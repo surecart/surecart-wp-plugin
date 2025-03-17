@@ -22,37 +22,17 @@ export class ScOrderShippingAddress {
   /** Is this required (defaults to false) */
   @Prop({ mutable: true, reflect: true }) required: boolean = false;
 
-  /** Show the   address */
+  /** Show the address */
   @Prop({ mutable: true }) full: boolean;
 
   /** Show the name field. */
   @Prop({ reflect: true }) showName: boolean;
-
-  /** Show the placeholder fields. */
-  @Prop() namePlaceholder: string = __('Name or Company Name', 'surecart');
-  @Prop() countryPlaceholder: string = __('Country', 'surecart');
-  @Prop() cityPlaceholder: string = __('City', 'surecart');
-  @Prop() line1Placeholder: string = __('Address', 'surecart');
-  @Prop() line2Placeholder: string = __('Address Line 2', 'surecart');
-  @Prop() postalCodePlaceholder: string = __('Postal Code/Zip', 'surecart');
-  @Prop() statePlaceholder: string = __('State/Province/Region', 'surecart');
 
   /** Default country for address */
   @Prop() defaultCountry: string;
 
   /** Whether to require the name in the address */
   @Prop({ reflect: true }) requireName: boolean = false;
-
-  /** Placeholder values. */
-  @Prop() placeholders: Partial<Address> = {
-    name: __('Name or Company Name', 'surecart'),
-    country: __('Country', 'surecart'),
-    city: __('City', 'surecart'),
-    line_1: __('Address', 'surecart'),
-    line_2: __('Address Line 2', 'surecart'),
-    postal_code: __('Postal Code/Zip', 'surecart'),
-    state: __('State/Province/Region', 'surecart'),
-  };
 
   /** Address to pass to the component */
   @State() address: Partial<Address> = {
@@ -125,15 +105,6 @@ export class ScOrderShippingAddress {
           exportparts="label, help-text, form-control, input__base, select__base, columns, search__base, menu__base"
           ref={el => (this.input = el as any)}
           label={this.label || __('Shipping Address', 'surecart')}
-          placeholders={{
-            name: this.namePlaceholder,
-            country: this.countryPlaceholder,
-            city: this.cityPlaceholder,
-            line_1: this.line1Placeholder,
-            line_2: this.line2Placeholder,
-            postal_code: this.postalCodePlaceholder,
-            state: this.statePlaceholder,
-          }}
           names={this.names}
           required={this.required || shippingAddressRequired()}
           loading={formLoading()}
@@ -150,15 +121,6 @@ export class ScOrderShippingAddress {
         required={this.required || shippingAddressRequired()}
         loading={formLoading()}
         address={this.address}
-        placeholders={{
-          name: this.namePlaceholder,
-          country: this.countryPlaceholder,
-          city: this.cityPlaceholder,
-          line_1: this.line1Placeholder,
-          line_2: this.line2Placeholder,
-          postal_code: this.postalCodePlaceholder,
-          state: this.statePlaceholder,
-        }}
         names={this.names}
         label={this.label}
         onScChangeAddress={e => this.updateAddressState(e.detail)}

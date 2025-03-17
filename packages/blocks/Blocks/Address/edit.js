@@ -25,12 +25,6 @@ export default ({ attributes, setAttributes }) => {
 		full,
 		show_name,
 		default_country,
-		name_placeholder,
-		country_placeholder,
-		city_placeholder,
-		line_1_placeholder,
-		postal_code_placeholder,
-		state_placeholder,
 		collect_billing,
 	} = attributes;
 	const [sameAsShipping, setSameAsShipping] = useState(false);
@@ -131,62 +125,7 @@ export default ({ attributes, setAttributes }) => {
 							/>
 						</PanelRow>
 					)}
-					{show_name && (
-						<PanelRow>
-							<TextControl
-								label={__('Name Placeholder', 'surecart')}
-								value={name_placeholder}
-								onChange={(name_placeholder) =>
-									setAttributes({ name_placeholder })
-								}
-							/>
-						</PanelRow>
-					)}
-					<PanelRow>
-						<TextControl
-							label={__('Country Placeholder', 'surecart')}
-							value={country_placeholder}
-							onChange={(country_placeholder) =>
-								setAttributes({ country_placeholder })
-							}
-						/>
-					</PanelRow>
-					<PanelRow>
-						<TextControl
-							label={__('City Placeholder', 'surecart')}
-							value={city_placeholder}
-							onChange={(city_placeholder) =>
-								setAttributes({ city_placeholder })
-							}
-						/>
-					</PanelRow>
-					<PanelRow>
-						<TextControl
-							label={__('Address Placeholder', 'surecart')}
-							value={line_1_placeholder}
-							onChange={(line_1_placeholder) =>
-								setAttributes({ line_1_placeholder })
-							}
-						/>
-					</PanelRow>
-					<PanelRow>
-						<TextControl
-							label={__('Postal Code Placeholder', 'surecart')}
-							value={postal_code_placeholder}
-							onChange={(postal_code_placeholder) =>
-								setAttributes({ postal_code_placeholder })
-							}
-						/>
-					</PanelRow>
-					<PanelRow>
-						<TextControl
-							label={__('State Placeholder', 'surecart')}
-							value={state_placeholder}
-							onChange={(state_placeholder) =>
-								setAttributes({ state_placeholder })
-							}
-						/>
-					</PanelRow>
+
 					<PanelRow>
 						<ScSelect
 							style={{ width: '100%' }}
@@ -214,17 +153,13 @@ export default ({ attributes, setAttributes }) => {
 						label={label}
 						showName={show_name}
 						required={required}
-						placeholders={{
-							name: name_placeholder,
-							country: country_placeholder,
-							city: city_placeholder,
-							line_1: line_1_placeholder,
-							postal_code: postal_code_placeholder,
-							state: state_placeholder,
-						}}
 						address={{
 							country: default_country,
 						}}
+						defaultCountryFields={
+							scBlockData.i18n.defaultCountryFields
+						}
+						countryFields={scBlockData.i18n.countryFields}
 					/>
 
 					{collect_billing && (
@@ -242,17 +177,13 @@ export default ({ attributes, setAttributes }) => {
 							label={billing_label}
 							showName={show_name}
 							required={true}
-							placeholders={{
-								name: name_placeholder,
-								country: country_placeholder,
-								city: city_placeholder,
-								line_1: line_1_placeholder,
-								postal_code: postal_code_placeholder,
-								state: state_placeholder,
-							}}
 							address={{
 								country: default_country,
 							}}
+							defaultCountryFields={
+								scBlockData.i18n.defaultCountryFields
+							}
+							countryFields={scBlockData.i18n.countryFields}
 						/>
 					)}
 				</ScFlex>

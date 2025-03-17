@@ -26,13 +26,6 @@ class Block extends BaseBlock {
 			<?php echo $attributes['show_name'] ? 'show-name' : null; ?>
 			required="<?php echo false === $attributes['required'] ? 'false' : 'true'; ?>"
 			default-country="<?php echo esc_attr( $default_country ); ?>"
-			name-placeholder="<?php echo esc_attr( $attributes['name_placeholder'] ); ?>"
-			country-placeholder="<?php echo esc_attr( $attributes['country_placeholder'] ); ?>"
-			city-placeholder="<?php echo esc_attr( $attributes['city_placeholder'] ); ?>"
-			line-1-placeholder="<?php echo esc_attr( $attributes['line_1_placeholder'] ); ?>"
-			line-2-placeholder="<?php echo esc_attr( $attributes['line_2_placeholder'] ); ?>"
-			postal-code-placeholder="<?php echo esc_attr( $attributes['postal_code_placeholder'] ); ?>"
-			state-placeholder="<?php echo esc_attr( $attributes['state_placeholder'] ); ?>"
 		></sc-order-shipping-address>
 		<?php
 
@@ -42,14 +35,6 @@ class Block extends BaseBlock {
 			label="<?php echo esc_attr( $attributes['billing_label'] ); ?>"
 			<?php echo $attributes['show_name'] ? 'show-name' : null; ?>
 			default-country="<?php echo esc_attr( $default_country ); ?>"
-			name-placeholder="<?php echo esc_attr( $attributes['name_placeholder'] ); ?>"
-			country-placeholder="<?php echo esc_attr( $attributes['country_placeholder'] ); ?>"
-			city-placeholder="<?php echo esc_attr( $attributes['city_placeholder'] ); ?>"
-			line-1-placeholder="<?php echo esc_attr( $attributes['line_1_placeholder'] ); ?>"
-			line-2-placeholder="<?php echo esc_attr( $attributes['line_2_placeholder'] ); ?>"
-			postal-code-placeholder="<?php echo esc_attr( $attributes['postal_code_placeholder'] ); ?>"
-			state-placeholder="<?php echo esc_attr( $attributes['state_placeholder'] ); ?>"
-			toggle-label="<?php echo esc_attr( $attributes['billing_toggle_label'] ); ?>"
 		></sc-order-billing-address>
 			<?php
 		}
