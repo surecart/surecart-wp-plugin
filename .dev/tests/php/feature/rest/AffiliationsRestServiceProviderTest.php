@@ -6,6 +6,7 @@ use SureCart\Account\AccountServiceProvider;
 use SureCart\Request\RequestService;
 use SureCart\Request\RequestServiceProvider;
 use SureCart\Rest\AffiliationsRestServiceProvider;
+use SureCart\Settings\SettingsServiceProvider;
 use SureCart\Support\Errors\ErrorsServiceProvider;
 use SureCart\Tests\SureCartUnitTestCase;
 
@@ -27,6 +28,7 @@ class AffiliationsRestServiceProviderTest extends SureCartUnitTestCase
 				AccountServiceProvider::class,
 				AffiliationsRestServiceProvider::class,
 				RequestServiceProvider::class,
+				SettingsServiceProvider::class,
 				ErrorsServiceProvider::class,
 			],
 		], false);

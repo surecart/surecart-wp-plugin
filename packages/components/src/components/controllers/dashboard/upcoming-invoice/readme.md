@@ -26,7 +26,6 @@
 ### Depends on
 
 - [sc-skeleton](../../../ui/skeleton)
-- [sc-format-number](../../../util/format-number)
 - [sc-product-line-item](../../../ui/product-line-item)
 - [sc-line-item](../../../ui/line-item)
 - [sc-coupon-form](../../../ui/coupon-form)
@@ -47,7 +46,6 @@
 ```mermaid
 graph TD;
   sc-upcoming-invoice --> sc-skeleton
-  sc-upcoming-invoice --> sc-format-number
   sc-upcoming-invoice --> sc-product-line-item
   sc-upcoming-invoice --> sc-line-item
   sc-upcoming-invoice --> sc-coupon-form

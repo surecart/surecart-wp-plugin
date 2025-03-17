@@ -120,7 +120,7 @@ class PermalinkServiceProvider implements ServiceProviderInterface {
 		// Handle product page with collection support.
 		$permalink = new PermalinkService();
 		$permalink->url( untrailingslashit( $product_base ) . '/([a-z0-9-]+)[/]?$' )
-			->query( 'index.php?sc_product=$matches[1]' );
+		->query( 'index.php?sc_product=$matches[1]' );
 
 		// We need to make sure WordPress does not try to go to a collection page.
 		if ( preg_match( '`/(.+)(/%sc_collection%)`', $product_base, $matches ) ) {
@@ -130,10 +130,13 @@ class PermalinkServiceProvider implements ServiceProviderInterface {
 			);
 		}
 
+		// Get clean product base without collection.
+		$clean_product_base = preg_replace( '/%sc_collection%\/?/', '', $product_base );
+
 		// Rule for default product base.
 		$permalink->addRule(
-			'^([^/]+)/([^/]+)/?$',
-			'index.php?sc_product=$matches[2]',
+			'^' . preg_quote( trim( $clean_product_base, '/' ), '^' ) . '/([^/]+)/?$',
+			'index.php?sc_product=$matches[1]',
 			'top'
 		);
 

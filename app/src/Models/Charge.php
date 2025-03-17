@@ -83,4 +83,22 @@ class Charge extends Model {
 			return 'https://www.' . ( ! $is_live_mode ? 'sandbox.' : '' ) . 'paypal.com/activity/payment/' . $external_charge_id;
 		}
 	}
+
+	/**
+	 * Get the display amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getAmountDisplayAmountAttribute() {
+		return Currency::format( $this->amount, $this->currency );
+	}
+
+	/**
+	 * Get the refunded display amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getRefundedDisplayAmountAttribute() {
+		return Currency::format( $this->refunded_amount, $this->currency );
+	}
 }

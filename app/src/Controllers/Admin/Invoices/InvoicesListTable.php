@@ -188,7 +188,7 @@ class InvoicesListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_total( $invoice ) {
-		return '<sc-format-number type="currency" currency="' . strtoupper( esc_html( $invoice->checkout->currency ?? 'u' ) ) . '" value="' . (float) $invoice->checkout->total_amount . '"></sc-format-number>';
+		return $invoice->checkout->total_display_amount;
 	}
 
 	/**

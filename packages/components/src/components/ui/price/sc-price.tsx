@@ -24,6 +24,12 @@ export class ScProductPrice {
   /** The scratch amount */
   @Prop() scratchAmount: number;
 
+  /** The scratch display amount */
+  @Prop() scratchDisplayAmount: string;
+
+  /** The display amount */
+  @Prop() displayAmount: string;
+
   /** The sale text */
   @Prop() saleText: string;
 
@@ -41,6 +47,9 @@ export class ScProductPrice {
 
   /** The setup fee amount */
   @Prop() setupFeeAmount: number;
+
+  /** The setup fee text */
+  @Prop() setupFeeText: string;
 
   /** The trial duration days */
   @Prop() trialDurationDays: number;
@@ -64,14 +73,24 @@ export class ScProductPrice {
                 ) : (
                   <Fragment>
                     <sc-visually-hidden>{__('The price was', 'surecart')} </sc-visually-hidden>
-                    <sc-format-number class="price__scratch" part="price__scratch" type="currency" currency={this.currency} value={this.scratchAmount}></sc-format-number>
+                    {!!this.scratchDisplayAmount ? (
+                      <span class="price__scratch">{this.scratchDisplayAmount}</span>
+                    ) : (
+                      <sc-format-number class="price__scratch" part="price__scratch" type="currency" currency={this.currency} value={this.scratchAmount}></sc-format-number>
+                    )}
                     <sc-visually-hidden> {__('now discounted to', 'surecart')}</sc-visually-hidden>
                   </Fragment>
                 )}
               </Fragment>
             )}
 
-            {this.amount === 0 ? __('Free', 'surecart') : <sc-format-number class="price__amount" type="currency" value={this.amount} currency={this.currency}></sc-format-number>}
+            {this.amount === 0 ? (
+              __('Free', 'surecart')
+            ) : this.displayAmount ? (
+              this.displayAmount
+            ) : (
+              <sc-format-number class="price__amount" type="currency" value={this.amount} currency={this.currency}></sc-format-number>
+            )}
 
             <div class="price__interval">
               {this.recurringPeriodCount && 1 < this.recurringPeriodCount && (
@@ -145,7 +164,14 @@ export class ScProductPrice {
               {!!this?.setupFeeAmount && (
                 <span class="price__setup-fee">
                   <sc-visually-hidden>{__('This product has', 'surecart')} </sc-visually-hidden>{' '}
-                  <sc-format-number type="currency" value={this?.setupFeeAmount} currency={this.currency}></sc-format-number> {this?.setupFeeName || __('Setup Fee', 'surecart')}.
+                  {this.setupFeeText ? (
+                    this.setupFeeText
+                  ) : (
+                    <Fragment>
+                      <sc-format-number type="currency" value={this?.setupFeeAmount} currency={this.currency}></sc-format-number>
+                      {this?.setupFeeName || __('Setup Fee', 'surecart')}
+                    </Fragment>
+                  )}
                 </span>
               )}
             </div>

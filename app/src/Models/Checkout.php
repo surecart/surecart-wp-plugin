@@ -65,10 +65,108 @@ class Checkout extends Model {
 	 *
 	 * @return string
 	 */
+	public function getAmountDueDisplayAmountAttribute() {
+		return ! empty( $this->amount_due ) ? Currency::format( $this->amount_due, $this->currency ) : '';
+	}
+
+	/**
+	 * Get the display subtotal amount attribute.
+	 *
+	 * @return string
+	 */
 	public function getSubtotalDisplayAmountAttribute() {
 		return ! empty( $this->subtotal_amount ) ? Currency::format( $this->subtotal_amount, $this->currency ) : '';
 	}
 
+	/**
+	 * Get the display discounts amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getDiscountsDisplayAmountAttribute() {
+		return ! empty( $this->discount_amount ) ? Currency::format( $this->discount_amount, $this->currency ) : '';
+	}
+
+	/**
+	 * Get the display tax reverse charged amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getTaxReverseChargedDisplayAmountAttribute() {
+		return ! empty( $this->tax_reverse_charged_amount ) ? Currency::format( $this->tax_reverse_charged_amount, $this->currency ) : '';
+	}
+
+	/**
+	 * Get the display tax reverse charged amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getDiscountsDisplayAttribute() {
+		return ! empty( $this->discounts ) ? Currency::format( $this->discounts, $this->currency ) : '';
+	}
+
+	/**
+	 * Get the display scratch amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getScratchDisplayAmountAttribute() {
+		return Currency::format( (int) ( -$this->total_savings_amount + $this->total_amount ), $this->currency );
+	}
+
+	/**
+	 * Get the display subtotal amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getTrialDisplayAmountAttribute() {
+		return ! empty( $this->trial_amount ) ? Currency::format( $this->trial_amount, $this->currency ) : '';
+	}
+
+	/**
+	 * Get the display remaining amount due attribute.
+	 *
+	 * @return string
+	 */
+	public function getRemainingAmountDueDisplayAmountAttribute() {
+		return ! empty( $this->remaining_amount_due ) ? Currency::format( $this->remaining_amount_due, $this->currency ) : '';
+	}
+
+	/**
+	 * Get the display refunded amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getRefundedDisplayAmountAttribute() {
+		return ! empty( $this->refunded_amount ) ? Currency::format( $this->refunded_amount, $this->currency ) : '';
+	}
+
+	/**
+	 * Get the display net paid amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getNetPaidDisplayAmountAttribute() {
+		return ! empty( $this->net_paid_amount ) ? Currency::format( $this->net_paid_amount, $this->currency ) : '';
+	}
+
+	/**
+	 * Get the display subtotal amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getTotalDisplayAmountAttribute() {
+		return Currency::format( (int) $this->total_amount, $this->currency );
+	}
+
+	/**
+	 * Get the display total savings amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getTotalSavingsDisplayAmountAttribute() {
+		return Currency::format( (int) $this->total_savings_amount, $this->currency );
+	}
 
 	/**
 	 * Get the display total scratch price attribute.
@@ -80,12 +178,13 @@ class Checkout extends Model {
 	}
 
 	/**
-	 * Get the display subtotal amount attribute.
+	 * Get the converts currency attribute.
+	 * We should convert currency by default.
 	 *
-	 * @return string
+	 * @return bool
 	 */
-	public function getTotalDisplayAmountAttribute() {
-		return Currency::format( (int) $this->total_amount, $this->currency );
+	public function getShowConvertedTotalAttribute() {
+		return apply_filters( 'surecart_checkout_show_converted_total', true, $this );
 	}
 
 	/**
@@ -520,6 +619,15 @@ class Checkout extends Model {
 	}
 
 	/**
+	 * Get the shipping display amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getShippingDisplayAmountAttribute() {
+		return $this->shipping_amount ? Currency::format( $this->shipping_amount, $this->currency ) : __( 'Free', 'surecart' );
+	}
+
+	/**
 	 * If the shipping address is required.
 	 *
 	 * @return bool
@@ -529,11 +637,92 @@ class Checkout extends Model {
 	}
 
 	/**
+	 * Get the paid display amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getPaidDisplayAmountAttribute() {
+		return Currency::format( $this->paid_amount, $this->currency );
+	}
+
+	/**
 	 * Get the Paid at Date attribute.
 	 *
 	 * @return string
 	 */
 	public function getPaidAtDateAttribute() {
 		return ! empty( $this->paid_at ) ? TimeDate::formatDate( $this->paid_at ) : '';
+	}
+
+	/**
+	 * Get the proration display amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getProrationDisplayAmountAttribute() {
+		return Currency::format( $this->proration_amount, $this->currency );
+	}
+
+	/**
+	 * Get the applied balance display amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getAppliedBalanceDisplayAmountAttribute() {
+		return Currency::format( $this->applied_balance_amount, $this->currency );
+	}
+
+	/**
+	 * Get the credited balance display amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getCreditedBalanceDisplayAmountAttribute() {
+		return Currency::format( $this->credited_balance_amount, $this->currency );
+	}
+
+	/**
+	 * Get the store currency amount due display amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getAmountDueDefaultCurrencyDisplayAmountAttribute() {
+		return Currency::format( $this->amount_due, $this->currency, [ 'convert' => false ] );
+	}
+
+	/**
+	 * Get the store currency amount due display amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getCurrentCurrencyAttribute() {
+		return Currency::getCurrentCurrency();
+	}
+
+	/**
+	 * Get the tax exclusive display amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getTaxExclusiveDisplayAmountAttribute() {
+		return Currency::format( $this->tax_exclusive_amount, $this->currency );
+	}
+
+	/**
+	 * Get the tax inclusive display amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getTaxInclusiveDisplayAmountAttribute() {
+		return Currency::format( $this->tax_inclusive_amount, $this->currency );
+	}
+
+	/**
+	 * Get the tax display amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getTaxDisplayAmountAttribute() {
+		return Currency::format( $this->tax_amount, $this->currency );
 	}
 }

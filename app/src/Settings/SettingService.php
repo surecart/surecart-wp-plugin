@@ -15,7 +15,7 @@ class SettingService {
 	 * @return void
 	 */
 	public function bootstrap() {
-		add_action( 'admin_init', [ $this, 'registerSettings' ] );
+		add_action( 'init', [ $this, 'registerSettings' ] );
 	}
 
 	/**
@@ -242,6 +242,51 @@ class SettingService {
 				'type'              => 'boolean',
 				'show_in_rest'      => true,
 				'sanitize_callback' => 'boolval',
+			]
+		);
+		$this->register(
+			'surecart',
+			'currency_switcher_alignment',
+			[
+				'type'              => 'string',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'sanitize_text_field',
+				'default'           => 'right',
+			]
+		);
+		$this->register(
+			'surecart',
+			'currency_switcher_selected_ids',
+			[
+				'type'         => 'array',
+				'items'        => 'integer',
+				'show_in_rest' => [
+					'schema' => [
+						'type'  => 'array',
+						'items' => [
+							'type' => 'integer',
+						],
+					],
+				],
+			]
+		);
+		$this->register(
+			'surecart',
+			'currency_geolocation_enabled',
+			[
+				'type'              => 'boolean',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'boolval',
+				'default'           => true,
+			]
+		);
+		$this->register(
+			'surecart',
+			'currency_locale',
+			[
+				'type'              => 'string',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'sanitize_text_field',
 			]
 		);
 	}

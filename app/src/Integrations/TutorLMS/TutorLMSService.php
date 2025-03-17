@@ -31,10 +31,11 @@ class TutorLMSService extends IntegrationService implements IntegrationInterface
 	 * Show our purchase button if we have an integration.
 	 *
 	 * @param string $output The button HTML.
+	 * @param int    $course_id The course id.
 	 *
 	 * @return string
 	 */
-	public function loopPurchaseButton( $output ) {
+	public function loopPurchaseButton( $output, $course_id ) {
 		// check first to see if we have any integrations.
 		$integrations = Integration::where( 'integration_id', get_the_ID() )->andWhere( 'model_name', 'product' )->get();
 		if ( empty( $integrations ) ) {
@@ -66,8 +67,11 @@ class TutorLMSService extends IntegrationService implements IntegrationInterface
 		// template.
 		ob_start(); ?>
 
-		<div class="tutor-course-list-btn"><?php echo apply_filters( 'tutor_course_restrict_new_entry', '<a href="' . get_the_permalink() . '" class="tutor-btn tutor-btn-outline-primary tutor-btn-md tutor-btn-block ' . $required_loggedin_class . '">' . __( 'Enroll Course', 'surecart' ) . '</a>' ); ?></div>
-
+		<div class="tutor-course-list-btn">
+			<?php
+				echo apply_filters( 'tutor_course_restrict_new_entry', '<a href="' . get_the_permalink() . '" class="tutor-btn tutor-btn-outline-primary tutor-btn-md tutor-btn-block ' . $required_loggedin_class . '">' . esc_html__( 'Enroll Course', 'surecart' ) . '</a>', $course_id ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			?>
+		</div>
 		<?php
 		return ob_get_clean();
 	}
@@ -242,7 +246,7 @@ class TutorLMSService extends IntegrationService implements IntegrationInterface
 	 * @return string
 	 */
 	public function getLogo() {
-		return esc_url_raw( trailingslashit( plugin_dir_url( SURECART_PLUGIN_FILE ) ) . 'images/integrations/tutor.svg' );
+		return esc_url_raw( trailingslashit( plugin_dir_url( SURECART_PLUGIN_FILE ) ) . 'images/integrations/tutorlms.svg' );
 	}
 
 	/**
@@ -306,7 +310,7 @@ class TutorLMSService extends IntegrationService implements IntegrationInterface
 
 		if ( ( isset( $course_query->posts ) ) && ( ! empty( $course_query->posts ) ) ) {
 			$items = array_map(
-				function( $post ) {
+				function ( $post ) {
 					return (object) [
 						'id'    => $post->ID,
 						'label' => $post->post_title,

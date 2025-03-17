@@ -1223,10 +1223,16 @@ class ProductPostTypeService {
 	public function maybeRedirectToProductCanonicalUrl(): void {
 		global $wp_rewrite;
 
+		// Abort if the rewrite class is not available.
 		if (
 			! is_a( $wp_rewrite, \WP_Rewrite::class )
 			|| ! sc_get_product()
 		) {
+			return;
+		}
+
+		// Abort if the current page is a collection.
+		if ( is_tax( 'sc_collection' ) ) {
 			return;
 		}
 

@@ -29,19 +29,10 @@ class BlockTemplatesService {
 	 * @return void
 	 */
 	public function bootstrap() {
-		add_action( 'init', [ $this, 'loadTemplateUtilityService' ] );
+		$this->utility = \SureCart::utility()->blockTemplates();
 		// add block templates.
 		add_filter( 'get_block_templates', [ $this, 'addBlockTemplates' ], 10, 3 );
 		add_filter( 'pre_get_block_file_template', [ $this, 'getBlockFileTemplate' ], 10, 3 );
-	}
-
-	/**
-	 * Load the template utility service.
-	 *
-	 * @return void
-	 */
-	public function loadTemplateUtilityService() {
-		$this->utility = \SureCart::utility()->blockTemplates();
 	}
 
 	/**

@@ -40,7 +40,7 @@ export class ScOrderConfirmationTotals {
             ({humanDiscount})
           </span>
         )}
-        <sc-format-number slot="price" type="currency" currency={this.order?.currency} value={-this.order?.discount_amount}></sc-format-number>
+        {this.order?.discounts_display_amount}
       </sc-line-item>
     );
   }
@@ -48,22 +48,24 @@ export class ScOrderConfirmationTotals {
   render() {
     return (
       <div class={{ 'line-item-totals': true }}>
-        <sc-line-item-total checkout={this.order} total="subtotal">
+        <sc-line-item>
           <span slot="description">{__('Subtotal', 'surecart')}</span>
-        </sc-line-item-total>
+          <span slot="price">{this.order?.subtotal_display_amount}</span>
+        </sc-line-item>
+
         {this.renderDiscountLine()}
 
         {!!this.order?.bump_amount && (
           <sc-line-item style={{ marginTop: 'var(--sc-spacing-small)' }}>
             <span slot="description">{__('Bundle Discount', 'surecart')}</span>
-            <sc-format-number slot="price" type="currency" currency={this.order?.currency} value={this.order?.bump_amount}></sc-format-number>
+            <span slot="price">{this.order?.bump_display_amount}</span>
           </sc-line-item>
         )}
 
         {!!this.order?.shipping_amount && (
           <sc-line-item style={{ marginTop: 'var(--sc-spacing-small)' }}>
             <span slot="description">{__('Shipping', 'surecart')}</span>
-            <sc-format-number slot="price" type="currency" currency={this.order?.currency} value={this.order?.shipping_amount}></sc-format-number>
+            <span slot="price">{this.order?.shipping_display_amount}</span>
           </sc-line-item>
         )}
 
@@ -72,7 +74,7 @@ export class ScOrderConfirmationTotals {
             <span slot="description">
               {formatTaxDisplay(this.order?.tax_label)} {`(${this.order.tax_percent}%)`}
             </span>
-            <sc-format-number slot="price" type="currency" currency={this.order?.currency} value={this.order?.tax_amount}></sc-format-number>
+            <span slot="price">{this.order?.tax_display_amount}</span>
           </sc-line-item>
         )}
 

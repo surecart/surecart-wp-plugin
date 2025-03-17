@@ -16,9 +16,8 @@ export class ScLineItemTax {
     let label = sprintf(__('Estimated %s', 'surecart'), this?.order?.tax_label || '');
 
     if (this?.order?.tax_status === 'calculated') {
-      label = this.order?.tax_label ||'';
+      label = this.order?.tax_label || '';
     }
-
 
     return (
       <Fragment>
@@ -50,16 +49,13 @@ export class ScLineItemTax {
       <sc-line-item>
         <span slot="description">{this.renderLabel()}</span>
 
-        {this.order?.tax_exclusive_amount && (
-          <span slot="price">
-            <sc-format-number type="currency" currency={this?.order?.currency || 'usd'} value={this?.order?.tax_exclusive_amount} />
-          </span>
-        )}
+        {this.order?.tax_exclusive_amount && <span slot="price">{this.order?.tax_exclusive_display_amount}</span>}
 
         {this.order?.tax_inclusive_amount && (
           <span slot="price-description">
             {'('}
-            <sc-format-number type="currency" currency={this?.order?.currency || 'usd'} value={this?.order?.tax_inclusive_amount} /> {__('included', 'surecart')}
+            {this.order?.tax_inclusive_display_amount}
+            {__('included', 'surecart')}
             {')'}
           </span>
         )}
