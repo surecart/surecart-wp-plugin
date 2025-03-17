@@ -7,6 +7,9 @@ inputs:
   package:
     required: false
     description: "Do you want to package the files?"
+  analytics_token:
+    required: true
+    description: "GitHub OAuth token for Composer authentication for installing BSF Analytics package"
 runs:
   using: "composite"
   steps:
