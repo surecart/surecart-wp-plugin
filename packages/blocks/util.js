@@ -70,6 +70,11 @@ export const updateCartLineItem = (data, existing = []) => {
 							? data.quantity
 							: existingVariant?.quantity + 1,
 					},
+					...{
+						ad_hoc_amount: data?.ad_hoc_amount
+							? data.ad_hoc_amount
+							: existingVariant?.ad_hoc_amount,
+					},
 				};
 			});
 		}
@@ -88,6 +93,11 @@ export const updateCartLineItem = (data, existing = []) => {
 					quantity: data?.quantity
 						? data.quantity
 						: existingPrice?.quantity + 1,
+				},
+				...{
+					ad_hoc_amount: data?.ad_hoc_amount
+						? data.ad_hoc_amount
+						: existingPrice?.ad_hoc_amount,
 				},
 			};
 		});

@@ -222,7 +222,7 @@ class OrdersListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_total( $order ) {
-		return '<sc-format-number type="currency" currency="' . strtoupper( esc_html( $order->checkout->currency ) ) . '" value="' . (float) $order->checkout->amount_due . '"></sc-format-number>';
+		return $order->checkout->total_display_amount;
 	}
 
 	/**

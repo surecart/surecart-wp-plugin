@@ -103,20 +103,12 @@ export class ScProductSelectedPrice {
               <span class="selected-price__price" aria-label={__('Product price', 'surecart')}>
                 {price?.scratch_amount > price.amount && (
                   <Fragment>
-                    <sc-format-number
-                      class="selected-price__scratch-price"
-                      part="price__scratch"
-                      type="currency"
-                      currency={price?.currency}
-                      value={price?.scratch_amount}
-                    ></sc-format-number>{' '}
+                    <span class="selected-price__scratch-price" part="price__scratch">
+                      {price?.scratch_display_amount}{' '}
+                    </span>
                   </Fragment>
                 )}
-                <sc-format-number
-                  type="currency"
-                  currency={price?.currency}
-                  value={this.lineItem()?.ad_hoc_amount !== null ? this.lineItem()?.ad_hoc_amount : variant?.amount || price?.amount}
-                />
+                {this.lineItem()?.ad_hoc_amount !== null ? this.lineItem()?.ad_hoc_display_amount : variant?.display_amount || price?.display_amount}
               </span>
               <span class="selected-price__interval" aria-label={__('Price interval', 'surecart')}>
                 {intervalString(price, {

@@ -17,6 +17,7 @@ class RequestServiceTest extends SureCartUnitTestCase
 		// Set up an app instance with whatever stubs and mocks we need before every test.
 		\SureCart::make()->bootstrap([
 			'providers' => [
+				\SureCart\Request\RequestServiceProvider::class,
 				\SureCart\WordPress\PluginServiceProvider::class
 			]
 		], false);
@@ -29,7 +30,7 @@ class RequestServiceTest extends SureCartUnitTestCase
 	 */
 	public function test_gets_base_url()
 	{
-		$service = new RequestService();
+		$service = new RequestService( [], 'token' );
 		$this->assertSame(SURECART_API_URL . '/v1/', $service->getBaseUrl());
 	}
 
@@ -38,7 +39,7 @@ class RequestServiceTest extends SureCartUnitTestCase
 	 * @dataProvider cacheProvider
 	 */
 	public function test_shouldFindCache(bool $cachable, string $cache_key, array $args, bool $expected) {
-		$service = new RequestService();
+		$service = new RequestService([], 'token');
 		$this->assertSame($service->shouldFindCache($cachable, $cache_key, $args), $expected);
 	}
 
@@ -56,7 +57,12 @@ class RequestServiceTest extends SureCartUnitTestCase
 	 * @group request
 	 */
 	public function test_shouldNotMakeRequestIfNoToken() {
-		$service = new RequestService( null );
+		// setup mocks.
+		$request_cache = \Mockery::mock(\SureCart\Request\RequestCacheService::class);
+		$service = \Mockery::mock( RequestService::class, [[], null] )->makePartial();
+		$service->shouldReceive('cache')->andReturn( $request_cache );
+
+		// make the request.
 		$this->assertWPError( $service->makeRequest( 'test') );
 		$error = $service->makeRequest( 'test' );
 		$this->assertSame( 'missing_token', $error->get_error_code() );
@@ -66,8 +72,13 @@ class RequestServiceTest extends SureCartUnitTestCase
 	 * @group request
 	 */
 	public function test_shouldRetry409Requests() {
-		// create the mock service.
-		$service = \Mockery::mock( RequestService::class, ['token'] )->makePartial();
+		// setup mocks.
+		$request_cache = \Mockery::mock(\SureCart\Request\RequestCacheService::class);
+		$error_service = \Mockery::mock(\SureCart\Support\Errors\ErrorsService::class);
+		$error_service->shouldReceive('translate')->andReturn('test');
+		$service = \Mockery::mock( RequestService::class, [[], 'token'] )->makePartial();
+		$service->shouldReceive('cache')->andReturn( $request_cache );
+		$service->shouldReceive('errors')->andReturn( $error_service );
 
 		// 409 response mock should be called twice as a retry (and only twice).
 		$service->shouldReceive( 'remoteRequest' )
