@@ -305,6 +305,14 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 
 == Changelog ==
 
+= 3.6.0 - March 18th, 2025 =
+- New: Refund UI - tie refunds to specific order line items, revoke affiliate commissions, and more.
+- New: Cart icon element for Bricks Builder.
+- Improvement: Internationalization of checkout address fields.
+- Change: New stores default checkout page won't include address unless required by checkout.
+- Fix: Handle generic customer dashboard redirects from platform.
+- Fix: Enhance error message for duplicate coupon names to be more descriptive.
+
 = 3.5.3 - March 14th, 2025 =
 - Change: Change the Bricks Product Data element to Product Pricing for better clarity.
 - Fix: Issue with TutorLMS coming soon page error in most recent version of TutorLMS.
