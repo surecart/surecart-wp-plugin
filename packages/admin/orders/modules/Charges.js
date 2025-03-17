@@ -1,13 +1,20 @@
+/**
+ * External dependencies.
+ */
 import { store as coreStore } from '@wordpress/core-data';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { __, _n } from '@wordpress/i18n';
-import { useState } from 'react';
+import { useState } from '@wordpress/element';
 
+/**
+ * Internal dependencies.
+ */
 import ChargesDataTable from '../../components/data-tables/charges-data-table';
-import Refund from '../../components/data-tables/charges-data-table/Refund';
 import ChargeDetails from '../../components/data-tables/charges-data-table/ChargeDetails';
+import CreateRefund from './Refund/CreateRefund';
 
-export default ({ checkoutId }) => {
+export default ({ checkout }) => {
+	const checkoutId = checkout?.id;
 	const [refundCharge, setRefundCharge] = useState(false);
 	const [chargeDetails, setChargeDetails] = useState(false);
 	const { invalidateResolution } = useDispatch(coreStore);
@@ -40,33 +47,6 @@ export default ({ checkoutId }) => {
 				charges: select(coreStore)?.getEntityRecords?.(...entityData),
 				invalidateCharges: () =>
 					invalidateResolution('getEntityRecords', [...entityData]),
-				loading: !select(coreStore)?.hasFinishedResolution?.(
-					'getEntityRecords',
-					[...entityData]
-				),
-			};
-		},
-		[checkoutId]
-	);
-
-	const { purchases, loadingPurchases } = useSelect(
-		(select) => {
-			if (!checkoutId) {
-				return {
-					purchases: [],
-					loading: true,
-				};
-			}
-			const entityData = [
-				'surecart',
-				'purchase',
-				{
-					checkout_ids: checkoutId ? [checkoutId] : null,
-					expand: ['product'],
-				},
-			];
-			return {
-				purchases: select(coreStore)?.getEntityRecords?.(...entityData),
 				loading: !select(coreStore)?.hasFinishedResolution?.(
 					'getEntityRecords',
 					[...entityData]
@@ -115,14 +95,17 @@ export default ({ checkoutId }) => {
 				data={charges}
 				isLoading={loading}
 			/>
+
 			{!!refundCharge && (
-				<Refund
+				<CreateRefund
+					checkout={checkout}
 					charge={refundCharge}
-					purchases={purchases}
+					chargeIds={(charges || [])?.map((charge) => charge.id)}
 					onRefunded={onRefunded}
 					onRequestClose={() => setRefundCharge(false)}
 				/>
 			)}
+
 			{!!chargeDetails && (
 				<ChargeDetails
 					charge={chargeDetails}
