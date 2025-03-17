@@ -40,7 +40,7 @@ runs:
 
     - name: Composer Install
       shell: bash
-      run: composer config github-oauth.github.com ${{ secrets.BSF_ANALYTICS_TOKEN }} && composer install
+      run: composer config github-oauth.github.com ${{ inputs.analytics_token }} && composer install
 
     - name: Get yarn cache directory path
       shell: bash
