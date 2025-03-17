@@ -42,6 +42,16 @@ class LineItem extends Model {
 	}
 
 	/**
+	 * Set the swap attribute.
+	 *
+	 * @param  string $value Swap properties.
+	 * @return void
+	 */
+	public function setSwapAttribute( $value ) {
+		$this->setRelation( 'swap', $value, Swap::class );
+	}
+
+	/**
 	 * Upsell a line item.
 	 *
 	 * @param array $attributes The attributes to update.

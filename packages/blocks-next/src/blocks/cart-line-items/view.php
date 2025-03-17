@@ -16,7 +16,7 @@
 					<span aria-hidden="true" class="sc-toggle__knob"></span>
 				</button>
 				<span data-wp-text="state.swap.description"></span>
-				<span data-wp-text="state.swap.display_amount"></span>
+				<span data-wp-text="state.swapDisplayAmount"></span>
 			</div>
 		</div>
 	</template>

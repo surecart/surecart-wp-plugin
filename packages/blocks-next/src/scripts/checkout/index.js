@@ -165,6 +165,10 @@ const { state, actions } = store('surecart/checkout', {
 			return line_item?.swap || line_item?.price?.current_swap;
 		},
 
+		get swapDisplayAmount() {
+			return state?.swap?.swap_price?.display_amount;
+		},
+
 		/**
 		 * Get the cart/checkout error title.
 		 */
