@@ -230,6 +230,7 @@ export class ScAddress {
                     part="name__input"
                     value={this.address?.country}
                     onScChange={(e: any) => {
+                      if (e.target.value === this.address?.country) return;
                       this.clearAddress();
                       this.updateAddress({ country: e.target.value });
                     }}
