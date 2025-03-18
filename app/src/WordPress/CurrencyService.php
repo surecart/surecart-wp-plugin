@@ -64,12 +64,12 @@ class CurrencyService {
 	 * @return string
 	 */
 	public function filterPagenumLink( $result, $pagenum ) {
-		if ( $this->filter_url ) {
+		if ( self::$filter_url ) {
 			remove_filter( 'get_pagenum_link', array( $this, 'filterPagenumLink' ), 99 );
-			$this->filter_url = false;
+			self::$filter_url = false;
 			$result           = get_pagenum_link( $pagenum, false );
 			add_filter( 'get_pagenum_link', array( $this, 'filterPagenumLink' ), 99, 2 );
-			$this->filter_url = true;
+			self::$filter_url = true;
 		}
 
 		return $result;
@@ -142,7 +142,7 @@ class CurrencyService {
 	 * @return string The filtered permalink.
 	 */
 	public function addCurrencyParam( $permalink ) {
-		if ( apply_filters( 'surecart/currency/filter_url', $this->filter_url, $permalink ) ) {
+		if ( apply_filters( 'surecart/currency/filter_url', self::$filter_url, $permalink ) ) {
 			// we can't use the Currency::getCurrencyFromRequest here because we don't want to fetch display currencies potentially multiple times per request.
 			$currency = strtolower( sanitize_text_field( $_GET['currency'] ?? $_COOKIE['sc_current_currency'] ?? '' ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			if ( ! empty( $currency ) && strtolower( $currency ) !== strtolower( \SureCart::account()->currency ) ) {
