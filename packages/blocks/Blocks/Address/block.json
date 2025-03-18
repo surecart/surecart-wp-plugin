@@ -33,6 +33,10 @@
 			"type": "boolean",
 			"default": true
 		},
+		"line_2": {
+			"type": "boolean",
+			"default": false
+		},
 		"show_name": {
 			"type": "boolean",
 			"default": false

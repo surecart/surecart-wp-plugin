@@ -24,6 +24,7 @@ class Block extends BaseBlock {
 			label="<?php echo esc_attr( $attributes['label'] ); ?>"
 			<?php echo $attributes['full'] ? 'full' : null; ?>
 			<?php echo $attributes['show_name'] ? 'show-name' : null; ?>
+			<?php echo $attributes['line_2'] ? 'show-line-2' : null; ?>
 			required="<?php echo false === $attributes['required'] ? 'false' : 'true'; ?>"
 			default-country="<?php echo esc_attr( $default_country ); ?>"
 		></sc-order-shipping-address>
@@ -34,6 +35,7 @@ class Block extends BaseBlock {
 			<sc-order-billing-address
 			label="<?php echo esc_attr( $attributes['billing_label'] ); ?>"
 			<?php echo $attributes['show_name'] ? 'show-name' : null; ?>
+			<?php echo $attributes['line_2'] ? 'show-line-2' : null; ?>
 			default-country="<?php echo esc_attr( $default_country ); ?>"
 		></sc-order-billing-address>
 			<?php
