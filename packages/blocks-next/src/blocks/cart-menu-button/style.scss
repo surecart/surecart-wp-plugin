@@ -6,6 +6,10 @@
 	color: inherit;
 	cursor: pointer;
 
+	&[hidden] {
+		display: none !important;
+	}
+
 	.sc-cart-icon {
 		font-size: var(--sc-cart-icon-size, 1.1em);
 		cursor: pointer;
