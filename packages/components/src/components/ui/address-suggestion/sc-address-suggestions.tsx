@@ -122,6 +122,7 @@ export class ScAddressSuggestions {
 
     this.addressSuggestions = [];
     this.showSuggestions = false;
+    this.scShowAddressFields.emit();
   }
 
   renderAddressSuggestions() {

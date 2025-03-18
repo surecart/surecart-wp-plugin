@@ -111,15 +111,8 @@ export class ScAddress {
     if (!this.address?.country) return;
     this.setRegions();
 
-    // If no api key set, then show the fields.
-    if (!window?.scData?.google_map_api_key) {
-      this.showAddressFields();
-    } else {
-      // Otherwise, show the fields if any address field is set or if the fields are already shown.
-      this.showCity = this.showCity || this.hasAnyAddressField();
-      this.showState = this.showState || this.hasAnyAddressField();
-      this.showPostal = this.showPostal || this.hasAnyAddressField();
-    }
+    // Show address fields if we have a country or any address field set.
+    this.toggleAddressFieldsVisibility(!window?.scData?.google_map_api_key || this.hasAnyAddressField());
 
     this.scChangeAddress.emit(this.address);
     this.scInputAddress.emit(this.address);
@@ -146,7 +139,11 @@ export class ScAddress {
   }
 
   handleAddressInput(address: Partial<Address>) {
-    this.scInputAddress.emit({ ...this.address, ...address });
+    if (!window?.scData?.google_map_api_key) {
+      this.scInputAddress.emit({ ...this.address, ...address });
+    } else {
+      this.address = { ...this.address, ...address };
+    }
   }
 
   clearAddress() {
@@ -233,10 +230,10 @@ export class ScAddress {
     }
   }
 
-  showAddressFields() {
-    this.showCity = true;
-    this.showState = true;
-    this.showPostal = true;
+  toggleAddressFieldsVisibility(show: boolean) {
+    this.showCity = show;
+    this.showState = show;
+    this.showPostal = show;
   }
 
   handleShowSuggestionsChange(event: CustomEvent<boolean>) {
@@ -342,7 +339,7 @@ export class ScAddress {
                         showSuggestions={this.showSuggestions}
                         onScPlaceSelect={(e: any) => this.updateAddress(e.detail)}
                         onScShowSuggestionsChange={(e: CustomEvent<boolean>) => this.handleShowSuggestionsChange(e)}
-                        onScShowAddressFields={() => this.showAddressFields()}
+                        onScShowAddressFields={() => this.toggleAddressFieldsVisibility(true)}
                       />
                     )}
                   </div>
