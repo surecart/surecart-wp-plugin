@@ -290,6 +290,7 @@ class PageService {
 				'surecart_page_sc-orders',
 				'surecart_page_sc-abandoned-checkouts',
 				'surecart_page_sc-invoices',
+				'sc_product',
 				'surecart_page_sc-products',
 				'surecart_page_sc-product-collections',
 				'surecart_page_sc-bumps',
