@@ -50,7 +50,7 @@ export default ({ checkout, charge, chargeIds, onRequestClose, onRefunded }) => 
 	const { records: refunds, hasResolved: hasResolvedRefunds } =
 		useEntityRecords('surecart', 'refund', {
 			context: 'edit',
-			charge_ids: [charge?.id],
+			charge_ids: chargeIds,
 			per_page: 100,
 			expand: ['refund_items', 'refund_item.line_item'],
 		});
