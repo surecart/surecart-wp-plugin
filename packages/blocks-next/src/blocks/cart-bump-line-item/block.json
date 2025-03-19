@@ -1,18 +1,12 @@
 {
 	"$schema": "https://json.schemastore.org/block.json",
-	"apiVersion": 2,
-	"name": "surecart/cart-bump-line-item",
+	"apiVersion": 3,
+	"name": "surecart/slide-out-cart-bump-line-item",
 	"title": "Cart Bump Line Item",
 	"description": "Display the cart bump line item",
-	"category": "surecart",
+	"category": "surecart-cart",
 	"textdomain": "surecart",
-	"supports": {
-		"reusable": false,
-		"html": false,
-		"multiple": false,
-		"inserter": false
-	},
-	"ancestor": ["surecart/cart"],
+	"ancestor": ["surecart/slide-out-cart"],
 	"attributes": {
 		"label": {
 			"type": "string",
@@ -37,5 +31,14 @@
 		"textColor": {
 			"type": "string"
 		}
-	}
+	},
+	"supports": {
+		"interactivity": true,
+		"html": false,
+		"multiple": false,
+		"currencyConversion": true
+	},
+	"render": "file:./view.php",
+	"editorScript": "file:./index.js",
+	"style": ["surecart-line-item", "file:./style-index.css"]
 }

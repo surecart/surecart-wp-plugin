@@ -18,12 +18,12 @@
 		background: #fff;
 		border-radius: var(--sc-border-radius-medium);
 		gap: 0;
-		border-radius: var(--sc-input-border-radius-medium);
-		overflow: hidden;
 		padding: 0;
 
 		.sc-product-line-item__content {
 			padding: var(--sc-spacing-medium);
+			border-radius: var(--sc-border-radius-medium)
+				var(--sc-border-radius-medium) 0 0;
 			border-bottom: solid var(--sc-input-border-width)
 				var(--sc-input-border-color);
 		}
@@ -35,8 +35,20 @@
 			font-size: var(--sc-font-size-small);
 			display: flex;
 			align-items: center;
-			gap: var(--sc-spacing-small);
+			justify-content: space-between;
 			color: var(--sc-input-label-color);
+			border-radius: 0 0 var(--sc-border-radius-medium)
+				var(--sc-border-radius-medium);
+
+			.sc-product-line-item__swap-content {
+				display: flex;
+				align-items: center;
+				gap: var(--sc-spacing-small);
+			}
+
+			.sc-product-line-item__swap-amount-value {
+				font-weight: var(--sc-font-weight-bold);
+			}
 		}
 	}
 }

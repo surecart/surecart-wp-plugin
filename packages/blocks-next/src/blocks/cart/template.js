@@ -53,18 +53,6 @@ export const TEMPLATE = [
 		},
 	],
 	[
-		'surecart/slide-out-cart-bump-line-item',
-		{
-			border: false,
-			padding: {
-				top: '1.25em',
-				left: '1.25em',
-				bottom: 0,
-				right: '1.25em',
-			},
-		},
-	],
-	[
 		'surecart/slide-out-cart-items-submit',
 		{
 			border: true,

@@ -118,7 +118,11 @@ const { state, actions } = store('surecart/checkout', {
 		 * Get the checkout line items.
 		 */
 		get checkoutLineItems() {
-			return state.checkout?.line_items?.data || [];
+			return (state?.checkout?.line_items?.data || []).sort((a, b) => {
+				const aHasSwap = a?.price?.current_swap || a?.swap ? 1 : 0;
+				const bHasSwap = b?.price?.current_swap || b?.swap ? 1 : 0;
+				return bHasSwap - aHasSwap;
+			});
 		},
 
 		/**
@@ -167,6 +171,10 @@ const { state, actions } = store('surecart/checkout', {
 
 		get swapDisplayAmount() {
 			return state?.swap?.swap_price?.display_amount;
+		},
+
+		get swapIntervalText() {
+			return state?.swap?.swap_price?.short_interval_text;
 		},
 
 		/**

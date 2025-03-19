@@ -1,0 +1,18 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "surecart/cart-bumps",
+	"title": "Cart Order Bumps",
+	"description": "Display recommended order bumps in a carousel.",
+	"category": "surecart-cart",
+	"keywords": ["order", "bump", "upsell", "cart"],
+	"version": "1.0.0",
+	"textdomain": "surecart",
+	"attributes": {},
+	"supports": {
+		"html": false
+	},
+	"editorScript": "file:./index.js",
+	"style": "file:./style-index.css",
+	"render": "file:./view.php"
+}
