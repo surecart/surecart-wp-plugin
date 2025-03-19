@@ -2712,6 +2712,10 @@ export namespace Components {
          */
         "setupFeeName": string;
         /**
+          * The setup fee text
+         */
+        "setupFeeText": string;
+        /**
           * The trial duration days
          */
         "trialDurationDays": number;
@@ -9853,6 +9857,10 @@ declare namespace LocalJSX {
           * The setup fee name
          */
         "setupFeeName"?: string;
+        /**
+          * The setup fee text
+         */
+        "setupFeeText"?: string;
         /**
           * The trial duration days
          */
