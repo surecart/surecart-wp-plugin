@@ -2,7 +2,6 @@
 import { __ } from '@wordpress/i18n';
 import { css, jsx } from '@emotion/react';
 import { useBlockProps, BlockControls } from '@wordpress/block-editor';
-import { ScIcon } from '@surecart/components-react';
 import { ToolbarDropdownMenu } from '@wordpress/components';
 import { useEntityRecord } from '@wordpress/core-data';
 
@@ -136,7 +135,7 @@ export default function Edit({ attributes, setAttributes }) {
 							__('Currency', 'surecart')}
 					</span>
 					<span className="sc-button__caret">
-						<ScIcon name="chevron-down" />
+						<sc-icon name="chevron-down" />
 					</span>
 				</div>
 			</div>
