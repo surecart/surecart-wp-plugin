@@ -69,6 +69,12 @@ export class ScLineItemTotal {
     );
   }
 
+  // Determine if the currency should be displayed to avoid duplication in the amount display.
+  getCurrencyToDisplay() {
+    const checkout = this.checkout || checkoutState?.checkout;
+    return checkout?.amount_due_default_currency_display_amount?.toLowerCase()?.includes(checkout?.currency?.toLowerCase()) ? '' : checkout?.currency?.toUpperCase();
+  }
+
   renderConversion() {
     if (this.total !== 'total') {
       return null;
@@ -90,11 +96,6 @@ export class ScLineItemTotal {
       return null;
     }
 
-    // Determine if the currency should be displayed to avoid duplication in the amount display.
-    const currencyToDisplay = checkout?.amount_due_default_currency_display_amount?.toLowerCase()?.includes(checkout?.currency?.toLowerCase())
-      ? ''
-      : checkout?.currency?.toUpperCase();
-
     return (
       <Fragment>
         <sc-divider></sc-divider>
@@ -103,7 +104,7 @@ export class ScLineItemTotal {
             <slot name="charge-amount-description">{__('Payment Total', 'surecart')}</slot>
           </span>
           <span slot="price">
-            {currencyToDisplay && <span class="currency-label">{currencyToDisplay}</span>}
+            {this.getCurrencyToDisplay() && <span class="currency-label">{this.getCurrencyToDisplay()}</span>}
             {checkout?.amount_due_default_currency_display_amount}
           </span>
         </sc-line-item>
