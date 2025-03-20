@@ -30,6 +30,12 @@ export class ScAddressSuggestions {
   /** Holds the regions for a given country. */
   @Prop() regions: Array<{ value: string; label: string }>;
 
+  /** Address line 1 */
+  @Prop() addressLine1: string = '';
+
+  /** Address line 2 */
+  @Prop() isManually: boolean = false;
+
   /** Address suggestions */
   @State() addressSuggestions: Array<AddressSuggestion> = [];
 
@@ -44,6 +50,17 @@ export class ScAddressSuggestions {
 
   /** Event to show address fields manually */
   @Event() scShowAddressFields: EventEmitter<void>;
+
+  @Watch('addressLine1')
+  handleAddressLine1Change(newValue: string) {
+    console.log('newValue', newValue);
+    console.log('this.showSuggestions', this.showSuggestions);
+    if (!this.address?.country) return;
+    // if address line 1 changes, we want to fetch address suggestions.
+    if (!!newValue && this.showSuggestions) {
+      this.fetchAddressSuggestions(newValue);
+    }
+  }
 
   @Watch('address')
   handleAddressChange() {
@@ -125,9 +142,15 @@ export class ScAddressSuggestions {
     this.scShowAddressFields.emit();
   }
 
+
+  highlightMatch(text: string, query: string) {
+    const regex = new RegExp(`(${query})`, 'gi');
+    return text.replace(regex, '<strong>$1</strong>');
+  }
+
   renderAddressSuggestions() {
     // if no addressSuggestions, return.
-    if (!this.showSuggestions || !this.addressSuggestions?.length || !this.address.line_1) {
+    if (!this.showSuggestions || !this.addressSuggestions?.length || !this.addressLine1) {
       return null;
     }
 
@@ -157,17 +180,19 @@ export class ScAddressSuggestions {
 
               {/* Address suggestions. */}
               {this.addressSuggestions.map(suggestion => (
-                <sc-menu-item onClick={() => this.fetchPlaceDetails(suggestion?.placeId)}>{suggestion.displayName}</sc-menu-item>
+                <sc-menu-item onClick={() => this.fetchPlaceDetails(suggestion?.placeId)} innerHTML={this.highlightMatch(suggestion.displayName, this.addressLine1)}></sc-menu-item>
               ))}
 
               {/* Enter address manually. */}
-              <sc-menu-item
-                noSelect
-                style={{ '--sc-font-size-medium': 'var(--sc-font-size-small)', '--sc-menu-item-text-decoration': 'underline' }}
-                onClick={() => this.scShowAddressFields.emit()}
-              >
-                {__('Enter address manually', 'surecart')}
-              </sc-menu-item>
+              {this.isManually && (
+                <sc-menu-item
+                  noSelect
+                  style={{ '--sc-font-size-medium': 'var(--sc-font-size-small)', '--sc-menu-item-text-decoration': 'underline' }}
+                  onClick={() => this.scShowAddressFields.emit()}
+                >
+                  {__('Enter address manually', 'surecart')}
+                </sc-menu-item>
+              )}
             </sc-menu>
           </sc-dropdown>
         </div>

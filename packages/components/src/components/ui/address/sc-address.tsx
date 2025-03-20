@@ -99,6 +99,9 @@ export class ScAddress {
   /** Show address suggestions */
   @State() showSuggestions: boolean = false;
 
+  /** Address line 1 value */
+  @State() addressLine1: string = '';
+
   /** Address change event. */
   @Event() scChangeAddress: EventEmitter<Partial<Address>>;
 
@@ -116,6 +119,11 @@ export class ScAddress {
 
     this.scChangeAddress.emit(this.address);
     this.scInputAddress.emit(this.address);
+
+    // If there is address line 1, update the addressLine1 state.
+    if (this.address?.line_1) {
+      this.addressLine1 = this.address.line_1;
+    }
   }
 
   /** Check if any address field is set. */
@@ -258,6 +266,9 @@ export class ScAddress {
       }
     });
 
+    console.log('this.showSuggestions', this.showSuggestions);
+    console.log('this.addressLine1', this.addressLine1);
+
     return (
       <div class="sc-address" part="base">
         <sc-form-control label={this.label} exportparts="label, help-text, form-control" class="sc-address__control" required={this.required}>
@@ -312,15 +323,24 @@ export class ScAddress {
                       exportparts="base:input__base, input, form-control, label, help-text"
                       value={this?.address?.line_1}
                       onScChange={(e: any) => {
-                        this.showSuggestions = true;
-                        this.updateAddress({ line_1: e.target.value || null });
+                        if (!window?.scData?.google_map_api_key || !!this.address?.line_1) {
+                          this.showSuggestions = true;
+                          this.updateAddress({ line_1: e.target.value || null });
+                          this.addressLine1 = e.target.value;
+                        } else {
+                          this.addressLine1 = e.target.value;
+                          this.showSuggestions = true;
+                        }
                       }}
                       onScInput={(e: any) => {
                         this.showSuggestions = true;
-                        if (!window?.scData?.google_map_api_key) {
+                        if (!window?.scData?.google_map_api_key || !!this.address?.line_1) {
                           this.handleAddressInput({ line_1: e.target.value || null });
+                          this.addressLine1 = e.target.value;
                         } else {
-                          this.updateAddress({ line_1: e.target.value || null });
+                          // this.updateAddress({ line_1: e.target.value || null });
+                          this.addressLine1 = e.target.value;
+                          this.showSuggestions = true;
                         }
                       }}
                       autocomplete="street-address"
@@ -336,10 +356,15 @@ export class ScAddress {
                       <sc-address-suggestions
                         address={this.address}
                         regions={this.regions}
+                        addressLine1={this.addressLine1}
                         showSuggestions={this.showSuggestions}
-                        onScPlaceSelect={(e: any) => this.updateAddress(e.detail)}
+                        onScPlaceSelect={(e: any) => {
+                          this.updateAddress(e.detail);
+                          this.addressLine1 = e.detail.line_1;
+                        }}
                         onScShowSuggestionsChange={(e: CustomEvent<boolean>) => this.handleShowSuggestionsChange(e)}
                         onScShowAddressFields={() => this.toggleAddressFieldsVisibility(true)}
+                        isManually={!this.hasAnyAddressField()}
                       />
                     )}
                   </div>

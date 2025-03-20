@@ -61,6 +61,14 @@ export namespace Components {
     interface ScAddressSuggestions {
         "address": Partial<Address>;
         /**
+          * Address line 1
+         */
+        "addressLine1": string;
+        /**
+          * Address line 2
+         */
+        "isManually": boolean;
+        /**
           * Holds the regions for a given country.
          */
         "regions": Array<{ value: string; label: string }>;
@@ -6995,6 +7003,14 @@ declare namespace LocalJSX {
     }
     interface ScAddressSuggestions {
         "address"?: Partial<Address>;
+        /**
+          * Address line 1
+         */
+        "addressLine1"?: string;
+        /**
+          * Address line 2
+         */
+        "isManually"?: boolean;
         /**
           * Place select event
          */

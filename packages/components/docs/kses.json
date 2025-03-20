@@ -18,6 +18,8 @@
   },
   "sc-address-suggestions": {
     "address": true,
+    "address-line1": true,
+    "is-manually": true,
     "regions": true,
     "show-suggestions": true,
     "style": true,
