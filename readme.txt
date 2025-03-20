@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: ecommerce plugin, online store, subscriptions, stripe, payments
 Requires at least: 6.6
 Tested up to: 6.7
-Stable tag: 3.5.3
+Stable tag: 3.6.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -305,9 +305,10 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 
 == Changelog ==
 
-= 3.6.0 - March 18th, 2025 =
+= 3.6.0 - March 20th, 2025 =
 - New: Refund UI - tie refunds to specific order line items, revoke affiliate commissions, and more.
 - New: Cart icon element for Bricks Builder.
+- New: Ability to add a line_2 to the checkout address.
 - Improvement: Internationalization of checkout address fields.
 - Change: New stores default checkout page won't include address unless required by checkout.
 - Fix: Handle generic customer dashboard redirects from platform.
