@@ -140,6 +140,7 @@ export class ScCompactAddress {
   getStatePlaceholder() {
     if (this.placeholders?.state) return this.placeholders.state;
 
+    if (this.address?.country === 'CA') return __('Province', 'surecart');
     if (this.address?.country === 'US') return __('State', 'surecart');
 
     return __('Province/Region', 'surecart');

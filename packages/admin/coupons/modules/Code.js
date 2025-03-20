@@ -112,6 +112,7 @@ export default ({ promotion: { id }, index }) => {
 					attribute="name"
 					value={promotion?.code}
 					onScInput={(e) => updatePromotion({ code: e.target.value })}
+					readonly={true}
 				>
 					{promotion?.archived && (
 						<ScTag type="warning" slot="suffix">

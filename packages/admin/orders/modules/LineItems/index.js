@@ -1,4 +1,8 @@
 /** @jsx jsx */
+
+/**
+ * External dependencies.
+ */
 import { css, jsx } from '@emotion/core';
 import {
 	ScButton,
@@ -11,13 +15,17 @@ import {
 import { Fragment } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
+import { useEntityRecords } from '@wordpress/core-data';
 
-/** @jsx jsx */
+/**
+ * Internal dependencies.
+ */
 import Box from '../../../ui/Box';
 import { formatTaxDisplay } from '../../../util/tax';
 import { intervalString } from '../../../util/translations';
 import LineItem from './LineItem';
 import { getSKUText } from '../../../util/products';
+import RefundLineItem from '../Refund/RefundLineItem';
 
 const status = {
 	processing: __('Processing', 'surecart'),
@@ -28,8 +36,20 @@ const status = {
 	draft: __('Draft', 'surecart'),
 };
 
-export default ({ order, checkout, loading }) => {
+export default ({ order, checkout, chargeIds }) => {
 	const line_items = checkout?.line_items?.data;
+
+	// get the refunds.
+	const { records: refunds, hasResolved } = useEntityRecords(
+		'surecart',
+		'refund',
+		{
+			context: 'edit',
+			charge_ids: chargeIds,
+			per_page: 100,
+			expand: ['refund_items', 'refund_item.line_item'],
+		}
+	);
 
 	const statusBadge = () => {
 		if (!order?.status) {
@@ -91,7 +111,7 @@ export default ({ order, checkout, loading }) => {
 					{status[order?.status] || order?.status}
 				</div>
 			}
-			loading={loading}
+			loading={!hasResolved}
 			header_action={
 				order?.statement_url && (
 					<div
@@ -181,12 +201,14 @@ export default ({ order, checkout, loading }) => {
 
 					{!!checkout?.refunded_amount && (
 						<>
-							<LineItem
-								label={__('Refunded', 'surecart')}
-								currency={checkout?.currency}
-								value={checkout?.refunded_amount}
-							/>
-
+							{(refunds || []).map((refund) => (
+								<RefundLineItem
+									key={refund.id}
+									order={order}
+									refund={refund}
+									label={__('Refund', 'surecart')}
+								/>
+							))}
 							<LineItem
 								title={__('Net Payment', 'surecart')}
 								currency={checkout?.currency}
