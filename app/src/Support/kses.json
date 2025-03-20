@@ -1262,6 +1262,7 @@
     "label": true,
     "require-name": true,
     "required": true,
+    "show-line2": true,
     "show-name": true,
     "style": true,
     "id": true,

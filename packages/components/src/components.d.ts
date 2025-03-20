@@ -2145,6 +2145,10 @@ export namespace Components {
          */
         "required": boolean;
         /**
+          * Show the line 2 field.
+         */
+        "showLine2": boolean;
+        /**
           * Show the name field.
          */
         "showName": boolean;
@@ -9243,6 +9247,10 @@ declare namespace LocalJSX {
           * Is this required (defaults to false)
          */
         "required"?: boolean;
+        /**
+          * Show the line 2 field.
+         */
+        "showLine2"?: boolean;
         /**
           * Show the name field.
          */
