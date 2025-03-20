@@ -308,7 +308,7 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 = 3.6.0 - March 20th, 2025 =
 - New: Refund UI - tie refunds to specific order line items, revoke affiliate commissions, and more.
 - New: Cart icon element for Bricks Builder.
-- New: Ability to add a line_2 to the checkout address.
+- New: Ability to add a Line 2 to the checkout address.
 - Improvement: Internationalization of checkout address fields.
 - Change: New stores default checkout page won't include address unless required by checkout.
 - Fix: Handle generic customer dashboard redirects from platform.
