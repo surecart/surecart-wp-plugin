@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-03-11T16:41:04",
+  "timestamp": "2025-03-20T20:05:17",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.18.3",
@@ -120,6 +120,66 @@
           "required": false
         },
         {
+          "name": "countryFields",
+          "type": "CountryLocaleField[]",
+          "complexType": {
+            "original": "Array<CountryLocaleField>",
+            "resolved": "CountryLocaleField[]",
+            "references": {
+              "Array": {
+                "location": "global",
+                "id": "global::Array"
+              },
+              "CountryLocaleField": {
+                "location": "import",
+                "path": "../../../types",
+                "id": "src/types.ts::CountryLocaleField"
+              }
+            }
+          },
+          "mutable": true,
+          "reflectToAttr": false,
+          "docs": "Country fields by country code",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "CountryLocaleField[]"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "defaultCountryFields",
+          "type": "CountryLocaleFieldValue[]",
+          "complexType": {
+            "original": "Array<CountryLocaleFieldValue>",
+            "resolved": "CountryLocaleFieldValue[]",
+            "references": {
+              "Array": {
+                "location": "global",
+                "id": "global::Array"
+              },
+              "CountryLocaleFieldValue": {
+                "location": "import",
+                "path": "../../../types",
+                "id": "src/types.ts::CountryLocaleFieldValue"
+              }
+            }
+          },
+          "mutable": true,
+          "reflectToAttr": false,
+          "docs": "Default country fields",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "CountryLocaleFieldValue[]"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "disabled",
           "type": "boolean",
           "complexType": {
@@ -206,37 +266,6 @@
           "docs": "",
           "docsTags": [],
           "default": "{\n    name: 'shipping_name',\n    country: 'shipping_country',\n    city: 'shipping_city',\n    line_1: 'shipping_line_1',\n    line_2: 'shipping_line_2',\n    postal_code: 'shipping_postal_code',\n    state: 'shipping_state',\n  }",
-          "values": [
-            {
-              "type": "{ name?: string; line_1?: string; line_2?: string; city?: string; state?: string; postal_code?: string; country?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "placeholders",
-          "type": "{ name?: string; line_1?: string; line_2?: string; city?: string; state?: string; postal_code?: string; country?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
-          "complexType": {
-            "original": "Partial<Address>",
-            "resolved": "{ name?: string; line_1?: string; line_2?: string; city?: string; state?: string; postal_code?: string; country?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
-            "references": {
-              "Partial": {
-                "location": "global",
-                "id": "global::Partial"
-              },
-              "Address": {
-                "location": "import",
-                "path": "../../../types",
-                "id": "src/types.ts::Address"
-              }
-            }
-          },
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "default": "{}",
           "values": [
             {
               "type": "{ name?: string; line_1?: string; line_2?: string; city?: string; state?: string; postal_code?: string; country?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }"
@@ -427,10 +456,6 @@
           "docs": "The select box caret."
         },
         {
-          "name": "columns",
-          "docs": ""
-        },
-        {
           "name": "empty",
           "docs": "The select empty message."
         },
@@ -498,22 +523,19 @@
       ],
       "dependencies": [
         "sc-form-control",
-        "sc-input",
         "sc-select",
+        "sc-input",
         "sc-block-ui"
       ],
       "dependencyGraph": {
         "sc-address": [
           "sc-form-control",
-          "sc-input",
           "sc-select",
+          "sc-input",
           "sc-block-ui"
         ],
         "sc-form-control": [
           "sc-visually-hidden"
-        ],
-        "sc-input": [
-          "sc-form-control"
         ],
         "sc-select": [
           "sc-icon",
@@ -524,6 +546,9 @@
           "sc-input",
           "sc-spinner",
           "sc-menu"
+        ],
+        "sc-input": [
+          "sc-form-control"
         ],
         "sc-block-ui": [
           "sc-spinner"
@@ -5558,8 +5583,8 @@
         ],
         "sc-address": [
           "sc-form-control",
-          "sc-input",
           "sc-select",
+          "sc-input",
           "sc-block-ui"
         ],
         "sc-select": [
@@ -9505,8 +9530,8 @@
         ],
         "sc-address": [
           "sc-form-control",
-          "sc-input",
           "sc-select",
+          "sc-input",
           "sc-block-ui"
         ],
         "sc-select": [
@@ -14918,15 +14943,12 @@
         ],
         "sc-address": [
           "sc-form-control",
-          "sc-input",
           "sc-select",
+          "sc-input",
           "sc-block-ui"
         ],
         "sc-form-control": [
           "sc-visually-hidden"
-        ],
-        "sc-input": [
-          "sc-form-control"
         ],
         "sc-select": [
           "sc-icon",
@@ -14937,6 +14959,9 @@
           "sc-input",
           "sc-spinner",
           "sc-menu"
+        ],
+        "sc-input": [
+          "sc-form-control"
         ],
         "sc-block-ui": [
           "sc-spinner"
@@ -20845,50 +20870,6 @@
       "usage": {},
       "props": [
         {
-          "name": "cityPlaceholder",
-          "type": "string",
-          "complexType": {
-            "original": "string",
-            "resolved": "string",
-            "references": {}
-          },
-          "mutable": false,
-          "attr": "city-placeholder",
-          "reflectToAttr": false,
-          "docs": "City placeholder",
-          "docsTags": [],
-          "default": "__('City', 'surecart')",
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "countryPlaceholder",
-          "type": "string",
-          "complexType": {
-            "original": "string",
-            "resolved": "string",
-            "references": {}
-          },
-          "mutable": false,
-          "attr": "country-placeholder",
-          "reflectToAttr": false,
-          "docs": "Country placeholder",
-          "docsTags": [],
-          "default": "__('Country', 'surecart')",
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
           "name": "defaultCountry",
           "type": "string",
           "complexType": {
@@ -20931,50 +20912,6 @@
           "required": false
         },
         {
-          "name": "line1Placeholder",
-          "type": "string",
-          "complexType": {
-            "original": "string",
-            "resolved": "string",
-            "references": {}
-          },
-          "mutable": false,
-          "attr": "line-1-placeholder",
-          "reflectToAttr": false,
-          "docs": "Address placeholder",
-          "docsTags": [],
-          "default": "__('Address', 'surecart')",
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "line2Placeholder",
-          "type": "string",
-          "complexType": {
-            "original": "string",
-            "resolved": "string",
-            "references": {}
-          },
-          "mutable": false,
-          "attr": "line-2-placeholder",
-          "reflectToAttr": false,
-          "docs": "Address Line 2 placeholder",
-          "docsTags": [],
-          "default": "__('Address Line 2', 'surecart')",
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
           "name": "namePlaceholder",
           "type": "string",
           "complexType": {
@@ -20988,28 +20925,6 @@
           "docs": "Name placeholder",
           "docsTags": [],
           "default": "__('Name or Company Name', 'surecart')",
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "postalCodePlaceholder",
-          "type": "string",
-          "complexType": {
-            "original": "string",
-            "resolved": "string",
-            "references": {}
-          },
-          "mutable": false,
-          "attr": "postal-code-placeholder",
-          "reflectToAttr": false,
-          "docs": "Postal Code placeholder",
-          "docsTags": [],
-          "default": "__('Postal Code/Zip', 'surecart')",
           "values": [
             {
               "type": "string"
@@ -21034,28 +20949,6 @@
           "values": [
             {
               "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "statePlaceholder",
-          "type": "string",
-          "complexType": {
-            "original": "string",
-            "resolved": "string",
-            "references": {}
-          },
-          "mutable": false,
-          "attr": "state-placeholder",
-          "reflectToAttr": false,
-          "docs": "State placeholder",
-          "docsTags": [],
-          "default": "__('State/Province/Region', 'surecart')",
-          "values": [
-            {
-              "type": "string"
             }
           ],
           "optional": false,
@@ -21127,15 +21020,12 @@
         ],
         "sc-address": [
           "sc-form-control",
-          "sc-input",
           "sc-select",
+          "sc-input",
           "sc-block-ui"
         ],
         "sc-form-control": [
           "sc-visually-hidden"
-        ],
-        "sc-input": [
-          "sc-form-control"
         ],
         "sc-select": [
           "sc-icon",
@@ -21146,6 +21036,9 @@
           "sc-input",
           "sc-spinner",
           "sc-menu"
+        ],
+        "sc-input": [
+          "sc-form-control"
         ],
         "sc-block-ui": [
           "sc-spinner"
@@ -23360,50 +23253,6 @@
       "usage": {},
       "props": [
         {
-          "name": "cityPlaceholder",
-          "type": "string",
-          "complexType": {
-            "original": "string",
-            "resolved": "string",
-            "references": {}
-          },
-          "mutable": false,
-          "attr": "city-placeholder",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "default": "__('City', 'surecart')",
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "countryPlaceholder",
-          "type": "string",
-          "complexType": {
-            "original": "string",
-            "resolved": "string",
-            "references": {}
-          },
-          "mutable": false,
-          "attr": "country-placeholder",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "default": "__('Country', 'surecart')",
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
           "name": "defaultCountry",
           "type": "string",
           "complexType": {
@@ -23435,7 +23284,7 @@
           "mutable": true,
           "attr": "full",
           "reflectToAttr": false,
-          "docs": "Show the   address",
+          "docs": "Show the address",
           "docsTags": [],
           "values": [
             {
@@ -23458,125 +23307,6 @@
           "reflectToAttr": false,
           "docs": "Label for the field.",
           "docsTags": [],
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "line1Placeholder",
-          "type": "string",
-          "complexType": {
-            "original": "string",
-            "resolved": "string",
-            "references": {}
-          },
-          "mutable": false,
-          "attr": "line-1-placeholder",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "default": "__('Address', 'surecart')",
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "line2Placeholder",
-          "type": "string",
-          "complexType": {
-            "original": "string",
-            "resolved": "string",
-            "references": {}
-          },
-          "mutable": false,
-          "attr": "line-2-placeholder",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "default": "__('Address Line 2', 'surecart')",
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "namePlaceholder",
-          "type": "string",
-          "complexType": {
-            "original": "string",
-            "resolved": "string",
-            "references": {}
-          },
-          "mutable": false,
-          "attr": "name-placeholder",
-          "reflectToAttr": false,
-          "docs": "Show the placeholder fields.",
-          "docsTags": [],
-          "default": "__('Name or Company Name', 'surecart')",
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "placeholders",
-          "type": "{ name?: string; line_1?: string; line_2?: string; city?: string; state?: string; postal_code?: string; country?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
-          "complexType": {
-            "original": "Partial<Address>",
-            "resolved": "{ name?: string; line_1?: string; line_2?: string; city?: string; state?: string; postal_code?: string; country?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
-            "references": {
-              "Partial": {
-                "location": "global",
-                "id": "global::Partial"
-              },
-              "Address": {
-                "location": "import",
-                "path": "../../../../types",
-                "id": "src/types.ts::Address"
-              }
-            }
-          },
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "Placeholder values.",
-          "docsTags": [],
-          "default": "{\n    name: __('Name or Company Name', 'surecart'),\n    country: __('Country', 'surecart'),\n    city: __('City', 'surecart'),\n    line_1: __('Address', 'surecart'),\n    line_2: __('Address Line 2', 'surecart'),\n    postal_code: __('Postal Code/Zip', 'surecart'),\n    state: __('State/Province/Region', 'surecart'),\n  }",
-          "values": [
-            {
-              "type": "{ name?: string; line_1?: string; line_2?: string; city?: string; state?: string; postal_code?: string; country?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "postalCodePlaceholder",
-          "type": "string",
-          "complexType": {
-            "original": "string",
-            "resolved": "string",
-            "references": {}
-          },
-          "mutable": false,
-          "attr": "postal-code-placeholder",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "default": "__('Postal Code/Zip', 'surecart')",
           "values": [
             {
               "type": "string"
@@ -23630,6 +23360,27 @@
           "required": false
         },
         {
+          "name": "showLine2",
+          "type": "boolean",
+          "complexType": {
+            "original": "boolean",
+            "resolved": "boolean",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "show-line-2",
+          "reflectToAttr": true,
+          "docs": "Show the line 2 field.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "showName",
           "type": "boolean",
           "complexType": {
@@ -23645,28 +23396,6 @@
           "values": [
             {
               "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "statePlaceholder",
-          "type": "string",
-          "complexType": {
-            "original": "string",
-            "resolved": "string",
-            "references": {}
-          },
-          "mutable": false,
-          "attr": "state-placeholder",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "default": "__('State/Province/Region', 'surecart')",
-          "values": [
-            {
-              "type": "string"
             }
           ],
           "optional": false,
@@ -23716,15 +23445,12 @@
         ],
         "sc-address": [
           "sc-form-control",
-          "sc-input",
           "sc-select",
+          "sc-input",
           "sc-block-ui"
         ],
         "sc-form-control": [
           "sc-visually-hidden"
-        ],
-        "sc-input": [
-          "sc-form-control"
         ],
         "sc-select": [
           "sc-icon",
@@ -23735,6 +23461,9 @@
           "sc-input",
           "sc-spinner",
           "sc-menu"
+        ],
+        "sc-input": [
+          "sc-form-control"
         ],
         "sc-block-ui": [
           "sc-spinner"
@@ -28600,6 +28329,27 @@
           "attr": "setup-fee-name",
           "reflectToAttr": false,
           "docs": "The setup fee name",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "setupFeeText",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "setup-fee-text",
+          "reflectToAttr": false,
+          "docs": "The setup fee text",
           "docsTags": [],
           "values": [
             {
@@ -44489,7 +44239,7 @@
       "path": "src/types.ts"
     },
     "src/types.ts::Price": {
-      "declaration": "export interface Price {\n  id: string;\n  name: string;\n  description?: string;\n  amount: number;\n  display_amount: string;\n  setup_fee_display_amount: string;\n  full_amount: number;\n  currency: string;\n  recurring: boolean;\n  recurring_interval?: 'week' | 'month' | 'year' | 'never';\n  recurring_interval_count?: number;\n  trial_duration_days?: number;\n  ad_hoc: boolean;\n  ad_hoc_max_amount: number;\n  ad_hoc_min_amount: number;\n  scratch_amount: number;\n  scratch_display_amount: string;\n  setup_fee_enabled: boolean;\n  setup_fee_amount: number;\n  setup_fee_name: string;\n  setup_fee_trial_enabled: boolean;\n  recurring_period_count: number;\n  archived: boolean;\n  product_id?: string;\n  archived_at?: string;\n  created_at: number;\n  updated_at: number;\n  product?: Product | string;\n  position: number;\n  portal_subscription_update_enabled: boolean;\n  metadata: { [key: string]: string };\n}",
+      "declaration": "export interface Price {\n  id: string;\n  name: string;\n  description?: string;\n  amount: number;\n  display_amount: string;\n  setup_fee_display_amount: string;\n  setup_fee_text: string;\n  full_amount: number;\n  currency: string;\n  recurring: boolean;\n  recurring_interval?: 'week' | 'month' | 'year' | 'never';\n  recurring_interval_count?: number;\n  trial_duration_days?: number;\n  ad_hoc: boolean;\n  ad_hoc_max_amount: number;\n  ad_hoc_min_amount: number;\n  scratch_amount: number;\n  scratch_display_amount: string;\n  setup_fee_enabled: boolean;\n  setup_fee_amount: number;\n  setup_fee_name: string;\n  setup_fee_trial_enabled: boolean;\n  recurring_period_count: number;\n  archived: boolean;\n  product_id?: string;\n  archived_at?: string;\n  created_at: number;\n  updated_at: number;\n  product?: Product | string;\n  position: number;\n  portal_subscription_update_enabled: boolean;\n  metadata: { [key: string]: string };\n}",
       "docstring": "",
       "path": "src/types.ts"
     },
@@ -44500,11 +44250,6 @@
     },
     "src/types.ts::ProcessorName": {
       "declaration": "export type ProcessorName = 'stripe' | 'paypal' | 'paypal-card';",
-      "docstring": "",
-      "path": "src/types.ts"
-    },
-    "src/types.ts::Address": {
-      "declaration": "export interface Address extends Object {\n  name?: string;\n  line_1?: string;\n  line_2?: string;\n  city?: string;\n  state?: string;\n  postal_code?: string;\n  country?: string;\n}",
       "docstring": "",
       "path": "src/types.ts"
     },
@@ -44585,6 +44330,21 @@
     },
     "src/types.ts::FormStateSetter": {
       "declaration": "export type FormStateSetter = 'RESOLVE' | 'REJECT' | 'FINALIZE' | 'PAYING' | 'PAID' | 'EXPIRE' | 'FETCH';",
+      "docstring": "",
+      "path": "src/types.ts"
+    },
+    "src/types.ts::Address": {
+      "declaration": "export interface Address extends Object {\n  name?: string;\n  line_1?: string;\n  line_2?: string;\n  city?: string;\n  state?: string;\n  postal_code?: string;\n  country?: string;\n}",
+      "docstring": "",
+      "path": "src/types.ts"
+    },
+    "src/types.ts::CountryLocaleFieldValue": {
+      "declaration": "export interface CountryLocaleFieldValue {\n  name: string;\n  priority: number;\n  label: boolean;\n}",
+      "docstring": "",
+      "path": "src/types.ts"
+    },
+    "src/types.ts::CountryLocaleField": {
+      "declaration": "export interface CountryLocaleField {\n  [key: string]: {\n    name: CountryLocaleFieldValue;\n    address_1: CountryLocaleFieldValue;\n    address_2: CountryLocaleFieldValue;\n    city: CountryLocaleFieldValue;\n    state: CountryLocaleFieldValue;\n    postcode: CountryLocaleFieldValue;\n  };\n}",
       "docstring": "",
       "path": "src/types.ts"
     },

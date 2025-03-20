@@ -20,8 +20,6 @@ return [
 	<sc-customer-name label="Name" placeholder="Your Full Name" required class="wp-block-surecart-name"></sc-customer-name>
 	<!-- /wp:surecart/name -->
 
-	<!-- wp:surecart/address /-->
-
 	<!-- wp:surecart/payment {"secure_notice":"This is a secure, encrypted payment"} -->
 	<sc-payment label="Payment" default-processor="stripe" secure-notice="This is a secure, encrypted payment" class="wp-block-surecart-payment"></sc-payment>
 	<!-- /wp:surecart/payment -->

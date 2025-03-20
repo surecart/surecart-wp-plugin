@@ -34,8 +34,6 @@ export default ({ fulfillment, onDeleteSuccess }) => {
 		0
 	);
 
-	console.log('fulfillment items', fulfillment?.fulfillment_items?.data);
-
 	const cancelFulfillment = async () => {
 		try {
 			setBusy(true);
