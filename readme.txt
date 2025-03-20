@@ -312,6 +312,7 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 - Improvement: Internationalization of checkout address fields.
 - Change: New stores default checkout page won't include address unless required by checkout.
 - Fix: Handle generic customer dashboard redirects from platform.
+- Fix: Issue where bricks pagination was not working when a currency was selected.
 - Fix: Enhance error message for duplicate coupon names to be more descriptive.
 
 = 3.5.3 - March 14th, 2025 =
