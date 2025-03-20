@@ -33,7 +33,6 @@
 
 ### Used by
 
- - [sc-address](../address)
  - [sc-alert](../alert)
  - [sc-breadcrumb](../breadcrumb)
  - [sc-breadcrumbs](../breadcrumbs)
@@ -99,7 +98,6 @@
 ### Graph
 ```mermaid
 graph TD;
-  sc-address --> sc-icon
   sc-alert --> sc-icon
   sc-breadcrumb --> sc-icon
   sc-breadcrumbs --> sc-icon

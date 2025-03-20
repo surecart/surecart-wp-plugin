@@ -55,16 +55,11 @@ graph TD;
   sc-input --> sc-form-control
   sc-form-control --> sc-visually-hidden
   sc-phone-input --> sc-form-control
-  sc-address --> sc-dropdown
-  sc-address --> sc-menu
-  sc-address --> sc-menu-item
-  sc-address --> sc-button
-  sc-address --> sc-icon
   sc-address --> sc-form-control
   sc-address --> sc-select
   sc-address --> sc-input
+  sc-address --> sc-address-suggestions
   sc-address --> sc-block-ui
-  sc-button --> sc-spinner
   sc-select --> sc-icon
   sc-select --> sc-menu-label
   sc-select --> sc-menu-item
@@ -81,6 +76,7 @@ graph TD;
   sc-tax-id-input --> sc-button
   sc-tax-id-input --> sc-menu
   sc-tax-id-input --> sc-menu-item
+  sc-button --> sc-spinner
   style sc-customer-edit fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

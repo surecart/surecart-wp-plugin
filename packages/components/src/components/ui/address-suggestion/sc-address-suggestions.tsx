@@ -51,10 +51,11 @@ export class ScAddressSuggestions {
   /** Event to show address fields manually */
   @Event() scShowAddressFields: EventEmitter<void>;
 
+  /** Focused index for keyboard navigation */
+  @State() focusedIndex: number = -1;
+
   @Watch('addressLine1')
   handleAddressLine1Change(newValue: string) {
-    console.log('newValue', newValue);
-    console.log('this.showSuggestions', this.showSuggestions);
     if (!this.address?.country) return;
     // if address line 1 changes, we want to fetch address suggestions.
     if (!!newValue && this.showSuggestions) {
@@ -75,6 +76,10 @@ export class ScAddressSuggestions {
   @Watch('showSuggestions')
   handleShowSuggestionsChange(newValue: boolean) {
     this.scShowSuggestionsChange.emit(newValue);
+    if (newValue && this.addressSuggestions.length > 0) {
+      this.focusedIndex = 0;
+      this.el.focus();
+    }
   }
 
   async fetchAddressSuggestions(input: string) {
@@ -142,6 +147,58 @@ export class ScAddressSuggestions {
     this.scShowAddressFields.emit();
   }
 
+  handleKeyDown(event: KeyboardEvent) {
+    if (!this.addressSuggestions.length) return;
+
+    const listElement = this.el.shadowRoot.querySelector('.sc-address__suggestions--list') as HTMLElement;
+    const focusedItem = listElement?.children[this.focusedIndex] as HTMLElement;
+
+    switch (event.key) {
+      case 'ArrowDown':
+        event.preventDefault();
+        this.focusedIndex = (this.focusedIndex + 1) % this.addressSuggestions.length;
+        focusedItem?.scrollIntoView({ block: 'nearest' });
+        break;
+      case 'ArrowUp':
+        event.preventDefault();
+        this.focusedIndex = (this.focusedIndex - 1 + this.addressSuggestions.length) % this.addressSuggestions.length;
+        focusedItem?.scrollIntoView({ block: 'nearest' });
+        break;
+      case 'Enter':
+        event.preventDefault();
+        if (this.focusedIndex >= 0) {
+          this.fetchPlaceDetails(this.addressSuggestions[this.focusedIndex].placeId);
+        }
+        break;
+      case 'Escape':
+        this.showSuggestions = false;
+        this.addressSuggestions = [];
+        break;
+    }
+  }
+
+  handleOutsideClick(evt) {
+    const path = evt.composedPath();
+    if (
+      !path.some(item => {
+        return item === this.el;
+      })
+    ) {
+      this.showSuggestions = false;
+    }
+  }
+
+  componentWillLoad() {
+    document.addEventListener('mousedown', evt => this.handleOutsideClick(evt));
+  }
+
+  componentDidLoad() {
+    this.el.addEventListener('keydown', this.handleKeyDown.bind(this));
+  }
+
+  disconnectedCallback() {
+    this.el.removeEventListener('keydown', this.handleKeyDown.bind(this));
+  }
 
   highlightMatch(text: string, query: string) {
     const regex = new RegExp(`(${query})`, 'gi');
@@ -156,45 +213,60 @@ export class ScAddressSuggestions {
 
     return (
       <div class="sc-address-suggestion" part="base">
-        <div class="sc-address__suggestions" part="suggestions">
-          <sc-dropdown
-            style={{ '--panel-width': '28.1em', '--sc-menu-item-white-space': 'wrap', '--sc-dropdown-overflow': 'hidden', '--sc-dropdown-overflow-y': 'auto' }}
-            position="bottom-right"
-            placement="bottom"
-            open={this.addressSuggestions.length > 0}
-          >
-            <sc-menu>
-              <sc-menu-item noSelect>
-                <span slot="prefix">{__('Suggestions powered by Google', 'surecart')}</span>
-                <sc-button
-                  slot="suffix"
-                  type="text"
-                  onClick={() => {
-                    this.showSuggestions = false;
-                    this.addressSuggestions = [];
-                  }}
-                >
-                  <sc-icon name="x" style={{ color: 'var(--sc-color-gray-500)' }}></sc-icon>
-                </sc-button>
-              </sc-menu-item>
+        <div class={`sc-address__suggestions ${this.showSuggestions ? 'sc-address__suggestions--visible' : ''}`} part="suggestions">
+          <ul class="sc-address__suggestions--list" part="suggestions-list" role="list">
+            {/* suggestions powered by Google */}
+            <li
+              class="sc-address__suggestions--item sc-address__suggestions--item--no-select sc-address__suggestions--item--powered-by"
+              part="suggestion-item"
+              role="listitem"
+              tabindex="-1"
+            >
+              <span>
+                {__('Suggestions powered by ', 'surecart')}
+                <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">
+                  <span>Google</span>
+                </a>
+              </span>
+              <sc-button
+                type="text"
+                onClick={() => {
+                  this.showSuggestions = false;
+                  this.addressSuggestions = [];
+                }}
+              >
+                <sc-icon name="x" style={{ color: 'var(--sc-color-gray-500)' }}></sc-icon>
+              </sc-button>
+            </li>
 
-              {/* Address suggestions. */}
-              {this.addressSuggestions.map(suggestion => (
-                <sc-menu-item onClick={() => this.fetchPlaceDetails(suggestion?.placeId)} innerHTML={this.highlightMatch(suggestion.displayName, this.addressLine1)}></sc-menu-item>
-              ))}
+            {this.addressSuggestions.map((suggestion, index) => (
+              <li
+                class={`sc-address__suggestions--item ${this.focusedIndex === index ? 'focused' : ''}`}
+                part="suggestion-item"
+                role="listitem"
+                tabindex={this.focusedIndex === index ? '0' : '-1'}
+                onClick={() => this.fetchPlaceDetails(suggestion?.placeId)}
+                innerHTML={this.highlightMatch(suggestion.displayName, this.addressLine1)}
+                style={{ color: this.focusedIndex === index ? 'var(--sc-color-primary)' : 'inherit' }}
+                onFocus={() => (this.focusedIndex = index)}
+                onBlur={() => (this.focusedIndex = -1)}
+                onMouseEnter={() => (this.focusedIndex = index)}
+                onMouseLeave={() => (this.focusedIndex = -1)}
+              ></li>
+            ))}
 
-              {/* Enter address manually. */}
-              {this.isManually && (
-                <sc-menu-item
-                  noSelect
-                  style={{ '--sc-font-size-medium': 'var(--sc-font-size-small)', '--sc-menu-item-text-decoration': 'underline' }}
-                  onClick={() => this.scShowAddressFields.emit()}
-                >
-                  {__('Enter address manually', 'surecart')}
-                </sc-menu-item>
-              )}
-            </sc-menu>
-          </sc-dropdown>
+            {/* Enter address manually */}
+            {this.isManually && (
+              <li
+                class="sc-address__suggestions--item sc-address__suggestions--item--no-select sc-address__suggestions--item--manually"
+                part="suggestion-item"
+                role="listitem"
+                tabindex="-1"
+              >
+                <button onClick={() => this.scShowAddressFields.emit()}>{__('Enter address manually', 'surecart')}</button>
+              </li>
+            )}
+          </ul>
         </div>
       </div>
     );

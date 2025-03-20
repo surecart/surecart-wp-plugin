@@ -266,9 +266,6 @@ export class ScAddress {
       }
     });
 
-    console.log('this.showSuggestions', this.showSuggestions);
-    console.log('this.addressLine1', this.addressLine1);
-
     return (
       <div class="sc-address" part="base">
         <sc-form-control label={this.label} exportparts="label, help-text, form-control" class="sc-address__control" required={this.required}>

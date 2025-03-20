@@ -39,7 +39,6 @@
 
 ### Used by
 
- - [sc-address](../address)
  - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
  - [sc-product-item-list](../../controllers/products/sc-product-item-list)
  - [sc-recurring-price-choice-container](../sc-recurring-price-choice-container)
@@ -49,7 +48,6 @@
 ### Graph
 ```mermaid
 graph TD;
-  sc-address --> sc-dropdown
   sc-payment-methods-list --> sc-dropdown
   sc-product-item-list --> sc-dropdown
   sc-recurring-price-choice-container --> sc-dropdown
