@@ -9,6 +9,16 @@ use SureCart\Routing\PermalinksSettingsService;
  * A service for registering settings.
  */
 class SettingService {
+
+	/**
+	 * Settings that should not be autoloaded.
+	 *
+	 * @var array
+	 */
+	protected $disabled_autoload = [
+		'surecart_product_content_block_prefixes',
+	];
+
 	/**
 	 * Boostrap settings.
 	 *
@@ -16,6 +26,21 @@ class SettingService {
 	 */
 	public function bootstrap() {
 		add_action( 'init', [ $this, 'registerSettings' ] );
+		add_filter( 'wp_default_autoload_value', [ $this, 'handleAutoload' ], 10, 2 );
+	}
+
+	/**
+	 * Handle autoload.
+	 *
+	 * @param array $autoload
+	 * @return array
+	 */
+	public function handleAutoload( $autoload, $option ) {
+		if ( in_array( $option, $this->disabled_autoload, true ) ) {
+			return false;
+		}
+
+		return $autoload;
 	}
 
 	/**
@@ -287,6 +312,23 @@ class SettingService {
 				'type'              => 'string',
 				'show_in_rest'      => true,
 				'sanitize_callback' => 'sanitize_text_field',
+			]
+		);
+		$this->register(
+			'surecart',
+			'product_content_block_prefixes',
+			[
+				'type'              => 'array',
+				'show_in_rest'      => [
+					'schema' => [
+						'type'  => 'array',
+						'items' => [
+							'type' => 'string',
+						],
+					],
+				],
+				'sanitize_callback' => 'sanitize_text_field',
+				'default'           => [ 'core', 'surecart' ],
 			]
 		);
 	}

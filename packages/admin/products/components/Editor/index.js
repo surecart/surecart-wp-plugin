@@ -7,14 +7,14 @@ import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import {
 	__experimentalConfirmDialog as ConfirmDialog,
-	Disabled,
 	Modal,
-	ToggleControl,
+	DropdownMenu,
 } from '@wordpress/components';
+import { store as coreStore } from '@wordpress/core-data';
 import { Suspense, useEffect, useState, memo } from '@wordpress/element';
 import { parse, serialize } from '@wordpress/blocks';
 import { Button } from '@wordpress/components';
-import { close, edit, settings } from '@wordpress/icons';
+import { moreHorizontal, close, settings } from '@wordpress/icons';
 import { useDebounce } from '@wordpress/compose';
 
 /**
@@ -24,7 +24,10 @@ import Box from '../../../ui/Box';
 import initBlocks from '../../../components/block-editor/utils/init-blocks';
 import BlockEditor from '../../../components/block-editor';
 import PreviewBlocks from '../../../components/block-editor/PreviewBlocks';
-import { ScTextarea } from '@surecart/components-react';
+import { ScButton, ScIcon } from '@surecart/components-react';
+import { useEntityProp } from '@wordpress/core-data';
+import Settings from './Settings';
+import { useSelect } from '@wordpress/data';
 
 const MemoizedBlockEditor = memo(BlockEditor);
 
@@ -45,6 +48,15 @@ export default ({ product, updateProduct, loading }) => {
 			unregisterBlocks();
 		};
 	}, []);
+
+	const canEditSettings = useSelect((select) =>
+		select(coreStore).canUser('update', {
+			kind: 'root',
+			name: 'site',
+		})
+	);
+
+	console.log({ canEditSettings });
 
 	useEffect(() => {
 		const parsedContent = parse(product?.post?.post_content ?? []);
@@ -108,49 +120,64 @@ export default ({ product, updateProduct, loading }) => {
 			<Box
 				title={__('Content', 'surecart')}
 				loading={loading}
-				header_action={
-					<>
-						<Button
-							icon={settings}
-							label={__('Editor Settings', 'surecart')}
-							onClick={() => setSettingsModal(true)}
-							showTooltip={true}
+				footer={
+					<div>
+						<ScButton
+							type="default"
+							size="medium"
 							css={css`
 								margin-top: -20px;
 								margin-bottom: -20px;
 							`}
-							disabled={loading}
-							size="compact"
-						/>
-						<Button
-							icon={edit}
-							label={__('Open Content Designer', 'surecart')}
 							onClick={() => setEditorModal(true)}
-							showTooltip={true}
+						>
+							<ScIcon name="maximize" slot="prefix" />
+							{__('Open Content Designer', 'surecart')}
+						</ScButton>
+					</div>
+				}
+				header_action={
+					canEditSettings && (
+						<DropdownMenu
+							controls={[
+								{
+									icon: settings,
+									onClick: () => setSettingsModal(true),
+									title: __('Editor Settings', 'surecart'),
+								},
+							]}
 							css={css`
 								margin-top: -20px;
 								margin-bottom: -20px;
 							`}
-							disabled={loading}
-							size="compact"
+							icon={moreHorizontal}
+							label={__('More Actions', 'surecart')}
+							popoverProps={{
+								placement: 'bottom-end',
+							}}
+							menuProps={{
+								style: {
+									minWidth: '150px',
+								},
+							}}
 						/>
-					</>
+					)
 				}
 			>
-				<div
-					css={css`
-						cursor: pointer;
-					`}
-				>
+				{blocks.length > 0 && (
 					<div
 						css={css`
-							display: block;
+							cursor: pointer;
 						`}
-						role="button"
-						tabIndex={0}
-						onClick={() => setEditorModal(true)}
 					>
-						{blocks.length > 0 ? (
+						<div
+							css={css`
+								display: block;
+							`}
+							role="button"
+							tabIndex={0}
+							onClick={() => setEditorModal(true)}
+						>
 							<div
 								css={css`
 									border: 1px solid #e5e5e5;
@@ -159,54 +186,15 @@ export default ({ product, updateProduct, loading }) => {
 							>
 								<PreviewBlocks blocks={blocks} />
 							</div>
-						) : (
-							<Disabled onClick={() => setEditorModal(true)}>
-								<ScTextarea
-									placeholder={__(
-										'Write your product details here.',
-										'surecart'
-									)}
-									rows={2}
-									resize="none"
-								/>
-							</Disabled>
-						)}
+						</div>
 					</div>
-				</div>
+				)}
 			</Box>
 
-			{settingsModal && (
-				<Modal
-					title={__('Editor Settings', 'surecart')}
-					onRequestClose={() => setSettingsModal(false)}
-				>
-					<fieldset className="preferences-modal__section">
-						<legend className="preferences-modal__section-legend">
-							<h2 className="preferences-modal__section-title">
-								{__('Allowed Blocks', 'surecart')}
-							</h2>
-						</legend>
-						<div className="preferences-modal__section-content">
-							{(
-								surecartBlockEditorSettings[
-									'surecart_all_block_prefixes'
-								] || []
-							).map((prefix) => (
-								<div key={prefix}>
-									<ToggleControl
-										label={
-											prefix.charAt(0).toUpperCase() +
-											prefix.slice(1)
-										}
-										checked={true}
-										onChange={() => {}}
-									/>
-								</div>
-							))}
-						</div>
-					</fieldset>
-				</Modal>
-			)}
+			<Settings
+				open={settingsModal}
+				onRequestClose={() => setSettingsModal(false)}
+			/>
 
 			{editorModal && (
 				<Modal
