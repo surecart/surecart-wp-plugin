@@ -45,6 +45,7 @@ return array(
 		\SureCart\Request\RequestServiceProvider::class,
 		\SureCart\View\ViewServiceProvider::class,
 		\SureCart\Cart\CartServiceProvider::class,
+		\SureCart\ProductQuickView\ProductQuickViewServiceProvider::class,
 		\SureCart\Webhooks\WebhooksServiceProvider::class,
 		\SureCart\BlockLibrary\BlockServiceProvider::class,
 		\SureCart\Support\Errors\ErrorsServiceProvider::class,

@@ -85,6 +85,10 @@ class TemplateUtilityService {
 				'title'       => class_exists( 'WooCommerce' ) ? _x( 'SureCart Checkout', 'Template name', 'surecart' ) : _x( 'Checkout', 'Template name', 'surecart' ),
 				'description' => __( 'Display the checkout content unless a custom template has been applied.', 'surecart' ),
 			),
+			'product-quick-view'            => array(
+				'title'       => class_exists( 'WooCommerce' ) ? _x( 'SureCart Product Quick View ', 'Template name', 'surecart' ) : _x( 'Product Quick View', 'Template name', 'surecart' ),
+				'description' => __( 'Display product quick view.', 'surecart' ),
+			),
 		);
 	}
 
