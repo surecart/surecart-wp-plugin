@@ -318,8 +318,8 @@ class SettingService {
 			'surecart',
 			'product_content_block_prefixes',
 			[
-				'type'              => 'array',
-				'show_in_rest'      => [
+				'type'         => 'array',
+				'show_in_rest' => [
 					'schema' => [
 						'type'  => 'array',
 						'items' => [
@@ -327,8 +327,7 @@ class SettingService {
 						],
 					],
 				],
-				'sanitize_callback' => 'sanitize_text_field',
-				'default'           => [ 'core', 'surecart' ],
+				'default'      => [ 'core', 'surecart' ],
 			]
 		);
 	}

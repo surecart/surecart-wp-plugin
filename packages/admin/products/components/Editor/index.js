@@ -14,7 +14,7 @@ import { store as coreStore } from '@wordpress/core-data';
 import { Suspense, useEffect, useState, memo } from '@wordpress/element';
 import { parse, serialize } from '@wordpress/blocks';
 import { Button } from '@wordpress/components';
-import { moreHorizontal, close, settings } from '@wordpress/icons';
+import { moreHorizontal, close, settings, external } from '@wordpress/icons';
 import { useDebounce } from '@wordpress/compose';
 
 /**
@@ -55,8 +55,6 @@ export default ({ product, updateProduct, loading }) => {
 			name: 'site',
 		})
 	);
-
-	console.log({ canEditSettings });
 
 	useEffect(() => {
 		const parsedContent = parse(product?.post?.post_content ?? []);
@@ -140,6 +138,15 @@ export default ({ product, updateProduct, loading }) => {
 					canEditSettings && (
 						<DropdownMenu
 							controls={[
+								{
+									icon: external,
+									onClick: () => {
+										window.location.assign(
+											`${window.location.origin}/wp-admin/post.php?post=${product.post.ID}&action=edit`
+										);
+									},
+									title: __('Open Full Editor', 'surecart'),
+								},
 								{
 									icon: settings,
 									onClick: () => setSettingsModal(true),

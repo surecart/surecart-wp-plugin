@@ -54,8 +54,11 @@ class ProductPostTypeService {
 		// update edit post link to edit the product directly.
 		add_filter( 'get_edit_post_link', array( $this, 'updateEditLink' ), 10, 2 );
 
+		// before inserting a product via the rest api, sync the product.
+		add_filter( 'rest_pre_insert_sc_product', [ $this, 'syncProductPostContent' ], 10, 2 );
+
 		// we need to disable the gutenberg editor for our post type so that blocks don't load there.
-		add_filter( 'use_block_editor_for_post_type', [ $this, 'disableGutenberg' ], 10, 2 );
+		add_filter( 'use_block_editor_for_post_type', [ $this, 'forceGutenberg' ], 10, 2 );
 
 		// Add edit product link to admin bar.
 		add_action( 'admin_bar_menu', [ $this, 'addEditLink' ], 99 );
@@ -556,9 +559,9 @@ class ProductPostTypeService {
 	 *
 	 * @return bool
 	 */
-	public function disableGutenberg( $current_status, $post_type ) {
+	public function forceGutenberg( $current_status, $post_type ) {
 		if ( $post_type === $this->post_type ) {
-			return false;
+			return true;
 		}
 		return $current_status;
 	}
@@ -1254,5 +1257,40 @@ class ProductPostTypeService {
 		$query_vars = isset( $_GET ) && is_array( $_GET ) ? $_GET : array(); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		wp_safe_redirect( add_query_arg( $query_vars, get_permalink( get_the_ID() ) ), 301 );
 		exit();
+	}
+
+	/**
+	 * Sync product content before insert
+	 *
+	 * @param \WP_Post         $prepared_post The prepared post object.
+	 * @param \WP_REST_Request $request       The request object.
+	 *
+	 * @return \WP_Post|\WP_Error
+	 */
+	public function syncProductPostContent( $prepared_post, $request ) {
+		// don't sync if explicitly set to false.
+		if ( false === $request->get_param( 'sync' ) ) {
+			return $prepared_post;
+		}
+
+		// sync the product if the post content is set.
+		if ( ! empty( $prepared_post->ID ) && ! empty( $prepared_post->post_content ) ) {
+			$product = sc_get_product( $prepared_post->ID );
+
+			if ( ! $product ) {
+				return $prepared_post;
+			}
+
+			$updated = $product->update(
+				[
+					'content' => $prepared_post->post_content,
+				]
+			);
+
+			if ( is_wp_error( $updated ) ) {
+				return $updated;
+			}
+		}
+		return $prepared_post;
 	}
 }

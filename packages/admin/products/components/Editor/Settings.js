@@ -5,7 +5,7 @@ import { css, jsx } from '@emotion/core';
  * External dependencies.
  */
 import { __ } from '@wordpress/i18n';
-import { store as coreStore, useEntityRecord } from '@wordpress/core-data';
+import { useEntityRecord } from '@wordpress/core-data';
 import { Modal, ToggleControl } from '@wordpress/components';
 import { useState } from '@wordpress/element';
 import { Button } from '@wordpress/components';
@@ -13,16 +13,23 @@ import { Button } from '@wordpress/components';
 /**
  * Internal dependencies.
  */
-import { useEntityProp } from '@wordpress/core-data';
 import Error from '../../../components/Error';
-import { useDispatch } from '@wordpress/data';
+import { Notice } from '@wordpress/components';
+
+const blockPrefixMap = {
+	core: __('Core WordPress', 'surecart'),
+	surecart: __('SureCart', 'surecart'),
+	uagb: __('Spectra', 'surecart'),
+};
 
 export default ({ open, onRequestClose }) => {
 	const [busy, setBusy] = useState(false);
 	const [error, setError] = useState(null);
-	const { saveEntityRecord } = useDispatch(coreStore);
 
-	const { editedRecord, edit, hasEdits } = useEntityRecord('root', 'site');
+	const { editedRecord, edit, hasEdits, save } = useEntityRecord(
+		'root',
+		'site'
+	);
 	const setting = editedRecord['surecart_product_content_block_prefixes'];
 	const editSetting = (data) =>
 		edit({
@@ -30,19 +37,11 @@ export default ({ open, onRequestClose }) => {
 		});
 
 	const onSave = async () => {
-		setBusy(true);
-		setError(null);
 		try {
-			await saveEntityRecord(
-				'root',
-				'site',
-				'surecart_product_content_block_prefixes',
-				setting,
-				{
-					throwOnError: true,
-				}
-			);
-			// window.location.reload();
+			setBusy(true);
+			setError(null);
+			await save();
+			window.location.reload();
 		} catch (error) {
 			console.error(error);
 			setBusy(false);
@@ -61,19 +60,40 @@ export default ({ open, onRequestClose }) => {
 		>
 			<Error error={error} setError={setError} />
 			{/* Supported Blocks Section */}
-			<fieldset className="preferences-modal__section">
-				<legend className="preferences-modal__section-legend">
-					<h2 className="preferences-modal__section-title">
-						{__('Supported Block Prefixes', 'surecart')}
+			<fieldset
+				css={css`
+					margin: 0 0 1.5rem;
+				`}
+			>
+				<legend
+					css={css`
+						margin-bottom: 8px;
+					`}
+				>
+					<h2
+						css={css`
+							font-size: 0.9rem;
+							font-weight: 600;
+							margin-top: 0;
+						`}
+					>
+						{__('Supported Blocks', 'surecart')}
 					</h2>
-					<p className="preferences-modal__section-description">
+					<p
+						css={css`
+							color: #757575;
+							font-size: 12px;
+							font-style: normal;
+							margin: -8px 0 8px;
+						`}
+					>
 						{__(
 							'These blocks have been tested and are supported by the editor.',
 							'surecart'
 						)}
 					</p>
 				</legend>
-				<div className="preferences-modal__section-content">
+				<div>
 					{(
 						surecartBlockEditorSettings[
 							'surecart_all_block_prefixes'
@@ -86,8 +106,9 @@ export default ({ open, onRequestClose }) => {
 							<div key={prefix}>
 								<ToggleControl
 									label={
+										blockPrefixMap[prefix] ||
 										prefix.charAt(0).toUpperCase() +
-										prefix.slice(1)
+											prefix.slice(1)
 									}
 									checked={setting.includes(prefix)}
 									onChange={() => {
@@ -106,19 +127,40 @@ export default ({ open, onRequestClose }) => {
 			</fieldset>
 
 			{/* Experimental Blocks Section */}
-			<fieldset className="preferences-modal__section">
-				<legend className="preferences-modal__section-legend">
-					<h2 className="preferences-modal__section-title">
-						{__('Experimental Block Prefixes', 'surecart')}
+			<fieldset
+				css={css`
+					margin: 0 0 1.5rem;
+				`}
+			>
+				<legend
+					css={css`
+						margin-bottom: 8px;
+					`}
+				>
+					<h2
+						css={css`
+							font-size: 0.9rem;
+							font-weight: 600;
+							margin-top: 0;
+						`}
+					>
+						{__('Experimental Block Libraries', 'surecart')}
 					</h2>
-					<p className="preferences-modal__section-description">
+					<p
+						css={css`
+							color: #757575;
+							font-size: 12px;
+							font-style: normal;
+							margin: -8px 0 8px;
+						`}
+					>
 						{__(
-							'These blocks may not yet have compatibility with the custom product content editor. They may not work as expected.',
+							'These blocks may not yet have compatibility with the custom product content designer. They may not display in the editor correctly.',
 							'surecart'
 						)}
 					</p>
 				</legend>
-				<div className="preferences-modal__section-content">
+				<div>
 					{(
 						surecartBlockEditorSettings[
 							'surecart_all_block_prefixes'
@@ -131,8 +173,9 @@ export default ({ open, onRequestClose }) => {
 							<div key={prefix}>
 								<ToggleControl
 									label={
+										blockPrefixMap[prefix] ||
 										prefix.charAt(0).toUpperCase() +
-										prefix.slice(1)
+											prefix.slice(1)
 									}
 									checked={setting.includes(prefix)}
 									onChange={() => {
@@ -150,18 +193,24 @@ export default ({ open, onRequestClose }) => {
 				</div>
 			</fieldset>
 			{hasEdits && (
-				<p>
-					{__(
-						'A page reload is required for this change. Make sure your product is saved before reloading.',
-						'surecart'
-					)}
-				</p>
+				<div
+					css={css`
+						margin: 0 0 1.5rem;
+					`}
+				>
+					<Notice status="warning" isDismissible={false}>
+						{__(
+							'A page reload is required for this change. Make sure your product is saved before reloading.',
+							'surecart'
+						)}
+					</Notice>
+				</div>
 			)}
 			<Button
 				variant="primary"
 				onClick={onSave}
-				disabled={!hasEdits}
-				busy={busy}
+				disabled={!hasEdits && !busy}
+				isBusy={busy}
 			>
 				{__('Save & Reload Page', 'surecart')}
 			</Button>
