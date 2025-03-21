@@ -14,6 +14,7 @@
 	?>
 	data-wp-on--click="surecart/cart::actions.toggle"
 	data-wp-on--keydown="surecart/cart::actions.toggle"
+	data-wp-bind--hidden="!state.showCartMenuIcon"
 	tabindex="0"
 >
 	<div class="sc-cart-icon" aria-label="<?php esc_attr_e( 'Open cart', 'surecart' ); ?>">

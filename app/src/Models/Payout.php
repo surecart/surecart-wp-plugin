@@ -5,14 +5,16 @@ namespace SureCart\Models;
 use SureCart\Models\Traits\HasAffiliation;
 use SureCart\Models\Traits\HasDates;
 use SureCart\Models\Traits\HasReferrals;
+use SureCart\Support\Currency;
 use SureCart\Support\TimeDate;
 
 /**
  * Payout model
  */
 class Payout extends Model {
-	use HasReferrals, HasAffiliation, HasDates;
-
+	use HasReferrals;
+	use HasAffiliation;
+	use HasDates;
 
 	/**
 	 * Rest API endpoint
@@ -133,5 +135,14 @@ class Payout extends Model {
 	 */
 	public function getEndAtDateAttribute() {
 		return ! empty( $this->end_date ) ? TimeDate::formatDate( $this->end_date ) : '';
+	}
+
+	/**
+	 * Get the total commission amount display.
+	 *
+	 * @return string
+	 */
+	public function getTotalCommissionDisplayAmountAttribute() {
+		return Currency::format( $this->total_commission_amount, $this->currency );
 	}
 }

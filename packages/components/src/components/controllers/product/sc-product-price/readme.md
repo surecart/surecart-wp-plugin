@@ -18,16 +18,12 @@
 
 ### Depends on
 
-- [sc-price-range](../../../ui/sc-price-range)
 - [sc-price](../../../ui/price)
 
 ### Graph
 ```mermaid
 graph TD;
-  sc-product-price --> sc-price-range
   sc-product-price --> sc-price
-  sc-price-range --> sc-format-number
-  sc-price-range --> sc-visually-hidden
   sc-price --> sc-visually-hidden
   sc-price --> sc-format-number
   sc-price --> sc-tag

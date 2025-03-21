@@ -38,6 +38,7 @@ export default ({ checkout, loading, setBusy }) => {
 			const data = await apiFetch({
 				path: addQueryArgs(`${baseURL}/${checkout?.id}`, {
 					expand,
+					context: 'edit',
 				}),
 			});
 
@@ -84,6 +85,7 @@ export default ({ checkout, loading, setBusy }) => {
 						}),
 						'checkout',
 					],
+					context: 'edit',
 				}),
 				data,
 			});

@@ -150,8 +150,8 @@ class ProductPageBlock {
 				'mode'            => \SureCart\Models\Form::getMode( \SureCart::forms()->getDefaultId() ),
 				'checkoutUrl'     => \SureCart::pages()->url( 'checkout' ),
 				'urlPrefix'       => $this->urlParams()->getKey(),
-				'product'         => ! empty( $product ) ? $product->only( [ 'id', 'name', 'has_unlimited_stock', 'available_stock', 'archived', 'permalink' ] ) : null,
-				'selectedPrice'   => ! empty( $product->initial_price ) ? $product->initial_price->only(
+				'product'         => ! empty( $product ) && ! empty( $product->id ) ? $product->only( [ 'id', 'name', 'has_unlimited_stock', 'available_stock', 'archived', 'permalink' ] ) : null,
+				'selectedPrice'   => ! empty( $product->initial_price ) && ! empty( $product->initial_price->id ) ? $product->initial_price->only(
 					[
 						'id',
 						'archived',
@@ -198,7 +198,7 @@ class ProductPageBlock {
 							'trial_text',
 						]
 					),
-					$product->active_prices
+					$product->active_prices ?? []
 				),
 				'variants'        => array_map(
 					fn( $variant ) => $variant->only(
@@ -281,7 +281,7 @@ class ProductPageBlock {
 					return $state['isOptionValueSelected']();
 				},
 				'adHocAmount'           => ( ! empty( $selected_price->ad_hoc ) ? $selected_price->amount : 0 ) / ( ! empty( $selected_price->is_zero_decimal ) ? 1 : 100 ),
-				'selectedVariant'       => ! empty( $selected_variant ) ? $selected_variant->only(
+				'selectedVariant'       => ! empty( $selected_variant ) && ! empty( $selected_variant->id ) ? $selected_variant->only(
 					[
 						'id',
 						'option_1',

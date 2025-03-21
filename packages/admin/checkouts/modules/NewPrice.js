@@ -42,6 +42,7 @@ export default ({ checkout, setBusy }) => {
 						}),
 						'checkout',
 					],
+					context: 'edit',
 				}),
 				data,
 			});
@@ -91,6 +92,7 @@ export default ({ checkout, setBusy }) => {
 						}),
 						'checkout',
 					],
+					context: 'edit',
 				}),
 				data,
 			});

@@ -181,6 +181,10 @@ module.exports = {
 			__dirname,
 			'packages/admin/settings/integrations/index.js'
 		),
+		['admin/settings/display-currency']: path.resolve(
+			__dirname,
+			'packages/admin/settings/display-currency/index.js'
+		),
 
 		/**
 		 * Data.

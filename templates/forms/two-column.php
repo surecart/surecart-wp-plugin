@@ -70,10 +70,6 @@ return [
 		<sc-order-password label="Password" placeholder="" size="medium" type="password" name="password" value="" class="wp-block-surecart-password"></sc-order-password>
 		<!-- /wp:surecart/password -->
 
-		<!-- wp:surecart/address -->
-		<sc-order-shipping-address label="Address"></sc-order-shipping-address>
-		<!-- /wp:surecart/address -->
-
 		<!-- wp:surecart/payment {"secure_notice":"This is a secure, encrypted payment"} -->
 		<sc-payment label="Payment" secure-notice="This is a secure, encrypted payment" class="wp-block-surecart-payment"></sc-payment>
 		<!-- /wp:surecart/payment -->

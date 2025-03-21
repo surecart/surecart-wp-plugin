@@ -156,6 +156,7 @@ class UpsellTemplatesService {
 	 * @return array
 	 */
 	public function addTemplates( array $posts_templates ): array {
+		$translations['pages/template-surecart-collection.php'] = esc_html__( 'SureCart Layout', 'surecart' );
 		return array_merge( $posts_templates, $this->templates );
 	}
 

@@ -289,6 +289,7 @@ export class ScSelectDropdown {
 
   @Listen('keydown')
   handleKeyDown(event: KeyboardEvent) {
+    event.stopPropagation();
     const target = event.target as HTMLElement;
     const items = this.getItems();
 
@@ -504,7 +505,6 @@ export class ScSelectDropdown {
                 value={this.searchTerm}
                 ref={el => (this.searchInput = el as HTMLScInputElement)}
                 aria-label={__('Type to search', 'surecart')}
-                onKeyDown={e => e.stopPropagation()}
               >
                 {this.loading && <sc-spinner exportparts="base:spinner__base" style={{ '--spinner-size': '0.5em' }} slot="suffix"></sc-spinner>}
               </sc-input>

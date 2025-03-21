@@ -124,6 +124,13 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, Object
 	protected $cache_key = '';
 
 	/**
+	 * Is this optimized caching?
+	 *
+	 * @var boolean
+	 */
+	protected $optimized_caching = false;
+
+	/**
 	 * Cache status for the request.
 	 *
 	 * @var string|null;
@@ -642,7 +649,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, Object
 		// add query vars.
 		$args['query'] = $this->query;
 
-		return [ $endpoint, $args, $this->cachable, $this->cache_key ];
+		return [ $endpoint, $args, $this->cachable, $this->cache_key, $this->optimized_caching ];
 	}
 
 	/**

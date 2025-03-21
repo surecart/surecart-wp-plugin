@@ -119,7 +119,7 @@
 	.sc-content {
 		margin-left: auto;
 		margin-right: auto;
-		max-width: 768px;
+		max-width: var(--sc-settings-content-width, 768px);
 		padding: 2rem;
 		display: flex;
 		flex-direction: column;

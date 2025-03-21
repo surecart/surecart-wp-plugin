@@ -25,7 +25,6 @@
 - [sc-flex](../../../ui/flex)
 - [sc-skeleton](../../../ui/skeleton)
 - [sc-subscription-details](.)
-- [sc-format-number](../../../util/format-number)
 - [sc-card](../../../ui/card)
 - [sc-product-line-item](../../../ui/product-line-item)
 - [sc-line-item](../../../ui/line-item)
@@ -41,7 +40,6 @@ graph TD;
   sc-subscription-next-payment --> sc-flex
   sc-subscription-next-payment --> sc-skeleton
   sc-subscription-next-payment --> sc-subscription-details
-  sc-subscription-next-payment --> sc-format-number
   sc-subscription-next-payment --> sc-card
   sc-subscription-next-payment --> sc-product-line-item
   sc-subscription-next-payment --> sc-line-item

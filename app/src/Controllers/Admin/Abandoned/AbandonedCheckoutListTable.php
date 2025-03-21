@@ -161,7 +161,7 @@ class AbandonedCheckoutListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_total( $abandoned ) {
-		return '<sc-format-number type="currency" currency="' . strtoupper( esc_html( $abandoned->checkout->currency ?? 'usd' ) ) . '" value="' . (float) $abandoned->checkout->total_amount . '"></sc-format-number>';
+		return $abandoned->checkout->total_display_amount;
 	}
 
 	/**

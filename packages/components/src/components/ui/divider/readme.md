@@ -25,6 +25,7 @@
  - [sc-form-components-validator](../../providers/form-components-validator)
  - [sc-invoices-list](../../controllers/dashboard/invoices-list)
  - [sc-licenses-list](../../controllers/dashboard/sc-licenses-list)
+ - [sc-line-item-total](../../controllers/checkout-form/line-item-total)
  - [sc-login-form](../../controllers/login)
  - [sc-order](../../controllers/dashboard/order)
  - [sc-order-bump](../../controllers/checkout-form/sc-order-bump)
@@ -47,6 +48,7 @@ graph TD;
   sc-form-components-validator --> sc-divider
   sc-invoices-list --> sc-divider
   sc-licenses-list --> sc-divider
+  sc-line-item-total --> sc-divider
   sc-login-form --> sc-divider
   sc-order --> sc-divider
   sc-order-bump --> sc-divider

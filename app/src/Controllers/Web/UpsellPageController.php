@@ -23,6 +23,8 @@ class UpsellPageController extends BasePageController {
 
 		// Add edit product link to admin bar.
 		add_action( 'admin_bar_menu', [ $this, 'addEditUpsellLink' ], 99 );
+
+		\SureCart::currency()->convert( true );
 	}
 
 	/**
@@ -95,7 +97,7 @@ class UpsellPageController extends BasePageController {
 			[
 				'product' => [
 					// we need to force the selected price.
-					$this->product->id => $this->product->getInitialPageState( [ 'selectedPrice' => $this->model->price ] ),
+					$this->product->id => $this->product->getInitialPageState( [ 'selectedPrice' => $this->model->price->toArray() ] ),
 				],
 				'upsell'  => [
 					'product'     => $this->product,

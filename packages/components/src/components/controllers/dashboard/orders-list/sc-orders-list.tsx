@@ -147,7 +147,7 @@ export class ScOrdersList {
     return this.orders.map(order => {
       const { checkout, created_at_date, id } = order;
       if (!checkout) return null;
-      const { line_items, amount_due, currency, charge } = checkout as Checkout;
+      const { line_items, amount_due_display_amount, charge } = checkout as Checkout;
       return (
         <sc-stacked-list-row
           href={addQueryArgs(window.location.href, {
@@ -173,9 +173,7 @@ export class ScOrdersList {
             {this.renderStatusBadge(order)}
             <sc-order-shipment-badge status={order?.shipment_status}></sc-order-shipment-badge>
           </div>
-          <div>
-            <sc-format-number type="currency" currency={currency} value={amount_due}></sc-format-number>
-          </div>
+          <div>{amount_due_display_amount}</div>
         </sc-stacked-list-row>
       );
     });

@@ -43,7 +43,7 @@ class LocalizationStateService {
 				array(
 					'name'     => 'address_2',
 					'priority' => 60,
-					'label'    => __( 'Address Line 2', 'surecart' ),
+					'label'    => __( 'Line 2', 'surecart' ),
 				),
 				array(
 					'name'     => 'city',

@@ -31,6 +31,9 @@ export class ScOrderShippingAddress {
   /** Default country for address */
   @Prop() defaultCountry: string;
 
+  /** Show the line 2 field. */
+  @Prop({ reflect: true }) showLine2: boolean;
+
   /** Whether to require the name in the address */
   @Prop({ reflect: true }) requireName: boolean = false;
 
@@ -111,6 +114,7 @@ export class ScOrderShippingAddress {
           address={this.address}
           show-name={this.showName}
           require-name={this.requireName}
+          show-line-2={this.showLine2}
           onScChangeAddress={e => this.updateAddressState(e.detail)}
         ></sc-address>
       );

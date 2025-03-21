@@ -104,7 +104,7 @@ abstract class AdminModelEditController {
 		// fix shitty jetpack issues key hijacking issues.
 		add_filter(
 			'admin_head',
-			function() {
+			function () {
 				wp_dequeue_script( 'wpcom-notes-common' );
 				wp_dequeue_script( 'wpcom-notes-admin-bar' );
 				wp_dequeue_style( 'wpcom-notes-admin-bar' );
@@ -152,7 +152,7 @@ abstract class AdminModelEditController {
 			$this->data['checkout_page_url'] = \SureCart::getUrl()->checkout();
 		}
 		if ( in_array( 'supported_currencies', $this->with_data ) ) {
-			$this->data['supported_currencies'] = Currency::getSupportedCurrencies();
+			$this->data['supported_currencies'] = Currency::list();
 		}
 		if ( in_array( 'links', $this->with_data ) ) {
 			$this->data['links'] = [];

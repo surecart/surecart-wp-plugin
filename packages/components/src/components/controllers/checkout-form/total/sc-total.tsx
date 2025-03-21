@@ -1,6 +1,11 @@
-import { Checkout } from '../../../../types';
-import { Component, h, Prop } from '@stencil/core';
-import { openWormhole } from 'stencil-wormhole';
+import { Component, Prop } from '@stencil/core';
+import { state as checkoutState } from '@store/checkout';
+
+const ORDER_KEYS = {
+  total: 'total_display_amount',
+  subtotal: 'subtotal_display_amount',
+  amount_due: 'amount_due_display_amount',
+};
 
 @Component({
   tag: 'sc-total',
@@ -9,19 +14,16 @@ import { openWormhole } from 'stencil-wormhole';
 })
 export class ScTotal {
   @Prop() total: 'total' | 'subtotal' | 'amount_due' = 'amount_due';
-  @Prop() order: Checkout;
 
   order_key = {
-    total: 'total_amount',
-    subtotal: 'subtotal_amount',
-    amount_due: 'amount_due',
+    total: 'total_display_amount',
+    subtotal: 'subtotal_display_amount',
+    amount_due: 'amount_due_display_amount',
   };
 
   render() {
-    if (!this.order?.currency) return;
-    if (!this.order?.line_items?.data?.length) return;
-    return <sc-format-number type="currency" currency={this.order.currency} value={this.order?.[this.order_key[this.total]]}></sc-format-number>;
+    if (!checkoutState?.checkout?.currency) return;
+    if (!checkoutState?.checkout?.line_items?.data?.length) return;
+    return checkoutState?.checkout?.[ORDER_KEYS[this.total]] || '';
   }
 }
-
-openWormhole(ScTotal, ['order'], false);

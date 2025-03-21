@@ -9,7 +9,9 @@ use SureCart\Models\Traits\HasPaymentIntent;
  * Payment method model.
  */
 class PaymentMethod extends Model {
-	use HasCustomer, HasPaymentIntent, HasPaymentInstrument;
+	use HasCustomer;
+	use HasPaymentIntent;
+	use HasPaymentInstrument;
 
 	/**
 	 * Rest API endpoint
@@ -70,5 +72,29 @@ class PaymentMethod extends Model {
 	 */
 	public function getPaymentMethodNameAttribute(): string {
 		return $this->payment_instrument->display_name ?? '';
+	}
+
+	/**
+	 * Get the processor name.
+	 *
+	 * @return string
+	 */
+	public function getProcessorNameAttribute(): string {
+		switch ( $this->processor_type ) {
+			case 'stripe':
+				return __( 'Stripe', 'surecart' );
+			case 'paypal':
+				return __( 'PayPal', 'surecart' );
+			case 'razorpay':
+				return __( 'Razorpay', 'surecart' );
+			case 'paystack':
+				return __( 'Paystack', 'surecart' );
+			case 'mollie':
+				return __( 'Mollie', 'surecart' );
+			case 'square':
+				return __( 'Square', 'surecart' );
+			default:
+				return __( 'Processor', 'surecart' );
+		}
 	}
 }

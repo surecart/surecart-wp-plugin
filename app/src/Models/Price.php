@@ -219,6 +219,18 @@ class Price extends Model {
 	}
 
 	/**
+	 * Get the setup fee display amount attribute
+	 *
+	 * @return string
+	 */
+	protected function getSetupFeeDisplayAmountAttribute() {
+		if ( empty( $this->setup_fee_enabled ) || empty( $this->setup_fee_amount ) ) {
+			return '';
+		}
+		return Currency::format( abs( $this->setup_fee_amount ), $this->currency );
+	}
+
+	/**
 	 * Get the payments text attribute
 	 *
 	 * @return string

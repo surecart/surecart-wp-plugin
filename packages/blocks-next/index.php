@@ -442,7 +442,7 @@ add_action(
 			),
 			$static_assets['version']
 		);
-		
+
 		// SureCart Checkout.
 		$static_assets = include trailingslashit( plugin_dir_path( __FILE__ ) ) . 'build/scripts/checkout/index.asset.php';
 		wp_register_script_module(

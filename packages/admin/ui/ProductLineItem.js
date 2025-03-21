@@ -1,5 +1,11 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
+
+import { __, sprintf } from '@wordpress/i18n';
+
+/**
+ * Internal dependencies.
+ */
 import LineItem from './LineItem';
 import { ScFormatNumber } from '@surecart/components-react';
 import LineItemLabel from './LineItemLabel';
@@ -43,12 +49,12 @@ export default ({ lineItem, suffix, showWeight, showQuantity, children }) => {
 						/>
 					</div>
 				)}
+
 				{showQuantity && !!lineItem?.quantity && (
 					<div>
 						{sprintf(
 							__('Qty: %d', 'surecart'),
-							line_item.quantity - line_item.fulfilled_quantity ||
-								0
+							lineItem.quantity - lineItem.fulfilled_quantity || 0
 						)}
 					</div>
 				)}

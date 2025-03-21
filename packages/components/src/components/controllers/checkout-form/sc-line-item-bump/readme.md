@@ -18,13 +18,11 @@
 ### Depends on
 
 - [sc-line-item](../../../ui/line-item)
-- [sc-format-number](../../../util/format-number)
 
 ### Graph
 ```mermaid
 graph TD;
   sc-line-item-bump --> sc-line-item
-  sc-line-item-bump --> sc-format-number
   style sc-line-item-bump fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

@@ -106,6 +106,9 @@ export interface Price {
   name: string;
   description?: string;
   amount: number;
+  display_amount: string;
+  setup_fee_display_amount: string;
+  setup_fee_text: string;
   full_amount: number;
   currency: string;
   recurring: boolean;
@@ -116,6 +119,7 @@ export interface Price {
   ad_hoc_max_amount: number;
   ad_hoc_min_amount: number;
   scratch_amount: number;
+  scratch_display_amount: string;
   setup_fee_enabled: boolean;
   setup_fee_amount: number;
   setup_fee_name: string;
@@ -147,6 +151,11 @@ export interface Bump {
   id: string;
   object: 'bump';
   amount_off: number;
+  amount_off_display_amount: string;
+  subtotal_display_amount: string;
+  subtotal_amount: number;
+  total_display_amount: string;
+  total_amount: number;
   archived: boolean;
   archived_at: number;
   auto_apply: boolean;
@@ -325,6 +334,7 @@ export interface Variant {
   position: number;
   product: string | Product;
   sku?: string | null;
+  display_amount?: string;
   created_at: number;
   updated_at: number;
 }
@@ -455,6 +465,7 @@ export interface LineItem extends Object {
   name: string;
   object: string;
   quantity: number;
+  currency: string;
   checkout: string | Checkout;
   bump: string | Bump;
   image: ImageAttributes;
@@ -463,14 +474,21 @@ export interface LineItem extends Object {
     pagination: Pagination;
     data: Array<Fee>;
   };
+  ad_hoc_display_amount: string;
+  subtotal_display_amount: string;
   bump_amount: number;
+  bump_display_amount: string;
   discount_amount: number;
   subtotal_amount: number;
   total_amount: number;
+  total_default_currency_display_amount: string;
+  total_display_amount: string;
   trial_amount: number;
   tax_amount: number;
+  tax_display_amount: string;
   fees_amount: number;
   scratch_amount: number;
+  scratch_display_amount: string;
   trial: boolean;
   total_savings_amount: number;
   created_at: number;
@@ -496,6 +514,7 @@ export interface Fee {
   object: 'fee';
   amount: number;
   description: string;
+  display_amount: string;
   fee_type: 'manual' | 'bump' | 'setup' | 'upsell';
   line_item: string | LineItem;
   created_at: number;
@@ -563,6 +582,7 @@ export interface Charge extends Object {
   created_at: number;
   created_at_date: string;
   currency: string;
+  display_amount: string;
   customer: string | Customer;
   external_charge_id: string;
   fully_refunded: boolean;
@@ -645,6 +665,16 @@ export interface ShippingMethod {
 export interface Checkout extends Object {
   id?: string;
   status?: 'canceled' | 'draft' | 'finalized' | 'paid' | 'payment_intent_canceled' | 'payment_failed' | 'processing';
+  tax_amount: number;
+  tax_display_amount: string;
+  tax_inclusive_amount: number;
+  tax_exclusive_amount: number;
+  tax_status: 'disabled' | 'address_invalid' | 'estimated' | 'calculated';
+  tax_label: string;
+  tax_percent: number;
+  tax_enabled: boolean;
+  email_exists: boolean;
+  show_converted_total: boolean;
   staged_payment_intents: {
     object: 'list';
     pagination: Pagination;
@@ -653,14 +683,19 @@ export interface Checkout extends Object {
   abandoned_checkout_enabled: boolean;
   billing_matches_shipping: boolean;
   bump_amount: number;
+  bump_display_amount: string;
   payment_method_required?: boolean;
   manual_payment: boolean;
   manual_payment_method?: string | ManualPaymentMethod;
   reusable_payment_method_required?: boolean;
   number?: string;
   amount_due?: number;
+  amount_due_display_amount?: string;
+  amount_due_default_currency_display_amount?: string;
   remaining_amount_due?: number;
+  remaining_amount_due_display_amount?: string;
   trial_amount?: number;
+  trial_display_amount?: string;
   charge?: string | Charge;
   name?: string;
   first_name?: string;
@@ -669,24 +704,30 @@ export interface Checkout extends Object {
   phone?: string;
   live_mode?: boolean;
   currency?: string;
+  current_currency?: string;
+  discounts_display_amount?: string;
+  discounts_display?: string;
+  tax_exclusive_display_amount?: string;
+  tax_inclusive_display_amount?: string;
   total_amount?: number;
+  total_display_amount?: string;
   subtotal_amount?: number;
+  subtotal_display_amount?: string;
   full_amount?: number;
+  full_display_amount?: string;
   paid_amount?: number;
+  paid_display_amount?: string;
   proration_amount?: number;
+  proration_display_amount?: string;
   total_savings_amount?: number;
+  total_savings_display_amount?: string;
+  total_scratch_display_amount?: string;
   applied_balance_amount?: number;
+  applied_balance_display_amount?: string;
+  scratch_display_amount?: string;
   discounts?: number;
   shipping_address_required?: boolean;
   shipping_address_accuracy_requirement?: 'full' | 'tax' | 'none';
-  tax_enabled: boolean;
-  tax_amount: number;
-  email_exists: boolean;
-  tax_inclusive_amount: number;
-  tax_exclusive_amount: number;
-  tax_status: 'disabled' | 'address_invalid' | 'estimated' | 'calculated';
-  tax_label: string;
-  tax_percent: number;
   line_items: lineItems;
   recommended_bumps?: {
     object: 'list';
@@ -718,6 +759,7 @@ export interface Checkout extends Object {
   discount?: DiscountResponse;
   billing_address?: string | Address;
   shipping_amount?: number;
+  shipping_display_amount?: string;
   shipping_address?: string | Address;
   shipping_enabled?: boolean;
   shipping_choices?: {
@@ -740,9 +782,13 @@ export interface Checkout extends Object {
   invoice?: string | Invoice;
   pdf_url?: string;
   refunded_amount?: number;
+  refunded_display_amount?: string;
   net_paid_amount?: number;
+  net_paid_display_amount?: string;
   credited_balance_amount?: number;
+  credited_balance_display_amount?: string;
   tax_reverse_charged_amount?: number;
+  tax_reverse_charged_display_amount?: string;
 }
 
 export interface ShippingMethod {
@@ -889,6 +935,7 @@ export interface Subscription extends Object {
   current_period_start_at: number | false;
   current_period_start_at_date: string;
   remaining_period_count: number | null;
+  remaining_period_text: string;
   ended_at: number;
   ended_at_date: string;
   end_behavior: 'cancel' | 'complete';
@@ -1256,6 +1303,7 @@ export interface ProductState {
   quantity: number;
   selectedPrice: Price;
   total: number;
+  range_display_amount: string;
   busy: boolean;
   disabled: boolean;
   checkoutUrl: string;

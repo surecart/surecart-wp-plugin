@@ -3,6 +3,7 @@
 namespace SureCart\Request;
 
 use SureCart\Models\ApiToken;
+use SureCart\Support\Errors\ErrorsService;
 use SureCartCore\ServiceProviders\ServiceProviderInterface;
 
 /**
@@ -17,11 +18,19 @@ class RequestServiceProvider implements ServiceProviderInterface {
 	public function register( $container ) {
 		$app = $container[ SURECART_APPLICATION_KEY ];
 
-		$container['requests']          = function () {
-			return new RequestService( ApiToken::get() );
+		$container['requests']          = function () use ( $container ) {
+			return new RequestService( $container, ApiToken::get(), '/v1', true );
 		};
-		$container['requests.unauthed'] = function () {
-			return new RequestService( '', '/v1', null, false );
+		$container['requests.cache']    = $container->protect(
+			function ( $endpoint, $args, $account_cache_key ) {
+				return new RequestCacheService( $endpoint, $args, $account_cache_key );
+			}
+		);
+		$container['requests.errors']   = function () {
+			return new ErrorsService();
+		};
+		$container['requests.unauthed'] = function () use ( $container ) {
+			return new RequestService( $container, '', '/v1', false );
 		};
 
 		$app->alias( 'requests', 'requests' );

@@ -62,6 +62,7 @@ export class ScOrderCouponForm {
         loading={formBusy() && !checkoutState.checkout?.line_items?.data?.length}
         busy={formBusy()}
         discount={checkoutState.checkout?.discount}
+        discounts-display-amount={checkoutState.checkout?.discounts_display_amount}
         currency={checkoutState.checkout?.currency}
         discount-amount={checkoutState.checkout?.discount_amount}
         class={{

@@ -2,12 +2,15 @@
 namespace SureCart\Models;
 
 use SureCart\Models\Traits\HasCustomer;
+use SureCart\Models\Traits\HasPlatformFee;
+use SureCart\Support\Currency;
 
 /**
  * Payment intent model.
  */
 class PaymentIntent extends Model {
 	use HasCustomer;
+	use HasPlatformFee;
 
 	/**
 	 * Rest API endpoint
@@ -59,5 +62,18 @@ class PaymentIntent extends Model {
 		$this->fireModelEvent( 'captured' );
 
 		return $this;
+	}
+
+	/**
+	 * Get the display amount for total fees
+	 *
+	 * @return array
+	 */
+	public function getTotalFeesDisplayAmountAttribute() {
+		$platform_fee_amount = $this->platform_fee->amount ?? 0;
+		$service_fee_amount  = $this->service_fee->amount ?? 0;
+		$total_fees          = $platform_fee_amount + $service_fee_amount;
+
+		return Currency::format( $total_fees, $this->currency );
 	}
 }

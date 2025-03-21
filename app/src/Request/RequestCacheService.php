@@ -168,4 +168,70 @@ class RequestCacheService {
 		}
 		return get_transient( $this->getTransientCacheKey() );
 	}
+
+	/**
+	 * Get the previous cache key.
+	 *
+	 * @return string
+	 */
+	public function getPreviousCacheKey() {
+		$timestamp = \SureCart::account()->cache_keys->{$this->account_cache_key} ?? 0;
+		if ( ! $timestamp ) {
+			return '';
+		}
+		// we need to hash this this because there is a limit on string size for the key on the options table.
+		return wp_hash( 'sc_previous' . $this->endpoint . wp_json_encode( $this->args ) . $timestamp );
+	}
+
+	/**
+	 * Set the previous cache.
+	 *
+	 * @param mixed $data Data to set.
+	 *
+	 * @return boolean
+	 */
+	public function setPreviousCache( $data ) {
+		$cache_key = $this->getPreviousCacheKey();
+		if ( $cache_key ) {
+			return update_option( $cache_key, $data, false );
+		}
+		return false;
+	}
+
+	/**
+	 * Get the previous cache.
+	 *
+	 * @return mixed
+	 */
+	public function getPreviousCache() {
+		return get_option( $this->getPreviousCacheKey() );
+	}
+
+	/**
+	 * Get the previous cache updating key.
+	 *
+	 * @return mixed
+	 */
+	public function getPreviousCacheUpdatingKey() {
+		return $this->endpoint . '_updating';
+	}
+
+	/**
+	 * Set the previous cache updating state.
+	 *
+	 * @param mixed $state State to set.
+	 * @return mixed
+	 */
+	public function setPreviousCacheUpdatingState( $state ) {
+		return update_option( $this->getPreviousCacheUpdatingKey(), $state, false );
+	}
+
+	/**
+	 * Get the previous cache updating state.
+	 *
+	 * @return mixed
+	 */
+	public function getPreviousCacheUpdatingState() {
+		return get_option( $this->getPreviousCacheUpdatingKey() );
+	}
 }

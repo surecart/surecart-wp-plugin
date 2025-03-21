@@ -44,6 +44,31 @@ class CheckoutRestServiceProviderTest extends SureCartUnitTestCase
 				AssetsServiceProvider::class,
 			]
 		], false);
+
+		// Test data
+		$this->display_currencies = [
+			(object)[
+				'id' => 'test_id_1',
+				'object' => 'display_currency',
+				'currency' => 'usd',
+				'current_exchange_rate' => 1.0,
+				'created_at' => time(),
+				'updated_at' => time(),
+			]
+		];
+
+		// Mock the request service
+		$requests = \Mockery::mock(RequestService::class);
+		\SureCart::alias('request', function() use ($requests) {
+			return call_user_func_array([$requests, 'makeRequest'], func_get_args());
+		});
+
+		// Mock display currencies request
+		$requests->shouldReceive('makeRequest')
+		->withSomeOfArgs('display_currencies')
+		->andReturn((object)[
+			'data' => $this->display_currencies,
+		]);
 	}
 
 	/**
@@ -310,6 +335,14 @@ class CheckoutRestServiceProviderTest extends SureCartUnitTestCase
 		->once()
 		->withSomeOfArgs('checkouts/testid/cancel/')
 		->andReturn([]);
+
+
+		// Mock display currencies request
+		$requests->shouldReceive('makeRequest')
+		->withSomeOfArgs('display_currencies')
+		->andReturn((object)[
+			'data' => $this->display_currencies,
+		]);
 
 		// unauthed.
 		$request = new WP_REST_Request('PATCH', '/surecart/v1/checkouts/testid/cancel');

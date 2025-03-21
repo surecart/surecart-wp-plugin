@@ -488,6 +488,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		\SureCart::route()->get()->where( 'sc_url_var', 'subscription_preservation', 'tab' )->name( 'settings.subscription_preservation' )->handle( 'SubscriptionPreservationSettings@show' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'affiliation_protocol', 'tab' )->name( 'settings.affiliation_protocol' )->handle( 'AffiliationProtocolSettings@show' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'customer_notification_protocol', 'tab' )->name( 'settings.customer' )->handle( 'CustomerSettings@show' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'display_currency', 'tab' )->name( 'settings.display_currency' )->handle( 'DisplayCurrencySettings@show' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'subscription_protocol', 'tab' )->name( 'settings.subscription' )->handle( 'SubscriptionSettings@show' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'tax_protocol', 'tab' )->where( 'sc_url_var', 'region', 'type' )->name( 'settings.tax.region' )->handle( 'TaxRegionSettings@show' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'tax_protocol', 'tab' )->name( 'settings.tax' )->handle( 'TaxSettings@show' );

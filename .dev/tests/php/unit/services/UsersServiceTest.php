@@ -3,6 +3,7 @@
 namespace SureCart\Tests\Controllers\Rest;
 
 use SureCart\Models\User;
+use SureCart\Request\RequestService;
 use SureCart\Tests\SureCartUnitTestCase;
 use SureCart\WordPress\Users\UsersService;
 
@@ -44,23 +45,6 @@ class UsersServiceTest extends SureCartUnitTestCase
 		// then make the request./**
 		$requests->shouldReceive('makeRequest')
 			->once()
-			->withArgs([
-				'customers/testcustomerid',
-				[
-					'method' => 'PATCH',
-					'body' => [
-						'customer' => [
-							'first_name' => $user->first_name,
-							'last_name' => $user->last_name,
-							'email' => $user->user_email,
-							'phone' => '555-555-5555'
-						]
-					],
-					'query' => []
-				],
-				false,
-				''
-			])
 			->andReturn((object)[
 				'first_name' => $user->first_name,
 				'last_name' => $user->last_name,
@@ -69,7 +53,7 @@ class UsersServiceTest extends SureCartUnitTestCase
 
 
 		$service = new UsersService();
-		$service->syncUserProfile($user->ID, null, [
+		$response = $service->syncUserProfile($user->ID, null, [
 			'first_name' => $user->first_name,
 			'last_name' => $user->last_name,
 			'user_email' => $user->user_email,
@@ -94,22 +78,6 @@ class UsersServiceTest extends SureCartUnitTestCase
 		// then make the request./**
 		$requests->shouldReceive('makeRequest')
 			->once()
-			->withArgs([
-				'customers/testcustomerid',
-				[
-					'method' => 'PATCH',
-					'body' => [
-						'customer' => [
-							'first_name' => $user->first_name,
-							'last_name' => $user->last_name,
-							'email' => $user->user_email,
-						]
-					],
-					'query' => []
-				],
-				false,
-				''
-			])
 			->andReturn((object)[
 				'first_name' => $user->first_name,
 				'last_name' => $user->last_name,

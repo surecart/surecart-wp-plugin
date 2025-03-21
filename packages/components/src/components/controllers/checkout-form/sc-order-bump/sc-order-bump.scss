@@ -52,10 +52,15 @@
   }
 
   &__price {
-    &--has-discount .bump__original-price {
-      text-decoration: line-through;
-      color: var(--sc-color-gray-500);
-      font-size: var(--sc-font-size-small);
+    &--has-discount {
+      display: flex;
+      align-items: baseline;
+      gap: var(--sc-spacing-x-small);
+      .bump__original-price {
+        text-decoration: line-through;
+        color: var(--sc-color-gray-500);
+        font-size: var(--sc-font-size-small);
+      }
     }
     .bump__new-price {
       font-size: var(--sc-font-size-large);

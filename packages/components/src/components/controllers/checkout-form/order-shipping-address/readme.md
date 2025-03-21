@@ -14,6 +14,7 @@
 | `label`          | `label`           | Label for the field.                       | `string`  | `undefined` |
 | `requireName`    | `require-name`    | Whether to require the name in the address | `boolean` | `false`     |
 | `required`       | `required`        | Is this required (defaults to false)       | `boolean` | `false`     |
+| `showLine2`      | `show-line-2`     | Show the line 2 field.                     | `boolean` | `undefined` |
 | `showName`       | `show-name`       | Show the name field.                       | `boolean` | `undefined` |
 
 

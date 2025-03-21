@@ -37,7 +37,6 @@
 
 ### Depends on
 
-- [sc-format-number](../../util/format-number)
 - [sc-choice-container](../choice-container)
 - [sc-skeleton](../skeleton)
 - [sc-visually-hidden](../../util/visually-hidden)
@@ -45,7 +44,6 @@
 ### Graph
 ```mermaid
 graph TD;
-  sc-price-choice-container --> sc-format-number
   sc-price-choice-container --> sc-choice-container
   sc-price-choice-container --> sc-skeleton
   sc-price-choice-container --> sc-visually-hidden

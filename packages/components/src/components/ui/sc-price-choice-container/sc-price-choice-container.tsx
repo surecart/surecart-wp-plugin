@@ -54,7 +54,7 @@ export class ScPriceChoiceContainer {
   renderPrice() {
     return (
       <Fragment>
-        <sc-format-number type="currency" value={this.priceData?.amount} currency={this.priceData?.currency}></sc-format-number>
+        {this.priceData?.display_amount}
         {intervalString(this.priceData, {
           showOnce: true,
           abbreviate: true,
@@ -105,7 +105,7 @@ export class ScPriceChoiceContainer {
                   __('Custom Amount', 'surecart')
                 ) : (
                   <Fragment>
-                    <sc-format-number type="currency" value={this.priceData?.amount} currency={this.priceData?.currency}></sc-format-number>
+                    {this.priceData?.display_amount}
                     {this.priceData?.recurring_period_count && 1 <= this.priceData?.recurring_period_count && (
                       <sc-visually-hidden>
                         {' '}
@@ -152,7 +152,7 @@ export class ScPriceChoiceContainer {
               {!!this.priceData?.setup_fee_enabled && this.priceData?.setup_fee_amount && (
                 <div class="price-choice__setup-fee">
                   <sc-visually-hidden>{__('This payment plan has', 'surecart')} </sc-visually-hidden>
-                  <sc-format-number type="currency" value={Math.abs(this.priceData.setup_fee_amount)} currency={this.priceData?.currency}></sc-format-number>{' '}
+                  {this.priceData?.setup_fee_display_amount}{' '}
                   {this.priceData?.setup_fee_name || (this.priceData?.setup_fee_amount < 0 ? __('Discount', 'surecart') : __('Setup Fee', 'surecart'))}
                 </div>
               )}

@@ -64,9 +64,11 @@ export class ScSubscriptionDetails {
         <span
           aria-label={sprintf(
             /* translators: %s: current period end date */
-            __('Renewal Update - Your plan will be canceled on %s', 'surecart'), this.subscription.current_period_end_at_date)
-          }>
-          {tag} {' '}
+            __('Renewal Update - Your plan will be canceled on %s', 'surecart'),
+            this.subscription.current_period_end_at_date,
+          )}
+        >
+          {tag}{' '}
           {
             /* translators: %s: current period end date */
             sprintf(__('Your plan will be canceled on %s', 'surecart'), this.subscription.current_period_end_at_date)
@@ -123,13 +125,16 @@ export class ScSubscriptionDetails {
         <span
           aria-label={sprintf(
             /* translators: %s: trial end date */
-            __('Renewal Update - Your plan begins on %s.', 'surecart'), this.subscription.trial_end_at_date)
-          }>
+            __('Renewal Update - Your plan begins on %s.', 'surecart'),
+            this.subscription.trial_end_at_date,
+          )}
+        >
           {tag}{' '}
           {sprintf(
             /* translators: %s: trial end date */
-            __('Your plan begins on %s', 'surecart'), this?.subscription?.trial_end_at_date)
-          }
+            __('Your plan begins on %s', 'surecart'),
+            this?.subscription?.trial_end_at_date,
+          )}
         </span>
       );
     }
@@ -138,18 +143,16 @@ export class ScSubscriptionDetails {
         <span
           aria-label={sprintf(
             /* translators: %s: current period end date */
-            __('Renewal Update - Your next payment is on %s', 'surecart'), this.subscription.current_period_end_at_date)
-          }>
+            __('Renewal Update - Your next payment is on %s', 'surecart'),
+            this.subscription.current_period_end_at_date,
+          )}
+        >
           {tag}{' '}
-          {
-            this.subscription?.remaining_period_count === null ? (
-              /* translators: %s: current period end date */
+          {this.subscription?.remaining_period_count === null
+            ? /* translators: %s: current period end date */
               sprintf(__('Your plan renews on %s', 'surecart'), this.subscription.current_period_end_at_date)
-            ) : (
-              /* translators: %s: current period end date */
-              sprintf(__('Your next payment is on %s', 'surecart'), this.subscription.current_period_end_at_date)
-            )
-          }
+            : /* translators: %s: current period end date */
+              sprintf(__('Your next payment is on %s', 'surecart'), this.subscription.current_period_end_at_date)}
         </span>
       );
     }
@@ -217,8 +220,11 @@ export class ScSubscriptionDetails {
           <sc-text
             aria-label={sprintf(
               /* translators: %s: plan name */
-              __('Plan name - %s', 'surecart'), this.renderName())
-            } style={{ '--font-weight': 'var(--sc-font-weight-bold)' }}>
+              __('Plan name - %s', 'surecart'),
+              this.renderName(),
+            )}
+            style={{ '--font-weight': 'var(--sc-font-weight-bold)' }}
+          >
             {this.renderName()}
           </sc-text>
           {this.renderActivations()}

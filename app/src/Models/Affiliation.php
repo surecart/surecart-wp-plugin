@@ -6,13 +6,17 @@ use SureCart\Models\Traits\HasCommissionStructure;
 use SureCart\Models\Traits\HasDates;
 use SureCart\Models\Traits\HasPayouts;
 use SureCart\Models\Traits\HasReferrals;
+use SureCart\Support\Currency;
 use SureCart\Support\TimeDate;
 
 /**
  * Holds the data of the current Affiliation.
  */
 class Affiliation extends Model {
-	use HasReferrals, HasPayouts, HasCommissionStructure, HasDates;
+	use HasReferrals;
+	use HasPayouts;
+	use HasCommissionStructure;
+	use HasDates;
 
 	/**
 	 * Rest API endpoint
@@ -164,5 +168,23 @@ class Affiliation extends Model {
 	 */
 	public function getExpiresAtDateTimeAttribute() {
 		return ! empty( $this->expires_at ) ? TimeDate::formatDateAndTime( $this->expires_at ) : '';
+	}
+
+	/**
+	 * Get the total commission amount display.
+	 *
+	 * @return string
+	 */
+	public function getTotalCommissionDisplayAmountAttribute() {
+		return Currency::format( $this->total_commission_amount );
+	}
+
+	/**
+	 * Get the total commission amount display.
+	 *
+	 * @return string
+	 */
+	public function getTotalNotPaidCommissionDisplayAmountAttribute() {
+		return Currency::format( $this->total_not_paid_commission_amount );
 	}
 }

@@ -42,7 +42,7 @@ class ProductData extends \Bricks\Element {
 	 * @var string
 	 */
 	public function get_label() {
-		return esc_html__( 'Product Data', 'surecart' );
+		return esc_html__( 'Product Pricing', 'surecart' );
 	}
 
 	/**
@@ -65,7 +65,7 @@ class ProductData extends \Bricks\Element {
 			'tab'           => 'content',
 			'type'          => 'repeater',
 			'titleProperty' => 'dynamicData',
-			'placeholder'   => esc_html__( 'Product data', 'surecart' ),
+			'placeholder'   => esc_html__( 'Product Pricing', 'surecart' ),
 			'fields'        => [
 				'dynamicData' => [
 					'label' => esc_html__( 'Dynamic data', 'surecart' ),
@@ -178,7 +178,7 @@ class ProductData extends \Bricks\Element {
 		if ( empty( $settings['meta'] ) ) {
 			return $this->render_element_placeholder(
 				[
-					'title' => esc_html__( 'No product data selected.', 'surecart' ),
+					'title' => esc_html__( 'No product pricing selected.', 'surecart' ),
 				]
 			);
 		}

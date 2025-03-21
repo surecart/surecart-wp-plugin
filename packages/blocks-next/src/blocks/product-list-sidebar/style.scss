@@ -92,7 +92,7 @@
 // Stop the body from scrolling when the cart drawer is open.
 html:has(dialog.sc-drawer[open]) {
 	overflow: hidden;
-	scrollbar-gutter: stable;
+	scrollbar-gutter: auto;
 }
 
 @media (max-width: 779px) {

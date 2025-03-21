@@ -31,13 +31,6 @@ class RequestService {
 	protected $base_path;
 
 	/**
-	 * Errors service container
-	 *
-	 * @var \SureCart\Support\Errors\ErrorsService;
-	 */
-	protected $errors_service;
-
-	/**
 	 * What type of cached request is this.
 	 *
 	 * @var string|null
@@ -73,23 +66,51 @@ class RequestService {
 	protected $retry_status_codes = [ 409 ];
 
 	/**
+	 * Container.
+	 *
+	 * @var \Pimple\Container
+	 */
+	protected $container;
+
+	/**
 	 * Constructor.
 	 *
-	 * @param string                                 $token The rest api base path.
-	 * @param string                                 $base_path The rest api base path.
-	 * @param \SureCart\Support\Errors\ErrorsService $errors_service The error handling service.
-	 * @param boolean                                $authorized Is this request authorized.
+	 * @param \Pimple\Container $container The container.
+	 * @param string            $token The rest api base path.
+	 * @param string            $base_path The rest api base path.
+	 * @param boolean           $authorized Is this request authorized.
 	 *
 	 * @return void
 	 */
-	public function __construct( $token = '', $base_path = '/v1', $errors_service = null, $authorized = true ) {
-		// error handing service.
-		$this->errors_service = $errors_service ? $errors_service : new ErrorsService();
+	public function __construct( $container, $token = '', $base_path = '/v1', $authorized = true ) {
 		// set the token.
 		$this->token = $token;
 		// set the base path and url.
 		$this->base_path  = $base_path;
 		$this->authorized = $authorized;
+		$this->container  = $container;
+	}
+
+	/**
+	 * Get the cache service.
+	 *
+	 * @param string $endpoint The endpoint to cache.
+	 * @param array  $args The args to cache.
+	 * @param string $account_cache_key The account cache key.
+	 *
+	 * @return \SureCart\Request\RequestCacheService
+	 */
+	public function cache( $endpoint, $args, $account_cache_key ) {
+		return $this->container['requests.cache']( $endpoint, $args, $account_cache_key );
+	}
+
+	/**
+	 * Get the errors service.
+	 *
+	 * @return \SureCart\Support\Errors\ErrorsService
+	 */
+	public function errors() {
+		return $this->container['requests.errors'];
 	}
 
 	/**
@@ -185,12 +206,12 @@ class RequestService {
 	 * @param array   $args Arguments for request.
 	 * @param boolean $cachable Should this request be cached.
 	 * @param string  $cache_key The cache key to use.
+	 * @param boolean $optimized_caching Should we use optimized caching.
 	 *
 	 * @return mixed
 	 */
-	public function makeRequest( $endpoint, $args = [], $cachable = false, $cache_key = '' ) {
-		// use the cache service for this request.
-		$cache = new RequestCacheService( $endpoint, $args, $cache_key );
+	public function makeRequest( $endpoint, $args = [], $cachable = false, $cache_key = '', $optimized_caching = false ) {
+		$cache = $this->cache( $endpoint, $args, $cache_key );
 
 		// check if we should get a cached version of this.
 		if ( $this->shouldFindCache( $cachable, $cache_key, $args ) ) {
@@ -203,8 +224,16 @@ class RequestService {
 			}
 		}
 
+		if ( $optimized_caching && $cache->getPreviousCacheUpdatingState() === 'updating' ) {
+			$previous_cache = $cache->getPreviousCache();
+			if ( false !== $previous_cache ) {
+				$this->cache_status = 'previous';
+				return $this->respond( $previous_cache, $args, $endpoint );
+			}
+		}
+
 		// make the uncached request.
-		$response_body = $this->makeUncachedRequest( $endpoint, $args );
+		$response_body = $this->makeUncachedRequest( $endpoint, $args, $cache, $optimized_caching );
 
 		if ( is_wp_error( $response_body ) ) {
 			return $response_body;
@@ -214,6 +243,11 @@ class RequestService {
 		$cache->setCache( $response_body, 'object' );
 		if ( (bool) $cachable && $cache_key ) {
 			$cache->setCache( $response_body, 'transient' );
+		}
+
+		if ( $optimized_caching ) {
+			$cache->setPreviousCache( $response_body );
+			$cache->setPreviousCacheUpdatingState( 'updated' );
 		}
 
 		// return response.
@@ -228,7 +262,11 @@ class RequestService {
 	 *
 	 * @return mixed
 	 */
-	public function makeUncachedRequest( $endpoint, $args = [] ) {
+	public function makeUncachedRequest( $endpoint, $args = [], $cache = null, $optimized_caching = false ) {
+		if ( $optimized_caching ) {
+			$cache->setPreviousCacheUpdatingState( 'updating' );
+		}
+
 		// must have a token for the request.
 		if ( $this->authorized && empty( $this->token ) ) {
 			return new \WP_Error( 'missing_token', __( 'Please connect your site to SureCart.', 'surecart' ) );
@@ -294,7 +332,7 @@ class RequestService {
 
 		// handle handle retries.
 		if ( in_array( $response_code, $this->retry_status_codes ) ) {
-			$this->current_retries++;
+			++$this->current_retries;
 			if ( $this->current_retries <= $this->total_retries ) {
 				call_user_func_array( [ $this, __METHOD__ ], func_get_args() );
 			}
@@ -329,7 +367,7 @@ class RequestService {
 			if ( is_string( $body ) ) {
 				return new \WP_Error( 'error', $response_body );
 			}
-			return $this->errors_service->translate( $body, $response_code );
+			return $this->errors()->translate( $body, $response_code );
 		}
 
 		return json_decode( $response_body );

@@ -11,6 +11,7 @@
 | -------------------------- | ---------------------------- | ------------------------------------------------ | ----------------- | ----------- |
 | `amount`                   | `amount`                     | Product monetary amount                          | `number`          | `undefined` |
 | `currency`                 | `currency`                   | Currency for the product                         | `string`          | `undefined` |
+| `displayAmount`            | `display-amount`             | Product display amount                           | `string`          | `undefined` |
 | `editable`                 | `editable`                   | Can we select the quantity                       | `boolean`         | `true`      |
 | `fees`                     | --                           | Product line item fees.                          | `Fee[]`           | `undefined` |
 | `image`                    | --                           | Image attributes.                                | `ImageAttributes` | `undefined` |
@@ -22,6 +23,7 @@
 | `quantity`                 | `quantity`                   | Quantity                                         | `number`          | `undefined` |
 | `removable`                | `removable`                  | Is the line item removable                       | `boolean`         | `undefined` |
 | `scratchAmount`            | `scratch-amount`             | The line item scratch amount                     | `number`          | `undefined` |
+| `scratchDisplayAmount`     | `scratch-display-amount`     | Product scratch display amount                   | `string`          | `undefined` |
 | `setupFeeTrialEnabled`     | `setup-fee-trial-enabled`    | Is the setup fee not included in the free trial? | `boolean`         | `true`      |
 | `sku`                      | `sku`                        | The SKU.                                         | `string`          | `''`        |
 | `trialDurationDays`        | `trial-duration-days`        | Trial duration days                              | `number`          | `undefined` |

@@ -53,7 +53,8 @@
 				"padding": true,
 				"margin": true
 			}
-		}
+		},
+		"currencyConversion": true
 	},
 	"textdomain": "surecart",
 	"render": "file:./view.php",

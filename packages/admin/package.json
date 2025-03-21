@@ -30,6 +30,7 @@
 		"access": "public"
 	},
 	"dependencies": {
+		"@wordpress/dataviews": "^4.11.1",
 		"react-easy-sort": "^1.5.1"
 	}
 }

@@ -228,12 +228,11 @@ class BumpsListTable extends ListTable {
 		ob_start();
 		?>
 			<strong><?php echo esc_html( $price->product->name ); ?></strong><br/>
-			<sc-format-number type="currency" currency="<?php echo esc_attr( $price->currency ); ?>" value="<?php echo (float) $price->amount; ?>"></sc-format-number>
-			<sc-format-interval value="<?php echo (int) $price->recurring_interval_count; ?>" interval="<?php echo esc_attr( $price->recurring_interval ); ?>"></sc-format-interval>
+			<?php echo esc_html( $price->display_amount ); ?>
+			<?php echo esc_html( $price->short_interval_text ); ?>
+			<?php echo esc_html( $price->short_interval_count_text ); ?>
 		<?php
 		return ob_get_clean();
-
-		return '<sc-format-number type="currency" currency="' . esc_attr( $price->currency ) . '" value="' . (float) $price->amount . '"></sc-format-number>';
 	}
 
 	/**
@@ -276,7 +275,7 @@ class BumpsListTable extends ListTable {
 	 */
 	public function column_default( $bump, $column_name ) {
 		// Call the parent method to handle custom columns
-        parent::column_default( $bump, $column_name );
+		parent::column_default( $bump, $column_name );
 
 		switch ( $column_name ) {
 			case 'name':

@@ -245,22 +245,11 @@ class SubscriptionsListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_plan( $subscription ) {
-		$amount       = $subscription->ad_hoc_amount ?? $subscription->price->amount ?? 0;
-		$interval     = $subscription->price->recurring_interval ?? '';
-		$count        = $subscription->price->recurring_interval_count ?? 1;
-		$period_count = $subscription->price->recurring_period_count ?? null;
-
 		ob_start();
-		echo '<sc-format-number type="currency" currency="' . esc_html( strtoupper( $subscription->currency ?? 'usd' ) ) . '" value="' . (float) $amount . '"></sc-format-number>';
-		echo esc_html( $this->getInterval( $interval, $count ) );
-		if ( null !== $period_count ) {
-			if ( 1 === $period_count ) {
-				echo ' ' . esc_html( __( '(one time)', 'surecart' ) );
-			} else {
-				echo esc_html( $this->getInterval( $interval, $period_count, __( 'for', 'surecart' ) ) );
-			}
-		}
-		echo $this->getProductDisplay( $subscription );
+		echo ! empty( $subscription->ad_hoc_display_amount ) ? esc_html( $subscription->ad_hoc_display_amount ) : esc_html( $subscription->price->display_amount );
+		echo ' ' . esc_html( $subscription->price->interval_text );
+		echo ' ' . esc_html( $subscription->price->interval_count_text );
+		echo wp_kses_post( $this->getProductDisplay( $subscription ) );
 		if ( ! empty( $subscription->variant_options ) ) {
 			echo '<div>' . esc_html( implode( ' / ', $subscription->variant_options ) ) . '</div>';
 		}

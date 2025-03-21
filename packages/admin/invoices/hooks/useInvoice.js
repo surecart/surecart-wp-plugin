@@ -216,6 +216,7 @@ export const useInvoice = () => {
 				`${baseURL}/${invoice?.checkout?.id}/manually_pay`,
 				{
 					expand: checkoutExpands,
+					context: 'edit',
 				}
 			),
 		});

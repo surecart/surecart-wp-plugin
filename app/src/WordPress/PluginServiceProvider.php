@@ -46,6 +46,12 @@ class PluginServiceProvider implements ServiceProviderInterface {
 			return new CompatibilityService();
 		};
 
+		// singleton.
+		$currency_service               = new CurrencyService();
+		$container['surecart.currency'] = function () use ( $currency_service ) {
+			return $currency_service;
+		};
+
 		$singleton                          = new StateService( [] );
 		$container['surecart.initialstate'] = function () use ( $singleton ) {
 			return $singleton;
@@ -57,6 +63,7 @@ class PluginServiceProvider implements ServiceProviderInterface {
 		$app->alias( 'config', 'surecart.config.setting' );
 		$app->alias( 'healthCheck', 'surecart.health' );
 		$app->alias( 'state', 'surecart.initialstate' );
+		$app->alias( 'currency', 'surecart.currency' );
 	}
 
 	/**
@@ -68,6 +75,7 @@ class PluginServiceProvider implements ServiceProviderInterface {
 		$container['surecart.initialstate']->bootstrap();
 		$container['surecart.upgrade.notice']->bootstrap();
 		$container['surecart.plugin.action.links']->bootstrap();
+		$container['surecart.currency']->bootstrap();
 	}
 
 	/**

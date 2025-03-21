@@ -10,6 +10,7 @@
 use SureCart\Middleware\CheckoutFormModeMiddleware;
 use SureCart\Middleware\CheckoutRedirectMiddleware;
 use SureCart\Middleware\CustomerDashboardRedirectMiddleware;
+use SureCart\Middleware\CustomerDashboardLinkRedirectMiddleware;
 use SureCart\Middleware\InvoiceRedirectMiddleware;
 use SureCart\Middleware\LoginLinkMiddleware;
 use SureCart\Middleware\OrderRedirectMiddleware;
@@ -88,4 +89,5 @@ if ( ! defined( 'ABSPATH' ) ) {
 	->middleware( SubscriptionRedirectMiddleware::class )
 	// customer dashboard redirect is the fallback if there is a customer_id present.
 	->middleware( CustomerDashboardRedirectMiddleware::class )
+	->middleware( CustomerDashboardLinkRedirectMiddleware::class )
 	->handle( 'DashboardController@show' );

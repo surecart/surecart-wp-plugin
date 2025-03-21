@@ -75,15 +75,18 @@ export default ({
 						size="large"
 						onScChange={(e) => onSelectCurrency(e.target.value)}
 						value={currency}
-						choices={Object.keys(
-							scData?.supported_currencies || {}
-						).map((value) => {
-							const label = scData?.supported_currencies[value];
-							return {
-								label: `${label} (${getCurrencySymbol(value)})`,
+						choices={(scData?.supported_currencies || []).map(
+							({
+								name,
+								symbol,
+								currency: value,
+								flag: icon,
+							}) => ({
+								label: `${name} (${symbol})`,
 								value,
-							};
-						})}
+								icon,
+							})
+						)}
 						style={{
 							fontSize: 'var(--sc-input-font-size-large)',
 						}}

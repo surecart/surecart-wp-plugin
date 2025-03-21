@@ -44,6 +44,7 @@ class CollectionTemplateService {
 	 * @return array
 	 */
 	public function addTemplates( $templates ) {
+		$translations['pages/template-surecart-collection.php'] = esc_html__( 'SureCart Layout', 'surecart' );
 		return array_merge( $templates, $this->templates );
 	}
 }

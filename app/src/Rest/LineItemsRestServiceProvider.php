@@ -24,6 +24,13 @@ class LineItemsRestServiceProvider extends RestServiceProvider implements RestSe
 	protected $controller = LineItemsController::class;
 
 	/**
+	 * Whether the rest service provider converts currency.
+	 *
+	 * @var boolean
+	 */
+	protected $converts_currency = true;
+
+	/**
 	 * Methods allowed for the model.
 	 *
 	 * @var array
@@ -70,7 +77,7 @@ class LineItemsRestServiceProvider extends RestServiceProvider implements RestSe
 			'type'       => 'object',
 			// In JSON Schema you can specify object properties in the properties attribute.
 			'properties' => [
-				'id' => [
+				'id'       => [
 					'description' => esc_html__( 'Unique identifier for the object.', 'surecart' ),
 					'type'        => 'string',
 					'context'     => [ 'view', 'edit', 'embed' ],

@@ -136,6 +136,8 @@ export class ScOrder {
               editable={false}
               removable={false}
               quantity={item.quantity}
+              scratchDisplayAmount={item?.scratch_display_amount}
+              displayAmount={item?.subtotal_display_amount}
               amount={item.subtotal_amount}
               currency={item?.price?.currency}
               trialDurationDays={item?.price?.trial_duration_days}
@@ -150,48 +152,45 @@ export class ScOrder {
         {checkout?.subtotal_amount !== checkout?.total_amount && (
           <sc-line-item>
             <span slot="description">{__('Subtotal', 'surecart')}</span>
-            <sc-format-number
+            <span
               slot="price"
               style={{
                 'font-weight': 'var(--sc-font-weight-semibold)',
                 'color': 'var(--sc-color-gray-800)',
               }}
-              type="currency"
-              currency={checkout?.currency}
-              value={checkout?.subtotal_amount}
-            ></sc-format-number>
+            >
+              {checkout?.subtotal_display_amount}
+            </span>
           </sc-line-item>
         )}
 
         {!!checkout?.trial_amount && (
           <sc-line-item>
             <span slot="description">{__('Trial', 'surecart')}</span>
-            <sc-format-number
+            <span
               slot="price"
               style={{
                 'font-weight': 'var(--sc-font-weight-semibold)',
                 'color': 'var(--sc-color-gray-800)',
               }}
-              type="currency"
-              currency={checkout?.currency}
-              value={checkout?.trial_amount}
-            ></sc-format-number>
+            >
+              {checkout?.trial_display_amount}
+            </span>
           </sc-line-item>
         )}
 
         {!!checkout?.discounts && (
           <sc-line-item>
-            <span slot="description">{__('Discount', 'surecart')}</span>
-            <sc-format-number
+            <span slot="description">{__('Discounts', 'surecart')}</span>
+            <span
               slot="price"
               style={{
                 'font-weight': 'var(--sc-font-weight-semibold)',
                 'color': 'var(--sc-color-gray-800)',
               }}
-              type="currency"
-              currency={checkout?.currency}
-              value={checkout?.discounts}
-            ></sc-format-number>
+            >
+              {checkout?.discounts_display}
+            </span>
           </sc-line-item>
         )}
 
@@ -205,56 +204,38 @@ export class ScOrder {
               </sc-tag>
             </span>
 
-            <sc-format-number
+            <span
               slot="price"
               style={{
                 'font-weight': 'var(--sc-font-weight-semibold)',
                 'color': 'var(--sc-color-gray-800)',
               }}
-              type="currency"
-              currency={checkout?.currency}
-              value={checkout?.discount_amount}
-            ></sc-format-number>
+            >
+              {checkout?.discounts_display_amount}
+            </span>
           </sc-line-item>
         )}
 
         {!!checkout?.shipping_amount && (
           <sc-line-item>
             <span slot="description">{`${__('Shipping', 'surecart')} ${shippingMethodName ? `(${shippingMethodName})` : ''}`}</span>
-            <sc-format-number
+            <span
               slot="price"
               style={{
                 'font-weight': 'var(--sc-font-weight-semibold)',
                 'color': 'var(--sc-color-gray-800)',
               }}
-              type="currency"
-              currency={checkout?.currency}
-              value={checkout?.shipping_amount}
-            ></sc-format-number>
+            >
+              {checkout?.shipping_display_amount}
+            </span>
           </sc-line-item>
         )}
 
         {!!checkout?.tax_amount && (
           <sc-line-item>
-            <span slot="description">{`${formatTaxDisplay(
-							checkout?.tax_label,
-							checkout?.tax_status === 'estimated'
-						)} (${checkout?.tax_percent}%)`}</span>
-            <sc-format-number
-              slot="price"
-              style={{
-                'font-weight': 'var(--sc-font-weight-semibold)',
-                'color': 'var(--sc-color-gray-800)',
-              }}
-              type="currency"
-              currency={checkout?.currency}
-              value={checkout?.tax_amount}
-            ></sc-format-number>
-            {!!checkout?.tax_inclusive_amount && (
-							<span slot="price-description">
-								{`(${__('included', 'surecart')})`}
-							</span>
-						)}
+            <span slot="description">{`${formatTaxDisplay(checkout?.tax_label, checkout?.tax_status === 'estimated')} (${checkout?.tax_percent}%)`}</span>
+            <span slot="price">{checkout?.tax_display_amount}</span>
+            {!!checkout?.tax_inclusive_amount && <span slot="price-description">{`(${__('included', 'surecart')})`}</span>}
           </sc-line-item>
         )}
 
@@ -267,57 +248,52 @@ export class ScOrder {
           }}
         >
           <span slot="title">{__('Total', 'surecart')}</span>
-          <span slot="price">
-            <sc-format-number type="currency" currency={checkout?.currency} value={checkout?.total_amount}></sc-format-number>
-          </span>
+          <span slot="price">{checkout?.total_display_amount}</span>
           <span slot="currency">{checkout?.currency}</span>
         </sc-line-item>
 
         {!!checkout?.proration_amount && (
           <sc-line-item>
             <span slot="description">{__('Proration', 'surecart')}</span>
-            <sc-format-number
+            <span
               slot="price"
               style={{
                 'font-weight': 'var(--sc-font-weight-semibold)',
                 'color': 'var(--sc-color-gray-800)',
               }}
-              type="currency"
-              currency={checkout?.currency}
-              value={checkout?.proration_amount}
-            ></sc-format-number>
+            >
+              {checkout?.proration_display_amount}
+            </span>
           </sc-line-item>
         )}
 
         {!!checkout?.applied_balance_amount && (
           <sc-line-item>
             <span slot="description">{__('Applied Balance', 'surecart')}</span>
-            <sc-format-number
-              slot="price"
+            <span
               style={{
                 'font-weight': 'var(--sc-font-weight-semibold)',
                 'color': 'var(--sc-color-gray-800)',
               }}
-              type="currency"
-              currency={checkout?.currency}
-              value={checkout?.applied_balance_amount}
-            ></sc-format-number>
+              slot="price"
+            >
+              {checkout?.applied_balance_display_amount}
+            </span>
           </sc-line-item>
         )}
 
         {!!checkout?.credited_balance_amount && (
           <sc-line-item>
             <span slot="description">{__('Credited Balance', 'surecart')}</span>
-            <sc-format-number
+            <span
               slot="price"
               style={{
                 'font-weight': 'var(--sc-font-weight-semibold)',
                 'color': 'var(--sc-color-gray-800)',
               }}
-              type="currency"
-              currency={checkout?.currency}
-              value={checkout?.credited_balance_amount}
-            ></sc-format-number>
+            >
+              {checkout?.credited_balance_display_amount}
+            </span>
           </sc-line-item>
         )}
 
@@ -329,9 +305,7 @@ export class ScOrder {
             }}
           >
             <span slot="title">{__('Amount Due', 'surecart')}</span>
-            <span slot="price">
-              <sc-format-number type="currency" currency={checkout?.currency} value={checkout?.amount_due}></sc-format-number>
-            </span>
+            <span slot="price">{checkout?.amount_due_display_amount}</span>
             <span slot="currency">{checkout?.currency}</span>
           </sc-line-item>
         )}
@@ -345,9 +319,7 @@ export class ScOrder {
             }}
           >
             <span slot="title">{__('Paid', 'surecart')}</span>
-            <span slot="price">
-              <sc-format-number type="currency" currency={checkout?.currency} value={checkout?.paid_amount}></sc-format-number>
-            </span>
+            <span slot="price">{checkout?.paid_display_amount}</span>
             <span slot="currency">{checkout?.currency}</span>
           </sc-line-item>
         )}
@@ -360,35 +332,23 @@ export class ScOrder {
               }}
             >
               <span slot="description">{__('Refunded', 'surecart')}</span>
-              <span slot="price">
-                <sc-format-number  
-                  type="currency" 
-                  currency={checkout?.currency} 
-                  value={checkout?.refunded_amount}
-                ></sc-format-number>
-              </span>
+              <span slot="price">{checkout?.refunded_display_amount}</span>
             </sc-line-item>
             <sc-line-item
-            style={{
-              'width': '100%',
-              '--price-size': 'var(--sc-font-size-x-large)',
-            }}
-          >
-            <span slot="title">{__('Net Payment', 'surecart')}</span>
-            <span slot="price">
-              <sc-format-number 
-                type="currency" 
-                currency={checkout?.currency} 
-                value={checkout?.net_paid_amount}
-              ></sc-format-number>
-            </span>
-          </sc-line-item>
-        </Fragment>
+              style={{
+                'width': '100%',
+                '--price-size': 'var(--sc-font-size-x-large)',
+              }}
+            >
+              <span slot="title">{__('Net Payment', 'surecart')}</span>
+              <span slot="price">{checkout?.net_paid_display_amount}</span>
+            </sc-line-item>
+          </Fragment>
         )}
         {checkout?.tax_reverse_charged_amount > 0 && (
-        <sc-line-item>
-          <span slot="description">{__('*Tax to be paid on reverse charge basis', 'surecart')}</span>
-        </sc-line-item>
+          <sc-line-item>
+            <span slot="description">{__('*Tax to be paid on reverse charge basis', 'surecart')}</span>
+          </sc-line-item>
         )}
       </Fragment>
     );

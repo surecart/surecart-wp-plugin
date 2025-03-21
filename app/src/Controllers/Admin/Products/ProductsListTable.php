@@ -351,35 +351,7 @@ class ProductsListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_price( $product ) {
-		$prices = $product->prices->data ?? array();
-
-		// this has no prices.
-		if ( empty( $prices ) || ! is_array( $prices ) ) {
-			return '<sc-tag type="warning">' . esc_html__( 'No price', 'surecart' ) . '</sc-tag>';
-		}
-
-		// map the prices into an array of formatted price strings.
-		$price_display = array_map(
-			function ( $price ) {
-				if ( $price->ad_hoc ) {
-					return esc_html__( 'Name your own price', 'surecart' );
-				}
-				if ( 0 === $price->amount ) {
-					return esc_html__( 'Free', 'surecart' );
-				}
-				return '<sc-format-number type="currency" currency="' . $price->currency . '" value="' . $price->amount . '"></sc-format-number>';     },
-			$prices
-		);
-
-		// combine into string with commas.
-		$price_output = implode( ', ', array_slice( $price_display, 0, 2 ) );
-
-		if ( $product->metrics->prices_count > 2 ) {
-			// translators: %d is the number of other prices.
-			$price_output .= sprintf( _n( ' and %d other price.', ' and %d other prices.', $product->metrics->prices_count - 2, 'surecart' ), $product->metrics->prices_count - 2 );
-		}
-
-		return $price_output;
+		return ! empty( $product->range_display_amount ) ? $product->range_display_amount : '-';
 	}
 
 	/**
@@ -545,7 +517,7 @@ class ProductsListTable extends ListTable {
 	 */
 	public function column_default( $product, $column_name ) {
 		// Call the parent method to handle custom columns
-        parent::column_default( $product, $column_name );
+		parent::column_default( $product, $column_name );
 
 		switch ( $column_name ) {
 			case 'name':

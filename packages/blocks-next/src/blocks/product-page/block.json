@@ -19,6 +19,7 @@
 		"anchor": true,
 		"align": true,
 		"layout": true,
+		"currencyConversion": true,
 		"spacing": {
 			"padding": true,
 			"margin": true,

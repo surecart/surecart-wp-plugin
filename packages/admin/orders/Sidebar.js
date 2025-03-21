@@ -48,6 +48,7 @@ export default ({ order, checkout, loading, onManuallyRefetchOrder }) => {
 					`/surecart/v1/checkouts/${order?.checkout?.id}`,
 					{
 						expand: checkoutOrderExpands,
+						context: 'edit',
 					}
 				),
 				method: 'PATCH',
@@ -71,10 +72,7 @@ export default ({ order, checkout, loading, onManuallyRefetchOrder }) => {
 
 	return (
 		<Fragment>
-			<InvoiceDetails
-				checkout={checkout}
-				loading={loading}
-			/>
+			<InvoiceDetails checkout={checkout} loading={loading} />
 
 			<ContactInfo
 				checkout={checkout}

@@ -80,6 +80,12 @@ class ErrorsTranslationService {
 			return sprintf( __( 'You must enter a quantity greater than or equal to %s', 'surecart' ), $options['value'] );
 		}
 
+		// refund quantity greater than or equal to.
+		if ( 'refund_items.quantity' === $attribute && 'greater_than_or_equal_to' === $type && ! empty( $options['value'] ) ) {
+			// translators: minimum quantity.
+			return sprintf( __( 'You must enter a quantity greater than or equal to %s', 'surecart' ), $options['value'] );
+		}
+
 		if ( 'coupon' === $attribute && 'less_than_min_subtotal_amount' === $type && ! empty( $options['coupon_min_subtotal_amount'] ) && ! empty( $options['currency'] ) ) {
 			// translators: minimum amount for coupon.
 			return sprintf( __( 'You must spend at least %s to use this coupon.', 'surecart' ), Currency::format( $options['coupon_min_subtotal_amount'], $options['currency'] ) );

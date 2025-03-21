@@ -55,6 +55,7 @@ export class ScOrderConfirmation {
             'shipping_address',
           ],
           refresh_status: true,
+          currency_conversion: false,
         }),
       })) as Checkout;
     } catch (e) {
