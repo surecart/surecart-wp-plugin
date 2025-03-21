@@ -26,7 +26,6 @@ export default ({ attributes, setAttributes }) => {
 	const [sameAsShipping, setSameAsShipping] = useState(false);
 	const blockProps = useBlockProps();
 
-	console.log(scBlockData.i18n.defaultCountryFields);
 	const Tag = full ? ScAddress : ScCompactAddress;
 
 	return (
