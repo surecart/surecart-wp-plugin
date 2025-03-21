@@ -92,6 +92,7 @@ export class ScAddressSuggestions {
       },
       body: JSON.stringify({
         textQuery: input,
+        pageSize: 5,
       }),
     });
 
