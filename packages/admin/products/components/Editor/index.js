@@ -16,7 +16,7 @@ import { parse, serialize } from '@wordpress/blocks';
 import { Button } from '@wordpress/components';
 import { moreHorizontal, close, settings, external } from '@wordpress/icons';
 import { useDebounce } from '@wordpress/compose';
-
+import { addQueryArgs } from '@wordpress/url';
 /**
  * Internal dependencies.
  */
@@ -25,9 +25,9 @@ import initBlocks from '../../../components/block-editor/utils/init-blocks';
 import BlockEditor from '../../../components/block-editor';
 import PreviewBlocks from '../../../components/block-editor/PreviewBlocks';
 import { ScButton, ScIcon } from '@surecart/components-react';
-import { useEntityProp } from '@wordpress/core-data';
 import Settings from './Settings';
 import { useSelect } from '@wordpress/data';
+import { ExternalLink } from '@wordpress/components';
 
 const MemoizedBlockEditor = memo(BlockEditor);
 
@@ -141,10 +141,15 @@ export default ({ product, updateProduct, loading }) => {
 								{
 									icon: external,
 									onClick: () => {
-										window.location.assign(
-											`${window.location.origin}/wp-admin/post.php?post=${product.post.ID}&action=edit`
+										window.open(
+											addQueryArgs('/wp-admin/post.php', {
+												post: product.post.ID,
+												action: 'edit',
+											}),
+											'_blank'
 										);
 									},
+
 									title: __('Open Full Editor', 'surecart'),
 								},
 								{
@@ -221,8 +226,7 @@ export default ({ product, updateProduct, loading }) => {
 						.components-modal__header {
 							height: 60px;
 							border-bottom: 1px solid #ccc;
-							padding-left: 18px;
-							padding-right: 18px;
+							padding: 18px;
 
 							.components-modal__header-heading {
 								font-size: 16px;
@@ -234,7 +238,7 @@ export default ({ product, updateProduct, loading }) => {
 							padding: 0;
 						}
 					`}
-					title={__('Content', 'surecart')}
+					title={__('Content Designer', 'surecart')}
 					shouldCloseOnClickOutside={false}
 					shouldCloseOnEsc={false}
 					isDismissible={false}
@@ -244,12 +248,46 @@ export default ({ product, updateProduct, loading }) => {
 						}
 					}}
 					headerActions={
-						<Button
-							size="small"
-							onClick={onCancel}
-							icon={close}
-							label={__('Close', 'surecart')}
-						/>
+						<div
+							css={css`
+								display: flex;
+								align-items: center;
+								gap: 2em;
+							`}
+						>
+							<ExternalLink
+								href={addQueryArgs('/wp-admin/post.php', {
+									post: product.post.ID,
+									action: 'edit',
+								})}
+								css={css`
+									font-size: 12px;
+									color: #666;
+
+									.components-external-link__contents {
+										text-decoration: none;
+									}
+								`}
+								onClick={(e) => {
+									e.preventDefault();
+									setEditorModal(false);
+									window.location.assign(
+										addQueryArgs('/wp-admin/post.php', {
+											post: product.post.ID,
+											action: 'edit',
+										})
+									);
+								}}
+							>
+								{__('Launch Full Editor', 'surecart')}
+							</ExternalLink>
+							<Button
+								size="small"
+								onClick={onCancel}
+								icon={close}
+								label={__('Close', 'surecart')}
+							/>
+						</div>
 					}
 				>
 					<Suspense

@@ -30,6 +30,9 @@ class ProductPostTypeService {
 		// register meta.
 		add_action( 'init', array( $this, 'registerMeta' ) );
 
+		// Hide trash button in block editor.
+		add_action( 'enqueue_block_editor_assets', array( $this, 'hidePostSummary' ) );
+
 		// add variation option value query to posts_where.
 		add_filter( 'posts_where', array( $this, 'handleVariationOptionValueQuery' ), 10, 2 );
 
@@ -56,6 +59,9 @@ class ProductPostTypeService {
 
 		// before inserting a product via the rest api, sync the product.
 		add_filter( 'rest_pre_insert_sc_product', [ $this, 'syncProductPostContent' ], 10, 2 );
+
+		// disable trash for products.
+		add_filter( 'rest_sc_product_trashable', '__return_false' );
 
 		// we need to disable the gutenberg editor for our post type so that blocks don't load there.
 		add_filter( 'use_block_editor_for_post_type', [ $this, 'forceGutenberg' ], 10, 2 );
@@ -109,6 +115,27 @@ class ProductPostTypeService {
 			// validate FSE template and return single if invalid.
 			add_filter( 'template_include', array( $this, 'validateFSETemplate' ), 10, 1 );
 		}
+	}
+
+	/**
+	 * Hide the trash button in the block editor for sc_product post type.
+	 *
+	 * @return void
+	 */
+	public function hidePostSummary() {
+		if ( ! is_admin() ) {
+			return;
+		}
+
+		$screen = get_current_screen();
+		if ( ! $screen || $this->post_type !== $screen->post_type ) {
+			return;
+		}
+
+		wp_add_inline_style(
+			'wp-edit-post',
+			'.editor-post-summary { display: none !important; }'
+		);
 	}
 
 	/**
@@ -977,11 +1004,11 @@ class ProductPostTypeService {
 				'map_meta_cap'      => true,
 				'supports'          => array(
 					'title',
-					'excerpt',
-					'custom-fields',
+					// 'excerpt',
+					// 'custom-fields',
 					'editor',
 					'thumbnail',
-					'page-attributes',
+					// 'page-attributes',
 				),
 			)
 		);
@@ -1262,35 +1289,46 @@ class ProductPostTypeService {
 	/**
 	 * Sync product content before insert
 	 *
-	 * @param \WP_Post         $prepared_post The prepared post object.
+	 * @param \WP_Post         $post The prepared post object.
 	 * @param \WP_REST_Request $request       The request object.
 	 *
 	 * @return \WP_Post|\WP_Error
 	 */
-	public function syncProductPostContent( $prepared_post, $request ) {
+	public function syncProductPostContent( $post, $request ) {
 		// don't sync if explicitly set to false.
 		if ( false === $request->get_param( 'sync' ) ) {
-			return $prepared_post;
+			return $post;
 		}
 
 		// sync the product if the post content is set.
-		if ( ! empty( $prepared_post->ID ) && ! empty( $prepared_post->post_content ) ) {
-			$product = sc_get_product( $prepared_post->ID );
+		if ( ! empty( $post->ID ) ) {
+			$product = sc_get_product( $post->ID );
 
 			if ( ! $product ) {
-				return $prepared_post;
+				return $post;
 			}
 
 			$updated = $product->update(
-				[
-					'content' => $prepared_post->post_content,
-				]
+				array_filter(
+					[
+						'name'         => $post->post_title,
+						'content'      => $post->post_content,
+						'description'  => $post->post_excerpt,
+						'slug'         => $post->post_name,
+						'position'     => $post->menu_order,
+						'cataloged_at' => strtotime( $post->post_date ),
+						'archived'     => $post->post_status === 'sc_archived',
+					]
+				)
 			);
 
 			if ( is_wp_error( $updated ) ) {
 				return $updated;
 			}
+
+			$post = $updated->post;
 		}
-		return $prepared_post;
+
+		return $post;
 	}
 }

@@ -6,7 +6,11 @@ import { css, jsx, Global } from '@emotion/core';
  */
 import { Popover, Button } from '@wordpress/components';
 import { useDispatch, useSelect } from '@wordpress/data';
-import { unregisterBlockType, getBlockTypes } from '@wordpress/blocks';
+import {
+	unregisterBlockType,
+	getBlockTypes,
+	registerBlockType,
+} from '@wordpress/blocks';
 import { useResizeObserver } from '@wordpress/compose';
 import {
 	useCallback,
@@ -193,7 +197,6 @@ export default function ({
 		updateSettings(editorSettings);
 	}, []);
 
-	// Unregister blocks that don't start with 'surecart/' or 'core/'
 	useEffect(() => {
 		const blockTypes = getBlockTypes();
 		blockTypes.forEach((blockType) => {
@@ -204,6 +207,13 @@ export default function ({
 			);
 			if (!isAllowed) {
 				unregisterBlockType(name);
+				registerBlockType(name, {
+					...blockType,
+					supports: {
+						...blockType.supports,
+						inserter: false,
+					},
+				});
 			}
 		});
 	}, []);

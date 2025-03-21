@@ -138,7 +138,8 @@ class CollectionTaxonomyService {
 				'public'            => true,
 				'show_in_rest'      => true,
 				'hierarchical'      => false,
-				'show_in_ui'        => true,
+				'show_in_ui'        => false,
+				'show_ui'           => false,
 				'show_admin_column' => true,
 				'rewrite'           => array(
 					'slug'       => \SureCart::settings()->permalinks()->getBase( 'collection_page' ),
