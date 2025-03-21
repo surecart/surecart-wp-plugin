@@ -18,7 +18,7 @@ class InvoicesViewController extends AdminController {
 		$table->prepare_items();
 		$this->withHeader(
 			array(
-				'breadcrumbs' => [
+				'breadcrumbs'      => [
 					'invoices' => [
 						'title' => __( 'Invoices', 'surecart' ),
 					],
