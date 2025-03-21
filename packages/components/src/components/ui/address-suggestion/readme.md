@@ -41,9 +41,17 @@
 
  - [sc-address](../address)
 
+### Depends on
+
+- [sc-button](../button)
+- [sc-icon](../icon)
+
 ### Graph
 ```mermaid
 graph TD;
+  sc-address-suggestions --> sc-button
+  sc-address-suggestions --> sc-icon
+  sc-button --> sc-spinner
   sc-address --> sc-address-suggestions
   style sc-address-suggestions fill:#f9f,stroke:#333,stroke-width:4px
 ```

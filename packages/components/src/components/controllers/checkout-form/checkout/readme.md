@@ -152,6 +152,8 @@ graph TD;
   sc-select --> sc-input
   sc-select --> sc-spinner
   sc-select --> sc-menu
+  sc-address-suggestions --> sc-button
+  sc-address-suggestions --> sc-icon
   sc-compact-address --> sc-form-control
   sc-compact-address --> sc-select
   sc-compact-address --> sc-input

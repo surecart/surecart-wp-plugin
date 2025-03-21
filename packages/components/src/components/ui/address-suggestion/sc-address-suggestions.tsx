@@ -43,7 +43,7 @@ export class ScAddressSuggestions {
   @Prop({ mutable: true }) showSuggestions: boolean = false;
 
   /** Place select event */
-  @Event() scPlaceSelect: EventEmitter<Address>;
+  @Event() scChangeAddress: EventEmitter<Address>;
 
   /** Show suggestions change event */
   @Event() scShowSuggestionsChange: EventEmitter<boolean>;
@@ -135,7 +135,7 @@ export class ScAddressSuggestions {
     const state = this.regions?.find(region => region.value === mapState)?.value || null;
 
     // Update the address with the place details.
-    this.scPlaceSelect.emit({
+    this.scChangeAddress.emit({
       line_1: place.displayName || null,
       city: addressComponents.find(component => component.types.includes('locality'))?.shortText || null,
       state,
@@ -186,6 +186,14 @@ export class ScAddressSuggestions {
       })
     ) {
       this.showSuggestions = false;
+
+      // If the address line 1 is not empty, we want to show the address fields.
+      if (this.addressLine1) {
+        this.scShowAddressFields.emit();
+        this.scChangeAddress.emit({
+          line_1: this.addressLine1,
+        });
+      }
     }
   }
 
@@ -202,13 +210,19 @@ export class ScAddressSuggestions {
   }
 
   highlightMatch(text: string, query: string) {
-    const regex = new RegExp(`(${query})`, 'gi');
+    // Split query into words and filter out empty strings.
+    const words = query.split(/\s+/).filter(word => word);
+
+    // Create a regex to match any word in the query.
+    const regex = new RegExp(`(${words.join('|')})`, 'gi');
+
+    // Replace matched words with highlighted version.
     return text.replace(regex, '<strong>$1</strong>');
   }
 
   renderAddressSuggestions() {
     // if no addressSuggestions, return.
-    if (!this.showSuggestions || !this.addressSuggestions?.length || !this.addressLine1) {
+    if (!this.showSuggestions || !this.addressLine1) {
       return null;
     }
 
@@ -235,11 +249,25 @@ export class ScAddressSuggestions {
                   this.showSuggestions = false;
                   this.addressSuggestions = [];
                 }}
+                aria-label={__('Close suggestions', 'surecart')}
               >
                 <sc-icon name="x" style={{ color: 'var(--sc-color-gray-500)' }}></sc-icon>
               </sc-button>
             </li>
 
+            {/* Display "No results found" if there are no suggestions */}
+            {this.addressSuggestions.length === 0 && (
+              <li
+                class="sc-address__suggestions--item sc-address__suggestions--item--no-select sc-address__suggestions--item--no-result"
+                part="suggestion-item"
+                role="listitem"
+                tabindex="-1"
+              >
+                {__('No results found', 'surecart')}
+              </li>
+            )}
+
+            {/* Render suggestions */}
             {this.addressSuggestions.map((suggestion, index) => (
               <li
                 class={`sc-address__suggestions--item ${this.focusedIndex === index ? 'focused' : ''}`}
@@ -264,7 +292,18 @@ export class ScAddressSuggestions {
                 role="listitem"
                 tabindex="-1"
               >
-                <button onClick={() => this.scShowAddressFields.emit()}>{__('Enter address manually', 'surecart')}</button>
+                <button
+                  onClick={() => {
+                    this.scShowAddressFields.emit();
+
+                    // Update the address with the address line 1.
+                    this.scChangeAddress.emit({
+                      line_1: this.addressLine1,
+                    });
+                  }}
+                >
+                  {__('Enter address manually', 'surecart')}
+                </button>
               </li>
             )}
           </ul>

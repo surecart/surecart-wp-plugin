@@ -70,6 +70,9 @@ graph TD;
   sc-select --> sc-spinner
   sc-select --> sc-menu
   sc-input --> sc-form-control
+  sc-address-suggestions --> sc-button
+  sc-address-suggestions --> sc-icon
+  sc-button --> sc-spinner
   sc-block-ui --> sc-spinner
   sc-compact-address --> sc-form-control
   sc-compact-address --> sc-select
@@ -85,7 +88,6 @@ graph TD;
   sc-tax-id-input --> sc-button
   sc-tax-id-input --> sc-menu
   sc-tax-id-input --> sc-menu-item
-  sc-button --> sc-spinner
   sc-order-bumps --> sc-form-control
   sc-order-bumps --> sc-order-bump
   sc-order-bump --> sc-format-number

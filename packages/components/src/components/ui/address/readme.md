@@ -102,6 +102,9 @@ graph TD;
   sc-select --> sc-spinner
   sc-select --> sc-menu
   sc-input --> sc-form-control
+  sc-address-suggestions --> sc-button
+  sc-address-suggestions --> sc-icon
+  sc-button --> sc-spinner
   sc-block-ui --> sc-spinner
   sc-customer-edit --> sc-address
   sc-order-billing-address --> sc-address

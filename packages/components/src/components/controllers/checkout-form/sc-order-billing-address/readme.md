@@ -60,6 +60,9 @@ graph TD;
   sc-select --> sc-spinner
   sc-select --> sc-menu
   sc-input --> sc-form-control
+  sc-address-suggestions --> sc-button
+  sc-address-suggestions --> sc-icon
+  sc-button --> sc-spinner
   sc-block-ui --> sc-spinner
   sc-form-components-validator --> sc-order-billing-address
   style sc-order-billing-address fill:#f9f,stroke:#333,stroke-width:4px

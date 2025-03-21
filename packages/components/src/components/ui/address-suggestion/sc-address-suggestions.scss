@@ -5,7 +5,7 @@
   z-index: 9;
   background: var(--sc-panel-background-color);
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  max-height: var(--panel-height, 300px);
+  max-height: var(--sc-panel-height, 350px);
   overflow-y: auto;
   width: 100%;
   border: solid 1px var(--sc-panel-border-color);
@@ -61,6 +61,10 @@
       }
     }
 
+    &--no-result {
+      color: var(--sc-color-gray-500);
+    }
+
     &--powered-by {
       font-size: var(--sc-font-size-small);
       color: var(--sc-color-gray-500);
@@ -69,6 +73,7 @@
       justify-content: space-between;
       text-align: center;
       padding: 0px 20px;
+      margin-top: 1px;
 
       a {
         color: var(--sc-color-gray-500);

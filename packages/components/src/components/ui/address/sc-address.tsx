@@ -355,12 +355,15 @@ export class ScAddress {
                         regions={this.regions}
                         addressLine1={this.addressLine1}
                         showSuggestions={this.showSuggestions}
-                        onScPlaceSelect={(e: any) => {
+                        onScChangeAddress={(e: any) => {
                           this.updateAddress(e.detail);
                           this.addressLine1 = e.detail.line_1;
                         }}
                         onScShowSuggestionsChange={(e: CustomEvent<boolean>) => this.handleShowSuggestionsChange(e)}
-                        onScShowAddressFields={() => this.toggleAddressFieldsVisibility(true)}
+                        onScShowAddressFields={() => {
+                          this.toggleAddressFieldsVisibility(true);
+                          this.showSuggestions = false;
+                        }}
                         isManually={!this.hasAnyAddressField()}
                       />
                     )}

@@ -4465,7 +4465,7 @@ declare global {
         new (): HTMLScAddressElement;
     };
     interface HTMLScAddressSuggestionsElementEventMap {
-        "scPlaceSelect": Address;
+        "scChangeAddress": Address;
         "scShowSuggestionsChange": boolean;
         "scShowAddressFields": void;
     }
@@ -7014,7 +7014,7 @@ declare namespace LocalJSX {
         /**
           * Place select event
          */
-        "onScPlaceSelect"?: (event: ScAddressSuggestionsCustomEvent<Address>) => void;
+        "onScChangeAddress"?: (event: ScAddressSuggestionsCustomEvent<Address>) => void;
         /**
           * Event to show address fields manually
          */
