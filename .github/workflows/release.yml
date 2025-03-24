@@ -18,7 +18,6 @@ jobs:
         with:
           bootstrap: true
           package: true
-          analytics_token: ${{ secrets.BSF_ANALYTICS_TOKEN }}
 
       - name: WordPress Plugin Deploy
         uses: 10up/action-wordpress-plugin-deploy@stable

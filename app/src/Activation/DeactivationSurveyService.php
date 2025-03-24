@@ -31,7 +31,7 @@ class DeactivationSurveyService {
 		update_site_option( $this->analytics_key . '_analytics_optin', 'no' ); // We do not want to track the user.
 
 		if ( ! class_exists( 'BSF_Analytics_Loader' ) ) {
-			require_once SURECART_VENDOR_DIR . DIRECTORY_SEPARATOR . 'brainstormforce/bsf-analytics/class-bsf-analytics-loader.php';
+			require_once SURECART_LIBRARY_DIR . DIRECTORY_SEPARATOR . 'bsf-analytics/class-bsf-analytics-loader.php';
 		}
 
 		$bsf_analytics = \BSF_Analytics_Loader::get_instance();
@@ -40,7 +40,7 @@ class DeactivationSurveyService {
 			[
 				$this->analytics_key => [
 					'product_name'        => 'SureCart',
-					'path'                => SURECART_VENDOR_DIR . DIRECTORY_SEPARATOR . 'brainstormforce/bsf-analytics',
+					'path'                => SURECART_LIBRARY_DIR . DIRECTORY_SEPARATOR . 'bsf-analytics',
 					'author'              => 'SureCart',
 					'deactivation_survey' => [
 						[

@@ -7,9 +7,6 @@ inputs:
   package:
     required: false
     description: "Do you want to package the files?"
-  analytics_token:
-    required: true
-    description: "GitHub OAuth token for Composer authentication for installing BSF Analytics package"
 runs:
   using: "composite"
   steps:
@@ -43,7 +40,7 @@ runs:
 
     - name: Composer Install
       shell: bash
-      run: composer config github-oauth.github.com ${{ inputs.analytics_token }} && composer install
+      run: composer install
 
     - name: Get yarn cache directory path
       shell: bash
