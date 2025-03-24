@@ -17,6 +17,13 @@ class CurrencyService {
 	public $is_converting = false;
 
 	/**
+	 * Filter URLs
+	 *
+	 * @var bool
+	 */
+	private static $filter_url = true;
+
+	/**
 	 * Bootstrap the currency service.
 	 *
 	 * @return void
@@ -45,6 +52,27 @@ class CurrencyService {
 		add_filter( 'attachment_link', array( $this, 'addCurrencyParam' ), 99 );
 		add_filter( 'home_url', array( $this, 'addCurrencyParamToHomeUrl' ), 99, 3 );
 		add_filter( 'get_canonical_url', array( $this, 'removeCurrencyParam' ) );
+		add_filter( 'get_pagenum_link', array( $this, 'filterPagenumLink' ), 99, 2 );
+	}
+
+	/**
+	 * Filter paginate link
+	 *
+	 * @param string $result  The page number link.
+	 * @param int    $pagenum The page number.
+	 *
+	 * @return string
+	 */
+	public function filterPagenumLink( $result, $pagenum ) {
+		if ( self::$filter_url ) {
+			remove_filter( 'get_pagenum_link', array( $this, 'filterPagenumLink' ), 99 );
+			self::$filter_url = false;
+			$result           = get_pagenum_link( $pagenum, false );
+			add_filter( 'get_pagenum_link', array( $this, 'filterPagenumLink' ), 99, 2 );
+			self::$filter_url = true;
+		}
+
+		return $result;
 	}
 
 	/**
@@ -114,7 +142,7 @@ class CurrencyService {
 	 * @return string The filtered permalink.
 	 */
 	public function addCurrencyParam( $permalink ) {
-		if ( apply_filters( 'surecart/currency/filter_url', true, $permalink ) ) {
+		if ( apply_filters( 'surecart/currency/filter_url', self::$filter_url, $permalink ) ) {
 			// we can't use the Currency::getCurrencyFromRequest here because we don't want to fetch display currencies potentially multiple times per request.
 			$currency = strtolower( sanitize_text_field( $_GET['currency'] ?? $_COOKIE['sc_current_currency'] ?? '' ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			if ( ! empty( $currency ) && strtolower( $currency ) !== strtolower( \SureCart::account()->currency ) ) {

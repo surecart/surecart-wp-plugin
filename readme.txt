@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: ecommerce plugin, online store, subscriptions, stripe, payments
 Requires at least: 6.6
 Tested up to: 6.7
-Stable tag: 3.5.3
+Stable tag: 3.6.1
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -304,6 +304,20 @@ Yes, the checkout form can be customized using our visual builder. You can chang
 Accessibility is a huge priority for the entire team building SureCart. As you know, accessibility is an ongoing improvement task. Our development and QA teams are trained in accessibility best practices and build/test each new feature for accessibility. If you come across any edge issues, we want to know about it and will prioritize its resolution. Please contact us via our website.
 
 == Changelog ==
+
+= 3.6.1 - March 21st, 2025 =
+- Fix: Issue with address fields not properly rendering on admin pages.
+- Fix: Issue where we show the currency abbreviation twice on the checkout page for some currencies.
+
+= 3.6.0 - March 20th, 2025 =
+- New: Refund UI - tie refunds to specific order line items, revoke affiliate commissions, and more.
+- New: Cart icon element for Bricks Builder.
+- New: Ability to add a Line 2 to the checkout address.
+- Improvement: Internationalization of checkout address fields.
+- Change: New stores default checkout page won't include address unless required by checkout.
+- Fix: Handle generic customer dashboard redirects from platform.
+- Fix: Issue where bricks pagination was not working when a currency was selected.
+- Fix: Enhance error message for duplicate coupon names to be more descriptive.
 
 = 3.5.3 - March 14th, 2025 =
 - Change: Change the Bricks Product Data element to Product Pricing for better clarity.

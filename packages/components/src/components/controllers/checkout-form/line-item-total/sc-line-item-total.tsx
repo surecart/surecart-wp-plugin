@@ -69,6 +69,12 @@ export class ScLineItemTotal {
     );
   }
 
+  // Determine if the currency should be displayed to avoid duplication in the amount display.
+  getCurrencyToDisplay() {
+    const checkout = this.checkout || checkoutState?.checkout;
+    return checkout?.amount_due_default_currency_display_amount?.toLowerCase()?.includes(checkout?.currency?.toLowerCase()) ? '' : checkout?.currency?.toUpperCase();
+  }
+
   renderConversion() {
     if (this.total !== 'total') {
       return null;
@@ -95,16 +101,16 @@ export class ScLineItemTotal {
         <sc-divider></sc-divider>
         <sc-line-item style={{ '--price-size': 'var(--sc-font-size-x-large)' }}>
           <span slot="title">
-            <slot name="charge-amount-description">{sprintf(__('Payment Total', 'surecart'), checkout?.currency?.toUpperCase())}</slot>
+            <slot name="charge-amount-description">{__('Payment Total', 'surecart')}</slot>
           </span>
           <span slot="price">
-            <span class="currency-label">{checkout?.currency?.toUpperCase()}</span>
+            {this.getCurrencyToDisplay() && <span class="currency-label">{this.getCurrencyToDisplay()}</span>}
             {checkout?.amount_due_default_currency_display_amount}
           </span>
         </sc-line-item>
         <sc-line-item>
           <span slot="description" class="conversion-description">
-            {/* Tranlators: %s is the currency code. */}
+            {/* translators: %s is the currency code */}
             {sprintf(__('Your payment will be processed in %s.', 'surecart'), checkout?.currency?.toUpperCase())}
           </span>
         </sc-line-item>
