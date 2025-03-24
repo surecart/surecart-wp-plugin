@@ -330,7 +330,18 @@ class SettingService {
 				'default'      => [ 'core', 'surecart' ],
 			]
 		);
+		$this->register(
+			'surecart',
+			'product_editor_mode',
+			[
+				'type'              => 'string',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'sanitize_text_field',
+				'default'           => 'inline',
+			]
+		);
 	}
+
 	/**
 	 * Register a setting.
 	 *

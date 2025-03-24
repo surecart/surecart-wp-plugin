@@ -14,19 +14,29 @@ import {
 import { Disabled, Tooltip } from '@wordpress/components';
 
 export default function ({ blocks }) {
+	const styles = surecartBlockEditorSettings?.styles;
+
+	styles.push({
+		css: `
+    /* Hide rich text placeholder */
+    [data-rich-text-placeholder] {
+      display: none;
+    }
+    /* Hide warning */
+    .wp-block.has-warning > div:first-child {
+      display: none !important;
+    }
+    `,
+		__unstableType: 'plugin',
+		isGlobalStyles: true,
+	});
+
 	return (
 		<BlockEditorProvider
 			value={blocks}
 			settings={surecartBlockEditorSettings}
 		>
-			<div
-				className="editor-styles-wrapper"
-				css={css`
-					[data-rich-text-placeholder] {
-						display: none;
-					}
-				`}
-			>
+			<div className="editor-styles-wrapper">
 				<Tooltip
 					text={__('Click to edit', 'surecart')}
 					placement="bottom"
@@ -42,9 +52,7 @@ export default function ({ blocks }) {
 							zoom: 0.7;
 						`}
 					>
-						<EditorStyles
-							styles={surecartBlockEditorSettings?.styles}
-						/>
+						<EditorStyles styles={styles} />
 						<div style={{ cursor: 'pointer' }}>
 							<Disabled>
 								<div style={{ padding: '10px 20px' }}>

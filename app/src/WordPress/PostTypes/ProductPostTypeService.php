@@ -57,9 +57,6 @@ class ProductPostTypeService {
 		// update edit post link to edit the product directly.
 		add_filter( 'get_edit_post_link', array( $this, 'updateEditLink' ), 10, 2 );
 
-		// before inserting a product via the rest api, sync the product.
-		add_filter( 'rest_pre_insert_sc_product', [ $this, 'syncProductPostContent' ], 10, 2 );
-
 		// disable trash for products.
 		add_filter( 'rest_sc_product_trashable', '__return_false' );
 
@@ -1003,7 +1000,7 @@ class ProductPostTypeService {
 				'capability_type'   => 'post',
 				'map_meta_cap'      => true,
 				'supports'          => array(
-					'title',
+					// 'title',
 					// 'excerpt',
 					// 'custom-fields',
 					'editor',
@@ -1284,51 +1281,5 @@ class ProductPostTypeService {
 		$query_vars = isset( $_GET ) && is_array( $_GET ) ? $_GET : array(); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		wp_safe_redirect( add_query_arg( $query_vars, get_permalink( get_the_ID() ) ), 301 );
 		exit();
-	}
-
-	/**
-	 * Sync product content before insert
-	 *
-	 * @param \WP_Post         $post The prepared post object.
-	 * @param \WP_REST_Request $request       The request object.
-	 *
-	 * @return \WP_Post|\WP_Error
-	 */
-	public function syncProductPostContent( $post, $request ) {
-		// don't sync if explicitly set to false.
-		if ( false === $request->get_param( 'sync' ) ) {
-			return $post;
-		}
-
-		// sync the product if the post content is set.
-		if ( ! empty( $post->ID ) ) {
-			$product = sc_get_product( $post->ID );
-
-			if ( ! $product ) {
-				return $post;
-			}
-
-			$updated = $product->update(
-				array_filter(
-					[
-						'name'         => $post->post_title,
-						'content'      => $post->post_content,
-						'description'  => $post->post_excerpt,
-						'slug'         => $post->post_name,
-						'position'     => $post->menu_order,
-						'cataloged_at' => strtotime( $post->post_date ),
-						'archived'     => $post->post_status === 'sc_archived',
-					]
-				)
-			);
-
-			if ( is_wp_error( $updated ) ) {
-				return $updated;
-			}
-
-			$post = $updated->post;
-		}
-
-		return $post;
 	}
 }

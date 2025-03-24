@@ -10,11 +10,17 @@ import {
 	Modal,
 	DropdownMenu,
 } from '@wordpress/components';
-import { store as coreStore } from '@wordpress/core-data';
+import { store as coreStore, useEntityRecord } from '@wordpress/core-data';
 import { Suspense, useEffect, useState, memo } from '@wordpress/element';
 import { parse, serialize } from '@wordpress/blocks';
 import { Button } from '@wordpress/components';
-import { moreHorizontal, close, settings, external } from '@wordpress/icons';
+import {
+	moreHorizontal,
+	close,
+	settings,
+	external,
+	fullscreen,
+} from '@wordpress/icons';
 import { useDebounce } from '@wordpress/compose';
 import { addQueryArgs } from '@wordpress/url';
 /**
@@ -31,15 +37,29 @@ import { ExternalLink } from '@wordpress/components';
 
 const MemoizedBlockEditor = memo(BlockEditor);
 
-export default ({ product, updateProduct, loading }) => {
-	if (!product) {
-		return null;
-	}
+export default ({ post, updatePost, loading }) => {
 	const [cancelModal, setCancelModal] = useState(false);
 	const [editorModal, setEditorModal] = useState(false);
 	const [settingsModal, setSettingsModal] = useState(false);
 	const [blocks, setBlocks] = useState([]);
 	const [initialBlocks, setInitialBlocks] = useState([]);
+	const {
+		editedRecord: { surecart_product_editor_mode: editorMode },
+	} = useEntityRecord('root', 'site');
+
+	const editPostLink = addQueryArgs('/wp-admin/post.php', {
+		post: post?.id,
+		action: 'edit',
+	});
+
+	const openEditor = (e) => {
+		e.preventDefault();
+		if (editorMode === 'external') {
+			window.location.assign(editPostLink);
+		} else {
+			setEditorModal(true);
+		}
+	};
 
 	useEffect(() => {
 		const unregisterBlocks = initBlocks();
@@ -57,10 +77,10 @@ export default ({ product, updateProduct, loading }) => {
 	);
 
 	useEffect(() => {
-		const parsedContent = parse(product?.post?.post_content ?? []);
+		const parsedContent = parse(post?.content ?? '');
 		setBlocks(parsedContent);
 		setInitialBlocks(parsedContent);
-	}, [product?.post?.post_content]);
+	}, [post?.content]);
 
 	const debouncedEditEntityRecord = useDebounce((changedBlocks) => {
 		editProductContent(changedBlocks);
@@ -107,11 +127,14 @@ export default ({ product, updateProduct, loading }) => {
 		setEditorModal(false);
 	};
 
-	const editProductContent = (blocksData) => {
-		updateProduct({
+	const editProductContent = (blocksData) =>
+		updatePost({
 			content: serialize(blocksData),
 		});
-	};
+
+	if (!post?.id) {
+		return null;
+	}
 
 	return (
 		<>
@@ -127,10 +150,14 @@ export default ({ product, updateProduct, loading }) => {
 								margin-top: -20px;
 								margin-bottom: -20px;
 							`}
-							onClick={() => setEditorModal(true)}
+							onClick={openEditor}
+							href={editPostLink}
 						>
 							<ScIcon name="maximize" slot="prefix" />
 							{__('Open Content Designer', 'surecart')}
+							{editorMode === 'external' && (
+								<ScIcon name="external-link" slot="suffix" />
+							)}
 						</ScButton>
 					</div>
 				}
@@ -138,25 +165,37 @@ export default ({ product, updateProduct, loading }) => {
 					canEditSettings && (
 						<DropdownMenu
 							controls={[
-								{
-									icon: external,
-									onClick: () => {
-										window.open(
-											addQueryArgs('/wp-admin/post.php', {
-												post: product.post.ID,
-												action: 'edit',
-											}),
-											'_blank'
-										);
+								[
+									{
+										icon: external,
+										onClick: () =>
+											window.location.assign(
+												editPostLink
+											),
+										title: __(
+											'Go to Full Editor',
+											'surecart'
+										),
 									},
-
-									title: __('Open Full Editor', 'surecart'),
-								},
-								{
-									icon: settings,
-									onClick: () => setSettingsModal(true),
-									title: __('Editor Settings', 'surecart'),
-								},
+									{
+										icon: fullscreen,
+										onClick: () => setEditorModal(true),
+										title: __(
+											'Open Quick Editor',
+											'surecart'
+										),
+									},
+								],
+								[
+									{
+										icon: settings,
+										onClick: () => setSettingsModal(true),
+										title: __(
+											'Editor Settings',
+											'surecart'
+										),
+									},
+								],
 							]}
 							css={css`
 								margin-top: -20px;
@@ -166,11 +205,6 @@ export default ({ product, updateProduct, loading }) => {
 							label={__('More Actions', 'surecart')}
 							popoverProps={{
 								placement: 'bottom-end',
-							}}
-							menuProps={{
-								style: {
-									minWidth: '150px',
-								},
 							}}
 						/>
 					)
@@ -188,7 +222,7 @@ export default ({ product, updateProduct, loading }) => {
 							`}
 							role="button"
 							tabIndex={0}
-							onClick={() => setEditorModal(true)}
+							onClick={openEditor}
 						>
 							<div
 								css={css`
@@ -256,10 +290,7 @@ export default ({ product, updateProduct, loading }) => {
 							`}
 						>
 							<ExternalLink
-								href={addQueryArgs('/wp-admin/post.php', {
-									post: product.post.ID,
-									action: 'edit',
-								})}
+								href={editPostLink}
 								css={css`
 									font-size: 12px;
 									color: #666;
@@ -271,12 +302,7 @@ export default ({ product, updateProduct, loading }) => {
 								onClick={(e) => {
 									e.preventDefault();
 									setEditorModal(false);
-									window.location.assign(
-										addQueryArgs('/wp-admin/post.php', {
-											post: product.post.ID,
-											action: 'edit',
-										})
-									);
+									window.location.assign(editPostLink);
 								}}
 							>
 								{__('Launch Full Editor', 'surecart')}

@@ -43,7 +43,7 @@ export default ({ id, setBrowserURL }) => {
 	const [error, setError] = useState(null);
 	const [saving, setSaving] = useState(false);
 	const { createSuccessNotice } = useDispatch(noticesStore);
-	const { saveEditedEntityRecord } = useDispatch(coreStore);
+	const { saveEditedEntityRecord, editEntityRecord } = useDispatch(coreStore);
 	const { setEditedPost } = useDispatch('core/editor');
 
 	const {
@@ -65,6 +65,9 @@ export default ({ id, setBrowserURL }) => {
 	const currentPost = useSelect((select) =>
 		select('core/editor').getCurrentPost()
 	);
+
+	const editPost = (data) =>
+		editEntityRecord('postType', 'sc_product', id, data);
 
 	const { post, loadingPost } = useSelect(
 		(select) => {
@@ -410,11 +413,15 @@ export default ({ id, setBrowserURL }) => {
 						loading={!hasLoadedProduct}
 					/>
 
-					<Editor
-						product={product}
-						updateProduct={editProduct}
-						loading={!hasLoadedProduct}
-					/>
+					{post?.id && (
+						<Editor
+							product={product}
+							updateProduct={editProduct}
+							post={post}
+							updatePost={editPost}
+							loading={!hasLoadedProduct}
+						/>
+					)}
 
 					<Image
 						productId={id}
