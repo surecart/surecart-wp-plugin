@@ -166,20 +166,17 @@ export class ScAddressSuggestions {
     if (!this.addressSuggestions.length) return;
 
     const listElement = this.el.shadowRoot.querySelector('.sc-address__suggestions--list') as HTMLElement;
-    const focusedItem = listElement?.children[this.focusedIndex] as HTMLElement;
 
     switch (event.key) {
       case 'ArrowDown':
         event.preventDefault();
         this.focusedIndex = (this.focusedIndex + 1) % this.addressSuggestions.length;
-        focusedItem?.scrollIntoView({ block: 'nearest' });
-        speak(sprintf(__('Suggestion: %s, Press enter to select', 'surecart'), this.addressSuggestions[this.focusedIndex].displayName), 'assertive');
+        this.updateFocus(listElement);
         break;
       case 'ArrowUp':
         event.preventDefault();
         this.focusedIndex = (this.focusedIndex - 1 + this.addressSuggestions.length) % this.addressSuggestions.length;
-        focusedItem?.scrollIntoView({ block: 'nearest' });
-        speak(sprintf(__('Suggestion: %s, Press enter to select', 'surecart'), this.addressSuggestions[this.focusedIndex].displayName), 'assertive');
+        this.updateFocus(listElement);
         break;
       case 'Enter':
         event.preventDefault();
@@ -192,6 +189,11 @@ export class ScAddressSuggestions {
         this.addressSuggestions = [];
         break;
     }
+  }
+
+  updateFocus(listElement: HTMLElement) {
+    const focusedItem = listElement?.children[this.focusedIndex] as HTMLElement;
+    focusedItem?.focus();
   }
 
   manualAddress() {
@@ -319,14 +321,12 @@ export class ScAddressSuggestions {
               <li
                 class={`sc-address__suggestions--item ${this.focusedIndex === index ? 'focused' : ''}`}
                 part="suggestion-item"
-                role="listitem"
-                aria-label={sprintf(__('Select address: %s', 'surecart'), suggestion.displayName)}
+                role="option"
+                aria-selected={this.focusedIndex === index ? 'true' : 'false'}
+                aria-label={sprintf(__('Select suggestion %s', 'surecart'), suggestion.displayName)}
                 tabindex={this.focusedIndex === index ? '0' : '-1'}
                 onClick={() => this.fetchPlaceDetails(suggestion?.placeId)}
                 innerHTML={this.highlightMatch(suggestion.displayName, this.addressLine1)}
-                style={{ color: this.focusedIndex === index ? 'var(--sc-color-primary)' : 'inherit' }}
-                onFocus={() => (this.focusedIndex = index)}
-                onBlur={() => (this.focusedIndex = -1)}
                 onMouseEnter={() => (this.focusedIndex = index)}
                 onMouseLeave={() => (this.focusedIndex = -1)}
               ></li>
