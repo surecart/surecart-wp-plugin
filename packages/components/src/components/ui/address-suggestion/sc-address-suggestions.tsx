@@ -279,7 +279,7 @@ export class ScAddressSuggestions {
       <div class="sc-address-suggestion" part="base">
         <div class={`sc-address__suggestions ${this.showSuggestions ? 'sc-address__suggestions--visible' : ''}`} part="suggestions">
           <ul class="sc-address__suggestions--list" part="suggestions-list" role="list">
-            {/* suggestions powered by Google */}
+            {/* Suggestions powered by */}
             <li
               class="sc-address__suggestions--item sc-address__suggestions--item--no-select sc-address__suggestions--item--powered-by"
               part="suggestion-item"
@@ -304,7 +304,7 @@ export class ScAddressSuggestions {
               </sc-button>
             </li>
 
-            {/* Display "No results found" if there are no suggestions */}
+            {/* No results */}
             {this.addressSuggestions.length === 0 && (
               <li
                 class="sc-address__suggestions--item sc-address__suggestions--item--no-select sc-address__suggestions--item--no-result"

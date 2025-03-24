@@ -1871,10 +1871,6 @@ export namespace Components {
          */
         "href": string;
         /**
-          * Disable the ability to select the item.
-         */
-        "noSelect": boolean;
-        /**
           * Removes focus from the button.
          */
         "setBlur": () => Promise<void>;
@@ -9038,10 +9034,6 @@ declare namespace LocalJSX {
           * Optional link to follow.
          */
         "href"?: string;
-        /**
-          * Disable the ability to select the item.
-         */
-        "noSelect"?: boolean;
         /**
           * The target of the link.
          */
