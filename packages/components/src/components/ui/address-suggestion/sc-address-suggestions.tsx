@@ -56,9 +56,6 @@ export class ScAddressSuggestions {
   /** Focused index for keyboard navigation */
   @State() focusedIndex: number = -1;
 
-  /** Search keyword for address suggestions */
-  @State() searchedKeyword: string = '';
-
   // Use Lodash debounce for fetchAddressSuggestions
   debouncedFetchAddressSuggestions = debounce((input: string) => {
     this.fetchAddressSuggestions(input);
@@ -91,11 +88,6 @@ export class ScAddressSuggestions {
   }
 
   async fetchAddressSuggestions(input: string) {
-    // If the input didn't change, don't fetch again.
-    if (input === this.searchedKeyword) {
-      return;
-    }
-
     const response = await fetch('https://places.googleapis.com/v1/places:searchText', {
       method: 'POST',
       headers: {
@@ -134,9 +126,6 @@ export class ScAddressSuggestions {
       placeId: place.id,
       addressComponents: place.addressComponents,
     }));
-
-    // Set the searched keyword to the current input to avoid duplicate requests later.
-    this.searchedKeyword = input;
   }
 
   async fetchPlaceDetails(placeId: string) {
