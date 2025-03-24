@@ -227,7 +227,6 @@ export class ScAddress {
   }
 
   toggleAddressFieldsVisibility(show: boolean) {
-    this.showLine2 = show;
     this.showCity = show;
     this.showState = show;
     this.showPostal = show;
