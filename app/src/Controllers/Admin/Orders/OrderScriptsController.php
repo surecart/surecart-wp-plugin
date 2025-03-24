@@ -13,7 +13,7 @@ class OrderScriptsController extends AdminModelEditController {
 	 *
 	 * @var array
 	 */
-	protected $with_data = [ 'currency', 'supported_currencies', 'links', 'shipping_protocol' ];
+	protected $with_data = [ 'currency', 'supported_currencies', 'links', 'shipping_protocol', 'i18n' ];
 
 	/**
 	 * Script handle.
