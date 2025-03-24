@@ -1,10 +1,11 @@
 import { Component, Element, Event, EventEmitter, h, Method, Prop, State, Watch } from '@stencil/core';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 import { countryChoices } from '../../../functions/address';
 import { reportChildrenValidity } from '../../../functions/form-data';
 import { Address, CountryLocaleField, CountryLocaleFieldValue } from '../../../types';
 import { getCountryRegions, getCurrentUserCountryCode, sortAddressFields } from 'src/functions/address-settings';
 import { state as i18nState } from '@store/i18n';
+import { speak } from '@wordpress/a11y';
 
 /**
  * @part base - The elements base wrapper.
@@ -342,6 +343,9 @@ export class ScAddress {
                         onScChangeAddress={(e: any) => {
                           this.updateAddress(e.detail);
                           this.addressLine1 = e.detail.line_1;
+
+                          /** translators: %s selected address line 1 */
+                          speak(sprintf(__('Address suggestion selected: %s', 'surecart'), e.detail.line_1));
                         }}
                         onScShowSuggestionsChange={(e: CustomEvent<boolean>) => this.handleShowSuggestionsChange(e)}
                         onScShowAddressFields={() => {

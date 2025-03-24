@@ -2,7 +2,8 @@
  * External dependencies.
  */
 import { Component, Element, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
+import { speak } from '@wordpress/a11y';
 import { debounce } from 'lodash';
 
 /**
@@ -172,11 +173,13 @@ export class ScAddressSuggestions {
         event.preventDefault();
         this.focusedIndex = (this.focusedIndex + 1) % this.addressSuggestions.length;
         focusedItem?.scrollIntoView({ block: 'nearest' });
+        speak(sprintf(__('Suggestion: %s, Press enter to select', 'surecart'), this.addressSuggestions[this.focusedIndex].displayName), 'assertive');
         break;
       case 'ArrowUp':
         event.preventDefault();
         this.focusedIndex = (this.focusedIndex - 1 + this.addressSuggestions.length) % this.addressSuggestions.length;
         focusedItem?.scrollIntoView({ block: 'nearest' });
+        speak(sprintf(__('Suggestion: %s, Press enter to select', 'surecart'), this.addressSuggestions[this.focusedIndex].displayName), 'assertive');
         break;
       case 'Enter':
         event.preventDefault();
@@ -317,6 +320,7 @@ export class ScAddressSuggestions {
                 class={`sc-address__suggestions--item ${this.focusedIndex === index ? 'focused' : ''}`}
                 part="suggestion-item"
                 role="listitem"
+                aria-label={sprintf(__('Select address: %s', 'surecart'), suggestion.displayName)}
                 tabindex={this.focusedIndex === index ? '0' : '-1'}
                 onClick={() => this.fetchPlaceDetails(suggestion?.placeId)}
                 innerHTML={this.highlightMatch(suggestion.displayName, this.addressLine1)}
