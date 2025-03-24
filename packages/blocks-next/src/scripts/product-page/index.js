@@ -334,10 +334,6 @@ const { state, actions } = store('surecart/product-page', {
 				context.busy = false;
 			}
 		},
-		*productQuickView(e) {
-			e.preventDefault();
-			console.log('productQuickView');
-		},
 	},
 
 	callbacks: {

@@ -1,26 +1,28 @@
 /**
  * WordPress dependencies
  */
-import { useBlockProps } from '@wordpress/block-editor';
+import { useBlockProps, useInnerBlocksProps } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
 
-/**
- * Internal dependencies
- */
-import ScIcon from '../../components/ScIcon';
+export default ({}) => {
+	const blockProps = useBlockProps({});
+	const innerBlocksProps = useInnerBlocksProps(blockProps, {
+		allowedBlocks: ['surecart/product-page'],
+		template: [
+			[
+				'surecart/product-page',
+				{
+					metadata: {
+						categories: ['surecart_product_page'],
+						patternName: 'surecart-product-quick-view',
+						name: 'Product Quick View',
+					},
+					align: 'wide',
+					layout: { type: 'constrained' },
+				},
+			],
+		],
+	});
 
-export default ({
-	attributes: { icon },
-	setAttributes,
-	context: { postId },
-}) => {
-	const blockProps = useBlockProps();
-
-	return (
-		<>
-			<div {...blockProps}>
-				<ScIcon name={icon} />
-			</div>
-		</>
-	);
+	return <div {...innerBlocksProps}></div>;
 };

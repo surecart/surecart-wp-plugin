@@ -1,13 +1,20 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
-	"name": "surecart/product-quick-view",
-	"title": "Product Quick View",
-	"description": "Display the product quick view.",
+	"name": "surecart/product-quick-view-button",
+	"title": "Product Quick View Button",
+	"description": "Display the product quick view button.",
 	"version": "1.0.0",
 	"category": "surecart-product-list",
 	"example": {},
-	"attributes": {},
+	"usesContext": ["postId"],
+	"ancestor": ["surecart/product-template"],
+	"attributes": {
+		"icon": {
+			"type": "string",
+			"default": "eye"
+		}
+	},
 	"supports": {
 		"interactivity": true,
 		"color": {

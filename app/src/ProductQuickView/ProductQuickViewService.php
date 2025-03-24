@@ -28,14 +28,11 @@ class ProductQuickViewService {
 		}
 
 		ob_start();
-		?>
 
-		<!-- Render the product quick view. -->
-		<div class="sc-product-quick-view">
-			<?php echo do_blocks( $template->content ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-		</div>
+		echo "<!-- Render the Product quick view -->\n";
+		// Render the product quick view.
+		echo do_blocks( $template->content ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped 
 
-		<?php
 		return trim( preg_replace( '/\s+/', ' ', ob_get_clean() ) );
 	}
 

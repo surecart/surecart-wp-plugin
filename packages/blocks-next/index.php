@@ -429,6 +429,32 @@ add_action(
 			$static_assets['version']
 		);
 
+		// Product Quick View.
+		$static_assets = include trailingslashit( plugin_dir_path( __FILE__ ) ) . 'build/scripts/product-quick-view/index.asset.php';
+		wp_register_script_module(
+			'@surecart/product-quick-view',
+			trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/product-quick-view/index.js',
+			array(
+				array(
+					'id'     => '@surecart/checkout',
+					'import' => 'dynamic',
+				),
+				array(
+					'id'     => '@surecart/product-page',
+					'import' => 'dynamic',
+				),
+				array(
+					'id'     => '@surecart/checkout-events',
+					'import' => 'dynamic',
+				),
+				array(
+					'id'     => '@wordpress/interactivity',
+					'import' => 'dynamic',
+				),
+			),
+			$static_assets['version']
+		);
+
 		// Cart side drawer.
 		$static_assets = include trailingslashit( plugin_dir_path( __FILE__ ) ) . 'build/scripts/sidebar/index.asset.php';
 		wp_register_script_module(
