@@ -75,8 +75,8 @@ class BSF_Analytics_Loader {
 	 * @return void
 	 */
 	public function set_entity( $data ) {
-		$this->entities = $data;
-		$this->analytics_path = $data['surecart'][ 'path' ];
+		$this->entities       = $data;
+		$this->analytics_path = $data['surecart']['path'];
 	}
 
 	/**

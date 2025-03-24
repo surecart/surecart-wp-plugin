@@ -55,7 +55,7 @@ if ( ! class_exists( 'BSF_Analytics_Helper' ) ) {
 			);
 		}
 
-        /**
+		/**
 		 * Get API URL for sending analytics.
 		 *
 		 * @return string API URL.
@@ -64,8 +64,8 @@ if ( ! class_exists( 'BSF_Analytics_Helper' ) ) {
 		public static function get_api_url() {
 			return defined( 'BSF_ANALYTICS_API_BASE_URL' ) ? BSF_ANALYTICS_API_BASE_URL : 'https://analytics.brainstormforce.com/';
 		}
-        
-        /**
+
+		/**
 		 * Check if the current screen is allowed for the survey.
 		 *
 		 * This function checks if the current screen is one of the allowed screens for displaying the survey.

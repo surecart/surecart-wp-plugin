@@ -44,7 +44,6 @@ if ( ! class_exists( 'BSF_Analytics' ) ) {
 			define( 'BSF_ANALYTICS_VERSION', $analytics_version );
 			define( 'BSF_ANALYTICS_URI', $this->get_analytics_url( $analytics_path ) );
 
-
 			$this->includes();
 
 			$this->load_deactivation_survey_actions();
