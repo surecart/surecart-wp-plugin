@@ -3,7 +3,7 @@ import { __ } from '@wordpress/i18n';
 import { countryChoices } from '../../../functions/address';
 import { reportChildrenValidity } from '../../../functions/form-data';
 import { Address, CountryLocaleField, CountryLocaleFieldValue } from '../../../types';
-import { getCurrentUserCountryCode, sortAddressFields } from 'src/functions/address-settings';
+import { getCountryRegions, getCurrentUserCountryCode, sortAddressFields } from 'src/functions/address-settings';
 import { state as i18nState } from '@store/i18n';
 
 /**
@@ -79,7 +79,7 @@ export class ScAddress {
   @Prop({ mutable: true }) countryFields: Array<CountryLocaleField>;
 
   /** Should we show name field? */
-  @Prop() showLine2: boolean;
+  @Prop() showLine2: boolean = false;
 
   /** Should we show the city field? */
   @State() showCity: boolean = false;
@@ -110,9 +110,9 @@ export class ScAddress {
 
   /** When the state changes, we want to update city and postal fields. */
   @Watch('address')
-  handleAddressChange() {
+  async handleAddressChange() {
     if (!this.address?.country) return;
-    this.setRegions();
+    this.regions = await getCountryRegions(this.address?.country);
 
     // Show address fields if we have a country or any address field set.
     this.toggleAddressFieldsVisibility(!window?.scData?.google_map_api_key || this.hasAnyAddressField());
@@ -138,10 +138,6 @@ export class ScAddress {
     }
   }
 
-  decodeHtmlEntities(html: string) {
-    return new DOMParser().parseFromString(html, 'text/html')?.body.textContent || html;
-  }
-
   updateAddress(address: Partial<Address>) {
     this.address = { ...this.address, ...address };
   }
@@ -164,16 +160,8 @@ export class ScAddress {
       postal_code: null,
       state: null,
     };
-  }
-
-  /** Set the regions based on the country. */
-  setRegions() {
-    import('country-region-data').then(module => {
-      this.regions = (module?.[this.address.country]?.[2] || []).map(region => ({
-        value: region[1],
-        label: this.decodeHtmlEntities(region[0]),
-      }));
-    });
+    this.addressLine1 = '';
+    this.showSuggestions = false;
   }
 
   componentWillLoad() {
@@ -239,6 +227,7 @@ export class ScAddress {
   }
 
   toggleAddressFieldsVisibility(show: boolean) {
+    this.showLine2 = show;
     this.showCity = show;
     this.showState = show;
     this.showPostal = show;
@@ -321,24 +310,19 @@ export class ScAddress {
                       exportparts="base:input__base, input, form-control, label, help-text"
                       value={this?.address?.line_1}
                       onScChange={(e: any) => {
+                        this.showSuggestions = true;
+                        this.addressLine1 = e.target.value;
+
                         if (!window?.scData?.google_map_api_key || !!this.address?.line_1) {
-                          this.showSuggestions = true;
                           this.updateAddress({ line_1: e.target.value || null });
-                          this.addressLine1 = e.target.value;
-                        } else {
-                          this.addressLine1 = e.target.value;
-                          this.showSuggestions = true;
                         }
                       }}
                       onScInput={(e: any) => {
                         this.showSuggestions = true;
-                        if (!window?.scData?.google_map_api_key || !!this.address?.line_1) {
+                        this.addressLine1 = e.target.value;
+
+                        if (!window?.scData?.google_map_api_key) {
                           this.handleAddressInput({ line_1: e.target.value || null });
-                          this.addressLine1 = e.target.value;
-                        } else {
-                          // this.updateAddress({ line_1: e.target.value || null });
-                          this.addressLine1 = e.target.value;
-                          this.showSuggestions = true;
                         }
                       }}
                       autocomplete="street-address"

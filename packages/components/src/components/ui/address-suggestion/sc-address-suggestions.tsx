@@ -3,12 +3,14 @@
  */
 import { Component, Element, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
+import { debounce } from 'lodash';
 
 /**
  * Internal dependencies.
  */
 import { Address, AddressSuggestion, GoogleMapPlace } from '../../../types';
 import { createErrorNotice } from '@store/notices/mutations';
+import { getCountryRegions } from 'src/functions/address-settings';
 
 @Component({
   tag: 'sc-address-suggestions',
@@ -28,7 +30,7 @@ export class ScAddressSuggestions {
   };
 
   /** Holds the regions for a given country. */
-  @Prop() regions: Array<{ value: string; label: string }>;
+  @Prop({ mutable: true }) regions: Array<{ value: string; label: string }> = [];
 
   /** Address line 1 */
   @Prop() addressLine1: string = '';
@@ -54,22 +56,28 @@ export class ScAddressSuggestions {
   /** Focused index for keyboard navigation */
   @State() focusedIndex: number = -1;
 
+  /** Search keyword for address suggestions */
+  @State() searchedKeyword: string = '';
+
+  // Use Lodash debounce for fetchAddressSuggestions
+  debouncedFetchAddressSuggestions = debounce((input: string) => {
+    this.fetchAddressSuggestions(input);
+  }, 300);
+
   @Watch('addressLine1')
   handleAddressLine1Change(newValue: string) {
     if (!this.address?.country) return;
-    // if address line 1 changes, we want to fetch address suggestions.
     if (!!newValue && this.showSuggestions) {
-      this.fetchAddressSuggestions(newValue);
+      this.debouncedFetchAddressSuggestions(newValue);
     }
   }
 
+  // Modify handleAddressChange to use the debounced function.
   @Watch('address')
   handleAddressChange() {
     if (!this.address?.country) return;
-
-    // if address line 1 changes, we want to fetch address suggestions.
     if (!!this.address.line_1 && this.showSuggestions) {
-      this.fetchAddressSuggestions(this.address.line_1);
+      this.debouncedFetchAddressSuggestions(this.address.line_1);
     }
   }
 
@@ -83,6 +91,11 @@ export class ScAddressSuggestions {
   }
 
   async fetchAddressSuggestions(input: string) {
+    // If the input didn't change, don't fetch again.
+    if (input === this.searchedKeyword) {
+      return;
+    }
+
     const response = await fetch('https://places.googleapis.com/v1/places:searchText', {
       method: 'POST',
       headers: {
@@ -103,12 +116,14 @@ export class ScAddressSuggestions {
       createErrorNotice({
         message: __('Google Map Error: ', 'surecart') + addressResponse?.error?.message,
       });
+      this.showSuggestions = false;
       this.addressSuggestions = [];
       return;
     }
 
     // If no places found, hide the suggestions.
     if (!addressResponse?.places?.length) {
+      this.showSuggestions = false;
       this.addressSuggestions = [];
       return;
     }
@@ -119,6 +134,9 @@ export class ScAddressSuggestions {
       placeId: place.id,
       addressComponents: place.addressComponents,
     }));
+
+    // Set the searched keyword to the current input to avoid duplicate requests later.
+    this.searchedKeyword = input;
   }
 
   async fetchPlaceDetails(placeId: string) {
@@ -131,19 +149,25 @@ export class ScAddressSuggestions {
     const { addressComponents } = place;
 
     // Only update the state if it is in the regions list.
-    const mapState = addressComponents.find(component => component.types.includes('administrative_area_level_1'))?.shortText || null;
-    const state = this.regions?.find(region => region.value === mapState)?.value || null;
+    const googleMapState = addressComponents.find(component => component.types.includes('administrative_area_level_1'))?.shortText || null;
+
+    // If address country and google address components country is different, update the regions.
+    const country = addressComponents.find(component => component.types.includes('country'))?.shortText || null;
+    if (this.address?.country !== country) {
+      this.regions = await getCountryRegions(country);
+    }
 
     // Update the address with the place details.
     this.scChangeAddress.emit({
+      ...(this.address as Address),
       line_1: place.displayName || null,
+      line_2: addressComponents.find(component => component.types.includes('sublocality'))?.shortText || null,
       city: addressComponents.find(component => component.types.includes('locality'))?.shortText || null,
-      state,
       postal_code: addressComponents.find(component => component.types.includes('postal_code'))?.shortText || null,
-      country: addressComponents.find(component => component.types.includes('country'))?.shortText || null,
+      state: this.regions?.find(region => region.value === googleMapState)?.value || null,
+      country,
     });
 
-    this.addressSuggestions = [];
     this.showSuggestions = false;
     this.scShowAddressFields.emit();
   }
@@ -178,7 +202,25 @@ export class ScAddressSuggestions {
     }
   }
 
+  manualAddress() {
+    this.showSuggestions = false;
+    this.scShowAddressFields.emit();
+
+    // If the address line 1 is not empty, we want to show the address fields.
+    if (!!this.addressLine1) {
+      this.scChangeAddress.emit({
+        ...(this.address as Address),
+        line_1: this.addressLine1,
+      });
+    }
+  }
+
   handleOutsideClick(evt) {
+    // If suggestions are false, return.
+    if (!this.showSuggestions) {
+      return;
+    }
+
     const path = evt.composedPath();
     if (
       !path.some(item => {
@@ -191,6 +233,7 @@ export class ScAddressSuggestions {
       if (this.addressLine1) {
         this.scShowAddressFields.emit();
         this.scChangeAddress.emit({
+          ...(this.address as Address),
           line_1: this.addressLine1,
         });
       }
@@ -207,17 +250,29 @@ export class ScAddressSuggestions {
 
   disconnectedCallback() {
     this.el.removeEventListener('keydown', this.handleKeyDown.bind(this));
+    this.debouncedFetchAddressSuggestions.cancel(); // Cancel any pending debounced calls
   }
 
   highlightMatch(text: string, query: string) {
     // Split query into words and filter out empty strings.
     const words = query.split(/\s+/).filter(word => word);
 
-    // Create a regex to match any word in the query.
-    const regex = new RegExp(`(${words.join('|')})`, 'gi');
+    // If no valid words, return the original text.
+    if (words.length === 0) {
+      return text;
+    }
 
-    // Replace matched words with highlighted version.
-    return text.replace(regex, '<strong>$1</strong>');
+    try {
+      // Create a regex to match any word in the query.
+      const regex = new RegExp(`(${words.join('|')})`, 'gi');
+
+      // Replace matched words with highlighted version.
+      return text.replace(regex, '<strong>$1</strong>');
+    } catch (error) {
+      // If regex creation fails, return the original text.
+      console.error('Invalid regex in highlightMatch:', error);
+      return text;
+    }
   }
 
   renderAddressSuggestions() {
@@ -240,7 +295,7 @@ export class ScAddressSuggestions {
               <span>
                 {__('Suggestions powered by ', 'surecart')}
                 <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">
-                  <span>Google</span>
+                  <span>{__('Google', 'surecart')}</span>
                 </a>
               </span>
               <sc-button
@@ -292,18 +347,7 @@ export class ScAddressSuggestions {
                 role="listitem"
                 tabindex="-1"
               >
-                <button
-                  onClick={() => {
-                    this.scShowAddressFields.emit();
-
-                    // Update the address with the address line 1.
-                    this.scChangeAddress.emit({
-                      line_1: this.addressLine1,
-                    });
-                  }}
-                >
-                  {__('Enter address manually', 'surecart')}
-                </button>
+                <button onClick={() => this.manualAddress()}>{__('Enter address manually', 'surecart')}</button>
               </li>
             )}
           </ul>

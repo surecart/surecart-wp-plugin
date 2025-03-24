@@ -20,7 +20,7 @@
 
 | Event                     | Description                           | Type                   |
 | ------------------------- | ------------------------------------- | ---------------------- |
-| `scPlaceSelect`           | Place select event                    | `CustomEvent<Address>` |
+| `scChangeAddress`         | Place select event                    | `CustomEvent<Address>` |
 | `scShowAddressFields`     | Event to show address fields manually | `CustomEvent<void>`    |
 | `scShowSuggestionsChange` | Show suggestions change event         | `CustomEvent<boolean>` |
 
