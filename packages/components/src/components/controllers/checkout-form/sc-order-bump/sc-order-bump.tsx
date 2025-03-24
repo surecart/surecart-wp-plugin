@@ -70,15 +70,18 @@ export class ScOrderBump {
   renderPrice() {
     return (
       <div slot="description" class={{ 'bump__price': true, 'bump__price--has-discount': !!this.bump?.percent_off || !!this.bump?.amount_off }} part="price">
-        <span
-          aria-label={
-            /** translators: %s: old price */
-            sprintf(__('Originally priced at %s.', 'surecart'), this.bump?.subtotal_display_amount)
-          }
-          class="bump__original-price"
-        >
-          {this.bump?.subtotal_display_amount}
-        </span>
+        {!!(this.bump?.percent_off || this.bump?.amount_off) && (
+          <span
+            aria-label={
+              /** translators: %s: old price */
+              sprintf(__('Originally priced at %s.', 'surecart'), this.bump?.subtotal_display_amount)
+            }
+            class="bump__original-price"
+          >
+            {this.bump?.subtotal_display_amount}
+          </span>
+        )}
+
         <span>
           <span aria-hidden="true">
             {this.bump?.total_amount === 0 && __('Free', 'surecart')}

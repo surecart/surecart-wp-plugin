@@ -107,6 +107,7 @@ export interface Price {
   amount: number;
   display_amount: string;
   setup_fee_display_amount: string;
+  setup_fee_text: string;
   full_amount: number;
   currency: string;
   recurring: boolean;
@@ -1366,4 +1367,21 @@ export interface ScNoticeStore {
 
 export interface CustomStripeElementChangeEvent extends StripeElementChangeEvent {
   value?: { type: string };
+}
+
+export interface CountryLocaleFieldValue {
+  name: string;
+  priority: number;
+  label: boolean;
+}
+
+export interface CountryLocaleField {
+  [key: string]: {
+    name: CountryLocaleFieldValue;
+    address_1: CountryLocaleFieldValue;
+    address_2: CountryLocaleFieldValue;
+    city: CountryLocaleFieldValue;
+    state: CountryLocaleFieldValue;
+    postcode: CountryLocaleFieldValue;
+  };
 }

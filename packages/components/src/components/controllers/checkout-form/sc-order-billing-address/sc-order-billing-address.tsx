@@ -25,24 +25,6 @@ export class ScOrderBillingAddress {
   /** Name placeholder */
   @Prop() namePlaceholder: string = __('Name or Company Name', 'surecart');
 
-  /** Country placeholder */
-  @Prop() countryPlaceholder: string = __('Country', 'surecart');
-
-  /** City placeholder */
-  @Prop() cityPlaceholder: string = __('City', 'surecart');
-
-  /** Address placeholder */
-  @Prop() line1Placeholder: string = __('Address', 'surecart');
-
-  /** Address Line 2 placeholder */
-  @Prop() line2Placeholder: string = __('Address Line 2', 'surecart');
-
-  /** Postal Code placeholder */
-  @Prop() postalCodePlaceholder: string = __('Postal Code/Zip', 'surecart');
-
-  /** State placeholder */
-  @Prop() statePlaceholder: string = __('State/Province/Region', 'surecart');
-
   /** Default country for address */
   @Prop() defaultCountry: string;
 
@@ -131,15 +113,6 @@ export class ScOrderBillingAddress {
               this.input = el;
             }}
             label={this.label || __('Billing Address', 'surecart')}
-            placeholders={{
-              name: this.namePlaceholder,
-              country: this.countryPlaceholder,
-              city: this.cityPlaceholder,
-              line_1: this.line1Placeholder,
-              line_2: this.line2Placeholder,
-              postal_code: this.postalCodePlaceholder,
-              state: this.statePlaceholder,
-            }}
             names={{
               name: 'billing_name',
               country: 'billing_country',

@@ -38,10 +38,6 @@ return [
 	<sc-heading>Address<span slot="description"></span><span slot="end"></span></sc-heading>
 	<!-- /wp:surecart/heading -->
 
-	<!-- wp:surecart/address {"label":""} -->
-	<sc-order-shipping-address label=""></sc-order-shipping-address>
-	<!-- /wp:surecart/address -->
-
 	<!-- wp:spacer {"height":1} -->
 	<div style="height:1px" aria-hidden="true" class="wp-block-spacer"></div>
 	<!-- /wp:spacer -->

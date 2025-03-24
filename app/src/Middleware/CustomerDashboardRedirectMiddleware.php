@@ -18,15 +18,15 @@ class CustomerDashboardRedirectMiddleware {
 	 * @return function
 	 */
 	public function handle( RequestInterface $request, Closure $next ) {
-		$customer_link_id = $request->query( 'customer_link_id' );
+		$customer_id = $request->query( 'customer_id' );
 
-		// need a path and a customer link id.
-		if ( empty( $customer_link_id ) ) {
+		// need a path and a customer id.
+		if ( empty( $customer_id ) ) {
 			return $next( $request );
 		}
 
 		return ( new RedirectResponse( $request ) )->to(
-			esc_url_raw( remove_query_arg( 'customer_link_id', add_query_arg( (array) $request->query(), \SureCart::pages()->url( 'dashboard' ) ) ) )
+			esc_url_raw( remove_query_arg( 'customer_id', add_query_arg( (array) $request->query(), \SureCart::pages()->url( 'dashboard' ) ) ) )
 		);
 	}
 }

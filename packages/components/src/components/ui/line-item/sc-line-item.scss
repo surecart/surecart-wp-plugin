@@ -3,13 +3,14 @@
 
   --mobile-size: 380px;
   --price-size: var(--sc-font-size-medium);
+  --line-item-grid-template-columns: auto 1fr 1fr;
   line-height: var(--sc-line-height-dense);
 }
 
 .item {
   display: grid;
   align-items: center;
-  grid-template-columns: auto 1fr 1fr;
+  grid-template-columns: var(--line-item-grid-template-columns);
 }
 
 @media screen and (min-width: var(--mobile-size)) {

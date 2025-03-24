@@ -48,6 +48,9 @@ export class ScProductPrice {
   /** The setup fee amount */
   @Prop() setupFeeAmount: number;
 
+  /** The setup fee text */
+  @Prop() setupFeeText: string;
+
   /** The trial duration days */
   @Prop() trialDurationDays: number;
 
@@ -161,7 +164,14 @@ export class ScProductPrice {
               {!!this?.setupFeeAmount && (
                 <span class="price__setup-fee">
                   <sc-visually-hidden>{__('This product has', 'surecart')} </sc-visually-hidden>{' '}
-                  <sc-format-number type="currency" value={this?.setupFeeAmount} currency={this.currency}></sc-format-number> {this?.setupFeeName || __('Setup Fee', 'surecart')}.
+                  {this.setupFeeText ? (
+                    this.setupFeeText
+                  ) : (
+                    <Fragment>
+                      <sc-format-number type="currency" value={this?.setupFeeAmount} currency={this.currency}></sc-format-number>
+                      {this?.setupFeeName || __('Setup Fee', 'surecart')}
+                    </Fragment>
+                  )}
                 </span>
               )}
             </div>
