@@ -3,7 +3,6 @@
  */
 import { Component, Element, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
 import { __, sprintf } from '@wordpress/i18n';
-import { speak } from '@wordpress/a11y';
 import { debounce } from 'lodash';
 
 /**
