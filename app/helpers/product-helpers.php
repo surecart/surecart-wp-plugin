@@ -208,6 +208,17 @@ function sc_unique_product_list_id( $prefix = '' ) {
 	return $prefix . (string) ++$id_counter;
 }
 
+/**
+ * Get the product quick view id.
+ *
+ * @param string $prefix The prefix.
+ *
+ * @return string
+ */
+function sc_unique_product_quick_view_id( $prefix = '' ) {
+	static $id_counter = -1;
+	return $prefix . (string) ++$id_counter;
+}
 
 /**
  * Get the product list query.
