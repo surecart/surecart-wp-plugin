@@ -14,22 +14,7 @@ import {
 import { Disabled, Tooltip } from '@wordpress/components';
 
 export default function ({ blocks }) {
-	const styles = surecartBlockEditorSettings?.styles;
-
-	styles.push({
-		css: `
-    /* Hide rich text placeholder */
-    [data-rich-text-placeholder] {
-      display: none;
-    }
-    /* Hide warning */
-    .wp-block.has-warning > div:first-child {
-      display: none !important;
-    }
-    `,
-		__unstableType: 'plugin',
-		isGlobalStyles: true,
-	});
+	const styles = surecartBlockEditorSettings?.styles || [];
 
 	return (
 		<BlockEditorProvider
@@ -52,7 +37,25 @@ export default function ({ blocks }) {
 							zoom: 0.7;
 						`}
 					>
-						<EditorStyles styles={styles} />
+						<EditorStyles
+							styles={[
+								...styles,
+								{
+									css: `
+                    /* Hide rich text placeholder */
+                    [data-rich-text-placeholder] {
+                      display: none;
+                    }
+                    /* Hide warning */
+                    .wp-block.has-warning > div:first-child {
+                      display: none !important;
+                    }
+                  `,
+									__unstableType: 'plugin',
+									isGlobalStyles: true,
+								},
+							]}
+						/>
 						<div style={{ cursor: 'pointer' }}>
 							<Disabled>
 								<div style={{ padding: '10px 20px' }}>

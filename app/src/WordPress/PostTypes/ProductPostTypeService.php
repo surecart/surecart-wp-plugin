@@ -1001,11 +1001,11 @@ class ProductPostTypeService {
 				'map_meta_cap'      => true,
 				'supports'          => array(
 					// 'title',
-					// 'excerpt',
-					// 'custom-fields',
+					'excerpt',
+					'custom-fields',
 					'editor',
 					'thumbnail',
-					// 'page-attributes',
+					'page-attributes',
 				),
 			)
 		);
