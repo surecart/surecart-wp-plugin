@@ -25,11 +25,11 @@
 	},
 	"textdomain": "surecart",
 	"render": "file:./view.php",
-	"style": "file:./style-index.css",
 	"editorScript": "file:./index.js",
 	"viewScriptModule": [
 		"@surecart/checkout",
 		"@surecart/product-page",
 		"@surecart/product-quick-view"
-	]
+	],
+	"style": ["file:./style-index.css", "surecart-block-ui"]
 }
