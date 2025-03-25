@@ -153,7 +153,7 @@ abstract class BaseSettings {
 				'is_block_theme'         => (bool) wp_is_block_theme(),
 				'claim_url'              => ! \SureCart::account()->claimed ? \SureCart::routeUrl( 'account.claim' ) : '',
 				'i18n'                   => \SureCart::state()->i18n()->get(),
-				'google_map_api_key'     => \SureCart::settings()->getGoogleMapApiKey(),
+				'google_map_api_key'     => \SureCart::settings_google_map()->getApiKey(),
 			]
 		);
 	}

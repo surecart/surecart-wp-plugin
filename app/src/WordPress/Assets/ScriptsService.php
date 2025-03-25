@@ -131,7 +131,7 @@ class ScriptsService {
 						'manage_sc_shop_settings' => current_user_can( 'manage_sc_shop_settings' ),
 					),
 					'is_account_connected' => \SureCart::account()->isConnected(),
-					'google_map_api_key'   => \SureCart::settings()->getGoogleMapApiKey(),
+					'google_map_api_key'   => \SureCart::settings_google_map()->getApiKey(),
 				]
 			)
 		);
@@ -364,7 +364,7 @@ class ScriptsService {
 						'manage_sc_shop_settings' => current_user_can( 'manage_sc_shop_settings' ),
 					),
 					'is_account_connected' => \SureCart::account()->isConnected(),
-					'google_map_api_key'   => \SureCart::settings()->getGoogleMapApiKey(),
+					'google_map_api_key'   => \SureCart::settings_google_map()->getApiKey(),
 				]
 			)
 		);
@@ -391,7 +391,7 @@ class ScriptsService {
 					'checkout'  => \SureCart::pages()->url( 'checkout' ),
 				],
 				'i18n'                 => \SureCart::state()->i18n()->get(),
-				'google_map_api_key'   => \SureCart::settings()->getGoogleMapApiKey(),
+				'google_map_api_key'   => \SureCart::settings_google_map()->getApiKey(),
 			]
 		);
 

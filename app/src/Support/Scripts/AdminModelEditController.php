@@ -164,7 +164,7 @@ abstract class AdminModelEditController {
 			$this->data['i18n'] = \SureCart::state()->i18n()->get();
 		}
 		if ( in_array( 'google_map_api_key', $this->with_data ) ) {
-			$this->data['google_map_api_key'] = \SureCart::settings()->getGoogleMapApiKey();
+			$this->data['google_map_api_key'] = \SureCart::settings_google_map()->getApiKey();
 		}
 
 		// pass entitlements to page.

@@ -342,15 +342,6 @@ class SettingService {
 	}
 
 	/**
-	 * Get the Google Map API key.
-	 *
-	 * @return string|null
-	 */
-	public function getGoogleMapApiKey() {
-		return $this->get( 'google_map_api_key_enabled' ) ? $this->get( 'google_map_api_key' ) ?? null : null;
-	}
-
-	/**
 	 * Get the option.
 	 *
 	 * @return mixed
