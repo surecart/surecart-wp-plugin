@@ -231,6 +231,11 @@ export class ScAddress {
     this.showCity = show;
     this.showState = show;
     this.showPostal = show;
+
+    // If Google Map API key is set, Override the showLine2 value.
+    if (window?.scData?.google_map_api_key) {
+      this.showLine2 = show;
+    }
   }
 
   handleShowSuggestionsChange(event: CustomEvent<boolean>) {
