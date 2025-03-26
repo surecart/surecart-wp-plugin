@@ -95,6 +95,7 @@ const { state, actions } = store('surecart/product-quick-view', {
 		 */
 		close: () => {
 			state.dialog?.close();
+			actions.clearURLParam();
 		},
 
 		/**
@@ -120,7 +121,17 @@ const { state, actions } = store('surecart/product-quick-view', {
 			// If the target is the dialog, close it.
 			if (e.target === e.currentTarget) {
 				e.currentTarget.close();
+				actions.clearURLParam();
 			}
+		},
+		/**
+		 * Clear URL param.
+		 */
+		clearURLParam: () => {
+			// Clear the URL param.
+			const url = new URL(window.location.href);
+			url.searchParams.delete('product-quick-view-id');
+			window.history.replaceState({}, '', url);
 		},
 	},
 	callbacks: {
