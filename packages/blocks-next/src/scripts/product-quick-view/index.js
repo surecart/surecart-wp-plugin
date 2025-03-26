@@ -121,4 +121,10 @@ const { state, actions } = store('surecart/product-quick-view', {
 			}
 		},
 	},
+	callbacks: {
+		init: () => {
+			// If we have reached here it means the URL has a product quick view parameter so we just open the dialog.
+			actions.open();
+		},
+	},
 });

@@ -6,6 +6,7 @@ use SureCart\Models\Blocks\ProductPageBlock;
 	<?php echo wp_kses_data( get_block_wrapper_attributes() ); ?>
 	data-wp-interactive='{ "namespace": "surecart/product-quick-view" }'
 	data-wp-router-region="<?php echo esc_attr( 'product-quick-view-id-' . $sc_product_quick_view_id ); ?>"
+	data-wp-init="callbacks.init"
 >
 	<dialog
 		class="sc-product-quick-view-dialog"
