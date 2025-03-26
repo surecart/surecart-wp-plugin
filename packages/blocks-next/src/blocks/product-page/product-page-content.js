@@ -4,8 +4,8 @@ import {
 	InnerBlocks,
 	BlockControls,
 	InspectorControls,
-	PanelBody,
 } from '@wordpress/block-editor';
+import { PanelBody } from '@wordpress/components';
 import template from './template';
 import ProductPageToolbar from '../../utilities/patterns-toolbar';
 import { usePostTypeCheck } from '../../hooks/usePostTypeCheck';
