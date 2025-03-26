@@ -15,7 +15,7 @@ import { store as noticesStore } from '@wordpress/notices';
 import { useState } from '@wordpress/element';
 import { Button, Placeholder } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
-import template from './template';
+import { Icon, chevronLeft } from '@wordpress/icons';
 
 /**
  * Internal dependencies
@@ -23,6 +23,7 @@ import template from './template';
 import { useBlockNameForPatterns } from '../utils';
 import SelectProductModal from './components/SelectProductModal';
 import { usePostTypeCheck } from '../../hooks/usePostTypeCheck';
+import template from './template';
 
 export default function QueryPlaceholder({
 	attributes,
@@ -95,9 +96,10 @@ export default function QueryPlaceholder({
 							attributes={attributes}
 							setAttributes={setAttributes}
 							onRequestClose={() => setStep(1)}
+							defaultProduct={product}
 							onChoose={(product) => {
 								setAttributes({
-									product: product?.id,
+									product_id: product?.id,
 								});
 								createSuccessNotice(
 									__(
@@ -122,7 +124,6 @@ export default function QueryPlaceholder({
 	const renderPatternSelector = () => {
 		return (
 			<>
-				{/* Back button */}
 				{!shouldDisableProductSelector && (
 					<Button
 						variant="secondary"
@@ -130,6 +131,7 @@ export default function QueryPlaceholder({
 							setStep(1);
 						}}
 					>
+						<Icon icon={chevronLeft} />
 						{__('Back', 'surecart')}
 					</Button>
 				)}
@@ -147,11 +149,21 @@ export default function QueryPlaceholder({
 				<Button
 					variant="secondary"
 					onClick={() => {
-						replaceInnerBlocks(
-							clientId,
-							createBlocksFromInnerBlocksTemplate(template),
-							false
-						);
+						const blocks =
+							createBlocksFromInnerBlocksTemplate(template);
+
+						// Preserve the product_id attribute for the surecart/product-page block
+						blocks.forEach((block) => {
+							if (block.name === 'surecart/product-page') {
+								block.attributes = {
+									...block.attributes,
+									product_id: attributes.product_id, // Preserve product_id
+								};
+								console.log('block', block);
+							}
+						});
+
+						replaceInnerBlocks(clientId, blocks, false);
 					}}
 				>
 					{__('Start basic', 'surecart')}

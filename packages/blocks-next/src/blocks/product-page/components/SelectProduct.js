@@ -6,6 +6,7 @@ import { useState, useEffect } from '@wordpress/element';
 import throttle from 'lodash/throttle';
 import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
+import { Spinner } from '@wordpress/components';
 
 /**
  * Internal dependencies.
@@ -14,10 +15,9 @@ import { ScSelect } from '@surecart/components-react';
 import { formatNumber } from '../../../../../admin/util';
 import { translateInterval } from '../../../../../admin/util/translations';
 
-export default ({ product, onSelect, children }) => {
+export default ({ product, onSelect, children, busy, setBusy }) => {
 	const [products, setProducts] = useState([]);
 	const [query, setQuery] = useState('');
-	const [busy, setBusy] = useState(false);
 
 	const findProduct = throttle(
 		(value) => {
@@ -83,21 +83,46 @@ export default ({ product, onSelect, children }) => {
 		};
 	});
 
-	return (
-		<ScSelect
-			loading={busy}
-			placeholder={__('Select a product', 'surecart')}
-			searchPlaceholder={__('Search for a product...', 'surecart')}
-			search
-			onScOpen={() => findProduct()}
-			onScSearch={(e) => findProduct(e.detail)}
-			onScChange={(e) =>
-				onSelect(products.find((p) => p.id === e.detail.id))
-			}
-			value={product?.id || ''}
-			choices={choices}
-		>
-			{children}
-		</ScSelect>
-	);
+	const selectProduct = (e) => {
+		const selectedProduct = products.find((p) => p.id === e.detail.id);
+		if (selectedProduct) {
+			onSelect(selectedProduct);
+		}
+	};
+
+	const renderProductSelection = () => {
+		if (products.length === 0 && busy) {
+			return (
+				<div
+					style={{
+						display: 'flex',
+						gap: '1em',
+						marginBottom: '0.5em',
+						alignItems: 'center',
+					}}
+				>
+					<Spinner />
+					<span>{__('Loading products...', 'surecart')}</span>
+				</div>
+			);
+		}
+
+		return (
+			<ScSelect
+				loading={busy}
+				placeholder={__('Select a product', 'surecart')}
+				searchPlaceholder={__('Search for a product...', 'surecart')}
+				search
+				onScOpen={() => findProduct()}
+				onScSearch={(e) => findProduct(e.detail)}
+				onScChange={selectProduct}
+				value={product?.id || ''}
+				choices={choices}
+			>
+				{children}
+			</ScSelect>
+		);
+	};
+
+	return renderProductSelection();
 };
