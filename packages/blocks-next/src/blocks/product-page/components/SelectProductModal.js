@@ -7,9 +7,14 @@ import { Button } from '@wordpress/components';
  */
 import SelectProduct from './SelectProduct';
 import { Icon } from '@wordpress/components';
-import { arrowRight, chevronRight } from '@wordpress/icons';
+import { arrowRight } from '@wordpress/icons';
 
-export default ({ defaultProduct, onChoose }) => {
+export default ({
+	defaultProduct,
+	onChoose,
+	onSelectProduct,
+	showSelectButtons = true,
+}) => {
 	const [product, setProduct] = useState(defaultProduct || {});
 	const [busy, setBusy] = useState(false);
 
@@ -32,38 +37,46 @@ export default ({ defaultProduct, onChoose }) => {
 		>
 			<SelectProduct
 				product={product}
-				onSelect={(product) => setProduct(product)}
+				onSelect={(product) => {
+					setProduct(product);
+
+					if (onSelectProduct) {
+						onSelectProduct(product);
+					}
+				}}
 				busy={busy}
 				setBusy={setBusy}
 			/>
 
-			<div
-				style={{
-					display: 'flex',
-					justifyContent: 'space-between',
-					alignItems: 'center',
-					gap: '0.5em',
-				}}
-			>
-				<Button
-					isPrimary
-					isBusy={busy}
-					onClick={addProduct}
+			{showSelectButtons && (
+				<div
 					style={{
-						marginTop: '1em',
+						display: 'flex',
+						justifyContent: 'space-between',
+						alignItems: 'center',
+						gap: '0.5em',
 					}}
-					disabled={!product?.id}
 				>
-					{__('Select Product', 'surecart')}
+					<Button
+						variant="primary"
+						isBusy={busy}
+						onClick={addProduct}
+						style={{
+							marginTop: '1em',
+						}}
+						disabled={!product?.id}
+					>
+						{__('Select Product', 'surecart')}
 
-					{!!product?.id && (
-						<Icon
-							icon={arrowRight}
-							style={{ marginLeft: '0.5em' }}
-						/>
-					)}
-				</Button>
-			</div>
+						{!!product?.id && (
+							<Icon
+								icon={arrowRight}
+								style={{ marginLeft: '0.5em' }}
+							/>
+						)}
+					</Button>
+				</div>
+			)}
 		</div>
 	);
 };
