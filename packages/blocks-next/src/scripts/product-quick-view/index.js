@@ -29,8 +29,6 @@ const isValidEvent = (event) =>
 
 const { state, actions } = store('surecart/product-quick-view', {
 	state: {
-		/** Are we loading */
-		loading: false,
 		/**
 		 * The product quick view dialog element.
 		 * This gets cached so we can call this many times without querying the DOM.
@@ -61,8 +59,6 @@ const { state, actions } = store('surecart/product-quick-view', {
 	actions: {
 		/** Navigate to a url using the router region. */
 		*navigate(event) {
-			state.loading = true;
-			actions.toggle(event);
 			const { ref } = getElement();
 			const queryRef = ref.closest('[data-wp-router-region]');
 			if (isValidLink(ref) && isValidEvent(event) && queryRef) {
@@ -73,7 +69,7 @@ const { state, actions } = store('surecart/product-quick-view', {
 				);
 				yield actions.navigate(ref.href);
 			}
-			state.loading = false;
+			actions.toggle(event);
 		},
 		/** Prefetch upcoming urls. */
 		*prefetch() {

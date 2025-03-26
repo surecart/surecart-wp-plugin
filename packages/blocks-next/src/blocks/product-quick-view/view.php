@@ -60,5 +60,4 @@ use SureCart\Models\Blocks\ProductPageBlock;
 				</form>
 		<?php endwhile; ?>
 	</dialog>
-	<div class="sc-block-ui" data-wp-bind--hidden="!state.loading" hidden></div>
 </div>
