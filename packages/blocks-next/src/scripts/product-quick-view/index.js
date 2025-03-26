@@ -59,6 +59,7 @@ const { state, actions } = store('surecart/product-quick-view', {
 	actions: {
 		/** Navigate to a url using the router region. */
 		*navigate(event) {
+			productListState.loading = true;
 			const { ref } = getElement();
 			const queryRef = ref.closest('[data-wp-router-region]');
 			if (isValidLink(ref) && isValidEvent(event) && queryRef) {
@@ -70,6 +71,7 @@ const { state, actions } = store('surecart/product-quick-view', {
 				yield actions.navigate(ref.href);
 			}
 			actions.toggle(event);
+			productListState.loading = false;
 		},
 		/** Prefetch upcoming urls. */
 		*prefetch() {
