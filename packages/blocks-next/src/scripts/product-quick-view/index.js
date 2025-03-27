@@ -70,7 +70,9 @@ const { state, actions } = store('surecart/product-quick-view', {
 					/* webpackIgnore: true */
 					'@wordpress/interactivity-router'
 				);
-				yield actions.navigate(ref.href);
+				yield actions.navigate(ref.href, {
+					replace: true,
+				});
 			}
 			state.loading = false;
 		},
