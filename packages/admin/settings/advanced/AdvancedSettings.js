@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
 import {
 	ScButton,
@@ -105,11 +105,51 @@ export default () => {
 	);
 
 	/**
+	 * Validate the Google Maps API key.
+	 *
+	 * @param {string} apiKey - The Google Maps API key.
+	 * @returns {boolean} - Returns true if the API key is valid, otherwise false.
+	 */
+	const validateGoogleMapApiKey = async (apiKey) => {
+		try {
+			const response = await fetch(
+				`https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=${apiKey}`
+			);
+			const data = await response.json();
+			if (data.status !== 'OK') {
+				setError(
+					sprintf(
+						__('Google Map API Key Error: %s', 'surecart'),
+						data.error_message
+					)
+				);
+				return false;
+			}
+			return true;
+		} catch (e) {
+			console.error(e);
+			setError(
+				__(
+					'An error occurred while validating the API key.',
+					'surecart'
+				)
+			);
+			return false;
+		}
+	};
+
+	/**
 	 * Form is submitted.
 	 */
 	const onSubmit = async () => {
 		setError(null);
 		try {
+			// Validate Google Maps API key if enabled.
+			if (googleMapApiEnabled && !!googleMapApiKey) {
+				const isValid = await validateGoogleMapApiKey(googleMapApiKey);
+				if (!isValid) return;
+			}
+
 			await save({
 				successMessage: __('Settings Updated.', 'surecart'),
 			});
@@ -414,7 +454,7 @@ export default () => {
 						{!googleMapApiKey && (
 							<ScAlert open>
 								{__(
-									'To get your Google Maps API key',
+									'To use Google Maps features, you need an API key.',
 									'surecart'
 								)}{' '}
 								<a
@@ -422,10 +462,16 @@ export default () => {
 									target="_blank"
 								>
 									{__(
-										'create a new project and enable the Places, GeoCoding and Geolocation APIs.',
+										'Get your API key from Google Cloud Platform',
 										'surecart'
 									)}
 								</a>
+								<p>
+									{__(
+										'Create a new project and enable the Places, Geocoding, and Geolocation API for it. Then, create a new API key and add it here.',
+										'surecart'
+									)}
+								</p>
 							</ScAlert>
 						)}
 					</>
