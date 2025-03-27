@@ -414,13 +414,7 @@ export default ({ id, setBrowserURL }) => {
 					/>
 
 					{post?.id && (
-						<Editor
-							product={product}
-							updateProduct={editProduct}
-							post={post}
-							updatePost={editPost}
-							loading={!hasLoadedProduct}
-						/>
+						<Editor post={post} loading={!hasLoadedProduct} />
 					)}
 
 					<Image

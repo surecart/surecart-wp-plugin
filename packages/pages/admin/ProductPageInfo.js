@@ -1,59 +1,72 @@
+/** @jsx jsx */
+import { css, jsx } from '@emotion/react';
 import {
 	PluginDocumentSettingPanel,
 	store as editorStore,
 } from '@wordpress/editor';
 import { useSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
-import { useDispatch } from '@wordpress/data';
-import { useEffect } from 'react';
-import { usePluginContext } from '@wordpress/plugins';
+import { __experimentalConfirmDialog as ConfirmDialog } from '@wordpress/components';
+import { useEffect, useState } from 'react';
+import { addQueryArgs } from '@wordpress/url';
 /**
  * The component to be rendered  as part of the plugin.
  */
 export default () => {
-	// Retrieve information about the current post type.
-	const isProduct = useSelect((select) => {
-		console.log(select(editorStore).getCurrentPostType());
-		return select(editorStore).getCurrentPostType() === 'sc_product';
+	const [isOpen, setIsOpen] = useState(null);
+	const post = useSelect((select) => {
+		return select(editorStore).getCurrentPost();
 	}, []);
 
-	const { name: pluginName } = usePluginContext();
-	console.log(pluginName);
-
-	const { toggleEditorPanelOpened } = useDispatch(editorStore);
-
-	const panelName = `${pluginName}/product-page-info`;
-
-	const { opened, isEnabled } = useSelect(
-		(select) => {
-			const { isEditorPanelOpened, isEditorPanelEnabled } =
-				select(editorStore);
-			return {
-				opened: isEditorPanelOpened(panelName),
-				isEnabled: isEditorPanelEnabled(panelName),
-			};
-		},
-		[panelName]
-	);
-
 	useEffect(() => {
-		toggleEditorPanelOpened(panelName);
-	}, [opened]);
-
-	console.log(opened, isEnabled);
+		if (
+			post?.type === 'sc_product' &&
+			!post?.has_content_block &&
+			isOpen === null // prevent multiple alerts
+		) {
+			setIsOpen(true);
+		}
+	}, [post?.has_content_block]);
 
 	// If the post type is viewable, do not render my fill
-	if (!isProduct) {
+	if (post?.type !== 'sc_product') {
 		return null;
 	}
 
 	return (
-		<PluginDocumentSettingPanel
-			name="product-page-info"
-			title={__('Site Editor Example')}
-			className="product-page-info"
-		>
-			<p>{__('Only appears in the Site Editor')}</p>
-		</PluginDocumentSettingPanel>
+		<>
+			<PluginDocumentSettingPanel
+				name="product-page-info"
+				title={post?.title}
+				className="product-page-info"
+			>
+				{__('This editor controls the content of the product page.')}
+			</PluginDocumentSettingPanel>
+			<ConfirmDialog
+				isOpen={isOpen}
+				onConfirm={() => {
+					window.location.assign(
+						addQueryArgs('site-editor.php', {
+							postType: post?.block_template?.type,
+							postId: post?.block_template?.id,
+							canvas: 'edit',
+						})
+					);
+				}}
+				confirmButtonText={__('Edit Template', 'surecart')}
+				cancelButtonText={__('Ignore', 'surecart')}
+				onCancel={() => setIsOpen(false)}
+			>
+				<div
+					css={css`
+						max-width: 350px;
+					`}
+				>
+					{__(
+						'This product\'s template is missing the "Post Content" block. It must be added to display the content.'
+					)}
+				</div>
+			</ConfirmDialog>
+		</>
 	);
 };

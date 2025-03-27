@@ -69,9 +69,11 @@ export default ({ post, loading }) => {
 								margin-top: -20px;
 								margin-bottom: -20px;
 							`}
-							onClick={() => window.location.assign(editPostLink)}
+							onClick={() => {
+								window.location.assign(editPostLink);
+							}}
 						>
-							<ScIcon name="maximize" slot="prefix" />
+							<ScIcon name="edit" slot="prefix" />
 							{__('Edit Content', 'surecart')}
 						</ScButton>
 					</div>

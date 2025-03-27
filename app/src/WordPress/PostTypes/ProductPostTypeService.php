@@ -31,7 +31,7 @@ class ProductPostTypeService {
 		add_action( 'init', array( $this, 'registerMeta' ) );
 
 		// Hide trash button in block editor.
-		add_action( 'enqueue_block_editor_assets', array( $this, 'hidePostSummary' ) );
+		add_action( 'enqueue_block_editor_assets', array( $this, 'modifyProductContentEditor' ) );
 
 		// add variation option value query to posts_where.
 		add_filter( 'posts_where', array( $this, 'handleVariationOptionValueQuery' ), 10, 2 );
@@ -59,6 +59,8 @@ class ProductPostTypeService {
 
 		// disable trash for products.
 		add_filter( 'rest_sc_product_trashable', '__return_false' );
+
+		add_action( 'rest_prepare_sc_product', array( $this, 'addTemplateToResponse' ), 10, 2 );
 
 		// we need to disable the gutenberg editor for our post type so that blocks don't load there.
 		add_filter( 'use_block_editor_for_post_type', [ $this, 'forceGutenberg' ], 10, 2 );
@@ -115,15 +117,35 @@ class ProductPostTypeService {
 	}
 
 	/**
+	 * Show whether the product has a content block.
+	 *
+	 * @param \WP_REST_Response $response The response.
+	 * @param \WP_Post          $post The post.
+	 * @param \WP_REST_Request  $request The request.
+	 *
+	 * @return \WP_REST_Response
+	 */
+	public function addTemplateToResponse( $response, $post ) {
+		$product                             = sc_get_product( $post );
+		$template_id                         = wp_is_block_theme() ? $product->template_id : $product->template_part_id;
+		$block_template                      = get_block_template( $template_id, wp_is_block_theme() ? 'wp_template' : 'wp_template_part' );
+		$response->data['has_content_block'] = has_block( 'core/post-content', $block_template->content );
+		$response->data['block_template']    = $block_template;
+		return $response;
+	}
+
+	/**
 	 * Hide the trash button in the block editor for sc_product post type.
 	 *
 	 * @return void
 	 */
-	public function hidePostSummary() {
+	public function modifyProductContentEditor() {
+		// just in case.
 		if ( ! is_admin() ) {
 			return;
 		}
 
+		// check if we are on the product edit screen.
 		$screen = get_current_screen();
 		if ( ! $screen || $this->post_type !== $screen->post_type ) {
 			return;
@@ -131,7 +153,7 @@ class ProductPostTypeService {
 
 		wp_add_inline_style(
 			'wp-edit-post',
-			'.editor-post-summary { display: none !important; }'
+			'.editor-post-summary, .editor-document-bar, .edit-post-visual-editor__post-title-wrapper { display: none !important; }'
 		);
 	}
 
@@ -1000,7 +1022,7 @@ class ProductPostTypeService {
 				'capability_type'   => 'post',
 				'map_meta_cap'      => true,
 				'supports'          => array(
-					// 'title',
+					'title',
 					'excerpt',
 					'custom-fields',
 					'editor',

@@ -15,6 +15,6 @@ registerPlugin('product-page-back-button', {
 });
 
 /** Product Page Info */
-// registerPlugin('product-page-info', {
-// 	render: ProductPageInfo,
-// });
+registerPlugin('product-page-info', {
+	render: ProductPageInfo,
+});
