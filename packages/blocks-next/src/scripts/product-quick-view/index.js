@@ -24,8 +24,7 @@ const isValidEvent = (event) =>
 	!event.metaKey && // Open in new tab (Mac).
 	!event.ctrlKey && // Open in new tab (Windows).
 	!event.altKey && // Download.
-	!event.shiftKey &&
-	!event.defaultPrevented;
+	!event.shiftKey;
 
 const { state, actions } = store('surecart/product-quick-view', {
 	state: {
@@ -61,7 +60,7 @@ const { state, actions } = store('surecart/product-quick-view', {
 		/** Navigate to a url using the router region. */
 		*navigate(event) {
 			state.loading = true;
-			actions.toggle(event, false);
+			actions.toggle(event);
 			const { ref } = getElement();
 			const queryRef = ref.closest('[data-wp-router-region]');
 			if (isValidLink(ref) && isValidEvent(event) && queryRef) {
@@ -104,16 +103,14 @@ const { state, actions } = store('surecart/product-quick-view', {
 		/**
 		 * Toggle the product quick view dialog.
 		 */
-		toggle: (e, preventDefault = true) => {
+		toggle: (e) => {
 			// If the key is not space or enter, return.
 			if (e?.key && e?.key !== ' ' && e?.key !== 'Enter') {
 				return;
 			}
 
-			if (preventDefault) {
-				// Prevent default behavior.
-				e?.preventDefault();
-			}
+			// Prevent default behavior.
+			e?.preventDefault();
 
 			// If the dialog is open, close it. Otherwise, open it.
 			state?.dialog?.open ? actions.close() : actions.open();
