@@ -106,7 +106,7 @@ export class ScAddressSuggestions {
     // If some error occurred, hide the suggestions and show error notice.
     if (!!addressResponse?.error?.message) {
       createErrorNotice({
-        message: __('Google Map Error: ', 'surecart') + addressResponse?.error?.message,
+        message: sprintf(__('Google Map Error: %s', 'surecart'), addressResponse?.error?.message),
       });
       this.showSuggestions = false;
       this.addressSuggestions = [];
@@ -243,7 +243,7 @@ export class ScAddressSuggestions {
 
   disconnectedCallback() {
     this.el.removeEventListener('keydown', this.handleKeyDown.bind(this));
-    this.debouncedFetchAddressSuggestions.cancel(); // Cancel any pending debounced calls
+    this.debouncedFetchAddressSuggestions.cancel();
   }
 
   highlightMatch(text: string, query: string) {
@@ -269,19 +269,23 @@ export class ScAddressSuggestions {
   }
 
   renderAddressSuggestions() {
-    // if no addressSuggestions, return.
     if (!this.showSuggestions || !this.addressLine1) {
       return null;
     }
 
     return (
       <div class="sc-address-suggestion" part="base">
-        <div class={`sc-address__suggestions ${this.showSuggestions ? 'sc-address__suggestions--visible' : ''}`} part="suggestions">
+        <div
+          class={{
+            'sc-address__suggestions': true,
+            'sc-address__suggestions--visible': this.showSuggestions,
+          }}
+          part="suggestions"
+        >
           <ul class="sc-address__suggestions--list" part="suggestions-list" role="list">
-            {/* Suggestions powered by */}
             <li
               class="sc-address__suggestions--item sc-address__suggestions--item--no-select sc-address__suggestions--item--powered-by"
-              part="suggestion-item"
+              part="suggestion-item powered-by"
               role="listitem"
               tabindex="-1"
             >
@@ -303,11 +307,10 @@ export class ScAddressSuggestions {
               </sc-button>
             </li>
 
-            {/* No results */}
             {this.addressSuggestions.length === 0 && (
               <li
                 class="sc-address__suggestions--item sc-address__suggestions--item--no-select sc-address__suggestions--item--no-result"
-                part="suggestion-item"
+                part="suggestion-item no-result"
                 role="listitem"
                 tabindex="-1"
               >
@@ -315,10 +318,12 @@ export class ScAddressSuggestions {
               </li>
             )}
 
-            {/* Render suggestions */}
             {this.addressSuggestions.map((suggestion, index) => (
               <li
-                class={`sc-address__suggestions--item ${this.focusedIndex === index ? 'focused' : ''}`}
+                class={{
+                  'sc-address__suggestions--item': true,
+                  'focused': this.focusedIndex === index,
+                }}
                 part="suggestion-item"
                 role="option"
                 aria-selected={this.focusedIndex === index ? 'true' : 'false'}
@@ -331,11 +336,10 @@ export class ScAddressSuggestions {
               ></li>
             ))}
 
-            {/* Enter address manually */}
             {this.isManually && (
               <li
                 class="sc-address__suggestions--item sc-address__suggestions--item--no-select sc-address__suggestions--item--manually"
-                part="suggestion-item"
+                part="suggestion-item manually"
                 role="listitem"
                 tabindex="-1"
               >
