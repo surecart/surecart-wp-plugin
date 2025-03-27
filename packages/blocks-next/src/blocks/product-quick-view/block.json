@@ -31,5 +31,5 @@
 		"@surecart/product-page",
 		"@surecart/product-quick-view"
 	],
-	"style": "file:./style-index.css"
+	"style": ["file:./style-index.css", "surecart-block-ui", "surecart-spinner"]
 }

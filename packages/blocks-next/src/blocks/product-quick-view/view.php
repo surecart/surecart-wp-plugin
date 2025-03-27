@@ -60,5 +60,8 @@ use SureCart\Models\Blocks\ProductPageBlock;
 					<?php echo $block_content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 				</form>
 		<?php endwhile; ?>
+		<div class="sc-block-ui" data-wp-bind--hidden="!state.loading" hidden>
+			<span class="sc-spinner" data-wp-bind--hidden="!state.loading"></span>
+		</div>
 	</dialog>
 </div>

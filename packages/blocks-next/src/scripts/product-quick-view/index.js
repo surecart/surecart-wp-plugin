@@ -29,6 +29,7 @@ const isValidEvent = (event) =>
 
 const { state, actions } = store('surecart/product-quick-view', {
 	state: {
+		loading: false,
 		/**
 		 * The product quick view dialog element.
 		 * This gets cached so we can call this many times without querying the DOM.
@@ -59,7 +60,8 @@ const { state, actions } = store('surecart/product-quick-view', {
 	actions: {
 		/** Navigate to a url using the router region. */
 		*navigate(event) {
-			productListState.loading = true;
+			state.loading = true;
+			actions.toggle(event, false);
 			const { ref } = getElement();
 			const queryRef = ref.closest('[data-wp-router-region]');
 			if (isValidLink(ref) && isValidEvent(event) && queryRef) {
@@ -70,8 +72,7 @@ const { state, actions } = store('surecart/product-quick-view', {
 				);
 				yield actions.navigate(ref.href);
 			}
-			actions.toggle(event);
-			productListState.loading = false;
+			state.loading = false;
 		},
 		/** Prefetch upcoming urls. */
 		*prefetch() {
@@ -101,14 +102,16 @@ const { state, actions } = store('surecart/product-quick-view', {
 		/**
 		 * Toggle the product quick view dialog.
 		 */
-		toggle: (e) => {
+		toggle: (e, preventDefault = true) => {
 			// If the key is not space or enter, return.
 			if (e?.key && e?.key !== ' ' && e?.key !== 'Enter') {
 				return;
 			}
 
-			// Prevent default behavior.
-			e?.preventDefault();
+			if (preventDefault) {
+				// Prevent default behavior.
+				e?.preventDefault();
+			}
 
 			// If the dialog is open, close it. Otherwise, open it.
 			state?.dialog?.open ? actions.close() : actions.open();
@@ -127,11 +130,18 @@ const { state, actions } = store('surecart/product-quick-view', {
 		/**
 		 * Clear URL param.
 		 */
-		clearURLParam: () => {
+		*clearURLParam() {
 			// Clear the URL param.
 			const url = new URL(window.location.href);
 			url.searchParams.delete('product-quick-view-id');
-			window.history.replaceState({}, '', url);
+
+			const { actions } = yield import(
+				/* webpackIgnore: true */
+				'@wordpress/interactivity-router'
+			);
+			yield actions.navigate(url.toString(), {
+				replace: true,
+			});
 		},
 	},
 	callbacks: {
