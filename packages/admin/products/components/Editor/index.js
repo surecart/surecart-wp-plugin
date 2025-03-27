@@ -126,7 +126,15 @@ export default ({ post, loading }) => {
 									<PreviewElementor />
 								)}
 								{pageBuilder === 'core' && (
-									<PreviewBlocks blocks={blocks} />
+									<div
+										onClick={() => {
+											window.location.assign(
+												editPostLink
+											);
+										}}
+									>
+										<PreviewBlocks blocks={blocks} />
+									</div>
 								)}
 							</div>
 						</a>
