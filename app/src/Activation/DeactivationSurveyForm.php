@@ -65,7 +65,7 @@ class DeactivationSurveyForm {
 		$id = sanitize_text_field( $args['id'] );
 
 		// Return if not on the allowed screen.
-		if ( ! sc_is_allowed_screen() ) {
+		if ( ! sc_is_plugins_screen() ) {
 			return;
 		}
 
@@ -144,7 +144,7 @@ class DeactivationSurveyForm {
 	 */
 	public static function loadFormStyles() {
 
-		if ( ! sc_is_allowed_screen() ) {
+		if ( ! sc_is_plugins_screen() ) {
 			return;
 		}
 

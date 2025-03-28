@@ -60,11 +60,7 @@ function sc_get_api_url() {
  * @since 1.1.6
  * @return bool True if the current screen is allowed, false otherwise.
  */
-function sc_is_allowed_screen() {
-
-	// This filter allows to dynamically modify the list of allowed screens for the survey.
-	$allowed_screens = array( 'plugins' );
-
+function sc_is_plugins_screen() {
 	$current_screen = get_current_screen();
 
 	// Check if $current_screen is a valid object before accessing its properties.
@@ -74,7 +70,7 @@ function sc_is_allowed_screen() {
 
 	$screen_id = $current_screen->id;
 
-	if ( ! empty( $screen_id ) && in_array( $screen_id, $allowed_screens, true ) ) {
+	if ( ! empty( $screen_id ) && 'plugins' === $screen_id ) {
 		return true;
 	}
 
