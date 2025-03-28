@@ -80,10 +80,12 @@ class RolesService {
 			'sc_shop_worker',
 			__( 'SureCart Shop Worker', 'surecart' ),
 			[
-				'read'         => true,
-				'edit_posts'   => false,
-				'upload_files' => true,
-				'delete_posts' => false,
+				'read'                 => true,
+				'edit_posts'           => true,
+				'upload_files'         => true,
+				'delete_posts'         => false,
+				'edit_published_posts' => true,
+				'edit_others_posts'    => true,
 			]
 		);
 
