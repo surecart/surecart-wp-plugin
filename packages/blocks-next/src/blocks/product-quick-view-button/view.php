@@ -11,6 +11,7 @@
 					'data-wp-on--click'      => 'actions.navigate',
 					'data-wp-on--mouseenter' => 'actions.prefetch',
 					'data-wp-interactive'    => '{ "namespace": "surecart/product-quick-view" }',
+					'style'                  => $style,
 				]
 			)
 		)

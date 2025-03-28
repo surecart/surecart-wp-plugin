@@ -14,12 +14,17 @@ import { __ } from '@wordpress/i18n';
  */
 import ScIcon from '../../components/ScIcon';
 import { ProductQuickViewButtonControls } from './product-quick-view-button-controls';
+import { getSpacingPresetCssVar } from '../../../../blocks/util';
 
 export default ({
-	attributes: { icon, quickViewButtonType, label },
+	attributes: { icon, quickViewButtonType, label, style },
 	setAttributes,
 }) => {
-	const blockProps = useBlockProps();
+	const blockProps = useBlockProps({
+		style: {
+			gap: getSpacingPresetCssVar(style?.spacing?.blockGap),
+		},
+	});
 
 	const renderButton = () => {
 		const showIcon =

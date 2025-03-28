@@ -6,5 +6,10 @@ $quick_view_link = $url->addArg( 'id', $product_id )->url();
 $show_icon       = 'icon' === $attributes['quickViewButtonType'] || 'both' === $attributes['quickViewButtonType'];
 $show_text       = 'text' === $attributes['quickViewButtonType'] || 'both' === $attributes['quickViewButtonType'];
 $label           = $attributes['label'] ?? __( 'Quick View', 'surecart' );
+$gap             = ! empty( $attributes['style']['spacing']['blockGap'] ) ? \SureCart::block()->styles()->getBlockGapPresetCssVar( $attributes['style']['spacing']['blockGap'] ) : '';
+
+$style = ! empty( $gap )
+	? esc_attr( safecss_filter_attr( 'gap:' . $gap ) ) . ';'
+	: '';
 
 return 'file:./view.php';
