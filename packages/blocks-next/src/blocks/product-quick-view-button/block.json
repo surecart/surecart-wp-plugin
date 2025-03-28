@@ -13,6 +13,14 @@
 		"icon": {
 			"type": "string",
 			"default": "eye"
+		},
+		"label": {
+			"type": "string",
+			"default": "Quick View"
+		},
+		"quickViewButtonType": {
+			"type": "string",
+			"default": "icon"
 		}
 	},
 	"supports": {
@@ -28,6 +36,28 @@
 		"spacing": {
 			"margin": true,
 			"padding": true
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true,
+			"textAlign": true,
+			"__experimentalFontFamily": true,
+			"__experimentalFontWeight": true,
+			"__experimentalFontStyle": true,
+			"__experimentalTextTransform": true,
+			"__experimentalTextDecoration": true,
+			"__experimentalLetterSpacing": true,
+			"__experimentalDefaultControls": {
+				"fontSize": true,
+				"fontAppearance": true,
+				"textTransform": true
+			}
+		},
+		"__experimentalBorder": {
+			"color": true,
+			"radius": true,
+			"style": true,
+			"width": true
 		}
 	},
 	"textdomain": "surecart",
