@@ -6,14 +6,11 @@ import {
 	InspectorControls,
 } from '@wordpress/block-editor';
 import { PanelBody } from '@wordpress/components';
-import { addQueryArgs } from '@wordpress/url';
 import template from './template';
 import ProductPageToolbar from '../../utilities/patterns-toolbar';
 import { usePostTypeCheck } from '../../hooks/usePostTypeCheck';
 import { __ } from '@wordpress/i18n';
-import { useEffect, useState } from '@wordpress/element';
-import SelectProductModal from './components/SelectProductModal';
-import apiFetch from '@wordpress/api-fetch';
+import SelectProduct from './components/SelectProduct';
 
 export default function ProductPageEdit({
 	name,
@@ -22,30 +19,9 @@ export default function ProductPageEdit({
 	attributes,
 	setAttributes,
 }) {
-	const { product_id } = attributes;
-	const [product, setProduct] = useState(null);
 	const blockProps = useBlockProps({
 		className: 'sc-product-page__editor-container',
 	});
-
-	useEffect(() => {
-		if (product_id) {
-			fetchProduct();
-		}
-	}, [product_id]);
-
-	const fetchProduct = async () => {
-		try {
-			const response = await apiFetch({
-				path: addQueryArgs(`surecart/v1/products/${product_id}`, {
-					expand: ['prices'],
-				}),
-			});
-			setProduct(response);
-		} catch (error) {
-			console.error(error);
-		}
-	};
 
 	const innerBlocksProps = useInnerBlocksProps(blockProps, {
 		template,
@@ -62,13 +38,6 @@ export default function ProductPageEdit({
 		]
 	);
 
-	const chooseProduct = (product) => {
-		setAttributes({
-			product_id: product?.id,
-		});
-		setProduct(product);
-	};
-
 	return (
 		<>
 			<BlockControls>
@@ -82,12 +51,9 @@ export default function ProductPageEdit({
 			{!shouldDisableProductSelector && (
 				<InspectorControls>
 					<PanelBody title={__('Product', 'surecart')}>
-						<SelectProductModal
+						<SelectProduct
 							attributes={attributes}
 							setAttributes={setAttributes}
-							defaultProduct={product}
-							onChoose={chooseProduct}
-							onSelectProduct={chooseProduct}
 							showSelectButtons={false}
 						/>
 					</PanelBody>

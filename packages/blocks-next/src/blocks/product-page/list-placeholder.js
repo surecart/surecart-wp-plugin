@@ -21,9 +21,9 @@ import { Icon, chevronLeft } from '@wordpress/icons';
  * Internal dependencies
  */
 import { useBlockNameForPatterns } from '../utils';
-import SelectProductModal from './components/SelectProductModal';
 import { usePostTypeCheck } from '../../hooks/usePostTypeCheck';
 import template from './template';
+import SelectProduct from './components/SelectProduct';
 
 export default function QueryPlaceholder({
 	attributes,
@@ -32,7 +32,7 @@ export default function QueryPlaceholder({
 	name,
 	openPatternSelectionModal,
 }) {
-	const { createSuccessNotice } = useDispatch(noticesStore);
+	// const { createSuccessNotice } = useDispatch(noticesStore);
 	const { replaceInnerBlocks } = useDispatch(blockEditorStore);
 	const blockProps = useBlockProps();
 	const blockNameForPatterns = useBlockNameForPatterns(
@@ -64,8 +64,6 @@ export default function QueryPlaceholder({
 		activeBlockVariation?.icon ||
 		blockType?.icon?.src;
 	const label = activeBlockVariation?.title || blockType?.title;
-
-	const [product, setProduct] = useState(null);
 	const [step, setStep] = useState(1);
 
 	// Checks whether we are in the sc-product post type or a template
@@ -78,6 +76,13 @@ export default function QueryPlaceholder({
 			'surecart/surecart//single-sc_product', // template.
 		]
 	);
+
+	const onChoose = (post) => {
+		setAttributes({
+			product_post_id: post?.id,
+		});
+		setStep(2);
+	};
 
 	const renderProductSelector = () => {
 		return (
@@ -92,28 +97,11 @@ export default function QueryPlaceholder({
 							marginBottom: '1em',
 						}}
 					>
-						<SelectProductModal
+						<SelectProduct
 							attributes={attributes}
 							setAttributes={setAttributes}
-							onRequestClose={() => setStep(1)}
-							defaultProduct={product}
-							onChoose={(product) => {
-								setAttributes({
-									product_id: product?.id,
-								});
-								createSuccessNotice(
-									__(
-										'Product selected. Choose a pattern to continue.',
-										'surecart'
-									),
-									{
-										type: 'snackbar',
-									}
-								);
-
-								setProduct(product);
-								setStep(2);
-							}}
+							onChange={onChoose}
+							onChoose={onChoose}
 						/>
 					</div>
 				</div>
@@ -159,7 +147,6 @@ export default function QueryPlaceholder({
 									...block.attributes,
 									product_id: attributes.product_id, // Preserve product_id
 								};
-								console.log('block', block);
 							}
 						});
 
