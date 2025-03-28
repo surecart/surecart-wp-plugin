@@ -65,7 +65,7 @@ class DeactivationSurveyForm {
 		$id = sanitize_text_field( $args['id'] );
 
 		// Return if not on the allowed screen.
-		if ( ! sc_is_plugins_screen() ) {
+		if ( ! $this->isPluginsScreen() ) {
 			return;
 		}
 
@@ -142,9 +142,9 @@ class DeactivationSurveyForm {
 	 * @since 1.1.6
 	 * @return void
 	 */
-	public static function loadFormStyles() {
+	public function loadFormStyles() {
 
-		if ( ! sc_is_plugins_screen() ) {
+		if ( ! $this->isPluginsScreen() ) {
 			return;
 		}
 
@@ -211,15 +211,15 @@ class DeactivationSurveyForm {
 
 		$api_args = array(
 			'body'    => wp_json_encode( $feedback_data ),
-			'headers' => sc_get_api_headers(),
+			'headers' => $this->getApiHeaders(),
 			'timeout' => 90, //phpcs:ignore WordPressVIPMinimum.Performance.RemoteRequestTimeout.timeout_timeout
 		);
 
-		$target_url = sc_get_api_url() . $this->feedback_api_endpoint;
+		$target_url = $this->getApiUrl() . $this->feedback_api_endpoint;
 
 		$response = wp_safe_remote_post( $target_url, $api_args );
 
-		$has_errors = sc_is_api_error( $response );
+		$has_errors = $this->isApiError( $response );
 
 		if ( $has_errors['error'] ) {
 			wp_send_json_error(
@@ -238,7 +238,7 @@ class DeactivationSurveyForm {
 	 *
 	 * @return array Default reasons.
 	 */
-	public static function getDefaultReasons() {
+	public function getDefaultReasons() {
 
 		return apply_filters(
 			'uds_default_deactivation_reasons',
@@ -275,5 +275,78 @@ class DeactivationSurveyForm {
 				),
 			)
 		);
+	}
+
+	/**
+	 * Check if the current screen is allowed for the survey.
+	 *
+	 * This function checks if the current screen is one of the allowed screens for displaying the survey.
+	 * It uses the `get_current_screen` function to get the current screen information and compares it with the list of allowed screens.
+	 *
+	 * @return bool True if the current screen is allowed, false otherwise.
+	 */
+	public function isPluginsScreen() {
+		$current_screen = get_current_screen();
+
+		// Check if $current_screen is a valid object before accessing its properties.
+		if ( ! is_object( $current_screen ) ) {
+			return false; // Return false if current screen is not valid.
+		}
+
+		$screen_id = $current_screen->id;
+
+		if ( ! empty( $screen_id ) && 'plugins' === $screen_id ) {
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Check is error in the received response.
+	 *
+	 * @param object $response Received API Response.
+	 * @return array $result Error result.
+	 */
+	public function isApiError( $response ) {
+
+		$result = array(
+			'error'         => false,
+			'error_message' => __( 'Oops! Something went wrong. Please refresh the page and try again.' ),
+			'error_code'    => 0,
+		);
+
+		if ( is_wp_error( $response ) ) {
+			$result['error']         = true;
+			$result['error_message'] = $response->get_error_message();
+			$result['error_code']    = $response->get_error_code();
+		} elseif ( ! empty( wp_remote_retrieve_response_code( $response ) ) && ! in_array( wp_remote_retrieve_response_code( $response ), array( 200, 201, 204 ), true ) ) {
+			$result['error']         = true;
+			$result['error_message'] = wp_remote_retrieve_response_message( $response );
+			$result['error_code']    = wp_remote_retrieve_response_code( $response );
+		}
+
+		return $result;
+	}
+
+	/**
+	 * Get API headers
+	 *
+	 * @return array<string, string>
+	 */
+	public function getApiHeaders() {
+		return array(
+			'Content-Type' => 'application/json',
+			'Accept'       => 'application/json',
+		);
+	}
+
+	/**
+	 * Get API URL for sending analytics.
+	 *
+	 * @return string API URL.
+	 */
+	public function getApiUrl() {
+		return defined( 'BSF_ANALYTICS_API_BASE_URL' ) ? BSF_ANALYTICS_API_BASE_URL : 'https://analytics.brainstormforce.com/';
 	}
 }
