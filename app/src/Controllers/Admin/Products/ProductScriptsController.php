@@ -46,30 +46,6 @@ class ProductScriptsController extends AdminModelEditController {
 	}
 
 	/**
-	 * Get all registered block prefixes.
-	 *
-	 * @return array Array of unique block prefixes.
-	 */
-	public function blockPrefixes() {
-		// Get all registered blocks.
-		$registered_blocks = \WP_Block_Type_Registry::get_instance()->get_all_registered();
-		$prefixes          = array();
-
-		// Extract prefixes from block names.
-		foreach ( $registered_blocks as $block ) {
-			$block_name = $block->name;
-			if ( strpos( $block_name, '/' ) !== false ) {
-				list( $prefix, $name ) = explode( '/', $block_name, 2 );
-				if ( ! empty( $prefix ) && ! in_array( $prefix, $prefixes, true ) ) {
-					$prefixes[] = $prefix;
-				}
-			}
-		}
-
-		return $prefixes;
-	}
-
-	/**
 	 * Enqueue needed scripts.
 	 *
 	 * @return void
@@ -122,8 +98,6 @@ class ProductScriptsController extends AdminModelEditController {
 		// Add patterns in both locations to ensure compatibility.
 		$editor_settings['__experimentalBlockPatterns']          = $patterns;
 		$editor_settings['__experimentalBlockPatternCategories'] = $pattern_categories;
-		$editor_settings['surecart_all_block_prefixes']          = $this->blockPrefixes();
-		$editor_settings['surecart_allowed_block_prefixes']      = apply_filters( 'surecart/product_page/allowed_block_prefixes', \SureCart::settings()->get( 'product_content_block_prefixes', [ 'core', 'surecart' ] ) );
 
 		wp_add_inline_script(
 			'surecart-components',
