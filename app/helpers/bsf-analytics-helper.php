@@ -63,7 +63,7 @@ function sc_get_api_url() {
 function sc_is_allowed_screen() {
 
 	// This filter allows to dynamically modify the list of allowed screens for the survey.
-	$allowed_screens = apply_filters( 'uds_survey_allowed_screens', array( 'plugins' ) );
+	$allowed_screens = array( 'plugins' );
 
 	$current_screen = get_current_screen();
 

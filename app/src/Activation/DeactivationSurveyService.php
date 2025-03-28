@@ -5,28 +5,12 @@ namespace SureCart\Activation;
  * Service for plugin deactivation survey.
  */
 class DeactivationSurveyService {
-
-	/**
-	 * Analytics key.
-	 *
-	 * @var string
-	 */
-	private $analytics_key = 'surecart';
-
-	/**
-	 * Analytics path.
-	 *
-	 * @var string
-	 */
-	private $analytics_path;
-
 	/**
 	 * Bootstrap.
 	 *
 	 * @return void
 	 */
 	public function bootstrap() {
-		$this->analytics_path = SURECART_LIBRARY_DIR . DIRECTORY_SEPARATOR . 'bsf-analytics';
 		add_action( 'init', array( $this, 'loadAnalytics' ) );
 	}
 
