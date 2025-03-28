@@ -73,8 +73,8 @@ export default ({ post, loading }) => {
 								window.location.assign(editPostLink);
 							}}
 						>
-							<ScIcon name="edit" slot="prefix" />
-							{__('Edit Content', 'surecart')}
+							<ScIcon name="maximize" slot="prefix" />
+							{__('Open Content Designer', 'surecart')}
 						</ScButton>
 					</div>
 				}
