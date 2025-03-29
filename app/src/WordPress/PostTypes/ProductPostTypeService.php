@@ -60,9 +60,10 @@ class ProductPostTypeService {
 		// disable trash for products.
 		add_filter( 'rest_sc_product_trashable', '__return_false' );
 
+		// add template to response.
 		add_action( 'rest_prepare_sc_product', array( $this, 'addTemplateToResponse' ), 10, 2 );
 
-		// we need to disable the gutenberg editor for our post type so that blocks don't load there.
+		// we need to enable the gutenberg editor for our post type so that content blocks can be edited.
 		add_filter( 'use_block_editor_for_post_type', [ $this, 'forceGutenberg' ], 10, 2 );
 
 		// Add edit product link to admin bar.
@@ -121,7 +122,6 @@ class ProductPostTypeService {
 	 *
 	 * @param \WP_REST_Response $response The response.
 	 * @param \WP_Post          $post The post.
-	 * @param \WP_REST_Request  $request The request.
 	 *
 	 * @return \WP_REST_Response
 	 */
@@ -135,7 +135,8 @@ class ProductPostTypeService {
 	}
 
 	/**
-	 * Hide the trash button in the block editor for sc_product post type.
+	 * Modify the UI for the product content editor.
+	 * This ensures you do not modify the post type directly, except the content.
 	 *
 	 * @return void
 	 */
@@ -995,6 +996,7 @@ class ProductPostTypeService {
 					'new_item'                 => __( 'New Product', 'surecart' ),
 					'edit_item'                => __( 'Edit Product', 'surecart' ),
 					'view_item'                => __( 'View Product', 'surecart' ),
+					'view_items'               => __( 'View Products', 'surecart' ),
 					'all_items'                => __( 'All Products', 'surecart' ),
 					'search_items'             => __( 'Search Products', 'surecart' ),
 					'not_found'                => __( 'No checkout forms found.', 'surecart' ),
