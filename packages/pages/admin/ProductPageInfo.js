@@ -9,6 +9,7 @@ import { __ } from '@wordpress/i18n';
 import { __experimentalConfirmDialog as ConfirmDialog } from '@wordpress/components';
 import { useEffect, useState } from 'react';
 import { addQueryArgs } from '@wordpress/url';
+
 /**
  * The component to be rendered  as part of the plugin.
  */
