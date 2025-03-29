@@ -24,6 +24,7 @@ export default () => {
 			<FullscreenModeClose
 				icon={wordpress}
 				label={__('Edit Product', 'surecart')}
+				showTooltip={false}
 				href={addQueryArgs('/wp-admin/admin.php', {
 					page: 'sc-products',
 					action: 'edit',
