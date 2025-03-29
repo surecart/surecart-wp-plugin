@@ -225,6 +225,17 @@ module.exports = {
 			__dirname,
 			'packages/admin/styles/webhook-notice.js'
 		),
+		/**
+		 * Deactivation survey.
+		 */
+		['styles/plugin-deactivation-feedback']: path.resolve(
+			__dirname,
+			'styles/plugin-deactivation-feedback.css'
+		),
+		['scripts/plugin-deactivation-feedback']: path.resolve(
+			__dirname,
+			'scripts/plugin-deactivation-feedback.js'
+		),
 	},
 	output: {
 		filename: '[name].js',
@@ -282,3 +293,4 @@ module.exports = {
 		}),
 	],
 };
+console.log('__dirname', __dirname);

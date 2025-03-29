@@ -148,11 +148,9 @@ class DeactivationSurveyForm {
 			return;
 		}
 
-		$file_ext = ! SCRIPT_DEBUG ? '.min' : '';
-
 		wp_enqueue_script(
 			'sc-uds-feedback-script',
-			plugins_url( 'scripts/plugin-deactivation-feedback' . $file_ext . '.js', SURECART_PLUGIN_FILE ),
+			plugins_url( 'dist/scripts/plugin-deactivation-feedback.js', SURECART_PLUGIN_FILE ),
 			array( 'jquery' ),
 			\SureCart::plugin()->version(),
 			true
@@ -170,7 +168,7 @@ class DeactivationSurveyForm {
 			)
 		);
 
-		wp_enqueue_style( 'sc-uds-feedback-style', plugins_url( 'styles/plugin-deactivation-feedback' . $file_ext . '.css', SURECART_PLUGIN_FILE ), array(), \SureCart::plugin()->version() );
+		wp_enqueue_style( 'sc-uds-feedback-style', plugins_url( 'dist/styles/plugin-deactivation-feedback.css', SURECART_PLUGIN_FILE ), array(), \SureCart::plugin()->version() );
 		wp_style_add_data( 'sc-uds-feedback-style', 'rtl', 'replace' );
 	}
 
