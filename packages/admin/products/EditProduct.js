@@ -43,7 +43,7 @@ export default ({ id, setBrowserURL }) => {
 	const [error, setError] = useState(null);
 	const [saving, setSaving] = useState(false);
 	const { createSuccessNotice } = useDispatch(noticesStore);
-	const { saveEditedEntityRecord, editEntityRecord } = useDispatch(coreStore);
+	const { saveEditedEntityRecord } = useDispatch(coreStore);
 	const { setEditedPost } = useDispatch('core/editor');
 
 	const {
@@ -66,10 +66,7 @@ export default ({ id, setBrowserURL }) => {
 		select('core/editor').getCurrentPost()
 	);
 
-	const editPost = (data) =>
-		editEntityRecord('postType', 'sc_product', id, data);
-
-	const { post, loadingPost } = useSelect(
+	const { post } = useSelect(
 		(select) => {
 			const queryArgs = [
 				'postType',
@@ -247,6 +244,8 @@ export default ({ id, setBrowserURL }) => {
 					#screen-meta-links {
 						display: none;
 					}
+
+					/** Fix conflicts with spectra. */
 					[type='text'],
 					[type='email'],
 					[type='url'],
