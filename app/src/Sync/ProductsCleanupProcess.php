@@ -56,8 +56,9 @@ class ProductsCleanupProcess extends BackgroundProcess {
 		$query = new \WP_Query(
 			[
 				'post_type'        => 'sc_product',
-				'posts_per_page'   => $args['batch_size'] ?? 25,
-				'page'             => $args['page'] ?? 1,
+				'post_status'      => 'any',
+				'posts_per_page'   => absint( $args['batch_size'] ?? 25 ),
+				'page'             => absint( $args['page'] ?? 1 ),
 				'suppress_filters' => true,
 				'tax_query'        => [
 					[
@@ -80,6 +81,7 @@ class ProductsCleanupProcess extends BackgroundProcess {
 			\SureCart::sync()
 			->productCleanup()
 			->queue( $product->ID );
+			error_log( $product->ID );
 		}
 
 		if ( $query->max_num_pages > $query->query_vars['page'] ) {
