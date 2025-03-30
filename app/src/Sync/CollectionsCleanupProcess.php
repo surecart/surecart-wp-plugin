@@ -66,11 +66,6 @@ class CollectionsCleanupProcess extends BackgroundProcess {
 				'hide_empty' => false,
 				'fields'     => 'ids',
 				'meta_query' => [
-					'relation' => 'AND',
-					[
-						'key'     => 'sc_account',
-						'compare' => 'EXISTS', // Ensures only terms that have sc_account key are included.
-					],
 					[
 						'key'     => 'sc_account',
 						'value'   => \SureCart::account()->id,
