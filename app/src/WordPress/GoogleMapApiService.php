@@ -23,7 +23,7 @@ class GoogleMapApiService {
 	 */
 	public function bootstrap() {
 		add_filter( 'pre_update_option_' . self::API_KEY_OPTION_NAME, [ $this, 'encryptSettings' ], 10, 3 );
-		add_filter( 'option_' . self::API_KEY_OPTION_NAME, [ $this, 'decryptSettings' ], 10, 2 );
+		add_filter( 'option_' . self::API_KEY_OPTION_NAME, [ $this, 'decryptSettings' ], 10 );
 	}
 
 	/**
@@ -46,12 +46,11 @@ class GoogleMapApiService {
 	/**
 	 * Decrypt the Google Map API key before returning it.
 	 *
-	 * @param mixed  $value  Value.
-	 * @param string $option Option name.
+	 * @param mixed $value  Value.
 	 *
 	 * @return string|\WP_Error
 	 */
-	public function decryptSettings( $value, $option ) {
+	public function decryptSettings( $value ) {
 		if ( empty( $value ) || is_wp_error( $value ) ) {
 			return '';
 		}
