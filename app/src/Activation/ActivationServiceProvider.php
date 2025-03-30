@@ -19,18 +19,13 @@ class ActivationServiceProvider implements ServiceProviderInterface {
 			return new ActivationService( $container['surecart.permissions.roles'], $container['surecart.pages.seeder'], $container['surecart.permissions.salts'] );
 		};
 
-		$container['surecart.deactivation.survey'] = function ( $container ) {
-			return new DeactivationSurveyService();
-		};
-
-		$container['surecart.deactivation.survey.form'] = function ( $container ) {
+		$container['surecart.deactivation.survey.form'] = function () {
 			return new DeactivationSurveyForm();
 		};
 
 		// register alias.
 		$app = $container[ SURECART_APPLICATION_KEY ];
 		$app->alias( 'activation', 'surecart.activation' );
-		$app->alias( 'deactivationForm', 'surecart.deactivation.survey.form' );
 	}
 
 	/**
@@ -42,6 +37,5 @@ class ActivationServiceProvider implements ServiceProviderInterface {
 	public function bootstrap( $container ) {
 		$container['surecart.activation']->bootstrap();
 		$container['surecart.deactivation.survey.form']->bootstrap();
-		$container['surecart.deactivation.survey']->bootstrap();
 	}
 }
