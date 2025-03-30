@@ -31,7 +31,7 @@ class SettingsServiceProvider implements ServiceProviderInterface {
 
 		$app = $container[ SURECART_APPLICATION_KEY ];
 		$app->alias( 'settings', 'surecart.settings' );
-		$app->alias( 'settings_google_map', 'surecart.settings.google_map' );
+		$app->alias( 'googleMaps', 'surecart.settings.google_map' );
 	}
 
 
