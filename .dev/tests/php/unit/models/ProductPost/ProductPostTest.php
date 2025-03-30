@@ -912,7 +912,7 @@ class ProductPostTest extends SureCartUnitTestCase
 		$query = new \WP_Query( array(
             'post_type' => 'sc_product',
         ) );
-		
+
 		$product_post_type_service = new ProductPostTypeService();
 		$result = $product_post_type_service->forceAccountIdScope( $query );
 		// Get the tax query
@@ -928,14 +928,20 @@ class ProductPostTest extends SureCartUnitTestCase
 	 * @group product-post
 	 */
 	public function test_force_account_id_with_suppress_filters_enabled() {
+		\SureCart::alias('account', function () {
+			return (object) [
+				'id' => '123',
+			];
+		});
+
 		$query = new \WP_Query( array(
 			'post_type' => 'sc_product',
 			'suppress_filters' => true
 		) );
-		
+
 		$product_post_type_service = new ProductPostTypeService();
 		$result = $product_post_type_service->forceAccountIdScope( $query );
-		
+
 		// Get the tax query.
 		$tax_query = $result->get( 'tax_query' );
 
