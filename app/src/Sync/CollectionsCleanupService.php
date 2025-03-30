@@ -1,9 +1,6 @@
 <?php
 
-
 namespace SureCart\Sync;
-
-use SureCart\Models\Product;
 
 /**
  * This delete's an individual collection term asynchronously.
@@ -53,7 +50,7 @@ class CollectionsCleanupService {
 			$this->action_name,
 			[
 				'id'          => $collection_term_id,
-				'show_notice' => false,
+				'show_notice' => true,
 			],
 			'product-cleanup-' . $collection_term_id, // unique id for the term.
 			true // force unique. This will replace any existing jobs.

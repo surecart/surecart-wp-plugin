@@ -1,9 +1,6 @@
 <?php
 
-
 namespace SureCart\Sync;
-
-use SureCart\Models\Product;
 
 /**
  * This delete's an individual product post asynchronously.
@@ -53,7 +50,7 @@ class ProductCleanupService {
 			$this->action_name,
 			[
 				'id'          => $product_post_id,
-				'show_notice' => false,
+				'show_notice' => true,
 			],
 			'product-cleanup-' . $product_post_id, // unique id for the product.
 			true // force unique. This will replace any existing jobs.
