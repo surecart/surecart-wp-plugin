@@ -143,7 +143,15 @@ class ProductsSyncService {
 		$this->cleanup();
 
 		// save and dispatch the process.
-		return $this->queue()->setNext( 'surecart.process.products.cleanup' )->push_to_queue( $args )->save()->dispatch();
+		return $this->queue()
+			// push the args to the queue.
+			->push_to_queue( $args )
+			// set the next process to the cleanup process.
+			->setNext( 'surecart.process.products.cleanup' )
+			// save the queue.
+			->save()
+			// dispatch the queue.
+			->dispatch();
 	}
 
 	/**
