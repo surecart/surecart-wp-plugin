@@ -3,7 +3,6 @@
 namespace SureCart\Sync;
 
 use SureCart\Background\BackgroundProcess;
-use SureCart\Models\Product;
 
 /**
  * This process fetches and queues all products collections for syncing.
