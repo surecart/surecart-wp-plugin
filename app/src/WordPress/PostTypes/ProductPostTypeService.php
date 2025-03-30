@@ -129,7 +129,7 @@ class ProductPostTypeService {
 		$product                             = sc_get_product( $post );
 		$template_id                         = wp_is_block_theme() ? $product->template_id : $product->template_part_id;
 		$block_template                      = get_block_template( $template_id, wp_is_block_theme() ? 'wp_template' : 'wp_template_part' );
-		$response->data['has_content_block'] = has_block( 'core/post-content', $block_template->content );
+		$response->data['has_content_block'] = has_block( 'core/post-content', $block_template->content ?? '' );
 		$response->data['block_template']    = $block_template;
 		return $response;
 	}
