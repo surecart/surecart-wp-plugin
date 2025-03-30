@@ -806,7 +806,7 @@ abstract class BackgroundProcess extends AsyncRequest {
 	 * @return BackgroundProcess|false
 	 */
 	public function getNext() {
-		return get_site_option( $this->identifier . '_next', false );
+		return get_option( $this->identifier . '_next', false );
 	}
 
 	/**
@@ -817,7 +817,7 @@ abstract class BackgroundProcess extends AsyncRequest {
 	 * @return $this
 	 */
 	public function setNext( $next ) {
-		update_site_option( $this->identifier . '_next', $next );
+		update_option( $this->identifier . '_next', $next, false );
 		return $this;
 	}
 }
