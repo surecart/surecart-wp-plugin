@@ -23,7 +23,7 @@ import { ScButton, ScIcon } from '@surecart/components-react';
 import { useSelect } from '@wordpress/data';
 import Confirm from '../../../components/confirm';
 
-export default ({ post, loading, onSave, error, setError }) => {
+export default ({ post, loading, onSave, error }) => {
 	const [blocks, setBlocks] = useState([]);
 	const [confirm, setConfirm] = useState(false);
 	const [isSaving, setIsSaving] = useState(false);
@@ -54,6 +54,7 @@ export default ({ post, loading, onSave, error, setError }) => {
 	useEffect(() => {
 		if (error) {
 			setIsSaving(false);
+			setConfirm(false);
 		}
 	}, [error]);
 
@@ -187,6 +188,7 @@ export default ({ post, loading, onSave, error, setError }) => {
 						navigate('editor');
 					} catch (error) {
 						setIsSaving(false);
+						setConfirm(false);
 					}
 				}}
 				confirmButtonText={__('Save and go to editor', 'surecart')}
