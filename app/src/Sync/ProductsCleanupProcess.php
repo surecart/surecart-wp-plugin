@@ -81,7 +81,6 @@ class ProductsCleanupProcess extends BackgroundProcess {
 			\SureCart::sync()
 			->productCleanup()
 			->queue( $product->ID );
-			error_log( $product->ID );
 		}
 
 		if ( $query->max_num_pages > $query->query_vars['page'] ) {
