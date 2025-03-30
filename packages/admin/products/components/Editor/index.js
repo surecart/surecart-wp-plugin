@@ -10,6 +10,8 @@ import { useEffect, useState } from '@wordpress/element';
 import { parse } from '@wordpress/blocks';
 import { moreHorizontal, external } from '@wordpress/icons';
 import { addQueryArgs } from '@wordpress/url';
+import { store as coreStore } from '@wordpress/core-data';
+
 /**
  * Internal dependencies.
  */
@@ -18,9 +20,19 @@ import initBlocks from '../../../components/block-editor/utils/init-blocks';
 import PreviewBlocks from '../../../components/block-editor/PreviewBlocks';
 import PreviewElementor from './PreviewElementor';
 import { ScButton, ScIcon } from '@surecart/components-react';
+import { useSelect } from '@wordpress/data';
+import Confirm from '../../../components/confirm';
 
-export default ({ post, loading }) => {
+export default ({ post, loading, onSave, error, setError }) => {
 	const [blocks, setBlocks] = useState([]);
+	const [confirm, setConfirm] = useState(false);
+	const [isSaving, setIsSaving] = useState(false);
+	const hasDirtyRecords = useSelect((select) => {
+		const { __experimentalGetDirtyEntityRecords } = select(coreStore);
+		const dirtyEntityRecords = __experimentalGetDirtyEntityRecords();
+		return dirtyEntityRecords.length > 0;
+	}, []);
+
 	const editPostLink = addQueryArgs('/wp-admin/post.php', {
 		post: post?.id,
 		action: 'edit',
@@ -38,22 +50,55 @@ export default ({ post, loading }) => {
 		setBlocks(parsedContent);
 	}, [post?.content]);
 
+	// bail on error.
+	useEffect(() => {
+		if (error) {
+			setIsSaving(false);
+		}
+	}, [error]);
+
 	if (!post?.id) {
 		return null;
 	}
 
-	// build post link.
-	let editorLink = editPostLink;
-	let pageBuilder = 'core';
+	// Determine editor configuration
+	const { editorLink, pageBuilder } =
+		post?.meta?._elementor_edit_mode === 'builder'
+			? {
+					pageBuilder: 'elementor',
+					editorLink: addQueryArgs('/wp-admin/post.php', {
+						post: post?.id,
+						action: 'elementor',
+					}),
+			  }
+			: {
+					pageBuilder: 'core',
+					editorLink: editPostLink,
+			  };
 
-	// is elementor.
-	if (post?.meta?._elementor_edit_mode === 'builder') {
-		pageBuilder = 'elementor';
-		editorLink = addQueryArgs('/wp-admin/post.php', {
-			post: post?.id,
-			action: 'elementor',
-		});
-	}
+	/**
+	 * Handle the navigateion request.
+	 */
+	const onNavigate = (type) => {
+		// show notice if has any dirty records on page.
+		if (hasDirtyRecords) {
+			setConfirm(true);
+			return;
+		}
+
+		navigate(type);
+	};
+
+	/**
+	 * Navigate to the editor or post.
+	 */
+	const navigate = (type = 'editor') => {
+		if (type === 'editor') {
+			window.location.assign(editorLink);
+		} else {
+			window.location.assign(editPostLink);
+		}
+	};
 
 	return (
 		<>
@@ -69,9 +114,7 @@ export default ({ post, loading }) => {
 								margin-top: -20px;
 								margin-bottom: -20px;
 							`}
-							onClick={() => {
-								window.location.assign(editPostLink);
-							}}
+							onClick={() => onNavigate('editor')}
 						>
 							<ScIcon name="maximize" slot="prefix" />
 							{__('Open Content Designer', 'surecart')}
@@ -84,8 +127,7 @@ export default ({ post, loading }) => {
 							[
 								{
 									icon: external,
-									onClick: () =>
-										window.location.assign(editPostLink),
+									onClick: () => onNavigate('post'),
 									title: __('Go to editor', 'surecart'),
 								},
 							],
@@ -126,13 +168,7 @@ export default ({ post, loading }) => {
 									<PreviewElementor />
 								)}
 								{pageBuilder === 'core' && (
-									<div
-										onClick={() => {
-											window.location.assign(
-												editPostLink
-											);
-										}}
-									>
+									<div onClick={() => onNavigate('editor')}>
 										<PreviewBlocks blocks={blocks} />
 									</div>
 								)}
@@ -141,6 +177,32 @@ export default ({ post, loading }) => {
 					</div>
 				)}
 			</Box>
+			<Confirm
+				open={confirm}
+				loading={isSaving}
+				onConfirm={async () => {
+					setIsSaving(true);
+					try {
+						await onSave();
+						navigate('editor');
+					} catch (error) {
+						setIsSaving(false);
+					}
+				}}
+				confirmButtonText={__('Save and go to editor', 'surecart')}
+				cancelButtonText={__('Cancel', 'surecart')}
+				onRequestClose={() => {
+					if (isSaving) {
+						return;
+					}
+					setConfirm(false);
+				}}
+			>
+				{__(
+					'Save your changes before going to the editor?',
+					'surecart'
+				)}
+			</Confirm>
 		</>
 	);
 };

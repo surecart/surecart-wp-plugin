@@ -125,7 +125,7 @@ export default ({ id, setBrowserURL }) => {
 	/**
 	 * Handle the form submission
 	 */
-	const onSubmit = async (e) => {
+	const onSubmit = async () => {
 		try {
 			setError(null);
 			setSaving(true);
@@ -414,7 +414,12 @@ export default ({ id, setBrowserURL }) => {
 					/>
 
 					{post?.id && (
-						<Editor post={post} loading={!hasLoadedProduct} />
+						<Editor
+							post={post}
+							loading={!hasLoadedProduct}
+							onSave={onSubmit}
+							error={saveProductError || productError || error}
+						/>
 					)}
 
 					<Image
