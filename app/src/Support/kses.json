@@ -1549,6 +1549,7 @@
     "scratch-display-amount": true,
     "setup-fee-amount": true,
     "setup-fee-name": true,
+    "setup-fee-text": true,
     "trial-duration-days": true,
     "style": true,
     "id": true,
