@@ -1,5 +1,6 @@
-import { registerPlugin } from '@wordpress/plugins';
-
+/**
+ * WordPress dependencies
+ */
 import {
 	__experimentalFullscreenModeClose as FullscreenModeClose,
 	__experimentalMainDashboardButton as MainDashboardButton,
