@@ -1,9 +1,9 @@
 /**
  * External dependencies.
  */
-import { Component, h } from '@stencil/core';
+import { Component, Fragment, h } from '@stencil/core';
 import { state } from '@store/upsell';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 @Component({
   tag: 'sc-upsell-totals',
   styleUrl: 'sc-upsell-totals.css',
@@ -11,12 +11,53 @@ import { __ } from '@wordpress/i18n';
 })
 export class ScUpsellTotals {
   renderAmountDue() {
-    return state.amount_due > 0 ? (
-      <sc-format-number type="currency" value={state.amount_due} currency={state?.line_item?.price?.currency || 'usd'}></sc-format-number>
-    ) : !!state?.line_item?.trial_amount ? (
-      __('Trial', 'surecart')
-    ) : (
-      __('Free', 'surecart')
+    return state.amount_due > 0 ? state?.line_item?.total_display_amount : !!state?.line_item?.trial_amount ? __('Trial', 'surecart') : __('Free', 'surecart');
+  }
+
+  // Determine if the currency should be displayed to avoid duplication in the amount display.
+  getCurrencyToDisplay() {
+    return state?.line_item?.total_default_currency_display_amount?.toLowerCase()?.includes(state?.line_item?.currency?.toLowerCase())
+      ? ''
+      : state?.line_item?.currency?.toUpperCase();
+  }
+
+  renderConversion() {
+    // need to check the checkout for a few things.
+    const checkout = state?.checkout;
+
+    if (!checkout?.show_converted_total) {
+      return null;
+    }
+
+    // the currency is the same as the current currency.
+    if (checkout?.currency === checkout?.current_currency) {
+      return null;
+    }
+
+    // there is no amount due.
+    if (!state?.line_item?.total_amount) {
+      return null;
+    }
+
+    return (
+      <Fragment>
+        <sc-divider></sc-divider>
+        <sc-line-item style={{ '--price-size': 'var(--sc-font-size-x-large)' }}>
+          <span slot="title">
+            <slot name="charge-amount-description">{sprintf(__('Payment Total', 'surecart'), state?.line_item?.currency?.toUpperCase())}</slot>
+          </span>
+          <span slot="price">
+            {this.getCurrencyToDisplay() && <span class="currency-label">{this.getCurrencyToDisplay()}</span>}
+            {state?.line_item?.total_default_currency_display_amount}
+          </span>
+        </sc-line-item>
+        <sc-line-item>
+          <span slot="description" class="conversion-description">
+           {/* translators: %s is the currency code */}
+            {sprintf(__('Your payment will be processed in %s.', 'surecart'), state?.line_item?.currency?.toUpperCase())}
+          </span>
+        </sc-line-item>
+      </Fragment>
     );
   }
 
@@ -29,7 +70,7 @@ export class ScUpsellTotals {
 
         <sc-line-item>
           <span slot="description">{__('Subtotal', 'surecart')}</span>
-          <sc-format-number slot="price" type="currency" value={state.line_item?.subtotal_amount} currency={state?.line_item?.price?.currency || 'usd'}></sc-format-number>
+          <span slot="price">{state.line_item?.subtotal_display_amount}</span>
         </sc-line-item>
 
         {(state?.line_item?.fees?.data || [])
@@ -40,7 +81,7 @@ export class ScUpsellTotals {
                 <span slot="description">
                   {fee.description} {`(${__('one time', 'surecart')})`}
                 </span>
-                <sc-format-number slot="price" type="currency" value={fee.amount} currency={state?.line_item?.price?.currency || 'usd'}></sc-format-number>
+                <span slot="price">{fee?.display_amount}</span>
               </sc-line-item>
             );
           })}
@@ -48,7 +89,7 @@ export class ScUpsellTotals {
         {!!state.line_item?.tax_amount && (
           <sc-line-item>
             <span slot="description">{__('Tax', 'surecart')}</span>
-            <sc-format-number slot="price" type="currency" value={state.line_item?.tax_amount} currency={state?.line_item?.price?.currency || 'usd'}></sc-format-number>
+            <span slot="price">{state.line_item?.tax_display_amount}</span>
           </sc-line-item>
         )}
 
@@ -56,17 +97,10 @@ export class ScUpsellTotals {
 
         <sc-line-item style={{ '--price-size': 'var(--sc-font-size-x-large)' }}>
           <span slot="title">{__('Total', 'surecart')}</span>
-          <sc-format-number slot="price" type="currency" value={state.line_item?.total_amount} currency={state?.line_item?.price?.currency || 'usd'}></sc-format-number>
+          <span slot="price">{state.line_item?.total_display_amount}</span>
         </sc-line-item>
 
-        {state.amount_due !== state.line_item?.total_amount && (
-          <sc-line-item style={{ '--price-size': 'var(--sc-font-size-x-large)' }}>
-            <span slot="title">{__('Amount Due', 'surecart')}</span>
-            <span slot="price">
-              {<sc-format-number slot="price" type="currency" value={state.amount_due} currency={state?.line_item?.price?.currency || 'usd'}></sc-format-number>}
-            </span>
-          </sc-line-item>
-        )}
+        {this.renderConversion()}
       </sc-summary>
     );
   }

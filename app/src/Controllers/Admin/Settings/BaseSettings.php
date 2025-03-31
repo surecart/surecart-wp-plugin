@@ -136,7 +136,8 @@ abstract class BaseSettings {
 			$handle,
 			'scData',
 			[
-				'supported_currencies'   => Currency::getSupportedCurrencies(),
+				'supported_currencies'   => Currency::list(),
+				'locales'                => Currency::getLocales(),
 				'app_url'                => defined( 'SURECART_APP_URL' ) ? untrailingslashit( SURECART_APP_URL ) : 'https://app.surecart.com',
 				'account_id'             => \SureCart::account()->id,
 				'account_slug'           => \SureCart::account()->slug,
@@ -151,6 +152,7 @@ abstract class BaseSettings {
 				'processors'             => Processor::get(),
 				'is_block_theme'         => (bool) wp_is_block_theme(),
 				'claim_url'              => ! \SureCart::account()->claimed ? \SureCart::routeUrl( 'account.claim' ) : '',
+				'i18n'                   => \SureCart::state()->i18n()->get(),
 			]
 		);
 	}

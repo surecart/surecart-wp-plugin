@@ -6,6 +6,7 @@ use SureCart\Account\AccountServiceProvider;
 use SureCart\Request\RequestService;
 use SureCart\Request\RequestServiceProvider;
 use SureCart\Rest\PayoutsRestServiceProvider;
+use SureCart\Settings\SettingsServiceProvider;
 use SureCart\Support\Errors\ErrorsServiceProvider;
 use SureCart\Tests\SureCartUnitTestCase;
 
@@ -27,6 +28,7 @@ class PayoutsRestServiceProviderTest extends SureCartUnitTestCase
 				AccountServiceProvider::class,
 				PayoutsRestServiceProvider::class,
 				RequestServiceProvider::class,
+				SettingsServiceProvider::class,
 				ErrorsServiceProvider::class,
 			],
 		], false);

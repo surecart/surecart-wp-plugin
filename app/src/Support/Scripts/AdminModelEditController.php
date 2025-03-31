@@ -104,7 +104,7 @@ abstract class AdminModelEditController {
 		// fix shitty jetpack issues key hijacking issues.
 		add_filter(
 			'admin_head',
-			function() {
+			function () {
 				wp_dequeue_script( 'wpcom-notes-common' );
 				wp_dequeue_script( 'wpcom-notes-admin-bar' );
 				wp_dequeue_style( 'wpcom-notes-admin-bar' );
@@ -152,13 +152,16 @@ abstract class AdminModelEditController {
 			$this->data['checkout_page_url'] = \SureCart::getUrl()->checkout();
 		}
 		if ( in_array( 'supported_currencies', $this->with_data ) ) {
-			$this->data['supported_currencies'] = Currency::getSupportedCurrencies();
+			$this->data['supported_currencies'] = Currency::list();
 		}
 		if ( in_array( 'links', $this->with_data ) ) {
 			$this->data['links'] = [];
 			foreach ( array_keys( \SureCart::getAdminPageNames() ) as $name ) {
 				$this->data['links'][ $name ] = esc_url_raw( add_query_arg( [ 'action' => 'edit' ], \SureCart::getUrl()->index( $name ) ) );
 			}
+		}
+		if ( in_array( 'i18n', $this->with_data ) ) {
+			$this->data['i18n'] = \SureCart::state()->i18n()->get();
 		}
 
 		// pass entitlements to page.

@@ -2,7 +2,7 @@
  * External dependencies.
  */
 import { Component, Fragment, h, Prop } from '@stencil/core';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 
 /**
  * Internal dependencies.
@@ -69,6 +69,55 @@ export class ScLineItemTotal {
     );
   }
 
+  // Determine if the currency should be displayed to avoid duplication in the amount display.
+  getCurrencyToDisplay() {
+    const checkout = this.checkout || checkoutState?.checkout;
+    return checkout?.amount_due_default_currency_display_amount?.toLowerCase()?.includes(checkout?.currency?.toLowerCase()) ? '' : checkout?.currency?.toUpperCase();
+  }
+
+  renderConversion() {
+    if (this.total !== 'total') {
+      return null;
+    }
+
+    const checkout = this.checkout || checkoutState?.checkout;
+
+    if (!checkout?.show_converted_total) {
+      return null;
+    }
+
+    // the currency is the same as the current currency.
+    if (checkout?.currency === checkout?.current_currency) {
+      return null;
+    }
+
+    // there is no amount due.
+    if (!checkout?.amount_due) {
+      return null;
+    }
+
+    return (
+      <Fragment>
+        <sc-divider></sc-divider>
+        <sc-line-item style={{ '--price-size': 'var(--sc-font-size-x-large)' }}>
+          <span slot="title">
+            <slot name="charge-amount-description">{__('Payment Total', 'surecart')}</slot>
+          </span>
+          <span slot="price">
+            {this.getCurrencyToDisplay() && <span class="currency-label">{this.getCurrencyToDisplay()}</span>}
+            {checkout?.amount_due_default_currency_display_amount}
+          </span>
+        </sc-line-item>
+        <sc-line-item>
+          <span slot="description" class="conversion-description">
+            {/* translators: %s is the currency code */}
+            {sprintf(__('Your payment will be processed in %s.', 'surecart'), checkout?.currency?.toUpperCase())}
+          </span>
+        </sc-line-item>
+      </Fragment>
+    );
+  }
+
   render() {
     const checkout = this.checkout || checkoutState?.checkout;
     // loading state
@@ -99,7 +148,7 @@ export class ScLineItemTotal {
               )}
             </span>
             <span slot="price">
-              <sc-total order={checkout} total={this.total}></sc-total>
+              <sc-total total={this.total}></sc-total>
             </span>
           </sc-line-item>
 
@@ -108,9 +157,7 @@ export class ScLineItemTotal {
               <span slot="description">
                 <slot name="free-trial-description">{__('Trial', 'surecart')}</slot>
               </span>
-              <span slot="price">
-                <sc-format-number type="currency" value={checkout.trial_amount} currency={checkout.currency} />
-              </span>
+              <span slot="price">{checkout?.trial_display_amount}</span>
             </sc-line-item>
           )}
 
@@ -125,10 +172,10 @@ export class ScLineItemTotal {
               </span>
             )}
 
-            <span slot="price">
-              <sc-format-number type="currency" currency={checkout?.currency} value={checkout?.amount_due}></sc-format-number>
-            </span>
+            <span slot="price">{checkout?.amount_due_display_amount}</span>
           </sc-line-item>
+
+          {this.renderConversion()}
         </div>
       );
     }
@@ -140,9 +187,7 @@ export class ScLineItemTotal {
             <span slot="description">
               <slot name="total-payments-description">{__('Total Installment Payments', 'surecart')}</slot>
             </span>
-            <span slot="price">
-              <sc-format-number type="currency" value={checkout?.full_amount} currency={checkout?.currency || 'usd'} />
-            </span>
+            <span slot="price">{checkout?.full_display_amount}</span>
           </sc-line-item>
         )}
 
@@ -150,12 +195,12 @@ export class ScLineItemTotal {
           {this.renderLineItemTitle(checkout)}
           {this.renderLineItemDescription(checkout)}
           <span slot="price">
-            {!!checkout?.total_savings_amount && this.total === 'total' && (
-              <sc-format-number class="scratch-price" type="currency" value={-checkout?.total_savings_amount} currency={checkout?.currency || 'usd'} />
-            )}
-            <sc-total class="total-price" order={checkout} total={this.total}></sc-total>
+            {!!checkout?.total_savings_amount && this.total === 'total' && <span class="scratch-price">{checkout?.total_scratch_display_amount}</span>}
+            {this.total === 'total' && <span class="total-price">{checkout?.total_display_amount}</span>}
           </span>
         </sc-line-item>
+
+        {this.renderConversion()}
       </Fragment>
     );
   }

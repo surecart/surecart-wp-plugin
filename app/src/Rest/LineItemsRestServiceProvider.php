@@ -24,6 +24,13 @@ class LineItemsRestServiceProvider extends RestServiceProvider implements RestSe
 	protected $controller = LineItemsController::class;
 
 	/**
+	 * Whether the rest service provider converts currency.
+	 *
+	 * @var boolean
+	 */
+	protected $converts_currency = true;
+
+	/**
 	 * Methods allowed for the model.
 	 *
 	 * @var array

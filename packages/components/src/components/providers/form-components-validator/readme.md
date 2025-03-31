@@ -56,11 +56,10 @@ graph TD;
   sc-order-shipping-address --> sc-address
   sc-order-shipping-address --> sc-compact-address
   sc-address --> sc-form-control
-  sc-address --> sc-input
   sc-address --> sc-select
+  sc-address --> sc-input
   sc-address --> sc-block-ui
   sc-form-control --> sc-visually-hidden
-  sc-input --> sc-form-control
   sc-select --> sc-icon
   sc-select --> sc-menu-label
   sc-select --> sc-menu-item
@@ -69,6 +68,7 @@ graph TD;
   sc-select --> sc-input
   sc-select --> sc-spinner
   sc-select --> sc-menu
+  sc-input --> sc-form-control
   sc-block-ui --> sc-spinner
   sc-compact-address --> sc-form-control
   sc-compact-address --> sc-select
@@ -87,11 +87,9 @@ graph TD;
   sc-button --> sc-spinner
   sc-order-bumps --> sc-form-control
   sc-order-bumps --> sc-order-bump
-  sc-order-bump --> sc-format-number
   sc-order-bump --> sc-choice
   sc-order-bump --> sc-divider
   sc-line-item-tax --> sc-line-item
-  sc-line-item-tax --> sc-format-number
   sc-shipping-choices --> sc-form-control
   sc-shipping-choices --> sc-radio-group
   sc-shipping-choices --> sc-radio
@@ -99,7 +97,6 @@ graph TD;
   sc-shipping-choices --> sc-block-ui
   sc-line-item-shipping --> sc-line-item
   sc-line-item-shipping --> sc-skeleton
-  sc-line-item-shipping --> sc-format-number
   sc-line-item-invoice-number --> sc-line-item
   sc-line-item-invoice-number --> sc-skeleton
   sc-line-item-invoice-due-date --> sc-line-item
@@ -109,7 +106,6 @@ graph TD;
   sc-line-item-invoice-receipt-download --> sc-icon
   sc-invoice-memo --> sc-skeleton
   sc-line-item-trial --> sc-line-item
-  sc-line-item-trial --> sc-format-number
   sc-checkout --> sc-form-components-validator
   style sc-form-components-validator fill:#f9f,stroke:#333,stroke-width:4px
 ```

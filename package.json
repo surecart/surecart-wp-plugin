@@ -151,7 +151,7 @@
 		"@wordpress/e2e-test-utils": "^10.28.0",
 		"@wordpress/env": "^9.9.0",
 		"@wordpress/prettier-config": "^3.14.0",
-		"@wordpress/scripts": "^27",
+		"@wordpress/scripts": "^30.6.2",
 		"adm-zip": "^0.5.9",
 		"archiver": "^4.0.1",
 		"chalk": "^4.0.0",
@@ -184,10 +184,7 @@
 		"webpack-dev-server": "^3.10.3"
 	},
 	"resolutions": {
-		"react": "17.0.2",
-		"react-dom": "17.0.2",
 		"eslint-plugin-jsdoc": "^37.4.2",
-		"react-test-renderer": "17.0.2",
 		"jest": "27.4.5",
 		"jest-cli": "27.4.5",
 		"jest-environment-node": "27.4.4"

@@ -36,7 +36,8 @@
 				"fontAppearance": true,
 				"textTransform": true
 			}
-		}
+		},
+		"currencyConversion": true
 	},
 	"textdomain": "surecart",
 	"render": "file:./view.php",

@@ -44,6 +44,12 @@ export class ScProductLineItem {
   /** The line item scratch amount */
   @Prop() scratch: string;
 
+  /** Product display amount */
+  @Prop() displayAmount: string;
+
+  /** Product scratch display amount */
+  @Prop() scratchDisplayAmount: string;
+
   /** Product line item fees. */
   @Prop() fees: Fee[];
 

@@ -57,7 +57,6 @@ graph TD;
   sc-subscription-next-payment --> sc-flex
   sc-subscription-next-payment --> sc-skeleton
   sc-subscription-next-payment --> sc-subscription-details
-  sc-subscription-next-payment --> sc-format-number
   sc-subscription-next-payment --> sc-card
   sc-subscription-next-payment --> sc-product-line-item
   sc-subscription-next-payment --> sc-line-item
@@ -128,7 +127,6 @@ graph TD;
   sc-subscription-reactivate --> sc-dialog
   sc-subscription-reactivate --> sc-dashboard-module
   sc-subscription-reactivate --> sc-alert
-  sc-subscription-reactivate --> sc-format-number
   sc-subscription-reactivate --> sc-text
   sc-subscription-reactivate --> sc-button
   sc-subscription-reactivate --> sc-block-ui
