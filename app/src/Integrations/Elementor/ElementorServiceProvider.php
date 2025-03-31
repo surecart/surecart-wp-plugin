@@ -48,8 +48,10 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 			add_filter( 'elementor/query/get_autocomplete/surecart-product', [ $this, 'get_autocomplete' ], 10, 2 );
 			add_filter( 'elementor/query/get_value_titles/surecart-product', [ $this, 'get_titles' ], 10, 2 );
 
-			add_action( 'elementor/frontend/before_render', [ $this, 'disable_interactivity_process_directives_for_surecart_elements' ], 0 );
+			// Add product widget wrapper.
 			add_action( 'elementor/frontend/builder_content_data', array( $this, 'append_product_widget_wrapper' ), 10, 2 );
+			add_action( 'elementor/frontend/before_get_builder_content', [ $this, 'preReturnSerializedBlock' ] );
+			add_action( 'elementor/frontend/the_content', [ $this, 'doBlocksAtEnd' ], 10 );
 		}
 
 		// Bootstrap the widgets.
@@ -57,6 +59,39 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 
 		// Bootstrap the dynamic tags.
 		$container['surecart.elementor.dynamic_tags']->bootstrap();
+	}
+
+	/**
+	 * Adds the block serialization filter before Elementor content is processed.
+	 *
+	 * @return void
+	 */
+	public function preReturnSerializedBlock(): void {
+		add_filter( 'pre_render_block', [ $this, 'serializeBlock' ], 10, 2 );
+	}
+
+	/**
+	 * Process Elementor content and remove the serialization filter.
+	 *
+	 * @param string $content The content to process
+	 *
+	 * @return string The processed content
+	 */
+	public function doBlocksAtEnd( string $content ): string {
+		remove_filter( 'pre_render_block', [ $this, 'serializeBlock' ], 10, 2 );
+		return do_blocks( $content );
+	}
+
+	/**
+	 * Disable Elementor render block.
+	 *
+	 * @param array $rendered The rendered block.
+	 * @param array $parsed_block The parsed block.
+	 *
+	 * @return array
+	 */
+	public function serializeBlock( $rendered, $parsed_block ) {
+		return serialize_block( $parsed_block );
 	}
 
 	/**
@@ -280,14 +315,16 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 					return $content;
 				}
 
-				// check for any surecart product block.
 				$product_page_wrapper = new ProductPageWrapperService( $content );
-				if ( $product_page_wrapper->hasAnySureCartProductBlock() ) {
+
+				// there is no surecart product block in the content..
+				if ( empty( $product_page_wrapper->hasAnySureCartProductBlock() ) ) {
 					return $content;
 				}
 
-				return do_blocks( $product_page_wrapper->addProductPageWrapper() );
-			}
+				return $product_page_wrapper->addProductPageWrapper();
+			},
+			9 // this is important to run this filter at the end of the content.
 		);
 		return $data;
 	}
