@@ -70,7 +70,7 @@ class AddToCartButton extends \Elementor\Widget_Base {
 	 * @return array
 	 */
 	public function get_style_depends() {
-		return array( 'surecart-spinner' );
+		return array( 'surecart-spinner', 'surecart-wp-button' );
 	}
 
 	/**
