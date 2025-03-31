@@ -5,7 +5,6 @@ namespace SureCart\Activation;
  * Service for plugin deactivation survey form.
  */
 class DeactivationSurveyForm {
-
 	/**
 	 * Feedback URL.
 	 *
@@ -19,8 +18,14 @@ class DeactivationSurveyForm {
 	 * @return void
 	 */
 	public function bootstrap() {
-		add_action( 'admin_enqueue_scripts', array( $this, 'loadFormStyles' ) );
+		// handle ajax request.
 		add_action( 'wp_ajax_uds_plugin_deactivate_feedback', array( $this, 'sendPluginDeactivateFeedback' ) );
+
+		// show feedback form on plugins screen.
+		if ( $this->isPluginsScreen() ) {
+			add_action( 'admin_enqueue_scripts', array( $this, 'loadFormStyles' ) );
+			add_action( 'admin_footer', array( $this, 'showFeedbackForm' ) );
+		}
 	}
 
 	/**
@@ -30,52 +35,29 @@ class DeactivationSurveyForm {
 	 * It takes an optional string parameter $id for the form wrapper ID and an optional array parameter $args for customizing the form.
 	 *
 	 * @since 1.1.6
-	 * @param array $args Optional. Custom arguments for the form. Defaults to an empty array.
 	 * @return void
 	 */
-	public function showFeedbackForm( array $args = array() ) {
-
-		// Return if not in admin.
-		if ( ! is_admin() ) {
-			return;
-		}
-
+	public function showFeedbackForm() {
 		// Set default arguments for the feedback form.
-		$defaults = array(
+		$args = array(
 			'source'            => 'User Deactivation Survey',
-			'popup_logo'        => '',
-			'plugin_slug'       => 'user-deactivation-survey',
-			'plugin_version'    => '',
-			'popup_title'       => __( 'Quick Feedback' ),
-			'support_url'       => 'https://brainstormforce.com/contact/',
 			'popup_reasons'     => $this->getDefaultReasons(),
-			'popup_description' => __( 'If you have a moment, please share why you are deactivating the plugin.' ),
-			'show_on_screens'   => array( 'plugins' ),
+			'popup_description' => __( 'If you have a moment, please share why you are deactivating the plugin.', 'surecart' ),
+			'id'                => 'deactivation-survey-surecart',
+			'popup_logo'        => esc_url( trailingslashit( plugin_dir_url( SURECART_PLUGIN_FILE ) ) . 'images/icon.svg' ),
+			'plugin_slug'       => 'surecart',
+			'plugin_version'    => \SureCart::plugin()->version(),
+			'popup_title'       => __( 'Quick Feedback', 'surecart' ),
+			'support_url'       => 'https://surecart.com/support/',
 		);
 
-		// Parse the arguments with defaults.
-		$args = wp_parse_args( $args, $defaults );
-		$id   = '';
-
-		// Set a default ID if none is provided.
-		if ( empty( $args['id'] ) ) {
-			$id = 'uds-feedback-form--wrapper';
-		}
-
-		$id = sanitize_text_field( $args['id'] );
-
-		// Return if not on the allowed screen.
-		if ( ! $this->isPluginsScreen() ) {
-			return;
-		}
-
 		?>
-		<div id="<?php echo esc_attr( $id ); ?>" class="uds-feedback-form--wrapper" style="display: none">
+		<div id="<?php echo esc_attr( $args['id'] ); ?>" class="uds-feedback-form--wrapper" style="display: none">
 			<div class="uds-feedback-form--container">
 				<div class="uds-form-header--wrapper">
 					<div class="uds-form-title--icon-wrapper">
 						<?php if ( ! empty( $args['popup_logo'] ) ) { ?>
-							<img class="uds-icon" src="<?php echo esc_url( $args['popup_logo'] ); ?>" title="<?php echo esc_attr( $args['plugin_slug'] ); ?> <?php echo esc_attr( __( 'Icon' ) ); ?>" />
+							<img class="uds-icon" src="<?php echo esc_url( $args['popup_logo'] ); ?>" title="<?php echo esc_attr( $args['plugin_slug'] ); ?> <?php echo esc_attr( __( 'Icon', 'surecart' ) ); ?>" />
 						<?php } ?>
 						<h2 class="uds-title"><?php echo esc_html( $args['popup_title'] ); ?></h2>
 					</div>
@@ -100,7 +82,7 @@ class DeactivationSurveyForm {
 						<?php } ?>
 
 						<fieldset>
-							<textarea class="uds-options-feedback hide" id="uds-options-feedback" rows="3" name="uds_options_feedback" placeholder="<?php echo esc_attr( __( 'Please tell us more details.' ) ); ?>"></textarea>
+							<textarea class="uds-options-feedback hide" id="uds-options-feedback" rows="3" name="uds_options_feedback" placeholder="<?php echo esc_attr( __( 'Please tell us more details.', 'surecart' ) ); ?>"></textarea>
 							<?php
 							if ( ! empty( $args['support_url'] ) ) {
 								?>
@@ -120,15 +102,14 @@ class DeactivationSurveyForm {
 						</fieldset>
 
 						<div class="uds-feedback-form-sumbit--actions">
-						<button class="button button-primary uds-feedback-submit" data-action="submit"><?php esc_html_e( 'Submit & Deactivate' ); ?></button>
-						<button class="button button-secondary uds-feedback-skip" data-action="skip"><?php esc_html_e( 'Skip & Deactivate' ); ?></button>
+						<button class="button button-primary uds-feedback-submit" data-action="submit"><?php esc_html_e( 'Submit & Deactivate', 'surecart' ); ?></button>
+						<button class="button button-secondary uds-feedback-skip" data-action="skip"><?php esc_html_e( 'Skip & Deactivate', 'surecart' ); ?></button>
 							<input type="hidden" name="referer" value="<?php echo esc_url( get_site_url() ); ?>">
 							<input type="hidden" name="version" value="<?php echo esc_attr( $args['plugin_version'] ); ?>">
 							<input type="hidden" name="source" value="<?php echo esc_attr( $args['plugin_slug'] ); ?>">
 						</div>
 					</form>
 				</div>
-
 			</div>
 		</div>
 		<?php
@@ -143,11 +124,6 @@ class DeactivationSurveyForm {
 	 * @return void
 	 */
 	public function loadFormStyles() {
-
-		if ( ! $this->isPluginsScreen() ) {
-			return;
-		}
-
 		wp_enqueue_script(
 			'sc-uds-feedback-script',
 			plugins_url( 'dist/scripts/plugin-deactivation-feedback.js', SURECART_PLUGIN_FILE ),
@@ -181,24 +157,23 @@ class DeactivationSurveyForm {
 	 * @return void
 	 */
 	public function sendPluginDeactivateFeedback() {
-
-		$response_data = array( 'message' => __( 'Sorry, you are not allowed to do this operation.' ) );
-
-		/**
-		 * Check permission
-		 */
-		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_send_json_error( $response_data );
-		}
-
 		/**
 		 * Nonce verification
 		 */
 		if ( ! check_ajax_referer( 'uds_plugin_deactivate_feedback', 'security', false ) ) {
-			$response_data = array( 'message' => __( 'Nonce validation failed' ) );
-			wp_send_json_error( $response_data );
+			wp_send_json_error( array( 'message' => __( 'Nonce validation failed', 'surecart' ) ) );
 		}
 
+		/**
+		 * Check permission
+		 */
+		if ( ! current_user_can( 'delete_plugins' ) ) {
+			wp_send_json_error( array( 'message' => __( 'Sorry, you are not allowed to do this operation.', 'surecart' ) ) );
+		}
+
+		/**
+		 * Get the feedback data.
+		 */
 		$feedback_data = array(
 			'reason'      => isset( $_POST['reason'] ) ? sanitize_text_field( wp_unslash( $_POST['reason'] ) ) : '',
 			'feedback'    => isset( $_POST['feedback'] ) ? sanitize_text_field( wp_unslash( $_POST['feedback'] ) ) : '',
@@ -207,27 +182,24 @@ class DeactivationSurveyForm {
 			'plugin'      => isset( $_POST['source'] ) ? sanitize_text_field( wp_unslash( $_POST['source'] ) ) : '',
 		);
 
-		$api_args = array(
-			'body'    => wp_json_encode( $feedback_data ),
-			'headers' => $this->getApiHeaders(),
-			'timeout' => 90, //phpcs:ignore WordPressVIPMinimum.Performance.RemoteRequestTimeout.timeout_timeout
+		/**
+		 * Send the feedback data to the server.
+		 */
+		wp_safe_remote_post(
+			$this->getApiUrl() . $this->feedback_api_endpoint,
+			array(
+				'body'     => wp_json_encode( $feedback_data ),
+				'headers'  => array(
+					'Content-Type' => 'application/json',
+					'Accept'       => 'application/json',
+				),
+				'blocking' => false, // don't wait for the response.
+			)
 		);
 
-		$target_url = $this->getApiUrl() . $this->feedback_api_endpoint;
-
-		$response = wp_safe_remote_post( $target_url, $api_args );
-
-		$has_errors = $this->isApiError( $response );
-
-		if ( $has_errors['error'] ) {
-			wp_send_json_error(
-				array(
-					'success' => false,
-					'message' => $has_errors['error_message'],
-				)
-			);
-		}
-
+		/**
+		 * Send success response.
+		 */
 		wp_send_json_success();
 	}
 
@@ -237,37 +209,36 @@ class DeactivationSurveyForm {
 	 * @return array Default reasons.
 	 */
 	public function getDefaultReasons() {
-
 		return apply_filters(
 			'uds_default_deactivation_reasons',
 			array(
 				'temporary_deactivation' => array(
-					'label'           => esc_html__( 'This is a temporary deactivation for testing.' ),
-					'placeholder'     => esc_html__( 'How can we assist you?' ),
+					'label'           => esc_html__( 'This is a temporary deactivation for testing.', 'surecart' ),
+					'placeholder'     => esc_html__( 'How can we assist you?', 'surecart' ),
 					'show_cta'        => 'false',
 					'accept_feedback' => 'false',
 				),
 				'plugin_not_working'     => array(
-					'label'           => esc_html__( 'The plugin isn\'t working properly.' ),
-					'placeholder'     => esc_html__( 'Please tell us more about what went wrong?' ),
+					'label'           => esc_html__( 'Something isn\'t working properly.', 'surecart' ),
+					'placeholder'     => esc_html__( 'Please tell us more about what went wrong?', 'surecart' ),
 					'show_cta'        => 'true',
 					'accept_feedback' => 'true',
 				),
 				'found_better_plugin'    => array(
-					'label'           => esc_html__( 'I found a better alternative plugin.' ),
-					'placeholder'     => esc_html__( 'Could you please specify which plugin?' ),
+					'label'           => esc_html__( 'I found a better alternative.', 'surecart' ),
+					'placeholder'     => esc_html__( 'Could you please specify which solution?', 'surecart' ),
 					'show_cta'        => 'false',
 					'accept_feedback' => 'true',
 				),
 				'missing_a_feature'      => array(
-					'label'           => esc_html__( 'It\'s missing a specific feature.' ),
-					'placeholder'     => esc_html__( 'Please tell us more about the feature.' ),
+					'label'           => esc_html__( 'It\'s missing a specific feature.', 'surecart' ),
+					'placeholder'     => esc_html__( 'Please tell us more about the feature.', 'surecart' ),
 					'show_cta'        => 'false',
 					'accept_feedback' => 'true',
 				),
 				'other'                  => array(
-					'label'           => esc_html__( 'Other' ),
-					'placeholder'     => esc_html__( 'Please tell us more details.' ),
+					'label'           => esc_html__( 'Other', 'surecart' ),
+					'placeholder'     => esc_html__( 'Please tell us more details.', 'surecart' ),
 					'show_cta'        => 'false',
 					'accept_feedback' => 'true',
 				),
@@ -281,9 +252,27 @@ class DeactivationSurveyForm {
 	 * This function checks if the current screen is one of the allowed screens for displaying the survey.
 	 * It uses the `get_current_screen` function to get the current screen information and compares it with the list of allowed screens.
 	 *
+	 * The function is accurate for identifying the main plugins screen, but doesn't account for:
+	 * - Network admin plugins screen (plugins.php in multisite)
+	 * - AJAX requests that might be triggered from the plugins screen
+	 * - Early admin page loads where get_current_screen() might not be available yet
+	 *
 	 * @return bool True if the current screen is allowed, false otherwise.
 	 */
 	public function isPluginsScreen() {
+		// Check if we are in the admin area.
+		if ( ! is_admin() ) {
+			return false;
+		}
+
+		// Handle case where function is called before get_current_screen() is available.
+		if ( ! function_exists( 'get_current_screen' ) ) {
+			// Alternative check: look at the current admin page URL.
+			global $pagenow;
+			return 'plugins.php' === $pagenow;
+		}
+
+		// Get the current screen.
 		$current_screen = get_current_screen();
 
 		// Check if $current_screen is a valid object before accessing its properties.
@@ -291,52 +280,11 @@ class DeactivationSurveyForm {
 			return false; // Return false if current screen is not valid.
 		}
 
+		// Get the current screen ID.
 		$screen_id = $current_screen->id;
 
-		if ( ! empty( $screen_id ) && 'plugins' === $screen_id ) {
-			return true;
-		}
-
-		return false;
-	}
-
-	/**
-	 * Check is error in the received response.
-	 *
-	 * @param object $response Received API Response.
-	 * @return array $result Error result.
-	 */
-	public function isApiError( $response ) {
-
-		$result = array(
-			'error'         => false,
-			'error_message' => __( 'Oops! Something went wrong. Please refresh the page and try again.' ),
-			'error_code'    => 0,
-		);
-
-		if ( is_wp_error( $response ) ) {
-			$result['error']         = true;
-			$result['error_message'] = $response->get_error_message();
-			$result['error_code']    = $response->get_error_code();
-		} elseif ( ! empty( wp_remote_retrieve_response_code( $response ) ) && ! in_array( wp_remote_retrieve_response_code( $response ), array( 200, 201, 204 ), true ) ) {
-			$result['error']         = true;
-			$result['error_message'] = wp_remote_retrieve_response_message( $response );
-			$result['error_code']    = wp_remote_retrieve_response_code( $response );
-		}
-
-		return $result;
-	}
-
-	/**
-	 * Get API headers
-	 *
-	 * @return array<string, string>
-	 */
-	public function getApiHeaders() {
-		return array(
-			'Content-Type' => 'application/json',
-			'Accept'       => 'application/json',
-		);
+		// Check for both regular and network admin plugins screens.
+		return ! empty( $screen_id ) && ( 'plugins' === $screen_id || 'plugins-network' === $screen_id );
 	}
 
 	/**
