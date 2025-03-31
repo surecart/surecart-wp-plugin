@@ -2,7 +2,7 @@ import { Component, Element, h, Prop, State, Watch } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { state as checkoutState, onChange as onCheckoutChange } from '@store/checkout';
 import { TaxProtocol } from '../../../types';
-import { shippingAddressRequired } from '@store/checkout/getters';
+import { fullShippingAddressRequired, shippingAddressRequired } from '@store/checkout/getters';
 
 @Component({
   tag: 'sc-form-components-validator',
@@ -166,11 +166,16 @@ export class ScFormComponentsValidator {
 
     const payment = this.el.querySelector('sc-payment');
     const shippingAddress = document.createElement('sc-order-shipping-address');
-    shippingAddress.label = __('Shipping Address', 'surecart');
-    const billingAddress = document.createElement('sc-order-billing-address');
-    billingAddress.label = __('Billing Address', 'surecart');
     payment.parentNode.insertBefore(shippingAddress, payment);
-    payment.parentNode.insertBefore(billingAddress, payment);
+
+    if (fullShippingAddressRequired()) {
+      const billingAddress = document.createElement('sc-order-billing-address');
+      billingAddress.label = __('Billing Address', 'surecart');
+      payment.parentNode.insertBefore(billingAddress, payment);
+    } else {
+      shippingAddress.label = __('Address', 'surecart');
+    }
+
     this.hasAddress = true;
   }
 

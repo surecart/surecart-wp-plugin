@@ -25,6 +25,7 @@ Internal dependencies.
 | `scratchDisplayAmount`   | `scratch-display-amount`   | The scratch display amount   | `string`                                 | `undefined` |
 | `setupFeeAmount`         | `setup-fee-amount`         | The setup fee amount         | `number`                                 | `undefined` |
 | `setupFeeName`           | `setup-fee-name`           | The setup fee name           | `string`                                 | `undefined` |
+| `setupFeeText`           | `setup-fee-text`           | The setup fee text           | `string`                                 | `undefined` |
 | `trialDurationDays`      | `trial-duration-days`      | The trial duration days      | `number`                                 | `undefined` |
 
 

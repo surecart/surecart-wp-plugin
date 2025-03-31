@@ -160,6 +160,9 @@ abstract class AdminModelEditController {
 				$this->data['links'][ $name ] = esc_url_raw( add_query_arg( [ 'action' => 'edit' ], \SureCart::getUrl()->index( $name ) ) );
 			}
 		}
+		if ( in_array( 'i18n', $this->with_data ) ) {
+			$this->data['i18n'] = \SureCart::state()->i18n()->get();
+		}
 
 		// pass entitlements to page.
 		$this->data['entitlements'] = \SureCart::account()->entitlements;

@@ -5,11 +5,11 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, ImageAttributes, InvoiceStatus, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentInfoAddedParams, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, ProductsSearchedParams, ProductsViewedParams, Purchase, ResponseError, ReturnRequestStatus, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxProtocol, WordPressUser } from "./types";
+import { Address, Bump, CancellationReason, Checkout, ChoiceItem, CountryLocaleField, CountryLocaleFieldValue, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, ImageAttributes, InvoiceStatus, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentInfoAddedParams, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, ProductsSearchedParams, ProductsViewedParams, Purchase, ResponseError, ReturnRequestStatus, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxProtocol, WordPressUser } from "./types";
 import { LineItemData, Price as Price1, Product as Product1, ProductMetrics, Subscription as Subscription1 } from "./types";
 import { LayoutConfig } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 import { LayoutConfig as LayoutConfig1 } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
-export { Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, ImageAttributes, InvoiceStatus, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentInfoAddedParams, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, ProductsSearchedParams, ProductsViewedParams, Purchase, ResponseError, ReturnRequestStatus, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxProtocol, WordPressUser } from "./types";
+export { Address, Bump, CancellationReason, Checkout, ChoiceItem, CountryLocaleField, CountryLocaleFieldValue, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, ImageAttributes, InvoiceStatus, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentInfoAddedParams, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, ProductsSearchedParams, ProductsViewedParams, Purchase, ResponseError, ReturnRequestStatus, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxProtocol, WordPressUser } from "./types";
 export { LineItemData, Price as Price1, Product as Product1, ProductMetrics, Subscription as Subscription1 } from "./types";
 export { LayoutConfig } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 export { LayoutConfig as LayoutConfig1 } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
@@ -19,6 +19,14 @@ export namespace Components {
           * The address.
          */
         "address": Partial<Address>;
+        /**
+          * Country fields by country code
+         */
+        "countryFields": Array<CountryLocaleField>;
+        /**
+          * Default country fields
+         */
+        "defaultCountryFields": Array<CountryLocaleFieldValue>;
         /**
           * Is this disabled?
          */
@@ -32,7 +40,6 @@ export namespace Components {
          */
         "loading": boolean;
         "names": Partial<Address>;
-        "placeholders": Partial<Address>;
         "reportValidity": () => Promise<boolean>;
         /**
           * Is the name required
@@ -1878,14 +1885,6 @@ export namespace Components {
     }
     interface ScOrderBillingAddress {
         /**
-          * City placeholder
-         */
-        "cityPlaceholder": string;
-        /**
-          * Country placeholder
-         */
-        "countryPlaceholder": string;
-        /**
           * Default country for address
          */
         "defaultCountry": string;
@@ -1894,30 +1893,14 @@ export namespace Components {
          */
         "label": string;
         /**
-          * Address placeholder
-         */
-        "line1Placeholder": string;
-        /**
-          * Address Line 2 placeholder
-         */
-        "line2Placeholder": string;
-        /**
           * Name placeholder
          */
         "namePlaceholder": string;
-        /**
-          * Postal Code placeholder
-         */
-        "postalCodePlaceholder": string;
         "reportValidity": () => Promise<boolean>;
         /**
           * Show the name field
          */
         "showName": boolean;
-        /**
-          * State placeholder
-         */
-        "statePlaceholder": string;
         /**
           * Toggle label
          */
@@ -2140,31 +2123,18 @@ export namespace Components {
         "status": OrderShipmentStatus;
     }
     interface ScOrderShippingAddress {
-        "cityPlaceholder": string;
-        "countryPlaceholder": string;
         /**
           * Default country for address
          */
         "defaultCountry": string;
         /**
-          * Show the   address
+          * Show the address
          */
         "full": boolean;
         /**
           * Label for the field.
          */
         "label": string;
-        "line1Placeholder": string;
-        "line2Placeholder": string;
-        /**
-          * Show the placeholder fields.
-         */
-        "namePlaceholder": string;
-        /**
-          * Placeholder values.
-         */
-        "placeholders": Partial<Address>;
-        "postalCodePlaceholder": string;
         "reportValidity": () => Promise<boolean>;
         /**
           * Whether to require the name in the address
@@ -2175,10 +2145,13 @@ export namespace Components {
          */
         "required": boolean;
         /**
+          * Show the line 2 field.
+         */
+        "showLine2": boolean;
+        /**
           * Show the name field.
          */
         "showName": boolean;
-        "statePlaceholder": string;
     }
     interface ScOrderStatusBadge {
         /**
@@ -6963,6 +6936,14 @@ declare namespace LocalJSX {
          */
         "address"?: Partial<Address>;
         /**
+          * Country fields by country code
+         */
+        "countryFields"?: Array<CountryLocaleField>;
+        /**
+          * Default country fields
+         */
+        "defaultCountryFields"?: Array<CountryLocaleFieldValue>;
+        /**
           * Is this disabled?
          */
         "disabled"?: boolean;
@@ -6983,7 +6964,6 @@ declare namespace LocalJSX {
           * Address change event.
          */
         "onScInputAddress"?: (event: ScAddressCustomEvent<Partial<Address>>) => void;
-        "placeholders"?: Partial<Address>;
         /**
           * Is the name required
          */
@@ -9006,14 +8986,6 @@ declare namespace LocalJSX {
     }
     interface ScOrderBillingAddress {
         /**
-          * City placeholder
-         */
-        "cityPlaceholder"?: string;
-        /**
-          * Country placeholder
-         */
-        "countryPlaceholder"?: string;
-        /**
           * Default country for address
          */
         "defaultCountry"?: string;
@@ -9022,29 +8994,13 @@ declare namespace LocalJSX {
          */
         "label"?: string;
         /**
-          * Address placeholder
-         */
-        "line1Placeholder"?: string;
-        /**
-          * Address Line 2 placeholder
-         */
-        "line2Placeholder"?: string;
-        /**
           * Name placeholder
          */
         "namePlaceholder"?: string;
         /**
-          * Postal Code placeholder
-         */
-        "postalCodePlaceholder"?: string;
-        /**
           * Show the name field
          */
         "showName"?: boolean;
-        /**
-          * State placeholder
-         */
-        "statePlaceholder"?: string;
         /**
           * Toggle label
          */
@@ -9271,31 +9227,18 @@ declare namespace LocalJSX {
         "status"?: OrderShipmentStatus;
     }
     interface ScOrderShippingAddress {
-        "cityPlaceholder"?: string;
-        "countryPlaceholder"?: string;
         /**
           * Default country for address
          */
         "defaultCountry"?: string;
         /**
-          * Show the   address
+          * Show the address
          */
         "full"?: boolean;
         /**
           * Label for the field.
          */
         "label"?: string;
-        "line1Placeholder"?: string;
-        "line2Placeholder"?: string;
-        /**
-          * Show the placeholder fields.
-         */
-        "namePlaceholder"?: string;
-        /**
-          * Placeholder values.
-         */
-        "placeholders"?: Partial<Address>;
-        "postalCodePlaceholder"?: string;
         /**
           * Whether to require the name in the address
          */
@@ -9305,10 +9248,13 @@ declare namespace LocalJSX {
          */
         "required"?: boolean;
         /**
+          * Show the line 2 field.
+         */
+        "showLine2"?: boolean;
+        /**
           * Show the name field.
          */
         "showName"?: boolean;
-        "statePlaceholder"?: string;
     }
     interface ScOrderStatusBadge {
         /**
