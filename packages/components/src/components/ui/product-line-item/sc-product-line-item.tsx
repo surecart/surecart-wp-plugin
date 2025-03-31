@@ -156,11 +156,9 @@ export class ScProductLineItem {
                   }
                 ></sc-quantity-select>
               ) : (
-                this.quantity > 1 && (
-                  <span class="item__description" part="static-quantity">
-                    {__('Qty:', 'surecart')} {this.quantity}
-                  </span>
-                )
+                <span class="item__description" part="static-quantity">
+                  {__('Qty:', 'surecart')} {this.quantity}
+                </span>
               )}
               {!!this.removable && (
                 <div
