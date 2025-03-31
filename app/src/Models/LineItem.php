@@ -7,7 +7,7 @@ use SureCart\Models\Traits\HasFees;
 use SureCart\Models\Traits\HasPrice;
 use SureCart\Support\Currency;
 use SureCart\Models\Traits\HasProduct;
-use SureCart\Models\Traits\HasFees;
+
 /**
  * Price model
  */
@@ -215,7 +215,7 @@ class LineItem extends Model {
 	 * @return string
 	 */
 	public function getSkuAttribute() {
-		if ( ! empty( $this->variant ) ) {
+		if ( ! empty( $this->variant ) && ! empty( $this->variant->sku ) ) {
 			return $this->variant->sku;
 		}
 		return $this->price->product->sku ?? '';
