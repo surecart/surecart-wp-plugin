@@ -493,8 +493,6 @@ export interface LineItem extends Object {
     pagination: Pagination;
     data: Array<Fee>;
   };
-  ad_hoc_display_amount: string;
-  subtotal_display_amount: string;
   bump_amount: number;
   bump_display_amount: string;
   discount_amount: number;
@@ -538,7 +536,6 @@ export interface Fee {
   amount: number;
   display_amount: string;
   description: string;
-  display_amount: string;
   fee_type: 'manual' | 'bump' | 'setup' | 'upsell';
   line_item: string | LineItem;
   created_at: number;

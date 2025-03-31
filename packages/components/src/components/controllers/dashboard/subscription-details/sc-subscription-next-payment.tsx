@@ -2,7 +2,6 @@ import { Component, h, Prop, State, Host, Watch } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 import apiFetch from '../../../../functions/fetch';
-import { translateRemainingPayments } from '../../../../functions/price';
 import { formatTaxDisplay } from '../../../../functions/tax';
 import { Checkout, Period, Product, ResponseError, Subscription, ManualPaymentMethod } from '../../../../types';
 

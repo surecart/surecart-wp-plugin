@@ -1722,7 +1722,6 @@
   },
   "sc-product-line-item": {
     "amount": true,
-    "currency": true,
     "display-amount": true,
     "editable": true,
     "fees": true,
@@ -1734,9 +1733,8 @@
     "purchasable-status": true,
     "quantity": true,
     "removable": true,
-    "scratch-amount": true,
+    "scratch": true,
     "scratch-display-amount": true,
-    "setup-fee-trial-enabled": true,
     "sku": true,
     "trial": true,
     "variant": true,
