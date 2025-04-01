@@ -370,10 +370,8 @@ class CartMenuIcon extends \Elementor\Widget_Base {
 
 		$attributes = array(
 			'cart_menu_always_shown' => $cart_menu_always_shown,
+			'custom_icon'            => $this->cart_icon,
 		);
-
-		// Filter cart icon.
-		add_filter( 'sc_cart_menu_icon', [ $this, 'render_cart_icon' ] );
 
 		if ( ! empty( $settings['hover_animation'] ) ) {
 			$this->add_render_attribute( 'icon-wrapper', 'class', 'sc-cart-icon elementor-animation-' . $settings['hover_animation'] );
@@ -394,9 +392,6 @@ class CartMenuIcon extends \Elementor\Widget_Base {
 		</div>
 
 		<?php
-
-		// Remove filter.
-		remove_filter( 'sc_cart_menu_icon', [ $this, 'render_cart_icon' ] );
 	}
 
 	/**
