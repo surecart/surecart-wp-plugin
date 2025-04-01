@@ -15,7 +15,9 @@
 				"__dynamic__": {
 					"link": "[elementor-tag id=\"1ca6fb3\" name=\"post-url\" settings=\"%7B%7D\"]"
 				},
-				"custom_css": ".sc_product a {text-decoration:none!important;}"
+				"custom_css": ".sc_product a {text-decoration:none!important;}",
+				"surecart_container_type": "surecart_form",
+				"_title": "Product Form"
 			},
 			"elements": [
 				{
