@@ -390,18 +390,6 @@ class CartMenuIcon extends \Elementor\Widget_Base {
 				endif;
 			?>
 		</div>
-
 		<?php
-	}
-
-	/**
-	 * Render the cart icon.
-	 *
-	 * @param string $icon Icon.
-	 *
-	 * @return string
-	 */
-	public function render_cart_icon( $icon ): string {
-		return $this->cart_icon ?? $icon;
 	}
 }
