@@ -82,11 +82,11 @@ const { state, actions } = store('surecart/product-quick-view', {
 				});
 			}
 
-			const productTitle = queryRef.querySelector(
-				'.wp-block-surecart-product-title'
+			const quickViewClose = queryRef.querySelector(
+				'.c-product-quick-view-dialog__close'
 			);
 			// Focus the product title to ensure the product page doe snot scroll to bottom after popup opens.
-			productTitle?.focus();
+			quickViewClose?.focus();
 			state.loading = false;
 		},
 		/** Prefetch upcoming urls. */

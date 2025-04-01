@@ -1,6 +1,6 @@
 .wp-block-surecart-product-quick-view {
 	width: 100%;
-	.sc-product-quick-view-dialog{
+	.sc-product-quick-view-dialog {
 			width: 70vw;
 			max-width: 1000px;
 			height: 80vh;
@@ -23,6 +23,18 @@
 		  &[open]::backdrop {
 			background: rgba(0, 0, 0, 0.5);
 			transition: background 0.3s ease;
+		  }
+		  &__close {
+			display: flex;
+			align-items: center;
+			position: absolute;
+			z-index: 9;
+			inset-block-start: 1em;
+			inset-inline-end: 1em;
+			cursor: pointer;
+			color: var(--sc-color-gray-500);
+			width: 1em;
+			height: 1em;
 		  }
 		  .sc-spinner {
 			position: absolute;

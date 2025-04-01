@@ -14,6 +14,16 @@ use SureCart\Models\Blocks\ProductPageBlock;
 		data-wp-on--click='actions.closeOverlay'
 		data-wp-on-window--resize="actions.close"
 	>
+		<div 
+			class="sc-product-quick-view-dialog__close"
+			data-wp-on--click="actions.close"
+			data-wp-on--keydown="actions.close"
+			role="button"
+			tabindex="0"
+			aria-label="<?php esc_attr_e( 'Close quick view', 'surecart' ); ?>"
+		>
+			<?php echo wp_kses( SureCart::svg()->get( 'x' ), sc_allowed_svg_html() ); ?>
+		</div>
 		<?php
 		while ( $query->have_posts() ) :
 			$query->the_post();
