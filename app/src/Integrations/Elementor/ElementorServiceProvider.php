@@ -49,7 +49,9 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 			add_filter( 'elementor/query/get_value_titles/surecart-product', [ $this, 'get_titles' ], 10, 2 );
 
 			// Add product widget wrapper.
-			add_action( 'elementor/frontend/builder_content_data', array( $this, 'append_product_widget_wrapper' ), 10, 2 );
+			add_action( 'elementor/frontend/container/before_render', [ $this, 'addProductWrapperStart' ] );
+			add_action( 'elementor/frontend/container/after_render', [ $this, 'addProductWrapperEnd' ] );
+			add_action( 'elementor/element/container/section_layout_container/after_section_start', [ $this, 'injectProductFormControls' ], 10 );
 			add_action( 'elementor/frontend/before_get_builder_content', [ $this, 'preReturnSerializedBlock' ] );
 			add_action( 'elementor/frontend/the_content', [ $this, 'doBlocksAtEnd' ], 10 );
 		}
@@ -59,6 +61,55 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 
 		// Bootstrap the dynamic tags.
 		$container['surecart.elementor.dynamic_tags']->bootstrap();
+	}
+
+	/**
+	 * Inject product form controls.
+	 *
+	 * @param \Elementor\Widget_Base $element The element.
+	 * @return void
+	 */
+	public function injectProductFormControls( $element ) {
+		$element->add_control(
+			'surecart_container_type',
+			[
+				'type'    => \Elementor\Controls_Manager::SELECT,
+				'label'   => esc_html__( 'Container Type', 'surecart' ),
+				'default' => 'default',
+				'options' => [
+					'default'       => esc_html__( 'Default', 'surecart' ),
+					'surecart_form' => esc_html__( 'Product Form', 'surecart' ),
+				],
+			]
+		);
+	}
+
+	/**
+	 * Add product wrapper start.
+	 *
+	 * @param \Elementor\Widget_Base $element The element.
+	 *
+	 * @return void
+	 */
+	public function addProductWrapperStart( $element ) {
+		$settings = $element->get_settings_for_display();
+		if ( 'surecart_form' === $settings['surecart_container_type'] ) {
+			echo '<!-- wp:surecart/product-page {"align":"wide"} -->';
+		}
+	}
+
+	/**
+	 * Add product wrapper end.
+	 *
+	 * @param \Elementor\Widget_Base $element The element.
+	 *
+	 * @return void
+	 */
+	public function addProductWrapperEnd( $element ) {
+		$settings = $element->get_settings_for_display();
+		if ( 'surecart_form' === $settings['surecart_container_type'] ) {
+			echo '<!-- /wp:surecart/product-page -->';
+		}
 	}
 
 	/**
@@ -234,21 +285,6 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 	 */
 	public function product_theme_conditions( $conditions_manager ) {
 		$conditions_manager->register_condition_instance( new Conditions() );
-	}
-
-	/**
-	 * Disable interactivity process directives for surecart elements.
-	 *
-	 * @param \Elementor\Element_Base $element The element.
-	 *
-	 * @return void
-	 */
-	public function disable_interactivity_process_directives_for_surecart_elements( $element ) {
-		if ( false === strpos( $element->get_name(), 'surecart-' ) ) {
-			return;
-		}
-
-		add_filter( 'interactivity_process_directives', '__return_false' );
 	}
 
 	/**

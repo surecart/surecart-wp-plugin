@@ -10,7 +10,9 @@
 					"isLinked": true,
 					"unit": "px",
 					"size": 60
-				}
+				},
+				"surecart_container_type": "surecart_form",
+				"_title": "Product Form"
 			},
 			"elements": [
 				{

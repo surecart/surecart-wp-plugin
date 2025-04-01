@@ -71,8 +71,26 @@ jQuery(window).ready(function () {
 	);
 
 	function insertSureCartTemplates(template) {
-		const container = elementor.getPreviewContainer();
-		let at = container.view.collection.length - 1 || 0;
+		// Get the active container - either the one being dragged into or the selected one
+		const container =
+			elementor.channels.data.request('container:active') ||
+			elementor.getPreviewView().getContainer();
+
+		// Get the insertion index based on the drop location or selected element
+		const dropLocation = elementor.channels.data.request('drop-location');
+		const selectedElement = elementor.selection.getElements()[0];
+
+		let at;
+		if (dropLocation) {
+			// If we have a drop location, use that
+			at = dropLocation.index;
+		} else if (selectedElement) {
+			// If we have a selected element, insert after it
+			at = container.view.collection.indexOf(selectedElement.model);
+		} else {
+			// Default to beginning of container
+			at = 0;
+		}
 
 		// Insert the product element content into the editor.
 		template.content.forEach((contentElement) => {
@@ -86,16 +104,19 @@ jQuery(window).ready(function () {
 			at++;
 		});
 
-		// Apply the page settings after all elements are inserted.
-		$e.run('document/elements/settings', {
-			container,
-			settings: template.page_settings,
-			options: {
-				external: true,
-			},
+		// Apply the page settings only to the newly inserted elements
+		const newElements = container.view.collection.slice(
+			at - template.content.length,
+			at
+		);
+		newElements.forEach((element) => {
+			$e.run('document/elements/settings', {
+				container: element,
+				settings: template.page_settings,
+				options: {
+					external: true,
+				},
+			});
 		});
-
-		// Delete last container element as, its creating empty container widget.
-		container.view.collection.pop();
 	}
 }, jQuery);
