@@ -233,7 +233,6 @@ class SelectedPriceAdHocAmount extends \Elementor\Widget_Base {
 
 				<div class="sc-input-group">
 					<span class="sc-input-group-text" id="basic-addon1"><?php echo esc_html( strtoupper( ( AccountModel::find() )->currency ?? '$' ) ); ?></span>
-
 					<input
 						class="sc-form-control"
 						id="sc-product-custom-amount"
