@@ -1,7 +1,7 @@
 /**
  * WordPress dependencies
  */
-import { store, getContext, getElement } from '@wordpress/interactivity';
+import { store, getElement } from '@wordpress/interactivity';
 const { __ } = wp.i18n;
 
 const { state: productListState } = store('surecart/product-list');
@@ -54,6 +54,14 @@ const { state, actions } = store('surecart/product-quick-view', {
 
 			return dialog;
 		},
+		set dialog(value) {
+			if (value instanceof HTMLDialogElement === false) {
+				return;
+			}
+
+			// Set the dialog.
+			this.dialog = value;
+		},
 	},
 
 	actions: {
@@ -73,6 +81,12 @@ const { state, actions } = store('surecart/product-quick-view', {
 					replace: true,
 				});
 			}
+
+			const productTitle = queryRef.querySelector(
+				'.wp-block-surecart-product-title'
+			);
+			// Focus the product title to ensure the product page doe snot scroll to bottom after popup opens.
+			productTitle?.focus();
 			state.loading = false;
 		},
 		/** Prefetch upcoming urls. */
@@ -147,6 +161,18 @@ const { state, actions } = store('surecart/product-quick-view', {
 		init: () => {
 			// If we have reached here it means the URL has a product quick view parameter so we just open the dialog.
 			actions.open();
+		},
+		updateDialog: () => {
+			if (state.dialog && state.dialog instanceof HTMLDialogElement) {
+				return;
+			}
+
+			// make sure the dialog state is up to date with latest HTML dialog element.
+			let latestDialog =
+				document?.querySelector('.sc-product-quick-view-dialog') ||
+				null;
+
+			state.dialog = latestDialog;
 		},
 	},
 });
