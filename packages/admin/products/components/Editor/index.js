@@ -115,34 +115,12 @@ export default ({ post, loading, onSave, error }) => {
 								margin-top: -20px;
 								margin-bottom: -20px;
 							`}
-							onClick={() => onNavigate('editor')}
+							onClick={() => onNavigate('post')}
 						>
 							<ScIcon name="maximize" slot="prefix" />
 							{__('Open Content Designer', 'surecart')}
 						</ScButton>
 					</div>
-				}
-				header_action={
-					<DropdownMenu
-						controls={[
-							[
-								{
-									icon: external,
-									onClick: () => onNavigate('post'),
-									title: __('Go to editor', 'surecart'),
-								},
-							],
-						]}
-						css={css`
-							margin-top: -20px;
-							margin-bottom: -20px;
-						`}
-						icon={moreHorizontal}
-						label={__('More Actions', 'surecart')}
-						popoverProps={{
-							placement: 'bottom-end',
-						}}
-					/>
 				}
 			>
 				{blocks.length > 0 && (
