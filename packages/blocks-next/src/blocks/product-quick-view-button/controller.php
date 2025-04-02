@@ -12,4 +12,9 @@ $style = ! empty( $gap )
 	? esc_attr( safecss_filter_attr( 'gap:' . $gap ) ) . ';'
 	: '';
 
+// We need to enqueue these assets as the quick view dialog is rendered in the footer.
+wp_enqueue_style( 'surecart-lightbox' );
+wp_enqueue_script_module( 'surecart/lightbox' );
+wp_enqueue_style( 'surecart-image-slider' );
+wp_enqueue_script_module( '@surecart/image-slider' );
 return 'file:./view.php';
