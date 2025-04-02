@@ -142,7 +142,12 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 	 * @return array
 	 */
 	public function serializeBlock( $rendered, $parsed_block ) {
-		return serialize_block( $parsed_block );
+		// don't serialize if it includes the surecart/ prefix.
+		if ( strpos( $parsed_block['blockName'], 'surecart/' ) !== false ) {
+			return $rendered;
+		}
+
+		return $rendered;
 	}
 
 	/**
