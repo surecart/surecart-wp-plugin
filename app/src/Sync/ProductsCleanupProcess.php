@@ -42,6 +42,7 @@ class ProductsCleanupProcess extends BackgroundProcess {
 				'posts_per_page'   => absint( $args['batch_size'] ?? 25 ),
 				'paged'            => absint( $args['page'] ?? 1 ),
 				'suppress_filters' => true,
+				'fields'           => 'ids',
 				'tax_query'        => [
 					[
 						'taxonomy' => 'sc_account',
@@ -59,10 +60,10 @@ class ProductsCleanupProcess extends BackgroundProcess {
 		}
 
 		// add each item to the queue.
-		foreach ( $query->posts as $product ) {
+		foreach ( $query->posts as $product_id ) {
 			\SureCart::sync()
 			->productCleanup()
-			->queue( $product->ID );
+			->queue( $product_id );
 		}
 
 		if ( $query->max_num_pages > $query->query_vars['paged'] ) {
