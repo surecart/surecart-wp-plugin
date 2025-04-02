@@ -126,8 +126,14 @@ class ProductPostTypeService {
 	 * @return \WP_REST_Response
 	 */
 	public function addTemplateToResponse( $response, $post ) {
-		$product                             = sc_get_product( $post );
-		$template_id                         = wp_is_block_theme() ? $product->template_id : $product->template_part_id;
+		$product     = sc_get_product( $post );
+		$template_id = wp_is_block_theme() ? $product->template_id : $product->template_part_id;
+
+		// fallback to the default template if no template is set.
+		if ( empty( $template_id ) ) {
+			$template_id = wp_is_block_theme() ? 'surecart/surecart//single-sc_product' : 'surecart/surecart//product-info';
+		}
+
 		$block_template                      = get_block_template( $template_id, wp_is_block_theme() ? 'wp_template' : 'wp_template_part' );
 		$response->data['has_content_block'] = has_block( 'core/post-content', $block_template->content ?? '' );
 		$response->data['block_template']    = $block_template;
