@@ -49,13 +49,13 @@ class SyncServiceProvider implements ServiceProviderInterface {
 		$container['surecart.sync.products']             = fn() => new ProductsSyncService( $container[ SURECART_APPLICATION_KEY ] );
 
 		// Queues up the products for syncing and starts sync.
-		$collections_cleanup_process                       = new CollectionsCleanupProcess( $container );
+		$collections_cleanup_process                       = new CollectionsCleanupProcess();
 		$container['surecart.process.collections.cleanup'] = fn() => $collections_cleanup_process;
 
-		$products_cleanup_process                       = new ProductsCleanupProcess( $container );
+		$products_cleanup_process                       = new ProductsCleanupProcess();
 		$container['surecart.process.products.cleanup'] = fn() => $products_cleanup_process;
 
-		$products_queue_process                       = new ProductsSyncProcess( $container );
+		$products_queue_process                       = new ProductsSyncProcess();
 		$container['surecart.process.products.queue'] = fn() => $products_queue_process;
 
 		$app->alias( 'sync', 'surecart.sync' );

@@ -23,24 +23,6 @@ class ProductsCleanupProcess extends BackgroundProcess {
 	protected $action = 'cleanup_products';
 
 	/**
-	 * The container.
-	 *
-	 * @var mixed
-	 */
-	protected $container;
-
-	/**
-	 * The construct.
-	 *
-	 * @param mixed $container The container.
-	 * @var mixed
-	 */
-	public function __construct( $container = null ) {
-		$this->container = $container;
-		parent::__construct();
-	}
-
-	/**
 	 * Perform task with queued item.
 	 *
 	 * Override this method to perform any actions required on each
@@ -58,7 +40,7 @@ class ProductsCleanupProcess extends BackgroundProcess {
 				'post_type'        => 'sc_product',
 				'post_status'      => [ 'publish', 'pending', 'draft', 'future', 'private', 'inherit', 'trash', 'auto-draft', 'sc_archived' ],
 				'posts_per_page'   => absint( $args['batch_size'] ?? 25 ),
-				'paged'             => absint( $args['page'] ?? 1 ),
+				'paged'            => absint( $args['page'] ?? 1 ),
 				'suppress_filters' => true,
 				'tax_query'        => [
 					[

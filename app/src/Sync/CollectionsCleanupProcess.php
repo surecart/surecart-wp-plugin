@@ -23,24 +23,6 @@ class CollectionsCleanupProcess extends BackgroundProcess {
 	protected $action = 'cleanup_product_collections';
 
 	/**
-	 * The container.
-	 *
-	 * @var mixed
-	 */
-	protected $container;
-
-	/**
-	 * The construct.
-	 *
-	 * @param mixed $container The container.
-	 * @var mixed
-	 */
-	public function __construct( $container = null ) {
-		$this->container = $container;
-		parent::__construct();
-	}
-
-	/**
 	 * Perform task with queued item.
 	 *
 	 * Override this method to perform any actions required on each
