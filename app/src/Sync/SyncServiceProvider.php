@@ -26,38 +26,31 @@ class SyncServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function register( $container ) {
-		$app = $container[ SURECART_APPLICATION_KEY ];
-
-		$container['surecart.sync'] = fn ( $container ) =>
-			new SyncService( $container[ SURECART_APPLICATION_KEY ] );
-
-		$container['surecart.sync.store'] = fn ( $container ) =>
-			new StoreSyncService( $container[ SURECART_APPLICATION_KEY ] );
-
-		$container['surecart.sync.product'] = fn ( $container ) =>
-			new ProductSyncService( $container[ SURECART_APPLICATION_KEY ] );
-
-		$container['surecart.sync.product.cleanup'] = fn ( $container ) =>
-			new ProductCleanupService( $container[ SURECART_APPLICATION_KEY ] );
-
-		$container['surecart.sync.collections.cleanup'] = fn ( $container ) =>
-			new CollectionsCleanupService( $container[ SURECART_APPLICATION_KEY ] );
-
+		$container['surecart.sync']                      = fn ( $container ) => new SyncService( $container[ SURECART_APPLICATION_KEY ] );
+		$container['surecart.sync.product']              = fn ( $container ) => new ProductSyncService( $container[ SURECART_APPLICATION_KEY ] );
+		$container['surecart.sync.products']             = fn() => new ProductsSyncService( $container[ SURECART_APPLICATION_KEY ] );
+		$container['surecart.sync.store']                = fn () => new StoreSyncService();
+		$container['surecart.sync.product.cleanup']      = fn() => new ProductCleanupService();
+		$container['surecart.sync.collections.cleanup']  = fn() => new CollectionsCleanupService();
 		$container['surecart.sync.collection']           = fn() => new CollectionSyncService();
 		$container['surecart.process.product_post.sync'] = fn() => new PostSyncService();
 		$container['surecart.sync.customers']            = fn() => new CustomerSyncService();
-		$container['surecart.sync.products']             = fn() => new ProductsSyncService( $container[ SURECART_APPLICATION_KEY ] );
 
 		// Queues up the products for syncing and starts sync.
 		$collections_cleanup_process                       = new CollectionsCleanupProcess();
 		$container['surecart.process.collections.cleanup'] = fn() => $collections_cleanup_process;
 
+		// Queues up the products for syncing and starts sync.
 		$products_cleanup_process                       = new ProductsCleanupProcess();
 		$container['surecart.process.products.cleanup'] = fn() => $products_cleanup_process;
 
+		// Queues up the products for syncing and starts sync.
 		$products_queue_process                       = new ProductsSyncProcess();
 		$container['surecart.process.products.queue'] = fn() => $products_queue_process;
 
+		$app = $container[ SURECART_APPLICATION_KEY ];
+
+		// Alias the sync service
 		$app->alias( 'sync', 'surecart.sync' );
 	}
 

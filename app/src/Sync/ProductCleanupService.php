@@ -14,22 +14,6 @@ class ProductCleanupService {
 	protected $action_name = 'surecart/cleanup/product';
 
 	/**
-	 * Application instance.
-	 *
-	 * @var \SureCart\Application
-	 */
-	protected $app = null;
-
-	/**
-	 * Constructor.
-	 *
-	 * @param \SureCart\Application $app The application.
-	 */
-	public function __construct( $app ) {
-		$this->app = $app;
-	}
-
-	/**
 	 * Bootstrap any actions.
 	 *
 	 * @return void
