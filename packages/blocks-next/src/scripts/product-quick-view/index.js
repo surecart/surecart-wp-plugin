@@ -144,6 +144,7 @@ const { state, actions } = store('surecart/product-quick-view', {
 		 * Clear URL param.
 		 */
 		*clearURLParam() {
+			state.loading = true;
 			// Clear the URL param.
 			const url = new URL(window.location.href);
 			url.searchParams.delete('product-quick-view-id');
@@ -155,6 +156,7 @@ const { state, actions } = store('surecart/product-quick-view', {
 			yield actions.navigate(url.toString(), {
 				replace: true,
 			});
+			state.loading = false;
 		},
 	},
 	callbacks: {
