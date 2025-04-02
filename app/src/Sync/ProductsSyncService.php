@@ -57,6 +57,24 @@ class ProductsSyncService {
 	}
 
 	/**
+	 * Get the cleanup process.
+	 *
+	 * @return ProductsCleanupProcess
+	 */
+	public function queueProductsCleanup() {
+		return $this->app->resolve( 'surecart.process.products.cleanup' );
+	}
+
+	/**
+	 * Get the cleanup process.
+	 *
+	 * @return CollectionsCleanupProcess
+	 */
+	public function queueCollectionsCleanup() {
+		return $this->app->resolve( 'surecart.process.collections.cleanup' );
+	}
+
+	/**
 	 * Cancel the process.
 	 *
 	 * This cancels the queue and sync processes
@@ -143,33 +161,27 @@ class ProductsSyncService {
 		$this->cleanup();
 
 		// save and dispatch the process.
-		return $this->queue()
-			// push the args to the queue.
-			->push_to_queue( $args )
-			// set the next process to the cleanup process.
-			->setNext( 'surecart.process.products.cleanup' )
-			// save the queue.
-			->save()
-			// dispatch the queue.
-			->dispatch();
+		return $this->syncProducts( $args );
 	}
 
 	/**
-	 * Get the cleanup process.
+	 * Sync the products.
 	 *
-	 * @return ProductsCleanupProcess
+	 * @param array $args The arguments.
+	 *
+	 * @return void
 	 */
-	public function queueProductsCleanup() {
-		return $this->app->resolve( 'surecart.process.products.cleanup' );
-	}
+	public function syncProducts( $args = [] ) {
+		$args = wp_parse_args(
+			$args,
+			[
+				'page'     => 1,
+				'per_page' => 25,
+			]
+		);
 
-	/**
-	 * Get the cleanup process.
-	 *
-	 * @return CollectionsCleanupProcess
-	 */
-	public function queueCollectionsCleanup() {
-		return $this->app->resolve( 'surecart.process.collections.cleanup' );
+		// save the process.
+		return $this->queue()->push_to_queue( $args )->setNext( 'surecart.process.products.sync' )->save();
 	}
 
 	/**
