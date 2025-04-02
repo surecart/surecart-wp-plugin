@@ -5,7 +5,7 @@ import {
 	__experimentalFullscreenModeClose as FullscreenModeClose,
 	__experimentalMainDashboardButton as MainDashboardButton,
 } from '@wordpress/edit-post';
-import { wordpress } from '@wordpress/icons';
+import { arrowLeft } from '@wordpress/icons';
 import { useSelect } from '@wordpress/data';
 import { addQueryArgs } from '@wordpress/url';
 import { __ } from '@wordpress/i18n';
@@ -23,7 +23,7 @@ export default () => {
 	return (
 		<MainDashboardButton>
 			<FullscreenModeClose
-				icon={wordpress}
+				icon={arrowLeft}
 				label={__('Edit Product', 'surecart')}
 				showTooltip={false}
 				href={addQueryArgs('/wp-admin/admin.php', {
