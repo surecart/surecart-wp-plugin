@@ -49,6 +49,6 @@ class ProductCleanupService {
 	 * @return \WP_Post|false|null
 	 */
 	public function handleScheduledSync( $id ) {
-		return wp_delete_post( $id, true );
+		return wp_delete_post( $id );
 	}
 }
