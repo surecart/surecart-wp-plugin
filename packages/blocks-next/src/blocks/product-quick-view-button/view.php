@@ -4,7 +4,6 @@
 		get_block_wrapper_attributes(
 			array_filter(
 				[
-					'href'                   => esc_url( $quick_view_link ),
 					'role'                   => 'button',
 					'aria-disabled'          => empty( $quick_view_link ) ? 'true' : null,
 					'aria-label'             => __( 'Quick View Product', 'surecart' ),

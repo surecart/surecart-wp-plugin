@@ -79,7 +79,7 @@ const { state, actions } = store('surecart/product-quick-view', {
 			state.loading = false;
 		},
 		/** Prefetch upcoming urls. */
-		*prefetch() {
+		*prefetch(e) {
 			const { url } = getContext();
 			const { actions } = yield import(
 				/* webpackIgnore: true */
