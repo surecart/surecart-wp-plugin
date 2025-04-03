@@ -1,20 +1,8 @@
 /**
  * WordPress dependencies
  */
-import { store, getElement } from '@wordpress/interactivity';
+import { store, getElement, getContext } from '@wordpress/interactivity';
 const { __ } = wp.i18n;
-
-const { state: productListState } = store('surecart/product-list');
-
-/**
- * Check if the link is valid.
- */
-const isValidLink = (ref) =>
-	ref &&
-	ref instanceof window.HTMLAnchorElement &&
-	ref.href &&
-	(!ref.target || ref.target === '_self') &&
-	ref.origin === window.location.origin;
 
 /**
  * Check if the event is a valid click event.
@@ -70,14 +58,15 @@ const { state, actions } = store('surecart/product-quick-view', {
 			state.loading = true;
 			actions.toggle(event);
 			const { ref } = getElement();
+			const { url } = getContext();
 			const queryRef = ref.closest('[data-wp-router-region]');
-			if (isValidLink(ref) && isValidEvent(event) && queryRef) {
+			if (isValidEvent(event) && queryRef) {
 				event.preventDefault();
 				const { actions } = yield import(
 					/* webpackIgnore: true */
 					'@wordpress/interactivity-router'
 				);
-				yield actions.navigate(ref.href, {
+				yield actions.navigate(url, {
 					replace: true,
 				});
 			}
@@ -91,14 +80,12 @@ const { state, actions } = store('surecart/product-quick-view', {
 		},
 		/** Prefetch upcoming urls. */
 		*prefetch() {
-			const { ref } = getElement();
-			if (isValidLink(ref)) {
-				const { actions } = yield import(
-					/* webpackIgnore: true */
-					'@wordpress/interactivity-router'
-				);
-				yield actions.prefetch(ref.href);
-			}
+			const { url } = getContext();
+			const { actions } = yield import(
+				/* webpackIgnore: true */
+				'@wordpress/interactivity-router'
+			);
+			yield actions.prefetch(url);
 		},
 		/**
 		 * Open the product quick view dialog.
