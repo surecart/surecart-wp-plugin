@@ -1,4 +1,4 @@
-( function ( $ ) {
+(function ($) {
 	const UserDeactivationPopup = {
 		slug: '',
 		skipButton: '',
@@ -18,16 +18,16 @@
 		 */
 		_cacheElements() {
 			this.slug = udsVars?._plugin_slug || '';
-			this.skipButton = $( '.uds-feedback-skip' );
-			this.submitDeactivate = $( '.uds-feedback-submit' );
-			this.deactivateButton = $( '#the-list' ).find(
+			this.skipButton = $('.uds-feedback-skip');
+			this.submitDeactivate = $('.uds-feedback-submit');
+			this.deactivateButton = $('#the-list').find(
 				`.row-actions span.deactivate a`
 			);
-			this.feedbackForm = $( '.uds-feedback-form' ); // Feedback Form.
-			this.feedbackInput = $( '.uds-options-feedback' ); // Feedback Textarea.
-			this.formWrapper = $( '.uds-feedback-form--wrapper' );
-			this.closeButton = $( '.uds-feedback-form--wrapper .uds-close' );
-			this.radioButton = $( '.uds-reason-input' );
+			this.feedbackForm = $('.uds-feedback-form'); // Feedback Form.
+			this.feedbackInput = $('.uds-options-feedback'); // Feedback Textarea.
+			this.formWrapper = $('.uds-feedback-form--wrapper');
+			this.closeButton = $('.uds-feedback-form--wrapper .uds-close');
+			this.radioButton = $('.uds-reason-input');
 		},
 
 		/**
@@ -35,22 +35,22 @@
 		 *
 		 * @param {string} slug - The slug of the plugin.
 		 */
-		_showPopup( slug ) {
-			$( `#deactivation-survey-${ slug }` ).addClass( 'show_popup' );
+		_showPopup(slug) {
+			$(`#deactivation-survey-${slug}`).addClass('show_popup');
 		},
 
 		/**
 		 * Hides the feedback popup by removing the 'show' class from the form wrapper.
 		 */
 		_hidePopup() {
-			this.formWrapper.removeClass( 'show_popup' );
+			this.formWrapper.removeClass('show_popup');
 		},
 
 		/**
 		 * Redirects to the deactivate URL if it exists, otherwise reloads the current page.
 		 */
 		_redirectOrReload() {
-			if ( this.deactivateUrl ) {
+			if (this.deactivateUrl) {
 				window.location.href = this.deactivateUrl;
 			} else {
 				location.reload();
@@ -62,22 +62,21 @@
 		 *
 		 * @param {Event} event - The event that triggered this function.
 		 */
-		_hideShowFeedbackAndCTA( event ) {
+		_hideShowFeedbackAndCTA(event) {
 			const acceptFeedback =
-				$( event.target ).attr( 'data-accept_feedback' ) === 'true';
-			const showCta =
-				$( event.target ).attr( 'data-show_cta' ) === 'true';
+				$(event.target).attr('data-accept_feedback') === 'true';
+			const showCta = $(event.target).attr('data-show_cta') === 'true';
 
-			$( event.target )
-				.closest( this.formWrapper )
-				.find( '.uds-options-feedback' )
-				.removeClass( 'hide' )
-				.addClass( acceptFeedback ? 'show' : 'hide' );
-			$( event.target )
-				.closest( this.formWrapper )
-				.find( '.uds-option-feedback-cta' )
-				.removeClass( 'hide' )
-				.addClass( showCta ? 'show' : 'hide' );
+			$(event.target)
+				.closest(this.formWrapper)
+				.find('.uds-options-feedback')
+				.removeClass('hide')
+				.addClass(acceptFeedback ? 'show' : 'hide');
+			$(event.target)
+				.closest(this.formWrapper)
+				.find('.uds-option-feedback-cta')
+				.removeClass('hide')
+				.addClass(showCta ? 'show' : 'hide');
 		},
 
 		/**
@@ -85,16 +84,16 @@
 		 *
 		 * @param {Event} event - The event that triggered this function.
 		 */
-		_changePlaceholderText( event ) {
+		_changePlaceholderText(event) {
 			const radioButtonPlaceholder =
-				event.target.getAttribute( 'data-placeholder' );
+				event.target.getAttribute('data-placeholder');
 
-			$( event.target )
-				.closest( this.formWrapper )
-				.find( this.feedbackInput )
-				.attr( 'placeholder', radioButtonPlaceholder || '' );
+			$(event.target)
+				.closest(this.formWrapper)
+				.find(this.feedbackInput)
+				.attr('placeholder', radioButtonPlaceholder || '');
 
-			this._hideShowFeedbackAndCTA( event );
+			this._hideShowFeedbackAndCTA(event);
 		},
 
 		/**
@@ -103,11 +102,16 @@
 		 * @param {Event}  event - The event that triggered this function.
 		 * @param {Object} self  - A reference to the current object.
 		 */
-		_submitFeedback( event, self ) {
+		_submitFeedback(event, self) {
 			event.preventDefault();
+			// Check if the button action is 'skip' and skip sending survey & deactivate plugin.
+			if ('skip' === this.buttonAction) {
+				this._redirectOrReload();
+				return;
+			}
 
-			const currentForm = $( event.target );
-			const closestForm = currentForm.closest( this.feedbackForm ); // Cache the closest form
+			const currentForm = $(event.target);
+			const closestForm = currentForm.closest(this.feedbackForm); // Cache the closest form
 
 			// Gather form data.
 			const formData = {
@@ -115,62 +119,60 @@
 				security: udsVars?._ajax_nonce || '',
 				reason:
 					closestForm
-						.find( this.radioButton.filter( ':checked' ) )
+						.find(this.radioButton.filter(':checked'))
 						.val() || '', // Get the selected radio button value from the current form.
-				source: closestForm.find( 'input[name="source"]' ).val() || '',
-				referer:
-					closestForm.find( 'input[name="referer"]' ).val() || '',
-				version:
-					closestForm.find( 'input[name="version"]' ).val() || '',
-				feedback: closestForm.find( this.feedbackInput ).val() || '', // Get the feedback input value from the current form.
+				source: closestForm.find('input[name="source"]').val() || '',
+				referer: closestForm.find('input[name="referer"]').val() || '',
+				version: closestForm.find('input[name="version"]').val() || '',
+				feedback: closestForm.find(this.feedbackInput).val() || '', // Get the feedback input value from the current form.
 			};
 
 			currentForm
-				.find( '.uds-feedback-' + this.buttonAction )
-				.text( 'Deactivating.' )
-				.addClass( 'processing' );
+				.find('.uds-feedback-' + this.buttonAction)
+				.text('Deactivating.')
+				.addClass('processing');
 
 			// Prepare AJAX call.
-			$.ajax( {
+			$.ajax({
 				url: udsVars?.ajaxurl, // URL to send the request to.
 				type: 'POST', // HTTP method.
 				data: formData, // Data to be sent.
-				success( response ) {
-					if ( response.success ) {
+				success(response) {
+					if (response.success) {
 						self._redirectOrReload();
 					}
 					self._hidePopup();
 				},
 				/* eslint-disable */
-				error( xhr, status, error ) {
+				error(xhr, status, error) {
 					/* eslint-disable */
 					self._redirectOrReload();
 				},
-			} );
+			});
 		},
 
-		_handleClick( e ) {
+		_handleClick(e) {
 			// Close feedback form or show/hide popup if clicked outside and add a click on a Activate button of Theme.
 			if (
-				e.target.classList.contains( 'show_popup' ) &&
-				e.target.closest( '.uds-feedback-form--wrapper' )
+				e.target.classList.contains('show_popup') &&
+				e.target.closest('.uds-feedback-form--wrapper')
 			) {
 				this._hidePopup();
-			} else if ( e.target.classList.contains( 'activate' ) ) {
+			} else if (e.target.classList.contains('activate')) {
 				this.deactivateUrl = e.target.href;
 
 				// Don't show for Child Themes.
 				if (
 					-1 !==
 					this.deactivateUrl.indexOf(
-						`stylesheet=${ udsVars?._current_theme }-child`
+						`stylesheet=${udsVars?._current_theme}-child`
 					)
 				) {
 					return;
 				}
 
 				e.preventDefault();
-				this._showPopup( udsVars?._current_theme );
+				this._showPopup(udsVars?._current_theme);
 			}
 		},
 
@@ -189,49 +191,49 @@
 			const self = this; // Store reference to the current object.
 
 			// Open the popup when clicked on the deactivate button.
-			this.deactivateButton.on( 'click', function ( event ) {
-				let closestTr = $( event.target ).closest( 'tr' );
-				let slug = closestTr.data( 'slug' );
+			this.deactivateButton.on('click', function (event) {
+				let closestTr = $(event.target).closest('tr');
+				let slug = closestTr.data('slug');
 
-				if ( self.slug.includes( slug ) ) {
+				if (self.slug.includes(slug)) {
 					event.preventDefault();
 					// Set the deactivation URL.
-					self.deactivateUrl = $( event.target ).attr( 'href' );
-					self._showPopup( slug );
+					self.deactivateUrl = $(event.target).attr('href');
+					self._showPopup(slug);
 				}
-			} );
+			});
 
 			// Close the popup on a click of Close button.
-			this.closeButton.on( 'click', function ( event ) {
+			this.closeButton.on('click', function (event) {
 				event.preventDefault();
 				self._hidePopup(); // Use self to refer to the UserDeactivationPopup instance.
-			} );
+			});
 
 			// Click event on radio button to change the placeholder of textarea.
-			this.radioButton.on( 'click', function ( event ) {
-				self._changePlaceholderText( event );
-			} );
+			this.radioButton.on('click', function (event) {
+				self._changePlaceholderText(event);
+			});
 
 			// Combined submit and skip button actions.
 			this.submitDeactivate
-				.add( this.skipButton )
-				.on( 'click', function ( event ) {
+				.add(this.skipButton)
+				.on('click', function (event) {
 					event.preventDefault(); // Prevent default button action.
-					self.buttonAction = $( event.target ).attr( 'data-action' );
-					$( event.target ).closest( self.feedbackForm ).submit();
-				} );
+					self.buttonAction = $(event.target).attr('data-action');
+					$(event.target).closest(self.feedbackForm).submit();
+				});
 
-			this.feedbackForm.on( 'submit', function ( event ) {
-				self._submitFeedback( event, self );
-			} );
+			this.feedbackForm.on('submit', function (event) {
+				self._submitFeedback(event, self);
+			});
 
-			document.addEventListener( 'click', function ( e ) {
-				self._handleClick( e );
-			} );
+			document.addEventListener('click', function (e) {
+				self._handleClick(e);
+			});
 		},
 	};
 
-	$( function () {
+	$(function () {
 		UserDeactivationPopup._init();
-	} );
-} )( jQuery );
+	});
+})(jQuery);
