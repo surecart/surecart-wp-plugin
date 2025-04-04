@@ -18,8 +18,8 @@ use SureCart\Models\Blocks\ProductPageBlock;
 	>
 		<div 
 			class="sc-product-quick-view-dialog__close-button"
-			data-wp-on--click="actions.close"
-			data-wp-on--keydown="actions.close"
+			data-wp-on--click="actions.toggle"
+			data-wp-on--keydown="actions.toggle"
 			role="button"
 			tabindex="0"
 			aria-label="<?php esc_attr_e( 'Close quick view', 'surecart' ); ?>"
@@ -76,5 +76,11 @@ use SureCart\Models\Blocks\ProductPageBlock;
 		<div class="sc-block-ui" data-wp-bind--hidden="!state.loading" hidden>
 			<span class="sc-spinner" data-wp-bind--hidden="!state.loading"></span>
 		</div>
-		</div>
+	</div>
+	<div 
+		class="sc-product-quick-view-overlay" 
+		data-wp-bind--hidden="!state.open"
+		data-wp-class--active="state.open"
+		data-wp-class--show-closing-animation="state.showClosingAnimation"
+	></div>
 </div>

@@ -14,6 +14,14 @@ const isValidEvent = (event) =>
 	!event.altKey && // Download.
 	!event.shiftKey;
 
+/**
+ * Holds all elements that are made inert when the lightbox is open; used to
+ * remove inert attribute of only those elements explicitly made inert.
+ *
+ * @type {Array}
+ */
+let inertElements = [];
+
 const { state, actions } = store('surecart/product-quick-view', {
 	state: {
 		loading: false,
@@ -61,6 +69,19 @@ const { state, actions } = store('surecart/product-quick-view', {
 		 */
 		open() {
 			state.open = true;
+			// Prevent body from scrolling when the dialog is open. Add class
+			document?.body?.classList?.add('sc-product-quick-view-open');
+			inertElements = [];
+			document
+				.querySelectorAll(
+					'body > :not(.sc-lightbox-overlay):not(.wp-block-surecart-product-quick-view)'
+				)
+				.forEach((el) => {
+					if (!el.hasAttribute('inert')) {
+						el.setAttribute('inert', '');
+						inertElements.push(el);
+					}
+				});
 		},
 		/**
 		 * Close the product quick view dialog.
@@ -68,7 +89,14 @@ const { state, actions } = store('surecart/product-quick-view', {
 		close: () => {
 			state.open = false;
 			state.showClosingAnimation = true;
+			// Allow body to scroll when the dialog is closed.
+			document?.body?.classList?.remove('sc-product-quick-view-open');
 			actions.clearURLParam();
+			// remove inert attribute from all children of the document
+			inertElements.forEach((el) => {
+				el.removeAttribute('inert');
+			});
+			inertElements = [];
 		},
 
 		/**
@@ -93,9 +121,7 @@ const { state, actions } = store('surecart/product-quick-view', {
 		closeOverlay: (e) => {
 			// If the target is the dialog, close it.
 			if (e.target === e.currentTarget) {
-				state.open = false;
-				state.showClosingAnimation = true;
-				actions.clearURLParam();
+				actions.close();
 			}
 		},
 		/**

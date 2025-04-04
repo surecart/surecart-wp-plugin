@@ -5,6 +5,7 @@
 			array_filter(
 				[
 					'role'                   => 'button',
+					'tabindex'               => '0',
 					'aria-disabled'          => empty( $quick_view_link ) ? 'true' : null,
 					'aria-label'             => __( 'Quick View Product', 'surecart' ),
 					'data-wp-on--click'      => 'actions.navigate',

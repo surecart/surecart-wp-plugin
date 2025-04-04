@@ -54,6 +54,35 @@
 			left: 50%;
 		}
 	}
+	.sc-product-quick-view-overlay {
+		position: fixed;
+		top: 0;
+		left: 0;
+		z-index: 9999;
+		width: 100vw;
+		height: 100vh;
+		background-color: rgba(0, 0, 0, 0.5);
+		visibility: hidden;
+		opacity: 0;
+		pointer-events: none;
+		overflow: hidden;
+
+		&.active {
+			visibility: visible;
+			pointer-events: all;
+			animation: both sc-turn-on-visibility 0.25s;
+		}
+
+		&.show-closing-animation {
+			&:not(.active) {
+				animation: both sc-turn-off-visibility 0.35s;
+			}
+		}
+	}
+}
+
+body.sc-product-quick-view-open {
+	overflow: hidden;
 }
 
 @keyframes sc-turn-on-visibility {
