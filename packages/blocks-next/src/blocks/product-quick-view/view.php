@@ -9,13 +9,15 @@ use SureCart\Models\Blocks\ProductPageBlock;
 	<?php echo $query->have_posts() ? 'data-wp-init="callbacks.init"' : ''; ?>
 	data-wp-watch="callbacks.updateDialog"
 >
-	<dialog
+	<div
 		class="sc-product-quick-view-dialog"
 		data-wp-on--click='actions.closeOverlay'
 		data-wp-on-window--resize="actions.close"
+		data-wp-class--active="state.open"
+		data-wp-class--show-closing-animation="state.showClosingAnimation"
 	>
 		<div 
-			class="sc-product-quick-view-dialog__close"
+			class="sc-product-quick-view-dialog__close-button"
 			data-wp-on--click="actions.close"
 			data-wp-on--keydown="actions.close"
 			role="button"
@@ -74,5 +76,5 @@ use SureCart\Models\Blocks\ProductPageBlock;
 		<div class="sc-block-ui" data-wp-bind--hidden="!state.loading" hidden>
 			<span class="sc-spinner" data-wp-bind--hidden="!state.loading"></span>
 		</div>
-	</dialog>
+		</div>
 </div>

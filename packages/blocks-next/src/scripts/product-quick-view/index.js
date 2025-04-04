@@ -17,39 +17,8 @@ const isValidEvent = (event) =>
 const { state, actions } = store('surecart/product-quick-view', {
 	state: {
 		loading: false,
-		/**
-		 * The product quick view dialog element.
-		 * This gets cached so we can call this many times without querying the DOM.
-		 */
-		get dialog() {
-			let dialog =
-				document?.querySelector('.sc-product-quick-view-dialog') ||
-				null;
-
-			if (!dialog) {
-				const { ref } = getElement();
-
-				dialog =
-					ref.parentElement.querySelector('dialog') || // Sibling dialog.
-					ref.closest('dialog') || // Parent dialog.
-					null;
-			}
-
-			// No dialog is found.
-			if (dialog instanceof HTMLDialogElement === false) {
-				return;
-			}
-
-			return dialog;
-		},
-		set dialog(value) {
-			if (value instanceof HTMLDialogElement === false) {
-				return;
-			}
-
-			// Set the dialog.
-			this.dialog = value;
-		},
+		open: false,
+		showClosingAnimation: false,
 	},
 
 	actions: {
@@ -72,7 +41,7 @@ const { state, actions } = store('surecart/product-quick-view', {
 			}
 
 			const quickViewClose = queryRef.querySelector(
-				'.c-product-quick-view-dialog__close'
+				'.sc-product-quick-view-dialog__close'
 			);
 			// Focus the product title to ensure the product page doe snot scroll to bottom after popup opens.
 			quickViewClose?.focus();
@@ -91,13 +60,14 @@ const { state, actions } = store('surecart/product-quick-view', {
 		 * Open the product quick view dialog.
 		 */
 		open() {
-			state.dialog?.showModal();
+			state.open = true;
 		},
 		/**
 		 * Close the product quick view dialog.
 		 */
 		close: () => {
-			state.dialog?.close();
+			state.open = false;
+			state.showClosingAnimation = true;
 			actions.clearURLParam();
 		},
 
@@ -114,7 +84,7 @@ const { state, actions } = store('surecart/product-quick-view', {
 			e?.preventDefault();
 
 			// If the dialog is open, close it. Otherwise, open it.
-			state?.dialog?.open ? actions.close() : actions.open();
+			state?.open ? actions.close() : actions.open();
 		},
 
 		/**
@@ -123,7 +93,8 @@ const { state, actions } = store('surecart/product-quick-view', {
 		closeOverlay: (e) => {
 			// If the target is the dialog, close it.
 			if (e.target === e.currentTarget) {
-				e.currentTarget.close();
+				state.open = false;
+				state.showClosingAnimation = true;
 				actions.clearURLParam();
 			}
 		},
@@ -150,18 +121,6 @@ const { state, actions } = store('surecart/product-quick-view', {
 		init: () => {
 			// If we have reached here it means the URL has a product quick view parameter so we just open the dialog.
 			actions.open();
-		},
-		updateDialog: () => {
-			if (state.dialog && state.dialog instanceof HTMLDialogElement) {
-				return;
-			}
-
-			// make sure the dialog state is up to date with latest HTML dialog element.
-			let latestDialog =
-				document?.querySelector('.sc-product-quick-view-dialog') ||
-				null;
-
-			state.dialog = latestDialog;
 		},
 	},
 });

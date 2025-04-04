@@ -17,4 +17,5 @@ wp_enqueue_style( 'surecart-lightbox' );
 wp_enqueue_script_module( 'surecart/lightbox' );
 wp_enqueue_style( 'surecart-image-slider' );
 wp_enqueue_script_module( '@surecart/image-slider' );
+
 return 'file:./view.php';

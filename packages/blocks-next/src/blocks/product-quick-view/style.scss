@@ -1,30 +1,42 @@
 .wp-block-surecart-product-quick-view {
 	width: 100%;
 	.sc-product-quick-view-dialog {
-			width: 70vw;
-			max-width: 1000px;
-			height: 80vh;
-			max-height: 600px;
-			border: none;
-			border-radius: 12px;
-			padding: 20px;
-			box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.3);
-			background: white;
-			transition: opacity 0.3s ease, transform 0.3s ease;
-			opacity: 0;
-			transform: scale(0.9);
-		  
-		  
-		  &[open] {
-			opacity: 1;
-			transform: scale(1);
-		  }
-		  
-		  &[open]::backdrop {
-			background: rgba(0, 0, 0, 0.5);
-			transition: background 0.3s ease;
-		  }
-		  &__close {
+		position: fixed;
+		// I want dialog in center of the screen
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		z-index: 10000;
+		box-sizing: border-box;
+		visibility: hidden;
+		width: 70vw;
+		max-width: 1000px;
+		height: 80vh;
+		max-height: 600px;
+		border: none;
+		border-radius: 12px;
+		padding: 20px;
+		box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.3);
+		background: white;
+		overflow: scroll;
+
+		// When fading, make the image come in slightly slower
+		// or faster than the scrim to give a sense of depth.
+		&.active {
+			visibility: visible;
+			animation: both sc-turn-on-visibility 0.25s;
+			img {
+				animation: both sc-turn-on-visibility 0.35s;
+			}
+		}
+		
+		&.show-closing-animation {
+			&:not(.active) {
+				animation: both sc-turn-off-visibility 0.35s;
+			}
+		}
+
+		&__close-button {
 			display: flex;
 			align-items: center;
 			position: absolute;
@@ -35,11 +47,35 @@
 			color: var(--sc-color-gray-500);
 			width: 1em;
 			height: 1em;
-		  }
-		  .sc-spinner {
+		}
+		.sc-spinner {
 			position: absolute;
 			top: 50%;
 			left: 50%;
-		  }
+		}
+	}
+}
+
+@keyframes sc-turn-on-visibility {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+@keyframes sc-turn-off-visibility {
+	0% {
+		opacity: 1;
+		visibility: visible;
+	}
+	99% {
+		opacity: 0;
+		visibility: visible;
+	}
+	100% {
+		opacity: 0;
+		visibility: hidden;
 	}
 }

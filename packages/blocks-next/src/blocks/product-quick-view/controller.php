@@ -9,4 +9,13 @@ $args       = [
 ];
 $query      = new WP_Query( $args );
 
+// Set the interactivity state for the quick view.
+wp_interactivity_state(
+	'@surecart/product-quick-view',
+	array(
+		'open'                 => false,
+		'showClosingAnimation' => false,
+	)
+);
+
 return 'file:./view.php';
