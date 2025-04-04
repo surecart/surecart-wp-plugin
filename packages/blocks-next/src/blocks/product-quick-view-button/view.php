@@ -2,19 +2,18 @@
 	<?php
 	echo wp_kses_data(
 		get_block_wrapper_attributes(
-			array_filter(
-				[
-					'role'                   => 'button',
-					'tabindex'               => '0',
-					'aria-disabled'          => empty( $quick_view_link ) ? 'true' : null,
-					'aria-label'             => __( 'Quick View Product', 'surecart' ),
-					'data-wp-on--click'      => 'actions.navigate',
-					'data-wp-on--mouseenter' => 'actions.prefetch',
-					'data-wp-interactive'    => '{ "namespace": "surecart/product-quick-view" }',
-					'data-wp-class--loading' => 'state.loading',
-					'style'                  => $style,
-				]
-			)
+			[
+				'role'                   => 'button',
+				'tabindex'               => '0',
+				'aria-disabled'          => empty( $quick_view_link ) ? 'true' : null,
+				'aria-label'             => __( 'Quick View Product', 'surecart' ),
+				'data-wp-on--click'      => 'actions.navigate',
+				'data-wp-on--keydown'    => 'actions.navigate',
+				'data-wp-on--mouseenter' => 'actions.prefetch',
+				'data-wp-interactive'    => '{ "namespace": "surecart/product-quick-view" }',
+				'data-wp-class--loading' => 'state.loading',
+				'style'                  => $style,
+			]
 		)
 	);
 	?>

@@ -5,16 +5,6 @@ import { store, getElement, getContext } from '@wordpress/interactivity';
 const { __ } = wp.i18n;
 
 /**
- * Check if the event is a valid click event.
- */
-const isValidEvent = (event) =>
-	event.button === 0 && // Left clicks only.
-	!event.metaKey && // Open in new tab (Mac).
-	!event.ctrlKey && // Open in new tab (Windows).
-	!event.altKey && // Download.
-	!event.shiftKey;
-
-/**
  * Holds all elements that are made inert when the lightbox is open; used to
  * remove inert attribute of only those elements explicitly made inert.
  *
@@ -37,7 +27,7 @@ const { state, actions } = store('surecart/product-quick-view', {
 			const { ref } = getElement();
 			const { url } = getContext();
 			const queryRef = ref.closest('[data-wp-router-region]');
-			if (isValidEvent(event) && queryRef) {
+			if (queryRef) {
 				event.preventDefault();
 				const { actions } = yield import(
 					/* webpackIgnore: true */
@@ -48,11 +38,12 @@ const { state, actions } = store('surecart/product-quick-view', {
 				});
 			}
 
-			const quickViewClose = queryRef.querySelector(
-				'.sc-product-quick-view-dialog__close'
+			const quickViewClose = document.querySelector(
+				'.sc-product-quick-view-dialog__close-button'
 			);
 			// Focus the product title to ensure the product page doe snot scroll to bottom after popup opens.
 			quickViewClose?.focus();
+
 			state.loading = false;
 		},
 		/** Prefetch upcoming urls. */
@@ -145,6 +136,10 @@ const { state, actions } = store('surecart/product-quick-view', {
 	},
 	callbacks: {
 		init: () => {
+			if (state?.open) {
+				return;
+			}
+
 			// If we have reached here it means the URL has a product quick view parameter so we just open the dialog.
 			actions.open();
 		},
