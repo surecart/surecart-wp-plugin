@@ -1193,7 +1193,7 @@ export interface GoogleMapAddressComponents extends Object {
 }
 
 export interface GoogleMapPlace extends Object {
-  id: string;
+  id?: string;
   displayName: {
     languageCode: string;
     text: string;
@@ -1203,6 +1203,7 @@ export interface GoogleMapPlace extends Object {
 
 export interface AddressSuggestion extends Object {
   displayName: string;
+  fullDisplayName: string;
   placeId: string;
   addressComponents?: GoogleMapAddressComponents[];
 }

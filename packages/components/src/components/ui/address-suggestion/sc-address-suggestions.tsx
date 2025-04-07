@@ -11,6 +11,7 @@ import { debounce } from 'lodash';
 import { Address, AddressSuggestion, GoogleMapPlace } from '../../../types';
 import { createErrorNotice } from '@store/notices/mutations';
 import { getCountryRegions } from 'src/functions/address-settings';
+import { getAddressLabels, transformPlaceDetails } from './utils/address-transformer';
 
 @Component({
   tag: 'sc-address-suggestions',
@@ -59,7 +60,7 @@ export class ScAddressSuggestions {
   // Use Lodash debounce for fetchAddressSuggestions
   debouncedFetchAddressSuggestions = debounce((input: string) => {
     this.fetchAddressSuggestions(input);
-  }, 300);
+  }, 100);
 
   @Watch('addressLine1')
   handleAddressLine1Change(newValue: string) {
@@ -98,6 +99,7 @@ export class ScAddressSuggestions {
       body: JSON.stringify({
         textQuery: input,
         pageSize: 5,
+        regionCode: this.address?.country,
       }),
     });
 
@@ -113,19 +115,17 @@ export class ScAddressSuggestions {
       return;
     }
 
-    // If no places found, hide the suggestions.
-    if (!addressResponse?.places?.length) {
-      this.showSuggestions = false;
-      this.addressSuggestions = [];
-      return;
-    }
-
     // Map the address suggestions to a more readable format.
-    this.addressSuggestions = addressResponse?.places?.map((place: GoogleMapPlace) => ({
-      displayName: place.displayName?.text ?? input,
-      placeId: place.id,
-      addressComponents: place.addressComponents,
-    }));
+    this.addressSuggestions = (addressResponse?.places || [])?.map((place: GoogleMapPlace) => {
+      const { city, state, country } = getAddressLabels(place?.addressComponents, this.regions);
+
+      return {
+        displayName: place?.displayName?.text ?? input,
+        fullDisplayName: [place?.displayName?.text ?? input, city, state, country].filter(Boolean).join(', '),
+        placeId: place?.id,
+        addressComponents: place?.addressComponents || null,
+      };
+    }) as Array<AddressSuggestion>;
   }
 
   async fetchPlaceDetails(placeId: string) {
@@ -137,24 +137,19 @@ export class ScAddressSuggestions {
 
     const { addressComponents } = place;
 
-    // Only update the state if it is in the regions list.
-    const googleMapState = addressComponents.find(component => component.types.includes('administrative_area_level_1'))?.shortText || null;
-
     // If address country and google address components country is different, update the regions.
     const country = addressComponents.find(component => component.types.includes('country'))?.shortText || null;
     if (this.address?.country !== country) {
       this.regions = await getCountryRegions(country);
     }
 
+    const placeDetails = transformPlaceDetails(place?.addressComponents, this.regions);
+
     // Update the address with the place details.
     this.scChangeAddress.emit({
       ...(this.address as Address),
-      line_1: place.displayName || null,
-      line_2: addressComponents.find(component => component.types.includes('sublocality'))?.shortText || null,
-      city: addressComponents.find(component => component.types.includes('locality'))?.shortText || null,
-      postal_code: addressComponents.find(component => component.types.includes('postal_code'))?.shortText || null,
-      state: this.regions?.find(region => region.value === googleMapState)?.value || null,
-      country,
+      ...placeDetails,
+      line_1: place?.displayName ?? this.addressLine1,
     });
 
     this.showSuggestions = false;
@@ -247,6 +242,10 @@ export class ScAddressSuggestions {
   }
 
   highlightMatch(text: string, query: string) {
+    if (!text || !query) {
+      return text;
+    }
+
     // Split query into words and filter out empty strings.
     const words = query.split(/\s+/).filter(word => word);
 
@@ -327,10 +326,10 @@ export class ScAddressSuggestions {
                 part="suggestion-item"
                 role="option"
                 aria-selected={this.focusedIndex === index ? 'true' : 'false'}
-                aria-label={sprintf(__('Select suggestion %s', 'surecart'), suggestion.displayName)}
+                aria-label={sprintf(__('Select suggestion %s', 'surecart'), suggestion.fullDisplayName)}
                 tabindex={this.focusedIndex === index ? '0' : '-1'}
                 onClick={() => this.fetchPlaceDetails(suggestion?.placeId)}
-                innerHTML={this.highlightMatch(suggestion.displayName, this.addressLine1)}
+                innerHTML={this.highlightMatch(suggestion.fullDisplayName, this.addressLine1)}
                 onMouseEnter={() => (this.focusedIndex = index)}
                 onMouseLeave={() => (this.focusedIndex = -1)}
               ></li>
