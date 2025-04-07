@@ -1,6 +1,6 @@
 import { Component, Prop, h, State } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
-import { Customer, Address } from '../../../../types';
+import { Customer, Address, CountryLocaleFieldValue, CountryLocaleField } from '../../../../types';
 import apiFetch from '../../../../functions/fetch';
 import { addQueryArgs } from '@wordpress/url';
 
@@ -13,6 +13,10 @@ export class ScCustomerEdit {
   @Prop() heading: string;
   @Prop({ mutable: true }) customer: Customer;
   @Prop() successUrl: string;
+  @Prop() i18n: {
+    defaultCountryFields: Array<CountryLocaleFieldValue>;
+    countryFields: Array<CountryLocaleField>;
+  };
 
   @State() loading: boolean;
   @State() error: string;
@@ -66,7 +70,7 @@ export class ScCustomerEdit {
           first_name,
           last_name,
           phone,
-          billing_matches_shipping: billing_matches_shipping === 'on',
+          billing_matches_shipping: billing_matches_shipping === true || billing_matches_shipping === 'on',
           shipping_address: this.customer.shipping_address,
           billing_address: this.customer.billing_address,
           ...(tax_identifier_number && tax_identifier_number_type
@@ -133,6 +137,8 @@ export class ScCustomerEdit {
                     postal_code: 'shipping_postal_code',
                     state: 'shipping_state',
                   }}
+                  defaultCountryFields={this.i18n?.defaultCountryFields || []}
+                  countryFields={this.i18n?.countryFields || []}
                 ></sc-address>
               </div>
 
@@ -168,6 +174,8 @@ export class ScCustomerEdit {
                     state: 'billing_state',
                   }}
                   required={true}
+                  defaultCountryFields={this.i18n?.defaultCountryFields || []}
+                  countryFields={this.i18n?.countryFields || []}
                 ></sc-address>
               </div>
 
