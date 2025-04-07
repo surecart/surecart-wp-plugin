@@ -79,15 +79,21 @@ const { state, actions } = store('surecart/product-quick-view', {
 			inertElements.forEach((el) => el.removeAttribute('inert'));
 			inertElements = [];
 		},
-
 		/** Toggle the dialog open/close based on keyboard event or click. */
-		toggle(e) {
+		*toggle(e) {
 			if (e?.key && ![' ', 'Enter'].includes(e.key)) return;
 			e?.preventDefault();
 
-			state.open ? actions.close() : actions.open();
+			if (state.open) {
+				yield actions.close();
+			} else {
+				actions.open();
+			}
 		},
-
+		*handleKeyDown(e) {
+			if (e?.key && e.key !== 'Escape') return;
+			yield actions.close();
+		},
 		/** Close if clicked outside the dialog content. */
 		closeOverlay(e) {
 			if (e.target === e.currentTarget) actions.close();

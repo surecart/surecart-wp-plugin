@@ -10,10 +10,10 @@ use SureCart\Models\Blocks\ProductPageBlock;
 >
 	<div
 		class="sc-product-quick-view-dialog"
-		data-wp-on--click='actions.closeOverlay'
 		data-wp-on-window--resize="actions.close"
 		data-wp-class--active="state.open"
 		data-wp-class--show-closing-animation="state.showClosingAnimation"
+		data-wp-on--keydown="actions.handleKeyDown"
 	>
 		<div 
 			class="sc-product-quick-view-dialog__close-button"
@@ -80,6 +80,7 @@ use SureCart\Models\Blocks\ProductPageBlock;
 		class="sc-product-quick-view-overlay" 
 		data-wp-bind--hidden="!state.open"
 		data-wp-class--active="state.open"
+		data-wp-on--click="actions.closeOverlay"
 		data-wp-class--show-closing-animation="state.showClosingAnimation"
 	></div>
 </div>
