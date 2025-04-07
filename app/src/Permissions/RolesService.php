@@ -102,7 +102,7 @@ class RolesService {
 	 * Add new shop-specific capabilities
 	 *
 	 * @since  1.4.4
-	 * @global WP_Roles $wp_roles
+	 * @global \WP_Roles $wp_roles
 	 * @return void
 	 */
 	public function addCaps() {
