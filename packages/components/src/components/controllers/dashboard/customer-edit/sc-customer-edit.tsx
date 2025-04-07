@@ -152,6 +152,7 @@ export class ScCustomerEdit {
                       billing_matches_shipping: (e.target as HTMLScCheckboxElement).checked,
                     };
                   }}
+                  value="on"
                 >
                   {__('Billing address is same as shipping', 'surecart')}
                 </sc-checkbox>
