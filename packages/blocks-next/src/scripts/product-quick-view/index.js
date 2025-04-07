@@ -20,128 +20,100 @@ const { state, actions } = store('surecart/product-quick-view', {
 	},
 
 	actions: {
-		/** Navigate to a url using the router region. */
+		/** Navigate to a URL using the router region. */
 		*navigate(event) {
 			state.loading = true;
 			actions.toggle(event);
+
 			const { ref } = getElement();
 			const { url } = getContext();
-			const queryRef = ref.closest('[data-wp-router-region]');
-			if (queryRef) {
+			const routerRegion = ref.closest('[data-wp-router-region]');
+
+			if (routerRegion) {
 				event.preventDefault();
-				const { actions } = yield import(
+				const { actions: routerActions } = yield import(
 					/* webpackIgnore: true */
 					'@wordpress/interactivity-router'
 				);
-				yield actions.navigate(url, {
-					replace: true,
-				});
+				yield routerActions.navigate(url, { replace: true });
 			}
 
-			const quickViewClose = document.querySelector(
-				'.sc-product-quick-view-dialog__close-button'
-			);
-			// Focus the product title to ensure the product page doe snot scroll to bottom after popup opens.
-			quickViewClose?.focus();
-
+			document
+				.querySelector('.sc-product-quick-view-dialog__close-button')
+				?.focus();
 			state.loading = false;
 		},
-		/** Prefetch upcoming urls. */
-		*prefetch(e) {
+
+		/** Prefetch upcoming URLs. */
+		*prefetch() {
 			const { url } = getContext();
-			const { actions } = yield import(
+			const { actions: routerActions } = yield import(
 				/* webpackIgnore: true */
 				'@wordpress/interactivity-router'
 			);
-			yield actions.prefetch(url);
+			yield routerActions.prefetch(url);
 		},
-		/**
-		 * Open the product quick view dialog.
-		 */
+
+		/** Open the product quick view dialog. */
 		open() {
 			state.open = true;
-			// Prevent body from scrolling when the dialog is open. Add class
-			document?.body?.classList?.add('sc-product-quick-view-open');
-			inertElements = [];
-			document
-				.querySelectorAll(
+			document.body.classList.add('sc-product-quick-view-open');
+
+			inertElements = Array.from(
+				document.querySelectorAll(
 					'body > :not(.sc-lightbox-overlay):not(.wp-block-surecart-product-quick-view)'
 				)
-				.forEach((el) => {
-					if (!el.hasAttribute('inert')) {
-						el.setAttribute('inert', '');
-						inertElements.push(el);
-					}
-				});
+			).filter((el) => !el.hasAttribute('inert'));
+
+			inertElements.forEach((el) => el.setAttribute('inert', ''));
 		},
-		/**
-		 * Close the product quick view dialog.
-		 */
-		close: async () => {
+
+		/** Close the product quick view dialog. */
+		*close() {
 			state.open = false;
 			state.showClosingAnimation = true;
-			// Allow body to scroll when the dialog is closed.
-			document?.body?.classList?.remove('sc-product-quick-view-open');
-			await actions.clearURLParam();
-			// remove inert attribute from all children of the document
-			inertElements.forEach((el) => {
-				el.removeAttribute('inert');
-			});
+
+			document.body.classList.remove('sc-product-quick-view-open');
+			yield actions.clearURLParam();
+
+			inertElements.forEach((el) => el.removeAttribute('inert'));
 			inertElements = [];
 		},
 
-		/**
-		 * Toggle the product quick view dialog.
-		 */
-		toggle: (e) => {
-			// If the key is not space or enter, return.
-			if (e?.key && e?.key !== ' ' && e?.key !== 'Enter') {
-				return;
-			}
-
-			// Prevent default behavior.
+		/** Toggle the dialog open/close based on keyboard event or click. */
+		toggle(e) {
+			if (e?.key && ![' ', 'Enter'].includes(e.key)) return;
 			e?.preventDefault();
 
-			// If the dialog is open, close it. Otherwise, open it.
-			state?.open ? actions.close() : actions.open();
+			state.open ? actions.close() : actions.open();
 		},
 
-		/**
-		 * Close the dialog if the target is the dialog.
-		 */
-		closeOverlay: (e) => {
-			// If the target is the dialog, close it.
-			if (e.target === e.currentTarget) {
-				actions.close();
-			}
+		/** Close if clicked outside the dialog content. */
+		closeOverlay(e) {
+			if (e.target === e.currentTarget) actions.close();
 		},
-		/**
-		 * Clear URL param.
-		 */
+
+		/** Clear product quick view URL param. */
 		*clearURLParam() {
 			state.loading = true;
-			// Clear the URL param.
+
 			const url = new URL(window.location.href);
 			url.searchParams.delete('product-quick-view-id');
 
-			const { actions } = yield import(
+			const { actions: routerActions } = yield import(
 				/* webpackIgnore: true */
 				'@wordpress/interactivity-router'
 			);
-			yield actions.navigate(url.toString(), {
-				replace: true,
-			});
+			yield routerActions.navigate(url.toString(), { replace: true });
 			state.loading = false;
 		},
 	},
-	callbacks: {
-		init: () => {
-			if (state?.open) {
-				return;
-			}
 
-			// If we have reached here it means the URL has a product quick view parameter so we just open the dialog.
-			actions.open();
+	callbacks: {
+		init() {
+			if (!state.open) {
+				actions.open(); // Automatically opens if URL param exists
+			}
 		},
 	},
 });
