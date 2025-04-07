@@ -77,12 +77,12 @@ const { state, actions } = store('surecart/product-quick-view', {
 		/**
 		 * Close the product quick view dialog.
 		 */
-		close: () => {
+		close: async () => {
 			state.open = false;
 			state.showClosingAnimation = true;
 			// Allow body to scroll when the dialog is closed.
 			document?.body?.classList?.remove('sc-product-quick-view-open');
-			actions.clearURLParam();
+			await actions.clearURLParam();
 			// remove inert attribute from all children of the document
 			inertElements.forEach((el) => {
 				el.removeAttribute('inert');
