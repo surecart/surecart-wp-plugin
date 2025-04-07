@@ -7,6 +7,7 @@ import {
 	store as blocksStore,
 } from '@wordpress/blocks';
 import {
+	__experimentalLinkControl as LinkControl,
 	useBlockProps,
 	store as blockEditorStore,
 	__experimentalBlockVariationPicker,
@@ -102,6 +103,28 @@ export default function QueryPlaceholder({
 							setAttributes={setAttributes}
 							onChange={onChoose}
 							onChoose={onChoose}
+						/>
+
+						<LinkControl
+							onChange={(nextValue) => {
+								console.log(
+									`The selected item URL: ${nextValue.url}.`
+								);
+							}}
+							showInitialSuggestions
+							hasTextControl
+							searchInputPlaceholder={__(
+								'Search for a product',
+								'surecart'
+							)}
+							suggestionsQuery={{
+								// always show Pages as initial suggestions
+								initialSuggestionsSearchOptions: {
+									type: 'post',
+									subtype: 'sc_product',
+									perPage: 20,
+								},
+							}}
 						/>
 					</div>
 				</div>
