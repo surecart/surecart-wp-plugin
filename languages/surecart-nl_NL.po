@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the SureCart package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2025-02-12 21:11:52+0000\n"
+"PO-Revision-Date: 2025-03-20 13:34:15+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -164,6 +164,36 @@ msgstr "De vervaldatum moet groter of gelijk zijn aan de uitgiftedatum."
 #: src/WordPress/UpgradeNoticeService.php:106
 msgid "To ensure a smooth update, please %1$sbackup your site%2$s before proceeding. For the safest experience, perform the update in a staging environment first. This helps prevent any unexpected issues and ensures your site remains up and running smoothly."
 msgstr "Om ervoor te zorgen dat de update soepel verloopt, maakt %1$s een back-up van uw site%2$s voordat je doorgaat. Voor de veiligheid voer je de update eerst uit in een testomgeving. Dit helpt onverwachte problemen te voorkomen en zorgt ervoor dat je site soepel blijft werken."
+
+#: src/Controllers/Admin/Invoices/InvoicesListTable.php:51
+msgid "Issued"
+msgstr "Uitgegeven"
+
+#: src/Controllers/Admin/Products/ProductsController.php:42
+msgid "No products selected. Please choose at least one product to delete."
+msgstr "Geen producten geselecteerd. Kies ten minste één product om te verwijderen."
+
+#: src/Controllers/Admin/Invoices/InvoicesListTable.php:52
+msgid "Due"
+msgstr "Op"
+
+#. translators: Hidden accessibility text.
+#: src/Controllers/Admin/Tables/HasModeFilter.php:31
+msgid "Filter by mode"
+msgstr "Filter op modus"
+
+#: src/Middleware/InvoiceRedirectMiddleware.php:44
+msgid "Invoice checkout not found."
+msgstr "Factuur niet gevonden."
+
+#: src/Models/Invoice.php:64 src/Models/Invoice.php:105
+msgid "Please create the invoice first."
+msgstr "Maak eerst de factuur."
+
+#. translators: %s is the name.
+#: src/Support/Errors/ErrorsTranslationService.php:116
+msgid "The name \"%s\" is already taken. Please choose a different name."
+msgstr "De naam \"%s\" is niet beschikbaar. Kies een andere naam."
 
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:274
 #: invoices/components/CheckoutPageLink.js:67
@@ -538,6 +568,13 @@ msgctxt "block keyword"
 msgid "confirm"
 msgstr "bevestigen"
 
+#: Blocks/Confirmation/block.json Blocks/OrderBumps/block.json
+#: Blocks/OrderConfirmationCustomer/block.json
+#: Blocks/OrderConfirmationLineItems/block.json
+msgctxt "block keyword"
+msgid "thank you"
+msgstr "dankjewel"
+
 #: Blocks/AddToCartButton/block.json Blocks/BuyButton/block.json
 #: Blocks/CustomerDashboardButton/block.json
 #: Blocks/Dashboard/CustomerBillingDetails/block.json
@@ -563,13 +600,6 @@ msgstr "bevestigen"
 msgctxt "block keyword"
 msgid "customer"
 msgstr "klant"
-
-#: Blocks/Confirmation/block.json Blocks/OrderBumps/block.json
-#: Blocks/OrderConfirmationCustomer/block.json
-#: Blocks/OrderConfirmationLineItems/block.json
-msgctxt "block keyword"
-msgid "thank you"
-msgstr "dankjewel"
 
 #: Blocks/Address/block.json
 msgctxt "block keyword"
@@ -2716,13 +2746,6 @@ msgstr "Bestellingen"
 msgid "Paid"
 msgstr "Betaald"
 
-#: src/Controllers/Admin/AffiliationPayouts/AffiliationPayoutsListTable.php:317
-#: src/Controllers/Admin/Orders/OrdersListTable.php:77
-#: src/Models/Payout.php:124 orders/modules/LineItems/index.js:24 util.js:94
-#: Blocks/Form/edit.js:393 sc-order-status-badge2.js:35
-msgid "Processing"
-msgstr "In behandeling"
-
 #: src/Support/Errors/Translations/codes.php:10
 #: src/Support/Errors/Translations/codes.php:39
 msgid "Failed to save coupon."
@@ -3010,6 +3033,10 @@ msgstr "Belastingen"
 msgid "View Customer"
 msgstr "Bekijk Klant"
 
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:111
+msgid "Remaining Payments"
+msgstr "Resterende Betalingen"
+
 #: src/Integrations/Beaver/BeaverFormModule.php:92
 #: src/Integrations/Elementor/ReusableFormWidget.php:134
 #: affiliation-payouts-groups/CreateAffiliationPayoutGroup.js:84
@@ -3042,10 +3069,6 @@ msgstr "Bekijk Klant"
 #: Blocks/Form/components/Setup.js:54
 msgid "Create"
 msgstr "Aanmaken"
-
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:111
-msgid "Remaining Payments"
-msgstr "Resterende Betalingen"
 
 #: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:288
 #: abandoned-checkouts/modules/LineItems/index.js:45
@@ -5129,39 +5152,6 @@ msgstr "Je hebt hier geen toestemming voor."
 msgid "Add the user role of the user who purchased the product."
 msgstr "Voeg de gebruikersrol toe van de gebruiker die het product heeft gekocht."
 
-#: src/Rest/BrandRestServiceProvider.php:124
-msgid "The phone number that will be shown to customers for support, on invoices, etc."
-msgstr "Het telefoonnummer dat aan klanten wordt getoond voor ondersteuning, op facturen, enz."
-
-#: src/Rest/BumpRestServiceProvider.php:98
-msgid "Percent that will be taken off line items associated with this bump."
-msgstr "Percentage dat van de regelitems wordt gehaald die aan dit kassakoopje zijn gekoppeld."
-
-#: src/Rest/BumpRestServiceProvider.php:78
-msgid "Amount (in the currency of the price) that will be taken off line items associated with this bump."
-msgstr "Bedrag (in de valuta van de prijs) dat van de regelitems wordt gehaald die aan dit kassakoopje zijn gekoppeld."
-
-#: src/Rest/BumpRestServiceProvider.php:88
-msgid "The conditions that will filter this bump to be recommeneded. Accepted keys are price_ids, product_ids, and product_group_ids with array values."
-msgstr "De voorwaarden die dit kassakoopje zullen filteren. Geaccepteerde sleutels zijn price_ids, product_ids en product_group_ids met een reeks wwaarden."
-
-#: src/Rest/BumpRestServiceProvider.php:103
-msgid "The priority of this bump in relation to other bumps. Must be in the range of 1 - 5."
-msgstr "De prioriteit van dit kassakoopje ten opzichte van andere kassakoopjes. Moet tussen 1 en 5 liggen."
-
-#: src/Rest/BumpRestServiceProvider.php:108
-#: src/Rest/UpsellRestServiceProvider.php:102
-msgid "The UUID of the price."
-msgstr "De UUID van de prijs."
-
-#: src/Rest/TaxProtocolRestServiceProvider.php:110
-msgid "If set to true taxes will be automatically calculated."
-msgstr "Indien ingesteld op waar, worden belastingen automatisch berekend."
-
-#: src/Rest/TaxProtocolRestServiceProvider.php:105
-msgid "If set to true VAT taxes will be calculated for all EU countries."
-msgstr "Indien ingesteld op waar, wordt BTW berekend voor alle EU-landen."
-
 #: src/Rest/AbandonedCheckoutProtocolRestServiceProvider.php:81
 #: src/Rest/AbandonedCheckoutRestServiceProvider.php:53
 #: src/Rest/AccountRestServiceProvider.php:76
@@ -5239,6 +5229,39 @@ msgstr "Indien ingesteld op waar, wordt BTW berekend voor alle EU-landen."
 #: src/Rest/WebhooksRestServiceProvider.php:46
 msgid "Unique identifier for the object."
 msgstr "Unieke identificatie voor het object."
+
+#: src/Rest/BrandRestServiceProvider.php:124
+msgid "The phone number that will be shown to customers for support, on invoices, etc."
+msgstr "Het telefoonnummer dat aan klanten wordt getoond voor ondersteuning, op facturen, enz."
+
+#: src/Rest/BumpRestServiceProvider.php:98
+msgid "Percent that will be taken off line items associated with this bump."
+msgstr "Percentage dat van de regelitems wordt gehaald die aan dit kassakoopje zijn gekoppeld."
+
+#: src/Rest/BumpRestServiceProvider.php:78
+msgid "Amount (in the currency of the price) that will be taken off line items associated with this bump."
+msgstr "Bedrag (in de valuta van de prijs) dat van de regelitems wordt gehaald die aan dit kassakoopje zijn gekoppeld."
+
+#: src/Rest/BumpRestServiceProvider.php:88
+msgid "The conditions that will filter this bump to be recommeneded. Accepted keys are price_ids, product_ids, and product_group_ids with array values."
+msgstr "De voorwaarden die dit kassakoopje zullen filteren. Geaccepteerde sleutels zijn price_ids, product_ids en product_group_ids met een reeks wwaarden."
+
+#: src/Rest/BumpRestServiceProvider.php:103
+msgid "The priority of this bump in relation to other bumps. Must be in the range of 1 - 5."
+msgstr "De prioriteit van dit kassakoopje ten opzichte van andere kassakoopjes. Moet tussen 1 en 5 liggen."
+
+#: src/Rest/BumpRestServiceProvider.php:108
+#: src/Rest/UpsellRestServiceProvider.php:102
+msgid "The UUID of the price."
+msgstr "De UUID van de prijs."
+
+#: src/Rest/TaxProtocolRestServiceProvider.php:110
+msgid "If set to true taxes will be automatically calculated."
+msgstr "Indien ingesteld op waar, worden belastingen automatisch berekend."
+
+#: src/Rest/TaxProtocolRestServiceProvider.php:105
+msgid "If set to true VAT taxes will be calculated for all EU countries."
+msgstr "Indien ingesteld op waar, wordt BTW berekend voor alle EU-landen."
 
 #: src/Rest/TaxProtocolRestServiceProvider.php:100
 msgid "If set to true VAT taxes will be calculated using the account's home country VAT rate."
@@ -5326,23 +5349,13 @@ msgstr "Bepaalt of het patroon zichtbaar is in de inserter."
 msgid "Ensure result set excludes specific IDs."
 msgstr "Zorg ervoor dat de resultatenset specifieke ID's uitsluit."
 
-#: src/Controllers/Rest/CheckoutsController.php:274
-msgid "Spam check failed. Please try again."
-msgstr "Spamcontrole mislukt. Probeer het opnieuw."
+#: src/Support/Errors/Translations/types.php:17
+msgid "Validation failed"
+msgstr "Validatie niet gelukt"
 
-#: src/Rest/AccountRestServiceProvider.php:105
-#: src/Rest/SettingsRestServiceProvider.php:105
-msgid "The default currency for the account."
-msgstr "De standaard valuta voor het account."
-
-#: src/Rest/StatisticRestServiceProvider.php:85
-msgid "The end of the date range to query."
-msgstr "Het einde van de periode waarover je de gegevens wilt opvragen."
-
-#: src/Support/Errors/Translations/codes.php:27
-#: src/Support/Errors/Translations/codes.php:56
-msgid "The compare at price must be greater than the price."
-msgstr "De vergelijkingsprijs moet hoger zijn dan de verkoopprijs."
+#: src/WordPress/HealthService.php:138
+msgid "%d of your webhooks failed to process on your site. Please check your error logs to make sure errors did not occur in webhook processing."
+msgstr "%d van je webhooks konden niet worden verwerkt op je website. Controleer je foutmeldingen om er zeker van te zijn dat er geen fouten zijn opgetreden tijdens de verwerking van de webhooks."
 
 #: admin/products/confirm-bulk-delete.php:68 admin/restore/index.php:43
 #: affiliation-payouts-groups/CreateAffiliationPayoutGroup.js:92
@@ -5437,13 +5450,23 @@ msgstr "De vergelijkingsprijs moet hoger zijn dan de verkoopprijs."
 msgid "Cancel"
 msgstr "Annuleer"
 
-#: src/Support/Errors/Translations/types.php:17
-msgid "Validation failed"
-msgstr "Validatie niet gelukt"
+#: src/Controllers/Rest/CheckoutsController.php:274
+msgid "Spam check failed. Please try again."
+msgstr "Spamcontrole mislukt. Probeer het opnieuw."
 
-#: src/WordPress/HealthService.php:138
-msgid "%d of your webhooks failed to process on your site. Please check your error logs to make sure errors did not occur in webhook processing."
-msgstr "%d van je webhooks konden niet worden verwerkt op je website. Controleer je foutmeldingen om er zeker van te zijn dat er geen fouten zijn opgetreden tijdens de verwerking van de webhooks."
+#: src/Rest/AccountRestServiceProvider.php:105
+#: src/Rest/SettingsRestServiceProvider.php:105
+msgid "The default currency for the account."
+msgstr "De standaard valuta voor het account."
+
+#: src/Rest/StatisticRestServiceProvider.php:85
+msgid "The end of the date range to query."
+msgstr "Het einde van de periode waarover je de gegevens wilt opvragen."
+
+#: src/Support/Errors/Translations/codes.php:27
+#: src/Support/Errors/Translations/codes.php:56
+msgid "The compare at price must be greater than the price."
+msgstr "De vergelijkingsprijs moet hoger zijn dan de verkoopprijs."
 
 #: src/Rest/SubscriptionProtocolRestServiceProvider.php:96
 msgid "Payment retry window in weeks."
@@ -5906,3 +5929,10 @@ msgstr "Alle SureCart Producten"
 #: Controllers/SubscriptionController.php:488
 msgid "Choose Variation"
 msgstr "Kies Variant"
+
+#: src/Controllers/Admin/AffiliationPayouts/AffiliationPayoutsListTable.php:317
+#: src/Controllers/Admin/Orders/OrdersListTable.php:77
+#: src/Models/Payout.php:124 orders/modules/LineItems/index.js:24 util.js:94
+#: Blocks/Form/edit.js:393 sc-order-status-badge2.js:35
+msgid "Processing"
+msgstr "Wordt verwerkt"

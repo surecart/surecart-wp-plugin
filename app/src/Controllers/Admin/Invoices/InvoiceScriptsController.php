@@ -13,7 +13,7 @@ class InvoiceScriptsController extends AdminModelEditController {
 	 *
 	 * @var array
 	 */
-	protected $with_data = [ 'currency', 'supported_currencies', 'links', 'checkout_page_url' ];
+	protected $with_data = [ 'currency', 'supported_currencies', 'links', 'checkout_page_url', 'i18n' ];
 
 	/**
 	 * Script handle.
