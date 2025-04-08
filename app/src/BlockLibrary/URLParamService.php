@@ -339,4 +339,12 @@ class URLParamService {
 			add_query_arg( $key, $filters, $this->url )
 		);
 	}
+	/**
+	 * Remove product quick view argument from the URL.
+	 *
+	 * @return string
+	 */
+	public function removeProductQuickViewArg() {
+		return remove_query_arg( 'product-quick-view-id', $this->url );
+	}
 }

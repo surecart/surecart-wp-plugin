@@ -21,7 +21,7 @@
 	echo wp_kses_data(
 		wp_interactivity_data_wp_context(
 			[
-				'url' => esc_url( $quick_view_link ),
+				'url' => sanitize_url( $quick_view_link ),
 			]
 		)
 	);

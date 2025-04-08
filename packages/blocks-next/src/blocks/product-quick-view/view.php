@@ -15,16 +15,27 @@ use SureCart\Models\Blocks\ProductPageBlock;
 		data-wp-class--show-closing-animation="state.showClosingAnimation"
 		data-wp-on--keydown="actions.handleKeyDown"
 	>
-		<div 
+		<a 
 			class="sc-product-quick-view-dialog__close-button"
-			data-wp-on--click="actions.toggle"
-			data-wp-on--keydown="actions.toggle"
+			data-wp-on--click="actions.navigate"
+			data-wp-on--keydown="actions.navigate"
+			data-wp-on--mouseenter="actions.prefetch"
 			role="button"
 			tabindex="0"
 			aria-label="<?php esc_attr_e( 'Close quick view', 'surecart' ); ?>"
+			href="<?php echo esc_url( $close_url ); ?>"
+			<?php
+				echo wp_kses_data(
+					wp_interactivity_data_wp_context(
+						[
+							'url' => sanitize_url( $close_url ),
+						]
+					)
+				);
+				?>
 		>
 			<?php echo wp_kses( SureCart::svg()->get( 'x' ), sc_allowed_svg_html() ); ?>
-		</div>
+		</a>
 		<?php
 		while ( $query->have_posts() ) :
 			$query->the_post();

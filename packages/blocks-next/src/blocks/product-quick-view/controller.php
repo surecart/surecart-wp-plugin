@@ -8,6 +8,7 @@ $args       = [
 	'post_type' => 'sc_product',
 ];
 $query      = new WP_Query( $args );
+$close_url  = $url->removeProductQuickViewArg();
 
 // Set the interactivity state for the quick view.
 wp_interactivity_state(

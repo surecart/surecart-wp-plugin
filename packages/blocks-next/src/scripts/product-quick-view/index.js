@@ -35,9 +35,10 @@ const { state, actions } = store('surecart/product-quick-view', {
 					/* webpackIgnore: true */
 					'@wordpress/interactivity-router'
 				);
-				yield routerActions.navigate(url, { replace: true });
+				yield routerActions.navigate(url, {
+					replace: true,
+				});
 			}
-
 			document
 				.querySelector('.sc-product-quick-view-dialog__close-button')
 				?.focus();
