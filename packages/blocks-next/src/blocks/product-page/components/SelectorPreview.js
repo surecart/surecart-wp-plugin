@@ -13,7 +13,7 @@ import {
 	__experimentalTruncate as Truncate,
 } from '@wordpress/components';
 import { filterURLForDisplay, safeDecodeURI } from '@wordpress/url';
-import { Icon, globe, info, edit, trash } from '@wordpress/icons';
+import { Icon, info, edit, trash, currencyDollar } from '@wordpress/icons';
 import { __unstableStripHTML as stripHTML } from '@wordpress/dom';
 import { useSelect } from '@wordpress/data';
 import { store as preferencesStore } from '@wordpress/preferences';
@@ -35,7 +35,6 @@ function filterTitleForDisplay(title) {
 export default function SelectorPreview({
 	value,
 	onEditClick,
-	hasRichPreviews = false,
 	hasUnlinkControl = false,
 	onRemove,
 }) {
@@ -43,16 +42,6 @@ export default function SelectorPreview({
 		(select) => select(preferencesStore).get('core', 'showIconLabels'),
 		[]
 	);
-
-	// Avoid fetching if rich previews are not desired.
-	const showRichPreviews = hasRichPreviews ? value?.url : null;
-
-	// const { richData, isFetching } = useRichUrlData(showRichPreviews);
-	const richData = {};
-	const isFetching = false;
-
-	// Rich data may be an empty object so test for that.
-	const hasRichData = false;
 
 	const displayURL =
 		(value && filterURLForDisplay(safeDecodeURI(value.url), 24)) || '';
@@ -69,8 +58,16 @@ export default function SelectorPreview({
 
 	if (isEmptyURL) {
 		icon = <Icon icon={info} size={32} />;
+	} else if (!!value?.gallery?.[0]?.url) {
+		icon = (
+			<img
+				className="block-editor-link-control__search-item-image"
+				src={value?.gallery?.[0]?.url}
+				alt={__('Product image', 'surecart')}
+			/>
+		);
 	} else {
-		icon = <Icon icon={globe} />;
+		icon = <Icon icon={currencyDollar} />;
 	}
 
 	return (
@@ -79,8 +76,8 @@ export default function SelectorPreview({
 			aria-label={__('Manage link', 'surecart')}
 			className={clsx('block-editor-link-control__search-item', {
 				'is-current': true,
-				'is-rich': hasRichData,
-				'is-fetching': !!isFetching,
+				'is-rich': false,
+				'is-fetching': false,
 				'is-preview': true,
 				'is-error': isEmptyURL,
 				'is-url-title': displayTitle === displayURL,
@@ -100,7 +97,7 @@ export default function SelectorPreview({
 						className={clsx(
 							'block-editor-link-control__search-item-icon',
 							{
-								'is-image': richData?.icon,
+								'is-image': false,
 							}
 						)}
 					>
