@@ -1,13 +1,13 @@
 <?php
 
-namespace SureCart\Sync;
+namespace SureCart\Sync\Jobs\Cleanup;
 
 use SureCart\Background\BackgroundProcess;
 
 /**
  * This process fetches and queues all products for syncing.
  */
-class ProductsCleanupProcess extends BackgroundProcess {
+class ProductsCleanupJob extends BackgroundProcess {
 	/**
 	 * The prefix for the action.
 	 *
@@ -23,6 +23,23 @@ class ProductsCleanupProcess extends BackgroundProcess {
 	protected $action = 'cleanup_products';
 
 	/**
+	 * The task.
+	 *
+	 * @var \SureCart\Sync\Tasks\Task
+	 */
+	protected $task;
+
+	/**
+	 * Constructor.
+	 *
+	 * @param \SureCart\Sync\Tasks\Task $task The task.
+	 */
+	public function __construct( \SureCart\Sync\Tasks\Task $task ) {
+		parent::__construct();
+		$this->task = $task;
+	}
+
+	/**
 	 * Perform task with queued item.
 	 *
 	 * Override this method to perform any actions required on each
@@ -35,6 +52,7 @@ class ProductsCleanupProcess extends BackgroundProcess {
 	 * @return mixed
 	 */
 	protected function task( $args ) {
+		error_log( 'args: ' . print_r( $args, true ) );
 		$query = new \WP_Query(
 			[
 				'post_type'        => 'sc_product',
@@ -61,9 +79,7 @@ class ProductsCleanupProcess extends BackgroundProcess {
 
 		// add each item to the queue.
 		foreach ( $query->posts as $product_id ) {
-			\SureCart::sync()
-			->productCleanup()
-			->queue( $product_id );
+			$this->task->queue( $product_id );
 		}
 
 		if ( $query->max_num_pages > $query->query_vars['paged'] ) {

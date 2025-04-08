@@ -1,13 +1,14 @@
 <?php
 
-namespace SureCart\Sync;
+namespace SureCart\Sync\Jobs\Cleanup;
 
 use SureCart\Background\BackgroundProcess;
+use SureCart\Sync\Tasks\Task;
 
 /**
  * This process fetches and queues all products collections for syncing.
  */
-class CollectionsCleanupProcess extends BackgroundProcess {
+class CollectionsCleanupJob extends BackgroundProcess {
 	/**
 	 * The prefix for the action.
 	 *
@@ -21,6 +22,23 @@ class CollectionsCleanupProcess extends BackgroundProcess {
 	 * @var string
 	 */
 	protected $action = 'cleanup_product_collections';
+
+	/**
+	 * The task.
+	 *
+	 * @var \SureCart\Sync\Tasks\Task
+	 */
+	protected $task;
+
+	/**
+	 * Constructor.
+	 *
+	 * @param \SureCart\Sync\Tasks\Task $task The task.
+	 */
+	public function __construct( \SureCart\Sync\Tasks\Task $task ) {
+		parent::__construct();
+		$this->task = $task;
+	}
 
 	/**
 	 * Perform task with queued item.
@@ -62,9 +80,7 @@ class CollectionsCleanupProcess extends BackgroundProcess {
 		}
 
 		foreach ( $terms as $term_id ) {
-			\SureCart::sync()
-			->collectionsCleanup()
-			->queue( $term_id );
+			$this->task->queue( $term_id );
 		}
 
 		// If we got fewer terms than batch size, assume there are no more terms left.

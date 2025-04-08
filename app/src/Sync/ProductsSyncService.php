@@ -39,56 +39,24 @@ class ProductsSyncService {
 	}
 
 	/**
-	 * Get the queue process.
+	 * Get the queue.
 	 *
-	 * @return ProductsQueueProcess
+	 * @return object
 	 */
-	public function queue() {
-		return $this->app->resolve( 'surecart.process.products.queue' );
+	public function jobs() {
+		return $this->app->resolve( 'surecart.jobs' );
 	}
 
 	/**
-	 * Get the sync process.
-	 *
-	 * @return ProductsSyncProcess
-	 */
-	public function sync() {
-		return $this->app->resolve( 'surecart.process.products.sync' );
-	}
-
-	/**
-	 * Get the cleanup process.
-	 *
-	 * @return ProductsCleanupProcess
-	 */
-	public function queueProductsCleanup() {
-		return $this->app->resolve( 'surecart.process.products.cleanup' );
-	}
-
-	/**
-	 * Get the cleanup process.
-	 *
-	 * @return CollectionsCleanupProcess
-	 */
-	public function queueCollectionsCleanup() {
-		return $this->app->resolve( 'surecart.process.collections.cleanup' );
-	}
-
-	/**
-	 * Cancel the process.
+	 * Cancel the jobs
 	 *
 	 * This cancels the queue and sync processes
 	 * and also deletes all the queue and sync items.
 	 *
-	 * @return void
+	 * @return boolean
 	 */
 	public function cancel() {
-		$this->queue()->cancel();
-		$this->queue()->delete_all();
-		$this->queueProductsCleanup()->cancel();
-		$this->queueProductsCleanup()->delete_all();
-		$this->queueCollectionsCleanup()->cancel();
-		$this->queueCollectionsCleanup()->delete_all();
+		return $this->jobs()->cancel();
 	}
 
 	/**
@@ -97,15 +65,7 @@ class ProductsSyncService {
 	 * @return boolean
 	 */
 	public function isActive() {
-		if ( $this->queue()->is_active() ) {
-			return 'queue';
-		}
-
-		if ( \SureCart::queue()->showNotice( 'surecart/sync/product' ) ) {
-			return 'sync';
-		}
-
-		return false;
+		return $this->jobs()->isActive();
 	}
 
 	/**
@@ -157,48 +117,19 @@ class ProductsSyncService {
 		// clear account cache.
 		\SureCart::account()->clearCache();
 
-		// save the cleanup queue.
-		$this->cleanup();
+		// sync and cleanup.
+		$result['sync_products']       = $this->jobs()->sync()->products( $args )->save()->dispatch();
+		$result['cleanup_products']    = $this->jobs()->cleanup()->products( $args )->save()->dispatch();
+		$result['cleanup_collections'] = $this->jobs()->cleanup()->collections( $args )->save()->dispatch();
 
-		// save and dispatch the process.
-		return $this->syncProducts( $args );
-	}
+		// if any are \WP_Error, return the first one.
+		foreach ( $result as $value ) {
+			if ( is_wp_error( $value ) ) {
+				error_log( $value->get_error_message() ); // phpcs:ignore
+				return $value;
+			}
+		}
 
-	/**
-	 * Sync the products.
-	 *
-	 * @param array $args The arguments.
-	 *
-	 * @return void
-	 */
-	public function syncProducts( $args = [] ) {
-		$args = wp_parse_args(
-			$args,
-			[
-				'page'     => 1,
-				'per_page' => 25,
-			]
-		);
-
-		// save the process.
-		return $this->queue()->push_to_queue( $args )->setNext( 'surecart.process.products.sync' )->save();
-	}
-
-	/**
-	 * Cleanup the old store product posts & collection terms.
-	 *
-	 * @return array|WP_Error The response or WP_Error on failure.
-	 */
-	public function cleanup() {
-		$args = [
-			'page'     => 1,
-			'per_page' => 25,
-		];
-
-		// save the process.
-		$this->queueProductsCleanup()->setNext( 'surecart.process.collections.cleanup' )->push_to_queue( $args )->save();
-		$this->queueCollectionsCleanup()->push_to_queue( $args )->save();
-
-		return true;
+		return $result;
 	}
 }
