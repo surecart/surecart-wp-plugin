@@ -35,6 +35,7 @@ function filterTitleForDisplay(title) {
 export default function SelectorPreview({
 	value,
 	onEditClick,
+	hasEditControl = true,
 	hasUnlinkControl = false,
 	onRemove,
 }) {
@@ -129,13 +130,15 @@ export default function SelectorPreview({
 						)}
 					</span>
 				</span>
-				<Button
-					icon={edit}
-					label={__('Change Product', 'surecart')}
-					onClick={onEditClick}
-					size="compact"
-					showTooltip={!showIconLabels}
-				/>
+				{hasEditControl && (
+					<Button
+						icon={edit}
+						label={__('Replace Product', 'surecart')}
+						onClick={onEditClick}
+						size="compact"
+						showTooltip={!showIconLabels}
+					/>
+				)}
 				{hasUnlinkControl && (
 					<Button
 						icon={trash}

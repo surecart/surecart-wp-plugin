@@ -97,6 +97,62 @@ export default function QueryPlaceholder({
 		[attributes?.product_post_id]
 	);
 
+	const renderProductPreview = () => {
+		// If the post is not set, return null
+		if (!post) {
+			return null;
+		}
+
+		return (
+			<div
+				style={{
+					marginBottom: '1em',
+				}}
+			>
+				{step === 2 && (
+					<div
+						className="components-placeholder__label"
+						style={{ marginBottom: '1em' }}
+					>
+						{__('Product', 'surecart')}
+					</div>
+				)}
+
+				<div
+					style={{
+						border: '1px solid #ddd',
+						borderRadius: '4px',
+						marginBottom: '1em',
+						padding: '1em',
+					}}
+				>
+					<SelectorPreview
+						key={post?.link}
+						value={{
+							...post,
+							url: post?.link,
+							title: post?.title?.rendered,
+						}}
+						onEditClick={() => {
+							setIsVisible(true);
+						}}
+						hasRichPreviews={true}
+						hasUnlinkControl={step === 1}
+						hasEditControl={step === 1}
+						onRemove={() => {
+							setAttributes({
+								product_post_id: null,
+							});
+
+							setStep(1);
+							setIsVisible(false);
+						}}
+					/>
+				</div>
+			</div>
+		);
+	};
+
 	const renderProductSelector = () => {
 		return (
 			<>
@@ -105,74 +161,35 @@ export default function QueryPlaceholder({
 						minWidth: '500px',
 					}}
 				>
-					<div
-						style={{
-							marginBottom: '1em',
-						}}
-					>
+					<div style={{ display: 'flex', gap: '1em' }}>
+						<Button
+							variant="secondary"
+							onClick={() => setIsVisible(!isVisible)}
+						>
+							{!post?.id
+								? __('Choose Product', 'surecart')
+								: __('Replace Product', 'surecart')}
+
+							<ProductSelector
+								isVisible={isVisible}
+								post={post}
+								onChoose={onChoose}
+								onClose={() => setIsVisible(false)}
+							/>
+						</Button>
+
+						{/* If post, then add another Next button */}
 						{post?.id && (
-							<div
-								style={{
-									border: '1px solid #ddd',
-									borderRadius: '4px',
-									marginBottom: '1em',
-									padding: '1em',
-								}}
-							>
-								<SelectorPreview
-									key={post?.link}
-									value={{
-										...post,
-										url: post?.link,
-										title: post?.title?.rendered,
-									}}
-									onEditClick={() => {
-										setIsVisible(true);
-									}}
-									hasRichPreviews={true}
-									hasUnlinkControl={true}
-									onRemove={() => {
-										setAttributes({
-											product_post_id: null,
-										});
-
-										setStep(1);
-										setIsVisible(false);
-									}}
-								/>
-							</div>
-						)}
-
-						<div style={{ display: 'flex', gap: '1em' }}>
 							<Button
 								variant="secondary"
-								onClick={() => setIsVisible(!isVisible)}
+								onClick={() => {
+									setStep(2);
+								}}
 							>
-								{!post?.id
-									? __('Choose Product', 'surecart')
-									: __('Replace Product', 'surecart')}
-
-								<ProductSelector
-									isVisible={isVisible}
-									post={post}
-									onChoose={onChoose}
-									onClose={() => setIsVisible(false)}
-								/>
+								Next
+								<Icon icon={chevronRight} />
 							</Button>
-
-							{/* If post, then add another Next button */}
-							{post?.id && (
-								<Button
-									variant="secondary"
-									onClick={() => {
-										setStep(2);
-									}}
-								>
-									Next
-									<Icon icon={chevronRight} />
-								</Button>
-							)}
-						</div>
+						)}
 					</div>
 				</div>
 			</>
@@ -181,51 +198,58 @@ export default function QueryPlaceholder({
 
 	const renderPatternSelector = () => {
 		return (
-			<>
-				{!shouldDisableProductSelector && (
+			<div>
+				<div
+					className="components-placeholder__label"
+					style={{ marginBottom: '1em' }}
+				>
+					{__('Choose a pattern', 'surecart')}
+				</div>
+				<div style={{ display: 'flex', gap: '1em' }}>
+					{!shouldDisableProductSelector && (
+						<Button
+							variant="secondary"
+							onClick={() => {
+								setStep(1);
+							}}
+						>
+							<Icon icon={chevronLeft} />
+							{__('Back', 'surecart')}
+						</Button>
+					)}
+
+					{!!hasPatterns && (
+						<Button
+							variant="primary"
+							onClick={openPatternSelectionModal}
+						>
+							{__('Choose', 'surecart')}
+						</Button>
+					)}
+
 					<Button
 						variant="secondary"
 						onClick={() => {
-							setStep(1);
+							const blocks =
+								createBlocksFromInnerBlocksTemplate(template);
+
+							// Preserve the product_id attribute for the surecart/product-page block
+							blocks.forEach((block) => {
+								if (block.name === 'surecart/product-page') {
+									block.attributes = {
+										...block.attributes,
+										product_id: attributes.product_id, // Preserve product_id
+									};
+								}
+							});
+
+							replaceInnerBlocks(clientId, blocks, false);
 						}}
 					>
-						<Icon icon={chevronLeft} />
-						{__('Back', 'surecart')}
+						{__('Start basic', 'surecart')}
 					</Button>
-				)}
-
-				{/* Pattern selector */}
-				{!!hasPatterns && (
-					<Button
-						variant="primary"
-						onClick={openPatternSelectionModal}
-					>
-						{__('Choose', 'surecart')}
-					</Button>
-				)}
-
-				<Button
-					variant="secondary"
-					onClick={() => {
-						const blocks =
-							createBlocksFromInnerBlocksTemplate(template);
-
-						// Preserve the product_id attribute for the surecart/product-page block
-						blocks.forEach((block) => {
-							if (block.name === 'surecart/product-page') {
-								block.attributes = {
-									...block.attributes,
-									product_id: attributes.product_id, // Preserve product_id
-								};
-							}
-						});
-
-						replaceInnerBlocks(clientId, blocks, false);
-					}}
-				>
-					{__('Start basic', 'surecart')}
-				</Button>
-			</>
+				</div>
+			</div>
 		);
 	};
 
@@ -237,14 +261,21 @@ export default function QueryPlaceholder({
 				instructions={__(
 					'Choose a product & pattern for the product page or start with a basic layout.'
 				)}
+				style={{
+					flexDirection: 'column',
+				}}
 			>
-				{step === 1 &&
-					!shouldDisableProductSelector &&
-					renderProductSelector()}
+				<div>
+					<div>{renderProductPreview()}</div>
 
-				{step === 2 || shouldDisableProductSelector
-					? renderPatternSelector()
-					: null}
+					{step === 1 &&
+						!shouldDisableProductSelector &&
+						renderProductSelector()}
+
+					{step === 2 || shouldDisableProductSelector
+						? renderPatternSelector()
+						: null}
+				</div>
 			</Placeholder>
 		</div>
 	);
