@@ -7,24 +7,24 @@ import {
 	store as blocksStore,
 } from '@wordpress/blocks';
 import {
-	__experimentalLinkControl as LinkControl,
 	useBlockProps,
 	store as blockEditorStore,
 	__experimentalBlockVariationPicker,
 } from '@wordpress/block-editor';
-import { store as noticesStore } from '@wordpress/notices';
+import { store as coreStore } from '@wordpress/core-data';
 import { useState } from '@wordpress/element';
 import { Button, Placeholder } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
-import { Icon, chevronLeft } from '@wordpress/icons';
+import { Icon, chevronLeft, chevronRight } from '@wordpress/icons';
 
 /**
- * Internal dependencies
+ * Internal dependencies.
  */
 import { useBlockNameForPatterns } from '../utils';
 import { usePostTypeCheck } from '../../hooks/usePostTypeCheck';
 import template from './template';
-import SelectProduct from './components/SelectProduct';
+import SelectorPreview from './components/SelectorPreview';
+import ProductSelector from './components/ProductSelector';
 
 export default function QueryPlaceholder({
 	attributes,
@@ -33,7 +33,7 @@ export default function QueryPlaceholder({
 	name,
 	openPatternSelectionModal,
 }) {
-	// const { createSuccessNotice } = useDispatch(noticesStore);
+	const [isVisible, setIsVisible] = useState(false);
 	const { replaceInnerBlocks } = useDispatch(blockEditorStore);
 	const blockProps = useBlockProps();
 	const blockNameForPatterns = useBlockNameForPatterns(
@@ -85,6 +85,18 @@ export default function QueryPlaceholder({
 		setStep(2);
 	};
 
+	const post = useSelect(
+		(select) => {
+			const { getEntityRecord } = select(coreStore);
+			const postId = attributes?.product_post_id;
+			if (!postId) {
+				return null;
+			}
+			return getEntityRecord('postType', 'sc_product', postId);
+		},
+		[attributes?.product_post_id]
+	);
+
 	const renderProductSelector = () => {
 		return (
 			<>
@@ -98,34 +110,69 @@ export default function QueryPlaceholder({
 							marginBottom: '1em',
 						}}
 					>
-						<SelectProduct
-							attributes={attributes}
-							setAttributes={setAttributes}
-							onChange={onChoose}
-							onChoose={onChoose}
-						/>
+						{post?.id && (
+							<div
+								style={{
+									border: '1px solid #ddd',
+									borderRadius: '4px',
+									marginBottom: '1em',
+									padding: '1em',
+								}}
+							>
+								<SelectorPreview
+									key={post?.link}
+									value={{
+										...post,
+										url: post?.link,
+										title: post?.title?.rendered,
+									}}
+									onEditClick={() => {
+										setIsVisible(true);
+									}}
+									hasRichPreviews={true}
+									hasUnlinkControl={true}
+									onRemove={() => {
+										setAttributes({
+											product_post_id: null,
+										});
 
-						<LinkControl
-							onChange={(nextValue) => {
-								console.log(
-									`The selected item URL: ${nextValue.url}.`
-								);
-							}}
-							showInitialSuggestions
-							hasTextControl
-							searchInputPlaceholder={__(
-								'Search for a product',
-								'surecart'
+										setStep(1);
+										setIsVisible(false);
+									}}
+								/>
+							</div>
+						)}
+
+						<div style={{ display: 'flex', gap: '1em' }}>
+							<Button
+								variant="secondary"
+								onClick={() => setIsVisible(!isVisible)}
+							>
+								{!post?.id
+									? __('Choose Product', 'surecart')
+									: __('Replace Product', 'surecart')}
+
+								<ProductSelector
+									isVisible={isVisible}
+									post={post}
+									onChoose={onChoose}
+									onClose={() => setIsVisible(false)}
+								/>
+							</Button>
+
+							{/* If post, then add another Next button */}
+							{post?.id && (
+								<Button
+									variant="secondary"
+									onClick={() => {
+										setStep(2);
+									}}
+								>
+									Next
+									<Icon icon={chevronRight} />
+								</Button>
 							)}
-							suggestionsQuery={{
-								// always show Pages as initial suggestions
-								initialSuggestionsSearchOptions: {
-									type: 'post',
-									subtype: 'sc_product',
-									perPage: 20,
-								},
-							}}
-						/>
+						</div>
 					</div>
 				</div>
 			</>

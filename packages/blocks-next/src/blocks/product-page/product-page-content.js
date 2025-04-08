@@ -1,3 +1,6 @@
+/**
+ * External dependencies.
+ */
 import {
 	useInnerBlocksProps,
 	useBlockProps,
@@ -5,12 +8,20 @@ import {
 	BlockControls,
 	InspectorControls,
 } from '@wordpress/block-editor';
+import { store as coreStore } from '@wordpress/core-data';
 import { PanelBody } from '@wordpress/components';
+import { useState } from '@wordpress/element';
+import { useSelect } from '@wordpress/data';
+import { __ } from '@wordpress/i18n';
+
+/**
+ * Internal dependencies.
+ */
 import template from './template';
 import ProductPageToolbar from '../../utilities/patterns-toolbar';
+import SelectorPreview from './components/SelectorPreview';
+import ProductSelector from './components/ProductSelector';
 import { usePostTypeCheck } from '../../hooks/usePostTypeCheck';
-import { __ } from '@wordpress/i18n';
-import SelectProduct from './components/SelectProduct';
 
 export default function ProductPageEdit({
 	name,
@@ -19,6 +30,7 @@ export default function ProductPageEdit({
 	attributes,
 	setAttributes,
 }) {
+	const [isVisible, setIsVisible] = useState(false);
 	const blockProps = useBlockProps({
 		className: 'sc-product-page__editor-container',
 	});
@@ -38,6 +50,18 @@ export default function ProductPageEdit({
 		]
 	);
 
+	const post = useSelect(
+		(select) => {
+			const { getEntityRecord } = select(coreStore);
+			const postId = attributes?.product_post_id;
+			if (!postId) {
+				return null;
+			}
+			return getEntityRecord('postType', 'sc_product', postId);
+		},
+		[attributes?.product_post_id]
+	);
+
 	return (
 		<>
 			<BlockControls>
@@ -51,11 +75,39 @@ export default function ProductPageEdit({
 			{!shouldDisableProductSelector && (
 				<InspectorControls>
 					<PanelBody title={__('Product', 'surecart')}>
-						<SelectProduct
-							attributes={attributes}
-							setAttributes={setAttributes}
-							showSelectButtons={false}
-						/>
+						{post?.id && (
+							<div
+								style={{
+									border: '1px solid #ddd',
+									borderRadius: '4px',
+									marginBottom: '1em',
+									padding: '1em',
+								}}
+							>
+								<SelectorPreview
+									key={post?.link}
+									value={{
+										...post,
+										url: post?.link,
+										title: post?.title?.rendered,
+									}}
+									onEditClick={() => setIsVisible(!isVisible)}
+									hasRichPreviews={true}
+									hasUnlinkControl={false}
+								/>
+								<ProductSelector
+									isVisible={isVisible}
+									post={post}
+									onChoose={(post) => {
+										setAttributes({
+											product_post_id: post.id,
+										});
+										setIsVisible(false);
+									}}
+									onClose={() => setIsVisible(false)}
+								/>
+							</div>
+						)}
 					</PanelBody>
 				</InspectorControls>
 			)}
