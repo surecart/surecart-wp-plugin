@@ -113,6 +113,7 @@ export default ({ post, loading, onSave, error }) => {
 					<div
 						style={{
 							margin: '-10px',
+							opacity: 0.5,
 						}}
 					>
 						<Button
@@ -205,13 +206,9 @@ export default ({ post, loading, onSave, error }) => {
 			{guide && (
 				<Guide
 					css={css`
-						width: 380px;
+						width: 312px;
 						* {
 							box-sizing: border-box;
-						}
-						.components-guide__page {
-							min-height: 0;
-							padding: 32px;
 						}
 					`}
 					onFinish={() => setGuide(false)}
@@ -228,7 +225,6 @@ export default ({ post, loading, onSave, error }) => {
 										width="100"
 										height="80"
 										fill="#f8f8f8"
-										rx="4"
 									/>
 
 									{/* Top section with 2 columns */}
@@ -323,7 +319,19 @@ export default ({ post, loading, onSave, error }) => {
 								</svg>
 							),
 							content: (
-								<>
+								<div
+									css={css`
+										padding: 32px;
+									`}
+								>
+									<h2
+										css={css`
+											font-size: 1.5em;
+											margin-bottom: 16px;
+										`}
+									>
+										{__('Product Content', 'surecart')}
+									</h2>
 									<p>
 										{__(
 											'Product content appears on product pages, usually below the form. You can reposition it by editing the product template and moving the "Post Content" or "WordPress Content" blocks.',
@@ -335,7 +343,7 @@ export default ({ post, loading, onSave, error }) => {
 											{__('Learn More', 'surecart')}
 										</ExternalLink>
 									</p>
-								</>
+								</div>
 							),
 						},
 					]}
