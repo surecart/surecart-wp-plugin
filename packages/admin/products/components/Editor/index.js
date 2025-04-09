@@ -339,7 +339,7 @@ export default ({ post, loading, onSave, error }) => {
 										)}
 									</p>
 									<p>
-										<ExternalLink href="https://surecart.com/docs">
+										<ExternalLink href="https://surecart.com/docs/product-content-description">
 											{__('Learn More', 'surecart')}
 										</ExternalLink>
 									</p>
