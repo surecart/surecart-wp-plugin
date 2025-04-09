@@ -48,18 +48,6 @@ class ProductsSyncService {
 	}
 
 	/**
-	 * Cancel the jobs
-	 *
-	 * This cancels the queue and sync processes
-	 * and also deletes all the queue and sync items.
-	 *
-	 * @return boolean
-	 */
-	public function cancel() {
-		return $this->jobs()->cancel();
-	}
-
-	/**
 	 * Is this process active?
 	 *
 	 * @return boolean
@@ -108,28 +96,13 @@ class ProductsSyncService {
 			]
 		);
 
-		// cancel previous processes.
-		$this->cancel();
-
 		// reset the notice.
 		\SureCart::notices()->reset( $this->notice_id );
 
 		// clear account cache.
 		\SureCart::account()->clearCache();
 
-		// sync and cleanup.
-		$result['sync_products']       = $this->jobs()->sync()->products( $args )->save()->dispatch();
-		$result['cleanup_products']    = $this->jobs()->cleanup()->products( $args )->save()->dispatch();
-		$result['cleanup_collections'] = $this->jobs()->cleanup()->collections( $args )->save()->dispatch();
-
-		// if any are \WP_Error, return the first one.
-		foreach ( $result as $value ) {
-			if ( is_wp_error( $value ) ) {
-				error_log( $value->get_error_message() ); // phpcs:ignore
-				return $value;
-			}
-		}
-
-		return $result;
+		// run all jobs.
+		return $this->jobs()->run( $args );
 	}
 }

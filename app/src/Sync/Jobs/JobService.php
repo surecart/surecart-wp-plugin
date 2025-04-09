@@ -27,6 +27,33 @@ class JobService {
 	}
 
 	/**
+	 * Run all jobs.
+	 *
+	 * @param array $args The arguments.
+	 *
+	 * @return \WP_Error|void
+	 */
+	public function run( $args = [] ) {
+		// cancel previous processes.
+		$this->cancel();
+
+		// run all jobs.
+		$result['cleanup_collections'] = $this->cleanup()->collections( $args )->save();
+		$result['cleanup_products']    = $this->cleanup()->products( $args )->setNext( $result['cleanup_collections'] )->save();
+		$result['sync_products']       = $this->sync()->products( $args )->setNext( $result['cleanup_products'] )->save();
+
+		// if any are \WP_Error, return the first one.
+		foreach ( $result as $value ) {
+			if ( is_wp_error( $value ) ) {
+				error_log( $value->get_error_message() ); // phpcs:ignore
+				return $value;
+			}
+		}
+
+		return $result;
+	}
+
+	/**
 	 * Get the sync jobs.
 	 *
 	 * @return \SureCart\Sync\SyncProcess

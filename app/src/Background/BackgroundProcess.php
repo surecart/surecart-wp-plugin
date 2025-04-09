@@ -80,6 +80,15 @@ abstract class BackgroundProcess extends AsyncRequest {
 	const STATUS_PAUSED = 2;
 
 	/**
+	 * Bootstrap the background process.
+	 *
+	 * @return void
+	 */
+	public function bootstrap() {
+		// we need to fake the dispatch method here because ajax handlers are only available in the constructor.
+	}
+
+	/**
 	 * Initiate new background process.
 	 *
 	 * @param bool|array $allowed_batch_data_classes Optional. Array of class names that can be unserialized. Default true (any class).

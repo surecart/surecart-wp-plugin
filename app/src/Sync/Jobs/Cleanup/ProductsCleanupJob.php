@@ -32,9 +32,9 @@ class ProductsCleanupJob extends BackgroundProcess {
 	/**
 	 * Constructor.
 	 *
-	 * @param \SureCart\Sync\Tasks\Task $task The task.
+	 * @param $task The task.
 	 */
-	public function __construct( \SureCart\Sync\Tasks\Task $task ) {
+	public function __construct( $task ) {
 		parent::__construct();
 		$this->task = $task;
 	}

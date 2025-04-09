@@ -72,6 +72,11 @@ class SyncServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function bootstrap( $container ) {
+		// call the jobs - this is required because ajax handlers are only available in the constructor.
+		$container['surecart.jobs.cleanup.collections']->bootstrap();
+		$container['surecart.jobs.cleanup.products']->bootstrap();
+		$container['surecart.jobs.sync.products']->bootstrap();
+
 		// bootstrap services.
 		$container['surecart.sync.products']->bootstrap();
 		$container['surecart.sync.customers']->bootstrap();
