@@ -35,6 +35,7 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 		add_action( 'elementor/widgets/register', [ $this, 'widget' ] );
 		add_action( 'elementor/editor/before_enqueue_scripts', [ $this, 'load_scripts' ] );
 		add_action( 'elementor/elements/categories_registered', [ $this, 'categories_registered' ] );
+		add_action( 'pre_option_elementor_optimized_gutenberg_loading', [ $this, 'disableOptimizedGutenbergLoadingForPostType' ] );
 
 		// Register product theme condition.
 		if ( defined( 'ELEMENTOR_PRO_VERSION' ) ) {
@@ -44,6 +45,20 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 			add_filter( 'elementor/query/get_value_titles/surecart-product', [ $this, 'get_titles' ], 10, 2 );
 			add_action( 'elementor/frontend/the_content', array( $this, 'handle_product_page_wrapper' ) );
 		}
+	}
+
+	/**
+	 * Disable optimized gutenberg loading.
+	 *
+	 * @param string $option The option.
+	 *
+	 * @return string
+	 */
+	public function disableOptimizedGutenbergLoadingForPostType( $option ) {
+		if ( get_post_type() === 'sc_product' ) {
+			return false;
+		}
+		return $option;
 	}
 
 	/**
