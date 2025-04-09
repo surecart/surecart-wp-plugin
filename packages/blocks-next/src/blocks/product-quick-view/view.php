@@ -7,10 +7,19 @@ use SureCart\Models\Blocks\ProductPageBlock;
 	data-wp-interactive='{ "namespace": "surecart/product-quick-view" }'
 	data-wp-router-region="<?php echo esc_attr( 'product-quick-view-id-' . $sc_product_quick_view_id ); ?>"
 	<?php echo $query->have_posts() ? 'data-wp-init="callbacks.init"' : ''; ?>
+	<?php
+		echo wp_kses_data(
+			wp_interactivity_data_wp_context(
+				[
+					'url' => sanitize_url( $close_url ),
+				]
+			)
+		);
+		?>
 >
 	<div
 		class="sc-product-quick-view-dialog"
-		data-wp-on-window--resize="actions.close"
+		data-wp-on-window--resize="actions.navigate"
 		data-wp-class--active="state.open"
 		data-wp-class--show-closing-animation="state.showClosingAnimation"
 		data-wp-on--keydown="actions.handleKeyDown"
@@ -24,15 +33,6 @@ use SureCart\Models\Blocks\ProductPageBlock;
 			tabindex="0"
 			aria-label="<?php esc_attr_e( 'Close quick view', 'surecart' ); ?>"
 			href="<?php echo esc_url( $close_url ); ?>"
-			<?php
-				echo wp_kses_data(
-					wp_interactivity_data_wp_context(
-						[
-							'url' => sanitize_url( $close_url ),
-						]
-					)
-				);
-				?>
 		>
 			<?php echo wp_kses( SureCart::svg()->get( 'x' ), sc_allowed_svg_html() ); ?>
 		</a>

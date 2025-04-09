@@ -90,7 +90,6 @@ const { state, actions } = store('surecart/product-quick-view', {
 			state.showClosingAnimation = true;
 
 			document.body.classList.remove('sc-product-quick-view-open');
-			yield actions.clearURLParam();
 
 			inertElements.forEach((el) => el.removeAttribute('inert'));
 			inertElements = [];
@@ -108,26 +107,11 @@ const { state, actions } = store('surecart/product-quick-view', {
 		},
 		*handleKeyDown(e) {
 			if (e?.key && e.key !== 'Escape') return;
-			yield actions.close();
+			yield actions.navigate(e);
 		},
 		/** Close if clicked outside the dialog content. */
 		closeOverlay(e) {
-			if (e.target === e.currentTarget) actions.close();
-		},
-
-		/** Clear product quick view URL param. */
-		*clearURLParam() {
-			state.loading = true;
-
-			const url = new URL(window.location.href);
-			url.searchParams.delete('product-quick-view-id');
-
-			const { actions: routerActions } = yield import(
-				/* webpackIgnore: true */
-				'@wordpress/interactivity-router'
-			);
-			yield routerActions.navigate(url.toString(), { replace: true });
-			state.loading = false;
+			if (e.target === e.currentTarget) actions.navigate(e);
 		},
 	},
 
