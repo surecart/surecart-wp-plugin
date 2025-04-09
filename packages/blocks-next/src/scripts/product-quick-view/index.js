@@ -12,6 +12,13 @@ const { __ } = wp.i18n;
  */
 let inertElements = [];
 
+const isValidEvent = (event) => {
+	if (!event) return false;
+	if (event?.key && ![' ', 'Enter'].includes(event.key)) return false;
+
+	return true;
+};
+
 const { state, actions } = store('surecart/product-quick-view', {
 	state: {
 		loading: false,
@@ -22,6 +29,7 @@ const { state, actions } = store('surecart/product-quick-view', {
 	actions: {
 		/** Navigate to a URL using the router region. */
 		*navigate(event) {
+			if (!isValidEvent(event)) return;
 			state.loading = true;
 			actions.toggle(event);
 
