@@ -19,7 +19,7 @@ use SureCart\Models\Blocks\ProductPageBlock;
 >
 	<div
 		class="sc-product-quick-view-dialog"
-		data-wp-on-window--resize="actions.navigate"
+		data-wp-on-window--resize="actions.closeOverlay"
 		data-wp-class--active="state.open"
 		data-wp-class--show-closing-animation="state.showClosingAnimation"
 		data-wp-on--keydown="actions.handleKeyDown"

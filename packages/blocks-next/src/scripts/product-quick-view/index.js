@@ -111,6 +111,7 @@ const { state, actions } = store('surecart/product-quick-view', {
 		},
 		/** Close if clicked outside the dialog content. */
 		closeOverlay(e) {
+			if (!state.open) return;
 			if (e.target === e.currentTarget) actions.navigate(e);
 		},
 	},
