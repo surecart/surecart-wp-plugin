@@ -12,6 +12,12 @@ const { __ } = wp.i18n;
  */
 let inertElements = [];
 
+/**
+ * Check if the event is valid for opening/closing the dialog.
+ *
+ * @param {Event} event - The event to check.
+ * @returns {boolean} - Returns true if the event is valid, false otherwise.
+ * */
 const isValidEvent = (event) => {
 	if (!event) return false;
 	if (event?.key && ![' ', 'Enter'].includes(event.key)) return false;
