@@ -85,6 +85,7 @@ const { state, actions } = store('surecart/product-quick-view', {
 
 		/** Close the product quick view dialog. */
 		*close() {
+			if (!state.open) return;
 			state.open = false;
 			state.showClosingAnimation = true;
 
