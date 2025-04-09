@@ -36,7 +36,6 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 		add_action( 'elementor/editor/before_enqueue_scripts', [ $this, 'load_scripts' ] );
 		add_action( 'elementor/elements/categories_registered', [ $this, 'categories_registered' ] );
 		add_filter( 'pre_option_elementor_optimized_gutenberg_loading', [ $this, 'disableOptimizedGutenbergLoadingForPostType' ] );
-		add_filter( 'elementor/settings/general/post_types', [ $this, 'addProductPostTypeToElementor' ] );
 
 		// Register product theme condition.
 		if ( defined( 'ELEMENTOR_PRO_VERSION' ) ) {
@@ -46,18 +45,6 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 			add_filter( 'elementor/query/get_value_titles/surecart-product', [ $this, 'get_titles' ], 10, 2 );
 			add_action( 'elementor/frontend/the_content', array( $this, 'handle_product_page_wrapper' ) );
 		}
-	}
-
-	/**
-	 * Add product post type to Elementor.
-	 *
-	 * @param array $post_types The post types.
-	 *
-	 * @return array
-	 */
-	public function addProductPostTypeToElementor( $post_types ) {
-		$post_types[] = 'sc_product';
-		return $post_types;
 	}
 
 	/**
