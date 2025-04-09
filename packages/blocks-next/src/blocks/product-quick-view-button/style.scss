@@ -1,4 +1,7 @@
 .wp-block-surecart-product-quick-view-button {
+    transition: all 0.3s ease-in-out;
+    transform: scale(1);
+    box-shadow: 0 0 0 transparent;
     margin: 0;
     opacity: 0.5;
     display: flex;
@@ -7,8 +10,21 @@
     align-items: center;
     gap: 0.5em;
 	text-decoration: none;
+    svg {
+        transition: transform 0.3s ease;
+    }
     &.loading {
         pointer-events: none;
         opacity: 0.2;
     }
+    &:hover, &:focus {
+        transform: scale(1.05);
+        box-shadow: 0 0 0 2px var(--surecart-color-primary);
+        opacity: 1;
+        svg {
+            transform: scale(1.1);
+        }
+    }
+
+
 }
