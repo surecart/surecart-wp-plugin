@@ -111,25 +111,10 @@ class ProductPostTypeService {
 		if ( ! wp_is_block_theme() ) {
 			// replace the content with product info part.
 			add_filter( 'the_content', array( $this, 'replaceContentWithProductInfoPart' ), 10 );
-			add_filter( 'template_include', array( $this, 'skipReplaceContentWithProductInfoPart' ), 10 );
 		} else {
 			// validate FSE template and return single if invalid.
 			add_filter( 'template_include', array( $this, 'validateFSETemplate' ), 10, 1 );
 		}
-	}
-
-	/**
-	 * Skip replace content with product info part for the single product page.
-	 *
-	 * @param string $template The template.
-	 *
-	 * @return string
-	 */
-	public function skipReplaceContentWithProductInfoPart( $template ) {
-		if ( strpos( $template, 'template-surecart-product.php' ) !== false ) {
-			remove_filter( 'the_content', array( $this, 'replaceContentWithProductInfoPart' ), 10 );
-		}
-		return $template;
 	}
 
 	/**
@@ -642,7 +627,14 @@ class ProductPostTypeService {
 	 * @return string
 	 */
 	public function replaceContentWithProductInfoPart( $content ) {
+		// not our post type.
 		if ( ! is_singular( 'sc_product' ) ) {
+			return $content;
+		}
+
+		// don't do this for our template.
+		global $template;
+		if ( basename( $template ) === 'template-surecart-product.php' ) {
 			return $content;
 		}
 
