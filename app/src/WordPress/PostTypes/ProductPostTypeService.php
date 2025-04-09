@@ -630,9 +630,10 @@ class ProductPostTypeService {
 		if ( ! is_singular( 'sc_product' ) ) {
 			return $content;
 		}
-		if ( ! empty( $content ) ) {
-			return $content;
-		}
+
+		// only run once.
+		remove_filter( 'the_content', array( $this, __FUNCTION__ ), 10 );
+
 		$product          = sc_get_product();
 		$template_part_id = isset( $product->template_part_id ) ? $product->template_part_id : 'surecart/surecart//product-info'; // Get the template part ID.
 		$template         = get_block_template( $template_part_id, 'wp_template_part' );
@@ -652,7 +653,7 @@ class ProductPostTypeService {
 		$blocks = $wp_embed->autoembed( $blocks );
 		$blocks = str_replace( ']]>', ']]&gt;', $blocks );
 
-		return $blocks . $content;
+		return $blocks;
 	}
 
 	/**
