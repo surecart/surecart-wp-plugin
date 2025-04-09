@@ -87,9 +87,8 @@ add_filter(
 		// pass a unique id to each product list block.
 		if ( 'surecart/product-list' === $parsed_block['blockName'] ) {
 			// we use our own counter to ensure uniqueness so that product page urls don't have ids.
-			global $sc_query_id, $sc_product_quick_view_id;
-			$sc_query_id              = sc_unique_product_list_id();
-			$sc_product_quick_view_id = sc_unique_product_quick_view_id();
+			global $sc_query_id;
+			$sc_query_id = sc_unique_product_list_id();
 		}
 
 		// pass a unique id to each product list block.

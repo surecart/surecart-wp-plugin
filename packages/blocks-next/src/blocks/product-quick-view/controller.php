@@ -1,6 +1,4 @@
 <?php
-global $sc_product_quick_view_id;
-
 $url        = \SureCart::block()->urlParams( 'product-quick-view' );
 $product_id = $url->getArg( 'id' );
 $args       = [

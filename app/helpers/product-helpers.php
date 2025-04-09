@@ -209,18 +209,6 @@ function sc_unique_product_list_id( $prefix = '' ) {
 }
 
 /**
- * Get the product quick view id.
- *
- * @param string $prefix The prefix.
- *
- * @return string
- */
-function sc_unique_product_quick_view_id( $prefix = '' ) {
-	static $id_counter = -1;
-	return $prefix . (string) ++$id_counter;
-}
-
-/**
  * Get the product list query.
  *
  * @param \WP_Block $block The block.
@@ -242,6 +230,7 @@ function sc_product_list_query( $block ) {
 /**
  * Get the product list prefix.
  *
+ * @param \WP_Block $block The block.
  * @return string
  */
 function sc_product_list_prefix( $block = null ) {
