@@ -98,7 +98,7 @@ class TaskTest extends SureCartUnitTestCase {
 
     public function test_are_actions_scheduled_checks_queue() {
         // Mock queue isScheduled method
-        $this->queue->shouldReceive('isScheduled')
+        $this->queue->shouldReceive('showNotice')
             ->once()
             ->with('mock_task_action')
             ->andReturn(true);
