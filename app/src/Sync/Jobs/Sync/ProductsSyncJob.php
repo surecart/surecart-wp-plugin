@@ -2,13 +2,13 @@
 
 namespace SureCart\Sync\Jobs\Sync;
 
-use SureCart\Background\BackgroundProcess;
+use SureCart\Background\Job;
 use SureCart\Models\Product;
 
 /**
  * This process fetches and queues all products for syncing.
  */
-class ProductsSyncJob extends BackgroundProcess {
+class ProductsSyncJob extends Job {
 	/**
 	 * The prefix for the action.
 	 *
@@ -22,23 +22,6 @@ class ProductsSyncJob extends BackgroundProcess {
 	 * @var string
 	 */
 	protected $action = 'queue_products';
-
-	/**
-	 * The task.
-	 *
-	 * @var \SureCart\Sync\Tasks\Task
-	 */
-	protected $task;
-
-	/**
-	 * Constructor.
-	 *
-	 * @param \SureCart\Sync\Tasks\Task $task The task.
-	 */
-	public function __construct( $task ) {
-		parent::__construct();
-		$this->task = $task;
-	}
 
 	/**
 	 * Perform task with queued item.

@@ -58,6 +58,6 @@ class CleanupJob {
 	 * @return boolean
 	 */
 	public function isActive() {
-		return $this->products()->is_active() || $this->collections()->is_active();
+		return $this->products()->isRunning() || $this->collections()->isRunning();
 	}
 }

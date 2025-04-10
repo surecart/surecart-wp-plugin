@@ -79,6 +79,15 @@ abstract class Task {
 	}
 
 	/**
+	 * Check are any actions scheduled.
+	 *
+	 * @return bool
+	 */
+	public function areActionsScheduled() {
+		return \SureCart::queue()->isScheduled( $this->action_name );
+	}
+
+	/**
 	 * Cancel the task.
 	 *
 	 * @param string $id The id.

@@ -14,6 +14,13 @@ class ProductCleanupTask extends Task {
 	protected $action_name = 'surecart/cleanup/product';
 
 	/**
+	 * Always show a notice.
+	 *
+	 * @var boolean
+	 */
+	protected $show_notice = true;
+
+	/**
 	 * Fetch and trash product post.
 	 *
 	 * It's safer to trash the post since there can be data loss

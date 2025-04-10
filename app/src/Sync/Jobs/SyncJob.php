@@ -39,7 +39,7 @@ class SyncJob {
 	 * @return boolean
 	 */
 	public function isActive() {
-		return $this->products()->is_active();
+		return $this->products()->isRunning();
 	}
 
 	/**

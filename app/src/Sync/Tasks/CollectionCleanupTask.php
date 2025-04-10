@@ -14,6 +14,13 @@ class CollectionCleanupTask extends Task {
 	protected $action_name = 'surecart/cleanup/collection';
 
 	/**
+	 * Always show a notice.
+	 *
+	 * @var boolean
+	 */
+	protected $show_notice = true;
+
+	/**
 	 * Fetch and delete product post.
 	 *
 	 * @param string $id The product post id to delete.

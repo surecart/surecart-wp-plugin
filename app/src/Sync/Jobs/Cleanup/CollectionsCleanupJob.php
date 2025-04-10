@@ -2,12 +2,12 @@
 
 namespace SureCart\Sync\Jobs\Cleanup;
 
-use SureCart\Background\BackgroundProcess;
+use SureCart\Background\Job;
 
 /**
  * This process fetches and queues all products collections for syncing.
  */
-class CollectionsCleanupJob extends BackgroundProcess {
+class CollectionsCleanupJob extends Job {
 	/**
 	 * The prefix for the action.
 	 *
@@ -21,23 +21,6 @@ class CollectionsCleanupJob extends BackgroundProcess {
 	 * @var string
 	 */
 	protected $action = 'cleanup_product_collections';
-
-	/**
-	 * The task.
-	 *
-	 * @var \SureCart\Sync\Tasks\Task
-	 */
-	protected $task;
-
-	/**
-	 * Constructor.
-	 *
-	 * @param $task The task.
-	 */
-	public function __construct( $task ) {
-		parent::__construct();
-		$this->task = $task;
-	}
 
 	/**
 	 * Perform task with queued item.
@@ -92,19 +75,5 @@ class CollectionsCleanupJob extends BackgroundProcess {
 			'page'       => $page + 1,
 			'batch_size' => $batch_size,
 		];
-	}
-
-	/**
-	 * Complete processing.
-	 *
-	 * Override if applicable, but ensure that the below actions are
-	 * performed, or, call parent::complete().
-	 */
-	protected function complete() {
-		// kick off the queue process immediately (instead of waiting for the next scheduled run).
-		\SureCart::queue()->run();
-
-		// call the parent complete method.
-		parent::complete();
 	}
 }
