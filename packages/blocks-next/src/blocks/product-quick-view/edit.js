@@ -1,10 +1,18 @@
 /**
  * WordPress dependencies
  */
-import { useBlockProps, useInnerBlocksProps } from '@wordpress/block-editor';
+import {
+	useBlockProps,
+	useInnerBlocksProps,
+	InspectorControls,
+} from '@wordpress/block-editor';
+import { PanelBody, ToggleControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 
-export default ({}) => {
+export default ({
+	attributes: { showViewProductPageStickyFooter },
+	setAttributes,
+}) => {
 	const blockProps = useBlockProps({});
 	const innerBlocksProps = useInnerBlocksProps(blockProps, {
 		allowedBlocks: ['surecart/product-page'],
@@ -24,5 +32,23 @@ export default ({}) => {
 		],
 	});
 
-	return <div {...innerBlocksProps}></div>;
+	return (
+		<>
+			<InspectorControls>
+				<PanelBody title={__('Settings', 'surecart')}>
+					<ToggleControl
+						label={__(
+							'Show view product page sticky footer.',
+							'surecart'
+						)}
+						checked={showViewProductPageStickyFooter}
+						onChange={(showViewProductPageStickyFooter) =>
+							setAttributes({ showViewProductPageStickyFooter })
+						}
+					/>
+				</PanelBody>
+			</InspectorControls>
+			<div {...innerBlocksProps}></div>
+		</>
+	);
 };

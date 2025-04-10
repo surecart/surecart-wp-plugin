@@ -87,6 +87,9 @@ use SureCart\Models\Blocks\ProductPageBlock;
 					</form>
 			<?php endwhile; ?>
 		</div>
+		<?php
+		if ( $show_footer ) :
+			?>
 		<a 
 			class="sc-view-product-page-sticky"
 			data-wp-class--hidden="state.loading"
@@ -98,6 +101,7 @@ use SureCart\Models\Blocks\ProductPageBlock;
 			<?php esc_html_e( 'View product page', 'surecart' ); ?>
 			<?php echo wp_kses( SureCart::svg()->get( 'arrow-right' ), sc_allowed_svg_html() ); ?>
 		</a>
+		<?php endif; ?>
 		<div class="sc-block-ui" style="--sc-block-ui-opacity:1" data-wp-bind--hidden="!state.loading" hidden>
 			<span class="sc-spinner" data-wp-bind--hidden="!state.loading"></span>
 		</div>
