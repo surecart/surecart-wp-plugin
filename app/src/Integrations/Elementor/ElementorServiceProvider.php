@@ -54,6 +54,7 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 			add_action( 'elementor/element/container/section_layout_container/after_section_start', [ $this, 'injectProductFormControls' ], 10 );
 			add_action( 'elementor/frontend/before_get_builder_content', [ $this, 'preReturnSerializedBlock' ] );
 			add_action( 'elementor/frontend/the_content', [ $this, 'doBlocksAtEnd' ], 10 );
+			add_filter( 'elementor/frontend/the_content', [ $this, 'showAlertIfNotUsingProductWrapper' ], 11 );
 		}
 
 		// Bootstrap the widgets.
@@ -61,6 +62,58 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 
 		// Bootstrap the dynamic tags.
 		$container['surecart.elementor.dynamic_tags']->bootstrap();
+	}
+
+	/**
+	 * Show alert if not using product wrapper.
+	 *
+	 * @param string $content The content.
+	 *
+	 * @return string
+	 */
+	public function showAlertIfNotUsingProductWrapper( $content ) {
+		// Show only to admins.
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return $content;
+		}
+
+		// List of SureCart widget types to check.
+		$surecart_widgets = [
+			'surecart-add-to-cart-button.default',
+			'surecart-collection-tags',
+			'surecart-media',
+			'surecart-price-chooser',
+			'surecart-product-pricing',
+			'surecart-quantity',
+			'surecart-sales-badge',
+			'surecart-selected-price-ad-hoc-amount',
+			'surecart-variant-pills',
+		];
+
+		// Check if any of the SureCart widgets are present in the content.
+		$widget_found = false;
+		foreach ( $surecart_widgets as $widget_type ) {
+			if ( strpos( $content, 'data-widget_type="' . $widget_type . '"' ) !== false ) {
+				$widget_found = true;
+				break;
+			}
+		}
+
+		if ( ! $widget_found ) {
+			return $content;
+		}
+
+		// If the content does not have the product page wrapper, show the alert.
+		if ( ! ( new ProductPageWrapperService( $content ) )->hasProductPageWrapper() ) {
+			$alert  = '<div class="sc-alert sc-alert-warning" style="margin:1em 0;padding:1em;border:1px solid #ffc107;background:#fff3cd;color:#856404;">';
+			$alert .= '<strong>' . esc_html__( 'Warning: ', 'surecart' ) . '</strong> ';
+			$alert .= esc_html__( 'You are using a SureCart Product widget without the SureCart product wrapper. Please wrap it inside a container type of "Product Form".', 'surecart' );
+			$alert .= '</div>';
+
+			return $alert . $content;
+		}
+
+		return $content;
 	}
 
 	/**
