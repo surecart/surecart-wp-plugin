@@ -1,6 +1,5 @@
 <?php
 
-
 namespace SureCart\Sync\Tasks;
 
 use SureCart\Models\Product;
