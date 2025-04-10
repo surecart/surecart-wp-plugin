@@ -78,8 +78,7 @@ export class ScShippingChoices {
         </sc-form-control>
       );
     }
-    console.log(checkoutState?.checkout?.shipping_choices?.data);
-    
+ 
     return (
       <Host>
         <sc-radio-group part="base" label={this.label || __('Shipping', 'surecart')} class="shipping-choices" onScChange={e => this.updateCheckout(e.detail)}>
