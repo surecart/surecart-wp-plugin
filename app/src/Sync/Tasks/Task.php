@@ -83,8 +83,8 @@ abstract class Task {
 	 *
 	 * @return bool
 	 */
-	public function areActionsScheduled() {
-		return \SureCart::queue()->isScheduled( $this->action_name );
+	public function showNotice() {
+		return \SureCart::queue()->showNotice( $this->action_name );
 	}
 
 	/**

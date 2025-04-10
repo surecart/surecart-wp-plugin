@@ -41,13 +41,13 @@ class JobTest extends \WP_UnitTestCase {
 
     public function test_job_is_running_status() {
         // Mock task to return false for scheduled actions
-        $this->task->shouldReceive('areActionsScheduled')->once()->andReturn(false);
+        $this->task->shouldReceive('showNotice')->once()->andReturn(false);
 
         // Test when job is not active and no actions scheduled
         $this->assertFalse($this->job->isRunning());
 
         // Mock task to return true for scheduled actions
-        $this->task->shouldReceive('areActionsScheduled')->once()->andReturn(true);
+        $this->task->shouldReceive('showNotice')->once()->andReturn(true);
 
         // Test when job has scheduled actions
         $this->assertTrue($this->job->isRunning());

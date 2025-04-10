@@ -103,7 +103,7 @@ class TaskTest extends SureCartUnitTestCase {
             ->with('mock_task_action')
             ->andReturn(true);
 
-        $result = $this->task->areActionsScheduled();
+        $result = $this->task->showNotice();
         $this->assertTrue($result);
     }
 

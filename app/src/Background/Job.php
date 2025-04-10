@@ -83,6 +83,6 @@ abstract class Job extends BackgroundProcess {
 	 * @return boolean
 	 */
 	public function isRunning() {
-		return $this->is_active() || $this->task->areActionsScheduled();
+		return $this->is_active() || $this->task->showNotice();
 	}
 }
