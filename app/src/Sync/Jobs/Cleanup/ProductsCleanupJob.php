@@ -52,14 +52,13 @@ class ProductsCleanupJob extends BackgroundProcess {
 	 * @return mixed
 	 */
 	protected function task( $args ) {
-		error_log( 'args: ' . print_r( $args, true ) );
 		$query = new \WP_Query(
 			[
 				'post_type'        => 'sc_product',
 				'post_status'      => [ 'publish', 'pending', 'draft', 'future', 'private', 'inherit', 'trash', 'auto-draft', 'sc_archived' ],
 				'posts_per_page'   => absint( $args['batch_size'] ?? 25 ),
 				'paged'            => absint( $args['page'] ?? 1 ),
-				'suppress_filters' => true,
+				'suppress_filters' => true, // important to bypass store filter.
 				'fields'           => 'ids',
 				'tax_query'        => [
 					[

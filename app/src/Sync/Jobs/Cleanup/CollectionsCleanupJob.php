@@ -3,7 +3,6 @@
 namespace SureCart\Sync\Jobs\Cleanup;
 
 use SureCart\Background\BackgroundProcess;
-use SureCart\Sync\Tasks\Task;
 
 /**
  * This process fetches and queues all products collections for syncing.
