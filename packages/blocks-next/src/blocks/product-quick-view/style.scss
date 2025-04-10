@@ -15,11 +15,12 @@
 		max-height: 600px;
 		border: none;
 		border-radius: 12px;
-		padding: 20px;
 		box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.3);
 		background: white;
 		overflow: scroll;
-
+		&__content {
+			padding: 20px;
+		}
 		// When fading, make the image come in slightly slower
 		// or faster than the scrim to give a sense of depth.
 		&.active {
@@ -52,6 +53,24 @@
 			position: absolute;
 			top: 50%;
 			left: 50%;
+		}
+		.sc-view-product-page-sticky {
+			position: sticky;
+			display: flex;
+			inset-block-end: 0;
+			inset-inline-start: 0;
+			justify-content: space-between;
+			padding: 1em;
+			border-block-start: 1px solid rgb(var(--color-border-light));
+			background-color: rgb(var(--color-background) / .7);
+			-webkit-backdrop-filter: blur(12px);
+			backdrop-filter: blur(12px);
+			border-block-start: 1px solid rgb(var(--color-border-light));
+			z-index: 99;
+			text-decoration: none;
+			&.hidden {
+				display: none;
+			}
 		}
 	}
 	.sc-product-quick-view-overlay {
