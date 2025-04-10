@@ -14,13 +14,16 @@ class ProductCleanupTask extends Task {
 	protected $action_name = 'surecart/cleanup/product';
 
 	/**
-	 * Fetch and delete product post.
+	 * Fetch and trash product post.
+	 *
+	 * It's safer to trash the post since there can be data loss
+	 * as some data is stored locally in the database.
 	 *
 	 * @param string $id The product post id to delete.
 	 *
 	 * @return \WP_Post|false|null
 	 */
 	public function handle( $id ) {
-		return wp_delete_post( $id );
+		return wp_trash_post( $id );
 	}
 }
