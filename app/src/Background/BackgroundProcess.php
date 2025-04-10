@@ -59,13 +59,6 @@ abstract class BackgroundProcess extends AsyncRequest {
 	protected $next = null;
 
 	/**
-	 * The container.
-	 *
-	 * @var array
-	 */
-	protected $container = [];
-
-	/**
 	 * The status set when process is cancelling.
 	 *
 	 * @var int
