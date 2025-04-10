@@ -105,13 +105,4 @@ abstract class Task {
 			true // force unique. This will replace any existing jobs.
 		);
 	}
-
-	/**
-	 * Get the hook name.
-	 *
-	 * @return string
-	 */
-	public function actionName() {
-		return $this->action_name;
-	}
 }

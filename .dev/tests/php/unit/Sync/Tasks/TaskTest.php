@@ -126,10 +126,6 @@ class TaskTest extends SureCartUnitTestCase {
         $this->assertTrue($result);
     }
 
-    public function test_action_name_returns_action_name() {
-        $this->assertEquals('mock_task_action', $this->task->actionName());
-    }
-
     public function test_queue_with_notice_creates_async_job() {
         // Set show notice to true
         $this->task->withNotice(true);
