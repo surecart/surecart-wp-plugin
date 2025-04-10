@@ -30,13 +30,28 @@ export class ScAddressSuggestions {
     state: null,
   };
 
+  @Prop() names: Partial<Address> = {
+    name: 'shipping_name',
+    country: 'shipping_country',
+    city: 'shipping_city',
+    line_1: 'shipping_line_1',
+    line_2: 'shipping_line_2',
+    postal_code: 'shipping_postal_code',
+    state: 'shipping_state',
+  };
+
+  @Prop() label: string = __('Address', 'surecart');
+
+  @Prop() inputProps: any = {};
+  @Prop() disabled: boolean = false;
+  @Prop() required: boolean = true;
+
+  @State() value: string = '';
+
   /** Holds the regions for a given country. */
   @Prop({ mutable: true }) regions: Array<{ value: string; label: string }> = [];
 
-  /** Address line 1 */
-  @Prop() addressLine1: string = '';
-
-  /** Address line 2 */
+  /** Is manually **/
   @Prop() isManually: boolean = false;
 
   /** Address suggestions */
@@ -54,6 +69,12 @@ export class ScAddressSuggestions {
   /** Event to show address fields manually */
   @Event() scShowAddressFields: EventEmitter<void>;
 
+  /** Event to update address */
+  @Event() scChange: EventEmitter<void>;
+
+  /** On input change */
+  @Event() scInput: EventEmitter<void>;
+
   /** Focused index for keyboard navigation */
   @State() focusedIndex: number = -1;
 
@@ -62,7 +83,7 @@ export class ScAddressSuggestions {
     this.fetchAddressSuggestions(input);
   }, 100);
 
-  @Watch('addressLine1')
+  @Watch('value')
   handleAddressLine1Change(newValue: string) {
     if (!this.address?.country) return;
     if (!!newValue && this.showSuggestions) {
@@ -149,7 +170,7 @@ export class ScAddressSuggestions {
     this.scChangeAddress.emit({
       ...(this.address as Address),
       ...placeDetails,
-      line_1: place?.displayName ?? this.addressLine1,
+      line_1: place?.displayName ?? this.value,
     });
 
     this.showSuggestions = false;
@@ -195,10 +216,10 @@ export class ScAddressSuggestions {
     this.scShowAddressFields.emit();
 
     // If the address line 1 is not empty, we want to show the address fields.
-    if (!!this.addressLine1) {
+    if (!!this.value) {
       this.scChangeAddress.emit({
         ...(this.address as Address),
-        line_1: this.addressLine1,
+        line_1: this.value,
       });
     }
   }
@@ -218,11 +239,11 @@ export class ScAddressSuggestions {
       this.showSuggestions = false;
 
       // If the address line 1 is not empty, we want to show the address fields.
-      if (this.addressLine1) {
+      if (this.value) {
         this.scShowAddressFields.emit();
         this.scChangeAddress.emit({
           ...(this.address as Address),
-          line_1: this.addressLine1,
+          line_1: this.value,
         });
       }
     }
@@ -268,12 +289,98 @@ export class ScAddressSuggestions {
   }
 
   renderAddressSuggestions() {
-    if (!this.showSuggestions || !this.addressLine1) {
+    if (!this.showSuggestions || !this.value) {
       return null;
     }
 
     return (
+      <ul class="sc-address__suggestions--list" part="suggestions-list" role="list">
+        <li
+          class="sc-address__suggestions--item sc-address__suggestions--item--no-select sc-address__suggestions--item--powered-by"
+          part="suggestion-item powered-by"
+          role="listitem"
+          tabindex="-1"
+        >
+          <span>
+            {__('Suggestions powered by ', 'surecart')}
+            <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">
+              <span>{__('Google', 'surecart')}</span>
+            </a>
+          </span>
+          <sc-button
+            type="text"
+            onClick={() => {
+              this.showSuggestions = false;
+              this.addressSuggestions = [];
+            }}
+            aria-label={__('Close suggestions', 'surecart')}
+          >
+            <sc-icon name="x" style={{ color: 'var(--sc-color-gray-500)' }}></sc-icon>
+          </sc-button>
+        </li>
+
+        {this.addressSuggestions.length === 0 && (
+          <li
+            class="sc-address__suggestions--item sc-address__suggestions--item--no-select sc-address__suggestions--item--no-result"
+            part="suggestion-item no-result"
+            role="listitem"
+            tabindex="-1"
+          >
+            {__('No results found', 'surecart')}
+          </li>
+        )}
+
+        {this.addressSuggestions.map((suggestion, index) => (
+          <li
+            class={{
+              'sc-address__suggestions--item': true,
+              'focused': this.focusedIndex === index,
+            }}
+            part="suggestion-item"
+            role="option"
+            aria-selected={this.focusedIndex === index ? 'true' : 'false'}
+            aria-label={sprintf(__('Select suggestion %s', 'surecart'), suggestion.fullDisplayName)}
+            tabindex={this.focusedIndex === index ? '0' : '-1'}
+            onClick={() => this.fetchPlaceDetails(suggestion?.placeId)}
+            innerHTML={this.highlightMatch(suggestion.fullDisplayName, this.value)}
+            onMouseEnter={() => (this.focusedIndex = index)}
+            onMouseLeave={() => (this.focusedIndex = -1)}
+          ></li>
+        ))}
+
+        {this.isManually && (
+          <li
+            class="sc-address__suggestions--item sc-address__suggestions--item--no-select sc-address__suggestions--item--manually"
+            part="suggestion-item manually"
+            role="listitem"
+            tabindex="-1"
+          >
+            <button onClick={() => this.manualAddress()}>{__('Enter address manually', 'surecart')}</button>
+          </li>
+        )}
+      </ul>
+    );
+  }
+
+  render() {
+    return (
       <div class="sc-address-suggestion" part="base">
+        <sc-input
+          exportparts="base:input__base, input, form-control, label, help-text"
+          value={this?.value}
+          onScInput={(e: any) => {
+            this.value = e.target.value;
+            this.showSuggestions = true;
+          }}
+          autocomplete="street-address"
+          placeholder={this.label}
+          aria-label={this.label}
+          name={this.names?.line_1}
+          disabled={this.disabled}
+          required={this.required}
+          {...this.inputProps}
+        />
+
         <div
           class={{
             'sc-address__suggestions': true,
@@ -281,77 +388,9 @@ export class ScAddressSuggestions {
           }}
           part="suggestions"
         >
-          <ul class="sc-address__suggestions--list" part="suggestions-list" role="list">
-            <li
-              class="sc-address__suggestions--item sc-address__suggestions--item--no-select sc-address__suggestions--item--powered-by"
-              part="suggestion-item powered-by"
-              role="listitem"
-              tabindex="-1"
-            >
-              <span>
-                {__('Suggestions powered by ', 'surecart')}
-                <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">
-                  <span>{__('Google', 'surecart')}</span>
-                </a>
-              </span>
-              <sc-button
-                type="text"
-                onClick={() => {
-                  this.showSuggestions = false;
-                  this.addressSuggestions = [];
-                }}
-                aria-label={__('Close suggestions', 'surecart')}
-              >
-                <sc-icon name="x" style={{ color: 'var(--sc-color-gray-500)' }}></sc-icon>
-              </sc-button>
-            </li>
-
-            {this.addressSuggestions.length === 0 && (
-              <li
-                class="sc-address__suggestions--item sc-address__suggestions--item--no-select sc-address__suggestions--item--no-result"
-                part="suggestion-item no-result"
-                role="listitem"
-                tabindex="-1"
-              >
-                {__('No results found', 'surecart')}
-              </li>
-            )}
-
-            {this.addressSuggestions.map((suggestion, index) => (
-              <li
-                class={{
-                  'sc-address__suggestions--item': true,
-                  'focused': this.focusedIndex === index,
-                }}
-                part="suggestion-item"
-                role="option"
-                aria-selected={this.focusedIndex === index ? 'true' : 'false'}
-                aria-label={sprintf(__('Select suggestion %s', 'surecart'), suggestion.fullDisplayName)}
-                tabindex={this.focusedIndex === index ? '0' : '-1'}
-                onClick={() => this.fetchPlaceDetails(suggestion?.placeId)}
-                innerHTML={this.highlightMatch(suggestion.fullDisplayName, this.addressLine1)}
-                onMouseEnter={() => (this.focusedIndex = index)}
-                onMouseLeave={() => (this.focusedIndex = -1)}
-              ></li>
-            ))}
-
-            {this.isManually && (
-              <li
-                class="sc-address__suggestions--item sc-address__suggestions--item--no-select sc-address__suggestions--item--manually"
-                part="suggestion-item manually"
-                role="listitem"
-                tabindex="-1"
-              >
-                <button onClick={() => this.manualAddress()}>{__('Enter address manually', 'surecart')}</button>
-              </li>
-            )}
-          </ul>
+          {this.renderAddressSuggestions()}
         </div>
       </div>
     );
-  }
-
-  render() {
-    return this.renderAddressSuggestions();
   }
 }

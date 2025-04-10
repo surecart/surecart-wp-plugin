@@ -1,11 +1,10 @@
 import { Component, Element, Event, EventEmitter, h, Method, Prop, State, Watch } from '@stencil/core';
-import { __, sprintf } from '@wordpress/i18n';
-import { countryChoices } from '../../../functions/address';
+import { __ } from '@wordpress/i18n';
+import { hasCity, hasPostal, countryChoices } from '../../../functions/address';
 import { reportChildrenValidity } from '../../../functions/form-data';
 import { Address, CountryLocaleField, CountryLocaleFieldValue } from '../../../types';
-import { getCountryRegions, getCurrentUserCountryCode, sortAddressFields } from 'src/functions/address-settings';
+import { sortAddressFields } from 'src/functions/address-settings';
 import { state as i18nState } from '@store/i18n';
-import { speak } from '@wordpress/a11y';
 
 /**
  * @part base - The elements base wrapper.
@@ -67,6 +66,9 @@ export class ScAddress {
   /** Should we show name field? */
   @Prop({ reflect: true, mutable: true }) showName: boolean;
 
+  /** Should we show name field? */
+  @Prop() showLine2: boolean;
+
   /** Is this required? */
   @Prop({ reflect: true }) required: boolean = false;
 
@@ -79,17 +81,11 @@ export class ScAddress {
   /** Country fields by country code */
   @Prop({ mutable: true }) countryFields: Array<CountryLocaleField>;
 
-  /** Should we show name field? */
-  @Prop() showLine2: boolean = false;
-
   /** Should we show the city field? */
-  @State() showCity: boolean = false;
-
-  /** Should we show the state field? */
-  @State() showState: boolean = false;
+  @State() showCity: boolean = true;
 
   /** Should we show the postal field? */
-  @State() showPostal: boolean = false;
+  @State() showPostal: boolean = true;
 
   /** Holds the regions for a given country. */
   @State() regions: Array<{ value: string; label: string }>;
@@ -97,39 +93,21 @@ export class ScAddress {
   /** Holds our country choices. */
   @State() countryChoices: Array<{ value: string; label: string }> = countryChoices;
 
-  /** Show address suggestions */
-  @State() showSuggestions: boolean = false;
-
-  /** Address line 1 value */
-  @State() addressLine1: string = '';
-
   /** Address change event. */
   @Event() scChangeAddress: EventEmitter<Partial<Address>>;
 
-  /** Address input event. */
+  /** Address change event. */
   @Event() scInputAddress: EventEmitter<Partial<Address>>;
 
   /** When the state changes, we want to update city and postal fields. */
   @Watch('address')
-  async handleAddressChange() {
+  handleAddressChange() {
     if (!this.address?.country) return;
-    this.regions = await getCountryRegions(this.address?.country);
-
-    // Show address fields if we have a country or any address field set.
-    this.toggleAddressFieldsVisibility(!window?.scData?.google_map_api_key || this.hasAnyAddressField());
-
+    this.setRegions();
+    this.showPostal = hasPostal(this.address.country);
+    this.showCity = hasCity(this.address.country);
     this.scChangeAddress.emit(this.address);
     this.scInputAddress.emit(this.address);
-
-    // If there is address line 1, update the addressLine1 state.
-    if (this.address?.line_1) {
-      this.addressLine1 = this.address.line_1;
-    }
-  }
-
-  /** Check if any address field is set. */
-  hasAnyAddressField() {
-    return !!this.address?.line_1 || !!this.address?.line_2 || !!this.address?.city || !!this.address?.state || !!this.address?.postal_code;
   }
 
   @Watch('requireName')
@@ -139,16 +117,16 @@ export class ScAddress {
     }
   }
 
+  decodeHtmlEntities(html: string) {
+    return new DOMParser().parseFromString(html, 'text/html')?.body.textContent || html;
+  }
+
   updateAddress(address: Partial<Address>) {
     this.address = { ...this.address, ...address };
   }
 
   handleAddressInput(address: Partial<Address>) {
-    if (!window?.scData?.google_map_api_key) {
-      this.scInputAddress.emit({ ...this.address, ...address });
-    } else {
-      this.address = { ...this.address, ...address };
-    }
+    this.scInputAddress.emit({ ...this.address, ...address });
   }
 
   clearAddress() {
@@ -161,13 +139,20 @@ export class ScAddress {
       postal_code: null,
       state: null,
     };
-    this.addressLine1 = '';
-    this.showSuggestions = false;
+  }
+
+  /** Set the regions based on the country. */
+  setRegions() {
+    import('country-region-data').then(module => {
+      this.regions = (module?.[this.address.country]?.[2] || []).map(region => ({
+        value: region[1],
+        label: this.decodeHtmlEntities(region[0]),
+      }));
+    });
   }
 
   componentWillLoad() {
     this.handleAddressChange();
-    this.fetchUserCountry();
     const country = this.countryChoices.find(country => country.value === this.address?.country)?.value || null;
 
     // Set default country fields.
@@ -213,35 +198,6 @@ export class ScAddress {
     };
   }
 
-  async fetchUserCountry() {
-    // If already set user country or Google Map API key is not set, return.
-    if (this.address?.country || !window?.scData?.google_map_api_key) {
-      return;
-    }
-
-    const country = await getCurrentUserCountryCode();
-
-    // Update the address with the user's country.
-    if (country) {
-      this.updateAddress({ country });
-    }
-  }
-
-  toggleAddressFieldsVisibility(show: boolean) {
-    this.showCity = show;
-    this.showState = show;
-    this.showPostal = show;
-
-    // If Google Map API key is set, Override the showLine2 value.
-    if (window?.scData?.google_map_api_key) {
-      this.showLine2 = show;
-    }
-  }
-
-  handleShowSuggestionsChange(event: CustomEvent<boolean>) {
-    this.showSuggestions = event.detail;
-  }
-
   render() {
     const visibleFields = (this.sortedFields() ?? []).filter(field => {
       switch (field.name) {
@@ -252,7 +208,7 @@ export class ScAddress {
         case 'city':
           return this.showCity;
         case 'state':
-          return this.showState && !!this?.regions?.length && !!this?.address?.country;
+          return !!this?.regions?.length && !!this?.address?.country;
         case 'postcode':
           return this.showPostal;
         default:
@@ -310,57 +266,28 @@ export class ScAddress {
 
               case 'address_1':
                 return (
-                  <div class="sc-address__line-1">
-                    <sc-input
-                      exportparts="base:input__base, input, form-control, label, help-text"
-                      value={this?.address?.line_1}
-                      onScChange={(e: any) => {
-                        this.showSuggestions = true;
-                        this.addressLine1 = e.target.value;
+                  // <sc-input
+                  //   exportparts="base:input__base, input, form-control, label, help-text"
+                  //   value={this?.address?.line_1}
+                  //   onScChange={(e: any) => this.updateAddress({ line_1: e.target.value || null })}
+                  //   onScInput={(e: any) => this.handleAddressInput({ line_1: e.target.value || null })}
+                  //   autocomplete="street-address"
+                  //   placeholder={field.label}
+                  //   name={this.names?.line_1}
+                  //   disabled={this.disabled}
+                  //   required={this.required}
+                  //   aria-label={field.label}
+                  //   {...roundedProps}
+                  // />
 
-                        if (!window?.scData?.google_map_api_key || !!this.address?.line_1) {
-                          this.updateAddress({ line_1: e.target.value || null });
-                        }
-                      }}
-                      onScInput={(e: any) => {
-                        this.showSuggestions = true;
-                        this.addressLine1 = e.target.value;
-
-                        if (!window?.scData?.google_map_api_key) {
-                          this.handleAddressInput({ line_1: e.target.value || null });
-                        }
-                      }}
-                      autocomplete="street-address"
-                      placeholder={field.label}
-                      name={this.names?.line_1}
-                      disabled={this.disabled}
-                      required={this.required}
-                      aria-label={field.label}
-                      {...roundedProps}
-                    />
-
-                    {this.showSuggestions && !!window?.scData?.google_map_api_key && (
-                      <sc-address-suggestions
-                        address={this.address}
-                        regions={this.regions}
-                        addressLine1={this.addressLine1}
-                        showSuggestions={this.showSuggestions}
-                        onScChangeAddress={(e: any) => {
-                          this.updateAddress(e.detail);
-                          this.addressLine1 = e.detail.line_1;
-
-                          /** translators: %s selected address line 1 */
-                          speak(sprintf(__('Address suggestion selected: %s', 'surecart'), e.detail.line_1));
-                        }}
-                        onScShowSuggestionsChange={(e: CustomEvent<boolean>) => this.handleShowSuggestionsChange(e)}
-                        onScShowAddressFields={() => {
-                          this.toggleAddressFieldsVisibility(true);
-                          this.showSuggestions = false;
-                        }}
-                        isManually={!this.hasAnyAddressField()}
-                      />
-                    )}
-                  </div>
+                  <sc-address-suggestions
+                    address={this.address}
+                    names={this.names}
+                    label={field.label}
+                    disabled={this.disabled}
+                    required={this.required}
+                    inputProps={roundedProps}
+                  />
                 );
 
               case 'address_2':

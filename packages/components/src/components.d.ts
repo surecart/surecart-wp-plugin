@@ -60,18 +60,19 @@ export namespace Components {
     }
     interface ScAddressSuggestions {
         "address": Partial<Address>;
+        "disabled": boolean;
+        "inputProps": any;
         /**
-          * Address line 1
-         */
-        "addressLine1": string;
-        /**
-          * Address line 2
+          * Is manually *
          */
         "isManually": boolean;
+        "label": string;
+        "names": Partial<Address>;
         /**
           * Holds the regions for a given country.
          */
         "regions": Array<{ value: string; label: string }>;
+        "required": boolean;
         /**
           * Show address suggestions
          */
@@ -4491,6 +4492,8 @@ declare global {
         "scChangeAddress": Address;
         "scShowSuggestionsChange": boolean;
         "scShowAddressFields": void;
+        "scChange": void;
+        "scInput": void;
     }
     interface HTMLScAddressSuggestionsElement extends Components.ScAddressSuggestions, HTMLStencilElement {
         addEventListener<K extends keyof HTMLScAddressSuggestionsElementEventMap>(type: K, listener: (this: HTMLScAddressSuggestionsElement, ev: ScAddressSuggestionsCustomEvent<HTMLScAddressSuggestionsElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -7004,7 +7007,7 @@ declare namespace LocalJSX {
          */
         "onScChangeAddress"?: (event: ScAddressCustomEvent<Partial<Address>>) => void;
         /**
-          * Address input event.
+          * Address change event.
          */
         "onScInputAddress"?: (event: ScAddressCustomEvent<Partial<Address>>) => void;
         /**
@@ -7026,18 +7029,26 @@ declare namespace LocalJSX {
     }
     interface ScAddressSuggestions {
         "address"?: Partial<Address>;
+        "disabled"?: boolean;
+        "inputProps"?: any;
         /**
-          * Address line 1
-         */
-        "addressLine1"?: string;
-        /**
-          * Address line 2
+          * Is manually *
          */
         "isManually"?: boolean;
+        "label"?: string;
+        "names"?: Partial<Address>;
+        /**
+          * Event to update address
+         */
+        "onScChange"?: (event: ScAddressSuggestionsCustomEvent<void>) => void;
         /**
           * Place select event
          */
         "onScChangeAddress"?: (event: ScAddressSuggestionsCustomEvent<Address>) => void;
+        /**
+          * On input change
+         */
+        "onScInput"?: (event: ScAddressSuggestionsCustomEvent<void>) => void;
         /**
           * Event to show address fields manually
          */
@@ -7050,6 +7061,7 @@ declare namespace LocalJSX {
           * Holds the regions for a given country.
          */
         "regions"?: Array<{ value: string; label: string }>;
+        "required"?: boolean;
         /**
           * Show address suggestions
          */

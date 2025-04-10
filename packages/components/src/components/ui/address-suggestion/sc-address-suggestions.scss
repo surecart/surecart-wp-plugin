@@ -1,6 +1,9 @@
+:host {
+  position: relative;
+}
+
 .sc-address__suggestions {
   position: absolute;
-  top: 45px;
   right: 0px;
   z-index: 9;
   background: var(--sc-panel-background-color);
