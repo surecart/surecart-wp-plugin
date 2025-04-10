@@ -33,7 +33,7 @@ class ProductsSyncJob extends BackgroundProcess {
 	/**
 	 * Constructor.
 	 *
-	 * @param $task The task.
+	 * @param \SureCart\Sync\Tasks\Task $task The task.
 	 */
 	public function __construct( $task ) {
 		parent::__construct();

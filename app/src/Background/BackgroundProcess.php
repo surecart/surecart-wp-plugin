@@ -658,10 +658,8 @@ abstract class BackgroundProcess extends AsyncRequest {
 		// Remove the cron healthcheck job from the cron schedule.
 		$this->clear_scheduled_event();
 
-		$next = $this->getNext();
-
-		if ( ! empty( $this->container[ $next ] ) && is_object( $this->container[ $next ] ) && method_exists( $this->container[ $next ], 'dispatch' ) ) {
-			$this->container[ $next ]->dispatch();
+		if ( is_a( $this->next, self::class ) ) {
+			$this->next->dispatch();
 		}
 
 		$this->completed();
@@ -809,15 +807,6 @@ abstract class BackgroundProcess extends AsyncRequest {
 	}
 
 	/**
-	 * Get the next background process in the chain.
-	 *
-	 * @return BackgroundProcess|false
-	 */
-	public function getNext() {
-		return get_option( $this->identifier . '_next', false );
-	}
-
-	/**
 	 * Set the next background process in the chain.
 	 *
 	 * @param BackgroundProcess $next The next background process.
@@ -825,7 +814,7 @@ abstract class BackgroundProcess extends AsyncRequest {
 	 * @return $this
 	 */
 	public function setNext( $next ) {
-		update_option( $this->identifier . '_next', $next, false );
+		$this->next = $next;
 		return $this;
 	}
 }

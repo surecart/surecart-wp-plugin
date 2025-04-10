@@ -48,8 +48,8 @@ class SyncServiceProvider implements ServiceProviderInterface {
 		$container['surecart.jobs.sync']                = fn() => new SyncJob( $app );
 		$container['surecart.jobs.cleanup']             = fn() => new CleanupJob( $app );
 		$container['surecart.jobs.cleanup.collections'] = fn() => new CollectionsCleanupJob( $container['surecart.tasks.collection.cleanup'] );
-		$container['surecart.jobs.cleanup.products']    = fn() => new ProductsCleanupJob( $container['surecart.tasks.product.cleanup'] );
-		$container['surecart.jobs.sync.products']       = fn() => new ProductsSyncJob( $container['surecart.tasks.product.sync'] );
+		$container['surecart.jobs.cleanup.products']    = fn() => ( new ProductsCleanupJob( $container['surecart.tasks.product.cleanup'] ) )->setNext( $container['surecart.jobs.cleanup.collections'] );
+		$container['surecart.jobs.sync.products']       = fn() => ( new ProductsSyncJob( $container['surecart.tasks.product.sync'] ) )->setNext( $container['surecart.jobs.cleanup.products'] );
 
 		/**
 		 * Services

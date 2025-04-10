@@ -37,10 +37,18 @@ class JobService {
 		// cancel previous processes.
 		$this->cancel();
 
+		$args = wp_parse_args(
+			$args,
+			[
+				'page'     => 1,
+				'per_page' => 25,
+			]
+		);
+
 		// run all jobs.
-		$result['cleanup_collections'] = $this->cleanup()->collections( $args )->save();
-		$result['cleanup_products']    = $this->cleanup()->products( $args )->setNext( $result['cleanup_collections'] )->save();
-		$result['sync_products']       = $this->sync()->products( $args )->setNext( $result['cleanup_products'] )->save();
+		$result['cleanup_collections'] = $this->cleanup()->collections()->data( $args )->save();
+		$result['cleanup_products']    = $this->cleanup()->products()->data( $args )->save();
+		$result['sync_products']       = $this->sync()->products()->data( $args )->save()->dispatch();
 
 		// if any are \WP_Error, return the first one.
 		foreach ( $result as $value ) {
