@@ -210,7 +210,7 @@ SureCart has 2 types of integrations. The first are natively available directly 
 * Thrive Automator
 * And more are coming
 
-The second type of integrations are done with [SureTriggers](https://wordpress.org/plugins/suretriggers/), which is like Zapier for WordPress. SureTriggers integrates with over 500 apps and services. These will require you to add the SureTriggers plugin to your website to integrate with:
+The second type of integrations are done with [Ottokit](https://wordpress.org/plugins/suretriggers/), which is like Zapier for WordPress. Ottokit integrates with over 500 apps and services. These will require you to add the Ottokit plugin to your website to integrate with:
 
 * ActiveCampaign
 * ConvertKit
