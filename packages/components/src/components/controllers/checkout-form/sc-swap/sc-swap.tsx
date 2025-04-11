@@ -33,7 +33,7 @@ export class ScSwap {
     }
 
     const swap = this?.lineItem?.swap || this?.lineItem?.price?.current_swap;
-    const price = swap?.swap_price as Price;
+    const price = (swap?.swap_price as Price) || this.lineItem.price;
 
     return (
       <div class="swap">
@@ -42,7 +42,7 @@ export class ScSwap {
         </sc-switch>
         {!!price?.display_amount && (
           <div class="sc-swap__price">
-            {(swap?.swap_price as Price)?.display_amount} {price?.short_interval_text} {price?.interval_count_text}
+            {price?.display_amount} {price?.short_interval_text} {price?.interval_count_text}
           </div>
         )}
       </div>
