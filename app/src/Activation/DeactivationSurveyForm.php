@@ -135,7 +135,7 @@ class DeactivationSurveyForm {
 		// Add localize JS.
 		wp_localize_script(
 			'sc-plugin-deactivation-feedback-script',
-			'udsVars',
+			'scUdsVars',
 			array(
 				'ajaxurl'        => esc_url( admin_url( 'admin-ajax.php' ) ),
 				'_ajax_nonce'    => wp_create_nonce( 'uds_plugin_deactivate_feedback' ),

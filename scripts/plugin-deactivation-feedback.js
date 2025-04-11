@@ -17,7 +17,7 @@
 		 * Caches elements for later use.
 		 */
 		_cacheElements() {
-			this.slug = udsVars?._plugin_slug || '';
+			this.slug = scUdsVars?._plugin_slug || '';
 			this.skipButton = $('.uds-feedback-skip');
 			this.submitDeactivate = $('.uds-feedback-submit');
 			this.deactivateButton = $('#the-list').find(
@@ -116,7 +116,7 @@
 			// Gather form data.
 			const formData = {
 				action: 'uds_plugin_deactivate_feedback',
-				security: udsVars?._ajax_nonce || '',
+				security: scUds?._ajax_nonce || '',
 				reason:
 					closestForm
 						.find(this.radioButton.filter(':checked'))
@@ -134,7 +134,7 @@
 
 			// Prepare AJAX call.
 			$.ajax({
-				url: udsVars?.ajaxurl, // URL to send the request to.
+				url: scUds?.ajaxurl, // URL to send the request to.
 				type: 'POST', // HTTP method.
 				data: formData, // Data to be sent.
 				success(response) {
@@ -165,14 +165,14 @@
 				if (
 					-1 !==
 					this.deactivateUrl.indexOf(
-						`stylesheet=${udsVars?._current_theme}-child`
+						`stylesheet=${scUds?._current_theme}-child`
 					)
 				) {
 					return;
 				}
 
 				e.preventDefault();
-				this._showPopup(udsVars?._current_theme);
+				this._showPopup(scUds?._current_theme);
 			}
 		},
 
