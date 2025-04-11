@@ -72,14 +72,14 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 	 * @return string
 	 */
 	public function showAlertIfNotUsingProductWrapper( $content ) {
-		// Show only to admins.
-		if ( ! current_user_can( 'manage_options' ) ) {
+		// Show only to the users who has the permissions to edit the post.
+		if ( ! current_user_can( 'edit_posts' ) ) {
 			return $content;
 		}
 
 		// List of SureCart widget types to check.
 		$surecart_widgets = [
-			'surecart-add-to-cart-button.default',
+			'surecart-add-to-cart-button',
 			'surecart-collection-tags',
 			'surecart-media',
 			'surecart-price-chooser',
