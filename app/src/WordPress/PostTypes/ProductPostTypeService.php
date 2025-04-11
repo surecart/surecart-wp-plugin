@@ -634,7 +634,7 @@ class ProductPostTypeService {
 
 		// don't do this for our template.
 		global $template;
-		if ( basename( $template ) === 'template-surecart-product.php' ) {
+		if ( ! empty( $template ) && basename( $template ) === 'template-surecart-product.php' ) {
 			return $content;
 		}
 
