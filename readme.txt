@@ -306,7 +306,7 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 == Changelog ==
 
 = 3.6.2 - April 11th, 2025 =
-- New: Admin help widget and feedback form.
+- New: Admin help widget to SureCart admin pages.
 - Improvement: Add new php filter to more easily filter platform requests.
 - Change: Remove tax percentage on checkout as it can be confusing for some users during checkout for combined regional and country tax.
 - Change: Update SureTriggers to Ottokit in the admin UI.
