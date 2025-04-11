@@ -24,7 +24,6 @@ export default function PreviewElementor() {
 				<button
 					id="elementor-editor-button"
 					class="button button-primary button-hero"
-					href="https://google.com"
 				>
 					<i class="eicon-elementor-square" aria-hidden="true"></i>
 					{__('Edit with Elementor', 'surecart')}

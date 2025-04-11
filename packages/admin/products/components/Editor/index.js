@@ -24,6 +24,7 @@ import { Guide } from '@wordpress/components';
 import { ExternalLink } from '@wordpress/components';
 import { help } from '@wordpress/icons';
 import { Button } from '@wordpress/components';
+import PreviewBricks from './PreviewBricks';
 
 export default ({ post, loading, onSave, error }) => {
 	const [blocks, setBlocks] = useState([]);
@@ -65,20 +66,42 @@ export default ({ post, loading, onSave, error }) => {
 		return null;
 	}
 
+	// Get the current page builder being used
+	const getPageBuilder = () => {
+		if (window?.bricksData?.renderWithBricks === '1') {
+			return 'bricks';
+		}
+		if (post?.meta?._elementor_edit_mode === 'builder') {
+			return 'elementor';
+		}
+		return 'core';
+	};
+
 	// Determine editor configuration
-	const { editorLink, pageBuilder } =
-		post?.meta?._elementor_edit_mode === 'builder'
-			? {
+	const { editorLink, pageBuilder } = (() => {
+		switch (getPageBuilder()) {
+			case 'bricks':
+				return {
+					pageBuilder: 'bricks',
+					editorLink: addQueryArgs(post?.link, {
+						bricks: 'run',
+					}),
+				};
+			case 'elementor':
+				return {
 					pageBuilder: 'elementor',
 					editorLink: addQueryArgs('/wp-admin/post.php', {
 						post: post?.id,
 						action: 'elementor',
 					}),
-			  }
-			: {
+				};
+			default:
+				return {
 					pageBuilder: 'core',
 					editorLink: editPostLink,
-			  };
+				};
+		}
+	})();
 
 	/**
 	 * Handle the navigateion request.
@@ -142,7 +165,7 @@ export default ({ post, loading, onSave, error }) => {
 					</div>
 				}
 			>
-				{blocks.length > 0 && (
+				{(blocks.length > 0 || pageBuilder === 'bricks') && (
 					<div
 						css={css`
 							cursor: pointer;
@@ -151,6 +174,7 @@ export default ({ post, loading, onSave, error }) => {
 						<a
 							css={css`
 								display: block;
+								text-decoration: none;
 							`}
 							role="button"
 							tabIndex={0}
@@ -165,6 +189,7 @@ export default ({ post, loading, onSave, error }) => {
 								{pageBuilder === 'elementor' && (
 									<PreviewElementor />
 								)}
+								{pageBuilder === 'bricks' && <PreviewBricks />}
 								{pageBuilder === 'core' && (
 									<div onClick={() => onNavigate('editor')}>
 										<PreviewBlocks blocks={blocks} />
