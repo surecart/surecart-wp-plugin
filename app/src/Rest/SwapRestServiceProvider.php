@@ -111,7 +111,6 @@ class SwapRestServiceProvider extends RestServiceProvider implements RestService
 					'type'        => 'boolean',
 					'context'     => [ 'view', 'edit', 'embed' ],
 				],
-
 			],
 		];
 
