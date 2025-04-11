@@ -2,9 +2,6 @@
 
 namespace SureCart\Models\Traits;
 
-use SureCart\Support\Currency;
-
-
 trait HasShippingAddress {
 	/**
 	 * Always set discount as object.
