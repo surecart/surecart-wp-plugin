@@ -116,7 +116,7 @@
 			// Gather form data.
 			const formData = {
 				action: 'uds_plugin_deactivate_feedback',
-				security: scUds?._ajax_nonce || '',
+				security: scUdsVars?._ajax_nonce || '',
 				reason:
 					closestForm
 						.find(this.radioButton.filter(':checked'))
@@ -134,7 +134,7 @@
 
 			// Prepare AJAX call.
 			$.ajax({
-				url: scUds?.ajaxurl, // URL to send the request to.
+				url: scUdsVars?.ajaxurl, // URL to send the request to.
 				type: 'POST', // HTTP method.
 				data: formData, // Data to be sent.
 				success(response) {
@@ -165,14 +165,14 @@
 				if (
 					-1 !==
 					this.deactivateUrl.indexOf(
-						`stylesheet=${scUds?._current_theme}-child`
+						`stylesheet=${scUdsVars?._current_theme}-child`
 					)
 				) {
 					return;
 				}
 
 				e.preventDefault();
-				this._showPopup(scUds?._current_theme);
+				this._showPopup(scUdsVars?._current_theme);
 			}
 		},
 
