@@ -2,7 +2,7 @@
 use SureCart\Models\Blocks\ProductPageBlock;
 ?>
 
-<div 
+<div
 	<?php echo wp_kses_data( get_block_wrapper_attributes() ); ?>
 	data-wp-interactive='{ "namespace": "surecart/product-quick-view" }'
 	data-wp-router-region="product-quick-view"
@@ -19,7 +19,6 @@ use SureCart\Models\Blocks\ProductPageBlock;
 >
 	<div
 		class="sc-product-quick-view-dialog"
-		data-wp-on-window--resize="actions.closeOverlay"
 		data-wp-class--active="state.open"
 		data-wp-class--show-closing-animation="state.showClosingAnimation"
 		data-wp-on--keydown="actions.handleKeyDown"
@@ -27,7 +26,7 @@ use SureCart\Models\Blocks\ProductPageBlock;
 		<div
 			class="sc-product-quick-view-dialog__content"
 		>
-			<a 
+			<a
 				class="sc-product-quick-view-dialog__close-button"
 				data-wp-on--click="actions.navigate"
 				data-wp-on--keydown="actions.navigate"
@@ -75,7 +74,7 @@ use SureCart\Models\Blocks\ProductPageBlock;
 
 					wp_interactivity_state( 'surecart/product-page', $state );
 				?>
-					<form 
+					<form
 						<?php
 						echo wp_kses_data( wp_interactivity_data_wp_context( $context ) );
 						?>
@@ -90,7 +89,7 @@ use SureCart\Models\Blocks\ProductPageBlock;
 		<?php
 		if ( $show_footer ) :
 			?>
-		<a 
+		<a
 			class="sc-view-product-page-sticky"
 			data-wp-class--hidden="state.loading"
 			role="button"
@@ -106,8 +105,8 @@ use SureCart\Models\Blocks\ProductPageBlock;
 			<span class="sc-spinner" data-wp-bind--hidden="!state.loading"></span>
 		</div>
 	</div>
-	<div 
-		class="sc-product-quick-view-overlay" 
+	<div
+		class="sc-product-quick-view-overlay"
 		data-wp-bind--hidden="!state.open"
 		data-wp-class--active="state.open"
 		data-wp-on--click="actions.closeOverlay"
