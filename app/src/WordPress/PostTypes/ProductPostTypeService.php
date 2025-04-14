@@ -632,6 +632,12 @@ class ProductPostTypeService {
 			return $content;
 		}
 
+		// allow filtering to prevent this from running.
+		$replace_content = apply_filters( 'surecart/product/replace_content_with_product_info_part', true );
+		if ( ! $replace_content ) {
+			return $content;
+		}
+
 		// don't do this for our template.
 		global $template;
 		if ( ! empty( $template ) && basename( $template ) === 'template-surecart-product.php' ) {
