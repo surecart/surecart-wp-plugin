@@ -73,7 +73,7 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 	 */
 	public function showAlertIfNotUsingProductWrapper( $content ) {
 		// Show only to the users who has the permissions to edit the post.
-		if ( ! current_user_can( 'edit_posts' ) ) {
+		if ( ! current_user_can( 'edit_posts', get_the_ID() ) ) {
 			return $content;
 		}
 
@@ -83,7 +83,6 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 			'surecart-collection-tags',
 			'surecart-media',
 			'surecart-price-chooser',
-			'surecart-product-pricing',
 			'surecart-quantity',
 			'surecart-sales-badge',
 			'surecart-selected-price-ad-hoc-amount',
@@ -93,7 +92,7 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 		// Check if any of the SureCart widgets are present in the content.
 		$widget_found = false;
 		foreach ( $surecart_widgets as $widget_type ) {
-			if ( strpos( $content, 'data-widget_type="' . $widget_type . '"' ) !== false ) {
+			if ( strpos( $content, 'data-widget_type="' . $widget_type . '.default"' ) !== false ) {
 				$widget_found = true;
 				break;
 			}
@@ -106,8 +105,11 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 		// If the content does not have the product page wrapper, show the alert.
 		if ( ! ( new ProductPageWrapperService( $content ) )->hasProductPageWrapper() ) {
 			$alert  = '<div class="sc-alert sc-alert-warning" style="margin:1em 0;padding:1em;border:1px solid #ffc107;background:#fff3cd;color:#856404;">';
-			$alert .= '<strong>' . esc_html__( 'Warning: ', 'surecart' ) . '</strong> ';
-			$alert .= esc_html__( 'You are using a SureCart Product widget without the SureCart product wrapper. Please wrap it inside a container type of "Product Form".', 'surecart' );
+			$alert .= sprintf(
+				/* translators: %s: URL to the SureCart documentation page. */
+				esc_html__( '⚠️ Warning: SureCart widgets must be placed inside a "Product Form" container to function properly. Please wrap them accordingly. &nbsp; %s', 'surecart' ),
+				'<a href="https://surecart.com/docs/elementor-product-form" target="_blank" rel="noopener noreferrer">' . esc_html__( 'Learn more', 'surecart' ) . '</a>'
+			);
 			$alert .= '</div>';
 
 			return $alert . $content;
