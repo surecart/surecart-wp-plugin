@@ -4,6 +4,8 @@ namespace SureCart\Integrations\Elementor;
 
 /**
  * Elementor core block styles service.
+ * This service is responsible for enqueuing core block styles for our product page
+ * as Elementor dequeues them in certain cases resulting in broken styles.
  */
 class ElementorCoreBlockStylesService {
 	/**
@@ -23,10 +25,9 @@ class ElementorCoreBlockStylesService {
 	 */
 	public function bootstrap() {
 		// check if core block styles are (should be)enqueued.
-		add_action( 'wp_enqueue_scripts', [ $this, 'areCoreBlockStylesEnqueued' ], 999 );
-
-		// enqueue core block styles if they are not enqueued.
-		add_action( 'elementor/frontend/before_get_builder_content', [ $this, 'maybeEnqueueCoreBlockStyles' ] );
+		add_action( 'wp_enqueue_scripts', [ $this, 'areCoreBlockStylesEnqueued' ], 900 );
+		// enqueue core block styles if they have been dequeued for our product page.
+		add_action( 'wp_enqueue_scripts', [ $this, 'maybeEnqueueCoreBlockStyles' ], 9999 );
 	}
 
 	/**
@@ -45,10 +46,9 @@ class ElementorCoreBlockStylesService {
 	/**
 	 * Maybe enqueue core block styles.
 	 *
-	 * @param Elementor\Core\DocumentTypes\Post $content The content.
 	 * @return void
 	 */
-	public function maybeEnqueueCoreBlockStyles( $content ) {
+	public function maybeEnqueueCoreBlockStyles() {
 		// separate core block assets are not loaded, so don't enqueue.
 		if ( wp_should_load_separate_core_block_assets() ) {
 			return;
@@ -56,11 +56,6 @@ class ElementorCoreBlockStylesService {
 
 		// not a product, so don't enqueue.
 		if ( 'sc_product' !== get_post_type() ) {
-			return;
-		}
-
-		// already has blocks, so don't enqueue.
-		if ( has_blocks( $content ) ) {
 			return;
 		}
 
