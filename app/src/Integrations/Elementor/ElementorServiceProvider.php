@@ -18,7 +18,14 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function register( $container ) {
+		if ( ! class_exists( '\Elementor\Plugin' ) ) {
+			return;
+		}
+
 		// nothing to register.
+		$container['elementor.core.block.styles.service'] = function () {
+			return new ElementorCoreBlockStylesService();
+		};
 	}
 
 	/**
@@ -31,11 +38,13 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 			return;
 		}
 
+		// bootstrap the core block styles service.
+		$container['elementor.core.block.styles.service']->bootstrap();
+
 		// Elementor integration.
 		add_action( 'elementor/widgets/register', [ $this, 'widget' ] );
 		add_action( 'elementor/editor/before_enqueue_scripts', [ $this, 'load_scripts' ] );
 		add_action( 'elementor/elements/categories_registered', [ $this, 'categories_registered' ] );
-		add_filter( 'pre_option_elementor_optimized_gutenberg_loading', [ $this, 'disableOptimizedGutenbergLoadingForPostType' ] );
 		add_filter( 'surecart/product/replace_content_with_product_info_part', [ $this, 'doNotReplaceContentIfRenderingWithElementor' ] );
 
 		// Register product theme condition.
@@ -62,20 +71,6 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 		}
 
 		return $replace_content;
-	}
-
-	/**
-	 * Disable optimized gutenberg loading.
-	 *
-	 * @param string $option The option.
-	 *
-	 * @return string
-	 */
-	public function disableOptimizedGutenbergLoadingForPostType( $option ) {
-		if ( get_post_type() === 'sc_product' ) {
-			return false;
-		}
-		return $option;
 	}
 
 	/**
