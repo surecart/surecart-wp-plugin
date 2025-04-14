@@ -15,6 +15,6 @@ trait HasShippingMethod {
 	 * @return void
 	 */
 	public function setShippingMethodAttribute( $value ) {
-		$this->setCollection( 'shipping_method', $value, ShippingMethod::class );
+		$this->setRelation( 'shipping_method', $value, ShippingMethod::class );
 	}
 }
