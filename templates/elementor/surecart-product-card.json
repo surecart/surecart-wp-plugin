@@ -29,16 +29,6 @@
 							"size": 300,
 							"sizes": []
 						},
-						"grid_columns_grid": {
-							"unit": "fr",
-							"size": 1,
-							"sizes": []
-						},
-						"grid_rows_grid": {
-							"unit": "fr",
-							"size": 1,
-							"sizes": []
-						},
 						"presetTitle": "Container",
 						"presetIcon": "eicon-container",
 						"background_background": "classic",
@@ -68,8 +58,7 @@
 							"left": "0",
 							"isLinked": true
 						},
-						"align-items": "stretch",
-						"grid_auto_flow": "column"
+						"align-items": "stretch"
 					},
 					"elements": [
 						{
