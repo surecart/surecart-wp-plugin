@@ -31,10 +31,10 @@ class PermalinksSettingsService {
 		return wp_parse_args(
 			$settings,
 			[
-				'buy_page'        => _x( 'buy', 'buy-page-slug', 'surecart' ),
-				'product_page'    => _x( 'products', 'product-page-slug', 'surecart' ),
-				'collection_page' => _x( 'collections', 'collection-page-slug', 'surecart' ),
-				'upsell_page'     => _x( 'offer', 'upsell-page-slug', 'surecart' ),
+				'buy_page'        => 'buy',
+				'product_page'    => 'products',
+				'collection_page' => 'collections',
+				'upsell_page'     => 'offer',
 			]
 		);
 	}

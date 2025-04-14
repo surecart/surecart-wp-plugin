@@ -47,43 +47,43 @@ class TemplateUtilityService {
 		$this->template_parts_directory = $template_parts_directory;
 		$this->plugin_template_types    = array(
 			'single-sc_product'       => array(
-				'title'       => class_exists( 'WooCommerce' ) ? _x( 'SureCart Products', 'Template name', 'surecart' ) : _x( 'Products', 'Template name', 'surecart' ),
-				'description' => __( 'Display all individual products unless a custom template has been applied.', 'surecart' ),
+				'title'       => class_exists( 'WooCommerce' ) ? 'SureCart Products' : 'Products',
+				'description' => 'Display all individual products unless a custom template has been applied.',
 				'post_types'  => array( 'sc_product' ),
 			),
 			'product-info'            => array(
-				'title'       => class_exists( 'WooCommerce' ) ? _x( 'SureCart Products', 'Template name', 'surecart' ) : _x( 'Products', 'Template name', 'surecart' ),
-				'description' => __( 'Display all individual products content unless a custom template has been applied.', 'surecart' ),
+				'title'       => class_exists( 'WooCommerce' ) ? 'SureCart Products' : 'Products',
+				'description' => 'Display all individual products content unless a custom template has been applied.',
 				'site-editor' => false,
 				'post_types'  => array( 'sc_product' ),
 			),
 			'single-upsell'           => array(
-				'title'       => _x( 'Upsells', 'Template name', 'surecart' ),
-				'description' => __( 'Display all individual upsells unless a custom template has been applied.', 'surecart' ),
+				'title'       => 'Upsells',
+				'description' => 'Display all individual upsells unless a custom template has been applied.',
 				'post_types'  => array( 'sc_upsell' ),
 			),
 			'upsell-info'             => array(
-				'title'       => _x( 'Upsells', 'Template name', 'surecart' ),
-				'description' => __( 'Display all individual upsells content unless a custom template has been applied.', 'surecart' ),
+				'title'       => 'Upsells',
+				'description' => 'Display all individual upsells content unless a custom template has been applied.',
 				'site-editor' => false,
 				'post_types'  => array( 'sc_upsell' ),
 			),
 			'taxonomy-sc_collection'  => array(
-				'title'       => class_exists( 'WooCommerce' ) ? _x( 'SureCart Product Collections', 'Template name', 'surecart' ) : _x( 'Product Collections', 'Template name', 'surecart' ),
-				'description' => __( 'Display all individual product collections unless a custom template has been applied.', 'surecart' ),
+				'title'       => class_exists( 'WooCommerce' ) ? 'SureCart Product Collections' : 'Product Collections',
+				'description' => 'Display all individual product collections unless a custom template has been applied.',
 			),
 			'product-collection-part' => array(
-				'title'       => class_exists( 'WooCommerce' ) ? _x( 'SureCart Product Collections', 'Template name', 'surecart' ) : _x( 'Product Collections', 'Template name', 'surecart' ),
-				'description' => __( 'Display all individual product collections content unless a custom template has been applied.', 'surecart' ),
+				'title'       => class_exists( 'WooCommerce' ) ? 'SureCart Product Collections' : 'Product Collections',
+				'description' => 'Display all individual product collections content unless a custom template has been applied.',
 				'site-editor' => false,
 			),
 			'cart'                    => array(
-				'title'       => class_exists( 'WooCommerce' ) ? _x( 'SureCart Cart', 'Template name', 'surecart' ) : _x( 'Cart', 'Template name', 'surecart' ),
-				'description' => __( 'The slide-out cart template.', 'surecart' ),
+				'title'       => class_exists( 'WooCommerce' ) ? 'SureCart Cart' : 'Cart',
+				'description' => 'The slide-out cart template.',
 			),
 			'checkout'                => array(
-				'title'       => class_exists( 'WooCommerce' ) ? _x( 'SureCart Checkout', 'Template name', 'surecart' ) : _x( 'Checkout', 'Template name', 'surecart' ),
-				'description' => __( 'Display the checkout content unless a custom template has been applied.', 'surecart' ),
+				'title'       => class_exists( 'WooCommerce' ) ? 'SureCart Checkout' : 'Checkout',
+				'description' => 'Display the checkout content unless a custom template has been applied.',
 			),
 		);
 	}
