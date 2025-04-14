@@ -384,6 +384,29 @@ class TemplateUtilityService {
 	 * @return string Human friendly title.
 	 */
 	public function getBlockTemplateTitle( $template_slug ) {
+		// This is just for translation purposes.
+		$translations = array(
+			'product-info'           => array(
+				'title-sc' => __( 'SureCart Products', 'surecart' ),
+				'title'    => __( 'Products', 'surecart' ),
+			),
+			'single-upsell'          => array(
+				'title' => __( 'Upsells', 'surecart' ),
+			),
+			'taxonomy-sc_collection' => array(
+				'title-sc' => __( 'SureCart Product Collections', 'surecart' ),
+				'title'    => __( 'Product Collections', 'surecart' ),
+			),
+			'cart'                   => array(
+				'title-sc' => __( 'SureCart Cart', 'surecart' ),
+				'title'    => __( 'Cart', 'surecart' ),
+			),
+			'checkout'               => array(
+				'title-sc' => __( 'SureCart Checkout', 'surecart' ),
+				'title'    => __( 'Checkout', 'surecart' ),
+			),
+		);
+
 		if ( isset( $this->plugin_template_types[ $template_slug ] ) ) {
 			return $this->plugin_template_types[ $template_slug ]['title'];
 		}
@@ -398,6 +421,18 @@ class TemplateUtilityService {
 	 * @return string Template description.
 	 */
 	public function getBlockTemplateDescription( $template_slug ) {
+		// This is just for translation purposes.
+		$translations = array(
+			'single-sc_product'       => __( 'Display all individual products unless a custom template has been applied.', 'surecart' ),
+			'product-info'            => __( 'Display all individual products content unless a custom template has been applied.', 'surecart' ),
+			'single-upsell'           => __( 'Display all individual upsells unless a custom template has been applied.', 'surecart' ),
+			'upsell-info'             => __( 'Display all individual upsells content unless a custom template has been applied.', 'surecart' ),
+			'taxonomy-sc_collection'  => __( 'Display all individual product collections unless a custom template has been applied.', 'surecart' ),
+			'product-collection-part' => __( 'Display all individual product collections content unless a custom template has been applied.', 'surecart' ),
+			'cart'                    => __( 'The slide-out cart template.', 'surecart' ),
+			'checkout'                => __( 'Display the checkout content unless a custom template has been applied.', 'surecart' ),
+		);
+
 		if ( isset( $this->plugin_template_types[ $template_slug ] ) ) {
 			return $this->plugin_template_types[ $template_slug ]['description'];
 		}

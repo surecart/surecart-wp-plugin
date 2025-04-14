@@ -42,7 +42,8 @@ class PermalinksSettingsService {
 	/**
 	 * Update the permalink settings.
 	 *
-	 * @param array $value The value to update.
+	 * @param string $key   The key to update.
+	 * @param array  $value The value to update.
 	 *
 	 * @return bool
 	 */
