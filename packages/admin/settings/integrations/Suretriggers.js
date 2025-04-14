@@ -21,7 +21,7 @@ export default () => {
 	useEffect(() => {
 		if (window?.SureTriggers) {
 			window.SureTriggers.init({
-				st_embed_url: 'https://app.suretriggers.com/embed-login',
+				st_embed_url: 'https://app.ottokit.com/embed-login',
 				client_id: '07eba731-9491-4887-a0ef-6bb688b3f7ca',
 				embedded_identifier: 'surecart-suretriggers-integration',
 				target: 'suretriggers-iframe-wrapper',
@@ -143,9 +143,9 @@ export default () => {
 
 	return (
 		<SettingsBox
-			title={__('Integrations via SureTriggers', 'surecart')}
+			title={__('Integrations via Ottokit', 'surecart')}
 			description={__(
-				'Boost your sales by automating customer actions & streamlining workflows with seamless SureCart and SureTriggers integration.',
+				'Boost your sales by automating customer actions & streamlining workflows with seamless SureCart and Ottokit integration.',
 				'surecart'
 			)}
 			noButton
@@ -157,12 +157,12 @@ export default () => {
 					`}
 				>
 					<Flex justify="flex-start">
-						<img src={sureTriggers?.logo} alt="SureTriggers" />
-						<img src={sureTriggers?.logoText} alt="SureTriggers" />
+						<img src={sureTriggers?.logo} alt="Ottokit" />
+						<img src={sureTriggers?.logoText} alt="Ottokit" />
 					</Flex>
 					<p>
 						{__(
-							'SureTriggers lets you connect SureCart to hundreds of apps, CRMs and tools such as Slack, Mailchimp, etc. With this you have have various automations setup between SureCart events & other apps. Whatever you want SureCart & SureTriggers has got you covered.',
+							'Ottokit lets you connect SureCart to hundreds of apps, CRMs and tools such as Slack, Mailchimp, etc. With this you have have various automations setup between SureCart events & other apps. Whatever you want SureCart & Ottokit has got you covered.',
 							'surecart'
 						)}
 					</p>
@@ -177,7 +177,7 @@ export default () => {
 				>
 					<img
 						src={sureTriggers?.banner}
-						alt="SureTriggers"
+						alt="Ottokit"
 						width="100%"
 						loading="lazy"
 					/>

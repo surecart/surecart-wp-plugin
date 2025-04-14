@@ -153,6 +153,7 @@ return array(
 		\SureCart\Integrations\Beaver\BeaverServiceProvider::class,
 		\SureCart\Integrations\Bricks\BricksServiceProvider::class,
 		\SureCart\Integrations\Avada\AvadaServiceProvider::class,
+		\SureCart\Integrations\HelpWidget\HelpWidgetServiceProvider::class,
 	),
 
 	/**

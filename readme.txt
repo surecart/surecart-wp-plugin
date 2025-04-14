@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: ecommerce plugin, online store, subscriptions, stripe, payments
 Requires at least: 6.6
 Tested up to: 6.7
-Stable tag: 3.6.1
+Stable tag: 3.6.2
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -210,7 +210,7 @@ SureCart has 2 types of integrations. The first are natively available directly 
 * Thrive Automator
 * And more are coming
 
-The second type of integrations are done with [SureTriggers](https://wordpress.org/plugins/suretriggers/), which is like Zapier for WordPress. SureTriggers integrates with over 500 apps and services. These will require you to add the SureTriggers plugin to your website to integrate with:
+The second type of integrations are done with [Ottokit](https://wordpress.org/plugins/suretriggers/), which is like Zapier for WordPress. Ottokit integrates with over 500 apps and services. These will require you to add the Ottokit plugin to your website to integrate with:
 
 * ActiveCampaign
 * ConvertKit
@@ -304,6 +304,16 @@ Yes, the checkout form can be customized using our visual builder. You can chang
 Accessibility is a huge priority for the entire team building SureCart. As you know, accessibility is an ongoing improvement task. Our development and QA teams are trained in accessibility best practices and build/test each new feature for accessibility. If you come across any edge issues, we want to know about it and will prioritize its resolution. Please contact us via our website.
 
 == Changelog ==
+
+= 3.6.2 - April 11th, 2025 =
+- New: Admin help widget to SureCart admin pages.
+- Improvement: Add new php filter to more easily filter platform requests.
+- Change: Remove tax percentage on checkout as it can be confusing for some users during checkout for combined regional and country tax.
+- Change: Update SureTriggers to Ottokit in the admin UI.
+- Fix: Issue with customer dashboard address forms not rendering correctly.
+- Fix: Donation label in admin not reflecting the store currency.
+- Fix: Edge case where pay what you want product was not loading on checkout if amount was already set by admin.
+- Fix: Deprecation notice in incoming webhook in site health for php 8.3+.
 
 = 3.6.1 - March 21st, 2025 =
 - Fix: Issue with address fields not properly rendering on admin pages.

@@ -468,6 +468,7 @@
   "sc-customer-edit": {
     "customer": true,
     "heading": true,
+    "i18n": true,
     "success-url": true,
     "style": true,
     "id": true,
