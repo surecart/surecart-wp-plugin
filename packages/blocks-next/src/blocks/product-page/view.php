@@ -1,9 +1,12 @@
 <?php
+
+use SureCart\Models\Blocks\ProductPageBlock;
+
 $query = new WP_Query(
 	[
 		'post_type'      => 'sc_product',
 		'posts_per_page' => 1,
-		'post__in'       => [ get_the_ID() ],
+		'post__in'       => [ $attributes['product_post_id'] ?? get_the_ID() ],
 	]
 );
 
@@ -12,6 +15,12 @@ $query = new WP_Query(
 <?php
 while ( $query->have_posts() ) {
 	$query->the_post();
+
+	$controller = new ProductPageBlock();
+	$state      = $controller->state();
+	$context    = $controller->context();
+	wp_interactivity_state( 'surecart/product-page', $state );
+
 	$block_instance = $block->parsed_block;
 
 	// Set the block name to one that does not correspond to an existing registered block.
@@ -40,11 +49,6 @@ while ( $query->have_posts() ) {
 	remove_filter( 'post_thumbnail_size', $change_thumbnail_size, 1 );
 	// Wrap the render inner blocks in a `li` element with the appropriate post classes.
 	$post_classes = implode( ' ', get_post_class( 'wp-block-post' ) );
-	$controller   = new \SureCart\Models\Blocks\ProductPageBlock();
-	$state        = $controller->state();
-	$context      = $controller->context();
-
-	wp_interactivity_state( 'surecart/product-page', $state );
 	?>
 <form
 	<?php
