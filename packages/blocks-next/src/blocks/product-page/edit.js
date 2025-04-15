@@ -51,31 +51,19 @@ export default (props) => {
 
 	const Component = hasInnerBlocks ? QueryContent : QueryPlaceholder;
 
-	const shouldPreviewBlock =
-		!!attributes?.product_post_id && hasInnerBlocks && blockContext?.postId;
-
 	return (
 		<>
-			{shouldPreviewBlock ? (
-				<BlockContextProvider
-					key={blockContext.postId}
-					value={blockContext}
-				>
-					<Component
-						{...props}
-						openPatternSelectionModal={() =>
-							setIsPatternSelectionModalOpen(true)
-						}
-					/>
-				</BlockContextProvider>
-			) : (
+			<BlockContextProvider
+				key={blockContext?.postId}
+				value={blockContext}
+			>
 				<Component
 					{...props}
 					openPatternSelectionModal={() =>
 						setIsPatternSelectionModalOpen(true)
 					}
 				/>
-			)}
+			</BlockContextProvider>
 
 			{isPatternSelectionModalOpen && (
 				<PatternSelectionModal
