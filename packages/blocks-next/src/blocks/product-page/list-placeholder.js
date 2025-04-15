@@ -15,7 +15,6 @@ import { store as coreStore } from '@wordpress/core-data';
 import { useState } from '@wordpress/element';
 import { Button, Placeholder } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
-import { Icon, chevronLeft, chevronRight } from '@wordpress/icons';
 
 /**
  * Internal dependencies.
@@ -65,7 +64,6 @@ export default function QueryPlaceholder({
 		activeBlockVariation?.icon ||
 		blockType?.icon?.src;
 	const label = activeBlockVariation?.title || blockType?.title;
-	const [step, setStep] = useState(1);
 
 	// Checks whether we are in the sc-product post type or a template
 	const shouldDisableProductSelector = usePostTypeCheck(
@@ -78,11 +76,19 @@ export default function QueryPlaceholder({
 		]
 	);
 
+	const instructions = shouldDisableProductSelector
+		? __(
+				'Choose a pattern for the product page or start with a basic layout.',
+				'surecart'
+		  )
+		: __(
+				'Choose a product & pattern for the product page or start with a basic layout.'
+		  );
+
 	const onChoose = (post) => {
 		setAttributes({
 			product_post_id: post?.id,
 		});
-		setStep(2);
 	};
 
 	const post = useSelect(
@@ -109,15 +115,6 @@ export default function QueryPlaceholder({
 					marginBottom: '1em',
 				}}
 			>
-				{step === 2 && (
-					<div
-						className="components-placeholder__label"
-						style={{ marginBottom: '1em' }}
-					>
-						{__('Product', 'surecart')}
-					</div>
-				)}
-
 				<div
 					style={{
 						border: '1px solid #ddd',
@@ -137,14 +134,12 @@ export default function QueryPlaceholder({
 							setIsVisible(true);
 						}}
 						hasRichPreviews={true}
-						hasUnlinkControl={step === 1}
-						hasEditControl={step === 1}
+						hasUnlinkControl={true}
+						hasEditControl={!post?.id}
 						onRemove={() => {
 							setAttributes({
 								product_post_id: null,
 							});
-
-							setStep(1);
 							setIsVisible(false);
 						}}
 					/>
@@ -154,6 +149,10 @@ export default function QueryPlaceholder({
 	};
 
 	const renderProductSelector = () => {
+		if (!!post?.id) {
+			return null;
+		}
+
 		return (
 			<>
 				<div
@@ -163,12 +162,10 @@ export default function QueryPlaceholder({
 				>
 					<div style={{ display: 'flex', gap: '1em' }}>
 						<Button
-							variant="secondary"
+							variant="primary"
 							onClick={() => setIsVisible(!isVisible)}
 						>
-							{!post?.id
-								? __('Choose Product', 'surecart')
-								: __('Replace Product', 'surecart')}
+							{__('Choose Product', 'surecart')}
 
 							<ProductSelector
 								isVisible={isVisible}
@@ -177,19 +174,6 @@ export default function QueryPlaceholder({
 								onClose={() => setIsVisible(false)}
 							/>
 						</Button>
-
-						{/* If post, then add another Next button */}
-						{post?.id && (
-							<Button
-								variant="secondary"
-								onClick={() => {
-									setStep(2);
-								}}
-							>
-								Next
-								<Icon icon={chevronRight} />
-							</Button>
-						)}
 					</div>
 				</div>
 			</>
@@ -199,36 +183,9 @@ export default function QueryPlaceholder({
 	const renderPatternSelector = () => {
 		return (
 			<div>
-				<div
-					className="components-placeholder__label"
-					style={{ marginBottom: '1em' }}
-				>
-					{__('Choose a pattern', 'surecart')}
-				</div>
 				<div style={{ display: 'flex', gap: '1em' }}>
-					{!shouldDisableProductSelector && (
-						<Button
-							variant="secondary"
-							onClick={() => {
-								setStep(1);
-							}}
-						>
-							<Icon icon={chevronLeft} />
-							{__('Back', 'surecart')}
-						</Button>
-					)}
-
-					{!!hasPatterns && (
-						<Button
-							variant="primary"
-							onClick={openPatternSelectionModal}
-						>
-							{__('Choose', 'surecart')}
-						</Button>
-					)}
-
 					<Button
-						variant="secondary"
+						variant="primary"
 						onClick={() => {
 							const blocks =
 								createBlocksFromInnerBlocksTemplate(template);
@@ -246,8 +203,17 @@ export default function QueryPlaceholder({
 							replaceInnerBlocks(clientId, blocks, false);
 						}}
 					>
-						{__('Start basic', 'surecart')}
+						{__('Create Form', 'surecart')}
 					</Button>
+
+					{!!hasPatterns && (
+						<Button
+							variant="secondary"
+							onClick={openPatternSelectionModal}
+						>
+							{__('Choose a template', 'surecart')}
+						</Button>
+					)}
 				</div>
 			</div>
 		);
@@ -258,23 +224,15 @@ export default function QueryPlaceholder({
 			<Placeholder
 				icon={icon}
 				label={label}
-				instructions={__(
-					'Choose a product & pattern for the product page or start with a basic layout.'
-				)}
+				instructions={instructions}
 				style={{
 					flexDirection: 'column',
 				}}
 			>
 				<div>
 					<div>{renderProductPreview()}</div>
-
-					{step === 1 &&
-						!shouldDisableProductSelector &&
-						renderProductSelector()}
-
-					{step === 2 || shouldDisableProductSelector
-						? renderPatternSelector()
-						: null}
+					<div>{renderProductSelector()}</div>
+					{post?.id && <div>{renderPatternSelector()}</div>}
 				</div>
 			</Placeholder>
 		</div>
