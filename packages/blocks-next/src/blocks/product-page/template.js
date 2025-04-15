@@ -325,4 +325,5 @@ export default [
 			],
 		],
 	],
+	['core/post-content'],
 ];
