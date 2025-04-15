@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-03-20T20:05:17",
+  "timestamp": "2025-04-15T16:57:54",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.18.3",
@@ -9446,6 +9446,41 @@
           "values": [
             {
               "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "i18n",
+          "type": "{ defaultCountryFields: CountryLocaleFieldValue[]; countryFields: CountryLocaleField[]; }",
+          "complexType": {
+            "original": "{\n    defaultCountryFields: Array<CountryLocaleFieldValue>;\n    countryFields: Array<CountryLocaleField>;\n  }",
+            "resolved": "{ defaultCountryFields: CountryLocaleFieldValue[]; countryFields: CountryLocaleField[]; }",
+            "references": {
+              "Array": {
+                "location": "global",
+                "id": "global::Array"
+              },
+              "CountryLocaleFieldValue": {
+                "location": "import",
+                "path": "../../../../types",
+                "id": "src/types.ts::CountryLocaleFieldValue"
+              },
+              "CountryLocaleField": {
+                "location": "import",
+                "path": "../../../../types",
+                "id": "src/types.ts::CountryLocaleField"
+              }
+            }
+          },
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "{ defaultCountryFields: CountryLocaleFieldValue[]; countryFields: CountryLocaleField[]; }"
             }
           ],
           "optional": false,
@@ -44278,6 +44313,16 @@
       "docstring": "",
       "path": "src/types.ts"
     },
+    "src/types.ts::CountryLocaleFieldValue": {
+      "declaration": "export interface CountryLocaleFieldValue {\n  name: string;\n  priority: number;\n  label: boolean;\n}",
+      "docstring": "",
+      "path": "src/types.ts"
+    },
+    "src/types.ts::CountryLocaleField": {
+      "declaration": "export interface CountryLocaleField {\n  [key: string]: {\n    name: CountryLocaleFieldValue;\n    address_1: CountryLocaleFieldValue;\n    address_2: CountryLocaleFieldValue;\n    city: CountryLocaleFieldValue;\n    state: CountryLocaleFieldValue;\n    postcode: CountryLocaleFieldValue;\n  };\n}",
+      "docstring": "",
+      "path": "src/types.ts"
+    },
     "src/types.ts::SubscriptionProtocol": {
       "declaration": "export interface SubscriptionProtocol {\n  id: string;\n  object: 'subscription_protocol';\n  cancel_behavior: 'pending' | 'immediate';\n  downgrade_behavior: 'pending' | 'immediate';\n  payment_retry_window_weeks: number;\n  upgrade_behavior: 'pending' | 'immediate';\n  preservation_enabled: boolean;\n  preservation_locales: {\n    reasons_title: string;\n    reasons_description: string;\n    skip_link: string;\n    preserve_title: string;\n    preserve_description: string;\n    preserve_button: string;\n    cancel_link: string;\n  };\n  preservation_coupon: Coupon | string;\n  created_at: number;\n  updated_at: number;\n}",
       "docstring": "",
@@ -44335,16 +44380,6 @@
     },
     "src/types.ts::Address": {
       "declaration": "export interface Address extends Object {\n  name?: string;\n  line_1?: string;\n  line_2?: string;\n  city?: string;\n  state?: string;\n  postal_code?: string;\n  country?: string;\n}",
-      "docstring": "",
-      "path": "src/types.ts"
-    },
-    "src/types.ts::CountryLocaleFieldValue": {
-      "declaration": "export interface CountryLocaleFieldValue {\n  name: string;\n  priority: number;\n  label: boolean;\n}",
-      "docstring": "",
-      "path": "src/types.ts"
-    },
-    "src/types.ts::CountryLocaleField": {
-      "declaration": "export interface CountryLocaleField {\n  [key: string]: {\n    name: CountryLocaleFieldValue;\n    address_1: CountryLocaleFieldValue;\n    address_2: CountryLocaleFieldValue;\n    city: CountryLocaleFieldValue;\n    state: CountryLocaleFieldValue;\n    postcode: CountryLocaleFieldValue;\n  };\n}",
       "docstring": "",
       "path": "src/types.ts"
     },
