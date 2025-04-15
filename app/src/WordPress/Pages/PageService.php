@@ -276,4 +276,40 @@ class PageService {
 		// Check if the current URL is the customer dashboard URL.
 		return untrailingslashit( $current_url ) === untrailingslashit( $customer_dashboard_url );
 	}
+
+	/**
+	 * Get SureCart page screen ids.
+	 *
+	 * @return array
+	 */
+	public function getSureCartPageScreenIds(): array {
+		return apply_filters(
+			'sc_surecart_page_screen_ids',
+			[
+				'toplevel_page_sc-dashboard',
+				'surecart_page_sc-orders',
+				'surecart_page_sc-abandoned-checkouts',
+				'surecart_page_sc-invoices',
+				'sc_product',
+				'surecart_page_sc-products',
+				'surecart_page_sc-product-collections',
+				'surecart_page_sc-bumps',
+				'surecart_page_sc-upsell-funnels',
+				'surecart_page_sc-product-groups',
+				'surecart_page_sc-coupons',
+				'surecart_page_sc-licenses',
+				'surecart_page_sc-subscriptions',
+				'surecart_page_sc-cancellation-insights',
+				'surecart_page_sc-affiliates',
+				'surecart_page_sc-affiliate-requests',
+				'surecart_page_sc-affiliate-clicks',
+				'surecart_page_sc-affiliate-referrals',
+				'surecart_page_sc-affiliate-payouts',
+				'surecart_page_sc-customers',
+				'edit-sc_form',
+				'sc_form',
+				'surecart_page_sc-settings',
+			]
+		);
+	}
 }
