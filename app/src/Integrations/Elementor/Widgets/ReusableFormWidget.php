@@ -1,6 +1,6 @@
 <?php
 
-namespace SureCart\Integrations\Elementor;
+namespace SureCart\Integrations\Elementor\Widgets;
 
 use Elementor\Widget_Base;
 
