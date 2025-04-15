@@ -81,7 +81,7 @@ class RolesService {
 			__( 'SureCart Shop Worker', 'surecart' ),
 			[
 				'read'         => true,
-				'edit_posts'   => false,
+				'upload_files' => true,
 				'delete_posts' => false,
 			]
 		);
@@ -121,7 +121,6 @@ class RolesService {
 			$wp_roles->add_cap( 'sc_shop_manager', 'edit_user' );
 
 			$wp_roles->add_cap( 'sc_shop_worker', 'edit_posts' );
-			$wp_roles->add_cap( 'sc_shop_worker', 'upload_files' );
 			$wp_roles->add_cap( 'sc_shop_worker', 'edit_published_posts' );
 			$wp_roles->add_cap( 'sc_shop_worker', 'edit_others_posts' );
 
