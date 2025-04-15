@@ -1,117 +1,62 @@
 /**
  * External dependencies.
  */
-import clsx from 'clsx';
-
-/**
- * WordPress dependencies.
- */
 import { __ } from '@wordpress/i18n';
 import {
-	ExternalLink,
 	__experimentalTruncate as Truncate,
+	ExternalLink,
 } from '@wordpress/components';
-import { filterURLForDisplay, safeDecodeURI } from '@wordpress/url';
-import { Icon, info, currencyDollar } from '@wordpress/icons';
-import { __unstableStripHTML as stripHTML } from '@wordpress/dom';
+import clsx from 'clsx';
 
-/**
- * Filters the title for display. Removes the protocol and www prefix.
- *
- * @param {string} title The title to be filtered.
- *
- * @return {string} The filtered title.
- */
-function filterTitleForDisplay(title) {
-	// Derived from `filterURLForDisplay` in `@wordpress/url`.
-	return title
-		.replace(/^[a-z\-.\+]+[0-9]*:(\/\/)?/i, '')
-		.replace(/^www\./i, '');
-}
-
-export default function SelectorPreview({ value, controls }) {
-	const displayURL =
-		(value && filterURLForDisplay(safeDecodeURI(value.url), 24)) || '';
-
-	// url can be undefined if the href attribute is unset
-	const isEmptyURL = !value?.url?.length;
-
-	const displayTitle = !isEmptyURL && stripHTML(value?.title || displayURL);
-
-	const isUrlRedundant =
-		!value?.url || filterTitleForDisplay(displayTitle) === displayURL;
-
-	let icon;
-
-	if (isEmptyURL) {
-		icon = <Icon icon={info} size={32} />;
-	} else if (!!value?.gallery?.[0]?.url) {
-		icon = (
-			<img
-				className="block-editor-link-control__search-item-image"
-				src={value?.gallery?.[0]?.url}
-				alt={__('Product image', 'surecart')}
-			/>
-		);
-	} else {
-		icon = <Icon icon={currencyDollar} />;
-	}
-
+export default function SelectorPreview({
+	title,
+	subtitle,
+	url,
+	imageUrl,
+	controls,
+}) {
 	return (
 		<div
 			role="group"
 			aria-label={__('Manage link', 'surecart')}
-			className={clsx('block-editor-link-control__search-item', {
-				'is-current': true,
-				'is-rich': false,
-				'is-fetching': false,
-				'is-preview': true,
-				'is-error': isEmptyURL,
-				'is-url-title': displayTitle === displayURL,
-			})}
+			className="block-editor-link-control__search-item is-current is-preview"
 			style={{ padding: 0 }}
 		>
 			<div className="block-editor-link-control__search-item-top">
 				<span
 					className="block-editor-link-control__search-item-header"
 					role="figure"
-					aria-label={
-						/* translators: Accessibility text for the link preview when editing a link. */
-						__('Link information', 'surecart')
-					}
+					aria-label={__('Link information', 'surecart')}
 				>
 					<span
 						className={clsx(
 							'block-editor-link-control__search-item-icon',
-							{
-								'is-image': false,
-							}
+							{ 'is-image': !!imageUrl }
 						)}
 					>
-						{icon}
+						{!!imageUrl && (
+							<img
+								className="block-editor-link-control__search-item-image"
+								src={imageUrl}
+								alt={__('Product image', 'surecart')}
+							/>
+						)}
 					</span>
 					<span className="block-editor-link-control__search-item-details">
-						{!isEmptyURL ? (
-							<>
-								<ExternalLink
-									className="block-editor-link-control__search-item-title"
-									href={value.url}
-								>
-									<Truncate numberOfLines={1}>
-										{displayTitle}
-									</Truncate>
-								</ExternalLink>
-								{!isUrlRedundant && (
-									<span className="block-editor-link-control__search-item-info">
-										<Truncate numberOfLines={1}>
-											{displayURL}
-										</Truncate>
-									</span>
-								)}
-							</>
-						) : (
-							<span className="block-editor-link-control__search-item-error-notice">
-								{__('Link is empty', 'surecart')}
+						<ExternalLink
+							className="block-editor-link-control__search-item-title"
+							href={url}
+						>
+							<Truncate numberOfLines={1}>
+								<span className="block-editor-link-control__search-item-title">
+									{title}
+								</span>
+							</Truncate>
+						</ExternalLink>
+
+						{subtitle && (
+							<span className="block-editor-link-control__search-item-info">
+								{subtitle}
 							</span>
 						)}
 					</span>

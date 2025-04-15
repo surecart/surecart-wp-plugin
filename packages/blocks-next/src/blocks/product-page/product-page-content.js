@@ -87,11 +87,10 @@ export default function ProductPageEdit({
 							>
 								<SelectorPreview
 									key={post?.link}
-									value={{
-										...post,
-										url: post?.link,
-										title: post?.title?.rendered,
-									}}
+									title={post?.title?.rendered}
+									subtitle={post?.link}
+									url={post?.link}
+									imageUrl={post?.gallery?.[0]?.url}
 									controls={
 										<Button
 											icon={edit}
