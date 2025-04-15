@@ -8,15 +8,12 @@ import clsx from 'clsx';
  */
 import { __ } from '@wordpress/i18n';
 import {
-	Button,
 	ExternalLink,
 	__experimentalTruncate as Truncate,
 } from '@wordpress/components';
 import { filterURLForDisplay, safeDecodeURI } from '@wordpress/url';
-import { Icon, info, edit, trash, currencyDollar } from '@wordpress/icons';
+import { Icon, info, currencyDollar } from '@wordpress/icons';
 import { __unstableStripHTML as stripHTML } from '@wordpress/dom';
-import { useSelect } from '@wordpress/data';
-import { store as preferencesStore } from '@wordpress/preferences';
 
 /**
  * Filters the title for display. Removes the protocol and www prefix.
@@ -32,18 +29,7 @@ function filterTitleForDisplay(title) {
 		.replace(/^www\./i, '');
 }
 
-export default function SelectorPreview({
-	value,
-	onEditClick,
-	hasEditControl = true,
-	hasUnlinkControl = false,
-	onRemove,
-}) {
-	const showIconLabels = useSelect(
-		(select) => select(preferencesStore).get('core', 'showIconLabels'),
-		[]
-	);
-
+export default function SelectorPreview({ value, controls }) {
 	const displayURL =
 		(value && filterURLForDisplay(safeDecodeURI(value.url), 24)) || '';
 
@@ -130,24 +116,7 @@ export default function SelectorPreview({
 						)}
 					</span>
 				</span>
-				{hasEditControl && (
-					<Button
-						icon={edit}
-						label={__('Replace Product', 'surecart')}
-						onClick={onEditClick}
-						size="compact"
-						showTooltip={!showIconLabels}
-					/>
-				)}
-				{hasUnlinkControl && (
-					<Button
-						icon={trash}
-						label={__('Remove', 'surecart')}
-						onClick={onRemove}
-						size="compact"
-						showTooltip={!showIconLabels}
-					/>
-				)}
+				{controls}
 			</div>
 		</div>
 	);

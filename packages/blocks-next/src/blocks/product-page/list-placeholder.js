@@ -14,6 +14,7 @@ import {
 import { store as coreStore } from '@wordpress/core-data';
 import { useState } from '@wordpress/element';
 import { Button, Placeholder } from '@wordpress/components';
+import { trash } from '@wordpress/icons';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -130,18 +131,20 @@ export default function QueryPlaceholder({
 							url: post?.link,
 							title: post?.title?.rendered,
 						}}
-						onEditClick={() => {
-							setIsVisible(true);
-						}}
-						hasRichPreviews={true}
-						hasUnlinkControl={true}
-						hasEditControl={!post?.id}
-						onRemove={() => {
-							setAttributes({
-								product_post_id: null,
-							});
-							setIsVisible(false);
-						}}
+						controls={
+							<Button
+								icon={trash}
+								label={__('Remove', 'surecart')}
+								onClick={() => {
+									setAttributes({
+										product_post_id: null,
+									});
+									setIsVisible(false);
+								}}
+								size="compact"
+								showTooltip={true}
+							/>
+						}
 					/>
 				</div>
 			</div>
@@ -230,9 +233,15 @@ export default function QueryPlaceholder({
 				}}
 			>
 				<div>
-					<div>{renderProductPreview()}</div>
-					<div>{renderProductSelector()}</div>
-					{post?.id && <div>{renderPatternSelector()}</div>}
+					{!shouldDisableProductSelector ? (
+						<>
+							<div>{renderProductPreview()}</div>
+							<div>{renderProductSelector()}</div>
+							{post?.id && <div>{renderPatternSelector()}</div>}
+						</>
+					) : (
+						<div>{renderPatternSelector()}</div>
+					)}
 				</div>
 			</Placeholder>
 		</div>

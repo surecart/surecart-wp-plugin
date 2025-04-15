@@ -9,9 +9,10 @@ import {
 	InspectorControls,
 } from '@wordpress/block-editor';
 import { store as coreStore } from '@wordpress/core-data';
-import { PanelBody } from '@wordpress/components';
+import { PanelBody, Button } from '@wordpress/components';
 import { useState } from '@wordpress/element';
 import { useSelect } from '@wordpress/data';
+import { edit } from '@wordpress/icons';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -91,20 +92,35 @@ export default function ProductPageEdit({
 										url: post?.link,
 										title: post?.title?.rendered,
 									}}
-									onEditClick={() => setIsVisible(!isVisible)}
-									hasRichPreviews={true}
-									hasUnlinkControl={false}
-								/>
-								<ProductSelector
-									isVisible={isVisible}
-									post={post}
-									onChoose={(post) => {
-										setAttributes({
-											product_post_id: post.id,
-										});
-										setIsVisible(false);
-									}}
-									onClose={() => setIsVisible(false)}
+									controls={
+										<Button
+											icon={edit}
+											label={__(
+												'Replace Product',
+												'surecart'
+											)}
+											onClick={() =>
+												setIsVisible(!isVisible)
+											}
+											size="compact"
+											showTooltip={true}
+										>
+											<ProductSelector
+												isVisible={isVisible}
+												post={post}
+												onChoose={(post) => {
+													setAttributes({
+														product_post_id:
+															post.id,
+													});
+													setIsVisible(false);
+												}}
+												onClose={() =>
+													setIsVisible(false)
+												}
+											/>
+										</Button>
+									}
 								/>
 							</div>
 						)}
