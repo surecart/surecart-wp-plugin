@@ -40,8 +40,8 @@ class ProductPageWrapperService {
 	 * @return boolean
 	 */
 	public function hasAnySureCartProductBlock(): bool {
-		// Check for blocks starting with wp:surecart/product- or wp:surecart/price-, or wp-surecart-product- or wp-surecart-price-
-		return preg_match( '/wp:surecart\/product-|wp:surecart\/price-|wp-surecart-product-|wp-surecart-price-/', $this->content );
+		// Check for blocks starting with wp:surecart/product- or wp:surecart/price-, or wp-surecart-product- or wp-surecart-price-.
+		return preg_match( '/wp:surecart\/product-|wp:surecart\/price-|wp-surecart-product-|wp-surecart-price-|class="wp-block-surecart-|data-widget_type="surecart-/', $this->content );
 	}
 
 	/**

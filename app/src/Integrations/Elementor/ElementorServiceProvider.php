@@ -77,45 +77,21 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 			return $content;
 		}
 
-		// List of SureCart widget types to check.
-		$surecart_widgets = [
-			'surecart-add-to-cart-button',
-			'surecart-collection-tags',
-			'surecart-media',
-			'surecart-price-chooser',
-			'surecart-quantity',
-			'surecart-sales-badge',
-			'surecart-selected-price-ad-hoc-amount',
-			'surecart-variant-pills',
-		];
-
-		// Check if any of the SureCart widgets are present in the content.
-		$widget_found = false;
-		foreach ( $surecart_widgets as $widget_type ) {
-			if ( strpos( $content, 'data-widget_type="' . $widget_type . '.default"' ) !== false ) {
-				$widget_found = true;
-				break;
-			}
-		}
-
-		if ( ! $widget_found ) {
+		// If no surecart elements in the content, return.
+		$product_page_wrapper = new ProductPageWrapperService( $content );
+		if ( $product_page_wrapper->hasProductPageWrapper() || ! $product_page_wrapper->hasAnySureCartProductBlock() ) {
 			return $content;
 		}
 
-		// If the content does not have the product page wrapper, show the alert.
-		if ( ! ( new ProductPageWrapperService( $content ) )->hasProductPageWrapper() ) {
-			$alert  = '<div class="sc-alert sc-alert-warning" style="margin:1em 0;padding:1em;border:1px solid #ffc107;background:#fff3cd;color:#856404;">';
-			$alert .= sprintf(
-				/* translators: %s: URL to the SureCart documentation page. */
-				esc_html__( '⚠️ Warning: SureCart widgets must be placed inside a "Product Form" container to function properly. Please wrap them accordingly. &nbsp; %s', 'surecart' ),
-				'<a href="https://surecart.com/docs/elementor-product-form" target="_blank" rel="noopener noreferrer">' . esc_html__( 'Learn more', 'surecart' ) . '</a>'
-			);
-			$alert .= '</div>';
+		$alert  = '<div class="sc-alert sc-alert-warning" style="margin:1em 0;padding:1em;border:1px solid #ffc107;background:#fff3cd;color:#856404;">';
+		$alert .= sprintf(
+			/* translators: %s: URL to the SureCart documentation page. */
+			esc_html__( '⚠️ Warning: SureCart widgets must be placed inside a "Product Form" container to function properly. Please wrap them accordingly. &nbsp; %s', 'surecart' ),
+			'<a href="https://surecart.com/docs/elementor-product-form" target="_blank" rel="noopener noreferrer">' . esc_html__( 'Learn more', 'surecart' ) . '</a>'
+		);
+		$alert .= '</div>';
 
-			return $alert . $content;
-		}
-
-		return $content;
+		return $alert . $content;
 	}
 
 	/**
