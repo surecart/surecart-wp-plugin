@@ -21,22 +21,9 @@ export class ScLineItemTax {
 
     return (
       <Fragment>
-        {`${__('Tax:', 'surecart')} ${label}`}
-        {this.renderPercent()}
+        {`${__('Tax', 'surecart')} ${label}`}
       </Fragment>
     );
-  }
-
-  renderPercent() {
-    if (this.order?.tax_percent) {
-      return (
-        <Fragment>
-          {'('}
-          {this.order.tax_percent}%{')'}
-        </Fragment>
-      );
-    }
-    return '';
   }
 
   render() {
