@@ -19,7 +19,6 @@ import { ProductQuickViewButtonControls } from './product-quick-view-button-cont
 import { getSpacingPresetCssVar } from '../../../../blocks/util';
 
 export default ({
-	attributes,
 	attributes: { icon, quickViewButtonType, label, style, width },
 	setAttributes,
 }) => {
