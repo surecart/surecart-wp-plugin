@@ -62,6 +62,11 @@ abstract class AdminModelEditController {
 		wp_enqueue_style( 'wp-editor' );
 	}
 
+	/**
+	 * Enqueue components
+	 *
+	 * @return void
+	 */
 	public function enqueueComponents() {
 		wp_enqueue_script( 'surecart-components' );
 		wp_enqueue_style( 'surecart-themes-default' );
