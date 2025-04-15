@@ -29,6 +29,15 @@ class ElementorWidgetsService {
 	}
 
 	/**
+	 * Enqueue the styles.
+	 *
+	 * @return void
+	 */
+	public function enqueueStyles() {
+		wp_enqueue_style( 'surecart-elementor-container-style' );
+	}
+
+	/**
 	 * Elementor load scripts
 	 *
 	 * @return void
@@ -48,13 +57,13 @@ class ElementorWidgetsService {
 		);
 	}
 
-		/**
-		 * Elementor surecart categories register.
-		 *
-		 * @param \Elementor\Elements_Manager $elements_manager The elements manager.
-		 *
-		 * @return void
-		 */
+	/**
+	 * Elementor surecart categories register.
+	 *
+	 * @param \Elementor\Elements_Manager $elements_manager The elements manager.
+	 *
+	 * @return void
+	 */
 	public function categories_registered( $elements_manager ) {
 		$elements_manager->add_category(
 			'surecart-elementor-layout',
@@ -104,15 +113,6 @@ class ElementorWidgetsService {
 
 			$widget_manager->register( new $widget_class_name() );
 		}
-	}
-
-	/**
-	 * Enqueue the styles.
-	 *
-	 * @return void
-	 */
-	public function enqueueStyles() {
-		wp_enqueue_style( 'surecart-elementor-container-style' );
 	}
 
 	/**
