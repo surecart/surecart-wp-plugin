@@ -21,6 +21,9 @@
 		"quickViewButtonType": {
 			"type": "string",
 			"default": "icon"
+		},
+		"width": {
+			"type": "number"
 		}
 	},
 	"supports": {
@@ -59,15 +62,21 @@
 			"radius": true,
 			"style": true,
 			"width": true
-		}
+		},
+		"__experimentalSelector": ".wp-block-button .wp-block-button__link"
 	},
 	"textdomain": "surecart",
 	"render": "file:./view.php",
-	"style": "file:./style-index.css",
 	"editorScript": "file:./index.js",
 	"viewScriptModule": [
 		"@surecart/checkout",
 		"@surecart/product-page",
 		"@surecart/product-quick-view"
+	],
+	"style": [
+		"surecart-wp-buttons",
+		"surecart-wp-button",
+		"file:./style-index.css",
+		"wp-block-button"
 	]
 }

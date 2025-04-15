@@ -7,10 +7,18 @@ $show_icon       = 'icon' === $attributes['quickViewButtonType'] || 'both' === $
 $show_text       = 'text' === $attributes['quickViewButtonType'] || 'both' === $attributes['quickViewButtonType'];
 $label           = $attributes['label'] ?? __( 'Quick View', 'surecart' );
 $gap             = ! empty( $attributes['style']['spacing']['blockGap'] ) ? \SureCart::block()->styles()->getBlockGapPresetCssVar( $attributes['style']['spacing']['blockGap'] ) : '';
+$alignment       = ! empty( $attributes['style']['typography']['textAlign'] ) ? $attributes['style']['typography']['textAlign'] : '';
+if ( ! empty( $attributes['width'] ) ) {
+	$width_class = 'has-custom-width wp-block-button__width-' . $attributes['width'];
+}
 
 $style = ! empty( $gap )
 	? esc_attr( safecss_filter_attr( 'gap:' . $gap ) ) . ';'
 	: '';
+
+if ( ! empty( $alignment ) ) {
+	$style .= 'justify-content:' . esc_attr( $alignment ) . ';';
+}
 
 // We need to enqueue these assets as the quick view dialog is rendered in the footer.
 wp_enqueue_style( 'surecart-lightbox' );

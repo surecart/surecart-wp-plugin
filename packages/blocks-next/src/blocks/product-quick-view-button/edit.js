@@ -8,6 +8,8 @@ import {
 } from '@wordpress/block-editor';
 import { PanelBody } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
+import WidthSettingsPanel from './width-settings-panel';
+import classnames from 'classnames';
 
 /**
  * Internal dependencies
@@ -17,12 +19,14 @@ import { ProductQuickViewButtonControls } from './product-quick-view-button-cont
 import { getSpacingPresetCssVar } from '../../../../blocks/util';
 
 export default ({
-	attributes: { icon, quickViewButtonType, label, style },
+	attributes,
+	attributes: { icon, quickViewButtonType, label, style, width },
 	setAttributes,
 }) => {
 	const blockProps = useBlockProps({
 		style: {
 			gap: getSpacingPresetCssVar(style?.spacing?.blockGap),
+			justifyContent: style?.typography?.textAlign,
 		},
 	});
 
@@ -62,8 +66,22 @@ export default ({
 						}}
 					/>
 				</PanelBody>
+				<WidthSettingsPanel
+					selectedWidth={width}
+					setAttributes={setAttributes}
+				/>
 			</InspectorControls>
-			<div {...blockProps}>{renderButton()}</div>
+			<div
+				{...blockProps}
+				className={classnames(blockProps.className, {
+					'wp-block-button__link': true,
+					'wp-block-button': true,
+					[`has-custom-width wp-block-button__width-${width}`]: width,
+					[`has-custom-width sc-block-button__width-${width}`]: width,
+				})}
+			>
+				{renderButton()}
+			</div>
 		</>
 	);
 };

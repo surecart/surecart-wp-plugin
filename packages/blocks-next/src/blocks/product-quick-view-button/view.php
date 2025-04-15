@@ -13,6 +13,7 @@
 				'data-wp-interactive'    => '{ "namespace": "surecart/product-quick-view" }',
 				'data-wp-class--loading' => 'state.loading',
 				'style'                  => $style,
+				'class'                  => 'wp-block-button__link wp-block-button ' . $width_class,
 			]
 		)
 	);

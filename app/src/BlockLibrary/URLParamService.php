@@ -376,6 +376,6 @@ class URLParamService {
 	 * @return string
 	 */
 	public function removeProductQuickViewArg() {
-		return remove_query_arg( $this->product_quick_view_key, $this->url );
+		return remove_query_arg( $this->product_quick_view_key );
 	}
 }
