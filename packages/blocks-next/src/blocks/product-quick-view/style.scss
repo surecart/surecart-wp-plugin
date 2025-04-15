@@ -61,11 +61,8 @@
 			inset-inline-start: 0;
 			justify-content: space-between;
 			padding: 1em;
-			border-block-start: 1px solid rgb(var(--color-border-light));
-			background-color: rgb(var(--color-background) / .7);
-			-webkit-backdrop-filter: blur(12px);
-			backdrop-filter: blur(12px);
-			border-block-start: 1px solid rgb(var(--color-border-light));
+			background-color: #fff;
+			border-top: solid var(--sc-input-border-width) var(--sc-input-border-color);
 			z-index: 99;
 			text-decoration: none;
 			&.hidden {
