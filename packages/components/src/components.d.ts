@@ -887,6 +887,10 @@ export namespace Components {
     interface ScCustomerEdit {
         "customer": Customer;
         "heading": string;
+        "i18n": {
+    defaultCountryFields: Array<CountryLocaleFieldValue>;
+    countryFields: Array<CountryLocaleField>;
+  };
         "successUrl": string;
     }
     interface ScCustomerEmail {
@@ -7846,6 +7850,10 @@ declare namespace LocalJSX {
     interface ScCustomerEdit {
         "customer"?: Customer;
         "heading"?: string;
+        "i18n"?: {
+    defaultCountryFields: Array<CountryLocaleFieldValue>;
+    countryFields: Array<CountryLocaleField>;
+  };
         "successUrl"?: string;
     }
     interface ScCustomerEmail {
