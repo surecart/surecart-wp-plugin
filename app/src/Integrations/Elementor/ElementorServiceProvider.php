@@ -54,6 +54,7 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 			add_action( 'elementor/element/container/section_layout_container/after_section_start', [ $this, 'injectProductFormControls' ], 10 );
 			add_action( 'elementor/frontend/before_get_builder_content', [ $this, 'preReturnSerializedBlock' ] );
 			add_action( 'elementor/frontend/the_content', [ $this, 'doBlocksAtEnd' ], 10 );
+			add_filter( 'elementor/frontend/the_content', [ $this, 'showAlertIfNotUsingProductWrapper' ], 11 );
 		}
 
 		// Bootstrap the widgets.
@@ -61,6 +62,36 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 
 		// Bootstrap the dynamic tags.
 		$container['surecart.elementor.dynamic_tags']->bootstrap();
+	}
+
+	/**
+	 * Show alert if not using product wrapper.
+	 *
+	 * @param string $content The content.
+	 *
+	 * @return string
+	 */
+	public function showAlertIfNotUsingProductWrapper( $content ) {
+		// Show only to the users who has the permissions to edit the post.
+		if ( ! current_user_can( 'edit_posts', get_the_ID() ) ) {
+			return $content;
+		}
+
+		// If no surecart elements in the content, return.
+		$product_page_wrapper = new ProductPageWrapperService( $content );
+		if ( $product_page_wrapper->hasProductPageWrapper() || ! $product_page_wrapper->hasAnySureCartProductBlock() ) {
+			return $content;
+		}
+
+		$alert  = '<div class="sc-alert sc-alert-warning" style="margin:1em 0;padding:1em;border:1px solid #ffc107;background:#fff3cd;color:#856404;">';
+		$alert .= sprintf(
+			/* translators: %s: URL to the SureCart documentation page. */
+			esc_html__( '⚠️ Warning: SureCart widgets must be placed inside a "Product Form" container to function properly. Please wrap them accordingly. &nbsp; %s', 'surecart' ),
+			'<a href="https://surecart.com/docs/elementor-product-form" target="_blank" rel="noopener noreferrer">' . esc_html__( 'Learn more', 'surecart' ) . '</a>'
+		);
+		$alert .= '</div>';
+
+		return $alert . $content;
 	}
 
 	/**
@@ -143,7 +174,7 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 	 */
 	public function serializeBlock( $rendered, $parsed_block ) {
 		// don't serialize if it includes the surecart/ prefix.
-		if ( strpos( $parsed_block['blockName'], 'surecart/' ) !== false ) {
+		if ( strpos( $parsed_block['blockName'] ?? '', 'surecart/' ) !== false ) {
 			return $rendered;
 		}
 
