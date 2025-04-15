@@ -17,7 +17,6 @@ class ElementorWidgetsService {
 		add_action( 'elementor/elements/categories_registered', [ $this, 'categories_registered' ] );
 		add_action( 'elementor/widgets/register', [ $this, 'registerWidgets' ] );
 		add_action( 'elementor/frontend/after_enqueue_styles', [ $this, 'enqueueStyles' ], 1 );
-		add_action( 'elementor/widgets/register', [ $this, 'formWidget' ] );
 	}
 
 	/**
