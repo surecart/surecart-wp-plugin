@@ -12,6 +12,8 @@ import NewIntegration from './NewIntegration';
 import IntegrationHelp from './IntegrationHelp';
 import Integration from './Integration';
 import useSave from '../../../settings/UseSave';
+import { Button } from '@wordpress/components';
+import { help } from '@wordpress/icons';
 
 export default ({ product, id }) => {
 	const [modal, setModal] = useState(false);
@@ -75,17 +77,20 @@ export default ({ product, id }) => {
 				loading={loading}
 				title={__('Integrations', 'surecart')}
 				header_action={
-					<ScButton
-						onClick={() => setGuide(true)}
-						size="small"
-						circle
-						type="text"
+					<div
+						style={{
+							margin: '-10px',
+							opacity: 0.5,
+						}}
 					>
-						<sc-icon
-							name="help-circle"
-							style={{ fontSize: '14px', opacity: '0.65' }}
-						></sc-icon>
-					</ScButton>
+						<Button
+							onClick={() => setGuide(true)}
+							size="compact"
+							icon={help}
+							showTooltip={true}
+							label={__('Learn More', 'surecart')}
+						/>
+					</div>
 				}
 				footer={
 					<ScButton onClick={() => addIntegration()}>
@@ -94,7 +99,7 @@ export default ({ product, id }) => {
 					</ScButton>
 				}
 			>
-				{!!integrations?.length ? (
+				{!!integrations?.length && (
 					<ScCard noPadding>
 						<ScStackedList>
 							{(integrations || []).map(({ id }) => (
@@ -107,17 +112,6 @@ export default ({ product, id }) => {
 							))}
 						</ScStackedList>
 					</ScCard>
-				) : (
-					<p
-						css={css`
-							opacity: 0.75;
-						`}
-					>
-						{__(
-							'To sync purchases of this product, add an integration.',
-							'surecart'
-						)}
-					</p>
 				)}
 			</Box>
 

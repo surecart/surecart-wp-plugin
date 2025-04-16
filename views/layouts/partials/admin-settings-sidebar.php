@@ -78,10 +78,4 @@
 		<sc-icon style="font-size: 18px; width: 18px; stroke-width: 4; opacity: 0.7" name="sliders" slot="prefix"></sc-icon>
 		<?php esc_html_e( 'Advanced', 'surecart' ); ?>
 	</sc-tab>
-
-	<a href="https://surecart.com/support/" target="_blank" class="surecart-help">
-		<sc-icon style="font-size: 18px; width: 22px; stroke-width: 4;" name="life-buoy"></sc-icon>
-		<?php esc_html_e( 'Help', 'surecart' ); ?>
-	</a>
-
 </div>

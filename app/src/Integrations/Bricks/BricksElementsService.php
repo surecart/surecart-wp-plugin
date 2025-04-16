@@ -83,12 +83,6 @@ class BricksElementsService {
 			return $active_templates;
 		}
 
-		// if the post has been edited directly by bricks, use that.
-		$bricks_data = \Bricks\Database::get_data( $post_id, 'content' );
-		if ( count( $bricks_data ) > 0 ) {
-			return $active_templates;
-		}
-
 		$sc_product_templates = \Bricks\Templates::get_templates_by_type( 'sc_product' );
 
 		$template_ids = [

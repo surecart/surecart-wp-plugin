@@ -384,7 +384,10 @@ class ProductPageBlock {
 				'isSoldOut'             => function () {
 					$context = wp_interactivity_get_context();
 					$state   = wp_interactivity_state();
-					$product = $context['product'];
+					$product = $context['product'] ?? [];
+					if ( empty( $product ) ) {
+						return false;
+					}
 					if ( $product['has_unlimited_stock'] ) {
 						return false;
 					}
