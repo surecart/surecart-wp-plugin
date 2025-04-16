@@ -3,7 +3,7 @@ import { __ } from '@wordpress/i18n';
 import { hasCity, hasPostal, countryChoices } from '../../../functions/address';
 import { reportChildrenValidity } from '../../../functions/form-data';
 import { Address, CountryLocaleField, CountryLocaleFieldValue } from '../../../types';
-import { sortAddressFields } from 'src/functions/address-settings';
+import { getCurrentUserCountryCode, sortAddressFields } from 'src/functions/address-settings';
 import { state as i18nState } from '@store/i18n';
 
 /**
@@ -153,6 +153,7 @@ export class ScAddress {
 
   componentWillLoad() {
     this.handleAddressChange();
+    this.fetchUserCountry();
     const country = this.countryChoices.find(country => country.value === this.address?.country)?.value || null;
 
     // Set default country fields.
@@ -166,6 +167,20 @@ export class ScAddress {
   @Method()
   async reportValidity() {
     return reportChildrenValidity(this.el);
+  }
+
+  async fetchUserCountry() {
+    // If already set user country, don't fetch again.
+    if (this.address?.country) {
+      return;
+    }
+
+    const country = await getCurrentUserCountryCode();
+
+    // Update the address with the user's country.
+    if (country) {
+      this.updateAddress({ country });
+    }
   }
 
   /**
