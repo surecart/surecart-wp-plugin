@@ -54,7 +54,7 @@ export default function SelectorPreview({
 							</Truncate>
 						</ExternalLink>
 
-						{subtitle && (
+						{!!subtitle && (
 							<span className="block-editor-link-control__search-item-info">
 								{subtitle}
 							</span>

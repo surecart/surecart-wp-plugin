@@ -9,7 +9,7 @@ import {
 	InspectorControls,
 } from '@wordpress/block-editor';
 import { store as coreStore } from '@wordpress/core-data';
-import { PanelBody, Button } from '@wordpress/components';
+import { Button, Card, CardBody, PanelBody } from '@wordpress/components';
 import { useState } from '@wordpress/element';
 import { useSelect } from '@wordpress/data';
 import { edit } from '@wordpress/icons';
@@ -77,51 +77,45 @@ export default function ProductPageEdit({
 				<InspectorControls>
 					<PanelBody title={__('Product', 'surecart')}>
 						{post?.id && (
-							<div
-								style={{
-									border: '1px solid #ddd',
-									borderRadius: '4px',
-									marginBottom: '1em',
-									padding: '1em',
-								}}
-							>
-								<SelectorPreview
-									key={post?.link}
-									title={post?.title?.rendered}
-									subtitle={post?.link}
-									url={post?.link}
-									imageUrl={post?.gallery?.[0]?.url}
-									controls={
-										<Button
-											icon={edit}
-											label={__(
-												'Replace Product',
-												'surecart'
-											)}
-											onClick={() =>
-												setIsVisible(!isVisible)
-											}
-											size="compact"
-											showTooltip={true}
-										>
-											<ProductSelector
-												isVisible={isVisible}
-												post={post}
-												onChoose={(post) => {
-													setAttributes({
-														product_post_id:
-															post.id,
-													});
-													setIsVisible(false);
-												}}
-												onClose={() =>
-													setIsVisible(false)
+							<Card>
+								<CardBody style={{ padding: 'var(--sc-spacing-medium)' }}>
+									<SelectorPreview
+										title={post?.title?.rendered}
+										subtitle={post?.link}
+										url={post?.link}
+										imageUrl={post?.gallery?.[0]?.url}
+										controls={
+											<Button
+												icon={edit}
+												label={__(
+													'Replace Product',
+													'surecart'
+												)}
+												onClick={() =>
+													setIsVisible(!isVisible)
 												}
-											/>
-										</Button>
-									}
-								/>
-							</div>
+												size="compact"
+												showTooltip={true}
+											>
+												<ProductSelector
+													isVisible={isVisible}
+													post={post}
+													onChoose={(post) => {
+														setAttributes({
+															product_post_id:
+																post.id,
+														});
+														setIsVisible(false);
+													}}
+													onClose={() =>
+														setIsVisible(false)
+													}
+												/>
+											</Button>
+										}
+									/>
+								</CardBody>
+							</Card>
 						)}
 					</PanelBody>
 				</InspectorControls>

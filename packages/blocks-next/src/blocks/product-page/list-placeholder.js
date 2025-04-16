@@ -13,7 +13,13 @@ import {
 } from '@wordpress/block-editor';
 import { store as coreStore } from '@wordpress/core-data';
 import { useState } from '@wordpress/element';
-import { Button, Placeholder } from '@wordpress/components';
+import {
+	Button,
+	Card,
+	CardBody,
+	Flex,
+	Placeholder,
+} from '@wordpress/components';
 import { trash } from '@wordpress/icons';
 import { __ } from '@wordpress/i18n';
 
@@ -33,6 +39,7 @@ export default function QueryPlaceholder({
 	name,
 	openPatternSelectionModal,
 }) {
+	const postId = attributes?.product_post_id;
 	const [isVisible, setIsVisible] = useState(false);
 	const { replaceInnerBlocks } = useDispatch(blockEditorStore);
 	const blockProps = useBlockProps();
@@ -92,59 +99,62 @@ export default function QueryPlaceholder({
 		});
 	};
 
-	const post = useSelect(
+	const { post, loading } = useSelect(
 		(select) => {
-			const { getEntityRecord } = select(coreStore);
-			const postId = attributes?.product_post_id;
 			if (!postId) {
-				return null;
+				return {
+					post: null,
+					loading: false,
+				};
 			}
-			return getEntityRecord('postType', 'sc_product', postId);
+			const entityArgs = ['postType', 'sc_product', postId];
+
+			return {
+				post: select(coreStore).getEntityRecord(...entityArgs),
+				loading: select(coreStore).isResolving(
+					'getEntityRecord',
+					entityArgs
+				),
+			};
 		},
-		[attributes?.product_post_id]
+		[postId]
 	);
 
 	const renderProductPreview = () => {
-		// If the post is not set, return null
-		if (!post) {
+		if (!post?.id) {
 			return null;
 		}
 
 		return (
 			<div
 				style={{
-					marginBottom: '1em',
+					marginBottom: 'var(--sc-spacing-medium)',
 				}}
 			>
-				<div
-					style={{
-						border: '1px solid #ddd',
-						borderRadius: '4px',
-						marginBottom: '1em',
-						padding: '1em',
-					}}
-				>
-					<SelectorPreview
-						title={post?.title?.rendered}
-						subtitle={post?.link}
-						url={post?.link}
-						imageUrl={post?.gallery?.[0]?.url}
-						controls={
-							<Button
-								icon={trash}
-								label={__('Remove', 'surecart')}
-								onClick={() => {
-									setAttributes({
-										product_post_id: null,
-									});
-									setIsVisible(false);
-								}}
-								size="compact"
-								showTooltip={true}
-							/>
-						}
-					/>
-				</div>
+				<Card>
+					<CardBody>
+						<SelectorPreview
+							title={post?.title?.rendered}
+							subtitle={post?.link}
+							url={post?.link}
+							imageUrl={post?.gallery?.[0]?.url}
+							controls={
+								<Button
+									icon={trash}
+									label={__('Remove', 'surecart')}
+									onClick={() => {
+										setAttributes({
+											product_post_id: null,
+										});
+										setIsVisible(false);
+									}}
+									size="compact"
+									showTooltip={true}
+								/>
+							}
+						/>
+					</CardBody>
+				</Card>
 			</div>
 		);
 	};
@@ -155,92 +165,88 @@ export default function QueryPlaceholder({
 		}
 
 		return (
-			<>
-				<div
-					style={{
-						minWidth: '500px',
-					}}
+			<div
+				style={{
+					minWidth: '500px',
+				}}
+			>
+				<Button
+					variant="primary"
+					onClick={() => setIsVisible(!isVisible)}
+					isBusy={loading}
 				>
-					<div style={{ display: 'flex', gap: '1em' }}>
-						<Button
-							variant="primary"
-							onClick={() => setIsVisible(!isVisible)}
-						>
-							{__('Choose Product', 'surecart')}
+					{__('Choose Product', 'surecart')}
 
-							<ProductSelector
-								isVisible={isVisible}
-								post={post}
-								onChoose={onChoose}
-								onClose={() => setIsVisible(false)}
-							/>
-						</Button>
-					</div>
-				</div>
-			</>
+					<ProductSelector
+						isVisible={isVisible}
+						post={post}
+						onChoose={onChoose}
+						onClose={() => setIsVisible(false)}
+					/>
+				</Button>
+			</div>
 		);
 	};
 
 	const renderPatternSelector = () => {
+		if (!post?.id) {
+			return null;
+		}
+
+		return (
+			<Flex gap={4} justify="start">
+				<Button
+					variant="primary"
+					onClick={() => {
+						const blocks =
+							createBlocksFromInnerBlocksTemplate(template);
+
+						// Preserve the product_post_id attribute for the surecart/product-page block
+						blocks.forEach((block) => {
+							if (block.name === 'surecart/product-page') {
+								block.attributes = {
+									...block.attributes,
+									product_post_id: attributes.product_post_id, // Preserve product_post_id
+								};
+							}
+						});
+
+						replaceInnerBlocks(clientId, blocks, false);
+					}}
+				>
+					{__('Create Form', 'surecart')}
+				</Button>
+
+				{!!hasPatterns && (
+					<Button
+						variant="secondary"
+						onClick={openPatternSelectionModal}
+					>
+						{__('Choose a template', 'surecart')}
+					</Button>
+				)}
+			</Flex>
+		);
+	};
+
+	const renderSelectors = () => {
+		if (shouldDisableProductSelector) {
+			return renderPatternSelector();
+		}
+
 		return (
 			<div>
-				<div style={{ display: 'flex', gap: '1em' }}>
-					<Button
-						variant="primary"
-						onClick={() => {
-							const blocks =
-								createBlocksFromInnerBlocksTemplate(template);
-
-							// Preserve the product_id attribute for the surecart/product-page block
-							blocks.forEach((block) => {
-								if (block.name === 'surecart/product-page') {
-									block.attributes = {
-										...block.attributes,
-										product_id: attributes.product_id, // Preserve product_id
-									};
-								}
-							});
-
-							replaceInnerBlocks(clientId, blocks, false);
-						}}
-					>
-						{__('Create Form', 'surecart')}
-					</Button>
-
-					{!!hasPatterns && (
-						<Button
-							variant="secondary"
-							onClick={openPatternSelectionModal}
-						>
-							{__('Choose a template', 'surecart')}
-						</Button>
-					)}
-				</div>
+				{renderProductPreview()}
+				{renderProductSelector()}
+				{renderPatternSelector()}
 			</div>
 		);
 	};
 
 	return (
 		<div {...blockProps}>
-			<Placeholder
-				icon={icon}
-				label={label}
-				instructions={instructions}
-				style={{
-					flexDirection: 'column',
-				}}
-			>
-				<div>
-					{!shouldDisableProductSelector ? (
-						<>
-							<div>{renderProductPreview()}</div>
-							<div>{renderProductSelector()}</div>
-							{post?.id && <div>{renderPatternSelector()}</div>}
-						</>
-					) : (
-						<div>{renderPatternSelector()}</div>
-					)}
-				</div>
+			<Placeholder icon={icon} label={label} instructions={instructions}>
+				{renderSelectors()}
 			</Placeholder>
 		</div>
 	);
