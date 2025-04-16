@@ -9,7 +9,13 @@ import {
 	InspectorControls,
 } from '@wordpress/block-editor';
 import { store as coreStore } from '@wordpress/core-data';
-import { Button, Card, CardBody, PanelBody } from '@wordpress/components';
+import {
+	Button,
+	Card,
+	CardBody,
+	PanelBody,
+	Spinner,
+} from '@wordpress/components';
 import { useState } from '@wordpress/element';
 import { useSelect } from '@wordpress/data';
 import { edit } from '@wordpress/icons';
@@ -31,6 +37,7 @@ export default function ProductPageEdit({
 	attributes,
 	setAttributes,
 }) {
+	const postId = attributes?.product_post_id;
 	const [isVisible, setIsVisible] = useState(false);
 	const blockProps = useBlockProps({
 		className: 'sc-product-page__editor-container',
@@ -51,16 +58,25 @@ export default function ProductPageEdit({
 		]
 	);
 
-	const post = useSelect(
+	const { post, loading } = useSelect(
 		(select) => {
-			const { getEntityRecord } = select(coreStore);
-			const postId = attributes?.product_post_id;
 			if (!postId) {
-				return null;
+				return {
+					post: null,
+					loading: false,
+				};
 			}
-			return getEntityRecord('postType', 'sc_product', postId);
+			const entityArgs = ['postType', 'sc_product', postId];
+
+			return {
+				post: select(coreStore).getEntityRecord(...entityArgs),
+				loading: select(coreStore).isResolving(
+					'getEntityRecord',
+					entityArgs
+				),
+			};
 		},
-		[attributes?.product_post_id]
+		[postId]
 	);
 
 	return (
@@ -76,9 +92,15 @@ export default function ProductPageEdit({
 			{!shouldDisableProductSelector && (
 				<InspectorControls>
 					<PanelBody title={__('Product', 'surecart')}>
-						{post?.id && (
-							<Card>
-								<CardBody style={{ padding: 'var(--sc-spacing-medium)' }}>
+						<Card>
+							<CardBody
+								style={{
+									padding: 'var(--sc-spacing-medium)',
+								}}
+							>
+								{loading && <Spinner />}
+
+								{post?.id && (
 									<SelectorPreview
 										title={post?.title?.rendered}
 										subtitle={post?.link}
@@ -114,9 +136,9 @@ export default function ProductPageEdit({
 											</Button>
 										}
 									/>
-								</CardBody>
-							</Card>
-						)}
+								)}
+							</CardBody>
+						</Card>
 					</PanelBody>
 				</InspectorControls>
 			)}

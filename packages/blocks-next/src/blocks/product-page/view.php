@@ -9,7 +9,6 @@ $query = new WP_Query(
 		'post__in'       => [ $attributes['product_post_id'] ?? get_the_ID() ],
 	]
 );
-
 ?>
 
 <?php
