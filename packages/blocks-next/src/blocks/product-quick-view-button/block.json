@@ -14,6 +14,10 @@
 			"type": "string",
 			"default": "eye"
 		},
+		"iconPosition": {
+			"type": "string",
+			"default": "after"
+		},
 		"label": {
 			"type": "string",
 			"default": "Quick View"

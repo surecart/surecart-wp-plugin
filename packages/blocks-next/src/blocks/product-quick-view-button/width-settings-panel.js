@@ -8,7 +8,7 @@ import {
 import { __ } from '@wordpress/i18n';
 import { useToolsPanelDropdownMenuProps } from '../utils';
 
-export default function WidthSettingsPanel({ selectedWidth, setAttributes }) {
+export function WidthSettingsPanel({ selectedWidth, setAttributes }) {
 	const dropdownMenuProps = useToolsPanelDropdownMenuProps();
 
 	return (

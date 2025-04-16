@@ -29,11 +29,15 @@
 	?>
 >
 	<?php
+	if ( $show_icon && 'before' === $icon_position ) {
+		echo wp_kses( SureCart::svg()->get( $icon, [ 'class' => '' ] ), sc_allowed_svg_html() );
+	}
+
 	if ( $show_text ) {
 		echo '<span class="sc-quick-view-button-text">' . esc_html( $label ) . '</span>';
 	}
 
-	if ( $show_icon ) {
+	if ( $show_icon && 'after' === $icon_position ) {
 		echo wp_kses( SureCart::svg()->get( $icon, [ 'class' => '' ] ), sc_allowed_svg_html() );
 	}
 	?>

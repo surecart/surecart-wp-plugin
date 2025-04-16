@@ -8,7 +8,6 @@ import {
 } from '@wordpress/block-editor';
 import { PanelBody } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
-import WidthSettingsPanel from './width-settings-panel';
 import classnames from 'classnames';
 
 /**
@@ -16,10 +15,19 @@ import classnames from 'classnames';
  */
 import ScIcon from '../../components/ScIcon';
 import { ProductQuickViewButtonControls } from './product-quick-view-button-controls';
+import { IconPositionControls } from './icon-position-controls';
+import { WidthSettingsPanel } from './width-settings-panel';
 import { getSpacingPresetCssVar } from '../../../../blocks/util';
 
 export default ({
-	attributes: { icon, quickViewButtonType, label, style, width },
+	attributes: {
+		icon,
+		quickViewButtonType,
+		label,
+		style,
+		width,
+		iconPosition,
+	},
 	setAttributes,
 }) => {
 	const blockProps = useBlockProps({
@@ -37,6 +45,9 @@ export default ({
 
 		return (
 			<>
+				{showIcon && 'before' === iconPosition && (
+					<ScIcon name={icon} />
+				)}
 				{showText && (
 					<PlainText
 						__experimentalVersion={2}
@@ -49,7 +60,7 @@ export default ({
 						}
 					/>
 				)}
-				{showIcon && <ScIcon name={icon} />}
+				{showIcon && 'after' === iconPosition && <ScIcon name={icon} />}
 			</>
 		);
 	};
@@ -64,6 +75,14 @@ export default ({
 							setAttributes({ quickViewButtonType: value });
 						}}
 					/>
+					{'both' === quickViewButtonType && (
+						<IconPositionControls
+							value={iconPosition}
+							onChange={(value) => {
+								setAttributes({ iconPosition: value });
+							}}
+						/>
+					)}
 				</PanelBody>
 				<WidthSettingsPanel
 					selectedWidth={width}
