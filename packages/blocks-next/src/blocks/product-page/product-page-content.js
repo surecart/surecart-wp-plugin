@@ -98,7 +98,11 @@ export default function ProductPageEdit({
 									padding: 'var(--sc-spacing-medium)',
 								}}
 							>
-								{loading && <Spinner />}
+								{loading && (
+									<div style={{ textAlign: 'center' }}>
+										<Spinner />
+									</div>
+								)}
 
 								{post?.id && (
 									<SelectorPreview
