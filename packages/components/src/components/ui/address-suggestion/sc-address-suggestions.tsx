@@ -95,6 +95,7 @@ export class ScAddressSuggestions {
   @Watch('address')
   handleAddressChange() {
     if (!this.address?.country) return;
+    this.value = this.address.line_1;
     if (!!this.address.line_1 && this.showSuggestions) {
       this.debouncedFetchAddressSuggestions(this.address.line_1);
     }
@@ -250,6 +251,7 @@ export class ScAddressSuggestions {
   }
 
   componentWillLoad() {
+    this.handleAddressChange();
     document.addEventListener('mousedown', evt => this.handleOutsideClick(evt));
   }
 
@@ -364,7 +366,7 @@ export class ScAddressSuggestions {
 
   render() {
     return (
-      <div class="sc-address-suggestion" part="base">
+      <div part="base">
         <sc-input
           exportparts="base:input__base, input, form-control, label, help-text"
           value={this?.value}

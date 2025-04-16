@@ -296,6 +296,7 @@ export class ScAddress {
                   // />
 
                   <sc-address-suggestions
+                    exportparts="base:input__base, input, form-control, label, help-text"
                     address={this.address}
                     names={this.names}
                     label={field.label}
