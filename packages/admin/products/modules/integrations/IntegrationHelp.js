@@ -18,7 +18,7 @@ export default ({ open, onRequestClose }) => {
 						font-family: -apple-system, BlinkMacSystemFont, Segoe UI,
 							Roboto, Oxygen-Sans, Ubuntu, Cantarell,
 							Helvetica Neue, sans-serif;
-						font-size: 24px;
+						font-size: 1.5em;
 						line-height: 1.4;
 						margin: 16px 0;
 						padding: 0 32px;

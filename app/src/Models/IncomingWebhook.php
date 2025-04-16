@@ -80,7 +80,7 @@ class IncomingWebhook extends DatabaseModel {
 	 * @return string
 	 */
 	public function getCreatedAtDateAttribute() {
-		return TimeDate::formatDate( strtotime( $this->created_at ) );
+		return TimeDate::formatDate( strtotime( $this->created_at ?? '' ) );
 	}
 
 	/**
@@ -89,7 +89,7 @@ class IncomingWebhook extends DatabaseModel {
 	 * @return string
 	 */
 	public function getCreatedAtDateTimeAttribute() {
-		return TimeDate::formatDateAndTime( strtotime( $this->created_at ) );
+		return TimeDate::formatDateAndTime( strtotime( $this->created_at ?? '' ) );
 	}
 
 	/**
@@ -98,7 +98,7 @@ class IncomingWebhook extends DatabaseModel {
 	 * @return string
 	 */
 	public function getUpdatedAtDateAttribute() {
-		return TimeDate::formatDate( strtotime( $this->updated_at ) );
+		return TimeDate::formatDate( strtotime( $this->updated_at ?? '' ) );
 	}
 
 	/**
@@ -107,6 +107,6 @@ class IncomingWebhook extends DatabaseModel {
 	 * @return string
 	 */
 	public function getUpdatedAtDateTimeAttribute() {
-		return TimeDate::formatDateAndTime( strtotime( $this->updated_at ) );
+		return TimeDate::formatDateAndTime( strtotime( $this->updated_at ?? '' ) );
 	}
 }

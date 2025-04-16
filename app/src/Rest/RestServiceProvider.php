@@ -230,7 +230,7 @@ abstract class RestServiceProvider extends \WP_REST_Controller implements RestSe
 
 			// get and call controller with request.
 			$controller = \SureCart::closure()->method( $class, $method );
-			$model      = $controller( $request );
+			$model      = $controller( apply_filters( "rest_{$this->endpoint}_request", $request, $method ) );
 
 			if ( is_wp_error( $model ) ) {
 				return $model;

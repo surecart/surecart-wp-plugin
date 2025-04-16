@@ -37,6 +37,7 @@ import Affiliation from './modules/Affiliation';
 import Collection from './modules/Collection';
 import MetaBoxes from './modules/MetaBoxes';
 import Taxonomies from './modules/Taxonomies';
+import Editor from './components/Editor';
 
 export default ({ id, setBrowserURL }) => {
 	const [error, setError] = useState(null);
@@ -65,7 +66,7 @@ export default ({ id, setBrowserURL }) => {
 		select('core/editor').getCurrentPost()
 	);
 
-	const { post, loadingPost } = useSelect(
+	const { post } = useSelect(
 		(select) => {
 			const queryArgs = [
 				'postType',
@@ -121,7 +122,7 @@ export default ({ id, setBrowserURL }) => {
 	/**
 	 * Handle the form submission
 	 */
-	const onSubmit = async (e) => {
+	const onSubmit = async () => {
 		try {
 			setError(null);
 			setSaving(true);
@@ -242,6 +243,34 @@ export default ({ id, setBrowserURL }) => {
 				styles={css`
 					#screen-meta-links {
 						display: none;
+					}
+
+					/** Fix conflicts with spectra. */
+					[type='text'],
+					[type='email'],
+					[type='url'],
+					[type='password'],
+					[type='number'],
+					[type='date'],
+					[type='datetime-local'],
+					[type='month'],
+					[type='search'],
+					[type='tel'],
+					[type='time'],
+					[type='week'],
+					[multiple],
+					textarea,
+					select {
+						appearance: none;
+						background-color: inherit;
+						border-color: inherit;
+						border-width: inherit;
+						border-radius: inherit;
+						padding-top: unset;
+						padding-right: unset;
+						padding-bottom: unset;
+						padding-left: unset;
+						font-size: unset;
 					}
 				`}
 			/>
@@ -382,6 +411,15 @@ export default ({ id, setBrowserURL }) => {
 						updateProduct={editProduct}
 						loading={!hasLoadedProduct}
 					/>
+
+					{post?.id && (
+						<Editor
+							post={post}
+							loading={!hasLoadedProduct}
+							onSave={onSubmit}
+							error={saveProductError || productError || error}
+						/>
+					)}
 
 					<Image
 						productId={id}

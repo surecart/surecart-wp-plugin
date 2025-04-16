@@ -128,7 +128,7 @@ abstract class BaseSettings {
 			true
 		);
 
-		wp_register_script( 'suretriggers-sdk', 'https://app.suretriggers.com/js/v2/embed.js', array(), '1.0.0', false );
+		wp_register_script( 'suretriggers-sdk', 'https://app.ottokit.com/js/v2/embed.js', array(), '1.0.0', false );
 
 		wp_set_script_translations( $handle, 'surecart' );
 

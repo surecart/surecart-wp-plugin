@@ -163,9 +163,10 @@ class Block extends BaseBlock {
 				function ( $price ) {
 					return array_filter(
 						[
-							'price'    => $price['id'],
-							'variant'  => $price['variant_id'] ?? null,
-							'quantity' => $price['quantity'] ?? 1,
+							'price'         => $price['id'],
+							'variant'       => $price['variant_id'] ?? null,
+							'quantity'      => $price['quantity'] ?? 1,
+							'ad_hoc_amount' => $price['ad_hoc_amount'] ?? null,
 						]
 					);
 				},

@@ -436,7 +436,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, Object
 			if ( ! $is_guarded ) {
 				$this->setAttribute( $key, $value );
 			} elseif ( $this->isFillable( $key ) ) {
-					$this->setAttribute( $key, $value );
+				$this->setAttribute( $key, $value );
 			}
 		}
 
