@@ -4496,6 +4496,7 @@ declare global {
         "scChangeAddress": Address;
         "scShowSuggestionsChange": boolean;
         "scShowAddressFields": void;
+        "scHideAddressFields": void;
         "scChange": void;
         "scInput": void;
     }
@@ -7049,6 +7050,10 @@ declare namespace LocalJSX {
           * Place select event
          */
         "onScChangeAddress"?: (event: ScAddressSuggestionsCustomEvent<Address>) => void;
+        /**
+          * Event to hide address fields
+         */
+        "onScHideAddressFields"?: (event: ScAddressSuggestionsCustomEvent<void>) => void;
         /**
           * On input change
          */

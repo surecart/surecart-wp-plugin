@@ -1,4 +1,5 @@
 import { Address, GoogleMapAddressComponents } from 'src/types';
+
 /**
  * Helper function to find an address component by type.
  */

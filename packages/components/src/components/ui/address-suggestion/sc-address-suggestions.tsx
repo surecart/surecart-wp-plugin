@@ -69,6 +69,9 @@ export class ScAddressSuggestions {
   /** Event to show address fields manually */
   @Event() scShowAddressFields: EventEmitter<void>;
 
+  /** Event to hide address fields */
+  @Event() scHideAddressFields: EventEmitter<void>;
+
   /** Event to update address */
   @Event() scChange: EventEmitter<void>;
 
@@ -178,6 +181,13 @@ export class ScAddressSuggestions {
     this.scShowAddressFields.emit();
   }
 
+  handleInputChange(e: any) {
+    this.value = e.target?.value;
+    this.showSuggestions = true;
+
+    this.scChange.emit();
+  }
+
   handleKeyDown(event: KeyboardEvent) {
     if (!this.addressSuggestions.length) return;
 
@@ -252,6 +262,14 @@ export class ScAddressSuggestions {
 
   componentWillLoad() {
     this.handleAddressChange();
+
+    // On load, if google map api key is set, show the address fields.
+    if (!!window?.scData?.google_map_api_key && !this.address?.line_1) {
+      this.scHideAddressFields.emit();
+    } else {
+      this.scShowAddressFields.emit();
+    }
+
     document.addEventListener('mousedown', evt => this.handleOutsideClick(evt));
   }
 
@@ -370,10 +388,7 @@ export class ScAddressSuggestions {
         <sc-input
           exportparts="base:input__base, input, form-control, label, help-text"
           value={this?.value}
-          onScInput={(e: any) => {
-            this.value = e.target.value;
-            this.showSuggestions = true;
-          }}
+          onScInput={(e: any) => this.handleInputChange(e)}
           autocomplete="street-address"
           placeholder={this.label}
           aria-label={this.label}

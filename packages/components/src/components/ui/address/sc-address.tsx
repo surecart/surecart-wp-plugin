@@ -87,6 +87,9 @@ export class ScAddress {
   /** Should we show the postal field? */
   @State() showPostal: boolean = true;
 
+  /** Should we show the state field? */
+  @State() showState: boolean = true;
+
   /** Holds the regions for a given country. */
   @State() regions: Array<{ value: string; label: string }>;
 
@@ -183,6 +186,17 @@ export class ScAddress {
     }
   }
 
+  toggleAddressFieldsVisibility(show: boolean) {
+    this.showCity = show;
+    this.showState = show;
+    this.showPostal = show;
+
+    // If Google Map API key is set, Override the showLine2 value.
+    if (!!window?.scData?.google_map_api_key) {
+      this.showLine2 = show;
+    }
+  }
+
   /**
    * Compute and return the sorted fields based on current country, defaultCountryFields and countryFields.
    * This method can be used as a computed property.
@@ -223,7 +237,7 @@ export class ScAddress {
         case 'city':
           return this.showCity;
         case 'state':
-          return !!this?.regions?.length && !!this?.address?.country;
+          return this.showState && !!this?.regions?.length && !!this?.address?.country;
         case 'postcode':
           return this.showPostal;
         default:
@@ -281,28 +295,15 @@ export class ScAddress {
 
               case 'address_1':
                 return (
-                  // <sc-input
-                  //   exportparts="base:input__base, input, form-control, label, help-text"
-                  //   value={this?.address?.line_1}
-                  //   onScChange={(e: any) => this.updateAddress({ line_1: e.target.value || null })}
-                  //   onScInput={(e: any) => this.handleAddressInput({ line_1: e.target.value || null })}
-                  //   autocomplete="street-address"
-                  //   placeholder={field.label}
-                  //   name={this.names?.line_1}
-                  //   disabled={this.disabled}
-                  //   required={this.required}
-                  //   aria-label={field.label}
-                  //   {...roundedProps}
-                  // />
-
                   <sc-address-suggestions
-                    exportparts="base:input__base, input, form-control, label, help-text"
                     address={this.address}
                     names={this.names}
                     label={field.label}
                     disabled={this.disabled}
                     required={this.required}
                     inputProps={roundedProps}
+                    onScShowAddressFields={() => this.toggleAddressFieldsVisibility(true)}
+                    onScHideAddressFields={() => this.toggleAddressFieldsVisibility(false)}
                   />
                 );
 
