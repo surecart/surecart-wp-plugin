@@ -615,7 +615,7 @@ class ProductPostTypeService {
 	public function forceGutenberg( $current_status, $post_type ) {
 		if ( $post_type === $this->post_type ) {
 			$screen = get_current_screen();
-			if ( ! $screen ) {
+			if ( empty( $screen ) ) {
 				return false;
 			}
 
