@@ -614,8 +614,24 @@ class ProductPostTypeService {
 	 */
 	public function forceGutenberg( $current_status, $post_type ) {
 		if ( $post_type === $this->post_type ) {
-			return true;
+			$screen = get_current_screen();
+			if ( empty( $screen ) ) {
+				return false;
+			}
+
+			$screen_id = $screen->id;
+
+			// For Product Content Edit Screen.
+			if ( 'sc_product' === $screen_id ) {
+				return true;
+			}
+
+			// For Product Edit Screen.
+			if ( 'surecart_page_sc-products' === $screen_id ) {
+				return false;
+			}
 		}
+
 		return $current_status;
 	}
 
