@@ -18,7 +18,14 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function register( $container ) {
+		if ( ! class_exists( '\Elementor\Plugin' ) ) {
+			return;
+		}
+
 		// nothing to register.
+		$container['elementor.core.block.styles.service'] = function () {
+			return new ElementorCoreBlockStylesService();
+		};
 	}
 
 	/**
@@ -31,10 +38,14 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 			return;
 		}
 
+		// bootstrap the core block styles service.
+		$container['elementor.core.block.styles.service']->bootstrap();
+
 		// Elementor integration.
 		add_action( 'elementor/widgets/register', [ $this, 'widget' ] );
 		add_action( 'elementor/editor/before_enqueue_scripts', [ $this, 'load_scripts' ] );
 		add_action( 'elementor/elements/categories_registered', [ $this, 'categories_registered' ] );
+		add_filter( 'surecart/product/replace_content_with_product_info_part', [ $this, 'doNotReplaceContentIfRenderingWithElementor' ] );
 
 		// Register product theme condition.
 		if ( defined( 'ELEMENTOR_PRO_VERSION' ) ) {
@@ -44,6 +55,22 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 			add_filter( 'elementor/query/get_value_titles/surecart-product', [ $this, 'get_titles' ], 10, 2 );
 			add_action( 'elementor/frontend/the_content', array( $this, 'handle_product_page_wrapper' ) );
 		}
+	}
+
+	/**
+	 * Do not replace content if rendering with and elementor template.
+	 *
+	 * @param bool $replace_content The replace content.
+	 *
+	 * @return bool
+	 */
+	public function doNotReplaceContentIfRenderingWithElementor( $replace_content ) {
+		$document = \Elementor\Plugin::$instance->documents->get_current();
+		if ( ! empty( $document ) ) {
+			return false;
+		}
+
+		return $replace_content;
 	}
 
 	/**

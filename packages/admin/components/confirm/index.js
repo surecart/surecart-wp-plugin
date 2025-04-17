@@ -20,12 +20,14 @@ export default ({
 	loading,
 	error,
 	children,
+	...props
 }) => {
 	return (
 		<ConfirmDialog
 			isOpen={open}
 			onConfirm={onConfirm}
 			onCancel={onRequestClose}
+			{...props}
 		>
 			<Error
 				error={error}

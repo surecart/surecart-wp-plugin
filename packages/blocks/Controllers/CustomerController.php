@@ -102,7 +102,7 @@ class CustomerController extends BaseController {
 						)
 					);
 					?>
-				 ">
+				">
 					<?php esc_html_e( 'Billing', 'surecart' ); ?>
 				</sc-breadcrumb>
 				<sc-breadcrumb>
@@ -123,6 +123,7 @@ class CustomerController extends BaseController {
 						'header'     => __( 'Update Billing Details', 'surecart' ),
 						'customer'   => $customer,
 						'successUrl' => esc_url_raw( $back ),
+						'i18n'       => \SureCart::state()->i18n()->get(),
 					]
 				)->render()
 			);
