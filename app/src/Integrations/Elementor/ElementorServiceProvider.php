@@ -18,26 +18,32 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 			return;
 		}
 
+		// Widgets.
 		$container['surecart.elementor.widgets'] = function () {
 			return new ElementorWidgetsService();
 		};
 
+		// Documents.
 		$container['surecart.elementor.documents'] = function () {
 			return new ElementorDocumentsService();
 		};
 
+		// Dynamic tags.
 		$container['surecart.elementor.dynamic_tags'] = function () {
 			return new ElementorDynamicTagsService();
 		};
 
+		// Core block styles.
 		$container['elementor.core.block.styles.service'] = function () {
 			return new ElementorCoreBlockStylesService();
 		};
 
+		// Shortcode service.
 		$container['elementor.shortcode.service'] = function () {
 			return new ElementorShortcodeService();
 		};
 
+		// Block adapter service.
 		$container['elementor.block.adapter.service'] = function () {
 			return new ElementorBlockAdapterService();
 		};
@@ -59,9 +65,12 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 		$container['surecart.elementor.widgets']->bootstrap();
 		$container['surecart.elementor.dynamic_tags']->bootstrap();
 
-		if ( defined( 'ELEMENTOR_PRO_VERSION' ) ) {
-			$container['elementor.block.adapter.service']->bootstrap();
-			$container['surecart.elementor.documents']->bootstrap();
+		// The rest are only needed if Elementor Pro is installed.
+		if ( ! defined( 'ELEMENTOR_PRO_VERSION' ) ) {
+			return;
 		}
+
+		$container['elementor.block.adapter.service']->bootstrap();
+		$container['surecart.elementor.documents']->bootstrap();
 	}
 }

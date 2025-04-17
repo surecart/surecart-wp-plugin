@@ -13,8 +13,8 @@ class ElementorWidgetsService {
 	 */
 	public function bootstrap() {
 		add_action( 'init', [ $this, 'registerStyles' ] );
-		add_action( 'elementor/editor/before_enqueue_scripts', [ $this, 'load_scripts' ] );
-		add_action( 'elementor/elements/categories_registered', [ $this, 'categories_registered' ] );
+		add_action( 'elementor/editor/before_enqueue_scripts', [ $this, 'loadScripts' ] );
+		add_action( 'elementor/elements/categories_registered', [ $this, 'registerCategories' ] );
 		add_action( 'elementor/widgets/register', [ $this, 'registerWidgets' ] );
 		add_action( 'elementor/frontend/after_enqueue_styles', [ $this, 'enqueueStyles' ], 1 );
 	}
@@ -42,7 +42,7 @@ class ElementorWidgetsService {
 	 *
 	 * @return void
 	 */
-	public function load_scripts() {
+	public function loadScripts() {
 		wp_enqueue_script( 'surecart-elementor-editor', plugins_url( 'assets/editor.js', __FILE__ ), array( 'jquery' ), \SureCart::plugin()->version(), true );
 		wp_enqueue_style( 'surecart-elementor-style', plugins_url( 'assets/editor.css', __FILE__ ), '', \SureCart::plugin()->version(), 'all' );
 		wp_localize_script(
@@ -64,7 +64,7 @@ class ElementorWidgetsService {
 	 *
 	 * @return void
 	 */
-	public function categories_registered( $elements_manager ) {
+	public function registerCategories( $elements_manager ) {
 		$elements_manager->add_category(
 			'surecart-elementor-layout',
 			[
