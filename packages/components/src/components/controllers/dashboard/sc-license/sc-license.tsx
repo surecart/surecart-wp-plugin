@@ -1,6 +1,6 @@
 import { Component, Element, Fragment, Prop, State, h } from '@stencil/core';
 import { onFirstVisible } from '../../../../functions/lazy';
-import { License, Product, Purchase } from 'src/types';
+import { Activation, License, Product, Purchase } from 'src/types';
 import { __ } from '@wordpress/i18n';
 import apiFetch from '../../../../functions/fetch';
 import { addQueryArgs } from '@wordpress/url';
@@ -19,11 +19,40 @@ export class ScLicense {
   @State() loading: boolean = false;
   @State() error: string = '';
   @State() license: License;
+  @State() activations: Activation[] = [];
   @State() copied: boolean = false;
   @State() showConfirmDelete: boolean = false;
   @State() selectedActivationId: string = '';
   @State() deleteActivationError: string = '';
   @State() busy: boolean = false;
+
+  /** Activations pagination */
+  @State() pagination: {
+    total: number;
+    total_pages: number;
+  } = {
+    total: 0,
+    total_pages: 0,
+  };
+
+  /** Query to fetch Activations */
+  @Prop({ mutable: true }) query: {
+    page: number;
+    per_page: number;
+  } = {
+    page: 1,
+    per_page: 10,
+  };
+
+  nextPage() {
+    this.query.page = this.query.page + 1;
+    this.fetchActivations();
+  }
+
+  prevPage() {
+    this.query.page = this.query.page - 1;
+    this.fetchActivations();
+  }
 
   /** Only fetch if visible */
   componentWillLoad() {
@@ -32,10 +61,23 @@ export class ScLicense {
     });
   }
 
+  async fetchActivations() {
+    try {
+      this.loading = true;
+      await this.getActivations();
+    } catch (e) {
+      console.error(e);
+      this.error = e?.message || __('Something went wrong', 'surecart');
+    } finally {
+      this.loading = false;
+    }
+  }
+
   async initialFetch() {
     try {
       this.loading = true;
       await this.getLicense();
+      await this.getActivations();
     } catch (e) {
       console.error(e);
       this.error = e?.message || __('Something went wrong', 'surecart');
@@ -47,9 +89,26 @@ export class ScLicense {
   async getLicense() {
     this.license = await apiFetch({
       path: addQueryArgs(`surecart/v1/licenses/${this.licenseId}`, {
-        expand: ['activations', 'purchase', 'purchase.product'],
+        expand: ['purchase', 'purchase.product'],
       }),
     });
+  }
+
+  async getActivations() {
+    const response = (await apiFetch({
+      path: addQueryArgs('surecart/v1/activations', {
+        license_ids: [this.licenseId],
+        ...this.query,
+      }),
+      parse: false,
+    })) as Response;
+
+    this.pagination = {
+      total: parseInt(response.headers.get('X-WP-Total')),
+      total_pages: parseInt(response.headers.get('X-WP-TotalPages')),
+    };
+    this.activations = (await response.json()) as Activation[];
+    return this.activations;
   }
 
   deleteActivation = async () => {
@@ -187,9 +246,9 @@ export class ScLicense {
             <slot name="heading">{__('Activations', 'surecart')}</slot>
           </span>
           <sc-card noPadding>
-            {!!this.license?.activations?.data?.length ? (
+            {!!this.activations?.length ? (
               <sc-stacked-list>
-                {this.license?.activations.data.map(activation => (
+                {this.activations.map(activation => (
                   <sc-stacked-list-row style={{ '--columns': '4' }}>
                     <div class="license__date">{activation.created_at_date}</div>
                     <div>{activation.name}</div>
@@ -202,7 +261,7 @@ export class ScLicense {
                           this.showConfirmDelete = true;
                         }}
                       >
-                        Delete
+                        {__('Delete', 'surecart')}
                       </sc-button>
                     </div>
                   </sc-stacked-list-row>
@@ -211,8 +270,21 @@ export class ScLicense {
             ) : (
               <sc-empty>{__('No activations present.', 'surecart')}</sc-empty>
             )}
+
             {this.loading && <sc-block-ui style={{ '--sc-block-ui-opacity': '0.75' }} spinner />}
           </sc-card>
+
+          {this.pagination?.total_pages > 1 && (
+            <sc-pagination
+              page={this.query.page}
+              perPage={this.query.per_page}
+              total={this.pagination.total}
+              totalPages={this.pagination.total_pages}
+              totalShowing={this?.activations?.length}
+              onScNextPage={() => this.nextPage()}
+              onScPrevPage={() => this.prevPage()}
+            />
+          )}
         </sc-dashboard-module>
       </Fragment>
     );
