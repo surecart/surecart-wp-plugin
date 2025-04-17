@@ -366,34 +366,18 @@ class TemplateUtilityService {
 	 */
 	public function getBlockTemplateTitle( $template_slug ) {
 		$translations = array(
-			'single-sc_product'       => array(
-				'title' => class_exists( 'WooCommerce' ) ? __( 'SureCart Products', 'surecart' ) : __( 'Products', 'surecart' ),
-			),
-			'product-info'            => array(
-				'title' => class_exists( 'WooCommerce' ) ? __( 'SureCart Products', 'surecart' ) : __( 'Products', 'surecart' ),
-			),
-			'single-upsell'           => array(
-				'title' => __( 'Upsells', 'surecart' ),
-			),
-			'upsell-info'             => array(
-				'title' => __( 'Upsells', 'surecart' ),
-			),
-			'taxonomy-sc_collection'  => array(
-				'title' => class_exists( 'WooCommerce' ) ? __( 'SureCart Product Collections', 'surecart' ) : __( 'Product Collections', 'surecart' ),
-			),
-			'product-collection-part' => array(
-				'title' => class_exists( 'WooCommerce' ) ? __( 'SureCart Product Collections', 'surecart' ) : __( 'Product Collections', 'surecart' ),
-			),
-			'cart'                    => array(
-				'title' => class_exists( 'WooCommerce' ) ? __( 'SureCart Cart', 'surecart' ) : __( 'Cart', 'surecart' ),
-			),
-			'checkout'                => array(
-				'title' => class_exists( 'WooCommerce' ) ? __( 'SureCart Checkout', 'surecart' ) : __( 'Checkout', 'surecart' ),
-			),
+			'single-sc_product'       => class_exists( 'WooCommerce' ) ? __( 'SureCart Products', 'surecart' ) : __( 'Products', 'surecart' ),
+			'product-info'            => class_exists( 'WooCommerce' ) ? __( 'SureCart Products', 'surecart' ) : __( 'Products', 'surecart' ),
+			'single-upsell'           => __( 'Upsells', 'surecart' ),
+			'upsell-info'             => __( 'Upsells', 'surecart' ),
+			'taxonomy-sc_collection'  => class_exists( 'WooCommerce' ) ? __( 'SureCart Product Collections', 'surecart' ) : __( 'Product Collections', 'surecart' ),
+			'product-collection-part' => class_exists( 'WooCommerce' ) ? __( 'SureCart Product Collections', 'surecart' ) : __( 'Product Collections', 'surecart' ),
+			'cart'                    => class_exists( 'WooCommerce' ) ? __( 'SureCart Cart', 'surecart' ) : __( 'Cart', 'surecart' ),
+			'checkout'                => class_exists( 'WooCommerce' ) ? __( 'SureCart Checkout', 'surecart' ) : __( 'Checkout', 'surecart' ),
 		);
 
 		if ( isset( $translations[ $template_slug ] ) ) {
-			return $translations[ $template_slug ]['title'];
+			return $translations[ $template_slug ];
 		}
 		// Human friendly title converted from the slug.
 		return ucwords( preg_replace( '/[\-_]/', ' ', $template_slug ) );
@@ -407,34 +391,18 @@ class TemplateUtilityService {
 	 */
 	public function getBlockTemplateDescription( $template_slug ) {
 		$translations = array(
-			'single-sc_product'       => array(
-				'description' => __( 'Display all individual products unless a custom template has been applied.', 'surecart' ),
-			),
-			'product-info'            => array(
-				'description' => __( 'Display all individual products content unless a custom template has been applied.', 'surecart' ),
-			),
-			'single-upsell'           => array(
-				'description' => __( 'Display all individual upsells unless a custom template has been applied.', 'surecart' ),
-			),
-			'upsell-info'             => array(
-				'description' => __( 'Display all individual upsells content unless a custom template has been applied.', 'surecart' ),
-			),
-			'taxonomy-sc_collection'  => array(
-				'description' => __( 'Display all individual product collections unless a custom template has been applied.', 'surecart' ),
-			),
-			'product-collection-part' => array(
-				'description' => __( 'Display all individual product collections content unless a custom template has been applied.', 'surecart' ),
-			),
-			'cart'                    => array(
-				'description' => __( 'The slide-out cart template.', 'surecart' ),
-			),
-			'checkout'                => array(
-				'description' => __( 'Display the checkout content unless a custom template has been applied.', 'surecart' ),
-			),
+			'single-sc_product'       => __( 'Display all individual products unless a custom template has been applied.', 'surecart' ),
+			'product-info'            => __( 'Display all individual products content unless a custom template has been applied.', 'surecart' ),
+			'single-upsell'           => __( 'Display all individual upsells unless a custom template has been applied.', 'surecart' ),
+			'upsell-info'             => __( 'Display all individual upsells content unless a custom template has been applied.', 'surecart' ),
+			'taxonomy-sc_collection'  => __( 'Display all individual product collections unless a custom template has been applied.', 'surecart' ),
+			'product-collection-part' => __( 'Display all individual product collections content unless a custom template has been applied.', 'surecart' ),
+			'cart'                    => __( 'The slide-out cart template.', 'surecart' ),
+			'checkout'                => __( 'Display the checkout content unless a custom template has been applied.', 'surecart' ),
 		);
 
-		if ( isset( $translations[ $template_slug ]['description'] ) ) {
-			return $translations[ $template_slug ]['description'];
+		if ( isset( $translations[ $template_slug ] ) ) {
+			return $translations[ $template_slug ];
 		}
 		return '';
 	}
