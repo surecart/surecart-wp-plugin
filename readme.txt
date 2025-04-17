@@ -3,8 +3,8 @@ Contributors: 2winfactor, wpcrafter
 Donate link: https://surecart.com
 Tags: ecommerce plugin, online store, subscriptions, stripe, payments
 Requires at least: 6.6
-Tested up to: 6.7
-Stable tag: 3.7.0
+Tested up to: 6.8
+Stable tag: 3.7.1
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -304,6 +304,12 @@ Yes, the checkout form can be customized using our visual builder. You can chang
 Accessibility is a huge priority for the entire team building SureCart. As you know, accessibility is an ongoing improvement task. Our development and QA teams are trained in accessibility best practices and build/test each new feature for accessibility. If you come across any edge issues, we want to know about it and will prioritize its resolution. Please contact us via our website.
 
 == Changelog ==
+
+= 3.7.1 - April 17th, 2025 =
+- Fix: Conflict with Jetpack on Edit Product pages with new content editor.
+- Fix: Debug notice with translation loading priority in 6.8.
+- Fix: SureCart shop worker role does not have permissions to access media library.
+- Fix: Issue where shipping choice did not convert currency to the chosen currency on checkout.
 
 = 3.7.0 - April 15th, 2025 =
 - New: Complete customization freedom with Product Content Designer. Design rich product pages in the WordPress editor or your favorite page builder. [Learn More](https://surecart.com/changelog/surecart-3-7-product-content-designer/)
