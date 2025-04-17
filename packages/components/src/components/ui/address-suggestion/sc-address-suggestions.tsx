@@ -8,10 +8,9 @@ import { debounce } from 'lodash';
 /**
  * Internal dependencies.
  */
-import { Address, AddressSuggestion, GoogleMapPlace } from '../../../types';
+import { Address, AddressSuggestion } from '../../../types';
 import { createErrorNotice } from '@store/notices/mutations';
-import { getCountryRegions } from 'src/functions/address-settings';
-import { getAddressLabels, transformPlaceDetails } from './utils/address-transformer';
+import { highlightMatch, updateFocus, fetchAddressSuggestions, fetchPlaceDetails } from './utils/suggestion-utils';
 
 @Component({
   tag: 'sc-address-suggestions',
@@ -81,9 +80,17 @@ export class ScAddressSuggestions {
   /** Focused index for keyboard navigation */
   @State() focusedIndex: number = -1;
 
-  // Use Lodash debounce for fetchAddressSuggestions
-  debouncedFetchAddressSuggestions = debounce((input: string) => {
-    this.fetchAddressSuggestions(input);
+  // Use Lodash debounce for fetchAddressSuggestions.
+  debouncedFetchAddressSuggestions = debounce(async (input: string) => {
+    try {
+      this.addressSuggestions = await fetchAddressSuggestions(input, this.address?.country, this.regions);
+    } catch (error) {
+      createErrorNotice({
+        message: sprintf(__('Google Map Error: %s', 'surecart'), error.message),
+      });
+      this.showSuggestions = false;
+      this.addressSuggestions = [];
+    }
   }, 100);
 
   @Watch('value')
@@ -94,7 +101,6 @@ export class ScAddressSuggestions {
     }
   }
 
-  // Modify handleAddressChange to use the debounced function.
   @Watch('address')
   handleAddressChange() {
     if (!this.address?.country) return;
@@ -113,72 +119,18 @@ export class ScAddressSuggestions {
     }
   }
 
-  async fetchAddressSuggestions(input: string) {
-    const response = await fetch('https://places.googleapis.com/v1/places:searchText', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Goog-Api-Key': window?.scData?.google_map_api_key,
-        'X-Goog-FieldMask': 'places.id,places.displayName,places.types,places.primaryType,places.primaryTypeDisplayName,places.addressComponents',
-      },
-      body: JSON.stringify({
-        textQuery: input,
-        pageSize: 5,
-        regionCode: this.address?.country,
-      }),
-    });
-
-    const addressResponse = await response.json();
-
-    // If some error occurred, hide the suggestions and show error notice.
-    if (!!addressResponse?.error?.message) {
-      createErrorNotice({
-        message: sprintf(__('Google Map Error: %s', 'surecart'), addressResponse?.error?.message),
-      });
-      this.showSuggestions = false;
-      this.addressSuggestions = [];
-      return;
-    }
-
-    // Map the address suggestions to a more readable format.
-    this.addressSuggestions = (addressResponse?.places || [])?.map((place: GoogleMapPlace) => {
-      const { city, state, country } = getAddressLabels(place?.addressComponents, this.regions);
-
-      return {
-        displayName: place?.displayName?.text ?? input,
-        fullDisplayName: [place?.displayName?.text ?? input, city, state, country].filter(Boolean).join(', '),
-        placeId: place?.id,
-        addressComponents: place?.addressComponents || null,
-      };
-    }) as Array<AddressSuggestion>;
-  }
-
   async fetchPlaceDetails(placeId: string) {
-    // Find the places from the suggestions.
-    const place = this.addressSuggestions.find((suggestion: AddressSuggestion) => suggestion.placeId === placeId);
-    if (!place?.addressComponents) {
-      return;
+    try {
+      const { updatedAddress, updatedRegions } = await fetchPlaceDetails(placeId, this.addressSuggestions, this.address, this.regions);
+      this.address = updatedAddress;
+      this.regions = updatedRegions;
+      this.showSuggestions = false;
+      this.scShowAddressFields.emit();
+    } catch (error) {
+      createErrorNotice({
+        message: sprintf(__('Google Map Error: %s', 'surecart'), error.message),
+      });
     }
-
-    const { addressComponents } = place;
-
-    // If address country and google address components country is different, update the regions.
-    const country = addressComponents.find(component => component.types.includes('country'))?.shortText || null;
-    if (this.address?.country !== country) {
-      this.regions = await getCountryRegions(country);
-    }
-
-    const placeDetails = transformPlaceDetails(place?.addressComponents, this.regions);
-
-    // Update the address with the place details.
-    this.scChangeAddress.emit({
-      ...(this.address as Address),
-      ...placeDetails,
-      line_1: place?.displayName ?? this.value,
-    });
-
-    this.showSuggestions = false;
-    this.scShowAddressFields.emit();
   }
 
   handleInputChange(e: any) {
@@ -197,12 +149,12 @@ export class ScAddressSuggestions {
       case 'ArrowDown':
         event.preventDefault();
         this.focusedIndex = (this.focusedIndex + 1) % this.addressSuggestions.length;
-        this.updateFocus(listElement);
+        updateFocus(listElement, this.focusedIndex);
         break;
       case 'ArrowUp':
         event.preventDefault();
         this.focusedIndex = (this.focusedIndex - 1 + this.addressSuggestions.length) % this.addressSuggestions.length;
-        this.updateFocus(listElement);
+        updateFocus(listElement, this.focusedIndex);
         break;
       case 'Enter':
         event.preventDefault();
@@ -215,11 +167,6 @@ export class ScAddressSuggestions {
         this.addressSuggestions = [];
         break;
     }
-  }
-
-  updateFocus(listElement: HTMLElement) {
-    const focusedItem = listElement?.children[this.focusedIndex] as HTMLElement;
-    focusedItem?.focus();
   }
 
   manualAddress() {
@@ -282,32 +229,6 @@ export class ScAddressSuggestions {
     this.debouncedFetchAddressSuggestions.cancel();
   }
 
-  highlightMatch(text: string, query: string) {
-    if (!text || !query) {
-      return text;
-    }
-
-    // Split query into words and filter out empty strings.
-    const words = query.split(/\s+/).filter(word => word);
-
-    // If no valid words, return the original text.
-    if (words.length === 0) {
-      return text;
-    }
-
-    try {
-      // Create a regex to match any word in the query.
-      const regex = new RegExp(`(${words.join('|')})`, 'gi');
-
-      // Replace matched words with highlighted version.
-      return text.replace(regex, '<strong>$1</strong>');
-    } catch (error) {
-      // If regex creation fails, return the original text.
-      console.error('Invalid regex in highlightMatch:', error);
-      return text;
-    }
-  }
-
   renderAddressSuggestions() {
     if (!this.showSuggestions || !this.value) {
       return null;
@@ -362,7 +283,7 @@ export class ScAddressSuggestions {
             aria-label={sprintf(__('Select suggestion %s', 'surecart'), suggestion.fullDisplayName)}
             tabindex={this.focusedIndex === index ? '0' : '-1'}
             onClick={() => this.fetchPlaceDetails(suggestion?.placeId)}
-            innerHTML={this.highlightMatch(suggestion.fullDisplayName, this.value)}
+            innerHTML={highlightMatch(suggestion.fullDisplayName, this.value)}
             onMouseEnter={() => (this.focusedIndex = index)}
             onMouseLeave={() => (this.focusedIndex = -1)}
           ></li>
