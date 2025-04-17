@@ -238,7 +238,7 @@ class AdminMenuPageService {
 			'checkout'                => $this->getPage( 'checkout', __( 'Checkout', 'surecart' ) ),
 			'cart'                    => $this->addTemplateSubMenuPage( 'cart', __( 'Cart', 'surecart' ), 'surecart/surecart//cart' ),
 			'dashboard'               => $this->getPage( 'dashboard', __( 'Customer Area', 'surecart' ) ),
-			'forms'                   => \add_submenu_page( $this->slug, __( 'Forms', 'surecart' ), __( 'Custom Forms', 'surecart' ), 'edit_posts', 'edit.php?post_type=sc_form', '' ),
+			'forms'                   => \add_submenu_page( $this->slug, __( 'Forms', 'surecart' ), __( 'Custom Forms', 'surecart' ), 'manage_options', 'edit.php?post_type=sc_form', '' ),
 			'settings'                => \add_submenu_page( $this->slug, __( 'Settings', 'surecart' ), __( 'Settings', 'surecart' ), 'manage_options', 'sc-settings', '__return_false' ),
 		);
 	}
