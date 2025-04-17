@@ -30,7 +30,9 @@ class CompatibilityService {
 
 		// rankmath fix.
 		add_action( 'rank_math/head', [ $this, 'rankMathFix' ] );
-		add_filter( 'rank_math/frontend/canonical', [ $this, 'rankMathCanonicalFix' ] );
+		add_filter( 'rank_math/frontend/canonical', [ $this, 'rankMathUrlFix' ] );
+		add_filter( 'rank_math/sitemap/xml_post_url', [ $this, 'rankMathUrlFix' ] );
+		add_filter( 'rank_math/sitemap/post_type_archive_link', [ $this, 'rankMathUrlFix' ] );
 
 		// Yoast SEO fix.
 		add_action( 'wpseo_frontend_presenters', [ $this, 'yoastSEOFix' ] );
@@ -123,7 +125,7 @@ class CompatibilityService {
 	 *
 	 * @return string
 	 */
-	public function rankMathCanonicalFix( $canonical ) {
+	public function rankMathUrlFix( $canonical ) {
 		return remove_query_arg( 'currency', $canonical );
 	}
 
