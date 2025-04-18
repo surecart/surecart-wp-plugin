@@ -67,10 +67,12 @@ export default function QueryPlaceholder({
 		},
 		[name, blockNameForPatterns, clientId, attributes]
 	);
+
 	const icon =
 		activeBlockVariation?.icon?.src ||
 		activeBlockVariation?.icon ||
 		blockType?.icon?.src;
+
 	const label = activeBlockVariation?.title || blockType?.title;
 
 	// Checks whether we are in the sc-product post type or a template
