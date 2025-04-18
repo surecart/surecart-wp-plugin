@@ -45,6 +45,19 @@ use SureCart\Models\Blocks\ProductPageBlock;
 				// Get an instance of the current Product Quick view block.
 				$block_instance = $block->parsed_block;
 
+				global $post;
+
+				$original_excerpt = $post->post_excerpt;
+
+				$read_more_link = sprintf(
+					' <a href="%s">%s</a>',
+					esc_url( get_permalink() ),
+					esc_html__( 'Read more', 'your-text-domain' )
+				);
+
+				// Trim post excerpt, since we do not need it in quick view.
+				$post->post_excerpt = wp_trim_words( $original_excerpt, 20 ) . $read_more_link;
+
 				// Set the block name to one that does not correspond to an existing registered block.
 				// This ensures that for the inner instances of the Product Quick view block, we do not render any block supports.
 				$block_instance['blockName'] = 'core/null';
