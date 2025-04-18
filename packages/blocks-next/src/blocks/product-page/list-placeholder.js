@@ -132,7 +132,11 @@ export default function QueryPlaceholder({
 				}}
 			>
 				<Card>
-					<CardBody>
+					<CardBody
+						style={{
+							padding: 'var(--sc-spacing-medium)',
+						}}
+					>
 						<SelectorPreview
 							title={post?.title?.rendered}
 							subtitle={post?.link}
