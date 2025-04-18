@@ -193,7 +193,7 @@ export default function QueryPlaceholder({
 	};
 
 	const renderPatternSelector = () => {
-		if (!post?.id) {
+		if (!post?.id && !shouldDisableProductSelector) {
 			return null;
 		}
 
