@@ -28,68 +28,74 @@ export default ({
 	}
 
 	const renderPriorityProductPrice = () => {
+		const otherProductPrices = currentProduct?.active_prices?.filter(
+			(priceItem) => priceItem.id !== price?.id
+		);
+
+		if (!otherProductPrices?.length) {
+			return null;
+		}
+
 		return (
 			<span slot="prefix">
 				<ScMenuLabel key={currentProduct?.id}>
 					{currentProduct?.name} {__('(Current Product)', 'surecart')}
 				</ScMenuLabel>
-				{(currentProduct?.active_prices || [])
-					.filter((priceItem) => priceItem.id !== price?.id)
-					.map((priceItem) => {
-						return (
-							<ScMenuItem
-								key={priceItem?.id}
-								checked={swapPrice?.id === priceItem?.id}
-								value={priceItem?.id}
-								onClick={() =>
+				{otherProductPrices.map((priceItem) => {
+					return (
+						<ScMenuItem
+							key={priceItem?.id}
+							checked={swapPrice?.id === priceItem?.id}
+							value={priceItem?.id}
+							onClick={() =>
+								updateSwap({
+									price: price?.id,
+									swap_price: priceItem?.id,
+								})
+							}
+							onKeyDown={(event) => {
+								if (
+									event.key === 'Enter' ||
+									event.key === ' '
+								) {
+									event.preventDefault();
+									event.stopImmediatePropagation();
 									updateSwap({
 										price: price?.id,
 										swap_price: priceItem?.id,
-									})
+									});
 								}
-								onKeyDown={(event) => {
-									if (
-										event.key === 'Enter' ||
-										event.key === ' '
-									) {
-										event.preventDefault();
-										event.stopImmediatePropagation();
-										updateSwap({
-											price: price?.id,
-											swap_price: priceItem?.id,
-										});
-									}
-								}}
-								aria-label={priceItem?.name}
-								aria-selected={
-									swapPrice?.id === priceItem?.id
-										? 'true'
-										: 'false'
-								}
-								role="option"
-							>
-								{priceItem?.display_amount}
-								<div slot="suffix">
-									{priceItem?.interval_text}
-									{currentProduct?.stock_enabled ? (
-										<div
-											css={css`
-												font-size: var(
-													--sc-input-help-text-font-size-medium
-												);
-												opacity: 0.65;
-											`}
-										>
-											{sprintf(
-												__('%s available', 'surecart'),
-												currentProduct?.available_stock
-											)}
-										</div>
-									) : null}
-								</div>
-							</ScMenuItem>
-						);
-					})}
+							}}
+							aria-label={priceItem?.name}
+							aria-selected={
+								swapPrice?.id === priceItem?.id
+									? 'true'
+									: 'false'
+							}
+							role="option"
+						>
+							{priceItem?.display_amount}
+							<div slot="suffix">
+								{priceItem?.interval_text}
+								{currentProduct?.stock_enabled ? (
+									<div
+										css={css`
+											font-size: var(
+												--sc-input-help-text-font-size-medium
+											);
+											opacity: 0.65;
+										`}
+									>
+										{sprintf(
+											__('%s available', 'surecart'),
+											currentProduct?.available_stock
+										)}
+									</div>
+								) : null}
+							</div>
+						</ScMenuItem>
+					);
+				})}
 			</span>
 		);
 	};
@@ -189,6 +195,7 @@ export default ({
 			</ScFormControl>
 			<ScFormControl
 				label={__('Description', 'surecart')}
+				required
 				help={__(
 					'This is shown to the customer on line items to help them understand the price boost.',
 					'surecart'
