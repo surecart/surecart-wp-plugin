@@ -9,9 +9,7 @@ $icon_position   = $attributes['iconPosition'] ?? 'after';
 $label           = $attributes['label'] ?? __( 'Quick View', 'surecart' );
 $gap             = ! empty( $attributes['style']['spacing']['blockGap'] ) ? \SureCart::block()->styles()->getBlockGapPresetCssVar( $attributes['style']['spacing']['blockGap'] ) : '';
 $alignment       = ! empty( $attributes['style']['typography']['textAlign'] ) ? $attributes['style']['typography']['textAlign'] : '';
-if ( ! empty( $attributes['width'] ) ) {
-	$width_class = 'has-custom-width wp-block-button__width-' . $attributes['width'];
-}
+$width_class     = ! empty( $attributes['width'] ) ? 'has-custom-width wp-block-button__width-' . $attributes['width'] : '';
 
 $style = ! empty( $gap )
 	? esc_attr( safecss_filter_attr( 'gap:' . $gap ) ) . ';'
