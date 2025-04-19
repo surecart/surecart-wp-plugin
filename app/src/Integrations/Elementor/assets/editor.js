@@ -28,35 +28,6 @@ jQuery(window).ready(function () {
 		win.focus();
 	});
 
-	/**
-	 * When adding a SureCart Product Widget, replace the default block with the product element.
-	 * This addresses issues with nested widgets in Elementor, ensuring state preservation on reload.
-	 */
-	elementor.hooks.addAction(
-		'panel/open_editor/widget/surecart-product',
-		function (panel, model, view) {
-			// Remove the default SureCart block by clearing the model.
-			model.destroy();
-
-			insertSureCartTemplates(
-				window?.scElementorData?.sc_product_template
-			);
-		}
-	);
-
-	// SureCart Product Card Widget.
-	elementor.hooks.addAction(
-		'panel/open_editor/widget/surecart-product-card',
-		function (panel, model, view) {
-			// Remove the default SureCart block by clearing the model.
-			model.destroy();
-
-			insertSureCartTemplates(
-				window?.scElementorData?.sc_product_card_template
-			);
-		}
-	);
-
 	// SureCart Product Pricing Widget.
 	elementor.hooks.addAction(
 		'panel/open_editor/widget/surecart-product-pricing',
@@ -85,9 +56,29 @@ jQuery(window).ready(function () {
 			'click',
 			'.elementor-surecart-template-button',
 			function (event) {
-				$e.run('library/open', { toDefault: true });
+				event.preventDefault();
+				jQuery('#surecart-custom-dialog').fadeIn();
 			}
 		);
+	});
+
+	// Close dialog on close button click
+	jQuery(document).on('click', '#surecart-dialog-close', function () {
+		jQuery('#surecart-custom-dialog').fadeOut();
+	});
+
+	// Handle card click events
+	jQuery(document).on('click', '.surecart-card', function () {
+		// Close the modal instantly
+		jQuery('#surecart-custom-dialog').fadeOut();
+
+		// Determine which template to insert
+		const selectedOption = jQuery(this).attr('id');
+		if (selectedOption === 'surecart-single-product-template') {
+			insertSureCartTemplates(window?.scElementorData?.sc_product_template);
+		} else if (selectedOption === 'surecart-product-card-template') {
+			insertSureCartTemplates(window?.scElementorData?.sc_product_card_template);
+		}
 	});
 
 	function insertSureCartTemplates(template) {

@@ -1,16 +1,109 @@
 .elementor-element .surecart-checkout-icon::after {
-    content: "";
-    background-image: url('data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgNDAwIDQwMCIgZmlsbD0iI2E3YWFhZCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KCTxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNMTI2LjIyNiAxMTAuMDExQzEzOC42NTQgOTcuNTc4MyAxNjIuOTc3IDg3LjUgMTgwLjU1MyA4Ny41SDMzOS42NzRMMjgzLjQxNiAxNDMuNzc2SDkyLjQ3MTRMMTI2LjIyNiAxMTAuMDExWk0xMTYuOTA1IDI1Ni4yMjRIMzA3Ljg1TDI3NC4wOTUgMjg5Ljk5QzI2MS42NjcgMzAyLjQyMiAyMzcuMzQ0IDMxMi41IDIxOS43NjggMzEyLjVINjAuNjQ3MkwxMTYuOTA1IDI1Ni4yMjRaTTMyOC43NjYgMTcxLjg2Mkg2NC42MjVMNTMuMzczNSAxODMuMTE3QzI4LjUxNzMgMjA3Ljk4MiAzNi44NjM3IDIyOC4xMzggNzIuMDE1NyAyMjguMTM4SDMzNi4xNTZMMzQ3LjQwOCAyMTYuODgzQzM3Mi4yNjQgMTkyLjAxOCAzNjMuOTE4IDE3MS44NjIgMzI4Ljc2NiAxNzEuODYyWiIvPgo8L3N2Zz4K');
-    position: absolute;
-    top: 0;
-    right: 0;
-    z-index: 1;
-    width: 20px;
-    height: 20px;
-    padding: 0.2em 0.5em;
-    border-width: 0 0 1px 1px;
-    border-color: #797878;
-    border-style: solid;
-    background-repeat: no-repeat;
-    background-position: center center;
+	content: "";
+	background-image: url("data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgNDAwIDQwMCIgZmlsbD0iI2E3YWFhZCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KCTxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNMTI2LjIyNiAxMTAuMDExQzEzOC42NTQgOTcuNTc4MyAxNjIuOTc3IDg3LjUgMTgwLjU1MyA4Ny41SDMzOS42NzRMMjgzLjQxNiAxNDMuNzc2SDkyLjQ3MTRMMTI2LjIyNiAxMTAuMDExWk0xMTYuOTA1IDI1Ni4yMjRIMzA3Ljg1TDI3NC4wOTUgMjg5Ljk5QzI2MS42NjcgMzAyLjQyMiAyMzcuMzQ0IDMxMi41IDIxOS43NjggMzEyLjVINjAuNjQ3MkwxMTYuOTA1IDI1Ni4yMjRaTTMyOC43NjYgMTcxLjg2Mkg2NC42MjVMNTMuMzczNSAxODMuMTE3QzI4LjUxNzMgMjA3Ljk4MiAzNi44NjM3IDIyOC4xMzggNzIuMDE1NyAyMjguMTM4SDMzNi4xNTZMMzQ3LjQwOCAyMTYuODgzQzM3Mi4yNjQgMTkyLjAxOCAzNjMuOTE4IDE3MS44NjIgMzI4Ljc2NiAxNzEuODYyWiIvPgo8L3N2Zz4K");
+	position: absolute;
+	top: 0;
+	right: 0;
+	z-index: 1;
+	width: 20px;
+	height: 20px;
+	padding: 0.2em 0.5em;
+	border-width: 0 0 1px 1px;
+	border-color: #797878;
+	border-style: solid;
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+
+/* SureCart custom dialog styles */
+#surecart-custom-dialog {
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 9999;
+}
+
+.surecart-dialog-overlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.5);
+}
+
+.surecart-dialog-content {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background: #fff;
+	padding: 30px;
+	width: 800px;
+	min-height: 420px;
+	border-radius: 12px;
+	box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+	text-align: center;
+	color: #111010bf;
+}
+
+.surecart-card-container {
+	display: flex;
+	margin-top: 30px;
+	gap: 30px;
+	width: 100%;
+	justify-content: center;
+	align-items: center;
+}
+
+.surecart-card {
+	padding: 10px;
+	border: 1px solid #eee;
+	flex-basis: 45%;
+	border-radius: 8px;
+	cursor: pointer;
+	background: #f9f9f9;
+	text-align: center;
+    transition: box-shadow 0.3s ease;
+}
+
+.surecart-card img {
+	width: 100%;
+	height: 300px;
+	object-fit: cover;
+	border-radius: 4px;
+	margin-bottom: 10px;
+}
+
+.surecart-card h3 {
+	font-size: 16px;
+	color: #333;
+	margin: 0;
+}
+
+.surecart-card:hover {
+	box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+}
+
+#surecart-dialog-close {
+	position: absolute;
+	top: 1em;
+	right: 1.5em;
+	background: none;
+	border: none;
+	font-size: 20px;
+	color: #333;
+	cursor: pointer;
+}
+
+#surecart-dialog-close:hover {
+	color: #01824c;
+}
+
+#surecart-dialog-close:focus {
+	outline: 2px solid #01824c;
+	outline-offset: 2px;
 }
