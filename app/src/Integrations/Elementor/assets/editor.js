@@ -70,6 +70,26 @@ jQuery(window).ready(function () {
 		}
 	);
 
+	const templateAddSection = jQuery('#tmpl-elementor-add-section');
+	if (0 < templateAddSection.length) {
+		var oldTemplateButton = templateAddSection.html();
+		oldTemplateButton = oldTemplateButton.replace(
+			'<div class="elementor-add-section-drag-title',
+			'<div class="elementor-add-section-area-button elementor-surecart-template-button" title="SureCart"></div><div class="elementor-add-section-drag-title'
+		);
+		templateAddSection.html(oldTemplateButton);
+	}
+
+	elementor.on('preview:loaded', function () {
+		jQuery(elementor.$previewContents[0].body).on(
+			'click',
+			'.elementor-surecart-template-button',
+			function (event) {
+				$e.run('library/open', { toDefault: true });
+			}
+		);
+	});
+
 	function insertSureCartTemplates(template) {
 		// Get the active container - either the one being dragged into or the selected one
 		const container =

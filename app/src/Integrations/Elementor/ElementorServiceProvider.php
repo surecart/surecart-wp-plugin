@@ -23,6 +23,11 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 			return new ElementorWidgetsService();
 		};
 
+		// Widgets.
+		$container['surecart.elementor.editor'] = function () {
+			return new ElementorEditorService();
+		};
+
 		// Documents.
 		$container['surecart.elementor.documents'] = function () {
 			return new ElementorDocumentsService();
@@ -63,6 +68,7 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 		$container['elementor.core.block.styles.service']->bootstrap();
 		$container['elementor.shortcode.service']->bootstrap();
 		$container['surecart.elementor.widgets']->bootstrap();
+		$container['surecart.elementor.editor']->bootstrap();
 		$container['surecart.elementor.dynamic_tags']->bootstrap();
 
 		// The rest are only needed if Elementor Pro is installed.
