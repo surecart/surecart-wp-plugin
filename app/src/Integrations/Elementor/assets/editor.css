@@ -171,3 +171,36 @@ body .elementor-add-new-section .elementor-add-section-area-button {
 		transform: scale(0.9);
 	}
 }
+
+/* Elementor Template selector modal - Responsive styles */
+@media (max-width: 768px) {
+	#sc-elementor-modal-dialog {
+		padding: 0 10px;
+	}
+
+	.sc-elementor-modal-content {
+		width: 100%;
+		height: auto;
+		max-height: 90%;
+		padding: var(--sc-dialog-body-spacing, 20px);
+	}
+
+	.sc-elementor-modal-card-container {
+		flex-direction: column;
+		gap: var(--sc-spacing-medium, 20px);
+	}
+
+	.sc-elementor-modal-card {
+		flex-basis: 100%;
+	}
+
+	.sc-elementor-modal-card img {
+		height: 200px;
+	}
+
+	#sc-elementor-modal-close {
+		top: 10px;
+		right: 10px;
+		font-size: var(--sc-font-size-medium, 16px);
+	}
+}
