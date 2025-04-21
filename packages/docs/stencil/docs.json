@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-04-15T17:01:38",
+  "timestamp": "2025-04-17T18:54:25",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.18.3",
@@ -5634,7 +5634,6 @@
           "sc-form-control",
           "sc-radio-group",
           "sc-radio",
-          "sc-format-number",
           "sc-block-ui"
         ],
         "sc-line-item-shipping": [
@@ -15041,7 +15040,6 @@
           "sc-form-control",
           "sc-radio-group",
           "sc-radio",
-          "sc-format-number",
           "sc-block-ui"
         ],
         "sc-line-item-shipping": [
@@ -16111,7 +16109,6 @@
         "sc-product-line-item",
         "sc-product-price-choices",
         "sc-recurring-price-choice-container",
-        "sc-shipping-choices",
         "sc-subscription-details",
         "sc-subscription-switch"
       ],
@@ -16145,9 +16142,6 @@
           "sc-format-number"
         ],
         "sc-recurring-price-choice-container": [
-          "sc-format-number"
-        ],
-        "sc-shipping-choices": [
           "sc-format-number"
         ],
         "sc-subscription-details": [
@@ -35972,7 +35966,6 @@
         "sc-form-control",
         "sc-radio-group",
         "sc-radio",
-        "sc-format-number",
         "sc-block-ui"
       ],
       "dependencyGraph": {
@@ -35980,7 +35973,6 @@
           "sc-form-control",
           "sc-radio-group",
           "sc-radio",
-          "sc-format-number",
           "sc-block-ui"
         ],
         "sc-form-control": [

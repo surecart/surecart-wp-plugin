@@ -37,7 +37,6 @@
 - [sc-form-control](../form-control)
 - [sc-radio-group](../radio-group)
 - [sc-radio](../radio)
-- [sc-format-number](../../util/format-number)
 - [sc-block-ui](../block-ui)
 
 ### Graph
@@ -46,7 +45,6 @@ graph TD;
   sc-shipping-choices --> sc-form-control
   sc-shipping-choices --> sc-radio-group
   sc-shipping-choices --> sc-radio
-  sc-shipping-choices --> sc-format-number
   sc-shipping-choices --> sc-block-ui
   sc-form-control --> sc-visually-hidden
   sc-block-ui --> sc-spinner
