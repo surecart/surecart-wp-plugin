@@ -76,8 +76,7 @@ export class ScLicense {
   async initialFetch() {
     try {
       this.loading = true;
-      await this.getLicense();
-      await this.getActivations();
+      await Promise.all([this.getLicense(), this.getActivations()]);
     } catch (e) {
       console.error(e);
       this.error = e?.message || __('Something went wrong', 'surecart');
@@ -87,11 +86,11 @@ export class ScLicense {
   }
 
   async getLicense() {
-    this.license = await apiFetch({
+    this.license = (await apiFetch({
       path: addQueryArgs(`surecart/v1/licenses/${this.licenseId}`, {
         expand: ['purchase', 'purchase.product'],
       }),
-    });
+    })) as License;
   }
 
   async getActivations() {
@@ -107,8 +106,8 @@ export class ScLicense {
       total: parseInt(response.headers.get('X-WP-Total')),
       total_pages: parseInt(response.headers.get('X-WP-TotalPages')),
     };
+
     this.activations = (await response.json()) as Activation[];
-    return this.activations;
   }
 
   deleteActivation = async () => {
