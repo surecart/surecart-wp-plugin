@@ -77,15 +77,11 @@ jQuery(window).ready(function () {
 		modal.removeClass('show').fadeOut();
 
 		const selectedOption = jQuery(this).attr('id');
-		if (selectedOption === 'sc-elementor-single-product-template') {
-			insertSureCartTemplates(
-				window?.scElementorData?.sc_product_template
-			);
-		} else if (selectedOption === 'sc-elementor-product-card-template') {
-			insertSureCartTemplates(
-				window?.scElementorData?.sc_product_card_template
-			);
-		}
+		const templateName =
+			selectedOption === 'sc-elementor-single-product-template'
+				? window?.scElementorData?.sc_product_template
+				: window?.scElementorData?.sc_product_card_template;
+		insertSureCartTemplates(templateName);
 	});
 
 	function insertSureCartTemplates(template) {
