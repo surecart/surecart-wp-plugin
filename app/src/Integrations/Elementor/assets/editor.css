@@ -15,6 +15,29 @@
 	background-position: center center;
 }
 
+/* SureCart Icon for Template selector */
+
+.elementor-add-new-section .elementor-surecart-template-button {
+	-webkit-mask: url("../../../../../images/icon.svg") no-repeat center;
+	mask: url("../../../../../images/icon.svg") no-repeat center;
+	-webkit-mask-size: contain;
+	mask-size: contain;
+	background-color: #01824c !important;
+	transition: opacity 0.3s ease;
+}
+
+.elementor-add-new-section .elementor-surecart-template-button:hover {
+	opacity: 0.8;
+}
+
+.elementor-add-new-section .elementor-surecart-template-button > i {
+	height: 12px;
+}
+
+body .elementor-add-new-section .elementor-add-section-area-button {
+	margin-left: 0;
+}
+
 /* SureCart custom dialog styles */
 #sc-elementor-modal-dialog {
 	display: block;
