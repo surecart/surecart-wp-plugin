@@ -122,19 +122,13 @@ jQuery(window).ready(function () {
 			at++;
 		});
 
-		// Apply the page settings only to the newly inserted elements
-		const newElements = container.view.collection.slice(
-			at - template.content.length,
-			at
-		);
-		newElements.forEach((element) => {
-			$e.run('document/elements/settings', {
-				container: element,
-				settings: template.page_settings,
-				options: {
-					external: true,
-				},
-			});
+		// Apply the settings to the newly created elements.
+		$e.run('document/elements/settings', {
+			container,
+			settings: template.page_settings,
+			options: {
+				external: true,
+			},
 		});
 	}
 });
