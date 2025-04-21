@@ -168,16 +168,6 @@ export default ({ id, setBrowserURL }) => {
 				);
 			});
 
-			// add metaboxes to pending records.
-			if (post) {
-				const metaboxes = applyFilters(
-					'surecart.saveProduct',
-					Promise.resolve(),
-					{}
-				);
-				pendingSavedRecords.push(metaboxes);
-			}
-
 			// check values.
 			const values = await Promise.all(pendingSavedRecords);
 
@@ -253,10 +243,6 @@ export default ({ id, setBrowserURL }) => {
 		<>
 			<Global
 				styles={css`
-					#screen-meta-links {
-						display: none;
-					}
-
 					/** Fix conflicts with spectra. */
 					[type='text'],
 					[type='email'],
