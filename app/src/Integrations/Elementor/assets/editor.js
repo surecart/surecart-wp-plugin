@@ -57,27 +57,33 @@ jQuery(window).ready(function () {
 			'.elementor-surecart-template-button',
 			function (event) {
 				event.preventDefault();
-				jQuery('#surecart-custom-dialog').fadeIn();
+				const modal = jQuery('#sc-elementor-modal-dialog');
+				modal.addClass('show');
 			}
 		);
 	});
 
 	// Close dialog on close button click
-	jQuery(document).on('click', '#surecart-dialog-close', function () {
-		jQuery('#surecart-custom-dialog').fadeOut();
+	jQuery(document).on('click', '#sc-elementor-modal-close', function () {
+		const modal = jQuery('#sc-elementor-modal-dialog');
+		modal.removeClass('show');
 	});
 
 	// Handle card click events
-	jQuery(document).on('click', '.surecart-card', function () {
+	jQuery(document).on('click', '.sc-elementor-modal-card', function () {
 		// Close the modal instantly
-		jQuery('#surecart-custom-dialog').fadeOut();
+		jQuery('#sc-elementor-modal-dialog').fadeOut();
 
 		// Determine which template to insert
 		const selectedOption = jQuery(this).attr('id');
-		if (selectedOption === 'surecart-single-product-template') {
-			insertSureCartTemplates(window?.scElementorData?.sc_product_template);
-		} else if (selectedOption === 'surecart-product-card-template') {
-			insertSureCartTemplates(window?.scElementorData?.sc_product_card_template);
+		if (selectedOption === 'sc-elementor-single-product-template') {
+			insertSureCartTemplates(
+				window?.scElementorData?.sc_product_template
+			);
+		} else if (selectedOption === 'sc-elementor-product-card-template') {
+			insertSureCartTemplates(
+				window?.scElementorData?.sc_product_card_template
+			);
 		}
 	});
 

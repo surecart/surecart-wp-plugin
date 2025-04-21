@@ -16,94 +16,126 @@
 }
 
 /* SureCart custom dialog styles */
-#surecart-custom-dialog {
-	display: none;
+#sc-elementor-modal-dialog {
+	display: block;
 	position: fixed;
-	top: 0;
-	left: 0;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
 	width: 100%;
 	height: 100%;
 	z-index: 9999;
+	opacity: 0;
+	pointer-events: none;
 }
 
-.surecart-dialog-overlay {
+#sc-elementor-modal-dialog.show {
+	opacity: 1;
+	pointer-events: auto;
+}
+
+.sc-elementor-modal-overlay {
 	position: absolute;
 	top: 0;
 	left: 0;
 	width: 100%;
 	height: 100%;
-	background: rgba(0, 0, 0, 0.5);
+	background-color: rgba(0, 0, 0, 0.25);
 }
 
-.surecart-dialog-content {
+.sc-elementor-modal-content {
+	box-sizing: border-box;
 	position: absolute;
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
-	background: #fff;
-	padding: 30px;
-	width: 800px;
-	min-height: 420px;
-	border-radius: 12px;
-	box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+	width: var(--sc-dialog-width, 50rem);
+	background-color: var(--sc-panel-background-color, #fff);
+	border-radius: var(--sc-border-radius-medium, 12px);
+	box-shadow: var(--sc-shadow-x-large, 0 6px 10px rgba(0, 0, 0, 0.15));
+	padding: var(--sc-dialog-body-spacing, 30px);
 	text-align: center;
-	color: #111010bf;
+	color: var(--sc-color-gray-800, #111010bf);
+	animation: fade-in 0.25s ease;
 }
 
-.surecart-card-container {
+.sc-elementor-modal-card-container {
 	display: flex;
-	margin-top: 30px;
-	gap: 30px;
+	margin-top: var(--sc-spacing-large, 30px);
+	gap: var(--sc-spacing-large, 30px);
 	width: 100%;
 	justify-content: center;
 	align-items: center;
 }
 
-.surecart-card {
-	padding: 10px;
-	border: 1px solid #eee;
+.sc-elementor-modal-card {
+	padding: var(--sc-spacing-medium, 10px);
+	border: 1px solid var(--sc-color-gray-300, #eee);
 	flex-basis: 45%;
-	border-radius: 8px;
+	border-radius: var(--sc-border-radius-small, 8px);
 	cursor: pointer;
-	background: #f9f9f9;
+	background: var(--sc-panel-background-color, #f9f9f9);
 	text-align: center;
-    transition: box-shadow 0.3s ease;
+	transition: box-shadow 0.3s ease;
 }
 
-.surecart-card img {
+.sc-elementor-modal-card img {
 	width: 100%;
 	height: 300px;
 	object-fit: cover;
-	border-radius: 4px;
-	margin-bottom: 10px;
+	border-radius: var(--sc-border-radius-x-small, 4px);
+	margin-bottom: var(--sc-spacing-small, 10px);
 }
 
-.surecart-card h3 {
-	font-size: 16px;
-	color: #333;
+.sc-elementor-modal-card h3 {
+	font-size: var(--sc-font-size-medium, 16px);
+	color: var(--sc-color-gray-900, #333);
 	margin: 0;
 }
 
-.surecart-card:hover {
-	box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+.sc-elementor-modal-card:hover {
+	box-shadow: var(--sc-shadow-medium, 0 6px 10px rgba(0, 0, 0, 0.1));
 }
 
-#surecart-dialog-close {
+#sc-elementor-modal-close {
 	position: absolute;
-	top: 1em;
-	right: 1.5em;
+	top: var(--sc-spacing-medium, 1em);
+	right: var(--sc-spacing-large, 1.5em);
 	background: none;
 	border: none;
-	font-size: 20px;
-	color: #333;
+	font-size: var(--sc-font-size-large, 20px);
+	color: var(--sc-color-gray-500, #333);
 	cursor: pointer;
 }
 
-#surecart-dialog-close:hover {
-	color: #01824c;
+#sc-elementor-modal-close:hover {
+	color: var(--sc-color-primary, #01824c);
 }
 
-#surecart-dialog-close:focus {
-	outline: 2px solid #01824c;
+#sc-elementor-modal-close:focus {
+	outline: 2px solid var(--sc-color-primary, #01824c);
 	outline-offset: 2px;
+}
+
+/* Animation keyframes */
+@keyframes fade-in {
+	0% {
+		opacity: 0;
+		transform: scale(0.9);
+	}
+	100% {
+		opacity: 1;
+		transform: scale(1);
+	}
+}
+
+@keyframes fade-out {
+	0% {
+		opacity: 1;
+		transform: scale(1);
+	}
+	100% {
+		opacity: 0;
+		transform: scale(0.9);
+	}
 }
