@@ -16,7 +16,6 @@
 }
 
 /* SureCart Icon for Template selector */
-
 .elementor-add-new-section .elementor-surecart-template-button {
 	-webkit-mask: url("../../../../../images/icon.svg") no-repeat center;
 	mask: url("../../../../../images/icon.svg") no-repeat center;
@@ -117,12 +116,6 @@ body .elementor-add-new-section .elementor-add-section-area-button {
 	font-size: var(--sc-font-size-large, 14px);
 	margin: 0;
 	padding: var(--sc-spacing-small, 15px) var(--sc-spacing-medium, 20px);
-}
-
-.sc-elementor-modal-card h3 {
-	font-size: var(--sc-font-size-medium, 16px);
-	color: var(--sc-color-gray-900, #333);
-	margin: 0;
 }
 
 .sc-elementor-modal-card:hover {
