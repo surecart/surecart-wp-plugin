@@ -40,20 +40,22 @@ body .elementor-add-new-section .elementor-add-section-area-button {
 
 /* SureCart custom dialog styles */
 #sc-elementor-modal-dialog {
-	display: block;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	position: fixed;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
+	top: 0;
+	left: 0;
 	width: 100%;
 	height: 100%;
 	z-index: 9999;
-	opacity: 0;
+	visibility: hidden;
 	pointer-events: none;
 }
 
 #sc-elementor-modal-dialog.show {
-	opacity: 1;
+	visibility: visible;
+	display: flex;
 	pointer-events: auto;
 }
 
@@ -69,10 +71,11 @@ body .elementor-add-new-section .elementor-add-section-area-button {
 .sc-elementor-modal-content {
 	box-sizing: border-box;
 	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	width: var(--sc-dialog-width, 50rem);
+	width: var(--sc-dialog-width, 60rem);
+	max-width: 90%;
+	max-height: 95%;
+	height: 520px;
+	overflow: auto;
 	background-color: var(--sc-panel-background-color, #fff);
 	border-radius: var(--sc-border-radius-medium, 12px);
 	box-shadow: var(--sc-shadow-x-large, 0 6px 10px rgba(0, 0, 0, 0.15));
@@ -92,7 +95,7 @@ body .elementor-add-new-section .elementor-add-section-area-button {
 }
 
 .sc-elementor-modal-card {
-	padding: var(--sc-spacing-medium, 10px);
+	padding: 0;
 	border: 1px solid var(--sc-color-gray-300, #eee);
 	flex-basis: 45%;
 	border-radius: var(--sc-border-radius-small, 8px);
@@ -104,10 +107,16 @@ body .elementor-add-new-section .elementor-add-section-area-button {
 
 .sc-elementor-modal-card img {
 	width: 100%;
-	height: 300px;
+	height: 350px;
 	object-fit: cover;
 	border-radius: var(--sc-border-radius-x-small, 4px);
 	margin-bottom: var(--sc-spacing-small, 10px);
+}
+
+.sc-elementor-modal-card h4 {
+	font-size: var(--sc-font-size-large, 14px);
+	margin: 0;
+	padding: var(--sc-spacing-small, 15px) var(--sc-spacing-medium, 20px);
 }
 
 .sc-elementor-modal-card h3 {

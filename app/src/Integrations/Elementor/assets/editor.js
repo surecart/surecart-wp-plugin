@@ -32,7 +32,6 @@ jQuery(window).ready(function () {
 	elementor.hooks.addAction(
 		'panel/open_editor/widget/surecart-product-pricing',
 		function (panel, model, view) {
-			// Remove the default SureCart block by clearing the model.
 			model.destroy();
 
 			insertSureCartTemplates(
@@ -58,7 +57,10 @@ jQuery(window).ready(function () {
 			function (event) {
 				event.preventDefault();
 				const modal = jQuery('#sc-elementor-modal-dialog');
-				modal.addClass('show');
+
+				// Reset and show the modal
+				modal.removeClass('show').hide();
+				modal.addClass('show').show();
 			}
 		);
 	});
@@ -66,15 +68,14 @@ jQuery(window).ready(function () {
 	// Close dialog on close button click
 	jQuery(document).on('click', '#sc-elementor-modal-close', function () {
 		const modal = jQuery('#sc-elementor-modal-dialog');
-		modal.removeClass('show');
+		modal.removeClass('show').hide();
 	});
 
 	// Handle card click events
 	jQuery(document).on('click', '.sc-elementor-modal-card', function () {
-		// Close the modal instantly
-		jQuery('#sc-elementor-modal-dialog').fadeOut();
+		const modal = jQuery('#sc-elementor-modal-dialog');
+		modal.removeClass('show').fadeOut();
 
-		// Determine which template to insert
 		const selectedOption = jQuery(this).attr('id');
 		if (selectedOption === 'sc-elementor-single-product-template') {
 			insertSureCartTemplates(
@@ -136,4 +137,4 @@ jQuery(window).ready(function () {
 			});
 		});
 	}
-}, jQuery);
+});
