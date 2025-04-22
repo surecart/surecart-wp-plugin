@@ -5,7 +5,7 @@ import usePageBuilderLinks from '../hooks/usePageBuilderLinks';
 
 export default ({ post, onNavigate }) => {
 	// Get page builder info and links
-	const { editorLink } = usePageBuilderLinks(post);
+	const { editPostLink } = usePageBuilderLinks(post);
 
 	return (
 		<div
@@ -24,10 +24,10 @@ export default ({ post, onNavigate }) => {
 			</div>
 
 			<a
-				href={editorLink}
+				href={editPostLink}
 				onClick={(e) => {
 					e.preventDefault();
-					onNavigate(editorLink);
+					onNavigate(editPostLink);
 				}}
 				css={css`
 					text-decoration: none;
