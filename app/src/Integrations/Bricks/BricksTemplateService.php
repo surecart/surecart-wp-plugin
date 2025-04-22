@@ -41,6 +41,7 @@ class BricksTemplateService {
 				return $data;
 			}
 
+			// Get the bricks edit link.
 			$data['bricks']['editLink'] = \Bricks\Helpers::get_builder_edit_link( $post->ID );
 		}
 
