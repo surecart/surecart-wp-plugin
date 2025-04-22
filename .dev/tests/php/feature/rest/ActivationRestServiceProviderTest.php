@@ -83,10 +83,6 @@ class ActivationRestServiceProviderTest extends SureCartUnitTestCase{
 	}
 
 	public function maybeMockCustomerApiRequest($caps, $attributes) {
-		if (!empty($caps) && $caps[0] !== 'read' && empty($attributes['license_ids'])) {
-			return;
-		}
-
 		// Mock the License model.
 		$licenseId = $attributes['license_ids'][0] ?? null;
 		$mockLicenses = \Mockery::mock('alias:' . License::class);
