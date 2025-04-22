@@ -93,7 +93,6 @@ graph TD;
   sc-shipping-choices --> sc-form-control
   sc-shipping-choices --> sc-radio-group
   sc-shipping-choices --> sc-radio
-  sc-shipping-choices --> sc-format-number
   sc-shipping-choices --> sc-block-ui
   sc-line-item-shipping --> sc-line-item
   sc-line-item-shipping --> sc-skeleton
