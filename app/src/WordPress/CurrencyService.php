@@ -142,7 +142,7 @@ class CurrencyService {
 	 * @return string The filtered permalink.
 	 */
 	public function addCurrencyParam( $permalink ) {
-		if ( apply_filters( 'surecart/currency/filter_url', self::$filter_url, $permalink ) ) {
+		if ( apply_filters( 'surecart/currency/filter_url', self::$filter_url, $permalink ) && ! $this->isSitemapOrFeedRequest() ) {
 			// we can't use the Currency::getCurrencyFromRequest here because we don't want to fetch display currencies potentially multiple times per request.
 			$currency = strtolower( sanitize_text_field( $_GET['currency'] ?? $_COOKIE['sc_current_currency'] ?? '' ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			if ( ! empty( $currency ) && strtolower( $currency ) !== strtolower( \SureCart::account()->currency ) ) {
@@ -151,6 +151,31 @@ class CurrencyService {
 		}
 
 		return $permalink;
+	}
+
+	/**
+	 * Check if the request is an XML request.
+	 *
+	 * @return bool
+	 */
+	private function isSitemapOrFeedRequest(): bool {
+		global $wp;
+
+		if ( is_feed() || is_robots() ) {
+			return true;
+		}
+
+		// Covers Yoast SEO sitemap, Rank Math sitemap, etc.
+		if ( ! empty( $wp->request ) && preg_match( '/sitemap(-index)?\.xml$/', $wp->request ) ) {
+			return true;
+		}
+
+		// Detect any request with `sitemap` in the URL.
+		if ( ! empty( $_SERVER['REQUEST_URI'] ) && str_contains( $_SERVER['REQUEST_URI'], 'sitemap' ) ) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**
@@ -163,7 +188,7 @@ class CurrencyService {
 	 * @return string
 	 */
 	public function addCurrencyParamToHomeUrl( $url, $path, $scheme ) {
-		if ( 'rest' !== $scheme && ! is_admin() ) {
+		if ( 'rest' !== $scheme && ! is_admin() && ! $this->isSitemapOrFeedRequest() ) {
 			$url = $this->addCurrencyParam( $url );
 		}
 
