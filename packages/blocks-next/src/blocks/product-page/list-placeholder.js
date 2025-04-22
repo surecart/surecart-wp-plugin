@@ -88,11 +88,11 @@ export default function QueryPlaceholder({
 
 	const instructions = shouldDisableProductSelector
 		? __(
-				'Choose a template for the product page or start with a basic layout.',
+				'Choose a pattern for the product page or start with a basic layout.',
 				'surecart'
 		  )
 		: __(
-				'Choose a product & template for the product page or start with a basic layout.'
+				'Choose a product & pattern for the product page or start with a basic layout.'
 		  );
 
 	const onChoose = (post) => {
@@ -228,7 +228,7 @@ export default function QueryPlaceholder({
 						variant="secondary"
 						onClick={openPatternSelectionModal}
 					>
-						{__('Choose a template', 'surecart')}
+						{__('Choose a pattern', 'surecart')}
 					</Button>
 				)}
 			</Flex>
