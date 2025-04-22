@@ -161,7 +161,7 @@ class CurrencyService {
 	private function isSitemapOrFeedRequest(): bool {
 		global $wp;
 
-		if ( is_feed() || is_robots() ) {
+		if ( is_feed() || is_robots() || wp_is_xml_request() ) {
 			return true;
 		}
 
