@@ -22,7 +22,7 @@ export default ({ attributes, setAttributes, context: { postId } }) => {
 
 	const {
 		height,
-		show_thumbnails,
+		show_thumbs,
 		thumbnails_per_page,
 		auto_height,
 		width,
@@ -74,7 +74,7 @@ export default ({ attributes, setAttributes, context: { postId } }) => {
 			return;
 		}
 		thumbSwiper.current.update();
-	}, [show_thumbnails, thumbnails_per_page, images]);
+	}, [show_thumbs, thumbnails_per_page, images]);
 
 	useEffect(() => {
 		if (swiperRef && thumbSwiperRef?.current) {
@@ -183,17 +183,26 @@ export default ({ attributes, setAttributes, context: { postId } }) => {
 						}
 					/>
 
-					<RangeControl
-						label={__('Thumbnails Per Page', 'surecart')}
-						min={2}
-						max={12}
-						value={thumbnails_per_page}
-						onChange={(thumbnails_per_page) =>
-							setAttributes({
-								thumbnails_per_page,
-							})
+					<ToggleControl
+						label={__('Show Thumbnails', 'surecart')}
+						checked={show_thumbs}
+						onChange={(show_thumbs) =>
+							setAttributes({ show_thumbs })
 						}
 					/>
+					{show_thumbs && (
+						<RangeControl
+							label={__('Thumbnails Per Page', 'surecart')}
+							min={2}
+							max={12}
+							value={thumbnails_per_page}
+							onChange={(thumbnails_per_page) =>
+								setAttributes({
+									thumbnails_per_page,
+								})
+							}
+						/>
+					)}
 				</PanelBody>
 			</InspectorControls>
 
@@ -222,7 +231,7 @@ export default ({ attributes, setAttributes, context: { postId } }) => {
 							<div class="swiper-button-next"></div>
 						</div>
 
-						{images?.length > 1 ? (
+						{show_thumbs && images?.length > 1 ? (
 							<div
 								className="sc-image-slider__thumbs"
 								ref={thumbSwiperRef}
