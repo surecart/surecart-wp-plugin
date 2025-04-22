@@ -15,10 +15,10 @@ export const getPageBuilderLinks = (post) => {
 	});
 
 	// Check for Bricks builder
-	if (window?.bricksData?.renderWithBricks === '1') {
+	if (window?.scData?.bricks?.editLink) {
 		return {
 			pageBuilder: 'bricks',
-			editorLink: addQueryArgs(post?.link, { bricks: 'run' }),
+			editorLink: window?.scData?.bricks?.editLink,
 			editPostLink,
 		};
 	}
