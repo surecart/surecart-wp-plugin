@@ -88,11 +88,11 @@ export default function QueryPlaceholder({
 
 	const instructions = shouldDisableProductSelector
 		? __(
-				'Choose a pattern for the product page or start with a basic layout.',
+				'Choose a template for the product page or start with a basic layout.',
 				'surecart'
 		  )
 		: __(
-				'Choose a product & pattern for the product page or start with a basic layout.'
+				'Choose a product & template for the product page or start with a basic layout.'
 		  );
 
 	const onChoose = (post) => {
@@ -220,7 +220,7 @@ export default function QueryPlaceholder({
 						replaceInnerBlocks(clientId, blocks, false);
 					}}
 				>
-					{__('Create Form', 'surecart')}
+					{__('Start with Basic Layout', 'surecart')}
 				</Button>
 
 				{!!hasPatterns && (
