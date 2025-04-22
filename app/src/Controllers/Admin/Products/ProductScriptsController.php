@@ -216,24 +216,4 @@ class ProductScriptsController extends AdminModelEditController {
 
 		return $args;
 	}
-
-	/**
-	 * Get the meta box url.
-	 *
-	 * @return string
-	 */
-	protected function getMetaBoxUrl() {
-		global $post;
-		$meta_box_url = admin_url( 'post.php' );
-		$meta_box_url = add_query_arg(
-			array(
-				'post'                  => $post->ID ?? 0,
-				'action'                => 'edit',
-				'meta-box-loader'       => true,
-				'meta-box-loader-nonce' => wp_create_nonce( 'meta-box-loader' ),
-			),
-			$meta_box_url
-		);
-		return $meta_box_url;
-	}
 }

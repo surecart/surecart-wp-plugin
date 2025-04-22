@@ -407,13 +407,12 @@ export default ({ id, setBrowserURL }) => {
 						loading={!hasLoadedProduct}
 					/>
 
-					{post?.id && (
-						<Editor
-							onNavigate={onConfirmNavigation}
-							post={post}
-							loading={!hasLoadedProduct}
-						/>
-					)}
+					<Prices
+						productId={id}
+						product={product}
+						updateProduct={editProduct}
+						loading={!hasLoadedProduct}
+					/>
 
 					<Image
 						productId={id}
@@ -421,12 +420,13 @@ export default ({ id, setBrowserURL }) => {
 						updateProduct={editProduct}
 					/>
 
-					<Prices
-						productId={id}
-						product={product}
-						updateProduct={editProduct}
-						loading={!hasLoadedProduct}
-					/>
+					{post?.id && (
+						<Editor
+							onNavigate={onConfirmNavigation}
+							post={post}
+							loading={!hasLoadedProduct}
+						/>
+					)}
 
 					<Inventory
 						product={product}
