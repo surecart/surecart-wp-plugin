@@ -24,13 +24,6 @@ class BlockPatternsService {
 	 * Set categories and patterns.
 	 */
 	public function __construct() {
-		$this->categories = [
-			'surecart_form'             => [ 'label' => __( 'Checkout Form', 'surecart' ) ],
-			'surecart_shop'             => [ 'label' => __( 'Shop', 'surecart' ) ],
-			'surecart_product_page'     => [ 'label' => __( 'Product Page', 'surecart' ) ],
-			'surecart_related_products' => [ 'label' => __( 'Related Products', 'surecart' ) ],
-		];
-
 		$this->patterns = [
 			'default',
 			'full-page',
@@ -55,6 +48,12 @@ class BlockPatternsService {
 	 * Register block patterns and
 	 */
 	public function registerPatternsAndCategories() {
+		$this->categories = [
+			'surecart_form'             => [ 'label' => __( 'Checkout Form', 'surecart' ) ],
+			'surecart_shop'             => [ 'label' => __( 'Shop', 'surecart' ) ],
+			'surecart_product_page'     => [ 'label' => __( 'Product Page', 'surecart' ) ],
+			'surecart_related_products' => [ 'label' => __( 'Related Products', 'surecart' ) ],
+		];
 		$this->registerCategories();
 		$this->registerPatterns();
 	}

@@ -7,12 +7,98 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-03-20T20:06:25+00:00\n"
+"POT-Creation-Date: 2025-04-17T18:55:31+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.9.0\n"
 
 #: helpers/template-helpers.php:18
 msgid "No matching template found"
+msgstr ""
+
+#: src/Activation/DeactivationSurveyForm.php:45
+msgid "If you have a moment, please share why you are deactivating the plugin."
+msgstr ""
+
+#: src/Activation/DeactivationSurveyForm.php:50
+msgid "Quick Feedback"
+msgstr ""
+
+#: src/Activation/DeactivationSurveyForm.php:60
+#: src/Integrations/Bricks/Elements/BuyButton.php:113
+#: src/Integrations/Bricks/Elements/BuyButton.php:118
+#: src/Integrations/Bricks/Elements/CartMenuIcon.php:68
+#: settings/brand/components/CartSettings.js:219
+#: Blocks/CartMenuButton/edit.js:41
+#: src/blocks/cart-menu-button/edit.js:36
+#: src/blocks/product-list-sidebar-toggle/edit.js:56
+msgid "Icon"
+msgstr ""
+
+#: src/Activation/DeactivationSurveyForm.php:85
+#: src/Activation/DeactivationSurveyForm.php:241
+msgid "Please tell us more details."
+msgstr ""
+
+#. translators: %1$s: link html start, %2$s: link html end
+#: src/Activation/DeactivationSurveyForm.php:94
+msgid "Need help from our experts? %1$sClick here to contact us.%2$s"
+msgstr ""
+
+#: src/Activation/DeactivationSurveyForm.php:105
+msgid "Submit & Deactivate"
+msgstr ""
+
+#: src/Activation/DeactivationSurveyForm.php:106
+msgid "Skip & Deactivate"
+msgstr ""
+
+#: src/Activation/DeactivationSurveyForm.php:164
+msgid "Nonce validation failed"
+msgstr ""
+
+#: src/Activation/DeactivationSurveyForm.php:171
+msgid "Sorry, you are not allowed to do this operation."
+msgstr ""
+
+#: src/Activation/DeactivationSurveyForm.php:216
+msgid "This is a temporary deactivation for testing."
+msgstr ""
+
+#: src/Activation/DeactivationSurveyForm.php:217
+msgid "How can we assist you?"
+msgstr ""
+
+#: src/Activation/DeactivationSurveyForm.php:222
+msgid "Something isn't working properly."
+msgstr ""
+
+#: src/Activation/DeactivationSurveyForm.php:223
+msgid "Please tell us more about what went wrong?"
+msgstr ""
+
+#: src/Activation/DeactivationSurveyForm.php:228
+msgid "I found a better alternative."
+msgstr ""
+
+#: src/Activation/DeactivationSurveyForm.php:229
+msgid "Could you please specify which solution?"
+msgstr ""
+
+#: src/Activation/DeactivationSurveyForm.php:234
+msgid "It's missing a specific feature."
+msgstr ""
+
+#: src/Activation/DeactivationSurveyForm.php:235
+msgid "Please tell us more about the feature."
+msgstr ""
+
+#: src/Activation/DeactivationSurveyForm.php:240
+#: orders/modules/TaxInfo/index.js:39
+#: Blocks/Donation/edit.js:210
+#: Blocks/Donation/save.js:17
+#: Blocks/TaxIdInput/edit.js:34
+#: tax.js:20
+msgid "Other"
 msgstr ""
 
 #: src/Background/BackgroundProcess.php:681
@@ -36,7 +122,7 @@ msgstr ""
 msgid "SureCart bulk action progress status."
 msgstr ""
 
-#: src/BlockLibrary/BlockPatternsService.php:28
+#: src/BlockLibrary/BlockPatternsService.php:52
 #: src/BlockLibrary/FormModeSwitcherService.php:46
 #: src/Integrations/Beaver/BeaverFormModule.php:67
 #: src/Integrations/Elementor/ReusableFormWidget.php:42
@@ -44,14 +130,14 @@ msgstr ""
 msgid "Checkout Form"
 msgstr ""
 
-#: src/BlockLibrary/BlockPatternsService.php:29
+#: src/BlockLibrary/BlockPatternsService.php:53
 #: src/BlockLibrary/BlockServiceProvider.php:144
 #: src/Routing/PermalinkSettingService.php:98
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:237
 msgid "Shop"
 msgstr ""
 
-#: src/BlockLibrary/BlockPatternsService.php:30
+#: src/BlockLibrary/BlockPatternsService.php:54
 #: src/Controllers/Admin/Products/ProductsListTable.php:151
 #: products/components/Status/index.js:25
 #: products/components/Status/index.js:64
@@ -59,12 +145,13 @@ msgstr ""
 msgid "Product Page"
 msgstr ""
 
-#: src/BlockLibrary/BlockPatternsService.php:31
+#: src/BlockLibrary/BlockPatternsService.php:55
 msgid "Related Products"
 msgstr ""
 
 #: src/BlockLibrary/BlockServiceProvider.php:132
 #: src/Controllers/Admin/Orders/OrdersListTable.php:261
+#: src/Support/Blocks/TemplateUtilityService.php:376
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:238
 #: forms/checkout.php:6
 #: store/add-entities.js:74
@@ -79,6 +166,7 @@ msgid "Customer Dashboard"
 msgstr ""
 
 #: src/BlockLibrary/BlockServiceProvider.php:140
+#: src/Support/Blocks/TemplateUtilityService.php:375
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:239
 #: cart.php:6
 #: settings/brand/BrandSettings.js:216
@@ -110,6 +198,8 @@ msgid "Product"
 msgstr ""
 
 #: src/BlockLibrary/BlockServiceProvider.php:152
+#: src/Support/Blocks/TemplateUtilityService.php:371
+#: src/Support/Blocks/TemplateUtilityService.php:372
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:223
 #: settings/order/OrderProtocol.js:169
 msgid "Upsells"
@@ -291,7 +381,7 @@ msgstr ""
 #: sc-order.js:158
 #: sc-stripe-payment-request2.js:98
 #: sc-stripe-payment-request2.js:135
-#: sc-upsell-totals.js:46
+#: sc-upsell-totals.js:53
 msgid "Total"
 msgstr ""
 
@@ -326,7 +416,7 @@ msgstr ""
 #: Blocks/Form/components/Mode.js:12
 #: Blocks/Form/components/Mode.js:32
 #: sc-customer-details2.js:431
-#: sc-customer-edit.js:99
+#: sc-customer-edit.js:100
 #: sc-payment-methods-list.js:168
 #: sc-subscription-payment-method.js:176
 msgid "Test"
@@ -527,7 +617,7 @@ msgstr ""
 #: Blocks/AddToCartButton/Block.php:137
 #: Blocks/Donation/edit.js:258
 #: Blocks/DonationAmount/edit.js:34
-#: Blocks/ProductDonationAmount/edit.js:49
+#: Blocks/ProductDonationAmount/edit.js:51
 #: src/blocks/product-selected-price-ad-hoc-amount/view.php:14
 msgid "Amount"
 msgstr ""
@@ -982,7 +1072,7 @@ msgstr ""
 #: src/Controllers/Admin/Upsells/UpsellsListTable.php:53
 #: coupons/modules/Code.js:119
 #: product-groups/EditProductGroup.js:164
-#: products/EditProduct.js:234
+#: products/EditProduct.js:235
 #: products/modules/Prices/Price/Header.js:241
 #: products/modules/SingleDownload.js:259
 #: upsell-funnels/EditFunnel.js:262
@@ -1481,9 +1571,9 @@ msgstr ""
 #: src/Controllers/Admin/Licenses/LicensesListTable.php:155
 #: src/Controllers/Admin/Products/ProductsListTable.php:449
 #: src/Controllers/Web/BuyPageController.php:56
-#: src/WordPress/PostTypes/ProductPostTypeService.php:350
-#: src/WordPress/PostTypes/ProductPostTypeService.php:947
-#: products/EditProduct.js:274
+#: src/WordPress/PostTypes/ProductPostTypeService.php:406
+#: src/WordPress/PostTypes/ProductPostTypeService.php:1033
+#: products/EditProduct.js:303
 #: components/PriceInfo.js:103
 msgid "Edit Product"
 msgstr ""
@@ -1539,9 +1629,9 @@ msgstr ""
 #: sc-line-item-shipping2.js:26
 #: sc-order-confirmation-totals2.js:36
 #: sc-order.js:152
-#: sc-shipping-choices2.js:61
-#: sc-shipping-choices2.js:65
-#: sc-shipping-choices2.js:67
+#: sc-shipping-choices2.js:60
+#: sc-shipping-choices2.js:64
+#: sc-shipping-choices2.js:66
 #: sc-subscription-next-payment2.js:111
 msgid "Shipping"
 msgstr ""
@@ -1551,7 +1641,7 @@ msgstr ""
 #: src/Controllers/Admin/Settings/BaseSettings.php:56
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:113
 #: layouts/partials/admin-settings-sidebar.php:75
-#: products/modules/integrations/Integrations.js:76
+#: products/modules/integrations/Integrations.js:78
 #: settings/integrations/Integration.js:133
 #: settings/integrations/IntegrationsList.js:51
 msgid "Integrations"
@@ -1652,6 +1742,8 @@ msgstr ""
 #: src/Controllers/Admin/ProductCollections/ProductCollectionsListTable.php:49
 #: src/Controllers/Admin/Products/ProductsController.php:31
 #: src/Integrations/Elementor/Conditions/ProductSingle.php:56
+#: src/Support/Blocks/TemplateUtilityService.php:369
+#: src/Support/Blocks/TemplateUtilityService.php:370
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:203
 #: admin/products/index.php:71
 #: bumps/modules/Conditions.js:73
@@ -1660,7 +1752,7 @@ msgstr ""
 #: invoices/modules/Prices.js:108
 #: product-collections/components/Products.js:28
 #: product-groups/modules/Products.js:45
-#: products/EditProduct.js:270
+#: products/EditProduct.js:299
 #: settings/advanced/AdvancedSettings.js:462
 #: settings/shipping/profile/Products.js:250
 #: upsell-funnels/modules/Conditions.js:132
@@ -1742,7 +1834,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: src/Controllers/Admin/Products/ProductsController.php:241
-#: src/WordPress/PostTypes/ProductPostTypeService.php:948
+#: src/WordPress/PostTypes/ProductPostTypeService.php:1034
 #: licenses/modules/Purchase.js:56
 #: products/components/Url/form.js:68
 msgid "View Product"
@@ -2005,7 +2097,7 @@ msgstr[1] ""
 
 #. translators: number of months
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:287
-#: src/Models/Checkout.php:614
+#: src/Models/Checkout.php:616
 #: src/Support/Interval.php:41
 #: util/translations.js:28
 #: price.js:39
@@ -2050,7 +2142,7 @@ msgstr[1] ""
 #. translators: Coupon % off.
 #. Translators: Percent off.
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:337
-#: src/Models/Checkout.php:591
+#: src/Models/Checkout.php:593
 #: src/Models/Coupon.php:54
 #: util.js:49
 #: price.js:12
@@ -2314,7 +2406,7 @@ msgstr ""
 #: src/Integrations/Beaver/BeaverFormModule.php:20
 #: src/Integrations/Beaver/BeaverFormModule.php:21
 #: src/Integrations/Elementor/Conditions/Conditions.php:38
-#: src/Integrations/Elementor/ElementorServiceProvider.php:133
+#: src/Integrations/Elementor/ElementorServiceProvider.php:160
 #: src/Integrations/ThriveAutomator/ThriveAutomatorApp.php:25
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:178
 #: src/WordPress/Admin/Notices/AdminNoticesService.php:115
@@ -2530,11 +2622,11 @@ msgstr ""
 msgid "$12 Signup Fee"
 msgstr ""
 
-#: src/Integrations/Bricks/BricksElementsService.php:160
+#: src/Integrations/Bricks/BricksElementsService.php:154
 msgid "SureCart - Single Product"
 msgstr ""
 
-#: src/Integrations/Bricks/BricksElementsService.php:161
+#: src/Integrations/Bricks/BricksElementsService.php:155
 msgid "SureCart - Collection Archive"
 msgstr ""
 
@@ -2612,16 +2704,6 @@ msgstr ""
 
 #: src/Integrations/Bricks/Elements/BuyButton.php:106
 msgid "Outline"
-msgstr ""
-
-#: src/Integrations/Bricks/Elements/BuyButton.php:113
-#: src/Integrations/Bricks/Elements/BuyButton.php:118
-#: src/Integrations/Bricks/Elements/CartMenuIcon.php:68
-#: settings/brand/components/CartSettings.js:219
-#: Blocks/CartMenuButton/edit.js:41
-#: src/blocks/cart-menu-button/edit.js:36
-#: src/blocks/product-list-sidebar-toggle/edit.js:56
-msgid "Icon"
 msgstr ""
 
 #: src/Integrations/Bricks/Elements/BuyButton.php:123
@@ -2959,7 +3041,7 @@ msgstr ""
 
 #: src/Integrations/Elementor/Conditions/Conditions.php:47
 #: src/Integrations/Elementor/Conditions/ProductCondition.php:46
-#: src/WordPress/PostTypes/ProductPostTypeService.php:949
+#: src/WordPress/PostTypes/ProductPostTypeService.php:1036
 #: Blocks/ProductItemList/edit.js:388
 #: Blocks/ProductItemList/edit.js:501
 #: src/blocks/product-list/inspector-controls/index.js:106
@@ -2967,6 +3049,8 @@ msgid "All Products"
 msgstr ""
 
 #: src/Integrations/Elementor/Documents/ProductDocument.php:61
+#: src/Support/Blocks/TemplateUtilityService.php:369
+#: src/Support/Blocks/TemplateUtilityService.php:370
 msgid "SureCart Products"
 msgstr ""
 
@@ -3188,7 +3272,7 @@ msgstr ""
 msgid "Error"
 msgstr ""
 
-#: src/Models/Checkout.php:612
+#: src/Models/Checkout.php:614
 #: util/translations.js:7
 #: util/translations.js:53
 #: util/translations.js:60
@@ -3200,13 +3284,13 @@ msgstr ""
 msgid "once"
 msgstr ""
 
-#: src/Models/Checkout.php:627
+#: src/Models/Checkout.php:629
 #: src/Models/Price.php:125
 #: checkouts/modules/SelectShipping.js:130
 #: invoices/modules/SelectShipping.js:95
 #: sc-order-bump2.js:69
 #: sc-price2.js:34
-#: sc-shipping-choices2.js:69
+#: sc-shipping-choices2.js:68
 #: sc-upsell-totals.js:20
 msgid "Free"
 msgstr ""
@@ -3587,7 +3671,7 @@ msgstr ""
 msgid "SureCart Shop Worker"
 msgstr ""
 
-#: src/Permissions/RolesService.php:92
+#: src/Permissions/RolesService.php:91
 msgid "SureCart Customer"
 msgstr ""
 
@@ -4282,6 +4366,8 @@ msgid "If you like, you may enter custom structures for your product page URLs h
 msgstr ""
 
 #: src/Routing/PermalinkSettingService.php:153
+#: src/Support/Blocks/TemplateUtilityService.php:373
+#: src/Support/Blocks/TemplateUtilityService.php:374
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:204
 #: src/WordPress/Admin/Menus/ProductCollectionsMenuService.php:36
 #: admin/product-collections/index.php:6
@@ -4310,115 +4396,58 @@ msgstr ""
 msgid "Enter a custom base to use. A base must be set or WordPress will use default instead."
 msgstr ""
 
-#: src/Routing/PermalinksSettingsService.php:34
-msgctxt "buy-page-slug"
-msgid "buy"
-msgstr ""
-
-#: src/Routing/PermalinksSettingsService.php:35
-msgctxt "product-page-slug"
-msgid "products"
-msgstr ""
-
-#: src/Routing/PermalinksSettingsService.php:36
-msgctxt "collection-page-slug"
-msgid "collections"
-msgstr ""
-
-#: src/Routing/PermalinksSettingsService.php:37
-msgctxt "upsell-page-slug"
-msgid "offer"
-msgstr ""
-
 #: src/Settings/SettingService.php:118
 #: Blocks/Email/Block.php:21
 msgid "Your email and cart are saved so we can send email reminders about this order."
 msgstr ""
 
-#: src/Support/Blocks/TemplateUtilityService.php:50
-#: src/Support/Blocks/TemplateUtilityService.php:55
-msgctxt "Template name"
-msgid "SureCart Products"
+#: src/Support/Blocks/TemplateUtilityService.php:209
+msgid "No theme is defined for this template."
 msgstr ""
 
-#: src/Support/Blocks/TemplateUtilityService.php:50
-#: src/Support/Blocks/TemplateUtilityService.php:55
-msgctxt "Template name"
-msgid "Products"
-msgstr ""
-
-#: src/Support/Blocks/TemplateUtilityService.php:51
-msgid "Display all individual products unless a custom template has been applied."
-msgstr ""
-
-#: src/Support/Blocks/TemplateUtilityService.php:56
-msgid "Display all individual products content unless a custom template has been applied."
-msgstr ""
-
-#: src/Support/Blocks/TemplateUtilityService.php:61
-#: src/Support/Blocks/TemplateUtilityService.php:66
-msgctxt "Template name"
-msgid "Upsells"
-msgstr ""
-
-#: src/Support/Blocks/TemplateUtilityService.php:62
-msgid "Display all individual upsells unless a custom template has been applied."
-msgstr ""
-
-#: src/Support/Blocks/TemplateUtilityService.php:67
-msgid "Display all individual upsells content unless a custom template has been applied."
-msgstr ""
-
-#: src/Support/Blocks/TemplateUtilityService.php:72
-#: src/Support/Blocks/TemplateUtilityService.php:76
-msgctxt "Template name"
+#: src/Support/Blocks/TemplateUtilityService.php:373
+#: src/Support/Blocks/TemplateUtilityService.php:374
 msgid "SureCart Product Collections"
 msgstr ""
 
-#: src/Support/Blocks/TemplateUtilityService.php:72
-#: src/Support/Blocks/TemplateUtilityService.php:76
-msgctxt "Template name"
-msgid "Product Collections"
-msgstr ""
-
-#: src/Support/Blocks/TemplateUtilityService.php:73
-msgid "Display all individual product collections unless a custom template has been applied."
-msgstr ""
-
-#: src/Support/Blocks/TemplateUtilityService.php:77
-msgid "Display all individual product collections content unless a custom template has been applied."
-msgstr ""
-
-#: src/Support/Blocks/TemplateUtilityService.php:81
-msgctxt "Template name"
+#: src/Support/Blocks/TemplateUtilityService.php:375
 msgid "SureCart Cart"
 msgstr ""
 
-#: src/Support/Blocks/TemplateUtilityService.php:81
-msgctxt "Template name"
-msgid "Cart"
-msgstr ""
-
-#: src/Support/Blocks/TemplateUtilityService.php:82
-msgid "The slide-out cart template."
-msgstr ""
-
-#: src/Support/Blocks/TemplateUtilityService.php:85
-msgctxt "Template name"
+#: src/Support/Blocks/TemplateUtilityService.php:376
 msgid "SureCart Checkout"
 msgstr ""
 
-#: src/Support/Blocks/TemplateUtilityService.php:85
-msgctxt "Template name"
-msgid "Checkout"
+#: src/Support/Blocks/TemplateUtilityService.php:394
+msgid "Display all individual products unless a custom template has been applied."
 msgstr ""
 
-#: src/Support/Blocks/TemplateUtilityService.php:86
+#: src/Support/Blocks/TemplateUtilityService.php:395
+msgid "Display all individual products content unless a custom template has been applied."
+msgstr ""
+
+#: src/Support/Blocks/TemplateUtilityService.php:396
+msgid "Display all individual upsells unless a custom template has been applied."
+msgstr ""
+
+#: src/Support/Blocks/TemplateUtilityService.php:397
+msgid "Display all individual upsells content unless a custom template has been applied."
+msgstr ""
+
+#: src/Support/Blocks/TemplateUtilityService.php:398
+msgid "Display all individual product collections unless a custom template has been applied."
+msgstr ""
+
+#: src/Support/Blocks/TemplateUtilityService.php:399
+msgid "Display all individual product collections content unless a custom template has been applied."
+msgstr ""
+
+#: src/Support/Blocks/TemplateUtilityService.php:400
+msgid "The slide-out cart template."
+msgstr ""
+
+#: src/Support/Blocks/TemplateUtilityService.php:401
 msgid "Display the checkout content unless a custom template has been applied."
-msgstr ""
-
-#: src/Support/Blocks/TemplateUtilityService.php:228
-msgid "No theme is defined for this template."
 msgstr ""
 
 #. translators: %s: current language name
@@ -6695,11 +6724,11 @@ msgstr ""
 #: src/WordPress/LocalizationStateService.php:41
 #: abandoned-checkouts/modules/Address.js:10
 #: customers/EditCustomer.js:192
-#: invoices/modules/Address.js:252
+#: invoices/modules/Address.js:256
 #: orders/Sidebar.js:84
 #: settings/account/AccountSettings.js:380
 #: settings/tax/TaxSettings.js:137
-#: sc-form-components-validator2.js:166
+#: sc-form-components-validator2.js:165
 msgid "Address"
 msgstr ""
 
@@ -6971,21 +7000,21 @@ msgstr ""
 
 #: src/WordPress/PostTypes/CartPostTypeService.php:251
 #: src/WordPress/PostTypes/FormPostTypeService.php:235
-#: src/WordPress/PostTypes/ProductPostTypeService.php:951
+#: src/WordPress/PostTypes/ProductPostTypeService.php:1038
 #: src/WordPress/PostTypes/ProductUpsellPagePostTypeService.php:44
 msgid "No checkout forms found."
 msgstr ""
 
 #: src/WordPress/PostTypes/CartPostTypeService.php:252
 #: src/WordPress/PostTypes/FormPostTypeService.php:236
-#: src/WordPress/PostTypes/ProductPostTypeService.php:952
+#: src/WordPress/PostTypes/ProductPostTypeService.php:1039
 #: src/WordPress/PostTypes/ProductUpsellPagePostTypeService.php:45
 msgid "No checkout forms found in Trash."
 msgstr ""
 
 #: src/WordPress/PostTypes/CartPostTypeService.php:253
 #: src/WordPress/PostTypes/FormPostTypeService.php:237
-#: src/WordPress/PostTypes/ProductPostTypeService.php:953
+#: src/WordPress/PostTypes/ProductPostTypeService.php:1040
 #: src/WordPress/PostTypes/ProductUpsellPagePostTypeService.php:46
 msgid "Filter checkout forms list"
 msgstr ""
@@ -7102,90 +7131,94 @@ msgstr ""
 msgid "(no title)"
 msgstr ""
 
-#: src/WordPress/PostTypes/ProductPostTypeService.php:272
+#: src/WordPress/PostTypes/ProductPostTypeService.php:328
 #: products/modules/Prices/Price/BuyLink.js:30
 #: products/modules/Variations/Variants.js:116
 #: store/add-entities.js:461
 msgid "Variant"
 msgstr ""
 
-#: src/WordPress/PostTypes/ProductPostTypeService.php:276
+#: src/WordPress/PostTypes/ProductPostTypeService.php:332
 msgid "Enter the variant name as it appears in Option Values (e.g., Black, White, Light Green)."
 msgstr ""
 
-#: src/WordPress/PostTypes/ProductPostTypeService.php:276
+#: src/WordPress/PostTypes/ProductPostTypeService.php:332
 msgid "Learn More."
 msgstr ""
 
-#: src/WordPress/PostTypes/ProductPostTypeService.php:855
+#: src/WordPress/PostTypes/ProductPostTypeService.php:941
 msgid "Product gallery"
 msgstr ""
 
-#: src/WordPress/PostTypes/ProductPostTypeService.php:942
+#: src/WordPress/PostTypes/ProductPostTypeService.php:1028
 msgctxt "post type general name"
 msgid "SureCart Product"
 msgstr ""
 
-#: src/WordPress/PostTypes/ProductPostTypeService.php:943
+#: src/WordPress/PostTypes/ProductPostTypeService.php:1029
 msgctxt "post type singular name"
 msgid "SureCart Product"
 msgstr ""
 
-#: src/WordPress/PostTypes/ProductPostTypeService.php:944
+#: src/WordPress/PostTypes/ProductPostTypeService.php:1030
 msgctxt "Product"
 msgid "Add New"
 msgstr ""
 
-#: src/WordPress/PostTypes/ProductPostTypeService.php:945
+#: src/WordPress/PostTypes/ProductPostTypeService.php:1031
 msgid "Add new Product"
 msgstr ""
 
-#: src/WordPress/PostTypes/ProductPostTypeService.php:946
+#: src/WordPress/PostTypes/ProductPostTypeService.php:1032
 msgid "New Product"
 msgstr ""
 
-#: src/WordPress/PostTypes/ProductPostTypeService.php:950
+#: src/WordPress/PostTypes/ProductPostTypeService.php:1035
+msgid "View Products"
+msgstr ""
+
+#: src/WordPress/PostTypes/ProductPostTypeService.php:1037
 #: admin/products/index.php:77
 msgid "Search Products"
 msgstr ""
 
-#: src/WordPress/PostTypes/ProductPostTypeService.php:954
+#: src/WordPress/PostTypes/ProductPostTypeService.php:1041
 msgid "Products list navigation"
 msgstr ""
 
-#: src/WordPress/PostTypes/ProductPostTypeService.php:955
+#: src/WordPress/PostTypes/ProductPostTypeService.php:1042
 msgid "Products list"
 msgstr ""
 
-#: src/WordPress/PostTypes/ProductPostTypeService.php:956
+#: src/WordPress/PostTypes/ProductPostTypeService.php:1043
 msgid "Product published."
 msgstr ""
 
-#: src/WordPress/PostTypes/ProductPostTypeService.php:957
+#: src/WordPress/PostTypes/ProductPostTypeService.php:1044
 msgid "Product published privately."
 msgstr ""
 
-#: src/WordPress/PostTypes/ProductPostTypeService.php:958
+#: src/WordPress/PostTypes/ProductPostTypeService.php:1045
 msgid "Product reverted to draft."
 msgstr ""
 
-#: src/WordPress/PostTypes/ProductPostTypeService.php:959
+#: src/WordPress/PostTypes/ProductPostTypeService.php:1046
 msgid "Product scheduled."
 msgstr ""
 
-#: src/WordPress/PostTypes/ProductPostTypeService.php:960
-#: products/EditProduct.js:187
-#: products/modules/integrations/Integrations.js:41
+#: src/WordPress/PostTypes/ProductPostTypeService.php:1047
+#: products/EditProduct.js:188
+#: products/modules/integrations/Integrations.js:43
 msgid "Product updated."
 msgstr ""
 
-#: src/WordPress/PostTypes/ProductPostTypeService.php:996
+#: src/WordPress/PostTypes/ProductPostTypeService.php:1083
 msgctxt "post"
 msgid "Archived"
 msgstr ""
 
 #. translators: %s: number of posts.
-#: src/WordPress/PostTypes/ProductPostTypeService.php:1005
+#: src/WordPress/PostTypes/ProductPostTypeService.php:1092
 msgid "Archived <span class=\"count\">(%s)</span>"
 msgid_plural "Archived <span class=\"count\">(%s)</span>"
 msgstr[0] ""
@@ -7421,7 +7454,7 @@ msgstr ""
 #: settings/SettingsTemplate.js:78
 #: settings/shipping/zone/ShippingZoneForm.js:181
 #: settings/tax-override/TaxOverrideModal.js:272
-#: sc-customer-edit.js:124
+#: sc-customer-edit.js:125
 #: sc-wordpress-user-edit.js:62
 msgid "Save"
 msgstr ""
@@ -7641,6 +7674,9 @@ msgstr ""
 
 #: admin/notices/webhook-change.php:28
 #: components/data-tables/charges-data-table/ChargeDetails.js:128
+#: products/components/Editor/index.js:147
+#: products/components/Editor/index.js:368
+#: products/modules/integrations/Integrations.js:91
 msgid "Learn More"
 msgstr ""
 
@@ -7766,12 +7802,12 @@ msgstr[1] ""
 #: bumps/CreateBump.js:105
 #: bumps/modules/NewCondition.js:169
 #: checkouts/CreateCheckout.js:358
-#: checkouts/modules/Address.js:148
+#: checkouts/modules/Address.js:150
 #: checkouts/modules/PaymentMethods.js:154
 #: checkouts/modules/Price.js:271
 #: checkouts/modules/SelectCustomer/CreateCustomer.js:128
 #: checkouts/modules/Tax/index.js:142
-#: components/address/EditAddress.js:121
+#: components/address/EditAddress.js:125
 #: components/affiliates/commission/CommissionForm.js:104
 #: components/affiliates/UpdateExpireAtModal.js:55
 #: components/data-tables/subscriptions-data-table/Cancel.js:70
@@ -7811,6 +7847,7 @@ msgstr[1] ""
 #: product-collections/modules/DeleteModal.js:76
 #: product-groups/CreateProductGroup.js:80
 #: product-groups/modules/NewProduct.js:78
+#: products/components/Editor/index.js:217
 #: products/components/SelectTemplate/create-modal.js:89
 #: products/components/SelectTemplatePart/create-modal.js:90
 #: products/CreateProduct.js:87
@@ -7911,23 +7948,6 @@ msgstr ""
 msgid "Currencies"
 msgstr ""
 
-#: layouts/partials/admin-settings-sidebar.php:84
-#: Blocks/Checkbox/components/Inspector.js:39
-#: Blocks/Email/components/Inspector.js:32
-#: Blocks/FirstName/edit.js:52
-#: Blocks/Input/components/Inspector.js:39
-#: Blocks/Input/edit.js:58
-#: Blocks/LastName/edit.js:52
-#: Blocks/Name/edit.js:52
-#: Blocks/NameYourPrice/edit.js:65
-#: Blocks/Password/components/Inspector.js:39
-#: Blocks/Password/edit.js:79
-#: Blocks/Phone/edit.js:42
-#: Blocks/Switch/components/Inspector.js:39
-#: Blocks/Textarea/edit.js:58
-msgid "Help"
-msgstr ""
-
 #: layouts/partials/customer-dashboard/dashboard-navigation.php:53
 #: pages/template-surecart-dashboard.php:119
 msgid "Log Out"
@@ -8013,7 +8033,7 @@ msgstr ""
 #: sc-order.js:139
 #: sc-subscription-next-payment2.js:106
 #: sc-upcoming-invoice.js:224
-#: sc-upsell-totals.js:42
+#: sc-upsell-totals.js:49
 msgid "Subtotal"
 msgstr ""
 
@@ -8022,7 +8042,7 @@ msgstr ""
 #: Blocks/Total/edit.js:64
 #: Blocks/Total/save.js:24
 #: Blocks/Totals/edit.js:73
-#: sc-line-item-total2.js:76
+#: sc-line-item-total2.js:82
 msgid "Total Due Today"
 msgstr ""
 
@@ -8185,7 +8205,7 @@ msgstr ""
 #: upsell-funnels/modules/Upsell/Product.js:54
 #: sc-cart-form.js:73
 #: sc-charges-list.js:73
-#: sc-customer-edit.js:93
+#: sc-customer-edit.js:94
 #: sc-dashboard-customer-details.js:55
 #: sc-dashboard-downloads-list.js:64
 #: sc-dashboard-downloads-list.js:80
@@ -8266,13 +8286,13 @@ msgid "Shipping & Tax Address"
 msgstr ""
 
 #: abandoned-checkouts/AbandonedCheckout.js:220
-#: components/address/EditAddress.js:101
+#: components/address/EditAddress.js:103
 #: components/address/ViewAddress.js:150
-#: invoices/modules/Address.js:235
+#: invoices/modules/Address.js:237
 #: Blocks/Dashboard/CustomerBillingDetails/edit.js:71
 #: sc-customer-details2.js:397
-#: sc-customer-edit.js:114
-#: sc-form-components-validator2.js:162
+#: sc-customer-edit.js:115
+#: sc-form-components-validator2.js:161
 #: sc-order-billing-address2.js:100
 msgid "Billing Address"
 msgstr ""
@@ -8492,7 +8512,7 @@ msgid "Actions"
 msgstr ""
 
 #: affiliation-referrals/EditAffiliationReferral.js:281
-#: checkouts/modules/Address.js:152
+#: checkouts/modules/Address.js:154
 #: checkouts/modules/Price.js:264
 #: checkouts/modules/Tax/index.js:153
 #: components/affiliates/AffiliateFooter.js:75
@@ -8678,7 +8698,7 @@ msgstr ""
 #: invoices/modules/SelectCustomer/CreateCustomer.js:92
 #: orders/modules/ContactInfo/EditContactInfo.js:109
 #: Blocks/Dashboard/WordPressAccount/edit.js:60
-#: sc-customer-edit.js:99
+#: sc-customer-edit.js:100
 #: sc-wordpress-user-edit.js:62
 #: sc-wordpress-user.js:28
 msgid "First Name"
@@ -8696,7 +8716,7 @@ msgstr ""
 #: invoices/modules/SelectCustomer/CreateCustomer.js:103
 #: orders/modules/ContactInfo/EditContactInfo.js:122
 #: Blocks/Dashboard/WordPressAccount/edit.js:65
-#: sc-customer-edit.js:99
+#: sc-customer-edit.js:100
 #: sc-wordpress-user-edit.js:62
 #: sc-wordpress-user.js:28
 msgid "Last Name"
@@ -9247,7 +9267,7 @@ msgstr ""
 #: Blocks/Total/edit.js:34
 #: Blocks/Total/edit.js:79
 #: Blocks/Total/save.js:30
-#: sc-line-item-total2.js:76
+#: sc-line-item-total2.js:82
 #: sc-line-item-trial2.js:20
 #: sc-order.js:142
 #: sc-subscription-next-payment2.js:109
@@ -9264,7 +9284,7 @@ msgstr ""
 #: Blocks/Total/edit.js:54
 #: Blocks/Total/edit.js:82
 #: Blocks/Total/save.js:33
-#: sc-line-item-total2.js:76
+#: sc-line-item-total2.js:82
 #: sc-order.js:170
 msgid "Amount Due"
 msgstr ""
@@ -9419,7 +9439,8 @@ msgstr ""
 #: subscriptions/show/modules/Tax.js:55
 #: util/tax.js:6
 #: Blocks/Upsell/UpsellTotals/edit.js:31
-#: sc-upsell-totals.js:46
+#: sc-line-item-tax2.js:22
+#: sc-upsell-totals.js:53
 #: tax.js:24
 msgid "Tax"
 msgstr ""
@@ -9472,17 +9493,17 @@ msgstr ""
 #: orders/modules/Fulfillment/CreateFulfillment.js:258
 #: Blocks/Dashboard/CustomerBillingDetails/edit.js:60
 #: sc-customer-details2.js:397
-#: sc-customer-edit.js:99
+#: sc-customer-edit.js:100
 #: sc-order-shipping-address2.js:102
 msgid "Shipping Address"
 msgstr ""
 
-#: components/address/EditAddress.js:93
-#: invoices/modules/Address.js:227
+#: components/address/EditAddress.js:95
+#: invoices/modules/Address.js:229
 msgid "Billing address is same as shipping address"
 msgstr ""
 
-#: components/address/EditAddress.js:113
+#: components/address/EditAddress.js:117
 #: customers/modules/EditAddressModal.js:93
 #: orders/modules/EditAddressModal.js:94
 msgid "Save Address"
@@ -9492,8 +9513,8 @@ msgstr ""
 #: invoices/components/DueDate.js:60
 #: invoices/components/IssueDate.js:63
 #: invoices/components/PaymentCollectionDueDate.js:60
-#: invoices/modules/Address.js:294
-#: invoices/modules/Address.js:335
+#: invoices/modules/Address.js:298
+#: invoices/modules/Address.js:339
 #: invoices/modules/Tax/TaxId.js:110
 #: orders/modules/TaxInfo/index.js:158
 msgid "Clear"
@@ -9608,6 +9629,10 @@ msgstr ""
 
 #: components/affiliates/UpdateExpireAtModal.js:38
 msgid "Update Commission Expiration"
+msgstr ""
+
+#: components/block-editor/PreviewBlocks.js:26
+msgid "Click to edit"
 msgstr ""
 
 #: components/ClaimNoticeModal.js:40
@@ -9982,6 +10007,7 @@ msgid "Permalink"
 msgstr ""
 
 #: components/Permalink.js:99
+#: products/components/Editor/index.js:240
 msgid "Ok"
 msgstr ""
 
@@ -10544,7 +10570,7 @@ msgstr ""
 #: settings/account/AccountSettings.js:360
 #: Blocks/Dashboard/CustomerBillingDetails/edit.js:82
 #: sc-customer-details2.js:397
-#: sc-customer-edit.js:99
+#: sc-customer-edit.js:100
 msgid "Phone"
 msgstr ""
 
@@ -10772,7 +10798,7 @@ msgid "Okay"
 msgstr ""
 
 #: hocs/withConfirm.js:51
-#: invoices/modules/Address.js:310
+#: invoices/modules/Address.js:314
 #: orders/modules/OrderCancelConfirmModal.js:57
 #: orders/modules/OrderStatusConfirmModal.js:61
 #: orders/modules/ReturnRequest/ReturnCancelConfirmModal.js:51
@@ -10940,22 +10966,22 @@ msgstr ""
 msgid "No billing address has been set."
 msgstr ""
 
-#: invoices/modules/Address.js:263
-#: invoices/modules/Address.js:269
+#: invoices/modules/Address.js:267
+#: invoices/modules/Address.js:273
 msgid "Fill Customer Address"
 msgstr ""
 
-#: invoices/modules/Address.js:317
-#: invoices/modules/Address.js:342
+#: invoices/modules/Address.js:321
+#: invoices/modules/Address.js:346
 #: settings/shipping/zone/ConfirmDeleteZone.js:41
 msgid "Are you sure?"
 msgstr ""
 
-#: invoices/modules/Address.js:324
+#: invoices/modules/Address.js:328
 msgid "This will set the shipping and billing addresses to the customer's default."
 msgstr ""
 
-#: invoices/modules/Address.js:349
+#: invoices/modules/Address.js:353
 msgid "This will remove the shipping and billing addresses from the invoice."
 msgstr ""
 
@@ -11008,7 +11034,7 @@ msgstr ""
 
 #: invoices/modules/Payment.js:179
 #: orders/modules/LineItems/index.js:348
-#: sc-line-item-tax2.js:38
+#: sc-line-item-tax2.js:31
 #: sc-order.js:155
 msgid "included"
 msgstr ""
@@ -11807,14 +11833,6 @@ msgstr ""
 msgid "EU VAT"
 msgstr ""
 
-#: orders/modules/TaxInfo/index.js:39
-#: Blocks/Donation/edit.js:210
-#: Blocks/Donation/save.js:17
-#: Blocks/TaxIdInput/edit.js:34
-#: tax.js:20
-msgid "Other"
-msgstr ""
-
 #: orders/modules/TaxInfo/index.js:62
 msgid "Tax information deleted."
 msgstr ""
@@ -12198,6 +12216,39 @@ msgstr ""
 msgid "Now"
 msgstr ""
 
+#: products/components/Editor/index.js:133
+#: Blocks/Column/Inspector/Spacing.js:96
+msgid "Content"
+msgstr ""
+
+#: products/components/Editor/index.js:163
+msgid "Open Content Designer"
+msgstr ""
+
+#: products/components/Editor/index.js:216
+msgid "Save and go to editor"
+msgstr ""
+
+#: products/components/Editor/index.js:225
+msgid "Save your changes before going to the editor?"
+msgstr ""
+
+#: products/components/Editor/index.js:358
+msgid "Product Content"
+msgstr ""
+
+#: products/components/Editor/index.js:361
+msgid "Product content appears on product pages, usually below the form. You can reposition it by editing the product template and moving the \"Post Content\" or \"WordPress Content\" blocks."
+msgstr ""
+
+#: products/components/Editor/PreviewBricks.js:40
+msgid "Edit with Bricks"
+msgstr ""
+
+#: products/components/Editor/PreviewElementor.js:29
+msgid "Edit with Elementor"
+msgstr ""
+
 #: products/components/price/Multiple.js:20
 msgid "Number of Payments"
 msgstr ""
@@ -12403,19 +12454,19 @@ msgstr ""
 msgid "A name for your product."
 msgstr ""
 
-#: products/EditProduct.js:206
+#: products/EditProduct.js:207
 msgid "Product deleted."
 msgstr ""
 
-#: products/EditProduct.js:298
+#: products/EditProduct.js:327
 msgid "View Product Page"
 msgstr ""
 
-#: products/EditProduct.js:322
+#: products/EditProduct.js:351
 msgid "Save & Publish"
 msgstr ""
 
-#: products/EditProduct.js:323
+#: products/EditProduct.js:352
 msgid "Save Product"
 msgstr ""
 
@@ -12654,20 +12705,16 @@ msgstr ""
 msgid "Since SureCart's integrations are native, there's no need to worry about the complexity of growing your store."
 msgstr ""
 
-#: products/modules/integrations/Integrations.js:31
+#: products/modules/integrations/Integrations.js:33
 msgid "You have unsaved changes that need to be saved before adding a new integration. Do you want to save your product now?"
 msgstr ""
 
-#: products/modules/integrations/Integrations.js:46
+#: products/modules/integrations/Integrations.js:48
 msgid "Product update failed."
 msgstr ""
 
-#: products/modules/integrations/Integrations.js:93
+#: products/modules/integrations/Integrations.js:98
 msgid "Add New Integration"
-msgstr ""
-
-#: products/modules/integrations/Integrations.js:116
-msgid "To sync purchases of this product, add an integration."
 msgstr ""
 
 #: products/modules/integrations/NewIntegration.js:54
@@ -14550,15 +14597,15 @@ msgid "View Integrations"
 msgstr ""
 
 #: settings/integrations/Suretriggers.js:146
-msgid "Integrations via SureTriggers"
+msgid "Integrations via Ottokit"
 msgstr ""
 
 #: settings/integrations/Suretriggers.js:147
-msgid "Boost your sales by automating customer actions & streamlining workflows with seamless SureCart and SureTriggers integration."
+msgid "Boost your sales by automating customer actions & streamlining workflows with seamless SureCart and Ottokit integration."
 msgstr ""
 
 #: settings/integrations/Suretriggers.js:164
-msgid "SureTriggers lets you connect SureCart to hundreds of apps, CRMs and tools such as Slack, Mailchimp, etc. With this you have have various automations setup between SureCart events & other apps. Whatever you want SureCart & SureTriggers has got you covered."
+msgid "Ottokit lets you connect SureCart to hundreds of apps, CRMs and tools such as Slack, Mailchimp, etc. With this you have have various automations setup between SureCart events & other apps. Whatever you want SureCart & Ottokit has got you covered."
 msgstr ""
 
 #: settings/order/OrderProtocol.js:52
@@ -15587,36 +15634,36 @@ msgid "Save Changes"
 msgstr ""
 
 #: settings/tax-region/TaxRegionSettings.js:30
-#: settings/tax/TaxSettings.js:249
+#: settings/tax/TaxSettings.js:251
 #: address.js:26
 msgid "Australia"
 msgstr ""
 
 #: settings/tax-region/TaxRegionSettings.js:31
-#: settings/tax/TaxSettings.js:259
+#: settings/tax/TaxSettings.js:261
 msgid "European Union"
 msgstr ""
 
 #: settings/tax-region/TaxRegionSettings.js:32
-#: settings/tax/TaxSettings.js:264
+#: settings/tax/TaxSettings.js:266
 #: address.js:245
 msgid "United Kingdom"
 msgstr ""
 
 #: settings/tax-region/TaxRegionSettings.js:33
-#: settings/tax/TaxSettings.js:254
+#: settings/tax/TaxSettings.js:256
 #: address.js:53
 msgid "Canada"
 msgstr ""
 
 #: settings/tax-region/TaxRegionSettings.js:34
-#: settings/tax/TaxSettings.js:269
+#: settings/tax/TaxSettings.js:271
 #: address.js:246
 msgid "United States"
 msgstr ""
 
 #: settings/tax-region/TaxRegionSettings.js:35
-#: settings/tax/TaxSettings.js:274
+#: settings/tax/TaxSettings.js:276
 msgid "Rest Of The World"
 msgstr ""
 
@@ -15733,55 +15780,55 @@ msgstr ""
 msgid "The fallback tax rate to use for checkouts when a specific tax registration is not found."
 msgstr ""
 
-#: settings/tax/TaxSettings.js:149
+#: settings/tax/TaxSettings.js:151
 msgid "EU VAT Settings"
 msgstr ""
 
-#: settings/tax/TaxSettings.js:150
+#: settings/tax/TaxSettings.js:152
 msgid "Change how your store manages EU VAT collection and validation."
 msgstr ""
 
-#: settings/tax/TaxSettings.js:165
+#: settings/tax/TaxSettings.js:167
 msgid "Require VAT Number"
 msgstr ""
 
-#: settings/tax/TaxSettings.js:167
+#: settings/tax/TaxSettings.js:169
 msgid "If enabled, require all customer’s in the EU to enter a EU VAT number when checking out."
 msgstr ""
 
-#: settings/tax/TaxSettings.js:184
+#: settings/tax/TaxSettings.js:186
 msgid "Local Reverse Charge"
 msgstr ""
 
-#: settings/tax/TaxSettings.js:186
+#: settings/tax/TaxSettings.js:188
 msgid "If enabled, apply reverse charge when applicable even when customers are in your home country."
 msgstr ""
 
-#: settings/tax/TaxSettings.js:194
+#: settings/tax/TaxSettings.js:196
 msgid "VAT Number Verification Failure"
 msgstr ""
 
-#: settings/tax/TaxSettings.js:204
+#: settings/tax/TaxSettings.js:206
 msgid "Choose the checkout behavior when VAT verification fails."
 msgstr ""
 
-#: settings/tax/TaxSettings.js:211
+#: settings/tax/TaxSettings.js:213
 msgid "Reject the order and show an error."
 msgstr ""
 
-#: settings/tax/TaxSettings.js:218
+#: settings/tax/TaxSettings.js:220
 msgid "Accept the order but don’t apply reverse charge."
 msgstr ""
 
-#: settings/tax/TaxSettings.js:225
+#: settings/tax/TaxSettings.js:227
 msgid "Accept the order and apply reverse charge."
 msgstr ""
 
-#: settings/tax/TaxSettings.js:237
+#: settings/tax/TaxSettings.js:239
 msgid "Tax Regions"
 msgstr ""
 
-#: settings/tax/TaxSettings.js:238
+#: settings/tax/TaxSettings.js:240
 msgid "Manage how your store charges sales tax within each tax region. Check with a tax expert to understand your tax obligations."
 msgstr ""
 
@@ -16729,7 +16776,7 @@ msgid "Billing Details"
 msgstr ""
 
 #: Controllers/CustomerController.php:123
-#: sc-customer-edit.js:99
+#: sc-customer-edit.js:100
 msgid "Update Billing Details"
 msgstr ""
 
@@ -16883,7 +16930,7 @@ msgstr ""
 #: Blocks/Product/Media/edit.js:44
 #: Blocks/Product/Quantity/edit.js:32
 #: Blocks/ProductCollection/edit.js:194
-#: Blocks/ProductDonationAmount/edit.js:34
+#: Blocks/ProductDonationAmount/edit.js:36
 #: Blocks/ProductDonationAmounts/edit.js:109
 #: Blocks/ProductDonationPrices/edit.js:80
 #: Blocks/ProductDonationRecurringPrices/edit.js:34
@@ -17225,6 +17272,22 @@ msgstr ""
 msgid "Bottom Border"
 msgstr ""
 
+#: Blocks/Checkbox/components/Inspector.js:39
+#: Blocks/Email/components/Inspector.js:32
+#: Blocks/FirstName/edit.js:52
+#: Blocks/Input/components/Inspector.js:39
+#: Blocks/Input/edit.js:58
+#: Blocks/LastName/edit.js:52
+#: Blocks/Name/edit.js:52
+#: Blocks/NameYourPrice/edit.js:65
+#: Blocks/Password/components/Inspector.js:39
+#: Blocks/Password/edit.js:79
+#: Blocks/Phone/edit.js:42
+#: Blocks/Switch/components/Inspector.js:39
+#: Blocks/Textarea/edit.js:58
+msgid "Help"
+msgstr ""
+
 #: Blocks/Checkbox/edit.js:45
 #: Blocks/Radio/edit.js:30
 #: Blocks/Switch/edit.js:43
@@ -17378,10 +17441,6 @@ msgstr ""
 
 #: Blocks/Column/Inspector/Spacing.js:84
 msgid "Nested blocks will fill the width of this container. Toggle to constrain."
-msgstr ""
-
-#: Blocks/Column/Inspector/Spacing.js:96
-msgid "Content"
 msgstr ""
 
 #: Blocks/Column/Inspector/Spacing.js:116
@@ -17773,12 +17832,12 @@ msgid "Add  Amount"
 msgstr ""
 
 #: Blocks/DonationAmount/edit.js:22
-#: Blocks/ProductDonationAmount/edit.js:37
+#: Blocks/ProductDonationAmount/edit.js:39
 msgid "Label for donation"
 msgstr ""
 
 #: Blocks/DonationAmount/edit.js:23
-#: Blocks/ProductDonationAmount/edit.js:38
+#: Blocks/ProductDonationAmount/edit.js:40
 msgid "Buy me coffee!"
 msgstr ""
 
@@ -18383,7 +18442,7 @@ msgstr ""
 msgid "Select a product to display donation choices according to the prices of the product."
 msgstr ""
 
-#: Blocks/ProductDonationAmount/edit.js:73
+#: Blocks/ProductDonationAmount/edit.js:75
 msgid "Donation Amount text"
 msgstr ""
 
@@ -18601,7 +18660,7 @@ msgstr ""
 #: Blocks/Subtotal/edit.js:56
 #: Blocks/Subtotal/save.js:17
 #: src/blocks/cart-subtotal/view.php:39
-#: sc-line-item-total2.js:78
+#: sc-line-item-total2.js:84
 msgid "Total Installment Payments"
 msgstr ""
 
@@ -23043,15 +23102,15 @@ msgstr ""
 msgid "Your payment is processing. Exiting this page could cause an error in your order. Please do not navigate away from this page."
 msgstr ""
 
-#: sc-checkout.js:202
+#: sc-checkout.js:201
 msgid "Due to processor restrictions, only one checkout form is allowed on the page."
 msgstr ""
 
-#: sc-checkout.js:209
+#: sc-checkout.js:208
 msgid "Processing payment..."
 msgstr ""
 
-#: sc-checkout.js:209
+#: sc-checkout.js:208
 msgid "This invoice is not currently available for payment. If you have any questions, please contact us."
 msgstr ""
 
@@ -23126,7 +23185,7 @@ msgstr ""
 msgid "You don't have any billing information."
 msgstr ""
 
-#: sc-customer-edit.js:114
+#: sc-customer-edit.js:115
 #: sc-order-billing-address2.js:32
 msgid "Billing address is same as shipping"
 msgstr ""
@@ -23227,17 +23286,13 @@ msgstr ""
 msgid "Estimated %s"
 msgstr ""
 
-#: sc-line-item-tax2.js:22
-msgid "Tax:"
-msgstr ""
-
-#: sc-line-item-total2.js:62
-#: sc-upsell-totals.js:37
+#: sc-line-item-total2.js:68
+#: sc-upsell-totals.js:44
 msgid "Payment Total"
 msgstr ""
 
-#: sc-line-item-total2.js:63
-#: sc-upsell-totals.js:38
+#: sc-line-item-total2.js:69
+#: sc-upsell-totals.js:45
 msgid "Your payment will be processed in %s."
 msgstr ""
 
@@ -23821,24 +23876,24 @@ msgstr ""
 msgid "Some products in your order were outdated and have been updated. Please review your order summary before proceeding to payment."
 msgstr ""
 
-#: sc-shipping-choices2.js:40
+#: sc-shipping-choices2.js:39
 msgid "Shipping choice updated."
 msgstr ""
 
 #. translators: %1$s: formatted amount
-#: sc-shipping-choices2.js:43
+#: sc-shipping-choices2.js:42
 msgid "Your order total has changed to: %1$s."
 msgstr ""
 
-#: sc-shipping-choices2.js:61
+#: sc-shipping-choices2.js:60
 msgid "To check available shipping choices, please provide your shipping country in the address section."
 msgstr ""
 
-#: sc-shipping-choices2.js:65
+#: sc-shipping-choices2.js:64
 msgid "Sorry, we are not able to ship to your address."
 msgstr ""
 
-#: sc-shipping-choices2.js:69
+#: sc-shipping-choices2.js:68
 msgid "Standard Shipping"
 msgstr ""
 
@@ -24104,7 +24159,7 @@ msgstr ""
 msgid "Upgrade Now"
 msgstr ""
 
-#: sc-upsell-totals.js:45
+#: sc-upsell-totals.js:52
 msgid "one time"
 msgstr ""
 

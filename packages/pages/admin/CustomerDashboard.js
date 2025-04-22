@@ -1,5 +1,5 @@
 import { useDispatch, useSelect } from '@wordpress/data';
-import { PluginDocumentSettingPanel } from '@wordpress/edit-post';
+import { PluginDocumentSettingPanel } from '@wordpress/editor';
 import { store as editorStore } from '@wordpress/editor';
 import { useSettings } from '@wordpress/block-editor';
 import {
