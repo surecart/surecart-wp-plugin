@@ -165,13 +165,13 @@ class CurrencyService {
 			return true;
 		}
 
-		// Covers Yoast SEO sitemap, Rank Math sitemap, etc.
-		if ( ! empty( $wp->request ) && preg_match( '/sitemap(-index)?\.xml$/', $wp->request ) ) {
+		// Don't filter XML requests.
+		if ( ! empty( $wp->request ) && preg_match( '/\.xml$/', $wp->request ) ) {
 			return true;
 		}
 
-		// Detect any request with `sitemap` in the URL.
-		if ( ! empty( $_SERVER['REQUEST_URI'] ) && str_contains( $_SERVER['REQUEST_URI'], 'sitemap' ) ) {
+		// In case of a custom XML request.
+		if ( ! empty( $_SERVER['REQUEST_URI'] ) && str_contains( $_SERVER['REQUEST_URI'], '.xml' ) ) {
 			return true;
 		}
 
