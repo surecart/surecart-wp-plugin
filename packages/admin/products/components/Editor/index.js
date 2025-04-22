@@ -98,6 +98,10 @@ export default ({ post, loading, onNavigate }) => {
 							role="button"
 							tabIndex={0}
 							href={editorLink}
+							onClick={(e) => {
+								e.preventDefault();
+								onNavigate(editorLink);
+							}}
 						>
 							<div
 								css={css`
