@@ -14,15 +14,6 @@ export const getPageBuilderLinks = (post) => {
 		action: 'edit',
 	});
 
-	// Check for Bricks builder
-	if (window?.scData?.bricks?.editLink) {
-		return {
-			pageBuilder: 'bricks',
-			editorLink: window?.scData?.bricks?.editLink,
-			editPostLink,
-		};
-	}
-
 	// Check for Elementor
 	if (post?.meta?._elementor_edit_mode === 'builder') {
 		return {
@@ -31,6 +22,15 @@ export const getPageBuilderLinks = (post) => {
 				post: post?.id,
 				action: 'elementor',
 			}),
+			editPostLink,
+		};
+	}
+
+	// Check for Bricks builder
+	if (window?.scData?.bricks?.editLink) {
+		return {
+			pageBuilder: 'bricks',
+			editorLink: window?.scData?.bricks?.editLink,
 			editPostLink,
 		};
 	}
