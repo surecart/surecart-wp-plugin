@@ -28,7 +28,7 @@ export default ({ post, loading, onNavigate }) => {
 	const [guide, setGuide] = useState(false);
 
 	// Get page builder info and links
-	const { pageBuilder, editorLink } = usePageBuilderLinks(post);
+	const { pageBuilder, editorLink, editPostLink } = usePageBuilderLinks(post);
 
 	useEffect(() => {
 		const unregisterBlocks = initBlocks();
@@ -76,7 +76,7 @@ export default ({ post, loading, onNavigate }) => {
 								margin-top: -20px;
 								margin-bottom: -20px;
 							`}
-							onClick={() => onNavigate(editorLink)}
+							onClick={() => onNavigate(editPostLink)}
 						>
 							<ScIcon name="maximize" slot="prefix" />
 							{__('Open Content Designer', 'surecart')}
@@ -110,7 +110,9 @@ export default ({ post, loading, onNavigate }) => {
 								)}
 								{pageBuilder === 'bricks' && <PreviewBricks />}
 								{pageBuilder === 'core' && (
-									<div onClick={() => onNavigate()}>
+									<div
+										onClick={() => onNavigate(editPostLink)}
+									>
 										<PreviewBlocks blocks={blocks} />
 									</div>
 								)}
