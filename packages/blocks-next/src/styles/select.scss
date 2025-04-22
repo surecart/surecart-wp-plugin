@@ -15,7 +15,7 @@
 	background-image: var(--sc-form-select-bg-img),
 		var(--sc-form-select-bg-icon, none);
 	background-repeat: no-repeat;
-	background-position: right var(--sc-input-spacing-medium) center;
+	background-position: right calc(var(--sc-input-spacing-medium) - 2px) center;
 	background-size: 16px 12px;
 	border: var(--sc-input-border-width) solid var(--sc-input-border-color);
 	border-radius: var(--sc-border-radius-medium);
