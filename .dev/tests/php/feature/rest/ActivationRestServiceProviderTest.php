@@ -2,6 +2,7 @@
 
 namespace SureCart\Tests\Feature\Rest;
 
+use SureCart\Models\License;
 use SureCart\Request\RequestService;
 use SureCart\Rest\ActivationRestServiceProvider;
 use SureCart\Tests\SureCartUnitTestCase;
@@ -30,6 +31,8 @@ class ActivationRestServiceProviderTest extends SureCartUnitTestCase{
 		return [
 			'List: Unauthenticated' => [null, 'GET', '/surecart/v1/activations', 401],
             'List: Missing Capability' => [[], 'GET', '/surecart/v1/activations', 403],
+			'List: Has capability to view license activations' => [['read'], 'GET', '/surecart/v1/activations', 200, ['license_ids' => ['test_license']]],
+			'List: Unauthenticated to view license activations' => [['read'], 'GET', '/surecart/v1/activations', 403, ['license_ids' => ['invalid_license']]],
             'List: Has Capability' => [['read_sc_products'],'GET', '/surecart/v1/activations', 200],
             'Find: Unauthenticated' => [null, 'GET', '/surecart/v1/activations/test', 401],
             'Find: Missing Capability' => [[], 'GET', '/surecart/v1/activations/test', 403],
@@ -49,12 +52,15 @@ class ActivationRestServiceProviderTest extends SureCartUnitTestCase{
 	/**
 	 * @dataProvider requestProvider
 	 */
-	public function test_permissions($caps, $method, $route, $status){
-		//mock the requests in the container
+	public function test_permissions($caps, $method, $route, $status, $attributes = []) {
+		// mock the requests in the container
         $requests = \Mockery::mock(RequestService::class);
         \SureCart::alias('request', function () use ($requests) {
             return call_user_func_array([$requests, 'makeRequest'], func_get_args());
         });
+
+		// mock For customer read api request
+		$this->maybeMockCustomerApiRequest($caps, $attributes);
 
         $requests->shouldReceive('makeRequest')
             ->andReturn((object) [
@@ -71,7 +77,34 @@ class ActivationRestServiceProviderTest extends SureCartUnitTestCase{
         }
 
         $request = new \WP_REST_Request($method, $route);
+		$request->set_query_params($attributes);
         $response = rest_do_request($request);
         $this->assertSame($status, $response->get_status());
+	}
+
+	public function maybeMockCustomerApiRequest($caps, $attributes) {
+		if (!empty($caps) && $caps[0] !== 'read' && empty($attributes['license_ids'])) {
+			return;
+		}
+
+		// Mock the License model.
+		$licenseId = $attributes['license_ids'][0] ?? null;
+		$mockLicenses = \Mockery::mock('alias:' . License::class);
+		$mockLicenses->shouldReceive('where')
+			->with(['ids' => [$licenseId]])
+			->andReturnSelf()
+			->shouldReceive('get')
+			->andReturnUsing(function () use ($licenseId) {
+				$mockLicense = \Mockery::mock([
+					'id' => $licenseId,
+				]);
+
+				$mockLicense->shouldReceive('belongsToUser')
+					->andReturnUsing(function ($user) use ($licenseId) {
+						return $licenseId === 'test_license';
+					});
+
+				return [$mockLicense];
+			});
 	}
 }
