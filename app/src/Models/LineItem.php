@@ -55,6 +55,23 @@ class LineItem extends Model {
 	}
 
 	/**
+	 * Check if the line item can be swapped.
+	 * Right now we only support swapping for products with no variants.
+	 *
+	 * @return bool
+	 */
+	protected function getCanSwapAttribute() {
+		$swap = $this->swap ?? $this->price->current_swap ?? null;
+		if ( ! $swap ) {
+			return false;
+		}
+		// get the price to check if it has variants.
+		$price = $swap->swap_price ?? $this->price;
+		// if the price has variants, we can't swap.
+		return 0 === $price->product->variants->pagination->count;
+	}
+
+	/**
 	 * Upsell a line item.
 	 *
 	 * @param array $attributes The attributes to update.
