@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-04-17T18:55:31+00:00\n"
+"POT-Creation-Date: 2025-04-23T18:14:53+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.9.0\n"
 
@@ -1072,7 +1072,7 @@ msgstr ""
 #: src/Controllers/Admin/Upsells/UpsellsListTable.php:53
 #: coupons/modules/Code.js:119
 #: product-groups/EditProductGroup.js:164
-#: products/EditProduct.js:235
+#: products/EditProduct.js:237
 #: products/modules/Prices/Price/Header.js:241
 #: products/modules/SingleDownload.js:259
 #: upsell-funnels/EditFunnel.js:262
@@ -1573,7 +1573,7 @@ msgstr ""
 #: src/Controllers/Web/BuyPageController.php:56
 #: src/WordPress/PostTypes/ProductPostTypeService.php:406
 #: src/WordPress/PostTypes/ProductPostTypeService.php:1033
-#: products/EditProduct.js:303
+#: products/EditProduct.js:301
 #: components/PriceInfo.js:103
 msgid "Edit Product"
 msgstr ""
@@ -1752,7 +1752,7 @@ msgstr ""
 #: invoices/modules/Prices.js:108
 #: product-collections/components/Products.js:28
 #: product-groups/modules/Products.js:45
-#: products/EditProduct.js:299
+#: products/EditProduct.js:297
 #: settings/advanced/AdvancedSettings.js:462
 #: settings/shipping/profile/Products.js:250
 #: upsell-funnels/modules/Conditions.js:132
@@ -6453,11 +6453,11 @@ msgstr ""
 msgid "SureCart is syncing customers in the background. The process may take a little while, so please be patient."
 msgstr ""
 
-#: src/Sync/ProductsSyncService.php:103
+#: src/Sync/ProductsSyncService.php:73
 msgid "SureCart: Getting things ready..."
 msgstr ""
 
-#: src/Sync/ProductsSyncService.php:106
+#: src/Sync/ProductsSyncService.php:76
 msgid "We are getting things ready and optimized in the background. This may take a few minutes."
 msgstr ""
 
@@ -7207,18 +7207,18 @@ msgid "Product scheduled."
 msgstr ""
 
 #: src/WordPress/PostTypes/ProductPostTypeService.php:1047
-#: products/EditProduct.js:188
+#: products/EditProduct.js:185
 #: products/modules/integrations/Integrations.js:43
 msgid "Product updated."
 msgstr ""
 
-#: src/WordPress/PostTypes/ProductPostTypeService.php:1083
+#: src/WordPress/PostTypes/ProductPostTypeService.php:1082
 msgctxt "post"
 msgid "Archived"
 msgstr ""
 
 #. translators: %s: number of posts.
-#: src/WordPress/PostTypes/ProductPostTypeService.php:1092
+#: src/WordPress/PostTypes/ProductPostTypeService.php:1091
 msgid "Archived <span class=\"count\">(%s)</span>"
 msgid_plural "Archived <span class=\"count\">(%s)</span>"
 msgstr[0] ""
@@ -7674,8 +7674,8 @@ msgstr ""
 
 #: admin/notices/webhook-change.php:28
 #: components/data-tables/charges-data-table/ChargeDetails.js:128
-#: products/components/Editor/index.js:147
-#: products/components/Editor/index.js:368
+#: products/components/Editor/index.js:66
+#: products/components/Editor/index.js:266
 #: products/modules/integrations/Integrations.js:91
 msgid "Learn More"
 msgstr ""
@@ -7847,7 +7847,7 @@ msgstr[1] ""
 #: product-collections/modules/DeleteModal.js:76
 #: product-groups/CreateProductGroup.js:80
 #: product-groups/modules/NewProduct.js:78
-#: products/components/Editor/index.js:217
+#: products/components/ConfirmNavigation.js:11
 #: products/components/SelectTemplate/create-modal.js:89
 #: products/components/SelectTemplatePart/create-modal.js:90
 #: products/CreateProduct.js:87
@@ -10007,7 +10007,7 @@ msgid "Permalink"
 msgstr ""
 
 #: components/Permalink.js:99
-#: products/components/Editor/index.js:240
+#: products/components/Editor/index.js:138
 msgid "Ok"
 msgstr ""
 
@@ -12216,28 +12216,29 @@ msgstr ""
 msgid "Now"
 msgstr ""
 
-#: products/components/Editor/index.js:133
+#: products/components/ConfirmNavigation.js:10
+msgid "Save and go to editor"
+msgstr ""
+
+#: products/components/ConfirmNavigation.js:19
+msgid "Save your changes before going to the editor?"
+msgstr ""
+
+#: products/components/Editor/index.js:52
 #: Blocks/Column/Inspector/Spacing.js:96
 msgid "Content"
 msgstr ""
 
-#: products/components/Editor/index.js:163
+#: products/components/Editor/index.js:82
+#: products/modules/ProductOptions.js:40
 msgid "Open Content Designer"
 msgstr ""
 
-#: products/components/Editor/index.js:216
-msgid "Save and go to editor"
-msgstr ""
-
-#: products/components/Editor/index.js:225
-msgid "Save your changes before going to the editor?"
-msgstr ""
-
-#: products/components/Editor/index.js:358
+#: products/components/Editor/index.js:256
 msgid "Product Content"
 msgstr ""
 
-#: products/components/Editor/index.js:361
+#: products/components/Editor/index.js:259
 msgid "Product content appears on product pages, usually below the form. You can reposition it by editing the product template and moving the \"Post Content\" or \"WordPress Content\" blocks."
 msgstr ""
 
@@ -12454,19 +12455,19 @@ msgstr ""
 msgid "A name for your product."
 msgstr ""
 
-#: products/EditProduct.js:207
+#: products/EditProduct.js:209
 msgid "Product deleted."
 msgstr ""
 
-#: products/EditProduct.js:327
+#: products/EditProduct.js:325
 msgid "View Product Page"
 msgstr ""
 
-#: products/EditProduct.js:351
+#: products/EditProduct.js:348
 msgid "Save & Publish"
 msgstr ""
 
-#: products/EditProduct.js:352
+#: products/EditProduct.js:349
 msgid "Save Product"
 msgstr ""
 
@@ -13002,6 +13003,10 @@ msgstr ""
 
 #: products/modules/Prices/ShowArchivedToggle.js:20
 msgid "Hide %d Archived Prices"
+msgstr ""
+
+#: products/modules/ProductOptions.js:23
+msgid "Looking for additional product options?"
 msgstr ""
 
 #: products/modules/SearchEngine.js:22

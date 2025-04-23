@@ -613,7 +613,7 @@ class ProductPostTypeService {
 	 * @return bool
 	 */
 	public function forceGutenberg( $current_status, $post_type ) {
-		if ( $post_type === $this->post_type ) {
+		if ( $post_type === $this->post_type && function_exists( 'get_current_screen' ) ) {
 			$screen = get_current_screen();
 			if ( empty( $screen ) ) {
 				return false;
@@ -665,12 +665,12 @@ class ProductPostTypeService {
 
 		$product          = sc_get_product();
 		$template_part_id = isset( $product->template_part_id ) ? $product->template_part_id : 'surecart/surecart//product-info'; // Get the template part ID.
-		$template         = get_block_template( $template_part_id, 'wp_template_part' );
-		if ( ! $template ) {
-			$template = get_block_template( 'surecart/surecart//product-info', 'wp_template_part' );
+		$block_template   = get_block_template( $template_part_id, 'wp_template_part' );
+		if ( ! $block_template ) {
+			$block_template = get_block_template( 'surecart/surecart//product-info', 'wp_template_part' );
 		}
 
-		$blocks = $template->content ?? '';
+		$blocks = $block_template->content ?? '';
 		$blocks = shortcode_unautop( $blocks );
 		$blocks = do_shortcode( $blocks );
 		$blocks = do_blocks( $blocks );
@@ -1024,7 +1024,7 @@ class ProductPostTypeService {
 		register_post_type(
 			$this->post_type,
 			array(
-				'labels'            => array(
+				'labels'          => array(
 					'name'                     => _x( 'SureCart Product', 'post type general name', 'surecart' ),
 					'singular_name'            => _x( 'SureCart Product', 'post type singular name', 'surecart' ),
 					'add_new'                  => _x( 'Add New', 'Product', 'surecart' ),
@@ -1046,20 +1046,19 @@ class ProductPostTypeService {
 					'item_scheduled'           => __( 'Product scheduled.', 'surecart' ),
 					'item_updated'             => __( 'Product updated.', 'surecart' ),
 				),
-				'hierarchical'      => true,
-				'public'            => true,
-				'show_ui'           => true,
-				'show_in_menu'      => false,
-				'rewrite'           => array(
+				'hierarchical'    => true,
+				'public'          => true,
+				'show_ui'         => true,
+				'show_in_menu'    => false,
+				'rewrite'         => array(
 					'slug'       => \SureCart::settings()->permalinks()->getBase( 'product_page' ),
 					'with_front' => false,
 				),
-				'show_in_rest'      => true,
-				'show_in_nav_menus' => false,
-				'can_export'        => false,
-				'capability_type'   => 'post',
-				'map_meta_cap'      => true,
-				'supports'          => array(
+				'show_in_rest'    => true,
+				'can_export'      => false,
+				'capability_type' => 'post',
+				'map_meta_cap'    => true,
+				'supports'        => array(
 					'title',
 					'excerpt',
 					'custom-fields',

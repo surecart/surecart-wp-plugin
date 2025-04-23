@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: ecommerce plugin, online store, subscriptions, stripe, payments
 Requires at least: 6.6
 Tested up to: 6.8
-Stable tag: 3.7.1
+Stable tag: 3.7.2
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -304,6 +304,14 @@ Yes, the checkout form can be customized using our visual builder. You can chang
 Accessibility is a huge priority for the entire team building SureCart. As you know, accessibility is an ongoing improvement task. Our development and QA teams are trained in accessibility best practices and build/test each new feature for accessibility. If you come across any edge issues, we want to know about it and will prioritize its resolution. Please contact us via our website.
 
 == Changelog ==
+
+= 3.7.2 - April 23rd, 2025 =
+- Improvement: Product metaboxes are now only on the product content editor page only for better compatibility.
+- Improvement: Cleanup old synced products/collections when connected store changes.
+- Fix: Issue with specific DIVI settings not allowing admin edit product page to load.
+- Fix: Issue with specific LifterLMS settings not allowing admin edit product page to load.
+- Fix: Don't modify template global that was breaking Divi builder in some cases.
+- Fix: Issue with get_current_screen not being available in some cases due to API request.
 
 = 3.7.1 - April 17th, 2025 =
 - Fix: Conflict with Jetpack on Edit Product pages with new content editor.
