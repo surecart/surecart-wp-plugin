@@ -1,13 +1,13 @@
 <?php
 
-namespace SureCart\Sync;
+namespace SureCart\Models\Wordpress;
 
 use SureCart\Models\Concerns\Facade;
 
 /**
  * This class syncs product records to WordPress posts.
  */
-class CollectionSyncService {
+class Collection {
 	use Facade;
 
 	/**
