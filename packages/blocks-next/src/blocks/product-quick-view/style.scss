@@ -12,13 +12,17 @@
 		width: 70vw;
 		max-width: 1000px;
 		height: fit-content;
-		min-height: 80vh;
 		max-height: 90vh;
 		border: none;
 		border-radius: 12px;
 		box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.3);
 		background: white;
 		overflow: scroll;
+
+		&.loading {
+			min-height: 80vh;
+		}
+
 		&__content {
 			padding: 20px;
 		}

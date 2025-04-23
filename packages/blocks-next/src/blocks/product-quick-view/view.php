@@ -20,6 +20,7 @@ use SureCart\Models\Blocks\ProductPageBlock;
 	<div
 		class="sc-product-quick-view-dialog"
 		data-wp-class--active="state.open"
+		data-wp-class--loading="state.loading"
 		data-wp-class--show-closing-animation="state.showClosingAnimation"
 		data-wp-on--keydown="actions.handleKeyDown"
 	>

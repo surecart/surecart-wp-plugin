@@ -37,7 +37,7 @@ const { state, actions } = store('surecart/product-quick-view', {
 		*navigate(event) {
 			if (!isValidEvent(event)) return;
 			state.loading = true;
-			actions.toggle(event);
+			yield actions.toggle(event);
 
 			const { ref } = getElement();
 			const { url } = getContext();
