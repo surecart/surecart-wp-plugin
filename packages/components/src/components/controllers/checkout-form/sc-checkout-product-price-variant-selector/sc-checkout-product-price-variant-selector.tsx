@@ -182,40 +182,40 @@ export class ScProductCheckoutSelectVariantOption {
 
   renderDropdown({ name, values, index }) {
     return (
-      <sc-select
-        unselect={false}
-        label={name}
-        value={this[`option${index + 1}`]}
-        onScChange={e => (this[`option${index + 1}`] = e.target.value)}
-        style={{
-          '--sc-menu-item-text-decoration-unavailable': 'line-through',
-        }}
-        choices={values.map(value => ({
-          value,
-          label: value,
-          unavailable:
-            isProductVariantOptionSoldOut.apply(void 0, [
-              index + 1,
-              value,
-              {
-                ...(this.option1 ? { option_1: this.option1 } : {}),
-                ...(this.option2 ? { option_2: this.option2 } : {}),
-                ...(this.option3 ? { option_3: this.option3 } : {}),
-              },
-              this.product,
-            ]) ||
-            isProductVariantOptionMissing.apply(void 0, [
-              index + 1,
-              value,
-              {
-                ...(this.option1 ? { option_1: this.option1 } : {}),
-                ...(this.option2 ? { option_2: this.option2 } : {}),
-                ...(this.option3 ? { option_3: this.option3 } : {}),
-              },
-              this.product,
-            ]),
-        }))}
-      />
+      <div class="sc-select-option__wrapper">
+        <label class="sc-form-label">{name}</label>
+        <select class="sc-form-select" onChange={e => (this[`option${index + 1}`] = (e.target as HTMLSelectElement).value)}>
+          {values.map(value => {
+            const isUnavailable =
+              isProductVariantOptionSoldOut.apply(void 0, [
+                index + 1,
+                value,
+                {
+                  ...(this.option1 ? { option_1: this.option1 } : {}),
+                  ...(this.option2 ? { option_2: this.option2 } : {}),
+                  ...(this.option3 ? { option_3: this.option3 } : {}),
+                },
+                this.product,
+              ]) ||
+              isProductVariantOptionMissing.apply(void 0, [
+                index + 1,
+                value,
+                {
+                  ...(this.option1 ? { option_1: this.option1 } : {}),
+                  ...(this.option2 ? { option_2: this.option2 } : {}),
+                  ...(this.option3 ? { option_3: this.option3 } : {}),
+                },
+                this.product,
+              ]);
+
+            return (
+              <option value={value} selected={this[`option${index + 1}`] === value}>
+                {value} {isUnavailable && <Fragment> {__('(unavailable)', 'surecart')}</Fragment>}
+              </option>
+            );
+          })}
+        </select>
+      </div>
     );
   }
 
