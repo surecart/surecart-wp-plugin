@@ -310,6 +310,8 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 - Improvement: Cleanup old synced products/collections when connected store changes.
 - Fix: Issue with specific DIVI settings not allowing admin edit product page to load.
 - Fix: Issue with specific LifterLMS settings not allowing admin edit product page to load.
+- Fix: Don't modify template global that was breaking Divi builder in some cases.
+- Fix: Issue with get_current_screen not being available in some cases due to API request.
 
 = 3.7.1 - April 17th, 2025 =
 - Fix: Conflict with Jetpack on Edit Product pages with new content editor.
