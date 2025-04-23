@@ -664,6 +664,7 @@ export interface Order extends Object {
 
 export interface ShippingChoice {
   amount: number;
+  display_amount: string;
   checkout: string | Checkout;
   currency: string;
   id: string;
