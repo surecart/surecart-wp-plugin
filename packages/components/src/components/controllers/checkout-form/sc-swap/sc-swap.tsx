@@ -41,7 +41,7 @@ export class ScSwap {
           {swap?.description}
         </sc-switch>
         {!!price?.display_amount && (
-          <div class="sc-swap__price">
+          <div class="swap__price">
             {price?.display_amount} {price?.short_interval_text} {price?.interval_count_text}
           </div>
         )}

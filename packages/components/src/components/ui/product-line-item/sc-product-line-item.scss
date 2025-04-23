@@ -46,7 +46,7 @@
     font-size: var(--sc-font-size-small);
     line-height: 1;
     color: var(--sc-input-help-text-color);
-    text-wrap: nowrap;
+    white-space: nowrap;
   }
 
   &__remove-container {
@@ -138,7 +138,7 @@
   flex-wrap: wrap;
   flex-direction: column;
   gap: var(--sc-product-line-item-line-gap);
-  text-wrap: pretty;
+  white-space: nowrap;
 
   &:last-child {
     align-items: flex-end;
@@ -184,7 +184,7 @@
   font-weight: var(--sc-font-weight-semibold);
   color: var(--sc-input-label-color);
   line-height: 1;
-  text-wrap: pretty;
+  white-space: nowrap;
   display: flex;
   gap: 4px;
   align-items: baseline;
@@ -195,7 +195,7 @@
   line-height: 1;
   color: var(--sc-input-help-text-color);
   text-align: right;
-  text-wrap: pretty;
+  white-space: nowrap;
 }
 
 .item--is-rtl {
