@@ -43,7 +43,7 @@ export default ({ invoice, open, onRequestClose }) => {
 
 	return (
 		<ScDialog
-			label={__('Resend Notification', 'surecart')}
+			label={__('Resend Invoice', 'surecart')}
 			open={open}
 			onScRequestClose={onRequestClose}
 		>
