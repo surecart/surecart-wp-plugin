@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: ecommerce plugin, online store, subscriptions, stripe, payments
 Requires at least: 6.6
 Tested up to: 6.8
-Stable tag: 3.7.2
+Stable tag: 3.7.3
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -304,6 +304,10 @@ Yes, the checkout form can be customized using our visual builder. You can chang
 Accessibility is a huge priority for the entire team building SureCart. As you know, accessibility is an ongoing improvement task. Our development and QA teams are trained in accessibility best practices and build/test each new feature for accessibility. If you come across any edge issues, we want to know about it and will prioritize its resolution. Please contact us via our website.
 
 == Changelog ==
+
+= 3.7.3 - April 24th, 2025 =
+- Fix: Issue with Rank Math SEO plugin appending selected currency to sitemaps.
+- Fix: Issue with missing pagination on license activations and licenses list (if more than 20).
 
 = 3.7.2 - April 23rd, 2025 =
 - Improvement: Product metaboxes are now only on the product content editor page only for better compatibility.
