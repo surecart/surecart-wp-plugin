@@ -380,7 +380,6 @@ export default () => {
 					order={order}
 					open={modal === 'order_resend_notification'}
 					onRequestClose={() => setModal(false)}
-					loading={!hasLoadedOrder}
 				/>
 				<CreateReturnRequest
 					fulfillmentItems={fulfilledItems}
