@@ -7,8 +7,6 @@ import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import { useEffect, useState } from '@wordpress/element';
 import { parse } from '@wordpress/blocks';
-import { addQueryArgs } from '@wordpress/url';
-import { store as coreStore } from '@wordpress/core-data';
 
 /**
  * Internal dependencies.
@@ -18,29 +16,19 @@ import initBlocks from '../../../components/block-editor/utils/init-blocks';
 import PreviewBlocks from '../../../components/block-editor/PreviewBlocks';
 import PreviewElementor from './PreviewElementor';
 import { ScButton, ScIcon } from '@surecart/components-react';
-import { useSelect } from '@wordpress/data';
-import Confirm from '../../../components/confirm';
 import { Guide } from '@wordpress/components';
 import { ExternalLink } from '@wordpress/components';
 import { help } from '@wordpress/icons';
 import { Button } from '@wordpress/components';
 import PreviewBricks from './PreviewBricks';
+import usePageBuilderLinks from '../../hooks/usePageBuilderLinks';
 
-export default ({ post, loading, onSave, error }) => {
+export default ({ post, loading, onNavigate }) => {
 	const [blocks, setBlocks] = useState([]);
-	const [confirm, setConfirm] = useState(false);
-	const [isSaving, setIsSaving] = useState(false);
 	const [guide, setGuide] = useState(false);
-	const hasDirtyRecords = useSelect((select) => {
-		const { __experimentalGetDirtyEntityRecords } = select(coreStore);
-		const dirtyEntityRecords = __experimentalGetDirtyEntityRecords();
-		return dirtyEntityRecords.length > 0;
-	}, []);
 
-	const editPostLink = addQueryArgs('/wp-admin/post.php', {
-		post: post?.id,
-		action: 'edit',
-	});
+	// Get page builder info and links
+	const { pageBuilder, editorLink, editPostLink } = usePageBuilderLinks(post);
 
 	useEffect(() => {
 		const unregisterBlocks = initBlocks();
@@ -54,78 +42,9 @@ export default ({ post, loading, onSave, error }) => {
 		setBlocks(parsedContent);
 	}, [post?.content]);
 
-	// bail on error.
-	useEffect(() => {
-		if (error) {
-			setIsSaving(false);
-			setConfirm(false);
-		}
-	}, [error]);
-
 	if (!post?.id) {
 		return null;
 	}
-
-	// Get the current page builder being used
-	const getPageBuilder = () => {
-		if (window?.bricksData?.renderWithBricks === '1') {
-			return 'bricks';
-		}
-		if (post?.meta?._elementor_edit_mode === 'builder') {
-			return 'elementor';
-		}
-		return 'core';
-	};
-
-	// Determine editor configuration
-	const { editorLink, pageBuilder } = (() => {
-		switch (getPageBuilder()) {
-			case 'bricks':
-				return {
-					pageBuilder: 'bricks',
-					editorLink: addQueryArgs(post?.link, {
-						bricks: 'run',
-					}),
-				};
-			case 'elementor':
-				return {
-					pageBuilder: 'elementor',
-					editorLink: addQueryArgs('/wp-admin/post.php', {
-						post: post?.id,
-						action: 'elementor',
-					}),
-				};
-			default:
-				return {
-					pageBuilder: 'core',
-					editorLink: editPostLink,
-				};
-		}
-	})();
-
-	/**
-	 * Handle the navigateion request.
-	 */
-	const onNavigate = (type) => {
-		// show notice if has any dirty records on page.
-		if (hasDirtyRecords) {
-			setConfirm(true);
-			return;
-		}
-
-		navigate(type);
-	};
-
-	/**
-	 * Navigate to the editor or post.
-	 */
-	const navigate = (type = 'editor') => {
-		if (type === 'editor') {
-			window.location.assign(editorLink);
-		} else {
-			window.location.assign(editPostLink);
-		}
-	};
 
 	return (
 		<>
@@ -157,7 +76,7 @@ export default ({ post, loading, onSave, error }) => {
 								margin-top: -20px;
 								margin-bottom: -20px;
 							`}
-							onClick={() => onNavigate('post')}
+							onClick={() => onNavigate(editPostLink)}
 						>
 							<ScIcon name="maximize" slot="prefix" />
 							{__('Open Content Designer', 'surecart')}
@@ -179,6 +98,10 @@ export default ({ post, loading, onSave, error }) => {
 							role="button"
 							tabIndex={0}
 							href={editorLink}
+							onClick={(e) => {
+								e.preventDefault();
+								onNavigate(editorLink);
+							}}
 						>
 							<div
 								css={css`
@@ -191,7 +114,9 @@ export default ({ post, loading, onSave, error }) => {
 								)}
 								{pageBuilder === 'bricks' && <PreviewBricks />}
 								{pageBuilder === 'core' && (
-									<div onClick={() => onNavigate('editor')}>
+									<div
+										onClick={() => onNavigate(editPostLink)}
+									>
 										<PreviewBlocks blocks={blocks} />
 									</div>
 								)}
@@ -200,33 +125,6 @@ export default ({ post, loading, onSave, error }) => {
 					</div>
 				)}
 			</Box>
-			<Confirm
-				open={confirm}
-				loading={isSaving}
-				onConfirm={async () => {
-					setIsSaving(true);
-					try {
-						await onSave();
-						navigate('editor');
-					} catch (error) {
-						setIsSaving(false);
-						setConfirm(false);
-					}
-				}}
-				confirmButtonText={__('Save and go to editor', 'surecart')}
-				cancelButtonText={__('Cancel', 'surecart')}
-				onRequestClose={() => {
-					if (isSaving) {
-						return;
-					}
-					setConfirm(false);
-				}}
-			>
-				{__(
-					'Save your changes before going to the editor?',
-					'surecart'
-				)}
-			</Confirm>
 
 			{guide && (
 				<Guide
