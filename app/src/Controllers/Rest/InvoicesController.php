@@ -86,7 +86,7 @@ class InvoicesController extends RestController {
 	}
 
 	/**
-	 * Resend order notification.
+	 * Resend invoice notification.
 	 *
 	 * @param \WP_REST_Request $request Rest Request.
 	 *
