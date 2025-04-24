@@ -6,10 +6,11 @@ use SureCart\Models\Traits\HasDates;
 use SureCart\Models\Traits\HasLicense;
 
 /**
- * Price model
+ * Activation model.
  */
 class Activation extends Model {
-	use HasLicense, HasDates;
+	use HasDates;
+	use HasLicense;
 
 	/**
 	 * Rest API endpoint
