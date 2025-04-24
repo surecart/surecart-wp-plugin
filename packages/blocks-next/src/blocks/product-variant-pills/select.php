@@ -1,3 +1,8 @@
+<?php
+// Enqueue the select styles.
+wp_enqueue_style( 'surecart-select' );
+?>
+
 <div class="sc-select-option__wrapper">
 	<select class="sc-form-select" data-wp-on--change="callbacks.setOption">
 		<?php foreach ( $option->values as $key => $value ) : ?>

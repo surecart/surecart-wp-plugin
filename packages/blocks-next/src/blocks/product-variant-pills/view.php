@@ -9,10 +9,9 @@
 
 		<?php
 		if ( 'dropdown' === $option->display_type ) :
-			wp_enqueue_style( 'surecart-select' );
-			require 'select.php';
+			include 'select.php';
 		else :
-			require 'radio.php';
+			include 'radio.php';
 		endif;
 		?>
 	</div>
