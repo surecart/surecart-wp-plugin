@@ -613,7 +613,7 @@ class ProductPostTypeService {
 	 * @return bool
 	 */
 	public function forceGutenberg( $current_status, $post_type ) {
-		if ( $post_type === $this->post_type ) {
+		if ( $post_type === $this->post_type && function_exists( 'get_current_screen' ) ) {
 			$screen = get_current_screen();
 			if ( empty( $screen ) ) {
 				return false;
@@ -665,12 +665,12 @@ class ProductPostTypeService {
 
 		$product          = sc_get_product();
 		$template_part_id = isset( $product->template_part_id ) ? $product->template_part_id : 'surecart/surecart//product-info'; // Get the template part ID.
-		$template         = get_block_template( $template_part_id, 'wp_template_part' );
-		if ( ! $template ) {
-			$template = get_block_template( 'surecart/surecart//product-info', 'wp_template_part' );
+		$block_template   = get_block_template( $template_part_id, 'wp_template_part' );
+		if ( ! $block_template ) {
+			$block_template = get_block_template( 'surecart/surecart//product-info', 'wp_template_part' );
 		}
 
-		$blocks = $template->content ?? '';
+		$blocks = $block_template->content ?? '';
 		$blocks = shortcode_unautop( $blocks );
 		$blocks = do_shortcode( $blocks );
 		$blocks = do_blocks( $blocks );
