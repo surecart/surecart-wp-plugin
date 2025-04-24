@@ -4,6 +4,7 @@ namespace SureCart\Models;
 
 use SureCart\Models\Traits\HasDates;
 use SureCart\Models\Traits\HasImageSizes;
+use SureCart\Models\Wordpress\Collection;
 use SureCart\Support\Contracts\PageModel;
 
 /**
@@ -112,10 +113,7 @@ class ProductCollection extends Model implements PageModel {
 	 */
 	protected function deleteSynced( $id = '' ) {
 		$id = ! empty( $id ) ? $id : $this->id;
-		\SureCart::sync()
-			->collection()
-			->delete( $id );
-
+		Collection::delete( $id );
 		return $this;
 	}
 
@@ -123,10 +121,7 @@ class ProductCollection extends Model implements PageModel {
 	 * Sync the collection
 	 */
 	public function sync() {
-		\SureCart::sync()
-			->collection()
-			->sync( $this );
-
+		Collection::sync( $this );
 		return $this;
 	}
 
@@ -139,7 +134,7 @@ class ProductCollection extends Model implements PageModel {
 		if ( empty( $this->id ) ) {
 			return false;
 		}
-		return \SureCart::sync()->collection()->findByModelId( $this->id );
+		return Collection::findByModelId( $this->id );
 	}
 
 	/**
