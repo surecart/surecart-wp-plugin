@@ -1,27 +1,31 @@
 import { ScBlockUi, ScButton, ScDialog } from '@surecart/components-react';
 import apiFetch from '@wordpress/api-fetch';
-import { useDispatch } from '@wordpress/data';
+import { store as coreStore } from '@wordpress/core-data';
+import { select, useDispatch } from '@wordpress/data';
 import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
-import { addQueryArgs } from '@wordpress/url';
 
 import Error from '../../components/Error';
 
-export default ({ order, open, onRequestClose, hasLoading }) => {
-	const [loading, setLoading] = useState(hasLoading);
+export default ({ order, open, onRequestClose }) => {
 	const [error, setError] = useState(false);
+	const [loading, setLoading] = useState(false);
 	const { createSuccessNotice } = useDispatch(noticesStore);
 
 	const resendNotification = async () => {
 		try {
 			setLoading(true);
 			setError(null);
+
+			const { baseURL } = select(coreStore).getEntityConfig(
+				'surecart',
+				'order'
+			);
+
 			await apiFetch({
 				method: 'POST',
-				path: addQueryArgs(
-					`surecart/v1/orders/${order?.id}/resend_notification`
-				),
+				path: `${baseURL}/${order?.id}/resend_notification`,
 			});
 
 			createSuccessNotice(__('Notification resent.', 'surecart'), {
@@ -39,7 +43,7 @@ export default ({ order, open, onRequestClose, hasLoading }) => {
 
 	return (
 		<ScDialog
-			label={__('Confirm', 'surecart')}
+			label={__('Resend Notification', 'surecart')}
 			open={open}
 			onScRequestClose={onRequestClose}
 		>
