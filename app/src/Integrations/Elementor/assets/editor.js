@@ -143,7 +143,6 @@ jQuery(window).ready(function () {
 				selectedOption === 'sc-elementor-single-product-template'
 					? window?.scElementorData?.sc_product_template
 					: window?.scElementorData?.sc_product_card_template;
-
 			insertSureCartTemplate(templateName);
 		});
 	}
@@ -152,7 +151,6 @@ jQuery(window).ready(function () {
 	setupSureCartTemplateButton();
 
 	// Re-run every time Elementor document type changes to ensure the button is set up correctly.
-	elementor.on('document:loaded', setupSureCartTemplateButton);
 	elementor.channels.editor.on(
 		'change:document:type',
 		setupSureCartTemplateButton
@@ -184,9 +182,6 @@ jQuery(window).ready(function () {
 				elType: 'container',
 				settings: template?.settings || {},
 				elements,
-			},
-			options: {
-				external: true,
 			},
 		});
 	}
