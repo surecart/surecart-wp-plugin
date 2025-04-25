@@ -58,7 +58,7 @@ body .elementor-add-new-section .elementor-add-section-area-button {
 	pointer-events: auto;
 }
 
-.sc-elementor-modal-overlay {
+.sc-elementor-modal__overlay {
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -67,7 +67,7 @@ body .elementor-add-new-section .elementor-add-section-area-button {
 	background-color: rgba(0, 0, 0, 0.25);
 }
 
-.sc-elementor-modal-content {
+.sc-elementor-modal__content {
 	box-sizing: border-box;
 	position: absolute;
 	width: var(--sc-dialog-width, 60rem);
@@ -83,16 +83,18 @@ body .elementor-add-new-section .elementor-add-section-area-button {
 	animation: fade-in 0.25s ease;
 }
 
-.sc-elementor-modal-title {
+.sc-elementor-modal__title {
 	text-align: left;
 }
 
-.sc-elementor-modal-header {
+.sc-elementor-modal__header {
 	padding: var(--sc-dialog-body-spacing, 30px);
 	border-bottom: 1px solid var(--sc-color-gray-300, #eee);
+	display: flex;
+	justify-content: space-between;
 }
 
-.sc-elementor-modal-card-container {
+.sc-elementor-modal__card-container {
 	display: flex;
 	padding: var(--sc-dialog-body-spacing, 30px) 0px;
 	gap: var(--sc-spacing-large, 30px);
@@ -101,7 +103,7 @@ body .elementor-add-new-section .elementor-add-section-area-button {
 	align-items: center;
 }
 
-.sc-elementor-modal-card {
+.sc-elementor-modal__card {
 	padding: 0;
 	border: 1px solid var(--sc-color-gray-300, #eee);
 	flex-basis: 45%;
@@ -112,22 +114,21 @@ body .elementor-add-new-section .elementor-add-section-area-button {
 	transition: box-shadow 0.3s ease;
 }
 
-.sc-elementor-modal-card img {
+.sc-elementor-modal__card img {
 	width: 100%;
 	height: 370px;
 	object-fit: cover;
 	border-radius: var(--sc-border-radius-x-small, 4px);
 	margin-bottom: var(--sc-spacing-small, 10px);
-
 	transform: scale(0.9);
 	transition: transform 0.3s ease;
 }
 
-.sc-elementor-modal-card img:hover {
+.sc-elementor-modal__card img:hover {
 	transform: scale(0.95);
 }
 
-.sc-elementor-modal-card h4 {
+.sc-elementor-modal__card-title {
 	font-size: var(--sc-font-size-large, 14px);
 	margin: 0;
 	padding: var(--sc-spacing-small, 15px) var(--sc-spacing-medium, 20px);
@@ -135,10 +136,7 @@ body .elementor-add-new-section .elementor-add-section-area-button {
 	text-align: left;
 }
 
-#sc-elementor-modal-close {
-	position: absolute;
-	top: var(--sc-spacing-medium, 1em);
-	right: var(--sc-spacing-large, 1.5em);
+#sc-elementor-modal-close.sc-elementor-modal__close {
 	background: none;
 	border: none;
 	font-size: var(--sc-font-size-large, 20px);
@@ -146,11 +144,11 @@ body .elementor-add-new-section .elementor-add-section-area-button {
 	cursor: pointer;
 }
 
-#sc-elementor-modal-close:hover {
+#sc-elementor-modal-close.sc-elementor-modal__close:hover {
 	color: var(--sc-color-primary, #01824c);
 }
 
-#sc-elementor-modal-close:focus {
+#sc-elementor-modal-close.sc-elementor-modal__close:focus {
 	outline: 2px solid var(--sc-color-primary, #01824c);
 	outline-offset: 2px;
 }
@@ -184,29 +182,32 @@ body .elementor-add-new-section .elementor-add-section-area-button {
 		padding: 0 10px;
 	}
 
-	.sc-elementor-modal-content {
+	.sc-elementor-modal__content {
 		width: 100%;
 		height: auto;
 		max-height: 90%;
 		padding: var(--sc-dialog-body-spacing, 20px);
 	}
 
-	.sc-elementor-modal-card-container {
+	.sc-elementor-modal__card-container {
 		flex-direction: column;
 		gap: var(--sc-spacing-medium, 20px);
 	}
 
-	.sc-elementor-modal-card {
+	.sc-elementor-modal__header {
+		padding: 20px;
+	}
+
+	.sc-elementor-modal__card {
 		flex-basis: 100%;
+		width: 100%;
 	}
 
-	.sc-elementor-modal-card img {
-		height: 200px;
+	.sc-elementor-modal__card img {
+		height: 100%;
 	}
 
-	#sc-elementor-modal-close {
-		top: 10px;
-		right: 10px;
+	.sc-elementor-modal__close {
 		font-size: var(--sc-font-size-medium, 16px);
 	}
 }

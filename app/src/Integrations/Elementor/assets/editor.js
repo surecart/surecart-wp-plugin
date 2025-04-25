@@ -29,51 +29,25 @@ jQuery(window).ready(function () {
 	});
 
 	/**
-	 * When adding a SureCart Product Widget, replace the default block with the product element.
-	 * This addresses issues with nested widgets in Elementor, ensuring state preservation on reload.
+	 * When adding a SureCart Widgets, remove the default SureCart block and insert the SureCart template.
 	 */
-	elementor.hooks.addAction(
-		'panel/open_editor/widget/surecart-product',
-		function (panel, model, view) {
-			// Remove the default SureCart block by clearing the model.
-			model.destroy();
+	for (const [widgetName, template] of Object.entries(
+		window?.scElementorData?.elementorTemplates
+	)) {
+		elementor.hooks.addAction(
+			'panel/open_editor/widget/' + widgetName,
+			function (panel, model, view) {
+				// Remove the default SureCart block by clearing the model.
+				model.destroy();
 
-			// Clear the preview container if it's empty.
-			maybeClearElementorPreview();
+				// Clear the preview container if it's empty.
+				maybeClearElementorPreview();
 
-			insertSureCartTemplate(
-				window?.scElementorData?.sc_product_template
-			);
-		}
-	);
-
-	// SureCart Product Card Widget.
-	elementor.hooks.addAction(
-		'panel/open_editor/widget/surecart-product-card',
-		function (panel, model, view) {
-			// Remove the default SureCart block by clearing the model.
-			model.destroy();
-
-			// Clear the preview container if it's empty.
-			maybeClearElementorPreview();
-
-			insertSureCartTemplate(
-				window?.scElementorData?.sc_product_card_template
-			);
-		}
-	);
-
-	// SureCart Product Pricing Widget.
-	elementor.hooks.addAction(
-		'panel/open_editor/widget/surecart-product-pricing',
-		function (panel, model, view) {
-			model.destroy();
-
-			insertSureCartTemplate(
-				window?.scElementorData?.sc_product_pricing_template
-			);
-		}
-	);
+				// Insert the SureCart template.
+				insertSureCartTemplate(template);
+			}
+		);
+	}
 
 	/**
 	 * Clears the preview container if its first container element and which is empty.
@@ -135,15 +109,13 @@ jQuery(window).ready(function () {
 			jQuery('#sc-elementor-modal-dialog').removeClass('show').hide();
 		});
 
-		jQuery(document).on('click', '.sc-elementor-modal-card', function () {
+		jQuery(document).on('click', '.sc-elementor-modal__card', function () {
 			jQuery('#sc-elementor-modal-dialog').removeClass('show').fadeOut();
 
-			const selectedOption = jQuery(this).attr('id');
-			const templateName =
-				selectedOption === 'sc-elementor-single-product-template'
-					? window?.scElementorData?.sc_product_template
-					: window?.scElementorData?.sc_product_card_template;
-			insertSureCartTemplate(templateName);
+			const templateKey = jQuery(this).data('template-key');
+			insertSureCartTemplate(
+				window?.scElementorData?.elementorTemplates[templateKey]
+			);
 		});
 	}
 
@@ -170,9 +142,9 @@ jQuery(window).ready(function () {
 	function insertSureCartTemplate(template) {
 		// Generate elements with unique IDs.
 		const elements = [];
-		for (let contentElement of template.elements) {
-			contentElement = generateUniqueIds(contentElement);
-			elements.push(contentElement);
+		for (let element of template.elements) {
+			element = generateUniqueIds(element);
+			elements.push(element);
 		}
 
 		$e.run('document/elements/create', {

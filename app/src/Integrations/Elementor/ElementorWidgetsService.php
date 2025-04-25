@@ -49,10 +49,8 @@ class ElementorWidgetsService {
 			'surecart-elementor-editor',
 			'scElementorData',
 			[
-				'site_url'                    => site_url(),
-				'sc_product_template'         => $this->get_elementor_template_from_file( 'surecart-single-product.json' ),
-				'sc_product_card_template'    => $this->get_elementor_template_from_file( 'surecart-product-card.json' ),
-				'sc_product_pricing_template' => $this->get_elementor_template_from_file( 'surecart-product-pricing.json' ),
+				'site_url'           => site_url(),
+				'elementorTemplates' => $this->get_surecart_elementor_templates(),
 			]
 		);
 	}
@@ -113,6 +111,19 @@ class ElementorWidgetsService {
 
 			$widget_manager->register( new $widget_class_name() );
 		}
+	}
+
+	/**
+	 * Get SureCart Elementor templates.
+	 *
+	 * @return array
+	 */
+	public function get_surecart_elementor_templates(): array {
+		return [
+			'surecart-product'         => $this->get_elementor_template_from_file( 'surecart-single-product.json' ),
+			'surecart-product-card'    => $this->get_elementor_template_from_file( 'surecart-product-card.json' ),
+			'surecart-product-pricing' => $this->get_elementor_template_from_file( 'surecart-product-pricing.json' ),
+		];
 	}
 
 	/**
