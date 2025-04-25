@@ -1,3 +1,7 @@
+<label class="sc-form-label">
+	<?php echo wp_kses_post( $option->name ); ?>
+</label>
+
 <div class="sc-pill-option__wrapper">
 	<?php
 	foreach ( $option->values as $value ) :
