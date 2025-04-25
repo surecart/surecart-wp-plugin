@@ -87,7 +87,7 @@ class LicenseRestServiceProvider extends RestServiceProvider implements RestServ
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function get_item_permissions_check( $request ) {
-		return current_user_can( 'read_sc_license', $request->get_params() );
+		return current_user_can( 'read_sc_license', $request['id'] );
 	}
 
 	/**

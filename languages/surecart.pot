@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-04-17T18:55:31+00:00\n"
+"POT-Creation-Date: 2025-04-24T19:44:02+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.9.0\n"
 
@@ -224,7 +224,7 @@ msgstr ""
 #: subscriptions/show/modules/Details.js:162
 #: Controllers/PaymentMethodController.php:182
 #: Blocks/Payment/edit.js:33
-#: sc-license.js:129
+#: sc-license.js:174
 #: sc-order.js:185
 #: sc-payment.js:66
 msgid "Test Mode"
@@ -335,7 +335,7 @@ msgstr ""
 #: orders/modules/Charges.js:78
 #: orders/modules/Refund/RefundHistory.js:132
 #: settings/connection/IncomingWebhooks.js:141
-#: sc-license.js:139
+#: sc-license.js:184
 #: sc-order.js:185
 msgid "Date"
 msgstr ""
@@ -668,6 +668,7 @@ msgstr ""
 #: settings/tax-override/TaxOverrideRows.js:71
 #: settings/tax-region/RegistrationForm.js:337
 #: upsell-funnels/EditFunnel.js:244
+#: sc-license.js:188
 #: sc-payment-methods-list.js:161
 #: sc-payment-methods-list.js:195
 msgid "Delete"
@@ -1044,8 +1045,8 @@ msgstr ""
 #: licenses/modules/Details/index.js:21
 #: util.js:91
 #: Blocks/Dashboard/CustomerLicenses/edit.js:75
-#: sc-license.js:108
-#: sc-licenses-list.js:81
+#: sc-license.js:153
+#: sc-licenses-list.js:92
 #: sc-subscription-status-badge2.js:54
 msgid "Active"
 msgstr ""
@@ -1056,7 +1057,7 @@ msgstr ""
 #: affiliations/ViewAffiliation.js:213
 #: licenses/modules/Details/index.js:27
 #: util.js:92
-#: sc-license.js:114
+#: sc-license.js:159
 msgid "Inactive"
 msgstr ""
 
@@ -1072,7 +1073,7 @@ msgstr ""
 #: src/Controllers/Admin/Upsells/UpsellsListTable.php:53
 #: coupons/modules/Code.js:119
 #: product-groups/EditProductGroup.js:164
-#: products/EditProduct.js:235
+#: products/EditProduct.js:237
 #: products/modules/Prices/Price/Header.js:241
 #: products/modules/SingleDownload.js:259
 #: upsell-funnels/EditFunnel.js:262
@@ -1524,7 +1525,7 @@ msgstr ""
 #: Controllers/LicenseController.php:69
 #: Controllers/LicenseController.php:79
 #: Controllers/LicenseController.php:131
-#: sc-licenses-list.js:30
+#: sc-licenses-list.js:33
 msgid "Licenses"
 msgstr ""
 
@@ -1563,8 +1564,8 @@ msgstr ""
 #: components/data-tables/purchases-data-table/purchase-item.js:37
 #: licenses/modules/Details/index.js:24
 #: licenses/modules/Purchase.js:71
-#: sc-license.js:111
-#: sc-licenses-list.js:84
+#: sc-license.js:156
+#: sc-licenses-list.js:95
 msgid "Revoked"
 msgstr ""
 
@@ -1573,7 +1574,7 @@ msgstr ""
 #: src/Controllers/Web/BuyPageController.php:56
 #: src/WordPress/PostTypes/ProductPostTypeService.php:406
 #: src/WordPress/PostTypes/ProductPostTypeService.php:1033
-#: products/EditProduct.js:303
+#: products/EditProduct.js:301
 #: components/PriceInfo.js:103
 msgid "Edit Product"
 msgstr ""
@@ -1752,7 +1753,7 @@ msgstr ""
 #: invoices/modules/Prices.js:108
 #: product-collections/components/Products.js:28
 #: product-groups/modules/Products.js:45
-#: products/EditProduct.js:299
+#: products/EditProduct.js:297
 #: settings/advanced/AdvancedSettings.js:462
 #: settings/shipping/profile/Products.js:250
 #: upsell-funnels/modules/Conditions.js:132
@@ -2411,7 +2412,7 @@ msgstr ""
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:178
 #: src/WordPress/Admin/Notices/AdminNoticesService.php:115
 #: src/WordPress/Admin/SSLCheck/AdminSSLCheckService.php:31
-#: src/WordPress/CompatibilityService.php:198
+#: src/WordPress/CompatibilityService.php:213
 #: src/WordPress/HealthService.php:32
 #: src/WordPress/HealthService.php:83
 #: src/WordPress/HealthService.php:92
@@ -6453,11 +6454,11 @@ msgstr ""
 msgid "SureCart is syncing customers in the background. The process may take a little while, so please be patient."
 msgstr ""
 
-#: src/Sync/ProductsSyncService.php:103
+#: src/Sync/ProductsSyncService.php:73
 msgid "SureCart: Getting things ready..."
 msgstr ""
 
-#: src/Sync/ProductsSyncService.php:106
+#: src/Sync/ProductsSyncService.php:76
 msgid "We are getting things ready and optimized in the background. This may take a few minutes."
 msgstr ""
 
@@ -6578,7 +6579,7 @@ msgstr ""
 msgid "Account seeded successfully."
 msgstr ""
 
-#: src/WordPress/CompatibilityService.php:199
+#: src/WordPress/CompatibilityService.php:214
 msgid "<p>The Gutenberg plugin is currently active. SureCart blocks might not perform as expected within the block editor. If you encounter any issues, consider disabling the Gutenberg plugin.<p>"
 msgstr ""
 
@@ -7207,18 +7208,18 @@ msgid "Product scheduled."
 msgstr ""
 
 #: src/WordPress/PostTypes/ProductPostTypeService.php:1047
-#: products/EditProduct.js:188
+#: products/EditProduct.js:185
 #: products/modules/integrations/Integrations.js:43
 msgid "Product updated."
 msgstr ""
 
-#: src/WordPress/PostTypes/ProductPostTypeService.php:1083
+#: src/WordPress/PostTypes/ProductPostTypeService.php:1082
 msgctxt "post"
 msgid "Archived"
 msgstr ""
 
 #. translators: %s: number of posts.
-#: src/WordPress/PostTypes/ProductPostTypeService.php:1092
+#: src/WordPress/PostTypes/ProductPostTypeService.php:1091
 msgid "Archived <span class=\"count\">(%s)</span>"
 msgid_plural "Archived <span class=\"count\">(%s)</span>"
 msgstr[0] ""
@@ -7674,8 +7675,8 @@ msgstr ""
 
 #: admin/notices/webhook-change.php:28
 #: components/data-tables/charges-data-table/ChargeDetails.js:128
-#: products/components/Editor/index.js:147
-#: products/components/Editor/index.js:368
+#: products/components/Editor/index.js:66
+#: products/components/Editor/index.js:266
 #: products/modules/integrations/Integrations.js:91
 msgid "Learn More"
 msgstr ""
@@ -7847,7 +7848,7 @@ msgstr[1] ""
 #: product-collections/modules/DeleteModal.js:76
 #: product-groups/CreateProductGroup.js:80
 #: product-groups/modules/NewProduct.js:78
-#: products/components/Editor/index.js:217
+#: products/components/ConfirmNavigation.js:11
 #: products/components/SelectTemplate/create-modal.js:89
 #: products/components/SelectTemplatePart/create-modal.js:90
 #: products/CreateProduct.js:87
@@ -7899,7 +7900,7 @@ msgstr[1] ""
 #: components/ColorPopup.js:80
 #: controls/AddPriceUI.js:71
 #: formats/AddPriceUI.js:113
-#: sc-license.js:146
+#: sc-license.js:191
 #: sc-password-nag.js:94
 #: sc-payment-methods-list.js:195
 msgid "Cancel"
@@ -8213,9 +8214,10 @@ msgstr ""
 #: sc-fulfillments.js:48
 #: sc-invoices-list.js:60
 #: sc-invoices-list.js:73
-#: sc-license.js:44
-#: sc-license.js:79
-#: sc-licenses-list.js:55
+#: sc-license.js:45
+#: sc-license.js:97
+#: sc-license.js:110
+#: sc-licenses-list.js:66
 #: sc-login-form.js:60
 #: sc-login-provider2.js:74
 #: sc-mollie-add-method.js:63
@@ -8299,8 +8301,8 @@ msgstr ""
 
 #: abandoned-checkouts/components/Link.js:35
 #: licenses/modules/Details/Copy.js:16
-#: sc-license.js:102
-#: sc-licenses-list.js:101
+#: sc-license.js:147
+#: sc-licenses-list.js:112
 msgid "Error copying to clipboard"
 msgstr ""
 
@@ -8310,7 +8312,7 @@ msgstr ""
 
 #: abandoned-checkouts/components/Link.js:52
 #: licenses/modules/Details/Copy.js:10
-#: sc-license.js:139
+#: sc-license.js:184
 msgid "Copied!"
 msgstr ""
 
@@ -8320,7 +8322,7 @@ msgstr ""
 #: products/modules/Prices/Price/CopyInput.js:32
 #: settings/affiliation-protocol/AffiliationProtocolSettings.js:289
 #: settings/display-currency/components/CurrencySwitcherSettings.js:198
-#: sc-license.js:139
+#: sc-license.js:184
 msgid "Copy"
 msgstr ""
 
@@ -10007,7 +10009,7 @@ msgid "Permalink"
 msgstr ""
 
 #: components/Permalink.js:99
-#: products/components/Editor/index.js:240
+#: products/components/Editor/index.js:138
 msgid "Ok"
 msgstr ""
 
@@ -11206,13 +11208,13 @@ msgid "This license has not been activated."
 msgstr ""
 
 #: licenses/modules/Activations/index.js:94
-#: sc-license.js:140
+#: sc-license.js:185
 #: sc-subscription-details2.js:187
 msgid "Activations"
 msgstr ""
 
 #: licenses/modules/Activations/index.js:100
-#: sc-licenses-list.js:124
+#: sc-licenses-list.js:135
 msgid "%1s of %2s Activations Used"
 msgstr ""
 
@@ -11225,7 +11227,7 @@ msgstr ""
 #: licenses/modules/Details/index.js:49
 #: licenses/modules/modals/EditKeyModal.js:104
 #: settings/upgrade/UpgradeSettings.js:65
-#: sc-license.js:139
+#: sc-license.js:184
 msgid "License Key"
 msgstr ""
 
@@ -12216,28 +12218,29 @@ msgstr ""
 msgid "Now"
 msgstr ""
 
-#: products/components/Editor/index.js:133
+#: products/components/ConfirmNavigation.js:10
+msgid "Save and go to editor"
+msgstr ""
+
+#: products/components/ConfirmNavigation.js:19
+msgid "Save your changes before going to the editor?"
+msgstr ""
+
+#: products/components/Editor/index.js:52
 #: Blocks/Column/Inspector/Spacing.js:96
 msgid "Content"
 msgstr ""
 
-#: products/components/Editor/index.js:163
+#: products/components/Editor/index.js:82
+#: products/modules/ProductOptions.js:40
 msgid "Open Content Designer"
 msgstr ""
 
-#: products/components/Editor/index.js:216
-msgid "Save and go to editor"
-msgstr ""
-
-#: products/components/Editor/index.js:225
-msgid "Save your changes before going to the editor?"
-msgstr ""
-
-#: products/components/Editor/index.js:358
+#: products/components/Editor/index.js:256
 msgid "Product Content"
 msgstr ""
 
-#: products/components/Editor/index.js:361
+#: products/components/Editor/index.js:259
 msgid "Product content appears on product pages, usually below the form. You can reposition it by editing the product template and moving the \"Post Content\" or \"WordPress Content\" blocks."
 msgstr ""
 
@@ -12454,19 +12457,19 @@ msgstr ""
 msgid "A name for your product."
 msgstr ""
 
-#: products/EditProduct.js:207
+#: products/EditProduct.js:209
 msgid "Product deleted."
 msgstr ""
 
-#: products/EditProduct.js:327
+#: products/EditProduct.js:325
 msgid "View Product Page"
 msgstr ""
 
-#: products/EditProduct.js:351
+#: products/EditProduct.js:348
 msgid "Save & Publish"
 msgstr ""
 
-#: products/EditProduct.js:352
+#: products/EditProduct.js:349
 msgid "Save Product"
 msgstr ""
 
@@ -13002,6 +13005,10 @@ msgstr ""
 
 #: products/modules/Prices/ShowArchivedToggle.js:20
 msgid "Hide %d Archived Prices"
+msgstr ""
+
+#: products/modules/ProductOptions.js:23
+msgid "Looking for additional product options?"
 msgstr ""
 
 #: products/modules/SearchEngine.js:22
@@ -16781,7 +16788,7 @@ msgid "Update Billing Details"
 msgstr ""
 
 #: Controllers/DownloadController.php:157
-#: sc-licenses-list.js:129
+#: sc-licenses-list.js:140
 msgid "License Keys"
 msgstr ""
 
@@ -17761,7 +17768,7 @@ msgstr ""
 #: Blocks/Dashboard/OrderDownloads/edit.js:41
 #: sc-charges-list.js:125
 #: sc-invoices-list.js:147
-#: sc-licenses-list.js:129
+#: sc-licenses-list.js:140
 #: sc-orders-list.js:155
 #: sc-purchase-downloads-list2.js:69
 #: sc-subscriptions-list.js:140
@@ -17785,7 +17792,7 @@ msgid "1 of 2 Activations Used"
 msgstr ""
 
 #: Blocks/Dashboard/CustomerLicenses/edit.js:115
-#: sc-licenses-list.js:87
+#: sc-licenses-list.js:98
 msgid "Not Activated"
 msgstr ""
 
@@ -23254,31 +23261,31 @@ msgstr ""
 msgid "View all %s"
 msgstr ""
 
-#: sc-license.js:122
+#: sc-license.js:167
 msgid "License not found."
 msgstr ""
 
-#: sc-license.js:139
+#: sc-license.js:184
 msgid "License Status"
 msgstr ""
 
-#: sc-license.js:139
+#: sc-license.js:184
 msgid "Activations Count"
 msgstr ""
 
-#: sc-license.js:143
+#: sc-license.js:188
 msgid "No activations present."
 msgstr ""
 
-#: sc-license.js:146
+#: sc-license.js:191
 msgid "Delete Activation"
 msgstr ""
 
-#: sc-license.js:146
+#: sc-license.js:191
 msgid "Are you sure you want to delete activation?"
 msgstr ""
 
-#: sc-licenses-list.js:108
+#: sc-licenses-list.js:119
 msgid "You don't have any licenses."
 msgstr ""
 

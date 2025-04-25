@@ -249,28 +249,7 @@ class ProductsController extends AdminController {
 			99
 		);
 
-		return '<div id="app"></div><div id="metaboxes" class="hidden">' . $this->renderMetaBoxes( $product ) . '</div>';
-	}
-
-	/**
-	 * Render meta boxes.
-	 *
-	 * @param \SureCart\Models\Product|null $product Product.
-	 */
-	public function renderMetaBoxes( $product ) {
-		if ( empty( $product ) || empty( $product->post ) ) {
-			return;
-		}
-
-		// fake the global post for metaboxes.
-		global $post;
-		// phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
-		$post = $product->post;
-
-		\SureCart::metaboxes()->register();
-		ob_start();
-		\SureCart::metaboxes()->render();
-		return ob_get_clean();
+		return '<div id="app"></div>';
 	}
 
 	/**

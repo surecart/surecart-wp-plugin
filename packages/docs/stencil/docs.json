@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-04-17T18:54:25",
+  "timestamp": "2025-04-24T19:42:46",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.18.3",
@@ -18523,6 +18523,27 @@
           ],
           "optional": false,
           "required": false
+        },
+        {
+          "name": "query",
+          "type": "{ page: number; per_page: number; }",
+          "complexType": {
+            "original": "{\n    page: number;\n    per_page: number;\n  }",
+            "resolved": "{ page: number; per_page: number; }",
+            "references": {}
+          },
+          "mutable": true,
+          "reflectToAttr": false,
+          "docs": "Query to fetch Activations",
+          "docsTags": [],
+          "default": "{\n    page: 1,\n    per_page: 10,\n  }",
+          "values": [
+            {
+              "type": "{ page: number; per_page: number; }"
+            }
+          ],
+          "optional": false,
+          "required": false
         }
       ],
       "methods": [],
@@ -18544,6 +18565,7 @@
         "sc-input",
         "sc-button",
         "sc-block-ui",
+        "sc-pagination",
         "sc-dialog",
         "sc-icon",
         "sc-spacing"
@@ -18561,6 +18583,7 @@
           "sc-input",
           "sc-button",
           "sc-block-ui",
+          "sc-pagination",
           "sc-dialog",
           "sc-icon",
           "sc-spacing"
@@ -18585,6 +18608,12 @@
         ],
         "sc-block-ui": [
           "sc-spinner"
+        ],
+        "sc-pagination": [
+          "sc-flex",
+          "sc-button",
+          "sc-visually-hidden",
+          "sc-icon"
         ],
         "sc-dialog": [
           "sc-button",
@@ -18736,7 +18765,8 @@
         "sc-empty",
         "sc-icon",
         "sc-dashboard-module",
-        "sc-button"
+        "sc-button",
+        "sc-pagination"
       ],
       "dependencyGraph": {
         "sc-licenses-list": [
@@ -18749,7 +18779,8 @@
           "sc-empty",
           "sc-icon",
           "sc-dashboard-module",
-          "sc-button"
+          "sc-button",
+          "sc-pagination"
         ],
         "sc-empty": [
           "sc-icon"
@@ -18762,6 +18793,12 @@
         ],
         "sc-button": [
           "sc-spinner"
+        ],
+        "sc-pagination": [
+          "sc-flex",
+          "sc-button",
+          "sc-visually-hidden",
+          "sc-icon"
         ]
       }
     },
@@ -24858,6 +24895,8 @@
         "sc-charges-list",
         "sc-dashboard-downloads-list",
         "sc-invoices-list",
+        "sc-license",
+        "sc-licenses-list",
         "sc-orders-list",
         "sc-product-item-list",
         "sc-subscriptions-list"
@@ -24885,6 +24924,12 @@
           "sc-pagination"
         ],
         "sc-invoices-list": [
+          "sc-pagination"
+        ],
+        "sc-license": [
+          "sc-pagination"
+        ],
+        "sc-licenses-list": [
           "sc-pagination"
         ],
         "sc-orders-list": [

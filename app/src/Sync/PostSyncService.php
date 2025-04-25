@@ -176,8 +176,8 @@ class PostSyncService {
 			'post_excerpt'      => $model->description ?? '',
 			'post_date'         => ( new \DateTime() )->setTimestamp( $model->cataloged_at )->setTimezone( new \DateTimeZone( wp_timezone_string() ) )->format( 'Y-m-d H:i:s' ),
 			'post_date_gmt'     => date_i18n( 'Y-m-d H:i:s', $model->cataloged_at, true ),
-			'post_modified'     => ( new \DateTime() )->setTimestamp( $model->updated_at )->setTimezone( new \DateTimeZone( wp_timezone_string() ) )->format( 'Y-m-d H:i:s' ),
-			'post_modified_gmt' => date_i18n( 'Y-m-d H:i:s', $model->updated_at, true ),
+			'post_modified'     => ( new \DateTime() )->setTimestamp( $model->updated_at ?? $model->created_at ?? time() )->setTimezone( new \DateTimeZone( wp_timezone_string() ) )->format( 'Y-m-d H:i:s' ),
+			'post_modified_gmt' => date_i18n( 'Y-m-d H:i:s', $model->updated_at ?? $model->created_at ?? time(), true ),
 			'post_status'       => $this->getPostStatusFromModel( $model ),
 			'meta_input'        => array_merge(
 				$metadata,
