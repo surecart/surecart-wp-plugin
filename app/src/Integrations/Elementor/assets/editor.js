@@ -104,10 +104,8 @@ jQuery(window).ready(function () {
 		if (!showSureCartIcon) return;
 
 		const templateAddSection = jQuery('#tmpl-elementor-add-section');
-		console.log('templateAddSection', templateAddSection);
 		if (templateAddSection?.length > 0) {
 			let oldTemplateButton = templateAddSection.html();
-			console.log('oldTemplateButton', oldTemplateButton);
 			if (
 				!oldTemplateButton.includes(
 					'elementor-surecart-template-button'
