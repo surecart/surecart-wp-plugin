@@ -32,7 +32,7 @@ jQuery(window).ready(function () {
 	 * When adding a SureCart Widgets, remove the default SureCart block and insert the SureCart template.
 	 */
 	for (const [widgetName, template] of Object.entries(
-		window?.scElementorData?.elementorTemplates
+		window?.scElementorData?.templates
 	)) {
 		elementor.hooks.addAction(
 			'panel/open_editor/widget/' + widgetName,
@@ -111,10 +111,10 @@ jQuery(window).ready(function () {
 
 		jQuery(document).on('click', '.sc-elementor-modal__card', function () {
 			jQuery('#sc-elementor-modal-dialog').removeClass('show').fadeOut();
-
 			const templateKey = jQuery(this).data('template-key');
+
 			insertSureCartTemplate(
-				window?.scElementorData?.elementorTemplates[templateKey]
+				window?.scElementorData?.templates?.[templateKey]
 			);
 		});
 	}

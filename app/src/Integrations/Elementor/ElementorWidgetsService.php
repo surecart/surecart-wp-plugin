@@ -49,8 +49,8 @@ class ElementorWidgetsService {
 			'surecart-elementor-editor',
 			'scElementorData',
 			[
-				'site_url'           => site_url(),
-				'elementorTemplates' => $this->get_surecart_elementor_templates(),
+				'site_url'  => site_url(),
+				'templates' => $this->get_surecart_elementor_templates(),
 			]
 		);
 	}
