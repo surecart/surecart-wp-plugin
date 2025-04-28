@@ -30,6 +30,7 @@ export default ({
 	onArchive,
 	collapsible,
 	onDelete,
+	onDuplicate,
 	loading,
 }) => {
 	const [copyDialog, setCopyDialog] = useState(false);
@@ -181,7 +182,7 @@ export default ({
 	};
 
 	const renderDropdown = () => {
-		if (!onArchive && !onDelete) {
+		if (!onArchive && !onDelete && !onDuplicate) {
 			return null;
 		}
 
@@ -226,6 +227,18 @@ export default ({
 								name="trash"
 							/>
 							{__('Delete', 'surecart')}
+						</ScMenuItem>
+					)}
+					{!!onDuplicate && (
+						<ScMenuItem onClick={onDuplicate}>
+							<ScIcon
+								slot="prefix"
+								style={{
+									opacity: 0.5,
+								}}
+								name="copy"
+							/>
+							{__('Duplicate', 'surecart')}
 						</ScMenuItem>
 					)}
 				</ScMenu>

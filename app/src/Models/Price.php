@@ -4,12 +4,14 @@ namespace SureCart\Models;
 
 use SureCart\Models\Traits\HasProduct;
 use SureCart\Support\Currency;
+use SureCart\Models\Traits\CanDuplicate;
 
 /**
  * Price model
  */
 class Price extends Model {
 	use HasProduct;
+	use CanDuplicate;
 
 	/**
 	 * Rest API endpoint

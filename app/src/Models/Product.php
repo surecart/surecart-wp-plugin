@@ -6,6 +6,7 @@ use SureCart\Models\Traits\HasDates;
 use SureCart\Models\Traits\HasImageSizes;
 use SureCart\Models\Traits\HasPurchases;
 use SureCart\Models\Traits\HasCommissionStructure;
+use SureCart\Models\Traits\CanDuplicate;
 use SureCart\Support\Contracts\GalleryItem;
 use SureCart\Support\Contracts\PageModel;
 use SureCart\Support\Currency;
@@ -19,6 +20,7 @@ class Product extends Model implements PageModel {
 	use HasPurchases;
 	use HasCommissionStructure;
 	use HasDates;
+	use CanDuplicate;
 
 	/**
 	 * These always need to be fetched during create/update in order to sync with post model.

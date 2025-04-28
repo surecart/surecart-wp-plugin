@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { Global, css, jsx } from '@emotion/core';
 import { ScButton, ScTag } from '@surecart/components-react';
-import { external } from '@wordpress/icons';
+import { addCard, external } from '@wordpress/icons';
 import { Button } from '@wordpress/components';
 import { store as coreStore } from '@wordpress/core-data';
 import { select, useDispatch, useSelect } from '@wordpress/data';
@@ -9,7 +9,7 @@ import { Fragment, useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
 import { getQueryArg, addQueryArgs } from '@wordpress/url';
-import { applyFilters, doAction } from '@wordpress/hooks';
+import { doAction } from '@wordpress/hooks';
 import apiFetch from '@wordpress/api-fetch';
 
 import Error from '../components/Error';
@@ -39,6 +39,7 @@ import Taxonomies from './modules/Taxonomies';
 import Editor from './components/Editor';
 import ConfirmNavigation from './components/ConfirmNavigation';
 import ProductOptions from './modules/ProductOptions';
+import DuplicateModel from './components/DuplicateModel';
 
 export default ({ id, setBrowserURL }) => {
 	const [error, setError] = useState(null);
@@ -318,6 +319,24 @@ export default ({ id, setBrowserURL }) => {
 							onDelete={onDeleteProduct}
 							onToggleArchive={onToggleArchiveProduct}
 						/>
+
+						<DuplicateModel
+							type="product"
+							id={id}
+							onConfirm={hasDirtyRecords ? onSubmit : null}
+							onSuccess={setConfirmUrl}
+						>
+							{({ onClick }) => (
+								<Button
+									icon={addCard}
+									label={__('Duplicate Product', 'surecart')}
+									showTooltip={true}
+									size="compact"
+									onClick={onClick}
+									target="_blank"
+								/>
+							)}
+						</DuplicateModel>
 
 						{!!product?.permalink && (
 							<Button
