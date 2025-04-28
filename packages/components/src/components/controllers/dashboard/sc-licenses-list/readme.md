@@ -37,6 +37,7 @@
 - [sc-icon](../../../ui/icon)
 - [sc-dashboard-module](../../../ui/dashboard-module)
 - [sc-button](../../../ui/button)
+- [sc-pagination](../../../ui/pagination)
 
 ### Graph
 ```mermaid
@@ -51,10 +52,15 @@ graph TD;
   sc-licenses-list --> sc-icon
   sc-licenses-list --> sc-dashboard-module
   sc-licenses-list --> sc-button
+  sc-licenses-list --> sc-pagination
   sc-empty --> sc-icon
   sc-dashboard-module --> sc-alert
   sc-alert --> sc-icon
   sc-button --> sc-spinner
+  sc-pagination --> sc-flex
+  sc-pagination --> sc-button
+  sc-pagination --> sc-visually-hidden
+  sc-pagination --> sc-icon
   style sc-licenses-list fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
