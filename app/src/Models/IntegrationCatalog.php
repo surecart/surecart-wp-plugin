@@ -104,7 +104,7 @@ class IntegrationCatalog extends ExternalApiModel {
 	 * @return bool
 	 */
 	public function isPieCalendarProPluginActive() {
-		if ( ! class_exists( 'Piecal\Utils\RRuleUtil' ) ) {
+		if ( ! function_exists( 'piecal_pro_classic_metabox' ) ) {
 			return false;
 		}
 
