@@ -266,7 +266,8 @@ export default ({ price, product }) => {
 							)}
 
 							{!product?.variants?.length &&
-								!product?.variants?.data?.length && (
+								!product?.variants?.data?.length &&
+								!currentPrice?.ad_hoc && (
 									<Swap
 										currentPrice={currentPrice}
 										updateSwap={editSwap}

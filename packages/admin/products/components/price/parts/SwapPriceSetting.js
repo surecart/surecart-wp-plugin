@@ -29,7 +29,7 @@ export default ({
 
 	const renderPriorityProductPrice = () => {
 		const otherProductPrices = currentProduct?.active_prices?.filter(
-			(priceItem) => priceItem.id !== price?.id
+			(priceItem) => priceItem.id !== price?.id && !priceItem.ad_hoc
 		);
 
 		if (!otherProductPrices?.length) {
@@ -145,6 +145,7 @@ export default ({
 					}}
 					includeVariants={false}
 					variable={false}
+					ad_hoc={false}
 					placement="top-start"
 					position="top-left"
 					exclude={[price?.id]}

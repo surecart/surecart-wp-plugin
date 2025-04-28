@@ -67,6 +67,22 @@ class LineItem extends Model {
 		}
 		// get the price to check if it has variants.
 		$price = $swap->swap_price ?? $this->price;
+
+		// Sanity check.
+		if ( empty( $price ) || empty( $price->id ) ) {
+			return false;
+		}
+
+		// cannot swap ad hoc prices.
+		if ( $price->ad_hoc ) {
+			return false;
+		}
+
+		// Sanity check.
+		if ( empty( $price->product ) || empty( $price->product->variants ) ) {
+			return false;
+		}
+
 		// if the price has variants, we can't swap.
 		return 0 === $price->product->variants->pagination->count;
 	}
