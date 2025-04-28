@@ -126,7 +126,10 @@ export class ScAddressSuggestions {
   async fetchPlaceDetails(placeId: string) {
     try {
       const { updatedAddress, updatedRegions } = await fetchPlaceDetails(placeId, this.addressSuggestions, this.address, this.regions);
-      this.address = updatedAddress;
+      this.scChangeAddress.emit({
+        ...(this.address as Address),
+        ...updatedAddress,
+      });
       this.regions = updatedRegions;
       this.showSuggestions = false;
       this.scShowAddressFields.emit();
@@ -173,7 +176,9 @@ export class ScAddressSuggestions {
     }
   }
 
-  hasAnyAddressField = !!this.address?.line_1 || !!this.address?.line_2 || !!this.address?.city || !!this.address?.state || !!this.address?.postal_code;
+  hasAnyAddressField() {
+    return !!this.address?.line_1 || !!this.address?.line_2 || !!this.address?.city || !!this.address?.state || !!this.address?.postal_code;
+  }
 
   manualAddress() {
     this.showSuggestions = false;
@@ -295,7 +300,7 @@ export class ScAddressSuggestions {
           ></li>
         ))}
 
-        {!this.hasAnyAddressField && (
+        {!this.hasAnyAddressField() && (
           <li
             class="sc-address__suggestions--item sc-address__suggestions--item--no-select sc-address__suggestions--item--manually"
             part="suggestion-item manually"
