@@ -38,12 +38,12 @@ class IntegrationCatalog extends ExternalApiModel {
 	 * @return bool
 	 */
 	public function getIsPluginActiveAttribute() {
-		if ( empty( $this->acf['plugin_file'] ) ) {
-			return false;
+		if ( 'pie-calendar' === $this->slug ) { // Since Pie Calendar Free & Pro plugin had same plugin file name we need to check if the pro plugin is active explicitly.
+			return $this->isPieCalendarProPluginActive();
 		}
 
-		if ( 'pie-calendar/plugin.php' === $this->acf['plugin_file'] ) { // Since Pie Calendar Free & Pro plugin had same plugin file name we need to check if the pro plugin is active explicitly.
-			return $this->isPieCalendarProPluginActive();
+		if ( empty( $this->acf['plugin_file'] ) ) {
+			return false;
 		}
 
 		return is_plugin_active( $this->acf['plugin_file'] );
@@ -104,6 +104,10 @@ class IntegrationCatalog extends ExternalApiModel {
 	 * @return bool
 	 */
 	public function isPieCalendarProPluginActive() {
-		return class_exists( 'Piecal\Utils\RRuleUtil' );
+		if ( ! class_exists( 'Piecal\Utils\RRuleUtil' ) ) {
+			return false;
+		}
+
+		return true;
 	}
 }
