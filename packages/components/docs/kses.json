@@ -20,7 +20,6 @@
     "address": true,
     "disabled": true,
     "input-props": true,
-    "is-manually": true,
     "label": true,
     "names": true,
     "regions": true,

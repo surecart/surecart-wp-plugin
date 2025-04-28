@@ -60,18 +60,26 @@ export namespace Components {
     }
     interface ScAddressSuggestions {
         "address": Partial<Address>;
+        /**
+          * If the address input is disabled
+         */
         "disabled": boolean;
+        /**
+          * Props for the input element
+         */
         "inputProps": any;
         /**
-          * Is manually *
+          * The label for the address input
          */
-        "isManually": boolean;
         "label": string;
         "names": Partial<Address>;
         /**
           * Holds the regions for a given country.
          */
         "regions": Array<{ value: string; label: string }>;
+        /**
+          * If the address is required
+         */
         "required": boolean;
         /**
           * Show address suggestions
@@ -7034,12 +7042,17 @@ declare namespace LocalJSX {
     }
     interface ScAddressSuggestions {
         "address"?: Partial<Address>;
+        /**
+          * If the address input is disabled
+         */
         "disabled"?: boolean;
+        /**
+          * Props for the input element
+         */
         "inputProps"?: any;
         /**
-          * Is manually *
+          * The label for the address input
          */
-        "isManually"?: boolean;
         "label"?: string;
         "names"?: Partial<Address>;
         /**
@@ -7070,6 +7083,9 @@ declare namespace LocalJSX {
           * Holds the regions for a given country.
          */
         "regions"?: Array<{ value: string; label: string }>;
+        /**
+          * If the address is required
+         */
         "required"?: boolean;
         /**
           * Show address suggestions

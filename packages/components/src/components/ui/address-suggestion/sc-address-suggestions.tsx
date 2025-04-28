@@ -39,19 +39,23 @@ export class ScAddressSuggestions {
     state: 'shipping_state',
   };
 
+  /** The label for the address input */
   @Prop() label: string = __('Address', 'surecart');
 
+  /** Props for the input element */
   @Prop() inputProps: any = {};
+
+  /** If the address input is disabled */
   @Prop() disabled: boolean = false;
+
+  /** If the address is required */
   @Prop() required: boolean = true;
 
+  /** Holds the address line 1 value */
   @State() value: string = '';
 
   /** Holds the regions for a given country. */
   @Prop({ mutable: true }) regions: Array<{ value: string; label: string }> = [];
-
-  /** Is manually **/
-  @Prop() isManually: boolean = false;
 
   /** Address suggestions */
   @State() addressSuggestions: Array<AddressSuggestion> = [];
@@ -168,6 +172,8 @@ export class ScAddressSuggestions {
         break;
     }
   }
+
+  hasAnyAddressField = !!this.address?.line_1 || !!this.address?.line_2 || !!this.address?.city || !!this.address?.state || !!this.address?.postal_code;
 
   manualAddress() {
     this.showSuggestions = false;
@@ -289,7 +295,7 @@ export class ScAddressSuggestions {
           ></li>
         ))}
 
-        {this.isManually && (
+        {!this.hasAnyAddressField && (
           <li
             class="sc-address__suggestions--item sc-address__suggestions--item--no-select sc-address__suggestions--item--manually"
             part="suggestion-item manually"
