@@ -12,8 +12,6 @@ import PluginActivationButton from './PluginActivationButton';
 import Notifications from '../../components/Notifications';
 
 const ActivateButton = ({ record, onActivated }) => {
-	console.log('ActivateButton');
-
 	if (record?.plugin_slug && record?.plugin_file) {
 		return (
 			<PluginActivationButton
@@ -56,8 +54,6 @@ const ActivateButton = ({ record, onActivated }) => {
 };
 
 const ActivatedButton = ({ record }) => {
-	console.log('ActivatedButton');
-
 	if (record?.plugin_slug && record?.plugin_file) {
 		return (
 			<PluginActivationButton
@@ -116,7 +112,6 @@ export default ({ id }) => {
 	}
 
 	const showDetails = !(IntegrationComponent && record?.is_enabled);
-	console.log('record?.is_enabled', record?.is_enabled);
 
 	return (
 		<div
