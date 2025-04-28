@@ -18,6 +18,9 @@ class HelpWidgetServiceProvider implements ServiceProviderInterface {
 		$container['surecart.help_widget'] = function () {
 			return new HelpWidget();
 		};
+
+		$app = $container[ SURECART_APPLICATION_KEY ];
+		$app->alias( 'helpWidget', 'surecart.help_widget' );
 	}
 
 	/**

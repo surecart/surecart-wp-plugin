@@ -78,4 +78,8 @@
 		<sc-icon style="font-size: 18px; width: 18px; stroke-width: 4; opacity: 0.7" name="sliders" slot="prefix"></sc-icon>
 		<?php esc_html_e( 'Advanced', 'surecart' ); ?>
 	</sc-tab>
+
+	<div style="padding: var(--sc-spacing-small); position: sticky; top: 120px;">
+		<?php \SureCart::helpWidget()->renderChecklist(); ?>
+	</div>
 </div>
