@@ -143,8 +143,11 @@ export class ScAddressSuggestions {
   handleInputChange(e: any) {
     this.value = e.target?.value;
     this.showSuggestions = true;
-
     this.scChange.emit();
+
+    if (!!this.address?.country && !!e.target?.value) {
+      this.debouncedFetchAddressSuggestions(e.target?.value);
+    }
   }
 
   handleKeyDown(event: KeyboardEvent) {
