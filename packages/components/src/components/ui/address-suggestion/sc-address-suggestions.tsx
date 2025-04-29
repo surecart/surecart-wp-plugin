@@ -52,7 +52,7 @@ export class ScAddressSuggestions {
   @Prop() required: boolean = true;
 
   /** Holds the address line 1 value */
-  @State() value: string = '';
+  @State() value: string = this.address?.line_1 || '';
 
   /** Holds the regions for a given country. */
   @Prop({ mutable: true }) regions: Array<{ value: string; label: string }> = [];
@@ -109,6 +109,8 @@ export class ScAddressSuggestions {
   handleAddressChange() {
     if (!this.address?.country) return;
     this.value = this.address.line_1;
+    this.toggleAddressInputs();
+
     if (!!this.address.line_1 && this.showSuggestions) {
       this.debouncedFetchAddressSuggestions(this.address.line_1);
     }
@@ -223,13 +225,7 @@ export class ScAddressSuggestions {
 
   componentWillLoad() {
     this.handleAddressChange();
-
-    // On load, if google map api key is set, show the address fields.
-    if (!!window?.scData?.google_map_api_key && !this.address?.line_1) {
-      this.scHideAddressFields.emit();
-    } else {
-      this.scShowAddressFields.emit();
-    }
+    this.toggleAddressInputs();
 
     document.addEventListener('mousedown', evt => this.handleOutsideClick(evt));
   }
@@ -241,6 +237,14 @@ export class ScAddressSuggestions {
   disconnectedCallback() {
     this.el.removeEventListener('keydown', this.handleKeyDown.bind(this));
     this.debouncedFetchAddressSuggestions.cancel();
+  }
+
+  toggleAddressInputs() {
+    if (!!window?.scData?.google_map_api_key && !this.address?.line_1) {
+      this.scHideAddressFields.emit();
+    } else {
+      this.scShowAddressFields.emit();
+    }
   }
 
   renderAddressSuggestions() {
