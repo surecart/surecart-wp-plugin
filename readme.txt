@@ -305,6 +305,15 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 
 == Changelog ==
 
+= 3.8.0 - April 30th, 2025 =
+- New: "Dropdown" variant selector type.
+- New: Ability to resend order confirmation and invoice emails.
+- Improvement: Improve create/edit price UI.
+- Improvement: Improve checkout line items design.
+- Improvement: Add Latepoint and Pie Calendar to integrations list.
+- Improvement: Allow conditional block in checkout totals.
+- Fix: Issue with some currencies not formatting correctly if PHP intl extension is not available.
+
 = 3.7.3 - April 24th, 2025 =
 - Fix: Issue with Rank Math SEO plugin appending selected currency to sitemaps.
 - Fix: Issue with missing pagination on license activations and licenses list (if more than 20).
