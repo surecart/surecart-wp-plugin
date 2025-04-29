@@ -217,9 +217,12 @@
 }
 
 sc-quantity-select::part(base) {
-  border: none;
   box-shadow: none;
   background-color: transparent;
+}
+
+sc-quantity-select::part(base):not(:focus-within) {
+  border-color: transparent;
 }
 
 sc-quantity-select::part(input),
