@@ -12,7 +12,7 @@ import OneTime from '../../../components/price/OneTime';
 import PriceName from '../../../components/price/parts/PriceName';
 import Subscription from '../../../components/price/Subscription';
 import Error from '../../../../components/Error';
-import Swap from '../../../components/price/parts/Swap';
+// import Swap from '../../../components/price/parts/Swap';
 import Advanced from '../../../components/price/parts/Advanced';
 import PaymentType from '../../../components/price/parts/PaymentType';
 
