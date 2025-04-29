@@ -159,6 +159,7 @@ export interface VariantOption {
   name: string;
   position: number;
   product: Product | string;
+  display_type: 'dropdown' | 'pills';
   updated_at: number;
   created_at: number;
   label: string;
