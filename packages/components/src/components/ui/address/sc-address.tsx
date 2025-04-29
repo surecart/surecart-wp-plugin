@@ -107,8 +107,8 @@ export class ScAddress {
   handleAddressChange() {
     if (!this.address?.country) return;
     this.setRegions();
-    this.showPostal = hasPostal(this.address.country);
-    this.showCity = hasCity(this.address.country);
+    this.showPostal = !window?.scData?.google_map_api_key ? hasPostal(this.address.country) : this.showPostal;
+    this.showCity = !window?.scData?.google_map_api_key ? hasCity(this.address.country) : this.showCity;
     this.scChangeAddress.emit(this.address);
     this.scInputAddress.emit(this.address);
   }
