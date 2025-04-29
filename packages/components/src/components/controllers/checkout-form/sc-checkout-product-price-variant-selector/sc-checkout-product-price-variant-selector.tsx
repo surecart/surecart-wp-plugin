@@ -180,7 +180,14 @@ export class ScProductCheckoutSelectVariantOption {
     return this.product?.variants?.data?.length > 0;
   }
 
+  isProductInCheckout() {
+    return (checkoutState.checkout?.line_items?.data || []).some(lineItem => ((lineItem.price as Price)?.product as Product)?.id === this.product?.id);
+  }
+
   renderDropdown({ name, values, index }) {
+    if (!this.isProductInCheckout()) {
+      return null;
+    }
     return (
       <div class="sc-select-option__wrapper">
         <label class="sc-form-label">{name}</label>
@@ -220,6 +227,9 @@ export class ScProductCheckoutSelectVariantOption {
   }
 
   renderPills({ name, values, index }) {
+    if (!this.isProductInCheckout()) {
+      return null;
+    }
     return (
       <sc-form-control label={name}>
         <div class="sc-checkout-product-price-variant-selector__pills-wrapper">
