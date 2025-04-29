@@ -8,10 +8,9 @@ import { debounce } from 'lodash';
 /**
  * Internal dependencies.
  */
-import { Address, AddressSuggestion, GoogleMapPlace } from '../../../types';
+import { Address, AddressSuggestion } from '../../../types';
 import { createErrorNotice } from '@store/notices/mutations';
-import { getCountryRegions } from 'src/functions/address-settings';
-import { getAddressLabels, transformPlaceDetails } from './utils/address-transformer';
+import { highlightMatch, updateFocus, fetchAddressSuggestions, fetchPlaceDetails } from './utils/suggestion-utils';
 
 @Component({
   tag: 'sc-address-suggestions',
@@ -30,14 +29,33 @@ export class ScAddressSuggestions {
     state: null,
   };
 
+  @Prop() names: Partial<Address> = {
+    name: 'shipping_name',
+    country: 'shipping_country',
+    city: 'shipping_city',
+    line_1: 'shipping_line_1',
+    line_2: 'shipping_line_2',
+    postal_code: 'shipping_postal_code',
+    state: 'shipping_state',
+  };
+
+  /** The label for the address input */
+  @Prop() label: string = __('Address', 'surecart');
+
+  /** Props for the input element */
+  @Prop() inputProps: any = {};
+
+  /** If the address input is disabled */
+  @Prop() disabled: boolean = false;
+
+  /** If the address is required */
+  @Prop() required: boolean = true;
+
+  /** Holds the address line 1 value */
+  @State() value: string = '';
+
   /** Holds the regions for a given country. */
   @Prop({ mutable: true }) regions: Array<{ value: string; label: string }> = [];
-
-  /** Address line 1 */
-  @Prop() addressLine1: string = '';
-
-  /** Address line 2 */
-  @Prop() isManually: boolean = false;
 
   /** Address suggestions */
   @State() addressSuggestions: Array<AddressSuggestion> = [];
@@ -54,15 +72,32 @@ export class ScAddressSuggestions {
   /** Event to show address fields manually */
   @Event() scShowAddressFields: EventEmitter<void>;
 
+  /** Event to hide address fields */
+  @Event() scHideAddressFields: EventEmitter<void>;
+
+  /** Event to update address */
+  @Event() scChange: EventEmitter<void>;
+
+  /** On input change */
+  @Event() scInput: EventEmitter<void>;
+
   /** Focused index for keyboard navigation */
   @State() focusedIndex: number = -1;
 
-  // Use Lodash debounce for fetchAddressSuggestions
-  debouncedFetchAddressSuggestions = debounce((input: string) => {
-    this.fetchAddressSuggestions(input);
-  }, 100);
+  // Use Lodash debounce for fetchAddressSuggestions.
+  debouncedFetchAddressSuggestions = debounce(async (input: string) => {
+    try {
+      this.addressSuggestions = await fetchAddressSuggestions(input, this.address?.country, this.regions);
+    } catch (error) {
+      createErrorNotice({
+        message: sprintf(__('Google Map Error: %s', 'surecart'), error.message),
+      });
+      this.showSuggestions = false;
+      this.addressSuggestions = [];
+    }
+  }, 50);
 
-  @Watch('addressLine1')
+  @Watch('value')
   handleAddressLine1Change(newValue: string) {
     if (!this.address?.country) return;
     if (!!newValue && this.showSuggestions) {
@@ -70,10 +105,10 @@ export class ScAddressSuggestions {
     }
   }
 
-  // Modify handleAddressChange to use the debounced function.
   @Watch('address')
   handleAddressChange() {
     if (!this.address?.country) return;
+    this.value = this.address.line_1;
     if (!!this.address.line_1 && this.showSuggestions) {
       this.debouncedFetchAddressSuggestions(this.address.line_1);
     }
@@ -88,72 +123,31 @@ export class ScAddressSuggestions {
     }
   }
 
-  async fetchAddressSuggestions(input: string) {
-    const response = await fetch('https://places.googleapis.com/v1/places:searchText', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Goog-Api-Key': window?.scData?.google_map_api_key,
-        'X-Goog-FieldMask': 'places.id,places.displayName,places.types,places.primaryType,places.primaryTypeDisplayName,places.addressComponents',
-      },
-      body: JSON.stringify({
-        textQuery: input,
-        pageSize: 5,
-        regionCode: this.address?.country,
-      }),
-    });
-
-    const addressResponse = await response.json();
-
-    // If some error occurred, hide the suggestions and show error notice.
-    if (!!addressResponse?.error?.message) {
-      createErrorNotice({
-        message: sprintf(__('Google Map Error: %s', 'surecart'), addressResponse?.error?.message),
+  async fetchPlaceDetails(placeId: string) {
+    try {
+      const { updatedAddress, updatedRegions } = await fetchPlaceDetails(placeId, this.addressSuggestions, this.address, this.regions);
+      this.scChangeAddress.emit({
+        ...(this.address as Address),
+        ...updatedAddress,
       });
+      this.regions = updatedRegions;
       this.showSuggestions = false;
-      this.addressSuggestions = [];
-      return;
+      this.scShowAddressFields.emit();
+    } catch (error) {
+      createErrorNotice({
+        message: sprintf(__('Google Map Error: %s', 'surecart'), error.message),
+      });
     }
-
-    // Map the address suggestions to a more readable format.
-    this.addressSuggestions = (addressResponse?.places || [])?.map((place: GoogleMapPlace) => {
-      const { city, state, country } = getAddressLabels(place?.addressComponents, this.regions);
-
-      return {
-        displayName: place?.displayName?.text ?? input,
-        fullDisplayName: [place?.displayName?.text ?? input, city, state, country].filter(Boolean).join(', '),
-        placeId: place?.id,
-        addressComponents: place?.addressComponents || null,
-      };
-    }) as Array<AddressSuggestion>;
   }
 
-  async fetchPlaceDetails(placeId: string) {
-    // Find the places from the suggestions.
-    const place = this.addressSuggestions.find((suggestion: AddressSuggestion) => suggestion.placeId === placeId);
-    if (!place?.addressComponents) {
-      return;
+  handleInputChange(e: any) {
+    this.value = e.target?.value;
+    this.showSuggestions = true;
+    this.scChange.emit();
+
+    if (!!this.address?.country && !!e.target?.value) {
+      this.debouncedFetchAddressSuggestions(e.target?.value);
     }
-
-    const { addressComponents } = place;
-
-    // If address country and google address components country is different, update the regions.
-    const country = addressComponents.find(component => component.types.includes('country'))?.shortText || null;
-    if (this.address?.country !== country) {
-      this.regions = await getCountryRegions(country);
-    }
-
-    const placeDetails = transformPlaceDetails(place?.addressComponents, this.regions);
-
-    // Update the address with the place details.
-    this.scChangeAddress.emit({
-      ...(this.address as Address),
-      ...placeDetails,
-      line_1: place?.displayName ?? this.addressLine1,
-    });
-
-    this.showSuggestions = false;
-    this.scShowAddressFields.emit();
   }
 
   handleKeyDown(event: KeyboardEvent) {
@@ -165,12 +159,12 @@ export class ScAddressSuggestions {
       case 'ArrowDown':
         event.preventDefault();
         this.focusedIndex = (this.focusedIndex + 1) % this.addressSuggestions.length;
-        this.updateFocus(listElement);
+        updateFocus(listElement, this.focusedIndex);
         break;
       case 'ArrowUp':
         event.preventDefault();
         this.focusedIndex = (this.focusedIndex - 1 + this.addressSuggestions.length) % this.addressSuggestions.length;
-        this.updateFocus(listElement);
+        updateFocus(listElement, this.focusedIndex);
         break;
       case 'Enter':
         event.preventDefault();
@@ -185,9 +179,8 @@ export class ScAddressSuggestions {
     }
   }
 
-  updateFocus(listElement: HTMLElement) {
-    const focusedItem = listElement?.children[this.focusedIndex] as HTMLElement;
-    focusedItem?.focus();
+  hasAnyAddressField() {
+    return !!this.address?.line_1 || !!this.address?.line_2 || !!this.address?.city || !!this.address?.state || !!this.address?.postal_code;
   }
 
   manualAddress() {
@@ -195,10 +188,10 @@ export class ScAddressSuggestions {
     this.scShowAddressFields.emit();
 
     // If the address line 1 is not empty, we want to show the address fields.
-    if (!!this.addressLine1) {
+    if (!!this.value) {
       this.scChangeAddress.emit({
         ...(this.address as Address),
-        line_1: this.addressLine1,
+        line_1: this.value,
       });
     }
   }
@@ -218,17 +211,26 @@ export class ScAddressSuggestions {
       this.showSuggestions = false;
 
       // If the address line 1 is not empty, we want to show the address fields.
-      if (this.addressLine1) {
+      if (this.value) {
         this.scShowAddressFields.emit();
         this.scChangeAddress.emit({
           ...(this.address as Address),
-          line_1: this.addressLine1,
+          line_1: this.value,
         });
       }
     }
   }
 
   componentWillLoad() {
+    this.handleAddressChange();
+
+    // On load, if google map api key is set, show the address fields.
+    if (!!window?.scData?.google_map_api_key && !this.address?.line_1) {
+      this.scHideAddressFields.emit();
+    } else {
+      this.scShowAddressFields.emit();
+    }
+
     document.addEventListener('mousedown', evt => this.handleOutsideClick(evt));
   }
 
@@ -241,39 +243,96 @@ export class ScAddressSuggestions {
     this.debouncedFetchAddressSuggestions.cancel();
   }
 
-  highlightMatch(text: string, query: string) {
-    if (!text || !query) {
-      return text;
-    }
-
-    // Split query into words and filter out empty strings.
-    const words = query.split(/\s+/).filter(word => word);
-
-    // If no valid words, return the original text.
-    if (words.length === 0) {
-      return text;
-    }
-
-    try {
-      // Create a regex to match any word in the query.
-      const regex = new RegExp(`(${words.join('|')})`, 'gi');
-
-      // Replace matched words with highlighted version.
-      return text.replace(regex, '<strong>$1</strong>');
-    } catch (error) {
-      // If regex creation fails, return the original text.
-      console.error('Invalid regex in highlightMatch:', error);
-      return text;
-    }
-  }
-
   renderAddressSuggestions() {
-    if (!this.showSuggestions || !this.addressLine1) {
+    if (!this.showSuggestions || !this.value) {
       return null;
     }
 
     return (
-      <div class="sc-address-suggestion" part="base">
+      <ul class="sc-address__suggestions--list" part="suggestions-list" role="list">
+        <li
+          class="sc-address__suggestions--item sc-address__suggestions--item--no-select sc-address__suggestions--item--powered-by"
+          part="suggestion-item powered-by"
+          role="listitem"
+          tabindex="-1"
+        >
+          <span>
+            {__('Suggestions powered by ', 'surecart')}
+            <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">
+              <span>{__('Google', 'surecart')}</span>
+            </a>
+          </span>
+          <sc-button
+            type="text"
+            onClick={() => {
+              this.showSuggestions = false;
+              this.addressSuggestions = [];
+            }}
+            aria-label={__('Close suggestions', 'surecart')}
+          >
+            <sc-icon name="x" style={{ color: 'var(--sc-color-gray-500)' }}></sc-icon>
+          </sc-button>
+        </li>
+
+        {this.addressSuggestions.length === 0 && (
+          <li
+            class="sc-address__suggestions--item sc-address__suggestions--item--no-select sc-address__suggestions--item--no-result"
+            part="suggestion-item no-result"
+            role="listitem"
+            tabindex="-1"
+          >
+            {__('No results found', 'surecart')}
+          </li>
+        )}
+
+        {this.addressSuggestions.map((suggestion, index) => (
+          <li
+            class={{
+              'sc-address__suggestions--item': true,
+              'focused': this.focusedIndex === index,
+            }}
+            part="suggestion-item"
+            role="option"
+            aria-selected={this.focusedIndex === index ? 'true' : 'false'}
+            aria-label={sprintf(__('Select suggestion %s', 'surecart'), suggestion.fullDisplayName)}
+            tabindex={this.focusedIndex === index ? '0' : '-1'}
+            onClick={() => this.fetchPlaceDetails(suggestion?.placeId)}
+            innerHTML={highlightMatch(suggestion.fullDisplayName, this.value)}
+            onMouseEnter={() => (this.focusedIndex = index)}
+            onMouseLeave={() => (this.focusedIndex = -1)}
+          ></li>
+        ))}
+
+        {!this.hasAnyAddressField() && (
+          <li
+            class="sc-address__suggestions--item sc-address__suggestions--item--no-select sc-address__suggestions--item--manually"
+            part="suggestion-item manually"
+            role="listitem"
+            tabindex="-1"
+          >
+            <button onClick={() => this.manualAddress()}>{__('Enter address manually', 'surecart')}</button>
+          </li>
+        )}
+      </ul>
+    );
+  }
+
+  render() {
+    return (
+      <div part="base">
+        <sc-input
+          exportparts="base:input__base, input, form-control, label, help-text"
+          value={this?.value}
+          onScInput={(e: any) => this.handleInputChange(e)}
+          autocomplete="street-address"
+          placeholder={this.label}
+          aria-label={this.label}
+          name={this.names?.line_1}
+          disabled={this.disabled}
+          required={this.required}
+          {...this.inputProps}
+        />
+
         <div
           class={{
             'sc-address__suggestions': true,
@@ -281,77 +340,9 @@ export class ScAddressSuggestions {
           }}
           part="suggestions"
         >
-          <ul class="sc-address__suggestions--list" part="suggestions-list" role="list">
-            <li
-              class="sc-address__suggestions--item sc-address__suggestions--item--no-select sc-address__suggestions--item--powered-by"
-              part="suggestion-item powered-by"
-              role="listitem"
-              tabindex="-1"
-            >
-              <span>
-                {__('Suggestions powered by ', 'surecart')}
-                <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">
-                  <span>{__('Google', 'surecart')}</span>
-                </a>
-              </span>
-              <sc-button
-                type="text"
-                onClick={() => {
-                  this.showSuggestions = false;
-                  this.addressSuggestions = [];
-                }}
-                aria-label={__('Close suggestions', 'surecart')}
-              >
-                <sc-icon name="x" style={{ color: 'var(--sc-color-gray-500)' }}></sc-icon>
-              </sc-button>
-            </li>
-
-            {this.addressSuggestions.length === 0 && (
-              <li
-                class="sc-address__suggestions--item sc-address__suggestions--item--no-select sc-address__suggestions--item--no-result"
-                part="suggestion-item no-result"
-                role="listitem"
-                tabindex="-1"
-              >
-                {__('No results found', 'surecart')}
-              </li>
-            )}
-
-            {this.addressSuggestions.map((suggestion, index) => (
-              <li
-                class={{
-                  'sc-address__suggestions--item': true,
-                  'focused': this.focusedIndex === index,
-                }}
-                part="suggestion-item"
-                role="option"
-                aria-selected={this.focusedIndex === index ? 'true' : 'false'}
-                aria-label={sprintf(__('Select suggestion %s', 'surecart'), suggestion.fullDisplayName)}
-                tabindex={this.focusedIndex === index ? '0' : '-1'}
-                onClick={() => this.fetchPlaceDetails(suggestion?.placeId)}
-                innerHTML={this.highlightMatch(suggestion.fullDisplayName, this.addressLine1)}
-                onMouseEnter={() => (this.focusedIndex = index)}
-                onMouseLeave={() => (this.focusedIndex = -1)}
-              ></li>
-            ))}
-
-            {this.isManually && (
-              <li
-                class="sc-address__suggestions--item sc-address__suggestions--item--no-select sc-address__suggestions--item--manually"
-                part="suggestion-item manually"
-                role="listitem"
-                tabindex="-1"
-              >
-                <button onClick={() => this.manualAddress()}>{__('Enter address manually', 'surecart')}</button>
-              </li>
-            )}
-          </ul>
+          {this.renderAddressSuggestions()}
         </div>
       </div>
     );
-  }
-
-  render() {
-    return this.renderAddressSuggestions();
   }
 }
