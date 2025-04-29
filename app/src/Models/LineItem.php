@@ -55,6 +55,16 @@ class LineItem extends Model {
 	}
 
 	/**
+	 * Check if the line item can be swapped.
+	 * Right now we only support swapping for products with no variants.
+	 *
+	 * @return bool
+	 */
+	protected function getCanSwapAttribute() {
+		return false;
+	}
+
+	/**
 	 * Upsell a line item.
 	 *
 	 * @param array $attributes The attributes to update.
