@@ -48,10 +48,10 @@ class LineItem extends Model {
 	 * @return string
 	 */
 	public function getVariantDisplayOptionsAttribute() {
-		if ( empty( $this->variant_option_names ) ) {
+		if ( empty( $this->variant_options ) ) {
 			return null;
 		}
-		return implode( ' / ', array_filter( $this->variant_option_names ) );
+		return implode( ' / ', array_filter( $this->variant_options ) );
 	}
 
 	/**
