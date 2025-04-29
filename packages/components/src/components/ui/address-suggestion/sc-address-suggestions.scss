@@ -1,5 +1,10 @@
 :host {
   position: relative;
+  display: block;
+}
+
+sc-input {
+  margin-bottom: var(--sc-address-column-spacing, -1px);
 }
 
 .sc-address__suggestions {
