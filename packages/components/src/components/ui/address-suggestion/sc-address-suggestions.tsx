@@ -95,7 +95,7 @@ export class ScAddressSuggestions {
       this.showSuggestions = false;
       this.addressSuggestions = [];
     }
-  }, 100);
+  }, 50);
 
   @Watch('value')
   handleAddressLine1Change(newValue: string) {
