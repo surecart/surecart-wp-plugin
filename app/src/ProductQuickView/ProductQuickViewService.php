@@ -12,7 +12,28 @@ class ProductQuickViewService {
 	 * @return void
 	 */
 	public function bootstrap() {
-		add_action( 'wp_footer', [ $this, 'renderProductQuickViewComponent' ] );
+		add_action( 'template_include', [ $this, 'includeQuickViewTemplate' ] );
+	}
+
+	/**
+	 * Include quick view template.
+	 * This needs to run before <head> so that blocks can add scripts and styles in wp_head().
+	 *
+	 * @param string $template The template path.
+	 * @return string
+	 */
+	public function includeQuickViewTemplate( $template ) {
+		$quick_view_template = $this->productQuickViewTemplate();
+
+		// add cart template to footer.
+		add_action(
+			'wp_footer',
+			function () use ( $quick_view_template ) {
+				echo $quick_view_template; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			}
+		);
+
+		return $template;
 	}
 
 	/**
