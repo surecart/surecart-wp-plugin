@@ -20,7 +20,7 @@ class HelpWidget {
 	 *
 	 * @return bool
 	 */
-	public function isEnabled() {
+	public function canView() {
 		if ( ! \SureCart::account()->is_connected ) {
 			return false;
 		}
@@ -34,9 +34,16 @@ class HelpWidget {
 	 * @return string
 	 */
 	public function getChecklistId() {
+		$charges = \SureCart::account()->charges_usd_amount;
+
 		// no charges yet.
-		if ( ! \SureCart::account()->has_charges ) {
+		if ( empty( $charges ) ) {
 			return '680fd578155c006aea08424b';
+		}
+
+		// less than $100.
+		if ( $charges < 10000 ) {
+			return '680fe7c59b227e43322c369a';
 		}
 
 		// has charges.
@@ -49,8 +56,7 @@ class HelpWidget {
 	 * @return void
 	 */
 	public function renderChecklist() {
-		// not enabled.
-		if ( ! $this->isEnabled() ) {
+		if ( ! $this->canView() ) {
 			return;
 		}
 
@@ -71,7 +77,7 @@ class HelpWidget {
 	 * @return void
 	 */
 	public function showWidget(): void {
-		if ( ! $this->isEnabled() ) {
+		if ( ! $this->canView() ) {
 			return;
 		}
 		?>
