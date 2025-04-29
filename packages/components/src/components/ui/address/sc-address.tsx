@@ -302,6 +302,7 @@ export class ScAddress {
                     disabled={this.disabled}
                     required={this.required}
                     inputProps={roundedProps}
+                    onScChangeAddress={(e: any) => this.updateAddress(e.detail)}
                     onScShowAddressFields={() => this.toggleAddressFieldsVisibility(true)}
                     onScHideAddressFields={() => this.toggleAddressFieldsVisibility(false)}
                   />
