@@ -62,6 +62,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 /*
 |--------------------------------------------------------------------------
+| Onboarding Checklist
+|--------------------------------------------------------------------------
+*/
+\SureCart::route()
+->get()
+->where( 'admin', 'sc-onboarding-checklist' )
+->middleware( 'assets.components' )
+->setNamespace( '\\SureCart\\Controllers\\Admin\\Onboarding\\' )
+->handle( 'OnboardingController@checklist' );
+
+/*
+|--------------------------------------------------------------------------
 | Complete Signup
 |--------------------------------------------------------------------------
 */

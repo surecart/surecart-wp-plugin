@@ -31,6 +31,32 @@ class OnboardingController {
 	}
 
 	/**
+	 * Show the onboarding checklist.
+	 *
+	 * @return string
+	 */
+	public function checklist() {
+		add_action(
+			'in_admin_header',
+			function() {
+				return \SureCart::render(
+					'layouts/partials/admin-header',
+					[
+						'breadcrumbs'      => [
+							'subscriptions' => [
+								'title' => __( 'Getting Started', 'surecart' ),
+							],
+						],
+						'suffix'           => '<sc-button href="https://surecart.com/docs">' . __( 'View Docs', 'surecart' ) . '<sc-icon name="external-link" slot="suffix"></sc-icon></sc-button>',
+						'claim_url'        => ! \SureCart::account()->claimed ? \SureCart::routeUrl( 'account.claim' ) : '',
+					]
+				);
+			}
+		);
+		return \SureCart::view( 'admin/onboarding/checklist' );
+	}
+
+	/**
 	 * Save the API Token.
 	 *
 	 * @param \SureCartCore\Requests\RequestInterface $request Request.

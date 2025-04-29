@@ -28,12 +28,12 @@ class Account extends Model {
 	protected $clears_account_cache = true;
 
 	/**
-	 * Has Charges.
+	 * Has Checklist.
 	 *
 	 * @return bool
 	 */
-	public function getHasChargesAttribute() {
-		return $this->charges_usd_amount > 0;
+	public function getHasChecklistAttribute() {
+		return ! empty( $this->onboarding_checklist );
 	}
 
 	/**
@@ -43,5 +43,31 @@ class Account extends Model {
 	 */
 	public function getIsConnectedAttribute() {
 		return ! empty( $this->id );
+	}
+
+	/**
+	 * Get the onboarding checklist ID.
+	 *
+	 * @return string
+	 */
+	public function getOnboardingChecklistAttribute() {
+		// no charges yet.
+		if ( empty( $this->charges_usd_amount ) ) {
+			return [
+				'id' => '680fd578155c006aea08424b',
+				'sharedKey' => 'setup-' . $this->id,
+			];
+		}
+
+		// less than $100.
+		if ( $this->charges_usd_amount < 10000 ) {
+			return [
+				'id' => '680fe7c59b227e43322c369a',
+				'sharedKey' => 'boost-' . $this->id,
+			];
+		}
+
+		// has charges.
+		return [];
 	}
 }
