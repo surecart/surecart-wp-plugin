@@ -918,6 +918,7 @@
   },
   "sc-license": {
     "license-id": true,
+    "query": true,
     "style": true,
     "id": true,
     "class": true,
