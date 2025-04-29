@@ -23,7 +23,7 @@
 			this.deactivateButton = $('#the-list').find(
 				`.row-actions span.deactivate a`
 			);
-			this.feedbackForm = $('.uds-feedback-form'); // Feedback Form.
+			this.feedbackForm = $('.sc-feedback-form'); // Feedback Form.
 			this.feedbackInput = $('.uds-options-feedback'); // Feedback Textarea.
 			this.formWrapper = $('.uds-feedback-form--wrapper');
 			this.closeButton = $('.uds-feedback-form--wrapper .uds-close');
@@ -115,7 +115,7 @@
 
 			// Gather form data.
 			const formData = {
-				action: 'uds_plugin_deactivate_feedback',
+				action: 'sc_plugin_deactivate_feedback',
 				security: scUdsVars?._ajax_nonce || '',
 				reason:
 					closestForm

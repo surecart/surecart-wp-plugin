@@ -7,9 +7,10 @@
 
 ## Properties
 
-| Property    | Attribute    | Description    | Type     | Default     |
-| ----------- | ------------ | -------------- | -------- | ----------- |
-| `licenseId` | `license-id` | The license id | `string` | `undefined` |
+| Property    | Attribute    | Description                | Type                                  | Default                                |
+| ----------- | ------------ | -------------------------- | ------------------------------------- | -------------------------------------- |
+| `licenseId` | `license-id` | The license id             | `string`                              | `undefined`                            |
+| `query`     | --           | Query to fetch Activations | `{ page: number; per_page: number; }` | `{     page: 1,     per_page: 10,   }` |
 
 
 ## Dependencies
@@ -27,6 +28,7 @@
 - [sc-input](../../../ui/input)
 - [sc-button](../../../ui/button)
 - [sc-block-ui](../../../ui/block-ui)
+- [sc-pagination](../../../ui/pagination)
 - [sc-dialog](../../../ui/sc-dialog)
 - [sc-icon](../../../ui/icon)
 - [sc-spacing](../../../ui/spacing)
@@ -45,6 +47,7 @@ graph TD;
   sc-license --> sc-input
   sc-license --> sc-button
   sc-license --> sc-block-ui
+  sc-license --> sc-pagination
   sc-license --> sc-dialog
   sc-license --> sc-icon
   sc-license --> sc-spacing
@@ -55,6 +58,10 @@ graph TD;
   sc-form-control --> sc-visually-hidden
   sc-button --> sc-spinner
   sc-block-ui --> sc-spinner
+  sc-pagination --> sc-flex
+  sc-pagination --> sc-button
+  sc-pagination --> sc-visually-hidden
+  sc-pagination --> sc-icon
   sc-dialog --> sc-button
   sc-dialog --> sc-icon
   style sc-license fill:#f9f,stroke:#333,stroke-width:4px

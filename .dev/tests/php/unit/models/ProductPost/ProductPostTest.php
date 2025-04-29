@@ -13,6 +13,7 @@ use SureCart\Models\VariantOptionValue;
 use SureCart\Request\RequestService;
 use SureCart\Sync\SyncService;
 use SureCart\Tests\SureCartUnitTestCase;
+use SureCart\WordPress\PostTypes\ProductPostTypeService;
 
 class ProductPostTest extends SureCartUnitTestCase
 {
@@ -895,5 +896,56 @@ class ProductPostTest extends SureCartUnitTestCase
 			'created_at' => 1111111111,
 			'updated_at' => 1111111110
 		]);
+	}
+
+	/**
+	 * @group product-post
+	 */
+	public function test_force_account_id_with_suppress_filters_disabled() {
+		// mock the account id.
+		\SureCart::alias('account', function () {
+			return (object) [
+				'id' => '123',
+			];
+		});
+
+		$query = new \WP_Query( array(
+            'post_type' => 'sc_product',
+        ) );
+
+		$product_post_type_service = new ProductPostTypeService();
+		$result = $product_post_type_service->forceAccountIdScope( $query );
+		// Get the tax query
+        $tax_query = $result->get( 'tax_query' );
+
+        $this->assertIsArray( $tax_query );
+        $this->assertEquals( 'sc_account', $tax_query[1]['taxonomy'] );
+        $this->assertEquals( 'name', $tax_query[1]['field'] );
+        $this->assertEquals( 123, $tax_query[1]['terms'] );
+	}
+
+	/**
+	 * @group product-post
+	 */
+	public function test_force_account_id_with_suppress_filters_enabled() {
+		\SureCart::alias('account', function () {
+			return (object) [
+				'id' => '123',
+			];
+		});
+
+		$query = new \WP_Query( array(
+			'post_type' => 'sc_product',
+			'suppress_filters' => true
+		) );
+
+		$product_post_type_service = new ProductPostTypeService();
+		$result = $product_post_type_service->forceAccountIdScope( $query );
+
+		// Get the tax query.
+		$tax_query = $result->get( 'tax_query' );
+
+		// Tax query should be empty.
+		$this->assertEmpty( $tax_query );
 	}
  }

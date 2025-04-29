@@ -27,8 +27,12 @@ class CompatibilityService {
 		add_action( 'render_block_data', [ $this, 'maybeEnqueueUAGBAssets' ] );
 		// SC Form Shortcode fix.
 		add_filter( 'surecart/shortcode/render', [ $this, 'maybeEnqueueUAGBAssetsForShortcode' ], 5, 3 );
+
 		// rankmath fix.
 		add_action( 'rank_math/head', [ $this, 'rankMathFix' ] );
+		add_filter( 'rank_math/frontend/canonical', [ $this, 'rankMathUrlFix' ] );
+		add_filter( 'rank_math/sitemap/xml_post_url', [ $this, 'rankMathUrlFix' ] );
+		add_filter( 'rank_math/sitemap/post_type_archive_link', [ $this, 'rankMathUrlFix' ] );
 
 		// Yoast SEO fix.
 		add_action( 'wpseo_frontend_presenters', [ $this, 'yoastSEOFix' ] );
@@ -112,6 +116,17 @@ class CompatibilityService {
 			remove_all_actions( 'rank_math/opengraph/facebook' );
 			remove_all_actions( 'rank_math/opengraph/twitter' );
 		}
+	}
+
+	/**
+	 * Fix the canonical URL for rankmath.
+	 *
+	 * @param string $canonical The canonical URL.
+	 *
+	 * @return string
+	 */
+	public function rankMathUrlFix( $canonical ) {
+		return remove_query_arg( 'currency', $canonical );
 	}
 
 	/**

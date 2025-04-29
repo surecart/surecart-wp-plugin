@@ -38,7 +38,6 @@
  - [sc-product-line-item](../../ui/product-line-item)
  - [sc-product-price-choices](../../controllers/product/sc-product-price-choices)
  - [sc-recurring-price-choice-container](../../ui/sc-recurring-price-choice-container)
- - [sc-shipping-choices](../../ui/sc-shipping-choices)
  - [sc-subscription-details](../../controllers/dashboard/subscription-details)
  - [sc-subscription-switch](../../controllers/dashboard/subscription-switch)
 
@@ -55,7 +54,6 @@ graph TD;
   sc-product-line-item --> sc-format-number
   sc-product-price-choices --> sc-format-number
   sc-recurring-price-choice-container --> sc-format-number
-  sc-shipping-choices --> sc-format-number
   sc-subscription-details --> sc-format-number
   sc-subscription-switch --> sc-format-number
   style sc-format-number fill:#f9f,stroke:#333,stroke-width:4px

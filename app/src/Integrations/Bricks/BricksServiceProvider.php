@@ -17,6 +17,7 @@ class BricksServiceProvider implements ServiceProviderInterface {
 	public function register( $container ) {
 		$container['surecart.bricks.elements']     = fn() => new BricksElementsService();
 		$container['surecart.bricks.dynamic_data'] = fn() => new BricksDynamicDataService();
+		$container['surecart.bricks.template']     = fn() => new BricksTemplateService();
 	}
 
 	/**
@@ -27,5 +28,6 @@ class BricksServiceProvider implements ServiceProviderInterface {
 	public function bootstrap( $container ) {
 		$container['surecart.bricks.elements']->bootstrap();
 		$container['surecart.bricks.dynamic_data']->bootstrap();
+		$container['surecart.bricks.template']->bootstrap();
 	}
 }

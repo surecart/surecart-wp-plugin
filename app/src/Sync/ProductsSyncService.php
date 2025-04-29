@@ -39,34 +39,12 @@ class ProductsSyncService {
 	}
 
 	/**
-	 * Get the queue process.
+	 * Get the queue.
 	 *
-	 * @return ProductsQueueProcess
+	 * @return object
 	 */
-	public function queue() {
-		return $this->app->resolve( 'surecart.process.products.queue' );
-	}
-
-	/**
-	 * Get the sync process.
-	 *
-	 * @return ProductsSyncProcess
-	 */
-	public function sync() {
-		return $this->app->resolve( 'surecart.process.products.sync' );
-	}
-
-	/**
-	 * Cancel the process.
-	 *
-	 * This cancels the queue and sync processes
-	 * and also deletes all the queue and sync items.
-	 *
-	 * @return void
-	 */
-	public function cancel() {
-		$this->queue()->cancel();
-		$this->queue()->delete_all();
+	public function jobs() {
+		return $this->app->resolve( 'surecart.jobs' );
 	}
 
 	/**
@@ -75,15 +53,7 @@ class ProductsSyncService {
 	 * @return boolean
 	 */
 	public function isActive() {
-		if ( $this->queue()->is_active() ) {
-			return 'queue';
-		}
-
-		if ( \SureCart::queue()->showNotice( 'surecart/sync/product' ) ) {
-			return 'sync';
-		}
-
-		return false;
+		return $this->jobs()->isActive();
 	}
 
 	/**
@@ -126,16 +96,13 @@ class ProductsSyncService {
 			]
 		);
 
-		// cancel previous processes.
-		$this->cancel();
-
 		// reset the notice.
 		\SureCart::notices()->reset( $this->notice_id );
 
 		// clear account cache.
 		\SureCart::account()->clearCache();
 
-		// save and dispatch the process.
-		return $this->queue()->push_to_queue( $args )->save()->dispatch();
+		// run all jobs.
+		return $this->jobs()->run( $args );
 	}
 }

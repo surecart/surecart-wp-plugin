@@ -33,7 +33,6 @@ export default function ({ blocks }) {
 							width: 100% !important;
 							height: 100vh !important;
 							max-height: 400px !important;
-							padding: 5px;
 							zoom: 0.7;
 						`}
 					>

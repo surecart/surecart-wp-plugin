@@ -19,7 +19,7 @@ class DeactivationSurveyForm {
 	 */
 	public function bootstrap() {
 		// handle ajax request.
-		add_action( 'wp_ajax_uds_plugin_deactivate_feedback', array( $this, 'sendPluginDeactivateFeedback' ) );
+		add_action( 'wp_ajax_sc_plugin_deactivate_feedback', array( $this, 'sendPluginDeactivateFeedback' ) );
 
 		// show feedback form on plugins screen.
 		if ( $this->isPluginsScreen() ) {
@@ -71,7 +71,7 @@ class DeactivationSurveyForm {
 						<p class="uds-form-description"><?php echo esc_html( $args['popup_description'] ); ?></p>
 					<?php } ?>
 
-					<form class="uds-feedback-form" id="uds-feedback-form" method="post">
+					<form class="sc-feedback-form" id="sc-feedback-form" method="post">
 						<?php foreach ( $args['popup_reasons'] as $key => $value ) { ?>
 							<fieldset>
 								<div class="reason">
@@ -138,7 +138,7 @@ class DeactivationSurveyForm {
 			'scUdsVars',
 			array(
 				'ajaxurl'        => esc_url( admin_url( 'admin-ajax.php' ) ),
-				'_ajax_nonce'    => wp_create_nonce( 'uds_plugin_deactivate_feedback' ),
+				'_ajax_nonce'    => wp_create_nonce( 'sc_plugin_deactivate_feedback' ),
 				'_current_theme' => function_exists( 'wp_get_theme' ) ? wp_get_theme()->get_template() : '',
 				'_plugin_slug'   => array( 'surecart' ),
 			)
@@ -160,7 +160,7 @@ class DeactivationSurveyForm {
 		/**
 		 * Nonce verification
 		 */
-		if ( ! check_ajax_referer( 'uds_plugin_deactivate_feedback', 'security', false ) ) {
+		if ( ! check_ajax_referer( 'sc_plugin_deactivate_feedback', 'security', false ) ) {
 			wp_send_json_error( array( 'message' => __( 'Nonce validation failed', 'surecart' ) ) );
 		}
 

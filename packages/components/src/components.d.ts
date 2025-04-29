@@ -1770,6 +1770,13 @@ export namespace Components {
           * The license id
          */
         "licenseId": string;
+        /**
+          * Query to fetch Activations
+         */
+        "query": {
+    page: number;
+    per_page: number;
+  };
     }
     interface ScLicensesList {
         /**
@@ -8956,6 +8963,13 @@ declare namespace LocalJSX {
           * The license id
          */
         "licenseId"?: string;
+        /**
+          * Query to fetch Activations
+         */
+        "query"?: {
+    page: number;
+    per_page: number;
+  };
     }
     interface ScLicensesList {
         /**

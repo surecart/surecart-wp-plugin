@@ -1,14 +1,14 @@
 <?php
 
-namespace SureCart\Sync;
+namespace SureCart\Sync\Jobs\Sync;
 
-use SureCart\Background\BackgroundProcess;
+use SureCart\Background\Job;
 use SureCart\Models\Product;
 
 /**
  * This process fetches and queues all products for syncing.
  */
-class ProductsSyncProcess extends BackgroundProcess {
+class ProductsSyncJob extends Job {
 	/**
 	 * The prefix for the action.
 	 *
@@ -36,13 +36,10 @@ class ProductsSyncProcess extends BackgroundProcess {
 	 * @return mixed
 	 */
 	protected function task( $args ) {
-		// the current page.
-		$page = $args['page'] ?? 1;
-
 		// get the items (uncached).
 		$products = Product::where( [ 'cached' => false ] )::paginate(
 			[
-				'page'     => $page,
+				'page'     => $args['page'] ?? 1,
 				'per_page' => $args['batch_size'] ?? 25,
 			]
 		);
@@ -54,7 +51,7 @@ class ProductsSyncProcess extends BackgroundProcess {
 
 		// add each item to the queue.
 		foreach ( $products->data as $product ) {
-			$product->queueSync( true ); // sync with notice.
+			$this->task->queue( $product->id );
 		}
 
 		// we have more to process.
