@@ -55,7 +55,7 @@ class Account extends Model {
 		if ( empty( $this->charges_usd_amount ) ) {
 			return [
 				'id' => '680fd578155c006aea08424b',
-				'sharedKey' => 'setup-' . $this->id,
+				'sharedKey' => 'setup/' . $this->id,
 			];
 		}
 
@@ -63,7 +63,7 @@ class Account extends Model {
 		if ( $this->charges_usd_amount < 10000 ) {
 			return [
 				'id' => '680fe7c59b227e43322c369a',
-				'sharedKey' => 'boost-' . $this->id,
+				'sharedKey' => 'boost/' . $this->id,
 			];
 		}
 
