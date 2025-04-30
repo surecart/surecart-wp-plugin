@@ -118,7 +118,6 @@ class HelpWidget {
 				location.href = url;
 			});
 		});
-
 		</script>
 		<?php
 	}
