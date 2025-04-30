@@ -179,8 +179,9 @@ class AdminMenuPageService {
 		 * Onboarding Checklist
 		 */
 		if ( \SureCart::helpWidget()->hasChecklist() ) {
+			$title = \SureCart::account()->onboarding_checklist['title'] ?? __( 'Getting Started', 'surecart' );
 			$this->pages = array(
-				'sc-onboarding-checklist' 	=> \add_submenu_page( $this->slug, __( 'Getting Started', 'surecart' ), '<span class="sc-menu-divider">' . __( 'Getting Started', 'surecart' ) . '<span style="width: 8px; height: 8px; min-width: 0; display: inline-block; background: #2271b1; border-radius: 999px; margin: 0 8px; line-height: 1;"></span></span>', 'manage_sc_shop_settings', 'sc-onboarding-checklist', '__return_false' ),
+				'sc-onboarding-checklist' 	=> \add_submenu_page( $this->slug, $title,  $title . '<span style="width: 8px; height: 8px; min-width: 0; display: inline-block; background: #2271b1; border-radius: 999px; margin: 0 8px; line-height: 1;"></span>', 'manage_sc_shop_settings', 'sc-onboarding-checklist', '__return_false' ),
 			);
 		}
 

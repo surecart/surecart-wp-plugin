@@ -54,14 +54,16 @@ class Account extends Model {
 		// no charges yet.
 		if ( empty( $this->charges_usd_amount ) ) {
 			return [
+				'title' => __( 'Getting Started', 'surecart' ),
 				'id' => '680fd578155c006aea08424b',
 				'sharedKey' => 'setup/' . $this->id,
 			];
 		}
 
-		// less than $100.
+		// less than $100 in charges.
 		if ( $this->charges_usd_amount < 10000 ) {
 			return [
+				'title' => __( 'Boost Revenue', 'surecart' ),
 				'id' => '680fe7c59b227e43322c369a',
 				'sharedKey' => 'boost/' . $this->id,
 			];
