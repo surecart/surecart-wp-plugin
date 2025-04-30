@@ -32,6 +32,27 @@ class OrderRestServiceProvider extends RestServiceProvider implements RestServic
 	protected $methods = [ 'index', 'find' ];
 
 	/**
+	 * Register Additional REST Routes
+	 *
+	 * @return void
+	 */
+	public function registerRoutes() {
+		register_rest_route(
+			"$this->name/v$this->version",
+			$this->endpoint . '/(?P<id>\S+)/resend_notification/',
+			array(
+				array(
+					'methods'             => \WP_REST_Server::EDITABLE,
+					'callback'            => $this->callback( $this->controller, 'resend_notification' ),
+					'permission_callback' => array( $this, 'resend_notification_permissions_check' ),
+				),
+				// Register our schema callback.
+				'schema' => array( $this, 'get_item_schema' ),
+			)
+		);
+	}
+
+	/**
 	 * Get our sample schema for a post.
 	 *
 	 * @return array The sample schema for a post
@@ -112,5 +133,15 @@ class OrderRestServiceProvider extends RestServiceProvider implements RestServic
 	 */
 	public function get_items_permissions_check( $request ) {
 		return current_user_can( 'read_sc_orders', $request->get_params() );
+	}
+
+	/**
+	 * Who can resend the order notification.
+	 *
+	 * @param \WP_REST_Request $request Rest Request.
+	 * @return true|\WP_Error True if the request has access to update return request, WP_Error object otherwise.
+	 */
+	public function resend_notification_permissions_check( $request ) {
+		return current_user_can( 'edit_sc_orders' );
 	}
 }

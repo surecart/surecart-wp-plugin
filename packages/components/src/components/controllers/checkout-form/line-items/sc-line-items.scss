@@ -1,0 +1,46 @@
+:host {
+  display: block;
+}
+
+:slotted(* ~ *) {
+  margin-top: 20px;
+}
+
+.line-items {
+  display: grid;
+  gap: var(--sc-form-row-spacing);
+}
+
+.line-item {
+  display: grid;
+  gap: var(--sc-spacing-small);
+
+  &--has-swap {
+    border: 1px solid var(--sc-input-border-color);
+    background: #fff;
+    border-radius: var(--sc-border-radius-medium);
+    gap: 0;
+    border-radius: var(--sc-input-border-radius-medium);
+    overflow: hidden;
+
+    sc-product-line-item {
+      padding: var(--sc-spacing-medium);
+      border-bottom: solid var(--sc-input-border-width) var(--sc-input-border-color);
+    }
+
+    sc-swap {
+      padding: var(--sc-spacing-medium);
+      background: var(--sc-color-gray-50);
+    }
+  }
+}
+
+sc-swap {
+  font-size: var(--sc-font-size-small);
+  line-height: var(--sc-line-height-dense);
+  color: var(--sc-input-label-color);
+}
+
+.fee__description {
+  opacity: 0.75;
+}

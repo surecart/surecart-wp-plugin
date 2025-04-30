@@ -32,6 +32,7 @@ import AdditionalOptions from './modules/AdditionalOptions';
 import PaidInvoiceConfirmModal from './modules/PaidInvoiceConfirmModal';
 import DraftInvoiceConfirmModal from './modules/DraftInvoiceConfirmModal';
 import SendNotificationConfirmModal from './modules/SendNotificationConfirmModal';
+import InvoiceResendModal from './modules/InvoiceResendModal';
 import DeleteInvoiceConfirmModal from './modules/DeleteInvoiceConfirmModal';
 import { useInvoice } from './hooks/useInvoice';
 import { Button } from '@wordpress/components';
@@ -117,6 +118,10 @@ export default () => {
 					{
 						title: __('Edit Invoice', 'surecart'),
 						modal: 'change_status_to_draft',
+					},
+					{
+						title: __('Resend Invoice', 'surecart'),
+						modal: 'resend_invoice',
 					},
 			  ]
 			: []),
@@ -308,7 +313,13 @@ export default () => {
 					onRequestClose={() => setModal(null)}
 				/>
 			)}
-
+			{modal === 'resend_invoice' && (
+				<InvoiceResendModal
+					invoice={invoice}
+					open={true}
+					onRequestClose={() => setModal(null)}
+				/>
+			)}
 			{modal === 'send_invoice' && (
 				<SendNotificationConfirmModal
 					onRequestClose={() => setModal(null)}
