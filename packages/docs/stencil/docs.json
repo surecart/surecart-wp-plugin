@@ -13340,6 +13340,28 @@
           "required": false
         },
         {
+          "name": "stickyFooter",
+          "type": "boolean",
+          "complexType": {
+            "original": "boolean",
+            "resolved": "boolean",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "sticky-footer",
+          "reflectToAttr": false,
+          "docs": "Sticky drawer footer",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "stickyHeader",
           "type": "boolean",
           "complexType": {
@@ -19782,13 +19804,15 @@
       "dependencies": [
         "sc-line-item",
         "sc-skeleton",
-        "sc-product-line-item"
+        "sc-product-line-item",
+        "sc-swap"
       ],
       "dependencyGraph": {
         "sc-line-items": [
           "sc-line-item",
           "sc-skeleton",
-          "sc-product-line-item"
+          "sc-product-line-item",
+          "sc-swap"
         ],
         "sc-product-line-item": [
           "sc-format-number",
@@ -19798,6 +19822,9 @@
         ],
         "sc-quantity-select": [
           "sc-icon"
+        ],
+        "sc-swap": [
+          "sc-switch"
         ]
       }
     },
@@ -30943,7 +30970,7 @@
             "references": {
               "LayoutConfig": {
                 "location": "local",
-                "path": "/Users/andre/sites/surecart/wp-content/plugins/surecart/packages/components/src/components/controllers/products/sc-product-item-list/sc-product-item-list.tsx",
+                "path": "/Users/rajkiranbagal/dev/app/public/wp-content/plugins/surecart/packages/components/src/components/controllers/products/sc-product-item-list/sc-product-item-list.tsx",
                 "id": "src/components/controllers/products/sc-product-item-list/sc-product-item-list.tsx::LayoutConfig"
               }
             }
@@ -40113,6 +40140,63 @@
       }
     },
     {
+      "filePath": "src/components/controllers/checkout-form/sc-swap/sc-swap.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-swap",
+      "readme": "# sc-swap\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "lineItem",
+          "type": "LineItem",
+          "complexType": {
+            "original": "LineItem",
+            "resolved": "LineItem",
+            "references": {
+              "LineItem": {
+                "location": "import",
+                "path": "src/types",
+                "id": "src/types.ts::LineItem"
+              }
+            }
+          },
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "The product id.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "LineItem"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [
+        "sc-line-items"
+      ],
+      "dependencies": [
+        "sc-switch"
+      ],
+      "dependencyGraph": {
+        "sc-swap": [
+          "sc-switch"
+        ],
+        "sc-line-items": [
+          "sc-swap"
+        ]
+      }
+    },
+    {
       "filePath": "src/components/ui/switch/sc-switch.tsx",
       "encapsulation": "shadow",
       "tag": "sc-switch",
@@ -40405,11 +40489,15 @@
         }
       ],
       "dependents": [
-        "sc-payment-methods-list"
+        "sc-payment-methods-list",
+        "sc-swap"
       ],
       "dependencies": [],
       "dependencyGraph": {
         "sc-payment-methods-list": [
+          "sc-switch"
+        ],
+        "sc-swap": [
           "sc-switch"
         ]
       }

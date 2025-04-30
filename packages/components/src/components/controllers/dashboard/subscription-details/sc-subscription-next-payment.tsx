@@ -2,7 +2,6 @@ import { Component, h, Prop, State, Host, Watch } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 import apiFetch from '../../../../functions/fetch';
-import { intervalString } from '../../../../functions/price';
 import { formatTaxDisplay } from '../../../../functions/tax';
 import { Checkout, Period, Product, ResponseError, Subscription, ManualPaymentMethod } from '../../../../types';
 
@@ -111,16 +110,16 @@ export class ScSubscriptionNextPayment {
               <sc-product-line-item
                 image={(item.price?.product as Product)?.line_item_image}
                 name={(item.price?.product as Product)?.name}
-                priceName={item?.price?.name}
-                variantLabel={(item?.variant_options || []).filter(Boolean).join(' / ') || null}
+                price={item?.price?.name}
+                variant={item?.variant_display_options}
                 editable={false}
                 removable={false}
                 scratchDisplayAmount={item?.scratch_display_amount}
                 displayAmount={item?.subtotal_display_amount}
                 quantity={item?.quantity}
-                currency={item?.price?.currency}
-                interval={intervalString(item?.price)}
-                purchasableStatusDisplay={item?.purchasable_status_display}
+                amount={item?.subtotal_display_amount}
+                interval={`${item?.price?.short_interval_text} ${item?.price?.short_interval_count_text}`}
+                purchasableStatus={item?.purchasable_status_display}
               ></sc-product-line-item>
             ))}
 
