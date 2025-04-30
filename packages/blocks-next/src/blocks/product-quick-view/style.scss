@@ -2,10 +2,11 @@
 	width: 100%;
 	.sc-product-quick-view-dialog {
 		position: fixed;
-		// I want dialog in center of the screen
 		top: 50%;
 		left: 50%;
-		transform: translate(-50%, -50%);
+		transform: translate(-50%, -50%) scale(0.95);
+		opacity: 0;
+		transition: opacity 0.3s ease, transform 0.3s ease;
 		z-index: 10000;
 		box-sizing: border-box;
 		visibility: hidden;
@@ -20,6 +21,7 @@
 		overflow: scroll;
 
 		&.loading {
+			visibility: visible;
 			min-height: 80vh;
 		}
 
@@ -30,6 +32,8 @@
 		// or faster than the scrim to give a sense of depth.
 		&.active {
 			visibility: visible;
+			opacity: 1;
+			transform: translate(-50%, -50%) scale(1);
 			animation: both sc-turn-on-visibility 0.25s;
 			img {
 				animation: both sc-turn-on-visibility 0.35s;
@@ -39,6 +43,7 @@
 		&.show-closing-animation {
 			&:not(.active) {
 				animation: both sc-turn-off-visibility 0.35s;
+				min-height: 80vh;
 			}
 		}
 
