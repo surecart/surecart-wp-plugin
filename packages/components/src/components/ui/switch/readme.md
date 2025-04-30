@@ -46,6 +46,7 @@ Type: `Promise<boolean>`
 | `"base"`        |             |
 | `"control"`     |             |
 | `"description"` |             |
+| `"label"`       |             |
 | `"thumb"`       |             |
 | `"title"`       |             |
 
