@@ -115,6 +115,19 @@ class Checklist {
 			$attributes .= $key . '="' . esc_attr( $value ) . '" ';
 		}
 		?>
+			<style>
+				gleap-checklist::part(sender){
+					display:none
+				}
+
+				gleap-checklist {
+					--color-gray-light: var(--sc-color-brand-stroke);
+					--color-gray-dark: var(--sc-color-brand-body);
+					--color-font-title: var(--sc-color-brand-heading);
+					--color-success: var(--sc-color-brand-primary);
+					--color-gray-lighter: var(--sc-color-gray-50);
+				}
+			</style>
 			<gleap-checklist <?php echo $attributes;?>></gleap-checklist>
 		<?php
 

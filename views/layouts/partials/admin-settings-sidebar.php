@@ -80,7 +80,7 @@
 	</sc-tab>
 
 	<?php if ( current_user_can( 'manage_options' ) ) : ?>
-		<div style="padding: var(--sc-spacing-small); position: sticky; top: 120px;">
+		<div style="padding: var(--sc-spacing-small);">
 			<?php \SureCart::helpWidget()->checklist()->render(['floating' => true]); ?>
 		</div>
 	<?php endif; ?>
