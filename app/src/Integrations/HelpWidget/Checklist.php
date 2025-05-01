@@ -56,11 +56,30 @@ class Checklist {
 							location.href = '<?php echo admin_url('admin.php?page=sc-products&action=edit'); ?>';
 							return;
 						}
-						if ( url.includes('set-up-your-payment-methods') ) {
+						if ( url.includes('processor_types') ) {
 							location.href = 'https://app.surecart.com/processor_types?switch_account_id=<?php echo $this->account->id; ?>';
 							return;
 						}
-						location.href = url;
+						if ( url.includes('abandoned-checkout') ) {
+							location.href = '<?php echo admin_url('admin.php?page=sc-settings&tab=abandoned_checkout'); ?>';
+							return;
+						}
+						if ( url.includes('create-coupons') ) {
+							location.href = '<?php echo admin_url('admin.php?page=sc-coupons&action=edit'); ?>';
+							return;
+						}
+						if ( url.includes('create-coupons') ) {
+							location.href = '<?php echo admin_url('admin.php?page=sc-coupons&action=edit'); ?>';
+							return;
+						}
+						if ( url.includes('revenue-booster') ) {
+							location.href = '<?php echo admin_url('admin.php?page=sc-bumps&action=edit'); ?>';
+							return;
+						}
+						if ( url.includes('subscription-saver') ) {
+							location.href = '<?php echo admin_url('admin.php?page=sc-settings&tab=subscription_preservation'); ?>';
+							return;
+						}
 					});
 				});
 			}
