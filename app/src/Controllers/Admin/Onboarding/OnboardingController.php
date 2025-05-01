@@ -35,19 +35,24 @@ class OnboardingController {
 	 *
 	 * @return string
 	 */
-	public function checklist() {
+	public function checklist( ) {
+		$checklist = \SureCart::account()->onboarding_checklist;
+		if ( empty( $checklist->id ) ) {
+			return \SureCart::redirect()->to( esc_url( admin_url( 'admin.php?page=sc-dashboard' ) ) );
+		}
+
 		add_action(
 			'in_admin_header',
-			function() {
+			function() use ( $checklist ) {
 				return \SureCart::render(
 					'layouts/partials/admin-header',
 					[
 						'breadcrumbs'      => [
 							'subscriptions' => [
-								'title' => __( 'Getting Started', 'surecart' ),
+								'title' => $checklist->title ?? __( 'Getting Started', 'surecart' ),
 							],
 						],
-						'suffix'           => '<sc-button href="https://surecart.com/docs">' . __( 'View Docs', 'surecart' ) . '<sc-icon name="external-link" slot="suffix"></sc-icon></sc-button>',
+						'suffix'           => '<sc-button href="https://surecart.com/docs" target="_blank">' . __( 'View Docs', 'surecart' ) . '<sc-icon name="external-link" slot="suffix"></sc-icon></sc-button>',
 						'claim_url'        => ! \SureCart::account()->claimed ? \SureCart::routeUrl( 'account.claim' ) : '',
 					]
 				);
