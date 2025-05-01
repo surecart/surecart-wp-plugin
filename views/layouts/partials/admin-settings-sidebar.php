@@ -79,7 +79,9 @@
 		<?php esc_html_e( 'Advanced', 'surecart' ); ?>
 	</sc-tab>
 
-	<div style="padding: var(--sc-spacing-small); position: sticky; top: 120px;">
-		<?php \SureCart::helpWidget()->renderChecklist(['floating' => true]); ?>
-	</div>
+	<?php if ( current_user_can( 'manage_options' ) ) : ?>
+		<div style="padding: var(--sc-spacing-small); position: sticky; top: 120px;">
+			<?php \SureCart::helpWidget()->checklist()->render(['floating' => true]); ?>
+		</div>
+	<?php endif; ?>
 </div>

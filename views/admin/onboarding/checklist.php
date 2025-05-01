@@ -42,7 +42,10 @@
 
 <div class="wrap">
 	<?php \SureCart::render( 'layouts/partials/admin-index-styles' ); ?>
-	<div class="sc-container">
-		<?php \SureCart::helpWidget()->renderChecklist(); ?>
-	</div>
+
+	<?php if ( current_user_can( 'manage_options' ) ) : ?>
+		<div class="sc-container">
+			<?php \SureCart::helpWidget()->checklist()->render(); ?>
+		</div>
+	<?php endif; ?>
 </div>
