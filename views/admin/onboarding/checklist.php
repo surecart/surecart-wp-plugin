@@ -17,26 +17,16 @@
 		padding: 2rem;
 	}
 
-	.sc-section-heading {
-		margin-bottom: 0.5rem;
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
+	gleap-checklist::part(sender){
+		display:none
 	}
 
-	.sc-section-heading h3 {
-		margin: 0;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		white-space: nowrap;
-		font-size: 1.25rem;
-		line-height: 1.75rem;
-		font-weight: 600;
-		color: rgba(17, 24, 39, 1);
-		display: flex;
-		align-items: center;
-		gap: 0.5em;
-		color: var(--sc-color-brand-heading);
+	gleap-checklist {
+		--color-gray-light: var(--sc-color-brand-stroke);
+		--color-gray-dark: var(--sc-color-brand-body);
+		--color-font-title: var(--sc-color-brand-heading);
+		--color-success: var(--sc-color-brand-primary);
+		--color-gray-lighter: var(--sc-color-gray-100);
 	}
 </style>
 
