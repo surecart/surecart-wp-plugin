@@ -1,7 +1,7 @@
 import { Component, Fragment, h, State, Watch } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import apiFetch from '../../../functions/fetch';
-import { ResponseError, VerificationCode } from '../../../types';
+import { ResponseError } from '../../../types';
 
 @Component({
   tag: 'sc-login-form',
@@ -78,18 +78,22 @@ export class ScLogin {
   async submitCode() {
     try {
       this.loading = true;
-      const { verified } = (await apiFetch({
+      const { verified, redirect_url } = (await apiFetch({
         method: 'POST',
         path: 'surecart/v1/verification_codes/verify',
         data: {
           login: this.email,
           code: this.verifyCode,
         },
-      })) as VerificationCode;
+      })) as any;
       if (!verified) {
         throw { message: __('Verification code is not valid. Please try again.', 'surecart') };
       }
-      window.location.reload();
+      if (redirect_url) {
+        window.location.replace(redirect_url);
+      } else {
+        window.location.reload();
+      }
     } catch (e) {
       this.handleError(e);
       this.loading = false;
