@@ -174,7 +174,7 @@ export default ({
 											'surecart'
 										)}
 										<a
-											href="/wp-admin/admin.php?page=sc-product-collections&action=edit"
+											href={`${window.scData?.home_url}/wp-admin/admin.php?page=sc-product-collections&action=edit`}
 											target="_blank"
 										>
 											{__('create a new one', 'surecart')}{' '}
