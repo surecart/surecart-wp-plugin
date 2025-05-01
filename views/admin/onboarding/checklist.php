@@ -26,7 +26,7 @@
 		--color-gray-dark: var(--sc-color-brand-body);
 		--color-font-title: var(--sc-color-brand-heading);
 		--color-success: var(--sc-color-brand-primary);
-		--color-gray-lighter: var(--sc-color-gray-100);
+		--color-gray-lighter: var(--sc-color-gray-50);
 	}
 </style>
 
