@@ -93,7 +93,7 @@ class Checklist {
 	 * @return void
 	 */
 	public function render( $args = [] ) {
-		if ( empty( $this->account->onboarding_checklist->id ) ) {
+		if ( empty( $this->account->gleap_checklist->gleap_id ) ) {
 			return;
 		}
 
@@ -101,8 +101,8 @@ class Checklist {
 			$args,
 			[
 				'floating' => false,
-				'checklistid' => $this->account->onboarding_checklist->id,
-				'sharedKey' => $this->account->onboarding_checklist->sharedKey,
+				'checklistid' => $this->account->gleap_checklist->gleap_id,
+				'sharedKey' => $this->account->gleap_checklist->shared_key,
 			]
 		);
 
@@ -142,6 +142,6 @@ class Checklist {
 	 * @return mixed
 	 */
 	public function __get( $key ) {
-		return $this->account->onboarding_checklist->$key;
+		return $this->account->gleap_checklist->$key;
 	}
 }

@@ -33,7 +33,7 @@ class Account extends Model {
 	 * @return bool
 	 */
 	public function getHasChecklistAttribute() {
-		return ! empty( $this->onboarding_checklist->id );
+		return ! empty( $this->gleap_checklist->gleap_id );
 	}
 
 	/**
@@ -43,33 +43,5 @@ class Account extends Model {
 	 */
 	public function getIsConnectedAttribute() {
 		return ! empty( $this->id );
-	}
-
-	/**
-	 * Get the onboarding checklist ID.
-	 *
-	 * @return object
-	 */
-	public function getOnboardingChecklistAttribute() {
-		// no charges yet.
-		if ( empty( $this->charges_usd_amount ) ) {
-			return (object) [
-				'title' => __( 'Getting Started', 'surecart' ),
-				'id' => '680fd578155c006aea08424b',
-				'sharedKey' => 'setup/' . $this->id,
-			];
-		}
-
-		// less than $100 in charges.
-		if ( $this->charges_usd_amount < 10000 ) {
-			return (object)[
-				'title' => __( 'Boost Revenue', 'surecart' ),
-				'id' => '680fe7c59b227e43322c369a',
-				'sharedKey' => 'boost/' . $this->id,
-			];
-		}
-
-		// has charges.
-		return (object) [];
 	}
 }
