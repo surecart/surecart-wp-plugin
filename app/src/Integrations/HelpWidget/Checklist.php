@@ -119,7 +119,6 @@ class Checklist {
 				gleap-checklist::part(sender){
 					display:none
 				}
-
 				gleap-checklist {
 					--color-gray-light: var(--sc-color-brand-stroke);
 					--color-gray-dark: var(--sc-color-brand-body);
