@@ -62,6 +62,14 @@ export class ScSubscriptionPayment {
         live_mode: this.subscription?.live_mode,
       }),
     })) as ManualPaymentMethod[];
+
+    // remove archived methods if the current payment method id is not the archived one.
+    this.manualPaymentMethods = this.manualPaymentMethods.filter(method => {
+      if( method?.archived  && method?.id !== this.currentPaymentMethodId()) {
+         return false;
+       }
+       return true;
+     });  
   }
 
   async handleSubmit(e) {
@@ -103,6 +111,12 @@ export class ScSubscriptionPayment {
     );
   }
 
+  currentPaymentMethodId() {
+    return this.subscription?.manual_payment
+    ? this.subscription?.manual_payment_method
+    : (this.subscription?.payment_method as PaymentMethod)?.id || this.subscription?.payment_method;
+  }
+
   renderContent() {
     if (this.loading) {
       return this.renderLoading();
@@ -110,9 +124,6 @@ export class ScSubscriptionPayment {
 
     const modeMethods = this.paymentMethods.filter(method => method?.live_mode === this.subscription?.live_mode);
     const hasNoPaymentMethods = (!this.paymentMethods?.length && !this.manualPaymentMethods?.length) || (this.paymentMethods?.length && !modeMethods?.length);
-    const currentPaymentMethodId = this.subscription?.manual_payment
-      ? this.subscription?.manual_payment_method
-      : (this.subscription?.payment_method as PaymentMethod)?.id || this.subscription?.payment_method;
 
     if (hasNoPaymentMethods) {
       return (
@@ -134,14 +145,14 @@ export class ScSubscriptionPayment {
             {(this.paymentMethods || []).map(method => {
               if (method?.live_mode !== this?.subscription?.live_mode) return null;
               return (
-                <sc-choice checked={currentPaymentMethodId === method?.id} name="payment_method" value={method?.id}>
+                <sc-choice checked={this.currentPaymentMethodId() === method?.id} name="payment_method" value={method?.id}>
                   <sc-payment-method paymentMethod={method} full={true} />
                 </sc-choice>
               );
             })}
             {(this.manualPaymentMethods || []).map(method => {
               return (
-                <sc-choice checked={currentPaymentMethodId === method?.id} name="payment_method" value={method?.id}>
+                <sc-choice checked={this.currentPaymentMethodId() === method?.id} name="payment_method" value={method?.id}>
                   <sc-manual-payment-method paymentMethod={method} showDescription />
                 </sc-choice>
               );
