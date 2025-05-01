@@ -39,6 +39,5 @@ class HelpWidgetServiceProvider implements ServiceProviderInterface {
 		}
 
 		$container['surecart.help_widget']->bootstrap();
-		$container['surecart.help_widget.checklist']->bootstrap();
 	}
 }

@@ -30,15 +30,6 @@ class Checklist {
 	}
 
 	/**
-	 * Bootstrap.
-	 *
-	 * @return void
-	 */
-	public function bootstrap() {
-		$this->checklist = $this->account->onboarding_checklist;
-	}
-
-	/**
 	 * Has Checklist.
 	 *
 	 * @return bool
@@ -83,7 +74,7 @@ class Checklist {
 	 * @return void
 	 */
 	public function render( $args = [] ) {
-		if ( empty( $this->checklist ) ) {
+		if ( empty( $this->account->onboarding_checklist->id ) ) {
 			return;
 		}
 
@@ -91,8 +82,8 @@ class Checklist {
 			$args,
 			[
 				'floating' => false,
-				'checklistid' => $this->checklist['id'],
-				'sharedKey' => $this->checklist['sharedKey'],
+				'checklistid' => $this->account->onboarding_checklist->id,
+				'sharedKey' => $this->account->onboarding_checklist->sharedKey,
 			]
 		);
 
@@ -110,5 +101,15 @@ class Checklist {
 
 		// configure the checklist urls.
 		add_action( 'surecart/help_widget/loaded', [ $this, 'configure' ] );
+	}
+
+	/**
+	 * Get property from the checklist.
+	 *
+	 * @param string $key Key.
+	 * @return mixed
+	 */
+	public function __get( $key ) {
+		return $this->account->onboarding_checklist->$key;
 	}
 }

@@ -33,7 +33,7 @@ class Account extends Model {
 	 * @return bool
 	 */
 	public function getHasChecklistAttribute() {
-		return ! empty( $this->onboarding_checklist );
+		return ! empty( $this->onboarding_checklist->id );
 	}
 
 	/**
@@ -48,12 +48,12 @@ class Account extends Model {
 	/**
 	 * Get the onboarding checklist ID.
 	 *
-	 * @return string
+	 * @return object
 	 */
 	public function getOnboardingChecklistAttribute() {
 		// no charges yet.
 		if ( empty( $this->charges_usd_amount ) ) {
-			return [
+			return (object) [
 				'title' => __( 'Getting Started', 'surecart' ),
 				'id' => '680fd578155c006aea08424b',
 				'sharedKey' => 'setup/' . $this->id,
@@ -62,7 +62,7 @@ class Account extends Model {
 
 		// less than $100 in charges.
 		if ( $this->charges_usd_amount < 10000 ) {
-			return [
+			return (object)[
 				'title' => __( 'Boost Revenue', 'surecart' ),
 				'id' => '680fe7c59b227e43322c369a',
 				'sharedKey' => 'boost/' . $this->id,
@@ -70,6 +70,6 @@ class Account extends Model {
 		}
 
 		// has charges.
-		return [];
+		return (object) [];
 	}
 }
