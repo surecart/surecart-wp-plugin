@@ -37,7 +37,7 @@ class OnboardingController {
 	 */
 	public function checklist( ) {
 		$checklist = \SureCart::account()->gleap_checklist;
-		if ( empty( $checklist->id ) ) {
+		if ( empty( $checklist->gleap_id ) ) {
 			return \SureCart::redirect()->to( esc_url( admin_url( 'admin.php?page=sc-dashboard' ) ) );
 		}
 
