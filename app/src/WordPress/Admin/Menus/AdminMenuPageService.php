@@ -147,20 +147,41 @@ class AdminMenuPageService {
 	}
 
 	/**
+	 * Get the menu slug.
+	 *
+	 * @return string
+	 */
+	public function getMenuSlug() {
+		// Set the slug to the getting started page if the user has no API token.
+		if ( ! ApiToken::get() ) {
+			return 'sc-getting-started';
+		}
+
+		// Set the slug to the onboarding checklist page if the user has a checklist.
+		if ( $this->hasChecklist() ) {
+			return 'sc-onboarding-checklist';
+		}
+
+		return $this->slug;
+	}
+
+	/**
+	 * Has Checklist.
+	 *
+	 * @return bool
+	 */
+	public function hasChecklist() {
+		return \SureCart::account()->has_checklist && current_user_can( 'manage_options' );
+	}
+
+	/**
 	 * Register admin pages.
 	 *
 	 * @return void
 	 */
 	public function registerAdminPages() {
-		// Set the slug to the getting started page if the user has no API token.
-		if ( ! ApiToken::get() ) {
-			$this->slug = 'sc-getting-started';
-		}
-
-		// Set the slug to the onboarding checklist page if the user has a checklist.
-		if ( \SureCart::helpWidget()->checklist()->exists() ) {
-			$this->slug = 'sc-onboarding-checklist';
-		}
+		// Get the menu slug.
+		$this->slug = $this->getMenuSlug();
 
 		// phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
 		\add_menu_page( __( 'Dashboard', 'surecart' ), __( 'SureCart', 'surecart' ), 'manage_sc_shop_settings', $this->slug, '__return_false', 'data:image/svg+xml;base64,' . base64_encode( file_get_contents( plugin_dir_path( SURECART_PLUGIN_FILE ) . 'images/icon.svg' ) ), apply_filters( 'surecart_menu_priority', 2.0001 ) );
@@ -178,7 +199,7 @@ class AdminMenuPageService {
 		/**
 		 * Onboarding Checklist
 		 */
-		if ( \SureCart::helpWidget()->checklist()->exists() ) {
+		if ( $this->hasChecklist() ) {
 			$title = \SureCart::helpWidget()->checklist()->title ?? __( 'Getting Started', 'surecart' );
 			$this->pages = array(
 				'sc-onboarding-checklist' 	=> \add_submenu_page( $this->slug, $title,  $title, 'manage_sc_shop_settings', 'sc-onboarding-checklist', '__return_false' ),

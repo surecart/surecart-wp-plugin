@@ -93,6 +93,12 @@ class Checklist {
 	 * @return void
 	 */
 	public function render( $args = [] ) {
+		// if the account is not connected, don't show the checklist.
+		if ( ! $this->account->is_connected ) {
+			return;
+		}
+
+		// if the checklist is not set, don't show the checklist.
 		if ( empty( $this->account->gleap_checklist->gleap_id ) ) {
 			return;
 		}

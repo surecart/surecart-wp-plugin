@@ -33,7 +33,7 @@ class Account extends Model {
 	 * @return bool
 	 */
 	public function getHasChecklistAttribute() {
-		return ! empty( $this->gleap_checklist->gleap_id );
+		return ! empty( $this->gleap_checklist->gleap_id ) && ! empty( $this->is_connected );
 	}
 
 	/**
@@ -42,6 +42,6 @@ class Account extends Model {
 	 * @return string
 	 */
 	public function getIsConnectedAttribute() {
-		return ! empty( $this->id );
+		return ! empty( ApiToken::get() ) && ! empty( $this->id );
 	}
 }
