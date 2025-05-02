@@ -10,24 +10,21 @@ import {
 const { __ } = wp.i18n;
 
 /**
- * Holds all elements that are made inert when the lightbox is open; used to
- * remove inert attribute of only those elements explicitly made inert.
+ * Tracks elements made inert when lightbox is active.
+ * Helps revert only explicitly modified elements.
  *
- * @type {Array}
+ * @type {Array<HTMLElement>}
  */
 let inertElements = [];
 
 /**
- * Check if the event is valid for opening/closing the dialog.
+ * Validate if the event triggers an open/close action.
  *
- * @param {Event} event - The event to check.
- * @returns {boolean} - Returns true if the event is valid, false otherwise.
- * */
-const isValidEvent = (event) => {
-	if (event?.key && ![' ', 'Enter'].includes(event.key)) return false;
-
-	return true;
-};
+ * @param {Event} event
+ * @returns {boolean}
+ */
+const isValidEvent = (event) =>
+	event?.key ? [' ', 'Enter'].includes(event.key) : true;
 
 const { state, actions } = store('surecart/product-quick-view', {
 	state: {
@@ -37,24 +34,24 @@ const { state, actions } = store('surecart/product-quick-view', {
 	},
 
 	actions: {
-		/** Navigate to a URL using the router region. */
+		/** Navigate using interactivity router */
 		*navigate(event) {
 			const { ref } = getElement();
 			const { url } = getContext();
 			const routerRegion = ref.closest('[data-wp-router-region]');
-			if (routerRegion) {
-				event?.preventDefault();
-				const { actions: routerActions } = yield import(
-					/* webpackIgnore: true */
-					'@wordpress/interactivity-router'
-				);
-				yield routerActions.navigate(url, {
-					replace: true,
-				});
-			}
+			if (!routerRegion) return;
+
+			event?.preventDefault();
+
+			const { actions: routerActions } = yield import(
+				/* webpackIgnore: true */
+				'@wordpress/interactivity-router'
+			);
+
+			yield routerActions.navigate(url, { replace: true });
 		},
 
-		/** Prefetch upcoming URLs. */
+		/** Prefetch URL */
 		*prefetch() {
 			const { url } = getContext();
 			const { actions: routerActions } = yield import(
@@ -64,16 +61,16 @@ const { state, actions } = store('surecart/product-quick-view', {
 			yield routerActions.prefetch(url);
 		},
 
-		/** Open the product quick view dialog. */
+		/** Open quick view modal */
 		*open(event) {
 			event?.preventDefault();
-
 			if (!isValidEvent(event)) return;
 
 			state.loading = true;
 			state.open = true;
 			document.body.classList.add('sc-product-quick-view-open');
 
+			// Set inert on all siblings
 			inertElements = Array.from(
 				document.querySelectorAll(
 					'body > :not(.sc-lightbox-overlay):not(.wp-block-surecart-product-quick-view)'
@@ -82,9 +79,7 @@ const { state, actions } = store('surecart/product-quick-view', {
 
 			inertElements.forEach((el) => el.setAttribute('inert', ''));
 
-			if (event) {
-				yield actions.navigate(event);
-			}
+			if (event) yield actions.navigate(event);
 			state.loading = false;
 
 			document
@@ -94,15 +89,15 @@ const { state, actions } = store('surecart/product-quick-view', {
 
 		/** Close the product quick view dialog. */
 		*close(event) {
-			if (!state.open) return;
-			if (!isValidEvent(event)) return;
-			const { ref } = getElement();
+			if (!state.open || !isValidEvent(event)) return;
 
+			const { ref } = getElement();
 			const dialog = ref?.closest('.sc-product-quick-view-dialog');
 
 			dialog.addEventListener(
 				'transitionend',
 				withScope(() => {
+					state.showClosingAnimation = false;
 					actions.navigate(event);
 				}),
 				{ once: true }
@@ -117,15 +112,13 @@ const { state, actions } = store('surecart/product-quick-view', {
 			inertElements = [];
 
 			state.open = false;
-
-			state.showClosingAnimation = false;
 		},
 	},
 
 	callbacks: {
 		init() {
 			if (!state.open) {
-				actions.open(); // Automatically opens if URL param exists
+				actions.open(); // Trigger open if URL param exists
 			}
 		},
 	},
