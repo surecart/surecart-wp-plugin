@@ -31,6 +31,7 @@ const { state, actions } = store('surecart/product-quick-view', {
 		loading: false,
 		open: false,
 		showClosingAnimation: false,
+		showOpeningAnimation: false,
 	},
 
 	actions: {
@@ -65,7 +66,7 @@ const { state, actions } = store('surecart/product-quick-view', {
 		*open(event) {
 			event?.preventDefault();
 			if (!isValidEvent(event)) return;
-
+			state.showOpeningAnimation = true;
 			state.loading = true;
 			state.open = true;
 			document.body.classList.add('sc-product-quick-view-open');
@@ -78,7 +79,7 @@ const { state, actions } = store('surecart/product-quick-view', {
 			).filter((el) => !el.hasAttribute('inert'));
 
 			inertElements.forEach((el) => el.setAttribute('inert', ''));
-
+			state.showOpeningAnimation = false;
 			if (event) yield actions.navigate(event);
 			state.loading = false;
 

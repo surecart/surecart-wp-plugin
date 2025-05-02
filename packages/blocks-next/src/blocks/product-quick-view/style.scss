@@ -34,12 +34,13 @@
 			visibility: visible;
 			opacity: 1;
 			transform: translate(-50%, -50%) scale(1);
+		}
+		&.show-opening-animation.active {
 			animation: both sc-turn-on-visibility 0.25s;
 			img {
 				animation: both sc-turn-on-visibility 0.35s;
 			}
 		}
-		
 		&.show-closing-animation {
 			&:not(.active) {
 				animation: both sc-turn-off-visibility 0.35s;
@@ -97,9 +98,10 @@
 		&.active {
 			visibility: visible;
 			pointer-events: all;
+		}
+		&.show-opening-animation.active {
 			animation: both sc-turn-on-visibility 0.25s;
 		}
-
 		&.show-closing-animation {
 			&:not(.active) {
 				animation: both sc-turn-off-visibility 0.35s;

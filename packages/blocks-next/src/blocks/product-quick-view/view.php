@@ -22,6 +22,7 @@ use SureCart\Models\Blocks\ProductPageBlock;
 		data-wp-class--active="state.open"
 		data-wp-class--loading="state.loading"
 		data-wp-class--show-closing-animation="state.showClosingAnimation"
+		data-wp-class--show-opening-animation="state.showOpeningAnimation"
 		data-wp-on--keydown="actions.close"
 	>
 		<div
@@ -125,5 +126,6 @@ use SureCart\Models\Blocks\ProductPageBlock;
 		data-wp-class--active="state.open"
 		data-wp-on--click="actions.close"
 		data-wp-class--show-closing-animation="state.showClosingAnimation"
+		data-wp-class--show-opening-animation="state.showOpeningAnimation"
 	></div>
 </div>

@@ -15,6 +15,7 @@ wp_interactivity_state(
 	array(
 		'open'                 => false,
 		'showClosingAnimation' => false,
+		'showOpeningAnimation' => false,
 	)
 );
 
