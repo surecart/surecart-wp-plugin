@@ -113,7 +113,7 @@ export class ScSubscriptionPaymentMethod {
 
     // remove archived methods if the current payment method id is not the archived one.
     this.manualPaymentMethods = this.manualPaymentMethods.filter(method => {
-     if( method?.archived  && method?.id !== this.currentPaymentMethodId()) {
+     if( method?.archived && method?.id !== this.currentPaymentMethodId()) {
         return false;
       }
       return true;
