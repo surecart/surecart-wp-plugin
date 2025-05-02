@@ -44,7 +44,6 @@
 		&.show-closing-animation {
 			&:not(.active) {
 				animation: both sc-turn-off-visibility 0.35s;
-				min-height: 80vh;
 			}
 		}
 
