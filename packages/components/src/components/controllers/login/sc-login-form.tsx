@@ -1,7 +1,7 @@
 import { Component, Fragment, h, State, Watch } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import apiFetch from '../../../functions/fetch';
-import { ResponseError } from '../../../types';
+import { ResponseError, VerificationCode } from '../../../types';
 
 @Component({
   tag: 'sc-login-form',
@@ -85,7 +85,7 @@ export class ScLogin {
           login: this.email,
           code: this.verifyCode,
         },
-      })) as any;
+      })) as VerificationCode;
       if (!verified) {
         throw { message: __('Verification code is not valid. Please try again.', 'surecart') };
       }
