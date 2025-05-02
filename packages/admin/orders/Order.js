@@ -32,6 +32,7 @@ import Details from './modules/Details';
 import LineItems from './modules/LineItems';
 import OrderCancelConfirmModal from './modules/OrderCancelConfirmModal';
 import OrderStatusConfirmModal from './modules/OrderStatusConfirmModal';
+import OrderResendNotificationModal from './modules/OrderResendNotificationModal';
 import PaymentFailures from './modules/PaymentFailures';
 import CreateRefund from './modules/Refund/CreateRefund';
 import Subscriptions from './modules/Subscriptions';
@@ -203,6 +204,13 @@ export default () => {
 			});
 		}
 
+		if (['paid'].includes(orderStatus)) {
+			menuItems.push({
+				title: __('Resend Notification', 'surecart'),
+				modal: 'order_resend_notification',
+			});
+		}
+
 		const totalReturnQty = returnRequests?.reduce(
 			(total, returnRequest) =>
 				total +
@@ -367,6 +375,11 @@ export default () => {
 					open={modal === 'order_cancel'}
 					onRequestClose={() => setModal(false)}
 					loading={!hasLoadedOrder}
+				/>
+				<OrderResendNotificationModal
+					order={order}
+					open={modal === 'order_resend_notification'}
+					onRequestClose={() => setModal(false)}
 				/>
 				<CreateReturnRequest
 					fulfillmentItems={fulfilledItems}
