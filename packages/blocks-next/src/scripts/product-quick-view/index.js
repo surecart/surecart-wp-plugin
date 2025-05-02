@@ -1,7 +1,12 @@
 /**
  * WordPress dependencies
  */
-import { store, getElement, getContext } from '@wordpress/interactivity';
+import {
+	store,
+	getElement,
+	getContext,
+	withScope,
+} from '@wordpress/interactivity';
 const { __ } = wp.i18n;
 
 /**
@@ -19,7 +24,6 @@ let inertElements = [];
  * @returns {boolean} - Returns true if the event is valid, false otherwise.
  * */
 const isValidEvent = (event) => {
-	if (!event) return false;
 	if (event?.key && ![' ', 'Enter'].includes(event.key)) return false;
 
 	return true;
@@ -35,16 +39,11 @@ const { state, actions } = store('surecart/product-quick-view', {
 	actions: {
 		/** Navigate to a URL using the router region. */
 		*navigate(event) {
-			if (!isValidEvent(event)) return;
-			state.loading = true;
-			yield actions.toggle(event);
-
 			const { ref } = getElement();
 			const { url } = getContext();
 			const routerRegion = ref.closest('[data-wp-router-region]');
-
 			if (routerRegion) {
-				event.preventDefault();
+				event?.preventDefault();
 				const { actions: routerActions } = yield import(
 					/* webpackIgnore: true */
 					'@wordpress/interactivity-router'
@@ -53,10 +52,6 @@ const { state, actions } = store('surecart/product-quick-view', {
 					replace: true,
 				});
 			}
-			document
-				.querySelector('.sc-product-quick-view-dialog__close-button')
-				?.focus();
-			state.loading = false;
 		},
 
 		/** Prefetch upcoming URLs. */
@@ -70,7 +65,12 @@ const { state, actions } = store('surecart/product-quick-view', {
 		},
 
 		/** Open the product quick view dialog. */
-		open() {
+		*open(event) {
+			event?.preventDefault();
+
+			if (!isValidEvent(event)) return;
+
+			state.loading = true;
 			state.open = true;
 			document.body.classList.add('sc-product-quick-view-open');
 
@@ -81,38 +81,44 @@ const { state, actions } = store('surecart/product-quick-view', {
 			).filter((el) => !el.hasAttribute('inert'));
 
 			inertElements.forEach((el) => el.setAttribute('inert', ''));
+
+			if (event) {
+				yield actions.navigate(event);
+			}
+			state.loading = false;
+
+			document
+				.querySelector('.sc-product-quick-view-dialog__close-button')
+				?.focus();
 		},
 
 		/** Close the product quick view dialog. */
-		*close() {
+		*close(event) {
 			if (!state.open) return;
-			state.open = false;
+			if (!isValidEvent(event)) return;
+			const { ref } = getElement();
+
+			const dialog = ref?.closest('.sc-product-quick-view-dialog');
+
+			dialog.addEventListener(
+				'transitionend',
+				withScope(() => {
+					actions.navigate(event);
+				}),
+				{ once: true }
+			); // Wait for the closing animation to finish before navigating.
+
+			event?.preventDefault();
 			state.showClosingAnimation = true;
 
 			document.body.classList.remove('sc-product-quick-view-open');
 
 			inertElements.forEach((el) => el.removeAttribute('inert'));
 			inertElements = [];
-		},
-		/** Toggle the dialog open/close based on keyboard event or click. */
-		*toggle(e) {
-			if (e?.key && ![' ', 'Enter'].includes(e.key)) return;
-			e?.preventDefault();
 
-			if (state.open) {
-				yield actions.close();
-			} else {
-				actions.open();
-			}
-		},
-		*handleKeyDown(e) {
-			if (e?.key && e.key !== 'Escape') return;
-			yield actions.navigate(e);
-		},
-		/** Close if clicked outside the dialog content. */
-		closeOverlay(e) {
-			if (!state.open) return;
-			if (e.target === e.currentTarget) actions.navigate(e);
+			state.open = false;
+
+			state.showClosingAnimation = false;
 		},
 	},
 

@@ -22,15 +22,15 @@ use SureCart\Models\Blocks\ProductPageBlock;
 		data-wp-class--active="state.open"
 		data-wp-class--loading="state.loading"
 		data-wp-class--show-closing-animation="state.showClosingAnimation"
-		data-wp-on--keydown="actions.handleKeyDown"
+		data-wp-on--keydown="actions.close"
 	>
 		<div
 			class="sc-product-quick-view-dialog__content"
 		>
 			<a
 				class="sc-product-quick-view-dialog__close-button"
-				data-wp-on--click="actions.navigate"
-				data-wp-on--keydown="actions.navigate"
+				data-wp-on--click="actions.close"
+				data-wp-on--keydown="actions.close"
 				data-wp-on--mouseenter="actions.prefetch"
 				role="button"
 				tabindex="0"
@@ -123,7 +123,7 @@ use SureCart\Models\Blocks\ProductPageBlock;
 		class="sc-product-quick-view-overlay"
 		data-wp-bind--hidden="!state.open"
 		data-wp-class--active="state.open"
-		data-wp-on--click="actions.closeOverlay"
+		data-wp-on--click="actions.close"
 		data-wp-class--show-closing-animation="state.showClosingAnimation"
 	></div>
 </div>
