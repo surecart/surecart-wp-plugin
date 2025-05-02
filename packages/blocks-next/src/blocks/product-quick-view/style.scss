@@ -98,8 +98,6 @@
 		&.active {
 			visibility: visible;
 			pointer-events: all;
-		}
-		&.show-opening-animation.active {
 			animation: both sc-turn-on-visibility 0.25s;
 		}
 		&.show-closing-animation {
