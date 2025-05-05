@@ -57,7 +57,7 @@ class Checklist {
 							return;
 						}
 						if ( url.includes('processor_types') ) {
-							location.href = 'https://app.surecart.com/processor_types?switch_account_id=<?php echo $this->account->id; ?>';
+							window.open('https://app.surecart.com/processor_types?switch_account_id=<?php echo $this->account->id; ?>', '_blank');
 							return;
 						}
 						if ( url.includes('abandoned-checkout') ) {
@@ -80,6 +80,7 @@ class Checklist {
 							location.href = '<?php echo admin_url('admin.php?page=sc-settings&tab=subscription_preservation'); ?>';
 							return;
 						}
+						window.open(url, '_blank');
 					});
 				});
 			}
