@@ -99,7 +99,7 @@ export class ScSubscriptionNextPayment {
           <span slot="summary">
             <sc-subscription-details subscription={this.subscription}>
               <div style={{ fontSize: 'var(--sc-font-size-small)' }}>
-                {__('Your next payment is', 'surecart')} <strong>{checkout?.amount_due_display_amount}</strong>{' '}
+                {__('Your next payment is', 'surecart')} <strong>{checkout?.amount_due_display_amount || __('Free', 'surecart')}</strong>{' '}
                 {!!this.subscription?.remaining_period_text && `— ${this.subscription?.remaining_period_text}`}
               </div>
             </sc-subscription-details>
