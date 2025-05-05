@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-04-30T18:46:00+00:00\n"
+"POT-Creation-Date: 2025-05-05T14:45:16+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.9.0\n"
 
@@ -419,7 +419,7 @@ msgstr ""
 #: sc-customer-details2.js:431
 #: sc-customer-edit.js:100
 #: sc-payment-methods-list.js:168
-#: sc-subscription-payment-method.js:176
+#: sc-subscription-payment-method.js:183
 msgid "Test"
 msgstr ""
 
@@ -1643,7 +1643,7 @@ msgstr ""
 #: src/Controllers/Admin/Products/ProductsListTable.php:149
 #: src/Controllers/Admin/Settings/BaseSettings.php:56
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:113
-#: layouts/partials/admin-settings-sidebar.php:75
+#: layouts/partials/admin-settings-sidebar.php:69
 #: products/modules/integrations/Integrations.js:78
 #: settings/integrations/Integration.js:133
 #: settings/integrations/IntegrationsList.js:51
@@ -1820,8 +1820,8 @@ msgstr ""
 #: orders/modules/OrderCancelConfirmModal.js:69
 #: orders/modules/OrderResendNotificationModal.js:61
 #: orders/modules/ReturnRequest/ReturnCancelConfirmModal.js:63
-#: sc-subscription-payment.js:128
-#: sc-subscription-payment.js:137
+#: sc-subscription-payment.js:138
+#: sc-subscription-payment.js:147
 msgid "Go Back"
 msgstr ""
 
@@ -2015,7 +2015,7 @@ msgstr ""
 
 #: src/Controllers/Admin/Settings/BaseSettings.php:55
 #: admin/notices/webhook-change.php:17
-#: layouts/partials/admin-settings-sidebar.php:71
+#: layouts/partials/admin-settings-sidebar.php:75
 msgid "Connection"
 msgstr ""
 
@@ -2069,8 +2069,8 @@ msgstr[1] ""
 
 #. translators: number of days.
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:275
-#: src/Models/Price.php:270
-#: src/Models/Price.php:309
+#: src/Models/Price.php:274
+#: src/Models/Price.php:313
 #: src/Support/Interval.php:29
 #: util/translations.js:15
 #: price.js:35
@@ -2092,7 +2092,7 @@ msgstr[1] ""
 
 #. translators: number of weeks.
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:281
-#: src/Models/Price.php:274
+#: src/Models/Price.php:278
 #: src/Support/Interval.php:35
 #: util/translations.js:22
 #: price.js:37
@@ -2115,7 +2115,7 @@ msgstr[1] ""
 
 #. translators: number of months
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:287
-#: src/Models/Price.php:278
+#: src/Models/Price.php:282
 #: src/Support/Interval.php:41
 #: util/translations.js:29
 #: price.js:39
@@ -2136,7 +2136,7 @@ msgstr[1] ""
 
 #. translators: number of yearls
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:293
-#: src/Models/Price.php:282
+#: src/Models/Price.php:286
 #: src/Support/Interval.php:47
 #: util/translations.js:36
 #: price.js:41
@@ -2989,7 +2989,7 @@ msgid "Text"
 msgstr ""
 
 #: src/Integrations/Bricks/Elements/SelectedPriceAdHocAmount.php:52
-#: src/Models/Price.php:133
+#: src/Models/Price.php:137
 #: products/modules/Prices/Price/Header.js:130
 #: sc-price-choice-container2.js:52
 #: sc-price-choice.js:806
@@ -3291,7 +3291,7 @@ msgid "once"
 msgstr ""
 
 #: src/Models/Checkout.php:629
-#: src/Models/Price.php:136
+#: src/Models/Price.php:140
 #: checkouts/modules/SelectShipping.js:130
 #: invoices/modules/SelectShipping.js:95
 #: sc-order-bump2.js:69
@@ -3525,7 +3525,7 @@ msgid "Processor"
 msgstr ""
 
 #. translators: %s is the number of days.
-#: src/Models/Price.php:206
+#: src/Models/Price.php:210
 #: checkouts/modules/Price.js:190
 #: invoices/modules/Price.js:225
 #: sc-price-choice-container2.js:71
@@ -3537,11 +3537,11 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %1$1s is the setup fee amount, %2$2s is the setup fee name.
-#: src/Models/Price.php:226
+#: src/Models/Price.php:230
 msgid "%1$1s %2$2s"
 msgstr ""
 
-#: src/Models/Price.php:228
+#: src/Models/Price.php:232
 #: products/modules/Prices/Price/Header.js:59
 #: subscriptions/show/modules/CurrentPlan.js:187
 #: src/blocks/product-selected-price-fees/edit.js:16
@@ -3553,7 +3553,7 @@ msgid "Setup Fee"
 msgstr ""
 
 #. translators: %d is the number of payments.
-#: src/Models/Price.php:252
+#: src/Models/Price.php:256
 #: util/translations.js:83
 #: price.js:84
 msgid "%d payment"
@@ -3561,34 +3561,34 @@ msgid_plural "%d payments"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Models/Price.php:271
-#: src/Models/Price.php:310
+#: src/Models/Price.php:275
+#: src/Models/Price.php:314
 #: products/components/price/parts/RevokeAfterDays.js:59
 #: settings/affiliation-protocol/AffiliationProtocolSettings.js:339
 msgid "days"
 msgstr ""
 
-#: src/Models/Price.php:275
+#: src/Models/Price.php:279
 msgid "weeks"
 msgstr ""
 
-#: src/Models/Price.php:279
+#: src/Models/Price.php:283
 #: components/coupon/CouponDiscountDuration.js:81
 msgid "months"
 msgstr ""
 
-#: src/Models/Price.php:283
+#: src/Models/Price.php:287
 msgid "years"
 msgstr ""
 
 #. translators: %1$d is the number of intervals, %2$s is the interval.
-#: src/Models/Price.php:295
+#: src/Models/Price.php:299
 msgid "every %2$2s"
 msgid_plural "every %1$1s %2$2s"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Models/Price.php:313
+#: src/Models/Price.php:317
 #: src/Support/Interval.php:80
 #: price.js:51
 msgid "wk"
@@ -3596,11 +3596,11 @@ msgid_plural "%d wks"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Models/Price.php:314
+#: src/Models/Price.php:318
 msgid "wks"
 msgstr ""
 
-#: src/Models/Price.php:317
+#: src/Models/Price.php:321
 #: src/Support/Interval.php:86
 #: price.js:53
 msgid "mo"
@@ -3608,11 +3608,11 @@ msgid_plural "%d mos"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Models/Price.php:318
+#: src/Models/Price.php:322
 msgid "mos"
 msgstr ""
 
-#: src/Models/Price.php:321
+#: src/Models/Price.php:325
 #: src/Support/Interval.php:92
 #: price.js:55
 msgid "yr"
@@ -3620,24 +3620,24 @@ msgid_plural "%d yrs"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Models/Price.php:322
+#: src/Models/Price.php:326
 msgid "yrs"
 msgstr ""
 
 #. translators: %1$d is the number of intervals, %2$s is the interval.
-#: src/Models/Price.php:334
+#: src/Models/Price.php:338
 msgid "/ %2$2s"
 msgid_plural "/ %1$1s %2$2s"
 msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %d is the number of intervals.
-#: src/Models/Price.php:351
+#: src/Models/Price.php:355
 msgid " x %s"
 msgstr ""
 
 #. translators: %d is the number of intervals.
-#: src/Models/Price.php:365
+#: src/Models/Price.php:369
 msgid "(%d payments)"
 msgstr ""
 
@@ -4005,7 +4005,7 @@ msgstr ""
 
 #: src/Rest/CheckEmailRestServiceProvider.php:66
 #: src/Rest/LoginRestServiceProvider.php:67
-#: sc-login-form.js:151
+#: sc-login-form.js:156
 #: sc-login-provider2.js:84
 msgid "Login"
 msgstr ""
@@ -7591,7 +7591,7 @@ msgstr ""
 #: settings/subscription-preservation/Reasons.js:97
 #: upsell-funnels/components/SelectTemplate/index.js:97
 #: upsell-funnels/components/SelectTemplatePart/index.js:98
-#: sc-subscription-payment-method.js:195
+#: sc-subscription-payment-method.js:202
 msgid "Add New"
 msgstr ""
 
@@ -8293,10 +8293,10 @@ msgstr ""
 #: sc-stripe-add-method.js:133
 #: sc-subscription-cancel2.js:51
 #: sc-subscription-payment-method.js:85
-#: sc-subscription-payment-method.js:124
-#: sc-subscription-payment-method.js:156
+#: sc-subscription-payment-method.js:131
+#: sc-subscription-payment-method.js:163
 #: sc-subscription-payment.js:55
-#: sc-subscription-payment.js:110
+#: sc-subscription-payment.js:117
 #: sc-subscription-reactivate2.js:50
 #: sc-subscription-reactivate2.js:69
 #: sc-subscription-switch.js:59
@@ -8592,7 +8592,7 @@ msgstr ""
 #: sc-customer-details2.js:431
 #: sc-donation-choices.js:131
 #: sc-product-selected-price.js:72
-#: sc-subscription-payment.js:137
+#: sc-subscription-payment.js:147
 #: sc-wordpress-user.js:37
 msgid "Update"
 msgstr ""
@@ -9355,7 +9355,7 @@ msgstr ""
 #: Blocks/Dashboard/CustomerPaymentMethods/edit.js:78
 #: Blocks/Dashboard/CustomerPaymentMethods/edit.js:117
 #: sc-payment-methods-list.js:166
-#: sc-subscription-payment-method.js:178
+#: sc-subscription-payment-method.js:185
 msgid "Exp."
 msgstr ""
 
@@ -9771,7 +9771,7 @@ msgstr ""
 #: orders/modules/LineItems/index.js:208
 #: orders/modules/Refund/CreateRefund.js:453
 #: orders/Order.js:242
-#: settings/customer/CustomerSettings.js:433
+#: settings/customer/CustomerSettings.js:450
 #: store/add-entities.js:293
 msgid "Refund"
 msgstr ""
@@ -14483,83 +14483,99 @@ msgid "Sent when a fulfillment is marked as delivered."
 msgstr ""
 
 #: settings/customer/CustomerSettings.js:386
-msgid "Subscription Recovery"
+msgid "Invoice Opened"
 msgstr ""
 
 #: settings/customer/CustomerSettings.js:387
+msgid "Sent after an invoice is opened."
+msgstr ""
+
+#: settings/customer/CustomerSettings.js:394
+msgid "Invoice Reminder"
+msgstr ""
+
+#: settings/customer/CustomerSettings.js:395
+msgid "Sent after an invoice hits the due date and is not paid yet."
+msgstr ""
+
+#: settings/customer/CustomerSettings.js:403
+msgid "Subscription Recovery"
+msgstr ""
+
+#: settings/customer/CustomerSettings.js:404
 msgid "Sent to customers when their subscription's payment method fails."
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:398
+#: settings/customer/CustomerSettings.js:415
 msgid "Subscription Reminder"
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:399
+#: settings/customer/CustomerSettings.js:416
 msgid "Sent to customers 3 days before a subscription renews."
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:407
+#: settings/customer/CustomerSettings.js:424
 msgid "Subscription Renewal"
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:408
+#: settings/customer/CustomerSettings.js:425
 msgid "Sent to customers when their subscription renews."
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:416
-#: settings/customer/CustomerSettings.js:467
+#: settings/customer/CustomerSettings.js:433
+#: settings/customer/CustomerSettings.js:484
 msgid "Subscription Cancellation"
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:417
+#: settings/customer/CustomerSettings.js:434
 msgid "Sent to customers when their subscription cancellation."
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:425
+#: settings/customer/CustomerSettings.js:442
 msgid "Product Access"
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:426
+#: settings/customer/CustomerSettings.js:443
 msgid "Sent to customers when a purchase is downloadable or has a license."
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:434
+#: settings/customer/CustomerSettings.js:451
 msgid "Sent to customers when a charge is refunded."
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:445
+#: settings/customer/CustomerSettings.js:462
 msgid "Store Emails"
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:446
+#: settings/customer/CustomerSettings.js:463
 msgid "These are the emails that are sent to you and other team members of this store."
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:457
+#: settings/customer/CustomerSettings.js:474
 msgid "New Order"
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:458
+#: settings/customer/CustomerSettings.js:475
 msgid "Sent when an order is created."
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:468
+#: settings/customer/CustomerSettings.js:485
 msgid "Sent when a subscription is canceled."
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:477
+#: settings/customer/CustomerSettings.js:494
 msgid "Subscription Payment"
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:478
+#: settings/customer/CustomerSettings.js:495
 msgid "Sent when a subscription renews."
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:487
+#: settings/customer/CustomerSettings.js:504
 msgid "Subscription Payment Failure"
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:491
+#: settings/customer/CustomerSettings.js:508
 msgid "Sent when a subscription payment fails."
 msgstr ""
 
@@ -15278,7 +15294,7 @@ msgstr ""
 #: src/blocks/product-pagination-next/edit.js:29
 #: sc-icon2.js:43
 #: sc-icon2.js:45
-#: sc-login-form.js:153
+#: sc-login-form.js:158
 #: sc-pagination2.js:42
 #: sc-subscription-ad-hoc-confirm.js:37
 #: sc-subscription-switch.js:220
@@ -16241,8 +16257,8 @@ msgstr ""
 
 #: subscriptions/edit/modules/PaymentMethod/EditPaymentMethod.js:91
 #: Controllers/SubscriptionController.php:309
-#: sc-subscription-payment-method.js:171
-#: sc-subscription-payment-method.js:190
+#: sc-subscription-payment-method.js:178
+#: sc-subscription-payment-method.js:197
 #: sc-subscription.js:192
 msgid "Update Payment Method"
 msgstr ""
@@ -18921,22 +18937,14 @@ msgid "Displayed on the summary when this is an invoice."
 msgstr ""
 
 #: Blocks/Upsell/CountdownTimer/edit.js:91
-msgid "Offer expires label"
-msgstr ""
-
-#: Blocks/Upsell/CountdownTimer/edit.js:92
-msgid "Offer expires in"
-msgstr ""
-
-#: Blocks/Upsell/CountdownTimer/edit.js:101
 msgid "Show clock icon"
 msgstr ""
 
-#: Blocks/Upsell/CountdownTimer/edit.js:142
+#: Blocks/Upsell/CountdownTimer/edit.js:132
 msgid "Offer Expire text"
 msgstr ""
 
-#: Blocks/Upsell/CountdownTimer/edit.js:143
+#: Blocks/Upsell/CountdownTimer/edit.js:133
 msgid "Offer Expires in"
 msgstr ""
 
@@ -23192,7 +23200,7 @@ msgid "Something went wrong. Please reload the page and try again."
 msgstr ""
 
 #: sc-charges-list.js:92
-#: sc-subscription-payment.js:128
+#: sc-subscription-payment.js:138
 msgid "You have no saved payment methods."
 msgstr ""
 
@@ -23460,35 +23468,35 @@ msgstr ""
 msgid "Verification code is not valid. Please try again."
 msgstr ""
 
-#: sc-login-form.js:148
+#: sc-login-form.js:153
 msgid "Check your email for a confirmation code"
 msgstr ""
 
-#: sc-login-form.js:148
+#: sc-login-form.js:153
 msgid "Confirmation code"
 msgstr ""
 
-#: sc-login-form.js:148
+#: sc-login-form.js:153
 msgid "Login with Code"
 msgstr ""
 
-#: sc-login-form.js:151
+#: sc-login-form.js:156
 msgid "Welcome"
 msgstr ""
 
-#: sc-login-form.js:151
+#: sc-login-form.js:156
 msgid "Send a login code"
 msgstr ""
 
-#: sc-login-form.js:151
+#: sc-login-form.js:156
 msgid "or"
 msgstr ""
 
-#: sc-login-form.js:151
+#: sc-login-form.js:156
 msgid "Enter your password"
 msgstr ""
 
-#: sc-login-form.js:153
+#: sc-login-form.js:158
 msgid "Username or Email Address"
 msgstr ""
 
@@ -23757,7 +23765,7 @@ msgid "Delete Payment Method"
 msgstr ""
 
 #: sc-payment-methods-list.js:195
-#: sc-subscription-payment-method.js:111
+#: sc-subscription-payment-method.js:118
 msgid "Are you sure you want to remove this payment method?"
 msgstr ""
 
@@ -24175,12 +24183,12 @@ msgstr ""
 msgid "You do not have any payment methods."
 msgstr ""
 
-#: sc-subscription-payment-method.js:180
-#: sc-subscription-payment-method.js:184
+#: sc-subscription-payment-method.js:187
+#: sc-subscription-payment-method.js:191
 msgid "Current Payment Method"
 msgstr ""
 
-#: sc-subscription-payment.js:140
+#: sc-subscription-payment.js:150
 msgid "Select a payment method"
 msgstr ""
 
