@@ -91,7 +91,7 @@ export class ScLineItems {
                 variant={item?.variant_display_options}
                 fees={item?.fees?.data}
                 amount={item.ad_hoc_display_amount ? item.ad_hoc_display_amount : item.subtotal_display_amount}
-                scratch={!item.ad_hoc_display_amount && item?.scratch_display_amount}
+                scratch={item.ad_hoc_display_amount ? null : item?.scratch_display_amount}
                 trial={item?.price?.trial_text}
                 interval={`${item?.price?.short_interval_text} ${item?.price?.short_interval_count_text}`}
                 quantity={item.quantity}

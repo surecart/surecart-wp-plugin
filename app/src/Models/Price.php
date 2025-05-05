@@ -130,6 +130,10 @@ class Price extends Model {
 	 */
 	public function getDisplayAmountAttribute() {
 		if ( $this->ad_hoc ) {
+			if ( $this->amount ) {
+				return Currency::format( $this->amount, $this->currency );
+			}
+
 			return esc_html__( 'Custom Amount', 'surecart' );
 		}
 		if ( empty( $this->amount ) && empty( $this->recurring_interval ) ) {

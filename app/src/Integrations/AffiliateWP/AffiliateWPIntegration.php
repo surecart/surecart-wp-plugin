@@ -86,7 +86,7 @@ class AffiliateWPIntegration extends \Affiliate_WP_Base {
 			return;
 		}
 
-		$this->reject_referral( $purchase->invoice ?? $purchase->order );
+		$this->reject_referral( $purchase->initial_order );
 	}
 
 	/**
@@ -97,7 +97,7 @@ class AffiliateWPIntegration extends \Affiliate_WP_Base {
 	 * @return void
 	 */
 	public function invokeReferral( $purchase ) {
-		$this->complete_referral( $purchase->invoice ?? $purchase->order );
+		$this->complete_referral( $purchase->initial_order );
 	}
 
 	/**
