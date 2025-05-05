@@ -7,12 +7,6 @@
 	"version": "1.0.0",
 	"category": "surecart-product-list",
 	"example": {},
-	"attributes": {
-		"showViewProductPageStickyFooter": {
-			"type": "boolean",
-			"default": true
-		}
-	},
 	"supports": {
 		"interactivity": true,
 		"color": {
@@ -41,7 +35,8 @@
 		"@surecart/cart",
 		"@surecart/product-page",
 		"@surecart/product-quick-view",
-		"@surecart/lightbox"
+		"surecart/lightbox",
+		"@surecart/image-slider"
 	],
 	"editorStyle": ["file:./index.css"],
 	"style": ["file:./style-index.css", "surecart-block-ui", "surecart-spinner"]

@@ -1,12 +1,13 @@
 .wp-block-surecart-product-quick-view {
 	width: 100%;
+	interpolate-size: allow-keywords;
+
 	.sc-product-quick-view-dialog {
 		position: fixed;
 		top: 50%;
 		left: 50%;
 		transform: translate(-50%, -50%) scale(0.95);
 		opacity: 0;
-		transition: opacity 0.3s ease, transform 0.3s ease;
 		z-index: 10000;
 		box-sizing: border-box;
 		visibility: hidden;
@@ -19,32 +20,10 @@
 		box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.3);
 		background: white;
 		overflow: scroll;
-
-		&.loading {
-			visibility: visible;
-			min-height: 80vh;
-		}
+		transition: all var(--sc-transition-medium) cubic-bezier(0.4, 0, 0.2, 1);
 
 		&__content {
 			padding: 20px;
-		}
-		// When fading, make the image come in slightly slower
-		// or faster than the scrim to give a sense of depth.
-		&.active {
-			visibility: visible;
-			opacity: 1;
-			transform: translate(-50%, -50%) scale(1);
-		}
-		&.show-opening-animation.active {
-			animation: both sc-turn-on-visibility 0.25s;
-			img {
-				animation: both sc-turn-on-visibility 0.35s;
-			}
-		}
-		&.show-closing-animation {
-			&:not(.active) {
-				animation: both sc-turn-off-visibility 0.35s;
-			}
 		}
 
 		&__close-button {
@@ -73,7 +52,8 @@
 			justify-content: space-between;
 			padding: 1em;
 			background-color: #fff;
-			border-top: solid var(--sc-input-border-width) var(--sc-input-border-color);
+			border-top: solid var(--sc-input-border-width)
+				var(--sc-input-border-color);
 			z-index: 99;
 			text-decoration: none;
 			&.hidden {
@@ -81,6 +61,7 @@
 			}
 		}
 	}
+
 	.sc-product-quick-view-overlay {
 		position: fixed;
 		top: 0;
@@ -93,44 +74,24 @@
 		opacity: 0;
 		pointer-events: none;
 		overflow: hidden;
+		transition: opacity 0.3s ease;
+	}
 
-		&.active {
+	&.sc-modal-active {
+		.sc-product-quick-view-dialog {
+			opacity: 1;
+			visibility: visible;
+			transform: translate(-50%, -50%) scale(1);
+		}
+
+		.sc-product-quick-view-overlay {
 			visibility: visible;
 			pointer-events: all;
-			animation: both sc-turn-on-visibility 0.25s;
-		}
-		&.show-closing-animation {
-			&:not(.active) {
-				animation: both sc-turn-off-visibility 0.35s;
-			}
+			opacity: 1;
 		}
 	}
 }
 
 body.sc-product-quick-view-open {
 	overflow: hidden;
-}
-
-@keyframes sc-turn-on-visibility {
-	0% {
-		opacity: 0;
-	}
-	100% {
-		opacity: 1;
-	}
-}
-
-@keyframes sc-turn-off-visibility {
-	0% {
-		opacity: 1;
-		visibility: visible;
-	}
-	99% {
-		opacity: 0;
-		visibility: visible;
-	}
-	100% {
-		opacity: 0;
-		visibility: hidden;
-	}
 }
