@@ -70,13 +70,6 @@ jQuery(window).ready(function () {
 	 * Sets up the SureCart template button in the Elementor editor.
 	 */
 	function setupSureCartTemplateButton() {
-		const documentType = elementor.config.document.type;
-
-		const showSureCartIcon =
-			documentType === 'surecart-product' || documentType === 'loop-item';
-
-		if (!showSureCartIcon) return;
-
 		const templateAddSection = jQuery('#tmpl-elementor-add-section');
 		if (templateAddSection?.length > 0) {
 			let oldTemplateButton = templateAddSection.html();
@@ -87,7 +80,8 @@ jQuery(window).ready(function () {
 			) {
 				oldTemplateButton = oldTemplateButton.replace(
 					'<div class="elementor-add-section-drag-title',
-					'<div class="elementor-add-section-area-button elementor-surecart-template-button" title="SureCart"></div><div class="elementor-add-section-drag-title'
+					`<# if ( 'loop-item' === elementor.documents.getCurrent()?.config?.type || 'surecart-product' === elementor.documents.getCurrent()?.config?.type ) { #><div class="elementor-add-section-area-button elementor-surecart-template-button" title="SureCart"></div><# } #>
+          <div class="elementor-add-section-drag-title`
 				);
 				templateAddSection.html(oldTemplateButton);
 			}
@@ -121,12 +115,6 @@ jQuery(window).ready(function () {
 
 	// Run initially to set up the SureCart template button.
 	setupSureCartTemplateButton();
-
-	// Re-run every time Elementor document type changes to ensure the button is set up correctly.
-	elementor.channels.editor.on(
-		'change:document:type',
-		setupSureCartTemplateButton
-	);
 
 	function generateUniqueIds(element) {
 		element.id = elementorCommon.helpers.getUniqueId();
