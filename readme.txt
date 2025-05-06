@@ -1,7 +1,7 @@
 === SureCart - Ecommerce Made Easy For Selling Physical Products, Digital Downloads, Subscriptions, Donations, & Payments ===
 Contributors: 2winfactor, wpcrafter
 Donate link: https://surecart.com
-Tags: ecommerce plugin, online store, subscriptions, stripe, payments
+Tags: ecommerce, online store, subscriptions, stripe, payments
 Requires at least: 6.6
 Tested up to: 6.8
 Stable tag: 3.8.1
