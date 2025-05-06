@@ -360,6 +360,42 @@ export default () => {
 		);
 	};
 
+	const renderActionButton = () => {
+		if (subscription?.price_readonly) return null;
+
+		return (
+			<ScDropdown
+				position="bottom-right"
+				style={{ '--panel-width': '14em' }}
+			>
+				<ScButton
+					type="primary"
+					slot="trigger"
+					loading={!hasLoadedSubscription}
+					caret
+				>
+					{__('Actions', 'surecart')}
+				</ScButton>
+				<ScMenu>
+					{!!Object.keys(subscription?.pending_update || {})
+						.length && (
+						<ScMenuItem onClick={() => setModal('cancel_update')}>
+							{__('Cancel Pending Update', 'surecart')}
+						</ScMenuItem>
+					)}
+					{renderUpdateButton()}
+					{renderRenewAtButton()}
+					{renderPauseButton()}
+					{renderPayOffButton()}
+					{renderCompleteButton()}
+					{renderCancelButton()}
+					{renderRestoreAtButton()}
+					{renderRestoreButton()}
+				</ScMenu>
+			</ScDropdown>
+		);
+	};
+
 	const onRequestCloseModal = () => setModal(false);
 
 	const onCancel = async (e) => {
@@ -471,39 +507,7 @@ export default () => {
 					/>
 				</>
 			}
-			button={
-				<ScDropdown
-					position="bottom-right"
-					style={{ '--panel-width': '14em' }}
-				>
-					<ScButton
-						type="primary"
-						slot="trigger"
-						loading={!hasLoadedSubscription}
-						caret
-					>
-						{__('Actions', 'surecart')}
-					</ScButton>
-					<ScMenu>
-						{!!Object.keys(subscription?.pending_update || {})
-							.length && (
-							<ScMenuItem
-								onClick={() => setModal('cancel_update')}
-							>
-								{__('Cancel Pending Update', 'surecart')}
-							</ScMenuItem>
-						)}
-						{renderUpdateButton()}
-						{renderRenewAtButton()}
-						{renderPauseButton()}
-						{renderPayOffButton()}
-						{renderCompleteButton()}
-						{renderCancelButton()}
-						{renderRestoreAtButton()}
-						{renderRestoreButton()}
-					</ScMenu>
-				</ScDropdown>
-			}
+			button={renderActionButton()}
 		>
 			<>
 				<Details
