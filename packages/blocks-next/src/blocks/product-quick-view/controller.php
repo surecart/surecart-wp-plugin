@@ -1,5 +1,5 @@
 <?php
-$product_id = (int) $_GET['product-quick-view'] ?? null;
+$product_id = isset( $_GET['product-quick-view'] ) ? (int) $_GET['product-quick-view'] : null;
 $close_url  = remove_query_arg( 'product-quick-view' );
 $query      = new WP_Query( [
 	'post__in'  => ! empty( $product_id ) ? [ $product_id ] : [ 0 ], // Ensures no posts are found if null.

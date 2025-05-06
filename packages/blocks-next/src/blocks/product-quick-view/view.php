@@ -86,7 +86,7 @@ use SureCart\Models\Blocks\ProductPageBlock;
 		</div>
 
 		<?php if ( ! $query->have_posts() ) : ?>
-			<div style="--sc-block-ui-opacity:1; min-height: 400px;">
+			<div class="sc-loader">
 				<span class="sc-spinner"></span>
 			</div>
 		<?php endif; ?>
