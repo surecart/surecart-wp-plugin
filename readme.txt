@@ -305,6 +305,13 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 
 == Changelog ==
 
+= 3.8.2 - May 6th, 2025 =
+- Fix: Billing Address checkbox custom label setting not applying on the frontend.
+- Fix: White gap appears on shop page when using ACF custom link field.
+- Fix: "Sections" form template is missing address.
+- Fix: Subtotal amount not displaying correctly on checkout page.
+- Fix: Line item description not breaking new line for long descriptions.
+
 = 3.8.1 - May 5th, 2025 =
 - New: Add quick link to invoice email template.
 - Fix: Custom amount text to actual amount in Instant checkout.
