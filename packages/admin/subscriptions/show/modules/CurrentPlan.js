@@ -143,7 +143,7 @@ export default ({ lineItem, loading, subscription }) => {
 											</div>
 										</LineItemLabel>
 									</div>
-									{!subscription?.price_readonly && (
+									{!subscription?.finite && (
 										<ScButton
 											size="small"
 											href={addQueryArgs('admin.php', {
@@ -209,13 +209,8 @@ export default ({ lineItem, loading, subscription }) => {
 									product: (
 										<ScTag
 											type="default"
-											clearable={
-												!subscription?.price_readonly
-											}
-											onClick={() =>
-												!subscription?.price_readonly &&
-												onSelectCoupon()
-											}
+											clearable
+											onClick={() => onSelectCoupon()}
 										>
 											{coupon?.name}
 										</ScTag>
