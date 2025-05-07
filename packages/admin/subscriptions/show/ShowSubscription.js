@@ -360,8 +360,38 @@ export default () => {
 		);
 	};
 
+	// If any of the menu items are shown, show the action button.
+	const showActionButton = () => {
+		const hasPendingUpdate = !!Object.keys(
+			subscription?.pending_update || {}
+		).length;
+
+		// Check if any of the action buttons would be rendered.
+		const hasUpdateButton = renderUpdateButton() !== null;
+		const hasRenewAtButton = renderRenewAtButton() !== null;
+		const hasPauseButton = renderPauseButton() !== null;
+		const hasPayOffButton = renderPayOffButton() !== null;
+		const hasCompleteButton = renderCompleteButton() !== null;
+		const hasCancelButton = renderCancelButton() !== null;
+		const hasRestoreAtButton = renderRestoreAtButton() !== null;
+		const hasRestoreButton = renderRestoreButton() !== null;
+
+		return (
+			hasPendingUpdate ||
+			hasUpdateButton ||
+			hasRenewAtButton ||
+			hasPauseButton ||
+			hasPayOffButton ||
+			hasCompleteButton ||
+			hasCancelButton ||
+			hasRestoreAtButton ||
+			hasRestoreButton
+		);
+	};
+
 	const renderActionButton = () => {
-		if (subscription?.price_readonly) return null;
+		// Don't render the action button if there are no actions to show
+		if (!showActionButton()) return null;
 
 		return (
 			<ScDropdown
