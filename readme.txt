@@ -1,10 +1,10 @@
 === SureCart - Ecommerce Made Easy For Selling Physical Products, Digital Downloads, Subscriptions, Donations, & Payments ===
 Contributors: 2winfactor, wpcrafter
 Donate link: https://surecart.com
-Tags: ecommerce plugin, online store, subscriptions, stripe, payments
+Tags: ecommerce, online store, subscriptions, stripe, payments
 Requires at least: 6.6
 Tested up to: 6.8
-Stable tag: 3.8.1
+Stable tag: 3.8.2
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -304,6 +304,13 @@ Yes, the checkout form can be customized using our visual builder. You can chang
 Accessibility is a huge priority for the entire team building SureCart. As you know, accessibility is an ongoing improvement task. Our development and QA teams are trained in accessibility best practices and build/test each new feature for accessibility. If you come across any edge issues, we want to know about it and will prioritize its resolution. Please contact us via our website.
 
 == Changelog ==
+
+= 3.8.2 - May 6th, 2025 =
+- Fix: Billing Address checkbox custom label setting not applying on the frontend.
+- Fix: White gap appears on shop page when using ACF custom link field.
+- Fix: "Sections" form template is missing address.
+- Fix: Subtotal amount not displaying correctly on checkout page.
+- Fix: Line item description not breaking new line for long descriptions.
 
 = 3.8.1 - May 5th, 2025 =
 - New: Add quick link to invoice email template.
