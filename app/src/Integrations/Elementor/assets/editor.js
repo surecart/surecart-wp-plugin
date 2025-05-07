@@ -1,3 +1,5 @@
+let inertElements = [];
+
 jQuery(window).ready(function () {
 	if (typeof elementor === 'undefined') {
 		return;
@@ -67,6 +69,47 @@ jQuery(window).ready(function () {
 	}
 
 	/**
+	 * Opens the SureCart template modal.
+	 */
+	function openModal() {
+		const modal = jQuery('#sc-elementor-modal-dialog');
+		modal.addClass('show');
+
+		// make other items inert
+		inertElements = [];
+		document
+			.querySelectorAll('body > :not(#sc-elementor-modal-dialog)')
+			.forEach((el) => {
+				if (!el.hasAttribute('inert')) {
+					el.setAttribute('inert', '');
+					inertElements.push(el);
+				}
+			});
+
+		// get and focus the first focusable element
+		const firstFocusableElement = modal.find(
+			'button, [href], input, textarea, select, details, [tabindex]:not([tabindex="-1"])'
+		)[0];
+		if (firstFocusableElement) {
+			setTimeout(() => {
+				firstFocusableElement.focus();
+			}, 100);
+		}
+	}
+
+	/**
+	 * Closes the SureCart template modal.
+	 */
+	function closeModal() {
+		jQuery('#sc-elementor-modal-dialog').removeClass('show');
+		// remove inert attribute from all children of the document
+		inertElements.forEach((el) => {
+			el.removeAttribute('inert');
+		});
+		inertElements = [];
+	}
+
+	/**
 	 * Sets up the SureCart template button in the Elementor editor.
 	 */
 	function setupSureCartTemplateButton() {
@@ -93,20 +136,29 @@ jQuery(window).ready(function () {
 				'.elementor-surecart-template-button',
 				function (event) {
 					event.preventDefault();
-					const modal = jQuery('#sc-elementor-modal-dialog');
-					modal.removeClass('show').hide().addClass('show').show();
+					openModal();
 				}
 			);
 		});
 
-		jQuery(document).on('click', '#sc-elementor-modal-close', function () {
-			jQuery('#sc-elementor-modal-dialog').removeClass('show').hide();
+		jQuery(document).on(
+			'click',
+			'#sc-elementor-modal-close, .sc-elementor-modal__overlay',
+			function () {
+				closeModal();
+			}
+		);
+
+		jQuery(document).on('keydown', function (event) {
+			console.log(event.key);
+			if (event.key === 'Escape') {
+				closeModal();
+			}
 		});
 
 		jQuery(document).on('click', '.sc-elementor-modal__card', function () {
-			jQuery('#sc-elementor-modal-dialog').removeClass('show').fadeOut();
+			closeModal();
 			const templateKey = jQuery(this).data('template-key');
-
 			insertSureCartTemplate(
 				window?.scElementorData?.templates?.[templateKey]
 			);
@@ -115,6 +167,30 @@ jQuery(window).ready(function () {
 
 	// Run initially to set up the SureCart template button.
 	setupSureCartTemplateButton();
+
+	/**
+	 * Show our template selection popup when the user is on a SureCart product page.
+	 */
+	elementor.on('document:loaded', function () {
+		// document is loaded.
+		if (
+			'surecart-product' !==
+			elementor.documents.getCurrent()?.config?.type
+		) {
+			return;
+		}
+
+		// If the document has elements, don't show the modal.
+		if (elementor.documents.getCurrent()?.config?.elements?.length !== 0) {
+			return;
+		}
+
+		// close the library.
+		$e.run('library/close');
+
+		// open our modal.
+		openModal();
+	});
 
 	function generateUniqueIds(element) {
 		element.id = elementorCommon.helpers.getUniqueId();
