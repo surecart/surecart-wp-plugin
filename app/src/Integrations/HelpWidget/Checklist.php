@@ -72,8 +72,12 @@ class Checklist {
 							location.href = '<?php echo admin_url('admin.php?page=sc-coupons&action=edit'); ?>';
 							return;
 						}
-						if ( url.includes('revenue-booster') ) {
+						if ( url.includes('order-bumps') ) {
 							location.href = '<?php echo admin_url('admin.php?page=sc-bumps&action=edit'); ?>';
+							return;
+						}
+						if ( url.includes('upsell-funnels') ) {
+							location.href = '<?php echo admin_url('admin.php?page=sc-upsell-funnels&action=edit'); ?>';
 							return;
 						}
 						if ( url.includes('subscription-saver') ) {
