@@ -43,6 +43,61 @@ export default ({
 	const coupon =
 		upcoming?.checkout?.discount?.coupon || subscription?.discount?.coupon;
 
+	const renderPriceChange = () => {
+		if (subscription?.price_readonly) {
+			return null;
+		}
+
+		return (
+			<ScDropdown
+				placement="bottom-end"
+				css={css`
+					margin-left: auto;
+				`}
+			>
+				<ScButton circle type="text" slot="trigger">
+					<ScIcon name="more-vertical" />
+				</ScButton>
+				<ScMenu>
+					{price?.ad_hoc && (
+						<ScMenuItem onClick={() => setDialog('amount')}>
+							{__('Edit Amount', 'surecart')}
+						</ScMenuItem>
+					)}
+					<ScMenuItem onClick={() => setDialog('price')}>
+						{__('Change', 'surecart')}
+					</ScMenuItem>
+					{!price?.current_version && (
+						<ScMenuItem onClick={() => setDialog('recent_price')}>
+							{__('Use Current Version', 'surecart')}
+						</ScMenuItem>
+					)}
+				</ScMenu>
+			</ScDropdown>
+		);
+	};
+
+	const renderQuantityChange = () => {
+		if (subscription?.price_readonly) {
+			return subscription?.quantity;
+		}
+
+		return (
+			<ScInput
+				type="number"
+				value={subscription?.quantity}
+				onScChange={(e) => {
+					updateSubscription({
+						price: price?.id,
+						quantity: e.target.value,
+					});
+				}}
+				style={{ maxWidth: 75 }}
+				required
+			/>
+		);
+	};
+
 	return (
 		<div
 			css={css`
@@ -110,61 +165,10 @@ export default ({
 										</div>
 									</LineItemLabel>
 								</div>
-
-								<ScDropdown
-									placement="bottom-end"
-									css={css`
-										margin-left: auto;
-									`}
-								>
-									<ScButton circle type="text" slot="trigger">
-										<ScIcon name="more-vertical" />
-									</ScButton>
-									<ScMenu>
-										{price?.ad_hoc && (
-											<ScMenuItem
-												onClick={() =>
-													setDialog('amount')
-												}
-											>
-												{__('Edit Amount', 'surecart')}
-											</ScMenuItem>
-										)}
-										<ScMenuItem
-											onClick={() => setDialog('price')}
-										>
-											{__('Change', 'surecart')}
-										</ScMenuItem>
-										{!price?.current_version && (
-											<ScMenuItem
-												onClick={() =>
-													setDialog('recent_price')
-												}
-											>
-												{__(
-													'Use Current Version',
-													'surecart'
-												)}
-											</ScMenuItem>
-										)}
-									</ScMenu>
-								</ScDropdown>
+								{renderPriceChange()}
 							</div>
 						),
-						quantity: (
-							<ScInput
-								type="number"
-								value={subscription?.quantity}
-								onScChange={(e) => {
-									updateSubscription({
-										price: price?.id,
-										quantity: e.target.value,
-									});
-								}}
-								style={{ maxWidth: 75 }}
-								required
-							></ScInput>
-						),
+						quantity: renderQuantityChange(),
 						total: (
 							<div
 								css={css`
