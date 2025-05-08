@@ -31,24 +31,28 @@ class ElementorTemplatesService {
 			'surecart-single-product-left'  => [
 				'name'     => __( 'Product Form (Left)', 'surecart' ),
 				'image'    => 'single-product-template-left.png',
+				'type'     => 'product-form',
 				'priority' => 10,
 				'hidden'   => false,
 			],
 			'surecart-single-product-right' => [
 				'name'     => __( 'Product Form (Right)', 'surecart' ),
 				'image'    => 'single-product-template-right.png',
+				'type'     => 'product-form',
 				'priority' => 20,
 				'hidden'   => false,
 			],
 			'surecart-product-card'         => [
 				'name'     => __( 'Product Card', 'surecart' ),
 				'image'    => 'product-card-template.png',
+				'type'     => 'product-card',
 				'priority' => 30,
 				'hidden'   => false,
 			],
 			'surecart-product-pricing'      => [
 				'name'     => __( 'Product Pricing', 'surecart' ),
 				'image'    => 'product-pricing-template.png',
+				'type'     => 'others',
 				'priority' => 40,
 				'hidden'   => true,
 			],
@@ -57,7 +61,8 @@ class ElementorTemplatesService {
 		// Get config or create default.
 		$config = $templates_config[ $filename ] ?? [
 			'name'     => ucwords( str_replace( [ 'surecart-', '-' ], [ '', ' ' ], $filename ) ),
-			'image'    => 'default-template.png',
+			'image'    => '',
+			'type'     => 'others',
 			'priority' => 999,
 			'hidden'   => false,
 		];

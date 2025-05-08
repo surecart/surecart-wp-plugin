@@ -159,6 +159,22 @@ body .elementor-add-new-section .elementor-add-section-area-button {
 	border-radius: 1px;
 }
 
+/* Empty state styling */
+.sc-elementor-empty-state {
+    padding: 30px;
+    font-size: 14px;
+    color: var(--e-a-color-txt);
+    text-align: center;
+    width: 100%;
+}
+
+/* Responsive adjustments for when fewer templates are shown */
+.sc-elementor-modal.surecart-product .sc-elementor-modal__card-container,
+.sc-elementor-modal.loop-item .sc-elementor-modal__card-container {
+    justify-content: center;
+    padding: 20px;
+}
+
 /* Elementor Template selector modal - Responsive styles */
 @media (max-width: 768px) {
 	.sc-elementor-modal__content {

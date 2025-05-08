@@ -1,4 +1,5 @@
 let inertElements = [];
+let currentDocType = '';
 
 jQuery(window).ready(function () {
 	if (typeof elementor === 'undefined') {
@@ -69,13 +70,78 @@ jQuery(window).ready(function () {
 	}
 
 	/**
+	 * Filter templates by document type and set empty state message.
+	 *
+	 * @param {jQuery} modal - The modal element
+	 */
+	function filterTemplatesAndSetEmptyState(modal) {
+		// Apply document type class for CSS filtering.
+		const docType = elementor.documents.getCurrent()?.config?.type || '';
+		currentDocType = docType;
+		modal.removeClass('surecart-product loop-item').addClass(docType);
+
+		// Get translation strings.
+		const i18n = window?.scElementorData?.i18n || {};
+
+		// Document type to template type mapping.
+		const docTypeMapping = {
+			'surecart-product': {
+				templateType: 'product-form',
+				emptyMessage: i18n?.no_product_form_templates,
+			},
+			'loop-item': {
+				templateType: 'product-card',
+				emptyMessage: i18n?.no_product_card_templates,
+			},
+		};
+
+		// Set empty state message based on document type.
+		const cardContainer = modal.find('.sc-elementor-modal__card-container');
+		const config = docTypeMapping[docType] || {
+			emptyMessage: i18n?.no_templates,
+		};
+		cardContainer.attr('data-empty-message', config.emptyMessage);
+
+		// Filter templates if we have a mapping for this document type.
+		if (config.templateType) {
+			modal.find('.sc-elementor-modal__card').each(function () {
+				const templateType = jQuery(this).data('template-type') || '';
+				jQuery(this).toggle(templateType === config.templateType);
+			});
+		}
+
+		// Check for visible templates after filtering and show empty state if needed.
+		setTimeout(() => {
+			const visibleTemplates = modal.find(
+				'.sc-elementor-modal__card:visible'
+			).length;
+			if (visibleTemplates === 0) {
+				// Instead of emptying the container, add a message element.
+				if (!cardContainer.find('.sc-elementor-empty-state').length) {
+					const emptyMessage =
+						cardContainer.attr('data-empty-message');
+					cardContainer.html(
+						`<div class="sc-elementor-empty-state">${emptyMessage}</div>`
+					);
+				}
+			} else {
+				// Remove any existing empty state message.
+				cardContainer.find('.sc-elementor-empty-state').remove();
+			}
+		}, 100);
+	}
+
+	/**
 	 * Opens the SureCart template modal.
 	 */
 	function openModal() {
 		const modal = jQuery('#sc-elementor-modal-dialog');
 		modal.addClass('show');
 
-		// make other items inert
+		// Filter templates and set empty state message.
+		filterTemplatesAndSetEmptyState(modal);
+
+		// Make other items inert.
 		inertElements = [];
 		document
 			.querySelectorAll('body > :not(#sc-elementor-modal-dialog)')
@@ -86,7 +152,7 @@ jQuery(window).ready(function () {
 				}
 			});
 
-		// get and focus the first focusable element
+		// Get and focus the first focusable element.
 		const firstFocusableElement = modal.find(
 			'button, [href], input, textarea, select, details, [tabindex]:not([tabindex="-1"])'
 		)[0];
@@ -156,6 +222,20 @@ jQuery(window).ready(function () {
 		});
 
 		jQuery(document).on('click', '.sc-elementor-modal__card', function () {
+			// Check if the template is valid for current document type
+			const templateType = jQuery(this).data('template-type') || '';
+			const isValidTemplate =
+				(currentDocType === 'surecart-product' &&
+					templateType === 'product-form') ||
+				(currentDocType === 'loop-item' &&
+					templateType === 'product-card') ||
+				!currentDocType ||
+				!templateType;
+
+			if (!isValidTemplate) {
+				return;
+			}
+
 			closeModal();
 			const templateKey = jQuery(this).data('template-key');
 			insertSureCartTemplate(

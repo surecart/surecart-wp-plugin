@@ -75,6 +75,11 @@ class ElementorEditorService {
 			[
 				'site_url'  => site_url(),
 				'templates' => $this->templates_service->get_templates(),
+				'i18n'      => [
+					'no_product_form_templates' => __( 'No product form templates available.', 'surecart' ),
+					'no_product_card_templates' => __( 'No product card templates available.', 'surecart' ),
+					'no_templates'              => __( 'No templates found.', 'surecart' ),
+				],
 			]
 		);
 	}

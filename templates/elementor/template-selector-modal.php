@@ -16,7 +16,7 @@
 
 		<div class="sc-elementor-modal__card-container">
 			<?php foreach ( $templates as $template_key => $template ) : ?>
-				<div class="sc-elementor-modal__card" data-template-key="<?php echo esc_attr( $template_key ); ?>" tabindex="0" role="button" aria-label="<?php echo esc_attr( $template['name'] ); ?>">
+				<div class="sc-elementor-modal__card" data-template-key="<?php echo esc_attr( $template_key ); ?>" data-template-type="<?php echo esc_attr( $template['type'] ?? '' ); ?>" tabindex="0" role="button" aria-label="<?php echo esc_attr( $template['name'] ); ?>">
 					<img src="<?php echo esc_url( $template['image'] ); ?>" alt="<?php echo esc_attr( $template['name'] ); ?>" />
 					<div class="sc-elementor-modal__card-actions">
 						<h4 class="sc-elementor-modal__card-title"><?php echo esc_html( $template['name'] ); ?></h4>
