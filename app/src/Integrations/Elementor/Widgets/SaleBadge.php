@@ -121,7 +121,9 @@ class SaleBadge extends \Elementor\Widget_Base {
 			array(
 				'label'     => esc_html__( 'Background Color', 'surecart' ),
 				'type'      => \Elementor\Controls_Manager::COLOR,
-				'default'   => '#000000',
+				'global'    => [
+					'default' => \Elementor\Core\Kits\Documents\Tabs\Global_Colors::COLOR_PRIMARY,
+				],
 				'selectors' => [
 					'{{WRAPPER}} .wp-block-surecart-product-sale-badge' => 'background-color: {{VALUE}}',
 				],
@@ -251,6 +253,9 @@ class SaleBadge extends \Elementor\Widget_Base {
 				'label'      => esc_html__( 'Border Radius', 'surecart' ),
 				'type'       => \Elementor\Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%', 'em', 'rem', 'custom' ],
+				'global'     => [
+					'default' => \Elementor\Core\Kits\Documents\Tabs\Global_Colors::COLOR_PRIMARY,
+				],
 				'selectors'  => [
 					'{{WRAPPER}} .wp-block-surecart-product-sale-badge' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],

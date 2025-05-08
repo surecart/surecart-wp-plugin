@@ -311,6 +311,9 @@ class VariantPills extends \Elementor\Widget_Base {
 			[
 				'label'     => esc_html__( 'Highlight Background', 'surecart' ),
 				'type'      => \Elementor\Controls_Manager::COLOR,
+				'global'    => [
+					'default' => \Elementor\Core\Kits\Documents\Tabs\Global_Colors::COLOR_PRIMARY,
+				],
 				'selectors' => [
 					'{{WRAPPER}} .sc-pill-option__wrapper .wp-block-surecart-product-variant-pill.sc-pill-option__button--selected' => 'background-color: {{VALUE}}',
 				],
@@ -322,6 +325,9 @@ class VariantPills extends \Elementor\Widget_Base {
 			[
 				'label'     => esc_html__( 'Highlight Border', 'surecart' ),
 				'type'      => \Elementor\Controls_Manager::COLOR,
+				'global'    => [
+					'default' => \Elementor\Core\Kits\Documents\Tabs\Global_Colors::COLOR_PRIMARY,
+				],
 				'selectors' => [
 					'{{WRAPPER}} .sc-pill-option__wrapper .wp-block-surecart-product-variant-pill.sc-pill-option__button--selected' => 'border-color: {{VALUE}}',
 				],

@@ -228,8 +228,25 @@ class PriceChooser extends \Elementor\Widget_Base {
 			[
 				'label'     => esc_html__( 'Highlight Border', 'surecart' ),
 				'type'      => \Elementor\Controls_Manager::COLOR,
+				'global'    => [
+					'default' => \Elementor\Core\Kits\Documents\Tabs\Global_Colors::COLOR_PRIMARY,
+				],
 				'selectors' => [
 					'{{WRAPPER}} .sc-choices .sc-choice.sc-choice--checked' => 'border-color: {{VALUE}}!important; box-shadow: 0 0 0 1px {{VALUE}} !important;',
+				],
+			]
+		);
+
+		$this->add_control(
+			'price_choice_highlight_text_color',
+			[
+				'label'     => esc_html__( 'Highlight Text Color', 'surecart' ),
+				'type'      => \Elementor\Controls_Manager::COLOR,
+				'global'    => [
+					'default' => \Elementor\Core\Kits\Documents\Tabs\Global_Colors::COLOR_PRIMARY,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .sc-choices .sc-choice.sc-choice--checked' => 'color: {{VALUE}};',
 				],
 			]
 		);

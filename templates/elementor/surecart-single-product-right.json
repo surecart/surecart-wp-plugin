@@ -214,6 +214,9 @@
 											"bottom": "0",
 											"left": "0",
 											"isLinked": true
+										},
+										"__globals__": {
+											"border_color": "globals/colors?id=primary"
 										}
 									},
 									"elements": [],
@@ -307,7 +310,11 @@
 					"settings": {
 						"label": "Pricing",
 						"label_color": "#000000",
-						"price_choice_color": "#000000"
+						"price_choice_color": "#000000",
+						"__globals__": {
+							"price_choice_highlight_color": "globals/colors?id=primary",
+							"price_choice_highlight_text_color": "globals/colors?id=primary"
+						}
 					},
 					"elements": [],
 					"isInner": false,
@@ -412,7 +419,6 @@
 							"isLinked": true
 						},
 						"button_border_border": "solid",
-						"button_border_color": "#000000",
 						"button_border_radius": {
 							"unit": "px",
 							"top": "24",
@@ -421,9 +427,14 @@
 							"left": "24",
 							"isLinked": true
 						},
-						"button_text_color": "#000000",
 						"button_background_color": "#FFFFFF",
-						"_title": "Buy Now Button"
+						"_title": "Buy Now Button",
+						"__globals__": {
+							"button_border_color": "globals/colors?id=primary",
+							"button_text_color": "globals/colors?id=primary",
+							"button_hover_background_color": "globals/colors?id=primary"
+						},
+						"button_hover_text_color": "#FFFFFF"
 					},
 					"elements": [],
 					"isInner": false,
