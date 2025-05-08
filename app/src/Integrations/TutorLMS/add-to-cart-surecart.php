@@ -20,12 +20,14 @@ foreach ( $prices as $price ) : ?>
 			);
 			?>
 	">
-		<?php esc_html_e( 'Purchase', 'surecart' ); ?>&nbsp;
-		<?php if ( $price->scratch_amount > 0 ) : ?>
-			<del><?php echo esc_html( Currency::format( $price->scratch_amount ?? 0, $price->currency ) ); ?></del>&nbsp;
-		<?php endif; ?>
-		<?php echo esc_html( Currency::format( $price->amount ?? 0, $price->currency ) ); ?>
-		&nbsp;
-		<sc-format-interval value="<?php echo (int) $price->recurring_interval_count; ?>" interval="<?php echo esc_attr( $price->recurring_interval ); ?>"></sc-format-interval>
+		<span>
+			<?php esc_html_e( 'Purchase', 'surecart' ); ?>&nbsp;
+			<?php if ( $price->scratch_amount > 0 ) : ?>
+				<del><?php echo esc_html( Currency::format( $price->scratch_amount ?? 0, $price->currency ) ); ?></del>&nbsp;
+			<?php endif; ?>
+			<?php echo esc_html( Currency::format( $price->amount ?? 0, $price->currency ) ); ?>
+			&nbsp;
+			<sc-format-interval value="<?php echo (int) $price->recurring_interval_count; ?>" interval="<?php echo esc_attr( $price->recurring_interval ); ?>"></sc-format-interval>
+		</span>
 	</a>
 <?php endforeach; ?>
