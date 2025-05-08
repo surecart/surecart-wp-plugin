@@ -4,41 +4,23 @@ use SureCart\Models\Blocks\ProductPageBlock;
 ?>
 
 <div
-	<?php echo wp_kses_data(
-		get_block_wrapper_attributes(
-			[
-				'data-wp-interactive' 				=> '{ "namespace": "surecart/product-quick-view" }',
-				'data-wp-router-region' 			=> 'product-quick-view',
-				'data-wp-class--sc-modal-active' 	=> 'state.open',
-				'data-wp-watch--open' 				=> 'callbacks.handleOpenChange',
-			]
-		)
-	); ?>
 	<?php
 	echo wp_kses_data(
-		wp_interactivity_data_wp_context(
+		get_block_wrapper_attributes(
 			[
-				'url' => sanitize_url($close_url),
+				'data-wp-interactive'            => '{ "namespace": "surecart/product-quick-view" }',
+				'data-wp-router-region'          => 'product-quick-view',
+				'data-wp-class--sc-modal-active' => 'state.open',
+				'data-wp-watch--open'            => 'callbacks.handleOpenChange',
 			]
 		)
 	);
-	?>>
+	?>
+	>
 	<div class="sc-product-quick-view-dialog">
 		<div class="sc-product-quick-view-dialog__content">
-			<a
-				class="sc-product-quick-view-dialog__close-button"
-				data-wp-on--click="actions.close"
-				data-wp-on--keydown="actions.close"
-				data-wp-on--mouseenter="actions.prefetch"
-				role="button"
-				tabindex="0"
-				aria-label="<?php esc_attr_e('Close quick view', 'surecart'); ?>"
-				href="<?php echo esc_url($close_url); ?>">
-				<?php echo wp_kses(SureCart::svg()->get('x'), sc_allowed_svg_html()); ?>
-			</a>
-
 			<?php
-			while ($query->have_posts()) :
+			while ( $query->have_posts() ) :
 				$query->the_post();
 
 				// Get an instance of the current Product Quick view block.
@@ -50,32 +32,32 @@ use SureCart\Models\Blocks\ProductPageBlock;
 
 				$product_post_id      = get_the_ID();
 				$product_post_type    = get_post_type();
-				$filter_block_context = static function ($context) use ($product_post_id, $product_post_type) {
+				$filter_block_context = static function ( $context ) use ( $product_post_id, $product_post_type ) {
 					$context['postType'] = $product_post_type;
 					$context['postId']   = $product_post_id;
 					return $context;
 				};
 
 				// Use an early priority to so that other 'render_block_context' filters have access to the values.
-				add_filter('render_block_context', $filter_block_context, 1);
+				add_filter( 'render_block_context', $filter_block_context, 1 );
 
 				// Render the inner blocks of the Product Quick view block with `dynamic` set to `false` to prevent calling
 				// `render_callback` and ensure that no wrapper markup is included.
-				$block_content = (new WP_Block($block_instance))->render(array('dynamic' => false));
-				remove_filter('render_block_context', $filter_block_context, 1);
+				$block_content = ( new WP_Block( $block_instance ) )->render( array( 'dynamic' => false ) );
+				remove_filter( 'render_block_context', $filter_block_context, 1 );
 
 				// Wrap the render inner blocks in a `li` element with the appropriate post classes.
-				$post_classes = implode(' ', get_post_class('wp-block-post'));
+				$post_classes = implode( ' ', get_post_class( 'wp-block-post' ) );
 
 				$controller = new ProductPageBlock();
 				$state      = $controller->state();
 				$context    = $controller->context();
 
-				wp_interactivity_state('surecart/product-page', $state);
-			?>
+				wp_interactivity_state( 'surecart/product-page', $state );
+				?>
 				<form
 					<?php
-					echo wp_kses_data(wp_interactivity_data_wp_context($context));
+					echo wp_kses_data( wp_interactivity_data_wp_context( $context ) );
 					?>
 					data-wp-interactive='{ "namespace": "surecart/product-page" }'
 					data-wp-on--submit="callbacks.handleSubmit"

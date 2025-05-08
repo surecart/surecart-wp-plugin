@@ -25,20 +25,6 @@
 		&__content {
 			padding: 20px;
 		}
-
-		&__close-button {
-			display: flex;
-			align-items: center;
-			position: absolute;
-			z-index: 9;
-			inset-block-start: 1em;
-			inset-inline-end: 1em;
-			cursor: pointer;
-			color: var(--sc-color-gray-500);
-			width: 1em;
-			height: 1em;
-			font-size: 1.5em;
-		}
 		.sc-spinner {
 			position: absolute;
 			top: 50%;
