@@ -15,26 +15,22 @@
 		</div>
 
 		<div class="sc-elementor-modal__card-container">
-			<div class="sc-elementor-modal__card" id="sc-elementor-single-product-template" data-template-key="surecart-product" tabindex="0" role="button" aria-label="<?php esc_attr_e( 'Single Product Template', 'surecart' ); ?>">
-				<img src="<?php echo esc_url( trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'images/elementor/single-product-template.png' ); ?>" alt="<?php esc_attr_e( 'Single Product Template', 'surecart' ); ?>" />
-				<div class="sc-elementor-modal__card-actions">
-					<h4 class="sc-elementor-modal__card-title"><?php esc_html_e( 'Product Card Template', 'surecart' ); ?></h4>
-					<a class="elementor-button e-primary">
-						<i class="eicon-file-download" aria-hidden="true"></i>
-						<span class="elementor-button-title"><?php esc_html_e( 'Insert', 'surecart' ); ?></span>
-					</a>
+			<?php foreach ( $templates as $template_key => $template ) : ?>
+				<div class="sc-elementor-modal__card" data-template-key="<?php echo esc_attr( $template_key ); ?>" tabindex="0" role="button" aria-label="<?php echo esc_attr( $template['name'] ); ?>">
+					<img src="<?php echo esc_url( $template['image'] ); ?>" alt="<?php echo esc_attr( $template['name'] ); ?>" />
+					<div class="sc-elementor-modal__card-actions">
+						<h4 class="sc-elementor-modal__card-title"><?php echo esc_html( $template['name'] ); ?></h4>
+						<a class="elementor-button e-primary">
+							<i class="eicon-file-download" aria-hidden="true"></i>
+							<span class="elementor-button-title"><?php esc_html_e( 'Insert', 'surecart' ); ?></span>
+						</a>
+					</div>
 				</div>
-			</div>
-			<div class="sc-elementor-modal__card" id="sc-elementor-product-card-template" data-template-key="surecart-product-card" tabindex="0" role="button" aria-label="<?php esc_attr_e( 'Product Card Template', 'surecart' ); ?>">
-				<img src="<?php echo esc_url( trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'images/elementor/product-card-template.png' ); ?>" alt="<?php esc_attr_e( 'Product Card Template', 'surecart' ); ?>" />
-				<div class="sc-elementor-modal__card-actions">
-					<h4 class="sc-elementor-modal__card-title"><?php esc_html_e( 'Product Card Template', 'surecart' ); ?></h4>
-					<a class="elementor-button e-primary">
-						<i class="eicon-file-download" aria-hidden="true"></i>
-						<span class="elementor-button-title"><?php esc_html_e( 'Insert', 'surecart' ); ?></span>
-					</a>
-				</div>
-			</div>
+			<?php endforeach; ?>
+
+			<?php if ( empty( $templates ) ) : ?>
+				<p><?php esc_html_e( 'No templates found.', 'surecart' ); ?></p>
+			<?php endif; ?>
 		</div>
 	</div>
 </div>

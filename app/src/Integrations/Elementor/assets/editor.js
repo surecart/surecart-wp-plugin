@@ -34,7 +34,7 @@ jQuery(window).ready(function () {
 	 * When adding a SureCart Widgets, remove the default SureCart block and insert the SureCart template.
 	 */
 	for (const [widgetName, template] of Object.entries(
-		window?.scElementorData?.templates
+		window?.scElementorData?.templates || {}
 	)) {
 		elementor.hooks.addAction(
 			'panel/open_editor/widget/' + widgetName,
@@ -150,7 +150,6 @@ jQuery(window).ready(function () {
 		);
 
 		jQuery(document).on('keydown', function (event) {
-			console.log(event.key);
 			if (event.key === 'Escape') {
 				closeModal();
 			}
@@ -206,7 +205,16 @@ jQuery(window).ready(function () {
 	function insertSureCartTemplate(template) {
 		// Generate elements with unique IDs.
 		const elements = [];
-		for (let element of template.elements) {
+
+		// Check if we have the new structure with content property or the old structure
+		const templateContent = template.content || template;
+
+		if (!templateContent || !templateContent.elements) {
+			console.error('Invalid template structure:', template);
+			return;
+		}
+
+		for (let element of templateContent.elements) {
 			element = generateUniqueIds(element);
 			elements.push(element);
 		}
@@ -216,7 +224,7 @@ jQuery(window).ready(function () {
 			model: {
 				id: elementorCommon.helpers.getUniqueId(),
 				elType: 'container',
-				settings: template?.settings || {},
+				settings: templateContent?.settings || {},
 				elements,
 			},
 		});
