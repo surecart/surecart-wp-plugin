@@ -8,7 +8,8 @@ jQuery(window).ready(function () {
 
 	// Form edit link
 	elementor.channels.editor.on('surecart:form:edit', function (view) {
-		let block_id = view.elementSettingsModel.get('sc_form_block');
+		let block_id = view?.container?.settings?.get('sc_form_block');
+
 		if (!block_id) {
 			return;
 		}
