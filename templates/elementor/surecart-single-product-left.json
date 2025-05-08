@@ -361,7 +361,10 @@
 							"size": 15
 						},
 						"text_color": "#000000",
-						"pill_background_color": "#FFFFFF"
+						"pill_background_color": "#FFFFFF",
+						"__globals__": {
+							"pill_highlight_background_color": "globals/colors?id=primary"
+						}
 					},
 					"elements": [],
 					"isInner": false,
