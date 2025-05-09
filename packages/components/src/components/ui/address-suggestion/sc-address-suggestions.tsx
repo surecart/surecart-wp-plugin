@@ -128,11 +128,11 @@ export class ScAddressSuggestions {
   async fetchPlaceDetails(placeId: string) {
     try {
       const { updatedAddress, updatedRegions } = await fetchPlaceDetails(placeId, this.addressSuggestions, this.address, this.regions);
+      this.regions = updatedRegions;
       this.scChangeAddress.emit({
         ...(this.address as Address),
         ...updatedAddress,
       });
-      this.regions = updatedRegions;
       this.showSuggestions = false;
       this.scShowAddressFields.emit();
     } catch (error) {
