@@ -111,7 +111,7 @@ window.addEventListener('scCheckoutCompleted', (e: CustomEvent) => {
       currency: (checkout.currency || '').toUpperCase(),
       item_name: (item?.price?.product as Product)?.name || '',
       discount: item?.discount_amount ? maybeConvertAmount(item?.discount_amount || 0, item?.price?.currency || 'USD') : 0,
-      price: maybeConvertAmount(item?.price?.amount || 0, item?.price?.currency || 'USD'),
+      price: maybeConvertAmount(item?.total_amount || 0, item?.price?.currency || 'USD'),
       quantity: item?.quantity || 1,
       ...(item?.variant_options?.length ? { item_variant: (item.variant_options || []).join(' / ') } : {}),
     })),
