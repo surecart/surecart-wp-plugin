@@ -284,6 +284,11 @@ abstract class IntegrationService extends AbstractIntegration implements Integra
 				continue;
 			}
 
+			// If no price & variant has been added for the integration, don't revoke it.
+			if ( empty( $integration->price_id ) && empty( $integration->variant_id ) ) {
+				continue;
+			}
+
 			$this->onPurchaseProductRemoved( $integration, $previous_purchase->getWPUser(), $previous_purchase );
 		}
 	}
@@ -444,12 +449,7 @@ abstract class IntegrationService extends AbstractIntegration implements Integra
 		$price_id   = $purchase->price->id ?? $purchase->price ?? null;
 		$variant_id = $purchase->variant->id ?? $purchase->variant ?? null;
 
-		// If integration no price and variant, means it doesn't match with any price or variant.
-		if ( empty( $price_id ) && empty( $variant_id ) ) {
-			return true;
-		}
-
-		// If integration has price_id or variant_id
+		// If integration has price_id or variant_id,
 		// then we need to match with specific price or variant.
 		if (
 			( ! empty( $integration->price_id ) && $integration->price_id !== $price_id )
