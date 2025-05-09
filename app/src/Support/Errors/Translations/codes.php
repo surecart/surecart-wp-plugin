@@ -149,4 +149,5 @@ return array(
 	'invoice.due_date.greater_than_or_equal_to'            => __( 'The due date must be greater than or equal to the issue date.', 'surecart' ),
 	'invoice.memo.too_long'                                => __( 'The memo is too long. Please enter a shorter memo. Maximum allowed length is 1000 characters.', 'surecart' ),
 	'invoice.footer.too_long'                              => __( 'The footer is too long. Please enter a shorter footer. Maximum allowed length is 1000 characters.', 'surecart' ),
+	'swap.swap_price.circular_with_existing_swap'          => __( 'This price swap would create a loop. Please select a different swap option.', 'surecart' ),
 );

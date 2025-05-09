@@ -63,17 +63,15 @@ export default ({ attributes, setAttributes }) => {
 						removable={removable}
 						editable={editable}
 						imageUrl={placeholderImageUrl}
-						amount={12345}
-						currency={scData?.currency || 'usd'}
+						amount={'$123.45'}
 						name={__('Example Product', 'surecart')}
 						priceName={__('Basic', 'surecart')}
 					></ScProductLineItem>
 					<ScProductLineItem
 						removable={removable}
 						editable={editable}
-						amount={1234}
-						interval={__('every month', 'surecart')}
-						currency={scData?.currency || 'usd'}
+						amount={'$123.45'}
+						interval={__(' / mo', 'surecart')}
 						imageUrl={placeholderImageUrl}
 						name={__('Example Product', 'surecart')}
 						priceName={__('Monthly', 'surecart')}

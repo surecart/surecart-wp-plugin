@@ -525,42 +525,15 @@ class Currency {
 	 * Format the currency number.
 	 *
 	 * @param integer|float $amount Amount.
-	 * @param string        $currency_code Currency code.
 	 *
 	 * @return string Formatted currency number.
 	 */
-	public static function formatCurrencyNumber( $amount, $currency_code = 'usd' ) {
+	public static function formatCurrencyNumber( $amount ) {
 		if ( ! is_numeric( $amount ) ) {
 			return '0';
 		}
-		$amount = (float) $amount;
-		return self::formatCents( $amount, 1 );
-	}
 
-	/**
-	 * Format the cents.
-	 *
-	 * @param integer $number Number.
-	 * @param integer $cents Cents.
-	 *
-	 * @return string
-	 */
-	public static function formatCents( $number, $cents = 1 ) {
-		// cents: 0=never, 1=if needed, 2=always.
-		if ( is_numeric( $number ) ) { // a number.
-			if ( ! $number ) { // zero.
-				$money = ( 2 === $cents ? '0.00' : '0' ); // output zero.
-			} elseif ( floor( $number ) == $number ) { // whole number.
-				$money = number_format_i18n( (float) $number, ( 2 === $cents ? 2 : 0 ) ); // format.
-			} else { // cents.
-					$money = number_format_i18n( round( (float) $number, 2 ), ( 0 === $cents ? 0 : 2 ) ); // format.
-			} // integer or decimal.
-
-			// Remove any comma separators.
-			$money = str_replace( ',', '', $money );
-
-			return number_format_i18n( (float) $money, 2 );
-		} // numeric.
+		return number_format_i18n( (float) $amount, 2 );
 	}
 
 	/**

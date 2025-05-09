@@ -2,6 +2,7 @@
 
 namespace SureCart\Models;
 
+use SureCart\Models\Traits\CanResendNotifications;
 use SureCart\Models\Traits\HasCheckout;
 use SureCart\Models\Traits\HasDates;
 
@@ -9,7 +10,9 @@ use SureCart\Models\Traits\HasDates;
  * Order model
  */
 class Order extends Model {
-	use HasCheckout, HasDates;
+	use HasCheckout;
+	use HasDates;
+	use CanResendNotifications;
 
 	/**
 	 * Rest API endpoint

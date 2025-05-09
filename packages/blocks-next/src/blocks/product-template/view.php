@@ -42,6 +42,10 @@ if ( ! $query->have_posts() ) {
 		// Render the inner blocks of the Post Template block with `dynamic` set to `false` to prevent calling
 		// `render_callback` and ensure that no wrapper markup is included.
 		$block_content = ( new WP_Block( $block_instance ) )->render( array( 'dynamic' => false ) );
+		$has_button    = ( new \WP_HTML_Tag_Processor( $block_content ?? '' ) )->next_tag( 'button' );
+		$has_link      = ( new \WP_HTML_Tag_Processor( $block_content ?? '' ) )->next_tag( 'a' );
+		$html_tag      = $has_link || $has_button ? 'form' : 'a';
+
 		remove_filter( 'render_block_context', $filter_block_context, 1 );
 		remove_filter( 'post_thumbnail_size', $change_thumbnail_size, 1 );
 

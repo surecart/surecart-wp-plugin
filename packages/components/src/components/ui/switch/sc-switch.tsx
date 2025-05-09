@@ -159,7 +159,7 @@ export class ScSwitch {
             onKeyDown={e => this.handleKeyDown(e)}
           />
         </span>
-        <span class="switch__label">
+        <span class="switch__label" part="label">
           <span part="title" id={this.labelId} class="switch__title">
             <slot></slot>
           </span>

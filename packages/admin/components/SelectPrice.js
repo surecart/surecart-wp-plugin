@@ -19,10 +19,13 @@ export default ({
 	children,
 	ad_hoc = true,
 	variable = true,
+	exclude = [],
+	excludeProducts = [],
 	loading,
 	onScrollEnd = () => {},
 	includeVariants = true,
 	showOutOfStock = false,
+	prefix = false,
 	...props
 }) => {
 	const selectRef = useRef();
@@ -42,6 +45,9 @@ export default ({
 			if (!product?.prices?.data?.length) {
 				return false;
 			}
+			if (excludeProducts && excludeProducts?.includes(product.id)) {
+				return false;
+			}
 			return true;
 		})
 		.map((product) => {
@@ -57,6 +63,7 @@ export default ({
 						return true;
 					})
 					.filter((price) => !price?.archived)
+					.filter((price) => !exclude.includes(price.id))
 					.map((price) => {
 						const variants = product?.variants?.data || [];
 
@@ -163,6 +170,9 @@ export default ({
 					></ScDivider>
 				</span>
 			)}
+
+			{prefix && <span slot="prefix">{prefix}</span>}
+
 			{children}
 		</ScSelect>
 	);

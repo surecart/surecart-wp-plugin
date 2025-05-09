@@ -106,7 +106,7 @@ class Block extends BaseBlock {
 
 		return wp_sprintf(
 			'<div %s>%s</div>',
-			get_block_wrapper_attributes( [ 'class' => $width_class . ' ' . ($attributes['className'] ?? '') . ' ' . 'sc-countdown-timer' ] ),
+			get_block_wrapper_attributes( [ 'class' => $width_class . ' ' . ( $attributes['className'] ?? '' ) . ' sc-countdown-timer' ] ),
 			wp_sprintf(
 				'<sc-upsell-countdown-timer showIcon="%s" class="%s" style="%s">
 					<span slot="offer-expire-text">%s</span>
@@ -114,7 +114,7 @@ class Block extends BaseBlock {
 				esc_attr( $attributes['show_icon'] ),
 				esc_attr( $this->getClasses( $attributes ) ),
 				esc_attr( $this->getStyles( $attributes ) ),
-				esc_attr( $attributes['offer_expire_text'] ?? '' )
+				wp_kses_post( $attributes['offer_expire_text'] ?? '' )
 			)
 		);
 	}

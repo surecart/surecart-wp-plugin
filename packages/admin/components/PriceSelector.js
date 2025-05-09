@@ -16,6 +16,8 @@ export default ({
 	open = false,
 	requestQuery,
 	required,
+	prefix,
+	hidePrefixOnSearch = false,
 	...props
 }) => {
 	const [query, setQuery] = useState(null);
@@ -50,6 +52,7 @@ export default ({
 			page: pagination.page,
 			per_page: pagination.per_page,
 			...requestQuery,
+			context: 'edit',
 		};
 
 		const data = select(coreStore).getEntityRecords('surecart', 'product', {
@@ -86,6 +89,10 @@ export default ({
 		fetchData(pagination);
 	}, [pagination]);
 
+	if (hidePrefixOnSearch && query) {
+		prefix = null;
+	}
+
 	return (
 		<SelectPrice
 			required={required}
@@ -102,6 +109,7 @@ export default ({
 			loading={isLoading}
 			onSelect={onSelect}
 			onScrollEnd={handleOnScrollEnd}
+			prefix={prefix}
 			{...props}
 		/>
 	);

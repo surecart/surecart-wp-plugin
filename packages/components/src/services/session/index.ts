@@ -14,8 +14,11 @@ export const expand = [
   'line_item.price',
   'line_item.fees',
   'line_item.variant',
+  'line_item.swap',
   'variant.image',
   'price.product',
+  'price.current_swap',
+  'swap.swap_price',
   'product.product_medias',
   'product.featured_product_media',
   'product.product_collections',
@@ -218,6 +221,22 @@ export const updateLineItem = async ({ id, data }) => {
     }),
     method: 'PATCH',
     data,
+  })) as LineItem;
+
+  return item?.checkout as Checkout;
+};
+
+export const toggleSwap = async ({ id, action = 'swap' }) => {
+  const item = (await apiFetch({
+    path: addQueryArgs(`surecart/v1/line_items/${id}/${action}`, {
+      expand: [
+        ...(expand || []).map(item => {
+          return item.includes('.') ? item : `checkout.${item}`;
+        }),
+        'checkout',
+      ],
+    }),
+    method: 'PATCH',
   })) as LineItem;
 
   return item?.checkout as Checkout;

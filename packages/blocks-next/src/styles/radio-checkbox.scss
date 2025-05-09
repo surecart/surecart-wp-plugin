@@ -3,13 +3,11 @@
 	align-items: center;
 	gap: 0.75em;
 	color: inherit;
-	label {
-		font-size: var(--sc-input-font-size-medium);
-		font-weight: var(--sc-input-font-weight);
-		font-style: normal;
-		font-weight: normal;
-		line-height: var(--sc-checkbox-size);
-	}
+	font-size: var(--sc-input-font-size-medium);
+	font-weight: var(--sc-input-font-weight);
+	font-style: normal;
+	font-weight: normal;
+	line-height: var(--sc-checkbox-size);
 }
 
 .sc-check-input,

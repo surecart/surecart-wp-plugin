@@ -136,6 +136,7 @@ return array(
 		\SureCart\Rest\AffiliationProductsRestServiceProvider::class,
 		\SureCart\Rest\AffiliationsRestServiceProvider::class,
 		\SureCart\Rest\ExportsRestServiceProvider::class,
+		\SureCart\Rest\SwapRestServiceProvider::class,
 
 		// integrations.
 		\SureCart\Integrations\DiviServiceProvider::class,

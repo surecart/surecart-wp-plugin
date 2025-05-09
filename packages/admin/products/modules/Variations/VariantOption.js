@@ -17,6 +17,7 @@ import {
 	ScForm,
 	ScInput,
 	ScTag,
+	ScSelect,
 } from '@surecart/components-react';
 import VariantOptionValues from './VariantOptionValues';
 import { hasDuplicate } from './utils';
@@ -45,9 +46,10 @@ export default ({
 		}
 	}, [open]);
 
-	const handleChange = (name) =>
+	const handleChange = (data) =>
 		updateOption({
-			name,
+			...(data.name ? { name: data.name } : {}),
+			...(data.display_type ? { display_type: data.display_type } : {}),
 		});
 
 	const onChangeValues = (values) =>
@@ -126,7 +128,9 @@ export default ({
 										width: 50%;
 									`}
 									onScInput={(e) =>
-										handleChange(e.target.value)
+										handleChange({
+											name: e.target.value,
+										})
 									}
 									onScChange={(e) => {
 										e.target.setCustomValidity(
@@ -144,6 +148,30 @@ export default ({
 												: ''
 										);
 									}}
+								/>
+								<ScSelect
+									slot="suffix"
+									unselect={false}
+									value={option?.display_type || 'radio'}
+									css={css`
+										min-width: 125px;
+									`}
+									onScChange={(e) =>
+										handleChange({
+											display_type: e.target.value,
+										})
+									}
+									choices={[
+										{
+											label: __('Radio', 'surecart'),
+											value: 'radio',
+										},
+										{
+											label: __('Dropdown', 'surecart'),
+											value: 'dropdown',
+										},
+									]}
+									placeholder={__('Option Type', 'surecart')}
 								/>
 								<ScIcon
 									name="trash"

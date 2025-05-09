@@ -35,7 +35,6 @@
  - [sc-price-range](../../ui/sc-price-range)
  - [sc-product-donation-amount-choice](../../controllers/checkout-form/product-donation-amount-choice)
  - [sc-product-item-price](../../controllers/products/sc-product-item-price)
- - [sc-product-line-item](../../ui/product-line-item)
  - [sc-product-price-choices](../../controllers/product/sc-product-price-choices)
  - [sc-recurring-price-choice-container](../../ui/sc-recurring-price-choice-container)
  - [sc-subscription-details](../../controllers/dashboard/subscription-details)
@@ -51,7 +50,6 @@ graph TD;
   sc-price-range --> sc-format-number
   sc-product-donation-amount-choice --> sc-format-number
   sc-product-item-price --> sc-format-number
-  sc-product-line-item --> sc-format-number
   sc-product-price-choices --> sc-format-number
   sc-recurring-price-choice-container --> sc-format-number
   sc-subscription-details --> sc-format-number

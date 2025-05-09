@@ -54,28 +54,28 @@ export default ({ className, price, updatePrice }) => {
 						<span slot="suffix">{__('Days', 'surecart')}</span>
 					</ScInput>
 				)}
-			</div>
 
-			{!!price?.trial_duration_days &&
-				!!price?.setup_fee_enabled &&
-				price?.setup_fee_amount >= 0 && (
-					<ScSwitch
-						checked={price.setup_fee_trial_enabled === false}
-						onScChange={(e) =>
-							updatePrice({
-								setup_fee_trial_enabled: !e.target.checked,
-							})
-						}
-					>
-						{__('Paid trial', 'surecart')}
-						<span slot="description">
-							{__(
-								'Charge the setup fee during the free trial period.',
-								'surecart'
-							)}
-						</span>
-					</ScSwitch>
-				)}
+				{!!price?.trial_duration_days &&
+					!!price?.setup_fee_enabled &&
+					price?.setup_fee_amount >= 0 && (
+						<ScSwitch
+							checked={price.setup_fee_trial_enabled === false}
+							onScChange={(e) =>
+								updatePrice({
+									setup_fee_trial_enabled: !e.target.checked,
+								})
+							}
+						>
+							{__('Paid trial', 'surecart')}
+							<span slot="description">
+								{__(
+									'Charge the setup fee during the free trial period.',
+									'surecart'
+								)}
+							</span>
+						</ScSwitch>
+					)}
+			</div>
 		</>
 	);
 };

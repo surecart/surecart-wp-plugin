@@ -15,8 +15,9 @@ export default ({ price, updatePrice }) => {
 	return (
 		<div
 			css={css`
-				display: grid;
-				gap: var(--sc-spacing-medium);
+				> *:not(:last-child) {
+					margin-bottom: var(--sc-spacing-medium);
+				}
 			`}
 		>
 			<ScSwitch

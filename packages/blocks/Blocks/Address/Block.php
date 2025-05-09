@@ -34,6 +34,7 @@ class Block extends BaseBlock {
 			?>
 			<sc-order-billing-address
 			label="<?php echo esc_attr( $attributes['billing_label'] ); ?>"
+			toggle-label="<?php echo esc_attr( $attributes['billing_toggle_label'] ); ?>"
 			<?php echo $attributes['show_name'] ? 'show-name' : null; ?>
 			<?php echo $attributes['line_2'] ? 'show-line-2' : null; ?>
 			default-country="<?php echo esc_attr( $default_country ); ?>"

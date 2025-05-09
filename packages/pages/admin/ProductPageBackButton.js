@@ -26,7 +26,7 @@ export default () => {
 				icon={arrowLeft}
 				label={__('Edit Product', 'surecart')}
 				showTooltip={false}
-				href={addQueryArgs('/wp-admin/admin.php', {
+				href={addQueryArgs(`${window?.scData?.admin_url}admin.php`, {
 					page: 'sc-products',
 					action: 'edit',
 					id: metadata.product.id,

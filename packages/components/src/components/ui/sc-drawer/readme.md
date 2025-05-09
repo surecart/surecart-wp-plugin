@@ -14,6 +14,7 @@
 | `noHeader`     | `no-header`     | Removes the header. This will also remove the default close button, so please ensure you provide an easy, accessible way for users to dismiss the drawer.                                       | `boolean`                               | `false` |
 | `open`         | `open`          | Indicates whether or not the drawer is open. You can use this in lieu of the show/hide methods.                                                                                                 | `boolean`                               | `false` |
 | `placement`    | `placement`     | The direction from which the drawer will open.                                                                                                                                                  | `"bottom" \| "end" \| "start" \| "top"` | `'end'` |
+| `stickyFooter` | `sticky-footer` | Sticky drawer footer                                                                                                                                                                            | `boolean`                               | `false` |
 | `stickyHeader` | `sticky-header` | Sticky drawer header                                                                                                                                                                            | `boolean`                               | `false` |
 
 

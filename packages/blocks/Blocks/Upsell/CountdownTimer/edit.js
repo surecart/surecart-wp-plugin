@@ -87,16 +87,6 @@ export default ({ attributes, setAttributes }) => {
 			<InspectorControls>
 				<PanelBody title={__('Text settings', 'surecart')}>
 					<PanelRow>
-						<TextControl
-							label={__('Offer expires label', 'surecart')}
-							placeholder={__('Offer expires in', 'surecart')}
-							value={offer_expire_text}
-							onChange={(value) =>
-								setAttributes({ offer_expire_text: value })
-							}
-						/>
-					</PanelRow>
-					<PanelRow>
 						<ToggleControl
 							label={__('Show clock icon', 'surecart')}
 							checked={show_icon}

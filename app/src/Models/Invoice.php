@@ -2,6 +2,7 @@
 
 namespace SureCart\Models;
 
+use SureCart\Models\Traits\CanResendNotifications;
 use SureCart\Models\Traits\HasCheckout;
 use SureCart\Models\Traits\HasDates;
 use SureCart\Support\TimeDate;
@@ -12,6 +13,7 @@ use SureCart\Support\TimeDate;
 class Invoice extends Model {
 	use HasCheckout;
 	use HasDates;
+	use CanResendNotifications;
 
 	/**
 	 * Rest API endpoint

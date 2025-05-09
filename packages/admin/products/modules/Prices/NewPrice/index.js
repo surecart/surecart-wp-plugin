@@ -1,12 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import {
-	ScButton,
-	ScForm,
-	ScIcon,
-	ScSelect,
-	ScDrawer,
-} from '@surecart/components-react';
+import { ScButton, ScForm, ScIcon, ScDrawer } from '@surecart/components-react';
 import { store as coreStore } from '@wordpress/core-data';
 import { useDispatch } from '@wordpress/data';
 import { useEffect, useRef, useState } from '@wordpress/element';
@@ -18,7 +12,9 @@ import OneTime from '../../../components/price/OneTime';
 import PriceName from '../../../components/price/parts/PriceName';
 import Subscription from '../../../components/price/Subscription';
 import Error from '../../../../components/Error';
-import CanUpgrade from '../../../components/price/parts/CanUpgrade';
+// import Swap from '../../../components/price/parts/Swap';
+import Advanced from '../../../components/price/parts/Advanced';
+import PaymentType from '../../../components/price/parts/PaymentType';
 
 export default ({ isOpen, onRequestClose, product }) => {
 	if (!isOpen) return null;
@@ -28,6 +24,7 @@ export default ({ isOpen, onRequestClose, product }) => {
 	const [price, setPrice] = useState({
 		portal_subscription_update_enabled: true,
 	});
+	const [currentSwap, setCurrentSwap] = useState(null);
 	const [type, setType] = useState('once');
 	const { saveEntityRecord } = useDispatch(coreStore);
 	const { createSuccessNotice } = useDispatch(noticesStore);
@@ -38,11 +35,15 @@ export default ({ isOpen, onRequestClose, product }) => {
 		setPrice({ ...price, ...data });
 	};
 
+	const editSwap = (data) => {
+		setCurrentSwap({ ...currentSwap, ...data });
+	};
+
 	const onSubmit = async (e) => {
 		e.stopPropagation();
 		try {
 			setLoading(true);
-			await saveEntityRecord(
+			const newPrice = await saveEntityRecord(
 				'surecart',
 				'price',
 				{
@@ -51,6 +52,18 @@ export default ({ isOpen, onRequestClose, product }) => {
 				},
 				{ throwOnError: true }
 			);
+
+			if (currentSwap) {
+				await saveEntityRecord(
+					'surecart',
+					'swap',
+					{
+						...currentSwap,
+						price: newPrice.id,
+					},
+					{ throwOnError: true }
+				);
+			}
 			createSuccessNotice(__('Price added.', 'surecart'), {
 				type: 'snackbar',
 			});
@@ -94,10 +107,14 @@ export default ({ isOpen, onRequestClose, product }) => {
 		<ScForm onScFormSubmit={onSubmit}>
 			<ScDrawer
 				label={__('Add A Price', 'surecart')}
-				style={{ '--sc-drawer-size': '32rem' }}
+				style={{
+					'--sc-drawer-size': '38rem',
+					'--sc-input-label-margin': 'var(--sc-spacing-small)',
+				}}
 				onScAfterHide={onRequestClose}
 				open={isOpen}
 				stickyHeader
+				stickyFooter
 				onScAfterShow={() => ref.current.triggerFocus()}
 			>
 				<div
@@ -105,6 +122,7 @@ export default ({ isOpen, onRequestClose, product }) => {
 						display: flex;
 						flex-direction: column;
 						height: 100%;
+						background: var(--sc-color-gray-50);
 					`}
 				>
 					<div
@@ -122,26 +140,11 @@ export default ({ isOpen, onRequestClose, product }) => {
 							ref={ref}
 						/>
 
-						<ScSelect
-							label={__('Payment type', 'surecart')}
-							required
-							unselect={false}
-							value={type}
-							onScChange={(e) => setType(e.target.value)}
-							choices={[
-								{
-									value: 'once',
-									label: __('One Time', 'surecart'),
-								},
-								{
-									value: 'multiple',
-									label: __('Installment', 'surecart'),
-								},
-								{
-									value: 'subscription',
-									label: __('Subscription', 'surecart'),
-								},
-							]}
+						<PaymentType
+							type={type}
+							setType={setType}
+							price={price}
+							updatePrice={updatePrice}
 						/>
 
 						{type === 'subscription' && (
@@ -167,8 +170,23 @@ export default ({ isOpen, onRequestClose, product }) => {
 								product={product}
 							/>
 						)}
+						{/* {!product?.variants?.length &&
+							!product?.variants?.data?.length &&
+							!price?.ad_hoc && (
+								<Swap
+									currentPrice={price}
+									updateSwap={editSwap}
+									currentSwap={currentSwap}
+									currentProduct={product}
+									isSaving={loading}
+								/>
+							)} */}
 
-						<CanUpgrade price={price} updatePrice={updatePrice} />
+						<Advanced
+							price={price}
+							updatePrice={updatePrice}
+							product={product}
+						/>
 					</div>
 				</div>
 				<div

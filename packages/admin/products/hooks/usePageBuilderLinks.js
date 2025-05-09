@@ -9,19 +9,25 @@ import { addQueryArgs } from '@wordpress/url';
  */
 export const getPageBuilderLinks = (post) => {
 	// Get edit post link
-	const editPostLink = addQueryArgs('/wp-admin/post.php', {
-		post: post?.id,
-		action: 'edit',
-	});
+	const editPostLink = addQueryArgs(
+		`${window?.scData?.home_url}/wp-admin/post.php`,
+		{
+			post: post?.id,
+			action: 'edit',
+		}
+	);
 
 	// Check for Elementor
 	if (post?.meta?._elementor_edit_mode === 'builder') {
 		return {
 			pageBuilder: 'elementor',
-			editorLink: addQueryArgs('/wp-admin/post.php', {
-				post: post?.id,
-				action: 'elementor',
-			}),
+			editorLink: addQueryArgs(
+				`${window?.scData?.home_url}/wp-admin/post.php`,
+				{
+					post: post?.id,
+					action: 'elementor',
+				}
+			),
 			editPostLink,
 		};
 	}

@@ -475,4 +475,11 @@ dispatch(coreStore).addEntities([
 		label: __('Return Reason', 'surecart'),
 		baseURL: '/surecart/v1/return_reasons',
 	},
+	{
+		name: 'swap',
+		kind: 'surecart',
+		label: __('Swap', 'surecart'),
+		baseURL: '/surecart/v1/swaps',
+		baseURLParams: { context: 'edit' },
+	},
 ]);
