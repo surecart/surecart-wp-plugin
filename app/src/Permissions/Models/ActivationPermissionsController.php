@@ -2,6 +2,7 @@
 namespace SureCart\Permissions\Models;
 
 use SureCart\Models\Activation;
+use SureCart\Models\License;
 
 /**
  * Handle various charge permissions.
@@ -48,7 +49,26 @@ class ActivationPermissionsController extends ModelPermissionsController {
 		if ( ! empty( $allcaps['read_sc_products'] ) ) {
 			return true;
 		}
-		return $this->isListingOwnCustomerIds( $user, $args[2]['customer_ids'] ?? [] );
+
+		$license_ids = $args[2]['license_ids'] ?? [];
+		if ( empty( $license_ids ) ) {
+			return false;
+		}
+
+		$licenses = License::where( [ 'ids' => $license_ids ] )->get();
+
+		if ( is_wp_error( $licenses ) || empty( $licenses ) ) {
+			return false;
+		}
+
+		// Ensure all licenses belong to the user.
+		foreach ( $licenses as $license ) {
+			if ( ! $license->belongsToUser( $user ) ) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	/**

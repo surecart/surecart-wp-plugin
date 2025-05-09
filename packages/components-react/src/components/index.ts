@@ -209,6 +209,7 @@ export const ScSubscriptionSwitch = /*@__PURE__*/createReactComponent<JSX.ScSubs
 export const ScSubscriptionVariationConfirm = /*@__PURE__*/createReactComponent<JSX.ScSubscriptionVariationConfirm, HTMLScSubscriptionVariationConfirmElement>('sc-subscription-variation-confirm');
 export const ScSubscriptionsList = /*@__PURE__*/createReactComponent<JSX.ScSubscriptionsList, HTMLScSubscriptionsListElement>('sc-subscriptions-list');
 export const ScSummary = /*@__PURE__*/createReactComponent<JSX.ScSummary, HTMLScSummaryElement>('sc-summary');
+export const ScSwap = /*@__PURE__*/createReactComponent<JSX.ScSwap, HTMLScSwapElement>('sc-swap');
 export const ScSwitch = /*@__PURE__*/createReactComponent<JSX.ScSwitch, HTMLScSwitchElement>('sc-switch');
 export const ScTab = /*@__PURE__*/createReactComponent<JSX.ScTab, HTMLScTabElement>('sc-tab');
 export const ScTabGroup = /*@__PURE__*/createReactComponent<JSX.ScTabGroup, HTMLScTabGroupElement>('sc-tab-group');

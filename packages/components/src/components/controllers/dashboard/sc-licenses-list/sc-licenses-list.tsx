@@ -47,6 +47,16 @@ export class ScLicensesList {
     });
   }
 
+  nextPage() {
+    this.query.page = this.query.page + 1;
+    this.initialFetch();
+  }
+
+  prevPage() {
+    this.query.page = this.query.page - 1;
+    this.initialFetch();
+  }
+
   async initialFetch() {
     try {
       this.loading = true;
@@ -186,6 +196,18 @@ export class ScLicensesList {
         )}
 
         {this.renderContent()}
+
+        {!this.allLink && (
+          <sc-pagination
+            page={this.query.page}
+            perPage={this.query.per_page}
+            total={this.pagination.total}
+            totalPages={this.pagination.total_pages}
+            totalShowing={this?.licenses?.length}
+            onScNextPage={() => this.nextPage()}
+            onScPrevPage={() => this.prevPage()}
+          />
+        )}
       </sc-dashboard-module>
     );
   }

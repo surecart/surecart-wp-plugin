@@ -58,6 +58,20 @@ class InvoicesRestServiceProvider extends RestServiceProvider implements RestSer
 				'schema' => [ $this, 'get_item_schema' ],
 			]
 		);
+
+		register_rest_route(
+			"$this->name/v$this->version",
+			$this->endpoint . '/(?P<id>\S+)/resend_notification/',
+			array(
+				array(
+					'methods'             => \WP_REST_Server::EDITABLE,
+					'callback'            => $this->callback( $this->controller, 'resend_notification' ),
+					'permission_callback' => array( $this, 'resend_notification_permissions_check' ),
+				),
+				// Register our schema callback.
+				'schema' => array( $this, 'get_item_schema' ),
+			)
+		);
 	}
 
 	/**
@@ -127,6 +141,16 @@ class InvoicesRestServiceProvider extends RestServiceProvider implements RestSer
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function open_permissions_check( $request ) {
+		return current_user_can( 'edit_sc_invoices', $request['id'], $request->get_params() );
+	}
+
+	/**
+	 * Resend notification permissions.
+	 *
+	 * @param \WP_REST_Request $request Full details about the request.
+	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
+	 */
+	public function resend_notification_permissions_check( $request ) {
 		return current_user_can( 'edit_sc_invoices', $request['id'], $request->get_params() );
 	}
 }

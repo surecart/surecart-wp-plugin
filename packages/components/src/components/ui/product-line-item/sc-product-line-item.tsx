@@ -1,4 +1,4 @@
-import { Component, h, Prop, Event, EventEmitter, Element, Fragment } from '@stencil/core';
+import { Component, h, Prop, Event, EventEmitter, Element } from '@stencil/core';
 import { __, _n, sprintf } from '@wordpress/i18n';
 import { isRtl } from '../../../functions/page-align';
 import { Fee, ImageAttributes } from '../../../types';
@@ -38,17 +38,11 @@ export class ScProductLineItem {
   /** Product name */
   @Prop() name: string;
 
-  /** Price name */
-  @Prop() priceName?: string;
-
-  /** Product variant label */
-  @Prop() variantLabel: string = '';
-
-  /** Quantity */
-  @Prop() quantity: number;
-
   /** Product monetary amount */
-  @Prop() amount: number;
+  @Prop() amount: string;
+
+  /** The line item scratch amount */
+  @Prop() scratch: string;
 
   /** Product display amount */
   @Prop() displayAmount: string;
@@ -59,20 +53,20 @@ export class ScProductLineItem {
   /** Product line item fees. */
   @Prop() fees: Fee[];
 
-  /** Is the setup fee not included in the free trial? */
-  @Prop() setupFeeTrialEnabled: boolean = true;
+  /** Price name */
+  @Prop() price?: string;
 
-  /** The line item scratch amount */
-  @Prop() scratchAmount: number;
+  /** Product variant label */
+  @Prop() variant: string = '';
 
-  /** Currency for the product */
-  @Prop() currency: string;
+  /** Quantity */
+  @Prop() quantity: number;
 
   /** Recurring interval (i.e. monthly, once, etc.) */
   @Prop() interval: string;
 
-  /** Trial duration days */
-  @Prop() trialDurationDays: number;
+  /** Trial text */
+  @Prop() trial: string;
 
   /** Is the line item removable */
   @Prop() removable: boolean;
@@ -87,83 +81,13 @@ export class ScProductLineItem {
   @Prop() sku: string = '';
 
   /** The purchasable status display */
-  @Prop() purchasableStatusDisplay: string;
+  @Prop() purchasableStatus: string;
 
   /** Emitted when the quantity changes. */
   @Event({ bubbles: false }) scUpdateQuantity: EventEmitter<number>;
 
   /** Emitted when the quantity changes. */
   @Event({ bubbles: false }) scRemove: EventEmitter<void>;
-
-  renderAmount() {
-    if (this.displayAmount) {
-      return this.displayAmount;
-    }
-
-    return <sc-format-number type="currency" currency={this.currency} value={this.amount}></sc-format-number>;
-  }
-
-  renderPriceAndInterval() {
-    const setupFee = (this.fees || []).find(fee => fee.fee_type === 'setup');
-    if (this.trialDurationDays) {
-      return (
-        <div class="item__price" part="price">
-          <div class="price" part="price__amount">
-            {!!setupFee && !this.setupFeeTrialEnabled ? (
-              <Fragment>
-                {setupFee?.description} {setupFee?.display_amount}
-              </Fragment>
-            ) : (
-              sprintf(_n('%d day free', '%d days free', this.trialDurationDays, 'surecart'), this.trialDurationDays)
-            )}
-          </div>
-          <div class="price__description" part="price__description">
-            {
-              /** translators: 30 days free, Then $99 per month. */
-              __('Then', 'surecart')
-            }{' '}
-            {!!this.scratchAmount && this.scratchAmount > this.amount && (
-              <Fragment>
-                <span class="item__scratch-price">{this.scratchDisplayAmount}</span>{' '}
-              </Fragment>
-            )}
-            <span slot="price__amount">{this.renderAmount()}</span> {!!this.interval && this.interval}
-            {!!setupFee && !this.setupFeeTrialEnabled && sprintf(_n('starting in %d day', 'starting in %d days', this.trialDurationDays, 'surecart'), this.trialDurationDays)}
-          </div>
-        </div>
-      );
-    }
-
-    return (
-      <div class="item__price" part="price">
-        <div class="price" part="price__amount">
-          {!!this.scratchAmount && this.scratchAmount !== this.amount && (
-            <Fragment>
-              <span class="item__scratch-price">{this.scratchDisplayAmount}</span>{' '}
-            </Fragment>
-          )}
-          {this.renderAmount()}
-        </div>
-        {!!this.interval && (
-          <div class="price__description" part="price__description">
-            {this.interval}
-          </div>
-        )}
-      </div>
-    );
-  }
-
-  renderPurchasableStatus() {
-    if (!this.purchasableStatusDisplay) return null;
-
-    return (
-      <div class="item__price" part="price">
-        <div class="product-line-item__purchasable-status" part="price__amount">
-          {this.purchasableStatusDisplay}
-        </div>
-      </div>
-    );
-  }
 
   render() {
     return (
@@ -178,77 +102,84 @@ export class ScProductLineItem {
             'product-line-item__removable': this.removable,
           }}
         >
-          {!!this.image?.src && <img {...(this.image as any)} part="image" />}
-          <div class="item__text" part="text">
-            <div class="item__text-details">
+          {!!this.image?.src ? <img {...(this.image as any)} part="image" class="item__image" /> : <div class="item__image-placeholder"></div>}
+          <div class="item__text-container">
+            <div class="item__row">
               <div class="item__title" part="title">
                 <slot name="title">{this.name}</slot>
               </div>
-              <div class="item__description item__price-variant" part="description">
-                <div>{this.variantLabel}</div>
-                <div>{this.priceName}</div>
-                {!!this.sku && (
+              <div class="price" part="price__amount">
+                {!!this.scratch && this.scratch !== this.amount && <span class="item__scratch-price">{this.scratch}</span>}
+                {this.amount}
+                <div class="price__description" part="price__description">
+                  {this.interval}
+                </div>
+              </div>
+            </div>
+
+            <div class="item__row">
+              <div class="item__description" part="description">
+                {this.variant && <div>{this.variant}</div>}
+                {this.price && <div>{this.price}</div>}
+                {this.sku && (
                   <div>
                     {__('SKU:', 'surecart')} {this.sku}
                   </div>
                 )}
+                {!!this.purchasableStatus && <div>{this.purchasableStatus}</div>}
               </div>
-              {!this.editable && this.quantity > 1 && (
+
+              <div class="item__description" part="trial-fees">
+                {!!this.trial && <div>{this.trial}</div>}
+                {(this.fees || []).map(fee => {
+                  return (
+                    <div>
+                      {fee?.display_amount} {fee?.description}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            <div class="item__row stick-bottom">
+              {this.editable ? (
+                <sc-quantity-select
+                  max={this.max || Infinity}
+                  exportparts="base:quantity, minus:quantity__minus, minus-icon:quantity__minus-icon, plus:quantity__plus, plus-icon:quantity__plus-icon, input:quantity__input"
+                  clickEl={this.el}
+                  quantity={this.quantity}
+                  size="small"
+                  onScChange={e => e.detail && this.scUpdateQuantity.emit(e.detail)}
+                  aria-label={
+                    /** translators: %1$s: product name, %2$s: product price name */
+                    sprintf(__('Change Quantity - %1$s %2$s', 'surecart'), this.name, this.price)
+                  }
+                ></sc-quantity-select>
+              ) : (
                 <span class="item__description" part="static-quantity">
                   {__('Qty:', 'surecart')} {this.quantity}
                 </span>
               )}
+              {!!this.removable && (
+                <div
+                  class="item__remove-container"
+                  onClick={() => this.scRemove.emit()}
+                  onKeyDown={e => {
+                    if (e.key === 'Enter') {
+                      this.scRemove.emit();
+                    }
+                  }}
+                  // translators: Remove Item - Product Name Product Price Name
+                  aria-label={sprintf(__('Remove Item - %1$s %2$s', 'surecart'), this.name, this.price)}
+                  tabIndex={0}
+                >
+                  <sc-icon exportparts="base:remove-icon__base" class="item__remove" name="x" />
+                  <span class="item__remove-text">{__('Remove', 'surecart')}</span>
+                </div>
+              )}
             </div>
-
-            {this.editable && (
-              <sc-quantity-select
-                max={this.max || Infinity}
-                exportparts="base:quantity, minus:quantity__minus, minus-icon:quantity__minus-icon, plus:quantity__plus, plus-icon:quantity__plus-icon, input:quantity__input"
-                clickEl={this.el}
-                quantity={this.quantity}
-                size="small"
-                onScChange={e => e.detail && this.scUpdateQuantity.emit(e.detail)}
-                aria-label={
-                  /** translators: %1$s: product name, %2$s: product price name */
-                  sprintf(__('Change Quantity - %1$s %2$s', 'surecart'), this.name, this.priceName)
-                }
-              ></sc-quantity-select>
-            )}
-          </div>
-          <div class="item__suffix" part="suffix">
-            {this.removable ? (
-              <sc-icon
-                exportparts="base:remove-icon__base"
-                class="item__remove"
-                name="x"
-                onClick={() => this.scRemove.emit()}
-                onKeyDown={e => {
-                  if (e.key === 'Enter') {
-                    this.scRemove.emit();
-                  }
-                }}
-                tabindex="0"
-                // translators: Remove Item - Product Name Product Price Name
-                aria-label={sprintf(__('Remove Item - %1$s %2$s', 'surecart'), this.name, this.priceName)}
-              ></sc-icon>
-            ) : (
-              <div></div>
-            )}
-            {this.renderPriceAndInterval()}
-            {this.renderPurchasableStatus()}
           </div>
         </div>
-        {(this.fees || []).map(fee => {
-          if (this.trialDurationDays && !this.setupFeeTrialEnabled && fee.fee_type === 'setup') return null;
-          return (
-            <sc-line-item exportparts="price-description:line-item__price-description">
-              <span slot="price-description">{fee?.display_amount}</span>
-              <span slot="price-description" class="fee__description">
-                {fee?.description}
-              </span>
-            </sc-line-item>
-          );
-        })}
       </div>
     );
   }
