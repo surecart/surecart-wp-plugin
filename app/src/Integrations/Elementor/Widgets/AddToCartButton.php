@@ -491,7 +491,7 @@ class AddToCartButton extends \Elementor\Widget_Base {
 		$settings       = $this->get_settings_for_display();
 		$is_add_to_cart = ! isset( $settings['buy_button_type'] ) || 'yes' !== $settings['buy_button_type'];
 
-		$this->add_render_attribute( 'wrapper', 'class', 'wp-block-button__link wp-element-button sc-button__link elementor-button elementor-button-link elementor-size-sm' );
+		$this->add_render_attribute( 'wrapper', 'class', 'wp-block-button__link wp-block-surecart-product-elementor-cart-button wp-element-button sc-button__link elementor-button elementor-button-link elementor-size-sm' );
 		$this->add_render_attribute( 'button', 'class', 'elementor-button' );
 
 		if ( ! empty( $settings['selected_icon']['value'] ) ) {

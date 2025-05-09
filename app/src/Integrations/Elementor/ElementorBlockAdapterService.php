@@ -124,9 +124,8 @@ class ElementorBlockAdapterService {
 			return $content;
 		}
 
-		// If no surecart elements in the content, return.
-		$product_page_wrapper = new ProductPageWrapperService( $content );
-		if ( $product_page_wrapper->hasProductPageWrapper() || ! $product_page_wrapper->hasAnySureCartProductBlock() ) {
+		$orphaned_blocks = $this->findOrphanedSurecartBlocks( $content );
+		if ( empty( $orphaned_blocks ) ) {
 			return $content;
 		}
 
@@ -155,5 +154,50 @@ class ElementorBlockAdapterService {
 		}
 
 		return $replace_content;
+	}
+
+	/**
+	 * Find orphaned surecart blocks.
+	 *
+	 * @param string $content The content.
+	 *
+	 * @return array
+	 */
+	public function findOrphanedSurecartBlocks($content) {
+		$processor = new \WP_HTML_Tag_Processor($content);
+		$inside_form = false;
+		$orphaned_blocks = [];
+
+		// Set a bookmark at the start to return to it later if needed
+		$processor->next_tag();
+		$processor->set_bookmark('start');
+
+		while ($processor->next_tag(array( 'tag_closers' => 'visit' ) )) {
+			$tag_name = strtolower($processor->get_tag());
+
+			// Track when we enter/exit form tags
+			if ($tag_name === 'form' && !$processor->is_tag_closer() ) {
+				$inside_form = true;
+				continue;
+			}
+			if ($tag_name === 'form' && $processor->is_tag_closer() ) {
+				$inside_form = false;
+				continue;
+			}
+
+			// If we're not inside a form, check for the class
+			if (!$inside_form) {
+				$class = $processor->get_attribute('class');
+
+				if ( preg_match( '/wp-block-surecart-(?:product|price)-/', $class ) ) {
+					$orphaned_blocks[] = [
+						'tag' => $processor->get_tag(),
+						'class' => $class,
+					];
+				}
+			}
+		}
+
+		return $orphaned_blocks;
 	}
 }
