@@ -1,0 +1,30 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "surecart/product-quick-view-close",
+	"title": "Close",
+	"description": "Display the product quick view close button.",
+	"version": "1.0.0",
+	"category": "surecart-product-list",
+	"example": {},
+	"ancestor": ["surecart/product-quick-view"],
+	"supports": {
+		"interactivity": true,
+		"color": {
+			"gradients": true,
+			"link": false,
+			"__experimentalDefaultControls": {
+				"background": true,
+				"text": true
+			}
+		},
+		"spacing": {
+			"margin": true,
+			"padding": true
+		}
+	},
+	"textdomain": "surecart",
+	"render": "file:./view.php",
+	"editorScript": "file:./index.js",
+	"style": ["file:./style-index.css"]
+}

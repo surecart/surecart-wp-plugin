@@ -28,13 +28,6 @@ class URLParamService {
 	protected $search_key = 'search';
 
 	/**
-	 * Product Quick View Key.
-	 *
-	 * @var string
-	 */
-	protected $product_quick_view_key = 'product-quick-view';
-
-	/**
 	 * Unique instance ID.
 	 *
 	 * @var string
@@ -345,37 +338,5 @@ class URLParamService {
 			],
 			add_query_arg( $key, $filters, $this->url )
 		);
-	}
-
-	/**
-	 * Add a product quick view argument to the URL.
-	 *
-	 * @param int $product_id The product ID.
-	 */
-	public function addProductQuickViewArg( $product_id ) {
-		$this->url = add_query_arg( $this->product_quick_view_key, $product_id, $this->url );
-		return $this;
-	}
-
-	/**
-	 * Get the product quick view argument from the URL.
-	 *
-	 * @return string
-	 */
-	public function getProductQuickViewArg() {
-		$product_id = $_GET[ $this->product_quick_view_key ] ?? null;
-		if ( ! $product_id ) {
-			return '';
-		}
-		return $product_id;
-	}
-
-	/**
-	 * Remove product quick view argument from the URL.
-	 *
-	 * @return string
-	 */
-	public function removeProductQuickViewArg() {
-		return remove_query_arg( $this->product_quick_view_key );
 	}
 }
