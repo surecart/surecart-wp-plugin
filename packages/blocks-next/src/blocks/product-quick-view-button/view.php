@@ -1,4 +1,4 @@
-<div 
+<div
 	<?php
 	echo wp_kses_data(
 		get_block_wrapper_attributes(
@@ -30,7 +30,7 @@
 >
 	<?php
 	if ( $show_icon && 'before' === $icon_position ) {
-		echo wp_kses( SureCart::svg()->get( $icon, [ 'class' => '' ] ), sc_allowed_svg_html() );
+		echo wp_kses( SureCart::svg()->get( $icon, [ 'class' => 'wp-block-surecart-product-quick-view-button__icon' ] ), sc_allowed_svg_html() );
 	}
 
 	if ( $show_text ) {
@@ -38,7 +38,7 @@
 	}
 
 	if ( $show_icon && 'after' === $icon_position ) {
-		echo wp_kses( SureCart::svg()->get( $icon, [ 'class' => '' ] ), sc_allowed_svg_html() );
+		echo wp_kses( SureCart::svg()->get( $icon, [ 'class' => 'wp-block-surecart-product-quick-view-button__icon' ] ), sc_allowed_svg_html() );
 	}
 	?>
 </div>

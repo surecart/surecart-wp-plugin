@@ -18,9 +18,6 @@ class ProductQuickViewServiceProvider implements ServiceProviderInterface {
 		$container['surecart.product.quick.view'] = function () {
 			return new ProductQuickViewService();
 		};
-
-		$app = $container[ SURECART_APPLICATION_KEY ];
-		$app->alias( 'productQuickView', 'surecart.product.quick.view' );
 	}
 
 	/**

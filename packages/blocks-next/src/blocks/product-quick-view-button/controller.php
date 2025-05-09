@@ -1,8 +1,7 @@
 <?php
 $icon            = $attributes['icon'] ?? 'eye';
 $product_id      = $block->context['postId'] ?? null;
-$url             = \SureCart::block()->urlParams( 'product-quick-view' );
-$quick_view_link = $url->addProductQuickViewArg( $product_id )->url();
+$quick_view_link = add_query_arg( 'product-quick-view', $product_id);
 $show_icon       = 'icon' === $attributes['quickViewButtonType'] || 'both' === $attributes['quickViewButtonType'];
 $show_text       = 'text' === $attributes['quickViewButtonType'] || 'both' === $attributes['quickViewButtonType'];
 $icon_position   = $attributes['iconPosition'] ?? 'after';
@@ -18,11 +17,5 @@ $style = ! empty( $gap )
 if ( ! empty( $alignment ) ) {
 	$style .= 'justify-content:' . esc_attr( $alignment ) . ';';
 }
-
-// We need to enqueue these assets as the quick view dialog is rendered in the footer.
-wp_enqueue_style( 'surecart-lightbox' );
-wp_enqueue_script_module( 'surecart/lightbox' );
-wp_enqueue_style( 'surecart-image-slider' );
-wp_enqueue_script_module( '@surecart/image-slider' );
 
 return 'file:./view.php';
