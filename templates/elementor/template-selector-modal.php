@@ -1,4 +1,4 @@
-<div id="sc-elementor-modal-dialog" class="sc-elementor-modal" role="dialog" aria-labelledby="sc-elementor-modal-title" aria-modal="true">
+<div id="sc-elementor-modal-dialog" class="sc-elementor-modal" role="dialog" aria-labelledby="sc-elementor-modal-title" aria-modal="true" hidden>
 	<div class="sc-elementor-modal__overlay" tabindex="-1" aria-hidden="true"></div>
 	<div class="sc-elementor-modal__content">
 		<div class="sc-elementor-modal__header">
