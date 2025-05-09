@@ -35,9 +35,14 @@ jQuery(window).ready(function () {
 	/**
 	 * When adding a SureCart Widgets, remove the default SureCart block and insert the SureCart template.
 	 */
-	for (const [widgetName, template] of Object.entries(
+	for (const template of Object.values(
 		window?.scElementorData?.templates || {}
 	)) {
+		const widgetName = template?.widget_name || '';
+		if (!widgetName) {
+			continue;
+		}
+
 		elementor.hooks.addAction(
 			'panel/open_editor/widget/' + widgetName,
 			function (panel, model, view) {
