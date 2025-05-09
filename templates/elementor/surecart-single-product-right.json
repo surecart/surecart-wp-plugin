@@ -216,7 +216,8 @@
 											"isLinked": true
 										},
 										"__globals__": {
-											"border_color": "globals/colors?id=primary"
+											"border_color": "globals/colors?id=primary",
+											"badge_background_color": "globals/colors?id=primary"
 										}
 									},
 									"elements": [],
@@ -334,7 +335,11 @@
 							"size": 15
 						},
 						"text_color": "#000000",
-						"pill_background_color": "#FFFFFF"
+						"pill_background_color": "#FFFFFF",
+						"__globals__": {
+							"pill_highlight_background_color": "globals/colors?id=primary",
+							"pill_highlight_border_color": "globals/colors?id=primary"
+						}
 					},
 					"elements": [],
 					"isInner": false,
@@ -443,8 +448,7 @@
 				}
 			],
 			"isInner": true,
-			"elType": "container",
-			"isLocked": false
+			"elType": "container"
 		},
 		{
 			"id": "703dc9d5",
@@ -470,8 +474,7 @@
 				}
 			],
 			"isInner": true,
-			"elType": "container",
-			"isLocked": false
+			"elType": "container"
 		}
 	]
 }
