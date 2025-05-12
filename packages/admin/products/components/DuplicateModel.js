@@ -34,6 +34,7 @@ export default function DuplicateModel(props) {
 			if (onSuccess) {
 				onSuccess(duplicate);
 			}
+			setConfirm(false);
 		} catch (error) {
 			console.error(error);
 		}

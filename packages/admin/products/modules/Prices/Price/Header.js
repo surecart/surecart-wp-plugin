@@ -18,6 +18,7 @@ import { useState } from 'react';
 import BuyLink from './BuyLink';
 import { ScMenuDivider } from '@surecart/components-react';
 import { SortableKnob } from 'react-easy-sort';
+import DuplicateModel from '../../../components/DuplicateModel';
 
 export default ({
 	isOpen,
@@ -229,18 +230,24 @@ export default ({
 							{__('Delete', 'surecart')}
 						</ScMenuItem>
 					)}
-					{!!onDuplicate && (
-						<ScMenuItem onClick={onDuplicate}>
-							<ScIcon
-								slot="prefix"
-								style={{
-									opacity: 0.5,
-								}}
-								name="copy"
-							/>
-							{__('Duplicate', 'surecart')}
-						</ScMenuItem>
-					)}
+					<DuplicateModel
+						type="price"
+						id={price?.id}
+						onSuccess={onDuplicate}
+					>
+						{({ onClick }) => (
+							<ScMenuItem onClick={onClick}>
+								<ScIcon
+									slot="prefix"
+									style={{
+										opacity: 0.5,
+									}}
+									name="copy"
+								/>
+								{__('Duplicate', 'surecart')}
+							</ScMenuItem>
+						)}
+					</DuplicateModel>
 				</ScMenu>
 			</ScDropdown>
 		);

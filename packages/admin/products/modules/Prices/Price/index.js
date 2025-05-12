@@ -165,32 +165,7 @@ export default ({ price, product }) => {
 	};
 
 	const onDuplicate = async () => {
-		const r = confirm(
-			__(
-				'Duplicate this price? This will create a new price with the same settings.',
-				'surecart'
-			)
-		);
-		if (!r) return;
-
-		const { baseURL } = select(coreStore).getEntityConfig(
-			'surecart',
-			'price'
-		);
-
-		try {
-			await apiFetch({
-				path: `${baseURL}/${currentPrice?.id}/duplicate`,
-				method: 'POST',
-			});
-			createSuccessNotice(__('Price duplicated.', 'surecart'), {
-				type: 'snackbar',
-			});
-			await invalidateResolutionForStore();
-		} catch (e) {
-			console.error(e);
-			setError(e);
-		}
+		await invalidateResolutionForStore();
 	};
 
 	// get the price type.
