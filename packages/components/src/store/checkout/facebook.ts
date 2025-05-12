@@ -28,7 +28,7 @@ window.addEventListener('scAddedToCart', function (e: CustomEvent) {
       },
     ],
     currency: item?.price?.currency,
-    value: maybeConvertAmount(item?.price?.amount || 0, item?.price?.currency || 'USD'),
+    value: maybeConvertAmount(item?.total_amount || 0, item?.price?.currency || 'USD'),
   });
 });
 
@@ -79,7 +79,7 @@ window.addEventListener('scTrialStarted', function (e: CustomEvent) {
   items.forEach(item => {
     window.fbq('track', 'StartTrial', {
       currency: item.price?.currency,
-      value: maybeConvertAmount(item.price?.amount || 0, item.price?.currency || 'USD'),
+      value: maybeConvertAmount(item?.total_amount || 0, item.price?.currency || 'USD'),
     });
   });
 });
@@ -95,7 +95,7 @@ window.addEventListener('scSubscriptionStarted', function (e: CustomEvent) {
   items.forEach(item => {
     window.fbq('track', 'Subscribe', {
       currency: item.price?.currency,
-      value: maybeConvertAmount(item.price?.amount || 0, item.price?.currency || 'USD'),
+      value: maybeConvertAmount(item?.total_amount || 0, item.price?.currency || 'USD'),
     });
   });
 });
