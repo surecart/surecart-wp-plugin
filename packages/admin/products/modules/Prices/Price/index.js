@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { store as coreStore, useEntityRecord } from '@wordpress/core-data';
-import { useDispatch, useSelect } from '@wordpress/data';
+import { useDispatch, useSelect, select } from '@wordpress/data';
 import { useRef, useState, useEffect } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
@@ -186,6 +186,7 @@ export default ({ price, product }) => {
 			createSuccessNotice(__('Price duplicated.', 'surecart'), {
 				type: 'snackbar',
 			});
+			await invalidateResolutionForStore();
 		} catch (e) {
 			console.error(e);
 			setError(e);
