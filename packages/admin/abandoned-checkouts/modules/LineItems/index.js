@@ -43,15 +43,17 @@ export default ({ checkout, loading, abandoned }) => {
 							key={item.id}
 							image={item?.image}
 							name={item?.price?.product?.name}
-							priceName={item?.price?.name}
+							price={item?.price?.name}
+							variant={item?.variant_display_options}
 							editable={false}
 							removable={false}
 							fees={item?.fees?.data}
 							quantity={item.quantity}
-							amount={item.subtotal_amount}
-							currency={item?.price?.currency}
-							trialDurationDays={item?.price?.trial_duration_days}
-							interval={intervalString(item?.price)}
+							amount={item.subtotal_display_amount}
+							scratch={item.scratch_display_amount}
+							trial={item?.price?.trial_text}
+							sku={item?.sku}
+							interval={`${item?.price?.short_interval_text} ${item?.price?.short_interval_count_text}`}
 						></ScProductLineItem>
 					);
 				})}

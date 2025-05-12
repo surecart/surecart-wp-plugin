@@ -27,6 +27,7 @@ const ALLOWED_BLOCKS = [
 	'surecart/subtotal',
 	'surecart/line-item-shipping',
 	'surecart/invoice-details',
+	'surecart/conditional-form',
 ];
 
 export default ({ attributes, setAttributes }) => {
