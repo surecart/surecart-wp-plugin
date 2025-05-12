@@ -13,7 +13,7 @@ export default function DuplicateModel(props) {
 		onConfirm,
 		id,
 		onSuccess,
-		message = 'Duplicate',
+		message = __('Are you sure you wish to duplicate?', 'surecart'),
 	} = props;
 
 	const onClick = () => setConfirm(true);
@@ -51,8 +51,7 @@ export default function DuplicateModel(props) {
 					onConfirm={onConfirmDuplicate}
 					onRequestClose={() => setConfirm(false)}
 				>
-					{message ||
-						__('Are you sure you wish to duplicate?', 'surecart')}
+					{message}
 				</Confirm>
 			)}
 		</>
