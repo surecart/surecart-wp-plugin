@@ -324,7 +324,16 @@ export default ({ id, setBrowserURL }) => {
 							type="product"
 							id={id}
 							onConfirm={hasDirtyRecords ? onSubmit : null}
-							onSuccess={setConfirmUrl}
+							onSuccess={(duplicate) => {
+								setConfirmUrl(
+									addQueryArgs(
+										'admin.php?page=sc-products&action=edit',
+										{
+											id: duplicate?.id,
+										}
+									)
+								);
+							}}
 						>
 							{({ onClick }) => (
 								<Button

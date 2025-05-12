@@ -3,6 +3,7 @@ import Confirm from '../../components/confirm';
 import apiFetch from '@wordpress/api-fetch';
 import { select } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
+import { store as coreStore } from '@wordpress/core-data';
 
 export default function DuplicateModel(props) {
 	const [confirm, setConfirm] = useState(null);
