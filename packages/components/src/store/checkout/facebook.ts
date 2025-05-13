@@ -79,7 +79,7 @@ window.addEventListener('scTrialStarted', function (e: CustomEvent) {
   items.forEach(item => {
     window.fbq('track', 'StartTrial', {
       currency: item.price?.currency,
-      value: maybeConvertAmount(item?.price?.amount || 0, item.price?.currency || 'USD'),
+      value: maybeConvertAmount(item?.price?.amount || 0, item.price?.currency || 'USD'), // Here we use the price amount instead of total amount because the total amount is 0 for trial subscriptions. But since the customer is committing to a subscription, we can use the price amount.
     });
   });
 });
@@ -95,7 +95,7 @@ window.addEventListener('scSubscriptionStarted', function (e: CustomEvent) {
   items.forEach(item => {
     window.fbq('track', 'Subscribe', {
       currency: item.price?.currency,
-      value: maybeConvertAmount(item?.total_amount || 0, item.price?.currency || 'USD'),
+      value: maybeConvertAmount(item?.total_amount || 0, item.price?.currency || 'USD'), // Here we use the total amount instead of price amount because the total amount is the first payment amount which also contains setup fee. The price amount is the recurring amount.
     });
   });
 });
