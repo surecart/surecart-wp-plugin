@@ -98,6 +98,10 @@ class PriceChooser extends \Elementor\Widget_Base {
 	 * @return void
 	 */
 	protected function add_price_chooser_style_settings() {
+		$selector         = '{{WRAPPER}} .wp-block-surecart-product-price-chooser';
+		$selector_label   = '{{WRAPPER}} .wp-block-surecart-product-price-chooser .sc-form-label';
+		$selector_choices = '{{WRAPPER}} .wp-block-surecart-product-price-chooser .sc-choices';
+
 		$this->start_controls_section(
 			'section_price_chooser_style',
 			array(
@@ -112,8 +116,8 @@ class PriceChooser extends \Elementor\Widget_Base {
 				'label'     => esc_html__( 'Label Color', 'surecart' ),
 				'type'      => \Elementor\Controls_Manager::COLOR,
 				'selectors' => array(
-					'{{WRAPPER}} .wp-block-surecart-product-price-chooser' => 'color: {{VALUE}}',
-					'{{WRAPPER}} .wp-block-surecart-product-price-chooser .sc-form-label' => 'color: {{VALUE}}',
+					$selector       => 'color: {{VALUE}}',
+					$selector_label => 'color: {{VALUE}}',
 				),
 				'default'   => '#000000',
 			)
@@ -130,7 +134,7 @@ class PriceChooser extends \Elementor\Widget_Base {
 					'grid' => esc_html__( 'Grid', 'surecart' ),
 				],
 				'selectors'        => [
-					'{{WRAPPER}} .wp-block-surecart-product-price-chooser .sc-choices' => '--display: {{VALUE}}',
+					$selector_choices => '--display: {{VALUE}}',
 				],
 				'separator'        => 'after',
 				'editor_available' => true,
@@ -141,7 +145,7 @@ class PriceChooser extends \Elementor\Widget_Base {
 			\Elementor\Group_Control_Flex_Container::get_type(),
 			[
 				'name'           => 'price_chooser_flex',
-				'selector'       => '{{WRAPPER}} .wp-block-surecart-product-price-chooser .sc-choices',
+				'selector'       => $selector_choices,
 				'fields_options' => [
 					'gap' => [
 						'label' => esc_html__( 'Gaps', 'surecart' ),
@@ -157,7 +161,7 @@ class PriceChooser extends \Elementor\Widget_Base {
 			\Elementor\Group_Control_Grid_Container::get_type(),
 			[
 				'name'           => 'price_chooser_grid',
-				'selector'       => '{{WRAPPER}} .wp-block-surecart-product-price-chooser .sc-choices',
+				'selector'       => $selector_choices,
 				'condition'      => [
 					'container_type' => [ 'grid' ],
 				],
@@ -190,6 +194,9 @@ class PriceChooser extends \Elementor\Widget_Base {
 	 * @return void
 	 */
 	protected function add_price_choice_style_settings() {
+		$selector         = '{{WRAPPER}} .sc-choices .sc-choice';
+		$selector_checked = '{{WRAPPER}} .sc-choices .sc-choice.sc-choice--checked';
+
 		$this->start_controls_section(
 			'section_price_choice_style',
 			array(
@@ -207,7 +214,7 @@ class PriceChooser extends \Elementor\Widget_Base {
 					'default' => \Elementor\Core\Kits\Documents\Tabs\Global_Colors::COLOR_PRIMARY,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .sc-choices .sc-choice' => 'color: {{VALUE}};',
+					$selector => 'color: {{VALUE}};',
 				],
 			]
 		);
@@ -218,7 +225,7 @@ class PriceChooser extends \Elementor\Widget_Base {
 				'label'     => esc_html__( 'Background Color', 'surecart' ),
 				'type'      => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .sc-choices .sc-choice' => 'background-color: {{VALUE}};',
+					$selector => 'background-color: {{VALUE}};',
 				],
 			]
 		);
@@ -232,7 +239,7 @@ class PriceChooser extends \Elementor\Widget_Base {
 					'default' => \Elementor\Core\Kits\Documents\Tabs\Global_Colors::COLOR_PRIMARY,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .sc-choices .sc-choice.sc-choice--checked' => 'border-color: {{VALUE}}!important; box-shadow: 0 0 0 1px {{VALUE}} !important;',
+					$selector_checked => 'border-color: {{VALUE}}!important; box-shadow: 0 0 0 1px {{VALUE}} !important;',
 				],
 			]
 		);
@@ -246,7 +253,7 @@ class PriceChooser extends \Elementor\Widget_Base {
 					'default' => \Elementor\Core\Kits\Documents\Tabs\Global_Colors::COLOR_PRIMARY,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .sc-choices .sc-choice.sc-choice--checked' => 'color: {{VALUE}};',
+					$selector_checked => 'color: {{VALUE}};',
 				],
 			]
 		);
@@ -258,7 +265,7 @@ class PriceChooser extends \Elementor\Widget_Base {
 				'global'   => [
 					'default' => \Elementor\Core\Kits\Documents\Tabs\Global_Typography::TYPOGRAPHY_PRIMARY,
 				],
-				'selector' => '{{WRAPPER}} .sc-choices .sc-choice',
+				'selector' => $selector,
 			]
 		);
 
@@ -269,7 +276,7 @@ class PriceChooser extends \Elementor\Widget_Base {
 				'type'       => \Elementor\Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', 'em', '%' ],
 				'selectors'  => [
-					'{{WRAPPER}} .sc-choices .sc-choice' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					$selector => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 			]
 		);
@@ -281,7 +288,7 @@ class PriceChooser extends \Elementor\Widget_Base {
 				'type'       => \Elementor\Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', 'em', '%' ],
 				'selectors'  => [
-					'{{WRAPPER}} .sc-choices .sc-choice' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					$selector => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 			]
 		);
@@ -290,7 +297,7 @@ class PriceChooser extends \Elementor\Widget_Base {
 			\Elementor\Group_Control_Border::get_type(),
 			[
 				'name'      => 'price_choice_border',
-				'selector'  => '{{WRAPPER}} .sc-choices .sc-choice',
+				'selector'  => $selector,
 				'separator' => 'before',
 			]
 		);
@@ -302,7 +309,7 @@ class PriceChooser extends \Elementor\Widget_Base {
 				'type'       => \Elementor\Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%', 'em', 'rem', 'custom' ],
 				'selectors'  => array(
-					'{{WRAPPER}} .sc-choices .sc-choice' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					$selector => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				),
 			)
 		);
@@ -316,6 +323,8 @@ class PriceChooser extends \Elementor\Widget_Base {
 	 * @return void
 	 */
 	protected function add_price_name_style_settings() {
+		$selector = '{{WRAPPER}} .sc-choices .sc-choice .wp-block-surecart-price-name';
+
 		$this->start_controls_section(
 			'section_price_name_style',
 			array(
@@ -330,7 +339,7 @@ class PriceChooser extends \Elementor\Widget_Base {
 				'label'     => esc_html__( 'Text Color', 'surecart' ),
 				'type'      => \Elementor\Controls_Manager::COLOR,
 				'selectors' => array(
-					'{{WRAPPER}} .sc-choices .sc-choice .wp-block-surecart-price-name' => 'color: {{VALUE}}',
+					$selector => 'color: {{VALUE}}',
 				),
 			)
 		);
@@ -341,7 +350,7 @@ class PriceChooser extends \Elementor\Widget_Base {
 				'label'     => esc_html__( 'Background Color', 'surecart' ),
 				'type'      => \Elementor\Controls_Manager::COLOR,
 				'selectors' => array(
-					'{{WRAPPER}} .sc-choices .sc-choice .wp-block-surecart-price-name' => 'background-color: {{VALUE}}',
+					$selector => 'background-color: {{VALUE}}',
 				),
 			)
 		);
@@ -350,7 +359,7 @@ class PriceChooser extends \Elementor\Widget_Base {
 			\Elementor\Group_Control_Typography::get_type(),
 			array(
 				'name'     => 'price_name_typography',
-				'selector' => '{{WRAPPER}} .sc-choices .sc-choice .wp-block-surecart-price-name',
+				'selector' => $selector,
 			)
 		);
 
@@ -363,6 +372,8 @@ class PriceChooser extends \Elementor\Widget_Base {
 	 * @return void
 	 */
 	protected function add_price_amount_style_settings() {
+		$selector = '{{WRAPPER}} .sc-choices .sc-choice .wp-block-surecart-price-amount';
+
 		$this->start_controls_section(
 			'section_price_amount_style',
 			array(
@@ -377,7 +388,7 @@ class PriceChooser extends \Elementor\Widget_Base {
 				'label'     => esc_html__( 'Text Color', 'surecart' ),
 				'type'      => \Elementor\Controls_Manager::COLOR,
 				'selectors' => array(
-					'{{WRAPPER}} .sc-choices .sc-choice .wp-block-surecart-price-amount' => 'color: {{VALUE}}',
+					$selector => 'color: {{VALUE}}',
 				),
 			)
 		);
@@ -388,7 +399,7 @@ class PriceChooser extends \Elementor\Widget_Base {
 				'label'     => esc_html__( 'Background Color', 'surecart' ),
 				'type'      => \Elementor\Controls_Manager::COLOR,
 				'selectors' => array(
-					'{{WRAPPER}} .sc-choices .sc-choice .wp-block-surecart-price-amount' => 'background-color: {{VALUE}}',
+					$selector => 'background-color: {{VALUE}}',
 				),
 			)
 		);
@@ -397,7 +408,7 @@ class PriceChooser extends \Elementor\Widget_Base {
 			\Elementor\Group_Control_Typography::get_type(),
 			array(
 				'name'     => 'price_amount_typography',
-				'selector' => '{{WRAPPER}} .sc-choices .sc-choice .wp-block-surecart-price-amount',
+				'selector' => $selector,
 			)
 		);
 
@@ -410,6 +421,8 @@ class PriceChooser extends \Elementor\Widget_Base {
 	 * @return void
 	 */
 	protected function add_price_trial_style_settings() {
+		$selector = '{{WRAPPER}} .sc-choices .sc-choice .wp-block-surecart-price-trial';
+
 		$this->start_controls_section(
 			'section_price_trial_style',
 			array(
@@ -424,7 +437,7 @@ class PriceChooser extends \Elementor\Widget_Base {
 				'label'     => esc_html__( 'Text Color', 'surecart' ),
 				'type'      => \Elementor\Controls_Manager::COLOR,
 				'selectors' => array(
-					'{{WRAPPER}} .sc-choices .sc-choice .wp-block-surecart-price-trial' => 'color: {{VALUE}}',
+					$selector => 'color: {{VALUE}}',
 				),
 				'default'   => '#8a8a8a',
 			)
@@ -436,7 +449,7 @@ class PriceChooser extends \Elementor\Widget_Base {
 				'label'     => esc_html__( 'Background Color', 'surecart' ),
 				'type'      => \Elementor\Controls_Manager::COLOR,
 				'selectors' => array(
-					'{{WRAPPER}} .sc-choices .sc-choice .wp-block-surecart-price-trial' => 'background-color: {{VALUE}}',
+					$selector => 'background-color: {{VALUE}}',
 				),
 			)
 		);
@@ -444,11 +457,17 @@ class PriceChooser extends \Elementor\Widget_Base {
 		$this->add_group_control(
 			\Elementor\Group_Control_Typography::get_type(),
 			array(
-				'name'     => 'price_trial_typography',
-				'selector' => '{{WRAPPER}} .sc-choices .sc-choice .wp-block-surecart-price-trial',
-				'default'  => array(
-					'font-size' => '9px',
-				),
+				'name'           => 'price_trial_typography',
+				'selector'       => $selector,
+				'fields_options' => [
+					'typography' => [ 'default' => 'yes' ],
+					'font_size'  => [
+						'default' => [
+							'unit' => 'px',
+							'size' => 12,
+						],
+					],
+				],
 			)
 		);
 
@@ -461,6 +480,8 @@ class PriceChooser extends \Elementor\Widget_Base {
 	 * @return void
 	 */
 	protected function add_price_setup_fee_style_settings() {
+		$selector = '{{WRAPPER}} .sc-choices .sc-choice .wp-block-surecart-price-setup-fee';
+
 		$this->start_controls_section(
 			'section_price_setup_fee_style',
 			array(
@@ -475,7 +496,7 @@ class PriceChooser extends \Elementor\Widget_Base {
 				'label'     => esc_html__( 'Text Color', 'surecart' ),
 				'type'      => \Elementor\Controls_Manager::COLOR,
 				'selectors' => array(
-					'{{WRAPPER}} .sc-choices .sc-choice .wp-block-surecart-price-setup-fee' => 'color: {{VALUE}}',
+					$selector => 'color: {{VALUE}}',
 				),
 				'default'   => '#8a8a8a',
 			)
@@ -487,7 +508,7 @@ class PriceChooser extends \Elementor\Widget_Base {
 				'label'     => esc_html__( 'Background Color', 'surecart' ),
 				'type'      => \Elementor\Controls_Manager::COLOR,
 				'selectors' => array(
-					'{{WRAPPER}} .sc-choices .sc-choice .wp-block-surecart-price-setup-fee' => 'background-color: {{VALUE}}',
+					$selector => 'background-color: {{VALUE}}',
 				),
 			)
 		);
@@ -495,8 +516,17 @@ class PriceChooser extends \Elementor\Widget_Base {
 		$this->add_group_control(
 			\Elementor\Group_Control_Typography::get_type(),
 			array(
-				'name'     => 'price_setup_fee_typography',
-				'selector' => '{{WRAPPER}} .sc-choices .sc-choice .wp-block-surecart-price-setup-fee',
+				'name'           => 'price_setup_fee_typography',
+				'selector'       => $selector,
+				'fields_options' => [
+					'typography' => [ 'default' => 'yes' ],
+					'font_size'  => [
+						'default' => [
+							'unit' => 'px',
+							'size' => 12,
+						],
+					],
+				],
 			)
 		);
 
@@ -546,9 +576,9 @@ class PriceChooser extends \Elementor\Widget_Base {
 							<?php // translators: %s is the price. ?>
 							<span class="wp-block-surecart-price-amount"><?php echo esc_html( sprintf( __( '%s /mo', 'surecart' ), Currency::format( 800 ) ) ); ?></span>
 							<?php // translators: %d is the number of days. ?>
-							<span class="wp-block-surecart-price-trial" style="font-size:small;"><?php echo esc_html( sprintf( __( 'Starting in %d days', 'surecart' ), 15 ) ); ?></span>
+							<span class="wp-block-surecart-price-trial"><?php echo esc_html( sprintf( __( 'Starting in %d days', 'surecart' ), 15 ) ); ?></span>
 							<?php // translators: %s is the setup fee. ?>
-							<span class="wp-block-surecart-price-setup-fee" style="font-size:small;"><?php echo esc_html( sprintf( __( '%s Setup fee', 'surecart' ), Currency::format( 1200 ) ) ); ?></span>
+							<span class="wp-block-surecart-price-setup-fee"><?php echo esc_html( sprintf( __( '%s Setup fee', 'surecart' ), Currency::format( 1200 ) ) ); ?></span>
 						</div>
 					</div>
 					<div class="sc-choice wp-block-surecart-product-price-choice-template is-layout-flex" style="align-items: center;">
@@ -557,7 +587,7 @@ class PriceChooser extends \Elementor\Widget_Base {
 							<?php // translators: %s is the price. ?>
 							<span class="wp-block-surecart-price-amount"><?php echo esc_html( Currency::format( 1000 ) ); ?></span>
 							<?php // translators: %s is the setup fee. ?>
-							<span class="wp-block-surecart-price-setup-fee" style="font-size:small;"><?php echo esc_html( sprintf( __( '%s Setup fee', 'surecart' ), Currency::format( 200 ) ) ); ?></span>
+							<span class="wp-block-surecart-price-setup-fee"><?php echo esc_html( sprintf( __( '%s Setup fee', 'surecart' ), Currency::format( 200 ) ) ); ?></span>
 						</div>
 					</div>
 				</div>
@@ -578,8 +608,8 @@ class PriceChooser extends \Elementor\Widget_Base {
 		<!-- wp:group {"style":{"spacing":{"blockGap":"0px"},"layout":{"selfStretch":"fixed","flexSize":"50%"}},"layout":{"type":"flex","orientation":"vertical","justifyContent":"right"}} -->
 		<div class="wp-block-group">
 			<!-- wp:surecart/price-amount /-->
-			<!-- wp:surecart/price-trial {"fontSize":"small"}  /-->
-			<!-- wp:surecart/price-setup-fee {"fontSize":"small"} /-->
+			<!-- wp:surecart/price-trial /-->
+			<!-- wp:surecart/price-setup-fee /-->
 		</div>
 		<!-- /wp:group -->
 		<!-- /wp:surecart/product-price-choice-template -->
@@ -604,18 +634,18 @@ class PriceChooser extends \Elementor\Widget_Base {
 						<?php // translators: %s is the price. ?>
 						<span class="wp-block-surecart-price-amount"><?php echo esc_html( sprintf( __( '%s /mo', 'surecart' ), Currency::format( 800 ) ) ); ?></span>
 						<?php // translators: %d is the number of days. ?>
-						<span class="wp-block-surecart-price-trial" style="font-size:small;"><?php echo esc_html( sprintf( __( 'Starting in %d days', 'surecart' ), 15 ) ); ?></span>
+						<span class="wp-block-surecart-price-trial"><?php echo esc_html( sprintf( __( 'Starting in %d days', 'surecart' ), 15 ) ); ?></span>
 						<?php // translators: %s is the setup fee. ?>
-						<span class="wp-block-surecart-price-setup-fee" style="font-size:small;"><?php echo esc_html( sprintf( __( '%s Setup fee', 'surecart' ), Currency::format( 1200 ) ) ); ?></span>
+						<span class="wp-block-surecart-price-setup-fee"><?php echo esc_html( sprintf( __( '%s Setup fee', 'surecart' ), Currency::format( 1200 ) ) ); ?></span>
 					</div>
 				</div>
 				<div class="sc-choice wp-block-surecart-product-price-choice-template is-layout-flex" style="align-items: center;">
 					<span class="wp-block-surecart-price-name"><?php echo esc_html__( 'One Time', 'surecart' ); ?></span>
 					<div class="is-layout-flex" style="flex-direction: column;align-items:flex-end;gap:0;">
 						<?php // translators: %s is the price. ?>
-						<span class="wp-block-surecart-price-amount" style="font-size:small;"><?php echo esc_html( Currency::format( 1000 ) ); ?></span>
+						<span class="wp-block-surecart-price-amount"><?php echo esc_html( Currency::format( 1000 ) ); ?></span>
 						<?php // translators: %s is the setup fee. ?>
-						<span class="wp-block-surecart-price-setup-fee" style="font-size:small;"><?php echo esc_html( sprintf( __( '%s Setup fee', 'surecart' ), Currency::format( 200 ) ) ); ?></span>
+						<span class="wp-block-surecart-price-setup-fee"><?php echo esc_html( sprintf( __( '%s Setup fee', 'surecart' ), Currency::format( 200 ) ) ); ?></span>
 					</div>
 				</div>
 			</div>

@@ -322,6 +322,18 @@
 						"__globals__": {
 							"price_choice_highlight_color": "globals/colors?id=primary",
 							"price_choice_highlight_text_color": "globals/colors?id=primary"
+						},
+						"price_trial_typography_typography": "custom",
+						"price_trial_typography_font_size": {
+							"unit": "px",
+							"size": 12,
+							"sizes": []
+						},
+						"price_setup_fee_typography_typography": "custom",
+						"price_setup_fee_typography_font_size": {
+							"unit": "px",
+							"size": 12,
+							"sizes": []
 						}
 					},
 					"elements": [],
