@@ -74,12 +74,22 @@ window.addEventListener('scCheckoutCompleted', function (e: CustomEvent) {
 window.addEventListener('scTrialStarted', function (e: CustomEvent) {
   if (!window?.fbq) return;
 
-  const items: LineItem[] = e.detail;
+  const {
+    is_reusable_payment_method_required,
+    items,
+  }: {
+    is_reusable_payment_method_required: boolean;
+    items: LineItem[];
+  } = e.detail;
 
   items.forEach(item => {
+    const value = is_reusable_payment_method_required
+      ? maybeConvertAmount(item?.price?.amount || 0, item.price?.currency || 'USD')
+      : maybeConvertAmount(item?.total_amount || 0, item.price?.currency || 'USD'); // Here if the payment method is reusable we use price amount because even if the user is on a trial they will be charged the price amount after the trial ends. If the payment method is not reusable we use total amount which also can be zero if the user is on a free trial.
+
     window.fbq('track', 'StartTrial', {
       currency: item.price?.currency,
-      value: maybeConvertAmount(item?.price?.amount || 0, item.price?.currency || 'USD'), // Here we use the price amount instead of total amount because the total amount is 0 for trial subscriptions. But since the customer is committing to a subscription, we can use the price amount.
+      value: value,
     });
   });
 });

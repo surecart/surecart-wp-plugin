@@ -38,7 +38,11 @@ on('set', (key, checkout: Checkout, oldCheckout: Checkout) => {
   // get trial line items and emit trial event if there are any.
   const trialLineItems: LineItem[] = (checkout?.line_items?.data || []).filter(item => item?.price?.trial_duration_days > 0);
   if (trialLineItems.length > 0) {
-    const event = new CustomEvent('scTrialStarted', { detail: trialLineItems, bubbles: true });
+    const data = {
+      is_reusable_payment_method_required: checkout?.reusable_payment_method_required,
+      items: trialLineItems,
+    };
+    const event = new CustomEvent('scTrialStarted', { detail: data, bubbles: true });
     document.dispatchEvent(event);
   }
 
