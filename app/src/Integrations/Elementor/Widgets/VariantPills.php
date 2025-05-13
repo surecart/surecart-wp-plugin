@@ -235,6 +235,15 @@ class VariantPills extends \Elementor\Widget_Base {
 			]
 		);
 
+		$this->add_group_control(
+			\Elementor\Group_Control_Typography::get_type(),
+			[
+				'name'     => 'pills_typography',
+				'label'    => esc_html__( 'Typography', 'surecart' ),
+				'selector' => $pills_selector . ' .sc-form-label',
+			]
+		);
+
 		$this->add_responsive_control(
 			'pill_gap',
 			[
