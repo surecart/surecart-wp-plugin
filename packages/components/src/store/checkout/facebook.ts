@@ -74,22 +74,12 @@ window.addEventListener('scCheckoutCompleted', function (e: CustomEvent) {
 window.addEventListener('scTrialStarted', function (e: CustomEvent) {
   if (!window?.fbq) return;
 
-  const {
-    is_reusable_payment_method_required,
-    items,
-  }: {
-    is_reusable_payment_method_required: boolean;
-    items: LineItem[];
-  } = e.detail;
+  const items: LineItem[] = e.detail;
 
   items.forEach(item => {
-    const value = is_reusable_payment_method_required
-      ? maybeConvertAmount(item?.price?.amount || 0, item.price?.currency || 'USD')
-      : maybeConvertAmount(item?.total_amount || 0, item.price?.currency || 'USD'); // Here if the payment method is reusable we use price amount because even if the user is on a trial they will be charged the price amount after the trial ends. If the payment method is not reusable we use total amount which also can be zero if the user is on a free trial.
-
     window.fbq('track', 'StartTrial', {
       currency: item.price?.currency,
-      value: value,
+      value: maybeConvertAmount(item.price?.amount || 0, item.price?.currency || 'USD'),
     });
   });
 });
@@ -105,7 +95,7 @@ window.addEventListener('scSubscriptionStarted', function (e: CustomEvent) {
   items.forEach(item => {
     window.fbq('track', 'Subscribe', {
       currency: item.price?.currency,
-      value: maybeConvertAmount(item?.total_amount || 0, item.price?.currency || 'USD'), // Here we use the total amount instead of price amount because the total amount is the first payment amount which also contains setup fee. The price amount is the recurring amount.
+      value: maybeConvertAmount(item.price?.amount || 0, item.price?.currency || 'USD'),
     });
   });
 });
