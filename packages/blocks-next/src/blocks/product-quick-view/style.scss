@@ -25,13 +25,14 @@
 		&__content {
 			padding: 20px;
 		}
-		.sc-spinner {
-			position: absolute;
-			top: 50%;
-			left: 50%;
-		}
 		.sc-loader {
 			min-height: 400px;
+
+			.sc-spinner {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+			}
 		}
 		.sc-view-product-page-sticky {
 			position: sticky;
