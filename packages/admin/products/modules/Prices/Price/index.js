@@ -20,7 +20,7 @@ import Swap from '../../../components/price/parts/Swap';
 import Advanced from '../../../components/price/parts/Advanced';
 import PaymentType from '../../../components/price/parts/PaymentType';
 
-export default ({ price, product }) => {
+export default ({ price, product, allPrices }) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [error, setError] = useState(null);
 	const [isSaving, setIsSaving] = useState(false);
@@ -37,6 +37,7 @@ export default ({ price, product }) => {
 		deleteEntityRecord,
 		saveEntityRecord,
 		invalidateResolutionForStore,
+		receiveEntityRecords,
 	} = useDispatch(coreStore);
 	const editPrice = (data) => {
 		setCurrentPrice({ ...currentPrice, ...data });
@@ -164,8 +165,13 @@ export default ({ price, product }) => {
 		}
 	};
 
-	const onDuplicate = async () => {
-		await invalidateResolutionForStore();
+	const onDuplicate = async (duplicate) => {
+		await receiveEntityRecords(
+			'surecart',
+			'price',
+			[...(allPrices || []), duplicate],
+			{ context: 'edit', product_ids: [product?.id], per_page: 100 }
+		);
 	};
 
 	// get the price type.

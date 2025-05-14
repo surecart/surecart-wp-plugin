@@ -20,7 +20,7 @@ export default ({ product, productId }) => {
 	const [newPriceModal, setNewPriceModal] = useState(false);
 	const [showArchived, setShowArchived] = useState(false);
 
-	const { active, archived, updating, loading } = useSelectPrices({
+	const { active, archived, updating, loading, allPrices } = useSelectPrices({
 		productId,
 	});
 
@@ -72,7 +72,11 @@ export default ({ product, productId }) => {
 				}
 			>
 				<div>
-					<List prices={active} product={product}>
+					<List
+						prices={active}
+						product={product}
+						allPrices={allPrices}
+					>
 						<ScEmpty icon="shopping-bag">
 							<ScSpacing>
 								<p
