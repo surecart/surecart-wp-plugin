@@ -109,7 +109,7 @@ class AdminMenuPageService {
 				\SureCart::pages()->getId( 'dashboard' ),
 			)
 		) ) {
-			$file = 'sc-dashboard';
+			$file = $this->slug;
 			// phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 			$submenu_file = 'post.php?post=' . (int) $post->ID . '&action=edit';
 		}
@@ -118,7 +118,7 @@ class AdminMenuPageService {
 		$screen   = get_current_screen();
 		$taxonomy = get_taxonomy( $screen->taxonomy );
 		if ( $screen && 'edit-tags' === $screen->base && in_array( 'sc_product', (array) $taxonomy->object_type, true ) ) {
-			$file         = 'sc-dashboard';
+			$file         = $this->slug;
 			$submenu_file = \SureCart::taxonomies()->editLink( $screen->taxonomy, 'sc_product' ); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 		}
 
@@ -132,26 +132,10 @@ class AdminMenuPageService {
 	 */
 	public function adminMenuCSS(): void {
 		echo '<style>
-			#toplevel_page_sc-dashboard li {
+			#toplevel_page_'. $this->slug .' li {
 				clear: both;
 			}
-			#toplevel_page_sc-dashboard li:not(:last-child) a[href^="admin.php?page=sc-customers"]:after {
-				border-bottom: 1px solid hsla(0,0%,100%,.2);
-				display: block;
-				float: left;
-				margin: 13px -15px 8px;
-				content: "";
-				width: calc(100% + 26px);
-			}
-			#toplevel_page_sc-dashboard li:not(:last-child) a[href^="admin.php?page=sc-dashboard"]:after {
-				border-bottom: 1px solid hsla(0,0%,100%,.2);
-				display: block;
-				float: left;
-				margin: 13px -15px 8px;
-				content: "";
-				width: calc(100% + 26px);
-			}
-			#toplevel_page_sc-dashboard li:not(:last-child) a[href^="edit.php?post_type=sc_form"]:after {
+			#toplevel_page_'. $this->slug .' li:not(:last-child) a:has(.sc-menu-divider):after {
 				border-bottom: 1px solid hsla(0,0%,100%,.2);
 				display: block;
 				float: left;
@@ -163,19 +147,44 @@ class AdminMenuPageService {
 	}
 
 	/**
+	 * Get the menu slug.
+	 *
+	 * @return string
+	 */
+	public function getMenuSlug() {
+		// Set the slug to the getting started page if the user has no API token.
+		if ( ! ApiToken::get() ) {
+			return 'sc-getting-started';
+		}
+
+		// Set the slug to the onboarding checklist page if the user has a checklist.
+		if ( $this->hasChecklist() ) {
+			return 'sc-onboarding-checklist';
+		}
+
+		return $this->slug;
+	}
+
+	/**
+	 * Has Checklist.
+	 *
+	 * @return bool
+	 */
+	public function hasChecklist() {
+		return \SureCart::account()->has_checklist && current_user_can( 'manage_options' );
+	}
+
+	/**
 	 * Register admin pages.
 	 *
 	 * @return void
 	 */
 	public function registerAdminPages() {
-		$entitlements = \SureCart::account()->entitlements;
-		if ( ! ApiToken::get() ) {
-			$this->slug = 'sc-getting-started';
-		}
+		// Get the menu slug.
+		$this->slug = $this->getMenuSlug();
 
-		$logo = file_get_contents( plugin_dir_path( SURECART_PLUGIN_FILE ) . 'images/icon.svg' );
 		// phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
-		\add_menu_page( __( 'Dashboard', 'surecart' ), __( 'SureCart', 'surecart' ), 'manage_sc_shop_settings', $this->slug, '__return_false', 'data:image/svg+xml;base64,' . base64_encode( $logo ), apply_filters( 'surecart_menu_priority', 2.0001 ) );
+		\add_menu_page( __( 'Dashboard', 'surecart' ), __( 'SureCart', 'surecart' ), 'manage_sc_shop_settings', $this->slug, '__return_false', 'data:image/svg+xml;base64,' . base64_encode( file_get_contents( plugin_dir_path( SURECART_PLUGIN_FILE ) . 'images/icon.svg' ) ), apply_filters( 'surecart_menu_priority', 2.0001 ) );
 
 		// not yet installed.
 		if ( ! ApiToken::get() ) {
@@ -187,58 +196,129 @@ class AdminMenuPageService {
 			return;
 		}
 
-		$affiliate_pages = array( 'sc-affiliates', 'sc-affiliate-requests', 'sc-affiliate-clicks', 'sc-affiliate-referrals', 'sc-affiliate-payouts', 'sc-affiliate-payout-groups' );
+		/**
+		 * Onboarding Checklist
+		 */
+		if ( $this->hasChecklist() ) {
+			$title = \SureCart::helpWidget()->checklist()->title ?? __( 'Getting Started', 'surecart' );
+			$this->pages = array(
+				'sc-onboarding-checklist' 	=> \add_submenu_page( $this->slug, $title,  $title, 'manage_sc_shop_settings', 'sc-onboarding-checklist', '__return_false' ),
+			);
+		}
 
+		/**
+		 * Dashboard
+		 */
+		$this->pages += array(
+			'get-started'	=> \add_submenu_page( $this->slug, __( 'Dashboard', 'surecart' ), '<span class="sc-menu-divider">' . __( 'Dashboard', 'surecart' ) . '</span>', 'manage_sc_shop_settings', 'sc-dashboard', '__return_false' ),
+			'complete-signup' => \add_submenu_page( '', __( 'Complete Signup', 'surecart' ), __( 'Complete Signup', 'surecart' ), 'manage_options', 'sc-complete-signup', '__return_false' ),
+			'claim-account'	=> \add_submenu_page( '', __( 'Claim Account', 'surecart' ), __( 'Claim Account', 'surecart' ), 'manage_options', 'sc-claim-account', '__return_false' ),
+		);
+
+		/**
+		 * Orders
+		 */
+		$this->pages += array(
+			'orders' => \add_submenu_page( $this->slug, __( 'Orders', 'surecart' ), __( 'Orders', 'surecart' ), 'edit_sc_orders', 'sc-orders', '__return_false' ),
+		);
+		// Orders submenu pages.
+		if ( in_array( $_GET['page'] ?? '', [ 'sc-orders', 'sc-abandoned-checkouts', 'sc-invoices' ], true ) ) {
+			$this->pages += array(
+				'abandoned'                 => \add_submenu_page( $this->slug, __( 'Abandoned', 'surecart' ), '↳ ' . __( 'Abandoned', 'surecart' ), 'edit_sc_orders', 'sc-abandoned-checkouts', '__return_false' ),
+				'invoices'                  => \add_submenu_page( $this->slug, __( 'Invoices', 'surecart' ), '↳ ' . __( 'Invoices', 'surecart' ), 'edit_sc_invoices', 'sc-invoices', '__return_false' ),
+			);
+		}
+
+		/**
+		 * Products
+		 */
+		$this->pages += array(
+			'products'                  => \add_submenu_page( $this->slug, __( 'Products', 'surecart' ), __( 'Products', 'surecart' ), 'edit_sc_products', 'sc-products', '__return_false' ),
+		);
+
+		// Product submenu pages.
 		$taxonomies = array_diff( get_object_taxonomies( 'sc_product' ), array( 'sc_account', 'sc_collection' ) );
 		sort( $taxonomies, SORT_STRING ); // Sort the taxonomies alphabetically.
 		$is_product_menu_opened = in_array( $_GET['page'] ?? '', array( 'sc-products', 'sc-product-groups', 'sc-bumps', 'sc-upsell-funnels', 'sc-product-collections' ), true ) || in_array( $_GET['taxonomy'] ?? '', array_merge( $taxonomies, array( 'sc_collection' ) ), true );
-
-		$this->pages = array(
-			'get-started'             => \add_submenu_page( $this->slug, __( 'Dashboard', 'surecart' ), __( 'Dashboard', 'surecart' ), 'manage_sc_shop_settings', $this->slug, '__return_false' ),
-			'complete-signup'         => \add_submenu_page( '', __( 'Complete Signup', 'surecart' ), __( 'Complete Signup', 'surecart' ), 'manage_options', 'sc-complete-signup', '__return_false' ),
-			'claim-account'           => \add_submenu_page( '', __( 'Claim Account', 'surecart' ), __( 'Claim Account', 'surecart' ), 'manage_options', 'sc-claim-account', '__return_false' ),
-			'orders'                  => \add_submenu_page( $this->slug, __( 'Orders', 'surecart' ), __( 'Orders', 'surecart' ), 'edit_sc_orders', 'sc-orders', '__return_false' ),
-			'abandoned'               => in_array( $_GET['page'] ?? '', [ 'sc-orders', 'sc-abandoned-checkouts', 'sc-invoices' ], true ) ? \add_submenu_page( $this->slug, __( 'Abandoned', 'surecart' ), '↳ ' . __( 'Abandoned', 'surecart' ), 'edit_sc_orders', 'sc-abandoned-checkouts', '__return_false' ) : null,
-			'invoices'                => in_array( $_GET['page'] ?? '', [ 'sc-orders', 'sc-abandoned-checkouts', 'sc-invoices' ], true ) ? \add_submenu_page( $this->slug, __( 'Invoices', 'surecart' ), '↳ ' . __( 'Invoices', 'surecart' ), 'edit_sc_invoices', 'sc-invoices', '__return_false' ) : null,
-			'products'                => \add_submenu_page( $this->slug, __( 'Products', 'surecart' ), __( 'Products', 'surecart' ), 'edit_sc_products', 'sc-products', '__return_false' ),
-			'product-collections'     => $is_product_menu_opened ? \add_submenu_page( $this->slug, __( 'Product Collections', 'surecart' ), '↳ ' . __( 'Collections', 'surecart' ), 'edit_sc_products', 'sc-product-collections', '__return_false' ) : null,
-		);
-
-		if ( ! empty( $taxonomies ) && is_array( $taxonomies ) && $is_product_menu_opened ) {
-			$this->pages += array_map(
-				function ( $taxonomy ) {
-					if ( ! taxonomy_exists( $taxonomy ) ) {
-						return null;
-					}
-					$taxonomy_obj = get_taxonomy( $taxonomy );
-					return \add_submenu_page( $this->slug, $taxonomy_obj->label, '↳ ' . $taxonomy_obj->labels->menu_name ?? $taxonomy_obj->label, 'edit_sc_products', \SureCart::taxonomies()->editLink( $taxonomy_obj->name, 'sc_product' ), '' );
-				},
-				$taxonomies,
-				[ $is_product_menu_opened, $this->slug ]
+		if ( $is_product_menu_opened ) {
+			$this->pages += array(
+				'product-collections'       => \add_submenu_page( $this->slug, __( 'Product Collections', 'surecart' ), '↳ ' . __( 'Collections', 'surecart' ), 'edit_sc_products', 'sc-product-collections', '__return_false' ),
+			);
+			if ( ! empty( $taxonomies ) && is_array( $taxonomies ) ) {
+				$this->pages += array_map(
+					function ( $taxonomy ) {
+						if ( ! taxonomy_exists( $taxonomy ) ) {
+							return null;
+						}
+						$taxonomy_obj = get_taxonomy( $taxonomy );
+						return \add_submenu_page( $this->slug, $taxonomy_obj->label, '↳ ' . $taxonomy_obj->labels->menu_name ?? $taxonomy_obj->label, 'edit_sc_products', \SureCart::taxonomies()->editLink( $taxonomy_obj->name, 'sc_product' ), '' );
+					},
+					$taxonomies,
+					[ $is_product_menu_opened, $this->slug ]
+				);
+			}
+			$this->pages += array(
+				'bumps'                   => \add_submenu_page( $this->slug, __( 'Order Bumps', 'surecart' ), '↳ ' . __( 'Order Bumps', 'surecart' ), 'edit_sc_products', 'sc-bumps', '__return_false' ),
+				'upsells'                 => \add_submenu_page( $this->slug, __( 'Upsells', 'surecart' ), '↳ ' . __( 'Upsells', 'surecart' ), 'edit_sc_products', 'sc-upsell-funnels', '__return_false' ),
+				'product-groups'          => \add_submenu_page( $this->slug, __( 'Upgrade Groups', 'surecart' ), '↳ ' . __( 'Upgrade Groups', 'surecart' ), 'edit_sc_products', 'sc-product-groups', '__return_false' ),
 			);
 		}
-		
+
+		/**
+		 * Coupons
+		 */
 		$this->pages += array(
-			'bumps'                   => $is_product_menu_opened ? \add_submenu_page( $this->slug, __( 'Order Bumps', 'surecart' ), '↳ ' . __( 'Order Bumps', 'surecart' ), 'edit_sc_products', 'sc-bumps', '__return_false' ) : null,
-			'upsells'                 => $is_product_menu_opened ? \add_submenu_page( $this->slug, __( 'Upsells', 'surecart' ), '↳ ' . __( 'Upsells', 'surecart' ), 'edit_sc_products', 'sc-upsell-funnels', '__return_false' ) : null,
-			'product-groups'          => $is_product_menu_opened ? \add_submenu_page( $this->slug, __( 'Upgrade Groups', 'surecart' ), '↳ ' . __( 'Upgrade Groups', 'surecart' ), 'edit_sc_products', 'sc-product-groups', '__return_false' ) : null,
 			'coupons'                 => \add_submenu_page( $this->slug, __( 'Coupons', 'surecart' ), __( 'Coupons', 'surecart' ), 'edit_sc_coupons', 'sc-coupons', '__return_false' ),
-			'licenses'                => ! empty( $entitlements->licensing ) ? \add_submenu_page( $this->slug, __( 'Licenses', 'surecart' ), __( 'Licenses', 'surecart' ), 'edit_sc_products', 'sc-licenses', '__return_false' ) : null,
+			'licenses'                => \add_submenu_page( $this->slug, __( 'Licenses', 'surecart' ), __( 'Licenses', 'surecart' ), 'edit_sc_products', 'sc-licenses', '__return_false' ),
+		);
+
+		/**
+		 * Subscriptions
+		 */
+		$this->pages += array(
 			'subscriptions'           => \add_submenu_page( $this->slug, __( 'Subscriptions', 'surecart' ), __( 'Subscriptions', 'surecart' ), 'edit_sc_subscriptions', 'sc-subscriptions', '__return_false' ),
-			'cancellations'           => in_array( $_GET['page'] ?? '', array( 'sc-subscriptions', 'sc-cancellation-insights' ) ) ? \add_submenu_page( $this->slug, __( 'Cancellation Insights', 'surecart' ), '↳ ' . __( 'Cancellations', 'surecart' ), 'edit_sc_subscriptions', 'sc-cancellation-insights', '__return_false' ) : null,
+		);
+		if ( in_array( $_GET['page'] ?? '', array( 'sc-subscriptions', 'sc-cancellation-insights' ), true ) ) {
+			$this->pages += array(
+				'cancellations'           => \add_submenu_page( $this->slug, __( 'Cancellation Insights', 'surecart' ), '↳ ' . __( 'Cancellations', 'surecart' ), 'edit_sc_subscriptions', 'sc-cancellation-insights', '__return_false' ),
+			);
+		}
+
+		$this->pages += array(
 			'affiliates'              => \add_submenu_page( $this->slug, __( 'Affiliates', 'surecart' ), __( 'Affiliates', 'surecart' ), 'edit_sc_affiliates', 'sc-affiliates', '__return_false' ),
-			'affiliate-requests'      => in_array( $_GET['page'] ?? '', $affiliate_pages, true ) ? \add_submenu_page( $this->slug, __( 'Requests', 'surecart' ), '↳ ' . __( 'Requests', 'surecart' ), 'edit_sc_affiliates', 'sc-affiliate-requests', '__return_false' ) : null,
-			'affiliate-clicks'        => in_array( $_GET['page'] ?? '', $affiliate_pages, true ) ? \add_submenu_page( $this->slug, __( 'Clicks', 'surecart' ), '↳ ' . __( 'Clicks', 'surecart' ), 'edit_sc_affiliates', 'sc-affiliate-clicks', '__return_false' ) : null,
-			'affiliate-referrals'     => in_array( $_GET['page'] ?? '', $affiliate_pages, true ) ? \add_submenu_page( $this->slug, __( 'Referrals', 'surecart' ), '↳ ' . __( 'Referrals', 'surecart' ), 'edit_sc_affiliates', 'sc-affiliate-referrals', '__return_false' ) : null,
-			'affiliate-payouts'       => in_array( $_GET['page'] ?? '', $affiliate_pages, true ) ? \add_submenu_page( $this->slug, __( 'Payouts', 'surecart' ), '↳ ' . __( 'Payouts', 'surecart' ), 'edit_sc_affiliates', 'sc-affiliate-payouts', '__return_false' ) : null,
-			'affiliate-payout-groups' => in_array( $_GET['page'] ?? '', $affiliate_pages, true ) ? \add_submenu_page( ' ', __( 'Payout Groups', 'surecart' ), '', 'edit_sc_affiliates', 'sc-affiliate-payout-groups', '__return_false' ) : null,
-			'customers'               => \add_submenu_page( $this->slug, __( 'Customers', 'surecart' ), __( 'Customers', 'surecart' ), 'edit_sc_customers', 'sc-customers', '__return_false' ),
-			'restore'                 => 'sc-restore' === ( $_GET['page'] ?? '' ) ? \add_submenu_page( null, __( 'Restore', 'surecart' ), __( 'Restore', 'surecart' ), 'manage_options', 'sc-restore', '__return_false' ) : null,
-			'shop'                    => $this->getPage( 'shop', __( 'Shop', 'surecart' ) ),
+		);
+		if ( in_array( $_GET['page'] ?? '', array( 'sc-affiliates', 'sc-affiliate-requests', 'sc-affiliate-clicks', 'sc-affiliate-referrals', 'sc-affiliate-payouts', 'sc-affiliate-payout-groups' ), true ) ) {
+			$this->pages += array(
+				'affiliate-requests'      => \add_submenu_page( $this->slug, __( 'Requests', 'surecart' ), '↳ ' . __( 'Requests', 'surecart' ), 'edit_sc_affiliates', 'sc-affiliate-requests', '__return_false' ),
+				'affiliate-clicks'        => \add_submenu_page( $this->slug, __( 'Clicks', 'surecart' ), '↳ ' . __( 'Clicks', 'surecart' ), 'edit_sc_affiliates', 'sc-affiliate-clicks', '__return_false' ),
+				'affiliate-referrals'     => \add_submenu_page( $this->slug, __( 'Referrals', 'surecart' ), '↳ ' . __( 'Referrals', 'surecart' ), 'edit_sc_affiliates', 'sc-affiliate-referrals', '__return_false' ),
+				'affiliate-payouts'       => \add_submenu_page( $this->slug, __( 'Payouts', 'surecart' ), '↳ ' . __( 'Payouts', 'surecart' ), 'edit_sc_affiliates', 'sc-affiliate-payouts', '__return_false' ),
+				'affiliate-payout-groups' => \add_submenu_page( ' ', __( 'Payout Groups', 'surecart' ), '', 'edit_sc_affiliates', 'sc-affiliate-payout-groups', '__return_false' ),
+			);
+		}
+
+		/**
+		 * Customers
+		 */
+		$this->pages += array(
+			'customers'               => \add_submenu_page( $this->slug, __( 'Customers', 'surecart' ), '<span class="sc-menu-divider">' . __( 'Customers', 'surecart' ) . '</span>', 'edit_sc_customers', 'sc-customers', '__return_false' ),
+		);
+
+		/**
+		 * Restore
+		 */
+		if ( 'sc-restore' === ( $_GET['page'] ?? '' ) ) {
+			$this->pages += array(
+				'restore'                 => \add_submenu_page( null, __( 'Restore', 'surecart' ), __( 'Restore', 'surecart' ), 'manage_options', 'sc-restore', '__return_false' ),
+			);
+		}
+
+		$this->pages += array(
+			'shop'                    => $this->getPage( 'shop', __( 'Shop', 'surecart' )),
 			'checkout'                => $this->getPage( 'checkout', __( 'Checkout', 'surecart' ) ),
 			'cart'                    => $this->addTemplateSubMenuPage( 'cart', __( 'Cart', 'surecart' ), 'surecart/surecart//cart' ),
 			'dashboard'               => $this->getPage( 'dashboard', __( 'Customer Area', 'surecart' ) ),
-			'forms'                   => \add_submenu_page( $this->slug, __( 'Forms', 'surecart' ), __( 'Custom Forms', 'surecart' ), 'manage_options', 'edit.php?post_type=sc_form', '' ),
+			'forms'                   => \add_submenu_page( $this->slug, __( 'Forms', 'surecart' ), '<span class="sc-menu-divider">' . __( 'Custom Forms', 'surecart' ) . '</span>', 'manage_options', 'edit.php?post_type=sc_form', '' ),
 			'settings'                => \add_submenu_page( $this->slug, __( 'Settings', 'surecart' ), __( 'Settings', 'surecart' ), 'manage_options', 'sc-settings', '__return_false' ),
 		);
 	}
@@ -252,7 +332,7 @@ class AdminMenuPageService {
 	 *
 	 * @return void
 	 */
-	public function getPage( $slug, $name, $post_type = 'page' ) {
+	public function getPage( $slug, $name, $post_type = 'page', $divider = false ) {
 		// add filter to disable shop page menu item.
 		if ( ! get_option( 'surecart_' . $slug . '_admin_menu', true ) ) {
 			return;
@@ -264,10 +344,15 @@ class AdminMenuPageService {
 
 		$post_status = get_post_status( $page_id );
 		if ( 'publish' !== $post_status ) {
-			$status = '<span class="awaiting-mod">' . ( get_post_status_object( $post_status )->label ?? esc_html__( 'Deleted', 'surecart' ) ) . '</span>';
+			$status = '<span class="awaiting - mod">' . ( get_post_status_object( $post_status )->label ?? esc_html__( 'Deleted', 'surecart' ) ) . '</span>';
 		}
 
-		return \add_submenu_page( $this->slug, $name, $name . $status, 'manage_options', $this->getSubMenuPageSlug( $slug, $page_id ), '' );
+		$label = $name . $status;
+		if ( $divider ) {
+			$label = '<span class="sc-menu-divider">' . $label . '</span>';
+		}
+
+		return \add_submenu_page( $this->slug, $name, $label, 'manage_options', $this->getSubMenuPageSlug( $slug, $page_id ), '' );
 	}
 
 	/**

@@ -128,13 +128,20 @@ class StylesService {
 			--sc-input-border-color-focus: var(--sc-color-brand-primary);
 			--sc-color-gray-900: var(--sc-color-brand-heading);
 			--sc-color-gray-800: var(--sc-color-brand-text);
-			--sc-tab-active-color: var(--sc-color-brand-heading);
-			--sc-tab-active-background: var(--sc-color-brand-main-background);
+			--sc-tab-active-color: var(--sc-color-brand-primary);
+			--sc-tab-active-background: transparent;
 			--sc-tag-default-background-color: var(--sc-color-brand-main-background);
 			--sc-tag-default-border-color: var(--sc-color-brand-stroke);
 			--sc-tag-default-color: var(--sc-color-brand-body);
 			--sc-stacked-list-row-hover-color: var(--sc-color-brand-main-background);
 			--sc-color-primary-text: white;
+		}
+
+		sc-tab:not([active]):not(:hover) sc-icon {
+			color: var(--sc-color-gray-500);
+		}
+		sc-tab::part(base) {
+			font-weight: 400;
 		}
 		<?php
 
