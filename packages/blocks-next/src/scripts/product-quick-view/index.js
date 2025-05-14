@@ -89,12 +89,7 @@ const { state, actions } = store('surecart/product-quick-view', {
 			dialog.addEventListener(
 				'transitionend',
 				withScope(() => {
-					setTimeout(
-						withScope(() => {
-							actions.navigate(event);
-						}),
-						100 // this is a hack to ensure the dialog is closed before navigating.
-					);
+					actions.navigate(event);
 				}),
 				{ once: true }
 			); // Wait for the closing animation to finish before navigating.
