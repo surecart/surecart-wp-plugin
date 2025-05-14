@@ -37,6 +37,9 @@ class CurrencyService {
 
 		// set the urls.
 		add_action( 'init', [ $this, 'appendUrls' ] );
+
+		// Add robots meta tag for currency parameter URLs.
+		add_action( 'wp_head', array( $this, 'addRobotsTag' ), 1 );
 	}
 
 	/**
@@ -204,5 +207,29 @@ class CurrencyService {
 	 */
 	public function removeCurrencyParam( $permalink ) {
 		return remove_query_arg( 'currency', $permalink );
+	}
+
+	/**
+	 * Add canonical tag to head to prevent search engines from indexing currency parameter URLs.
+	 *
+	 * @return void
+	 */
+	public function addCanonicalTag() {
+		if ( is_singular() && ! is_admin() ) {
+			$canonical_url = $this->removeCurrencyParam( get_permalink() );
+			echo '<link rel="canonical" href="' . esc_url( $canonical_url ) . '" />' . "\n";
+		}
+	}
+
+	/**
+	 * Add a robots meta tag to prevent indexing of URLs with query parameters.
+	 *
+	 * @return void
+	 */
+	public function addRobotsTag() {
+		// Only add this tag if the URL has a currency parameter.
+		if ( isset( $_GET['currency'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			echo '<meta name="robots" content="noindex, follow" />' . "\n";
+		}
 	}
 }
