@@ -210,18 +210,6 @@ class CurrencyService {
 	}
 
 	/**
-	 * Add canonical tag to head to prevent search engines from indexing currency parameter URLs.
-	 *
-	 * @return void
-	 */
-	public function addCanonicalTag() {
-		if ( is_singular() && ! is_admin() ) {
-			$canonical_url = $this->removeCurrencyParam( get_permalink() );
-			echo '<link rel="canonical" href="' . esc_url( $canonical_url ) . '" />' . "\n";
-		}
-	}
-
-	/**
 	 * Add a robots meta tag to prevent indexing of URLs with query parameters.
 	 *
 	 * @return void
