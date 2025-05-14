@@ -2,11 +2,21 @@ import { __, sprintf } from '@wordpress/i18n';
 import {
 	DropdownMenu,
 	__experimentalConfirmDialog as ConfirmDialog,
+	MenuItem,
 } from '@wordpress/components';
-import { moreHorizontal, inbox, trash } from '@wordpress/icons';
+import { moreHorizontal, inbox, trash, addCard } from '@wordpress/icons';
 import { useState } from '@wordpress/element';
+import DuplicateModel from '../DuplicateModel';
+import { addQueryArgs } from '@wordpress/url';
 
-export default ({ product, onDelete, onToggleArchive }) => {
+export default ({
+	product,
+	onDelete,
+	onToggleArchive,
+	onSubmit,
+	setConfirmUrl,
+	hasDirtyRecords,
+}) => {
 	const [modal, setModal] = useState(null);
 
 	if (!product?.id) {
@@ -16,28 +26,6 @@ export default ({ product, onDelete, onToggleArchive }) => {
 	return (
 		<>
 			<DropdownMenu
-				controls={[
-					...[
-						!!onToggleArchive
-							? {
-									icon: inbox,
-									onClick: () => setModal('archive'),
-									title: product?.archived
-										? __('Un-Archive Product', 'surecart')
-										: __('Archive Product', 'surecart'),
-							  }
-							: {},
-					],
-					...[
-						!!onDelete
-							? {
-									icon: trash,
-									onClick: () => setModal('delete'),
-									title: __('Delete Product', 'surecart'),
-							  }
-							: {},
-					],
-				]}
 				icon={moreHorizontal}
 				label={__('More Actions', 'surecart')}
 				popoverProps={{
@@ -48,8 +36,57 @@ export default ({ product, onDelete, onToggleArchive }) => {
 						minWidth: '150px',
 					},
 				}}
-			/>
-
+			>
+				{() => (
+					<>
+						{!!onToggleArchive && (
+							<MenuItem
+								icon={inbox}
+								iconPosition="left"
+								onClick={() => setModal('archive')}
+							>
+								{product?.archived
+									? __('Un-Archive Product', 'surecart')
+									: __('Archive Product', 'surecart')}
+							</MenuItem>
+						)}
+						{!!onDelete && (
+							<MenuItem
+								icon={trash}
+								iconPosition="left"
+								onClick={() => setModal('delete')}
+							>
+								{__('Delete Product', 'surecart')}
+							</MenuItem>
+						)}
+						<DuplicateModel
+							type="product"
+							id={product?.id}
+							onConfirm={hasDirtyRecords ? onSubmit : null}
+							onSuccess={(duplicate) => {
+								setConfirmUrl(
+									addQueryArgs(
+										'admin.php?page=sc-products&action=edit',
+										{
+											id: duplicate?.id,
+										}
+									)
+								);
+							}}
+						>
+							{({ onClick }) => (
+								<MenuItem
+									icon={addCard}
+									onClick={onClick}
+									iconPosition="left"
+								>
+									{__('Duplicate Product', 'surecart')}
+								</MenuItem>
+							)}
+						</DuplicateModel>
+					</>
+				)}
+			</DropdownMenu>
 			<ConfirmDialog
 				isOpen={modal === 'delete'}
 				onConfirm={() => {

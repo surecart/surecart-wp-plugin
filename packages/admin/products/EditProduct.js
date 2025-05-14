@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { Global, css, jsx } from '@emotion/core';
 import { ScButton, ScTag } from '@surecart/components-react';
-import { addCard, external } from '@wordpress/icons';
+import { external } from '@wordpress/icons';
 import { Button } from '@wordpress/components';
 import { store as coreStore } from '@wordpress/core-data';
 import { select, useDispatch, useSelect } from '@wordpress/data';
@@ -39,7 +39,6 @@ import Taxonomies from './modules/Taxonomies';
 import Editor from './components/Editor';
 import ConfirmNavigation from './components/ConfirmNavigation';
 import ProductOptions from './modules/ProductOptions';
-import DuplicateModel from './components/DuplicateModel';
 
 export default ({ id, setBrowserURL }) => {
 	const [error, setError] = useState(null);
@@ -318,34 +317,10 @@ export default ({ id, setBrowserURL }) => {
 							product={product}
 							onDelete={onDeleteProduct}
 							onToggleArchive={onToggleArchiveProduct}
+							onSubmit={onSubmit}
+							setConfirmUrl={setConfirmUrl}
+							hasDirtyRecords={hasDirtyRecords}
 						/>
-
-						<DuplicateModel
-							type="product"
-							id={id}
-							onConfirm={hasDirtyRecords ? onSubmit : null}
-							onSuccess={(duplicate) => {
-								setConfirmUrl(
-									addQueryArgs(
-										'admin.php?page=sc-products&action=edit',
-										{
-											id: duplicate?.id,
-										}
-									)
-								);
-							}}
-						>
-							{({ onClick }) => (
-								<Button
-									icon={addCard}
-									label={__('Duplicate Product', 'surecart')}
-									showTooltip={true}
-									size="compact"
-									onClick={onClick}
-									target="_blank"
-								/>
-							)}
-						</DuplicateModel>
 
 						{!!product?.permalink && (
 							<Button
