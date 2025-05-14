@@ -215,6 +215,11 @@ class CurrencyService {
 	 * @return void
 	 */
 	public function addRobotsTag() {
+		// Don't add the robots tag if the filter is disabled.
+		if ( apply_filters( 'surecart/currency/disable_robots_tag', false ) ) {
+			return;
+		}
+
 		if ( isset( $_GET['currency'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			echo '<meta name="robots" content="noindex, follow" />' . "\n";
 		}
