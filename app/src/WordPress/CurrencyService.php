@@ -215,7 +215,6 @@ class CurrencyService {
 	 * @return void
 	 */
 	public function addRobotsTag() {
-		// Only add this tag if the URL has a currency parameter.
 		if ( isset( $_GET['currency'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			echo '<meta name="robots" content="noindex, follow" />' . "\n";
 		}
