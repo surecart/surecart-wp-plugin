@@ -23,7 +23,7 @@ let inertElements = [];
  * @returns {boolean}
  */
 const isValidEvent = (event) =>
-	event?.key ? [' ', 'Enter'].includes(event.key) : true;
+	event?.key ? [' ', 'Enter', 'Esc'].includes(event.key) : true;
 
 const { state, actions } = store('surecart/product-quick-view', {
 	actions: {
@@ -84,7 +84,9 @@ const { state, actions } = store('surecart/product-quick-view', {
 			event?.preventDefault();
 
 			const { ref } = getElement();
-			const dialog = ref?.closest('.sc-product-quick-view-dialog');
+			const dialog = ref
+				?.closest('.wp-block-surecart-product-quick-view')
+				.querySelector('.sc-product-quick-view-dialog');
 
 			dialog.addEventListener(
 				'transitionend',
