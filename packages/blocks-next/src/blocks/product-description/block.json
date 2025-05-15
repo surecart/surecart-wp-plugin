@@ -9,19 +9,19 @@
 	"ancestor": ["surecart/product-page", "surecart/product-template"],
 	"usesContext": ["postId"],
 	"attributes": {
-		"truncateExcerpt": {
+		"truncate_excerpt": {
 			"type": "boolean",
 			"default": false
 		},
-		"excerptLength": {
+		"excerpt_length": {
 			"type": "number",
 			"default": 55
 		},
-		"readMoreText": {
+		"read_more_text": {
 			"type": "string",
 			"default": "Read more"
 		},
-		"showReadMore": {
+		"show_read_more": {
 			"type": "boolean",
 			"default": false
 		}

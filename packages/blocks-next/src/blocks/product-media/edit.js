@@ -1,6 +1,6 @@
 import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
 import Swiper from 'swiper';
-import { Thumbs, Navigation } from 'swiper/modules';
+import { Thumbs, Navigation, Pagination } from 'swiper/modules';
 import { useEntityRecord } from '@wordpress/core-data';
 import {
 	PanelBody,
@@ -22,7 +22,7 @@ export default ({ attributes, setAttributes, context: { postId } }) => {
 
 	const {
 		height,
-		show_thumbs,
+		show_thumbnails,
 		thumbnails_per_page,
 		auto_height,
 		width,
@@ -74,7 +74,7 @@ export default ({ attributes, setAttributes, context: { postId } }) => {
 			return;
 		}
 		thumbSwiper.current.update();
-	}, [show_thumbs, thumbnails_per_page, images]);
+	}, [show_thumbnails, thumbnails_per_page, images]);
 
 	useEffect(() => {
 		if (swiperRef && thumbSwiperRef?.current) {
@@ -109,7 +109,7 @@ export default ({ attributes, setAttributes, context: { postId } }) => {
 			);
 
 			swiper.current = new Swiper(swiperRef.current, {
-				modules: [Navigation, Thumbs],
+				modules: [Navigation, Thumbs, Pagination],
 				direction: 'horizontal',
 				loop: false,
 				centeredSlides: true,
@@ -122,6 +122,14 @@ export default ({ attributes, setAttributes, context: { postId } }) => {
 						'.swiper-button-prev'
 					),
 				},
+				...(!thumbs && {
+					pagination: {
+						el: swiperRef.current.querySelector(
+							'.swiper-pagination'
+						),
+						dynamicBullets: true,
+					},
+				}),
 				thumbs: {
 					swiper: thumbSwiper.current,
 				},
@@ -185,12 +193,12 @@ export default ({ attributes, setAttributes, context: { postId } }) => {
 
 					<ToggleControl
 						label={__('Show Thumbnails', 'surecart')}
-						checked={show_thumbs}
-						onChange={(show_thumbs) =>
-							setAttributes({ show_thumbs })
+						checked={show_thumbnails}
+						onChange={(show_thumbnails) =>
+							setAttributes({ show_thumbnails })
 						}
 					/>
-					{show_thumbs && (
+					{show_thumbnails && (
 						<RangeControl
 							label={__('Thumbnails Per Page', 'surecart')}
 							min={2}
@@ -229,9 +237,10 @@ export default ({ attributes, setAttributes, context: { postId } }) => {
 
 							<div class="swiper-button-prev"></div>
 							<div class="swiper-button-next"></div>
+							<div class="swiper-pagination"></div>
 						</div>
 
-						{show_thumbs && images?.length > 1 ? (
+						{show_thumbnails && images?.length > 1 ? (
 							<div
 								className="sc-image-slider__thumbs"
 								ref={thumbSwiperRef}

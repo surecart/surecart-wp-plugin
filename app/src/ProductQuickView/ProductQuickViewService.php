@@ -50,19 +50,9 @@ class ProductQuickViewService {
 
 		ob_start();
 
-		echo "<!-- Render the Product quick view -->\n";
 		// Render the product quick view.
 		echo do_blocks( $template->content ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped 
 
 		return trim( preg_replace( '/\s+/', ' ', ob_get_clean() ) );
-	}
-
-	/**
-	 * Render the product quick view components.
-	 *
-	 * @return void
-	 */
-	public function renderProductQuickViewComponent() {
-		echo $this->productQuickViewTemplate(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 }

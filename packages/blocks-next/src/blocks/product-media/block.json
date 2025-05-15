@@ -31,7 +31,7 @@
 		"width": {
 			"type": "number"
 		},
-		"show_thumbs": {
+		"show_thumbnails": {
 			"type": "boolean",
 			"default": true
 		},

@@ -12,7 +12,12 @@ import { ToggleControl, RangeControl, PanelBody } from '@wordpress/components';
 
 export default ({
 	context: { postId },
-	attributes: { truncateExcerpt, excerptLength, readMoreText, showReadMore },
+	attributes: {
+		truncate_excerpt,
+		excerpt_length,
+		read_more_text,
+		show_read_more,
+	},
 	setAttributes,
 }) => {
 	const blockProps = useBlockProps();
@@ -25,13 +30,13 @@ export default ({
 
 	const readMoreLink = (
 		<RichText
-			identifier="readMoreText"
+			identifier="read_more_text"
 			className="wp-block-post-excerpt__more-link"
 			tagName="a"
 			aria-label={__('“Read more” link text')}
 			placeholder={__('Add "read more" link text')}
-			value={readMoreText}
-			onChange={(value) => setAttributes({ readMoreText: value })}
+			value={read_more_text}
+			onChange={(value) => setAttributes({ read_more_text: value })}
 			withoutInteractiveFormatting
 		/>
 	);
@@ -43,22 +48,22 @@ export default ({
 					<ToggleControl
 						__nextHasNoMarginBottom
 						label={__('Show excerpt')}
-						checked={truncateExcerpt}
+						checked={truncate_excerpt}
 						onChange={(value) =>
 							setAttributes({
-								truncateExcerpt: value,
+								truncate_excerpt: value,
 							})
 						}
 					/>
-					{truncateExcerpt && (
+					{truncate_excerpt && (
 						<>
 							<RangeControl
 								__next40pxDefaultSize
 								__nextHasNoMarginBottom
 								label={__('Max number of words')}
-								value={excerptLength}
+								value={excerpt_length}
 								onChange={(value) => {
-									setAttributes({ excerptLength: value });
+									setAttributes({ excerpt_length: value });
 								}}
 								min="10"
 								max="100"
@@ -66,10 +71,10 @@ export default ({
 							<ToggleControl
 								__nextHasNoMarginBottom
 								label={__('Show read more link')}
-								checked={showReadMore}
+								checked={show_read_more}
 								onChange={(value) =>
 									setAttributes({
-										showReadMore: value,
+										show_read_more: value,
 									})
 								}
 							/>
@@ -84,7 +89,7 @@ export default ({
 							'Experience the next level of convenience with our innovative widget. Melding cutting-edge technology with user-friendly design, this product provides unparalleled functionality that caters to your lifestyle ',
 							'surecart'
 					  )}
-				{showReadMore && readMoreLink}
+				{show_read_more && readMoreLink}
 			</div>
 		</>
 	);
