@@ -152,6 +152,6 @@ class Checklist {
 	 * @return mixed
 	 */
 	public function __get( $key ) {
-		return $this->account->gleap_checklist->$key;
+		return isset( $this->account->gleap_checklist->$key ) ? $this->account->gleap_checklist->$key : null;
 	}
 }
