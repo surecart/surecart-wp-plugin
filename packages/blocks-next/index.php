@@ -444,10 +444,6 @@ add_action(
 					'import' => 'dynamic',
 				),
 				array(
-					'id'     => 'surecart/lightbox',
-					'import' => 'dynamic',
-				),
-				array(
 					'id'     => '@surecart/checkout-events',
 					'import' => 'dynamic',
 				),
