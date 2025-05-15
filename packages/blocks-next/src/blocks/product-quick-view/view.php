@@ -17,7 +17,11 @@ use SureCart\Models\Blocks\ProductPageBlock;
 	);
 	?>
 	>
-	<div class="sc-product-quick-view-dialog">
+	<div 
+		class="sc-product-quick-view-dialog"
+		tabindex="-1"
+		data-wp-on--keydown="callbacks.handleKeyDown"
+	>
 		<div class="sc-product-quick-view-dialog__content">
 			<?php
 			while ( $query->have_posts() ) :

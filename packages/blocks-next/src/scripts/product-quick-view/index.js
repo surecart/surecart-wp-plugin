@@ -23,7 +23,7 @@ let inertElements = [];
  * @returns {boolean}
  */
 const isValidEvent = (event) =>
-	event?.key ? [' ', 'Enter', 'Esc'].includes(event.key) : true;
+	event?.key ? [' ', 'Enter', 'Escape'].includes(event.key) : true;
 
 const { state, actions } = store('surecart/product-quick-view', {
 	actions: {
@@ -116,6 +116,11 @@ const { state, actions } = store('surecart/product-quick-view', {
 			} else {
 				document.body.classList.remove('sc-product-quick-view-open');
 				inertElements.forEach((el) => el.removeAttribute('inert'));
+			}
+		},
+		handleKeyDown(event) {
+			if (event?.key === 'Escape') {
+				actions.close(event);
 			}
 		},
 	},
