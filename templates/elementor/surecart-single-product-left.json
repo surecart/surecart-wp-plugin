@@ -461,6 +461,12 @@
 							"unit": "px",
 							"size": 16,
 							"sizes": []
+						},
+						"input_typography_typography": "custom",
+						"input_typography_font_size": {
+							"unit": "px",
+							"size": 16,
+							"sizes": []
 						}
 					},
 					"elements": [],
