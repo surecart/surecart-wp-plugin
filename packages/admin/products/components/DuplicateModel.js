@@ -7,6 +7,7 @@ import { store as coreStore } from '@wordpress/core-data';
 
 export default function DuplicateModel(props) {
 	const [confirm, setConfirm] = useState(null);
+	const [duplicating, setDuplicating] = useState(false);
 	const {
 		children,
 		type = 'product',
@@ -19,6 +20,7 @@ export default function DuplicateModel(props) {
 	const onClick = () => setConfirm(true);
 
 	const onConfirmDuplicate = async () => {
+		setDuplicating(true);
 		// save current product first.
 		if (onConfirm) {
 			await onConfirm();
@@ -34,6 +36,7 @@ export default function DuplicateModel(props) {
 			if (onSuccess) {
 				onSuccess(duplicate);
 			}
+			setDuplicating(false);
 			setConfirm(false);
 		} catch (error) {
 			console.error(error);
@@ -52,6 +55,7 @@ export default function DuplicateModel(props) {
 					onRequestClose={() => setConfirm(false)}
 				>
 					{message}
+					{duplicating && <sc-block-ui spinner></sc-block-ui>}
 				</Confirm>
 			)}
 		</>
