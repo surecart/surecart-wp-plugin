@@ -8,7 +8,7 @@ const { __ } = wp.i18n;
  * External dependencies
  */
 import Swiper from 'swiper';
-import { Thumbs, Navigation, A11y } from 'swiper/modules';
+import { Thumbs, Navigation, A11y, Pagination } from 'swiper/modules';
 
 // controls the slider
 const { state } = store('surecart/image-slider', {
@@ -115,7 +115,7 @@ const { state } = store('surecart/image-slider', {
 					'.swiper:not(.sc-image-slider__thumbs .swiper)'
 				),
 				{
-					modules: [Thumbs, A11y, Navigation],
+					modules: [Thumbs, A11y, Navigation, Pagination],
 					direction: 'horizontal',
 					loop: false,
 					centeredSlides: true,
@@ -125,6 +125,12 @@ const { state } = store('surecart/image-slider', {
 						nextEl: ref.querySelector('.swiper-button-next'),
 						prevEl: ref.querySelector('.swiper-button-prev'),
 					},
+					...(!thumbs && {
+						pagination: {
+							el: ref.querySelector('.swiper-pagination'),
+							dynamicBullets: true,
+						},
+					}),
 					...(!!thumbs &&
 						state.thumbsSwiper && {
 							thumbs: {
