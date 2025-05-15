@@ -52,6 +52,11 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 		$container['elementor.block.adapter.service'] = function () {
 			return new ElementorBlockAdapterService();
 		};
+
+		// FSE script loader service for Elementor.
+		$container['elementor.fse.script.loader'] = function () {
+			return new ElementorFseScriptLoaderService();
+		};
 	}
 
 	/**
@@ -70,6 +75,7 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 		$container['surecart.elementor.widgets']->bootstrap();
 		$container['surecart.elementor.editor']->bootstrap();
 		$container['surecart.elementor.dynamic_tags']->bootstrap();
+		$container['elementor.fse.script.loader']->bootstrap();
 
 		// The rest are only needed if Elementor Pro is installed.
 		if ( ! defined( 'ELEMENTOR_PRO_VERSION' ) ) {
