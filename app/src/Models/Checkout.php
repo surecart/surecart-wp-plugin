@@ -68,7 +68,7 @@ class Checkout extends Model {
 	 * @return string
 	 */
 	public function getAmountDueDisplayAmountAttribute() {
-		return ! empty( $this->amount_due ) ? Currency::format( $this->amount_due, $this->currency ) : '';
+		return Currency::format( $this->amount_due ?? 0, $this->currency );
 	}
 
 	/**

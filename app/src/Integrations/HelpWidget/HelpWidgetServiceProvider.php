@@ -15,9 +15,16 @@ class HelpWidgetServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function register( $container ) {
-		$container['surecart.help_widget'] = function () {
-			return new HelpWidget();
+		$container['surecart.help_widget'] = function ( $container ) {
+			return new HelpWidget( $container['surecart.help_widget.checklist'] );
 		};
+		$container['surecart.help_widget.checklist'] = function ( $container ) {
+			return new Checklist( $container['surecart.account'] );
+		};
+
+		$app = $container[ SURECART_APPLICATION_KEY ];
+
+		$app->alias( 'helpWidget', 'surecart.help_widget' );
 	}
 
 	/**
@@ -26,6 +33,11 @@ class HelpWidgetServiceProvider implements ServiceProviderInterface {
 	 * @param  \Pimple\Container $container Service Container.
 	 */
 	public function bootstrap( $container ) {
+		// not connected.
+		if ( ! $container['surecart.account']->is_connected ) {
+			return;
+		}
+
 		$container['surecart.help_widget']->bootstrap();
 	}
 }

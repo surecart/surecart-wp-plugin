@@ -53,11 +53,11 @@ sc-button-group > sc-tooltip > sc-button.sc-focus {
 
 :root {
   /** Brand */
-  --sc-color-brand-primary: #01824c;
-  --sc-color-brand-secondary: #2cc965;
+  --sc-color-brand-primary: #388051;
+  --sc-color-brand-secondary: #00824c;
   --sc-color-brand-heading: #002e33;
   --sc-color-brand-body: #45505f;
-  --sc-color-brand-main-background: #f2fafc;
+  --sc-color-brand-main-background: #f4f7f9;
   --sc-color-brand-content-background: #ffffff;
   --sc-color-brand-stroke: #e7ecee;
   --sc-color-brand-subheading: #9ca7ab;

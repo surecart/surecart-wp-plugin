@@ -256,7 +256,7 @@ abstract class IntegrationService extends AbstractIntegration implements Integra
 	 *
 	 * @return void
 	 */
-	public function onPurchaseProductUpdated( \SureCart\Models\Purchase $purchase, \SureCart\Models\Purchase $previous_purchase, $request ) {
+	public function onPurchaseProductUpdated( Purchase $purchase, Purchase $previous_purchase, $request ) {
 		$this->purchase = $purchase;
 
 		// product added.
@@ -281,6 +281,11 @@ abstract class IntegrationService extends AbstractIntegration implements Integra
 			}
 
 			if ( $this->purchaseIsNotMatchedWithPriceOrVariant( $integration, $previous_purchase ) ) {
+				continue;
+			}
+
+			// If no price & variant has been added for the integration, don't revoke it.
+			if ( empty( $integration->price_id ) && empty( $integration->variant_id ) ) {
 				continue;
 			}
 
@@ -434,8 +439,8 @@ abstract class IntegrationService extends AbstractIntegration implements Integra
 	/**
 	 * Check if the integration does not match with purchase price or variant.
 	 *
-	 * @param Integration $integration
-	 * @param Purchase    $purchase
+	 * @param Integration $integration The integration.
+	 * @param Purchase    $purchase    The purchase.
 	 *
 	 * @return boolean
 	 */

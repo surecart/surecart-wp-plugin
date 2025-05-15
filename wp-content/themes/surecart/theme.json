@@ -1,0 +1,23 @@
+{
+	"border": {
+		"radius": true,
+		"units": [
+			{
+				"slug": "none",
+				"value": "0"
+			},
+			{
+				"slug": "sm",
+				"value": "4px"
+			},
+			{
+				"slug": "md",
+				"value": "8px"
+			},
+			{
+				"slug": "lg",
+				"value": "12px"
+			}
+		]
+	}
+}

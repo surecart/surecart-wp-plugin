@@ -306,6 +306,8 @@ class PageService {
 				'surecart_page_sc-affiliate-referrals',
 				'surecart_page_sc-affiliate-payouts',
 				'surecart_page_sc-customers',
+				'surecart_page_sc-onboarding-checklist',
+				'toplevel_page_sc-onboarding-checklist',
 				'edit-sc_form',
 				'sc_form',
 				'surecart_page_sc-settings',
