@@ -185,6 +185,14 @@ class PriceChooser extends \Elementor\Widget_Base {
 			]
 		);
 
+		$this->add_group_control(
+			\Elementor\Group_Control_Typography::get_type(),
+			[
+				'name'     => 'price_chooser_typography',
+				'selector' => $selector_label,
+			]
+		);
+
 		$this->end_controls_section();
 	}
 

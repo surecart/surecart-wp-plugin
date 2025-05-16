@@ -138,6 +138,14 @@ class Quantity extends \Elementor\Widget_Base {
 				'tab'   => \Elementor\Controls_Manager::TAB_STYLE,
 			)
 		);
+		$this->add_group_control(
+			\Elementor\Group_Control_Typography::get_type(),
+			array(
+				'name'     => 'input_typography',
+				'label'    => esc_html__( 'Typography', 'surecart' ),
+				'selector' => $input_selector,
+			)
+		);
 
 		$this->add_responsive_control(
 			'quantity_width',
