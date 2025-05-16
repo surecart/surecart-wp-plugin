@@ -65,6 +65,9 @@ class ElementorFseScriptLoaderService {
 			return;
 		}
 
+		wp_enqueue_script_module( '@surecart/image-slider' );
+		wp_enqueue_script_module( 'surecart/lightbox' );
 		wp_enqueue_script_module( '@surecart/product-page' );
+		wp_enqueue_script_module( '@surecart/product-list' );
 	}
 }
