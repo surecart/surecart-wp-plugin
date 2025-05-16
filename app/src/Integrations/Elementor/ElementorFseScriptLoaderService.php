@@ -26,26 +26,20 @@ class ElementorFseScriptLoaderService {
 	 * @return string The template path unchanged.
 	 */
 	public function maybePreloadProductScripts( $template ) {
-		// Ensure the template is not empty.
-		if ( empty( $template ) ) {
+		if ( empty( $template ) || ! $this->isProductPage() ) {
 			return $template;
 		}
 
-		// Check if this is a product context.
-		if ( ! $this->is_product_page() ) {
-			return $template;
-		}
-
-		add_action( 'wp_enqueue_scripts', [ $this, 'preloadProductScripts' ], 5 );
+		add_action( 'wp_enqueue_scripts', [ $this, 'loadElementorAssetsForProductTemplate' ], 9 );
 		return $template;
 	}
 
 	/**
-	 * Determine if the current page is a product page.
+	 * Determine if the current page is a surecart product page.
 	 *
 	 * @return bool True if this page contains product elements.
 	 */
-	private function is_product_page(): bool {
+	private function isProductPage(): bool {
 		global $post;
 		if ( ! $post ) {
 			return false;
@@ -56,18 +50,45 @@ class ElementorFseScriptLoaderService {
 	}
 
 	/**
-	 * Preload product scripts in head for FSE themes.
+	 * Force load Elementor scripts for SureCart product templates.
 	 *
 	 * @return void
 	 */
-	public function preloadProductScripts(): void {
-		if ( ! function_exists( 'wp_enqueue_script_module' ) ) {
+	public function loadElementorAssetsForProductTemplate(): void {
+		$template_id = $this->get_surecart_elementor_template_id();
+		if ( ! $template_id ) {
 			return;
 		}
 
-		wp_enqueue_script_module( '@surecart/image-slider' );
-		wp_enqueue_script_module( 'surecart/lightbox' );
-		wp_enqueue_script_module( '@surecart/product-page' );
-		wp_enqueue_script_module( '@surecart/product-list' );
+		$document = \Elementor\Plugin::$instance->documents->get( $template_id );
+		if ( ! $document || ! $document->is_built_with_elementor() ) {
+			return;
+		}
+
+		$elementor_frontend = \Elementor\Plugin::instance()->frontend;
+		$elementor_frontend->enqueue_scripts();
+		$elementor_frontend->get_builder_content_for_display( $template_id );
+	}
+
+	/**
+	 * Get the SureCart Elementor template ID.
+	 *
+	 * @return int|null The ID of the SureCart Elementor template or null if not found.
+	 */
+	private function get_surecart_elementor_template_id() {
+		$query = new \WP_Query(
+			[
+				'post_type'      => 'elementor_library',
+				'meta_query'     => [
+					[
+						'key'   => '_elementor_template_type',
+						'value' => 'surecart-product',
+					],
+				],
+				'posts_per_page' => 1,
+			]
+		);
+
+		return $query->have_posts() ? $query->posts[0]->ID : null;
 	}
 }
