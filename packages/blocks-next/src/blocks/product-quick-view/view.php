@@ -16,6 +16,15 @@ use SureCart\Models\Blocks\ProductPageBlock;
 		)
 	);
 	?>
+	<?php
+	echo wp_kses_data(
+		wp_interactivity_data_wp_context(
+			[
+				'url'   => $close_url,
+			]
+		)
+	);
+	?>
 	>
 	<div 
 		class="sc-product-quick-view-dialog"

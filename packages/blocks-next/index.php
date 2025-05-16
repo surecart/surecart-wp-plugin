@@ -158,7 +158,6 @@ add_action(
 			class="sc-lightbox-overlay zoom"
 			aria-label="$dialog_label"
 			data-wp-interactive="surecart/lightbox"
-			data-wp-context='{}'
 			data-wp-bind--role="state.roleAttribute"
 			data-wp-bind--aria-modal="state.ariaModal"
 			data-wp-class--active="state.overlayEnabled"
