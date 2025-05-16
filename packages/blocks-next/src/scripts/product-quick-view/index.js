@@ -61,6 +61,10 @@ const { state, actions } = store('surecart/product-quick-view', {
 			// prevent default to avoid page reload.
 			event?.preventDefault();
 
+			state.openButton = event?.target?.closest(
+				'.wp-block-surecart-product-quick-view-button'
+			);
+
 			// import lightbox and image slider scripts modules.
 			yield import(/* webpackIgnore: true */ 'surecart/lightbox');
 			yield import(/* webpackIgnore: true */ '@surecart/image-slider');
@@ -95,6 +99,7 @@ const { state, actions } = store('surecart/product-quick-view', {
 			dialog.addEventListener(
 				'transitionend',
 				withScope(() => {
+					state.openButton.focus();
 					actions.navigate(event);
 				}),
 				{ once: true }
