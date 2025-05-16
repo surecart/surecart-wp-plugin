@@ -99,7 +99,7 @@ const { state, actions } = store('surecart/product-quick-view', {
 			dialog.addEventListener(
 				'transitionend',
 				withScope(() => {
-					state.openButton.focus();
+					state?.openButton?.focus();
 					actions.navigate(event);
 				}),
 				{ once: true }
