@@ -36,7 +36,7 @@ class ElementorFseScriptLoaderService {
 			return $template;
 		}
 
-		add_action( 'wp_head', [ $this, 'preloadProductScripts' ], 5 );
+		add_action( 'wp_enqueue_scripts', [ $this, 'preloadProductScripts' ], 5 );
 		return $template;
 	}
 
