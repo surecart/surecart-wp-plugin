@@ -65,9 +65,9 @@ const { state, actions } = store('surecart/product-quick-view', {
 				'.wp-block-surecart-product-quick-view-button'
 			);
 
-			// import lightbox and image slider scripts modules.
-			yield import(/* webpackIgnore: true */ 'surecart/lightbox');
-			yield import(/* webpackIgnore: true */ '@surecart/image-slider');
+			// // import lightbox and image slider scripts modules.
+			// yield import(/* webpackIgnore: true */ 'surecart/lightbox');
+			// yield import(/* webpackIgnore: true */ '@surecart/image-slider');
 
 			// open the dialog UI.
 			state.open = true;

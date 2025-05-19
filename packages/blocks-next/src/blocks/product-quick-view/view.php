@@ -16,7 +16,12 @@ use SureCart\Models\Blocks\ProductPageBlock;
 		)
 	);
 	?>
-	<?php
+	>
+	<div 
+		class="sc-product-quick-view-dialog"
+		tabindex="-1"
+		data-wp-on--keydown="callbacks.handleKeyDown"
+		<?php
 	echo wp_kses_data(
 		wp_interactivity_data_wp_context(
 			[
@@ -25,11 +30,6 @@ use SureCart\Models\Blocks\ProductPageBlock;
 		)
 	);
 	?>
-	>
-	<div 
-		class="sc-product-quick-view-dialog"
-		tabindex="-1"
-		data-wp-on--keydown="callbacks.handleKeyDown"
 	>
 		<div class="sc-product-quick-view-dialog__content">
 			<?php
@@ -87,5 +87,13 @@ use SureCart\Models\Blocks\ProductPageBlock;
 		<?php endif; ?>
 	</div>
 
-	<div class="sc-product-quick-view-overlay" data-wp-on--click="actions.close"></div>
+	<div class="sc-product-quick-view-overlay" data-wp-on--click="actions.close" <?php
+	echo wp_kses_data(
+		wp_interactivity_data_wp_context(
+			[
+				'url'   => $close_url,
+			]
+		)
+	);
+	?>></div>
 </div>

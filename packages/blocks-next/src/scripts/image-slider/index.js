@@ -11,7 +11,7 @@ import Swiper from 'swiper';
 import { Thumbs, Navigation, A11y, Pagination } from 'swiper/modules';
 
 // controls the slider
-const { state } = store('surecart/image-slider', {
+export const { state, actions } = store('surecart/image-slider', {
 	state: {
 		thumbsSwiper: null,
 		swiper: null,
