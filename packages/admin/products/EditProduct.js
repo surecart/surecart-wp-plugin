@@ -317,9 +317,7 @@ export default ({ id, setBrowserURL }) => {
 							product={product}
 							onDelete={onDeleteProduct}
 							onToggleArchive={onToggleArchiveProduct}
-							onSubmit={onSubmit}
 							setConfirmUrl={setConfirmUrl}
-							hasDirtyRecords={hasDirtyRecords}
 						/>
 
 						{!!product?.permalink && (

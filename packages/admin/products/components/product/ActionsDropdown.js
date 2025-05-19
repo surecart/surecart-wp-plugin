@@ -9,14 +9,7 @@ import { useState } from '@wordpress/element';
 import DuplicateModel from '../DuplicateModel';
 import { addQueryArgs } from '@wordpress/url';
 
-export default ({
-	product,
-	onDelete,
-	onToggleArchive,
-	onSubmit,
-	setConfirmUrl,
-	hasDirtyRecords,
-}) => {
+export default ({ product, onDelete, onToggleArchive, setConfirmUrl }) => {
 	const [modal, setModal] = useState(null);
 
 	if (!product?.id) {
@@ -62,7 +55,6 @@ export default ({
 						<DuplicateModel
 							type="product"
 							id={product?.id}
-							onConfirm={hasDirtyRecords ? onSubmit : null}
 							onSuccess={(duplicate) => {
 								setConfirmUrl(
 									addQueryArgs(
