@@ -361,8 +361,6 @@ class RequestService {
 			return new \WP_Error( 'invalid_token', __( 'Invalid API token.', 'surecart' ) );
 		}
 
-		error_log( print_r( $response_body, true ) );
-
 		// check for errors.
 		if ( ! in_array( $response_code, [ 200, 201 ], true ) ) {
 			$body = json_decode( $response_body, true );
