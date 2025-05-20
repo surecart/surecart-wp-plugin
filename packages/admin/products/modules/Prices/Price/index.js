@@ -1,11 +1,10 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { store as coreStore, useEntityRecord } from '@wordpress/core-data';
-import { useDispatch, useSelect, select } from '@wordpress/data';
+import { useDispatch, useSelect } from '@wordpress/data';
 import { useRef, useState, useEffect } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
-import apiFetch from '@wordpress/api-fetch';
 import { ScButton, ScIcon, ScDrawer, ScForm } from '@surecart/components-react';
 
 import Error from '../../../../components/Error';
