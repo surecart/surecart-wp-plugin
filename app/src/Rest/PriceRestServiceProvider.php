@@ -36,7 +36,7 @@ class PriceRestServiceProvider extends RestServiceProvider implements RestServic
 			[
 				'methods'             => \WP_REST_Server::CREATABLE,
 				'callback'            => $this->callback( $this->controller, 'duplicate' ),
-				'permission_callback' => [ $this, 'update_item_permissions_check' ],
+				'permission_callback' => [ $this, 'create_item_permissions_check' ],
 			]
 		);
 	}
