@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: ecommerce, online store, subscriptions, stripe, payments
 Requires at least: 6.6
 Tested up to: 6.8
-Stable tag: 3.8.4
+Stable tag: 3.8.5
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -304,6 +304,13 @@ Yes, the checkout form can be customized using our visual builder. You can chang
 Accessibility is a huge priority for the entire team building SureCart. As you know, accessibility is an ongoing improvement task. Our development and QA teams are trained in accessibility best practices and build/test each new feature for accessibility. If you come across any edge issues, we want to know about it and will prioritize its resolution. Please contact us via our website.
 
 == Changelog ==
+
+= 3.8.5 - May 20th, 2025 =
+- New: List Jetengine compatibility in integrations list.
+- Improvement: Customer syncing string to be more descriptive.
+- Fix: Issue with rankmath indexing urls with currency in search console.
+- Fix: Google Analytics ecommerce tracking now includes discounts and taxes.
+- Fix: Discount amount and total amount sometimes not visible on order confirmation block.
 
 = 3.8.4 - May 14th, 2025 =
 - Fix: Issue with debug notice in admin if WordPress was in debug mode and there were no onboarding checklists.

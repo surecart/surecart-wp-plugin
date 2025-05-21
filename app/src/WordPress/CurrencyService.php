@@ -37,6 +37,9 @@ class CurrencyService {
 
 		// set the urls.
 		add_action( 'init', [ $this, 'appendUrls' ] );
+
+		// Add robots meta tag for currency parameter URLs.
+		add_action( 'wp_head', array( $this, 'addRobotsTag' ), 1 );
 	}
 
 	/**
@@ -204,5 +207,21 @@ class CurrencyService {
 	 */
 	public function removeCurrencyParam( $permalink ) {
 		return remove_query_arg( 'currency', $permalink );
+	}
+
+	/**
+	 * Add a robots meta tag to prevent indexing of URLs with query parameters.
+	 *
+	 * @return void
+	 */
+	public function addRobotsTag() {
+		// Don't add the robots tag if the filter is disabled.
+		if ( apply_filters( 'surecart/currency/disable_robots_tag', false ) ) {
+			return;
+		}
+
+		if ( isset( $_GET['currency'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			echo '<meta name="robots" content="noindex, follow" />' . "\n";
+		}
 	}
 }

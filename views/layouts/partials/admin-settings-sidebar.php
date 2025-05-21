@@ -74,10 +74,6 @@
 		<sc-icon style="font-size: 18px; width: 18px; stroke-width: 4;" name="upload-cloud" slot="prefix"></sc-icon>
 		<?php esc_html_e( 'Connection', 'surecart' ); ?>
 	</sc-tab>
-	<sc-tab href="<?php echo esc_url( add_query_arg( [ 'tab' => 'integrations' ], menu_page_url( 'sc-settings', false ) ) ); ?>" <?php echo 'integrations' === $tab ? 'active' : ''; ?>>
-		<sc-icon slot="prefix" style="font-size: 18px; width: 18px; stroke-width: 4;" name="zap"></sc-icon>
-		<?php esc_html_e( 'Integrations', 'surecart' ); ?>
-	</sc-tab>
 	<sc-tab href="<?php echo esc_url( add_query_arg( [ 'tab' => 'advanced' ], menu_page_url( 'sc-settings', false ) ) ); ?>" <?php echo 'advanced' === $tab ? 'active' : ''; ?> >
 		<sc-icon style="font-size: 18px; width: 18px; stroke-width: 4;" name="sliders" slot="prefix"></sc-icon>
 		<?php esc_html_e( 'Advanced', 'surecart' ); ?>
@@ -85,7 +81,7 @@
 
 	<?php if ( current_user_can( 'manage_options' ) ) : ?>
 		<div style="padding: var(--sc-spacing-small);">
-			<?php \SureCart::helpWidget()->checklist()->render(['floating' => true]); ?>
+			<?php \SureCart::helpWidget()->checklist()->render( [ 'floating' => true ] ); ?>
 		</div>
 	<?php endif; ?>
 </div>
