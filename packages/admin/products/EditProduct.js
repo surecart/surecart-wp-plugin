@@ -37,7 +37,6 @@ import Affiliation from './modules/Affiliation';
 import Collection from './modules/Collection';
 import Taxonomies from './modules/Taxonomies';
 import Editor from './components/Editor';
-import ConfirmNavigation from './components/ConfirmNavigation';
 import ProductOptions from './modules/ProductOptions';
 
 export default ({ id, setBrowserURL }) => {
@@ -316,8 +315,10 @@ export default ({ id, setBrowserURL }) => {
 						<ActionsDropdown
 							product={product}
 							onDelete={onDeleteProduct}
+							onSubmit={onSubmit}
 							onToggleArchive={onToggleArchiveProduct}
 							setConfirmUrl={setConfirmUrl}
+							hasDirtyRecords={hasDirtyRecords}
 						/>
 
 						{!!product?.permalink && (
@@ -467,15 +468,6 @@ export default ({ id, setBrowserURL }) => {
 					<ProductOptions
 						post={post}
 						onNavigate={onConfirmNavigation}
-					/>
-
-					<ConfirmNavigation
-						open={!!confirmUrl}
-						loading={saving}
-						onConfirm={onSubmit}
-						onRequestClose={() => {
-							setConfirmUrl(null);
-						}}
 					/>
 				</Fragment>
 			</UpdateModel>

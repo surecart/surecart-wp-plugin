@@ -9,8 +9,15 @@ import { useState } from '@wordpress/element';
 import DuplicateModel from '../DuplicateModel';
 import { addQueryArgs } from '@wordpress/url';
 
-export default ({ product, onDelete, onToggleArchive, setConfirmUrl }) => {
+export default ({
+	product,
+	onDelete,
+	onToggleArchive,
+	onSubmit,
+	hasDirtyRecords,
+}) => {
 	const [modal, setModal] = useState(null);
+	const [confirmMessage, setConfirmMessage] = useState(null);
 
 	if (!product?.id) {
 		return '';
@@ -55,8 +62,9 @@ export default ({ product, onDelete, onToggleArchive, setConfirmUrl }) => {
 						<DuplicateModel
 							type="product"
 							id={product?.id}
+							onConfirm={hasDirtyRecords ? onSubmit : null}
 							onSuccess={(duplicate) => {
-								setConfirmUrl(
+								window.location.assign(
 									addQueryArgs(
 										'admin.php?page=sc-products&action=edit',
 										{
@@ -65,11 +73,26 @@ export default ({ product, onDelete, onToggleArchive, setConfirmUrl }) => {
 									)
 								);
 							}}
+							message={confirmMessage}
 						>
 							{({ onClick }) => (
 								<MenuItem
 									icon={addCard}
-									onClick={onClick}
+									onClick={() => {
+										setConfirmMessage(
+											hasDirtyRecords
+												? __(
+														'This will save changes and create a duplicate. Continue?',
+														'surecart'
+												  )
+												: __(
+														'Are you sure you wish to duplicate?',
+														'surecart'
+												  )
+										);
+
+										onClick();
+									}}
 									iconPosition="left"
 								>
 									{__('Duplicate Product', 'surecart')}
