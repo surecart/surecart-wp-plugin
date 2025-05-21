@@ -170,7 +170,7 @@ export default ({ isOpen, onRequestClose, product }) => {
 								product={product}
 							/>
 						)}
-						{/* {!product?.variants?.length &&
+						{!product?.variants?.length &&
 							!product?.variants?.data?.length &&
 							!price?.ad_hoc && (
 								<Swap
@@ -180,7 +180,7 @@ export default ({ isOpen, onRequestClose, product }) => {
 									currentProduct={product}
 									isSaving={loading}
 								/>
-							)} */}
+							)}
 
 						<Advanced
 							price={price}
