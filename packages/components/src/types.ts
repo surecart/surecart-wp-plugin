@@ -523,6 +523,7 @@ export interface LineItem extends Object {
   variant?: Variant;
   locked: boolean;
   swap?: Swap;
+  is_swappable?: boolean;
 }
 
 export interface DeletedItem {

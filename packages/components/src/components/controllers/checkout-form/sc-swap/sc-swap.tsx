@@ -28,7 +28,7 @@ export class ScSwap {
   }
 
   render() {
-    if (!this?.lineItem?.price?.current_swap && !this?.lineItem?.swap) {
+    if (!this?.lineItem?.is_swappable) {
       return null;
     }
 

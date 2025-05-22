@@ -173,6 +173,14 @@ class LineItem extends Model {
 	}
 
 	/**
+	 * Get the is_swappable attribute.
+	 *
+	 * @return string
+	 */
+	public function getIsSwappableAttribute() {
+		return ! empty( $this->swap ) || ! empty( $this->price->current_swap );
+	}
+	/**
 	 * Get the currency attribute.
 	 *
 	 * TODO: Remove this method once currency added on line item.
