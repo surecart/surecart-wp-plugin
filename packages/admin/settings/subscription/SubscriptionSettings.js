@@ -197,6 +197,37 @@ export default () => {
 			</SettingsBox>
 
 			<SettingsBox
+				title={__('Subscription Renewals', 'surecart')}
+				description={__(
+					'Manage how your store subscription renewals.',
+					'surecart'
+				)}
+				loading={!hasLoadedItem}
+			>
+				<ScInput
+					value={item?.remind_at_period_percent_remaining}
+					label={__('Subscription Renewal Reminders', 'surecart')}
+					type="number"
+					min="0"
+					max="100"
+					onScInput={(e) =>
+						editItem({
+							remind_at_period_percent_remaining: e.target.value,
+						})
+					}
+					help={__(
+						'Specify the percentage of time remaining in the subscription period at which a reminder should be sent to customers. For example, if set to 25, the reminder will be triggered when there is 25% of the subscription period remaining.',
+						'surecart'
+					)}
+					required
+				>
+					<span slot="suffix" style={{ opacity: '0.65' }}>
+						{__('% of Period Remaining', 'surecart')}
+					</span>
+				</ScInput>
+			</SettingsBox>
+
+			<SettingsBox
 				title={__('Failed Payments', 'surecart')}
 				description={__(
 					'Manage how your store handles failed subscription payments.',
