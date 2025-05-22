@@ -20,7 +20,9 @@ class Product extends Model implements PageModel {
 	use HasPurchases;
 	use HasCommissionStructure;
 	use HasDates;
-	use CanDuplicate;
+	use canDuplicate {
+		duplicate as protected originalDuplicate;
+	}
 
 	/**
 	 * These always need to be fetched during create/update in order to sync with post model.
@@ -196,6 +198,38 @@ class Product extends Model implements PageModel {
 		$this->deleteSynced( $id );
 
 		// return.
+		return $this;
+	}
+
+	/**
+	 * Duplicate the model.
+	 *
+	 * @param string $id The id of the model to duplicate.
+	 * @return $this|false
+	 */
+	protected function duplicate( $id = '' ) {
+		if ( $id ) {
+			$this->attributes['id'] = $id;
+		}
+
+		$current_post_content = $this->post->post_content ?? '';
+
+		$duplicated = $this->originalDuplicate( $id );
+
+		// sync with the post.
+		$post = $this->sync();
+
+		if ( is_wp_error( $post ) ) {
+			return $post;
+		}
+
+		wp_update_post(
+			array(
+				'ID'           => $this->post->ID,
+				'post_content' => $current_post_content,
+			)
+		); // update the post content.
+
 		return $this;
 	}
 
