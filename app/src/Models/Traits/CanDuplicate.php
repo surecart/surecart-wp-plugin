@@ -37,11 +37,27 @@ trait CanDuplicate {
 			return $duplicated;
 		}
 
+		$current_post_content = $this->post->post_content ?? '';
+
 		$this->resetAttributes();
 
 		$this->fill( $duplicated );
 
 		$this->fireModelEvent( 'duplicated' );
+
+		// sync with the post.
+		$post = $this->sync();
+
+		if ( is_wp_error( $post ) ) {
+			return $post;
+		}
+
+		wp_update_post(
+			array(
+				'ID'           => $this->post->ID,
+				'post_content' => $current_post_content,
+			)
+		); // update the post content.
 
 		return $this;
 	}
