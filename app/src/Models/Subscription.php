@@ -465,7 +465,7 @@ class Subscription extends Model {
 		$end = $end->modify( "-{$cancel_window_days} days" );
 		$end = $end->format( 'Y-m-d' );
 
-		return $now < $end;
+		return $now >= $end;
 	}
 
 	/**
