@@ -82,7 +82,7 @@ export default ({
 										setConfirmMessage(
 											hasDirtyRecords
 												? __(
-														'Are you sure you wish to duplicate? This will any unsaved changes.',
+														'Are you sure you wish to duplicate? This will save any unsaved changes.',
 														'surecart'
 												  )
 												: __(
