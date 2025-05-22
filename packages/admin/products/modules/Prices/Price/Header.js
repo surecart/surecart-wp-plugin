@@ -4,24 +4,16 @@ import { __ } from '@wordpress/i18n';
 import {
 	ScTag,
 	ScButton,
-	ScDropdown,
-	ScMenu,
-	ScMenuItem,
 	ScIcon,
 	ScSkeleton,
 	ScFlex,
 } from '@surecart/components-react';
-import {
-	DropdownMenu,
-	__experimentalConfirmDialog as ConfirmDialog,
-	MenuItem,
-} from '@wordpress/components';
+import { DropdownMenu, MenuItem } from '@wordpress/components';
 import { moreHorizontal, inbox, trash, addCard } from '@wordpress/icons';
 import ToggleHeader from '../../../../components/ToggleHeader';
 import { intervalString } from '../../../../util/translations';
 import { useState } from 'react';
 import BuyLink from './BuyLink';
-import { ScMenuDivider } from '@surecart/components-react';
 import { SortableKnob } from 'react-easy-sort';
 import DuplicateModel from '../../../components/DuplicateModel';
 
