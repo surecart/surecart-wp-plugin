@@ -72,8 +72,8 @@ export class ScLineItems {
 
     // Sort items so that items with swaps are at the top.
     const sortedItems = (checkoutState?.checkout?.line_items?.data || []).sort((a, b) => {
-      const aHasSwap = a?.price?.current_swap ? 1 : 0;
-      const bHasSwap = b?.price?.current_swap ? 1 : 0;
+      const aHasSwap = a?.price?.current_swap || a?.swap ? 1 : 0;
+      const bHasSwap = b?.price?.current_swap || b?.swap ? 1 : 0;
       return bHasSwap - aHasSwap;
     });
 
