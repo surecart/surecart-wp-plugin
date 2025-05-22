@@ -172,7 +172,7 @@ export default ({ isOpen, onRequestClose, product }) => {
 						)}
 						{!product?.variants?.length &&
 							!product?.variants?.data?.length &&
-							!price?.ad_hoc && (
+							!currentPrice?.ad_hoc && (
 								<Swap
 									currentPrice={price}
 									updateSwap={editSwap}
