@@ -212,23 +212,32 @@ class Product extends Model implements PageModel {
 			$this->attributes['id'] = $id;
 		}
 
+		// store post content before duplication.
 		$current_post_content = $this->post->post_content ?? '';
 
+		// duplicate the model.
 		$duplicated = $this->originalDuplicate( $id );
+
+		// check for errors.
+		if ( is_wp_error( $duplicated ) ) {
+			return $duplicated;
+		}
 
 		// sync with the post.
 		$post = $this->sync();
 
+		// check for errors.
 		if ( is_wp_error( $post ) ) {
 			return $post;
 		}
 
+		// update the post content.
 		wp_update_post(
 			array(
 				'ID'           => $this->post->ID,
 				'post_content' => $current_post_content,
 			)
-		); // update the post content.
+		);
 
 		return $this;
 	}
