@@ -27,6 +27,7 @@ export default ({ attributes, setAttributes, context: { postId } }) => {
 		auto_height,
 		width,
 		lightbox,
+		desktop_gallery,
 	} = attributes;
 	const [images, setImages] = useState([]);
 	const blockProps = useBlockProps({});
@@ -50,7 +51,7 @@ export default ({ attributes, setAttributes, context: { postId } }) => {
 							width,
 						};
 				  })
-				: [...Array(20)].map(() => {
+				: [...Array(desktop_gallery ? 3 : 20)].map(() => {
 						return {
 							src:
 								scBlockData?.plugin_url +
@@ -59,7 +60,7 @@ export default ({ attributes, setAttributes, context: { postId } }) => {
 						};
 				  })
 		);
-	}, [width, thumbnails_per_page, product]);
+	}, [width, thumbnails_per_page, product, desktop_gallery]);
 
 	// update the slider when the props change.
 	useEffect(() => {
@@ -199,7 +200,13 @@ export default ({ attributes, setAttributes, context: { postId } }) => {
 
 			<div {...blockProps}>
 				<Disabled>
-					<div className="sc-image-slider">
+					<div
+						className={
+							desktop_gallery
+								? 'sc-image-gallery'
+								: 'sc-image-slider'
+						}
+					>
 						<div className="swiper" ref={swiperRef}>
 							<div className="swiper-wrapper">
 								{images.map((image, index) => (
