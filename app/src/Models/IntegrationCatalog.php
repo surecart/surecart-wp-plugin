@@ -38,6 +38,10 @@ class IntegrationCatalog extends ExternalApiModel {
 	 * @return bool
 	 */
 	public function getIsPluginActiveAttribute() {
+		if ( 'pie-calendar' === $this->slug ) { // Since Pie Calendar Free & Pro plugin had same plugin file name we need to check if the pro plugin is active explicitly.
+			return $this->isPieCalendarProPluginActive();
+		}
+
 		if ( empty( $this->acf['plugin_file'] ) ) {
 			return false;
 		}
@@ -92,5 +96,18 @@ class IntegrationCatalog extends ExternalApiModel {
 
 		// then fallback to the featured media.
 		return $this->_embedded['wp:featuredmedia'][0]['media_details']['sizes']['medium']['source_url'] ?? $this->_embedded['wp:featuredmedia'][0]['source_url'] ?? '';
+	}
+
+	/**
+	 * Is Pie Calendar Pro plugin active.
+	 *
+	 * @return bool
+	 */
+	public function isPieCalendarProPluginActive() {
+		if ( ! function_exists( 'piecal_pro_classic_metabox' ) ) {
+			return false;
+		}
+
+		return true;
 	}
 }

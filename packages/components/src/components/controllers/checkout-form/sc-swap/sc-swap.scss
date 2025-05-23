@@ -1,0 +1,12 @@
+.swap {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+
+  &__price {
+    color: var(--sc-swap-price-color, var(--sc-input-label-color));
+    line-height: var(--sc-line-height-dense);
+    font-size: var(--sc-font-size-small);
+    white-space: nowrap;
+  }
+}

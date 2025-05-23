@@ -113,12 +113,27 @@ class Price extends Model {
 	}
 
 	/**
+	 * Set the current swap attribute
+	 *
+	 * @param Swap $swap Swap.
+	 *
+	 * @return void
+	 */
+	public function setCurrentSwapAttribute( $swap ) {
+		$this->setRelation( 'current_swap', $swap, Swap::class );
+	}
+
+	/**
 	 * Get the display amount attribute
 	 *
 	 * @return string
 	 */
 	public function getDisplayAmountAttribute() {
 		if ( $this->ad_hoc ) {
+			if ( $this->amount ) {
+				return Currency::format( $this->amount, $this->currency );
+			}
+
 			return esc_html__( 'Custom Amount', 'surecart' );
 		}
 		if ( empty( $this->amount ) && empty( $this->recurring_interval ) ) {
@@ -193,8 +208,8 @@ class Price extends Model {
 		return $this->trial_duration_days ? sprintf(
 			// translators: %s is the number of days.
 			_n(
-				'Starting in %s day.',
-				'Starting in %s days.',
+				'Starting in %s day',
+				'Starting in %s days',
 				$this->trial_duration_days,
 				'surecart'
 			),
@@ -212,7 +227,7 @@ class Price extends Model {
 		}
 		return sprintf(
 			// translators: %1$1s is the setup fee amount, %2$2s is the setup fee name.
-			__( '%1$1s %2$2s.', 'surecart' ),
+			__( '%1$1s %2$2s', 'surecart' ),
 			Currency::format( $this->setup_fee_amount, $this->currency ),
 			$this->setup_fee_name ?? __( 'Setup Fee', 'surecart' )
 		);

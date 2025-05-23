@@ -7,7 +7,7 @@ use SureCart\Models\Traits\HasFees;
 use SureCart\Models\Traits\HasPrice;
 use SureCart\Support\Currency;
 use SureCart\Models\Traits\HasProduct;
-
+use SureCart\Models\Traits\HasSwap;
 /**
  * Price model
  */
@@ -16,6 +16,7 @@ class LineItem extends Model {
 	use HasCheckout;
 	use HasProduct;
 	use HasFees;
+	use HasSwap;
 
 	/**
 	 * Rest API endpoint
@@ -39,6 +40,28 @@ class LineItem extends Model {
 	 */
 	public function setVariantAttribute( $value ) {
 		$this->setRelation( 'variant', $value, Variant::class );
+	}
+
+	/**
+	 * Get the variant attribute.
+	 *
+	 * @return string
+	 */
+	public function getVariantDisplayOptionsAttribute() {
+		if ( empty( $this->variant_options ) ) {
+			return null;
+		}
+		return implode( ' / ', array_filter( $this->variant_options ) );
+	}
+
+	/**
+	 * Check if the line item can be swapped.
+	 * Right now we only support swapping for products with no variants.
+	 *
+	 * @return bool
+	 */
+	protected function getCanSwapAttribute() {
+		return false;
 	}
 
 	/**
@@ -82,6 +105,84 @@ class LineItem extends Model {
 	}
 
 	/**
+	 * Swap Line Item
+	 *
+	 * @param string $id LineItem ID.
+	 *
+	 * @return $this|\WP_Error
+	 */
+	protected function swap( $id = null ) {
+		if ( $this->fireModelEvent( 'swaping' ) === false ) {
+			return $this;
+		}
+
+		$this->id = $id ? $id : $this->id;
+
+		if ( empty( $this->id ) ) {
+			return new \WP_Error( 'not_saved', 'No Line Item Id passed.' );
+		}
+
+		$swapped = \SureCart::request(
+			$this->endpoint . '/' . $this->id . '/swap',
+			[
+				'method' => 'PATCH',
+				'query'  => $this->query,
+			]
+		);
+
+		if ( is_wp_error( $swapped ) ) {
+			return $swapped;
+		}
+
+		$this->resetAttributes();
+
+		$this->fill( $swapped );
+
+		$this->fireModelEvent( 'swapped' );
+
+		return $this;
+	}
+
+	/**
+	 * Swap Line Item
+	 *
+	 * @param string $id LineItem ID.
+	 *
+	 * @return $this|\WP_Error
+	 */
+	protected function unswap( $id = null ) {
+		if ( $this->fireModelEvent( 'unswaping' ) === false ) {
+			return $this;
+		}
+
+		$this->id = $id ? $id : $this->id;
+
+		if ( empty( $this->id ) ) {
+			return new \WP_Error( 'not_saved', 'No Line Item Id passed.' );
+		}
+
+		$unswapped = \SureCart::request(
+			$this->endpoint . '/' . $this->id . '/unswap',
+			[
+				'method' => 'PATCH',
+				'query'  => $this->query,
+			]
+		);
+
+		if ( is_wp_error( $unswapped ) ) {
+			return $unswapped;
+		}
+
+		$this->resetAttributes();
+
+		$this->fill( $unswapped );
+
+		$this->fireModelEvent( 'unswapped' );
+
+		return $this;
+	}
+
+	/**
 	 * Get the currency attribute.
 	 *
 	 * TODO: Remove this method once currency added on line item.
@@ -117,6 +218,18 @@ class LineItem extends Model {
 	 */
 	public function getScratchDisplayAmountAttribute() {
 		return ! empty( $this->scratch_amount ) ? Currency::format( $this->scratch_amount, $this->currency ) : '';
+	}
+
+	/**
+	 * Get the SKU text attribute.
+	 *
+	 * @return string
+	 */
+	public function getSkuAttribute() {
+		if ( ! empty( $this->variant ) && ! empty( $this->variant->sku ) ) {
+			return $this->variant->sku;
+		}
+		return $this->price->product->sku ?? '';
 	}
 
 	/**
