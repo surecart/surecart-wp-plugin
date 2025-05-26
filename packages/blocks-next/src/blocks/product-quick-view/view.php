@@ -17,24 +17,26 @@ use SureCart\Models\Blocks\ProductPageBlock;
 	);
 	?>
 	>
-	<div 
-		class="sc-product-quick-view-dialog"
-		tabindex="-1"
-		data-wp-on--keydown="callbacks.handleKeyDown"
-		<?php
-		echo wp_kses_data(
-			wp_interactivity_data_wp_context(
-				[
-					'url' => $close_url,
-				]
-			)
-		);
+	<?php
+	while ( $query->have_posts() ) :
+		$query->the_post();
 		?>
-	>
-		<div class="sc-product-quick-view-dialog__content">
+		<div 
+			class="sc-product-quick-view-dialog"
+			tabindex="-1"
+			data-wp-on--keydown="callbacks.handleKeyDown"
 			<?php
-			while ( $query->have_posts() ) :
-				$query->the_post();
+			echo wp_kses_data(
+				wp_interactivity_data_wp_context(
+					[
+						'url' => $close_url,
+					]
+				)
+			);
+			?>
+		>
+			<div class="sc-product-quick-view-dialog__content">
+				<?php
 
 				// Get an instance of the current Product Quick view block.
 				$block_instance = $block->parsed_block;
@@ -77,25 +79,25 @@ use SureCart\Models\Blocks\ProductPageBlock;
 					data-wp-init="callbacks.init">
 					<?php echo $block_content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 				</form>
-			<?php endwhile; ?>
+			</div>
 		</div>
 
-		<?php if ( ! $query->have_posts() ) : ?>
-			<div class="sc-loader">
-				<span class="sc-spinner"></span>
-			</div>
-		<?php endif; ?>
-	</div>
+		<div class="sc-product-quick-view-overlay" data-wp-on--click="actions.close"
+			<?php
+			echo wp_kses_data(
+				wp_interactivity_data_wp_context(
+					[
+						'url' => $close_url,
+					]
+				)
+			);
+			?>
+		></div>
+	<?php endwhile; ?>
 
-	<div class="sc-product-quick-view-overlay" data-wp-on--click="actions.close" 
-	<?php
-	echo wp_kses_data(
-		wp_interactivity_data_wp_context(
-			[
-				'url' => $close_url,
-			]
-		)
-	);
-	?>
-	></div>
+	<?php if ( ! $query->have_posts() ) : ?>
+		<div class="sc-loader">
+			<span class="sc-spinner"></span>
+		</div>
+	<?php endif; ?>
 </div>
