@@ -33,7 +33,7 @@ wp_enqueue_script_module( '@surecart/image-slider' );
 
 // handle slideshow.
 $slider_options = array(
-	'activeBreakpoint'   => $attributes['desktop_gallery'] ? 768 : false,
+	'activeBreakpoint'   => apply_filters( 'surecart/image-slider/active-breakpoint', $attributes['desktop_gallery'] ? 782 : false ),
 	'sliderOptions'      => array(
 		'autoHeight'   => ! empty( $attributes['auto_height'] ),
 		'spaceBetween' => 40,
