@@ -34,7 +34,8 @@
 		"@surecart/checkout",
 		"@surecart/cart",
 		"@surecart/product-page",
-		"@surecart/product-quick-view"
+		"@surecart/product-quick-view",
+		"surecart/lightbox"
 	],
 	"editorStyle": ["file:./index.css"],
 	"style": ["file:./style-index.css", "surecart-block-ui", "surecart-spinner"]
