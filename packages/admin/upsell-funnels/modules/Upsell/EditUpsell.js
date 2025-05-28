@@ -1,7 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import {
-	ScAlert,
 	ScButton,
 	ScDrawer,
 	ScForm,
@@ -134,23 +133,6 @@ export default ({ upsell: initialUpsell, open, onRequestClose }) => {
 						}
 						required
 					/>
-
-					<ScAlert
-						type="info"
-						open
-						title={__(
-							'Reusable Payment Methods Required',
-							'surecart'
-						)}
-						css={css`
-							margin-bottom: calc(-1 * var(--sc-spacing-large));
-						`}
-					>
-						{__(
-							'For upsells to work properly, you must enable reusable payment methods in your payment processor settings. This allows customers to be charged for upsells after the initial checkout.',
-							'surecart'
-						)}
-					</ScAlert>
 
 					<Product
 						label={__('Product price', 'surecart')}

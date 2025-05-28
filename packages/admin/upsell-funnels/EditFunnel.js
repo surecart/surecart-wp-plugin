@@ -1,6 +1,7 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import {
+	ScAlert,
 	ScBreadcrumb,
 	ScBreadcrumbs,
 	ScButton,
@@ -31,7 +32,10 @@ import Funnel from './modules/Funnel';
 import useSave from '../settings/UseSave';
 import Priority from './modules/Priority';
 import { useEffect, useState } from '@wordpress/element';
-import { __experimentalConfirmDialog as ConfirmDialog } from '@wordpress/components';
+import {
+	__experimentalConfirmDialog as ConfirmDialog,
+	ExternalLink,
+} from '@wordpress/components';
 
 export default ({ setBrowserURL }) => {
 	const { createSuccessNotice, createErrorNotice } =
@@ -299,6 +303,27 @@ export default ({ setBrowserURL }) => {
 					loading={loading || loadingUpsells}
 				/>
 				<Priority funnel={funnel} updateFunnel={editFunnel} />
+
+				<ScAlert
+					type="info"
+					open
+					title={__(
+						'Upsells Need Reusable Payment Methods',
+						'surecart'
+					)}
+				>
+					{__(
+						'Enable reusable payments in your payment processor settings to charge customers for upsells after checkout.',
+						'surecart'
+					)}{' '}
+					<ExternalLink
+						href="https://surecart.com/docs/enable-upsell-funnels/"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						{__('Learn more', 'surecart')}
+					</ExternalLink>
+				</ScAlert>
 			</>
 
 			<ConfirmDialog
