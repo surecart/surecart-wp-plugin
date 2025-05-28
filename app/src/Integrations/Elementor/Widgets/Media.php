@@ -79,6 +79,26 @@ class Media extends \Elementor\Widget_Base {
 		);
 
 		$this->add_control(
+			'desktop_gallery',
+			[
+				'label'   => esc_html__( 'Display Mode', 'surecart' ),
+				'type'    => \Elementor\Controls_Manager::CHOOSE,
+				'default' => 'slider',
+				'options' => [
+					'slider'  => [
+						'title' => esc_html__( 'Slider View', 'surecart' ),
+						'icon'  => 'eicon-image-before-after',
+					],
+					'gallery' => [
+						'title' => esc_html__( 'Gallery View', 'surecart' ),
+						'icon'  => 'eicon-gallery-grid',
+					],
+				],
+				'toggle'  => false,
+			]
+		);
+
+		$this->add_control(
 			'lightbox',
 			[
 				'label'       => esc_html__( 'Enlarge on Click', 'surecart' ),
@@ -175,6 +195,9 @@ class Media extends \Elementor\Widget_Base {
 				'type'        => \Elementor\Controls_Manager::NUMBER,
 				'default'     => 5,
 				'description' => esc_html__( 'Set the number of thumbnails to show per page.', 'surecart' ),
+				'condition'   => [
+					'desktop_gallery' => 'slider',
+				],
 			]
 		);
 
@@ -223,12 +246,13 @@ class Media extends \Elementor\Widget_Base {
 			'height'              => ! empty( $settings['slider_height']['size'] ) ? $settings['slider_height']['size'] . $settings['slider_height']['unit'] : '',
 			'width'               => ! empty( $settings['slider_max_image_width']['size'] ) ? $settings['slider_max_image_width']['size'] . $settings['slider_max_image_width']['unit'] : '',
 			'lightbox'            => 'yes' === $settings['lightbox'],
+			'desktop_gallery'     => 'gallery' === $settings['desktop_gallery'],
 		);
 
 		?>
 		<div <?php $this->print_render_attribute_string( 'wrapper' ); ?>>
 			<!-- wp:surecart/product-media <?php echo wp_json_encode( $attributes ); ?> /-->
-		</div>
+		</div> 
 		<?php
 	}
 
