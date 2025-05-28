@@ -1,16 +1,206 @@
 .elementor-element .surecart-checkout-icon::after {
-    content: "";
-    background-image: url('data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgNDAwIDQwMCIgZmlsbD0iI2E3YWFhZCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KCTxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNMTI2LjIyNiAxMTAuMDExQzEzOC42NTQgOTcuNTc4MyAxNjIuOTc3IDg3LjUgMTgwLjU1MyA4Ny41SDMzOS42NzRMMjgzLjQxNiAxNDMuNzc2SDkyLjQ3MTRMMTI2LjIyNiAxMTAuMDExWk0xMTYuOTA1IDI1Ni4yMjRIMzA3Ljg1TDI3NC4wOTUgMjg5Ljk5QzI2MS42NjcgMzAyLjQyMiAyMzcuMzQ0IDMxMi41IDIxOS43NjggMzEyLjVINjAuNjQ3MkwxMTYuOTA1IDI1Ni4yMjRaTTMyOC43NjYgMTcxLjg2Mkg2NC42MjVMNTMuMzczNSAxODMuMTE3QzI4LjUxNzMgMjA3Ljk4MiAzNi44NjM3IDIyOC4xMzggNzIuMDE1NyAyMjguMTM4SDMzNi4xNTZMMzQ3LjQwOCAyMTYuODgzQzM3Mi4yNjQgMTkyLjAxOCAzNjMuOTE4IDE3MS44NjIgMzI4Ljc2NiAxNzEuODYyWiIvPgo8L3N2Zz4K');
-    position: absolute;
-    top: 0;
-    right: 0;
-    z-index: 1;
-    width: 20px;
-    height: 20px;
-    padding: 0.2em 0.5em;
-    border-width: 0 0 1px 1px;
-    border-color: #797878;
-    border-style: solid;
-    background-repeat: no-repeat;
-    background-position: center center;
+	content: "";
+	background-image: url("data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgNDAwIDQwMCIgZmlsbD0iI2E3YWFhZCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KCTxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNMTI2LjIyNiAxMTAuMDExQzEzOC42NTQgOTcuNTc4MyAxNjIuOTc3IDg3LjUgMTgwLjU1MyA4Ny41SDMzOS42NzRMMjgzLjQxNiAxNDMuNzc2SDkyLjQ3MTRMMTI2LjIyNiAxMTAuMDExWk0xMTYuOTA1IDI1Ni4yMjRIMzA3Ljg1TDI3NC4wOTUgMjg5Ljk5QzI2MS42NjcgMzAyLjQyMiAyMzcuMzQ0IDMxMi41IDIxOS43NjggMzEyLjVINjAuNjQ3MkwxMTYuOTA1IDI1Ni4yMjRaTTMyOC43NjYgMTcxLjg2Mkg2NC42MjVMNTMuMzczNSAxODMuMTE3QzI4LjUxNzMgMjA3Ljk4MiAzNi44NjM3IDIyOC4xMzggNzIuMDE1NyAyMjguMTM4SDMzNi4xNTZMMzQ3LjQwOCAyMTYuODgzQzM3Mi4yNjQgMTkyLjAxOCAzNjMuOTE4IDE3MS44NjIgMzI4Ljc2NiAxNzEuODYyWiIvPgo8L3N2Zz4K");
+	position: absolute;
+	top: 0;
+	right: 0;
+	z-index: 1;
+	width: 20px;
+	height: 20px;
+	padding: 0.2em 0.5em;
+	border-width: 0 0 1px 1px;
+	border-color: #797878;
+	border-style: solid;
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+
+/* SureCart Icon for Template selector */
+.elementor-add-new-section .elementor-surecart-template-button {
+	-webkit-mask: url("../../../../../images/icon.svg") no-repeat center;
+	mask: url("../../../../../images/icon.svg") no-repeat center;
+	-webkit-mask-size: contain;
+	mask-size: contain;
+	background-color: #01824c !important;
+	transition: opacity 0.3s ease;
+}
+
+.elementor-add-new-section .elementor-surecart-template-button:hover {
+	opacity: 0.8;
+}
+
+.elementor-add-new-section .elementor-surecart-template-button > i {
+	height: 12px;
+}
+
+body .elementor-add-new-section .elementor-add-section-area-button {
+	margin-left: 0;
+}
+
+/* SureCart custom dialog styles */
+#sc-elementor-modal-dialog {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 99999;
+	visibility: hidden;
+	opacity: 0;
+	transition: all 0.5s ease;
+}
+
+#sc-elementor-modal-dialog.show {
+	visibility: visible;
+	opacity: 1;
+}
+
+.sc-elementor-modal__overlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.8);
+}
+
+.sc-elementor-modal__content {
+	box-sizing: border-box;
+	position: absolute;
+	width: var(--sc-dialog-width, 60rem);
+	max-width: 90%;
+	max-height: 95%;
+	overflow: auto;
+	font-family: Roboto, Arial, Helvetica, sans-serif;
+	background-color: var(--e-a-bg-default);
+	border-radius: 3px;
+	box-shadow: 2px 8px 23px 3px rgba(0, 0, 0, 0.2);
+	text-align: center;
+}
+
+.sc-elementor-modal__title {
+	text-align: left;
+	line-height: 0;
+}
+
+.sc-elementor-modal__header {
+	padding: 15px 20px;
+	border-block-end: var(--e-a-border);
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	position: sticky;
+	top: 0;
+	background-color: var(--e-a-bg-default);
+}
+
+.sc-elementor-modal__card-container {
+	display: flex;
+	width: 100%;
+	justify-content: center;
+	align-items: center;
+}
+
+.sc-elementor-modal__card-actions {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.sc-elementor-modal__card {
+	flex-basis: 50%;
+	cursor: pointer;
+	text-align: center;
+	transition: box-shadow 0.3s ease;
+	margin: calc(30px / 2);
+	padding: 8px;
+	border: var(--e-a-border);
+	border-radius: 3px;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
+.sc-elementor-modal__card img {
+	width: 100%;
+	height: 370px;
+	object-fit: cover;
+	border-radius: 3px;
+}
+
+.sc-elementor-modal__card-title {
+	display: flex;
+	justify-content: space-between;
+	font-size: 12px;
+	line-height: 1;
+	align-items: center;
+}
+
+#sc-elementor-modal-close.sc-elementor-modal__close {
+	background: none;
+	border: none;
+	font-size: 13px;
+	color: var(--e-a-color-txt);
+	cursor: pointer;
+	transition: opacity 0.3s ease;
+	line-height: 0;
+}
+
+#sc-elementor-modal-close.sc-elementor-modal__close:hover {
+	opacity: 0.8;
+}
+
+#sc-elementor-modal-close.sc-elementor-modal__close:focus-visible {
+	outline: 2px solid #fff;
+	outline-offset: 2px;
+	border-radius: 1px;
+}
+
+/* Empty state styling */
+.sc-elementor-empty-state {
+    padding: 30px;
+    font-size: 14px;
+    color: var(--e-a-color-txt);
+    text-align: center;
+    width: 100%;
+}
+
+/* Responsive adjustments for when fewer templates are shown */
+.sc-elementor-modal.surecart-product .sc-elementor-modal__card-container,
+.sc-elementor-modal.loop-item .sc-elementor-modal__card-container {
+    justify-content: center;
+    padding: 20px;
+}
+
+/* Elementor Template selector modal - Responsive styles */
+@media (max-width: 768px) {
+	.sc-elementor-modal__content {
+		width: 100%;
+		height: auto;
+		max-height: 90%;
+	}
+
+	.sc-elementor-modal__card-container {
+		flex-direction: column;
+	}
+
+	.sc-elementor-modal__header {
+		padding: 20px;
+	}
+
+	.sc-elementor-modal__card {
+		flex-basis: 100%;
+		width: 100%;
+	}
+
+	.sc-elementor-modal__card img {
+		height: 100%;
+	}
+
+	.sc-elementor-modal__close {
+		font-size: var(--sc-font-size-medium, 16px);
+	}
 }

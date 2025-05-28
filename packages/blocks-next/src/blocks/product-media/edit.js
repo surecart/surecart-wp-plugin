@@ -103,9 +103,7 @@ export default ({ attributes, setAttributes, context: { postId } }) => {
 						value={width}
 						min={1}
 						spinControls={'custom'}
-						onChange={(width) =>
-							setAttributes({ width: parseInt(width) })
-						}
+						onChange={(width) => setAttributes({ width: width })}
 					/>
 
 					<RangeControl
