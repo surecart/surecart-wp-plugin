@@ -41,10 +41,6 @@ export default ({
 			'product'
 		);
 		if (!baseURL) return;
-		if (pagination.page === 1) {
-			setProducts([]);
-			setPagination((state) => ({ ...state, enabled: true }));
-		}
 
 		const queryArgs = {
 			query,
