@@ -131,6 +131,10 @@ export class ScOrderBump {
     }
   }
 
+  formatMetadataDescription(description?: string): string {
+    return description?.replace(/\n/g, '<br>') ?? '';
+  }
+
   render() {
     const product = (this.bump?.price as Price)?.product as Product;
     return (
@@ -193,7 +197,7 @@ export class ScOrderBump {
                       this.bump?.metadata?.description,
                     )}
                   >
-                    <span aria-hidden="true">{this.bump?.metadata?.description}</span>
+                    <span aria-hidden="true" innerHTML={this.formatMetadataDescription(this.bump?.metadata?.description)}></span>
                   </div>
                 )}
               </div>
