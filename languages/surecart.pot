@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-04-30T18:46:00+00:00\n"
+"POT-Creation-Date: 2025-05-14T18:26:15+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.9.0\n"
 
@@ -133,7 +133,7 @@ msgstr ""
 #: src/BlockLibrary/BlockPatternsService.php:53
 #: src/BlockLibrary/BlockServiceProvider.php:144
 #: src/Routing/PermalinkSettingService.php:98
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:237
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:317
 msgid "Shop"
 msgstr ""
 
@@ -152,7 +152,7 @@ msgstr ""
 #: src/BlockLibrary/BlockServiceProvider.php:132
 #: src/Controllers/Admin/Orders/OrdersListTable.php:261
 #: src/Support/Blocks/TemplateUtilityService.php:376
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:238
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:318
 #: forms/checkout.php:6
 #: store/add-entities.js:74
 msgid "Checkout"
@@ -167,7 +167,7 @@ msgstr ""
 
 #: src/BlockLibrary/BlockServiceProvider.php:140
 #: src/Support/Blocks/TemplateUtilityService.php:375
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:239
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:319
 #: cart.php:6
 #: settings/brand/BrandSettings.js:216
 msgid "Cart"
@@ -200,7 +200,7 @@ msgstr ""
 #: src/BlockLibrary/BlockServiceProvider.php:152
 #: src/Support/Blocks/TemplateUtilityService.php:371
 #: src/Support/Blocks/TemplateUtilityService.php:372
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:223
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:262
 #: settings/order/OrderProtocol.js:169
 msgid "Upsells"
 msgstr ""
@@ -391,7 +391,7 @@ msgid "Email Sent"
 msgstr ""
 
 #: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:200
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:201
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:227
 #: abandoned-checkouts/modules/Details.js:11
 msgid "Abandoned"
 msgstr ""
@@ -419,7 +419,7 @@ msgstr ""
 #: sc-customer-details2.js:431
 #: sc-customer-edit.js:100
 #: sc-payment-methods-list.js:168
-#: sc-subscription-payment-method.js:176
+#: sc-subscription-payment-method.js:183
 msgid "Test"
 msgstr ""
 
@@ -466,7 +466,7 @@ msgstr ""
 
 #: src/Controllers/Admin/AffiliationClicks/AffiliationClicksController.php:21
 #: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:97
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:231
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:293
 #: admin/affiliation-clicks/index.php:6
 #: affiliations/modules/Clicks.js:54
 #: components/data-tables/affiliates/ClicksDataTable.js:36
@@ -595,7 +595,7 @@ msgstr ""
 
 #: src/Controllers/Admin/AffiliationPayouts/AffiliationPayoutsListTable.php:115
 #: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:98
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:232
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:294
 #: affiliation-referrals/EditAffiliationReferral.js:223
 #: affiliations/modules/Referrals.js:55
 #: components/data-tables/affiliates/ReferralsDataTable.js:36
@@ -970,7 +970,7 @@ msgid "Pending"
 msgstr ""
 
 #: src/Controllers/Admin/Affiliations/AffiliationsController.php:24
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:229
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:288
 #: admin/affiliations/index.php:6
 #: layouts/partials/admin-settings-sidebar.php:40
 #: affiliations/ViewAffiliation.js:183
@@ -1235,7 +1235,7 @@ msgid "Coupon Applied"
 msgstr ""
 
 #: src/Controllers/Admin/Coupons/CouponsController.php:24
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:225
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:271
 #: admin/coupons/index.php:6
 #: coupons/EditCoupon.js:133
 #: settings/export/ExportSettings.js:19
@@ -1363,7 +1363,7 @@ msgstr ""
 
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:359
 #: src/Controllers/Admin/Restore/RestoreController.php:26
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:236
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:312
 #: admin/restore/index.php:37
 #: admin/restore/index.php:42
 #: products/modules/Variations/VariantItem.js:289
@@ -1386,7 +1386,7 @@ msgid "Move to Trash"
 msgstr ""
 
 #: src/Controllers/Admin/Customers/CustomersController.php:25
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:235
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:304
 #: admin/customers/index.php:7
 #: bumps/modules/Conditions.js:80
 #: coupons/modules/Restrictions.js:66
@@ -1510,7 +1510,7 @@ msgstr ""
 
 #: src/Controllers/Admin/Invoices/InvoicesViewController.php:23
 #: src/Controllers/Web/DashboardController.php:139
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:202
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:228
 #: admin/invoices/index.php:10
 #: invoices/Invoice.js:263
 #: Controllers/InvoiceController.php:63
@@ -1520,7 +1520,7 @@ msgid "Invoices"
 msgstr ""
 
 #: src/Controllers/Admin/Licenses/LicensesController.php:23
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:226
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:272
 #: admin/licenses/index.php:7
 #: components/data-tables/licenses-data-table/index.js:26
 #: licenses/License.js:85
@@ -1541,7 +1541,7 @@ msgid "Key"
 msgstr ""
 
 #: src/Controllers/Admin/Licenses/LicensesListTable.php:64
-#: src/Integrations/TutorLMS/add-to-cart-surecart.php:21
+#: src/Integrations/TutorLMS/add-to-cart-surecart.php:24
 #: src/Routing/PermalinkSettingService.php:115
 #: src/Routing/PermalinkSettingService.php:136
 #: web/buy-template.php:91
@@ -1596,7 +1596,16 @@ msgstr ""
 msgid "Toggle Product Archive"
 msgstr ""
 
-#: src/Controllers/Admin/Onboarding/OnboardingController.php:59
+#: src/Controllers/Admin/Onboarding/OnboardingController.php:52
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:203
+msgid "Getting Started"
+msgstr ""
+
+#: src/Controllers/Admin/Onboarding/OnboardingController.php:55
+msgid "View Docs"
+msgstr ""
+
+#: src/Controllers/Admin/Onboarding/OnboardingController.php:90
 msgid "Invalid API Token"
 msgstr ""
 
@@ -1643,7 +1652,8 @@ msgstr ""
 #: src/Controllers/Admin/Products/ProductsListTable.php:149
 #: src/Controllers/Admin/Settings/BaseSettings.php:56
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:113
-#: layouts/partials/admin-settings-sidebar.php:75
+#: layouts/partials/admin-settings-sidebar.php:69
+#: layouts/partials/admin-settings-sidebar.php:79
 #: products/modules/integrations/Integrations.js:78
 #: settings/integrations/Integration.js:133
 #: settings/integrations/IntegrationsList.js:51
@@ -1725,7 +1735,7 @@ msgstr ""
 
 #: src/Controllers/Admin/Orders/OrdersViewController.php:22
 #: src/Controllers/Web/DashboardController.php:127
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:200
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:222
 #: admin/orders/index.php:7
 #: checkouts/CreateCheckout.js:227
 #: components/data-tables/OrdersDataTable.js:27
@@ -1747,7 +1757,7 @@ msgstr ""
 #: src/Integrations/Elementor/Conditions/ProductSingle.php:56
 #: src/Support/Blocks/TemplateUtilityService.php:369
 #: src/Support/Blocks/TemplateUtilityService.php:370
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:203
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:236
 #: admin/products/index.php:71
 #: bumps/modules/Conditions.js:73
 #: checkouts/modules/Prices.js:191
@@ -1820,8 +1830,8 @@ msgstr ""
 #: orders/modules/OrderCancelConfirmModal.js:69
 #: orders/modules/OrderResendNotificationModal.js:61
 #: orders/modules/ReturnRequest/ReturnCancelConfirmModal.js:63
-#: sc-subscription-payment.js:128
-#: sc-subscription-payment.js:137
+#: sc-subscription-payment.js:138
+#: sc-subscription-payment.js:147
 msgid "Go Back"
 msgstr ""
 
@@ -1870,7 +1880,7 @@ msgid "Quantity"
 msgstr ""
 
 #: src/Controllers/Admin/Products/ProductsListTable.php:150
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:204
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:245
 #: src/WordPress/Taxonomies/CollectionTaxonomyService.php:124
 #: product-collections/EditProductCollection.js:144
 #: products/modules/Collection/index.js:55
@@ -1978,7 +1988,7 @@ msgstr ""
 
 #: src/Controllers/Admin/Settings/BaseSettings.php:50
 #: src/Controllers/Admin/Subscriptions/SubscriptionsController.php:24
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:227
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:279
 #: admin/subscriptions/index.php:19
 #: layouts/partials/admin-settings-sidebar.php:30
 #: web/dashboard/orders/show.php:58
@@ -2015,12 +2025,12 @@ msgstr ""
 
 #: src/Controllers/Admin/Settings/BaseSettings.php:55
 #: admin/notices/webhook-change.php:17
-#: layouts/partials/admin-settings-sidebar.php:71
+#: layouts/partials/admin-settings-sidebar.php:75
 msgid "Connection"
 msgstr ""
 
 #: src/Controllers/Admin/Settings/BaseSettings.php:57
-#: layouts/partials/admin-settings-sidebar.php:79
+#: layouts/partials/admin-settings-sidebar.php:83
 #: products/components/price/parts/Advanced.js:8
 #: products/modules/Advanced.js:7
 msgid "Advanced"
@@ -2069,8 +2079,8 @@ msgstr[1] ""
 
 #. translators: number of days.
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:275
-#: src/Models/Price.php:270
-#: src/Models/Price.php:309
+#: src/Models/Price.php:274
+#: src/Models/Price.php:313
 #: src/Support/Interval.php:29
 #: util/translations.js:15
 #: price.js:35
@@ -2092,7 +2102,7 @@ msgstr[1] ""
 
 #. translators: number of weeks.
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:281
-#: src/Models/Price.php:274
+#: src/Models/Price.php:278
 #: src/Support/Interval.php:35
 #: util/translations.js:22
 #: price.js:37
@@ -2115,7 +2125,7 @@ msgstr[1] ""
 
 #. translators: number of months
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:287
-#: src/Models/Price.php:278
+#: src/Models/Price.php:282
 #: src/Support/Interval.php:41
 #: util/translations.js:29
 #: price.js:39
@@ -2136,7 +2146,7 @@ msgstr[1] ""
 
 #. translators: number of yearls
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:293
-#: src/Models/Price.php:282
+#: src/Models/Price.php:286
 #: src/Support/Interval.php:47
 #: util/translations.js:36
 #: price.js:41
@@ -2289,8 +2299,8 @@ msgid "Billing"
 msgstr ""
 
 #: src/Controllers/Web/DashboardController.php:121
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:178
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:197
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:187
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:213
 #: web/buy.php:72
 #: dashboard/Dashboard.js:63
 #: Blocks/CustomerDashboardButton/Block.php:33
@@ -2414,7 +2424,7 @@ msgstr ""
 #: src/Integrations/Elementor/Conditions/Conditions.php:38
 #: src/Integrations/Elementor/ElementorServiceProvider.php:160
 #: src/Integrations/ThriveAutomator/ThriveAutomatorApp.php:25
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:178
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:187
 #: src/WordPress/Admin/Notices/AdminNoticesService.php:115
 #: src/WordPress/Admin/SSLCheck/AdminSSLCheckService.php:31
 #: src/WordPress/CompatibilityService.php:213
@@ -2441,8 +2451,8 @@ msgid "Select a form"
 msgstr ""
 
 #: src/Integrations/Beaver/BeaverFormModule.php:60
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:185
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:242
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:194
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:322
 #: src/WordPress/PluginActionLinksService.php:46
 #: layouts/partials/admin-settings-header.php:83
 #: invoices/modules/Tax/index.js:52
@@ -2989,7 +2999,7 @@ msgid "Text"
 msgstr ""
 
 #: src/Integrations/Bricks/Elements/SelectedPriceAdHocAmount.php:52
-#: src/Models/Price.php:133
+#: src/Models/Price.php:137
 #: products/modules/Prices/Price/Header.js:130
 #: sc-price-choice-container2.js:52
 #: sc-price-choice.js:806
@@ -3291,7 +3301,7 @@ msgid "once"
 msgstr ""
 
 #: src/Models/Checkout.php:629
-#: src/Models/Price.php:136
+#: src/Models/Price.php:140
 #: checkouts/modules/SelectShipping.js:130
 #: invoices/modules/SelectShipping.js:95
 #: sc-order-bump2.js:69
@@ -3525,7 +3535,7 @@ msgid "Processor"
 msgstr ""
 
 #. translators: %s is the number of days.
-#: src/Models/Price.php:206
+#: src/Models/Price.php:210
 #: checkouts/modules/Price.js:190
 #: invoices/modules/Price.js:225
 #: sc-price-choice-container2.js:71
@@ -3537,11 +3547,11 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %1$1s is the setup fee amount, %2$2s is the setup fee name.
-#: src/Models/Price.php:226
+#: src/Models/Price.php:230
 msgid "%1$1s %2$2s"
 msgstr ""
 
-#: src/Models/Price.php:228
+#: src/Models/Price.php:232
 #: products/modules/Prices/Price/Header.js:59
 #: subscriptions/show/modules/CurrentPlan.js:187
 #: src/blocks/product-selected-price-fees/edit.js:16
@@ -3553,7 +3563,7 @@ msgid "Setup Fee"
 msgstr ""
 
 #. translators: %d is the number of payments.
-#: src/Models/Price.php:252
+#: src/Models/Price.php:256
 #: util/translations.js:83
 #: price.js:84
 msgid "%d payment"
@@ -3561,34 +3571,34 @@ msgid_plural "%d payments"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Models/Price.php:271
-#: src/Models/Price.php:310
+#: src/Models/Price.php:275
+#: src/Models/Price.php:314
 #: products/components/price/parts/RevokeAfterDays.js:59
 #: settings/affiliation-protocol/AffiliationProtocolSettings.js:339
 msgid "days"
 msgstr ""
 
-#: src/Models/Price.php:275
+#: src/Models/Price.php:279
 msgid "weeks"
 msgstr ""
 
-#: src/Models/Price.php:279
+#: src/Models/Price.php:283
 #: components/coupon/CouponDiscountDuration.js:81
 msgid "months"
 msgstr ""
 
-#: src/Models/Price.php:283
+#: src/Models/Price.php:287
 msgid "years"
 msgstr ""
 
 #. translators: %1$d is the number of intervals, %2$s is the interval.
-#: src/Models/Price.php:295
+#: src/Models/Price.php:299
 msgid "every %2$2s"
 msgid_plural "every %1$1s %2$2s"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Models/Price.php:313
+#: src/Models/Price.php:317
 #: src/Support/Interval.php:80
 #: price.js:51
 msgid "wk"
@@ -3596,11 +3606,11 @@ msgid_plural "%d wks"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Models/Price.php:314
+#: src/Models/Price.php:318
 msgid "wks"
 msgstr ""
 
-#: src/Models/Price.php:317
+#: src/Models/Price.php:321
 #: src/Support/Interval.php:86
 #: price.js:53
 msgid "mo"
@@ -3608,11 +3618,11 @@ msgid_plural "%d mos"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Models/Price.php:318
+#: src/Models/Price.php:322
 msgid "mos"
 msgstr ""
 
-#: src/Models/Price.php:321
+#: src/Models/Price.php:325
 #: src/Support/Interval.php:92
 #: price.js:55
 msgid "yr"
@@ -3620,24 +3630,24 @@ msgid_plural "%d yrs"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Models/Price.php:322
+#: src/Models/Price.php:326
 msgid "yrs"
 msgstr ""
 
 #. translators: %1$d is the number of intervals, %2$s is the interval.
-#: src/Models/Price.php:334
+#: src/Models/Price.php:338
 msgid "/ %2$2s"
 msgid_plural "/ %1$1s %2$2s"
 msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %d is the number of intervals.
-#: src/Models/Price.php:351
+#: src/Models/Price.php:355
 msgid " x %s"
 msgstr ""
 
 #. translators: %d is the number of intervals.
-#: src/Models/Price.php:365
+#: src/Models/Price.php:369
 msgid "(%d payments)"
 msgstr ""
 
@@ -4005,7 +4015,7 @@ msgstr ""
 
 #: src/Rest/CheckEmailRestServiceProvider.php:66
 #: src/Rest/LoginRestServiceProvider.php:67
-#: sc-login-form.js:151
+#: sc-login-form.js:156
 #: sc-login-provider2.js:84
 msgid "Login"
 msgstr ""
@@ -4413,7 +4423,7 @@ msgstr ""
 #: src/Routing/PermalinkSettingService.php:153
 #: src/Support/Blocks/TemplateUtilityService.php:373
 #: src/Support/Blocks/TemplateUtilityService.php:374
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:204
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:245
 #: src/WordPress/Admin/Menus/ProductCollectionsMenuService.php:36
 #: admin/product-collections/index.php:6
 #: store/add-entities.js:265
@@ -6522,70 +6532,70 @@ msgstr ""
 msgid "Visit Store"
 msgstr ""
 
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:183
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:192
 msgid "Get Started"
 msgstr ""
 
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:184
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:198
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:193
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:214
 #: templates/UpdateModel/index.js:44
 msgid "Complete Signup"
 msgstr ""
 
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:199
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:215
 msgid "Claim Account"
 msgstr ""
 
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:222
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:261
 #: bumps/EditBump.js:160
 msgid "Order Bumps"
 msgstr ""
 
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:224
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:263
 #: admin/product-groups/index.php:20
 msgid "Upgrade Groups"
 msgstr ""
 
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:228
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:283
 msgid "Cancellation Insights"
 msgstr ""
 
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:228
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:283
 msgid "Cancellations"
 msgstr ""
 
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:230
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:292
 msgid "Requests"
 msgstr ""
 
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:233
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:295
 #: affiliations/modules/Payouts.js:54
 #: components/data-tables/affiliates/PayoutsDataTable.js:29
 #: store/add-entities.js:384
 msgid "Payouts"
 msgstr ""
 
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:234
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:296
 #: store/add-entities.js:391
 msgid "Payout Groups"
 msgstr ""
 
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:240
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:320
 #: settings/advanced/AdvancedSettings.js:384
 msgid "Customer Area"
 msgstr ""
 
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:241
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:321
 #: src/WordPress/PostTypes/CartPostTypeService.php:153
 #: src/WordPress/PostTypes/FormPostTypeService.php:98
 msgid "Forms"
 msgstr ""
 
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:241
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:321
 msgid "Custom Forms"
 msgstr ""
 
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:267
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:347
 msgid "Deleted"
 msgstr ""
 
@@ -6761,7 +6771,7 @@ msgstr ""
 #: settings/tax-region/RegistrationForm.js:33
 #: settings/tax-region/RegistrationForm.js:34
 #: settings/tax-region/RegistrationForm.js:35
-#: Blocks/Address/edit.js:132
+#: Blocks/Address/edit.js:130
 msgid "Country"
 msgstr ""
 
@@ -7591,7 +7601,7 @@ msgstr ""
 #: settings/subscription-preservation/Reasons.js:97
 #: upsell-funnels/components/SelectTemplate/index.js:97
 #: upsell-funnels/components/SelectTemplatePart/index.js:98
-#: sc-subscription-payment-method.js:195
+#: sc-subscription-payment-method.js:202
 msgid "Add New"
 msgstr ""
 
@@ -8293,10 +8303,10 @@ msgstr ""
 #: sc-stripe-add-method.js:133
 #: sc-subscription-cancel2.js:51
 #: sc-subscription-payment-method.js:85
-#: sc-subscription-payment-method.js:124
-#: sc-subscription-payment-method.js:156
+#: sc-subscription-payment-method.js:131
+#: sc-subscription-payment-method.js:163
 #: sc-subscription-payment.js:55
-#: sc-subscription-payment.js:110
+#: sc-subscription-payment.js:117
 #: sc-subscription-reactivate2.js:50
 #: sc-subscription-reactivate2.js:69
 #: sc-subscription-switch.js:59
@@ -8592,7 +8602,7 @@ msgstr ""
 #: sc-customer-details2.js:431
 #: sc-donation-choices.js:131
 #: sc-product-selected-price.js:72
-#: sc-subscription-payment.js:137
+#: sc-subscription-payment.js:147
 #: sc-wordpress-user.js:37
 msgid "Update"
 msgstr ""
@@ -9355,7 +9365,7 @@ msgstr ""
 #: Blocks/Dashboard/CustomerPaymentMethods/edit.js:78
 #: Blocks/Dashboard/CustomerPaymentMethods/edit.js:117
 #: sc-payment-methods-list.js:166
-#: sc-subscription-payment-method.js:178
+#: sc-subscription-payment-method.js:185
 msgid "Exp."
 msgstr ""
 
@@ -9771,7 +9781,7 @@ msgstr ""
 #: orders/modules/LineItems/index.js:208
 #: orders/modules/Refund/CreateRefund.js:453
 #: orders/Order.js:242
-#: settings/customer/CustomerSettings.js:433
+#: settings/customer/CustomerSettings.js:450
 #: store/add-entities.js:293
 msgid "Refund"
 msgstr ""
@@ -14483,83 +14493,99 @@ msgid "Sent when a fulfillment is marked as delivered."
 msgstr ""
 
 #: settings/customer/CustomerSettings.js:386
-msgid "Subscription Recovery"
+msgid "Invoice Opened"
 msgstr ""
 
 #: settings/customer/CustomerSettings.js:387
+msgid "Sent after an invoice is opened."
+msgstr ""
+
+#: settings/customer/CustomerSettings.js:394
+msgid "Invoice Reminder"
+msgstr ""
+
+#: settings/customer/CustomerSettings.js:395
+msgid "Sent after an invoice hits the due date and is not paid yet."
+msgstr ""
+
+#: settings/customer/CustomerSettings.js:403
+msgid "Subscription Recovery"
+msgstr ""
+
+#: settings/customer/CustomerSettings.js:404
 msgid "Sent to customers when their subscription's payment method fails."
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:398
+#: settings/customer/CustomerSettings.js:415
 msgid "Subscription Reminder"
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:399
+#: settings/customer/CustomerSettings.js:416
 msgid "Sent to customers 3 days before a subscription renews."
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:407
+#: settings/customer/CustomerSettings.js:424
 msgid "Subscription Renewal"
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:408
+#: settings/customer/CustomerSettings.js:425
 msgid "Sent to customers when their subscription renews."
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:416
-#: settings/customer/CustomerSettings.js:467
+#: settings/customer/CustomerSettings.js:433
+#: settings/customer/CustomerSettings.js:484
 msgid "Subscription Cancellation"
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:417
+#: settings/customer/CustomerSettings.js:434
 msgid "Sent to customers when their subscription cancellation."
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:425
+#: settings/customer/CustomerSettings.js:442
 msgid "Product Access"
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:426
+#: settings/customer/CustomerSettings.js:443
 msgid "Sent to customers when a purchase is downloadable or has a license."
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:434
+#: settings/customer/CustomerSettings.js:451
 msgid "Sent to customers when a charge is refunded."
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:445
+#: settings/customer/CustomerSettings.js:462
 msgid "Store Emails"
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:446
+#: settings/customer/CustomerSettings.js:463
 msgid "These are the emails that are sent to you and other team members of this store."
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:457
+#: settings/customer/CustomerSettings.js:474
 msgid "New Order"
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:458
+#: settings/customer/CustomerSettings.js:475
 msgid "Sent when an order is created."
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:468
+#: settings/customer/CustomerSettings.js:485
 msgid "Sent when a subscription is canceled."
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:477
+#: settings/customer/CustomerSettings.js:494
 msgid "Subscription Payment"
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:478
+#: settings/customer/CustomerSettings.js:495
 msgid "Sent when a subscription renews."
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:487
+#: settings/customer/CustomerSettings.js:504
 msgid "Subscription Payment Failure"
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:491
+#: settings/customer/CustomerSettings.js:508
 msgid "Sent when a subscription payment fails."
 msgstr ""
 
@@ -15278,7 +15304,7 @@ msgstr ""
 #: src/blocks/product-pagination-next/edit.js:29
 #: sc-icon2.js:43
 #: sc-icon2.js:45
-#: sc-login-form.js:153
+#: sc-login-form.js:158
 #: sc-pagination2.js:42
 #: sc-subscription-ad-hoc-confirm.js:37
 #: sc-subscription-switch.js:220
@@ -16241,8 +16267,8 @@ msgstr ""
 
 #: subscriptions/edit/modules/PaymentMethod/EditPaymentMethod.js:91
 #: Controllers/SubscriptionController.php:309
-#: sc-subscription-payment-method.js:171
-#: sc-subscription-payment-method.js:190
+#: sc-subscription-payment-method.js:178
+#: sc-subscription-payment-method.js:197
 #: sc-subscription.js:192
 msgid "Update Payment Method"
 msgstr ""
@@ -17038,7 +17064,7 @@ msgstr ""
 msgid "Update Password"
 msgstr ""
 
-#: Blocks/Address/edit.js:35
+#: Blocks/Address/edit.js:33
 #: Blocks/BumpLineItem/edit.js:13
 #: Blocks/Card/edit.js:25
 #: Blocks/CartBumpLineItem/edit.js:30
@@ -17115,7 +17141,7 @@ msgstr ""
 msgid "Attributes"
 msgstr ""
 
-#: Blocks/Address/edit.js:37
+#: Blocks/Address/edit.js:35
 #: Blocks/Checkbox/edit.js:31
 #: Blocks/FirstName/edit.js:29
 #: Blocks/Input/edit.js:28
@@ -17131,55 +17157,55 @@ msgstr ""
 msgid "Required"
 msgstr ""
 
-#: Blocks/Address/edit.js:42
+#: Blocks/Address/edit.js:40
 msgid "If tax or shipping is required for checkout the address field will automatically be required."
 msgstr ""
 
-#: Blocks/Address/edit.js:50
+#: Blocks/Address/edit.js:48
 msgid "Shipping Address Label"
 msgstr ""
 
-#: Blocks/Address/edit.js:56
+#: Blocks/Address/edit.js:54
 msgid "Collect Billing Address"
 msgstr ""
 
-#: Blocks/Address/edit.js:61
+#: Blocks/Address/edit.js:59
 msgid "If enabled, the user can enter a separate billing address. Otherwise, the billing address will be the same as the shipping address."
 msgstr ""
 
-#: Blocks/Address/edit.js:69
+#: Blocks/Address/edit.js:67
 msgid "Billing Address Toggle"
 msgstr ""
 
-#: Blocks/Address/edit.js:79
+#: Blocks/Address/edit.js:77
 msgid "Billing Address Label"
 msgstr ""
 
-#: Blocks/Address/edit.js:88
+#: Blocks/Address/edit.js:86
 msgid "Use a compact address"
 msgstr ""
 
-#: Blocks/Address/edit.js:96
+#: Blocks/Address/edit.js:94
 msgid "If products in the cart require tax but not shipping, we will show a condensed version specifically for tax collection."
 msgstr ""
 
-#: Blocks/Address/edit.js:104
+#: Blocks/Address/edit.js:102
 msgid "Name or company name"
 msgstr ""
 
-#: Blocks/Address/edit.js:105
+#: Blocks/Address/edit.js:103
 msgid "If enabled, the name or company name field will be shown."
 msgstr ""
 
-#: Blocks/Address/edit.js:118
+#: Blocks/Address/edit.js:116
 msgid "Show address line 2"
 msgstr ""
 
-#: Blocks/Address/edit.js:120
+#: Blocks/Address/edit.js:118
 msgid "If enabled, the address line 2 field will be shown."
 msgstr ""
 
-#: Blocks/Address/edit.js:131
+#: Blocks/Address/edit.js:129
 msgid "Default country"
 msgstr ""
 
@@ -18921,22 +18947,14 @@ msgid "Displayed on the summary when this is an invoice."
 msgstr ""
 
 #: Blocks/Upsell/CountdownTimer/edit.js:91
-msgid "Offer expires label"
-msgstr ""
-
-#: Blocks/Upsell/CountdownTimer/edit.js:92
-msgid "Offer expires in"
-msgstr ""
-
-#: Blocks/Upsell/CountdownTimer/edit.js:101
 msgid "Show clock icon"
 msgstr ""
 
-#: Blocks/Upsell/CountdownTimer/edit.js:142
+#: Blocks/Upsell/CountdownTimer/edit.js:132
 msgid "Offer Expire text"
 msgstr ""
 
-#: Blocks/Upsell/CountdownTimer/edit.js:143
+#: Blocks/Upsell/CountdownTimer/edit.js:133
 msgid "Offer Expires in"
 msgstr ""
 
@@ -23192,7 +23210,7 @@ msgid "Something went wrong. Please reload the page and try again."
 msgstr ""
 
 #: sc-charges-list.js:92
-#: sc-subscription-payment.js:128
+#: sc-subscription-payment.js:138
 msgid "You have no saved payment methods."
 msgstr ""
 
@@ -23460,35 +23478,35 @@ msgstr ""
 msgid "Verification code is not valid. Please try again."
 msgstr ""
 
-#: sc-login-form.js:148
+#: sc-login-form.js:153
 msgid "Check your email for a confirmation code"
 msgstr ""
 
-#: sc-login-form.js:148
+#: sc-login-form.js:153
 msgid "Confirmation code"
 msgstr ""
 
-#: sc-login-form.js:148
+#: sc-login-form.js:153
 msgid "Login with Code"
 msgstr ""
 
-#: sc-login-form.js:151
+#: sc-login-form.js:156
 msgid "Welcome"
 msgstr ""
 
-#: sc-login-form.js:151
+#: sc-login-form.js:156
 msgid "Send a login code"
 msgstr ""
 
-#: sc-login-form.js:151
+#: sc-login-form.js:156
 msgid "or"
 msgstr ""
 
-#: sc-login-form.js:151
+#: sc-login-form.js:156
 msgid "Enter your password"
 msgstr ""
 
-#: sc-login-form.js:153
+#: sc-login-form.js:158
 msgid "Username or Email Address"
 msgstr ""
 
@@ -23757,7 +23775,7 @@ msgid "Delete Payment Method"
 msgstr ""
 
 #: sc-payment-methods-list.js:195
-#: sc-subscription-payment-method.js:111
+#: sc-subscription-payment-method.js:118
 msgid "Are you sure you want to remove this payment method?"
 msgstr ""
 
@@ -24175,12 +24193,12 @@ msgstr ""
 msgid "You do not have any payment methods."
 msgstr ""
 
-#: sc-subscription-payment-method.js:180
-#: sc-subscription-payment-method.js:184
+#: sc-subscription-payment-method.js:187
+#: sc-subscription-payment-method.js:191
 msgid "Current Payment Method"
 msgstr ""
 
-#: sc-subscription-payment.js:140
+#: sc-subscription-payment.js:150
 msgid "Select a payment method"
 msgstr ""
 

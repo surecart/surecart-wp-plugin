@@ -200,14 +200,14 @@ const { state, actions } = store('surecart/product-page', {
 			if (!context) {
 				return true;
 			}
-			const { text, outOfStockText, unavailableText } = context;
+			const { buttonText, outOfStockText, unavailableText } = context;
 			if (state.isSoldOut) {
 				return outOfStockText;
 			}
 			if (state.isUnavailable) {
 				return unavailableText;
 			}
-			return text;
+			return buttonText;
 		},
 
 		/**

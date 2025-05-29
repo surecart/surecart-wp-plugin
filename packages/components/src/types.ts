@@ -16,6 +16,7 @@ declare global {
       apiFetch: any;
       blocks: any;
       i18n: any;
+      hooks: any;
     };
     dataLayer: any;
     gtag: any;
@@ -1132,6 +1133,7 @@ export interface VerificationCode {
   code: number;
   verified: boolean;
   verified_at: number | null;
+  redirect_url: string | null;
   created_at: number;
   updated_at: number;
 }

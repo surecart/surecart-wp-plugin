@@ -196,7 +196,7 @@ export class ScLineItemTotal {
           {this.renderLineItemDescription(checkout)}
           <span slot="price">
             {!!checkout?.total_savings_amount && this.total === 'total' && <span class="scratch-price">{checkout?.total_scratch_display_amount}</span>}
-            {this.total === 'total' && <span class="total-price">{checkout?.total_display_amount}</span>}
+            <span class="total-price">{checkout?.total_display_amount}</span>
           </span>
         </sc-line-item>
 

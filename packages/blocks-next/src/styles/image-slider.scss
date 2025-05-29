@@ -1,3 +1,39 @@
+.sc-image-gallery {
+	.swiper-slide {
+		border-radius: var(--sc-border-radius-medium);
+		background: rgba(0, 0, 0, 0.1);
+		overflow: hidden;
+
+		img {
+			display: block;
+			flex: 1 0;
+			object-fit: var(--sc-image-gallery-object-fit, cover);
+			width: 100%;
+		}
+	}
+
+	// Make sure to take up the full height of the container.
+	.wp-block-surecart-product-media {
+		height: 100%;
+	}
+
+	.swiper-wrapper {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 1em;
+
+		// the first child is large, or the first item with swiper-slide.
+		:nth-child(1 of .swiper-slide) {
+			grid-column: 1 / -1;
+			width: 100%;
+		}
+	}
+
+	.sc-image-slider__thumbs {
+		display: none;
+	}
+}
+
 .sc-image-slider {
 	user-select: none;
 
@@ -27,11 +63,24 @@
 		margin-top: -20px;
 	}
 
+	// don't display until the slider is initialized.
+	:not(.swiper-initialized) {
+		.swiper-button-next,
+		.swiper-button-prev {
+			display: none;
+		}
+	}
+
 	&__thumbs {
 		margin-top: var(--sc-slider-spacing, var(--sc-spacing-small));
 		display: flex;
 		align-items: stretch;
 		gap: calc(var(--sc-slider-spacing, var(--sc-spacing-small)) / 2);
+
+		&:not(:has(.swiper-initialized)) {
+			opacity: 0;
+			visibility: hidden;
+		}
 
 		.swiper {
 			flex: 1; // important to prevent slideshow from collapsing.

@@ -1,6 +1,10 @@
 <div
-	class="sc-image-slider"
+	class="sc-image-media"
+	data-wp-class--sc-image-slider="state.active"
+	data-wp-class--sc-image-gallery="!state.active"
 	data-wp-interactive='{ "namespace": "surecart/image-slider" }'
+	data-wp-init="actions.init"
+	data-wp-on-window--resize="actions.init"
 	data-wp-watch="actions.updateSlider"
 	<?php echo wp_kses_data( wp_interactivity_data_wp_context( $slider_options ) ); ?>
 	data-wp-init="surecart/product-media::actions.init"

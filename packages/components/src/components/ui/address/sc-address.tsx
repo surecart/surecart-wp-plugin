@@ -148,6 +148,10 @@ export class ScAddress {
         value: region[1],
         label: this.decodeHtmlEntities(region[0]),
       }));
+
+      if ( window?.wp?.hooks?.applyFilters ) {
+        this.regions = window.wp.hooks.applyFilters('surecart_address_regions', this.regions, this.address.country) as Array<{ value: string; label: string }>;
+      }
     });
   }
 

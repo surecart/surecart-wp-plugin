@@ -1,10 +1,10 @@
 === SureCart - Ecommerce Made Easy For Selling Physical Products, Digital Downloads, Subscriptions, Donations, & Payments ===
 Contributors: 2winfactor, wpcrafter
 Donate link: https://surecart.com
-Tags: ecommerce plugin, online store, subscriptions, stripe, payments
+Tags: ecommerce, online store, subscriptions, stripe, payments
 Requires at least: 6.6
 Tested up to: 6.8
-Stable tag: 3.8.0
+Stable tag: 3.8.5
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -304,6 +304,41 @@ Yes, the checkout form can be customized using our visual builder. You can chang
 Accessibility is a huge priority for the entire team building SureCart. As you know, accessibility is an ongoing improvement task. Our development and QA teams are trained in accessibility best practices and build/test each new feature for accessibility. If you come across any edge issues, we want to know about it and will prioritize its resolution. Please contact us via our website.
 
 == Changelog ==
+
+= 3.8.5 - May 20th, 2025 =
+- New: List Jetengine compatibility in integrations list.
+- Improvement: Customer syncing string to be more descriptive.
+- Fix: Issue with rankmath indexing urls with currency in search console.
+- Fix: Google Analytics ecommerce tracking now includes discounts and taxes.
+- Fix: Discount amount and total amount sometimes not visible on order confirmation block.
+
+= 3.8.4 - May 14th, 2025 =
+- Fix: Issue with debug notice in admin if WordPress was in debug mode and there were no onboarding checklists.
+
+= 3.8.3 - May 14th, 2025 =
+- New: Onboarding checklist to help you get started with SureCart.
+- Improvement: Add JavaScript filter to allow customization of the states/counties/provinces dropdowns on the checkout page.
+- Fix: Access group being revoked when upgrading between price options in the same product.
+- Fix: Scratch price not being shown on TutorLMS buttons.
+- Fix: Next payment field is blank in Customer Dashboard when 100% coupon is applied.
+
+= 3.8.2 - May 6th, 2025 =
+- Fix: Billing Address checkbox custom label setting not applying on the frontend.
+- Fix: White gap appears on shop page when using ACF custom link field.
+- Fix: "Sections" form template is missing address.
+- Fix: Subtotal amount not displaying correctly on checkout page.
+- Fix: Line item description not breaking new line for long descriptions.
+
+= 3.8.1 - May 5th, 2025 =
+- New: Add quick link to invoice email template.
+- Fix: Custom amount text to actual amount in Instant checkout.
+- Fix: Content Designer link is redirecting to main site on multisite setup.
+- Fix: Fix issue with dynamic shortcode `{post_terms_sc_collection}` not working in Bricks Builder.
+- Fix: The `sc_login_redirect_url` filter does not work with login codes.
+- Fix: Typography settings not working for product list radio & checkbox filters.
+- Fix: Disabled manual payment method were previously appearing in upgrades.
+- Fix: Hide integrations menu item unless API is connected.
+- Fix: Upsell page countdown timer block shows html tags on frontend instead of rendering.
 
 = 3.8.0 - April 30th, 2025 =
 - New: “Dropdown” variant selector type.

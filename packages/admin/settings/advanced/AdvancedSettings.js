@@ -439,7 +439,7 @@ export default () => {
 					<ScFormControl
 						label={__('Customers', 'surecart')}
 						help={__(
-							'Match all SureCart customers with WordPress users. This is helpful if you have migrated from another eCommerce platform.',
+							"Create WordPress user accounts for SureCart customers who don't already have a WordPress account. Use this after migrating from another eCommerce platform to ensure every SureCart customer can log in.",
 							'surecart'
 						)}
 					/>

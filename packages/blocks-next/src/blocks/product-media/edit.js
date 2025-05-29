@@ -1,6 +1,4 @@
 import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
-import Swiper from 'swiper';
-import { Thumbs, Navigation, Pagination } from 'swiper/modules';
 import { useEntityRecord } from '@wordpress/core-data';
 import {
 	PanelBody,
@@ -10,23 +8,18 @@ import {
 	__experimentalUnitControl as UnitControl,
 	__experimentalUseCustomUnits as useCustomUnits,
 } from '@wordpress/components';
-import { useEffect, useRef, useState } from '@wordpress/element';
+import { useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { Disabled } from '@wordpress/components';
 
 export default ({ attributes, setAttributes, context: { postId } }) => {
-	const swiperRef = useRef(null);
-	const thumbSwiperRef = useRef(null);
-	const swiper = useRef(null);
-	const thumbSwiper = useRef(null);
-
 	const {
 		height,
-		show_thumbnails,
 		thumbnails_per_page,
 		auto_height,
 		width,
 		lightbox,
+		desktop_gallery,
 	} = attributes;
 	const [images, setImages] = useState([]);
 	const blockProps = useBlockProps({});
@@ -50,7 +43,7 @@ export default ({ attributes, setAttributes, context: { postId } }) => {
 							width,
 						};
 				  })
-				: [...Array(20)].map(() => {
+				: [...Array(desktop_gallery ? 3 : 20)].map(() => {
 						return {
 							src:
 								scBlockData?.plugin_url +
@@ -59,83 +52,7 @@ export default ({ attributes, setAttributes, context: { postId } }) => {
 						};
 				  })
 		);
-	}, [width, thumbnails_per_page, product]);
-
-	// update the slider when the props change.
-	useEffect(() => {
-		if (!swiper.current) {
-			return;
-		}
-		swiper.current.update();
-	}, [height, auto_height, width, images]);
-
-	useEffect(() => {
-		if (!thumbSwiper.current) {
-			return;
-		}
-		thumbSwiper.current.update();
-	}, [show_thumbnails, thumbnails_per_page, images]);
-
-	useEffect(() => {
-		if (swiperRef && thumbSwiperRef?.current) {
-			thumbSwiper.current = new Swiper(
-				thumbSwiperRef.current.querySelector('.swiper'),
-				{
-					modules: [Navigation],
-					direction: 'horizontal',
-					navigation: {
-						nextEl: thumbSwiperRef.current.querySelector(
-							'.sc-image-slider-button__next'
-						),
-						prevEl: thumbSwiperRef.current.querySelector(
-							'.sc-image-slider-button__prev'
-						),
-					},
-					loop: false,
-					centerInsufficientSlides: true,
-					slideToClickedSlide: true,
-					watchSlidesProgress: true,
-					slidesPerView: 3,
-					slidesPerGroup: 3,
-					spaceBetween: 10,
-					breakpointsBase: 'container',
-					breakpoints: {
-						320: {
-							slidesPerView: 5,
-							slidesPerGroup: 5,
-						},
-					},
-				}
-			);
-
-			swiper.current = new Swiper(swiperRef.current, {
-				modules: [Navigation, Thumbs, Pagination],
-				direction: 'horizontal',
-				loop: false,
-				centeredSlides: true,
-				autoHeight: auto_height,
-				navigation: {
-					nextEl: swiperRef.current.querySelector(
-						'.swiper-button-next'
-					),
-					prevEl: swiperRef.current.querySelector(
-						'.swiper-button-prev'
-					),
-				},
-				...(!thumbs && {
-					pagination: {
-						el: swiperRef.current.querySelector(
-							'.swiper-pagination'
-						),
-						dynamicBullets: true,
-					},
-				}),
-				thumbs: {
-					swiper: thumbSwiper.current,
-				},
-			});
-		}
-	}, []);
+	}, [width, thumbnails_per_page, product, desktop_gallery]);
 
 	return (
 		<>
@@ -186,9 +103,7 @@ export default ({ attributes, setAttributes, context: { postId } }) => {
 						value={width}
 						min={1}
 						spinControls={'custom'}
-						onChange={(width) =>
-							setAttributes({ width: parseInt(width) })
-						}
+						onChange={(width) => setAttributes({ width: width })}
 					/>
 
 					<ToggleControl
@@ -216,8 +131,14 @@ export default ({ attributes, setAttributes, context: { postId } }) => {
 
 			<div {...blockProps}>
 				<Disabled>
-					<div className="sc-image-slider">
-						<div className="swiper" ref={swiperRef}>
+					<div
+						className={
+							desktop_gallery
+								? 'sc-image-gallery'
+								: 'sc-image-slider'
+						}
+					>
+						<div className="swiper swiper-initialized">
 							<div className="swiper-wrapper">
 								{images.map((image, index) => (
 									<div className="swiper-slide" key={index}>
@@ -240,11 +161,8 @@ export default ({ attributes, setAttributes, context: { postId } }) => {
 							<div class="swiper-pagination"></div>
 						</div>
 
-						{show_thumbnails && images?.length > 1 ? (
-							<div
-								className="sc-image-slider__thumbs"
-								ref={thumbSwiperRef}
-							>
+						{images?.length > 1 ? (
+							<div className="sc-image-slider__thumbs">
 								<div
 									className="sc-image-slider-button__prev"
 									tabIndex="-1"
@@ -265,9 +183,9 @@ export default ({ attributes, setAttributes, context: { postId } }) => {
 									</svg>
 								</div>
 
-								<div className="swiper">
+								<div className="swiper swiper-initialized">
 									<div
-										className={`swiper-wrapper  sc-has-${thumbnails_per_page}-thumbs`}
+										className={`swiper-wrapper sc-has-${thumbnails_per_page}-thumbs`}
 									>
 										{images.map((image, index) => (
 											<div
