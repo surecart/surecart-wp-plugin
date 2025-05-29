@@ -418,40 +418,22 @@ class Media extends \Elementor\Widget_Base {
 			</div>
 		<# } else { #>
 			<div class="sc-image-slider">
-				<div class="swiper">
+				<# if ( 'yes' !== settings.show_thumbs ) { #>
 					<div class="swiper-wrapper">
-						<div class="swiper-slide" style="background: transparent;">
+						<div class="swiper-slide">
 							<img src="<?php echo esc_url( trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'images/placeholder.jpg' ); ?>" alt="<?php esc_attr_e( 'Placeholder image', 'surecart' ); ?>" />
 						</div>
 					</div>
-					<div class="swiper-button-prev"></div>
-					<div class="swiper-button-next"></div>
-				</div>
-
-				<# if ( 'yes' === settings.show_thumbs ) { #>
-					<div class="sc-image-slider__thumbs" style="opacity: 1 !important; visibility: visible !important;">
-						<div class="sc-image-slider-button__prev" tabIndex="-1" role="button">
-							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-								<polyline points="15 18 9 12 15 6" />
-							</svg>
+				<# } else { #>
+					<?php $this->swiper_template_before(); ?>
+						<div class="swiper-wrapper sc-has-{{settings.thumbnails_per_page}}-thumbs">
+							<# for ( var i = 0; i < settings.thumbnails_per_page; i++ ) { #>
+								<div class="swiper-slide" style="background: transparent;">
+									<img src="<?php echo esc_url( trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'images/placeholder.jpg' ); ?>" alt="<?php esc_attr_e( 'Placeholder image', 'surecart' ); ?>" />
+								</div>
+							<# } #>
 						</div>
-
-						<div class="swiper">
-							<div class="swiper-wrapper sc-has-{{settings.thumbnails_per_page}}-thumbs">
-								<# for ( var i = 0; i < settings.thumbnails_per_page; i++ ) { #>
-									<div class="swiper-slide" style="background: transparent;">
-										<img src="<?php echo esc_url( trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'images/placeholder.jpg' ); ?>" alt="<?php esc_attr_e( 'Placeholder image', 'surecart' ); ?>" />
-									</div>
-								<# } #>
-							</div>
-						</div>
-
-						<div class="sc-image-slider-button__next" tabIndex="-1" role="button">
-							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-								<polyline points="9 18 15 12 9 6" />
-							</svg>
-						</div>
-					</div>
+					<?php $this->swiper_template_after(); ?>
 				<# } #>
 			</div>
 		<# } #>
