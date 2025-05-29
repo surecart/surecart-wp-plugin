@@ -132,7 +132,10 @@ export class ScOrderBump {
   }
 
   formatMetadataDescription(description?: string): string {
-    return description?.replace(/\n/g, '<br>') ?? '';
+    return description
+      ?.replace(/<[^>]*>/g, '')
+      ?.replace(/\n/g, '<br />')
+      ?.trim();
   }
 
   render() {
@@ -194,7 +197,7 @@ export class ScOrderBump {
                     aria-label={sprintf(
                       /* translators: %s: Product description */
                       __('Product description: %s.', 'surecart'),
-                      this.bump?.metadata?.description,
+                      this.formatMetadataDescription(this.bump?.metadata?.description),
                     )}
                   >
                     <span aria-hidden="true" innerHTML={this.formatMetadataDescription(this.bump?.metadata?.description)}></span>
