@@ -31,7 +31,7 @@ export default ({
 	const { receiveEntityRecords } = useDispatch(coreStore);
 
 	const handleOnScrollEnd = () => {
-		if (!pagination.enabled || isLoading) return;
+		if (!pagination.enabled || isLoading || query) return;
 		setPagination((state) => ({ ...state, page: (state.page += 1) }));
 	};
 
