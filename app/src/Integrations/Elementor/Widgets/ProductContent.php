@@ -38,7 +38,7 @@ class ProductContent extends \Elementor\Widget_Base {
 	 * @return array
 	 */
 	public function get_categories() {
-		return [ 'surecart-elementor-layout' ];
+		return array( 'surecart-elementor-elements' );
 	}
 
 	protected function register_controls() {
@@ -116,10 +116,14 @@ class ProductContent extends \Elementor\Widget_Base {
 	 * @return void
 	 */
 	protected function render() {
-		if ( empty( sc_get_product() ) ) {
+		$product = sc_get_product();
+		if ( empty( $product ) || empty( get_the_content() ) ) {
 			?>
 			<div>
-				<p><?php esc_html_e( 'This is where your product description, features, and detailed information will be displayed. Content appears automatically when customers view your product pages. You can edit the product content in product editor.', 'surecart' ); ?></p>
+				<p><?php esc_html_e( 'This section will display the content you create using the Content Designer on the Edit Product page.', 'surecart' ); ?></p>
+				<p><?php esc_html_e( 'Use this area to add detailed information about your product, such as features, specifications, and usage instructions.', 'surecart' ); ?></p>
+				<p><?php esc_html_e( 'In the template preview, you can see how the product\'s content will appear to customers.', 'surecart' ); ?></p>
+				<p><?php esc_html_e( 'Note: If you haven\'t added any content in the Content Designer, this area will remain empty. This text is for demonstration purposes only.', 'surecart' ); ?></p>
 			</div>
 			<?php
 
