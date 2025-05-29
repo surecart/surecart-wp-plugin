@@ -31,7 +31,7 @@ export default ({
 	const { receiveEntityRecords } = useDispatch(coreStore);
 
 	const handleOnScrollEnd = () => {
-		if (!pagination.enabled || isLoading || query) return;
+		if (!pagination.enabled || isLoading || !!query) return;
 		setPagination((state) => ({ ...state, page: (state.page += 1) }));
 	};
 
@@ -56,7 +56,11 @@ export default ({
 		});
 
 		if (data && data.length) {
-			setProducts((state) => [...state, ...(data || [])]);
+			setProducts((state) =>
+				[...state, ...(data || [])]?.filter((product) => {
+					return !products.some((p) => p?.id === product?.id);
+				})
+			);
 			return;
 		}
 
@@ -65,7 +69,12 @@ export default ({
 			const data = await apiFetch({
 				path: addQueryArgs(baseURL, queryArgs),
 			});
-			setProducts((state) => [...state, ...(data || [])]);
+
+			setProducts((state) =>
+				[...state, ...(data || [])]?.filter((product) => {
+					return !products.some((p) => p?.id === product?.id);
+				})
+			);
 			receiveEntityRecords('surecart', 'product', data, queryArgs);
 		} catch (error) {
 			setPagination((state) => ({ ...state, enabled: false }));
