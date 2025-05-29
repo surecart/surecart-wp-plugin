@@ -131,13 +131,6 @@ export class ScOrderBump {
     }
   }
 
-  formatMetadataDescription(description?: string): string {
-    return description
-      ?.replace(/<[^>]*>/g, '')
-      ?.replace(/\n/g, '<br />')
-      ?.trim();
-  }
-
   render() {
     const product = (this.bump?.price as Price)?.product as Product;
     return (
@@ -197,10 +190,10 @@ export class ScOrderBump {
                     aria-label={sprintf(
                       /* translators: %s: Product description */
                       __('Product description: %s.', 'surecart'),
-                      this.formatMetadataDescription(this.bump?.metadata?.description),
+                      this.bump?.rendered_description,
                     )}
                   >
-                    <span aria-hidden="true" innerHTML={this.formatMetadataDescription(this.bump?.metadata?.description)}></span>
+                    <span aria-hidden="true" innerHTML={this.bump?.rendered_description}></span>
                   </div>
                 )}
               </div>
