@@ -590,5 +590,14 @@
 			"isInner": true,
 			"elType": "container"
 		}
+	],
+	"outer_elements": [
+		{
+			"settings": [],
+			"elements": [],
+			"isInner": false,
+			"widgetType": "surecart-product-content",
+			"elType": "widget"
+		}
 	]
 }
