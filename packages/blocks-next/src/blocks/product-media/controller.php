@@ -33,6 +33,7 @@ wp_enqueue_script_module( '@surecart/image-slider' );
 
 // handle slideshow.
 $slider_options = array(
+	'activeBreakpoint'   => apply_filters( 'surecart/image-slider/active-breakpoint', $attributes['desktop_gallery'] ? 782 : false ),
 	'sliderOptions'      => array(
 		'autoHeight'   => ! empty( $attributes['auto_height'] ),
 		'spaceBetween' => 40,
@@ -53,5 +54,12 @@ $height = 'auto';
 if ( empty( $attributes['auto_height'] ) && ! empty( $attributes['height'] ) ) {
 	$height = $attributes['height'];
 }
+
+wp_interactivity_state(
+	'surecart/image-slider',
+	array(
+		'active' => true, // to prevent flash of unstyled content.
+	)
+);
 
 return 'file:./slideshow.php';
