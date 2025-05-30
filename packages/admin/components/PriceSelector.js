@@ -36,10 +36,15 @@ export default ({
 	};
 
 	const removeDuplicateProducts = (products) => {
-		return products?.filter(
-			(product, index, array) =>
-				array.findIndex((p) => p?.id === product?.id) === index
-		);
+		if (!products || !Array.isArray(products)) return [];
+
+		const seenIds = new Set();
+		return products.filter((product) => {
+			if (!product?.id) return false; // Skip products without valid IDs
+			if (seenIds.has(product.id)) return false; // Skip duplicates
+			seenIds.add(product.id);
+			return true;
+		});
 	};
 
 	const fetchData = async (pagination) => {
