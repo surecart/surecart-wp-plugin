@@ -57,11 +57,12 @@ class SelectedSetupFee extends \Elementor\Core\DynamicTags\Tag {
 	public function render() {
 		$product = sc_get_product();
 
-		if ( empty( $product ) ) {
+		if ( ! $product || ( empty( $product->initial_price->setup_fee_text ?? null ) && \Elementor\Plugin::$instance->editor->is_edit_mode() ) ) {
 			// translators: %s: Setup Fee amount.
 			echo "<span class='wp-block-surecart-product-selected-price-fees'>" . esc_html( sprintf( __( '%s setup fee.', 'surecart' ), Currency::format( 100 ) ) ) . '</span>';
+			return;
 		}
 
-		echo '<!-- wp:surecart/product-selected-price-fees /-->';
+		echo '<!-- wp:surecart/product-selected-price-fees -->' . esc_html( $product->initial_price->setup_fee_text ?? '' ) . '<!-- /wp:surecart/product-selected-price-fees -->';
 	}
 }

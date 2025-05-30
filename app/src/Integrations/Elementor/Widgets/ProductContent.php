@@ -117,7 +117,8 @@ class ProductContent extends \Elementor\Widget_Base {
 	 */
 	protected function render() {
 		$product = sc_get_product();
-		if ( empty( $product ) || empty( get_the_content() ) ) {
+
+		if ( empty( $product ) || ( empty( get_the_content() ) && \Elementor\Plugin::$instance->editor->is_edit_mode() ) ) {
 			?>
 			<div>
 				<p><?php esc_html_e( 'This section will display the content you create using the Content Designer on the Edit Product page.', 'surecart' ); ?></p>
