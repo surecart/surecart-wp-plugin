@@ -31,8 +31,15 @@ export default ({
 	const { receiveEntityRecords } = useDispatch(coreStore);
 
 	const handleOnScrollEnd = () => {
-		if (!pagination.enabled || isLoading) return;
+		if (!pagination.enabled || isLoading || !!query) return;
 		setPagination((state) => ({ ...state, page: (state.page += 1) }));
+	};
+
+	const mergeDuplicateProducts = (products) => {
+		return products?.filter(
+			(product, index, array) =>
+				array.findIndex((p) => p?.id === product?.id) === index
+		);
 	};
 
 	const fetchData = async (pagination) => {
@@ -41,10 +48,6 @@ export default ({
 			'product'
 		);
 		if (!baseURL) return;
-		if (pagination.page === 1) {
-			setProducts([]);
-			setPagination((state) => ({ ...state, enabled: true }));
-		}
 
 		const queryArgs = {
 			query,
@@ -60,7 +63,11 @@ export default ({
 		});
 
 		if (data && data.length) {
-			setProducts((state) => [...state, ...(data || [])]);
+			setProducts((currentProducts) => {
+				const newProducts = [...currentProducts, ...(data || [])];
+				// Remove duplicates based on product id
+				return mergeDuplicateProducts(newProducts);
+			});
 			return;
 		}
 
@@ -69,7 +76,12 @@ export default ({
 			const data = await apiFetch({
 				path: addQueryArgs(baseURL, queryArgs),
 			});
-			setProducts((state) => [...state, ...(data || [])]);
+
+			setProducts((currentProducts) => {
+				const newProducts = [...currentProducts, ...(data || [])];
+				// Remove duplicates based on product id
+				return mergeDuplicateProducts(newProducts);
+			});
 			receiveEntityRecords('surecart', 'product', data, queryArgs);
 		} catch (error) {
 			setPagination((state) => ({ ...state, enabled: false }));
