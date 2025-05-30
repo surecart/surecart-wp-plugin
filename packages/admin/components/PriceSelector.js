@@ -35,7 +35,7 @@ export default ({
 		setPagination((state) => ({ ...state, page: (state.page += 1) }));
 	};
 
-	const mergeDuplicateProducts = (products) => {
+	const removeDuplicateProducts = (products) => {
 		return products?.filter(
 			(product, index, array) =>
 				array.findIndex((p) => p?.id === product?.id) === index
@@ -66,7 +66,7 @@ export default ({
 			setProducts((currentProducts) => {
 				const newProducts = [...currentProducts, ...(data || [])];
 				// Remove duplicates based on product id
-				return mergeDuplicateProducts(newProducts);
+				return removeDuplicateProducts(newProducts);
 			});
 			return;
 		}
@@ -80,7 +80,7 @@ export default ({
 			setProducts((currentProducts) => {
 				const newProducts = [...currentProducts, ...(data || [])];
 				// Remove duplicates based on product id
-				return mergeDuplicateProducts(newProducts);
+				return removeDuplicateProducts(newProducts);
 			});
 			receiveEntityRecords('surecart', 'product', data, queryArgs);
 		} catch (error) {
