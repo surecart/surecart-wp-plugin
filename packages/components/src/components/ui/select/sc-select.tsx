@@ -395,7 +395,7 @@ export class ScSelectDropdown {
     return <sc-icon name={icon} slot="prefix" class="choice__icon" />;
   }
 
-  renderItem(choice: ChoiceItem, index: number | string) {
+  renderItem(choice: ChoiceItem, index: number) {
     const uniqueKey = `${choice?.value || choice?.label || 'item'}-${index}`;
     
     if (choice?.choices?.length) {
