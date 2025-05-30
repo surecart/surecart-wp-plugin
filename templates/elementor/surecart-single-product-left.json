@@ -352,7 +352,7 @@
 					"id": "3d235015",
 					"settings": {
 						"__dynamic__": {
-							"excerpt": "[elementor-tag id=\"\" name=\"post-excerpt\" settings=\"%7B%22apply_to_post_content%22%3A%22yes%22%7D\"]"
+							"excerpt": "[elementor-tag id=\"\" name=\"post-excerpt\" settings=\"%7B%22apply_to_post_content%22%3A%22yes%22%2C%22fallback%22%3A%22Experience%20the%20next%20level%20of%20convenience%20with%20our%20innovative%20widget.%20Melding%20cutting-edge%20technology%20with%20user-friendly%20design%2C%20this%20product%20provides%20unparalleled%20functionality%20that%20caters%20to%20your%20lifestyle.%22%7D\"]"
 						},
 						"_title": "Product short description",
 						"title_color": "#000000",
