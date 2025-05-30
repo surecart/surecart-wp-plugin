@@ -98,6 +98,7 @@ export default ({
 
 	useEffect(() => {
 		if (query === null) return;
+		setProducts([]);
 		setPagination((state) => ({ ...state, page: 1 }));
 	}, [query]);
 
