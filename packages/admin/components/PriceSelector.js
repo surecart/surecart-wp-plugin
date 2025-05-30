@@ -35,6 +35,13 @@ export default ({
 		setPagination((state) => ({ ...state, page: (state.page += 1) }));
 	};
 
+	const mergeDuplicateProducts = (products) => {
+		return products?.filter(
+			(product, index, array) =>
+				array.findIndex((p) => p?.id === product?.id) === index
+		);
+	};
+
 	const fetchData = async (pagination) => {
 		const { baseURL } = select(coreStore).getEntityConfig(
 			'surecart',
@@ -56,11 +63,11 @@ export default ({
 		});
 
 		if (data && data.length) {
-			setProducts((state) =>
-				[...state, ...(data || [])]?.filter((product) => {
-					return !products.some((p) => p?.id === product?.id);
-				})
-			);
+			setProducts((currentProducts) => {
+				const newProducts = [...currentProducts, ...(data || [])];
+				// Remove duplicates based on product id
+				return mergeDuplicateProducts(newProducts);
+			});
 			return;
 		}
 
@@ -70,11 +77,11 @@ export default ({
 				path: addQueryArgs(baseURL, queryArgs),
 			});
 
-			setProducts((state) =>
-				[...state, ...(data || [])]?.filter((product) => {
-					return !products.some((p) => p?.id === product?.id);
-				})
-			);
+			setProducts((currentProducts) => {
+				const newProducts = [...currentProducts, ...(data || [])];
+				// Remove duplicates based on product id
+				return mergeDuplicateProducts(newProducts);
+			});
 			receiveEntityRecords('surecart', 'product', data, queryArgs);
 		} catch (error) {
 			setPagination((state) => ({ ...state, enabled: false }));

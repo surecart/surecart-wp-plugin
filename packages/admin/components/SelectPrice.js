@@ -28,8 +28,6 @@ export default ({
 	prefix = false,
 	...props
 }) => {
-	console.log('products', products);
-
 	const selectRef = useRef();
 	const findProduct = throttle(
 		(value) => {
