@@ -178,7 +178,7 @@ class Media extends \Bricks\Element {
 			if ( 'gallery' === $desktop_gallery ) {
 				$content = '<div class="sc-image-gallery"><div class="swiper swiper-initialized"><div class="swiper-wrapper">';
 				for ( $i = 0; $i < 3; $i++ ) {
-					$content .= '<div class="swiper-slide" style="background: transparent;">';
+					$content .= '<div class="swiper-slide">';
 					$content .= '<img src="' . esc_url( trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'images/placeholder.jpg' ) . '"';
 					$content .= ' style="' . ( ! empty( $this->settings['max_image_width'] ) ? 'max-width:' . esc_attr( $this->settings['max_image_width'] ) : '' ) . '"';
 					$content .= ' alt="' . esc_attr( get_the_title() ) . '" />';
@@ -197,7 +197,7 @@ class Media extends \Bricks\Element {
 					$thumbnails_per_page = ! empty( $this->settings['thumbnails_per_page'] ) ? (int) $this->settings['thumbnails_per_page'] : 5;
 					$content            .= '<div class="sc-image-slider__thumbs"><div class="swiper swiper-initialized"><div class="swiper-wrapper sc-has-' . $thumbnails_per_page . '-thumbs">';
 					for ( $i = 0; $i < $thumbnails_per_page; $i++ ) {
-						$content .= '<div class="swiper-slide" style="background: transparent;">';
+						$content .= '<div class="swiper-slide">';
 						$content .= '<img src="' . esc_url( trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'images/placeholder.jpg' ) . '"';
 						$content .= ' alt="' . esc_attr( get_the_title() ) . '" />';
 						$content .= '</div>';
