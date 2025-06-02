@@ -52,11 +52,32 @@ class Media extends \Bricks\Element {
 	}
 
 	/**
+	 * Enqueue scripts and styles.
+	 *
+	 * @return void
+	 */
+	public function enqueue_scripts() {
+		wp_enqueue_style( 'surecart-image-slider' );
+	}
+
+	/**
 	 * Set controls.
 	 *
 	 * @return void
 	 */
 	public function set_controls() {
+		$this->controls['desktop_gallery'] = [
+			'tab'        => 'content',
+			'label'      => esc_html__( 'Display Mode', 'surecart' ),
+			'type'       => 'select',
+			'options'    => [
+				'slider'  => esc_html__( 'Slider View', 'surecart' ),
+				'gallery' => esc_html__( 'Gallery View', 'surecart' ),
+			],
+			'fullAccess' => true,
+			'default'    => 'slider',
+		];
+
 		$this->controls['auto_height'] = [
 			'tab'        => 'content',
 			'label'      => esc_html__( 'Auto height', 'surecart' ),
@@ -96,6 +117,28 @@ class Media extends \Bricks\Element {
 			'placeholder' => esc_html__( 'Unlimited', 'surecart' ),
 		];
 
+		$this->controls['gallery_spacing'] = [
+			'tab'         => 'content',
+			'label'       => esc_html__( 'Gallery Spacing', 'surecart' ),
+			'type'        => 'number',
+			'units'       => true,
+			'default'     => '1rem',
+			'placeholder' => '1rem',
+			'css'         => [
+				[
+					'property' => 'gap',
+					'selector' => '&.sc-image-gallery .swiper-wrapper',
+				],
+				[
+					'property' => 'margin-bottom',
+					'selector' => '&.sc-image-gallery .swiper-wrapper .swiper-slide',
+				],
+			],
+			'required'    => [
+				[ 'desktop_gallery', '=', 'gallery' ],
+			],
+		];
+
 		$this->controls['thumbnails_per_page'] = [
 			'tab'         => 'content',
 			'label'       => esc_html__( 'Thumbs per page', 'surecart' ),
@@ -103,6 +146,21 @@ class Media extends \Bricks\Element {
 			'default'     => 5,
 			'min'         => 2,
 			'placeholder' => 5,
+			'required'    => [
+				[ 'desktop_gallery', '=', 'slider' ],
+			],
+		];
+
+		$this->controls['show_thumbs'] = [
+			'tab'        => 'content',
+			'label'      => esc_html__( 'Show Thumbnails', 'surecart' ),
+			'type'       => 'checkbox',
+			'inline'     => true,
+			'fullAccess' => true,
+			'default'    => true,
+			'required'   => [
+				[ 'desktop_gallery', '=', 'slider' ],
+			],
 		];
 	}
 
@@ -114,11 +172,41 @@ class Media extends \Bricks\Element {
 	public function render() {
 		$product = sc_get_product();
 
-		if ( $this->is_admin_editor() && 1 < count( ( $product->gallery ?? [] ) ) ) {
-			$content  = '<img src="' . esc_url( trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'images/placeholder.jpg' ) . '"';
-			$content .= ' style="' . ( ! empty( $this->settings['max_image_width'] ) ? 'max-width:' . esc_attr( $this->settings['max_image_width'] ) : '' ) . '"';
-			$content .= ' alt="' . esc_attr( get_the_title() ) . '" />';
-			$content .= '<div class="bricks-element-placeholder" data-type="info" draggable="false"><i class="ti-layout-slider-alt"></i><div class="placeholder-inner"><div class="placeholder-description">' . __( 'The accurate preview for this element is only available on frontend due to compatibility issues.', 'surecart' ) . '</div></div></div>';
+		if ( $this->is_admin_editor() ) {
+			$desktop_gallery = ! empty( $this->settings['desktop_gallery'] ) ? $this->settings['desktop_gallery'] : 'slider';
+
+			if ( 'gallery' === $desktop_gallery ) {
+				$content = '<div class="sc-image-gallery"><div class="swiper swiper-initialized"><div class="swiper-wrapper">';
+				for ( $i = 0; $i < 3; $i++ ) {
+					$content .= '<div class="swiper-slide" style="background: transparent;">';
+					$content .= '<img src="' . esc_url( trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'images/placeholder.jpg' ) . '"';
+					$content .= ' style="' . ( ! empty( $this->settings['max_image_width'] ) ? 'max-width:' . esc_attr( $this->settings['max_image_width'] ) : '' ) . '"';
+					$content .= ' alt="' . esc_attr( get_the_title() ) . '" />';
+					$content .= '</div>';
+				}
+				$content .= '</div></div></div>';
+				$content .= '<div class="bricks-element-placeholder" data-type="info" draggable="false"><i class="ti-layout-slider-alt"></i><div class="placeholder-inner"><div class="placeholder-description">' . __( 'The accurate preview for this element is only available on frontend due to compatibility issues.', 'surecart' ) . '</div></div></div>';
+			} else {
+				$content  = '<div class="sc-image-slider"><div class="swiper swiper-initialized"><div class="swiper-wrapper">';
+				$content .= '<div class="swiper-slide"><img src="' . esc_url( trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'images/placeholder.jpg' ) . '"';
+				$content .= ' style="' . ( ! empty( $this->settings['max_image_width'] ) ? 'max-width:' . esc_attr( $this->settings['max_image_width'] ) : '' ) . '"';
+				$content .= ' alt="' . esc_attr( get_the_title() ) . '" /></div>';
+				$content .= '</div><div class="swiper-button-prev"></div><div class="swiper-button-next"></div></div>';
+
+				if ( ! empty( $this->settings['show_thumbs'] ) ) {
+					$thumbnails_per_page = ! empty( $this->settings['thumbnails_per_page'] ) ? (int) $this->settings['thumbnails_per_page'] : 5;
+					$content            .= '<div class="sc-image-slider__thumbs"><div class="swiper swiper-initialized"><div class="swiper-wrapper sc-has-' . $thumbnails_per_page . '-thumbs">';
+					for ( $i = 0; $i < $thumbnails_per_page; $i++ ) {
+						$content .= '<div class="swiper-slide" style="background: transparent;">';
+						$content .= '<img src="' . esc_url( trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'images/placeholder.jpg' ) . '"';
+						$content .= ' alt="' . esc_attr( get_the_title() ) . '" />';
+						$content .= '</div>';
+					}
+					$content .= '</div></div></div>';
+				}
+				$content .= '</div>';
+				$content .= '<div class="bricks-element-placeholder" data-type="info" draggable="false"><i class="ti-layout-slider-alt"></i><div class="placeholder-inner"><div class="placeholder-description">' . __( 'The accurate preview for this element is only available on frontend due to compatibility issues.', 'surecart' ) . '</div></div></div>';
+			}
 
 			echo $this->preview( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				$content,
@@ -136,6 +224,8 @@ class Media extends \Bricks\Element {
 				'lightbox'            => (bool) ! empty( $this->settings['lightbox'] ),
 				'width'               => esc_html( $this->settings['max_image_width'] ?? null ),
 				'thumbnails_per_page' => ! empty( $this->settings['thumbnails_per_page'] ) ? (int) $this->settings['thumbnails_per_page'] : null,
+				'desktop_gallery'     => ! empty( $this->settings['desktop_gallery'] ) && 'gallery' === $this->settings['desktop_gallery'],
+				'show_thumbs'         => (bool) ! empty( $this->settings['show_thumbs'] ),
 			]
 		);
 	}
