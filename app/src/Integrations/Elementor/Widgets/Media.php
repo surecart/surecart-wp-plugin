@@ -317,37 +317,7 @@ class Media extends \Elementor\Widget_Base {
 		$settings = $this->get_settings_for_display();
 
 		if ( \Elementor\Plugin::$instance->editor->is_edit_mode() ) {
-			if ( 'gallery' === $settings['desktop_gallery'] ) {
-				?>
-				<div class="sc-image-gallery">
-					<div class="swiper">
-						<div class="swiper-wrapper">
-							<?php for ( $i = 0; $i < 3; $i++ ) : ?>
-								<div class="swiper-slide" style="background: transparent;">
-									<img src="<?php echo esc_url( $this->get_featured_image( $i )['src'] ); ?>" alt="<?php esc_attr_e( 'Placeholder image', 'surecart' ); ?>" width="<?php echo esc_attr( $this->get_featured_image( $i )['width'] ); ?>" />
-								</div>
-							<?php endfor; ?>
-						</div>
-					</div>
-				</div>
-				<?php
-			} else {
-				$this->swiper_template_before();
-				?>
-				<div class="swiper-wrapper sc-has-<?php echo esc_attr( $settings['thumbnails_per_page'] ); ?>-thumbs">
-					<?php
-					for ( $i = 0; $i < $settings['thumbnails_per_page']; $i++ ) {
-						?>
-						<div class="swiper-slide" style="background: transparent;">
-							<img src="<?php echo esc_url( $this->get_featured_image( $i )['src'] ); ?>" alt="<?php esc_attr_e( 'Placeholder image', 'surecart' ); ?>" width="<?php echo esc_attr( $this->get_featured_image( $i )['width'] ); ?>" />
-						</div>
-						<?php
-					}
-					?>
-				</div>
-				<?php
-				$this->swiper_template_after();
-			}
+			$this->render_editor_content( $settings );
 			return;
 		}
 
@@ -369,146 +339,145 @@ class Media extends \Elementor\Widget_Base {
 	}
 
 	/**
-	 * Swiper template before.
+	 * Render content specifically for the editor with dynamic product data.
 	 *
+	 * @param array $settings Widget settings.
 	 * @return void
 	 */
-	private function swiper_template_before() {
-		?>
-		<div class="sc-image-slider">
-			<div class="swiper">
-				<div class="swiper-wrapper">
-					<div class="swiper-slide">
-						<img src="<?php echo esc_url( $this->get_featured_image( 0 )['src'] ); ?>" alt="<?php esc_attr_e( 'Placeholder image', 'surecart' ); ?>" width="<?php echo esc_attr( $this->get_featured_image( 0 )['width'] ); ?>" />
-					</div>
-				</div>
-				<div class="swiper-button-prev"></div>
-				<div class="swiper-button-next"></div>
-			</div>
+	protected function render_editor_content( $settings ) {
+		$this->add_render_attribute( 'wrapper', 'data-widget-type', $this->get_name() );
+		$this->add_render_attribute( 'wrapper', 'data-surecart-dynamic', 'true' );
 
-			<div class="sc-image-slider__thumbs" style="opacity: 1 !important; visibility: visible !important;">
-				<div
-					class="sc-image-slider-button__prev"
-					tabIndex="-1"
-					role="button"
-				>
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						width="24"
-						height="24"
-						viewBox="0 0 24 24"
-						fill="none"
-						stroke="currentColor"
-						stroke-width="2"
-						stroke-linecap="round"
-						stroke-linejoin="round"
-					>
-						<polyline points="15 18 9 12 15 6" />
-					</svg>
-				</div>
+		// Get current product context.
+		$product = sc_get_product();
+		$images  = $this->get_product_images( $product );
 
-				<div class="swiper">
-		<?php
+		if ( 'gallery' === $settings['desktop_gallery'] ) {
+			$this->render_gallery_view( $images, $settings );
+		} else {
+			$this->render_slider_view( $images, $settings );
+		}
 	}
 
 	/**
-	 * Swiper template after.
+	 * Get product images array.
 	 *
+	 * @param object|null $product Product object.
+	 * @return array
+	 */
+	protected function get_product_images( $product ) {
+		// Return placeholder images if no product or gallery is available.
+		if ( ! $product || empty( $product->gallery ) ) {
+			return array_fill(
+				0,
+				5,
+				array(
+					'src'   => $this->get_placeholder_image(),
+					'width' => 1000,
+					'alt'   => __( 'Placeholder image', 'surecart' ),
+				)
+			);
+		}
+
+		return array_map(
+			function ( $image ) {
+				return array(
+					'src'   => $image->guid ? $image->guid : $this->get_placeholder_image(),
+					'width' => $image->width ?? 1000,
+					'alt'   => $image->alt ?? '',
+				);
+			},
+			$product->gallery
+		);
+	}
+
+	/**
+	 * Render gallery view.
+	 *
+	 * @param array $images Array of images.
+	 * @param array $settings Widget settings.
 	 * @return void
 	 */
-	private function swiper_template_after() {
+	protected function render_gallery_view( $images, $settings ) {
 		?>
-			</div>
-			<div
-				class="sc-image-slider-button__next"
-				tabIndex="-1"
-				role="button"
-			>
-				<svg
-				xmlns="http://www.w3.org/2000/svg"
-				width="24"
-				height="24"
-				viewBox="0 0 24 24"
-				fill="none"
-				stroke="currentColor"
-				stroke-width="2"
-				stroke-linecap="round"
-				stroke-linejoin="round"
-				>
-					<polyline points="9 18 15 12 9 6" />
-				</svg>
-			</div>
+		<div <?php $this->print_render_attribute_string( 'wrapper' ); ?>>
+			<div class="sc-image-gallery">
+				<div class="swiper">
+					<div class="swiper-wrapper">
+						<?php foreach ( array_slice( $images, 0, 5 ) as $image ) : ?>
+							<div class="swiper-slide" style="background: transparent;">
+								<img 
+									src="<?php echo esc_url( $image['src'] ); ?>" 
+									alt="<?php echo esc_attr( $image['alt'] ); ?>" 
+									width="<?php echo esc_attr( $image['width'] ); ?>" 
+								/>
+							</div>
+						<?php endforeach; ?>
+					</div>
+				</div>
 			</div>
 		</div>
 		<?php
 	}
 
 	/**
-	 * Render the widget output on the editor.
+	 * Render slider view.
 	 *
+	 * @param array $images Array of images.
+	 * @param array $settings Widget settings.
 	 * @return void
 	 */
-	protected function content_template() {
+	protected function render_slider_view( $images, $settings ) {
+		$thumbnails_per_page = $settings['thumbnails_per_page'];
+		$show_thumbs         = 'yes' === $settings['show_thumbs'];
 		?>
-		<#
-		var placeholderUrl = '<?php echo esc_js( $this->get_featured_image( 0 )['src'] ); ?>';
-		#>
-		<# if ( 'gallery' === settings.desktop_gallery ) { #>
-			<div class="sc-image-gallery">
+		<div <?php $this->print_render_attribute_string( 'wrapper' ); ?>>
+			<div class="sc-image-slider">
 				<div class="swiper swiper-initialized">
 					<div class="swiper-wrapper">
-						<# for ( var i = 0; i < 3; i++ ) { #>
-							<div class="swiper-slide" style="background: transparent;">
-								<img src="{{ placeholderUrl }}" alt="<?php esc_attr_e( 'Placeholder image', 'surecart' ); ?>" width="1000" />
-							</div>
-						<# } #>
-					</div>
-				</div>
-			</div>
-		<# } else { #>
-			<div class="sc-image-slider">
-				<# if ( 'yes' !== settings.show_thumbs ) { #>
-					<div class="swiper-wrapper">
 						<div class="swiper-slide">
-							<img src="{{ placeholderUrl }}" alt="<?php esc_attr_e( 'Placeholder image', 'surecart' ); ?>" width="1000" />
+							<img 
+								src="<?php echo esc_url( $images[0]['src'] ); ?>" 
+								alt="<?php echo esc_attr( $images[0]['alt'] ); ?>" 
+								width="<?php echo esc_attr( $images[0]['width'] ); ?>" 
+							/>
 						</div>
 					</div>
-				<# } else { #>
-					<div class="sc-image-slider">
+					<div class="swiper-button-prev"></div>
+					<div class="swiper-button-next"></div>
+				</div>
+
+				<?php if ( $show_thumbs ) : ?>
+					<div class="sc-image-slider__thumbs">
+						<div class="sc-image-slider-button__prev" tabIndex="-1" role="button">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+								<polyline points="15 18 9 12 15 6" />
+							</svg>
+						</div>
+
 						<div class="swiper swiper-initialized">
-							<div class="swiper-wrapper">
-								<div class="swiper-slide">
-									<img src="{{ placeholderUrl }}" alt="<?php esc_attr_e( 'Placeholder image', 'surecart' ); ?>" width="1000" />
-								</div>
+							<div class="swiper-wrapper sc-has-<?php echo esc_attr( $thumbnails_per_page ); ?>-thumbs">
+								<?php foreach ( array_slice( $images, 0, $thumbnails_per_page ) as $image ) : ?>
+									<div class="swiper-slide" style="background: transparent;">
+										<img 
+											src="<?php echo esc_url( $image['src'] ); ?>" 
+											alt="<?php echo esc_attr( $image['alt'] ); ?>" 
+											width="<?php echo esc_attr( $image['width'] ); ?>" 
+										/>
+									</div>
+								<?php endforeach; ?>
 							</div>
-							<div class="swiper-button-prev"></div>
-							<div class="swiper-button-next"></div>
 						</div>
-						<div class="sc-image-slider__thumbs">
-							<div class="sc-image-slider-button__prev" tabIndex="-1" role="button">
-								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-									<polyline points="15 18 9 12 15 6" />
-								</svg>
-							</div>
-							<div class="swiper swiper-initialized">
-								<div class="swiper-wrapper sc-has-{{ settings.thumbnails_per_page }}-thumbs" style="opacity: 1 !important; visibility: visible !important;">
-									<# for ( var i = 0; i < settings.thumbnails_per_page; i++ ) { #>
-										<div class="swiper-slide" style="background: transparent;">
-											<img src="{{ placeholderUrl }}" alt="<?php esc_attr_e( 'Placeholder image', 'surecart' ); ?>" width="1000" />
-										</div>
-									<# } #>
-								</div>
-							</div>
-							<div class="sc-image-slider-button__next" tabIndex="-1" role="button">
-								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-									<polyline points="9 18 15 12 9 6" />
-								</svg>
-							</div>
+
+						<div class="sc-image-slider-button__next" tabIndex="-1" role="button">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+								<polyline points="9 18 15 12 9 6" />
+							</svg>
 						</div>
 					</div>
-				<# } #>
+				<?php endif; ?>
 			</div>
-		<# } #>
+		</div>
 		<?php
 	}
 }
