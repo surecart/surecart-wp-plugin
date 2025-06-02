@@ -53,6 +53,10 @@ class TemplateUtilityService {
 				'site-editor' => false,
 				'post_types'  => array( 'sc_product' ),
 			),
+			'sticky-purchase-button'  => array(
+				'site-editor' => true,
+				'post_types'  => array( 'sc_product' ),
+			),
 			'single-upsell'           => array(
 				'post_types' => array( 'sc_upsell' ),
 			),
@@ -368,6 +372,7 @@ class TemplateUtilityService {
 		$translations = array(
 			'single-sc_product'       => class_exists( 'WooCommerce' ) ? __( 'SureCart Products', 'surecart' ) : __( 'Products', 'surecart' ),
 			'product-info'            => class_exists( 'WooCommerce' ) ? __( 'SureCart Products', 'surecart' ) : __( 'Products', 'surecart' ),
+			'sticky-purchase-button'  => __( 'Sticky Purchase Button', 'surecart' ),
 			'single-upsell'           => __( 'Upsells', 'surecart' ),
 			'upsell-info'             => __( 'Upsells', 'surecart' ),
 			'taxonomy-sc_collection'  => class_exists( 'WooCommerce' ) ? __( 'SureCart Product Collections', 'surecart' ) : __( 'Product Collections', 'surecart' ),
@@ -393,6 +398,7 @@ class TemplateUtilityService {
 		$translations = array(
 			'single-sc_product'       => __( 'Display all individual products unless a custom template has been applied.', 'surecart' ),
 			'product-info'            => __( 'Display all individual products content unless a custom template has been applied.', 'surecart' ),
+			'sticky-purchase-button'  => __( 'Display a sticky purchase button when the product form is scrolled out of view.', 'surecart' ),
 			'single-upsell'           => __( 'Display all individual upsells unless a custom template has been applied.', 'surecart' ),
 			'upsell-info'             => __( 'Display all individual upsells content unless a custom template has been applied.', 'surecart' ),
 			'taxonomy-sc_collection'  => __( 'Display all individual product collections unless a custom template has been applied.', 'surecart' ),

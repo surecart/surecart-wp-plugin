@@ -12,6 +12,10 @@
 	"attributes": {
 		"product_id": {
 			"type": "string"
+		},
+		"show_sticky_purchase_button": {
+			"type": "boolean",
+			"default": false
 		}
 	},
 	"supports": {

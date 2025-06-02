@@ -355,6 +355,7 @@ const { state, actions } = store('surecart/product-page', {
 
 			const { selectedPrice, product } = getContext();
 			scProductViewed(product, selectedPrice, state.quantity);
+			initStickyButton();
 		},
 
 		/**
@@ -588,3 +589,66 @@ export const isProductVariantOptionSoldOut = (
 	const highestStock = Math.max(...items.map((item) => item.available_stock));
 	return highestStock <= 0;
 };
+
+/**
+ * Initialize sticky button scroll behavior.
+ */
+function initStickyButton() {
+	// Add a small delay to ensure DOM is fully rendered.
+	setTimeout(() => {
+		const stickyButton = document.querySelector(
+			'.sc-sticky-purchase-button'
+		);
+		if (!stickyButton) {
+			return;
+		}
+
+		// Look for the main product buy buttons, excluding any in the sticky button.
+		const productForm = document.querySelector(
+			'[data-sc-block-id="product-page"]'
+		);
+		const productBuyButtons = productForm
+			? productForm.querySelector(
+					'.wp-block-surecart-product-buy-buttons'
+			  )
+			: null;
+
+		if (!stickyButton || !productBuyButtons) {
+			return;
+		}
+
+		let isVisible = false;
+		let ticking = false;
+
+		function updateStickyButtonVisibility() {
+			const rect = productBuyButtons.getBoundingClientRect();
+			const shouldShow = rect.bottom < 0; // Product form is above viewport
+
+			if (shouldShow !== isVisible) {
+				isVisible = shouldShow;
+
+				if (isVisible) {
+					stickyButton.classList.add('is-visible');
+				} else {
+					stickyButton.classList.remove('is-visible');
+				}
+			}
+
+			ticking = false;
+		}
+
+		function requestTick() {
+			if (!ticking) {
+				requestAnimationFrame(updateStickyButtonVisibility);
+				ticking = true;
+			}
+		}
+
+		// Listen for scroll events.
+		window.addEventListener('scroll', requestTick, { passive: true });
+		window.addEventListener('resize', requestTick, { passive: true });
+
+		// Initial check.
+		updateStickyButtonVisibility();
+	}, 100);
+}

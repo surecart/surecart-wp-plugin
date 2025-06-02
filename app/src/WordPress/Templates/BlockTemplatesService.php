@@ -86,6 +86,11 @@ class BlockTemplatesService {
 		$template_object = $this->utility->createNewBlockTemplateObject( $template_file_path, $template_type, $template_slug );
 		$template_built  = $this->utility->buildTemplateResultFromFile( $template_object, $template_type );
 
+		// Set template area for template parts.
+		if ( 'wp_template_part' === $template_type && $template_slug === 'sticky-purchase-button' ) {
+			$template_built->area = 'sticky-purchase';
+		}
+
 		if ( null !== $template_built ) {
 			return $template_built;
 		}
@@ -132,6 +137,11 @@ class BlockTemplatesService {
 			// the filesystem.
 			if ( 'custom' !== $template_file->source ) {
 				$template = $this->utility->buildTemplateResultFromFile( $template_file, $template_type );
+
+				// Set template area for template parts.
+				if ( 'wp_template_part' === $template_type && $template_file->slug === 'sticky-purchase-button' ) {
+					$template->area = 'sticky-purchase';
+				}
 			} else {
 				$template_file->title       = $this->utility->getBlockTemplateTitle( $template_file->slug );
 				$template_file->description = $this->utility->getBlockTemplateDescription( $template_file->slug );

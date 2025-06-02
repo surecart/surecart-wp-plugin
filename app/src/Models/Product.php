@@ -536,6 +536,25 @@ class Product extends Model implements PageModel {
 	}
 
 	/**
+	 * Get the sticky purchase button template id.
+	 *
+	 * @return string
+	 */
+	public function getStickyPurchaseButtonTemplateIdAttribute(): string {
+		return 'sticky-purchase-button';
+	}
+
+
+	/**
+	 * Get the sticky purchase button template part id.
+	 *
+	 * @return string
+	 */
+	public function getStickyPurchaseButtonTemplatePartIdAttribute(): string {
+		return 'surecart/surecart//sticky-purchase-button';
+	}
+
+	/**
 	 * Get with sorted prices.
 	 *
 	 * @return this
