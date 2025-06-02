@@ -170,7 +170,9 @@ class Media extends \Bricks\Element {
 	 * @return void
 	 */
 	public function render() {
-		$product = sc_get_product();
+		$product             = sc_get_product();
+		$settings            = $this->settings;
+		$thumbnails_per_page = ! empty( $settings['thumbnails_per_page'] ) ? (int) $settings['thumbnails_per_page'] : 5;
 
 		if ( $this->is_admin_editor() ) {
 			$desktop_gallery = ! empty( $this->settings['desktop_gallery'] ) ? $this->settings['desktop_gallery'] : 'slider';
@@ -194,8 +196,7 @@ class Media extends \Bricks\Element {
 				$content .= '</div><div class="swiper-button-prev"></div><div class="swiper-button-next"></div></div>';
 
 				if ( ! empty( $this->settings['show_thumbs'] ) ) {
-					$thumbnails_per_page = ! empty( $this->settings['thumbnails_per_page'] ) ? (int) $this->settings['thumbnails_per_page'] : 5;
-					$content            .= '<div class="sc-image-slider__thumbs"><div class="swiper swiper-initialized"><div class="swiper-wrapper sc-has-' . $thumbnails_per_page . '-thumbs">';
+					$content .= '<div class="sc-image-slider__thumbs"><div class="swiper swiper-initialized"><div class="swiper-wrapper sc-has-' . $thumbnails_per_page . '-thumbs">';
 					for ( $i = 0; $i < $thumbnails_per_page; $i++ ) {
 						$content .= '<div class="swiper-slide">';
 						$content .= '<img src="' . esc_url( trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'images/placeholder.jpg' ) . '"';
@@ -223,7 +224,7 @@ class Media extends \Bricks\Element {
 				'height'              => esc_html( $this->settings['height'] ),
 				'lightbox'            => (bool) ! empty( $this->settings['lightbox'] ),
 				'width'               => esc_html( $this->settings['max_image_width'] ?? null ),
-				'thumbnails_per_page' => ! empty( $this->settings['thumbnails_per_page'] ) ? (int) $this->settings['thumbnails_per_page'] : null,
+				'thumbnails_per_page' => $thumbnails_per_page,
 				'desktop_gallery'     => ! empty( $this->settings['desktop_gallery'] ) && 'gallery' === $this->settings['desktop_gallery'],
 				'show_thumbs'         => (bool) ! empty( $this->settings['show_thumbs'] ),
 			]
