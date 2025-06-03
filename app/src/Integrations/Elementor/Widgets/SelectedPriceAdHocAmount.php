@@ -36,7 +36,7 @@ class SelectedPriceAdHocAmount extends \Elementor\Widget_Base {
 	 * @return string
 	 */
 	public function get_icon() {
-		return 'eicon-plus';
+		return 'eicon-pencil';
 	}
 
 	/**
