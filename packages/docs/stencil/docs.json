@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-05-14T18:25:05",
+  "timestamp": "2025-06-03T09:35:59",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.18.3",
@@ -30954,7 +30954,7 @@
             "references": {
               "LayoutConfig": {
                 "location": "local",
-                "path": "/Users/andre/sites/surecart/wp-content/plugins/surecart/packages/components/src/components/controllers/products/sc-product-item-list/sc-product-item-list.tsx",
+                "path": "/Users/maniruzzamanakash/Local Sites/bsf/app/public/wp-content/plugins/surecart/packages/components/src/components/controllers/products/sc-product-item-list/sc-product-item-list.tsx",
                 "id": "src/components/controllers/products/sc-product-item-list/sc-product-item-list.tsx::LayoutConfig"
               }
             }

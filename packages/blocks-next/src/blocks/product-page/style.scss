@@ -23,83 +23,62 @@
 .sc-sticky-purchase-button-container {
 	position: relative;
 	pointer-events: none;
-}
 
-.sc-sticky-purchase-button {
-	max-width: 100%;
-	display: block;
-	opacity: 0;
-	visibility: hidden;
-	transform: translateY(100%);
-	position: fixed !important;
-	bottom: 0 !important;
-	left: 0 !important;
-	right: 0 !important;
-	z-index: 10 !important;
-	background-color: var(--wp--preset--color--background, #fff) !important;
-	box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1) !important;
-	transition: all 0.3s ease !important;
-	width: 100vw !important;
-	margin-left: 0 !important;
-	margin-right: 0 !important;
-	box-sizing: border-box !important;
-	pointer-events: auto;
-
-	/* Show state */
-	&.is-visible {
-		opacity: 1;
-		visibility: visible;
-		transform: translateY(0);
-	}
-
-	/* Override any parent container constraints */
-	&.wp-block-group {
+	.sc-sticky-purchase-button {
+		max-width: 100%;
+		display: block;
+		opacity: 0;
+		visibility: hidden;
+		transform: translateY(100%);
+		position: fixed !important;
+		bottom: 0 !important;
+		left: 0 !important;
+		right: 0 !important;
+		z-index: 10 !important;
+		transition: all 0.3s ease !important;
 		width: 100vw !important;
-		max-width: none !important;
-	}
+		margin-left: 0 !important;
+		margin-right: 0 !important;
+		box-sizing: border-box !important;
+		pointer-events: auto;
 
-	/* Inner content container */
-	.wp-block-columns.alignwide {
-		width: 100% !important;
-		max-width: 1200px !important;
-		margin-left: auto !important;
-		margin-right: auto !important;
-		padding-left: 20px !important;
-		padding-right: 20px !important;
-	}
-
-	@media (max-width: 768px) {
-		.wp-block-columns {
-			flex-direction: column;
-
-			.wp-block-column {
-				flex-basis: 100% !important;
-				margin-left: 0;
-				margin-bottom: 10px;
-			}
+		/* Show state */
+		&.is-visible {
+			opacity: 1;
+			visibility: visible;
+			transform: translateY(0);
 		}
-	}
 
-	.wp-block-surecart-product-media {
-		flex-shrink: 0;
-	}
+		&.wp-block-group {
+			width: 100vw !important;
+			display: flex;
+		}
 
-	.wp-block-surecart-product-title {
-		margin: 0;
-		white-space: nowrap;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		max-width: 200px;
-	}
-
-	.wp-block-surecart-product-buy-buttons {
-		margin: 0;
+		.wp-block-columns.alignwide {
+			width: 100% !important;
+		}
 
 		@media (max-width: 768px) {
-			width: 100%;
+			.wp-block-columns {
+				flex-direction: column;
 
-			.wp-block-button {
+				.wp-block-column {
+					flex-basis: 100% !important;
+					margin-left: 0;
+					margin-bottom: 10px;
+				}
+			}
+		}
+
+		.wp-block-surecart-product-buy-buttons {
+			margin: 0;
+
+			@media (max-width: 768px) {
 				width: 100%;
+
+				.wp-block-button {
+					width: 100%;
+				}
 			}
 		}
 	}

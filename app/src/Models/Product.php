@@ -536,22 +536,17 @@ class Product extends Model implements PageModel {
 	}
 
 	/**
-	 * Get the sticky purchase button template id.
+	 * Get the sticky purchase button template content.
 	 *
 	 * @return string
 	 */
-	public function getStickyPurchaseButtonTemplateIdAttribute(): string {
-		return 'sticky-purchase-button';
-	}
+	public function getStickyPurchaseButtonTemplateContentAttribute(): string {
+		$template = get_block_template( 'surecart/surecart//sticky-purchase-button', 'wp_template_part' );
+		if ( ! $template || empty( $template->content ) ) {
+			return '';
+		}
 
-
-	/**
-	 * Get the sticky purchase button template part id.
-	 *
-	 * @return string
-	 */
-	public function getStickyPurchaseButtonTemplatePartIdAttribute(): string {
-		return 'surecart/surecart//sticky-purchase-button';
+		return $template->content;
 	}
 
 	/**
