@@ -536,23 +536,9 @@ class Product extends Model implements PageModel {
 	}
 
 	/**
-	 * Get the sticky purchase button template content.
-	 *
-	 * @return string
-	 */
-	public function getStickyPurchaseButtonTemplateContentAttribute(): string {
-		$template = get_block_template( 'surecart/surecart//sticky-purchase-button', 'wp_template_part' );
-		if ( ! $template || empty( $template->content ) ) {
-			return '';
-		}
-
-		return $template->content;
-	}
-
-	/**
 	 * Get with sorted prices.
 	 *
-	 * @return this
+	 * @return self
 	 */
 	public function withSortedPrices() {
 		if ( empty( $this->prices->data ) ) {

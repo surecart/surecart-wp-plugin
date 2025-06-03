@@ -15,9 +15,13 @@
 >
 	<?php echo do_blocks( $content );  // phpcs:ignore WordPress.Security.EscapeOutput ?>
 	
-	<?php if ( ! empty( $attributes['show_sticky_purchase_button'] ) ) : ?>
+	<?php
+	if ( ! empty( $attributes['show_sticky_purchase_button'] ) ) :
+		$sticky_purchase_button_template = get_block_template( 'surecart/surecart//sticky-purchase-button', 'wp_template_part' );
+		$sticky_purchase_button_content  = $sticky_purchase_button_template ? $sticky_purchase_button_template->content ?? '' : '';
+		?>
 		<div class="sc-sticky-purchase-button-container">
-			<?php echo do_blocks( $product->sticky_purchase_button_template_content ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+			<?php echo do_blocks( $sticky_purchase_button_content ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 		</div>
 	<?php endif; ?>
 </form>
