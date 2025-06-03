@@ -237,6 +237,7 @@ dispatch(coreStore).addEntities([
 		label: __('Product', 'surecart'),
 		baseURL: '/surecart/v1/products',
 		baseURLParams: { context: 'edit' },
+		supportsPagination: true,
 	},
 	{
 		name: 'product-media',
@@ -272,6 +273,7 @@ dispatch(coreStore).addEntities([
 		label: __('Price', 'surecart'),
 		baseURL: '/surecart/v1/prices',
 		baseURLParams: { context: 'edit' },
+		supportsPagination: true,
 	},
 	{
 		name: 'promotion',

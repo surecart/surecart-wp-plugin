@@ -1,11 +1,7 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { useState, useEffect } from '@wordpress/element';
-import { store as coreStore } from '@wordpress/core-data';
-import { select, useDispatch } from '@wordpress/data';
-import apiFetch from '@wordpress/api-fetch';
-import { addQueryArgs } from '@wordpress/url';
-
+import { useState, useMemo } from '@wordpress/element';
+import { useEntityRecords } from '@wordpress/core-data';
 import SelectPrice from './SelectPrice';
 
 export default ({
@@ -20,96 +16,86 @@ export default ({
 	hidePrefixOnSearch = false,
 	...props
 }) => {
-	const [query, setQuery] = useState(null);
-	const [products, setProducts] = useState([]);
-	const [isLoading, setIsLoading] = useState(false);
-	const [pagination, setPagination] = useState({
-		enabled: true,
-		page: 1,
-		per_page: 10,
-	});
-	const { receiveEntityRecords } = useDispatch(coreStore);
+	const [query, setQuery] = useState('');
+	const [page, setPage] = useState(1);
+	const per_page = 10;
 
-	const handleOnScrollEnd = () => {
-		if (!pagination.enabled || isLoading || !!query) return;
-		setPagination((state) => ({ ...state, page: (state.page += 1) }));
-	};
-
-	const removeDuplicateProducts = (products) => {
-		if (!products || !Array.isArray(products)) return [];
-
-		const seenIds = new Set();
-		return products.filter((product) => {
-			if (!product?.id) return false; // Skip products without valid IDs
-			if (seenIds.has(product.id)) return false; // Skip duplicates
-			seenIds.add(product.id);
-			return true;
-		});
-	};
-
-	const fetchData = async (pagination) => {
-		const { baseURL } = select(coreStore).getEntityConfig(
-			'surecart',
-			'product'
-		);
-		if (!baseURL) return;
-
-		const queryArgs = {
-			query,
+	// Build query arguments
+	const queryArgs = useMemo(
+		() => ({
+			query: query || undefined,
 			expand: ['prices', 'variants'],
-			page: pagination.page,
-			per_page: pagination.per_page,
+			page,
+			per_page,
 			...requestQuery,
 			context: 'edit',
-		};
+		}),
+		[query, page, requestQuery]
+	);
 
-		const data = select(coreStore).getEntityRecords('surecart', 'product', {
-			...queryArgs,
-		});
+	// Use useEntityRecords hook
+	const {
+		records: fetchedProducts,
+		isResolving: loading,
+		totalPages,
+	} = useEntityRecords('surecart', 'product', queryArgs);
 
-		if (data && data.length) {
-			setProducts((currentProducts) => {
-				const newProducts = [...currentProducts, ...(data || [])];
-				// Remove duplicates based on product id
-				return removeDuplicateProducts(newProducts);
-			});
-			return;
+	// Accumulate products for pagination (only when not searching)
+	const [accumulatedProducts, setAccumulatedProducts] = useState([]);
+
+	// Reset accumulated products when query changes
+	useMemo(() => {
+		if (query) {
+			setAccumulatedProducts([]);
+			setPage(1);
 		}
-
-		try {
-			setIsLoading(true);
-			const data = await apiFetch({
-				path: addQueryArgs(baseURL, queryArgs),
-			});
-
-			setProducts((currentProducts) => {
-				const newProducts = [...currentProducts, ...(data || [])];
-				// Remove duplicates based on product id
-				return removeDuplicateProducts(newProducts);
-			});
-			receiveEntityRecords('surecart', 'product', data, queryArgs);
-		} catch (error) {
-			setPagination((state) => ({ ...state, enabled: false }));
-			console.error(error);
-		} finally {
-			setIsLoading(false);
-		}
-	};
-
-	useEffect(() => {
-		if (query === null) return;
-		setProducts([]);
-		setPagination((state) => ({ ...state, page: 1 }));
 	}, [query]);
 
-	useEffect(() => {
-		if (query === null || isLoading) return;
-		fetchData(pagination);
-	}, [pagination]);
+	// Update accumulated products when new data arrives
+	useMemo(() => {
+		if (!fetchedProducts) return;
 
-	if (hidePrefixOnSearch && query) {
-		prefix = null;
-	}
+		if (query) {
+			// When searching, show only current results
+			setAccumulatedProducts(fetchedProducts);
+		} else {
+			// When not searching, accumulate results for pagination
+			if (page === 1) {
+				setAccumulatedProducts(fetchedProducts);
+			} else {
+				setAccumulatedProducts((prev) => {
+					const combined = [...prev, ...fetchedProducts];
+					// Remove duplicates based on product id
+					const seenIds = new Set();
+					return combined.filter((product) => {
+						if (!product?.id || seenIds.has(product.id))
+							return false;
+						seenIds.add(product.id);
+						return true;
+					});
+				});
+			}
+		}
+	}, [fetchedProducts, query, page]);
+
+	const handleOnScrollEnd = () => {
+		// Don't paginate when searching or if already loading or no more pages
+		if (query || loading || !totalPages || page >= totalPages) return;
+		setPage((prev) => prev + 1);
+	};
+
+	const handleQuery = (newQuery) => {
+		setQuery(newQuery);
+		setPage(1);
+	};
+
+	const handleFetch = () => {
+		setQuery('');
+		setPage(1);
+	};
+
+	// Hide prefix when searching if requested
+	const displayPrefix = hidePrefixOnSearch && query ? null : prefix;
 
 	return (
 		<SelectPrice
@@ -121,13 +107,13 @@ export default ({
 			ad_hoc={ad_hoc}
 			variable={variable}
 			open={open}
-			products={products}
-			onQuery={setQuery}
-			onFetch={() => setQuery('')}
-			loading={isLoading}
+			products={accumulatedProducts}
+			onQuery={handleQuery}
+			onFetch={handleFetch}
+			loading={loading}
 			onSelect={onSelect}
 			onScrollEnd={handleOnScrollEnd}
-			prefix={prefix}
+			prefix={displayPrefix}
 			{...props}
 		/>
 	);
