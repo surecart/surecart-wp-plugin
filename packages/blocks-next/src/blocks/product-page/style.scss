@@ -18,68 +18,26 @@
 }
 
 /**
- * Sticky Purchase Button Styles.
+ * Sticky Purchase Button Style.
  */
 .sc-sticky-purchase-button-container {
 	position: relative;
-	pointer-events: none;
 
 	.sc-sticky-purchase-button {
-		max-width: 100%;
-		display: block;
 		opacity: 0;
 		visibility: hidden;
 		transform: translateY(100%);
-		position: fixed !important;
-		bottom: 0 !important;
-		left: 0 !important;
-		right: 0 !important;
-		z-index: 10 !important;
-		transition: all 0.3s ease !important;
-		width: 100vw !important;
-		margin-left: 0 !important;
-		margin-right: 0 !important;
-		box-sizing: border-box !important;
-		pointer-events: auto;
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		z-index: 10;
+		transition: all 0.3s ease;
 
-		/* Show state */
 		&.is-visible {
 			opacity: 1;
 			visibility: visible;
 			transform: translateY(0);
-		}
-
-		&.wp-block-group {
-			width: 100vw !important;
-			display: flex;
-		}
-
-		.wp-block-columns.alignwide {
-			width: 100% !important;
-		}
-
-		@media (max-width: 768px) {
-			.wp-block-columns {
-				flex-direction: column;
-
-				.wp-block-column {
-					flex-basis: 100% !important;
-					margin-left: 0;
-					margin-bottom: 10px;
-				}
-			}
-		}
-
-		.wp-block-surecart-product-buy-buttons {
-			margin: 0;
-
-			@media (max-width: 768px) {
-				width: 100%;
-
-				.wp-block-button {
-					width: 100%;
-				}
-			}
 		}
 	}
 }

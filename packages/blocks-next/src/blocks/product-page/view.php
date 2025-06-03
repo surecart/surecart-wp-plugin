@@ -21,7 +21,9 @@
 		$sticky_purchase_button_content  = $sticky_purchase_button_template ? $sticky_purchase_button_template->content ?? '' : '';
 		?>
 		<div class="sc-sticky-purchase-button-container">
-			<?php echo do_blocks( $sticky_purchase_button_content ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+			<div class="sc-sticky-purchase-button">
+				<?php echo do_blocks( $sticky_purchase_button_content ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+			</div>
 		</div>
 	<?php endif; ?>
 </form>

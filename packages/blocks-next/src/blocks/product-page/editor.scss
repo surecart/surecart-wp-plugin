@@ -1,12 +1,5 @@
-/**
- * Sticky Purchase Button Styles for Editor.
- */
-.sc-sticky-purchase-button-container {
-	.sc-sticky-purchase-button {
-		max-width: 100%;
-		display: block;
-		opacity: 1;
-		visibility: visible;
-		position: static !important;
-	}
+.sc-sticky-purchase-button-container .sc-sticky-purchase-button {
+	opacity: 1;
+	visibility: visible;
+	position: static;
 }
