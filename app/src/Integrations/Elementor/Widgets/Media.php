@@ -118,7 +118,10 @@ class Media extends \Elementor\Widget_Base {
 				'label_on'  => esc_html__( 'Yes', 'surecart' ),
 				'label_off' => esc_html__( 'No', 'surecart' ),
 				'default'   => 'yes',
-			]
+				'condition' => [
+					'desktop_gallery' => 'slider',
+				],
+			],
 		);
 
 		$this->add_control(
@@ -158,6 +161,7 @@ class Media extends \Elementor\Widget_Base {
 				],
 				'condition'  => [
 					'slider_is_auto_height!' => 'yes',
+					'desktop_gallery'        => 'slider',
 				],
 			]
 		);
@@ -272,43 +276,6 @@ class Media extends \Elementor\Widget_Base {
 	}
 
 	/**
-	 * Get featured images for the product.
-	 *
-	 * This method retrieves the product's gallery images and formats them for use in the widget.
-	 * If no images are found, it returns an array of placeholder images.
-	 *
-	 * @param int $index The index of the featured image to retrieve. Defaults to 0.
-	 *
-	 * @return array
-	 */
-	private function get_featured_image( int $index = 0 ): array {
-		$product         = sc_get_product();
-		$featured_images = array();
-
-		$featured_images = ( ! $product || empty( $product->gallery ) ) ? array_fill(
-			0,
-			20,
-			array(
-				'src'   => $this->get_placeholder_image(),
-				'width' => 1000,
-			)
-		) : array_map(
-			function ( $image ) {
-				return array(
-					'src'   => $image->guid ? $image->guid : $this->get_placeholder_image(),
-					'width' => $image->width ?? 1000,
-				);
-			},
-			$product->gallery
-		);
-
-		return $featured_images[ $index ] ?? array(
-			'src'   => $this->get_placeholder_image(),
-			'width' => 1000,
-		);
-	}
-
-	/**
 	 * Render the widget output on the frontend.
 	 *
 	 * @return void
@@ -321,10 +288,13 @@ class Media extends \Elementor\Widget_Base {
 			return;
 		}
 
+		$auto_height = 'gallery' === $settings['desktop_gallery'] ? true : 'yes' === $settings['slider_is_auto_height'];
+		$height      = ! $auto_height ? ( ! empty( $settings['slider_height']['size'] ) ? $settings['slider_height']['size'] . $settings['slider_height']['unit'] : '' ) : '';
+
 		$attributes = array(
 			'thumbnails_per_page' => $settings['thumbnails_per_page'],
-			'auto_height'         => 'yes' === $settings['slider_is_auto_height'],
-			'height'              => ! empty( $settings['slider_height']['size'] ) ? $settings['slider_height']['size'] . $settings['slider_height']['unit'] : '',
+			'auto_height'         => $auto_height,
+			'height'              => $height,
 			'width'               => ! empty( $settings['slider_max_image_width']['size'] ) ? $settings['slider_max_image_width']['size'] . $settings['slider_max_image_width']['unit'] : '',
 			'lightbox'            => 'yes' === $settings['lightbox'],
 			'desktop_gallery'     => 'gallery' === $settings['desktop_gallery'],
