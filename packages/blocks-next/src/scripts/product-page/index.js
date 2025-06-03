@@ -619,19 +619,87 @@ function initStickyButton() {
 
 		let isVisible = false;
 		let ticking = false;
+		let lastScrollY = window.scrollY;
+		let scrollDirection = 'down';
+		let viewportHeight = window.innerHeight;
+		let lastScrollTime = Date.now();
+		let hideTimeout;
+
+		// Get the document height.
+		const getDocumentHeight = () => {
+			return Math.max(
+				document.body.scrollHeight,
+				document.documentElement.scrollHeight,
+				document.body.offsetHeight,
+				document.documentElement.offsetHeight,
+				document.body.clientHeight,
+				document.documentElement.clientHeight
+			);
+		};
 
 		function updateStickyButtonVisibility() {
 			const rect = productBuyButtons.getBoundingClientRect();
-			const shouldShow = rect.bottom < 0; // Product form is above viewport
+			const scrollY = window.scrollY;
+			const currentTime = Date.now();
 
+			// Determine scroll direction.
+			scrollDirection = scrollY > lastScrollY ? 'down' : 'up';
+			lastScrollY = scrollY;
+
+			// Calculate if we're near the bottom of the page (within 100px of bottom).
+			const nearBottom =
+				scrollY + viewportHeight >= getDocumentHeight() - 100;
+
+			// Check if the buy buttons are out of view.
+			const buyButtonsOutOfView = rect.bottom < 0;
+
+			// Determine if we should show the sticky button.
+			// Show when:
+			// 1. Buy buttons are out of view AND
+			// 2. Either we're not near the bottom OR we're scrolling up.
+			const shouldShow =
+				buyButtonsOutOfView &&
+				(!nearBottom || scrollDirection === 'up');
+
+			// Clear any pending hide timeout when scrolling.
+			if (hideTimeout) {
+				clearTimeout(hideTimeout);
+				hideTimeout = null;
+			}
+
+			// Update visibility state.
 			if (shouldShow !== isVisible) {
 				isVisible = shouldShow;
 
 				if (isVisible) {
+					stickyButton.classList.remove('is-hiding');
 					stickyButton.classList.add('is-visible');
 				} else {
-					stickyButton.classList.remove('is-visible');
+					// Add a hiding class first for smooth transition.
+					stickyButton.classList.add('is-hiding');
+
+					// Then remove the visible class after transition completes.
+					setTimeout(() => {
+						if (!isVisible) {
+							stickyButton.classList.remove('is-visible');
+						}
+					}, 300);
 				}
+			}
+
+			// If user has stopped scrolling for more than 2 seconds and we're at the bottom,
+			// hide the sticky button for better viewing of footer content.
+			if (nearBottom && scrollDirection === 'down') {
+				lastScrollTime = currentTime;
+				hideTimeout = setTimeout(() => {
+					if (nearBottom) {
+						isVisible = false;
+						stickyButton.classList.add('is-hiding');
+						setTimeout(() => {
+							stickyButton.classList.remove('is-visible');
+						}, 300);
+					}
+				}, 2000);
 			}
 
 			ticking = false;
@@ -646,7 +714,16 @@ function initStickyButton() {
 
 		// Listen for scroll events.
 		window.addEventListener('scroll', requestTick, { passive: true });
-		window.addEventListener('resize', requestTick, { passive: true });
+
+		// Update on resize to handle orientation changes and dynamic content.
+		window.addEventListener(
+			'resize',
+			() => {
+				viewportHeight = window.innerHeight;
+				requestTick();
+			},
+			{ passive: true }
+		);
 
 		// Initial check.
 		updateStickyButtonVisibility();

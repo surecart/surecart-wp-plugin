@@ -31,13 +31,26 @@
 		bottom: 0;
 		left: 0;
 		right: 0;
-		z-index: 10;
+		z-index: 100; // greater than the cart toggle button.
 		transition: all 0.3s ease;
+		box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
 
 		&.is-visible {
 			opacity: 1;
 			visibility: visible;
 			transform: translateY(0);
+		}
+
+		&.is-hiding {
+			opacity: 0;
+			transform: translateY(100%);
+		}
+
+		// Mobile device styles.
+		@media (max-width: 768px) {
+			&.is-visible {
+				padding: 0 30px;
+			}
 		}
 	}
 }
