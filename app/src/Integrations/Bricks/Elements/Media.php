@@ -74,6 +74,7 @@ class Media extends \Bricks\Element {
 				'slider'  => esc_html__( 'Slider View', 'surecart' ),
 				'gallery' => esc_html__( 'Gallery View', 'surecart' ),
 			],
+			'inline'     => true,
 			'fullAccess' => true,
 			'default'    => 'slider',
 		];
