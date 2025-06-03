@@ -166,7 +166,8 @@ class RequestCacheService {
 		if ( ! $this->canUseTransient() ) {
 			return false;
 		}
-		return get_transient( $this->getTransientCacheKey() );
+		$key = $this->getTransientCacheKey();
+		return $key ? get_transient( $key ) : false;
 	}
 
 	/**
