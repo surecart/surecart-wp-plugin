@@ -86,6 +86,9 @@ class Media extends \Bricks\Element {
 			'inline'     => true,
 			'fullAccess' => true,
 			'default'    => true,
+			'required'   => [
+				[ 'desktop_gallery', '=', 'slider' ],
+			],
 		];
 
 		$this->controls['lightbox'] = [
@@ -106,6 +109,7 @@ class Media extends \Bricks\Element {
 			'placeholder' => '310px',
 			'required'    => [
 				[ 'auto_height', '!=', true ],
+				[ 'desktop_gallery', '=', 'slider' ],
 			],
 			'fullAccess'  => true,
 		];
@@ -174,10 +178,9 @@ class Media extends \Bricks\Element {
 		$product             = sc_get_product();
 		$settings            = $this->settings;
 		$thumbnails_per_page = ! empty( $settings['thumbnails_per_page'] ) ? (int) $settings['thumbnails_per_page'] : 5;
+		$desktop_gallery     = ! empty( $settings['desktop_gallery'] ) ? $settings['desktop_gallery'] : 'slider';
 
 		if ( $this->is_admin_editor() ) {
-			$desktop_gallery = ! empty( $this->settings['desktop_gallery'] ) ? $this->settings['desktop_gallery'] : 'slider';
-
 			if ( 'gallery' === $desktop_gallery ) {
 				$content = '<div class="sc-image-gallery"><div class="swiper swiper-initialized"><div class="swiper-wrapper">';
 				for ( $i = 0; $i < 3; $i++ ) {
@@ -219,14 +222,17 @@ class Media extends \Bricks\Element {
 			return;
 		}
 
+		$auto_height = 'gallery' === $desktop_gallery ? true : ! empty( $settings['auto_height'] );
+		$height      = ! $auto_height ? ( ! empty( $settings['height'] ) ? $settings['height'] : '310px' ) : '';
+
 		echo $this->html( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			[
-				'auto_height'         => (bool) ! empty( $this->settings['auto_height'] ),
-				'height'              => esc_html( $this->settings['height'] ),
+				'auto_height'         => $auto_height,
+				'height'              => $height,
 				'lightbox'            => (bool) ! empty( $this->settings['lightbox'] ),
 				'width'               => esc_html( $this->settings['max_image_width'] ?? null ),
 				'thumbnails_per_page' => $thumbnails_per_page,
-				'desktop_gallery'     => ! empty( $this->settings['desktop_gallery'] ) && 'gallery' === $this->settings['desktop_gallery'],
+				'desktop_gallery'     => 'gallery' === $desktop_gallery,
 				'show_thumbs'         => (bool) ! empty( $this->settings['show_thumbs'] ),
 			]
 		);

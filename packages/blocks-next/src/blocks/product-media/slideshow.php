@@ -46,7 +46,7 @@
 									array_filter(
 										[
 											'loading' => $index > 0 ? 'lazy' : 'eager',
-											'style'   => ( ! empty( $width ) ? 'max-width : min(' . esc_attr( $width ) . ', 100%);' : '' ) . ';' . ( empty( $attributes['auto_height'] ) && ! empty( $attributes['height'] ) ? "height: {$attributes['height']}" : '' ),
+											'style'   => ( ! empty( $width ) ? 'max-width : min(' . esc_attr( $width ) . ', 100%);' : '' ) . ';' . ( ! $auto_height && ! empty( $attributes['height'] ) ? "height: {$attributes['height']}" : '' ),
 										]
 									)
 								),
