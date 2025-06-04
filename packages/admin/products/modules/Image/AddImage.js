@@ -2,7 +2,7 @@
 import { css, jsx } from '@emotion/core';
 import { ScFlex, ScTag } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
-const ALLOWED_MEDIA_TYPES = ['image'];
+const ALLOWED_MEDIA_TYPES = ['image', 'video'];
 import { MediaUpload } from '@wordpress/media-utils';
 
 export default ({ value, onSelect, ...rest }) => {

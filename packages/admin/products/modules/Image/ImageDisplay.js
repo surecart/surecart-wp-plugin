@@ -6,6 +6,11 @@ import Download from './Download';
 import { SortableKnob } from 'react-easy-sort';
 
 export default ({ productMedia, onDeleteImage, onDownloaded, isFeatured }) => {
+	const isVideo = productMedia?.url?.includes('.mp4') || 
+		productMedia?.url?.includes('.webm') || 
+		productMedia?.url?.includes('.ogg') ||
+		productMedia?.media?.mime_type?.includes('video');
+
 	return (
 		<div
 			css={css`
@@ -42,6 +47,21 @@ export default ({ productMedia, onDeleteImage, onDownloaded, isFeatured }) => {
 					`}
 				>
 					{__('Featured', 'surecart')}
+				</ScTag>
+			)}
+
+			{isVideo && (
+				<ScTag
+					type="warning"
+					className="media-type-badge"
+					size="small"
+					css={css`
+						position: absolute;
+						top: ${isFeatured ? '25px' : '5px'};
+						left: 5px;
+					`}
+				>
+					{__('Video', 'surecart')}
 				</ScTag>
 			)}
 
@@ -90,21 +110,63 @@ export default ({ productMedia, onDeleteImage, onDownloaded, isFeatured }) => {
 				></div>
 			</SortableKnob>
 
-			<img
-				src={productMedia?.url || productMedia?.media?.url}
-				css={css`
-					max-width: 100%;
-					aspect-ratio: 1 / 1;
-					object-fit: contain;
-					height: auto;
-					display: block;
-					border-radius: var(--sc-border-radius-medium);
-					pointer-events: none;
-				`}
-				alt={productMedia?.media?.alt}
-				{...(productMedia?.title ? { title: productMedia?.title } : {})}
-				loading="lazy"
-			/>
+			{productMedia?.url || productMedia?.media?.url ? (
+				isVideo ? (
+					<div
+						css={css`
+							display: flex;
+							align-items: center;
+							justify-content: center;
+							height: 100%;
+							width: 100%;
+							position: relative;
+						`}
+					>
+						<video
+							css={css`
+								max-width: 100%;
+								max-height: 100%;
+								object-fit: contain;
+								border-radius: var(--sc-border-radius-medium);
+								pointer-events: none;
+							`}
+							src={productMedia?.url || productMedia?.media?.url}
+							muted
+							loop
+							autoPlay
+							playsInline
+						/>
+						<ScIcon
+							css={css`
+								position: absolute;
+								color: var(--sc-color-white);
+								background-color: rgba(0, 0, 0, 0.5);
+								border-radius: 50%;
+								padding: var(--sc-spacing-small);
+								width: 40px;
+								height: 40px;
+							`}
+							name="play"
+						/>
+					</div>
+				) : (
+					<img
+						src={productMedia?.url || productMedia?.media?.url}
+						css={css`
+							max-width: 100%;
+							aspect-ratio: 1 / 1;
+							object-fit: contain;
+							height: auto;
+							display: block;
+							border-radius: var(--sc-border-radius-medium);
+							pointer-events: none;
+						`}
+						alt={productMedia?.media?.alt}
+						{...(productMedia?.title ? { title: productMedia?.title } : {})}
+						loading="lazy"
+					/>
+				)
+			) : null}
 		</div>
 	);
 };

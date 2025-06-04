@@ -73,7 +73,7 @@ export default ({ productId, product, updateProduct }) => {
 	};
 
 	return (
-		<Box title={__('Images', 'surecart')}>
+		<Box title={__('Media', 'surecart')}>
 			<Error error={error} setError={setError} margin="100px" />
 			<SortableList
 				css={css`

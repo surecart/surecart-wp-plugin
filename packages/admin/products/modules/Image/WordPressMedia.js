@@ -8,7 +8,7 @@ import { MediaUpload } from '@wordpress/block-editor';
 import { Notice } from '@wordpress/components';
 import { useDispatch } from '@wordpress/data';
 import { SortableKnob } from 'react-easy-sort';
-const ALLOWED_MEDIA_TYPES = ['image'];
+const ALLOWED_MEDIA_TYPES = ['image', 'video'];
 
 export default ({ id, isNew, onRemove, isFeatured, onSelect }) => {
 	const { invalidateResolution } = useDispatch(coreStore);
@@ -52,13 +52,15 @@ export default ({ id, isNew, onRemove, isFeatured, onSelect }) => {
 					]}
 				>
 					{__(
-						'This image has been deleted or is unavailable.',
+						'This media has been deleted or is unavailable.',
 						'surecart'
 					)}
 				</Notice>
 			</div>
 		);
 	}
+
+	const isVideo = media?.mime_type?.includes('video');
 
 	return (
 		<div
@@ -113,6 +115,21 @@ export default ({ id, isNew, onRemove, isFeatured, onSelect }) => {
 					`}
 				>
 					{__('New', 'surecart')}
+				</ScTag>
+			)}
+
+			{isVideo && (
+				<ScTag
+					type="warning"
+					className="media-type-badge"
+					size="small"
+					css={css`
+						position: absolute;
+						top: ${isFeatured && isNew ? '45px' : isFeatured || isNew ? '25px' : '5px'};
+						left: 5px;
+					`}
+				>
+					{__('Video', 'surecart')}
 				</ScTag>
 			)}
 
@@ -202,26 +219,66 @@ export default ({ id, isNew, onRemove, isFeatured, onSelect }) => {
 			</SortableKnob>
 
 			{media?.source_url ? (
-				<img
-					src={
-						media?.media_details?.sizes?.medium?.source_url ||
-						media?.source_url
-					}
-					css={css`
-						max-width: 100%;
-						aspect-ratio: 1 / 1;
-						object-fit: contain;
-						height: auto;
-						display: block;
-						border-radius: var(--sc-border-radius-medium);
-						pointer-events: none;
-					`}
-					alt={media?.alt_text}
-					{...(media?.title?.rendered
-						? { title: media?.title?.rendered }
-						: {})}
-					loading="lazy"
-				/>
+				isVideo ? (
+					<div
+						css={css`
+							display: flex;
+							align-items: center;
+							justify-content: center;
+							height: 100%;
+							width: 100%;
+							position: relative;
+						`}
+					>
+						<video
+							css={css`
+								max-width: 100%;
+								max-height: 100%;
+								object-fit: contain;
+								border-radius: var(--sc-border-radius-medium);
+								pointer-events: none;
+							`}
+							src={media?.source_url}
+							muted
+							loop
+							autoPlay
+							playsInline
+						/>
+						<ScIcon
+							css={css`
+								position: absolute;
+								color: var(--sc-color-white);
+								background-color: rgba(0, 0, 0, 0.5);
+								border-radius: 50%;
+								padding: var(--sc-spacing-small);
+								width: 40px;
+								height: 40px;
+							`}
+							name="play"
+						/>
+					</div>
+				) : (
+					<img
+						src={
+							media?.media_details?.sizes?.medium?.source_url ||
+							media?.source_url
+						}
+						css={css`
+							max-width: 100%;
+							aspect-ratio: 1 / 1;
+							object-fit: contain;
+							height: auto;
+							display: block;
+							border-radius: var(--sc-border-radius-medium);
+							pointer-events: none;
+						`}
+						alt={media?.alt_text}
+						{...(media?.title?.rendered
+							? { title: media?.title?.rendered }
+							: {})}
+						loading="lazy"
+					/>
+				)
 			) : (
 				<ScSkeleton
 					style={{
