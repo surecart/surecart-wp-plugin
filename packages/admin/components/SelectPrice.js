@@ -145,6 +145,7 @@ export default ({
 			ref={selectRef}
 			value={value}
 			className={className}
+			{...(open && { open })}
 			loading={loading}
 			placeholder={__('Select a price', 'surecart')}
 			searchPlaceholder={__('Search for a price...', 'surecart')}
