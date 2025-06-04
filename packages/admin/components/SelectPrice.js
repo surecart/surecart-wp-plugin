@@ -48,6 +48,13 @@ export default ({
 			if (excludeProducts && excludeProducts?.includes(product.id)) {
 				return false;
 			}
+			// if all prices of the product are ad_hoc and ad_hoc is false, skip the product.
+			if (
+				!ad_hoc &&
+				product?.prices?.data?.every((price) => price?.ad_hoc)
+			) {
+				return false;
+			}
 			return true;
 		})
 		.map((product) => {
