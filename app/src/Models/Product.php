@@ -559,9 +559,9 @@ class Product extends Model implements PageModel {
 	}
 
 	/**
-	 * Get product with acgive and sorted prices.
+	 * Get product with active and sorted prices.
 	 *
-	 * @return this
+	 * @return self
 	 */
 	public function withActivePrices() {
 		if ( empty( $this->prices->data ) ) {
