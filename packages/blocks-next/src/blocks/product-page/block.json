@@ -40,5 +40,9 @@
 		"surecart-prose"
 	],
 	"viewScript": ["wp-url", "wp-api-fetch", "wp-i18n", "wp-a11y"],
-	"viewScriptModule": ["@surecart/checkout", "@surecart/product-page"]
+	"viewScriptModule": [
+		"@surecart/checkout",
+		"@surecart/product-page",
+		"@surecart/sticky-purchase-button"
+	]
 }
