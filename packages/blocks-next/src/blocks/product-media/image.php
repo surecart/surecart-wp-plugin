@@ -10,6 +10,7 @@
 		)
 	);
 	?>
+	data-wp-init="surecart/product-media::actions.init"
 >
 	<?php
 	echo wp_kses(

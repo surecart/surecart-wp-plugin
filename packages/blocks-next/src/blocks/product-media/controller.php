@@ -19,8 +19,15 @@ if ( empty( $gallery ) ) {
 
 if ( ! empty( $attributes['lightbox'] ) ) {
 	wp_enqueue_style( 'surecart-lightbox' );
-	wp_enqueue_script_module( 'surecart/lightbox' );
 }
+
+wp_interactivity_state(
+	'surecart/product-media',
+	array(
+		'loadLightBox'       => $attributes['lightbox'],
+		'loadImageSlider'    => false,
+	)
+);
 
 // handle image.
 if ( count( $gallery ) === 1 ) {
@@ -29,10 +36,17 @@ if ( count( $gallery ) === 1 ) {
 
 // only enqueue if we are needing a slideshow.
 wp_enqueue_style( 'surecart-image-slider' );
-wp_enqueue_script_module( '@surecart/image-slider' );
+
+wp_interactivity_state(
+	'surecart/product-media',
+	array(
+		'loadImageSlider'    => true,
+	)
+);
 
 // handle slideshow.
 $slider_options = array(
+	'activeBreakpoint'   => apply_filters( 'surecart/image-slider/active-breakpoint', $attributes['desktop_gallery'] ? 782 : false ),
 	'sliderOptions'      => array(
 		'autoHeight'   => ! empty( $attributes['auto_height'] ),
 		'spaceBetween' => 40,
@@ -53,5 +67,12 @@ $height = 'auto';
 if ( empty( $attributes['auto_height'] ) && ! empty( $attributes['height'] ) ) {
 	$height = $attributes['height'];
 }
+
+wp_interactivity_state(
+	'surecart/image-slider',
+	array(
+		'active' => true, // to prevent flash of unstyled content.
+	)
+);
 
 return 'file:./slideshow.php';

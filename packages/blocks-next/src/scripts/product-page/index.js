@@ -8,6 +8,8 @@ import { store, getContext } from '@wordpress/interactivity';
  */
 const { actions: checkoutActions } = store('surecart/checkout');
 const { actions: cartActions, state: cartState } = store('surecart/cart');
+const { actions: quickViewActions } = store('surecart/product-quick-view');
+
 const { addQueryArgs } = wp.url; // TODO: replace with `@wordpress/url` when available.
 const { sprintf, __ } = wp.i18n;
 const { scProductViewed } = require('./events');
@@ -198,14 +200,14 @@ const { state, actions } = store('surecart/product-page', {
 			if (!context) {
 				return true;
 			}
-			const { text, outOfStockText, unavailableText } = context;
+			const { buttonText, outOfStockText, unavailableText } = context;
 			if (state.isSoldOut) {
 				return outOfStockText;
 			}
 			if (state.isUnavailable) {
 				return unavailableText;
 			}
-			return text;
+			return buttonText;
 		},
 
 		/**
@@ -304,7 +306,10 @@ const { state, actions } = store('surecart/product-page', {
 			);
 
 			// no busy context, toggle cart right away.
-			!hasContextBusy && cartActions.open();
+			if (!hasContextBusy) {
+				cartActions.open();
+				quickViewActions.close(); // close the quick view dialog.
+			}
 
 			const context = getContext();
 			const { mode, formId, product } = context;
@@ -320,7 +325,10 @@ const { state, actions } = store('surecart/product-page', {
 				checkoutActions.setCheckout(checkout, mode, formId);
 
 				// no busy context, wait to toggle cart
-				hasContextBusy && cartActions.open();
+				if (hasContextBusy) {
+					cartActions.open();
+					quickViewActions.close(); // close the quick view dialog.
+				}
 
 				// speak the cart dialog state.
 				cartState.label = sprintf(

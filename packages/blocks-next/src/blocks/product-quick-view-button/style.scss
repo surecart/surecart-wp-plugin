@@ -1,0 +1,21 @@
+.wp-block-surecart-product-quick-view-button {
+	gap: 0.5em;
+	text-decoration: none;
+	background-color: var(--sc-color-gray-300);
+	color: var(--sc-color-gray-800);
+	cursor: pointer;
+
+	&__icon {
+		width: 1em;
+		height: 1em;
+	}
+
+	&.wp-block-button__link {
+		display: flex;
+		align-items: center;
+	}
+
+	&.loading {
+		pointer-events: none;
+	}
+}

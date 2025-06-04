@@ -8,14 +8,14 @@ namespace SureCart\Migration;
 class ProductPageWrapperService {
 
 	/**
-	 * Content of the page
+	 * Content of the page.
 	 *
 	 * @var string
 	 */
 	protected $content = '';
 
 	/**
-	 * Constructor
+	 * Constructor.
 	 *
 	 * @param string $content Content of the page.
 	 *
@@ -26,34 +26,44 @@ class ProductPageWrapperService {
 	}
 
 	/**
-	 * Has product page wrapper
+	 * Has product page wrapper.
 	 *
 	 * @return boolean
 	 */
 	public function hasProductPageWrapper() {
-		return preg_match( '/data-sc-block-id=(?:"product-page"|\'product-page\'|\\"product-page\\"|\\\'product-page\\\')/', $this->content );
+		return preg_match( '/wp:surecart\/product-page|data-sc-block-id\s*=\s*(?:"product-page"|\'product-page\'|\\"product-page\\"|\\\'product-page\\\')/', $this->content );
 	}
 
 	/**
-	 * Has product buy button
+	 * Has any surecart product block.
+	 *
+	 * @return boolean
+	 */
+	public function hasAnySureCartProductBlock(): bool {
+		// Check for blocks starting with wp:surecart/product- or wp:surecart/price-, or wp-surecart-product- or wp-surecart-price-.
+		return preg_match( '/wp:surecart\/product-|wp:surecart\/price-|wp-surecart-product-|wp-surecart-price-|class="wp-block-surecart-|data-widget_type="surecart-/', $this->content );
+	}
+
+	/**
+	 * Has product buy button.
 	 *
 	 * @return boolean
 	 */
 	public function hasProductBuyButton() {
-		return preg_match( '/data-sc-block-id=(?:"product-buy-button"|\'product-buy-button\'|\\"product-buy-button\\"|\\\'product-buy-button\\\')/', $this->content );
+		return preg_match( '/wp:surecart\/product-buy-button|data-sc-block-id\s*=\s*(?:"product-buy-button"|\'product-buy-button\'|\\"product-buy-button\\"|\\\'product-buy-button\\\')/', $this->content );
 	}
 
 	/**
-	 * Has custom amount block
+	 * Has custom amount block.
 	 *
 	 * @return boolean
 	 */
 	public function hasCustomAmountBlock() {
-		return preg_match( '/data-sc-block-id=(?:"custom-amount"|\'custom-amount\'|\\"custom-amount\\"|\\\'custom-amount\\\')/', $this->content );
+		return preg_match( '/wp:surecart\/custom-amount|data-sc-block-id\s*=\s*(?:"custom-amount"|\'custom-amount\'|\\"custom-amount\\"|\\\'custom-amount\\\')/', $this->content );
 	}
 
 	/**
-	 * Add product page wrapper
+	 * Add product page wrapper.
 	 *
 	 * @return string
 	 */
@@ -62,7 +72,7 @@ class ProductPageWrapperService {
 	}
 
 	/**
-	 * Add custom amount block
+	 * Add custom amount block.
 	 *
 	 * @return string
 	 */

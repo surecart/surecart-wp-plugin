@@ -1,10 +1,13 @@
 <div
-	class="sc-image-slider"
+	class="sc-image-media"
+	data-wp-class--sc-image-slider="state.active"
+	data-wp-class--sc-image-gallery="!state.active"
 	data-wp-interactive='{ "namespace": "surecart/image-slider" }'
-	data-wp-init="actions.init"
+	data-wp-on-window--resize="actions.init"
 	data-wp-watch="actions.updateSlider"
 	<?php echo wp_kses_data( wp_interactivity_data_wp_context( $slider_options ) ); ?>
->
+	data-wp-init="surecart/product-media::actions.init"
+	>
 	<div class="swiper" style="height: <?php echo esc_attr( $height ); ?>">
 		<div class="swiper-wrapper" data-wp-interactive='{ "namespace": "surecart/lightbox" }' <?php echo wp_kses_data( wp_interactivity_data_wp_context( [ 'images' => $product->gallery_ids ] ) ); ?>>
 			<?php foreach ( $gallery as $index => $image ) : ?>
@@ -57,9 +60,10 @@
 
 		<div class="swiper-button-prev"></div>
 		<div class="swiper-button-next"></div>
+		<div class="swiper-pagination"></div>
 	</div>
 
-	<?php if ( ! empty( $attributes['show_thumbs'] ) ) : ?>
+	<?php if ( ! empty( $attributes['show_thumbnails'] ) ) : ?>
 		<div class="sc-image-slider__thumbs">
 			<div class="sc-image-slider-button__prev" tabindex="-1" role="button" aria-label="<?php esc_attr_e( 'Previous Page', 'surecart' ); ?>">
 				<?php echo wp_kses( SureCart::svg()->get( 'chevron-left' ), sc_allowed_svg_html() ); ?>

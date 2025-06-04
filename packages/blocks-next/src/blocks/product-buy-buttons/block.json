@@ -51,7 +51,7 @@
 			}
 		}
 	},
-	"style": ["surecart-wp-buttons"],
+	"style": ["surecart-wp-buttons", "file:./style-index.css"],
 	"render": "file:./view.php",
 	"editorScript": "file:./index.js"
 }

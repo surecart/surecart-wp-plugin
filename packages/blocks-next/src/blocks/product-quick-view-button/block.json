@@ -1,0 +1,86 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "surecart/product-quick-view-button",
+	"title": "Product Quick View Button",
+	"description": "Display the product quick view button.",
+	"version": "1.0.0",
+	"category": "surecart-product-list",
+	"example": {},
+	"usesContext": ["postId"],
+	"ancestor": ["surecart/product-template"],
+	"attributes": {
+		"icon": {
+			"type": "string",
+			"default": "eye"
+		},
+		"iconPosition": {
+			"type": "string",
+			"default": "after"
+		},
+		"label": {
+			"type": "string",
+			"default": "Quick View"
+		},
+		"quickViewButtonType": {
+			"type": "string",
+			"default": "icon"
+		},
+		"width": {
+			"type": "number"
+		}
+	},
+	"supports": {
+		"interactivity": true,
+		"color": {
+			"gradients": true,
+			"link": false,
+			"__experimentalDefaultControls": {
+				"background": true,
+				"text": true
+			}
+		},
+		"spacing": {
+			"margin": true,
+			"padding": true,
+			"blockGap": true
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true,
+			"textAlign": true,
+			"__experimentalFontFamily": true,
+			"__experimentalFontWeight": true,
+			"__experimentalFontStyle": true,
+			"__experimentalTextTransform": true,
+			"__experimentalTextDecoration": true,
+			"__experimentalLetterSpacing": true,
+			"__experimentalDefaultControls": {
+				"fontSize": true,
+				"fontAppearance": true,
+				"textTransform": true
+			}
+		},
+		"__experimentalBorder": {
+			"color": true,
+			"radius": true,
+			"style": true,
+			"width": true
+		},
+		"__experimentalSelector": ".wp-block-button .wp-block-button__link"
+	},
+	"textdomain": "surecart",
+	"render": "file:./view.php",
+	"editorScript": "file:./index.js",
+	"viewScriptModule": [
+		"@surecart/checkout",
+		"@surecart/product-page",
+		"@surecart/product-quick-view"
+	],
+	"style": [
+		"surecart-wp-buttons",
+		"surecart-wp-button",
+		"file:./style-index.css",
+		"wp-block-button"
+	]
+}
