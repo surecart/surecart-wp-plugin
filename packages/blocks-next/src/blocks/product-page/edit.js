@@ -4,8 +4,6 @@
 import { useSelect } from '@wordpress/data';
 import { useState } from '@wordpress/element';
 import { store as blockEditorStore } from '@wordpress/block-editor';
-import { InspectorControls } from '@wordpress/block-editor';
-import { PanelBody, ToggleControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -16,7 +14,7 @@ import QueryPlaceholder from './list-placeholder';
 import PatternSelectionModal from '../../utilities/pattern-selection-modal';
 
 export default (props) => {
-	const { clientId, attributes, name, setAttributes } = props;
+	const { clientId, attributes, name } = props;
 	const [isPatternSelectionModalOpen, setIsPatternSelectionModalOpen] =
 		useState(false);
 	const hasInnerBlocks = useSelect(
@@ -26,17 +24,6 @@ export default (props) => {
 	const Component = hasInnerBlocks ? QueryContent : QueryPlaceholder;
 	return (
 		<>
-			<InspectorControls>
-				<PanelBody title={__('Product Page Settings', 'surecart')}>
-					<ToggleControl
-						label={__('Show sticky purchase button', 'surecart')}
-						help={__('Display a sticky purchase button when the product form is scrolled out of view', 'surecart')}
-						checked={attributes.show_sticky_purchase_button}
-						onChange={(show_sticky_purchase_button) => setAttributes({ show_sticky_purchase_button })}
-					/>
-				</PanelBody>
-			</InspectorControls>
-
 			<Component
 				{...props}
 				openPatternSelectionModal={() =>
