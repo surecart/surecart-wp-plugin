@@ -48,8 +48,8 @@
 
 		// Mobile device styles.
 		@media (max-width: 768px) {
-			&.is-visible {
-				padding: 0 30px;
+			.wp-block-columns .wp-block-column:nth-child(2) div {
+				justify-content: center;
 			}
 		}
 	}
