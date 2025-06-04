@@ -81,6 +81,7 @@ export default ({ id, setId }) => {
 								required
 								value={price}
 								ad_hoc={false}
+								variable={false}
 								includeVariants={false}
 								onSelect={({ price_id }) => setPrice(price_id)}
 								requestQuery={{
