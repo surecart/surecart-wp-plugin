@@ -11,10 +11,11 @@ import Swiper from 'swiper';
 import { Thumbs, Navigation, A11y } from 'swiper/modules';
 
 // controls the slider
-const { state } = store('surecart/image-slider', {
+const { state, actions } = store('surecart/image-slider', {
 	state: {
 		thumbsSwiper: null,
 		swiper: null,
+		active: false,
 	},
 	actions: {
 		updateSlider: () => {
@@ -25,7 +26,7 @@ const { state } = store('surecart/image-slider', {
 				lightboxState?.currentImageIndex !== undefined &&
 				lightboxState.currentImageIndex !== -1
 			) {
-				state.swiper.slideTo(lightboxState.currentImageIndex, 0);
+				state.swiper?.slideTo(lightboxState.currentImageIndex, 0);
 			}
 
 			// the selected variant has not changed.
@@ -43,7 +44,21 @@ const { state } = store('surecart/image-slider', {
 			}
 		},
 
-		init: () => {
+		destroy: () => {
+			state.active = false;
+			if (state.swiper) {
+				state.swiper.destroy(true, true);
+			}
+			if (state.thumbsSwiper) {
+				state.thumbsSwiper.destroy(true, true);
+			}
+		},
+
+		create: () => {
+			if (state.active) {
+				return;
+			}
+			state.active = true;
 			const { ref } = getElement();
 			const context = getContext();
 			const { sliderOptions, thumbSliderOptions } = context;
@@ -134,6 +149,17 @@ const { state } = store('surecart/image-slider', {
 					...(sliderOptions || {}),
 				}
 			);
+		},
+
+		init: () => {
+			const context = getContext();
+			if (context.activeBreakpoint) {
+				if (window.innerWidth >= context.activeBreakpoint) {
+					actions.destroy();
+					return;
+				}
+			}
+			actions.create();
 		},
 	},
 });

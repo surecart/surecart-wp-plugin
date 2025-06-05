@@ -9,6 +9,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 /**
  * Single product condition.
+ *
+ * @deprecated Deprecated in favor of ProductCondition with built in WordPress Post way.
  */
 class ProductSingle extends \ElementorPro\Modules\ThemeBuilder\Conditions\Condition_Base {
 	/**
@@ -44,7 +46,7 @@ class ProductSingle extends \ElementorPro\Modules\ThemeBuilder\Conditions\Condit
 	 * @return string
 	 */
 	public function get_label() {
-		return __( 'Product', 'surecart' );
+		return __( 'SureCart Product (Deprecated)', 'surecart' );
 	}
 
 	/**
@@ -53,7 +55,7 @@ class ProductSingle extends \ElementorPro\Modules\ThemeBuilder\Conditions\Condit
 	 * @return string
 	 */
 	public function get_all_label() {
-		return __( 'Products', 'surecart' );
+		return __( 'SureCart Products (Deprecated)', 'surecart' );
 	}
 
 	/**
