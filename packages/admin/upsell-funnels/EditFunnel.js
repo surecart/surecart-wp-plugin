@@ -308,12 +308,12 @@ export default ({ setBrowserURL }) => {
 					type="info"
 					open
 					title={__(
-						'Upsells Need Reusable Payment Methods',
+						'Some Payment Options May Be Hidden',
 						'surecart'
 					)}
 				>
 					{__(
-						'Enable reusable payments in your payment processor settings to charge customers for upsells after checkout.',
+						'When an upsell funnel is active, only reusable payment methods are shown at checkout. Options like "pay-in-4" or iDEAL may be hidden at checkout if they can’t support 1-click upsells.',
 						'surecart'
 					)}{' '}
 					<ExternalLink
