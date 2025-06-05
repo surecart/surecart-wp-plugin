@@ -204,7 +204,7 @@ export default () => {
 			});
 		}
 
-		if (['paid'].includes(orderStatus)) {
+		if (['paid', 'processing'].includes(orderStatus)) {
 			menuItems.push({
 				title: __('Resend Notification', 'surecart'),
 				modal: 'order_resend_notification',
