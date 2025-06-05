@@ -106,6 +106,7 @@ $current_currency = Currency::getCurrentCurrency();
 					class="sc-dropdown__menu-item__flag"
 					width="20"
 					height="15"
+					loading="lazy"
 				/>
 				<span class="sc-dropdown__menu-item__label">
 					<?php echo esc_html( $currency->name ); ?>
