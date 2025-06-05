@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-05-14T18:26:15+00:00\n"
+"POT-Creation-Date: 2025-06-05T19:59:24+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.9.0\n"
 
@@ -378,7 +378,7 @@ msgstr ""
 #: Blocks/Upsell/UpsellTotals/edit.js:45
 #: components/PriceChoices.js:21
 #: src/blocks/cart-subtotal/view.php:14
-#: sc-order-confirmation-totals2.js:36
+#: sc-order-confirmation-totals2.js:35
 #: sc-order.js:156
 #: sc-stripe-payment-request2.js:98
 #: sc-stripe-payment-request2.js:135
@@ -1639,7 +1639,7 @@ msgstr ""
 #: subscriptions/edit/modules/Modals/UpdateRecentPrice.js:257
 #: subscriptions/show/modules/LineItems/index.js:99
 #: sc-line-item-shipping2.js:26
-#: sc-order-confirmation-totals2.js:36
+#: sc-order-confirmation-totals2.js:35
 #: sc-order.js:150
 #: sc-shipping-choices2.js:60
 #: sc-shipping-choices2.js:64
@@ -1653,7 +1653,6 @@ msgstr ""
 #: src/Controllers/Admin/Settings/BaseSettings.php:56
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:113
 #: layouts/partials/admin-settings-sidebar.php:69
-#: layouts/partials/admin-settings-sidebar.php:79
 #: products/modules/integrations/Integrations.js:78
 #: settings/integrations/Integration.js:133
 #: settings/integrations/IntegrationsList.js:51
@@ -2030,7 +2029,7 @@ msgid "Connection"
 msgstr ""
 
 #: src/Controllers/Admin/Settings/BaseSettings.php:57
-#: layouts/partials/admin-settings-sidebar.php:83
+#: layouts/partials/admin-settings-sidebar.php:79
 #: products/components/price/parts/Advanced.js:8
 #: products/modules/Advanced.js:7
 msgid "Advanced"
@@ -8092,7 +8091,7 @@ msgstr ""
 #: Blocks/Upsell/UpsellTotals/edit.js:21
 #: src/blocks/cart-subtotal/edit.js:51
 #: sc-line-item-total2.js:35
-#: sc-order-confirmation-totals2.js:36
+#: sc-order-confirmation-totals2.js:35
 #: sc-order.js:137
 #: sc-subscription-next-payment2.js:105
 #: sc-upcoming-invoice.js:224
@@ -13922,7 +13921,7 @@ msgid "Manually sync your WordPress install with SureCart."
 msgstr ""
 
 #: settings/advanced/AdvancedSettings.js:441
-msgid "Match all SureCart customers with WordPress users. This is helpful if you have migrated from another eCommerce platform."
+msgid "Create WordPress user accounts for SureCart customers who don't already have a WordPress account. Use this after migrating from another eCommerce platform to ensure every SureCart customer can log in."
 msgstr ""
 
 #: settings/advanced/AdvancedSettings.js:463
@@ -16836,7 +16835,7 @@ msgstr ""
 #: src/blocks/cart-bump-line-item/view.php:18
 #: src/blocks/cart-bump-line-item/edit.js:54
 #: sc-line-item-bump.js:21
-#: sc-order-confirmation-totals2.js:36
+#: sc-order-confirmation-totals2.js:35
 msgid "Bundle Discount"
 msgstr ""
 
