@@ -148,7 +148,7 @@ class CurrencyService {
 		if ( apply_filters( 'surecart/currency/filter_url', self::$filter_url, $permalink ) && ! $this->isSitemapOrFeedRequest() ) {
 			// we can't use the Currency::getCurrencyFromRequest here because we don't want to fetch display currencies potentially multiple times per request.
 			$currency = strtolower( sanitize_text_field( $_GET['currency'] ?? $_COOKIE['sc_current_currency'] ?? '' ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-			if ( ! empty( $currency ) && strtolower( $currency ) !== strtolower( \SureCart::account()->currency ) ) {
+			if ( ! empty( $currency ) && strtolower( $currency ) !== strtolower( \SureCart::account()->currency ?? '' ) ) {
 				$permalink = add_query_arg( compact( 'currency' ), $permalink );
 			}
 		}
