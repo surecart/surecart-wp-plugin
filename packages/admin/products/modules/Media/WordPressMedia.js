@@ -23,6 +23,8 @@ export default ({ id, isNew, onRemove, isFeatured, onSelect }) => {
 		};
 	});
 
+	console.log('media', media);
+
 	if (hasLoadedMedia && !media) {
 		return (
 			<div
@@ -115,21 +117,6 @@ export default ({ id, isNew, onRemove, isFeatured, onSelect }) => {
 					`}
 				>
 					{__('New', 'surecart')}
-				</ScTag>
-			)}
-
-			{isVideo && (
-				<ScTag
-					type="warning"
-					className="media-type-badge"
-					size="small"
-					css={css`
-						position: absolute;
-						top: ${isFeatured && isNew ? '45px' : isFeatured || isNew ? '25px' : '5px'};
-						left: 5px;
-					`}
-				>
-					{__('Video', 'surecart')}
 				</ScTag>
 			)}
 
@@ -231,6 +218,7 @@ export default ({ id, isNew, onRemove, isFeatured, onSelect }) => {
 						`}
 					>
 						<video
+							controls={false}
 							css={css`
 								max-width: 100%;
 								max-height: 100%;
@@ -241,9 +229,16 @@ export default ({ id, isNew, onRemove, isFeatured, onSelect }) => {
 							src={media?.source_url}
 							muted
 							loop
-							autoPlay
 							playsInline
-						/>
+							{...(media?.thumbnail_url
+								? { poster: media?.thumbnail_url }
+								: {})}
+						>
+							<source
+								type={media?.mime_type}
+								src={media?.source_url}
+							/>
+						</video>
 						<ScIcon
 							css={css`
 								position: absolute;

@@ -6,8 +6,9 @@ import Download from './Download';
 import { SortableKnob } from 'react-easy-sort';
 
 export default ({ productMedia, onDeleteImage, onDownloaded, isFeatured }) => {
-	const isVideo = productMedia?.url?.includes('.mp4') || 
-		productMedia?.url?.includes('.webm') || 
+	const isVideo =
+		productMedia?.url?.includes('.mp4') ||
+		productMedia?.url?.includes('.webm') ||
 		productMedia?.url?.includes('.ogg') ||
 		productMedia?.media?.mime_type?.includes('video');
 
@@ -47,21 +48,6 @@ export default ({ productMedia, onDeleteImage, onDownloaded, isFeatured }) => {
 					`}
 				>
 					{__('Featured', 'surecart')}
-				</ScTag>
-			)}
-
-			{isVideo && (
-				<ScTag
-					type="warning"
-					className="media-type-badge"
-					size="small"
-					css={css`
-						position: absolute;
-						top: ${isFeatured ? '25px' : '5px'};
-						left: 5px;
-					`}
-				>
-					{__('Video', 'surecart')}
 				</ScTag>
 			)}
 
@@ -162,7 +148,9 @@ export default ({ productMedia, onDeleteImage, onDownloaded, isFeatured }) => {
 							pointer-events: none;
 						`}
 						alt={productMedia?.media?.alt}
-						{...(productMedia?.title ? { title: productMedia?.title } : {})}
+						{...(productMedia?.title
+							? { title: productMedia?.title }
+							: {})}
 						loading="lazy"
 					/>
 				)

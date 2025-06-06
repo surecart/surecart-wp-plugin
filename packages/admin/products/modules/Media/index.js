@@ -6,8 +6,8 @@ import { useState } from 'react';
 import { useDispatch } from '@wordpress/data';
 import { store as coreStore, useEntityRecord } from '@wordpress/core-data';
 import { store as noticesStore } from '@wordpress/notices';
-import AddImage from './AddImage';
-import ConfirmDeleteImage from './ConfirmDeleteImage';
+import AddMedia from './AddMedia';
+import ConfirmDeleteMedia from './ConfirmDeleteMedia';
 import Error from '../../../components/Error';
 import SortableList, { SortableItem } from 'react-easy-sort';
 import arrayMove from 'array-move';
@@ -126,7 +126,7 @@ export default ({ productId, product, updateProduct }) => {
 						</div>
 					</SortableItem>
 				))}
-				<AddImage
+				<AddMedia
 					value={product?.gallery_ids || []}
 					onClose={() =>
 						(product?.gallery_ids || []).forEach(({ id }) =>
@@ -140,7 +140,7 @@ export default ({ productId, product, updateProduct }) => {
 				/>
 			</SortableList>
 
-			<ConfirmDeleteImage
+			<ConfirmDeleteMedia
 				open={currentModal === modals.CONFIRM_DELETE_IMAGE}
 				onRequestClose={() => {
 					setSelectedImage();
