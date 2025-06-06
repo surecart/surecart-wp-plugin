@@ -24,12 +24,16 @@
 			"type": "boolean",
 			"default": true
 		},
+		"desktop_gallery": {
+			"type": "boolean",
+			"default": false
+		},
 		"height": {
 			"type": "string",
 			"default": "310px"
 		},
 		"width": {
-			"type": "number"
+			"type": "string"
 		},
 		"show_thumbs": {
 			"type": "boolean",
@@ -51,6 +55,31 @@
 			"type": "string"
 		}
 	},
+	"variations": [
+		{
+			"name": "slider",
+			"title": "Product Media Slider",
+			"icon": "image-flip-horizontal",
+			"description": "Display the product media in a slider.",
+			"isDefault": true,
+			"attributes": {
+				"desktop_gallery": false
+			},
+			"isActive": ["desktop_gallery"],
+			"scope": ["inserter", "block", "transform"]
+		},
+		{
+			"name": "gallery",
+			"title": "Product Media Gallery",
+			"icon": "screenoptions",
+			"description": "Display the product media in a gallery on desktop devices.",
+			"attributes": {
+				"desktop_gallery": true
+			},
+			"isActive": ["desktop_gallery"],
+			"scope": ["inserter", "block", "transform"]
+		}
+	],
 	"render": "file:./view.php",
 	"editorScript": "file:./index.js",
 	"editorStyle": ["surecart-image-slider"],

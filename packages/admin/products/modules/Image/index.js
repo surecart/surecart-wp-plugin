@@ -31,19 +31,25 @@ export default ({ productId, product, updateProduct }) => {
 		productId
 	);
 
-	const onDragStop = (oldIndex, newIndex) =>
+	const updateGalleryIds = (gallery_ids) => {
 		updateProduct({
-			gallery_ids: arrayMove(
-				product?.gallery_ids || [],
-				oldIndex,
-				newIndex
-			),
+			gallery_ids,
+			metadata: {
+				...(product?.metadata || {}),
+				gallery_ids,
+			},
 		});
+	};
+
+	const onDragStop = (oldIndex, newIndex) =>
+		updateGalleryIds(
+			arrayMove(product?.gallery_ids || [], oldIndex, newIndex)
+		);
 
 	const onRemoveMedia = (id) =>
-		updateProduct({
-			gallery_ids: product?.gallery_ids.filter((itemId) => itemId !== id),
-		});
+		updateGalleryIds(
+			product?.gallery_ids.filter((itemId) => itemId !== id)
+		);
 
 	const onSwapMedia = (id, newId) => {
 		// for some reason we need to select this again.
@@ -67,9 +73,7 @@ export default ({ productId, product, updateProduct }) => {
 			return;
 		}
 
-		updateProduct({
-			gallery_ids,
-		});
+		updateGalleryIds(gallery_ids);
 	};
 
 	return (
@@ -131,7 +135,7 @@ export default ({ productId, product, updateProduct }) => {
 					}
 					onSelect={(media) => {
 						const gallery_ids = (media || []).map(({ id }) => id);
-						updateProduct({ gallery_ids });
+						updateGalleryIds(gallery_ids);
 					}}
 				/>
 			</SortableList>
