@@ -83,6 +83,7 @@ class GalleryItemProductMedia extends ModelsGalleryItem implements GalleryItem {
 	 *
 	 * @param string $size The size of the image.
 	 * @param array  $attr The attributes for the tag.
+	 * @param array  $metadata Additional metadata for the media.
 	 *
 	 * @return string
 	 */
@@ -250,7 +251,7 @@ class GalleryItemProductMedia extends ModelsGalleryItem implements GalleryItem {
 	 * @return object
 	 */
 	public function attributes( $size = 'full', $attr = array() ) {
-		// Check if this is a video
+		// Check if this is a video.
 		$is_video = false;
 		if ( isset( $this->item->media ) && isset( $this->item->media->mime_type ) && strpos( $this->item->media->mime_type, 'video' ) !== false ) {
 			$is_video = true;

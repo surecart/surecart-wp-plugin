@@ -21,14 +21,18 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-
-	video {
-		max-width: 100%;
-		max-height: 100%;
-		object-fit: contain;
-	}
+	position: relative;
 }
 
+.wp-video {
+	width: 100% !important;
+	height: auto !important;
+
+	video {
+		width: 100% !important;
+		height: auto !important;
+	}
+}
 .sc-video-thumbnail {
 	position: relative;
 	width: 100%;
@@ -55,6 +59,7 @@
 		background-color: rgba(0, 0, 0, 0.6);
 		border-radius: 50%;
 		z-index: 2;
+		transition: all 0.2s ease;
 
 		svg {
 			width: 14px;
@@ -71,6 +76,7 @@
 			border-left: 8px solid white;
 			border-top: 5px solid transparent;
 			border-bottom: 5px solid transparent;
+			margin-left: 2px;
 		}
 	}
 
@@ -82,7 +88,25 @@
 		}
 
 		&::after {
+			content: "";
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
 			background: rgba(0, 0, 0, 0.2);
+			pointer-events: none;
+		}
+	}
+}
+
+// Ensure videos work properly in Swiper slides
+.swiper-slide {
+	.sc-video-container {
+		height: 100%;
+
+		.wp-video {
+			height: 100% !important;
 		}
 	}
 }
