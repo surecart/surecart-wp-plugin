@@ -21,6 +21,49 @@ class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 	}
 
 	/**
+	 * Generate a reliable thumbnail image URL for video attachments
+	 *
+	 * @param int $attachment_id The attachment ID
+	 * @return string The thumbnail URL
+	 */
+	public function get_video_thumbnail_url( $attachment_id ) {
+		// First check if the video has a poster/thumbnail set.
+		$thumb_id = get_post_thumbnail_id( $attachment_id );
+		if ( $thumb_id ) {
+			$thumb_url = wp_get_attachment_image_url( $thumb_id, 'thumbnail' );
+			if ( $thumb_url ) {
+				return $thumb_url;
+			}
+		}
+
+		// Try to get a frame from the video as thumbnail using WordPress metadata.
+		$metadata = wp_get_attachment_metadata( $attachment_id );
+		if ( ! empty( $metadata['image']['src'] ) ) {
+			return $metadata['image']['src'];
+		}
+
+		// Check if WordPress has generated any thumbnails for this video.
+		$thumb_sizes = [ 'thumbnail', 'medium', 'large' ];
+		foreach ( $thumb_sizes as $size ) {
+			$thumb = image_downsize( $attachment_id, $size );
+			if ( $thumb && ! empty( $thumb[0] ) ) {
+				return $thumb[0];
+			}
+		}
+
+		// If WordPress hasn't generated thumbnails, check for video thumbnail plugins.
+		if ( function_exists( 'get_video_thumbnail' ) ) {
+			$thumb_url = get_video_thumbnail( $attachment_id );
+			if ( $thumb_url ) {
+				return $thumb_url;
+			}
+		}
+
+		// Fallback to a default placeholder image if no thumbnail is found.
+		return esc_url_raw( trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'images/placeholder.jpg' );
+	}
+
+	/**
 	 * Get the media attribute markup.
 	 *
 	 * @param string $size The size of the image.
@@ -34,83 +77,150 @@ class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 			return '';
 		}
 
-		// Handle attachments.
-		$image = wp_get_attachment_image( $this->item->ID, $size, false, $attr );
-
-		// add any styles.
-		$tags = new \WP_HTML_Tag_Processor( $image );
-
-		// get the image tag.
-		$has_image = $tags->next_tag( 'img' );
-
-		// add inline styles.
-		if ( ! empty( $attr['style'] ) ) {
-			if ( $has_image && ! empty( $attr['style'] ) ) {
-				$tags->set_attribute( 'style', $attr['style'] );
-			}
+		// Check if this is a video attachment.
+		$is_video  = false;
+		$mime_type = get_post_mime_type( $this->item->ID );
+		if ( strpos( $mime_type, 'video' ) !== false ) {
+			$is_video = true;
 		}
 
-		if ( $this->with_lightbox ) {
-			$this->with_lightbox = false; // reset to false.
+		if ( $is_video ) {
+			// For thumbnails, get the video thumbnail.
+			if ( 'thumbnail' === $size ) {
+				$video_thumbnail_url = $this->get_video_thumbnail_url( $this->item->ID );
+				$html                = '<div class="sc-video-thumbnail">';
+				$html               .= '<img src="' . $video_thumbnail_url . '"';
+				$html               .= ' alt="' . esc_attr__( 'Video thumbnail', 'surecart' ) . '"';
+				$html               .= '>';
+				$html               .= '<div class="sc-video-play-button"></div>';
+				$html               .= '</div>';
 
-			// get the image data.
-			$full_data = $this->attributes( 'full' );
+				return $html;
+			}
 
-			// set the lightbox state.
-			wp_interactivity_state(
-				'surecart/lightbox',
-				array(
-					'metadata' => array(
-						// metadata keyed by unique image id.
-						$this->id => wp_parse_args(
-							$metadata,
-							array(
-								'uploadedSrc'      => $full_data->src,
-								'imgClassNames'    => $full_data->class,
-								'targetWidth'      => $full_data->width,
-								'targetHeight'     => $full_data->height,
-								'scaleAttr'        => false, // false or 'contain'.
-								'alt'              => $full_data->alt,
-								// translators: %s is the image title.
-								'screenReaderText' => sprintf( __( 'Viewing image: %s.', 'surecart' ), $this->post_title ),
-								'galleryId'        => get_the_ID(),
+			// For main display, handle video attachments.
+			$video_url  = wp_get_attachment_url( $this->item->ID );
+			$video_html = '<div class="sc-video-container">';
+			// $video_html .= '<video';
+
+			// // Add common attributes.
+			// $video_html .= ' src="' . esc_url( $video_url ) . '"';
+			// $video_html .= ' muted controls';
+			// $video_html .= ' playsinline';
+
+			// // Add class if provided.
+			// if ( ! empty( $attr['class'] ) ) {
+			// $video_html .= ' class="' . esc_attr( $attr['class'] ) . '"';
+			// } else {
+			// $video_html .= ' class="attachment-' . esc_attr( $size ) . ' size-' . esc_attr( $size ) . '"';
+			// }
+
+			// // Add style if provided.
+			// if ( ! empty( $attr['style'] ) ) {
+			// $video_html .= ' style="' . esc_attr( $attr['style'] ) . '"';
+			// }
+
+			// // Add loading attribute if provided.
+			// if ( ! empty( $attr['loading'] ) ) {
+			// $video_html .= ' loading="' . esc_attr( $attr['loading'] ) . '"';
+			// }
+
+			// // Add poster if available.
+			// $thumbnail_url = $this->get_video_thumbnail_url( $this->item->ID );
+			// if ( $thumbnail_url ) {
+			// $video_html .= ' poster="' . esc_url( $thumbnail_url ) . '"';
+			// }
+
+			// // Close video tag.
+			// $video_html .= '></video>';
+			$video_html = wp_video_shortcode(
+				[
+					'src'    => $video_url,
+					'poster' => $this->get_video_thumbnail_url( $this->item->ID ),
+				]
+			);
+			// $video_html .= '</div>';
+
+			return $video_html;
+		} else {
+			// Handle image attachments.
+			$image = wp_get_attachment_image( $this->item->ID, $size, false, $attr );
+
+			// add any styles.
+			$tags = new \WP_HTML_Tag_Processor( $image );
+
+			// get the image tag.
+			$has_image = $tags->next_tag( 'img' );
+
+			// add inline styles.
+			if ( ! empty( $attr['style'] ) ) {
+				if ( $has_image && ! empty( $attr['style'] ) ) {
+					$tags->set_attribute( 'style', $attr['style'] );
+				}
+			}
+
+			if ( $this->with_lightbox ) {
+				$this->with_lightbox = false; // reset to false.
+
+				// get the image data.
+				$full_data = $this->attributes( 'full' );
+
+				// set the lightbox state.
+				wp_interactivity_state(
+					'surecart/lightbox',
+					array(
+						'metadata' => array(
+							// metadata keyed by unique image id.
+							$this->id => wp_parse_args(
+								$metadata,
+								array(
+									'uploadedSrc'      => $full_data->src,
+									'imgClassNames'    => $full_data->class,
+									'targetWidth'      => $full_data->width,
+									'targetHeight'     => $full_data->height,
+									'scaleAttr'        => false, // false or 'contain'.
+									'alt'              => $full_data->alt,
+									// translators: %s is the image title.
+									'screenReaderText' => sprintf( __( 'Viewing image: %s.', 'surecart' ), $this->post_title ),
+									'galleryId'        => get_the_ID(),
+								),
 							),
 						),
-					),
-				)
-			);
+					)
+				);
 
-			$tags->set_attribute( 'data-wp-on-async--load', 'callbacks.setImageRef' );
-			$tags->set_attribute( 'data-wp-init', 'callbacks.setImageRef' );
-			$tags->set_attribute( 'data-wp-on-async--click', 'actions.showLightbox' );
-			$tags->set_attribute( 'data-wp-class--sc-hide', 'state.isContentHidden' );
-			$tags->set_attribute( 'data-wp-class--sc-show', 'state.isContentVisible' );
-			$tags->add_class( 'has-image-lightbox' );
+				$tags->set_attribute( 'data-wp-on-async--load', 'callbacks.setImageRef' );
+				$tags->set_attribute( 'data-wp-init', 'callbacks.setImageRef' );
+				$tags->set_attribute( 'data-wp-on-async--click', 'actions.showLightbox' );
+				$tags->set_attribute( 'data-wp-class--hide', 'state.isContentHidden' );
+				$tags->set_attribute( 'data-wp-class--show', 'state.isContentVisible' );
+				$tags->add_class( 'has-image-lightbox' );
 
-			// add the lightbox trigger button.
-			return $tags->get_updated_html() .
-				'<button
-					class="lightbox-trigger"
-					type="button"
-					aria-haspopup="dialog"
-					aria-label="' . esc_attr__( 'Expand image', 'surecart' ) . '"
-					data-wp-init="callbacks.initTriggerButton"
-					data-wp-on-async--click="actions.showLightbox"
-					data-wp-style--right="state.imageButtonRight"
-					data-wp-style--top="state.imageButtonTop"
-				>
-				' . \SureCart::svg()->get(
-						'maximize',
-						[
-							'width'  => 16,
-							'height' => 16,
-						]
-					) . '
-			</button>';
+				// add the lightbox trigger button.
+				return $tags->get_updated_html() .
+					'<button
+						class="lightbox-trigger"
+						type="button"
+						aria-haspopup="dialog"
+						aria-label="' . esc_attr__( 'Expand image', 'surecart' ) . '"
+						data-wp-init="callbacks.initTriggerButton"
+						data-wp-on-async--click="actions.showLightbox"
+						data-wp-style--right="state.imageButtonRight"
+						data-wp-style--top="state.imageButtonTop"
+					>
+					' . \SureCart::svg()->get(
+							'maximize',
+							[
+								'width'  => 16,
+								'height' => 16,
+							]
+						) . '
+				</button>';
+			}
+
+			// return updated html.
+			return $tags->get_updated_html();
 		}
-
-		// return updated html.
-		return $tags->get_updated_html();
 	}
 
 	/**
@@ -123,7 +233,30 @@ class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 	 */
 	public function attributes( $size = 'full', $attr = [] ) {
 		$attachment_id = ! empty( $this->item->ID ) ? $this->item->ID : 0;
-		$image         = wp_get_attachment_image_src( $attachment_id, $size, $attr['icon'] ?? false, $attr );
+
+		// Check if this is a video attachment
+		$mime_type = get_post_mime_type( $attachment_id );
+		if ( strpos( $mime_type, 'video' ) !== false ) {
+			// For video, return basic attributes
+			$video_url  = wp_get_attachment_url( $attachment_id );
+			$attachment = get_post( $attachment_id );
+			$size_class = $size;
+
+			if ( is_array( $size_class ) ) {
+				$size_class = implode( 'x', $size_class );
+			}
+
+			return (object) [
+				'src'       => $this->get_video_thumbnail_url( $attachment_id ),
+				'class'     => "attachment-$size_class size-$size_class video-attachment",
+				'alt'       => trim( strip_tags( get_post_meta( $attachment_id, '_wp_attachment_image_alt', true ) ) ),
+				'mime_type' => $mime_type,
+				'is_video'  => true,
+			];
+		}
+
+		// For images, use the standard approach
+		$image = wp_get_attachment_image_src( $attachment_id, $size, $attr['icon'] ?? false, $attr );
 
 		if ( $image ) {
 			list( $src, $width, $height ) = $image;
