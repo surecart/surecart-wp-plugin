@@ -100,9 +100,15 @@ class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 		$html      = '<div class="sc-video-container">';
 		$html     .= wp_video_shortcode(
 			[
-				'src'    => $video_url,
-				'poster' => $video_thumbnail_url,
-			]
+				'src'      => $video_url,
+				'poster'   => $video_thumbnail_url,
+				'loop'     => '',
+				'autoplay' => '',
+				'muted'    => 'false',
+				'preload'  => 'metadata',
+				'class'    => 'wp-video-shortcode',
+			],
+			''
 		);
 		$html     .= '</div>';
 

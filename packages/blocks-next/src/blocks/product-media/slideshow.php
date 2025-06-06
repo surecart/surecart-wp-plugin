@@ -27,7 +27,7 @@
 					?>
 				>
 					<?php if ( $media->isVideo() ) : ?>
-						<?php echo wp_kses_post( $media->html( 'full' ) ); ?>
+						<?php echo $media->html( 'full' ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
 					<?php else : ?>
 						<div
 							data-wp-interactive='{ "namespace": "surecart/lightbox" }'
