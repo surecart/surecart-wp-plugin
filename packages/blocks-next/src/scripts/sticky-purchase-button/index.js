@@ -149,7 +149,17 @@ const { state, actions } = store('surecart/sticky-purchase-button', {
 				context.hideTimeout = setTimeout(
 					withScope(() => {
 						const currentContext = getContext();
-						if (nearBottom && currentContext) {
+						if (!currentContext) return;
+
+						// Recalculate nearBottom with current scroll position
+						const currentScrollY = window.scrollY;
+						const currentNearBottom =
+							currentScrollY +
+								(currentContext.viewportHeight ||
+									window.innerHeight) >=
+							actions.getDocumentHeight() - 100;
+
+						if (currentNearBottom) {
 							currentContext.isVisible = false;
 							stickyButton.classList.add('is-hiding');
 							// Remove body class when hiding due to bottom scroll
