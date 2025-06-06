@@ -2,7 +2,6 @@
 
 namespace SureCart\Integrations\Bricks\Elements;
 
-use Bricks\Element;
 use SureCart\Integrations\Bricks\Concerns\ConvertsBlocks;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -12,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Buy Button element.
  */
-class BuyButton extends Element {
+class BuyButton extends \Bricks\Element {
 	use ConvertsBlocks; // we have to use a trait since we can't extend the bricks class.
 
 	/**
@@ -200,10 +199,11 @@ class BuyButton extends Element {
 			wp_json_encode(
 				array(
 					'checkoutUrl'     => esc_url( \SureCart::pages()->url( 'checkout' ) ),
-					'text'            => $settings['content'] ?? ( $settings['buy_now'] ? __( 'Add to Cart', 'surecart' ) : __( 'Buy Now', 'surecart' ) ),
+					'text'            => $settings['content'] ?? ( $settings['buy_now'] ? __( 'Buy Now', 'surecart' ) : __( 'Add To Cart', 'surecart' ) ),
 					'outOfStockText'  => esc_attr( __( 'Sold Out', 'surecart' ) ),
 					'unavailableText' => esc_attr( __( 'Unavailable For Purchase', 'surecart' ) ),
 					'addToCart'       => $settings['buy_now'] ? false : true,
+					'buttonText'      => $settings['content'] ?? ( $settings['buy_now'] ? __( 'Buy Now', 'surecart' ) : __( 'Add To Cart', 'surecart' ) ),
 				),
 				JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP
 			)
@@ -243,9 +243,9 @@ class BuyButton extends Element {
 			$output .= $icon;
 		}
 
-		if ( isset( $settings['content'] ) ) {
+		if ( isset( $settings['content'] ) || true ) {
 			if ( $this->is_admin_editor() ) {
-				$output .= trim( $settings['content'] );
+				$output .= trim( $settings['content'] ?? ( $settings['buy_now'] ? __( 'Buy Now', 'surecart' ) : __( 'Add To Cart', 'surecart' ) ) );
 			} else {
 				$output .= '<span class="sc-spinner" aria-hidden="false"></span>';
 				$output .= '<span class="sc-button__link-text" data-wp-text="state.buttonText"></span>';
