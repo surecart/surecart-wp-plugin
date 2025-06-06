@@ -24,15 +24,6 @@
 	position: relative;
 }
 
-.wp-video {
-	width: 100% !important;
-	height: auto !important;
-
-	video {
-		width: 100% !important;
-		height: auto !important;
-	}
-}
 .sc-video-thumbnail {
 	position: relative;
 	width: 100%;
@@ -100,13 +91,9 @@
 	}
 }
 
-// Ensure videos work properly in Swiper slides
+// Ensure videos work properly in Swiper slides.
 .swiper-slide {
 	.sc-video-container {
 		height: 100%;
-
-		.wp-video {
-			height: 100% !important;
-		}
 	}
 }

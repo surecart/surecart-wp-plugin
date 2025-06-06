@@ -181,7 +181,7 @@ const { state, actions, callbacks } = store('surecart/lightbox', {
 			const { imageId, images } = getContext();
 
 			// Bails out if the image has not loaded yet.
-			if (!state.metadata[imageId].imageRef?.complete) {
+			if (!state.metadata[imageId]?.imageRef?.complete) {
 				return;
 			}
 
@@ -192,8 +192,8 @@ const { state, actions, callbacks } = store('surecart/lightbox', {
 
 			// get only the image ids that share the same galleryId as the imageId and are not hidden
 			state.images = (images || [imageId]).filter((id) => {
-				const metadata = state.metadata[id];
-				const imageRef = metadata.imageRef;
+				const metadata = state?.metadata[id];
+				const imageRef = metadata?.imageRef;
 
 				// Check if image exists and check visibility of image and all its parents
 				const isVisible =
