@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: ecommerce, online store, subscriptions, stripe, payments
 Requires at least: 6.6
 Tested up to: 6.8
-Stable tag: 3.8.5
+Stable tag: 3.9.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -304,6 +304,21 @@ Yes, the checkout form can be customized using our visual builder. You can chang
 Accessibility is a huge priority for the entire team building SureCart. As you know, accessibility is an ongoing improvement task. Our development and QA teams are trained in accessibility best practices and build/test each new feature for accessibility. If you come across any edge issues, we want to know about it and will prioritize its resolution. Please contact us via our website.
 
 == Changelog ==
+
+= 3.9.0 - June 5th, 2025 =
+- New: Elementor product and shop page builder. [Learn More](https://surecart.com/docs/product-page-in-elementor/)
+- New: Gallery style for product page media.
+- Improvement: Refactor Price Selector component for improved performance and reliability.
+- Improvement: Bump offer description now uses line breaks.
+- Improvement: Lazy load flags in currency switcher for improved performance.
+- Fix: PHP Error on orders page with Buddy Boss Integration in some contexts.
+- Fix: Appending ?currency to home_url if there is a path.
+- Fix: Enable "Resend Order Confirmation Email" for Manual Payment Methods.
+- Fix: Instant checkout slideshow not loading when product page is draft.
+- Fix: Error when trying to flush object cache pro in some cases.
+- Fix: Make product line item mobile images display configurable via CSS variable.
+- Fix: Update subscription delay self-service cancellations text to be more accurate.
+- Fix: Check button width issue compatibility on some themes.
 
 = 3.8.5 - May 20th, 2025 =
 - New: List Jetengine compatibility in integrations list.

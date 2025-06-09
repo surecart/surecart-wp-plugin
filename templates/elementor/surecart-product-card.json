@@ -1,0 +1,104 @@
+{
+	"settings": {
+		"flex_direction": "column",
+		"flex_gap": {
+			"column": "10",
+			"row": "10",
+			"isLinked": true,
+			"unit": "px",
+			"size": 10
+		},
+		"html_tag": "a",
+		"__dynamic__": {
+			"link": "[elementor-tag id=\"1ca6fb3\" name=\"post-url\" settings=\"%7B%7D\"]"
+		},
+		"custom_css": ".sc_product a {text-decoration:none!important;}",
+		"surecart_container_type": "surecart_form",
+		"_title": "Product Form"
+	},
+	"elements": [
+		{
+			"id": "14551a0b",
+			"settings": {
+				"__dynamic__": {
+					"title": "[elementor-tag id=\"\" name=\"post-featured-image\" settings=\"%7B%22before%22%3A%22%22%2C%22after%22%3A%22%22%2C%22fallback%22%3A%22%22%7D\"]"
+				},
+				"space": {
+					"unit": "%",
+					"size": 100,
+					"sizes": []
+				},
+				"align": "center",
+				"object-fit": "contain",
+				"image_border_radius": {
+					"unit": "px",
+					"top": "10",
+					"right": "10",
+					"bottom": "10",
+					"left": "10",
+					"isLinked": true
+				},
+				"width": {
+					"unit": "%",
+					"size": 100,
+					"sizes": []
+				}
+			},
+			"elements": [],
+			"isInner": false,
+			"widgetType": "theme-post-featured-image",
+			"elType": "widget"
+		},
+		{
+			"id": "2925be0d",
+			"settings": {
+				"__dynamic__": {
+					"title": "[elementor-tag id=\"\" name=\"post-title\" settings=\"%7B%22before%22%3A%22%22%2C%22after%22%3A%22%22%2C%22fallback%22%3A%22%22%7D\"]"
+				},
+				"title": "Add Your Heading Text Here",
+				"header_size": "h2",
+				"typography_typography": "custom",
+				"typography_line_height": {
+					"unit": "em",
+					"size": 1,
+					"sizes": []
+				},
+				"typography_font_size": {
+					"unit": "px",
+					"size": 14,
+					"sizes": []
+				},
+				"title_color": "#111111"
+			},
+			"elements": [],
+			"isInner": false,
+			"widgetType": "theme-post-title",
+			"elType": "widget"
+		},
+		{
+			"id": "1c7f74d8",
+			"settings": {
+				"__dynamic__": {
+					"editor": "[elementor-tag id=\"dc67044\" name=\"sc_product_price\" settings=\"%7B%7D\"]"
+				},
+				"typography_typography": "custom",
+				"typography_font_weight": "600",
+				"typography_line_height": {
+					"unit": "em",
+					"size": 1,
+					"sizes": []
+				},
+				"typography_font_size": {
+					"unit": "px",
+					"size": 16,
+					"sizes": []
+				},
+				"text_color": "#111111"
+			},
+			"elements": [],
+			"isInner": false,
+			"widgetType": "text-editor",
+			"elType": "widget"
+		}
+	]
+}
