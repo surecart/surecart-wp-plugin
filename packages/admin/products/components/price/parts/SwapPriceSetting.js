@@ -151,7 +151,7 @@ export default ({
 					exclude={[price?.id]}
 					prefix={renderPriorityProductPrice()}
 					hidePrefixOnSearch={true}
-					excludeProducts={[price?.product?.id]}
+					excludeProducts={[currentProduct?.id]}
 				/>
 			</ScFormControl>
 		);

@@ -265,7 +265,7 @@ export default ({ price, product }) => {
 								/>
 							)}
 
-							{/* {!product?.variants?.length &&
+							{!product?.variants?.length &&
 								!product?.variants?.data?.length &&
 								!currentPrice?.ad_hoc && (
 									<Swap
@@ -275,7 +275,7 @@ export default ({ price, product }) => {
 										isSaving={isSaving}
 										currentProduct={product}
 									/>
-								)} */}
+								)}
 
 							<Advanced
 								price={currentPrice}
