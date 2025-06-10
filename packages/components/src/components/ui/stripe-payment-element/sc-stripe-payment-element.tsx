@@ -174,7 +174,7 @@ export class ScStripePaymentElement {
       processorsState.instances.stripeElements = processorsState.instances.stripe.elements(this.getElementsConfig() as any);
       const { line1, line2, city, state, country, postal_code } = getCompleteAddress('shipping') ?? {};
       
-      let options = {
+      const options = {
         defaultValues: {
           billingDetails: {
             name: checkoutState.checkout?.name,
@@ -190,8 +190,10 @@ export class ScStripePaymentElement {
       } as any;
 
       if ( window?.wp?.hooks?.applyFilters ) {
-        // Allow filters to modify the options before creating the payment element.
-        options = window.wp.hooks.applyFilters('surecart_stripe_payment_element_options', options, checkoutState.checkout);
+        // apply filters to the options.
+        options.paymentMethodOrder = window.wp.hooks.applyFilters('surecart_stripe_payment_element_payment_method_order', []);
+        options.wallets = window.wp.hooks.applyFilters('surecart_stripe_payment_element_wallets', {});
+        options.terms = window.wp.hooks.applyFilters('surecart_stripe_payment_element_terms', {});
       }
 
       // create the payment element.
