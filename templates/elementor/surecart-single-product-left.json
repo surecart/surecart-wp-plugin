@@ -352,7 +352,7 @@
 					"id": "3d235015",
 					"settings": {
 						"__dynamic__": {
-							"excerpt": "[elementor-tag id=\"\" name=\"post-excerpt\" settings=\"%7B%22apply_to_post_content%22%3A%22yes%22%7D\"]"
+							"excerpt": "[elementor-tag id=\"\" name=\"post-excerpt\" settings=\"%7B%22apply_to_post_content%22%3A%22yes%22%2C%22fallback%22%3A%22%26nbsp%3B%22%7D\"]"
 						},
 						"_title": "Product short description",
 						"title_color": "#000000",
@@ -589,6 +589,15 @@
 			],
 			"isInner": true,
 			"elType": "container"
+		}
+	],
+	"outer_elements": [
+		{
+			"settings": [],
+			"elements": [],
+			"isInner": false,
+			"widgetType": "surecart-product-content",
+			"elType": "widget"
 		}
 	]
 }

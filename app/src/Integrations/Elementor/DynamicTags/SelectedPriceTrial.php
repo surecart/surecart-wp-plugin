@@ -54,11 +54,11 @@ class SelectedPriceTrial extends \Elementor\Core\DynamicTags\Tag {
 	public function render() {
 		$product = sc_get_product();
 
-		if ( empty( $product ) ) {
+		if ( ! $product || ( empty( $product->initial_price->trial_text ?? null ) && \Elementor\Plugin::$instance->editor->is_edit_mode() ) ) {
 			echo "<span class='wp-block-surecart-product-selected-price-trial'>" . esc_html__( 'Starting in 15 days.', 'surecart' ) . '</span>';
 			return;
 		}
 
-		echo '<!-- wp:surecart/product-selected-price-trial /-->';
+		echo '<!-- wp:surecart/product-selected-price-trial -->' . esc_html( $product->initial_price->trial_text ?? '' ) . '<!-- /wp:surecart/product-selected-price-trial -->';
 	}
 }

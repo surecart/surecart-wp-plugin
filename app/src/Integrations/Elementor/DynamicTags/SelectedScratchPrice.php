@@ -56,11 +56,11 @@ class SelectedScratchPrice extends \Elementor\Core\DynamicTags\Tag {
 	public function render() {
 		$product = sc_get_product();
 
-		if ( empty( $product ) ) {
+		if ( ! $product || ( empty( $product->initial_price->scratch_display_amount ?? null ) && \Elementor\Plugin::$instance->editor->is_edit_mode() ) ) {
 			echo "<span class='wp-block-surecart-product-selected-price-scratch-amount sc-price__amount'>" . esc_html( Currency::format( 1400 ) ) . '</span>';
 			return;
 		}
 
-		echo '<!-- wp:surecart/product-selected-price-scratch-amount /-->';
+		echo '<!-- wp:surecart/product-selected-price-scratch-amount -->' . esc_html( $product->initial_price->scratch_display_amount ?? '' ) . ' <!-- /wp:surecart/product-selected-price-scratch-amount --> ';
 	}
 }

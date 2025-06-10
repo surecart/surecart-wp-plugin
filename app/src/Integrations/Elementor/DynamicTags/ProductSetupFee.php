@@ -57,7 +57,7 @@ class ProductSetupFee extends \Elementor\Core\DynamicTags\Tag {
 	public function render() {
 		$product = sc_get_product();
 
-		if ( empty( $product ) ) {
+		if ( ! $product || ( empty( $product->setup_fee_text ?? null ) && \Elementor\Plugin::$instance->editor->is_edit_mode() ) ) {
 			// translators: %s: Setup fee amount.
 			printf( esc_html__( '%s setup fee.', 'surecart' ), esc_html( Currency::format( 100 ) ) );
 			return;

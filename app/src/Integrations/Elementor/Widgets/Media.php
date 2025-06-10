@@ -79,6 +79,26 @@ class Media extends \Elementor\Widget_Base {
 		);
 
 		$this->add_control(
+			'desktop_gallery',
+			[
+				'label'   => esc_html__( 'Display Mode', 'surecart' ),
+				'type'    => \Elementor\Controls_Manager::CHOOSE,
+				'default' => 'slider',
+				'options' => [
+					'slider'  => [
+						'title' => esc_html__( 'Slider View', 'surecart' ),
+						'icon'  => 'eicon-image-before-after',
+					],
+					'gallery' => [
+						'title' => esc_html__( 'Gallery View', 'surecart' ),
+						'icon'  => 'eicon-gallery-grid',
+					],
+				],
+				'toggle'  => false,
+			]
+		);
+
+		$this->add_control(
 			'lightbox',
 			[
 				'label'       => esc_html__( 'Enlarge on Click', 'surecart' ),
@@ -98,7 +118,10 @@ class Media extends \Elementor\Widget_Base {
 				'label_on'  => esc_html__( 'Yes', 'surecart' ),
 				'label_off' => esc_html__( 'No', 'surecart' ),
 				'default'   => 'yes',
-			]
+				'condition' => [
+					'desktop_gallery' => 'slider',
+				],
+			],
 		);
 
 		$this->add_control(
@@ -138,6 +161,7 @@ class Media extends \Elementor\Widget_Base {
 				],
 				'condition'  => [
 					'slider_is_auto_height!' => 'yes',
+					'desktop_gallery'        => 'slider',
 				],
 			]
 		);
@@ -150,6 +174,7 @@ class Media extends \Elementor\Widget_Base {
 				'size_units' => [ 'px', '%', 'em', 'rem', 'custom' ],
 				'selectors'  => [
 					'{{WRAPPER}} .sc-image-slider>.swiper>.swiper-wrapper>.swiper-slide>img' => 'max-width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .sc-image-gallery .swiper-wrapper .swiper-slide img' => 'max-width: {{SIZE}}{{UNIT}};',
 				],
 				'range'      => [
 					'px'  => [
@@ -169,12 +194,63 @@ class Media extends \Elementor\Widget_Base {
 		);
 
 		$this->add_control(
+			'gallery_spacing',
+			[
+				'label'      => esc_html__( 'Gallery Spacing', 'surecart' ),
+				'type'       => \Elementor\Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', 'rem' ],
+				'default'    => [
+					'size' => 1,
+					'unit' => 'rem',
+				],
+				'selectors'  => [
+					'{{WRAPPER}} .sc-image-gallery .swiper-wrapper' => 'gap: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .sc-image-gallery .swiper-wrapper .swiper-slide' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+				],
+				'range'      => [
+					'px'  => [
+						'min' => 0,
+						'max' => 50,
+					],
+					'em'  => [
+						'min' => 0,
+						'max' => 5,
+					],
+					'rem' => [
+						'min' => 0,
+						'max' => 5,
+					],
+				],
+				'condition'  => [
+					'desktop_gallery' => 'gallery',
+				],
+			]
+		);
+
+		$this->add_control(
 			'thumbnails_per_page',
 			[
 				'label'       => esc_html__( 'Thumbnails per Page', 'surecart' ),
 				'type'        => \Elementor\Controls_Manager::NUMBER,
 				'default'     => 5,
 				'description' => esc_html__( 'Set the number of thumbnails to show per page.', 'surecart' ),
+				'condition'   => [
+					'desktop_gallery' => 'slider',
+				],
+			]
+		);
+
+		$this->add_control(
+			'show_thumbs',
+			[
+				'label'     => esc_html__( 'Show Thumbnails', 'surecart' ),
+				'type'      => \Elementor\Controls_Manager::SWITCHER,
+				'label_on'  => esc_html__( 'Yes', 'surecart' ),
+				'label_off' => esc_html__( 'No', 'surecart' ),
+				'default'   => 'yes',
+				'condition' => [
+					'desktop_gallery' => 'slider',
+				],
 			]
 		);
 
@@ -191,6 +267,15 @@ class Media extends \Elementor\Widget_Base {
 	}
 
 	/**
+	 * Get the placeholder image URL.
+	 *
+	 * @return string
+	 */
+	private function get_placeholder_image(): string {
+		return trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'images/placeholder.jpg';
+	}
+
+	/**
 	 * Render the widget output on the frontend.
 	 *
 	 * @return void
@@ -199,30 +284,21 @@ class Media extends \Elementor\Widget_Base {
 		$settings = $this->get_settings_for_display();
 
 		if ( \Elementor\Plugin::$instance->editor->is_edit_mode() ) {
-			$this->swiper_template_before();
-			?>
-			<div class="swiper-wrapper sc-has-<?php echo esc_attr( $settings['thumbnails_per_page'] ); ?>-thumbs">
-				<?php
-				for ( $i = 0; $i < $settings['thumbnails_per_page']; $i++ ) {
-					?>
-						<div class="swiper-slide">
-							<img src="<?php echo esc_url( trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'images/placeholder.jpg' ); ?>" alt="Placeholder image" />
-						</div>
-						<?php
-				}
-				?>
-			</div>
-			<?php
-			$this->swiper_template_after();
+			$this->render_editor_content( $settings );
 			return;
 		}
 
+		$auto_height = 'gallery' === $settings['desktop_gallery'] ? true : 'yes' === $settings['slider_is_auto_height'];
+		$height      = ! $auto_height ? ( ! empty( $settings['slider_height']['size'] ) ? $settings['slider_height']['size'] . $settings['slider_height']['unit'] : '' ) : '';
+
 		$attributes = array(
 			'thumbnails_per_page' => $settings['thumbnails_per_page'],
-			'auto_height'         => 'yes' === $settings['slider_is_auto_height'],
-			'height'              => ! empty( $settings['slider_height']['size'] ) ? $settings['slider_height']['size'] . $settings['slider_height']['unit'] : '',
+			'auto_height'         => $auto_height,
+			'height'              => $height,
 			'width'               => ! empty( $settings['slider_max_image_width']['size'] ) ? $settings['slider_max_image_width']['size'] . $settings['slider_max_image_width']['unit'] : '',
 			'lightbox'            => 'yes' === $settings['lightbox'],
+			'desktop_gallery'     => 'gallery' === $settings['desktop_gallery'],
+			'show_thumbs'         => 'yes' === $settings['show_thumbs'],
 		);
 
 		?>
@@ -233,96 +309,145 @@ class Media extends \Elementor\Widget_Base {
 	}
 
 	/**
-	 * Swiper template before.
+	 * Render content specifically for the editor with dynamic product data.
 	 *
+	 * @param array $settings Widget settings.
 	 * @return void
 	 */
-	private function swiper_template_before() {
+	protected function render_editor_content( $settings ) {
+		$this->add_render_attribute( 'wrapper', 'data-widget-type', $this->get_name() );
+		$this->add_render_attribute( 'wrapper', 'data-surecart-dynamic', 'true' );
+
+		// Get current product context.
+		$product = sc_get_product();
+		$images  = $this->get_product_images( $product );
+
+		if ( 'gallery' === $settings['desktop_gallery'] ) {
+			$this->render_gallery_view( $images, $settings );
+		} else {
+			$this->render_slider_view( $images, $settings );
+		}
+	}
+
+	/**
+	 * Get product images array.
+	 *
+	 * @param object|null $product Product object.
+	 * @return array
+	 */
+	protected function get_product_images( $product ) {
+		// Return placeholder images if no product or gallery is available.
+		if ( ! $product || empty( $product->gallery ) ) {
+			return array_fill(
+				0,
+				5,
+				array(
+					'src'   => $this->get_placeholder_image(),
+					'width' => 1000,
+					'alt'   => __( 'Placeholder image', 'surecart' ),
+				)
+			);
+		}
+
+		return array_map(
+			function ( $image ) {
+				return array(
+					'src'   => $image->guid ? $image->guid : $this->get_placeholder_image(),
+					'width' => $image->width ?? 1000,
+					'alt'   => $image->alt ?? '',
+				);
+			},
+			$product->gallery
+		);
+	}
+
+	/**
+	 * Render gallery view.
+	 *
+	 * @param array $images Array of images.
+	 * @param array $settings Widget settings.
+	 * @return void
+	 */
+	protected function render_gallery_view( $images, $settings ) {
 		?>
-		<div class="sc-image-slider">
-			<div class="swiper">
-				<div class="swiper-wrapper">
-					<div class="swiper-slide">
-						<img src="<?php echo esc_url( trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'images/placeholder.jpg' ); ?>" alt="Placeholder image" />
+		<div <?php $this->print_render_attribute_string( 'wrapper' ); ?>>
+			<div class="sc-image-gallery">
+				<div class="swiper">
+					<div class="swiper-wrapper">
+						<?php foreach ( array_slice( $images, 0, 5 ) as $image ) : ?>
+							<div class="swiper-slide" style="background: transparent;">
+								<img 
+									src="<?php echo esc_url( $image['src'] ); ?>" 
+									alt="<?php echo esc_attr( $image['alt'] ); ?>" 
+									width="<?php echo esc_attr( $image['width'] ); ?>" 
+								/>
+							</div>
+						<?php endforeach; ?>
 					</div>
 				</div>
-				<div class="swiper-button-prev"></div>
-				<div class="swiper-button-next"></div>
-			</div>
-
-			<div class="sc-image-slider__thumbs">
-				<div
-					class="sc-image-slider-button__prev"
-					tabIndex="-1"
-					role="button"
-				>
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						width="24"
-						height="24"
-						viewBox="0 0 24 24"
-						fill="none"
-						stroke="currentColor"
-						stroke-width="2"
-						stroke-linecap="round"
-						stroke-linejoin="round"
-					>
-						<polyline points="15 18 9 12 15 6" />
-					</svg>
-				</div>
-
-				<div class="swiper">
-		<?php
-	}
-
-	/**
-	 * Swiper template after.
-	 *
-	 * @return void
-	 */
-	private function swiper_template_after() {
-		?>
-			</div>
-			<div
-				class="sc-image-slider-button__next"
-				tabIndex="-1"
-				role="button"
-			>
-				<svg
-				xmlns="http://www.w3.org/2000/svg"
-				width="24"
-				height="24"
-				viewBox="0 0 24 24"
-				fill="none"
-				stroke="currentColor"
-				stroke-width="2"
-				stroke-linecap="round"
-				stroke-linejoin="round"
-				>
-					<polyline points="9 18 15 12 9 6" />
-				</svg>
-			</div>
 			</div>
 		</div>
 		<?php
 	}
 
 	/**
-	 * Render the widget output on the editor.
+	 * Render slider view.
 	 *
+	 * @param array $images Array of images.
+	 * @param array $settings Widget settings.
 	 * @return void
 	 */
-	protected function content_template() {
-		$this->swiper_template_before();
+	protected function render_slider_view( $images, $settings ) {
+		$thumbnails_per_page = $settings['thumbnails_per_page'];
+		$show_thumbs         = 'yes' === $settings['show_thumbs'];
 		?>
-		<div class="swiper-wrapper sc-has-{{settings.thumbnails_per_page}}-thumbs">
-			<# for ( var i = 0; i < settings.thumbnails_per_page; i++ ) { #>
-				<div class="swiper-slide">
-					<img src="<?php echo esc_url( trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'images/placeholder.jpg' ); ?>" alt="<?php esc_attr_e( 'Placeholder image', 'surecart' ); ?>" />
+		<div <?php $this->print_render_attribute_string( 'wrapper' ); ?>>
+			<div class="sc-image-slider">
+				<div class="swiper swiper-initialized">
+					<div class="swiper-wrapper">
+						<div class="swiper-slide">
+							<img 
+								src="<?php echo esc_url( $images[0]['src'] ); ?>" 
+								alt="<?php echo esc_attr( $images[0]['alt'] ); ?>" 
+								width="<?php echo esc_attr( $images[0]['width'] ); ?>" 
+							/>
+						</div>
+					</div>
+					<div class="swiper-button-prev"></div>
+					<div class="swiper-button-next"></div>
 				</div>
-			<# } #>
+
+				<?php if ( $show_thumbs ) : ?>
+					<div class="sc-image-slider__thumbs">
+						<div class="sc-image-slider-button__prev" tabIndex="-1" role="button">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+								<polyline points="15 18 9 12 15 6" />
+							</svg>
+						</div>
+
+						<div class="swiper swiper-initialized">
+							<div class="swiper-wrapper sc-has-<?php echo esc_attr( $thumbnails_per_page ); ?>-thumbs">
+								<?php foreach ( array_slice( $images, 0, $thumbnails_per_page ) as $image ) : ?>
+									<div class="swiper-slide" style="background: transparent;">
+										<img 
+											src="<?php echo esc_url( $image['src'] ); ?>" 
+											alt="<?php echo esc_attr( $image['alt'] ); ?>" 
+											width="<?php echo esc_attr( $image['width'] ); ?>" 
+										/>
+									</div>
+								<?php endforeach; ?>
+							</div>
+						</div>
+
+						<div class="sc-image-slider-button__next" tabIndex="-1" role="button">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+								<polyline points="9 18 15 12 9 6" />
+							</svg>
+						</div>
+					</div>
+				<?php endif; ?>
+			</div>
 		</div>
 		<?php
-		$this->swiper_template_after();
 	}
 }

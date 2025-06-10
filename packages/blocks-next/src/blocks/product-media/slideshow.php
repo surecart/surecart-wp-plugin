@@ -3,6 +3,7 @@
 	data-wp-class--sc-image-slider="state.active"
 	data-wp-class--sc-image-gallery="!state.active"
 	data-wp-interactive='{ "namespace": "surecart/image-slider" }'
+	data-wp-init="actions.init"
 	data-wp-on-window--resize="actions.init"
 	data-wp-watch="actions.updateSlider"
 	<?php echo wp_kses_data( wp_interactivity_data_wp_context( $slider_options ) ); ?>
@@ -46,7 +47,7 @@
 									array_filter(
 										[
 											'loading' => $index > 0 ? 'lazy' : 'eager',
-											'style'   => ( ! empty( $width ) ? 'max-width : min(' . esc_attr( $width ) . ', 100%);' : '' ) . ';' . ( empty( $attributes['auto_height'] ) && ! empty( $attributes['height'] ) ? "height: {$attributes['height']}" : '' ),
+											'style'   => ( ! empty( $width ) ? 'max-width : min(' . esc_attr( $width ) . ', 100%);' : '' ) . ';' . ( ! $auto_height && ! empty( $attributes['height'] ) ? "height: {$attributes['height']}" : '' ),
 										]
 									)
 								),

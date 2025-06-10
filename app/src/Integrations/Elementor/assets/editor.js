@@ -314,5 +314,21 @@ jQuery(window).ready(function () {
 				elements,
 			},
 		});
+
+		// If there are outer elements, create a new container for them and add them.
+		// This is useful for templates that have outer elements like extra sections or containers.
+		if (templateContent.outer_elements) {
+			$e.run('document/elements/create', {
+				container: elementor.getPreviewContainer(),
+				model: {
+					id: elementorCommon.helpers.getUniqueId(),
+					elType: 'container',
+					elements: templateContent.outer_elements.map((element) => {
+						element = generateUniqueIds(element);
+						return element;
+					}),
+				},
+			});
+		}
 	}
 });

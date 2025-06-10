@@ -54,6 +54,8 @@ export default ({ attributes, setAttributes, context: { postId } }) => {
 		);
 	}, [width, thumbnails_per_page, product, desktop_gallery]);
 
+	const autoHeightEnabled = desktop_gallery ? true : auto_height;
+
 	return (
 		<>
 			<InspectorControls>
@@ -72,21 +74,23 @@ export default ({ attributes, setAttributes, context: { postId } }) => {
 						}
 					/>
 
-					<ToggleControl
-						label={__('Auto Height', 'surecart')}
-						help={__(
-							'Automatically adjust the height of the slider to the image height.',
-							'surecart'
-						)}
-						checked={auto_height}
-						onChange={(auto_height) =>
-							setAttributes({
-								auto_height,
-							})
-						}
-					/>
+					{!desktop_gallery && (
+						<ToggleControl
+							label={__('Auto Height', 'surecart')}
+							help={__(
+								'Automatically adjust the height of the slider to the image height.',
+								'surecart'
+							)}
+							checked={auto_height}
+							onChange={(auto_height) =>
+								setAttributes({
+									auto_height,
+								})
+							}
+						/>
+					)}
 
-					{!auto_height && (
+					{!desktop_gallery && !auto_height && (
 						<UnitControl
 							label={__('Slider Height', 'surecart')}
 							labelPosition="edge"
@@ -106,14 +110,7 @@ export default ({ attributes, setAttributes, context: { postId } }) => {
 						onChange={(width) => setAttributes({ width: width })}
 					/>
 
-					<ToggleControl
-						label={__('Show Thumbnails', 'surecart')}
-						checked={show_thumbnails}
-						onChange={(show_thumbnails) =>
-							setAttributes({ show_thumbnails })
-						}
-					/>
-					{show_thumbnails && (
+					{!desktop_gallery && (
 						<RangeControl
 							label={__('Thumbnails Per Page', 'surecart')}
 							min={2}
@@ -147,7 +144,7 @@ export default ({ attributes, setAttributes, context: { postId } }) => {
 											alt=""
 											width={image.width}
 											style={{
-												height: auto_height
+												height: autoHeightEnabled
 													? 'auto'
 													: height,
 											}}
@@ -156,9 +153,8 @@ export default ({ attributes, setAttributes, context: { postId } }) => {
 								))}
 							</div>
 
-							<div class="swiper-button-prev"></div>
-							<div class="swiper-button-next"></div>
-							<div class="swiper-pagination"></div>
+							<div className="swiper-button-prev"></div>
+							<div className="swiper-button-next"></div>
 						</div>
 
 						{images?.length > 1 ? (

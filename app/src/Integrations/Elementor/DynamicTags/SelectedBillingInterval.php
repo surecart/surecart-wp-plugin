@@ -54,11 +54,11 @@ class SelectedBillingInterval extends \Elementor\Core\DynamicTags\Tag {
 	public function render() {
 		$product = sc_get_product();
 
-		if ( empty( $product ) ) {
+		if ( ! $product || ( empty( $product->initial_price->interval_text ?? null ) && \Elementor\Plugin::$instance->editor->is_edit_mode() ) ) {
 			echo "<span class='wp-block-surecart-product-selected-price-interval sc-price__amount'>" . esc_html__( '/ day (3 payments)', 'surecart' ) . '</span>';
 			return;
 		}
 
-		echo '<!-- wp:surecart/product-selected-price-interval /-->';
+		echo '<!-- wp:surecart/product-selected-price-interval -->' . esc_html( $product->initial_price->interval_text ?? '' ) . '<!-- /wp:surecart/product-selected-price-interval -->';
 	}
 }

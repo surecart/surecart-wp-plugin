@@ -77,7 +77,7 @@ class ElementorWidgetsService {
 	 * @return void
 	 */
 	public function registerWidgets( $widget_manager ) {
-		if ( ! class_exists( '\Elementor\Widget_Base' ) ) {
+		if ( ! class_exists( '\Elementor\Widget_Base' ) || ! class_exists( '\ElementorPro\Plugin' ) ) {
 			return;
 		}
 

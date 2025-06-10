@@ -55,11 +55,12 @@ class SelectedPrice extends \Elementor\Core\DynamicTags\Tag {
 	 */
 	public function render() {
 		$product = sc_get_product();
-		if ( ! $product ) {
+
+		if ( ! $product || ( empty( $product->initial_price->display_amount ?? null ) && \Elementor\Plugin::$instance->editor->is_edit_mode() ) ) {
 			echo "<span class='wp-block-surecart-product-selected-price-amount'>" . Currency::format( 1200 ) . '</span>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			return;
 		}
 
-		echo '<!-- wp:surecart/product-selected-price-amount --><!-- /wp:surecart/product-selected-price-amount --> ';
+		echo '<!-- wp:surecart/product-selected-price-amount -->' . esc_html( $product->initial_price->display_amount ?? '' ) . ' <!-- /wp:surecart/product-selected-price-amount -->';
 	}
 }

@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-05-14T18:25:05",
+  "timestamp": "2025-06-05T20:06:04",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.18.3",
@@ -44368,7 +44368,7 @@
       "path": "src/types.ts"
     },
     "src/types.ts::Bump": {
-      "declaration": "export interface Bump {\n  id: string;\n  object: 'bump';\n  amount_off: number;\n  amount_off_display_amount: string;\n  subtotal_display_amount: string;\n  subtotal_amount: number;\n  total_display_amount: string;\n  total_amount: number;\n  archived: boolean;\n  archived_at: number;\n  auto_apply: boolean;\n  filter_match_type: 'all' | 'any' | 'none';\n  filters: any;\n  metadata: any;\n  name: string;\n  percent_off: number;\n  price: string | Price;\n  priority: 1 | 2 | 3 | 4 | 5;\n  created_at: number;\n  updated_at: number;\n}",
+      "declaration": "export interface Bump {\n  id: string;\n  object: 'bump';\n  amount_off: number;\n  amount_off_display_amount: string;\n  subtotal_display_amount: string;\n  subtotal_amount: number;\n  total_display_amount: string;\n  total_amount: number;\n  archived: boolean;\n  archived_at: number;\n  auto_apply: boolean;\n  filter_match_type: 'all' | 'any' | 'none';\n  filters: any;\n  metadata: any;\n  rendered_description: string;\n  name: string;\n  percent_off: number;\n  price: string | Price;\n  priority: 1 | 2 | 3 | 4 | 5;\n  created_at: number;\n  updated_at: number;\n}",
       "docstring": "",
       "path": "src/types.ts"
     },

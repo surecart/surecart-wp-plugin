@@ -82,6 +82,10 @@ class BuddyBossService extends IntegrationService implements IntegrationInterfac
 	 * @return array The items for the integration.
 	 */
 	public function getItems( $items = [], $search = '' ) {
+		if ( ! function_exists( '\groups_get_groups' ) ) {
+			return [];
+		}
+
 		$groups = \groups_get_groups(
 			[
 				'search_terms' => $search,
@@ -112,6 +116,10 @@ class BuddyBossService extends IntegrationService implements IntegrationInterfac
 	 * @return object The item for the integration.
 	 */
 	public function getItem( $id ) {
+		if ( ! function_exists( '\groups_get_group' ) ) {
+			return (object) [];
+		}
+
 		$group = \groups_get_group( $id );
 		if ( ! $group ) {
 			return (object) [];
