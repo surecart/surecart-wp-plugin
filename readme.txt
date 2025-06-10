@@ -305,6 +305,14 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 
 == Changelog ==
 
+= 3.10.0 - June 10th, 2025 =
+- New: Price boosts. 1-click price swaps on your checkout page.
+- New: Add a product form anywhere on your website.
+- New: Omnisend integration.
+- Change: Improve coupon order amount exceeded message to be more clear on checkout.
+- Fix: Subtotal displays tax-inclusive amount instead of pre-tax subtotal.
+- Fix: Elementor container warning link going to wrong url.
+
 = 3.9.0 - June 5th, 2025 =
 - New: Elementor product and shop page builder. [Learn More](https://surecart.com/docs/product-page-in-elementor/)
 - New: Gallery style for product page media.
