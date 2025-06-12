@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-05-14T18:26:15+00:00\n"
+"POT-Creation-Date: 2025-06-05T20:07:14+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.9.0\n"
 
@@ -24,9 +24,13 @@ msgid "Quick Feedback"
 msgstr ""
 
 #: src/Activation/DeactivationSurveyForm.php:60
-#: src/Integrations/Bricks/Elements/BuyButton.php:113
-#: src/Integrations/Bricks/Elements/BuyButton.php:118
+#: src/Integrations/Bricks/Elements/BuyButton.php:112
+#: src/Integrations/Bricks/Elements/BuyButton.php:117
 #: src/Integrations/Bricks/Elements/CartMenuIcon.php:68
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:142
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:149
+#: src/Integrations/Elementor/Widgets/CartMenuIcon.php:99
+#: src/Integrations/Elementor/Widgets/CartMenuIcon.php:141
 #: settings/brand/components/CartSettings.js:219
 #: Blocks/CartMenuButton/edit.js:41
 #: src/blocks/cart-menu-button/edit.js:36
@@ -125,8 +129,8 @@ msgstr ""
 #: src/BlockLibrary/BlockPatternsService.php:52
 #: src/BlockLibrary/FormModeSwitcherService.php:46
 #: src/Integrations/Beaver/BeaverFormModule.php:67
-#: src/Integrations/Elementor/ReusableFormWidget.php:42
-#: src/Integrations/Elementor/ReusableFormWidget.php:101
+#: src/Integrations/Elementor/Widgets/ReusableFormWidget.php:42
+#: src/Integrations/Elementor/Widgets/ReusableFormWidget.php:101
 msgid "Checkout Form"
 msgstr ""
 
@@ -174,8 +178,6 @@ msgid "Cart"
 msgstr ""
 
 #: src/BlockLibrary/BlockServiceProvider.php:148
-#: src/Integrations/Elementor/Conditions/ProductCondition.php:37
-#: src/Integrations/Elementor/Conditions/ProductSingle.php:47
 #: src/Integrations/ThriveAutomator/DataFields/ProductDataField.php:109
 #: src/Support/Errors/Translations/attributes.php:17
 #: src/Support/Errors/Translations/attributes.php:18
@@ -256,6 +258,7 @@ msgstr ""
 #: src/Integrations/Bricks/Elements/PriceChooser.php:168
 #: src/Integrations/Bricks/Elements/Product.php:87
 #: src/Integrations/Bricks/Elements/ProductCard.php:142
+#: src/Integrations/Elementor/Widgets/PriceChooser.php:88
 #: src/WordPress/Shortcodes/ShortcodesServiceProvider.php:200
 #: web/buy-template.php:25
 #: products/components/price/parts/PaymentType.js:144
@@ -268,6 +271,8 @@ msgstr ""
 
 #: src/BlockLibrary/ProductSelectedPriceMigrationService.php:57
 #: src/Integrations/Bricks/Elements/SaleBadge.php:71
+#: src/Integrations/Elementor/Widgets/SaleBadge.php:85
+#: src/Integrations/Elementor/Widgets/SaleBadge.php:86
 #: Blocks/Product/Price/replace.js:82
 #: sc-price2.js:60
 msgid "Sale"
@@ -378,7 +383,7 @@ msgstr ""
 #: Blocks/Upsell/UpsellTotals/edit.js:45
 #: components/PriceChoices.js:21
 #: src/blocks/cart-subtotal/view.php:14
-#: sc-order-confirmation-totals2.js:36
+#: sc-order-confirmation-totals2.js:35
 #: sc-order.js:156
 #: sc-stripe-payment-request2.js:98
 #: sc-stripe-payment-request2.js:135
@@ -470,7 +475,7 @@ msgstr ""
 #: admin/affiliation-clicks/index.php:6
 #: affiliations/modules/Clicks.js:54
 #: components/data-tables/affiliates/ClicksDataTable.js:36
-#: store/add-entities.js:363
+#: store/add-entities.js:365
 msgid "Clicks"
 msgstr ""
 
@@ -790,7 +795,7 @@ msgstr ""
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:409
 #: src/Controllers/Admin/Upsells/UpsellsListTable.php:249
 #: src/Integrations/Beaver/BeaverFormModule.php:95
-#: src/Integrations/Elementor/ReusableFormWidget.php:122
+#: src/Integrations/Elementor/Widgets/ReusableFormWidget.php:122
 #: checkouts/modules/Address.js:101
 #: checkouts/modules/Tax/index.js:114
 #: components/address/ViewAddress.js:62
@@ -907,7 +912,7 @@ msgstr ""
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:105
 #: src/Controllers/Admin/Products/ProductsListTable.php:145
 #: src/Controllers/Admin/Upsells/UpsellsListTable.php:93
-#: src/Integrations/Bricks/Elements/PriceChoiceTemplate.php:89
+#: src/Integrations/Bricks/Elements/PriceChoiceTemplate.php:88
 #: src/Integrations/Bricks/Elements/PriceChooser.php:118
 #: src/Integrations/Bricks/Elements/Product.php:177
 #: src/Support/Errors/Translations/attributes.php:11
@@ -1095,7 +1100,7 @@ msgstr ""
 #: products/modules/Variations/Variants.js:119
 #: settings/shipping/rate/ShippingRateForm.js:391
 #: settings/shipping/zone/ShippingZone.js:112
-#: store/add-entities.js:272
+#: store/add-entities.js:273
 #: subscriptions/edit/modules/Price.js:57
 #: subscriptions/show/modules/CurrentPlan.js:88
 #: Blocks/CheckoutForm/entities.js:19
@@ -1122,8 +1127,8 @@ msgstr ""
 #: src/Controllers/Admin/Upsells/UpsellsListTable.php:192
 #: products/components/price/parts/PaymentType.js:138
 #: products/modules/Prices/Price/Header.js:84
-#: store/add-entities.js:433
-#: store/add-entities.js:440
+#: store/add-entities.js:435
+#: store/add-entities.js:442
 #: subscriptions/edit/EditSubscription.js:239
 #: sc-subscription-details2.js:80
 #: sc-subscription.js:153
@@ -1547,7 +1552,7 @@ msgstr ""
 #: web/buy-template.php:91
 #: web/buy-template.php:93
 #: licenses/modules/Purchase.js:44
-#: store/add-entities.js:286
+#: store/add-entities.js:288
 #: sc-order-submit.js:55
 #: sc-order-submit.js:57
 msgid "Purchase"
@@ -1639,7 +1644,7 @@ msgstr ""
 #: subscriptions/edit/modules/Modals/UpdateRecentPrice.js:257
 #: subscriptions/show/modules/LineItems/index.js:99
 #: sc-line-item-shipping2.js:26
-#: sc-order-confirmation-totals2.js:36
+#: sc-order-confirmation-totals2.js:35
 #: sc-order.js:150
 #: sc-shipping-choices2.js:60
 #: sc-shipping-choices2.js:64
@@ -1653,7 +1658,6 @@ msgstr ""
 #: src/Controllers/Admin/Settings/BaseSettings.php:56
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:113
 #: layouts/partials/admin-settings-sidebar.php:69
-#: layouts/partials/admin-settings-sidebar.php:79
 #: products/modules/integrations/Integrations.js:78
 #: settings/integrations/Integration.js:133
 #: settings/integrations/IntegrationsList.js:51
@@ -1754,7 +1758,6 @@ msgstr ""
 
 #: src/Controllers/Admin/ProductCollections/ProductCollectionsListTable.php:49
 #: src/Controllers/Admin/Products/ProductsController.php:31
-#: src/Integrations/Elementor/Conditions/ProductSingle.php:56
 #: src/Support/Blocks/TemplateUtilityService.php:369
 #: src/Support/Blocks/TemplateUtilityService.php:370
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:236
@@ -1865,6 +1868,9 @@ msgstr ""
 #: src/Controllers/Admin/Products/ProductsListTable.php:148
 #: src/Integrations/Bricks/Elements/Quantity.php:51
 #: src/Integrations/Bricks/Elements/Quantity.php:72
+#: src/Integrations/Elementor/Widgets/Quantity.php:28
+#: src/Integrations/Elementor/Widgets/Quantity.php:85
+#: src/Integrations/Elementor/Widgets/Quantity.php:86
 #: affiliation-referrals/modules/ReferralItems.js:77
 #: checkouts/modules/Prices.js:137
 #: invoices/modules/Prices.js:54
@@ -2030,7 +2036,7 @@ msgid "Connection"
 msgstr ""
 
 #: src/Controllers/Admin/Settings/BaseSettings.php:57
-#: layouts/partials/admin-settings-sidebar.php:83
+#: layouts/partials/admin-settings-sidebar.php:79
 #: products/components/price/parts/Advanced.js:8
 #: products/modules/Advanced.js:7
 msgid "Advanced"
@@ -2056,7 +2062,7 @@ msgid "Remaining Payments"
 msgstr ""
 
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:223
-#: src/Integrations/Bricks/Elements/BuyButton.php:96
+#: src/Integrations/Bricks/Elements/BuyButton.php:95
 #: coupons/modules/SelectAffiliate.js:131
 #: sc-product-item-list.js:258
 msgid "None"
@@ -2422,7 +2428,6 @@ msgstr ""
 #: src/Integrations/Beaver/BeaverFormModule.php:20
 #: src/Integrations/Beaver/BeaverFormModule.php:21
 #: src/Integrations/Elementor/Conditions/Conditions.php:38
-#: src/Integrations/Elementor/ElementorServiceProvider.php:160
 #: src/Integrations/ThriveAutomator/ThriveAutomatorApp.php:25
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:187
 #: src/WordPress/Admin/Notices/AdminNoticesService.php:115
@@ -2469,13 +2474,13 @@ msgid "Settings"
 msgstr ""
 
 #: src/Integrations/Beaver/BeaverFormModule.php:92
-#: src/Integrations/Elementor/ReusableFormWidget.php:134
+#: src/Integrations/Elementor/Widgets/ReusableFormWidget.php:134
 #: affiliation-payouts-groups/CreateAffiliationPayoutGroup.js:84
 #: affiliation-payouts/CreateAffiliationPayout.js:81
 #: affiliation-referrals/CreateAffiliationReferral.js:70
 #: affiliation-requests/CreateAffiliationRequest.js:70
 #: affiliations/modules/affiliation-products/index.js:318
-#: bumps/CreateBump.js:99
+#: bumps/CreateBump.js:100
 #: checkouts/modules/SelectCustomer/CreateCustomer.js:125
 #: coupons/modules/CustomerSelector.js:149
 #: coupons/modules/EditPromotionCode.js:168
@@ -2503,6 +2508,7 @@ msgid "Create"
 msgstr ""
 
 #: src/Integrations/Bricks/BricksDynamicDataService.php:58
+#: src/Integrations/Elementor/DynamicTags/Price.php:30
 #: upsell-funnels/modules/Upsell/EditUpsell.js:138
 #: sc-product-selected-price.js:72
 msgid "Product price"
@@ -2528,39 +2534,48 @@ msgstr ""
 #: src/Integrations/Bricks/BricksDynamicDataService.php:161
 #: src/Integrations/Bricks/BricksDynamicDataService.php:167
 #: src/Integrations/Elementor/Documents/ProductDocument.php:52
+#: src/Integrations/Elementor/ElementorDynamicTagsService.php:55
 msgid "SureCart Product"
 msgstr ""
 
 #: src/Integrations/Bricks/BricksDynamicDataService.php:64
+#: src/Integrations/Elementor/DynamicTags/SelectedPrice.php:30
 msgid "Product selected price"
 msgstr ""
 
 #: src/Integrations/Bricks/BricksDynamicDataService.php:70
+#: src/Integrations/Elementor/DynamicTags/ScratchPrice.php:30
 msgid "Product scratch price"
 msgstr ""
 
 #: src/Integrations/Bricks/BricksDynamicDataService.php:76
+#: src/Integrations/Elementor/DynamicTags/SelectedScratchPrice.php:30
 msgid "Product selected scratch price"
 msgstr ""
 
 #: src/Integrations/Bricks/BricksDynamicDataService.php:82
+#: src/Integrations/Elementor/DynamicTags/PriceRange.php:31
 msgid "Product price range"
 msgstr ""
 
 #: src/Integrations/Bricks/BricksDynamicDataService.php:88
+#: src/Integrations/Elementor/DynamicTags/ProductDescription.php:29
 #: web/buy-template.php:19
 msgid "Product description"
 msgstr ""
 
 #: src/Integrations/Bricks/BricksDynamicDataService.php:94
+#: src/Integrations/Elementor/DynamicTags/ProductStock.php:28
 msgid "Product stock"
 msgstr ""
 
 #: src/Integrations/Bricks/BricksDynamicDataService.php:100
+#: src/Integrations/Elementor/DynamicTags/ProductSku.php:28
 msgid "Product SKU"
 msgstr ""
 
 #: src/Integrations/Bricks/BricksDynamicDataService.php:106
+#: src/Integrations/Elementor/DynamicTags/ProductOnSale.php:28
 msgid "Product on sale"
 msgstr ""
 
@@ -2569,18 +2584,23 @@ msgid "Product trial"
 msgstr ""
 
 #: src/Integrations/Bricks/BricksDynamicDataService.php:118
+#: src/Integrations/Elementor/DynamicTags/SelectedPriceTrial.php:28
 msgid "Product selected price trial"
 msgstr ""
 
 #: src/Integrations/Bricks/BricksDynamicDataService.php:124
+#: src/Integrations/Elementor/DynamicTags/ProductBillingInterval.php:28
 msgid "Product billing interval"
 msgstr ""
 
 #: src/Integrations/Bricks/BricksDynamicDataService.php:130
+#: src/Integrations/Elementor/DynamicTags/SelectedBillingInterval.php:28
 msgid "Product selected price billing interval"
 msgstr ""
 
 #: src/Integrations/Bricks/BricksDynamicDataService.php:136
+#: src/Integrations/Elementor/DynamicTags/PriceSetupFee.php:28
+#: src/Integrations/Elementor/DynamicTags/ProductSetupFee.php:30
 msgid "Product setup fee"
 msgstr ""
 
@@ -2591,14 +2611,18 @@ msgstr ""
 #. translators: %s: Setup Fee amount.
 #: src/Integrations/Bricks/BricksDynamicDataService.php:148
 #: src/Integrations/Bricks/BricksDynamicDataService.php:318
+#: src/Integrations/Elementor/DynamicTags/PriceName.php:28
+#: src/Integrations/Elementor/DynamicTags/PriceName.php:59
 msgid "Price name"
 msgstr ""
 
 #: src/Integrations/Bricks/BricksDynamicDataService.php:154
+#: src/Integrations/Elementor/DynamicTags/PriceAmount.php:30
 msgid "Price amount"
 msgstr ""
 
 #: src/Integrations/Bricks/BricksDynamicDataService.php:160
+#: src/Integrations/Elementor/DynamicTags/PriceTrial.php:28
 msgid "Price trial"
 msgstr ""
 
@@ -2608,27 +2632,35 @@ msgstr ""
 
 #: src/Integrations/Bricks/BricksDynamicDataService.php:275
 #: src/Integrations/Bricks/BricksDynamicDataService.php:281
+#: src/Integrations/Elementor/DynamicTags/SelectedPriceTrial.php:58
 msgid "Starting in 15 days."
 msgstr ""
 
 #: src/Integrations/Bricks/BricksDynamicDataService.php:288
 #: src/Integrations/Bricks/BricksDynamicDataService.php:294
+#: src/Integrations/Elementor/DynamicTags/SelectedBillingInterval.php:58
 msgid "/ day (3 payments)"
 msgstr ""
 
 #. translators: %s: Setup Fee amount.
+#. translators: %s: Setup fee amount.
 #: src/Integrations/Bricks/BricksDynamicDataService.php:302
 #: src/Integrations/Bricks/BricksDynamicDataService.php:310
+#: src/Integrations/Elementor/DynamicTags/ProductSetupFee.php:62
+#: src/Integrations/Elementor/DynamicTags/SelectedSetupFee.php:62
 msgid "%s setup fee."
 msgstr ""
 
 #. translators: %s: Setup Fee amount.
 #: src/Integrations/Bricks/BricksDynamicDataService.php:326
+#: src/Integrations/Elementor/DynamicTags/PriceAmount.php:61
 msgid "%1$s %2$s"
 msgstr ""
 
 #. translators: %s: Setup Fee amount.
 #: src/Integrations/Bricks/BricksDynamicDataService.php:334
+#: src/Integrations/Elementor/DynamicTags/PriceSetupFee.php:58
+#: src/Integrations/Elementor/DynamicTags/PriceTrial.php:58
 #: src/blocks/price-trial/edit.js:9
 msgid "Starting in 15 days"
 msgstr ""
@@ -2656,8 +2688,13 @@ msgstr ""
 msgid "Go to: Settings > Template Settings > Populate Content"
 msgstr ""
 
-#: src/Integrations/Bricks/Elements/BuyButton.php:52
-#: src/Integrations/Bricks/Elements/BuyButton.php:65
+#: src/Integrations/Bricks/Elements/BuyButton.php:51
+#: src/Integrations/Bricks/Elements/BuyButton.php:64
+#: src/Integrations/Bricks/Elements/BuyButton.php:202
+#: src/Integrations/Bricks/Elements/BuyButton.php:206
+#: src/Integrations/Bricks/Elements/BuyButton.php:248
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:28
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:64
 #: src/WordPress/Shortcodes/ShortcodesServiceProvider.php:226
 #: src/WordPress/Shortcodes/ShortcodesServiceProvider.php:246
 #: src/blocks/product-buy-buttons/edit.js:49
@@ -2665,7 +2702,8 @@ msgstr ""
 msgid "Add To Cart"
 msgstr ""
 
-#: src/Integrations/Bricks/Elements/BuyButton.php:63
+#: src/Integrations/Bricks/Elements/BuyButton.php:62
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:113
 #: Blocks/CartCoupon/edit.js:66
 #: Blocks/CartSubmit/edit.js:86
 #: Blocks/Coupon/edit.js:63
@@ -2677,21 +2715,26 @@ msgstr ""
 msgid "Button Text"
 msgstr ""
 
-#: src/Integrations/Bricks/Elements/BuyButton.php:70
+#: src/Integrations/Bricks/Elements/BuyButton.php:69
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:92
 msgid "Go Directly To Checkout"
 msgstr ""
 
-#: src/Integrations/Bricks/Elements/BuyButton.php:72
+#: src/Integrations/Bricks/Elements/BuyButton.php:71
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:97
 msgid "Bypass adding to cart and go directly to the checkout."
 msgstr ""
 
-#: src/Integrations/Bricks/Elements/BuyButton.php:76
-#: src/Integrations/Bricks/Elements/BuyButton.php:90
+#: src/Integrations/Bricks/Elements/BuyButton.php:75
+#: src/Integrations/Bricks/Elements/BuyButton.php:89
+#: src/Integrations/Elementor/Widgets/ProductContent.php:48
 #: Blocks/Form/edit.js:275
 msgid "Style"
 msgstr ""
 
-#: src/Integrations/Bricks/Elements/BuyButton.php:81
+#: src/Integrations/Bricks/Elements/BuyButton.php:80
+#: src/Integrations/Elementor/Widgets/CartMenuIcon.php:216
+#: src/Integrations/Elementor/Widgets/VariantPills.php:462
 #: components/MediaLibrary/Preview.js:144
 #: Blocks/CustomerDashboardButton/edit.js:57
 #: Blocks/Submit/edit.js:99
@@ -2699,7 +2742,8 @@ msgstr ""
 msgid "Size"
 msgstr ""
 
-#: src/Integrations/Bricks/Elements/BuyButton.php:86
+#: src/Integrations/Bricks/Elements/BuyButton.php:85
+#: src/Integrations/Elementor/ElementorBlockAdapterService.php:107
 #: src/Routing/PermalinkSettingService.php:94
 #: src/Routing/PermalinkSettingService.php:111
 #: src/Routing/PermalinkSettingService.php:132
@@ -2714,49 +2758,57 @@ msgstr ""
 msgid "Default"
 msgstr ""
 
-#: src/Integrations/Bricks/Elements/BuyButton.php:100
+#: src/Integrations/Bricks/Elements/BuyButton.php:99
 msgid "Circle"
 msgstr ""
 
-#: src/Integrations/Bricks/Elements/BuyButton.php:106
+#: src/Integrations/Bricks/Elements/BuyButton.php:105
 msgid "Outline"
 msgstr ""
 
-#: src/Integrations/Bricks/Elements/BuyButton.php:123
+#: src/Integrations/Bricks/Elements/BuyButton.php:122
+#: src/Integrations/Elementor/Widgets/Quantity.php:127
+#: src/Integrations/Elementor/Widgets/Quantity.php:145
+#: src/Integrations/Elementor/Widgets/SelectedPriceAdHocAmount.php:125
+#: src/Integrations/Elementor/Widgets/SelectedPriceAdHocAmount.php:153
+#: src/Integrations/Elementor/Widgets/VariantPills.php:242
+#: src/Integrations/Elementor/Widgets/VariantPills.php:350
 msgid "Typography"
 msgstr ""
 
-#: src/Integrations/Bricks/Elements/BuyButton.php:135
+#: src/Integrations/Bricks/Elements/BuyButton.php:134
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:392
 #: settings/display-currency/components/CurrencySwitcherSettings.js:158
 msgid "Position"
 msgstr ""
 
-#: src/Integrations/Bricks/Elements/BuyButton.php:139
+#: src/Integrations/Bricks/Elements/BuyButton.php:138
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:404
+#: src/Integrations/Elementor/Widgets/ProductContent.php:68
+#: src/Integrations/Elementor/Widgets/SaleBadge.php:159
 #: settings/brand/components/CartSettings.js:185
 #: settings/display-currency/components/CurrencySwitcherSettings.js:171
 #: src/blocks/currency-switcher/edit.js:107
 msgid "Right"
 msgstr ""
 
-#: src/Integrations/Bricks/Elements/BuyButton.php:144
+#: src/Integrations/Bricks/Elements/BuyButton.php:143
 #: src/Integrations/Bricks/Elements/PriceData.php:141
 #: src/Integrations/Bricks/Elements/ProductData.php:155
+#: src/Integrations/Elementor/Widgets/CollectionTags.php:182
 msgid "Gap"
 msgstr ""
 
-#: src/Integrations/Bricks/Elements/BuyButton.php:156
+#: src/Integrations/Bricks/Elements/BuyButton.php:155
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:440
 msgid "Space between"
 msgstr ""
 
-#: src/Integrations/Bricks/Elements/BuyButton.php:203
-#: src/Integrations/Bricks/Elements/Product.php:235
-#: src/Models/Blocks/ProductPageBlock.php:228
-#: src/blocks/product-buy-button/view.php:16
-msgid "Add to Cart"
-msgstr ""
-
-#: src/Integrations/Bricks/Elements/BuyButton.php:203
+#: src/Integrations/Bricks/Elements/BuyButton.php:202
+#: src/Integrations/Bricks/Elements/BuyButton.php:206
+#: src/Integrations/Bricks/Elements/BuyButton.php:248
 #: src/Integrations/Bricks/Elements/Product.php:247
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:523
 #: Blocks/AddToCartButton/Block.php:81
 #: Blocks/BuyButton/Block.php:36
 #: src/blocks/product-buy-button/view.php:16
@@ -2764,7 +2816,9 @@ msgstr ""
 msgid "Buy Now"
 msgstr ""
 
-#: src/Integrations/Bricks/Elements/BuyButton.php:204
+#: src/Integrations/Bricks/Elements/BuyButton.php:203
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:124
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:524
 #: src/Models/Blocks/ProductPageBlock.php:229
 #: Blocks/Product/BuyButton/Block.php:128
 #: Blocks/Upsell/SubmitButton/Block.php:131
@@ -2772,7 +2826,8 @@ msgstr ""
 msgid "Sold Out"
 msgstr ""
 
-#: src/Integrations/Bricks/Elements/BuyButton.php:205
+#: src/Integrations/Bricks/Elements/BuyButton.php:204
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:525
 #: src/Models/Blocks/ProductPageBlock.php:230
 #: products/components/Availability/index.js:85
 #: Blocks/Product/BuyButton/Block.php:124
@@ -2784,6 +2839,7 @@ msgid "Unavailable For Purchase"
 msgstr ""
 
 #: src/Integrations/Bricks/Elements/CartMenuIcon.php:58
+#: src/Integrations/Elementor/Widgets/CartMenuIcon.php:43
 msgid "Cart Toggle Icon"
 msgstr ""
 
@@ -2792,15 +2848,19 @@ msgid "Always show cart menu"
 msgstr ""
 
 #: src/Integrations/Bricks/Elements/CartMenuIcon.php:121
+#: src/Integrations/Elementor/Widgets/CartMenuIcon.php:381
 #: src/blocks/cart-menu-button/view.php:20
 msgid "Open cart"
 msgstr ""
 
 #: src/Integrations/Bricks/Elements/CollectionTag.php:56
+#: src/Integrations/Elementor/Widgets/CollectionTags.php:240
 msgid "Collection Tag"
 msgstr ""
 
 #: src/Integrations/Bricks/Elements/CollectionTags.php:58
+#: src/Integrations/Elementor/Widgets/CollectionTags.php:28
+#: src/Integrations/Elementor/Widgets/CollectionTags.php:76
 msgid "Collection Tags"
 msgstr ""
 
@@ -2812,51 +2872,81 @@ msgstr ""
 msgid "Product media"
 msgstr ""
 
-#: src/Integrations/Bricks/Elements/Media.php:62
+#: src/Integrations/Bricks/Elements/Media.php:71
+#: src/Integrations/Elementor/Widgets/Media.php:84
+msgid "Display Mode"
+msgstr ""
+
+#: src/Integrations/Bricks/Elements/Media.php:74
+#: src/Integrations/Elementor/Widgets/Media.php:89
+msgid "Slider View"
+msgstr ""
+
+#: src/Integrations/Bricks/Elements/Media.php:75
+#: src/Integrations/Elementor/Widgets/Media.php:93
+msgid "Gallery View"
+msgstr ""
+
+#: src/Integrations/Bricks/Elements/Media.php:84
 msgid "Auto height"
 msgstr ""
 
-#: src/Integrations/Bricks/Elements/Media.php:71
-#: src/blocks/product-media/edit.js:137
+#: src/Integrations/Bricks/Elements/Media.php:96
+#: src/blocks/product-media/edit.js:64
 msgid "Enlarge on click"
 msgstr ""
 
-#: src/Integrations/Bricks/Elements/Media.php:80
+#: src/Integrations/Bricks/Elements/Media.php:105
+#: src/Integrations/Elementor/Widgets/Media.php:130
 #: Blocks/ProductCollectionImage/dimension-controls.js:141
 #: Blocks/ProductCollectionImage/dimension-controls.js:150
 #: src/blocks/product-image/edit.js:144
 msgid "Height"
 msgstr ""
 
-#: src/Integrations/Bricks/Elements/Media.php:93
+#: src/Integrations/Bricks/Elements/Media.php:119
 msgid "Max image width"
 msgstr ""
 
-#: src/Integrations/Bricks/Elements/Media.php:96
+#: src/Integrations/Bricks/Elements/Media.php:122
 #: Blocks/Product/Media/edit.js:68
-#: src/blocks/product-media/edit.js:177
+#: src/blocks/product-media/edit.js:106
 msgid "Unlimited"
 msgstr ""
 
-#: src/Integrations/Bricks/Elements/Media.php:101
+#: src/Integrations/Bricks/Elements/Media.php:127
+#: src/Integrations/Elementor/Widgets/Media.php:199
+msgid "Gallery Spacing"
+msgstr ""
+
+#: src/Integrations/Bricks/Elements/Media.php:149
 msgid "Thumbs per page"
 msgstr ""
 
-#: src/Integrations/Bricks/Elements/Media.php:121
+#: src/Integrations/Bricks/Elements/Media.php:161
+#: src/Integrations/Elementor/Widgets/Media.php:246
+msgid "Show Thumbnails"
+msgstr ""
+
+#: src/Integrations/Bricks/Elements/Media.php:194
+#: src/Integrations/Bricks/Elements/Media.php:213
 msgid "The accurate preview for this element is only available on frontend due to compatibility issues."
 msgstr ""
 
-#: src/Integrations/Bricks/Elements/PriceChoiceTemplate.php:65
+#: src/Integrations/Bricks/Elements/PriceChoiceTemplate.php:64
+#: src/Integrations/Elementor/Widgets/PriceChooser.php:211
 msgid "Price Choice"
 msgstr ""
 
-#: src/Integrations/Bricks/Elements/PriceChoiceTemplate.php:75
+#: src/Integrations/Bricks/Elements/PriceChoiceTemplate.php:74
+#: src/Integrations/Elementor/Widgets/PriceChooser.php:244
+#: src/Integrations/Elementor/Widgets/VariantPills.php:335
 #: src/blocks/product-price-choice-template/edit.js:148
 #: src/blocks/product-variant-pill/edit.js:75
 msgid "Highlight Border"
 msgstr ""
 
-#: src/Integrations/Bricks/Elements/PriceChoiceTemplate.php:105
+#: src/Integrations/Bricks/Elements/PriceChoiceTemplate.php:104
 #: src/Integrations/Bricks/Elements/PriceChooser.php:134
 #: src/Integrations/Bricks/Elements/Product.php:193
 #: product-collections/modules/Details.js:13
@@ -2867,12 +2957,19 @@ msgid "Details"
 msgstr ""
 
 #: src/Integrations/Bricks/Elements/PriceChooser.php:77
+#: src/Integrations/Elementor/Widgets/PriceChooser.php:30
 msgid "Price Selector"
 msgstr ""
 
 #: src/Integrations/Bricks/Elements/PriceChooser.php:87
 #: src/Integrations/Bricks/Elements/Quantity.php:61
 #: src/Integrations/Bricks/Elements/SelectedPriceAdHocAmount.php:62
+#: src/Integrations/Elementor/Widgets/PriceChooser.php:78
+#: src/Integrations/Elementor/Widgets/PriceChooser.php:85
+#: src/Integrations/Elementor/Widgets/Quantity.php:83
+#: src/Integrations/Elementor/Widgets/Quantity.php:106
+#: src/Integrations/Elementor/Widgets/SelectedPriceAdHocAmount.php:83
+#: src/Integrations/Elementor/Widgets/SelectedPriceAdHocAmount.php:104
 #: settings/display-currency/components/DisplayCurrenciesSettings.js:106
 #: settings/subscription-preservation/EditReason.js:88
 #: Blocks/BumpLineItem/edit.js:16
@@ -2923,6 +3020,8 @@ msgstr ""
 #: src/Integrations/Bricks/Elements/PriceData.php:58
 #: src/Integrations/Bricks/Elements/ProductData.php:45
 #: src/Integrations/Bricks/Elements/ProductData.php:68
+#: src/Integrations/Elementor/ElementorTemplatesService.php:56
+#: src/Integrations/Elementor/Widgets/ProductPricing.php:28
 msgid "Product Pricing"
 msgstr ""
 
@@ -2935,6 +3034,7 @@ msgstr ""
 #: src/Integrations/Bricks/Elements/PriceData.php:100
 #: src/Integrations/Bricks/Elements/ProductData.php:101
 #: src/Integrations/Bricks/Elements/ProductData.php:114
+#: src/Integrations/Elementor/Widgets/CollectionTags.php:84
 msgid "Direction"
 msgstr ""
 
@@ -2953,6 +3053,8 @@ msgid "No price data selected."
 msgstr ""
 
 #: src/Integrations/Bricks/Elements/Product.php:58
+#: src/Integrations/Elementor/ElementorBlockAdapterService.php:108
+#: src/Integrations/Elementor/Widgets/Product.php:37
 msgid "Product Form"
 msgstr ""
 
@@ -2964,12 +3066,23 @@ msgstr ""
 msgid "Trial/Fees"
 msgstr ""
 
+#: src/Integrations/Bricks/Elements/Product.php:235
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:523
+#: src/Models/Blocks/ProductPageBlock.php:228
+#: src/blocks/product-buy-button/view.php:16
+msgid "Add to Cart"
+msgstr ""
+
 #: src/Integrations/Bricks/Elements/Product.php:263
 #: src/Integrations/Bricks/Elements/Product.php:273
+#: src/Integrations/Elementor/Widgets/CollectionTags.php:92
+#: src/Integrations/Elementor/Widgets/VariantPills.php:110
 msgid "Column"
 msgstr ""
 
 #: src/Integrations/Bricks/Elements/ProductCard.php:58
+#: src/Integrations/Elementor/ElementorTemplatesService.php:48
+#: src/Integrations/Elementor/Widgets/ProductCard.php:37
 msgid "Product Card"
 msgstr ""
 
@@ -2990,15 +3103,19 @@ msgid "No product pricing selected."
 msgstr ""
 
 #: src/Integrations/Bricks/Elements/SaleBadge.php:52
+#: src/Integrations/Elementor/Widgets/SaleBadge.php:28
+#: src/Integrations/Elementor/Widgets/SaleBadge.php:76
 msgid "Sale Badge"
 msgstr ""
 
 #: src/Integrations/Bricks/Elements/SaleBadge.php:62
+#: src/Integrations/Elementor/Widgets/SaleBadge.php:83
 #: Blocks/Divider/edit.js:29
 msgid "Text"
 msgstr ""
 
 #: src/Integrations/Bricks/Elements/SelectedPriceAdHocAmount.php:52
+#: src/Integrations/Elementor/Widgets/SelectedPriceAdHocAmount.php:30
 #: src/Models/Price.php:137
 #: products/modules/Prices/Price/Header.js:130
 #: sc-price-choice-container2.js:52
@@ -3009,6 +3126,8 @@ msgid "Custom Amount"
 msgstr ""
 
 #: src/Integrations/Bricks/Elements/SelectedPriceAdHocAmount.php:73
+#: src/Integrations/Elementor/Widgets/SelectedPriceAdHocAmount.php:85
+#: src/Integrations/Elementor/Widgets/SelectedPriceAdHocAmount.php:86
 #: src/WordPress/Shortcodes/ShortcodesServiceProvider.php:261
 msgid "Enter an amount"
 msgstr ""
@@ -3018,6 +3137,7 @@ msgid "Product Variant Pill"
 msgstr ""
 
 #: src/Integrations/Bricks/Elements/VariantPill.php:54
+#: src/Integrations/Elementor/Widgets/PriceChooser.php:258
 msgid "Highlight Text Color"
 msgstr ""
 
@@ -3034,6 +3154,7 @@ msgid "Option Value"
 msgstr ""
 
 #: src/Integrations/Bricks/Elements/VariantPills.php:58
+#: src/Integrations/Elementor/Widgets/VariantPills.php:28
 msgid "Product Variant Pills"
 msgstr ""
 
@@ -3042,7 +3163,7 @@ msgid "Variation"
 msgstr ""
 
 #: src/Integrations/BuddyBoss/BuddyBossService.php:46
-#: src/Integrations/BuddyBoss/BuddyBossService.php:122
+#: src/Integrations/BuddyBoss/BuddyBossService.php:130
 msgid "BuddyBoss Group"
 msgstr ""
 
@@ -3056,12 +3177,19 @@ msgid "Enable access to a BuddyBoss Group."
 msgstr ""
 
 #: src/Integrations/Elementor/Conditions/Conditions.php:47
-#: src/Integrations/Elementor/Conditions/ProductCondition.php:46
 #: src/WordPress/PostTypes/ProductPostTypeService.php:1036
 #: Blocks/ProductItemList/edit.js:388
 #: Blocks/ProductItemList/edit.js:501
 #: src/blocks/product-list/inspector-controls/index.js:106
 msgid "All Products"
+msgstr ""
+
+#: src/Integrations/Elementor/Conditions/ProductSingle.php:49
+msgid "SureCart Product (Deprecated)"
+msgstr ""
+
+#: src/Integrations/Elementor/Conditions/ProductSingle.php:58
+msgid "SureCart Products (Deprecated)"
 msgstr ""
 
 #: src/Integrations/Elementor/Documents/ProductDocument.php:61
@@ -3070,29 +3198,710 @@ msgstr ""
 msgid "SureCart Products"
 msgstr ""
 
-#: src/Integrations/Elementor/Documents/ProductDocument.php:82
+#: src/Integrations/Elementor/Documents/ProductDocument.php:91
 msgid "What is a Single Product Template?"
 msgstr ""
 
-#: src/Integrations/Elementor/Documents/ProductDocument.php:83
+#: src/Integrations/Elementor/Documents/ProductDocument.php:92
 msgid "A single product template allows you to easily design the layout and style of SureCart single product pages, and apply that template to various conditions that you assign."
 msgstr ""
 
-#: src/Integrations/Elementor/Documents/ProductDocument.php:84
+#: src/Integrations/Elementor/Documents/ProductDocument.php:93
 msgid "You can create multiple single product templates, and assign each to different types of products, enabling a custom design for each group of similar products."
 msgstr ""
 
-#: src/Integrations/Elementor/ReusableFormWidget.php:110
+#: src/Integrations/Elementor/DynamicTags/Price.php:60
+msgid "Price Type"
+msgstr ""
+
+#: src/Integrations/Elementor/DynamicTags/Price.php:64
+#: src/Integrations/Elementor/DynamicTags/ScratchPrice.php:66
+msgid "Formatted"
+msgstr ""
+
+#: src/Integrations/Elementor/DynamicTags/Price.php:65
+#: src/Integrations/Elementor/DynamicTags/ScratchPrice.php:67
+msgid "Raw"
+msgstr ""
+
+#: src/Integrations/Elementor/DynamicTags/Price.php:66
+#: src/Integrations/Elementor/DynamicTags/ScratchPrice.php:68
+#: Blocks/Checkbox/edit.js:45
+#: Blocks/Radio/edit.js:30
+#: Blocks/Switch/edit.js:43
+msgid "Value"
+msgstr ""
+
+#: src/Integrations/Elementor/DynamicTags/ProductStock.php:58
+msgid "Stock Type"
+msgstr ""
+
+#: src/Integrations/Elementor/DynamicTags/ProductStock.php:62
+#: products/modules/Inventory/StockAdjustmentModal.js:96
+#: products/modules/Variations/VariantItem.js:229
+msgid "On Hand"
+msgstr ""
+
+#: src/Integrations/Elementor/DynamicTags/ProductStock.php:63
+msgid "Held Stock"
+msgstr ""
+
+#: src/Integrations/Elementor/DynamicTags/ProductStock.php:64
+#: products/modules/Inventory/index.js:78
+msgid "Available Stock"
+msgstr ""
+
+#: src/Integrations/Elementor/DynamicTags/ScratchPrice.php:62
+msgid "Scratch Price Type"
+msgstr ""
+
+#: src/Integrations/Elementor/DynamicTags/SelectedSetupFee.php:31
+msgid "Product selected setup fee"
+msgstr ""
+
+#: src/Integrations/Elementor/ElementorBlockAdapterService.php:104
+msgid "Container Type"
+msgstr ""
+
+#. translators: %s: URL to the SureCart documentation page.
+#: src/Integrations/Elementor/ElementorBlockAdapterService.php:135
+msgid "⚠️ Warning: SureCart widgets must be placed inside a \"Product Form\" container to function properly. Please wrap them accordingly. &nbsp; %s"
+msgstr ""
+
+#: src/Integrations/Elementor/ElementorBlockAdapterService.php:136
+#: components/coupon/CouponDiscountDuration.js:100
+msgid "Learn more"
+msgstr ""
+
+#: src/Integrations/Elementor/ElementorEditorService.php:79
+msgid "No product form templates available."
+msgstr ""
+
+#: src/Integrations/Elementor/ElementorEditorService.php:80
+msgid "No product card templates available."
+msgstr ""
+
+#: src/Integrations/Elementor/ElementorEditorService.php:81
+#: elementor/template-selector-modal.php:32
+msgid "No templates found."
+msgstr ""
+
+#: src/Integrations/Elementor/ElementorTemplatesService.php:32
+msgid "Product Form (Left)"
+msgstr ""
+
+#: src/Integrations/Elementor/ElementorTemplatesService.php:40
+msgid "Product Form (Right)"
+msgstr ""
+
+#: src/Integrations/Elementor/ElementorWidgetsService.php:50
+#: src/WordPress/Templates/CollectionTemplateService.php:47
+#: src/WordPress/Templates/TemplatesService.php:156
+#: src/WordPress/Templates/UpsellTemplatesService.php:159
+msgid "SureCart Layout"
+msgstr ""
+
+#: src/Integrations/Elementor/ElementorWidgetsService.php:58
+msgid "SureCart Elements"
+msgstr ""
+
+#: src/Integrations/Elementor/ElementorWidgetsService.php:66
+msgid "SureCart Checkout Page"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:85
+#: src/Integrations/Elementor/Widgets/Media.php:77
+msgid "Content Settings"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:94
+#: src/Integrations/Elementor/Widgets/CartMenuIcon.php:121
+#: src/Integrations/Elementor/Widgets/Media.php:106
+#: src/Integrations/Elementor/Widgets/Media.php:118
+#: src/Integrations/Elementor/Widgets/Media.php:248
+msgid "Yes"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:95
+#: src/Integrations/Elementor/Widgets/CartMenuIcon.php:122
+#: src/Integrations/Elementor/Widgets/Media.php:107
+#: src/Integrations/Elementor/Widgets/Media.php:119
+#: src/Integrations/Elementor/Widgets/Media.php:249
+msgid "No"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:106
+msgid "Text Settings"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:122
+#: Blocks/Product/BuyButton/edit.js:148
+#: Blocks/Upsell/SubmitButton/edit.js:113
+#: src/blocks/product-buy-button/edit.js:59
+msgid "Out of stock label"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:131
+#: Blocks/Product/BuyButton/edit.js:157
+#: Blocks/Upsell/SubmitButton/edit.js:122
+#: src/blocks/product-buy-button/edit.js:68
+msgid "Unavailable label"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:133
+#: Blocks/Product/BuyButton/Block.php:131
+#: Blocks/Upsell/SubmitButton/Block.php:135
+msgid "Unavailable"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:169
+msgid "Icon Position"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:174
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:428
+#: src/Integrations/Elementor/Widgets/CollectionTags.php:118
+#: src/Integrations/Elementor/Widgets/CollectionTags.php:156
+#: src/Integrations/Elementor/Widgets/VariantPills.php:143
+#: src/Integrations/Elementor/Widgets/VariantPills.php:164
+#: src/Integrations/Elementor/Widgets/VariantPills.php:202
+msgid "Start"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:178
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:436
+#: src/Integrations/Elementor/Widgets/CollectionTags.php:126
+#: src/Integrations/Elementor/Widgets/CollectionTags.php:164
+#: src/Integrations/Elementor/Widgets/VariantPills.php:144
+#: src/Integrations/Elementor/Widgets/VariantPills.php:165
+#: src/Integrations/Elementor/Widgets/VariantPills.php:203
+msgid "End"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:199
+msgid "Icon Spacing"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:241
+#: settings/subscription-preservation/PreservationSettings.js:295
+#: Blocks/CustomerDashboardButton/edit.js:93
+msgid "Button"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:271
+#: src/Integrations/Elementor/Widgets/CartMenuIcon.php:151
+msgid "Normal"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:278
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:311
+#: src/Integrations/Elementor/Widgets/CollectionTags.php:248
+#: src/Integrations/Elementor/Widgets/PriceChooser.php:219
+#: src/Integrations/Elementor/Widgets/PriceChooser.php:347
+#: src/Integrations/Elementor/Widgets/PriceChooser.php:396
+#: src/Integrations/Elementor/Widgets/PriceChooser.php:445
+#: src/Integrations/Elementor/Widgets/PriceChooser.php:504
+#: src/Integrations/Elementor/Widgets/ProductContent.php:85
+#: src/Integrations/Elementor/Widgets/Quantity.php:114
+#: src/Integrations/Elementor/Widgets/SaleBadge.php:110
+#: src/Integrations/Elementor/Widgets/SelectedPriceAdHocAmount.php:112
+#: src/Integrations/Elementor/Widgets/VariantPills.php:229
+#: src/Integrations/Elementor/Widgets/VariantPills.php:285
+#: Blocks/AddToCartButton/edit.js:90
+#: Blocks/BuyButton/edit.js:71
+#: components/CartInspectorControls.js:29
+#: src/components/CartInspectorControls.js:29
+msgid "Text Color"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:291
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:323
+#: src/Integrations/Elementor/Widgets/CollectionTags.php:262
+#: src/Integrations/Elementor/Widgets/PriceChooser.php:233
+#: src/Integrations/Elementor/Widgets/PriceChooser.php:358
+#: src/Integrations/Elementor/Widgets/PriceChooser.php:407
+#: src/Integrations/Elementor/Widgets/PriceChooser.php:457
+#: src/Integrations/Elementor/Widgets/PriceChooser.php:516
+#: src/Integrations/Elementor/Widgets/SaleBadge.php:122
+#: src/Integrations/Elementor/Widgets/VariantPills.php:296
+#: Blocks/AddToCartButton/edit.js:84
+#: Blocks/BuyButton/edit.js:65
+#: Blocks/CartSubmit/edit.js:57
+#: components/CartInspectorControls.js:24
+#: src/components/CartInspectorControls.js:24
+msgid "Background Color"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:304
+#: src/Integrations/Elementor/Widgets/CartMenuIcon.php:173
+msgid "Hover"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:334
+#: src/Integrations/Elementor/Widgets/CartMenuIcon.php:193
+msgid "Hover Animation"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:346
+#: src/Integrations/Elementor/Widgets/CartMenuIcon.php:240
+#: src/Integrations/Elementor/Widgets/Quantity.php:153
+#: src/Integrations/Elementor/Widgets/SaleBadge.php:197
+#: src/Integrations/Elementor/Widgets/SelectedPriceAdHocAmount.php:161
+#: products/modules/BuyLink.js:180
+#: Blocks/Cart/edit.js:70
+#: Blocks/Column/edit.js:140
+#: Blocks/ProductCollectionImage/dimension-controls.js:163
+#: Blocks/ProductCollectionImage/dimension-controls.js:172
+#: Blocks/StoreLogo/edit.js:153
+#: src/blocks/cart/edit.js:61
+#: src/blocks/product-image/edit.js:154
+#: src/blocks/product-selected-price-ad-hoc-amount/edit.js:33
+msgid "Width"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:373
+#: src/Integrations/Elementor/Widgets/CartMenuIcon.php:280
+#: src/Integrations/Elementor/Widgets/CollectionTags.php:284
+#: src/Integrations/Elementor/Widgets/PriceChooser.php:283
+#: src/Integrations/Elementor/Widgets/SaleBadge.php:173
+#: src/Integrations/Elementor/Widgets/VariantPills.php:358
+#: Blocks/CartSubmit/edit.js:63
+#: components/CartInspectorControls.js:35
+#: src/blocks/cart-submit/edit.js:62
+#: src/components/CartInspectorControls.js:35
+msgid "Padding"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:396
+#: src/Integrations/Elementor/Widgets/ProductContent.php:60
+#: src/Integrations/Elementor/Widgets/SaleBadge.php:151
+#: settings/brand/components/CartSettings.js:189
+#: settings/display-currency/components/CurrencySwitcherSettings.js:175
+msgid "Left"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:400
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:432
+#: src/Integrations/Elementor/Widgets/CollectionTags.php:122
+#: src/Integrations/Elementor/Widgets/CollectionTags.php:160
+#: src/Integrations/Elementor/Widgets/ProductContent.php:64
+#: src/Integrations/Elementor/Widgets/SaleBadge.php:155
+#: src/Integrations/Elementor/Widgets/VariantPills.php:145
+#: src/Integrations/Elementor/Widgets/VariantPills.php:166
+#: src/Integrations/Elementor/Widgets/VariantPills.php:204
+msgid "Center"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:408
+#: src/Integrations/Elementor/Widgets/CollectionTags.php:168
+#: src/Integrations/Elementor/Widgets/VariantPills.php:167
+msgid "Stretch"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:424
+#: src/Integrations/Elementor/Widgets/ProductContent.php:56
+#: src/Integrations/Elementor/Widgets/SaleBadge.php:147
+msgid "Alignment"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:463
+#: src/Integrations/Elementor/Widgets/CartMenuIcon.php:338
+#: src/Integrations/Elementor/Widgets/CollectionTags.php:317
+#: src/Integrations/Elementor/Widgets/PriceChooser.php:316
+#: src/Integrations/Elementor/Widgets/Quantity.php:183
+#: src/Integrations/Elementor/Widgets/SaleBadge.php:253
+#: src/Integrations/Elementor/Widgets/SelectedPriceAdHocAmount.php:196
+#: src/Integrations/Elementor/Widgets/VariantPills.php:391
+msgid "Border Radius"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/CartMenuIcon.php:91
+#: src/Integrations/Elementor/Widgets/CollectionTags.php:338
+#: src/Integrations/Elementor/Widgets/Quantity.php:76
+#: src/Integrations/Elementor/Widgets/SelectedPriceAdHocAmount.php:76
+#: products/components/Editor/index.js:52
+#: Blocks/Column/Inspector/Spacing.js:96
+msgid "Content"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/CartMenuIcon.php:119
+msgid "Always Show Cart Menu"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/CartMenuIcon.php:158
+#: src/Integrations/Elementor/Widgets/CartMenuIcon.php:180
+msgid "Primary Color"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/CartMenuIcon.php:263
+msgid "Fit to Size"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/CartMenuIcon.php:266
+msgid "Off"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/CartMenuIcon.php:267
+msgid "On"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/CartMenuIcon.php:305
+msgid "Rotate"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/CartMenuIcon.php:326
+msgid "Border Width"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/CollectionTags.php:88
+#: src/Integrations/Elementor/Widgets/VariantPills.php:109
+msgid "Row"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/CollectionTags.php:96
+msgid "Row Reverse"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/CollectionTags.php:100
+msgid "Column Reverse"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/CollectionTags.php:114
+msgid "Justify"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/CollectionTags.php:130
+#: src/Integrations/Elementor/Widgets/VariantPills.php:146
+#: src/Integrations/Elementor/Widgets/VariantPills.php:205
+msgid "Space Between"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/CollectionTags.php:134
+#: src/Integrations/Elementor/Widgets/VariantPills.php:147
+#: src/Integrations/Elementor/Widgets/VariantPills.php:206
+msgid "Space Around"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/CollectionTags.php:138
+#: src/Integrations/Elementor/Widgets/VariantPills.php:148
+#: src/Integrations/Elementor/Widgets/VariantPills.php:207
+msgid "Space Evenly"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/CollectionTags.php:152
+msgid "Align"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/CollectionTags.php:209
+#: src/Integrations/Elementor/Widgets/CollectionTags.php:217
+#: src/Integrations/Elementor/Widgets/VariantPills.php:185
+msgid "Wrap"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/CollectionTags.php:213
+#: src/Integrations/Elementor/Widgets/VariantPills.php:184
+msgid "No Wrap"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/CollectionTags.php:296
+#: src/Integrations/Elementor/Widgets/PriceChooser.php:295
+#: src/Integrations/Elementor/Widgets/SaleBadge.php:185
+#: src/Integrations/Elementor/Widgets/VariantPills.php:370
+msgid "Margin"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/CollectionTags.php:346
+msgid "Count"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/CollectionTags.php:348
+msgid "Number of tags to display."
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/Media.php:29
+#: store/add-entities.js:245
+msgid "Product Media"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/Media.php:104
+msgid "Enlarge on Click"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/Media.php:109
+#: src/blocks/product-media/edit.js:65
+msgid "Scale images with a lightbox effect."
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/Media.php:116
+#: Blocks/Product/Media/edit.js:46
+#: src/blocks/product-media/edit.js:79
+msgid "Auto Height"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/Media.php:172
+#: Blocks/Product/Media/edit.js:67
+#: src/blocks/product-media/edit.js:105
+msgid "Max Image Width"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/Media.php:233
+msgid "Thumbnails per Page"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/Media.php:236
+msgid "Set the number of thumbnails to show per page."
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/Media.php:347
+msgid "Placeholder image"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/PriceChooser.php:87
+msgid "The label for price choices."
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/PriceChooser.php:108
+msgid "Container"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/PriceChooser.php:116
+msgid "Label Color"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/PriceChooser.php:129
+#: src/Integrations/Elementor/Widgets/VariantPills.php:88
+msgid "Container Layout"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/PriceChooser.php:133
+#: src/Integrations/Elementor/Widgets/VariantPills.php:92
+msgid "Flexbox"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/PriceChooser.php:134
+msgid "Grid"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/PriceChooser.php:151
+msgid "Gaps"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/PriceChooser.php:339
+#: src/blocks/price-name/edit.js:7
+msgid "Price Name"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/PriceChooser.php:388
+msgid "Price Amount"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/PriceChooser.php:437
+msgid "Price Trial"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/PriceChooser.php:496
+msgid "Price Setup Fee"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/PriceChooser.php:582
+#: src/Integrations/Elementor/Widgets/PriceChooser.php:640
+#: src/blocks/product-price-chooser/edit.js:37
+msgid "Subscribe & Save"
+msgstr ""
+
+#. translators: %s is the price.
+#: src/Integrations/Elementor/Widgets/PriceChooser.php:585
+#: src/Integrations/Elementor/Widgets/PriceChooser.php:643
+msgid "%s /mo"
+msgstr ""
+
+#. translators: %d is the number of days.
+#: src/Integrations/Elementor/Widgets/PriceChooser.php:587
+#: src/Integrations/Elementor/Widgets/PriceChooser.php:645
+msgid "Starting in %d days"
+msgstr ""
+
+#. translators: %s is the setup fee.
+#: src/Integrations/Elementor/Widgets/PriceChooser.php:589
+#: src/Integrations/Elementor/Widgets/PriceChooser.php:598
+#: src/Integrations/Elementor/Widgets/PriceChooser.php:647
+#: src/Integrations/Elementor/Widgets/PriceChooser.php:656
+msgid "%s Setup fee"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/PriceChooser.php:593
+#: src/Integrations/Elementor/Widgets/PriceChooser.php:651
+#: products/components/price/parts/PaymentType.js:130
+#: products/modules/Prices/Price/Header.js:87
+#: Blocks/Product/PriceChoices/edit.js:99
+#: src/blocks/product-price-chooser/edit.js:42
+msgid "One Time"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/ProductContent.php:32
+#: products/components/Editor/index.js:256
+msgid "Product Content"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/ProductContent.php:72
+msgid "Justified"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/ProductContent.php:124
+msgid "This section will display the content you create using the Content Designer on the Edit Product page."
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/ProductContent.php:125
+msgid "Use this area to add detailed information about your product, such as features, specifications, and usage instructions."
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/ProductContent.php:126
+msgid "In the template preview, you can see how the product's content will appear to customers."
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/ProductContent.php:127
+msgid "Note: If you haven't added any content in the Content Designer, this area will remain empty. This text is for demonstration purposes only."
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/Quantity.php:137
+#: src/Integrations/Elementor/Widgets/SelectedPriceAdHocAmount.php:144
+msgid "Input"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/ReusableFormWidget.php:110
 #: Blocks/CheckoutForm/components/Empty.js:185
 msgid "Select Form"
 msgstr ""
 
-#: src/Integrations/Elementor/ReusableFormWidget.php:120
+#: src/Integrations/Elementor/Widgets/ReusableFormWidget.php:120
 msgid "Edit Form"
 msgstr ""
 
-#: src/Integrations/Elementor/ReusableFormWidget.php:130
+#: src/Integrations/Elementor/Widgets/ReusableFormWidget.php:130
 msgid "Create New Form"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/SaleBadge.php:102
+msgid "Badge Style"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/SaleBadge.php:200
+msgid "Fit"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/SaleBadge.php:201
+msgid "Fill"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/SaleBadge.php:202
+#: bumps/modules/Discount.js:53
+msgid "Fixed"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/SaleBadge.php:214
+msgid "Specify a fixed width"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/VariantPills.php:80
+#: Blocks/Column/edit.js:131
+msgid "Layout"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/VariantPills.php:105
+msgid "Flex Direction"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/VariantPills.php:122
+msgid "Flex Gap"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/VariantPills.php:139
+msgid "Justify Content"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/VariantPills.php:160
+msgid "Align Items"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/VariantPills.php:168
+msgid "Baseline"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/VariantPills.php:180
+msgid "Flex Wrap"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/VariantPills.php:186
+msgid "Wrap Reverse"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/VariantPills.php:198
+msgid "Align Content"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/VariantPills.php:221
+msgid "Variant pills"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/VariantPills.php:250
+msgid "Pill Gap"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/VariantPills.php:253
+msgid "Space between each pill."
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/VariantPills.php:277
+msgid "Variant pill"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/VariantPills.php:310
+#: src/blocks/product-variant-pill/edit.js:57
+msgid "Highlight Text"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/VariantPills.php:321
+#: src/blocks/product-variant-pill/edit.js:65
+msgid "Highlight Background"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/VariantPills.php:454
+#: Blocks/Product/VariantChoices/edit.js:60
+#: src/blocks/product-variant-pills/edit.js:33
+msgid "Color"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/VariantPills.php:456
+msgid "Red"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/VariantPills.php:457
+msgid "Blue"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/VariantPills.php:458
+#: Blocks/Product/VariantChoices/edit.js:69
+msgid "Green"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/VariantPills.php:464
+#: Blocks/CustomerDashboardButton/edit.js:70
+#: Blocks/Submit/edit.js:112
+msgid "Small"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/VariantPills.php:465
+#: bumps/modules/Priority.js:34
+#: upsell-funnels/modules/Priority.js:34
+#: Blocks/CustomerDashboardButton/edit.js:74
+#: Blocks/Submit/edit.js:116
+msgid "Medium"
+msgstr ""
+
+#: src/Integrations/Elementor/Widgets/VariantPills.php:466
+#: Blocks/CustomerDashboardButton/edit.js:78
+#: Blocks/Submit/edit.js:120
+msgid "Large"
 msgstr ""
 
 #: src/Integrations/LearnDash/LearnDashService.php:46
@@ -3529,7 +4338,7 @@ msgid "Square"
 msgstr ""
 
 #: src/Models/PaymentMethod.php:97
-#: store/add-entities.js:251
+#: store/add-entities.js:252
 #: Blocks/ConditionalForm/translations.js:7
 msgid "Processor"
 msgstr ""
@@ -4013,6 +4822,14 @@ msgstr ""
 msgid "The UUID of the price."
 msgstr ""
 
+#: src/Rest/BumpRestServiceProvider.php:113
+msgid "Set of key-value pairs for custom data."
+msgstr ""
+
+#: src/Rest/BumpRestServiceProvider.php:118
+msgid "Offer description."
+msgstr ""
+
 #: src/Rest/CheckEmailRestServiceProvider.php:66
 #: src/Rest/LoginRestServiceProvider.php:67
 #: sc-login-form.js:156
@@ -4426,7 +5243,7 @@ msgstr ""
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:245
 #: src/WordPress/Admin/Menus/ProductCollectionsMenuService.php:36
 #: admin/product-collections/index.php:6
-#: store/add-entities.js:265
+#: store/add-entities.js:266
 msgid "Product Collections"
 msgstr ""
 
@@ -6571,12 +7388,12 @@ msgstr ""
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:295
 #: affiliations/modules/Payouts.js:54
 #: components/data-tables/affiliates/PayoutsDataTable.js:29
-#: store/add-entities.js:384
+#: store/add-entities.js:386
 msgid "Payouts"
 msgstr ""
 
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:296
-#: store/add-entities.js:391
+#: store/add-entities.js:393
 msgid "Payout Groups"
 msgstr ""
 
@@ -7193,7 +8010,7 @@ msgstr ""
 #: src/WordPress/PostTypes/ProductPostTypeService.php:328
 #: products/modules/Prices/Price/BuyLink.js:30
 #: products/modules/Variations/Variants.js:116
-#: store/add-entities.js:461
+#: store/add-entities.js:463
 msgid "Variant"
 msgstr ""
 
@@ -7445,12 +8262,6 @@ msgstr ""
 
 #: src/WordPress/Templates/BlockTemplatesService.php:231
 msgid "Template used for specific single SureCart upsell pages."
-msgstr ""
-
-#: src/WordPress/Templates/CollectionTemplateService.php:47
-#: src/WordPress/Templates/TemplatesService.php:156
-#: src/WordPress/Templates/UpsellTemplatesService.php:159
-msgid "SureCart Layout"
 msgstr ""
 
 #: src/WordPress/Templates/TemplatesService.php:155
@@ -7862,7 +8673,7 @@ msgstr[1] ""
 #: affiliation-payouts/ExportAffiliationPayout.js:108
 #: affiliation-referrals/CreateAffiliationReferral.js:76
 #: affiliation-requests/CreateAffiliationRequest.js:76
-#: bumps/CreateBump.js:105
+#: bumps/CreateBump.js:106
 #: bumps/modules/NewCondition.js:169
 #: checkouts/CreateCheckout.js:358
 #: checkouts/modules/Address.js:150
@@ -8092,7 +8903,7 @@ msgstr ""
 #: Blocks/Upsell/UpsellTotals/edit.js:21
 #: src/blocks/cart-subtotal/edit.js:51
 #: sc-line-item-total2.js:35
-#: sc-order-confirmation-totals2.js:36
+#: sc-order-confirmation-totals2.js:35
 #: sc-order.js:137
 #: sc-subscription-next-payment2.js:105
 #: sc-upcoming-invoice.js:224
@@ -8147,6 +8958,14 @@ msgstr ""
 
 #: web/no-customer.php:8
 msgid "Home"
+msgstr ""
+
+#: elementor/template-selector-modal.php:12
+msgid "Close dialog"
+msgstr ""
+
+#: elementor/template-selector-modal.php:25
+msgid "Insert"
 msgstr ""
 
 #: forms/donation.php:10
@@ -9165,10 +9984,6 @@ msgstr ""
 msgid "Percentage"
 msgstr ""
 
-#: bumps/modules/Discount.js:53
-msgid "Fixed"
-msgstr ""
-
 #: bumps/modules/NewCondition.js:23
 #: coupons/modules/NewRestriction.js:27
 #: upsell-funnels/modules/NewCondition.js:23
@@ -9223,13 +10038,6 @@ msgstr ""
 #: bumps/modules/Priority.js:27
 #: upsell-funnels/modules/Priority.js:27
 msgid "Low"
-msgstr ""
-
-#: bumps/modules/Priority.js:34
-#: upsell-funnels/modules/Priority.js:34
-#: Blocks/CustomerDashboardButton/edit.js:74
-#: Blocks/Submit/edit.js:116
-msgid "Medium"
 msgstr ""
 
 #: bumps/modules/Priority.js:41
@@ -9724,16 +10532,12 @@ msgstr ""
 msgid "This determines how long this coupon will continue to apply once redeemed."
 msgstr ""
 
-#: components/coupon/CouponDiscountDuration.js:100
-msgid "Learn more"
-msgstr ""
-
 #: components/data-tables/affiliates/PromotionsDataTable.js:69
 msgid "View Coupon"
 msgstr ""
 
 #: components/data-tables/affiliates/ReferralItemsDataTable.js:29
-#: store/add-entities.js:377
+#: store/add-entities.js:379
 msgid "Referral Items"
 msgstr ""
 
@@ -9782,7 +10586,7 @@ msgstr ""
 #: orders/modules/Refund/CreateRefund.js:453
 #: orders/Order.js:242
 #: settings/customer/CustomerSettings.js:450
-#: store/add-entities.js:293
+#: store/add-entities.js:295
 msgid "Refund"
 msgstr ""
 
@@ -9955,13 +10759,13 @@ msgid "Max"
 msgstr ""
 
 #: components/MediaLibrary/index.js:264
-#: src/blocks/product-media/slideshow.php:64
+#: src/blocks/product-media/slideshow.php:67
 #: src/blocks/product-pagination-previous/view.php:11
 msgid "Previous Page"
 msgstr ""
 
 #: components/MediaLibrary/index.js:272
-#: src/blocks/product-media/slideshow.php:101
+#: src/blocks/product-media/slideshow.php:104
 #: src/blocks/product-pagination-next/view.php:11
 msgid "Next Page"
 msgstr ""
@@ -10068,8 +10872,8 @@ msgstr ""
 msgid "Ok"
 msgstr ""
 
-#: components/SelectPrice.js:84
-#: components/SelectPrice.js:120
+#: components/SelectPrice.js:91
+#: components/SelectPrice.js:127
 #: products/components/price/parts/SwapPriceSetting.js:90
 #: products/modules/integrations/NewIntegration.js:96
 #: products/modules/Prices/Price/BuyLink.js:54
@@ -10078,21 +10882,21 @@ msgstr ""
 msgid "%s available"
 msgstr ""
 
-#: components/SelectPrice.js:143
+#: components/SelectPrice.js:150
 #: subscriptions/edit/modules/Modals/UpdatePrice.js:34
 msgid "Select a price"
 msgstr ""
 
-#: components/SelectPrice.js:144
+#: components/SelectPrice.js:151
 msgid "Search for a price..."
 msgstr ""
 
-#: components/SelectPrice.js:150
+#: components/SelectPrice.js:157
 #: components/SelectPrice.js:184
 msgid "Variant Out of Stock."
 msgstr ""
 
-#: components/SelectPrice.js:166
+#: components/SelectPrice.js:173
 #: components/SelectPrice.js:200
 msgid "Add New Product"
 msgstr ""
@@ -11861,7 +12665,7 @@ msgid "Returned on"
 msgstr ""
 
 #: orders/modules/ReturnRequest/ReturnReasonsSelector.js:14
-#: store/add-entities.js:475
+#: store/add-entities.js:477
 msgid "Return Reason"
 msgstr ""
 
@@ -12307,18 +13111,9 @@ msgstr ""
 msgid "Save your changes before going to the editor?"
 msgstr ""
 
-#: products/components/Editor/index.js:52
-#: Blocks/Column/Inspector/Spacing.js:96
-msgid "Content"
-msgstr ""
-
 #: products/components/Editor/index.js:82
 #: products/modules/ProductOptions.js:40
 msgid "Open Content Designer"
-msgstr ""
-
-#: products/components/Editor/index.js:256
-msgid "Product Content"
 msgstr ""
 
 #: products/components/Editor/index.js:259
@@ -12413,13 +13208,6 @@ msgstr ""
 
 #: products/components/price/parts/PaymentType.js:122
 msgid "Payment type"
-msgstr ""
-
-#: products/components/price/parts/PaymentType.js:130
-#: products/modules/Prices/Price/Header.js:87
-#: Blocks/Product/PriceChoices/edit.js:99
-#: src/blocks/product-price-chooser/edit.js:42
-msgid "One Time"
 msgstr ""
 
 #: products/components/price/parts/PaymentType.js:134
@@ -12700,18 +13488,6 @@ msgstr ""
 msgid "Show store logo"
 msgstr ""
 
-#: products/modules/BuyLink.js:180
-#: Blocks/Cart/edit.js:70
-#: Blocks/Column/edit.js:140
-#: Blocks/ProductCollectionImage/dimension-controls.js:163
-#: Blocks/ProductCollectionImage/dimension-controls.js:172
-#: Blocks/StoreLogo/edit.js:153
-#: src/blocks/cart/edit.js:61
-#: src/blocks/product-image/edit.js:154
-#: src/blocks/product-selected-price-ad-hoc-amount/edit.js:33
-msgid "Width"
-msgstr ""
-
 #: products/modules/BuyLink.js:191
 msgid "Show product image"
 msgstr ""
@@ -12801,11 +13577,11 @@ msgstr ""
 msgid "Migrate image to server"
 msgstr ""
 
-#: products/modules/Image/index.js:64
+#: products/modules/Image/index.js:70
 msgid "This image is already in the gallery."
 msgstr ""
 
-#: products/modules/Image/index.js:76
+#: products/modules/Image/index.js:80
 msgid "Images"
 msgstr ""
 
@@ -12953,10 +13729,6 @@ msgstr ""
 msgid "Continue selling when out of stock"
 msgstr ""
 
-#: products/modules/Inventory/index.js:78
-msgid "Available Stock"
-msgstr ""
-
 #: products/modules/Inventory/index.js:106
 msgid "Make stock adjustment"
 msgstr ""
@@ -12977,11 +13749,6 @@ msgstr ""
 #: products/modules/Inventory/StockAdjustmentModal.js:75
 #: products/modules/Variations/VariantItem.js:205
 msgid "Available"
-msgstr ""
-
-#: products/modules/Inventory/StockAdjustmentModal.js:96
-#: products/modules/Variations/VariantItem.js:229
-msgid "On Hand"
 msgstr ""
 
 #: products/modules/Inventory/StockAdjustmentModal.js:133
@@ -13922,7 +14689,7 @@ msgid "Manually sync your WordPress install with SureCart."
 msgstr ""
 
 #: settings/advanced/AdvancedSettings.js:441
-msgid "Match all SureCart customers with WordPress users. This is helpful if you have migrated from another eCommerce platform."
+msgid "Create WordPress user accounts for SureCart customers who don't already have a WordPress account. Use this after migrating from another eCommerce platform to ensure every SureCart customer can log in."
 msgstr ""
 
 #: settings/advanced/AdvancedSettings.js:463
@@ -14205,11 +14972,6 @@ msgstr ""
 
 #: settings/brand/components/CartSettings.js:179
 msgid "Select the cart button position, i.e. left or right, where it will look best with your website design."
-msgstr ""
-
-#: settings/brand/components/CartSettings.js:189
-#: settings/display-currency/components/CurrencySwitcherSettings.js:175
-msgid "Left"
 msgstr ""
 
 #: settings/brand/components/CartSettings.js:203
@@ -15183,7 +15945,7 @@ msgid "Maximum weight"
 msgstr ""
 
 #: settings/shipping/rate/ShippingRateForm.js:336
-#: store/add-entities.js:419
+#: store/add-entities.js:421
 msgid "Shipping Method"
 msgstr ""
 
@@ -15441,11 +16203,6 @@ msgstr ""
 msgid "Provide a discount to keep a subscription."
 msgstr ""
 
-#: settings/subscription-preservation/PreservationSettings.js:295
-#: Blocks/CustomerDashboardButton/edit.js:93
-msgid "Button"
-msgstr ""
-
 #: settings/subscription-preservation/PreservationSettings.js:304
 msgid "Cancel Link"
 msgstr ""
@@ -15503,7 +16260,7 @@ msgid "Delay Self-Service Cancellations"
 msgstr ""
 
 #: settings/subscription/SubscriptionSettings.js:168
-msgid "When enabled, this feature prevents customers from cancelling their subscription on the customer dashboard until a set number of days before renewal."
+msgid "The number of days prior to a subscription renewing that the cancel option will be visible to customers."
 msgstr ""
 
 #: settings/subscription/SubscriptionSettings.js:178
@@ -15914,7 +16671,7 @@ msgid "%s Tax Region"
 msgstr ""
 
 #: settings/tax-region/TaxRegionSettings.js:191
-#: store/add-entities.js:313
+#: store/add-entities.js:315
 msgid "Tax Registration"
 msgstr ""
 
@@ -16099,80 +16856,76 @@ msgstr ""
 msgid "Billing Period"
 msgstr ""
 
-#: store/add-entities.js:244
-msgid "Product Media"
-msgstr ""
-
-#: store/add-entities.js:258
+#: store/add-entities.js:259
 msgid "Product Group"
 msgstr ""
 
-#: store/add-entities.js:279
+#: store/add-entities.js:281
 msgid "Promotion"
 msgstr ""
 
-#: store/add-entities.js:300
-#: store/add-entities.js:306
+#: store/add-entities.js:302
+#: store/add-entities.js:308
 msgid "Shipping Protocol"
 msgstr ""
 
-#: store/add-entities.js:320
+#: store/add-entities.js:322
 msgid "Tax Zone"
 msgstr ""
 
-#: store/add-entities.js:327
+#: store/add-entities.js:329
 msgid "Tax Override"
 msgstr ""
 
-#: store/add-entities.js:334
+#: store/add-entities.js:336
 msgid "Affiliation Protocol"
 msgstr ""
 
-#: store/add-entities.js:341
+#: store/add-entities.js:343
 msgid "Affiliation Request"
 msgstr ""
 
-#: store/add-entities.js:348
+#: store/add-entities.js:350
 msgid "Affiliations"
 msgstr ""
 
-#: store/add-entities.js:355
+#: store/add-entities.js:357
 msgid "Affiliation Product"
 msgstr ""
 
-#: store/add-entities.js:370
+#: store/add-entities.js:372
 msgid "Referral"
 msgstr ""
 
-#: store/add-entities.js:398
+#: store/add-entities.js:400
 msgid "Shipping Profile"
 msgstr ""
 
-#: store/add-entities.js:405
+#: store/add-entities.js:407
 msgid "Shipping Zone"
 msgstr ""
 
-#: store/add-entities.js:412
+#: store/add-entities.js:414
 msgid "Shipping Rate"
 msgstr ""
 
-#: store/add-entities.js:426
+#: store/add-entities.js:428
 msgid "Statistic"
 msgstr ""
 
-#: store/add-entities.js:447
+#: store/add-entities.js:449
 msgid "Incoming Webhook"
 msgstr ""
 
-#: store/add-entities.js:454
+#: store/add-entities.js:456
 msgid "Variant Option"
 msgstr ""
 
-#: store/add-entities.js:468
+#: store/add-entities.js:470
 msgid "Return Request"
 msgstr ""
 
-#: store/add-entities.js:481
+#: store/add-entities.js:483
 msgid "Swap"
 msgstr ""
 
@@ -16836,7 +17589,7 @@ msgstr ""
 #: src/blocks/cart-bump-line-item/view.php:18
 #: src/blocks/cart-bump-line-item/edit.js:54
 #: sc-line-item-bump.js:21
-#: sc-order-confirmation-totals2.js:36
+#: sc-order-confirmation-totals2.js:35
 msgid "Bundle Discount"
 msgstr ""
 
@@ -16917,11 +17670,6 @@ msgstr ""
 #: Controllers/SubscriptionController.php:215
 #: sc-subscription-switch.js:241
 msgid "Update Plan"
-msgstr ""
-
-#: Blocks/Product/BuyButton/Block.php:131
-#: Blocks/Upsell/SubmitButton/Block.php:135
-msgid "Unavailable"
 msgstr ""
 
 #: Blocks/ProductItemList/Block.php:188
@@ -17136,7 +17884,7 @@ msgstr ""
 #: src/blocks/cart-subtotal/edit.js:30
 #: src/blocks/product-list-related/inspector-controls/index.js:73
 #: src/blocks/product-list/inspector-controls/index.js:64
-#: src/blocks/product-media/edit.js:135
+#: src/blocks/product-media/edit.js:62
 #: src/blocks/product-quantity/edit.js:34
 msgid "Attributes"
 msgstr ""
@@ -17219,21 +17967,6 @@ msgstr ""
 #: components/CartInspectorControls.js:18
 #: src/components/CartInspectorControls.js:18
 msgid "Color Settings"
-msgstr ""
-
-#: Blocks/AddToCartButton/edit.js:84
-#: Blocks/BuyButton/edit.js:65
-#: Blocks/CartSubmit/edit.js:57
-#: components/CartInspectorControls.js:24
-#: src/components/CartInspectorControls.js:24
-msgid "Background Color"
-msgstr ""
-
-#: Blocks/AddToCartButton/edit.js:90
-#: Blocks/BuyButton/edit.js:71
-#: components/CartInspectorControls.js:29
-#: src/components/CartInspectorControls.js:29
-msgid "Text Color"
 msgstr ""
 
 #: Blocks/AddToCartButton/edit.js:94
@@ -17433,13 +18166,6 @@ msgstr ""
 msgid "Spacing"
 msgstr ""
 
-#: Blocks/CartSubmit/edit.js:63
-#: components/CartInspectorControls.js:35
-#: src/blocks/cart-submit/edit.js:62
-#: src/components/CartInspectorControls.js:35
-msgid "Padding"
-msgstr ""
-
 #: Blocks/CartSubmit/edit.js:74
 #: components/CartInspectorControls.js:46
 #: src/blocks/cart-submit/edit.js:73
@@ -17468,12 +18194,6 @@ msgstr ""
 #: Blocks/Switch/components/Inspector.js:39
 #: Blocks/Textarea/edit.js:58
 msgid "Help"
-msgstr ""
-
-#: Blocks/Checkbox/edit.js:45
-#: Blocks/Radio/edit.js:30
-#: Blocks/Switch/edit.js:43
-msgid "Value"
 msgstr ""
 
 #: Blocks/Checkbox/edit.js:52
@@ -17582,10 +18302,6 @@ msgstr ""
 #. translators: 1: Block label (i.e. "Block: Column"), 2: Position of the selected block, 3: Total number of sibling blocks of the same type
 #: Blocks/Column/edit.js:105
 msgid "%1$s (%2$d of %3$d)"
-msgstr ""
-
-#: Blocks/Column/edit.js:131
-msgid "Layout"
 msgstr ""
 
 #: Blocks/Column/edit.js:138
@@ -17882,16 +18598,6 @@ msgstr ""
 #: Blocks/CustomerDashboardButton/edit.js:50
 #: Blocks/Submit/edit.js:51
 msgid "Full"
-msgstr ""
-
-#: Blocks/CustomerDashboardButton/edit.js:70
-#: Blocks/Submit/edit.js:112
-msgid "Small"
-msgstr ""
-
-#: Blocks/CustomerDashboardButton/edit.js:78
-#: Blocks/Submit/edit.js:120
-msgid "Large"
 msgstr ""
 
 #: Blocks/CustomerDashboardButton/edit.js:97
@@ -18371,18 +19077,6 @@ msgstr ""
 msgid "Text settings"
 msgstr ""
 
-#: Blocks/Product/BuyButton/edit.js:148
-#: Blocks/Upsell/SubmitButton/edit.js:113
-#: src/blocks/product-buy-button/edit.js:59
-msgid "Out of stock label"
-msgstr ""
-
-#: Blocks/Product/BuyButton/edit.js:157
-#: Blocks/Upsell/SubmitButton/edit.js:122
-#: src/blocks/product-buy-button/edit.js:68
-msgid "Unavailable label"
-msgstr ""
-
 #: Blocks/Product/CollectionBadges/edit.js:62
 #: src/blocks/product-collection-tags/edit.js:63
 msgid "Number To Display"
@@ -18393,23 +19087,13 @@ msgstr ""
 msgid "Experience the next level of convenience with our innovative widget. Melding cutting-edge technology with user-friendly design, this product provides unparalleled functionality that caters to your lifestyle."
 msgstr ""
 
-#: Blocks/Product/Media/edit.js:46
-#: src/blocks/product-media/edit.js:151
-msgid "Auto Height"
-msgstr ""
-
 #: Blocks/Product/Media/edit.js:57
-#: src/blocks/product-media/edit.js:166
+#: src/blocks/product-media/edit.js:95
 msgid "Slider Height"
 msgstr ""
 
-#: Blocks/Product/Media/edit.js:67
-#: src/blocks/product-media/edit.js:176
-msgid "Max Image Width"
-msgstr ""
-
 #: Blocks/Product/Media/edit.js:78
-#: src/blocks/product-media/edit.js:187
+#: src/blocks/product-media/edit.js:115
 msgid "Thumbnails Per Page"
 msgstr ""
 
@@ -18446,15 +19130,6 @@ msgstr ""
 #: Blocks/Upsell/Title/heading-level-dropdown.js:56
 #: src/components/HeadingLebelDropdown.js:56
 msgid "Heading %d"
-msgstr ""
-
-#: Blocks/Product/VariantChoices/edit.js:60
-#: src/blocks/product-variant-pills/edit.js:33
-msgid "Color"
-msgstr ""
-
-#: Blocks/Product/VariantChoices/edit.js:69
-msgid "Green"
 msgstr ""
 
 #: Blocks/Product/VariantChoices/edit.js:71
@@ -21189,10 +21864,6 @@ msgstr ""
 msgid "/ mo"
 msgstr ""
 
-#: src/blocks/price-name/edit.js:7
-msgid "Price Name"
-msgstr ""
-
 #: src/blocks/price-setup-fee/edit.js:9
 msgid "12 Signup Fee"
 msgstr ""
@@ -21349,11 +22020,7 @@ msgstr ""
 msgid "Keyword"
 msgstr ""
 
-#: src/blocks/product-media/edit.js:138
-msgid "Scale images with a lightbox effect."
-msgstr ""
-
-#: src/blocks/product-media/edit.js:152
+#: src/blocks/product-media/edit.js:80
 msgid "Automatically adjust the height of the slider to the image height."
 msgstr ""
 
@@ -21396,10 +22063,6 @@ msgstr ""
 msgid "Toggle off to hide the label text, e.g. \"Next Page\"."
 msgstr ""
 
-#: src/blocks/product-price-chooser/edit.js:37
-msgid "Subscribe & Save"
-msgstr ""
-
 #: src/blocks/product-price-chooser/edit.js:110
 msgid "This block will only show multiple columns if the width of the container is over 600px."
 msgstr ""
@@ -21438,14 +22101,6 @@ msgstr ""
 
 #: src/blocks/product-title/edit.js:45
 msgid "Make title a link"
-msgstr ""
-
-#: src/blocks/product-variant-pill/edit.js:57
-msgid "Highlight Text"
-msgstr ""
-
-#: src/blocks/product-variant-pill/edit.js:65
-msgid "Highlight Background"
 msgstr ""
 
 #: src/components/LabelInspectorControls.js:27
@@ -21520,23 +22175,23 @@ msgstr ""
 msgid "Removing line item."
 msgstr ""
 
-#: src/scripts/image-slider/index.js:53
+#: src/scripts/image-slider/index.js:68
 msgid "Go to previous slide."
 msgstr ""
 
-#: src/scripts/image-slider/index.js:54
+#: src/scripts/image-slider/index.js:69
 msgid "This is the first slide."
 msgstr ""
 
-#: src/scripts/image-slider/index.js:55
+#: src/scripts/image-slider/index.js:70
 msgid "This is the last slide."
 msgstr ""
 
-#: src/scripts/image-slider/index.js:56
+#: src/scripts/image-slider/index.js:71
 msgid "Go to next slide."
 msgstr ""
 
-#: src/scripts/image-slider/index.js:57
+#: src/scripts/image-slider/index.js:72
 msgid "Slide {{index}} of {{slidesLength}}."
 msgstr ""
 
@@ -21897,6 +22552,26 @@ msgstr ""
 #: src/blocks/product-list/block.json
 msgctxt "block description"
 msgid "Display a list of products."
+msgstr ""
+
+#: src/blocks/product-media/block.json
+msgctxt "block variation title"
+msgid "Product Media Slider"
+msgstr ""
+
+#: src/blocks/product-media/block.json
+msgctxt "block variation description"
+msgid "Display the product media in a slider."
+msgstr ""
+
+#: src/blocks/product-media/block.json
+msgctxt "block variation title"
+msgid "Product Media Gallery"
+msgstr ""
+
+#: src/blocks/product-media/block.json
+msgctxt "block variation description"
+msgid "Display the product media in a gallery on desktop devices."
 msgstr ""
 
 #: src/blocks/product-page/block.json
@@ -24007,19 +24682,19 @@ msgstr ""
 msgid "%d characters remaining"
 msgstr ""
 
-#: sc-select2.js:2078
+#: sc-select2.js:2079
 msgid "Select..."
 msgstr ""
 
-#: sc-select2.js:2078
+#: sc-select2.js:2079
 msgid "Search..."
 msgstr ""
 
-#: sc-select2.js:2078
+#: sc-select2.js:2079
 msgid "Type to search"
 msgstr ""
 
-#: sc-select2.js:2080
+#: sc-select2.js:2081
 msgid "Nothing Found"
 msgstr ""
 

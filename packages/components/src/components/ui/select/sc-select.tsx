@@ -396,14 +396,16 @@ export class ScSelectDropdown {
   }
 
   renderItem(choice: ChoiceItem, index: number) {
+    const uniqueKey = `${choice?.value || choice?.label || 'item'}-${index}`;
+    
     if (choice?.choices?.length) {
-      return <sc-menu-label key={index}>{choice.label}</sc-menu-label>;
+      return <sc-menu-label key={uniqueKey}>{choice?.label}</sc-menu-label>;
     }
 
     return (
       <sc-menu-item
         class={{ 'is-unavailable': choice?.unavailable }}
-        key={index}
+        key={uniqueKey}
         checked={this.isChecked(choice)}
         value={choice?.value}
         onClick={() => !choice.disabled && this.handleSelect(choice)}
