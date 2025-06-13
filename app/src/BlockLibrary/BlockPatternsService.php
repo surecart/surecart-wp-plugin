@@ -27,6 +27,7 @@ class BlockPatternsService {
 		$this->categories = [
 			'surecart_form'             => [ 'label' => __( 'Checkout Form', 'surecart' ) ],
 			'surecart_shop'             => [ 'label' => __( 'Shop', 'surecart' ) ],
+			'surecart_cart'             => [ 'label' => __( 'Cart', 'surecart' ) ],
 			'surecart_product_page'     => [ 'label' => __( 'Product Page', 'surecart' ) ],
 			'surecart_related_products' => [ 'label' => __( 'Related Products', 'surecart' ) ],
 		];
