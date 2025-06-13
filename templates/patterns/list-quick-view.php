@@ -51,7 +51,7 @@ return [
 <div class="wp-block-cover is-light has-custom-content-position is-position-top-right" style="border-radius:10px;margin-bottom:15px"><span aria-hidden="true" class="wp-block-cover__background has-background-dim-0 has-background-dim"></span><div class="wp-block-cover__inner-container"><!-- wp:group {"layout":{"type":"flex","flexWrap":"nowrap","verticalAlignment":"center"}} -->
 <div class="wp-block-group"><!-- wp:surecart/product-sale-badge {"style":{"typography":{"fontSize":"12px"},"border":{"radius":"100px"}}} /-->
 
-<!-- wp:surecart/product-quick-view-button {"style":{"spacing":{"padding":{"top":"5px","bottom":"5px","left":"var:preset|spacing|20","right":"var:preset|spacing|20"},"blockGap":"var:preset|spacing|20"},"border":{"radius":"13px"},"typography":{"fontSize":"0.7rem"}}} /--></div>
+<!-- wp:surecart/product-quick-view-button {"style":{"border":{"radius":"13px"},"typography":{"fontSize":"12px"},"spacing":{"padding":{"left":"0.75em","right":"0.75em","top":"0.75em","bottom":"0.75em"}}}} /--></div>
 <!-- /wp:group --></div></div>
 <!-- /wp:cover --></div>
 <!-- /wp:group -->

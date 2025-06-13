@@ -46,7 +46,10 @@ export default ({
 		return (
 			<>
 				{showIcon && 'before' === iconPosition && (
-					<ScIcon name={icon} />
+					<ScIcon
+						className="wp-block-surecart-product-quick-view-button__icon"
+						name={icon}
+					/>
 				)}
 				{showText && (
 					<PlainText
@@ -60,7 +63,12 @@ export default ({
 						}
 					/>
 				)}
-				{showIcon && 'after' === iconPosition && <ScIcon name={icon} />}
+				{showIcon && 'after' === iconPosition && (
+					<ScIcon
+						className="wp-block-surecart-product-quick-view-button__icon"
+						name={icon}
+					/>
+				)}
 			</>
 		);
 	};
