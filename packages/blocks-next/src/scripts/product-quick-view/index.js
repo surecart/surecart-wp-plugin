@@ -38,12 +38,16 @@ const { state, actions } = store('surecart/product-quick-view', {
 
 			event?.preventDefault();
 
+			productListState.loading = true;
+
 			const { actions: routerActions } = yield import(
 				/* webpackIgnore: true */
 				'@wordpress/interactivity-router'
 			);
 
 			yield routerActions.navigate(url, { replace: true });
+
+			productListState.loading = false;
 		},
 
 		/** Prefetch URL */
@@ -60,8 +64,6 @@ const { state, actions } = store('surecart/product-quick-view', {
 		*open(event) {
 			if (!isValidEvent(event)) return;
 
-			productListState.loading = true;
-
 			// prevent default to avoid page reload.
 			event?.preventDefault();
 
@@ -74,8 +76,6 @@ const { state, actions } = store('surecart/product-quick-view', {
 
 			// navigate to the product page.
 			if (event) yield actions.navigate(event);
-
-			productListState.loading = false;
 
 			// focus the first focusable element.
 			const firstFocusable = document
@@ -93,8 +93,6 @@ const { state, actions } = store('surecart/product-quick-view', {
 			// prevent default to avoid page reload.
 			event?.preventDefault();
 
-			productListState.loading = true;
-
 			const { ref } = getElement();
 			const dialog = ref
 				?.closest('.wp-block-surecart-product-quick-view')
@@ -105,7 +103,6 @@ const { state, actions } = store('surecart/product-quick-view', {
 				withScope(() => {
 					state?.openButton?.focus();
 					actions.navigate(event);
-					productListState.loading = false;
 				}),
 				{ once: true }
 			); // Wait for the closing animation to finish before navigating.
