@@ -8,6 +8,8 @@ import {
 	withScope,
 } from '@wordpress/interactivity';
 
+const { state: productListState } = store('surecart/product-list');
+
 /**
  * Tracks elements made inert when lightbox is active.
  * Helps revert only explicitly modified elements.
@@ -58,6 +60,8 @@ const { state, actions } = store('surecart/product-quick-view', {
 		*open(event) {
 			if (!isValidEvent(event)) return;
 
+			productListState.loading = true;
+
 			// prevent default to avoid page reload.
 			event?.preventDefault();
 
@@ -70,6 +74,8 @@ const { state, actions } = store('surecart/product-quick-view', {
 
 			// navigate to the product page.
 			if (event) yield actions.navigate(event);
+
+			productListState.loading = false;
 
 			// focus the first focusable element.
 			const firstFocusable = document
@@ -87,6 +93,8 @@ const { state, actions } = store('surecart/product-quick-view', {
 			// prevent default to avoid page reload.
 			event?.preventDefault();
 
+			productListState.loading = true;
+
 			const { ref } = getElement();
 			const dialog = ref
 				?.closest('.wp-block-surecart-product-quick-view')
@@ -97,6 +105,7 @@ const { state, actions } = store('surecart/product-quick-view', {
 				withScope(() => {
 					state?.openButton?.focus();
 					actions.navigate(event);
+					productListState.loading = false;
 				}),
 				{ once: true }
 			); // Wait for the closing animation to finish before navigating.
