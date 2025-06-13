@@ -12,10 +12,6 @@
 	"attributes": {
 		"product_id": {
 			"type": "string"
-		},
-		"show_sticky_purchase_button": {
-			"type": "boolean",
-			"default": false
 		}
 	},
 	"supports": {
@@ -40,9 +36,5 @@
 		"surecart-prose"
 	],
 	"viewScript": ["wp-url", "wp-api-fetch", "wp-i18n", "wp-a11y"],
-	"viewScriptModule": [
-		"@surecart/checkout",
-		"@surecart/product-page",
-		"@surecart/sticky-purchase-button"
-	]
+	"viewScriptModule": ["@surecart/checkout", "@surecart/product-page"]
 }

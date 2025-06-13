@@ -3,8 +3,8 @@
  */
 import { store, getContext, withScope } from '@wordpress/interactivity';
 
-// controls the sticky purchase button behavior.
-const { state, actions } = store('surecart/sticky-purchase-button', {
+// controls the sticky purchase behavior.
+const { state, actions } = store('surecart/sticky-purchase', {
 	state: {
 		get isVisible() {
 			const context = getContext();
@@ -62,9 +62,7 @@ const { state, actions } = store('surecart/sticky-purchase-button', {
 			const context = getContext();
 			if (!context) return;
 
-			const stickyButton = document.querySelector(
-				'.sc-sticky-purchase-button'
-			);
+			const stickyButton = document.querySelector('.sc-sticky-purchase');
 
 			if (!stickyButton) {
 				context.ticking = false;

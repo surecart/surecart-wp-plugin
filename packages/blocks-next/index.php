@@ -327,10 +327,10 @@ add_action(
 		);
 
 		// Sticky purchase button interactivity script.
-		$static_assets = include trailingslashit( plugin_dir_path( __FILE__ ) ) . 'build/scripts/sticky-purchase-button/index.asset.php';
+		$static_assets = include trailingslashit( plugin_dir_path( __FILE__ ) ) . 'build/scripts/sticky-purchase/index.asset.php';
 		wp_register_script_module(
-			'@surecart/sticky-purchase-button',
-			trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/sticky-purchase-button/index.js',
+			'@surecart/sticky-purchase',
+			trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/sticky-purchase/index.js',
 			[
 				[
 					'id'     => '@wordpress/interactivity',

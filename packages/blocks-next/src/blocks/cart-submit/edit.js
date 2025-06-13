@@ -24,7 +24,14 @@ import { __ } from '@wordpress/i18n';
 import ColorInspectorControl from '../../components/ColorInspectorControl';
 
 export default ({ className, attributes, setAttributes, clientId }) => {
-	const { text, style, padding, border, sectionBackgroundColor } = attributes;
+	const {
+		text,
+		style,
+		padding,
+		border,
+		sectionBackgroundColor,
+		show_sticky_purchase_button,
+	} = attributes;
 
 	// Use internal state instead of a ref to make sure that the component
 	// re-renders when the popover's anchor updates.
@@ -70,6 +77,22 @@ export default ({ className, attributes, setAttributes, clientId }) => {
 						onChange={(padding) => setAttributes({ padding })}
 					/>
 				</PanelBody>
+
+				<PanelBody title={__('Sticky Button', 'surecart')}>
+					<PanelRow>
+						<ToggleControl
+							label={__(
+								'Show Sticky Purchase Button',
+								'surecart'
+							)}
+							checked={show_sticky_purchase_button}
+							onChange={(show_sticky_purchase_button) =>
+								setAttributes({ show_sticky_purchase_button })
+							}
+						/>
+					</PanelRow>
+				</PanelBody>
+
 				<PanelBody title={__('Border', 'surecart')}>
 					<PanelRow>
 						<ToggleControl

@@ -20,10 +20,10 @@
 /**
  * Sticky Purchase Button Style.
  */
-.sc-sticky-purchase-button-container {
+.sc-sticky-purchase-container {
 	position: relative;
 
-	.sc-sticky-purchase-button {
+	.sc-sticky-purchase {
 		opacity: 0;
 		visibility: hidden;
 		transform: translateY(100%);
