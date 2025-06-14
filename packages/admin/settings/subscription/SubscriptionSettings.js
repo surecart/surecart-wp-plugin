@@ -216,7 +216,7 @@ export default () => {
 						})
 					}
 					help={__(
-						'Specify the percentage of time remaining in the subscription period at which a reminder should be sent to customers. For example, if set to 25, the reminder will be triggered when there is 25% of the subscription period remaining.',
+						'Specify the percentage of the subscription period remaining when a reminder should be sent to customers. For instance, entering 25% will trigger the reminder when 25% of the period is left.',
 						'surecart'
 					)}
 					required
