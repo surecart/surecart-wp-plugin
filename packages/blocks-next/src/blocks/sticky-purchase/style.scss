@@ -1,0 +1,170 @@
+.wp-block-surecart-sticky-purchase {
+	.sc-sticky-purchase-container {
+		position: relative;
+
+		.sc-sticky-purchase {
+			opacity: 0;
+			visibility: hidden;
+			transform: translateY(100%) translateX(-50%);
+			position: fixed;
+			bottom: 0;
+			left: 50%;
+			z-index: 100; // greater than the cart toggle button.
+			transition: all 0.3s ease;
+			box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+			width: 600px;
+			max-width: calc(100vw - 2rem);
+
+			&.is-visible {
+				opacity: 1;
+				visibility: visible;
+				transform: translateY(0) translateX(-50%);
+			}
+
+			&.is-hiding {
+				opacity: 0;
+				transform: translateY(100%) translateX(-50%);
+			}
+
+			.wp-block-surecart-product-buy-buttons {
+				min-width: 175px;
+			}
+
+			// Mobile device styles.
+			@media (max-width: 768px) {
+				left: 0;
+				right: 0;
+				width: 100%;
+				max-width: none;
+				transform: translateY(100%);
+
+				.wp-block-surecart-product-buy-buttons {
+					min-width: 100%;
+				}
+
+				.wp-block-columns:not(.is-not-stacked-on-mobile)
+					> .wp-block-column {
+					flex-basis: 70% !important;
+					width: auto !important;
+				}
+
+				&.is-visible {
+					transform: translateY(0);
+				}
+
+				&.is-hiding {
+					transform: translateY(100%);
+				}
+
+				// Force columns to stay in row layout on mobile - override WordPress core styles
+				.wp-block-columns,
+				.wp-block-columns.is-stacked-on-mobile {
+					flex-direction: row !important;
+					gap: 0.75rem !important;
+					align-items: center !important;
+
+					.wp-block-column {
+						&:first-child {
+							flex: 1 1 auto !important;
+							min-width: 0;
+						}
+
+						&:last-child {
+							flex: 0 0 auto !important;
+							display: flex !important;
+							align-items: center !important;
+							justify-content: flex-end !important;
+						}
+
+						// Override group justification
+						.wp-block-group.is-content-justification-right {
+							justify-content: flex-end !important;
+						}
+
+						.wp-block-group.is-content-justification-left {
+							justify-content: flex-start !important;
+						}
+					}
+				}
+
+				// Hide text in buttons, show only icons
+				.wp-block-surecart-product-buy-button {
+					.sc-button__link-text {
+						display: none !important;
+					}
+
+					.wp-block-button__link {
+						min-width: 48px !important;
+						min-height: 48px !important;
+						padding: 0.75rem !important;
+						justify-content: center !important;
+						width: auto !important;
+
+						svg {
+							width: 1.25rem !important;
+							height: 1.25rem !important;
+						}
+					}
+				}
+
+				// Ensure buttons container stays inline
+				.wp-block-surecart-product-buy-buttons,
+				.wp-block-buttons {
+					gap: 0.5rem !important;
+					flex-direction: row !important;
+					width: auto !important;
+
+					.wp-block-button {
+						margin: 0 !important;
+						width: auto !important;
+					}
+				}
+
+				// Make product info more compact
+				.wp-block-surecart-product-title {
+					font-size: 0.9rem;
+					line-height: 1.3;
+					margin-bottom: 0.25rem;
+				}
+
+				.wp-block-surecart-product-price {
+					font-size: 1rem;
+					margin-bottom: 0.5rem;
+				}
+
+				// Ensure product info group stays horizontal
+				.wp-block-group.is-nowrap {
+					flex-direction: row !important;
+					gap: 0.75rem !important;
+					align-items: center !important;
+				}
+			}
+
+			// Very small mobile devices
+			@media (max-width: 480px) {
+				padding: 0.5rem 0.75rem;
+
+				.wp-block-surecart-product-buy-button {
+					.wp-block-button__link {
+						min-width: 44px;
+						min-height: 44px;
+						padding: 0.5rem;
+
+						svg {
+							width: 1rem;
+							height: 1rem;
+						}
+					}
+				}
+
+				.wp-block-surecart-product-title {
+					font-size: 0.8rem;
+				}
+
+				.wp-block-surecart-product-price {
+					font-size: 0.9rem;
+				}
+			}
+		}
+	}
+}

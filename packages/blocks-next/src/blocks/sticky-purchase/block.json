@@ -1,0 +1,48 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "surecart/sticky-purchase",
+	"title": "Sticky Purchase Button",
+	"description": "Display the sticky purchase button.",
+	"version": "1.0.0",
+	"example": {},
+	"category": "surecart-cart",
+	"attributes": {
+		"width": {
+			"type": "string",
+			"default": "400px"
+		}
+	},
+	"supports": {
+		"interactivity": true,
+		"color": {
+			"gradients": true,
+			"link": false,
+			"__experimentalDefaultControls": {
+				"background": true,
+				"text": true
+			}
+		},
+		"spacing": {
+			"margin": true,
+			"padding": true
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true,
+			"__experimentalFontWeight": true
+		}
+	},
+	"textdomain": "surecart",
+	"render": "file:./view.php",
+	"editorScript": "file:./index.js",
+	"viewScriptModule": [
+		"@surecart/checkout",
+		"@surecart/cart",
+		"@surecart/product-page",
+		"@surecart/sticky-purchase",
+		"surecart/lightbox"
+	],
+	"editorStyle": ["file:./index.css"],
+	"style": ["file:./style-index.css", "surecart-block-ui", "surecart-spinner"]
+}

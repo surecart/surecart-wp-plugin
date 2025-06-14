@@ -6,9 +6,15 @@ import classnames from 'classnames';
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { __, _x } from '@wordpress/i18n';
 import { useRef } from '@wordpress/element';
-import { PanelBody, PanelRow, TextControl } from '@wordpress/components';
+import {
+	PanelBody,
+	PanelRow,
+	TextControl,
+	__experimentalToggleGroupControl as ToggleGroupControl,
+	__experimentalToggleGroupControlOption as ToggleGroupControlOption,
+} from '@wordpress/components';
 import {
 	InspectorControls,
 	RichText,
@@ -21,11 +27,20 @@ import {
 } from '@wordpress/block-editor';
 import { isKeyboardEvent } from '@wordpress/keycodes';
 import WidthPanel from '../../components/WidthPanel';
+import ScIcon from '../../components/ScIcon';
 
 export default (props) => {
 	const { attributes, setAttributes, className } = props;
-	const { style, text, width, out_of_stock_text, unavailable_text } =
-		attributes;
+	const {
+		style,
+		text,
+		width,
+		out_of_stock_text,
+		unavailable_text,
+		icon,
+		iconName,
+		iconPosition,
+	} = attributes;
 
 	function onKeyDown(event) {
 		if (isKeyboardEvent.primary(event, 'k')) {
@@ -79,6 +94,75 @@ export default (props) => {
 					setAttributes={setAttributes}
 					ariaLabel={__('Button width')}
 				/>
+
+				<PanelBody title={__('Text settings', 'surecart')}>
+					<ToggleGroupControl
+						__nextHasNoMarginBottom
+						label={__('Button')}
+						value={icon}
+						onChange={(value) => setAttributes({ icon: value })}
+						help={__(
+							'A decorative way to display the button.',
+							'surecart'
+						)}
+						isBlock
+					>
+						<ToggleGroupControlOption
+							value="icon"
+							label={_x(
+								'Icon',
+								'Button option for product quick view button.',
+								'surecart'
+							)}
+						/>
+						<ToggleGroupControlOption
+							value="text"
+							label={_x(
+								'Text',
+								'Button option for product quick view button.',
+								'surecart'
+							)}
+						/>
+						<ToggleGroupControlOption
+							value="both"
+							label={_x(
+								'Both',
+								'Button option for product quick view button.',
+								'surecart'
+							)}
+						/>
+					</ToggleGroupControl>
+
+					{(icon === 'icon' || icon === 'both') && (
+						<ToggleGroupControl
+							__nextHasNoMarginBottom
+							label={__('Icon Position')}
+							value={iconPosition}
+							onChange={(value) =>
+								setAttributes({ iconPosition: value })
+							}
+							help={__('The position of the icon in the button.')}
+							isBlock
+						>
+							<ToggleGroupControlOption
+								value="before"
+								label={_x(
+									'Before',
+									'The position of the icon in the button.',
+									'surecart'
+								)}
+							/>
+							<ToggleGroupControlOption
+								value="after"
+								label={_x(
+									'After',
+									'The position of the icon in the button.',
+									'surecart'
+								)}
+							/>
+						</ToggleGroupControl>
+					)}
+				</PanelBody>
 			</InspectorControls>
 
 			<div
@@ -90,10 +174,7 @@ export default (props) => {
 					[`has-custom-font-size`]: blockProps.style.fontSize,
 				})}
 			>
-				<RichText
-					aria-label={__('Button text', 'surecart')}
-					placeholder={__('Add text…', 'surecart')}
-					ref={richTextRef}
+				<span
 					className={classnames(
 						className,
 						'wp-block-button__link',
@@ -115,11 +196,25 @@ export default (props) => {
 						...shadowProps.style,
 						...colorProps.style,
 					}}
-					value={text}
-					onChange={(value) => setAttributes({ text: value })}
-					withoutInteractiveFormatting
-					allowedFormats={['core/bold', 'core/italic']}
-				/>
+				>
+					{('icon' === icon || 'both' === icon) &&
+						'before' === iconPosition && <ScIcon name={iconName} />}
+
+					{('text' === icon || 'both' === icon) && (
+						<RichText
+							aria-label={__('Button text', 'surecart')}
+							placeholder={__('Add text…', 'surecart')}
+							ref={richTextRef}
+							value={text}
+							onChange={(value) => setAttributes({ text: value })}
+							withoutInteractiveFormatting
+							allowedFormats={['core/bold', 'core/italic']}
+						/>
+					)}
+
+					{('icon' === icon || 'both' === icon) &&
+						'after' === iconPosition && <ScIcon name={iconName} />}
+				</span>
 			</div>
 		</>
 	);

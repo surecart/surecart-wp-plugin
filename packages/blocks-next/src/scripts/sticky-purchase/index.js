@@ -118,15 +118,9 @@ const { state, actions } = store('surecart/sticky-purchase', {
 				if (context.isVisible) {
 					stickyButton.classList.remove('is-hiding');
 					stickyButton.classList.add('is-visible');
-
-					// Add class to body when sticky button is visible.
-					document.body.classList.add('sc-sticky-purchase-active');
 				} else {
 					// Add a hiding class first for smooth transition.
 					stickyButton.classList.add('is-hiding');
-
-					// Remove the body class when hiding the sticky button.
-					document.body.classList.remove('sc-sticky-purchase-active');
 
 					// Then remove the visible class after transition completes.
 					setTimeout(
@@ -160,10 +154,6 @@ const { state, actions } = store('surecart/sticky-purchase', {
 						if (currentNearBottom) {
 							currentContext.isVisible = false;
 							stickyButton.classList.add('is-hiding');
-							// Remove body class when hiding due to bottom scroll
-							document.body.classList.remove(
-								'sc-sticky-purchase-active'
-							);
 							setTimeout(
 								withScope(() => {
 									stickyButton.classList.remove('is-visible');
@@ -203,9 +193,6 @@ const { state, actions } = store('surecart/sticky-purchase', {
 			context.scrollDirection = 'down';
 			context.viewportHeight = window.innerHeight;
 			context.hideTimeout = null;
-
-			// Ensure body class is removed on init
-			document.body.classList.remove('sc-sticky-purchase-active');
 
 			// Initial check after a small delay to ensure DOM is fully rendered.
 			setTimeout(
