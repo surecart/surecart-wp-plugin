@@ -1,4 +1,4 @@
-<figure data-wp-bind--hidden="!context.line_item.image.src">
+<figure class="sc-cart-line-item-image-wrap" data-wp-bind--hidden="!context.line_item.image.src">
 	<img
 		<?php echo wp_kses_data(
 			get_block_wrapper_attributes(
