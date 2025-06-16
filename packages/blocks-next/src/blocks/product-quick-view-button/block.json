@@ -75,6 +75,7 @@
 	"viewScriptModule": [
 		"@surecart/checkout",
 		"@surecart/product-page",
+		"@surecart/product-list",
 		"@surecart/product-quick-view"
 	],
 	"style": [
