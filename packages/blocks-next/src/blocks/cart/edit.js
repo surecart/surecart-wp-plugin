@@ -41,7 +41,7 @@ export default ({
 	const isOldTemplate = useSelect(
 		(select) =>
 			!!select(blockEditorStore).getBlocksByName(
-				'surecart/slide-out-cart-coupon'
+				'surecart/slide-out-cart-submit'
 			).length
 	);
 
