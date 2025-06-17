@@ -89,5 +89,8 @@ return [
 </div>
 <!-- /wp:columns -->
 <!-- /wp:surecart/product-page -->
+<!-- wp:group {"style":{"spacing":{"margin":{"top":"40px"}}},"layout":{"type":"default"}} -->
+<div class="wp-block-group" style="margin-top:40px"><!-- wp:post-content /--></div>
+<!-- /wp:group -->
 ',
 ];

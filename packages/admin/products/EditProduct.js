@@ -35,12 +35,15 @@ import Shipping from './modules/Shipping';
 import Inventory from './modules/Inventory';
 import Affiliation from './modules/Affiliation';
 import Collection from './modules/Collection';
-import MetaBoxes from './modules/MetaBoxes';
 import Taxonomies from './modules/Taxonomies';
+import Editor from './components/Editor';
+import ConfirmNavigation from './components/ConfirmNavigation';
+import ProductOptions from './modules/ProductOptions';
 
 export default ({ id, setBrowserURL }) => {
 	const [error, setError] = useState(null);
 	const [saving, setSaving] = useState(false);
+	const [confirmUrl, setConfirmUrl] = useState(null);
 	const { createSuccessNotice } = useDispatch(noticesStore);
 	const { saveEditedEntityRecord } = useDispatch(coreStore);
 	const { setEditedPost } = useDispatch('core/editor');
@@ -57,15 +60,17 @@ export default ({ id, setBrowserURL }) => {
 		productError,
 	} = useEntity('product', id);
 
-	const isSavingMetaBoxes = useSelect((select) =>
-		select('surecart/metaboxes').isSavingMetaBoxes()
-	);
-
 	const currentPost = useSelect((select) =>
 		select('core/editor').getCurrentPost()
 	);
 
-	const { post, loadingPost } = useSelect(
+	const hasDirtyRecords = useSelect((select) => {
+		const { __experimentalGetDirtyEntityRecords } = select(coreStore);
+		const dirtyEntityRecords = __experimentalGetDirtyEntityRecords();
+		return dirtyEntityRecords.length > 0;
+	}, []);
+
+	const { post } = useSelect(
 		(select) => {
 			const queryArgs = [
 				'postType',
@@ -102,6 +107,14 @@ export default ({ id, setBrowserURL }) => {
 		setEditedPost('sc_product', post?.id);
 	}, [post]);
 
+	const onConfirmNavigation = (url) => {
+		if (hasDirtyRecords) {
+			setConfirmUrl(url);
+		} else {
+			window.location.assign(url);
+		}
+	};
+
 	/**
 	 * Whether the product should be published.
 	 */
@@ -121,7 +134,7 @@ export default ({ id, setBrowserURL }) => {
 	/**
 	 * Handle the form submission
 	 */
-	const onSubmit = async (e) => {
+	const onSubmit = async () => {
 		try {
 			setError(null);
 			setSaving(true);
@@ -155,16 +168,6 @@ export default ({ id, setBrowserURL }) => {
 				);
 			});
 
-			// add metaboxes to pending records.
-			if (post) {
-				const metaboxes = applyFilters(
-					'surecart.saveProduct',
-					Promise.resolve(),
-					{}
-				);
-				pendingSavedRecords.push(metaboxes);
-			}
-
 			// check values.
 			const values = await Promise.all(pendingSavedRecords);
 
@@ -175,22 +178,22 @@ export default ({ id, setBrowserURL }) => {
 			// fire save event.
 			doAction('surecart.productSaved', product);
 
-			// unload acf if it exists.
-			// TODO: move to a separate function.
-			if (!!window?.acf?.unload?.reset) {
-				window.acf.unload.reset();
-			}
-
 			// remove all args from the url.
 			setBrowserURL({ id });
+
 			// save success.
 			createSuccessNotice(__('Product updated.', 'surecart'), {
 				type: 'snackbar',
 			});
+
+			if (confirmUrl) {
+				return window.location.assign(confirmUrl);
+			}
+
+			setSaving(false);
 		} catch (e) {
 			console.error(e);
 			setError(e);
-		} finally {
 			setSaving(false);
 		}
 	};
@@ -240,8 +243,32 @@ export default ({ id, setBrowserURL }) => {
 		<>
 			<Global
 				styles={css`
-					#screen-meta-links {
-						display: none;
+					/** Fix conflicts with spectra. */
+					[type='text'],
+					[type='email'],
+					[type='url'],
+					[type='password'],
+					[type='number'],
+					[type='date'],
+					[type='datetime-local'],
+					[type='month'],
+					[type='search'],
+					[type='tel'],
+					[type='time'],
+					[type='week'],
+					[multiple],
+					textarea,
+					select {
+						appearance: none;
+						background-color: inherit;
+						border-color: inherit;
+						border-width: inherit;
+						border-radius: inherit;
+						padding-top: unset;
+						padding-right: unset;
+						padding-bottom: unset;
+						padding-left: unset;
+						font-size: unset;
 					}
 				`}
 			/>
@@ -314,7 +341,6 @@ export default ({ id, setBrowserURL }) => {
 								deletingProduct ||
 								savingProduct ||
 								!hasLoadedProduct ||
-								isSavingMetaBoxes ||
 								saving
 							}
 						>
@@ -365,8 +391,6 @@ export default ({ id, setBrowserURL }) => {
 							loading={!hasLoadedProduct}
 							error={error}
 						/>
-
-						<MetaBoxes location="side" />
 					</>
 				}
 			>
@@ -383,18 +407,26 @@ export default ({ id, setBrowserURL }) => {
 						loading={!hasLoadedProduct}
 					/>
 
-					<Image
-						productId={id}
-						product={product}
-						updateProduct={editProduct}
-					/>
-
 					<Prices
 						productId={id}
 						product={product}
 						updateProduct={editProduct}
 						loading={!hasLoadedProduct}
 					/>
+
+					<Image
+						productId={id}
+						product={product}
+						updateProduct={editProduct}
+					/>
+
+					{post?.id && (
+						<Editor
+							onNavigate={onConfirmNavigation}
+							post={post}
+							loading={!hasLoadedProduct}
+						/>
+					)}
 
 					<Inventory
 						product={product}
@@ -430,8 +462,20 @@ export default ({ id, setBrowserURL }) => {
 						updateProduct={editProduct}
 						loading={!hasLoadedProduct}
 					/>
-					<MetaBoxes location="normal" />
-					<MetaBoxes location="advanced" />
+
+					<ProductOptions
+						post={post}
+						onNavigate={onConfirmNavigation}
+					/>
+
+					<ConfirmNavigation
+						open={!!confirmUrl}
+						loading={saving}
+						onConfirm={onSubmit}
+						onRequestClose={() => {
+							setConfirmUrl(null);
+						}}
+					/>
 				</Fragment>
 			</UpdateModel>
 		</>

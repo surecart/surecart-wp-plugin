@@ -35,7 +35,6 @@ class LineItemsController extends RestController {
 		return $model->where( $request->get_query_params() )->upsell( $request->get_json_params() );
 	}
 
-
 	/**
 	 * Swap line item.
 	 *

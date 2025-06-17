@@ -289,6 +289,7 @@ export class ScSelectDropdown {
 
   @Listen('keydown')
   handleKeyDown(event: KeyboardEvent) {
+    event.stopPropagation();
     const target = event.target as HTMLElement;
     const items = this.getItems();
 
@@ -395,14 +396,16 @@ export class ScSelectDropdown {
   }
 
   renderItem(choice: ChoiceItem, index: number) {
+    const uniqueKey = `${choice?.value || choice?.label || 'item'}-${index}`;
+    
     if (choice?.choices?.length) {
-      return <sc-menu-label key={index}>{choice.label}</sc-menu-label>;
+      return <sc-menu-label key={uniqueKey}>{choice?.label}</sc-menu-label>;
     }
 
     return (
       <sc-menu-item
         class={{ 'is-unavailable': choice?.unavailable }}
-        key={index}
+        key={uniqueKey}
         checked={this.isChecked(choice)}
         value={choice?.value}
         onClick={() => !choice.disabled && this.handleSelect(choice)}
@@ -504,7 +507,6 @@ export class ScSelectDropdown {
                 value={this.searchTerm}
                 ref={el => (this.searchInput = el as HTMLScInputElement)}
                 aria-label={__('Type to search', 'surecart')}
-                onKeyDown={e => e.stopPropagation()}
               >
                 {this.loading && <sc-spinner exportparts="base:spinner__base" style={{ '--spinner-size': '0.5em' }} slot="suffix"></sc-spinner>}
               </sc-input>

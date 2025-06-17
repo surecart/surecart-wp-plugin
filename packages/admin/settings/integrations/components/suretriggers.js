@@ -8,7 +8,7 @@ export default ({ record }) => {
 
 		if (window?.SureTriggers) {
 			window.SureTriggers.init({
-				st_embed_url: 'https://app.suretriggers.com/embed-login',
+				st_embed_url: 'https://app.ottokit.com/embed-login',
 				client_id: '07eba731-9491-4887-a0ef-6bb688b3f7ca',
 				embedded_identifier: 'surecart-suretriggers-integration',
 				target: 'suretriggers-iframe-wrapper',

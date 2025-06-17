@@ -2,10 +2,14 @@
 
 namespace SureCart\Models;
 
+use SureCart\Models\Traits\HasPrice;
+
 /**
  * Swap model
  */
 class Swap extends Model {
+	use HasPrice;
+
 	/**
 	 * Rest API endpoint
 	 *

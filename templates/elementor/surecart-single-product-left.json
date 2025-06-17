@@ -1,0 +1,603 @@
+{
+	"settings": {
+		"flex_direction": "row",
+		"flex_gap": {
+			"column": "60",
+			"row": "60",
+			"isLinked": true,
+			"unit": "px",
+			"size": 60
+		},
+		"surecart_container_type": "surecart_form",
+		"_title": "Product Form"
+	},
+	"elements": [
+		{
+			"id": "703dc9d5",
+			"settings": {
+				"_title": "Column",
+				"padding": {
+					"unit": "px",
+					"top": "0",
+					"right": "0",
+					"bottom": "0",
+					"left": "0",
+					"isLinked": true
+				},
+				"flex_gap": {
+					"column": "10",
+					"row": "10",
+					"isLinked": true,
+					"unit": "px",
+					"size": 10
+				}
+			},
+			"elements": [
+				{
+					"id": "421ee3e1",
+					"settings": [],
+					"elements": [],
+					"isInner": false,
+					"widgetType": "surecart-media",
+					"elType": "widget"
+				}
+			],
+			"isInner": true,
+			"elType": "container"
+		},
+		{
+			"id": "72cf69ad",
+			"settings": {
+				"_title": "Column",
+				"padding": {
+					"unit": "px",
+					"top": "0",
+					"right": "0",
+					"bottom": "0",
+					"left": "0",
+					"isLinked": true
+				},
+				"flex_gap": {
+					"column": "10",
+					"row": "10",
+					"isLinked": true,
+					"unit": "px",
+					"size": 10
+				}
+			},
+			"elements": [
+				{
+					"id": "2925be0d",
+					"settings": {
+						"__dynamic__": {
+							"title": "[elementor-tag id=\"\" name=\"post-title\" settings=\"%7B%22before%22%3A%22%22%2C%22after%22%3A%22%22%2C%22fallback%22%3A%22%22%7D\"]"
+						},
+						"title": "Add Your Heading Text Here",
+						"header_size": "h1",
+						"typography_typography": "custom",
+						"typography_font_size": {
+							"unit": "px",
+							"size": 32,
+							"sizes": []
+						},
+						"_title": "Product name",
+						"title_color": "#000000"
+					},
+					"elements": [],
+					"isInner": false,
+					"widgetType": "theme-post-title",
+					"elType": "widget"
+				},
+				{
+					"id": "28f6fb60",
+					"settings": {
+						"content_width": "full",
+						"flex_gap": {
+							"column": "0",
+							"row": "0",
+							"isLinked": false,
+							"unit": "px",
+							"size": 0
+						},
+						"padding": {
+							"unit": "px",
+							"top": "0",
+							"right": "0",
+							"bottom": "0",
+							"left": "0",
+							"isLinked": true
+						},
+						"_title": "Pricing"
+					},
+					"elements": [
+						{
+							"id": "476d82fd",
+							"settings": {
+								"content_width": "full",
+								"flex_direction": "row",
+								"flex_justify_content": "flex-start",
+								"flex_align_items": "center",
+								"flex_gap": {
+									"column": "8",
+									"row": "0",
+									"isLinked": false,
+									"unit": "px",
+									"size": 8
+								},
+								"padding": {
+									"unit": "px",
+									"top": "0",
+									"right": "0",
+									"bottom": "0",
+									"left": "0",
+									"isLinked": true
+								},
+								"_title": "Amount"
+							},
+							"elements": [
+								{
+									"id": "2820ba95",
+									"settings": {
+										"typography_typography": "custom",
+										"typography_font_family": "Roboto",
+										"typography_font_size": {
+											"unit": "px",
+											"size": 24,
+											"sizes": []
+										},
+										"text_color": "#8A8A8A",
+										"typography_font_weight": "400",
+										"typography_text_decoration": "line-through",
+										"__dynamic__": {
+											"editor": "[elementor-tag id=\"\" name=\"surecart-selected-scratch-price\" settings=\"%7B%7D\"]"
+										},
+										"_title": "Selected Scratch Price"
+									},
+									"elements": [],
+									"isInner": false,
+									"widgetType": "text-editor",
+									"elType": "widget"
+								},
+								{
+									"id": "2b2e46f8",
+									"settings": {
+										"text_color": "#000000",
+										"typography_typography": "custom",
+										"typography_font_family": "Roboto",
+										"typography_font_size": {
+											"unit": "px",
+											"size": 24,
+											"sizes": []
+										},
+										"typography_font_weight": "400",
+										"__dynamic__": {
+											"editor": "[elementor-tag id=\"\" name=\"product-selected-price\" settings=\"%7B%7D\"]"
+										},
+										"_title": "Selected Price"
+									},
+									"elements": [],
+									"isInner": false,
+									"widgetType": "text-editor",
+									"elType": "widget"
+								},
+								{
+									"id": "428a7fde",
+									"settings": {
+										"text_color": "#000000",
+										"paragraph_spacing": {
+											"unit": "px",
+											"size": 0,
+											"sizes": []
+										},
+										"__dynamic__": {
+											"editor": "[elementor-tag id=\"\" name=\"surecart-selected-billing-interval\" settings=\"%7B%7D\"]"
+										},
+										"_title": "Selected Billing Interval"
+									},
+									"elements": [],
+									"isInner": false,
+									"widgetType": "text-editor",
+									"elType": "widget"
+								},
+								{
+									"id": "26d9e516",
+									"settings": {
+										"text": "Sale",
+										"badge_typography_typography": "custom",
+										"badge_typography_font_family": "Roboto",
+										"badge_typography_font_size": {
+											"unit": "px",
+											"size": 12,
+											"sizes": []
+										},
+										"badge_typography_font_weight": "600",
+										"badge_typography_line_height": {
+											"unit": "px",
+											"size": 14,
+											"sizes": []
+										},
+										"badge_padding": {
+											"unit": "px",
+											"top": "4",
+											"right": "10",
+											"bottom": "4",
+											"left": "10",
+											"isLinked": false
+										},
+										"badge_width": "100%",
+										"badge_fixed_width": {
+											"unit": "px",
+											"size": 74,
+											"sizes": []
+										},
+										"border_border": "solid",
+										"border_width": {
+											"unit": "px",
+											"top": "1",
+											"right": "1",
+											"bottom": "1",
+											"left": "1",
+											"isLinked": true
+										},
+										"border_radius": {
+											"unit": "px",
+											"top": "14",
+											"right": "14",
+											"bottom": "14",
+											"left": "14",
+											"isLinked": true
+										},
+										"_padding": {
+											"unit": "px",
+											"top": "0",
+											"right": "0",
+											"bottom": "0",
+											"left": "0",
+											"isLinked": true
+										},
+										"__globals__": {
+											"border_color": "globals/colors?id=primary",
+											"badge_background_color": "globals/colors?id=primary"
+										}
+									},
+									"elements": [],
+									"isInner": false,
+									"widgetType": "surecart-sales-badge",
+									"elType": "widget"
+								}
+							],
+							"isInner": true,
+							"elType": "container"
+						},
+						{
+							"id": "373b26d7",
+							"settings": {
+								"content_width": "full",
+								"flex_direction": "row",
+								"flex_justify_content": "flex-start",
+								"flex_align_items": "center",
+								"flex_gap": {
+									"column": "5",
+									"row": "0",
+									"isLinked": false,
+									"unit": "px",
+									"size": 5
+								},
+								"padding": {
+									"unit": "px",
+									"top": "0",
+									"right": "0",
+									"bottom": "0",
+									"left": "0",
+									"isLinked": true
+								},
+								"_title": "Selected Trial/Setup Fee"
+							},
+							"elements": [
+								{
+									"id": "3b4ec283",
+									"settings": {
+										"editor": "",
+										"text_color": "#8A8A8A",
+										"__dynamic__": {
+											"editor": "[elementor-tag id=\"\" name=\"surecart-selected-price-trial\" settings=\"%7B%7D\"]"
+										},
+										"typography_typography": "custom",
+										"typography_font_family": "Roboto",
+										"typography_font_size": {
+											"unit": "px",
+											"size": 16,
+											"sizes": []
+										},
+										"typography_font_weight": "400",
+										"_title": "Selected Trial"
+									},
+									"elements": [],
+									"isInner": false,
+									"widgetType": "text-editor",
+									"elType": "widget"
+								},
+								{
+									"id": "63b6f15",
+									"settings": {
+										"editor": "",
+										"text_color": "#8A8A8A",
+										"__dynamic__": {
+											"editor": "[elementor-tag id=\"\" name=\"surecart-product-selected-setup-fee\" settings=\"%7B%7D\"]"
+										},
+										"typography_typography": "custom",
+										"typography_font_family": "Roboto",
+										"typography_font_size": {
+											"unit": "px",
+											"size": 16,
+											"sizes": []
+										},
+										"typography_font_weight": "400",
+										"_title": "Selected Setup Fee"
+									},
+									"elements": [],
+									"isInner": false,
+									"widgetType": "text-editor",
+									"elType": "widget"
+								}
+							],
+							"isInner": true,
+							"elType": "container"
+						}
+					],
+					"isInner": true,
+					"elType": "container"
+				},
+				{
+					"id": "3d235015",
+					"settings": {
+						"__dynamic__": {
+							"excerpt": "[elementor-tag id=\"\" name=\"post-excerpt\" settings=\"%7B%22apply_to_post_content%22%3A%22yes%22%2C%22fallback%22%3A%22%26nbsp%3B%22%7D\"]"
+						},
+						"_title": "Product short description",
+						"title_color": "#000000",
+						"typography_typography": "custom",
+						"typography_font_family": "Roboto",
+						"typography_font_size": {
+							"unit": "px",
+							"size": 16,
+							"sizes": []
+						},
+						"typography_font_weight": "400"
+					},
+					"elements": [],
+					"isInner": false,
+					"widgetType": "theme-post-excerpt",
+					"elType": "widget"
+				},
+				{
+					"id": "503b5afa",
+					"settings": {
+						"label": "Pricing",
+						"label_color": "#000000",
+						"price_choice_color": "#000000",
+						"__globals__": {
+							"price_choice_highlight_color": "globals/colors?id=primary",
+							"price_choice_highlight_text_color": "globals/colors?id=primary"
+						},
+						"price_trial_typography_typography": "custom",
+						"price_setup_fee_typography_typography": "custom",
+						"price_name_typography_typography": "custom",
+						"price_amount_typography_typography": "custom",
+						"price_amount_typography_font_size": {
+							"unit": "px",
+							"size": 16,
+							"sizes": []
+						},
+						"price_choice_typography_typography": "custom",
+						"price_choice_typography_font_family": "Roboto",
+						"price_choice_typography_font_size": {
+							"unit": "px",
+							"size": 16,
+							"sizes": []
+						},
+						"price_choice_typography_font_weight": "600",
+						"price_name_typography_font_size": {
+							"unit": "px",
+							"size": 16,
+							"sizes": []
+						},
+						"price_chooser_typography_typography": "custom",
+						"price_chooser_typography_font_family": "Roboto",
+						"price_chooser_typography_font_size": {
+							"unit": "px",
+							"size": 16,
+							"sizes": []
+						}
+					},
+					"elements": [],
+					"isInner": false,
+					"widgetType": "surecart-price-chooser",
+					"elType": "widget"
+				},
+				{
+					"id": "7c5b30ef",
+					"settings": {
+						"variant_pills_wrapper_container_type": "flex",
+						"variant_pills_wrapper_flex_direction": "column",
+						"variant_pills_wrapper_flex_gap": {
+							"column": "15",
+							"row": "15",
+							"isLinked": true,
+							"unit": "px",
+							"size": 15
+						},
+						"text_color": "#000000",
+						"pill_background_color": "#FFFFFF",
+						"__globals__": {
+							"pill_highlight_background_color": "globals/colors?id=primary",
+							"pill_highlight_border_color": "globals/colors?id=primary"
+						},
+						"pills_typography_typography": "custom",
+						"pills_typography_font_size": {
+							"unit": "px",
+							"size": 16,
+							"sizes": []
+						},
+						"pill_typography_typography": "custom",
+						"pill_typography_font_size": {
+							"unit": "px",
+							"size": 16,
+							"sizes": []
+						}
+					},
+					"elements": [],
+					"isInner": false,
+					"widgetType": "surecart-variant-pills",
+					"elType": "widget"
+				},
+				{
+					"id": "62c70def",
+					"settings": {
+						"label": "Quantity",
+						"quantity_text_color": "#000000",
+						"quantity_typography_typography": "custom",
+						"quantity_typography_font_size": {
+							"unit": "px",
+							"size": 16,
+							"sizes": []
+						},
+						"input_typography_typography": "custom",
+						"input_typography_font_size": {
+							"unit": "px",
+							"size": 16,
+							"sizes": []
+						}
+					},
+					"elements": [],
+					"isInner": false,
+					"widgetType": "surecart-quantity",
+					"elType": "widget"
+				},
+				{
+					"id": "79d7190e",
+					"settings": {
+						"label": "Enter an amount",
+						"label_text_color": "#000000",
+						"selected_amount_typography_typography": "custom",
+						"label_typography_typography": "custom",
+						"label_typography_font_size": {
+							"unit": "px",
+							"size": 16,
+							"sizes": []
+						},
+						"selected_amount_typography_font_size": {
+							"unit": "px",
+							"size": 16,
+							"sizes": []
+						}
+					},
+					"elements": [],
+					"isInner": false,
+					"widgetType": "surecart-selected-price-ad-hoc-amount",
+					"elType": "widget"
+				},
+				{
+					"id": "1651338d",
+					"settings": {
+						"button_text": "Add To Cart",
+						"button_width": {
+							"unit": "%",
+							"size": 100,
+							"sizes": []
+						},
+						"button_border_width": {
+							"unit": "px",
+							"top": "1",
+							"right": "1",
+							"bottom": "1",
+							"left": "1",
+							"isLinked": true
+						},
+						"button_border_border": "solid",
+						"button_border_radius": {
+							"unit": "px",
+							"top": "24",
+							"right": "24",
+							"bottom": "24",
+							"left": "24",
+							"isLinked": true
+						},
+						"__globals__": {
+							"button_border_color": "globals/colors?id=primary",
+							"button_background_color": "globals/colors?id=primary"
+						},
+						"button_typography_typography": "custom",
+						"button_typography_font_size": {
+							"unit": "px",
+							"size": 16,
+							"sizes": []
+						}
+					},
+					"elements": [],
+					"isInner": false,
+					"widgetType": "surecart-add-to-cart-button",
+					"elType": "widget"
+				},
+				{
+					"id": "9351991c",
+					"settings": {
+						"button_text": "Buy Now",
+						"buy_button_type": "yes",
+						"button_width": {
+							"unit": "%",
+							"size": 100,
+							"sizes": []
+						},
+						"button_border_width": {
+							"unit": "px",
+							"top": "1",
+							"right": "1",
+							"bottom": "1",
+							"left": "1",
+							"isLinked": true
+						},
+						"button_border_border": "solid",
+						"button_border_radius": {
+							"unit": "px",
+							"top": "24",
+							"right": "24",
+							"bottom": "24",
+							"left": "24",
+							"isLinked": true
+						},
+						"button_background_color": "#FFFFFF",
+						"_title": "Buy Now Button",
+						"__globals__": {
+							"button_border_color": "globals/colors?id=primary",
+							"button_text_color": "globals/colors?id=primary",
+							"button_hover_background_color": "globals/colors?id=primary"
+						},
+						"button_hover_text_color": "#FFFFFF",
+						"button_typography_typography": "custom",
+						"button_typography_font_size": {
+							"unit": "px",
+							"size": 16,
+							"sizes": []
+						}
+					},
+					"elements": [],
+					"isInner": false,
+					"widgetType": "surecart-add-to-cart-button",
+					"elType": "widget"
+				}
+			],
+			"isInner": true,
+			"elType": "container"
+		}
+	],
+	"outer_elements": [
+		{
+			"settings": [],
+			"elements": [],
+			"isInner": false,
+			"widgetType": "surecart-product-content",
+			"elType": "widget"
+		}
+	]
+}

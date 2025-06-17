@@ -383,6 +383,23 @@ export default () => {
 							action="delivered_notification"
 						/>
 						<EmailRow
+							title={__('Invoice Opened', 'surecart')}
+							description={__(
+								'Sent after an invoice is opened.',
+								'surecart'
+							)}
+							model="invoice"
+						/>
+						<EmailRow
+							title={__('Invoice Reminder', 'surecart')}
+							description={__(
+								'Sent after an invoice hits the due date and is not paid yet.',
+								'surecart'
+							)}
+							model="invoice"
+							action="reminder_notification"
+						/>
+						<EmailRow
 							title={__('Subscription Recovery', 'surecart')}
 							description={__(
 								"Sent to customers when their subscription's payment method fails.",

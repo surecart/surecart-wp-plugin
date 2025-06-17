@@ -16,6 +16,7 @@ declare global {
       apiFetch: any;
       blocks: any;
       i18n: any;
+      hooks: any;
     };
     dataLayer: any;
     gtag: any;
@@ -100,6 +101,19 @@ export interface ChoiceItem extends Object {
 
 export type ChoiceType = 'all' | 'single' | 'multiple';
 
+export interface Swap {
+  id: string;
+  object: 'swap';
+  archived: boolean;
+  archived_at?: string;
+  description: string;
+  metadata: { [key: string]: string };
+  price: string | Price;
+  swap_price: string | Price;
+  discarded_at?: number;
+  created_at: number;
+  updated_at: number;
+}
 export interface Price {
   id: string;
   name: string;
@@ -114,6 +128,7 @@ export interface Price {
   recurring_interval?: 'week' | 'month' | 'year' | 'never';
   recurring_interval_count?: number;
   trial_duration_days?: number;
+  trial_text?: string;
   ad_hoc: boolean;
   ad_hoc_max_amount: number;
   ad_hoc_min_amount: number;
@@ -121,6 +136,10 @@ export interface Price {
   scratch_display_amount: string;
   setup_fee_enabled: boolean;
   setup_fee_amount: number;
+  short_interval_text: string;
+  short_interval_count_text: string;
+  interval_text: string;
+  interval_count_text: string;
   setup_fee_name: string;
   setup_fee_trial_enabled: boolean;
   recurring_period_count: number;
@@ -133,6 +152,7 @@ export interface Price {
   position: number;
   portal_subscription_update_enabled: boolean;
   metadata: { [key: string]: string };
+  current_swap?: Swap;
 }
 export interface VariantOption {
   id: string;
@@ -140,6 +160,7 @@ export interface VariantOption {
   name: string;
   position: number;
   product: Product | string;
+  display_type: 'dropdown' | 'pills';
   updated_at: number;
   created_at: number;
   label: string;
@@ -161,6 +182,7 @@ export interface Bump {
   filter_match_type: 'all' | 'any' | 'none';
   filters: any;
   metadata: any;
+  rendered_description: string;
   name: string;
   percent_off: number;
   price: string | Price;
@@ -461,6 +483,7 @@ export interface ImageAttributes {
 export interface LineItem extends Object {
   id?: string;
   ad_hoc_amount?: number;
+  ad_hoc_display_amount?: string;
   name: string;
   object: string;
   quantity: number;
@@ -473,12 +496,11 @@ export interface LineItem extends Object {
     pagination: Pagination;
     data: Array<Fee>;
   };
-  ad_hoc_display_amount: string;
-  subtotal_display_amount: string;
   bump_amount: number;
   bump_display_amount: string;
   discount_amount: number;
   subtotal_amount: number;
+  subtotal_display_amount?: string;
   total_amount: number;
   total_default_currency_display_amount: string;
   total_display_amount: string;
@@ -487,18 +509,22 @@ export interface LineItem extends Object {
   tax_display_amount: string;
   fees_amount: number;
   scratch_amount: number;
-  scratch_display_amount: string;
+  scratch_display_amount?: string;
   trial: boolean;
   total_savings_amount: number;
   created_at: number;
   updated_at: number;
   price?: Price;
   price_id: string;
+  sku: string;
   purchasable_status: 'price_gone' | 'price_old_version' | 'variant_mising' | 'variant_gone' | 'variant_old_version' | 'out_of_stock' | 'exceeds_purchase_limit' | 'purchasable';
   purchasable_status_display: string;
   variant_options: Array<string>;
+  variant_display_options: string;
   variant?: Variant;
   locked: boolean;
+  swap?: Swap;
+  can_swap: boolean;
 }
 
 export interface DeletedItem {
@@ -512,8 +538,8 @@ export interface Fee {
   id: string;
   object: 'fee';
   amount: number;
-  description: string;
   display_amount: string;
+  description: string;
   fee_type: 'manual' | 'bump' | 'setup' | 'upsell';
   line_item: string | LineItem;
   created_at: number;
@@ -642,6 +668,7 @@ export interface Order extends Object {
 
 export interface ShippingChoice {
   amount: number;
+  display_amount: string;
   checkout: string | Checkout;
   currency: string;
   id: string;
@@ -1107,6 +1134,7 @@ export interface VerificationCode {
   code: number;
   verified: boolean;
   verified_at: number | null;
+  redirect_url: string | null;
   created_at: number;
   updated_at: number;
 }
@@ -1367,4 +1395,21 @@ export interface ScNoticeStore {
 
 export interface CustomStripeElementChangeEvent extends StripeElementChangeEvent {
   value?: { type: string };
+}
+
+export interface CountryLocaleFieldValue {
+  name: string;
+  priority: number;
+  label: boolean;
+}
+
+export interface CountryLocaleField {
+  [key: string]: {
+    name: CountryLocaleFieldValue;
+    address_1: CountryLocaleFieldValue;
+    address_2: CountryLocaleFieldValue;
+    city: CountryLocaleFieldValue;
+    state: CountryLocaleFieldValue;
+    postcode: CountryLocaleFieldValue;
+  };
 }

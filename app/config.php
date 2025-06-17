@@ -136,6 +136,7 @@ return array(
 		\SureCart\Rest\AffiliationProductsRestServiceProvider::class,
 		\SureCart\Rest\AffiliationsRestServiceProvider::class,
 		\SureCart\Rest\ExportsRestServiceProvider::class,
+		\SureCart\Rest\SwapRestServiceProvider::class,
 
 		// integrations.
 		\SureCart\Integrations\DiviServiceProvider::class,
@@ -151,8 +152,8 @@ return array(
 		\SureCart\Integrations\Bricks\BricksServiceProvider::class,
 		\SureCart\Integrations\Elementor\ElementorServiceProvider::class,
 		\SureCart\Integrations\Beaver\BeaverServiceProvider::class,
-		\SureCart\Integrations\Bricks\BricksServiceProvider::class,
 		\SureCart\Integrations\Avada\AvadaServiceProvider::class,
+		\SureCart\Integrations\HelpWidget\HelpWidgetServiceProvider::class,
 	),
 
 	/**

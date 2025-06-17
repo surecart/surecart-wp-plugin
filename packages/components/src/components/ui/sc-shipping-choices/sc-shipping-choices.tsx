@@ -82,7 +82,7 @@ export class ScShippingChoices {
     return (
       <Host>
         <sc-radio-group part="base" label={this.label || __('Shipping', 'surecart')} class="shipping-choices" onScChange={e => this.updateCheckout(e.detail)}>
-          {(checkoutState?.checkout?.shipping_choices?.data || []).map(({ id, amount, currency, shipping_method }) => (
+          {(checkoutState?.checkout?.shipping_choices?.data || []).map(({ id, display_amount, shipping_method }) => (
             <sc-radio
               key={id}
               checked={checkoutState?.checkout?.selected_shipping_choice === id}
@@ -96,7 +96,7 @@ export class ScShippingChoices {
                   <div class="shipping-choice__description">{(shipping_method as ShippingMethod)?.description}</div>
                 )}
               </div>
-              <div class="shipping-choice__price">{!!amount ? <sc-format-number type="currency" value={amount} currency={currency} /> : __('Free', 'surecart')}</div>
+              <div class="shipping-choice__price">{!!display_amount ? display_amount : __('Free', 'surecart')}</div>
             </sc-radio>
           ))}
         </sc-radio-group>

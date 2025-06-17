@@ -5,11 +5,11 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, ImageAttributes, InvoiceStatus, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentInfoAddedParams, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, ProductsSearchedParams, ProductsViewedParams, Purchase, ResponseError, ReturnRequestStatus, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxProtocol, WordPressUser } from "./types";
+import { Address, Bump, CancellationReason, Checkout, ChoiceItem, CountryLocaleField, CountryLocaleFieldValue, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, ImageAttributes, InvoiceStatus, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentInfoAddedParams, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, ProductsSearchedParams, ProductsViewedParams, Purchase, ResponseError, ReturnRequestStatus, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxProtocol, WordPressUser } from "./types";
 import { LineItemData, Price as Price1, Product as Product1, ProductMetrics, Subscription as Subscription1 } from "./types";
 import { LayoutConfig } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 import { LayoutConfig as LayoutConfig1 } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
-export { Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, ImageAttributes, InvoiceStatus, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentInfoAddedParams, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, ProductsSearchedParams, ProductsViewedParams, Purchase, ResponseError, ReturnRequestStatus, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxProtocol, WordPressUser } from "./types";
+export { Address, Bump, CancellationReason, Checkout, ChoiceItem, CountryLocaleField, CountryLocaleFieldValue, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, ImageAttributes, InvoiceStatus, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentInfoAddedParams, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, ProductsSearchedParams, ProductsViewedParams, Purchase, ResponseError, ReturnRequestStatus, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxProtocol, WordPressUser } from "./types";
 export { LineItemData, Price as Price1, Product as Product1, ProductMetrics, Subscription as Subscription1 } from "./types";
 export { LayoutConfig } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 export { LayoutConfig as LayoutConfig1 } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
@@ -19,6 +19,14 @@ export namespace Components {
           * The address.
          */
         "address": Partial<Address>;
+        /**
+          * Country fields by country code
+         */
+        "countryFields": Array<CountryLocaleField>;
+        /**
+          * Default country fields
+         */
+        "defaultCountryFields": Array<CountryLocaleFieldValue>;
         /**
           * Is this disabled?
          */
@@ -32,7 +40,6 @@ export namespace Components {
          */
         "loading": boolean;
         "names": Partial<Address>;
-        "placeholders": Partial<Address>;
         "reportValidity": () => Promise<boolean>;
         /**
           * Is the name required
@@ -880,6 +887,10 @@ export namespace Components {
     interface ScCustomerEdit {
         "customer": Customer;
         "heading": string;
+        "i18n": {
+    defaultCountryFields: Array<CountryLocaleFieldValue>;
+    countryFields: Array<CountryLocaleField>;
+  };
         "successUrl": string;
     }
     interface ScCustomerEmail {
@@ -1270,6 +1281,10 @@ export namespace Components {
          */
         "placement": 'top' | 'end' | 'bottom' | 'start';
         "requestClose": (source?: 'close-button' | 'keyboard' | 'overlay' | 'method') => Promise<void>;
+        /**
+          * Sticky drawer footer
+         */
+        "stickyFooter": boolean;
         /**
           * Sticky drawer header
          */
@@ -1731,6 +1746,13 @@ export namespace Components {
           * The license id
          */
         "licenseId": string;
+        /**
+          * Query to fetch Activations
+         */
+        "query": {
+    page: number;
+    per_page: number;
+  };
     }
     interface ScLicensesList {
         /**
@@ -1878,14 +1900,6 @@ export namespace Components {
     }
     interface ScOrderBillingAddress {
         /**
-          * City placeholder
-         */
-        "cityPlaceholder": string;
-        /**
-          * Country placeholder
-         */
-        "countryPlaceholder": string;
-        /**
           * Default country for address
          */
         "defaultCountry": string;
@@ -1894,30 +1908,14 @@ export namespace Components {
          */
         "label": string;
         /**
-          * Address placeholder
-         */
-        "line1Placeholder": string;
-        /**
-          * Address Line 2 placeholder
-         */
-        "line2Placeholder": string;
-        /**
           * Name placeholder
          */
         "namePlaceholder": string;
-        /**
-          * Postal Code placeholder
-         */
-        "postalCodePlaceholder": string;
         "reportValidity": () => Promise<boolean>;
         /**
           * Show the name field
          */
         "showName": boolean;
-        /**
-          * State placeholder
-         */
-        "statePlaceholder": string;
         /**
           * Toggle label
          */
@@ -2140,31 +2138,18 @@ export namespace Components {
         "status": OrderShipmentStatus;
     }
     interface ScOrderShippingAddress {
-        "cityPlaceholder": string;
-        "countryPlaceholder": string;
         /**
           * Default country for address
          */
         "defaultCountry": string;
         /**
-          * Show the   address
+          * Show the address
          */
         "full": boolean;
         /**
           * Label for the field.
          */
         "label": string;
-        "line1Placeholder": string;
-        "line2Placeholder": string;
-        /**
-          * Show the placeholder fields.
-         */
-        "namePlaceholder": string;
-        /**
-          * Placeholder values.
-         */
-        "placeholders": Partial<Address>;
-        "postalCodePlaceholder": string;
         "reportValidity": () => Promise<boolean>;
         /**
           * Whether to require the name in the address
@@ -2175,10 +2160,13 @@ export namespace Components {
          */
         "required": boolean;
         /**
+          * Show the line 2 field.
+         */
+        "showLine2": boolean;
+        /**
           * Show the name field.
          */
         "showName": boolean;
-        "statePlaceholder": string;
     }
     interface ScOrderStatusBadge {
         /**
@@ -3081,11 +3069,7 @@ export namespace Components {
         /**
           * Product monetary amount
          */
-        "amount": number;
-        /**
-          * Currency for the product
-         */
-        "currency": string;
+        "amount": string;
         /**
           * Product display amount
          */
@@ -3117,11 +3101,11 @@ export namespace Components {
         /**
           * Price name
          */
-        "priceName"?: string;
+        "price"?: string;
         /**
           * The purchasable status display
          */
-        "purchasableStatusDisplay": string;
+        "purchasableStatus": string;
         /**
           * Quantity
          */
@@ -3133,27 +3117,23 @@ export namespace Components {
         /**
           * The line item scratch amount
          */
-        "scratchAmount": number;
+        "scratch": string;
         /**
           * Product scratch display amount
          */
         "scratchDisplayAmount": string;
         /**
-          * Is the setup fee not included in the free trial?
-         */
-        "setupFeeTrialEnabled": boolean;
-        /**
           * The SKU.
          */
         "sku": string;
         /**
-          * Trial duration days
+          * Trial text
          */
-        "trialDurationDays": number;
+        "trial": string;
         /**
           * Product variant label
          */
-        "variantLabel": string;
+        "variant": string;
     }
     interface ScProductPillsVariantOption {
         /**
@@ -3791,6 +3771,12 @@ export namespace Components {
         "collapsible": boolean;
         "loading": boolean;
         "openText": string;
+    }
+    interface ScSwap {
+        /**
+          * The product id.
+         */
+        "lineItem": LineItem;
     }
     interface ScSwitch {
         /**
@@ -6476,6 +6462,12 @@ declare global {
         prototype: HTMLScSummaryElement;
         new (): HTMLScSummaryElement;
     };
+    interface HTMLScSwapElement extends Components.ScSwap, HTMLStencilElement {
+    }
+    var HTMLScSwapElement: {
+        prototype: HTMLScSwapElement;
+        new (): HTMLScSwapElement;
+    };
     interface HTMLScSwitchElementEventMap {
         "scBlur": void;
         "scChange": void;
@@ -6927,6 +6919,7 @@ declare global {
         "sc-subscription-variation-confirm": HTMLScSubscriptionVariationConfirmElement;
         "sc-subscriptions-list": HTMLScSubscriptionsListElement;
         "sc-summary": HTMLScSummaryElement;
+        "sc-swap": HTMLScSwapElement;
         "sc-switch": HTMLScSwitchElement;
         "sc-tab": HTMLScTabElement;
         "sc-tab-group": HTMLScTabGroupElement;
@@ -6963,6 +6956,14 @@ declare namespace LocalJSX {
          */
         "address"?: Partial<Address>;
         /**
+          * Country fields by country code
+         */
+        "countryFields"?: Array<CountryLocaleField>;
+        /**
+          * Default country fields
+         */
+        "defaultCountryFields"?: Array<CountryLocaleFieldValue>;
+        /**
           * Is this disabled?
          */
         "disabled"?: boolean;
@@ -6983,7 +6984,6 @@ declare namespace LocalJSX {
           * Address change event.
          */
         "onScInputAddress"?: (event: ScAddressCustomEvent<Partial<Address>>) => void;
-        "placeholders"?: Partial<Address>;
         /**
           * Is the name required
          */
@@ -7866,6 +7866,10 @@ declare namespace LocalJSX {
     interface ScCustomerEdit {
         "customer"?: Customer;
         "heading"?: string;
+        "i18n"?: {
+    defaultCountryFields: Array<CountryLocaleFieldValue>;
+    countryFields: Array<CountryLocaleField>;
+  };
         "successUrl"?: string;
     }
     interface ScCustomerEmail {
@@ -8369,6 +8373,10 @@ declare namespace LocalJSX {
          */
         "placement"?: 'top' | 'end' | 'bottom' | 'start';
         /**
+          * Sticky drawer footer
+         */
+        "stickyFooter"?: boolean;
+        /**
           * Sticky drawer header
          */
         "stickyHeader"?: boolean;
@@ -8861,6 +8869,13 @@ declare namespace LocalJSX {
           * The license id
          */
         "licenseId"?: string;
+        /**
+          * Query to fetch Activations
+         */
+        "query"?: {
+    page: number;
+    per_page: number;
+  };
     }
     interface ScLicensesList {
         /**
@@ -9006,14 +9021,6 @@ declare namespace LocalJSX {
     }
     interface ScOrderBillingAddress {
         /**
-          * City placeholder
-         */
-        "cityPlaceholder"?: string;
-        /**
-          * Country placeholder
-         */
-        "countryPlaceholder"?: string;
-        /**
           * Default country for address
          */
         "defaultCountry"?: string;
@@ -9022,29 +9029,13 @@ declare namespace LocalJSX {
          */
         "label"?: string;
         /**
-          * Address placeholder
-         */
-        "line1Placeholder"?: string;
-        /**
-          * Address Line 2 placeholder
-         */
-        "line2Placeholder"?: string;
-        /**
           * Name placeholder
          */
         "namePlaceholder"?: string;
         /**
-          * Postal Code placeholder
-         */
-        "postalCodePlaceholder"?: string;
-        /**
           * Show the name field
          */
         "showName"?: boolean;
-        /**
-          * State placeholder
-         */
-        "statePlaceholder"?: string;
         /**
           * Toggle label
          */
@@ -9271,31 +9262,18 @@ declare namespace LocalJSX {
         "status"?: OrderShipmentStatus;
     }
     interface ScOrderShippingAddress {
-        "cityPlaceholder"?: string;
-        "countryPlaceholder"?: string;
         /**
           * Default country for address
          */
         "defaultCountry"?: string;
         /**
-          * Show the   address
+          * Show the address
          */
         "full"?: boolean;
         /**
           * Label for the field.
          */
         "label"?: string;
-        "line1Placeholder"?: string;
-        "line2Placeholder"?: string;
-        /**
-          * Show the placeholder fields.
-         */
-        "namePlaceholder"?: string;
-        /**
-          * Placeholder values.
-         */
-        "placeholders"?: Partial<Address>;
-        "postalCodePlaceholder"?: string;
         /**
           * Whether to require the name in the address
          */
@@ -9305,10 +9283,13 @@ declare namespace LocalJSX {
          */
         "required"?: boolean;
         /**
+          * Show the line 2 field.
+         */
+        "showLine2"?: boolean;
+        /**
           * Show the name field.
          */
         "showName"?: boolean;
-        "statePlaceholder"?: string;
     }
     interface ScOrderStatusBadge {
         /**
@@ -10259,11 +10240,7 @@ declare namespace LocalJSX {
         /**
           * Product monetary amount
          */
-        "amount"?: number;
-        /**
-          * Currency for the product
-         */
-        "currency"?: string;
+        "amount"?: string;
         /**
           * Product display amount
          */
@@ -10303,11 +10280,11 @@ declare namespace LocalJSX {
         /**
           * Price name
          */
-        "priceName"?: string;
+        "price"?: string;
         /**
           * The purchasable status display
          */
-        "purchasableStatusDisplay"?: string;
+        "purchasableStatus"?: string;
         /**
           * Quantity
          */
@@ -10319,27 +10296,23 @@ declare namespace LocalJSX {
         /**
           * The line item scratch amount
          */
-        "scratchAmount"?: number;
+        "scratch"?: string;
         /**
           * Product scratch display amount
          */
         "scratchDisplayAmount"?: string;
         /**
-          * Is the setup fee not included in the free trial?
-         */
-        "setupFeeTrialEnabled"?: boolean;
-        /**
           * The SKU.
          */
         "sku"?: string;
         /**
-          * Trial duration days
+          * Trial text
          */
-        "trialDurationDays"?: number;
+        "trial"?: string;
         /**
           * Product variant label
          */
-        "variantLabel"?: string;
+        "variant"?: string;
     }
     interface ScProductPillsVariantOption {
         /**
@@ -11075,6 +11048,12 @@ declare namespace LocalJSX {
         "onScShow"?: (event: ScSummaryCustomEvent<void>) => void;
         "openText"?: string;
     }
+    interface ScSwap {
+        /**
+          * The product id.
+         */
+        "lineItem"?: LineItem;
+    }
     interface ScSwitch {
         /**
           * Draws the switch in a checked state.
@@ -11710,6 +11689,7 @@ declare namespace LocalJSX {
         "sc-subscription-variation-confirm": ScSubscriptionVariationConfirm;
         "sc-subscriptions-list": ScSubscriptionsList;
         "sc-summary": ScSummary;
+        "sc-swap": ScSwap;
         "sc-switch": ScSwitch;
         "sc-tab": ScTab;
         "sc-tab-group": ScTabGroup;
@@ -11968,6 +11948,7 @@ declare module "@stencil/core" {
             "sc-subscription-variation-confirm": LocalJSX.ScSubscriptionVariationConfirm & JSXBase.HTMLAttributes<HTMLScSubscriptionVariationConfirmElement>;
             "sc-subscriptions-list": LocalJSX.ScSubscriptionsList & JSXBase.HTMLAttributes<HTMLScSubscriptionsListElement>;
             "sc-summary": LocalJSX.ScSummary & JSXBase.HTMLAttributes<HTMLScSummaryElement>;
+            "sc-swap": LocalJSX.ScSwap & JSXBase.HTMLAttributes<HTMLScSwapElement>;
             "sc-switch": LocalJSX.ScSwitch & JSXBase.HTMLAttributes<HTMLScSwitchElement>;
             "sc-tab": LocalJSX.ScTab & JSXBase.HTMLAttributes<HTMLScTabElement>;
             "sc-tab-group": LocalJSX.ScTabGroup & JSXBase.HTMLAttributes<HTMLScTabGroupElement>;

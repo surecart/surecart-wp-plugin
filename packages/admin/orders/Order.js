@@ -32,8 +32,9 @@ import Details from './modules/Details';
 import LineItems from './modules/LineItems';
 import OrderCancelConfirmModal from './modules/OrderCancelConfirmModal';
 import OrderStatusConfirmModal from './modules/OrderStatusConfirmModal';
+import OrderResendNotificationModal from './modules/OrderResendNotificationModal';
 import PaymentFailures from './modules/PaymentFailures';
-import Refunds from './modules/Refunds';
+import CreateRefund from './modules/Refund/CreateRefund';
 import Subscriptions from './modules/Subscriptions';
 import Sidebar from './Sidebar';
 import Fulfillment from './modules/Fulfillment';
@@ -203,6 +204,13 @@ export default () => {
 			});
 		}
 
+		if (['paid', 'processing'].includes(orderStatus)) {
+			menuItems.push({
+				title: __('Resend Notification', 'surecart'),
+				modal: 'order_resend_notification',
+			});
+		}
+
 		const totalReturnQty = returnRequests?.reduce(
 			(total, returnRequest) =>
 				total +
@@ -225,10 +233,23 @@ export default () => {
 			});
 		}
 
+		// Add refund option if only one charge is present.
+		// For multiple charges, refund should be done from the charges table individually.
+		if (order?.checkout?.charges?.data?.length === 1) {
+			const charge = order?.checkout?.charges?.data?.[0] ?? null;
+			if (!charge?.fully_refunded) {
+				menuItems.push({
+					title: __('Refund', 'surecart'),
+					modal: 'refund',
+				});
+			}
+		}
+
 		return menuItems;
 	};
 
 	const menuItems = getMenuItems(order?.status);
+	const checkoutId = order?.checkout?.id;
 
 	return (
 		<UpdateModel
@@ -325,19 +346,24 @@ export default () => {
 					onCreateSuccess={manuallyRefetchOrder}
 					onDeleteSuccess={manuallyRefetchOrder}
 				/>
-				<LineItems
-					order={order}
-					checkout={order?.checkout}
-					charge={order?.checkout?.charge}
-					loading={!hasLoadedOrder}
-				/>
-				<Charges checkoutId={order?.checkout?.id} />
+				{order?.checkout && (
+					<LineItems
+						order={order}
+						checkout={order?.checkout}
+						chargeIds={
+							order?.checkout?.charges?.data?.map(
+								(charge) => charge.id
+							) ?? []
+						}
+						loading={!hasLoadedOrder}
+					/>
+				)}
+				<Charges checkout={order?.checkout} />
 				<PaymentFailures
 					failures={order?.checkout?.payment_failures}
 					loading={!hasLoadedOrder}
 				/>
-				<Refunds chargeId={order?.checkout?.charge?.id} />
-				<Subscriptions checkoutId={order?.checkout?.id} />
+				<Subscriptions checkoutId={checkoutId} />
 				<OrderStatusConfirmModal
 					order={order}
 					open={modal === 'order_status_update'}
@@ -350,6 +376,11 @@ export default () => {
 					onRequestClose={() => setModal(false)}
 					loading={!hasLoadedOrder}
 				/>
+				<OrderResendNotificationModal
+					order={order}
+					open={modal === 'order_resend_notification'}
+					onRequestClose={() => setModal(false)}
+				/>
 				<CreateReturnRequest
 					fulfillmentItems={fulfilledItems}
 					returnRequests={returnRequests}
@@ -359,6 +390,20 @@ export default () => {
 					onRequestClose={() => setModal(false)}
 					onCreateSuccess={manuallyRefetchOrder}
 				/>
+
+				{modal === 'refund' && (
+					<CreateRefund
+						checkout={order?.checkout}
+						charge={order?.checkout?.charges?.data?.[0]}
+						chargeIds={
+							order?.checkout?.charges?.data?.map(
+								(charge) => charge.id
+							) ?? []
+						}
+						onRefunded={() => setModal(false)}
+						onRequestClose={() => setModal(false)}
+					/>
+				)}
 			</>
 		</UpdateModel>
 	);

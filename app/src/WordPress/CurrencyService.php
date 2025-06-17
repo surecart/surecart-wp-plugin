@@ -17,6 +17,13 @@ class CurrencyService {
 	public $is_converting = false;
 
 	/**
+	 * Filter URLs
+	 *
+	 * @var bool
+	 */
+	private static $filter_url = true;
+
+	/**
 	 * Bootstrap the currency service.
 	 *
 	 * @return void
@@ -30,6 +37,9 @@ class CurrencyService {
 
 		// set the urls.
 		add_action( 'init', [ $this, 'appendUrls' ] );
+
+		// Add robots meta tag for currency parameter URLs.
+		add_action( 'wp_head', array( $this, 'addRobotsTag' ), 1 );
 	}
 
 	/**
@@ -38,13 +48,34 @@ class CurrencyService {
 	 * @return void
 	 */
 	public function appendUrls() {
-		add_filter( 'page_link', array( $this, 'addCurrencyParam' ), 99 );
-		add_filter( 'post_link', array( $this, 'addCurrencyParam' ), 99 );
-		add_filter( 'term_link', array( $this, 'addCurrencyParam' ), 99 );
-		add_filter( 'post_type_link', array( $this, 'addCurrencyParam' ), 99 );
-		add_filter( 'attachment_link', array( $this, 'addCurrencyParam' ), 99 );
+		add_filter( 'page_link', array( $this, 'maybeAddCurrencyParam' ), 99 );
+		add_filter( 'post_link', array( $this, 'maybeAddCurrencyParam' ), 99 );
+		add_filter( 'term_link', array( $this, 'maybeAddCurrencyParam' ), 99 );
+		add_filter( 'post_type_link', array( $this, 'maybeAddCurrencyParam' ), 99 );
+		add_filter( 'attachment_link', array( $this, 'maybeAddCurrencyParam' ), 99 );
 		add_filter( 'home_url', array( $this, 'addCurrencyParamToHomeUrl' ), 99, 3 );
 		add_filter( 'get_canonical_url', array( $this, 'removeCurrencyParam' ) );
+		add_filter( 'get_pagenum_link', array( $this, 'filterPagenumLink' ), 99, 2 );
+	}
+
+	/**
+	 * Filter paginate link
+	 *
+	 * @param string $result  The page number link.
+	 * @param int    $pagenum The page number.
+	 *
+	 * @return string
+	 */
+	public function filterPagenumLink( $result, $pagenum ) {
+		if ( self::$filter_url ) {
+			remove_filter( 'get_pagenum_link', array( $this, 'filterPagenumLink' ), 99 );
+			self::$filter_url = false;
+			$result           = get_pagenum_link( $pagenum, false );
+			add_filter( 'get_pagenum_link', array( $this, 'filterPagenumLink' ), 99, 2 );
+			self::$filter_url = true;
+		}
+
+		return $result;
 	}
 
 	/**
@@ -107,6 +138,21 @@ class CurrencyService {
 	}
 
 	/**
+	 * Maybe Filter the link to add the currency parameter.
+	 *
+	 * @param string $permalink The permalink to filter.
+	 *
+	 * @return string The permalink or the filtered permalink.
+	 */
+	public function maybeAddCurrencyParam( $permalink ) {
+		if ( ! $this->shouldModifyUrl() ) {
+			return $permalink;
+		}
+
+		return $this->addCurrencyParam( $permalink );
+	}
+
+	/**
 	 * Filter the link to add the currency parameter.
 	 *
 	 * @param string $permalink The permalink to filter.
@@ -114,15 +160,40 @@ class CurrencyService {
 	 * @return string The filtered permalink.
 	 */
 	public function addCurrencyParam( $permalink ) {
-		if ( apply_filters( 'surecart/currency/filter_url', true, $permalink ) ) {
+		if ( apply_filters( 'surecart/currency/filter_url', self::$filter_url, $permalink ) && ! $this->isSitemapOrFeedRequest() ) {
 			// we can't use the Currency::getCurrencyFromRequest here because we don't want to fetch display currencies potentially multiple times per request.
 			$currency = strtolower( sanitize_text_field( $_GET['currency'] ?? $_COOKIE['sc_current_currency'] ?? '' ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-			if ( ! empty( $currency ) && strtolower( $currency ) !== strtolower( \SureCart::account()->currency ) ) {
+			if ( ! empty( $currency ) && strtolower( $currency ) !== strtolower( \SureCart::account()->currency ?? '' ) ) {
 				$permalink = add_query_arg( compact( 'currency' ), $permalink );
 			}
 		}
 
 		return $permalink;
+	}
+
+	/**
+	 * Check if the request is an XML request.
+	 *
+	 * @return bool
+	 */
+	private function isSitemapOrFeedRequest(): bool {
+		global $wp;
+
+		if ( is_feed() || is_robots() || wp_is_xml_request() ) {
+			return true;
+		}
+
+		// Don't filter XML requests.
+		if ( ! empty( $wp->request ) && preg_match( '/\.xml$/', $wp->request ) ) {
+			return true;
+		}
+
+		// In case of a custom XML request.
+		if ( ! empty( $_SERVER['REQUEST_URI'] ) && str_contains( $_SERVER['REQUEST_URI'], '.xml' ) ) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**
@@ -135,11 +206,29 @@ class CurrencyService {
 	 * @return string
 	 */
 	public function addCurrencyParamToHomeUrl( $url, $path, $scheme ) {
-		if ( 'rest' !== $scheme && ! is_admin() ) {
-			$url = $this->addCurrencyParam( $url );
+		if ( ! $this->shouldModifyUrl( $path, $scheme ) ) {
+			return $url;
 		}
 
-		return $url;
+		return $this->addCurrencyParam( $url );
+	}
+
+	/**
+	 * Determines if the URL should be modified with currency parameter.
+	 *
+	 * @param string $path   Optional. The path for home_url. Default empty string.
+	 * @param string $scheme Optional. The scheme for requests. Default empty string.
+	 *
+	 * @return bool Whether the URL should be modified.
+	 */
+	protected function shouldModifyUrl( $path = '', $scheme = '' ) {
+		// Return false if any of these conditions are true (don't modify URL).
+		return empty( $path ) &&
+			! is_admin() &&
+			! ( defined( 'REST_REQUEST' ) && REST_REQUEST ) &&
+			! wp_doing_ajax() &&
+			! $this->isSitemapOrFeedRequest() &&
+			'rest' !== $scheme;
 	}
 
 	/**
@@ -151,5 +240,21 @@ class CurrencyService {
 	 */
 	public function removeCurrencyParam( $permalink ) {
 		return remove_query_arg( 'currency', $permalink );
+	}
+
+	/**
+	 * Add a robots meta tag to prevent indexing of URLs with query parameters.
+	 *
+	 * @return void
+	 */
+	public function addRobotsTag() {
+		// Don't add the robots tag if the filter is disabled.
+		if ( apply_filters( 'surecart/currency/disable_robots_tag', false ) ) {
+			return;
+		}
+
+		if ( isset( $_GET['currency'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			echo '<meta name="robots" content="noindex, follow" />' . "\n";
+		}
 	}
 }

@@ -62,6 +62,11 @@ abstract class AdminModelEditController {
 		wp_enqueue_style( 'wp-editor' );
 	}
 
+	/**
+	 * Enqueue components
+	 *
+	 * @return void
+	 */
 	public function enqueueComponents() {
 		wp_enqueue_script( 'surecart-components' );
 		wp_enqueue_style( 'surecart-themes-default' );
@@ -159,6 +164,9 @@ abstract class AdminModelEditController {
 			foreach ( array_keys( \SureCart::getAdminPageNames() ) as $name ) {
 				$this->data['links'][ $name ] = esc_url_raw( add_query_arg( [ 'action' => 'edit' ], \SureCart::getUrl()->index( $name ) ) );
 			}
+		}
+		if ( in_array( 'i18n', $this->with_data ) ) {
+			$this->data['i18n'] = \SureCart::state()->i18n()->get();
 		}
 
 		// pass entitlements to page.

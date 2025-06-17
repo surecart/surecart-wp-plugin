@@ -237,6 +237,7 @@ dispatch(coreStore).addEntities([
 		label: __('Product', 'surecart'),
 		baseURL: '/surecart/v1/products',
 		baseURLParams: { context: 'edit' },
+		supportsPagination: true,
 	},
 	{
 		name: 'product-media',
@@ -272,6 +273,7 @@ dispatch(coreStore).addEntities([
 		label: __('Price', 'surecart'),
 		baseURL: '/surecart/v1/prices',
 		baseURLParams: { context: 'edit' },
+		supportsPagination: true,
 	},
 	{
 		name: 'promotion',
@@ -474,5 +476,12 @@ dispatch(coreStore).addEntities([
 		kind: 'surecart',
 		label: __('Return Reason', 'surecart'),
 		baseURL: '/surecart/v1/return_reasons',
+	},
+	{
+		name: 'swap',
+		kind: 'surecart',
+		label: __('Swap', 'surecart'),
+		baseURL: '/surecart/v1/swaps',
+		baseURLParams: { context: 'edit' },
 	},
 ]);

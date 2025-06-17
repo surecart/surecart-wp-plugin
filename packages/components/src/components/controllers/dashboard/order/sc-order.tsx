@@ -4,7 +4,6 @@ import { addQueryArgs } from '@wordpress/url';
 
 import apiFetch from '../../../../functions/fetch';
 import { onFirstVisible } from '../../../../functions/lazy';
-import { intervalString } from '../../../../functions/price';
 import { formatTaxDisplay } from '../../../../functions/tax';
 import { Checkout, ManualPaymentMethod, Order, Product, Purchase, ShippingChoice, ShippingMethod } from '../../../../types';
 
@@ -131,19 +130,16 @@ export class ScOrder {
               key={item.id}
               image={item?.image}
               name={(item?.price?.product as Product)?.name}
-              priceName={item?.price?.name}
-              variantLabel={(item?.variant_options || []).filter(Boolean).join(' / ') || null}
+              price={item?.price?.name}
+              variant={item?.variant_display_options}
               editable={false}
               removable={false}
               quantity={item.quantity}
-              scratchDisplayAmount={item?.scratch_display_amount}
-              displayAmount={item?.subtotal_display_amount}
-              amount={item.subtotal_amount}
-              currency={item?.price?.currency}
-              trialDurationDays={item?.price?.trial_duration_days}
-              interval={intervalString(item?.price)}
-              scratchAmount={item?.scratch_amount}
-              setupFeeTrialEnabled={item?.price?.setup_fee_trial_enabled}
+              amount={item.subtotal_display_amount}
+              trial={item?.price?.trial_text}
+              interval={`${item?.price?.short_interval_text} ${item?.price?.short_interval_count_text}`}
+              scratch={item?.scratch_display_amount}
+              purchasableStatus={item?.purchasable_status_display}
               fees={item?.fees?.data}
             />
           );

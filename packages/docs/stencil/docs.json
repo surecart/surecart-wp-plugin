@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-03-11T16:41:04",
+  "timestamp": "2025-06-05T20:06:04",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.18.3",
@@ -120,6 +120,66 @@
           "required": false
         },
         {
+          "name": "countryFields",
+          "type": "CountryLocaleField[]",
+          "complexType": {
+            "original": "Array<CountryLocaleField>",
+            "resolved": "CountryLocaleField[]",
+            "references": {
+              "Array": {
+                "location": "global",
+                "id": "global::Array"
+              },
+              "CountryLocaleField": {
+                "location": "import",
+                "path": "../../../types",
+                "id": "src/types.ts::CountryLocaleField"
+              }
+            }
+          },
+          "mutable": true,
+          "reflectToAttr": false,
+          "docs": "Country fields by country code",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "CountryLocaleField[]"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "defaultCountryFields",
+          "type": "CountryLocaleFieldValue[]",
+          "complexType": {
+            "original": "Array<CountryLocaleFieldValue>",
+            "resolved": "CountryLocaleFieldValue[]",
+            "references": {
+              "Array": {
+                "location": "global",
+                "id": "global::Array"
+              },
+              "CountryLocaleFieldValue": {
+                "location": "import",
+                "path": "../../../types",
+                "id": "src/types.ts::CountryLocaleFieldValue"
+              }
+            }
+          },
+          "mutable": true,
+          "reflectToAttr": false,
+          "docs": "Default country fields",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "CountryLocaleFieldValue[]"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "disabled",
           "type": "boolean",
           "complexType": {
@@ -206,37 +266,6 @@
           "docs": "",
           "docsTags": [],
           "default": "{\n    name: 'shipping_name',\n    country: 'shipping_country',\n    city: 'shipping_city',\n    line_1: 'shipping_line_1',\n    line_2: 'shipping_line_2',\n    postal_code: 'shipping_postal_code',\n    state: 'shipping_state',\n  }",
-          "values": [
-            {
-              "type": "{ name?: string; line_1?: string; line_2?: string; city?: string; state?: string; postal_code?: string; country?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "placeholders",
-          "type": "{ name?: string; line_1?: string; line_2?: string; city?: string; state?: string; postal_code?: string; country?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
-          "complexType": {
-            "original": "Partial<Address>",
-            "resolved": "{ name?: string; line_1?: string; line_2?: string; city?: string; state?: string; postal_code?: string; country?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
-            "references": {
-              "Partial": {
-                "location": "global",
-                "id": "global::Partial"
-              },
-              "Address": {
-                "location": "import",
-                "path": "../../../types",
-                "id": "src/types.ts::Address"
-              }
-            }
-          },
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "default": "{}",
           "values": [
             {
               "type": "{ name?: string; line_1?: string; line_2?: string; city?: string; state?: string; postal_code?: string; country?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }"
@@ -427,10 +456,6 @@
           "docs": "The select box caret."
         },
         {
-          "name": "columns",
-          "docs": ""
-        },
-        {
           "name": "empty",
           "docs": "The select empty message."
         },
@@ -498,22 +523,19 @@
       ],
       "dependencies": [
         "sc-form-control",
-        "sc-input",
         "sc-select",
+        "sc-input",
         "sc-block-ui"
       ],
       "dependencyGraph": {
         "sc-address": [
           "sc-form-control",
-          "sc-input",
           "sc-select",
+          "sc-input",
           "sc-block-ui"
         ],
         "sc-form-control": [
           "sc-visually-hidden"
-        ],
-        "sc-input": [
-          "sc-form-control"
         ],
         "sc-select": [
           "sc-icon",
@@ -524,6 +546,9 @@
           "sc-input",
           "sc-spinner",
           "sc-menu"
+        ],
+        "sc-input": [
+          "sc-form-control"
         ],
         "sc-block-ui": [
           "sc-spinner"
@@ -5558,8 +5583,8 @@
         ],
         "sc-address": [
           "sc-form-control",
-          "sc-input",
           "sc-select",
+          "sc-input",
           "sc-block-ui"
         ],
         "sc-select": [
@@ -5609,7 +5634,6 @@
           "sc-form-control",
           "sc-radio-group",
           "sc-radio",
-          "sc-format-number",
           "sc-block-ui"
         ],
         "sc-line-item-shipping": [
@@ -9427,6 +9451,41 @@
           "required": false
         },
         {
+          "name": "i18n",
+          "type": "{ defaultCountryFields: CountryLocaleFieldValue[]; countryFields: CountryLocaleField[]; }",
+          "complexType": {
+            "original": "{\n    defaultCountryFields: Array<CountryLocaleFieldValue>;\n    countryFields: Array<CountryLocaleField>;\n  }",
+            "resolved": "{ defaultCountryFields: CountryLocaleFieldValue[]; countryFields: CountryLocaleField[]; }",
+            "references": {
+              "Array": {
+                "location": "global",
+                "id": "global::Array"
+              },
+              "CountryLocaleFieldValue": {
+                "location": "import",
+                "path": "../../../../types",
+                "id": "src/types.ts::CountryLocaleFieldValue"
+              },
+              "CountryLocaleField": {
+                "location": "import",
+                "path": "../../../../types",
+                "id": "src/types.ts::CountryLocaleField"
+              }
+            }
+          },
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "{ defaultCountryFields: CountryLocaleFieldValue[]; countryFields: CountryLocaleField[]; }"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "successUrl",
           "type": "string",
           "complexType": {
@@ -9505,8 +9564,8 @@
         ],
         "sc-address": [
           "sc-form-control",
-          "sc-input",
           "sc-select",
+          "sc-input",
           "sc-block-ui"
         ],
         "sc-select": [
@@ -13281,6 +13340,28 @@
           "required": false
         },
         {
+          "name": "stickyFooter",
+          "type": "boolean",
+          "complexType": {
+            "original": "boolean",
+            "resolved": "boolean",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "sticky-footer",
+          "reflectToAttr": false,
+          "docs": "Sticky drawer footer",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "stickyHeader",
           "type": "boolean",
           "complexType": {
@@ -14918,15 +14999,12 @@
         ],
         "sc-address": [
           "sc-form-control",
-          "sc-input",
           "sc-select",
+          "sc-input",
           "sc-block-ui"
         ],
         "sc-form-control": [
           "sc-visually-hidden"
-        ],
-        "sc-input": [
-          "sc-form-control"
         ],
         "sc-select": [
           "sc-icon",
@@ -14937,6 +15015,9 @@
           "sc-input",
           "sc-spinner",
           "sc-menu"
+        ],
+        "sc-input": [
+          "sc-form-control"
         ],
         "sc-block-ui": [
           "sc-spinner"
@@ -14981,7 +15062,6 @@
           "sc-form-control",
           "sc-radio-group",
           "sc-radio",
-          "sc-format-number",
           "sc-block-ui"
         ],
         "sc-line-item-shipping": [
@@ -16048,10 +16128,8 @@
         "sc-price-range",
         "sc-product-donation-amount-choice",
         "sc-product-item-price",
-        "sc-product-line-item",
         "sc-product-price-choices",
         "sc-recurring-price-choice-container",
-        "sc-shipping-choices",
         "sc-subscription-details",
         "sc-subscription-switch"
       ],
@@ -16078,16 +16156,10 @@
         "sc-product-item-price": [
           "sc-format-number"
         ],
-        "sc-product-line-item": [
-          "sc-format-number"
-        ],
         "sc-product-price-choices": [
           "sc-format-number"
         ],
         "sc-recurring-price-choice-container": [
-          "sc-format-number"
-        ],
-        "sc-shipping-choices": [
           "sc-format-number"
         ],
         "sc-subscription-details": [
@@ -18469,6 +18541,27 @@
           ],
           "optional": false,
           "required": false
+        },
+        {
+          "name": "query",
+          "type": "{ page: number; per_page: number; }",
+          "complexType": {
+            "original": "{\n    page: number;\n    per_page: number;\n  }",
+            "resolved": "{ page: number; per_page: number; }",
+            "references": {}
+          },
+          "mutable": true,
+          "reflectToAttr": false,
+          "docs": "Query to fetch Activations",
+          "docsTags": [],
+          "default": "{\n    page: 1,\n    per_page: 10,\n  }",
+          "values": [
+            {
+              "type": "{ page: number; per_page: number; }"
+            }
+          ],
+          "optional": false,
+          "required": false
         }
       ],
       "methods": [],
@@ -18490,6 +18583,7 @@
         "sc-input",
         "sc-button",
         "sc-block-ui",
+        "sc-pagination",
         "sc-dialog",
         "sc-icon",
         "sc-spacing"
@@ -18507,6 +18601,7 @@
           "sc-input",
           "sc-button",
           "sc-block-ui",
+          "sc-pagination",
           "sc-dialog",
           "sc-icon",
           "sc-spacing"
@@ -18531,6 +18626,12 @@
         ],
         "sc-block-ui": [
           "sc-spinner"
+        ],
+        "sc-pagination": [
+          "sc-flex",
+          "sc-button",
+          "sc-visually-hidden",
+          "sc-icon"
         ],
         "sc-dialog": [
           "sc-button",
@@ -18682,7 +18783,8 @@
         "sc-empty",
         "sc-icon",
         "sc-dashboard-module",
-        "sc-button"
+        "sc-button",
+        "sc-pagination"
       ],
       "dependencyGraph": {
         "sc-licenses-list": [
@@ -18695,7 +18797,8 @@
           "sc-empty",
           "sc-icon",
           "sc-dashboard-module",
-          "sc-button"
+          "sc-button",
+          "sc-pagination"
         ],
         "sc-empty": [
           "sc-icon"
@@ -18708,6 +18811,12 @@
         ],
         "sc-button": [
           "sc-spinner"
+        ],
+        "sc-pagination": [
+          "sc-flex",
+          "sc-button",
+          "sc-visually-hidden",
+          "sc-icon"
         ]
       }
     },
@@ -18908,7 +19017,6 @@
         "sc-order-confirmation-line-items",
         "sc-order-confirmation-totals",
         "sc-order-summary",
-        "sc-product-line-item",
         "sc-subscription-next-payment",
         "sc-summary",
         "sc-upcoming-invoice",
@@ -18959,9 +19067,6 @@
           "sc-line-item"
         ],
         "sc-order-summary": [
-          "sc-line-item"
-        ],
-        "sc-product-line-item": [
           "sc-line-item"
         ],
         "sc-subscription-next-payment": [
@@ -19691,22 +19796,25 @@
       "dependencies": [
         "sc-line-item",
         "sc-skeleton",
-        "sc-product-line-item"
+        "sc-product-line-item",
+        "sc-swap"
       ],
       "dependencyGraph": {
         "sc-line-items": [
           "sc-line-item",
           "sc-skeleton",
-          "sc-product-line-item"
+          "sc-product-line-item",
+          "sc-swap"
         ],
         "sc-product-line-item": [
-          "sc-format-number",
           "sc-quantity-select",
-          "sc-icon",
-          "sc-line-item"
+          "sc-icon"
         ],
         "sc-quantity-select": [
           "sc-icon"
+        ],
+        "sc-swap": [
+          "sc-switch"
         ]
       }
     },
@@ -20782,10 +20890,8 @@
           "sc-icon"
         ],
         "sc-product-line-item": [
-          "sc-format-number",
           "sc-quantity-select",
-          "sc-icon",
-          "sc-line-item"
+          "sc-icon"
         ],
         "sc-quantity-select": [
           "sc-icon"
@@ -20845,50 +20951,6 @@
       "usage": {},
       "props": [
         {
-          "name": "cityPlaceholder",
-          "type": "string",
-          "complexType": {
-            "original": "string",
-            "resolved": "string",
-            "references": {}
-          },
-          "mutable": false,
-          "attr": "city-placeholder",
-          "reflectToAttr": false,
-          "docs": "City placeholder",
-          "docsTags": [],
-          "default": "__('City', 'surecart')",
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "countryPlaceholder",
-          "type": "string",
-          "complexType": {
-            "original": "string",
-            "resolved": "string",
-            "references": {}
-          },
-          "mutable": false,
-          "attr": "country-placeholder",
-          "reflectToAttr": false,
-          "docs": "Country placeholder",
-          "docsTags": [],
-          "default": "__('Country', 'surecart')",
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
           "name": "defaultCountry",
           "type": "string",
           "complexType": {
@@ -20931,50 +20993,6 @@
           "required": false
         },
         {
-          "name": "line1Placeholder",
-          "type": "string",
-          "complexType": {
-            "original": "string",
-            "resolved": "string",
-            "references": {}
-          },
-          "mutable": false,
-          "attr": "line-1-placeholder",
-          "reflectToAttr": false,
-          "docs": "Address placeholder",
-          "docsTags": [],
-          "default": "__('Address', 'surecart')",
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "line2Placeholder",
-          "type": "string",
-          "complexType": {
-            "original": "string",
-            "resolved": "string",
-            "references": {}
-          },
-          "mutable": false,
-          "attr": "line-2-placeholder",
-          "reflectToAttr": false,
-          "docs": "Address Line 2 placeholder",
-          "docsTags": [],
-          "default": "__('Address Line 2', 'surecart')",
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
           "name": "namePlaceholder",
           "type": "string",
           "complexType": {
@@ -20988,28 +21006,6 @@
           "docs": "Name placeholder",
           "docsTags": [],
           "default": "__('Name or Company Name', 'surecart')",
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "postalCodePlaceholder",
-          "type": "string",
-          "complexType": {
-            "original": "string",
-            "resolved": "string",
-            "references": {}
-          },
-          "mutable": false,
-          "attr": "postal-code-placeholder",
-          "reflectToAttr": false,
-          "docs": "Postal Code placeholder",
-          "docsTags": [],
-          "default": "__('Postal Code/Zip', 'surecart')",
           "values": [
             {
               "type": "string"
@@ -21034,28 +21030,6 @@
           "values": [
             {
               "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "statePlaceholder",
-          "type": "string",
-          "complexType": {
-            "original": "string",
-            "resolved": "string",
-            "references": {}
-          },
-          "mutable": false,
-          "attr": "state-placeholder",
-          "reflectToAttr": false,
-          "docs": "State placeholder",
-          "docsTags": [],
-          "default": "__('State/Province/Region', 'surecart')",
-          "values": [
-            {
-              "type": "string"
             }
           ],
           "optional": false,
@@ -21127,15 +21101,12 @@
         ],
         "sc-address": [
           "sc-form-control",
-          "sc-input",
           "sc-select",
+          "sc-input",
           "sc-block-ui"
         ],
         "sc-form-control": [
           "sc-visually-hidden"
-        ],
-        "sc-input": [
-          "sc-form-control"
         ],
         "sc-select": [
           "sc-icon",
@@ -21146,6 +21117,9 @@
           "sc-input",
           "sc-spinner",
           "sc-menu"
+        ],
+        "sc-input": [
+          "sc-form-control"
         ],
         "sc-block-ui": [
           "sc-spinner"
@@ -21871,10 +21845,8 @@
           "sc-product-line-item"
         ],
         "sc-product-line-item": [
-          "sc-format-number",
           "sc-quantity-select",
-          "sc-icon",
-          "sc-line-item"
+          "sc-icon"
         ],
         "sc-quantity-select": [
           "sc-icon"
@@ -21976,10 +21948,8 @@
           "sc-product-line-item"
         ],
         "sc-product-line-item": [
-          "sc-format-number",
           "sc-quantity-select",
-          "sc-icon",
-          "sc-line-item"
+          "sc-icon"
         ],
         "sc-quantity-select": [
           "sc-icon"
@@ -23360,50 +23330,6 @@
       "usage": {},
       "props": [
         {
-          "name": "cityPlaceholder",
-          "type": "string",
-          "complexType": {
-            "original": "string",
-            "resolved": "string",
-            "references": {}
-          },
-          "mutable": false,
-          "attr": "city-placeholder",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "default": "__('City', 'surecart')",
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "countryPlaceholder",
-          "type": "string",
-          "complexType": {
-            "original": "string",
-            "resolved": "string",
-            "references": {}
-          },
-          "mutable": false,
-          "attr": "country-placeholder",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "default": "__('Country', 'surecart')",
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
           "name": "defaultCountry",
           "type": "string",
           "complexType": {
@@ -23435,7 +23361,7 @@
           "mutable": true,
           "attr": "full",
           "reflectToAttr": false,
-          "docs": "Show the   address",
+          "docs": "Show the address",
           "docsTags": [],
           "values": [
             {
@@ -23458,125 +23384,6 @@
           "reflectToAttr": false,
           "docs": "Label for the field.",
           "docsTags": [],
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "line1Placeholder",
-          "type": "string",
-          "complexType": {
-            "original": "string",
-            "resolved": "string",
-            "references": {}
-          },
-          "mutable": false,
-          "attr": "line-1-placeholder",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "default": "__('Address', 'surecart')",
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "line2Placeholder",
-          "type": "string",
-          "complexType": {
-            "original": "string",
-            "resolved": "string",
-            "references": {}
-          },
-          "mutable": false,
-          "attr": "line-2-placeholder",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "default": "__('Address Line 2', 'surecart')",
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "namePlaceholder",
-          "type": "string",
-          "complexType": {
-            "original": "string",
-            "resolved": "string",
-            "references": {}
-          },
-          "mutable": false,
-          "attr": "name-placeholder",
-          "reflectToAttr": false,
-          "docs": "Show the placeholder fields.",
-          "docsTags": [],
-          "default": "__('Name or Company Name', 'surecart')",
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "placeholders",
-          "type": "{ name?: string; line_1?: string; line_2?: string; city?: string; state?: string; postal_code?: string; country?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
-          "complexType": {
-            "original": "Partial<Address>",
-            "resolved": "{ name?: string; line_1?: string; line_2?: string; city?: string; state?: string; postal_code?: string; country?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
-            "references": {
-              "Partial": {
-                "location": "global",
-                "id": "global::Partial"
-              },
-              "Address": {
-                "location": "import",
-                "path": "../../../../types",
-                "id": "src/types.ts::Address"
-              }
-            }
-          },
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "Placeholder values.",
-          "docsTags": [],
-          "default": "{\n    name: __('Name or Company Name', 'surecart'),\n    country: __('Country', 'surecart'),\n    city: __('City', 'surecart'),\n    line_1: __('Address', 'surecart'),\n    line_2: __('Address Line 2', 'surecart'),\n    postal_code: __('Postal Code/Zip', 'surecart'),\n    state: __('State/Province/Region', 'surecart'),\n  }",
-          "values": [
-            {
-              "type": "{ name?: string; line_1?: string; line_2?: string; city?: string; state?: string; postal_code?: string; country?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "postalCodePlaceholder",
-          "type": "string",
-          "complexType": {
-            "original": "string",
-            "resolved": "string",
-            "references": {}
-          },
-          "mutable": false,
-          "attr": "postal-code-placeholder",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "default": "__('Postal Code/Zip', 'surecart')",
           "values": [
             {
               "type": "string"
@@ -23630,6 +23437,27 @@
           "required": false
         },
         {
+          "name": "showLine2",
+          "type": "boolean",
+          "complexType": {
+            "original": "boolean",
+            "resolved": "boolean",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "show-line-2",
+          "reflectToAttr": true,
+          "docs": "Show the line 2 field.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "showName",
           "type": "boolean",
           "complexType": {
@@ -23645,28 +23473,6 @@
           "values": [
             {
               "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "statePlaceholder",
-          "type": "string",
-          "complexType": {
-            "original": "string",
-            "resolved": "string",
-            "references": {}
-          },
-          "mutable": false,
-          "attr": "state-placeholder",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "default": "__('State/Province/Region', 'surecart')",
-          "values": [
-            {
-              "type": "string"
             }
           ],
           "optional": false,
@@ -23716,15 +23522,12 @@
         ],
         "sc-address": [
           "sc-form-control",
-          "sc-input",
           "sc-select",
+          "sc-input",
           "sc-block-ui"
         ],
         "sc-form-control": [
           "sc-visually-hidden"
-        ],
-        "sc-input": [
-          "sc-form-control"
         ],
         "sc-select": [
           "sc-icon",
@@ -23735,6 +23538,9 @@
           "sc-input",
           "sc-spinner",
           "sc-menu"
+        ],
+        "sc-input": [
+          "sc-form-control"
         ],
         "sc-block-ui": [
           "sc-spinner"
@@ -25100,6 +24906,8 @@
         "sc-charges-list",
         "sc-dashboard-downloads-list",
         "sc-invoices-list",
+        "sc-license",
+        "sc-licenses-list",
         "sc-orders-list",
         "sc-product-item-list",
         "sc-subscriptions-list"
@@ -25127,6 +24935,12 @@
           "sc-pagination"
         ],
         "sc-invoices-list": [
+          "sc-pagination"
+        ],
+        "sc-license": [
+          "sc-pagination"
+        ],
+        "sc-licenses-list": [
           "sc-pagination"
         ],
         "sc-orders-list": [
@@ -28610,6 +28424,27 @@
           "required": false
         },
         {
+          "name": "setupFeeText",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "setup-fee-text",
+          "reflectToAttr": false,
+          "docs": "The setup fee text",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "trialDurationDays",
           "type": "number",
           "complexType": {
@@ -31751,27 +31586,6 @@
       "props": [
         {
           "name": "amount",
-          "type": "number",
-          "complexType": {
-            "original": "number",
-            "resolved": "number",
-            "references": {}
-          },
-          "mutable": false,
-          "attr": "amount",
-          "reflectToAttr": false,
-          "docs": "Product monetary amount",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "number"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "currency",
           "type": "string",
           "complexType": {
             "original": "string",
@@ -31779,9 +31593,9 @@
             "references": {}
           },
           "mutable": false,
-          "attr": "currency",
+          "attr": "amount",
           "reflectToAttr": false,
-          "docs": "Currency for the product",
+          "docs": "Product monetary amount",
           "docsTags": [],
           "values": [
             {
@@ -31950,7 +31764,7 @@
           "required": false
         },
         {
-          "name": "priceName",
+          "name": "price",
           "type": "string",
           "complexType": {
             "original": "string",
@@ -31958,7 +31772,7 @@
             "references": {}
           },
           "mutable": false,
-          "attr": "price-name",
+          "attr": "price",
           "reflectToAttr": false,
           "docs": "Price name",
           "docsTags": [],
@@ -31971,7 +31785,7 @@
           "required": false
         },
         {
-          "name": "purchasableStatusDisplay",
+          "name": "purchasableStatus",
           "type": "string",
           "complexType": {
             "original": "string",
@@ -31979,7 +31793,7 @@
             "references": {}
           },
           "mutable": false,
-          "attr": "purchasable-status-display",
+          "attr": "purchasable-status",
           "reflectToAttr": false,
           "docs": "The purchasable status display",
           "docsTags": [],
@@ -32034,21 +31848,21 @@
           "required": false
         },
         {
-          "name": "scratchAmount",
-          "type": "number",
+          "name": "scratch",
+          "type": "string",
           "complexType": {
-            "original": "number",
-            "resolved": "number",
+            "original": "string",
+            "resolved": "string",
             "references": {}
           },
           "mutable": false,
-          "attr": "scratch-amount",
+          "attr": "scratch",
           "reflectToAttr": false,
           "docs": "The line item scratch amount",
           "docsTags": [],
           "values": [
             {
-              "type": "number"
+              "type": "string"
             }
           ],
           "optional": false,
@@ -32070,28 +31884,6 @@
           "values": [
             {
               "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "setupFeeTrialEnabled",
-          "type": "boolean",
-          "complexType": {
-            "original": "boolean",
-            "resolved": "boolean",
-            "references": {}
-          },
-          "mutable": false,
-          "attr": "setup-fee-trial-enabled",
-          "reflectToAttr": false,
-          "docs": "Is the setup fee not included in the free trial?",
-          "docsTags": [],
-          "default": "true",
-          "values": [
-            {
-              "type": "boolean"
             }
           ],
           "optional": false,
@@ -32120,28 +31912,7 @@
           "required": false
         },
         {
-          "name": "trialDurationDays",
-          "type": "number",
-          "complexType": {
-            "original": "number",
-            "resolved": "number",
-            "references": {}
-          },
-          "mutable": false,
-          "attr": "trial-duration-days",
-          "reflectToAttr": false,
-          "docs": "Trial duration days",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "number"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "variantLabel",
+          "name": "trial",
           "type": "string",
           "complexType": {
             "original": "string",
@@ -32149,7 +31920,28 @@
             "references": {}
           },
           "mutable": false,
-          "attr": "variant-label",
+          "attr": "trial",
+          "reflectToAttr": false,
+          "docs": "Trial text",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "variant",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "variant",
           "reflectToAttr": false,
           "docs": "Product variant label",
           "docsTags": [],
@@ -32277,6 +32069,10 @@
         {
           "name": "title",
           "docs": "The product title"
+        },
+        {
+          "name": "trial-fees",
+          "docs": ""
         }
       ],
       "dependents": [
@@ -32287,17 +32083,13 @@
         "sc-upcoming-invoice"
       ],
       "dependencies": [
-        "sc-format-number",
         "sc-quantity-select",
-        "sc-icon",
-        "sc-line-item"
+        "sc-icon"
       ],
       "dependencyGraph": {
         "sc-product-line-item": [
-          "sc-format-number",
           "sc-quantity-select",
-          "sc-icon",
-          "sc-line-item"
+          "sc-icon"
         ],
         "sc-quantity-select": [
           "sc-icon"
@@ -36187,7 +35979,6 @@
         "sc-form-control",
         "sc-radio-group",
         "sc-radio",
-        "sc-format-number",
         "sc-block-ui"
       ],
       "dependencyGraph": {
@@ -36195,7 +35986,6 @@
           "sc-form-control",
           "sc-radio-group",
           "sc-radio",
-          "sc-format-number",
           "sc-block-ui"
         ],
         "sc-form-control": [
@@ -38050,10 +37840,8 @@
           "sc-spinner"
         ],
         "sc-product-line-item": [
-          "sc-format-number",
           "sc-quantity-select",
-          "sc-icon",
-          "sc-line-item"
+          "sc-icon"
         ],
         "sc-quantity-select": [
           "sc-icon"
@@ -38744,10 +38532,8 @@
           "sc-spinner"
         ],
         "sc-product-line-item": [
-          "sc-format-number",
           "sc-quantity-select",
-          "sc-icon",
-          "sc-line-item"
+          "sc-icon"
         ],
         "sc-quantity-select": [
           "sc-icon"
@@ -40291,6 +40077,63 @@
       }
     },
     {
+      "filePath": "src/components/controllers/checkout-form/sc-swap/sc-swap.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-swap",
+      "readme": "# sc-swap\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "lineItem",
+          "type": "LineItem",
+          "complexType": {
+            "original": "LineItem",
+            "resolved": "LineItem",
+            "references": {
+              "LineItem": {
+                "location": "import",
+                "path": "../../../../types",
+                "id": "src/types.ts::LineItem"
+              }
+            }
+          },
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "The product id.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "LineItem"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [
+        "sc-line-items"
+      ],
+      "dependencies": [
+        "sc-switch"
+      ],
+      "dependencyGraph": {
+        "sc-swap": [
+          "sc-switch"
+        ],
+        "sc-line-items": [
+          "sc-swap"
+        ]
+      }
+    },
+    {
       "filePath": "src/components/ui/switch/sc-switch.tsx",
       "encapsulation": "shadow",
       "tag": "sc-switch",
@@ -40574,6 +40417,10 @@
           "docs": ""
         },
         {
+          "name": "label",
+          "docs": ""
+        },
+        {
           "name": "thumb",
           "docs": ""
         },
@@ -40583,11 +40430,15 @@
         }
       ],
       "dependents": [
-        "sc-payment-methods-list"
+        "sc-payment-methods-list",
+        "sc-swap"
       ],
       "dependencies": [],
       "dependencyGraph": {
         "sc-payment-methods-list": [
+          "sc-switch"
+        ],
+        "sc-swap": [
           "sc-switch"
         ]
       }
@@ -43657,10 +43508,8 @@
           "sc-block-ui"
         ],
         "sc-product-line-item": [
-          "sc-format-number",
           "sc-quantity-select",
-          "sc-icon",
-          "sc-line-item"
+          "sc-icon"
         ],
         "sc-quantity-select": [
           "sc-icon"
@@ -44489,22 +44338,17 @@
       "path": "src/types.ts"
     },
     "src/types.ts::Price": {
-      "declaration": "export interface Price {\n  id: string;\n  name: string;\n  description?: string;\n  amount: number;\n  display_amount: string;\n  setup_fee_display_amount: string;\n  full_amount: number;\n  currency: string;\n  recurring: boolean;\n  recurring_interval?: 'week' | 'month' | 'year' | 'never';\n  recurring_interval_count?: number;\n  trial_duration_days?: number;\n  ad_hoc: boolean;\n  ad_hoc_max_amount: number;\n  ad_hoc_min_amount: number;\n  scratch_amount: number;\n  scratch_display_amount: string;\n  setup_fee_enabled: boolean;\n  setup_fee_amount: number;\n  setup_fee_name: string;\n  setup_fee_trial_enabled: boolean;\n  recurring_period_count: number;\n  archived: boolean;\n  product_id?: string;\n  archived_at?: string;\n  created_at: number;\n  updated_at: number;\n  product?: Product | string;\n  position: number;\n  portal_subscription_update_enabled: boolean;\n  metadata: { [key: string]: string };\n}",
+      "declaration": "export interface Price {\n  id: string;\n  name: string;\n  description?: string;\n  amount: number;\n  display_amount: string;\n  setup_fee_display_amount: string;\n  setup_fee_text: string;\n  full_amount: number;\n  currency: string;\n  recurring: boolean;\n  recurring_interval?: 'week' | 'month' | 'year' | 'never';\n  recurring_interval_count?: number;\n  trial_duration_days?: number;\n  trial_text?: string;\n  ad_hoc: boolean;\n  ad_hoc_max_amount: number;\n  ad_hoc_min_amount: number;\n  scratch_amount: number;\n  scratch_display_amount: string;\n  setup_fee_enabled: boolean;\n  setup_fee_amount: number;\n  short_interval_text: string;\n  short_interval_count_text: string;\n  interval_text: string;\n  interval_count_text: string;\n  setup_fee_name: string;\n  setup_fee_trial_enabled: boolean;\n  recurring_period_count: number;\n  archived: boolean;\n  product_id?: string;\n  archived_at?: string;\n  created_at: number;\n  updated_at: number;\n  product?: Product | string;\n  position: number;\n  portal_subscription_update_enabled: boolean;\n  metadata: { [key: string]: string };\n  current_swap?: Swap;\n}",
       "docstring": "",
       "path": "src/types.ts"
     },
     "src/types.ts::LineItem": {
-      "declaration": "export interface LineItem extends Object {\n  id?: string;\n  ad_hoc_amount?: number;\n  name: string;\n  object: string;\n  quantity: number;\n  currency: string;\n  checkout: string | Checkout;\n  bump: string | Bump;\n  image: ImageAttributes;\n  fees?: {\n    object: 'list';\n    pagination: Pagination;\n    data: Array<Fee>;\n  };\n  ad_hoc_display_amount: string;\n  subtotal_display_amount: string;\n  bump_amount: number;\n  bump_display_amount: string;\n  discount_amount: number;\n  subtotal_amount: number;\n  total_amount: number;\n  total_default_currency_display_amount: string;\n  total_display_amount: string;\n  trial_amount: number;\n  tax_amount: number;\n  tax_display_amount: string;\n  fees_amount: number;\n  scratch_amount: number;\n  scratch_display_amount: string;\n  trial: boolean;\n  total_savings_amount: number;\n  created_at: number;\n  updated_at: number;\n  price?: Price;\n  price_id: string;\n  purchasable_status: 'price_gone' | 'price_old_version' | 'variant_mising' | 'variant_gone' | 'variant_old_version' | 'out_of_stock' | 'exceeds_purchase_limit' | 'purchasable';\n  purchasable_status_display: string;\n  variant_options: Array<string>;\n  variant?: Variant;\n  locked: boolean;\n}",
+      "declaration": "export interface LineItem extends Object {\n  id?: string;\n  ad_hoc_amount?: number;\n  ad_hoc_display_amount?: string;\n  name: string;\n  object: string;\n  quantity: number;\n  currency: string;\n  checkout: string | Checkout;\n  bump: string | Bump;\n  image: ImageAttributes;\n  fees?: {\n    object: 'list';\n    pagination: Pagination;\n    data: Array<Fee>;\n  };\n  bump_amount: number;\n  bump_display_amount: string;\n  discount_amount: number;\n  subtotal_amount: number;\n  subtotal_display_amount?: string;\n  total_amount: number;\n  total_default_currency_display_amount: string;\n  total_display_amount: string;\n  trial_amount: number;\n  tax_amount: number;\n  tax_display_amount: string;\n  fees_amount: number;\n  scratch_amount: number;\n  scratch_display_amount?: string;\n  trial: boolean;\n  total_savings_amount: number;\n  created_at: number;\n  updated_at: number;\n  price?: Price;\n  price_id: string;\n  sku: string;\n  purchasable_status: 'price_gone' | 'price_old_version' | 'variant_mising' | 'variant_gone' | 'variant_old_version' | 'out_of_stock' | 'exceeds_purchase_limit' | 'purchasable';\n  purchasable_status_display: string;\n  variant_options: Array<string>;\n  variant_display_options: string;\n  variant?: Variant;\n  locked: boolean;\n  swap?: Swap;\n  can_swap: boolean;\n}",
       "docstring": "",
       "path": "src/types.ts"
     },
     "src/types.ts::ProcessorName": {
       "declaration": "export type ProcessorName = 'stripe' | 'paypal' | 'paypal-card';",
-      "docstring": "",
-      "path": "src/types.ts"
-    },
-    "src/types.ts::Address": {
-      "declaration": "export interface Address extends Object {\n  name?: string;\n  line_1?: string;\n  line_2?: string;\n  city?: string;\n  state?: string;\n  postal_code?: string;\n  country?: string;\n}",
       "docstring": "",
       "path": "src/types.ts"
     },
@@ -44524,12 +44368,22 @@
       "path": "src/types.ts"
     },
     "src/types.ts::Bump": {
-      "declaration": "export interface Bump {\n  id: string;\n  object: 'bump';\n  amount_off: number;\n  amount_off_display_amount: string;\n  subtotal_display_amount: string;\n  subtotal_amount: number;\n  total_display_amount: string;\n  total_amount: number;\n  archived: boolean;\n  archived_at: number;\n  auto_apply: boolean;\n  filter_match_type: 'all' | 'any' | 'none';\n  filters: any;\n  metadata: any;\n  name: string;\n  percent_off: number;\n  price: string | Price;\n  priority: 1 | 2 | 3 | 4 | 5;\n  created_at: number;\n  updated_at: number;\n}",
+      "declaration": "export interface Bump {\n  id: string;\n  object: 'bump';\n  amount_off: number;\n  amount_off_display_amount: string;\n  subtotal_display_amount: string;\n  subtotal_amount: number;\n  total_display_amount: string;\n  total_amount: number;\n  archived: boolean;\n  archived_at: number;\n  auto_apply: boolean;\n  filter_match_type: 'all' | 'any' | 'none';\n  filters: any;\n  metadata: any;\n  rendered_description: string;\n  name: string;\n  percent_off: number;\n  price: string | Price;\n  priority: 1 | 2 | 3 | 4 | 5;\n  created_at: number;\n  updated_at: number;\n}",
       "docstring": "",
       "path": "src/types.ts"
     },
     "src/types.ts::Order": {
       "declaration": "export interface Order extends Object {\n  id?: string;\n  object: 'order';\n  number?: string;\n  order_type?: 'checkout' | 'subscription';\n  statement_url?: string;\n  status?: OrderStatus;\n  shipment_status?: OrderShipmentStatus;\n  checkout?: Checkout | string;\n  invoice?: Invoice | string;\n  created_at: number;\n  created_at_date: string;\n  updated_at: number;\n  updated_at_date: string;\n}",
+      "docstring": "",
+      "path": "src/types.ts"
+    },
+    "src/types.ts::CountryLocaleFieldValue": {
+      "declaration": "export interface CountryLocaleFieldValue {\n  name: string;\n  priority: number;\n  label: boolean;\n}",
+      "docstring": "",
+      "path": "src/types.ts"
+    },
+    "src/types.ts::CountryLocaleField": {
+      "declaration": "export interface CountryLocaleField {\n  [key: string]: {\n    name: CountryLocaleFieldValue;\n    address_1: CountryLocaleFieldValue;\n    address_2: CountryLocaleFieldValue;\n    city: CountryLocaleFieldValue;\n    state: CountryLocaleFieldValue;\n    postcode: CountryLocaleFieldValue;\n  };\n}",
       "docstring": "",
       "path": "src/types.ts"
     },
@@ -44588,6 +44442,11 @@
       "docstring": "",
       "path": "src/types.ts"
     },
+    "src/types.ts::Address": {
+      "declaration": "export interface Address extends Object {\n  name?: string;\n  line_1?: string;\n  line_2?: string;\n  city?: string;\n  state?: string;\n  postal_code?: string;\n  country?: string;\n}",
+      "docstring": "",
+      "path": "src/types.ts"
+    },
     "src/types.ts::DiscountResponse": {
       "declaration": "export interface DiscountResponse {\n  coupon?: Coupon;\n  id: string;\n  object: 'discount';\n  promotion: Promotion;\n  redeemable_status: string;\n}",
       "docstring": "",
@@ -44629,7 +44488,7 @@
       "path": "src/types.ts"
     },
     "src/types.ts::Fee": {
-      "declaration": "export interface Fee {\n  id: string;\n  object: 'fee';\n  amount: number;\n  description: string;\n  display_amount: string;\n  fee_type: 'manual' | 'bump' | 'setup' | 'upsell';\n  line_item: string | LineItem;\n  created_at: number;\n  updated_at: number;\n}",
+      "declaration": "export interface Fee {\n  id: string;\n  object: 'fee';\n  amount: number;\n  display_amount: string;\n  description: string;\n  fee_type: 'manual' | 'bump' | 'setup' | 'upsell';\n  line_item: string | LineItem;\n  created_at: number;\n  updated_at: number;\n}",
       "docstring": "",
       "path": "src/types.ts"
     },

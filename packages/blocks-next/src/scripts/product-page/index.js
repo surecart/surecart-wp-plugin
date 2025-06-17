@@ -198,14 +198,14 @@ const { state, actions } = store('surecart/product-page', {
 			if (!context) {
 				return true;
 			}
-			const { text, outOfStockText, unavailableText } = context;
+			const { buttonText, outOfStockText, unavailableText } = context;
 			if (state.isSoldOut) {
 				return outOfStockText;
 			}
 			if (state.isUnavailable) {
 				return unavailableText;
 			}
-			return text;
+			return buttonText;
 		},
 
 		/**
@@ -382,15 +382,22 @@ const { state, actions } = store('surecart/product-page', {
 
 			e.preventDefault();
 
+			// Get context values and option data
+			const { variantValues, optionNumber, urlPrefix } = getContext();
+
+			// get data from select element or context.
+			let optionData = e?.target?.selectedOptions?.[0]?.dataset?.wpContext
+				? JSON.parse(
+						e?.target?.selectedOptions?.[0]?.dataset?.wpContext
+				  )
+				: getContext();
+
 			const {
-				variantValues,
-				optionNumber,
 				option_value,
 				option_name,
-				option_name_slug,
 				option_value_slug,
-				urlPrefix,
-			} = getContext();
+				option_name_slug,
+			} = optionData;
 
 			// get the value.
 			const value = option_value || e?.target?.value;

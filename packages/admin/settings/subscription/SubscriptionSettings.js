@@ -166,7 +166,7 @@ export default () => {
 						)}
 						<span slot="description" style={{ lineHeight: '1.4' }}>
 							{__(
-								'When enabled, this feature prevents customers from cancelling their subscription on the customer dashboard until a set number of days before renewal.',
+								'The number of days prior to a subscription renewing that the cancel option will be visible to customers.',
 								'surecart'
 							)}
 						</span>

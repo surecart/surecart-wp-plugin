@@ -7,11 +7,12 @@
 
 ## Properties
 
-| Property     | Attribute     | Description | Type       | Default     |
-| ------------ | ------------- | ----------- | ---------- | ----------- |
-| `customer`   | --            |             | `Customer` | `undefined` |
-| `heading`    | `heading`     |             | `string`   | `undefined` |
-| `successUrl` | `success-url` |             | `string`   | `undefined` |
+| Property     | Attribute     | Description | Type                                                                                        | Default     |
+| ------------ | ------------- | ----------- | ------------------------------------------------------------------------------------------- | ----------- |
+| `customer`   | --            |             | `Customer`                                                                                  | `undefined` |
+| `heading`    | `heading`     |             | `string`                                                                                    | `undefined` |
+| `i18n`       | --            |             | `{ defaultCountryFields: CountryLocaleFieldValue[]; countryFields: CountryLocaleField[]; }` | `undefined` |
+| `successUrl` | `success-url` |             | `string`                                                                                    | `undefined` |
 
 
 ## Dependencies
@@ -56,8 +57,8 @@ graph TD;
   sc-form-control --> sc-visually-hidden
   sc-phone-input --> sc-form-control
   sc-address --> sc-form-control
-  sc-address --> sc-input
   sc-address --> sc-select
+  sc-address --> sc-input
   sc-address --> sc-block-ui
   sc-select --> sc-icon
   sc-select --> sc-menu-label

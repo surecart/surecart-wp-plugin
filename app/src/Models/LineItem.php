@@ -7,7 +7,7 @@ use SureCart\Models\Traits\HasFees;
 use SureCart\Models\Traits\HasPrice;
 use SureCart\Support\Currency;
 use SureCart\Models\Traits\HasProduct;
-
+use SureCart\Models\Traits\HasSwap;
 /**
  * Price model
  */
@@ -16,6 +16,7 @@ class LineItem extends Model {
 	use HasCheckout;
 	use HasProduct;
 	use HasFees;
+	use HasSwap;
 
 	/**
 	 * Rest API endpoint
@@ -49,6 +50,28 @@ class LineItem extends Model {
 	 */
 	public function setSwapAttribute( $value ) {
 		$this->setRelation( 'swap', $value, Swap::class );
+	}
+
+	/**
+	 * Get the variant attribute.
+	 *
+	 * @return string
+	 */
+	public function getVariantDisplayOptionsAttribute() {
+		if ( empty( $this->variant_options ) ) {
+			return null;
+		}
+		return implode( ' / ', array_filter( $this->variant_options ) );
+	}
+
+	/**
+	 * Check if the line item can be swapped.
+	 * Right now we only support swapping for products with no variants.
+	 *
+	 * @return bool
+	 */
+	protected function getCanSwapAttribute() {
+		return false;
 	}
 
 	/**
@@ -206,6 +229,18 @@ class LineItem extends Model {
 	public function getScratchDisplayAmountAttribute() {
 		// TODO: Maybe remove this conditional check once scratch_amount is null as it should be in line items.
 		return ! empty( $this->scratch_amount ) && ( $this->scratch_amount > $this->subtotal_amount ) ? Currency::format( $this->scratch_amount, $this->currency ) : '';
+	}
+
+	/**
+	 * Get the SKU text attribute.
+	 *
+	 * @return string
+	 */
+	public function getSkuAttribute() {
+		if ( ! empty( $this->variant ) && ! empty( $this->variant->sku ) ) {
+			return $this->variant->sku;
+		}
+		return $this->price->product->sku ?? '';
 	}
 
 	/**

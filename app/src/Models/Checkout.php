@@ -15,6 +15,7 @@ use SureCart\Models\Traits\HasPaymentMethod;
 use SureCart\Models\Traits\HasProcessorType;
 use SureCart\Models\Traits\HasPurchases;
 use SureCart\Models\Traits\HasShippingAddress;
+use SureCart\Models\Traits\HasShippingChoices;
 use SureCart\Support\Currency;
 use SureCart\Support\TimeDate;
 
@@ -26,6 +27,7 @@ class Checkout extends Model {
 	use HasSubscriptions;
 	use HasDiscount;
 	use HasShippingAddress;
+	use HasShippingChoices;
 	use HasPaymentIntent;
 	use HasPaymentMethod;
 	use HasPurchases;
@@ -66,7 +68,7 @@ class Checkout extends Model {
 	 * @return string
 	 */
 	public function getAmountDueDisplayAmountAttribute() {
-		return ! empty( $this->amount_due ) ? Currency::format( $this->amount_due, $this->currency ) : '';
+		return Currency::format( $this->amount_due ?? 0, $this->currency );
 	}
 
 	/**

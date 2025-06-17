@@ -30,6 +30,9 @@ class ProductPostTypeService {
 		// register meta.
 		add_action( 'init', array( $this, 'registerMeta' ) );
 
+		// Hide trash button in block editor.
+		add_action( 'enqueue_block_editor_assets', array( $this, 'modifyProductContentEditor' ) );
+
 		// add variation option value query to posts_where.
 		add_filter( 'posts_where', array( $this, 'handleVariationOptionValueQuery' ), 10, 2 );
 
@@ -54,8 +57,14 @@ class ProductPostTypeService {
 		// update edit post link to edit the product directly.
 		add_filter( 'get_edit_post_link', array( $this, 'updateEditLink' ), 10, 2 );
 
-		// we need to disable the gutenberg editor for our post type so that blocks don't load there.
-		add_filter( 'use_block_editor_for_post_type', [ $this, 'disableGutenberg' ], 10, 2 );
+		// disable trash for products.
+		add_filter( 'rest_sc_product_trashable', '__return_false' );
+
+		// add template to response.
+		add_action( 'rest_prepare_sc_product', array( $this, 'addTemplateToResponse' ), 10, 2 );
+
+		// we need to enable the gutenberg editor for our post type so that content blocks can be edited.
+		add_filter( 'use_block_editor_for_post_type', [ $this, 'forceGutenberg' ], 10, 2 );
 
 		// Add edit product link to admin bar.
 		add_action( 'admin_bar_menu', [ $this, 'addEditLink' ], 99 );
@@ -106,6 +115,53 @@ class ProductPostTypeService {
 			// validate FSE template and return single if invalid.
 			add_filter( 'template_include', array( $this, 'validateFSETemplate' ), 10, 1 );
 		}
+	}
+
+	/**
+	 * Show whether the product has a content block.
+	 *
+	 * @param \WP_REST_Response $response The response.
+	 * @param \WP_Post          $post The post.
+	 *
+	 * @return \WP_REST_Response
+	 */
+	public function addTemplateToResponse( $response, $post ) {
+		$product     = sc_get_product( $post );
+		$template_id = wp_is_block_theme() ? $product->template_id : $product->template_part_id;
+
+		// fallback to the default template if no template is set.
+		if ( empty( $template_id ) ) {
+			$template_id = wp_is_block_theme() ? 'surecart/surecart//single-sc_product' : 'surecart/surecart//product-info';
+		}
+
+		$block_template                      = get_block_template( $template_id, wp_is_block_theme() ? 'wp_template' : 'wp_template_part' );
+		$response->data['has_content_block'] = has_block( 'core/post-content', $block_template->content ?? '' );
+		$response->data['block_template']    = $block_template;
+		return $response;
+	}
+
+	/**
+	 * Modify the UI for the product content editor.
+	 * This ensures you do not modify the post type directly, except the content.
+	 *
+	 * @return void
+	 */
+	public function modifyProductContentEditor() {
+		// just in case.
+		if ( ! is_admin() ) {
+			return;
+		}
+
+		// check if we are on the product edit screen.
+		$screen = get_current_screen();
+		if ( ! $screen || $this->post_type !== $screen->post_type ) {
+			return;
+		}
+
+		wp_add_inline_style(
+			'wp-edit-post',
+			'.editor-post-summary, .editor-document-bar, .edit-post-visual-editor__post-title-wrapper { display: none !important; }'
+		);
 	}
 
 	/**
@@ -556,10 +612,26 @@ class ProductPostTypeService {
 	 *
 	 * @return bool
 	 */
-	public function disableGutenberg( $current_status, $post_type ) {
-		if ( $post_type === $this->post_type ) {
-			return false;
+	public function forceGutenberg( $current_status, $post_type ) {
+		if ( $post_type === $this->post_type && function_exists( 'get_current_screen' ) ) {
+			$screen = get_current_screen();
+			if ( empty( $screen ) ) {
+				return false;
+			}
+
+			$screen_id = $screen->id;
+
+			// For Product Content Edit Screen.
+			if ( 'sc_product' === $screen_id ) {
+				return true;
+			}
+
+			// For Product Edit Screen.
+			if ( 'surecart_page_sc-products' === $screen_id ) {
+				return false;
+			}
 		}
+
 		return $current_status;
 	}
 
@@ -571,20 +643,34 @@ class ProductPostTypeService {
 	 * @return string
 	 */
 	public function replaceContentWithProductInfoPart( $content ) {
+		// not our post type.
 		if ( ! is_singular( 'sc_product' ) ) {
 			return $content;
 		}
-		if ( ! empty( $content ) ) {
+
+		// allow filtering to prevent this from running.
+		$replace_content = apply_filters( 'surecart/product/replace_content_with_product_info_part', true );
+		if ( ! $replace_content ) {
 			return $content;
 		}
-		$product          = sc_get_product();
-		$template_part_id = isset( $product->template_part_id ) ? $product->template_part_id : 'surecart/surecart//product-info'; // Get the template part ID.
-		$template         = get_block_template( $template_part_id, 'wp_template_part' );
-		if ( ! $template ) {
-			$template = get_block_template( 'surecart/surecart//product-info', 'wp_template_part' );
+
+		// don't do this for our template.
+		global $template;
+		if ( ! empty( $template ) && basename( $template ) === 'template-surecart-product.php' ) {
+			return $content;
 		}
 
-		$blocks = $template->content ?? '';
+		// only run once.
+		remove_filter( 'the_content', array( $this, __FUNCTION__ ), 10 );
+
+		$product          = sc_get_product();
+		$template_part_id = isset( $product->template_part_id ) ? $product->template_part_id : 'surecart/surecart//product-info'; // Get the template part ID.
+		$block_template   = get_block_template( $template_part_id, 'wp_template_part' );
+		if ( ! $block_template ) {
+			$block_template = get_block_template( 'surecart/surecart//product-info', 'wp_template_part' );
+		}
+
+		$blocks = $block_template->content ?? '';
 		$blocks = shortcode_unautop( $blocks );
 		$blocks = do_shortcode( $blocks );
 		$blocks = do_blocks( $blocks );
@@ -596,7 +682,7 @@ class ProductPostTypeService {
 		$blocks = $wp_embed->autoembed( $blocks );
 		$blocks = str_replace( ']]>', ']]&gt;', $blocks );
 
-		return $blocks . $content;
+		return $blocks;
 	}
 
 	/**
@@ -938,7 +1024,7 @@ class ProductPostTypeService {
 		register_post_type(
 			$this->post_type,
 			array(
-				'labels'            => array(
+				'labels'          => array(
 					'name'                     => _x( 'SureCart Product', 'post type general name', 'surecart' ),
 					'singular_name'            => _x( 'SureCart Product', 'post type singular name', 'surecart' ),
 					'add_new'                  => _x( 'Add New', 'Product', 'surecart' ),
@@ -946,6 +1032,7 @@ class ProductPostTypeService {
 					'new_item'                 => __( 'New Product', 'surecart' ),
 					'edit_item'                => __( 'Edit Product', 'surecart' ),
 					'view_item'                => __( 'View Product', 'surecart' ),
+					'view_items'               => __( 'View Products', 'surecart' ),
 					'all_items'                => __( 'All Products', 'surecart' ),
 					'search_items'             => __( 'Search Products', 'surecart' ),
 					'not_found'                => __( 'No checkout forms found.', 'surecart' ),
@@ -959,20 +1046,19 @@ class ProductPostTypeService {
 					'item_scheduled'           => __( 'Product scheduled.', 'surecart' ),
 					'item_updated'             => __( 'Product updated.', 'surecart' ),
 				),
-				'hierarchical'      => true,
-				'public'            => true,
-				'show_ui'           => true,
-				'show_in_menu'      => false,
-				'rewrite'           => array(
+				'hierarchical'    => true,
+				'public'          => true,
+				'show_ui'         => true,
+				'show_in_menu'    => false,
+				'rewrite'         => array(
 					'slug'       => \SureCart::settings()->permalinks()->getBase( 'product_page' ),
 					'with_front' => false,
 				),
-				'show_in_rest'      => true,
-				'show_in_nav_menus' => false,
-				'can_export'        => false,
-				'capability_type'   => 'post',
-				'map_meta_cap'      => true,
-				'supports'          => array(
+				'show_in_rest'    => true,
+				'can_export'      => false,
+				'capability_type' => 'post',
+				'map_meta_cap'    => true,
+				'supports'        => array(
 					'title',
 					'excerpt',
 					'custom-fields',

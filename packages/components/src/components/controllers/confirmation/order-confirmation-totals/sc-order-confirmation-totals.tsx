@@ -40,7 +40,9 @@ export class ScOrderConfirmationTotals {
             ({humanDiscount})
           </span>
         )}
-        {this.order?.discounts_display_amount}
+        <span slot="price">
+          {this.order?.discounts_display_amount}
+        </span>
       </sc-line-item>
     );
   }
