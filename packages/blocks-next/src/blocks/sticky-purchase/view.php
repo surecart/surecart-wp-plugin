@@ -13,6 +13,7 @@ use SureCart\Models\Blocks\ProductPageBlock;
 				'data-wp-context'           => '{}',
 				'data-wp-on-window--scroll' => 'actions.handleScroll',
 				'data-wp-on-window--resize' => 'actions.handleResize',
+				'data-wp-on--keydown'       => 'callbacks.handleKeyDown',
 			]
 		)
 	);
@@ -22,19 +23,7 @@ use SureCart\Models\Blocks\ProductPageBlock;
 	while ( $query->have_posts() ) :
 		$query->the_post();
 		?>
-		<div 
-			class="sc-sticky-purchase-container"
-			tabindex="-1"
-			data-wp-on--keydown="callbacks.handleKeyDown"
-			<?php
-			echo wp_kses_data(
-				wp_interactivity_data_wp_context(
-					[
-					]
-				)
-			);
-			?>
-		>
+		<div class="sc-sticky-purchase-container" tabindex="-1">
 			<div class="sc-sticky-purchase">
 				<?php
 
@@ -76,7 +65,8 @@ use SureCart\Models\Blocks\ProductPageBlock;
 					?>
 					data-wp-interactive='{ "namespace": "surecart/product-page" }'
 					data-wp-on--submit="callbacks.handleSubmit"
-					data-wp-init="callbacks.init">
+					data-wp-init="callbacks.init"
+				>
 					<?php echo $block_content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 				</form>
 			</div>
