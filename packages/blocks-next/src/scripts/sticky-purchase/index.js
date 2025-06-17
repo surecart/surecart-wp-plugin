@@ -118,9 +118,21 @@ const { state, actions } = store('surecart/sticky-purchase', {
 				if (context.isVisible) {
 					stickyButton.classList.remove('is-hiding');
 					stickyButton.classList.add('is-visible');
+					document.body.classList.add('sc-sticky-purchase-active');
+					
+					// Calculate and set the sticky purchase height as a CSS variable
+					// for proper cart icon positioning
+					setTimeout(() => {
+						const stickyHeight = stickyButton.offsetHeight;
+						document.documentElement.style.setProperty(
+							'--sc-sticky-purchase-height',
+							`${stickyHeight}px`
+						);
+					}, 50);
 				} else {
 					// Add a hiding class first for smooth transition.
 					stickyButton.classList.add('is-hiding');
+					document.body.classList.remove('sc-sticky-purchase-active');
 
 					// Then remove the visible class after transition completes.
 					setTimeout(
@@ -154,6 +166,9 @@ const { state, actions } = store('surecart/sticky-purchase', {
 						if (currentNearBottom) {
 							currentContext.isVisible = false;
 							stickyButton.classList.add('is-hiding');
+							document.body.classList.remove(
+								'sc-sticky-purchase-active'
+							);
 							setTimeout(
 								withScope(() => {
 									stickyButton.classList.remove('is-visible');
@@ -193,6 +208,10 @@ const { state, actions } = store('surecart/sticky-purchase', {
 			context.scrollDirection = 'down';
 			context.viewportHeight = window.innerHeight;
 			context.hideTimeout = null;
+			document.body.classList.remove('sc-sticky-purchase-active');
+
+			// Reset the CSS variable for sticky purchase height
+			document.documentElement.style.setProperty('--sc-sticky-purchase-height', '80px');
 
 			// Initial check after a small delay to ensure DOM is fully rendered.
 			setTimeout(
@@ -202,5 +221,23 @@ const { state, actions } = store('surecart/sticky-purchase', {
 				100
 			);
 		},
+		
+		handleKeyDown(event) {
+			// Handle Escape key to close the sticky purchase if it's visible
+			if (event.key === 'Escape') {
+				const context = getContext();
+				if (context?.isVisible) {
+					context.isVisible = false;
+					const stickyButton = document.querySelector('.sc-sticky-purchase');
+					if (stickyButton) {
+						stickyButton.classList.add('is-hiding');
+						document.body.classList.remove('sc-sticky-purchase-active');
+						setTimeout(() => {
+							stickyButton.classList.remove('is-visible');
+						}, 300);
+					}
+				}
+			}
+		}
 	},
 });

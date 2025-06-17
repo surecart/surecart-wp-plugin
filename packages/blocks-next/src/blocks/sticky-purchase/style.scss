@@ -168,3 +168,16 @@
 		}
 	}
 }
+
+// Add styles to adjust cart icon position when sticky purchase is active
+body.sc-sticky-purchase-active {
+	.wp-block-surecart-cart-icon {
+		transition: bottom 0.3s ease;
+
+		@media (max-width: 768px) {
+			// Move the cart icon above the sticky purchase bar
+			// Default height of sticky bar + 10px gap
+			bottom: calc(var(--sc-sticky-purchase-height, 80px) + 10px) !important;
+		}
+	}
+}
