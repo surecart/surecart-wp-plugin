@@ -47,7 +47,7 @@ class StickyPurchaseService {
 	 * @return string
 	 */
 	public function stickyPurchaseTemplate() {
-		// Check if sticky purchase button is enabled in cart template.
+		// Check if sticky purchase button is enabled in product template.
 		if ( ! $this->isStickyPurchaseEnabled() ) {
 			return;
 		}
@@ -66,19 +66,25 @@ class StickyPurchaseService {
 	}
 
 	/**
-	 * Check if sticky purchase button is enabled in cart template.
+	 * Check if sticky purchase button is enabled in product template.
 	 *
 	 * @return bool
 	 */
 	private function isStickyPurchaseEnabled() {
-		$cart_template = get_block_template( 'surecart/surecart//cart', 'wp_template_part' );
-
-		if ( ! $cart_template || empty( $cart_template->content ) ) {
+		// Check if we're on a product page.
+		if ( ! is_singular( 'sc_product' ) ) {
 			return false;
 		}
 
-		// Parse blocks to find surecart/slide-out-cart-submit block.
-		$blocks = parse_blocks( $cart_template->content );
+		// Get the product template.
+		$product_template = get_block_template( wp_is_block_theme() ? 'surecart/surecart//single-sc_product' : 'surecart/surecart//product-info', 'wp_template_part' );
+
+		if ( ! $product_template || empty( $product_template->content ) ) {
+			return false;
+		}
+
+		// Parse blocks to find surecart/product-buy-buttons block.
+		$blocks = parse_blocks( $product_template->content );
 
 		return $this->findStickyPurchaseSetting( $blocks );
 	}
@@ -91,10 +97,10 @@ class StickyPurchaseService {
 	 */
 	private function findStickyPurchaseSetting( $blocks ) {
 		foreach ( $blocks as $block ) {
-			// Check if this is the slide-out-cart-submit block.
-			if ( 'surecart/slide-out-cart-submit' === $block['blockName'] ) {
+			// Check if this is the surecart/product-buy-button block.
+			if ( 'surecart/product-buy-button' === $block['blockName'] ) {
 				$attrs = $block['attrs'] ?? [];
-				return isset( $attrs['show_sticky_purchase_button'] ) && $attrs['show_sticky_purchase_button'] === true;
+				return ! empty( $attrs['show_sticky_purchase_button'] ) && $attrs['show_sticky_purchase_button'];
 			}
 
 			// Recursively check inner blocks.

@@ -15,6 +15,10 @@
 			"type": "boolean",
 			"default": false
 		},
+		"show_sticky_purchase_button": {
+			"type": "boolean",
+			"default": false
+		},
 		"text": {
 			"type": "string"
 		},

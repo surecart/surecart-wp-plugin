@@ -12,6 +12,7 @@ import {
 	PanelBody,
 	PanelRow,
 	TextControl,
+	ToggleControl,
 	__experimentalToggleGroupControl as ToggleGroupControl,
 	__experimentalToggleGroupControlOption as ToggleGroupControlOption,
 } from '@wordpress/components';
@@ -25,9 +26,11 @@ import {
 	__experimentalGetSpacingClassesAndStyles as useSpacingProps,
 	__experimentalGetShadowClassesAndStyles as useShadowProps,
 } from '@wordpress/block-editor';
+import { select, useDispatch } from '@wordpress/data';
 import { isKeyboardEvent } from '@wordpress/keycodes';
 import WidthPanel from '../../components/WidthPanel';
 import ScIcon from '../../components/ScIcon';
+import { findAllBlocksByName } from '../../utilities/blocks-finder';
 
 export default (props) => {
 	const { attributes, setAttributes, className } = props;
@@ -37,10 +40,14 @@ export default (props) => {
 		width,
 		out_of_stock_text,
 		unavailable_text,
+		show_sticky_purchase_button,
 		icon,
 		iconName,
 		iconPosition,
 	} = attributes;
+
+	const { getBlocks } = select('core/block-editor');
+	const { updateBlockAttributes } = useDispatch('core/block-editor');
 
 	function onKeyDown(event) {
 		if (isKeyboardEvent.primary(event, 'k')) {
@@ -64,6 +71,24 @@ export default (props) => {
 		ref,
 		onKeyDown,
 	});
+
+	const changeStickyPurchaseButton = (value) => {
+		setAttributes({ show_sticky_purchase_button: value });
+		changeStickyPurchaseButtonSettingsToOtherBlocks(value);
+	};
+
+	const changeStickyPurchaseButtonSettingsToOtherBlocks = (value) => {
+		const blocks = findAllBlocksByName(
+			getBlocks(),
+			'surecart/product-buy-button'
+		);
+
+		blocks.forEach((block) => {
+			updateBlockAttributes(block.clientId, {
+				show_sticky_purchase_button: value,
+			});
+		});
+	};
 
 	return (
 		<>
@@ -141,14 +166,16 @@ export default (props) => {
 							onChange={(value) =>
 								setAttributes({ iconPosition: value })
 							}
-							help={__('The position of the icon in the button.')}
+							help={__(
+								'The position of the icon in the button..'
+							)}
 							isBlock
 						>
 							<ToggleGroupControlOption
 								value="before"
 								label={_x(
 									'Before',
-									'The position of the icon in the button.',
+									'The position of the icon in the button..',
 									'surecart'
 								)}
 							/>
@@ -156,12 +183,29 @@ export default (props) => {
 								value="after"
 								label={_x(
 									'After',
-									'The position of the icon in the button.',
+									'The position of the icon in the button..',
 									'surecart'
 								)}
 							/>
 						</ToggleGroupControl>
 					)}
+				</PanelBody>
+
+				<PanelBody title={__('Sticky Button', 'surecart')}>
+					<PanelRow>
+						<ToggleControl
+							label={__(
+								'Show Sticky Purchase Button',
+								'surecart'
+							)}
+							checked={show_sticky_purchase_button}
+							onChange={changeStickyPurchaseButton}
+							help={__(
+								'Show a sticky purchase button when the main buy buttons are out of view',
+								'surecart'
+							)}
+						/>
+					</PanelRow>
 				</PanelBody>
 			</InspectorControls>
 

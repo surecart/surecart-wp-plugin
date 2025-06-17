@@ -14,10 +14,6 @@
 			"type": "string",
 			"default": "Checkout"
 		},
-		"show_sticky_purchase_button": {
-			"type": "boolean",
-			"default": false
-		},
 		"border": {
 			"type": "boolean"
 		},
