@@ -63,8 +63,11 @@ const { state, actions } = store('surecart/sticky-purchase', {
 			if (!context) return;
 
 			const stickyButton = document.querySelector('.sc-sticky-purchase');
+			const stickyContainer = document.querySelector(
+				'.wp-block-surecart-sticky-purchase'
+			);
 
-			if (!stickyButton) {
+			if (!stickyButton || !stickyContainer) {
 				context.ticking = false;
 				return;
 			}
@@ -119,14 +122,26 @@ const { state, actions } = store('surecart/sticky-purchase', {
 					stickyButton.classList.remove('is-hiding');
 					stickyButton.classList.add('is-visible');
 					document.body.classList.add('sc-sticky-purchase-active');
-					
+
 					// Calculate and set the sticky purchase height as a CSS variable
-					// for proper cart icon positioning
+					// for proper cart icon positioning.
 					setTimeout(() => {
 						const stickyHeight = stickyButton.offsetHeight;
 						document.documentElement.style.setProperty(
 							'--sc-sticky-purchase-height',
 							`${stickyHeight}px`
+						);
+
+						// Get the bottom position from the container if available.
+						const computedStyle =
+							window.getComputedStyle(stickyContainer);
+						const bottomPosition =
+							computedStyle.getPropertyValue(
+								'--sc-sticky-purchase-bottom'
+							) || '0';
+						document.documentElement.style.setProperty(
+							'--sc-sticky-purchase-bottom',
+							bottomPosition
 						);
 					}, 50);
 				} else {
@@ -211,7 +226,14 @@ const { state, actions } = store('surecart/sticky-purchase', {
 			document.body.classList.remove('sc-sticky-purchase-active');
 
 			// Reset the CSS variable for sticky purchase height
-			document.documentElement.style.setProperty('--sc-sticky-purchase-height', '80px');
+			document.documentElement.style.setProperty(
+				'--sc-sticky-purchase-height',
+				'80px'
+			);
+			document.documentElement.style.setProperty(
+				'--sc-sticky-purchase-bottom',
+				'0'
+			);
 
 			// Initial check after a small delay to ensure DOM is fully rendered.
 			setTimeout(
@@ -221,23 +243,27 @@ const { state, actions } = store('surecart/sticky-purchase', {
 				100
 			);
 		},
-		
+
 		handleKeyDown(event) {
 			// Handle Escape key to close the sticky purchase if it's visible
 			if (event.key === 'Escape') {
 				const context = getContext();
 				if (context?.isVisible) {
 					context.isVisible = false;
-					const stickyButton = document.querySelector('.sc-sticky-purchase');
+					const stickyButton = document.querySelector(
+						'.sc-sticky-purchase'
+					);
 					if (stickyButton) {
 						stickyButton.classList.add('is-hiding');
-						document.body.classList.remove('sc-sticky-purchase-active');
+						document.body.classList.remove(
+							'sc-sticky-purchase-active'
+						);
 						setTimeout(() => {
 							stickyButton.classList.remove('is-visible');
 						}, 300);
 					}
 				}
 			}
-		}
+		},
 	},
 });

@@ -1,6 +1,17 @@
 <?php
 
 use SureCart\Models\Blocks\ProductPageBlock;
+
+// Get block attributes.
+$width           = isset( $attributes['width'] ) ? esc_attr( $attributes['width'] ) : '600px';
+$bottom_position = isset( $attributes['bottomPosition'] ) ? esc_attr( $attributes['bottomPosition'] ) : '0';
+
+// Create inline style for CSS variables.
+$style = sprintf(
+	'--sc-sticky-purchase-bottom: %s; --sc-sticky-purchase-width: %s;',
+	$bottom_position,
+	$width
+);
 ?>
 
 <div
@@ -14,6 +25,7 @@ use SureCart\Models\Blocks\ProductPageBlock;
 				'data-wp-on-window--scroll' => 'actions.handleScroll',
 				'data-wp-on-window--resize' => 'actions.handleResize',
 				'data-wp-on--keydown'       => 'callbacks.handleKeyDown',
+				'style'                     => $style,
 			]
 		)
 	);

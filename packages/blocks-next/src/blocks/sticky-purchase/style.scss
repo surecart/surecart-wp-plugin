@@ -1,4 +1,7 @@
 .wp-block-surecart-sticky-purchase {
+	width: var(--sc-sticky-purchase-width, 600px);
+	margin: 0px auto;
+
 	.sc-sticky-purchase-container {
 		position: relative;
 
@@ -7,13 +10,13 @@
 			visibility: hidden;
 			transform: translateY(100%) translateX(-50%);
 			position: fixed;
-			bottom: 0;
+			bottom: var(--sc-sticky-purchase-bottom, 0);
 			left: 50%;
 			z-index: 100; // greater than the cart toggle button.
 			transition: all 0.3s ease;
 			box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
-			width: 600px;
 			max-width: calc(100vw - 2rem);
+			width: var(--sc-sticky-purchase-width, 600px);
 
 			&.is-visible {
 				opacity: 1;
@@ -176,8 +179,11 @@ body.sc-sticky-purchase-active {
 
 		@media (max-width: 768px) {
 			// Move the cart icon above the sticky purchase bar
-			// Default height of sticky bar + 10px gap
-			bottom: calc(var(--sc-sticky-purchase-height, 80px) + 10px) !important;
+			// Account for the custom bottom position
+			bottom: calc(
+				var(--sc-sticky-purchase-height, 80px) +
+					var(--sc-sticky-purchase-bottom, 0) + 10px
+			) !important;
 		}
 	}
 }

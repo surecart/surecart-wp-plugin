@@ -10,19 +10,15 @@
 	"attributes": {
 		"width": {
 			"type": "string",
-			"default": "400px"
+			"default": "600px"
+		},
+		"bottomPosition": {
+			"type": "string",
+			"default": "0"
 		}
 	},
 	"supports": {
 		"interactivity": true,
-		"color": {
-			"gradients": true,
-			"link": false,
-			"__experimentalDefaultControls": {
-				"background": true,
-				"text": true
-			}
-		},
 		"spacing": {
 			"margin": true,
 			"padding": true
