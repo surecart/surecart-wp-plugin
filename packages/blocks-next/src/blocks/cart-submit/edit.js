@@ -65,6 +65,7 @@ export default ({ className, attributes, setAttributes }) => {
 						spacingProps.className,
 						shadowProps.className,
 						{
+							'has-custom-font-size': blockProps.style.fontSize,
 							// For backwards compatibility add style that isn't
 							// provided via block support.
 							'no-border-radius': style?.border?.radius === 0,
@@ -76,6 +77,7 @@ export default ({ className, attributes, setAttributes }) => {
 						...spacingProps.style,
 						...shadowProps.style,
 						...colorProps.style,
+						fontSize: blockProps.style.fontSize,
 					}}
 					value={text}
 					onChange={(text) => setAttributes({ text })}
