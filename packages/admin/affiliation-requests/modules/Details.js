@@ -30,7 +30,6 @@ export default ({
 		payout_email,
 		bio,
 		url,
-		metadata,
 	} = affiliationRequest;
 
 	return (
@@ -38,14 +37,7 @@ export default ({
 			title={__('Affiliate Request Details', 'surecart')}
 			loading={loading}
 			header_action={
-				<>
-					<ScTag type={status_type}>{status_display_text}</ScTag>
-					{!!metadata?.agency && (
-						<ScTag type="info">
-							{__('Agency Program', 'surecart')}
-						</ScTag>
-					)}
-				</>
+				<ScTag type={status_type}>{status_display_text}</ScTag>
 			}
 			footer={
 				<SaveButton busy={loading || saving || deleting}>
