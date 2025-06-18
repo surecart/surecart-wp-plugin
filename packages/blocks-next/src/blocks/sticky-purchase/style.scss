@@ -16,6 +16,10 @@
 		max-width: calc(100vw - 2rem);
 		width: var(--sc-sticky-purchase-width, 600px);
 
+		form {
+			margin-bottom: 0px;
+		}
+
 		&.is-visible {
 			opacity: 1;
 			visibility: visible;
@@ -178,8 +182,7 @@ body.sc-sticky-purchase-active {
 			// Move the cart icon above the sticky purchase bar
 			// Account for the custom bottom position
 			bottom: calc(
-				var(--sc-sticky-purchase-height, 80px) +
-					var(--sc-sticky-purchase-bottom, 0) + 10px
+				var(--sc-sticky-purchase-height, 80px) + 10px
 			) !important;
 		}
 	}

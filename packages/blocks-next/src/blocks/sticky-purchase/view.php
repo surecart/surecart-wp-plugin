@@ -67,7 +67,7 @@ $style = sprintf(
 			$context    = $controller->context();
 
 			wp_interactivity_state( 'surecart/product-page', $state );
-	?>
+		?>
 			<form
 				<?php
 				echo wp_kses_data( wp_interactivity_data_wp_context( $context ) );

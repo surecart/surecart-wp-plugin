@@ -84,31 +84,12 @@ use SureCart\Models\Blocks\ProductPageBlock;
 
 <?php
 if ( isset( $attributes['show_sticky_purchase_button'] ) && $attributes['show_sticky_purchase_button'] ) {
-	// Enqueue the sticky purchase module script.
-	wp_enqueue_script_module( '@surecart/sticky-purchase' );
-
-	// Add the template to the footer.
 	add_action(
 		'wp_footer',
 		function () {
 			$template = get_block_template( 'surecart/surecart//sticky-purchase', 'wp_template_part' );
 			if ( $template && ! empty( $template->content ) ) {
-				// Add the interactivity state and context for the sticky purchase block.
-				$controller = new ProductPageBlock();
-				$state      = $controller->state();
-				$context    = $controller->context();
-
-				wp_interactivity_state( 'surecart/product-page', $state );
-				?>
-				<div
-					data-wp-interactive='{ "namespace": "surecart/product-page" }'
-					<?php echo wp_kses_data( wp_interactivity_data_wp_context( $context ) ); ?>
-					data-wp-on--submit="callbacks.handleSubmit"
-					data-wp-init="callbacks.init"
-				>
-					<?php echo do_blocks( $template->content ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-				</div>
-				<?php
+				echo do_blocks( $template->content ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			}
 		},
 		20

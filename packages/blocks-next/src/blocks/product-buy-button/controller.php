@@ -13,5 +13,10 @@ if ( ! \SureCart::cart()->isCartEnabled() ) {
 	$add_to_cart = false;
 }
 
+// Enqueue the sticky purchase module script if needed.
+if ( isset( $attributes['show_sticky_purchase_button'] ) && $attributes['show_sticky_purchase_button'] ) {
+	wp_enqueue_script_module( '@surecart/sticky-purchase' );
+}
+
 // return the view.
 return 'file:./view.php';
