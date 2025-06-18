@@ -32,18 +32,22 @@ use SureCart\Models\Blocks\ProductPageBlock;
 			style="<?php echo ! empty( $styles['css'] ) ? esc_attr( $styles['css'] ) : ''; ?>"
 			data-wp-on--click="callbacks.redirectToCheckout"
 		>
-			<?php if ( ( 'icon' === ( $attributes['icon'] ?? 'text' ) || 'both' === ( $attributes['icon'] ?? 'text' ) ) && 'before' === ( $attributes['iconPosition'] ?? 'before' ) ) : ?>
-				<?php echo wp_kses( SureCart::svg()->get( $attributes['iconName'] ?? 'plus' ), sc_allowed_svg_html() ); ?>
-			<?php endif; ?>
+			<div data-wp-bind--hidden="context.busy">
+				<?php if ( ( 'icon' === ( $attributes['icon'] ?? 'text' ) || 'both' === ( $attributes['icon'] ?? 'text' ) ) && 'before' === ( $attributes['iconPosition'] ?? 'before' ) ) : ?>
+					<?php echo wp_kses( SureCart::svg()->get( $attributes['iconName'] ?? 'plus' ), sc_allowed_svg_html() ); ?>
+				<?php endif; ?>
+			</div>
 			
 			<?php if ( 'text' === ( $attributes['icon'] ?? 'text' ) || 'both' === ( $attributes['icon'] ?? 'text' ) ) : ?>
 				<span class="sc-button__link-text" data-wp-text="state.buttonText">
 				</span>
 			<?php endif; ?>
 			
-			<?php if ( ( 'icon' === ( $attributes['icon'] ?? 'text' ) || 'both' === ( $attributes['icon'] ?? 'text' ) ) && 'after' === ( $attributes['iconPosition'] ?? 'before' ) ) : ?>
-				<?php echo wp_kses( SureCart::svg()->get( $attributes['iconName'] ?? 'plus' ), sc_allowed_svg_html() ); ?>
-			<?php endif; ?>
+			<div data-wp-bind--hidden="context.busy">
+				<?php if ( ( 'icon' === ( $attributes['icon'] ?? 'text' ) || 'both' === ( $attributes['icon'] ?? 'text' ) ) && 'after' === ( $attributes['iconPosition'] ?? 'before' ) ) : ?>
+					<?php echo wp_kses( SureCart::svg()->get( $attributes['iconName'] ?? 'plus' ), sc_allowed_svg_html() ); ?>
+				<?php endif; ?>
+			</div>
 		</button>
 		<?php
 	} else {
@@ -56,18 +60,22 @@ use SureCart\Models\Blocks\ProductPageBlock;
 		>
 			<span class="sc-spinner" aria-hidden="false"></span>
 			
+			<div data-wp-bind--hidden="context.busy">
 			<?php if ( ( 'icon' === ( $attributes['icon'] ?? 'text' ) || 'both' === ( $attributes['icon'] ?? 'text' ) ) && 'before' === ( $attributes['iconPosition'] ?? 'before' ) ) : ?>
 				<?php echo wp_kses( SureCart::svg()->get( $attributes['iconName'] ?? 'plus' ), sc_allowed_svg_html() ); ?>
 			<?php endif; ?>
+			</div>
 			
 			<?php if ( 'text' === ( $attributes['icon'] ?? 'text' ) || 'both' === ( $attributes['icon'] ?? 'text' ) ) : ?>
 				<span class="sc-button__link-text" data-wp-text="state.buttonText">
 				</span>
 			<?php endif; ?>
-			
-			<?php if ( ( 'icon' === ( $attributes['icon'] ?? 'text' ) || 'both' === ( $attributes['icon'] ?? 'text' ) ) && 'after' === ( $attributes['iconPosition'] ?? 'before' ) ) : ?>
-				<?php echo wp_kses( SureCart::svg()->get( $attributes['iconName'] ?? 'plus' ), sc_allowed_svg_html() ); ?>
-			<?php endif; ?>
+
+			<div data-wp-bind--hidden="context.busy">
+				<?php if ( ( 'icon' === ( $attributes['icon'] ?? 'text' ) || 'both' === ( $attributes['icon'] ?? 'text' ) ) && 'after' === ( $attributes['iconPosition'] ?? 'before' ) ) : ?>
+					<?php echo wp_kses( SureCart::svg()->get( $attributes['iconName'] ?? 'plus' ), sc_allowed_svg_html() ); ?>
+				<?php endif; ?>
+			</div>
 		</button>
 		<?php
 	}
@@ -76,33 +84,32 @@ use SureCart\Models\Blocks\ProductPageBlock;
 
 <?php
 if ( isset( $attributes['show_sticky_purchase_button'] ) && $attributes['show_sticky_purchase_button'] ) {
+	// Enqueue the sticky purchase module script.
 	wp_enqueue_script_module( '@surecart/sticky-purchase' );
-
-	// Add a flag to body to indicate sticky purchase is enabled for this page.
-	add_filter(
-		'body_class',
-		function ( $classes ) {
-			$classes[] = 'sc-sticky-purchase-enabled';
-			return $classes;
-		}
-	);
-
-	// Product context.
-	// $product = sc_get_product();
-
-	// $controller = new ProductPageBlock();
-	// $state      = $controller->state();
-	// $context    = $controller->context();
-
-	// wp_interactivity_state( 'surecart/product-page', $state );
 
 	// Add the template to the footer.
 	add_action(
 		'wp_footer',
-		function () use ( $product ) {
+		function () {
 			$template = get_block_template( 'surecart/surecart//sticky-purchase', 'wp_template_part' );
 			if ( $template && ! empty( $template->content ) ) {
-				echo do_blocks( $template->content ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				// Add the interactivity state and context for the sticky purchase block.
+				$controller = new ProductPageBlock();
+				$state      = $controller->state();
+				$context    = $controller->context();
+
+				wp_interactivity_state( 'surecart/product-page', $state );
+				?>
+				<div
+					data-wp-interactive='{ "namespace": "surecart/product-page" }'
+					<?php echo wp_kses_data( wp_interactivity_data_wp_context( $context ) ); ?>
+					data-wp-interactive='{ "namespace": "surecart/product-page" }'
+					data-wp-on--submit="callbacks.handleSubmit"
+					data-wp-init="callbacks.init"
+				>
+					<?php echo do_blocks( $template->content ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+				</div>
+				<?php
 			}
 		},
 		20
