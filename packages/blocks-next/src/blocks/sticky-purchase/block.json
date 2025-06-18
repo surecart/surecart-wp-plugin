@@ -11,10 +11,6 @@
 		"width": {
 			"type": "string",
 			"default": "600px"
-		},
-		"bottomPosition": {
-			"type": "string",
-			"default": "0"
 		}
 	},
 	"supports": {
