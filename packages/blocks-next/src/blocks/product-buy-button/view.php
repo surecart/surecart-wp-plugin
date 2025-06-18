@@ -1,4 +1,7 @@
 <div <?php
+
+use SureCart\Models\Blocks\ProductPageBlock;
+
 	echo wp_kses_data(
 		get_block_wrapper_attributes(
 			array(
@@ -70,3 +73,38 @@
 	}
 	?>
 </div>
+
+<?php
+if ( isset( $attributes['show_sticky_purchase_button'] ) && $attributes['show_sticky_purchase_button'] ) {
+	wp_enqueue_script_module( '@surecart/sticky-purchase' );
+
+	// Add a flag to body to indicate sticky purchase is enabled for this page.
+	add_filter(
+		'body_class',
+		function ( $classes ) {
+			$classes[] = 'sc-sticky-purchase-enabled';
+			return $classes;
+		}
+	);
+
+	// Product context.
+	// $product = sc_get_product();
+
+	// $controller = new ProductPageBlock();
+	// $state      = $controller->state();
+	// $context    = $controller->context();
+
+	// wp_interactivity_state( 'surecart/product-page', $state );
+
+	// Add the template to the footer.
+	add_action(
+		'wp_footer',
+		function () use ( $product ) {
+			$template = get_block_template( 'surecart/surecart//sticky-purchase', 'wp_template_part' );
+			if ( $template && ! empty( $template->content ) ) {
+				echo do_blocks( $template->content ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			}
+		},
+		20
+	);
+}
