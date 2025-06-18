@@ -65,6 +65,7 @@ export default ({ className, attributes, setAttributes }) => {
 						spacingProps.className,
 						shadowProps.className,
 						{
+							'has-custom-font-size': blockProps.style.fontSize,
 							// For backwards compatibility add style that isn't
 							// provided via block support.
 							'no-border-radius': style?.border?.radius === 0,
