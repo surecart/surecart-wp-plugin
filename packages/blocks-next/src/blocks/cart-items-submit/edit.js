@@ -77,6 +77,7 @@ export default ({ className, attributes, setAttributes }) => {
 						...spacingProps.style,
 						...shadowProps.style,
 						...colorProps.style,
+						fontSize: blockProps.style.fontSize,
 					}}
 					value={text}
 					onChange={(text) => setAttributes({ text })}
