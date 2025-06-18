@@ -29,6 +29,8 @@ export default ({
 		email,
 		payout_email,
 		bio,
+		url,
+		metadata,
 	} = affiliationRequest;
 
 	return (
@@ -36,7 +38,14 @@ export default ({
 			title={__('Affiliate Request Details', 'surecart')}
 			loading={loading}
 			header_action={
-				<ScTag type={status_type}>{status_display_text}</ScTag>
+				<>
+					<ScTag type={status_type}>{status_display_text}</ScTag>
+					{!!metadata?.agency && (
+						<ScTag type="info">
+							{__('Agency Program', 'surecart')}
+						</ScTag>
+					)}
+				</>
 			}
 			footer={
 				<SaveButton busy={loading || saving || deleting}>
@@ -114,6 +123,21 @@ export default ({
 							payout_email: e.target.value,
 						})
 					}
+				/>
+
+				<ScInput
+					value={url}
+					label={__('Website', 'surecart')}
+					onScInput={(e) =>
+						onUpdate({
+							url: e.target.value,
+						})
+					}
+					help={__(
+						'The primary website or social media account of the affiliate.',
+						'surecart'
+					)}
+					type="url"
 				/>
 
 				<ScTextarea
