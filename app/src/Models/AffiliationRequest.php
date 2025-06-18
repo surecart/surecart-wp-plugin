@@ -133,7 +133,7 @@ class AffiliationRequest extends Model {
 	 */
 	public function getStatusTypeAttribute() {
 		$types = [
-			'approved' => 'success',
+			'approved' => 'info',
 			'pending'  => 'warning',
 			'denied'   => 'danger',
 		];
