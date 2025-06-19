@@ -71,6 +71,13 @@ class BuyButton extends \Bricks\Element {
 			'description' => esc_html__( 'Bypass adding to cart and go directly to the checkout.', 'surecart' ),
 		];
 
+		$this->controls['show_sticky_purchase_button'] = [
+			'tab'         => 'content',
+			'label'       => esc_html__( 'Show Sticky Purchase Button', 'surecart' ),
+			'type'        => 'checkbox',
+			'description' => esc_html__( 'Show a sticky purchase button when the main buy buttons are out of view', 'surecart' ),
+		];
+
 		$this->controls['styleSeparator'] = [
 			'label' => esc_html__( 'Style', 'surecart' ),
 			'type'  => 'separator',
@@ -172,6 +179,11 @@ class BuyButton extends \Bricks\Element {
 	public function render() {
 		$settings = $this->settings;
 
+		// Enqueue the sticky purchase script if enabled.
+		if ( isset( $settings['show_sticky_purchase_button'] ) && $settings['show_sticky_purchase_button'] ) {
+			wp_enqueue_script_module( '@surecart/sticky-purchase' );
+		}
+
 		$this->set_attribute( '_root', 'class', 'bricks-button' );
 
 		if ( ! empty( $settings['size'] ) ) {
@@ -259,5 +271,15 @@ class BuyButton extends \Bricks\Element {
 		$output .= "</{$this->tag}>";
 
 		echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+
+		// Add the sticky purchase button if enabled.
+		global $is_sticky_purchase_added;
+		if ( isset( $settings['show_sticky_purchase_button'] ) && $settings['show_sticky_purchase_button'] && ! $is_sticky_purchase_added ) {
+			$template = get_block_template( 'surecart/surecart//sticky-purchase', 'wp_template_part' );
+			if ( $template && ! empty( $template->content ) ) {
+				echo do_blocks( $template->content ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				$is_sticky_purchase_added = true;
+			}
+		}
 	}
 }

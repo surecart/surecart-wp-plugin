@@ -85,6 +85,8 @@ const { state, actions } = store('surecart/sticky-purchase', {
 			let querySelector = '.wp-block-surecart-product-buy-button';
 			if (typeof elementorFrontend !== 'undefined') {
 				querySelector = '.elementor-widget-surecart-add-to-cart-button';
+			} else if (typeof bricksData !== 'undefined') {
+				querySelector = '.brxe-surecart-product-buy-button';
 			}
 			const productBuyButton = productForm.querySelector(querySelector);
 
