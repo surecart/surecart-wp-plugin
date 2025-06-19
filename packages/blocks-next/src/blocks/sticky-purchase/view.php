@@ -68,16 +68,9 @@ $style = sprintf(
 
 			wp_interactivity_state( 'surecart/product-page', $state );
 		?>
-			<form
-				<?php
-				echo wp_kses_data( wp_interactivity_data_wp_context( $context ) );
-				?>
-				data-wp-interactive='{ "namespace": "surecart/product-page" }'
-				data-wp-on--submit="callbacks.handleSubmit"
-				data-wp-init="callbacks.init"
-			>
+			<div data-wp-interactive='{ "namespace": "surecart/product-page" }'>
 				<?php echo $block_content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-			</form>
+			</div>
 		</div>
 	<?php endwhile; ?>
 </div>

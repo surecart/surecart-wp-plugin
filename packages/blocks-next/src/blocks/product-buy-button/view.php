@@ -51,15 +51,11 @@
 </div>
 
 <?php
-if ( isset( $attributes['show_sticky_purchase_button'] ) && $attributes['show_sticky_purchase_button'] ) {
-	add_action(
-		'wp_footer',
-		function () {
-			$template = get_block_template( 'surecart/surecart//sticky-purchase', 'wp_template_part' );
-			if ( $template && ! empty( $template->content ) ) {
-				echo do_blocks( $template->content ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-			}
-		},
-		20
-	);
+global $is_sticky_purchase_added;
+if ( isset( $attributes['show_sticky_purchase_button'] ) && $attributes['show_sticky_purchase_button'] && ! $is_sticky_purchase_added ) {
+	$template = get_block_template( 'surecart/surecart//sticky-purchase', 'wp_template_part' );
+	if ( $template && ! empty( $template->content ) ) {
+		echo do_blocks( $template->content ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		$is_sticky_purchase_added = true;
+	}
 }
