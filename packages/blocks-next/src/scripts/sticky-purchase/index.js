@@ -76,18 +76,24 @@ const { state, actions } = store('surecart/sticky-purchase', {
 			const productForm = document.querySelector(
 				'[data-sc-block-id="product-page"]'
 			);
-			const productBuyButtons = productForm
-				? productForm.querySelector(
-						'.wp-block-surecart-product-buy-buttons'
-				  )
-				: null;
 
-			if (!productBuyButtons) {
+			if (!productForm) {
 				context.ticking = false;
 				return;
 			}
 
-			const rect = productBuyButtons.getBoundingClientRect();
+			let querySelector = '.wp-block-surecart-product-buy-button';
+			if (typeof elementorFrontend !== 'undefined') {
+				querySelector = '.elementor-widget-surecart-add-to-cart-button';
+			}
+			const productBuyButton = productForm.querySelector(querySelector);
+
+			if (!productBuyButton) {
+				context.ticking = false;
+				return;
+			}
+
+			const rect = productBuyButton.getBoundingClientRect();
 			const scrollY = window.scrollY;
 
 			// Determine scroll direction.

@@ -98,6 +98,18 @@ class AddToCartButton extends \Elementor\Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'show_sticky_purchase_button',
+			[
+				'label'       => esc_html__( 'Show Sticky Purchase Button', 'surecart' ),
+				'type'        => \Elementor\Controls_Manager::SWITCHER,
+				'label_on'    => esc_html__( 'Yes', 'surecart' ),
+				'label_off'   => esc_html__( 'No', 'surecart' ),
+				'default'     => 'no',
+				'description' => esc_html__( 'Show a sticky purchase button when the main buy buttons are out of view', 'surecart' ),
+			]
+		);
+
 		$this->end_controls_section();
 
 		$this->start_controls_section(
@@ -491,6 +503,11 @@ class AddToCartButton extends \Elementor\Widget_Base {
 		$settings       = $this->get_settings_for_display();
 		$is_add_to_cart = ! isset( $settings['buy_button_type'] ) || 'yes' !== $settings['buy_button_type'];
 
+		// Enqueue the sticky purchase script if enabled.
+		if ( isset( $settings['show_sticky_purchase_button'] ) && 'yes' === $settings['show_sticky_purchase_button'] ) {
+			wp_enqueue_script_module( '@surecart/sticky-purchase' );
+		}
+
 		$this->add_render_attribute( 'wrapper', 'class', 'wp-block-button__link wp-block-surecart-product-elementor-cart-button wp-element-button sc-button__link elementor-button elementor-button-link elementor-size-sm' );
 		$this->add_render_attribute( 'button', 'class', 'elementor-button' );
 
@@ -565,6 +582,16 @@ class AddToCartButton extends \Elementor\Widget_Base {
 		<?php
 		$output = ob_get_clean();
 		echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+
+		// Add the sticky purchase button if enabled.
+		global $is_sticky_purchase_added;
+		if ( isset( $settings['show_sticky_purchase_button'] ) && 'yes' === $settings['show_sticky_purchase_button'] && ! $is_sticky_purchase_added ) {
+			$template = get_block_template( 'surecart/surecart//sticky-purchase', 'wp_template_part' );
+			if ( $template && ! empty( $template->content ) ) {
+				echo do_blocks( $template->content ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				$is_sticky_purchase_added = true;
+			}
+		}
 	}
 
 	/**
