@@ -1,7 +1,9 @@
 .wp-block-surecart-sticky-purchase {
 	width: var(--sc-sticky-purchase-width, 600px);
 	margin: 0px auto;
-	position: relative;
+	position: static;
+	height: 0; // Height 0 to ensure it doesn't take up space after buy button.
+	overflow: visible;
 
 	.sc-sticky-purchase {
 		opacity: 0;
