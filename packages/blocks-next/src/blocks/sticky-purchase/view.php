@@ -33,7 +33,10 @@ $style = sprintf(
 	while ( $query->have_posts() ) :
 		$query->the_post();
 		?>
-		<div class="sc-sticky-purchase">
+		<div
+			class="sc-sticky-purchase"
+			<?php echo wp_kses_data( get_block_wrapper_attributes() ); ?>
+		>
 			<?php
 
 			// Get an instance of the current Product Quick view block.
