@@ -1,7 +1,4 @@
 <div <?php
-
-use SureCart\Models\Blocks\ProductPageBlock;
-
 	echo wp_kses_data(
 		get_block_wrapper_attributes(
 			array(
@@ -32,22 +29,8 @@ use SureCart\Models\Blocks\ProductPageBlock;
 			style="<?php echo ! empty( $styles['css'] ) ? esc_attr( $styles['css'] ) : ''; ?>"
 			data-wp-on--click="callbacks.redirectToCheckout"
 		>
-			<div data-wp-bind--hidden="context.busy">
-				<?php if ( ( 'icon' === ( $attributes['icon'] ?? 'text' ) || 'both' === ( $attributes['icon'] ?? 'text' ) ) && 'before' === ( $attributes['iconPosition'] ?? 'before' ) ) : ?>
-					<?php echo wp_kses( SureCart::svg()->get( $attributes['iconName'] ?? 'plus' ), sc_allowed_svg_html() ); ?>
-				<?php endif; ?>
-			</div>
-			
-			<?php if ( 'text' === ( $attributes['icon'] ?? 'text' ) || 'both' === ( $attributes['icon'] ?? 'text' ) ) : ?>
-				<span class="sc-button__link-text" data-wp-text="state.buttonText">
-				</span>
-			<?php endif; ?>
-			
-			<div data-wp-bind--hidden="context.busy">
-				<?php if ( ( 'icon' === ( $attributes['icon'] ?? 'text' ) || 'both' === ( $attributes['icon'] ?? 'text' ) ) && 'after' === ( $attributes['iconPosition'] ?? 'before' ) ) : ?>
-					<?php echo wp_kses( SureCart::svg()->get( $attributes['iconName'] ?? 'plus' ), sc_allowed_svg_html() ); ?>
-				<?php endif; ?>
-			</div>
+			<span class="sc-button__link-text" data-wp-text="state.buttonText">
+			</span>
 		</button>
 		<?php
 	} else {
@@ -59,23 +42,8 @@ use SureCart\Models\Blocks\ProductPageBlock;
 			style="<?php echo ! empty( $styles['css'] ) ? esc_attr( $styles['css'] ) : ''; ?>"
 		>
 			<span class="sc-spinner" aria-hidden="false"></span>
-			
-			<div data-wp-bind--hidden="context.busy">
-			<?php if ( ( 'icon' === ( $attributes['icon'] ?? 'text' ) || 'both' === ( $attributes['icon'] ?? 'text' ) ) && 'before' === ( $attributes['iconPosition'] ?? 'before' ) ) : ?>
-				<?php echo wp_kses( SureCart::svg()->get( $attributes['iconName'] ?? 'plus' ), sc_allowed_svg_html() ); ?>
-			<?php endif; ?>
-			</div>
-			
-			<?php if ( 'text' === ( $attributes['icon'] ?? 'text' ) || 'both' === ( $attributes['icon'] ?? 'text' ) ) : ?>
-				<span class="sc-button__link-text" data-wp-text="state.buttonText">
-				</span>
-			<?php endif; ?>
-
-			<div data-wp-bind--hidden="context.busy">
-				<?php if ( ( 'icon' === ( $attributes['icon'] ?? 'text' ) || 'both' === ( $attributes['icon'] ?? 'text' ) ) && 'after' === ( $attributes['iconPosition'] ?? 'before' ) ) : ?>
-					<?php echo wp_kses( SureCart::svg()->get( $attributes['iconName'] ?? 'plus' ), sc_allowed_svg_html() ); ?>
-				<?php endif; ?>
-			</div>
+			<span class="sc-button__link-text" data-wp-text="state.buttonText">
+			</span>
 		</button>
 		<?php
 	}

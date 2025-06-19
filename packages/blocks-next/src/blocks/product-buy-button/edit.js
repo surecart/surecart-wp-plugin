@@ -29,7 +29,6 @@ import {
 import { select, useDispatch } from '@wordpress/data';
 import { isKeyboardEvent } from '@wordpress/keycodes';
 import WidthPanel from '../../components/WidthPanel';
-import ScIcon from '../../components/ScIcon';
 import { findAllBlocksByName } from '../../utilities/blocks-finder';
 
 export default (props) => {
@@ -41,9 +40,6 @@ export default (props) => {
 		out_of_stock_text,
 		unavailable_text,
 		show_sticky_purchase_button,
-		icon,
-		iconName,
-		iconPosition,
 	} = attributes;
 
 	const { getBlocks } = select('core/block-editor');
@@ -120,77 +116,6 @@ export default (props) => {
 					ariaLabel={__('Button width')}
 				/>
 
-				<PanelBody title={__('Text settings', 'surecart')}>
-					<ToggleGroupControl
-						__nextHasNoMarginBottom
-						label={__('Button')}
-						value={icon}
-						onChange={(value) => setAttributes({ icon: value })}
-						help={__(
-							'A decorative way to display the button.',
-							'surecart'
-						)}
-						isBlock
-					>
-						<ToggleGroupControlOption
-							value="icon"
-							label={_x(
-								'Icon',
-								'Button option for product quick view button.',
-								'surecart'
-							)}
-						/>
-						<ToggleGroupControlOption
-							value="text"
-							label={_x(
-								'Text',
-								'Button option for product quick view button.',
-								'surecart'
-							)}
-						/>
-						<ToggleGroupControlOption
-							value="both"
-							label={_x(
-								'Both',
-								'Button option for product quick view button.',
-								'surecart'
-							)}
-						/>
-					</ToggleGroupControl>
-
-					{(icon === 'icon' || icon === 'both') && (
-						<ToggleGroupControl
-							__nextHasNoMarginBottom
-							label={__('Icon Position')}
-							value={iconPosition}
-							onChange={(value) =>
-								setAttributes({ iconPosition: value })
-							}
-							help={__(
-								'The position of the icon in the button..'
-							)}
-							isBlock
-						>
-							<ToggleGroupControlOption
-								value="before"
-								label={_x(
-									'Before',
-									'The position of the icon in the button..',
-									'surecart'
-								)}
-							/>
-							<ToggleGroupControlOption
-								value="after"
-								label={_x(
-									'After',
-									'The position of the icon in the button..',
-									'surecart'
-								)}
-							/>
-						</ToggleGroupControl>
-					)}
-				</PanelBody>
-
 				<PanelBody title={__('Sticky Button', 'surecart')}>
 					<PanelRow>
 						<ToggleControl
@@ -241,23 +166,15 @@ export default (props) => {
 						...colorProps.style,
 					}}
 				>
-					{('icon' === icon || 'both' === icon) &&
-						'before' === iconPosition && <ScIcon name={iconName} />}
-
-					{('text' === icon || 'both' === icon) && (
-						<RichText
-							aria-label={__('Button text', 'surecart')}
-							placeholder={__('Add text…', 'surecart')}
-							ref={richTextRef}
-							value={text}
-							onChange={(value) => setAttributes({ text: value })}
-							withoutInteractiveFormatting
-							allowedFormats={['core/bold', 'core/italic']}
-						/>
-					)}
-
-					{('icon' === icon || 'both' === icon) &&
-						'after' === iconPosition && <ScIcon name={iconName} />}
+					<RichText
+						aria-label={__('Button text', 'surecart')}
+						placeholder={__('Add text…', 'surecart')}
+						ref={richTextRef}
+						value={text}
+						onChange={(value) => setAttributes({ text: value })}
+						withoutInteractiveFormatting
+						allowedFormats={['core/bold', 'core/italic']}
+					/>
 				</span>
 			</div>
 		</>

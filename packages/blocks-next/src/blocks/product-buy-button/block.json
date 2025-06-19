@@ -33,18 +33,6 @@
 		"width": {
 			"type": "number",
 			"default": 100
-		},
-		"icon": {
-			"type": "string",
-			"default": "text"
-		},
-		"iconName": {
-			"type": "string",
-			"default": "plus"
-		},
-		"iconPosition": {
-			"type": "string",
-			"default": "before"
 		}
 	},
 	"supports": {
@@ -121,10 +109,6 @@
 	"render": "file:./view.php",
 	"editorScript": "file:./index.js",
 	"editorStyle": ["surecart-wp-button"],
-	"style": [
-		"file:./style-index.css",
-		"surecart-wp-button",
-		"surecart-spinner"
-	],
+	"style": ["surecart-wp-button", "surecart-spinner"],
 	"viewScriptModule": ["@surecart/checkout", "@surecart/cart"]
 }
