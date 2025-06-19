@@ -131,9 +131,6 @@ const { state, actions } = store('surecart/sticky-purchase', {
 							'--sc-sticky-purchase-height',
 							`${stickyHeight}px`
 						);
-
-						// Get the bottom position from the container if available.
-						document.documentElement.style.setProperty('0');
 					}, 50);
 				} else {
 					// Add a hiding class first for smooth transition.
@@ -221,7 +218,6 @@ const { state, actions } = store('surecart/sticky-purchase', {
 				'--sc-sticky-purchase-height',
 				'80px'
 			);
-			document.documentElement.style.setProperty('0');
 
 			// Initial check after a small delay to ensure DOM is fully rendered.
 			setTimeout(
