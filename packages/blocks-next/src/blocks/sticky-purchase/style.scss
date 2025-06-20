@@ -1,38 +1,46 @@
 .wp-block-surecart-sticky-purchase {
 	width: var(--sc-sticky-purchase-width, 600px);
-	margin: 0px auto;
+	margin: 0 auto;
 	position: static;
-	height: 0; // Height 0 to ensure it doesn't take up space after buy button.
+	height: 0;
 	overflow: visible;
+	display: none;
 
 	.sc-sticky-purchase {
-		opacity: 0;
-		visibility: hidden;
-		transform: translateY(100%) translateX(-50%);
 		position: fixed;
 		bottom: 0;
 		left: 50%;
-		z-index: 100; // greater than the cart toggle button.
-		transition: all 0.3s ease;
+		transform: translateY(100%) translateX(-50%);
+		opacity: 0;
+		z-index: 100;
 		max-width: calc(100vw - 2rem);
 		width: var(--sc-sticky-purchase-width, 600px);
+		pointer-events: none;
+		transition: opacity 500ms ease-out, transform 500ms ease-out,
+			display 500ms allow-discrete;
+		transition-behavior: allow-discrete;
 
 		form {
-			margin-bottom: 0px;
+			margin-bottom: 0;
 		}
 
 		&.is-visible {
 			opacity: 1;
-			visibility: visible;
 			transform: translateY(0) translateX(-50%);
+			pointer-events: auto;
+
+			@starting-style {
+				opacity: 0;
+				transform: translateY(100%) translateX(-50%);
+			}
 		}
 
 		&.is-hiding {
 			opacity: 0;
 			transform: translateY(100%) translateX(-50%);
+			pointer-events: none;
 		}
 
-		// Mobile device styles.
 		@media (max-width: 768px) {
 			left: 0;
 			right: 0;
@@ -52,13 +60,17 @@
 
 			&.is-visible {
 				transform: translateY(0);
+
+				@starting-style {
+					opacity: 0;
+					transform: translateY(100%);
+				}
 			}
 
 			&.is-hiding {
 				transform: translateY(100%);
 			}
 
-			// Force columns to stay in row layout on mobile - override WordPress core styles
 			.wp-block-columns,
 			.wp-block-columns.is-stacked-on-mobile {
 				flex-direction: row !important;
@@ -70,7 +82,6 @@
 						flex: 1 1 auto !important;
 						min-width: 0;
 					}
-
 					&:last-child {
 						flex: 0 0 auto !important;
 						display: flex !important;
@@ -78,30 +89,24 @@
 						justify-content: flex-end !important;
 					}
 
-					// Override group justification
 					.wp-block-group.is-content-justification-right {
 						justify-content: flex-end !important;
 					}
-
 					.wp-block-group.is-content-justification-left {
 						justify-content: flex-start !important;
 					}
 				}
 			}
 
-			// Make product info more compact.
 			.wp-block-surecart-product-title {
 				font-size: 0.9rem;
 				line-height: 1.3;
 				margin-bottom: 0.25rem;
 			}
-
 			.wp-block-surecart-product-price {
 				font-size: 1rem;
 				margin-bottom: 0.5rem;
 			}
-
-			// Ensure product info group stays horizontal.
 			.wp-block-group.is-nowrap {
 				flex-direction: row !important;
 				gap: 0.75rem !important;
@@ -109,14 +114,12 @@
 			}
 		}
 
-		// Very small mobile devices.
 		@media (max-width: 480px) {
 			padding: 0.5rem 0.75rem;
 
 			.wp-block-surecart-product-title {
 				font-size: 0.8rem;
 			}
-
 			.wp-block-surecart-product-price {
 				font-size: 0.9rem;
 			}
@@ -124,14 +127,18 @@
 	}
 }
 
-// Add styles to adjust cart icon position when sticky purchase is active
+// When sticky purchase is active, display root container
 body.sc-sticky-purchase-active {
+	.wp-block-surecart-sticky-purchase {
+		display: block;
+	}
+
 	.wp-block-surecart-cart-icon {
-		transition: bottom 0.3s ease;
+		transition: opacity 500ms ease-out, transform 500ms ease-out,
+			display 500ms allow-discrete;
+		transition-behavior: allow-discrete;
 
 		@media (max-width: 768px) {
-			// Move the cart icon above the sticky purchase bar
-			// Account for the custom bottom position
 			bottom: calc(
 				var(--sc-sticky-purchase-height, 80px) + 10px
 			) !important;

@@ -141,19 +141,19 @@ const { state, actions } = store('surecart/sticky-purchase', {
 						);
 					}, 50);
 				} else {
-					// Add a hiding class first for smooth transition.
 					stickyButton.classList.add('is-hiding');
-					document.body.classList.remove('sc-sticky-purchase-active');
 
-					// Then remove the visible class after transition completes.
 					setTimeout(
 						withScope(() => {
 							const currentContext = getContext();
 							if (!currentContext?.isVisible) {
 								stickyButton.classList.remove('is-visible');
+								document.body.classList.remove(
+									'sc-sticky-purchase-active'
+								);
 							}
 						}),
-						300
+						500
 					);
 				}
 			}
@@ -177,14 +177,14 @@ const { state, actions } = store('surecart/sticky-purchase', {
 						if (currentNearBottom) {
 							currentContext.isVisible = false;
 							stickyButton.classList.add('is-hiding');
-							document.body.classList.remove(
-								'sc-sticky-purchase-active'
-							);
 							setTimeout(
 								withScope(() => {
 									stickyButton.classList.remove('is-visible');
+									document.body.classList.remove(
+										'sc-sticky-purchase-active'
+									);
 								}),
-								300
+								500
 							);
 						}
 					}),
@@ -247,12 +247,12 @@ const { state, actions } = store('surecart/sticky-purchase', {
 					);
 					if (stickyButton) {
 						stickyButton.classList.add('is-hiding');
-						document.body.classList.remove(
-							'sc-sticky-purchase-active'
-						);
 						setTimeout(() => {
 							stickyButton.classList.remove('is-visible');
-						}, 300);
+							document.body.classList.remove(
+								'sc-sticky-purchase-active'
+							);
+						}, 500);
 					}
 				}
 			}
