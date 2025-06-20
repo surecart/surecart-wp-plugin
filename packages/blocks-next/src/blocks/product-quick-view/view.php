@@ -94,10 +94,4 @@ use SureCart\Models\Blocks\ProductPageBlock;
 			?>
 		></div>
 	<?php endwhile; ?>
-
-	<?php if ( ! $query->have_posts() ) : ?>
-		<div class="sc-loader">
-			<span class="sc-spinner"></span>
-		</div>
-	<?php endif; ?>
 </div>
