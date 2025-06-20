@@ -146,6 +146,30 @@ const TEMPLATE = [
 					],
 				],
 			],
+			[
+				'surecart/product-quick-view-button',
+				{
+					iconPosition: 'before',
+					quickViewButtonType: 'both',
+					width: 50,
+					style: {
+						border: { radius: '4px' },
+						typography: {
+							fontSize: '12px',
+							textAlign: 'center',
+							textTransform: 'uppercase',
+						},
+						spacing: {
+							padding: {
+								left: '12px',
+								right: '12px',
+								top: '12px',
+								bottom: '12px',
+							},
+						},
+					},
+				},
+			],
 		],
 	],
 ];
