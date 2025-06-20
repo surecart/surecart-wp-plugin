@@ -9,6 +9,13 @@ import {
 } from '@wordpress/block-editor';
 import { PanelBody } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
+import { TEMPLATE } from './template';
+
+const ALLOWED_BLOCKS = [
+	'surecart/product-page',
+	'surecart/product-template',
+	'core/group',
+];
 
 export default ({ attributes, setAttributes }) => {
 	const { width } = attributes;
@@ -22,8 +29,8 @@ export default ({ attributes, setAttributes }) => {
 	});
 
 	const innerBlocksProps = useInnerBlocksProps(blockProps, {
-		allowedBlocks: [],
-		template: [],
+		allowedBlocks: ALLOWED_BLOCKS,
+		template: TEMPLATE,
 		style: {
 			maxWidth: width,
 			width: '100%',

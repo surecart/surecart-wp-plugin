@@ -2,7 +2,7 @@
  * External dependencies
  */
 import { registerBlockType } from '@wordpress/blocks';
-import { aspectRatio as icon } from '@wordpress/icons';
+import { caption as icon } from '@wordpress/icons';
 
 /**
  * Internal dependencies

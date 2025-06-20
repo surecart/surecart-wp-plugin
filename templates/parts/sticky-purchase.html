@@ -2,8 +2,9 @@
 <!-- wp:group {"className":"has-foreground-color has-text-color has-background has-link-color","style":{"spacing":{"padding":{"top":"var:preset|spacing|40","bottom":"var:preset|spacing|40","left":"var:preset|spacing|40","right":"var:preset|spacing|40"},"blockGap":"0"},"border":{"radius":"12px","color":"#e5e7eb","width":"1px"}},"backgroundColor":"white","layout":{"type":"constrained","contentSize":""}} -->
 <div class="wp-block-group has-foreground-color has-text-color has-background has-link-color has-border-color has-white-background-color"
     style="border-color:#e5e7eb;border-width:1px;border-radius:12px;padding-top:var(--wp--preset--spacing--40);padding-right:var(--wp--preset--spacing--40);padding-bottom:var(--wp--preset--spacing--40);padding-left:var(--wp--preset--spacing--40)">
-    <!-- wp:columns {"align":"wide","className":"is-stacked-on-mobile","style":{"spacing":{"blockGap":{"top":"20px","left":"20px"}}}} -->
-    <div class="wp-block-columns is-stacked-on-mobile">
+    <!-- wp:surecart/product-page -->
+    <!-- wp:columns {"className":"is-not-stacked-on-mobile is-stacked-on-mobile"} -->
+    <div class="wp-block-columns is-not-stacked-on-mobile is-stacked-on-mobile">
         <!-- wp:column {"verticalAlignment":"center","width":"75%"} -->
         <div class="wp-block-column is-vertically-aligned-center" style="flex-basis:75%">
             <!-- wp:group {"layout":{"type":"flex","flexWrap":"nowrap"}} -->
@@ -15,7 +16,7 @@
 
                 <!-- wp:group {"style":{"spacing":{"blockGap":"4px"}},"layout":{"type":"flex","orientation":"vertical"}} -->
                 <div class="wp-block-group">
-                    <!-- wp:surecart/product-title {"level":4,"style":{"typography":{"fontSize":"16px"},"layout":{"selfStretch":"fill","flexSize":null}}} /-->
+                    <!-- wp:surecart/product-title {"level":4,"style":{"typography":{"fontSize":"16px","fontStyle":"normal","fontWeight":"700"},"layout":{"selfStretch":"fill","flexSize":null}}} /-->
 
                     <!-- wp:surecart/product-selected-variant {"separator":"/","style":{"elements":{"link":{"color":{"text":"#6b7280"}}},"color":{"text":"#6b7280"},"typography":{"fontSize":"16px"}}} /-->
 
@@ -49,6 +50,7 @@
         <!-- /wp:column -->
     </div>
     <!-- /wp:columns -->
+    <!-- /wp:surecart/product-page -->
 </div>
 <!-- /wp:group -->
 <!-- /wp:surecart/sticky-purchase -->

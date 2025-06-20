@@ -4,7 +4,7 @@
 import { store, getContext, withScope } from '@wordpress/interactivity';
 
 // controls the sticky purchase behavior.
-const { state, actions } = store('surecart/sticky-purchase', {
+const { actions } = store('surecart/sticky-purchase', {
 	state: {
 		get isVisible() {
 			const context = getContext();
@@ -72,7 +72,7 @@ const { state, actions } = store('surecart/sticky-purchase', {
 				return;
 			}
 
-			// Look for the main product buy buttons
+			// Look for the main product buy buttons.
 			const productForm = document.querySelector(
 				'[data-sc-block-id="product-page"]'
 			);
@@ -166,7 +166,7 @@ const { state, actions } = store('surecart/sticky-purchase', {
 						const currentContext = getContext();
 						if (!currentContext) return;
 
-						// Recalculate nearBottom with current scroll position
+						// Recalculate nearBottom with current scroll position.
 						const currentScrollY = window.scrollY;
 						const currentNearBottom =
 							currentScrollY +
@@ -221,7 +221,7 @@ const { state, actions } = store('surecart/sticky-purchase', {
 			context.hideTimeout = null;
 			document.body.classList.remove('sc-sticky-purchase-active');
 
-			// Reset the CSS variable for sticky purchase height
+			// Reset the CSS variable for sticky purchase height.
 			document.documentElement.style.setProperty(
 				'--sc-sticky-purchase-height',
 				'80px'
@@ -237,7 +237,7 @@ const { state, actions } = store('surecart/sticky-purchase', {
 		},
 
 		handleKeyDown(event) {
-			// Handle Escape key to close the sticky purchase if it's visible
+			// Handle Escape key to close the sticky purchase if it's visible.
 			if (event.key === 'Escape') {
 				const context = getContext();
 				if (context?.isVisible) {
