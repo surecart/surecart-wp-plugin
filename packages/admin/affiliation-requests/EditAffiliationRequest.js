@@ -225,12 +225,12 @@ export default () => {
 			}
 			sidebar={
 				affiliationRequest?.metadata &&
-				Object.keys(affiliationRequest?.metadata).length && (
+				Object.keys(affiliationRequest?.metadata).length ? (
 					<MetaData
 						affiliationRequest={affiliationRequest}
 						loading={!hasLoadedAffiliationRequest}
 					/>
-				)
+				) : null
 			}
 			button={
 				<div
