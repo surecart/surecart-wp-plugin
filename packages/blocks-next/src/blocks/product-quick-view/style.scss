@@ -25,15 +25,6 @@
 		&__content {
 			padding: 20px;
 		}
-		.sc-loader {
-			min-height: 400px;
-
-			.sc-spinner {
-				position: absolute;
-				top: 50%;
-				left: 50%;
-			}
-		}
 		.sc-view-product-page-sticky {
 			position: sticky;
 			display: flex;
@@ -66,6 +57,16 @@
 		overflow: hidden;
 		transition: opacity 0.3s ease;
 	}
+	.sc-loader {
+		min-height: 400px;
+		display: none;
+
+		.sc-spinner {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+		}
+	}
 
 	&.sc-modal-active {
 		.sc-product-quick-view-dialog {
@@ -78,6 +79,10 @@
 			visibility: visible;
 			pointer-events: all;
 			opacity: 1;
+		}
+
+		.sc-loader {
+			display: block;
 		}
 	}
 }
