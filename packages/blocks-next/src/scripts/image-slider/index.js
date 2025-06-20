@@ -158,6 +158,9 @@ export const { state, actions } = store('surecart/image-slider', {
 		},
 
 		init: () => {
+			if (state.active) {
+				actions.destroy(); // destroy the existing slider if it exists.
+			}
 			const context = getContext();
 			if (context.activeBreakpoint) {
 				if (window.innerWidth >= context.activeBreakpoint) {
