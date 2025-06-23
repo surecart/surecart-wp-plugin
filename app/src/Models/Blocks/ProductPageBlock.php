@@ -254,14 +254,14 @@ class ProductPageBlock {
 				'selectedDisplayAmount' => $product->display_amount,
 				'isOnSale'              => function () {
 					$context        = wp_interactivity_get_context();
-					$selected_price = $context['selectedPrice'] ?? [];
+					$selected_price = $context['selectedPrice'];
 					return $selected_price['is_on_sale'] ?? false;
 				},
 				'selectedAmount'        => function () {
 					$context        = wp_interactivity_get_context();
 					$state          = wp_interactivity_state();
-					$selected_price = $context['selectedPrice'] ?? [];
-					$prices         = $context['prices'] ?? [];
+					$selected_price = $context['selectedPrice'];
+					$prices         = $context['prices'];
 
 					if ( ! empty( $prices ) && count( $prices ) > 1 ) {
 						return $selected_price['amount'];

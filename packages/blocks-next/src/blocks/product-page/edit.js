@@ -4,7 +4,6 @@
 import { useSelect } from '@wordpress/data';
 import { useState } from '@wordpress/element';
 import { store as blockEditorStore } from '@wordpress/block-editor';
-import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies

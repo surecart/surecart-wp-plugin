@@ -1,17 +1,9 @@
-/**
- * WordPress dependencies.
- */
 import {
 	useInnerBlocksProps,
 	useBlockProps,
 	InnerBlocks,
 	BlockControls,
 } from '@wordpress/block-editor';
-import { __ } from '@wordpress/i18n';
-
-/**
- * Internal dependencies.
- */
 import template from './template';
 import ProductPageToolbar from '../../utilities/patterns-toolbar';
 

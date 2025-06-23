@@ -28,13 +28,7 @@
 	"textdomain": "surecart",
 	"render": "file:./view.php",
 	"editorScript": "file:./index.js",
-	"viewScriptModule": [
-		"@surecart/checkout",
-		"@surecart/cart",
-		"@surecart/product-page",
-		"@surecart/sticky-purchase",
-		"surecart/lightbox"
-	],
+	"viewScriptModule": ["@surecart/product-page", "@surecart/sticky-purchase"],
 	"editorStyle": ["file:./index.css"],
 	"style": ["file:./style-index.css", "surecart-block-ui", "surecart-spinner"]
 }

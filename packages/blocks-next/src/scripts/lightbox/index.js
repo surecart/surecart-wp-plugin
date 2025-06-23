@@ -193,7 +193,7 @@ const { state, actions, callbacks } = store('surecart/lightbox', {
 			// get only the image ids that share the same galleryId as the imageId and are not hidden
 			state.images = (images || [imageId]).filter((id) => {
 				const metadata = state.metadata[id];
-				const imageRef = metadata.imageRef;
+				const imageRef = metadata?.imageRef;
 
 				// Check if image exists and check visibility of image and all its parents
 				const isVisible =
@@ -208,7 +208,7 @@ const { state, actions, callbacks } = store('surecart/lightbox', {
 					})(imageRef);
 
 				return (
-					metadata.galleryId === state.metadata[imageId].galleryId &&
+					metadata?.galleryId === state.metadata[imageId]?.galleryId &&
 					isVisible
 				);
 			});

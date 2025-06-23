@@ -13,8 +13,6 @@ import {
 	PanelRow,
 	TextControl,
 	ToggleControl,
-	__experimentalToggleGroupControl as ToggleGroupControl,
-	__experimentalToggleGroupControlOption as ToggleGroupControlOption,
 } from '@wordpress/components';
 import {
 	InspectorControls,
@@ -143,7 +141,10 @@ export default (props) => {
 					[`has-custom-font-size`]: blockProps.style.fontSize,
 				})}
 			>
-				<span
+				<RichText
+					aria-label={__('Button text', 'surecart')}
+					placeholder={__('Add text…', 'surecart')}
+					ref={richTextRef}
 					className={classnames(
 						className,
 						'wp-block-button__link',
@@ -165,17 +166,11 @@ export default (props) => {
 						...shadowProps.style,
 						...colorProps.style,
 					}}
-				>
-					<RichText
-						aria-label={__('Button text', 'surecart')}
-						placeholder={__('Add text…', 'surecart')}
-						ref={richTextRef}
-						value={text}
-						onChange={(value) => setAttributes({ text: value })}
-						withoutInteractiveFormatting
-						allowedFormats={['core/bold', 'core/italic']}
-					/>
-				</span>
+					value={text}
+					onChange={(value) => setAttributes({ text: value })}
+					withoutInteractiveFormatting
+					allowedFormats={['core/bold', 'core/italic']}
+				/>
 			</div>
 		</>
 	);

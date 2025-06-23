@@ -70,7 +70,6 @@ export default ({ className, attributes, setAttributes, clientId }) => {
 						onChange={(padding) => setAttributes({ padding })}
 					/>
 				</PanelBody>
-
 				<PanelBody title={__('Border', 'surecart')}>
 					<PanelRow>
 						<ToggleControl

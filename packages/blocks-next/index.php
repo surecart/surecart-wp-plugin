@@ -333,23 +333,7 @@ add_action(
 			trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/sticky-purchase/index.js',
 			array(
 				array(
-					'id'     => '@surecart/checkout',
-					'import' => 'dynamic',
-				),
-				array(
 					'id'     => '@surecart/product-page',
-					'import' => 'dynamic',
-				),
-				array(
-					'id'     => 'surecart/lightbox',
-					'import' => 'dynamic',
-				),
-				array(
-					'id'     => '@surecart/image-slider',
-					'import' => 'dynamic',
-				),
-				array(
-					'id'     => '@surecart/checkout-events',
 					'import' => 'dynamic',
 				),
 				array(

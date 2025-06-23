@@ -127,7 +127,7 @@
 	}
 }
 
-// When sticky purchase is active, display root container
+// When sticky purchase is active, show the sticky purchase block and hide the cart icon.
 body.sc-sticky-purchase-active {
 	.wp-block-surecart-sticky-purchase {
 		display: block;
