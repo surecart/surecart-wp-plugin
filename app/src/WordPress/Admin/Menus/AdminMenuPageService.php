@@ -273,6 +273,13 @@ class AdminMenuPageService {
 		);
 
 		/**
+		 * Auto Fees & Discounts.
+		 */
+		$this->pages += array(
+			'auto_fee'                 => \add_submenu_page( $this->slug, __( 'Auto Fees & Discounts', 'surecart' ), __( 'Auto Fees & Discounts', 'surecart' ), 'edit_sc_products', 'sc-auto-fees', '__return_false' ),
+		);
+
+		/**
 		 * Subscriptions
 		 */
 		$this->pages += array(

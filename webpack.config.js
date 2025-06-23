@@ -33,6 +33,10 @@ module.exports = {
 			__dirname,
 			'packages/admin/coupons/index.js'
 		),
+		['admin/auto-fees']: path.resolve(
+			__dirname,
+			'packages/admin/auto-fees/index.js'
+		),
 		['admin/products']: path.resolve(
 			__dirname,
 			'packages/admin/products/index.js'
