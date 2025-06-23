@@ -6,7 +6,7 @@
 	"description": "Displays the currently selected variant of a product.",
 	"version": "1.0.0",
 	"category": "surecart-product-page",
-	"icon": "clock",
+	"icon": "tag",
 	"ancestor": ["surecart/product-page", "surecart/product-template"],
 	"example": {
 		"attributes": {}
