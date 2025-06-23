@@ -37,7 +37,7 @@ export default ({ currentDate, setDate, label, required }) => {
 			<div>
 				<span>{label || __('Select Date', 'surecart')}</span>
 				{required && (
-					<span aria-hidden="true" class="required">
+					<span aria-hidden="true" className="required">
 						{' '}
 						*
 					</span>

@@ -11,13 +11,7 @@ import { __ } from '@wordpress/i18n';
  */
 import {
 	ScInput,
-	ScRadioGroup,
-	ScRadio,
 	ScPriceInput,
-	ScButton,
-	ScDropdown,
-	ScMenu,
-	ScMenuItem,
 	ScSwitch,
 	ScSelect,
 	ScFormControl,
@@ -30,7 +24,6 @@ import DateTimePicker from './DateTimePicker';
 export default ({ autoFee, onUpdate, loading, saving, deleting, ...props }) => {
 	const {
 		name,
-		active,
 		amount_adjustment,
 		percent_adjustment,
 		discount,
@@ -78,11 +71,6 @@ export default ({ autoFee, onUpdate, loading, saving, deleting, ...props }) => {
 		<Box
 			title={__('Auto Fee Details', 'surecart')}
 			loading={loading}
-			footer={
-				<SaveButton busy={loading || saving || deleting}>
-					{__('Save', 'surecart')}
-				</SaveButton>
-			}
 			{...props}
 		>
 			<ScInput

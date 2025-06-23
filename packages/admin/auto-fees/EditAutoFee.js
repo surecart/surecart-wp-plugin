@@ -22,6 +22,8 @@ import {
 	ScIcon,
 	ScMenu,
 	ScMenuItem,
+	ScSwitch,
+	ScTag,
 } from '@surecart/components-react';
 import { store as dataStore } from '@surecart/data';
 import useSave from '../settings/UseSave';
@@ -29,6 +31,7 @@ import Error from '../components/Error';
 import Logo from '../templates/Logo';
 import UpdateModel from '../templates/UpdateModel';
 import Details from './modules/Details';
+import SaveButton from '../templates/SaveButton';
 
 export default () => {
 	const [error, setError] = useState(null);
@@ -138,12 +141,11 @@ export default () => {
 				>
 					<ScDropdown slot="suffix" placement="bottom-end">
 						<ScButton
-							type="primary"
+							type="text"
 							slot="trigger"
-							caret
 							loading={isSaving || isDeleting}
 						>
-							{__('Actions', 'surecart')}
+							<ScIcon name="more-horizontal" />
 						</ScButton>
 						<ScMenu>
 							<ScMenuItem onClick={() => setModal('delete')}>
@@ -156,6 +158,30 @@ export default () => {
 							</ScMenuItem>
 						</ScMenu>
 					</ScDropdown>
+					{hasLoadedAutoFee && (
+						<ScTag
+							type={autoFee?.active ? 'success' : 'default'}
+							size="small"
+							pill
+						>
+							{autoFee?.active
+								? __('Auto Fee Active', 'surecart')
+								: __('Auto Fee Inactive', 'surecart')}
+						</ScTag>
+					)}
+					<ScSwitch
+						checked={autoFee?.active}
+						onScChange={(e) =>
+							updateAutoFee({
+								active: e.target.checked,
+							})
+						}
+					/>
+					<SaveButton
+						busy={isSaving || isDeleting || !hasLoadedAutoFee}
+					>
+						{__('Save Auto Fee', 'surecart')}
+					</SaveButton>
 				</div>
 			}
 		>
