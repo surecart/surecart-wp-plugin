@@ -27,27 +27,6 @@ let inertElements = [];
 const isValidEvent = (event) =>
 	event?.key ? [' ', 'Enter', 'Escape'].includes(event.key) : true;
 
-// Set up a promise that resolves when the transition ends
-const waitForTransition = new Promise((resolve) => {
-	let hasResolved = false;
-	const resolveOnce = () => {
-		if (!hasResolved) {
-			hasResolved = true;
-			resolve();
-		}
-	};
-
-	// Listen for the transform transition specifically (usually the last to complete)
-	const handleTransitionEnd = (e) => {
-		if (e.target === dialog && e.propertyName === 'transform') {
-			dialog.removeEventListener('transitionend', handleTransitionEnd);
-			resolveOnce();
-		}
-	};
-
-	dialog.addEventListener('transitionend', handleTransitionEnd);
-});
-
 const { state, actions } = store('surecart/product-quick-view', {
 	actions: {
 		/** Navigate using interactivity router */
@@ -119,14 +98,16 @@ const { state, actions } = store('surecart/product-quick-view', {
 				?.closest('.wp-block-surecart-product-quick-view')
 				.querySelector('.sc-product-quick-view-dialog');
 
+			dialog.addEventListener(
+				'transitionend',
+				withScope(() => {
+					state?.openButton?.focus();
+					actions.navigate(event);
+				}),
+				{ once: true }
+			); // Wait for the closing animation to finish before navigating.
+
 			state.open = false;
-
-			// Wait for the transition to complete
-			yield waitForTransition;
-
-			// Now navigate after the transition is truly finished
-			state?.openButton?.focus();
-			yield actions.navigate(event);
 		},
 	},
 
