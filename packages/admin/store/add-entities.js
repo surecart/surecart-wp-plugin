@@ -83,7 +83,7 @@ dispatch(coreStore).addEntities([
 		baseURLParams: { context: 'edit' },
 	},
 	{
-		name: 'auto_fee',
+		name: 'auto-fee',
 		kind: 'surecart',
 		label: __('Auto Fees', 'surecart'),
 		baseURL: '/surecart/v1/auto_fees',

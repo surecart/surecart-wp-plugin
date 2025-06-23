@@ -173,7 +173,7 @@ class AutoFeesListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_status( $auto_fees ) {
-		return (string) $auto_fees->active;
+		return $auto_fees->active ? '<sc-tag type="success">' . __( 'Active', 'surecart' ) . '</sc-tag>' : '<sc-tag type="warning">' . __( 'Inactive', 'surecart' ) . '</sc-tag>';
 	}
 
 	/**
