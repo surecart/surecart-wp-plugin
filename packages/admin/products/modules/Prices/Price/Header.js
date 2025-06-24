@@ -197,7 +197,7 @@ export default ({
 					},
 				}}
 			>
-				{() => (
+				{({ onClose }) => (
 					<>
 						{price?.id && !!onArchive && (
 							<MenuItem
@@ -222,7 +222,10 @@ export default ({
 						<DuplicateModel
 							type="price"
 							id={price?.id}
-							onSuccess={onDuplicate}
+							onSuccess={(duplicate) => {
+								onDuplicate(duplicate);
+								onClose();
+							}}
 						>
 							{({ onClick }) => (
 								<MenuItem
