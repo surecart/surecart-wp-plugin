@@ -119,7 +119,7 @@ export default ({
 								)}
 							</p>
 							<ExternalLink
-								href="https://docs.surecart.com"
+								href="https://surecart.com/docs/price-boost/"
 								target="_blank"
 							>
 								{__('Learn More', 'surecart')}
@@ -176,7 +176,7 @@ export default ({
 								)}
 							</p>
 							<ExternalLink
-								href="https://docs.surecart.com"
+								href="https://surecart.com/docs/price-boost/"
 								target="_blank"
 							>
 								{__('Learn More', 'surecart')}
