@@ -24,10 +24,8 @@ import {
 	__experimentalGetSpacingClassesAndStyles as useSpacingProps,
 	__experimentalGetShadowClassesAndStyles as useShadowProps,
 } from '@wordpress/block-editor';
-import { select, useDispatch } from '@wordpress/data';
 import { isKeyboardEvent } from '@wordpress/keycodes';
 import WidthPanel from '../../components/WidthPanel';
-import { findAllBlocksByName } from '../../utilities/blocks-finder';
 
 export default (props) => {
 	const { attributes, setAttributes, className } = props;
@@ -39,9 +37,6 @@ export default (props) => {
 		unavailable_text,
 		show_sticky_purchase_button,
 	} = attributes;
-
-	const { getBlocks } = select('core/block-editor');
-	const { updateBlockAttributes } = useDispatch('core/block-editor');
 
 	function onKeyDown(event) {
 		if (isKeyboardEvent.primary(event, 'k')) {
@@ -65,24 +60,6 @@ export default (props) => {
 		ref,
 		onKeyDown,
 	});
-
-	const changeStickyPurchaseButton = (value) => {
-		setAttributes({ show_sticky_purchase_button: value });
-		changeStickyPurchaseButtonSettingsToOtherBlocks(value);
-	};
-
-	const changeStickyPurchaseButtonSettingsToOtherBlocks = (value) => {
-		const blocks = findAllBlocksByName(
-			getBlocks(),
-			'surecart/product-buy-button'
-		);
-
-		blocks.forEach((block) => {
-			updateBlockAttributes(block.clientId, {
-				show_sticky_purchase_button: value,
-			});
-		});
-	};
 
 	return (
 		<>
@@ -122,7 +99,11 @@ export default (props) => {
 								'surecart'
 							)}
 							checked={show_sticky_purchase_button}
-							onChange={changeStickyPurchaseButton}
+							onChange={(value) =>
+								setAttributes({
+									show_sticky_purchase_button: value,
+								})
+							}
 							help={__(
 								'Show a sticky purchase button when the main buy buttons are out of view',
 								'surecart'
