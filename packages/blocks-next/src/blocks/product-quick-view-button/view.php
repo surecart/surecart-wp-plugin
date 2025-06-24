@@ -14,7 +14,6 @@
 				'data-wp-class--loading' => 'state.loading',
 				'style'                  => $style,
 				'class'                  => 'wp-block-button__link wp-block-button sc-button__link ' . $width_class,
-				'data-wp-class--sc-button__link--busy' => "surecart/product-list::state.loading"
 			]
 		)
 	);
@@ -42,5 +41,4 @@
 		echo wp_kses( SureCart::svg()->get( $icon, [ 'class' => 'wp-block-surecart-product-quick-view-button__icon sc-button__link-text' ] ), sc_allowed_svg_html() );
 	}
 	?>
-	<span class="sc-spinner" aria-hidden="false"></span>
 </div>
