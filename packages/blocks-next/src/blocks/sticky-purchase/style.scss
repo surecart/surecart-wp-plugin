@@ -112,6 +112,10 @@
 				gap: 0.75rem !important;
 				align-items: center !important;
 			}
+			.wp-block-column.is-vertically-aligned-center,
+			.wp-block-column.is-vertically-aligned-top {
+				width: auto;
+			}
 		}
 
 		@media (max-width: 480px) {

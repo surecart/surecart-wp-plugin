@@ -235,27 +235,5 @@ const { actions } = store('surecart/sticky-purchase', {
 				100
 			);
 		},
-
-		handleKeyDown(event) {
-			// Handle Escape key to close the sticky purchase if it's visible.
-			if (event.key === 'Escape') {
-				const context = getContext();
-				if (context?.isVisible) {
-					context.isVisible = false;
-					const stickyButton = document.querySelector(
-						'.sc-sticky-purchase'
-					);
-					if (stickyButton) {
-						stickyButton.classList.add('is-hiding');
-						setTimeout(() => {
-							stickyButton.classList.remove('is-visible');
-							document.body.classList.remove(
-								'sc-sticky-purchase-active'
-							);
-						}, 500);
-					}
-				}
-			}
-		},
 	},
 });
