@@ -103,10 +103,10 @@ const { actions } = store('surecart/sticky-purchase', {
 				scrollY > (context.lastScrollY || 0) ? 'down' : 'up';
 			context.lastScrollY = scrollY;
 
-			// Calculate if we're near the bottom of the page (within 100px of bottom).
-			const nearBottom =
+			// Calculate if we're at the bottom of the page.
+			const atBottom =
 				scrollY + (context.viewportHeight || window.innerHeight) >=
-				actions.getDocumentHeight() - 100;
+				actions.getDocumentHeight();
 
 			// Check if the buy buttons are out of view.
 			const buyButtonsOutOfView = rect.bottom < 0;
@@ -114,7 +114,7 @@ const { actions } = store('surecart/sticky-purchase', {
 			// Determine if we should show the sticky button.
 			const shouldShow =
 				buyButtonsOutOfView &&
-				(!nearBottom || context.scrollDirection === 'up');
+				(!atBottom || context.scrollDirection === 'up');
 
 			// Clear any pending hide timeout when scrolling.
 			if (context.hideTimeout) {
@@ -160,21 +160,21 @@ const { actions } = store('surecart/sticky-purchase', {
 
 			// If user has stopped scrolling for more than 2 seconds and we're at the bottom,
 			// hide the sticky button for better viewing of footer content.
-			if (nearBottom && context.scrollDirection === 'down') {
+			if (atBottom && context.scrollDirection === 'down') {
 				context.hideTimeout = setTimeout(
 					withScope(() => {
 						const currentContext = getContext();
 						if (!currentContext) return;
 
-						// Recalculate nearBottom with current scroll position.
+						// Recalculate atBottom with current scroll position.
 						const currentScrollY = window.scrollY;
-						const currentNearBottom =
+						const currentAtBottom =
 							currentScrollY +
 								(currentContext.viewportHeight ||
 									window.innerHeight) >=
-							actions.getDocumentHeight() - 100;
+							actions.getDocumentHeight();
 
-						if (currentNearBottom) {
+						if (currentAtBottom) {
 							currentContext.isVisible = false;
 							stickyButton.classList.add('is-hiding');
 							setTimeout(
