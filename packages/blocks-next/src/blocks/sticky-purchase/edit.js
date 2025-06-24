@@ -55,9 +55,7 @@ export default ({ attributes, setAttributes }) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<div {...blockProps}>
-				<div {...innerBlocksProps}></div>
-			</div>
+			<div {...innerBlocksProps}></div>
 		</>
 	);
 };
