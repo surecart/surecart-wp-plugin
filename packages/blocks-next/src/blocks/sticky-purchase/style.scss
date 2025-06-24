@@ -2,11 +2,10 @@
 	width: var(--sc-sticky-purchase-width, 600px);
 	margin: 0 auto;
 	position: static;
-	height: 0;
 	overflow: visible;
 	display: none;
 
-	.sc-sticky-purchase {
+	&.sc-sticky-purchase {
 		position: fixed;
 		bottom: 0;
 		left: 50%;

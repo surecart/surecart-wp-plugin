@@ -15,6 +15,24 @@
 	},
 	"supports": {
 		"interactivity": true,
+		"multiple": false,
+		"currencyConversion": true,
+		"layout": {
+			"allowSwitching": false,
+			"allowInheriting": false,
+			"allowSizingOnChildren": true,
+			"default": {
+				"type": "flex",
+				"orientation": "horizontal",
+				"verticalAlignment": "top",
+				"flexWrap": "nowrap",
+				"wideSize": "full"
+			}
+		},
+		"anchor": true,
+		"color": {
+			"gradients": true
+		},
 		"spacing": {
 			"margin": true,
 			"padding": true
@@ -23,6 +41,18 @@
 			"fontSize": true,
 			"lineHeight": true,
 			"__experimentalFontWeight": true
+		},
+		"__experimentalBorder": {
+			"color": true,
+			"radius": true,
+			"style": true,
+			"width": true,
+			"__experimentalDefaultControls": {
+				"color": true,
+				"radius": true,
+				"style": true,
+				"width": true
+			}
 		}
 	},
 	"textdomain": "surecart",

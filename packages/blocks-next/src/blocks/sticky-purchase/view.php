@@ -22,17 +22,13 @@ $style = sprintf(
 				'data-wp-on-window--resize' => 'actions.handleResize',
 				'data-wp-on--keydown'       => 'callbacks.handleKeyDown',
 				'style'                     => $style,
+				'class'                     => 'sc-sticky-purchase',
 			]
 		)
 	);
 	?>
-	>
-	<div
-		class="sc-sticky-purchase"
-		<?php echo wp_kses_data( get_block_wrapper_attributes() ); ?>
-	>
-		<div data-wp-interactive='{ "namespace": "surecart/product-page" }'>
-			<?php echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-		</div>
+>
+	<div data-wp-interactive='{ "namespace": "surecart/product-page" }'>
+		<?php echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 	</div>
 </div>

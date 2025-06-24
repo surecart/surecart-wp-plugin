@@ -6,6 +6,4 @@ if ( empty( $product->variants ) ) {
 	return '';
 }
 
-$separator = isset( $attributes['separator'] ) ? $attributes['separator'] : ' / ';
-
 return 'file:./view.php';
