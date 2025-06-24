@@ -22,6 +22,48 @@
 	align-items: center;
 	justify-content: center;
 	position: relative;
+
+	/* Custom video play button for MediaElement videos */
+	.sc-video-play-button {
+		position: absolute;
+		display: none; /* Hidden by default, shown via JS */
+		align-items: center;
+		justify-content: center;
+		width: 60px;
+		height: 60px;
+		background-color: rgba(255, 255, 255, 0.9);
+		border-radius: 50%;
+		z-index: 10;
+		transition: all 0.2s ease;
+		cursor: pointer;
+		backdrop-filter: blur(4px);
+		border: 2px solid rgba(255, 255, 255, 0.3);
+
+		// Add a play button icon
+		&::before {
+			content: "";
+			display: inline-block;
+			width: 0;
+			height: 0;
+			border-left: 18px solid #111827;
+			border-top: 12px solid transparent;
+			border-bottom: 12px solid transparent;
+			margin-left: 4px;
+		}
+
+		/* Hover effect */
+		&:hover {
+			transform: scale(1.1);
+			background-color: rgba(255, 255, 255, 1);
+			box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+		}
+
+		/* Focus styles for accessibility */
+		&:focus {
+			outline: 2px solid #2563eb;
+			outline-offset: 2px;
+		}
+	}
 }
 
 .swiper-slide:has(.sc-video-container) {

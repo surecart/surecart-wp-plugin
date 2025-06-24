@@ -16,6 +16,7 @@ const { state, actions } = store('surecart/image-slider', {
 		thumbsSwiper: null,
 		swiper: null,
 		active: false,
+		videoObservers: [],
 	},
 	actions: {
 		updateSlider: () => {
@@ -31,6 +32,8 @@ const { state, actions } = store('surecart/image-slider', {
 
 			// the selected variant has not changed.
 			if (!productState.selectedVariant) {
+				// Manage video controls even if variant hasn't changed
+				actions.manageVideoControls();
 				return;
 			}
 
@@ -42,10 +45,14 @@ const { state, actions } = store('surecart/image-slider', {
 			if (state.swiper) {
 				state.swiper.update();
 			}
+
+			// Manage video controls after slider update
+			actions.manageVideoControls();
 		},
 
 		destroy: () => {
 			state.active = false;
+			actions.cleanupVideoObservers();
 			if (state.swiper) {
 				state.swiper.destroy(true, true);
 			}
@@ -149,6 +156,121 @@ const { state, actions } = store('surecart/image-slider', {
 					...(sliderOptions || {}),
 				}
 			);
+
+			// Initialize video controls management with longer delay to ensure DOM is ready
+			setTimeout(() => {
+				actions.manageVideoControls();
+			}, 500);
+		},
+
+		manageVideoControls: () => {
+			const { ref } = getElement();
+			const videoContainers = ref.querySelectorAll('.sc-video-container');
+
+			videoContainers.forEach((container) => {
+				const overlayButton = container.querySelector(
+					'.mejs-overlay-button[aria-pressed]'
+				);
+				const controlsElement =
+					container.querySelector('.mejs-controls');
+				const mejsOverlay =
+					container.querySelector('.mejs-overlay-play');
+
+				if (overlayButton && controlsElement) {
+					// Create custom play button if it doesn't exist.
+					let customPlayButton = container.querySelector(
+						'.sc-video-play-button'
+					);
+					if (!customPlayButton) {
+						customPlayButton = document.createElement('div');
+						customPlayButton.className = 'sc-video-play-button';
+						customPlayButton.setAttribute('role', 'button');
+						customPlayButton.setAttribute('tabindex', '0');
+						customPlayButton.setAttribute(
+							'aria-label',
+							'Play video'
+						);
+
+						// Add click handler to trigger the original overlay button
+						customPlayButton.addEventListener('click', () => {
+							overlayButton.click();
+						});
+
+						// Add keyboard support
+						customPlayButton.addEventListener('keydown', (e) => {
+							if (e.key === 'Enter' || e.key === ' ') {
+								e.preventDefault();
+								overlayButton.click();
+							}
+						});
+
+						// Insert the custom button into the container
+						container.appendChild(customPlayButton);
+					}
+
+					// Function to update controls and button visibility
+					const updateControlsVisibility = () => {
+						const isPressed =
+							overlayButton.getAttribute('aria-pressed') ===
+							'true';
+
+						if (!isPressed) {
+							// Video is paused/stopped.
+							controlsElement.style.opacity = '0';
+							controlsElement.classList.add('mejs-offscreen');
+
+							// Hide original overlay button.
+							if (mejsOverlay) {
+								mejsOverlay.style.display = 'none';
+							}
+
+							// Show custom play button.
+							customPlayButton.style.display = 'flex';
+						} else {
+							// Video is playing.
+							controlsElement.style.opacity = '';
+							controlsElement.classList.remove('mejs-offscreen');
+
+							// Show original overlay (if needed).
+							if (mejsOverlay) {
+								mejsOverlay.style.display = '';
+							}
+
+							// Hide custom play button.
+							customPlayButton.style.display = 'none';
+						}
+					};
+
+					// Initial check
+					updateControlsVisibility();
+
+					// Create observer for aria-pressed changes
+					const observer = new MutationObserver((mutations) => {
+						mutations.forEach((mutation) => {
+							if (
+								mutation.type === 'attributes' &&
+								mutation.attributeName === 'aria-pressed'
+							) {
+								updateControlsVisibility();
+							}
+						});
+					});
+
+					// Start observing
+					observer.observe(overlayButton, {
+						attributes: true,
+						attributeFilter: ['aria-pressed'],
+					});
+
+					// Store observer for cleanup
+					state.videoObservers.push(observer);
+				}
+			});
+		},
+
+		cleanupVideoObservers: () => {
+			state.videoObservers.forEach((observer) => observer.disconnect());
+			state.videoObservers = [];
 		},
 
 		init: () => {
@@ -160,6 +282,11 @@ const { state, actions } = store('surecart/image-slider', {
 				}
 			}
 			actions.create();
+
+			// Manage video controls on init.
+			setTimeout(() => {
+				actions.manageVideoControls();
+			}, 1000);
 		},
 	},
 });
