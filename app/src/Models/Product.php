@@ -784,13 +784,18 @@ class Product extends Model implements PageModel {
 			return $cached;
 		}
 
+		$featured_image_url = null;
+		if ( ! empty( $this->featured_image ) && is_a( $this->featured_image, GalleryItem::class ) ) {
+			$featured_image_url = $this->featured_image->attributes( 'thumbnail' )->src ?? null;
+		}
+
 		$gallery = array_values(
 			array_filter(
 				array_map(
-					function ( $id ) {
+					function ( $id ) use ( $featured_image_url ) {
 						// this is an attachment id.
 						if ( is_int( $id ) ) {
-							return new GalleryItemAttachment( $id );
+							return new GalleryItemAttachment( $id, $featured_image_url );
 						}
 
 						// get the product media item that matches the id.

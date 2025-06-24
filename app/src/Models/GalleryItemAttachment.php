@@ -9,15 +9,26 @@ use SureCart\Support\Contracts\GalleryItem;
  */
 class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 	/**
+	 * Product featured image URL.
+	 *
+	 * This is used for fallback when the attachment does not have a thumbnail or poster image.
+	 *
+	 * @var string|null
+	 */
+	private $featured_image_url = null;
+
+	/**
 	 * Create a new gallery item.
 	 * This can accept a product media or a post.
 	 *
 	 * @param int|\WP_Post $item The item.
+	 * @param string|null  $featured_image_url The featured image URL for the product.
 	 *
 	 * @return void
 	 */
-	public function __construct( $item ) {
-		$this->item = get_post( $item );
+	public function __construct( $item, $featured_image_url = null ) {
+		$this->item               = get_post( $item );
+		$this->featured_image_url = $featured_image_url;
 	}
 
 	/**
@@ -60,8 +71,8 @@ class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 			}
 		}
 
-		// Fallback to a default placeholder image if no thumbnail is found.
-		return esc_url_raw( trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'images/placeholder.jpg' );
+		// Fallback to a featured image / default placeholder image if no thumbnail is found.
+		return $this->featured_image_url ?? esc_url_raw( trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'images/placeholder.jpg' );
 	}
 
 	/**
