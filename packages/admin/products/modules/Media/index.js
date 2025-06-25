@@ -16,13 +16,12 @@ import ProductMedia from './ProductMedia';
 import { select } from '@wordpress/data';
 
 const modals = {
-	CONFIRM_DELETE_IMAGE: 'confirm_delete_image',
-	ADD_IMAGE_FROM_URL: 'add_image_from_url',
+	CONFIRM_DELETE_MEDIA: 'confirm_delete_media',
 };
 export default ({ productId, product, updateProduct }) => {
 	const [error, setError] = useState();
 	const [currentModal, setCurrentModal] = useState('');
-	const [selectedImage, setSelectedImage] = useState();
+	const [selectedMedia, setSelectedMedia] = useState();
 	const { createErrorNotice } = useDispatch(noticesStore);
 	const { invalidateResolution } = useDispatch(coreStore);
 	const { record: savedProduct } = useEntityRecord(
@@ -141,12 +140,12 @@ export default ({ productId, product, updateProduct }) => {
 			</SortableList>
 
 			<ConfirmDeleteMedia
-				open={currentModal === modals.CONFIRM_DELETE_IMAGE}
+				open={currentModal === modals.CONFIRM_DELETE_MEDIA}
 				onRequestClose={() => {
-					setSelectedImage();
+					setSelectedMedia();
 					setCurrentModal('');
 				}}
-				selectedImage={selectedImage}
+				selectedMedia={selectedMedia}
 			/>
 		</Box>
 	);

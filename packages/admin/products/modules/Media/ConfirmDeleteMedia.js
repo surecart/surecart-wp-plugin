@@ -10,7 +10,7 @@ import { useState } from 'react';
 import { useDispatch } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 
-export default ({ open, onRequestClose, selectedImage }) => {
+export default ({ open, onRequestClose, selectedMedia }) => {
 	const [error, setError] = useState(false);
 	const [loading, setLoading] = useState(false);
 	const { deleteEntityRecord } = useDispatch(coreStore);
@@ -21,7 +21,7 @@ export default ({ open, onRequestClose, selectedImage }) => {
 			await deleteEntityRecord(
 				'surecart',
 				'product-media',
-				selectedImage?.id
+				selectedMedia?.id
 			);
 			onRequestClose();
 		} catch (e) {
