@@ -364,7 +364,7 @@ class ProductPostTypeService {
 				$thumbnail_img = wp_get_attachment_image( $thumbnail_id, 'thumbnail' );
 			}
 
-			$form_fields['video_thumbnail'] = array(
+			$form_fields['sc_video_thumbnail'] = array(
 				'label' => __( 'Video Poster Image', 'surecart' ),
 				'input' => 'html',
 				'html'  => '
@@ -394,12 +394,14 @@ class ProductPostTypeService {
 									button: {
 										text: "' . __( 'Use this image', 'surecart' ) . '"
 									},
+									library: {
+										type: "image"
+									},
 									multiple: false
 								});
 
 								frame.on("select", function() {
 									var attachment = frame.state().get("selection").first().toJSON();
-									console.log("attachment", attachment);
 									$("#video-thumbnail-id-" + attachmentId).val(attachment.id);
 									$("#current-thumbnail-" + attachmentId).html("<img src=\"" + attachment.url + "\" alt=\"\" style=\"max-width:150px;\" />");
 									$("#sc-remove-video-thumbnail-" + attachmentId).removeClass("hidden");
@@ -408,7 +410,7 @@ class ProductPostTypeService {
 								frame.open();
 							});
 
-							// Remove video thumbnail
+							// Remove video thumbnail.
 							$("#sc-remove-video-thumbnail-' . esc_attr( $post->ID ) . '").on("click", function() {
 								var attachmentId = ' . esc_attr( $post->ID ) . ';
 								$("#video-thumbnail-id-" + attachmentId).val("");
