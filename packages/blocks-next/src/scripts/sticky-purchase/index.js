@@ -158,7 +158,7 @@ const { actions } = store('surecart/sticky-purchase', {
 				}
 			}
 
-			// If user has stopped scrolling for more than 2 seconds and we're at the bottom,
+			// If user has stopped scrolling for more than 1 second and we're at the bottom,
 			// hide the sticky button for better viewing of footer content.
 			if (atBottom && context.scrollDirection === 'down') {
 				context.hideTimeout = setTimeout(
@@ -188,7 +188,7 @@ const { actions } = store('surecart/sticky-purchase', {
 							);
 						}
 					}),
-					2000
+					1000
 				);
 			}
 
