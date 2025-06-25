@@ -115,7 +115,7 @@ function RenderDropdownButton({ isOpen, onClick, date, label }) {
 				text-align: right;
 			`}
 		>
-			{formatDateTime(date * 1000)}
+			{date ? formatDateTime(date * 1000) : __('Set Date', 'surecart')}
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				fill="none"

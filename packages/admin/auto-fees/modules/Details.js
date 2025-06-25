@@ -9,26 +9,20 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies.
  */
-import {
-	ScInput,
-	ScPriceInput,
-	ScSwitch,
-	ScSelect,
-	ScFormControl,
-} from '@surecart/components-react';
+import { ScInput, ScPriceInput, ScSelect } from '@surecart/components-react';
 import Box from '../../ui/Box';
-import SaveButton from '../../templates/SaveButton';
 import { useState, useEffect } from '@wordpress/element';
-import DateTimePicker from './DateTimePicker';
 
-export default ({ autoFee, onUpdate, loading, saving, deleting, ...props }) => {
+export default ({ autoFee, onUpdate, loading }) => {
+	if (!autoFee || Object.keys(autoFee).length === 0) {
+		return;
+	}
+
 	const {
 		name,
 		amount_adjustment,
 		percent_adjustment,
 		discount,
-		start_at,
-		end_at,
 		rule_string,
 	} = autoFee;
 
@@ -36,43 +30,28 @@ export default ({ autoFee, onUpdate, loading, saving, deleting, ...props }) => {
 		amount_adjustment ? 'fixed' : 'percentage'
 	);
 
-	const [endDateToggle, setEndDateToggle] = useState(false);
-
-	useEffect(() => {
-		if (!endDateToggle && end_at) {
-			onUpdate({
-				end_at: null,
-			});
-		}
-	}, [endDateToggle]);
-
 	useEffect(() => {
 		if (adjustmentType === 'percentage' && amount_adjustment) {
-			onUpdate({
-				amount_adjustment: null,
-			});
+			onUpdate({ amount_adjustment: null });
 		}
 		if (adjustmentType === 'fixed' && percent_adjustment) {
-			onUpdate({
-				percent_adjustment: null,
-			});
+			onUpdate({ percent_adjustment: null });
 		}
-	}, [adjustmentType]);
+	}, [adjustmentType, amount_adjustment, percent_adjustment, onUpdate]);
 
 	useEffect(() => {
-		if (amount_adjustment && adjustmentType !== 'fixed') {
-			setAdjustmentType('fixed');
-		} else if (percent_adjustment && adjustmentType !== 'percent') {
-			setAdjustmentType('percent');
+		// Only auto-set type if no explicit type is set and we have a value
+		if (!adjustmentType) {
+			if (amount_adjustment) {
+				setAdjustmentType('fixed');
+			} else if (percent_adjustment) {
+				setAdjustmentType('percentage');
+			}
 		}
-	}, [amount_adjustment, percent_adjustment]);
+	}, [amount_adjustment, percent_adjustment, adjustmentType]);
 
 	return (
-		<Box
-			title={__('Auto Fee Details', 'surecart')}
-			loading={loading}
-			{...props}
-		>
+		<Box title={__('Auto Fee Details', 'surecart')} loading={loading}>
 			<ScInput
 				label={__('Name', 'surecart')}
 				help={__(
@@ -87,140 +66,102 @@ export default ({ autoFee, onUpdate, loading, saving, deleting, ...props }) => {
 					})
 				}
 			/>
-			<ScSelect
-				label={__('Type', 'surecart')}
-				help={__(
-					'Whether this auto fee is a discount (subtracted from total) or a fee (added to total).',
-					'surecart'
-				)}
-				unselect={false}
-				value={discount ? 'discount' : 'fee'}
+			<div
 				css={css`
-					min-width: 125px;
+					display: grid;
+					gap: var(--sc-form-row-spacing);
+					grid-template-columns: 1fr 1fr 1fr;
 				`}
-				onScChange={(e) => {
-					onUpdate({
-						discount: 'discount' === e.target.value ? true : false,
-					});
-				}}
-				choices={[
-					{
-						label: __('Discount', 'surecart'),
-						value: 'discount',
-					},
-					{
-						label: __('Fee', 'surecart'),
-						value: 'fee',
-					},
-				]}
-			/>
-			<ScSelect
-				label={__('Adjustment Type', 'surecart')}
-				help={__(
-					'Whether this auto fee is a percentage or fixed amount adjustment.',
-					'surecart'
-				)}
-				unselect={false}
-				value={adjustmentType}
-				css={css`
-					min-width: 125px;
-				`}
-				onScChange={(e) => setAdjustmentType(e.target.value)}
-				choices={[
-					{
-						label: __('Percentage', 'surecart'),
-						value: 'percentage',
-					},
-					{
-						label: __('Fixed Amount', 'surecart'),
-						value: 'fixed',
-					},
-				]}
-			/>
-
-			{adjustmentType === 'percentage' ? (
-				<ScInput
-					type="number"
-					disabled={adjustmentType !== 'percentage'}
-					min="0"
-					max="100"
-					step="0.01"
-					attribute="percent_adjustment"
-					label={__('Percent', 'surecart')}
-					value={percent_adjustment}
-					onScInput={(e) =>
+			>
+				<ScSelect
+					label={__('Type', 'surecart')}
+					help={__(
+						'Whether this auto fee is a discount or a fee.',
+						'surecart'
+					)}
+					unselect={false}
+					value={discount ? 'discount' : 'fee'}
+					css={css`
+						min-width: 125px;
+					`}
+					onScChange={(e) => {
 						onUpdate({
-							percent_adjustment: e.target.value,
-						})
-					}
-					required={adjustmentType === 'percentage'}
-				>
-					<span slot="suffix">%</span>
-				</ScInput>
-			) : (
-				<ScPriceInput
-					currencyCode={autoFee?.currency || scData?.currency_code}
-					disabled={adjustmentType === 'percentage'}
-					attribute="amount_adjustment"
-					label={__('Amount', 'surecart')}
-					value={amount_adjustment || null}
-					required={adjustmentType === 'fixed'}
-					onScInput={(e) => {
-						onUpdate({
-							amount_adjustment: e.target.value,
+							discount:
+								'discount' === e.target.value ? true : false,
 						});
 					}}
+					choices={[
+						{
+							label: __('Discount', 'surecart'),
+							value: 'discount',
+						},
+						{
+							label: __('Fee', 'surecart'),
+							value: 'fee',
+						},
+					]}
 				/>
-			)}
-			<ScFormControl
-				help={__(
-					'Time at which the auto fee becomes active & start being applied to the checkout.',
-					'surecart'
-				)}
-			>
-				<DateTimePicker
-					label={__('Start Date', 'surecart')}
-					currentDate={start_at}
-					setDate={(date) =>
-						onUpdate({
-							start_at: date,
-						})
-					}
-					required
-				/>
-			</ScFormControl>
-			<ScSwitch
-				checked={!!endDateToggle}
-				onScChange={(e) => {
-					setEndDateToggle(e.target.checked);
-				}}
-			>
-				{__('Set End Date?', 'surecart')}
-				<span slot="description">
-					{__(
-						'Limit the end date when auto fee becomes inactive.',
-						'surecart'
-					)}
-				</span>
-			</ScSwitch>
-			{endDateToggle && (
-				<ScFormControl
+				<ScSelect
+					label={__('Adjustment Type', 'surecart')}
 					help={__(
-						'Time at which the auto fee becomes inactive.',
+						'Whether this auto fee is a percentage or fixed amount adjustment.',
 						'surecart'
 					)}
-				>
-					<DateTimePicker
-						label={__('End Date', 'surecart')}
-						currentDate={end_at}
-						setDate={(date) =>
+					unselect={false}
+					value={adjustmentType}
+					css={css`
+						min-width: 125px;
+					`}
+					onScChange={(e) => setAdjustmentType(e.target.value)}
+					choices={[
+						{
+							label: __('Percentage', 'surecart'),
+							value: 'percentage',
+						},
+						{
+							label: __('Fixed Amount', 'surecart'),
+							value: 'fixed',
+						},
+					]}
+				/>
+
+				{adjustmentType === 'percentage' ? (
+					<ScInput
+						type="number"
+						disabled={adjustmentType !== 'percentage'}
+						min="0"
+						max="100"
+						step="0.01"
+						attribute="percent_adjustment"
+						label={__('Percent', 'surecart')}
+						value={percent_adjustment}
+						onScInput={(e) =>
 							onUpdate({
-								end_at: date,
+								percent_adjustment: e.target.value,
 							})
 						}
+						required={adjustmentType === 'percentage'}
+					>
+						<span slot="suffix">%</span>
+					</ScInput>
+				) : (
+					<ScPriceInput
+						currencyCode={
+							autoFee?.currency || scData?.currency_code
+						}
+						disabled={adjustmentType === 'percentage'}
+						attribute="amount_adjustment"
+						label={__('Amount', 'surecart')}
+						value={amount_adjustment || null}
+						required={adjustmentType === 'fixed'}
+						onScInput={(e) => {
+							onUpdate({
+								amount_adjustment: e.target.value,
+							});
+						}}
 					/>
-				</ScFormControl>
-			)}
+				)}
+			</div>
 		</Box>
 	);
 };

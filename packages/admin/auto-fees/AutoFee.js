@@ -1,16 +1,13 @@
 /**
  * External dependencies.
  */
-import { useSelect } from '@wordpress/data';
 import { addQueryArgs } from '@wordpress/url';
 import { useState } from '@wordpress/element';
 
 /**
  * Internal dependencies.
  */
-import EditAutoFee from './EditAutoFee';
-import CreateAutoFee from './CreateAutoFee';
-import { store } from '@surecart/data';
+import CreateEditAutoFee from './CreateEditAutoFee';
 
 /**
  * Returns the Model Edit URL.
@@ -46,8 +43,5 @@ export default () => {
 		}
 	};
 
-	// Get the id from the page url.
-	const id = useSelect((select) => select(store).selectPageId());
-
-	return id ? <EditAutoFee id={id} /> : <CreateAutoFee setId={setId} />;
+	return <CreateEditAutoFee setId={setId} />;
 };
