@@ -65,6 +65,7 @@ class AutoFeesListTable extends ListTable {
 		$stati = [
 			'all'      => __( 'All', 'surecart' ),
 			'active'   => __( 'Active', 'surecart' ),
+			'inactive' => __( 'Inactive', 'surecart' ),
 		];
 
 		foreach ( $stati as $status => $label ) {
@@ -143,6 +144,10 @@ class AutoFeesListTable extends ListTable {
 
 		if ( 'active' === $this->getStatus() ) {
 			$conditions['active'] = true;
+		}
+
+		if ( 'inactive' === $this->getStatus() ) {
+			$conditions['active'] = false;
 		}
 
 		return AutoFee::where( $conditions )
