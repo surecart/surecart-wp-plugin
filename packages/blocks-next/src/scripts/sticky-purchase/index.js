@@ -69,7 +69,6 @@ const { state } = store('surecart/sticky-purchase', {
 			);
 
 			if (!elementsOverlap) {
-				document.body.style.removeProperty('--sc-cart-icon-bottom');
 				return;
 			}
 
