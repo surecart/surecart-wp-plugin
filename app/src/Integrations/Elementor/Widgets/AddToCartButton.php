@@ -557,7 +557,10 @@ class AddToCartButton extends \Elementor\Widget_Base {
 
 		ob_start();
 		?>
-		<button <?php echo $this->get_render_attribute_string( 'wrapper' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+		<button
+			data-wp-on-window--scroll="surecart/sticky-purchase::actions.toggleVisibility"
+			data-wp-on-window--resize="surecart/sticky-purchase::actions.toggleVisibility"
+			<?php echo $this->get_render_attribute_string( 'wrapper' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 			<span <?php echo $this->get_render_attribute_string( 'content-wrapper' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 			<?php
 			if ( ! empty( $settings['icon'] ) || ! empty( $settings['selected_icon']['value'] ) ) :
