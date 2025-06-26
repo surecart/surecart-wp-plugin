@@ -124,7 +124,7 @@ export default ({ ruleSchema = [], addRuleGroup, id, totalRuleGroups }) => {
 				/>
 				{renderValueInput()}
 			</div>
-			{totalRuleGroups === id + 1 && (
+			{totalRuleGroups === id && (
 				<ScButton
 					type="link"
 					css={css`

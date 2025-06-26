@@ -34,7 +34,7 @@ export default ({ autoFee = {}, onUpdate, loading }) => {
 
 	const [ruleSchema, setRuleSchema] = useState(null);
 	const [loadingRuleSchema, setLoadingRuleSchema] = useState(false);
-	const [oRRuleGroupCount, setOrRuleGroupCount] = useState(1);
+	const [ruleGroupsManager, setRuleGroupsManager] = useState([{ id: 1 }]);
 
 	const baseUrl = select(coreStore).getEntityConfig(
 		'surecart',
@@ -95,30 +95,35 @@ export default ({ autoFee = {}, onUpdate, loading }) => {
 			>
 				{__('Apply this auto fee to Orders where: ', 'surecart')}
 			</label>
-			{[...Array(oRRuleGroupCount)].map((_, index) => (
-				<>
-					{index > 0 && (
-						<label
-							css={css`
-								display: block;
-								text-align: center;
-								color: var(--sc-color-gray-500);
-							`}
-						>
-							{__('OR', 'surecart')}
-						</label>
-					)}
-					<OrGroup
-						key={index}
-						id={index}
-						ruleSchema={ruleSchema}
-						addRuleGroup={() =>
-							setOrRuleGroupCount(oRRuleGroupCount + 1)
-						}
-						totalRuleGroups={oRRuleGroupCount}
-					/>
-				</>
-			))}
+			{ruleGroupsManager?.map(({ id }) => {
+				return (
+					<>
+						{id > 1 && (
+							<label
+								css={css`
+									display: block;
+									text-align: center;
+									color: var(--sc-color-gray-500);
+								`}
+							>
+								{__('OR', 'surecart')}
+							</label>
+						)}
+						<OrGroup
+							key={id}
+							id={id}
+							ruleSchema={ruleSchema}
+							addRuleGroup={() =>
+								setRuleGroupsManager([
+									...ruleGroupsManager,
+									{ id: ruleGroupsManager?.length + 1 },
+								])
+							}
+							totalRuleGroups={ruleGroupsManager?.length}
+						/>
+					</>
+				);
+			})}
 		</Box>
 	);
 };

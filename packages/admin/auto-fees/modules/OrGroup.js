@@ -51,15 +51,14 @@ export default ({
 		);
 	}
 
-	const [andRuleGroupCount, setAndRuleGroupCount] = useState(1);
+	const [ruleGroupsManager, setRuleGroupsManager] = useState([{ id: 1 }]);
 
 	return (
 		<ScCard>
-			{
-				// render rule groups according to the andRuleGroupCount
-				[...Array(andRuleGroupCount)].map((_, index) => (
+			{ruleGroupsManager?.map(({ id }) => {
+				return (
 					<>
-						{index > 0 && (
+						{id > 1 && (
 							<label
 								css={css`
 									display: block;
@@ -71,18 +70,21 @@ export default ({
 							</label>
 						)}
 						<AndGroup
-							key={index}
-							id={index}
+							key={id}
+							id={id}
 							ruleSchema={ruleSchema}
 							addRuleGroup={() =>
-								setAndRuleGroupCount(andRuleGroupCount + 1)
+								setRuleGroupsManager([
+									...ruleGroupsManager,
+									{ id: ruleGroupsManager?.length + 1 },
+								])
 							}
-							totalRuleGroups={andRuleGroupCount}
+							totalRuleGroups={ruleGroupsManager?.length}
 						/>
 					</>
-				))
-			}
-			{totalRuleGroups === id + 1 && (
+				);
+			})}
+			{totalRuleGroups === id && (
 				<ScButton
 					type="link"
 					css={css`
