@@ -1,9 +1,13 @@
+
+Deprecated: Mockery::formatArgs(): Implicitly marking parameter $arguments as nullable is deprecated, the explicit nullable type must be used instead in /Users/andre/sites/surecart/wp-content/plugins/surecart/vendor/mockery/mockery/library/Mockery.php on line 560
+
+Deprecated: Mockery::formatObjects(): Implicitly marking parameter $objects as nullable is deprecated, the explicit nullable type must be used instead in /Users/andre/sites/surecart/wp-content/plugins/surecart/vendor/mockery/mockery/library/Mockery.php on line 636
 <?php
 /**
  * Plugin Name: SureCart
  * Plugin URI: https://surecart.com/
  * Description: A simple yet powerful headless e-commerce platform designed to grow your business with effortlessly selling online.
- * Version: 3.10.0-beta1
+ * Version: 3.10.0-beta2
  * Requires at least: 6.6
  * Requires PHP: 7.4
  * Author: SureCart
