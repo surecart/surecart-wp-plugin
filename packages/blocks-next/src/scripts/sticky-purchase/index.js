@@ -1,143 +1,99 @@
 /**
  * WordPress dependencies.
  */
-import {
-	store,
-	getContext,
-	getElement,
-	withScope,
-} from '@wordpress/interactivity';
+import { store, getContext, getElement } from '@wordpress/interactivity';
 
-// controls the sticky purchase behavior.
 const { actions } = store('surecart/sticky-purchase', {
 	state: {
 		get isVisible() {
-			const context = getContext();
-			return context?.isVisible || false;
-		},
-		get ticking() {
-			const context = getContext();
-			return context?.ticking || false;
+			return getContext()?.isVisible || false;
 		},
 		get lastScrollY() {
-			const context = getContext();
-			return context?.lastScrollY || 0;
-		},
-		get scrollDirection() {
-			const context = getContext();
-			return context?.scrollDirection || 'down';
-		},
-		get viewportHeight() {
-			const context = getContext();
-			return context?.viewportHeight || window.innerHeight;
-		},
-		get hideTimeout() {
-			const context = getContext();
-			return context?.hideTimeout || null;
+			return getContext()?.lastScrollY || 0;
 		},
 	},
 
 	actions: {
 		toggleVisibility() {
 			const context = getContext() || {};
-			if (context?.ticking) {
-				return;
-			}
+			if (context.ticking) return;
 
 			const stickyButton = document.querySelector('.sc-sticky-purchase');
-			if (!stickyButton) {
-				context.ticking = false;
-				return;
-			}
+			if (!stickyButton) return;
 
+			context.ticking = true;
 			const { ref: productBuyButtonRef } = getElement();
 			const scrollY = window.scrollY;
-
-			// Determine scroll direction.
-			context.scrollDirection =
-				scrollY > (context.lastScrollY || 0) ? 'down' : 'up';
+			const scrollDirection =
+				scrollY > context.lastScrollY ? 'down' : 'up';
 			context.lastScrollY = scrollY;
 
-			// Calculate if we're at the bottom of the page.
+			// Check if at bottom of page.
 			const atBottom =
-				scrollY + (context.viewportHeight || window.innerHeight) >=
-				actions.getDocumentHeight();
+				scrollY + window.innerHeight >= actions.getDocumentHeight();
 
-			// Determine if we should show the sticky button.
+			// Show sticky button if buy button is out of view and conditions are met
+			const buyButtonOutOfView =
+				productBuyButtonRef?.getBoundingClientRect().bottom < 0;
 			const shouldShow =
-				(productBuyButtonRef?.getBoundingClientRect()).bottom < 0 && // Check if the buy buttons are out of view.
-				(!atBottom || context.scrollDirection === 'up'); // If at bottom, show only if scrolling up.
+				buyButtonOutOfView && (!atBottom || scrollDirection === 'up');
 
-			// Clear any pending hide timeout when scrolling.
-			if (context.hideTimeout) {
-				clearTimeout(context.hideTimeout);
-				context.hideTimeout = null;
-			}
-
-			// Update visibility state.
 			if (shouldShow !== context.isVisible) {
 				context.isVisible = shouldShow;
 
-				if (context.isVisible) {
+				// Clear any existing hide timeout
+				if (context.hideTimer) {
+					clearTimeout(context.hideTimer);
+					context.hideTimer = null;
+				}
+
+				if (shouldShow) {
+					// Show immediately.
 					stickyButton.classList.remove('is-hiding');
 					stickyButton.classList.add('is-visible');
-					actions.addStickyPurchaseToBody();
+					document.body.classList.add('sc-sticky-purchase-active');
 
-					// Calculate and set the sticky purchase height as a CSS variable
-					// for proper cart icon positioning.
-					setTimeout(() => {
-						const stickyHeight = stickyButton.offsetHeight;
-						document.documentElement.style.setProperty(
-							'--sc-sticky-purchase-height',
-							`${stickyHeight}px`
-						);
-					}, 50);
+					// Set height CSS variable only once when first showing.
+					if (!context.heightSet) {
+						requestAnimationFrame(() => {
+							document.documentElement.style.setProperty(
+								'--sc-sticky-purchase-height',
+								`${stickyButton.offsetHeight}px`
+							);
+							context.heightSet = true;
+						});
+					}
 				} else {
+					// Hide with animation.
 					stickyButton.classList.add('is-hiding');
-
-					setTimeout(
-						withScope(() => {
-							const currentContext = getContext();
-							if (!currentContext?.isVisible) {
-								stickyButton.classList.remove('is-visible');
-								actions.removeStickyPurchaseToBody();
-							}
-						}),
-						500
-					);
+					context.hideTimer = setTimeout(() => {
+						if (!context.isVisible) {
+							stickyButton.classList.remove('is-visible');
+							document.body.classList.remove(
+								'sc-sticky-purchase-active'
+							);
+						}
+					}, 300);
 				}
 			}
 
-			// If user has stopped scrolling for more than 1 second and we're at the bottom,
-			// hide the sticky button for better viewing of footer content.
-			if (atBottom && context.scrollDirection === 'down') {
-				context.hideTimeout = setTimeout(
-					withScope(() => {
-						const currentContext = getContext();
-						if (!currentContext) return;
-
-						// Recalculate atBottom with current scroll position.
-						const currentScrollY = window.scrollY;
-						const currentAtBottom =
-							currentScrollY +
-								(currentContext.viewportHeight ||
-									window.innerHeight) >=
-							actions.getDocumentHeight();
-
-						if (currentAtBottom) {
-							currentContext.isVisible = false;
-							stickyButton.classList.add('is-hiding');
-							setTimeout(
-								withScope(() => {
-									stickyButton.classList.remove('is-visible');
-									actions.removeStickyPurchaseToBody();
-								}),
-								500
+			// Auto-hide at bottom with delay.
+			if (atBottom && scrollDirection === 'down' && context.isVisible) {
+				context.hideTimer = setTimeout(() => {
+					const currentAtBottom =
+						window.scrollY + window.innerHeight >=
+						actions.getDocumentHeight() - 10;
+					if (currentAtBottom && context.isVisible) {
+						context.isVisible = false;
+						stickyButton.classList.add('is-hiding');
+						setTimeout(() => {
+							stickyButton.classList.remove('is-visible');
+							document.body.classList.remove(
+								'sc-sticky-purchase-active'
 							);
-						}
-					}),
-					1000
-				);
+						}, 300);
+					}
+				}, 500);
 			}
 
 			context.ticking = false;
@@ -146,20 +102,8 @@ const { actions } = store('surecart/sticky-purchase', {
 		getDocumentHeight() {
 			return Math.max(
 				document.body.scrollHeight,
-				document.documentElement.scrollHeight,
-				document.body.offsetHeight,
-				document.documentElement.offsetHeight,
-				document.body.clientHeight,
-				document.documentElement.clientHeight
+				document.documentElement.scrollHeight
 			);
-		},
-
-		addStickyPurchaseToBody() {
-			document.body.classList.add('sc-sticky-purchase-active');
-		},
-
-		removeStickyPurchaseToBody() {
-			document.body.classList.remove('sc-sticky-purchase-active');
 		},
 	},
 
@@ -168,16 +112,16 @@ const { actions } = store('surecart/sticky-purchase', {
 			const context = getContext();
 			if (!context) return;
 
-			// Initialize context properties.
-			context.isVisible = false;
-			context.ticking = false;
-			context.lastScrollY = window.scrollY;
-			context.scrollDirection = 'down';
-			context.viewportHeight = window.innerHeight;
-			context.hideTimeout = null;
-			actions.removeStickyPurchaseToBody();
+			// Initialize.
+			Object.assign(context, {
+				isVisible: false,
+				ticking: false,
+				lastScrollY: window.scrollY,
+				hideTimer: null,
+				heightSet: false,
+			});
 
-			// Reset the CSS variable for sticky purchase height.
+			document.body.classList.remove('sc-sticky-purchase-active');
 			document.documentElement.style.setProperty(
 				'--sc-sticky-purchase-height',
 				'80px'
