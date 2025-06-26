@@ -48,6 +48,7 @@ export default ({ autoFee = {}, onUpdate, loading }) => {
 				path: `${baseUrl}`,
 			});
 			setRuleSchema(response?.data);
+			setRuleGroupsManager([{ id: 1 }]);
 			setLoadingRuleSchema(false);
 		} catch (e) {
 			console.error(e);
