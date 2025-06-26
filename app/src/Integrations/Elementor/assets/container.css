@@ -75,9 +75,3 @@
 	opacity: 0;
 	visibility: hidden;
 }
-
-.elementor-widget-container {
-	:where(.wp-block-columns) {
-		margin-bottom: 0;
-	}
-}

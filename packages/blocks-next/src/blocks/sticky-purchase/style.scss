@@ -23,6 +23,10 @@
 			margin-bottom: 0;
 		}
 
+		:where(.wp-block-columns) {
+			margin-bottom: 0;
+		}
+
 		&.is-visible {
 			opacity: 1;
 			transform: translateY(0) translateX(-50%);
