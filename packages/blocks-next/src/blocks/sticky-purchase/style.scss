@@ -1,20 +1,21 @@
 .wp-block-surecart-sticky-purchase.sc-sticky-purchase {
 	width: var(--sc-sticky-purchase-width, 600px);
 	position: fixed;
-	bottom: 1%;
 	padding: 1%;
 	left: 50%;
-	transform: translateY(100%) translateX(-50%);
+	transform: translateX(-50%);
 	opacity: 0;
 	z-index: 100;
+	bottom: -100%;
 	margin: auto;
 	max-width: calc(100vw - 2rem);
 	width: var(--sc-sticky-purchase-width, 600px);
 	pointer-events: none;
 	visibility: hidden;
 	transition: opacity var(--sc-transition-fast) cubic-bezier(0.4, 0, 0.2, 1),
-		transform var(--sc-transition-fast) cubic-bezier(0.4, 0, 0.2, 1),
+		bottom var(--sc-transition-fast) cubic-bezier(0.4, 0, 0.2, 1),
 		visibility var(--sc-transition-fast) cubic-bezier(0.4, 0, 0.2, 1);
+	will-change: opacity, bottom, visibility;
 
 	.sc-sticky-purchase__content {
 		width: 100%;
@@ -31,14 +32,9 @@
 
 	&.is-visible {
 		opacity: 1;
-		transform: translateY(0) translateX(-50%);
+		transform: translateX(-50%);
+		bottom: 1%;
 		pointer-events: auto;
 		visibility: visible;
-
-		@starting-style {
-			opacity: 0;
-			transform: translateY(100%) translateX(-50%);
-			visibility: hidden;
-		}
 	}
 }
