@@ -557,7 +557,10 @@ class AddToCartButton extends \Elementor\Widget_Base {
 
 		ob_start();
 		?>
-		<button <?php echo $this->get_render_attribute_string( 'wrapper' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+		<button
+			data-wp-on-window--scroll="surecart/sticky-purchase::actions.toggleVisibility"
+			data-wp-on-window--resize="surecart/sticky-purchase::actions.toggleVisibility"
+			<?php echo $this->get_render_attribute_string( 'wrapper' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 			<span <?php echo $this->get_render_attribute_string( 'content-wrapper' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 			<?php
 			if ( ! empty( $settings['icon'] ) || ! empty( $settings['selected_icon']['value'] ) ) :
@@ -584,12 +587,12 @@ class AddToCartButton extends \Elementor\Widget_Base {
 		echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
 		// Add the sticky purchase button if enabled.
-		global $is_sticky_purchase_added;
-		if ( isset( $settings['show_sticky_purchase_button'] ) && 'yes' === $settings['show_sticky_purchase_button'] && ! $is_sticky_purchase_added ) {
+		global $is_sticky_purchase_added_by_elementor;
+		if ( isset( $settings['show_sticky_purchase_button'] ) && 'yes' === $settings['show_sticky_purchase_button'] && ! $is_sticky_purchase_added_by_elementor ) {
 			$template = get_block_template( 'surecart/surecart//sticky-purchase', 'wp_template_part' );
 			if ( $template && ! empty( $template->content ) ) {
 				echo do_blocks( $template->content ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-				$is_sticky_purchase_added = true;
+				$is_sticky_purchase_added_by_elementor = true;
 			}
 		}
 	}
