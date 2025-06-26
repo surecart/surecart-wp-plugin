@@ -51,13 +51,6 @@ const { actions } = store('surecart/sticky-purchase', {
 			}
 
 			const { ref: productBuyButtonRef } = getElement();
-
-			if (!productBuyButtonRef) {
-				context.ticking = false;
-				return;
-			}
-
-			const rect = productBuyButtonRef.getBoundingClientRect();
 			const scrollY = window.scrollY;
 
 			// Determine scroll direction.
@@ -70,13 +63,10 @@ const { actions } = store('surecart/sticky-purchase', {
 				scrollY + (context.viewportHeight || window.innerHeight) >=
 				actions.getDocumentHeight();
 
-			// Check if the buy buttons are out of view.
-			const buyButtonsOutOfView = rect.bottom < 0;
-
 			// Determine if we should show the sticky button.
 			const shouldShow =
-				buyButtonsOutOfView &&
-				(!atBottom || context.scrollDirection === 'up');
+				(productBuyButtonRef?.getBoundingClientRect()).bottom < 0 && // Check if the buy buttons are out of view.
+				(!atBottom || context.scrollDirection === 'up'); // If at bottom, show only if scrolling up.
 
 			// Clear any pending hide timeout when scrolling.
 			if (context.hideTimeout) {
