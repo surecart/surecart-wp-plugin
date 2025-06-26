@@ -56,7 +56,7 @@ export default ({ autoFee = {}, onUpdate, loading }) => {
 
 	const { rule_string } = autoFee;
 
-	if (!ruleSchema && !rule_string) {
+	if (!ruleSchema || !ruleGroupsManager?.length) {
 		return (
 			<Box
 				title={__('Auto Fee Conditions', 'surecart')}
@@ -119,6 +119,13 @@ export default ({ autoFee = {}, onUpdate, loading }) => {
 									{ id: ruleGroupsManager?.length + 1 },
 								])
 							}
+							removeRuleGroup={() => {
+								setRuleGroupsManager(
+									ruleGroupsManager.filter(
+										(ruleGroup) => ruleGroup.id !== id
+									)
+								);
+							}}
 							totalRuleGroups={ruleGroupsManager?.length}
 						/>
 					</>

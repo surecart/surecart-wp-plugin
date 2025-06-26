@@ -31,6 +31,7 @@ import AndGroup from './AndGroup';
 export default ({
 	ruleSchema = [],
 	addRuleGroup,
+	removeRuleGroup,
 	id,
 	totalRuleGroups,
 	loading,
@@ -54,7 +55,29 @@ export default ({
 	const [ruleGroupsManager, setRuleGroupsManager] = useState([{ id: 1 }]);
 
 	return (
-		<ScCard>
+		<ScCard hasTitleSlot={true}>
+			<div
+				css={css`
+					display: flex;
+					width: 100%;
+					justify-content: flex-end;
+				`}
+			>
+				<ScIcon
+					name="trash"
+					tabindex="0"
+					onClick={removeRuleGroup}
+					css={css`
+						cursor: pointer;
+						transition: color var(--sc-transition-medium)
+							ease-in-out;
+						color: var(--sc-color-gray-600);
+						&:hover {
+							color: var(--sc-color-danger-500);
+						}
+					`}
+				/>
+			</div>
 			{ruleGroupsManager?.map(({ id }) => {
 				return (
 					<>
@@ -79,6 +102,13 @@ export default ({
 									{ id: ruleGroupsManager?.length + 1 },
 								])
 							}
+							removeRuleGroup={() => {
+								setRuleGroupsManager(
+									ruleGroupsManager.filter(
+										(ruleGroup) => ruleGroup.id !== id
+									)
+								);
+							}}
 							totalRuleGroups={ruleGroupsManager?.length}
 						/>
 					</>

@@ -15,7 +15,7 @@ import {
 	ScInput,
 	ScPriceInput,
 	ScSelect,
-	ScSkeleton,
+	ScIcon,
 } from '@surecart/components-react';
 import Box from '../../ui/Box';
 import { useState, useEffect } from '@wordpress/element';
@@ -25,7 +25,13 @@ import { useDispatch, useSelect, select } from '@wordpress/data';
 import apiFetch from '@wordpress/api-fetch';
 import DateTimePicker from './DateTimePicker';
 
-export default ({ ruleSchema = [], addRuleGroup, id, totalRuleGroups }) => {
+export default ({
+	ruleSchema = [],
+	addRuleGroup,
+	removeRuleGroup,
+	id,
+	totalRuleGroups,
+}) => {
 	const [attribute, setAttribute] = useState(null);
 	const [operator, setOperator] = useState(null);
 	const [value, setValue] = useState(null);
@@ -122,7 +128,29 @@ export default ({ ruleSchema = [], addRuleGroup, id, totalRuleGroups }) => {
 					}}
 					choices={operators[attribute] || []}
 				/>
-				{renderValueInput()}
+				<div
+					css={css`
+						display: flex;
+						align-items: center;
+						gap: 0.5em;
+					`}
+				>
+					{renderValueInput()}
+					<ScIcon
+						name="trash"
+						tabindex="0"
+						onClick={removeRuleGroup}
+						css={css`
+							cursor: pointer;
+							transition: color var(--sc-transition-medium)
+								ease-in-out;
+							color: var(--sc-color-gray-600);
+							&:hover {
+								color: var(--sc-color-danger-500);
+							}
+						`}
+					/>
+				</div>
 			</div>
 			{totalRuleGroups === id && (
 				<ScButton
