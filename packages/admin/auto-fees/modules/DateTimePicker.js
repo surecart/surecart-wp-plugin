@@ -16,7 +16,13 @@ import { __ } from '@wordpress/i18n';
 import { getDate } from '@wordpress/date';
 import { formatDateTime } from '../../util/time';
 
-export default ({ currentDate, setDate, label, required }) => {
+export default ({
+	currentDate,
+	setDate,
+	label,
+	required,
+	showLabel = true,
+}) => {
 	// Use internal state instead of a ref to make sure that the component
 	// re-renders when the popover's anchor updates.
 	const [popoverAnchor, setPopoverAnchor] = useState(null);
@@ -35,7 +41,9 @@ export default ({ currentDate, setDate, label, required }) => {
 	return (
 		<PanelRow ref={setPopoverAnchor}>
 			<div>
-				<span>{label || __('Select Date', 'surecart')}</span>
+				{showLabel && (
+					<span>{label || __('Select Date', 'surecart')}</span>
+				)}
 				{required && (
 					<span aria-hidden="true" className="required">
 						{' '}
@@ -73,7 +81,11 @@ export default ({ currentDate, setDate, label, required }) => {
 						`}
 					>
 						<InspectorPopoverHeader
-							title={label || __('Select Date', 'surecart')}
+							title={
+								showLabel
+									? label || __('Select Date', 'surecart')
+									: ''
+							}
 							onClose={onClose}
 							actions={[
 								{

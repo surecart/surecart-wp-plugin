@@ -14,17 +14,11 @@ import Box from '../../ui/Box';
 import { useState, useEffect } from '@wordpress/element';
 
 export default ({ autoFee, onUpdate, loading }) => {
-	if (!autoFee || Object.keys(autoFee).length === 0) {
-		return;
+	if (!loading && !autoFee?.id) {
+		return null;
 	}
 
-	const {
-		name,
-		amount_adjustment,
-		percent_adjustment,
-		discount,
-		rule_string,
-	} = autoFee;
+	const { name, amount_adjustment, percent_adjustment, discount } = autoFee;
 
 	const [adjustmentType, setAdjustmentType] = useState(
 		amount_adjustment ? 'fixed' : 'percentage'

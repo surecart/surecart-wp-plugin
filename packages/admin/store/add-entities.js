@@ -90,6 +90,13 @@ dispatch(coreStore).addEntities([
 		baseURLParams: { context: 'edit' },
 	},
 	{
+		name: 'auto-fee-rule-schema',
+		kind: 'surecart',
+		label: __('Auto Fees Rule Schema', 'surecart'),
+		baseURL: '/surecart/v1/auto_fees/rule_schema',
+		baseURLParams: { context: 'edit' },
+	},
+	{
 		name: 'customer',
 		kind: 'surecart',
 		label: __('Customer', 'surecart'),

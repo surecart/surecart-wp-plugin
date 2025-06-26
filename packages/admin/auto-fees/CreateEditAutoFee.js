@@ -150,7 +150,6 @@ export default ({ setId }) => {
 			setError(e);
 		}
 	};
-	console.log('autoFee', autoFee);
 
 	return (
 		<UpdateModel
