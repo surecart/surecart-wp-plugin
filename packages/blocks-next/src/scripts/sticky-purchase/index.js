@@ -40,28 +40,24 @@ const { actions } = store('surecart/sticky-purchase', {
 	actions: {
 		toggleVisibility() {
 			const context = getContext() || {};
-			if (context.ticking) {
+			if (context?.ticking) {
 				return;
 			}
 
 			const stickyButton = document.querySelector('.sc-sticky-purchase');
-			const stickyContainer = document.querySelector(
-				'.wp-block-surecart-sticky-purchase'
-			);
-
-			if (!stickyButton || !stickyContainer) {
+			if (!stickyButton) {
 				context.ticking = false;
 				return;
 			}
 
-			const { ref: productBuyButton } = getElement();
+			const { ref: productBuyButtonRef } = getElement();
 
-			if (!productBuyButton) {
+			if (!productBuyButtonRef) {
 				context.ticking = false;
 				return;
 			}
 
-			const rect = productBuyButton.getBoundingClientRect();
+			const rect = productBuyButtonRef.getBoundingClientRect();
 			const scrollY = window.scrollY;
 
 			// Determine scroll direction.
@@ -95,7 +91,7 @@ const { actions } = store('surecart/sticky-purchase', {
 				if (context.isVisible) {
 					stickyButton.classList.remove('is-hiding');
 					stickyButton.classList.add('is-visible');
-					document.body.classList.add('sc-sticky-purchase-active');
+					actions.addStickyPurchaseToBody();
 
 					// Calculate and set the sticky purchase height as a CSS variable
 					// for proper cart icon positioning.
@@ -114,9 +110,7 @@ const { actions } = store('surecart/sticky-purchase', {
 							const currentContext = getContext();
 							if (!currentContext?.isVisible) {
 								stickyButton.classList.remove('is-visible');
-								document.body.classList.remove(
-									'sc-sticky-purchase-active'
-								);
+								actions.removeStickyPurchaseToBody();
 							}
 						}),
 						500
@@ -146,9 +140,7 @@ const { actions } = store('surecart/sticky-purchase', {
 							setTimeout(
 								withScope(() => {
 									stickyButton.classList.remove('is-visible');
-									document.body.classList.remove(
-										'sc-sticky-purchase-active'
-									);
+									actions.removeStickyPurchaseToBody();
 								}),
 								500
 							);
@@ -171,6 +163,14 @@ const { actions } = store('surecart/sticky-purchase', {
 				document.documentElement.clientHeight
 			);
 		},
+
+		addStickyPurchaseToBody() {
+			document.body.classList.add('sc-sticky-purchase-active');
+		},
+
+		removeStickyPurchaseToBody() {
+			document.body.classList.remove('sc-sticky-purchase-active');
+		},
 	},
 
 	callbacks: {
@@ -185,21 +185,13 @@ const { actions } = store('surecart/sticky-purchase', {
 			context.scrollDirection = 'down';
 			context.viewportHeight = window.innerHeight;
 			context.hideTimeout = null;
-			document.body.classList.remove('sc-sticky-purchase-active');
+			actions.removeStickyPurchaseToBody();
 
 			// Reset the CSS variable for sticky purchase height.
 			document.documentElement.style.setProperty(
 				'--sc-sticky-purchase-height',
 				'80px'
 			);
-
-			// Initial check after a small delay to ensure DOM is fully rendered.
-			// setTimeout(
-			// 	withScope(() => {
-			// 		actions.toggleVisibility();
-			// 	}),
-			// 	100
-			// );
 		},
 	},
 });
