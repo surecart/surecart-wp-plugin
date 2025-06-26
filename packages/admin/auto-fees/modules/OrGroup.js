@@ -103,6 +103,10 @@ export default ({
 								])
 							}
 							removeRuleGroup={() => {
+								if (ruleGroupsManager.length === 1) {
+									removeRuleGroup();
+									return;
+								}
 								setRuleGroupsManager(
 									ruleGroupsManager.filter(
 										(ruleGroup) => ruleGroup.id !== id
