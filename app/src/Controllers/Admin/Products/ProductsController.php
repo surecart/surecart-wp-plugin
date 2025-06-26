@@ -333,13 +333,7 @@ class ProductsController extends AdminController {
 	 * @return \SureCartCore\Responses\RedirectResponse
 	 */
 	public function duplicate( $request ) {
-		$product = Product::find( $request->query( 'id' ) );
-
-		if ( is_wp_error( $product ) ) {
-			wp_die( implode( ' ', array_map( 'esc_html', $product->get_error_messages() ) ) );
-		}
-
-		$duplicated = $product->duplicate();
+		$duplicated = Product::duplicate( $request->query( 'id' ) );
 
 		if ( is_wp_error( $duplicated ) ) {
 			wp_die( implode( ' ', array_map( 'esc_html', $duplicated->get_error_messages() ) ) );
