@@ -28,8 +28,10 @@
 			data-wp-bind--disabled="state.isUnavailable"
 			style="<?php echo ! empty( $styles['css'] ) ? esc_attr( $styles['css'] ) : ''; ?>"
 			data-wp-on--click="callbacks.redirectToCheckout"
-			data-wp-on-window--scroll="surecart/sticky-purchase::actions.toggleVisibility"
-			data-wp-on-window--resize="surecart/sticky-purchase::actions.toggleVisibility"
+			<?php if ( $show_sticky_purchase_button ) { ?>
+				data-wp-on-async-window--scroll="surecart/sticky-purchase::actions.toggleVisibility"
+				data-wp-on-async-window--resize="surecart/sticky-purchase::actions.toggleVisibility"
+			<?php } ?>
 		>
 			<span class="sc-button__link-text" data-wp-text="state.buttonText">
 			</span>
@@ -41,9 +43,11 @@
 			class="wp-block-button__link wp-element-button sc-button__link <?php echo ! empty( $styles['classnames'] ) ? esc_attr( $styles['classnames'] ) : ''; ?>"
 			data-wp-bind--disabled="state.isUnavailable"
 			data-wp-class--sc-button__link--busy="context.busy"
-			data-wp-on-window--scroll="surecart/sticky-purchase::actions.toggleVisibility"
-			data-wp-on-window--resize="surecart/sticky-purchase::actions.toggleVisibility"
 			style="<?php echo ! empty( $styles['css'] ) ? esc_attr( $styles['css'] ) : ''; ?>"
+			<?php if ( $show_sticky_purchase_button ) { ?>
+				data-wp-on-async-window--scroll="surecart/sticky-purchase::actions.toggleVisibility"
+				data-wp-on-async-window--resize="surecart/sticky-purchase::actions.toggleVisibility"
+			<?php } ?>
 		>
 			<span class="sc-spinner" aria-hidden="false"></span>
 			<span class="sc-button__link-text" data-wp-text="state.buttonText">
@@ -56,7 +60,7 @@
 
 <?php
 global $is_sticky_purchase_added;
-if ( isset( $attributes['show_sticky_purchase_button'] ) && $attributes['show_sticky_purchase_button'] && ! $is_sticky_purchase_added ) {
+if ( $show_sticky_purchase_button ) {
 	$template = get_block_template( 'surecart/surecart//sticky-purchase', 'wp_template_part' );
 	if ( $template && ! empty( $template->content ) ) {
 		echo do_blocks( $template->content ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped

@@ -13,5 +13,8 @@ if ( ! \SureCart::cart()->isCartEnabled() ) {
 	$add_to_cart = false;
 }
 
+global $is_sticky_purchase_added;
+$show_sticky_purchase_button = !empty( $attributes['show_sticky_purchase_button'] ) && ! $is_sticky_purchase_added;
+
 // return the view.
 return 'file:./view.php';
