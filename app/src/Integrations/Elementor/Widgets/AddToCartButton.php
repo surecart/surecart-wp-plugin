@@ -587,12 +587,12 @@ class AddToCartButton extends \Elementor\Widget_Base {
 		echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
 		// Add the sticky purchase button if enabled.
-		global $is_sticky_purchase_added;
-		if ( isset( $settings['show_sticky_purchase_button'] ) && 'yes' === $settings['show_sticky_purchase_button'] && ! $is_sticky_purchase_added ) {
+		global $is_sticky_purchase_added_by_elementor;
+		if ( isset( $settings['show_sticky_purchase_button'] ) && 'yes' === $settings['show_sticky_purchase_button'] && ! $is_sticky_purchase_added_by_elementor ) {
 			$template = get_block_template( 'surecart/surecart//sticky-purchase', 'wp_template_part' );
 			if ( $template && ! empty( $template->content ) ) {
 				echo do_blocks( $template->content ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-				$is_sticky_purchase_added = true;
+				$is_sticky_purchase_added_by_elementor = true;
 			}
 		}
 	}
