@@ -108,7 +108,7 @@ const { actions } = store('surecart/sticky-purchase', {
 	},
 
 	callbacks: {
-		*init() {
+		init() {
 			const context = getContext();
 			if (!context) return;
 
