@@ -28,6 +28,8 @@
 			data-wp-bind--disabled="state.isUnavailable"
 			style="<?php echo ! empty( $styles['css'] ) ? esc_attr( $styles['css'] ) : ''; ?>"
 			data-wp-on--click="callbacks.redirectToCheckout"
+			data-wp-on-window--scroll="surecart/sticky-purchase::actions.toggleVisibility"
+			data-wp-on-window--resize="surecart/sticky-purchase::actions.toggleVisibility"
 		>
 			<span class="sc-button__link-text" data-wp-text="state.buttonText">
 			</span>
@@ -39,6 +41,8 @@
 			class="wp-block-button__link wp-element-button sc-button__link <?php echo ! empty( $styles['classnames'] ) ? esc_attr( $styles['classnames'] ) : ''; ?>"
 			data-wp-bind--disabled="state.isUnavailable"
 			data-wp-class--sc-button__link--busy="context.busy"
+			data-wp-on-window--scroll="surecart/sticky-purchase::actions.toggleVisibility"
+			data-wp-on-window--resize="surecart/sticky-purchase::actions.toggleVisibility"
 			style="<?php echo ! empty( $styles['css'] ) ? esc_attr( $styles['css'] ) : ''; ?>"
 		>
 			<span class="sc-spinner" aria-hidden="false"></span>

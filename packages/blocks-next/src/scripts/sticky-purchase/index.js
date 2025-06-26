@@ -1,7 +1,12 @@
 /**
  * WordPress dependencies.
  */
-import { store, getContext, withScope } from '@wordpress/interactivity';
+import {
+	store,
+	getContext,
+	getElement,
+	withScope,
+} from '@wordpress/interactivity';
 
 // controls the sticky purchase behavior.
 const { actions } = store('surecart/sticky-purchase', {
@@ -33,34 +38,11 @@ const { actions } = store('surecart/sticky-purchase', {
 	},
 
 	actions: {
-		handleScroll() {
-			const context = getContext();
-			if (!context) return;
-
-			if (!context.ticking) {
-				requestAnimationFrame(
-					withScope(() => actions.updateStickyButtonVisibility())
-				);
-				context.ticking = true;
+		toggleVisibility() {
+			const context = getContext() || {};
+			if (context.ticking) {
+				return;
 			}
-		},
-
-		handleResize() {
-			const context = getContext();
-			if (!context) return;
-
-			context.viewportHeight = window.innerHeight;
-			if (!context.ticking) {
-				requestAnimationFrame(
-					withScope(() => actions.updateStickyButtonVisibility())
-				);
-				context.ticking = true;
-			}
-		},
-
-		updateStickyButtonVisibility() {
-			const context = getContext();
-			if (!context) return;
 
 			const stickyButton = document.querySelector('.sc-sticky-purchase');
 			const stickyContainer = document.querySelector(
@@ -72,23 +54,7 @@ const { actions } = store('surecart/sticky-purchase', {
 				return;
 			}
 
-			// Look for the main product buy buttons.
-			const productForm = document.querySelector(
-				'[data-sc-block-id="product-page"]'
-			);
-
-			if (!productForm) {
-				context.ticking = false;
-				return;
-			}
-
-			let querySelector = '.wp-block-surecart-product-buy-button';
-			if (typeof elementorFrontend !== 'undefined') {
-				querySelector = '.elementor-widget-surecart-add-to-cart-button';
-			} else if (typeof bricksData !== 'undefined') {
-				querySelector = '.brxe-surecart-product-buy-button';
-			}
-			const productBuyButton = productForm.querySelector(querySelector);
+			const { ref: productBuyButton } = getElement();
 
 			if (!productBuyButton) {
 				context.ticking = false;
@@ -228,12 +194,12 @@ const { actions } = store('surecart/sticky-purchase', {
 			);
 
 			// Initial check after a small delay to ensure DOM is fully rendered.
-			setTimeout(
-				withScope(() => {
-					actions.updateStickyButtonVisibility();
-				}),
-				100
-			);
+			// setTimeout(
+			// 	withScope(() => {
+			// 		actions.toggleVisibility();
+			// 	}),
+			// 	100
+			// );
 		},
 	},
 });
