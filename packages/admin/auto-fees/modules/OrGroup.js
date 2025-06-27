@@ -80,7 +80,7 @@ export default ({
 			</div>
 			{ruleGroupsManager?.map(({ id }) => {
 				return (
-					<>
+					<div key={id}>
 						{id > 1 && (
 							<label
 								css={css`
@@ -115,7 +115,7 @@ export default ({
 							}}
 							totalRuleGroups={ruleGroupsManager?.length}
 						/>
-					</>
+					</div>
 				);
 			})}
 			{totalRuleGroups === id && (

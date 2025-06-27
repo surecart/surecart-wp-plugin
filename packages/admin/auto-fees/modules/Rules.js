@@ -98,7 +98,7 @@ export default ({ autoFee = {}, onUpdate, loading }) => {
 			</label>
 			{ruleGroupsManager?.map(({ id }) => {
 				return (
-					<>
+					<div key={id}>
 						{id > 1 && (
 							<label
 								css={css`
@@ -111,7 +111,6 @@ export default ({ autoFee = {}, onUpdate, loading }) => {
 							</label>
 						)}
 						<OrGroup
-							key={id}
 							id={id}
 							ruleSchema={ruleSchema}
 							addRuleGroup={() =>
@@ -129,7 +128,7 @@ export default ({ autoFee = {}, onUpdate, loading }) => {
 							}}
 							totalRuleGroups={ruleGroupsManager?.length}
 						/>
-					</>
+					</div>
 				);
 			})}
 		</Box>
