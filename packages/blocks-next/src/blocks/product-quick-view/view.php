@@ -17,24 +17,24 @@ use SureCart\Models\Blocks\ProductPageBlock;
 	);
 	?>
 	>
+	<div 
+		class="sc-product-quick-view-dialog"
+		tabindex="-1"
+		data-wp-on--keydown="callbacks.handleKeyDown"
+		<?php
+		echo wp_kses_data(
+			wp_interactivity_data_wp_context(
+				[
+					'url' => $close_url,
+				]
+			)
+		);
+		?>
+	>
 	<?php
 	while ( $query->have_posts() ) :
 		$query->the_post();
 		?>
-		<div 
-			class="sc-product-quick-view-dialog"
-			tabindex="-1"
-			data-wp-on--keydown="callbacks.handleKeyDown"
-			<?php
-			echo wp_kses_data(
-				wp_interactivity_data_wp_context(
-					[
-						'url' => $close_url,
-					]
-				)
-			);
-			?>
-		>
 			<div class="sc-product-quick-view-dialog__content">
 				<?php
 
@@ -69,7 +69,7 @@ use SureCart\Models\Blocks\ProductPageBlock;
 				$context    = $controller->context();
 
 				wp_interactivity_state( 'surecart/product-page', $state );
-				?>
+		?>
 				<form
 					<?php
 					echo wp_kses_data( wp_interactivity_data_wp_context( $context ) );
@@ -80,18 +80,17 @@ use SureCart\Models\Blocks\ProductPageBlock;
 					<?php echo $block_content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 				</form>
 			</div>
-		</div>
-
-		<div class="sc-product-quick-view-overlay" data-wp-on--click="actions.close"
-			<?php
-			echo wp_kses_data(
-				wp_interactivity_data_wp_context(
-					[
-						'url' => $close_url,
-					]
-				)
-			);
-			?>
-		></div>
 	<?php endwhile; ?>
+	</div>
+	<div class="sc-product-quick-view-overlay" data-wp-on--click="actions.close" data-wp-bind--hidden="surecart/product-list::state.loading"
+		<?php
+		echo wp_kses_data(
+			wp_interactivity_data_wp_context(
+				[
+					'url' => $close_url,
+				]
+			)
+		);
+		?>
+	></div>
 </div>

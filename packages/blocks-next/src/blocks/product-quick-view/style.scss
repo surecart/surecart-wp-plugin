@@ -10,7 +10,6 @@
 		opacity: 0;
 		z-index: 10000;
 		box-sizing: border-box;
-		visibility: hidden;
 		width: 60vw;
 		max-width: 1000px;
 		height: fit-content;
@@ -51,7 +50,6 @@
 		width: 100vw;
 		height: 100vh;
 		background-color: rgba(0, 0, 0, 0.5);
-		visibility: hidden;
 		opacity: 0;
 		pointer-events: none;
 		overflow: hidden;
@@ -61,12 +59,10 @@
 	&.sc-modal-active {
 		.sc-product-quick-view-dialog {
 			opacity: 1;
-			visibility: visible;
 			transform: translate(-50%, -50%) scale(1);
 		}
 
 		.sc-product-quick-view-overlay {
-			visibility: visible;
 			pointer-events: all;
 			opacity: 1;
 		}
