@@ -35,6 +35,8 @@ export default ({
 	const [attribute, setAttribute] = useState(null);
 	const [operator, setOperator] = useState(null);
 	const [value, setValue] = useState(null);
+	const [metadataKey, setMetadataKey] = useState(null);
+
 	let operators = [];
 	let attributes = [];
 
@@ -95,6 +97,10 @@ export default ({
 		}
 	};
 
+	const isAttributeMetadata = attribute
+		? attribute.endsWith('.metadata') || 'metadata' === attribute
+		: false;
+
 	return (
 		<ScCard>
 			<div
@@ -108,21 +114,22 @@ export default ({
 					placeholder={__('Select an attribute', 'surecart')}
 					unselect={false}
 					value={attribute}
-					css={css`
-						min-width: 125px;
-					`}
 					onScChange={(e) => {
 						setAttribute(e.target.value);
 					}}
 					choices={attributes}
 				/>
+				{isAttributeMetadata && (
+					<ScInput
+						value={metadataKey}
+						onChange={(e) => setMetadataKey(e.target.value)}
+						placeholder={__('Enter a key', 'surecart')}
+					/>
+				)}
 				<ScSelect
 					placeholder={__('Select an operator', 'surecart')}
 					unselect={false}
 					value={operator}
-					css={css`
-						min-width: 125px;
-					`}
 					onScChange={(e) => {
 						setOperator(e.target.value);
 					}}
@@ -141,6 +148,7 @@ export default ({
 						tabindex="0"
 						onClick={removeRuleGroup}
 						css={css`
+							width: 10%;
 							cursor: pointer;
 							transition: color var(--sc-transition-medium)
 								ease-in-out;
