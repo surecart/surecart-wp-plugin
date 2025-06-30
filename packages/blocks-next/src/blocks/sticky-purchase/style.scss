@@ -29,4 +29,14 @@
 		pointer-events: auto;
 		visibility: visible;
 	}
+
+	.wp-block-surecart-product-buy-button {
+		min-width: 80px;
+	}
+
+	@media (max-width: 400px) {
+		.wp-block-post-featured-image {
+			display: none;
+		}
+	}
 }
