@@ -17,6 +17,7 @@ import {
 	ScButton,
 	ScEmpty,
 	ScIcon,
+	ScFlex,
 } from '@surecart/components-react';
 import Box from '../../ui/Box';
 import { useState, useEffect } from '@wordpress/element';
@@ -48,7 +49,6 @@ export default ({ autoFee = {}, onUpdate, loading }) => {
 				path: `${baseUrl}`,
 			});
 			setRuleSchema(response?.data);
-			setRuleGroupsManager([{ id: 1 }]);
 			setLoadingRuleSchema(false);
 		} catch (e) {
 			console.error(e);
@@ -57,7 +57,18 @@ export default ({ autoFee = {}, onUpdate, loading }) => {
 
 	const { rule_string } = autoFee;
 
-	if (!ruleSchema || !ruleGroupsManager?.length) {
+	useEffect(() => {
+		if (ruleSchema) {
+			return;
+		}
+		fetchRuleSchema();
+	}, [ruleSchema]);
+
+	useEffect(() => {
+		setRuleGroupsManager([{ id: 1 }]);
+	}, []);
+
+	if (!ruleGroupsManager?.length) {
 		return (
 			<Box
 				title={__('Auto Fee Conditions', 'surecart')}
@@ -71,8 +82,9 @@ export default ({ autoFee = {}, onUpdate, loading }) => {
 						)}
 						<div>
 							<ScButton
-								onClick={() => fetchRuleSchema()}
-								loading={loadingRuleSchema}
+								onClick={() =>
+									setRuleGroupsManager([{ id: 1 }])
+								}
 							>
 								<ScIcon name="plus" slot="prefix" />
 								{__('Add Conditions', 'surecart')}
@@ -85,7 +97,10 @@ export default ({ autoFee = {}, onUpdate, loading }) => {
 	}
 
 	return (
-		<Box title={__('Auto Fee Conditions', 'surecart')} loading={loading}>
+		<Box
+			title={__('Auto Fee Conditions', 'surecart')}
+			loading={loading || loadingRuleSchema}
+		>
 			<label
 				css={css`
 					display: block;
@@ -96,41 +111,56 @@ export default ({ autoFee = {}, onUpdate, loading }) => {
 			>
 				{__('Apply this auto fee to Orders where: ', 'surecart')}
 			</label>
-			{ruleGroupsManager?.map(({ id }) => {
-				return (
-					<div key={id}>
-						{id > 1 && (
-							<label
-								css={css`
-									display: block;
-									text-align: center;
-									color: var(--sc-color-gray-500);
-								`}
-							>
-								{__('OR', 'surecart')}
-							</label>
-						)}
-						<OrGroup
-							id={id}
-							ruleSchema={ruleSchema}
-							addRuleGroup={() =>
-								setRuleGroupsManager([
-									...ruleGroupsManager,
-									{ id: ruleGroupsManager?.length + 1 },
-								])
-							}
-							removeRuleGroup={() => {
-								setRuleGroupsManager(
-									ruleGroupsManager.filter(
-										(ruleGroup) => ruleGroup.id !== id
-									)
-								);
-							}}
-							totalRuleGroups={ruleGroupsManager?.length}
-						/>
-					</div>
-				);
-			})}
+			<ScFlex
+				flexDirection="column"
+				css={css`
+					--sc-flex-column-gap: 0;
+				`}
+			>
+				{ruleGroupsManager?.map(({ id }) => {
+					return (
+						<div
+							key={id}
+							css={css`
+								display: flex;
+								flex-direction: column;
+							`}
+						>
+							{id > 1 && (
+								<ScButton
+									css={css`
+										pointer-events: none;
+										margin: 1em auto;
+									`}
+									pill
+									type="default"
+									size="small"
+								>
+									{__('OR', 'surecart')}
+								</ScButton>
+							)}
+							<OrGroup
+								id={id}
+								ruleSchema={ruleSchema}
+								addRuleGroup={() =>
+									setRuleGroupsManager([
+										...ruleGroupsManager,
+										{ id: ruleGroupsManager?.length + 1 },
+									])
+								}
+								removeRuleGroup={() => {
+									setRuleGroupsManager(
+										ruleGroupsManager.filter(
+											(ruleGroup) => ruleGroup.id !== id
+										)
+									);
+								}}
+								totalRuleGroups={ruleGroupsManager?.length}
+							/>
+						</div>
+					);
+				})}
+			</ScFlex>
 		</Box>
 	);
 };

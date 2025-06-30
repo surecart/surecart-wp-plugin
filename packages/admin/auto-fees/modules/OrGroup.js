@@ -11,12 +11,13 @@ import { __ } from '@wordpress/i18n';
  */
 import {
 	ScInput,
-	ScPriceInput,
+	ScToggle,
 	ScSelect,
 	ScCard,
 	ScButton,
 	ScEmpty,
 	ScIcon,
+	ScFlex,
 	ScSkeleton,
 } from '@surecart/components-react';
 import Box from '../../ui/Box';
@@ -55,42 +56,46 @@ export default ({
 	const [ruleGroupsManager, setRuleGroupsManager] = useState([{ id: 1 }]);
 
 	return (
-		<ScCard hasTitleSlot={true}>
-			<div
+		<ScToggle
+			open
+			css={css`
+				position: relative;
+			`}
+			showIcon={true}
+		>
+			<ScButton
+				circle
 				css={css`
-					display: flex;
-					width: 100%;
-					justify-content: flex-end;
+					--sc-input-height-medium: 30px;
+					position: absolute;
+					top: -20px;
+					right: -12px;
 				`}
+				onClick={removeRuleGroup}
 			>
-				<ScIcon
-					name="trash"
-					tabindex="0"
-					onClick={removeRuleGroup}
-					css={css`
-						cursor: pointer;
-						transition: color var(--sc-transition-medium)
-							ease-in-out;
-						color: var(--sc-color-gray-600);
-						&:hover {
-							color: var(--sc-color-danger-500);
-						}
-					`}
-				/>
-			</div>
+				<ScIcon name="trash" />
+			</ScButton>
 			{ruleGroupsManager?.map(({ id }) => {
 				return (
-					<div key={id}>
+					<div
+						key={id}
+						css={css`
+							display: flex;
+							flex-direction: column;
+						`}
+					>
 						{id > 1 && (
-							<label
+							<ScButton
 								css={css`
-									display: block;
-									text-align: center;
-									color: var(--sc-color-gray-500);
+									pointer-events: none;
+									margin: 1em auto;
 								`}
+								pill
+								type="default"
+								size="small"
 							>
 								{__('AND', 'surecart')}
-							</label>
+							</ScButton>
 						)}
 						<AndGroup
 							key={id}
@@ -130,6 +135,6 @@ export default ({
 					{__('+ Add OR Group', 'surecart')}
 				</ScButton>
 			)}
-		</ScCard>
+		</ScToggle>
 	);
 };

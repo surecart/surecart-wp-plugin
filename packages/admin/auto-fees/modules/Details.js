@@ -60,41 +60,40 @@ export default ({ autoFee, onUpdate, loading }) => {
 					})
 				}
 			/>
+			<ScSelect
+				label={__('Type', 'surecart')}
+				help={__(
+					'Whether this auto fee is a discount or a fee.',
+					'surecart'
+				)}
+				unselect={false}
+				value={discount ? 'discount' : 'fee'}
+				css={css`
+					min-width: 125px;
+				`}
+				onScChange={(e) => {
+					onUpdate({
+						discount: 'discount' === e.target.value ? true : false,
+					});
+				}}
+				choices={[
+					{
+						label: __('Discount', 'surecart'),
+						value: 'discount',
+					},
+					{
+						label: __('Fee', 'surecart'),
+						value: 'fee',
+					},
+				]}
+			/>
 			<div
 				css={css`
 					display: grid;
 					gap: var(--sc-form-row-spacing);
-					grid-template-columns: 1fr 1fr 1fr;
+					grid-template-columns: 1fr 1fr;
 				`}
 			>
-				<ScSelect
-					label={__('Type', 'surecart')}
-					help={__(
-						'Whether this auto fee is a discount or a fee.',
-						'surecart'
-					)}
-					unselect={false}
-					value={discount ? 'discount' : 'fee'}
-					css={css`
-						min-width: 125px;
-					`}
-					onScChange={(e) => {
-						onUpdate({
-							discount:
-								'discount' === e.target.value ? true : false,
-						});
-					}}
-					choices={[
-						{
-							label: __('Discount', 'surecart'),
-							value: 'discount',
-						},
-						{
-							label: __('Fee', 'surecart'),
-							value: 'fee',
-						},
-					]}
-				/>
 				<ScSelect
 					label={__('Adjustment Type', 'surecart')}
 					help={__(

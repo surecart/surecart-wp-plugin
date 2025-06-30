@@ -102,7 +102,11 @@ export default ({
 		: false;
 
 	return (
-		<ScCard>
+		<ScCard
+			css={css`
+				position: relative;
+			`}
+		>
 			<div
 				css={css`
 					display: grid;
@@ -135,30 +139,20 @@ export default ({
 					}}
 					choices={operators[attribute] || []}
 				/>
-				<div
+
+				{renderValueInput()}
+				<ScButton
+					circle
 					css={css`
-						display: flex;
-						align-items: center;
-						gap: 0.5em;
+						--sc-input-height-medium: 30px;
+						position: absolute;
+						top: -8px;
+						right: -8px;
 					`}
+					onClick={removeRuleGroup}
 				>
-					{renderValueInput()}
-					<ScIcon
-						name="trash"
-						tabindex="0"
-						onClick={removeRuleGroup}
-						css={css`
-							width: 10%;
-							cursor: pointer;
-							transition: color var(--sc-transition-medium)
-								ease-in-out;
-							color: var(--sc-color-gray-600);
-							&:hover {
-								color: var(--sc-color-danger-500);
-							}
-						`}
-					/>
-				</div>
+					<ScIcon name="trash" />
+				</ScButton>
 			</div>
 			{totalRuleGroups === id && (
 				<ScButton
