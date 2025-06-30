@@ -1,3 +1,7 @@
+
+Deprecated: Mockery::formatArgs(): Implicitly marking parameter $arguments as nullable is deprecated, the explicit nullable type must be used instead in /Users/andre/sites/surecart/wp-content/plugins/surecart/vendor/mockery/mockery/library/Mockery.php on line 560
+
+Deprecated: Mockery::formatObjects(): Implicitly marking parameter $objects as nullable is deprecated, the explicit nullable type must be used instead in /Users/andre/sites/surecart/wp-content/plugins/surecart/vendor/mockery/mockery/library/Mockery.php on line 636
 <?php
 
 namespace SureCart\ProductQuickView;
@@ -20,7 +24,7 @@ class ProductQuickViewService {
 	 * This needs to run before <head> so that blocks can add scripts and styles in wp_head().
 	 *
 	 * @param string $template The template path.
-	 * @return string
+	 * @return string|null
 	 */
 	public function includeQuickViewTemplate( $template ) {
 		$quick_view_template = $this->productQuickViewTemplate();
@@ -51,7 +55,7 @@ class ProductQuickViewService {
 		ob_start();
 
 		// Render the product quick view.
-		echo do_blocks( $template->content ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped 
+		echo do_blocks( $template->content ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
 		return trim( preg_replace( '/\s+/', ' ', ob_get_clean() ) );
 	}
