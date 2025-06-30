@@ -23,6 +23,7 @@ const { state } = store('surecart/sticky-purchase', {
 		floatingCartElement() {
 			return document.querySelector('.wp-block-surecart-cart-icon');
 		},
+		isVisible: false,
 	},
 
 	actions: {
@@ -46,7 +47,7 @@ const { state } = store('surecart/sticky-purchase', {
 				return;
 			}
 
-			// Show sticky button if buy button is out of view and conditions are met
+			// Show sticky button if buy button is out of view and conditions are met.
 			state.isVisible = buyButton?.getBoundingClientRect().bottom < 0;
 		},
 	},
@@ -63,16 +64,17 @@ const { state } = store('surecart/sticky-purchase', {
 
 			// remove this so we can (re)calculate the overlap.
 			document.body.style.removeProperty('--sc-cart-icon-bottom');
-			const elementsOverlap = doElementsOverlap(
-				ref,
-				state.floatingCartElement()
-			);
 
-			if (!elementsOverlap) {
+			// If no floating cart element, do not adjust the offset.
+			const floatingCartElement = state.floatingCartElement();
+			if (
+				!floatingCartElement ||
+				!doElementsOverlap(ref, floatingCartElement)
+			) {
 				return;
 			}
 
-			// Distance from bottom of element to bottom of viewport
+			// Distance from bottom of element to bottom of viewport.
 			const distanceFromBottom = window.innerHeight - stickyRect.bottom;
 
 			document.body.style.setProperty(
