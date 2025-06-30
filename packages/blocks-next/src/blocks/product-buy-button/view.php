@@ -61,9 +61,9 @@
 <?php
 global $is_sticky_purchase_added;
 if ( $show_sticky_purchase_button ) {
-	$is_sticky_purchase_added = true;
 	$template = get_block_template( 'surecart/surecart//sticky-purchase', 'wp_template_part' );
 	if ( $template && ! empty( $template->content ) ) {
 		echo do_blocks( $template->content ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		$is_sticky_purchase_added = true;
 	}
 }
