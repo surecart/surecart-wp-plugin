@@ -5,28 +5,17 @@ import { css, jsx } from '@emotion/core';
  * External dependencies.
  */
 import { __ } from '@wordpress/i18n';
+import { useState, useEffect } from '@wordpress/element';
 
 /**
  * Internal dependencies.
  */
 import {
-	ScInput,
 	ScToggle,
-	ScSelect,
-	ScCard,
 	ScButton,
-	ScEmpty,
 	ScIcon,
-	ScFlex,
 	ScSkeleton,
 } from '@surecart/components-react';
-import Box from '../../ui/Box';
-import { useState, useEffect } from '@wordpress/element';
-import { store as coreStore } from '@wordpress/core-data';
-import { useDispatch, useSelect, select } from '@wordpress/data';
-
-import apiFetch from '@wordpress/api-fetch';
-
 import AndGroup from './AndGroup';
 
 export default ({

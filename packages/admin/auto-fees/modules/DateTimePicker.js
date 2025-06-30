@@ -40,17 +40,19 @@ export default ({
 
 	return (
 		<PanelRow ref={setPopoverAnchor}>
-			<div>
-				{showLabel && (
-					<span>{label || __('Select Date', 'surecart')}</span>
-				)}
-				{required && (
-					<span aria-hidden="true" className="required">
-						{' '}
-						*
-					</span>
-				)}
-			</div>
+			{(showLabel || required) && (
+				<div>
+					{showLabel && (
+						<span>{label || __('Select Date', 'surecart')}</span>
+					)}
+					{required && (
+						<span aria-hidden="true" className="required">
+							{' '}
+							*
+						</span>
+					)}
+				</div>
+			)}
 			<Dropdown
 				popoverProps={popoverProps}
 				focusOnMount

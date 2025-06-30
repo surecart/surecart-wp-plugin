@@ -5,6 +5,7 @@ import { css, jsx } from '@emotion/core';
  * External dependencies.
  */
 import { __ } from '@wordpress/i18n';
+import { useState, useEffect } from '@wordpress/element';
 
 /**
  * Internal dependencies.
@@ -17,12 +18,6 @@ import {
 	ScSelect,
 	ScIcon,
 } from '@surecart/components-react';
-import Box from '../../ui/Box';
-import { useState, useEffect } from '@wordpress/element';
-import { store as coreStore } from '@wordpress/core-data';
-import { useDispatch, useSelect, select } from '@wordpress/data';
-
-import apiFetch from '@wordpress/api-fetch';
 import DateTimePicker from './DateTimePicker';
 
 export default ({
@@ -54,6 +49,13 @@ export default ({
 			value: rule.key,
 		});
 	}
+
+	useEffect(() => {
+		// Reset values when the attribute changes.
+		setValue(null);
+		setOperator(null);
+		setMetadataKey(null);
+	}, [attribute]);
 
 	const renderValueInput = () => {
 		switch (attribute) {
@@ -111,7 +113,7 @@ export default ({
 				css={css`
 					display: grid;
 					gap: var(--sc-form-row-spacing);
-					grid-template-columns: 1fr 1fr 1fr;
+					grid-template-columns: 1fr 1fr;
 				`}
 			>
 				<ScSelect
@@ -127,7 +129,7 @@ export default ({
 					<ScInput
 						value={metadataKey}
 						onChange={(e) => setMetadataKey(e.target.value)}
-						placeholder={__('Enter a key', 'surecart')}
+						placeholder={__("Enter metadata's key", 'surecart')}
 					/>
 				)}
 				<ScSelect

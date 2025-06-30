@@ -5,14 +5,15 @@ import { css, jsx } from '@emotion/core';
  * External dependencies.
  */
 import { __ } from '@wordpress/i18n';
+import { useState, useEffect } from '@wordpress/element';
+import { store as coreStore } from '@wordpress/core-data';
+import { select } from '@wordpress/data';
+import apiFetch from '@wordpress/api-fetch';
 
 /**
  * Internal dependencies.
  */
 import {
-	ScInput,
-	ScPriceInput,
-	ScSelect,
 	ScCard,
 	ScButton,
 	ScEmpty,
@@ -20,12 +21,6 @@ import {
 	ScFlex,
 } from '@surecart/components-react';
 import Box from '../../ui/Box';
-import { useState, useEffect } from '@wordpress/element';
-import { store as coreStore } from '@wordpress/core-data';
-import { useDispatch, useSelect, select } from '@wordpress/data';
-
-import apiFetch from '@wordpress/api-fetch';
-
 import OrGroup from './OrGroup';
 
 export default ({ autoFee = {}, onUpdate, loading }) => {
@@ -35,7 +30,7 @@ export default ({ autoFee = {}, onUpdate, loading }) => {
 
 	const [ruleSchema, setRuleSchema] = useState(null);
 	const [loadingRuleSchema, setLoadingRuleSchema] = useState(false);
-	const [ruleGroupsManager, setRuleGroupsManager] = useState([{ id: 1 }]);
+	const [ruleGroupsManager, setRuleGroupsManager] = useState([]);
 
 	const baseUrl = select(coreStore).getEntityConfig(
 		'surecart',
@@ -63,10 +58,6 @@ export default ({ autoFee = {}, onUpdate, loading }) => {
 		}
 		fetchRuleSchema();
 	}, [ruleSchema]);
-
-	useEffect(() => {
-		setRuleGroupsManager([{ id: 1 }]);
-	}, []);
 
 	if (!ruleGroupsManager?.length) {
 		return (
@@ -104,12 +95,11 @@ export default ({ autoFee = {}, onUpdate, loading }) => {
 			<label
 				css={css`
 					display: block;
-					font-size: 14px;
-					font-weight: 500;
+					font-size: 1em;
 					margin-bottom: 10px;
 				`}
 			>
-				{__('Apply this auto fee to Orders where: ', 'surecart')}
+				{__('Apply this auto fee to Orders where ', 'surecart')}
 			</label>
 			<ScFlex
 				flexDirection="column"
