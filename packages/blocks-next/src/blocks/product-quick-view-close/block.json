@@ -3,7 +3,7 @@
 	"apiVersion": 3,
 	"name": "surecart/product-quick-view-close",
 	"title": "Close",
-	"description": "Display the product quick view close button.",
+	"description": "Display the product quick add close button.",
 	"version": "1.0.0",
 	"category": "surecart-product-list",
 	"example": {},

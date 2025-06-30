@@ -6,7 +6,7 @@
 				'role'                   => 'button',
 				'tabindex'               => '0',
 				'aria-disabled'          => empty( $quick_view_link ) ? 'true' : null,
-				'aria-label'             => __( 'Quick View Product', 'surecart' ),
+				'aria-label'             => __( 'Quick Add Product', 'surecart' ),
 				'data-wp-on--click'      => 'actions.open',
 				'data-wp-on--keydown'    => 'actions.open',
 				'data-wp-on--mouseenter' => 'actions.prefetch',

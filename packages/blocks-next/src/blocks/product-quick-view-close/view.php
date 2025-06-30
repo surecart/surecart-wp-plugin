@@ -19,7 +19,7 @@ $close_url = remove_query_arg( 'product-quick-view' );
 	data-wp-on--mouseenter="actions.prefetch"
 	role="button"
 	tabindex="0"
-	aria-label="<?php esc_attr_e( 'Close quick view', 'surecart' ); ?>"
+	aria-label="<?php esc_attr_e( 'Close quick add', 'surecart' ); ?>"
 	href="<?php echo esc_url( $close_url ); ?>">
 	<?php echo wp_kses( SureCart::svg()->get( 'x' ), sc_allowed_svg_html() ); ?>
 </a>

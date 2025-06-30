@@ -14,7 +14,7 @@ export default () => {
 					metadata: {
 						categories: ['surecart_product_page'],
 						patternName: 'surecart-product-quick-view',
-						name: __('Product Quick View', 'surecart'),
+						name: __('Product Quick Add', 'surecart'),
 					},
 					align: 'wide',
 					layout: { type: 'constrained' },

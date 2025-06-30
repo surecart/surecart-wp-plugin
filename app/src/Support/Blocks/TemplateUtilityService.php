@@ -375,7 +375,7 @@ class TemplateUtilityService {
 			'product-collection-part' => class_exists( 'WooCommerce' ) ? __( 'SureCart Product Collections', 'surecart' ) : __( 'Product Collections', 'surecart' ),
 			'cart'                    => class_exists( 'WooCommerce' ) ? __( 'SureCart Cart', 'surecart' ) : __( 'Cart', 'surecart' ),
 			'checkout'                => class_exists( 'WooCommerce' ) ? __( 'SureCart Checkout', 'surecart' ) : __( 'Checkout', 'surecart' ),
-			'product-quick-view'      => class_exists( 'WooCommerce' ) ? __( 'SureCart Product Quick View ', 'surecart' ) : __( 'Product Quick View', 'surecart' ),
+			'product-quick-view'      => class_exists( 'WooCommerce' ) ? __( 'SureCart Product Quick Add', 'surecart' ) : __( 'Product Quick Add', 'surecart' ),
 		);
 
 		if ( isset( $translations[ $template_slug ] ) ) {
@@ -401,7 +401,7 @@ class TemplateUtilityService {
 			'product-collection-part' => __( 'Display all individual product collections content unless a custom template has been applied.', 'surecart' ),
 			'cart'                    => __( 'The slide-out cart template.', 'surecart' ),
 			'checkout'                => __( 'Display the checkout content unless a custom template has been applied.', 'surecart' ),
-			'product-quick-view'      => __( 'Display product quick view.', 'surecart' ),
+			'product-quick-view'      => __( 'Display product quick add.', 'surecart' ),
 		);
 
 		if ( isset( $translations[ $template_slug ] ) ) {

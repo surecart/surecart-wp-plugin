@@ -55,8 +55,8 @@ export default ({
 					<PlainText
 						__experimentalVersion={2}
 						tagName="span"
-						aria-label={__('Quick view button')}
-						placeholder={__('Quick View')}
+						aria-label={__('Quick add button')}
+						placeholder={__('Quick Add')}
 						value={label}
 						onChange={(newLabel) =>
 							setAttributes({ label: newLabel })
