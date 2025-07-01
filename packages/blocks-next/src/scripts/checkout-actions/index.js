@@ -19,7 +19,6 @@ export const expand = [
 	'variant.image',
 	'price.product',
 	'price.current_swap',
-	'line_item.swap',
 	'swap.swap_price',
 	'product.featured_product_media',
 	'product.product_collections',
