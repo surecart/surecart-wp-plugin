@@ -211,6 +211,7 @@ class ProductPageBlock {
 							'amount',
 							'display_amount',
 							'available_stock',
+							'line_item_image',
 						]
 					),
 					$product->variants->data ?? array()
