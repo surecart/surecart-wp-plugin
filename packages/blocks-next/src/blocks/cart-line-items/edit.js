@@ -17,7 +17,8 @@ export default ({
 	__unstableLayoutClassNames,
 	clientId,
 }) => {
-	const { removable, editable } = attributes;
+	const { removable, editable, style } = attributes;
+	const { blockGap } = style?.spacing || {};
 
 	const placeholderImageUrl =
 		scBlockData?.plugin_url + '/images/placeholder-thumbnail.jpg';
@@ -92,6 +93,9 @@ export default ({
 				clientId={clientId}
 				blockProps={blockProps}
 				className={__unstableLayoutClassNames}
+				style={{
+					gap: blockGap,
+				}}
 			/>
 		</>
 	);
