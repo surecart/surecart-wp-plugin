@@ -197,7 +197,6 @@ export function* removeCheckoutLineItem(id) {
  * Toggle a swap
  */
 export function* toggleSwap({ id, action = 'swap' }) {
-	const context = getContext();
 	try {
 		checkoutState.loading = true;
 		const item = yield apiFetch({
