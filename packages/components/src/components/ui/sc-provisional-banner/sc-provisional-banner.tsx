@@ -15,7 +15,7 @@ export class ScProvisionalBanner {
       <div class={{ 'sc-banner': true }}>
         <p>
           {__('Complete your store setup to go live.', 'surecart')}
-          <a href={this.claimUrl}>
+          <a href={this.claimUrl} target="_blank" rel="noopener noreferrer">
             {__('Complete Setup', 'surecart')} <sc-icon name="arrow-right"></sc-icon>
           </a>
         </p>

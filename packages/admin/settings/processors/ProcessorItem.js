@@ -24,7 +24,7 @@ export default ({ processor }) => {
 	return (
 		<ScStackedListRow
 			href={link}
-			target={scData?.claim_url ? '_self' : '_blank'}
+			target="_blank"
 		>
 			<ScIcon name="chevron-right" slot="suffix" />
 			<ScFlex flex-direction="column">
