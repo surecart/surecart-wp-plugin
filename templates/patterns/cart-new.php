@@ -3,7 +3,7 @@
  * Staggered Product List Pattern
  */
 return [
-	'title'      => __( 'Cart', 'surecart' ),
+	'title'      => __( 'DefaultCart', 'surecart' ),
 	'categories' => [ 'surecart_cart' ],
 	'blockTypes' => [ 'surecart/slide-out-cart' ],
 	'priority'   => 2,
