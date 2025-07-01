@@ -1,7 +1,3 @@
-
-Deprecated: Mockery::formatArgs(): Implicitly marking parameter $arguments as nullable is deprecated, the explicit nullable type must be used instead in /Users/andre/sites/surecart/wp-content/plugins/surecart/vendor/mockery/mockery/library/Mockery.php on line 560
-
-Deprecated: Mockery::formatObjects(): Implicitly marking parameter $objects as nullable is deprecated, the explicit nullable type must be used instead in /Users/andre/sites/surecart/wp-content/plugins/surecart/vendor/mockery/mockery/library/Mockery.php on line 636
 <?php
 
 namespace SureCart\Models;
@@ -44,16 +40,6 @@ class LineItem extends Model {
 	 */
 	public function setVariantAttribute( $value ) {
 		$this->setRelation( 'variant', $value, Variant::class );
-	}
-
-	/**
-	 * Set the swap attribute.
-	 *
-	 * @param  string $value Swap properties.
-	 * @return void
-	 */
-	public function setSwapAttribute( $value ) {
-		$this->setRelation( 'swap', $value, Swap::class );
 	}
 
 	/**
