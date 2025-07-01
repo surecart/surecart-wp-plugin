@@ -61,7 +61,7 @@ return [
 
 <!-- wp:surecart/product-scratch-price {"style":{"typography":{"fontSize":"18px","fontStyle":"normal","fontWeight":"600"},"spacing":{"margin":{"top":"5px","bottom":"5px"}}}} /--></div>
 <!-- /wp:group -->
-<!-- wp:surecart/product-quick-view-button {"iconPosition":"before","quickViewButtonType":"both","width":50,"style":{"border":{"radius":"4px"},"typography":{"fontSize":"12px","textAlign":"center","textTransform":"uppercase"},"spacing":{"padding":{"left":"12px","right":"12px","top":"12px","bottom":"12px"}}}} /--></div>
+<!-- wp:surecart/product-quick-view-button {"iconPosition":"before","quickViewButtonType":"both","style":{"border":{"radius":"4px"},"typography":{"fontSize":"12px","textAlign":"center","textTransform":"uppercase"},"spacing":{"padding":{"left":"12px","right":"12px","top":"12px","bottom":"12px"}}}} /--></div>
 <!-- /wp:group -->
 <!-- /wp:surecart/product-template -->
 
