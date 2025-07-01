@@ -38,6 +38,7 @@ export default ({
 				}
 				disabled={disabled}
 				target="_blank"
+				rel="noopener noreferrer"
 			>
 				{__('Edit', 'surecart')}
 				<ScIcon
