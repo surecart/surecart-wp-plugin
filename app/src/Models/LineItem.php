@@ -1,3 +1,7 @@
+
+Deprecated: Mockery::formatArgs(): Implicitly marking parameter $arguments as nullable is deprecated, the explicit nullable type must be used instead in /Users/andre/sites/surecart/wp-content/plugins/surecart/vendor/mockery/mockery/library/Mockery.php on line 560
+
+Deprecated: Mockery::formatObjects(): Implicitly marking parameter $objects as nullable is deprecated, the explicit nullable type must be used instead in /Users/andre/sites/surecart/wp-content/plugins/surecart/vendor/mockery/mockery/library/Mockery.php on line 636
 <?php
 
 namespace SureCart\Models;
@@ -227,8 +231,7 @@ class LineItem extends Model {
 	 * @return string
 	 */
 	public function getScratchDisplayAmountAttribute() {
-		// TODO: Maybe remove this conditional check once scratch_amount is null as it should be in line items.
-		return ! empty( $this->scratch_amount ) && ( $this->scratch_amount > $this->subtotal_amount ) ? Currency::format( $this->scratch_amount, $this->currency ) : '';
+		return ! empty( $this->scratch_amount ) ? Currency::format( $this->scratch_amount, $this->currency ) : '';
 	}
 
 	/**
