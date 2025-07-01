@@ -15,7 +15,14 @@
 	);
 	?>
 >
-	<div class="sc-sticky-purchase__content" data-wp-interactive='{ "namespace": "surecart/product-page" }'>
+	<div
+		data-wp-interactive='{ "namespace": "surecart/product-page" }'
+		<?php if ( ! $enable_out_of_stock ) : ?>
+			data-wp-bind--class="state.stickyPurchaseClassNames"
+		<?php else : ?>
+			class="sc-sticky-purchase__content"
+		<?php endif; ?>
+	>
 		<?php echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 	</div>
 </div>

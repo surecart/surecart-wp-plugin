@@ -19,6 +19,10 @@
 			"type": "boolean",
 			"default": false
 		},
+		"show_sticky_purchase_on_out_of_stock": {
+			"type": "boolean",
+			"default": false
+		},
 		"text": {
 			"type": "string"
 		},

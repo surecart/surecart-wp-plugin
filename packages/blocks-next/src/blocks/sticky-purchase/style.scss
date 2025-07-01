@@ -47,3 +47,10 @@
 		}
 	}
 }
+
+.wp-block-surecart-sticky-purchase.sc-sticky-purchase:has(.sc-sticky-purchase__content--unavailable) {
+	opacity: 0;
+	bottom: -100%;
+	pointer-events: none;
+	visibility: hidden;
+}
