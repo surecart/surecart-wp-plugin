@@ -9,21 +9,20 @@
 	); ?>
 >
 	<img
-		data-wp-bind--hidden="!state.selectedVariant.line_item_image.data-src"
-		data-wp-bind--src="state.selectedVariant.line_item_image.data-src"
+		data-wp-bind--hidden="!state.selectedVariant.line_item_image.src"
+		data-wp-bind--src="state.selectedVariant.line_item_image.src"
 		data-wp-bind--alt="state.selectedVariant.line_item_image.alt"
 		data-wp-bind--srcset="state.selectedVariant.line_item_image.srcset"
 		data-wp-bind--sizes="state.selectedVariant.line_item_image.sizes"
-		loading="lazy"
+		loading="state.selectedVariant.line_item_image.loading"
 	/>
 
 	<img
 		data-wp-bind--hidden="state.selectedVariant.line_item_image.src"
-		data-wp-bind--src="<?php echo esc_attr( $product_featured_image->{'data-src'} ?? '' ); ?>"
-		srcset="<?php echo esc_attr( $product_featured_image->{'data-srcset'} ?? '' ); ?>"
-		sizes="<?php echo esc_attr( $product_featured_image->{'data-sizes'} ?? '' ); ?>"
+		src="<?php echo esc_attr( $product_featured_image->src ?? '' ); ?>"
 		alt="<?php echo esc_attr( $product_featured_image->alt ?? '' ); ?>"
+		srcset="<?php echo esc_attr( $product_featured_image->srcset ?? '' ); ?>"
+		sizes="<?php echo esc_attr( $product_featured_image->sizes ?? '' ); ?>"
 		loading="<?php echo esc_attr( $product_featured_image->loading ?? 'lazy' ); ?>"
-		alt="<?php echo esc_attr( $product_featured_image->alt ?? '' ); ?>"
 	/>
 </figure>
