@@ -155,6 +155,7 @@ export default ({ price, product, allPrices }) => {
 				null,
 				{ throwOnError: true }
 			);
+			await invalidateResolutionForStore(); // invalidate the resolution for the store to refresh the prices.
 			createSuccessNotice(__('Price deleted.', 'surecart'), {
 				type: 'snackbar',
 			});
@@ -171,6 +172,10 @@ export default ({ price, product, allPrices }) => {
 			[...(allPrices || []), duplicate],
 			{ context: 'edit', product_ids: [product?.id], per_page: 100 }
 		);
+		createSuccessNotice(__('Price duplicated.', 'surecart'), {
+			type: 'snackbar',
+		});
+		await invalidateResolutionForStore(); // invalidate the resolution for the store to refresh the prices.
 	};
 
 	// get the price type.
