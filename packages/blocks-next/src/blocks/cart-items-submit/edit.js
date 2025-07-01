@@ -43,47 +43,51 @@ export default ({ className, attributes, setAttributes }) => {
 
 	return (
 		<div className="sc-cart-items-submit__wrapper">
-			<div
-				{...blockProps}
-				className={classnames(blockProps.className, {
-					'wp-block-button': true,
-					'sc-block-button': true,
-					[`has-custom-width sc-block-button__width-${width}`]: width,
-					[`has-custom-font-size`]: blockProps.style.fontSize,
-				})}
-			>
-				<RichText
-					aria-label={__('Button text', 'surecart')}
-					placeholder={__('Add text…', 'surecart')}
-					ref={richTextRef}
-					className={classnames(
-						className,
-						'wp-block-button__link',
-						'sc-block-button__link',
-						colorProps.className,
-						borderProps.className,
-						spacingProps.className,
-						shadowProps.className,
-						{
-							'has-custom-font-size': blockProps.style.fontSize,
-							// For backwards compatibility add style that isn't
-							// provided via block support.
-							'no-border-radius': style?.border?.radius === 0,
-						},
-						__experimentalGetElementClassName('button')
-					)}
-					style={{
-						...borderProps.style,
-						...spacingProps.style,
-						...shadowProps.style,
-						...colorProps.style,
-						fontSize: blockProps.style.fontSize,
-					}}
-					value={text}
-					onChange={(text) => setAttributes({ text })}
-					withoutInteractiveFormatting
-					allowedFormats={['core/bold', 'core/italic']}
-				/>
+			<div class="wp-block-button">
+				<div
+					{...blockProps}
+					className={classnames(blockProps.className, {
+						'wp-block-button': true,
+						'sc-block-button': true,
+						[`has-custom-width sc-block-button__width-${width}`]:
+							width,
+						[`has-custom-font-size`]: blockProps.style.fontSize,
+					})}
+				>
+					<RichText
+						aria-label={__('Button text', 'surecart')}
+						placeholder={__('Add text…', 'surecart')}
+						ref={richTextRef}
+						className={classnames(
+							className,
+							'wp-block-button__link',
+							'sc-block-button__link',
+							colorProps.className,
+							borderProps.className,
+							spacingProps.className,
+							shadowProps.className,
+							{
+								'has-custom-font-size':
+									blockProps.style.fontSize,
+								// For backwards compatibility add style that isn't
+								// provided via block support.
+								'no-border-radius': style?.border?.radius === 0,
+							},
+							__experimentalGetElementClassName('button')
+						)}
+						style={{
+							...borderProps.style,
+							...spacingProps.style,
+							...shadowProps.style,
+							...colorProps.style,
+							fontSize: blockProps.style.fontSize,
+						}}
+						value={text}
+						onChange={(text) => setAttributes({ text })}
+						withoutInteractiveFormatting
+						allowedFormats={['core/bold', 'core/italic']}
+					/>
+				</div>
 			</div>
 		</div>
 	);
