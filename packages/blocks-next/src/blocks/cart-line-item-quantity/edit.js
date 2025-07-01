@@ -4,7 +4,9 @@ import { __ } from '@wordpress/i18n';
 
 export default ({ context: { editable = true } }) => {
 	const blockProps = useBlockProps({
-		className: editable ? 'sc-input-group sc-quantity-selector' : null,
+		className: editable
+			? 'sc-input-group sc-quantity-selector sc-input-group-sm'
+			: null,
 	});
 
 	if (!editable) {
