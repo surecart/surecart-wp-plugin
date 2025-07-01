@@ -17,4 +17,4 @@ $style .= ! empty( $attributes['height'] )
 $style .= $styles['css'];
 $class .= $styles['classnames'];
 
-return 'file:/view.php';
+return 'file:./view.php';
