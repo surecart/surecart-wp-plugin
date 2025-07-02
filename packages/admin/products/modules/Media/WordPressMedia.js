@@ -10,7 +10,7 @@ import { useDispatch } from '@wordpress/data';
 import { SortableKnob } from 'react-easy-sort';
 const ALLOWED_MEDIA_TYPES = ['image', 'video'];
 
-export default ({ id, isNew, onRemove, isFeatured, onSelect }) => {
+export default ({ id, isNew, onRemove, isFeatured, onSelect, onEditMedia }) => {
 	const { invalidateResolution } = useDispatch(coreStore);
 
 	const { media, hasLoadedMedia } = useSelect((select) => {
@@ -22,8 +22,6 @@ export default ({ id, isNew, onRemove, isFeatured, onSelect }) => {
 			),
 		};
 	});
-
-	console.log('media', media);
 
 	if (hasLoadedMedia && !media) {
 		return (
@@ -185,7 +183,7 @@ export default ({ id, isNew, onRemove, isFeatured, onSelect }) => {
 							border-radius: var(--sc-border-radius-small);
 						`}
 						name="edit-2"
-						onClick={open}
+						onClick={() => onEditMedia(media)}
 					/>
 				)}
 			/>

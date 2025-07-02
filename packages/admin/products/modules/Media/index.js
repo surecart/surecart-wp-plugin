@@ -7,6 +7,7 @@ import { useDispatch } from '@wordpress/data';
 import { store as coreStore, useEntityRecord } from '@wordpress/core-data';
 import { store as noticesStore } from '@wordpress/notices';
 import AddMedia from './AddMedia';
+import EditMedia from './EditMedia';
 import ConfirmDeleteMedia from './ConfirmDeleteMedia';
 import Error from '../../../components/Error';
 import SortableList, { SortableItem } from 'react-easy-sort';
@@ -17,6 +18,7 @@ import { select } from '@wordpress/data';
 
 const modals = {
 	CONFIRM_DELETE_MEDIA: 'confirm_delete_media',
+	EDIT_MEDIA: 'edit_media',
 };
 export default ({ productId, product, updateProduct }) => {
 	const [error, setError] = useState();
@@ -120,6 +122,10 @@ export default ({ productId, product, updateProduct }) => {
 										onSwapMedia(id, media.id)
 									}
 									isFeatured={index === 0}
+									onEditMedia={(media) => {
+										setSelectedMedia(media);
+										setCurrentModal(modals.EDIT_MEDIA);
+									}}
 								/>
 							)}
 						</div>
@@ -146,6 +152,22 @@ export default ({ productId, product, updateProduct }) => {
 					setCurrentModal('');
 				}}
 				selectedMedia={selectedMedia}
+			/>
+
+			<EditMedia
+				media={selectedMedia}
+				setMedia={setSelectedMedia}
+				open={currentModal === modals.EDIT_MEDIA}
+				product={product}
+				onRequestClose={() => {
+					setCurrentModal('');
+					setSelectedMedia('');
+				}}
+				value={product?.gallery_ids || []}
+				onSelect={(media) => {
+					const gallery_ids = (media || []).map(({ id }) => id);
+					updateGalleryIds(gallery_ids);
+				}}
 			/>
 		</Box>
 	);
