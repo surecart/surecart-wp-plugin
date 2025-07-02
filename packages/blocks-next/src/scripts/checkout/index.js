@@ -177,6 +177,10 @@ const { state, actions } = store('surecart/checkout', {
 			return state?.swap?.swap_price?.short_interval_text;
 		},
 
+		get swapIntervalCountText() {
+			return state?.swap?.swap_price?.short_interval_count_text;
+		},
+
 		/**
 		 * Get the cart/checkout error title.
 		 */

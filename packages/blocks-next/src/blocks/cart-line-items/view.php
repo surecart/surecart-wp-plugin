@@ -21,6 +21,7 @@
 				<div class="sc-product-line-item__swap-amount">
 					<span data-wp-text="state.swapDisplayAmount" class="sc-product-line-item__swap-amount-value"></span>
 					<span data-wp-text="state.swapIntervalText" class="sc-product-line-item__swap-amount-interval"></span>
+					<span data-wp-text="state.swapIntervalCountText" class="sc-product-line-item__swap-amount-interval-count"></span>
 				</div>
 			</div>
 		</div>
