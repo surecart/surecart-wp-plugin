@@ -14,9 +14,20 @@
 			"type": "string",
 			"default": "Checkout"
 		},
-		"width": {
-			"type": "number",
-			"default": 100
+		"border": {
+			"type": "boolean"
+		},
+		"sectionBackgroundColor": {
+			"type": "string"
+		},
+		"padding": {
+			"type": "object",
+			"default": {
+				"top": "1.25em",
+				"left": "1.25em",
+				"bottom": "1.25em",
+				"right": "1.25em"
+			}
 		}
 	},
 	"supports": {
@@ -25,42 +36,13 @@
 		"align": false,
 		"alignWide": false,
 		"html": false,
-		"multiple": false,
 		"inserter": false,
+		"multiple": false,
 		"__experimentalSelector": ".wp-block-button .wp-block-button__link",
-		"spacing": {
-			"__experimentalSkipSerialization": true,
-			"padding": ["horizontal", "vertical"],
-			"margin": ["top", "bottom"]
-		},
 		"color": {
 			"__experimentalSkipSerialization": true,
-			"gradients": true,
-			"__experimentalDefaultControls": {
-				"background": true,
-				"text": true
-			}
-		},
-		"typography": {
-			"fontSize": true,
-			"__experimentalFontFamily": true,
-			"__experimentalFontWeight": true,
-			"__experimentalFontStyle": true,
-			"__experimentalTextTransform": true
-		},
-		"reusable": false,
-		"__experimentalBorder": {
-			"color": true,
-			"radius": true,
-			"style": true,
-			"width": true,
-			"__experimentalSkipSerialization": true,
-			"__experimentalDefaultControls": {
-				"color": true,
-				"radius": true,
-				"style": true,
-				"width": true
-			}
+			"background": true,
+			"text": true
 		}
 	},
 	"render": "file:./view.php",
