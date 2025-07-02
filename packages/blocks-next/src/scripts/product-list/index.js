@@ -48,10 +48,25 @@ const { state } = store('surecart/product-list', {
 				);
 
 				state.loading = true;
+				
+				// Also set loading state in sidebar if the click came from within a sidebar
+				const sidebar = ref.closest('.sc-sidebar-drawer');
+				if (sidebar) {
+					const { state: sidebarState } = store('surecart/sidebar');
+					sidebarState.loading = true;
+				}
+				
 				yield actions.navigate(ref.href, {
 					replace: history !== false ? false : true,
 				});
+				
 				state.loading = false;
+				
+				// Clear sidebar loading state
+				if (sidebar) {
+					const { state: sidebarState } = store('surecart/sidebar');
+					sidebarState.loading = false;
+				}
 
 				const firstAnchor = queryRef.querySelector(
 					'.sc-product-item a[href]'
@@ -118,6 +133,14 @@ const { state } = store('surecart/product-list', {
 			state.loading = true;
 			state.searching = true;
 
+			// Also set loading state in sidebar if the search is within a sidebar
+			const { ref } = getElement();
+			const sidebar = ref.closest('.sc-sidebar-drawer');
+			if (sidebar) {
+				const { state: sidebarState } = store('surecart/sidebar');
+				sidebarState.loading = true;
+			}
+
 			const { actions: routerActions } = yield import(
 				/* webpackIgnore: true */
 				'@wordpress/interactivity-router'
@@ -138,6 +161,12 @@ const { state } = store('surecart/product-list', {
 
 			state.loading = false;
 			state.searching = false;
+
+			// Clear sidebar loading state
+			if (sidebar) {
+				const { state: sidebarState } = store('surecart/sidebar');
+				sidebarState.loading = false;
+			}
 		},
 		/** Clear the search input. */
 		*clearSearch(event) {
@@ -159,6 +188,14 @@ const { state } = store('surecart/product-list', {
 			state.loading = true;
 			state.searching = true;
 
+			// Also set loading state in sidebar if the clear is within a sidebar
+			const { ref } = getElement();
+			const sidebar = ref.closest('.sc-sidebar-drawer');
+			if (sidebar) {
+				const { state: sidebarState } = store('surecart/sidebar');
+				sidebarState.loading = true;
+			}
+
 			// Get the current URL.
 			const url = new URL(window.location.href);
 
@@ -175,6 +212,12 @@ const { state } = store('surecart/product-list', {
 
 			state.loading = false;
 			state.searching = false;
+
+			// Clear sidebar loading state
+			if (sidebar) {
+				const { state: sidebarState } = store('surecart/sidebar');
+				sidebarState.loading = false;
+			}
 		},
 	},
 
