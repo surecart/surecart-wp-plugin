@@ -24,10 +24,6 @@ import Box from '../../ui/Box';
 import OrGroup from './OrGroup';
 
 export default ({ autoFee = {}, onUpdate, loading }) => {
-	if (!loading && !autoFee?.id) {
-		return null;
-	}
-
 	const [ruleSchema, setRuleSchema] = useState(null);
 	const [loadingRuleSchema, setLoadingRuleSchema] = useState(false);
 	const [ruleGroupsManager, setRuleGroupsManager] = useState([]);
