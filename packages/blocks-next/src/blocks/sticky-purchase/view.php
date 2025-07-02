@@ -18,7 +18,7 @@
 	<div
 		data-wp-interactive='{ "namespace": "surecart/product-page" }'
 		<?php if ( ! $enable_out_of_stock ) : ?>
-			data-wp-bind--class="state.stickyPurchaseClassNames"
+			data-wp-bind--class="surecart/sticky-purchase::state.stickyPurchaseClassNames"
 		<?php else : ?>
 			class="sc-sticky-purchase__content"
 		<?php endif; ?>

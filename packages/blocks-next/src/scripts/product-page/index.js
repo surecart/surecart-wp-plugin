@@ -225,19 +225,6 @@ const { state, actions } = store('surecart/product-page', {
 			);
 		},
 
-		// @TODO: Move it to sticky purchase script.
-		get stickyPurchaseClassNames() {
-			const context = getContext();
-			if (!context) {
-				return '';
-			}
-			if (state.isUnavailable) {
-				return 'sc-sticky-purchase__content sc-sticky-purchase__content--unavailable';
-			}
-
-			return 'sc-sticky-purchase__content';
-		},
-
 		/**
 		 * Is the product sold out?
 		 */

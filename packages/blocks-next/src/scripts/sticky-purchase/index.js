@@ -3,6 +3,12 @@
  */
 import { store, getElement } from '@wordpress/interactivity';
 
+/**
+ * Internal dependencies.
+ */
+const { state: productState } = store('surecart/product-page');
+
+
 // Check if two elements overlap.
 const doElementsOverlap = (elementA, elementB) => {
 	const A = elementA.getBoundingClientRect();
@@ -24,6 +30,13 @@ const { state } = store('surecart/sticky-purchase', {
 			return document.querySelector('.wp-block-surecart-cart-icon');
 		},
 		isVisible: false,
+		get stickyPurchaseClassNames() {
+			if (productState.isUnavailable) {
+				return 'sc-sticky-purchase__content sc-sticky-purchase__content--unavailable';
+			}
+
+			return 'sc-sticky-purchase__content';
+		},
 	},
 
 	actions: {
