@@ -88,16 +88,6 @@
 			margin-bottom: 0;
 		}
 	}
-
-	// Loading overlay specific to the drawer
-	.sc-block-ui {
-		position: absolute;
-		top: 0;
-		left: 0;
-		right: 0;
-		bottom: 0;
-		z-index: 10; // Ensure it covers drawer content but not the dialog backdrop
-	}
 }
 
 // Stop the body from scrolling when the cart drawer is open.
