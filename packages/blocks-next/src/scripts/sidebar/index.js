@@ -35,8 +35,6 @@ const { state, actions } = store('surecart/sidebar', {
 				: __('Open sidebar', 'surecart');
 		},
 		ariaLabelMobile: __('Open sidebar', 'surecart'),
-		/** Are we loading */
-		loading: false,
 	},
 
 	actions: {
@@ -109,13 +107,6 @@ const { state, actions } = store('surecart/sidebar', {
 			if (e.target === e.currentTarget) {
 				e.currentTarget.close();
 			}
-		},
-
-		/**
-		 * Set the loading state.
-		 */
-		setLoading: (loading) => {
-			state.loading = loading;
 		},
 	},
 });
