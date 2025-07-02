@@ -100,11 +100,14 @@ const { state, actions } = store('surecart/checkout', {
 		 */
 		get lineItemHasScratchAmount() {
 			const { line_item } = getContext();
-			if (!!line_item?.ad_hoc_amount) {
+			if (
+				!!line_item?.ad_hoc_amount ||
+				!line_item?.scratch_display_amount
+			) {
 				return false;
 			}
 
-			return line_item.price.scratchAmount !== line_item.price.amount;
+			return line_item.scratch_amount !== line_item.subtotal_amount;
 		},
 
 		/**
