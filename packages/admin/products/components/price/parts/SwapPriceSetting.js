@@ -22,13 +22,14 @@ export default ({
 	onDelete,
 	loading,
 	currentProduct,
+	activePrices,
 }) => {
 	if (loading) {
 		return <ScSkeleton />;
 	}
 
 	const renderPriorityProductPrice = () => {
-		const otherProductPrices = currentProduct?.active_prices?.filter(
+		const otherProductPrices = activePrices?.filter(
 			(priceItem) => priceItem.id !== price?.id && !priceItem.ad_hoc
 		);
 
