@@ -237,18 +237,33 @@ export default ({ id, isNew, onRemove, isFeatured, onSelect, onEditMedia }) => {
 								src={media?.source_url}
 							/>
 						</video>
-						<ScIcon
+						<div
 							css={css`
 								position: absolute;
 								color: var(--sc-color-white);
 								background-color: rgba(0, 0, 0, 0.5);
 								border-radius: 50%;
 								padding: var(--sc-spacing-small);
-								width: 40px;
-								height: 40px;
+								width: 45px;
+								height: 45px;
+								display: flex;
+								justify-content: center;
+								align-items: center;
+
+								svg {
+									fill: var(--sc-color-white) !important;
+								}
 							`}
-							name="play"
-						/>
+						>
+							<ScIcon
+								css={css`
+									width: 20px;
+									height: 30px;
+									color: var(--sc-color-white);
+								`}
+								name="play"
+							/>
+						</div>
 					</div>
 				) : (
 					<img

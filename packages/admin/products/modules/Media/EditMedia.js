@@ -217,7 +217,7 @@ export default ({ media, setMedia, product, onSave, open, onRequestClose }) => {
 												<ScButton
 													type="danger"
 													onClick={() => {
-														setMedia('');
+														setMediaData('');
 														setVariation('');
 														setVideoThumbnail('');
 													}}
