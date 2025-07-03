@@ -36,6 +36,7 @@
 			display: flex;
 			align-items: center;
 			justify-content: space-between;
+			text-wrap: auto;
 			color: var(--sc-input-label-color);
 			border-radius: 0 0 var(--sc-border-radius-medium)
 				var(--sc-border-radius-medium);
