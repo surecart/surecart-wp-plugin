@@ -80,10 +80,9 @@ export default ({ price, product, allPrices }) => {
 				await saveEntityRecord('surecart', 'swap', currentSwap, {
 					throwOnError: true,
 				});
-				if (!currentSwap?.id) {
-					await invalidateResolutionForStore();
-				}
 			}
+
+			await invalidateResolutionForStore();
 			setIsOpen(false);
 			createSuccessNotice(__('Price updated.', 'surecart'), {
 				type: 'snackbar',
