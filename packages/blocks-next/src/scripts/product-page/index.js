@@ -78,6 +78,17 @@ const { state, actions } = store('surecart/product-page', {
 				: {};
 		},
 
+		get selectedVariantImage() {
+			const context = getContext();
+			if (!context) {
+				return {};
+			}
+
+			return !!state.selectedVariant?.line_item_image?.src
+				? state.selectedVariant.line_item_image
+				: state.featuredImage || {};
+		},
+
 		/**
 		 * Is this product on sale?
 		 */

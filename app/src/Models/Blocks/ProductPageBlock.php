@@ -247,6 +247,7 @@ class ProductPageBlock {
 		}
 		$selected_price   = $product->initial_price;
 		$selected_variant = $this->getSelectedVariant();
+		$featured_image   = ! empty( $product->featured_image ) ? $product->featured_image->attributes( 'thumbnail' ) ?? (object) [] : (object) [];
 
 		return wp_parse_args(
 			$state,
@@ -382,6 +383,7 @@ class ProductPageBlock {
 					$state = wp_interactivity_state();
 					return $state['shouldDisplayImage']() ? 'inherit' : 'none';
 				},
+				'featuredImage'         => $featured_image,
 				'isSoldOut'             => function () {
 					$context = wp_interactivity_get_context();
 					$state   = wp_interactivity_state();
