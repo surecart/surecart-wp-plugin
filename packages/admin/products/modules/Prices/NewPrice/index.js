@@ -26,8 +26,7 @@ export default ({ isOpen, onRequestClose, product }) => {
 	});
 	const [currentSwap, setCurrentSwap] = useState(null);
 	const [type, setType] = useState('once');
-	const { saveEntityRecord, invalidateResolutionForStore } =
-		useDispatch(coreStore);
+	const { saveEntityRecord } = useDispatch(coreStore);
 	const { createSuccessNotice } = useDispatch(noticesStore);
 	const ref = useRef(null);
 
@@ -65,7 +64,6 @@ export default ({ isOpen, onRequestClose, product }) => {
 					{ throwOnError: true }
 				);
 			}
-			await invalidateResolutionForStore();
 			createSuccessNotice(__('Price added.', 'surecart'), {
 				type: 'snackbar',
 			});
