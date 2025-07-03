@@ -7,6 +7,7 @@ import { useState } from '@wordpress/element';
  * Internal dependencies.
  */
 import UploadMedia from './UploadMedia';
+import MediaDisplayPreview from './MediaDisplayPreview';
 import Error from '../../../components/Error';
 import {
 	ScButton,
@@ -15,9 +16,7 @@ import {
 	ScFormControl,
 	ScIcon,
 	ScSelect,
-	ScSkeleton,
 } from '@surecart/components-react';
-import SortableList, { SortableItem } from 'react-easy-sort';
 import { MediaUpload } from '@wordpress/media-utils';
 const ALLOWED_MEDIA_TYPES = ['image', 'video'];
 
@@ -29,10 +28,58 @@ export default ({ media, setMedia, product, open, onRequestClose }) => {
 
 	const onSubmit = (event) => {
 		event.preventDefault();
+		if (!media?.id) {
+			setError(__('Please select a media item.', 'surecart'));
+			return;
+		}
 	};
 
 	const selectMedia = (media) => {
+		media = {
+			...media,
+			mime_type: media?.mime || media?.mime_type,
+			source_url: media?.source_url || media?.url,
+			alt_text: media?.alt_text || media?.alt,
+			thumb: media?.sizes?.medium
+				? {
+						src: media.sizes.medium.url,
+				  }
+				: media?.thumb,
+			media_details: media?.media_details || {
+				sizes: media?.sizes
+					? {
+							medium: media.sizes.medium,
+					  }
+					: {},
+			},
+		};
 		setMedia(media);
+	};
+
+	const selectThumbnail = (thumbnail) => {
+		const normalizedThumbnail = {
+			...thumbnail,
+			mime_type: thumbnail?.mime || thumbnail?.mime_type,
+			source_url: thumbnail?.source_url || thumbnail?.url,
+			alt_text: thumbnail?.alt_text || thumbnail?.alt,
+			thumb: thumbnail?.sizes?.medium
+				? {
+						src: thumbnail.sizes.medium.url,
+				  }
+				: thumbnail?.thumb,
+			media_details: thumbnail?.media_details || {
+				sizes: thumbnail?.sizes
+					? {
+							medium: thumbnail.sizes.medium,
+					  }
+					: {},
+			},
+		};
+		setVideoThumbnail(normalizedThumbnail);
+	};
+
+	const updateVideoThumbnail = () => {
+		setVideoThumbnail('');
 	};
 
 	const isVideo = media?.mime_type?.includes('video');
@@ -71,261 +118,74 @@ export default ({ media, setMedia, product, open, onRequestClose }) => {
 							required
 						>
 							{!!media?.id && (
-								<SortableList>
-									<SortableItem key={media?.id ?? ''}>
-										<div
-											css={css`
-												user-select: none;
-												cursor: grab;
-												max-height: 200px;
-											`}
-										>
-											{typeof media?.id === 'string' ? (
-												<div>Handle Product Media</div>
-											) : (
-												<div
-													css={css`
-														background: #f3f3f3;
-														position: relative;
-														border-radius: var(
-															--sc-border-radius-medium
-														);
-														border: var(
-															--sc-input-border
-														);
-														box-shadow: var(
-															--sc-input-box-shadow
-														);
+								<>
+									{typeof media?.id === 'string' ? (
+										<div>Handle Product Media</div>
+									) : (
+										<>
+											<MediaDisplayPreview
+												media={media}
+											/>
 
-														height: auto;
-														width: 200px;
+											<div
+												css={css`
+													display: flex;
+													justify-content: flex-end;
+													align-items: center;
+													gap: var(
+														--sc-spacing-x-small
+													);
+													margin: var(
+															--sc-spacing-small
+														)
+														0px;
+												`}
+											>
+												<MediaUpload
+													addToGallery={false}
+													multiple={false}
+													value={media?.id ?? ''}
+													onSelect={selectMedia}
+													allowedTypes={
+														ALLOWED_MEDIA_TYPES
+													}
+													onClose={() => {}}
+													render={({ open }) => (
+														<ScButton
+															onClick={open}
+														>
+															<ScIcon
+																name="edit-3"
+																slot="prefix"
+															/>
+															{__(
+																'Change',
+																'surecart'
+															)}
+														</ScButton>
+													)}
+												/>
 
-														.overlay,
-														.delete-icon,
-														.edit-icon {
-															opacity: 0;
-															visibility: hidden;
-															transition: all
-																var(
-																	--sc-transition-medium
-																)
-																ease-in-out;
-														}
-
-														:hover .overlay,
-														:hover .delete-icon,
-														:hover .edit-icon {
-															opacity: 1;
-															visibility: visible;
-														}
-													`}
+												<ScButton
+													type="danger"
+													onClick={() => {
+														setMedia('');
+														setVariation('');
+														setVideoThumbnail('');
+													}}
+													outline
 												>
 													<ScIcon
-														className="delete-icon"
-														onClick={() => {
-															setMedia('');
-															setVariation('');
-															setVideoThumbnail(
-																''
-															);
-														}}
-														css={css`
-															position: absolute;
-															top: 4px;
-															right: 4px;
-															z-index: 10;
-															cursor: pointer;
-															padding: var(
-																--sc-spacing-xx-small
-															);
-															border-radius: var(
-																--sc-border-radius-small
-															);
-															color: var(
-																--sc-color-white
-															);
-															font-weight: var(
-																--sc-font-weight-semibold
-															);
-															background-color: var(
-																--sc-color-gray-800
-															);
-														`}
 														name="x"
+														className="delete-icon"
+														slot="prefix"
 													/>
-
-													<MediaUpload
-														addToGallery={false}
-														multiple={false}
-														value={media?.id ?? ''}
-														onSelect={selectMedia}
-														allowedTypes={
-															ALLOWED_MEDIA_TYPES
-														}
-														onClose={() => {
-															// invalidateResolution(
-															// 	'getMedia',
-															// 	[media?.id]
-															// );
-														}}
-														render={({ open }) => (
-															<ScIcon
-																className="edit-icon"
-																css={css`
-																	position: absolute;
-																	bottom: 4px;
-																	right: 4px;
-																	z-index: 10;
-																	cursor: pointer;
-																	padding: var(
-																		--sc-spacing-small
-																	);
-																	font-size: var(
-																		--sc-font-size-small
-																	);
-																	border-radius: var(
-																		--sc-border-radius-small
-																	);
-																	color: var(
-																		--sc-color-gray-800
-																	);
-																	font-weight: var(
-																		--sc-font-weight-semibold
-																	);
-																	background-color: var(
-																		--sc-color-white
-																	);
-																	border-radius: var(
-																		--sc-border-radius-small
-																	);
-																`}
-																name="edit-2"
-																onClick={open}
-															/>
-														)}
-													/>
-
-													{media?.source_url ? (
-														isVideo ? (
-															<div
-																css={css`
-																	display: flex;
-																	align-items: center;
-																	justify-content: center;
-																	height: 100%;
-																	width: 100%;
-																	position: relative;
-																`}
-															>
-																<video
-																	controls={
-																		false
-																	}
-																	css={css`
-																		max-width: 100%;
-																		max-height: 100%;
-																		object-fit: contain;
-																		border-radius: var(
-																			--sc-border-radius-medium
-																		);
-																		pointer-events: none;
-																	`}
-																	src={
-																		media?.source_url
-																	}
-																	muted
-																	loop
-																	playsInline
-																	{...(media
-																		?.thumb
-																		?.src
-																		? {
-																				poster: media
-																					?.thumb
-																					?.src,
-																		  }
-																		: {})}
-																>
-																	<source
-																		type={
-																			media?.mime
-																		}
-																		src={
-																			media?.source_url
-																		}
-																	/>
-																</video>
-																<ScIcon
-																	css={css`
-																		position: absolute;
-																		color: var(
-																			--sc-color-white
-																		);
-																		background-color: rgba(
-																			0,
-																			0,
-																			0,
-																			0.5
-																		);
-																		border-radius: 50%;
-																		padding: var(
-																			--sc-spacing-small
-																		);
-																		width: 40px;
-																		height: 40px;
-																	`}
-																	name="play"
-																/>
-															</div>
-														) : (
-															<img
-																src={
-																	media
-																		?.media_details
-																		?.sizes
-																		?.medium
-																		?.source_url ||
-																	media?.source_url
-																}
-																css={css`
-																	max-width: 100%;
-																	object-fit: contain;
-																	display: block;
-																	border-radius: var(
-																		--sc-border-radius-medium
-																	);
-																	pointer-events: none;
-																`}
-																alt={
-																	media?.alt_text
-																}
-																{...(media
-																	?.title
-																	?.rendered
-																	? {
-																			title: media
-																				?.title
-																				?.rendered,
-																	  }
-																	: {})}
-																loading="lazy"
-															/>
-														)
-													) : (
-														<ScSkeleton
-															style={{
-																aspectRatio:
-																	'1 / 1',
-																'--border-radius':
-																	'var(--sc-border-radius-medium)',
-															}}
-														/>
-													)}
-												</div>
-											)}
-										</div>
-									</SortableItem>
-								</SortableList>
+													{__('Remove', 'surecart')}
+												</ScButton>
+											</div>
+										</>
+									)}
+								</>
 							)}
 
 							{!media?.id && (
@@ -340,9 +200,6 @@ export default ({ media, setMedia, product, open, onRequestClose }) => {
 							<>
 								<ScFormControl
 									label={__('Select Variation', 'surecart')}
-									css={css`
-										margin-top: var(--sc-spacing-medium);
-									`}
 								>
 									<ScSelect
 										value={variation}
@@ -368,38 +225,130 @@ export default ({ media, setMedia, product, open, onRequestClose }) => {
 								{isVideo && (
 									<>
 										<ScFormControl
-											label={__(
-												'Video Thumbnail',
-												'surecart'
-											)}
+											label={__('Thumbnail', 'surecart')}
 										>
-											<MediaUpload
-												title={__(
-													'Select Video Thumbnail',
-													'surecart'
-												)}
-												onSelect={(thumbnail) =>
-													setVideoThumbnail(thumbnail)
-												}
-												value={videoThumbnail?.id ?? ''}
-												multiple={false}
-												allowedTypes={['image']}
-												render={({ open }) => (
-													<ScButton
-														type="default"
-														onClick={open}
+											{!!videoThumbnail?.id ? (
+												<div
+													css={css`
+														display: flex;
+														justify-content: space-between;
+														gap: var(
+															--sc-spacing-small
+														);
+
+														.media-display-preview {
+															max-width: 100px;
+														}
+
+														img {
+															max-height: 60px;
+														}
+													`}
+												>
+													<MediaDisplayPreview
+														media={videoThumbnail}
+													/>
+
+													<div
+														css={css`
+															display: flex;
+															justify-content: flex-end;
+															align-items: center;
+															gap: var(
+																--sc-spacing-x-small
+															);
+															margin: var(
+																	--sc-spacing-small
+																)
+																0px;
+														`}
 													>
-														<ScIcon
-															name="upload"
-															slot="prefix"
-														></ScIcon>
-														{__(
-															'Upload Thumbnail',
-															'surecart'
-														)}
-													</ScButton>
-												)}
-											/>
+														<MediaUpload
+															title={__(
+																'Change Thumbnail',
+																'surecart'
+															)}
+															onSelect={
+																selectThumbnail
+															}
+															value={
+																videoThumbnail?.id ??
+																''
+															}
+															multiple={false}
+															allowedTypes={[
+																'image',
+															]}
+															render={({
+																open,
+															}) => (
+																<ScButton
+																	onClick={
+																		open
+																	}
+																>
+																	<ScIcon
+																		name="edit-3"
+																		slot="prefix"
+																	/>
+																	{__(
+																		'Change',
+																		'surecart'
+																	)}
+																</ScButton>
+															)}
+														/>
+
+														<ScButton
+															type="danger"
+															onClick={
+																updateVideoThumbnail
+															}
+															outline
+														>
+															<ScIcon
+																name="x"
+																slot="prefix"
+															/>
+															{__(
+																'Remove',
+																'surecart'
+															)}
+														</ScButton>
+													</div>
+												</div>
+											) : (
+												<MediaUpload
+													title={__(
+														'Select Thumbnail',
+														'surecart'
+													)}
+													onSelect={selectThumbnail}
+													value={
+														videoThumbnail?.id ?? ''
+													}
+													multiple={false}
+													allowedTypes={['image']}
+													render={({ open }) => (
+														<ScButton
+															type="default"
+															onClick={open}
+															css={css`
+																width: 100%;
+															`}
+														>
+															<ScIcon
+																name="upload"
+																slot="suffix"
+															></ScIcon>
+															{__(
+																'Open Media Library',
+																'surecart'
+															)}
+														</ScButton>
+													)}
+												/>
+											)}
 										</ScFormControl>
 
 										<ScFormControl
@@ -412,6 +361,10 @@ export default ({ media, setMedia, product, open, onRequestClose }) => {
 												value={
 													media?.aspect_ratio || ''
 												}
+												placeholder={__(
+													'Select aspect ratio',
+													'surecart'
+												)}
 												choices={[
 													{
 														label: __(
@@ -464,7 +417,7 @@ export default ({ media, setMedia, product, open, onRequestClose }) => {
 							type="primary"
 							submit
 							isBusy={isSaving}
-							disabled={isSaving}
+							disabled={isSaving || !media?.id}
 						>
 							{__('Update Media', 'surecart')}
 						</ScButton>

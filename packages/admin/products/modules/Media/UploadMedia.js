@@ -1,3 +1,6 @@
+/** @jsx jsx */
+import { css, jsx } from '@emotion/core';
+
 /**
  * External dependencies.
  */
@@ -20,9 +23,14 @@ export default ({ value, onSelect, ...rest }) => {
 			multiple={false}
 			allowedTypes={ALLOWED_MEDIA_TYPES}
 			render={({ open }) => (
-				<ScButton type="default" onClick={open}>
-					<ScIcon name="upload" slot="prefix"></ScIcon>
-					{__('Upload', 'surecart')}
+				<ScButton
+					type="default"
+					onClick={open}
+					css={css`
+						width: 100%;
+					`}
+				>
+					{__('Open Media Library', 'surecart')}
 				</ScButton>
 			)}
 			{...rest}
