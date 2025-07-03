@@ -1,6 +1,11 @@
 <div
-	<?php echo wp_kses_data( get_block_wrapper_attributes() ); ?>
-	role="list"
+	<?php echo wp_kses_data(
+		get_block_wrapper_attributes(
+			array(
+				'role' => 'list',
+			)
+		)
+	); ?>
 >
 	<template
 		data-wp-each--line_item="state.checkoutLineItems"
