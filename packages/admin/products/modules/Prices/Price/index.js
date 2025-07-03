@@ -81,7 +81,6 @@ export default ({ price, product, allPrices }) => {
 					throwOnError: true,
 				});
 			}
-
 			await invalidateResolutionForStore();
 			setIsOpen(false);
 			createSuccessNotice(__('Price updated.', 'surecart'), {
