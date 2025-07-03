@@ -12,25 +12,13 @@ import {
 	store as blockEditorStore,
 } from '@wordpress/block-editor';
 
-function PostTemplateInnerBlocks({
-	template,
-	renderAppender,
-	before,
-	after,
-	...itemProps
-}) {
+function PostTemplateInnerBlocks({ template, renderAppender, ...itemProps }) {
 	const innerBlocksProps = useInnerBlocksProps(itemProps, {
 		template,
 		__unstableDisableLayoutClassNames: true,
 		renderAppender,
 	});
-	return (
-		<>
-			{before}
-			<div {...innerBlocksProps} />
-			{after}
-		</>
-	);
+	return <div {...innerBlocksProps} />;
 }
 
 function PostTemplateBlockPreview({
@@ -38,8 +26,6 @@ function PostTemplateBlockPreview({
 	blockContextId,
 	isHidden,
 	setActiveBlockContextId,
-	before,
-	after,
 	...props
 }) {
 	const { style, className, ...remainingProps } = props || {};
@@ -52,20 +38,16 @@ function PostTemplateBlockPreview({
 	};
 
 	return (
-		<>
-			{!isHidden && before}
-			<div
-				{...blockPreviewProps}
-				tabIndex={0}
-				// eslint-disable-next-line jsx-a11y/no-noninteractive-element-to-interactive-role
-				role="button"
-				onClick={handleOnClick}
-				style={{ ...style, display: isHidden ? 'none' : undefined }}
-				className={className}
-				{...remainingProps}
-			/>
-			{!isHidden && after}
-		</>
+		<div
+			{...blockPreviewProps}
+			tabIndex={0}
+			// eslint-disable-next-line jsx-a11y/no-noninteractive-element-to-interactive-role
+			role="button"
+			onClick={handleOnClick}
+			style={{ ...style, display: isHidden ? 'none' : undefined }}
+			className={className}
+			{...remainingProps}
+		/>
 	);
 }
 
@@ -77,8 +59,6 @@ export default function MultiEdit({
 	className,
 	style,
 	itemProps,
-	before,
-	after,
 	template,
 	renderAppender,
 	attachBlockProps = true,
@@ -114,8 +94,6 @@ export default function MultiEdit({
 							<PostTemplateInnerBlocks
 								template={template}
 								renderAppender={renderAppender}
-								before={before}
-								after={after}
 								{...itemProps}
 							/>
 						)}
@@ -123,8 +101,6 @@ export default function MultiEdit({
 							blocks={blocks}
 							blockContextId={blockContext.id}
 							setActiveBlockContextId={setActiveBlockContextId}
-							before={before}
-							after={after}
 							isHidden={
 								blockContext.id ===
 								(activeBlockContextId || blockContexts[0]?.id)
