@@ -241,6 +241,14 @@ Join our [Facebook group community](https://www.facebook.com/groups/surecrafted)
 1. Upload the SureCart folder to the /wp-content/plugins/ directory
 2. Activate the SureCart plugin through the 'Plugins' menu in WordPress
 
+== Screenshots ==
+1. Freedom to Customize.
+2. eCommerce, Digital Downloads & Subscriptions.
+3. Cart Abandonment.
+4. Order Bumps/Upsells.
+5. Affiliate Program.
+6. Popular Integrations.
+
 == Frequently Asked Questions ==
 
 = Why do I need a SureCart.com account? =
