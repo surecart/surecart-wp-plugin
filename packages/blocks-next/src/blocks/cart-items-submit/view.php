@@ -1,11 +1,15 @@
-<div class="sc-cart-items-submit__wrapper">
+<div 
+	class="sc-cart-items-submit__wrapper"
+	style="<?php echo esc_attr( $wrapper_style ); ?>"
+>
 	<div class="wp-block-button">
 		<a
 		<?php
 			echo wp_kses_data(
 				get_block_wrapper_attributes(
 					array(
-						'class' => 'wp-block-button__link wp-element-button sc-button__link',
+						'class' => 'wp-block-button__link wp-element-button sc-button__link ' . ( $styles['classnames'] ?? '' ),
+						'style' => $styles['css'] ?? '',
 					)
 				)
 			);

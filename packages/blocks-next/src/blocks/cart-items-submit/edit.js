@@ -42,7 +42,13 @@ export default ({ className, attributes, setAttributes }) => {
 	});
 
 	return (
-		<div className="sc-cart-items-submit__wrapper">
+		<div
+			className="sc-cart-items-submit__wrapper"
+			style={{
+				marginTop: spacingProps?.style?.marginTop,
+				marginBottom: spacingProps?.style?.marginBottom,
+			}}
+		>
 			<div class="wp-block-button">
 				<div
 					{...blockProps}
