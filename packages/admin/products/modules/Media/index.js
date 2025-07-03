@@ -156,7 +156,14 @@ export default ({ productId, product, updateProduct }) => {
 
 			<EditMedia
 				media={selectedMedia}
-				setMedia={setSelectedMedia}
+				setMedia={(updatedMedia) => {
+					setSelectedMedia(updatedMedia);
+				}}
+				onSave={(updatedMedia) => {
+					setSelectedMedia(updatedMedia);
+					onSwapMedia(selectedMedia?.id, updatedMedia?.id);
+					invalidateResolution('getMedia', [updatedMedia?.id]);
+				}}
 				open={currentModal === modals.EDIT_MEDIA}
 				product={product}
 				onRequestClose={() => {

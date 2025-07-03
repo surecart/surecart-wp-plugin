@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
-import { useState } from '@wordpress/element';
+import { useState, useEffect } from '@wordpress/element';
 
 /**
  * Internal dependencies.
@@ -20,40 +20,88 @@ import {
 import { MediaUpload } from '@wordpress/media-utils';
 const ALLOWED_MEDIA_TYPES = ['image', 'video'];
 
-export default ({ media, setMedia, product, open, onRequestClose }) => {
+export default ({ media, setMedia, product, onSave, open, onRequestClose }) => {
+	const [mediaData, setMediaData] = useState(media || '');
 	const [error, setError] = useState(null);
 	const [isSaving, setIsSaving] = useState(false);
 	const [variation, setVariation] = useState('');
 	const [videoThumbnail, setVideoThumbnail] = useState('');
 
+	useEffect(() => {
+		if (media) {
+			setMediaData({
+				...media,
+				mime_type: media?.mime || media?.mime_type,
+				source_url: media?.source_url || media?.url,
+				alt_text: media?.alt_text || media?.alt,
+				thumb: media?.sizes?.medium
+					? { src: media.sizes.medium.url }
+					: media?.thumb,
+				media_details: media?.media_details || {
+					sizes: media?.sizes
+						? {
+								medium: media.sizes.medium,
+						  }
+						: {},
+				},
+			});
+		}
+	}, [media]);
+
 	const onSubmit = (event) => {
 		event.preventDefault();
-		if (!media?.id) {
+		if (!mediaData?.id) {
 			setError(__('Please select a media item.', 'surecart'));
 			return;
 		}
+
+		try {
+			setIsSaving(true);
+			setError(null);
+
+			// Update the media in the parent component
+			onSave({
+				...mediaData,
+				meta: {
+					...mediaData.meta,
+					sc_variant_option: variation || '',
+				},
+				thumbnail_url:
+					videoThumbnail?.source_url || mediaData.thumbnail_url,
+			});
+
+			// Close the drawer
+			onRequestClose();
+		} catch (e) {
+			console.error(e);
+			setError(
+				e?.message ||
+					__('An error occurred while updating media.', 'surecart')
+			);
+		} finally {
+			setIsSaving(false);
+		}
 	};
 
-	const selectMedia = (media) => {
-		media = {
-			...media,
-			mime_type: media?.mime || media?.mime_type,
-			source_url: media?.source_url || media?.url,
-			alt_text: media?.alt_text || media?.alt,
-			thumb: media?.sizes?.medium
+	const selectMedia = (updatedMedia) => {
+		setMediaData({
+			...updatedMedia,
+			mime_type: updatedMedia?.mime || updatedMedia?.mime_type,
+			source_url: updatedMedia?.source_url || updatedMedia?.url,
+			alt_text: updatedMedia?.alt_text || updatedMedia?.alt,
+			thumb: updatedMedia?.sizes?.medium
 				? {
-						src: media.sizes.medium.url,
+						src: updatedMedia.sizes.medium.url,
 				  }
-				: media?.thumb,
-			media_details: media?.media_details || {
-				sizes: media?.sizes
+				: updatedMedia?.thumb,
+			media_details: updatedMedia?.media_details || {
+				sizes: updatedMedia?.sizes
 					? {
-							medium: media.sizes.medium,
+							medium: updatedMedia.sizes.medium,
 					  }
 					: {},
 			},
-		};
-		setMedia(media);
+		});
 	};
 
 	const selectThumbnail = (thumbnail) => {
@@ -82,7 +130,7 @@ export default ({ media, setMedia, product, open, onRequestClose }) => {
 		setVideoThumbnail('');
 	};
 
-	const isVideo = media?.mime_type?.includes('video');
+	const isVideo = mediaData?.mime_type?.includes('video');
 
 	return (
 		<ScForm onScFormSubmit={onSubmit}>
@@ -117,14 +165,14 @@ export default ({ media, setMedia, product, open, onRequestClose }) => {
 							label={__('Select Media', 'surecart')}
 							required
 						>
-							{!!media?.id && (
+							{!!mediaData?.id && (
 								<>
-									{typeof media?.id === 'string' ? (
+									{typeof mediaData?.id === 'string' ? (
 										<div>Handle Product Media</div>
 									) : (
 										<>
 											<MediaDisplayPreview
-												media={media}
+												media={mediaData}
 											/>
 
 											<div
@@ -144,7 +192,7 @@ export default ({ media, setMedia, product, open, onRequestClose }) => {
 												<MediaUpload
 													addToGallery={false}
 													multiple={false}
-													value={media?.id ?? ''}
+													value={mediaData?.id ?? ''}
 													onSelect={selectMedia}
 													allowedTypes={
 														ALLOWED_MEDIA_TYPES
@@ -188,15 +236,15 @@ export default ({ media, setMedia, product, open, onRequestClose }) => {
 								</>
 							)}
 
-							{!media?.id && (
+							{!mediaData?.id && (
 								<UploadMedia
-									value={media?.id ?? ''}
+									value={mediaData?.id ?? ''}
 									onSelect={selectMedia}
 								/>
 							)}
 						</ScFormControl>
 
-						{media?.id && (
+						{mediaData?.id && (
 							<>
 								<ScFormControl
 									label={__('Select Variation', 'surecart')}
@@ -359,7 +407,8 @@ export default ({ media, setMedia, product, open, onRequestClose }) => {
 										>
 											<ScSelect
 												value={
-													media?.aspect_ratio || ''
+													mediaData?.aspect_ratio ||
+													''
 												}
 												placeholder={__(
 													'Select aspect ratio',
@@ -391,7 +440,7 @@ export default ({ media, setMedia, product, open, onRequestClose }) => {
 												style={{ width: '100%' }}
 												onScChange={(e) =>
 													setMedia({
-														...media,
+														...mediaData,
 														aspect_ratio:
 															e.target.value,
 													})
@@ -417,7 +466,7 @@ export default ({ media, setMedia, product, open, onRequestClose }) => {
 							type="primary"
 							submit
 							isBusy={isSaving}
-							disabled={isSaving || !media?.id}
+							disabled={isSaving || !mediaData?.id}
 						>
 							{__('Update Media', 'surecart')}
 						</ScButton>
