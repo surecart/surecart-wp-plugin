@@ -127,9 +127,8 @@ export default ({
 					</Button>
 				</Notice>
 			)}
-			<div {...blockProps}>
-				<div {...innerBlocksProps}></div>
-			</div>
+
+			<div {...innerBlocksProps}></div>
 		</>
 	);
 };
