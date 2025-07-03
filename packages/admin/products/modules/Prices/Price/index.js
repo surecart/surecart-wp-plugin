@@ -32,12 +32,8 @@ export default ({ price, product, allPrices }) => {
 		price?.current_swap
 	);
 	const ref = useRef(null);
-	const {
-		deleteEntityRecord,
-		saveEntityRecord,
-		invalidateResolutionForStore,
-		receiveEntityRecords,
-	} = useDispatch(coreStore);
+	const { deleteEntityRecord, saveEntityRecord, receiveEntityRecords } =
+		useDispatch(coreStore);
 	const editPrice = (data) => {
 		setCurrentPrice({ ...currentPrice, ...data });
 	};
@@ -81,7 +77,6 @@ export default ({ price, product, allPrices }) => {
 					throwOnError: true,
 				});
 			}
-			await invalidateResolutionForStore();
 			setIsOpen(false);
 			createSuccessNotice(__('Price updated.', 'surecart'), {
 				type: 'snackbar',
@@ -155,7 +150,6 @@ export default ({ price, product, allPrices }) => {
 				null,
 				{ throwOnError: true }
 			);
-			await invalidateResolutionForStore(); // invalidate the resolution for the store to refresh the prices.
 			createSuccessNotice(__('Price deleted.', 'surecart'), {
 				type: 'snackbar',
 			});
@@ -175,7 +169,6 @@ export default ({ price, product, allPrices }) => {
 		createSuccessNotice(__('Price duplicated.', 'surecart'), {
 			type: 'snackbar',
 		});
-		await invalidateResolutionForStore(); // invalidate the resolution for the store to refresh the prices.
 	};
 
 	// get the price type.
