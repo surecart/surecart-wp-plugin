@@ -2,6 +2,7 @@
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import { useState, useEffect } from '@wordpress/element';
+import { Button } from '@wordpress/components';
 
 /**
  * Internal dependencies.
@@ -16,8 +17,10 @@ import {
 	ScFormControl,
 	ScIcon,
 	ScSelect,
+	ScText,
 } from '@surecart/components-react';
 import { MediaUpload } from '@wordpress/media-utils';
+import { closeSmall, edit } from '@wordpress/icons';
 const ALLOWED_MEDIA_TYPES = ['image', 'video'];
 
 export default ({ media, setMedia, product, onSave, open, onRequestClose }) => {
@@ -26,6 +29,7 @@ export default ({ media, setMedia, product, onSave, open, onRequestClose }) => {
 	const [isSaving, setIsSaving] = useState(false);
 	const [variation, setVariation] = useState('');
 	const [videoThumbnail, setVideoThumbnail] = useState('');
+	console.log('media', media);
 
 	useEffect(() => {
 		if (media) {
@@ -45,6 +49,8 @@ export default ({ media, setMedia, product, onSave, open, onRequestClose }) => {
 						: {},
 				},
 			});
+			setVariation(media?.meta?.sc_variant_option || '');
+			setVideoThumbnail(media?.meta?.sc_video_thumbnail || '');
 		}
 	}, [media]);
 
@@ -126,10 +132,6 @@ export default ({ media, setMedia, product, onSave, open, onRequestClose }) => {
 		setVideoThumbnail(normalizedThumbnail);
 	};
 
-	const updateVideoThumbnail = () => {
-		setVideoThumbnail('');
-	};
-
 	const isVideo = mediaData?.mime_type?.includes('video');
 
 	return (
@@ -199,37 +201,31 @@ export default ({ media, setMedia, product, onSave, open, onRequestClose }) => {
 													}
 													onClose={() => {}}
 													render={({ open }) => (
-														<ScButton
+														<Button
 															onClick={open}
+															icon={edit}
+															variant="secondary"
 														>
-															<ScIcon
-																name="edit-3"
-																slot="prefix"
-															/>
 															{__(
 																'Change',
 																'surecart'
 															)}
-														</ScButton>
+														</Button>
 													)}
 												/>
 
-												<ScButton
-													type="danger"
+												<Button
+													icon={closeSmall}
+													variant="secondary"
 													onClick={() => {
 														setMediaData('');
 														setVariation('');
 														setVideoThumbnail('');
 													}}
-													outline
+													isDestructive
 												>
-													<ScIcon
-														name="x"
-														className="delete-icon"
-														slot="prefix"
-													/>
 													{__('Remove', 'surecart')}
-												</ScButton>
+												</Button>
 											</div>
 										</>
 									)}
@@ -283,6 +279,14 @@ export default ({ media, setMedia, product, onSave, open, onRequestClose }) => {
 														gap: var(
 															--sc-spacing-small
 														);
+														border: 1px solid
+															var(
+																--sc-color-gray-200
+															);
+														border-radius: 4px;
+														padding: var(
+															--sc-spacing-small
+														);
 
 														.media-display-preview {
 															max-width: 100px;
@@ -293,9 +297,27 @@ export default ({ media, setMedia, product, onSave, open, onRequestClose }) => {
 														}
 													`}
 												>
-													<MediaDisplayPreview
-														media={videoThumbnail}
-													/>
+													<div
+														css={css`
+															display: flex;
+															justify-content: center;
+															align-items: center;
+															gap: var(
+																--sc-spacing-x-small
+															);
+														`}
+													>
+														<MediaDisplayPreview
+															media={
+																videoThumbnail
+															}
+														/>
+														<ScText truncate>
+															{videoThumbnail?.title ||
+																videoThumbnail?.alt ||
+																''}
+														</ScText>
+													</div>
 
 													<div
 														css={css`
@@ -330,39 +352,36 @@ export default ({ media, setMedia, product, onSave, open, onRequestClose }) => {
 															render={({
 																open,
 															}) => (
-																<ScButton
+																<Button
+																	icon={edit}
+																	label={__(
+																		'Change Thumbnail',
+																		'surecart'
+																	)}
+																	showTooltip={
+																		true
+																	}
+																	size="compact"
 																	onClick={
 																		open
 																	}
-																>
-																	<ScIcon
-																		name="edit-3"
-																		slot="prefix"
-																	/>
-																	{__(
-																		'Change',
-																		'surecart'
-																	)}
-																</ScButton>
+																/>
 															)}
 														/>
-
-														<ScButton
-															type="danger"
-															onClick={
-																updateVideoThumbnail
-															}
-															outline
-														>
-															<ScIcon
-																name="x"
-																slot="prefix"
-															/>
-															{__(
-																'Remove',
+														<Button
+															icon={closeSmall}
+															label={__(
+																'Remove Thumbnail',
 																'surecart'
 															)}
-														</ScButton>
+															showTooltip={true}
+															size="compact"
+															onClick={() =>
+																setVideoThumbnail(
+																	''
+																)
+															}
+														/>
 													</div>
 												</div>
 											) : (
@@ -417,24 +436,59 @@ export default ({ media, setMedia, product, onSave, open, onRequestClose }) => {
 												choices={[
 													{
 														label: __(
-															'16:9',
+															'Original',
 															'surecart'
 														),
-														value: '16:9',
+														value: 'auto',
 													},
 													{
 														label: __(
-															'4:3',
+															'Square - 1:1',
 															'surecart'
 														),
-														value: '4:3',
+														value: '1',
 													},
 													{
 														label: __(
-															'1:1',
+															'Standard - 4:3',
 															'surecart'
 														),
-														value: '1:1',
+														value: '4/3',
+													},
+													{
+														label: __(
+															'Portrait - 3:4',
+															'surecart'
+														),
+														value: '3/4',
+													},
+													{
+														label: __(
+															'Classic - 3:2',
+															'surecart'
+														),
+														value: '3/2',
+													},
+													{
+														label: __(
+															'Classic Portrait - 2:3',
+															'surecart'
+														),
+														value: '2/3',
+													},
+													{
+														label: __(
+															'Wide - 16:9',
+															'surecart'
+														),
+														value: '16/9',
+													},
+													{
+														label: __(
+															'Tall - 9:16',
+															'surecart'
+														),
+														value: '9/16',
 													},
 												]}
 												style={{ width: '100%' }}

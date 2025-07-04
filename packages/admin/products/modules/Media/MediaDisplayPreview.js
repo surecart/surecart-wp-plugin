@@ -36,10 +36,7 @@ export default ({ media }) => {
 						  }
 						: {})}
 				>
-					<source
-						type={media?.mime}
-						src={media?.source_url}
-					/>
+					<source type={media?.mime} src={media?.source_url} />
 				</video>
 				<div
 					css={css`
@@ -110,10 +107,18 @@ export default ({ media }) => {
 				box-shadow: var(--sc-input-box-shadow);
 				height: auto;
 				width: 100%;
+				min-height: 200px;
+				justify-content: center;
+				display: flex;
+				align-items: center;
 			`}
 		>
 			{media?.source_url ? (
-				isVideo ? renderVideo() : renderImage()
+				isVideo ? (
+					renderVideo()
+				) : (
+					renderImage()
+				)
 			) : (
 				<ScSkeleton
 					style={{
