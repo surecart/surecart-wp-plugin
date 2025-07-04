@@ -17,8 +17,11 @@ import {
 	ScPriceInput,
 	ScSelect,
 	ScIcon,
+	ScFlex,
+	ScFormControl,
 } from '@surecart/components-react';
 import DateTimePicker from './DateTimePicker';
+import { formatDateTime } from '../../util/time';
 
 export default ({
 	ruleSchema = [],
@@ -57,6 +60,10 @@ export default ({
 		setMetadataKey(null);
 	}, [attribute]);
 
+	const isAttributeMetadata = attribute
+		? attribute.endsWith('.metadata') || 'metadata' === attribute
+		: false;
+
 	const renderValueInput = () => {
 		switch (attribute) {
 			case 'created_at':
@@ -67,6 +74,26 @@ export default ({
 						showLabel={false}
 						currentDate={value}
 						setDate={(date) => setValue(date)}
+						className={
+							!isAttributeMetadata ? 'sc-grid-full-width' : ''
+						}
+						renderButton={({ isOpen, onToggle, date }) => (
+							<ScInput
+								value={
+									date
+										? formatDateTime(date * 1000)
+										: __('Set Date', 'surecart')
+								}
+								onClick={onToggle}
+								placeholder={__('Select a date', 'surecart')}
+								readOnly
+								css={css`
+									--sc-input-cursor: pointer;
+								`}
+							>
+								<ScIcon name="calendar" slot="suffix" />
+							</ScInput>
+						)}
 					/>
 				);
 			case 'subtotal_amount':
@@ -76,6 +103,9 @@ export default ({
 						onChange={(e) => setValue(e.target.value)}
 						currency={scData?.currency_code}
 						placeholder={__('Enter an amount', 'surecart')}
+						className={
+							!isAttributeMetadata ? 'sc-grid-full-width' : ''
+						}
 					/>
 				);
 			case 'customer.email':
@@ -86,6 +116,9 @@ export default ({
 						value={value}
 						onChange={(e) => setValue(e.target.value)}
 						placeholder={__('Enter a value', 'surecart')}
+						className={
+							!isAttributeMetadata ? 'sc-grid-full-width' : ''
+						}
 					/>
 				);
 			default:
@@ -94,14 +127,13 @@ export default ({
 						value={value}
 						onChange={(e) => setValue(e.target.value)}
 						placeholder={__('Enter a value', 'surecart')}
+						className={
+							!isAttributeMetadata ? 'sc-grid-full-width' : ''
+						}
 					/>
 				);
 		}
 	};
-
-	const isAttributeMetadata = attribute
-		? attribute.endsWith('.metadata') || 'metadata' === attribute
-		: false;
 
 	return (
 		<ScCard
@@ -113,7 +145,17 @@ export default ({
 				css={css`
 					display: grid;
 					gap: var(--sc-form-row-spacing);
-					grid-template-columns: 1fr 1fr;
+					grid-template-columns: repeat(
+						auto-fill,
+						minmax(min(13rem, 100%), 1fr)
+					);
+
+					.sc-grid-full-width {
+						grid-column: 1 / -1;
+					}
+					.sc-grid-full-width .components-dropdown {
+						width: 100%;
+					}
 				`}
 			>
 				<ScSelect

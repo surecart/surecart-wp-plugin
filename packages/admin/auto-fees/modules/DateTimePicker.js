@@ -22,6 +22,8 @@ export default ({
 	label,
 	required,
 	showLabel = true,
+	className,
+	renderButton = false,
 }) => {
 	// Use internal state instead of a ref to make sure that the component
 	// re-renders when the popover's anchor updates.
@@ -39,7 +41,7 @@ export default ({
 	};
 
 	return (
-		<PanelRow ref={setPopoverAnchor}>
+		<PanelRow ref={setPopoverAnchor} className={className}>
 			{(showLabel || required) && (
 				<div>
 					{showLabel && (
@@ -56,14 +58,23 @@ export default ({
 			<Dropdown
 				popoverProps={popoverProps}
 				focusOnMount
-				renderToggle={({ isOpen, onToggle }) => (
-					<RenderDropdownButton
-						isOpen={isOpen}
-						onClick={onToggle}
-						date={currentDate}
-						label={label || __('Select Date', 'surecart')}
-					/>
-				)}
+				renderToggle={({ isOpen, onToggle }) =>
+					renderButton ? (
+						renderButton({
+							isOpen,
+							onToggle,
+							date: currentDate,
+							label,
+						})
+					) : (
+						<RenderDropdownButton
+							isOpen={isOpen}
+							onClick={onToggle}
+							date={currentDate}
+							label={label || __('Select Date', 'surecart')}
+						/>
+					)
+				}
 				renderContent={({ onClose }) => (
 					<div
 						css={css`
