@@ -289,7 +289,7 @@ export default ({ media, setMedia, product, onSave, open, onRequestClose }) => {
 														);
 
 														.media-display-preview {
-															max-width: 100px;
+															width: 100px;
 															min-height: auto;
 														}
 
@@ -306,14 +306,34 @@ export default ({ media, setMedia, product, onSave, open, onRequestClose }) => {
 															gap: var(
 																--sc-spacing-x-small
 															);
+															max-width: 100%;
 														`}
 													>
-														<MediaDisplayPreview
-															media={
-																videoThumbnail
+														<div
+															css={css`
+																width: 100px;
+																height: 60px;
+																overflow: hidden;
+															`}
+														>
+															<MediaDisplayPreview
+																media={
+																	videoThumbnail
+																}
+															/>
+														</div>
+														<ScText
+															css={css`
+																max-width: 180px;
+															`}
+															tag="p"
+															truncate
+															title={
+																videoThumbnail?.title ||
+																videoThumbnail?.alt ||
+																''
 															}
-														/>
-														<ScText truncate>
+														>
 															{videoThumbnail?.title ||
 																videoThumbnail?.alt ||
 																''}
