@@ -86,12 +86,20 @@ export default ({
 								}
 								onClick={onToggle}
 								placeholder={__('Select a date', 'surecart')}
-								readOnly
+								readonly
 								css={css`
 									--sc-input-cursor: pointer;
 								`}
 							>
-								<ScIcon name="calendar" slot="suffix" />
+								<ScIcon
+									name="calendar"
+									slot="suffix"
+									style={{
+										width: '20px',
+										height: '20px',
+										cursor: 'pointer',
+									}}
+								/>
 							</ScInput>
 						)}
 					/>
