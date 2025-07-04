@@ -290,6 +290,7 @@ export default ({ media, setMedia, product, onSave, open, onRequestClose }) => {
 
 														.media-display-preview {
 															max-width: 100px;
+															min-height: auto;
 														}
 
 														img {
