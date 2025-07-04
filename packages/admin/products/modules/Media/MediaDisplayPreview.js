@@ -25,6 +25,7 @@ export default ({ media }) => {
 						object-fit: contain;
 						border-radius: var(--sc-border-radius-medium);
 						pointer-events: none;
+						max-height: 200px;
 					`}
 					src={media?.source_url}
 					muted

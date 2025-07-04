@@ -3,6 +3,10 @@ import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import { useState, useEffect } from '@wordpress/element';
 import { Button } from '@wordpress/components';
+import { MediaUpload } from '@wordpress/media-utils';
+import { closeSmall, edit } from '@wordpress/icons';
+import { useSelect } from '@wordpress/data';
+import { store as coreStore } from '@wordpress/core-data';
 
 /**
  * Internal dependencies.
@@ -17,10 +21,15 @@ import {
 	ScFormControl,
 	ScIcon,
 	ScSelect,
+	ScSkeleton,
 	ScText,
 } from '@surecart/components-react';
-import { MediaUpload } from '@wordpress/media-utils';
-import { closeSmall, edit } from '@wordpress/icons';
+import {
+	aspectRatioChoices,
+	normalizeMedia,
+	updateAttachmentMeta,
+} from '../../../util/attachments';
+
 const ALLOWED_MEDIA_TYPES = ['image', 'video'];
 
 export default ({ media, setMedia, product, onSave, open, onRequestClose }) => {
@@ -28,33 +37,41 @@ export default ({ media, setMedia, product, onSave, open, onRequestClose }) => {
 	const [error, setError] = useState(null);
 	const [isSaving, setIsSaving] = useState(false);
 	const [variation, setVariation] = useState('');
-	const [videoThumbnail, setVideoThumbnail] = useState('');
-	console.log('media', media);
+	const [videoThumbnailId, setVideoThumbnailId] = useState(
+		media?.meta?.sc_video_thumbnail || null
+	);
+	const [videoThumbnailAspectRatio, setVideoThumbnailAspectRatio] =
+		useState('');
 
 	useEffect(() => {
 		if (media) {
-			setMediaData({
-				...media,
-				mime_type: media?.mime || media?.mime_type,
-				source_url: media?.source_url || media?.url,
-				alt_text: media?.alt_text || media?.alt,
-				thumb: media?.sizes?.medium
-					? { src: media.sizes.medium.url }
-					: media?.thumb,
-				media_details: media?.media_details || {
-					sizes: media?.sizes
-						? {
-								medium: media.sizes.medium,
-						  }
-						: {},
-				},
-			});
+			setMediaData(normalizeMedia(media));
 			setVariation(media?.meta?.sc_variant_option || '');
-			setVideoThumbnail(media?.meta?.sc_video_thumbnail || '');
+			setVideoThumbnailId(media?.meta?.sc_video_thumbnail || null);
+			setVideoThumbnailAspectRatio(
+				media?.meta?.sc_video_thumbnail_aspect_ratio || ''
+			);
 		}
 	}, [media]);
 
-	const onSubmit = (event) => {
+	const { videoThumbnail, thumbnailLoading } = useSelect((select) => {
+		if (!videoThumbnailId) {
+			return {
+				videoThumbnail: null,
+				thumbnailLoading: false,
+			};
+		}
+
+		return {
+			videoThumbnail: select(coreStore).getMedia(videoThumbnailId),
+			thumbnailLoading: !select(coreStore).hasFinishedResolution(
+				'getMedia',
+				[videoThumbnailId]
+			),
+		};
+	});
+
+	const onSubmit = async (event) => {
 		event.preventDefault();
 		if (!mediaData?.id) {
 			setError(__('Please select a media item.', 'surecart'));
@@ -66,14 +83,25 @@ export default ({ media, setMedia, product, onSave, open, onRequestClose }) => {
 			setError(null);
 
 			// Update the media in the parent component
+			const meta = {
+				sc_variant_option: variation || '',
+				sc_video_thumbnail: videoThumbnail?.id || null,
+				sc_video_thumbnail_aspect_ratio:
+					videoThumbnailAspectRatio || null,
+			};
+
+			// Update product media data.
 			onSave({
 				...mediaData,
-				meta: {
-					...mediaData.meta,
-					sc_variant_option: variation || '',
-				},
-				thumbnail_url:
-					videoThumbnail?.source_url || mediaData.thumbnail_url,
+				meta,
+			});
+
+			// Update the attachment meta in the WordPress.
+			await updateAttachmentMeta(mediaData.id, {
+				meta,
+				...(meta?.sc_video_thumbnail
+					? { featured_media: meta.sc_video_thumbnail }
+					: {}),
 			});
 
 			// Close the drawer
@@ -90,46 +118,18 @@ export default ({ media, setMedia, product, onSave, open, onRequestClose }) => {
 	};
 
 	const selectMedia = (updatedMedia) => {
-		setMediaData({
-			...updatedMedia,
-			mime_type: updatedMedia?.mime || updatedMedia?.mime_type,
-			source_url: updatedMedia?.source_url || updatedMedia?.url,
-			alt_text: updatedMedia?.alt_text || updatedMedia?.alt,
-			thumb: updatedMedia?.sizes?.medium
-				? {
-						src: updatedMedia.sizes.medium.url,
-				  }
-				: updatedMedia?.thumb,
-			media_details: updatedMedia?.media_details || {
-				sizes: updatedMedia?.sizes
-					? {
-							medium: updatedMedia.sizes.medium,
-					  }
-					: {},
-			},
-		});
+		setMediaData(normalizeMedia(updatedMedia));
 	};
 
 	const selectThumbnail = (thumbnail) => {
-		const normalizedThumbnail = {
-			...thumbnail,
-			mime_type: thumbnail?.mime || thumbnail?.mime_type,
-			source_url: thumbnail?.source_url || thumbnail?.url,
-			alt_text: thumbnail?.alt_text || thumbnail?.alt,
-			thumb: thumbnail?.sizes?.medium
-				? {
-						src: thumbnail.sizes.medium.url,
-				  }
-				: thumbnail?.thumb,
-			media_details: thumbnail?.media_details || {
-				sizes: thumbnail?.sizes
-					? {
-							medium: thumbnail.sizes.medium,
-					  }
-					: {},
+		setMediaData({
+			...mediaData,
+			meta: {
+				...mediaData.meta,
+				sc_video_thumbnail: thumbnail?.id || null,
 			},
-		};
-		setVideoThumbnail(normalizedThumbnail);
+		});
+		setVideoThumbnailId(thumbnail?.id || null);
 	};
 
 	const isVideo = mediaData?.mime_type?.includes('video');
@@ -218,9 +218,13 @@ export default ({ media, setMedia, product, onSave, open, onRequestClose }) => {
 													icon={closeSmall}
 													variant="secondary"
 													onClick={() => {
-														setMediaData('');
-														setVariation('');
-														setVideoThumbnail('');
+														setMedia(null);
+														setMediaData(null);
+														setVariation(null);
+														setVideoThumbnailId(
+															null
+														);
+														selectThumbnail(null);
 													}}
 													isDestructive
 												>
@@ -316,6 +320,16 @@ export default ({ media, setMedia, product, onSave, open, onRequestClose }) => {
 																overflow: hidden;
 															`}
 														>
+															{thumbnailLoading && (
+																<ScSkeleton
+																	style={{
+																		aspectRatio:
+																			'1 / 1',
+																		'--border-radius':
+																			'var(--sc-border-radius-medium)',
+																	}}
+																/>
+															)}
 															<MediaDisplayPreview
 																media={
 																	videoThumbnail
@@ -329,12 +343,18 @@ export default ({ media, setMedia, product, onSave, open, onRequestClose }) => {
 															tag="p"
 															truncate
 															title={
+																videoThumbnail
+																	?.title
+																	?.rendered ||
 																videoThumbnail?.title ||
 																videoThumbnail?.alt ||
 																''
 															}
 														>
-															{videoThumbnail?.title ||
+															{videoThumbnail
+																?.title
+																?.rendered ||
+																videoThumbnail?.title ||
 																videoThumbnail?.alt ||
 																''}
 														</ScText>
@@ -364,7 +384,7 @@ export default ({ media, setMedia, product, onSave, open, onRequestClose }) => {
 															}
 															value={
 																videoThumbnail?.id ??
-																''
+																null
 															}
 															multiple={false}
 															allowedTypes={[
@@ -398,8 +418,8 @@ export default ({ media, setMedia, product, onSave, open, onRequestClose }) => {
 															showTooltip={true}
 															size="compact"
 															onClick={() =>
-																setVideoThumbnail(
-																	''
+																selectThumbnail(
+																	null
 																)
 															}
 														/>
@@ -447,78 +467,18 @@ export default ({ media, setMedia, product, onSave, open, onRequestClose }) => {
 										>
 											<ScSelect
 												value={
-													mediaData?.aspect_ratio ||
-													''
+													videoThumbnailAspectRatio
 												}
 												placeholder={__(
 													'Select aspect ratio',
 													'surecart'
 												)}
-												choices={[
-													{
-														label: __(
-															'Original',
-															'surecart'
-														),
-														value: 'auto',
-													},
-													{
-														label: __(
-															'Square - 1:1',
-															'surecart'
-														),
-														value: '1',
-													},
-													{
-														label: __(
-															'Standard - 4:3',
-															'surecart'
-														),
-														value: '4/3',
-													},
-													{
-														label: __(
-															'Portrait - 3:4',
-															'surecart'
-														),
-														value: '3/4',
-													},
-													{
-														label: __(
-															'Classic - 3:2',
-															'surecart'
-														),
-														value: '3/2',
-													},
-													{
-														label: __(
-															'Classic Portrait - 2:3',
-															'surecart'
-														),
-														value: '2/3',
-													},
-													{
-														label: __(
-															'Wide - 16:9',
-															'surecart'
-														),
-														value: '16/9',
-													},
-													{
-														label: __(
-															'Tall - 9:16',
-															'surecart'
-														),
-														value: '9/16',
-													},
-												]}
+												choices={aspectRatioChoices}
 												style={{ width: '100%' }}
 												onScChange={(e) =>
-													setMedia({
-														...mediaData,
-														aspect_ratio:
-															e.target.value,
-													})
+													setVideoThumbnailAspectRatio(
+														e.target.value
+													)
 												}
 											/>
 										</ScFormControl>
