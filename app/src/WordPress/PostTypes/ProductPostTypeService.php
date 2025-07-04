@@ -325,16 +325,6 @@ class ProductPostTypeService {
 		$attachid = $post['ID']; // yes this is actually an array here.
 		update_post_meta( $attachid, 'sc_variant_option', $attachment['sc_variant_option'] ?? '' );
 
-		if ( isset( $attachment['sc_video_thumbnail_id'] ) ) {
-			$thumbnail_id = (int) $attachment['sc_video_thumbnail_id'];
-
-			if ( $thumbnail_id > 0 ) {
-				set_post_thumbnail( $attachid, $thumbnail_id );
-			} else {
-				delete_post_thumbnail( $attachid );
-			}
-		}
-
 		return $post;
 	}
 
@@ -354,94 +344,6 @@ class ProductPostTypeService {
 			'value'    => get_post_meta( $post->ID, 'sc_variant_option', true ),
 			'helps'    => esc_html__( 'Enter the variant name as it appears in Option Values (e.g., Black, White, Light Green).', 'surecart' ) . ' <a href="https://surecart.com/docs/variant-swatches/" target="_blank">' . esc_html__( 'Learn More.', 'surecart' ) . '</a>',
 		);
-
-		// Add video thumbnail field for video attachments.
-		if ( str_contains( $post->post_mime_type, 'video' ) ) {
-			$thumbnail_id  = get_post_thumbnail_id( $post->ID );
-			$thumbnail_img = '';
-
-			if ( $thumbnail_id ) {
-				$thumbnail_img = wp_get_attachment_image( $thumbnail_id, 'thumbnail' );
-			}
-
-			$form_fields['sc_video_thumbnail'] = array(
-				'label' => __( 'Video Poster Image', 'surecart' ),
-				'input' => 'html',
-				'html'  => '
-					<div class="video-thumbnail-container" id="video-thumbnail-container-' . esc_attr( $post->ID ) . '">
-						<div class="current-thumbnail" id="current-thumbnail-' . esc_attr( $post->ID ) . '">
-							' . $thumbnail_img . '
-						</div>
-						<button type="button" class="button-secondary"
-							id="sc-set-video-thumbnail-' . esc_attr( $post->ID ) . '">
-							' . __( 'Set poster image', 'surecart' ) . '
-						</button>
-						<button type="button" class="button-link' . ( ! $thumbnail_id ? ' hidden' : '' ) . '"
-							id="sc-remove-video-thumbnail-' . esc_attr( $post->ID ) . '">
-							' . __( 'Remove poster image', 'surecart' ) . '
-						</button>
-						<input type="hidden" name="attachments[' . esc_attr( $post->ID ) . '][sc_video_thumbnail_id]"
-							id="video-thumbnail-id-' . esc_attr( $post->ID ) . '"
-							value="' . esc_attr( $thumbnail_id ) . '" />
-					</div>
-					<script>
-						jQuery(document).ready(function($) {
-							// Set video thumbnail.
-							$("#sc-set-video-thumbnail-' . esc_attr( $post->ID ) . '").on("click", function() {
-								var attachmentId = ' . esc_attr( $post->ID ) . ';
-								var frame = wp.media({
-									title: "' . __( 'Select or Upload Poster Image', 'surecart' ) . '",
-									button: {
-										text: "' . __( 'Use this image', 'surecart' ) . '"
-									},
-									library: {
-										type: "image"
-									},
-									multiple: false
-								});
-
-								frame.on("select", function() {
-									var attachment = frame.state().get("selection").first().toJSON();
-									$("#video-thumbnail-id-" + attachmentId).val(attachment.id);
-									$("#current-thumbnail-" + attachmentId).html("<img src=\"" + attachment.url + "\" alt=\"\" style=\"max-width:150px;\" />");
-									$("#sc-remove-video-thumbnail-" + attachmentId).removeClass("hidden");
-								});
-
-								frame.open();
-							});
-
-							// Remove video thumbnail.
-							$("#sc-remove-video-thumbnail-' . esc_attr( $post->ID ) . '").on("click", function() {
-								var attachmentId = ' . esc_attr( $post->ID ) . ';
-								$("#video-thumbnail-id-" + attachmentId).val("");
-								$("#current-thumbnail-" + attachmentId).empty();
-								$(this).addClass("hidden");
-							});
-						});
-					</script>
-					<style>
-						.video-thumbnail-container {
-							margin-top: 10px;
-						}
-						.current-thumbnail {
-							margin-bottom: 10px;
-						}
-						.current-thumbnail img {
-							max-width: 150px;
-							height: auto;
-						}
-						#sc-remove-video-thumbnail-' . esc_attr( $post->ID ) . ' {
-							color: #a00;
-							margin-left: 10px;
-						}
-						#sc-remove-video-thumbnail-' . esc_attr( $post->ID ) . '.hidden {
-							display: none;
-						}
-					</style>
-				',
-				'helps' => __( 'Set a poster image to display before the video plays.', 'surecart' ),
-			);
-		}
 
 		return $form_fields;
 	}
@@ -687,15 +589,25 @@ class ProductPostTypeService {
 			)
 		);
 
-		// Register sc_video_thumbnail_id meta for attachments.
 		register_meta(
 			'post',
-			'sc_video_thumbnail_id',
+			'sc_video_thumbnail',
 			array(
 				'object_subtype' => 'attachment',
 				'show_in_rest'   => true,
 				'single'         => true,
 				'type'           => 'integer',
+			)
+		);
+
+		register_meta(
+			'post',
+			'sc_video_thumbnail_aspect_ratio',
+			array(
+				'object_subtype' => 'attachment',
+				'show_in_rest'   => true,
+				'single'         => true,
+				'type'           => 'string',
 			)
 		);
 	}
