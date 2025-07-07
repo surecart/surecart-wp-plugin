@@ -8,6 +8,7 @@ import { MediaUpload } from '@wordpress/block-editor';
 import { Notice } from '@wordpress/components';
 import { useDispatch } from '@wordpress/data';
 import { SortableKnob } from 'react-easy-sort';
+import { isVideoMedia } from '../../../util/attachments';
 const ALLOWED_MEDIA_TYPES = ['image', 'video'];
 
 export default ({ id, isNew, onRemove, isFeatured, onSelect, onEditMedia }) => {
@@ -20,6 +21,18 @@ export default ({ id, isNew, onRemove, isFeatured, onSelect, onEditMedia }) => {
 				'getMedia',
 				[id]
 			),
+		};
+	});
+
+	const { featuredMedia } = useSelect((select) => {
+		if (!media?.featured_media) {
+			return {
+				featuredMedia: null,
+			};
+		}
+
+		return {
+			featuredMedia: select(coreStore).getMedia(media?.featured_media),
 		};
 	});
 
@@ -59,8 +72,6 @@ export default ({ id, isNew, onRemove, isFeatured, onSelect, onEditMedia }) => {
 			</div>
 		);
 	}
-
-	const isVideo = media?.mime_type?.includes('video');
 
 	return (
 		<div
@@ -204,7 +215,7 @@ export default ({ id, isNew, onRemove, isFeatured, onSelect, onEditMedia }) => {
 			</SortableKnob>
 
 			{media?.source_url ? (
-				isVideo ? (
+				isVideoMedia(media) ? (
 					<div
 						css={css`
 							display: flex;
@@ -228,8 +239,12 @@ export default ({ id, isNew, onRemove, isFeatured, onSelect, onEditMedia }) => {
 							muted
 							loop
 							playsInline
-							{...(media?.thumbnail_url
-								? { poster: media?.thumbnail_url }
+							{...(featuredMedia?.source_url ?? featuredMedia?.url
+								? {
+										poster:
+											featuredMedia?.source_url ??
+											featuredMedia?.url,
+								  }
 								: {})}
 						>
 							<source
