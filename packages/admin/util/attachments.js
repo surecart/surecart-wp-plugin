@@ -75,3 +75,147 @@ export const normalizeMedia = (media) => {
 		},
 	};
 };
+
+/**
+ * Extract thumbnail from video file.
+ *
+ * @param {string} videoUrl - URL of the video.
+ * @param {number} seekTime - Time in seconds to capture frame (default: 1).
+ *
+ * @returns {Promise<string>} - Base64 encoded PNG thumbnail.
+ */
+export const extractVideoThumbnail = (videoUrl, seekTime = 1) => {
+	return new Promise((resolve, reject) => {
+		// Create video element.
+		const video = document.createElement('video');
+		video.crossOrigin = 'anonymous';
+		video.preload = 'metadata';
+		video.muted = true;
+		video.playsInline = true;
+
+		// Handle video load errors.
+		video.onerror = () => {
+			reject(new Error('Failed to load video'));
+		};
+
+		// When video metadata is loaded.
+		video.onloadeddata = function () {
+			// Seek to the specified time.
+			video.currentTime = Math.min(seekTime, video.duration || 1);
+		};
+
+		// When seeking is complete, extract the frame.
+		video.onseeked = function () {
+			try {
+				// Create canvas element.
+				const canvas = document.createElement('canvas');
+				canvas.width = video.videoWidth;
+				canvas.height = video.videoHeight;
+
+				// Draw video frame on canvas.
+				const ctx = canvas.getContext('2d');
+				ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+				// Convert to base64 PNG.
+				const dataURL = canvas.toDataURL('image/png');
+
+				// Cleanup.
+				video.remove();
+				canvas.remove();
+
+				resolve(dataURL);
+			} catch (error) {
+				reject(error);
+			}
+		};
+
+		// Set video source.
+		video.src = videoUrl;
+	});
+};
+
+/**
+ * Upload base64 thumbnail to WordPress media library using REST API.
+ *
+ * @param {string} base64Data - Base64 encoded image data
+ * @param {string} filename - Filename for the thumbnail
+ *
+ * @returns {Promise<Object>} - WordPress media object (JSON).
+ */
+export const uploadThumbnailToMediaRestApi = async (
+	base64Data,
+	filename = 'video-thumbnail.png'
+) => {
+	// Convert base64 to Blob.
+	const response = await fetch(base64Data);
+	const blob = await response.blob();
+
+	// Create FormData.
+	const formData = new FormData();
+	formData.append('file', blob, filename);
+
+	// Upload to WordPress REST API.
+	const uploadResponse = await fetch(wpApiSettings.root + 'wp/v2/media', {
+		method: 'POST',
+		headers: {
+			'X-WP-Nonce': wpApiSettings.nonce,
+		},
+		body: formData,
+	});
+
+	if (!uploadResponse.ok) {
+		const errorData = await uploadResponse.json();
+		throw new Error(
+			`Failed to upload thumbnail via REST API: ${uploadResponse.status} ${uploadResponse.statusText}. Code: ${errorData.code}, Message: ${errorData.message}`
+		);
+	}
+
+	// Parse the JSON response.
+	return await uploadResponse.json();
+};
+
+/**
+ * Generate and upload video thumbnail automatically.
+ *
+ * @param {Object} videoMedia - Video media object.
+ * @param {number} seekTime - Time in seconds to capture frame.
+ *
+ * @returns {Promise<Object>} - Thumbnail media object.
+ */
+export const generateVideoThumbnail = async (videoMedia, seekTime = 1) => {
+	if (!videoMedia?.source_url || !videoMedia?.mime_type?.includes('video')) {
+		throw new Error('Invalid video media object');
+	}
+
+	try {
+		// Extract thumbnail from video.
+		const thumbnailBase64 = await extractVideoThumbnail(
+			videoMedia.source_url,
+			seekTime
+		);
+
+		// Generate filename.
+		const videoName =
+			videoMedia.title?.rendered || videoMedia?.title || 'video';
+		const filename = `${videoName.replace(
+			/[^a-zA-Z0-9]/g,
+			'_'
+		)}_thumbnail_${Date.now()}.png`;
+
+		// Upload thumbnail to media library.
+		return await uploadThumbnailToMediaRestApi(thumbnailBase64, filename);
+	} catch (error) {
+		console.error('Failed to generate video thumbnail:', error);
+		throw error;
+	}
+};
+
+/**
+ * Check if media is a video.
+ *
+ * @param {Object} media - Media object.
+ *
+ * @returns {boolean}
+ */
+export const isVideoMedia = (media) =>
+	(media?.mime_type || media?.mime)?.includes('video');

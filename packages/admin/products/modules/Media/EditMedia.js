@@ -28,6 +28,8 @@ import {
 	aspectRatioChoices,
 	normalizeMedia,
 	updateAttachmentMeta,
+	generateVideoThumbnail,
+	isVideoMedia,
 } from '../../../util/attachments';
 
 const ALLOWED_MEDIA_TYPES = ['image', 'video'];
@@ -42,6 +44,8 @@ export default ({ media, setMedia, product, onSave, open, onRequestClose }) => {
 	);
 	const [videoThumbnailAspectRatio, setVideoThumbnailAspectRatio] =
 		useState('');
+	const [isGeneratingThumbnail, setIsGeneratingThumbnail] = useState(false);
+	const [thumbnailError, setThumbnailError] = useState(null);
 
 	useEffect(() => {
 		if (media) {
@@ -132,7 +136,58 @@ export default ({ media, setMedia, product, onSave, open, onRequestClose }) => {
 		setVideoThumbnailId(thumbnail?.id || null);
 	};
 
-	const isVideo = mediaData?.mime_type?.includes('video');
+	const handleGenerateThumbnail = async () => {
+		if (!mediaData?.id || !isVideoMedia(mediaData)) {
+			return;
+		}
+
+		try {
+			setIsGeneratingThumbnail(true);
+			setThumbnailError(null);
+
+			// Generate thumbnail from video
+			const thumbnailMedia = await generateVideoThumbnail(mediaData);
+
+			if (thumbnailMedia) {
+				// Update the video media with the thumbnail reference
+				await updateAttachmentMeta(mediaData.id, {
+					meta: {
+						...mediaData.meta,
+						sc_video_thumbnail: thumbnailMedia.id,
+					},
+					featured_media: thumbnailMedia.id,
+				});
+
+				// Update local state
+				setVideoThumbnailId(thumbnailMedia.id);
+				setMediaData({
+					...mediaData,
+					meta: {
+						...mediaData.meta,
+						sc_video_thumbnail: thumbnailMedia.id,
+					},
+				});
+			}
+		} catch (error) {
+			console.error('Failed to generate thumbnail:', error);
+			setThumbnailError(
+				error?.message ||
+					__(
+						'Failed to generate video thumbnail. Please try again.',
+						'surecart'
+					)
+			);
+		} finally {
+			setIsGeneratingThumbnail(false);
+		}
+	};
+
+	const variantOptionChoices = (product?.variant_options || []).flatMap((v) =>
+		v.values.map((val) => ({
+			label: val,
+			value: val,
+		}))
+	);
 
 	return (
 		<ScForm onScFormSubmit={onSubmit}>
@@ -246,35 +301,51 @@ export default ({ media, setMedia, product, onSave, open, onRequestClose }) => {
 
 						{mediaData?.id && (
 							<>
-								<ScFormControl
-									label={__('Select Variation', 'surecart')}
-								>
-									<ScSelect
-										value={variation}
-										choices={(
-											product?.variant_options || []
-										).flatMap((v) =>
-											v.values.map((val) => ({
-												label: val,
-												value: val,
-											}))
-										)}
-										style={{ width: '100%' }}
-										placeholder={__(
+								{!!variantOptionChoices?.length && (
+									<ScFormControl
+										label={__(
 											'Select Variation',
 											'surecart'
 										)}
-										onScChange={(e) =>
-											setVariation(e.target.value)
-										}
-									/>
-								</ScFormControl>
+									>
+										<ScSelect
+											value={variation}
+											choices={variantOptionChoices}
+											style={{ width: '100%' }}
+											placeholder={__(
+												'Select Variation',
+												'surecart'
+											)}
+											onScChange={(e) =>
+												setVariation(e.target.value)
+											}
+										/>
+									</ScFormControl>
+								)}
 
-								{isVideo && (
+								{isVideoMedia(mediaData) && (
 									<>
 										<ScFormControl
 											label={__('Thumbnail', 'surecart')}
 										>
+											{thumbnailError && (
+												<div
+													css={css`
+														color: var(
+															--sc-color-danger-500
+														);
+														font-size: var(
+															--sc-font-size-small
+														);
+														margin-bottom: var(
+															--sc-spacing-small
+														);
+													`}
+												>
+													{thumbnailError}
+												</div>
+											)}
+
 											{!!videoThumbnail?.id ? (
 												<div
 													css={css`
@@ -426,36 +497,79 @@ export default ({ media, setMedia, product, onSave, open, onRequestClose }) => {
 													</div>
 												</div>
 											) : (
-												<MediaUpload
-													title={__(
-														'Select Thumbnail',
-														'surecart'
-													)}
-													onSelect={selectThumbnail}
-													value={
-														videoThumbnail?.id ?? ''
-													}
-													multiple={false}
-													allowedTypes={['image']}
-													render={({ open }) => (
-														<ScButton
-															type="default"
-															onClick={open}
-															css={css`
-																width: 100%;
-															`}
-														>
-															<ScIcon
-																name="upload"
-																slot="suffix"
-															></ScIcon>
-															{__(
-																'Open Media Library',
-																'surecart'
-															)}
-														</ScButton>
-													)}
-												/>
+												<div
+													css={css`
+														display: flex;
+														gap: var(
+															--sc-spacing-small
+														);
+														width: 100%;
+													`}
+												>
+													<MediaUpload
+														title={__(
+															'Select Thumbnail',
+															'surecart'
+														)}
+														onSelect={
+															selectThumbnail
+														}
+														value={
+															videoThumbnail?.id ??
+															''
+														}
+														multiple={false}
+														allowedTypes={['image']}
+														render={({ open }) => (
+															<ScButton
+																type="default"
+																onClick={open}
+																css={css`
+																	flex: 1;
+																`}
+															>
+																<ScIcon
+																	name="upload"
+																	slot="suffix"
+																></ScIcon>
+																{__(
+																	'Select from Library',
+																	'surecart'
+																)}
+															</ScButton>
+														)}
+													/>
+
+													<ScButton
+														type="default"
+														onClick={
+															handleGenerateThumbnail
+														}
+														disabled={
+															isGeneratingThumbnail
+														}
+														isBusy={
+															isGeneratingThumbnail
+														}
+														css={css`
+															flex: 1;
+														`}
+													>
+														{isGeneratingThumbnail
+															? __(
+																	'Generating...',
+																	'surecart'
+															  )
+															: __(
+																	'Generate Thumbnail',
+																	'surecart'
+															  )}
+														<ScIcon
+															name="refresh-cw"
+															slot="suffix"
+														></ScIcon>
+													</ScButton>
+												</div>
 											)}
 										</ScFormControl>
 
