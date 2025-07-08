@@ -25,6 +25,23 @@ class PriceRestServiceProvider extends RestServiceProvider implements RestServic
 	protected $controller = PricesController::class;
 
 	/**
+	 * Register Additional REST Routes
+	 *
+	 * @return void
+	 */
+	public function registerRoutes() {
+		register_rest_route(
+			"$this->name/v$this->version",
+			$this->endpoint . '/(?P<id>\S+)/duplicate',
+			[
+				'methods'             => \WP_REST_Server::CREATABLE,
+				'callback'            => $this->callback( $this->controller, 'duplicate' ),
+				'permission_callback' => [ $this, 'create_item_permissions_check' ],
+			]
+		);
+	}
+
+	/**
 	 * Get our sample schema for a post.
 	 *
 	 * @return array The sample schema for a post

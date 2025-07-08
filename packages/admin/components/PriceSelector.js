@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { useState, useMemo } from '@wordpress/element';
+import { useState, useMemo, useEffect } from '@wordpress/element';
 import { useEntityRecords } from '@wordpress/core-data';
 import SelectPrice from './SelectPrice';
 
@@ -44,7 +44,7 @@ export default ({
 	const [accumulatedProducts, setAccumulatedProducts] = useState([]);
 
 	// Reset accumulated products when query changes
-	useMemo(() => {
+	useEffect(() => {
 		if (query) {
 			setAccumulatedProducts([]);
 			setPage(1);
@@ -52,7 +52,7 @@ export default ({
 	}, [query]);
 
 	// Update accumulated products when new data arrives
-	useMemo(() => {
+	useEffect(() => {
 		if (!fetchedProducts) return;
 
 		if (query) {

@@ -481,7 +481,8 @@ class ProductsListTable extends ListTable {
 					'edit'         => '<a href="' . esc_url( \SureCart::getUrl()->edit( 'product', $product->id ) ) . '" aria-label="' . esc_attr( 'Edit Product', 'surecart' ) . '">' . esc_html__( 'Edit', 'surecart' ) . '</a>',
 					'trash'        => $this->action_toggle_archive( $product ),
 					'sync'         => isset( $_GET['debug'] ) ? '<a href="' . esc_url( \SureCart::getUrl()->sync( 'product', $product->id ) ) . '" aria-label="' . esc_attr( 'Sync Product', 'surecart' ) . '">' . esc_html__( 'Sync', 'surecart' ) . '</a>' : null,
-					'view_product' => ! empty( $product->permalink ) ? '<a href="' . esc_url( $product->permalink ) . '" aria-label="' . esc_attr( 'View', 'surecart' ) . '">' . esc_html__( 'View', 'surecart' ) . '</a>' : null,
+					'view_product' => ! empty( $product->permalink ) ? '<a href="' . esc_url( $product->permalink ) . '" aria-label="' . esc_attr__( 'View', 'surecart' ) . '">' . esc_html__( 'View', 'surecart' ) . '</a>' : null,
+					'duplicate'    => '<a href="' . esc_url( \SureCart::getUrl()->duplicate( 'product', $product->id ) ) . '" aria-label="' . esc_attr__( 'Duplicate', 'surecart' ) . '">' . esc_html__( 'Duplicate', 'surecart' ) . '</a>',
 				]
 			)
 		);
