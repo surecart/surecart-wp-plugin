@@ -273,13 +273,10 @@ export default ({ media, setMedia, product, onSave, open, onRequestClose }) => {
 													icon={closeSmall}
 													variant="secondary"
 													onClick={() => {
-														setMedia(null);
 														setMediaData(null);
-														setVariation(null);
-														setVideoThumbnailId(
-															null
-														);
-														selectThumbnail(null);
+														setVariation('');
+														setVideoThumbnailId(null);
+														setVideoThumbnailAspectRatio('');
 													}}
 													isDestructive
 												>
