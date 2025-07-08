@@ -313,7 +313,8 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 
 == Changelog ==
 
-= 3.10.0 - June 10th, 2025 =
+= 3.10.0 - July 8th, 2025 =
+- [Overview] (https://surecart.com/changelog/surecart-3-10-features-that-speed-up-your-workflow-and-boost-revenue/)
 - New: Price boosts. 1-click price swaps on your checkout page.
 - New: Duplicate products and prices.
 - New: Add a product form anywhere on your website.
