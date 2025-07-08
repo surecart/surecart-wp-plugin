@@ -84,9 +84,17 @@ const { state, actions } = store('surecart/product-page', {
 				return {};
 			}
 
-			return !!state.selectedVariant?.line_item_image?.src
+			const image = !!state.selectedVariant?.line_item_image?.src
 				? state.selectedVariant.line_item_image
 				: state.featuredImage || {};
+
+			// Compatibility with lazy loading enabled images.
+			return {
+				...image,
+				src: image?.['data-src'] || image?.src,
+				srcset: image?.['data-srcset'] || image?.srcset,
+				sizes: image?.['data-sizes'] || image?.sizes,
+			}
 		},
 
 		/**
