@@ -40,6 +40,7 @@ export default ({ productMedia, onDeleteImage, onDownloaded, isFeatured }) => {
 						position: absolute;
 						top: 5px;
 						left: 5px;
+						z-index: 10;
 					`}
 				>
 					{__('Featured', 'surecart')}
@@ -71,6 +72,7 @@ export default ({ productMedia, onDeleteImage, onDownloaded, isFeatured }) => {
 					bottom: 4px;
 					right: 4px;
 					line-height: 0;
+					z-index: 10;
 				`}
 				media={productMedia}
 				onDownloaded={onDownloaded}
@@ -126,6 +128,7 @@ export default ({ productMedia, onDeleteImage, onDownloaded, isFeatured }) => {
 								padding: var(--sc-spacing-small);
 								width: 40px;
 								height: 40px;
+								z-index: 10;
 							`}
 							name="play"
 						/>
