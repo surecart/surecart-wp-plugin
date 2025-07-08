@@ -199,7 +199,7 @@ export default () => {
 			<SettingsBox
 				title={__('Subscription Renewals', 'surecart')}
 				description={__(
-					'Manage how your store subscription renewals.',
+					'Manage your store subscription renewal behavior.',
 					'surecart'
 				)}
 				loading={!hasLoadedItem}
