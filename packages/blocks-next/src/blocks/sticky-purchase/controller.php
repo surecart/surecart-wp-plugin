@@ -33,4 +33,10 @@ if ( ! $buy_button_block ) {
 $buy_button_args     = $buy_button_block['attrs'] ?? [];
 $enable_out_of_stock = $buy_button_args['show_sticky_purchase_on_out_of_stock'] ?? false;
 
+// Check for global setting overrides.
+global $sc_sticky_purchase_enable_out_of_stock;
+if ( isset( $sc_sticky_purchase_enable_out_of_stock ) ) {
+	$enable_out_of_stock = $sc_sticky_purchase_enable_out_of_stock;
+}
+
 return 'file:./view.php';
