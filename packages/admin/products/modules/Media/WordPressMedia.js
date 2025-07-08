@@ -137,6 +137,7 @@ export default ({ id, isNew, onRemove, isFeatured, onSelect, onEditMedia }) => {
 						position: absolute;
 						bottom: 5px;
 						left: 5px;
+						z-index: 1;
 
 						&::part(content) {
 							max-width: 140px;

@@ -4,14 +4,9 @@ import { ScIcon, ScTag } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 import Download from './Download';
 import { SortableKnob } from 'react-easy-sort';
+import { isVideoMedia } from '../../../util/attachments';
 
 export default ({ productMedia, onDeleteImage, onDownloaded, isFeatured }) => {
-	const isVideo =
-		productMedia?.url?.includes('.mp4') ||
-		productMedia?.url?.includes('.webm') ||
-		productMedia?.url?.includes('.ogg') ||
-		productMedia?.media?.mime_type?.includes('video');
-
 	return (
 		<div
 			css={css`
@@ -97,7 +92,7 @@ export default ({ productMedia, onDeleteImage, onDownloaded, isFeatured }) => {
 			</SortableKnob>
 
 			{productMedia?.url || productMedia?.media?.url ? (
-				isVideo ? (
+				isVideoMedia(productMedia) ? (
 					<div
 						css={css`
 							display: flex;
