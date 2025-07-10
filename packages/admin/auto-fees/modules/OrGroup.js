@@ -17,6 +17,7 @@ import {
 	ScSkeleton,
 } from '@surecart/components-react';
 import AndGroup from './AndGroup';
+import { createEmptyAndRule } from '../utils/ruleQueryUtils';
 
 export default ({
 	ruleSchema = [],
@@ -25,6 +26,9 @@ export default ({
 	id,
 	totalRuleGroups,
 	loading,
+	orGroupIndex,
+	rule_query,
+	updateRuleQuery,
 }) => {
 	if (loading || !ruleSchema?.length) {
 		return (
@@ -90,24 +94,45 @@ export default ({
 							key={id}
 							id={id}
 							ruleSchema={ruleSchema}
-							addRuleGroup={() =>
-								setRuleGroupsManager([
+							addRuleGroup={() => {
+								const newRuleGroups = [
 									...ruleGroupsManager,
 									{ id: ruleGroupsManager?.length + 1 },
-								])
-							}
+								];
+								setRuleGroupsManager(newRuleGroups);
+								// Add new empty AND condition to current OR group
+								const newRuleQuery = [...rule_query];
+								if (!newRuleQuery[orGroupIndex]) {
+									newRuleQuery[orGroupIndex] = [];
+								}
+								newRuleQuery[orGroupIndex].push(
+									createEmptyAndRule()
+								);
+								updateRuleQuery(newRuleQuery);
+							}}
 							removeRuleGroup={() => {
 								if (ruleGroupsManager.length === 1) {
 									removeRuleGroup();
 									return;
 								}
-								setRuleGroupsManager(
-									ruleGroupsManager.filter(
-										(ruleGroup) => ruleGroup.id !== id
-									)
+								const newRuleGroups = ruleGroupsManager.filter(
+									(ruleGroup) => ruleGroup.id !== id
 								);
+								setRuleGroupsManager(newRuleGroups);
+								// Remove corresponding AND condition from rule_query
+								const newRuleQuery = [...rule_query];
+								if (newRuleQuery[orGroupIndex]) {
+									newRuleQuery[orGroupIndex] = newRuleQuery[
+										orGroupIndex
+									].filter((_, index) => index !== id - 1);
+								}
+								updateRuleQuery(newRuleQuery);
 							}}
 							totalRuleGroups={ruleGroupsManager?.length}
+							andGroupIndex={id - 1}
+							orGroupIndex={orGroupIndex}
+							rule_query={rule_query}
+							updateRuleQuery={updateRuleQuery}
 						/>
 					</div>
 				);

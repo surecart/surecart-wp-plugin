@@ -22,6 +22,7 @@ import {
 } from '@surecart/components-react';
 import DateTimePicker from './DateTimePicker';
 import { formatDateTime } from '../../util/time';
+import { createEmptyAndRule } from '../utils/ruleQueryUtils';
 
 export default ({
 	ruleSchema = [],
@@ -29,11 +30,50 @@ export default ({
 	removeRuleGroup,
 	id,
 	totalRuleGroups,
+	andGroupIndex,
+	orGroupIndex,
+	rule_query,
+	updateRuleQuery,
 }) => {
 	const [attribute, setAttribute] = useState(null);
 	const [operator, setOperator] = useState(null);
 	const [value, setValue] = useState(null);
 	const [metadataKey, setMetadataKey] = useState(null);
+
+	// Function to update the rule_query when any field changes
+	const updateCurrentRule = () => {
+		const newRuleQuery = [...rule_query];
+		if (!newRuleQuery[orGroupIndex]) {
+			newRuleQuery[orGroupIndex] = [];
+		}
+		if (!newRuleQuery[orGroupIndex][andGroupIndex]) {
+			newRuleQuery[orGroupIndex][andGroupIndex] = createEmptyAndRule();
+		}
+
+		newRuleQuery[orGroupIndex][andGroupIndex] = {
+			attribute: attribute,
+			value: value,
+			metadataKey: metadataKey,
+			operator: operator,
+		};
+
+		updateRuleQuery(newRuleQuery);
+	};
+
+	// Initialize from existing rule_query if available
+	useEffect(() => {
+		if (
+			rule_query[orGroupIndex] &&
+			rule_query[orGroupIndex][andGroupIndex]
+		) {
+			setAttribute(rule_query[orGroupIndex][andGroupIndex]?.attribute);
+			setValue(rule_query[orGroupIndex][andGroupIndex]?.value);
+			setMetadataKey(
+				rule_query[orGroupIndex][andGroupIndex]?.metadataKey
+			);
+			setOperator(rule_query[orGroupIndex][andGroupIndex]?.operator);
+		}
+	}, [orGroupIndex, andGroupIndex, rule_query]);
 
 	let operators = [];
 	let attributes = [];
@@ -54,11 +94,24 @@ export default ({
 	}
 
 	useEffect(() => {
+		//do not run on initial render
+		if (attribute === null) {
+			return;
+		}
 		// Reset values when the attribute changes.
 		setValue(null);
 		setOperator(null);
 		setMetadataKey(null);
+		// Update rule_query when attribute changes
+		updateCurrentRule();
 	}, [attribute]);
+
+	useEffect(() => {
+		if (attribute === null) {
+			return;
+		}
+		updateCurrentRule();
+	}, [operator, value, metadataKey]);
 
 	const isAttributeMetadata = attribute
 		? attribute.endsWith('.metadata') || 'metadata' === attribute
@@ -73,7 +126,9 @@ export default ({
 					<DateTimePicker
 						showLabel={false}
 						currentDate={value}
-						setDate={(date) => setValue(date)}
+						setDate={(date) => {
+							setValue(date);
+						}}
 						className={
 							!isAttributeMetadata ? 'sc-grid-full-width' : ''
 						}
@@ -108,7 +163,9 @@ export default ({
 				return (
 					<ScPriceInput
 						value={value}
-						onScInput={(e) => setValue(e.target.value)}
+						onScInput={(e) => {
+							setValue(e.target.value);
+						}}
 						currency={scData?.currency_code}
 						placeholder={__('Enter an amount', 'surecart')}
 						className={
@@ -122,7 +179,9 @@ export default ({
 				return (
 					<ScInput
 						value={value}
-						onScInput={(e) => setValue(e.target.value)}
+						onScInput={(e) => {
+							setValue(e.target.value);
+						}}
 						placeholder={__('Enter a value', 'surecart')}
 						className={
 							!isAttributeMetadata ? 'sc-grid-full-width' : ''
@@ -133,7 +192,9 @@ export default ({
 				return (
 					<ScInput
 						value={value}
-						onScInput={(e) => setValue(e.target.value)}
+						onScInput={(e) => {
+							setValue(e.target.value);
+						}}
 						placeholder={__('Enter a value', 'surecart')}
 						className={
 							!isAttributeMetadata ? 'sc-grid-full-width' : ''
@@ -178,7 +239,9 @@ export default ({
 				{isAttributeMetadata && (
 					<ScInput
 						value={metadataKey}
-						onScInput={(e) => setMetadataKey(e.target.value)}
+						onScInput={(e) => {
+							setMetadataKey(e.target.value);
+						}}
 						placeholder={__("Enter metadata's key", 'surecart')}
 					/>
 				)}

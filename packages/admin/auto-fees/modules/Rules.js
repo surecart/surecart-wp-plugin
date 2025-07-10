@@ -22,6 +22,7 @@ import {
 } from '@surecart/components-react';
 import Box from '../../ui/Box';
 import OrGroup from './OrGroup';
+import { createEmptyOrGroup } from '../utils/ruleQueryUtils';
 
 export default ({ autoFee = {}, onUpdate, loading }) => {
 	const [ruleSchema, setRuleSchema] = useState(null);
@@ -46,7 +47,24 @@ export default ({ autoFee = {}, onUpdate, loading }) => {
 		}
 	};
 
-	const { rule_string } = autoFee;
+	const { rule_string, rule_query = [] } = autoFee;
+	console.log('Auto Fee Rule Query:', rule_query);
+
+	// Initialize ruleGroupsManager based on existing rule_query
+	useEffect(() => {
+		if (rule_query.length > 0 && ruleGroupsManager.length === 0) {
+			const initialGroups = rule_query.map((_, index) => ({
+				id: index + 1,
+			}));
+			setRuleGroupsManager(initialGroups);
+		}
+	}, [rule_query, ruleGroupsManager.length]);
+
+	// Update rule_query whenever changes occur
+	const updateRuleQuery = (newRuleQuery) => {
+		console.log('Updating rule_query:', newRuleQuery);
+		onUpdate({ rule_query: newRuleQuery });
+	};
 
 	useEffect(() => {
 		if (ruleSchema) {
@@ -69,9 +87,12 @@ export default ({ autoFee = {}, onUpdate, loading }) => {
 						)}
 						<div>
 							<ScButton
-								onClick={() =>
-									setRuleGroupsManager([{ id: 1 }])
-								}
+								onClick={() => {
+									const newRuleGroups = [{ id: 1 }];
+									setRuleGroupsManager(newRuleGroups);
+									// Initialize rule_query with empty OR group
+									updateRuleQuery([createEmptyOrGroup()]);
+								}}
 							>
 								<ScIcon name="plus" slot="prefix" />
 								{__('Add Conditions', 'surecart')}
@@ -128,20 +149,35 @@ export default ({ autoFee = {}, onUpdate, loading }) => {
 							<OrGroup
 								id={id}
 								ruleSchema={ruleSchema}
-								addRuleGroup={() =>
-									setRuleGroupsManager([
+								addRuleGroup={() => {
+									const newRuleGroups = [
 										...ruleGroupsManager,
 										{ id: ruleGroupsManager?.length + 1 },
-									])
-								}
+									];
+									setRuleGroupsManager(newRuleGroups);
+									// Add new empty OR group to rule_query
+									const newRuleQuery = [
+										...rule_query,
+										createEmptyOrGroup(),
+									];
+									updateRuleQuery(newRuleQuery);
+								}}
 								removeRuleGroup={() => {
-									setRuleGroupsManager(
+									const newRuleGroups =
 										ruleGroupsManager.filter(
 											(ruleGroup) => ruleGroup.id !== id
-										)
+										);
+									setRuleGroupsManager(newRuleGroups);
+									// Remove corresponding OR group from rule_query
+									const newRuleQuery = rule_query.filter(
+										(_, index) => index !== id - 1
 									);
+									updateRuleQuery(newRuleQuery);
 								}}
 								totalRuleGroups={ruleGroupsManager?.length}
+								orGroupIndex={id - 1}
+								rule_query={rule_query}
+								updateRuleQuery={updateRuleQuery}
 							/>
 						</div>
 					);

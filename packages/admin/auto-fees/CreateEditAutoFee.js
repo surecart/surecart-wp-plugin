@@ -60,6 +60,7 @@ export default ({ setId }) => {
 			start_at: Date.parse(getDate(new Date())) / 1000,
 			end_at: null,
 			rule_string: '',
+			rule_query: [],
 		}
 	);
 
