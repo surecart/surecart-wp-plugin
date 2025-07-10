@@ -26,6 +26,12 @@ class GalleryItemProductMedia extends ModelsGalleryItem implements GalleryItem {
 	 * @return string The thumbnail URL
 	 */
 	public function get_video_thumbnail_url() {
+		// First check if we have a thumbnail image from gallery properties.
+		$thumbnail_image = $this->getThumbnailImage();
+		if ( ! empty( $thumbnail_image['url'] ) ) {
+			return $thumbnail_image['url'];
+		}
+
 		// If we have a media object with a thumbnail.
 		if ( isset( $this->item->media ) && isset( $this->item->media->thumbnail_url ) ) {
 			return $this->item->media->thumbnail_url;
@@ -96,7 +102,7 @@ class GalleryItemProductMedia extends ModelsGalleryItem implements GalleryItem {
 			$is_video = true;
 		} elseif ( isset( $this->item->url ) ) {
 			$file_extension = pathinfo( $this->item->url, PATHINFO_EXTENSION );
-			if ( in_array( strtolower( $file_extension ), [ 'mp4', 'webm', 'ogg' ] ) ) {
+			if ( in_array( strtolower( $file_extension ), [ 'mp4', 'webm', 'ogg' ], true ) ) {
 				$is_video = true;
 			}
 		}

@@ -25,7 +25,6 @@ export default ({ media }) => {
 						object-fit: contain;
 						border-radius: var(--sc-border-radius-medium);
 						pointer-events: none;
-						max-height: 200px;
 					`}
 					src={media?.source_url}
 					muted
@@ -79,7 +78,7 @@ export default ({ media }) => {
 				}
 				css={css`
 					max-width: 100%;
-					max-height: 200px;
+					max-height: 100%;
 					object-fit: contain;
 					display: block;
 					border-radius: var(--sc-border-radius-medium);
@@ -106,9 +105,7 @@ export default ({ media }) => {
 				border-radius: var(--sc-border-radius-medium);
 				border: var(--sc-input-border);
 				box-shadow: var(--sc-input-box-shadow);
-				height: auto;
 				width: 100%;
-				min-height: 200px;
 				justify-content: center;
 				display: flex;
 				align-items: center;

@@ -28,6 +28,13 @@ abstract class GalleryItem implements ArrayAccess, JsonSerializable, Arrayable, 
 	protected $with_lightbox = false;
 
 	/**
+	 * Additional gallery item properties.
+	 *
+	 * @var array
+	 */
+	protected $gallery_properties = [];
+
+	/**
 	 * Set the lightbox attribute.
 	 *
 	 * @param bool $with_lightbox Whether to include lightbox.
@@ -42,7 +49,7 @@ abstract class GalleryItem implements ArrayAccess, JsonSerializable, Arrayable, 
 	/**
 	 * Convert object to array.
 	 *
-	 * @return Array
+	 * @return array
 	 */
 	public function toArray() {
 		if ( isset( $this->item->ID ) ) {
@@ -136,5 +143,68 @@ abstract class GalleryItem implements ArrayAccess, JsonSerializable, Arrayable, 
 		}
 
 		return isset( $this->item->{$key} );
+	}
+
+	/**
+	 * Set the variant option.
+	 *
+	 * @param string|null $variant_option The variant option.
+	 *
+	 * @return self
+	 */
+	public function setVariantOption( $variant_option ): self {
+		$this->gallery_properties['variant_option'] = $variant_option;
+		return $this;
+	}
+
+	/**
+	 * Set the thumbnail image.
+	 *
+	 * @param array|null $thumbnail_image The thumbnail image data.
+	 *
+	 * @return self
+	 */
+	public function setThumbnailImage( $thumbnail_image ): self {
+		$this->gallery_properties['thumbnail_image'] = $thumbnail_image;
+		return $this;
+	}
+
+	/**
+	 * Set the aspect ratio.
+	 *
+	 * @param string|null $aspect_ratio The aspect ratio.
+	 *
+	 * @return self
+	 */
+	public function setAspectRatio( $aspect_ratio ): self {
+		$this->gallery_properties['aspect_ratio'] = $aspect_ratio;
+		return $this;
+	}
+
+	/**
+	 * Get the variant option.
+	 *
+	 * @return string|null
+	 */
+	public function getVariantOption() {
+		return $this->gallery_properties['variant_option'] ?? null;
+	}
+
+	/**
+	 * Get the thumbnail image.
+	 *
+	 * @return array|null
+	 */
+	public function getThumbnailImage() {
+		return $this->gallery_properties['thumbnail_image'] ?? null;
+	}
+
+	/**
+	 * Get the aspect ratio.
+	 *
+	 * @return string|null
+	 */
+	public function getAspectRatio() {
+		return $this->gallery_properties['aspect_ratio'] ?? null;
 	}
 }

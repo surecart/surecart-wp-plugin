@@ -98,7 +98,7 @@ class ProductMedia extends Model {
 			$is_video = true;
 		} elseif ( ! empty( $url ) ) {
 			$file_extension = pathinfo( $url, PATHINFO_EXTENSION );
-			if ( in_array( strtolower( $file_extension ), [ 'mp4', 'webm', 'ogg' ] ) ) {
+			if ( in_array( strtolower( $file_extension ), [ 'mp4', 'webm', 'ogg' ], true ) ) {
 				$is_video = true;
 			}
 		}

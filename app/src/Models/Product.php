@@ -895,16 +895,32 @@ class Product extends Model implements PageModel {
 				array_filter(
 					array_map(
 						function ( $media ) {
-							return $media->id;
+							return $media->id ?? null;
 						},
 						$this->product_medias->data ?? array()
-					)
-				),
+					),
+					function ( $id ) {
+						return ! empty( $id );
+					}
+				)
 			);
 		}
 
-		// gallery.
-		return json_decode( $this->metadata->gallery_ids ?? '' );
+		// Get the raw gallery ids from metadata.
+		$gallery_ids = $this->metadata->gallery_ids ?? '';
+
+		// Check if it's already an array (which would be wrong).
+		if ( is_array( $gallery_ids ) ) {
+			return $gallery_ids;
+		}
+
+		// If the JSON has been corrupted to PHP syntax, fix it.
+		if ( is_string( $gallery_ids ) && strpos( $gallery_ids, '=>' ) !== false ) {
+			$gallery_ids = str_replace( ' => ', ': ', $gallery_ids );
+		}
+
+		$decoded = json_decode( $gallery_ids, true );
+		return is_array( $decoded ) ? $decoded : array();
 	}
 
 	/**
@@ -915,7 +931,7 @@ class Product extends Model implements PageModel {
 	 * @return void
 	 */
 	public function setGalleryIdsAttribute( $value ) {
-		$this->attributes['metadata']              = (object) ( $this->attributes['metadata'] ?? [] );
+		$this->attributes['metadata']              = (object) ( $this->attributes['metadata'] ?? array() );
 		$this->attributes['metadata']->gallery_ids = is_string( $value ) ? $value : wp_json_encode( $value );
 	}
 
@@ -937,18 +953,50 @@ class Product extends Model implements PageModel {
 			$featured_image_url = $this->featured_image->attributes( 'thumbnail' )->src ?? null;
 		}
 
+		// Get gallery_ids using the accessor method which handles metadata parsing.
+		$gallery_ids = $this->getGalleryIdsAttribute();
+		if ( ! is_array( $gallery_ids ) ) {
+			$gallery_ids = array();
+		}
+
 		$gallery = array_values(
 			array_filter(
 				array_map(
-					function ( $id ) use ( $featured_image_url ) {
+					function ( $gallery_item ) use ( $featured_image_url ) {
+						// Extract the ID from the gallery item (can be int or object).
+						$id = $this->getGalleryItemId( $gallery_item );
+
+						// Get additional properties if it's an object.
+						$variant_option  = null;
+						$thumbnail_image = null;
+						$aspect_ratio    = null;
+
+						if ( is_object( $gallery_item ) || is_array( $gallery_item ) ) {
+							$item_data       = (object) $gallery_item;
+							$variant_option  = $item_data->variant_option ?? null;
+							$thumbnail_image = $item_data->thumbnail_image ?? null;
+							$aspect_ratio    = $item_data->aspect_ratio ?? null;
+						}
+
 						// this is an attachment id.
 						if ( is_int( $id ) ) {
-							return new GalleryItemAttachment( $id, $featured_image_url );
+							$gallery_item_attachment = new GalleryItemAttachment( $id, $featured_image_url );
+
+							// Set additional properties if they exist.
+							if ( $variant_option || $thumbnail_image || $aspect_ratio ) {
+								$gallery_item_attachment->setVariantOption( $variant_option );
+								$gallery_item_attachment->setThumbnailImage( $thumbnail_image );
+								$gallery_item_attachment->setAspectRatio( $aspect_ratio );
+							}
+
+							return $gallery_item_attachment;
 						}
 
 						// get the product media item that matches the id.
+						$product_medias = $this->getAttribute( 'product_medias' )->data ?? array();
+
 						$item = array_filter(
-							$this->getAttribute( 'product_medias' )->data ?? array(),
+							$product_medias,
 							function ( $item ) use ( $id ) {
 								return $item->id === $id;
 							}
@@ -957,12 +1005,21 @@ class Product extends Model implements PageModel {
 						// get the first item.
 						$item = array_shift( $item );
 						if ( ! empty( $item ) ) {
-							return new GalleryItemProductMedia( $item );
+							$gallery_item_product_media = new GalleryItemProductMedia( $item );
+
+							// Set additional properties if they exist.
+							if ( $variant_option || $thumbnail_image || $aspect_ratio ) {
+								$gallery_item_product_media->setVariantOption( $variant_option );
+								$gallery_item_product_media->setThumbnailImage( $thumbnail_image );
+								$gallery_item_product_media->setAspectRatio( $aspect_ratio );
+							}
+
+							return $gallery_item_product_media;
 						}
 
 						return null;
 					},
-					$this->gallery_ids
+					$gallery_ids
 				),
 				function ( $item ) {
 					// it must have a src at least.
@@ -974,6 +1031,26 @@ class Product extends Model implements PageModel {
 		$this->setAttributeCache( 'gallery', $gallery );
 
 		return $gallery;
+	}
+
+	/**
+	 * Extract ID from gallery item (can be int, object, or array).
+	 *
+	 * @param int|object|array $gallery_item The gallery item.
+	 *
+	 * @return int The gallery item ID.
+	 */
+	private function getGalleryItemId( $gallery_item ): int {
+		if ( is_int( $gallery_item ) ) {
+			return $gallery_item;
+		}
+
+		if ( is_object( $gallery_item ) || is_array( $gallery_item ) ) {
+			$item_data = (object) $gallery_item;
+			return intval( $item_data->id ?? 0 );
+		}
+
+		return 0;
 	}
 
 	/**

@@ -15,6 +15,12 @@ import arrayMove from 'array-move';
 import WordPressMedia from './WordPressMedia';
 import ProductMedia from './ProductMedia';
 import { select } from '@wordpress/data';
+import {
+	normalizeGalleryItem,
+	getGalleryItemId,
+	createGalleryItem,
+	updateGalleryItem,
+} from '../../../util/attachments';
 
 const modals = {
 	CONFIRM_DELETE_MEDIA: 'confirm_delete_media',
@@ -49,10 +55,10 @@ export default ({ productId, product, updateProduct }) => {
 
 	const onRemoveMedia = (id) =>
 		updateGalleryIds(
-			product?.gallery_ids.filter((itemId) => itemId !== id)
+			(product?.gallery_ids || []).filter((item) => getGalleryItemId(item) !== id)
 		);
 
-	const onSwapMedia = (id, newId) => {
+	const onSwapMedia = (oldId, newId) => {
 		// for some reason we need to select this again.
 		const product = select(coreStore).getEditedEntityRecord(
 			'surecart',
@@ -62,11 +68,21 @@ export default ({ productId, product, updateProduct }) => {
 
 		const gallery_ids = [...(product?.gallery_ids || [])];
 		// find the index of the old id
-		const index = product?.gallery_ids.indexOf(id);
-		gallery_ids[index] = newId;
+		const index = gallery_ids.findIndex((item) => getGalleryItemId(item) === oldId);
+		
+		if (index === -1) return;
+
+		// Get the existing item and preserve its properties while updating the ID
+		const existingItem = gallery_ids[index];
+		if (typeof existingItem === 'object' && existingItem !== null) {
+			gallery_ids[index] = { ...existingItem, id: newId };
+		} else {
+			gallery_ids[index] = newId;
+		}
 
 		// if there is a duplicate media in the gallery, show an error.
-		if (new Set(gallery_ids).size !== gallery_ids.length) {
+		const ids = gallery_ids.map(getGalleryItemId);
+		if (new Set(ids).size !== ids.length) {
 			createErrorNotice(
 				__('This media is already in the gallery.', 'surecart'),
 				{ type: 'snackbar' }
@@ -91,55 +107,77 @@ export default ({ productId, product, updateProduct }) => {
 				draggedItemClassName="sc-dragging"
 				onSortEnd={onDragStop}
 			>
-				{(product?.gallery_ids || []).map((id, index) => (
-					<SortableItem key={id}>
-						<div
-							css={css`
-								user-select: none;
-								cursor: grab;
-							`}
-							key={id}
-						>
-							{typeof id === 'string' ? (
-								<ProductMedia
-									id={id}
-									onRemove={() => onRemoveMedia(id)}
-									onDownloaded={(newId) =>
-										onSwapMedia(id, newId)
-									}
-									isFeatured={index === 0}
-								/>
-							) : (
-								<WordPressMedia
-									id={id}
-									product={product}
-									isNew={
-										!savedProduct?.gallery_ids?.includes(id)
-									}
-									updateProduct={updateProduct}
-									onRemove={() => onRemoveMedia(id)}
-									onSelect={(media) =>
-										onSwapMedia(id, media.id)
-									}
-									isFeatured={index === 0}
-									onEditMedia={(media) => {
-										setSelectedMedia(media);
-										setCurrentModal(modals.EDIT_MEDIA);
-									}}
-								/>
-							)}
-						</div>
-					</SortableItem>
-				))}
+				{(product?.gallery_ids || []).map((item, index) => {
+					const itemId = getGalleryItemId(item);
+					return (
+						<SortableItem key={itemId}>
+							<div
+								css={css`
+									user-select: none;
+									cursor: grab;
+								`}
+								key={itemId}
+							>
+								{typeof itemId === 'string' ? (
+									<ProductMedia
+										id={itemId}
+										onRemove={() => onRemoveMedia(itemId)}
+										onDownloaded={(newId) =>
+											onSwapMedia(itemId, newId)
+										}
+										isFeatured={index === 0}
+									/>
+								) : (
+									<WordPressMedia
+										id={itemId}
+										item={item}
+										product={product}
+										isNew={
+											!savedProduct?.gallery_ids?.some(savedItem => 
+												getGalleryItemId(savedItem) === itemId
+											)
+										}
+										updateProduct={updateProduct}
+										onRemove={() => onRemoveMedia(itemId)}
+										onSelect={(media) =>
+											onSwapMedia(itemId, media.id)
+										}
+										isFeatured={index === 0}
+										onEditMedia={(media) => {
+											setSelectedMedia({
+												...media,
+												...(typeof item === 'object' ? item : {}),
+											});
+											setCurrentModal(modals.EDIT_MEDIA);
+										}}
+										onUpdateItem={(updatedItem) => {
+											const gallery_ids = [...(product?.gallery_ids || [])];
+											const updateIndex = gallery_ids.findIndex(galleryItem => 
+												getGalleryItemId(galleryItem) === itemId
+											);
+											if (updateIndex !== -1) {
+												gallery_ids[updateIndex] = updatedItem;
+												updateGalleryIds(gallery_ids);
+											}
+										}}
+									/>
+								)}
+							</div>
+						</SortableItem>
+					);
+				})}
 				<AddMedia
 					value={product?.gallery_ids || []}
 					onClose={() =>
-						(product?.gallery_ids || []).forEach(({ id }) =>
-							invalidateResolution('getMedia', [id])
-						)
+						(product?.gallery_ids || []).forEach((item) => {
+							const id = getGalleryItemId(item);
+							if (typeof id === 'number') {
+								invalidateResolution('getMedia', [id]);
+							}
+						})
 					}
 					onSelect={(media) => {
-						const gallery_ids = (media || []).map(({ id }) => id);
+						const gallery_ids = (media || []).map(({ id }) => createGalleryItem(id));
 						updateGalleryIds(gallery_ids);
 					}}
 				/>
@@ -159,21 +197,28 @@ export default ({ productId, product, updateProduct }) => {
 				setMedia={(updatedMedia) => {
 					setSelectedMedia(updatedMedia);
 				}}
-				onSave={(updatedMedia) => {
-					setSelectedMedia(updatedMedia);
-					onSwapMedia(selectedMedia?.id, updatedMedia?.id);
-					invalidateResolution('getMedia', [updatedMedia?.id]);
+				onSave={(updatedItem) => {
+					// Update the gallery with the new item data
+					const gallery_ids = [...(product?.gallery_ids || [])];
+					const updateIndex = gallery_ids.findIndex(item => 
+						getGalleryItemId(item) === getGalleryItemId(selectedMedia)
+					);
+					
+					if (updateIndex !== -1) {
+						gallery_ids[updateIndex] = updatedItem;
+						updateGalleryIds(gallery_ids);
+					}
+					
+					// Invalidate cache for the media
+					invalidateResolution('getMedia', [getGalleryItemId(updatedItem)]);
+					setCurrentModal('');
+					setSelectedMedia(null);
 				}}
 				open={currentModal === modals.EDIT_MEDIA}
 				product={product}
 				onRequestClose={() => {
 					setCurrentModal('');
-					setSelectedMedia('');
-				}}
-				value={product?.gallery_ids || []}
-				onSelect={(media) => {
-					const gallery_ids = (media || []).map(({ id }) => id);
-					updateGalleryIds(gallery_ids);
+					setSelectedMedia(null);
 				}}
 			/>
 		</Box>

@@ -5,7 +5,7 @@ if ( isset( $featured_image->item->media ) && isset( $featured_image->item->medi
 	$is_video = true;
 } elseif ( isset( $featured_image->item->url ) ) {
 	$file_extension = pathinfo( $featured_image->item->url, PATHINFO_EXTENSION );
-	if ( in_array( strtolower( $file_extension ), [ 'mp4', 'webm', 'ogg' ] ) ) {
+	if ( in_array( strtolower( $file_extension ), [ 'mp4', 'webm', 'ogg' ], true ) ) {
 		$is_video = true;
 	}
 }

@@ -39,7 +39,13 @@ class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 	 * @return string The thumbnail URL.
 	 */
 	public function get_video_thumbnail_url( $attachment_id ) {
-		// First check if the video has a poster/thumbnail set.
+		// Check if we have a thumbnail image from gallery properties.
+		$thumbnail_image = $this->getThumbnailImage();
+		if ( ! empty( $thumbnail_image['url'] ) ) {
+			return $thumbnail_image['url'];
+		}
+
+		// Check if the video has a poster/thumbnail set.
 		$thumb_id = get_post_thumbnail_id( $attachment_id );
 		if ( $thumb_id ) {
 			$thumb_url = wp_get_attachment_image_url( $thumb_id, 'thumbnail' );

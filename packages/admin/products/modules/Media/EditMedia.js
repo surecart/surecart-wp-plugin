@@ -1,79 +1,59 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
-import { useState, useEffect } from '@wordpress/element';
+import { useState } from '@wordpress/element';
 import { Button } from '@wordpress/components';
 import { MediaUpload } from '@wordpress/media-utils';
 import { closeSmall, edit } from '@wordpress/icons';
-import { useSelect } from '@wordpress/data';
-import { store as coreStore } from '@wordpress/core-data';
 
 /**
  * Internal dependencies.
  */
-import UploadMedia from './UploadMedia';
 import MediaDisplayPreview from './MediaDisplayPreview';
+import VideoThumbnail from './VideoThumbnail';
 import Error from '../../../components/Error';
 import {
 	ScButton,
 	ScDrawer,
 	ScForm,
 	ScFormControl,
-	ScIcon,
 	ScSelect,
-	ScSkeleton,
-	ScText,
 } from '@surecart/components-react';
 import {
-	aspectRatioChoices,
 	normalizeMedia,
-	updateAttachmentMeta,
-	generateVideoThumbnail,
 	isVideoMedia,
+	normalizeGalleryItem,
+	createGalleryItem,
 } from '../../../util/attachments';
 
 const ALLOWED_MEDIA_TYPES = ['image', 'video'];
 
-export default ({ media, setMedia, product, onSave, open, onRequestClose }) => {
-	const [mediaData, setMediaData] = useState(media || '');
+export default ({ media, product, onSave, open, onRequestClose }) => {
+	const [mediaData, setMediaData] = useState(() => normalizeMedia(media));
 	const [error, setError] = useState(null);
 	const [isSaving, setIsSaving] = useState(false);
-	const [variation, setVariation] = useState('');
-	const [videoThumbnailId, setVideoThumbnailId] = useState(
-		media?.meta?.sc_video_thumbnail || null
-	);
-	const [videoThumbnailAspectRatio, setVideoThumbnailAspectRatio] =
-		useState('');
-	const [isGeneratingThumbnail, setIsGeneratingThumbnail] = useState(false);
-	const [thumbnailError, setThumbnailError] = useState(null);
 
-	useEffect(() => {
-		if (media) {
-			setMediaData(normalizeMedia(media));
-			setVariation(media?.meta?.sc_variant_option || '');
-			setVideoThumbnailId(media?.meta?.sc_video_thumbnail || null);
-			setVideoThumbnailAspectRatio(
-				media?.meta?.sc_video_thumbnail_aspect_ratio || ''
-			);
-		}
-	}, [media]);
-
-	const { videoThumbnail, thumbnailLoading } = useSelect((select) => {
-		if (!videoThumbnailId) {
-			return {
-				videoThumbnail: null,
-				thumbnailLoading: false,
-			};
-		}
-
+	// Initialize form values from media data
+	const [formData, setFormData] = useState(() => {
+		const normalized = normalizeGalleryItem(media);
 		return {
-			videoThumbnail: select(coreStore).getMedia(videoThumbnailId),
-			thumbnailLoading: !select(coreStore).hasFinishedResolution(
-				'getMedia',
-				[videoThumbnailId]
-			),
+			variant_option: normalized.variant_option || '',
+			thumbnail_image: normalized.thumbnail_image || null,
+			aspect_ratio: normalized.aspect_ratio || '',
 		};
 	});
+
+	React.useEffect(() => {
+		if (media) {
+			setMediaData(normalizeMedia(media));
+			const normalized = normalizeGalleryItem(media);
+			setFormData({
+				variant_option: normalized.variant_option || '',
+				thumbnail_image: normalized.thumbnail_image || null,
+				aspect_ratio: normalized.aspect_ratio || '',
+			});
+		}
+	}, [media]);
 
 	const onSubmit = async (event) => {
 		event.preventDefault();
@@ -86,30 +66,14 @@ export default ({ media, setMedia, product, onSave, open, onRequestClose }) => {
 			setIsSaving(true);
 			setError(null);
 
-			// Update the media in the parent component
-			const meta = {
-				sc_variant_option: variation || '',
-				sc_video_thumbnail: videoThumbnail?.id || null,
-				sc_video_thumbnail_aspect_ratio:
-					videoThumbnailAspectRatio || null,
-			};
-
-			// Update product media data.
-			onSave({
-				...mediaData,
-				meta,
+			// Create the updated gallery item.
+			const updatedItem = createGalleryItem(mediaData.id, {
+				variant_option: formData.variant_option || null,
+				thumbnail_image: formData.thumbnail_image || null,
+				aspect_ratio: formData.aspect_ratio || null,
 			});
 
-			// Update the attachment meta in the WordPress.
-			await updateAttachmentMeta(mediaData.id, {
-				meta,
-				...(meta?.sc_video_thumbnail
-					? { featured_media: meta.sc_video_thumbnail }
-					: {}),
-			});
-
-			// Close the drawer
-			onRequestClose();
+			onSave(updatedItem);
 		} catch (e) {
 			console.error(e);
 			setError(
@@ -125,61 +89,8 @@ export default ({ media, setMedia, product, onSave, open, onRequestClose }) => {
 		setMediaData(normalizeMedia(updatedMedia));
 	};
 
-	const selectThumbnail = (thumbnail) => {
-		setMediaData({
-			...mediaData,
-			meta: {
-				...mediaData.meta,
-				sc_video_thumbnail: thumbnail?.id || null,
-			},
-		});
-		setVideoThumbnailId(thumbnail?.id || null);
-	};
-
-	const handleGenerateThumbnail = async () => {
-		if (!mediaData?.id || !isVideoMedia(mediaData)) {
-			return;
-		}
-
-		try {
-			setIsGeneratingThumbnail(true);
-			setThumbnailError(null);
-
-			// Generate thumbnail from video
-			const thumbnailMedia = await generateVideoThumbnail(mediaData);
-
-			if (thumbnailMedia) {
-				// Update the video media with the thumbnail reference
-				await updateAttachmentMeta(mediaData.id, {
-					meta: {
-						...mediaData.meta,
-						sc_video_thumbnail: thumbnailMedia.id,
-					},
-					featured_media: thumbnailMedia.id,
-				});
-
-				// Update local state
-				setVideoThumbnailId(thumbnailMedia.id);
-				setMediaData({
-					...mediaData,
-					meta: {
-						...mediaData.meta,
-						sc_video_thumbnail: thumbnailMedia.id,
-					},
-				});
-			}
-		} catch (error) {
-			console.error('Failed to generate thumbnail:', error);
-			setThumbnailError(
-				error?.message ||
-					__(
-						'Failed to generate video thumbnail. Please try again.',
-						'surecart'
-					)
-			);
-		} finally {
-			setIsGeneratingThumbnail(false);
-		}
+	const updateFormData = (key, value) => {
+		setFormData((prev) => ({ ...prev, [key]: value }));
 	};
 
 	const variantOptionChoices = (product?.variant_options || []).flatMap((v) =>
@@ -274,9 +185,12 @@ export default ({ media, setMedia, product, onSave, open, onRequestClose }) => {
 													variant="secondary"
 													onClick={() => {
 														setMediaData(null);
-														setVariation('');
-														setVideoThumbnailId(null);
-														setVideoThumbnailAspectRatio('');
+														setFormData({
+															variant_option: '',
+															thumbnail_image:
+																null,
+															aspect_ratio: '',
+														});
 													}}
 													isDestructive
 												>
@@ -289,9 +203,26 @@ export default ({ media, setMedia, product, onSave, open, onRequestClose }) => {
 							)}
 
 							{!mediaData?.id && (
-								<UploadMedia
-									value={mediaData?.id ?? ''}
+								<MediaUpload
+									title={__('Select Media', 'surecart')}
 									onSelect={selectMedia}
+									value={mediaData?.id ?? ''}
+									multiple={false}
+									allowedTypes={ALLOWED_MEDIA_TYPES}
+									render={({ open }) => (
+										<ScButton
+											type="default"
+											onClick={open}
+											css={css`
+												width: 100%;
+											`}
+										>
+											{__(
+												'Select from Library',
+												'surecart'
+											)}
+										</ScButton>
+									)}
 								/>
 							)}
 						</ScFormControl>
@@ -306,7 +237,7 @@ export default ({ media, setMedia, product, onSave, open, onRequestClose }) => {
 										)}
 									>
 										<ScSelect
-											value={variation}
+											value={formData.variant_option}
 											choices={variantOptionChoices}
 											style={{ width: '100%' }}
 											placeholder={__(
@@ -314,312 +245,53 @@ export default ({ media, setMedia, product, onSave, open, onRequestClose }) => {
 												'surecart'
 											)}
 											onScChange={(e) =>
-												setVariation(e.target.value)
+												updateFormData(
+													'variant_option',
+													e.target.value
+												)
 											}
 										/>
 									</ScFormControl>
 								)}
 
 								{isVideoMedia(mediaData) && (
-									<>
-										<ScFormControl
-											label={__('Thumbnail', 'surecart')}
-										>
-											{thumbnailError && (
-												<div
-													css={css`
-														color: var(
-															--sc-color-danger-500
-														);
-														font-size: var(
-															--sc-font-size-small
-														);
-														margin-bottom: var(
-															--sc-spacing-small
-														);
-													`}
-												>
-													{thumbnailError}
-												</div>
-											)}
-
-											{!!videoThumbnail?.id ? (
-												<div
-													css={css`
-														display: flex;
-														justify-content: space-between;
-														gap: var(
-															--sc-spacing-small
-														);
-														border: 1px solid
-															var(
-																--sc-color-gray-200
-															);
-														border-radius: 4px;
-														padding: var(
-															--sc-spacing-small
-														);
-
-														.media-display-preview {
-															width: 100px;
-															min-height: auto;
-														}
-
-														img {
-															max-height: 60px;
-														}
-													`}
-												>
-													<div
-														css={css`
-															display: flex;
-															justify-content: center;
-															align-items: center;
-															gap: var(
-																--sc-spacing-x-small
-															);
-															max-width: 100%;
-														`}
-													>
-														<div
-															css={css`
-																width: 100px;
-																height: 60px;
-																overflow: hidden;
-															`}
-														>
-															{thumbnailLoading && (
-																<ScSkeleton
-																	style={{
-																		aspectRatio:
-																			'1 / 1',
-																		'--border-radius':
-																			'var(--sc-border-radius-medium)',
-																	}}
-																/>
-															)}
-															<MediaDisplayPreview
-																media={
-																	videoThumbnail
-																}
-															/>
-														</div>
-														<ScText
-															css={css`
-																max-width: 180px;
-															`}
-															tag="p"
-															truncate
-															title={
-																videoThumbnail
-																	?.title
-																	?.rendered ||
-																videoThumbnail?.title ||
-																videoThumbnail?.alt ||
-																''
-															}
-														>
-															{videoThumbnail
-																?.title
-																?.rendered ||
-																videoThumbnail?.title ||
-																videoThumbnail?.alt ||
-																''}
-														</ScText>
-													</div>
-
-													<div
-														css={css`
-															display: flex;
-															justify-content: flex-end;
-															align-items: center;
-															gap: var(
-																--sc-spacing-x-small
-															);
-															margin: var(
-																	--sc-spacing-small
-																)
-																0px;
-														`}
-													>
-														<MediaUpload
-															title={__(
-																'Change Thumbnail',
-																'surecart'
-															)}
-															onSelect={
-																selectThumbnail
-															}
-															value={
-																videoThumbnail?.id ??
-																null
-															}
-															multiple={false}
-															allowedTypes={[
-																'image',
-															]}
-															render={({
-																open,
-															}) => (
-																<Button
-																	icon={edit}
-																	label={__(
-																		'Change Thumbnail',
-																		'surecart'
-																	)}
-																	showTooltip={
-																		true
-																	}
-																	size="compact"
-																	onClick={
-																		open
-																	}
-																/>
-															)}
-														/>
-														<Button
-															icon={closeSmall}
-															label={__(
-																'Remove Thumbnail',
-																'surecart'
-															)}
-															showTooltip={true}
-															size="compact"
-															onClick={() =>
-																selectThumbnail(
-																	null
-																)
-															}
-														/>
-													</div>
-												</div>
-											) : (
-												<div
-													css={css`
-														display: flex;
-														gap: var(
-															--sc-spacing-small
-														);
-														width: 100%;
-													`}
-												>
-													<MediaUpload
-														title={__(
-															'Select Thumbnail',
-															'surecart'
-														)}
-														onSelect={
-															selectThumbnail
-														}
-														value={
-															videoThumbnail?.id ??
-															''
-														}
-														multiple={false}
-														allowedTypes={['image']}
-														render={({ open }) => (
-															<ScButton
-																type="default"
-																onClick={open}
-																css={css`
-																	flex: 1;
-																`}
-															>
-																<ScIcon
-																	name="upload"
-																	slot="suffix"
-																></ScIcon>
-																{__(
-																	'Select from Library',
-																	'surecart'
-																)}
-															</ScButton>
-														)}
-													/>
-
-													<ScButton
-														type="default"
-														onClick={
-															handleGenerateThumbnail
-														}
-														disabled={
-															isGeneratingThumbnail
-														}
-														isBusy={
-															isGeneratingThumbnail
-														}
-														css={css`
-															flex: 1;
-														`}
-													>
-														{isGeneratingThumbnail
-															? __(
-																	'Generating...',
-																	'surecart'
-															  )
-															: __(
-																	'Generate Thumbnail',
-																	'surecart'
-															  )}
-														<ScIcon
-															name="refresh-cw"
-															slot="suffix"
-														></ScIcon>
-													</ScButton>
-												</div>
-											)}
-										</ScFormControl>
-
-										<ScFormControl
-											label={__(
-												'Aspect Ratio',
-												'surecart'
-											)}
-										>
-											<ScSelect
-												value={
-													videoThumbnailAspectRatio
-												}
-												placeholder={__(
-													'Select aspect ratio',
-													'surecart'
-												)}
-												choices={aspectRatioChoices}
-												style={{ width: '100%' }}
-												onScChange={(e) =>
-													setVideoThumbnailAspectRatio(
-														e.target.value
-													)
-												}
-											/>
-										</ScFormControl>
-									</>
+									<VideoThumbnail
+										thumbnailImage={
+											formData.thumbnail_image
+										}
+										onThumbnailChange={(thumbnail) =>
+											updateFormData(
+												'thumbnail_image',
+												thumbnail
+											)
+										}
+										aspectRatio={formData.aspect_ratio}
+										onAspectRatioChange={(aspectRatio) =>
+											updateFormData(
+												'aspect_ratio',
+												aspectRatio
+											)
+										}
+										mediaData={mediaData}
+									/>
 								)}
 							</>
 						)}
 					</div>
 				</div>
 
-				<div
-					css={css`
-						display: flex;
-						justify-content: space-between;
-					`}
-					slot="footer"
-				>
-					<div>
-						<ScButton
-							type="primary"
-							submit
-							isBusy={isSaving}
-							disabled={isSaving || !mediaData?.id}
-						>
-							{__('Update Media', 'surecart')}
-						</ScButton>
-						<ScButton type="text" onClick={onRequestClose}>
-							{__('Cancel', 'surecart')}
-						</ScButton>
-					</div>
+				<div slot="footer">
+					<ScButton
+						type="primary"
+						submit
+						isBusy={isSaving}
+						disabled={isSaving || !mediaData?.id}
+					>
+						{__('Update Media', 'surecart')}
+					</ScButton>
+					<ScButton type="text" onClick={onRequestClose}>
+						{__('Cancel', 'surecart')}
+					</ScButton>
 				</div>
 				{isSaving && <sc-block-ui spinner></sc-block-ui>}
 			</ScDrawer>

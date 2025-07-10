@@ -8,10 +8,19 @@ import { MediaUpload } from '@wordpress/block-editor';
 import { Notice } from '@wordpress/components';
 import { useDispatch } from '@wordpress/data';
 import { SortableKnob } from 'react-easy-sort';
-import { isVideoMedia } from '../../../util/attachments';
+import { isVideoMedia, normalizeGalleryItem, getGalleryItemId } from '../../../util/attachments';
 const ALLOWED_MEDIA_TYPES = ['image', 'video'];
 
-export default ({ id, isNew, onRemove, isFeatured, onSelect, onEditMedia }) => {
+export default ({ 
+	id, 
+	item, 
+	isNew, 
+	onRemove, 
+	isFeatured, 
+	onSelect, 
+	onEditMedia, 
+	onUpdateItem 
+}) => {
 	const { invalidateResolution } = useDispatch(coreStore);
 
 	const { media, hasLoadedMedia } = useSelect((select) => {
@@ -129,7 +138,7 @@ export default ({ id, isNew, onRemove, isFeatured, onSelect, onEditMedia }) => {
 				</ScTag>
 			)}
 
-			{media?.meta?.sc_variant_option && (
+			{(typeof item === 'object' && item?.variant_option) && (
 				<ScTag
 					className="featured-badge"
 					size="small"
@@ -148,7 +157,7 @@ export default ({ id, isNew, onRemove, isFeatured, onSelect, onEditMedia }) => {
 						}
 					`}
 				>
-					{media?.meta?.sc_variant_option}
+					{item.variant_option}
 				</ScTag>
 			)}
 
@@ -195,7 +204,10 @@ export default ({ id, isNew, onRemove, isFeatured, onSelect, onEditMedia }) => {
 							border-radius: var(--sc-border-radius-small);
 						`}
 						name="edit-2"
-						onClick={() => onEditMedia(media)}
+						onClick={() => onEditMedia({
+							...media,
+							...(typeof item === 'object' ? item : { id: item })
+						})}
 					/>
 				)}
 			/>
@@ -240,11 +252,14 @@ export default ({ id, isNew, onRemove, isFeatured, onSelect, onEditMedia }) => {
 							muted
 							loop
 							playsInline
-							{...(featuredMedia?.source_url ?? featuredMedia?.url
+							{...(
+								(typeof item === 'object' && item?.thumbnail_image?.url) || 
+								featuredMedia?.source_url || 
+								featuredMedia?.url
 								? {
 										poster:
-											featuredMedia?.source_url ??
-											featuredMedia?.url,
+											(typeof item === 'object' && item?.thumbnail_image?.url) ||
+											(featuredMedia?.source_url ?? featuredMedia?.url),
 								  }
 								: {})}
 						>

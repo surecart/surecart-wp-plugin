@@ -219,3 +219,99 @@ export const generateVideoThumbnail = async (videoMedia, seekTime = 1) => {
  */
 export const isVideoMedia = (media) =>
 	(media?.mime_type || media?.mime)?.includes('video');
+
+/**
+ * Normalize gallery item to ensure consistent structure.
+ *
+ * @param {number|Object} item - Gallery item (can be integer ID or object)
+ * @returns {Object} - Normalized gallery item object
+ */
+export const normalizeGalleryItem = (item) => {
+	if (typeof item === 'number' || typeof item === 'string') {
+		return {
+			id: parseInt(item),
+			variant_option: null,
+			thumbnail_image: null,
+			aspect_ratio: null,
+		};
+	}
+
+	if (typeof item === 'object' && item !== null) {
+		return {
+			id: parseInt(item.id || 0),
+			variant_option: item.variant_option || null,
+			thumbnail_image: item.thumbnail_image || null,
+			aspect_ratio: item.aspect_ratio || null,
+		};
+	}
+
+	return {
+		id: 0,
+		variant_option: null,
+		thumbnail_image: null,
+		aspect_ratio: null,
+	};
+};
+
+/**
+ * Get the ID from a gallery item (handles both integer and object formats).
+ *
+ * @param {number|Object} item - Gallery item
+ * @returns {number} - The media ID
+ */
+export const getGalleryItemId = (item) => {
+	return typeof item === 'object' ? item?.id : parseInt(item);
+};
+
+/**
+ * Check if gallery item is an object with additional properties.
+ *
+ * @param {number|Object} item - Gallery item
+ * @returns {boolean} - True if item is an object with properties
+ */
+export const isComplexGalleryItem = (item) => {
+	return typeof item === 'object' && item !== null &&
+		(item.variant_option || item.thumbnail_image || item.aspect_ratio);
+};
+
+/**
+ * Create a gallery item object with the specified properties.
+ *
+ * @param {number} id - Media ID
+ * @param {Object} properties - Additional properties
+ * @returns {number|Object} - Gallery item (returns just ID if no properties, otherwise object)
+ */
+export const createGalleryItem = (id, properties = {}) => {
+	const { variant_option, thumbnail_image, aspect_ratio } = properties;
+
+	// If no additional properties, return just the ID
+	if (!variant_option && !thumbnail_image && !aspect_ratio) {
+		return parseInt(id);
+	}
+
+	// Return object with properties
+	const item = { id: parseInt(id) };
+	if (variant_option) item.variant_option = variant_option;
+	if (thumbnail_image) item.thumbnail_image = thumbnail_image;
+	if (aspect_ratio) item.aspect_ratio = aspect_ratio;
+
+	return item;
+};
+
+/**
+ * Update a gallery item's properties.
+ *
+ * @param {number|Object} item - Existing gallery item
+ * @param {Object} updates - Properties to update
+ * @returns {number|Object} - Updated gallery item
+ */
+export const updateGalleryItem = (item, updates = {}) => {
+	const normalized = normalizeGalleryItem(item);
+	const updated = { ...normalized, ...updates };
+
+	return createGalleryItem(updated.id, {
+		variant_option: updated.variant_option,
+		thumbnail_image: updated.thumbnail_image,
+		aspect_ratio: updated.aspect_ratio,
+	});
+};
