@@ -108,7 +108,7 @@ export default ({
 				return (
 					<ScPriceInput
 						value={value}
-						onChange={(e) => setValue(e.target.value)}
+						onScInput={(e) => setValue(e.target.value)}
 						currency={scData?.currency_code}
 						placeholder={__('Enter an amount', 'surecart')}
 						className={
@@ -122,7 +122,7 @@ export default ({
 				return (
 					<ScInput
 						value={value}
-						onChange={(e) => setValue(e.target.value)}
+						onScInput={(e) => setValue(e.target.value)}
 						placeholder={__('Enter a value', 'surecart')}
 						className={
 							!isAttributeMetadata ? 'sc-grid-full-width' : ''
@@ -133,7 +133,7 @@ export default ({
 				return (
 					<ScInput
 						value={value}
-						onChange={(e) => setValue(e.target.value)}
+						onScInput={(e) => setValue(e.target.value)}
 						placeholder={__('Enter a value', 'surecart')}
 						className={
 							!isAttributeMetadata ? 'sc-grid-full-width' : ''
@@ -178,7 +178,7 @@ export default ({
 				{isAttributeMetadata && (
 					<ScInput
 						value={metadataKey}
-						onChange={(e) => setMetadataKey(e.target.value)}
+						onScInput={(e) => setMetadataKey(e.target.value)}
 						placeholder={__("Enter metadata's key", 'surecart')}
 					/>
 				)}
