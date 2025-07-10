@@ -316,7 +316,10 @@ export default ({ id, setBrowserURL }) => {
 						<ActionsDropdown
 							product={product}
 							onDelete={onDeleteProduct}
+							onSubmit={onSubmit}
 							onToggleArchive={onToggleArchiveProduct}
+							setConfirmUrl={setConfirmUrl}
+							hasDirtyRecords={hasDirtyRecords}
 						/>
 
 						{!!product?.permalink && (

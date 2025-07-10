@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: ecommerce, online store, subscriptions, stripe, payments
 Requires at least: 6.6
 Tested up to: 6.8
-Stable tag: 3.9.0
+Stable tag: 3.10.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -31,7 +31,7 @@ Each year we send all of our users a survey, so here are the 2024 results of who
 
 - **Agencies:** Instead of passing on higher priced ecommerce projects due to the complexities, web agencies tell us that they are taking on more online store clients because SureCart is easy to set up and manage, and their clients love it
 - **Physical Product Stores:** Sellers love how easy it is to set up an online store, manage order fulfillment, and generate higher AOV with cart abandonment recovery, order bumps, and post purchase upsells
-- **Sellling Subscriptions:** Mostly coaching programs, course creators, membership websites, and SaaS companies that want advanced subscription management and retention features
+- **Selling Subscriptions:** Mostly coaching programs, course creators, membership websites, and SaaS companies that want advanced subscription management and retention features
 - **Selling Services:** Mostly web agencies, legal services, local businesses that sell via subscriptions, installment plans, and use setup fees
 - **Digital Downloads:** Ebooks, printables, creative work, and we are seeing an increase in WordPress software developers who are using our licensing system
 - **Donations:** Charities and causes that want to have flexible donation forms, but also be able to sell additional products
@@ -51,7 +51,7 @@ No other ecommerce plugin offers this depth of options on how to price your prod
 
 SureCart's unique approach to let you offer more than one price for a single product is a big reason why SureCart merchants sell more products.
 
-Some of the pricing options include one-time payments, subscription payments, installemnt plans, free trials, paid trials, setup fees, setup discounts, and name your own price.
+Some of the pricing options include one-time payments, subscription payments, installment plans, free trials, paid trials, setup fees, setup discounts, and name your own price.
 
 [youtube https://www.youtube.com/watch?v=vHOamau4BWw]
 
@@ -111,7 +111,7 @@ One-time payments, subscriptions, subscriptions with free trials, setup fees, pa
 There is a lot more to subscriptions than simply rebilling on an interval. SureCart’s subscription engine is second to none. With our extensive subscription payments options, you can sell your subscriptions how you want. But SureCart goes beyond other ecommerce platforms by offering prorated upgrades or downgrades. So if you are offering a monthly subscription or an annual subscription and your buyer wants to upgrade, SureCart can prorate the upgrade.
 
 * **Order Bumps & Upsell Funnels:**
-SureCart merchants have more profitable stores due to a full suite of revenue optimization features. Generate more revene with one-click order bumps, post purchase [one-click upsells](https://www.youtube.com/watch?v=97gSH-KPFZU&t=25s), and cart abandonment recovery.
+SureCart merchants have more profitable stores due to a full suite of revenue optimization features. Generate more revenue with one-click order bumps, post purchase [one-click upsells](https://www.youtube.com/watch?v=97gSH-KPFZU&t=25s), and cart abandonment recovery.
 
 * **Affiliate Platform:**
 Generate more sales by adding an affiliate program. Easily launch an affiliate program in just a few minutes. You can customize each aspect of your affiliate program, including lifetime commissions, custom affiliate rates, affiliate coupons, and more.
@@ -120,7 +120,7 @@ Generate more sales by adding an affiliate program. Easily launch an affiliate p
 With our highly customizable customer area, you can have full control on what a customer sees and is able to do. For example, you can let your customers change their personal details, password, access secure digital downloads, update credit cards on file, upgrade a subscription, downgrade a subscription. All with a beautiful and modern user experience.
 
 * **Customizable Shopping Experience:**
-Customize product pages, shop pages, cart, and customer dashboard using a intuitive and powerful drag and drop editor that utilizes the WordPress block editor.
+Customize product pages, shop pages, cart, and customer dashboard using an intuitive and powerful drag and drop editor that utilizes the WordPress block editor.
 
 * **Flexible Checkout Form Builder:**
 Create a completely custom checkout form. In fact, create as many as you like. There is no other ecommerce platform with this much customizability. Simply drag and drop fields, price choosers, donation choosers, check boxes, and other parts to create the perfect checkout form.
@@ -241,6 +241,14 @@ Join our [Facebook group community](https://www.facebook.com/groups/surecrafted)
 1. Upload the SureCart folder to the /wp-content/plugins/ directory
 2. Activate the SureCart plugin through the 'Plugins' menu in WordPress
 
+== Screenshots ==
+1. Freedom to Customize.
+2. eCommerce, Digital Downloads & Subscriptions.
+3. Cart Abandonment.
+4. Order Bumps/Upsells.
+5. Affiliate Program.
+6. Popular Integrations.
+
 == Frequently Asked Questions ==
 
 = Why do I need a SureCart.com account? =
@@ -265,7 +273,7 @@ SureCart will work with all WordPress themes. With there being over 10k WordPres
 
 = Where can I request new SureCart features? =
 
-The best way is to request features via our [dedicated website](https://surecart.feedbear.com/boards/feature-requests)dedicated website. You can upvote feature requests that have already been made.
+The best way is to request features via our [dedicated website](https://surecart.feedbear.com/boards/feature-requests). You can upvote feature requests that have already been made.
 
 = What are the ecommerce fees? =
 
@@ -277,7 +285,7 @@ We have an extensive knowledgebase here [https://surecart.com/docs/](https://sur
 
 = Where can I ask for help with my online store? =
 
-You can submit a support ticket via the [support forum](https://wordpress.org/support/plugin/surecart/)support forum at anytime. You can also seek help via our support desk.
+You can submit a support ticket via the [support forum](https://wordpress.org/support/plugin/surecart/) at anytime. You can also seek help via our support desk.
 
 = How do I migrate from WooCommerce? =
 
@@ -299,11 +307,25 @@ SureCart is a standalone ecommerce, payments & subscription plugin and does not 
 
 Yes, the checkout form can be customized using our visual builder. You can change the order of the form fields, remove fields that aren’t required and also add extra fields to the form like Inputs, Checkboxes, Radio buttons, and more. You can even add conditional containers.
 
-= Is SureCart accessibile? =
+= Is SureCart accessible? =
 
 Accessibility is a huge priority for the entire team building SureCart. As you know, accessibility is an ongoing improvement task. Our development and QA teams are trained in accessibility best practices and build/test each new feature for accessibility. If you come across any edge issues, we want to know about it and will prioritize its resolution. Please contact us via our website.
 
 == Changelog ==
+
+= 3.10.0 - July 8th, 2025 =
+- [Overview] (https://surecart.com/changelog/surecart-3-10-features-that-speed-up-your-workflow-and-boost-revenue/)
+- New: Price boosts. 1-click price swaps on your checkout page.
+- New: Duplicate products and prices.
+- New: Add a product form anywhere on your website.
+- New: Add control to adjust when subscription renewal reminders are sent.
+- Improvement: Add filters to allow customization of Stripe payment element.
+- Change: Improve coupon order amount exceeded message to be more clear on checkout.
+- Change: Add notice to upsell page explaining reusable payment methods requirement.
+- Change: Make sure claim store opens in new tab.
+- Fix: Subtotal displays tax-inclusive amount instead of pre-tax subtotal.
+- Fix: Elementor container warning link going to wrong URL.
+- Fix: Issue where product post content was not checking for main query on product pages.
 
 = 3.9.0 - June 5th, 2025 =
 - New: Elementor product and shop page builder. [Learn More](https://surecart.com/docs/product-page-in-elementor/)
@@ -488,7 +510,7 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 - Change: Rename "Add Payment Method" to "Select Payment Method" on invoice creation page.
 - Change: Make sure id is passed with delete hook for 3rd parties to be able to access the deleted record id.
 - Fix: Issue where adding a new integration was showing a blank dropdown.
-- Fix: Add context to "save" string to differenciate between saving a form and saving money.
+- Fix: Add context to "save" string to differentiate between saving a form and saving money.
 
 = 3.2.0 - January 13th, 2025 =
 - New: Related products block. [Docs](https://surecart.com/docs/related-products/)
@@ -496,10 +518,10 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 - New: Ability for 3rd party developers to add UI elements to admin pages. [Docs](https://developer.surecart.com/docs/admin-custom-ui-elements)
 - Improvement: Format checkout finalize error message.
 - Fix: CSS issue for shop page filter tags incorrectly breaking lines on shortcodes and page builders.
-- Fix: Compatiblity with Winden and some other plugins that use ajax to load data with posts in admin.
+- Fix: Compatibility with Winden and some other plugins that use ajax to load data with posts in admin.
 - Fix: Issue where max-width of product media block could sometimes overflow on mobile.
 - Fix: Issue with extra space below line items on mobile in some cases.
-- Fix: Compatibility issue with object cache pro where SureCart was not retuning a string for cache_key.
+- Fix: Compatibility issue with object cache pro where SureCart was not returning a string for cache_key.
 - Fix: Issue where custom tax labels could not be changed after they were created.
 
 = 3.1.6 - December 23rd, 2024 =
@@ -511,7 +533,7 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 - New: Customizable product list page empty state.
 - Fix: Issue where attachment page slugs could not be updated.
 - Fix: Apple pay showing as "pending" in express payment element instead of the total amount.
-- Fix: Issue where product filter could have a fatal error is the taxonomy was removed.
+- Fix: Issue where product filter could have a fatal error if the taxonomy was removed.
 
 = 3.1.4 - December 17th, 2024 =
 - Improvement: Automatic cache exclusions for customer dashboard login page.
@@ -570,12 +592,12 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 - New: Add ability to filter by any taxonomy on product list front-end.
 - New: Extra security setting to prevent non-admin users from making test payments.
 - Improvement: Lazy load javascript modules on front-end for improved performance.
-- Fix: Customer dashbaord template no longer being recognized in WordPress 6.7 with Full Site Editing themes.
+- Fix: Customer dashboard template no longer being recognized in WordPress 6.7 with Full Site Editing themes.
 - Fix: Issue where product form was wrapping some non-content elementor templates.
 - Fix: Issue with Mollie and Paystack payment redirects sometimes not creating WordPress user accounts.
 - Fix: Opacity of backdrop on cart in firefox.
 - Fix: Potential race condition in cart due to module imports under certain caching conditions.
-- Fix: Upgrade staging site warning should no longer show if you have alread upgraded to 3.0.
+- Fix: Upgrade staging site warning should no longer show if you have already upgraded to 3.0.
 - Fix: Issue with no quotes around aria-label in cart causing unexpected output in some cases.
 - Fix: Issue with non-cached items sometimes loading on front-end if there is a server timeout.
 - Fix: Minor security issue.
