@@ -8,18 +8,18 @@ import { MediaUpload } from '@wordpress/block-editor';
 import { Notice } from '@wordpress/components';
 import { useDispatch } from '@wordpress/data';
 import { SortableKnob } from 'react-easy-sort';
-import { isVideoMedia, normalizeGalleryItem, getGalleryItemId } from '../../../util/attachments';
+import { isVideoMedia } from '../../../util/attachments';
 const ALLOWED_MEDIA_TYPES = ['image', 'video'];
 
-export default ({ 
-	id, 
-	item, 
-	isNew, 
-	onRemove, 
-	isFeatured, 
-	onSelect, 
-	onEditMedia, 
-	onUpdateItem 
+export default ({
+	id,
+	item,
+	isNew,
+	onRemove,
+	isFeatured,
+	onSelect,
+	onEditMedia,
+	onUpdateItem,
 }) => {
 	const { invalidateResolution } = useDispatch(coreStore);
 
@@ -138,7 +138,7 @@ export default ({
 				</ScTag>
 			)}
 
-			{(typeof item === 'object' && item?.variant_option) && (
+			{typeof item === 'object' && item?.variant_option && (
 				<ScTag
 					className="featured-badge"
 					size="small"
@@ -204,10 +204,14 @@ export default ({
 							border-radius: var(--sc-border-radius-small);
 						`}
 						name="edit-2"
-						onClick={() => onEditMedia({
-							...media,
-							...(typeof item === 'object' ? item : { id: item })
-						})}
+						onClick={() =>
+							onEditMedia({
+								...media,
+								...(typeof item === 'object'
+									? item
+									: { id: item }),
+							})
+						}
 					/>
 				)}
 			/>
@@ -252,14 +256,12 @@ export default ({
 							muted
 							loop
 							playsInline
-							{...(
-								(typeof item === 'object' && item?.thumbnail_image?.url) || 
-								featuredMedia?.source_url || 
-								featuredMedia?.url
+							{...(typeof item === 'object' &&
+							item?.thumbnail_image?.url
 								? {
 										poster:
-											(typeof item === 'object' && item?.thumbnail_image?.url) ||
-											(featuredMedia?.source_url ?? featuredMedia?.url),
+											typeof item === 'object' &&
+											item?.thumbnail_image?.url,
 								  }
 								: {})}
 						>

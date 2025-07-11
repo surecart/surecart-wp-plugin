@@ -107,7 +107,7 @@ export default ({ productId, product, updateProduct }) => {
 				draggedItemClassName="sc-dragging"
 				onSortEnd={onDragStop}
 			>
-				{(product?.gallery || []).map((item, index) => {
+				{(product?.gallery_ids || []).map((item, index) => {
 					const itemId = getGalleryItemId(item);
 					return (
 						<SortableItem key={itemId}>
