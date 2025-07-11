@@ -23,12 +23,12 @@ export default ({
 	ruleSchema = [],
 	addRuleGroup,
 	removeRuleGroup,
-	id,
 	totalRuleGroups,
 	loading,
 	orGroupIndex,
 	rule_query,
 	updateRuleQuery,
+	orGroup,
 }) => {
 	if (loading || !ruleSchema?.length) {
 		return (
@@ -45,8 +45,6 @@ export default ({
 			</div>
 		);
 	}
-
-	const [ruleGroupsManager, setRuleGroupsManager] = useState([{ id: 1 }]);
 
 	return (
 		<ScToggle
@@ -68,16 +66,16 @@ export default ({
 			>
 				<ScIcon name="trash" />
 			</ScButton>
-			{ruleGroupsManager?.map(({ id }) => {
+			{orGroup?.map((_, andGroupIndex) => {
 				return (
 					<div
-						key={id}
+						key={andGroupIndex}
 						css={css`
 							display: flex;
 							flex-direction: column;
 						`}
 					>
-						{id > 1 && (
+						{andGroupIndex > 0 && (
 							<ScButton
 								css={css`
 									pointer-events: none;
@@ -91,16 +89,9 @@ export default ({
 							</ScButton>
 						)}
 						<AndGroup
-							key={id}
-							id={id}
+							key={andGroupIndex}
 							ruleSchema={ruleSchema}
 							addRuleGroup={() => {
-								const newRuleGroups = [
-									...ruleGroupsManager,
-									{ id: ruleGroupsManager?.length + 1 },
-								];
-								setRuleGroupsManager(newRuleGroups);
-								// Add new empty AND condition to current OR group
 								const newRuleQuery = [...rule_query];
 								if (!newRuleQuery[orGroupIndex]) {
 									newRuleQuery[orGroupIndex] = [];
@@ -111,25 +102,18 @@ export default ({
 								updateRuleQuery(newRuleQuery);
 							}}
 							removeRuleGroup={() => {
-								if (ruleGroupsManager.length === 1) {
-									removeRuleGroup();
-									return;
-								}
-								const newRuleGroups = ruleGroupsManager.filter(
-									(ruleGroup) => ruleGroup.id !== id
-								);
-								setRuleGroupsManager(newRuleGroups);
-								// Remove corresponding AND condition from rule_query
 								const newRuleQuery = [...rule_query];
 								if (newRuleQuery[orGroupIndex]) {
 									newRuleQuery[orGroupIndex] = newRuleQuery[
 										orGroupIndex
-									].filter((_, index) => index !== id - 1);
+									].filter(
+										(_, index) => index !== andGroupIndex
+									);
 								}
 								updateRuleQuery(newRuleQuery);
 							}}
-							totalRuleGroups={ruleGroupsManager?.length}
-							andGroupIndex={id - 1}
+							totalRuleGroups={orGroup?.length}
+							andGroupIndex={andGroupIndex}
 							orGroupIndex={orGroupIndex}
 							rule_query={rule_query}
 							updateRuleQuery={updateRuleQuery}
@@ -137,7 +121,7 @@ export default ({
 					</div>
 				);
 			})}
-			{totalRuleGroups === id && (
+			{totalRuleGroups === orGroupIndex + 1 && (
 				<ScButton
 					type="link"
 					css={css`

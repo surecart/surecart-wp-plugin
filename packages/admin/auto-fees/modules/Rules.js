@@ -27,7 +27,6 @@ import { createEmptyOrGroup } from '../utils/ruleQueryUtils';
 export default ({ autoFee = {}, onUpdate, loading }) => {
 	const [ruleSchema, setRuleSchema] = useState(null);
 	const [loadingRuleSchema, setLoadingRuleSchema] = useState(false);
-	const [ruleGroupsManager, setRuleGroupsManager] = useState([]);
 
 	const baseUrl = select(coreStore).getEntityConfig(
 		'surecart',
@@ -50,16 +49,6 @@ export default ({ autoFee = {}, onUpdate, loading }) => {
 	const { rule_string, rule_query = [] } = autoFee;
 	console.log('Auto Fee Rule Query:', rule_query);
 
-	// Initialize ruleGroupsManager based on existing rule_query
-	useEffect(() => {
-		if (rule_query.length > 0 && ruleGroupsManager.length === 0) {
-			const initialGroups = rule_query.map((_, index) => ({
-				id: index + 1,
-			}));
-			setRuleGroupsManager(initialGroups);
-		}
-	}, [rule_query, ruleGroupsManager.length]);
-
 	// Update rule_query whenever changes occur
 	const updateRuleQuery = (newRuleQuery) => {
 		console.log('Updating rule_query:', newRuleQuery);
@@ -73,7 +62,7 @@ export default ({ autoFee = {}, onUpdate, loading }) => {
 		fetchRuleSchema();
 	}, [ruleSchema]);
 
-	if (!ruleGroupsManager?.length) {
+	if (!rule_query?.length) {
 		return (
 			<Box
 				title={__('Auto Fee Conditions', 'surecart')}
@@ -88,9 +77,6 @@ export default ({ autoFee = {}, onUpdate, loading }) => {
 						<div>
 							<ScButton
 								onClick={() => {
-									const newRuleGroups = [{ id: 1 }];
-									setRuleGroupsManager(newRuleGroups);
-									// Initialize rule_query with empty OR group
 									updateRuleQuery([createEmptyOrGroup()]);
 								}}
 							>
@@ -124,16 +110,16 @@ export default ({ autoFee = {}, onUpdate, loading }) => {
 					--sc-flex-column-gap: 0;
 				`}
 			>
-				{ruleGroupsManager?.map(({ id }) => {
+				{rule_query?.map((orGroup, orGroupIndex) => {
 					return (
 						<div
-							key={id}
+							key={orGroupIndex}
 							css={css`
 								display: flex;
 								flex-direction: column;
 							`}
 						>
-							{id > 1 && (
+							{orGroupIndex > 0 && (
 								<ScButton
 									css={css`
 										pointer-events: none;
@@ -147,15 +133,9 @@ export default ({ autoFee = {}, onUpdate, loading }) => {
 								</ScButton>
 							)}
 							<OrGroup
-								id={id}
+								orGroup={orGroup}
 								ruleSchema={ruleSchema}
 								addRuleGroup={() => {
-									const newRuleGroups = [
-										...ruleGroupsManager,
-										{ id: ruleGroupsManager?.length + 1 },
-									];
-									setRuleGroupsManager(newRuleGroups);
-									// Add new empty OR group to rule_query
 									const newRuleQuery = [
 										...rule_query,
 										createEmptyOrGroup(),
@@ -163,19 +143,13 @@ export default ({ autoFee = {}, onUpdate, loading }) => {
 									updateRuleQuery(newRuleQuery);
 								}}
 								removeRuleGroup={() => {
-									const newRuleGroups =
-										ruleGroupsManager.filter(
-											(ruleGroup) => ruleGroup.id !== id
-										);
-									setRuleGroupsManager(newRuleGroups);
-									// Remove corresponding OR group from rule_query
 									const newRuleQuery = rule_query.filter(
-										(_, index) => index !== id - 1
+										(_, index) => index !== orGroupIndex
 									);
 									updateRuleQuery(newRuleQuery);
 								}}
-								totalRuleGroups={ruleGroupsManager?.length}
-								orGroupIndex={id - 1}
+								totalRuleGroups={rule_query?.length}
+								orGroupIndex={orGroupIndex}
 								rule_query={rule_query}
 								updateRuleQuery={updateRuleQuery}
 							/>

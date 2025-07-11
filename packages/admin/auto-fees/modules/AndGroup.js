@@ -28,7 +28,6 @@ export default ({
 	ruleSchema = [],
 	addRuleGroup,
 	removeRuleGroup,
-	id,
 	totalRuleGroups,
 	andGroupIndex,
 	orGroupIndex,
@@ -269,7 +268,7 @@ export default ({
 					<ScIcon name="trash" />
 				</ScButton>
 			</div>
-			{totalRuleGroups === id && (
+			{totalRuleGroups === andGroupIndex + 1 && (
 				<ScButton
 					type="link"
 					css={css`
