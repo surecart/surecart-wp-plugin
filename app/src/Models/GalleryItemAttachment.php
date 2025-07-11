@@ -27,7 +27,15 @@ class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 	 * @return void
 	 */
 	public function __construct( $item, $featured_image_url = null ) {
-		$this->item               = get_post( $item );
+		$this->item = get_post( $item['id'] ?? $item );
+
+		// If the item is not an integer, we assume it's an array with additional properties.
+		if ( ! is_int( $item ) && ! empty( $this->item ) ) {
+			$this->item->variant_option  = $item['variant_option'] ?? '';
+			$this->item->thumbnail_image = $item['thumbnail_image'] ?? [];
+			$this->item->aspect_ratio    = $item['aspect_ratio'] ?? '';
+		}
+
 		$this->featured_image_url = $featured_image_url;
 	}
 
@@ -40,7 +48,7 @@ class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 	 */
 	public function get_video_thumbnail_url( $attachment_id ) {
 		// Check if we have a thumbnail image from gallery properties.
-		$thumbnail_image = $this->getThumbnailImage();
+		$thumbnail_image = $this->getThumbnailImageAttribute();
 		if ( ! empty( $thumbnail_image['url'] ) ) {
 			return $thumbnail_image['url'];
 		}
@@ -114,7 +122,7 @@ class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 
 		// For main display, handle video attachments.
 		$video_url = wp_get_attachment_url( $this->item->ID );
-		$html      = '<div class="sc-video-container">';
+		$html      = '<div class="sc-video-container" style="aspect-ratio: ' . esc_attr( $this->item->aspect_ratio ) . ';">';
 		$html     .= wp_video_shortcode(
 			[
 				'src'      => $video_url,

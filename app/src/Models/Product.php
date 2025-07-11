@@ -948,11 +948,6 @@ class Product extends Model implements PageModel {
 			return $cached;
 		}
 
-		$featured_image_url = null;
-		if ( ! empty( $this->featured_image ) && is_a( $this->featured_image, GalleryItem::class ) ) {
-			$featured_image_url = $this->featured_image->attributes( 'thumbnail' )->src ?? null;
-		}
-
 		// Get gallery_ids using the accessor method which handles metadata parsing.
 		$gallery_ids = $this->getGalleryIdsAttribute();
 		if ( ! is_array( $gallery_ids ) ) {
@@ -962,7 +957,7 @@ class Product extends Model implements PageModel {
 		$gallery = array_values(
 			array_filter(
 				array_map(
-					function ( $gallery_item ) use ( $featured_image_url ) {
+					function ( $gallery_item ) {
 						// Extract the ID from the gallery item (can be int or object).
 						$id = $this->getGalleryItemId( $gallery_item );
 
@@ -980,7 +975,7 @@ class Product extends Model implements PageModel {
 
 						// this is an attachment id.
 						if ( is_int( $id ) ) {
-							$gallery_item_attachment = new GalleryItemAttachment( $id, $featured_image_url );
+							$gallery_item_attachment = new GalleryItemAttachment( $gallery_item );
 
 							// Set additional properties if they exist.
 							if ( $variant_option || $thumbnail_image || $aspect_ratio ) {

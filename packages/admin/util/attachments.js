@@ -239,7 +239,8 @@ export const normalizeGalleryItem = (item) => {
 	if (typeof item === 'object' && item !== null) {
 		return {
 			id: parseInt(item.id || 0),
-			variant_option: item.variant_option || null,
+			variant_option:
+				item.variant_option || item?.meta?.sc_variant_option || null,
 			thumbnail_image: item.thumbnail_image || null,
 			aspect_ratio: item.aspect_ratio || null,
 		};
@@ -270,8 +271,11 @@ export const getGalleryItemId = (item) => {
  * @returns {boolean} - True if item is an object with properties
  */
 export const isComplexGalleryItem = (item) => {
-	return typeof item === 'object' && item !== null &&
-		(item.variant_option || item.thumbnail_image || item.aspect_ratio);
+	return (
+		typeof item === 'object' &&
+		item !== null &&
+		(item.variant_option || item.thumbnail_image || item.aspect_ratio)
+	);
 };
 
 /**

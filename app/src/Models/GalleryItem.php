@@ -72,9 +72,8 @@ abstract class GalleryItem implements ArrayAccess, JsonSerializable, Arrayable, 
 	 * @return string
 	 */
 	public function __get( $key ) {
-		// normalize the variant option.
-		if ( 'variant_option' === $key && isset( $this->item->ID ) ) {
-			return get_post_meta( $this->item->ID, 'sc_variant_option', true );
+		if ( $this->getGalleryPropertiesByKey( $key ) ) {
+			return $this->getGalleryPropertiesByKey( $key );
 		}
 
 		// normalize the ID.
@@ -137,12 +136,32 @@ abstract class GalleryItem implements ArrayAccess, JsonSerializable, Arrayable, 
 	 * @return bool
 	 */
 	public function __isset( $key ) {
-		// normalize the variant option.
-		if ( 'variant_option' === $key && isset( $this->item->ID ) ) {
-			return ! empty( get_post_meta( $this->item->ID, 'sc_variant_option', true ) );
+		return isset( $this->item->{$key} ) || isset( $this->gallery_properties[ $key ] );
+	}
+
+	/**
+	 * Handle gallery properties.
+	 *
+	 * @param string $key The key to check.
+	 *
+	 * @return string|null
+	 */
+	protected function getGalleryPropertiesByKey( $key ) {
+		// Handle new gallery properties first.
+		if ( ! in_array( $key, [ 'variant_option', 'thumbnail_image', 'aspect_ratio' ], true ) ) {
+			return null;
 		}
 
-		return isset( $this->item->{$key} );
+		if ( isset( $this->gallery_properties[ $key ] ) ) {
+			return $this->gallery_properties[ $key ];
+		}
+
+		// Backward compatibility for variant_option with post meta - sc_variant_option.
+		if ( 'variant_option' === $key && isset( $this->item->ID ) ) {
+			return get_post_meta( $this->item->ID, 'sc_variant_option', true );
+		}
+
+		return null;
 	}
 
 	/**
@@ -186,7 +205,7 @@ abstract class GalleryItem implements ArrayAccess, JsonSerializable, Arrayable, 
 	 *
 	 * @return string|null
 	 */
-	public function getVariantOption() {
+	public function getVariantOptionAttribute() {
 		return $this->gallery_properties['variant_option'] ?? null;
 	}
 
@@ -195,7 +214,7 @@ abstract class GalleryItem implements ArrayAccess, JsonSerializable, Arrayable, 
 	 *
 	 * @return array|null
 	 */
-	public function getThumbnailImage() {
+	public function getThumbnailImageAttribute() {
 		return $this->gallery_properties['thumbnail_image'] ?? null;
 	}
 
@@ -204,7 +223,7 @@ abstract class GalleryItem implements ArrayAccess, JsonSerializable, Arrayable, 
 	 *
 	 * @return string|null
 	 */
-	public function getAspectRatio() {
+	public function getAspectRatioAttribute() {
 		return $this->gallery_properties['aspect_ratio'] ?? null;
 	}
 }

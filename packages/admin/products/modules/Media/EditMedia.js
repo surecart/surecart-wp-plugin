@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
-import { useState } from '@wordpress/element';
+import { useState, useEffect } from '@wordpress/element';
 import { Button } from '@wordpress/components';
 import { MediaUpload } from '@wordpress/media-utils';
 import { closeSmall, edit } from '@wordpress/icons';
@@ -43,15 +43,10 @@ export default ({ media, product, onSave, open, onRequestClose }) => {
 		};
 	});
 
-	React.useEffect(() => {
+	useEffect(() => {
 		if (media) {
 			setMediaData(normalizeMedia(media));
-			const normalized = normalizeGalleryItem(media);
-			setFormData({
-				variant_option: normalized.variant_option || '',
-				thumbnail_image: normalized.thumbnail_image || null,
-				aspect_ratio: normalized.aspect_ratio || '',
-			});
+			setFormData(normalizeGalleryItem(media));
 		}
 	}, [media]);
 

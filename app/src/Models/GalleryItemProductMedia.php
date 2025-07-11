@@ -27,7 +27,7 @@ class GalleryItemProductMedia extends ModelsGalleryItem implements GalleryItem {
 	 */
 	public function get_video_thumbnail_url() {
 		// First check if we have a thumbnail image from gallery properties.
-		$thumbnail_image = $this->getThumbnailImage();
+		$thumbnail_image = $this->getThumbnailImageAttribute();
 		if ( ! empty( $thumbnail_image['url'] ) ) {
 			return $thumbnail_image['url'];
 		}
