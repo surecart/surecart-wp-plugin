@@ -954,10 +954,15 @@ class Product extends Model implements PageModel {
 			$gallery_ids = array();
 		}
 
+		$product_featured_image     = $this->getFeaturedImageAttribute();
+		$product_featured_image_url = $product_featured_image instanceof GalleryItem
+		? ( $product_featured_image->attributes( 'thumbnail' )->src ?? '' )
+		: '';
+
 		$gallery = array_values(
 			array_filter(
 				array_map(
-					function ( $gallery_item ) {
+					function ( $gallery_item ) use ( $product_featured_image_url ) {
 						// Extract the ID from the gallery item (can be int or object).
 						$id = $this->getGalleryItemId( $gallery_item );
 
@@ -975,7 +980,7 @@ class Product extends Model implements PageModel {
 
 						// this is an attachment id.
 						if ( is_int( $id ) ) {
-							$gallery_item_attachment = new GalleryItemAttachment( $gallery_item );
+							$gallery_item_attachment = new GalleryItemAttachment( $gallery_item, $product_featured_image_url );
 
 							// Set additional properties if they exist.
 							if ( $variant_option || $thumbnail_image || $aspect_ratio ) {

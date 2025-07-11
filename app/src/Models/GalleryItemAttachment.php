@@ -122,7 +122,7 @@ class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 
 		// For main display, handle video attachments.
 		$video_url = wp_get_attachment_url( $this->item->ID );
-		$html      = '<div class="sc-video-container" style="aspect-ratio: ' . esc_attr( $this->item->aspect_ratio ) . ';">';
+		$html      = '<div class="sc-video-container" style="aspect-ratio: ' . esc_attr( $this->item->aspect_ratio ?? '' ) . ';">';
 		$html     .= wp_video_shortcode(
 			[
 				'src'      => $video_url,
