@@ -173,7 +173,7 @@ export class ScStripePaymentElement {
       // we have what we need, load elements.
       processorsState.instances.stripeElements = processorsState.instances.stripe.elements(this.getElementsConfig() as any);
       const { line1, line2, city, state, country, postal_code } = getCompleteAddress('shipping') ?? {};
-      
+
       const options = {
         defaultValues: {
           billingDetails: {
@@ -189,17 +189,21 @@ export class ScStripePaymentElement {
         },
       } as any;
 
-      if ( window?.wp?.hooks?.applyFilters ) {
-        // apply filters to the options. 
+      if (window?.wp?.hooks?.applyFilters) {
+        // apply filters to the options.
         options.paymentMethodOrder = window.wp.hooks.applyFilters('surecart_stripe_payment_element_payment_method_order', [], checkoutState.checkout);
         options.wallets = window.wp.hooks.applyFilters('surecart_stripe_payment_element_wallets', {}, checkoutState.checkout);
         options.terms = window.wp.hooks.applyFilters('surecart_stripe_payment_element_terms', {}, checkoutState.checkout);
+
+        // filter the billing details fields if filter provided.
+        if (window.wp.hooks.hasFilter && window.wp.hooks.hasFilter('surecart_stripe_payment_element_fields')) {
+          const filteredFields = window.wp.hooks.applyFilters('surecart_stripe_payment_element_fields', options.fields);
+          options.fields = this.validateBillingFields(filteredFields, options.fields);
+        }
       }
 
       // create the payment element.
-      (processorsState.instances.stripeElements as any)
-        .create('payment', options)
-        .mount(this.container);
+      (processorsState.instances.stripeElements as any).create('payment', options).mount(this.container);
 
       this.element = processorsState.instances.stripeElements.getElement('payment');
       this.element.on('ready', () => (this.loaded = true));
@@ -257,6 +261,41 @@ export class ScStripePaymentElement {
         },
       },
     });
+  }
+
+  validateBillingFields(filteredFields: Record<string, any>, defaultFields: Record<string, any>) {
+    if (!filteredFields?.billingDetails || typeof filteredFields.billingDetails !== 'object') {
+      return defaultFields;
+    }
+
+    const allowedFields = {
+      name: ['never', 'auto'],
+      email: ['never', 'auto'],
+      phone: ['never', 'auto'],
+      address: ['never', 'auto', 'if_required'],
+    };
+
+    const addressFields = ['line1', 'line2', 'city', 'state', 'country', 'postalCode'];
+    const validated: Record<string, any> = {};
+
+    for (const [key, value] of Object.entries(filteredFields.billingDetails)) {
+      if (allowedFields[key]?.includes(value)) {
+        validated[key] = value;
+      } else if (key === 'address' && value && typeof value === 'object') {
+        const validAddress = addressFields.reduce((acc, field) => {
+          if (['never', 'auto'].includes(value[field])) {
+            acc[field] = value[field];
+          }
+          return acc;
+        }, {});
+
+        if (Object.keys(validAddress).length > 0) {
+          validated[key] = validAddress;
+        }
+      }
+    }
+
+    return Object.keys(validated).length > 0 ? { ...defaultFields, billingDetails: validated } : defaultFields;
   }
 
   async submit() {
