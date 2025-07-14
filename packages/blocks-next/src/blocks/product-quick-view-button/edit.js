@@ -97,16 +97,19 @@ export default ({
 					setAttributes={setAttributes}
 				/>
 			</InspectorControls>
-			<div
-				{...blockProps}
-				className={classnames(blockProps.className, {
-					'wp-block-button__link': true,
-					'wp-block-button': true,
-					[`has-custom-width wp-block-button__width-${width}`]: width,
-					[`has-custom-width sc-block-button__width-${width}`]: width,
-				})}
-			>
-				{renderButton()}
+			<div className="wp-block-button">
+				<div
+					{...blockProps}
+					className={classnames(blockProps.className, {
+						'wp-block-button__link': true,
+						[`has-custom-width wp-block-button__width-${width}`]:
+							width,
+						[`has-custom-width sc-block-button__width-${width}`]:
+							width,
+					})}
+				>
+					{renderButton()}
+				</div>
 			</div>
 		</>
 	);
