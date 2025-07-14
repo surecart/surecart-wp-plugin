@@ -46,6 +46,19 @@ export default ({
 		);
 	}
 
+	const renderRuleTitle = () => {
+		return (orGroup || [])
+			?.map((andGroup) => {
+				if (!andGroup?.attribute) {
+					return;
+				}
+				return ruleSchema.find(
+					(item) => item.key === andGroup?.attribute
+				)?.label;
+			})
+			.join(', ');
+	};
+
 	return (
 		<ScToggle
 			open
@@ -53,6 +66,7 @@ export default ({
 				position: relative;
 			`}
 			showIcon={true}
+			summary={renderRuleTitle()}
 		>
 			<ScButton
 				circle
@@ -102,6 +116,12 @@ export default ({
 								updateRuleQuery(newRuleQuery);
 							}}
 							removeRuleGroup={() => {
+								// if there's only one and group, remove the entire or group
+								if (orGroup?.length === 1) {
+									updateRuleQuery([]);
+									return;
+								}
+
 								const newRuleQuery = [...rule_query];
 								if (newRuleQuery[orGroupIndex]) {
 									newRuleQuery[orGroupIndex] = newRuleQuery[
