@@ -24,6 +24,19 @@
 	justify-content: center;
 	position: relative;
 
+	[hidden] {
+		display: none;
+	}
+
+	img {
+		cursor: pointer;
+		transition: opacity 0.3s ease;
+
+		&:hover {
+			opacity: 0.8;
+		}
+	}
+
 	video {
 		width: 100%;
 		height: auto;
@@ -33,10 +46,19 @@
 		background-color: #000;
 	}
 
+	> div {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		&[hidden] {
+			display: none;
+		}
+	}
+
 	/* Custom video play button for MediaElement videos */
 	.sc-video-play-button {
 		position: absolute;
-		display: none; /* Hidden by default, shown via JS */
 		align-items: center;
 		justify-content: center;
 		width: 60px;
@@ -52,13 +74,15 @@
 		// Add a play button icon
 		&::before {
 			content: "";
-			display: inline-block;
+			display: flex;
+			justify-content: center;
+			align-items: center;
 			width: 0;
 			height: 0;
 			border-left: 18px solid #111827;
 			border-top: 12px solid transparent;
 			border-bottom: 12px solid transparent;
-			margin-left: 4px;
+			margin: 16px 20px 20px 22px;
 		}
 
 		/* Hover effect */

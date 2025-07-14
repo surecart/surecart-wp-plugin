@@ -122,26 +122,46 @@ class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 
 		// For main display, handle video attachments.
 		$video_url = wp_get_attachment_url( $this->item->ID );
-		$html      = '<div class="sc-video-container" style="aspect-ratio: ' . esc_attr( $this->item->aspect_ratio ?? '' ) . ';">';
-		$html     .= apply_filters(
-			'surecart_video_html',
-			sprintf(
-				'<video
-					src="%s"
-					poster="%s"
-					loop
-					muted
-					controls
-					playsinline
-					preload="metadata"
-					class="wp-video-shortcode"
-				></video>',
-				esc_url( $video_url ),
-				esc_url( $video_thumbnail_url )
-			)
-		);
 
-		$html .= '</div>';
+		ob_start();
+		?>
+		<div class="sc-video-container"
+			data-wp-interactive='{ "namespace": "surecart/video" }'
+			data-wp-context='{ "isVideoPressed": false }'
+			data-wp-on--click="actions.playVideo"
+			style="aspect-ratio: <?php echo esc_attr( $this->item->aspect_ratio ?? '' ); ?>;">
+			
+			<div data-wp-bind--hidden="context.isVideoPressed" style="cursor: pointer;">
+				<img
+					src="<?php echo esc_url( $video_thumbnail_url ); ?>"
+					alt="<?php echo esc_attr__( 'Video thumbnail', 'surecart' ); ?>"
+				/>
+				<div class="sc-video-play-button"></div>
+			</div>
+			
+			<?php
+			echo apply_filters(
+				'surecart_video_html',
+				sprintf(
+					'<video
+						data-wp-bind--hidden="!context.isVideoPressed"
+						src="%s"
+						poster="%s"
+						loop
+						muted
+						controls
+						playsinline
+						preload="metadata"
+						class="wp-video-shortcode"
+					></video>',
+					esc_url( $video_url ),
+					esc_url( $video_thumbnail_url )
+				)
+			);
+			?>
+		</div>
+		<?php
+		$html = ob_get_clean();
 
 		return $html;
 	}

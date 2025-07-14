@@ -22,6 +22,19 @@ if ( ! empty( $attributes['lightbox'] ) ) {
 	wp_enqueue_script_module( 'surecart/lightbox' );
 }
 
+// Check if we have any videos in the gallery and enqueue video script.
+$has_videos = false;
+foreach ( $gallery as $media ) {
+	if ( $media->isVideo() ) {
+		$has_videos = true;
+		break;
+	}
+}
+
+if ( $has_videos ) {
+	wp_enqueue_script_module( '@surecart/video' );
+}
+
 // handle image.
 if ( count( $gallery ) === 1 ) {
 	return 'file:./image.php';
