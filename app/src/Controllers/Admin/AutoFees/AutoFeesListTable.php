@@ -109,6 +109,7 @@ class AutoFeesListTable extends ListTable {
 			[
 				'name'   => __( 'Name', 'surecart' ),
 				'status' => __( 'Status', 'surecart' ),
+				'date'   => __( 'Date', 'surecart' ),
 			],
 			parent::get_columns()
 		);
