@@ -178,7 +178,18 @@ class AutoFeesListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_status( $auto_fees ) {
-		return $auto_fees->active ? '<sc-tag type="success">' . __( 'Active', 'surecart' ) . '</sc-tag>' : '<sc-tag type="warning">' . __( 'Inactive', 'surecart' ) . '</sc-tag>';
+		$toggle_url = add_query_arg(
+			[
+				'action' => 'toggle_active',
+				'nonce'  => wp_create_nonce( 'archive_product' ), // use archive product nonce.
+				'id'     => $auto_fees->id,
+			]
+		);
+		?>
+		<sc-switch checked="<?php echo esc_attr( $auto_fees->active ) ? 'true' : 'false'; ?>"
+			onClick="window.location.assign('<?php echo esc_url_raw( $toggle_url ); ?>'); document.querySelector('#loading-<?php echo esc_attr( $auto_fees->id ); ?>').style.display = '';"></sc-switch>
+		<sc-block-ui id="loading-<?php echo esc_attr( $auto_fees->id ); ?>" spinner style="display: none;"></sc-block-ui>
+		<?php
 	}
 
 	/**

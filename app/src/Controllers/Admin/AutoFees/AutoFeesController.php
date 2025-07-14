@@ -5,6 +5,7 @@ namespace SureCart\Controllers\Admin\AutoFees;
 use SureCart\Controllers\Admin\AdminController;
 use SureCart\Controllers\Admin\AutoFees\AutoFeesListTable;
 use SureCart\Controllers\Admin\AutoFees\AutoFeesScriptsController;
+use SureCart\Models\AutoFee;
 
 /**
  * Handles product admin requests.
@@ -54,5 +55,40 @@ class AutoFeesController extends AdminController {
 
 		// return view.
 		return '<div id="app"></div>';
+	}
+
+	/**
+	 * Change the active state od the model.
+	 *
+	 * @param \SureCartCore\Requests\RequestInterface $request Request.
+	 *
+	 * @return \SureCartCore\Responses\RedirectResponse
+	 */
+	public function toggleActive( $request ) {
+		$auto_fee = AutoFee::find( $request->query( 'id' ) );
+		$status   = $request->query( 'status' ) ?? 'active';
+
+		if ( is_wp_error( $auto_fee ) ) {
+			wp_die( implode( ' ', array_map( 'esc_html', $auto_fee->get_error_messages() ) ) );
+		}
+
+		$updated = $auto_fee->update(
+			[
+				'active' => ! (bool) $auto_fee->active,
+			]
+		);
+
+		if ( is_wp_error( $updated ) ) {
+			wp_die( implode( ' ', array_map( 'esc_html', $updated->get_error_messages() ) ) );
+		}
+
+		\SureCart::flash()->add(
+			'success',
+			$updated->active ? __( 'Auto Fee enabled.', 'surecart' ) : __( 'Auto Fee disabled.', 'surecart' )
+		);
+
+		return \SureCart::redirect()->to(
+			esc_url_raw( add_query_arg( 'status', $status, admin_url( 'admin.php?page=sc-auto-fees' ) ) )
+		);
 	}
 }
