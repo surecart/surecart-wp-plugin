@@ -9,7 +9,7 @@ use SureCart\Support\Contracts\GalleryItem;
  */
 class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 	/**
-	 * Product featured image URL.
+	 * Featured image URL.
 	 *
 	 * This is used for fallback when the attachment does not have a thumbnail or poster image.
 	 *
@@ -22,7 +22,7 @@ class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 	 * This can accept a product media or a post.
 	 *
 	 * @param int|\WP_Post $item The item.
-	 * @param string|null  $featured_image_url The featured image URL for the product.
+	 * @param string|null  $featured_image_url The featured image URL for the post.
 	 *
 	 * @return void
 	 */
@@ -225,8 +225,8 @@ class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 			$tags->set_attribute( 'data-wp-on-async--load', 'callbacks.setImageRef' );
 			$tags->set_attribute( 'data-wp-init', 'callbacks.setImageRef' );
 			$tags->set_attribute( 'data-wp-on-async--click', 'actions.showLightbox' );
-			$tags->set_attribute( 'data-wp-class--hide', 'state.isContentHidden' );
-			$tags->set_attribute( 'data-wp-class--show', 'state.isContentVisible' );
+			$tags->set_attribute( 'data-wp-class--sc-hide', 'state.isContentHidden' );
+			$tags->set_attribute( 'data-wp-class--sc-show', 'state.isContentVisible' );
 			$tags->add_class( 'has-image-lightbox' );
 
 			// add the lightbox trigger button.

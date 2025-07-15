@@ -62,52 +62,18 @@ class Media extends Model {
 	 * @return string
 	 */
 	protected function html( $size = 'full', $attr = [] ) {
-		// Check if this is a video.
-		$is_video = isset( $this->attributes['mime_type'] ) && strpos( $this->attributes['mime_type'], 'video' ) !== false;
+		// prepare attributes.
+		$attr = $this->attributes( $size, $attr );
+		$html = '<img ';
 
-		if ( $is_video ) {
-			// Video handling.
-			$html  = '<div class="sc-video-container">';
-			$html .= '<video controls';
-
-			// Add src attribute.
-			$html .= ' src="' . esc_url( $this->attributes['url'] ) . '"';
-
-			// Add class attribute.
-			if ( ! empty( $attr['class'] ) ) {
-				$html .= ' class="' . esc_attr( $attr['class'] ) . '"';
-			}
-
-			// Add style if provided.
-			if ( ! empty( $attr['style'] ) ) {
-				$html .= ' style="' . esc_attr( $attr['style'] ) . '"';
-			}
-
-			// Add loading attribute if provided.
-			if ( ! empty( $attr['loading'] ) ) {
-				$html .= ' loading="' . esc_attr( $attr['loading'] ) . '"';
-			}
-
-			// Close video tag.
-			$html .= '></video>';
-			$html .= '</div>';
-
-			return $html;
-		} else {
-			// Image handling
-			// prepare attributes.
-			$attr = $this->attributes( $size, $attr );
-			$html = '<img ';
-
-			foreach ( $attr as $name => $value ) {
-				$html .= " $name=" . '"' . $value . '"';
-			}
-
-			// close tag.
-			$html .= ' />';
-
-			return $html;
+		foreach ( $attr as $name => $value ) {
+			$html .= " $name=" . '"' . $value . '"';
 		}
+
+		// close tag.
+		$html .= ' />';
+
+		return $html;
 	}
 
 	/**
