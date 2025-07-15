@@ -17,7 +17,7 @@ class CheckEmailController extends RestController {
 		$login = $request->get_param( 'login' ) ?? '';
 		// handle email.
 		if ( strpos( $login, '@' ) !== false ) {
-			$user = get_user_by( 'email', $request->get_param( 'login' ) );
+			$user = get_user_by( 'email', $login );
 			return $user ? true : new \WP_Error(
 				'invalid_email',
 				__( 'There is no account with that username or email address.', 'surecart' )
