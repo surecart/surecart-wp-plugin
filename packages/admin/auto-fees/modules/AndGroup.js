@@ -17,12 +17,10 @@ import {
 	ScPriceInput,
 	ScSelect,
 	ScIcon,
-	ScFlex,
-	ScFormControl,
 } from '@surecart/components-react';
 import DateTimePicker from './DateTimePicker';
 import { formatDateTime } from '../../util/time';
-import { createEmptyAndRule } from '../utils/ruleQueryUtils';
+import { createEmptyAndRule, getInputType } from '../utils/ruleQueryUtils';
 
 export default ({
 	ruleSchema = [],
@@ -117,10 +115,9 @@ export default ({
 		: false;
 
 	const renderValueInput = () => {
-		switch (attribute) {
-			case 'created_at':
-			case 'customer.created_at':
-			case 'products.created_at':
+		const inputType = getInputType(attribute);
+		switch (inputType) {
+			case 'date':
 				return (
 					<DateTimePicker
 						showLabel={false}
@@ -158,7 +155,7 @@ export default ({
 						)}
 					/>
 				);
-			case 'subtotal_amount':
+			case 'price':
 				return (
 					<ScPriceInput
 						value={value}
@@ -172,11 +169,23 @@ export default ({
 						}
 					/>
 				);
-			case 'customer.email':
-			case 'customer.first_name':
-			case 'products.name':
+			case 'text':
 				return (
 					<ScInput
+						value={value}
+						onScInput={(e) => {
+							setValue(e.target.value);
+						}}
+						placeholder={__('Enter a value', 'surecart')}
+						className={
+							!isAttributeMetadata ? 'sc-grid-full-width' : ''
+						}
+					/>
+				);
+			case 'email':
+				return (
+					<ScInput
+						type="email"
 						value={value}
 						onScInput={(e) => {
 							setValue(e.target.value);

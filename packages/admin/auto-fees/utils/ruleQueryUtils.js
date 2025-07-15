@@ -1,3 +1,10 @@
+import {
+	DATE_ATTRIBUTES,
+	PRICE_ATTRIBUTES,
+	TEXT_ATTRIBUTES,
+	EMAIL_ATTRIBUTES,
+} from './constants';
+
 /**
  * Creates an empty OR group
  * @returns {Array} - Empty OR group with one empty AND rule
@@ -14,4 +21,12 @@ export const createEmptyOrGroup = () => {
  */
 export const createEmptyAndRule = () => {
 	return { attribute: null, value: null, operator: null, metadataKey: null };
+};
+
+export const getInputType = (attribute) => {
+	if (DATE_ATTRIBUTES?.includes(attribute)) return 'date';
+	if (PRICE_ATTRIBUTES?.includes(attribute)) return 'price';
+	if (EMAIL_ATTRIBUTES?.includes(attribute)) return 'email';
+	if (TEXT_ATTRIBUTES?.includes(attribute)) return 'text';
+	return 'text';
 };
