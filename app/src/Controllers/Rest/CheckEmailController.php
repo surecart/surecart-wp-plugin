@@ -14,8 +14,9 @@ class CheckEmailController extends RestController {
 	 * @return true|\WP_Error
 	 */
 	public function checkEmail( \WP_REST_Request $request ) {
+		$login = $request->get_param( 'login' ) || '';
 		// handle email.
-		if ( strpos( $request->get_param( 'login' ), '@' ) ) {
+		if ( strpos( $login, '@' ) ) {
 			$user = get_user_by( 'email', $request->get_param( 'login' ) );
 			return $user ? true : new \WP_Error(
 				'invalid_email',
