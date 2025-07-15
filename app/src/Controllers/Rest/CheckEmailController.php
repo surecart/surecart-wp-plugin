@@ -14,9 +14,9 @@ class CheckEmailController extends RestController {
 	 * @return true|\WP_Error
 	 */
 	public function checkEmail( \WP_REST_Request $request ) {
-		$login = $request->get_param( 'login' ) || '';
+		$login = $request->get_param( 'login' ) ?? '';
 		// handle email.
-		if ( strpos( $login, '@' ) ) {
+		if ( strpos( $login, '@' ) !== false ) {
 			$user = get_user_by( 'email', $request->get_param( 'login' ) );
 			return $user ? true : new \WP_Error(
 				'invalid_email',
@@ -25,14 +25,14 @@ class CheckEmailController extends RestController {
 		}
 
 		// check for login.
-		$user = get_user_by( 'login', $request->get_param( 'login' ) );
+		$user = get_user_by( 'login', $login );
 
 		return $user ? true : new \WP_Error(
 			'invalid_username',
 			sprintf(
 					/* translators: %s: User name. */
 				__( 'The username <strong>%s</strong> is not registered on this site. If you are unsure of your username, try your email address instead.', 'surecart' ),
-				esc_html( $request->get_param( 'login' ) )
+				esc_html( $login )
 			)
 		);
 	}
