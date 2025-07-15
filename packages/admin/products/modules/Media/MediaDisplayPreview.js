@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { ScIcon, ScSkeleton } from '@surecart/components-react';
+import { ScSkeleton } from '@surecart/components-react';
 
 export default ({ media }) => {
 	const isVideo = media?.mime_type?.includes('video');
@@ -50,21 +50,20 @@ export default ({ media }) => {
 						display: flex;
 						justify-content: center;
 						align-items: center;
+						backdrop-filter: blur(4px);
 
-						svg {
-							fill: var(--sc-color-white) !important;
+						&::before {
+							content: '';
+							display: inline-block;
+							width: 0;
+							height: 0;
+							border-left: 18px solid var(--sc-color-white);
+							border-top: 12px solid transparent;
+							border-bottom: 12px solid transparent;
+							margin-left: 2px;
 						}
 					`}
-				>
-					<ScIcon
-						css={css`
-							width: 20px;
-							height: 30px;
-							color: var(--sc-color-white);
-						`}
-						name="play"
-					/>
-				</div>
+				/>
 			</div>
 		);
 	};

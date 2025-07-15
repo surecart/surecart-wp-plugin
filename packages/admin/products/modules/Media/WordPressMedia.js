@@ -277,26 +277,26 @@ export default ({
 								background-color: rgba(0, 0, 0, 0.5);
 								border-radius: 50%;
 								padding: var(--sc-spacing-small);
-								width: 45px;
-								height: 45px;
+								width: 30px;
+								height: 30px;
 								display: flex;
 								justify-content: center;
 								align-items: center;
+								backdrop-filter: blur(4px);
 
-								svg {
-									fill: var(--sc-color-white) !important;
+								&::before {
+									content: '';
+									display: inline-block;
+									width: 0;
+									height: 0;
+									border-left: 18px solid
+										var(--sc-color-white);
+									border-top: 12px solid transparent;
+									border-bottom: 12px solid transparent;
+									margin-left: 2px;
 								}
 							`}
-						>
-							<ScIcon
-								css={css`
-									width: 20px;
-									height: 30px;
-									color: var(--sc-color-white);
-								`}
-								name="play"
-							/>
-						</div>
+						/>
 					</div>
 				) : (
 					<img
