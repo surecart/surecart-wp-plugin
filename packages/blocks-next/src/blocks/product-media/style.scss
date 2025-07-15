@@ -1,43 +1,33 @@
-.wp-block-surecart-product-media {
-	img {
-		max-width: 100%;
-		height: auto;
-	}
+:root {
+	--sc-video-play-button-size: 60px;
+	--sc-video-play-button-size-thumb: 20px;
+	--sc-video-play-button-color: #111827;
+}
 
+.wp-block-surecart-product-media {
+	text-align: center;
+
+	img,
 	video {
 		max-width: 100%;
 		height: auto;
 	}
 }
 
-.wp-block-surecart-product-media {
-	text-align: center;
-}
-
-/* Video container and thumbnail styles */
 .sc-video-container {
+	position: relative;
 	width: 100%;
 	max-width: 100%;
 	overflow: hidden;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	position: relative;
 
 	[hidden] {
-		display: none;
+		display: none !important;
 	}
 
-	img {
-		cursor: pointer;
-		transition: opacity 0.3s ease;
-
-		&:hover {
-			opacity: 0.8;
-		}
-	}
-
-	video {
+	.sc-video-player {
 		width: 100%;
 		height: auto;
 		max-width: 100%;
@@ -45,70 +35,10 @@
 		object-fit: contain;
 		background-color: #000;
 	}
-
-	> div {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-
-		&[hidden] {
-			display: none;
-		}
-	}
-
-	/* Custom video play button for MediaElement videos */
-	.sc-video-play-button {
-		position: absolute;
-		align-items: center;
-		justify-content: center;
-		width: 60px;
-		height: 60px;
-		background-color: rgba(255, 255, 255, 0.9);
-		border-radius: 50%;
-		z-index: 10;
-		transition: all 0.2s ease;
-		cursor: pointer;
-		backdrop-filter: blur(4px);
-		border: 2px solid rgba(255, 255, 255, 0.3);
-
-		// Add a play button icon
-		&::before {
-			content: "";
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			width: 0;
-			height: 0;
-			border-left: 18px solid #111827;
-			border-top: 12px solid transparent;
-			border-bottom: 12px solid transparent;
-			margin: 16px 20px 20px 22px;
-		}
-
-		/* Hover effect */
-		&:hover {
-			transform: scale(1.1);
-			background-color: rgba(255, 255, 255, 1);
-			box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-		}
-
-		/* Focus styles for accessibility */
-		&:focus {
-			outline: 2px solid #2563eb;
-			outline-offset: 2px;
-		}
-	}
 }
 
-.swiper-slide:has(.sc-video-container) {
-	grid-column: span 2;
-}
-
-.swiper-slide .sc-video-container .wp-video {
-	margin-bottom: 0;
-}
-
-.sc-video-thumbnail {
+.sc-video-thumbnail,
+.sc-video-overlay {
 	position: relative;
 	width: 100%;
 	height: 100%;
@@ -122,64 +52,99 @@
 		width: 100%;
 		height: 100%;
 		object-fit: cover;
+		transition: opacity 0.3s ease;
+
+		&:hover {
+			opacity: 0.8;
+		}
 	}
 
-	.sc-video-play-button {
+	&:hover::after {
+		content: "";
 		position: absolute;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		width: 20px;
-		height: 20px;
-		background-color: #fff;
-		border-radius: 50%;
-		z-index: 2;
-		transition: all 0.2s ease;
-		left: 5px;
-		bottom: 5px;
-
-		svg {
-			width: 14px;
-			height: 14px;
-			fill: currentColor;
-		}
-
-		// Add a play button icon.
-		&::before {
-			content: "";
-			display: inline-block;
-			width: 0;
-			height: 0;
-			border-left: 8px solid #111827;
-			border-top: 5px solid transparent;
-			border-bottom: 5px solid transparent;
-			margin-left: 2px;
-		}
-	}
-
-	/* Hover effect */
-	&:hover {
-		.sc-video-play-button {
-			transform: scale(1.1);
-			background-color: #ffffff;
-		}
-
-		&::after {
-			content: "";
-			position: absolute;
-			top: 0;
-			left: 0;
-			right: 0;
-			bottom: 0;
-			background: rgba(0, 0, 0, 0.2);
-			pointer-events: none;
-		}
+		inset: 0;
+		pointer-events: none;
 	}
 }
 
-// Ensure videos work properly in Swiper slides.
+@mixin play-button-icon($size: 18px, $offset: 2px) {
+	content: "";
+	display: inline-block;
+	width: 0;
+	height: 0;
+	border-left: $size solid var(--sc-video-play-button-color);
+	border-top: calc($size * 0.67) solid transparent;
+	border-bottom: calc($size * 0.67) solid transparent;
+	margin-left: $offset;
+}
+
+.sc-video-play-button {
+	position: absolute;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: var(--sc-video-play-button-size);
+	height: var(--sc-video-play-button-size);
+	background-color: rgba(255, 255, 255, 0.9);
+	border-radius: 50%;
+	z-index: 10;
+	transition: all 0.2s ease;
+	cursor: pointer;
+	backdrop-filter: blur(4px);
+	border: 2px solid var(--sc-color-gray-200);
+
+	&::before {
+		@include play-button-icon();
+	}
+
+	&:hover {
+		transform: scale(1.1);
+		background-color: rgba(255, 255, 255, 1);
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+	}
+
+	&:focus {
+		outline: 3px auto rgb(90 90 90 / 25%);
+		outline: 3px auto -webkit-focus-ring-color;
+		outline-offset: 3px;
+	}
+}
+
+// Thumbnail specific play button.
+.sc-video-thumbnail .sc-video-play-button {
+	--sc-video-play-button-size: var(--sc-video-play-button-size-thumb);
+	left: 5px;
+	bottom: 5px;
+	border: 1px solid rgba(255, 255, 255, 0.3);
+	backdrop-filter: none;
+
+	&::before {
+		@include play-button-icon(8px, 2px);
+	}
+}
+
+// Overlay specific play button.
+.sc-video-overlay .sc-video-play-button {
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+
+	&:hover {
+		transform: translate(-50%, -50%) scale(1.1);
+	}
+}
+
+// Swiper Integration.
 .swiper-slide {
+	&:has(.sc-video-container) {
+		grid-column: span 2;
+	}
+
 	.sc-video-container {
 		height: 100%;
+
+		.wp-video {
+			margin-bottom: 0;
+		}
 	}
 }

@@ -120,9 +120,7 @@ class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 			return $html;
 		}
 
-		// For main display, handle video attachments.
 		$video_url = wp_get_attachment_url( $this->item->ID );
-
 		ob_start();
 		?>
 		<div class="sc-video-container"
@@ -131,7 +129,7 @@ class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 			data-wp-on--click="actions.playVideo"
 			style="aspect-ratio: <?php echo esc_attr( $this->item->aspect_ratio ?? '' ); ?>;">
 			
-			<div data-wp-bind--hidden="context.isVideoPressed" style="cursor: pointer;">
+			<div class="sc-video-overlay" data-wp-bind--hidden="context.isVideoPressed">
 				<img
 					src="<?php echo esc_url( $video_thumbnail_url ); ?>"
 					alt="<?php echo esc_attr__( 'Video thumbnail', 'surecart' ); ?>"
@@ -141,9 +139,10 @@ class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 			
 			<?php
 			echo apply_filters(
-				'surecart_video_html',
+				'surecart_product_video_html',
 				sprintf(
 					'<video
+						class="sc-video-player"
 						data-wp-bind--hidden="!context.isVideoPressed"
 						src="%s"
 						poster="%s"
@@ -152,7 +151,6 @@ class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 						controls
 						playsinline
 						preload="metadata"
-						class="wp-video-shortcode"
 					></video>',
 					esc_url( $video_url ),
 					esc_url( $video_thumbnail_url )
