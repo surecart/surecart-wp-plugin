@@ -4,7 +4,6 @@ import { ScIcon, ScTag } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 import Download from './Download';
 import { SortableKnob } from 'react-easy-sort';
-import { isVideoMedia } from '../../../util/attachments';
 
 export default ({ productMedia, onDeleteImage, onDownloaded, isFeatured }) => {
 	return (
@@ -40,7 +39,6 @@ export default ({ productMedia, onDeleteImage, onDownloaded, isFeatured }) => {
 						position: absolute;
 						top: 5px;
 						left: 5px;
-						z-index: 10;
 					`}
 				>
 					{__('Featured', 'surecart')}
@@ -72,7 +70,6 @@ export default ({ productMedia, onDeleteImage, onDownloaded, isFeatured }) => {
 					bottom: 4px;
 					right: 4px;
 					line-height: 0;
-					z-index: 10;
 				`}
 				media={productMedia}
 				onDownloaded={onDownloaded}
@@ -93,66 +90,21 @@ export default ({ productMedia, onDeleteImage, onDownloaded, isFeatured }) => {
 				></div>
 			</SortableKnob>
 
-			{productMedia?.url || productMedia?.media?.url ? (
-				isVideoMedia(productMedia) ? (
-					<div
-						css={css`
-							display: flex;
-							align-items: center;
-							justify-content: center;
-							height: 100%;
-							width: 100%;
-							position: relative;
-						`}
-					>
-						<video
-							css={css`
-								max-width: 100%;
-								max-height: 100%;
-								object-fit: contain;
-								border-radius: var(--sc-border-radius-medium);
-								pointer-events: none;
-							`}
-							src={productMedia?.url || productMedia?.media?.url}
-							muted
-							loop
-							autoPlay
-							playsInline
-						/>
-						<ScIcon
-							css={css`
-								position: absolute;
-								color: var(--sc-color-white);
-								background-color: rgba(0, 0, 0, 0.5);
-								border-radius: 50%;
-								padding: var(--sc-spacing-small);
-								width: 40px;
-								height: 40px;
-								z-index: 10;
-							`}
-							name="play"
-						/>
-					</div>
-				) : (
-					<img
-						src={productMedia?.url || productMedia?.media?.url}
-						css={css`
-							max-width: 100%;
-							aspect-ratio: 1 / 1;
-							object-fit: contain;
-							height: auto;
-							display: block;
-							border-radius: var(--sc-border-radius-medium);
-							pointer-events: none;
-						`}
-						alt={productMedia?.media?.alt}
-						{...(productMedia?.title
-							? { title: productMedia?.title }
-							: {})}
-						loading="lazy"
-					/>
-				)
-			) : null}
+			<img
+				src={productMedia?.url || productMedia?.media?.url}
+				css={css`
+					max-width: 100%;
+					aspect-ratio: 1 / 1;
+					object-fit: contain;
+					height: auto;
+					display: block;
+					border-radius: var(--sc-border-radius-medium);
+					pointer-events: none;
+				`}
+				alt={productMedia?.media?.alt}
+				{...(productMedia?.title ? { title: productMedia?.title } : {})}
+				loading="lazy"
+			/>
 		</div>
 	);
 };

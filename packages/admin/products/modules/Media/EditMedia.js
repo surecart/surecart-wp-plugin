@@ -9,7 +9,7 @@ import { closeSmall, edit } from '@wordpress/icons';
 /**
  * Internal dependencies.
  */
-import MediaDisplayPreview from './MediaDisplayPreview';
+import WordPressMediaFullPreview from './WordPressMediaFullPreview';
 import VideoThumbnail from './VideoThumbnail';
 import Error from '../../../components/Error';
 import {
@@ -21,7 +21,7 @@ import {
 } from '@surecart/components-react';
 import {
 	normalizeMedia,
-	isVideoMedia,
+	isVideo,
 	normalizeGalleryItem,
 	createGalleryItem,
 } from '../../../util/attachments';
@@ -128,72 +128,55 @@ export default ({ media, product, onSave, open, onRequestClose }) => {
 							label={__('Select Media', 'surecart')}
 							required
 						>
-							{!!mediaData?.id && (
+							{typeof mediaData?.id !== 'string' && (
 								<>
-									{typeof mediaData?.id === 'string' ? (
-										<div>Handle Product Media</div>
-									) : (
-										<>
-											<MediaDisplayPreview
-												media={mediaData}
-											/>
+									<WordPressMediaFullPreview
+										media={mediaData}
+									/>
 
-											<div
-												css={css`
-													display: flex;
-													justify-content: flex-end;
-													align-items: center;
-													gap: var(
-														--sc-spacing-x-small
-													);
-													margin: var(
-															--sc-spacing-small
-														)
-														0px;
-												`}
-											>
-												<MediaUpload
-													addToGallery={false}
-													multiple={false}
-													value={mediaData?.id ?? ''}
-													onSelect={selectMedia}
-													allowedTypes={
-														ALLOWED_MEDIA_TYPES
-													}
-													onClose={() => {}}
-													render={({ open }) => (
-														<Button
-															onClick={open}
-															icon={edit}
-															variant="secondary"
-														>
-															{__(
-																'Change',
-																'surecart'
-															)}
-														</Button>
-													)}
-												/>
-
+									<div
+										css={css`
+											display: flex;
+											justify-content: flex-end;
+											align-items: center;
+											gap: var(--sc-spacing-x-small);
+											margin: var(--sc-spacing-small) 0px;
+										`}
+									>
+										<MediaUpload
+											addToGallery={false}
+											multiple={false}
+											value={mediaData?.id ?? ''}
+											onSelect={selectMedia}
+											allowedTypes={ALLOWED_MEDIA_TYPES}
+											onClose={() => {}}
+											render={({ open }) => (
 												<Button
-													icon={closeSmall}
+													onClick={open}
+													icon={edit}
 													variant="secondary"
-													onClick={() => {
-														setMediaData(null);
-														setFormData({
-															variant_option: '',
-															thumbnail_image:
-																null,
-															aspect_ratio: '',
-														});
-													}}
-													isDestructive
 												>
-													{__('Remove', 'surecart')}
+													{__('Change', 'surecart')}
 												</Button>
-											</div>
-										</>
-									)}
+											)}
+										/>
+
+										<Button
+											icon={closeSmall}
+											variant="secondary"
+											onClick={() => {
+												setMediaData(null);
+												setFormData({
+													variant_option: '',
+													thumbnail_image: null,
+													aspect_ratio: '',
+												});
+											}}
+											isDestructive
+										>
+											{__('Remove', 'surecart')}
+										</Button>
+									</div>
 								</>
 							)}
 
@@ -249,7 +232,7 @@ export default ({ media, product, onSave, open, onRequestClose }) => {
 									</ScFormControl>
 								)}
 
-								{isVideoMedia(mediaData) && (
+								{isVideo(mediaData) && (
 									<VideoThumbnail
 										thumbnailImage={
 											formData.thumbnail_image

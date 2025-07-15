@@ -21,173 +21,44 @@ class GalleryItemProductMedia extends ModelsGalleryItem implements GalleryItem {
 	}
 
 	/**
-	 * Generate a reliable thumbnail for video.
-	 *
-	 * @return string The thumbnail URL
-	 */
-	public function get_video_thumbnail_url() {
-		// First check if we have a thumbnail image from gallery properties.
-		$thumbnail_image = $this->getThumbnailImageAttribute();
-		if ( ! empty( $thumbnail_image['url'] ) ) {
-			return $thumbnail_image['url'];
-		}
-
-		// If we have a media object with a thumbnail.
-		if ( isset( $this->item->media ) && isset( $this->item->media->thumbnail_url ) ) {
-			return $this->item->media->thumbnail_url;
-		}
-
-		// Check if this is an attachment and has a featured image.
-		if ( isset( $this->item->media ) && isset( $this->item->media->id ) ) {
-			$attachment_id = $this->item->media->id;
-			if ( is_numeric( $attachment_id ) ) {
-				// Get the featured image of the attachment.
-				$thumbnail_id = get_post_thumbnail_id( $attachment_id );
-				if ( $thumbnail_id ) {
-					$thumbnail_url = wp_get_attachment_url( $thumbnail_id );
-					if ( $thumbnail_url ) {
-						return $thumbnail_url;
-					}
-				}
-			}
-		}
-
-		// Check if the product has a featured image.
-		if ( isset( $this->item->product ) && is_string( $this->item->product ) ) {
-			// Get the product post ID from the product ID.
-			$product_posts = get_posts(
-				[
-					'post_type'      => 'sc_product',
-					'meta_query'     => [
-						[
-							'key'   => 'sc_id',
-							'value' => $this->item->product,
-						],
-					],
-					'posts_per_page' => 1,
-				]
-			);
-
-			if ( ! empty( $product_posts ) ) {
-				$product_post_id = $product_posts[0]->ID;
-				$thumbnail_id    = get_post_thumbnail_id( $product_post_id );
-				if ( $thumbnail_id ) {
-					$thumbnail_url = wp_get_attachment_url( $thumbnail_id );
-					if ( $thumbnail_url ) {
-						return $thumbnail_url;
-					}
-				}
-			}
-		}
-
-		// Fallback to a default product placeholder image.
-		return esc_url_raw( trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'images/placeholder.jpg' );
-	}
-
-	/**
 	 * Get the media attribute markup.
 	 *
 	 * @param string $size The size of the image.
 	 * @param array  $attr The attributes for the tag.
-	 * @param array  $metadata Additional metadata for the media.
 	 *
 	 * @return string
 	 */
 	public function html( $size = 'full', $attr = array(), $metadata = array() ): string {
-		$media_html = '';
-		$is_video   = false;
+		$image = '';
 
-		// Check if this is a video.
-		if ( isset( $this->item->media ) && isset( $this->item->media->mime_type ) && strpos( $this->item->media->mime_type, 'video' ) !== false ) {
-			$is_video = true;
-		} elseif ( isset( $this->item->url ) ) {
-			$file_extension = pathinfo( $this->item->url, PATHINFO_EXTENSION );
-			if ( in_array( strtolower( $file_extension ), [ 'mp4', 'webm', 'ogg' ], true ) ) {
-				$is_video = true;
-			}
+		// Handle media.
+		if ( isset( $this->item->media ) ) {
+			return $this->item->media->html( $size, $attr );
 		}
 
-		// Handle media based on type.
-		if ( $is_video ) {
-			if ( 'thumbnail' === $size ) {
-				$thumbnail_url = $this->get_video_thumbnail_url();
-				$attributes    = $this->attributes( $size, $attr );
-
-				$media_html  = '<div class="sc-video-thumbnail">';
-				$media_html .= '<img src="' . esc_url( $thumbnail_url ) . '" class="' . esc_attr( $attributes->class ) . '" alt="' . esc_attr__( 'Video thumbnail', 'surecart' ) . '"/>';
-				$media_html .= '<div class="sc-video-play-button"></div>';
-				$media_html .= '</div>';
-
-				return $media_html;
-			}
-
-			// Video handling for main display.
-			$src        = isset( $this->item->media ) ? $this->item->media->url : $this->item->url;
+		// Handle media url.
+		if ( isset( $this->item->url ) ) {
 			$attributes = $this->attributes( $size, $attr );
 
-			// Build video tag.
-			$media_html  = '<div class="sc-video-container">';
-			$media_html .= '<video';
-
-			// Add common attributes.
-			$media_html .= ' src="' . esc_url( $src ) . '"';
-			$media_html .= ' controls';
-			$media_html .= ' playsinline';
-			$media_html .= ' class="' . esc_attr( $attributes->class ) . '"';
-
-			// Add style if provided.
-			if ( ! empty( $attr['style'] ) ) {
-				$media_html .= ' style="' . esc_attr( $attr['style'] ) . '"';
+			// build the image tag.
+			$image = '<img';
+			foreach ( $attributes as $key => $value ) {
+				$image .= sprintf( ' %s="%s"', $key, esc_attr( $value ) );
 			}
-
-			// Add loading attribute if provided.
-			if ( ! empty( $attr['loading'] ) ) {
-				$media_html .= ' loading="' . esc_attr( $attr['loading'] ) . '"';
-			}
-
-			// Add poster (thumbnail).
-			$thumbnail_url = $this->get_video_thumbnail_url();
-			if ( $thumbnail_url ) {
-				$media_html .= ' poster="' . esc_url( $thumbnail_url ) . '"';
-			}
-
-			// Close video tag.
-			$media_html .= '></video>';
-			$media_html .= '</div>';
-		} else {
-			// Handle media for images.
-			if ( isset( $this->item->media ) ) {
-				return $this->item->media->html( $size, $attr );
-			}
-
-			// Handle media url for images.
-			if ( isset( $this->item->url ) ) {
-				$attributes = $this->attributes( $size, $attr );
-
-				// build the image tag.
-				$media_html = '<img';
-				foreach ( $attributes as $key => $value ) {
-					$media_html .= sprintf( ' %s="%s"', $key, esc_attr( $value ) );
-				}
-				$media_html .= ' />';
-			}
+			$image .= ' />';
 		}
 
 		// add any styles.
-		$tags = new \WP_HTML_Tag_Processor( $media_html );
+		$tags = new \WP_HTML_Tag_Processor( $image );
 
 		// add inline styles.
 		if ( ! empty( $attr['style'] ) ) {
-			if ( $is_video ) {
-				if ( $tags->next_tag( 'video' ) ) {
-					$tags->set_attribute( 'style', $attr['style'] );
-				}
-			} elseif ( $tags->next_tag( 'img' ) ) {
-					$tags->set_attribute( 'style', $attr['style'] );
+			if ( $tags->next_tag( 'img' ) && ! empty( $attr['style'] ) ) {
+				$tags->set_attribute( 'style', $attr['style'] );
 			}
 		}
 
-		if ( $this->with_lightbox && ! $is_video ) {
+		if ( $this->with_lightbox ) {
 			$this->with_lightbox = false; // reset to false.
 
 			// get the image data.
@@ -257,28 +128,6 @@ class GalleryItemProductMedia extends ModelsGalleryItem implements GalleryItem {
 	 * @return object
 	 */
 	public function attributes( $size = 'full', $attr = array() ) {
-		// Check if this is a video.
-		$is_video = false;
-		if ( isset( $this->item->media ) && isset( $this->item->media->mime_type ) && strpos( $this->item->media->mime_type, 'video' ) !== false ) {
-			$is_video = true;
-		} elseif ( isset( $this->item->url ) ) {
-			$file_extension = pathinfo( $this->item->url, PATHINFO_EXTENSION );
-			if ( in_array( strtolower( $file_extension ), [ 'mp4', 'webm', 'ogg' ] ) ) {
-				$is_video = true;
-			}
-		}
-
-		if ( $is_video ) {
-			$attachment_class = 'attachment-' . $size . ' size-' . $size . ' video-attachment';
-
-			return (object) array(
-				'src'      => $this->get_video_thumbnail_url(),
-				'class'    => $attachment_class . ' ' . ( ! empty( $attr['class'] ) ? $attr['class'] : '' ),
-				'alt'      => get_the_title(),
-				'is_video' => true,
-			);
-		}
-
 		if ( isset( $this->item->media ) ) {
 			return $this->item->media->attributes( $size, $attr );
 		}

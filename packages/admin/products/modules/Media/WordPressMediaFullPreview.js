@@ -1,10 +1,13 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { ScIcon, ScSkeleton } from '@surecart/components-react';
+
+/**
+ * Internal dependencies.
+ */
+import { ScSkeleton } from '@surecart/components-react';
+import { isVideo } from '../../../util/attachments';
 
 export default ({ media }) => {
-	const isVideo = media?.mime_type?.includes('video');
-
 	const renderVideo = () => {
 		return (
 			<div
@@ -27,14 +30,7 @@ export default ({ media }) => {
 						pointer-events: none;
 					`}
 					src={media?.source_url}
-					muted
-					loop
-					playsInline
-					{...(media?.thumb?.src
-						? {
-								poster: media?.thumb?.src,
-						  }
-						: {})}
+					preload="metadata"
 				>
 					<source type={media?.mime} src={media?.source_url} />
 				</video>
@@ -50,21 +46,20 @@ export default ({ media }) => {
 						display: flex;
 						justify-content: center;
 						align-items: center;
+						backdrop-filter: blur(4px);
 
-						svg {
-							fill: var(--sc-color-white) !important;
+						&::before {
+							content: '';
+							display: inline-block;
+							width: 0;
+							height: 0;
+							border-left: 18px solid var(--sc-color-white);
+							border-top: 12px solid transparent;
+							border-bottom: 12px solid transparent;
+							margin-left: 2px;
 						}
 					`}
-				>
-					<ScIcon
-						css={css`
-							width: 20px;
-							height: 30px;
-							color: var(--sc-color-white);
-						`}
-						name="play"
-					/>
-				</div>
+				/>
 			</div>
 		);
 	};
@@ -96,6 +91,21 @@ export default ({ media }) => {
 		);
 	};
 
+	const renderMedia = () => {
+		if (!media?.source_url) {
+			return (
+				<ScSkeleton
+					style={{
+						aspectRatio: '1 / 1',
+						'--border-radius': 'var(--sc-border-radius-medium)',
+					}}
+				/>
+			);
+		}
+
+		return isVideo(media) ? renderVideo() : renderImage();
+	};
+
 	return (
 		<div
 			className="media-display-preview"
@@ -111,20 +121,7 @@ export default ({ media }) => {
 				align-items: center;
 			`}
 		>
-			{media?.source_url ? (
-				isVideo ? (
-					renderVideo()
-				) : (
-					renderImage()
-				)
-			) : (
-				<ScSkeleton
-					style={{
-						aspectRatio: '1 / 1',
-						'--border-radius': 'var(--sc-border-radius-medium)',
-					}}
-				/>
-			)}
+			{renderMedia()}
 		</div>
 	);
 };
