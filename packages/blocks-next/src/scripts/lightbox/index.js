@@ -195,6 +195,11 @@ const { state, actions, callbacks } = store('surecart/lightbox', {
 				const metadata = state?.metadata[id];
 				const imageRef = metadata?.imageRef;
 
+				// Don't show the lightbox if the image is not loaded or its a video.
+				if (!imageRef) {
+					return false;
+				}
+
 				// Check if image exists and check visibility of image and all its parents
 				const isVisible =
 					imageRef &&
