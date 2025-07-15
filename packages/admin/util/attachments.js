@@ -217,7 +217,7 @@ export const generateVideoThumbnail = async (videoMedia, seekTime = 1) => {
  *
  * @returns {boolean}
  */
-export const isVideoMedia = (media) =>
+export const isVideo = (media) =>
 	(media?.mime_type || media?.mime)?.includes('video');
 
 /**

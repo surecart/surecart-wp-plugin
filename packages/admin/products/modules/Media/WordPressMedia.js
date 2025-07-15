@@ -8,7 +8,7 @@ import { MediaUpload } from '@wordpress/block-editor';
 import { Notice } from '@wordpress/components';
 import { useDispatch } from '@wordpress/data';
 import { SortableKnob } from 'react-easy-sort';
-import { isVideoMedia } from '../../../util/attachments';
+import { isVideo } from '../../../util/attachments';
 const ALLOWED_MEDIA_TYPES = ['image', 'video'];
 
 export default ({
@@ -19,7 +19,6 @@ export default ({
 	isFeatured,
 	onSelect,
 	onEditMedia,
-	onUpdateItem,
 }) => {
 	const { invalidateResolution } = useDispatch(coreStore);
 
@@ -30,18 +29,6 @@ export default ({
 				'getMedia',
 				[id]
 			),
-		};
-	});
-
-	const { featuredMedia } = useSelect((select) => {
-		if (!media?.featured_media) {
-			return {
-				featuredMedia: null,
-			};
-		}
-
-		return {
-			featuredMedia: select(coreStore).getMedia(media?.featured_media),
 		};
 	});
 
@@ -232,7 +219,7 @@ export default ({
 			</SortableKnob>
 
 			{media?.source_url ? (
-				isVideoMedia(media) ? (
+				isVideo(media) ? (
 					<div
 						css={css`
 							display: flex;

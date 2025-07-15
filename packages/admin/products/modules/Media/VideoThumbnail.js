@@ -119,7 +119,8 @@ export default ({
 				>
 					<div
 						css={css`
-							width: 100px;
+							width: auto;
+							max-width: 100px;
 							overflow: hidden;
 						`}
 					>
