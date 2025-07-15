@@ -118,7 +118,7 @@ export default ({
 							removeRuleGroup={() => {
 								// if there's only one and group, remove the entire or group
 								if (orGroup?.length === 1) {
-									updateRuleQuery([]);
+									removeRuleGroup();
 									return;
 								}
 
