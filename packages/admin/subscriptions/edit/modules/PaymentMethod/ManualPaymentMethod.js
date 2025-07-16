@@ -44,11 +44,9 @@ export default ({ subscription, loading, setEdit }) => {
 				style={{ gap: '0.5em' }}
 			>
 				<ScManualPaymentMethod paymentMethod={payment_method} />
-				{!subscription?.price_readonly && (
-					<ScButton type="text" circle onClick={() => setEdit(true)}>
-						<ScIcon name="edit-2" />
-					</ScButton>
-				)}
+				<ScButton type="text" circle onClick={() => setEdit(true)}>
+					<ScIcon name="edit-2" />
+				</ScButton>
 			</ScFlex>
 		</ScCard>
 	);
