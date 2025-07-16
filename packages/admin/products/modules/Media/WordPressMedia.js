@@ -144,7 +144,7 @@ export default ({
 						}
 					`}
 				>
-					{item.variant_option}
+					{item?.variant_option || media?.meta?.sc_variant_option}
 				</ScTag>
 			)}
 

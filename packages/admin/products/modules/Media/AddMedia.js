@@ -4,13 +4,27 @@ import { ScFlex, ScTag } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 const ALLOWED_MEDIA_TYPES = ['image', 'video'];
 import { MediaUpload } from '@wordpress/media-utils';
+import { getGalleryItemId, createGalleryItem } from '../../../util/attachments';
 
 export default ({ value, onSelect, ...rest }) => {
+	const handleSelect = (media) => {
+		const existingIds = (value || []).map(getGalleryItemId);
+		const newMedia = (media || []).filter(
+			({ id }) => !existingIds.includes(id)
+		);
+
+		// Preserve existing gallery items and add new ones as objects.
+		const newGalleryItems = newMedia.map(({ id }) => createGalleryItem(id));
+		const updatedGallery = [...(value || []), ...newGalleryItems];
+
+		onSelect(updatedGallery);
+	};
+
 	return (
 		<MediaUpload
 			title={__('Select Media', 'surecart')}
-			onSelect={onSelect}
-			value={value}
+			onSelect={handleSelect}
+			value={(value || []).map(getGalleryItemId)}
 			multiple={'add'}
 			allowedTypes={ALLOWED_MEDIA_TYPES}
 			render={({ open }) => (

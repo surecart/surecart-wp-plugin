@@ -55,7 +55,9 @@ export default ({ productId, product, updateProduct }) => {
 
 	const onRemoveMedia = (id) =>
 		updateGalleryIds(
-			(product?.gallery_ids || []).filter((item) => getGalleryItemId(item) !== id)
+			(product?.gallery_ids || []).filter(
+				(item) => getGalleryItemId(item) !== id
+			)
 		);
 
 	const onSwapMedia = (oldId, newId) => {
@@ -68,8 +70,10 @@ export default ({ productId, product, updateProduct }) => {
 
 		const gallery_ids = [...(product?.gallery_ids || [])];
 		// find the index of the old id
-		const index = gallery_ids.findIndex((item) => getGalleryItemId(item) === oldId);
-		
+		const index = gallery_ids.findIndex(
+			(item) => getGalleryItemId(item) === oldId
+		);
+
 		if (index === -1) return;
 
 		// Get the existing item and preserve its properties while updating the ID
@@ -133,8 +137,11 @@ export default ({ productId, product, updateProduct }) => {
 										item={item}
 										product={product}
 										isNew={
-											!savedProduct?.gallery_ids?.some(savedItem => 
-												getGalleryItemId(savedItem) === itemId
+											!savedProduct?.gallery_ids?.some(
+												(savedItem) =>
+													getGalleryItemId(
+														savedItem
+													) === itemId
 											)
 										}
 										updateProduct={updateProduct}
@@ -146,17 +153,26 @@ export default ({ productId, product, updateProduct }) => {
 										onEditMedia={(media) => {
 											setSelectedMedia({
 												...media,
-												...(typeof item === 'object' ? item : {}),
+												...(typeof item === 'object'
+													? item
+													: {}),
 											});
 											setCurrentModal(modals.EDIT_MEDIA);
 										}}
 										onUpdateItem={(updatedItem) => {
-											const gallery_ids = [...(product?.gallery_ids || [])];
-											const updateIndex = gallery_ids.findIndex(galleryItem => 
-												getGalleryItemId(galleryItem) === itemId
-											);
+											const gallery_ids = [
+												...(product?.gallery_ids || []),
+											];
+											const updateIndex =
+												gallery_ids.findIndex(
+													(galleryItem) =>
+														getGalleryItemId(
+															galleryItem
+														) === itemId
+												);
 											if (updateIndex !== -1) {
-												gallery_ids[updateIndex] = updatedItem;
+												gallery_ids[updateIndex] =
+													updatedItem;
 												updateGalleryIds(gallery_ids);
 											}
 										}}
@@ -176,9 +192,8 @@ export default ({ productId, product, updateProduct }) => {
 							}
 						})
 					}
-					onSelect={(media) => {
-						const gallery_ids = (media || []).map(({ id }) => createGalleryItem(id));
-						updateGalleryIds(gallery_ids);
+					onSelect={(updatedGallery) => {
+						updateGalleryIds(updatedGallery);
 					}}
 				/>
 			</SortableList>
@@ -200,17 +215,21 @@ export default ({ productId, product, updateProduct }) => {
 				onSave={(updatedItem) => {
 					// Update the gallery with the new item data
 					const gallery_ids = [...(product?.gallery_ids || [])];
-					const updateIndex = gallery_ids.findIndex(item => 
-						getGalleryItemId(item) === getGalleryItemId(selectedMedia)
+					const updateIndex = gallery_ids.findIndex(
+						(item) =>
+							getGalleryItemId(item) ===
+							getGalleryItemId(selectedMedia)
 					);
-					
+
 					if (updateIndex !== -1) {
 						gallery_ids[updateIndex] = updatedItem;
 						updateGalleryIds(gallery_ids);
 					}
-					
+
 					// Invalidate cache for the media
-					invalidateResolution('getMedia', [getGalleryItemId(updatedItem)]);
+					invalidateResolution('getMedia', [
+						getGalleryItemId(updatedItem),
+					]);
 					setCurrentModal('');
 					setSelectedMedia(null);
 				}}
