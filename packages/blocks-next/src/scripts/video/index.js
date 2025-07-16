@@ -9,8 +9,8 @@ store('surecart/video', {
 			const context = getContext();
 			const { ref } = getElement();
 
-			// If video is already playing, do nothing.
-			if (context.isVideoPressed) {
+			// If this video is already playing, do nothing.
+			if (context.isVideoPlaying) {
 				return;
 			}
 
@@ -24,7 +24,7 @@ store('surecart/video', {
 						console.error('Error playing video:', error);
 					})
 					.finally(() => {
-						context.isVideoPressed = true;
+						context.isVideoPlaying = true;
 					});
 			}
 		},

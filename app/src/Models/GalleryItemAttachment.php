@@ -125,11 +125,11 @@ class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 		?>
 		<div class="sc-video-container"
 			data-wp-interactive='{ "namespace": "surecart/video" }'
-			data-wp-context='{ "isVideoPressed": false }'
+			data-wp-context='{ "isVideoPlaying": false }'
 			data-wp-on--click="actions.playVideo"
 			style="aspect-ratio: <?php echo esc_attr( $this->item->aspect_ratio ?? '' ); ?>;">
 			
-			<div class="sc-video-overlay" data-wp-bind--hidden="context.isVideoPressed">
+			<div class="sc-video-overlay" data-wp-bind--hidden="context.isVideoPlaying">
 				<img
 					src="<?php echo esc_url( $video_thumbnail_url ); ?>"
 					alt="<?php echo esc_attr__( 'Video thumbnail', 'surecart' ); ?>"
@@ -143,7 +143,7 @@ class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 				sprintf(
 					'<video
 						class="sc-video-player"
-						data-wp-bind--hidden="!context.isVideoPressed"
+						data-wp-bind--hidden="!context.isVideoPlaying"
 						src="%s"
 						poster="%s"
 						loop
