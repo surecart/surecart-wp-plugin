@@ -16,6 +16,7 @@ declare global {
       apiFetch: any;
       blocks: any;
       i18n: any;
+      hooks: any;
     };
     dataLayer: any;
     gtag: any;
@@ -181,6 +182,7 @@ export interface Bump {
   filter_match_type: 'all' | 'any' | 'none';
   filters: any;
   metadata: any;
+  rendered_description: string;
   name: string;
   percent_off: number;
   price: string | Price;
@@ -522,7 +524,7 @@ export interface LineItem extends Object {
   variant?: Variant;
   locked: boolean;
   swap?: Swap;
-  can_swap: boolean;
+  is_swappable?: boolean;
 }
 
 export interface DeletedItem {

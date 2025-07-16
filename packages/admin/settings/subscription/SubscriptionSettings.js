@@ -166,7 +166,7 @@ export default () => {
 						)}
 						<span slot="description" style={{ lineHeight: '1.4' }}>
 							{__(
-								'When enabled, this feature prevents customers from cancelling their subscription on the customer dashboard until a set number of days before renewal.',
+								'The number of days prior to a subscription renewing that the cancel option will be visible to customers.',
 								'surecart'
 							)}
 						</span>
@@ -194,6 +194,37 @@ export default () => {
 						</span>
 					</ScInput>
 				)}
+			</SettingsBox>
+
+			<SettingsBox
+				title={__('Subscription Renewals', 'surecart')}
+				description={__(
+					'Manage your store subscription renewal behavior.',
+					'surecart'
+				)}
+				loading={!hasLoadedItem}
+			>
+				<ScInput
+					value={item?.remind_at_period_percent_remaining}
+					label={__('Subscription Renewal Reminders', 'surecart')}
+					type="number"
+					min="0"
+					max="100"
+					onScInput={(e) =>
+						editItem({
+							remind_at_period_percent_remaining: e.target.value,
+						})
+					}
+					help={__(
+						'Specify the percentage of the subscription period remaining when a reminder should be sent to customers. For instance, entering 25% will trigger the reminder when 25% of the period is left.',
+						'surecart'
+					)}
+					required
+				>
+					<span slot="suffix" style={{ opacity: '0.65' }}>
+						{__('% of Period Remaining', 'surecart')}
+					</span>
+				</ScInput>
 			</SettingsBox>
 
 			<SettingsBox

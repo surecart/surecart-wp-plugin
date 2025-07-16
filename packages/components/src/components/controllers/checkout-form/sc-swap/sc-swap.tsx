@@ -28,7 +28,7 @@ export class ScSwap {
   }
 
   render() {
-    if (!this?.lineItem?.price?.current_swap && !this?.lineItem?.swap) {
+    if (!this?.lineItem?.is_swappable) {
       return null;
     }
 
@@ -42,7 +42,7 @@ export class ScSwap {
         </sc-switch>
         {!!price?.display_amount && (
           <div class="swap__price">
-            {price?.display_amount} {price?.short_interval_text} {price?.interval_count_text}
+            {price?.display_amount} {price?.short_interval_text} {price?.short_interval_count_text}
           </div>
         )}
       </div>

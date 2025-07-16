@@ -6,6 +6,7 @@ use SureCart\Models\Traits\HasDates;
 use SureCart\Models\Traits\HasImageSizes;
 use SureCart\Models\Traits\HasPurchases;
 use SureCart\Models\Traits\HasCommissionStructure;
+use SureCart\Models\Traits\CanDuplicate;
 use SureCart\Support\Contracts\GalleryItem;
 use SureCart\Support\Contracts\PageModel;
 use SureCart\Support\Currency;
@@ -19,6 +20,9 @@ class Product extends Model implements PageModel {
 	use HasPurchases;
 	use HasCommissionStructure;
 	use HasDates;
+	use canDuplicate {
+		duplicate as protected originalDuplicate;
+	}
 
 	/**
 	 * These always need to be fetched during create/update in order to sync with post model.
@@ -195,6 +199,150 @@ class Product extends Model implements PageModel {
 
 		// return.
 		return $this;
+	}
+
+	/**
+	 * Duplicate the model.
+	 *
+	 * @param string $id The id of the model to duplicate.
+	 * @return $this|false
+	 */
+	protected function duplicate( $id = '' ) {
+		if ( $id ) {
+			$this->attributes['id'] = $id;
+		}
+
+		// get the post duplication data.
+		$duplication_data = $this->getPostDuplicationData();
+
+		// duplicate the model.
+		$duplicated = $this->originalDuplicate( $id );
+
+		// check for errors.
+		if ( is_wp_error( $duplicated ) ) {
+			return $duplicated;
+		}
+
+		// sync with the post.
+		$post = $this->sync();
+
+		// check for errors.
+		if ( is_wp_error( $post ) ) {
+			return $post;
+		}
+
+		// update the post duplication data.
+		$this->updatePostDuplicationData( $duplication_data );
+
+		return $this;
+	}
+
+	/**
+	 * Get the post duplication data.
+	 *
+	 * @return array|false
+	 */
+	public function getPostDuplicationData() {
+		// we don't have a post.
+		if ( empty( $this->post ) || empty( $this->post->ID ) ) {
+			return [];
+		}
+
+		// store post content before duplication.
+		$current_post_content = $this->post->post_content ?? '';
+
+		// store post meta before duplication.
+		$post_meta = $this->getPostMeta();
+
+		// store post taxonomies before duplication.
+		$taxonomy_names = get_post_taxonomies( $this->post->ID );
+		$taxonomy_terms = [];
+
+		// store post terms before duplication.
+		foreach ( $taxonomy_names as $taxonomy ) {
+			$terms = wp_get_object_terms( $this->post->ID, $taxonomy, [ 'fields' => 'ids' ] );
+			if ( ! empty( $terms ) ) {
+				$taxonomy_terms[ $taxonomy ] = $terms;
+			}
+		}
+
+		return [
+			'post_content'   => $current_post_content,
+			'post_meta'      => $post_meta,
+			'taxonomy_terms' => $taxonomy_terms,
+		];
+	}
+
+	/**
+	 * Update the post duplication data.
+	 *
+	 * @param array $post_data The post data.
+	 *
+	 * @return void
+	 */
+	public function updatePostDuplicationData( $post_data ) {
+		// we don't have a post.
+		if ( empty( $this->post ) || empty( $this->post->ID ) || empty( $post_data ) ) {
+			return;
+		}
+
+		// update the post content.
+		wp_update_post(
+			array(
+				'ID'           => $this->post->ID,
+				'post_content' => $post_data['post_content'],
+			)
+		);
+
+		$post_meta = $post_data['post_meta'] ?? array();
+
+		// update the post meta.
+		if ( ! empty( $post_meta ) ) {
+			foreach ( $post_meta as $meta ) {
+				$meta_value = maybe_unserialize( $meta->meta_value );
+				update_post_meta( $this->post->ID, $meta->meta_key, $meta_value );
+			}
+		}
+
+		$taxonomy_terms = $post_data['taxonomy_terms'] ?? array();
+
+		// update the post taxonomies.
+		if ( ! empty( $taxonomy_terms ) ) {
+			foreach ( $taxonomy_terms as $taxonomy => $terms ) {
+				if ( ! empty( $terms ) ) {
+					wp_set_object_terms( $this->post->ID, $terms, $taxonomy );
+				}
+			}
+		}
+	}
+
+	/**
+	 * Get post meta, excluding specific keys.
+	 *
+	 * @return array|false Array of meta_key/meta_value objects or false if no post.
+	 */
+	public function getPostMeta() {
+		$skip_keys = [
+			'_edit_lock',
+			'_edit_last',
+			'product',
+			'sc_id',
+			'_wp_trash_meta_status',
+			'_wp_trash_meta_time',
+		];
+
+		global $wpdb;
+
+		$placeholders = implode( ',', array_fill( 0, count( $skip_keys ), '%s' ) );
+
+		$not_in_clause = "AND meta_key NOT IN ($placeholders)";
+
+		return $wpdb->get_results(
+			$wpdb->prepare(
+				"SELECT meta_key, meta_value FROM {$wpdb->postmeta} WHERE post_id = %d $not_in_clause",
+				array_merge( [ $this->post->ID ], $skip_keys )
+			)
+		);
 	}
 
 	/**

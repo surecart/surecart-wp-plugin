@@ -111,6 +111,27 @@ class AdminURLService {
 	}
 
 	/**
+	 * Duplicate page url.
+	 *
+	 * @param string $name Model lowercase name.
+	 * @param string $id Model id.
+	 *
+	 * @return string URL for the page.
+	 */
+	public function duplicate( $name, $id ) {
+		return esc_url(
+			add_query_arg(
+				[
+					'action' => 'duplicate',
+					'nonce'  => wp_create_nonce( "duplicate_$name" ),
+					'id'     => $id,
+				],
+				$this->index( $name )
+			)
+		);
+	}
+
+	/**
 	 * Sync a specific model
 	 *
 	 * @param string $name Model lowercase name.

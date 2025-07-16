@@ -9,9 +9,21 @@
 	"providesContext": {
 		"surecart/product_id": "product_id"
 	},
+	"usesContext": [
+		"queryId",
+		"query",
+		"displayLayout",
+		"templateSlug",
+		"previewPostType",
+		"enhancedPagination",
+		"postType"
+	],
 	"attributes": {
 		"product_id": {
 			"type": "string"
+		},
+		"product_post_id": {
+			"type": "integer"
 		}
 	},
 	"supports": {
