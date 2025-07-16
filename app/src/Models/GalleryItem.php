@@ -199,31 +199,4 @@ abstract class GalleryItem implements ArrayAccess, JsonSerializable, Arrayable, 
 		$this->gallery_properties['aspect_ratio'] = $aspect_ratio;
 		return $this;
 	}
-
-	/**
-	 * Get the variant option.
-	 *
-	 * @return string|null
-	 */
-	public function getVariantOptionAttribute() {
-		return $this->gallery_properties['variant_option'] ?? null;
-	}
-
-	/**
-	 * Get the thumbnail image.
-	 *
-	 * @return array|null
-	 */
-	public function getThumbnailImageAttribute() {
-		return $this->gallery_properties['thumbnail_image'] ?? null;
-	}
-
-	/**
-	 * Get the aspect ratio.
-	 *
-	 * @return string|null
-	 */
-	public function getAspectRatioAttribute() {
-		return $this->gallery_properties['aspect_ratio'] ?? null;
-	}
 }

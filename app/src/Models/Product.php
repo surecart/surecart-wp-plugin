@@ -931,7 +931,7 @@ class Product extends Model implements PageModel {
 	 * @return void
 	 */
 	public function setGalleryIdsAttribute( $value ) {
-		$this->attributes['metadata']              = (object) ( $this->attributes['metadata'] ?? array() );
+		$this->attributes['metadata']              = (object) ( $this->attributes['metadata'] ?? [] );
 		$this->attributes['metadata']->gallery_ids = is_string( $value ) ? $value : wp_json_encode( $value );
 	}
 
@@ -966,37 +966,23 @@ class Product extends Model implements PageModel {
 						// Extract the ID from the gallery item (can be int or object).
 						$id = $this->getGalleryItemId( $gallery_item );
 
-						// Get additional properties if it's an object.
-						$variant_option  = null;
-						$thumbnail_image = null;
-						$aspect_ratio    = null;
-
-						if ( is_object( $gallery_item ) || is_array( $gallery_item ) ) {
-							$item_data       = (object) $gallery_item;
-							$variant_option  = $item_data->variant_option ?? null;
-							$thumbnail_image = $item_data->thumbnail_image ?? null;
-							$aspect_ratio    = $item_data->aspect_ratio ?? null;
-						}
-
 						// this is an attachment id.
 						if ( is_int( $id ) ) {
-							$gallery_item_attachment = new GalleryItemAttachment( $gallery_item, $product_featured_image_url );
+							$attachment = new GalleryItemAttachment( $gallery_item, $product_featured_image_url );
 
-							// Set additional properties if they exist.
-							if ( $variant_option || $thumbnail_image || $aspect_ratio ) {
-								$gallery_item_attachment->setVariantOption( $variant_option );
-								$gallery_item_attachment->setThumbnailImage( $thumbnail_image );
-								$gallery_item_attachment->setAspectRatio( $aspect_ratio );
+							if ( is_object( $gallery_item ) || is_array( $gallery_item ) ) {
+								$item = (object) $gallery_item;
+								$attachment->setVariantOption( $item->variant_option ?? null );
+								$attachment->setThumbnailImage( $item->thumbnail_image ?? null );
+								$attachment->setAspectRatio( $item->aspect_ratio ?? null );
 							}
 
-							return $gallery_item_attachment;
+							return $attachment;
 						}
 
 						// get the product media item that matches the id.
-						$product_medias = $this->getAttribute( 'product_medias' )->data ?? array();
-
 						$item = array_filter(
-							$product_medias,
+							$this->getAttribute( 'product_medias' )->data ?? array(),
 							function ( $item ) use ( $id ) {
 								return $item->id === $id;
 							}
@@ -1005,21 +991,12 @@ class Product extends Model implements PageModel {
 						// get the first item.
 						$item = array_shift( $item );
 						if ( ! empty( $item ) ) {
-							$gallery_item_product_media = new GalleryItemProductMedia( $item );
-
-							// Set additional properties if they exist.
-							if ( $variant_option || $thumbnail_image || $aspect_ratio ) {
-								$gallery_item_product_media->setVariantOption( $variant_option );
-								$gallery_item_product_media->setThumbnailImage( $thumbnail_image );
-								$gallery_item_product_media->setAspectRatio( $aspect_ratio );
-							}
-
-							return $gallery_item_product_media;
+							return new GalleryItemProductMedia( $item );
 						}
 
 						return null;
 					},
-					$gallery_ids
+					$this->gallery_ids
 				),
 				function ( $item ) {
 					// it must have a src at least.

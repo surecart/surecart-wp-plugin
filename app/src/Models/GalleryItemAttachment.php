@@ -48,7 +48,7 @@ class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 	 */
 	public function get_video_thumbnail_url( $attachment_id ) {
 		// Check if we have a thumbnail image from gallery properties.
-		$thumbnail_image = $this->getThumbnailImageAttribute();
+		$thumbnail_image = $this->gallery_properties['thumbnail_image'] ?? null;
 		if ( ! empty( $thumbnail_image['url'] ) ) {
 			return $thumbnail_image['url'];
 		}
@@ -95,7 +95,7 @@ class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 	 * @return bool
 	 */
 	public function isVideo(): bool {
-		return strpos( get_post_mime_type( $this->item->ID ?? '' ), 'video' ) !== false;
+		return false !== strpos( get_post_mime_type( $this->item->ID ?? '' ), 'video' );
 	}
 
 	/**
@@ -114,7 +114,7 @@ class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 		if ( 'thumbnail' === $size ) {
 			$html  = '<div class="sc-video-thumbnail">';
 			$html .= '<img src="' . $video_thumbnail_url . '" alt="' . esc_attr__( 'Video thumbnail', 'surecart' ) . '" >';
-			$html .= '<div class="sc-video-play-button"></div>';
+			$html .= '<button type="button" class="sc-video-play-button" aria-label="' . esc_attr__( 'Play video', 'surecart' ) . '"><span class="screen-reader-text">' . esc_html__( 'Play video', 'surecart' ) . '</span></button>';
 			$html .= '</div>';
 
 			return $html;
@@ -134,7 +134,9 @@ class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 					src="<?php echo esc_url( $video_thumbnail_url ); ?>"
 					alt="<?php echo esc_attr__( 'Video thumbnail', 'surecart' ); ?>"
 				/>
-				<div class="sc-video-play-button"></div>
+				<button type="button" class="sc-video-play-button" aria-label="<?php echo esc_attr__( 'Play video', 'surecart' ); ?>">
+					<span class="screen-reader-text"><?php echo esc_html__( 'Play video', 'surecart' ); ?></span>
+				</button>
 			</div>
 			
 			<?php
