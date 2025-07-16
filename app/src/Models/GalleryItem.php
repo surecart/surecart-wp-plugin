@@ -28,11 +28,11 @@ abstract class GalleryItem implements ArrayAccess, JsonSerializable, Arrayable, 
 	protected $with_lightbox = false;
 
 	/**
-	 * Additional gallery item properties.
+	 * Metadata for the gallery item.
 	 *
 	 * @var array
 	 */
-	protected $gallery_properties = [];
+	protected $metadata = [];
 
 	/**
 	 * Set the lightbox attribute.
@@ -72,8 +72,8 @@ abstract class GalleryItem implements ArrayAccess, JsonSerializable, Arrayable, 
 	 * @return string
 	 */
 	public function __get( $key ) {
-		if ( $this->getGalleryPropertiesByKey( $key ) ) {
-			return $this->getGalleryPropertiesByKey( $key );
+		if ( $this->getMetadata( $key ) ) {
+			return $this->getMetadata( $key );
 		}
 
 		// normalize the ID.
@@ -136,24 +136,19 @@ abstract class GalleryItem implements ArrayAccess, JsonSerializable, Arrayable, 
 	 * @return bool
 	 */
 	public function __isset( $key ) {
-		return isset( $this->item->{$key} ) || isset( $this->gallery_properties[ $key ] );
+		return isset( $this->item->{$key} ) || isset( $this->metadata[ $key ] );
 	}
 
 	/**
-	 * Handle gallery properties.
+	 * Get metadata for the gallery item.
 	 *
 	 * @param string $key The key to check.
 	 *
 	 * @return string|null
 	 */
-	protected function getGalleryPropertiesByKey( $key ) {
-		// Handle new gallery properties first.
-		if ( ! in_array( $key, [ 'variant_option', 'thumbnail_image', 'aspect_ratio' ], true ) ) {
-			return null;
-		}
-
-		if ( isset( $this->gallery_properties[ $key ] ) ) {
-			return $this->gallery_properties[ $key ];
+	protected function getMetadata( $key ) {
+		if ( isset( $this->metadata[ $key ] ) ) {
+			return $this->metadata[ $key ];
 		}
 
 		// Backward compatibility for variant_option with post meta - sc_variant_option.
@@ -172,7 +167,7 @@ abstract class GalleryItem implements ArrayAccess, JsonSerializable, Arrayable, 
 	 * @return self
 	 */
 	public function setVariantOption( $variant_option ): self {
-		$this->gallery_properties['variant_option'] = $variant_option;
+		$this->metadata['variant_option'] = $variant_option;
 		return $this;
 	}
 
@@ -184,7 +179,7 @@ abstract class GalleryItem implements ArrayAccess, JsonSerializable, Arrayable, 
 	 * @return self
 	 */
 	public function setThumbnailImage( $thumbnail_image ): self {
-		$this->gallery_properties['thumbnail_image'] = $thumbnail_image;
+		$this->metadata['thumbnail_image'] = $thumbnail_image;
 		return $this;
 	}
 
@@ -196,7 +191,7 @@ abstract class GalleryItem implements ArrayAccess, JsonSerializable, Arrayable, 
 	 * @return self
 	 */
 	public function setAspectRatio( $aspect_ratio ): self {
-		$this->gallery_properties['aspect_ratio'] = $aspect_ratio;
+		$this->metadata['aspect_ratio'] = $aspect_ratio;
 		return $this;
 	}
 }

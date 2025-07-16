@@ -964,7 +964,7 @@ class Product extends Model implements PageModel {
 				array_map(
 					function ( $gallery_item ) use ( $product_featured_image_url ) {
 						// Extract the ID from the gallery item (can be int or object).
-						$id = $this->getGalleryItemId( $gallery_item );
+						$id = is_int( $gallery_item ) ? $gallery_item : intval( ((object) $gallery_item)->id ?? 0 );
 
 						// this is an attachment id.
 						if ( is_int( $id ) ) {
@@ -1008,26 +1008,6 @@ class Product extends Model implements PageModel {
 		$this->setAttributeCache( 'gallery', $gallery );
 
 		return $gallery;
-	}
-
-	/**
-	 * Extract ID from gallery item (can be int, object, or array).
-	 *
-	 * @param int|object|array $gallery_item The gallery item.
-	 *
-	 * @return int The gallery item ID.
-	 */
-	private function getGalleryItemId( $gallery_item ): int {
-		if ( is_int( $gallery_item ) ) {
-			return $gallery_item;
-		}
-
-		if ( is_object( $gallery_item ) || is_array( $gallery_item ) ) {
-			$item_data = (object) $gallery_item;
-			return intval( $item_data->id ?? 0 );
-		}
-
-		return 0;
 	}
 
 	/**
