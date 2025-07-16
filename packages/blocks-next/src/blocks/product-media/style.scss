@@ -99,14 +99,17 @@
 
 	&:hover {
 		transform: scale(1.1);
-		background-color: rgba(255, 255, 255, 1);
+		background-color: var(--sc-color-white);
 		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 	}
 
 	&:focus {
 		outline: 3px auto rgb(90 90 90 / 25%);
 		outline: 3px auto -webkit-focus-ring-color;
+		border: none;
+		background-color: var(--sc-color-white);
 		outline-offset: 3px;
+		transform: scale(1.05);
 	}
 }
 
