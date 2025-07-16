@@ -92,6 +92,7 @@
 	cursor: pointer;
 	backdrop-filter: blur(4px);
 	border: 2px solid var(--sc-color-gray-200);
+	padding: 0;
 
 	&::before {
 		@include play-button-icon();
