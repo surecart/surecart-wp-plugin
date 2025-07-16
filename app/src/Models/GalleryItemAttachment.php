@@ -21,72 +21,23 @@ class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 	 * Create a new gallery item.
 	 * This can accept a product media or a post.
 	 *
-	 * @param int|\WP_Post $item The item.
+	 * @param int|\WP_Post $item               The item.
 	 * @param string|null  $featured_image_url The featured image URL for the post.
 	 *
 	 * @return void
 	 */
 	public function __construct( $item, $featured_image_url = null ) {
-		$this->item = get_post( $item['id'] ?? $item );
-
-		// If the item is not an integer, we assume it's an array with additional properties.
-		if ( ! is_int( $item ) && ! empty( $this->item ) ) {
-			$this->item->variant_option  = $item['variant_option'] ?? '';
-			$this->item->thumbnail_image = $item['thumbnail_image'] ?? [];
-			$this->item->aspect_ratio    = $item['aspect_ratio'] ?? '';
-		}
-
+		$this->item               = get_post( $item['id'] ?? $item );
 		$this->featured_image_url = $featured_image_url;
 	}
 
 	/**
-	 * Generate a reliable thumbnail image URL for video attachments
+	 * Get the video poster image URL or a fallback.
 	 *
-	 * @param int $attachment_id The attachment ID.
-	 *
-	 * @return string The thumbnail URL.
+	 * @return string The Poster image URL.
 	 */
-	public function get_video_thumbnail_url( $attachment_id ) {
-		// Check if we have a thumbnail image from gallery properties.
-		$thumbnail_image = $this->gallery_properties['thumbnail_image'] ?? null;
-		if ( ! empty( $thumbnail_image['url'] ) ) {
-			return $thumbnail_image['url'];
-		}
-
-		// Check if the video has a poster/thumbnail set.
-		$thumb_id = get_post_thumbnail_id( $attachment_id );
-		if ( $thumb_id ) {
-			$thumb_url = wp_get_attachment_image_url( $thumb_id, 'thumbnail' );
-			if ( $thumb_url ) {
-				return $thumb_url;
-			}
-		}
-
-		// Try to get a frame from the video as thumbnail using WordPress metadata.
-		$metadata = wp_get_attachment_metadata( $attachment_id );
-		if ( ! empty( $metadata['image']['src'] ) ) {
-			return $metadata['image']['src'];
-		}
-
-		// Check if WordPress has generated any thumbnails for this video.
-		$thumb_sizes = [ 'thumbnail', 'medium', 'large' ];
-		foreach ( $thumb_sizes as $size ) {
-			$thumb = image_downsize( $attachment_id, $size );
-			if ( $thumb && ! empty( $thumb[0] ) ) {
-				return $thumb[0];
-			}
-		}
-
-		// If WordPress hasn't generated thumbnails, check for video thumbnail plugins.
-		if ( function_exists( 'get_video_thumbnail' ) ) {
-			$thumb_url = get_video_thumbnail( $attachment_id );
-			if ( $thumb_url ) {
-				return $thumb_url;
-			}
-		}
-
-		// Fallback to a featured image / default placeholder image if no thumbnail is found.
-		return $this->featured_image_url ?? esc_url_raw( trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'images/placeholder.jpg' );
+	public function get_video_poster_image(): string {
+		return $this->thumbnail_image['url'] ?? $this->featured_image_url ?? esc_url_raw( trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'images/placeholder.jpg' );
 	}
 
 	/**
@@ -109,7 +60,7 @@ class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 	 */
 	public function getVideoHtml( $size = 'full', $attr = [], $metadata = [] ): string {
 		$html                = '';
-		$video_thumbnail_url = $this->get_video_thumbnail_url( $this->item->ID );
+		$video_thumbnail_url = $this->get_video_poster_image();
 
 		if ( 'thumbnail' === $size ) {
 			$html  = '<div class="sc-video-thumbnail">';
@@ -127,7 +78,7 @@ class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 			data-wp-interactive='{ "namespace": "surecart/video" }'
 			data-wp-context='{ "isVideoPlaying": false }'
 			data-wp-on--click="actions.playVideo"
-			style="aspect-ratio: <?php echo esc_attr( $this->item->aspect_ratio ?? '' ); ?>;">
+			style="aspect-ratio: <?php echo esc_attr( $this->aspect_ratio ?? '' ); ?>;">
 			
 			<div class="sc-video-overlay" data-wp-bind--hidden="context.isVideoPlaying">
 				<img
@@ -288,122 +239,158 @@ class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 	public function attributes( $size = 'full', $attr = [] ) {
 		$attachment_id = ! empty( $this->item->ID ) ? $this->item->ID : 0;
 
-		// Check if this is a video attachment.
 		if ( $this->isVideo() ) {
-			$video_url  = wp_get_attachment_url( $attachment_id );
-			$attachment = get_post( $attachment_id );
-			$size_class = $size;
+			return (object) $this->get_video_attributes( $attachment_id, $size, $attr );
+		}
 
-			if ( is_array( $size_class ) ) {
-				$size_class = implode( 'x', $size_class );
-			}
+		return (object) $this->get_image_attributes( $attachment_id, $size, $attr );
+	}
 
-			return (object) [
-				'url'       => $video_url,
-				'src'       => $this->get_video_thumbnail_url( $attachment_id ),
+	/**
+	 * Get the video attributes.
+	 *
+	 * @param int    $attachment_id The attachment ID.
+	 * @param string $size          The video size.
+	 * @param array  $attr         Additional attributes.
+	 *
+	 * @return array
+	 */
+	public function get_video_attributes( int $attachment_id, $size = 'full', $attr = [] ) {
+		$video = wp_get_attachment_url( $attachment_id );
+		if ( ! $video ) {
+			return [];
+		}
+
+		$size_class = $size;
+
+		if ( is_array( $size_class ) ) {
+			$size_class = implode( 'x', $size_class );
+		}
+
+		$attr = wp_parse_args(
+			$attr,
+			array(
+				'url'       => $video,
+				'src'       => $this->get_video_poster_image(),
 				'class'     => "attachment-$size_class size-$size_class video-attachment",
 				'alt'       => trim( strip_tags( get_post_meta( $attachment_id, '_wp_attachment_image_alt', true ) ) ),
 				'mime_type' => get_post_mime_type( $attachment_id ),
-				'is_video'  => true,
-			];
-		}
+			)
+		);
 
-		// For images, use the standard approach.
+		return apply_filters(
+			'surecart_gallery_item_video_attributes',
+			$attr,
+			$attachment_id,
+			$size,
+		);
+	}
+
+	/**
+	 * Get the image attributes.
+	 *
+	 * @param int    $attachment_id The attachment ID.
+	 * @param string $size          The image size.
+	 * @param array  $attr         Additional attributes.
+	 *
+	 * @return array
+	 */
+	public function get_image_attributes( int $attachment_id, $size = 'full', $attr = [] ) {
 		$image = wp_get_attachment_image_src( $attachment_id, $size, $attr['icon'] ?? false, $attr );
 
-		if ( $image ) {
-			list( $src, $width, $height ) = $image;
+		if ( ! $image ) {
+			return [];
+		}
 
-			$attachment = get_post( $attachment_id );
-			$size_class = $size;
+		list( $src, $width, $height ) = $image;
 
-			if ( is_array( $size_class ) ) {
-				$size_class = implode( 'x', $size_class );
-			}
+		$attachment = get_post( $attachment_id );
+		$size_class = $size;
 
-			$default_attr = array(
-				'src'    => $src,
-				'class'  => "attachment-$size_class size-$size_class",
-				'alt'    => trim( strip_tags( get_post_meta( $attachment_id, '_wp_attachment_image_alt', true ) ) ),
-				'width'  => $width,
-				'height' => $height,
-			);
+		if ( is_array( $size_class ) ) {
+			$size_class = implode( 'x', $size_class );
+		}
 
-			/**
-			 * Filters the context in which wp_get_attachment_image() is used.
-			 *
-			 * @since 6.3.0
-			 *
-			 * @param string $context The context. Default 'wp_get_attachment_image'.
-			 */
-			$context = apply_filters( 'wp_get_attachment_image_context', 'wp_get_attachment_image' );
-			$attr    = wp_parse_args( $attr, $default_attr );
+		$default_attr = array(
+			'src'    => $src,
+			'class'  => "attachment-$size_class size-$size_class",
+			'alt'    => trim( strip_tags( get_post_meta( $attachment_id, '_wp_attachment_image_alt', true ) ) ),
+			'width'  => $width,
+			'height' => $height,
+		);
 
-			$loading_attr              = $attr;
-			$loading_attr['width']     = $width;
-			$loading_attr['height']    = $height;
-			$loading_optimization_attr = wp_get_loading_optimization_attributes(
-				'img',
-				$loading_attr,
-				$context
-			);
+		/**
+		 * Filters the context in which wp_get_attachment_image() is used.
+		 *
+		 * @since 6.3.0
+		 *
+		 * @param string $context The context. Default 'wp_get_attachment_image'.
+		 */
+		$context = apply_filters( 'wp_get_attachment_image_context', 'wp_get_attachment_image' );
+		$attr    = wp_parse_args( $attr, $default_attr );
 
-			// Add loading optimization attributes if not available.
-			$attr = array_merge( $attr, $loading_optimization_attr );
+		$loading_attr              = $attr;
+		$loading_attr['width']     = $width;
+		$loading_attr['height']    = $height;
+		$loading_optimization_attr = wp_get_loading_optimization_attributes(
+			'img',
+			$loading_attr,
+			$context
+		);
 
-			// Omit the `decoding` attribute if the value is invalid according to the spec.
-			if ( empty( $attr['decoding'] ) || ! in_array( $attr['decoding'], array( 'async', 'sync', 'auto' ), true ) ) {
-				unset( $attr['decoding'] );
-			}
+		// Add loading optimization attributes if not available.
+		$attr = array_merge( $attr, $loading_optimization_attr );
 
-			/*
-			 * If the default value of `lazy` for the `loading` attribute is overridden
-			 * to omit the attribute for this image, ensure it is not included.
-			 */
-			if ( isset( $attr['loading'] ) && ! $attr['loading'] ) {
-				unset( $attr['loading'] );
-			}
+		// Omit the `decoding` attribute if the value is invalid according to the spec.
+		if ( empty( $attr['decoding'] ) || ! in_array( $attr['decoding'], array( 'async', 'sync', 'auto' ), true ) ) {
+			unset( $attr['decoding'] );
+		}
 
-			// If the `fetchpriority` attribute is overridden and set to false or an empty string.
-			if ( isset( $attr['fetchpriority'] ) && ! $attr['fetchpriority'] ) {
-				unset( $attr['fetchpriority'] );
-			}
+		/*
+		 * If the default value of `lazy` for the `loading` attribute is overridden
+		 * to omit the attribute for this image, ensure it is not included.
+		 */
+		if ( isset( $attr['loading'] ) && ! $attr['loading'] ) {
+			unset( $attr['loading'] );
+		}
 
-			// Generate 'srcset' and 'sizes' if not already present.
-			if ( empty( $attr['srcset'] ) ) {
-				$image_meta = wp_get_attachment_metadata( $attachment_id );
+		// If the `fetchpriority` attribute is overridden and set to false or an empty string.
+		if ( isset( $attr['fetchpriority'] ) && ! $attr['fetchpriority'] ) {
+			unset( $attr['fetchpriority'] );
+		}
 
-				if ( is_array( $image_meta ) ) {
-					$size_array = array( absint( $width ), absint( $height ) );
-					$srcset     = wp_calculate_image_srcset( $size_array, $src, $image_meta, $attachment_id );
-					$sizes      = wp_calculate_image_sizes( $size_array, $src, $image_meta, $attachment_id );
+		// Generate 'srcset' and 'sizes' if not already present.
+		if ( empty( $attr['srcset'] ) ) {
+			$image_meta = wp_get_attachment_metadata( $attachment_id );
 
-					if ( $srcset && ( $sizes || ! empty( $attr['sizes'] ) ) ) {
-						$attr['srcset'] = $srcset;
+			if ( is_array( $image_meta ) ) {
+				$size_array = array( absint( $width ), absint( $height ) );
+				$srcset     = wp_calculate_image_srcset( $size_array, $src, $image_meta, $attachment_id );
+				$sizes      = wp_calculate_image_sizes( $size_array, $src, $image_meta, $attachment_id );
 
-						if ( empty( $attr['sizes'] ) ) {
-							$attr['sizes'] = $sizes;
-						}
+				if ( $srcset && ( $sizes || ! empty( $attr['sizes'] ) ) ) {
+					$attr['srcset'] = $srcset;
+
+					if ( empty( $attr['sizes'] ) ) {
+						$attr['sizes'] = $sizes;
 					}
 				}
 			}
-
-			/**
-			 * Filters the list of attachment image attributes.
-			 *
-			 * @since 2.8.0
-			 *
-			 * @param string[]     $attr       Array of attribute values for the image markup, keyed by attribute name.
-			 *                                 See wp_get_attachment_image().
-			 * @param WP_Post      $attachment Image attachment post.
-			 * @param string|int[] $size       Requested image size. Can be any registered image size name, or
-			 *                                 an array of width and height values in pixels (in that order).
-			 */
-			$attr = apply_filters( 'wp_get_attachment_image_attributes', $attr, $attachment, $size );
-
-			return (object) $attr;
 		}
 
-		return (object) [];
+		/**
+		 * Filters the list of attachment image attributes.
+		 *
+		 * @since 2.8.0
+		 *
+		 * @param string[]     $attr       Array of attribute values for the image markup, keyed by attribute name.
+		 *                                 See wp_get_attachment_image().
+		 * @param WP_Post      $attachment Image attachment post.
+		 * @param string|int[] $size       Requested image size. Can be any registered image size name, or
+		 *                                 an array of width and height values in pixels (in that order).
+		 */
+		$attr = apply_filters( 'wp_get_attachment_image_attributes', $attr, $attachment, $size );
+
+		return $attr;
 	}
 }
