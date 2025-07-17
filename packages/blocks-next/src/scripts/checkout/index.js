@@ -73,10 +73,10 @@ const { state, actions } = store('surecart/checkout', {
 		oldCheckout: {},
 
 		/**
-		 * Get the number of items in checkout.
+		 * Get the number of line items in checkout.
 		 */
 		get itemsCount() {
-			return state.checkout?.line_items_count || 0;
+			return state.checkout?.line_items?.data?.length || 0;
 		},
 
 		/**
@@ -632,7 +632,17 @@ const { state, actions } = store('surecart/checkout', {
 		/**
 		 * Remove the line item.
 		 */
-		removeLineItem: function* () {
+		removeLineItem: function* (e) {
+			// If this is a keydown event, only allow Space key
+			if (e?.type === 'keydown' && e?.key !== ' ') {
+				return true;
+			}
+
+			// Prevent default behavior for space key
+			if (e?.key === ' ') {
+				e.preventDefault();
+			}
+
 			state.loading = true;
 			const { line_item, mode, formId } = getContext();
 			const { speak } = yield import(
