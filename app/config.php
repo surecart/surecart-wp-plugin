@@ -139,6 +139,7 @@ return array(
 		\SureCart\Rest\SwapRestServiceProvider::class,
 		\SureCart\Rest\AutoFeeRestServiceProvider::class,
 		\SureCart\Rest\AutoFeeRuleSchemaRestServiceProvider::class,
+		\SureCart\Rest\RuleStringRestServiceProvider::class,
 
 
 		// integrations.
