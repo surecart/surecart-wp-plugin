@@ -38,80 +38,9 @@ const { state, actions } = store('surecart/cart', {
 
 			return dialog;
 		},
-
-		/**
-		 * Get all focusable elements within the cart dialog.
-		 */
-		get focusableElements() {
-			const dialog = state.dialog;
-			if (!dialog) return [];
-
-			const focusableSelectors = [
-				'button:not([disabled])',
-				'[href]',
-				'input:not([disabled])',
-				'select:not([disabled])',
-				'textarea:not([disabled])',
-				'[tabindex]:not([tabindex="-1"])',
-				'[contenteditable="true"]'
-			].join(', ');
-
-			return Array.from(dialog.querySelectorAll(focusableSelectors));
-		},
-
-		/**
-		 * Get the first focusable element in the cart dialog.
-		 */
-		get firstFocusableElement() {
-			const elements = state.focusableElements;
-			return elements.length > 0 ? elements[0] : null;
-		},
-
-		/**
-		 * Get the last focusable element in the cart dialog.
-		 */
-		get lastFocusableElement() {
-			const elements = state.focusableElements;
-			return elements.length > 0 ? elements[elements.length - 1] : null;
-		},
 	},
 
 	actions: {
-		/**
-		 * Handle focus trapping within the cart dialog.
-		 */
-		trapFocus(e) {
-			if (!state.dialog || !state.dialog.open) return;
-
-			// Handle Tab key navigation
-			if (e.key === 'Tab') {
-				const firstElement = state.firstFocusableElement;
-				const lastElement = state.lastFocusableElement;
-
-				if (!firstElement || !lastElement) return;
-
-				// Shift + Tab: moving backwards
-				if (e.shiftKey) {
-					if (document.activeElement === firstElement) {
-						e.preventDefault();
-						lastElement.focus();
-					}
-				} else {
-					// Tab: moving forwards
-					if (document.activeElement === lastElement) {
-						e.preventDefault();
-						firstElement.focus();
-					}
-				}
-			}
-
-			// Handle Escape key to close cart
-			if (e.key === 'Escape') {
-				e.preventDefault();
-				actions.close();
-			}
-		},
-
 		/**
 		 * Open the cart dialog.
 		 */
@@ -125,14 +54,6 @@ const { state, actions } = store('surecart/cart', {
 
 			// Trigger cart view event.
 			actions.processCartViewEvent(checkoutState?.checkout);
-
-			// Set up focus trapping
-			document.addEventListener('keydown', actions.trapFocus);
-
-			// Focus the first focusable element
-			setTimeout(() => {
-				state.firstFocusableElement?.focus();
-			}, 0);
 		},
 
 		processCartViewEvent: function* (checkout) {
@@ -149,15 +70,6 @@ const { state, actions } = store('surecart/cart', {
 		close: () => {
 			state.dialog?.close();
 			state.label = __('Cart closed.', 'surecart');
-
-			// Remove focus trapping
-			document.removeEventListener('keydown', actions.trapFocus);
-
-			// Return focus to the cart toggle button
-			const cartToggleButton = document.querySelector('[data-wp-on--click="surecart/cart::actions.toggle"]');
-			if (cartToggleButton) {
-				cartToggleButton.focus();
-			}
 		},
 
 		/**
@@ -173,12 +85,7 @@ const { state, actions } = store('surecart/cart', {
 			e?.preventDefault();
 
 			// If the dialog is open, close it. Otherwise, open it.
-			const isOpen = state?.dialog?.open;
-			if (isOpen) {
-				actions.close();
-			} else {
-				actions.open();
-			}
+			state?.dialog?.open ? actions.close() : actions.open();
 		},
 
 		/**

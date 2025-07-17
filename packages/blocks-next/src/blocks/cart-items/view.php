@@ -1,3 +1,7 @@
+
+Deprecated: Mockery::formatArgs(): Implicitly marking parameter $arguments as nullable is deprecated, the explicit nullable type must be used instead in /Users/andre/sites/surecart/wp-content/plugins/surecart/vendor/mockery/mockery/library/Mockery.php on line 560
+
+Deprecated: Mockery::formatObjects(): Implicitly marking parameter $objects as nullable is deprecated, the explicit nullable type must be used instead in /Users/andre/sites/surecart/wp-content/plugins/surecart/vendor/mockery/mockery/library/Mockery.php on line 636
 <div
 	class="wp-block-surecart-cart-items__wrapper"
 	<?php echo wp_kses_data(

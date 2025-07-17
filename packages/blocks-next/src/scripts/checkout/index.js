@@ -73,10 +73,10 @@ const { state, actions } = store('surecart/checkout', {
 		oldCheckout: {},
 
 		/**
-		 * Get the number of line items in checkout.
+		 * Get the number of items in checkout.
 		 */
 		get itemsCount() {
-			return state.checkout?.line_items?.data?.length || 0;
+			return state.checkout?.line_items_count || 0;
 		},
 
 		/**
