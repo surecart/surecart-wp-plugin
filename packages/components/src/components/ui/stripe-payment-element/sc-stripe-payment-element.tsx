@@ -164,16 +164,10 @@ export class ScStripePaymentElement {
   maybeApplyFilters(options: any): any {
     if (!window?.wp?.hooks?.applyFilters) return options;
 
-    // apply filters to the options.
     options.paymentMethodOrder = window.wp.hooks.applyFilters('surecart_stripe_payment_element_payment_method_order', [], checkoutState.checkout);
     options.wallets = window.wp.hooks.applyFilters('surecart_stripe_payment_element_wallets', {}, checkoutState.checkout);
     options.terms = window.wp.hooks.applyFilters('surecart_stripe_payment_element_terms', {}, checkoutState.checkout);
-
-    // filter the billing details fields if filter provided.
-    if (window.wp.hooks.hasFilter && window.wp.hooks.hasFilter('surecart_stripe_payment_element_fields')) {
-      const filteredFields = window.wp.hooks.applyFilters('surecart_stripe_payment_element_fields', options.fields);
-      options.fields = this.validateBillingFields(filteredFields, options.fields);
-    }
+    options.fields = window.wp.hooks.applyFilters('surecart_stripe_payment_element_fields', options.fields);
 
     return options;
   }
@@ -267,41 +261,6 @@ export class ScStripePaymentElement {
     } as any);
 
     this.element.update(options);
-  }
-
-  validateBillingFields(filteredFields: Record<string, any>, defaultFields: Record<string, any>) {
-    if (!filteredFields?.billingDetails || typeof filteredFields.billingDetails !== 'object') {
-      return defaultFields;
-    }
-
-    const allowedFields = {
-      name: ['never', 'auto'],
-      email: ['never', 'auto'],
-      phone: ['never', 'auto'],
-      address: ['never', 'auto', 'if_required'],
-    };
-
-    const addressFields = ['line1', 'line2', 'city', 'state', 'country', 'postalCode'];
-    const validated: Record<string, any> = {};
-
-    for (const [key, value] of Object.entries(filteredFields.billingDetails)) {
-      if (allowedFields[key]?.includes(value)) {
-        validated[key] = value;
-      } else if (key === 'address' && value && typeof value === 'object') {
-        const validAddress = addressFields.reduce((acc, field) => {
-          if (['never', 'auto'].includes(value[field])) {
-            acc[field] = value[field];
-          }
-          return acc;
-        }, {});
-
-        if (Object.keys(validAddress).length > 0) {
-          validated[key] = validAddress;
-        }
-      }
-    }
-
-    return Object.keys(validated).length > 0 ? { ...defaultFields, billingDetails: validated } : defaultFields;
   }
 
   async submit() {
