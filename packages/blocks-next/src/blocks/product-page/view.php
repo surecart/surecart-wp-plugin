@@ -7,6 +7,7 @@ $query = new WP_Query(
 		'post_type'      => 'sc_product',
 		'posts_per_page' => 1,
 		'post__in'       => [ $attributes['product_post_id'] ?? get_the_ID() ],
+		'post_status'    => $attributes['post_statuses'] ?? [ 'publish' ],
 	]
 );
 ?>

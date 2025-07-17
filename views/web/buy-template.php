@@ -3,7 +3,7 @@
 	<sc-column class="wp-block-surecart-column is-layout-constrained is-horizontally-aligned-right" style="border-style:none;border-width:0px;padding:30px 5rem 5rem 5rem;--sc-column-content-width:450px;--sc-form-row-spacing:30px">
 
 		<?php if ( $show_image ) : ?>
-			<!-- wp:surecart/product-page -->
+			<!-- wp:surecart/product-page {"post_statuses":["publish", "draft"]} -->
 				<!-- wp:surecart/product-media {"auto_height":false,"height":"310px","hide_empty":true} /-->
 			<!-- /wp:surecart/product-page -->
 		<?php endif; ?>
