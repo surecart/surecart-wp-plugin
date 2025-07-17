@@ -88,6 +88,15 @@ abstract class GalleryItem implements ArrayAccess, JsonSerializable, Arrayable, 
 	}
 
 	/**
+	 * Check if this gallery item is a video.
+	 *
+	 * @return bool
+	 */
+	public function isVideo() {
+		return false !== strpos( $this->item->post_mime_type, 'video' );
+	}
+
+	/**
 	 * Determine if the given attribute exists.
 	 *
 	 * @param  mixed $offset Name.
@@ -146,7 +155,7 @@ abstract class GalleryItem implements ArrayAccess, JsonSerializable, Arrayable, 
 	 *
 	 * @return string|null
 	 */
-	protected function getMetadata( $key ) {
+	public function getMetadata( $key ) {
 		if ( isset( $this->metadata[ $key ] ) ) {
 			return $this->metadata[ $key ];
 		}
@@ -160,38 +169,15 @@ abstract class GalleryItem implements ArrayAccess, JsonSerializable, Arrayable, 
 	}
 
 	/**
-	 * Set the variant option.
+	 * Set the metadata for the gallery item.
 	 *
-	 * @param string|null $variant_option The variant option.
-	 *
-	 * @return self
-	 */
-	public function setVariantOption( $variant_option ): self {
-		$this->metadata['variant_option'] = $variant_option;
-		return $this;
-	}
-
-	/**
-	 * Set the thumbnail image.
-	 *
-	 * @param array|null $thumbnail_image The thumbnail image data.
+	 * @param string $key   The key to set.
+	 * @param mixed  $value The value to set.
 	 *
 	 * @return self
 	 */
-	public function setThumbnailImage( $thumbnail_image ): self {
-		$this->metadata['thumbnail_image'] = $thumbnail_image;
-		return $this;
-	}
-
-	/**
-	 * Set the aspect ratio.
-	 *
-	 * @param string|null $aspect_ratio The aspect ratio.
-	 *
-	 * @return self
-	 */
-	public function setAspectRatio( $aspect_ratio ): self {
-		$this->metadata['aspect_ratio'] = $aspect_ratio;
+	public function setMetadata( $key, $value ): self {
+		$this->metadata[ $key ] = $value;
 		return $this;
 	}
 }

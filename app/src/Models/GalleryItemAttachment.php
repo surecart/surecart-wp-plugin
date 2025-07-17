@@ -37,16 +37,7 @@ class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 	 * @return string The Poster image URL.
 	 */
 	public function get_video_poster_image(): string {
-		return $this->thumbnail_image['url'] ?? $this->featured_image_url ?? esc_url_raw( trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'images/placeholder.jpg' );
-	}
-
-	/**
-	 * Check if the media item is a video.
-	 *
-	 * @return bool
-	 */
-	public function isVideo(): bool {
-		return false !== strpos( get_post_mime_type( $this->item->ID ?? '' ), 'video' );
+		return $this->getMetadata( 'thumbnail_image' )['url'] ?? $this->featured_image_url ?? esc_url_raw( trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'images/placeholder.jpg' );
 	}
 
 	/**
@@ -59,12 +50,12 @@ class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 	 * @return string
 	 */
 	public function getVideoHtml( $size = 'full', $attr = [], $metadata = [] ): string {
-		$html                = '';
-		$video_thumbnail_url = $this->get_video_poster_image();
+		$html         = '';
+		$poster_image = $this->get_video_poster_image();
 
 		if ( 'thumbnail' === $size ) {
 			$html  = '<div class="sc-video-thumbnail">';
-			$html .= '<img src="' . $video_thumbnail_url . '" alt="' . esc_attr__( 'Video thumbnail', 'surecart' ) . '" >';
+			$html .= '<img src="' . $poster_image . '" alt="' . esc_attr__( 'Video thumbnail', 'surecart' ) . '" >';
 			$html .= '<button type="button" class="sc-video-play-button" aria-label="' . esc_attr__( 'Play video', 'surecart' ) . '"><span class="screen-reader-text">' . esc_html__( 'Play video', 'surecart' ) . '</span></button>';
 			$html .= '</div>';
 
@@ -78,11 +69,11 @@ class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 			data-wp-interactive='{ "namespace": "surecart/video" }'
 			data-wp-context='{ "isVideoPlaying": false }'
 			data-wp-on--click="actions.playVideo"
-			style="aspect-ratio: <?php echo esc_attr( $this->aspect_ratio ?? '' ); ?>;">
-			
+			style="aspect-ratio: <?php echo esc_attr( $this->getMetadata( 'aspect_ratio' ) ?? '' ); ?>;"
+		>
 			<div class="sc-video-overlay" data-wp-bind--hidden="context.isVideoPlaying">
 				<img
-					src="<?php echo esc_url( $video_thumbnail_url ); ?>"
+					src="<?php echo esc_url( $poster_image ); ?>"
 					alt="<?php echo esc_attr__( 'Video thumbnail', 'surecart' ); ?>"
 				/>
 				<button type="button" class="sc-video-play-button" aria-label="<?php echo esc_attr__( 'Play video', 'surecart' ); ?>">
@@ -106,7 +97,7 @@ class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 						preload="metadata"
 					></video>',
 					esc_url( $video_url ),
-					esc_url( $video_thumbnail_url )
+					esc_url( $poster_image )
 				)
 			);
 			?>

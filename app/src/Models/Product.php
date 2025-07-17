@@ -641,11 +641,28 @@ class Product extends Model implements PageModel {
 	 * @return \SureCart\Support\Contracts\GalleryItem|null;
 	 */
 	public function getFeaturedImageAttribute() {
-		$gallery = array_values( $this->gallery ?? array() );
+		$gallery     = array_values( $this->gallery ?? array() );
+		$first_media = $gallery[0] ?? [];
 
-		if ( ! empty( $gallery ) ) {
-			return $gallery[0] ?? null;
+		$total_gallery_items = count( $gallery );
+		if ( $first_media instanceof GalleryItemAttachment && $first_media->isVideo() ) {
+			if ( ! empty( $first_media->getMetadata( 'thumbnail_image' ) ) ) {
+				return new GalleryItemAttachment( $first_media->getMetadata( 'thumbnail_image' ) );
+			}
+
+			// If no thumbnail, look for next image in gallery.
+			for ( $i = 1; $i < $total_gallery_items; $i++ ) {
+				$next_media = $gallery[ $i ] ?? [];
+				if ( false !== strpos( $next_media['post_mime_type'] ?? '', 'image' ) ) {
+					return $gallery[ $i ];
+				}
+			}
 		}
+
+		if ( ! empty( $first_media ) ) {
+			return $first_media;
+		}
+
 		if ( empty( $this->featured_product_media ) ) {
 			return null;
 		}
@@ -964,7 +981,7 @@ class Product extends Model implements PageModel {
 				array_map(
 					function ( $gallery_item ) use ( $product_featured_image_url ) {
 						// Extract the ID from the gallery item (can be int or object).
-						$id = is_int( $gallery_item ) ? $gallery_item : intval( ((object) $gallery_item)->id ?? 0 );
+						$id = is_int( $gallery_item ) ? $gallery_item : intval( ( (object) $gallery_item )->id ?? 0 );
 
 						// this is an attachment id.
 						if ( is_int( $id ) ) {
@@ -972,9 +989,9 @@ class Product extends Model implements PageModel {
 
 							if ( is_object( $gallery_item ) || is_array( $gallery_item ) ) {
 								$item = (object) $gallery_item;
-								$attachment->setVariantOption( $item->variant_option ?? null );
-								$attachment->setThumbnailImage( $item->thumbnail_image ?? null );
-								$attachment->setAspectRatio( $item->aspect_ratio ?? null );
+								$attachment->setMetadata( 'variant_option', $item->variant_option ?? null );
+								$attachment->setMetadata( 'thumbnail_image', $item->thumbnail_image ?? null );
+								$attachment->setMetadata( 'aspect_ratio', $item->aspect_ratio ?? null );
 							}
 
 							return $attachment;
