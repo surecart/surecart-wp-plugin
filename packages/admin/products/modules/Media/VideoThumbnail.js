@@ -23,7 +23,10 @@ import {
 	ScSkeleton,
 	ScText,
 } from '@surecart/components-react';
-import { generateVideoThumbnail, aspectRatioChoices } from '../../../util/attachments';
+import {
+	generateVideoThumbnail,
+	aspectRatioChoices,
+} from '../../../util/attachments';
 
 export default ({
 	thumbnailImage,
@@ -51,6 +54,12 @@ export default ({
 			),
 		};
 	});
+
+	const thumbnailTitle =
+		videoThumbnail?.title?.rendered ||
+		videoThumbnail?.title ||
+		videoThumbnail?.alt ||
+		'';
 
 	const selectThumbnail = (thumbnail) => {
 		onThumbnailChange(
@@ -124,14 +133,6 @@ export default ({
 							overflow: hidden;
 						`}
 					>
-						{thumbnailLoading && (
-							<ScSkeleton
-								style={{
-									aspectRatio: '1 / 1',
-									'--border-radius': 'var(--sc-border-radius-medium)',
-								}}
-							/>
-						)}
 						<img
 							src={
 								videoThumbnail?.media_details?.sizes?.medium
@@ -145,10 +146,14 @@ export default ({
 								border-radius: var(--sc-border-radius-medium);
 								pointer-events: none;
 							`}
-							alt={videoThumbnail?.alt_text || videoThumbnail?.alt || ''}
-							{...(videoThumbnail?.title?.rendered
+							alt={
+								videoThumbnail?.alt_text ||
+								videoThumbnail?.alt ||
+								''
+							}
+							{...(!!thumbnailTitle
 								? {
-										title: videoThumbnail.title.rendered,
+										title: thumbnailTitle,
 								  }
 								: {})}
 							loading="lazy"
@@ -160,17 +165,9 @@ export default ({
 						`}
 						tag="p"
 						truncate
-						title={
-							videoThumbnail?.title?.rendered ||
-							videoThumbnail?.title ||
-							videoThumbnail?.alt ||
-							''
-						}
+						title={thumbnailTitle}
 					>
-						{videoThumbnail?.title?.rendered ||
-							videoThumbnail?.title ||
-							videoThumbnail?.alt ||
-							''}
+						{thumbnailTitle}
 					</ScText>
 				</div>
 
@@ -244,14 +241,12 @@ export default ({
 					type="default"
 					onClick={handleGenerateThumbnail}
 					disabled={isGeneratingThumbnail}
-					isBusy={isGeneratingThumbnail}
+					loading={isGeneratingThumbnail}
 					css={css`
 						flex: 1;
 					`}
 				>
-					{isGeneratingThumbnail
-						? __('Generating...', 'surecart')
-						: __('Generate Thumbnail', 'surecart')}
+					{__('Generate Thumbnail', 'surecart')}
 					<ScIcon name="refresh-cw" slot="suffix"></ScIcon>
 				</ScButton>
 			</div>
@@ -272,8 +267,16 @@ export default ({
 						{thumbnailError}
 					</div>
 				)}
-
-				{renderExistingThumbnail() || renderThumbnailActions()}
+				{!(thumbnailLoading || isGeneratingThumbnail) ? (
+					<>{renderExistingThumbnail() || renderThumbnailActions()}</>
+				) : (
+					<ScSkeleton
+						style={{
+							height: '60px',
+							'--border-radius': 'var(--sc-border-radius-small)',
+						}}
+					/>
+				)}
 			</ScFormControl>
 
 			<ScFormControl label={__('Aspect Ratio', 'surecart')}>
