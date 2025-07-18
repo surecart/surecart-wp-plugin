@@ -21,6 +21,7 @@ import {
 import DateTimePicker from './DateTimePicker';
 import { formatDateTime } from '../../util/time';
 import { createEmptyAndRule, getInputType } from '../utils/ruleQueryUtils';
+import { attributeLabels } from '../utils/labelTranslations';
 
 export default ({
 	ruleSchema = [],
@@ -79,13 +80,13 @@ export default ({
 		const operatorsChoices = [];
 		for (const operator of rule.operators) {
 			operatorsChoices.push({
-				label: operator,
-				value: operator,
+				label: operator?.label,
+				value: operator?.label,
 			});
 		}
 		operators[rule.key] = operatorsChoices;
 		attributes.push({
-			label: rule.label,
+			label: attributeLabels?.[rule.key],
 			value: rule.key,
 		});
 	}

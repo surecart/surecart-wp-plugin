@@ -10,14 +10,14 @@ class RuleString {
 	 *
 	 * @var string
 	 */
-	protected $endpoint = 'rule_strings';
+	public $endpoint = 'rule_strings';
 
 	/**
 	 * Rest API endpoint
 	 *
 	 * @var string
 	 */
-	protected $object_name = 'rule_string';
+	public $object_name = 'rule_string';
 
 	/**
 	 * Gets Rule String Schema.
@@ -26,7 +26,7 @@ class RuleString {
 	 *
 	 * @return $rule_schema|\WP_Error
 	 */
-	protected function getSchema( $schema_id = null ) {
+	public function getSchema( $schema_id = null ) {
 		$rule_schema = \SureCart::request(
 			$this->endpoint . '/schema/' . $schema_id,
 			[
@@ -48,7 +48,7 @@ class RuleString {
 	 *
 	 * @return $rule_string|\WP_Error
 	 */
-	protected function construct( $rule_json = null ) {
+	public function construct( $rule_json = null ) {
 		$rule_string = \SureCart::request(
 			$this->endpoint . '/construct',
 			[
@@ -73,7 +73,7 @@ class RuleString {
 	 *
 	 * @return $rule_json|\WP_Error
 	 */
-	protected function deconstruct( $rule_string = null ) {
+	public function deconstruct( $rule_string = null ) {
 		$rule_json = \SureCart::request(
 			$this->endpoint . '/deconstruct',
 			[

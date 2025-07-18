@@ -30,16 +30,16 @@ export default ({ autoFee = {}, onUpdate, loading }) => {
 
 	const baseUrl = select(coreStore).getEntityConfig(
 		'surecart',
-		'auto-fee-rule-schema'
+		'rule-string'
 	)?.baseURL;
 
 	const fetchRuleSchema = async () => {
 		try {
 			setLoadingRuleSchema(true);
 			const response = await apiFetch({
-				path: `${baseUrl}`,
+				path: `${baseUrl}/schema/auto_fees__checkout`,
 			});
-			setRuleSchema(response?.data);
+			setRuleSchema(response?.attributes);
 			setLoadingRuleSchema(false);
 		} catch (e) {
 			console.error(e);
@@ -47,7 +47,6 @@ export default ({ autoFee = {}, onUpdate, loading }) => {
 	};
 
 	const { rule_string, rule_query = [] } = autoFee;
-	console.log('Auto Fee Rule Query:', rule_query);
 
 	// Update rule_query whenever changes occur
 	const updateRuleQuery = (newRuleQuery) => {

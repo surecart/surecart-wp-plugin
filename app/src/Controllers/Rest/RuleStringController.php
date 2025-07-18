@@ -57,7 +57,7 @@ class RuleStringController extends RestController {
 		if ( is_wp_error( $model ) ) {
 			return $model;
 		}
-		return $model->where( $request->get_query_params() )->getSchema( $request['schema_id'] );
+		return $model->getSchema( $request['schema_id'] );
 	}
 
 	/**
@@ -73,7 +73,7 @@ class RuleStringController extends RestController {
 		if ( is_wp_error( $model ) ) {
 			return $model;
 		}
-		return $model->where( $request->get_query_params() )->construct( $request['rule_json'] );
+		return $model->construct( $request['rule_json'] );
 	}
 
 	/**
@@ -89,6 +89,6 @@ class RuleStringController extends RestController {
 		if ( is_wp_error( $model ) ) {
 			return $model;
 		}
-		return $model->where( $request->get_query_params() )->deconstruct( $request['rule_string'] );
+		return $model->deconstruct( $request['rule_string'] );
 	}
 }
