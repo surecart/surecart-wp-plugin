@@ -1,3 +1,7 @@
+
+Deprecated: Mockery::formatArgs(): Implicitly marking parameter $arguments as nullable is deprecated, the explicit nullable type must be used instead in /Users/andre/sites/surecart/wp-content/plugins/surecart/vendor/mockery/mockery/library/Mockery.php on line 560
+
+Deprecated: Mockery::formatObjects(): Implicitly marking parameter $objects as nullable is deprecated, the explicit nullable type must be used instead in /Users/andre/sites/surecart/wp-content/plugins/surecart/vendor/mockery/mockery/library/Mockery.php on line 636
 <?php
 
 namespace SureCart\Integrations\Bricks;
@@ -166,7 +170,13 @@ class BricksElementsService {
 	 * @param array $query_args Query arguments.
 	 */
 	public function removeQueryArgsForEditor( array $query_args ): array {
-		if ( ! class_exists( '\Bricks\Elements' ) || ( bricks_is_frontend() && ! bricks_is_builder_call() ) ) {
+		// Return if bricks is not loaded.
+		if ( ! function_exists( 'bricks_is_frontend' ) || ! function_exists( 'bricks_is_builder_call' ) ) {
+			return $query_args;
+		}
+
+		// Return if not frontend or builder call.
+		if ( bricks_is_frontend() && ! bricks_is_builder_call() ) {
 			return $query_args;
 		}
 
