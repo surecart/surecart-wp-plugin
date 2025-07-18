@@ -62,14 +62,16 @@ class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 			return $html;
 		}
 
-		$video_url = wp_get_attachment_url( $this->item->ID );
+		$video_url    = wp_get_attachment_url( $this->item->ID );
+		$aspect_ratio = $this->getMetadata( 'aspect_ratio' );
+		$style        = $aspect_ratio ? 'aspect-ratio: ' . esc_attr( $aspect_ratio ) . ';' : '';
 		ob_start();
 		?>
 		<div class="sc-video-container"
 			data-wp-interactive='{ "namespace": "surecart/video" }'
 			data-wp-context='{ "isVideoPlaying": false }'
 			data-wp-on--click="actions.playVideo"
-			style="aspect-ratio: <?php echo esc_attr( $this->getMetadata( 'aspect_ratio' ) ?? '' ); ?>;"
+			style="<?php echo esc_attr( $style ); ?>"
 		>
 			<div class="sc-video-overlay" data-wp-bind--hidden="context.isVideoPlaying">
 				<img
@@ -95,9 +97,13 @@ class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 						controls
 						playsinline
 						preload="metadata"
+						aria-label="%s"
+						title="%s"
 					></video>',
 					esc_url( $video_url ),
-					esc_url( $poster_image )
+					esc_url( $poster_image ),
+					esc_attr( sprintf( __( 'Video: %s', 'surecart' ), $this->item->post_title ?? '' ) ),
+					esc_attr( $this->item->post_title ?? '' )
 				)
 			);
 			?>

@@ -38,6 +38,51 @@ export const aspectRatioChoices = [
 	},
 ];
 
+// Add thumbnail cache to avoid re-processing
+const thumbnailCache = new Map();
+
+/**
+ * Common thumbnail size presets
+ */
+export const THUMBNAIL_SIZES = {
+	small: { maxWidth: 300, maxHeight: 200 },
+	medium: { maxWidth: 600, maxHeight: 400 },
+	large: { maxWidth: 1200, maxHeight: 800 },
+	original: { maxWidth: Infinity, maxHeight: Infinity },
+};
+
+/**
+ * Calculate optimal thumbnail dimensions while preserving aspect ratio
+ *
+ * @param {number} videoWidth - Original video width
+ * @param {number} videoHeight - Original video height
+ * @param {number} maxWidth - Maximum allowed width
+ * @param {number} maxHeight - Maximum allowed height
+ * @returns {Object} - Calculated dimensions { width, height, scale }
+ */
+export const calculateThumbnailDimensions = (
+	videoWidth,
+	videoHeight,
+	maxWidth,
+	maxHeight
+) => {
+	if (videoWidth <= maxWidth && videoHeight <= maxHeight) {
+		return { width: videoWidth, height: videoHeight, scale: 1 };
+	}
+
+	const widthRatio = maxWidth / videoWidth;
+	const heightRatio = maxHeight / videoHeight;
+
+	// Use the smaller ratio to ensure both dimensions fit within limits
+	const scale = Math.min(widthRatio, heightRatio);
+
+	return {
+		width: Math.round(videoWidth * scale),
+		height: Math.round(videoHeight * scale),
+		scale,
+	};
+};
+
 export const updateAttachmentMeta = async (attachmentId, media) => {
 	const response = await fetch(`/wp-json/wp/v2/media/${attachmentId}`, {
 		method: 'POST',
@@ -77,57 +122,118 @@ export const normalizeMedia = (media) => {
 };
 
 /**
- * Extract thumbnail from video file.
+ * Extract thumbnail from video file with optimizations.
  *
  * @param {string} videoUrl - URL of the video.
  * @param {number} seekTime - Time in seconds to capture frame (default: 1).
+ * @param {Object} options - Optimization options.
  *
  * @returns {Promise<string>} - Base64 encoded PNG thumbnail.
  */
-export const extractVideoThumbnail = (videoUrl, seekTime = 1) => {
+export const extractVideoThumbnail = (videoUrl, seekTime = 1, options = {}) => {
+	// Check cache first.
+	const cacheKey = `${videoUrl}_${seekTime}`;
+	if (thumbnailCache.has(cacheKey)) {
+		return Promise.resolve(thumbnailCache.get(cacheKey));
+	}
+
+	const {
+		maxWidth = 800,
+		maxHeight = 600,
+		quality = 0.8,
+		format = 'jpeg',
+		timeout = 20000, // 20 second timeout
+	} = options;
+
 	return new Promise((resolve, reject) => {
-		// Create video element.
-		const video = document.createElement('video');
+		let timeoutId;
+		let video;
+		let canvas;
+		let ctx;
+
+		const cleanup = () => {
+			if (timeoutId) clearTimeout(timeoutId);
+			if (video) {
+				video.removeEventListener('loadeddata', onLoadedData);
+				video.removeEventListener('seeked', onSeeked);
+				video.removeEventListener('error', onError);
+				video.src = '';
+				video.load();
+			}
+			if (canvas && ctx) {
+				ctx.clearRect(0, 0, canvas.width, canvas.height);
+				canvas.width = canvas.height = 0;
+				canvas.remove();
+			}
+		};
+
+		const onError = () => {
+			cleanup();
+			reject(new Error('Failed to load video'));
+		};
+
+		const onLoadedData = function () {
+			// Seek to the specified time
+			video.currentTime = Math.min(seekTime, video.duration || 1);
+		};
+
+		const onSeeked = function () {
+			try {
+				// Calculate optimal canvas size while preserving aspect ratio
+				const dimensions = calculateThumbnailDimensions(
+					video.videoWidth,
+					video.videoHeight,
+					maxWidth,
+					maxHeight
+				);
+
+				// Create canvas with calculated dimensions
+				canvas = document.createElement('canvas');
+				canvas.width = dimensions.width;
+				canvas.height = dimensions.height;
+
+				// Use willReadFrequently for better performance
+				ctx = canvas.getContext('2d', { willReadFrequently: false });
+
+				// Optimize rendering
+				ctx.imageSmoothingEnabled = true;
+				ctx.imageSmoothingQuality = 'medium';
+
+				// Draw video frame on canvas
+				ctx.drawImage(video, 0, 0, dimensions.width, dimensions.height);
+
+				// Convert to base64 with specified format and quality
+				const mimeType = format === 'jpeg' ? 'image/jpeg' : 'image/png';
+				const dataURL = canvas.toDataURL(mimeType, quality);
+
+				// Cache the result
+				thumbnailCache.set(cacheKey, dataURL);
+
+				cleanup();
+				resolve(dataURL);
+			} catch (error) {
+				cleanup();
+				reject(error);
+			}
+		};
+
+		// Set timeout.
+		timeoutId = setTimeout(() => {
+			cleanup();
+			reject(new Error('Video thumbnail extraction timed out'));
+		}, timeout);
+
+		// Create video element with optimizations.
+		video = document.createElement('video');
 		video.crossOrigin = 'anonymous';
 		video.preload = 'metadata';
 		video.muted = true;
 		video.playsInline = true;
 
-		// Handle video load errors.
-		video.onerror = () => {
-			reject(new Error('Failed to load video'));
-		};
-
-		// When video metadata is loaded.
-		video.onloadeddata = function () {
-			// Seek to the specified time.
-			video.currentTime = Math.min(seekTime, video.duration || 1);
-		};
-
-		// When seeking is complete, extract the frame.
-		video.onseeked = function () {
-			try {
-				// Create canvas element.
-				const canvas = document.createElement('canvas');
-				canvas.width = video.videoWidth;
-				canvas.height = video.videoHeight;
-
-				// Draw video frame on canvas.
-				const ctx = canvas.getContext('2d');
-				ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-				// Convert to base64 PNG.
-				const dataURL = canvas.toDataURL('image/png');
-
-				// Cleanup.
-				video.remove();
-				canvas.remove();
-
-				resolve(dataURL);
-			} catch (error) {
-				reject(error);
-			}
-		};
+		// Add event listeners.
+		video.addEventListener('error', onError);
+		video.addEventListener('loadeddata', onLoadedData);
+		video.addEventListener('seeked', onSeeked);
 
 		// Set video source.
 		video.src = videoUrl;
@@ -135,79 +241,186 @@ export const extractVideoThumbnail = (videoUrl, seekTime = 1) => {
 };
 
 /**
- * Upload base64 thumbnail to WordPress media library using REST API.
+ * Upload base64 thumbnail to WordPress media library using REST API with optimizations.
  *
  * @param {string} base64Data - Base64 encoded image data
  * @param {string} filename - Filename for the thumbnail
+ * @param {Object} options - Upload options
  *
  * @returns {Promise<Object>} - WordPress media object (JSON).
  */
 export const uploadThumbnailToMediaRestApi = async (
 	base64Data,
-	filename = 'video-thumbnail.png'
+	filename = 'video-thumbnail.jpg', // Default to JPEG
+	options = {}
 ) => {
-	// Convert base64 to Blob.
-	const response = await fetch(base64Data);
-	const blob = await response.blob();
+	const { timeout = 30000 } = options;
 
-	// Create FormData.
+	// Convert base64 to Blob more efficiently
+	const byteCharacters = atob(base64Data.split(',')[1]);
+	const byteNumbers = new Array(byteCharacters.length);
+	for (let i = 0; i < byteCharacters.length; i++) {
+		byteNumbers[i] = byteCharacters.charCodeAt(i);
+	}
+	const byteArray = new Uint8Array(byteNumbers);
+	const mimeType = base64Data.split(',')[0].split(':')[1].split(';')[0];
+	const blob = new Blob([byteArray], { type: mimeType });
+
+	// Create FormData
 	const formData = new FormData();
 	formData.append('file', blob, filename);
 
-	// Upload to WordPress REST API.
-	const uploadResponse = await fetch(wpApiSettings.root + 'wp/v2/media', {
-		method: 'POST',
-		headers: {
-			'X-WP-Nonce': wpApiSettings.nonce,
-		},
-		body: formData,
-	});
+	// Create abort controller for timeout
+	const controller = new AbortController();
+	const timeoutId = setTimeout(() => controller.abort(), timeout);
 
-	if (!uploadResponse.ok) {
-		const errorData = await uploadResponse.json();
-		throw new Error(
-			`Failed to upload thumbnail via REST API: ${uploadResponse.status} ${uploadResponse.statusText}. Code: ${errorData.code}, Message: ${errorData.message}`
-		);
+	try {
+		// Upload to WordPress REST API
+		const uploadResponse = await fetch(wpApiSettings.root + 'wp/v2/media', {
+			method: 'POST',
+			headers: {
+				'X-WP-Nonce': wpApiSettings.nonce,
+			},
+			body: formData,
+			signal: controller.signal,
+		});
+
+		clearTimeout(timeoutId);
+
+		if (!uploadResponse.ok) {
+			const errorData = await uploadResponse.json();
+			throw new Error(
+				`Failed to upload thumbnail via REST API: ${uploadResponse.status} ${uploadResponse.statusText}. Code: ${errorData.code}, Message: ${errorData.message}`
+			);
+		}
+
+		// Parse the JSON response
+		return await uploadResponse.json();
+	} catch (error) {
+		clearTimeout(timeoutId);
+		if (error.name === 'AbortError') {
+			throw new Error('Upload timed out');
+		}
+		throw error;
 	}
-
-	// Parse the JSON response.
-	return await uploadResponse.json();
 };
 
 /**
- * Generate and upload video thumbnail automatically.
+ * Generate and upload video thumbnail automatically with optimizations.
  *
  * @param {Object} videoMedia - Video media object.
  * @param {number} seekTime - Time in seconds to capture frame.
+ * @param {Object} options - Generation options.
  *
  * @returns {Promise<Object>} - Thumbnail media object.
  */
-export const generateVideoThumbnail = async (videoMedia, seekTime = 1) => {
+export const generateVideoThumbnail = async (
+	videoMedia,
+	seekTime = 1,
+	options = {}
+) => {
 	if (!videoMedia?.source_url || !videoMedia?.mime_type?.includes('video')) {
 		throw new Error('Invalid video media object');
 	}
 
+	const {
+		maxWidth = 800,
+		maxHeight = 600,
+		quality = 0.8,
+		format = 'jpeg',
+		skipIfExists = true,
+	} = options;
+
+	// Check if thumbnail already exists
+	if (skipIfExists && videoMedia.thumbnail_image) {
+		return videoMedia.thumbnail_image;
+	}
+
 	try {
-		// Extract thumbnail from video.
+		// Extract thumbnail from video with optimizations
 		const thumbnailBase64 = await extractVideoThumbnail(
 			videoMedia.source_url,
-			seekTime
+			seekTime,
+			{ maxWidth, maxHeight, quality, format }
 		);
 
-		// Generate filename.
+		// Generate filename
 		const videoName =
 			videoMedia.title?.rendered || videoMedia?.title || 'video';
-		const filename = `${videoName.replace(
-			/[^a-zA-Z0-9]/g,
-			'_'
-		)}_thumbnail_${Date.now()}.png`;
+		const sanitizedName = videoName.replace(/[^a-zA-Z0-9]/g, '_');
+		const extension = format === 'jpeg' ? 'jpg' : 'png';
+		const filename = `${sanitizedName}_thumbnail_${Date.now()}.${extension}`;
 
-		// Upload thumbnail to media library.
+		// Upload thumbnail to media library
 		return await uploadThumbnailToMediaRestApi(thumbnailBase64, filename);
 	} catch (error) {
 		console.error('Failed to generate video thumbnail:', error);
 		throw error;
 	}
+};
+
+/**
+ * Batch process multiple video thumbnails with concurrency control.
+ *
+ * @param {Array} videoMediaArray - Array of video media objects.
+ * @param {Object} options - Processing options.
+ *
+ * @returns {Promise<Array>} - Array of thumbnail media objects.
+ */
+export const generateVideoThumbnailsBatch = async (
+	videoMediaArray,
+	options = {}
+) => {
+	const {
+		concurrency = 3, // Process 3 videos at once
+		seekTime = 1,
+		...thumbnailOptions
+	} = options;
+
+	const results = [];
+	const errors = [];
+
+	// Process in batches
+	for (let i = 0; i < videoMediaArray.length; i += concurrency) {
+		const batch = videoMediaArray.slice(i, i + concurrency);
+
+		const batchPromises = batch.map(async (videoMedia, index) => {
+			try {
+				const thumbnail = await generateVideoThumbnail(
+					videoMedia,
+					seekTime,
+					thumbnailOptions
+				);
+				return { index: i + index, thumbnail, error: null };
+			} catch (error) {
+				return { index: i + index, thumbnail: null, error };
+			}
+		});
+
+		const batchResults = await Promise.allSettled(batchPromises);
+
+		batchResults.forEach((result, batchIndex) => {
+			if (result.status === 'fulfilled') {
+				const { index, thumbnail, error } = result.value;
+				if (error) {
+					errors.push({ index, error });
+				} else {
+					results[index] = thumbnail;
+				}
+			} else {
+				errors.push({ index: i + batchIndex, error: result.reason });
+			}
+		});
+	}
+
+	return { results, errors };
+};
+
+/**
+ * Clear thumbnail cache (useful for memory management).
+ */
+export const clearThumbnailCache = () => {
+	thumbnailCache.clear();
 };
 
 /**
