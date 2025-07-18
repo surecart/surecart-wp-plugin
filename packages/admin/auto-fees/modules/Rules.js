@@ -23,6 +23,7 @@ import {
 import Box from '../../ui/Box';
 import OrGroup from './OrGroup';
 import { createEmptyOrGroup } from '../utils/ruleQueryUtils';
+import { SCHEMA_ID } from '../utils/constants';
 
 export default ({ autoFee = {}, onUpdate, loading }) => {
 	const [ruleSchema, setRuleSchema] = useState(null);
@@ -37,7 +38,7 @@ export default ({ autoFee = {}, onUpdate, loading }) => {
 		try {
 			setLoadingRuleSchema(true);
 			const response = await apiFetch({
-				path: `${baseUrl}/schema/auto_fees__checkout`,
+				path: `${baseUrl}/schema/${SCHEMA_ID}`,
 			});
 			setRuleSchema(response?.attributes);
 			setLoadingRuleSchema(false);
@@ -46,12 +47,14 @@ export default ({ autoFee = {}, onUpdate, loading }) => {
 		}
 	};
 
-	const { rule_string, rule_query = [] } = autoFee;
+	const {
+		rule_string,
+		rule_json = { rule_string: { schema_id: SCHEMA_ID, groups: [] } },
+	} = autoFee;
 
-	// Update rule_query whenever changes occur
-	const updateRuleQuery = (newRuleQuery) => {
-		console.log('Updating rule_query:', newRuleQuery);
-		onUpdate({ rule_query: newRuleQuery });
+	// Update rule_json whenever changes occur
+	const updateRuleJson = (newRuleJson) => {
+		onUpdate({ rule_json: newRuleJson });
 	};
 
 	useEffect(() => {
@@ -61,7 +64,7 @@ export default ({ autoFee = {}, onUpdate, loading }) => {
 		fetchRuleSchema();
 	}, [ruleSchema]);
 
-	if (!rule_query?.length) {
+	if (!rule_json?.rule_string?.groups?.length) {
 		return (
 			<Box
 				title={__('Auto Fee Conditions', 'surecart')}
@@ -76,7 +79,25 @@ export default ({ autoFee = {}, onUpdate, loading }) => {
 						<div>
 							<ScButton
 								onClick={() => {
-									updateRuleQuery([createEmptyOrGroup()]);
+									updateRuleJson({
+										rule_string: {
+											schema_id: SCHEMA_ID,
+											groups: [
+												{
+													leaves: [
+														{
+															attribute_name:
+																null,
+															operator_label:
+																null,
+															comparison_value:
+																'',
+														},
+													],
+												},
+											],
+										},
+									});
 								}}
 							>
 								<ScIcon name="plus" slot="prefix" />
@@ -109,16 +130,16 @@ export default ({ autoFee = {}, onUpdate, loading }) => {
 					--sc-flex-column-gap: 0;
 				`}
 			>
-				{rule_query?.map((orGroup, orGroupIndex) => {
+				{rule_json?.rule_string?.groups?.map((group, groupIndex) => {
 					return (
 						<div
-							key={orGroupIndex}
+							key={groupIndex}
 							css={css`
 								display: flex;
 								flex-direction: column;
 							`}
 						>
-							{orGroupIndex > 0 && (
+							{groupIndex > 0 && (
 								<ScButton
 									css={css`
 										pointer-events: none;
@@ -132,25 +153,39 @@ export default ({ autoFee = {}, onUpdate, loading }) => {
 								</ScButton>
 							)}
 							<OrGroup
-								orGroup={orGroup}
+								group={group}
 								ruleSchema={ruleSchema}
 								addRuleGroup={() => {
-									const newRuleQuery = [
-										...rule_query,
-										createEmptyOrGroup(),
-									];
-									updateRuleQuery(newRuleQuery);
+									const newRuleJson = JSON.parse(
+										JSON.stringify(rule_json)
+									);
+									newRuleJson.rule_string.groups.push({
+										leaves: [
+											{
+												attribute_name: null,
+												operator_label: null,
+												comparison_value: '',
+											},
+										],
+									});
+									updateRuleJson(newRuleJson);
 								}}
 								removeRuleGroup={() => {
-									const newRuleQuery = rule_query.filter(
-										(_, index) => index !== orGroupIndex
+									const newRuleJson = JSON.parse(
+										JSON.stringify(rule_json)
 									);
-									updateRuleQuery(newRuleQuery);
+									newRuleJson.rule_string.groups =
+										newRuleJson.rule_string.groups.filter(
+											(_, index) => index !== groupIndex
+										);
+									updateRuleJson(newRuleJson);
 								}}
-								totalRuleGroups={rule_query?.length}
-								orGroupIndex={orGroupIndex}
-								rule_query={rule_query}
-								updateRuleQuery={updateRuleQuery}
+								totalRuleGroups={
+									rule_json?.rule_string?.groups?.length
+								}
+								groupIndex={groupIndex}
+								rule_json={rule_json}
+								updateRuleJson={updateRuleJson}
 							/>
 						</div>
 					);

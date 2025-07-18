@@ -25,53 +25,43 @@ import { attributeLabels } from '../utils/labelTranslations';
 
 export default ({
 	ruleSchema = [],
-	addRuleGroup,
-	removeRuleGroup,
-	totalRuleGroups,
-	andGroupIndex,
-	orGroupIndex,
-	rule_query,
-	updateRuleQuery,
+	addLeaf,
+	removeLeaf,
+	totalLeaves,
+	leafIndex,
+	groupIndex,
+	rule_json,
+	updateRuleJson,
+	leaf,
 }) => {
-	const [attribute, setAttribute] = useState(null);
-	const [operator, setOperator] = useState(null);
-	const [value, setValue] = useState(null);
-	const [metadataKey, setMetadataKey] = useState(null);
+	const [attribute, setAttribute] = useState(leaf?.attribute_name || null);
+	const [operator, setOperator] = useState(leaf?.operator_label || null);
+	const [value, setValue] = useState(leaf?.comparison_value || null);
+	const [metadataKey, setMetadataKey] = useState(leaf?.metadata_key || null);
 
-	// Function to update the rule_query when any field changes
-	const updateCurrentRule = () => {
-		const newRuleQuery = [...rule_query];
-		if (!newRuleQuery[orGroupIndex]) {
-			newRuleQuery[orGroupIndex] = [];
-		}
-		if (!newRuleQuery[orGroupIndex][andGroupIndex]) {
-			newRuleQuery[orGroupIndex][andGroupIndex] = createEmptyAndRule();
-		}
-
-		newRuleQuery[orGroupIndex][andGroupIndex] = {
-			attribute: attribute,
-			value: value,
-			metadataKey: metadataKey,
-			operator: operator,
+	// Function to update the rule_json when any field changes
+	const updateCurrentLeaf = () => {
+		const newRuleJson = JSON.parse(JSON.stringify(rule_json));
+		
+		newRuleJson.rule_string.groups[groupIndex].leaves[leafIndex] = {
+			attribute_name: attribute,
+			operator_label: operator,
+			comparison_value: value?.toString() || '',
+			...(metadataKey ? { metadata_key: metadataKey } : {})
 		};
 
-		updateRuleQuery(newRuleQuery);
+		updateRuleJson(newRuleJson);
 	};
 
-	// Initialize from existing rule_query if available
+	// Initialize from existing leaf if available
 	useEffect(() => {
-		if (
-			rule_query[orGroupIndex] &&
-			rule_query[orGroupIndex][andGroupIndex]
-		) {
-			setAttribute(rule_query[orGroupIndex][andGroupIndex]?.attribute);
-			setValue(rule_query[orGroupIndex][andGroupIndex]?.value);
-			setMetadataKey(
-				rule_query[orGroupIndex][andGroupIndex]?.metadataKey
-			);
-			setOperator(rule_query[orGroupIndex][andGroupIndex]?.operator);
+		if (leaf) {
+			setAttribute(leaf.attribute_name);
+			setValue(leaf.comparison_value);
+			setMetadataKey(leaf.metadata_key);
+			setOperator(leaf.operator_label);
 		}
-	}, [orGroupIndex, andGroupIndex, rule_query]);
+	}, [leaf]);
 
 	let operators = [];
 	let attributes = [];
@@ -100,15 +90,15 @@ export default ({
 		setValue(null);
 		setOperator(null);
 		setMetadataKey(null);
-		// Update rule_query when attribute changes
-		updateCurrentRule();
+		// Update rule_json when attribute changes
+		updateCurrentLeaf();
 	}, [attribute]);
 
 	useEffect(() => {
 		if (attribute === null) {
 			return;
 		}
-		updateCurrentRule();
+		updateCurrentLeaf();
 	}, [operator, value, metadataKey]);
 
 	const isAttributeMetadata = attribute
@@ -273,19 +263,19 @@ export default ({
 						top: -8px;
 						right: -8px;
 					`}
-					onClick={removeRuleGroup}
+					onClick={removeLeaf}
 				>
 					<ScIcon name="trash" />
 				</ScButton>
 			</div>
-			{totalRuleGroups === andGroupIndex + 1 && (
+			{totalLeaves === leafIndex + 1 && (
 				<ScButton
 					type="link"
 					css={css`
 						text-align: left;
 						--sc-button-link-color: #388051;
 					`}
-					onClick={addRuleGroup}
+					onClick={addLeaf}
 				>
 					{__('+ AND', 'surecart')}
 				</ScButton>

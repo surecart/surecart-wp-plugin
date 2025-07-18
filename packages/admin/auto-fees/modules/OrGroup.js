@@ -25,10 +25,10 @@ export default ({
 	removeRuleGroup,
 	totalRuleGroups,
 	loading,
-	orGroupIndex,
-	rule_query,
-	updateRuleQuery,
-	orGroup,
+	groupIndex,
+	rule_json,
+	updateRuleJson,
+	group,
 }) => {
 	if (loading || !ruleSchema?.length) {
 		return (
@@ -47,13 +47,13 @@ export default ({
 	}
 
 	const renderRuleTitle = () => {
-		return (orGroup || [])
-			?.map((andGroup) => {
-				if (!andGroup?.attribute) {
+		return (group?.leaves || [])
+			?.map((leaf) => {
+				if (!leaf?.attribute_name) {
 					return;
 				}
 				return ruleSchema.find(
-					(item) => item.key === andGroup?.attribute
+					(item) => item.key === leaf.attribute_name
 				)?.label;
 			})
 			.join(', ');
@@ -80,16 +80,16 @@ export default ({
 			>
 				<ScIcon name="trash" />
 			</ScButton>
-			{orGroup?.map((_, andGroupIndex) => {
+			{group?.leaves?.map((leaf, leafIndex) => {
 				return (
 					<div
-						key={andGroupIndex}
+						key={leafIndex}
 						css={css`
 							display: flex;
 							flex-direction: column;
 						`}
 					>
-						{andGroupIndex > 0 && (
+						{leafIndex > 0 && (
 							<ScButton
 								css={css`
 									pointer-events: none;
@@ -103,45 +103,42 @@ export default ({
 							</ScButton>
 						)}
 						<AndGroup
-							key={andGroupIndex}
+							key={leafIndex}
 							ruleSchema={ruleSchema}
-							addRuleGroup={() => {
-								const newRuleQuery = [...rule_query];
-								if (!newRuleQuery[orGroupIndex]) {
-									newRuleQuery[orGroupIndex] = [];
-								}
-								newRuleQuery[orGroupIndex].push(
-									createEmptyAndRule()
-								);
-								updateRuleQuery(newRuleQuery);
+							leaf={leaf}
+							addLeaf={() => {
+								const newRuleJson = JSON.parse(JSON.stringify(rule_json));
+								newRuleJson.rule_string.groups[groupIndex].leaves.push({
+									attribute_name: null,
+									operator_label: null,
+									comparison_value: ''
+								});
+								updateRuleJson(newRuleJson);
 							}}
-							removeRuleGroup={() => {
-								// if there's only one and group, remove the entire or group
-								if (orGroup?.length === 1) {
+							removeLeaf={() => {
+								// if there's only one leaf, remove the entire group
+								if (group?.leaves?.length === 1) {
 									removeRuleGroup();
 									return;
 								}
 
-								const newRuleQuery = [...rule_query];
-								if (newRuleQuery[orGroupIndex]) {
-									newRuleQuery[orGroupIndex] = newRuleQuery[
-										orGroupIndex
-									].filter(
-										(_, index) => index !== andGroupIndex
+								const newRuleJson = JSON.parse(JSON.stringify(rule_json));
+								newRuleJson.rule_string.groups[groupIndex].leaves = 
+									newRuleJson.rule_string.groups[groupIndex].leaves.filter(
+										(_, index) => index !== leafIndex
 									);
-								}
-								updateRuleQuery(newRuleQuery);
+								updateRuleJson(newRuleJson);
 							}}
-							totalRuleGroups={orGroup?.length}
-							andGroupIndex={andGroupIndex}
-							orGroupIndex={orGroupIndex}
-							rule_query={rule_query}
-							updateRuleQuery={updateRuleQuery}
+							totalLeaves={group?.leaves?.length}
+							leafIndex={leafIndex}
+							groupIndex={groupIndex}
+							rule_json={rule_json}
+							updateRuleJson={updateRuleJson}
 						/>
 					</div>
 				);
 			})}
-			{totalRuleGroups === orGroupIndex + 1 && (
+			{totalRuleGroups === groupIndex + 1 && (
 				<ScButton
 					type="link"
 					css={css`

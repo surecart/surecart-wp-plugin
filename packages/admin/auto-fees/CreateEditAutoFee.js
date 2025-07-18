@@ -6,10 +6,11 @@ import { css, jsx } from '@emotion/core';
  */
 import { __ } from '@wordpress/i18n';
 import { __experimentalConfirmDialog as ConfirmDialog } from '@wordpress/components';
-import { useDispatch, useSelect } from '@wordpress/data';
+import { useDispatch, useSelect, select } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
-import { useState, useReducer } from '@wordpress/element';
+import { useState, useReducer, useEffect } from '@wordpress/element';
 import { getDate } from '@wordpress/date';
+import apiFetch from '@wordpress/api-fetch';
 
 /**
  * Internal dependencies.
@@ -46,6 +47,10 @@ export default ({ setId }) => {
 	const { deleteEntityRecord, editEntityRecord } = useDispatch(coreStore);
 	const id = useSelect((select) => select(dataStore).selectPageId());
 	const { saveEntityRecord } = useDispatch(coreStore);
+	const baseUrl = select(coreStore).getEntityConfig(
+		'surecart',
+		'rule-string'
+	)?.baseURL;
 
 	const [newAutoFee, updateNewAutoFee] = useReducer(
 		(currentState, newState) => {
@@ -60,17 +65,11 @@ export default ({ setId }) => {
 			start_at: Date.parse(getDate(new Date())) / 1000,
 			end_at: null,
 			rule_string: '',
-			rule_query: [],
+			rule_json: {
+				rule_string: { schema_id: 'auto_fees__checkout', groups: [] },
+			},
 		}
 	);
-
-	const updateAutoFee = (data) => {
-		if (!id) {
-			updateNewAutoFee(data);
-			return;
-		}
-		editEntityRecord('surecart', 'auto-fee', id, data);
-	};
 
 	const { autoFee, isSaving, loadError, isDeleting, hasLoadedAutoFee } =
 		useSelect(
@@ -111,6 +110,55 @@ export default ({ setId }) => {
 			[id, newAutoFee]
 		);
 
+	useEffect(() => {
+		if (!autoFee?.rule_string || autoFee?.rule_json) {
+			return;
+		}
+		const ruleJson = deconstructRuleString();
+	}, [autoFee]);
+
+	const updateAutoFee = async (data) => {
+		if (!id) {
+			updateNewAutoFee(data);
+			return;
+		}
+		editEntityRecord('surecart', 'auto-fee', id, data);
+	};
+
+	const deconstructRuleString = async () => {
+		try {
+			const response = await apiFetch({
+				path: `${baseUrl}/deconstruct`,
+				method: 'POST',
+				data: {
+					rule_string: {
+						schema_id: autoFee?.rule_schema_id,
+						rule_string: autoFee?.rule_string,
+					},
+				},
+			});
+
+			return response;
+		} catch (e) {
+			console.error(e);
+		}
+	};
+
+	const constructRuleString = async (rule_json) => {
+		try {
+			const response = await apiFetch({
+				path: `${baseUrl}/construct`,
+				method: 'POST',
+				data: {
+					rule_json: rule_json?.rule_string,
+				},
+			});
+			return response;
+		} catch (e) {
+			console.error(e);
+		}
+	};
+
 	/**
 	 * Update the auto fee.
 	 */
@@ -127,6 +175,14 @@ export default ({ setId }) => {
 				setId(createdAutoFee.id);
 				setIsCreating(false);
 			}
+			const ruleString = await constructRuleString(autoFee?.rule_json);
+
+			if (!ruleString?.rule_string) {
+				throw new Error('Rule String not updated.');
+			}
+
+			await updateAutoFee({ rule_string: ruleString?.rule_string });
+
 			await save({
 				successMessage: __('Auto Fee updated.', 'surecart'),
 			});

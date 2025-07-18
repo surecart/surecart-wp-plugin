@@ -81,7 +81,7 @@ class RuleStringRestServiceProvider extends RestServiceProvider implements RestS
 
 		register_rest_route(
 			"$this->name/v$this->version",
-			$this->endpoint . '/construct',
+			$this->endpoint . '/deconstruct',
 			[
 				[
 					'methods'             => \WP_REST_Server::EDITABLE,

@@ -10,9 +10,7 @@ import {
  * @returns {Array} - Empty OR group with one empty AND rule
  */
 export const createEmptyOrGroup = () => {
-	return [
-		{ attribute: null, value: null, operator: null, metadataKey: null },
-	];
+	return [createEmptyAndRule()];
 };
 
 /**
@@ -20,7 +18,12 @@ export const createEmptyOrGroup = () => {
  * @returns {Array} - Empty AND rule [attribute, value, metadataKey, operator]
  */
 export const createEmptyAndRule = () => {
-	return { attribute: null, value: null, operator: null, metadataKey: null };
+	return {
+		attribute_name: null,
+		comparison_value: null,
+		operator_label: null,
+		metadataKey: null,
+	};
 };
 
 export const getInputType = (attribute) => {
