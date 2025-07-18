@@ -166,7 +166,7 @@ class BricksElementsService {
 	 * @param array $query_args Query arguments.
 	 */
 	public function removeQueryArgsForEditor( array $query_args ): array {
-		if ( bricks_is_frontend() && ! bricks_is_builder_call() ) {
+		if ( ! class_exists( '\Bricks\Elements' ) || ( bricks_is_frontend() && ! bricks_is_builder_call() ) ) {
 			return $query_args;
 		}
 
