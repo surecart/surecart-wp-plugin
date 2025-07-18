@@ -24,7 +24,7 @@ class BricksElementsService {
 		// handle the default active template for our collection.
 		add_filter( 'bricks/active_templates', [ $this, 'setDefaultCollectionTemplate' ], 10, 3 );
 
-		// Remove post type from query args to ensure that the product page block works correctly in Editor.
+		// Remove product page query args for editor.
 		add_filter( 'surecart_product_page_query_args', [ $this, 'removeQueryArgsForEditor' ] );
 	}
 
