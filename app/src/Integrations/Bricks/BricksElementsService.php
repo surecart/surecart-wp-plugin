@@ -23,6 +23,9 @@ class BricksElementsService {
 
 		// handle the default active template for our collection.
 		add_filter( 'bricks/active_templates', [ $this, 'setDefaultCollectionTemplate' ], 10, 3 );
+
+		// Remove product page query args for editor.
+		add_filter( 'surecart_product_page_query_args', [ $this, 'removeQueryArgsForEditor' ] );
 	}
 
 	/**
@@ -155,5 +158,28 @@ class BricksElementsService {
 		$control_options['templateTypes']['sc_collection'] = esc_html__( 'SureCart - Collection Archive', 'surecart' );
 
 		return $control_options;
+	}
+
+	/**
+	 * Remove query args for editor.
+	 *
+	 * @param array $query_args Query arguments.
+	 */
+	public function removeQueryArgsForEditor( array $query_args ): array {
+		// Return if bricks is not loaded.
+		if ( ! function_exists( 'bricks_is_frontend' ) || ! function_exists( 'bricks_is_builder_call' ) ) {
+			return $query_args;
+		}
+
+		// Return if not frontend or builder call.
+		if ( bricks_is_frontend() && ! bricks_is_builder_call() ) {
+			return $query_args;
+		}
+
+		if ( isset( $query_args['post__in'] ) ) {
+			unset( $query_args['post__in'] );
+		}
+
+		return $query_args;
 	}
 }
