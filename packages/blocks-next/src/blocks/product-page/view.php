@@ -4,7 +4,7 @@ use SureCart\Models\Blocks\ProductPageBlock;
 
 $query = new WP_Query(
 	apply_filters(
-		'surecart-product-page-query-args',
+		'surecart_product_page_query_args',
 		[
 			'post_type'      => 'sc_product',
 			'posts_per_page' => 1,

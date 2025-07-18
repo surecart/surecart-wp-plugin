@@ -25,7 +25,7 @@ class BricksElementsService {
 		add_filter( 'bricks/active_templates', [ $this, 'setDefaultCollectionTemplate' ], 10, 3 );
 
 		// Remove post type from query args to ensure that the product page block works correctly in Editor.
-		add_filter( 'surecart-product-page-query-args', [ $this, 'removeQueryArgsForEditor' ] );
+		add_filter( 'surecart_product_page_query_args', [ $this, 'removeQueryArgsForEditor' ] );
 	}
 
 	/**
@@ -165,7 +165,7 @@ class BricksElementsService {
 	 *
 	 * @param array $query_args Query arguments.
 	 */
-	public function removeQueryArgsForEditor( $query_args ) {
+	public function removeQueryArgsForEditor( array $query_args ): array {
 		if ( bricks_is_frontend() || ! bricks_is_builder_call() ) {
 			return $query_args;
 		}
