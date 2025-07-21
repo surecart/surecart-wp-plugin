@@ -84,7 +84,6 @@ class RuleStringController extends RestController {
 	 * @return \WP_REST_Response
 	 */
 	public function deconstruct( \WP_REST_Request $request ) {
-        error_log('In deconstruct');
 		$class = new $this->class( $request->get_json_params() );
 		$model = $this->middleware( $class, $request, 'deconstruct' );
 		if ( is_wp_error( $model ) ) {
