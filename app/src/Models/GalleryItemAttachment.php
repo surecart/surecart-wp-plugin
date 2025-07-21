@@ -9,26 +9,26 @@ use SureCart\Support\Contracts\GalleryItem;
  */
 class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 	/**
-	 * Featured image URL.
+	 * Featured image.
 	 *
 	 * This is used for fallback when the attachment does not have a thumbnail or poster image.
 	 *
 	 * @var string|null
 	 */
-	private $featured_image_url = null;
+	private $featured_image = null;
 
 	/**
 	 * Create a new gallery item.
 	 * This can accept a product media or a post.
 	 *
 	 * @param int|\WP_Post $item               The item.
-	 * @param string|null  $featured_image_url The featured image URL for the post.
+	 * @param string|null  $featured_image The featured image URL for the post.
 	 *
 	 * @return void
 	 */
-	public function __construct( $item, $featured_image_url = null ) {
-		$this->item               = get_post( $item['id'] ?? $item );
-		$this->featured_image_url = $featured_image_url;
+	public function __construct( $item, $featured_image = null ) {
+		$this->item           = get_post( $item['id'] ?? $item );
+		$this->featured_image = $featured_image;
 	}
 
 	/**
@@ -37,7 +37,10 @@ class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 	 * @return string The Poster image URL.
 	 */
 	public function get_video_poster_image(): string {
-		return $this->getMetadata( 'thumbnail_image' )['url'] ?? $this->featured_image_url ?? esc_url_raw( trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'images/placeholder.jpg' );
+		// Fallback featured_image.
+		$fallback_featured_image = $this->featured_image->guid ?? $this->featured_image->src ?? null;
+
+		return esc_url_raw( $this->getMetadata( 'thumbnail_image' )['url'] ?? $fallback_featured_image ?? trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'images/placeholder.jpg' );
 	}
 
 	/**

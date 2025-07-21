@@ -644,19 +644,8 @@ class Product extends Model implements PageModel {
 		$gallery     = array_values( $this->gallery ?? array() );
 		$first_media = $gallery[0] ?? [];
 
-		$total_gallery_items = count( $gallery );
 		if ( $first_media instanceof GalleryItemAttachment && $first_media->isVideo() ) {
-			if ( ! empty( $first_media->getMetadata( 'thumbnail_image' ) ) ) {
-				return new GalleryItemAttachment( $first_media->getMetadata( 'thumbnail_image' ) );
-			}
-
-			// If no thumbnail, look for next image in gallery.
-			for ( $i = 1; $i < $total_gallery_items; $i++ ) {
-				$next_media = $gallery[ $i ] ?? [];
-				if ( false !== strpos( $next_media['post_mime_type'] ?? '', 'image' ) ) {
-					return $gallery[ $i ];
-				}
-			}
+			return $this->getVideoThumbnailOrFallback( $first_media, $gallery );
 		}
 
 		if ( ! empty( $first_media ) ) {
@@ -971,21 +960,18 @@ class Product extends Model implements PageModel {
 			$gallery_ids = array();
 		}
 
-		$product_featured_image     = $this->getFeaturedImageAttribute();
-		$product_featured_image_url = $product_featured_image instanceof GalleryItem
-		? ( $product_featured_image->attributes( 'thumbnail' )->src ?? '' )
-		: '';
+		$product_featured_image = $this->getFeaturedImageAttribute();
 
 		$gallery = array_values(
 			array_filter(
 				array_map(
-					function ( $gallery_item ) use ( $product_featured_image_url ) {
+					function ( $gallery_item ) use ( $product_featured_image ) {
 						// Extract the ID from the gallery item (can be int or object).
 						$id = is_int( $gallery_item ) ? $gallery_item : intval( ( (object) $gallery_item )->id ?? 0 );
 
 						// this is an attachment id.
 						if ( is_int( $id ) ) {
-							$attachment = new GalleryItemAttachment( $gallery_item, $product_featured_image_url );
+							$attachment = new GalleryItemAttachment( $gallery_item, $product_featured_image );
 
 							if ( is_object( $gallery_item ) || is_array( $gallery_item ) ) {
 								$item = (object) $gallery_item;
@@ -1141,5 +1127,29 @@ class Product extends Model implements PageModel {
 	 */
 	public function getCatalogedAtDateTimeAttribute() {
 		return ! empty( $this->cataloged_at ) ? TimeDate::formatDateAndTime( $this->cataloged_at ) : '';
+	}
+
+	/**
+	 * Get the video thumbnail or fallback to the next image in the gallery.
+	 *
+	 * @param GalleryItemAttachment $first_media The first media item.
+	 * @param array                 $gallery The gallery items.
+	 *
+	 * @return GalleryItemAttachment|null
+	 */
+	private function getVideoThumbnailOrFallback( $first_media, $gallery ) {
+		$thumbnail_image = $first_media->getMetadata( 'thumbnail_image' ) ?? null;
+		if ( ! empty( $thumbnail_image ) ) {
+			return new GalleryItemAttachment( $thumbnail_image );
+		}
+
+		// If no thumbnail, look for next image in gallery.
+		foreach ( $gallery as $media ) {
+			if ( false !== strpos( $media->post_mime_type ?? '', 'image' ) ) {
+				return $media;
+			}
+		}
+
+		return null;
 	}
 }

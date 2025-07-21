@@ -20,7 +20,7 @@
 					echo wp_kses_data(
 						wp_interactivity_data_wp_context(
 							[
-								'optionValue' => $media->variant_option,
+								'optionValue' => $media->getMetadata( 'variant_option' ),
 							]
 						)
 					);
@@ -84,7 +84,7 @@
 							echo wp_kses_data(
 								wp_interactivity_data_wp_context(
 									[
-										'optionValue' => $media->variant_option,
+										'optionValue' => $media->getMetadata( 'variant_option' ),
 									]
 								)
 							);

@@ -72,10 +72,6 @@ abstract class GalleryItem implements ArrayAccess, JsonSerializable, Arrayable, 
 	 * @return string
 	 */
 	public function __get( $key ) {
-		if ( $this->getMetadata( $key ) ) {
-			return $this->getMetadata( $key );
-		}
-
 		// normalize the ID.
 		if ( 'id' === $key && isset( $this->item->ID ) ) {
 			return $this->item->ID;
