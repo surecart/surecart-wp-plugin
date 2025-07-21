@@ -74,8 +74,8 @@ export default ({ attributes: { label, showLabel, icon }, setAttributes }) => {
 					<PlainText
 						__experimentalVersion={2}
 						tagName="span"
-						aria-label={__('Next page link')}
-						placeholder={__('Next')}
+						aria-label={__('Close cart')}
+						placeholder={__('Close')}
 						value={label}
 						onChange={(newLabel) =>
 							setAttributes({ label: newLabel })
