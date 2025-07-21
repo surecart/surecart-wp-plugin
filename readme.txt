@@ -314,14 +314,14 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 == Changelog ==
 
 = 3.11.0-beta1 - July 21, 2025 =
-- Improvement: Added loading state to mobile filters for better user experience.
-- Improvement: Enhanced subscription price display with readonly attribute support.
-- Improvement: Added product image support for instant checkout.
+- New: Updated cart design and customization options.
+- Improvement: Added loading state to mobile shop page filters for better user experience.
+- Improvement: Enhanced readonly subscription price display in admin.
 - Improvement: Added shadow part for line item placeholder images for better customization.
-- Improvement: Enhanced cart display with dividers and larger thumbnail sizes.
-- Improvement: Added dark mode support for price boost feature.
-- Fix: Affiliate commission display now shows correct currency instead of defaulting to USD.
-- Fix: Product messages now display only on relevant product pages.
+- Fix: Issue on instant checkout where product images were not showing if the product page was a draft.
+- Fix: Dark mode support for price boost feature.
+- Fix: Affiliate commission display now shows correct currency.
+- Fix: Elementor product wrapper messages now display only on relevant product pages.
 
 = 3.10.1 - July 18th, 2025 =
 - Fix: Improved compatibility with Bricks Builder to ensure forms display correctly in the editor.
