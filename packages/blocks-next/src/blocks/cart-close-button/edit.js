@@ -65,7 +65,7 @@ export default ({ attributes: { label, showLabel, icon }, setAttributes }) => {
 			</InspectorControls>
 			<div
 				role="button"
-				tabIndex="0"
+				tabIndex={0}
 				aria-label={__('Close cart', 'surecart')}
 				onClick={(e) => e.preventDefault()}
 				{...blockProps}
