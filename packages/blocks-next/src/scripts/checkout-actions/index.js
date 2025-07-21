@@ -194,6 +194,32 @@ export function* removeCheckoutLineItem(id) {
 }
 
 /**
+ * Toggle a swap
+ */
+export function* toggleSwap({ id, action = 'swap' }) {
+	try {
+		checkoutState.loading = true;
+		const item = yield apiFetch({
+			path: addQueryArgs(`surecart/v1/line_items/${id}/${action}`, {
+				expand: [
+					...(expand || []).map((item) => {
+						return item.includes('.') ? item : `checkout.${item}`;
+					}),
+					'checkout',
+				],
+			}),
+			method: 'PATCH',
+		});
+		return item?.checkout;
+	} catch (e) {
+		console.error(e);
+		checkoutState.error = e;
+	} finally {
+		checkoutState.loading = false;
+	}
+}
+
+/**
  * Add a line item.
  */
 export function* addLineItem({ checkout, data, live_mode = false }) {

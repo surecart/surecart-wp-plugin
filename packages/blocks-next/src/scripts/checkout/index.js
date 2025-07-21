@@ -100,11 +100,14 @@ const { state, actions } = store('surecart/checkout', {
 		 */
 		get lineItemHasScratchAmount() {
 			const { line_item } = getContext();
-			if (!!line_item?.ad_hoc_amount) {
+			if (
+				!!line_item?.ad_hoc_amount ||
+				!line_item?.scratch_display_amount
+			) {
 				return false;
 			}
 
-			return line_item.price.scratchAmount !== line_item.price.amount;
+			return line_item.scratch_amount !== line_item.subtotal_amount;
 		},
 
 		/**
@@ -118,7 +121,19 @@ const { state, actions } = store('surecart/checkout', {
 		 * Get the checkout line items.
 		 */
 		get checkoutLineItems() {
-			return state.checkout?.line_items?.data || [];
+			return (state?.checkout?.line_items?.data || []).sort((a, b) => {
+				const aHasSwap = a?.price?.current_swap || a?.swap ? 1 : 0;
+				const bHasSwap = b?.price?.current_swap || b?.swap ? 1 : 0;
+				return bHasSwap - aHasSwap;
+			});
+		},
+
+		/**
+		 * Get the line item fees.
+		 */
+		get lineItemFees() {
+			const { line_item } = getContext();
+			return line_item?.fees?.data || [];
 		},
 
 		/**
@@ -150,6 +165,23 @@ const { state, actions } = store('surecart/checkout', {
 			return state?.checkout?.line_items?.data?.some(
 				(item) => item?.price?.recurring_interval
 			);
+		},
+
+		get swap() {
+			const { line_item } = getContext();
+			return line_item?.swap || line_item?.price?.current_swap;
+		},
+
+		get swapDisplayAmount() {
+			return state?.swap?.swap_price?.display_amount;
+		},
+
+		get swapIntervalText() {
+			return state?.swap?.swap_price?.short_interval_text;
+		},
+
+		get swapIntervalCountText() {
+			return state?.swap?.swap_price?.short_interval_count_text;
 		},
 
 		/**
@@ -219,6 +251,14 @@ const { state, actions } = store('surecart/checkout', {
 					.filter(Boolean)
 					.join(' / ') || null
 			);
+		},
+
+		/**
+		 * Get the line item variant.
+		 */
+		get lineItemPriceName() {
+			const { line_item } = getContext();
+			return line_item.price.name ?? '';
 		},
 	},
 
@@ -329,6 +369,22 @@ const { state, actions } = store('surecart/checkout', {
 			if (input) {
 				setTimeout(() => input.focus(), 0);
 			}
+		},
+
+		toggleSwap: function* () {
+			const { line_item, mode, formId } = getContext();
+			// fetch the checkout.
+			const { toggleSwap } = yield import(
+				/* webpackIgnore: true */
+				'@surecart/checkout-service'
+			);
+
+			const checkout = yield* toggleSwap({
+				id: line_item?.id,
+				action: line_item?.swap ? 'unswap' : 'swap',
+			});
+
+			actions.setCheckout(checkout, mode, formId);
 		},
 
 		/**

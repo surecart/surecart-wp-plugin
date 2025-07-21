@@ -1,0 +1,71 @@
+// Toggle Switch Styles
+.sc-toggle {
+	position: relative;
+	display: inline-flex;
+	height: 16px;
+	width: 30px;
+	padding: 0;
+	flex-shrink: 0;
+	cursor: pointer;
+	box-shadow: none;
+	border-radius: 9999px;
+	border: 2px solid transparent;
+	background-color: rgba(0, 0, 0, 0.1);
+	transition-property: background-color;
+	transition-duration: 200ms;
+	transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+
+	&:focus,
+	&:hover {
+		&:not(.sc-toggle--checked) {
+			background-color: rgba(0, 0, 0, 0.2);
+			border-color: transparent;
+		}
+	}
+
+	&:focus {
+		outline: none;
+		--ring-color: var(--sc-color-primary-500);
+		--ring-offset-width: 2px;
+		--ring-width: 2px;
+		box-shadow: 0 0 0 var(--ring-offset-width) #fff,
+			0 0 0 calc(var(--ring-offset-width) + var(--ring-width))
+				var(--ring-color);
+	}
+
+	&.sc-toggle--checked {
+		background-color: var(--sc-color-primary-500);
+	}
+
+	.sc-toggle__knob {
+		pointer-events: none;
+		padding: 0;
+		display: inline-block;
+		height: 12px;
+		width: 12px;
+		transform: translateX(0);
+		border-radius: 9999px;
+		background-color: white;
+		box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1),
+			0 1px 2px 0 rgba(0, 0, 0, 0.06);
+		transition-property: transform;
+		transition-duration: 200ms;
+		transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+	}
+
+	&.sc-toggle--checked .sc-toggle__knob {
+		transform: translateX(13px);
+	}
+
+	.sc-toggle__label {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		margin: -1px;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+		white-space: nowrap;
+		border-width: 0;
+	}
+}
