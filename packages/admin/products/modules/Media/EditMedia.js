@@ -96,7 +96,12 @@ export default ({ media, product, onSave, open, onRequestClose }) => {
 	);
 
 	return (
-		<ScForm onScFormSubmit={onSubmit}>
+		<ScForm
+			style={{
+				'--sc-form-row-spacing': 'var(--sc-spacing-large)',
+			}}
+			onScFormSubmit={onSubmit}
+		>
 			<ScDrawer
 				label={__('Edit Media', 'surecart')}
 				style={{
@@ -112,14 +117,13 @@ export default ({ media, product, onSave, open, onRequestClose }) => {
 						display: flex;
 						flex-direction: column;
 						height: 100%;
-						background: var(--sc-color-gray-50);
+						padding: var(--sc-spacing-x-large);
 					`}
 				>
 					<div
 						css={css`
-							padding: 30px;
 							display: grid;
-							gap: 2em;
+							gap: var(--sc-spacing-medium);
 						`}
 					>
 						<Error error={error} setError={setError} />
@@ -208,28 +212,24 @@ export default ({ media, product, onSave, open, onRequestClose }) => {
 						{mediaData?.id && (
 							<>
 								{!!variantOptionChoices?.length && (
-									<ScFormControl
+									<ScSelect
 										label={__(
 											'Select Variation',
 											'surecart'
 										)}
-									>
-										<ScSelect
-											value={formData.variant_option}
-											choices={variantOptionChoices}
-											style={{ width: '100%' }}
-											placeholder={__(
-												'Select Variation',
-												'surecart'
-											)}
-											onScChange={(e) =>
-												updateFormData(
-													'variant_option',
-													e.target.value
-												)
-											}
-										/>
-									</ScFormControl>
+										value={formData.variant_option}
+										choices={variantOptionChoices}
+										placeholder={__(
+											'Select Variation',
+											'surecart'
+										)}
+										onScChange={(e) =>
+											updateFormData(
+												'variant_option',
+												e.target.value
+											)
+										}
+									/>
 								)}
 
 								{isVideo(mediaData) && (

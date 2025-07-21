@@ -279,15 +279,14 @@ export default ({
 				)}
 			</ScFormControl>
 
-			<ScFormControl label={__('Aspect Ratio', 'surecart')}>
-				<ScSelect
-					value={aspectRatio}
-					placeholder={__('Select aspect ratio', 'surecart')}
-					choices={aspectRatioChoices}
-					style={{ width: '100%' }}
-					onScChange={(e) => onAspectRatioChange(e.target.value)}
-				/>
-			</ScFormControl>
+			<ScSelect
+				label={__('Aspect Ratio', 'surecart')}
+				value={aspectRatio}
+				placement="top-start"
+				placeholder={__('Select aspect ratio', 'surecart')}
+				choices={aspectRatioChoices}
+				onScChange={(e) => onAspectRatioChange(e.target.value)}
+			/>
 		</>
 	);
 };
