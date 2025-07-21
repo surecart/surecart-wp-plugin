@@ -164,12 +164,13 @@ export class ScStripePaymentElement {
   maybeApplyFilters(options: any): any {
     if (!window?.wp?.hooks?.applyFilters) return options;
 
-    options.paymentMethodOrder = window.wp.hooks.applyFilters('surecart_stripe_payment_element_payment_method_order', [], checkoutState.checkout);
-    options.wallets = window.wp.hooks.applyFilters('surecart_stripe_payment_element_wallets', {}, checkoutState.checkout);
-    options.terms = window.wp.hooks.applyFilters('surecart_stripe_payment_element_terms', {}, checkoutState.checkout);
-    options.fields = window.wp.hooks.applyFilters('surecart_stripe_payment_element_fields', options.fields);
-
-    return options;
+    return {
+      ...options,
+      paymentMethodOrder: window.wp.hooks.applyFilters('surecart_stripe_payment_element_payment_method_order', [], checkoutState.checkout),
+      wallets: window.wp.hooks.applyFilters('surecart_stripe_payment_element_wallets', {}, checkoutState.checkout),
+      terms: window.wp.hooks.applyFilters('surecart_stripe_payment_element_terms', {}, checkoutState.checkout),
+      fields: window.wp.hooks.applyFilters('surecart_stripe_payment_element_fields', options.fields),
+    };
   }
 
   /** Update the payment element mode, amount and currency when it changes. */
