@@ -169,7 +169,7 @@ export class ScStripePaymentElement {
       paymentMethodOrder: window.wp.hooks.applyFilters('surecart_stripe_payment_element_payment_method_order', [], checkoutState.checkout),
       wallets: window.wp.hooks.applyFilters('surecart_stripe_payment_element_wallets', {}, checkoutState.checkout),
       terms: window.wp.hooks.applyFilters('surecart_stripe_payment_element_terms', {}, checkoutState.checkout),
-      fields: window.wp.hooks.applyFilters('surecart_stripe_payment_element_fields', options.fields),
+      fields: window.wp.hooks.applyFilters('surecart_stripe_payment_element_fields', options.fields ?? {}),
     };
   }
 
