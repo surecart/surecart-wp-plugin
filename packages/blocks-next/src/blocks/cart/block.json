@@ -20,14 +20,41 @@
 	},
 	"supports": {
 		"interactivity": true,
-		"layout": true,
+		"layout": {
+			"__experimentalDefault": "grid",
+			"__experimentalDefaultControls": {
+				"layout": true
+			}
+		},
+		"__experimentalBorder": {
+			"color": true,
+			"radius": true,
+			"style": true,
+			"width": true,
+			"__experimentalDefaultControls": {
+				"color": true,
+				"radius": true,
+				"style": true,
+				"width": true
+			}
+		},
 		"html": false,
 		"multiple": false,
+		"spacing": {
+			"padding": true,
+			"margin": true,
+			"blockGap": true
+		},
 		"currencyConversion": true,
 		"typography": {
 			"fontSize": true,
 			"lineHeight": false,
 			"textAlign": false
+		},
+		"color": {
+			"text": true,
+			"background": true,
+			"enableContrastChecker": true
 		}
 	},
 	"render": "file:./view.php",

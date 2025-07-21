@@ -1,0 +1,18 @@
+.wp-block-surecart-cart-line-item-image {
+	box-sizing: border-box;
+	height: auto;
+	max-width: 100%;
+	vertical-align: bottom;
+
+	&.sc-is-covered {
+		object-fit: cover;
+	}
+
+	&.sc-is-contained {
+		object-fit: contain;
+	}
+}
+
+.sc-cart-line-item-image-wrap {
+	flex-shrink: 0; // Prevent the image from shrinking below the fixed size.
+}

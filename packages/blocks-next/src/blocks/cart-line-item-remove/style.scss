@@ -1,0 +1,14 @@
+.wp-block-surecart-cart-line-item-remove {
+	cursor: pointer;
+	display: inline-flex;
+	align-items: center;
+	gap: 0.25em;
+	color: var(--sc-color-primary-500);
+	font-weight: var(--sc-font-weight-semibold);
+	font-size: var(--sc-font-size-medium);
+
+	&__icon {
+		width: 1.1em;
+		height: 1.1em;
+	}
+}

@@ -1,0 +1,25 @@
+.sc-cart-items-submit__wrapper {
+	a.wp-block-button__link,
+	.wp-block-button__link {
+		position: relative;
+		text-decoration: none;
+		width: 100%;
+		display: block;
+		box-sizing: border-box;
+		text-align: center;
+		background: var(--sc-color-primary-500);
+		color: white;
+
+		&:focus {
+			outline: none;
+			box-shadow: 0 0 0 var(--sc-focus-ring-width)
+				var(--sc-focus-ring-color-primary);
+		}
+	}
+
+	&.wp-block-buttons > .wp-block-button {
+		display: block;
+		width: 100%;
+		text-decoration: none !important;
+	}
+}
