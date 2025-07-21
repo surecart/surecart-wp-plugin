@@ -102,7 +102,7 @@ export class ScProductLineItem {
             'product-line-item__removable': this.removable,
           }}
         >
-          {!!this.image?.src ? <img {...(this.image as any)} part="image" class="item__image" /> : <div class="item__image-placeholder"></div>}
+          {!!this.image?.src ? <img {...(this.image as any)} part="image" class="item__image" /> : <div class="item__image-placeholder" part="placeholder__image"></div>}
           <div class="item__text-container">
             <div class="item__row">
               <div class="item__title" part="title">
