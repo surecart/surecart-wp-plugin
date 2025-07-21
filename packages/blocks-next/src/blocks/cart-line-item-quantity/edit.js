@@ -1,6 +1,6 @@
 import { useBlockProps } from '@wordpress/block-editor';
 import { ScIcon } from '@surecart/components-react';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 
 export default ({ context: { editable = true } }) => {
 	const blockProps = useBlockProps({
