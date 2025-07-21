@@ -12,6 +12,7 @@ import {
 	__experimentalGetSpacingClassesAndStyles as useSpacingProps,
 	__experimentalGetShadowClassesAndStyles as useShadowProps,
 } from '@wordpress/block-editor';
+import { isKeyboardEvent } from '@wordpress/keycodes';
 import { useRef } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
