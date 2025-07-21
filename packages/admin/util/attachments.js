@@ -38,7 +38,7 @@ export const aspectRatioChoices = [
 	},
 ];
 
-// Add thumbnail cache to avoid re-processing
+// Add thumbnail cache to avoid re-processing.
 const thumbnailCache = new Map();
 
 /**
@@ -81,19 +81,6 @@ export const calculateThumbnailDimensions = (
 		height: Math.round(videoHeight * scale),
 		scale,
 	};
-};
-
-export const updateAttachmentMeta = async (attachmentId, media) => {
-	const response = await fetch(`/wp-json/wp/v2/media/${attachmentId}`, {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
-			'X-WP-Nonce': wpApiSettings.nonce,
-		},
-		body: JSON.stringify(media),
-	});
-
-	return response.json();
 };
 
 export const normalizeMedia = (media) => {
@@ -142,7 +129,7 @@ export const extractVideoThumbnail = (videoUrl, seekTime = 1, options = {}) => {
 		maxHeight = 600,
 		quality = 0.8,
 		format = 'jpeg',
-		timeout = 20000, // 20 second timeout
+		timeout = 20000, // 20 seconds timeout.
 	} = options;
 
 	return new Promise((resolve, reject) => {
@@ -173,13 +160,13 @@ export const extractVideoThumbnail = (videoUrl, seekTime = 1, options = {}) => {
 		};
 
 		const onLoadedData = function () {
-			// Seek to the specified time
+			// Seek to the specified time.
 			video.currentTime = Math.min(seekTime, video.duration || 1);
 		};
 
 		const onSeeked = function () {
 			try {
-				// Calculate optimal canvas size while preserving aspect ratio
+				// Calculate optimal canvas size while preserving aspect ratio.
 				const dimensions = calculateThumbnailDimensions(
 					video.videoWidth,
 					video.videoHeight,
@@ -187,22 +174,22 @@ export const extractVideoThumbnail = (videoUrl, seekTime = 1, options = {}) => {
 					maxHeight
 				);
 
-				// Create canvas with calculated dimensions
+				// Create canvas with calculated dimensions.
 				canvas = document.createElement('canvas');
 				canvas.width = dimensions.width;
 				canvas.height = dimensions.height;
 
-				// Use willReadFrequently for better performance
+				// Use willReadFrequently for better performance.
 				ctx = canvas.getContext('2d', { willReadFrequently: false });
 
-				// Optimize rendering
+				// Optimize rendering.
 				ctx.imageSmoothingEnabled = true;
 				ctx.imageSmoothingQuality = 'medium';
 
-				// Draw video frame on canvas
+				// Draw video frame on canvas.
 				ctx.drawImage(video, 0, 0, dimensions.width, dimensions.height);
 
-				// Convert to base64 with specified format and quality
+				// Convert to base64 with specified format and quality.
 				const mimeType = format === 'jpeg' ? 'image/jpeg' : 'image/png';
 				const dataURL = canvas.toDataURL(mimeType, quality);
 
@@ -331,96 +318,31 @@ export const generateVideoThumbnail = async (
 		skipIfExists = true,
 	} = options;
 
-	// Check if thumbnail already exists
+	// Check if thumbnail already exists.
 	if (skipIfExists && videoMedia.thumbnail_image) {
 		return videoMedia.thumbnail_image;
 	}
 
 	try {
-		// Extract thumbnail from video with optimizations
+		// Extract thumbnail from video with optimizations.
 		const thumbnailBase64 = await extractVideoThumbnail(
 			videoMedia.source_url,
 			seekTime,
 			{ maxWidth, maxHeight, quality, format }
 		);
 
-		// Generate filename
+		// Generate filename.
 		const videoName =
 			videoMedia.title?.rendered || videoMedia?.title || 'video';
 		const sanitizedName = videoName.replace(/[^a-zA-Z0-9]/g, '_');
 		const extension = format === 'jpeg' ? 'jpg' : 'png';
 		const filename = `${sanitizedName}_thumbnail_${Date.now()}.${extension}`;
 
-		// Upload thumbnail to media library
+		// Upload thumbnail to media library.
 		return await uploadThumbnailToMediaRestApi(thumbnailBase64, filename);
 	} catch (error) {
-		console.error('Failed to generate video thumbnail:', error);
-		throw error;
+		throw new Error(`Error generating video thumbnail: ${error.message}`);
 	}
-};
-
-/**
- * Batch process multiple video thumbnails with concurrency control.
- *
- * @param {Array} videoMediaArray - Array of video media objects.
- * @param {Object} options - Processing options.
- *
- * @returns {Promise<Array>} - Array of thumbnail media objects.
- */
-export const generateVideoThumbnailsBatch = async (
-	videoMediaArray,
-	options = {}
-) => {
-	const {
-		concurrency = 3, // Process 3 videos at once
-		seekTime = 1,
-		...thumbnailOptions
-	} = options;
-
-	const results = [];
-	const errors = [];
-
-	// Process in batches
-	for (let i = 0; i < videoMediaArray.length; i += concurrency) {
-		const batch = videoMediaArray.slice(i, i + concurrency);
-
-		const batchPromises = batch.map(async (videoMedia, index) => {
-			try {
-				const thumbnail = await generateVideoThumbnail(
-					videoMedia,
-					seekTime,
-					thumbnailOptions
-				);
-				return { index: i + index, thumbnail, error: null };
-			} catch (error) {
-				return { index: i + index, thumbnail: null, error };
-			}
-		});
-
-		const batchResults = await Promise.allSettled(batchPromises);
-
-		batchResults.forEach((result, batchIndex) => {
-			if (result.status === 'fulfilled') {
-				const { index, thumbnail, error } = result.value;
-				if (error) {
-					errors.push({ index, error });
-				} else {
-					results[index] = thumbnail;
-				}
-			} else {
-				errors.push({ index: i + batchIndex, error: result.reason });
-			}
-		});
-	}
-
-	return { results, errors };
-};
-
-/**
- * Clear thumbnail cache (useful for memory management).
- */
-export const clearThumbnailCache = () => {
-	thumbnailCache.clear();
 };
 
 /**
@@ -501,12 +423,12 @@ export const isComplexGalleryItem = (item) => {
 export const createGalleryItem = (id, properties = {}) => {
 	const { variant_option, thumbnail_image, aspect_ratio } = properties;
 
-	// If no additional properties, return just the ID
+	// If no additional properties, return just the ID.
 	if (!variant_option && !thumbnail_image && !aspect_ratio) {
 		return parseInt(id);
 	}
 
-	// Return object with properties
+	// Return object with properties.
 	const item = { id: parseInt(id) };
 	if (variant_option) item.variant_option = variant_option;
 	if (thumbnail_image) item.thumbnail_image = thumbnail_image;

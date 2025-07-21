@@ -105,7 +105,7 @@ class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 					></video>',
 					esc_url( $video_url ),
 					esc_url( $poster_image ),
-					esc_attr( sprintf( __( 'Video: %s', 'surecart' ), $this->item->post_title ?? '' ) ),
+					esc_attr( sprintf( __( 'Product Video: %s', 'surecart' ), $this->item->post_title ?? '' ) ),
 					esc_attr( $this->item->post_title ?? '' )
 				)
 			);
