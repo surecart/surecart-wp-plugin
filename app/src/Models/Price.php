@@ -310,6 +310,11 @@ class Price extends Model {
 	 * @return string
 	 */
 	public function getShortIntervalTextAttribute() {
+		// Don't output interval text if recurring_interval_count is 1 or less.
+		if ( (int) $this->recurring_interval_count <= 1 ) {
+			return '';
+		}
+
 		$intervals = array(
 			'day'   => [
 				'single' => __( 'day', 'surecart' ),
