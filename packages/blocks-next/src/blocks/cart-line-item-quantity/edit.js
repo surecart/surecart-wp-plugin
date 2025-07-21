@@ -20,7 +20,7 @@ export default ({ context: { editable = true } }) => {
 			<div
 				className="sc-input-group-text sc-quantity-selector__decrease"
 				role="button"
-				tabIndex="0"
+				tabIndex={0}
 				aria-label={__('Decrease quantity by one.', 'surecart')}
 			>
 				<ScIcon name="minus" />
@@ -36,7 +36,7 @@ export default ({ context: { editable = true } }) => {
 			<div
 				className="sc-input-group-text sc-quantity-selector__increase"
 				role="button"
-				tabindex="0"
+				tabIndex={0}
 				aria-label={__('Increase quantity by one.', 'surecart')}
 			>
 				<ScIcon name="plus" />
