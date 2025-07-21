@@ -12,21 +12,11 @@ import {
 	__experimentalGetSpacingClassesAndStyles as useSpacingProps,
 	__experimentalGetShadowClassesAndStyles as useShadowProps,
 } from '@wordpress/block-editor';
-import { isKeyboardEvent } from '@wordpress/keycodes';
 import { useRef } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 export default ({ className, attributes, setAttributes }) => {
 	const { text, style, width } = attributes;
-
-	function onKeyDown(event) {
-		if (isKeyboardEvent.primary(event, 'k')) {
-			startEditing(event);
-		} else if (isKeyboardEvent.primaryShift(event, 'k')) {
-			unlink();
-			richTextRef.current?.focus();
-		}
-	}
 
 	// Use internal state instead of a ref to make sure that the component
 	// re-renders when the popover's anchor updates.
@@ -39,7 +29,6 @@ export default ({ className, attributes, setAttributes }) => {
 	const richTextRef = useRef();
 	const blockProps = useBlockProps({
 		ref,
-		onKeyDown,
 	});
 
 	return (
