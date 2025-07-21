@@ -50,7 +50,7 @@ export default ({ className, attributes, setAttributes }) => {
 				marginBottom: spacingProps?.style?.marginBottom,
 			}}
 		>
-			<div class="wp-block-button">
+			<div className="wp-block-button">
 				<div
 					{...blockProps}
 					className={classnames(blockProps.className, {
