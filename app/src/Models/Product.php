@@ -868,7 +868,7 @@ class Product extends Model implements PageModel {
 	 * @return \WP_Template
 	 */
 	public function getTemplateAttribute() {
-		return null;// get_block_template( $this->getTemplateIdAttribute() );
+		return null;
 	}
 
 	/**
