@@ -90,6 +90,8 @@ export class ScProductLineItem {
   @Event({ bubbles: false }) scRemove: EventEmitter<void>;
 
   render() {
+    const isImageFallback = 'fallback' === this.image?.type ? true : false;
+  
     return (
       <div class="base" part="base">
         <div
@@ -102,7 +104,7 @@ export class ScProductLineItem {
             'product-line-item__removable': this.removable,
           }}
         >
-          {!!this.image?.src ? <img {...(this.image as any)} part="image" class="item__image" /> : <div class="item__image-placeholder" part="placeholder__image"></div>}
+          <img {...(this.image as any)} part={isImageFallback ? "placeholder__image" : "image" } class={isImageFallback ? "item__image-placeholder" : "item__image"} />
           <div class="item__text-container">
             <div class="item__row">
               <div class="item__title" part="title">
