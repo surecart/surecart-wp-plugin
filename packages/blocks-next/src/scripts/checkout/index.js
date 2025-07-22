@@ -689,13 +689,13 @@ const { state, actions } = store('surecart/checkout', {
 		 * Remove the line item.
 		 */
 		removeLineItem: function* (e) {
-			// If this is a keydown event, only allow Space key
-			if (e?.type === 'keydown' && e?.key !== ' ') {
-				return true;
+			// If this is a keydown event, only allow Space key or Enter key.
+			if (e?.type === 'keydown' && e?.key !== ' ' && e?.key !== 'Enter') {
+				return;
 			}
 
-			// Prevent default behavior for space key
-			if (e?.key === ' ') {
+			// Prevent default behavior for space key or enter key.
+			if (e?.key === ' ' || e?.key === 'Enter') {
 				e.preventDefault();
 			}
 
