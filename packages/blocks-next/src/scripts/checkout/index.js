@@ -648,7 +648,7 @@ const { state, actions } = store('surecart/checkout', {
 		 */
 		onQuantityChange: function* (e) {
 			const quantity = parseInt(e.target.value || '');
-			yield* actions.updateLineItem({ quantity });
+			yield actions.updateLineItem({ quantity });
 
 			const { speak } = yield import(
 				/* webpackIgnore: true */
