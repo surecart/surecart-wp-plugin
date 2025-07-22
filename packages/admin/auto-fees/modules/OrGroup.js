@@ -17,7 +17,7 @@ import {
 	ScSkeleton,
 } from '@surecart/components-react';
 import AndGroup from './AndGroup';
-import { createEmptyAndRule } from '../utils/ruleQueryUtils';
+import { attributeLabels } from '../utils/labelTranslations';
 
 export default ({
 	ruleSchema = [],
@@ -52,9 +52,8 @@ export default ({
 				if (!leaf?.attribute_name) {
 					return;
 				}
-				return ruleSchema.find(
-					(item) => item.key === leaf.attribute_name
-				)?.label;
+
+				return attributeLabels?.[leaf?.attribute_name];
 			})
 			.join(', ');
 	};
@@ -107,11 +106,15 @@ export default ({
 							ruleSchema={ruleSchema}
 							leaf={leaf}
 							addLeaf={() => {
-								const newRuleJson = JSON.parse(JSON.stringify(rule_json));
-								newRuleJson.rule_string.groups[groupIndex].leaves.push({
+								const newRuleJson = JSON.parse(
+									JSON.stringify(rule_json)
+								);
+								newRuleJson.rule_string.groups[
+									groupIndex
+								].leaves.push({
 									attribute_name: null,
 									operator_label: null,
-									comparison_value: ''
+									comparison_value: '',
 								});
 								updateRuleJson(newRuleJson);
 							}}
@@ -122,11 +125,16 @@ export default ({
 									return;
 								}
 
-								const newRuleJson = JSON.parse(JSON.stringify(rule_json));
-								newRuleJson.rule_string.groups[groupIndex].leaves = 
-									newRuleJson.rule_string.groups[groupIndex].leaves.filter(
-										(_, index) => index !== leafIndex
-									);
+								const newRuleJson = JSON.parse(
+									JSON.stringify(rule_json)
+								);
+								newRuleJson.rule_string.groups[
+									groupIndex
+								].leaves = newRuleJson.rule_string.groups[
+									groupIndex
+								].leaves.filter(
+									(_, index) => index !== leafIndex
+								);
 								updateRuleJson(newRuleJson);
 							}}
 							totalLeaves={group?.leaves?.length}
