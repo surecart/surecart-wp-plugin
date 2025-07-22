@@ -211,6 +211,7 @@ class ProductPageBlock {
 							'amount',
 							'display_amount',
 							'available_stock',
+							'line_item_image',
 						]
 					),
 					$product->variants->data ?? array()
@@ -246,6 +247,7 @@ class ProductPageBlock {
 		}
 		$selected_price   = $product->initial_price;
 		$selected_variant = $this->getSelectedVariant();
+		$featured_image   = ! empty( $product->featured_image ) ? $product->featured_image->attributes( 'thumbnail' ) ?? (object) [] : (object) [];
 
 		return wp_parse_args(
 			$state,
@@ -254,14 +256,14 @@ class ProductPageBlock {
 				'selectedDisplayAmount' => $product->display_amount,
 				'isOnSale'              => function () {
 					$context        = wp_interactivity_get_context();
-					$selected_price = $context['selectedPrice'];
+					$selected_price = $context['selectedPrice'] ?? [];
 					return $selected_price['is_on_sale'] ?? false;
 				},
 				'selectedAmount'        => function () {
 					$context        = wp_interactivity_get_context();
 					$state          = wp_interactivity_state();
-					$selected_price = $context['selectedPrice'];
-					$prices         = $context['prices'];
+					$selected_price = $context['selectedPrice'] ?? [];
+					$prices         = $context['prices'] ?? [];
 
 					if ( ! empty( $prices ) && count( $prices ) > 1 ) {
 						return $selected_price['amount'];
@@ -381,6 +383,7 @@ class ProductPageBlock {
 					$state = wp_interactivity_state();
 					return $state['shouldDisplayImage']() ? 'inherit' : 'none';
 				},
+				'featuredImage'         => $featured_image,
 				'isSoldOut'             => function () {
 					$context = wp_interactivity_get_context();
 					$state   = wp_interactivity_state();
@@ -431,7 +434,7 @@ class ProductPageBlock {
 					if ( $state['isUnavailable']() ) {
 						return $context['unavailableText'] ?? $context['text'];
 					}
-					return $context['text'];
+					return $context['text'] ?? '';
 				},
 			]
 		);

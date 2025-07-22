@@ -19,6 +19,7 @@ export default ({ attributes, setAttributes }) => {
 			maxWidth: width,
 			width: '100%',
 		},
+		className: 'sc-sticky-purchase',
 	});
 
 	const innerBlocksProps = useInnerBlocksProps(blockProps, {

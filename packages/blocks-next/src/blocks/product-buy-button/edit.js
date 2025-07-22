@@ -36,6 +36,7 @@ export default (props) => {
 		out_of_stock_text,
 		unavailable_text,
 		show_sticky_purchase_button,
+		show_sticky_purchase_on_out_of_stock,
 	} = attributes;
 
 	function onKeyDown(event) {
@@ -110,6 +111,28 @@ export default (props) => {
 							)}
 						/>
 					</PanelRow>
+
+					{show_sticky_purchase_button && (
+						<PanelRow>
+							<ToggleControl
+								label={__(
+									'Show Sticky Button on Out of Stock Products',
+									'surecart'
+								)}
+								checked={show_sticky_purchase_on_out_of_stock}
+								onChange={(value) =>
+									setAttributes({
+										show_sticky_purchase_on_out_of_stock:
+											value,
+									})
+								}
+								help={__(
+									'Show the sticky purchase button even when the product is out of stock',
+									'surecart'
+								)}
+							/>
+						</PanelRow>
+					)}
 				</PanelBody>
 			</InspectorControls>
 

@@ -78,6 +78,14 @@ class BuyButton extends \Bricks\Element {
 			'description' => esc_html__( 'Show a sticky purchase button when the main buy buttons are out of view', 'surecart' ),
 		];
 
+		$this->controls['show_sticky_purchase_on_out_of_stock'] = [
+			'tab'         => 'content',
+			'label'       => esc_html__( 'Show Sticky Button on Out of Stock Products', 'surecart' ),
+			'type'        => 'checkbox',
+			'description' => esc_html__( 'Show the sticky purchase button even when the product is out of stock', 'surecart' ),
+			'required'    => [ 'show_sticky_purchase_button', '!=', '' ],
+		];
+
 		$this->controls['styleSeparator'] = [
 			'label' => esc_html__( 'Style', 'surecart' ),
 			'type'  => 'separator',
@@ -279,6 +287,13 @@ class BuyButton extends \Bricks\Element {
 		// Add the sticky purchase button if enabled.
 		global $is_sticky_purchase_added_by_bricks;
 		if ( isset( $settings['show_sticky_purchase_button'] ) && $settings['show_sticky_purchase_button'] && ! $is_sticky_purchase_added_by_bricks ) {
+			// Set the out-of-stock setting for the template.
+			$enable_out_of_stock = isset( $settings['show_sticky_purchase_on_out_of_stock'] ) && $settings['show_sticky_purchase_on_out_of_stock'];
+
+			// Store the setting globally for the template to access.
+			global $sc_sticky_purchase_enable_out_of_stock;
+			$sc_sticky_purchase_enable_out_of_stock = $enable_out_of_stock;
+
 			$template = get_block_template( 'surecart/surecart//sticky-purchase', 'wp_template_part' );
 			if ( $template && ! empty( $template->content ) ) {
 				echo do_blocks( $template->content ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped

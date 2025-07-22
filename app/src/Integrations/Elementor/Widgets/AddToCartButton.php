@@ -110,6 +110,21 @@ class AddToCartButton extends \Elementor\Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'show_sticky_purchase_on_out_of_stock',
+			[
+				'label'       => esc_html__( 'Show Sticky Button on Out of Stock Products', 'surecart' ),
+				'type'        => \Elementor\Controls_Manager::SWITCHER,
+				'label_on'    => esc_html__( 'Yes', 'surecart' ),
+				'label_off'   => esc_html__( 'No', 'surecart' ),
+				'default'     => 'no',
+				'description' => esc_html__( 'Show the sticky purchase button even when the product is out of stock', 'surecart' ),
+				'condition'   => [
+					'show_sticky_purchase_button' => 'yes',
+				],
+			]
+		);
+
 		$this->end_controls_section();
 
 		$this->start_controls_section(
@@ -589,6 +604,13 @@ class AddToCartButton extends \Elementor\Widget_Base {
 		// Add the sticky purchase button if enabled.
 		global $is_sticky_purchase_added_by_elementor;
 		if ( isset( $settings['show_sticky_purchase_button'] ) && 'yes' === $settings['show_sticky_purchase_button'] && ! $is_sticky_purchase_added_by_elementor ) {
+			// Set the out-of-stock setting for the template.
+			$enable_out_of_stock = isset( $settings['show_sticky_purchase_on_out_of_stock'] ) && 'yes' === $settings['show_sticky_purchase_on_out_of_stock'];
+			
+			// Store the setting globally for the template to access.
+			global $sc_sticky_purchase_enable_out_of_stock;
+			$sc_sticky_purchase_enable_out_of_stock = $enable_out_of_stock;
+			
 			$template = get_block_template( 'surecart/surecart//sticky-purchase', 'wp_template_part' );
 			if ( $template && ! empty( $template->content ) ) {
 				echo do_blocks( $template->content ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
