@@ -1,0 +1,62 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "surecart/cart-line-item-remove",
+	"title": "Line item remove",
+	"description": "Display the product line item remove.",
+	"version": "1.0.0",
+	"category": "surecart-cart",
+	"ancestor": [
+		"surecart/slide-out-cart-items",
+		"surecart/slide-out-cart-line-items"
+	],
+	"usesContext": ["removable"],
+	"example": {},
+	"attributes": {
+		"show_label": {
+			"type": "boolean",
+			"default": true
+		},
+		"label": {
+			"type": "string",
+			"default": "Remove"
+		},
+		"icon": {
+			"type": "string",
+			"default": "x"
+		}
+	},
+	"supports": {
+		"interactivity": true,
+		"anchor": true,
+		"color": {
+			"gradients": true,
+			"text": true,
+			"background": true,
+			"__experimentalDefaultControls": {
+				"text": true,
+				"background": true
+			}
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true,
+			"textAlign": true,
+			"__experimentalFontFamily": true,
+			"__experimentalFontWeight": true,
+			"__experimentalFontStyle": true,
+			"__experimentalTextTransform": true,
+			"__experimentalTextDecoration": true,
+			"__experimentalLetterSpacing": true,
+			"__experimentalDefaultControls": {
+				"fontSize": true,
+				"fontAppearance": true,
+				"textTransform": true
+			}
+		}
+	},
+	"render": "file:./view.php",
+	"textdomain": "surecart",
+	"style": "file:./style-index.css",
+	"editorScript": "file:./index.js"
+}
