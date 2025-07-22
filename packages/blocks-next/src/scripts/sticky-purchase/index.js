@@ -8,7 +8,6 @@ import { store, getElement } from '@wordpress/interactivity';
  */
 const { state: productState } = store('surecart/product-page');
 
-
 // Check if two elements overlap.
 const doElementsOverlap = (elementA, elementB) => {
 	const A = elementA.getBoundingClientRect();
@@ -81,6 +80,7 @@ const { state } = store('surecart/sticky-purchase', {
 			// If no floating cart element, do not adjust the offset.
 			const floatingCartElement = state.floatingCartElement();
 			if (
+				!ref ||
 				!floatingCartElement ||
 				!doElementsOverlap(ref, floatingCartElement)
 			) {
