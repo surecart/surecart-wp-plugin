@@ -27,7 +27,7 @@ const getCheckoutData = (mode = 'live', formId) => {
  * Check if the key is not submit key.
  */
 const isNotKeySubmit = (e) => {
-	return e.type === 'keydown' && e.key !== 'Enter' && e.code !== 'Space';
+	return e.type === 'keydown' && e.key !== 'Enter' && e.key !== ' ';
 };
 
 /**
