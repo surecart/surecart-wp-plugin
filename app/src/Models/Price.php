@@ -344,6 +344,11 @@ class Price extends Model {
 	 * @return string
 	 */
 	public function getShortIntervalTextAttribute() {
+		// // Don't output interval text if recurring_period_count is 1 or less.
+		if ( ! empty( $this->recurring_period_count ) && (int) $this->recurring_period_count <= 1 ) {
+			return '';
+		}
+
 		$intervals = array(
 			'day'   => [
 				'single' => __( 'day', 'surecart' ),
