@@ -40,30 +40,3 @@ if ( ! function_exists( 'sc_remove_interactivity_debug_notice' ) ) {
 		return false;
 	}
 }
-
-if ( ! function_exists( 'sc_find_block' ) ) {
-	/**
-	 * Find a block by its name.
-	 *
-	 * @param string $name The block name.
-	 * @param array  $blocks The blocks to search.
-	 *
-	 * @return array|null The found block or null.
-	 */
-	function sc_find_block( string $name, array $blocks ) {
-		foreach ( $blocks as $block ) {
-			if ( isset( $block['blockName'] ) && $block['blockName'] === $name ) {
-				return $block;
-			}
-
-			if ( isset( $block['innerBlocks'] ) && is_array( $block['innerBlocks'] ) ) {
-				$found = sc_find_block( $name, $block['innerBlocks'] );
-				if ( $found ) {
-					return $found;
-				}
-			}
-		}
-
-		return null;
-	}
-}

@@ -20,18 +20,15 @@ if ( empty( $template->content ) ) {
 	return '';
 }
 
-$blocks = parse_blocks( $template->content );
-if ( empty( $blocks ) ) {
-	return '';
-}
-
-$buy_button_block = sc_find_block( 'surecart/product-buy-button', $blocks );
+$buy_button_block = wp_get_first_block( parse_blocks( $template->content ), 'surecart/product-buy-button' );
 if ( ! $buy_button_block ) {
 	return '';
 }
 
 $buy_button_args     = $buy_button_block['attrs'] ?? [];
 $enable_out_of_stock = $buy_button_args['show_sticky_purchase_on_out_of_stock'] ?? false;
+
+error_log( 'buy_button_args: ' . print_r( $buy_button_args, true ) );
 
 // Check for global setting overrides.
 global $sc_sticky_purchase_enable_out_of_stock;
