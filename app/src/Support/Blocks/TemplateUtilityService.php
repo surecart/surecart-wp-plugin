@@ -375,7 +375,7 @@ class TemplateUtilityService {
 			'product-collection-part' => class_exists( 'WooCommerce' ) ? __( 'SureCart Product Collections', 'surecart' ) : __( 'Product Collections', 'surecart' ),
 			'cart'                    => class_exists( 'WooCommerce' ) ? __( 'SureCart Cart', 'surecart' ) : __( 'Cart', 'surecart' ),
 			'checkout'                => class_exists( 'WooCommerce' ) ? __( 'SureCart Checkout', 'surecart' ) : __( 'Checkout', 'surecart' ),
-			'sticky-purchase'         => __( 'Sticky Purchase', 'surecart' ),
+			'sticky-purchase'         => __( 'Sticky purchase', 'surecart' ),
 		);
 
 		if ( isset( $translations[ $template_slug ] ) ) {

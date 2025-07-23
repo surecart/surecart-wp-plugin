@@ -101,7 +101,7 @@ class AddToCartButton extends \Elementor\Widget_Base {
 		$this->add_control(
 			'show_sticky_purchase_button',
 			[
-				'label'       => esc_html__( 'Show Sticky Purchase Button', 'surecart' ),
+				'label'       => esc_html__( 'Show sticky purchase button', 'surecart' ),
 				'type'        => \Elementor\Controls_Manager::SWITCHER,
 				'label_on'    => esc_html__( 'Yes', 'surecart' ),
 				'label_off'   => esc_html__( 'No', 'surecart' ),
@@ -113,7 +113,7 @@ class AddToCartButton extends \Elementor\Widget_Base {
 		$this->add_control(
 			'show_sticky_purchase_on_out_of_stock',
 			[
-				'label'       => esc_html__( 'Show Sticky Button on Out of Stock Products', 'surecart' ),
+				'label'       => esc_html__( 'Show sticky purchase button on out of stock products', 'surecart' ),
 				'type'        => \Elementor\Controls_Manager::SWITCHER,
 				'label_on'    => esc_html__( 'Yes', 'surecart' ),
 				'label_off'   => esc_html__( 'No', 'surecart' ),

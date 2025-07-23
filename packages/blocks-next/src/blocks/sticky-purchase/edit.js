@@ -33,7 +33,7 @@ export default ({ attributes, setAttributes }) => {
 		<>
 			<InspectorControls>
 				<PanelBody
-					title={__('Sticky Purchase Settings', 'surecart')}
+					title={__('Sticky purchase settings', 'surecart')}
 					initialOpen={true}
 				>
 					<UnitControl

@@ -53,13 +53,13 @@ const { state } = store('surecart/sticky-purchase', {
 					document.documentElement.scrollHeight
 				);
 
-			// If at bottom of page, hide sticky button.
+			// If at bottom of page, hide sticky purchase button.
 			if (atBottom) {
 				state.isVisible = false;
 				return;
 			}
 
-			// Show sticky button if buy button is out of view and conditions are met.
+			// Show sticky purchase button if buy button is out of view and conditions are met.
 			state.isVisible = buyButton?.getBoundingClientRect().bottom < 0;
 		},
 	},

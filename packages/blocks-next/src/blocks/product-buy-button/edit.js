@@ -92,11 +92,11 @@ export default (props) => {
 					ariaLabel={__('Button width')}
 				/>
 
-				<PanelBody title={__('Sticky Button', 'surecart')}>
+				<PanelBody title={__('Sticky purchase button', 'surecart')}>
 					<PanelRow>
 						<ToggleControl
 							label={__(
-								'Show Sticky Purchase Button',
+								'Show sticky purchase button',
 								'surecart'
 							)}
 							checked={show_sticky_purchase_button}
@@ -116,7 +116,7 @@ export default (props) => {
 						<PanelRow>
 							<ToggleControl
 								label={__(
-									'Show Sticky Button on Out of Stock Products',
+									'Show sticky purchase button on out of stock products',
 									'surecart'
 								)}
 								checked={show_sticky_purchase_on_out_of_stock}

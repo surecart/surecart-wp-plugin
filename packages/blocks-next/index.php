@@ -336,6 +336,10 @@ add_action(
 					'id'     => '@wordpress/interactivity',
 					'import' => 'dynamic',
 				),
+				array(
+					'id'     => '@surecart/product-page',
+					'import' => 'dynamic',
+				),
 			),
 			$static_assets['version']
 		);
