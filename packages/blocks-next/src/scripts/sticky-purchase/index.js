@@ -71,7 +71,9 @@ const { state } = store('surecart/sticky-purchase', {
 				return;
 			}
 
-			const { ref } = getElement();
+			const ref = getElement()?.ref;
+			if (!ref) return;
+
 			const stickyRect = ref.getBoundingClientRect();
 
 			// remove this so we can (re)calculate the overlap.
@@ -80,7 +82,6 @@ const { state } = store('surecart/sticky-purchase', {
 			// If no floating cart element, do not adjust the offset.
 			const floatingCartElement = state.floatingCartElement();
 			if (
-				!ref ||
 				!floatingCartElement ||
 				!doElementsOverlap(ref, floatingCartElement)
 			) {

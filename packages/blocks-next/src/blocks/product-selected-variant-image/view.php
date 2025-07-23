@@ -7,9 +7,9 @@
 			)
 		)
 	); ?>
+	data-wp-bind--hidden="!state.selectedVariantImage.src"
 >
 	<img
-		data-wp-bind--hidden="!state.selectedVariantImage.src"
 		data-wp-bind--src="state.selectedVariantImage.src"
 		data-wp-bind--alt="state.selectedVariantImage.alt"
 		data-wp-bind--srcset="state.selectedVariantImage.srcset"

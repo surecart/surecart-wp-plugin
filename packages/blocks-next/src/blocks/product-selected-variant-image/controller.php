@@ -2,11 +2,11 @@
 $product = sc_get_product();
 
 // make sure we have the product and variants.
-if ( empty( $product->variants ) ) {
-	return '';
+if ( empty( $product ) || empty( $product->variants->data ) ) {
+	return null;
 }
 
-$class = $attributes['sizing'] ? 'contain' === $attributes['sizing'] ? 'sc-is-contained' : 'sc-is-covered' : 'sc-is-covered';
+$class = $attributes['sizing'] ? ( 'contain' === $attributes['sizing'] ? 'sc-is-contained' : 'sc-is-covered' ) : 'sc-is-covered';
 
 $style  = '';
 $style .= ! empty( $attributes['aspectRatio'] )
