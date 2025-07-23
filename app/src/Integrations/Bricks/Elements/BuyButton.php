@@ -73,14 +73,14 @@ class BuyButton extends \Bricks\Element {
 
 		$this->controls['show_sticky_purchase_button'] = [
 			'tab'         => 'content',
-			'label'       => esc_html__( 'Show Sticky Purchase Button', 'surecart' ),
+			'label'       => esc_html__( 'Show sticky purchase button', 'surecart' ),
 			'type'        => 'checkbox',
 			'description' => esc_html__( 'Show a sticky purchase button when the main buy buttons are out of view', 'surecart' ),
 		];
 
 		$this->controls['show_sticky_purchase_on_out_of_stock'] = [
 			'tab'         => 'content',
-			'label'       => esc_html__( 'Show Sticky Button on Out of Stock Products', 'surecart' ),
+			'label'       => esc_html__( 'Show sticky purchase button on out of stock products', 'surecart' ),
 			'type'        => 'checkbox',
 			'description' => esc_html__( 'Show the sticky purchase button even when the product is out of stock', 'surecart' ),
 			'required'    => [ 'show_sticky_purchase_button', '!=', '' ],
@@ -253,10 +253,16 @@ class BuyButton extends \Bricks\Element {
 			$this->set_attribute( '_root', 'data-wp-class--sc-button__link--busy', 'context.busy' );
 		}
 
+		global $is_sticky_purchase_added_by_bricks;
+		$sticky_attributes = '';
+		if ( $is_sticky_purchase_added_by_bricks ) {
+			$sticky_attributes = "data-wp-on-window--scroll='surecart/sticky-purchase::actions.toggleVisibility'
+			data-wp-on-window--resize='surecart/sticky-purchase::actions.toggleVisibility'";
+		}
+
 		$output = "<{$this->tag}
 			{$this->render_attributes( '_root' )}
-			data-wp-on-window--scroll='surecart/sticky-purchase::actions.toggleVisibility'
-			data-wp-on-window--resize='surecart/sticky-purchase::actions.toggleVisibility'
+			{$sticky_attributes}
 		>";
 
 		// Icon.
@@ -285,7 +291,6 @@ class BuyButton extends \Bricks\Element {
 		echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
 		// Add the sticky purchase button if enabled.
-		global $is_sticky_purchase_added_by_bricks;
 		if ( isset( $settings['show_sticky_purchase_button'] ) && $settings['show_sticky_purchase_button'] && ! $is_sticky_purchase_added_by_bricks ) {
 			// Set the out-of-stock setting for the template.
 			$enable_out_of_stock = isset( $settings['show_sticky_purchase_on_out_of_stock'] ) && $settings['show_sticky_purchase_on_out_of_stock'];

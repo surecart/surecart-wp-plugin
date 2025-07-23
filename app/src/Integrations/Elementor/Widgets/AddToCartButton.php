@@ -570,11 +570,15 @@ class AddToCartButton extends \Elementor\Widget_Base {
 			$this->add_render_attribute( 'wrapper', 'data-wp-class--sc-button__link--busy', 'context.busy' );
 		}
 
+		global $is_sticky_purchase_added_by_elementor;
 		ob_start();
 		?>
 		<button
-			data-wp-on-window--scroll="surecart/sticky-purchase::actions.toggleVisibility"
-			data-wp-on-window--resize="surecart/sticky-purchase::actions.toggleVisibility"
+			<?php if ( $is_sticky_purchase_added_by_elementor ) : ?>
+				data-wp-on-window--scroll="surecart/sticky-purchase::actions.toggleVisibility"
+				data-wp-on-window--resize="surecart/sticky-purchase::actions.toggleVisibility"
+			<?php endif; ?>
+
 			<?php echo $this->get_render_attribute_string( 'wrapper' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 			<span <?php echo $this->get_render_attribute_string( 'content-wrapper' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 			<?php
@@ -601,16 +605,14 @@ class AddToCartButton extends \Elementor\Widget_Base {
 		$output = ob_get_clean();
 		echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
-		// Add the sticky purchase button if enabled.
-		global $is_sticky_purchase_added_by_elementor;
 		if ( isset( $settings['show_sticky_purchase_button'] ) && 'yes' === $settings['show_sticky_purchase_button'] && ! $is_sticky_purchase_added_by_elementor ) {
 			// Set the out-of-stock setting for the template.
 			$enable_out_of_stock = isset( $settings['show_sticky_purchase_on_out_of_stock'] ) && 'yes' === $settings['show_sticky_purchase_on_out_of_stock'];
-			
+
 			// Store the setting globally for the template to access.
 			global $sc_sticky_purchase_enable_out_of_stock;
 			$sc_sticky_purchase_enable_out_of_stock = $enable_out_of_stock;
-			
+
 			$template = get_block_template( 'surecart/surecart//sticky-purchase', 'wp_template_part' );
 			if ( $template && ! empty( $template->content ) ) {
 				echo do_blocks( $template->content ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
