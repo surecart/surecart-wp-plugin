@@ -570,11 +570,11 @@ class AddToCartButton extends \Elementor\Widget_Base {
 			$this->add_render_attribute( 'wrapper', 'data-wp-class--sc-button__link--busy', 'context.busy' );
 		}
 
-		global $is_sticky_purchase_added_by_elementor;
+		$show_sticky_purchase = isset( $settings['show_sticky_purchase_button'] ) && 'yes' === $settings['show_sticky_purchase_button'];
 		ob_start();
 		?>
 		<button
-			<?php if ( $is_sticky_purchase_added_by_elementor ) : ?>
+			<?php if ( $show_sticky_purchase ) : ?>
 				data-wp-on-window--scroll="surecart/sticky-purchase::actions.toggleVisibility"
 				data-wp-on-window--resize="surecart/sticky-purchase::actions.toggleVisibility"
 			<?php endif; ?>
@@ -605,7 +605,7 @@ class AddToCartButton extends \Elementor\Widget_Base {
 		$output = ob_get_clean();
 		echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
-		if ( isset( $settings['show_sticky_purchase_button'] ) && 'yes' === $settings['show_sticky_purchase_button'] && ! $is_sticky_purchase_added_by_elementor ) {
+		if ( $show_sticky_purchase ) {
 			// Set the out-of-stock setting for the template.
 			$enable_out_of_stock = isset( $settings['show_sticky_purchase_on_out_of_stock'] ) && 'yes' === $settings['show_sticky_purchase_on_out_of_stock'];
 
@@ -616,7 +616,6 @@ class AddToCartButton extends \Elementor\Widget_Base {
 			$template = get_block_template( 'surecart/surecart//sticky-purchase', 'wp_template_part' );
 			if ( $template && ! empty( $template->content ) ) {
 				echo do_blocks( $template->content ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-				$is_sticky_purchase_added_by_elementor = true;
 			}
 		}
 	}

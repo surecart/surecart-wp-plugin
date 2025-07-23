@@ -253,9 +253,9 @@ class BuyButton extends \Bricks\Element {
 			$this->set_attribute( '_root', 'data-wp-class--sc-button__link--busy', 'context.busy' );
 		}
 
-		global $is_sticky_purchase_added_by_bricks;
-		$sticky_attributes = '';
-		if ( $is_sticky_purchase_added_by_bricks ) {
+		$sticky_attributes           = '';
+		$show_sticky_purchase_button = isset( $settings['show_sticky_purchase_button'] ) && $settings['show_sticky_purchase_button'];
+		if ( $show_sticky_purchase_button ) {
 			$sticky_attributes = "data-wp-on-window--scroll='surecart/sticky-purchase::actions.toggleVisibility'
 			data-wp-on-window--resize='surecart/sticky-purchase::actions.toggleVisibility'";
 		}
@@ -291,7 +291,7 @@ class BuyButton extends \Bricks\Element {
 		echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
 		// Add the sticky purchase button if enabled.
-		if ( isset( $settings['show_sticky_purchase_button'] ) && $settings['show_sticky_purchase_button'] && ! $is_sticky_purchase_added_by_bricks ) {
+		if ( $show_sticky_purchase_button ) {
 			// Set the out-of-stock setting for the template.
 			$enable_out_of_stock = isset( $settings['show_sticky_purchase_on_out_of_stock'] ) && $settings['show_sticky_purchase_on_out_of_stock'];
 
@@ -302,7 +302,6 @@ class BuyButton extends \Bricks\Element {
 			$template = get_block_template( 'surecart/surecart//sticky-purchase', 'wp_template_part' );
 			if ( $template && ! empty( $template->content ) ) {
 				echo do_blocks( $template->content ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-				$is_sticky_purchase_added_by_bricks = true;
 			}
 		}
 	}
