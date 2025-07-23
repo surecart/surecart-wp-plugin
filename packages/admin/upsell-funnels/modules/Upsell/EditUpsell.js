@@ -5,6 +5,7 @@ import {
 	ScDrawer,
 	ScForm,
 	ScInput,
+	ScSwitch,
 } from '@surecart/components-react';
 import { __, sprintf } from '@wordpress/i18n';
 import Discount from './Discount';
@@ -145,6 +146,23 @@ export default ({ upsell: initialUpsell, open, onRequestClose }) => {
 					<DisplayConditions upsell={upsell} onUpdate={editUpsell} />
 
 					<Template upsell={upsell} onUpdate={editUpsell} />
+
+					<ScSwitch
+						checked={upsell?.replacement_behavior === 'all'}
+						onScChange={(e) =>
+							editUpsell({
+								replacement_behavior: e.target.checked ? 'all' : 'none'
+							})
+						}
+					>
+						<span slot="label">{__('Replace Order', 'surecart')}</span>
+						<span slot="description">
+							{__(
+								'Replace the entire order with this product',
+								'surecart'
+							)}
+						</span>
+					</ScSwitch>
 
 					<ScInput
 						label={__('Statement label', 'surecart')}
