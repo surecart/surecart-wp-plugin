@@ -69,3 +69,23 @@
 		border-width: 0;
 	}
 }
+
+.surecart-theme-dark {
+	.sc-toggle {
+		background-color: var(--sc-switch-control-background-color, var(--sc-color-gray-300));
+
+		&:focus,
+		&:hover {
+			&:not(.sc-toggle--checked) {
+				background-color: var(--sc-switch-control-hover-background-color, var(--sc-color-gray-200));
+
+				.sc-toggle__knob {
+					background-color: var(--sc-switch-background-thumb-hover-color, var(--sc-color-white));
+				}
+			}
+		}
+		.sc-toggle__knob {
+			background-color: var(--sc-switch-thumb-background-color, var(--sc-color-white));
+		}
+	}	
+}

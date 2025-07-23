@@ -15,7 +15,7 @@
 .sc-product-line-item {
 	&--has-swap {
 		border: 1px solid var(--sc-input-border-color);
-		background: #fff;
+		background: var(--sc-panel-background-color);
 		border-radius: var(--sc-border-radius-medium);
 		gap: 0;
 		padding: 0;
@@ -30,7 +30,7 @@
 
 		.sc-product-line-item__swap {
 			padding: var(--sc-spacing-medium);
-			background: var(--sc-color-gray-50);
+			background: var(--sc-panel-background-color);
 			line-height: 1;
 			font-size: var(--sc-font-size-small);
 			display: flex;
