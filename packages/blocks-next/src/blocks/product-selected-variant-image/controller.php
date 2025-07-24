@@ -20,6 +20,4 @@ $style .= ! empty( $attributes['height'] )
 	? esc_attr( safecss_filter_attr( 'height:' . $attributes['height'] ) ) . ';'
 	: '';
 
-$product_featured_image = sc_get_product_featured_image_attributes( 'medium_large', [ 'loading' => 'lazy' ] );
-
 return 'file:./view.php';
