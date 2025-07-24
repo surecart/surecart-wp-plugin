@@ -606,9 +606,12 @@ class AddToCartButton extends \Elementor\Widget_Base {
 		echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
 		if ( $show_sticky_purchase ) {
-			// Store the setting globally for the template to access.
-			global $sc_sticky_purchase_enable_out_of_stock;
-			$sc_sticky_purchase_enable_out_of_stock = isset( $settings['show_sticky_purchase_on_out_of_stock'] ) && 'yes' === $settings['show_sticky_purchase_on_out_of_stock'];
+			add_filter(
+				'surecart_sticky_purchase_enable_out_of_stock',
+				function () use ( $settings ) {
+					return isset( $settings['show_sticky_purchase_on_out_of_stock'] ) && 'yes' === $settings['show_sticky_purchase_on_out_of_stock'];
+				}
+			);
 
 			$template = get_block_template( 'surecart/surecart//sticky-purchase', 'wp_template_part' );
 			if ( $template && ! empty( $template->content ) ) {
