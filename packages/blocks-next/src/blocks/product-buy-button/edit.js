@@ -68,18 +68,15 @@ export default ({ attributes, setAttributes, className, clientId }) => {
 		onKeyDown,
 	});
 
+	// Toggle the sticky purchase button and make other buttons inactive.
 	const toggleStickyPurchaseButton = (value) => {
-		// First make all other product buy button values to false.
-		getBlocksByName('surecart/product-buy-button')
-			?.filter((blockClientId) => blockClientId !== clientId)
-			.forEach((blockClientId) =>
+		getBlocksByName('surecart/product-buy-button')?.forEach(
+			(blockClientId) =>
 				updateBlockAttributes(blockClientId, {
-					show_sticky_purchase_button: false,
+					show_sticky_purchase_button:
+						blockClientId === clientId ? value : false,
 				})
-			);
-
-		// Then set the value of the current block.
-		setAttributes({ show_sticky_purchase_button: value });
+		);
 	};
 
 	return (
