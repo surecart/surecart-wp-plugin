@@ -1,7 +1,7 @@
 /**
  * WordPress dependencies.
  */
-import { store, getElement } from '@wordpress/interactivity';
+import { store, getElement, getContext } from '@wordpress/interactivity';
 
 /**
  * Internal dependencies.
@@ -29,12 +29,16 @@ const { state } = store('surecart/sticky-purchase', {
 			return document.querySelector('.wp-block-surecart-cart-icon');
 		},
 		isVisible: false,
-		get stickyPurchaseClassNames() {
-			if (productState.isUnavailable) {
-				return 'sc-sticky-purchase__content sc-sticky-purchase__content--unavailable';
+		get isContentUnavailable() {
+			const context = getContext();
+
+			// Out of stock is enabled, always show the purchase button.
+			if (context?.enableOutOfStock) {
+				return false;
 			}
 
-			return 'sc-sticky-purchase__content';
+			// If out of stock is disabled, get from product availability.
+			return productState.isUnavailable;
 		},
 	},
 

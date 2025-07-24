@@ -71,7 +71,7 @@
 }
 
 .wp-block-surecart-sticky-purchase.sc-sticky-purchase:has(
-		.sc-sticky-purchase__content--unavailable
+		.sc-sticky-purchase__content__unavailable
 	) {
 	opacity: 0;
 	bottom: -100%;

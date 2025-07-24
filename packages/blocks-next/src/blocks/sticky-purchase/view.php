@@ -13,15 +13,19 @@
 			]
 		)
 	);
+	echo wp_kses_data(
+		wp_interactivity_data_wp_context(
+			[
+				'enableOutOfStock' => $enable_out_of_stock,
+			]
+		)
+	);
 	?>
 >
 	<div
+		class="sc-sticky-purchase__content"
 		data-wp-interactive='{ "namespace": "surecart/product-page" }'
-		<?php if ( ! $enable_out_of_stock ) : ?>
-			data-wp-bind--class="surecart/sticky-purchase::state.stickyPurchaseClassNames"
-		<?php else : ?>
-			class="sc-sticky-purchase__content"
-		<?php endif; ?>
+		data-wp-class--sc-sticky-purchase__content__unavailable="surecart/sticky-purchase::state.isContentUnavailable"
 	>
 		<?php echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 	</div>
