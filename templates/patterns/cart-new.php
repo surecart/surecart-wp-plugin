@@ -7,7 +7,7 @@ return [
 	'categories' => [ 'surecart_cart' ],
 	'blockTypes' => [ 'surecart/slide-out-cart' ],
 	'priority'   => 2,
-	'content'    => '<!-- wp:surecart/slide-out-cart {"metadata":{"categories":["surecart_cart"],"patternName":"surecart-cart-new","name":"Cart)"}"width":"525px","style":{"color":{"background":"#ffffff"},"typography":{"fontSize":"15px"},"spacing":{"blockGap":"0px"}},"layout":{"type":"default"}} -->
+	'content'    => '<!-- wp:surecart/slide-out-cart {"metadata":{"categories":["surecart_cart"],"patternName":"surecart-cart-new","name":"Cart)"}"width":"525px","style":{"typography":{"fontSize":"15px"},"spacing":{"blockGap":"0px"}},"layout":{"type":"default"}} -->
 <!-- wp:group {"style":{"spacing":{"padding":{"top":"1.5em","bottom":"0em","left":"2em","right":"2em"}}},"layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"space-between"}} -->
 <div class="wp-block-group" style="padding-top:1.5em;padding-right:2em;padding-bottom:0em;padding-left:2em"><!-- wp:surecart/cart-close-button {"style":{"typography":{"lineHeight":"1"}}} /-->
 
@@ -16,7 +16,7 @@ return [
 		Review My Order</p>
 <!-- /wp:paragraph -->
 
-<!-- wp:surecart/cart-count {"style":{"layout":{"selfStretch":"fit","flexSize":null},"typography":{"lineHeight":"1","fontWeight":"600","fontSize":"14px","fontStyle":"normal"},"spacing":{"padding":{"top":"6px","bottom":"6px","left":"10px","right":"10px"}},"color":{"background":"#f3f4f6"},"border":{"radius":"4px"}}} /--></div>
+<!-- wp:surecart/cart-count {"style":{"layout":{"selfStretch":"fit","flexSize":null},"typography":{"lineHeight":"1","fontWeight":"600","fontSize":"14px","fontStyle":"normal"},"spacing":{"padding":{"top":"6px","bottom":"6px","left":"10px","right":"10px"}},"border":{"radius":"4px"}}} /--></div>
 <!-- /wp:group -->
 
 <!-- wp:surecart/slide-out-cart-line-items {"border":false,"padding":{"top":"0em","right":"0em","bottom":"0em","left":"0em"},"metadata":{"ignoredHookedBlocks":["surecart/cart-line-item-divider"]},"style":{"spacing":{"padding":{"top":"2em","bottom":"2em","left":"2em","right":"2em"},"blockGap":"2em"}}} -->
