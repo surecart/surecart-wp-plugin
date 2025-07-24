@@ -1,10 +1,10 @@
 /**
- * External dependencies
+ * External dependencies.
  */
 import classnames from 'classnames';
 
 /**
- * WordPress dependencies
+ * WordPress dependencies.
  */
 import { __ } from '@wordpress/i18n';
 import { useRef } from '@wordpress/element';
@@ -24,11 +24,15 @@ import {
 	__experimentalGetSpacingClassesAndStyles as useSpacingProps,
 	__experimentalGetShadowClassesAndStyles as useShadowProps,
 } from '@wordpress/block-editor';
+import { select, useDispatch } from '@wordpress/data';
 import { isKeyboardEvent } from '@wordpress/keycodes';
+
+/**
+ * Internal dependencies.
+ */
 import WidthPanel from '../../components/WidthPanel';
 
-export default (props) => {
-	const { attributes, setAttributes, className } = props;
+export default ({ attributes, setAttributes, className, clientId }) => {
 	const {
 		style,
 		text,
@@ -38,6 +42,8 @@ export default (props) => {
 		show_sticky_purchase_button,
 		show_sticky_purchase_on_out_of_stock,
 	} = attributes;
+	const { getBlocksByName } = select('core/block-editor');
+	const { updateBlockAttributes } = useDispatch('core/block-editor');
 
 	function onKeyDown(event) {
 		if (isKeyboardEvent.primary(event, 'k')) {
@@ -61,6 +67,20 @@ export default (props) => {
 		ref,
 		onKeyDown,
 	});
+
+	const toggleStickyPurchaseButton = (value) => {
+		// First make all other product buy button values to false.
+		getBlocksByName('surecart/product-buy-button')
+			?.filter((blockClientId) => blockClientId !== clientId)
+			.forEach((blockClientId) =>
+				updateBlockAttributes(blockClientId, {
+					show_sticky_purchase_button: false,
+				})
+			);
+
+		// Then set the value of the current block.
+		setAttributes({ show_sticky_purchase_button: value });
+	};
 
 	return (
 		<>
@@ -100,11 +120,7 @@ export default (props) => {
 								'surecart'
 							)}
 							checked={show_sticky_purchase_button}
-							onChange={(value) =>
-								setAttributes({
-									show_sticky_purchase_button: value,
-								})
-							}
+							onChange={toggleStickyPurchaseButton}
 							help={__(
 								'Show a sticky purchase button when the main buy buttons are out of view',
 								'surecart'
