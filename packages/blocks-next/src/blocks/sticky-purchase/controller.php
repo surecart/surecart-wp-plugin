@@ -23,6 +23,8 @@ if ( ! $buy_button_block ) {
 
 global $sc_sticky_purchase_enable_out_of_stock;
 $enable_out_of_stock = ( $buy_button_block['attrs'] ?? [] )['show_sticky_purchase_on_out_of_stock'] ?? false;
+
+// Override if its coming from Elementor or other integrations.
 if ( isset( $sc_sticky_purchase_enable_out_of_stock ) ) {
 	$enable_out_of_stock = $sc_sticky_purchase_enable_out_of_stock;
 }

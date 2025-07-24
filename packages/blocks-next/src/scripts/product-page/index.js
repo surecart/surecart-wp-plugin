@@ -94,7 +94,7 @@ const { state, actions } = store('surecart/product-page', {
 				src: image?.['data-src'] || image?.src,
 				srcset: image?.['data-srcset'] || image?.srcset,
 				sizes: image?.['data-sizes'] || image?.sizes,
-			}
+			};
 		},
 
 		/**

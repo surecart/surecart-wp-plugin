@@ -68,6 +68,18 @@
 	.wp-block-surecart-product-title {
 		color: var(--sc-sticky-purchase-text-color);
 	}
+
+	.wp-block-columns {
+		align-items: center;
+	}
+
+	.wp-block-gallery {
+		gap: var(--sc-spacing-large);
+	}
+
+	.wp-block-surecart-product-selected-variant-image {
+		margin-bottom: 0;
+	}
 }
 
 .wp-block-surecart-sticky-purchase.sc-sticky-purchase:has(
