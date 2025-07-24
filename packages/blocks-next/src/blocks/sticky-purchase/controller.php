@@ -10,9 +10,6 @@ $style = sprintf(
 	$width
 );
 
-// Set the interactivity state for the sticky purchase block.
-wp_interactivity_state( 'surecart/sticky-purchase' );
-
 // Get the buy button block template and settings.
 $template_id      = wp_is_block_theme() ? 'surecart/surecart//single-sc_product' : 'surecart/surecart//product-info';
 $template         = get_block_template( $template_id, wp_is_block_theme() ? 'wp_template' : 'wp_template_part' );
