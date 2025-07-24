@@ -14,6 +14,6 @@
 		data-wp-bind--alt="state.selectedVariantImage.alt"
 		data-wp-bind--srcset="state.selectedVariantImage.srcset"
 		data-wp-bind--sizes="state.selectedVariantImage.sizes"
-		loading="state.selectedVariantImage.loading"
+		data-wp-bind--loading="state.selectedVariantImage.loading"
 	/>
 </figure>

@@ -12,7 +12,7 @@
 
 .wp-block-surecart-sticky-purchase.sc-sticky-purchase {
 	position: fixed;
-	padding: 1%;
+	padding: 1.5%;
 	left: 50%;
 	transform: translateX(-50%);
 	opacity: 0;
@@ -69,14 +69,15 @@
 		color: var(--sc-sticky-purchase-text-color);
 	}
 
+	// Compatibility for some theme builders.
 	.wp-block-columns {
 		align-items: center;
 	}
-
-	.wp-block-gallery {
+	.wp-block-group-is-layout-flex:has(
+			> .wp-block-surecart-product-selected-variant-image
+		) {
 		gap: var(--sc-spacing-large);
 	}
-
 	.wp-block-surecart-product-selected-variant-image {
 		margin-bottom: 0;
 	}

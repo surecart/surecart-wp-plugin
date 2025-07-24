@@ -22,14 +22,14 @@ const doElementsOverlap = (elementA, elementB) => {
 
 const { state } = store('surecart/sticky-purchase', {
 	state: {
+		isVisible: false,
 		stickyButtonElement() {
 			return document.querySelector('.sc-sticky-purchase');
 		},
 		floatingCartElement() {
 			return document.querySelector('.wp-block-surecart-cart-icon');
 		},
-		isVisible: false,
-		get isContentUnavailable() {
+		isContentUnavailable() {
 			const context = getContext();
 
 			// Out of stock is enabled, always show the purchase button.

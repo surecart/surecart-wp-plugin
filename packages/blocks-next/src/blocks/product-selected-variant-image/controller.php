@@ -6,7 +6,8 @@ if ( empty( $product ) || empty( $product->variants->data ) ) {
 	return null;
 }
 
-$class = $attributes['sizing'] ? ( 'contain' === $attributes['sizing'] ? 'sc-is-contained' : 'sc-is-covered' ) : 'sc-is-covered';
+$class  = 'align-left '; // For theme compatibility.
+$class .= $attributes['sizing'] ? ( 'contain' === $attributes['sizing'] ? 'sc-is-contained' : 'sc-is-covered' ) : 'sc-is-covered';
 
 $style  = '';
 $style .= ! empty( $attributes['aspectRatio'] )
