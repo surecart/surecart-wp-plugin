@@ -23,8 +23,6 @@ export const TEMPLATE = [
 				'surecart/cart-close-button',
 				{
 					style: {
-						color: { text: '#828c99' },
-						elements: { link: { color: { text: '#828c99' } } },
 						typography: { lineHeight: '1' },
 					},
 				},
@@ -53,8 +51,6 @@ export const TEMPLATE = [
 								right: '0px',
 							},
 						},
-						color: { text: '#4b5563' },
-						elements: { link: { color: { text: '#4b5563' } } },
 					},
 					content: 'Review My Order',
 				},
@@ -78,7 +74,6 @@ export const TEMPLATE = [
 								right: '10px',
 							},
 						},
-						color: { background: '#f3f4f6' },
 						border: { radius: '4px' },
 					},
 				},
@@ -218,16 +213,6 @@ export const TEMPLATE = [
 																	textDecoration:
 																		'none',
 																},
-																color: {
-																	text: '#4b5563',
-																},
-																elements: {
-																	link: {
-																		color: {
-																			text: '#4b5563',
-																		},
-																	},
-																},
 															},
 														},
 													],
@@ -249,17 +234,6 @@ export const TEMPLATE = [
 																'surecart/cart-line-item-price-name',
 																{
 																	style: {
-																		color: {
-																			text: '#828c99',
-																		},
-																		elements:
-																			{
-																				link: {
-																					color: {
-																						text: '#828c99',
-																					},
-																				},
-																			},
 																		typography:
 																			{
 																				fontSize:
@@ -274,17 +248,6 @@ export const TEMPLATE = [
 																'surecart/cart-line-item-variant',
 																{
 																	style: {
-																		color: {
-																			text: '#828c99',
-																		},
-																		elements:
-																			{
-																				link: {
-																					color: {
-																						text: '#828c99',
-																					},
-																				},
-																			},
 																		typography:
 																			{
 																				fontSize:
@@ -305,16 +268,7 @@ export const TEMPLATE = [
 																	textAlign:
 																		'right',
 																},
-																elements: {
-																	link: {
-																		color: {
-																			text: 'var:preset|color|vivid-red',
-																		},
-																	},
-																},
 															},
-															textColor:
-																'vivid-red',
 														},
 													],
 												],
@@ -358,37 +312,12 @@ export const TEMPLATE = [
 														[
 															[
 																'surecart/cart-line-item-scratch-amount',
-																{
-																	style: {
-																		color: {
-																			text: '#828c99',
-																		},
-																		elements:
-																			{
-																				link: {
-																					color: {
-																						text: '#828c99',
-																					},
-																				},
-																			},
-																	},
-																},
+																{},
 															],
 															[
 																'surecart/cart-line-item-amount',
 																{
 																	style: {
-																		color: {
-																			text: '#4b5563',
-																		},
-																		elements:
-																			{
-																				link: {
-																					color: {
-																						text: '#4b5563',
-																					},
-																				},
-																			},
 																		typography:
 																			{
 																				fontStyle:
@@ -409,17 +338,6 @@ export const TEMPLATE = [
 																			{
 																				fontSize:
 																					'14px',
-																			},
-																		color: {
-																			text: '#828c99',
-																		},
-																		elements:
-																			{
-																				link: {
-																					color: {
-																						text: '#828c99',
-																					},
-																				},
 																			},
 																	},
 																},
@@ -444,17 +362,6 @@ export const TEMPLATE = [
 																'surecart/cart-line-item-trial',
 																{
 																	style: {
-																		color: {
-																			text: '#828c99',
-																		},
-																		elements:
-																			{
-																				link: {
-																					color: {
-																						text: '#828c99',
-																					},
-																				},
-																			},
 																		typography:
 																			{
 																				fontSize:
@@ -469,17 +376,6 @@ export const TEMPLATE = [
 																'surecart/cart-line-item-fees',
 																{
 																	style: {
-																		color: {
-																			text: '#828c99',
-																		},
-																		elements:
-																			{
-																				link: {
-																					color: {
-																						text: '#828c99',
-																					},
-																				},
-																			},
 																		typography:
 																			{
 																				fontSize:
@@ -556,16 +452,6 @@ export const TEMPLATE = [
 																	fontWeight:
 																		'400',
 																},
-																elements: {
-																	link: {
-																		color: {
-																			text: '#6b7280',
-																		},
-																	},
-																},
-																color: {
-																	text: '#6b7280',
-																},
 															},
 														},
 													],
@@ -621,7 +507,6 @@ export const TEMPLATE = [
 								{
 									content: 'Subtotal',
 									style: {
-										color: { text: '#4b5563' },
 										typography: {
 											fontStyle: 'normal',
 											fontWeight: '500',
@@ -667,10 +552,6 @@ export const TEMPLATE = [
 									fontStyle: 'normal',
 									fontWeight: '500',
 									lineHeight: '1.4',
-								},
-								color: { text: '#4b5563' },
-								elements: {
-									link: { color: { text: '#4b5563' } },
 								},
 							},
 						},
