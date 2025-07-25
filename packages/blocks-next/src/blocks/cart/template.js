@@ -479,7 +479,7 @@ export const TEMPLATE = [
 						right: '2em',
 					},
 				},
-				border: { top: { color: '#e4e6eba6', width: '1px' } },
+				border: { top: { color: '#b0b0b069', width: '1px' } },
 			},
 			layout: { type: 'default' },
 		},
