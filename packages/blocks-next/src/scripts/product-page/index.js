@@ -80,6 +80,25 @@ const { state, actions } = store('surecart/product-page', {
 				: {};
 		},
 
+		get selectedVariantImage() {
+			const context = getContext();
+			if (!context) {
+				return {};
+			}
+
+			const image = !!state.selectedVariant?.line_item_image?.src
+				? state.selectedVariant.line_item_image
+				: context.product?.preview_image || {};
+
+			// Compatibility with lazy loading enabled images.
+			return {
+				...image,
+				src: image?.['data-src'] || image?.src,
+				srcset: image?.['data-srcset'] || image?.srcset,
+				sizes: image?.['data-sizes'] || image?.sizes,
+			};
+		},
+
 		/**
 		 * Is this product on sale?
 		 */
