@@ -1,5 +1,5 @@
 <div class="wp-block-buttons">
-	<div class="wp-block-button" style="<?php echo esc_attr( $wrapper_style ); ?>">
+	<div class="wp-block-button <?php echo esc_attr( $width_class ); ?>" style="<?php echo esc_attr( $wrapper_style ); ?>">
 		<div
 			<?php
 			echo wp_kses_data(
@@ -15,7 +15,7 @@
 						'data-wp-interactive'    => '{ "namespace": "surecart/product-quick-view" }',
 						'data-wp-class--loading' => 'state.loading',
 						'style'                  => $style,
-						'class'                  => 'wp-block-button__link wp-block-button sc-button__link ' . $width_class,
+						'class'                  => 'wp-block-button__link sc-button__link ',
 					]
 				)
 			);
