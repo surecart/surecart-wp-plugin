@@ -86,7 +86,7 @@ const { state, actions } = store('surecart/product-page', {
 
 			const image = !!state.selectedVariant?.line_item_image?.src
 				? state.selectedVariant.line_item_image
-				: state.featuredImage || {};
+				: context.product?.preview_image || {};
 
 			// Compatibility with lazy loading enabled images.
 			return {
