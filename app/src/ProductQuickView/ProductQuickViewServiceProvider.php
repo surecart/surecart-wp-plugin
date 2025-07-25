@@ -15,9 +15,7 @@ class ProductQuickViewServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function register( $container ) {
-		$container['surecart.product.quick.view'] = function () {
-			return new ProductQuickViewService();
-		};
+		$container['surecart.product.quick.view'] = fn () => new ProductQuickViewService();
 	}
 
 	/**
