@@ -71,7 +71,8 @@ yarn lint:css
 
 ### Block System
 - Server-side rendered blocks defined in `config.php` under `'blocks'`
-- Block PHP controllers in `packages/blocks/Blocks/`
+- Legacy Block PHP controllers in `packages/blocks/Blocks/`
+- New Block PHP controllers and views in `packages/blocks-next`
 - Components preloaded per block for performance (see `'preload'` in config)
 
 ### Middleware System
