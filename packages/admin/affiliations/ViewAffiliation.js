@@ -34,7 +34,7 @@ import Details from './modules/Details';
 import Referrals from './modules/Referrals';
 import Payouts from './modules/Payouts';
 import Promotions from './modules/Promotions';
-import Url from './modules/Url';
+import Urls from './modules/Urls';
 import Products from './modules/affiliation-products';
 import Commission from './modules/Commission';
 
@@ -246,9 +246,10 @@ export default ({ id }) => {
 						affiliation={affiliation || {}}
 						loading={!hasLoadedAffiliation}
 					/>
-					<Url
-						url={affiliation?.referral_url}
-						code={affiliation?.code}
+					<Urls
+						referralUrl={affiliation?.referral_url}
+						websiteUrl={affiliation?.url}
+						loading={!hasLoadedAffiliation}
 					/>
 					<Commission
 						affiliation={affiliation}

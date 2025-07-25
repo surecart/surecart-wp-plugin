@@ -28,7 +28,7 @@ export default ({
 		postId
 	);
 
-	const readMoreLink = (
+	const readMoreLink = show_read_more && (
 		<RichText
 			identifier="read_more_text"
 			className="wp-block-post-excerpt__more-link"
@@ -41,13 +41,20 @@ export default ({
 		/>
 	);
 
+	const description =
+		product?.description ||
+		__(
+			'Experience the next level of convenience with our innovative widget. Melding cutting-edge technology with user-friendly design, this product provides unparalleled functionality that caters to your lifestyle ',
+			'surecart'
+		);
+
 	return (
 		<>
 			<InspectorControls>
 				<PanelBody title={__('Settings', 'surecart')}>
 					<ToggleControl
 						__nextHasNoMarginBottom
-						label={__('Show excerpt')}
+						label={__('Limit description length')}
 						checked={truncate_excerpt}
 						onChange={(value) =>
 							setAttributes({
@@ -83,13 +90,8 @@ export default ({
 				</PanelBody>
 			</InspectorControls>
 			<div {...blockProps}>
-				{product
-					? product?.description
-					: __(
-							'Experience the next level of convenience with our innovative widget. Melding cutting-edge technology with user-friendly design, this product provides unparalleled functionality that caters to your lifestyle ',
-							'surecart'
-					  )}
-				{show_read_more && readMoreLink}
+				<div dangerouslySetInnerHTML={{ __html: description }} />
+				{readMoreLink}
 			</div>
 		</>
 	);

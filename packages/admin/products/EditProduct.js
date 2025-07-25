@@ -9,7 +9,7 @@ import { Fragment, useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
 import { getQueryArg, addQueryArgs } from '@wordpress/url';
-import { applyFilters, doAction } from '@wordpress/hooks';
+import { doAction } from '@wordpress/hooks';
 import apiFetch from '@wordpress/api-fetch';
 
 import Error from '../components/Error';
@@ -316,7 +316,10 @@ export default ({ id, setBrowserURL }) => {
 						<ActionsDropdown
 							product={product}
 							onDelete={onDeleteProduct}
+							onSubmit={onSubmit}
 							onToggleArchive={onToggleArchiveProduct}
+							setConfirmUrl={setConfirmUrl}
+							hasDirtyRecords={hasDirtyRecords}
 						/>
 
 						{!!product?.permalink && (

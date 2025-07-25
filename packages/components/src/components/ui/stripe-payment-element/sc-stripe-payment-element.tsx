@@ -173,23 +173,32 @@ export class ScStripePaymentElement {
       // we have what we need, load elements.
       processorsState.instances.stripeElements = processorsState.instances.stripe.elements(this.getElementsConfig() as any);
       const { line1, line2, city, state, country, postal_code } = getCompleteAddress('shipping') ?? {};
+      
+      const options = {
+        defaultValues: {
+          billingDetails: {
+            name: checkoutState.checkout?.name,
+            email: checkoutState.checkout?.email,
+            ...(line1 && { address: { line1, line2, city, state, country, postal_code } }),
+          },
+        },
+        fields: {
+          billingDetails: {
+            email: 'never',
+          },
+        },
+      } as any;
+
+      if ( window?.wp?.hooks?.applyFilters ) {
+        // apply filters to the options. 
+        options.paymentMethodOrder = window.wp.hooks.applyFilters('surecart_stripe_payment_element_payment_method_order', [], checkoutState.checkout);
+        options.wallets = window.wp.hooks.applyFilters('surecart_stripe_payment_element_wallets', {}, checkoutState.checkout);
+        options.terms = window.wp.hooks.applyFilters('surecart_stripe_payment_element_terms', {}, checkoutState.checkout);
+      }
 
       // create the payment element.
       (processorsState.instances.stripeElements as any)
-        .create('payment', {
-          defaultValues: {
-            billingDetails: {
-              name: checkoutState.checkout?.name,
-              email: checkoutState.checkout?.email,
-              ...(line1 && { address: { line1, line2, city, state, country, postal_code } }),
-            },
-          },
-          fields: {
-            billingDetails: {
-              email: 'never',
-            },
-          },
-        })
+        .create('payment', options)
         .mount(this.container);
 
       this.element = processorsState.instances.stripeElements.getElement('payment');
