@@ -6,7 +6,7 @@ $query      = new WP_Query(
 		'post_type' => 'sc_product',
 	]
 );
-$close_url = remove_query_arg( 'product-quick-view' );
+$close_url  = remove_query_arg( 'product-quick-view' );
 
 // Set the interactivity state for the quick view.
 wp_interactivity_state(
