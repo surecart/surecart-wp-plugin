@@ -4,14 +4,15 @@
 
 	.sc-product-quick-view-dialog {
 		position: fixed;
-		top: 50%;
-		left: 50%;
-		transform: translate(-50%, -50%) scale(0.95);
+		bottom: 0;
+		right: 0;
+		margin: 30px;
+		transform: scale(0.95);
 		opacity: 0;
 		z-index: 10000;
 		box-sizing: border-box;
-		width: 60vw;
-		max-width: 1000px;
+		width: 100vw;
+		max-width: 550px;
 		height: fit-content;
 		max-height: 90vh;
 		border: none;
@@ -59,7 +60,7 @@
 	&.sc-modal-active {
 		.sc-product-quick-view-dialog {
 			opacity: 1;
-			transform: translate(-50%, -50%) scale(1);
+			transform: scale(1);
 		}
 
 		.sc-product-quick-view-overlay {
