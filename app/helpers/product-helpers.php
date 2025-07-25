@@ -208,6 +208,7 @@ function sc_unique_product_list_id( $prefix = '' ) {
 	return $prefix . (string) ++$id_counter;
 }
 
+
 /**
  * Get the product list query.
  *
