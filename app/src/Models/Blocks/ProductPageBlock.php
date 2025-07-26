@@ -382,7 +382,6 @@ class ProductPageBlock {
 					$state = wp_interactivity_state();
 					return $state['shouldDisplayImage']() ? 'inherit' : 'none';
 				},
-				'featuredImage'         => ! empty( $product->featured_image ) ? $product->featured_image->attributes( 'thumbnail' ) ?? (object) [] : (object) [],
 				'isSoldOut'             => function () {
 					$context = wp_interactivity_get_context();
 					$state   = wp_interactivity_state();
