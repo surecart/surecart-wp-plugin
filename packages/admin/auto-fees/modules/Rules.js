@@ -122,7 +122,7 @@ export default ({ autoFee = {}, onUpdate, loading }) => {
 					margin-bottom: 10px;
 				`}
 			>
-				{__('Apply this auto fee to Orders where ', 'surecart')}
+				{__('Apply this auto fee to Line Items where ', 'surecart')}
 			</label>
 			<ScFlex
 				flexDirection="column"

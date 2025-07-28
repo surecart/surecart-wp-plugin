@@ -1,6 +1,7 @@
 import { __ } from '@wordpress/i18n';
 
 export const attributeLabels = {
+	// Existing attributes
 	amount_due: __('Amount Due', 'surecart'),
 	discount_amount: __('Discount Amount', 'surecart'),
 	email: __('Email', 'surecart'),
@@ -20,4 +21,32 @@ export const attributeLabels = {
 	'product.slug': __('Product Slug', 'surecart'),
 	'product_group.name': __('Product Group Name', 'surecart'),
 	'product_group.metadata': __('Product Group Metadata', 'surecart'),
+	quantity: __('Quantity', 'surecart'),
+	note: __('Note', 'surecart'),
+	'checkout.metadata': __('Checkout Metadata', 'surecart'),
+	'checkout.order_type': __('Checkout Order Type', 'surecart'),
+	'checkout.subtotal_amount': __('Checkout Subtotal Amount', 'surecart'),
+	'customer.email': __('Customer Email', 'surecart'),
+	'customer.first_name': __('Customer First Name', 'surecart'),
+	'customer.last_name': __('Customer Last Name', 'surecart'),
+	'customer.orders_count': __('Customer Orders Count', 'surecart'),
+	'price.created_at': __('Price Created At', 'surecart'),
+	'price.metadata': __('Price Metadata', 'surecart'),
+	'price.name': __('Price Name', 'surecart'),
+	'price.recurring_count': __('Price Recurring Count', 'surecart'),
+	'price.recurring_interval': __('Price Recurring Interval', 'surecart'),
+	'price.recurring_period_count': __(
+		'Price Recurring Period Count',
+		'surecart'
+	),
+	'price.type': __('Price Type', 'surecart'),
+	'product.created_at': __('Product Created At', 'surecart'),
+	'product.metadata': __('Product Metadata', 'surecart'),
+	'product.sku': __('Product SKU', 'surecart'),
+	'product_collection.metadata': __(
+		'Product Collection Metadata',
+		'surecart'
+	),
+	'product_collection.name': __('Product Collection Name', 'surecart'),
+	'product_collection.slug': __('Product Collection Slug', 'surecart'),
 };

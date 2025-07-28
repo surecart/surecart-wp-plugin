@@ -66,7 +66,7 @@ export default ({ setId }) => {
 			end_at: null,
 			rule_string: '',
 			rule_json: {
-				rule_string: { schema_id: 'auto_fees__checkout', groups: [] },
+				rule_string: { schema_id: 'auto_fees__line_item', groups: [] },
 			},
 		}
 	);

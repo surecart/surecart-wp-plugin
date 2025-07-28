@@ -10,4 +10,4 @@ export const TEXT_ATTRIBUTES = ['products.name', 'customer.first_name'];
 
 export const EMAIL_ATTRIBUTES = ['customer.email'];
 
-export const SCHEMA_ID = 'auto_fees__checkout';
+export const SCHEMA_ID = 'auto_fees__line_item';

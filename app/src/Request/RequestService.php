@@ -231,9 +231,6 @@ class RequestService {
 				return $this->respond( $previous_cache, $args, $endpoint );
 			}
 		}
-		error_log('$endpoint' . print_r($endpoint,true));
-		error_log('$args' . print_r($args,true));
-
 
 		// make the uncached request.
 		$response_body = $this->makeUncachedRequest( $endpoint, $args, $cache, $optimized_caching );
