@@ -38,9 +38,11 @@ import Rules from './modules/Rules';
 import SaveButton from '../templates/SaveButton';
 import Box from '../ui/Box';
 import DateTimePicker from './modules/DateTimePicker';
+import { SCHEMA_ID } from './utils/constants';
 
 export default ({ setId }) => {
 	const [error, setError] = useState(null);
+	const [loading, setLoading] = useState(false);
 	const [modal, setModal] = useState(false);
 	const [isCreating, setIsCreating] = useState(false);
 	const { save } = useSave();
@@ -66,7 +68,9 @@ export default ({ setId }) => {
 			end_at: null,
 			rule_string: '',
 			rule_json: {
-				rule_string: { schema_id: 'auto_fees__line_item', groups: [] },
+				rule_string: '',
+				schema_id: 'auto_fees__line_item',
+				groups: [],
 			},
 		}
 	);
@@ -111,10 +115,11 @@ export default ({ setId }) => {
 		);
 
 	useEffect(() => {
-		if (!autoFee?.rule_string || autoFee?.rule_json) {
+		if (!autoFee?.rule_string || autoFee?.rule_json || !SCHEMA_ID) {
 			return;
 		}
-		const ruleJson = deconstructRuleString();
+
+		deconstructRuleString();
 	}, [autoFee]);
 
 	const updateAutoFee = async (data) => {
@@ -127,18 +132,22 @@ export default ({ setId }) => {
 
 	const deconstructRuleString = async () => {
 		try {
+			setLoading(true);
 			const response = await apiFetch({
 				path: `${baseUrl}/deconstruct`,
 				method: 'POST',
 				data: {
 					rule_string: {
-						schema_id: autoFee?.rule_schema_id,
+						schema_id: SCHEMA_ID,
 						rule_string: autoFee?.rule_string,
 					},
 				},
 			});
 
-			return response;
+			editEntityRecord('surecart', 'auto-fee', id, {
+				rule_json: response,
+			});
+			setLoading(false);
 		} catch (e) {
 			console.error(e);
 		}
@@ -150,7 +159,10 @@ export default ({ setId }) => {
 				path: `${baseUrl}/construct`,
 				method: 'POST',
 				data: {
-					rule_json: rule_json?.rule_string,
+					rule_json: {
+						schema_id: SCHEMA_ID,
+						groups: rule_json?.groups,
+					},
 				},
 			});
 			return response;
@@ -238,7 +250,7 @@ export default ({ setId }) => {
 			sidebar={
 				<Box
 					title={__('Auto Fee Schedule', 'surecart')}
-					loading={!hasLoadedAutoFee}
+					loading={!hasLoadedAutoFee || loading}
 				>
 					<ScFormControl
 						help={__(
@@ -352,12 +364,12 @@ export default ({ setId }) => {
 			<Details
 				autoFee={autoFee || {}}
 				onUpdate={updateAutoFee}
-				loading={!hasLoadedAutoFee}
+				loading={!hasLoadedAutoFee || loading}
 			/>
 			<Rules
 				autoFee={autoFee || {}}
 				onUpdate={updateAutoFee}
-				loading={!hasLoadedAutoFee}
+				loading={!hasLoadedAutoFee || loading}
 			/>
 			<ConfirmDialog
 				isOpen={'delete' === modal}

@@ -49,7 +49,11 @@ export default ({ autoFee = {}, onUpdate, loading }) => {
 
 	const {
 		rule_string,
-		rule_json = { rule_string: { schema_id: SCHEMA_ID, groups: [] } },
+		rule_json = {
+			rule_string: '',
+			schema_id: 'auto_fees__line_item',
+			groups: [],
+		},
 	} = autoFee;
 
 	// Update rule_json whenever changes occur
@@ -64,7 +68,7 @@ export default ({ autoFee = {}, onUpdate, loading }) => {
 		fetchRuleSchema();
 	}, [ruleSchema]);
 
-	if (!rule_json?.rule_string?.groups?.length) {
+	if (!rule_json?.groups?.length) {
 		return (
 			<Box
 				title={__('Auto Fee Conditions', 'surecart')}
@@ -130,7 +134,7 @@ export default ({ autoFee = {}, onUpdate, loading }) => {
 					--sc-flex-column-gap: 0;
 				`}
 			>
-				{rule_json?.rule_string?.groups?.map((group, groupIndex) => {
+				{rule_json?.groups?.map((group, groupIndex) => {
 					return (
 						<div
 							key={groupIndex}
@@ -159,7 +163,7 @@ export default ({ autoFee = {}, onUpdate, loading }) => {
 									const newRuleJson = JSON.parse(
 										JSON.stringify(rule_json)
 									);
-									newRuleJson.rule_string.groups.push({
+									newRuleJson.groups.push({
 										leaves: [
 											{
 												attribute_name: null,
@@ -174,15 +178,13 @@ export default ({ autoFee = {}, onUpdate, loading }) => {
 									const newRuleJson = JSON.parse(
 										JSON.stringify(rule_json)
 									);
-									newRuleJson.rule_string.groups =
-										newRuleJson.rule_string.groups.filter(
+									newRuleJson.groups =
+										newRuleJson.groups.filter(
 											(_, index) => index !== groupIndex
 										);
 									updateRuleJson(newRuleJson);
 								}}
-								totalRuleGroups={
-									rule_json?.rule_string?.groups?.length
-								}
+								totalRuleGroups={rule_json?.groups?.length}
 								groupIndex={groupIndex}
 								rule_json={rule_json}
 								updateRuleJson={updateRuleJson}

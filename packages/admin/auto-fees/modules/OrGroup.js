@@ -109,9 +109,7 @@ export default ({
 								const newRuleJson = JSON.parse(
 									JSON.stringify(rule_json)
 								);
-								newRuleJson.rule_string.groups[
-									groupIndex
-								].leaves.push({
+								newRuleJson.groups[groupIndex].leaves.push({
 									attribute_name: null,
 									operator_label: null,
 									comparison_value: '',
@@ -128,13 +126,12 @@ export default ({
 								const newRuleJson = JSON.parse(
 									JSON.stringify(rule_json)
 								);
-								newRuleJson.rule_string.groups[
-									groupIndex
-								].leaves = newRuleJson.rule_string.groups[
-									groupIndex
-								].leaves.filter(
-									(_, index) => index !== leafIndex
-								);
+								newRuleJson.groups[groupIndex].leaves =
+									newRuleJson.groups[
+										groupIndex
+									].leaves.filter(
+										(_, index) => index !== leafIndex
+									);
 								updateRuleJson(newRuleJson);
 							}}
 							totalLeaves={group?.leaves?.length}

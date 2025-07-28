@@ -42,12 +42,12 @@ export default ({
 	// Function to update the rule_json when any field changes
 	const updateCurrentLeaf = () => {
 		const newRuleJson = JSON.parse(JSON.stringify(rule_json));
-		
-		newRuleJson.rule_string.groups[groupIndex].leaves[leafIndex] = {
+
+		newRuleJson.groups[groupIndex].leaves[leafIndex] = {
 			attribute_name: attribute,
 			operator_label: operator,
 			comparison_value: value?.toString() || '',
-			...(metadataKey ? { metadata_key: metadataKey } : {})
+			...(metadataKey ? { metadata_key: metadataKey } : {}),
 		};
 
 		updateRuleJson(newRuleJson);
