@@ -192,8 +192,11 @@ export default ({ setId }) => {
 			if (!ruleString?.rule_string) {
 				throw new Error('Rule String not updated.');
 			}
-
-			await updateAutoFee({ rule_string: ruleString?.rule_string });
+			//remove the rule_json from the auto fee
+			await updateAutoFee({
+				rule_string: ruleString?.rule_string,
+				rule_json: null,
+			});
 
 			await save({
 				successMessage: __('Auto Fee updated.', 'surecart'),
