@@ -187,6 +187,20 @@ export default ({
 						}
 					/>
 				);
+			case 'number':
+				return (
+					<ScInput
+						type="number"
+						value={value}
+						onScInput={(e) => {
+							setValue(e.target.value);
+						}}
+						placeholder={__('Enter a value', 'surecart')}
+						className={
+							!isAttributeMetadata ? 'sc-grid-full-width' : ''
+						}
+					/>
+				);
 			default:
 				return (
 					<ScInput

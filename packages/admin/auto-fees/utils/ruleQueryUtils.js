@@ -3,6 +3,7 @@ import {
 	PRICE_ATTRIBUTES,
 	TEXT_ATTRIBUTES,
 	EMAIL_ATTRIBUTES,
+	NUMBER_ATTRIBUTES,
 } from './constants';
 
 /**
@@ -31,5 +32,7 @@ export const getInputType = (attribute) => {
 	if (PRICE_ATTRIBUTES?.includes(attribute)) return 'price';
 	if (EMAIL_ATTRIBUTES?.includes(attribute)) return 'email';
 	if (TEXT_ATTRIBUTES?.includes(attribute)) return 'text';
+	if (NUMBER_ATTRIBUTES?.includes(attribute)) return 'number';
+
 	return 'text';
 };
