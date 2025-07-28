@@ -1,7 +1,13 @@
 :root {
 	--sc-video-play-button-size: 60px;
 	--sc-video-play-button-size-thumb: 20px;
-	--sc-video-play-button-color: #111827;
+	--sc-video-play-button-color: var(--sc-color-gray-900);
+	--sc-video-play-button-bg: var(--sc-color-white);
+}
+
+.surecart-theme-dark {
+	--sc-video-play-button-color: var(--sc-color-white);
+	--sc-video-play-button-bg: var(--sc-color-gray-900);
 }
 
 .wp-block-surecart-product-media {
@@ -33,7 +39,6 @@
 		max-width: 100%;
 		display: block;
 		object-fit: contain;
-		background-color: #000;
 	}
 }
 
@@ -67,15 +72,12 @@
 	}
 }
 
-@mixin play-button-icon($size: 18px, $offset: 2px) {
+@mixin play-button-icon($size: 18px) {
 	content: "";
 	display: inline-block;
-	width: 0;
-	height: 0;
 	border-left: $size solid var(--sc-video-play-button-color);
 	border-top: calc($size * 0.67) solid transparent;
 	border-bottom: calc($size * 0.67) solid transparent;
-	margin-left: $offset;
 }
 
 .sc-video-play-button {
@@ -85,13 +87,11 @@
 	justify-content: center;
 	width: var(--sc-video-play-button-size);
 	height: var(--sc-video-play-button-size);
-	background-color: rgba(255, 255, 255, 0.9);
+	background-color: var(--sc-video-play-button-bg);
+	transition: var(--sc-transition-medium) ease;
+	box-shadow: var(--sc-shadow-medium);
 	border-radius: 50%;
-	z-index: 10;
-	transition: all 0.2s ease;
 	cursor: pointer;
-	backdrop-filter: blur(4px);
-	border: 2px solid var(--sc-color-gray-200);
 	padding: 0;
 
 	&::before {
@@ -99,17 +99,15 @@
 	}
 
 	&:hover {
-		transform: scale(1.1);
-		background-color: var(--sc-color-white);
-		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+		transform: scale(1.05);
+		background-color: var(--sc-video-play-button-bg);
 	}
 
 	&:focus {
-		outline: 3px auto rgb(90 90 90 / 25%);
-		outline: 3px auto -webkit-focus-ring-color;
+		outline: 2px auto var(--sc-color-gray-200);
 		border: none;
-		background-color: var(--sc-color-white);
-		outline-offset: 3px;
+		background-color: var(--sc-video-play-button-bg);
+		outline-offset: 2px;
 		transform: scale(1.05);
 	}
 }
@@ -119,11 +117,10 @@
 	--sc-video-play-button-size: var(--sc-video-play-button-size-thumb);
 	left: 5px;
 	bottom: 5px;
-	border: 1px solid rgba(255, 255, 255, 0.3);
 	backdrop-filter: none;
 
 	&::before {
-		@include play-button-icon(8px, 2px);
+		@include play-button-icon(8px);
 	}
 }
 
@@ -134,7 +131,7 @@
 	transform: translate(-50%, -50%);
 
 	&:hover {
-		transform: translate(-50%, -50%) scale(1.1);
+		transform: translate(-50%, -50%) scale(1.05);
 	}
 }
 
