@@ -382,4 +382,48 @@ class ProductTest extends SureCartUnitTestCase
 		$this->assertSame('lazy', $line_item_image->loading);
 		$this->assertSame('async', $line_item_image->decoding);
 	}
+
+	/**
+	 * @group media
+	 * @group product
+	 * @group gallery
+	 */
+	public function test_has_gallery_ids_or_object_can_return_valid_ids()
+	{
+		$this->shouldSyncProduct('test');
+
+		$queue_service = \Mockery::mock(QueueService::class)->makePartial();
+		\SureCart::alias('queue', function () use ($queue_service) {
+			return $queue_service;
+		});
+		$queue_service->shouldReceive('async')->andReturn(true);
+
+		$filename = DIR_TESTDATA . '/images/test-image-large.jpg';
+		$id = $this->factory()->attachment->create_upload_object( $filename );
+
+		$filename = DIR_TESTDATA . '/images/test-image.jpg';
+		$id_2 = $this->factory()->attachment->create_upload_object( $filename );
+
+		$product = new Product([
+			'id' => 'test',
+			'name' => 'test',
+			'updated_at' => time(),
+			'created_at' => time(),
+			'metadata' => [
+				'gallery_ids' => [
+					$id,
+					['id' => $id_2],
+				]
+			]
+		]);
+
+		$product = $product->sync();
+		$gallery_items = $product->gallery;
+
+		$this->assertIsArray($gallery_items, 'Gallery IDs should be an array');
+		$this->assertCount(2, $gallery_items, 'Gallery IDs should contain 2 items');
+
+		$this->assertEquals($id, $gallery_items[0]->id ?? $gallery_items[0]);
+		$this->assertEquals($id_2, $gallery_items[1]->id ?? $gallery_items[1]);
+	}
 }
