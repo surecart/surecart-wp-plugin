@@ -915,7 +915,7 @@ class Product extends Model implements PageModel {
 		// Get the raw gallery ids from metadata.
 		$gallery_ids = $this->metadata->gallery_ids ?? '';
 
-		// Check if it's already an array (which would be wrong).
+		// Check if it's already an array, if not, we need to decode it.
 		if ( is_array( $gallery_ids ) ) {
 			return $gallery_ids;
 		}

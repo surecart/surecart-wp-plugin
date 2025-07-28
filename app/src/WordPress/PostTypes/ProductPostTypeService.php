@@ -578,31 +578,12 @@ class ProductPostTypeService {
 			)
 		);
 
+		/*
+		* @deprecated, we use gallery instead to store the product media informations.
+		*/
 		register_meta(
 			'post',
 			'sc_variant_option',
-			array(
-				'object_subtype' => 'attachment',
-				'show_in_rest'   => true,
-				'single'         => true,
-				'type'           => 'string',
-			)
-		);
-
-		register_meta(
-			'post',
-			'sc_video_thumbnail',
-			array(
-				'object_subtype' => 'attachment',
-				'show_in_rest'   => true,
-				'single'         => true,
-				'type'           => 'integer',
-			)
-		);
-
-		register_meta(
-			'post',
-			'sc_video_thumbnail_aspect_ratio',
 			array(
 				'object_subtype' => 'attachment',
 				'show_in_rest'   => true,
