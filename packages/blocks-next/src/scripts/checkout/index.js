@@ -27,7 +27,7 @@ const getCheckoutData = (mode = 'live', formId) => {
  * Check if the key is not submit key.
  */
 const isNotKeySubmit = (e) => {
-	return e.type === 'keydown' && e.key !== 'Enter' && e.code !== 'Space';
+	return e.type === 'keydown' && e.key !== 'Enter' && e.key !== ' ';
 };
 
 /**
@@ -648,7 +648,7 @@ const { state, actions } = store('surecart/checkout', {
 		 */
 		onQuantityChange: function* (e) {
 			const quantity = parseInt(e.target.value || '');
-			yield* actions.updateLineItem({ quantity });
+			yield actions.updateLineItem({ quantity });
 
 			const { speak } = yield import(
 				/* webpackIgnore: true */
@@ -688,7 +688,13 @@ const { state, actions } = store('surecart/checkout', {
 		/**
 		 * Remove the line item.
 		 */
-		removeLineItem: function* () {
+		removeLineItem: function* (e) {
+			if (isNotKeySubmit(e)) {
+				return true;
+			}
+
+			e.preventDefault();
+
 			state.loading = true;
 			const { line_item, mode, formId } = getContext();
 			const { speak } = yield import(
