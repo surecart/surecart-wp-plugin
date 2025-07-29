@@ -24,6 +24,7 @@ import {
 	ScFlex,
 	ScIcon,
 	ScMenu,
+	ScMenuDivider,
 	ScMenuItem,
 } from '@surecart/components-react';
 import useSave from '../settings/UseSave';
@@ -45,7 +46,8 @@ export default ({ id }) => {
 	const [modal, setModal] = useState(false);
 	const [error, setError] = useState(null);
 	const { createSuccessNotice } = useDispatch(noticesStore);
-	const { editEntityRecord, receiveEntityRecords, deleteEntityRecord } = useDispatch(coreStore);
+	const { editEntityRecord, receiveEntityRecords, deleteEntityRecord } =
+		useDispatch(coreStore);
 
 	const { affiliation, hasLoadedAffiliation } = useSelect(
 		(select) => {
@@ -169,19 +171,16 @@ export default ({ id }) => {
 			setLoading(true);
 			setError(null);
 
-			await deleteEntityRecord(
-				'surecart',
-				'affiliation',
-				id,
-				undefined,
+			await deleteEntityRecord('surecart', 'affiliation', id, undefined, {
+				throwOnError: true,
+			});
+
+			createSuccessNotice(
+				__('Affiliate deleted successfully.', 'surecart'),
 				{
-					throwOnError: true,
+					type: 'snackbar',
 				}
 			);
-
-			createSuccessNotice(__('Affiliate deleted successfully.', 'surecart'), {
-				type: 'snackbar',
-			});
 
 			// Redirect to affiliates list page after successful deletion
 			window.location.href = addQueryArgs('admin.php', {
@@ -271,14 +270,13 @@ export default ({ id }) => {
 									{__('Deactivate', 'surecart')}
 								</ScMenuItem>
 							)}
-							<hr style={{ margin: '8px 0' }} />
-							<ScMenuItem
-								onClick={() => setModal('delete')}
-								style={{ color: '#dc3545' }}
-							>
+
+							<ScMenuDivider />
+
+							<ScMenuItem onClick={() => setModal('delete')}>
 								<ScIcon
 									slot="prefix"
-									style={{ opacity: 0.65, color: '#dc3545' }}
+									style={{ opacity: 0.65 }}
 									name="trash"
 								/>
 								{__('Delete', 'surecart')}
