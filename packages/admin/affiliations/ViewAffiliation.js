@@ -11,6 +11,7 @@ import { store as noticesStore } from '@wordpress/notices';
 import { store as coreStore } from '@wordpress/core-data';
 import { useState } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
+import { addQueryArgs } from '@wordpress/url';
 
 /**
  * Internal dependencies.
@@ -160,6 +161,35 @@ export default ({ id }) => {
 		}
 	};
 
+	/**
+	 * Delete the affiliation.
+	 */
+	const onDelete = async () => {
+		try {
+			setLoading(true);
+			setError(null);
+
+			await apiFetch({
+				path: `${baseUrl}/${id}`,
+				method: 'DELETE',
+			});
+
+			createSuccessNotice(__('Affiliate deleted successfully.', 'surecart'), {
+				type: 'snackbar',
+			});
+
+			// Redirect to affiliates list page after successful deletion
+			window.location.href = addQueryArgs('admin.php', {
+				page: 'sc-affiliates',
+			});
+		} catch (e) {
+			console.error(e);
+			setError(e);
+		} finally {
+			setLoading(false);
+		}
+	};
+
 	const updateAffiliation = (data) =>
 		editEntityRecord('surecart', 'affiliation', id, data);
 
@@ -236,6 +266,18 @@ export default ({ id }) => {
 									{__('Deactivate', 'surecart')}
 								</ScMenuItem>
 							)}
+							<hr style={{ margin: '8px 0' }} />
+							<ScMenuItem
+								onClick={() => setModal('delete')}
+								style={{ color: '#dc3545' }}
+							>
+								<ScIcon
+									slot="prefix"
+									style={{ opacity: 0.65, color: '#dc3545' }}
+									name="trash"
+								/>
+								{__('Delete', 'surecart')}
+							</ScMenuItem>
 						</ScMenu>
 					</ScDropdown>
 				</div>
@@ -289,6 +331,20 @@ export default ({ id }) => {
 			>
 				{__(
 					'Are you sure you want to deactivate the affiliate?',
+					'surecart'
+				)}
+			</ConfirmDialog>
+
+			<ConfirmDialog
+				isOpen={'delete' === modal}
+				onConfirm={() => {
+					onDelete();
+					setModal(false);
+				}}
+				onCancel={() => setModal(false)}
+			>
+				{__(
+					'Are you sure you want to delete this affiliate? This action cannot be undone.',
 					'surecart'
 				)}
 			</ConfirmDialog>
