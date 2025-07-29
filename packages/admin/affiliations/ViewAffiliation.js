@@ -45,7 +45,7 @@ export default ({ id }) => {
 	const [modal, setModal] = useState(false);
 	const [error, setError] = useState(null);
 	const { createSuccessNotice } = useDispatch(noticesStore);
-	const { editEntityRecord, receiveEntityRecords } = useDispatch(coreStore);
+	const { editEntityRecord, receiveEntityRecords, deleteEntityRecord } = useDispatch(coreStore);
 
 	const { affiliation, hasLoadedAffiliation } = useSelect(
 		(select) => {
@@ -169,10 +169,15 @@ export default ({ id }) => {
 			setLoading(true);
 			setError(null);
 
-			await apiFetch({
-				path: `${baseUrl}/${id}`,
-				method: 'DELETE',
-			});
+			await deleteEntityRecord(
+				'surecart',
+				'affiliation',
+				id,
+				undefined,
+				{
+					throwOnError: true,
+				}
+			);
 
 			createSuccessNotice(__('Affiliate deleted successfully.', 'surecart'), {
 				type: 'snackbar',
