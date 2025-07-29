@@ -89,7 +89,10 @@ abstract class GalleryItem implements ArrayAccess, JsonSerializable, Arrayable, 
 	 * @return bool
 	 */
 	public function isVideo() {
-		return false !== strpos( $this->item->post_mime_type ?? '', 'video' );
+		if ( ! isset( $this->item->post_mime_type ) ) {
+			return false;
+		}
+		return false !== strpos( $this->item->post_mime_type, 'video' );
 	}
 
 	/**
