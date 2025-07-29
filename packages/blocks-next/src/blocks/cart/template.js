@@ -136,7 +136,6 @@ export const TEMPLATE = [
 											flexSize: '80px',
 										},
 										border: {
-											color: '#dce0e6',
 											width: '1px',
 											radius: '4px',
 										},
