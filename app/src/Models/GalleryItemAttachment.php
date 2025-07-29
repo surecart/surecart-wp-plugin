@@ -53,21 +53,25 @@ class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 	 * @return string
 	 */
 	public function getVideoHtml( $size = 'full', $attr = [], $metadata = [] ): string {
-		$html         = '';
 		$poster_image = $this->get_video_poster_image();
 
 		if ( 'thumbnail' === $size ) {
-			$html  = '<div class="sc-video-thumbnail">';
-			$html .= '<img src="' . $poster_image . '" alt="' . esc_attr__( 'Video thumbnail', 'surecart' ) . '" >';
-			$html .= '<button type="button" class="sc-video-play-button" aria-label="' . esc_attr__( 'Play video', 'surecart' ) . '"><span class="screen-reader-text">' . esc_html__( 'Play video', 'surecart' ) . '</span></button>';
-			$html .= '</div>';
-
-			return $html;
+			ob_start();
+			?>
+			<div class="sc-video-thumbnail">
+				<img src="<?php echo esc_url( $poster_image ); ?>" alt="<?php echo esc_attr( sprintf( __( 'Video thumbnail for %s', 'surecart' ), $this->item->post_title ?? '' ) ); ?>" >
+				<button type="button" class="sc-video-play-button" aria-label="<?php echo esc_attr__( 'Play video', 'surecart' ); ?>">
+					<?php echo wp_kses( \SureCart::svg()->get( 'play', [ 'class' => '' ] ), sc_allowed_svg_html() ); ?>
+					<span class="screen-reader-text"><?php echo esc_html( sprintf( __( 'Play video: %s', 'surecart' ), $this->item->post_title ?? '' ) ); ?></span>
+				</button>
+			</div>
+			<?php
+			return ob_get_clean();
 		}
 
 		$video_url    = wp_get_attachment_url( $this->item->ID );
 		$aspect_ratio = $this->getMetadata( 'aspect_ratio' );
-		$style        = $aspect_ratio ? 'aspect-ratio: ' . esc_attr( $aspect_ratio ) . ';' : '';
+		$style        = ! empty( $aspect_ratio ) ? 'aspect-ratio: ' . esc_attr( $aspect_ratio ) . ';' : '';
 		ob_start();
 		?>
 		<div class="sc-video-container"
@@ -77,12 +81,10 @@ class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 			style="<?php echo esc_attr( $style ); ?>"
 		>
 			<div class="sc-video-overlay" data-wp-bind--hidden="context.isVideoPlaying">
-				<img
-					src="<?php echo esc_url( $poster_image ); ?>"
-					alt="<?php echo esc_attr__( 'Video thumbnail', 'surecart' ); ?>"
-				/>
+				<img src="<?php echo esc_url( $poster_image ); ?>" alt="<?php echo esc_attr( sprintf( __( 'Video thumbnail for %s', 'surecart' ), $this->item->post_title ?? '' ) ); ?>" />
 				<button type="button" class="sc-video-play-button" aria-label="<?php echo esc_attr__( 'Play video', 'surecart' ); ?>">
-					<span class="screen-reader-text"><?php echo esc_html__( 'Play video', 'surecart' ); ?></span>
+					<?php echo wp_kses( \SureCart::svg()->get( 'play', [ 'class' => '' ] ), sc_allowed_svg_html() ); ?>
+					<span class="screen-reader-text"><?php echo esc_html( sprintf( __( 'Play video: %s', 'surecart' ), $this->item->post_title ?? '' ) ); ?></span>
 				</button>
 			</div>
 			
@@ -112,9 +114,7 @@ class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 			?>
 		</div>
 		<?php
-		$html = ob_get_clean();
-
-		return $html;
+		return ob_get_clean();
 	}
 
 	/**

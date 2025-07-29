@@ -72,14 +72,6 @@
 	}
 }
 
-@mixin play-button-icon($size: 18px) {
-	content: "";
-	display: inline-block;
-	border-left: $size solid var(--sc-video-play-button-color);
-	border-top: calc($size * 0.67) solid transparent;
-	border-bottom: calc($size * 0.67) solid transparent;
-}
-
 .sc-video-play-button {
 	position: absolute;
 	display: flex;
@@ -94,8 +86,9 @@
 	cursor: pointer;
 	padding: 0;
 
-	&::before {
-		@include play-button-icon();
+	svg {
+		margin-left: 4px; /* Optical centering adjustment */
+		fill: var(--sc-video-play-button-color);
 	}
 
 	&:hover {
@@ -119,8 +112,9 @@
 	bottom: 5px;
 	backdrop-filter: none;
 
-	&::before {
-		@include play-button-icon(8px);
+	svg {
+		margin-left: 2px; /* Optical centering adjustment */
+		fill: var(--sc-video-play-button-color);
 	}
 }
 
