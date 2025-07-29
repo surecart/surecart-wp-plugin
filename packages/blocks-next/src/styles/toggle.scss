@@ -10,7 +10,7 @@
 	box-shadow: none;
 	border-radius: 9999px;
 	border: 2px solid transparent;
-	background-color: rgba(0, 0, 0, 0.1);
+	background-color: var(--sc-switch-control-background-color, var(--sc-color-gray-300));
 	transition-property: background-color;
 	transition-duration: 200ms;
 	transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
@@ -18,8 +18,11 @@
 	&:focus,
 	&:hover {
 		&:not(.sc-toggle--checked) {
-			background-color: rgba(0, 0, 0, 0.2);
+			background-color: var(--sc-switch-control-hover-background-color, var(--sc-color-gray-200));
 			border-color: transparent;
+			.sc-toggle__knob {
+				background-color: var(--sc-switch-background-thumb-hover-color, var(--sc-color-white));
+			}
 		}
 	}
 
@@ -34,7 +37,7 @@
 	}
 
 	&.sc-toggle--checked {
-		background-color: var(--sc-color-primary-500);
+		background-color: var(--sc-switch-checked-control-background-color, var(--sc-color-primary-500));
 	}
 
 	.sc-toggle__knob {
@@ -45,7 +48,7 @@
 		width: 12px;
 		transform: translateX(0);
 		border-radius: 9999px;
-		background-color: white;
+		background-color: var(--sc-switch-thumb-background-color, var(--sc-color-white));
 		box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1),
 			0 1px 2px 0 rgba(0, 0, 0, 0.06);
 		transition-property: transform;

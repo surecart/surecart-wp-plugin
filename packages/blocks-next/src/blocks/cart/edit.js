@@ -11,6 +11,7 @@ import {
 	useSettings,
 	BlockControls,
 } from '@wordpress/block-editor';
+import { useEntityProp } from '@wordpress/core-data';
 import {
 	__experimentalUseCustomUnits as useCustomUnits,
 	PanelBody,
@@ -36,6 +37,8 @@ export default ({
 	setAttributes,
 	__unstableLayoutClassNames,
 }) => {
+	const [theme] = useEntityProp('root', 'site', 'surecart_theme');
+
 	const [isPatternSelectionModalOpen, setIsPatternSelectionModalOpen] =
 		useState(false);
 	const isOldTemplate = useSelect(
@@ -53,6 +56,7 @@ export default ({
 		},
 		className: classNames(
 			'sc-cart__editor-container',
+			'surecart-theme-' + theme,
 			__unstableLayoutClassNames
 		),
 	});

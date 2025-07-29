@@ -15,7 +15,7 @@
 		},
 		"width": {
 			"type": "string",
-			"default": "500px"
+			"default": "525px"
 		}
 	},
 	"supports": {

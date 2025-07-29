@@ -1,8 +1,13 @@
 .wp-block-surecart-cart-line-item-status {
+	--sc-cart-line-item-status-color: var(--sc-color-danger-600);
 	display: inline-flex;
 	align-items: center;
 	gap: 0.25em;
-	color: var(--sc-color-danger-500);
+	color: var(--sc-cart-line-item-status-color);
 	font-weight: var(--sc-font-weight-semibold);
 	font-size: var(--sc-font-size-small);
+}
+
+.surecart-theme-dark .wp-block-surecart-cart-line-item-status {
+	--sc-cart-line-item-status-color: var(--sc-color-danger-400);
 }

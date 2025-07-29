@@ -38,7 +38,6 @@ export default [
 								},
 								border: {
 									radius: '4px',
-									color: '#dce0e6',
 									width: '1px',
 								},
 								shadow: 'none',
