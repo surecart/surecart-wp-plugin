@@ -3,6 +3,7 @@ import { css, jsx } from '@emotion/core';
 import { ScIcon, ScSkeleton, ScTag } from '@surecart/components-react';
 import { useSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
+import { useRef, useEffect } from '@wordpress/element';
 import { store as coreStore } from '@wordpress/core-data';
 import { MediaUpload } from '@wordpress/block-editor';
 import { Notice } from '@wordpress/components';
@@ -21,6 +22,7 @@ export default ({
 	onEditMedia,
 }) => {
 	const { invalidateResolution } = useDispatch(coreStore);
+	const videoRef = useRef(null);
 
 	const { media, hasLoadedMedia } = useSelect((select) => {
 		return {
@@ -31,6 +33,16 @@ export default ({
 			),
 		};
 	});
+
+	useEffect(() => {
+		return () => {
+			if (videoRef.current) {
+				videoRef.current.pause();
+				videoRef.current.src = '';
+				videoRef.current.load();
+			}
+		};
+	}, []);
 
 	if (hasLoadedMedia && !media) {
 		return (
@@ -231,6 +243,7 @@ export default ({
 						`}
 					>
 						<video
+							ref={videoRef}
 							controls={false}
 							css={css`
 								max-width: 100%;
