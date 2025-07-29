@@ -11,7 +11,7 @@ import { MediaUpload } from '@wordpress/media-utils';
  * Internal dependencies.
  */
 import { ScFlex, ScTag } from '@surecart/components-react';
-import { getGalleryItemId, createGalleryItem } from '../../../util/attachments';
+import { getGalleryItemId, transformGalleryItem } from '../../../util/attachments';
 
 const ALLOWED_MEDIA_TYPES = ['image', 'video'];
 
@@ -23,7 +23,7 @@ export default ({ value, onSelect, ...rest }) => {
 		);
 
 		// Preserve existing gallery items and add new ones as objects.
-		const newGalleryItems = newMedia.map(({ id }) => createGalleryItem(id));
+		const newGalleryItems = newMedia.map(({ id }) => transformGalleryItem(id));
 		const updatedGallery = [...(value || []), ...newGalleryItems];
 
 		onSelect(updatedGallery);

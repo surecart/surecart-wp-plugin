@@ -23,7 +23,7 @@ import {
 	normalizeMedia,
 	isVideo,
 	normalizeGalleryItem,
-	createGalleryItem,
+	transformGalleryItem,
 } from '../../../util/attachments';
 
 const ALLOWED_MEDIA_TYPES = ['image', 'video'];
@@ -62,7 +62,7 @@ export default ({ media, product, onSave, open, onRequestClose }) => {
 			setError(null);
 
 			// Create the updated gallery item.
-			const updatedItem = createGalleryItem(mediaData.id, {
+			const updatedItem = transformGalleryItem(mediaData.id, {
 				variant_option: formData.variant_option || null,
 				thumbnail_image: formData.thumbnail_image || null,
 				aspect_ratio: formData.aspect_ratio || null,

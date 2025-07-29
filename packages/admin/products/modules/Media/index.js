@@ -15,12 +15,7 @@ import arrayMove from 'array-move';
 import WordPressMedia from './WordPressMedia';
 import ProductMedia from './ProductMedia';
 import { select } from '@wordpress/data';
-import {
-	normalizeGalleryItem,
-	getGalleryItemId,
-	createGalleryItem,
-	updateGalleryItem,
-} from '../../../util/attachments';
+import { getGalleryItemId } from '../../../util/attachments';
 
 const modals = {
 	CONFIRM_DELETE_MEDIA: 'confirm_delete_media',

@@ -118,7 +118,6 @@ export const normalizeMedia = (media) => {
  * @returns {Promise<string>} - Base64 encoded PNG thumbnail.
  */
 export const extractVideoThumbnail = (videoUrl, seekTime = 1, options = {}) => {
-	// Check cache first.
 	const cacheKey = `${videoUrl}_${seekTime}`;
 	if (thumbnailCache.has(cacheKey)) {
 		return Promise.resolve(thumbnailCache.get(cacheKey));
@@ -129,44 +128,33 @@ export const extractVideoThumbnail = (videoUrl, seekTime = 1, options = {}) => {
 		maxHeight = 600,
 		quality = 0.8,
 		format = 'jpeg',
-		timeout = 20000, // 20 seconds timeout.
+		timeout = 30000, // 30 seconds timeout.
 	} = options;
 
 	return new Promise((resolve, reject) => {
 		let timeoutId;
-		let video;
+		const video = document.createElement('video');
+		video.crossOrigin = 'anonymous';
+		video.preload = 'metadata';
+		video.muted = true;
+		video.playsInline = true;
+
 		let canvas;
 		let ctx;
 
 		const cleanup = () => {
 			if (timeoutId) clearTimeout(timeoutId);
-			if (video) {
-				video.removeEventListener('loadeddata', onLoadedData);
-				video.removeEventListener('seeked', onSeeked);
-				video.removeEventListener('error', onError);
-				video.src = '';
-				video.load();
-			}
-			if (canvas && ctx) {
-				ctx.clearRect(0, 0, canvas.width, canvas.height);
-				canvas.width = canvas.height = 0;
-				canvas.remove();
-			}
+			video.remove();
+			if (canvas) canvas.remove();
 		};
 
 		const onError = () => {
 			cleanup();
-			reject(new Error('Failed to load video'));
+			reject(new Error(__('Failed to load video.', 'surecart')));
 		};
 
-		const onLoadedData = function () {
-			// Seek to the specified time.
-			video.currentTime = Math.min(seekTime, video.duration || 1);
-		};
-
-		const onSeeked = function () {
+		const captureFrame = () => {
 			try {
-				// Calculate optimal canvas size while preserving aspect ratio.
 				const dimensions = calculateThumbnailDimensions(
 					video.videoWidth,
 					video.videoHeight,
@@ -174,56 +162,85 @@ export const extractVideoThumbnail = (videoUrl, seekTime = 1, options = {}) => {
 					maxHeight
 				);
 
-				// Create canvas with calculated dimensions.
 				canvas = document.createElement('canvas');
 				canvas.width = dimensions.width;
 				canvas.height = dimensions.height;
 
-				// Use willReadFrequently for better performance.
-				ctx = canvas.getContext('2d', { willReadFrequently: false });
-
-				// Optimize rendering.
+				ctx = canvas.getContext('2d');
+				if (!ctx) {
+					cleanup();
+					reject(
+						new Error('Failed to get canvas context.', 'surecart')
+					);
+					return;
+				}
 				ctx.imageSmoothingEnabled = true;
 				ctx.imageSmoothingQuality = 'medium';
-
-				// Draw video frame on canvas.
 				ctx.drawImage(video, 0, 0, dimensions.width, dimensions.height);
 
-				// Convert to base64 with specified format and quality.
 				const mimeType = format === 'jpeg' ? 'image/jpeg' : 'image/png';
-				const dataURL = canvas.toDataURL(mimeType, quality);
-
-				// Cache the result
-				thumbnailCache.set(cacheKey, dataURL);
-
+				canvas.toBlob(
+					(blob) => {
+						if (!blob) {
+							reject(
+								new Error(
+									__(
+										'Failed to convert canvas to blob.',
+										'surecart'
+									)
+								)
+							);
+							return;
+						}
+						const reader = new FileReader();
+						reader.onloadend = () => {
+							const dataURL = reader.result;
+							thumbnailCache.set(cacheKey, dataURL);
+							cleanup();
+							resolve(dataURL);
+						};
+						reader.readAsDataURL(blob);
+					},
+					mimeType,
+					quality
+				);
+			} catch (err) {
 				cleanup();
-				resolve(dataURL);
-			} catch (error) {
-				cleanup();
-				reject(error);
+				reject(err);
 			}
 		};
 
-		// Set timeout.
+		const onLoadedMetadata = () => {
+			try {
+				const targetTime = Math.min(seekTime, video.duration || 1);
+				video.currentTime = targetTime;
+			} catch (err) {
+				reject(new Error(__('Failed to seek video', 'surecart')));
+			}
+		};
+
+		const onSeeked = () => {
+			captureFrame();
+		};
+
 		timeoutId = setTimeout(() => {
 			cleanup();
-			reject(new Error('Video thumbnail extraction timed out'));
+			reject(
+				new Error(
+					__(
+						'Video processing timed out. Please try again.',
+						'surecart'
+					)
+				)
+			);
 		}, timeout);
 
-		// Create video element with optimizations.
-		video = document.createElement('video');
-		video.crossOrigin = 'anonymous';
-		video.preload = 'metadata';
-		video.muted = true;
-		video.playsInline = true;
-
-		// Add event listeners.
 		video.addEventListener('error', onError);
-		video.addEventListener('loadeddata', onLoadedData);
+		video.addEventListener('loadedmetadata', onLoadedMetadata);
 		video.addEventListener('seeked', onSeeked);
 
-		// Set video source.
 		video.src = videoUrl;
+		document.body.appendChild(video);
 	});
 };
 
@@ -236,14 +253,14 @@ export const extractVideoThumbnail = (videoUrl, seekTime = 1, options = {}) => {
  *
  * @returns {Promise<Object>} - WordPress media object (JSON).
  */
-export const uploadThumbnailToMediaRestApi = async (
+export const uploadThumbnailToMedia = async (
 	base64Data,
-	filename = 'video-thumbnail.jpg', // Default to JPEG
+	filename = 'video-thumbnail.jpg', // Default to JPEG.
 	options = {}
 ) => {
 	const { timeout = 30000 } = options;
 
-	// Convert base64 to Blob more efficiently
+	// Convert base64 to Blob more efficiently.
 	const byteCharacters = atob(base64Data.split(',')[1]);
 	const byteNumbers = new Array(byteCharacters.length);
 	for (let i = 0; i < byteCharacters.length; i++) {
@@ -253,7 +270,7 @@ export const uploadThumbnailToMediaRestApi = async (
 	const mimeType = base64Data.split(',')[0].split(':')[1].split(';')[0];
 	const blob = new Blob([byteArray], { type: mimeType });
 
-	// Create FormData
+	// Create FormData.
 	const formData = new FormData();
 	formData.append('file', blob, filename);
 
@@ -262,7 +279,7 @@ export const uploadThumbnailToMediaRestApi = async (
 	const timeoutId = setTimeout(() => controller.abort(), timeout);
 
 	try {
-		// Upload to WordPress REST API
+		// Upload to WordPress REST API.
 		const uploadResponse = await fetch(wpApiSettings.root + 'wp/v2/media', {
 			method: 'POST',
 			headers: {
@@ -281,7 +298,7 @@ export const uploadThumbnailToMediaRestApi = async (
 			);
 		}
 
-		// Parse the JSON response
+		// Parse the JSON response.
 		return await uploadResponse.json();
 	} catch (error) {
 		clearTimeout(timeoutId);
@@ -307,7 +324,7 @@ export const generateVideoThumbnail = async (
 	options = {}
 ) => {
 	if (!videoMedia?.source_url || !videoMedia?.mime_type?.includes('video')) {
-		throw new Error('Invalid video media object');
+		throw new Error(__('Invalid video media provided.', 'surecart'));
 	}
 
 	const {
@@ -339,7 +356,7 @@ export const generateVideoThumbnail = async (
 		const filename = `${sanitizedName}_thumbnail_${Date.now()}.${extension}`;
 
 		// Upload thumbnail to media library.
-		return await uploadThumbnailToMediaRestApi(thumbnailBase64, filename);
+		return await uploadThumbnailToMedia(thumbnailBase64, filename);
 	} catch (error) {
 		throw new Error(`Error generating video thumbnail: ${error.message}`);
 	}
@@ -400,27 +417,13 @@ export const getGalleryItemId = (item) => {
 };
 
 /**
- * Check if gallery item is an object with additional properties.
- *
- * @param {number|Object} item - Gallery item
- * @returns {boolean} - True if item is an object with properties
- */
-export const isComplexGalleryItem = (item) => {
-	return (
-		typeof item === 'object' &&
-		item !== null &&
-		(item.variant_option || item.thumbnail_image || item.aspect_ratio)
-	);
-};
-
-/**
  * Create a gallery item object with the specified properties.
  *
  * @param {number} id - Media ID
  * @param {Object} properties - Additional properties
  * @returns {number|Object} - Gallery item (returns just ID if no properties, otherwise object)
  */
-export const createGalleryItem = (id, properties = {}) => {
+export const transformGalleryItem = (id, properties = {}) => {
 	const { variant_option, thumbnail_image, aspect_ratio } = properties;
 
 	// If no additional properties, return just the ID.
@@ -435,22 +438,4 @@ export const createGalleryItem = (id, properties = {}) => {
 	if (aspect_ratio) item.aspect_ratio = aspect_ratio;
 
 	return item;
-};
-
-/**
- * Update a gallery item's properties.
- *
- * @param {number|Object} item - Existing gallery item
- * @param {Object} updates - Properties to update
- * @returns {number|Object} - Updated gallery item
- */
-export const updateGalleryItem = (item, updates = {}) => {
-	const normalized = normalizeGalleryItem(item);
-	const updated = { ...normalized, ...updates };
-
-	return createGalleryItem(updated.id, {
-		variant_option: updated.variant_option,
-		thumbnail_image: updated.thumbnail_image,
-		aspect_ratio: updated.aspect_ratio,
-	});
 };
