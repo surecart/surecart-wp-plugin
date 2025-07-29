@@ -2,7 +2,7 @@
 import { css, jsx } from '@emotion/core';
 import { ScSwitch } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
-import Box from '../../../templates/Box';
+import Box from '../../../ui/Box';
 
 export default ({ subscription, updateSubscription, loading }) => {
 	// Only show for installment subscriptions (finite with remaining periods)

@@ -20,10 +20,10 @@ export default ({ price, updatePrice }) => {
 					})
 				}
 			>
-				{__('Restart subscription when completed', 'surecart')}
+				{__('Restart plan when completed', 'surecart')}
 				<span slot="description">
 					{__(
-						'Automatically restart the subscription after all installment payments are completed.',
+						'Automatically restart the plan after all installment payments are completed.',
 						'surecart'
 					)}
 				</span>
