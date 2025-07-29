@@ -142,10 +142,10 @@
 						<div
 							class="sc-product-line-item__purchasable-status sc-product-line-item__price-description"
 							data-wp-text="context.line_item.purchasable_status_display"
+							data-wp-bind--hidden="!context.line_item.purchasable_status_display"
 							role="status"
 							aria-live="polite"
-							aria-atomic="true"
-						>&nbsp;</div>
+							aria-atomic="true">&nbsp;</div>
 					</div>
 				</div>
 			</div>
