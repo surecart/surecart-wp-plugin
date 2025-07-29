@@ -531,10 +531,14 @@ export const TEMPLATE = [
 											fontSize: '14px',
 											lineHeight: '1.4',
 										},
-										color: { text: '#828c99' },
+										color: {
+											text: 'var(--sc-input-help-text-color)',
+										},
 										elements: {
 											link: {
-												color: { text: '#828c99' },
+												color: {
+													text: 'var(--sc-input-help-text-color)',
+												},
 											},
 										},
 									},
