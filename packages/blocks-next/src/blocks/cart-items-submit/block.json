@@ -1,0 +1,73 @@
+{
+	"$schema": "https://json.schemastore.org/block.json",
+	"apiVersion": 3,
+	"name": "surecart/slide-out-cart-items-submit",
+	"title": "Cart Submit Button",
+	"description": "The cart submit button",
+	"textdomain": "surecart",
+	"version": "1.0.0",
+	"category": "surecart-cart",
+	"example": {},
+	"ancestor": ["surecart/slide-out-cart"],
+	"attributes": {
+		"text": {
+			"type": "string",
+			"default": "Checkout"
+		},
+		"width": {
+			"type": "number",
+			"default": 100
+		}
+	},
+	"supports": {
+		"interactivity": true,
+		"anchor": true,
+		"align": false,
+		"alignWide": false,
+		"html": false,
+		"multiple": false,
+		"__experimentalSelector": ".wp-block-button .wp-block-button__link",
+		"spacing": {
+			"__experimentalSkipSerialization": true,
+			"padding": ["horizontal", "vertical"],
+			"margin": ["top", "bottom"]
+		},
+		"color": {
+			"__experimentalSkipSerialization": true,
+			"gradients": true,
+			"__experimentalDefaultControls": {
+				"background": true,
+				"text": true
+			}
+		},
+		"typography": {
+			"fontSize": true,
+			"__experimentalFontFamily": true,
+			"__experimentalFontWeight": true,
+			"__experimentalFontStyle": true,
+			"__experimentalTextTransform": true
+		},
+		"reusable": false,
+		"__experimentalBorder": {
+			"color": true,
+			"radius": true,
+			"style": true,
+			"width": true,
+			"__experimentalSkipSerialization": true,
+			"__experimentalDefaultControls": {
+				"color": true,
+				"radius": true,
+				"style": true,
+				"width": true
+			}
+		}
+	},
+	"render": "file:./view.php",
+	"editorScript": "file:./index.js",
+	"style": [
+		"surecart-wp-buttons",
+		"surecart-wp-button",
+		"file:./style-index.css",
+		"wp-block-button"
+	]
+}

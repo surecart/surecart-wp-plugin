@@ -868,7 +868,7 @@ class Product extends Model implements PageModel {
 	 * @return \WP_Template
 	 */
 	public function getTemplateAttribute() {
-		return null;// get_block_template( $this->getTemplateIdAttribute() );
+		return null;
 	}
 
 	/**
@@ -1039,7 +1039,12 @@ class Product extends Model implements PageModel {
 	 * @return object
 	 */
 	public function getLineItemImageAttribute() {
-		return is_a( $this->featured_image, GalleryItem::class ) ? $this->featured_image->attributes( 'thumbnail' ) : (object) array();
+		return is_a( $this->featured_image, GalleryItem::class ) ?
+			$this->featured_image->attributes( 'thumbnail' ) :
+			(object) array(
+				'src'  => apply_filters( 'surecart/product-line-item-image/fallback_src', \SureCart::core()->assets()->getUrl() . '/images/image-placeholder.svg', $this ),
+				'type' => 'fallback',
+			);
 	}
 
 	/**

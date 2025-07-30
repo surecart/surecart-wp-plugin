@@ -1,0 +1,33 @@
+{
+	"$schema": "https://json.schemastore.org/block.json",
+	"apiVersion": 3,
+	"name": "surecart/slide-out-cart-items-subtotal",
+	"title": "Cart Subtotal",
+	"description": "Display the cart subtotal",
+	"keywords": ["cart", "subtotal"],
+	"category": "surecart-cart",
+	"textdomain": "surecart",
+	"version": "1.0.0",
+	"example": {},
+	"ancestor": ["surecart/slide-out-cart"],
+	"supports": {
+		"interactivity": true,
+		"html": false,
+		"multiple": false,
+		"layout": {
+			"allowSwitching": false,
+			"allowInheriting": false,
+			"allowSizingOnChildren": true,
+			"default": {
+				"type": "flex",
+				"justifyContent": "space-between"
+			}
+		},
+		"spacing": {
+			"margin": true,
+			"padding": true
+		}
+	},
+	"render": "file:./view.php",
+	"editorScript": "file:./index.js"
+}

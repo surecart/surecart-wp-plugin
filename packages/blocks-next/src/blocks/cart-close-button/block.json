@@ -1,0 +1,51 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "surecart/cart-close-button",
+	"title": "Close Cart Button",
+	"description": "Display the close cart button.",
+	"version": "1.0.0",
+	"category": "surecart-cart",
+	"example": {},
+	"ancestor": ["surecart/slide-out-cart"],
+	"attributes": {
+		"label": {
+			"type": "string"
+		},
+		"showLabel": {
+			"type": "boolean",
+			"default": false
+		},
+		"icon": {
+			"type": "string",
+			"default": "arrow"
+		}
+	},
+	"supports": {
+		"interactivity": true,
+		"spacing": {
+			"padding": true,
+			"margin": true
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true,
+			"__experimentalFontWeight": true
+		},
+		"__experimentalBorder": {
+			"color": true,
+			"radius": true,
+			"style": true,
+			"width": true
+		},
+		"color": {
+			"text": true,
+			"background": true,
+			"enableContrastChecker": true
+		}
+	},
+	"render": "file:./view.php",
+	"textdomain": "surecart",
+	"editorScript": "file:./index.js",
+	"style": "file:./style-index.css"
+}

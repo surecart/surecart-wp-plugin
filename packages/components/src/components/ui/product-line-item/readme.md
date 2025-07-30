@@ -44,6 +44,7 @@
 | `"description"`                  |                                 |
 | `"image"`                        | The product image               |
 | `"line-item__price-description"` | The line item price description |
+| `"placeholder__image"`           |                                 |
 | `"price"`                        | The product price               |
 | `"price__amount"`                | The product price amount        |
 | `"price__description"`           | The product price description   |
