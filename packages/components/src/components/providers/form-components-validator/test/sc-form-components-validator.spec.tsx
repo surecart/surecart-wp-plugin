@@ -22,7 +22,7 @@ describe('sc-form-components-validator', () => {
     const page = await newSpecPage({
       components: [ScFormComponentsValidator],
       template: () => (
-        <sc-form-components-validator>
+        <sc-form-components-validator disabled={false}>
           <sc-payment></sc-payment>
         </sc-form-components-validator>
       ),
@@ -38,7 +38,7 @@ describe('sc-form-components-validator', () => {
     const page = await newSpecPage({
       components: [ScFormComponentsValidator],
       template: () => (
-        <sc-form-components-validator taxProtocol={{ tax_enabled: true, eu_vat_required: true } as TaxProtocol}>
+        <sc-form-components-validator disabled={false} taxProtocol={{ tax_enabled: true, eu_vat_required: true } as TaxProtocol}>
           <sc-payment></sc-payment>
         </sc-form-components-validator>
       ),
@@ -52,7 +52,7 @@ describe('sc-form-components-validator', () => {
     const page = await newSpecPage({
       components: [ScFormComponentsValidator],
       template: () => (
-        <sc-form-components-validator>
+        <sc-form-components-validator disabled={false}>
           <sc-order-summary>
             <sc-line-item-total total="subtotal"></sc-line-item-total>
           </sc-order-summary>
@@ -70,7 +70,7 @@ describe('sc-form-components-validator', () => {
     const page = await newSpecPage({
       components: [ScFormComponentsValidator],
       template: () => (
-        <sc-form-components-validator>
+        <sc-form-components-validator disabled={false}>
           <sc-payment></sc-payment>
         </sc-form-components-validator>
       ),
@@ -86,7 +86,7 @@ describe('sc-form-components-validator', () => {
     const page = await newSpecPage({
       components: [ScFormComponentsValidator],
       template: () => (
-        <sc-form-components-validator>
+        <sc-form-components-validator disabled={false}>
           <sc-payment></sc-payment>
           <sc-customer-name></sc-customer-name>
         </sc-form-components-validator>
@@ -111,7 +111,7 @@ describe('sc-form-components-validator', () => {
     const page = await newSpecPage({
       components: [ScFormComponentsValidator],
       template: () => (
-        <sc-form-components-validator>
+        <sc-form-components-validator disabled={false}>
           <sc-payment></sc-payment>
         </sc-form-components-validator>
       ),

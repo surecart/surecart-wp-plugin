@@ -4,11 +4,12 @@ exports[`sc-order-confirmation-totals renders 1`] = `
 <sc-order-confirmation-totals>
   <mock:shadow-root>
     <div class="line-item-totals">
-      <sc-line-item-total total="subtotal">
+      <sc-line-item>
         <span slot="description">
           Subtotal
         </span>
-      </sc-line-item-total>
+        <span slot="price"></span>
+      </sc-line-item>
       <sc-divider style="--spacing: var(--sc-spacing-small);"></sc-divider>
       <sc-line-item-total show-currency="" size="large">
         <span slot="description">
@@ -24,16 +25,17 @@ exports[`sc-order-confirmation-totals renders bump amount 1`] = `
 <sc-order-confirmation-totals>
   <mock:shadow-root>
     <div class="line-item-totals">
-      <sc-line-item-total total="subtotal">
+      <sc-line-item>
         <span slot="description">
           Subtotal
         </span>
-      </sc-line-item-total>
+        <span slot="price"></span>
+      </sc-line-item>
       <sc-line-item style="margin-top: var(--sc-spacing-small);">
         <span slot="description">
           Bundle Discount
         </span>
-        <sc-format-number slot="price" type="currency" value="-100"></sc-format-number>
+        <span slot="price"></span>
       </sc-line-item>
       <sc-divider style="--spacing: var(--sc-spacing-small);"></sc-divider>
       <sc-line-item-total show-currency="" size="large">

@@ -6,7 +6,7 @@ exports[`sc-provisional-banner renders 1`] = `
     <div class="sc-banner">
       <p>
         Complete your store setup to go live.
-        <a href="">
+        <a href="" rel="noopener noreferrer" target="_blank">
           Complete Setup
           <sc-icon name="arrow-right"></sc-icon>
         </a>
