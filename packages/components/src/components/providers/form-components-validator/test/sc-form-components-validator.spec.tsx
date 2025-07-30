@@ -1,12 +1,34 @@
+// Mock the checkout store.
+jest.mock('@store/checkouts/store', () => ({
+  __esModule: true,
+  default: {
+    state: { live: {}, test: {} },
+    set: jest.fn(),
+    get: jest.fn(),
+    onChange: jest.fn(),
+    on: jest.fn(),
+    dispose: jest.fn(),
+  },
+  state: { live: {}, test: {} },
+  set: jest.fn(),
+  get: jest.fn(),
+  onChange: jest.fn(),
+  on: jest.fn(),
+  dispose: jest.fn(),
+}));
+
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 import { Checkout, TaxProtocol } from '../../../../types';
-import { dispose as disposeCheckout, state as checkoutState } from '@store/checkout';
+import { state as checkoutState } from '@store/checkout';
 import { ScFormComponentsValidator } from '../sc-form-components-validator';
+import { ScCustomerName } from '../../../controllers/checkout-form/customer-name/sc-customer-name';
+import { ScOrderShippingAddress } from '../../../controllers/checkout-form/order-shipping-address/sc-order-shipping-address';
 
 describe('sc-form-components-validator', () => {
   beforeEach(() => {
-    disposeCheckout();
+    checkoutState.checkout = null;
+    checkoutState.formId = null;
   });
 
   it('renders', async () => {
@@ -84,7 +106,7 @@ describe('sc-form-components-validator', () => {
 
   it('requires the customer name on sc-customer-name if present in page and shipping address required', async () => {
     const page = await newSpecPage({
-      components: [ScFormComponentsValidator],
+      components: [ScFormComponentsValidator, ScCustomerName, ScOrderShippingAddress],
       template: () => (
         <sc-form-components-validator disabled={false}>
           <sc-payment></sc-payment>
@@ -109,7 +131,7 @@ describe('sc-form-components-validator', () => {
 
   it('requires the customer name on sc-order-shipping-address if shipping address is required', async () => {
     const page = await newSpecPage({
-      components: [ScFormComponentsValidator],
+      components: [ScFormComponentsValidator, ScCustomerName, ScOrderShippingAddress],
       template: () => (
         <sc-form-components-validator disabled={false}>
           <sc-payment></sc-payment>

@@ -52,7 +52,7 @@ export class ScFormComponentsValidator {
 
   handleOrderChange() {
     // bail if we don't have address invalid error or disabled.
-    if (this?.disabled) return;
+    if (this.disabled) return;
 
     // make sure to add the address field if it's not there.
     if (shippingAddressRequired()) {
