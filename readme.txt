@@ -313,7 +313,7 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 
 == Changelog ==
 
-= 3.11.0 - July 29, 2025 =
+= 3.11.0 - July 30th, 2025 =
 - New: Updated cart design and customization options.
 - Improvement: Added loading state to mobile shop page filters for better user experience.
 - Improvement: Enhanced readonly subscription price display in admin.
