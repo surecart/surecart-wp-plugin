@@ -1,17 +1,13 @@
-/** @jsx jsx */
-import { jsx, css } from '@emotion/core';
 import { ScSwitch } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 
 export default ({ price, updatePrice }) => {
-	return price?.recurring_period_count ? (
-		<div
-			css={css`
-				> *:not(:last-child) {
-					margin-bottom: var(--sc-spacing-medium);
-				}
-			`}
-		>
+	if (!price?.recurring_period_count) {
+		return null;
+	}
+
+	return (
+		<div>
 			<ScSwitch
 				checked={price?.restart_subscription_on_completed}
 				onScChange={(e) =>
@@ -29,5 +25,5 @@ export default ({ price, updatePrice }) => {
 				</span>
 			</ScSwitch>
 		</div>
-	) : null;
+	);
 };
