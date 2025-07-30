@@ -4,7 +4,10 @@ import Box from '../../../ui/Box';
 
 export default ({ subscription, updateSubscription, loading }) => {
 	// Only show for installment payments (finite subscriptions).
-	if (!subscription?.finite) {
+	if (
+		!subscription?.finite ||
+		['completed', 'canceled'].includes(subscription?.status)
+	) {
 		return null;
 	}
 
