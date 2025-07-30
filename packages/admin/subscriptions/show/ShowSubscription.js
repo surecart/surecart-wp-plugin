@@ -177,7 +177,10 @@ export default () => {
 	);
 
 	useEffect(() => {
-		if (id && 'canceled' !== subscription?.status) {
+		if (
+			id &&
+			!['completed', 'canceled', undefined].includes(subscription?.status)
+		) {
 			fetchUpcomingPeriod();
 		}
 	}, [id, subscription?.discount?.id, subscription?.status]);
