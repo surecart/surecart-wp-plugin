@@ -225,6 +225,26 @@ export default () => {
 						{__('% of Period Remaining', 'surecart')}
 					</span>
 				</ScInput>
+
+				<ScInput
+					value={item?.remind_after_days}
+					label={__('Minimum Days Between Reminders', 'surecart')}
+					type="number"
+					min="0"
+					onScInput={(e) =>
+						editItem({
+							remind_after_days: e.target.value,
+						})
+					}
+					help={__(
+						'The minimum number of days that must pass since the last reminder (or subscription creation if no reminder has been sent) before a new reminder can be sent. This prevents reminders from being sent too frequently across multiple subscription periods.',
+						'surecart'
+					)}
+				>
+					<span slot="suffix" style={{ opacity: '0.65' }}>
+						{__('days', 'surecart')}
+					</span>
+				</ScInput>
 			</SettingsBox>
 
 			<SettingsBox
