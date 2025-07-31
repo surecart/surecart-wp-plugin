@@ -76,8 +76,8 @@ class RuleString {
 	 * @return $rule_string|\WP_Error
 	 */
 	public function construct( $rule_json = null ) {
-		$rule_json = $this->handleCustomAttributes( $rule_json );
-		$rule_string       = \SureCart::request(
+		$rule_json   = $this->handleCustomAttributes( $rule_json );
+		$rule_string = \SureCart::request(
 			$this->endpoint . '/construct',
 			[
 				'method' => 'POST',
