@@ -34,6 +34,4 @@ if ( ! empty( $styles['declarations'] ) ) {
 $product           = sc_get_product();
 $should_direct_add = $direct_add_to_cart && empty( $product->has_options );
 
-var_dump( $product->is_sold_out );
-
 return $should_direct_add ? 'file:./button-cart.php' : 'file:./button-quick-view.php';

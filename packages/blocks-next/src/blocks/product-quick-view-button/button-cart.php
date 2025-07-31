@@ -8,9 +8,9 @@
 						[
 							'role'              => 'button',
 							'tabindex'          => '0',
-							'aria-disabled'     => $product->is_sold_out ? 'true' : null,
-							'disabled'          => $product->is_sold_out ? 'true' : null,
-							'aria-label'        => __( 'Add to Cart', 'surecart' ),
+							'aria-disabled'     => empty( $product->in_stock ) ? 'true' : null,
+							'disabled'          => empty( $product->in_stock ) ? 'true' : null,
+							'aria-label'        => empty( $product->in_stock ) ? __( 'Sold Out', 'surecart' ) : __( 'Add to Cart', 'surecart' ),
 							'data-wp-class--sc-button__link--busy' => 'context.busy',
 							'style'             => $style,
 							'class'             => 'wp-block-button__link sc-button__link ',
@@ -42,7 +42,7 @@
 
 			<?php if ( $show_text ) { ?>
 				<span class="sc-button__link-text">
-					<?php echo esc_html( $product->is_sold_out ? __( 'Sold Out', 'surecart' ) : $label ); ?>
+					<?php echo esc_html( empty( $product->in_stock ) ? __( 'Sold Out', 'surecart' ) : $label ); ?>
 				</span>
 			<?php } ?>
 

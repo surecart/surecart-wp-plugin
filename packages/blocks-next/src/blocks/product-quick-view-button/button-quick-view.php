@@ -30,19 +30,19 @@
 			);
 			?>
 		>
-			<?php
-			if ( $show_icon && 'before' === $icon_position ) {
-				echo wp_kses( SureCart::svg()->get( $icon, [ 'class' => 'wp-block-surecart-product-quick-view-button__icon sc-button__link-text' ] ), sc_allowed_svg_html() );
-			}
+			<?php if ( $show_icon && 'before' === $icon_position ) { ?>
+				<?php echo wp_kses( SureCart::svg()->get( $icon, [ 'class' => 'wp-block-surecart-product-quick-view-button__icon sc-button__link-text' ] ), sc_allowed_svg_html() ); ?>
+			<?php } ?>
 
-			if ( $show_text ) {
-				echo '<span class="sc-quick-view-button-text sc-button__link-text">' . esc_html( $label ) . '</span>';
-			}
+			<?php if ( $show_text ) { ?>
+				<span class="sc-button__link-text">
+					<?php echo esc_html( empty( $product->in_stock ) ? __( 'Sold Out', 'surecart' ) : $label ); ?>
+				</span>
+			<?php } ?>
 
-			if ( $show_icon && 'after' === $icon_position ) {
-				echo wp_kses( SureCart::svg()->get( $icon, [ 'class' => 'wp-block-surecart-product-quick-view-button__icon sc-button__link-text' ] ), sc_allowed_svg_html() );
-			}
-			?>
+			<?php if ( $show_icon && 'after' === $icon_position ) { ?>
+				<?php echo wp_kses( SureCart::svg()->get( $icon, [ 'class' => 'wp-block-surecart-product-quick-view-button__icon sc-button__link-text' ] ), sc_allowed_svg_html() ); ?>
+			<?php } ?>
 		</div>
 	</div>
 </div>

@@ -394,7 +394,9 @@ const { state, actions } = store('surecart/product-page', {
 			// Add submitter to event if it doesn't exist (for non-form elements)
 			if (!e.submitter) {
 				const { ref } = getElement();
-				e.submitter = ref;
+				if (ref) {
+					e.submitter = ref;
+				}
 			}
 
 			// if the button hdoes not have a value, add to cart.
