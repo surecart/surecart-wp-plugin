@@ -44,4 +44,13 @@ class Account extends Model {
 	public function getIsConnectedAttribute() {
 		return ! empty( ApiToken::get() ) && ! empty( $this->id );
 	}
+
+	/**
+	 * Get the claim expired attribute.
+	 *
+	 * @return bool
+	 */
+	public function getClaimExpiredAttribute() {
+		return time() > $this->claim_window_ends_at;
+	}
 }

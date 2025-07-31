@@ -18,7 +18,7 @@ export class ScProvisionalBanner {
       <div class={{ 'sc-banner': true }}>
         <p>
           {this.expired
-            ? __('The claim window for this account has expired.', 'surecart')
+            ? __('The setup window for your store has expired. Please contact support to complete your setup.', 'surecart')
             : __('Complete your store setup to go live.', 'surecart')}
           {!this.expired && (
             <a href={this.claimUrl} target="_blank" rel="noopener noreferrer">

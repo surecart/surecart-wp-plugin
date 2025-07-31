@@ -39,22 +39,16 @@ abstract class AdminController {
 	public function withHeader( $args ) {
 		add_action(
 			'in_admin_header',
-			function() use ( $args ) {
-				$account = \SureCart::account();
-				$is_expired = false;
-				
-				if ( ! $account->claimed && ! empty( $account->claim_window_ends_at ) ) {
-					$is_expired = time() > $account->claim_window_ends_at;
-				}
-				
+			function () use ( $args ) {
+
 				return \SureCart::render(
 					'layouts/partials/admin-header',
 					[
-						'breadcrumbs'      => $args['breadcrumbs'] ?? [],
-						'suffix'           => $args['suffix'] ?? '',
-						'claim_url'        => ! $account->claimed ? \SureCart::routeUrl( 'account.claim' ) : '',
-						'claim_expired'    => $is_expired,
-						'report_url'       => $args['report_url'] ?? '',
+						'breadcrumbs'   => $args['breadcrumbs'] ?? [],
+						'suffix'        => $args['suffix'] ?? '',
+						'claim_url'     => ! \SureCart::account()->claimed ? \SureCart::routeUrl( 'account.claim' ) : '',
+						'claim_expired' => \SureCart::account()->claim_expired ?? false,
+						'report_url'    => $args['report_url'] ?? '',
 					]
 				);
 			}
@@ -71,7 +65,7 @@ abstract class AdminController {
 	public function withNotices( $items ) {
 		add_action(
 			'admin_notices',
-			function() use ( $items ) {
+			function () use ( $items ) {
 				foreach ( $items as $key => $item ) {
 					if ( (bool) ( $_REQUEST[ $key ] ?? false ) ) {
 						?>
