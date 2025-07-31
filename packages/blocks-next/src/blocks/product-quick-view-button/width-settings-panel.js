@@ -13,7 +13,7 @@ export function WidthSettingsPanel({ selectedWidth, setAttributes }) {
 
 	return (
 		<ToolsPanel
-			label={__('Settings', 'surecart')}
+			label={__('Width Settings', 'surecart')}
 			resetAll={() => setAttributes({ width: undefined })}
 			dropdownMenuProps={dropdownMenuProps}
 		>
