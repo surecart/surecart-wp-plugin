@@ -72,7 +72,7 @@
 	<?php endif; ?>
 
 	<?php if ( ! empty( $claim_url ) ) : ?>
-		<sc-provisional-banner claim-url="<?php echo esc_url( $claim_url ); ?>"></sc-provisional-banner>
+		<sc-provisional-banner claim-url="<?php echo esc_url( $claim_url ); ?>" <?php echo ! empty( $claim_expired ) && $claim_expired ? 'expired="true"' : ''; ?>></sc-provisional-banner>
 	<?php endif; ?>
 
 	<div id="sc-settings-header">

@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-07-30T19:54:15",
+  "timestamp": "2025-07-31T14:30:51",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.18.3",
@@ -30954,7 +30954,7 @@
             "references": {
               "LayoutConfig": {
                 "location": "local",
-                "path": "/Users/andre/sites/surecart/wp-content/plugins/surecart/packages/components/src/components/controllers/products/sc-product-item-list/sc-product-item-list.tsx",
+                "path": "/home/runner/work/surecart-wp/surecart-wp/packages/components/src/components/controllers/products/sc-product-item-list/sc-product-item-list.tsx",
                 "id": "src/components/controllers/products/sc-product-item-list/sc-product-item-list.tsx::LayoutConfig"
               }
             }
@@ -33025,6 +33025,28 @@
           "values": [
             {
               "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "expired",
+          "type": "boolean",
+          "complexType": {
+            "original": "boolean",
+            "resolved": "boolean",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "expired",
+          "reflectToAttr": false,
+          "docs": "Whether the claim window has expired.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
             }
           ],
           "optional": false,

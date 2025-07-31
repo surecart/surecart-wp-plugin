@@ -3245,6 +3245,10 @@ export namespace Components {
           * Claim URL.
          */
         "claimUrl": string;
+        /**
+          * Whether the claim window has expired.
+         */
+        "expired": boolean;
     }
     interface ScPurchaseDownloadsList {
         "allLink": string;
@@ -10429,6 +10433,10 @@ declare namespace LocalJSX {
           * Claim URL.
          */
         "claimUrl"?: string;
+        /**
+          * Whether the claim window has expired.
+         */
+        "expired"?: boolean;
     }
     interface ScPurchaseDownloadsList {
         "allLink"?: string;

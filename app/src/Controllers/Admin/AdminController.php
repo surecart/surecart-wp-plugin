@@ -40,12 +40,20 @@ abstract class AdminController {
 		add_action(
 			'in_admin_header',
 			function() use ( $args ) {
+				$account = \SureCart::account();
+				$is_expired = false;
+				
+				if ( ! $account->claimed && ! empty( $account->claim_window_ends_at ) ) {
+					$is_expired = time() > $account->claim_window_ends_at;
+				}
+				
 				return \SureCart::render(
 					'layouts/partials/admin-header',
 					[
 						'breadcrumbs'      => $args['breadcrumbs'] ?? [],
 						'suffix'           => $args['suffix'] ?? '',
-						'claim_url'        => ! \SureCart::account()->claimed ? \SureCart::routeUrl( 'account.claim' ) : '',
+						'claim_url'        => ! $account->claimed ? \SureCart::routeUrl( 'account.claim' ) : '',
+						'claim_expired'    => $is_expired,
 						'report_url'       => $args['report_url'] ?? '',
 					]
 				);

@@ -70,16 +70,24 @@ abstract class BaseSettings {
 
 		add_action( 'admin_enqueue_scripts', [ $this, 'showScripts' ] );
 
+		$account = \SureCart::account();
+		$is_expired = false;
+		
+		if ( ! $account->claimed && ! empty( $account->claim_window_ends_at ) ) {
+			$is_expired = time() > $account->claim_window_ends_at;
+		}
+
 		return \SureCart::view( $this->template )->with(
 			[
-				'tab'          => $request->query( 'tab' ) ?? '',
-				'breadcrumb'   => ! empty( $this->tabs[ $request->query( 'tab' ) ?? '' ] ) ? $this->tabs[ $request->query( 'tab' ) ?? '' ] : '',
-				'is_free'      => (bool) ( \SureCart::account()->plan->free ?? true ),
-				'entitlements' => \SureCart::account()->entitlements,
-				'upgrade_url'  => \SureCart::config()->links->purchase,
-				'brand_color'  => \SureCart::account()->brand->color ?? null,
-				'status'       => $request->query( 'status' ),
-				'claim_url'    => ! \SureCart::account()->claimed ? \SureCart::routeUrl( 'account.claim' ) : '',
+				'tab'           => $request->query( 'tab' ) ?? '',
+				'breadcrumb'    => ! empty( $this->tabs[ $request->query( 'tab' ) ?? '' ] ) ? $this->tabs[ $request->query( 'tab' ) ?? '' ] : '',
+				'is_free'       => (bool) ( \SureCart::account()->plan->free ?? true ),
+				'entitlements'  => \SureCart::account()->entitlements,
+				'upgrade_url'   => \SureCart::config()->links->purchase,
+				'brand_color'   => \SureCart::account()->brand->color ?? null,
+				'status'        => $request->query( 'status' ),
+				'claim_url'     => ! \SureCart::account()->claimed ? \SureCart::routeUrl( 'account.claim' ) : '',
+				'claim_expired' => $is_expired,
 			]
 		);
 	}
