@@ -55,7 +55,7 @@
 	}
 
 	th#name {
-		width: 235px;
+		width: 245px;
 	}
 	th#featured {
 		width: 60px;

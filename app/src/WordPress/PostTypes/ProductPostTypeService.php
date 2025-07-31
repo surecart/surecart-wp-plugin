@@ -644,7 +644,7 @@ class ProductPostTypeService {
 	 */
 	public function replaceContentWithProductInfoPart( $content ) {
 		// not our post type.
-		if ( ! is_singular( 'sc_product' ) ) {
+		if ( ! is_singular( 'sc_product' ) || ! is_main_query() || 'sc_product' !== get_post_type() ) {
 			return $content;
 		}
 

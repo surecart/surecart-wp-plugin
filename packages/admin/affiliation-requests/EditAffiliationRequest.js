@@ -33,6 +33,7 @@ import Error from '../components/Error';
 import Logo from '../templates/Logo';
 import UpdateModel from '../templates/UpdateModel';
 import Details from './modules/Details';
+import MetaData from './modules/MetaData';
 
 export default () => {
 	const [loading, setLoading] = useState(false);
@@ -221,6 +222,15 @@ export default () => {
 						</ScBreadcrumb>
 					</ScBreadcrumbs>
 				</ScFlex>
+			}
+			sidebar={
+				affiliationRequest?.metadata &&
+				Object.keys(affiliationRequest?.metadata).length ? (
+					<MetaData
+						affiliationRequest={affiliationRequest}
+						loading={!hasLoadedAffiliationRequest}
+					/>
+				) : null
 			}
 			button={
 				<div

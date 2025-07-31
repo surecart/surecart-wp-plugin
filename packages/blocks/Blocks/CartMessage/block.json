@@ -5,11 +5,11 @@
 	"title": "Cart Message",
 	"description": "Display a custom message in the cart",
 	"category": "surecart",
-  "textdomain": "surecart",
+	"textdomain": "surecart",
 	"supports": {
 		"reusable": false,
 		"html": false,
-		"typography": true
+		"inserter": false
 	},
 	"ancestor": ["surecart/cart"],
 	"attributes": {

@@ -20,6 +20,9 @@ class ProductTest extends SureCartUnitTestCase
 		// Set up an app instance with whatever stubs and mocks we need before every test.
 		\SureCart::make()->bootstrap([
 			'providers' => [
+				\SureCartAppCore\AppCore\AppCoreServiceProvider::class,
+				\SureCartAppCore\Config\ConfigServiceProvider::class,
+				\SureCartAppCore\Assets\AssetsServiceProvider::class,
 				\SureCart\WordPress\PluginServiceProvider::class,
 				\SureCart\Settings\SettingsServiceProvider::class,
 				\SureCart\Request\RequestServiceProvider::class,

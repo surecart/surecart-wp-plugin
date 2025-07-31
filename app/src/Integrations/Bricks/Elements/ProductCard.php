@@ -188,13 +188,13 @@ class ProductCard extends \Bricks\Element {
 	 * @return void
 	 */
 	public function render() {
-		if ( $this->settings['linkToPost'] ) {
+		if ( ! empty( $this->settings['linkToPost'] ) ) {
 			echo '<a href="' . esc_url( get_permalink() ) . '">'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 
 		echo $this->html( [], \Bricks\Frontend::render_children( $this ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
-		if ( $this->settings['linkToPost'] ) {
+		if ( ! empty( $this->settings['linkToPost'] ) ) {
 			echo '</a>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 	}

@@ -36,7 +36,7 @@ class BricksTemplateService {
 			}
 
 			// Get the post by product id.
-			$post = $product->post;
+			$post = $product->post ?? null;
 			if ( empty( $post ) ) {
 				return $data;
 			}

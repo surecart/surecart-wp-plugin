@@ -14,7 +14,7 @@ import arrayMove from 'array-move';
 
 import Price from './Price';
 
-export default ({ prices, product, children }) => {
+export default ({ prices, product, children, allPrices }) => {
 	const [saving, setSaving] = useState(false);
 	const { editEntityRecord, receiveEntityRecords } = useDispatch(coreStore);
 	const { createErrorNotice, createSuccessNotice } =
@@ -94,7 +94,11 @@ export default ({ prices, product, children }) => {
 					return (
 						<SortableItem key={price.id}>
 							<div>
-								<Price price={price} product={product} />
+								<Price
+									price={price}
+									product={product}
+									allPrices={allPrices}
+								/>
 							</div>
 						</SortableItem>
 					);

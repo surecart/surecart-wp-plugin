@@ -119,8 +119,12 @@ class ElementorBlockAdapterService {
 	 * @return string
 	 */
 	public function showAlertIfNotUsingProductWrapper( $content ) {
-		// Show only to the users who has the permissions to edit the post.
-		if ( ! current_user_can( 'edit_posts', get_the_ID() ) ) {
+		// Show only to the users who has the permissions to edit the post
+		// and if the current post is a product.
+		if (
+			! current_user_can( 'edit_posts', get_the_ID() ) ||
+			! sc_get_product()
+		) {
 			return $content;
 		}
 
@@ -131,9 +135,9 @@ class ElementorBlockAdapterService {
 
 		$alert  = '<div class="sc-alert sc-alert-warning" style="margin:1em 0;padding:1em;border:1px solid #ffc107;background:#fff3cd;color:#856404;">';
 		$alert .= sprintf(
-			/* translators: %s: URL to the SureCart documentation page. */
-			esc_html__( '⚠️ Warning: SureCart widgets must be placed inside a "Product Form" container to function properly. Please wrap them accordingly. &nbsp; %s', 'surecart' ),
-			'<a href="https://surecart.com/docs/elementor-product-form" target="_blank" rel="noopener noreferrer">' . esc_html__( 'Learn more', 'surecart' ) . '</a>'
+			/* translators: %s: URL to the SureCart Elementor documentation page. */
+			esc_html__( '⚠️ Warning: SureCart widgets must be placed inside a "Product Form" container to function properly. &nbsp; %s', 'surecart' ),
+			'<a href="https://surecart.com/docs/product-page-in-elementor" target="_blank" rel="noopener noreferrer">' . esc_html__( 'Learn more', 'surecart' ) . '</a>'
 		);
 		$alert .= '</div>';
 

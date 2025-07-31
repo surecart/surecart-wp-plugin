@@ -17,7 +17,7 @@
 
   &--has-swap {
     border: 1px solid var(--sc-input-border-color);
-    background: #fff;
+    background: var(--sc-card-background-color, var(--sc-color-white));
     border-radius: var(--sc-border-radius-medium);
     gap: 0;
     border-radius: var(--sc-input-border-radius-medium);
@@ -30,7 +30,7 @@
 
     sc-swap {
       padding: var(--sc-spacing-medium);
-      background: var(--sc-color-gray-50);
+      background: var(--sc-card-background-color, var(--sc-color-gray-50));
     }
   }
 }

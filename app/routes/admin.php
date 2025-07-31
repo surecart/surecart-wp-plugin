@@ -165,6 +165,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		\SureCart::route()->get()->where( 'sc_url_var', 'delete', 'action' )->handle( 'ProductsController@confirmBulkDelete' );
 		\SureCart::route()->post()->middleware( 'nonce:bulk_delete_nonce' )->handle( 'ProductsController@bulkDelete' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->handle( 'ProductsController@edit' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'duplicate', 'action' )->middleware( 'nonce:duplicate_product' )->handle( 'ProductsController@duplicate' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'toggle_archive', 'action' )->middleware( 'archive_model:product' )->handle( 'ProductsController@toggleArchive' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'sync_all', 'action' )->middleware( 'nonce:sync_products' )->handle( 'ProductsController@syncAll' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'sync', 'action' )->middleware( 'nonce:sync_product' )->handle( 'ProductsController@sync' );

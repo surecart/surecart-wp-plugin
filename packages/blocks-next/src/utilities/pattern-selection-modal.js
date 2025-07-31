@@ -36,6 +36,15 @@ export default function PatternSelectionModal({
 			attributes,
 			name
 		);
+
+		// Merge the attributes of the first block with the attributes.
+		if (newBlocks[0]) {
+			newBlocks[0].attributes = {
+				...newBlocks[0].attributes,
+				...attributes,
+			};
+		}
+
 		replaceBlock(clientId, newBlocks);
 		if (queryClientIds[0]) {
 			selectBlock(queryClientIds[0]);

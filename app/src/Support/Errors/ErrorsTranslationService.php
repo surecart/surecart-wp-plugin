@@ -97,6 +97,17 @@ class ErrorsTranslationService {
 			return sprintf( __( 'The minimum order amount for the processor is %s.', 'surecart' ), Currency::format( $options['minimum_amount'], $options['currency'] ) );
 		}
 
+		// Remind at period percent remaining translation.
+		if ( 'remind_at_period_percent_remaining' === $attribute && isset( $options['count'] ) ) {
+			if ( 'greater_than_or_equal_to' === $type ) {
+				// translators: minimum percentage.
+				return sprintf( __( 'You must enter a percentage greater than or equal to %s', 'surecart' ), $options['count'] );
+			} elseif ( 'less_than_or_equal_to' === $type ) {
+				// translators: maximum percentage.
+				return sprintf( __( 'You must enter a percentage less than or equal to %s', 'surecart' ), $options['count'] );
+			}
+		}
+
 		if ( 'line_items' === $attribute && 'not_purchasable' === $type && ! empty( $options['purchasable_statuses'] ) ) {
 			$line_item_translations = array(
 				'price_gone'             => __( 'One or more items in your cart is no longer available. Please update your cart and try again.', 'surecart' ),

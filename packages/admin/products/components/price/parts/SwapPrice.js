@@ -4,6 +4,7 @@ import { store as noticesStore } from '@wordpress/notices';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { useState } from '@wordpress/element';
 import SwapPriceSetting from './SwapPriceSetting';
+import useSelectPrices from '../../../hooks/useSelectPrices';
 
 export default ({
 	price,
@@ -36,6 +37,10 @@ export default ({
 		[currentSwap]
 	);
 
+	const { active } = useSelectPrices({
+		productId: currentProduct?.id,
+	});
+
 	const onDelete = async () => {
 		try {
 			setIsDeleting(true);
@@ -63,6 +68,7 @@ export default ({
 		<SwapPriceSetting
 			price={price}
 			currentProduct={currentProduct}
+			activePrices={active}
 			swapPrice={swapPrice}
 			swapPriceDescription={currentSwap?.description}
 			updateSwap={updateSwap}

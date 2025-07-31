@@ -120,7 +120,7 @@
 	}
 
 	&__description {
-		color: var(--sc-price-label-color, var(--sc-input-help-text-color));
+		color: var(--sc-input-label-color);
 		font-size: var(
 			--sc-price-label-font-size,
 			var(--sc-input-help-text-font-size-medium)
