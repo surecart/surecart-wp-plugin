@@ -382,4 +382,152 @@ class ProductTest extends SureCartUnitTestCase
 		$this->assertSame('lazy', $line_item_image->loading);
 		$this->assertSame('async', $line_item_image->decoding);
 	}
+
+	/**
+	 * Test has_variants attribute
+	 */
+	public function test_has_variants_attribute()
+	{
+		$this->shouldSyncProduct('test-variants');
+
+		// Test with no variant options
+		$product = new Product([
+			'id' => 'test-no-variants',
+			'variant_options' => (object) [
+				'data' => []
+			]
+		]);
+		$this->assertFalse($product->has_variants);
+
+		// Test with variant options
+		$product = new Product([
+			'id' => 'test-with-variants',
+			'variants' => (object) [
+				'data' => [
+					['id' => 'opt1'],
+					['id' => 'opt2']
+				]
+			]
+		]);
+		$this->assertTrue($product->has_variants, 'Product has variants');
+
+		// Test with null variant_options
+		$product = new Product([
+			'id' => 'test-null-variants'
+		]);
+		$this->assertFalse($product->has_variants);
+	}
+
+	/**
+	 * Test active_ad_hoc_prices attribute
+	 */
+	public function test_active_ad_hoc_prices_attribute()
+	{
+		$this->shouldSyncProduct('test-ad-hoc');
+
+		$product = new Product([
+			'id' => 'test-ad-hoc-prices',
+			'prices' => (object) [
+				'data' => [
+					['id' => 'price1', 'archived' => false, 'ad_hoc' => true, 'amount' => 1000], 
+					['id' => 'price2', 'archived' => false, 'ad_hoc' => false, 'amount' => 2000], 
+					['id' => 'price3', 'archived' => true, 'ad_hoc' => true, 'amount' => 3000], 
+					['id' => 'price4', 'archived' => false, 'ad_hoc' => true, 'amount' => 4000]
+				]
+			]
+		]);
+
+		$activeAdHocPrices = $product->active_ad_hoc_prices;
+
+		// Should only include active (non-archived) ad hoc prices
+		$this->assertCount(2, $activeAdHocPrices);
+		
+		// Convert to array values to ensure proper indexing
+		$activeAdHocPricesArray = array_values($activeAdHocPrices);
+		$this->assertSame('price1', $activeAdHocPricesArray[0]->id);
+		$this->assertSame('price4', $activeAdHocPricesArray[1]->id);
+
+		// Test with no prices
+		$product = new Product([
+			'id' => 'test-no-prices'
+		]);
+		$this->assertEmpty($product->active_ad_hoc_prices);
+
+		// Test with no ad hoc prices
+		$product = new Product([
+			'id' => 'test-no-ad-hoc',
+			'prices' => (object) [
+				'data' => [
+					['id' => 'price5', 'archived' => false, 'ad_hoc' => false, 'amount' => 5000, 'position' => 0]
+				]
+			]
+		]);
+		$this->assertEmpty($product->active_ad_hoc_prices);
+	}
+
+	/**
+	 * Test has_options attribute
+	 */
+	public function test_has_options_attribute()
+	{
+		$this->shouldSyncProduct('test-options');
+
+		// Test with variants
+		$product = new Product([
+			'id' => 'test-options-variants',
+			'variants' => (object) [
+				'data' => [['id' => 'opt1']]
+			],
+			'prices' => (object) [
+				'data' => [['id' => 'price1', 'archived' => false, 'ad_hoc' => false, 'position' => 0]]
+			]
+		]);
+		$this->assertTrue($product->has_options);
+
+		// Test with multiple prices
+		$product = new Product([
+			'id' => 'test-options-multiple-prices',
+			'prices' => (object) [
+				'data' => [
+					['id' => 'price1', 'archived' => false, 'position' => 0],
+					['id' => 'price2', 'archived' => false, 'position' => 1]
+				]
+			]
+		]);
+		$this->assertTrue($product->has_options);
+
+		// Test with ad hoc prices
+		$product = new Product([
+			'id' => 'test-options-ad-hoc',
+			'prices' => (object) [
+				'data' => [
+					['id' => 'price1', 'archived' => false, 'ad_hoc' => true, 'position' => 0]
+				]
+			]
+		]);
+		$this->assertTrue($product->has_options);
+
+		// Test with no options (single non-ad-hoc price, no variants)
+		$product = new Product([
+			'id' => 'test-no-options',
+			'prices' => (object) [
+				'data' => [
+					['id' => 'price1', 'archived' => false, 'ad_hoc' => false, 'position' => 0]
+				]
+			]
+		]);
+		$this->assertFalse($product->has_options);
+
+		// Test with archived prices only (should have no options)
+		$product = new Product([
+			'id' => 'test-archived-prices',
+			'prices' => (object) [
+				'data' => [
+					['id' => 'price1', 'archived' => true, 'position' => 0],
+					['id' => 'price2', 'archived' => true, 'position' => 1]
+				]
+			]
+		]);
+		$this->assertFalse($product->has_options);
+	}
 }
