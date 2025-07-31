@@ -167,11 +167,13 @@ class ProductPageBlock {
 						'converted_ad_hoc_min_amount',
 						'converted_ad_hoc_max_amount',
 						'setup_fee_text',
+						'setup_fee_text_with_punctuation',
 						'interval_text',
 						'short_interval_text',
 						'interval_count_text',
 						'payments_text',
 						'trial_text',
+						'trial_text_with_punctuation',
 					]
 				) : null,
 				'prices'          => array_map(

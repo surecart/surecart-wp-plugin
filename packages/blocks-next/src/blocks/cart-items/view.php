@@ -28,7 +28,7 @@
 
 				<div class="sc-product-line-item__text">
 					<div class="sc-product-line-item__text-details">
-						<a data-wp-bind--href="state.lineItemPermalink" class="sc-product-line-item__title">
+						<a data-wp-bind--href="state.lineItemPermalink" class="sc-product-line-item__title" data-wp-bind--tabindex="state.lineItemPermalink ? '0' : '-1'">
 							<span data-wp-text="context.line_item.price.product.name"></span>
 						</a>
 						<div class="sc-product-line-item__description sc-product-line-item__price-variant">
@@ -98,6 +98,7 @@
 							class="sc-product-line-item__remove-button"
 							aria-label="<?php esc_attr_e( 'Remove item', 'surecart' ); ?>"
 							data-wp-on--click="surecart/checkout::actions.removeLineItem"
+							data-wp-on--keydown="surecart/checkout::actions.removeLineItem"
 						>
 							<?php echo wp_kses( SureCart::svg()->get( 'x', [ 'class' => 'sc-product-line-item__remove' ] ), sc_allowed_svg_html() ); ?>
 						</button>
@@ -140,9 +141,11 @@
 
 						<div
 							class="sc-product-line-item__purchasable-status sc-product-line-item__price-description"
-							data-wp-bind--hidden="!context.line_item.purchasable_status_display"
 							data-wp-text="context.line_item.purchasable_status_display"
-						></div>
+							data-wp-bind--hidden="!context.line_item.purchasable_status_display"
+							role="status"
+							aria-live="polite"
+							aria-atomic="true">&nbsp;</div>
 					</div>
 				</div>
 			</div>
