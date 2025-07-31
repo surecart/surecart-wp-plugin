@@ -73,9 +73,14 @@
 		},
 		"__experimentalSelector": ".wp-block-button .wp-block-button__link"
 	},
+	"styles": [
+		{ "name": "default", "label": "Default", "isDefault": true },
+		{ "name": "show-on-hover", "label": "Show on hover" }
+	],
 	"textdomain": "surecart",
 	"render": "file:./view.php",
 	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
 	"viewScriptModule": [
 		"@surecart/checkout",
 		"@surecart/product-page",
