@@ -28,6 +28,10 @@
 		},
 		"width": {
 			"type": "number"
+		},
+		"direct_add_to_cart": {
+			"type": "boolean",
+			"default": true
 		}
 	},
 	"supports": {
@@ -79,9 +83,9 @@
 		"@surecart/product-quick-view"
 	],
 	"style": [
+		"file:./style-index.css",
 		"surecart-wp-buttons",
 		"surecart-wp-button",
-		"file:./style-index.css",
 		"wp-block-button"
 	]
 }

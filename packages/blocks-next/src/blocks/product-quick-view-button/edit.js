@@ -6,7 +6,7 @@ import {
 	PlainText,
 	InspectorControls,
 } from '@wordpress/block-editor';
-import { PanelBody } from '@wordpress/components';
+import { PanelBody, ToggleControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import classnames from 'classnames';
 
@@ -27,6 +27,7 @@ export default ({
 		style,
 		width,
 		iconPosition,
+		direct_add_to_cart,
 	},
 	setAttributes,
 }) => {
@@ -91,6 +92,17 @@ export default ({
 							}}
 						/>
 					)}
+					<ToggleControl
+						label={__('Direct add to cart', 'surecart')}
+						help={__(
+							'Add the product directly to cart if it has no options.',
+							'surecart'
+						)}
+						checked={direct_add_to_cart}
+						onChange={(value) => {
+							setAttributes({ direct_add_to_cart: value });
+						}}
+					/>
 				</PanelBody>
 				<WidthSettingsPanel
 					selectedWidth={width}

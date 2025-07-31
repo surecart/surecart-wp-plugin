@@ -1,14 +1,15 @@
 <?php
-$icon            = $attributes['icon'] ?? 'plus';
-$product_id      = $block->context['postId'] ?? null;
-$quick_view_link = add_query_arg( 'product-quick-view', $product_id );
-$show_icon       = 'icon' === $attributes['quickViewButtonType'] || 'both' === $attributes['quickViewButtonType'];
-$show_text       = 'text' === $attributes['quickViewButtonType'] || 'both' === $attributes['quickViewButtonType'];
-$icon_position   = $attributes['iconPosition'] ?? 'after';
-$label           = $attributes['label'] ?? __( 'Quick Add', 'surecart' );
-$gap             = ! empty( $attributes['style']['spacing']['blockGap'] ) ? \SureCart::block()->styles()->getBlockGapPresetCssVar( $attributes['style']['spacing']['blockGap'] ) : '';
-$alignment       = ! empty( $attributes['style']['typography']['textAlign'] ) ? $attributes['style']['typography']['textAlign'] : '';
-$width_class     = ! empty( $attributes['width'] ) ? 'has-custom-width wp-block-button__width-' . $attributes['width'] : '';
+$icon               = $attributes['icon'] ?? 'plus';
+$product_id         = $block->context['postId'] ?? null;
+$show_icon          = in_array( $attributes['quickViewButtonType'], [ 'icon', 'both' ], true );
+$show_text          = in_array( $attributes['quickViewButtonType'], [ 'text', 'both' ], true );
+$icon_position      = $attributes['iconPosition'] ?? 'after';
+$label              = $attributes['label'] ?? __( 'Quick Add', 'surecart' );
+$direct_add_to_cart = $attributes['direct_add_to_cart'] ?? true;
+$quick_view_link    = add_query_arg( 'product-quick-view', $product_id );
+$gap                = ! empty( $attributes['style']['spacing']['blockGap'] ) ? \SureCart::block()->styles()->getBlockGapPresetCssVar( $attributes['style']['spacing']['blockGap'] ) : '';
+$alignment          = ! empty( $attributes['style']['typography']['textAlign'] ) ? $attributes['style']['typography']['textAlign'] : '';
+$width_class        = ! empty( $attributes['width'] ) ? 'has-custom-width wp-block-button__width-' . $attributes['width'] : '';
 
 $style = ! empty( $gap )
 	? esc_attr( safecss_filter_attr( 'gap:' . $gap ) ) . ';'
@@ -29,4 +30,10 @@ if ( ! empty( $styles['declarations'] ) ) {
 	$wrapper_style .= ! empty( $styles['declarations']['margin-right'] ) ? esc_attr( safecss_filter_attr( 'margin-right:' . $styles['declarations']['margin-right'] ) ) . ';' : '';
 }
 
-return 'file:./view.php';
+// Determine if we should add directly to cart.
+$product           = sc_get_product();
+$should_direct_add = $direct_add_to_cart && empty( $product->has_options );
+
+var_dump( $product->is_sold_out );
+
+return $should_direct_add ? 'file:./button-cart.php' : 'file:./button-quick-view.php';
