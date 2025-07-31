@@ -1,7 +1,7 @@
 /**
  * WordPress dependencies.
  */
-import { store, getContext } from '@wordpress/interactivity';
+import { store, getContext, getElement } from '@wordpress/interactivity';
 
 /**
  * Internal dependencies.
@@ -390,6 +390,12 @@ const { state, actions } = store('surecart/product-page', {
 		*handleSubmit(e) {
 			e.preventDefault(); // prevent the form from submitting.
 			e.stopPropagation(); // prevent the event from bubbling up.
+
+			// Add submitter to event if it doesn't exist (for non-form elements)
+			if (!e.submitter) {
+				const { ref } = getElement();
+				e.submitter = ref;
+			}
 
 			// if the button hdoes not have a value, add to cart.
 			if (!e?.submitter?.value) {
