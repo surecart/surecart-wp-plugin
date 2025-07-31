@@ -51,6 +51,6 @@ class Account extends Model {
 	 * @return bool
 	 */
 	public function getClaimExpiredAttribute() {
-		return time() > $this->claim_window_ends_at;
+		return ! empty( $this->claim_window_ends_at ) && time() > $this->claim_window_ends_at;
 	}
 }

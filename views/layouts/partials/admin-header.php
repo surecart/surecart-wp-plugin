@@ -28,8 +28,8 @@
 
 
 <div id="sc-admin-header">
-	<?php if ( ! empty( $claim_url ) ) : ?>
-		<sc-provisional-banner claim-url="<?php echo esc_url( $claim_url ); ?>" <?php echo ! empty( $claim_expired ) && $claim_expired ? 'expired="true"' : ''; ?>></sc-provisional-banner>
+	<?php if ( ! empty( $claim_url ) || ! empty( $claim_expired ) ) : ?>
+		<sc-provisional-banner claim-url="<?php echo esc_url( $claim_url ); ?>" expired="<?php echo (bool) ! empty( $claim_expired ); ?>"></sc-provisional-banner>
 	<?php endif; ?>
 	<div id="sc-admin-container">
 		<?php if ( ! empty( $breadcrumbs ) ) : ?>
