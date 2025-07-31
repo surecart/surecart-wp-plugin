@@ -39,4 +39,6 @@ export const NUMBER_ATTRIBUTES = [
 	'price.recurring_period_count',
 ];
 
+export const USER_ROLE_ATTRIBUTES = ['wp_user_role'];
+
 export const SCHEMA_ID = 'auto_fees__line_item';

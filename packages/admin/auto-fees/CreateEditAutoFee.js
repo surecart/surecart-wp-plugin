@@ -115,7 +115,12 @@ export default ({ setId }) => {
 		);
 
 	useEffect(() => {
-		if (!autoFee?.rule_string || autoFee?.rule_json || !SCHEMA_ID) {
+		if (
+			!autoFee?.rule_string ||
+			autoFee?.rule_json ||
+			!SCHEMA_ID ||
+			loading
+		) {
 			return;
 		}
 

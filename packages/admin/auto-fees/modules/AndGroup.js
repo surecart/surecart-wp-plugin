@@ -20,7 +20,7 @@ import {
 } from '@surecart/components-react';
 import DateTimePicker from './DateTimePicker';
 import { formatDateTime } from '../../util/time';
-import { createEmptyAndRule, getInputType } from '../utils/ruleQueryUtils';
+import { getInputType } from '../utils/ruleQueryUtils';
 import { attributeLabels } from '../utils/labelTranslations';
 
 export default ({
@@ -104,6 +104,13 @@ export default ({
 	const isAttributeMetadata = attribute
 		? attribute.endsWith('.metadata') || 'metadata' === attribute
 		: false;
+
+	const userRoleChoices = Object.entries(scData?.wp_user_roles).map(
+		([key, value]) => ({
+			label: value?.name,
+			value: key,
+		})
+	);
 
 	const renderValueInput = () => {
 		const inputType = getInputType(attribute);
@@ -201,6 +208,16 @@ export default ({
 						}
 					/>
 				);
+			case 'user_role':
+				return (
+					<ScSelect
+						value={value}
+						onScChange={(e) => {
+							setValue(e.target.value);
+						}}
+						choices={userRoleChoices}
+					/>
+				);
 			default:
 				return (
 					<ScInput
@@ -249,7 +266,7 @@ export default ({
 					}}
 					choices={attributes}
 				/>
-				{isAttributeMetadata && (
+				{isAttributeMetadata && attribute !== 'wp_user_role' && (
 					<ScInput
 						value={metadataKey}
 						onScInput={(e) => {

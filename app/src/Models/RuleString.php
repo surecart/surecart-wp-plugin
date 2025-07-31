@@ -38,6 +38,33 @@ class RuleString {
 			return $rule_schema;
 		}
 
+		$rule_schema = $this->addWPUserRoleAttribute( $rule_schema );
+
+		return $rule_schema;
+	}
+
+	/**
+	 * Add WP User Role attribute to the rule schema.
+	 *
+	 * @param object $rule_schema Rule schema.
+	 *
+	 * @return object
+	 */
+	public function addWPUserRoleAttribute( $rule_schema = null ) {
+		$rule_schema->attributes[] = (object) [
+			'key'               => 'wp_user_role',
+			'type'              => 'metadata',
+			'operators'         => [
+				(object) [
+					'label' => 'is',
+				],
+				(object) [
+					'label' => 'is not',
+				],
+			],
+			'acceptable_values' => [],
+		];
+
 		return $rule_schema;
 	}
 
@@ -49,7 +76,8 @@ class RuleString {
 	 * @return $rule_string|\WP_Error
 	 */
 	public function construct( $rule_json = null ) {
-		$rule_string = \SureCart::request(
+		$rule_json = $this->handleCustomAttributes( $rule_json );
+		$rule_string       = \SureCart::request(
 			$this->endpoint . '/construct',
 			[
 				'method' => 'POST',
@@ -88,6 +116,64 @@ class RuleString {
 			return $rule_json;
 		}
 
+		$rule_json->groups = $this->handleCustomAttributes( $rule_json->groups );
+
 		return $rule_json;
+	}
+
+	/**
+	 * Handle Custom Attributes.
+	 *
+	 * @param array $rule_json Rule JSON.
+	 *
+	 * @return array $rule_json
+	 */
+	public function handleCustomAttributes( $rule_json ) {
+		$rule_array = $this->convertObjectToArray( $rule_json );
+
+		foreach ( $rule_array as $key => &$value ) {
+			if ( is_array( $value ) ) {
+				$value = $this->handleCustomAttributes( $value );
+
+				if ( empty( $value['attribute_name'] ) ) {
+					continue;
+				}
+
+				if ( 'wp_user_role' === $value['attribute_name'] ) {
+					$value['attribute_name'] = 'checkout.metadata';
+					$value['metadata_key']   = 'wp_user_role';
+					continue;
+				}
+
+				if ( empty( $value['metadata_key'] ) ) {
+					continue;
+				}
+
+				if ( 'checkout.metadata' === $value['attribute_name'] && 'wp_user_role' === $value['metadata_key'] ) {
+					$value['attribute_name'] = 'wp_user_role';
+				}
+			}
+		}
+
+		return is_object( $rule_json ) ? (object) $rule_array : $rule_array;
+	}
+
+	/**
+	 * Convert Nested Objects to Array
+	 *
+	 * @param array $data Object.
+	 *
+	 * @return array $data
+	 */
+	private function convertObjectToArray( $data ) {
+		if ( is_object( $data ) ) {
+			$data = get_object_vars( $data );
+		}
+
+		if ( is_array( $data ) ) {
+			return array_map( [ $this, 'convertObjectToArray' ], $data );
+		}
+
+		return $data;
 	}
 }

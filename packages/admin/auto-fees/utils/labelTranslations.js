@@ -18,6 +18,7 @@ export const attributeLabels = {
 	trial_amount: __('Trial Amount', 'surecart'),
 	note: __('Note', 'surecart'),
 	quantity: __('Quantity', 'surecart'),
+	wp_user_role: __('WordPress User Role', 'surecart'),
 	'customer.created_at': __('Customer Created At', 'surecart'),
 	'product.name': __('Product Name', 'surecart'),
 	'product.slug': __('Product Slug', 'surecart'),
