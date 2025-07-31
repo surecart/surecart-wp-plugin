@@ -17,6 +17,12 @@ jest.mock('@store/checkouts/store', () => ({
   dispose: jest.fn(),
 }));
 
+// Mock the getters
+jest.mock('@store/checkout/getters', () => ({
+  fullShippingAddressRequired: jest.fn(() => false),
+  shippingAddressRequired: jest.fn(() => false),
+}));
+
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 import { Checkout, TaxProtocol } from '../../../../types';
@@ -24,11 +30,16 @@ import { state as checkoutState } from '@store/checkout';
 import { ScFormComponentsValidator } from '../sc-form-components-validator';
 import { ScCustomerName } from '../../../controllers/checkout-form/customer-name/sc-customer-name';
 import { ScOrderShippingAddress } from '../../../controllers/checkout-form/order-shipping-address/sc-order-shipping-address';
+import { shippingAddressRequired } from '@store/checkout/getters';
+
+// Mock the getter functions
+const mockShippingAddressRequired = shippingAddressRequired as jest.MockedFunction<typeof shippingAddressRequired>;
 
 describe('sc-form-components-validator', () => {
   beforeEach(() => {
     checkoutState.checkout = null;
     checkoutState.formId = null;
+    mockShippingAddressRequired.mockReturnValue(false);
   });
 
   it('renders', async () => {
@@ -41,6 +52,8 @@ describe('sc-form-components-validator', () => {
   });
 
   it('appends missing address field if required', async () => {
+    mockShippingAddressRequired.mockReturnValue(true);
+
     const page = await newSpecPage({
       components: [ScFormComponentsValidator],
       template: () => (
@@ -49,6 +62,7 @@ describe('sc-form-components-validator', () => {
         </sc-form-components-validator>
       ),
     });
+
     checkoutState.checkout = { tax_status: 'address_invalid' } as Checkout;
     await page.waitForChanges();
 
@@ -89,6 +103,8 @@ describe('sc-form-components-validator', () => {
   });
 
   it('appends missing address field with shipping address required', async () => {
+    mockShippingAddressRequired.mockReturnValue(true);
+
     const page = await newSpecPage({
       components: [ScFormComponentsValidator],
       template: () => (
@@ -111,19 +127,27 @@ describe('sc-form-components-validator', () => {
         <sc-form-components-validator disabled={false}>
           <sc-payment></sc-payment>
           <sc-customer-name></sc-customer-name>
+          <sc-order-shipping-address></sc-order-shipping-address>
         </sc-form-components-validator>
       ),
     });
+
+    // Set up the checkout state
     checkoutState.checkout = { shipping_address_required: true } as Checkout;
+    await page.waitForChanges();
+
+    // Get the instance and trigger the handler
+    const instance = page.rootInstance as ScFormComponentsValidator;
+    instance.handleShippingAddressRequired();
     await page.waitForChanges();
 
     const customerName = page.root.querySelector('sc-customer-name');
     expect(customerName.required).toBe(true);
 
-    const shippingAddress = page.root.querySelector('sc-order-shipping-address');
-    expect(shippingAddress.required).toBe(true);
-    expect(!!shippingAddress.requireName).toBe(false);
-    expect(!!shippingAddress.showName).toBe(false);
+    const shippingAddressElement = page.root.querySelector('sc-order-shipping-address');
+    expect(shippingAddressElement.required).toBe(true);
+    expect(!!shippingAddressElement.requireName).toBe(false);
+    expect(!!shippingAddressElement.showName).toBe(false);
 
     expect(page.root).toMatchSnapshot();
     page.rootInstance.disconnectedCallback();
@@ -135,16 +159,24 @@ describe('sc-form-components-validator', () => {
       template: () => (
         <sc-form-components-validator disabled={false}>
           <sc-payment></sc-payment>
+          <sc-order-shipping-address></sc-order-shipping-address>
         </sc-form-components-validator>
       ),
     });
+
+    // Set up the checkout state
     checkoutState.checkout = { shipping_address_required: true } as Checkout;
     await page.waitForChanges();
 
-    const shippingAddress = page.root.querySelector('sc-order-shipping-address');
-    expect(shippingAddress.required).toBe(true);
-    expect(shippingAddress.requireName).toBe(true);
-    expect(shippingAddress.showName).toBe(true);
+    // Get the instance and trigger the handler
+    const instance = page.rootInstance as ScFormComponentsValidator;
+    instance.handleShippingAddressRequired();
+    await page.waitForChanges();
+
+    const shippingAddressElement = page.root.querySelector('sc-order-shipping-address');
+    expect(shippingAddressElement.required).toBe(true);
+    expect(shippingAddressElement.requireName).toBe(true);
+    expect(shippingAddressElement.showName).toBe(true);
 
     expect(page.root).toMatchSnapshot();
     page.rootInstance.disconnectedCallback();

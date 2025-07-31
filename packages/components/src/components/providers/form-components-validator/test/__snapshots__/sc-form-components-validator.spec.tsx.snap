@@ -5,6 +5,7 @@ exports[`sc-form-components-validator appends missing address field if required 
   <mock:shadow-root>
     <slot></slot>
   </mock:shadow-root>
+  <sc-order-shipping-address></sc-order-shipping-address>
   <sc-payment></sc-payment>
 </sc-form-components-validator>
 `;
@@ -14,6 +15,7 @@ exports[`sc-form-components-validator appends missing address field with shippin
   <mock:shadow-root>
     <slot></slot>
   </mock:shadow-root>
+  <sc-order-shipping-address></sc-order-shipping-address>
   <sc-payment></sc-payment>
 </sc-form-components-validator>
 `;
@@ -45,5 +47,24 @@ exports[`sc-form-components-validator renders 1`] = `
   <mock:shadow-root>
     <slot></slot>
   </mock:shadow-root>
+</sc-form-components-validator>
+`;
+
+exports[`sc-form-components-validator requires the customer name on sc-customer-name if present in page and shipping address required 1`] = `
+<sc-form-components-validator>
+  <mock:shadow-root>
+    <slot></slot>
+  </mock:shadow-root>
+  <sc-payment></sc-payment>
+  <sc-customer-name required="" size="medium">
+    <mock:shadow-root>
+      <sc-input autocomplete="name" help="" name="name" required="" type="text"></sc-input>
+    </mock:shadow-root>
+  </sc-customer-name>
+  <sc-order-shipping-address required="">
+    <mock:shadow-root>
+      <sc-compact-address required=""></sc-compact-address>
+    </mock:shadow-root>
+  </sc-order-shipping-address>
 </sc-form-components-validator>
 `;
