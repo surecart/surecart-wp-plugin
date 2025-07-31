@@ -41,7 +41,7 @@
 			data-wp-class--sc-button__link--busy="context.busy"
 			style="<?php echo ! empty( $styles['css'] ) ? esc_attr( $styles['css'] ) : ''; ?>"
 		>
-			<span class="sc-spinner" aria-hidden="false"></span>
+			<span class="sc-spinner" aria-hidden="true"></span>
 			<span class="sc-button__link-text" data-wp-text="state.buttonText">
 			</span>
 		</button>
