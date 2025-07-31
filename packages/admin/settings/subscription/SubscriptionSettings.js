@@ -235,14 +235,15 @@ export default () => {
 					max="365"
 					onScInput={(e) =>
 						editItem({
-							remind_after_days: parseInt(e.target.value) || 0,
+							remind_after_days: e.target.value
+								? parseInt(e.target.value)
+								: null,
 						})
 					}
 					help={__(
 						'The minimum number of days that must pass since the last reminder (or subscription creation if no reminder has been sent) before a new reminder can be sent. This prevents reminders from being sent too frequently across multiple subscription periods.',
 						'surecart'
 					)}
-					required
 				>
 					<span slot="suffix" style={{ opacity: '0.65' }}>
 						{__('days', 'surecart')}
