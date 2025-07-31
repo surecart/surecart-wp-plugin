@@ -144,11 +144,11 @@ class AutoFeesListTable extends ListTable {
 		];
 
 		if ( 'active' === $this->getStatus() ) {
-			$conditions['active'] = true;
+			$conditions['enabled'] = true;
 		}
 
 		if ( 'inactive' === $this->getStatus() ) {
-			$conditions['active'] = false;
+			$conditions['enabled'] = false;
 		}
 
 		return AutoFee::where( $conditions )
@@ -187,7 +187,7 @@ class AutoFeesListTable extends ListTable {
 			]
 		);
 		?>
-		<sc-switch checked="<?php echo esc_attr( $auto_fees->active ) ? 'true' : 'false'; ?>"
+		<sc-switch checked="<?php echo esc_attr( $auto_fees->enabled ) ? 'true' : 'false'; ?>"
 			onClick="window.location.assign('<?php echo esc_url_raw( $toggle_url ); ?>'); document.querySelector('#loading-<?php echo esc_attr( $auto_fees->id ); ?>').style.display = '';"></sc-switch>
 		<sc-block-ui id="loading-<?php echo esc_attr( $auto_fees->id ); ?>" spinner style="display: none;"></sc-block-ui>
 		<?php

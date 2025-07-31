@@ -60,7 +60,7 @@ export default ({ setId }) => {
 		},
 		{
 			name: '',
-			active: true,
+			enabled: true,
 			amount_adjustment: null,
 			percent_adjustment: null,
 			discount: false,
@@ -324,21 +324,21 @@ export default ({ setId }) => {
 							{hasLoadedAutoFee && (
 								<ScTag
 									type={
-										autoFee?.active ? 'success' : 'default'
+										autoFee?.enabled ? 'success' : 'default'
 									}
 									size="small"
 									pill
 								>
-									{autoFee?.active
+									{autoFee?.enabled
 										? __('Auto Fee Active', 'surecart')
 										: __('Auto Fee Inactive', 'surecart')}
 								</ScTag>
 							)}
 							<ScSwitch
-								checked={autoFee?.active}
+								checked={autoFee?.enabled}
 								onScChange={(e) =>
 									updateAutoFee({
-										active: e.target.checked,
+										enabled: e.target.checked,
 									})
 								}
 							/>
