@@ -229,6 +229,7 @@ export default () => {
 				<ScInput
 					value={item?.remind_after_days}
 					label={__('Minimum Days Between Reminders', 'surecart')}
+					placeholder={'∞'}
 					type="number"
 					min="0"
 					max="365"
