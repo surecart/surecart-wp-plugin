@@ -84,23 +84,18 @@ export default ({ autoFee = {}, onUpdate, loading }) => {
 							<ScButton
 								onClick={() => {
 									updateRuleJson({
-										rule_string: {
-											schema_id: SCHEMA_ID,
-											groups: [
-												{
-													leaves: [
-														{
-															attribute_name:
-																null,
-															operator_label:
-																null,
-															comparison_value:
-																'',
-														},
-													],
-												},
-											],
-										},
+										schema_id: SCHEMA_ID,
+										groups: [
+											{
+												leaves: [
+													{
+														attribute_name: null,
+														operator_label: null,
+														comparison_value: '',
+													},
+												],
+											},
+										],
 									});
 								}}
 							>
