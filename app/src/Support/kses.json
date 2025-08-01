@@ -1731,6 +1731,7 @@
     "interval": true,
     "max": true,
     "name": true,
+    "note": true,
     "price": true,
     "purchasable-status": true,
     "quantity": true,
