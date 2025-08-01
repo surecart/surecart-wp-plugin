@@ -1,8 +1,8 @@
 /** @jsx jsx */
-import Box from '../../ui/Box';
 import { css, jsx } from '@emotion/core';
 import { ScText } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
+import Box from '../../ui/Box';
 
 export default ({ metadata, title, loading }) => {
 	// Return null if no metadata
@@ -11,7 +11,10 @@ export default ({ metadata, title, loading }) => {
 	}
 
 	return (
-		<Box title={title || __('Additional Data', 'surecart')} loading={loading}>
+		<Box
+			title={title || __('Additional Data', 'surecart')}
+			loading={loading}
+		>
 			<div
 				css={css`
 					display: grid;
