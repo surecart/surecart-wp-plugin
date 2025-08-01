@@ -4,7 +4,7 @@ namespace SureCart\Models;
 /**
  * Handle working of Rule String.
  */
-class RuleString {
+class RuleString extends Model {
 	/**
 	 * Rest API endpoint
 	 *
@@ -20,69 +20,42 @@ class RuleString {
 	public $object_name = 'rule_string';
 
 	/**
-	 * Gets Rule String Schema.
+	 * Set the product attribute
 	 *
-	 * @param string $schema_id Schema ID.
-	 *
-	 * @return $rule_schema|\WP_Error
+	 * @param  string $value Product properties.
+	 * @return void
 	 */
-	public function getSchema( $schema_id = null ) {
-		$rule_schema = \SureCart::request(
-			$this->endpoint . '/schema/' . $schema_id,
-			[
-				'method' => 'GET',
-			]
-		);
-
-		if ( is_wp_error( $rule_schema ) ) {
-			return $rule_schema;
-		}
-
-		$rule_schema = $this->addWPUserRoleAttribute( $rule_schema );
-
-		return $rule_schema;
-	}
-
-	/**
-	 * Add WP User Role attribute to the rule schema.
-	 *
-	 * @param object $rule_schema Rule schema.
-	 *
-	 * @return object
-	 */
-	public function addWPUserRoleAttribute( $rule_schema = null ) {
-		$rule_schema->attributes[] = (object) [
-			'key'               => 'wp_user_role',
-			'type'              => 'metadata',
-			'operators'         => [
-				(object) [
-					'label' => 'is',
-				],
-				(object) [
-					'label' => 'is not',
-				],
-			],
-			'acceptable_values' => [],
-		];
-
-		return $rule_schema;
+	public function setGroupsAttribute( $value ) {
+		$this->attributes['groups'] = $this->handleCustomAttributes( $value );
 	}
 
 	/**
 	 * Construct a Rule String from JSON.
 	 *
-	 * @param string $rule_json Rule JSON.
+	 * @param string $schema_id Schema ID.
+	 * @param array  $groups Groups.
 	 *
 	 * @return $rule_string|\WP_Error
 	 */
-	public function construct( $rule_json = null ) {
-		$rule_json   = $this->handleCustomAttributes( $rule_json );
+	public function construct( $schema_id, $groups ) {
+		if ( $schema_id ) {
+			$this->setAttribute( 'schema_id', $schema_id );
+		}
+
+		if ( $groups ) {
+			$this->setAttribute( 'groups', $groups );
+		}
+
+		if ( empty( $this->attributes['schema_id'] ) ) {
+			return new \WP_Error( 'not_saved', 'Please set the schema_id' );
+		}
+
 		$rule_string = \SureCart::request(
 			$this->endpoint . '/construct',
 			[
 				'method' => 'POST',
 				'body'   => [
-					$this->object_name => $rule_json,
+					$this->object_name => $this->getAttributes(),
 				],
 			]
 		);
@@ -91,34 +64,53 @@ class RuleString {
 			return $rule_string;
 		}
 
-		return $rule_string;
+		$this->resetAttributes();
+
+		$this->fill( $rule_string );
+
+		return $this;
 	}
 
 	/**
 	 * Deconstruct a Rule String from JSON.
 	 *
-	 * @param string $rule_string Rule JSON.
+	 * @param string $schema_id Schema ID.
+	 * @param array  $rule_string Rule String.
 	 *
-	 * @return $rule_json|\WP_Error
+	 * @return $rule_string|\WP_Error
 	 */
-	public function deconstruct( $rule_string = null ) {
-		$rule_json = \SureCart::request(
+	public function deconstruct( $schema_id, $rule_string ) {
+		if ( $schema_id ) {
+			$this->setAttribute( 'schema_id', $schema_id );
+		}
+
+		if ( empty( $this->attributes['schema_id'] ) ) {
+			return new \WP_Error( 'not_saved', 'Please set the schema_id' );
+		}
+
+		if ( $rule_string ) {
+			$this->setAttribute( 'rule_string', $rule_string );
+		}
+
+		$rule_string = \SureCart::request(
 			$this->endpoint . '/deconstruct',
 			[
 				'method' => 'POST',
 				'body'   => [
-					$this->object_name => $rule_string,
+					$this->object_name => $this->getAttributes(),
 				],
 			]
 		);
 
-		if ( is_wp_error( $rule_json ) ) {
-			return $rule_json;
+		if ( is_wp_error( $rule_string ) ) {
+			return $rule_string;
 		}
 
-		$rule_json->groups = $this->handleCustomAttributes( $rule_json->groups );
+		$this->resetAttributes();
 
-		return $rule_json;
+		$this->fill( $rule_string );
+
+		return $this;
 	}
 
 	/**

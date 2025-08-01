@@ -142,10 +142,8 @@ export default ({ setId }) => {
 				path: `${baseUrl}/deconstruct`,
 				method: 'POST',
 				data: {
-					rule_string: {
-						schema_id: SCHEMA_ID,
-						rule_string: autoFee?.rule_string,
-					},
+					schema_id: SCHEMA_ID,
+					rule_string: autoFee?.rule_string,
 				},
 			});
 
@@ -164,10 +162,8 @@ export default ({ setId }) => {
 				path: `${baseUrl}/construct`,
 				method: 'POST',
 				data: {
-					rule_json: {
-						schema_id: SCHEMA_ID,
-						groups: rule_json?.groups,
-					},
+					schema_id: SCHEMA_ID,
+					groups: rule_json?.groups,
 				},
 			});
 			return response;

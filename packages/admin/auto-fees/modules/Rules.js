@@ -9,6 +9,7 @@ import { useState, useEffect } from '@wordpress/element';
 import { store as coreStore } from '@wordpress/core-data';
 import { select } from '@wordpress/data';
 import apiFetch from '@wordpress/api-fetch';
+import { addQueryArgs } from '@wordpress/url';
 
 /**
  * Internal dependencies.
@@ -31,21 +32,26 @@ export default ({ autoFee = {}, onUpdate, loading }) => {
 
 	const baseUrl = select(coreStore).getEntityConfig(
 		'surecart',
-		'rule-string'
+		'rule-schema'
 	)?.baseURL;
 
 	const fetchRuleSchema = async () => {
 		try {
 			setLoadingRuleSchema(true);
 			const response = await apiFetch({
-				path: `${baseUrl}/schema/${SCHEMA_ID}`,
+				path: addQueryArgs(`${baseUrl}/${SCHEMA_ID}`, {
+					context: 'edit',
+					t: Date.now(), // prevents cache.
+				}),
 			});
+
 			setRuleSchema(response?.attributes);
 			setLoadingRuleSchema(false);
 		} catch (e) {
 			console.error(e);
 		}
 	};
+	console.log('ruleSchema', ruleSchema);
 
 	const {
 		rule_string,
