@@ -17,6 +17,7 @@
 | `interval`             | `interval`               | Recurring interval (i.e. monthly, once, etc.) | `string`          | `undefined` |
 | `max`                  | `max`                    | The max allowed.                              | `number`          | `undefined` |
 | `name`                 | `name`                   | Product name                                  | `string`          | `undefined` |
+| `note`                 | `note`                   | The line item note                            | `string`          | `undefined` |
 | `price`                | `price`                  | Price name                                    | `string`          | `undefined` |
 | `purchasableStatus`    | `purchasable-status`     | The purchasable status display                | `string`          | `undefined` |
 | `quantity`             | `quantity`               | Quantity                                      | `number`          | `undefined` |

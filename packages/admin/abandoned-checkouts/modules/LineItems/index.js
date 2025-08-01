@@ -53,6 +53,7 @@ export default ({ checkout, loading, abandoned }) => {
 							scratch={item.scratch_display_amount}
 							trial={item?.price?.trial_text}
 							sku={item?.sku}
+							note={item?.note}
 							interval={`${item?.price?.short_interval_text} ${item?.price?.short_interval_count_text}`}
 						></ScProductLineItem>
 					);

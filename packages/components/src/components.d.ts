@@ -3099,6 +3099,10 @@ export namespace Components {
          */
         "name": string;
         /**
+          * The line item note
+         */
+        "note": string;
+        /**
           * Price name
          */
         "price"?: string;
@@ -10269,6 +10273,10 @@ declare namespace LocalJSX {
           * Product name
          */
         "name"?: string;
+        /**
+          * The line item note
+         */
+        "note"?: string;
         /**
           * Emitted when the quantity changes.
          */

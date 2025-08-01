@@ -58,6 +58,16 @@ export default ({ lineItem, suffix, showWeight, showQuantity, children }) => {
 						)}
 					</div>
 				)}
+				{!!lineItem?.note && (
+					<div
+						css={css`
+							margin-top: 0.5em;
+							font-style: italic;
+						`}
+					>
+						{__('Note:', 'surecart')} {lineItem.note}
+					</div>
+				)}
 				{children}
 			</LineItemLabel>
 		</LineItem>
