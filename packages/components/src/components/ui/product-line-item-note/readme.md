@@ -12,6 +12,13 @@
 | `note`   | `note`    |             | `string` | `undefined` |
 
 
+## Shadow Parts
+
+| Part     | Description |
+| -------- | ----------- |
+| `"base"` |             |
+
+
 ## Dependencies
 
 ### Used by

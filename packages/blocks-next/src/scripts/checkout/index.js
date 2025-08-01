@@ -260,6 +260,14 @@ const { state, actions } = store('surecart/checkout', {
 			const { line_item } = getContext();
 			return line_item.price.name ?? '';
 		},
+
+		/**
+		 * Get the line item note.
+		 */
+		get lineItemNote() {
+			const { line_item } = getContext();
+			return line_item.note ?? '';
+		},
 	},
 
 	callbacks: {

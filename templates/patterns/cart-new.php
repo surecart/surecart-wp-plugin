@@ -32,7 +32,9 @@ return [
 <!-- wp:group {"style":{"spacing":{"blockGap":"0px"}},"layout":{"type":"default"}} -->
 <div class="wp-block-group"><!-- wp:surecart/cart-line-item-price-name {"style":{"typography":{"fontSize":"14px","lineHeight":"1.4"}}} /-->
 
-<!-- wp:surecart/cart-line-item-variant {"style":{"typography":{"fontSize":"14px","lineHeight":"1.4"}}} /--></div>
+<!-- wp:surecart/cart-line-item-variant {"style":{"typography":{"fontSize":"14px","lineHeight":"1.4"}}} /-->
+
+<!-- wp:surecart/cart-line-item-note {"style":{"typography":{"fontSize":"14px","lineHeight":"1.4"}}} /--></div>
 <!-- /wp:group -->
 
 <!-- wp:surecart/cart-line-item-status {"style":{"typography":{"textAlign":"right"}}} /--></div>

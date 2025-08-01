@@ -1,4 +1,4 @@
-import { Component, h, Prop, Event, EventEmitter, Element, State } from '@stencil/core';
+import { Component, h, Prop, Event, EventEmitter, Element } from '@stencil/core';
 import { __, _n, sprintf } from '@wordpress/i18n';
 import { isRtl } from '../../../functions/page-align';
 import { Fee, ImageAttributes } from '../../../types';
@@ -85,9 +85,6 @@ export class ScProductLineItem {
 
   /** The line item note */
   @Prop() note: string;
-
-  /** Whether the note is expanded */
-  @State() noteExpanded: boolean = false;
 
   /** Emitted when the quantity changes. */
   @Event({ bubbles: false }) scUpdateQuantity: EventEmitter<number>;
