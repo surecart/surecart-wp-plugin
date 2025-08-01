@@ -83,6 +83,9 @@ export class ScProductLineItem {
   /** The purchasable status display */
   @Prop() purchasableStatus: string;
 
+  /** The line item note */
+  @Prop() note: string;
+
   /** Emitted when the quantity changes. */
   @Event({ bubbles: false }) scUpdateQuantity: EventEmitter<number>;
 
@@ -129,6 +132,7 @@ export class ScProductLineItem {
                   </div>
                 )}
                 {!!this.purchasableStatus && <div>{this.purchasableStatus}</div>}
+                {!!this.note && <div>{this.note}</div>}
               </div>
 
               <div class="item__description" part="trial-fees">
