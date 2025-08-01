@@ -23,7 +23,6 @@ import { useEntityRecords } from '@wordpress/core-data';
 import Box from '../../../ui/Box';
 import { formatTaxDisplay } from '../../../util/tax';
 import LineItem from './LineItem';
-import { getSKUText } from '../../../util/products';
 import RefundLineItem from '../Refund/RefundLineItem';
 import DisputeLineItem from '../Dispute/DisputeLineItem';
 
@@ -52,15 +51,12 @@ export default ({ order, checkout, chargeIds }) => {
 	);
 
 	// get the disputes.
-	const { records: disputes, hasResolved: hasResolvedDisputes } = useEntityRecords(
-		'surecart',
-		'dispute',
-		{
+	const { records: disputes, hasResolved: hasResolvedDisputes } =
+		useEntityRecords('surecart', 'dispute', {
 			context: 'edit',
 			charge_ids: chargeIds,
 			per_page: 100,
-		}
-	);
+		});
 
 	const statusBadge = () => {
 		if (!order?.status) {
@@ -228,7 +224,7 @@ export default ({ order, checkout, chargeIds }) => {
 						</>
 					)}
 
-					{!!checkout?.disputed_amount && (
+					{!!disputes?.length && (
 						<>
 							{(disputes || []).map((dispute) => (
 								<DisputeLineItem
