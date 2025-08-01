@@ -70,9 +70,19 @@
 	input[type="number"].sc-quantity-selector__control {
 		line-height: 1;
 		font-size: var(--sc-font-size-small);
-		height: 100%;
 		text-align: center;
+		-moz-appearance: textfield; /* Firefox */
+		appearance: textfield;
+		padding: 0;
+
+		&::-webkit-outer-spin-button,
+		&::-webkit-inner-spin-button {
+			/* display: none; <- Crashes Chrome on hover */
+			-webkit-appearance: none;
+			margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+		}
 		min-height: 0;
+		height: 100%;
 	}
 
 	&.quantity--small {

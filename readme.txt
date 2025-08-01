@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: ecommerce, online store, subscriptions, stripe, payments
 Requires at least: 6.6
 Tested up to: 6.8
-Stable tag: 3.10.1
+Stable tag: 3.11.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -312,6 +312,18 @@ Yes, the checkout form can be customized using our visual builder. You can chang
 Accessibility is a huge priority for the entire team building SureCart. As you know, accessibility is an ongoing improvement task. Our development and QA teams are trained in accessibility best practices and build/test each new feature for accessibility. If you come across any edge issues, we want to know about it and will prioritize its resolution. Please contact us via our website.
 
 == Changelog ==
+
+= 3.11.0 - July 30th, 2025 =
+- New: Updated cart design and customization options.
+- Improvement: Added loading state to mobile shop page filters for better user experience.
+- Improvement: Enhanced readonly subscription price display in admin.
+- Improvement: Added shadow part for line item placeholder images for better customization.
+- Improvement: Do not show interval if the installment plan has a single payment.
+- Fix: Issue on instant checkout where product images were not showing if the product page was a draft.
+- Fix: Dark mode support for price boost feature.
+- Fix: PHP notice for undefined array key on bricks builder submit button if add to cart was not selected for the button.
+- Fix: Affiliate commission display now shows correct currency.
+- Fix: Elementor product wrapper messages now display only on relevant product pages.
 
 = 3.10.1 - July 18th, 2025 =
 - Fix: Improved compatibility with Bricks Builder to ensure forms display correctly in the editor.

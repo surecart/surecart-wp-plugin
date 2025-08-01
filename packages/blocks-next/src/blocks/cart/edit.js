@@ -9,25 +9,56 @@ import {
 	useInnerBlocksProps,
 	__experimentalUnitControl as UnitControl,
 	useSettings,
+	BlockControls,
 } from '@wordpress/block-editor';
+import { useEntityProp } from '@wordpress/core-data';
 import {
 	__experimentalUseCustomUnits as useCustomUnits,
 	PanelBody,
+	Button,
+	Notice,
 } from '@wordpress/components';
-
+import { useState } from '@wordpress/element';
+import { useSelect } from '@wordpress/data';
+import { store as blockEditorStore } from '@wordpress/block-editor';
 /**
  * Internal dependencies.
  */
 import { TEMPLATE } from './template';
+import classNames from 'classnames';
+import PatternSelectionModal from '../../utilities/pattern-selection-modal';
+import PatternsToolbar from '../../utilities/patterns-toolbar';
 
-export default ({ attributes: { width }, setAttributes }) => {
+export default ({
+	attributes,
+	name,
+	attributes: { width },
+	clientId,
+	setAttributes,
+	__unstableLayoutClassNames,
+}) => {
+	const [theme] = useEntityProp('root', 'site', 'surecart_theme');
+
+	const [isPatternSelectionModalOpen, setIsPatternSelectionModalOpen] =
+		useState(false);
+	const isOldTemplate = useSelect(
+		(select) =>
+			!!select(blockEditorStore).getBlocksByName(
+				'surecart/slide-out-cart-submit'
+			).length
+	);
+
 	const blockProps = useBlockProps({
 		style: {
 			fontSize: '16px',
 			fontFamily: 'var(--sc-font-sans)',
 			maxWidth: `max(400px, ${width})`,
 		},
-		className: 'sc-cart__editor-container',
+		className: classNames(
+			'sc-cart__editor-container',
+			'surecart-theme-' + theme,
+			__unstableLayoutClassNames
+		),
 	});
 
 	const innerBlocksProps = useInnerBlocksProps(
@@ -53,6 +84,17 @@ export default ({ attributes: { width }, setAttributes }) => {
 		],
 	});
 
+	if (isPatternSelectionModalOpen) {
+		return (
+			<PatternSelectionModal
+				clientId={clientId}
+				attributes={attributes}
+				setIsPatternSelectionModalOpen={setIsPatternSelectionModalOpen}
+				name={name}
+			/>
+		);
+	}
+
 	return (
 		<>
 			<InspectorControls>
@@ -67,10 +109,30 @@ export default ({ attributes: { width }, setAttributes }) => {
 					/>
 				</PanelBody>
 			</InspectorControls>
+			<BlockControls>
+				<PatternsToolbar
+					name={name}
+					clientId={clientId}
+					openPatternSelectionModal={setIsPatternSelectionModalOpen}
+				/>
+			</BlockControls>
+			{isOldTemplate && (
+				<Notice status="warning" isDismissible={false}>
+					{__(
+						'The current template for cart is outdated. Please upgrade to a newer version by clicking '
+					)}
+					<Button
+						onClick={() => {
+							setIsPatternSelectionModalOpen(true);
+						}}
+						variant="link"
+					>
+						{__(' here.', 'surecart')}
+					</Button>
+				</Notice>
+			)}
 
-			<div {...blockProps}>
-				<div {...innerBlocksProps}></div>
-			</div>
+			<div {...innerBlocksProps}></div>
 		</>
 	);
 };

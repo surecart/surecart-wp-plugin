@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-08-01T17:35:54",
+  "timestamp": "2025-07-30T19:54:15",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.18.3",
@@ -32007,6 +32007,10 @@
           "docs": "The line item price description"
         },
         {
+          "name": "placeholder__image",
+          "docs": ""
+        },
+        {
           "name": "price",
           "docs": "The product price"
         },
@@ -44483,7 +44487,7 @@
       "path": "src/types.ts"
     },
     "src/types.ts::ImageAttributes": {
-      "declaration": "export interface ImageAttributes {\n  src: string;\n  alt?: string;\n  class?: string;\n  decoding?: string;\n  height?: number;\n  loading?: string;\n  sizes?: string;\n  srcset?: string;\n  width?: number;\n}",
+      "declaration": "export interface ImageAttributes {\n  src: string;\n  alt?: string;\n  class?: string;\n  decoding?: string;\n  height?: number;\n  loading?: string;\n  sizes?: string;\n  srcset?: string;\n  width?: number;\n  type?: string;\n}",
       "docstring": "",
       "path": "src/types.ts"
     },
