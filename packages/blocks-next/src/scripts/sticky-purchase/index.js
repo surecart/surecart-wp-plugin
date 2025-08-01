@@ -33,7 +33,7 @@ const { state } = store('surecart/sticky-purchase', {
 			const context = getContext();
 
 			// Out of stock is enabled, always show the purchase button.
-			if (context?.enableOutOfStock) {
+			if (context?.showStickyPurchaseButton === 'always') {
 				return false;
 			}
 

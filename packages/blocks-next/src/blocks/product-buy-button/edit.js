@@ -9,12 +9,6 @@ import classnames from 'classnames';
 import { __ } from '@wordpress/i18n';
 import { useRef } from '@wordpress/element';
 import {
-	PanelBody,
-	PanelRow,
-	TextControl,
-	ToggleControl,
-} from '@wordpress/components';
-import {
 	InspectorControls,
 	RichText,
 	useBlockProps,
@@ -24,24 +18,16 @@ import {
 	__experimentalGetSpacingClassesAndStyles as useSpacingProps,
 	__experimentalGetShadowClassesAndStyles as useShadowProps,
 } from '@wordpress/block-editor';
-import { select, useDispatch } from '@wordpress/data';
 import { isKeyboardEvent } from '@wordpress/keycodes';
 
 /**
  * Internal dependencies.
  */
-import WidthPanel from '../../components/WidthPanel';
+import Labels from './labels';
+import Display from './display';
 
-export default ({ attributes, setAttributes, className }) => {
-	const {
-		style,
-		text,
-		width,
-		out_of_stock_text,
-		unavailable_text,
-		show_sticky_purchase_button,
-		show_sticky_purchase_on_out_of_stock,
-	} = attributes;
+export default ({ attributes, setAttributes, className, context }) => {
+	const { style, text, width } = attributes;
 
 	function onKeyDown(event) {
 		if (isKeyboardEvent.primary(event, 'k')) {
@@ -69,71 +55,12 @@ export default ({ attributes, setAttributes, className }) => {
 	return (
 		<>
 			<InspectorControls>
-				<PanelBody title={__('Text settings', 'surecart')}>
-					<PanelRow>
-						<TextControl
-							label={__('Out of stock label', 'surecart')}
-							value={out_of_stock_text}
-							onChange={(value) =>
-								setAttributes({ out_of_stock_text: value })
-							}
-						/>
-					</PanelRow>
-					<PanelRow>
-						<TextControl
-							label={__('Unavailable label', 'surecart')}
-							value={unavailable_text}
-							onChange={(value) =>
-								setAttributes({ unavailable_text: value })
-							}
-						/>
-					</PanelRow>
-				</PanelBody>
-
-				<WidthPanel
-					selectedWidth={width}
+				<Display
+					attributes={attributes}
 					setAttributes={setAttributes}
-					ariaLabel={__('Button width')}
+					context={context}
 				/>
-
-				<PanelBody title={__('Sticky purchase button', 'surecart')}>
-					<PanelRow>
-						<ToggleControl
-							label={__(
-								'Show sticky purchase button',
-								'surecart'
-							)}
-							checked={show_sticky_purchase_button}
-							onChange={toggleStickyPurchaseButton}
-							help={__(
-								'Show a sticky purchase button when the main buy buttons are out of view',
-								'surecart'
-							)}
-						/>
-					</PanelRow>
-
-					{show_sticky_purchase_button && (
-						<PanelRow>
-							<ToggleControl
-								label={__(
-									'Show sticky purchase button on out of stock products',
-									'surecart'
-								)}
-								checked={show_sticky_purchase_on_out_of_stock}
-								onChange={(value) =>
-									setAttributes({
-										show_sticky_purchase_on_out_of_stock:
-											value,
-									})
-								}
-								help={__(
-									'Show the sticky purchase button even when the product is out of stock',
-									'surecart'
-								)}
-							/>
-						</PanelRow>
-					)}
-				</PanelBody>
+				<Labels attributes={attributes} setAttributes={setAttributes} />
 			</InspectorControls>
 
 			<div

@@ -16,7 +16,7 @@
 	echo wp_kses_data(
 		wp_interactivity_data_wp_context(
 			[
-				'enableOutOfStock' => $enable_out_of_stock,
+				'showStickyPurchaseButton' => $show_sticky_purchase_button,
 			]
 		)
 	);

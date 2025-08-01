@@ -15,7 +15,7 @@
 				'checkoutUrl'     => esc_url( \SureCart::pages()->url( 'checkout' ) ),
 				'buttonText'      => $attributes['text'] ?? ( $add_to_cart ? __( 'Add to Cart', 'surecart' ) : __( 'Buy Now', 'surecart' ) ),
 				'outOfStockText'  => esc_attr( $attributes['out_of_stock_text'] ?? __( 'Sold Out', 'surecart' ) ),
-				'unavailableText' => esc_attr( $attributes['unavailable_text'] ?? __( 'Unavailable For Purchase', 'surecart' ) ),
+				'unavailableText' => esc_attr( $attributes['unavailable_text'] ?? __( 'Unavailable', 'surecart' ) ),
 				'addToCart'       => $add_to_cart ?? true,
 			)
 		)
@@ -28,7 +28,7 @@
 			data-wp-bind--disabled="state.isUnavailable"
 			style="<?php echo ! empty( $styles['css'] ) ? esc_attr( $styles['css'] ) : ''; ?>"
 			data-wp-on--click="callbacks.redirectToCheckout"
-			<?php if ( ! empty( $attributes['show_sticky_purchase_button'] ) ) { ?>
+			<?php if ( 'never' !== $attributes['show_sticky_purchase_button'] ) { ?>
 				data-wp-on-async-window--scroll="surecart/sticky-purchase::actions.toggleVisibility"
 				data-wp-on-async-window--resize="surecart/sticky-purchase::actions.toggleVisibility"
 			<?php } ?>
@@ -44,7 +44,7 @@
 			data-wp-bind--disabled="state.isUnavailable"
 			data-wp-class--sc-button__link--busy="context.busy"
 			style="<?php echo ! empty( $styles['css'] ) ? esc_attr( $styles['css'] ) : ''; ?>"
-			<?php if ( ! empty( $attributes['show_sticky_purchase_button'] ) ) { ?>
+			<?php if ( 'never' !== $attributes['show_sticky_purchase_button'] ) { ?>
 				data-wp-on-async-window--scroll="surecart/sticky-purchase::actions.toggleVisibility"
 				data-wp-on-async-window--resize="surecart/sticky-purchase::actions.toggleVisibility"
 			<?php } ?>
@@ -58,10 +58,4 @@
 	?>
 </div>
 
-<?php
-if ( ! empty( $attributes['show_sticky_purchase_button'] ) ) {
-	$template = get_block_template( 'surecart/surecart//sticky-purchase', 'wp_template_part' );
-	if ( $template && ! empty( $template->content ) ) {
-		echo do_blocks( $template->content ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-	}
-}
+<?php require 'sticky-purchase.php'; ?>
