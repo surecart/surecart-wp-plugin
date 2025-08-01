@@ -254,8 +254,8 @@ class BuyButton extends \Bricks\Element {
 		}
 
 		if ( ! empty( $settings['show_sticky_purchase_button'] ) ) {
-			$this->set_attribute( '_root', 'data-wp-on-window--scroll', 'surecart/sticky-purchase::actions.toggleVisibility' );
-			$this->set_attribute( '_root', 'data-wp-on-window--resize', 'surecart/sticky-purchase::actions.toggleVisibility' );
+			$this->set_attribute( '_root', 'data-wp-on-async-window--scroll', 'surecart/sticky-purchase::actions.toggleVisibility' );
+			$this->set_attribute( '_root', 'data-wp-on-async-window--resize', 'surecart/sticky-purchase::actions.toggleVisibility' );
 		}
 
 		$output = "<{$this->tag} {$this->render_attributes( '_root' )}>";
