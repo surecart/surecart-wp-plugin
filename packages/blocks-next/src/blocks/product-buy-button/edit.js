@@ -32,7 +32,7 @@ import { isKeyboardEvent } from '@wordpress/keycodes';
  */
 import WidthPanel from '../../components/WidthPanel';
 
-export default ({ attributes, setAttributes, className, clientId }) => {
+export default ({ attributes, setAttributes, className }) => {
 	const {
 		style,
 		text,
@@ -42,8 +42,6 @@ export default ({ attributes, setAttributes, className, clientId }) => {
 		show_sticky_purchase_button,
 		show_sticky_purchase_on_out_of_stock,
 	} = attributes;
-	const { getBlocksByName } = select('core/block-editor');
-	const { updateBlockAttributes } = useDispatch('core/block-editor');
 
 	function onKeyDown(event) {
 		if (isKeyboardEvent.primary(event, 'k')) {
@@ -67,17 +65,6 @@ export default ({ attributes, setAttributes, className, clientId }) => {
 		ref,
 		onKeyDown,
 	});
-
-	// Toggle the sticky purchase button and make other buttons inactive.
-	const toggleStickyPurchaseButton = (value) => {
-		getBlocksByName('surecart/product-buy-button')?.forEach(
-			(blockClientId) =>
-				updateBlockAttributes(blockClientId, {
-					show_sticky_purchase_button:
-						blockClientId === clientId ? value : false,
-				})
-		);
-	};
 
 	return (
 		<>
