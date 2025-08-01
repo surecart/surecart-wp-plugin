@@ -1746,6 +1746,13 @@
     "class": true,
     "slot": true
   },
+  "sc-product-line-item-note": {
+    "note": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-product-pills-variant-option": {
     "label": true,
     "option-number": true,

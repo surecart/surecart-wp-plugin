@@ -97,7 +97,7 @@ export class ScProductLineItem {
 
   render() {
     const isImageFallback = this.image?.type === 'fallback';
-  
+
     return (
       <div class="base" part="base">
         <div
@@ -110,7 +110,11 @@ export class ScProductLineItem {
             'product-line-item__removable': this.removable,
           }}
         >
-          {!!this.image?.src ? <img {...(this.image as any)} part={isImageFallback ? "placeholder__image" : "image" } class={isImageFallback ? "item__image-placeholder" : "item__image"} /> : <div class="item__image-placeholder" part="placeholder__image"></div>}
+          {!!this.image?.src ? (
+            <img {...(this.image as any)} part={isImageFallback ? 'placeholder__image' : 'image'} class={isImageFallback ? 'item__image-placeholder' : 'item__image'} />
+          ) : (
+            <div class="item__image-placeholder" part="placeholder__image"></div>
+          )}
           <div class="item__text-container">
             <div class="item__row">
               <div class="item__title" part="title">
@@ -135,25 +139,7 @@ export class ScProductLineItem {
                   </div>
                 )}
                 {!!this.purchasableStatus && <div>{this.purchasableStatus}</div>}
-                {!!this.note && (
-                  <div class="item__note-container">
-                    <div
-                      class={{
-                        'item__note': true,
-                        'item__note--expanded': this.noteExpanded,
-                      }}
-                    >
-                      {this.note}
-                    </div>
-                    <button
-                      class="item__note-toggle"
-                      onClick={() => (this.noteExpanded = !this.noteExpanded)}
-                      type="button"
-                    >
-                      {this.noteExpanded ? __('less', 'surecart') : __('more', 'surecart')}
-                    </button>
-                  </div>
-                )}
+                <sc-product-line-item-note note={this.note} />
               </div>
 
               <div class="item__description" part="trial-fees">

@@ -3139,6 +3139,9 @@ export namespace Components {
          */
         "variant": string;
     }
+    interface ScProductLineItemNote {
+        "note": string;
+    }
     interface ScProductPillsVariantOption {
         /**
           * Label
@@ -6020,6 +6023,12 @@ declare global {
         prototype: HTMLScProductLineItemElement;
         new (): HTMLScProductLineItemElement;
     };
+    interface HTMLScProductLineItemNoteElement extends Components.ScProductLineItemNote, HTMLStencilElement {
+    }
+    var HTMLScProductLineItemNoteElement: {
+        prototype: HTMLScProductLineItemNoteElement;
+        new (): HTMLScProductLineItemNoteElement;
+    };
     interface HTMLScProductPillsVariantOptionElement extends Components.ScProductPillsVariantOption, HTMLStencilElement {
     }
     var HTMLScProductPillsVariantOptionElement: {
@@ -6881,6 +6890,7 @@ declare global {
         "sc-product-item-price": HTMLScProductItemPriceElement;
         "sc-product-item-title": HTMLScProductItemTitleElement;
         "sc-product-line-item": HTMLScProductLineItemElement;
+        "sc-product-line-item-note": HTMLScProductLineItemNoteElement;
         "sc-product-pills-variant-option": HTMLScProductPillsVariantOptionElement;
         "sc-product-price": HTMLScProductPriceElement;
         "sc-product-price-choices": HTMLScProductPriceChoicesElement;
@@ -10322,6 +10332,9 @@ declare namespace LocalJSX {
          */
         "variant"?: string;
     }
+    interface ScProductLineItemNote {
+        "note"?: string;
+    }
     interface ScProductPillsVariantOption {
         /**
           * Label
@@ -11655,6 +11668,7 @@ declare namespace LocalJSX {
         "sc-product-item-price": ScProductItemPrice;
         "sc-product-item-title": ScProductItemTitle;
         "sc-product-line-item": ScProductLineItem;
+        "sc-product-line-item-note": ScProductLineItemNote;
         "sc-product-pills-variant-option": ScProductPillsVariantOption;
         "sc-product-price": ScProductPrice;
         "sc-product-price-choices": ScProductPriceChoices;
@@ -11914,6 +11928,7 @@ declare module "@stencil/core" {
             "sc-product-item-price": LocalJSX.ScProductItemPrice & JSXBase.HTMLAttributes<HTMLScProductItemPriceElement>;
             "sc-product-item-title": LocalJSX.ScProductItemTitle & JSXBase.HTMLAttributes<HTMLScProductItemTitleElement>;
             "sc-product-line-item": LocalJSX.ScProductLineItem & JSXBase.HTMLAttributes<HTMLScProductLineItemElement>;
+            "sc-product-line-item-note": LocalJSX.ScProductLineItemNote & JSXBase.HTMLAttributes<HTMLScProductLineItemNoteElement>;
             "sc-product-pills-variant-option": LocalJSX.ScProductPillsVariantOption & JSXBase.HTMLAttributes<HTMLScProductPillsVariantOptionElement>;
             "sc-product-price": LocalJSX.ScProductPrice & JSXBase.HTMLAttributes<HTMLScProductPriceElement>;
             "sc-product-price-choices": LocalJSX.ScProductPriceChoices & JSXBase.HTMLAttributes<HTMLScProductPriceChoicesElement>;

@@ -52,6 +52,7 @@ graph TD;
   sc-line-items --> sc-skeleton
   sc-line-items --> sc-product-line-item
   sc-line-items --> sc-swap
+  sc-product-line-item --> sc-product-line-item-note
   sc-product-line-item --> sc-quantity-select
   sc-product-line-item --> sc-icon
   sc-quantity-select --> sc-icon

@@ -1,0 +1,39 @@
+:host {
+  position: relative;
+}
+
+.item__note {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  line-clamp: 1;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
+  line-height: 1.4;
+
+  &--expanded {
+    line-clamp: unset;
+    -webkit-line-clamp: unset;
+    overflow: visible;
+  }
+}
+
+.item__note-toggle {
+  background: none;
+  border: none;
+  color: var(--sc-color-primary-500);
+  cursor: pointer;
+  font-size: var(--sc-font-size-small);
+  padding: 0;
+  text-decoration: underline;
+  align-self: flex-start;
+  transition: opacity 0.2s ease;
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  &:focus {
+    outline: 2px solid var(--sc-color-primary-500);
+    outline-offset: 2px;
+  }
+}

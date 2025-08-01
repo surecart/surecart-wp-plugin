@@ -77,12 +77,14 @@
 
 ### Depends on
 
+- [sc-product-line-item-note](../product-line-item-note)
 - [sc-quantity-select](../quantity-select)
 - [sc-icon](../icon)
 
 ### Graph
 ```mermaid
 graph TD;
+  sc-product-line-item --> sc-product-line-item-note
   sc-product-line-item --> sc-quantity-select
   sc-product-line-item --> sc-icon
   sc-quantity-select --> sc-icon

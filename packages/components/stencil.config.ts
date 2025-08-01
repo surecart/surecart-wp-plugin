@@ -26,7 +26,7 @@ export const config: Config = {
     transform: {
       '^.+\\.(ts|tsx|js|jsx|css)$': '@stencil/core/testing/jest-preprocessor',
     },
-    transformIgnorePatterns: ['node_modules/(?!stencil-fragment)'],
+    transformIgnorePatterns: ['node_modules/(?!(stencil-fragment|@wordpress|memize|country-region-data))'],
     setupFilesAfterEnv: ['./setup-tests.js'],
     moduleNameMapper: {
       '^@store/(.*)$': '<rootDir>/src/store/$1',
