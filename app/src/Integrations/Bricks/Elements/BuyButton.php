@@ -188,7 +188,7 @@ class BuyButton extends \Bricks\Element {
 		$settings = $this->settings;
 
 		// Enqueue the sticky purchase script if enabled.
-		if ( isset( $settings['show_sticky_purchase_button'] ) && $settings['show_sticky_purchase_button'] ) {
+		if ( ! empty( $settings['show_sticky_purchase_button'] ) ) {
 			wp_enqueue_script_module( '@surecart/sticky-purchase' );
 		}
 
@@ -253,17 +253,12 @@ class BuyButton extends \Bricks\Element {
 			$this->set_attribute( '_root', 'data-wp-class--sc-button__link--busy', 'context.busy' );
 		}
 
-		$sticky_attributes           = '';
-		$show_sticky_purchase_button = isset( $settings['show_sticky_purchase_button'] ) && $settings['show_sticky_purchase_button'];
-		if ( $show_sticky_purchase_button ) {
-			$sticky_attributes = "data-wp-on-window--scroll='surecart/sticky-purchase::actions.toggleVisibility'
-			data-wp-on-window--resize='surecart/sticky-purchase::actions.toggleVisibility'";
+		if ( ! empty( $settings['show_sticky_purchase_button'] ) ) {
+			$this->set_attribute( '_root', 'data-wp-on-window--scroll', 'surecart/sticky-purchase::actions.toggleVisibility' );
+			$this->set_attribute( '_root', 'data-wp-on-window--resize', 'surecart/sticky-purchase::actions.toggleVisibility' );
 		}
 
-		$output = "<{$this->tag}
-			{$this->render_attributes( '_root' )}
-			{$sticky_attributes}
-		>";
+		$output = "<{$this->tag} {$this->render_attributes( '_root' )}>";
 
 		// Icon.
 		$icon          = ! empty( $settings['icon'] ) ? self::render_icon( $settings['icon'] ) : false;
@@ -291,11 +286,11 @@ class BuyButton extends \Bricks\Element {
 		echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
 		// Add the sticky purchase button if enabled.
-		if ( $show_sticky_purchase_button ) {
+		if ( ! empty( $settings['show_sticky_purchase_button'] ) ) {
 			add_filter(
 				'surecart_sticky_purchase_enable_out_of_stock',
 				function () use ( $settings ) {
-					return isset( $settings['show_sticky_purchase_on_out_of_stock'] ) && $settings['show_sticky_purchase_on_out_of_stock'];
+					return ! empty( $settings['show_sticky_purchase_on_out_of_stock'] );
 				}
 			);
 
