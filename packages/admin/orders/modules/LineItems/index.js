@@ -25,6 +25,7 @@ import { formatTaxDisplay } from '../../../util/tax';
 import LineItem from './LineItem';
 import { getSKUText } from '../../../util/products';
 import RefundLineItem from '../Refund/RefundLineItem';
+import DisputeLineItem from '../Dispute/DisputeLineItem';
 
 const status = {
 	processing: __('Processing', 'surecart'),
@@ -47,6 +48,17 @@ export default ({ order, checkout, chargeIds }) => {
 			charge_ids: chargeIds,
 			per_page: 100,
 			expand: ['refund_items', 'refund_item.line_item'],
+		}
+	);
+
+	// get the disputes.
+	const { records: disputes, hasResolved: hasResolvedDisputes } = useEntityRecords(
+		'surecart',
+		'dispute',
+		{
+			context: 'edit',
+			charge_ids: chargeIds,
+			per_page: 100,
 		}
 	);
 
@@ -110,7 +122,7 @@ export default ({ order, checkout, chargeIds }) => {
 					{status[order?.status] || order?.status}
 				</div>
 			}
-			loading={!hasResolved}
+			loading={!hasResolved || !hasResolvedDisputes}
 			header_action={
 				order?.statement_url && (
 					<div
@@ -213,6 +225,19 @@ export default ({ order, checkout, chargeIds }) => {
 								currency={checkout?.currency}
 								value={checkout?.net_paid_amount}
 							/>
+						</>
+					)}
+
+					{!!checkout?.disputed_amount && (
+						<>
+							{(disputes || []).map((dispute) => (
+								<DisputeLineItem
+									key={dispute.id}
+									order={order}
+									dispute={dispute}
+									label={__('Dispute', 'surecart')}
+								/>
+							))}
 						</>
 					)}
 

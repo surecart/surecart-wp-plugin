@@ -101,4 +101,13 @@ class Charge extends Model {
 	public function getRefundedDisplayAmountAttribute() {
 		return Currency::format( $this->refunded_amount, $this->currency );
 	}
+
+	/**
+	 * Get the disputed display amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getDisputedDisplayAmountAttribute() {
+		return Currency::format( $this->disputed_amount, $this->currency );
+	}
 }

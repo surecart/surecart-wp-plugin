@@ -39,6 +39,10 @@ export default ({
 			return <sc-tag type="danger">{__('Refunded', 'surecart')}</sc-tag>;
 		}
 
+		if (charge?.disputed_amount) {
+			return <sc-tag type="warning">{__('Disputed', 'surecart')}</sc-tag>;
+		}
+
 		if (charge?.refunded_amount && charge?.refunded_amount) {
 			return (
 				<sc-tag type="warning">
@@ -111,6 +115,16 @@ export default ({
 										>
 											- {charge?.refunded_display_amount}{' '}
 											{__('Refunded', 'surecart')}
+										</div>
+									)}
+									{!!charge?.disputed_amount && (
+										<div
+											style={{
+												color: 'var(--sc-color-warning-500)',
+											}}
+										>
+											- {charge?.disputed_display_amount}{' '}
+											{__('Disputed', 'surecart')}
 										</div>
 									)}
 								</sc-text>
