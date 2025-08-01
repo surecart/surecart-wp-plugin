@@ -8,24 +8,6 @@
 	"category": "surecart-product-page",
 	"ancestor": ["surecart/product-page", "surecart/product-template"],
 	"usesContext": ["postId"],
-	"attributes": {
-		"truncate_excerpt": {
-			"type": "boolean",
-			"default": false
-		},
-		"excerpt_length": {
-			"type": "number",
-			"default": 55
-		},
-		"read_more_text": {
-			"type": "string",
-			"default": "Read more"
-		},
-		"show_read_more": {
-			"type": "boolean",
-			"default": false
-		}
-	},
 	"supports": {
 		"interactivity": true,
 		"reusable": false,
