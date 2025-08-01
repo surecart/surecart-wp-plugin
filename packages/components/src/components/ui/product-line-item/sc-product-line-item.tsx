@@ -1,4 +1,4 @@
-import { Component, h, Prop, Event, EventEmitter, Element } from '@stencil/core';
+import { Component, h, Prop, Event, EventEmitter, Element, State } from '@stencil/core';
 import { __, _n, sprintf } from '@wordpress/i18n';
 import { isRtl } from '../../../functions/page-align';
 import { Fee, ImageAttributes } from '../../../types';
@@ -86,6 +86,9 @@ export class ScProductLineItem {
   /** The line item note */
   @Prop() note: string;
 
+  /** Whether the note is expanded */
+  @State() noteExpanded: boolean = false;
+
   /** Emitted when the quantity changes. */
   @Event({ bubbles: false }) scUpdateQuantity: EventEmitter<number>;
 
@@ -132,7 +135,25 @@ export class ScProductLineItem {
                   </div>
                 )}
                 {!!this.purchasableStatus && <div>{this.purchasableStatus}</div>}
-                {!!this.note && <div>{this.note}</div>}
+                {!!this.note && (
+                  <div class="item__note-container">
+                    <div
+                      class={{
+                        'item__note': true,
+                        'item__note--expanded': this.noteExpanded,
+                      }}
+                    >
+                      {this.note}
+                    </div>
+                    <button
+                      class="item__note-toggle"
+                      onClick={() => (this.noteExpanded = !this.noteExpanded)}
+                      type="button"
+                    >
+                      {this.noteExpanded ? __('less', 'surecart') : __('more', 'surecart')}
+                    </button>
+                  </div>
+                )}
               </div>
 
               <div class="item__description" part="trial-fees">

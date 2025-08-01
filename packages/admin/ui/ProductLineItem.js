@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-
+import { useState } from '@wordpress/element';
 import { __, sprintf } from '@wordpress/i18n';
 
 /**
@@ -11,6 +11,7 @@ import { ScFormatNumber } from '@surecart/components-react';
 import LineItemLabel from './LineItemLabel';
 
 export default ({ lineItem, suffix, showWeight, showQuantity, children }) => {
+	const [noteExpanded, setNoteExpanded] = useState(false);
 	return (
 		<LineItem suffix={suffix} image={lineItem?.image}>
 			<span
@@ -62,10 +63,47 @@ export default ({ lineItem, suffix, showWeight, showQuantity, children }) => {
 					<div
 						css={css`
 							margin-top: 0.5em;
-							font-style: italic;
 						`}
 					>
-						{__('Note:', 'surecart')} {lineItem.note}
+						<div
+							css={css`
+								font-style: italic;
+								overflow: hidden;
+								text-overflow: ellipsis;
+								display: -webkit-box;
+								-webkit-line-clamp: ${noteExpanded ? 'none' : '1'};
+								-webkit-box-orient: vertical;
+								line-clamp: ${noteExpanded ? 'none' : '1'};
+							`}
+						>
+							{__('Note:', 'surecart')} {lineItem.note}
+						</div>
+						<button
+							css={css`
+								background: none;
+								border: none;
+								color: var(--sc-color-primary-500, #3858e9);
+								cursor: pointer;
+								font-size: 13px;
+								padding: 0;
+								margin-top: 2px;
+								text-decoration: underline;
+								transition: opacity 0.2s ease;
+								
+								&:hover {
+									opacity: 0.8;
+								}
+								
+								&:focus {
+									outline: 2px solid var(--sc-color-primary-500, #3858e9);
+									outline-offset: 2px;
+								}
+							`}
+							onClick={() => setNoteExpanded(!noteExpanded)}
+							type="button"
+						>
+							{noteExpanded ? __('less', 'surecart') : __('more', 'surecart')}
+						</button>
 					</div>
 				)}
 				{children}
