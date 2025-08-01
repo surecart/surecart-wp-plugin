@@ -37,6 +37,7 @@ import Promotions from './modules/Promotions';
 import Urls from './modules/Urls';
 import Products from './modules/affiliation-products';
 import Commission from './modules/Commission';
+import Metadata from '../components/affiliates/Metadata';
 
 export default ({ id }) => {
 	const { save } = useSave();
@@ -254,6 +255,10 @@ export default ({ id }) => {
 					<Commission
 						affiliation={affiliation}
 						loading={!hasLoadedAffiliation || loading}
+					/>
+					<Metadata
+						metadata={affiliation?.metadata}
+						loading={!hasLoadedAffiliation}
 					/>
 				</>
 			}
