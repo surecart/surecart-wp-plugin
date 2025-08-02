@@ -113,4 +113,68 @@ class RequestServiceTest extends SureCartUnitTestCase
 		// make the request.
 		$service->makeUncachedRequest('test');
 	}
+
+	/**
+	 * Test that bad_gateway errors are properly handled.
+	 * 
+	 * @group request
+	 */
+	public function test_bad_gateway_error_handling() {
+		// setup mocks.
+		$request_cache = \Mockery::mock(\SureCart\Request\RequestCacheService::class);
+		$error_service = \Mockery::mock(\SureCart\Support\Errors\ErrorsService::class);
+		
+		// Mock the translate method to return a WP_Error with bad_gateway message
+		$error_service->shouldReceive('translate')
+			->once()
+			->with(
+				[
+					'code' => 'bad_gateway',
+					'type' => 'bad_gateway', 
+					'http_status' => 'bad_gateway',
+					'message' => 'Charge ch_3Rh3nCCAyH09BTUT1QpGDreU has been charged back; cannot issue a refund.',
+					'validation_errors' => []
+				],
+				502
+			)
+			->andReturn(
+				new \WP_Error(
+					'bad_gateway',
+					'Charge ch_3Rh3nCCAyH09BTUT1QpGDreU has been charged back; cannot issue a refund.',
+					[
+						'status' => 502,
+						'type' => 'bad_gateway',
+						'http_status' => 'bad_gateway'
+					]
+				)
+			);
+		
+		$service = \Mockery::mock( RequestService::class, [[], 'token'] )->makePartial();
+		$service->shouldReceive('cache')->andReturn( $request_cache );
+		$service->shouldReceive('errors')->andReturn( $error_service );
+		
+		// Mock remote request to return bad_gateway response
+		$service->shouldReceive( 'remoteRequest' )
+			->once()
+			->andReturn( [
+				'response' => [
+					'code' => 502
+				],
+				'body' => wp_json_encode([
+					'code' => 'bad_gateway',
+					'type' => 'bad_gateway',
+					'http_status' => 'bad_gateway',
+					'message' => 'Charge ch_3Rh3nCCAyH09BTUT1QpGDreU has been charged back; cannot issue a refund.',
+					'validation_errors' => []
+				])
+			] );
+		
+		// Make the request
+		$result = $service->makeUncachedRequest('test');
+		
+		// Assert it's a WP_Error with the correct details
+		$this->assertWPError( $result );
+		$this->assertEquals( 'bad_gateway', $result->get_error_code() );
+		$this->assertEquals( 'Charge ch_3Rh3nCCAyH09BTUT1QpGDreU has been charged back; cannot issue a refund.', $result->get_error_message() );
+	}
 }
