@@ -73,17 +73,17 @@ class BuyButton extends \Bricks\Element {
 
 		$this->controls['show_sticky_purchase_button'] = [
 			'tab'         => 'content',
-			'label'       => esc_html__( 'Show sticky purchase button', 'surecart' ),
-			'type'        => 'checkbox',
-			'description' => esc_html__( 'Show a sticky purchase button when the main buy buttons are out of view', 'surecart' ),
-		];
-
-		$this->controls['show_sticky_purchase_on_out_of_stock'] = [
-			'tab'         => 'content',
-			'label'       => esc_html__( 'Show sticky purchase button on out of stock products', 'surecart' ),
-			'type'        => 'checkbox',
-			'description' => esc_html__( 'Show the sticky purchase button even when the product is out of stock', 'surecart' ),
-			'required'    => [ 'show_sticky_purchase_button', '!=', '' ],
+			'label'       => esc_html__( 'Sticky button', 'surecart' ),
+			'type'        => 'select',
+			'description' => esc_html__( 'Show a sticky purchase button when this button is out of view', 'surecart' ),
+			'options'     => [
+				'never'    => esc_html__( 'Never', 'surecart' ),
+				'in_stock' => esc_html__( 'In Stock', 'surecart' ),
+				'always'   => esc_html__( 'Always', 'surecart' ),
+			],
+			'inline'      => true,
+			'fullAccess'  => true,
+			'default'     => 'never',
 		];
 
 		$this->controls['styleSeparator'] = [
@@ -185,11 +185,12 @@ class BuyButton extends \Bricks\Element {
 	 * @return void
 	 */
 	public function render() {
-		$settings   = $this->settings;
-		$is_buy_now = isset( $settings['buy_now'] ) ? (bool) $settings['buy_now'] : false;
+		$settings             = $this->settings;
+		$is_buy_now           = isset( $settings['buy_now'] ) ? (bool) $settings['buy_now'] : false;
+		$show_sticky_purchase = isset( $settings['show_sticky_purchase_button'] ) && 'never' !== $settings['show_sticky_purchase_button'];
 
 		// Enqueue the sticky purchase script if enabled.
-		if ( ! empty( $settings['show_sticky_purchase_button'] ) ) {
+		if ( $show_sticky_purchase ) {
 			wp_enqueue_script_module( '@surecart/sticky-purchase' );
 		}
 
@@ -287,18 +288,31 @@ class BuyButton extends \Bricks\Element {
 		echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
 		// Add the sticky purchase button if enabled.
-		if ( ! empty( $settings['show_sticky_purchase_button'] ) ) {
-			add_filter(
-				'surecart_sticky_purchase_enable_out_of_stock',
-				function () use ( $settings ) {
-					return ! empty( $settings['show_sticky_purchase_on_out_of_stock'] );
-				}
-			);
-
-			$template = get_block_template( 'surecart/surecart//sticky-purchase', 'wp_template_part' );
-			if ( $template && ! empty( $template->content ) ) {
-				echo do_blocks( $template->content ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-			}
+		if ( ! $show_sticky_purchase ) {
+			return;
 		}
+
+		// Get the sticky purchase template.
+		$template = get_block_template( 'surecart/surecart//sticky-purchase', 'wp_template_part' );
+
+		// If the template is empty, don't render it.
+		if ( empty( $template ) || empty( $template->content ) ) {
+			return;
+		}
+
+		// Add the show sticky purchase button context to the template.
+		$filter_block_context = static function ( $context ) use ( $settings ) {
+			$context['showStickyPurchaseButton'] = $settings['show_sticky_purchase_button'];
+			return $context;
+		};
+
+		// Add the filter to the template.
+		add_filter( 'render_block_context', $filter_block_context, 1 );
+
+		// Render the template.
+		echo do_blocks( $template->content ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+
+		// Remove the filter from the template.
+		remove_filter( 'render_block_context', $filter_block_context, 1 );
 	}
 }

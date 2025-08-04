@@ -101,26 +101,14 @@ class AddToCartButton extends \Elementor\Widget_Base {
 		$this->add_control(
 			'show_sticky_purchase_button',
 			[
-				'label'       => esc_html__( 'Show sticky purchase button', 'surecart' ),
-				'type'        => \Elementor\Controls_Manager::SWITCHER,
-				'label_on'    => esc_html__( 'Yes', 'surecart' ),
-				'label_off'   => esc_html__( 'No', 'surecart' ),
-				'default'     => 'no',
-				'description' => esc_html__( 'Show a sticky purchase button when the main buy buttons are out of view', 'surecart' ),
-			]
-		);
-
-		$this->add_control(
-			'show_sticky_purchase_on_out_of_stock',
-			[
-				'label'       => esc_html__( 'Show sticky purchase button on out of stock products', 'surecart' ),
-				'type'        => \Elementor\Controls_Manager::SWITCHER,
-				'label_on'    => esc_html__( 'Yes', 'surecart' ),
-				'label_off'   => esc_html__( 'No', 'surecart' ),
-				'default'     => 'no',
-				'description' => esc_html__( 'Show the sticky purchase button even when the product is out of stock', 'surecart' ),
-				'condition'   => [
-					'show_sticky_purchase_button' => 'yes',
+				'label'       => esc_html__( 'Sticky button', 'surecart' ),
+				'type'        => \Elementor\Controls_Manager::SELECT,
+				'default'     => 'never',
+				'description' => esc_html__( 'Show a sticky purchase button when this button is out of view', 'surecart' ),
+				'options'     => [
+					'never'    => esc_html__( 'Never', 'surecart' ),
+					'in_stock' => esc_html__( 'In Stock', 'surecart' ),
+					'always'   => esc_html__( 'Always', 'surecart' ),
 				],
 			]
 		);
@@ -517,7 +505,7 @@ class AddToCartButton extends \Elementor\Widget_Base {
 	protected function render() {
 		$settings             = $this->get_settings_for_display();
 		$is_add_to_cart       = ! isset( $settings['buy_button_type'] ) || 'yes' !== $settings['buy_button_type'];
-		$show_sticky_purchase = ! empty( $settings['show_sticky_purchase_button'] );
+		$show_sticky_purchase = ! empty( $settings['show_sticky_purchase_button'] ) && 'never' !== $settings['show_sticky_purchase_button'];
 
 		// Enqueue the sticky purchase script if enabled.
 		if ( $show_sticky_purchase ) {
@@ -605,19 +593,32 @@ class AddToCartButton extends \Elementor\Widget_Base {
 		$output = ob_get_clean();
 		echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
-		if ( $show_sticky_purchase ) {
-			add_filter(
-				'surecart_sticky_purchase_enable_out_of_stock',
-				function () use ( $settings ) {
-					return isset( $settings['show_sticky_purchase_on_out_of_stock'] ) && 'yes' === $settings['show_sticky_purchase_on_out_of_stock'];
-				}
-			);
-
-			$template = get_block_template( 'surecart/surecart//sticky-purchase', 'wp_template_part' );
-			if ( $template && ! empty( $template->content ) ) {
-				echo do_blocks( $template->content ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-			}
+		if ( ! $show_sticky_purchase ) {
+			return;
 		}
+
+		// Get the sticky purchase template.
+		$template = get_block_template( 'surecart/surecart//sticky-purchase', 'wp_template_part' );
+
+		// If the template is empty, don't render it.
+		if ( empty( $template ) || empty( $template->content ) ) {
+			return;
+		}
+
+		// Add the show sticky purchase button context to the template.
+		$filter_block_context = static function ( $context ) use ( $settings ) {
+			$context['showStickyPurchaseButton'] = $settings['show_sticky_purchase_button'];
+			return $context;
+		};
+
+		// Add the filter to the template.
+		add_filter( 'render_block_context', $filter_block_context, 1 );
+
+		// Render the template.
+		echo do_blocks( $template->content ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+
+		// Remove the filter from the template.
+		remove_filter( 'render_block_context', $filter_block_context, 1 );
 	}
 
 	/**
