@@ -58,4 +58,4 @@
 	?>
 </div>
 
-<?php require 'sticky-purchase.php'; ?>
+<?php \SureCart::render( 'blocks/sticky-purchase', [ 'settings' => $attributes ] ); ?>
