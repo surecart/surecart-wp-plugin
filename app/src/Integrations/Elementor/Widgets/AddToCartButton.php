@@ -503,14 +503,8 @@ class AddToCartButton extends \Elementor\Widget_Base {
 	 * @return void
 	 */
 	protected function render() {
-		$settings             = $this->get_settings_for_display();
-		$is_add_to_cart       = ! isset( $settings['buy_button_type'] ) || 'yes' !== $settings['buy_button_type'];
-		$show_sticky_purchase = ! empty( $settings['show_sticky_purchase_button'] ) && 'never' !== $settings['show_sticky_purchase_button'];
-
-		// Enqueue the sticky purchase script if enabled.
-		if ( $show_sticky_purchase ) {
-			wp_enqueue_script_module( '@surecart/sticky-purchase' );
-		}
+		$settings       = $this->get_settings_for_display();
+		$is_add_to_cart = ! isset( $settings['buy_button_type'] ) || 'yes' !== $settings['buy_button_type'];
 
 		$this->add_render_attribute( 'wrapper', 'class', 'wp-block-button__link wp-block-surecart-product-elementor-cart-button wp-element-button sc-button__link elementor-button elementor-button-link elementor-size-sm' );
 		$this->add_render_attribute( 'button', 'class', 'elementor-button' );
@@ -562,7 +556,7 @@ class AddToCartButton extends \Elementor\Widget_Base {
 		ob_start();
 		?>
 		<button
-			<?php if ( $show_sticky_purchase ) : ?>
+			<?php if ( ! empty( $settings['show_sticky_purchase_button'] ) && 'never' !== $settings['show_sticky_purchase_button'] ) : ?>
 				<?php $this->add_render_attribute( 'wrapper', 'data-wp-on-async-window--scroll', 'surecart/sticky-purchase::actions.toggleVisibility' ); ?>
 				<?php $this->add_render_attribute( 'wrapper', 'data-wp-on-async-window--resize', 'surecart/sticky-purchase::actions.toggleVisibility' ); ?>
 			<?php endif; ?>

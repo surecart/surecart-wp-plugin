@@ -185,14 +185,8 @@ class BuyButton extends \Bricks\Element {
 	 * @return void
 	 */
 	public function render() {
-		$settings             = $this->settings;
-		$is_buy_now           = isset( $settings['buy_now'] ) ? (bool) $settings['buy_now'] : false;
-		$show_sticky_purchase = isset( $settings['show_sticky_purchase_button'] ) && 'never' !== $settings['show_sticky_purchase_button'];
-
-		// Enqueue the sticky purchase script if enabled.
-		if ( $show_sticky_purchase ) {
-			wp_enqueue_script_module( '@surecart/sticky-purchase' );
-		}
+		$settings   = $this->settings;
+		$is_buy_now = isset( $settings['buy_now'] ) ? (bool) $settings['buy_now'] : false;
 
 		$this->set_attribute( '_root', 'class', 'bricks-button' );
 
