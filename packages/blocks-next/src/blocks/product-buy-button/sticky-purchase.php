@@ -1,7 +1,7 @@
 <?php
 
 // If the sticky purchase button is never, don't render it.
-if ( 'never' === $attributes['show_sticky_purchase_button'] ) {
+if ( empty( $settings['show_sticky_purchase_button'] ) || 'never' === $settings['show_sticky_purchase_button'] ) {
 	return;
 }
 
