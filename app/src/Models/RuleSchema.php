@@ -22,16 +22,12 @@ class RuleSchema extends Model {
 	/**
 	 * Has the product changed?
 	 */
-	protected function getAttributesAttribute() {
-		return $this->attributes ? $this->addWPUserRoleAttribute() : [];
-	}
+	protected function getRuleSchemaAttribute() {
+		if ( empty( $this->attributes ) || empty( $this->attributes['attributes'] ) ) {
+			return [];
+		}
 
-	/**
-	 * Add WP User Role attribute to the rule schema.
-	 *
-	 * @return object
-	 */
-	public function addWPUserRoleAttribute() {
+		// Add wp_user_role attribute.
 		$this->attributes['attributes'][] = (object) [
 			'key'               => 'wp_user_role',
 			'type'              => 'metadata',
@@ -46,6 +42,6 @@ class RuleSchema extends Model {
 			'acceptable_values' => [],
 		];
 
-		return $this->attributes;
+		return $this->attributes['attributes'];
 	}
 }

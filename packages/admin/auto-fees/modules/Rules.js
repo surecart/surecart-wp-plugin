@@ -45,7 +45,7 @@ export default ({ autoFee = {}, onUpdate, loading }) => {
 				}),
 			});
 
-			setRuleSchema(response?.attributes);
+			setRuleSchema(response?.rule_schema);
 			setLoadingRuleSchema(false);
 		} catch (e) {
 			console.error(e);
