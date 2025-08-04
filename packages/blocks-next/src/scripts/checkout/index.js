@@ -267,19 +267,11 @@ const { state, actions } = store('surecart/checkout', {
 		},
 
 		/**
-		 * Get the line item note.
-		 */
-		get lineItemNote() {
-			const { line_item } = getContext();
-			return line_item.note ?? '';
-		},
-
-		/**
 		 * Get the line item note expanded state.
 		 */
 		get showLineItemNoteToggle() {
 			const { line_item } = getContext();
-			if (!line_item || !line_item.note) {
+			if (!line_item?.note) {
 				return false;
 			}
 
@@ -293,32 +285,24 @@ const { state, actions } = store('surecart/checkout', {
 			const { line_item } = getContext();
 			if (!line_item?.id) return false;
 
-			return state.expandedNotes[line_item.id] || false;
+			return state.expandedNotes?.[line_item.id] || false;
 		},
 
 		/**
 		 * Get the line item note button text.
 		 */
 		get lineItemNoteButtonText() {
-			const { line_item } = getContext();
-			const isExpanded = line_item?.id
-				? state.expandedNotes[line_item.id] || false
-				: false;
-
-			return isExpanded ? __('less', 'surecart') : __('more', 'surecart');
+			return state.lineItemNoteExpanded
+				? __('less', 'surecart')
+				: __('more', 'surecart');
 		},
 
 		/**
 		 * Get the line item note button aria label for accessibility.
 		 */
 		get lineItemNoteAriaLabel() {
-			const { line_item } = getContext();
-			const isExpanded = line_item?.id
-				? state.expandedNotes[line_item.id] || false
-				: false;
-
-			return isExpanded 
-				? __('Collapse note', 'surecart') 
+			return state.lineItemNoteExpanded
+				? __('Collapse note', 'surecart')
 				: __('Expand note', 'surecart');
 		},
 
@@ -327,7 +311,7 @@ const { state, actions } = store('surecart/checkout', {
 		 */
 		get lineItemNoteId() {
 			const { line_item } = getContext();
-			return line_item?.id ? `line-item-note-${line_item.id}` : 'line-item-note';
+			return `line-item-note-${line_item?.id}`;
 		},
 	},
 
@@ -468,7 +452,9 @@ const { state, actions } = store('surecart/checkout', {
 			// Toggle the expanded state in our tracked object.
 			state.expandedNotes = {
 				...state.expandedNotes,
-				[line_item.id]: !(state.expandedNotes[line_item.id] || false),
+				[line_item.id]: !(
+					state.expandedNotes?.[line_item?.id] || false
+				),
 			};
 		},
 

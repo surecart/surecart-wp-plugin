@@ -1,11 +1,10 @@
 <div
 	<?php echo wp_kses_data( get_block_wrapper_attributes() ); ?>
-	data-wp-interactive="surecart/checkout"
 >
 	<div
 		class="item__note"
 		data-wp-class--item__note--expanded="state.lineItemNoteExpanded"
-		data-wp-text="state.lineItemNote"
+		data-wp-text="context.line_item.note"
 		data-wp-bind--id="state.lineItemNoteId"
 	></div>
 	<button
