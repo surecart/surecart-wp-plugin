@@ -168,6 +168,7 @@ export const ScProductItemPrice = /*@__PURE__*/createReactComponent<JSX.ScProduc
 export const ScProductItemTitle = /*@__PURE__*/createReactComponent<JSX.ScProductItemTitle, HTMLScProductItemTitleElement>('sc-product-item-title');
 export const ScProductLineItem = /*@__PURE__*/createReactComponent<JSX.ScProductLineItem, HTMLScProductLineItemElement>('sc-product-line-item');
 export const ScProductLineItemNote = /*@__PURE__*/createReactComponent<JSX.ScProductLineItemNote, HTMLScProductLineItemNoteElement>('sc-product-line-item-note');
+export const ScProductNoteInput = /*@__PURE__*/createReactComponent<JSX.ScProductNoteInput, HTMLScProductNoteInputElement>('sc-product-note-input');
 export const ScProductPillsVariantOption = /*@__PURE__*/createReactComponent<JSX.ScProductPillsVariantOption, HTMLScProductPillsVariantOptionElement>('sc-product-pills-variant-option');
 export const ScProductPrice = /*@__PURE__*/createReactComponent<JSX.ScProductPrice, HTMLScProductPriceElement>('sc-product-price');
 export const ScProductPriceChoices = /*@__PURE__*/createReactComponent<JSX.ScProductPriceChoices, HTMLScProductPriceChoicesElement>('sc-product-price-choices');

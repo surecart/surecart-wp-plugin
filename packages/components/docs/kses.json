@@ -1753,6 +1753,22 @@
     "class": true,
     "slot": true
   },
+  "sc-product-note-input": {
+    "errors": true,
+    "help": true,
+    "label": true,
+    "maxlength": true,
+    "name": true,
+    "placeholder": true,
+    "product-id": true,
+    "required": true,
+    "show-label": true,
+    "size": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-product-pills-variant-option": {
     "label": true,
     "option-number": true,

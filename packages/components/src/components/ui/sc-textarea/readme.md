@@ -91,6 +91,7 @@ Type: `Promise<void>`
 ### Used by
 
  - [sc-cancel-survey](../../controllers/dashboard/sc-cancel-survey)
+ - [sc-product-note-input](../../controllers/product/sc-product-note-input)
 
 ### Depends on
 
@@ -102,6 +103,7 @@ graph TD;
   sc-textarea --> sc-form-control
   sc-form-control --> sc-visually-hidden
   sc-cancel-survey --> sc-textarea
+  sc-product-note-input --> sc-textarea
   style sc-textarea fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

@@ -305,6 +305,7 @@ export default [
 					],
 					['surecart/product-quantity'],
 					['surecart/product-selected-price-ad-hoc-amount'],
+					['surecart/product-line-item-note'],
 					[
 						'surecart/product-buy-buttons',
 						{

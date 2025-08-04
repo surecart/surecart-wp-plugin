@@ -1,0 +1,71 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "surecart/product-line-item-note",
+	"title": "Product Line Item Note",
+	"description": "Allow customers to add a note to the product",
+	"version": "1.0.0",
+	"category": "surecart-product-page",
+	"icon": "edit",
+	"ancestor": ["surecart/product-page", "surecart/product-template"],
+	"keywords": ["note", "comment", "message", "product"],
+	"attributes": {
+		"label": {
+			"type": "string",
+			"default": "Note"
+		},
+		"placeholder": {
+			"type": "string",
+			"default": "Add a note (optional)"
+		},
+		"showLabel": {
+			"type": "boolean",
+			"default": true
+		},
+		"help": {
+			"type": "string",
+			"default": ""
+		},
+		"id": {
+			"type": "string"
+		}
+	},
+	"supports": {
+		"interactivity": true,
+		"anchor": true,
+		"typography": {
+			"fontSize": true
+		},
+		"spacing": {
+			"padding": true,
+			"margin": true,
+			"__experimentalDefaultControls": {
+				"padding": true,
+				"margin": true
+			}
+		},
+		"color": {
+			"gradients": false,
+			"background": false,
+			"link": false,
+			"__experimentalDefaultControls": {
+				"background": true,
+				"text": true
+			}
+		},
+		"__experimentalBorder": {
+			"radius": true,
+			"__experimentalDefaultControls": {
+				"radius": true
+			}
+		}
+	},
+	"textdomain": "surecart",
+	"render": "file:./view.php",
+	"editorScript": "file:./index.js",
+	"editorStyle": ["surecart-textarea"],
+	"style": [
+		"surecart-textarea",
+		"file:./style-index.css"
+	]
+}

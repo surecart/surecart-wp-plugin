@@ -1,0 +1,49 @@
+.wp-block-surecart-product-line-item-note {
+	display: block;
+	
+	.sc-form-label {
+		display: block;
+		margin-bottom: 0.5rem;
+		font-weight: 500;
+		color: var(--sc-input-label-color, currentColor);
+	}
+	
+	.sc-textarea {
+		display: block;
+		width: 100%;
+		padding: 0.5rem 0.75rem;
+		font-size: 1rem;
+		line-height: 1.5;
+		color: var(--sc-input-color, currentColor);
+		background-color: var(--sc-input-background-color, #fff);
+		background-clip: padding-box;
+		border: 1px solid var(--sc-input-border-color, #ced4da);
+		border-radius: var(--sc-input-border-radius, 0.25rem);
+		transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+		resize: vertical;
+		
+		&:focus {
+			color: var(--sc-input-color-focus, currentColor);
+			background-color: var(--sc-input-background-color-focus, #fff);
+			border-color: var(--sc-input-border-color-focus, #86b7fe);
+			outline: 0;
+			box-shadow: 0 0 0 0.25rem var(--sc-focus-ring-color-primary, rgba(13, 110, 253, 0.25));
+		}
+		
+		&::placeholder {
+			color: var(--sc-input-placeholder-color, #6c757d);
+		}
+		
+		&:disabled {
+			background-color: var(--sc-input-background-color-disabled, #e9ecef);
+			opacity: 1;
+		}
+	}
+	
+	.sc-help-text {
+		display: block;
+		margin-top: 0.25rem;
+		font-size: 0.875em;
+		color: var(--sc-input-help-text-color, #6c757d);
+	}
+}
