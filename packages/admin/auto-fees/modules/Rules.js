@@ -23,7 +23,6 @@ import {
 } from '@surecart/components-react';
 import Box from '../../ui/Box';
 import OrGroup from './OrGroup';
-import { createEmptyOrGroup } from '../utils/ruleQueryUtils';
 import { SCHEMA_ID } from '../utils/constants';
 
 export default ({ autoFee = {}, onUpdate, loading }) => {
@@ -51,16 +50,15 @@ export default ({ autoFee = {}, onUpdate, loading }) => {
 			console.error(e);
 		}
 	};
-	console.log('ruleSchema', ruleSchema);
 
 	const {
-		rule_string,
 		rule_json = {
 			rule_string: '',
 			schema_id: 'auto_fees__line_item',
 			groups: [],
 		},
 	} = autoFee;
+	console.log(rule_json);
 
 	// Update rule_json whenever changes occur
 	const updateRuleJson = (newRuleJson) => {

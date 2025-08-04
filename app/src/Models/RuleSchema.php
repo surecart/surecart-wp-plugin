@@ -20,7 +20,7 @@ class RuleSchema extends Model {
 	public $object_name = 'rule_schema';
 
 	/**
-	 * Has the product changed?
+	 * Rule Schema.
 	 */
 	protected function getRuleSchemaAttribute() {
 		if ( empty( $this->attributes ) || empty( $this->attributes['attributes'] ) ) {

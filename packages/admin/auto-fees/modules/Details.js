@@ -21,24 +21,17 @@ export default ({ autoFee, onUpdate, loading }) => {
 	);
 
 	useEffect(() => {
+		// Handle adjustment type changes - clear conflicting values
 		if (adjustmentType === 'percentage' && amount_adjustment) {
 			onUpdate({ amount_adjustment: null });
+			return;
 		}
+
 		if (adjustmentType === 'fixed' && percent_adjustment) {
 			onUpdate({ percent_adjustment: null });
+			return;
 		}
-	}, [adjustmentType, amount_adjustment, percent_adjustment, onUpdate]);
-
-	useEffect(() => {
-		// Only auto-set type if no explicit type is set and we have a value
-		if (!adjustmentType) {
-			if (amount_adjustment) {
-				setAdjustmentType('fixed');
-			} else if (percent_adjustment) {
-				setAdjustmentType('percentage');
-			}
-		}
-	}, [amount_adjustment, percent_adjustment, adjustmentType]);
+	}, [adjustmentType, amount_adjustment, percent_adjustment]);
 
 	return (
 		<Box title={__('Auto Fee Details', 'surecart')} loading={loading}>

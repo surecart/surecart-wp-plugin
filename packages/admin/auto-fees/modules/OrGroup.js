@@ -5,7 +5,6 @@ import { css, jsx } from '@emotion/core';
  * External dependencies.
  */
 import { __ } from '@wordpress/i18n';
-import { useState, useEffect } from '@wordpress/element';
 
 /**
  * Internal dependencies.
