@@ -13,5 +13,6 @@
 		rows="<?php echo esc_attr( $attributes['noOfRows'] ?? 2 ); ?>"
 		data-wp-bind--value="context.lineItemNote"
 		data-wp-on--input="callbacks.setLineItemNote"
+		maxlength="500"
 	></textarea>
 </div>
