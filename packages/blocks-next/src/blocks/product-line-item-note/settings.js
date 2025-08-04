@@ -1,9 +1,16 @@
+/**
+ * WordPress dependencies.
+ */
 import { __ } from '@wordpress/i18n';
 import {
 	__experimentalToolsPanel as ToolsPanel,
 	__experimentalToolsPanelItem as ToolsPanelItem,
 	RangeControl,
 } from '@wordpress/components';
+
+/**
+ * Internal dependencies.
+ */
 import { useToolsPanelDropdownMenuProps } from '../utils';
 
 export default function Settings({ attributes, setAttributes }) {

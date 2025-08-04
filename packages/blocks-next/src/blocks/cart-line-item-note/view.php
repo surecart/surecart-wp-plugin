@@ -10,7 +10,7 @@
 	<button
 		type="button"
 		class="item__note-toggle"
-		data-wp-bind--hidden="!state.showLineItemNoteToggle"
+		data-wp-bind--hidden="!state.showLineItemNoteMore"
 		data-wp-on--click="actions.toggleLineItemNote"
 		data-wp-text="state.lineItemNoteButtonText"
 		data-wp-bind--aria-expanded="state.lineItemNoteExpanded"

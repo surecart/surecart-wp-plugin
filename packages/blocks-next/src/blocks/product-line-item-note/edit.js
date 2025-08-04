@@ -51,7 +51,7 @@ export default ({ attributes, setAttributes }) => {
 					className={`sc-form-label ${colorStyle.className}`}
 					aria-label={__('Label text', 'surecart')}
 					placeholder={__('Add label…', 'surecart')}
-					value={label}
+					value={label || __('Note', 'surecart')}
 					onChange={(label) => setAttributes({ label })}
 					withoutInteractiveFormatting
 					allowedFormats={['core/bold', 'core/italic']}
