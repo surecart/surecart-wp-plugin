@@ -11,12 +11,13 @@
 	"keywords": ["note", "comment", "message", "product"],
 	"attributes": {
 		"label": {
-			"type": "string",
-			"default": "Note"
+			"type": "string"
 		},
 		"placeholder": {
-			"type": "string",
-			"default": "Add a note (optional)"
+			"type": "string"
+		},
+		"noOfRows": {
+			"type": "number"
 		}
 	},
 	"supports": {

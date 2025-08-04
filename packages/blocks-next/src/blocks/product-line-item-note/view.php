@@ -10,7 +10,7 @@
 		name="sc_product_note"
 		id="sc_product_note"
 		placeholder="<?php echo esc_attr( $attributes['placeholder'] ?? __( 'Add a note (optional)', 'surecart' ) ); ?>"
-		rows="3"
+		rows="<?php echo esc_attr( $attributes['noOfRows'] ?? 2 ); ?>"
 		data-wp-bind--value="context.lineItemNote"
 		data-wp-on--input="callbacks.setLineItemNote"
 	></textarea>
