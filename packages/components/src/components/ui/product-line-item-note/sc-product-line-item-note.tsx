@@ -29,7 +29,12 @@ export class ScProductLineItemNote {
 
   checkOverflow() {
     if (!this.noteEl) return;
-    this.isOverflowing = this.noteEl.scrollHeight > this.noteEl.clientHeight + 1;
+
+    setTimeout(() => {
+      if (this.noteEl) {
+        this.isOverflowing = this.noteEl.scrollHeight > this.noteEl.clientHeight;
+      }
+    }, 50);
   }
 
   toggle() {
