@@ -11,6 +11,10 @@ import {
 	__experimentalUseBorderProps as useBorderProps,
 	__experimentalUseColorProps as useColorProps,
 } from '@wordpress/block-editor';
+
+/**
+ * Internal dependencies.
+ */
 import Labels from './labels';
 import Settings from './settings';
 

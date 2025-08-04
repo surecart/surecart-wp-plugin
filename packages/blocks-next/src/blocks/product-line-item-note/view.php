@@ -1,5 +1,5 @@
 <div <?php echo wp_kses_data( get_block_wrapper_attributes() ); ?>>
-	<?php if ( ! empty( $attributes['label'] ) && $attributes['label'] ) : ?>
+	<?php if ( ! empty( $attributes['label'] ) ) : ?>
 		<label class="sc-form-label" for="sc_product_note">
 			<?php echo wp_kses_post( $attributes['label'] ); ?>
 		</label>
