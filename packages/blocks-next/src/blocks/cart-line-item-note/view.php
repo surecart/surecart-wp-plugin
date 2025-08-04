@@ -1,1 +1,22 @@
-<div <?php echo wp_kses_data( get_block_wrapper_attributes() ); ?> data-wp-text="state.lineItemNote" data-wp-bind--hidden="!state.lineItemNote"></div>
+<div
+	<?php echo wp_kses_data( get_block_wrapper_attributes() ); ?>
+	data-wp-interactive="surecart/checkout"
+>
+	<div
+		class="item__note"
+		data-wp-class--item__note--expanded="state.lineItemNoteExpanded"
+		data-wp-text="state.lineItemNote"
+		data-wp-bind--id="state.lineItemNoteId"
+	></div>
+	<button
+		type="button"
+		class="item__note-toggle"
+		data-wp-bind--hidden="!state.showLineItemNoteToggle"
+		data-wp-on--click="actions.toggleLineItemNote"
+		data-wp-text="state.lineItemNoteButtonText"
+		data-wp-bind--aria-expanded="state.lineItemNoteExpanded"
+		data-wp-bind--aria-label="state.lineItemNoteAriaLabel"
+		data-wp-bind--aria-controls="state.lineItemNoteId"
+		data-wp-bind--aria-describedby="state.lineItemNoteId"
+	></button>
+</div>

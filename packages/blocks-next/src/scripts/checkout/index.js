@@ -63,6 +63,11 @@ const { state, actions } = store('surecart/checkout', {
 		promotionCode: '',
 
 		/**
+		 * Store for expanded line item notes (keyed by line item ID).
+		 */
+		expandedNotes: {},
+
+		/**
 		 * Current checkout data.
 		 */
 		checkout: {},
@@ -268,6 +273,62 @@ const { state, actions } = store('surecart/checkout', {
 			const { line_item } = getContext();
 			return line_item.note ?? '';
 		},
+
+		/**
+		 * Get the line item note expanded state.
+		 */
+		get showLineItemNoteToggle() {
+			const { line_item } = getContext();
+			if (!line_item || !line_item.note) {
+				return false;
+			}
+
+			return line_item.note.length > 50; // Show toggle if note is longer than 50 characters.
+		},
+
+		/**
+		 * Is the line item note expanded?
+		 */
+		get lineItemNoteExpanded() {
+			const { line_item } = getContext();
+			if (!line_item?.id) return false;
+
+			return state.expandedNotes[line_item.id] || false;
+		},
+
+		/**
+		 * Get the line item note button text.
+		 */
+		get lineItemNoteButtonText() {
+			const { line_item } = getContext();
+			const isExpanded = line_item?.id
+				? state.expandedNotes[line_item.id] || false
+				: false;
+
+			return isExpanded ? __('less', 'surecart') : __('more', 'surecart');
+		},
+
+		/**
+		 * Get the line item note button aria label for accessibility.
+		 */
+		get lineItemNoteAriaLabel() {
+			const { line_item } = getContext();
+			const isExpanded = line_item?.id
+				? state.expandedNotes[line_item.id] || false
+				: false;
+
+			return isExpanded 
+				? __('Collapse note', 'surecart') 
+				: __('Expand note', 'surecart');
+		},
+
+		/**
+		 * Get unique ID for the line item note element.
+		 */
+		get lineItemNoteId() {
+			const { line_item } = getContext();
+			return line_item?.id ? `line-item-note-${line_item.id}` : 'line-item-note';
+		},
 	},
 
 	callbacks: {
@@ -393,6 +454,22 @@ const { state, actions } = store('surecart/checkout', {
 			});
 
 			actions.setCheckout(checkout, mode, formId);
+		},
+
+		/**
+		 * Toggle the line item note expanded state.
+		 */
+		toggleLineItemNote() {
+			const { line_item } = getContext();
+			if (!line_item?.id) {
+				return;
+			}
+
+			// Toggle the expanded state in our tracked object.
+			state.expandedNotes = {
+				...state.expandedNotes,
+				[line_item.id]: !(state.expandedNotes[line_item.id] || false),
+			};
 		},
 
 		/**
@@ -728,11 +805,3 @@ const { state, actions } = store('surecart/checkout', {
 		},
 	},
 });
-
-addEventListener('scCheckoutUpdated', (e) => {
-	// if document has sc-checkout, bail.
-	if (document.querySelector('sc-checkout')) {
-		return;
-	}
-	actions.updateCheckout(e);
-}); // Listen for checkout update on product page only.
