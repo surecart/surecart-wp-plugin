@@ -3142,48 +3142,6 @@ export namespace Components {
     interface ScProductLineItemNote {
         "note": string;
     }
-    interface ScProductNoteInput {
-        /**
-          * Display server-side validation errors.
-         */
-        "errors": any;
-        /**
-          * Help text
-         */
-        "help": string;
-        /**
-          * Input label.
-         */
-        "label": string;
-        /**
-          * Maximum characters allowed
-         */
-        "maxlength": number;
-        /**
-          * Name for the input. Used for validation errors.
-         */
-        "name": string;
-        /**
-          * Placeholder text
-         */
-        "placeholder": string;
-        /**
-          * The product id
-         */
-        "productId": string;
-        /**
-          * Whether the input is required.
-         */
-        "required": boolean;
-        /**
-          * Show the label.
-         */
-        "showLabel": boolean;
-        /**
-          * Size of the control
-         */
-        "size": 'small' | 'medium' | 'large';
-    }
     interface ScProductPillsVariantOption {
         /**
           * Label
@@ -6071,12 +6029,6 @@ declare global {
         prototype: HTMLScProductLineItemNoteElement;
         new (): HTMLScProductLineItemNoteElement;
     };
-    interface HTMLScProductNoteInputElement extends Components.ScProductNoteInput, HTMLStencilElement {
-    }
-    var HTMLScProductNoteInputElement: {
-        prototype: HTMLScProductNoteInputElement;
-        new (): HTMLScProductNoteInputElement;
-    };
     interface HTMLScProductPillsVariantOptionElement extends Components.ScProductPillsVariantOption, HTMLStencilElement {
     }
     var HTMLScProductPillsVariantOptionElement: {
@@ -6939,7 +6891,6 @@ declare global {
         "sc-product-item-title": HTMLScProductItemTitleElement;
         "sc-product-line-item": HTMLScProductLineItemElement;
         "sc-product-line-item-note": HTMLScProductLineItemNoteElement;
-        "sc-product-note-input": HTMLScProductNoteInputElement;
         "sc-product-pills-variant-option": HTMLScProductPillsVariantOptionElement;
         "sc-product-price": HTMLScProductPriceElement;
         "sc-product-price-choices": HTMLScProductPriceChoicesElement;
@@ -10384,48 +10335,6 @@ declare namespace LocalJSX {
     interface ScProductLineItemNote {
         "note"?: string;
     }
-    interface ScProductNoteInput {
-        /**
-          * Display server-side validation errors.
-         */
-        "errors"?: any;
-        /**
-          * Help text
-         */
-        "help"?: string;
-        /**
-          * Input label.
-         */
-        "label"?: string;
-        /**
-          * Maximum characters allowed
-         */
-        "maxlength"?: number;
-        /**
-          * Name for the input. Used for validation errors.
-         */
-        "name"?: string;
-        /**
-          * Placeholder text
-         */
-        "placeholder"?: string;
-        /**
-          * The product id
-         */
-        "productId"?: string;
-        /**
-          * Whether the input is required.
-         */
-        "required"?: boolean;
-        /**
-          * Show the label.
-         */
-        "showLabel"?: boolean;
-        /**
-          * Size of the control
-         */
-        "size"?: 'small' | 'medium' | 'large';
-    }
     interface ScProductPillsVariantOption {
         /**
           * Label
@@ -11760,7 +11669,6 @@ declare namespace LocalJSX {
         "sc-product-item-title": ScProductItemTitle;
         "sc-product-line-item": ScProductLineItem;
         "sc-product-line-item-note": ScProductLineItemNote;
-        "sc-product-note-input": ScProductNoteInput;
         "sc-product-pills-variant-option": ScProductPillsVariantOption;
         "sc-product-price": ScProductPrice;
         "sc-product-price-choices": ScProductPriceChoices;
@@ -12021,7 +11929,6 @@ declare module "@stencil/core" {
             "sc-product-item-title": LocalJSX.ScProductItemTitle & JSXBase.HTMLAttributes<HTMLScProductItemTitleElement>;
             "sc-product-line-item": LocalJSX.ScProductLineItem & JSXBase.HTMLAttributes<HTMLScProductLineItemElement>;
             "sc-product-line-item-note": LocalJSX.ScProductLineItemNote & JSXBase.HTMLAttributes<HTMLScProductLineItemNoteElement>;
-            "sc-product-note-input": LocalJSX.ScProductNoteInput & JSXBase.HTMLAttributes<HTMLScProductNoteInputElement>;
             "sc-product-pills-variant-option": LocalJSX.ScProductPillsVariantOption & JSXBase.HTMLAttributes<HTMLScProductPillsVariantOptionElement>;
             "sc-product-price": LocalJSX.ScProductPrice & JSXBase.HTMLAttributes<HTMLScProductPriceElement>;
             "sc-product-price-choices": LocalJSX.ScProductPriceChoices & JSXBase.HTMLAttributes<HTMLScProductPriceChoicesElement>;

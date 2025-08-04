@@ -1,9 +1,18 @@
 /**
- * WordPress dependencies
+ * WordPress dependencies.
  */
 import { __ } from '@wordpress/i18n';
-import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
-import { PanelBody, PanelRow, TextControl, ToggleControl } from '@wordpress/components';
+import {
+	InspectorControls,
+	RichText,
+	useBlockProps,
+} from '@wordpress/block-editor';
+import {
+	PanelBody,
+	PanelRow,
+	TextControl,
+	ToggleControl,
+} from '@wordpress/components';
 import {
 	__experimentalUseBorderProps as useBorderProps,
 	__experimentalUseColorProps as useColorProps,
@@ -42,14 +51,18 @@ export default ({ attributes, setAttributes }) => {
 						<TextControl
 							label={__('Placeholder', 'surecart')}
 							value={placeholder}
-							onChange={(placeholder) => setAttributes({ placeholder })}
+							onChange={(placeholder) =>
+								setAttributes({ placeholder })
+							}
 						/>
 					</PanelRow>
 					<PanelRow>
 						<ToggleControl
 							label={__('Show Label', 'surecart')}
 							checked={showLabel}
-							onChange={(showLabel) => setAttributes({ showLabel })}
+							onChange={(showLabel) =>
+								setAttributes({ showLabel })
+							}
 						/>
 					</PanelRow>
 					<PanelRow>
@@ -62,9 +75,20 @@ export default ({ attributes, setAttributes }) => {
 				</PanelBody>
 			</InspectorControls>
 			<div {...blockProps}>
-				{showLabel && <label className="sc-form-label">{label}</label>}
+				{showLabel && (
+					<RichText
+						tagName="label"
+						className={`sc-form-label ${colorStyle.className}`}
+						aria-label={__('Label text', 'surecart')}
+						placeholder={__('Add label…', 'surecart')}
+						value={label}
+						onChange={(label) => setAttributes({ label })}
+						withoutInteractiveFormatting
+						allowedFormats={['core/bold', 'core/italic']}
+					/>
+				)}
 				<textarea
-					className="sc-textarea"
+					className="sc-form-control"
 					placeholder={placeholder}
 					rows="3"
 					style={{
@@ -75,7 +99,6 @@ export default ({ attributes, setAttributes }) => {
 							: {}),
 					}}
 				></textarea>
-				{help && <div className="sc-help-text">{help}</div>}
 			</div>
 		</>
 	);

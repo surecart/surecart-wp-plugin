@@ -282,6 +282,7 @@ export function* addLineItem({ checkout, data, live_mode = false }) {
  * Add the checkout line item.
  */
 export function* addCheckoutLineItem(data) {
+	console.log('data', data);
 	const context = getContext();
 	try {
 		checkoutState.loading = true;

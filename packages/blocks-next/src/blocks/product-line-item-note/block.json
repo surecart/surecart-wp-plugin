@@ -17,17 +17,6 @@
 		"placeholder": {
 			"type": "string",
 			"default": "Add a note (optional)"
-		},
-		"showLabel": {
-			"type": "boolean",
-			"default": true
-		},
-		"help": {
-			"type": "string",
-			"default": ""
-		},
-		"id": {
-			"type": "string"
 		}
 	},
 	"supports": {
@@ -64,8 +53,5 @@
 	"render": "file:./view.php",
 	"editorScript": "file:./index.js",
 	"editorStyle": ["surecart-textarea"],
-	"style": [
-		"surecart-textarea",
-		"file:./style-index.css"
-	]
+	"style": ["surecart-textarea", "file:./style-index.css"]
 }
