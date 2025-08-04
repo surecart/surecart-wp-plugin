@@ -587,7 +587,10 @@ class AddToCartButton extends \Elementor\Widget_Base {
 		$output = ob_get_clean();
 		echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
-		require SURECART_PLUGIN_DIR . '/views/blocks/sticky-purchase.php';
+		// Render the sticky purchase button.
+		if ( ! is_admin() ) { // Elementor injects into the content area so we only render it in the frontend.
+			\SureCart::render( 'blocks/sticky-purchase', [ 'settings' => $settings ] );
+		}
 	}
 
 	/**

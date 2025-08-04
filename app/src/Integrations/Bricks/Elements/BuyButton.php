@@ -78,7 +78,7 @@ class BuyButton extends \Bricks\Element {
 			'description' => esc_html__( 'Show a sticky purchase button when this button is out of view', 'surecart' ),
 			'options'     => [
 				'never'    => esc_html__( 'Never', 'surecart' ),
-				'in_stock' => esc_html__( 'In Stock', 'surecart' ),
+				'in_stock' => esc_html__( 'When product selection is in stock.', 'surecart' ),
 				'always'   => esc_html__( 'Always', 'surecart' ),
 			],
 			'inline'      => true,
@@ -281,6 +281,6 @@ class BuyButton extends \Bricks\Element {
 
 		echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
-		require SURECART_PLUGIN_DIR . '/views/blocks/sticky-purchase.php';
+		\SureCart::render( 'blocks/sticky-purchase', [ 'settings' => $settings ] );
 	}
 }
