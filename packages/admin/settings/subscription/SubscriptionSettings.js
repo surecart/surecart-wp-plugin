@@ -241,7 +241,7 @@ export default () => {
 						})
 					}
 					help={__(
-						'The minimum number of days that must pass since the last reminder (or subscription creation if no reminder has been sent) before a new reminder can be sent. This prevents reminders from being sent too frequently across multiple subscription periods.',
+						'Set how long to wait between reminders. For example, 180 days means customers get at most one reminder every 180 days, regardless of renewal frequency.',
 						'surecart'
 					)}
 				>
