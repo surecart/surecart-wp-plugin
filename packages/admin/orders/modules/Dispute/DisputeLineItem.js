@@ -42,7 +42,7 @@ export default ({ order, label, dispute }) => {
 							flex: 1 1 100%;
 						`}
 					>
-						{dispute?.created_at_date_time}
+						{dispute?.created_at_date_time}{' '}
 						<span>
 							(
 							<a

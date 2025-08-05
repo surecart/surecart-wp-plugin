@@ -5,8 +5,10 @@ import { css, jsx } from '@emotion/core';
  * External dependencies.
  */
 import { __ } from '@wordpress/i18n';
-import { ProgressBar } from '@wordpress/components';
+import { Button, ProgressBar } from '@wordpress/components';
 import { useEntityRecords } from '@wordpress/core-data';
+import { external } from '@wordpress/icons';
+import { Icon } from '@wordpress/components';
 
 /**
  * Internal dependencies.
@@ -65,6 +67,13 @@ export default ({ disputeId, onRequestClose }) => {
 		return <ScTag>{status || __('Unknown', 'surecart')}</ScTag>;
 	};
 
+	const getStripeDisputeUrl = (externalDisputeId, liveMode) => {
+		const baseUrl = liveMode
+			? 'https://dashboard.stripe.com/disputes/'
+			: 'https://dashboard.stripe.com/test/disputes/';
+		return baseUrl + externalDisputeId;
+	};
+
 	// get the dispute.
 	const { records: disputes, hasResolved } = useEntityRecords(
 		'surecart',
@@ -101,27 +110,17 @@ export default ({ disputeId, onRequestClose }) => {
 						{__('Status', 'surecart')}
 					</ScTableCell>
 					<ScTableCell slot="head">
-						{__('Reason', 'surecart')}
-					</ScTableCell>
-					<ScTableCell slot="head">
 						{__('Amount', 'surecart')}
 					</ScTableCell>
-					<ScTableCell slot="head" style={{ textAlign: 'right' }}>
+					<ScTableCell slot="head">
 						{__('Date', 'surecart')}
+					</ScTableCell>
+					<ScTableCell slot="head" style={{ textAlign: 'center' }}>
+						{__('View', 'surecart')}
 					</ScTableCell>
 					<ScTableRow>
 						<ScTableCell>
 							{renderDisputeStatusBadge(dispute.status)}
-						</ScTableCell>
-						<ScTableCell>
-							<ScText
-								css={css`
-									color: var(--sc-color-gray-500);
-								`}
-							>
-								{dispute?.reason ||
-									__('Fraudulent', 'surecart')}
-							</ScText>
 						</ScTableCell>
 						<ScTableCell>
 							<sc-format-number
@@ -132,6 +131,23 @@ export default ({ disputeId, onRequestClose }) => {
 						</ScTableCell>
 						<ScTableCell>
 							{dispute.created_at_date_time}
+						</ScTableCell>
+						<ScTableCell style={{ textAlign: 'center' }}>
+							{dispute.external_dispute_id && (
+								<Button
+									variant="tertiary"
+									href={getStripeDisputeUrl(
+										dispute.external_dispute_id,
+										dispute.live_mode
+									)}
+									size="small"
+									label={__('View on Stripe', 'surecart')}
+									target="_blank"
+									rel="noopener noreferrer"
+								>
+									<Icon icon={external} size={16} />
+								</Button>
+							)}
 						</ScTableCell>
 					</ScTableRow>
 				</ScTable>
