@@ -119,42 +119,16 @@ class RequestServiceTest extends SureCartUnitTestCase
 	 * 
 	 * @group request
 	 */
-	public function test_bad_gateway_error_handling() {
-		// setup mocks.
-		$request_cache = \Mockery::mock(\SureCart\Request\RequestCacheService::class);
-		$error_service = \Mockery::mock(\SureCart\Support\Errors\ErrorsService::class);
-		
-		// Mock the translate method to return a WP_Error with bad_gateway message
-		$error_service->shouldReceive('translate')
-			->once()
-			->with(
-				[
-					'code' => 'bad_gateway',
-					'type' => 'bad_gateway', 
-					'http_status' => 'bad_gateway',
-					'message' => 'Charge ch_3Rh3nCCAyH09BTUT1QpGDreU has been charged back; cannot issue a refund.',
-					'validation_errors' => []
-				],
-				502
-			)
-			->andReturn(
-				new \WP_Error(
-					'bad_gateway',
-					'Charge ch_3Rh3nCCAyH09BTUT1QpGDreU has been charged back; cannot issue a refund.',
-					[
-						'status' => 502,
-						'type' => 'bad_gateway',
-						'http_status' => 'bad_gateway'
-					]
-				)
-			);
-		
-		$service = \Mockery::mock( RequestService::class, [[], 'token'] )->makePartial();
-		$service->shouldReceive('cache')->andReturn( $request_cache );
-		$service->shouldReceive('errors')->andReturn( $error_service );
+	public function test_bad_gateway_error_handling() {				
+		// mock the requests in the container with proper container injection and a token
+		$requests =  \Mockery::mock(RequestService::class, [\SureCart::getApplication()->container(), 'test-token', '/v1', true])->makePartial();
+		\SureCart::alias('request', function () use ($requests) {
+			return call_user_func_array([$requests, 'makeRequest'], func_get_args());
+		});
 		
 		// Mock remote request to return bad_gateway response
-		$service->shouldReceive( 'remoteRequest' )
+		$requests
+			->shouldReceive( 'remoteRequest' )
 			->once()
 			->andReturn( [
 				'response' => [
@@ -168,9 +142,9 @@ class RequestServiceTest extends SureCartUnitTestCase
 					'validation_errors' => []
 				])
 			] );
-		
+
 		// Make the request
-		$result = $service->makeUncachedRequest('test');
+		$result = \SureCart\Models\Checkout::update(['id' => 1]);
 		
 		// Assert it's a WP_Error with the correct details
 		$this->assertWPError( $result );
