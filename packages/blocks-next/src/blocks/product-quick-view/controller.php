@@ -1,6 +1,6 @@
 <?php
-$product_id = isset( $_GET['product-quick-view'] ) ? (int) $_GET['product-quick-view'] : null;
-$query      = new WP_Query(
+$product_id     = isset( $_GET['product-quick-view'] ) ? (int) $_GET['product-quick-view'] : null;
+$query          = new WP_Query(
 	[
 		'post__in'  => ! empty( $product_id ) ? [ $product_id ] : [ 0 ], // Ensures no posts are found if null.
 		'post_type' => 'sc_product',
