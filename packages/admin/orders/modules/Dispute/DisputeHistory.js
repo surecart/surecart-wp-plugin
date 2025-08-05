@@ -25,19 +25,23 @@ export default ({ disputeId, onRequestClose }) => {
 		switch (status) {
 			case 'warning_needs_response':
 				return (
-					<ScTag type="warning">{__('Needs Response', 'surecart')}</ScTag>
+					<ScTag type="warning">
+						{__('Needs Response', 'surecart')}
+					</ScTag>
 				);
 			case 'warning_under_review':
 				return (
-					<ScTag type="warning">{__('Under Review', 'surecart')}</ScTag>
+					<ScTag type="warning">
+						{__('Under Review', 'surecart')}
+					</ScTag>
 				);
 			case 'warning_closed':
-				return (
-					<ScTag type="default">{__('Closed', 'surecart')}</ScTag>
-				);
+				return <ScTag type="default">{__('Closed', 'surecart')}</ScTag>;
 			case 'needs_response':
 				return (
-					<ScTag type="danger">{__('Needs Response', 'surecart')}</ScTag>
+					<ScTag type="danger">
+						{__('Needs Response', 'surecart')}
+					</ScTag>
 				);
 			case 'under_review':
 				return (
@@ -45,7 +49,13 @@ export default ({ disputeId, onRequestClose }) => {
 				);
 			case 'charge_refunded':
 				return (
-					<ScTag type="success">{__('Charge Refunded', 'surecart')}</ScTag>
+					<ScTag type="success">
+						{__('Charge Refunded', 'surecart')}
+					</ScTag>
+				);
+			case 'pending':
+				return (
+					<ScTag type="default">{__('Pending', 'surecart')}</ScTag>
 				);
 			case 'won':
 				return <ScTag type="success">{__('Won', 'surecart')}</ScTag>;
@@ -96,7 +106,7 @@ export default ({ disputeId, onRequestClose }) => {
 					<ScTableCell slot="head">
 						{__('Amount', 'surecart')}
 					</ScTableCell>
-					<ScTableCell slot="head">
+					<ScTableCell slot="head" style={{ textAlign: 'right' }}>
 						{__('Date', 'surecart')}
 					</ScTableCell>
 					<ScTableRow>
@@ -109,7 +119,8 @@ export default ({ disputeId, onRequestClose }) => {
 									color: var(--sc-color-gray-500);
 								`}
 							>
-								{dispute?.reason || __('Unknown', 'surecart')}
+								{dispute?.reason ||
+									__('Fraudulent', 'surecart')}
 							</ScText>
 						</ScTableCell>
 						<ScTableCell>
@@ -119,7 +130,9 @@ export default ({ disputeId, onRequestClose }) => {
 								value={dispute?.amount}
 							/>
 						</ScTableCell>
-						<ScTableCell>{dispute.created_at_date}</ScTableCell>
+						<ScTableCell>
+							{dispute.created_at_date_time}
+						</ScTableCell>
 					</ScTableRow>
 				</ScTable>
 

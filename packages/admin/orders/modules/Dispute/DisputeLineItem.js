@@ -4,7 +4,7 @@ import { css, jsx } from '@emotion/core';
 /**
  * External dependencies.
  */
-import { __, sprintf } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
 
 /**
@@ -42,9 +42,7 @@ export default ({ order, label, dispute }) => {
 							flex: 1 1 100%;
 						`}
 					>
-						{dispute?.reason
-							? `${__('Reason: ', 'surecart')} "${dispute?.reason}"`
-							: __('no reason provided', 'surecart')}{' '}
+						{dispute?.created_at_date_time}
 						<span>
 							(
 							<a
