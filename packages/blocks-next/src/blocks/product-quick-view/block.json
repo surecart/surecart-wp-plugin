@@ -7,6 +7,12 @@
 	"version": "1.0.0",
 	"category": "surecart-product-list",
 	"example": {},
+	"attributes": {
+		"alignment": {
+			"type": "string",
+			"default": "bottom right"
+		}
+	},
 	"supports": {
 		"interactivity": true,
 		"color": {

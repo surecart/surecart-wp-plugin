@@ -22,7 +22,7 @@ use SureCart\Models\Blocks\ProductPageBlock;
 		$query->the_post();
 		?>
 			<div 
-				class="sc-product-quick-view-dialog"
+				class="sc-product-quick-view-dialog <?php echo esc_attr( $position_class ); ?>"
 				tabindex="-1"
 				data-wp-on--keydown="callbacks.handleKeyDown"
 				<?php
