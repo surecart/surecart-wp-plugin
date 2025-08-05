@@ -166,17 +166,6 @@ class ErrorsTranslationService {
 	 * @return \WP_Error
 	 */
 	public function translateErrorMessage( $response, $fallback = null ) {
-		// Handle bad_gateway errors - preserve raw message without translation.
-		if ( isset( $response['code'] ) && 'bad_gateway' === $response['code'] ) {
-			return $response['message'] ?? __( 'Payment processor error occurred', 'surecart' );
-		}
-		if ( isset( $response['type'] ) && 'bad_gateway' === $response['type'] ) {
-			return $response['message'] ?? __( 'Payment processor error occurred', 'surecart' );
-		}
-		if ( isset( $response['http_status'] ) && 'bad_gateway' === $response['http_status'] ) {
-			return $response['message'] ?? __( 'Payment processor error occurred', 'surecart' );
-		}
-
 		// translate specific error code.
 		$translated = $this->codeTranslation( $response['code'] ?? '' );
 		if ( $translated ) {
