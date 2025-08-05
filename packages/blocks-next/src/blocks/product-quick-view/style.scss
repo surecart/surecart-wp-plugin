@@ -125,5 +125,9 @@ body.sc-product-quick-view-open {
 	overflow: hidden;
 }
 body.admin-bar .sc-product-quick-view-dialog {
-	margin-top: 62px;
+	&.position-top-left,
+	&.position-top-center,
+	&.position-top-right {
+		top: 32px;
+	}
 }
