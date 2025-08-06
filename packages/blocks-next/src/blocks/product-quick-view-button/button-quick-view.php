@@ -46,3 +46,5 @@
 		</div>
 	</div>
 </div>
+
+<?php \SureCart::block()->quickView()->renderTemplate(); ?>
