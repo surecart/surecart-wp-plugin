@@ -6,7 +6,11 @@
 	"description": "Displays collection selectors for a product.",
 	"version": "1.0.0",
 	"category": "surecart-product-page",
-	"ancestor": ["surecart/product-page", "surecart/product-template"],
+	"ancestor": [
+		"surecart/product-page",
+		"surecart/product-template",
+		"surecart/product-quick-view"
+	],
 	"usesContext": ["postId"],
 	"attributes": {
 		"count": {

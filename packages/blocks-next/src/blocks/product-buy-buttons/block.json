@@ -6,7 +6,11 @@
 	"description": "Displays product buy and add to cart buttons",
 	"category": "surecart-product-page",
 	"keywords": ["button", "buy", "product"],
-	"ancestor": ["surecart/product-page", "surecart/product-template"],
+	"ancestor": [
+		"surecart/product-page",
+		"surecart/product-template",
+		"surecart/product-quick-view"
+	],
 	"supports": {
 		"interactivity": true,
 		"anchor": true,

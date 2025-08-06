@@ -10,7 +10,7 @@
 	"ancestor": [
 		"surecart/product-page",
 		"surecart/product-template",
-		"surecart/sticky-purchase"
+		"surecart/product-quick-view"
 	],
 	"example": {
 		"attributes": {}

@@ -8,7 +8,11 @@
 	"category": "surecart-product-list",
 	"example": {},
 	"usesContext": ["postId"],
-	"ancestor": ["surecart/product-page", "surecart/product-template"],
+	"ancestor": [
+		"surecart/product-page",
+		"surecart/product-template",
+		"surecart/product-quick-view"
+	],
 	"attributes": {
 		"show_range": {
 			"type": "boolean",
