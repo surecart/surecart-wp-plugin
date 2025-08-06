@@ -19,15 +19,8 @@ if ( empty( $gallery ) ) {
 
 if ( ! empty( $attributes['lightbox'] ) ) {
 	wp_enqueue_style( 'surecart-lightbox' );
+	wp_enqueue_script_module( 'surecart/lightbox' );
 }
-
-wp_interactivity_state(
-	'surecart/product-media',
-	array(
-		'loadLightBox'       => $attributes['lightbox'],
-		'loadImageSlider'    => false,
-	)
-);
 
 // handle image.
 if ( count( $gallery ) === 1 ) {
@@ -36,13 +29,7 @@ if ( count( $gallery ) === 1 ) {
 
 // only enqueue if we are needing a slideshow.
 wp_enqueue_style( 'surecart-image-slider' );
-
-wp_interactivity_state(
-	'surecart/product-media',
-	array(
-		'loadImageSlider'    => true,
-	)
-);
+wp_enqueue_script_module( '@surecart/image-slider' );
 
 $auto_height = ! empty( $attributes['desktop_gallery'] ) ? true : ! empty( $attributes['auto_height'] ) && $attributes['auto_height'];
 

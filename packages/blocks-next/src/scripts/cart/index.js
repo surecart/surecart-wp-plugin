@@ -2,9 +2,9 @@
  * WordPress dependencies
  */
 import { store, getElement } from '@wordpress/interactivity';
+const { actions: quickViewActions } = store('surecart/product-quick-view');
 const { state: checkoutState, actions: checkoutActions } =
 	store('surecart/checkout');
-const { actions: quickViewActions } = store('surecart/product-quick-view');
 const { __ } = wp.i18n;
 
 const { state, actions } = store('surecart/cart', {
