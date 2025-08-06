@@ -4,6 +4,7 @@
 import { store, getElement } from '@wordpress/interactivity';
 const { state: checkoutState, actions: checkoutActions } =
 	store('surecart/checkout');
+const { actions: quickViewActions } = store('surecart/product-quick-view');
 const { __ } = wp.i18n;
 
 const { state, actions } = store('surecart/cart', {
@@ -54,6 +55,9 @@ const { state, actions } = store('surecart/cart', {
 
 			// Trigger cart view event.
 			actions.processCartViewEvent(checkoutState?.checkout);
+
+			// close the quick view dialog if it is open.
+			quickViewActions?.close?.();
 		},
 
 		processCartViewEvent: function* (checkout) {

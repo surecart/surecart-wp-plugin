@@ -8,7 +8,6 @@ import { store, getContext, getElement } from '@wordpress/interactivity';
  */
 const { actions: checkoutActions } = store('surecart/checkout');
 const { actions: cartActions, state: cartState } = store('surecart/cart');
-const { actions: quickViewActions } = store('surecart/product-quick-view');
 
 const { addQueryArgs } = wp.url; // TODO: replace with `@wordpress/url` when available.
 const { sprintf, __ } = wp.i18n;
@@ -325,10 +324,7 @@ const { state, actions } = store('surecart/product-page', {
 			);
 
 			// no busy context, toggle cart right away.
-			if (!hasContextBusy) {
-				cartActions.open();
-				quickViewActions.close(); // close the quick view dialog.
-			}
+			!hasContextBusy && cartActions.open();
 
 			const context = getContext();
 			const { mode, formId, product } = context;
@@ -344,10 +340,7 @@ const { state, actions } = store('surecart/product-page', {
 				checkoutActions.setCheckout(checkout, mode, formId);
 
 				// no busy context, wait to toggle cart
-				if (hasContextBusy) {
-					cartActions.open();
-					quickViewActions.close(); // close the quick view dialog.
-				}
+				hasContextBusy && cartActions.open();
 
 				// speak the cart dialog state.
 				cartState.label = sprintf(
