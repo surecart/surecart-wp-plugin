@@ -31,6 +31,7 @@ import {
 import { intervalString } from '../../util/translations';
 import { useInvoice } from '../hooks/useInvoice';
 import LineItemLabel from '../../ui/LineItemLabel';
+import LineItemNote from './LineItemNote';
 
 export default ({
 	price,
@@ -167,8 +168,16 @@ export default ({
 							<ScText
 								css={css`
 									margin-top: var(--sc-spacing-small);
-									color: var(--sc-price-label-color, var(--sc-input-help-text-color));
-									font-size: var(--sc-price-label-font-size, var(--sc-input-help-text-font-size-medium));
+									color: var(
+										--sc-price-label-color,
+										var(--sc-input-help-text-color)
+									);
+									font-size: var(
+										--sc-price-label-font-size,
+										var(
+											--sc-input-help-text-font-size-medium
+										)
+									);
 								`}
 							>
 								{sprintf(
@@ -256,6 +265,13 @@ export default ({
 						</div>
 					)}
 				</div>
+			</ScTableCell>
+			<ScTableCell>
+				<LineItemNote
+					lineItem={lineItem}
+					onChange={onChange}
+					isDraftInvoice={isDraftInvoice}
+				/>
 			</ScTableCell>
 			{isDraftInvoice && (
 				<ScTableCell
