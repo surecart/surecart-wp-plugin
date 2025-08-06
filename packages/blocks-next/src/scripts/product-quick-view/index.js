@@ -103,14 +103,10 @@ const { state, actions } = store('surecart/product-quick-view', {
 				if (isTransitioning) return; // Wait for the transition to finish.
 				state?.openButton?.focus();
 				actions.navigate(event);
-				//remove the event listener to avoid memory leaks.
-				dialog.removeEventListener(
-					'transitionend',
-					handleTransitionEnd
-				);
 			});
 
-			dialog.addEventListener('transitionend', handleTransitionEnd); // Wait for the closing animation to finish before navigating.
+			// Use { once: true } for automatic cleanup to prevent memory leaks
+			dialog.addEventListener('transitionend', handleTransitionEnd, { once: true }); // Wait for the closing animation to finish before navigating.
 
 			state.open = false;
 		},
