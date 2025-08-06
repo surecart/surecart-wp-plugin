@@ -43,7 +43,6 @@
  - [sc-order-bumps](../../controllers/checkout-form/sc-order-bumps)
  - [sc-payment](../../controllers/checkout-form/payment)
  - [sc-phone-input](../phone-input)
- - [sc-product-note-input](../../controllers/product/sc-product-note-input)
  - [sc-product-pills-variant-option](../../controllers/product/sc-product-pills-variant-option)
  - [sc-product-quantity](../../controllers/product/sc-product-quantity)
  - [sc-rich-text](../rich-text)
@@ -69,7 +68,6 @@ graph TD;
   sc-order-bumps --> sc-form-control
   sc-payment --> sc-form-control
   sc-phone-input --> sc-form-control
-  sc-product-note-input --> sc-form-control
   sc-product-pills-variant-option --> sc-form-control
   sc-product-quantity --> sc-form-control
   sc-rich-text --> sc-form-control

@@ -2,7 +2,7 @@
  * WordPress dependencies
  */
 import { registerBlockType } from '@wordpress/blocks';
-import { paragraph as icon } from '@wordpress/icons';
+import { postContent as icon } from '@wordpress/icons';
 
 /**
  * Internal dependencies
@@ -15,6 +15,6 @@ import './style.scss';
  * Every block starts by registering a new block type definition.
  */
 registerBlockType(metadata.name, {
-	edit,
 	icon,
+	edit,
 });

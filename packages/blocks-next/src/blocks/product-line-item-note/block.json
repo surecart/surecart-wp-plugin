@@ -6,12 +6,12 @@
 	"description": "Allow customers to add a note to the product",
 	"version": "1.0.0",
 	"category": "surecart-product-page",
-	"icon": "edit",
 	"ancestor": ["surecart/product-page", "surecart/product-template"],
 	"keywords": ["note", "comment", "message", "product"],
 	"attributes": {
 		"label": {
-			"type": "string"
+			"type": "string",
+			"default": "Note"
 		},
 		"placeholder": {
 			"type": "string"
@@ -53,6 +53,5 @@
 	"textdomain": "surecart",
 	"render": "file:./view.php",
 	"editorScript": "file:./index.js",
-	"editorStyle": ["surecart-textarea"],
-	"style": ["surecart-textarea", "file:./style-index.css"]
+	"style": ["surecart-form-control", "file:./style-index.css"]
 }
