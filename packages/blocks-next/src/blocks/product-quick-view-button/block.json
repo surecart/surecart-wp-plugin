@@ -6,7 +6,11 @@
 	"description": "Display the product quick add button.",
 	"version": "1.0.0",
 	"category": "surecart-product-list",
-	"example": {},
+	"example": {
+		"attributes": {
+			"quickViewButtonType": "both"
+		}
+	},
 	"usesContext": ["postId"],
 	"ancestor": ["surecart/product-template"],
 	"attributes": {
@@ -16,15 +20,15 @@
 		},
 		"iconPosition": {
 			"type": "string",
-			"default": "after"
+			"default": "before"
 		},
 		"label": {
 			"type": "string",
-			"default": "Quick Add"
+			"default": "Add"
 		},
 		"quickViewButtonType": {
 			"type": "string",
-			"default": "icon"
+			"default": "both"
 		},
 		"width": {
 			"type": "number"
