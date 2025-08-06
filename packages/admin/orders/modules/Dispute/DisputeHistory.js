@@ -19,42 +19,11 @@ import {
 	ScTableCell,
 	ScTableRow,
 	ScTag,
-	ScText,
 } from '@surecart/components-react';
 
 export default ({ disputeId, onRequestClose }) => {
 	const renderDisputeStatusBadge = (status) => {
 		switch (status) {
-			case 'warning_needs_response':
-				return (
-					<ScTag type="warning">
-						{__('Needs Response', 'surecart')}
-					</ScTag>
-				);
-			case 'warning_under_review':
-				return (
-					<ScTag type="warning">
-						{__('Under Review', 'surecart')}
-					</ScTag>
-				);
-			case 'warning_closed':
-				return <ScTag type="default">{__('Closed', 'surecart')}</ScTag>;
-			case 'needs_response':
-				return (
-					<ScTag type="danger">
-						{__('Needs Response', 'surecart')}
-					</ScTag>
-				);
-			case 'under_review':
-				return (
-					<ScTag type="info">{__('Under Review', 'surecart')}</ScTag>
-				);
-			case 'charge_refunded':
-				return (
-					<ScTag type="success">
-						{__('Charge Refunded', 'surecart')}
-					</ScTag>
-				);
 			case 'pending':
 				return (
 					<ScTag type="default">{__('Pending', 'surecart')}</ScTag>
@@ -64,14 +33,8 @@ export default ({ disputeId, onRequestClose }) => {
 			case 'lost':
 				return <ScTag type="danger">{__('Lost', 'surecart')}</ScTag>;
 		}
-		return <ScTag>{status || __('Unknown', 'surecart')}</ScTag>;
-	};
 
-	const getStripeDisputeUrl = (externalDisputeId, liveMode) => {
-		const baseUrl = liveMode
-			? 'https://dashboard.stripe.com/disputes/'
-			: 'https://dashboard.stripe.com/test/disputes/';
-		return baseUrl + externalDisputeId;
+		return <ScTag>{status || __('Unknown', 'surecart')}</ScTag>;
 	};
 
 	// get the dispute.
@@ -136,10 +99,7 @@ export default ({ disputeId, onRequestClose }) => {
 							{dispute.external_dispute_id && (
 								<Button
 									variant="tertiary"
-									href={getStripeDisputeUrl(
-										dispute.external_dispute_id,
-										dispute.live_mode
-									)}
+									href={dispute.external_dispute_link}
 									size="small"
 									label={__('View on Stripe', 'surecart')}
 									target="_blank"

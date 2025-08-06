@@ -27,4 +27,19 @@ class Dispute extends Model {
 	 * @var string
 	 */
 	protected $object_name = 'dispute';
+
+	/**
+	 * Get external dispute link.
+	 *
+	 * @return string
+	 */
+	public function getExternalDisputeLinkAttribute(): string {
+		if ( empty( $this->external_dispute_id ) ) {
+			return '';
+		}
+
+		// For now, we're using only Stripe disputes.
+		$base_url = $this->live_mode ? 'https://dashboard.stripe.com/disputes/' : 'https://dashboard.stripe.com/test/disputes/';
+		return $base_url . $this->external_dispute_id;
+	}
 }
