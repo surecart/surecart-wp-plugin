@@ -8,55 +8,92 @@ import {
 } from '@wordpress/block-editor';
 import {
 	AlignmentMatrixControl,
-	PanelBody,
-	PanelRow,
 	__experimentalToolsPanelItem as ToolsPanelItem,
 	__experimentalToolsPanel as ToolsPanel,
+	__experimentalUnitControl as UnitControl,
+	BaseControl,
 } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
-import { useViewportMatch } from '@wordpress/compose';
+import { useToolsPanelDropdownMenuProps } from '../utils';
 
 export default ({ attributes, setAttributes }) => {
-	const { alignment } = attributes;
+	const { alignment, width, height } = attributes;
 	const blockProps = useBlockProps({
-		className: `position-${alignment.replace(' ', '-')}`,
+		className: alignment ? `position-${alignment.replace(' ', '-')}` : '',
+		style: {
+			maxWidth: width || '',
+			height: height || '',
+		},
 	});
 	const innerBlocksProps = useInnerBlocksProps(blockProps);
-	const isMobile = useViewportMatch('medium', '<');
+	const dropdownMenuProps = useToolsPanelDropdownMenuProps();
 
 	return (
 		<>
 			<InspectorControls>
 				<ToolsPanel
-					label={__('Popup', 'surecart')}
+					label={__('Size', 'surecart')}
 					resetAll={() =>
-						setAttributes({ alignment: 'bottom right' })
+						setAttributes({
+							width: null,
+							height: null,
+						})
 					}
-					dropdownMenuProps={
-						isMobile
-							? {}
-							: {
-									popoverProps: {
-										placement: 'left-start',
-										// For non-mobile, inner sidebar width (248px) - button width (24px) - border (1px) + padding (16px) + spacing (20px)
-										offset: 259,
-									},
-							  }
+					dropdownMenuProps={dropdownMenuProps}
+				>
+					<ToolsPanelItem
+						hasValue={() => !!width}
+						label={__('Width', 'surecart')}
+						onDeselect={() => setAttributes({ width: null })}
+					>
+						<UnitControl
+							label={__('Width', 'surecart')}
+							value={width}
+							placeholder={__('500', 'surecart')}
+							onChange={(width) => setAttributes({ width })}
+						/>
+					</ToolsPanelItem>
+					<ToolsPanelItem
+						hasValue={() => !!height}
+						label={__('Height', 'surecart')}
+						onDeselect={() => setAttributes({ height: null })}
+					>
+						<UnitControl
+							label={__('Height', 'surecart')}
+							value={height}
+							placeholder={__('500', 'surecart')}
+							onChange={(height) => setAttributes({ height })}
+						/>
+					</ToolsPanelItem>
+				</ToolsPanel>
+				<ToolsPanel
+					label={__('Position', 'surecart')}
+					resetAll={() =>
+						setAttributes({
+							alignment: undefined,
+						})
 					}
+					dropdownMenuProps={dropdownMenuProps}
 				>
 					<ToolsPanelItem
 						hasValue={() => !!alignment}
-						label={__('Alignment', 'surecart')}
+						label={__('Position', 'surecart')}
 						onDeselect={() =>
-							setAttributes({ alignment: 'bottom right' })
+							setAttributes({ alignment: undefined })
 						}
+						isShownByDefault
 					>
-						<AlignmentMatrixControl
-							value={alignment}
-							onChange={(alignment) => {
-								setAttributes({ alignment });
-							}}
-						/>
+						<BaseControl
+							__nextHasNoMarginBottom
+							label={__('Position', 'surecart')}
+						>
+							<AlignmentMatrixControl
+								value={alignment}
+								onChange={(alignment) => {
+									setAttributes({ alignment });
+								}}
+							/>
+						</BaseControl>
 					</ToolsPanelItem>
 				</ToolsPanel>
 			</InspectorControls>

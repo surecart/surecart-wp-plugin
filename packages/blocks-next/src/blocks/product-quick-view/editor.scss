@@ -1,11 +1,9 @@
 .wp-block-surecart-product-quick-view {
-	width: 75vw;
-	max-width: 1200px;
 	margin: 1em auto !important;
 	border: var(--sc-drawer-border);
 	box-shadow: 0 1px 2px #0d131e1a;
 	overflow: auto;
 	padding: 1em;
-	height: 500px;
-	max-height: 600px;
+	width: calc(100vw - 60px);
+	max-width: 850px;
 }

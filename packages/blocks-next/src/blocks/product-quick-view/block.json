@@ -9,8 +9,13 @@
 	"example": {},
 	"attributes": {
 		"alignment": {
-			"type": "string",
-			"default": "bottom right"
+			"type": "string"
+		},
+		"width": {
+			"type": "string"
+		},
+		"height": {
+			"type": "string"
 		}
 	},
 	"supports": {
@@ -25,7 +30,11 @@
 		},
 		"spacing": {
 			"margin": true,
-			"padding": true
+			"padding": true,
+			"blockGap": true,
+			"__experimentalDefaultControls": {
+				"blockGap": true
+			}
 		},
 		"typography": {
 			"fontSize": true,

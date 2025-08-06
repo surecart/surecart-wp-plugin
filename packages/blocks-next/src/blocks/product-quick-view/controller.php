@@ -9,6 +9,14 @@ $query          = new WP_Query(
 $close_url      = remove_query_arg( 'product-quick-view' );
 $position_class = $attributes['alignment'] ? 'position-' . str_replace( ' ', '-', $attributes['alignment'] ) : '';
 
+$style = '';
+if ( $attributes['height'] ) {
+	$style .= 'height:' . $attributes['height'] . ';';
+}
+if ( $attributes['width'] ) {
+	$style .= 'max-width:' . $attributes['width'] . ';';
+}
+
 // Set the interactivity state for the quick view.
 wp_interactivity_state(
 	'surecart/product-quick-view',
