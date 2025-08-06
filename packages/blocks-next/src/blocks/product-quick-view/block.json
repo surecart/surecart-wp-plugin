@@ -21,6 +21,7 @@
 	"supports": {
 		"interactivity": true,
 		"color": {
+			"__experimentalSkipSerialization": true,
 			"gradients": true,
 			"link": false,
 			"__experimentalDefaultControls": {
@@ -29,6 +30,7 @@
 			}
 		},
 		"spacing": {
+			"__experimentalSkipSerialization": true,
 			"margin": true,
 			"padding": true
 		},

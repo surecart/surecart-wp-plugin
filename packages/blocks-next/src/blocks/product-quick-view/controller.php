@@ -9,7 +9,9 @@ $query          = new WP_Query(
 $close_url      = remove_query_arg( 'product-quick-view' );
 $position_class = $attributes['alignment'] ? 'position-' . str_replace( ' ', '-', $attributes['alignment'] ) : '';
 
-$style = '';
+$styles = sc_get_block_styles();
+$style  = $styles['css'] ?? '';
+
 if ( ! empty( $attributes['height'] ) ) {
 	$style .= 'height:' . $attributes['height'] . ';';
 }
