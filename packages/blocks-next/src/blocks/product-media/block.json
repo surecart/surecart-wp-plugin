@@ -10,8 +10,7 @@
 	"ancestor": [
 		"surecart/product-page",
 		"surecart/product-template",
-		"surecart/upsell",
-		"surecart/product-quick-view"
+		"surecart/upsell"
 	],
 	"usesContext": ["postId"],
 	"supports": {
