@@ -6,15 +6,16 @@
 				get_block_wrapper_attributes(
 					array_filter(
 						[
-							'role'              => 'button',
-							'tabindex'          => '0',
-							'aria-disabled'     => empty( $product->in_stock ) ? 'true' : null,
-							'disabled'          => empty( $product->in_stock ) ? 'true' : null,
-							'aria-label'        => empty( $product->in_stock ) ? __( 'Sold Out', 'surecart' ) : __( 'Add to Cart', 'surecart' ),
+							'role'                => 'button',
+							'tabindex'            => '0',
+							'aria-disabled'       => empty( $product->in_stock ) ? 'true' : null,
+							'disabled'            => empty( $product->in_stock ) ? 'true' : null,
+							'aria-label'          => empty( $product->in_stock ) ? __( 'Sold Out', 'surecart' ) : __( 'Add to Cart', 'surecart' ),
 							'data-wp-class--sc-button__link--busy' => 'context.busy',
-							'style'             => $style,
-							'class'             => 'wp-block-button__link sc-button__link ',
-							'data-wp-on--click' => 'callbacks.handleSubmit',
+							'style'               => $style,
+							'class'               => 'wp-block-button__link sc-button__link ',
+							'data-wp-on--click'   => 'callbacks.handleSubmit',
+							'data-wp-on--keydown' => 'callbacks.handleSubmit',
 						],
 						function ( $value ) {
 							return null !== $value;
