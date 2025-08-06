@@ -197,4 +197,13 @@ class BlockService {
 	public function anchorSupport() {
 		return $this->app->resolve( 'block.support.anchor' );
 	}
+
+	/**
+	 * Get the product quick view service.
+	 *
+	 * @return ProductQuickViewService
+	 */
+	public function quickView() {
+		return $this->app->resolve( 'blocks.quick_view' );
+	}
 }
