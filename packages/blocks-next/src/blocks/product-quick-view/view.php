@@ -86,7 +86,10 @@ use SureCart\Models\Blocks\ProductPageBlock;
 			</div>
 		</div>
 	<?php endwhile; ?>
-	<div class="sc-product-quick-view-overlay" data-wp-on--click="actions.close" data-wp-bind--hidden="surecart/product-list::state.loading"
+	<div class="sc-product-quick-view-overlay" 
+		data-wp-on--click="actions.close" 
+		data-wp-bind--hidden="surecart/product-list::state.loading"
+		aria-hidden="true"
 		<?php
 		echo wp_kses_data(
 			wp_interactivity_data_wp_context(
