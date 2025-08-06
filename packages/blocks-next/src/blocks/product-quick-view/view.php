@@ -25,6 +25,9 @@ use SureCart\Models\Blocks\ProductPageBlock;
 				class="sc-product-quick-view-dialog <?php echo esc_attr( $position_class ); ?>"
 				style="<?php echo esc_attr( $style ); ?>"
 				tabindex="-1"
+				role="dialog"
+				aria-modal="true"
+				aria-label="<?php esc_attr_e( 'Quick view product details', 'surecart' ); ?>"
 				data-wp-on--keydown="callbacks.handleKeyDown"
 				<?php
 				echo wp_kses_data(
