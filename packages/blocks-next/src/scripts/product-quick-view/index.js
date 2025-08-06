@@ -79,7 +79,7 @@ const { state, actions } = store('surecart/product-quick-view', {
 
 			// focus the first focusable element.
 			const firstFocusable = document
-				.querySelector('.sc-product-quick-view-dialog')
+				.querySelector('.wp-block-surecart-product-quick-view')
 				?.querySelector(
 					'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
 				);
@@ -94,21 +94,27 @@ const { state, actions } = store('surecart/product-quick-view', {
 			event?.preventDefault();
 
 			const { ref } = getElement();
-			const dialog = ref
-				?.closest('.wp-block-surecart-product-quick-view')
-				.querySelector('.sc-product-quick-view-dialog');
+			const dialog = ref?.closest(
+				'.wp-block-surecart-product-quick-view'
+			);
 
 			const handleTransitionEnd = withScope((event) => {
 				const isTransitioning = dialog?.getAnimations()?.length > 0;
 				if (isTransitioning) return; // Wait for the transition to finish.
-				state?.openButton?.focus();
+				// navigate to the product page.
 				actions.navigate(event);
+				//remove the event listener to avoid memory leaks.
+				dialog.removeEventListener(
+					'transitionend',
+					handleTransitionEnd
+				);
 			});
 
-			// Use { once: true } for automatic cleanup to prevent memory leaks
-			dialog.addEventListener('transitionend', handleTransitionEnd, { once: true }); // Wait for the closing animation to finish before navigating.
+			dialog.addEventListener('transitionend', handleTransitionEnd); // Wait for the closing animation to finish before navigating.
 
 			state.open = false;
+
+			setTimeout(() => state?.openButton?.focus(), 1);
 		},
 	},
 
