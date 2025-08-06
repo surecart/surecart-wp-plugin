@@ -22,7 +22,7 @@ import Design from './design';
 import Settings from './settings';
 
 export default ({ attributes, setAttributes }) => {
-	const { icon, quickViewButtonType, label, style, width, iconPosition } =
+	const { icon, quick_view_button_type, label, style, width, iconPosition } =
 		attributes;
 
 	const blockProps = useBlockProps({
@@ -34,9 +34,11 @@ export default ({ attributes, setAttributes }) => {
 
 	const renderButton = () => {
 		const showIcon =
-			quickViewButtonType === 'icon' || quickViewButtonType === 'both';
+			quick_view_button_type === 'icon' ||
+			quick_view_button_type === 'both';
 		const showText =
-			quickViewButtonType === 'text' || quickViewButtonType === 'both';
+			quick_view_button_type === 'text' ||
+			quick_view_button_type === 'both';
 
 		return (
 			<>

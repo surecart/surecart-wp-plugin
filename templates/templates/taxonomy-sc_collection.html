@@ -46,7 +46,13 @@
 				style="border-radius:10px;margin-bottom:15px"><span aria-hidden="true"
 					class="wp-block-cover__background has-background-dim-0 has-background-dim"></span>
 				<div class="wp-block-cover__inner-container">
-					<!-- wp:surecart/product-sale-badge {"style":{"typography":{"fontSize":"12px"},"border":{"radius":"100px"}}} /-->
+					<!-- wp:group {"layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"space-between"}} -->
+						<div class="wp-block-group">
+							<!-- wp:surecart/product-quick-view-button {"iconPosition":"before","label":"Add","quick_view_button_type":"both","style":{"typography":{"fontSize":"12px","textAlign":"center"},"spacing":{"padding":{"left":"10px","right":"10px","top":"10px","bottom":"10px"}},"elements":{"link":{"color":{"text":"#37505d"}}},"color":{"text":"#37505d"},"border":{"radius":"100px"}},"backgroundColor":"ast-global-color-5"} /-->
+
+							<!-- wp:surecart/product-sale-badge {"style":{"typography":{"fontSize":"12px"},"border":{"radius":"100px"},"layout":{"selfStretch":"fit","flexSize":null}}} /-->
+						</div>
+					<!-- /wp:group -->
 				</div>
 			</div>
 			<!-- /wp:cover -->

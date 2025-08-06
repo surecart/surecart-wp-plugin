@@ -26,7 +26,7 @@
 			"type": "string",
 			"default": "Add"
 		},
-		"quickViewButtonType": {
+		"quick_view_button_type": {
 			"type": "string",
 			"default": "both"
 		},

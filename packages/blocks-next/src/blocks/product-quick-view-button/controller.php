@@ -1,8 +1,8 @@
 <?php
 $icon               = $attributes['icon'] ?? 'plus';
 $product_id         = $block->context['postId'] ?? null;
-$show_icon          = in_array( $attributes['quickViewButtonType'], [ 'icon', 'both' ], true );
-$show_text          = in_array( $attributes['quickViewButtonType'], [ 'text', 'both' ], true );
+$show_icon          = in_array( $attributes['quick_view_button_type'], [ 'icon', 'both' ], true );
+$show_text          = in_array( $attributes['quick_view_button_type'], [ 'text', 'both' ], true );
 $icon_position      = $attributes['iconPosition'] ?? 'after';
 $label              = $attributes['label'] ?? __( 'Quick Add', 'surecart' );
 $direct_add_to_cart = $attributes['direct_add_to_cart'] ?? true;

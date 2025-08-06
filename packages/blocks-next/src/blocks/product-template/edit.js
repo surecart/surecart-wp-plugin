@@ -150,7 +150,7 @@ const TEMPLATE = [
 				'surecart/product-quick-view-button',
 				{
 					iconPosition: 'before',
-					quickViewButtonType: 'both',
+					quick_view_button_type: 'both',
 					width: 50,
 					style: {
 						border: { radius: '4px' },
