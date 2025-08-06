@@ -40,8 +40,7 @@ class BlockServiceProvider implements ServiceProviderInterface {
 		$container['blocks.quick_view']      = fn () => new ProductQuickViewService();
 		$container['blocks.patterns']        = fn () => new BlockPatternsService( $app );
 		$container['blocks.mode_switcher']   = fn () => new FormModeSwitcherService( $app );
-
-		$container['blocks.validations'] = fn () => new BlockValidationService(
+		$container['blocks.validations']     = fn () => new BlockValidationService(
 			apply_filters(
 				'surecart_block_validators',
 				array(
