@@ -3,7 +3,7 @@
 	"apiVersion": 3,
 	"name": "surecart/product-quick-view",
 	"title": "Product Quick Add",
-	"description": "Display the product quick add.",
+	"description": "Display the product quick add button.",
 	"version": "1.0.0",
 	"category": "surecart-product-list",
 	"example": {},
