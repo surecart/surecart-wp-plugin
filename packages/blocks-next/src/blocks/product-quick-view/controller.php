@@ -10,10 +10,10 @@ $close_url      = remove_query_arg( 'product-quick-view' );
 $position_class = $attributes['alignment'] ? 'position-' . str_replace( ' ', '-', $attributes['alignment'] ) : '';
 
 $style = '';
-if ( $attributes['height'] ) {
+if ( ! empty( $attributes['height'] ) ) {
 	$style .= 'height:' . $attributes['height'] . ';';
 }
-if ( $attributes['width'] ) {
+if ( ! empty( $attributes['width'] ) ) {
 	$style .= 'max-width:' . $attributes['width'] . ';';
 }
 
