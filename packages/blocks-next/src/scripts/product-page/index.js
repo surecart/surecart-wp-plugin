@@ -381,6 +381,10 @@ const { state, actions } = store('surecart/product-page', {
 		 * Handle submit callback.
 		 */
 		*handleSubmit(e) {
+			if (e.type === 'keydown' && e.key !== 'Enter') {
+				return true;
+			}
+
 			e.preventDefault(); // prevent the form from submitting.
 			e.stopPropagation(); // prevent the event from bubbling up.
 
@@ -396,6 +400,7 @@ const { state, actions } = store('surecart/product-page', {
 			if (!e?.submitter?.value) {
 				return yield actions.addToCart(e);
 			}
+
 			// otherwise, redirect to the provided url.
 			return window.location.assign(e.submitter.value);
 		},
