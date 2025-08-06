@@ -33,12 +33,8 @@ export default ({ attributes, setAttributes }) => {
 	});
 
 	const renderButton = () => {
-		const showIcon =
-			quick_view_button_type === 'icon' ||
-			quick_view_button_type === 'both';
-		const showText =
-			quick_view_button_type === 'text' ||
-			quick_view_button_type === 'both';
+		const showIcon = ['icon', 'both'].includes(quick_view_button_type);
+		const showText = ['text', 'both'].includes(quick_view_button_type);
 
 		return (
 			<>
