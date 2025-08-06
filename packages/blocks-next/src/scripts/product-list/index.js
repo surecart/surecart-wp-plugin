@@ -26,7 +26,7 @@ const isValidEvent = (event) =>
 
 let supersedePreviousSearch = null;
 
-export const { state } = store('surecart/product-list', {
+const { state } = store('surecart/product-list', {
 	state: {
 		/** Are we loading */
 		loading: false,
