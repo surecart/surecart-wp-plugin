@@ -58,6 +58,13 @@ class HelpWidget {
 		}}();
 		</script>
 
+		<style>
+			/* Prevent the Gleap feedback button from overlapping WordPress modals */
+			.bb-feedback-button {
+				z-index: 150000 !important;
+			}
+		</style>
+
 		<?php
 		do_action( 'surecart/help_widget/loaded' );
 	}
