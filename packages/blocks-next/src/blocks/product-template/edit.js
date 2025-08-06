@@ -62,8 +62,7 @@ const TEMPLATE = [
 							dimRatio: 0,
 							isUserOverlayColor: true,
 							focalPoint: { x: 0.5, y: 0.5 },
-							contentPosition: 'top right',
-							isDark: false,
+							contentPosition: 'top center',
 							style: {
 								dimensions: { aspectRatio: '3/4' },
 								layout: { selfStretch: 'fit', flexSize: null },
@@ -74,13 +73,61 @@ const TEMPLATE = [
 						},
 						[
 							[
-								'surecart/product-sale-badge',
+								'core/group',
 								{
-									style: {
-										typography: { fontSize: '12px' },
-										border: { radius: '100px' },
+									layout: {
+										type: 'flex',
+										flexWrap: 'nowrap',
+										justifyContent: 'space-between',
 									},
 								},
+								[
+									[
+										'surecart/product-quick-view-button',
+										{
+											style: {
+												typography: {
+													fontSize: '12px',
+													textAlign: 'center',
+												},
+												spacing: {
+													padding: {
+														left: '10px',
+														right: '10px',
+														top: '10px',
+														bottom: '10px',
+													},
+												},
+												elements: {
+													link: {
+														color: {
+															text: '#37505d',
+														},
+													},
+												},
+												color: { text: '#37505d' },
+												border: { radius: '100px' },
+											},
+											backgroundColor:
+												'ast-global-color-5',
+										},
+									],
+									[
+										'surecart/product-sale-badge',
+										{
+											style: {
+												typography: {
+													fontSize: '12px',
+												},
+												border: { radius: '100px' },
+												layout: {
+													selfStretch: 'fit',
+													flexSize: null,
+												},
+											},
+										},
+									],
+								],
 							],
 						],
 					],
@@ -145,30 +192,6 @@ const TEMPLATE = [
 						},
 					],
 				],
-			],
-			[
-				'surecart/product-quick-view-button',
-				{
-					iconPosition: 'before',
-					quick_view_button_type: 'both',
-					width: 50,
-					style: {
-						border: { radius: '4px' },
-						typography: {
-							fontSize: '12px',
-							textAlign: 'center',
-							textTransform: 'uppercase',
-						},
-						spacing: {
-							padding: {
-								left: '12px',
-								right: '12px',
-								top: '12px',
-								bottom: '12px',
-							},
-						},
-					},
-				},
 			],
 		],
 	],
