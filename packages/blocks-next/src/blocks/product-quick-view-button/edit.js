@@ -6,7 +6,6 @@ import {
 	PlainText,
 	InspectorControls,
 } from '@wordpress/block-editor';
-import { PanelBody, ToggleControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import classnames from 'classnames';
 
@@ -14,23 +13,18 @@ import classnames from 'classnames';
  * Internal dependencies
  */
 import ScIcon from '../../components/ScIcon';
-import { ProductQuickViewButtonControls } from './product-quick-view-button-controls';
-import { IconPositionControls } from './icon-position-controls';
-import { WidthSettingsPanel } from './width-settings-panel';
 import { getSpacingPresetCssVar } from '../../../../blocks/util';
 
-export default ({
-	attributes: {
-		icon,
-		quickViewButtonType,
-		label,
-		style,
-		width,
-		iconPosition,
-		direct_add_to_cart,
-	},
-	setAttributes,
-}) => {
+/**
+ * Inspector controls
+ */
+import Design from './design';
+import Settings from './settings';
+
+export default ({ attributes, setAttributes }) => {
+	const { icon, quickViewButtonType, label, style, width, iconPosition } =
+		attributes;
+
 	const blockProps = useBlockProps({
 		style: {
 			gap: getSpacingPresetCssVar(style?.spacing?.blockGap),
@@ -77,38 +71,13 @@ export default ({
 	return (
 		<>
 			<InspectorControls>
-				<PanelBody title={__('Settings')}>
-					<ProductQuickViewButtonControls
-						value={quickViewButtonType}
-						onChange={(value) => {
-							setAttributes({ quickViewButtonType: value });
-						}}
-					/>
-					{'both' === quickViewButtonType && (
-						<IconPositionControls
-							value={iconPosition}
-							onChange={(value) => {
-								setAttributes({ iconPosition: value });
-							}}
-						/>
-					)}
-					<ToggleControl
-						label={__('Direct add to cart', 'surecart')}
-						help={__(
-							'Add the product directly to cart if it has no options.',
-							'surecart'
-						)}
-						checked={direct_add_to_cart}
-						onChange={(value) => {
-							setAttributes({ direct_add_to_cart: value });
-						}}
-					/>
-				</PanelBody>
-				<WidthSettingsPanel
-					selectedWidth={width}
+				<Design attributes={attributes} setAttributes={setAttributes} />
+				<Settings
+					attributes={attributes}
 					setAttributes={setAttributes}
 				/>
 			</InspectorControls>
+
 			<div className="wp-block-buttons">
 				<div
 					className={classnames({
