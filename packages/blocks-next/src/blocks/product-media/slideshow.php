@@ -3,11 +3,11 @@
 	data-wp-class--sc-image-slider="state.active"
 	data-wp-class--sc-image-gallery="!state.active"
 	data-wp-interactive='{ "namespace": "surecart/image-slider" }'
+	data-wp-init="actions.init"
 	data-wp-on-window--resize="actions.init"
 	data-wp-watch="actions.updateSlider"
 	<?php echo wp_kses_data( wp_interactivity_data_wp_context( $slider_options ) ); ?>
-	data-wp-init="surecart/product-media::actions.init"
-	>
+>
 	<div class="swiper" style="height: <?php echo esc_attr( $height ); ?>">
 		<div class="swiper-wrapper" data-wp-interactive='{ "namespace": "surecart/lightbox" }' <?php echo wp_kses_data( wp_interactivity_data_wp_context( [ 'images' => $product->gallery_ids ] ) ); ?>>
 			<?php foreach ( $gallery as $index => $image ) : ?>
