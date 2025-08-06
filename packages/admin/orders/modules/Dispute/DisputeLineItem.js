@@ -10,7 +10,7 @@ import { useState } from '@wordpress/element';
 /**
  * Internal dependencies.
  */
-import { ScFormatNumber, ScLineItem } from '@surecart/components-react';
+import { ScLineItem } from '@surecart/components-react';
 import DisputeHistory from './DisputeHistory';
 
 export default ({ order, label, dispute }) => {
@@ -58,16 +58,9 @@ export default ({ order, label, dispute }) => {
 						</span>
 					</span>
 				</div>
-				<ScFormatNumber
-					slot="price"
-					style={{
-						'font-weight': 'var(--sc-font-weight-semibold)',
-						color: 'var(--sc-color-gray-800)',
-					}}
-					type="currency"
-					currency={dispute?.currency}
-					value={-dispute?.amount}
-				></ScFormatNumber>
+				<span slot="price" css={css` var(--sc-color-gray-800);`}>
+					-{dispute?.display_amount}
+				</span>
 			</ScLineItem>
 
 			{modal === 'dispute_history' && (

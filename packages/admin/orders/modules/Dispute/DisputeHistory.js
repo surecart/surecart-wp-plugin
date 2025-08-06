@@ -85,13 +85,7 @@ export default ({ disputeId, onRequestClose }) => {
 						<ScTableCell>
 							{renderDisputeStatusBadge(dispute.status)}
 						</ScTableCell>
-						<ScTableCell>
-							<sc-format-number
-								type="currency"
-								currency={dispute?.currency}
-								value={dispute?.amount}
-							/>
-						</ScTableCell>
+						<ScTableCell>{dispute?.display_amount}</ScTableCell>
 						<ScTableCell>
 							{dispute.created_at_date_time}
 						</ScTableCell>

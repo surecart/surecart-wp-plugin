@@ -133,22 +133,6 @@ class Charge extends Model {
 	 * @return string
 	 */
 	public function getDisputedDisplayAmountAttribute(): string {
-		if ( empty( $this->disputed_amount ) ) {
-			return '';
-		}
-
-		$disputes = $this->disputes->data ?? [];
-
-		if ( count( $disputes ) > 1 ) {
-			$lost_disputes_amount = array_reduce(
-				array_filter( $disputes, fn( $dispute ) => 'lost' === $dispute->status ),
-				fn( $carry, $dispute ) => $carry + $dispute->amount,
-				0
-			);
-
-			return Currency::format( $lost_disputes_amount, $this->currency );
-		}
-
-		return Currency::format( $this->disputed_amount, $this->currency );
+		return ! empty( $this->disputed_amount ) ? Currency::format( $this->disputed_amount, $this->currency ) : '';
 	}
 }

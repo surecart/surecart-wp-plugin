@@ -5,6 +5,7 @@ namespace SureCart\Models;
 use SureCart\Models\Traits\HasCustomer;
 use SureCart\Models\Traits\HasCharge;
 use SureCart\Models\Traits\HasDates;
+use SureCart\Support\Currency;
 
 /**
  * Dispute model.
@@ -27,6 +28,15 @@ class Dispute extends Model {
 	 * @var string
 	 */
 	protected $object_name = 'dispute';
+
+	/**
+	 * Get the display amount attribute
+	 *
+	 * @return string
+	 */
+	protected function getDisplayAmountAttribute(): string {
+		return Currency::format( $this->amount, $this->currency );
+	}
 
 	/**
 	 * Get external dispute link.
