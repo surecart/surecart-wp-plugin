@@ -254,11 +254,7 @@ export default ({ charge, onRequestClose }) => {
 							{__('Disputed Amount', 'surecart')}
 						</span>
 						<span slot="price">
-							<sc-format-number
-								type="currency"
-								currency={charge?.currency}
-								value={charge?.disputed_amount}
-							/>
+							{charge?.disputed_display_amount}
 						</span>
 					</ScLineItem>
 				)}

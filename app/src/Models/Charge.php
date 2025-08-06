@@ -4,6 +4,7 @@ namespace SureCart\Models;
 
 use SureCart\Models\Traits\HasCustomer;
 use SureCart\Models\Traits\HasDates;
+use SureCart\Models\Traits\HasDisputes;
 use SureCart\Models\Traits\HasOrder;
 use SureCart\Models\Traits\HasPaymentMethod;
 use SureCart\Models\Traits\HasSubscription;
@@ -20,6 +21,7 @@ class Charge extends Model {
 	use HasDates;
 	use HasPaymentMethod;
 	use HasPaymentIntent;
+	use HasDisputes;
 
 	/**
 	 * Rest API endpoint
@@ -103,11 +105,50 @@ class Charge extends Model {
 	}
 
 	/**
-	 * Get the disputed display amount attribute.
+	 * Get the dispute status attribute.
 	 *
 	 * @return string
 	 */
-	public function getDisputedDisplayAmountAttribute() {
+	public function getDisputeStatusAttribute(): string {
+		if ( ! $this->disputed_amount ) {
+			return '';
+		}
+
+		if ( ! empty( $this->disputes->data ) && count( $this->disputes->data ) > 1 ) {
+			return __( 'Multiple Disputes', 'surecart' );
+		}
+
+		$status = $this->disputes->data[0]->status ?? '';
+
+		return sprintf(
+			/* translators: %s: dispute status */
+			__( 'Disputed (%s)', 'surecart' ),
+			$status ? ucfirst( $status ) : __( 'Unknown', 'surecart' )
+		);
+	}
+
+	/**
+	 * Get the disputed amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getDisputedDisplayAmountAttribute(): string {
+		if ( empty( $this->disputed_amount ) ) {
+			return '';
+		}
+
+		$disputes = $this->disputes->data ?? [];
+
+		if ( count( $disputes ) > 1 ) {
+			$lost_disputes_amount = array_reduce(
+				array_filter( $disputes, fn( $dispute ) => 'lost' === $dispute->status ),
+				fn( $carry, $dispute ) => $carry + $dispute->amount,
+				0
+			);
+
+			return Currency::format( $lost_disputes_amount, $this->currency );
+		}
+
 		return Currency::format( $this->disputed_amount, $this->currency );
 	}
 }

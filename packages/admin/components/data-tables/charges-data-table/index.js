@@ -40,7 +40,7 @@ export default ({
 		}
 
 		if (charge?.disputed_amount) {
-			return <sc-tag type="warning">{__('Disputed', 'surecart')}</sc-tag>;
+			return <sc-tag type="warning">{charge?.dispute_status}</sc-tag>;
 		}
 
 		if (charge?.refunded_amount && charge?.refunded_amount) {
@@ -64,28 +64,6 @@ export default ({
 				{__('Refund', 'surecart')}
 			</ScMenuItem>
 		);
-	};
-
-	const getExternalChargeLink = (charge) => {
-		const paymentType = charge?.payment_method?.processor_type;
-
-		if (!['stripe', 'paypal'].includes(paymentType)) return null;
-
-		const externalChargeId = charge?.external_charge_id;
-		const isLiveMode = charge?.live_mode;
-
-		if (!externalChargeId) return null;
-
-		if (paymentType === 'stripe')
-			return `https://dashboard.stripe.com/${
-				!isLiveMode ? 'test/' : ''
-			}charges/${externalChargeId}`;
-
-		if (paymentType === 'paypal') {
-			return `https://www.${
-				!isLiveMode ? 'sandbox.' : ''
-			}paypal.com/activity/payment/${externalChargeId}`;
-		}
 	};
 
 	return (
