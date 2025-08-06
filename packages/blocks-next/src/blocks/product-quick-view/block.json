@@ -30,11 +30,7 @@
 		},
 		"spacing": {
 			"margin": true,
-			"padding": true,
-			"blockGap": true,
-			"__experimentalDefaultControls": {
-				"blockGap": true
-			}
+			"padding": true
 		},
 		"typography": {
 			"fontSize": true,
