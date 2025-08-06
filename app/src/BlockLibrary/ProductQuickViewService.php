@@ -19,7 +19,7 @@ class ProductQuickViewService {
 	 *
 	 * @return void
 	 */
-	public function renderTemplate() {
+	public function render() {
 		// Only render the template once per page load.
 		if ( self::$rendered ) {
 			return;
