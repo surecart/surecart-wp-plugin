@@ -34,6 +34,9 @@ export default ({
 		};
 	});
 
+	const variantOption =
+		item?.variant_option || media?.meta?.sc_variant_option;
+
 	useEffect(() => {
 		return () => {
 			if (videoRef.current) {
@@ -137,7 +140,7 @@ export default ({
 				</ScTag>
 			)}
 
-			{typeof item === 'object' && item?.variant_option && (
+			{variantOption && (
 				<ScTag
 					className="featured-badge"
 					size="small"
@@ -156,7 +159,7 @@ export default ({
 						}
 					`}
 				>
-					{item?.variant_option || media?.meta?.sc_variant_option}
+					{variantOption}
 				</ScTag>
 			)}
 
