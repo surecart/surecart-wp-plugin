@@ -61,7 +61,19 @@ class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 			<div class="sc-video-thumbnail">
 				<img src="<?php echo esc_url( $poster_image ); ?>" alt="<?php echo esc_attr( sprintf( __( 'Video thumbnail for %s', 'surecart' ), $this->item->post_title ?? '' ) ); ?>" >
 				<button type="button" class="sc-video-play-button" aria-label="<?php echo esc_attr__( 'Play video', 'surecart' ); ?>">
-					<?php echo wp_kses( \SureCart::svg()->get( 'play', [ 'class' => '' ] ), sc_allowed_svg_html() ); ?>
+					<?php
+					echo wp_kses(
+						\SureCart::svg()->get(
+							'play',
+							[
+								'width'  => 12,
+								'height' => 12,
+								'class'  => '',
+							]
+						),
+						sc_allowed_svg_html()
+					);
+					?>
 					<span class="screen-reader-text"><?php echo esc_html( sprintf( __( 'Play video: %s', 'surecart' ), $this->item->post_title ?? '' ) ); ?></span>
 				</button>
 			</div>

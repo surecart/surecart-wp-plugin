@@ -8,7 +8,7 @@ import { useEffect, useRef } from '@wordpress/element';
 import { ScSkeleton } from '@surecart/components-react';
 import { isVideo } from '../../../util/attachments';
 
-export default ({ media }) => {
+export default ({ media, settings = {} }) => {
 	const videoRef = useRef(null);
 
 	useEffect(() => {
@@ -38,6 +38,7 @@ export default ({ media }) => {
 					height: 100%;
 					width: 100%;
 					position: relative;
+					aspect-ratio: ${settings?.aspect_ratio || '16/9'};
 
 					.wp-video {
 						width: 100% !important;
@@ -80,11 +81,12 @@ export default ({ media }) => {
 				css={css`
 					max-width: 100%;
 					max-height: 100%;
-					object-fit: contain;
 					display: block;
 					border-radius: var(--sc-border-radius-medium);
 					pointer-events: none;
 					margin: 0 auto;
+					aspect-ratio: ${settings?.aspect_ratio || '3/4'};
+					object-fit: cover;
 				`}
 				alt={media?.alt_text}
 				{...(media?.title?.rendered

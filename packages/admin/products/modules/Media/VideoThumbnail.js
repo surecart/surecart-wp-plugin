@@ -23,18 +23,9 @@ import {
 	ScSkeleton,
 	ScText,
 } from '@surecart/components-react';
-import {
-	generateVideoThumbnail,
-	aspectRatioChoices,
-} from '../../../util/attachments';
+import { generateVideoThumbnail } from '../../../util/attachments';
 
-export default ({
-	thumbnailImage,
-	onThumbnailChange,
-	aspectRatio,
-	onAspectRatioChange,
-	mediaData,
-}) => {
+export default ({ thumbnailImage, onThumbnailChange, mediaData }) => {
 	const [isGeneratingThumbnail, setIsGeneratingThumbnail] = useState(false);
 	const [thumbnailError, setThumbnailError] = useState(null);
 
@@ -278,15 +269,6 @@ export default ({
 					/>
 				)}
 			</ScFormControl>
-
-			<ScSelect
-				label={__('Aspect Ratio', 'surecart')}
-				value={aspectRatio}
-				placement="top-start"
-				placeholder={__('Select aspect ratio', 'surecart')}
-				choices={aspectRatioChoices}
-				onScChange={(e) => onAspectRatioChange(e.target.value)}
-			/>
 		</>
 	);
 };

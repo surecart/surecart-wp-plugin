@@ -24,6 +24,7 @@ import {
 	isVideo,
 	normalizeGalleryItem,
 	transformGalleryItem,
+	aspectRatioChoices,
 } from '../../../util/attachments';
 
 const ALLOWED_MEDIA_TYPES = ['image', 'video'];
@@ -136,6 +137,7 @@ export default ({ media, product, onSave, open, onRequestClose }) => {
 								<>
 									<WordPressMediaFullPreview
 										media={mediaData}
+										settings={formData}
 									/>
 
 									<div
@@ -232,6 +234,23 @@ export default ({ media, product, onSave, open, onRequestClose }) => {
 									/>
 								)}
 
+								<ScSelect
+									label={__('Aspect Ratio', 'surecart')}
+									value={formData.aspect_ratio}
+									placement="top-start"
+									placeholder={__(
+										'Select aspect ratio',
+										'surecart'
+									)}
+									choices={aspectRatioChoices}
+									onScChange={(e) =>
+										updateFormData(
+											'aspect_ratio',
+											e.target.value
+										)
+									}
+								/>
+
 								{isVideo(mediaData) && (
 									<VideoThumbnail
 										thumbnailImage={
@@ -241,13 +260,6 @@ export default ({ media, product, onSave, open, onRequestClose }) => {
 											updateFormData(
 												'thumbnail_image',
 												thumbnail
-											)
-										}
-										aspectRatio={formData.aspect_ratio}
-										onAspectRatioChange={(aspectRatio) =>
-											updateFormData(
-												'aspect_ratio',
-												aspectRatio
 											)
 										}
 										mediaData={mediaData}
