@@ -1,5 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
+import { useEffect, useRef } from '@wordpress/element';
 
 /**
  * Internal dependencies.
@@ -8,6 +9,25 @@ import { ScSkeleton } from '@surecart/components-react';
 import { isVideo } from '../../../util/attachments';
 
 export default ({ media }) => {
+	const videoRef = useRef(null);
+
+	useEffect(() => {
+		if (!isVideo(media) || !videoRef.current || !window.wp?.mediaelement)
+			return;
+
+		let player;
+		try {
+			player = window.wp.mediaelement.initialize(
+				videoRef.current,
+				window._wpmejsSettings
+			);
+		} catch (error) {
+			console.warn('Failed to initialize MediaElement:', error);
+		}
+
+		return () => player?.remove?.();
+	}, [media?.source_url]);
+
 	const renderVideo = () => {
 		return (
 			<div
@@ -18,48 +38,35 @@ export default ({ media }) => {
 					height: 100%;
 					width: 100%;
 					position: relative;
+
+					.wp-video {
+						width: 100% !important;
+						height: auto !important;
+					}
+
+					.mejs-container {
+						overflow: hidden;
+						border-radius: var(--sc-border-radius-medium);
+					}
+
+					.mejs-video {
+						border-radius: var(--sc-border-radius-medium);
+					}
 				`}
 			>
 				<video
-					controls={false}
-					css={css`
-						max-width: 100%;
-						max-height: 100%;
-						object-fit: contain;
-						border-radius: var(--sc-border-radius-medium);
-						pointer-events: none;
-					`}
-					src={media?.source_url}
+					ref={videoRef}
+					className="wp-video-shortcode"
+					controls
 					preload="metadata"
+					width={media?.media_details?.width || 'auto'}
+					height={media?.media_details?.height || 'auto'}
 				>
-					<source type={media?.mime} src={media?.source_url} />
+					<source
+						type={media?.mime_type || media?.mime}
+						src={media?.source_url}
+					/>
 				</video>
-				<div
-					css={css`
-						position: absolute;
-						color: var(--sc-color-white);
-						background-color: rgba(0, 0, 0, 0.5);
-						border-radius: 50%;
-						padding: var(--sc-spacing-small);
-						width: 45px;
-						height: 45px;
-						display: flex;
-						justify-content: center;
-						align-items: center;
-						backdrop-filter: blur(4px);
-
-						&::before {
-							content: '';
-							display: inline-block;
-							width: 0;
-							height: 0;
-							border-left: 18px solid var(--sc-color-white);
-							border-top: 12px solid transparent;
-							border-bottom: 12px solid transparent;
-							margin-left: 2px;
-						}
-					`}
-				/>
 			</div>
 		);
 	};
