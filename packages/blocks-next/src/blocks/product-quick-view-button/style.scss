@@ -16,6 +16,11 @@
 		color: #000000;
 	}
 
+	&.wp-block-button__link:hover {
+		background-color: #000000;
+		color: #ffffff;
+	}
+
 	&.loading {
 		pointer-events: none;
 	}
