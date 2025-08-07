@@ -39,7 +39,7 @@ use SureCart\Models\Blocks\ProductPageBlock;
 				);
 				?>
 			>
-				<div class="sc-product-quick-view-dialog__content">
+				<div class="sc-product-quick-view-dialog__content" style="<?php echo esc_attr( $content_style ); ?>">
 					<?php
 
 					// Get an instance of the current Product Quick view block.

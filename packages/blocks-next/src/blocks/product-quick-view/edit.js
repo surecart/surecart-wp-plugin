@@ -1,10 +1,17 @@
 /**
+ * External dependencies
+ */
+import classnames from 'classnames';
+
+/**
  * WordPress dependencies
  */
 import {
 	useBlockProps,
 	useInnerBlocksProps,
 	InspectorControls,
+	__experimentalUseColorProps as useColorProps,
+	__experimentalGetSpacingClassesAndStyles as useSpacingProps,
 } from '@wordpress/block-editor';
 import {
 	AlignmentMatrixControl,
@@ -18,11 +25,19 @@ import { useToolsPanelDropdownMenuProps } from '../utils';
 
 export default ({ attributes, setAttributes }) => {
 	const { alignment, width, height } = attributes;
+	const colorProps = useColorProps(attributes);
+	const spacingProps = useSpacingProps(attributes);
 	const blockProps = useBlockProps({
-		className: alignment ? `position-${alignment.replace(' ', '-')}` : '',
+		className: classnames(
+			alignment ? `position-${alignment.replace(' ', '-')}` : '',
+			spacingProps.className,
+			colorProps.className
+		),
 		style: {
 			maxWidth: width || '',
 			height: height || '',
+			...spacingProps.style,
+			...colorProps.style,
 		},
 	});
 	const innerBlocksProps = useInnerBlocksProps(blockProps);
