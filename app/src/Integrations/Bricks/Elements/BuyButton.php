@@ -73,12 +73,12 @@ class BuyButton extends \Bricks\Element {
 
 		$this->controls['show_sticky_purchase_button'] = [
 			'tab'         => 'content',
-			'label'       => esc_html__( 'Sticky button', 'surecart' ),
+			'label'       => esc_html__( 'Show sticky button', 'surecart' ),
 			'type'        => 'select',
 			'description' => esc_html__( 'Show a sticky purchase button when this button is out of view', 'surecart' ),
 			'options'     => [
 				'never'    => esc_html__( 'Never', 'surecart' ),
-				'in_stock' => esc_html__( 'When product selection is in stock.', 'surecart' ),
+				'in_stock' => esc_html__( 'In stock', 'surecart' ),
 				'always'   => esc_html__( 'Always', 'surecart' ),
 			],
 			'inline'      => true,

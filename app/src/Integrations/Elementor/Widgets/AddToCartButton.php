@@ -107,7 +107,7 @@ class AddToCartButton extends \Elementor\Widget_Base {
 				'description' => esc_html__( 'Show a sticky purchase button when this button is out of view', 'surecart' ),
 				'options'     => [
 					'never'    => esc_html__( 'Never', 'surecart' ),
-					'in_stock' => esc_html__( 'When product selection is in stock.', 'surecart' ),
+					'in_stock' => esc_html__( 'In stock', 'surecart' ),
 					'always'   => esc_html__( 'Always', 'surecart' ),
 				],
 			]

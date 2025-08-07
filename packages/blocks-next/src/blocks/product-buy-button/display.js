@@ -69,7 +69,7 @@ export default function Display({ attributes, setAttributes, context }) {
 					__nextHasNoMarginBottom
 				>
 					<ToggleGroupControl
-						label={__('Sticky button', 'surecart')}
+						label={__('Show sticky button', 'surecart')}
 						value={show_sticky_purchase_button}
 						onChange={(show_sticky_purchase_button) =>
 							setAttributes({
