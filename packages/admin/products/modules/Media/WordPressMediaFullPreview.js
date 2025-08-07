@@ -58,9 +58,8 @@ export default ({ media }) => {
 					ref={videoRef}
 					className="wp-video-shortcode"
 					controls
+					src={media?.source_url}
 					preload="metadata"
-					width={media?.media_details?.width || 'auto'}
-					height={media?.media_details?.height || 'auto'}
 				>
 					<source
 						type={media?.mime_type || media?.mime}
