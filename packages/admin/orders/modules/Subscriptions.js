@@ -43,7 +43,7 @@ export default ({ checkoutId }) => {
 			columns={{
 				status: {
 					label: __('Status', 'surecart'),
-					width: '100px',
+					width: '150px',
 				},
 				product: {
 					label: __('Product', 'surecart'),
