@@ -89,6 +89,8 @@ const TEMPLATE = [
 												typography: {
 													fontSize: '12px',
 													textAlign: 'center',
+													fontStyle: 'normal',
+													fontWeight: '500',
 												},
 												spacing: {
 													padding: {
@@ -98,18 +100,8 @@ const TEMPLATE = [
 														bottom: '10px',
 													},
 												},
-												elements: {
-													link: {
-														color: {
-															text: '#37505d',
-														},
-													},
-												},
-												color: { text: '#37505d' },
 												border: { radius: '100px' },
 											},
-											backgroundColor:
-												'ast-global-color-5',
 										},
 									],
 									[
