@@ -81,6 +81,156 @@ class ProductLineItemNote extends \Bricks\Element {
 			'max'     => 10,
 			'default' => 2,
 		);
+
+		// Label Style Controls.
+		$this->controls['labelStyleSeparator'] = [
+			'label' => esc_html__( 'Label Style', 'surecart' ),
+			'type'  => 'separator',
+		];
+
+		$this->controls['labelTypography'] = [
+			'label' => esc_html__( 'Typography', 'surecart' ),
+			'type'  => 'typography',
+			'css'   => [
+				[
+					'property' => 'font',
+					'selector' => '.sc-form-label',
+				],
+			],
+		];
+
+		$this->controls['labelColor'] = [
+			'label' => esc_html__( 'Text Color', 'surecart' ),
+			'type'  => 'color',
+			'css'   => [
+				[
+					'property' => 'color',
+					'selector' => '.sc-form-label',
+				],
+			],
+		];
+
+		$this->controls['labelMargin'] = [
+			'label' => esc_html__( 'Margin', 'surecart' ),
+			'type'  => 'spacing',
+			'css'   => [
+				[
+					'property' => 'margin',
+					'selector' => '.sc-form-label',
+				],
+			],
+		];
+
+		// Input Field Style Controls.
+		$this->controls['inputFieldStyleSeparator'] = [
+			'label' => esc_html__( 'Input Field Style', 'surecart' ),
+			'type'  => 'separator',
+		];
+
+		$this->controls['inputFieldTypography'] = [
+			'label' => esc_html__( 'Typography', 'surecart' ),
+			'type'  => 'typography',
+			'css'   => [
+				[
+					'property' => 'font',
+					'selector' => '.sc-form-control',
+				],
+			],
+		];
+
+		$this->controls['inputFieldColor'] = [
+			'label' => esc_html__( 'Text Color', 'surecart' ),
+			'type'  => 'color',
+			'css'   => [
+				[
+					'property' => 'color',
+					'selector' => '.sc-form-control',
+				],
+			],
+		];
+
+		$this->controls['inputFieldBackgroundColor'] = [
+			'label' => esc_html__( 'Background Color', 'surecart' ),
+			'type'  => 'color',
+			'css'   => [
+				[
+					'property' => 'background-color',
+					'selector' => '.sc-form-control',
+				],
+			],
+		];
+
+		$this->controls['inputFieldBorder'] = [
+			'label' => esc_html__( 'Border', 'surecart' ),
+			'type'  => 'border',
+			'css'   => [
+				[
+					'property' => 'border',
+					'selector' => '.sc-form-control',
+				],
+			],
+		];
+
+		$this->controls['inputFieldPadding'] = [
+			'label' => esc_html__( 'Padding', 'surecart' ),
+			'type'  => 'spacing',
+			'css'   => [
+				[
+					'property' => 'padding',
+					'selector' => '.sc-form-control',
+				],
+			],
+		];
+
+		$this->controls['inputFieldMargin'] = [
+			'label' => esc_html__( 'Margin', 'surecart' ),
+			'type'  => 'spacing',
+			'css'   => [
+				[
+					'property' => 'margin',
+					'selector' => '.sc-form-control',
+				],
+			],
+		];
+
+		// Help Text Style Controls.
+		$this->controls['helpTextStyleSeparator'] = [
+			'label' => esc_html__( 'Help Text Style', 'surecart' ),
+			'type'  => 'separator',
+		];
+
+		$this->controls['helpTextTypography'] = [
+			'label' => esc_html__( 'Typography', 'surecart' ),
+			'type'  => 'typography',
+			'css'   => [
+				[
+					'property' => 'font',
+					'selector' => '.sc-help-text',
+				],
+			],
+		];
+
+		$this->controls['helpTextColor'] = [
+			'label' => esc_html__( 'Text Color', 'surecart' ),
+			'type'  => 'color',
+			'css'   => [
+				[
+					'property' => 'color',
+					'selector' => '.sc-help-text',
+				],
+			],
+		];
+
+		$this->controls['helpTextMargin'] = [
+			'label' => esc_html__( 'Margin', 'surecart' ),
+			'type'  => 'spacing',
+			'css'   => [
+				[
+					'property' => 'margin',
+					'selector' => '.sc-help-text',
+				],
+			],
+		];
 	}
 
 	/**
