@@ -6,6 +6,7 @@ import { css, jsx } from '@emotion/core';
  */
 import { __ } from '@wordpress/i18n';
 import { useEffect, useState } from '@wordpress/element';
+import { Tooltip } from '@wordpress/components';
 
 /**
  * Internal dependencies.
@@ -17,27 +18,14 @@ import {
 	ScTextarea,
 } from '@surecart/components-react';
 
-export default ({ lineItem, onChange, isDraftInvoice }) => {
-	const [noteEditing, setNoteEditing] = useState(false);
-	const [noteValue, setNoteValue] = useState(lineItem?.note || '');
+export default function LineItemNote({ lineItem, onChange, isDraftInvoice }) {
+	const [editing, setEditing] = useState(false);
+	const [value, setValue] = useState(lineItem?.note ?? '');
 
-	useEffect(() => {
-		setNoteValue(lineItem?.note || '');
-	}, [lineItem?.note]);
+	useEffect(() => setValue(lineItem?.note ?? ''), [lineItem?.note]);
 
-	const handleNoteSubmit = () => {
-		setNoteEditing(false);
-		onChange({ note: noteValue });
-	};
-
-	const handleNoteCancel = () => {
-		setNoteEditing(false);
-		setNoteValue(lineItem?.note || '');
-	};
-
-	if (!isDraftInvoice) {
-		return <ScProductLineItemNote note={lineItem.note ?? ''} />;
-	}
+	if (!isDraftInvoice)
+		return <ScProductLineItemNote note={lineItem?.note ?? ''} />;
 
 	return (
 		<div
@@ -47,7 +35,7 @@ export default ({ lineItem, onChange, isDraftInvoice }) => {
 				align-items: center;
 			`}
 		>
-			{noteEditing ? (
+			{editing ? (
 				<div
 					css={css`
 						display: flex;
@@ -58,9 +46,9 @@ export default ({ lineItem, onChange, isDraftInvoice }) => {
 				>
 					<ScTextarea
 						autofocus
-						value={noteValue}
+						value={value}
 						placeholder={__('Add a note...', 'surecart')}
-						onScInput={(e) => setNoteValue(e.target.value)}
+						onScInput={(e) => setValue(e.target.value)}
 						rows="2"
 						css={css`
 							font-size: 12px;
@@ -75,76 +63,75 @@ export default ({ lineItem, onChange, isDraftInvoice }) => {
 						<ScButton
 							size="small"
 							type="primary"
-							onClick={handleNoteSubmit}
+							onClick={() => {
+								setEditing(false);
+								onChange({ note: value });
+							}}
 						>
 							{__('Save', 'surecart')}
 						</ScButton>
 						<ScButton
 							size="small"
 							type="text"
-							onClick={handleNoteCancel}
+							onClick={() => {
+								setEditing(false);
+								setValue(lineItem?.note ?? '');
+							}}
 						>
 							{__('Cancel', 'surecart')}
 						</ScButton>
 					</div>
 				</div>
 			) : (
-				<button
-					css={css`
-						cursor: pointer;
-						width: 100%;
-						min-height: 2em;
-						display: flex;
-						align-items: center;
-						padding: 0.25em;
-						border-radius: 4px;
-						border: none;
-						background: transparent;
-						text-align: left;
-						&:hover {
-							background-color: var(--sc-color-gray-50);
-						}
-						&:focus {
-							outline: 2px solid var(--sc-color-primary-500);
-							outline-offset: 2px;
-						}
-					`}
-					onClick={() => setNoteEditing(true)}
-					aria-label={
-						lineItem?.note
-							? __('Edit note', 'surecart')
-							: __('Add note', 'surecart')
+				<Tooltip
+					text={
+						!!value
+							? __('Click to edit note', 'surecart')
+							: __('Click to add note', 'surecart')
 					}
-					type="button"
 				>
-					{lineItem?.note ? (
+					<button
+						css={css`
+							cursor: pointer;
+							width: 100%;
+							min-height: 2em;
+							display: flex;
+							align-items: center;
+							padding: 0.25em;
+							border-radius: 4px;
+							border: none;
+							background: transparent;
+							text-align: left;
+							&:hover {
+								background-color: var(--sc-color-gray-50);
+							}
+							&:focus {
+								outline: 2px solid var(--sc-color-primary-500);
+								outline-offset: 2px;
+							}
+						`}
+						onClick={() => setEditing(true)}
+						aria-label={
+							lineItem?.note
+								? __('Edit note', 'surecart')
+								: __('Add note', 'surecart')
+						}
+						type="button"
+					>
 						<ScText
 							css={css`
 								font-size: 12px;
-								line-height: 1.3;
-								color: var(--sc-input-color);
-								display: -webkit-box;
-								-webkit-line-clamp: 2;
-								-webkit-box-orient: vertical;
-								overflow: hidden;
-								text-overflow: ellipsis;
+								${lineItem?.note
+									? `line-height: 1.3; color: var(--sc-input-color); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;`
+									: `color: var(--sc-input-placeholder-color); font-style: italic;`}
 							`}
 						>
-							{lineItem.note}
+							{lineItem?.note ||
+								__('Add note (optional)', 'surecart')}
 						</ScText>
-					) : (
-						<ScText
-							css={css`
-								font-size: 12px;
-								color: var(--sc-input-placeholder-color);
-								font-style: italic;
-							`}
-						>
-							{__('Add note (optional)', 'surecart')}
-						</ScText>
-					)}
-				</button>
+					</button>
+				</Tooltip>
 			)}
 		</div>
 	);
-};
+}
