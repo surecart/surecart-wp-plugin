@@ -98,7 +98,7 @@ class ProductLineItemNote extends \Elementor\Widget_Base {
 		$this->add_control(
 			'helpText',
 			[
-				'label'       => esc_html__( 'Help Text', 'surecart' ),
+				'label'       => esc_html__( 'Help text', 'surecart' ),
 				'type'        => \Elementor\Controls_Manager::TEXT,
 				'placeholder' => esc_html__( 'Enter help text (optional)', 'surecart' ),
 				'description' => esc_html__( 'Optional text that appears below the note field to provide additional guidance.', 'surecart' ),
@@ -108,7 +108,7 @@ class ProductLineItemNote extends \Elementor\Widget_Base {
 		$this->add_control(
 			'noOfRows',
 			[
-				'label'   => esc_html__( 'Number of Rows', 'surecart' ),
+				'label'   => esc_html__( 'Number of rows', 'surecart' ),
 				'type'    => \Elementor\Controls_Manager::NUMBER,
 				'min'     => 1,
 				'max'     => 10,
@@ -139,7 +139,7 @@ class ProductLineItemNote extends \Elementor\Widget_Base {
 		$this->add_control(
 			'label_text_color',
 			array(
-				'label'     => esc_html__( 'Text Color', 'surecart' ),
+				'label'     => esc_html__( 'Text color', 'surecart' ),
 				'type'      => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
 					$note_selector                     => 'color: {{VALUE}}',
@@ -171,7 +171,7 @@ class ProductLineItemNote extends \Elementor\Widget_Base {
 		$this->start_controls_section(
 			'section_textarea_style',
 			array(
-				'label' => esc_html__( 'Textarea', 'surecart' ),
+				'label' => esc_html__( 'Input field', 'surecart' ),
 				'tab'   => \Elementor\Controls_Manager::TAB_STYLE,
 			)
 		);

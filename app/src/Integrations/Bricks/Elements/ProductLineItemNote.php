@@ -69,13 +69,13 @@ class ProductLineItemNote extends \Bricks\Element {
 		);
 
 		$this->controls['helpText'] = array(
-			'label'       => esc_html__( 'Help Text', 'surecart' ),
+			'label'       => esc_html__( 'Help text', 'surecart' ),
 			'type'        => 'text',
 			'description' => esc_html__( 'Optional text that appears below the note field to provide additional guidance.', 'surecart' ),
 		);
 
 		$this->controls['noOfRows'] = array(
-			'label'   => esc_html__( 'Number of Rows', 'surecart' ),
+			'label'   => esc_html__( 'Number of rows', 'surecart' ),
 			'type'    => 'number',
 			'min'     => 1,
 			'max'     => 10,
@@ -84,7 +84,7 @@ class ProductLineItemNote extends \Bricks\Element {
 
 		// Label Style Controls.
 		$this->controls['labelStyleSeparator'] = [
-			'label' => esc_html__( 'Label Style', 'surecart' ),
+			'label' => esc_html__( 'Label style', 'surecart' ),
 			'type'  => 'separator',
 		];
 
@@ -100,7 +100,7 @@ class ProductLineItemNote extends \Bricks\Element {
 		];
 
 		$this->controls['labelColor'] = [
-			'label' => esc_html__( 'Text Color', 'surecart' ),
+			'label' => esc_html__( 'Text color', 'surecart' ),
 			'type'  => 'color',
 			'css'   => [
 				[
@@ -123,7 +123,7 @@ class ProductLineItemNote extends \Bricks\Element {
 
 		// Input Field Style Controls.
 		$this->controls['inputFieldStyleSeparator'] = [
-			'label' => esc_html__( 'Input Field Style', 'surecart' ),
+			'label' => esc_html__( 'Input field style', 'surecart' ),
 			'type'  => 'separator',
 		];
 
@@ -139,7 +139,7 @@ class ProductLineItemNote extends \Bricks\Element {
 		];
 
 		$this->controls['inputFieldColor'] = [
-			'label' => esc_html__( 'Text Color', 'surecart' ),
+			'label' => esc_html__( 'Text color', 'surecart' ),
 			'type'  => 'color',
 			'css'   => [
 				[
@@ -150,7 +150,7 @@ class ProductLineItemNote extends \Bricks\Element {
 		];
 
 		$this->controls['inputFieldBackgroundColor'] = [
-			'label' => esc_html__( 'Background Color', 'surecart' ),
+			'label' => esc_html__( 'Background color', 'surecart' ),
 			'type'  => 'color',
 			'css'   => [
 				[
@@ -195,7 +195,7 @@ class ProductLineItemNote extends \Bricks\Element {
 
 		// Help Text Style Controls.
 		$this->controls['helpTextStyleSeparator'] = [
-			'label' => esc_html__( 'Help Text Style', 'surecart' ),
+			'label' => esc_html__( 'Help text style', 'surecart' ),
 			'type'  => 'separator',
 		];
 
@@ -211,7 +211,7 @@ class ProductLineItemNote extends \Bricks\Element {
 		];
 
 		$this->controls['helpTextColor'] = [
-			'label' => esc_html__( 'Text Color', 'surecart' ),
+			'label' => esc_html__( 'Text color', 'surecart' ),
 			'type'  => 'color',
 			'css'   => [
 				[

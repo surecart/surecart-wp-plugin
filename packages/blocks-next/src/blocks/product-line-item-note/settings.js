@@ -19,7 +19,7 @@ export default function Settings({ attributes, setAttributes }) {
 
 	return (
 		<ToolsPanel
-			label={__('Textarea Settings', 'surecart')}
+			label={__('Input field', 'surecart')}
 			resetAll={() =>
 				setAttributes({
 					noOfRows: 2,
@@ -28,7 +28,7 @@ export default function Settings({ attributes, setAttributes }) {
 			dropdownMenuProps={dropdownMenuProps}
 		>
 			<ToolsPanelItem
-				label={__('Number of Rows', 'surecart')}
+				label={__('Number of rows', 'surecart')}
 				hasValue={() => noOfRows !== 2}
 				onDeselect={() =>
 					setAttributes({
@@ -38,7 +38,7 @@ export default function Settings({ attributes, setAttributes }) {
 			>
 				<RangeControl
 					__nextHasNoMarginBottom
-					label={__('Number of Rows', 'surecart')}
+					label={__('Number of rows', 'surecart')}
 					value={noOfRows || 2}
 					onChange={(noOfRows) =>
 						setAttributes({ noOfRows: parseInt(noOfRows) })
