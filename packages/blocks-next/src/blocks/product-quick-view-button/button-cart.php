@@ -11,7 +11,7 @@
 							'aria-disabled'       => empty( $product->in_stock ) ? 'true' : null,
 							'disabled'            => empty( $product->in_stock ) ? 'true' : null,
 							'aria-label'          => empty( $product->in_stock ) ? __( 'Sold Out', 'surecart' ) : __( 'Add to Cart', 'surecart' ),
-							'data-wp-class--sc-button__link--busy' => 'context.busy',
+							'data-wp-class--sc-button__link--busy' => 'state.loading',
 							'style'               => $style,
 							'class'               => 'wp-block-button__link sc-button__link ',
 							'data-wp-on--click'   => 'callbacks.handleSubmit',
@@ -25,7 +25,9 @@
 			);
 			?>
 		>
-			<span class="sc-spinner" aria-hidden="true"></span>
+			<?php if ( $show_loading_indicator ) { ?>
+				<span class="sc-spinner" aria-hidden="true"></span>
+			<?php } ?>
 			
 			<?php if ( $show_icon && 'before' === $icon_position ) { ?>
 				<?php

@@ -33,11 +33,10 @@ const { state, actions } = store('surecart/product-quick-view', {
 		*navigate(event) {
 			const { ref } = getElement();
 			const { url } = getContext();
-			const routerRegion = ref.closest('[data-wp-router-region]');
-			if (!routerRegion) return;
 
 			event?.preventDefault();
 
+			state.loading = true;
 			productListState.loading = true;
 
 			const { actions: routerActions } = yield import(
@@ -48,6 +47,7 @@ const { state, actions } = store('surecart/product-quick-view', {
 			yield routerActions.navigate(url, { replace: true });
 
 			productListState.loading = false;
+			state.loading = false;
 		},
 
 		/** Prefetch URL */

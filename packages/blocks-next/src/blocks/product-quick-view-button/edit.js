@@ -22,7 +22,7 @@ import Design from './design';
 import Settings from './settings';
 
 export default ({ attributes, setAttributes }) => {
-	const { icon, quick_view_button_type, label, style, width, iconPosition } =
+	const { icon, quick_view_button_type, label, style, width, icon_position } =
 		attributes;
 
 	const blockProps = useBlockProps({
@@ -38,7 +38,7 @@ export default ({ attributes, setAttributes }) => {
 
 		return (
 			<>
-				{showIcon && 'before' === iconPosition && (
+				{showIcon && 'before' === icon_position && (
 					<ScIcon
 						className="wp-block-surecart-product-quick-view-button__icon"
 						name={icon}
@@ -56,7 +56,7 @@ export default ({ attributes, setAttributes }) => {
 						}
 					/>
 				)}
-				{showIcon && 'after' === iconPosition && (
+				{showIcon && 'after' === icon_position && (
 					<ScIcon
 						className="wp-block-surecart-product-quick-view-button__icon"
 						name={icon}
