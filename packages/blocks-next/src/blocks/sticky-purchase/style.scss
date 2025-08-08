@@ -83,9 +83,6 @@
 	}
 
 	// Compatibility for some theme builders.
-	.wp-block-columns {
-		align-items: center;
-	}
 	.wp-block-group-is-layout-flex:has(
 			> .wp-block-surecart-product-selected-variant-image
 		) {
