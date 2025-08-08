@@ -253,7 +253,7 @@ class ProductLineItemNote extends \Elementor\Widget_Base {
 	 * @return void
 	 */
 	protected function register_help_text_style_settings() {
-		$help_text_selector = '{{WRAPPER}} .wp-block-surecart-product-line-item-note .sc-form-control-help';
+		$help_text_selector = '{{WRAPPER}} .wp-block-surecart-product-line-item-note .sc-help-text';
 
 		$this->start_controls_section(
 			'section_help_text_style',
@@ -337,7 +337,7 @@ class ProductLineItemNote extends \Elementor\Widget_Base {
 				></textarea>
 
 				<?php if ( ! empty( $settings['helpText'] ) ) : ?>
-					<div class="sc-form-control-help">
+					<div class="sc-help-text">
 						<?php echo esc_html( $settings['helpText'] ); ?>
 					</div>
 				<?php endif; ?>
@@ -349,38 +349,6 @@ class ProductLineItemNote extends \Elementor\Widget_Base {
 		?>
 		<div <?php $this->print_render_attribute_string( 'wrapper' ); ?>>
 			<!-- wp:surecart/product-line-item-note { "label" : "<?php echo esc_attr( $settings['label'] ?? '' ); ?>", "placeholder" : "<?php echo esc_attr( $settings['placeholder'] ?? '' ); ?>", "helpText" : "<?php echo esc_attr( $settings['helpText'] ?? '' ); ?>", "noOfRows" : <?php echo esc_attr( $settings['noOfRows'] ?? 2 ); ?>} /-->
-		</div>
-		<?php
-	}
-
-	/**
-	 * Render the widget output on the editor.
-	 *
-	 * @return void
-	 */
-	protected function content_template() {
-		?>
-		<div class="wp-block-surecart-product-line-item-note">
-			<# if ( settings.label ) { #>
-				<label for="sc_product_note" class="sc-form-label">
-					{{{ settings.label }}}
-				</label>
-			<# } #>
-
-			<textarea
-				class="sc-form-control"
-				name="sc_product_note"
-				id="sc_product_note"
-				placeholder="{{{ settings.placeholder || '<?php echo esc_js( __( 'Add a note (optional)', 'surecart' ) ); ?>' }}}"
-				rows="{{{ settings.noOfRows || 2 }}}"
-				maxlength="500"
-			></textarea>
-
-			<# if ( settings.helpText ) { #>
-				<div class="sc-help-text">
-					{{{ settings.helpText }}}
-				</div>
-			<# } #>
 		</div>
 		<?php
 	}
