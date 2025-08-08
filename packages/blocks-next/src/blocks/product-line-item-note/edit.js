@@ -19,7 +19,7 @@ import Labels from './labels';
 import Settings from './settings';
 
 export default ({ attributes, setAttributes }) => {
-	const { label, placeholder, noOfRows } = attributes;
+	const { label, placeholder, helpText, noOfRows } = attributes;
 	const { style: borderStyle } = useBorderProps(attributes);
 	const { style: colorStyle } = useColorProps(attributes);
 
@@ -70,6 +70,7 @@ export default ({ attributes, setAttributes }) => {
 							: {}),
 					}}
 				></textarea>
+				{helpText && <div className="sc-help-text">{helpText}</div>}
 			</div>
 		</>
 	);

@@ -96,6 +96,16 @@ class ProductLineItemNote extends \Elementor\Widget_Base {
 		);
 
 		$this->add_control(
+			'helpText',
+			[
+				'label'       => esc_html__( 'Help Text', 'surecart' ),
+				'type'        => \Elementor\Controls_Manager::TEXT,
+				'placeholder' => esc_html__( 'Enter help text (optional)', 'surecart' ),
+				'description' => esc_html__( 'Optional text that appears below the note field to provide additional guidance.', 'surecart' ),
+			]
+		);
+
+		$this->add_control(
 			'noOfRows',
 			[
 				'label'   => esc_html__( 'Number of Rows', 'surecart' ),
@@ -238,6 +248,57 @@ class ProductLineItemNote extends \Elementor\Widget_Base {
 	}
 
 	/**
+	 * Register the widget help text style settings.
+	 *
+	 * @return void
+	 */
+	protected function register_help_text_style_settings() {
+		$help_text_selector = '{{WRAPPER}} .wp-block-surecart-product-line-item-note .sc-form-control-help';
+
+		$this->start_controls_section(
+			'section_help_text_style',
+			array(
+				'label' => esc_html__( 'Help Text', 'surecart' ),
+				'tab'   => \Elementor\Controls_Manager::TAB_STYLE,
+			)
+		);
+
+		$this->add_control(
+			'help_text_color',
+			array(
+				'label'     => esc_html__( 'Text Color', 'surecart' ),
+				'type'      => \Elementor\Controls_Manager::COLOR,
+				'selectors' => [
+					$help_text_selector => 'color: {{VALUE}}',
+				],
+			)
+		);
+
+		$this->add_group_control(
+			\Elementor\Group_Control_Typography::get_type(),
+			array(
+				'name'     => 'help_text_typography',
+				'label'    => esc_html__( 'Typography', 'surecart' ),
+				'selector' => $help_text_selector,
+			)
+		);
+
+		$this->add_responsive_control(
+			'help_text_margin',
+			[
+				'label'      => esc_html__( 'Margin', 'surecart' ),
+				'type'       => \Elementor\Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%', 'em', 'rem', 'custom' ],
+				'selectors'  => [
+					$help_text_selector => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+			]
+		);
+
+		$this->end_controls_section();
+	}
+
+	/**
 	 * Register the widget controls.
 	 *
 	 * @return void
@@ -246,6 +307,7 @@ class ProductLineItemNote extends \Elementor\Widget_Base {
 		$this->register_content_settings();
 		$this->register_label_style_settings();
 		$this->register_textarea_style_settings();
+		$this->register_help_text_style_settings();
 	}
 
 	/**
@@ -273,6 +335,12 @@ class ProductLineItemNote extends \Elementor\Widget_Base {
 					rows="<?php echo esc_attr( $settings['noOfRows'] ?? 2 ); ?>"
 					maxlength="500"
 				></textarea>
+
+				<?php if ( ! empty( $settings['helpText'] ) ) : ?>
+					<div class="sc-form-control-help">
+						<?php echo esc_html( $settings['helpText'] ); ?>
+					</div>
+				<?php endif; ?>
 			</div>
 			<?php
 			return;
@@ -280,7 +348,7 @@ class ProductLineItemNote extends \Elementor\Widget_Base {
 
 		?>
 		<div <?php $this->print_render_attribute_string( 'wrapper' ); ?>>
-			<!-- wp:surecart/product-line-item-note { "label" : "<?php echo esc_attr( $settings['label'] ?? '' ); ?>", "placeholder" : "<?php echo esc_attr( $settings['placeholder'] ?? '' ); ?>", "noOfRows" : <?php echo esc_attr( $settings['noOfRows'] ?? 2 ); ?>} /-->
+			<!-- wp:surecart/product-line-item-note { "label" : "<?php echo esc_attr( $settings['label'] ?? '' ); ?>", "placeholder" : "<?php echo esc_attr( $settings['placeholder'] ?? '' ); ?>", "helpText" : "<?php echo esc_attr( $settings['helpText'] ?? '' ); ?>", "noOfRows" : <?php echo esc_attr( $settings['noOfRows'] ?? 2 ); ?>} /-->
 		</div>
 		<?php
 	}
@@ -307,6 +375,12 @@ class ProductLineItemNote extends \Elementor\Widget_Base {
 				rows="{{{ settings.noOfRows || 2 }}}"
 				maxlength="500"
 			></textarea>
+
+			<# if ( settings.helpText ) { #>
+				<div class="sc-help-text">
+					{{{ settings.helpText }}}
+				</div>
+			<# } #>
 		</div>
 		<?php
 	}

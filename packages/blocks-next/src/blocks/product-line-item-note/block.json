@@ -16,6 +16,9 @@
 		"placeholder": {
 			"type": "string"
 		},
+		"helpText": {
+			"type": "string"
+		},
 		"noOfRows": {
 			"type": "number"
 		}

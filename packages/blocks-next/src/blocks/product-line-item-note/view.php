@@ -15,4 +15,10 @@
 		data-wp-on--input="callbacks.setLineItemNote"
 		maxlength="500"
 	></textarea>
+
+	<?php if ( ! empty( $attributes['helpText'] ) ) : ?>
+		<div class="sc-help-text">
+			<?php echo wp_kses_post( $attributes['helpText'] ); ?>
+		</div>
+	<?php endif; ?>
 </div>
