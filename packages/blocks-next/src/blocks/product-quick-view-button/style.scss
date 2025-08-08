@@ -12,13 +12,15 @@
 		display: flex;
 		align-items: center;
 		width: max-content;
-		background-color: #ffffff;
-		color: #000000;
+		background-color: var(--sc-color-primary-500);
+		color: var(--sc-color-white);
+		transition: background-color var(--sc-transition-fast) ease,
+			color var(--sc-transition-fast) ease;
 	}
 
 	&.wp-block-button__link:hover {
-		background-color: #000000;
-		color: #ffffff;
+		background-color: var(--sc-color-primary-500);
+		color: var(--sc-color-white);
 	}
 
 	&.loading {
