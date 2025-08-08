@@ -52,7 +52,7 @@
 	}
 
 	.wp-block-surecart-product-buy-button {
-		min-width: 80px;
+		min-width: max-content;
 	}
 
 	.wp-block-surecart-product-selected-variant-image {
@@ -90,6 +90,11 @@
 			> .wp-block-surecart-product-selected-variant-image
 		) {
 		gap: var(--sc-spacing-large);
+	}
+
+	/** Fix for if themes dequeue default wordpress global styles */
+	.is-vertically-aligned-center {
+		align-items: center;
 	}
 }
 
