@@ -8,7 +8,7 @@
 	"category": "surecart-product-list",
 	"example": {
 		"attributes": {
-			"quickViewButtonType": "both"
+			"quick_view_button_type": "both"
 		}
 	},
 	"usesContext": ["postId"],
