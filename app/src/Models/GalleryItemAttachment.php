@@ -151,7 +151,11 @@ class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 		// add inline styles.
 		if ( ! empty( $attr['style'] ) ) {
 			if ( $has_image && ! empty( $attr['style'] ) ) {
-				$tags->set_attribute( 'style', $attr['style'] );
+				$style        = $attr['style'] ?? '';
+				$aspect_ratio = $this->getMetadata( 'aspect_ratio' );
+				$style       .= ! empty( $aspect_ratio ) ? 'aspect-ratio: ' . esc_attr( $aspect_ratio ) . ';' : '';
+
+				$tags->set_attribute( 'style', $style );
 			}
 		}
 

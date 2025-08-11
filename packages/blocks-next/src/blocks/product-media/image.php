@@ -12,12 +12,16 @@
 	?>
 >
 	<?php
+	$style        = ! empty( $width ) ? 'max-width: min(' . esc_attr( $width ) . ', 100%);' : '';
+	$aspect_ratio = $featured_image->getMetadata( 'aspect_ratio' );
+	$style       .= ! empty( $aspect_ratio ) ? 'aspect-ratio: ' . esc_attr( $aspect_ratio ) . ';' : '';
+
 	echo wp_kses(
 		$featured_image->withLightbox( $is_video_featured ? false : $attributes['lightbox'] )->html(
 			'large',
 			array(
 				'loading' => 'eager',
-				'style'   => ! empty( $width ) ? 'max-width: min(' . esc_attr( $width ) . ', 100%)' : '',
+				'style'   => $style,
 			)
 		),
 		sc_allowed_svg_html()
