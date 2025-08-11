@@ -314,11 +314,10 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 == Changelog ==
 
 = 3.12.0 - August 11th, 2025 =
-- New: Enhanced Stripe payment element with customizable address field visibility options.
 - New: Delete affiliation functionality for better affiliate management.
-- Improvement: Export customer details component for advanced CSS customization capabilities.
-- Improvement: Display affiliate agency status in affiliation details page.
-- Fix: Resolved cart line item image display issues.
+- Improvement: Added javascript filter to customize Stripe payment element options.
+- Improvement: Export customer details css to allow for css customizations.
+- Fix: Resolved cart line item image display issues in some cases.
 
 = 3.11.0 - July 30th, 2025 =
 - New: Updated cart design and customization options.
