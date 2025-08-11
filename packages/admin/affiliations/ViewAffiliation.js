@@ -11,6 +11,7 @@ import { store as noticesStore } from '@wordpress/notices';
 import { store as coreStore } from '@wordpress/core-data';
 import { useState } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
+import { addQueryArgs } from '@wordpress/url';
 
 /**
  * Internal dependencies.
@@ -23,6 +24,7 @@ import {
 	ScFlex,
 	ScIcon,
 	ScMenu,
+	ScMenuDivider,
 	ScMenuItem,
 } from '@surecart/components-react';
 import useSave from '../settings/UseSave';
@@ -44,7 +46,8 @@ export default ({ id }) => {
 	const [modal, setModal] = useState(false);
 	const [error, setError] = useState(null);
 	const { createSuccessNotice } = useDispatch(noticesStore);
-	const { editEntityRecord, receiveEntityRecords } = useDispatch(coreStore);
+	const { editEntityRecord, receiveEntityRecords, deleteEntityRecord } =
+		useDispatch(coreStore);
 
 	const { affiliation, hasLoadedAffiliation } = useSelect(
 		(select) => {
@@ -160,6 +163,37 @@ export default ({ id }) => {
 		}
 	};
 
+	/**
+	 * Delete the affiliation.
+	 */
+	const onDelete = async () => {
+		try {
+			setLoading(true);
+			setError(null);
+
+			await deleteEntityRecord('surecart', 'affiliation', id, undefined, {
+				throwOnError: true,
+			});
+
+			createSuccessNotice(
+				__('Affiliate deleted successfully.', 'surecart'),
+				{
+					type: 'snackbar',
+				}
+			);
+
+			// Redirect to affiliates list page after successful deletion
+			window.location.href = addQueryArgs('admin.php', {
+				page: 'sc-affiliates',
+			});
+		} catch (e) {
+			console.error(e);
+			setError(e);
+		} finally {
+			setLoading(false);
+		}
+	};
+
 	const updateAffiliation = (data) =>
 		editEntityRecord('surecart', 'affiliation', id, data);
 
@@ -236,6 +270,17 @@ export default ({ id }) => {
 									{__('Deactivate', 'surecart')}
 								</ScMenuItem>
 							)}
+
+							<ScMenuDivider />
+
+							<ScMenuItem onClick={() => setModal('delete')}>
+								<ScIcon
+									slot="prefix"
+									style={{ opacity: 0.65 }}
+									name="trash"
+								/>
+								{__('Delete', 'surecart')}
+							</ScMenuItem>
 						</ScMenu>
 					</ScDropdown>
 				</div>
@@ -289,6 +334,20 @@ export default ({ id }) => {
 			>
 				{__(
 					'Are you sure you want to deactivate the affiliate?',
+					'surecart'
+				)}
+			</ConfirmDialog>
+
+			<ConfirmDialog
+				isOpen={'delete' === modal}
+				onConfirm={() => {
+					onDelete();
+					setModal(false);
+				}}
+				onCancel={() => setModal(false)}
+			>
+				{__(
+					'Are you sure you want to delete this affiliate? This action cannot be undone.',
 					'surecart'
 				)}
 			</ConfirmDialog>
