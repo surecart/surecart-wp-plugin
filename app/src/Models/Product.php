@@ -957,7 +957,7 @@ class Product extends Model implements PageModel {
 
 						return null;
 					},
-					$this->gallery_ids
+					$this->gallery_ids ?? []
 				),
 				function ( $item ) {
 					// it must have a src at least.
