@@ -72,7 +72,7 @@ export default ({
 				</ScInput>
 			) : (
 				<ScPriceInput
-					currencyCode={scData?.currency_code}
+					currencyCode={scData?.currency_code || scData?.currency}
 					disabled={commisionType === 'percentage'}
 					attribute="amount_commission"
 					label={__('Amount Commission', 'surecart')}
