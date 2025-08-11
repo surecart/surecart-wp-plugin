@@ -128,10 +128,10 @@ class ProductQuickAddButton extends \Elementor\Widget_Base {
 				'label'   => esc_html__( 'Width', 'surecart' ),
 				'type'    => \Elementor\Controls_Manager::SELECT,
 				'options' => [
-					'25%'  => esc_html__( '25%', 'surecart' ),
-					'50%'  => esc_html__( '50%', 'surecart' ),
-					'75%'  => esc_html__( '75%', 'surecart' ),
-					'100%' => esc_html__( '100%', 'surecart' ),
+					25  => esc_html__( '25%', 'surecart' ),
+					50  => esc_html__( '50%', 'surecart' ),
+					75  => esc_html__( '75%', 'surecart' ),
+					100 => esc_html__( '100%', 'surecart' ),
 				],
 			]
 		);
@@ -242,7 +242,6 @@ class ProductQuickAddButton extends \Elementor\Widget_Base {
 		$attributes     = array(
 			'icon_position'          => $settings['icon_position'] ?? 'before',
 			'quick_view_button_type' => $settings['quick_view_button_type'] ?? 'both',
-			'width'                  => $settings['width'] ?? null,
 			'direct_add_to_cart'     => $is_add_to_cart,
 			'label'                  => $settings['label'] ?? $this->get_default_label(),
 			'show_loading_indicator' => true,
