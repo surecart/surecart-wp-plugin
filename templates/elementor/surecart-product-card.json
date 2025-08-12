@@ -99,6 +99,16 @@
 			"isInner": false,
 			"widgetType": "text-editor",
 			"elType": "widget"
+		},
+		{
+			"id": "778a27e2",
+			"settings": {
+				"label": "Add"
+			},
+			"elements": [],
+			"isInner": false,
+			"widgetType": "surecart-product-quick-add-button",
+			"elType": "widget"
 		}
 	]
 }
