@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: ecommerce, online store, subscriptions, stripe, payments
 Requires at least: 6.6
 Tested up to: 6.8
-Stable tag: 3.11.0
+Stable tag: 3.12.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -312,6 +312,12 @@ Yes, the checkout form can be customized using our visual builder. You can chang
 Accessibility is a huge priority for the entire team building SureCart. As you know, accessibility is an ongoing improvement task. Our development and QA teams are trained in accessibility best practices and build/test each new feature for accessibility. If you come across any edge issues, we want to know about it and will prioritize its resolution. Please contact us via our website.
 
 == Changelog ==
+
+= 3.12.0 - August 11th, 2025 =
+- New: Delete affiliation functionality for better affiliate management.
+- Improvement: Added javascript filter to customize Stripe payment element options.
+- Improvement: Export customer details css to allow for css customizations.
+- Fix: Resolved cart line item image display issues in some cases.
 
 = 3.11.0 - July 30th, 2025 =
 - New: Updated cart design and customization options.
