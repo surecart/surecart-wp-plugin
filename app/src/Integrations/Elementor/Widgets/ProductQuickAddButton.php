@@ -244,6 +244,7 @@ class ProductQuickAddButton extends \Elementor\Widget_Base {
 			'quick_view_button_type' => $settings['quick_view_button_type'] ?? 'both',
 			'direct_add_to_cart'     => $is_add_to_cart,
 			'label'                  => $settings['label'] ?? $this->get_default_label(),
+			'width'                  => $settings['width'] ?? null,
 			'show_loading_indicator' => true,
 		);
 		ob_start();

@@ -148,14 +148,9 @@ class ProductQuickAddButton extends \Bricks\Element {
 			'quick_view_button_type' => $settings['quick_view_button_type'] ?? 'both',
 			'direct_add_to_cart'     => $is_add_to_cart,
 			'label'                  => $settings['label'] ?? $this->get_default_label(),
+			'width'                  => $settings['width'] ?? null,
 			'show_loading_indicator' => true,
 		);
-
-		ob_start();
-		?>
-		<!-- wp:surecart/product-quick-view-button <?php echo wp_json_encode( $attributes ); ?> /-->
-		<?php
-		$output = ob_get_clean();
-		echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo $this->raw( $attributes );  // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 }

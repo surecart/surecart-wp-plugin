@@ -287,15 +287,6 @@ add_action(
 		);
 
 		// instead, use a static loader that injects the script at runtime.
-		$static_assets = include trailingslashit( plugin_dir_path( __FILE__ ) ) . 'build/scripts/product-media/index.asset.php';
-		wp_register_script_module(
-			'@surecart/product-media',
-			trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/product-media/index.js',
-			[],
-			$static_assets['version']
-		);
-
-		// instead, use a static loader that injects the script at runtime.
 		$static_assets = include trailingslashit( plugin_dir_path( __FILE__ ) ) . 'build/scripts/facebook/index.asset.php';
 		wp_register_script_module(
 			'@surecart/facebook-events',
