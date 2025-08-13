@@ -15,7 +15,7 @@ const ORDER_KEYS = {
 })
 export class ScTotal {
   @Prop() total: 'total' | 'subtotal' | 'amount_due' = 'amount_due';
-  @Prop() checkout: Checkout;
+  @Prop() checkout?: Checkout;
 
   order_key = {
     total: 'total_display_amount',
