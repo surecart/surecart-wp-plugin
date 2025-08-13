@@ -179,6 +179,29 @@ class ProductCard extends \Bricks\Element {
 					],
 				],
 			),
+			[
+				'name'     => 'surecart-product-quick-add-button',
+				'settings' => [
+					'label'                  => 'Add',
+					'icon_position'          => 'before',
+					'quick_view_button_type' => 'both',
+					'direct_add_to_cart'     => true,
+					'width'                  => '50',
+					'_justifyContent'        => 'center',
+					'_border'                => [
+						'radius' => [
+							'top'    => '0',
+							'right'  => '0',
+							'bottom' => '0',
+							'left'   => '0',
+						],
+					],
+					'_margin'                => [
+						'top' => '24',
+					],
+				],
+
+			],
 		];
 	}
 
