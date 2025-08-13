@@ -186,18 +186,37 @@ class ProductCard extends \Bricks\Element {
 					'icon_position'          => 'before',
 					'quick_view_button_type' => 'both',
 					'direct_add_to_cart'     => true,
-					'width'                  => '50',
+					'width'                  => '100',
 					'_justifyContent'        => 'center',
 					'_border'                => [
 						'radius' => [
-							'top'    => '0',
-							'right'  => '0',
-							'bottom' => '0',
-							'left'   => '0',
+							'top'    => '4',
+							'right'  => '4',
+							'bottom' => '4',
+							'left'   => '4',
 						],
 					],
-					'_margin'                => [
-						'top' => '24',
+					'_width'                 => '100%',
+					'_typography'            => [
+						'text-wrap'   => 'nowrap',
+						'font-size'   => '12',
+						'font-weight' => '500',
+						'color'       => [
+							'hex'  => '#212121',
+							'id'   => '7c9a5b',
+							'name' => 'Color #6',
+						],
+					],
+					'_padding'               => [
+						'top'    => '7',
+						'bottom' => '7',
+					],
+					'_background'            => [
+						'color' => [
+							'hex'  => '#f5f5f5',
+							'id'   => 'ceb2be',
+							'name' => 'Color #1',
+						],
 					],
 				],
 

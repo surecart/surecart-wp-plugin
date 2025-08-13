@@ -118,6 +118,14 @@ class ProductQuickAddButton extends \Bricks\Element {
 			'inline'  => true,
 		];
 
+		$this->controls['show_on_hover'] = [
+			'tab'         => 'content',
+			'label'       => esc_html__( 'Show on Hover', 'surecart' ),
+			'type'        => 'checkbox',
+			'description' => esc_html__( 'Show the quick add button only when the product item is hovered.', 'surecart' ),
+			'default'     => false,
+		];
+
 		// Settings Controls.
 		$this->controls['settingsSeparator'] = [
 			'label' => esc_html__( 'Settings', 'surecart' ),
@@ -150,6 +158,7 @@ class ProductQuickAddButton extends \Bricks\Element {
 			'label'                  => $settings['label'] ?? $this->get_default_label(),
 			'width'                  => $settings['width'] ?? null,
 			'show_loading_indicator' => true,
+			'className'              => $settings['show_on_hover'] ? 'is-style-show-on-hover ' : '',
 		);
 		echo $this->raw( $attributes );  // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
