@@ -23,6 +23,7 @@ import {
 	ScForm,
 	ScVisuallyHidden,
 	ScText,
+	ScInput,
 } from '@surecart/components-react';
 import {
 	getFeaturedProductMediaAttributes,
@@ -140,6 +141,12 @@ export default ({
 									{intervalString(price)}
 								</div>
 							</LineItemLabel>
+
+							<LineItemNote
+								lineItem={lineItem}
+								onChange={onChange}
+								isDraftInvoice={isDraftInvoice}
+							/>
 						</div>
 					</div>
 				</ScFlex>
@@ -150,10 +157,13 @@ export default ({
 				) : (
 					<>
 						{isDraftInvoice ? (
-							<ScQuantitySelect
-								quantity={quantity}
+							<ScInput
+								type="number"
+								value={quantity}
 								onScChange={(e) =>
-									onChange({ quantity: e.detail })
+									onChange({
+										quantity: parseInt(e.target.value),
+									})
 								}
 								{...(!!maxStockQuantity
 									? { max: maxStockQuantity }
@@ -265,13 +275,6 @@ export default ({
 						</div>
 					)}
 				</div>
-			</ScTableCell>
-			<ScTableCell>
-				<LineItemNote
-					lineItem={lineItem}
-					onChange={onChange}
-					isDraftInvoice={isDraftInvoice}
-				/>
 			</ScTableCell>
 			{isDraftInvoice && (
 				<ScTableCell
