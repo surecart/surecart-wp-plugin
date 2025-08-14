@@ -17,12 +17,12 @@ import {
 	ScIcon,
 	ScTableCell,
 	ScTableRow,
-	ScQuantitySelect,
 	ScDialog,
 	ScPriceInput,
 	ScForm,
 	ScVisuallyHidden,
 	ScText,
+	ScInput,
 } from '@surecart/components-react';
 import {
 	getFeaturedProductMediaAttributes,
@@ -72,6 +72,10 @@ export default ({
 									--sc-product-line-item-image-size,
 									4em
 								);
+								min-width: var(
+									--sc-product-line-item-image-size,
+									4em
+								);
 								height: var(
 									--sc-product-line-item-image-size,
 									4em
@@ -94,6 +98,10 @@ export default ({
 						<div
 							css={css`
 								width: var(
+									--sc-product-line-item-image-size,
+									4em
+								);
+								min-width: var(
 									--sc-product-line-item-image-size,
 									4em
 								);
@@ -123,10 +131,17 @@ export default ({
 							/>
 						</div>
 					)}
-					<div>
+					<div
+						css={css`
+							flex: 1;
+						`}
+					>
 						<div>
 							<strong>{price?.product?.name}</strong>
-							<LineItemLabel lineItem={lineItem}>
+							<LineItemLabel
+								lineItem={lineItem}
+								showPriceName={false}
+							>
 								<div>
 									<ScFormatNumber
 										type="currency"
@@ -140,20 +155,94 @@ export default ({
 									{intervalString(price)}
 								</div>
 							</LineItemLabel>
+
+							<LineItemNote
+								lineItem={lineItem}
+								onChange={onChange}
+								isDraftInvoice={isDraftInvoice}
+							/>
 						</div>
 					</div>
 				</ScFlex>
 			</ScTableCell>
 			<ScTableCell>
+				<div
+					css={css`
+						display: flex;
+						align-items: center;
+						justify-content: space-between;
+					`}
+				>
+					{!!price?.name && <div>{price?.name}</div>}
+					{!!price?.ad_hoc && isDraftInvoice && (
+						<ScButton size="small" onClick={() => setOpen(true)}>
+							<ScIcon name="edit" />
+						</ScButton>
+					)}
+				</div>
+
+				{!!price?.trial_duration_days && (
+					<div
+						css={css`
+							opacity: 0.65;
+							font-size: 12px;
+							line-height: 1.2;
+						`}
+					>
+						{sprintf(
+							_n(
+								'Starting in %s day',
+								'Starting in %s days',
+								price.trial_duration_days,
+								'surecart'
+							),
+							price.trial_duration_days
+						)}
+					</div>
+				)}
+
+				{!!fees?.length && (
+					<div>
+						{(fees || []).map(({ description, amount }) => {
+							return (
+								<div
+									css={css`
+										opacity: 0.65;
+										font-size: 12px;
+										line-height: 1.2;
+									`}
+								>
+									<ScFormatNumber
+										type="currency"
+										currency={price?.currency || 'usd'}
+										value={amount}
+									/>{' '}
+									{description || __('Fee', 'surecart')}
+								</div>
+							);
+						})}
+					</div>
+				)}
+			</ScTableCell>
+			<ScTableCell>
 				{!!price?.ad_hoc ? (
-					__('--', 'surecart')
+					<>
+						{isDraftInvoice ? (
+							<ScInput type="number" value={1} disabled={true} />
+						) : (
+							quantity
+						)}
+					</>
 				) : (
 					<>
 						{isDraftInvoice ? (
-							<ScQuantitySelect
-								quantity={quantity}
+							<ScInput
+								type="number"
+								value={quantity}
 								onScChange={(e) =>
-									onChange({ quantity: e.detail })
+									onChange({
+										quantity: parseInt(e.target.value),
+									})
 								}
 								{...(!!maxStockQuantity
 									? { max: maxStockQuantity }
@@ -212,66 +301,8 @@ export default ({
 									: subtotal_amount
 							}
 						/>
-						{!!price?.ad_hoc && isDraftInvoice && (
-							<ScButton
-								size="small"
-								onClick={() => setOpen(true)}
-							>
-								<ScIcon name="edit" />
-							</ScButton>
-						)}
 					</div>
-
-					{!!price?.trial_duration_days && (
-						<div
-							css={css`
-								opacity: 0.65;
-								font-size: 12px;
-								line-height: 1.2;
-							`}
-						>
-							{sprintf(
-								_n(
-									'Starting in %s day',
-									'Starting in %s days',
-									price.trial_duration_days,
-									'surecart'
-								),
-								price.trial_duration_days
-							)}
-						</div>
-					)}
-
-					{!!fees?.length && (
-						<div>
-							{(fees || []).map(({ description, amount }) => {
-								return (
-									<div
-										css={css`
-											opacity: 0.65;
-											font-size: 12px;
-											line-height: 1.2;
-										`}
-									>
-										<ScFormatNumber
-											type="currency"
-											currency={price?.currency || 'usd'}
-											value={amount}
-										/>{' '}
-										{description || __('Fee', 'surecart')}
-									</div>
-								);
-							})}
-						</div>
-					)}
 				</div>
-			</ScTableCell>
-			<ScTableCell>
-				<LineItemNote
-					lineItem={lineItem}
-					onChange={onChange}
-					isDraftInvoice={isDraftInvoice}
-				/>
 			</ScTableCell>
 			{isDraftInvoice && (
 				<ScTableCell

@@ -47,19 +47,19 @@ export default () => {
 					borderRight: '0',
 				}}
 			>
-				<ScTableCell style={{ width: '40%' }} slot="head">
+				<ScTableCell style={{ width: '45%' }} slot="head">
 					<div>{__('Product', 'surecart')}</div>
 				</ScTableCell>
-				<ScTableCell style={{ width: '25%' }} slot="head">
+				<ScTableCell style={{ width: '15%' }} slot="head">
+					<div>{__('Price', 'surecart')}</div>
+				</ScTableCell>
+				<ScTableCell style={{ width: '10%' }} slot="head">
 					<div>{__('Quantity', 'surecart')}</div>
 				</ScTableCell>
-				<ScTableCell style={{ width: '20%' }} slot="head">
+				<ScTableCell style={{ width: '5%' }} slot="head">
 					<div>{__('Total', 'surecart')}</div>
 				</ScTableCell>
-				<ScTableCell style={{ width: '25%' }} slot="head">
-					<div>{__('Note', 'surecart')}</div>
-				</ScTableCell>
-				<ScTableCell style={{ width: '10%' }} slot="head"></ScTableCell>
+				<ScTableCell style={{ width: '5%' }} slot="head"></ScTableCell>
 
 				{(line_items || []).map((line_item) => {
 					const {

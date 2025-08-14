@@ -8,7 +8,7 @@ import { __ } from '@wordpress/i18n';
 import { getVariantLabel } from '../util/variation';
 import { getSKUText } from '../util/products';
 
-export default ({ lineItem, children }) => {
+export default ({ lineItem, children, showPriceName = true }) => {
 	const variantLabel = getVariantLabel(lineItem?.variant_options);
 	const priceName = lineItem?.price?.name;
 	const productSku = getSKUText(lineItem);
@@ -28,7 +28,7 @@ export default ({ lineItem, children }) => {
 			`}
 		>
 			<div>{variantLabel}</div>
-			<div>{priceName}</div>
+			{showPriceName && <div>{priceName}</div>}
 			{!!productSku && (
 				<div>
 					{__('SKU:', 'surecart')} {productSku}

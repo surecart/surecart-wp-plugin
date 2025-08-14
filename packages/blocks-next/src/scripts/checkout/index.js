@@ -269,7 +269,7 @@ const { state, actions } = store('surecart/checkout', {
 		/**
 		 * Show the line item note "more"/ "less" button if the note is longer than 50 characters.
 		 */
-		get showLineItemNoteMore() {
+		get showLineItemNoteToggle() {
 			const { line_item } = getContext();
 			return line_item?.note?.length > 40;
 		},
@@ -282,20 +282,6 @@ const { state, actions } = store('surecart/checkout', {
 			if (!line_item?.id) return false;
 
 			return state.expandedNotes?.[line_item.id] || false;
-		},
-
-		/**
-		 * Get the line item note button text.
-		 */
-		get lineItemNoteButtonText() {
-			const { line_item } = getContext();
-			if (!line_item?.note) {
-				return '';
-			}
-
-			return state.lineItemNoteExpanded
-				? __('less', 'surecart')
-				: __('more', 'surecart');
 		},
 
 		/**
