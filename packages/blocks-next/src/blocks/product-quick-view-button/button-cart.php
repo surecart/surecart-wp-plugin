@@ -16,6 +16,7 @@
 							'class'               => 'wp-block-button__link sc-button__link ',
 							'data-wp-on--click'   => 'callbacks.handleSubmit',
 							'data-wp-on--keydown' => 'callbacks.handleSubmit',
+							'data-wp-interactive'    => '{ "namespace": "surecart/product-quick-view" }',
 						],
 						function ( $value ) {
 							return null !== $value;

@@ -31,7 +31,7 @@
 			);
 			?>
 		>
-		<?php if ( $show_loading_indicator ) { ?>
+			<?php if ( $show_loading_indicator ) { ?>
 				<span class="sc-spinner" aria-hidden="true"></span>
 			<?php } ?>
 			<?php if ( $show_icon && 'before' === $icon_position ) { ?>
