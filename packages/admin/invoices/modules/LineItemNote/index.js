@@ -6,27 +6,21 @@ import { css, jsx } from '@emotion/core';
  */
 import { __ } from '@wordpress/i18n';
 import { useState, useRef, useEffect } from '@wordpress/element';
-import { Button, Icon, Tooltip } from '@wordpress/components';
+import { Button, Icon } from '@wordpress/components';
 
 /**
  * Internal dependencies.
  */
 import {
-	ScButton,
 	ScIcon,
 	ScProductLineItemNote,
 	ScText,
 } from '@surecart/components-react';
-import LineItemNoteModal from './LineItemNoteModal';
+import LineItemNoteInput from './LineItemNoteInput';
 import { chevronDown, chevronUp } from '@wordpress/icons';
 
 export default function LineItemNote({ lineItem, onChange, isDraftInvoice }) {
-	const [showModal, setShowModal] = useState(false);
-
-	const handleSaveNote = (noteValue) => {
-		onChange({ note: noteValue });
-		setShowModal(false);
-	};
+	const [showLineItemInput, setShowLineItemInput] = useState(false);
 
 	const [noteExpanded, setNoteExpanded] = useState(false);
 	const [isTruncated, setIsTruncated] = useState(false);
@@ -105,6 +99,19 @@ export default function LineItemNote({ lineItem, onChange, isDraftInvoice }) {
 		);
 	}
 
+	if (showLineItemInput) {
+		return (
+			<LineItemNoteInput
+				onSave={(noteValue) => {
+					onChange({ note: noteValue });
+					setShowLineItemInput(false);
+				}}
+				onCancel={() => setShowLineItemInput(false)}
+				initialValue={lineItem?.note ?? ''}
+			/>
+		);
+	}
+
 	return (
 		<div
 			css={css`
@@ -132,7 +139,7 @@ export default function LineItemNote({ lineItem, onChange, isDraftInvoice }) {
 						color: 'var(--sc-input-placeholder-color)',
 						padding: 0,
 					}}
-					onClick={() => setShowModal(true)}
+					onClick={() => setShowLineItemInput(true)}
 				>
 					{__('Add note (optional)', 'surecart')}
 				</Button>
@@ -146,7 +153,7 @@ export default function LineItemNote({ lineItem, onChange, isDraftInvoice }) {
 				>
 					<Button
 						variant="tertiary"
-						onClick={() => setShowModal(true)}
+						onClick={() => setShowLineItemInput(true)}
 						label={
 							!!lineItem?.note
 								? __('Click to edit note', 'surecart')
@@ -165,15 +172,6 @@ export default function LineItemNote({ lineItem, onChange, isDraftInvoice }) {
 						/>
 					</Button>
 				</div>
-			)}
-
-			{showModal && (
-				<LineItemNoteModal
-					add={!lineItem?.note}
-					setModal={setShowModal}
-					onSaveNote={handleSaveNote}
-					initialValue={lineItem?.note ?? ''}
-				/>
 			)}
 		</div>
 	);
