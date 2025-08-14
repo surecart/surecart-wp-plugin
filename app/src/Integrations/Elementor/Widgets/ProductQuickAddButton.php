@@ -252,6 +252,30 @@ class ProductQuickAddButton extends \Elementor\Widget_Base {
 			]
 		);
 
+		$this->add_responsive_control(
+			'padding',
+			[
+				'type'       => \Elementor\Controls_Manager::DIMENSIONS,
+				'label'      => esc_html__( 'Padding', 'textdomain' ),
+				'size_units' => [ 'px', '%', 'em', 'rem', 'custom' ],
+				'selectors'  => [
+					$button_selector => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'margin',
+			[
+				'type'       => \Elementor\Controls_Manager::DIMENSIONS,
+				'label'      => esc_html__( 'Margin', 'textdomain' ),
+				'size_units' => [ 'px', '%', 'em', 'rem', 'custom' ],
+				'selectors'  => [
+					$button_selector => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+			]
+		);
+
 		$this->end_controls_section();
 	}
 
@@ -309,6 +333,7 @@ class ProductQuickAddButton extends \Elementor\Widget_Base {
 					</div>
 				</div>
 			<?php
+			return;
 		}
 
 		?>
