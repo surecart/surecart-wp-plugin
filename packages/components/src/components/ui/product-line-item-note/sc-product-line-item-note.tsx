@@ -12,7 +12,7 @@ export class ScProductLineItemNote {
   @State() expanded = false;
   @State() isOverflowing = false;
 
-  private noteEl?: HTMLDivElement;
+  private noteEl?: HTMLScTextElement;
 
   @Watch('note')
   noteChanged() {
@@ -48,19 +48,25 @@ export class ScProductLineItemNote {
       <div class="base" part="base">
         <div
           class={{
-            'item__note': true,
-            'item__note--expanded': this.expanded,
+            'line-item-note': true,
+            'line-item-note--is-expanded': this.expanded,
           }}
-          ref={el => (this.noteEl = el as HTMLDivElement)}
         >
-          {this.note}
-        </div>
+          <sc-text ref={el => (this.noteEl = el as HTMLScTextElement)} class="line-item-note__text">
+            {this.note}
+          </sc-text>
 
-        {(this.isOverflowing || this.expanded) && (
-          <button class="item__note-toggle" onClick={() => this.toggle()} type="button">
-            {this.expanded ? __('less', 'surecart') : __('more', 'surecart')}
-          </button>
-        )}
+          {(this.isOverflowing || this.expanded) && (
+            <button
+              class="line-item-note__toggle"
+              type="button"
+              onClick={() => this.toggle()}
+              title={this.expanded ? __('Collapse note', 'surecart') : __('Expand note', 'surecart')}
+            >
+              <sc-icon name={this.expanded ? 'chevron-up' : 'chevron-down'} style={{ width: '16px', height: '16px' }}></sc-icon>
+            </button>
+          )}
+        </div>
       </div>
     );
   }

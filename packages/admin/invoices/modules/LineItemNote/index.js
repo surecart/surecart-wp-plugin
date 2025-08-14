@@ -5,8 +5,8 @@ import { css, jsx } from '@emotion/core';
  * External dependencies.
  */
 import { __ } from '@wordpress/i18n';
-import { useState, useRef, useEffect } from '@wordpress/element';
-import { Button, Icon } from '@wordpress/components';
+import { useState } from '@wordpress/element';
+import { Button } from '@wordpress/components';
 
 /**
  * Internal dependencies.
@@ -17,86 +17,16 @@ import {
 	ScText,
 } from '@surecart/components-react';
 import LineItemNoteInput from './LineItemNoteInput';
-import { chevronDown, chevronUp } from '@wordpress/icons';
 
 export default function LineItemNote({ lineItem, onChange, isDraftInvoice }) {
 	const [showLineItemInput, setShowLineItemInput] = useState(false);
-
-	const [noteExpanded, setNoteExpanded] = useState(false);
-	const [isTruncated, setIsTruncated] = useState(false);
-	const textRef = useRef(null);
-
-	// Check if text is truncated
-	useEffect(() => {
-		if (textRef.current && lineItem?.note) {
-			const element = textRef.current;
-
-			const checkTruncation = () => {
-				const isOverflowing =
-					element.scrollHeight > element.clientHeight;
-				setIsTruncated(isOverflowing);
-			};
-
-			// Check immediately and after a small delay
-			checkTruncation();
-			const timer = setTimeout(checkTruncation, 50);
-
-			return () => clearTimeout(timer);
-		} else {
-			setIsTruncated(false);
-		}
-	}, [lineItem?.note, noteExpanded, isDraftInvoice]);
 
 	if (!isDraftInvoice) {
 		if (!lineItem?.note) {
 			return null;
 		}
 
-		return (
-			<div
-				css={css`
-					display: flex;
-					align-items: flex-start;
-					gap: 0.25em;
-					min-height: 1.5em;
-				`}
-			>
-				<ScText
-					ref={textRef}
-					css={css`
-						font-size: 12px;
-						line-height: 1.4;
-						color: var(--sc-color-gray-500);
-						flex: 1;
-						${!noteExpanded
-							? `display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;`
-							: ``}
-					`}
-				>
-					{lineItem?.note}
-				</ScText>
-
-				{(isTruncated || noteExpanded) && (
-					<Button
-						variant="link"
-						onClick={() => setNoteExpanded(!noteExpanded)}
-						title={
-							noteExpanded
-								? __('Collapse note', 'surecart')
-								: __('Expand note', 'surecart')
-						}
-						style={{
-							color: 'var(--sc-color-gray-500)',
-						}}
-					>
-						<Icon
-							icon={noteExpanded ? chevronUp : chevronDown}
-							size={16}
-						/>
-					</Button>
-				)}
-			</div>
-		);
+		return <ScProductLineItemNote note={lineItem?.note} />;
 	}
 
 	if (showLineItemInput) {
