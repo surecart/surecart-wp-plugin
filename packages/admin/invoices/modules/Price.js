@@ -160,10 +160,7 @@ export default ({
 					>
 						<strong>{price?.product?.name}</strong>
 
-						<LineItemLabel
-							lineItem={lineItem}
-							showPriceName={false}
-						/>
+						<LineItemLabel lineItem={lineItem} />
 
 						<LineItemNote
 							lineItem={lineItem}
