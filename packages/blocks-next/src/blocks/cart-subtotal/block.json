@@ -39,6 +39,7 @@
 		"interactivity": true,
 		"html": false,
 		"multiple": false,
+		"inserter": false,
 		"currencyConversion": true
 	},
 	"render": "file:./view.php",

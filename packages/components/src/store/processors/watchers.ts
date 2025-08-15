@@ -14,8 +14,11 @@ const maybeUpdateProcessor = () => {
   const ids = [...availableProcessors().map(({ processor_type }) => processor_type), ...availableManualPaymentMethods().map(({ id }) => id)];
   // selected processor is available.
   if (ids.includes(selectedProcessor.id)) return;
-  // set to first if we have one, otherwise unset.
-  selectedProcessor.id = ids?.length ? ids?.[0] : null;
+
+  if (!window?.wp?.hooks?.applyFilters || window.wp.hooks.applyFilters('surecart_auto_select_payment_method', true)) {
+    // set to first if we have one, otherwise unset.
+    selectedProcessor.id = ids?.length ? ids?.[0] : null;
+  }
 };
 
 /**

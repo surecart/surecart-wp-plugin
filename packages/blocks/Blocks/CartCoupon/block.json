@@ -10,7 +10,8 @@
 	"supports": {
 		"reusable": false,
 		"html": false,
-		"multiple": false
+		"multiple": false,
+		"inserter": false
 	},
 	"attributes": {
 		"lock": {

@@ -5,12 +5,13 @@
 	"title": "Cart Items",
 	"description": "The cart",
 	"category": "surecart",
-  "textdomain": "surecart",
+	"textdomain": "surecart",
 	"ancestor": ["surecart/cart"],
 	"supports": {
 		"reusable": false,
 		"html": false,
-		"multiple": false
+		"multiple": false,
+		"inserter": false
 	},
 	"attributes": {
 		"removable": {

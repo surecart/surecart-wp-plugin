@@ -5,11 +5,12 @@
 	"title": "Cart Subtotal",
 	"description": "Display the cart subtotal",
 	"category": "surecart",
-  "textdomain": "surecart",
+	"textdomain": "surecart",
 	"supports": {
 		"reusable": false,
 		"html": false,
-		"multiple": false
+		"multiple": false,
+		"inserter": false
 	},
 	"ancestor": ["surecart/cart"],
 	"attributes": {

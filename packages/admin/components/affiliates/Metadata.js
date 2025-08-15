@@ -1,20 +1,36 @@
 /** @jsx jsx */
-import Box from '../../ui/Box';
 import { css, jsx } from '@emotion/core';
+
+/**
+ * External dependencies.
+ */
 import { ScText } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 
-export default ({ affiliationRequest, loading }) => {
+/**
+ * Internal dependencies.
+ */
+import Box from '../../ui/Box';
+
+export default ({ metadata, title, loading }) => {
+	// Return null if no metadata.
+	if (!metadata || !Object.keys(metadata).length) {
+		return null;
+	}
+
 	return (
-		<Box title={__('Additional Data', 'surecart')} loading={loading}>
+		<Box
+			title={title || __('Additional Data', 'surecart')}
+			loading={loading}
+		>
 			<div
 				css={css`
 					display: grid;
 					gap: 0.5em;
 				`}
 			>
-				{Object.keys(affiliationRequest?.metadata).map((key) => (
-					<div>
+				{Object.keys(metadata).map((key) => (
+					<div key={key}>
 						<ScText
 							tag="h3"
 							style={{
@@ -24,7 +40,8 @@ export default ({ affiliationRequest, loading }) => {
 						>
 							{key.replaceAll('_', ' ')}
 						</ScText>
-						<div>{`${affiliationRequest?.metadata[key]}`}</div>
+
+						<div>{metadata[key]}</div>
 					</div>
 				))}
 			</div>

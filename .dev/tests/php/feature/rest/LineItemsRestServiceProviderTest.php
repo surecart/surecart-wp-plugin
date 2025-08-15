@@ -2,6 +2,7 @@
 
 namespace SureCart\Tests\Feature\Rest;
 
+use SureCart\Request\RequestService;
 use SureCart\Request\RequestServiceProvider;
 use SureCart\Rest\LineItemsRestServiceProvider;
 use SureCart\Support\Errors\ErrorsServiceProvider;

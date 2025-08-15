@@ -50,6 +50,7 @@ export class ScDashboardCustomerDetails {
   render() {
     return (
       <sc-customer-details
+        exportparts="base, heading, heading-text, heading-title, heading-description, error__base, error__icon, error__text, error__title, error__message, test-tag__base, test-tag__content, button__base, button__label, button__prefix"
         customer={this.customer}
         loading={this.loading}
         error={this.error}

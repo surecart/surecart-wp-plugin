@@ -170,7 +170,8 @@ class BuyButton extends \Bricks\Element {
 	 * @return void
 	 */
 	public function render() {
-		$settings = $this->settings;
+		$settings   = $this->settings;
+		$is_buy_now = isset( $settings['buy_now'] ) ? (bool) $settings['buy_now'] : false;
 
 		$this->set_attribute( '_root', 'class', 'bricks-button' );
 
@@ -199,11 +200,11 @@ class BuyButton extends \Bricks\Element {
 			wp_json_encode(
 				array(
 					'checkoutUrl'     => esc_url( \SureCart::pages()->url( 'checkout' ) ),
-					'text'            => $settings['content'] ?? ( $settings['buy_now'] ? __( 'Buy Now', 'surecart' ) : __( 'Add To Cart', 'surecart' ) ),
+					'text'            => $settings['content'] ?? ( $is_buy_now ? __( 'Buy Now', 'surecart' ) : __( 'Add To Cart', 'surecart' ) ),
 					'outOfStockText'  => esc_attr( __( 'Sold Out', 'surecart' ) ),
 					'unavailableText' => esc_attr( __( 'Unavailable For Purchase', 'surecart' ) ),
-					'addToCart'       => $settings['buy_now'] ? false : true,
-					'buttonText'      => $settings['content'] ?? ( $settings['buy_now'] ? __( 'Buy Now', 'surecart' ) : __( 'Add To Cart', 'surecart' ) ),
+					'addToCart'       => ! $is_buy_now,
+					'buttonText'      => $settings['content'] ?? ( $is_buy_now ? __( 'Buy Now', 'surecart' ) : __( 'Add To Cart', 'surecart' ) ),
 				),
 				JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP
 			)
@@ -223,7 +224,7 @@ class BuyButton extends \Bricks\Element {
 		$this->set_attribute( '_root', 'class', 'sc-button__link' );
 
 		// Set tag and attributes.
-		if ( ! empty( $settings['buy_now'] ) ) {
+		if ( $is_buy_now ) {
 			$this->tag = 'a';
 			$this->set_attribute( '_root', 'data-wp-bind--disabled', 'state.isUnavailable' );
 			$this->set_attribute( '_root', 'data-wp-bind--href', 'state.checkoutUrl' );
@@ -245,7 +246,7 @@ class BuyButton extends \Bricks\Element {
 
 		if ( isset( $settings['content'] ) || true ) {
 			if ( $this->is_admin_editor() ) {
-				$output .= trim( $settings['content'] ?? ( $settings['buy_now'] ? __( 'Buy Now', 'surecart' ) : __( 'Add To Cart', 'surecart' ) ) );
+				$output .= trim( $settings['content'] ?? ( $is_buy_now ? __( 'Buy Now', 'surecart' ) : __( 'Add To Cart', 'surecart' ) ) );
 			} else {
 				$output .= '<span class="sc-spinner" aria-hidden="false"></span>';
 				$output .= '<span class="sc-button__link-text" data-wp-text="state.buttonText"></span>';

@@ -16,7 +16,9 @@ declare global {
       apiFetch: any;
       blocks: any;
       i18n: any;
-      hooks: any;
+      hooks: {
+        applyFilters?: (filterName: string, defaultValue: any, ...args: any[]) => any;
+      };
     };
     dataLayer: any;
     gtag: any;
@@ -478,6 +480,7 @@ export interface ImageAttributes {
   sizes?: string;
   srcset?: string;
   width?: number;
+  type?: string;
 }
 
 export interface LineItem extends Object {

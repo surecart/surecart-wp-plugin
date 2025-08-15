@@ -119,8 +119,12 @@ class ElementorBlockAdapterService {
 	 * @return string
 	 */
 	public function showAlertIfNotUsingProductWrapper( $content ) {
-		// Show only to the users who has the permissions to edit the post.
-		if ( ! current_user_can( 'edit_posts', get_the_ID() ) ) {
+		// Show only to the users who has the permissions to edit the post
+		// and if the current post is a product.
+		if (
+			! current_user_can( 'edit_posts', get_the_ID() ) ||
+			! sc_get_product()
+		) {
 			return $content;
 		}
 

@@ -3,7 +3,7 @@
 	"apiVersion": 3,
 	"name": "surecart/slide-out-cart-items",
 	"title": "Cart Items",
-	"description": "The cart items",
+	"description": "The slide-out cart items",
 	"category": "surecart-cart",
 	"version": "1.0.0",
 	"example": {},
@@ -42,6 +42,7 @@
 		"interactivity": true,
 		"html": false,
 		"multiple": false,
+		"inserter": false,
 		"currencyConversion": true
 	},
 	"render": "file:./view.php",

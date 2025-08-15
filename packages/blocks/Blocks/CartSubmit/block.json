@@ -12,6 +12,7 @@
 		"align": false,
 		"alignWide": false,
 		"multiple": false,
+		"inserter": false,
 		"spacing": {
 			"__experimentalSkipSerialization": true,
 			"padding": ["horizontal", "vertical"],

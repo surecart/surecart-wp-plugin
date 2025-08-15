@@ -221,6 +221,25 @@ class Price extends Model {
 	}
 
 	/**
+	 * Get the trial display text attribute
+	 *
+	 * @return string
+	 */
+	public function getTrialTextWithPunctuationAttribute() {
+		return $this->trial_duration_days ? sprintf(
+			// translators: %s is the number of days.
+			_n(
+				'Starting in %s day.',
+				'Starting in %s days.',
+				$this->trial_duration_days,
+				'surecart'
+			),
+			$this->trial_duration_days
+		)
+		: '';
+	}
+
+	/**
 	 * Get the setup fee text attribute
 	 */
 	public function getSetupFeeTextAttribute() {
@@ -230,6 +249,21 @@ class Price extends Model {
 		return sprintf(
 			// translators: %1$1s is the setup fee amount, %2$2s is the setup fee name.
 			__( '%1$1s %2$2s', 'surecart' ),
+			Currency::format( $this->setup_fee_amount, $this->currency ),
+			$this->setup_fee_name ?? __( 'Setup Fee', 'surecart' )
+		);
+	}
+
+	/**
+	 * Get the setup fee text attribute
+	 */
+	public function getSetupFeeTextWithPunctuationAttribute() {
+		if ( empty( $this->setup_fee_enabled ) || empty( $this->setup_fee_amount ) ) {
+			return '';
+		}
+		return sprintf(
+			// translators: %1$1s is the setup fee amount, %2$2s is the setup fee name.
+			__( '%1$1s %2$2s.', 'surecart' ),
 			Currency::format( $this->setup_fee_amount, $this->currency ),
 			$this->setup_fee_name ?? __( 'Setup Fee', 'surecart' )
 		);
@@ -310,6 +344,11 @@ class Price extends Model {
 	 * @return string
 	 */
 	public function getShortIntervalTextAttribute() {
+		// // Don't output interval text if recurring_period_count is 1 or less.
+		if ( ! empty( $this->recurring_period_count ) && (int) $this->recurring_period_count <= 1 ) {
+			return '';
+		}
+
 		$intervals = array(
 			'day'   => [
 				'single' => __( 'day', 'surecart' ),
