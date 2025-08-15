@@ -145,15 +145,25 @@ class ProductLineItemNote extends \Elementor\Widget_Base {
 					$note_selector                     => 'color: {{VALUE}}',
 					$note_selector . ' .sc-form-label' => 'color: {{VALUE}}',
 				],
+				'default'   => '#000000',
 			)
 		);
 
 		$this->add_group_control(
 			\Elementor\Group_Control_Typography::get_type(),
 			array(
-				'name'     => 'label_typography',
-				'label'    => esc_html__( 'Typography', 'surecart' ),
-				'selector' => $note_selector . ' label',
+				'name'           => 'label_typography',
+				'label'          => esc_html__( 'Typography', 'surecart' ),
+				'selector'       => $note_selector . ' label',
+				'fields_options' => [
+					'typography' => [ 'default' => 'yes' ],
+					'font_size'  => [
+						'default' => [
+							'unit' => 'px',
+							'size' => 16,
+						],
+					],
+				],
 			)
 		);
 
@@ -179,9 +189,18 @@ class ProductLineItemNote extends \Elementor\Widget_Base {
 		$this->add_group_control(
 			\Elementor\Group_Control_Typography::get_type(),
 			array(
-				'name'     => 'textarea_typography',
-				'label'    => esc_html__( 'Typography', 'surecart' ),
-				'selector' => $textarea_selector,
+				'name'           => 'textarea_typography',
+				'label'          => esc_html__( 'Typography', 'surecart' ),
+				'selector'       => $textarea_selector,
+				'fields_options' => [
+					'typography' => [ 'default' => 'yes' ],
+					'font_size'  => [
+						'default' => [
+							'unit' => 'px',
+							'size' => 14,
+						],
+					],
+				],
 			)
 		);
 
@@ -277,9 +296,18 @@ class ProductLineItemNote extends \Elementor\Widget_Base {
 		$this->add_group_control(
 			\Elementor\Group_Control_Typography::get_type(),
 			array(
-				'name'     => 'help_text_typography',
-				'label'    => esc_html__( 'Typography', 'surecart' ),
-				'selector' => $help_text_selector,
+				'name'           => 'help_text_typography',
+				'label'          => esc_html__( 'Typography', 'surecart' ),
+				'selector'       => $help_text_selector,
+				'fields_options' => [
+					'typography' => [ 'default' => 'yes' ],
+					'font_size'  => [
+						'default' => [
+							'unit' => 'px',
+							'size' => 12,
+						],
+					],
+				],
 			)
 		);
 
