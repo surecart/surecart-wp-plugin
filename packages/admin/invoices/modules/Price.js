@@ -59,26 +59,6 @@ export default ({
 		setAddHocAmount(ad_hoc_amount || price?.amount);
 	}, [ad_hoc_amount, price]);
 
-	const renderQuantityInput = () => {
-		if (!isDraftInvoice) {
-			return quantity;
-		}
-
-		return (
-			<ScInput
-				type="number"
-				value={quantity}
-				disabled={price?.ad_hoc || busy}
-				onScChange={(e) =>
-					onChange({
-						quantity: parseInt(e.target.value),
-					})
-				}
-				{...(maxStockQuantity && { max: maxStockQuantity })}
-			/>
-		);
-	};
-
 	return (
 		<ScTableRow>
 			<ScTableCell>
