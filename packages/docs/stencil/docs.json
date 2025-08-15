@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-08-11T16:36:08",
+  "timestamp": "2025-08-15T09:17:53",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.18.3",
@@ -16642,6 +16642,7 @@
         "sc-payment-methods-list",
         "sc-product-item-list",
         "sc-product-line-item",
+        "sc-product-line-item-note",
         "sc-product-selected-price",
         "sc-provisional-banner",
         "sc-purchase-downloads-list",
@@ -16782,6 +16783,9 @@
           "sc-icon"
         ],
         "sc-product-line-item": [
+          "sc-icon"
+        ],
+        "sc-product-line-item-note": [
           "sc-icon"
         ],
         "sc-product-selected-price": [
@@ -19811,6 +19815,10 @@
           "sc-quantity-select",
           "sc-icon"
         ],
+        "sc-product-line-item-note": [
+          "sc-text",
+          "sc-icon"
+        ],
         "sc-quantity-select": [
           "sc-icon"
         ],
@@ -20895,6 +20903,10 @@
           "sc-quantity-select",
           "sc-icon"
         ],
+        "sc-product-line-item-note": [
+          "sc-text",
+          "sc-icon"
+        ],
         "sc-quantity-select": [
           "sc-icon"
         ],
@@ -21851,6 +21863,10 @@
           "sc-quantity-select",
           "sc-icon"
         ],
+        "sc-product-line-item-note": [
+          "sc-text",
+          "sc-icon"
+        ],
         "sc-quantity-select": [
           "sc-icon"
         ],
@@ -21953,6 +21969,10 @@
         "sc-product-line-item": [
           "sc-product-line-item-note",
           "sc-quantity-select",
+          "sc-icon"
+        ],
+        "sc-product-line-item-note": [
+          "sc-text",
           "sc-icon"
         ],
         "sc-quantity-select": [
@@ -32122,6 +32142,10 @@
           "sc-quantity-select",
           "sc-icon"
         ],
+        "sc-product-line-item-note": [
+          "sc-text",
+          "sc-icon"
+        ],
         "sc-quantity-select": [
           "sc-icon"
         ],
@@ -32187,8 +32211,15 @@
       "dependents": [
         "sc-product-line-item"
       ],
-      "dependencies": [],
+      "dependencies": [
+        "sc-text",
+        "sc-icon"
+      ],
       "dependencyGraph": {
+        "sc-product-line-item-note": [
+          "sc-text",
+          "sc-icon"
+        ],
         "sc-product-line-item": [
           "sc-product-line-item-note"
         ]
@@ -37927,6 +37958,10 @@
           "sc-quantity-select",
           "sc-icon"
         ],
+        "sc-product-line-item-note": [
+          "sc-text",
+          "sc-icon"
+        ],
         "sc-quantity-select": [
           "sc-icon"
         ],
@@ -38618,6 +38653,10 @@
         "sc-product-line-item": [
           "sc-product-line-item-note",
           "sc-quantity-select",
+          "sc-icon"
+        ],
+        "sc-product-line-item-note": [
+          "sc-text",
           "sc-icon"
         ],
         "sc-quantity-select": [
@@ -41849,6 +41888,7 @@
         "sc-orders-list",
         "sc-payment-method",
         "sc-payment-methods-list",
+        "sc-product-line-item-note",
         "sc-stripe-element",
         "sc-stripe-payment-element",
         "sc-subscription-details",
@@ -41867,6 +41907,9 @@
           "sc-text"
         ],
         "sc-payment-methods-list": [
+          "sc-text"
+        ],
+        "sc-product-line-item-note": [
           "sc-text"
         ],
         "sc-stripe-element": [
@@ -43595,6 +43638,10 @@
         "sc-product-line-item": [
           "sc-product-line-item-note",
           "sc-quantity-select",
+          "sc-icon"
+        ],
+        "sc-product-line-item-note": [
+          "sc-text",
           "sc-icon"
         ],
         "sc-quantity-select": [

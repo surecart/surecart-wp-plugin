@@ -86,8 +86,8 @@ export default function LineItemNote({ lineItem, onChange, isDraftInvoice }) {
 						onClick={() => setShowLineItemInput(true)}
 						label={
 							!!lineItem?.note
-								? __('Click to edit note', 'surecart')
-								: __('Click to add note', 'surecart')
+								? __('Edit note', 'surecart')
+								: __('Add note', 'surecart')
 						}
 						style={{
 							color: 'var(--sc-color-gray-500)',

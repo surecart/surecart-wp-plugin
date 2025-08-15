@@ -32,6 +32,7 @@ import { intervalString } from '../../util/translations';
 import { useInvoice } from '../hooks/useInvoice';
 import LineItemLabel from '../../ui/LineItemLabel';
 import LineItemNote from './LineItemNote';
+import { Button } from '@wordpress/components';
 
 export default ({
 	price,
@@ -57,6 +58,53 @@ export default ({
 	useEffect(() => {
 		setAddHocAmount(ad_hoc_amount || price?.amount);
 	}, [ad_hoc_amount, price]);
+
+	const renderQuantityInput = () => {
+		if (!isDraftInvoice) {
+			return quantity;
+		}
+
+		if (price?.ad_hoc) {
+			return <ScInput type="number" value={1} disabled={true} />;
+		}
+
+		return (
+			<>
+				<ScInput
+					type="number"
+					value={quantity}
+					onScChange={(e) =>
+						onChange({
+							quantity: parseInt(e.target.value),
+						})
+					}
+					{...(maxStockQuantity && { max: maxStockQuantity })}
+					disabled={busy}
+				/>
+
+				{maxStockQuantity && (
+					<ScText
+						css={css`
+							margin-top: var(--sc-spacing-small);
+							color: var(
+								--sc-price-label-color,
+								var(--sc-input-help-text-color)
+							);
+							font-size: var(
+								--sc-price-label-font-size,
+								var(--sc-input-help-text-font-size-medium)
+							);
+						`}
+					>
+						{sprintf(
+							__('Available: %d', 'surecart'),
+							maxStockQuantity
+						)}
+					</ScText>
+				)}
+			</>
+		);
+	};
 
 	return (
 		<ScTableRow>
@@ -138,23 +186,11 @@ export default ({
 					>
 						<div>
 							<strong>{price?.product?.name}</strong>
+
 							<LineItemLabel
 								lineItem={lineItem}
 								showPriceName={false}
-							>
-								<div>
-									<ScFormatNumber
-										type="currency"
-										currency={price?.currency || 'usd'}
-										value={
-											!!price?.ad_hoc && ad_hoc_amount
-												? ad_hoc_amount
-												: price?.amount
-										}
-									/>
-									{intervalString(price)}
-								</div>
-							</LineItemLabel>
+							/>
 
 							<LineItemNote
 								lineItem={lineItem}
@@ -171,13 +207,34 @@ export default ({
 						display: flex;
 						align-items: center;
 						justify-content: space-between;
+						margin-bottom: var(--sc-spacing-small);
 					`}
 				>
-					{!!price?.name && <div>{price?.name}</div>}
+					<div>
+						<ScFormatNumber
+							type="currency"
+							currency={price?.currency || 'usd'}
+							value={
+								!!price?.ad_hoc && ad_hoc_amount
+									? ad_hoc_amount
+									: price?.amount
+							}
+						/>
+						{intervalString(price)}
+					</div>
+
 					{!!price?.ad_hoc && isDraftInvoice && (
-						<ScButton size="small" onClick={() => setOpen(true)}>
+						<Button
+							label={__('Change Amount', 'surecart')}
+							variant="tertiary"
+							type="button"
+							onClick={() => setOpen(true)}
+							style={{
+								color: 'var(--sc-color-gray-500)',
+							}}
+						>
 							<ScIcon name="edit" />
-						</ScButton>
+						</Button>
 					)}
 				</div>
 
@@ -224,60 +281,7 @@ export default ({
 					</div>
 				)}
 			</ScTableCell>
-			<ScTableCell>
-				{!!price?.ad_hoc ? (
-					<>
-						{isDraftInvoice ? (
-							<ScInput type="number" value={1} disabled={true} />
-						) : (
-							quantity
-						)}
-					</>
-				) : (
-					<>
-						{isDraftInvoice ? (
-							<ScInput
-								type="number"
-								value={quantity}
-								onScChange={(e) =>
-									onChange({
-										quantity: parseInt(e.target.value),
-									})
-								}
-								{...(!!maxStockQuantity
-									? { max: maxStockQuantity }
-									: {})}
-								disabled={busy}
-							/>
-						) : (
-							quantity
-						)}
-
-						{maxStockQuantity && (
-							<ScText
-								css={css`
-									margin-top: var(--sc-spacing-small);
-									color: var(
-										--sc-price-label-color,
-										var(--sc-input-help-text-color)
-									);
-									font-size: var(
-										--sc-price-label-font-size,
-										var(
-											--sc-input-help-text-font-size-medium
-										)
-									);
-								`}
-							>
-								{sprintf(
-									__('Available: %d', 'surecart'),
-									maxStockQuantity
-								)}
-							</ScText>
-						)}
-					</>
-				)}
-			</ScTableCell>
+			<ScTableCell>{renderQuantityInput()}</ScTableCell>
 			<ScTableCell>
 				<div
 					css={css`

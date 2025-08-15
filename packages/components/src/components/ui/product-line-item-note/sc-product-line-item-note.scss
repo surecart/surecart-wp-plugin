@@ -37,6 +37,7 @@
     padding: 0;
     align-self: flex-start;
     transition: opacity 0.2s ease;
+    border-radius: var(--sc-border-radius-small);
 
     &:hover {
       opacity: 0.8;

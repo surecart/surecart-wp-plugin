@@ -10,11 +10,12 @@ import { useState, useEffect } from '@wordpress/element';
 /**
  * Internal dependencies.
  */
-import { ScButton, ScTextarea } from '@surecart/components-react';
+import { ScTextarea } from '@surecart/components-react';
+import { Button } from '@wordpress/components';
 
 export default function LineItemNoteModal({
-	onCancel,
 	onSave,
+	onCancel,
 	initialValue = '',
 }) {
 	const [value, setValue] = useState(initialValue);
@@ -50,17 +51,17 @@ export default function LineItemNoteModal({
 					gap: 0.5em;
 				`}
 			>
-				<ScButton
+				<Button
 					size="small"
-					type="primary"
-					onClick={onSave}
+					variant="primary"
+					onClick={() => onSave(value)}
 					disabled={!value.trim() || initialValue === value}
 				>
 					{__('Save', 'surecart')}
-				</ScButton>
-				<ScButton size="small" type="text" onClick={onCancel}>
+				</Button>
+				<Button size="small" variant="text" onClick={onCancel}>
 					{__('Cancel', 'surecart')}
-				</ScButton>
+				</Button>
 			</div>
 		</div>
 	);

@@ -55,6 +55,8 @@ graph TD;
   sc-product-line-item --> sc-product-line-item-note
   sc-product-line-item --> sc-quantity-select
   sc-product-line-item --> sc-icon
+  sc-product-line-item-note --> sc-text
+  sc-product-line-item-note --> sc-icon
   sc-quantity-select --> sc-icon
   sc-swap --> sc-switch
   style sc-line-items fill:#f9f,stroke:#333,stroke-width:4px

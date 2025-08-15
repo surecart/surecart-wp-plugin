@@ -50,10 +50,10 @@ export default () => {
 				<ScTableCell style={{ width: '45%' }} slot="head">
 					<div>{__('Product', 'surecart')}</div>
 				</ScTableCell>
-				<ScTableCell style={{ width: '15%' }} slot="head">
+				<ScTableCell style={{ width: '20%' }} slot="head">
 					<div>{__('Price', 'surecart')}</div>
 				</ScTableCell>
-				<ScTableCell style={{ width: '10%' }} slot="head">
+				<ScTableCell style={{ width: '15%' }} slot="head">
 					<div>{__('Quantity', 'surecart')}</div>
 				</ScTableCell>
 				<ScTableCell style={{ width: '5%' }} slot="head">
