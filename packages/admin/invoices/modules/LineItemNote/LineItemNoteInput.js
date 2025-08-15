@@ -5,7 +5,7 @@ import { css, jsx } from '@emotion/core';
  * External dependencies.
  */
 import { __ } from '@wordpress/i18n';
-import { useState, useEffect } from '@wordpress/element';
+import { useState, useEffect, useRef } from '@wordpress/element';
 
 /**
  * Internal dependencies.
@@ -16,13 +16,23 @@ import { Button } from '@wordpress/components';
 export default function LineItemNoteModal({
 	onSave,
 	onCancel,
+	autoFocus = true,
 	initialValue = '',
+	busy = false,
 }) {
 	const [value, setValue] = useState(initialValue);
-
+	const textareaRef = useRef(null);
 	useEffect(() => {
 		setValue(initialValue);
 	}, [initialValue]);
+
+	useEffect(() => {
+		if (textareaRef.current && autoFocus) {
+			setTimeout(() => {
+				textareaRef.current.triggerFocus();
+			}, 0);
+		}
+	}, []);
 
 	return (
 		<div
@@ -35,7 +45,8 @@ export default function LineItemNoteModal({
 		>
 			<ScTextarea
 				value={value}
-				autofocus={true}
+				ref={textareaRef}
+				autofocus={autoFocus}
 				placeholder={__('Add a note...', 'surecart')}
 				onScInput={(e) => setValue(e.target.value)}
 				rows="3"
@@ -55,7 +66,7 @@ export default function LineItemNoteModal({
 					size="small"
 					variant="primary"
 					onClick={() => onSave(value)}
-					disabled={!value.trim() || initialValue === value}
+					isBusy={busy}
 				>
 					{__('Save', 'surecart')}
 				</Button>

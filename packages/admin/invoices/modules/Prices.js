@@ -43,6 +43,7 @@ export default () => {
 				style={{
 					'--shadow': 'none',
 					'--border-radius': '0',
+					'--sc-table-cell-vertical-align': 'top',
 					borderLeft: '0',
 					borderRight: '0',
 				}}

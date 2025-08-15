@@ -3140,6 +3140,7 @@ export namespace Components {
         "variant": string;
     }
     interface ScProductLineItemNote {
+        "alwaysShowIcon": boolean;
         "note": string;
     }
     interface ScProductPillsVariantOption {
@@ -10333,6 +10334,7 @@ declare namespace LocalJSX {
         "variant"?: string;
     }
     interface ScProductLineItemNote {
+        "alwaysShowIcon"?: boolean;
         "note"?: string;
     }
     interface ScProductPillsVariantOption {

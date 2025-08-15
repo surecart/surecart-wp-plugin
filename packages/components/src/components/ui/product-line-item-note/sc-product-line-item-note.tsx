@@ -9,6 +9,7 @@ import { __ } from '@wordpress/i18n';
 export class ScProductLineItemNote {
   @Element() el: HTMLElement;
   @Prop() note: string;
+  @Prop() alwaysShowIcon = false;
   @State() expanded = false;
   @State() isOverflowing = false;
 
@@ -56,14 +57,16 @@ export class ScProductLineItemNote {
             {this.note}
           </sc-text>
 
-          {(this.isOverflowing || this.expanded) && (
+          {(this.isOverflowing || this.expanded || this.alwaysShowIcon) && (
             <button
               class="line-item-note__toggle"
               type="button"
               onClick={() => this.toggle()}
               title={this.expanded ? __('Collapse note', 'surecart') : __('Expand note', 'surecart')}
             >
-              <sc-icon name={this.expanded ? 'chevron-up' : 'chevron-down'} style={{ width: '16px', height: '16px' }}></sc-icon>
+              <slot name="icon">
+                <sc-icon name={this.expanded ? 'chevron-up' : 'chevron-down'} style={{ width: '16px', height: '16px' }}></sc-icon>
+              </slot>
             </button>
           )}
         </div>

@@ -64,21 +64,17 @@ export default ({
 			return quantity;
 		}
 
-		if (price?.ad_hoc) {
-			return <ScInput type="number" value={1} disabled={true} />;
-		}
-
 		return (
 			<ScInput
 				type="number"
 				value={quantity}
+				disabled={price?.ad_hoc || busy}
 				onScChange={(e) =>
 					onChange({
 						quantity: parseInt(e.target.value),
 					})
 				}
 				{...(maxStockQuantity && { max: maxStockQuantity })}
-				disabled={busy}
 			/>
 		);
 	};
@@ -86,7 +82,7 @@ export default ({
 	return (
 		<ScTableRow>
 			<ScTableCell>
-				<ScFlex alignItems="center" justifyContent="flex-start">
+				<ScFlex alignItems="flex-start" justifyContent="flex-start">
 					{media?.url ? (
 						<img
 							src={media.url}
@@ -114,8 +110,6 @@ export default ({
 									);
 								display: block;
 								box-shadow: var(--sc-input-box-shadow);
-								-webkit-align-self: flex-start;
-								-ms-flex-item-align: start;
 								align-self: flex-start;
 							`}
 						/>
@@ -159,25 +153,28 @@ export default ({
 					<div
 						css={css`
 							flex: 1;
+							display: flex;
+							flex-direction: column;
+							gap: 2px;
 						`}
 					>
-						<div>
-							<strong>{price?.product?.name}</strong>
+						<strong>{price?.product?.name}</strong>
 
-							<LineItemLabel
-								lineItem={lineItem}
-								showPriceName={false}
-							/>
+						<LineItemLabel
+							lineItem={lineItem}
+							showPriceName={false}
+						/>
 
-							<LineItemNote
-								lineItem={lineItem}
-								onChange={onChange}
-								isDraftInvoice={isDraftInvoice}
-							/>
-						</div>
+						<LineItemNote
+							lineItem={lineItem}
+							onChange={onChange}
+							isDraftInvoice={isDraftInvoice}
+							busy={busy}
+						/>
 					</div>
 				</ScFlex>
 			</ScTableCell>
+
 			<ScTableCell>
 				<div
 					css={css`
@@ -259,7 +256,22 @@ export default ({
 				)}
 			</ScTableCell>
 			<ScTableCell>
-				{renderQuantityInput()}
+				{isDraftInvoice ? (
+					<ScInput
+						type="number"
+						value={quantity}
+						disabled={price?.ad_hoc || busy}
+						onScChange={(e) =>
+							onChange({
+								quantity: parseInt(e.target.value),
+							})
+						}
+						{...(maxStockQuantity && { max: maxStockQuantity })}
+					/>
+				) : (
+					quantity
+				)}
+
 				{isDraftInvoice && maxStockQuantity && (
 					<ScText
 						css={css`
