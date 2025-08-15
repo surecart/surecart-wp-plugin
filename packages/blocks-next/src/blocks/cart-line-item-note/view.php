@@ -21,15 +21,19 @@
 			data-wp-bind--aria-describedby="state.lineItemNoteId"
 		>
 			<span class="sc-icon" data-wp-class--sc-icon--rotated="state.lineItemNoteExpanded">
-				<svg
-					width="16"
-					height="16"
-					viewBox="0 0 16 16"
-					fill="none"
-					xmlns="http://www.w3.org/2000/svg"
-				>
-					<path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="2" fill="none" fill-rule="evenodd"/>
-				</svg>
+				<?php
+				echo wp_kses(
+					SureCart::svg()->get(
+						'chevron-down',
+						[
+							'class'  => '',
+							'width'  => 16,
+							'height' => 16,
+						]
+					),
+					sc_allowed_svg_html()
+				);
+				?>
 			</span>
 		</button>
 	</div>

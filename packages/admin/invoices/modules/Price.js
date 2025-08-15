@@ -69,40 +69,17 @@ export default ({
 		}
 
 		return (
-			<>
-				<ScInput
-					type="number"
-					value={quantity}
-					onScChange={(e) =>
-						onChange({
-							quantity: parseInt(e.target.value),
-						})
-					}
-					{...(maxStockQuantity && { max: maxStockQuantity })}
-					disabled={busy}
-				/>
-
-				{maxStockQuantity && (
-					<ScText
-						css={css`
-							margin-top: var(--sc-spacing-small);
-							color: var(
-								--sc-price-label-color,
-								var(--sc-input-help-text-color)
-							);
-							font-size: var(
-								--sc-price-label-font-size,
-								var(--sc-input-help-text-font-size-medium)
-							);
-						`}
-					>
-						{sprintf(
-							__('Available: %d', 'surecart'),
-							maxStockQuantity
-						)}
-					</ScText>
-				)}
-			</>
+			<ScInput
+				type="number"
+				value={quantity}
+				onScChange={(e) =>
+					onChange({
+						quantity: parseInt(e.target.value),
+					})
+				}
+				{...(maxStockQuantity && { max: maxStockQuantity })}
+				disabled={busy}
+			/>
 		);
 	};
 
@@ -281,7 +258,29 @@ export default ({
 					</div>
 				)}
 			</ScTableCell>
-			<ScTableCell>{renderQuantityInput()}</ScTableCell>
+			<ScTableCell>
+				{renderQuantityInput()}
+				{isDraftInvoice && maxStockQuantity && (
+					<ScText
+						css={css`
+							margin-top: var(--sc-spacing-small);
+							color: var(
+								--sc-price-label-color,
+								var(--sc-input-help-text-color)
+							);
+							font-size: var(
+								--sc-price-label-font-size,
+								var(--sc-input-help-text-font-size-medium)
+							);
+						`}
+					>
+						{sprintf(
+							__('Available: %d', 'surecart'),
+							maxStockQuantity
+						)}
+					</ScText>
+				)}
+			</ScTableCell>
 			<ScTableCell>
 				<div
 					css={css`
