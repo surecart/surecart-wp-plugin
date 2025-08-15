@@ -136,7 +136,7 @@ export class ScProductLineItem {
                   </div>
                 )}
                 {!!this.purchasableStatus && <div>{this.purchasableStatus}</div>}
-                <sc-product-line-item-note note={this.note} />
+                {!!this.note && <sc-product-line-item-note note={this.note} />}
               </div>
 
               <div class="item__description" part="trial-fees">
