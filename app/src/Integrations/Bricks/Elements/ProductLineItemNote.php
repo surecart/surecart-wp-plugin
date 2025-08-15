@@ -247,7 +247,7 @@ class ProductLineItemNote extends \Bricks\Element {
 		if ( $this->is_admin_editor() ) {
 			ob_start();
 			?>
-			<div class="wp-block-surecart-product-line-item-note" data-sc-block-id="product-line-item-note">
+			<div>
 				<?php if ( ! empty( $label ) ) : ?>
 					<label class="sc-form-label" for="sc_product_note">
 						<?php echo wp_kses_post( $label ); ?>
@@ -271,7 +271,10 @@ class ProductLineItemNote extends \Bricks\Element {
 			</div>
 			<?php
 			$output = ob_get_clean();
-			echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo $this->preview( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				$output,
+				'wp-block-surecart-product-line-item-note'
+			);
 			return;
 		}
 
