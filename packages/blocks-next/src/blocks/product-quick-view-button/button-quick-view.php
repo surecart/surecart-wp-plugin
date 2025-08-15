@@ -34,6 +34,7 @@
 			<?php if ( $show_loading_indicator ) { ?>
 				<span class="sc-spinner" aria-hidden="true"></span>
 			<?php } ?>
+			
 			<?php if ( $show_icon && 'before' === $icon_position ) { ?>
 				<?php echo wp_kses( SureCart::svg()->get( $icon, [ 'class' => 'wp-block-surecart-product-quick-view-button__icon sc-button__link-text' ] ), sc_allowed_svg_html() ); ?>
 			<?php } ?>
