@@ -40,6 +40,7 @@ export default function LineItemNote({
 				onCancel={() => setEditing(false)}
 				initialValue={lineItem?.note ?? ''}
 				busy={busy}
+				autoFocus={false}
 			/>
 		);
 	}
