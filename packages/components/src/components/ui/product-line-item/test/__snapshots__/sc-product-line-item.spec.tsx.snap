@@ -5,7 +5,7 @@ exports[`sc-product-line-item renders 1`] = `
   <mock:shadow-root>
     <div class="base" part="base">
       <div class="item product-line-item__editable" part="product-line-item">
-        <div class="item__image-placeholder"></div>
+        <div class="item__image-placeholder" part="placeholder__image"></div>
         <div class="item__text-container">
           <div class="item__row">
             <div class="item__title" part="title">
