@@ -31,7 +31,6 @@ const { state, actions } = store('surecart/product-quick-view', {
 	actions: {
 		/** Navigate using interactivity router */
 		*navigate(event) {
-			const { ref } = getElement();
 			const { url } = getContext();
 
 			event?.preventDefault();
