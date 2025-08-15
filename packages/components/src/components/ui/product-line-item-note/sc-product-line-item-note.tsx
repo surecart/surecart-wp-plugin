@@ -1,4 +1,4 @@
-import { Component, h, Prop, State, Watch, Element } from '@stencil/core';
+import { Component, h, Prop, State, Element } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 
 @Component({
@@ -14,28 +14,56 @@ export class ScProductLineItemNote {
   @State() isOverflowing = false;
 
   private noteEl?: HTMLScTextElement;
-
-  @Watch('note')
-  noteChanged() {
-    this.checkOverflow();
-  }
+  private resizeObserver?: ResizeObserver;
+  private mutationObserver?: MutationObserver;
 
   componentDidLoad() {
+    this.setupObservers();
     this.checkOverflow();
   }
 
-  componentDidUpdate() {
-    this.checkOverflow();
+  disconnectedCallback() {
+    this.cleanupObservers();
+  }
+
+  setupObservers() {
+    if (!this.noteEl) return;
+
+    // ResizeObserver for container size changes
+    if (typeof ResizeObserver !== 'undefined') {
+      this.resizeObserver = new ResizeObserver(() => {
+        this.checkOverflow();
+      });
+      this.resizeObserver.observe(this.noteEl);
+    }
+
+    // MutationObserver for content changes
+    if (typeof MutationObserver !== 'undefined') {
+      this.mutationObserver = new MutationObserver(() => {
+        this.checkOverflow();
+      });
+      this.mutationObserver.observe(this.noteEl, {
+        characterData: true,
+        subtree: true,
+        childList: true,
+      });
+    }
+  }
+
+  cleanupObservers() {
+    if (this.resizeObserver) {
+      this.resizeObserver.disconnect();
+      this.resizeObserver = undefined;
+    }
+    if (this.mutationObserver) {
+      this.mutationObserver.disconnect();
+      this.mutationObserver = undefined;
+    }
   }
 
   checkOverflow() {
     if (!this.noteEl) return;
-
-    setTimeout(() => {
-      if (this.noteEl) {
-        this.isOverflowing = this.noteEl.scrollHeight > this.noteEl.clientHeight;
-      }
-    }, 50);
+    this.isOverflowing = this.noteEl.scrollHeight > this.noteEl.clientHeight;
   }
 
   toggle() {
