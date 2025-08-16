@@ -91,6 +91,11 @@ export default () => {
 		'site',
 		'surecart_unrestricted_test_mode'
 	);
+	const [hideHelpWidget, setHideHelpWidget] = useEntityProp(
+		'root',
+		'site',
+		'surecart_hide_help_widget'
+	);
 
 	/**
 	 * Form is submitted.
@@ -385,6 +390,18 @@ export default () => {
 					<span slot="description" style={{ lineHeight: '1.4' }}>
 						{__(
 							'Show a link to edit the customer area in the menu.',
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
+				<ScSwitch
+					checked={hideHelpWidget}
+					onScChange={(e) => setHideHelpWidget(e.target.checked)}
+				>
+					{__('Hide Help Widget', 'surecart')}
+					<span slot="description" style={{ lineHeight: '1.4' }}>
+						{__(
+							'Hide the Gleap help widget that appears in the bottom right corner of SureCart admin pages.',
 							'surecart'
 						)}
 					</span>
