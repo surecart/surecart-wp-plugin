@@ -401,7 +401,7 @@ export default () => {
 					{__('Hide Help Widget', 'surecart')}
 					<span slot="description" style={{ lineHeight: '1.4' }}>
 						{__(
-							'Hide the Gleap help widget that appears in the bottom right corner of SureCart admin pages.',
+							'Hide the help widget that appears in the bottom right corner of SureCart admin pages.',
 							'surecart'
 						)}
 					</span>
