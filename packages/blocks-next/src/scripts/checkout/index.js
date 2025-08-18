@@ -451,6 +451,14 @@ const { state, actions } = store('surecart/checkout', {
 		},
 
 		/**
+		 * Stop propagation and toggle the line item note expanded state.
+		 */
+		stopPropagationAndToggle(e) {
+			e.stopPropagation();
+			actions.toggleLineItemNote();
+		},
+
+		/**
 		 * Set the promotion code.
 		 */
 		setPromotionCode(e) {

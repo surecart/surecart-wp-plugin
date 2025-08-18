@@ -9,6 +9,10 @@
     gap: 0.25em;
     min-height: 1.5em;
 
+    &--clickable {
+      cursor: pointer;
+    }
+
     &__text {
       line-height: 1.4;
       color: var(--sc-color-gray-500);

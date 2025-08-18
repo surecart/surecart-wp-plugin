@@ -79,7 +79,10 @@ export class ScProductLineItemNote {
           class={{
             'line-item-note': true,
             'line-item-note--is-expanded': this.expanded,
+            'line-item-note--clickable': this.isOverflowing || this.expanded || this.alwaysShowIcon,
           }}
+          tabIndex={this.isOverflowing || this.expanded || this.alwaysShowIcon ? 0 : undefined}
+          onClick={() => (this.isOverflowing || this.expanded || this.alwaysShowIcon) && this.toggle()}
         >
           <sc-text ref={el => (this.noteEl = el as HTMLScTextElement)} class="line-item-note__text">
             {this.note}
@@ -89,7 +92,10 @@ export class ScProductLineItemNote {
             <button
               class="line-item-note__toggle"
               type="button"
-              onClick={() => this.toggle()}
+              onClick={e => {
+                e.stopPropagation();
+                this.toggle();
+              }}
               title={this.expanded ? __('Collapse note', 'surecart') : __('Expand note', 'surecart')}
             >
               <slot name="icon">

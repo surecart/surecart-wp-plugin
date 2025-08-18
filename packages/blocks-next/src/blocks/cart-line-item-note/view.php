@@ -4,6 +4,12 @@
 	<div
 		class="line-item-note"
 		data-wp-class--line-item-note--is-expanded="state.lineItemNoteExpanded"
+		data-wp-class--line-item-note--clickable="state.showLineItemNoteToggle"
+		data-wp-on--click="actions.toggleLineItemNote"
+		data-wp-bind--role="state.showLineItemNoteToggle ? 'button' : null"
+		data-wp-bind--tabindex="state.showLineItemNoteToggle ? '0' : null"
+		data-wp-bind--aria-expanded="state.showLineItemNoteToggle ? state.lineItemNoteExpanded : null"
+		data-wp-bind--aria-label="state.showLineItemNoteToggle ? state.lineItemNoteAriaLabel : null"
 	>
 		<div
 			class="line-item-note__text"
@@ -14,7 +20,7 @@
 			type="button"
 			class="line-item-note__toggle"
 			data-wp-bind--hidden="!state.showLineItemNoteToggle"
-			data-wp-on--click="actions.toggleLineItemNote"
+			data-wp-on--click="actions.stopPropagationAndToggle"
 			data-wp-bind--aria-expanded="state.lineItemNoteExpanded"
 			data-wp-bind--aria-label="state.lineItemNoteAriaLabel"
 			data-wp-bind--aria-controls="state.lineItemNoteId"

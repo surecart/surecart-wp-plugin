@@ -4,6 +4,10 @@
   gap: 0.25em;
   min-height: 1.5em;
 
+  &--clickable {
+    cursor: pointer;
+  }
+
   &__text {
     font-size: 12px;
     line-height: 1.4;
