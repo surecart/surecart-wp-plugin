@@ -41,7 +41,7 @@ export const newCartTemplate = (childBlocks) => {
 				break;
 			case 'surecart/cart-submit':
 				transformedBlocks.push([
-					'surecart/slide-out-cart-submit',
+					'surecart/slide-out-cart-items-submit',
 					block.attributes,
 				]);
 				break;
