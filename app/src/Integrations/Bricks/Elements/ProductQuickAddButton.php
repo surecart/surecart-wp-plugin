@@ -105,19 +105,6 @@ class ProductQuickAddButton extends \Bricks\Element {
 			'inline'  => true,
 		];
 
-		$this->controls['width'] = [
-			'tab'     => 'content',
-			'label'   => esc_html__( 'Width', 'surecart' ),
-			'type'    => 'select',
-			'options' => [
-				25  => esc_html__( '25%', 'surecart' ),
-				50  => esc_html__( '50%', 'surecart' ),
-				75  => esc_html__( '75%', 'surecart' ),
-				100 => esc_html__( '100%', 'surecart' ),
-			],
-			'inline'  => true,
-		];
-
 		$this->controls['show_on_hover'] = [
 			'tab'         => 'content',
 			'label'       => esc_html__( 'Show on Hover', 'surecart' ),
@@ -156,7 +143,6 @@ class ProductQuickAddButton extends \Bricks\Element {
 			'quick_view_button_type' => $settings['quick_view_button_type'] ?? 'both',
 			'direct_add_to_cart'     => $is_add_to_cart,
 			'label'                  => $settings['label'] ?? $this->get_default_label(),
-			'width'                  => $settings['width'] ?? null,
 			'show_loading_indicator' => true,
 			'className'              => $settings['show_on_hover'] ? 'is-style-show-on-hover ' : '',
 		);
