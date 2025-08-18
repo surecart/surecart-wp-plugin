@@ -19,7 +19,7 @@ import Labels from './labels';
 import Settings from './settings';
 
 export default ({ attributes, setAttributes }) => {
-	const { label, placeholder, helpText, noOfRows } = attributes;
+	const { label, placeholder, help_text, no_of_rows } = attributes;
 	const { style: borderStyle } = useBorderProps(attributes);
 	const { style: colorStyle } = useColorProps(attributes);
 
@@ -61,7 +61,7 @@ export default ({ attributes, setAttributes }) => {
 					placeholder={
 						placeholder || __('Add a note (optional)', 'surecart')
 					}
-					rows={noOfRows || 2}
+					rows={no_of_rows || 2}
 					style={{
 						...(borderStyle?.borderRadius
 							? {
@@ -70,7 +70,7 @@ export default ({ attributes, setAttributes }) => {
 							: {}),
 					}}
 				></textarea>
-				{helpText && <div className="sc-help-text">{helpText}</div>}
+				{help_text && <div className="sc-help-text">{help_text}</div>}
 			</div>
 		</>
 	);

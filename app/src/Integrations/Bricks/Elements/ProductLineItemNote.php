@@ -68,13 +68,13 @@ class ProductLineItemNote extends \Bricks\Element {
 			'type'  => 'text',
 		);
 
-		$this->controls['helpText'] = array(
+		$this->controls['help_text'] = array(
 			'label'       => esc_html__( 'Help text', 'surecart' ),
 			'type'        => 'text',
 			'description' => esc_html__( 'Optional text that appears below the note field to provide additional guidance.', 'surecart' ),
 		);
 
-		$this->controls['noOfRows'] = array(
+		$this->controls['no_of_rows'] = array(
 			'label'   => esc_html__( 'Number of rows', 'surecart' ),
 			'type'    => 'number',
 			'min'     => 1,
@@ -241,8 +241,8 @@ class ProductLineItemNote extends \Bricks\Element {
 	public function render() {
 		$label       = ! empty( $this->settings['label'] ) ? $this->settings['label'] : '';
 		$placeholder = ! empty( $this->settings['placeholder'] ) ? $this->settings['placeholder'] : esc_html__( 'Add a note (optional)', 'surecart' );
-		$help_text   = ! empty( $this->settings['helpText'] ) ? $this->settings['helpText'] : '';
-		$no_of_rows  = ! empty( $this->settings['noOfRows'] ) ? absint( $this->settings['noOfRows'] ) : 2;
+		$help_text   = ! empty( $this->settings['help_text'] ) ? $this->settings['help_text'] : '';
+		$no_of_rows  = ! empty( $this->settings['no_of_rows'] ) ? absint( $this->settings['no_of_rows'] ) : 2;
 
 		if ( $this->is_admin_editor() ) {
 			ob_start();
@@ -282,8 +282,8 @@ class ProductLineItemNote extends \Bricks\Element {
 			[
 				'label'       => wp_kses_post( $label ),
 				'placeholder' => esc_attr( $placeholder ),
-				'helpText'    => wp_kses_post( $help_text ),
-				'noOfRows'    => absint( $no_of_rows ),
+				'help_text'   => wp_kses_post( $help_text ),
+				'no_of_rows'  => absint( $no_of_rows ),
 			]
 		);
 	}
