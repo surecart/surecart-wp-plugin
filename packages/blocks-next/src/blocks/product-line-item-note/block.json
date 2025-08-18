@@ -16,10 +16,10 @@
 		"placeholder": {
 			"type": "string"
 		},
-		"helpText": {
+		"help_text": {
 			"type": "string"
 		},
-		"noOfRows": {
+		"no_of_rows": {
 			"type": "number"
 		}
 	},

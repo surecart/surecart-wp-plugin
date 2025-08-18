@@ -7,7 +7,7 @@ import {
 import { useToolsPanelDropdownMenuProps } from '../utils';
 
 export default function Labels({ attributes, setAttributes }) {
-	const { placeholder, helpText } = attributes;
+	const { placeholder, help_text } = attributes;
 	const dropdownMenuProps = useToolsPanelDropdownMenuProps();
 
 	return (
@@ -16,7 +16,7 @@ export default function Labels({ attributes, setAttributes }) {
 			resetAll={() =>
 				setAttributes({
 					placeholder: '',
-					helpText: '',
+					help_text: '',
 				})
 			}
 			dropdownMenuProps={dropdownMenuProps}
@@ -41,17 +41,17 @@ export default function Labels({ attributes, setAttributes }) {
 			</ToolsPanelItem>
 			<ToolsPanelItem
 				label={__('Help Text', 'surecart')}
-				hasValue={() => !!helpText}
+				hasValue={() => !!help_text}
 				onDeselect={() =>
 					setAttributes({
-						helpText: '',
+						help_text: '',
 					})
 				}
 			>
 				<TextControl
 					label={__('Help Text', 'surecart')}
-					value={helpText}
-					onChange={(helpText) => setAttributes({ helpText })}
+					value={help_text}
+					onChange={(help_text) => setAttributes({ help_text })}
 					help={__(
 						'Optional text that appears below the note field to provide additional guidance.',
 						'surecart'

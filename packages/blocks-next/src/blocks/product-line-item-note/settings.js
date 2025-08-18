@@ -14,7 +14,7 @@ import {
 import { useToolsPanelDropdownMenuProps } from '../utils';
 
 export default function Settings({ attributes, setAttributes }) {
-	const { noOfRows } = attributes;
+	const { no_of_rows } = attributes;
 	const dropdownMenuProps = useToolsPanelDropdownMenuProps();
 
 	return (
@@ -22,26 +22,26 @@ export default function Settings({ attributes, setAttributes }) {
 			label={__('Input field', 'surecart')}
 			resetAll={() =>
 				setAttributes({
-					noOfRows: 2,
+					no_of_rows: 2,
 				})
 			}
 			dropdownMenuProps={dropdownMenuProps}
 		>
 			<ToolsPanelItem
 				label={__('Number of rows', 'surecart')}
-				hasValue={() => noOfRows !== 2}
+				hasValue={() => no_of_rows !== 2}
 				onDeselect={() =>
 					setAttributes({
-						noOfRows: 2,
+						no_of_rows: 2,
 					})
 				}
 			>
 				<RangeControl
 					__nextHasNoMarginBottom
 					label={__('Number of rows', 'surecart')}
-					value={noOfRows || 2}
-					onChange={(noOfRows) =>
-						setAttributes({ noOfRows: parseInt(noOfRows) })
+					value={no_of_rows || 2}
+					onChange={(no_of_rows) =>
+						setAttributes({ no_of_rows: parseInt(no_of_rows) })
 					}
 					min={1}
 					max={10}

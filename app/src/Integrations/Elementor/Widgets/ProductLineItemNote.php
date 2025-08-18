@@ -96,7 +96,7 @@ class ProductLineItemNote extends \Elementor\Widget_Base {
 		);
 
 		$this->add_control(
-			'helpText',
+			'help_text',
 			[
 				'label'       => esc_html__( 'Help text', 'surecart' ),
 				'type'        => \Elementor\Controls_Manager::TEXT,
@@ -106,7 +106,7 @@ class ProductLineItemNote extends \Elementor\Widget_Base {
 		);
 
 		$this->add_control(
-			'noOfRows',
+			'no_of_rows',
 			[
 				'label'   => esc_html__( 'Number of rows', 'surecart' ),
 				'type'    => \Elementor\Controls_Manager::NUMBER,
@@ -360,13 +360,13 @@ class ProductLineItemNote extends \Elementor\Widget_Base {
 					name="sc_product_note"
 					id="sc_product_note"
 					placeholder="<?php echo esc_attr( $settings['placeholder'] ?? __( 'Add a note (optional)', 'surecart' ) ); ?>"
-					rows="<?php echo esc_attr( $settings['noOfRows'] ?? 2 ); ?>"
+					rows="<?php echo esc_attr( $settings['no_of_rows'] ?? 2 ); ?>"
 					maxlength="500"
 				></textarea>
 
-				<?php if ( ! empty( $settings['helpText'] ) ) : ?>
+				<?php if ( ! empty( $settings['help_text'] ) ) : ?>
 					<div class="sc-help-text">
-						<?php echo esc_html( $settings['helpText'] ); ?>
+						<?php echo esc_html( $settings['help_text'] ); ?>
 					</div>
 				<?php endif; ?>
 			</div>
@@ -376,7 +376,7 @@ class ProductLineItemNote extends \Elementor\Widget_Base {
 
 		?>
 		<div <?php $this->print_render_attribute_string( 'wrapper' ); ?>>
-			<!-- wp:surecart/product-line-item-note { "label" : "<?php echo esc_attr( $settings['label'] ?? '' ); ?>", "placeholder" : "<?php echo esc_attr( $settings['placeholder'] ?? '' ); ?>", "helpText" : "<?php echo esc_attr( $settings['helpText'] ?? '' ); ?>", "noOfRows" : <?php echo esc_attr( $settings['noOfRows'] ?? 2 ); ?>} /-->
+			<!-- wp:surecart/product-line-item-note { "label" : "<?php echo esc_attr( $settings['label'] ?? '' ); ?>", "placeholder" : "<?php echo esc_attr( $settings['placeholder'] ?? '' ); ?>", "help_text" : "<?php echo esc_attr( $settings['help_text'] ?? '' ); ?>", "no_of_rows" : <?php echo esc_attr( $settings['no_of_rows'] ?? 2 ); ?>} /-->
 		</div>
 		<?php
 	}
