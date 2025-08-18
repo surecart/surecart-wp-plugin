@@ -7,28 +7,10 @@ namespace SureCart\Integrations\HelpWidget;
  */
 class HelpWidget {
 	/**
-	 * Checklist.
-	 *
-	 * @var Checklist
-	 */
-	protected $checklist;
-
-	/**
 	 * Constructor.
-	 *
-	 * @param Checklist $checklist Checklist.
 	 */
-	public function __construct( Checklist $checklist ) {
-		$this->checklist = $checklist;
-	}
-
-	/**
-	 * Checklist.
-	 *
-	 * @return Checklist
-	 */
-	public function checklist() {
-		return $this->checklist;
+	public function __construct() {
+		// Constructor
 	}
 
 	/**
