@@ -60,7 +60,12 @@ export default ({
 
 		// provisional.
 		if (!!scData?.claim_url) {
-			return <ScProvisionalBanner claim-url={scData?.claim_url} />;
+			return (
+				<ScProvisionalBanner
+					claimUrl={scData?.claim_url}
+					expired={scData?.claim_expired ?? false}
+				/>
+			);
 		}
 
 		// nothing.
