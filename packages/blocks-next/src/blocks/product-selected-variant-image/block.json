@@ -1,33 +1,38 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
-	"name": "surecart/product-quantity",
-	"title": "Product Quantity",
-	"description": "Display the product quantity selector",
+	"name": "surecart/product-selected-variant-image",
+	"title": "Product Selected Variant Image",
+	"description": "Shows the image for the currently selected product variant.",
 	"version": "1.0.0",
 	"category": "surecart-product-page",
-	"icon": "media-interactive",
+	"icon": "tag",
 	"ancestor": [
 		"surecart/product-page",
 		"surecart/product-template",
 		"surecart/sticky-purchase"
 	],
-	"keywords": ["quantity", "form", "product"],
+	"example": {
+		"attributes": {}
+	},
 	"attributes": {
-		"label": {
+		"sizing": {
 			"type": "string",
-			"default": "Quantity"
+			"default": "cover"
 		},
-		"id": {
+		"aspectRatio": {
+			"type": "string"
+		},
+		"width": {
+			"type": "string"
+		},
+		"height": {
 			"type": "string"
 		}
 	},
 	"supports": {
 		"interactivity": true,
 		"anchor": true,
-		"typography": {
-			"fontSize": true
-		},
 		"spacing": {
 			"padding": true,
 			"margin": true,
@@ -37,18 +42,16 @@
 			}
 		},
 		"color": {
-			"gradients": false,
-			"background": false,
-			"link": false,
-			"__experimentalDefaultControls": {
-				"background": true,
-				"text": true,
-				"link": true
-			}
+			"text": false,
+			"background": false
 		},
 		"__experimentalBorder": {
+			"width": true,
+			"color": true,
 			"radius": true,
 			"__experimentalDefaultControls": {
+				"width": true,
+				"color": true,
 				"radius": true
 			}
 		}
@@ -56,10 +59,5 @@
 	"textdomain": "surecart",
 	"render": "file:./view.php",
 	"editorScript": "file:./index.js",
-	"editorStyle": ["surecart-quantity-selector", "surecart-input-group"],
-	"style": [
-		"surecart-quantity-selector",
-		"surecart-input-group",
-		"file:./style-index.css"
-	]
+	"style": "file:./style-index.css"
 }

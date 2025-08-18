@@ -1,12 +1,12 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
-	"name": "surecart/product-selected-price-interval",
-	"title": "Selected Price Interval",
-	"description": "Displays the currently selected price interval.",
+	"name": "surecart/product-selected-variant",
+	"title": "Selected Variant Display",
+	"description": "Displays the currently selected variant of a product.",
 	"version": "1.0.0",
 	"category": "surecart-product-page",
-	"icon": "clock",
+	"icon": "tag",
 	"ancestor": [
 		"surecart/product-page",
 		"surecart/product-template",
