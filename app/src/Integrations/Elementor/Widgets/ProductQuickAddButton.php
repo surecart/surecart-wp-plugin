@@ -305,48 +305,80 @@ class ProductQuickAddButton extends \Elementor\Widget_Base {
 	 * @return void
 	 */
 	protected function render() {
-		$settings       = $this->get_settings_for_display();
-		$is_add_to_cart = ! empty( $settings['direct_add_to_cart'] ) && 'yes' === $settings['direct_add_to_cart'];
-		$attributes     = array(
+		$settings            = $this->get_settings_for_display();
+		$product_id          = get_the_ID();
+		$product             = sc_get_product();
+		$is_add_to_cart      = ! empty( $settings['direct_add_to_cart'] ) && 'yes' === $settings['direct_add_to_cart'];
+		$should_direct_add   = $is_add_to_cart && empty( $product->has_options );
+		$show_on_hover_class = 'yes' === $settings['show_on_hover'] ? 'is-style-show-on-hover ' : '';
+		$attributes          = array(
 			'icon_position'          => $settings['icon_position'] ?? 'before',
 			'quick_view_button_type' => $settings['quick_view_button_type'] ?? 'both',
-			'direct_add_to_cart'     => $is_add_to_cart,
 			'label'                  => $settings['label'] ?? $this->get_default_label(),
-			'show_loading_indicator' => true,
-			'className'              => 'yes' === $settings['show_on_hover'] ? 'is-style-show-on-hover ' : '',
 		);
-		$show_icon      = in_array( $attributes['quick_view_button_type'], [ 'icon', 'both' ], true );
-		$show_text      = in_array( $attributes['quick_view_button_type'], [ 'text', 'both' ], true );
+		$show_icon           = in_array( $attributes['quick_view_button_type'], [ 'icon', 'both' ], true );
+		$show_text           = in_array( $attributes['quick_view_button_type'], [ 'text', 'both' ], true );
+		$quick_view_link     = add_query_arg( 'product-quick-view', $product_id );
+		$is_disabled         = empty( $quick_view_link ) ? 'true' : null;
 
-		if ( \Elementor\Plugin::$instance->editor->is_edit_mode() ) {
-			?>
-				<div class="wp-block-buttons">
-					<div class="wp-block-button">
-						<div class="wp-block-button__link sc-button__link  wp-block-surecart-product-quick-view-button" aria-label="Quick Add Product" role="button">
-							<?php if ( $show_icon && 'before' === $attributes['icon_position'] ) : ?>
-								<svg class="wp-block-surecart-product-quick-view-button__icon sc-button__link-text" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-									<line x1="12" y1="5" x2="12" y2="19"></line>
-									<line x1="5" y1="12" x2="19" y2="12"></line>
-								</svg>
-							<?php endif; ?>
-							<?php if ( $show_text ) : ?>
-								<span class="sc-button__link-text"><?php echo esc_html( $attributes['label'] ); ?></span>
-							<?php endif; ?>
-							<?php if ( $show_icon && 'after' === $attributes['icon_position'] ) : ?>
-								<svg class="wp-block-surecart-product-quick-view-button__icon sc-button__link-text" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-									<line x1="12" y1="5" x2="12" y2="19"></line>
-									<line x1="5" y1="12" x2="19" y2="12"></line>
-								</svg>
-							<?php endif; ?>
-						</div>
-					</div>
-				</div>
-			<?php
-			return;
+		if ( $should_direct_add ) {
+			$is_disabled = empty( $product->in_stock ) ? 'true' : null;
+			$aria_label  = empty( $product->in_stock ) ? __( 'Sold Out', 'surecart' ) : __( 'Add to Cart', 'surecart' );
+
+			$this->add_render_attribute( 'quick-add-button', 'disabled', $is_disabled );
+			$this->add_render_attribute( 'quick-add-button', 'aria-label', $aria_label );
+			$this->add_render_attribute( 'quick-add-button', 'data-wp-on--click', 'callbacks.handleSubmit' );
+			$this->add_render_attribute( 'quick-add-button', 'data-wp-on--keydown', 'callbacks.handleSubmit' );
+		} else {
+			$this->add_render_attribute(
+				'quick-add-button',
+				'data-wp-context',
+				wp_json_encode(
+					[
+						'url' => sanitize_url( $quick_view_link ),
+					],
+					JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP
+				)
+			);
+			$this->add_render_attribute( 'quick-add-button', 'aria-label', __( 'Quick Add Product', 'surecart' ) );
+			$this->add_render_attribute( 'quick-add-button', 'data-wp-on--click', 'actions.open' );
+			$this->add_render_attribute( 'quick-add-button', 'data-wp-on--keydown', 'actions.open' );
+			$this->add_render_attribute( 'quick-add-button', 'data-wp-on--mouseenter', 'actions.prefetch' );
+			$this->add_render_attribute( 'quick-add-button', 'data-wp-interactive', '{ "namespace": "surecart/product-quick-view" }' );
+		}
+
+		$this->add_render_attribute( 'quick-add-button', 'class', 'wp-block-surecart-product-quick-view-button wp-block-button__link sc-button__link elementor-button elementor-button-link elementor-size-sm ' . $show_on_hover_class );
+		$this->add_render_attribute( 'quick-add-button', 'data-wp-class--loading', 'state.loading' );
+		$this->add_render_attribute( 'quick-add-button', 'data-wp-class--sc-button__link--busy', 'state.loading' );
+		$this->add_render_attribute( 'quick-add-button', 'aria-disabled', $is_disabled );
+
+		if ( ! \Elementor\Plugin::$instance->editor->is_edit_mode() ) {
+			\SureCart::block()->quickView()->render();
 		}
 
 		?>
-		<!-- wp:surecart/product-quick-view-button <?php echo wp_json_encode( $attributes ); ?> /-->
+		<div 
+			role="button" 
+			tabindex="0" 
+			<?php echo $this->get_render_attribute_string( 'quick-add-button' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+		>
+			<span class="sc-spinner" aria-hidden="true"></span>
+			<?php if ( $show_icon && 'before' === $attributes['icon_position'] ) : ?>
+				<svg class="wp-block-surecart-product-quick-view-button__icon sc-button__link-text" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<line x1="12" y1="5" x2="12" y2="19"></line>
+					<line x1="5" y1="12" x2="19" y2="12"></line>
+				</svg>
+			<?php endif; ?>
+			<?php if ( $show_text ) : ?>
+				<span class="sc-button__link-text"><?php echo esc_html( empty( $product->in_stock ) ? __( 'Sold Out', 'surecart' ) : $attributes['label'] ); ?></span>
+			<?php endif; ?>
+			<?php if ( $show_icon && 'after' === $attributes['icon_position'] ) : ?>
+				<svg class="wp-block-surecart-product-quick-view-button__icon sc-button__link-text" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<line x1="12" y1="5" x2="12" y2="19"></line>
+					<line x1="5" y1="12" x2="19" y2="12"></line>
+				</svg>
+			<?php endif; ?>
+		</div>
 		<?php
 	}
 }
