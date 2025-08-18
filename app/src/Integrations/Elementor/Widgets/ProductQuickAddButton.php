@@ -122,6 +122,17 @@ class ProductQuickAddButton extends \Elementor\Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'show_on_hover',
+			array(
+				'label'        => esc_html__( 'Show on Hover', 'surecart' ),
+				'type'         => \Elementor\Controls_Manager::SWITCHER,
+				'label_on'     => esc_html__( 'Yes', 'surecart' ),
+				'label_off'    => esc_html__( 'No', 'surecart' ),
+				'default'      => 'no',
+			)
+		);
+
 		$this->end_controls_section();
 
 		$this->start_controls_section(
@@ -302,6 +313,7 @@ class ProductQuickAddButton extends \Elementor\Widget_Base {
 			'direct_add_to_cart'     => $is_add_to_cart,
 			'label'                  => $settings['label'] ?? $this->get_default_label(),
 			'show_loading_indicator' => true,
+			'className'              => 'yes' === $settings['show_on_hover'] ? 'is-style-show-on-hover ' : '',
 		);
 		$show_icon      = in_array( $attributes['quick_view_button_type'], [ 'icon', 'both' ], true );
 		$show_text      = in_array( $attributes['quick_view_button_type'], [ 'text', 'both' ], true );
