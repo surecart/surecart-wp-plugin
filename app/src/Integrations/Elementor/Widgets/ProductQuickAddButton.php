@@ -122,19 +122,6 @@ class ProductQuickAddButton extends \Elementor\Widget_Base {
 			]
 		);
 
-		$this->add_control(
-			'width',
-			[
-				'label'   => esc_html__( 'Width', 'surecart' ),
-				'type'    => \Elementor\Controls_Manager::SELECT,
-				'options' => [
-					25  => esc_html__( '25%', 'surecart' ),
-					50  => esc_html__( '50%', 'surecart' ),
-					75  => esc_html__( '75%', 'surecart' ),
-					100 => esc_html__( '100%', 'surecart' ),
-				],
-			]
-		);
 		$this->end_controls_section();
 
 		$this->start_controls_section(
@@ -252,6 +239,18 @@ class ProductQuickAddButton extends \Elementor\Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'border_radius',
+			array(
+				'label'      => esc_html__( 'Border Radius', 'surecart' ),
+				'type'       => \Elementor\Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', 'em', '%' ],
+				'selectors'  => array(
+					$button_selector => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				),
+			)
+		);
+
 		$this->add_responsive_control(
 			'padding',
 			[
@@ -302,17 +301,15 @@ class ProductQuickAddButton extends \Elementor\Widget_Base {
 			'quick_view_button_type' => $settings['quick_view_button_type'] ?? 'both',
 			'direct_add_to_cart'     => $is_add_to_cart,
 			'label'                  => $settings['label'] ?? $this->get_default_label(),
-			'width'                  => $settings['width'] ?? null,
 			'show_loading_indicator' => true,
 		);
-		$width_class    = ! empty( $attributes['width'] ) ? 'has-custom-width wp-block-button__width-' . $attributes['width'] : '';
 		$show_icon      = in_array( $attributes['quick_view_button_type'], [ 'icon', 'both' ], true );
 		$show_text      = in_array( $attributes['quick_view_button_type'], [ 'text', 'both' ], true );
 
 		if ( \Elementor\Plugin::$instance->editor->is_edit_mode() ) {
 			?>
 				<div class="wp-block-buttons">
-					<div class="wp-block-button <?php echo esc_attr( $width_class ); ?>">
+					<div class="wp-block-button">
 						<div class="wp-block-button__link sc-button__link  wp-block-surecart-product-quick-view-button" aria-label="Quick Add Product" role="button">
 							<?php if ( $show_icon && 'before' === $attributes['icon_position'] ) : ?>
 								<svg class="wp-block-surecart-product-quick-view-button__icon sc-button__link-text" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
