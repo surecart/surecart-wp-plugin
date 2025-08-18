@@ -225,6 +225,30 @@ export default () => {
 						{__('% of Period Remaining', 'surecart')}
 					</span>
 				</ScInput>
+
+				<ScInput
+					value={item?.remind_after_days}
+					label={__('Minimum Days Between Reminders', 'surecart')}
+					placeholder={__('(no limit)', 'surecart')}
+					type="number"
+					min="0"
+					max="365"
+					onScInput={(e) =>
+						editItem({
+							remind_after_days: e.target.value
+								? parseInt(e.target.value)
+								: null,
+						})
+					}
+					help={__(
+						'Set how long to wait between reminders. For example, 180 days means customers get at most one reminder every 180 days, regardless of renewal frequency.',
+						'surecart'
+					)}
+				>
+					<span slot="suffix" style={{ opacity: '0.65' }}>
+						{__('days', 'surecart')}
+					</span>
+				</ScInput>
 			</SettingsBox>
 
 			<SettingsBox
