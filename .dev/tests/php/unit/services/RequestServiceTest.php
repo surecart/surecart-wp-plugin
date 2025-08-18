@@ -113,4 +113,42 @@ class RequestServiceTest extends SureCartUnitTestCase
 		// make the request.
 		$service->makeUncachedRequest('test');
 	}
+
+	/**
+	 * Test that bad_gateway errors are properly handled.
+	 * 
+	 * @group request
+	 */
+	public function test_bad_gateway_error_handling() {				
+		// mock the requests in the container with proper container injection and a token
+		$requests =  \Mockery::mock(RequestService::class, [\SureCart::getApplication()->container(), 'test-token', '/v1', true])->makePartial();
+		\SureCart::alias('request', function () use ($requests) {
+			return call_user_func_array([$requests, 'makeRequest'], func_get_args());
+		});
+		
+		// Mock remote request to return bad_gateway response
+		$requests
+			->shouldReceive( 'remoteRequest' )
+			->once()
+			->andReturn( [
+				'response' => [
+					'code' => 502
+				],
+				'body' => wp_json_encode([
+					'code' => 'bad_gateway',
+					'type' => 'bad_gateway',
+					'http_status' => 'bad_gateway',
+					'message' => 'Charge ch_3Rh3nCCAyH09BTUT1QpGDreU has been charged back; cannot issue a refund.',
+					'validation_errors' => []
+				])
+			] );
+
+		// Make the request
+		$result = \SureCart\Models\Checkout::update(['id' => 1]);
+		
+		// Assert it's a WP_Error with the correct details
+		$this->assertWPError( $result );
+		$this->assertEquals( 'bad_gateway', $result->get_error_code() );
+		$this->assertEquals( 'Charge ch_3Rh3nCCAyH09BTUT1QpGDreU has been charged back; cannot issue a refund.', $result->get_error_message() );
+	}
 }
