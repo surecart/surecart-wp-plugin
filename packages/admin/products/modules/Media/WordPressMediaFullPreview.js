@@ -1,6 +1,5 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { useEffect, useRef } from '@wordpress/element';
 
 /**
  * Internal dependencies.
@@ -9,65 +8,25 @@ import { ScSkeleton } from '@surecart/components-react';
 import { isVideo } from '../../../util/attachments';
 
 export default ({ media, settings = {} }) => {
-	const videoRef = useRef(null);
-
-	useEffect(() => {
-		if (!isVideo(media) || !videoRef.current || !window.wp?.mediaelement)
-			return;
-
-		let player;
-		try {
-			player = window.wp.mediaelement.initialize(
-				videoRef.current,
-				window._wpmejsSettings
-			);
-		} catch (error) {
-			console.warn('Failed to initialize MediaElement:', error);
-		}
-
-		return () => player?.remove?.();
-	}, [media?.source_url]);
-
 	const renderVideo = () => {
 		return (
-			<div
+			<video
 				css={css`
-					display: flex;
-					align-items: center;
-					justify-content: center;
-					height: 100%;
 					width: 100%;
-					position: relative;
+					height: 100%;
+					object-fit: cover;
+					display: block;
 					aspect-ratio: ${settings?.aspect_ratio || '16/9'};
-
-					.wp-video {
-						width: 100% !important;
-						height: auto !important;
-					}
-
-					.mejs-container {
-						overflow: hidden;
-						border-radius: var(--sc-border-radius-medium);
-					}
-
-					.mejs-video {
-						border-radius: var(--sc-border-radius-medium);
-					}
 				`}
+				controls
+				src={media?.source_url}
+				preload="metadata"
 			>
-				<video
-					ref={videoRef}
-					className="wp-video-shortcode"
-					controls
+				<source
+					type={media?.mime_type || media?.mime}
 					src={media?.source_url}
-					preload="metadata"
-				>
-					<source
-						type={media?.mime_type || media?.mime}
-						src={media?.source_url}
-					/>
-				</video>
-			</div>
+				/>
+			</video>
 		);
 	};
 
@@ -124,9 +83,8 @@ export default ({ media, settings = {} }) => {
 				border: var(--sc-input-border);
 				box-shadow: var(--sc-input-box-shadow);
 				width: 100%;
-				justify-content: center;
-				display: flex;
-				align-items: center;
+				max-width: var(--sc-drawer-size);
+				overflow: hidden;
 			`}
 		>
 			{renderMedia()}

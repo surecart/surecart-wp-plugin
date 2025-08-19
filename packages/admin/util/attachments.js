@@ -413,7 +413,7 @@ export const normalizeGalleryItem = (item) => {
  * @returns {number} - The media ID
  */
 export const getGalleryItemId = (item) => {
-	return typeof item === 'object' ? item?.id : parseInt(item);
+	return typeof item === 'object' ? parseInt(item?.id) : parseInt(item);
 };
 
 /**
@@ -425,17 +425,10 @@ export const getGalleryItemId = (item) => {
  */
 export const transformGalleryItem = (id, properties = {}) => {
 	const { variant_option, thumbnail_image, aspect_ratio } = properties;
-
-	// If no additional properties, return just the ID.
-	if (!variant_option && !thumbnail_image && !aspect_ratio) {
-		return parseInt(id);
-	}
-
-	// Return object with properties.
-	const item = { id: parseInt(id) };
-	if (variant_option) item.variant_option = variant_option;
-	if (thumbnail_image) item.thumbnail_image = thumbnail_image;
-	if (aspect_ratio) item.aspect_ratio = aspect_ratio;
-
-	return item;
+	return {
+		id: parseInt(id),
+		...(variant_option ? { variant_option } : {}),
+		...(thumbnail_image ? { thumbnail_image } : {}),
+		...(aspect_ratio ? { aspect_ratio } : {}),
+	};
 };
