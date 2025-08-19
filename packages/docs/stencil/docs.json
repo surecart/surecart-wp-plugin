@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-07-30T19:54:15",
+  "timestamp": "2025-08-19T14:50:15",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.18.3",
@@ -43186,6 +43186,32 @@
       "docsTags": [],
       "usage": {},
       "props": [
+        {
+          "name": "checkout",
+          "type": "Checkout",
+          "complexType": {
+            "original": "Checkout",
+            "resolved": "Checkout",
+            "references": {
+              "Checkout": {
+                "location": "import",
+                "path": "../../../../types",
+                "id": "src/types.ts::Checkout"
+              }
+            }
+          },
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "Checkout"
+            }
+          ],
+          "optional": true,
+          "required": false
+        },
         {
           "name": "total",
           "type": "\"amount_due\" | \"subtotal\" | \"total\"",

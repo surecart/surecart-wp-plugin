@@ -2,7 +2,7 @@
 	"apiVersion": 2,
 	"name": "surecart/address",
 	"title": "Address",
-	"description": "Display an shipping address form. This is used for shipping and tax calculations.",
+	"description": "Display a shipping address form. This is used for shipping and tax calculations.",
 	"category": "surecart",
 	"keywords": ["address", "shipping", "tax"],
 	"textdomain": "surecart",
