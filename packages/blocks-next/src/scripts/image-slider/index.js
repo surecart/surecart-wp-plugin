@@ -130,6 +130,13 @@ const { state, actions } = store('surecart/image-slider', {
 					'.swiper:not(.sc-image-slider__thumbs .swiper)'
 				),
 				{
+					on: {
+						slideChange: () => {
+							const { actions: videoActions } =
+								store('surecart/video');
+							videoActions.pauseVideos();
+						},
+					},
 					modules: [Thumbs, A11y, Navigation],
 					direction: 'horizontal',
 					loop: false,

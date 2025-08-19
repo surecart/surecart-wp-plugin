@@ -3,7 +3,7 @@
  */
 import { store, getContext, getElement } from '@wordpress/interactivity';
 
-store('surecart/video', {
+const { actions } = store('surecart/video', {
 	actions: {
 		async play() {
 			const context = getContext();
@@ -13,6 +13,9 @@ store('surecart/video', {
 			if (context.isVideoPlaying) {
 				return;
 			}
+
+			// pause all other videos.
+			actions.pauseVideos();
 
 			// always show the video.
 			context.isVideoPlaying = true;
@@ -30,6 +33,12 @@ store('surecart/video', {
 			} catch (error) {
 				console.error('Error playing video:', error);
 			}
+		},
+		pauseVideos() {
+			const videos = document.querySelectorAll('video');
+			(videos || []).forEach((video) => {
+				video.pause();
+			});
 		},
 	},
 });
