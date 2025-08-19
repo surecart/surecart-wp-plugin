@@ -48,7 +48,7 @@ class HelpWidget {
 		<style>
 			/* Prevent the Gleap feedback button from overlapping WordPress modals */
 			.bb-feedback-button {
-				z-index: 150000 !important;
+				z-index: 99999 !important;
 			}
 		</style>
 
