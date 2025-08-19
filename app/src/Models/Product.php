@@ -692,7 +692,7 @@ class Product extends Model implements PageModel {
 	/**
 	 * Get with sorted prices.
 	 *
-	 * @return this
+	 * @return self
 	 */
 	public function withSortedPrices() {
 		if ( empty( $this->prices->data ) ) {
@@ -713,9 +713,9 @@ class Product extends Model implements PageModel {
 	}
 
 	/**
-	 * Get product with acgive and sorted prices.
+	 * Get product with active and sorted prices.
 	 *
-	 * @return this
+	 * @return self
 	 */
 	public function withActivePrices() {
 		if ( empty( $this->prices->data ) ) {

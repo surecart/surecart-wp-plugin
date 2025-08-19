@@ -60,17 +60,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\Dashboard\\' )
 ->handle( 'DashboardController@index' );
 
-/*
-|--------------------------------------------------------------------------
-| Onboarding Checklist
-|--------------------------------------------------------------------------
-*/
-\SureCart::route()
-->get()
-->where( 'admin', 'sc-onboarding-checklist' )
-->middleware( 'assets.components' )
-->setNamespace( '\\SureCart\\Controllers\\Admin\\Onboarding\\' )
-->handle( 'OnboardingController@checklist' );
 
 /*
 |--------------------------------------------------------------------------

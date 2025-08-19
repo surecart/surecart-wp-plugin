@@ -213,8 +213,8 @@ const { state, actions, callbacks } = store('surecart/lightbox', {
 					})(imageRef);
 
 				return (
-					metadata.galleryId === state.metadata[imageId].galleryId &&
-					isVisible
+					metadata?.galleryId ===
+						state.metadata[imageId]?.galleryId && isVisible
 				);
 			});
 
