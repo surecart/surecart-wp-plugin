@@ -5,7 +5,7 @@ import { store, getContext, getElement } from '@wordpress/interactivity';
 
 store('surecart/video', {
 	actions: {
-		playVideo() {
+		async play() {
 			const context = getContext();
 			const { ref } = getElement();
 
@@ -14,18 +14,21 @@ store('surecart/video', {
 				return;
 			}
 
+			// always show the video.
+			context.isVideoPlaying = true;
+
 			// Get the stored video element for this container.
 			const video = ref.querySelector('video');
 
-			if (video) {
-				video
-					.play()
-					.catch((error) => {
-						console.error('Error playing video:', error);
-					})
-					.finally(() => {
-						context.isVideoPlaying = true;
-					});
+			// it's not a video element.
+			if (!video) {
+				return;
+			}
+
+			try {
+				await video.play();
+			} catch (error) {
+				console.error('Error playing video:', error);
 			}
 		},
 	},
