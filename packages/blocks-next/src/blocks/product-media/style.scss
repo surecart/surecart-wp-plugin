@@ -25,9 +25,6 @@
 	width: 100%;
 	max-width: 100%;
 	overflow: hidden;
-	display: flex;
-	align-items: center;
-	justify-content: center;
 
 	[hidden] {
 		display: none !important;
@@ -118,8 +115,12 @@
 	}
 }
 
+.sc-video-container:not(.sc-video-playing) {
+	cursor: pointer;
+}
+
 // Overlay specific play button.
-.sc-video-overlay .sc-video-play-button {
+.sc-video-container .sc-video-play-button {
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);

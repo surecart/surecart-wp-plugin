@@ -1,4 +1,5 @@
 <?php
+
 namespace SureCart\Models;
 
 use SureCart\Models\GalleryItem as ModelsGalleryItem;
@@ -8,6 +9,7 @@ use SureCart\Support\Contracts\GalleryItem;
  * Gallery item model
  */
 class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
+
 	/**
 	 * Featured image.
 	 *
@@ -44,6 +46,60 @@ class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 	}
 
 	/**
+	 * Get the HTML for the video thumbnail.
+	 *
+	 * @return string The HTML for the video thumbnail.
+	 */
+	public function getVideoThumbnailHtml(): string {
+		$poster_image = $this->get_video_poster_image();
+		ob_start();
+		?>
+		<div class="sc-video-thumbnail">
+			<img 
+				src="<?php echo esc_url( $poster_image ); ?>" 
+				alt="
+				<?php
+					echo esc_attr(
+						sprintf(
+						// translators: %s is the video title.
+							__( 'Video thumbnail for %s', 'surecart' ),
+							$this->item->post_title ?? ''
+						)
+					);
+				?>
+			"/>
+			<div role="button" class="sc-video-play-button" aria-label="<?php echo esc_attr__( 'Play video', 'surecart' ); ?>">
+				<?php
+				echo wp_kses(
+					\SureCart::svg()->get(
+						'play',
+						[
+							'width'  => 12,
+							'height' => 12,
+							'class'  => '',
+						]
+					),
+					sc_allowed_svg_html()
+				);
+				?>
+				<span class="screen-reader-text">
+					<?php
+					echo esc_html(
+						sprintf(
+						// translators: %s is the video title.
+							__( 'Play video: %s', 'surecart' ),
+							$this->item->post_title ?? ''
+						)
+					);
+					?>
+				</span>
+			</div>
+		</div>
+		<?php
+		return ob_get_clean();
+	}
+
+	/**
 	 * Get the HTML for the video attachment.
 	 *
 	 * @param string $size The size of the video.
@@ -56,29 +112,7 @@ class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 		$poster_image = $this->get_video_poster_image();
 
 		if ( 'thumbnail' === $size ) {
-			ob_start();
-			?>
-			<div class="sc-video-thumbnail">
-				<img src="<?php echo esc_url( $poster_image ); ?>" alt="<?php echo esc_attr( sprintf( __( 'Video thumbnail for %s', 'surecart' ), $this->item->post_title ?? '' ) ); ?>" >
-				<button type="button" class="sc-video-play-button" aria-label="<?php echo esc_attr__( 'Play video', 'surecart' ); ?>">
-					<?php
-					echo wp_kses(
-						\SureCart::svg()->get(
-							'play',
-							[
-								'width'  => 12,
-								'height' => 12,
-								'class'  => '',
-							]
-						),
-						sc_allowed_svg_html()
-					);
-					?>
-					<span class="screen-reader-text"><?php echo esc_html( sprintf( __( 'Play video: %s', 'surecart' ), $this->item->post_title ?? '' ) ); ?></span>
-				</button>
-			</div>
-			<?php
-			return ob_get_clean();
+			return $this->getVideoThumbnailHtml();
 		}
 
 		$video_url    = wp_get_attachment_url( $this->item->ID );
@@ -86,77 +120,43 @@ class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 		$style        = ! empty( $aspect_ratio ) ? 'aspect-ratio: ' . esc_attr( $aspect_ratio ) . ';' : '';
 		ob_start();
 		?>
-		<div class="sc-video-container"
+
+		<div 
+			class="sc-video-container"
 			data-wp-interactive='{ "namespace": "surecart/video" }'
 			data-wp-context='{ "isVideoPlaying": false }'
 			data-wp-on--click="actions.play"
+			data-wp-class--sc-video-playing="context.isVideoPlaying"
 			style="<?php echo esc_attr( $style ); ?>"
 		>
-			<div class="sc-video-overlay" data-wp-bind--hidden="context.isVideoPlaying">
-				<img src="<?php echo esc_url( $poster_image ); ?>" alt="
-					<?php
-						echo esc_attr(
-							sprintf(
-							// translators: %s is the video title.
-								__( 'Video thumbnail for %s', 'surecart' ),
-								$this->item->post_title ?? ''
-							)
-						);
-					?>
-				" />
-
-				<button type="button" class="sc-video-play-button" aria-label="<?php echo esc_attr__( 'Play video', 'surecart' ); ?>">
-					<?php echo wp_kses( \SureCart::svg()->get( 'play', [ 'class' => '' ] ), sc_allowed_svg_html() ); ?>
-
-					<span class="screen-reader-text">
-						<?php
-						echo esc_html(
-							sprintf(
-							// translators: %s is the video title.
-								__( 'Play video: %s', 'surecart' ),
-								$this->item->post_title ?? ''
-							)
-						);
-						?>
-					</span>
-				</button>
+			<div 
+				role="button" 
+				class="sc-video-play-button" 
+				aria-label="<?php echo esc_attr__( 'Play video', 'surecart' ); ?>" 
+				data-wp-bind--hidden="context.isVideoPlaying"
+			>
+				<?php echo wp_kses( \SureCart::svg()->get( 'play' ), sc_allowed_svg_html() ); ?>
 			</div>
-			
-			<div class="sc-video-player-container" data-wp-bind--hidden="!context.isVideoPlaying" style="<?php echo esc_attr( $style ); ?>">
-				<?php
-				echo wp_kses_post(
-					apply_filters(
-						'surecart_product_video_html',
-						wp_sprintf(
-							'<video
-								class="sc-video-player"
-								src="%s"
-								poster="%s"
-								loop
-								muted
-								controls
-								playsinline
-								preload="none"
-								aria-label="%s"
-								title="%s"
-								%s
-							></video>',
-							esc_url( $video_url ),
-							esc_url( $poster_image ),
-							// translators: %s is the video title.
-							esc_attr( sprintf( __( 'Product Video: %s', 'surecart' ), $this->item->post_title ?? '' ) ),
-							esc_attr( $this->item->post_title ?? '' ),
-						),
-						$video_url,
-						$poster_image,
-						$this->item ?? ''
-					)
-				);
-				?>
-			</div>
+			<video
+				class="sc-video-player"
+				src="<?php echo esc_url( $video_url ); ?>"
+				poster="<?php echo esc_url( $poster_image ); ?>"
+				data-wp-bind--controls="context.isVideoPlaying"
+				playsinline
+				preload="none"
+				title="<?php echo esc_attr( $this->item->post_title ?? '' ); ?>">
+			</video>
 		</div>
+
 		<?php
-		return ob_get_clean();
+		// filter the output so 3rd parties can add their own video html.
+		return apply_filters(
+			'surecart_product_video_html',
+			ob_get_clean(),
+			$video_url,
+			$poster_image,
+			$this->item ?? ''
+		);
 	}
 
 	/**
@@ -344,7 +344,7 @@ class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 			return [];
 		}
 
-		list( $src, $width, $height ) = $image;
+		list($src, $width, $height) = $image;
 
 		$attachment = get_post( $attachment_id );
 		$size_class = $size;
