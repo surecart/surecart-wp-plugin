@@ -156,12 +156,16 @@ export default ({
 				<div
 					css={css`
 						display: flex;
-						align-items: center;
+						align-items: flex-start;
 						justify-content: space-between;
 						margin-bottom: var(--sc-spacing-small);
 					`}
 				>
-					<div>
+					<div
+						css={css`
+							padding-top: 8px;
+						`}
+					>
 						<ScFormatNumber
 							type="currency"
 							currency={price?.currency || 'usd'}
@@ -233,48 +237,55 @@ export default ({
 				)}
 			</ScTableCell>
 			<ScTableCell>
-				{isDraftInvoice ? (
-					<ScInput
-						type="number"
-						value={quantity}
-						disabled={price?.ad_hoc || busy}
-						onScChange={(e) =>
-							onChange({
-								quantity: parseInt(e.target.value),
-							})
-						}
-						{...(maxStockQuantity && { max: maxStockQuantity })}
-					/>
-				) : (
-					quantity
-				)}
+				<div
+					css={css`
+						padding-top: 8px;
+					`}
+				>
+					{isDraftInvoice ? (
+						<ScInput
+							type="number"
+							value={quantity}
+							disabled={price?.ad_hoc || busy}
+							onScChange={(e) =>
+								onChange({
+									quantity: parseInt(e.target.value),
+								})
+							}
+							{...(maxStockQuantity && { max: maxStockQuantity })}
+						/>
+					) : (
+						quantity
+					)}
 
-				{isDraftInvoice && maxStockQuantity && (
-					<ScText
-						css={css`
-							margin-top: var(--sc-spacing-small);
-							color: var(
-								--sc-price-label-color,
-								var(--sc-input-help-text-color)
-							);
-							font-size: var(
-								--sc-price-label-font-size,
-								var(--sc-input-help-text-font-size-medium)
-							);
-						`}
-					>
-						{sprintf(
-							__('Available: %d', 'surecart'),
-							maxStockQuantity
-						)}
-					</ScText>
-				)}
+					{isDraftInvoice && maxStockQuantity && (
+						<ScText
+							css={css`
+								margin-top: var(--sc-spacing-small);
+								color: var(
+									--sc-price-label-color,
+									var(--sc-input-help-text-color)
+								);
+								font-size: var(
+									--sc-price-label-font-size,
+									var(--sc-input-help-text-font-size-medium)
+								);
+							`}
+						>
+							{sprintf(
+								__('Available: %d', 'surecart'),
+								maxStockQuantity
+							)}
+						</ScText>
+					)}
+				</div>
 			</ScTableCell>
 			<ScTableCell>
 				<div
 					css={css`
 						display: grid;
 						gap: 0.5em;
+						padding-top: 8px;
 					`}
 				>
 					<div
@@ -302,12 +313,16 @@ export default ({
 						text-align: right;
 					`}
 				>
-					<ScButton onClick={onRemove} type="text" circle>
+					<Button
+						label={__('Remove', 'surecart')}
+						onClick={onRemove}
+						variant="tertiary"
+						style={{
+							color: 'var(--sc-color-gray-500)',
+						}}
+					>
 						<ScIcon name="trash" />
-						<ScVisuallyHidden>
-							{__('Remove', 'surecart')}
-						</ScVisuallyHidden>
-					</ScButton>
+					</Button>
 				</ScTableCell>
 			)}
 			<ScForm
