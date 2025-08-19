@@ -225,9 +225,17 @@ export function* toggleSwap({ id, action = 'swap' }) {
 export function* addLineItem({ checkout, data, live_mode = false }) {
 	const existingLineItem = (checkout?.line_items?.data || []).find((item) => {
 		if (!item?.variant?.id) {
-			return item.price.id === data.price;
+			return (
+				item.price.id === data.price &&
+				(!!data.note ? item.note === data.note : true)
+			);
 		}
-		return item.variant.id === data.variant && item.price.id === data.price;
+
+		return (
+			item.variant.id === data.variant &&
+			item.price.id === data.price &&
+			(!!data.note ? item.note === data.note : true)
+		);
 	});
 
 	// create the checkout with the line item.
