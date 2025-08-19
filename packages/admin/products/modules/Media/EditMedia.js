@@ -1,10 +1,13 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
-import { useState, useEffect } from '@wordpress/element';
+import { useState } from '@wordpress/element';
 import { Button } from '@wordpress/components';
 import { MediaUpload } from '@wordpress/media-utils';
-import { closeSmall, edit } from '@wordpress/icons';
+import { store as coreStore } from '@wordpress/core-data';
+import { select, useDispatch } from '@wordpress/data';
+import apiFetch from '@wordpress/api-fetch';
+import { reusableBlock } from '@wordpress/icons';
 
 /**
  * Internal dependencies.
@@ -16,24 +19,25 @@ import {
 	ScButton,
 	ScDrawer,
 	ScForm,
-	ScFormControl,
 	ScSelect,
 } from '@surecart/components-react';
 import {
 	normalizeMedia,
 	isVideo,
 	normalizeGalleryItem,
-	transformGalleryItem,
 	aspectRatioChoices,
+	getGalleryItemId,
 } from '../../../util/attachments';
+import DrawerSection from '../../../ui/DrawerSection';
 
 const ALLOWED_MEDIA_TYPES = ['image', 'video'];
 
-export default ({ media, product, onSave, onRequestClose }) => {
+export default ({ media, product, onRequestClose }) => {
 	const [mediaData, setMediaData] = useState(() => normalizeMedia(media));
 	const [error, setError] = useState(null);
 	const [open, setOpen] = useState(true);
 	const [isSaving, setIsSaving] = useState(false);
+	const { receiveEntityRecords } = useDispatch(coreStore);
 
 	// Initialize form values from media data
 	const [formData, setFormData] = useState(() => {
@@ -45,15 +49,10 @@ export default ({ media, product, onSave, onRequestClose }) => {
 		};
 	});
 
-	useEffect(() => {
-		if (media) {
-			setMediaData(normalizeMedia(media));
-			setFormData(normalizeGalleryItem(media));
-		}
-	}, [media]);
-
 	const onSubmit = async (event) => {
 		event.preventDefault();
+		event.stopPropagation(); // prevent parent form from submitting.
+
 		if (!mediaData?.id) {
 			setError(__('Please select a media item.', 'surecart'));
 			return;
@@ -63,14 +62,57 @@ export default ({ media, product, onSave, onRequestClose }) => {
 			setIsSaving(true);
 			setError(null);
 
-			// Create the updated gallery item.
-			const updatedItem = transformGalleryItem(mediaData.id, {
-				variant_option: formData.variant_option || null,
-				thumbnail_image: formData.thumbnail_image || null,
-				aspect_ratio: formData.aspect_ratio || null,
+			const { variant_option, thumbnail_image, aspect_ratio } = formData;
+
+			// Update the gallery with the new item data
+			const ids = [...(product?.gallery_ids || [])];
+			const updateIndex = ids.findIndex(
+				(item) => getGalleryItemId(item) === getGalleryItemId(mediaData)
+			);
+
+			if (updateIndex !== -1) {
+				ids[updateIndex] = {
+					id: parseInt(mediaData.id),
+					...(variant_option ? { variant_option } : {}),
+					...(thumbnail_image ? { thumbnail_image } : {}),
+					...(aspect_ratio ? { aspect_ratio } : {}),
+				};
+			}
+
+			// get the checkout endpoint.
+			const { baseURL } = select(coreStore).getEntityConfig(
+				'surecart',
+				'product'
+			);
+
+			const data = {
+				metadata: {
+					...(product?.metadata || {}),
+					gallery_ids: ids,
+				},
+			};
+
+			const { gallery_ids, gallery, metadata } = await apiFetch({
+				method: 'PATCH',
+				path: `${baseURL}/${product?.id}`,
+				data,
 			});
 
-			onSave(updatedItem);
+			// update the checkout in the redux store.
+			receiveEntityRecords(
+				'surecart',
+				'product',
+				{
+					...product,
+					gallery,
+					gallery_ids,
+					metadata,
+				},
+				undefined,
+				false,
+				data
+			);
+
 			setOpen(false);
 		} catch (e) {
 			console.error(e);
@@ -83,177 +125,92 @@ export default ({ media, product, onSave, onRequestClose }) => {
 		}
 	};
 
-	const selectMedia = (updatedMedia) => {
+	const selectMedia = (updatedMedia) =>
 		setMediaData(normalizeMedia(updatedMedia));
-	};
 
-	const updateFormData = (key, value) => {
+	const updateFormData = (key, value) =>
 		setFormData((prev) => ({ ...prev, [key]: value }));
-	};
 
-	const variantOptionChoices = (product?.variant_options || []).flatMap((v) =>
-		v.values.map((val) => ({
-			label: val,
-			value: val,
-		}))
+	const variantOptionChoices = (product?.variant_options || []).flatMap(
+		(v) => {
+			return {
+				label: v.name,
+				choices: v.values.map((val) => ({
+					label: val,
+					value: val,
+				})),
+			};
+		}
 	);
 
 	return (
 		<ScForm
 			style={{
 				'--sc-form-row-spacing': 'var(--sc-spacing-large)',
+				position: 'absolute',
 			}}
 			onScFormSubmit={onSubmit}
 		>
 			<ScDrawer
 				label={__('Edit Media', 'surecart')}
 				style={{
-					'--sc-drawer-size': '28rem',
+					'--sc-drawer-size': '30rem',
 					'--sc-input-label-margin': 'var(--sc-spacing-small)',
 				}}
 				onScAfterHide={onRequestClose}
 				open={open}
 				stickyHeader
+				stickyFooter
 			>
 				<div
 					css={css`
 						display: flex;
 						flex-direction: column;
 						height: 100%;
-						padding: var(--sc-spacing-x-large);
+						background: var(--sc-color-gray-50);
 					`}
 				>
 					<div
 						css={css`
+							padding: 30px;
 							display: grid;
-							gap: var(--sc-spacing-medium);
+							gap: 2em;
 						`}
 					>
 						<Error error={error} setError={setError} />
 
-						<ScFormControl
-							label={__('Select Media', 'surecart')}
-							required
-						>
-							{typeof mediaData?.id !== 'string' && (
-								<>
-									<WordPressMediaFullPreview
-										media={mediaData}
-										settings={formData}
-									/>
-
-									<div
-										css={css`
-											display: flex;
-											justify-content: flex-end;
-											align-items: center;
-											gap: var(--sc-spacing-x-small);
-											margin: var(--sc-spacing-small) 0px;
-										`}
-									>
-										<MediaUpload
-											addToGallery={false}
-											multiple={false}
-											value={mediaData?.id ?? ''}
-											onSelect={selectMedia}
-											allowedTypes={ALLOWED_MEDIA_TYPES}
-											onClose={() => {}}
-											render={({ open }) => (
-												<Button
-													onClick={open}
-													icon={edit}
-													variant="secondary"
-												>
-													{__('Change', 'surecart')}
-												</Button>
-											)}
-										/>
-
-										<Button
-											icon={closeSmall}
-											variant="secondary"
-											onClick={() => {
-												setMediaData(null);
-												setFormData({
-													variant_option: '',
-													thumbnail_image: null,
-													aspect_ratio: '',
-												});
-											}}
-											isDestructive
-										>
-											{__('Remove', 'surecart')}
-										</Button>
-									</div>
-								</>
-							)}
-
-							{!mediaData?.id && (
+						<DrawerSection
+							title={__('Media', 'surecart')}
+							suffix={
 								<MediaUpload
-									title={__('Select Media', 'surecart')}
-									onSelect={selectMedia}
-									value={mediaData?.id ?? ''}
+									addToGallery={false}
 									multiple={false}
+									value={mediaData?.id ?? ''}
+									onSelect={selectMedia}
 									allowedTypes={ALLOWED_MEDIA_TYPES}
+									onClose={() => {}}
 									render={({ open }) => (
-										<ScButton
-											type="default"
+										<Button
 											onClick={open}
-											css={css`
-												width: 100%;
-											`}
+											icon={reusableBlock}
+											variant="secondary"
+											size="small"
+											iconSize={14}
 										>
-											{__(
-												'Select from Library',
-												'surecart'
-											)}
-										</ScButton>
+											{__('Change', 'surecart')}
+										</Button>
 									)}
 								/>
-							)}
-						</ScFormControl>
-
-						{mediaData?.id && (
-							<>
-								{!!variantOptionChoices?.length && (
-									<ScSelect
-										label={__(
-											'Select Variation',
-											'surecart'
-										)}
-										value={formData.variant_option}
-										choices={variantOptionChoices}
-										placeholder={__(
-											'Select Variation',
-											'surecart'
-										)}
-										onScChange={(e) =>
-											updateFormData(
-												'variant_option',
-												e.target.value
-											)
-										}
-									/>
-								)}
-
-								<ScSelect
-									label={__('Aspect Ratio', 'surecart')}
-									value={formData.aspect_ratio}
-									placement="top-start"
-									placeholder={__(
-										'Select aspect ratio',
-										'surecart'
-									)}
-									choices={aspectRatioChoices}
-									onScChange={(e) =>
-										updateFormData(
-											'aspect_ratio',
-											e.target.value
-										)
-									}
+							}
+						>
+							<div>
+								<WordPressMediaFullPreview
+									media={mediaData}
+									settings={formData}
 								/>
-
-								{isVideo(mediaData) && (
+							</div>
+							{isVideo(mediaData) && (
+								<>
 									<VideoThumbnail
 										thumbnailImage={
 											formData.thumbnail_image
@@ -266,9 +223,64 @@ export default ({ media, product, onSave, onRequestClose }) => {
 										}
 										mediaData={mediaData}
 									/>
-								)}
-							</>
-						)}
+
+									<ScSelect
+										label={__('Aspect Ratio', 'surecart')}
+										help={__(
+											'The aspect ratio of the media.',
+											'surecart'
+										)}
+										value={formData.aspect_ratio}
+										placement="top-start"
+										placeholder={__(
+											'Select aspect ratio',
+											'surecart'
+										)}
+										choices={aspectRatioChoices}
+										onScChange={(e) =>
+											updateFormData(
+												'aspect_ratio',
+												e.target.value
+											)
+										}
+									/>
+								</>
+							)}
+						</DrawerSection>
+
+						<DrawerSection title={__('Variation', 'surecart')}>
+							{!!variantOptionChoices?.length && (
+								<ScSelect
+									label={__('Option', 'surecart')}
+									help={__(
+										'Display only when this variant option is selected.',
+										'surecart'
+									)}
+									placement="top-start"
+									value={formData.variant_option}
+									choices={[
+										{
+											label: __(
+												'(All Variations)',
+												'surecart'
+											),
+											value: '',
+										},
+										...variantOptionChoices,
+									]}
+									placeholder={__(
+										'(All Variations)',
+										'surecart'
+									)}
+									onScChange={(e) =>
+										updateFormData(
+											'variant_option',
+											e.target.value
+										)
+									}
+								/>
+							)}
+						</DrawerSection>
 					</div>
 				</div>
 
@@ -279,7 +291,7 @@ export default ({ media, product, onSave, onRequestClose }) => {
 						isBusy={isSaving}
 						disabled={isSaving || !mediaData?.id}
 					>
-						{__('Update Media', 'surecart')}
+						{__('Update', 'surecart')}
 					</ScButton>
 					<ScButton type="text" onClick={() => setOpen(false)}>
 						{__('Cancel', 'surecart')}

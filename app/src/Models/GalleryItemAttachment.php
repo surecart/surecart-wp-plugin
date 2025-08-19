@@ -122,7 +122,7 @@ class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 				</button>
 			</div>
 			
-			<div class="sc-video-player-container" data-wp-bind--hidden="!context.isVideoPlaying">
+			<div class="sc-video-player-container" data-wp-bind--hidden="!context.isVideoPlaying" style="<?php echo esc_attr( $style ); ?>">
 				<?php
 				echo wp_kses_post(
 					apply_filters(
@@ -139,13 +139,17 @@ class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 								preload="none"
 								aria-label="%s"
 								title="%s"
+								%s
 							></video>',
 							esc_url( $video_url ),
 							esc_url( $poster_image ),
 							// translators: %s is the video title.
 							esc_attr( sprintf( __( 'Product Video: %s', 'surecart' ), $this->item->post_title ?? '' ) ),
-							esc_attr( $this->item->post_title ?? '' )
-						)
+							esc_attr( $this->item->post_title ?? '' ),
+						),
+						$video_url,
+						$poster_image,
+						$this->item ?? ''
 					)
 				);
 				?>
@@ -177,11 +181,7 @@ class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 		// add inline styles.
 		if ( ! empty( $attr['style'] ) ) {
 			if ( $has_image && ! empty( $attr['style'] ) ) {
-				$style        = $attr['style'] ?? '';
-				$aspect_ratio = $this->getMetadata( 'aspect_ratio' );
-				$style       .= ! empty( $aspect_ratio ) ? 'aspect-ratio: ' . esc_attr( $aspect_ratio ) . ';' : '';
-
-				$tags->set_attribute( 'style', $style );
+				$tags->set_attribute( 'style', $attr['style'] );
 			}
 		}
 

@@ -34,7 +34,7 @@ export default ({ media, settings = {} }) => {
 		return (
 			<img
 				src={
-					media?.media_details?.sizes?.medium?.source_url ||
+					media?.media_details?.sizes?.large?.source_url ||
 					media?.source_url
 				}
 				css={css`

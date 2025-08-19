@@ -246,7 +246,10 @@ export default ({ thumbnailImage, onThumbnailChange, mediaData }) => {
 
 	return (
 		<>
-			<ScFormControl label={__('Thumbnail', 'surecart')}>
+			<ScFormControl
+				label={__('Poster', 'surecart')}
+				help={__('The poster thumbnail of the video.', 'surecart')}
+			>
 				{thumbnailError && (
 					<div
 						css={css`
