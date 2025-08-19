@@ -167,6 +167,10 @@ class ProductCard extends \Bricks\Element {
 											'name' => 'Color #1',
 										],
 									],
+									'icon'               => [
+										'library' => 'fontawesomeSolid',
+										'icon'    => 'fas fa-plus',
+									],
 								],
 
 							],

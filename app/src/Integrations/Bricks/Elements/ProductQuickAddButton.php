@@ -79,19 +79,6 @@ class ProductQuickAddButton extends \Bricks\Element {
 			'default' => $this->get_default_label(),
 		];
 
-		$this->controls['icon_position'] = [
-			'tab'         => 'content',
-			'label'       => esc_html__( 'Icon Position', 'surecart' ),
-			'type'        => 'select',
-			'options'     => [
-				'before' => esc_html__( 'Before', 'surecart' ),
-				'after'  => esc_html__( 'After', 'surecart' ),
-			],
-			'default'     => 'before',
-			'inline'      => true,
-			'placeholder' => esc_html__( 'Before', 'surecart' ),
-		];
-
 		$this->controls['quick_view_button_type'] = [
 			'tab'     => 'content',
 			'label'   => esc_html__( 'Icon & Text', 'surecart' ),
@@ -126,6 +113,69 @@ class ProductQuickAddButton extends \Bricks\Element {
 			'description' => esc_html__( 'Add the product directly to the cart without opening a quick view modal.', 'surecart' ),
 			'default'     => true,
 		];
+
+		$this->controls['iconSeparator'] = [
+			'label' => esc_html__( 'Icon', 'surecart' ),
+			'type'  => 'separator',
+		];
+
+		$this->controls['icon'] = [
+			'label'   => esc_html__( 'Icon', 'surecart' ),
+			'type'    => 'icon',
+			'default' => array(
+				'library' => 'fontawesomeSolid',
+				'icon'    => 'fas fa-plus',
+			),
+		];
+
+		$this->controls['iconTypography'] = [
+			'label'    => esc_html__( 'Typography', 'surecart' ),
+			'type'     => 'typography',
+			'css'      => [
+				[
+					'property' => 'font',
+					'selector' => 'i',
+				],
+			],
+			'required' => [ 'icon.icon', '!=', '' ],
+		];
+
+		$this->controls['icon_position'] = [
+			'tab'         => 'content',
+			'label'       => esc_html__( 'Icon Position', 'surecart' ),
+			'type'        => 'select',
+			'options'     => [
+				'before' => esc_html__( 'Before', 'surecart' ),
+				'after'  => esc_html__( 'After', 'surecart' ),
+			],
+			'default'     => 'before',
+			'inline'      => true,
+			'placeholder' => esc_html__( 'Before', 'surecart' ),
+		];
+
+		$this->controls['styleSeparator'] = [
+			'label' => esc_html__( 'Style', 'surecart' ),
+			'type'  => 'separator',
+		];
+
+		$this->controls['size'] = [
+			'label'       => esc_html__( 'Size', 'surecart' ),
+			'type'        => 'select',
+			'options'     => $this->control_options['buttonSizes'],
+			'inline'      => true,
+			'reset'       => true,
+			'placeholder' => esc_html__( 'Default', 'surecart' ),
+		];
+
+		$this->controls['style'] = [
+			'label'       => esc_html__( 'Style', 'surecart' ),
+			'type'        => 'select',
+			'options'     => $this->control_options['styles'],
+			'inline'      => true,
+			'reset'       => true,
+			'default'     => 'primary',
+			'placeholder' => esc_html__( 'None', 'surecart' ),
+		];
 	}
 
 	/**
@@ -134,18 +184,91 @@ class ProductQuickAddButton extends \Bricks\Element {
 	 * @return void
 	 */
 	public function render() {
-		$settings = $this->settings;
-
-		// Prepare block attributes.
-		$is_add_to_cart = ! empty( $settings['direct_add_to_cart'] );
-		$attributes     = array(
+		$settings            = $this->settings;
+		$product_id          = get_the_ID();
+		$product             = sc_get_product();
+		$is_add_to_cart      = ! empty( $settings['direct_add_to_cart'] ) && 'yes' === $settings['direct_add_to_cart'];
+		$should_direct_add   = $is_add_to_cart && empty( $product->has_options );
+		$show_on_hover_class = ! empty( $settings['show_on_hover'] ) && 'yes' === $settings['show_on_hover'] ? 'is-style-show-on-hover ' : '';
+		$attributes          = array(
 			'icon_position'          => $settings['icon_position'] ?? 'before',
 			'quick_view_button_type' => $settings['quick_view_button_type'] ?? 'both',
-			'direct_add_to_cart'     => $is_add_to_cart,
 			'label'                  => $settings['label'] ?? $this->get_default_label(),
-			'show_loading_indicator' => true,
-			'className'              => $settings['show_on_hover'] ? 'is-style-show-on-hover ' : '',
 		);
-		echo $this->raw( $attributes );  // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		$show_icon           = in_array( $attributes['quick_view_button_type'], [ 'icon', 'both' ], true ) && ! empty( $settings['icon'] );
+		$show_text           = in_array( $attributes['quick_view_button_type'], [ 'text', 'both' ], true );
+		$quick_view_link     = add_query_arg( 'product-quick-view', $product_id );
+		$is_disabled         = empty( $quick_view_link ) ? 'true' : null;
+
+		if ( $should_direct_add ) {
+			$is_disabled = empty( $product->in_stock ) ? 'true' : null;
+			$aria_label  = empty( $product->in_stock ) ? __( 'Sold Out', 'surecart' ) : __( 'Add to Cart', 'surecart' );
+
+			$this->set_attribute( '_root', 'disabled', $is_disabled );
+			$this->set_attribute( '_root', 'aria-label', $aria_label );
+			$this->set_attribute( '_root', 'data-wp-on--click', 'callbacks.handleSubmit' );
+			$this->set_attribute( '_root', 'data-wp-on--keydown', 'callbacks.handleSubmit' );
+		} else {
+			$this->set_attribute(
+				'_root',
+				'data-wp-context',
+				wp_json_encode(
+					[
+						'url' => sanitize_url( $quick_view_link ),
+					],
+					JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP
+				)
+			);
+			$this->set_attribute( '_root', 'aria-label', __( 'Quick Add Product', 'surecart' ) );
+			$this->set_attribute( '_root', 'data-wp-on--click', 'actions.open' );
+			$this->set_attribute( '_root', 'data-wp-on--keydown', 'actions.open' );
+			$this->set_attribute( '_root', 'data-wp-on--mouseenter', 'actions.prefetch' );
+			$this->set_attribute( '_root', 'data-wp-interactive', '{ "namespace": "surecart/product-quick-view" }' );
+		}
+
+		$this->set_attribute( '_root', 'class', 'wp-block-surecart-product-quick-view-button sc-button__link bricks-button ' . $show_on_hover_class );
+		$this->set_attribute( '_root', 'data-wp-class--loading', 'state.loading' );
+		$this->set_attribute( '_root', 'data-wp-class--sc-button__link--busy', 'state.loading' );
+		$this->set_attribute( '_root', 'aria-disabled', $is_disabled );
+
+		if ( ! empty( $settings['size'] ) ) {
+			$this->set_attribute( '_root', 'class', $settings['size'] );
+		}
+
+		if ( ! empty( $settings['style'] ) ) {
+			// Outline (border).
+			if ( isset( $settings['outline'] ) ) {
+				$this->set_attribute( '_root', 'class', "bricks-color-{$settings['style']}" );
+			} else { // Background (= default).
+				$this->set_attribute( '_root', 'class', "bricks-background-{$settings['style']}" );
+			}
+		}
+
+		if ( ! $this->is_admin_editor() ) {
+			\SureCart::block()->quickView()->render();
+		}
+
+		?>
+		<div 
+			role="button" 
+			tabindex="0" 
+			<?php echo $this->render_attributes( '_root' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+		>
+			<span class="sc-spinner" aria-hidden="true"></span>
+			<?php
+			if ( $show_icon && 'before' === $attributes['icon_position'] ) {
+				echo self::render_icon( $settings['icon'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			}
+			?>
+			<?php if ( $show_text ) : ?>
+				<span class="sc-button__link-text"><?php echo esc_html( empty( $product->in_stock ) ? __( 'Sold Out', 'surecart' ) : $attributes['label'] ); ?></span>
+			<?php endif; ?>
+			<?php
+			if ( $show_icon && 'after' === $attributes['icon_position'] ) {
+				echo self::render_icon( $settings['icon'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			}
+			?>
+		</div>
+		<?php
 	}
 }
