@@ -260,7 +260,7 @@ class ProductQuickAddButton extends \Elementor\Widget_Base {
 				'label'     => esc_html__( 'Text Color', 'surecart' ),
 				'type'      => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
-					$button_selector => 'color: {{VALUE}}',
+					$button_selector      => 'color: {{VALUE}}',
 					$button_icon_selector => 'fill: {{VALUE}}',
 				],
 				'default'   => '#ffffff',
@@ -342,7 +342,6 @@ class ProductQuickAddButton extends \Elementor\Widget_Base {
 	 */
 	protected function render() {
 		$settings            = $this->get_settings_for_display();
-		error_log(print_r($settings['selected_icon'],true));
 		$product_id          = get_the_ID();
 		$product             = sc_get_product();
 		$is_add_to_cart      = ! empty( $settings['direct_add_to_cart'] ) && 'yes' === $settings['direct_add_to_cart'];
