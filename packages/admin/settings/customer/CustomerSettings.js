@@ -228,7 +228,7 @@ export default () => {
 					{__('Subscription Reminder Notifications', 'surecart')}{' '}
 					<span slot="description" style={{ lineHeight: '1.4' }}>
 						{__(
-							'Send a reminder to your subscribers 3 days before their subscription renews.',
+							'Send a reminder to your subscribers based on the percentage of the subscription period remaining.',
 							'surecart'
 						)}
 					</span>
@@ -414,7 +414,7 @@ export default () => {
 						<EmailRow
 							title={__('Subscription Reminder', 'surecart')}
 							description={__(
-								'Sent to customers 3 days before a subscription renews.',
+								'Sent to customers based on the percentage of the subscription period remaining.',
 								'surecart'
 							)}
 							model="subscription"
