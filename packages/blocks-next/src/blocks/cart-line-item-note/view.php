@@ -1,5 +1,6 @@
 <div
 	<?php echo wp_kses_data( get_block_wrapper_attributes() ); ?>
+	data-wp-interactive="surecart/line-item-note"
 >
 	<div
 		class="line-item-note"
@@ -25,7 +26,6 @@
 			data-wp-bind--aria-label="state.lineItemNoteAriaLabel"
 			data-wp-bind--aria-controls="state.lineItemNoteId"
 			data-wp-bind--aria-describedby="state.lineItemNoteId"
-		>
 			<span class="sc-icon" data-wp-class--sc-icon--rotated="state.lineItemNoteExpanded">
 				<?php
 				echo wp_kses(
