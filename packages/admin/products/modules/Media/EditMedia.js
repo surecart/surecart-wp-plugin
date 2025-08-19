@@ -29,9 +29,10 @@ import {
 
 const ALLOWED_MEDIA_TYPES = ['image', 'video'];
 
-export default ({ media, product, onSave, open, onRequestClose }) => {
+export default ({ media, product, onSave, onRequestClose }) => {
 	const [mediaData, setMediaData] = useState(() => normalizeMedia(media));
 	const [error, setError] = useState(null);
+	const [open, setOpen] = useState(true);
 	const [isSaving, setIsSaving] = useState(false);
 
 	// Initialize form values from media data
@@ -70,6 +71,7 @@ export default ({ media, product, onSave, open, onRequestClose }) => {
 			});
 
 			onSave(updatedItem);
+			setOpen(false);
 		} catch (e) {
 			console.error(e);
 			setError(
@@ -109,7 +111,7 @@ export default ({ media, product, onSave, open, onRequestClose }) => {
 					'--sc-drawer-size': '28rem',
 					'--sc-input-label-margin': 'var(--sc-spacing-small)',
 				}}
-				onScRequestClose={onRequestClose}
+				onScAfterHide={onRequestClose}
 				open={open}
 				stickyHeader
 			>
@@ -279,7 +281,7 @@ export default ({ media, product, onSave, open, onRequestClose }) => {
 					>
 						{__('Update Media', 'surecart')}
 					</ScButton>
-					<ScButton type="text" onClick={onRequestClose}>
+					<ScButton type="text" onClick={() => setOpen(false)}>
 						{__('Cancel', 'surecart')}
 					</ScButton>
 				</div>

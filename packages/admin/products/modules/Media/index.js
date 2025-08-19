@@ -202,39 +202,38 @@ export default ({ productId, product, updateProduct }) => {
 				selectedMedia={selectedMedia}
 			/>
 
-			<EditMedia
-				media={selectedMedia}
-				setMedia={(updatedMedia) => {
-					setSelectedMedia(updatedMedia);
-				}}
-				onSave={(updatedItem) => {
-					// Update the gallery with the new item data
-					const gallery_ids = [...(product?.gallery_ids || [])];
-					const updateIndex = gallery_ids.findIndex(
-						(item) =>
-							getGalleryItemId(item) ===
-							getGalleryItemId(selectedMedia)
-					);
+			{currentModal === modals.EDIT_MEDIA && (
+				<EditMedia
+					media={selectedMedia}
+					setMedia={(updatedMedia) => {
+						setSelectedMedia(updatedMedia);
+					}}
+					onSave={(updatedItem) => {
+						// Update the gallery with the new item data
+						const gallery_ids = [...(product?.gallery_ids || [])];
+						const updateIndex = gallery_ids.findIndex(
+							(item) =>
+								getGalleryItemId(item) ===
+								getGalleryItemId(selectedMedia)
+						);
 
-					if (updateIndex !== -1) {
-						gallery_ids[updateIndex] = updatedItem;
-						updateGalleryIds(gallery_ids);
-					}
+						if (updateIndex !== -1) {
+							gallery_ids[updateIndex] = updatedItem;
+							updateGalleryIds(gallery_ids);
+						}
 
-					// Invalidate cache for the media
-					invalidateResolution('getMedia', [
-						getGalleryItemId(updatedItem),
-					]);
-					setCurrentModal('');
-					setSelectedMedia(null);
-				}}
-				open={currentModal === modals.EDIT_MEDIA}
-				product={product}
-				onRequestClose={() => {
-					setCurrentModal('');
-					setSelectedMedia(null);
-				}}
-			/>
+						// Invalidate cache for the media
+						invalidateResolution('getMedia', [
+							getGalleryItemId(updatedItem),
+						]);
+					}}
+					product={product}
+					onRequestClose={() => {
+						setCurrentModal('');
+						setSelectedMedia(null);
+					}}
+				/>
+			)}
 		</Box>
 	);
 };
