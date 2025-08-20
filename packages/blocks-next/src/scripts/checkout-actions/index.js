@@ -225,16 +225,13 @@ export function* toggleSwap({ id, action = 'swap' }) {
 export function* addLineItem({ checkout, data, live_mode = false }) {
 	const existingLineItem = (checkout?.line_items?.data || []).find((item) => {
 		if (!item?.variant?.id) {
-			return (
-				item.price.id === data.price &&
-				(!!data.note ? item.note === data.note : true)
-			);
+			return item.price.id === data.price && item.note === data.note;
 		}
 
 		return (
 			item.variant.id === data.variant &&
 			item.price.id === data.price &&
-			(!!data.note ? item.note === data.note : true)
+			item.note === data.note
 		);
 	});
 
