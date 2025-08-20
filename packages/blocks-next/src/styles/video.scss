@@ -118,6 +118,9 @@
 
 // Swiper Integration.
 .swiper-slide {
+	&:has(.sc-video-container) {
+		grid-column: span 2;
+	}
 	.sc-video-container {
 		height: 100%;
 	}
