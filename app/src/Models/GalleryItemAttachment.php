@@ -157,6 +157,7 @@ class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 			ob_get_clean(),
 			$video_url,
 			$poster_image,
+			$aspect_ratio,
 			$this->item ?? ''
 		);
 	}
