@@ -44,8 +44,11 @@ export class ScPayment {
   /** Hide the test mode badge */
   @Prop() hideTestModeBadge: boolean;
 
-  componentWillLoad() {
-    processorsState.disabled.processors = this.disabledProcessorTypes;
+  componentWillLoad() {    
+    processorsState.disabled = {
+      ...processorsState.disabled,
+      processors: this.disabledProcessorTypes
+  };
   }
 
   renderStripe(processor) {
