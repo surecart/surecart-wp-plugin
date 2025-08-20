@@ -314,8 +314,8 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 == Changelog ==
 
 = 3.13.1 - August 20th, 2025 =
-- Improvement: Do not do post type check when finding dashboard page to allow custom post type dashboard pages.
-- Fix: Issue where help widget was covering modal buttons in admin.
+- Improvement: Removed post type check when finding dashboard page to allow custom post type dashboard pages.
+- Fix: Issue where help widget covered modal buttons in admin.
 - Fix: Issue where Mollie was not loading payment methods for free trials in some cases.
 
 = 3.13.0 - August 19th, 2025 =
