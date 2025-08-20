@@ -144,6 +144,8 @@ const { state, actions } = store('surecart/image-slider', {
 						pagination: {
 							el: ref.querySelector('.swiper-pagination'),
 							dynamicBullets: true,
+							dynamicMainBullets: 6,
+							clickable: true,
 						},
 					}),
 					...(!!thumbs &&
