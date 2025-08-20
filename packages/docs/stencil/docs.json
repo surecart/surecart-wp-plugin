@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-07-08T15:50:08",
+  "timestamp": "2025-08-19T14:50:15",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.18.3",
@@ -32007,6 +32007,10 @@
           "docs": "The line item price description"
         },
         {
+          "name": "placeholder__image",
+          "docs": ""
+        },
+        {
           "name": "price",
           "docs": "The product price"
         },
@@ -43183,6 +43187,32 @@
       "usage": {},
       "props": [
         {
+          "name": "checkout",
+          "type": "Checkout",
+          "complexType": {
+            "original": "Checkout",
+            "resolved": "Checkout",
+            "references": {
+              "Checkout": {
+                "location": "import",
+                "path": "../../../../types",
+                "id": "src/types.ts::Checkout"
+              }
+            }
+          },
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "Checkout"
+            }
+          ],
+          "optional": true,
+          "required": false
+        },
+        {
           "name": "total",
           "type": "\"amount_due\" | \"subtotal\" | \"total\"",
           "complexType": {
@@ -44483,7 +44513,7 @@
       "path": "src/types.ts"
     },
     "src/types.ts::ImageAttributes": {
-      "declaration": "export interface ImageAttributes {\n  src: string;\n  alt?: string;\n  class?: string;\n  decoding?: string;\n  height?: number;\n  loading?: string;\n  sizes?: string;\n  srcset?: string;\n  width?: number;\n}",
+      "declaration": "export interface ImageAttributes {\n  src: string;\n  alt?: string;\n  class?: string;\n  decoding?: string;\n  height?: number;\n  loading?: string;\n  sizes?: string;\n  srcset?: string;\n  width?: number;\n  type?: string;\n}",
       "docstring": "",
       "path": "src/types.ts"
     },

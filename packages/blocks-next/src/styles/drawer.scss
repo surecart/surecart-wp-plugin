@@ -2,8 +2,10 @@
 	position: fixed;
 	box-sizing: border-box;
 	width: var(--sc-drawer-width, 31rem);
-	min-height: 100dvh;
+	max-height: none;
+	height: auto;
 	min-width: var(--sc-drawer-min-width, "300px");
+	max-width: 100%;
 	background-color: var(--sc-panel-background-color);
 	box-shadow: var(--sc-shadow-x-large);
 	padding: 0;
@@ -15,7 +17,7 @@
 	right: 0;
 	top: 0;
 	left: auto;
-	bottom: auto;
+	bottom: 0;
 	overflow: hidden;
 	font-family: var(--sc-font-sans);
 	font-weight: var(--sc-font-weight-normal);
@@ -44,7 +46,8 @@
 	}
 
 	&:modal {
-		display: block;
+		display: flex;
+		flex-direction: column;
 		margin: 0;
 		padding: 0;
 	}

@@ -71,6 +71,21 @@ class BuyButton extends \Bricks\Element {
 			'description' => esc_html__( 'Bypass adding to cart and go directly to the checkout.', 'surecart' ),
 		];
 
+		$this->controls['show_sticky_purchase_button'] = [
+			'tab'         => 'content',
+			'label'       => esc_html__( 'Show sticky button', 'surecart' ),
+			'type'        => 'select',
+			'description' => esc_html__( 'Show a sticky purchase button when this button is out of view', 'surecart' ),
+			'options'     => [
+				'never'    => esc_html__( 'Never', 'surecart' ),
+				'in_stock' => esc_html__( 'In stock', 'surecart' ),
+				'always'   => esc_html__( 'Always', 'surecart' ),
+			],
+			'inline'      => true,
+			'fullAccess'  => true,
+			'default'     => 'never',
+		];
+
 		$this->controls['styleSeparator'] = [
 			'label' => esc_html__( 'Style', 'surecart' ),
 			'type'  => 'separator',
@@ -170,7 +185,8 @@ class BuyButton extends \Bricks\Element {
 	 * @return void
 	 */
 	public function render() {
-		$settings = $this->settings;
+		$settings   = $this->settings;
+		$is_buy_now = isset( $settings['buy_now'] ) ? (bool) $settings['buy_now'] : false;
 
 		$this->set_attribute( '_root', 'class', 'bricks-button' );
 
@@ -199,11 +215,11 @@ class BuyButton extends \Bricks\Element {
 			wp_json_encode(
 				array(
 					'checkoutUrl'     => esc_url( \SureCart::pages()->url( 'checkout' ) ),
-					'text'            => $settings['content'] ?? ( $settings['buy_now'] ? __( 'Buy Now', 'surecart' ) : __( 'Add To Cart', 'surecart' ) ),
+					'text'            => $settings['content'] ?? ( $is_buy_now ? __( 'Buy Now', 'surecart' ) : __( 'Add To Cart', 'surecart' ) ),
 					'outOfStockText'  => esc_attr( __( 'Sold Out', 'surecart' ) ),
 					'unavailableText' => esc_attr( __( 'Unavailable For Purchase', 'surecart' ) ),
-					'addToCart'       => $settings['buy_now'] ? false : true,
-					'buttonText'      => $settings['content'] ?? ( $settings['buy_now'] ? __( 'Buy Now', 'surecart' ) : __( 'Add To Cart', 'surecart' ) ),
+					'addToCart'       => ! $is_buy_now,
+					'buttonText'      => $settings['content'] ?? ( $is_buy_now ? __( 'Buy Now', 'surecart' ) : __( 'Add To Cart', 'surecart' ) ),
 				),
 				JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP
 			)
@@ -223,7 +239,7 @@ class BuyButton extends \Bricks\Element {
 		$this->set_attribute( '_root', 'class', 'sc-button__link' );
 
 		// Set tag and attributes.
-		if ( ! empty( $settings['buy_now'] ) ) {
+		if ( $is_buy_now ) {
 			$this->tag = 'a';
 			$this->set_attribute( '_root', 'data-wp-bind--disabled', 'state.isUnavailable' );
 			$this->set_attribute( '_root', 'data-wp-bind--href', 'state.checkoutUrl' );
@@ -231,6 +247,11 @@ class BuyButton extends \Bricks\Element {
 			$this->tag = 'button';
 			$this->set_attribute( '_root', 'data-wp-bind--disabled', 'state.isUnavailable' );
 			$this->set_attribute( '_root', 'data-wp-class--sc-button__link--busy', 'context.busy' );
+		}
+
+		if ( ! empty( $settings['show_sticky_purchase_button'] ) && 'never' !== $settings['show_sticky_purchase_button'] ) {
+			$this->set_attribute( '_root', 'data-wp-on-async-window--scroll', 'surecart/sticky-purchase::actions.toggleVisibility' );
+			$this->set_attribute( '_root', 'data-wp-on-async-window--resize', 'surecart/sticky-purchase::actions.toggleVisibility' );
 		}
 
 		$output = "<{$this->tag} {$this->render_attributes( '_root' )}>";
@@ -245,7 +266,7 @@ class BuyButton extends \Bricks\Element {
 
 		if ( isset( $settings['content'] ) || true ) {
 			if ( $this->is_admin_editor() ) {
-				$output .= trim( $settings['content'] ?? ( $settings['buy_now'] ? __( 'Buy Now', 'surecart' ) : __( 'Add To Cart', 'surecart' ) ) );
+				$output .= trim( $settings['content'] ?? ( $is_buy_now ? __( 'Buy Now', 'surecart' ) : __( 'Add To Cart', 'surecart' ) ) );
 			} else {
 				$output .= '<span class="sc-spinner" aria-hidden="false"></span>';
 				$output .= '<span class="sc-button__link-text" data-wp-text="state.buttonText"></span>';
@@ -259,5 +280,7 @@ class BuyButton extends \Bricks\Element {
 		$output .= "</{$this->tag}>";
 
 		echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+
+		\SureCart::render( 'blocks/sticky-purchase', [ 'settings' => $settings ] );
 	}
 }

@@ -150,7 +150,7 @@ class ProductPageBlock {
 				'mode'            => \SureCart\Models\Form::getMode( \SureCart::forms()->getDefaultId() ),
 				'checkoutUrl'     => \SureCart::pages()->url( 'checkout' ),
 				'urlPrefix'       => $this->urlParams()->getKey(),
-				'product'         => ! empty( $product ) && ! empty( $product->id ) ? $product->only( [ 'id', 'name', 'has_unlimited_stock', 'available_stock', 'archived', 'permalink' ] ) : null,
+				'product'         => ! empty( $product ) && ! empty( $product->id ) ? $product->only( [ 'id', 'name', 'has_unlimited_stock', 'available_stock', 'archived', 'permalink', 'preview_image' ] ) : null,
 				'selectedPrice'   => ! empty( $product->initial_price ) && ! empty( $product->initial_price->id ) ? $product->initial_price->only(
 					[
 						'id',
@@ -167,11 +167,13 @@ class ProductPageBlock {
 						'converted_ad_hoc_min_amount',
 						'converted_ad_hoc_max_amount',
 						'setup_fee_text',
+						'setup_fee_text_with_punctuation',
 						'interval_text',
 						'short_interval_text',
 						'interval_count_text',
 						'payments_text',
 						'trial_text',
+						'trial_text_with_punctuation',
 					]
 				) : null,
 				'prices'          => array_map(
@@ -211,6 +213,7 @@ class ProductPageBlock {
 							'amount',
 							'display_amount',
 							'available_stock',
+							'line_item_image',
 						]
 					),
 					$product->variants->data ?? array()
@@ -254,14 +257,14 @@ class ProductPageBlock {
 				'selectedDisplayAmount' => $product->display_amount,
 				'isOnSale'              => function () {
 					$context        = wp_interactivity_get_context();
-					$selected_price = $context['selectedPrice'];
+					$selected_price = $context['selectedPrice'] ?? [];
 					return $selected_price['is_on_sale'] ?? false;
 				},
 				'selectedAmount'        => function () {
 					$context        = wp_interactivity_get_context();
 					$state          = wp_interactivity_state();
-					$selected_price = $context['selectedPrice'];
-					$prices         = $context['prices'];
+					$selected_price = $context['selectedPrice'] ?? [];
+					$prices         = $context['prices'] ?? [];
 
 					if ( ! empty( $prices ) && count( $prices ) > 1 ) {
 						return $selected_price['amount'];
@@ -431,7 +434,7 @@ class ProductPageBlock {
 					if ( $state['isUnavailable']() ) {
 						return $context['unavailableText'] ?? $context['text'];
 					}
-					return $context['text'];
+					return $context['text'] ?? '';
 				},
 			]
 		);
