@@ -48,7 +48,7 @@ export class ScPayment {
     processorsState.disabled = {
       ...processorsState.disabled,
       processors: this.disabledProcessorTypes
-  };
+    };
   }
 
   renderStripe(processor) {
