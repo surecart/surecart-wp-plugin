@@ -16,11 +16,13 @@
 		color: var(--sc-color-white);
 		transition: background-color var(--sc-transition-fast) ease,
 			color var(--sc-transition-fast) ease;
+		line-height: 1;
 	}
 
 	&.wp-block-button__link:hover {
 		background-color: var(--sc-color-primary-500);
 		color: var(--sc-color-white);
+		text-decoration: none;
 	}
 
 	&.loading {

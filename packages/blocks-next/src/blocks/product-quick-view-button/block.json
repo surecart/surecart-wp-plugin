@@ -2,8 +2,8 @@
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
 	"name": "surecart/product-quick-view-button",
-	"title": "Product Quick Add Button",
-	"description": "Display the product quick add button.",
+	"title": "Quick Add Button",
+	"description": "Display the product quick add to cart button.",
 	"version": "1.0.0",
 	"category": "surecart-product-list",
 	"example": {
