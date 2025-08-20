@@ -13,8 +13,6 @@
 						'data-wp-on--keydown'    => 'actions.open',
 						'data-wp-on--mouseenter' => 'actions.prefetch',
 						'data-wp-interactive'    => '{ "namespace": "surecart/product-quick-view" }',
-						'data-wp-class--loading' => 'state.loading',
-						'data-wp-class--sc-button__link--busy' => 'state.loading',
 						'style'                  => $style,
 						'class'                  => 'wp-block-button__link sc-button__link ',
 					]
