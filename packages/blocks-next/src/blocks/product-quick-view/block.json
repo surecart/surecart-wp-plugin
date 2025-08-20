@@ -19,6 +19,7 @@
 		}
 	},
 	"supports": {
+		"inserter": false,
 		"interactivity": true,
 		"color": {
 			"__experimentalSkipSerialization": true,

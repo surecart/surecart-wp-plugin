@@ -7,11 +7,7 @@
 	"version": "1.0.0",
 	"category": "surecart-product-page",
 	"icon": "clock",
-	"ancestor": [
-		"surecart/product-page",
-		"surecart/product-template",
-		"surecart/product-quick-view"
-	],
+	"ancestor": ["surecart/product-page", "surecart/product-quick-view"],
 	"example": {
 		"attributes": {}
 	},

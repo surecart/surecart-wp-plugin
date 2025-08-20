@@ -6,11 +6,7 @@
 	"description": "Display product variants as pills selector.",
 	"version": "1.0.0",
 	"category": "surecart-product-page",
-	"ancestor": [
-		"surecart/product-page",
-		"surecart/product-template",
-		"surecart/product-quick-view"
-	],
+	"ancestor": ["surecart/product-page", "surecart/product-quick-view"],
 	"usesContext": ["postId"],
 	"supports": {
 		"interactivity": true,
