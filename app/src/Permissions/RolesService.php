@@ -141,6 +141,10 @@ class RolesService {
 					$wp_roles->add_cap( 'sc_shop_accountant', $cap );
 				}
 			}
+
+			$wp_roles->add_cap( 'sc_shop_accountant', 'view_sc_shop_reports' );
+			$wp_roles->add_cap( 'sc_shop_accountant', 'export_sc_shop_reports' );
+			$wp_roles->add_cap( 'sc_shop_accountant', 'edit_sc_shop_charges' );
 		}
 	}
 
