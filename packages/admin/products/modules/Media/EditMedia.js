@@ -103,7 +103,7 @@ export default ({ media, product, onRequestClose }) => {
 				'surecart',
 				'product',
 				{
-					...product,
+					id: product?.id,
 					gallery,
 					gallery_ids,
 					metadata,
@@ -188,7 +188,6 @@ export default ({ media, product, onRequestClose }) => {
 									value={mediaData?.id ?? ''}
 									onSelect={selectMedia}
 									allowedTypes={ALLOWED_MEDIA_TYPES}
-									onClose={() => {}}
 									render={({ open }) => (
 										<Button
 											onClick={open}
