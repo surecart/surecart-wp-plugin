@@ -115,7 +115,7 @@
 	}
 }
 
-.sc-video-container:not(.sc-video-playing) {
+.sc-video-container:not(.sc-video-loaded) {
 	cursor: pointer;
 }
 

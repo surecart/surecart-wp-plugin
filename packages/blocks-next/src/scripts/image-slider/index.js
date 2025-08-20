@@ -134,7 +134,9 @@ const { state, actions } = store('surecart/image-slider', {
 						slideChange: () => {
 							const { actions: videoActions } =
 								store('surecart/video');
-							videoActions.pauseVideos();
+							if (videoActions) {
+								videoActions.pauseVideos();
+							}
 						},
 					},
 					modules: [Thumbs, A11y, Navigation],

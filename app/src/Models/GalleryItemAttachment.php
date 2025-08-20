@@ -124,24 +124,26 @@ class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 		<div 
 			class="sc-video-container"
 			data-wp-interactive='{ "namespace": "surecart/video" }'
-			data-wp-context='{ "isVideoPlaying": false }'
+			data-wp-context='{ "loaded": false }'
 			data-wp-on--click="actions.play"
-			data-wp-class--sc-video-playing="context.isVideoPlaying"
+			data-wp-class--sc-video-loaded="context.loaded"
 			style="<?php echo esc_attr( $style ); ?>"
 		>
 			<div 
 				role="button" 
 				class="sc-video-play-button" 
 				aria-label="<?php echo esc_attr__( 'Play video', 'surecart' ); ?>" 
-				data-wp-bind--hidden="context.isVideoPlaying"
+				data-wp-bind--hidden="context.loaded"
 			>
 				<?php echo wp_kses( \SureCart::svg()->get( 'play' ), sc_allowed_svg_html() ); ?>
 			</div>
+			
 			<video
 				class="sc-video-player"
+				data-wp-bind--controls="context.loaded"
+				data-wp-on--play="callbacks.handlePlay"
 				src="<?php echo esc_url( $video_url ); ?>"
 				poster="<?php echo esc_url( $poster_image ); ?>"
-				data-wp-bind--controls="context.isVideoPlaying"
 				playsinline
 				preload="none"
 				title="<?php echo esc_attr( $this->item->post_title ?? '' ); ?>">
