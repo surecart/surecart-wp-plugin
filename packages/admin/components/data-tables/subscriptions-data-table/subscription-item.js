@@ -108,6 +108,7 @@ export default (subscription) => {
 		status: (
 			<ScSubscriptionStatusBadge
 				subscription={subscription}
+				showCurrentPeriodEndAt={false}
 			></ScSubscriptionStatusBadge>
 		),
 		product: (

@@ -23,6 +23,9 @@ export class ScSubscriptionStatusBadge {
   /** Makes the tag clearable. */
   @Prop() clearable: boolean = false;
 
+  /** Shows the current period end date */
+  @Prop() showCurrentPeriodEndAt: boolean = true;
+
   getType() {
     if (this.subscription?.cancel_at_period_end) {
       return 'info';
@@ -48,14 +51,23 @@ export class ScSubscriptionStatusBadge {
     }
   }
 
-  getText() {
-    if (this.subscription?.cancel_at_period_end && this.subscription.current_period_end_at && this.subscription?.status !== 'canceled') {
+  renderCurrentPeriodEndAt() {
+    if (this.showCurrentPeriodEndAt) {
       return (
         <Fragment>
           {!!this.subscription?.restore_at ? __('Pauses', 'surecart') : __('Cancels', 'surecart')} {this.subscription.current_period_end_at_date}
         </Fragment>
       );
     }
+
+    return __('Cancelling', 'surecart');
+  }
+
+  getText() {
+    if (this.subscription?.cancel_at_period_end && this.subscription.current_period_end_at && this.subscription?.status !== 'canceled') {
+      return this.renderCurrentPeriodEndAt();
+    }
+
     switch (this.status || this.subscription?.status) {
       case 'incomplete':
         return __('Incomplete', 'surecart');

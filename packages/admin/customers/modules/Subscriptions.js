@@ -52,10 +52,11 @@ export default ({ customerId }) => {
 			columns={{
 				status: {
 					label: __('Status', 'surecart'),
-					minWidth: '100px',
+					minWidth: '80px',
 				},
 				product: {
 					label: __('Product', 'surecart'),
+					minWidth: '120px',
 				},
 				plan: {
 					label: __('Renews', 'surecart'),
