@@ -137,9 +137,9 @@ class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 			>
 				<?php echo wp_kses( \SureCart::svg()->get( 'play' ), sc_allowed_svg_html() ); ?>
 			</div>
-			
+
 			<video
-				class="sc-video-player"
+				class="sc-video"
 				data-wp-bind--controls="context.loaded"
 				data-wp-on--play="callbacks.handlePlay"
 				src="<?php echo esc_url( $video_url ); ?>"

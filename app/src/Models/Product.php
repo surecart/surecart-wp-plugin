@@ -1157,4 +1157,13 @@ class Product extends Model implements PageModel {
 
 		return null;
 	}
+
+	/**
+	 * Get if the product has videos.
+	 *
+	 * @return bool
+	 */
+	public function getHasVideosAttribute() {
+		return ! empty( array_filter( $this->gallery, fn( $media ) => $media->isVideo() ) );
+	}
 }

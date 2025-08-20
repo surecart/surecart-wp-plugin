@@ -1,0 +1,112 @@
+.sc-video-container {
+	position: relative;
+	width: 100%;
+	max-width: 100%;
+	overflow: hidden;
+
+	[hidden] {
+		display: none !important;
+	}
+
+	.sc-video {
+		width: 100%;
+		height: 100%;
+		max-width: 100%;
+		display: block;
+		object-fit: contain;
+	}
+}
+
+.sc-video-thumbnail,
+.sc-video-overlay {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	overflow: hidden;
+
+	img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		transition: opacity 0.3s ease;
+
+		&:hover {
+			opacity: 0.8;
+		}
+	}
+
+	&:hover::after {
+		content: "";
+		position: absolute;
+		inset: 0;
+		pointer-events: none;
+	}
+}
+
+.sc-video-play-button {
+	position: absolute;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: var(--sc-video-play-button-size);
+	height: var(--sc-video-play-button-size);
+	background-color: var(--sc-video-play-button-bg);
+	transition: var(--sc-transition-medium) ease;
+	box-shadow: var(--sc-shadow-medium);
+	border-radius: 50%;
+	cursor: pointer;
+	padding: 0;
+
+	svg {
+		margin-left: 4px; /* Optical centering adjustment */
+		fill: var(--sc-video-play-button-color);
+	}
+
+	&:hover {
+		transform: scale(1.05);
+		background-color: var(--sc-video-play-button-bg);
+	}
+
+	&:focus {
+		outline: 2px auto var(--sc-color-gray-200);
+		border: none;
+		background-color: var(--sc-video-play-button-bg);
+		outline-offset: 2px;
+		transform: scale(1.05);
+	}
+}
+
+// Thumbnail specific play button.
+.sc-video-thumbnail .sc-video-play-button {
+	--sc-video-play-button-size: var(--sc-video-play-button-size-thumb);
+	left: 5px;
+	bottom: 5px;
+	backdrop-filter: none;
+
+	svg {
+		margin-left: 2px; /* Optical centering adjustment */
+		fill: var(--sc-video-play-button-color);
+	}
+}
+
+.sc-video-container:not(.sc-video-loaded) {
+	cursor: pointer;
+}
+
+// Overlay specific play button.
+.sc-video-container .sc-video-play-button {
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+// Swiper Integration.
+.swiper-slide {
+	.sc-video-container {
+		height: 100%;
+	}
+}
