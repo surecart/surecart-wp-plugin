@@ -78,7 +78,7 @@ class ProductQuickAddButton extends \Elementor\Widget_Base {
 	 * @return array
 	 */
 	public function get_style_depends() {
-		return array( 'surecart-wp-buttons', 'surecart-wp-button', 'wp-block-button' );
+		return array( 'surecart-wp-buttons', 'surecart-wp-button', 'wp-block-button', 'surecart-elementor-container-style' );
 	}
 
 	/**
