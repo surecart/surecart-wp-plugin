@@ -62,7 +62,6 @@ const { state, actions } = store('surecart/checkout', {
 		 */
 		promotionCode: '',
 
-
 		/**
 		 * Current checkout data.
 		 */
@@ -109,6 +108,14 @@ const { state, actions } = store('surecart/checkout', {
 			}
 
 			return line_item.scratch_amount !== line_item.subtotal_amount;
+		},
+
+		/**
+		 * Get the line item note.
+		 */
+		get lineItemNote() {
+			const { line_item } = getContext();
+			return line_item?.note || '';
 		},
 
 		/**
@@ -261,7 +268,6 @@ const { state, actions } = store('surecart/checkout', {
 			const { line_item } = getContext();
 			return line_item.price.name ?? '';
 		},
-
 	},
 
 	callbacks: {
@@ -388,7 +394,6 @@ const { state, actions } = store('surecart/checkout', {
 
 			actions.setCheckout(checkout, mode, formId);
 		},
-
 
 		/**
 		 * Set the promotion code.

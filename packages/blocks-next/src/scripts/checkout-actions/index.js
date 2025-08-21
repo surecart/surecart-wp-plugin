@@ -264,7 +264,7 @@ export function* addLineItem({ checkout, data, live_mode = false }) {
 				existingLineItem?.id ? existingLineItem?.id : ''
 			}`,
 			{
-				consolidate: true,
+				consolidate: false,
 				expand: [
 					...(expand || []).map((item) => {
 						return item.includes('.') ? item : `checkout.${item}`;
