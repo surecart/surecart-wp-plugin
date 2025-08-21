@@ -3719,10 +3719,6 @@ export namespace Components {
          */
         "pill": boolean;
         /**
-          * Shows the current period end date
-         */
-        "showCurrentPeriodEndAt": boolean;
-        /**
           * The tag's size.
          */
         "size": 'small' | 'medium' | 'large';
@@ -10991,10 +10987,6 @@ declare namespace LocalJSX {
           * Draws a pill-style tag with rounded edges.
          */
         "pill"?: boolean;
-        /**
-          * Shows the current period end date
-         */
-        "showCurrentPeriodEndAt"?: boolean;
         /**
           * The tag's size.
          */

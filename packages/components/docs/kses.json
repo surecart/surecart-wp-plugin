@@ -2125,7 +2125,6 @@
   "sc-subscription-status-badge": {
     "clearable": true,
     "pill": true,
-    "show-current-period-end-at": true,
     "size": true,
     "status": true,
     "subscription": true,
