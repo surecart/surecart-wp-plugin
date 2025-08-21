@@ -2364,6 +2364,7 @@
     "slot": true
   },
   "sc-total": {
+    "checkout": true,
     "total": true,
     "style": true,
     "id": true,
