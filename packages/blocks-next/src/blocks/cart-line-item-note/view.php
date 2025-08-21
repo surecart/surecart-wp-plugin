@@ -5,6 +5,7 @@
 	data-wp-run="actions.init"
 	data-wp-class--line-item-note--is-expanded="context.noteExpanded"
 	data-wp-class--line-item-note--is-collapsible="context.showToggle"
+	data-wp-bind--hidden="surecart/checkout::!state.lineItemNote"
 	data-wp-on--click="actions.toggleNoteExpanded"
 	data-wp-on--keydown="actions.toggleNoteExpanded"
 	data-wp-bind--role="button"

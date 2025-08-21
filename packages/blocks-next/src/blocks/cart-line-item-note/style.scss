@@ -4,7 +4,7 @@
 	margin-top: var(--sc-spacing-x-small);
 	display: flex;
 	justify-content: center;
-	align-items: center;
+	align-items: flex-start;
 	gap: 0.25em;
 	min-height: 1.5em;
 
@@ -64,7 +64,6 @@
 		}
 
 		&--is-expanded .line-item-note__text {
-			// display: block;
 			line-clamp: unset;
 			-webkit-line-clamp: unset;
 			overflow: visible;
