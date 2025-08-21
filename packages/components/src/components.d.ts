@@ -4128,6 +4128,7 @@ export namespace Components {
         "width": string;
     }
     interface ScTotal {
+        "checkout"?: Checkout;
         "total": 'total' | 'subtotal' | 'amount_due';
     }
     interface ScUpcomingInvoice {
@@ -11445,6 +11446,7 @@ declare namespace LocalJSX {
         "width"?: string;
     }
     interface ScTotal {
+        "checkout"?: Checkout;
         "total"?: 'total' | 'subtotal' | 'amount_due';
     }
     interface ScUpcomingInvoice {

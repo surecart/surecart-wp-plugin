@@ -1,0 +1,16 @@
+.wp-block-surecart-sticky-purchase {
+	margin: auto;
+
+	&.sc-sticky-purchase {
+		position: relative;
+		opacity: 1;
+		left: 0;
+		transform: none;
+		pointer-events: auto;
+		visibility: visible;
+	}
+}
+
+.is-root-container.block-editor-block-list__layout {
+	padding: 100px 0;
+}
