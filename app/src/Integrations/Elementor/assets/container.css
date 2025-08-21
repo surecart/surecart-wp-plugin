@@ -75,24 +75,3 @@
 	opacity: 0;
 	visibility: hidden;
 }
-
-/* Product Quick Add CSS */
-.wp-block-surecart-product-quick-view-button {
-	display: flex;
-	align-items: center;
-	width: max-content;
-	gap: 0.5em;
-	text-decoration: none;
-	cursor: pointer;
-}
-
-.wp-block-surecart-product-quick-view-button.is-style-show-on-hover {
-	opacity: 0;
-	transition: opacity 0.35s ease;
-}
-
-li:hover .wp-block-surecart-product-quick-view-button.is-style-show-on-hover,
-a:hover .wp-block-surecart-product-quick-view-button.is-style-show-on-hover,
-.wp-block-surecart-product-quick-view-button.is-style-show-on-hover:focus {
-	opacity: 1;
-}

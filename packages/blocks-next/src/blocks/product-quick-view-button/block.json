@@ -92,7 +92,7 @@
 		"@surecart/product-quick-view"
 	],
 	"style": [
-		"file:./style-index.css",
+		"surecart-product-quick-view-button",
 		"surecart-wp-buttons",
 		"surecart-wp-button",
 		"wp-block-button"
