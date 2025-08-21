@@ -34,7 +34,6 @@ class ElementorWidgetsService {
 	 */
 	public function enqueueStyles() {
 		wp_enqueue_style( 'surecart-elementor-container-style' );
-		wp_enqueue_style( 'surecart-product-quick-view-button' );
 	}
 
 	/**
