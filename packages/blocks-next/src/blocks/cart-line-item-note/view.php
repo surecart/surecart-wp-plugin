@@ -2,7 +2,7 @@
 	data-wp-interactive='{ "namespace": "surecart/line-item-note" }'
 	<?php echo wp_kses_data( get_block_wrapper_attributes() ); ?>
 	<?php echo wp_kses_data( wp_interactivity_data_wp_context( [] ) ); ?>
-	data-wp-run="actions.init"
+	data-wp-run="callbacks.init"
 	data-wp-class--line-item-note--is-expanded="context.noteExpanded"
 	data-wp-class--line-item-note--is-collapsible="context.showToggle"
 	data-wp-bind--hidden="surecart/checkout::!state.lineItemNote"

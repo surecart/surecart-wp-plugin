@@ -32,7 +32,9 @@ store('surecart/line-item-note', {
 
 			context.noteExpanded = !context.noteExpanded;
 		},
+	},
 
+	callbacks: {
 		init() {
 			const context = getContext();
 

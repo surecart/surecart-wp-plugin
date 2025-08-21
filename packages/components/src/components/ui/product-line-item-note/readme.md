@@ -7,9 +7,10 @@
 
 ## Properties
 
-| Property | Attribute | Description | Type     | Default     |
-| -------- | --------- | ----------- | -------- | ----------- |
-| `note`   | `note`    |             | `string` | `undefined` |
+| Property         | Attribute          | Description | Type      | Default     |
+| ---------------- | ------------------ | ----------- | --------- | ----------- |
+| `alwaysShowIcon` | `always-show-icon` |             | `boolean` | `false`     |
+| `note`           | `note`             |             | `string`  | `undefined` |
 
 
 ## Shadow Parts
