@@ -86,17 +86,16 @@ class PageService {
 	}
 
 	/**
-	 * Find page by its id
+	 * Find Post/Page by its id
 	 *
-	 * @param integer $id Page ID.
-	 * @param string  $post_type Post type slug.
+	 * @param integer $id Post/Page ID.
 	 *
 	 * @return \WP_Post|null
 	 */
-	public function find( $id, $post_type ) {
-		$page_object = get_post( $id );
-		if ( $page_object && $post_type === $page_object->post_type && ! in_array( $page_object->post_status, [ 'pending', 'trash', 'future', 'auto-draft' ], true ) ) {
-			return $page_object;
+	public function find( $id ) {
+		$post = get_post( $id );
+		if ( $post && ! in_array( $post->post_status, [ 'pending', 'trash', 'future', 'auto-draft' ], true ) ) {
+			return $post;
 		}
 		return null;
 	}
@@ -181,12 +180,12 @@ class PageService {
 	 * @return \WP_Post|null
 	 */
 	public function findByName( $option, $post_type = 'page' ) {
-		// get the option fro the database.
+		// get the option from the database.
 		$option_value = (int) get_option( $this->getOptionName( $option, $post_type ) );
 
 		// check if page has been created.
 		if ( $option_value > 0 ) {
-			$page = $this->find( $option_value, $post_type );
+			$page = $this->find( $option_value );
 			if ( $page ) {
 				return $page;
 			}

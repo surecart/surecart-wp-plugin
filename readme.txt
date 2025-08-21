@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: ecommerce, online store, subscriptions, stripe, payments
 Requires at least: 6.6
 Tested up to: 6.8
-Stable tag: 3.13.0
+Stable tag: 3.13.1
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -312,6 +312,11 @@ Yes, the checkout form can be customized using our visual builder. You can chang
 Accessibility is a huge priority for the entire team building SureCart. As you know, accessibility is an ongoing improvement task. Our development and QA teams are trained in accessibility best practices and build/test each new feature for accessibility. If you come across any edge issues, we want to know about it and will prioritize its resolution. Please contact us via our website.
 
 == Changelog ==
+
+= 3.13.1 - August 20th, 2025 =
+- Improvement: Removed post type check when finding dashboard page to allow custom post type dashboard pages.
+- Fix: Issue where help widget covered modal buttons in admin.
+- Fix: Issue where Mollie was not loading payment methods for free trials in some cases.
 
 = 3.13.0 - August 19th, 2025 =
 - New: Sticky purchase button feature to improve product page conversions.
