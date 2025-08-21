@@ -8,10 +8,8 @@ export default () => {
 	const blockProps = useBlockProps();
 	return (
 		<div {...blockProps}>
-			<div class="line-item-note">
-				<div class="line-item-note__text">
-					{__('Your note here...', 'surecart')}
-				</div>
+			<div class="line-item-note__text">
+				{__('Your note here...', 'surecart')}
 			</div>
 		</div>
 	);
