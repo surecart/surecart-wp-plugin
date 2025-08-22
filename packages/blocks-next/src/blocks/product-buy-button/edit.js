@@ -1,14 +1,13 @@
 /**
- * External dependencies
+ * External dependencies.
  */
 import classnames from 'classnames';
 
 /**
- * WordPress dependencies
+ * WordPress dependencies.
  */
 import { __ } from '@wordpress/i18n';
 import { useRef } from '@wordpress/element';
-import { PanelBody, PanelRow, TextControl } from '@wordpress/components';
 import {
 	InspectorControls,
 	RichText,
@@ -20,12 +19,15 @@ import {
 	__experimentalGetShadowClassesAndStyles as useShadowProps,
 } from '@wordpress/block-editor';
 import { isKeyboardEvent } from '@wordpress/keycodes';
-import WidthPanel from '../../components/WidthPanel';
 
-export default (props) => {
-	const { attributes, setAttributes, className } = props;
-	const { style, text, width, out_of_stock_text, unavailable_text } =
-		attributes;
+/**
+ * Internal dependencies.
+ */
+import Labels from './labels';
+import Display from './display';
+
+export default ({ attributes, setAttributes, className, context }) => {
+	const { style, text, width } = attributes;
 
 	function onKeyDown(event) {
 		if (isKeyboardEvent.primary(event, 'k')) {
@@ -53,32 +55,12 @@ export default (props) => {
 	return (
 		<>
 			<InspectorControls>
-				<PanelBody title={__('Text settings', 'surecart')}>
-					<PanelRow>
-						<TextControl
-							label={__('Out of stock label', 'surecart')}
-							value={out_of_stock_text}
-							onChange={(value) =>
-								setAttributes({ out_of_stock_text: value })
-							}
-						/>
-					</PanelRow>
-					<PanelRow>
-						<TextControl
-							label={__('Unavailable label', 'surecart')}
-							value={unavailable_text}
-							onChange={(value) =>
-								setAttributes({ unavailable_text: value })
-							}
-						/>
-					</PanelRow>
-				</PanelBody>
-
-				<WidthPanel
-					selectedWidth={width}
+				<Display
+					attributes={attributes}
 					setAttributes={setAttributes}
-					ariaLabel={__('Button width')}
+					context={context}
 				/>
+				<Labels attributes={attributes} setAttributes={setAttributes} />
 			</InspectorControls>
 
 			<div

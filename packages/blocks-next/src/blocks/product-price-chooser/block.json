@@ -6,7 +6,11 @@
 	"description": "Displays possible choices for product prices.",
 	"version": "1.0.0",
 	"category": "surecart-product-page",
-	"ancestor": ["surecart/product-page", "surecart/product-quick-view"],
+	"ancestor": [
+		"surecart/product-page",
+		"surecart/product-quick-view",
+		"surecart/sticky-purchase"
+	],
 	"usesContext": ["postId"],
 	"supports": {
 		"interactivity": true,

@@ -246,6 +246,16 @@ class SettingService {
 		);
 		$this->register(
 			'surecart',
+			'hide_help_widget',
+			[
+				'type'              => 'boolean',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'boolval',
+				'default'           => false,
+			]
+		);
+		$this->register(
+			'surecart',
 			'currency_switcher_alignment',
 			[
 				'type'              => 'string',

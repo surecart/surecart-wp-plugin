@@ -9,7 +9,8 @@
 	"ancestor": [
 		"surecart/product-page",
 		"surecart/product-template",
-		"surecart/product-quick-view"
+		"surecart/product-quick-view",
+		"surecart/sticky-purchase"
 	],
 	"usesContext": ["postId"],
 	"attributes": {
