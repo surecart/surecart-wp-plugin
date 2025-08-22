@@ -513,8 +513,8 @@ export interface LineItem extends Object {
   fees_amount: number;
   scratch_amount: number;
   scratch_display_amount?: string;
-  subtotal_with_tax_display_amount?: string;
-  subtotal_with_tax_amount?: number;
+  subtotal_with_upsell_discount_display_amount?: string;
+  subtotal_with_upsell_discount_amount?: number;
   trial: boolean;
   total_savings_amount: number;
   created_at: number;

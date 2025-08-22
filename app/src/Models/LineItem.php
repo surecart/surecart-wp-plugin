@@ -258,21 +258,33 @@ class LineItem extends Model {
 	}
 
 	/**
-	 * Get the display total amount attribute.
+	 * Get the display subtotal amount + upsell discount amount attribute.
 	 *
 	 * @return string
 	 */
-	public function getSubtotalWithTaxDisplayAmountAttribute() {
-		return Currency::format( (int) $this->subtotal_amount + (int) ( $this->tax_amount ?? 0 ), $this->currency );
+	public function getSubtotalWithUpsellDiscountDisplayAmountAttribute() {
+		return Currency::format( (int) $this->subtotal_with_upsell_discount_amount, $this->currency );
 	}
 
 	/**
-	 * Get the display total amount attribute.
+	 * Get the subtotal amount + upsell discount amount attribute.
 	 *
 	 * @return string
 	 */
-	public function getSubtotalWithTaxAmountAttribute() {
-		return (int) $this->subtotal_amount + (int) ( $this->tax_amount ?? 0 );
+	public function getSubtotalWithUpsellDiscountAmountAttribute() {
+		if ( empty( $this->fees->data ) || ! is_array( $this->fees->data ) ) {
+			return 0;
+		}
+
+		$total_upsell_discount = 0;
+
+		foreach ( $this->fees->data as $fee ) {
+			if ( 'upsell' === $fee->fee_type ) {
+				$total_upsell_discount += $fee->amount ?? 0;
+			}
+		}
+
+		return (int) $this->subtotal_amount + (int) ( $total_upsell_discount ?? 0 );
 	}
 
 	/**
