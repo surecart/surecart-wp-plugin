@@ -258,6 +258,24 @@ class LineItem extends Model {
 	}
 
 	/**
+	 * Get the display total amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getSubtotalWithTaxDisplayAmountAttribute() {
+		return Currency::format( (int) $this->subtotal_amount + (int) ( $this->tax_amount ?? 0 ), $this->currency );
+	}
+
+	/**
+	 * Get the display total amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getSubtotalWithTaxAmountAttribute() {
+		return (int) $this->subtotal_amount + (int) ( $this->tax_amount ?? 0 );
+	}
+
+	/**
 	 * Get the display full amount attribute.
 	 *
 	 * @return string
