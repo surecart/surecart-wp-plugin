@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-08-11T16:37:31+00:00\n"
+"POT-Creation-Date: 2025-08-19T14:51:20+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.9.0\n"
 
@@ -24,11 +24,11 @@ msgid "Quick Feedback"
 msgstr ""
 
 #: src/Activation/DeactivationSurveyForm.php:60
-#: src/Integrations/Bricks/Elements/BuyButton.php:112
-#: src/Integrations/Bricks/Elements/BuyButton.php:117
+#: src/Integrations/Bricks/Elements/BuyButton.php:127
+#: src/Integrations/Bricks/Elements/BuyButton.php:132
 #: src/Integrations/Bricks/Elements/CartMenuIcon.php:68
-#: src/Integrations/Elementor/Widgets/AddToCartButton.php:142
-#: src/Integrations/Elementor/Widgets/AddToCartButton.php:149
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:157
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:164
 #: src/Integrations/Elementor/Widgets/CartMenuIcon.php:99
 #: src/Integrations/Elementor/Widgets/CartMenuIcon.php:141
 #: settings/brand/components/CartSettings.js:219
@@ -137,7 +137,7 @@ msgstr ""
 #: src/BlockLibrary/BlockPatternsService.php:53
 #: src/BlockLibrary/BlockServiceProvider.php:144
 #: src/Routing/PermalinkSettingService.php:98
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:317
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:295
 msgid "Shop"
 msgstr ""
 
@@ -155,8 +155,8 @@ msgstr ""
 
 #: src/BlockLibrary/BlockServiceProvider.php:132
 #: src/Controllers/Admin/Orders/OrdersListTable.php:261
-#: src/Support/Blocks/TemplateUtilityService.php:376
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:318
+#: src/Support/Blocks/TemplateUtilityService.php:375
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:296
 #: forms/checkout.php:6
 #: store/add-entities.js:74
 msgid "Checkout"
@@ -165,13 +165,13 @@ msgstr ""
 #: src/BlockLibrary/BlockServiceProvider.php:136
 #: src/WordPress/Pages/PageService.php:124
 #: dashboard/customer-dashboard.php:6
-#: Blocks/Confirmation/edit.js:20
+#: Blocks/Confirmation/edit.js:30
 msgid "Customer Dashboard"
 msgstr ""
 
 #: src/BlockLibrary/BlockServiceProvider.php:140
-#: src/Support/Blocks/TemplateUtilityService.php:375
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:319
+#: src/Support/Blocks/TemplateUtilityService.php:374
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:297
 #: cart.php:6
 #: settings/brand/BrandSettings.js:216
 msgid "Cart"
@@ -201,9 +201,9 @@ msgid "Product"
 msgstr ""
 
 #: src/BlockLibrary/BlockServiceProvider.php:152
-#: src/Support/Blocks/TemplateUtilityService.php:371
-#: src/Support/Blocks/TemplateUtilityService.php:372
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:262
+#: src/Support/Blocks/TemplateUtilityService.php:376
+#: src/Support/Blocks/TemplateUtilityService.php:377
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:240
 #: settings/order/OrderProtocol.js:169
 msgid "Upsells"
 msgstr ""
@@ -385,7 +385,7 @@ msgid "Email Sent"
 msgstr ""
 
 #: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:200
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:227
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:205
 #: abandoned-checkouts/modules/Details.js:11
 msgid "Abandoned"
 msgstr ""
@@ -455,7 +455,7 @@ msgstr ""
 
 #: src/Controllers/Admin/AffiliationClicks/AffiliationClicksController.php:21
 #: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:97
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:293
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:271
 #: admin/affiliation-clicks/index.php:6
 #: affiliations/modules/Clicks.js:54
 #: components/data-tables/affiliates/ClicksDataTable.js:36
@@ -583,7 +583,7 @@ msgstr ""
 
 #: src/Controllers/Admin/AffiliationPayouts/AffiliationPayoutsListTable.php:115
 #: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:98
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:294
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:272
 #: affiliation-referrals/EditAffiliationReferral.js:223
 #: affiliations/modules/Referrals.js:55
 #: components/data-tables/affiliates/ReferralsDataTable.js:36
@@ -950,7 +950,7 @@ msgid "Pending"
 msgstr ""
 
 #: src/Controllers/Admin/Affiliations/AffiliationsController.php:24
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:288
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:266
 #: admin/affiliations/index.php:6
 #: layouts/partials/admin-settings-sidebar.php:40
 #: affiliations/ViewAffiliation.js:218
@@ -1208,7 +1208,7 @@ msgid "Coupon Applied"
 msgstr ""
 
 #: src/Controllers/Admin/Coupons/CouponsController.php:24
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:271
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:249
 #: admin/coupons/index.php:6
 #: coupons/EditCoupon.js:133
 #: settings/export/ExportSettings.js:19
@@ -1335,7 +1335,7 @@ msgstr ""
 
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:359
 #: src/Controllers/Admin/Restore/RestoreController.php:26
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:312
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:290
 #: admin/restore/index.php:37
 #: admin/restore/index.php:42
 #: products/modules/Variations/VariantItem.js:289
@@ -1358,12 +1358,12 @@ msgid "Move to Trash"
 msgstr ""
 
 #: src/Controllers/Admin/Customers/CustomersController.php:25
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:304
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:282
 #: admin/customers/index.php:7
 #: bumps/modules/Conditions.js:80
 #: coupons/modules/Restrictions.js:66
 #: customers/EditCustomer.js:156
-#: settings/advanced/AdvancedSettings.js:440
+#: settings/advanced/AdvancedSettings.js:457
 #: settings/export/ExportSettings.js:23
 #: upsell-funnels/modules/Conditions.js:139
 msgid "Customers"
@@ -1471,7 +1471,7 @@ msgstr ""
 
 #: src/Controllers/Admin/Invoices/InvoicesViewController.php:23
 #: src/Controllers/Web/DashboardController.php:139
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:228
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:206
 #: admin/invoices/index.php:10
 #: invoices/Invoice.js:263
 #: Controllers/InvoiceController.php:63
@@ -1480,7 +1480,7 @@ msgid "Invoices"
 msgstr ""
 
 #: src/Controllers/Admin/Licenses/LicensesController.php:23
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:272
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:250
 #: admin/licenses/index.php:7
 #: components/data-tables/licenses-data-table/index.js:26
 #: licenses/License.js:85
@@ -1551,16 +1551,7 @@ msgstr ""
 msgid "Toggle Product Archive"
 msgstr ""
 
-#: src/Controllers/Admin/Onboarding/OnboardingController.php:52
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:203
-msgid "Getting Started"
-msgstr ""
-
-#: src/Controllers/Admin/Onboarding/OnboardingController.php:55
-msgid "View Docs"
-msgstr ""
-
-#: src/Controllers/Admin/Onboarding/OnboardingController.php:90
+#: src/Controllers/Admin/Onboarding/OnboardingController.php:60
 msgid "Invalid API Token"
 msgstr ""
 
@@ -1671,7 +1662,7 @@ msgstr ""
 
 #: src/Controllers/Admin/Orders/OrdersViewController.php:22
 #: src/Controllers/Web/DashboardController.php:127
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:222
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:200
 #: admin/orders/index.php:7
 #: checkouts/CreateCheckout.js:227
 #: components/data-tables/OrdersDataTable.js:27
@@ -1690,9 +1681,9 @@ msgstr ""
 
 #: src/Controllers/Admin/ProductCollections/ProductCollectionsListTable.php:49
 #: src/Controllers/Admin/Products/ProductsController.php:31
-#: src/Support/Blocks/TemplateUtilityService.php:369
 #: src/Support/Blocks/TemplateUtilityService.php:370
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:236
+#: src/Support/Blocks/TemplateUtilityService.php:371
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:214
 #: admin/products/index.php:71
 #: bumps/modules/Conditions.js:73
 #: checkouts/modules/Prices.js:191
@@ -1701,7 +1692,7 @@ msgstr ""
 #: product-collections/components/Products.js:28
 #: product-groups/modules/Products.js:45
 #: products/EditProduct.js:297
-#: settings/advanced/AdvancedSettings.js:462
+#: settings/advanced/AdvancedSettings.js:479
 #: settings/shipping/profile/Products.js:250
 #: upsell-funnels/modules/Conditions.js:132
 #: Blocks/Form/components/SelectPrices.js:111
@@ -1819,7 +1810,7 @@ msgid "Quantity"
 msgstr ""
 
 #: src/Controllers/Admin/Products/ProductsListTable.php:150
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:245
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:223
 #: src/WordPress/Taxonomies/CollectionTaxonomyService.php:124
 #: product-collections/EditProductCollection.js:144
 #: products/modules/Collection/index.js:55
@@ -1873,7 +1864,7 @@ msgid "Queued for deletion."
 msgstr ""
 
 #: src/Controllers/Admin/Products/ProductsListTable.php:483
-#: settings/advanced/AdvancedSettings.js:449
+#: settings/advanced/AdvancedSettings.js:466
 #: settings/advanced/components/ProductSyncButton.js:38
 msgid "Sync"
 msgstr ""
@@ -1932,7 +1923,7 @@ msgstr ""
 
 #: src/Controllers/Admin/Settings/BaseSettings.php:50
 #: src/Controllers/Admin/Subscriptions/SubscriptionsController.php:24
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:279
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:257
 #: admin/subscriptions/index.php:19
 #: layouts/partials/admin-settings-sidebar.php:30
 #: web/dashboard/orders/show.php:58
@@ -1997,7 +1988,7 @@ msgid "Remaining Payments"
 msgstr ""
 
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:223
-#: src/Integrations/Bricks/Elements/BuyButton.php:95
+#: src/Integrations/Bricks/Elements/BuyButton.php:110
 #: coupons/modules/SelectAffiliate.js:131
 msgid "None"
 msgstr ""
@@ -2226,8 +2217,8 @@ msgid "Billing"
 msgstr ""
 
 #: src/Controllers/Web/DashboardController.php:121
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:187
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:213
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:173
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:191
 #: web/buy.php:72
 #: dashboard/Dashboard.js:63
 #: Blocks/CustomerDashboardButton/Block.php:33
@@ -2347,7 +2338,7 @@ msgstr ""
 #: src/Integrations/Beaver/BeaverFormModule.php:21
 #: src/Integrations/Elementor/Conditions/Conditions.php:38
 #: src/Integrations/ThriveAutomator/ThriveAutomatorApp.php:25
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:187
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:173
 #: src/WordPress/Admin/Notices/AdminNoticesService.php:115
 #: src/WordPress/Admin/SSLCheck/AdminSSLCheckService.php:31
 #: src/WordPress/CompatibilityService.php:213
@@ -2374,8 +2365,8 @@ msgid "Select a form"
 msgstr ""
 
 #: src/Integrations/Beaver/BeaverFormModule.php:60
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:194
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:322
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:180
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:300
 #: src/WordPress/PluginActionLinksService.php:46
 #: layouts/partials/admin-settings-header.php:83
 #: invoices/modules/Tax/index.js:52
@@ -2608,9 +2599,9 @@ msgstr ""
 
 #: src/Integrations/Bricks/Elements/BuyButton.php:51
 #: src/Integrations/Bricks/Elements/BuyButton.php:64
-#: src/Integrations/Bricks/Elements/BuyButton.php:203
-#: src/Integrations/Bricks/Elements/BuyButton.php:207
-#: src/Integrations/Bricks/Elements/BuyButton.php:249
+#: src/Integrations/Bricks/Elements/BuyButton.php:218
+#: src/Integrations/Bricks/Elements/BuyButton.php:222
+#: src/Integrations/Bricks/Elements/BuyButton.php:269
 #: src/Integrations/Elementor/Widgets/AddToCartButton.php:28
 #: src/Integrations/Elementor/Widgets/AddToCartButton.php:64
 #: src/WordPress/Shortcodes/ShortcodesServiceProvider.php:226
@@ -2620,7 +2611,7 @@ msgid "Add To Cart"
 msgstr ""
 
 #: src/Integrations/Bricks/Elements/BuyButton.php:62
-#: src/Integrations/Elementor/Widgets/AddToCartButton.php:113
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:128
 #: Blocks/CartCoupon/edit.js:66
 #: Blocks/CartSubmit/edit.js:86
 #: Blocks/Coupon/edit.js:63
@@ -2642,14 +2633,44 @@ msgstr ""
 msgid "Bypass adding to cart and go directly to the checkout."
 msgstr ""
 
-#: src/Integrations/Bricks/Elements/BuyButton.php:75
-#: src/Integrations/Bricks/Elements/BuyButton.php:89
+#: src/Integrations/Bricks/Elements/BuyButton.php:76
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:104
+#: src/blocks/product-buy-button/display.js:72
+msgid "Show sticky button"
+msgstr ""
+
+#: src/Integrations/Bricks/Elements/BuyButton.php:78
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:107
+#: src/blocks/product-buy-button/display.js:94
+msgid "Show a sticky purchase button when this button is out of view"
+msgstr ""
+
+#: src/Integrations/Bricks/Elements/BuyButton.php:80
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:109
+#: src/blocks/product-buy-button/display.js:106
+msgid "Never"
+msgstr ""
+
+#: src/Integrations/Bricks/Elements/BuyButton.php:81
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:110
+#: src/blocks/product-buy-button/display.js:111
+msgid "In stock"
+msgstr ""
+
+#: src/Integrations/Bricks/Elements/BuyButton.php:82
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:111
+#: src/blocks/product-buy-button/display.js:116
+msgid "Always"
+msgstr ""
+
+#: src/Integrations/Bricks/Elements/BuyButton.php:90
+#: src/Integrations/Bricks/Elements/BuyButton.php:104
 #: src/Integrations/Elementor/Widgets/ProductContent.php:48
 #: Blocks/Form/edit.js:275
 msgid "Style"
 msgstr ""
 
-#: src/Integrations/Bricks/Elements/BuyButton.php:80
+#: src/Integrations/Bricks/Elements/BuyButton.php:95
 #: src/Integrations/Elementor/Widgets/CartMenuIcon.php:216
 #: src/Integrations/Elementor/Widgets/VariantPills.php:462
 #: components/MediaLibrary/Preview.js:144
@@ -2659,7 +2680,7 @@ msgstr ""
 msgid "Size"
 msgstr ""
 
-#: src/Integrations/Bricks/Elements/BuyButton.php:85
+#: src/Integrations/Bricks/Elements/BuyButton.php:100
 #: src/Integrations/Elementor/ElementorBlockAdapterService.php:107
 #: src/Routing/PermalinkSettingService.php:94
 #: src/Routing/PermalinkSettingService.php:111
@@ -2674,15 +2695,15 @@ msgstr ""
 msgid "Default"
 msgstr ""
 
-#: src/Integrations/Bricks/Elements/BuyButton.php:99
+#: src/Integrations/Bricks/Elements/BuyButton.php:114
 msgid "Circle"
 msgstr ""
 
-#: src/Integrations/Bricks/Elements/BuyButton.php:105
+#: src/Integrations/Bricks/Elements/BuyButton.php:120
 msgid "Outline"
 msgstr ""
 
-#: src/Integrations/Bricks/Elements/BuyButton.php:122
+#: src/Integrations/Bricks/Elements/BuyButton.php:137
 #: src/Integrations/Elementor/Widgets/Quantity.php:127
 #: src/Integrations/Elementor/Widgets/Quantity.php:145
 #: src/Integrations/Elementor/Widgets/SelectedPriceAdHocAmount.php:125
@@ -2692,14 +2713,14 @@ msgstr ""
 msgid "Typography"
 msgstr ""
 
-#: src/Integrations/Bricks/Elements/BuyButton.php:134
-#: src/Integrations/Elementor/Widgets/AddToCartButton.php:392
+#: src/Integrations/Bricks/Elements/BuyButton.php:149
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:407
 #: settings/display-currency/components/CurrencySwitcherSettings.js:158
 msgid "Position"
 msgstr ""
 
-#: src/Integrations/Bricks/Elements/BuyButton.php:138
-#: src/Integrations/Elementor/Widgets/AddToCartButton.php:404
+#: src/Integrations/Bricks/Elements/BuyButton.php:153
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:419
 #: src/Integrations/Elementor/Widgets/ProductContent.php:68
 #: src/Integrations/Elementor/Widgets/SaleBadge.php:159
 #: settings/brand/components/CartSettings.js:185
@@ -2708,23 +2729,23 @@ msgstr ""
 msgid "Right"
 msgstr ""
 
-#: src/Integrations/Bricks/Elements/BuyButton.php:143
+#: src/Integrations/Bricks/Elements/BuyButton.php:158
 #: src/Integrations/Bricks/Elements/PriceData.php:141
 #: src/Integrations/Bricks/Elements/ProductData.php:155
 #: src/Integrations/Elementor/Widgets/CollectionTags.php:182
 msgid "Gap"
 msgstr ""
 
-#: src/Integrations/Bricks/Elements/BuyButton.php:155
-#: src/Integrations/Elementor/Widgets/AddToCartButton.php:440
+#: src/Integrations/Bricks/Elements/BuyButton.php:170
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:455
 msgid "Space between"
 msgstr ""
 
-#: src/Integrations/Bricks/Elements/BuyButton.php:203
-#: src/Integrations/Bricks/Elements/BuyButton.php:207
-#: src/Integrations/Bricks/Elements/BuyButton.php:249
+#: src/Integrations/Bricks/Elements/BuyButton.php:218
+#: src/Integrations/Bricks/Elements/BuyButton.php:222
+#: src/Integrations/Bricks/Elements/BuyButton.php:269
 #: src/Integrations/Bricks/Elements/Product.php:247
-#: src/Integrations/Elementor/Widgets/AddToCartButton.php:523
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:538
 #: Blocks/AddToCartButton/Block.php:81
 #: Blocks/BuyButton/Block.php:36
 #: src/blocks/product-buy-button/view.php:16
@@ -2732,25 +2753,24 @@ msgstr ""
 msgid "Buy Now"
 msgstr ""
 
-#: src/Integrations/Bricks/Elements/BuyButton.php:204
-#: src/Integrations/Elementor/Widgets/AddToCartButton.php:124
-#: src/Integrations/Elementor/Widgets/AddToCartButton.php:524
-#: src/Models/Blocks/ProductPageBlock.php:231
+#: src/Integrations/Bricks/Elements/BuyButton.php:219
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:139
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:539
+#: src/Models/Blocks/ProductPageBlock.php:232
 #: Blocks/Product/BuyButton/Block.php:128
 #: Blocks/Upsell/SubmitButton/Block.php:131
 #: src/blocks/product-buy-button/view.php:17
 msgid "Sold Out"
 msgstr ""
 
-#: src/Integrations/Bricks/Elements/BuyButton.php:205
-#: src/Integrations/Elementor/Widgets/AddToCartButton.php:525
-#: src/Models/Blocks/ProductPageBlock.php:232
+#: src/Integrations/Bricks/Elements/BuyButton.php:220
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:540
+#: src/Models/Blocks/ProductPageBlock.php:233
 #: products/components/Availability/index.js:85
 #: Blocks/Product/BuyButton/Block.php:124
 #: Blocks/Product/BuyButton/Block.php:144
 #: Blocks/Upsell/SubmitButton/Block.php:125
 #: Blocks/Upsell/SubmitButton/Block.php:149
-#: src/blocks/product-buy-button/view.php:18
 msgid "Unavailable For Purchase"
 msgstr ""
 
@@ -2818,6 +2838,7 @@ msgstr ""
 #: Blocks/ProductCollectionImage/dimension-controls.js:150
 #: src/blocks/cart-line-item-image/edit.js:140
 #: src/blocks/product-image/edit.js:144
+#: src/blocks/product-selected-variant-image/edit.js:148
 msgid "Height"
 msgstr ""
 
@@ -2984,8 +3005,8 @@ msgid "Trial/Fees"
 msgstr ""
 
 #: src/Integrations/Bricks/Elements/Product.php:235
-#: src/Integrations/Elementor/Widgets/AddToCartButton.php:523
-#: src/Models/Blocks/ProductPageBlock.php:230
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:538
+#: src/Models/Blocks/ProductPageBlock.php:231
 #: src/blocks/product-buy-button/view.php:16
 msgid "Add to Cart"
 msgstr ""
@@ -3017,6 +3038,22 @@ msgstr ""
 
 #: src/Integrations/Bricks/Elements/ProductData.php:181
 msgid "No product pricing selected."
+msgstr ""
+
+#: src/Integrations/Bricks/Elements/Quantity.php:86
+#: src/blocks/cart-items/view.php:59
+#: src/blocks/cart-line-item-quantity/view.php:22
+#: src/blocks/product-quantity/view.php:18
+#: src/blocks/cart-line-item-quantity/edit.js:24
+msgid "Decrease quantity by one."
+msgstr ""
+
+#: src/Integrations/Bricks/Elements/Quantity.php:104
+#: src/blocks/cart-items/view.php:86
+#: src/blocks/cart-line-item-quantity/view.php:49
+#: src/blocks/product-quantity/view.php:44
+#: src/blocks/cart-line-item-quantity/edit.js:40
+msgid "Increase quantity by one."
 msgstr ""
 
 #: src/Integrations/Bricks/Elements/SaleBadge.php:52
@@ -3106,8 +3143,8 @@ msgid "SureCart Products (Deprecated)"
 msgstr ""
 
 #: src/Integrations/Elementor/Documents/ProductDocument.php:61
-#: src/Support/Blocks/TemplateUtilityService.php:369
 #: src/Support/Blocks/TemplateUtilityService.php:370
+#: src/Support/Blocks/TemplateUtilityService.php:371
 msgid "SureCart Products"
 msgstr ""
 
@@ -3244,36 +3281,38 @@ msgstr ""
 msgid "No"
 msgstr ""
 
-#: src/Integrations/Elementor/Widgets/AddToCartButton.php:106
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:121
 msgid "Text Settings"
 msgstr ""
 
-#: src/Integrations/Elementor/Widgets/AddToCartButton.php:122
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:137
 #: Blocks/Product/BuyButton/edit.js:148
 #: Blocks/Upsell/SubmitButton/edit.js:113
-#: src/blocks/product-buy-button/edit.js:59
+#: src/blocks/product-buy-button/labels.js:25
 msgid "Out of stock label"
 msgstr ""
 
-#: src/Integrations/Elementor/Widgets/AddToCartButton.php:131
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:146
 #: Blocks/Product/BuyButton/edit.js:157
 #: Blocks/Upsell/SubmitButton/edit.js:122
-#: src/blocks/product-buy-button/edit.js:68
+#: src/blocks/product-buy-button/labels.js:55
 msgid "Unavailable label"
 msgstr ""
 
-#: src/Integrations/Elementor/Widgets/AddToCartButton.php:133
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:148
 #: Blocks/Product/BuyButton/Block.php:131
 #: Blocks/Upsell/SubmitButton/Block.php:135
+#: src/blocks/product-buy-button/view.php:18
+#: src/blocks/product-buy-button/labels.js:46
 msgid "Unavailable"
 msgstr ""
 
-#: src/Integrations/Elementor/Widgets/AddToCartButton.php:169
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:184
 msgid "Icon Position"
 msgstr ""
 
-#: src/Integrations/Elementor/Widgets/AddToCartButton.php:174
-#: src/Integrations/Elementor/Widgets/AddToCartButton.php:428
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:189
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:443
 #: src/Integrations/Elementor/Widgets/CollectionTags.php:118
 #: src/Integrations/Elementor/Widgets/CollectionTags.php:156
 #: src/Integrations/Elementor/Widgets/VariantPills.php:143
@@ -3282,8 +3321,8 @@ msgstr ""
 msgid "Start"
 msgstr ""
 
-#: src/Integrations/Elementor/Widgets/AddToCartButton.php:178
-#: src/Integrations/Elementor/Widgets/AddToCartButton.php:436
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:193
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:451
 #: src/Integrations/Elementor/Widgets/CollectionTags.php:126
 #: src/Integrations/Elementor/Widgets/CollectionTags.php:164
 #: src/Integrations/Elementor/Widgets/VariantPills.php:144
@@ -3292,23 +3331,23 @@ msgstr ""
 msgid "End"
 msgstr ""
 
-#: src/Integrations/Elementor/Widgets/AddToCartButton.php:199
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:214
 msgid "Icon Spacing"
 msgstr ""
 
-#: src/Integrations/Elementor/Widgets/AddToCartButton.php:241
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:256
 #: settings/subscription-preservation/PreservationSettings.js:295
 #: Blocks/CustomerDashboardButton/edit.js:93
 msgid "Button"
 msgstr ""
 
-#: src/Integrations/Elementor/Widgets/AddToCartButton.php:271
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:286
 #: src/Integrations/Elementor/Widgets/CartMenuIcon.php:151
 msgid "Normal"
 msgstr ""
 
-#: src/Integrations/Elementor/Widgets/AddToCartButton.php:278
-#: src/Integrations/Elementor/Widgets/AddToCartButton.php:311
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:293
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:326
 #: src/Integrations/Elementor/Widgets/CollectionTags.php:248
 #: src/Integrations/Elementor/Widgets/PriceChooser.php:219
 #: src/Integrations/Elementor/Widgets/PriceChooser.php:347
@@ -3328,8 +3367,8 @@ msgstr ""
 msgid "Text Color"
 msgstr ""
 
-#: src/Integrations/Elementor/Widgets/AddToCartButton.php:291
-#: src/Integrations/Elementor/Widgets/AddToCartButton.php:323
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:306
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:338
 #: src/Integrations/Elementor/Widgets/CollectionTags.php:262
 #: src/Integrations/Elementor/Widgets/PriceChooser.php:233
 #: src/Integrations/Elementor/Widgets/PriceChooser.php:358
@@ -3346,17 +3385,17 @@ msgstr ""
 msgid "Background Color"
 msgstr ""
 
-#: src/Integrations/Elementor/Widgets/AddToCartButton.php:304
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:319
 #: src/Integrations/Elementor/Widgets/CartMenuIcon.php:173
 msgid "Hover"
 msgstr ""
 
-#: src/Integrations/Elementor/Widgets/AddToCartButton.php:334
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:349
 #: src/Integrations/Elementor/Widgets/CartMenuIcon.php:193
 msgid "Hover Animation"
 msgstr ""
 
-#: src/Integrations/Elementor/Widgets/AddToCartButton.php:346
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:361
 #: src/Integrations/Elementor/Widgets/CartMenuIcon.php:240
 #: src/Integrations/Elementor/Widgets/Quantity.php:153
 #: src/Integrations/Elementor/Widgets/SaleBadge.php:197
@@ -3369,12 +3408,16 @@ msgstr ""
 #: Blocks/StoreLogo/edit.js:153
 #: src/blocks/cart-line-item-image/edit.js:151
 #: src/blocks/cart/edit.js:103
+#: src/blocks/product-buy-button/display.js:29
+#: src/blocks/product-buy-button/display.js:36
 #: src/blocks/product-image/edit.js:154
 #: src/blocks/product-selected-price-ad-hoc-amount/edit.js:33
+#: src/blocks/product-selected-variant-image/edit.js:158
+#: src/blocks/sticky-purchase/edit.js:40
 msgid "Width"
 msgstr ""
 
-#: src/Integrations/Elementor/Widgets/AddToCartButton.php:373
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:388
 #: src/Integrations/Elementor/Widgets/CartMenuIcon.php:280
 #: src/Integrations/Elementor/Widgets/CollectionTags.php:284
 #: src/Integrations/Elementor/Widgets/PriceChooser.php:283
@@ -3387,7 +3430,7 @@ msgstr ""
 msgid "Padding"
 msgstr ""
 
-#: src/Integrations/Elementor/Widgets/AddToCartButton.php:396
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:411
 #: src/Integrations/Elementor/Widgets/ProductContent.php:60
 #: src/Integrations/Elementor/Widgets/SaleBadge.php:151
 #: settings/brand/components/CartSettings.js:189
@@ -3395,8 +3438,8 @@ msgstr ""
 msgid "Left"
 msgstr ""
 
-#: src/Integrations/Elementor/Widgets/AddToCartButton.php:400
-#: src/Integrations/Elementor/Widgets/AddToCartButton.php:432
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:415
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:447
 #: src/Integrations/Elementor/Widgets/CollectionTags.php:122
 #: src/Integrations/Elementor/Widgets/CollectionTags.php:160
 #: src/Integrations/Elementor/Widgets/ProductContent.php:64
@@ -3407,19 +3450,19 @@ msgstr ""
 msgid "Center"
 msgstr ""
 
-#: src/Integrations/Elementor/Widgets/AddToCartButton.php:408
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:423
 #: src/Integrations/Elementor/Widgets/CollectionTags.php:168
 #: src/Integrations/Elementor/Widgets/VariantPills.php:167
 msgid "Stretch"
 msgstr ""
 
-#: src/Integrations/Elementor/Widgets/AddToCartButton.php:424
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:439
 #: src/Integrations/Elementor/Widgets/ProductContent.php:56
 #: src/Integrations/Elementor/Widgets/SaleBadge.php:147
 msgid "Alignment"
 msgstr ""
 
-#: src/Integrations/Elementor/Widgets/AddToCartButton.php:463
+#: src/Integrations/Elementor/Widgets/AddToCartButton.php:478
 #: src/Integrations/Elementor/Widgets/CartMenuIcon.php:338
 #: src/Integrations/Elementor/Widgets/CollectionTags.php:317
 #: src/Integrations/Elementor/Widgets/PriceChooser.php:316
@@ -3788,6 +3831,7 @@ msgid "Color"
 msgstr ""
 
 #: src/Integrations/Elementor/Widgets/VariantPills.php:456
+#: src/blocks/product-selected-variant/edit.js:12
 msgid "Red"
 msgstr ""
 
@@ -3803,6 +3847,7 @@ msgstr ""
 #: src/Integrations/Elementor/Widgets/VariantPills.php:464
 #: Blocks/CustomerDashboardButton/edit.js:70
 #: Blocks/Submit/edit.js:112
+#: src/blocks/product-selected-variant/edit.js:12
 msgid "Small"
 msgstr ""
 
@@ -4095,6 +4140,7 @@ msgstr ""
 
 #: src/Models/LineItem.php:334
 #: src/blocks/cart-line-item-status/edit.js:6
+#: src/blocks/product-buy-button/labels.js:34
 msgid "Out of stock"
 msgstr ""
 
@@ -4225,6 +4271,7 @@ msgstr ""
 #: Blocks/ProductItemImage/aspect-ratio-dropdown.js:55
 #: src/blocks/cart-line-item-image/edit.js:106
 #: src/blocks/product-image/edit.js:110
+#: src/blocks/product-selected-variant-image/edit.js:114
 msgid "Square"
 msgstr ""
 
@@ -4280,6 +4327,7 @@ msgstr[1] ""
 #: src/Models/Price.php:355
 #: products/components/price/parts/RevokeAfterDays.js:59
 #: settings/affiliation-protocol/AffiliationProtocolSettings.js:339
+#: settings/subscription/SubscriptionSettings.js:249
 msgid "days"
 msgstr ""
 
@@ -4395,10 +4443,6 @@ msgstr ""
 
 #: src/Permissions/RolesService.php:91
 msgid "SureCart Customer"
-msgstr ""
-
-#: src/Request/RequestService.php:272
-msgid "Please connect your site to SureCart."
 msgstr ""
 
 #: src/Request/RequestService.php:361
@@ -5128,9 +5172,9 @@ msgid "If you like, you may enter custom structures for your product page URLs h
 msgstr ""
 
 #: src/Routing/PermalinkSettingService.php:153
+#: src/Support/Blocks/TemplateUtilityService.php:372
 #: src/Support/Blocks/TemplateUtilityService.php:373
-#: src/Support/Blocks/TemplateUtilityService.php:374
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:245
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:223
 #: src/WordPress/Admin/Menus/ProductCollectionsMenuService.php:36
 #: admin/product-collections/index.php:6
 #: store/add-entities.js:266
@@ -5163,53 +5207,61 @@ msgstr ""
 msgid "Your email and cart are saved so we can send email reminders about this order."
 msgstr ""
 
-#: src/Support/Blocks/TemplateUtilityService.php:209
+#: src/Support/Blocks/TemplateUtilityService.php:210
 msgid "No theme is defined for this template."
 msgstr ""
 
+#: src/Support/Blocks/TemplateUtilityService.php:372
 #: src/Support/Blocks/TemplateUtilityService.php:373
-#: src/Support/Blocks/TemplateUtilityService.php:374
 msgid "SureCart Product Collections"
 msgstr ""
 
-#: src/Support/Blocks/TemplateUtilityService.php:375
+#: src/Support/Blocks/TemplateUtilityService.php:374
 msgid "SureCart Cart"
 msgstr ""
 
-#: src/Support/Blocks/TemplateUtilityService.php:376
+#: src/Support/Blocks/TemplateUtilityService.php:375
 msgid "SureCart Checkout"
 msgstr ""
 
-#: src/Support/Blocks/TemplateUtilityService.php:394
-msgid "Display all individual products unless a custom template has been applied."
-msgstr ""
-
-#: src/Support/Blocks/TemplateUtilityService.php:395
-msgid "Display all individual products content unless a custom template has been applied."
+#: src/Support/Blocks/TemplateUtilityService.php:378
+msgid "Sticky Purchase"
 msgstr ""
 
 #: src/Support/Blocks/TemplateUtilityService.php:396
-msgid "Display all individual upsells unless a custom template has been applied."
+msgid "Display all individual products unless a custom template has been applied."
 msgstr ""
 
 #: src/Support/Blocks/TemplateUtilityService.php:397
-msgid "Display all individual upsells content unless a custom template has been applied."
+msgid "Display all individual products content unless a custom template has been applied."
 msgstr ""
 
 #: src/Support/Blocks/TemplateUtilityService.php:398
-msgid "Display all individual product collections unless a custom template has been applied."
+msgid "Display all individual upsells unless a custom template has been applied."
 msgstr ""
 
 #: src/Support/Blocks/TemplateUtilityService.php:399
-msgid "Display all individual product collections content unless a custom template has been applied."
+msgid "Display all individual upsells content unless a custom template has been applied."
 msgstr ""
 
 #: src/Support/Blocks/TemplateUtilityService.php:400
-msgid "The slide-out cart template."
+msgid "Display all individual product collections unless a custom template has been applied."
 msgstr ""
 
 #: src/Support/Blocks/TemplateUtilityService.php:401
+msgid "Display all individual product collections content unless a custom template has been applied."
+msgstr ""
+
+#: src/Support/Blocks/TemplateUtilityService.php:402
+msgid "The slide-out cart template."
+msgstr ""
+
+#: src/Support/Blocks/TemplateUtilityService.php:403
 msgid "Display the checkout content unless a custom template has been applied."
+msgstr ""
+
+#: src/Support/Blocks/TemplateUtilityService.php:404
+msgid "Display a sticky purchase button when the product form is scrolled out of view."
 msgstr ""
 
 #. translators: %s: current language name
@@ -7246,70 +7298,70 @@ msgstr ""
 msgid "Visit Store"
 msgstr ""
 
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:192
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:178
 msgid "Get Started"
 msgstr ""
 
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:193
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:214
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:179
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:192
 #: templates/UpdateModel/index.js:44
 msgid "Complete Signup"
 msgstr ""
 
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:215
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:193
 msgid "Claim Account"
 msgstr ""
 
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:261
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:239
 #: bumps/EditBump.js:160
 msgid "Order Bumps"
 msgstr ""
 
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:263
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:241
 #: admin/product-groups/index.php:20
 msgid "Upgrade Groups"
 msgstr ""
 
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:283
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:261
 msgid "Cancellation Insights"
 msgstr ""
 
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:283
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:261
 msgid "Cancellations"
 msgstr ""
 
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:292
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:270
 msgid "Requests"
 msgstr ""
 
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:295
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:273
 #: affiliations/modules/Payouts.js:54
 #: components/data-tables/affiliates/PayoutsDataTable.js:29
 #: store/add-entities.js:386
 msgid "Payouts"
 msgstr ""
 
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:296
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:274
 #: store/add-entities.js:393
 msgid "Payout Groups"
 msgstr ""
 
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:320
-#: settings/advanced/AdvancedSettings.js:384
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:298
+#: settings/advanced/AdvancedSettings.js:389
 msgid "Customer Area"
 msgstr ""
 
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:321
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:299
 #: src/WordPress/PostTypes/CartPostTypeService.php:153
 #: src/WordPress/PostTypes/FormPostTypeService.php:98
 msgid "Forms"
 msgstr ""
 
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:321
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:299
 msgid "Custom Forms"
 msgstr ""
 
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:347
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:325
 msgid "Deleted"
 msgstr ""
 
@@ -7720,7 +7772,7 @@ msgid "Order Confirmation"
 msgstr ""
 
 #: src/WordPress/Pages/PageService.php:132
-#: settings/advanced/AdvancedSettings.js:348
+#: settings/advanced/AdvancedSettings.js:353
 msgid "Shop Page"
 msgstr ""
 
@@ -8201,7 +8253,7 @@ msgstr ""
 
 #: admin/advanced.php:30
 #: settings/abandoned/AbandonedSettings.js:284
-#: settings/advanced/AdvancedSettings.js:112
+#: settings/advanced/AdvancedSettings.js:117
 msgid "Advanced Settings"
 msgstr ""
 
@@ -8222,35 +8274,35 @@ msgstr ""
 
 #: admin/advanced.php:41
 #: admin/plugin.php:95
-#: settings/advanced/AdvancedSettings.js:123
+#: settings/advanced/AdvancedSettings.js:128
 msgid "Performance"
 msgstr ""
 
 #: admin/advanced.php:42
 #: admin/plugin.php:96
-#: settings/advanced/AdvancedSettings.js:124
+#: settings/advanced/AdvancedSettings.js:129
 msgid "Change your plugin performance settings."
 msgstr ""
 
 #: admin/advanced.php:45
 #: admin/plugin.php:99
-#: settings/advanced/AdvancedSettings.js:139
+#: settings/advanced/AdvancedSettings.js:144
 msgid "Use JavaScript ESM Loader"
 msgstr ""
 
 #: admin/advanced.php:46
 #: admin/plugin.php:100
-#: settings/advanced/AdvancedSettings.js:141
+#: settings/advanced/AdvancedSettings.js:146
 msgid "This can slightly increase page load speed, but may require you to enable CORS headers for .js files on your CDN. Please check your checkout forms after you enable this option in a private browser window."
 msgstr ""
 
 #: admin/advanced.php:52
-#: settings/advanced/AdvancedSettings.js:395
+#: settings/advanced/AdvancedSettings.js:412
 msgid "Legacy Features"
 msgstr ""
 
 #: admin/advanced.php:53
-#: settings/advanced/AdvancedSettings.js:396
+#: settings/advanced/AdvancedSettings.js:413
 msgid "Opt-in to some legacy features of the plugin."
 msgstr ""
 
@@ -8259,31 +8311,31 @@ msgid "Use the Stripe Card Element"
 msgstr ""
 
 #: admin/advanced.php:57
-#: settings/advanced/AdvancedSettings.js:414
+#: settings/advanced/AdvancedSettings.js:431
 msgid "Use Stripe's Card Element instead of the Payment Element in all forms."
 msgstr ""
 
 #: admin/advanced.php:63
 #: admin/plugin.php:106
-#: settings/advanced/AdvancedSettings.js:494
+#: settings/advanced/AdvancedSettings.js:511
 msgid "Uninstall"
 msgstr ""
 
 #: admin/advanced.php:64
 #: admin/plugin.php:107
-#: settings/advanced/AdvancedSettings.js:495
+#: settings/advanced/AdvancedSettings.js:512
 msgid "Change your plugin uninstall settings."
 msgstr ""
 
 #: admin/advanced.php:67
 #: admin/plugin.php:110
-#: settings/advanced/AdvancedSettings.js:510
+#: settings/advanced/AdvancedSettings.js:527
 msgid "Remove Plugin Data"
 msgstr ""
 
 #: admin/advanced.php:68
 #: admin/plugin.php:111
-#: settings/advanced/AdvancedSettings.js:512
+#: settings/advanced/AdvancedSettings.js:529
 msgid "Completely remove all plugin data when deleted. This cannot be undone."
 msgstr ""
 
@@ -13978,7 +14030,7 @@ msgstr ""
 
 #: settings/abandoned/AbandonedSettings.js:62
 #: settings/account/AccountSettings.js:53
-#: settings/advanced/AdvancedSettings.js:102
+#: settings/advanced/AdvancedSettings.js:107
 #: settings/affiliation-protocol/AffiliationProtocolSettings.js:63
 #: settings/brand/BrandSettings.js:71
 #: settings/connection/ConnectionSettings.js:38
@@ -14282,155 +14334,163 @@ msgstr ""
 msgid "Enter a website URL"
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:158
+#: settings/advanced/AdvancedSettings.js:163
 msgid "On Demand Block Assets"
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:160
+#: settings/advanced/AdvancedSettings.js:165
 msgid "Enabling this option will load block assets only when they are rendered. This will happen for ALL blocks on your website, not just SureCart blocks. Please check your pages after you enable this option in a private browser window as this might change the CSS load order."
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:170
+#: settings/advanced/AdvancedSettings.js:175
 msgid "Note: This option is sometimes enabled by the theme. If it is already enabled by the theme, then this setting won't have any effect."
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:181
+#: settings/advanced/AdvancedSettings.js:186
 msgid "Spam Protection & Security"
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:182
+#: settings/advanced/AdvancedSettings.js:187
 msgid "Change your checkout spam protection and security settings."
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:194
+#: settings/advanced/AdvancedSettings.js:199
 msgid "Test Mode Restricted"
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:196
+#: settings/advanced/AdvancedSettings.js:201
 msgid "Restrict test orders to store administrators only. Disable this setting to allow anyone to complete test orders."
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:207
+#: settings/advanced/AdvancedSettings.js:212
 msgid "Honeypot"
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:209
+#: settings/advanced/AdvancedSettings.js:214
 msgid "This adds a field that is invisible to users, but visible to bots in an attempt to trick them into filling it out."
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:223
+#: settings/advanced/AdvancedSettings.js:228
 msgid "Recaptcha v3"
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:225
+#: settings/advanced/AdvancedSettings.js:230
 msgid "Enable Recaptcha spam protection on checkout forms."
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:234
+#: settings/advanced/AdvancedSettings.js:239
 msgid "Important"
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:235
+#: settings/advanced/AdvancedSettings.js:240
 msgid "Please clear checkout page cache after changing this setting."
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:256
-#: settings/advanced/AdvancedSettings.js:257
+#: settings/advanced/AdvancedSettings.js:261
+#: settings/advanced/AdvancedSettings.js:262
 msgid "reCaptcha Site Key"
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:265
-#: settings/advanced/AdvancedSettings.js:281
+#: settings/advanced/AdvancedSettings.js:270
+#: settings/advanced/AdvancedSettings.js:286
 msgid "You can find this on your google Recaptcha dashboard."
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:272
-#: settings/advanced/AdvancedSettings.js:273
+#: settings/advanced/AdvancedSettings.js:277
+#: settings/advanced/AdvancedSettings.js:278
 msgid "reCaptcha Secret Key"
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:289
+#: settings/advanced/AdvancedSettings.js:294
 msgid "To get your Recaptcha keys"
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:294
+#: settings/advanced/AdvancedSettings.js:299
 msgid "register a new site and choose v3."
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:313
+#: settings/advanced/AdvancedSettings.js:318
 msgid "Stripe Fraud Monitoring"
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:318
+#: settings/advanced/AdvancedSettings.js:323
 msgid "This will load stripe.js on every page to help with Fraud monitoring."
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:329
+#: settings/advanced/AdvancedSettings.js:334
 msgid "Strong Password Validation"
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:331
+#: settings/advanced/AdvancedSettings.js:336
 msgid "This ensures all the password fields have a stronger validation for user password input i.e. at least 6 characters and one special character."
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:340
+#: settings/advanced/AdvancedSettings.js:345
 msgid "Admin Appearance"
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:341
+#: settings/advanced/AdvancedSettings.js:346
 msgid "Change some admin UI options."
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:350
+#: settings/advanced/AdvancedSettings.js:355
 msgid "Show a link to edit the shop page in the menu."
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:360
+#: settings/advanced/AdvancedSettings.js:365
 msgid "Cart Page"
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:362
+#: settings/advanced/AdvancedSettings.js:367
 msgid "Show a link to edit the cart in the menu."
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:372
+#: settings/advanced/AdvancedSettings.js:377
 msgid "Checkout Page"
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:374
+#: settings/advanced/AdvancedSettings.js:379
 msgid "Show a link to edit the checkout page in the menu."
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:386
+#: settings/advanced/AdvancedSettings.js:391
 msgid "Show a link to edit the customer area in the menu."
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:412
+#: settings/advanced/AdvancedSettings.js:401
+msgid "Hide Help Widget"
+msgstr ""
+
+#: settings/advanced/AdvancedSettings.js:403
+msgid "Hide the help widget that appears in the bottom right corner of SureCart admin pages."
+msgstr ""
+
+#: settings/advanced/AdvancedSettings.js:429
 msgid "Use The Stripe Card Element"
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:423
+#: settings/advanced/AdvancedSettings.js:440
 msgid "Syncing"
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:424
+#: settings/advanced/AdvancedSettings.js:441
 msgid "Manually sync your WordPress install with SureCart."
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:441
+#: settings/advanced/AdvancedSettings.js:458
 msgid "Create WordPress user accounts for SureCart customers who don't already have a WordPress account. Use this after migrating from another eCommerce platform to ensure every SureCart customer can log in."
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:463
+#: settings/advanced/AdvancedSettings.js:480
 msgid "Run a sync on all SureCart products to post types."
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:475
-#: settings/advanced/AdvancedSettings.js:489
+#: settings/advanced/AdvancedSettings.js:492
+#: settings/advanced/AdvancedSettings.js:506
 msgid "Clear Test Data"
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:476
+#: settings/advanced/AdvancedSettings.js:493
 msgid "Clear out all of your test data with one-click."
 msgstr ""
 
@@ -14892,7 +14952,7 @@ msgid "Subscription Reminder Notifications"
 msgstr ""
 
 #: settings/customer/CustomerSettings.js:230
-msgid "Send a reminder to your subscribers 3 days before their subscription renews."
+msgid "Send a reminder to your subscribers based on the percentage of the subscription period remaining."
 msgstr ""
 
 #: settings/customer/CustomerSettings.js:259
@@ -15012,7 +15072,7 @@ msgid "Subscription Reminder"
 msgstr ""
 
 #: settings/customer/CustomerSettings.js:416
-msgid "Sent to customers 3 days before a subscription renews."
+msgid "Sent to customers based on the percentage of the subscription period remaining."
 msgstr ""
 
 #: settings/customer/CustomerSettings.js:424
@@ -16017,106 +16077,118 @@ msgid "% of Period Remaining"
 msgstr ""
 
 #: settings/subscription/SubscriptionSettings.js:231
-msgid "Failed Payments"
+msgid "Minimum Days Between Reminders"
 msgstr ""
 
 #: settings/subscription/SubscriptionSettings.js:232
+msgid "(no limit)"
+msgstr ""
+
+#: settings/subscription/SubscriptionSettings.js:243
+msgid "Set how long to wait between reminders. For example, 180 days means customers get at most one reminder every 180 days, regardless of renewal frequency."
+msgstr ""
+
+#: settings/subscription/SubscriptionSettings.js:255
+msgid "Failed Payments"
+msgstr ""
+
+#: settings/subscription/SubscriptionSettings.js:256
 msgid "Manage how your store handles failed subscription payments."
 msgstr ""
 
-#: settings/subscription/SubscriptionSettings.js:246
+#: settings/subscription/SubscriptionSettings.js:270
 msgid "Cancel Subscriptions After"
 msgstr ""
 
-#: settings/subscription/SubscriptionSettings.js:257
+#: settings/subscription/SubscriptionSettings.js:281
 msgid "One Week"
 msgstr ""
 
-#: settings/subscription/SubscriptionSettings.js:261
+#: settings/subscription/SubscriptionSettings.js:285
 msgid "Two Weeks"
 msgstr ""
 
-#: settings/subscription/SubscriptionSettings.js:265
+#: settings/subscription/SubscriptionSettings.js:289
 msgid "Three Weeks"
 msgstr ""
 
-#: settings/subscription/SubscriptionSettings.js:273
+#: settings/subscription/SubscriptionSettings.js:297
 msgid "If a subscription payment fails, the subscription is marked past due. When this happens we automatically retry the payment based on our smart retry logic. If the payment is still unsuccessful after the duration set above, the subscription will be canceled."
 msgstr ""
 
-#: settings/subscription/SubscriptionSettings.js:281
+#: settings/subscription/SubscriptionSettings.js:305
 msgid "Purchase Behavior"
 msgstr ""
 
-#: settings/subscription/SubscriptionSettings.js:282
+#: settings/subscription/SubscriptionSettings.js:306
 msgid "Manage your subscription purchase behavior."
 msgstr ""
 
-#: settings/subscription/SubscriptionSettings.js:311
+#: settings/subscription/SubscriptionSettings.js:335
 msgid "Require Upfront Payment Method"
 msgstr ""
 
-#: settings/subscription/SubscriptionSettings.js:317
+#: settings/subscription/SubscriptionSettings.js:341
 msgid "Whether or not a payment method should be required for subscriptions that have an initial period amount of $0 (free trial or coupon). This is useful if you want to offer a \"no credit card required\" free trials."
 msgstr ""
 
-#: settings/subscription/SubscriptionSettings.js:334
+#: settings/subscription/SubscriptionSettings.js:358
 msgid "Prevent Duplicate Trials"
 msgstr ""
 
-#: settings/subscription/SubscriptionSettings.js:336
+#: settings/subscription/SubscriptionSettings.js:360
 msgid "When enabled, this setting prevents customers from receiving multiple trial periods for the same product. If a customer has previously used a trial for the product, they will be charged the full price instead of receiving another trial."
 msgstr ""
 
-#: settings/subscription/SubscriptionSettings.js:351
+#: settings/subscription/SubscriptionSettings.js:375
 msgid "Purchase Revoke Behavior"
 msgstr ""
 
-#: settings/subscription/SubscriptionSettings.js:379
+#: settings/subscription/SubscriptionSettings.js:403
 msgid "Revoke Immediately"
 msgstr ""
 
-#: settings/subscription/SubscriptionSettings.js:383
+#: settings/subscription/SubscriptionSettings.js:407
 msgid "Revoke Purchase After All Payment Retries Fail"
 msgstr ""
 
-#: settings/subscription/SubscriptionSettings.js:394
+#: settings/subscription/SubscriptionSettings.js:418
 msgid "Customer Portal"
 msgstr ""
 
-#: settings/subscription/SubscriptionSettings.js:395
+#: settings/subscription/SubscriptionSettings.js:419
 msgid "Manage what your customers are able to see and do from the customer portal."
 msgstr ""
 
-#: settings/subscription/SubscriptionSettings.js:411
+#: settings/subscription/SubscriptionSettings.js:435
 msgid "Allow Subscription Changes"
 msgstr ""
 
-#: settings/subscription/SubscriptionSettings.js:413
+#: settings/subscription/SubscriptionSettings.js:437
 msgid "Customers will be able to switch pricing plans from the customer portal. You can configure what happens when a subscription change happens from the Subscriptions settings page."
 msgstr ""
 
-#: settings/subscription/SubscriptionSettings.js:430
+#: settings/subscription/SubscriptionSettings.js:454
 msgid "Allow Subscription Quantity Changes"
 msgstr ""
 
-#: settings/subscription/SubscriptionSettings.js:432
+#: settings/subscription/SubscriptionSettings.js:456
 msgid "Customers will be able to change subscription quantities from the customer portal."
 msgstr ""
 
-#: settings/subscription/SubscriptionSettings.js:449
+#: settings/subscription/SubscriptionSettings.js:473
 msgid "Allow Subscription Cancellations"
 msgstr ""
 
-#: settings/subscription/SubscriptionSettings.js:451
+#: settings/subscription/SubscriptionSettings.js:475
 msgid "Customers will be able to cancel their subscriptions from the customer portal. You can configure what happens when a subscription cancellation happens from the Subscriptions settings page."
 msgstr ""
 
-#: settings/subscription/SubscriptionSettings.js:467
+#: settings/subscription/SubscriptionSettings.js:491
 msgid "Allow Customers To Remove Default Payment Method"
 msgstr ""
 
-#: settings/subscription/SubscriptionSettings.js:472
+#: settings/subscription/SubscriptionSettings.js:496
 msgid "When enabled, customers are allowed to remove their default payment method on file. This can lead to subscription payments failing since there is no payment method on file."
 msgstr ""
 
@@ -17707,7 +17779,7 @@ msgstr ""
 #: Blocks/Button/edit.js:19
 #: Blocks/BuyButton/edit.js:104
 #: Blocks/CartSubmit/edit.js:103
-#: Blocks/CustomerDashboardButton/edit.js:121
+#: Blocks/CustomerDashboardButton/edit.js:131
 #: Blocks/LogoutButton/edit.js:70
 #: Blocks/OrderConfirmationCustomer/edit.js:36
 #: Blocks/Product/BuyButton/edit.js:109
@@ -17716,7 +17788,7 @@ msgstr ""
 #: Blocks/Upsell/SubmitButton/edit.js:147
 #: src/blocks/cart-items-submit/edit.js:54
 #: src/blocks/cart-submit/edit.js:117
-#: src/blocks/product-buy-button/edit.js:94
+#: src/blocks/product-buy-button/edit.js:76
 msgid "Button text"
 msgstr ""
 
@@ -17724,7 +17796,7 @@ msgstr ""
 #: Blocks/Button/edit.js:20
 #: Blocks/BuyButton/edit.js:105
 #: Blocks/CartSubmit/edit.js:104
-#: Blocks/CustomerDashboardButton/edit.js:122
+#: Blocks/CustomerDashboardButton/edit.js:132
 #: Blocks/LogoutButton/edit.js:71
 #: Blocks/OrderConfirmationCustomer/edit.js:37
 #: Blocks/Product/BuyButton/edit.js:110
@@ -17733,7 +17805,7 @@ msgstr ""
 #: Blocks/Upsell/SubmitButton/edit.js:148
 #: src/blocks/cart-items-submit/edit.js:55
 #: src/blocks/cart-submit/edit.js:118
-#: src/blocks/product-buy-button/edit.js:95
+#: src/blocks/product-buy-button/edit.js:77
 msgid "Add text…"
 msgstr ""
 
@@ -18305,8 +18377,12 @@ msgstr ""
 msgid "is less than or equal to"
 msgstr ""
 
-#: Blocks/Confirmation/edit.js:11
+#: Blocks/Confirmation/edit.js:21
 msgid "Thank you for your purchase! Please check your inbox for additional information."
+msgstr ""
+
+#: Blocks/Confirmation/edit.js:287
+msgid "14 day free trial"
 msgstr ""
 
 #: Blocks/CustomerDashboardButton/edit.js:42
@@ -18754,14 +18830,12 @@ msgstr ""
 #: Blocks/Upsell/CountdownTimer/edit.js:41
 #: Blocks/Upsell/NoThanksButton/edit.js:30
 #: Blocks/Upsell/SubmitButton/edit.js:46
-#: src/blocks/product-buy-button/edit.js:80
 msgid "Button width"
 msgstr ""
 
 #: Blocks/Product/BuyButton/edit.js:145
 #: Blocks/Upsell/CountdownTimer/edit.js:88
 #: Blocks/Upsell/SubmitButton/edit.js:110
-#: src/blocks/product-buy-button/edit.js:56
 msgid "Text settings"
 msgstr ""
 
@@ -18936,12 +19010,15 @@ msgstr ""
 #: src/blocks/cart-line-item-image/edit.js:97
 #: src/blocks/product-image/edit.js:91
 #: src/blocks/product-image/edit.js:101
+#: src/blocks/product-selected-variant-image/edit.js:95
+#: src/blocks/product-selected-variant-image/edit.js:105
 msgid "Aspect ratio"
 msgstr ""
 
 #: Blocks/ProductCollectionImage/dimension-controls.js:101
 #: src/blocks/cart-line-item-image/edit.js:102
 #: src/blocks/product-image/edit.js:106
+#: src/blocks/product-selected-variant-image/edit.js:110
 msgid "Original"
 msgstr ""
 
@@ -18949,6 +19026,7 @@ msgstr ""
 #: Blocks/ProductItemImage/aspect-ratio-dropdown.js:73
 #: src/blocks/cart-line-item-image/edit.js:110
 #: src/blocks/product-image/edit.js:114
+#: src/blocks/product-selected-variant-image/edit.js:118
 msgid "16:9"
 msgstr ""
 
@@ -18956,6 +19034,7 @@ msgstr ""
 #: Blocks/ProductItemImage/aspect-ratio-dropdown.js:77
 #: src/blocks/cart-line-item-image/edit.js:114
 #: src/blocks/product-image/edit.js:118
+#: src/blocks/product-selected-variant-image/edit.js:122
 msgid "4:3"
 msgstr ""
 
@@ -18963,6 +19042,7 @@ msgstr ""
 #: Blocks/ProductItemImage/aspect-ratio-dropdown.js:81
 #: src/blocks/cart-line-item-image/edit.js:118
 #: src/blocks/product-image/edit.js:122
+#: src/blocks/product-selected-variant-image/edit.js:126
 msgid "3:2"
 msgstr ""
 
@@ -18970,6 +19050,7 @@ msgstr ""
 #: Blocks/ProductItemImage/aspect-ratio-dropdown.js:99
 #: src/blocks/cart-line-item-image/edit.js:122
 #: src/blocks/product-image/edit.js:126
+#: src/blocks/product-selected-variant-image/edit.js:130
 msgid "9:16"
 msgstr ""
 
@@ -18977,6 +19058,7 @@ msgstr ""
 #: Blocks/ProductItemImage/aspect-ratio-dropdown.js:103
 #: src/blocks/cart-line-item-image/edit.js:126
 #: src/blocks/product-image/edit.js:130
+#: src/blocks/product-selected-variant-image/edit.js:134
 msgid "3:4"
 msgstr ""
 
@@ -18984,6 +19066,7 @@ msgstr ""
 #: Blocks/ProductItemImage/aspect-ratio-dropdown.js:107
 #: src/blocks/cart-line-item-image/edit.js:130
 #: src/blocks/product-image/edit.js:134
+#: src/blocks/product-selected-variant-image/edit.js:138
 msgid "2:3"
 msgstr ""
 
@@ -19042,18 +19125,22 @@ msgstr ""
 #: src/blocks/cart-line-item-image/edit.js:71
 #: src/blocks/product-image/edit.js:66
 #: src/blocks/product-image/edit.js:75
+#: src/blocks/product-selected-variant-image/edit.js:70
+#: src/blocks/product-selected-variant-image/edit.js:79
 msgid "Image Cropping"
 msgstr ""
 
 #: Blocks/ProductItemImage/edit.js:111
 #: src/blocks/cart-line-item-image/edit.js:77
 #: src/blocks/product-image/edit.js:81
+#: src/blocks/product-selected-variant-image/edit.js:85
 msgid "Contain"
 msgstr ""
 
 #: Blocks/ProductItemImage/edit.js:115
 #: src/blocks/cart-line-item-image/edit.js:81
 #: src/blocks/product-image/edit.js:85
+#: src/blocks/product-selected-variant-image/edit.js:89
 msgid "Cover"
 msgstr ""
 
@@ -19426,7 +19513,7 @@ msgstr ""
 
 #: Blocks/Address/block.json
 msgctxt "block description"
-msgid "Display an shipping address form. This is used for shipping and tax calculations."
+msgid "Display a shipping address form. This is used for shipping and tax calculations."
 msgstr ""
 
 #: Blocks/Address/block.json
@@ -21394,20 +21481,6 @@ msgstr ""
 msgid "Cart Button."
 msgstr ""
 
-#: src/blocks/cart-items/view.php:59
-#: src/blocks/cart-line-item-quantity/view.php:22
-#: src/blocks/product-quantity/view.php:18
-#: src/blocks/cart-line-item-quantity/edit.js:24
-msgid "Decrease quantity by one."
-msgstr ""
-
-#: src/blocks/cart-items/view.php:86
-#: src/blocks/cart-line-item-quantity/view.php:49
-#: src/blocks/product-quantity/view.php:44
-#: src/blocks/cart-line-item-quantity/edit.js:40
-msgid "Increase quantity by one."
-msgstr ""
-
 #: src/blocks/cart-items/view.php:99
 #: src/blocks/cart-line-item-remove/view.php:3
 msgid "Remove item"
@@ -21671,6 +21744,35 @@ msgstr ""
 msgid "12 Signup Fee"
 msgstr ""
 
+#: src/blocks/product-buy-button/display.js:17
+msgid "Display"
+msgstr ""
+
+#. translators: Percentage value.
+#: src/blocks/product-buy-button/display.js:50
+msgid "%d%%"
+msgstr ""
+
+#: src/blocks/product-buy-button/display.js:61
+msgid "Sticky purchase button"
+msgstr ""
+
+#: src/blocks/product-buy-button/display.js:81
+msgid "Do not show a sticky purchase button when scrolling to the bottom of the page"
+msgstr ""
+
+#: src/blocks/product-buy-button/display.js:85
+msgid "Show a sticky purchase button only when the product is in stock"
+msgstr ""
+
+#: src/blocks/product-buy-button/display.js:89
+msgid "Always show a sticky purchase button regardless of stock status"
+msgstr ""
+
+#: src/blocks/product-buy-button/labels.js:15
+msgid "Labels"
+msgstr ""
+
 #: src/blocks/product-collection-tag/edit.js:22
 msgid "Link to collection page"
 msgstr ""
@@ -21886,6 +21988,10 @@ msgstr ""
 msgid "Starting in 7 days."
 msgstr ""
 
+#: src/blocks/product-selected-variant/edit.js:13
+msgid "Cotton"
+msgstr ""
+
 #: src/blocks/product-template-container/index.js:27
 msgid "Main"
 msgstr ""
@@ -21900,6 +22006,10 @@ msgstr ""
 
 #: src/blocks/product-title/edit.js:45
 msgid "Make title a link"
+msgstr ""
+
+#: src/blocks/sticky-purchase/edit.js:36
+msgid "Sticky purchase settings"
 msgstr ""
 
 #: src/components/LabelInspectorControls.js:27
@@ -21994,7 +22104,7 @@ msgid "Slide {{index}} of {{slidesLength}}."
 msgstr ""
 
 #. translators: %s: product name
-#: src/scripts/product-page/index.js:328
+#: src/scripts/product-page/index.js:347
 msgid "%s has been added to your cart."
 msgstr ""
 
@@ -22676,6 +22786,26 @@ msgctxt "block description"
 msgid "Displays the currently selected price trial."
 msgstr ""
 
+#: src/blocks/product-selected-variant-image/block.json
+msgctxt "block title"
+msgid "Product Selected Variant Image"
+msgstr ""
+
+#: src/blocks/product-selected-variant-image/block.json
+msgctxt "block description"
+msgid "Shows the image for the currently selected product variant."
+msgstr ""
+
+#: src/blocks/product-selected-variant/block.json
+msgctxt "block title"
+msgid "Selected Variant Display"
+msgstr ""
+
+#: src/blocks/product-selected-variant/block.json
+msgctxt "block description"
+msgid "Displays the currently selected variant of a product."
+msgstr ""
+
 #: src/blocks/product-template-container/block.json
 msgctxt "block title"
 msgid "Product Template Container"
@@ -22714,4 +22844,14 @@ msgstr ""
 #: src/blocks/product-variant-pills/block.json
 msgctxt "block description"
 msgid "Display product variants as pills selector."
+msgstr ""
+
+#: src/blocks/sticky-purchase/block.json
+msgctxt "block title"
+msgid "Sticky purchase"
+msgstr ""
+
+#: src/blocks/sticky-purchase/block.json
+msgctxt "block description"
+msgid "Display the sticky purchase."
 msgstr ""

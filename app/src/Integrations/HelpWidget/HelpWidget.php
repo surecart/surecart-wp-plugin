@@ -7,28 +7,10 @@ namespace SureCart\Integrations\HelpWidget;
  */
 class HelpWidget {
 	/**
-	 * Checklist.
-	 *
-	 * @var Checklist
-	 */
-	protected $checklist;
-
-	/**
 	 * Constructor.
-	 *
-	 * @param Checklist $checklist Checklist.
 	 */
-	public function __construct( Checklist $checklist ) {
-		$this->checklist = $checklist;
-	}
-
-	/**
-	 * Checklist.
-	 *
-	 * @return Checklist
-	 */
-	public function checklist() {
-		return $this->checklist;
+	public function __construct() {
+		// Constructor
 	}
 
 	/**
@@ -46,6 +28,11 @@ class HelpWidget {
 	 * @return void
 	 */
 	public function show(): void {
+		// Check if widget is hidden via settings.
+		if ( get_option( 'surecart_hide_help_widget', false ) ) {
+			return;
+		}
+
 		// Check if widget is enabled first
 		if ( ! apply_filters( 'surecart/help_widget/show', in_array( get_current_screen()->id, \SureCart::pages()->getSureCartPageScreenIds(), true ) ) ) {
 			return;
@@ -57,6 +44,13 @@ class HelpWidget {
 			Gleap.initialize("0suyWPJ1PjG0zzzBZPBVkCFUoajlj1jS")
 		}}();
 		</script>
+
+		<style>
+			/* Prevent the Gleap feedback button from overlapping WordPress modals */
+			.bb-feedback-button {
+				z-index: 99999 !important;
+			}
+		</style>
 
 		<?php
 		do_action( 'surecart/help_widget/loaded' );

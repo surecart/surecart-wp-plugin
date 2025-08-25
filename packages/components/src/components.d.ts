@@ -4120,7 +4120,7 @@ export namespace Components {
         "width": string;
     }
     interface ScTotal {
-        "checkout": Checkout;
+        "checkout"?: Checkout;
         "total": 'total' | 'subtotal' | 'amount_due';
     }
     interface ScUpcomingInvoice {
