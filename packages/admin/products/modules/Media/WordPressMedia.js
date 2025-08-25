@@ -163,60 +163,67 @@ export default ({
 				</ScTag>
 			)}
 
-			<ScIcon
-				className="delete-icon"
-				onClick={onRemove}
-				css={css`
-					position: absolute;
-					top: 4px;
-					right: 4px;
-					z-index: 10;
-					cursor: pointer;
-					padding: var(--sc-spacing-xx-small);
-					border-radius: var(--sc-border-radius-small);
-					color: var(--sc-color-white);
-					font-weight: var(--sc-font-weight-semibold);
-					background-color: var(--sc-color-gray-800);
-				`}
-				name="x"
-			/>
-
-			<MediaUpload
-				addToGallery={false}
-				multiple={false}
-				value={id}
-				onSelect={onSelect}
-				allowedTypes={ALLOWED_MEDIA_TYPES}
-				onClose={() => invalidateResolution('getMedia', [id])}
-				render={({ open }) => (
+			{!!media?.source_url && (
+				<>
 					<ScIcon
-						className="edit-icon"
+						className="delete-icon"
+						onClick={onRemove}
 						css={css`
 							position: absolute;
-							bottom: 4px;
+							top: 4px;
 							right: 4px;
 							z-index: 10;
 							cursor: pointer;
-							padding: var(--sc-spacing-small);
-							font-size: var(--sc-font-size-small);
+							padding: var(--sc-spacing-xx-small);
 							border-radius: var(--sc-border-radius-small);
-							color: var(--sc-color-gray-800);
+							color: var(--sc-color-white);
 							font-weight: var(--sc-font-weight-semibold);
-							background-color: var(--sc-color-white);
-							border-radius: var(--sc-border-radius-small);
+							background-color: var(--sc-color-gray-800);
 						`}
-						name="edit-2"
-						onClick={() =>
-							onEditMedia({
-								...media,
-								...(typeof item === 'object'
-									? item
-									: { id: item }),
-							})
-						}
+						name="x"
 					/>
-				)}
-			/>
+					<MediaUpload
+						addToGallery={false}
+						multiple={false}
+						value={id}
+						onSelect={onSelect}
+						allowedTypes={ALLOWED_MEDIA_TYPES}
+						onClose={() => invalidateResolution('getMedia', [id])}
+						render={({ open }) => (
+							<ScIcon
+								className="edit-icon"
+								css={css`
+									position: absolute;
+									bottom: 4px;
+									right: 4px;
+									z-index: 10;
+									cursor: pointer;
+									padding: var(--sc-spacing-small);
+									font-size: var(--sc-font-size-small);
+									border-radius: var(
+										--sc-border-radius-small
+									);
+									color: var(--sc-color-gray-800);
+									font-weight: var(--sc-font-weight-semibold);
+									background-color: var(--sc-color-white);
+									border-radius: var(
+										--sc-border-radius-small
+									);
+								`}
+								name="edit-2"
+								onClick={() =>
+									onEditMedia({
+										...media,
+										...(typeof item === 'object'
+											? item
+											: { id: item }),
+									})
+								}
+							/>
+						)}
+					/>
+				</>
+			)}
 
 			<SortableKnob>
 				<div
