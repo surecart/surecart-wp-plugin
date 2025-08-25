@@ -28,15 +28,6 @@ class Account extends Model {
 	protected $clears_account_cache = true;
 
 	/**
-	 * Has Checklist.
-	 *
-	 * @return bool
-	 */
-	public function getHasChecklistAttribute() {
-		return ! empty( $this->gleap_checklist->gleap_id ) && ! empty( $this->is_connected );
-	}
-
-	/**
 	 * Get the account ID.
 	 *
 	 * @return string
