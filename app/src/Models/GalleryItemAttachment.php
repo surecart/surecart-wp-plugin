@@ -61,7 +61,7 @@ class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 				<?php
 					echo esc_attr(
 						sprintf(
-						// translators: %s is the video title.
+							// translators: %s is the video title.
 							__( 'Video thumbnail for %s', 'surecart' ),
 							$this->item->post_title ?? ''
 						)
@@ -86,7 +86,7 @@ class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 					<?php
 					echo esc_html(
 						sprintf(
-						// translators: %s is the video title.
+							// translators: %s is the video title.
 							__( 'Play video: %s', 'surecart' ),
 							$this->item->post_title ?? ''
 						)
