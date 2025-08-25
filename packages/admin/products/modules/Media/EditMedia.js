@@ -4,9 +4,6 @@ import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
 import { Button } from '@wordpress/components';
 import { MediaUpload } from '@wordpress/media-utils';
-import { store as coreStore } from '@wordpress/core-data';
-import { select, useDispatch } from '@wordpress/data';
-import apiFetch from '@wordpress/api-fetch';
 import { reusableBlock } from '@wordpress/icons';
 
 /**
@@ -32,12 +29,11 @@ import DrawerSection from '../../../ui/DrawerSection';
 
 const ALLOWED_MEDIA_TYPES = ['image', 'video'];
 
-export default ({ media, product, onRequestClose }) => {
+export default ({ media, product, onRequestClose, updateProduct }) => {
 	const [mediaData, setMediaData] = useState(() => normalizeMedia(media));
 	const [error, setError] = useState(null);
 	const [open, setOpen] = useState(true);
 	const [isSaving, setIsSaving] = useState(false);
-	const { receiveEntityRecords } = useDispatch(coreStore);
 
 	// Initialize form values from media data
 	const [formData, setFormData] = useState(() => {
@@ -79,39 +75,13 @@ export default ({ media, product, onRequestClose }) => {
 				};
 			}
 
-			// get the checkout endpoint.
-			const { baseURL } = select(coreStore).getEntityConfig(
-				'surecart',
-				'product'
-			);
-
-			const data = {
+			updateProduct({
 				metadata: {
 					...(product?.metadata || {}),
 					gallery_ids: ids,
 				},
-			};
-
-			const { gallery_ids, gallery, metadata } = await apiFetch({
-				method: 'PATCH',
-				path: `${baseURL}/${product?.id}`,
-				data,
+				gallery_ids: ids,
 			});
-
-			// update the checkout in the redux store.
-			receiveEntityRecords(
-				'surecart',
-				'product',
-				{
-					id: product?.id,
-					gallery,
-					gallery_ids,
-					metadata,
-				},
-				undefined,
-				false,
-				data
-			);
 
 			setOpen(false);
 		} catch (e) {

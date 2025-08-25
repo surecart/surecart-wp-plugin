@@ -204,6 +204,7 @@ export default ({ productId, product, updateProduct }) => {
 						setCurrentModal('');
 						setSelectedMedia(null);
 					}}
+					updateProduct={updateProduct}
 				/>
 			)}
 		</Box>
