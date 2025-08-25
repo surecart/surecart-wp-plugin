@@ -63,7 +63,7 @@ export default ({
 			return (
 				<ScProvisionalBanner
 					claimUrl={scData?.claim_url}
-					expired={scData?.claim_expired ?? false}
+					expired={scData?.claim_expired || false}
 				/>
 			);
 		}

@@ -40,7 +40,6 @@ abstract class AdminController {
 		add_action(
 			'in_admin_header',
 			function () use ( $args ) {
-
 				return \SureCart::render(
 					'layouts/partials/admin-header',
 					[
