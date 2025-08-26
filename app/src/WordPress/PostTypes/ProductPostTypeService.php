@@ -404,7 +404,7 @@ class ProductPostTypeService {
 			[
 				'id'    => 'edit',
 				'title' => __( 'Edit Product', 'surecart' ),
-				'href'  => get_edit_post_link( $product->ID ),
+				'href'  => \SureCart::getUrl()->edit( 'product', $product->id ),
 			]
 		);
 	}
@@ -585,6 +585,11 @@ class ProductPostTypeService {
 	 * @return string
 	 */
 	public function updateEditLink( $link, $post_id ) {
+		// allow edit post link in admin bar only.
+		if ( doing_action( 'admin_bar_menu' ) ) {
+			return $link;
+		}
+
 		// only for our post type.
 		if ( get_post_type( $post_id ) !== $this->post_type ) {
 			return $link;
