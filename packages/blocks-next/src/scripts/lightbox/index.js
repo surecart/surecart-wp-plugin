@@ -191,32 +191,35 @@ const { state, actions, callbacks } = store('surecart/lightbox', {
 			state.scrollLeftReset = document.documentElement.scrollLeft;
 
 			// get only the image ids that share the same galleryId as the imageId and are not hidden
-			state.images = (images || [imageId]).filter((id) => {
-				const metadata = state?.metadata[id];
-				const imageRef = metadata?.imageRef;
+			state.images = (images || [imageId])
+				.filter((item) => {
+					const id = item?.id || item;
+					const metadata = state?.metadata[id];
+					const imageRef = metadata?.imageRef;
 
-				// Don't show the lightbox if the image is not loaded or its a video.
-				if (!imageRef) {
-					return false;
-				}
+					// Don't show the lightbox if the image is not loaded or its a video.
+					if (!imageRef) {
+						return false;
+					}
 
-				// Check if image exists and check visibility of image and all its parents
-				const isVisible =
-					imageRef &&
-					(function isElementVisible(element) {
-						while (element) {
-							const style = window.getComputedStyle(element);
-							if (style.display === 'none') return false;
-							element = element.parentElement;
-						}
-						return true;
-					})(imageRef);
+					// Check if image exists and check visibility of image and all its parents
+					const isVisible =
+						imageRef &&
+						(function isElementVisible(element) {
+							while (element) {
+								const style = window.getComputedStyle(element);
+								if (style.display === 'none') return false;
+								element = element.parentElement;
+							}
+							return true;
+						})(imageRef);
 
-				return (
-					metadata?.galleryId ===
-						state.metadata[imageId]?.galleryId && isVisible
-				);
-			});
+					return (
+						metadata?.galleryId ===
+							state.metadata[imageId]?.galleryId && isVisible
+					);
+				})
+				.map((item) => (item?.id ? item.id : item));
 
 			// Sets the current image index to the one that was clicked.
 			callbacks.setCurrentImageIndex(imageId);
