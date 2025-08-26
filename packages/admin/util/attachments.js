@@ -414,7 +414,7 @@ export const normalizeGalleryItem = (item) => {
  */
 export const getGalleryItemId = (item) => {
 	const id = typeof item === 'object' ? item?.id : item;
-	return isNaN(id) ? id : parseInt(id); // Platform media id could be just a uuid.
+	return isNaN(id) ? id : parseInt(id); // ProductMedia id could be just a uuid.
 };
 
 /**
