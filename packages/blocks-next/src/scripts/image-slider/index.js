@@ -134,7 +134,9 @@ const { state, actions } = store('surecart/image-slider', {
 						slideChange: () => {
 							const { actions: videoActions } =
 								store('surecart/video');
-							if (videoActions) {
+							if (
+								typeof videoActions?.pauseVideos === 'function'
+							) {
 								videoActions.pauseVideos();
 							}
 						},
