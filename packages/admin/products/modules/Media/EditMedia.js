@@ -260,7 +260,7 @@ export default ({ media, product, onRequestClose, updateProduct }) => {
 						isBusy={isSaving}
 						disabled={isSaving || !mediaData?.id}
 					>
-						{__('Update', 'surecart')}
+						{__('Done', 'surecart')}
 					</ScButton>
 					<ScButton type="text" onClick={() => setOpen(false)}>
 						{__('Cancel', 'surecart')}
