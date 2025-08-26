@@ -55,6 +55,11 @@ class AdminMenuPageService {
 		if ( apply_filters( 'surecart_show_admin_bar_visit_store', true ) ) {
 			add_action( 'admin_bar_menu', array( $this, 'adminBarMenu' ), 31 );
 		}
+
+		// Admin toolbar new content menu.
+		if ( apply_filters( 'surecart_show_admin_bar_new_content', true ) ) {
+			add_action( 'admin_bar_menu', array( $this, 'adminBarNewContent' ), 70 );
+		}
 	}
 
 	/**
@@ -87,6 +92,77 @@ class AdminMenuPageService {
 				'href'   => \SureCart::pages()->url( 'shop' ),
 			)
 		);
+	}
+
+	/**
+	 * Add SureCart admin page links to the admin bar "+ New" menu.
+	 *
+	 * @param WP_Admin_Bar $wp_admin_bar Admin bar instance.
+	 */
+	public function adminBarNewContent( $wp_admin_bar ) {
+		if ( ! is_admin_bar_showing() ) {
+			return;
+		}
+
+		// Show only when the user is a member of this site, or they're a super admin.
+		if ( ! is_user_member_of_blog() && ! is_super_admin() ) {
+			return;
+		}
+
+		// Only show if user is logged in and has API token
+		if ( ! is_user_logged_in() || ! \SureCart\Models\ApiToken::get() ) {
+			return;
+		}
+
+		$woocommerce_exists = class_exists( 'WooCommerce' );
+
+		// Add Product link
+		if ( current_user_can( 'edit_sc_products' ) ) {
+			$wp_admin_bar->add_node(
+				array(
+					'parent' => 'new-content',
+					'id'     => 'new-sc-product',
+					'title'  => $woocommerce_exists ? __( 'SureCart Product', 'surecart' ) : __( 'Product', 'surecart' ),
+					'href'   => admin_url( 'admin.php?page=sc-products&action=new' ),
+				)
+			);
+		}
+
+		// Add Coupon link
+		if ( current_user_can( 'edit_sc_coupons' ) ) {
+			$wp_admin_bar->add_node(
+				array(
+					'parent' => 'new-content',
+					'id'     => 'new-sc-coupon',
+					'title'  => $woocommerce_exists ? __( 'SureCart Coupon', 'surecart' ) : __( 'Coupon', 'surecart' ),
+					'href'   => admin_url( 'admin.php?page=sc-coupons&action=new' ),
+				)
+			);
+		}
+
+		// Add Order link
+		if ( current_user_can( 'edit_sc_orders' ) ) {
+			$wp_admin_bar->add_node(
+				array(
+					'parent' => 'new-content',
+					'id'     => 'new-sc-order',
+					'title'  => $woocommerce_exists ? __( 'SureCart Order', 'surecart' ) : __( 'Order', 'surecart' ),
+					'href'   => admin_url( 'admin.php?page=sc-orders&action=new' ),
+				)
+			);
+		}
+
+		// Add Invoice link
+		if ( current_user_can( 'edit_sc_invoices' ) ) {
+			$wp_admin_bar->add_node(
+				array(
+					'parent' => 'new-content',
+					'id'     => 'new-sc-invoice',
+					'title'  => __( 'Invoice', 'surecart' ),
+					'href'   => admin_url( 'admin.php?page=sc-invoices&action=new' ),
+				)
+			);
+		}
 	}
 
 	/**
