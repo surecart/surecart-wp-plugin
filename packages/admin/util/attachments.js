@@ -413,7 +413,8 @@ export const normalizeGalleryItem = (item) => {
  * @returns {number} - The media ID
  */
 export const getGalleryItemId = (item) => {
-	return typeof item === 'object' ? parseInt(item?.id) : parseInt(item);
+	const id = typeof item === 'object' ? item?.id : item;
+	return isNaN(id) ? id : parseInt(id); // Platform media id could be just a uuid.
 };
 
 /**
