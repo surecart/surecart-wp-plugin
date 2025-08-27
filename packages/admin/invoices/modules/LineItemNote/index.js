@@ -19,6 +19,17 @@ export default function LineItemNote({
 	isDraftInvoice,
 	busy = false,
 }) {
+	const textStyle = css`
+		color: var(--sc-input-placeholder-color);
+		border-radius: var(--sc-input-border-radius-small);
+		color: var(--sc-price-label-color, var(--sc-input-help-text-color));
+		font-size: var(
+			--sc-price-label-font-size,
+			var(--sc-input-help-text-font-size-medium)
+		);
+		line-height: var(--sc-line-height-dense);
+	`;
+
 	const [editing, setEditing] = useState(false);
 
 	useEffect(() => {
@@ -29,7 +40,9 @@ export default function LineItemNote({
 
 	if (!isDraftInvoice) {
 		return (
-			!!lineItem?.note && <ScProductLineItemNote note={lineItem?.note} />
+			!!lineItem?.note && (
+				<ScProductLineItemNote css={textStyle} note={lineItem?.note} />
+			)
 		);
 	}
 
@@ -47,13 +60,24 @@ export default function LineItemNote({
 
 	return (
 		<div
+			className="sc-line-item-note"
 			css={css`
+				${!lineItem?.note &&
+				css`
+					opacity: 0;
+					transition: opacity 0.2s;
+					sc-table-row:hover &,
+					sc-table-row:focus-within & {
+						opacity: 1;
+					}
+				`}
+
+				${textStyle}
+				
 				display: flex;
 				align-items: center;
 				gap: 4px;
 				cursor: pointer;
-				color: var(--sc-input-placeholder-color);
-				border-radius: var(--sc-input-border-radius-small);
 
 				&:focus-visible {
 					outline: 2px solid var(--sc-color-primary-500);
@@ -82,20 +106,26 @@ export default function LineItemNote({
 					: __('Add note', 'surecart')
 			}
 		>
-			<ScProductLineItemNote
-				note={lineItem?.note || __('Add note...', 'surecart')}
-				alwaysShowIcon={true}
+			<div
+				css={css`
+					display: -webkit-box;
+					-webkit-box-orient: vertical;
+					-webkit-line-clamp: 1;
+					overflow: hidden;
+				`}
 			>
-				<ScIcon
-					slot="icon"
-					name="edit-3"
-					style={{
-						width: 14,
-						height: 14,
-						color: 'var(--sc-color-gray-500)',
-					}}
-				/>
-			</ScProductLineItemNote>
+				{lineItem?.note || __('Add note...', 'surecart')}
+			</div>
+			<ScIcon
+				slot="icon"
+				name="edit-3"
+				css={css`
+					width: 14px;
+					height: 14px;
+					flex: 0 0 14px;
+					color: 'var(--sc-color-gray-500)';
+				`}
+			/>
 		</div>
 	);
 }
