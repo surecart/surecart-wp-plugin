@@ -20,9 +20,8 @@ import {
 	ScDialog,
 	ScPriceInput,
 	ScForm,
-	ScVisuallyHidden,
 	ScText,
-	ScInput,
+	ScQuantitySelect,
 } from '@surecart/components-react';
 import {
 	getFeaturedProductMediaAttributes,
@@ -157,15 +156,11 @@ export default ({
 					css={css`
 						display: flex;
 						align-items: flex-start;
-						justify-content: space-between;
+						gap: 0.5em;
 						margin-bottom: var(--sc-spacing-small);
 					`}
 				>
-					<div
-						css={css`
-							padding-top: 8px;
-						`}
-					>
+					<div>
 						<ScFormatNumber
 							type="currency"
 							currency={price?.currency || 'usd'}
@@ -237,20 +232,17 @@ export default ({
 				)}
 			</ScTableCell>
 			<ScTableCell>
-				<div
-					css={css`
-						padding-top: 8px;
-					`}
-				>
+				<div>
 					{isDraftInvoice ? (
-						<ScInput
-							type="number"
-							value={quantity}
+						<ScQuantitySelect
+							quantity={quantity}
 							disabled={price?.ad_hoc || busy}
-							onScChange={(e) =>
-								onChange({
-									quantity: parseInt(e.target.value),
-								})
+							css={css`
+								margin-top: -3px;
+							`}
+							size="small"
+							onChange={(e) =>
+								onChange({ quantity: parseInt(e.target.value) })
 							}
 							{...(maxStockQuantity && { max: maxStockQuantity })}
 						/>
@@ -285,7 +277,6 @@ export default ({
 					css={css`
 						display: grid;
 						gap: 0.5em;
-						padding-top: 8px;
 					`}
 				>
 					<div
@@ -319,6 +310,7 @@ export default ({
 						variant="tertiary"
 						style={{
 							color: 'var(--sc-color-gray-500)',
+							marginTop: '-10px',
 						}}
 					>
 						<ScIcon name="trash" />
@@ -330,7 +322,6 @@ export default ({
 					if (!isDraftInvoice) {
 						return;
 					}
-
 					e.stopImmediatePropagation(); // prevents the page form from submitting.
 					setOpen(false);
 					onChange({ ad_hoc_amount: addHocAmount });
