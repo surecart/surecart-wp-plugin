@@ -13,7 +13,7 @@ export class ScProductLineItemNote {
   @State() expanded = false;
   @State() isOverflowing = false;
 
-  private noteEl?: HTMLScTextElement;
+  private noteEl?: HTMLDivElement;
   private resizeObserver?: ResizeObserver;
   private mutationObserver?: MutationObserver;
 
@@ -84,9 +84,9 @@ export class ScProductLineItemNote {
           tabIndex={this.isOverflowing || this.expanded || this.alwaysShowIcon ? 0 : undefined}
           onClick={() => (this.isOverflowing || this.expanded || this.alwaysShowIcon) && this.toggle()}
         >
-          <sc-text ref={el => (this.noteEl = el as HTMLScTextElement)} class="line-item-note__text">
+          <div ref={el => (this.noteEl = el as HTMLDivElement)} class="line-item-note__text">
             {this.note}
-          </sc-text>
+          </div>
 
           {(this.isOverflowing || this.expanded || this.alwaysShowIcon) && (
             <button
