@@ -241,8 +241,8 @@ export default ({
 								margin-top: -3px;
 							`}
 							size="small"
-							onChange={(e) =>
-								onChange({ quantity: parseInt(e.target.value) })
+							onScChange={(e) =>
+								onChange({ quantity: parseInt(e.detail) })
 							}
 							{...(maxStockQuantity && { max: maxStockQuantity })}
 						/>
