@@ -1747,7 +1747,6 @@
     "slot": true
   },
   "sc-product-line-item-note": {
-    "always-show-icon": true,
     "note": true,
     "style": true,
     "id": true,
