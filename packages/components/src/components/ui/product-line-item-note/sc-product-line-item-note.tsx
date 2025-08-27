@@ -9,7 +9,6 @@ import { __ } from '@wordpress/i18n';
 export class ScProductLineItemNote {
   @Element() el: HTMLElement;
   @Prop() note: string;
-  @Prop() alwaysShowIcon = false;
   @State() expanded = false;
   @State() isOverflowing = false;
 
@@ -79,16 +78,16 @@ export class ScProductLineItemNote {
           class={{
             'line-item-note': true,
             'line-item-note--is-expanded': this.expanded,
-            'line-item-note--clickable': this.isOverflowing || this.expanded || this.alwaysShowIcon,
+            'line-item-note--clickable': this.isOverflowing || this.expanded,
           }}
-          tabIndex={this.isOverflowing || this.expanded || this.alwaysShowIcon ? 0 : undefined}
-          onClick={() => (this.isOverflowing || this.expanded || this.alwaysShowIcon) && this.toggle()}
+          tabIndex={this.isOverflowing || this.expanded ? 0 : undefined}
+          onClick={() => (this.isOverflowing || this.expanded) && this.toggle()}
         >
           <div ref={el => (this.noteEl = el as HTMLDivElement)} class="line-item-note__text">
             {this.note}
           </div>
 
-          {(this.isOverflowing || this.expanded || this.alwaysShowIcon) && (
+          {(this.isOverflowing || this.expanded) && (
             <button
               class="line-item-note__toggle"
               type="button"
