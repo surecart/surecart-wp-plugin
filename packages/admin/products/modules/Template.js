@@ -2,7 +2,7 @@
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import { store as coreStore } from '@wordpress/core-data';
-import { useSelect, useDispatch } from '@wordpress/data';
+import { useSelect } from '@wordpress/data';
 import { useState } from '@wordpress/element';
 import { addQueryArgs } from '@wordpress/url';
 
@@ -16,118 +16,98 @@ export default ({ product, updateProduct, post, loading }) => {
 	const isBlockTheme = scData?.is_block_theme;
 
 	// Get the assigned template and template options for both block and classic themes
-	const { template, templates, defaultTemplate, canCreate, canEdit } =
-		useSelect(
-			(select) => {
-				const { canUser } = select(coreStore);
+	const { template, canCreate, canEdit } = useSelect(
+		(select) => {
+			const { canUser } = select(coreStore);
 
-				if (isBlockTheme) {
-					// Block theme logic - similar to original SelectTemplate
-					const {
-						type,
-						slug,
-						template: currentTemplate,
-					} = post || {};
-					const { getEntityRecords } = select(coreStore);
-					const selectorArgs = [
-						'postType',
-						'wp_template',
-						{ per_page: -1 },
-					];
-					const templates = getEntityRecords(...selectorArgs) || [];
-					const defaultTemplateId = select(
-						coreStore
-					).getDefaultTemplateId({
-						slug: slug
-							? `single-${type}-${slug}`
-							: `single-${type}`,
-					});
+			if (isBlockTheme) {
+				// Block theme logic - similar to original SelectTemplate
+				const { type, slug, template: currentTemplate } = post || {};
+				const { getEntityRecords } = select(coreStore);
+				const selectorArgs = [
+					'postType',
+					'wp_template',
+					{ per_page: -1 },
+				];
+				const templates = getEntityRecords(...selectorArgs) || [];
+				const defaultTemplateId = select(
+					coreStore
+				).getDefaultTemplateId({
+					slug: slug ? `single-${type}-${slug}` : `single-${type}`,
+				});
 
-					let currentTemplateRecord = null;
+				let currentTemplateRecord = null;
 
-					// Find current template record
-					if (currentTemplate) {
-						const templateWithSameSlug = templates?.find(
-							(template) => template.slug === currentTemplate
-						);
+				// Find current template record
+				if (currentTemplate) {
+					const templateWithSameSlug = templates?.find(
+						(template) => template.slug === currentTemplate
+					);
 
-						if (templateWithSameSlug?.id) {
-							currentTemplateRecord = select(
-								coreStore
-							).getEditedEntityRecord(
-								'postType',
-								'wp_template',
-								templateWithSameSlug.id
-							);
-						}
-					}
-
-					if (!currentTemplateRecord) {
+					if (templateWithSameSlug?.id) {
 						currentTemplateRecord = select(
 							coreStore
 						).getEditedEntityRecord(
 							'postType',
 							'wp_template',
-							defaultTemplateId
+							templateWithSameSlug.id
 						);
 					}
+				}
 
-					return {
-						template: currentTemplateRecord,
-						templates: templates.filter((template) => {
-							const slug = template?.slug || '';
-							return slug.includes('sc-products');
-						}),
-						defaultTemplate: select(
-							coreStore
-						).getEditedEntityRecord(
-							'postType',
-							'wp_template',
-							defaultTemplateId
-						),
-						canCreate: canUser('create', 'templates'),
-						canEdit: canUser('create', 'templates'),
-					};
-				} else {
-					// Classic theme logic - similar to SelectTemplatePart
-					const template =
-						canUser('create', 'templates') &&
-						select(coreStore).getEntityRecord(
-							'postType',
-							'wp_template_part',
-							product?.metadata?.wp_template_part_id ||
-								'surecart/surecart//product-info'
-						);
+				if (!currentTemplateRecord) {
+					currentTemplateRecord = select(
+						coreStore
+					).getEditedEntityRecord(
+						'postType',
+						'wp_template',
+						defaultTemplateId
+					);
+				}
 
-					const { getEntityRecords } = select(coreStore);
-					const selectorArgs = [
+				return {
+					template: currentTemplateRecord,
+					canCreate: canUser('create', 'templates'),
+					canEdit: canUser('create', 'templates'),
+				};
+			} else {
+				const template =
+					canUser('create', 'templates') &&
+					select(coreStore).getEntityRecord(
 						'postType',
 						'wp_template_part',
-						{ per_page: -1 },
-					];
-					const templateParts =
-						getEntityRecords(...selectorArgs) || [];
+						product?.metadata?.wp_template_part_id ||
+							'surecart/surecart//product-info'
+					);
 
-					return {
-						template,
-						templates: templateParts.filter((template) => {
-							const slug = template?.slug || '';
-							return slug.includes('product');
-						}),
-						defaultTemplate: null,
-						canCreate: canUser('create', 'templates'),
-						canEdit: canUser('create', 'templates'),
-					};
-				}
-			},
-			[
-				isBlockTheme,
-				post?.template,
-				post?.slug,
-				post?.type,
-				product?.metadata?.wp_template_part_id,
-			]
-		);
+				return {
+					template,
+					defaultTemplate: null,
+					canCreate: canUser('create', 'templates'),
+					canEdit: canUser('create', 'templates'),
+				};
+			}
+		},
+		[
+			isBlockTheme,
+			post?.template,
+			post?.slug,
+			post?.type,
+			product?.metadata?.wp_template_part_id,
+		]
+	);
+
+	const editUrl = isBlockTheme
+		? addQueryArgs('site-editor.php', {
+				postType: 'wp_template',
+				postId: template?.id || 'surecart/surecart//single-sc_product',
+				canvas: 'edit',
+		  })
+		: addQueryArgs('site-editor.php', {
+				postType: 'wp_template_part',
+				postId: template?.id || 'surecart/surecart//product-info',
+				canvas: 'edit',
+		  });
 
 	return (
 		<Box
@@ -165,27 +145,7 @@ export default ({ product, updateProduct, post, loading }) => {
 			footer={
 				canEdit &&
 				template && (
-					<ScButton
-						type="default"
-						href={addQueryArgs(
-							'site-editor.php',
-							isBlockTheme
-								? {
-										postType: 'wp_template',
-										postId:
-											template?.id ||
-											'surecart/surecart//single-sc_product',
-										canvas: 'edit',
-								  }
-								: {
-										postType: 'wp_template_part',
-										postId:
-											template?.id ||
-											'surecart/surecart//product-info',
-										canvas: 'edit',
-								  }
-						)}
-					>
+					<ScButton type="default" href={editUrl}>
 						<ScIcon name="edit" slot="prefix" />
 						{__('Edit Template', 'surecart')}
 					</ScButton>

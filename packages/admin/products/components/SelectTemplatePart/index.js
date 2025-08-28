@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import { useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
@@ -12,7 +10,6 @@ import PostTemplateCreateModal from './create-modal';
 export default function SelectTemplatePart({
 	product,
 	updateProduct,
-	post,
 	modal,
 	setModal,
 }) {
@@ -68,20 +65,18 @@ export default function SelectTemplatePart({
 		scData?.availableTemplates || {}
 	).find((value, label) => !value);
 
-	console.log('templatePartCreated', templatePartCreated);
-
 	return (
 		<div>
 			<div style={{ marginBottom: '16px' }}>
 				<ScSelect
 					label={__('Page Layout', 'surecart')}
 					value={product?.metadata?.wp_template_id || ''}
-					choices={Object.keys(scData?.availableTemplates || {}).map(
-						(value) => ({
+					choices={Object.keys(scData?.availableTemplates || {})
+						.filter((value) => value) // Exclude empty values
+						.map((value) => ({
 							value,
-							label: scData?.availableTemplates[value],
-						})
-					)}
+							label: scData?.availableTemplates?.[value],
+						}))}
 					placeholder={
 						scData?.availableTemplates?.[defaultPageLayout] ||
 						__('Select a layout', 'surecart')
