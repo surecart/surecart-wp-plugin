@@ -1,174 +1,114 @@
 /** @jsx jsx */
-import { css, jsx } from '@emotion/core';
-import { Button, Dropdown, PanelRow, Spinner } from '@wordpress/components';
-import { store as coreStore } from '@wordpress/core-data';
-import { useSelect } from '@wordpress/data';
-import { useMemo, useState } from '@wordpress/element';
-import { __, sprintf } from '@wordpress/i18n';
-import { addQueryArgs } from '@wordpress/url';
+import { css, jsx } from '@emotion/react';
 
 /**
- * Internal dependencies
+ * External dependencies.
  */
-import PostTemplateForm from './form';
+import { __ } from '@wordpress/i18n';
+import { store as coreStore } from '@wordpress/core-data';
+import { useSelect, useDispatch } from '@wordpress/data';
+import { useState } from '@wordpress/element';
 
-export default function PostTemplate({ product, updateProduct, post }) {
-	// Use internal state instead of a ref to make sure that the component
-	// re-renders when the popover's anchor updates.
-	const [popoverAnchor, setPopoverAnchor] = useState(null);
-	// Memoize popoverProps to avoid returning a new object every time.
-	const popoverProps = useMemo(
-		() => ({ anchor: popoverAnchor, placement: 'bottom-end' }),
-		[popoverAnchor]
-	);
+/**
+ * Internal dependencies.
+ */
+import { ScSelect } from '@surecart/components-react';
+import PostTemplateCreateModal from './create-modal';
 
-	// get the assigned template.
-	const template = useSelect(
+export default function SelectTemplate({
+	product,
+	updateProduct,
+	post,
+	template,
+	modal,
+	setModal,
+}) {
+	const { editEntityRecord } = useDispatch(coreStore);
+	const [templateCreated, setTemplateCreated] = useState(null);
+	const { templates, defaultTemplate, canCreate } = useSelect(
 		(select) => {
-			const { type, slug, template: currentTemplate } = post || {};
-			const { getEntityRecords } = select(coreStore);
+			const { canUser, getEntityRecords } = select(coreStore);
 			const selectorArgs = ['postType', 'wp_template', { per_page: -1 }];
 			const templates = getEntityRecords(...selectorArgs) || [];
+			const { type, slug } = post;
 			const defaultTemplateId = select(coreStore).getDefaultTemplateId({
-				slug: slug ? `single-${type}-${slug}` : `single-${type}`,
+				slug: post?.slug ? `single-${type}-${slug}` : `single-${type}`,
 			});
-
-			// have have set a current template with a slug.
-			if (currentTemplate) {
-				const templateWithSameSlug = templates?.find(
-					(template) => template.slug === currentTemplate
-				);
-
-				if (templateWithSameSlug?.id) {
-					return select(coreStore).getEditedEntityRecord(
-						'postType',
-						'wp_template',
-						templateWithSameSlug.id
-					);
-				}
-			}
-
-			return select(coreStore).getEditedEntityRecord(
-				'postType',
-				'wp_template',
-				defaultTemplateId
-			);
+			return {
+				templates: templates.filter((t) => {
+					const slug = t?.slug || '';
+					return slug.includes('sc-products');
+				}),
+				defaultTemplate: select(coreStore).getEditedEntityRecord(
+					'postType',
+					'wp_template',
+					defaultTemplateId
+				),
+				canCreate: canUser('create', 'templates'),
+			};
 		},
-		[post?.template, post?.slug]
+		[post?.slug, post?.type, product?.metadata?.wp_template_id]
 	);
 
-	return (
-		<PanelRow className="edit-post-post-template" ref={setPopoverAnchor}>
-			<span>{__('Template')}</span>
-			<Dropdown
-				popoverProps={popoverProps}
-				className="edit-post-post-template__dropdown"
-				contentClassName="edit-post-post-template__dialog"
-				focusOnMount
-				css={css`
-					.components-dropdown__content .components-popover__content {
-						min-width: 240px;
-						padding: 0;
-					}
-				`}
-				renderToggle={({ isOpen, onToggle }) => (
-					<PostTemplateToggle
-						isOpen={isOpen}
-						onClick={onToggle}
-						template={template}
-					/>
-				)}
-				renderContent={({ onClose }) => (
-					<>
-						<div
-							css={css`
-								margin: 0;
-								padding: 8px;
-							`}
-						>
-							<PostTemplateForm
-								onClose={onClose}
-								template={template}
-								product={product}
-								post={post}
-								updateProduct={updateProduct}
-							/>
-						</div>
-						<a
-							href={addQueryArgs('site-editor.php', {
-								path: '/wp_template/all',
-							})}
-							className="components-button"
-							css={css`
-								background: #1e1e1e;
-								border-radius: 0;
-								color: #fff;
-								display: flex;
-								height: 44px;
-								justify-content: center;
-								width: 100%;
+	const options = (templates ?? [])
+		.map((template) => ({
+			value: template?.slug,
+			label:
+				template?.title?.rendered || template?.title || template?.slug,
+		}))
+		.filter(
+			(option, index, self) =>
+				index === self.findIndex((t) => t.value === option.value)
+		);
 
-								&:hover,
-								&:active,
-								&:focus {
-									color: #fff !important;
-								}
-							`}
-						>
-							{__('Manage all templates', 'surecart')}
-						</a>
-					</>
-				)}
-			/>
-		</PanelRow>
-	);
-}
-
-function PostTemplateToggle({ isOpen, onClick, template }) {
 	return (
-		<Button
-			css={css`
-				height: auto;
-				text-align: right;
-				white-space: normal !important;
-				word-break: break-word;
-			`}
-			className="edit-post-post-template__toggle"
-			variant="tertiary"
-			aria-expanded={isOpen}
-			aria-label={
-				template?.title
-					? sprintf(
-							// translators: %s: Name of the currently selected template.
-							__('Select template: %s', 'surecart'),
-							template?.title
-					  )
-					: __('Select template')
-			}
-			onClick={onClick}
-		>
-			{template?.title}
-			<svg
-				xmlns="http://www.w3.org/2000/svg"
-				fill="none"
-				viewBox="0 0 24 24"
-				strokeWidth={2}
-				stroke="currentColor"
-				width="18"
-				height="18"
-				style={{
-					fill: 'none',
-					color: 'var(--sc-color-gray-300)',
-					marginLeft: '6px',
-					flex: '1 0 18px',
+		<div>
+			<ScSelect
+				label={__('Template')}
+				value={templateCreated?.slug || template?.slug}
+				choices={[
+					!!templateCreated?.id && {
+						value: templateCreated.slug,
+						label:
+							templateCreated.title?.rendered ||
+							templateCreated.title ||
+							__('(no title)'),
+					},
+					...options,
+				]}
+				placeholder={
+					defaultTemplate?.title?.rendered ||
+					defaultTemplate?.title ||
+					__('Select a template')
+				}
+				onScChange={(e) => {
+					editEntityRecord(
+						'postType',
+						'sc_product',
+						post?.id,
+						{ template: e.target.value },
+						{ undoIgnore: true }
+					);
+					// needed to make sure sync does not overwrite the template
+					updateProduct({
+						metadata: {
+							...product.metadata,
+							wp_template_id: e.target.value,
+						},
+					});
 				}}
-			>
-				<path
-					strokeLinecap="round"
-					strokeLinejoin="round"
-					d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"
+			/>
+
+			{!!modal && canCreate && (
+				<PostTemplateCreateModal
+					template={defaultTemplate}
+					product={product}
+					post={post}
+					updateProduct={updateProduct}
+					onClose={() => setModal(false)}
+					setTemplate={(template) => setTemplateCreated(template)}
 				/>
-			</svg>
-		</Button>
+			)}
+		</div>
 	);
 }

@@ -21,6 +21,7 @@ export default function PostTemplateCreateModal({
 	template,
 	product,
 	updateProduct,
+	setTemplatePart,
 }) {
 	const [title, setTitle] = useState('');
 	const [isBusy, setIsBusy] = useState(false);
@@ -58,6 +59,14 @@ export default function PostTemplateCreateModal({
 		});
 
 		setIsBusy(false);
+		setTemplatePart({
+			id,
+			slug: `sc-part-products-info-${cleanForSlug(
+				title || DEFAULT_TITLE
+			)}`,
+			content: newTemplateContent,
+			title: title || DEFAULT_TITLE,
+		});
 		cancel();
 
 		// __unstableSwitchToTemplateMode(true);
