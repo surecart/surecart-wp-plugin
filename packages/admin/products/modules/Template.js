@@ -151,6 +151,9 @@ export default ({ product, updateProduct, post, loading }) => {
 					</ScButton>
 				)
 			}
+			footerStyle={{
+				borderTop: '1px solid var(--sc-color-gray-200)',
+			}}
 		>
 			<div
 				css={css`

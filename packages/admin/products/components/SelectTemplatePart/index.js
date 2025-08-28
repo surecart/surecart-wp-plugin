@@ -1,8 +1,14 @@
+/**
+ * External dependencies.
+ */
 import { __ } from '@wordpress/i18n';
 import { useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import { useState } from '@wordpress/element';
 
+/**
+ * Internal dependencies.
+ */
 import { getTemplateTitle } from '../../utility';
 import { ScSelect } from '@surecart/components-react';
 import PostTemplateCreateModal from './create-modal';
@@ -61,6 +67,18 @@ export default function SelectTemplatePart({
 		};
 	});
 
+	const pageLayouts = Object.keys(scData?.availableTemplates || {})
+		.map((value) => ({
+			value,
+			label: scData?.availableTemplates?.[value],
+		}))
+		.sort((a, b) => {
+			// show empty layouts first.
+			if (!a.value) return -1;
+			if (!b.value) return 1;
+			return true;
+		});
+
 	const defaultPageLayout = Object.keys(
 		scData?.availableTemplates || {}
 	).find((value, label) => !value);
@@ -71,12 +89,7 @@ export default function SelectTemplatePart({
 				<ScSelect
 					label={__('Page Layout', 'surecart')}
 					value={product?.metadata?.wp_template_id || ''}
-					choices={Object.keys(scData?.availableTemplates || {})
-						.filter((value) => value) // Exclude empty values
-						.map((value) => ({
-							value,
-							label: scData?.availableTemplates?.[value],
-						}))}
+					choices={pageLayouts}
 					placeholder={
 						scData?.availableTemplates?.[defaultPageLayout] ||
 						__('Select a layout', 'surecart')
