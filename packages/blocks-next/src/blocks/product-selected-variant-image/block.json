@@ -29,6 +29,10 @@
 		},
 		"height": {
 			"type": "string"
+		},
+		"hide_on_mobile": {
+			"type": "boolean",
+			"default": false
 		}
 	},
 	"supports": {

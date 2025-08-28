@@ -43,4 +43,8 @@
 	&:hover img {
 		transform: scale(1.05);
 	}
+
+	&.hide-on-mobile {
+		display: none;
+	}
 }
