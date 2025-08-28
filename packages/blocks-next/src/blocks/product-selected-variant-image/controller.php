@@ -2,7 +2,7 @@
 $product = sc_get_product();
 
 // make sure we have the product and variants.
-if ( empty( $product ) || empty( $product->variants->data ?? [] ) ) {
+if ( empty( $product ) ) {
 	return null;
 }
 
