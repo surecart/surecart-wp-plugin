@@ -11,6 +11,8 @@
 	}
 }
 
-.is-root-container.block-editor-block-list__layout {
+.is-root-container.block-editor-block-list__layout:has(
+		.wp-block-surecart-sticky-purchase
+	) {
 	padding: 100px 0;
 }
