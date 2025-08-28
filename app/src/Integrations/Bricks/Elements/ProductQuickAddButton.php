@@ -255,19 +255,15 @@ class ProductQuickAddButton extends \Bricks\Element {
 			<?php echo $this->render_attributes( '_root' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 		>
 			<span class="sc-spinner" aria-hidden="true"></span>
-			<?php
-			if ( $show_icon && 'before' === $attributes['icon_position'] ) {
-				echo self::render_icon( $settings['icon'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-			}
-			?>
+			<?php if ( $show_icon && 'before' === $attributes['icon_position'] ) : ?>
+				<span class="sc-button__link-text"><?php echo self::render_icon( $settings['icon'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
+			<?php endif; ?>
 			<?php if ( $show_text ) : ?>
 				<span class="sc-button__link-text"><?php echo esc_html( empty( $product->in_stock ) ? __( 'Sold Out', 'surecart' ) : $attributes['label'] ); ?></span>
 			<?php endif; ?>
-			<?php
-			if ( $show_icon && 'after' === $attributes['icon_position'] ) {
-				echo self::render_icon( $settings['icon'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-			}
-			?>
+			<?php if ( $show_icon && 'after' === $attributes['icon_position'] ) : ?>
+				<span class="sc-button__link-text"><?php echo self::render_icon( $settings['icon'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
+			<?php endif; ?>
 		</div>
 		<?php
 	}
