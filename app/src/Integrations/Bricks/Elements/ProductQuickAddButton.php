@@ -110,7 +110,7 @@ class ProductQuickAddButton extends \Bricks\Element {
 			'tab'         => 'content',
 			'label'       => esc_html__( 'Direct add to cart', 'surecart' ),
 			'type'        => 'checkbox',
-			'description' => esc_html__( 'Add the product directly to the cart without opening a quick view modal.', 'surecart' ),
+			'description' => esc_html__( 'Add the product directly to the cart if it has no options.', 'surecart' ),
 			'default'     => true,
 		];
 
@@ -187,9 +187,9 @@ class ProductQuickAddButton extends \Bricks\Element {
 		$settings            = $this->settings;
 		$product_id          = get_the_ID();
 		$product             = sc_get_product();
-		$is_add_to_cart      = ! empty( $settings['direct_add_to_cart'] ) && 'yes' === $settings['direct_add_to_cart'];
+		$is_add_to_cart      = ! empty( $settings['direct_add_to_cart'] );
 		$should_direct_add   = $is_add_to_cart && empty( $product->has_options );
-		$show_on_hover_class = ! empty( $settings['show_on_hover'] ) && 'yes' === $settings['show_on_hover'] ? 'is-style-show-on-hover ' : '';
+		$show_on_hover_class = ! empty( $settings['show_on_hover'] ) ? 'is-style-show-on-hover ' : '';
 		$attributes          = array(
 			'icon_position'          => $settings['icon_position'] ?? 'before',
 			'quick_view_button_type' => $settings['quick_view_button_type'] ?? 'both',
