@@ -29,7 +29,7 @@ class ProductContent extends \Bricks\Element {
 	 *
 	 * @var string
 	 */
-	public $icon = 'ti-receipt';
+	public $icon = 'ion-md-list-box';
 
 	/**
 	 * Enqueue scripts and styles for the element.
