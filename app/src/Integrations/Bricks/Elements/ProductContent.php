@@ -11,18 +11,18 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class ProductContent extends \Bricks\Element {
 	/**
-	 * The category of the element.
-	 *
-	 * @var string
-	 */
-	public $category = 'single';
-
-	/**
 	 * The name of the element.
 	 *
 	 * @var string
 	 */
 	public $name = 'product-content';
+
+	/**
+	 * Element category.
+	 *
+	 * @var string
+	 */
+	public $category = 'SureCart Elements';
 
 	/**
 	 * The icon for the element.
