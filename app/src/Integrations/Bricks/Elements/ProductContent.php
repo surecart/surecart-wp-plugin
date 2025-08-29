@@ -2,20 +2,14 @@
 
 namespace SureCart\Integrations\Bricks\Elements;
 
-use SureCart\Integrations\Bricks\Concerns\ConvertsBlocks;
-
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
 /**
- * Class ProductContent
- *
- * @see themes/bricks/includes/elements/post-content.php
+ * Class ProductContent.
  */
 class ProductContent extends \Bricks\Element {
-	use ConvertsBlocks; // we have to use a trait since we can't extend the bricks class.
-
 	/**
 	 * The category of the element.
 	 *
@@ -194,11 +188,10 @@ class ProductContent extends \Bricks\Element {
 			// Set global in_the_loop().
 			// Some plugins might rely on the `in_the_loop` check (e.g. BuddyBoss).
 			$wp_query->in_the_loop = true;
-
 			setup_postdata( $post );
+
 			$output = get_the_content();
 			if ( post_password_required( $post->ID ) ) {
-				// PHPCS - `get_the_password_form`. is safe.
 				$output = get_the_password_form( $post->ID ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			}
 
@@ -206,6 +199,7 @@ class ProductContent extends \Bricks\Element {
 				return $this->render_element_placeholder( $no_content );
 			}
 
+			// Reset postdata before any return.
 			wp_reset_postdata();
 		}
 
