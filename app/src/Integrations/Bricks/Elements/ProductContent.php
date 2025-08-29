@@ -176,6 +176,7 @@ class ProductContent extends \Bricks\Element {
 
 		// STEP: Render WordPress content.
 		else {
+			global $wp_query;
 			$product    = sc_get_product();
 			$no_content = [
 				'title' => esc_html__( 'No WordPress added content found.', 'surecart' ),
@@ -185,21 +186,24 @@ class ProductContent extends \Bricks\Element {
 				return $this->render_element_placeholder( $no_content );
 			}
 
-			$post = $product->post;
+			$post = $product->post ?? null;
 			if ( ! $post ) {
 				return $this->render_element_placeholder( $no_content );
 			}
 
+			// Set global in_the_loop().
+			// Some plugins might rely on the `in_the_loop` check (e.g. BuddyBoss).
+			$wp_query->in_the_loop = true;
+
 			setup_postdata( $post );
 			$output = get_the_content();
-
-			if ( bricks_is_builder_call() && ! $output ) {
-				return $this->render_element_placeholder( $no_content );
-			}
-
 			if ( post_password_required( $post->ID ) ) {
 				// PHPCS - `get_the_password_form`. is safe.
 				$output = get_the_password_form( $post->ID ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			}
+
+			if ( bricks_is_builder_call() && ! $output ) {
+				return $this->render_element_placeholder( $no_content );
 			}
 
 			wp_reset_postdata();
