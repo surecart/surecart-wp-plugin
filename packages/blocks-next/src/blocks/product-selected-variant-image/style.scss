@@ -43,8 +43,10 @@
 	&:hover img {
 		transform: scale(1.05);
 	}
+}
 
-	&.hide-on-mobile {
+@media (max-width: 480px) {
+	.wp-block-surecart-product-selected-variant-image.hide-on-mobile {
 		display: none;
 	}
 }
