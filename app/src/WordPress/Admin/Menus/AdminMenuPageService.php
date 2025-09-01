@@ -53,12 +53,17 @@ class AdminMenuPageService {
 
 		// Admin bar menus.
 		if ( apply_filters( 'surecart_show_admin_bar_visit_store', true ) ) {
-			add_action( 'admin_bar_menu', array( $this, 'adminBarMenu' ), 31 );
+			add_action( 'admin_bar_menu', array( $this, 'adminBarSiteMenu' ), 31 );
 		}
 
 		// Admin toolbar new content menu.
 		if ( apply_filters( 'surecart_show_admin_bar_new_content', true ) ) {
 			add_action( 'admin_bar_menu', array( $this, 'adminBarNewContent' ), 71 );
+		}
+
+		// Admin toolbar SureCart menu.
+		if ( apply_filters( 'surecart_show_admin_bar_menu', true ) ) {
+			add_action( 'admin_bar_menu', array( $this, 'adminBarMenu' ), 99 );
 		}
 	}
 
@@ -68,7 +73,7 @@ class AdminMenuPageService {
 	 * @since 2.4.0
 	 * @param \WP_Admin_Bar $wp_admin_bar Admin bar instance.
 	 */
-	public function adminBarMenu( $wp_admin_bar ) {
+	public function adminBarSiteMenu( $wp_admin_bar ) {
 		if ( ! is_admin() || ! is_admin_bar_showing() ) {
 			return;
 		}
@@ -151,6 +156,173 @@ class AdminMenuPageService {
 				)
 			);
 		}
+	}
+
+	/**
+	 * Add SureCart main menu to the admin bar.
+	 *
+	 * @param \WP_Admin_Bar $wp_admin_bar Admin bar instance.
+	 *
+	 * @return void
+	 */
+	public function adminBarMenu( $wp_admin_bar ) {
+		// Its for frontend only.
+		if ( ! is_admin_bar_showing() || is_admin() ) {
+			return;
+		}
+
+		// Show only when the user is a member of this site, or they're a super admin.
+		if ( ! is_user_member_of_blog() && ! is_super_admin() ) {
+			return;
+		}
+
+		// Only show if user has API token.
+		if ( ! ApiToken::get() ) {
+			return;
+		}
+		$surecart_logo = esc_url_raw( plugin_dir_url( SURECART_PLUGIN_FILE ) . 'images/icon.svg' );
+		?>
+
+		<style>
+			#wp-admin-bar-surecart-toolbar > .ab-item {
+				display: flex !important;
+				align-items: center;
+			}
+
+			#wp-admin-bar-surecart-toolbar > .ab-item::before {
+				content: "";
+				display: inline-block;
+				width: 25px;
+				height: 30px;
+				background-color: #01824c !important;
+
+				/* Mask */
+				-webkit-mask: url('<?php echo esc_url( $surecart_logo ); ?>') no-repeat center;
+				mask: url('<?php echo esc_url( $surecart_logo ); ?>') no-repeat center;
+				-webkit-mask-size: contain;
+				mask-size: contain;
+				-webkit-mask-size: 20px 20px;
+				mask-size: 20px 20px;
+			}
+		</style>
+		<?php
+		$wp_admin_bar->add_node(
+			[
+				'id'    => 'surecart-toolbar',
+				'title' => __( 'Edit with SureCart', 'surecart' ),
+				'href'  => '#',
+			]
+		);
+		$this->maybeAddCartTemplate( $wp_admin_bar );
+
+		// Add Product related content/templates.
+		if ( empty( sc_get_product() ) ) {
+			return;
+		}
+
+		$this->addProductContentItem( $wp_admin_bar );
+		$this->maybeAddProductTemplate( $wp_admin_bar );
+		$this->maybeAddStickyPurchaseTemplate( $wp_admin_bar );
+	}
+
+	/**
+	 * Maybe add cart template to admin toolbar.
+	 *
+	 * @param \WP_Admin_Bar $wp_admin_bar The admin bar instance.
+	 *
+	 * @return void
+	 */
+	public function maybeAddCartTemplate( $wp_admin_bar ): void {
+		$template_id = 'surecart/surecart//cart';
+		if ( empty( get_block_template( $template_id, 'wp_template_part' ) ) ) {
+			return;
+		}
+
+		$wp_admin_bar->add_node(
+			[
+				'id'     => 'surecart-edit-cart-template',
+				'parent' => 'surecart-toolbar',
+				'title'  => __( 'Cart', 'surecart' ),
+				'href'   => admin_url( '/site-editor.php?postType=wp_template_part&postId=' . rawurlencode( $template_id ) . '&canvas=edit' ),
+			]
+		);
+	}
+
+	/**
+	 * Add product content item to admin toolbar.
+	 *
+	 * @param \WP_Admin_Bar $wp_admin_bar The admin bar instance.
+	 *
+	 * @return void
+	 */
+	public function addProductContentItem( $wp_admin_bar ): void {
+		$wp_admin_bar->add_node(
+			[
+				'id'     => 'surecart-edit-product-content',
+				'parent' => 'surecart-toolbar',
+				'title'  => 'Product Content',
+				'href'   => admin_url( '/post.php?post=' . get_the_ID() . '&action=edit' ),
+			]
+		);
+	}
+
+	/**
+	 * Maybe add sticky purchase template to admin toolbar.
+	 *
+	 * @param \WP_Admin_Bar $wp_admin_bar The admin bar instance.
+	 *
+	 * @return void
+	 */
+	public function maybeAddStickyPurchaseTemplate( $wp_admin_bar ): void {
+		$sticky_purchase_template_id = 'surecart/surecart//sticky-purchase';
+		if ( empty( get_block_template( $sticky_purchase_template_id, 'wp_template_part' ) ) ) {
+			return;
+		}
+
+		$wp_admin_bar->add_node(
+			[
+				'id'     => 'surecart-edit-sticky-template',
+				'parent' => 'surecart-toolbar',
+				'title'  => __( 'Sticky Purchase', 'surecart' ),
+				'href'   => admin_url( '/site-editor.php?postType=wp_template_part&postId=' . rawurlencode( $sticky_purchase_template_id ) . '&canvas=edit' ),
+			]
+		);
+	}
+
+	/**
+	 * Maybe add product template to admin toolbar.
+	 *
+	 * @param \WP_Admin_Bar $wp_admin_bar The admin bar instance.
+	 *
+	 * @return void
+	 */
+	public function maybeAddProductTemplate( $wp_admin_bar ): void {
+		if (
+			class_exists( 'Elementor\Plugin' ) ||
+			class_exists( '\Bricks\Elements' )
+		) {
+			return;
+		}
+
+		$product       = sc_get_product();
+		$template_type = wp_is_block_theme() ? 'wp_template' : 'wp_template_part';
+		$template_id   = wp_is_block_theme() ? $product->template_id : $product->template_part_id;
+		if ( empty( $template_id ) ) {
+			$template_id = wp_is_block_theme() ? 'surecart/surecart//single-sc_product' : 'surecart/surecart//product-info';
+		}
+
+		if ( empty( get_block_template( $template_id, $template_type ) ) ) {
+			return;
+		}
+
+		$wp_admin_bar->add_node(
+			[
+				'id'     => 'surecart-edit-product-template',
+				'parent' => 'surecart-toolbar',
+				'title'  => __( 'Product Template', 'surecart' ),
+				'href'   => admin_url( '/site-editor.php?postType=' . rawurlencode( $template_type ) . '&postId=' . rawurlencode( $template_id ) . '&canvas=edit' ),
+			]
+		);
 	}
 
 	/**
