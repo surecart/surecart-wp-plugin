@@ -51,10 +51,10 @@ store('surecart/line-item-note', {
 				}
 
 				const checkOverflow = () => {
-					context.showToggle = !!context.noteExpanded
-						? true
-						: noteTextElement.scrollHeight >
-						  noteTextElement.clientHeight;
+					context.showToggle =
+						!!context.noteExpanded ||
+						noteTextElement.scrollHeight >
+							noteTextElement.clientHeight;
 				};
 
 				checkOverflow();
