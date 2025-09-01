@@ -9,7 +9,7 @@ export default () => {
 	return (
 		<div {...blockProps}>
 			<div class="line-item-note__text">
-				{__('Your note here...', 'surecart')}
+				{__('Note: Your note here...', 'surecart')}
 			</div>
 		</div>
 	);
