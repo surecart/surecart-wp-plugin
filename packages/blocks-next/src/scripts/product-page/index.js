@@ -265,7 +265,11 @@ const { state, actions } = store('surecart/product-page', {
 		 * Line item to add to cart.
 		 */
 		get lineItem() {
-			const { adHocAmount, selectedPrice, lineItemNote } = getContext();
+			const { adHocAmount, selectedPrice, note, noteLabel } =
+				getContext();
+
+			console.log(noteLabel, note);
+
 			return {
 				price: selectedPrice?.id,
 				quantity: Math.max(
@@ -279,7 +283,7 @@ const { state, actions } = store('surecart/product-page', {
 								: adHocAmount,
 					  }
 					: {}),
-				note: lineItemNote || '',
+				note: noteLabel ? `${noteLabel}: ${note}` : note || '',
 				...(state.selectedVariant?.id
 					? { variant: state.selectedVariant?.id }
 					: {}),
@@ -338,9 +342,6 @@ const { state, actions } = store('surecart/product-page', {
 
 				const checkout = yield* addCheckoutLineItem(state.lineItem);
 				checkoutActions.setCheckout(checkout, mode, formId);
-
-				// Reset the line item note in context.
-				context.lineItemNote = '';
 
 				// no busy context, wait to toggle cart
 				hasContextBusy && cartActions.open();
@@ -476,7 +477,8 @@ const { state, actions } = store('surecart/product-page', {
 		 */
 		setLineItemNote: (e) => {
 			const context = getContext();
-			context.lineItemNote = e.target.value;
+			context.note = e.target.value || '';
+			context.noteLabel = context.label || '';
 		},
 
 		/**

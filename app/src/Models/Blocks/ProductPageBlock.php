@@ -231,6 +231,8 @@ class ProductPageBlock {
 				'text'            => __( 'Add to Cart', 'surecart' ),
 				'outOfStockText'  => __( 'Sold Out', 'surecart' ),
 				'unavailableText' => __( 'Unavailable For Purchase', 'surecart' ),
+				'note'            => '',
+				'noteLabel'       => '',
 			),
 		);
 	}

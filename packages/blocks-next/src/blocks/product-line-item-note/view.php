@@ -1,4 +1,14 @@
-<div <?php echo wp_kses_data( get_block_wrapper_attributes() ); ?>>
+<div <?php echo wp_kses_data( get_block_wrapper_attributes() ); ?>
+	<?php
+	echo wp_kses_data(
+		wp_interactivity_data_wp_context(
+			[
+				'label' => $attributes['label'] ?? '',
+			]
+		)
+	);
+	?>
+	>
 	<?php if ( ! empty( $attributes['label'] ) ) : ?>
 		<label class="sc-form-label" for="sc_product_note">
 			<?php echo wp_kses_post( $attributes['label'] ); ?>
@@ -14,7 +24,7 @@
 		data-wp-bind--value="context.lineItemNote"
 		data-wp-on--input="callbacks.setLineItemNote"
 		maxlength="500"
-	></textarea>
+	></textarea> 
 
 	<?php if ( ! empty( $attributes['help_text'] ) ) : ?>
 		<div class="sc-help-text">
