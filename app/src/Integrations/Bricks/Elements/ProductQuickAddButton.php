@@ -92,14 +92,6 @@ class ProductQuickAddButton extends \Bricks\Element {
 			'inline'  => true,
 		];
 
-		$this->controls['show_on_hover'] = [
-			'tab'         => 'content',
-			'label'       => esc_html__( 'Show on Hover', 'surecart' ),
-			'type'        => 'checkbox',
-			'description' => esc_html__( 'Show the quick add button only when the product item is hovered.', 'surecart' ),
-			'default'     => false,
-		];
-
 		// Settings Controls.
 		$this->controls['settingsSeparator'] = [
 			'label' => esc_html__( 'Settings', 'surecart' ),
@@ -189,7 +181,6 @@ class ProductQuickAddButton extends \Bricks\Element {
 		$product             = sc_get_product();
 		$is_add_to_cart      = ! empty( $settings['direct_add_to_cart'] );
 		$should_direct_add   = $is_add_to_cart && empty( $product->has_options );
-		$show_on_hover_class = ! empty( $settings['show_on_hover'] ) ? 'is-style-show-on-hover ' : '';
 		$attributes          = array(
 			'icon_position'          => $settings['icon_position'] ?? 'before',
 			'quick_view_button_type' => $settings['quick_view_button_type'] ?? 'both',
@@ -226,7 +217,7 @@ class ProductQuickAddButton extends \Bricks\Element {
 			$this->set_attribute( '_root', 'data-wp-interactive', '{ "namespace": "surecart/product-quick-view" }' );
 		}
 
-		$this->set_attribute( '_root', 'class', 'wp-block-surecart-product-quick-view-button sc-button__link bricks-button ' . $show_on_hover_class );
+		$this->set_attribute( '_root', 'class', 'wp-block-surecart-product-quick-view-button sc-button__link bricks-button' );
 		$this->set_attribute( '_root', 'data-wp-class--loading', 'state.loading' );
 		$this->set_attribute( '_root', 'data-wp-class--sc-button__link--busy', 'state.loading' );
 		$this->set_attribute( '_root', 'aria-disabled', $is_disabled );
