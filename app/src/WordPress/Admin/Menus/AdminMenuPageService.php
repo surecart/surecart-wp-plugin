@@ -109,8 +109,8 @@ class AdminMenuPageService {
 			return;
 		}
 
-		// Only show if user is logged in and has API token.
-		if ( ! is_user_logged_in() || ! ApiToken::get() ) {
+		// Only show if user has API token connected.
+		if ( ! ApiToken::get() ) {
 			return;
 		}
 
