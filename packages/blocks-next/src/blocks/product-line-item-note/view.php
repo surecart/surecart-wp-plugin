@@ -23,7 +23,7 @@
 		rows="<?php echo esc_attr( $attributes['no_of_rows'] ?? 2 ); ?>"
 		data-wp-bind--value="context.lineItemNote"
 		data-wp-on--input="callbacks.setLineItemNote"
-		maxlength="500"
+		maxlength="485"
 	></textarea> 
 
 	<?php if ( ! empty( $attributes['help_text'] ) ) : ?>
