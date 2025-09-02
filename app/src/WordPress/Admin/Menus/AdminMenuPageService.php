@@ -100,10 +100,6 @@ class AdminMenuPageService {
 	 * @param \WP_Admin_Bar $wp_admin_bar Admin bar instance.
 	 */
 	public function adminBarNewContent( $wp_admin_bar ) {
-		if ( ! is_admin_bar_showing() ) {
-			return;
-		}
-
 		// Show only when the user is a member of this site, or they're a super admin.
 		if ( ! is_user_member_of_blog() && ! is_super_admin() ) {
 			return;
