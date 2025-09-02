@@ -67,7 +67,6 @@
 	width: var(--sc-video-play-button-size);
 	height: var(--sc-video-play-button-size);
 	background-color: var(--sc-video-play-button-bg);
-	transition: var(--sc-transition-medium) ease;
 	box-shadow: var(--sc-shadow-medium);
 	border-radius: 50%;
 	cursor: pointer;
@@ -76,11 +75,6 @@
 	svg {
 		margin-left: 4px; /* Optical centering adjustment */
 		fill: var(--sc-video-play-button-color);
-	}
-
-	&:hover {
-		transform: scale(1.05);
-		background-color: var(--sc-video-play-button-bg);
 	}
 
 	&:focus {
