@@ -314,12 +314,14 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 == Changelog ==
 
 = 3.13.2 - September 2nd, 2025 =
+- Improvement: Add "Restart installment plan on completion" setting for contract-based subscriptions.
 - Improvement: Enhanced Shop Accountant role permissions for better access control and financial management.
-- Improvement: Added plan identification support for improved customer support integration.
-- Fix: Resolved text overlap issue when subscriptions are canceled for better readability.
+- Improvement: Update claim banner on settings page for unclaimed stores.
+- Fix: "Edit with Bricks" / "Edit with WordPress" setting not working on product page.
+- Fix: Issue with PayPal payment method button loading when free trial was enabled.
 - Fix: Corrected Bricks Builder content source rendering to display designer content properly.
 - Fix: Resolved sticky purchase button spacing issue in the editor for cleaner layouts.
-- Fix: Improved admin dropdown menu functionality for better navigation experience.
+- Fix: Issue with overlapping text when subscription is pending cancellation in admin on narrow screens.
 
 = 3.13.1 - August 20th, 2025 =
 - Improvement: Removed post type check when finding dashboard page to allow custom post type dashboard pages.

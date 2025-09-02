@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-08-19T14:51:20+00:00\n"
+"POT-Creation-Date: 2025-09-02T17:53:21+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.9.0\n"
 
@@ -163,7 +163,7 @@ msgid "Checkout"
 msgstr ""
 
 #: src/BlockLibrary/BlockServiceProvider.php:136
-#: src/WordPress/Pages/PageService.php:124
+#: src/WordPress/Pages/PageService.php:123
 #: dashboard/customer-dashboard.php:6
 #: Blocks/Confirmation/edit.js:30
 msgid "Customer Dashboard"
@@ -404,7 +404,7 @@ msgstr ""
 #: src/Controllers/Admin/CancellationInsights/CancellationInsightsListTable.php:192
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:283
 #: src/Controllers/Admin/Tables/ListTable.php:141
-#: src/WordPress/PostTypes/FormPostTypeService.php:339
+#: src/WordPress/PostTypes/FormPostTypeService.php:340
 #: admin/user-profile.php:10
 #: admin/user-profile.php:18
 #: dashboard/components/RecentOrders.js:162
@@ -1380,7 +1380,7 @@ msgstr ""
 #: affiliation-referrals/modules/Summary.js:31
 #: affiliations/modules/Details.js:92
 #: coupons/Sidebar.js:94
-#: customers/modules/Subscriptions.js:64
+#: customers/modules/Subscriptions.js:65
 #: orders/modules/Subscriptions.js:55
 msgid "Created"
 msgstr ""
@@ -1530,7 +1530,7 @@ msgstr ""
 #: src/Controllers/Admin/Products/ProductsListTable.php:449
 #: src/Controllers/Web/BuyPageController.php:56
 #: src/WordPress/PostTypes/ProductPostTypeService.php:406
-#: src/WordPress/PostTypes/ProductPostTypeService.php:1033
+#: src/WordPress/PostTypes/ProductPostTypeService.php:1038
 #: products/EditProduct.js:301
 #: components/PriceInfo.js:103
 msgid "Edit Product"
@@ -1721,7 +1721,7 @@ msgid "Search Orders"
 msgstr ""
 
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:176
-#: src/WordPress/PostTypes/FormPostTypeService.php:343
+#: src/WordPress/PostTypes/FormPostTypeService.php:344
 #: Blocks/Form/components/Mode.js:19
 #: Blocks/Form/components/Mode.js:38
 msgid "Live"
@@ -1777,7 +1777,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: src/Controllers/Admin/Products/ProductsController.php:242
-#: src/WordPress/PostTypes/ProductPostTypeService.php:1034
+#: src/WordPress/PostTypes/ProductPostTypeService.php:1039
 #: licenses/modules/Purchase.js:56
 #: products/components/Url/form.js:68
 msgid "View Product"
@@ -1931,7 +1931,7 @@ msgstr ""
 #: customers/modules/Subscriptions.js:51
 #: settings/export/ExportSettings.js:43
 #: settings/subscription/SubscriptionSettings.js:64
-#: subscriptions/show/ShowSubscription.js:503
+#: subscriptions/show/ShowSubscription.js:507
 msgid "Subscriptions"
 msgstr ""
 
@@ -1965,7 +1965,7 @@ msgstr ""
 
 #: src/Controllers/Admin/Settings/BaseSettings.php:57
 #: layouts/partials/admin-settings-sidebar.php:79
-#: products/components/price/parts/Advanced.js:8
+#: products/components/price/parts/Advanced.js:9
 #: products/modules/Advanced.js:7
 msgid "Advanced"
 msgstr ""
@@ -2220,7 +2220,7 @@ msgstr ""
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:173
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:191
 #: web/buy.php:72
-#: dashboard/Dashboard.js:63
+#: dashboard/Dashboard.js:66
 #: Blocks/CustomerDashboardButton/Block.php:33
 #: Blocks/Dashboard/CustomerSubscriptions/Block.php:76
 #: Controllers/ChargeController.php:19
@@ -2589,11 +2589,13 @@ msgstr ""
 
 #: src/Integrations/Bricks/Concerns/ConvertsBlocks.php:29
 #: src/Integrations/Bricks/Concerns/ConvertsBlocks.php:100
+#: src/Integrations/Bricks/Elements/ProductContent.php:113
 msgid "For better preview select content to show."
 msgstr ""
 
 #: src/Integrations/Bricks/Concerns/ConvertsBlocks.php:30
 #: src/Integrations/Bricks/Concerns/ConvertsBlocks.php:101
+#: src/Integrations/Bricks/Elements/ProductContent.php:114
 msgid "Go to: Settings > Template Settings > Populate Content"
 msgstr ""
 
@@ -3036,6 +3038,37 @@ msgstr ""
 msgid "Scratch Price"
 msgstr ""
 
+#: src/Integrations/Bricks/Elements/ProductContent.php:50
+#: src/Integrations/Elementor/Widgets/ProductContent.php:32
+#: products/components/Editor/index.js:256
+msgid "Product Content"
+msgstr ""
+
+#: src/Integrations/Bricks/Elements/ProductContent.php:72
+msgid "Edit WordPress content (WP admin)."
+msgstr ""
+
+#: src/Integrations/Bricks/Elements/ProductContent.php:79
+msgid "Data source"
+msgstr ""
+
+#: src/Integrations/Bricks/Elements/ProductContent.php:82
+#: src/Integrations/Bricks/Elements/ProductContent.php:86
+msgid "WordPress"
+msgstr ""
+
+#: src/Integrations/Bricks/Elements/ProductContent.php:83
+msgid "Bricks"
+msgstr ""
+
+#: src/Integrations/Bricks/Elements/ProductContent.php:124
+msgid "No Bricks data found."
+msgstr ""
+
+#: src/Integrations/Bricks/Elements/ProductContent.php:176
+msgid "No WordPress added content found."
+msgstr ""
+
 #: src/Integrations/Bricks/Elements/ProductData.php:181
 msgid "No product pricing selected."
 msgstr ""
@@ -3127,7 +3160,7 @@ msgid "Enable access to a BuddyBoss Group."
 msgstr ""
 
 #: src/Integrations/Elementor/Conditions/Conditions.php:47
-#: src/WordPress/PostTypes/ProductPostTypeService.php:1036
+#: src/WordPress/PostTypes/ProductPostTypeService.php:1041
 #: Blocks/ProductItemList/edit.js:388
 #: Blocks/ProductItemList/edit.js:501
 #: src/blocks/product-list/inspector-controls/index.js:106
@@ -3695,11 +3728,6 @@ msgstr ""
 #: Blocks/Product/PriceChoices/edit.js:99
 #: src/blocks/product-price-chooser/edit.js:42
 msgid "One Time"
-msgstr ""
-
-#: src/Integrations/Elementor/Widgets/ProductContent.php:32
-#: products/components/Editor/index.js:256
-msgid "Product Content"
 msgstr ""
 
 #: src/Integrations/Elementor/Widgets/ProductContent.php:72
@@ -4437,11 +4465,11 @@ msgstr ""
 msgid "SureCart Accountant"
 msgstr ""
 
-#: src/Permissions/RolesService.php:81
+#: src/Permissions/RolesService.php:82
 msgid "SureCart Shop Worker"
 msgstr ""
 
-#: src/Permissions/RolesService.php:91
+#: src/Permissions/RolesService.php:92
 msgid "SureCart Customer"
 msgstr ""
 
@@ -7760,18 +7788,18 @@ msgstr ""
 msgid "Deleting This is Restricted"
 msgstr ""
 
-#: src/WordPress/Pages/PageService.php:120
-#: src/WordPress/PostTypes/FormPostTypeService.php:151
+#: src/WordPress/Pages/PageService.php:119
+#: src/WordPress/PostTypes/FormPostTypeService.php:152
 msgid "Store Checkout"
 msgstr ""
 
-#: src/WordPress/Pages/PageService.php:128
+#: src/WordPress/Pages/PageService.php:127
 #: confirmation/order-confirmation.php:6
 #: settings/customer/CustomerSettings.js:330
 msgid "Order Confirmation"
 msgstr ""
 
-#: src/WordPress/Pages/PageService.php:132
+#: src/WordPress/Pages/PageService.php:131
 #: settings/advanced/AdvancedSettings.js:353
 msgid "Shop Page"
 msgstr ""
@@ -7820,22 +7848,22 @@ msgid "Search Carts"
 msgstr ""
 
 #: src/WordPress/PostTypes/CartPostTypeService.php:251
-#: src/WordPress/PostTypes/FormPostTypeService.php:235
-#: src/WordPress/PostTypes/ProductPostTypeService.php:1038
+#: src/WordPress/PostTypes/FormPostTypeService.php:236
+#: src/WordPress/PostTypes/ProductPostTypeService.php:1043
 #: src/WordPress/PostTypes/ProductUpsellPagePostTypeService.php:44
 msgid "No checkout forms found."
 msgstr ""
 
 #: src/WordPress/PostTypes/CartPostTypeService.php:252
-#: src/WordPress/PostTypes/FormPostTypeService.php:236
-#: src/WordPress/PostTypes/ProductPostTypeService.php:1039
+#: src/WordPress/PostTypes/FormPostTypeService.php:237
+#: src/WordPress/PostTypes/ProductPostTypeService.php:1044
 #: src/WordPress/PostTypes/ProductUpsellPagePostTypeService.php:45
 msgid "No checkout forms found in Trash."
 msgstr ""
 
 #: src/WordPress/PostTypes/CartPostTypeService.php:253
-#: src/WordPress/PostTypes/FormPostTypeService.php:237
-#: src/WordPress/PostTypes/ProductPostTypeService.php:1040
+#: src/WordPress/PostTypes/FormPostTypeService.php:238
+#: src/WordPress/PostTypes/ProductPostTypeService.php:1045
 #: src/WordPress/PostTypes/ProductUpsellPagePostTypeService.php:46
 msgid "Filter checkout forms list"
 msgstr ""
@@ -7868,87 +7896,87 @@ msgstr ""
 msgid "Cart updated."
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:226
+#: src/WordPress/PostTypes/FormPostTypeService.php:227
 msgctxt "post type general name"
 msgid "Checkout Forms"
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:227
+#: src/WordPress/PostTypes/FormPostTypeService.php:228
 msgctxt "post type singular name"
 msgid "Checkout Form"
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:228
+#: src/WordPress/PostTypes/FormPostTypeService.php:229
 msgctxt "Checkout Form"
 msgid "Add New"
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:229
+#: src/WordPress/PostTypes/FormPostTypeService.php:230
 msgid "Add new Checkout Form"
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:230
+#: src/WordPress/PostTypes/FormPostTypeService.php:231
 msgid "New Checkout Form"
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:231
+#: src/WordPress/PostTypes/FormPostTypeService.php:232
 msgid "Edit Checkout Form"
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:232
+#: src/WordPress/PostTypes/FormPostTypeService.php:233
 msgid "View Checkout Form"
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:233
+#: src/WordPress/PostTypes/FormPostTypeService.php:234
 msgid "All Checkout Forms"
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:234
+#: src/WordPress/PostTypes/FormPostTypeService.php:235
 msgid "Search Checkout Forms"
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:238
+#: src/WordPress/PostTypes/FormPostTypeService.php:239
 msgid "Checkout Forms list navigation"
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:239
+#: src/WordPress/PostTypes/FormPostTypeService.php:240
 msgid "Checkout Forms list"
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:240
+#: src/WordPress/PostTypes/FormPostTypeService.php:241
 msgid "Checkout Form published."
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:241
+#: src/WordPress/PostTypes/FormPostTypeService.php:242
 msgid "Checkout Form published privately."
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:242
+#: src/WordPress/PostTypes/FormPostTypeService.php:243
 msgid "Checkout Form reverted to draft."
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:243
+#: src/WordPress/PostTypes/FormPostTypeService.php:244
 msgid "Checkout Form scheduled."
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:244
+#: src/WordPress/PostTypes/FormPostTypeService.php:245
 msgid "Checkout Form updated."
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:296
+#: src/WordPress/PostTypes/FormPostTypeService.php:297
 msgid "Published In"
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:297
+#: src/WordPress/PostTypes/FormPostTypeService.php:298
 msgid "Mode"
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:298
+#: src/WordPress/PostTypes/FormPostTypeService.php:299
 #: settings/display-currency/components/CurrencySwitcherSettings.js:186
 msgid "Shortcode"
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:367
+#: src/WordPress/PostTypes/FormPostTypeService.php:368
 msgid "(no title)"
 msgstr ""
 
@@ -7967,79 +7995,79 @@ msgstr ""
 msgid "Learn More."
 msgstr ""
 
-#: src/WordPress/PostTypes/ProductPostTypeService.php:941
+#: src/WordPress/PostTypes/ProductPostTypeService.php:946
 msgid "Product gallery"
 msgstr ""
 
-#: src/WordPress/PostTypes/ProductPostTypeService.php:1028
+#: src/WordPress/PostTypes/ProductPostTypeService.php:1033
 msgctxt "post type general name"
 msgid "SureCart Product"
 msgstr ""
 
-#: src/WordPress/PostTypes/ProductPostTypeService.php:1029
+#: src/WordPress/PostTypes/ProductPostTypeService.php:1034
 msgctxt "post type singular name"
 msgid "SureCart Product"
 msgstr ""
 
-#: src/WordPress/PostTypes/ProductPostTypeService.php:1030
+#: src/WordPress/PostTypes/ProductPostTypeService.php:1035
 msgctxt "Product"
 msgid "Add New"
 msgstr ""
 
-#: src/WordPress/PostTypes/ProductPostTypeService.php:1031
+#: src/WordPress/PostTypes/ProductPostTypeService.php:1036
 msgid "Add new Product"
 msgstr ""
 
-#: src/WordPress/PostTypes/ProductPostTypeService.php:1032
+#: src/WordPress/PostTypes/ProductPostTypeService.php:1037
 msgid "New Product"
 msgstr ""
 
-#: src/WordPress/PostTypes/ProductPostTypeService.php:1035
+#: src/WordPress/PostTypes/ProductPostTypeService.php:1040
 msgid "View Products"
 msgstr ""
 
-#: src/WordPress/PostTypes/ProductPostTypeService.php:1037
+#: src/WordPress/PostTypes/ProductPostTypeService.php:1042
 #: admin/products/index.php:77
 msgid "Search Products"
 msgstr ""
 
-#: src/WordPress/PostTypes/ProductPostTypeService.php:1041
+#: src/WordPress/PostTypes/ProductPostTypeService.php:1046
 msgid "Products list navigation"
 msgstr ""
 
-#: src/WordPress/PostTypes/ProductPostTypeService.php:1042
+#: src/WordPress/PostTypes/ProductPostTypeService.php:1047
 msgid "Products list"
 msgstr ""
 
-#: src/WordPress/PostTypes/ProductPostTypeService.php:1043
+#: src/WordPress/PostTypes/ProductPostTypeService.php:1048
 msgid "Product published."
 msgstr ""
 
-#: src/WordPress/PostTypes/ProductPostTypeService.php:1044
+#: src/WordPress/PostTypes/ProductPostTypeService.php:1049
 msgid "Product published privately."
 msgstr ""
 
-#: src/WordPress/PostTypes/ProductPostTypeService.php:1045
+#: src/WordPress/PostTypes/ProductPostTypeService.php:1050
 msgid "Product reverted to draft."
 msgstr ""
 
-#: src/WordPress/PostTypes/ProductPostTypeService.php:1046
+#: src/WordPress/PostTypes/ProductPostTypeService.php:1051
 msgid "Product scheduled."
 msgstr ""
 
-#: src/WordPress/PostTypes/ProductPostTypeService.php:1047
+#: src/WordPress/PostTypes/ProductPostTypeService.php:1052
 #: products/EditProduct.js:185
 #: products/modules/integrations/Integrations.js:43
 msgid "Product updated."
 msgstr ""
 
-#: src/WordPress/PostTypes/ProductPostTypeService.php:1082
+#: src/WordPress/PostTypes/ProductPostTypeService.php:1087
 msgctxt "post"
 msgid "Archived"
 msgstr ""
 
 #. translators: %s: number of posts.
-#: src/WordPress/PostTypes/ProductPostTypeService.php:1091
+#: src/WordPress/PostTypes/ProductPostTypeService.php:1096
 msgid "Archived <span class=\"count\">(%s)</span>"
 msgid_plural "Archived <span class=\"count\">(%s)</span>"
 msgstr[0] ""
@@ -8490,6 +8518,7 @@ msgstr ""
 #: products/components/price/parts/SwapPriceSetting.js:183
 #: products/modules/integrations/Integrations.js:91
 #: products/modules/Prices/Price/Swap.js:35
+#: subscriptions/show/modules/SubscriptionSettings.js:34
 msgid "Learn More"
 msgstr ""
 
@@ -8696,7 +8725,7 @@ msgstr[1] ""
 #: subscriptions/show/modules/modals/DontCancelModal.js:59
 #: subscriptions/show/modules/modals/PayOffSubscriptionModal.js:74
 #: subscriptions/show/modules/modals/RenewSubscriptionAtModal.js:107
-#: subscriptions/show/modules/modals/RestoreSubscriptionAtModal.js:149
+#: subscriptions/show/modules/modals/RestoreSubscriptionAtModal.js:150
 #: subscriptions/show/modules/modals/RestoreSubscriptionModal.js:93
 #: subscriptions/show/modules/modals/RetryPaymentModal.js:89
 #: upsell-funnels/components/SelectTemplate/create-modal.js:87
@@ -8724,8 +8753,8 @@ msgstr ""
 msgid "This user is not a customer."
 msgstr ""
 
-#: layouts/partials/admin-header.php:58
-#: dashboard/Dashboard.js:80
+#: layouts/partials/admin-header.php:57
+#: dashboard/Dashboard.js:83
 msgid "View Reports"
 msgstr ""
 
@@ -9011,9 +9040,9 @@ msgstr ""
 #: subscriptions/show/modules/CurrentPlan.js:68
 #: subscriptions/show/modules/modals/PauseSubscriptionUntilModal.js:74
 #: subscriptions/show/modules/modals/PauseSubscriptionUntilModal.js:79
-#: subscriptions/show/modules/modals/RestoreSubscriptionAtModal.js:67
+#: subscriptions/show/modules/modals/RestoreSubscriptionAtModal.js:68
 #: subscriptions/show/modules/Tax.js:42
-#: subscriptions/show/ShowSubscription.js:111
+#: subscriptions/show/ShowSubscription.js:112
 #: upsell-funnels/modules/Upsell/Product.js:54
 msgid "Something went wrong"
 msgstr ""
@@ -9246,7 +9275,7 @@ msgstr ""
 #: affiliation-requests/EditAffiliationRequest.js:249
 #: invoices/Invoice.js:224
 #: orders/Order.js:297
-#: subscriptions/show/ShowSubscription.js:407
+#: subscriptions/show/ShowSubscription.js:411
 msgid "Actions"
 msgstr ""
 
@@ -9354,7 +9383,7 @@ msgstr ""
 #: customers/modules/Charges.js:90
 #: customers/modules/Orders.js:81
 #: customers/modules/PaymentMethods/index.js:48
-#: customers/modules/Subscriptions.js:80
+#: customers/modules/Subscriptions.js:81
 #: settings/connection/IncomingWebhooks.js:151
 msgid "None found."
 msgstr ""
@@ -10469,8 +10498,8 @@ msgstr ""
 #: components/subscriptions/Cancel.js:86
 #: subscriptions/show/modules/modals/CancelSubscriptionModal.js:89
 #: subscriptions/show/modules/modals/ForceCancelModal.js:96
-#: subscriptions/show/ShowSubscription.js:215
-#: subscriptions/show/ShowSubscription.js:222
+#: subscriptions/show/ShowSubscription.js:219
+#: subscriptions/show/ShowSubscription.js:226
 msgid "Cancel Subscription"
 msgstr ""
 
@@ -10491,7 +10520,7 @@ msgstr ""
 #: components/data-tables/subscriptions-data-table/subscription-item.js:92
 #: components/data-tables/subscriptions-data-table/UnCancel.js:58
 #: components/subscriptions/Cancel.js:92
-#: subscriptions/show/ShowSubscription.js:198
+#: subscriptions/show/ShowSubscription.js:202
 msgid "Don't Cancel"
 msgstr ""
 
@@ -10516,7 +10545,7 @@ msgid "Begins"
 msgstr ""
 
 #: components/data-tables/subscriptions-data-table/subscription-item.js:45
-#: customers/modules/Subscriptions.js:61
+#: customers/modules/Subscriptions.js:62
 msgid "Renews"
 msgstr ""
 
@@ -11303,7 +11332,7 @@ msgstr ""
 msgid "Payment Methods"
 msgstr ""
 
-#: customers/modules/Subscriptions.js:79
+#: customers/modules/Subscriptions.js:80
 msgid "No more subscriptions."
 msgstr ""
 
@@ -11454,11 +11483,11 @@ msgstr ""
 msgid "View All"
 msgstr ""
 
-#: dashboard/Dashboard.js:89
+#: dashboard/Dashboard.js:92
 msgid "Setup Complete!"
 msgstr ""
 
-#: dashboard/Dashboard.js:95
+#: dashboard/Dashboard.js:98
 msgid "Your store is now connected to SureCart."
 msgstr ""
 
@@ -12999,6 +13028,14 @@ msgstr ""
 
 #: products/components/price/parts/RecurringAmount.js:23
 msgid "then cancels"
+msgstr ""
+
+#: products/components/price/parts/RestartSubscription.js:19
+msgid "Restart plan when completed"
+msgstr ""
+
+#: products/components/price/parts/RestartSubscription.js:21
+msgid "Automatically restart the plan after all installment payments are completed."
 msgstr ""
 
 #: products/components/price/parts/RevokeAccess.js:23
@@ -16750,12 +16787,12 @@ msgstr ""
 
 #: subscriptions/edit/EditSubscription.js:124
 #: subscriptions/show/modules/modals/RenewSubscriptionAtModal.js:51
-#: subscriptions/show/modules/modals/RestoreSubscriptionAtModal.js:60
+#: subscriptions/show/modules/modals/RestoreSubscriptionAtModal.js:61
 msgid "Subscription updated."
 msgstr ""
 
 #: subscriptions/edit/EditSubscription.js:248
-#: subscriptions/show/ShowSubscription.js:507
+#: subscriptions/show/ShowSubscription.js:511
 msgid "Subscription Details"
 msgstr ""
 
@@ -16767,8 +16804,8 @@ msgstr ""
 #: subscriptions/edit/EditSubscription.js:294
 #: subscriptions/edit/modules/Modals/UpdateRecentPrice.js:331
 #: subscriptions/show/modules/modals/RenewSubscriptionAtModal.js:116
-#: subscriptions/show/modules/modals/RestoreSubscriptionAtModal.js:161
-#: subscriptions/show/ShowSubscription.js:267
+#: subscriptions/show/modules/modals/RestoreSubscriptionAtModal.js:162
+#: subscriptions/show/ShowSubscription.js:271
 msgid "Update Subscription"
 msgstr ""
 
@@ -16953,7 +16990,7 @@ msgid "Are you sure you want to complete this payment plan? This will eliminate 
 msgstr ""
 
 #: subscriptions/show/modules/modals/CompleteSubscriptionModal.js:63
-#: subscriptions/show/ShowSubscription.js:238
+#: subscriptions/show/ShowSubscription.js:242
 msgid "Complete Subscription"
 msgstr ""
 
@@ -17003,7 +17040,7 @@ msgid "Resume Subscription"
 msgstr ""
 
 #: subscriptions/show/modules/modals/ForceCancelModal.js:51
-#: subscriptions/show/ShowSubscription.js:462
+#: subscriptions/show/ShowSubscription.js:466
 msgid "Subscription canceled."
 msgstr ""
 
@@ -17016,7 +17053,7 @@ msgid "Subscription paused."
 msgstr ""
 
 #: subscriptions/show/modules/modals/PauseSubscriptionUntilModal.js:105
-#: subscriptions/show/ShowSubscription.js:300
+#: subscriptions/show/ShowSubscription.js:304
 msgid "Pause Subscription"
 msgstr ""
 
@@ -17025,12 +17062,12 @@ msgid "This will automatically pause the subscription on %s. Please choose a res
 msgstr ""
 
 #: subscriptions/show/modules/modals/PauseSubscriptionUntilModal.js:148
-#: subscriptions/show/ShowSubscription.js:284
+#: subscriptions/show/ShowSubscription.js:288
 msgid "Don't Pause"
 msgstr ""
 
 #: subscriptions/show/modules/modals/PauseSubscriptionUntilModal.js:157
-#: subscriptions/show/ShowSubscription.js:299
+#: subscriptions/show/ShowSubscription.js:303
 msgid "Pause"
 msgstr ""
 
@@ -17050,11 +17087,11 @@ msgstr ""
 msgid "Renew Subscription At"
 msgstr ""
 
-#: subscriptions/show/modules/modals/RestoreSubscriptionAtModal.js:107
+#: subscriptions/show/modules/modals/RestoreSubscriptionAtModal.js:108
 msgid "Restore Subscription At"
 msgstr ""
 
-#: subscriptions/show/modules/modals/RestoreSubscriptionAtModal.js:128
+#: subscriptions/show/modules/modals/RestoreSubscriptionAtModal.js:129
 msgid "This subscription is going to be paused on %s. When would you like the subscription to be restored?"
 msgstr ""
 
@@ -17119,6 +17156,18 @@ msgstr ""
 msgid "Next retry:"
 msgstr ""
 
+#: subscriptions/show/modules/SubscriptionSettings.js:19
+msgid "Subscription Settings"
+msgstr ""
+
+#: subscriptions/show/modules/SubscriptionSettings.js:47
+msgid "Restart subscription when completed"
+msgstr ""
+
+#: subscriptions/show/modules/SubscriptionSettings.js:49
+msgid "Automatically restart the subscription after all installment payments are completed."
+msgstr ""
+
 #: subscriptions/show/modules/Tax.js:36
 msgid "Tax enabled."
 msgstr ""
@@ -17127,51 +17176,55 @@ msgstr ""
 msgid "Tax disabled."
 msgstr ""
 
-#: subscriptions/show/ShowSubscription.js:97
+#: subscriptions/show/ShowSubscription.js:98
 msgid "Payment method updated."
 msgstr ""
 
-#: subscriptions/show/ShowSubscription.js:201
+#: subscriptions/show/ShowSubscription.js:205
 msgid "Cancel Now"
 msgstr ""
 
-#: subscriptions/show/ShowSubscription.js:247
+#: subscriptions/show/ShowSubscription.js:251
 msgid "Restore Now"
 msgstr ""
 
-#: subscriptions/show/ShowSubscription.js:321
+#: subscriptions/show/ShowSubscription.js:325
 msgid "Pay Off"
 msgstr ""
 
-#: subscriptions/show/ShowSubscription.js:322
+#: subscriptions/show/ShowSubscription.js:326
 msgid "Pay Off Subscription"
 msgstr ""
 
-#: subscriptions/show/ShowSubscription.js:340
+#: subscriptions/show/ShowSubscription.js:344
 msgid "Restore At..."
 msgstr ""
 
-#: subscriptions/show/ShowSubscription.js:358
+#: subscriptions/show/ShowSubscription.js:362
 msgid "Change Renewal Date"
 msgstr ""
 
-#: subscriptions/show/ShowSubscription.js:413
+#: subscriptions/show/ShowSubscription.js:417
 msgid "Cancel Pending Update"
 msgstr ""
 
-#: subscriptions/show/ShowSubscription.js:463
+#: subscriptions/show/ShowSubscription.js:467
 msgid "Subscription scheduled for cancelation."
 msgstr ""
 
-#: subscriptions/show/ShowSubscription.js:529
+#: subscriptions/show/ShowSubscription.js:533
+msgid "Subscription settings updated."
+msgstr ""
+
+#: subscriptions/show/ShowSubscription.js:543
 msgid "Affiliate commissions updated."
 msgstr ""
 
-#: subscriptions/show/ShowSubscription.js:533
+#: subscriptions/show/ShowSubscription.js:547
 msgid "Commission On This Subscription"
 msgstr ""
 
-#: subscriptions/show/ShowSubscription.js:607
+#: subscriptions/show/ShowSubscription.js:621
 msgid "Are you sure? Subscription will be canceled immediately."
 msgstr ""
 
