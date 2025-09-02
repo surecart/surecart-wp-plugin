@@ -313,6 +313,14 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 
 == Changelog ==
 
+= 3.13.2 - September 2nd, 2025 =
+- Improvement: Enhanced Shop Accountant role permissions for better access control and financial management.
+- Improvement: Added plan identification support for improved customer support integration.
+- Fix: Resolved text overlap issue when subscriptions are canceled for better readability.
+- Fix: Corrected Bricks Builder content source rendering to display designer content properly.
+- Fix: Resolved sticky purchase button spacing issue in the editor for cleaner layouts.
+- Fix: Improved admin dropdown menu functionality for better navigation experience.
+
 = 3.13.1 - August 20th, 2025 =
 - Improvement: Removed post type check when finding dashboard page to allow custom post type dashboard pages.
 - Fix: Issue where help widget covered modal buttons in admin.
