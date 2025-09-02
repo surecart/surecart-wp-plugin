@@ -128,7 +128,7 @@ export default ({ product, updateProduct, post, loading }) => {
 				canCreate && (
 					<div
 						css={css`
-							margin: -12px var(--sc-spacing-xxxx-large);
+							margin: -12px 0;
 						`}
 					>
 						<ScButton
@@ -137,7 +137,7 @@ export default ({ product, updateProduct, post, loading }) => {
 							disabled={loading}
 						>
 							<ScIcon name="plus" slot="prefix" />
-							{__('Add template', 'surecart')}
+							{__('New', 'surecart')}
 						</ScButton>
 					</div>
 				)
@@ -151,9 +151,6 @@ export default ({ product, updateProduct, post, loading }) => {
 					</ScButton>
 				)
 			}
-			footerStyle={{
-				borderTop: '1px solid var(--sc-color-gray-200)',
-			}}
 		>
 			<div
 				css={css`
