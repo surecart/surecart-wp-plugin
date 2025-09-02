@@ -194,7 +194,7 @@ class AdminMenuPageService {
 				display: inline-block;
 				width: 25px;
 				height: 30px;
-				background-color: #01824c !important;
+				background-color: #a7aaad !important; /* WordPress toolbar icon color */
 
 				/* Mask */
 				-webkit-mask: url('<?php echo esc_url( $surecart_logo ); ?>') no-repeat center;
@@ -203,6 +203,11 @@ class AdminMenuPageService {
 				mask-size: contain;
 				-webkit-mask-size: 20px 20px;
 				mask-size: 20px 20px;
+			}
+
+			#wp-admin-bar-surecart-toolbar-default > li + #wp-admin-bar-surecart-edit-cart-template {
+				border-block-start: 1px solid #464b50;
+				margin-block-start: 6px;
 			}
 		</style>
 		<?php
@@ -213,39 +218,16 @@ class AdminMenuPageService {
 				'href'  => '#',
 			]
 		);
+
+		// If there is product, add product template links.
+		if ( ! empty( sc_get_product() ) ) {
+			$this->addProductContentItem( $wp_admin_bar );
+			$this->maybeAddProductTemplate( $wp_admin_bar );
+			$this->maybeAddStickyPurchaseTemplate( $wp_admin_bar );
+		}
+
+		// Add cart links.
 		$this->maybeAddCartTemplate( $wp_admin_bar );
-
-		// Add Product related content/templates.
-		if ( empty( sc_get_product() ) ) {
-			return;
-		}
-
-		$this->addProductContentItem( $wp_admin_bar );
-		$this->maybeAddProductTemplate( $wp_admin_bar );
-		$this->maybeAddStickyPurchaseTemplate( $wp_admin_bar );
-	}
-
-	/**
-	 * Maybe add cart template to admin toolbar.
-	 *
-	 * @param \WP_Admin_Bar $wp_admin_bar The admin bar instance.
-	 *
-	 * @return void
-	 */
-	public function maybeAddCartTemplate( $wp_admin_bar ): void {
-		$template_id = 'surecart/surecart//cart';
-		if ( empty( get_block_template( $template_id, 'wp_template_part' ) ) ) {
-			return;
-		}
-
-		$wp_admin_bar->add_node(
-			[
-				'id'     => 'surecart-edit-cart-template',
-				'parent' => 'surecart-toolbar',
-				'title'  => __( 'Cart', 'surecart' ),
-				'href'   => admin_url( '/site-editor.php?postType=wp_template_part&postId=' . rawurlencode( $template_id ) . '&canvas=edit' ),
-			]
-		);
 	}
 
 	/**
@@ -262,29 +244,6 @@ class AdminMenuPageService {
 				'parent' => 'surecart-toolbar',
 				'title'  => 'Product Content',
 				'href'   => admin_url( '/post.php?post=' . get_the_ID() . '&action=edit' ),
-			]
-		);
-	}
-
-	/**
-	 * Maybe add sticky purchase template to admin toolbar.
-	 *
-	 * @param \WP_Admin_Bar $wp_admin_bar The admin bar instance.
-	 *
-	 * @return void
-	 */
-	public function maybeAddStickyPurchaseTemplate( $wp_admin_bar ): void {
-		$sticky_purchase_template_id = 'surecart/surecart//sticky-purchase';
-		if ( empty( get_block_template( $sticky_purchase_template_id, 'wp_template_part' ) ) ) {
-			return;
-		}
-
-		$wp_admin_bar->add_node(
-			[
-				'id'     => 'surecart-edit-sticky-template',
-				'parent' => 'surecart-toolbar',
-				'title'  => __( 'Sticky Purchase', 'surecart' ),
-				'href'   => admin_url( '/site-editor.php?postType=wp_template_part&postId=' . rawurlencode( $sticky_purchase_template_id ) . '&canvas=edit' ),
 			]
 		);
 	}
@@ -321,6 +280,52 @@ class AdminMenuPageService {
 				'parent' => 'surecart-toolbar',
 				'title'  => __( 'Product Template', 'surecart' ),
 				'href'   => admin_url( '/site-editor.php?postType=' . rawurlencode( $template_type ) . '&postId=' . rawurlencode( $template_id ) . '&canvas=edit' ),
+			]
+		);
+	}
+
+	/**
+	 * Maybe add sticky purchase template to admin toolbar.
+	 *
+	 * @param \WP_Admin_Bar $wp_admin_bar The admin bar instance.
+	 *
+	 * @return void
+	 */
+	public function maybeAddStickyPurchaseTemplate( $wp_admin_bar ): void {
+		$sticky_purchase_template_id = 'surecart/surecart//sticky-purchase';
+		if ( empty( get_block_template( $sticky_purchase_template_id, 'wp_template_part' ) ) ) {
+			return;
+		}
+
+		$wp_admin_bar->add_node(
+			[
+				'id'     => 'surecart-edit-sticky-template',
+				'parent' => 'surecart-toolbar',
+				'title'  => __( 'Sticky Purchase', 'surecart' ),
+				'href'   => admin_url( '/site-editor.php?postType=wp_template_part&postId=' . rawurlencode( $sticky_purchase_template_id ) . '&canvas=edit' ),
+			]
+		);
+	}
+
+	/**
+	 * Maybe add cart template to admin toolbar.
+	 *
+	 * @param \WP_Admin_Bar $wp_admin_bar The admin bar instance.
+	 *
+	 * @return void
+	 */
+	public function maybeAddCartTemplate( $wp_admin_bar ): void {
+		$template_id = 'surecart/surecart//cart';
+		if ( empty( get_block_template( $template_id, 'wp_template_part' ) ) ) {
+			return;
+		}
+
+		$wp_admin_bar->add_node(
+			[
+				'id'     => 'surecart-edit-cart-template',
+				'parent' => 'surecart-toolbar',
+				'title'  => __( 'Cart', 'surecart' ),
+				'href'   => admin_url( '/site-editor.php?postType=wp_template_part&postId=' . rawurlencode( $template_id ) . '&canvas=edit' ),
 			]
 		);
 	}
