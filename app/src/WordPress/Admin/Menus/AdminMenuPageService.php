@@ -110,7 +110,7 @@ class AdminMenuPageService {
 		}
 
 		// Only show if user has API token connected.
-		if ( ! ApiToken::get() ) {
+		if ( ! \SureCart::account()->isConnected() ) {
 			return;
 		}
 
