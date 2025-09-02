@@ -63,11 +63,6 @@ const { state, actions } = store('surecart/checkout', {
 		promotionCode: '',
 
 		/**
-		 * Store for expanded line item notes (keyed by line item ID).
-		 */
-		expandedNotes: {},
-
-		/**
 		 * Current checkout data.
 		 */
 		checkout: {},
@@ -113,6 +108,14 @@ const { state, actions } = store('surecart/checkout', {
 			}
 
 			return line_item.scratch_amount !== line_item.subtotal_amount;
+		},
+
+		/**
+		 * Get the line item note.
+		 */
+		get lineItemNote() {
+			const { line_item } = getContext();
+			return line_item?.note || '';
 		},
 
 		/**
@@ -265,46 +268,6 @@ const { state, actions } = store('surecart/checkout', {
 			const { line_item } = getContext();
 			return line_item.price.name ?? '';
 		},
-
-		/**
-		 * Show the line item note "more"/ "less" button if the note is longer than 50 characters.
-		 */
-		get showLineItemNoteToggle() {
-			const { line_item } = getContext();
-			return line_item?.note?.length > 40;
-		},
-
-		/**
-		 * Is the line item note expanded?
-		 */
-		get lineItemNoteExpanded() {
-			const { line_item } = getContext();
-			if (!line_item?.id) return false;
-
-			return state.expandedNotes?.[line_item.id] || false;
-		},
-
-		/**
-		 * Get the line item note button aria label for accessibility.
-		 */
-		get lineItemNoteAriaLabel() {
-			const { line_item } = getContext();
-			if (!line_item?.note) {
-				return '';
-			}
-
-			return state.lineItemNoteExpanded
-				? __('Collapse note', 'surecart')
-				: __('Expand note', 'surecart');
-		},
-
-		/**
-		 * Get unique ID for the line item note element.
-		 */
-		get lineItemNoteId() {
-			const { line_item } = getContext();
-			return `line-item-note-${line_item?.id}`;
-		},
 	},
 
 	callbacks: {
@@ -430,24 +393,6 @@ const { state, actions } = store('surecart/checkout', {
 			});
 
 			actions.setCheckout(checkout, mode, formId);
-		},
-
-		/**
-		 * Toggle the line item note expanded state.
-		 */
-		toggleLineItemNote() {
-			const { line_item } = getContext();
-			if (!line_item?.id || !line_item?.note) {
-				return;
-			}
-
-			// Toggle the expanded state in our tracked object.
-			state.expandedNotes = {
-				...state.expandedNotes,
-				[line_item.id]: !(
-					state.expandedNotes?.[line_item?.id] || false
-				),
-			};
 		},
 
 		/**

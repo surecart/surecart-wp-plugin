@@ -20,9 +20,8 @@ import {
 	ScDialog,
 	ScPriceInput,
 	ScForm,
-	ScVisuallyHidden,
 	ScText,
-	ScInput,
+	ScQuantitySelect,
 } from '@surecart/components-react';
 import {
 	getFeaturedProductMediaAttributes,
@@ -59,34 +58,10 @@ export default ({
 		setAddHocAmount(ad_hoc_amount || price?.amount);
 	}, [ad_hoc_amount, price]);
 
-	const renderQuantityInput = () => {
-		if (!isDraftInvoice) {
-			return quantity;
-		}
-
-		if (price?.ad_hoc) {
-			return <ScInput type="number" value={1} disabled={true} />;
-		}
-
-		return (
-			<ScInput
-				type="number"
-				value={quantity}
-				onScChange={(e) =>
-					onChange({
-						quantity: parseInt(e.target.value),
-					})
-				}
-				{...(maxStockQuantity && { max: maxStockQuantity })}
-				disabled={busy}
-			/>
-		);
-	};
-
 	return (
 		<ScTableRow>
 			<ScTableCell>
-				<ScFlex alignItems="center" justifyContent="flex-start">
+				<ScFlex alignItems="flex-start" justifyContent="flex-start">
 					{media?.url ? (
 						<img
 							src={media.url}
@@ -114,8 +89,6 @@ export default ({
 									);
 								display: block;
 								box-shadow: var(--sc-input-box-shadow);
-								-webkit-align-self: flex-start;
-								-ms-flex-item-align: start;
 								align-self: flex-start;
 							`}
 						/>
@@ -159,31 +132,31 @@ export default ({
 					<div
 						css={css`
 							flex: 1;
+							display: flex;
+							flex-direction: column;
+							gap: 2px;
 						`}
 					>
-						<div>
-							<strong>{price?.product?.name}</strong>
+						<strong>{price?.product?.name}</strong>
 
-							<LineItemLabel
-								lineItem={lineItem}
-								showPriceName={false}
-							/>
+						<LineItemLabel lineItem={lineItem} />
 
-							<LineItemNote
-								lineItem={lineItem}
-								onChange={onChange}
-								isDraftInvoice={isDraftInvoice}
-							/>
-						</div>
+						<LineItemNote
+							lineItem={lineItem}
+							onChange={onChange}
+							isDraftInvoice={isDraftInvoice}
+							busy={busy}
+						/>
 					</div>
 				</ScFlex>
 			</ScTableCell>
+
 			<ScTableCell>
 				<div
 					css={css`
 						display: flex;
-						align-items: center;
-						justify-content: space-between;
+						align-items: flex-start;
+						gap: 0.5em;
 						margin-bottom: var(--sc-spacing-small);
 					`}
 				>
@@ -259,27 +232,45 @@ export default ({
 				)}
 			</ScTableCell>
 			<ScTableCell>
-				{renderQuantityInput()}
-				{isDraftInvoice && maxStockQuantity && (
-					<ScText
-						css={css`
-							margin-top: var(--sc-spacing-small);
-							color: var(
-								--sc-price-label-color,
-								var(--sc-input-help-text-color)
-							);
-							font-size: var(
-								--sc-price-label-font-size,
-								var(--sc-input-help-text-font-size-medium)
-							);
-						`}
-					>
-						{sprintf(
-							__('Available: %d', 'surecart'),
-							maxStockQuantity
-						)}
-					</ScText>
-				)}
+				<div>
+					{isDraftInvoice ? (
+						<ScQuantitySelect
+							quantity={quantity}
+							disabled={price?.ad_hoc || busy}
+							css={css`
+								margin-top: -3px;
+							`}
+							size="small"
+							onScChange={(e) =>
+								onChange({ quantity: parseInt(e.detail) })
+							}
+							{...(maxStockQuantity && { max: maxStockQuantity })}
+						/>
+					) : (
+						quantity
+					)}
+
+					{isDraftInvoice && maxStockQuantity && (
+						<ScText
+							css={css`
+								margin-top: var(--sc-spacing-small);
+								color: var(
+									--sc-price-label-color,
+									var(--sc-input-help-text-color)
+								);
+								font-size: var(
+									--sc-price-label-font-size,
+									var(--sc-input-help-text-font-size-medium)
+								);
+							`}
+						>
+							{sprintf(
+								__('Available: %d', 'surecart'),
+								maxStockQuantity
+							)}
+						</ScText>
+					)}
+				</div>
 			</ScTableCell>
 			<ScTableCell>
 				<div
@@ -313,12 +304,17 @@ export default ({
 						text-align: right;
 					`}
 				>
-					<ScButton onClick={onRemove} type="text" circle>
+					<Button
+						label={__('Remove', 'surecart')}
+						onClick={onRemove}
+						variant="tertiary"
+						style={{
+							color: 'var(--sc-color-gray-500)',
+							marginTop: '-10px',
+						}}
+					>
 						<ScIcon name="trash" />
-						<ScVisuallyHidden>
-							{__('Remove', 'surecart')}
-						</ScVisuallyHidden>
-					</ScButton>
+					</Button>
 				</ScTableCell>
 			)}
 			<ScForm
@@ -326,7 +322,6 @@ export default ({
 					if (!isDraftInvoice) {
 						return;
 					}
-
 					e.stopImmediatePropagation(); // prevents the page form from submitting.
 					setOpen(false);
 					onChange({ ad_hoc_amount: addHocAmount });

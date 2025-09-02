@@ -4,10 +4,12 @@
   gap: 0.25em;
   min-height: 1.5em;
 
+  &--clickable {
+    cursor: pointer;
+  }
+
   &__text {
-    font-size: 12px;
     line-height: 1.4;
-    color: var(--sc-color-gray-500);
     flex: 1;
     display: -webkit-box;
     -webkit-box-orient: vertical;

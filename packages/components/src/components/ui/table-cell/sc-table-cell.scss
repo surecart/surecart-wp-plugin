@@ -2,10 +2,10 @@
   display: table-cell;
   font-size: var(--sc-font-size-medium);
   padding: var(--sc-table-cell-spacing, var(--sc-spacing-small)) var(--sc-table-cell-spacing, var(--sc-spacing-large)) !important;
-  vertical-align: middle;
+  vertical-align: var(--sc-table-cell-vertical-align, middle);
 }
 
-:host([slot="head"]) {
+:host([slot='head']) {
   background: var(--sc-table-cell-background-color, var(--sc-color-gray-50));
   font-size: var(--sc-font-size-x-small);
   padding: var(--sc-table-cell-spacing, var(--sc-spacing-small));

@@ -43,5 +43,6 @@
 	},
 	"render": "file:./view.php",
 	"editorScript": "file:./index.js",
-	"style": "file:./style-index.css"
+	"style": "file:./style-index.css",
+	"viewScriptModule": ["@surecart/line-item-note"]
 }

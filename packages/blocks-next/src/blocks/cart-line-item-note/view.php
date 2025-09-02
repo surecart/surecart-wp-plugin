@@ -1,40 +1,39 @@
 <div
+	data-wp-interactive='{ "namespace": "surecart/line-item-note" }'
 	<?php echo wp_kses_data( get_block_wrapper_attributes() ); ?>
+	<?php echo wp_kses_data( wp_interactivity_data_wp_context( [] ) ); ?>
+	data-wp-run="callbacks.init"
+	data-wp-class--line-item-note--is-expanded="context.noteExpanded"
+	data-wp-class--line-item-note--is-collapsible="context.showToggle"
+	data-wp-bind--hidden="surecart/checkout::!state.lineItemNote"
+	data-wp-on--click="actions.toggleNoteExpanded"
+	data-wp-on--keydown="actions.toggleNoteExpanded"
+	data-wp-bind--role="button"
+	data-wp-bind--disabled="!context.showToggle"
+	data-wp-bind--aria-expanded="context.noteExpanded"
+	data-wp-bind--aria-label="<?php esc_attr_e( 'Toggle note visibility', 'surecart' ); ?>"
+	tabindex="0"
 >
 	<div
-		class="line-item-note"
-		data-wp-class--line-item-note--is-expanded="state.lineItemNoteExpanded"
+		class="line-item-note__text"
+		data-wp-text="surecart/checkout::state.lineItemNote"
+	></div>
+	<span
+		class="sc-icon"
+		data-wp-class--sc-icon--rotated="context.noteExpanded"
 	>
-		<div
-			class="line-item-note__text"
-			data-wp-bind--id="state.lineItemNoteId"
-			data-wp-text="context.line_item.note"
-		></div>
-		<button
-			type="button"
-			class="line-item-note__toggle"
-			data-wp-bind--hidden="!state.showLineItemNoteToggle"
-			data-wp-on--click="actions.toggleLineItemNote"
-			data-wp-bind--aria-expanded="state.lineItemNoteExpanded"
-			data-wp-bind--aria-label="state.lineItemNoteAriaLabel"
-			data-wp-bind--aria-controls="state.lineItemNoteId"
-			data-wp-bind--aria-describedby="state.lineItemNoteId"
-		>
-			<span class="sc-icon" data-wp-class--sc-icon--rotated="state.lineItemNoteExpanded">
-				<?php
-				echo wp_kses(
-					SureCart::svg()->get(
-						'chevron-down',
-						[
-							'class'  => '',
-							'width'  => 16,
-							'height' => 16,
-						]
-					),
-					sc_allowed_svg_html()
-				);
-				?>
-			</span>
-		</button>
-	</div>
+		<?php
+		echo wp_kses(
+			SureCart::svg()->get(
+				'chevron-down',
+				[
+					'class'  => '',
+					'width'  => 16,
+					'height' => 16,
+				]
+			),
+			sc_allowed_svg_html()
+		);
+		?>
+	</span>
 </div>
