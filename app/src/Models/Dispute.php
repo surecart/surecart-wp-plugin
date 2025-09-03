@@ -44,7 +44,7 @@ class Dispute extends Model {
 	 * @return string
 	 */
 	public function getExternalDisputeLinkAttribute(): string {
-		if ( empty( $this->charge->payment_intent->processor_type ) ) {
+		if ( empty( $this->processor_type ) ) {
 			return '';
 		}
 
@@ -67,18 +67,17 @@ class Dispute extends Model {
 			],
 		];
 
-		$mode           = $this->live_mode ? 'live' : 'test';
-		$processor_type = $this->charge->payment_intent->processor_type ?? '';
+		$mode = $this->live_mode ? 'live' : 'test';
 
-		switch ( $processor_type ) {
+		switch ( $this->processor_type ) {
 			case 'stripe':
-				return $links[ $processor_type ][ $mode ] . ( $this->external_dispute_id ?? '' );
+				return $links[ $this->processor_type ][ $mode ] . ( $this->external_dispute_id ?? '' );
 
 			// These don't support specific page for the dispute.
 			case 'paypal':
 			case 'mollie':
 			case 'paystack':
-				return $links[ $processor_type ][ $mode ];
+				return $links[ $this->processor_type ][ $mode ];
 
 			default:
 				return '';

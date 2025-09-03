@@ -45,7 +45,6 @@ export default ({ disputeId, onRequestClose }) => {
 			context: 'edit',
 			ids: [disputeId],
 			per_page: 100,
-			expand: ['charge', 'charge.payment_intent'],
 		}
 	);
 

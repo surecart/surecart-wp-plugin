@@ -56,7 +56,6 @@ export default ({ order, checkout, chargeIds }) => {
 			context: 'edit',
 			charge_ids: chargeIds,
 			per_page: 100,
-			expand: ['charge', 'charge.payment_intent'],
 		});
 
 	const statusBadge = () => {
