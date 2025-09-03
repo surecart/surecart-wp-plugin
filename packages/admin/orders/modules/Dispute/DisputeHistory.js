@@ -6,7 +6,7 @@ import { css, jsx } from '@emotion/core';
  */
 import { __ } from '@wordpress/i18n';
 import { Button, ProgressBar } from '@wordpress/components';
-import { useEntityRecords } from '@wordpress/core-data';
+import { useEntityRecord } from '@wordpress/core-data';
 import { external } from '@wordpress/icons';
 import { Icon } from '@wordpress/components';
 
@@ -38,17 +38,11 @@ export default ({ disputeId, onRequestClose }) => {
 	};
 
 	// get the dispute.
-	const { records: disputes, hasResolved } = useEntityRecords(
+	const { record: dispute, hasResolved } = useEntityRecord(
 		'surecart',
 		'dispute',
-		{
-			context: 'edit',
-			ids: [disputeId],
-			per_page: 100,
-		}
+		disputeId
 	);
-
-	const dispute = disputes?.[0] || {};
 
 	const renderContent = () => {
 		if (!hasResolved) {
@@ -95,7 +89,7 @@ export default ({ disputeId, onRequestClose }) => {
 									variant="tertiary"
 									href={dispute.external_dispute_link}
 									size="small"
-									label={__('View on Stripe', 'surecart')}
+									label={__('View Dispute', 'surecart')}
 									target="_blank"
 									rel="noopener noreferrer"
 								>
