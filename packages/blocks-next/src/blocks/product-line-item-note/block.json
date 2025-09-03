@@ -18,9 +18,6 @@
 		},
 		"help_text": {
 			"type": "string"
-		},
-		"no_of_rows": {
-			"type": "number"
 		}
 	},
 	"supports": {

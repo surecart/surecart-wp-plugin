@@ -11,15 +11,16 @@ import {
 	__experimentalUseBorderProps as useBorderProps,
 	__experimentalUseColorProps as useColorProps,
 } from '@wordpress/block-editor';
+import { useState } from '@wordpress/element';
 
 /**
  * Internal dependencies.
  */
 import Labels from './labels';
-import Settings from './settings';
 
 export default ({ attributes, setAttributes }) => {
-	const { label, placeholder, help_text, no_of_rows } = attributes;
+	const { label, placeholder, help_text } = attributes;
+	const [rows, setRows] = useState(1);
 	const { style: borderStyle } = useBorderProps(attributes);
 	const { style: colorStyle } = useColorProps(attributes);
 
@@ -40,10 +41,6 @@ export default ({ attributes, setAttributes }) => {
 		<>
 			<InspectorControls>
 				<Labels attributes={attributes} setAttributes={setAttributes} />
-				<Settings
-					attributes={attributes}
-					setAttributes={setAttributes}
-				/>
 			</InspectorControls>
 			<div {...blockProps}>
 				<RichText
@@ -61,7 +58,8 @@ export default ({ attributes, setAttributes }) => {
 					placeholder={
 						placeholder || __('Add a note (optional)', 'surecart')
 					}
-					rows={no_of_rows || 2}
+					rows={rows}
+					onFocus={() => setRows(3)}
 					style={{
 						...(borderStyle?.borderRadius
 							? {

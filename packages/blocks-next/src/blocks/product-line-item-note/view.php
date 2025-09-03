@@ -4,6 +4,7 @@
 		wp_interactivity_data_wp_context(
 			[
 				'label' => $attributes['label'] ?? '',
+				'rows'  => 1,
 			]
 		)
 	);
@@ -20,9 +21,11 @@
 		name="sc_product_note"
 		id="sc_product_note"
 		placeholder="<?php echo esc_attr( $attributes['placeholder'] ?? __( 'Add a note (optional)', 'surecart' ) ); ?>"
-		rows="<?php echo esc_attr( $attributes['no_of_rows'] ?? 2 ); ?>"
+		data-wp-bind--rows="context.rows"
 		data-wp-bind--value="context.lineItemNote"
 		data-wp-on--input="callbacks.setLineItemNote"
+		data-wp-on--click="callbacks.expandLineItemNote"
+		data-wp-on--focus="callbacks.expandLineItemNote"
 		maxlength="485"
 	></textarea> 
 

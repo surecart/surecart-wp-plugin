@@ -105,18 +105,6 @@ class ProductLineItemNote extends \Elementor\Widget_Base {
 			]
 		);
 
-		$this->add_control(
-			'no_of_rows',
-			[
-				'label'   => esc_html__( 'Number of rows', 'surecart' ),
-				'type'    => \Elementor\Controls_Manager::NUMBER,
-				'min'     => 1,
-				'max'     => 10,
-				'step'    => 1,
-				'default' => 2,
-			]
-		);
-
 		$this->end_controls_section();
 	}
 
@@ -360,7 +348,7 @@ class ProductLineItemNote extends \Elementor\Widget_Base {
 					name="sc_product_note"
 					id="sc_product_note"
 					placeholder="<?php echo esc_attr( $settings['placeholder'] ?? __( 'Add a note (optional)', 'surecart' ) ); ?>"
-					rows="<?php echo esc_attr( $settings['no_of_rows'] ?? 2 ); ?>"
+					rows="3"
 					maxlength="500"
 				></textarea>
 
@@ -376,7 +364,7 @@ class ProductLineItemNote extends \Elementor\Widget_Base {
 
 		?>
 		<div <?php $this->print_render_attribute_string( 'wrapper' ); ?>>
-			<!-- wp:surecart/product-line-item-note { "label" : "<?php echo esc_attr( $settings['label'] ?? '' ); ?>", "placeholder" : "<?php echo esc_attr( $settings['placeholder'] ?? '' ); ?>", "help_text" : "<?php echo esc_attr( $settings['help_text'] ?? '' ); ?>", "no_of_rows" : <?php echo esc_attr( $settings['no_of_rows'] ?? 2 ); ?>} /-->
+			<!-- wp:surecart/product-line-item-note { "label" : "<?php echo esc_attr( $settings['label'] ?? '' ); ?>", "placeholder" : "<?php echo esc_attr( $settings['placeholder'] ?? '' ); ?>", "help_text" : "<?php echo esc_attr( $settings['help_text'] ?? '' ); ?>"} /-->
 		</div>
 		<?php
 	}

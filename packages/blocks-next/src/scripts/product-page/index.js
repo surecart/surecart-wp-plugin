@@ -483,6 +483,14 @@ const { state, actions } = store('surecart/product-page', {
 		},
 
 		/**
+		 * Expand the product line item note textarea when clicked or focused.
+		 */
+		expandLineItemNote: (e) => {
+			const context = getContext();
+			context.rows = 3;
+		},
+
+		/**
 		 * Redirect to the checkout page if the form is valid.
 		 */
 		redirectToCheckout: (e) => {
