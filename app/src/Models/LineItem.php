@@ -273,7 +273,7 @@ class LineItem extends Model {
 	 */
 	public function getSubtotalWithUpsellDiscountAmountAttribute() {
 		if ( empty( $this->fees->data ) || ! is_array( $this->fees->data ) ) {
-			return 0;
+			return (int) $this->subtotal_amount;
 		}
 
 		$total_upsell_discount = 0;
