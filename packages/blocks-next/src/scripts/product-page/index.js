@@ -268,8 +268,6 @@ const { state, actions } = store('surecart/product-page', {
 			const { adHocAmount, selectedPrice, note, noteLabel } =
 				getContext();
 
-			console.log(noteLabel, note);
-
 			return {
 				price: selectedPrice?.id,
 				quantity: Math.max(
@@ -283,7 +281,10 @@ const { state, actions } = store('surecart/product-page', {
 								: adHocAmount,
 					  }
 					: {}),
-				note: noteLabel ? `${noteLabel}: ${note}` : note || '',
+				note:
+					!!noteLabel && !!note
+						? `${noteLabel}: ${note}`
+						: note || '',
 				...(state.selectedVariant?.id
 					? { variant: state.selectedVariant?.id }
 					: {}),
