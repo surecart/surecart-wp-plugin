@@ -45,6 +45,7 @@ export default ({ disputeId, onRequestClose }) => {
 			context: 'edit',
 			ids: [disputeId],
 			per_page: 100,
+			expand: ['charge', 'charge.payment_intent'],
 		}
 	);
 
@@ -90,7 +91,7 @@ export default ({ disputeId, onRequestClose }) => {
 							{dispute.created_at_date_time}
 						</ScTableCell>
 						<ScTableCell style={{ textAlign: 'center' }}>
-							{dispute.external_dispute_id && (
+							{!!dispute.external_dispute_link && (
 								<Button
 									variant="tertiary"
 									href={dispute.external_dispute_link}

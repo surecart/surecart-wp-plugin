@@ -44,12 +44,39 @@ class Dispute extends Model {
 	 * @return string
 	 */
 	public function getExternalDisputeLinkAttribute(): string {
-		if ( empty( $this->external_dispute_id ) ) {
+		if ( empty( $this->charge->payment_intent->processor_type ) ) {
 			return '';
 		}
 
-		// For now, we're using only Stripe disputes.
-		$base_url = $this->live_mode ? 'https://dashboard.stripe.com/disputes/' : 'https://dashboard.stripe.com/test/disputes/';
-		return $base_url . $this->external_dispute_id;
+		$links = [
+			'stripe' => [
+				'live' => 'https://dashboard.stripe.com/disputes/',
+				'test' => 'https://dashboard.stripe.com/test/disputes/',
+			],
+			'paypal' => [
+				'live' => 'https://www.paypal.com/disputes/',
+				'test' => 'https://www.sandbox.paypal.com/disputes/',
+			],
+			'mollie' => [
+				'live' => 'https://my.mollie.com/dashboard/chargebacks',
+				'test' => 'https://my.mollie.com/dashboard/chargebacks', // same for test.
+			],
+		];
+
+		$processor = $this->charge->payment_intent->processor_type;
+		$mode      = $this->live_mode ? 'live' : 'test';
+
+		switch ( $processor ) {
+			case 'stripe':
+				return $links[ $processor ][ $mode ] . ( $this->external_dispute_id ?? '' );
+
+			// paypal and mollie has no specific page for dispute.
+			case 'paypal':
+			case 'mollie':
+				return $links[ $processor ][ $mode ];
+
+			default:
+				return '';
+		}
 	}
 }
