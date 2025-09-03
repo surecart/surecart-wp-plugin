@@ -49,31 +49,36 @@ class Dispute extends Model {
 		}
 
 		$links = [
-			'stripe' => [
+			'stripe'   => [
 				'live' => 'https://dashboard.stripe.com/disputes/',
 				'test' => 'https://dashboard.stripe.com/test/disputes/',
 			],
-			'paypal' => [
+			'paypal'   => [
 				'live' => 'https://www.paypal.com/disputes/',
 				'test' => 'https://www.sandbox.paypal.com/disputes/',
 			],
-			'mollie' => [
-				'live' => 'https://my.mollie.com/dashboard/chargebacks',
-				'test' => 'https://my.mollie.com/dashboard/chargebacks', // same for test.
+			'mollie'   => [
+				'live' => 'https://my.mollie.com/dashboard/chargebacks/',
+				'test' => 'https://my.mollie.com/dashboard/chargebacks/', // same for test.
+			],
+			'paystack' => [
+				'live' => 'https://dashboard.paystack.com/#/disputes',
+				'test' => 'https://dashboard.paystack.com/#/disputes', // same for test.
 			],
 		];
 
-		$processor = $this->charge->payment_intent->processor_type;
-		$mode      = $this->live_mode ? 'live' : 'test';
+		$mode           = $this->live_mode ? 'live' : 'test';
+		$processor_type = $this->charge->payment_intent->processor_type ?? '';
 
-		switch ( $processor ) {
+		switch ( $processor_type ) {
 			case 'stripe':
-				return $links[ $processor ][ $mode ] . ( $this->external_dispute_id ?? '' );
+				return $links[ $processor_type ][ $mode ] . ( $this->external_dispute_id ?? '' );
 
-			// paypal and mollie has no specific page for dispute.
+			// These don't support specific page for the dispute.
 			case 'paypal':
 			case 'mollie':
-				return $links[ $processor ][ $mode ];
+			case 'paystack':
+				return $links[ $processor_type ][ $mode ];
 
 			default:
 				return '';
