@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: ecommerce, online store, subscriptions, stripe, payments
 Requires at least: 6.6
 Tested up to: 6.8
-Stable tag: 3.13.1
+Stable tag: 3.13.2
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -312,6 +312,17 @@ Yes, the checkout form can be customized using our visual builder. You can chang
 Accessibility is a huge priority for the entire team building SureCart. As you know, accessibility is an ongoing improvement task. Our development and QA teams are trained in accessibility best practices and build/test each new feature for accessibility. If you come across any edge issues, we want to know about it and will prioritize its resolution. Please contact us via our website.
 
 == Changelog ==
+
+= 3.13.2 - September 2nd, 2025 =
+- Improvement: Add "Restart installment plan on completion" setting for contract-based subscriptions.
+- Improvement: Enhanced Shop SureCart Accountant role permissions for better access control and financial management.
+- Improvement: Update claim banner on settings page for unclaimed stores.
+- Improvement: Add new Product Content element for Bricks Builder to display designer content properly.
+- Improvement: Status badge text refined to “Cancelling” for a cleaner and more consistent UI.
+- Fix: Resolved Stripe "Invalid value for stripe.confirmPayment()" error that ocurred in some cases.
+- Fix: "Edit with Bricks" / "Edit with WordPress" setting not working on product page.
+- Fix: Issue with PayPal payment method button loading when free trial was enabled.
+- Fix: Resolved sticky purchase button spacing issue in the editor for cleaner layouts.
 
 = 3.13.1 - August 20th, 2025 =
 - Improvement: Removed post type check when finding dashboard page to allow custom post type dashboard pages.

@@ -1833,6 +1833,7 @@
   },
   "sc-provisional-banner": {
     "claim-url": true,
+    "expired": true,
     "style": true,
     "id": true,
     "class": true,
