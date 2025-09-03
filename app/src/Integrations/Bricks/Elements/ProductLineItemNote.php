@@ -250,8 +250,9 @@ class ProductLineItemNote extends \Bricks\Element {
 					name="sc_product_note"
 					id="sc_product_note"
 					placeholder="<?php echo esc_attr( $placeholder ); ?>"
-					rows="3"
-					maxlength="500"
+					rows="1"
+					onfocus="this.rows=3"
+					maxlength="485"
 				></textarea>
 
 				<?php if ( ! empty( $help_text ) ) : ?>

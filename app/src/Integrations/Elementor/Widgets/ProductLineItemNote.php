@@ -348,8 +348,9 @@ class ProductLineItemNote extends \Elementor\Widget_Base {
 					name="sc_product_note"
 					id="sc_product_note"
 					placeholder="<?php echo esc_attr( $settings['placeholder'] ?? __( 'Add a note (optional)', 'surecart' ) ); ?>"
-					rows="3"
-					maxlength="500"
+					rows="1"
+					onfocus="this.rows=3"
+					maxlength="485"
 				></textarea>
 
 				<?php if ( ! empty( $settings['help_text'] ) ) : ?>
