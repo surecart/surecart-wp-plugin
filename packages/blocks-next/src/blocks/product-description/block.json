@@ -6,7 +6,11 @@
 	"description": "Display the product description.",
 	"version": "1.0.0",
 	"category": "surecart-product-page",
-	"ancestor": ["surecart/product-page", "surecart/product-template"],
+	"ancestor": [
+		"surecart/product-page",
+		"surecart/product-template",
+		"surecart/sticky-purchase"
+	],
 	"usesContext": ["postId"],
 	"supports": {
 		"interactivity": true,

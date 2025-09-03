@@ -47,4 +47,5 @@ onChangeProcessor('id', () => maybeUpdateProcessor());
 
 // when processors and methods are first loaded, select first one.
 onChange('processors', () => maybeUpdateProcessor());
+onChange('disabled', () => maybeUpdateProcessor());
 onChange('methods', () => maybeUpdateMethod());

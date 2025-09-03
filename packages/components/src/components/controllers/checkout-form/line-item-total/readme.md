@@ -16,10 +16,6 @@
 
 ## Dependencies
 
-### Used by
-
- - [sc-order-confirmation-totals](../../confirmation/order-confirmation-totals)
-
 ### Depends on
 
 - [sc-divider](../../../ui/divider)
@@ -34,7 +30,6 @@ graph TD;
   sc-line-item-total --> sc-line-item
   sc-line-item-total --> sc-skeleton
   sc-line-item-total --> sc-total
-  sc-order-confirmation-totals --> sc-line-item-total
   style sc-line-item-total fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

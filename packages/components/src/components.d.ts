@@ -3245,6 +3245,10 @@ export namespace Components {
           * Claim URL.
          */
         "claimUrl": string;
+        /**
+          * Whether the claim window has expired.
+         */
+        "expired": boolean;
     }
     interface ScPurchaseDownloadsList {
         "allLink": string;
@@ -4120,6 +4124,7 @@ export namespace Components {
         "width": string;
     }
     interface ScTotal {
+        "checkout"?: Checkout;
         "total": 'total' | 'subtotal' | 'amount_due';
     }
     interface ScUpcomingInvoice {
@@ -10429,6 +10434,10 @@ declare namespace LocalJSX {
           * Claim URL.
          */
         "claimUrl"?: string;
+        /**
+          * Whether the claim window has expired.
+         */
+        "expired"?: boolean;
     }
     interface ScPurchaseDownloadsList {
         "allLink"?: string;
@@ -11422,6 +11431,7 @@ declare namespace LocalJSX {
         "width"?: string;
     }
     interface ScTotal {
+        "checkout"?: Checkout;
         "total"?: 'total' | 'subtotal' | 'amount_due';
     }
     interface ScUpcomingInvoice {
