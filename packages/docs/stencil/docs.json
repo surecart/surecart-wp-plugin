@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-09-02T20:22:19",
+  "timestamp": "2025-09-03T07:54:11",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.18.3",
@@ -16642,6 +16642,7 @@
         "sc-payment-methods-list",
         "sc-product-item-list",
         "sc-product-line-item",
+        "sc-product-line-item-note",
         "sc-product-selected-price",
         "sc-provisional-banner",
         "sc-purchase-downloads-list",
@@ -16782,6 +16783,9 @@
           "sc-icon"
         ],
         "sc-product-line-item": [
+          "sc-icon"
+        ],
+        "sc-product-line-item-note": [
           "sc-icon"
         ],
         "sc-product-selected-price": [
@@ -19802,7 +19806,11 @@
           "sc-swap"
         ],
         "sc-product-line-item": [
+          "sc-product-line-item-note",
           "sc-quantity-select",
+          "sc-icon"
+        ],
+        "sc-product-line-item-note": [
           "sc-icon"
         ],
         "sc-quantity-select": [
@@ -20885,7 +20893,11 @@
           "sc-icon"
         ],
         "sc-product-line-item": [
+          "sc-product-line-item-note",
           "sc-quantity-select",
+          "sc-icon"
+        ],
+        "sc-product-line-item-note": [
           "sc-icon"
         ],
         "sc-quantity-select": [
@@ -21840,7 +21852,11 @@
           "sc-product-line-item"
         ],
         "sc-product-line-item": [
+          "sc-product-line-item-note",
           "sc-quantity-select",
+          "sc-icon"
+        ],
+        "sc-product-line-item-note": [
           "sc-icon"
         ],
         "sc-quantity-select": [
@@ -21936,7 +21952,11 @@
           "sc-product-line-item"
         ],
         "sc-product-line-item": [
+          "sc-product-line-item-note",
           "sc-quantity-select",
+          "sc-icon"
+        ],
+        "sc-product-line-item-note": [
           "sc-icon"
         ],
         "sc-quantity-select": [
@@ -30934,7 +30954,7 @@
             "references": {
               "LayoutConfig": {
                 "location": "local",
-                "path": "/Users/andre/sites/surecart/wp-content/plugins/surecart/packages/components/src/components/controllers/products/sc-product-item-list/sc-product-item-list.tsx",
+                "path": "/Users/maniruzzamanakash/Local Sites/sc/app/public/wp-content/plugins/surecart/packages/components/src/components/controllers/products/sc-product-item-list/sc-product-item-list.tsx",
                 "id": "src/components/controllers/products/sc-product-item-list/sc-product-item-list.tsx::LayoutConfig"
               }
             }
@@ -31744,6 +31764,27 @@
           "required": false
         },
         {
+          "name": "note",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "note",
+          "reflectToAttr": false,
+          "docs": "The line item note",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "price",
           "type": "string",
           "complexType": {
@@ -32067,12 +32108,17 @@
         "sc-upcoming-invoice"
       ],
       "dependencies": [
+        "sc-product-line-item-note",
         "sc-quantity-select",
         "sc-icon"
       ],
       "dependencyGraph": {
         "sc-product-line-item": [
+          "sc-product-line-item-note",
           "sc-quantity-select",
+          "sc-icon"
+        ],
+        "sc-product-line-item-note": [
           "sc-icon"
         ],
         "sc-quantity-select": [
@@ -32092,6 +32138,63 @@
         ],
         "sc-upcoming-invoice": [
           "sc-product-line-item"
+        ]
+      }
+    },
+    {
+      "filePath": "src/components/ui/product-line-item-note/sc-product-line-item-note.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-product-line-item-note",
+      "readme": "# sc-product-line-item-note\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "note",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "note",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [
+        {
+          "name": "base",
+          "docs": ""
+        }
+      ],
+      "dependents": [
+        "sc-product-line-item"
+      ],
+      "dependencies": [
+        "sc-icon"
+      ],
+      "dependencyGraph": {
+        "sc-product-line-item-note": [
+          "sc-icon"
+        ],
+        "sc-product-line-item": [
+          "sc-product-line-item-note"
         ]
       }
     },
@@ -37846,7 +37949,11 @@
           "sc-spinner"
         ],
         "sc-product-line-item": [
+          "sc-product-line-item-note",
           "sc-quantity-select",
+          "sc-icon"
+        ],
+        "sc-product-line-item-note": [
           "sc-icon"
         ],
         "sc-quantity-select": [
@@ -38538,7 +38645,11 @@
           "sc-spinner"
         ],
         "sc-product-line-item": [
+          "sc-product-line-item-note",
           "sc-quantity-select",
+          "sc-icon"
+        ],
+        "sc-product-line-item-note": [
           "sc-icon"
         ],
         "sc-quantity-select": [
@@ -43540,7 +43651,11 @@
           "sc-block-ui"
         ],
         "sc-product-line-item": [
+          "sc-product-line-item-note",
           "sc-quantity-select",
+          "sc-icon"
+        ],
+        "sc-product-line-item-note": [
           "sc-icon"
         ],
         "sc-quantity-select": [
@@ -44375,7 +44490,7 @@
       "path": "src/types.ts"
     },
     "src/types.ts::LineItem": {
-      "declaration": "export interface LineItem extends Object {\n  id?: string;\n  ad_hoc_amount?: number;\n  ad_hoc_display_amount?: string;\n  name: string;\n  object: string;\n  quantity: number;\n  currency: string;\n  checkout: string | Checkout;\n  bump: string | Bump;\n  image: ImageAttributes;\n  fees?: {\n    object: 'list';\n    pagination: Pagination;\n    data: Array<Fee>;\n  };\n  bump_amount: number;\n  bump_display_amount: string;\n  discount_amount: number;\n  subtotal_amount: number;\n  subtotal_display_amount?: string;\n  total_amount: number;\n  total_default_currency_display_amount: string;\n  total_display_amount: string;\n  trial_amount: number;\n  tax_amount: number;\n  tax_display_amount: string;\n  fees_amount: number;\n  scratch_amount: number;\n  scratch_display_amount?: string;\n  trial: boolean;\n  total_savings_amount: number;\n  created_at: number;\n  updated_at: number;\n  price?: Price;\n  price_id: string;\n  sku: string;\n  purchasable_status: 'price_gone' | 'price_old_version' | 'variant_mising' | 'variant_gone' | 'variant_old_version' | 'out_of_stock' | 'exceeds_purchase_limit' | 'purchasable';\n  purchasable_status_display: string;\n  variant_options: Array<string>;\n  variant_display_options: string;\n  variant?: Variant;\n  locked: boolean;\n  swap?: Swap;\n  is_swappable?: boolean;\n}",
+      "declaration": "export interface LineItem extends Object {\n  id?: string;\n  ad_hoc_amount?: number;\n  ad_hoc_display_amount?: string;\n  name: string;\n  object: string;\n  quantity: number;\n  currency: string;\n  checkout: string | Checkout;\n  bump: string | Bump;\n  image: ImageAttributes;\n  fees?: {\n    object: 'list';\n    pagination: Pagination;\n    data: Array<Fee>;\n  };\n  bump_amount: number;\n  bump_display_amount: string;\n  discount_amount: number;\n  subtotal_amount: number;\n  subtotal_display_amount?: string;\n  total_amount: number;\n  total_default_currency_display_amount: string;\n  total_display_amount: string;\n  trial_amount: number;\n  tax_amount: number;\n  tax_display_amount: string;\n  fees_amount: number;\n  scratch_amount: number;\n  scratch_display_amount?: string;\n  trial: boolean;\n  total_savings_amount: number;\n  created_at: number;\n  updated_at: number;\n  price?: Price;\n  price_id: string;\n  sku: string;\n  purchasable_status: 'price_gone' | 'price_old_version' | 'variant_mising' | 'variant_gone' | 'variant_old_version' | 'out_of_stock' | 'exceeds_purchase_limit' | 'purchasable';\n  purchasable_status_display: string;\n  variant_options: Array<string>;\n  variant_display_options: string;\n  variant?: Variant;\n  locked: boolean;\n  swap?: Swap;\n  is_swappable?: boolean;\n  note?: string;\n}",
       "docstring": "",
       "path": "src/types.ts"
     },
