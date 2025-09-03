@@ -145,7 +145,7 @@ export default ({ product, updateProduct, post, loading }) => {
 			footer={
 				canEdit &&
 				template && (
-					<ScButton type="default" href={editUrl}>
+					<ScButton target="_blank" type="default" href={editUrl}>
 						<ScIcon name="edit" slot="prefix" />
 						{__('Edit Template', 'surecart')}
 					</ScButton>
