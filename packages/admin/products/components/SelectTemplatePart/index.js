@@ -122,7 +122,7 @@ export default function SelectTemplatePart({
 							__('(no title)'),
 					},
 					...options,
-				]}
+				].filter(Boolean)}
 				onScChange={(e) =>
 					updateProduct({
 						metadata: {
