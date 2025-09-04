@@ -66,9 +66,6 @@ class ProductPostTypeService {
 		// we need to enable the gutenberg editor for our post type so that content blocks can be edited.
 		add_filter( 'use_block_editor_for_post_type', [ $this, 'forceGutenberg' ], 10, 2 );
 
-		// Add edit product link to admin bar.
-		add_action( 'admin_bar_menu', [ $this, 'addEditLink' ], 99 );
-
 		// when a product media is deleted, remove it from the gallery.
 		add_action( 'delete_attachment', array( $this, 'removeFromGallery' ), 10, 1 );
 		add_action( 'delete_attachment', array( $this, 'removeFromGallery' ), 10, 1 );
@@ -380,33 +377,6 @@ class ProductPostTypeService {
 		}
 
 		return $template;
-	}
-
-	/**
-	 * Add edit links
-	 *
-	 * @param \WP_Admin_bar $wp_admin_bar The admin bar.
-	 *
-	 * @return void
-	 */
-	public function addEditLink( $wp_admin_bar ) {
-		if ( ! is_singular( 'sc_product' ) || ! current_user_can( 'edit_sc_products' ) ) {
-			return;
-		}
-
-		$product = sc_get_product();
-
-		if ( empty( $product ) ) {
-			return;
-		}
-
-		$wp_admin_bar->add_node(
-			[
-				'id'    => 'edit',
-				'title' => __( 'Edit Product', 'surecart' ),
-				'href'  => \SureCart::getUrl()->edit( 'product', $product->id ),
-			]
-		);
 	}
 
 	/**

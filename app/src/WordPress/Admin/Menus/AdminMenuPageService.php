@@ -197,12 +197,12 @@ class AdminMenuPageService {
 			return;
 		}
 
-		// Show only when the user is a member of this site, or they're a super admin.
-		if ( ! is_user_member_of_blog() && ! is_super_admin() ) {
+		// Only show on single product edit screen and user can edit products.
+		if ( ! is_singular( 'sc_product' ) || ! current_user_can( 'edit_sc_products' ) ) {
 			return;
 		}
 
-		// Only show if user has API token or product is not empty.
+		// Only show if user has API token and product is not empty.
 		if ( ! ApiToken::get() || empty( sc_get_product() ) ) {
 			return;
 		}
@@ -218,30 +218,28 @@ class AdminMenuPageService {
 			#wp-admin-bar-surecart-toolbar > .ab-item::before {
 				content: "";
 				display: inline-block;
-				width: 25px;
-				height: 30px;
-				background-color: #a7aaad !important; /* WordPress toolbar icon color */
-
-				/* Mask */
+				width: 18px;
+				height: 18px;
+				background-color: #a7aaad !important; /* WordPress toolbar like icon color */
 				-webkit-mask: url('<?php echo esc_url( $surecart_logo ); ?>') no-repeat center;
 				mask: url('<?php echo esc_url( $surecart_logo ); ?>') no-repeat center;
 				-webkit-mask-size: contain;
 				mask-size: contain;
-				-webkit-mask-size: 20px 20px;
-				mask-size: 20px 20px;
+				-webkit-mask-size: 18px 18px;
+				mask-size: 18px 18px;
 			}
 		</style>
 		<?php
+		$product = sc_get_product();
 		$wp_admin_bar->add_node(
 			[
 				'id'    => 'surecart-toolbar',
 				'title' => __( 'Edit with SureCart', 'surecart' ),
-				'href'  => '#',
+				'href'  => \SureCart::getUrl()->edit( 'product', $product->id ),
 			]
 		);
 
-		$this->addProductContentItem( $wp_admin_bar );
-		$this->maybeAddProductTemplate( $wp_admin_bar );
+		$this->addProductContentAndTemplate( $wp_admin_bar );
 		$this->maybeAddStickyPurchaseTemplate( $wp_admin_bar );
 	}
 
@@ -252,7 +250,12 @@ class AdminMenuPageService {
 	 *
 	 * @return void
 	 */
-	public function addProductContentItem( $wp_admin_bar ): void {
+	public function addProductContentAndTemplate( $wp_admin_bar ): void {
+		if ( class_exists( '\Bricks\Helpers' ) && \Bricks\Helpers::render_with_bricks() ) {
+			return;
+		}
+
+		// Add product content link.
 		$wp_admin_bar->add_node(
 			[
 				'id'     => 'surecart-edit-product-content',
@@ -261,22 +264,6 @@ class AdminMenuPageService {
 				'href'   => admin_url( '/post.php?post=' . get_the_ID() . '&action=edit' ),
 			]
 		);
-	}
-
-	/**
-	 * Maybe add product template to admin toolbar.
-	 *
-	 * @param \WP_Admin_Bar $wp_admin_bar The admin bar instance.
-	 *
-	 * @return void
-	 */
-	public function maybeAddProductTemplate( $wp_admin_bar ): void {
-		if (
-			class_exists( 'Elementor\Plugin' ) ||
-			class_exists( '\Bricks\Elements' )
-		) {
-			return;
-		}
 
 		$product       = sc_get_product();
 		$template_type = wp_is_block_theme() ? 'wp_template' : 'wp_template_part';
@@ -289,6 +276,7 @@ class AdminMenuPageService {
 			return;
 		}
 
+		// Add product template link.
 		$wp_admin_bar->add_node(
 			[
 				'id'     => 'surecart-edit-product-template',
