@@ -2,6 +2,7 @@
 
 namespace SureCart\WordPress\Admin\Menus;
 
+use SureCart\Integrations\Elementor\ElementorTemplatesService;
 use SureCart\Models\ApiToken;
 
 /**
@@ -251,7 +252,7 @@ class AdminMenuPageService {
 	 * @return void
 	 */
 	public function addProductContentAndTemplate( $wp_admin_bar ): void {
-		if ( class_exists( '\Bricks\Helpers' ) && \Bricks\Helpers::render_with_bricks() ) {
+		if ( $this->isRenderedWithBricks() || $this->isRenderedWithElementor() ) {
 			return;
 		}
 
@@ -285,6 +286,33 @@ class AdminMenuPageService {
 				'href'   => admin_url( '/site-editor.php?postType=' . rawurlencode( $template_type ) . '&postId=' . rawurlencode( $template_id ) . '&canvas=edit' ),
 			]
 		);
+	}
+
+	/**
+	 * Check if bricks is rendering the current page.
+	 *
+	 * @return bool
+	 */
+	public function isRenderedWithBricks(): bool {
+		return class_exists( '\Bricks\Helpers' ) && \Bricks\Helpers::render_with_bricks();
+	}
+
+	/**
+	 * Check if elementor is rendering the current page.
+	 *
+	 * @return bool
+	 */
+	public function isRenderedWithElementor(): bool {
+		if ( ! class_exists( 'Elementor\Plugin' ) ) {
+			return false;
+		}
+
+		// If has custom page template, means its rendering from SureCart template, not with Elementor.
+		if ( ! empty( get_post_meta( get_the_ID(), '_wp_page_template', true ) ) ) {
+			return false;
+		}
+
+		return ( new ElementorTemplatesService() )->hasActiveSureCartElementorTemplate();
 	}
 
 	/**

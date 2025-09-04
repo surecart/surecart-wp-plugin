@@ -158,4 +158,30 @@ class ElementorTemplatesService {
 			return [];
 		}
 	}
+
+	/**
+	 * Check if surecart-product Elementor template is active.
+	 *
+	 * @return bool
+	 */
+	public function hasActiveSureCartElementorTemplate(): bool {
+		$templates = get_posts(
+			[
+				'post_type'      => 'elementor_library',
+				'meta_query'     => [
+					[
+						'key'   => '_elementor_template_type',
+						'value' => 'surecart-product',
+					],
+					[
+						'key'   => '_elementor_edit_mode',
+						'value' => 'builder',
+					],
+				],
+				'posts_per_page' => 1,
+			]
+		);
+
+		return ! empty( $templates );
+	}
 }
