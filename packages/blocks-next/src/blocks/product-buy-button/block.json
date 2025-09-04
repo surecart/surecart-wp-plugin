@@ -71,6 +71,21 @@
 				"style": true,
 				"width": true
 			}
+		},
+		"__experimentalStyle": {
+			"variations": {
+				"outline": {
+					"border": {
+						"color": "currentColor",
+						"width": "2px",
+						"style": "solid"
+					},
+					"color": {
+						"text": "currentColor",
+						"gradient": "transparent none"
+					}
+				}
+			}
 		}
 	},
 	"variations": [
