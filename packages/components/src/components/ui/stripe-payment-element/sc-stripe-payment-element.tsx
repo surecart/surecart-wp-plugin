@@ -38,6 +38,12 @@ export class ScStripePaymentElement {
   /** Are we confirming the order? */
   @State() confirming: boolean = false;
 
+  /** Are we initializing stripe? */
+  @State() isInitializingStripe: boolean = false;
+
+  /** Are we creating our updating stripe elements? */
+  @State() isCreatingUpdatingStripeElement: boolean = false;
+
   /** Are we loaded? */
   @State() loaded: boolean = false;
 
@@ -95,10 +101,10 @@ export class ScStripePaymentElement {
   }
 
   async initializeStripe() {
-    if (typeof checkoutState?.checkout?.live_mode === 'undefined' || processorsState?.instances?.stripe) {
+    if (typeof checkoutState?.checkout?.live_mode === 'undefined' || processorsState?.instances?.stripe || this.isInitializingStripe) {
       return;
     }
-
+    this.isInitializingStripe = true;
     const { processor_data } = getProcessorByType('stripe') || {};
 
     try {
@@ -106,6 +112,7 @@ export class ScStripePaymentElement {
       this.error = '';
     } catch (e) {
       this.error = e?.message || __('Stripe could not be loaded', 'surecart');
+      this.isInitializingStripe = false;
       // don't continue.
       return;
     }
@@ -126,11 +133,32 @@ export class ScStripePaymentElement {
         this.maybeConfirmOrder();
       }
     });
+    this.isInitializingStripe = false;
+  }
+
+  clearStripeInstances() {
+    this.isInitializingStripe = false;
+    this.isCreatingUpdatingStripeElement = false;
+    if (this?.element) {
+      try {
+        this.element?.unmount?.(); // If Stripe provides this method
+      } catch (e) {
+        console.warn('Could not unmount Stripe element:', e);
+      }
+      this.element = null;
+    }
+    if(processorsState?.instances?.stripeElements) {
+      processorsState.instances.stripeElements = null;
+    }
+    if(processorsState?.instances?.stripe) {
+      processorsState.instances.stripe = null;
+    }
   }
 
   disconnectedCallback() {
     this.unlistenToFormState();
     this.unlistenToCheckout();
+    this.clearStripeInstances();
   }
 
   getElementsConfig() {
@@ -177,8 +205,10 @@ export class ScStripePaymentElement {
   createOrUpdateElements() {
     // need an order amount, etc.
     if (!checkoutState?.checkout?.payment_method_required) return;
-    if (!processorsState.instances.stripe) return;
+    if (!processorsState.instances.stripe || this.isCreatingUpdatingStripeElement) return;
     if (checkoutState.checkout?.status && ['paid', 'processing'].includes(checkoutState.checkout?.status)) return;
+
+    this.isCreatingUpdatingStripeElement = true;
 
     // create the elements if they have not yet been created.
     if (!processorsState.instances.stripeElements) {
@@ -226,9 +256,11 @@ export class ScStripePaymentElement {
           });
         }
       });
+      this.isCreatingUpdatingStripeElement = false;
       return;
     }
     processorsState.instances.stripeElements.update(this.getElementsConfig());
+    this.isCreatingUpdatingStripeElement = false;
   }
 
   /** Update the default attributes of the element when they cahnge. */
