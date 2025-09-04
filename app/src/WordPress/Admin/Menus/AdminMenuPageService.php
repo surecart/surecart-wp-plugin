@@ -105,30 +105,56 @@ class AdminMenuPageService {
 	 * @param \WP_Admin_Bar $wp_admin_bar Admin bar instance.
 	 */
 	public function adminBarNewContent( $wp_admin_bar ) {
-		if ( ! is_admin_bar_showing() ) {
-			return;
-		}
-
 		// Show only when the user is a member of this site, or they're a super admin.
 		if ( ! is_user_member_of_blog() && ! is_super_admin() ) {
 			return;
 		}
 
-		// Only show if user is logged in and has API token.
-		if ( ! is_user_logged_in() || ! ApiToken::get() ) {
+		// Only show if user has API token connected.
+		if ( ! \SureCart::account()->isConnected() ) {
 			return;
 		}
 
 		$woocommerce_exists = class_exists( 'WooCommerce' );
 
-		// Add Product link.
 		if ( current_user_can( 'edit_sc_products' ) ) {
+			// Add Product link.
 			$wp_admin_bar->add_node(
 				array(
 					'parent' => 'new-content',
 					'id'     => 'new-sc-product',
 					'title'  => $woocommerce_exists ? __( 'SureCart Product', 'surecart' ) : __( 'Product', 'surecart' ),
 					'href'   => esc_url( admin_url( 'admin.php?page=sc-products&action=edit' ) ),
+				)
+			);
+
+			// Add Product Collection link.
+			$wp_admin_bar->add_node(
+				array(
+					'parent' => 'new-sc-product',
+					'id'     => 'new-sc-collection',
+					'title'  => $woocommerce_exists ? __( 'SureCart Collection', 'surecart' ) : __( 'Collection', 'surecart' ),
+					'href'   => esc_url( admin_url( 'admin.php?page=sc-product-collections&action=edit' ) ),
+				)
+			);
+
+			// Add Order Bump link.
+			$wp_admin_bar->add_node(
+				array(
+					'parent' => 'new-sc-product',
+					'id'     => 'new-sc-bump',
+					'title'  => $woocommerce_exists ? __( 'SureCart Order Bump', 'surecart' ) : __( 'Order Bump', 'surecart' ),
+					'href'   => esc_url( admin_url( 'admin.php?page=sc-bumps&action=edit' ) ),
+				)
+			);
+
+			// Add Upsell link.
+			$wp_admin_bar->add_node(
+				array(
+					'parent' => 'new-sc-product',
+					'id'     => 'new-sc-upsell',
+					'title'  => $woocommerce_exists ? __( 'SureCart Upsell', 'surecart' ) : __( 'Upsell', 'surecart' ),
+					'href'   => esc_url( admin_url( 'admin.php?page=sc-upsell-funnels&action=edit' ) ),
 				)
 			);
 		}

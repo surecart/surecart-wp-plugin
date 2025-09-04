@@ -11,9 +11,9 @@ export default ({ price, updatePrice }) => {
 		<>
 			<DrawerSection title={__('Price Options', 'surecart')}>
 				<AdHoc price={price} updatePrice={updatePrice} />
-				<RevokeAccess price={price} updatePrice={updatePrice} />
 				<SetupFee price={price} updatePrice={updatePrice} />
 				<Trial price={price} updatePrice={updatePrice} />
+				<RevokeAccess price={price} updatePrice={updatePrice} />
 			</DrawerSection>
 		</>
 	);
