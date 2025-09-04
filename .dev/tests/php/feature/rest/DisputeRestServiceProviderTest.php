@@ -2,9 +2,11 @@
 
 namespace SureCart\Tests\Feature\Rest;
 
+use SureCart\Account\AccountServiceProvider;
 use SureCart\Request\RequestService;
 use SureCart\Request\RequestServiceProvider;
 use SureCart\Rest\DisputesRestServiceProvider;
+use SureCart\Settings\SettingsServiceProvider;
 use SureCart\Support\Errors\ErrorsServiceProvider;
 use SureCart\Tests\SureCartUnitTestCase;
 
@@ -22,6 +24,8 @@ class DisputeRestServiceProviderTest extends SureCartUnitTestCase {
 		\SureCart::make()->bootstrap([
 			'providers' => [
 				\SureCart\WordPress\PluginServiceProvider::class,
+				AccountServiceProvider::class,
+				SettingsServiceProvider::class,
 				DisputesRestServiceProvider::class,
 				RequestServiceProvider::class,
 				ErrorsServiceProvider::class
@@ -36,7 +40,7 @@ class DisputeRestServiceProviderTest extends SureCartUnitTestCase {
 			'List: Has Capability' =>  [['read_sc_disputes'], 'GET','/surecart/v1/disputes', 200],
 			'Find: Unauthenticated' => [null, 'GET','/surecart/v1/disputes/test', 401],
 			'Find: Without Capability' => [[], 'GET','/surecart/v1/disputes/test', 403],
-			'Find: Has Capability' => [['read_sc_disputes'], 'GET','/surecart/v1/disputes/test', 200],
+			'Find: Has Capability' => [['read_sc_dispute'], 'GET','/surecart/v1/disputes/test', 200],
 		];
 	}
 
