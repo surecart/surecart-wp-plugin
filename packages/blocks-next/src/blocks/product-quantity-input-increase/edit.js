@@ -1,0 +1,30 @@
+import { useBlockProps } from '@wordpress/block-editor';
+import { ScIcon } from '@surecart/components-react';
+import { __ } from '@wordpress/i18n';
+
+export default () => {
+	const blockProps = useBlockProps({
+		class: 'sc-input-group-text sc-quantity-selector__increase',
+		role: 'button',
+		tabIndex: '0',
+		'aria-label': __('Increase quantity by one.', 'surecart'),
+	});
+	return (
+		<div {...blockProps}>
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				width="24"
+				height="24"
+				viewBox="0 0 24 24"
+				fill="none"
+				stroke="currentColor"
+				stroke-width="2"
+				stroke-linecap="round"
+				stroke-linejoin="round"
+			>
+				<line x1="12" y1="5" x2="12" y2="19" />
+				<line x1="5" y1="12" x2="19" y2="12" />
+			</svg>
+		</div>
+	);
+};

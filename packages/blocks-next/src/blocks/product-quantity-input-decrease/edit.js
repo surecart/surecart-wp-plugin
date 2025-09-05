@@ -1,0 +1,28 @@
+import { useBlockProps } from '@wordpress/block-editor';
+import { __ } from '@wordpress/i18n';
+
+export default () => {
+	const blockProps = useBlockProps({
+		class: 'sc-input-group-text sc-quantity-selector__decrease',
+		role: 'button',
+		tabIndex: '0',
+		'aria-label': __('Decrease quantity by one.', 'surecart'),
+	});
+	return (
+		<div {...blockProps}>
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				width="24"
+				height="24"
+				viewBox="0 0 24 24"
+				fill="none"
+				stroke="currentColor"
+				stroke-width="2"
+				stroke-linecap="round"
+				stroke-linejoin="round"
+			>
+				<line x1="5" y1="12" x2="19" y2="12" />
+			</svg>
+		</div>
+	);
+};

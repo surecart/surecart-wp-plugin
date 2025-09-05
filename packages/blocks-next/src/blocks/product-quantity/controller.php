@@ -8,5 +8,9 @@ if ( get_query_var( 'sc_upsell_id' ) ) {
 
 $styles = sc_get_block_styles();
 
+if ( ! empty( $content ) ) {
+	return 'file:./view.php';
+}
+
 // return the view.
-return 'file:./view.php';
+return 'file:./legacy.php';

@@ -2,8 +2,17 @@
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
-import { PanelBody, PanelRow, TextControl } from '@wordpress/components';
+import {
+	InspectorControls,
+	useBlockProps,
+	useInnerBlocksProps,
+} from '@wordpress/block-editor';
+import {
+	PanelBody,
+	PanelRow,
+	TextControl,
+	ToggleControl,
+} from '@wordpress/components';
 import {
 	__experimentalUseBorderProps as useBorderProps,
 	__experimentalUseColorProps as useColorProps,
@@ -11,7 +20,7 @@ import {
 } from '@wordpress/block-editor';
 
 export default ({ attributes, setAttributes }) => {
-	const { label } = attributes;
+	const { label, hidden_label } = attributes;
 	const { style: borderStyle } = useBorderProps(attributes);
 	const { style: colorStyle } = useColorProps(attributes);
 
@@ -28,6 +37,15 @@ export default ({ attributes, setAttributes }) => {
 		},
 	});
 
+	const innerBlocksProps = useInnerBlocksProps(
+		{},
+		{
+			allowedBlocks: ['surecart/product-quantity-control'],
+			template: [['surecart/product-quantity-control', {}]],
+			templateLock: 'all',
+		}
+	);
+
 	return (
 		<>
 			<InspectorControls>
@@ -39,11 +57,24 @@ export default ({ attributes, setAttributes }) => {
 							onChange={(label) => setAttributes({ label })}
 						/>
 					</PanelRow>
+					<PanelRow>
+						<ToggleControl
+							label={__('Hidden Label', 'surecart')}
+							checked={hidden_label}
+							onChange={(hidden_label) =>
+								setAttributes({ hidden_label })
+							}
+						/>
+					</PanelRow>
 				</PanelBody>
 			</InspectorControls>
 			<div {...blockProps}>
-				<label className="sc-form-label">{label}</label>
-				<div
+				{!hidden_label && (
+					<label className="sc-form-label">{label}</label>
+				)}
+
+				<div {...innerBlocksProps}></div>
+				{/* <div
 					className="sc-input-group sc-quantity-selector"
 					style={{
 						...(borderStyle?.borderRadius
@@ -89,7 +120,7 @@ export default ({ attributes, setAttributes }) => {
 							<line x1="5" y1="12" x2="19" y2="12" />
 						</svg>
 					</div>
-				</div>
+				</div> */}
 			</div>
 		</>
 	);

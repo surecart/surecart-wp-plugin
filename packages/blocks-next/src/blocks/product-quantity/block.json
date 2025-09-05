@@ -18,6 +18,10 @@
 			"type": "string",
 			"default": "Quantity"
 		},
+		"hidden_label": {
+			"type": "boolean",
+			"default": false
+		},
 		"id": {
 			"type": "string"
 		}
@@ -34,7 +38,8 @@
 			"__experimentalDefaultControls": {
 				"padding": true,
 				"margin": true
-			}
+			},
+			"__experimentalSkipSerialization": true
 		},
 		"color": {
 			"gradients": false,
@@ -48,8 +53,15 @@
 		},
 		"__experimentalBorder": {
 			"radius": true,
+			"color": true,
+			"style": true,
+			"width": true,
+			"__experimentalSkipSerialization": true,
 			"__experimentalDefaultControls": {
-				"radius": true
+				"radius": true,
+				"color": true,
+				"style": true,
+				"width": true
 			}
 		}
 	},
