@@ -46,6 +46,5 @@
 	"textdomain": "surecart",
 	"render": "file:./view.php",
 	"editorScript": "file:./index.js",
-	"editorStyle": ["surecart-quantity-selector", "surecart-input-group"],
-	"style": ["surecart-quantity-selector", "surecart-input-group"]
+	"style": "file:./style-index.css"
 }

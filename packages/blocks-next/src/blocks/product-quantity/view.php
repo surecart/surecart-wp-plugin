@@ -6,7 +6,6 @@
 	<?php endif; ?>
 
 	<div
-		class="sc-input-group sc-quantity-selector"
 		data-wp-class--quantity--disabled="state.isQuantityDisabled"
 		style="<?php echo esc_attr( $styles['css'] ?? '' ); ?>"
 	>

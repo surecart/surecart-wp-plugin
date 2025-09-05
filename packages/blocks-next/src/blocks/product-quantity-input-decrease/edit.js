@@ -3,7 +3,6 @@ import { __ } from '@wordpress/i18n';
 
 export default () => {
 	const blockProps = useBlockProps({
-		class: 'sc-input-group-text sc-quantity-selector__decrease',
 		role: 'button',
 		tabIndex: '0',
 		'aria-label': __('Decrease quantity by one.', 'surecart'),

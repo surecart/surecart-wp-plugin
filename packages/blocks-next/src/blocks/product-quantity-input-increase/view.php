@@ -1,7 +1,6 @@
 <div <?php echo wp_kses_data(
 	get_block_wrapper_attributes(
 		[
-			'class'                           => 'sc-input-group-text sc-quantity-selector__increase',
 			'role'                            => 'button',
 			'tabindex'                        => '0',
 			'data-wp-on--click'               => 'callbacks.onQuantityIncrease',

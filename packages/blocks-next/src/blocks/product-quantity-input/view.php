@@ -2,7 +2,6 @@
 	<?php echo wp_kses_data(
 		get_block_wrapper_attributes(
 			[
-				'class'                       => 'sc-form-control sc-quantity-selector__control',
 				'data-wp-bind--value'         => 'context.quantity',
 				'data-wp-on--change'          => 'callbacks.onQuantityChange',
 				'data-wp-bind--disabled'      => 'state.isQuantityDisabled',

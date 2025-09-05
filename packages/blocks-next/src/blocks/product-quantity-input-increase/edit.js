@@ -1,10 +1,8 @@
 import { useBlockProps } from '@wordpress/block-editor';
-import { ScIcon } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 
 export default () => {
 	const blockProps = useBlockProps({
-		class: 'sc-input-group-text sc-quantity-selector__increase',
 		role: 'button',
 		tabIndex: '0',
 		'aria-label': __('Increase quantity by one.', 'surecart'),

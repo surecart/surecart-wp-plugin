@@ -18,10 +18,7 @@
 			"padding": true,
 			"margin": true
 		},
-		"color": {
-			"gradients": false,
-			"background": false
-		},
+		"color": true,
 		"__experimentalBorder": {
 			"radius": true,
 			"color": true,

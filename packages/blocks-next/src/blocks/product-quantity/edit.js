@@ -6,6 +6,7 @@ import {
 	InspectorControls,
 	useBlockProps,
 	useInnerBlocksProps,
+	RichText,
 } from '@wordpress/block-editor';
 import {
 	PanelBody,
@@ -14,15 +15,13 @@ import {
 	ToggleControl,
 } from '@wordpress/components';
 import {
-	__experimentalUseBorderProps as useBorderProps,
 	__experimentalUseColorProps as useColorProps,
 	__experimentalGetElementClassName,
 } from '@wordpress/block-editor';
 
 export default ({ attributes, setAttributes }) => {
 	const { label, hidden_label } = attributes;
-	const { style: borderStyle } = useBorderProps(attributes);
-	const { style: colorStyle } = useColorProps(attributes);
+	const { style: colorStyle, className } = useColorProps(attributes);
 
 	const blockProps = useBlockProps({
 		style: {
@@ -49,78 +48,35 @@ export default ({ attributes, setAttributes }) => {
 	return (
 		<>
 			<InspectorControls>
-				<PanelBody title={__('Attributes', 'surecart')}>
-					<PanelRow>
-						<TextControl
-							label={__('Label', 'surecart')}
-							value={label}
-							onChange={(label) => setAttributes({ label })}
-						/>
-					</PanelRow>
-					<PanelRow>
-						<ToggleControl
-							label={__('Hidden Label', 'surecart')}
-							checked={hidden_label}
-							onChange={(hidden_label) =>
-								setAttributes({ hidden_label })
-							}
-						/>
-					</PanelRow>
+				<PanelBody>
+					<ToggleControl
+						label={__('Hide Label', 'surecart')}
+						help={__(
+							'Visually hide the label, but still keep it accessible to screen readers.',
+							'surecart'
+						)}
+						checked={hidden_label}
+						onChange={(hidden_label) =>
+							setAttributes({ hidden_label })
+						}
+					/>
 				</PanelBody>
 			</InspectorControls>
 			<div {...blockProps}>
 				{!hidden_label && (
-					<label className="sc-form-label">{label}</label>
+					<RichText
+						tagName="label"
+						className={`sc-form-label ${className}`}
+						aria-label={__('Label text', 'surecart')}
+						placeholder={__('Add label…', 'surecart')}
+						value={label}
+						onChange={(label) => setAttributes({ label })}
+						withoutInteractiveFormatting
+						allowedFormats={['core/bold', 'core/italic']}
+					/>
 				)}
 
 				<div {...innerBlocksProps}></div>
-				{/* <div
-					className="sc-input-group sc-quantity-selector"
-					style={{
-						...(borderStyle?.borderRadius
-							? {
-									'border-radius': borderStyle.borderRadius,
-							  }
-							: {}),
-					}}
-				>
-					<div className="sc-input-group-text sc-quantity-selector__decrease">
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							width="24"
-							height="24"
-							viewBox="0 0 24 24"
-							fill="none"
-							stroke="currentColor"
-							stroke-width="2"
-							stroke-linecap="round"
-							stroke-linejoin="round"
-						>
-							<line x1="5" y1="12" x2="19" y2="12" />
-						</svg>
-					</div>
-					<input
-						className="sc-form-control sc-quantity-selector__control"
-						value={0}
-						type="number"
-					/>
-					<div className="sc-input-group-text sc-quantity-selector__increase">
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							width="24"
-							height="24"
-							viewBox="0 0 24 24"
-							fill="none"
-							stroke="currentColor"
-							stroke-width="2"
-							stroke-linecap="round"
-							stroke-linejoin="round"
-						>
-							<line x1="12" y1="5" x2="12" y2="19" />
-							<line x1="5" y1="12" x2="19" y2="12" />
-						</svg>
-					</div>
-				</div> */}
 			</div>
 		</>
 	);
