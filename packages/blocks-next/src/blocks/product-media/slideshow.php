@@ -93,12 +93,7 @@
 							<?php
 							if ( $media->isVideo() ) {
 								echo wp_kses(
-									$media->html(
-										'thumbnail',
-										array(
-											'loading' => $thumb_index > $attributes['thumbnails_per_page'] ? 'lazy' : 'eager',
-										)
-									),
+									$media->getVideoPosterHtml( 'thumbnail' ),
 									sc_allowed_svg_html()
 								);
 							} else {

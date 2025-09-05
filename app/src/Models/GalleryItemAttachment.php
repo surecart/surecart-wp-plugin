@@ -36,38 +36,33 @@ class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 	/**
 	 * Get the video poster image URL or a fallback.
 	 *
+	 * @param string $size The size of the image.
+	 *
 	 * @return string The Poster image URL.
 	 */
-	public function get_video_poster_image(): string {
-		// Fallback featured_image.
-		$fallback_featured_image = $this->featured_image->guid ?? $this->featured_image->src ?? null;
+	public function getVideoPosterImage( $size = 'thumbnail' ): string {
+		$poster_attachment_id = $this->getMetadata( 'thumbnail_image' )['id'] ?? $this->featured_image->ID ?? null;
 
-		return esc_url_raw( $this->getMetadata( 'thumbnail_image' )['url'] ?? $fallback_featured_image ?? trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'images/placeholder.jpg' );
+		if ( $poster_attachment_id ) {
+			return wp_get_attachment_image( $poster_attachment_id, $size );
+		}
+
+		// Fallback to a placeholder image.
+		return "<img src='" . esc_url_raw( trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'images/placeholder.jpg' ) . "' alt='" . esc_attr( sprintf( __( 'Video thumbnail for %s', 'surecart' ), $this->item->post_title ?? '' ) ) . "' />";
 	}
 
 	/**
-	 * Get the HTML for the video thumbnail.
+	 * Get the HTML for the video poster.
 	 *
-	 * @return string The HTML for the video thumbnail.
+	 * @param string $size The size of the image.
+	 *
+	 * @return string The HTML for the video poster.
 	 */
-	public function getVideoThumbnailHtml(): string {
-		$poster_image = $this->get_video_poster_image();
+	public function getVideoPosterHtml( $size = 'thumbnail' ): string {
 		ob_start();
 		?>
 		<div class="sc-video-thumbnail">
-			<img 
-				src="<?php echo esc_url( $poster_image ); ?>" 
-				alt="
-				<?php
-					echo esc_attr(
-						sprintf(
-							// translators: %s is the video title.
-							__( 'Video thumbnail for %s', 'surecart' ),
-							$this->item->post_title ?? ''
-						)
-					);
-				?>
-			"/>
+			<?php echo wp_kses_post( $this->getVideoPosterImage( $size ) ); ?>
 			<div role="button" class="sc-video-play-button" aria-label="<?php echo esc_attr__( 'Play video', 'surecart' ); ?>">
 				<?php
 				echo wp_kses(
@@ -109,12 +104,8 @@ class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 	 * @return string
 	 */
 	public function getVideoHtml( $size = 'full', $attr = [], $metadata = [] ): string {
-		$poster_image = $this->get_video_poster_image();
-
-		if ( 'thumbnail' === $size ) {
-			return $this->getVideoThumbnailHtml();
-		}
-
+		$poster_id    = $this->getMetadata( 'thumbnail_image' )['id'] ?? $this->featured_image->ID ?? null;
+		$poster_image = ! empty( $poster_id ) ? wp_get_attachment_url( $poster_id ) : trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'images/placeholder.jpg';
 		$video_url    = wp_get_attachment_url( $this->item->ID );
 		$aspect_ratio = $this->getMetadata( 'aspect_ratio' );
 		$style        = ! empty( $aspect_ratio ) ? 'aspect-ratio: ' . esc_attr( $aspect_ratio ) . ';' : '';
@@ -316,7 +307,7 @@ class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 			$attr,
 			array(
 				'url'       => $video,
-				'src'       => $this->get_video_poster_image(),
+				'src'       => $this->getVideoPosterImage( $size ),
 				'class'     => "attachment-$size_class size-$size_class video-attachment",
 				'alt'       => trim( strip_tags( get_post_meta( $attachment_id, '_wp_attachment_image_alt', true ) ) ),
 				'mime_type' => get_post_mime_type( $attachment_id ),
