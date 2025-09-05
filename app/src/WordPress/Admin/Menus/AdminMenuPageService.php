@@ -236,7 +236,17 @@ class AdminMenuPageService {
 			[
 				'id'    => 'surecart-toolbar',
 				'title' => __( 'Edit with SureCart', 'surecart' ),
-				'href'  => \SureCart::getUrl()->edit( 'product', $product->id ),
+				'href'  => '#',
+			]
+		);
+
+		// Add product edit link.
+		$wp_admin_bar->add_node(
+			[
+				'id'     => 'surecart-edit-product',
+				'parent' => 'surecart-toolbar',
+				'title'  => 'Edit Product',
+				'href'   => \SureCart::getUrl()->edit( 'product', $product->id ),
 			]
 		);
 
