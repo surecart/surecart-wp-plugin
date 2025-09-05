@@ -19,7 +19,6 @@ import {
 	ScButton,
 	ScFormControl,
 	ScIcon,
-	ScSelect,
 	ScSkeleton,
 	ScText,
 } from '@surecart/components-react';
