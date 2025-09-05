@@ -19,12 +19,12 @@ class AffiliationReferralsController extends AdminController {
 
 		$this->withHeader(
 			array(
-				'breadcrumbs'      => [
+				'breadcrumbs' => [
 					'affiliate_referrals' => [
 						'title' => __( 'Affiliate Referrals', 'surecart' ),
 					],
 				],
-				'report_url'       => SURECART_REPORTS_URL . 'affiliates/referrals',
+				'report_url'  => SURECART_REPORTS_URL . 'referrals',
 			)
 		);
 
