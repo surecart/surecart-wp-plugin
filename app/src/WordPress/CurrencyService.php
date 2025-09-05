@@ -40,9 +40,6 @@ class CurrencyService {
 
 		// Add robots meta tag for currency parameter URLs.
 		add_action( 'wp_head', array( $this, 'addRobotsTag' ), 1 );
-
-		// Add robots.txt rules to block currency parameter URLs.
-		add_filter( 'robots_txt', array( $this, 'addRobotsTxtRules' ), 10000, 2 );
 	}
 
 	/**
@@ -265,29 +262,5 @@ class CurrencyService {
 			// Add meta tag as fallback.
 			echo '<meta name="robots" content="noindex, follow" />' . "\n";
 		}
-	}
-
-	/**
-	 * Add robots.txt rules to discourage crawling of currency parameter URLs.
-	 *
-	 * @param string $output The robots.txt output.
-	 * @param bool   $is_public Whether the site is public.
-	 *
-	 * @return string Modified robots.txt output.
-	 */
-	public function addRobotsTxtRules( $output, $is_public ) {
-		// Don't add robots.txt rules if the filter is disabled.
-		if ( apply_filters( 'surecart/currency/disable_robots_txt_rules', false ) ) {
-			return $output;
-		}
-
-		// Only add rules for public sites.
-		if ( $is_public ) {
-			$output .= "\n# SureCart Currency Parameters\n";
-			$output .= "Disallow: /*?*currency=*\n";
-			$output .= "Disallow: /*&currency=*\n";
-		}
-
-		return $output;
 	}
 }
