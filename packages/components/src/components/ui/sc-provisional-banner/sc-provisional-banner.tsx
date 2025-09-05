@@ -10,14 +10,21 @@ export class ScProvisionalBanner {
   /** Claim URL. */
   @Prop() claimUrl: string = '';
 
+  /** Whether the claim window has expired. */
+  @Prop() expired: boolean = false;
+
   render() {
     return (
       <div class={{ 'sc-banner': true }}>
         <p>
-          {__('Complete your store setup to go live.', 'surecart')}
-          <a href={this.claimUrl} target="_blank" rel="noopener noreferrer">
-            {__('Complete Setup', 'surecart')} <sc-icon name="arrow-right"></sc-icon>
-          </a>
+          {this.expired
+            ? __('The setup window for your store has expired. Please contact support to complete your setup.', 'surecart')
+            : __('Complete your store setup to go live.', 'surecart')}
+          {!this.expired && (
+            <a href={this.claimUrl} target="_blank" rel="noopener noreferrer">
+              {__('Complete Setup', 'surecart')} <sc-icon name="arrow-right"></sc-icon>
+            </a>
+          )}
         </p>
       </div>
     );

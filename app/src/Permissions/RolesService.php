@@ -71,7 +71,8 @@ class RolesService {
 			__( 'SureCart Accountant', 'surecart' ),
 			[
 				'read'         => true,
-				'edit_posts'   => false,
+				'upload_files' => true,
+				'edit_posts'   => true,
 				'delete_posts' => false,
 			]
 		);
@@ -137,10 +138,10 @@ class RolesService {
 					$wp_roles->add_cap( 'administrator', $cap );
 					$wp_roles->add_cap( 'sc_shop_manager', $cap );
 					$wp_roles->add_cap( 'sc_shop_worker', $cap );
+					$wp_roles->add_cap( 'sc_shop_accountant', $cap );
 				}
 			}
 
-			$wp_roles->add_cap( 'sc_shop_accountant', 'edit_sc_products' );
 			$wp_roles->add_cap( 'sc_shop_accountant', 'view_sc_shop_reports' );
 			$wp_roles->add_cap( 'sc_shop_accountant', 'export_sc_shop_reports' );
 			$wp_roles->add_cap( 'sc_shop_accountant', 'edit_sc_shop_charges' );
