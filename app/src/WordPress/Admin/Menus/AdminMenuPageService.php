@@ -65,6 +65,8 @@ class AdminMenuPageService {
 		// Admin toolbar SureCart menu.
 		if ( ! get_option( 'surecart_admin_toolbar_disabled', false ) ) {
 			add_action( 'admin_bar_menu', array( $this, 'adminBarMenu' ), 99 );
+		} else {
+			add_action( 'admin_bar_menu', array( $this, 'addEditProductLink' ), 99 );
 		}
 	}
 
@@ -252,6 +254,39 @@ class AdminMenuPageService {
 
 		$this->addProductContentAndTemplate( $wp_admin_bar );
 		$this->maybeAddStickyPurchaseTemplate( $wp_admin_bar );
+	}
+
+	/**
+	 * Add product edit link to admin toolbar.
+	 *
+	 * @param \WP_Admin_Bar $wp_admin_bar The admin bar instance.
+	 *
+	 * @return void
+	 */
+	public function addEditProductLink( $wp_admin_bar ) {
+		// Its for frontend only.
+		if ( ! is_admin_bar_showing() || is_admin() ) {
+			return;
+		}
+
+		// Only show on single product edit screen and user can edit products.
+		if ( ! is_singular( 'sc_product' ) || ! current_user_can( 'edit_sc_products' ) ) {
+			return;
+		}
+
+		// Only show if product is not empty.
+		$product = sc_get_product();
+		if ( empty( $product ) ) {
+			return;
+		}
+
+		$wp_admin_bar->add_node(
+			[
+				'id'    => 'surecart-edit-product',
+				'title' => 'Edit Product',
+				'href'  => \SureCart::getUrl()->edit( 'product', $product->id ),
+			]
+		);
 	}
 
 	/**
