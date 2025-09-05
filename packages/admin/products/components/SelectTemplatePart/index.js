@@ -102,6 +102,9 @@ export default function SelectTemplatePart({
 							},
 						})
 					}
+					style={{
+						'--sc-input-placeholder-color': 'var(--sc-input-color)',
+					}}
 				/>
 			</div>
 
