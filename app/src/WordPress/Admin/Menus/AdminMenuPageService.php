@@ -63,7 +63,7 @@ class AdminMenuPageService {
 		}
 
 		// Admin toolbar SureCart menu.
-		if ( apply_filters( 'surecart_show_admin_bar_menu', true ) ) {
+		if ( ! get_option( 'surecart_admin_toolbar_disabled', false ) ) {
 			add_action( 'admin_bar_menu', array( $this, 'adminBarMenu' ), 99 );
 		}
 	}
@@ -226,8 +226,8 @@ class AdminMenuPageService {
 				mask: url('<?php echo esc_url( $surecart_logo ); ?>') no-repeat center;
 				-webkit-mask-size: contain;
 				mask-size: contain;
-				-webkit-mask-size: 18px 18px;
-				mask-size: 18px 18px;
+				-webkit-mask-size: 18px;
+				mask-size: 18px;
 			}
 		</style>
 		<?php

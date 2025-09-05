@@ -211,7 +211,7 @@ export default () => {
 					</ScUpgradeRequired>
 				</div>
 			</SettingsBox>
-			
+
 			<SettingsBox
 				title={__('Cart', 'surecart')}
 				loading={!hasLoadedSettingItem}
@@ -237,6 +237,31 @@ export default () => {
 				</ScSwitch>
 
 				{!settingItem?.slide_out_cart_disabled && <CartSettings />}
+			</SettingsBox>
+
+			<SettingsBox
+				title={__('Admin Toolbar', 'surecart')}
+				loading={!hasLoadedSettingItem}
+				description={__('Change admin toolbar settings.', 'surecart')}
+			>
+				<ScSwitch
+					checked={!settingItem?.admin_toolbar_disabled}
+					onClick={(e) => {
+						e.preventDefault();
+						editSettingItem({
+							admin_toolbar_disabled:
+								!settingItem?.admin_toolbar_disabled,
+						});
+					}}
+				>
+					{__('Enable Admin Toolbar', 'surecart')}
+					<span slot="description" style={{ lineHeight: '1.4' }}>
+						{__(
+							'This will enable the SureCart admin toolbar in the WordPress admin bar for easy access to SureCart features.',
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
 			</SettingsBox>
 		</SettingsTemplate>
 	);
