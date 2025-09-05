@@ -48,7 +48,7 @@ class ProductLineItemNote extends \Bricks\Element {
 	 * @return string
 	 */
 	public function get_label() {
-		return esc_html__( 'Product Line Item Note', 'surecart' );
+		return esc_html__( 'Product Note', 'surecart' );
 	}
 
 	/**

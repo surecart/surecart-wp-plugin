@@ -25,7 +25,7 @@ class ProductLineItemNote extends \Elementor\Widget_Base {
 	 * @return string
 	 */
 	public function get_title() {
-		return esc_html__( 'Product Line Item Note', 'surecart' );
+		return esc_html__( 'Product Note', 'surecart' );
 	}
 
 	/**
