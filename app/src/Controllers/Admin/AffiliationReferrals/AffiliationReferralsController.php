@@ -24,6 +24,7 @@ class AffiliationReferralsController extends AdminController {
 						'title' => __( 'Affiliate Referrals', 'surecart' ),
 					],
 				],
+				'report_url'       => SURECART_REPORTS_URL . 'affiliates/referrals',
 			)
 		);
 

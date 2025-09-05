@@ -21,6 +21,7 @@ class AffiliationClicksController extends AdminController {
 						'title' => __( 'Clicks', 'surecart' ),
 					],
 				],
+				'report_url'  => SURECART_REPORTS_URL . 'affiliates/clicks',
 			)
 		);
 		return \SureCart::view( 'admin/affiliation-clicks/index' )->with( [ 'table' => $table ] );
