@@ -25,7 +25,6 @@ class SettingsController {
 				'auto_sync_user_to_customer'  => (bool) get_option( 'surecart_auto_sync_user_to_customer', false ),
 				'use_esm_loader'              => (bool) get_option( 'surecart_use_esm_loader', false ),
 				'slide_out_cart_disabled'     => (bool) get_option( 'sc_slide_out_cart_disabled', false ),
-				'admin_toolbar_disabled'      => (bool) get_option( 'surecart_admin_toolbar_disabled', false ),
 				'load_block_assets_on_demand' => (bool) get_option( 'surecart_load_block_assets_on_demand', false ),
 			]
 		);
@@ -73,11 +72,6 @@ class SettingsController {
 		// update slide out cart option.
 		if ( isset( $request['slide_out_cart_disabled'] ) ) {
 			update_option( 'sc_slide_out_cart_disabled', (bool) $request->get_param( 'slide_out_cart_disabled' ) );
-		}
-
-		// update admin toolbar option.
-		if ( isset( $request['admin_toolbar_disabled'] ) ) {
-			update_option( 'surecart_admin_toolbar_disabled', (bool) $request->get_param( 'admin_toolbar_disabled' ) );
 		}
 
 		if ( isset( $request['auto_sync_user_to_customer'] ) ) {
