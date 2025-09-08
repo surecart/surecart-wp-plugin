@@ -34,126 +34,6 @@ class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 	}
 
 	/**
-	 * Get the video poster image URL or a fallback.
-	 *
-	 * @param string $size The size of the image.
-	 *
-	 * @return string The Poster image URL.
-	 */
-	public function getVideoPosterImage( $size = 'thumbnail' ): string {
-		$poster_attachment_id = $this->getMetadata( 'thumbnail_image' )['id'] ?? $this->featured_image->ID ?? null;
-
-		if ( $poster_attachment_id ) {
-			return wp_get_attachment_image( $poster_attachment_id, $size );
-		}
-
-		// Fallback to a placeholder image.
-		return "<img src='" . esc_url_raw( trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'images/placeholder.jpg' ) . "' alt='" . esc_attr( sprintf( __( 'Video thumbnail for %s', 'surecart' ), $this->item->post_title ?? '' ) ) . "' />";
-	}
-
-	/**
-	 * Get the HTML for the video poster.
-	 *
-	 * @param string $size The size of the image.
-	 *
-	 * @return string The HTML for the video poster.
-	 */
-	public function getVideoPosterHtml( $size = 'thumbnail' ): string {
-		ob_start();
-		?>
-		<div class="sc-video-thumbnail">
-			<?php echo wp_kses_post( $this->getVideoPosterImage( $size ) ); ?>
-			<div role="button" class="sc-video-play-button" aria-label="<?php echo esc_attr__( 'Play video', 'surecart' ); ?>">
-				<?php
-				echo wp_kses(
-					\SureCart::svg()->get(
-						'play',
-						[
-							'width'  => 12,
-							'height' => 12,
-							'class'  => '',
-						]
-					),
-					sc_allowed_svg_html()
-				);
-				?>
-				<span class="screen-reader-text">
-					<?php
-					echo esc_html(
-						sprintf(
-							// translators: %s is the video title.
-							__( 'Play video: %s', 'surecart' ),
-							$this->item->post_title ?? ''
-						)
-					);
-					?>
-				</span>
-			</div>
-		</div>
-		<?php
-		return ob_get_clean();
-	}
-
-	/**
-	 * Get the HTML for the video attachment.
-	 *
-	 * @param string $size The size of the video.
-	 * @param array  $attr The attributes for the tag.
-	 * @param array  $metadata Additional metadata for the lightbox.
-	 *
-	 * @return string
-	 */
-	public function getVideoHtml( $size = 'full', $attr = [], $metadata = [] ): string {
-		$poster_id    = $this->getMetadata( 'thumbnail_image' )['id'] ?? $this->featured_image->ID ?? null;
-		$poster_image = ! empty( $poster_id ) ? wp_get_attachment_url( $poster_id ) : trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'images/placeholder.jpg';
-		$video_url    = wp_get_attachment_url( $this->item->ID );
-		$aspect_ratio = $this->getMetadata( 'aspect_ratio' );
-		$style        = ! empty( $aspect_ratio ) ? 'aspect-ratio: ' . esc_attr( $aspect_ratio ) . ';' : '';
-		ob_start();
-		?>
-
-		<div 
-			class="sc-video-container"
-			data-wp-interactive='{ "namespace": "surecart/video" }'
-			data-wp-context='{ "loaded": false }'
-			data-wp-on--click="actions.play"
-			data-wp-class--sc-video-loaded="context.loaded"
-			style="<?php echo esc_attr( $style ); ?>"
-		>
-			<div 
-				role="button" 
-				class="sc-video-play-button" 
-				aria-label="<?php echo esc_attr__( 'Play video', 'surecart' ); ?>" 
-				data-wp-bind--hidden="context.loaded"
-			>
-				<?php echo wp_kses( \SureCart::svg()->get( 'play' ), sc_allowed_svg_html() ); ?>
-			</div>
-
-			<video
-				class="sc-video"
-				data-wp-bind--controls="context.loaded"
-				data-wp-on--play="callbacks.handlePlay"
-				src="<?php echo esc_url( $video_url ); ?>"
-				poster="<?php echo esc_url( $poster_image ); ?>"
-				playsinline
-				preload="none"
-				title="<?php echo esc_attr( $this->item->post_title ?? '' ); ?>">
-			</video>
-		</div>
-
-		<?php
-		// filter the output so 3rd parties can add their own video html.
-		return apply_filters(
-			'surecart_product_video_html',
-			ob_get_clean(),
-			$video_url,
-			$poster_image,
-			$aspect_ratio,
-			$this->item ?? ''
-		);
-	}
-
-	/**
 	 * Get the HTML for the image attachment.
 	 *
 	 * @param string $size The size of the image.
@@ -243,6 +123,130 @@ class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 	}
 
 	/**
+	 * Get the HTML for the video poster image.
+	 *
+	 * @param string $size The size of the image image.
+	 *
+	 * @return string The HTML for the video poster image.
+	 */
+	public function getVideoImageHtml( $size = 'thumbnail' ): string {
+		$poster_attachment_id = $this->getMetadata( 'thumbnail_image' )['id'] ?? $this->featured_image->ID ?? null;
+
+		ob_start();
+		?>
+		<div class="sc-video-thumbnail">
+			<?php if ( $poster_attachment_id ) : ?>
+				<?php echo wp_kses_post( wp_get_attachment_image( $poster_attachment_id, $size ) ); ?>
+			<?php else : ?>
+				<img
+					src="<?php echo esc_url( trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'images/placeholder.jpg' ); ?>"
+					alt="
+					<?php
+						echo esc_attr(
+							// translators: %s is the video title.
+							sprintf( __( 'Video thumbnail for %s', 'surecart' ), $this->item->post_title ?? '' )
+						);
+					?>
+					"
+				/>
+			<?php endif; ?>
+
+			<div role="button" class="sc-video-play-button" aria-label="<?php echo esc_attr__( 'Play video', 'surecart' ); ?>">
+				<?php
+				echo wp_kses(
+					\SureCart::svg()->get(
+						'play',
+						[
+							'width'  => 12,
+							'height' => 12,
+							'class'  => '',
+						]
+					),
+					sc_allowed_svg_html()
+				);
+				?>
+				<span class="screen-reader-text">
+					<?php
+					echo esc_html(
+						sprintf(
+							// translators: %s is the video title.
+							__( 'Play video: %s', 'surecart' ),
+							$this->item->post_title ?? ''
+						)
+					);
+					?>
+				</span>
+			</div>
+		</div>
+		<?php
+		return ob_get_clean();
+	}
+
+	/**
+	 * Get the HTML for the video attachment.
+	 *
+	 * @return string
+	 */
+	public function getVideoHtml(): string {
+		$poster_image = $this->getVideoImageUrl();
+		$video_url    = wp_get_attachment_url( $this->item->ID );
+		$aspect_ratio = $this->getMetadata( 'aspect_ratio' );
+		$style        = ! empty( $aspect_ratio ) ? 'aspect-ratio: ' . esc_attr( $aspect_ratio ) . ';' : '';
+		ob_start();
+		?>
+
+		<div 
+			class="sc-video-container"
+			data-wp-interactive='{ "namespace": "surecart/video" }'
+			data-wp-context='{ "loaded": false }'
+			data-wp-on--click="actions.play"
+			data-wp-class--sc-video-loaded="context.loaded"
+			style="<?php echo esc_attr( $style ); ?>"
+		>
+			<div 
+				role="button" 
+				class="sc-video-play-button" 
+				aria-label="<?php echo esc_attr__( 'Play video', 'surecart' ); ?>" 
+				data-wp-bind--hidden="context.loaded"
+			>
+				<?php echo wp_kses( \SureCart::svg()->get( 'play' ), sc_allowed_svg_html() ); ?>
+			</div>
+
+			<video
+				class="sc-video"
+				data-wp-bind--controls="context.loaded"
+				data-wp-on--play="callbacks.handlePlay"
+				src="<?php echo esc_url( $video_url ); ?>"
+				poster="<?php echo esc_url( $poster_image ); ?>"
+				playsinline
+				preload="none"
+				title="<?php echo esc_attr( $this->item->post_title ?? '' ); ?>">
+			</video>
+		</div>
+
+		<?php
+		// filter the output so 3rd parties can add their own video html.
+		return apply_filters(
+			'surecart_product_video_html',
+			ob_get_clean(),
+			$video_url,
+			$poster_image,
+			$aspect_ratio,
+			$this->item ?? ''
+		);
+	}
+
+	/**
+	 * Get the video poster image URL or a fallback.
+	 *
+	 * @return string The Video poster image URL or a fallback.
+	 */
+	public function getVideoImageUrl(): string {
+		$poster_id = $this->getMetadata( 'thumbnail_image' )['id'] ?? $this->featured_image->ID ?? null;
+		return ! empty( $poster_id ) ? wp_get_attachment_url( $poster_id ) : trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'images/placeholder.jpg';
+	}
+
+	/**
 	 * Get the media attribute markup.
 	 *
 	 * @param string $size The size of the image.
@@ -258,7 +262,7 @@ class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 		}
 
 		if ( $this->isVideo() ) {
-			return $this->getVideoHtml( $size, $attr, $metadata );
+			return $this->getVideoHtml();
 		}
 
 		return $this->getImageHtml( $size, $attr, $metadata );
@@ -276,10 +280,10 @@ class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 		$attachment_id = ! empty( $this->item->ID ) ? $this->item->ID : 0;
 
 		if ( $this->isVideo() ) {
-			return (object) $this->get_video_attributes( $attachment_id, $size, $attr );
+			return (object) $this->getVideoAttributes( $attachment_id, $size, $attr );
 		}
 
-		return (object) $this->get_image_attributes( $attachment_id, $size, $attr );
+		return (object) $this->getImageAttributes( $attachment_id, $size, $attr );
 	}
 
 	/**
@@ -291,7 +295,7 @@ class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 	 *
 	 * @return array
 	 */
-	public function get_video_attributes( int $attachment_id, $size = 'full', $attr = [] ) {
+	public function getVideoAttributes( int $attachment_id, $size = 'full', $attr = [] ) {
 		$video = wp_get_attachment_url( $attachment_id );
 		if ( ! $video ) {
 			return [];
@@ -307,9 +311,9 @@ class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 			$attr,
 			array(
 				'url'       => $video,
-				'src'       => $this->getVideoPosterImage( $size ),
+				'src'       => $this->getVideoImageUrl(),
 				'class'     => "attachment-$size_class size-$size_class video-attachment",
-				'alt'       => trim( strip_tags( get_post_meta( $attachment_id, '_wp_attachment_image_alt', true ) ) ),
+				'alt'       => trim( wp_strip_all_tags( get_post_meta( $attachment_id, '_wp_attachment_image_alt', true ) ) ),
 				'mime_type' => get_post_mime_type( $attachment_id ),
 			)
 		);
@@ -331,7 +335,7 @@ class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 	 *
 	 * @return array
 	 */
-	public function get_image_attributes( int $attachment_id, $size = 'full', $attr = [] ) {
+	public function getImageAttributes( int $attachment_id, $size = 'full', $attr = [] ) {
 		$image = wp_get_attachment_image_src( $attachment_id, $size, $attr['icon'] ?? false, $attr );
 
 		if ( ! $image ) {
@@ -350,7 +354,7 @@ class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 		$default_attr = array(
 			'src'    => $src,
 			'class'  => "attachment-$size_class size-$size_class",
-			'alt'    => trim( strip_tags( get_post_meta( $attachment_id, '_wp_attachment_image_alt', true ) ) ),
+			'alt'    => trim( wp_strip_all_tags( get_post_meta( $attachment_id, '_wp_attachment_image_alt', true ) ) ),
 			'width'  => $width,
 			'height' => $height,
 		);

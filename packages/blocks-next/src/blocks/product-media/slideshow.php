@@ -93,7 +93,7 @@
 							<?php
 							if ( $media->isVideo() ) {
 								echo wp_kses(
-									$media->getVideoPosterHtml( 'thumbnail' ),
+									$media->getVideoImageHtml( 'thumbnail' ),
 									sc_allowed_svg_html()
 								);
 							} else {
