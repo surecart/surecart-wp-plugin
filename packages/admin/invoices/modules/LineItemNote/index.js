@@ -41,7 +41,10 @@ export default function LineItemNote({
 	if (!isDraftInvoice) {
 		return (
 			!!lineItem?.note && (
-				<ScProductLineItemNote css={textStyle} note={lineItem?.note} />
+				<ScProductLineItemNote
+					css={textStyle}
+					note={lineItem?.display_note}
+				/>
 			)
 		);
 	}
@@ -73,7 +76,7 @@ export default function LineItemNote({
 				`}
 
 				${textStyle}
-				
+
 				display: flex;
 				align-items: center;
 				gap: 4px;
@@ -114,7 +117,7 @@ export default function LineItemNote({
 					overflow: hidden;
 				`}
 			>
-				{lineItem?.note || __('Add note...', 'surecart')}
+				{lineItem?.display_note || __('Add note...', 'surecart')}
 			</div>
 			<ScIcon
 				slot="icon"

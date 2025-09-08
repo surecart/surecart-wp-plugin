@@ -135,7 +135,7 @@ export class ScOrder {
               editable={false}
               removable={false}
               quantity={item.quantity}
-              note={item?.note}
+              note={item?.display_note}
               amount={item.subtotal_display_amount}
               trial={item?.price?.trial_text}
               interval={`${item?.price?.short_interval_text} ${item?.price?.short_interval_count_text}`}

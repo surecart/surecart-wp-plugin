@@ -529,6 +529,7 @@ export interface LineItem extends Object {
   swap?: Swap;
   is_swappable?: boolean;
   note?: string;
+  display_note?: string;
 }
 
 export interface DeletedItem {

@@ -115,7 +115,7 @@ const { state, actions } = store('surecart/checkout', {
 		 */
 		get lineItemNote() {
 			const { line_item } = getContext();
-			return line_item?.note || '';
+			return line_item?.display_note || '';
 		},
 
 		/**

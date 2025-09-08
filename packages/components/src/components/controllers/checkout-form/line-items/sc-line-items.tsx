@@ -96,7 +96,7 @@ export class ScLineItems {
                 interval={`${item?.price?.short_interval_text} ${item?.price?.short_interval_count_text}`}
                 quantity={item.quantity}
                 purchasableStatus={item?.purchasable_status_display}
-                note={item?.note}
+                note={item?.display_note}
                 {...(max ? { max } : {})}
                 editable={this.isEditable(item)}
                 removable={!item?.locked && this.removable}

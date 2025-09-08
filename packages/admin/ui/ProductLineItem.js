@@ -60,7 +60,7 @@ export default ({ lineItem, suffix, showWeight, showQuantity, children }) => {
 						)}
 					</div>
 				)}
-				<ScProductLineItemNote note={lineItem?.note} />
+				<ScProductLineItemNote note={lineItem?.display_note} />
 				{children}
 			</LineItemLabel>
 		</LineItem>
