@@ -91,20 +91,14 @@
 							?>
 						>
 							<?php
+							$media_attrs = [
+								'loading' => $thumb_index > $attributes['thumbnails_per_page'] ? 'lazy' : 'eager',
+							];
+
 							if ( $media->isVideo() ) {
-								echo wp_kses(
-									$media->getVideoImageHtml( 'thumbnail' ),
-									sc_allowed_svg_html()
-								);
+								echo wp_kses( $media->getVideoImageHtml( 'thumbnail', $media_attrs ), sc_allowed_svg_html() );
 							} else {
-								echo wp_kses_post(
-									$media->html(
-										'thumbnail',
-										array(
-											'loading' => $thumb_index > $attributes['thumbnails_per_page'] ? 'lazy' : 'eager',
-										)
-									)
-								);
+								echo wp_kses_post( $media->html( 'thumbnail', $media_attrs ) );
 							}
 							?>
 						</div>

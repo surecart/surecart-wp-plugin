@@ -126,17 +126,18 @@ class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 	 * Get the HTML for the video poster image.
 	 *
 	 * @param string $size The size of the image image.
+	 * @param array  $attr The attributes for the image.
 	 *
 	 * @return string The HTML for the video poster image.
 	 */
-	public function getVideoImageHtml( $size = 'thumbnail' ): string {
+	public function getVideoImageHtml( $size = 'thumbnail', $attr = [] ): string {
 		$poster_attachment_id = $this->getMetadata( 'thumbnail_image' )['id'] ?? $this->featured_image->ID ?? null;
 
 		ob_start();
 		?>
 		<div class="sc-video-thumbnail">
 			<?php if ( $poster_attachment_id ) : ?>
-				<?php echo wp_kses_post( wp_get_attachment_image( $poster_attachment_id, $size ) ); ?>
+				<?php echo wp_kses_post( wp_get_attachment_image( $poster_attachment_id, $size, false, $attr ) ); ?>
 			<?php else : ?>
 				<img
 					src="<?php echo esc_url( trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'images/placeholder.jpg' ); ?>"
@@ -148,6 +149,7 @@ class GalleryItemAttachment extends ModelsGalleryItem implements GalleryItem {
 						);
 					?>
 					"
+					loading="<?php echo esc_attr( $attr['loading'] ?? 'lazy' ); ?>"
 				/>
 			<?php endif; ?>
 
