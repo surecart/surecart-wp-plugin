@@ -22,9 +22,6 @@ if ( ! empty( $attributes['lightbox'] ) ) {
 	wp_enqueue_script_module( 'surecart/lightbox' );
 }
 
-// For video, a URL is passed from the gallery item.
-$is_video_featured = ! empty( $featured_image->item->url );
-
 // Check if we have any videos in the gallery and enqueue video script.
 $has_videos = ! empty( array_filter( $gallery, fn( $media ) => $media->isVideo() ) );
 
