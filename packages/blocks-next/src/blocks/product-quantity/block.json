@@ -13,6 +13,9 @@
 		"surecart/sticky-purchase"
 	],
 	"keywords": ["quantity", "form", "product"],
+	"example": {
+		"viewportWidth": 200
+	},
 	"attributes": {
 		"label": {
 			"type": "string",
@@ -63,6 +66,9 @@
 				"style": true,
 				"width": true
 			}
+		},
+		"dimensions": {
+			"minHeight": true
 		}
 	},
 	"textdomain": "surecart",

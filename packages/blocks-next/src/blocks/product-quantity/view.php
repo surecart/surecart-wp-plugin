@@ -1,9 +1,7 @@
 <div <?php echo wp_kses_data( get_block_wrapper_attributes() ); ?>>
-	<?php if ( empty( $attributes['hidden_label'] ) ) : ?>
-		<label for="sc-quantity" class="sc-form-label">
-			<?php echo wp_kses_post( $attributes['label'] ?? esc_html_e( 'Quantity', 'surecart' ) ); ?>
-		</label>
-	<?php endif; ?>
+	<label class="sc-form-label <?php echo esc_attr( ! empty( $attributes['hidden_label'] ) ? 'sc-screen-reader-text' : '' ); ?>">
+		<?php echo wp_kses_post( $attributes['label'] ); ?>
+	</label>
 
 	<div
 		data-wp-class--quantity--disabled="state.isQuantityDisabled"

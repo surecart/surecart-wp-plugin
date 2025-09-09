@@ -21,13 +21,16 @@
 			"default": {
 				"type": "flex",
 				"orientation": "horizontal",
-				"verticalAlignment": "top",
-				"flexWrap": "nowrap"
+				"verticalAlignment": "center",
+				"horizontalAlignment": "space-between",
+				"flexWrap": "nowrap",
+				"justifyContent": "space-between"
 			}
 		},
 		"typography": {
 			"fontSize": true
 		},
+		"shadow": true,
 		"spacing": {
 			"padding": true,
 			"margin": true

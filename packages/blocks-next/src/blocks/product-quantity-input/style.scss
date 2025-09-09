@@ -12,6 +12,11 @@ input.wp-block-surecart-product-quantity-input {
 	appearance: textfield;
 	padding: 0;
 
+	&:focus {
+		outline: none;
+		border: none;
+	}
+
 	&::-webkit-outer-spin-button,
 	&::-webkit-inner-spin-button {
 		/* display: none; <- Crashes Chrome on hover */

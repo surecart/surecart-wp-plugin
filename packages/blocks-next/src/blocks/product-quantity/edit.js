@@ -3,25 +3,25 @@
  */
 import { __ } from '@wordpress/i18n';
 import {
-	InspectorControls,
 	useBlockProps,
 	useInnerBlocksProps,
 	RichText,
+	BlockControls,
 } from '@wordpress/block-editor';
-import {
-	PanelBody,
-	PanelRow,
-	TextControl,
-	ToggleControl,
-} from '@wordpress/components';
+import { ToolbarButton } from '@wordpress/components';
 import {
 	__experimentalUseColorProps as useColorProps,
 	__experimentalGetElementClassName,
 } from '@wordpress/block-editor';
+import { pencil, closeSmall } from '@wordpress/icons';
+import { useState } from '@wordpress/element';
+import LabelControl from '../../components/LabelControl';
+import StyleContentsControl from '../../components/StyleContentsControl';
 
 export default ({ attributes, setAttributes }) => {
 	const { label, hidden_label } = attributes;
 	const { style: colorStyle, className } = useColorProps(attributes);
+	const [mode, setMode] = useState('contentOnly');
 
 	const blockProps = useBlockProps({
 		style: {
@@ -41,27 +41,18 @@ export default ({ attributes, setAttributes }) => {
 		{
 			allowedBlocks: ['surecart/product-quantity-control'],
 			template: [['surecart/product-quantity-control', {}]],
-			templateLock: 'all',
+			templateLock: mode,
 		}
 	);
 
 	return (
 		<>
-			<InspectorControls>
-				<PanelBody>
-					<ToggleControl
-						label={__('Hide Label', 'surecart')}
-						help={__(
-							'Visually hide the label, but still keep it accessible to screen readers.',
-							'surecart'
-						)}
-						checked={hidden_label}
-						onChange={(hidden_label) =>
-							setAttributes({ hidden_label })
-						}
-					/>
-				</PanelBody>
-			</InspectorControls>
+			<LabelControl
+				label={hidden_label}
+				setLabel={(hidden_label) => setAttributes({ hidden_label })}
+			/>
+			<StyleContentsControl mode={mode} setMode={setMode} />
+
 			<div {...blockProps}>
 				{!hidden_label && (
 					<RichText
