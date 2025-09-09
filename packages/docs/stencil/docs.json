@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-08-19T14:50:15",
+  "timestamp": "2025-09-02T20:22:19",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.18.3",
@@ -19503,9 +19503,7 @@
       "styles": [],
       "slots": [],
       "parts": [],
-      "dependents": [
-        "sc-order-confirmation-totals"
-      ],
+      "dependents": [],
       "dependencies": [
         "sc-divider",
         "sc-line-item",
@@ -19518,9 +19516,6 @@
           "sc-line-item",
           "sc-skeleton",
           "sc-total"
-        ],
-        "sc-order-confirmation-totals": [
-          "sc-line-item-total"
         ]
       }
     },
@@ -21854,14 +21849,7 @@
         "sc-order-confirmation-totals": [
           "sc-line-item",
           "sc-tag",
-          "sc-divider",
-          "sc-line-item-total"
-        ],
-        "sc-line-item-total": [
-          "sc-divider",
-          "sc-line-item",
-          "sc-skeleton",
-          "sc-total"
+          "sc-divider"
         ]
       }
     },
@@ -22007,21 +21995,13 @@
       "dependencies": [
         "sc-line-item",
         "sc-tag",
-        "sc-divider",
-        "sc-line-item-total"
+        "sc-divider"
       ],
       "dependencyGraph": {
         "sc-order-confirmation-totals": [
           "sc-line-item",
           "sc-tag",
-          "sc-divider",
-          "sc-line-item-total"
-        ],
-        "sc-line-item-total": [
-          "sc-divider",
-          "sc-line-item",
-          "sc-skeleton",
-          "sc-total"
+          "sc-divider"
         ],
         "sc-order-confirmation-details": [
           "sc-order-confirmation-totals"
@@ -33025,6 +33005,28 @@
           "values": [
             {
               "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "expired",
+          "type": "boolean",
+          "complexType": {
+            "original": "boolean",
+            "resolved": "boolean",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "expired",
+          "reflectToAttr": false,
+          "docs": "Whether the claim window has expired.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
             }
           ],
           "optional": false,
