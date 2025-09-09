@@ -2,7 +2,6 @@
 
 namespace SureCart\Support\Scripts;
 
-use SureCart\Models\Account;
 use SureCart\Support\Currency;
 
 /**
@@ -143,6 +142,7 @@ abstract class AdminModelEditController {
 		$this->data['collection_page_slug'] = untrailingslashit( \SureCart::settings()->permalinks()->getBase( 'collection_page' ) );
 		$this->data['is_block_theme']       = \SureCart::utility()->blockTemplates()->isFSETheme();
 		$this->data['claim_url']            = ! \SureCart::account()->claimed ? \SureCart::routeUrl( 'account.claim' ) : '';
+		$this->data['claim_expired']        = \SureCart::account()->claim_expired ?? false;
 
 		if ( in_array( 'currency', $this->with_data ) ) {
 			$this->data['currency_code'] = \SureCart::account()->currency;

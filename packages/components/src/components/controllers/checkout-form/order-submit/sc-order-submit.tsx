@@ -96,12 +96,14 @@ export class ScOrderSubmit {
       );
     }
 
+    const paymentRequired = checkoutState.checkout?.payment_method_required;
+
     return (
       <Fragment>
-        {selectedProcessor.id === 'paypal' && !selectedProcessor?.method && this.renderPayPalButton(['paypal'])}
-        {selectedProcessor.id === 'paypal' && selectedProcessor?.method === 'card' && this.renderPayPalButton(['card'])}
+        {paymentRequired && selectedProcessor.id === 'paypal' && !selectedProcessor?.method && this.renderPayPalButton(['paypal'])}
+        {paymentRequired && selectedProcessor.id === 'paypal' && selectedProcessor?.method === 'card' && this.renderPayPalButton(['card'])}
         <sc-button
-          hidden={['paypal', 'paypal-card'].includes(selectedProcessor.id)}
+          hidden={['paypal', 'paypal-card'].includes(selectedProcessor.id) && paymentRequired}
           submit
           type={this.type}
           size={this.size}

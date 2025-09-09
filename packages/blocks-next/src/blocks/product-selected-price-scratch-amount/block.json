@@ -7,7 +7,11 @@
 	"version": "1.0.0",
 	"category": "surecart-product-page",
 	"icon": "money-alt",
-	"ancestor": ["surecart/product-page", "surecart/product-template"],
+	"ancestor": [
+		"surecart/product-page",
+		"surecart/product-template",
+		"surecart/sticky-purchase"
+	],
 	"example": {
 		"attributes": {}
 	},

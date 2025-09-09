@@ -98,6 +98,21 @@ class AddToCartButton extends \Elementor\Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'show_sticky_purchase_button',
+			[
+				'label'       => esc_html__( 'Show sticky button', 'surecart' ),
+				'type'        => \Elementor\Controls_Manager::SELECT,
+				'default'     => 'never',
+				'description' => esc_html__( 'Show a sticky purchase button when this button is out of view', 'surecart' ),
+				'options'     => [
+					'never'    => esc_html__( 'Never', 'surecart' ),
+					'in_stock' => esc_html__( 'In stock', 'surecart' ),
+					'always'   => esc_html__( 'Always', 'surecart' ),
+				],
+			]
+		);
+
 		$this->end_controls_section();
 
 		$this->start_controls_section(
@@ -540,7 +555,13 @@ class AddToCartButton extends \Elementor\Widget_Base {
 
 		ob_start();
 		?>
-		<button <?php echo $this->get_render_attribute_string( 'wrapper' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+		<button
+			<?php if ( ! empty( $settings['show_sticky_purchase_button'] ) && 'never' !== $settings['show_sticky_purchase_button'] ) : ?>
+				<?php $this->add_render_attribute( 'wrapper', 'data-wp-on-async-window--scroll', 'surecart/sticky-purchase::actions.toggleVisibility' ); ?>
+				<?php $this->add_render_attribute( 'wrapper', 'data-wp-on-async-window--resize', 'surecart/sticky-purchase::actions.toggleVisibility' ); ?>
+			<?php endif; ?>
+
+			<?php echo $this->get_render_attribute_string( 'wrapper' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 			<span <?php echo $this->get_render_attribute_string( 'content-wrapper' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 			<?php
 			if ( ! empty( $settings['icon'] ) || ! empty( $settings['selected_icon']['value'] ) ) :
@@ -565,6 +586,11 @@ class AddToCartButton extends \Elementor\Widget_Base {
 		<?php
 		$output = ob_get_clean();
 		echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+
+		// Render the sticky purchase button.
+		if ( ! is_admin() ) { // Elementor injects into the content area so we only render it in the frontend.
+			\SureCart::render( 'blocks/sticky-purchase', [ 'settings' => $settings ] );
+		}
 	}
 
 	/**

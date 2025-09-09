@@ -26,10 +26,9 @@
 	}
 </style>
 
-
 <div id="sc-admin-header">
-	<?php if ( ! empty( $claim_url ) ) : ?>
-		<sc-provisional-banner claim-url="<?php echo esc_url( $claim_url ); ?>"></sc-provisional-banner>
+	<?php if ( ! empty( $claim_url ) || ! empty( $claim_expired ) ) : ?>
+		<sc-provisional-banner claim-url="<?php echo esc_url( $claim_url ); ?>" expired="<?php echo ! empty( $claim_expired ) ? 'true' : 'false'; ?>"></sc-provisional-banner>
 	<?php endif; ?>
 	<div id="sc-admin-container">
 		<?php if ( ! empty( $breadcrumbs ) ) : ?>

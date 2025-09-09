@@ -1,0 +1,63 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "surecart/product-selected-variant-image",
+	"title": "Product Selected Variant Image",
+	"description": "Shows the image for the currently selected product variant.",
+	"version": "1.0.0",
+	"category": "surecart-product-page",
+	"icon": "tag",
+	"ancestor": [
+		"surecart/product-page",
+		"surecart/product-template",
+		"surecart/sticky-purchase"
+	],
+	"example": {
+		"attributes": {}
+	},
+	"attributes": {
+		"sizing": {
+			"type": "string",
+			"default": "cover"
+		},
+		"aspectRatio": {
+			"type": "string"
+		},
+		"width": {
+			"type": "string"
+		},
+		"height": {
+			"type": "string"
+		}
+	},
+	"supports": {
+		"interactivity": true,
+		"anchor": true,
+		"spacing": {
+			"padding": true,
+			"margin": true,
+			"__experimentalDefaultControls": {
+				"padding": true,
+				"margin": true
+			}
+		},
+		"color": {
+			"text": false,
+			"background": false
+		},
+		"__experimentalBorder": {
+			"width": true,
+			"color": true,
+			"radius": true,
+			"__experimentalDefaultControls": {
+				"width": true,
+				"color": true,
+				"radius": true
+			}
+		}
+	},
+	"textdomain": "surecart",
+	"render": "file:./view.php",
+	"editorScript": "file:./index.js",
+	"style": "file:./style-index.css"
+}

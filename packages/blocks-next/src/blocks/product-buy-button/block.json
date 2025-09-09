@@ -9,22 +9,25 @@
 	"icon": "media-interactive",
 	"example": {},
 	"ancestor": ["surecart/product-buy-buttons", "surecart/product-template"],
-	"usesContext": ["surecart/product", "postId"],
+	"usesContext": ["surecart/product", "postId", "providerBlock"],
 	"attributes": {
 		"add_to_cart": {
 			"type": "boolean",
 			"default": false
 		},
+		"show_sticky_purchase_button": {
+			"type": "string",
+			"enum": ["never", "in_stock", "always"],
+			"default": "never"
+		},
 		"text": {
 			"type": "string"
 		},
 		"out_of_stock_text": {
-			"type": "string",
-			"default": "Sold Out"
+			"type": "string"
 		},
 		"unavailable_text": {
-			"type": "string",
-			"default": "Unavailable"
+			"type": "string"
 		},
 		"width": {
 			"type": "number",

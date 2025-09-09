@@ -30,7 +30,7 @@ export default ({ clientId, context: { postId } }) => {
 
 	return (
 		<div {...blockProps}>
-			<label class="sc-form-label">{__('Color', 'surecart')}</label>
+			<label className="sc-form-label">{__('Color', 'surecart')}</label>
 			<TemplateListEdit
 				template={[['surecart/product-variant-pill']]}
 				blockContexts={TEST_VARIANTS}

@@ -157,21 +157,7 @@ class AdminMenuPageService {
 			return 'sc-getting-started';
 		}
 
-		// Set the slug to the onboarding checklist page if the user has a checklist.
-		if ( $this->hasChecklist() ) {
-			return 'sc-onboarding-checklist';
-		}
-
 		return $this->slug;
-	}
-
-	/**
-	 * Has Checklist.
-	 *
-	 * @return bool
-	 */
-	public function hasChecklist() {
-		return \SureCart::account()->has_checklist && current_user_can( 'manage_options' );
 	}
 
 	/**
@@ -196,15 +182,7 @@ class AdminMenuPageService {
 			return;
 		}
 
-		/**
-		 * Onboarding Checklist
-		 */
-		if ( $this->hasChecklist() ) {
-			$title = \SureCart::helpWidget()->checklist()->title ?? __( 'Getting Started', 'surecart' );
-			$this->pages = array(
-				'sc-onboarding-checklist' 	=> \add_submenu_page( $this->slug, $title,  $title, 'manage_sc_shop_settings', 'sc-onboarding-checklist', '__return_false' ),
-			);
-		}
+		$this->pages = array();
 
 		/**
 		 * Dashboard

@@ -13,7 +13,7 @@ class DashboardScriptsController extends AdminModelEditController {
 	 *
 	 * @var array
 	 */
-	protected $with_data = [ 'currency', 'supported_currencies', 'claimed', 'claim_url' ];
+	protected $with_data = [ 'currency', 'supported_currencies', 'claimed', 'claim_url', 'claim_expired' ];
 
 	/**
 	 * Script handle.

@@ -32,12 +32,12 @@ export class ScCheckoutMolliePayment {
   componentWillLoad() {
     selectedProcessor.id = 'mollie';
     this.fetchMethods();
-    listenTo('checkout', ['total_amount', 'currency', 'reusabled_payment_method_required', 'shipping_address'], () => this.fetchMethods());
+    listenTo('checkout', ['total_amount', 'subtotal_amount', 'currency', 'reusabled_payment_method_required', 'shipping_address'], () => this.fetchMethods());
   }
 
   async fetchMethods() {
     const checkout = checkoutState.checkout;
-    if (!checkout?.currency || !checkout?.total_amount) return; // wait until we have a currency.
+    if (!checkout?.currency) return; // wait until we have a currency.
     try {
       lockCheckout('methods');
       const response = (await apiFetch({

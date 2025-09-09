@@ -7,9 +7,10 @@
 
 ## Properties
 
-| Property   | Attribute   | Description | Type     | Default |
-| ---------- | ----------- | ----------- | -------- | ------- |
-| `claimUrl` | `claim-url` | Claim URL.  | `string` | `''`    |
+| Property   | Attribute   | Description                           | Type      | Default |
+| ---------- | ----------- | ------------------------------------- | --------- | ------- |
+| `claimUrl` | `claim-url` | Claim URL.                            | `string`  | `''`    |
+| `expired`  | `expired`   | Whether the claim window has expired. | `boolean` | `false` |
 
 
 ## Dependencies

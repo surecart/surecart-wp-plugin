@@ -1,0 +1,46 @@
+.wp-block-surecart-product-selected-variant-image {
+	overflow: hidden;
+	aspect-ratio: 1 / 1;
+	margin-top: 0;
+	width: var(--sc-selected-variant-image-width, 80px);
+	height: var(--sc-selected-variant-image-height, 80px);
+	border: solid
+		var(
+			--sc-selected-variant-image-border-width,
+			var(--sc-input-border-width)
+		)
+		var(
+			--sc-selected-variant-image-border-color,
+			var(--sc-input-border-color)
+		);
+	border-radius: var(
+		--sc-selected-variant-image-border-radius,
+		var(--sc-input-border-radius-large)
+	);
+
+	[hidden] {
+		display: none;
+	}
+
+	img {
+		max-width: 100%;
+		width: 100%;
+		height: 100%;
+		box-sizing: border-box;
+		object-fit: contain;
+		display: block;
+		transition: transform var(--sc-transition-medium) ease;
+	}
+
+	&.sc-is-covered img {
+		object-fit: cover;
+	}
+
+	&.sc-is-contained img {
+		object-fit: contain;
+	}
+
+	&:hover img {
+		transform: scale(1.05);
+	}
+}

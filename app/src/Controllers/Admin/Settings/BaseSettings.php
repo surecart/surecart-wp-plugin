@@ -72,14 +72,15 @@ abstract class BaseSettings {
 
 		return \SureCart::view( $this->template )->with(
 			[
-				'tab'          => $request->query( 'tab' ) ?? '',
-				'breadcrumb'   => ! empty( $this->tabs[ $request->query( 'tab' ) ?? '' ] ) ? $this->tabs[ $request->query( 'tab' ) ?? '' ] : '',
-				'is_free'      => (bool) ( \SureCart::account()->plan->free ?? true ),
-				'entitlements' => \SureCart::account()->entitlements,
-				'upgrade_url'  => \SureCart::config()->links->purchase,
-				'brand_color'  => \SureCart::account()->brand->color ?? null,
-				'status'       => $request->query( 'status' ),
-				'claim_url'    => ! \SureCart::account()->claimed ? \SureCart::routeUrl( 'account.claim' ) : '',
+				'tab'           => $request->query( 'tab' ) ?? '',
+				'breadcrumb'    => ! empty( $this->tabs[ $request->query( 'tab' ) ?? '' ] ) ? $this->tabs[ $request->query( 'tab' ) ?? '' ] : '',
+				'is_free'       => (bool) ( \SureCart::account()->plan->free ?? true ),
+				'entitlements'  => \SureCart::account()->entitlements,
+				'upgrade_url'   => \SureCart::config()->links->purchase,
+				'brand_color'   => \SureCart::account()->brand->color ?? null,
+				'status'        => $request->query( 'status' ),
+				'claim_url'     => ! \SureCart::account()->claimed ? \SureCart::routeUrl( 'account.claim' ) : '',
+				'claim_expired' => \SureCart::account()->claim_expired ?? false,
 			]
 		);
 	}
@@ -153,6 +154,7 @@ abstract class BaseSettings {
 				'processors'             => Processor::get(),
 				'is_block_theme'         => (bool) wp_is_block_theme(),
 				'claim_url'              => ! \SureCart::account()->claimed ? \SureCart::routeUrl( 'account.claim' ) : '',
+				'claim_expired'          => \SureCart::account()->claim_expired ?? false,
 				'i18n'                   => \SureCart::state()->i18n()->get(),
 			]
 		);
