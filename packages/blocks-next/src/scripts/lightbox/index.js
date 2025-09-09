@@ -511,6 +511,7 @@ const { state, actions, callbacks } = store('surecart/lightbox', {
 			const lightboxImgHeight =
 				imgMaxHeight * (containerHeight / containerMaxHeight);
 
+			// Get/update the screen position of the image to animate from there.
 			const swiper = state.currentImage.imageRef.closest('.swiper');
 			if (swiper) {
 				const { x, y } = swiper.getBoundingClientRect();
