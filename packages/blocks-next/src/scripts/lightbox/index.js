@@ -511,6 +511,13 @@ const { state, actions, callbacks } = store('surecart/lightbox', {
 			const lightboxImgHeight =
 				imgMaxHeight * (containerHeight / containerMaxHeight);
 
+			const swiper = state.currentImage.imageRef.closest('.swiper');
+			if (swiper) {
+				const { x, y } = swiper.getBoundingClientRect();
+				screenPosX = x;
+				screenPosY = y;
+			}
+
 			// As of this writing, using the calculations above will render the
 			// lightbox with a small, erroneous whitespace on the left side of the
 			// image in iOS Safari, perhaps due to an inconsistency in how browsers
