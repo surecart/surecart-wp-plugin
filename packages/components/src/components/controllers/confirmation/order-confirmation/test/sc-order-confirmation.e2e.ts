@@ -9,7 +9,7 @@ describe('sc-order-confirmation', () => {
     expect(element).toHaveClass('hydrated');
   });
 
-  // Skipping it for now, as we don't handling alert in sc-order-confirmation.tsx file.
+  // Skipping it for now, as we don't handle alert in sc-order-confirmation.tsx file.
   // it('appends manual instructions if present in order', async () => {
   //   const page = await newE2EPage();
   //   await page.setContent('<sc-order-confirmation><sc-order-confirmation-details></sc-order-confirmation-details></sc-order-confirmation>');
