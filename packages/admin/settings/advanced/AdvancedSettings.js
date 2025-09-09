@@ -418,7 +418,7 @@ export default () => {
 					{__('Enable Admin Toolbar', 'surecart')}
 					<span slot="description" style={{ lineHeight: '1.4' }}>
 						{__(
-							'This will enable the SureCart admin toolbar in the WordPress admin bar for easy access to SureCart features.',
+							'This will enable the SureCart toolbar in the WordPress admin bar for easy access to SureCart features.',
 							'surecart'
 						)}
 					</span>
