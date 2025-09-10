@@ -15,7 +15,7 @@ class AdminToolbarService {
 	 * @return void
 	 */
 	public function bootstrap() {
-		// Admin bar menus.
+		// Admin bar site menu.
 		if ( apply_filters( 'surecart_show_admin_bar_visit_store', true ) ) {
 			add_action( 'admin_bar_menu', array( $this, 'adminBarSiteMenu' ), 31 );
 		}
@@ -26,9 +26,18 @@ class AdminToolbarService {
 		}
 
 		// Admin toolbar SureCart menu.
-		if ( ! get_option( 'surecart_admin_toolbar_disabled', false ) ) {
+		if ( $this->isEnabled() ) {
 			add_action( 'admin_bar_menu', array( $this, 'adminBarMenu' ), 99 );
 		}
+	}
+
+	/**
+	 * Check if the admin toolbar is enabled.
+	 *
+	 * @return bool
+	 */
+	public function isEnabled(): bool {
+		return ! get_option( 'surecart_admin_toolbar_disabled', false );
 	}
 
 	/**

@@ -24,6 +24,9 @@ class AdminMenuPageServiceProvider implements ServiceProviderInterface {
 		$container['surecart.product_collection_pages.menus'] = function () {
 			return new ProductCollectionsMenuService();
 		};
+
+		$app = $container[ SURECART_APPLICATION_KEY ];
+		$app->alias( 'adminToolbar', 'surecart.admin.toolbar' );
 	}
 
 	/**

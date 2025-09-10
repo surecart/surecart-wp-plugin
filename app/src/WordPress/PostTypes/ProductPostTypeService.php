@@ -391,7 +391,7 @@ class ProductPostTypeService {
 	 */
 	public function addEditLink( $wp_admin_bar ) {
 		// Don't render if admin toolbar is already enabled, the menu will be handled there.
-		if ( ! get_option( 'surecart_admin_toolbar_disabled', false ) ) {
+		if ( \SureCart::adminToolbar()->isEnabled() ) {
 			return;
 		}
 
