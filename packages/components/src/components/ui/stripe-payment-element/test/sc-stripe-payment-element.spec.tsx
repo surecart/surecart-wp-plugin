@@ -36,7 +36,6 @@ describe('sc-stripe-payment-element', () => {
 
       // Reset window.wp before each test
       (global as any).window.wp = undefined;
-      (global as any).window.checkoutState = { checkout: {} };
 
       mockApplyFilters = jest.fn();
     });
@@ -75,7 +74,7 @@ describe('sc-stripe-payment-element', () => {
     it('applies filters when wp.hooks.applyFilters is available', () => {
       // Mock the checkout state
       const mockCheckout = { id: 'test-checkout' };
-      (global as any).window.checkoutState = { checkout: mockCheckout };
+      checkoutState.checkout = mockCheckout as any;
 
       // Setup mock for applyFilters
       mockApplyFilters.mockImplementation((filterName, defaultValue) => {
@@ -120,7 +119,7 @@ describe('sc-stripe-payment-element', () => {
     });
 
     it('handles undefined options.fields gracefully', () => {
-      (global as any).window.checkoutState = { checkout: {} };
+      checkoutState.checkout = {} as any;
       mockApplyFilters.mockReturnValue({});
       (global as any).window.wp = { hooks: { applyFilters: mockApplyFilters } };
 
@@ -134,7 +133,7 @@ describe('sc-stripe-payment-element', () => {
     });
 
     it('preserves all original properties when applying filters', () => {
-      (global as any).window.checkoutState = { checkout: {} };
+      checkoutState.checkout = {} as any;
       mockApplyFilters.mockImplementation((_, defaultValue) => defaultValue);
       (global as any).window.wp = { hooks: { applyFilters: mockApplyFilters } };
 
