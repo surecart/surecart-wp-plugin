@@ -180,6 +180,7 @@ class LineItem extends Model {
 	public function getIsSwappableAttribute() {
 		return ! empty( $this->swap ) || ! empty( $this->price->current_swap );
 	}
+
 	/**
 	 * Get the currency attribute.
 	 *
