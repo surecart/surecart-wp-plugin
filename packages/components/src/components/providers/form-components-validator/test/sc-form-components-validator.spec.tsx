@@ -17,6 +17,12 @@ jest.mock('@store/checkouts/store', () => ({
   dispose: jest.fn(),
 }));
 
+// Mock the checkout module
+jest.mock('@store/checkout', () => ({
+  state: { checkout: null, formId: null },
+  onChange: jest.fn(() => jest.fn()), // Return a cleanup function
+}));
+
 // Mock the getters
 jest.mock('@store/checkout/getters', () => ({
   fullShippingAddressRequired: jest.fn(() => false),
@@ -40,6 +46,7 @@ describe('sc-form-components-validator', () => {
     checkoutState.checkout = null;
     checkoutState.formId = null;
     mockShippingAddressRequired.mockReturnValue(false);
+    jest.clearAllMocks();
   });
 
   it('renders', async () => {
@@ -62,6 +69,9 @@ describe('sc-form-components-validator', () => {
         </sc-form-components-validator>
       ),
     });
+
+    // Wait for components to initialize
+    await page.waitForChanges();
 
     checkoutState.checkout = { tax_status: 'address_invalid' } as Checkout;
     await page.waitForChanges();
@@ -132,6 +142,9 @@ describe('sc-form-components-validator', () => {
       ),
     });
 
+    // Wait for components to initialize
+    await page.waitForChanges();
+
     // Set up the checkout state
     checkoutState.checkout = { shipping_address_required: true } as Checkout;
     await page.waitForChanges();
@@ -163,6 +176,9 @@ describe('sc-form-components-validator', () => {
         </sc-form-components-validator>
       ),
     });
+
+    // Wait for components to initialize
+    await page.waitForChanges();
 
     // Set up the checkout state
     checkoutState.checkout = { shipping_address_required: true } as Checkout;

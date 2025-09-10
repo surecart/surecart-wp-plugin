@@ -36,7 +36,6 @@ exports[`sc-form-components-validator appends missing trial line item if require
     <slot></slot>
   </mock:shadow-root>
   <sc-order-summary>
-    <sc-line-item-trial></sc-line-item-trial>
     <sc-line-item-total total="subtotal"></sc-line-item-total>
   </sc-order-summary>
 </sc-form-components-validator>
@@ -64,6 +63,20 @@ exports[`sc-form-components-validator requires the customer name on sc-customer-
   <sc-order-shipping-address required="">
     <mock:shadow-root>
       <sc-compact-address required=""></sc-compact-address>
+    </mock:shadow-root>
+  </sc-order-shipping-address>
+</sc-form-components-validator>
+`;
+
+exports[`sc-form-components-validator requires the customer name on sc-order-shipping-address if shipping address is required 1`] = `
+<sc-form-components-validator>
+  <mock:shadow-root>
+    <slot></slot>
+  </mock:shadow-root>
+  <sc-payment></sc-payment>
+  <sc-order-shipping-address require-name="" required="" show-name="">
+    <mock:shadow-root>
+      <sc-address exportparts="label, help-text, form-control, input__base, select__base, columns, search__base, menu__base" label="Shipping Address" require-name="" required="" show-name=""></sc-address>
     </mock:shadow-root>
   </sc-order-shipping-address>
 </sc-form-components-validator>
