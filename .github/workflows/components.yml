@@ -14,11 +14,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       
-      - name: Use Node.js 18.x
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 18.x
+          node-version: '20'
           cache: 'yarn'
+          cache-dependency-path: packages/components/yarn.lock
           
       - name: Install dependencies
         run: |
@@ -28,6 +29,9 @@ jobs:
           SKIP_SASS_BINARY_DOWNLOAD_FOR_CI: true
           PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
           NODE_OPTIONS: "--max-old-space-size=4096"
+          SASS_BINARY_SITE: https://github.com/sass/node-sass/releases/download
+          npm_config_cache: /tmp/.npm
+          YARN_CACHE_FOLDER: /tmp/.yarn
         
       - name: Run Stencil tests
         run: cd packages/components && yarn test --spec --e2e
