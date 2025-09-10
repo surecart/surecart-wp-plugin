@@ -23,7 +23,7 @@ jobs:
       - name: Install dependencies
         run: |
           cd packages/components
-          yarn install --frozen-lockfile --ignore-optional --ignore-engines
+          yarn install --frozen-lockfile
         env:
           SKIP_SASS_BINARY_DOWNLOAD_FOR_CI: true
           PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
