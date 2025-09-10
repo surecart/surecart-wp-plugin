@@ -160,6 +160,24 @@ class ElementorTemplatesService {
 	}
 
 	/**
+	 * Check if the current page/template is rendered by Elementor and contains SureCart product template.
+	 *
+	 * @return bool
+	 */
+	public function isRenderedWithElementor(): bool {
+		if ( ! class_exists( 'Elementor\Plugin' ) ) {
+			return false;
+		}
+
+		// If has custom page template, means its rendering from SureCart template, not with Elementor.
+		if ( ! empty( get_post_meta( get_the_ID(), '_wp_page_template', true ) ) ) {
+			return false;
+		}
+
+		return $this->hasActiveSureCartElementorTemplate();
+	}
+
+	/**
 	 * Check if surecart-product Elementor template is active.
 	 *
 	 * @return bool
