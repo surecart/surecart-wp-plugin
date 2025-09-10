@@ -21,12 +21,20 @@ jobs:
           cache: 'yarn'
           
       - name: Install dependencies
-        run: cd packages/components && yarn install --frozen-lockfile
+        run: |
+          cd packages/components
+          yarn install --frozen-lockfile --ignore-optional --ignore-engines
+        env:
+          SKIP_SASS_BINARY_DOWNLOAD_FOR_CI: true
+          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
+          NODE_OPTIONS: "--max-old-space-size=4096"
         
       - name: Run Stencil tests
         run: cd packages/components && yarn test --spec --e2e
+        timeout-minutes: 20
         env:
           CI: true
+          NODE_OPTIONS: "--max-old-space-size=4096"
           PUPPETEER_ARGS: "--no-sandbox --disable-setuid-sandbox --disable-dev-shm-usage --disable-gpu --disable-extensions"
           CHROME_BIN: /usr/bin/google-chrome
           CHROME_ARGS: "--no-sandbox --disable-setuid-sandbox --disable-dev-shm-usage --disable-gpu"
