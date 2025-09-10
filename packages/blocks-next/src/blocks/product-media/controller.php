@@ -6,10 +6,9 @@ $gallery        = $product->gallery ?? [];
 $featured_image = $gallery[0] ?? null;
 
 // get the width.
+$width = false;
 if ( ! empty( $attributes['width'] ) ) {
 	$width = is_numeric( $attributes['width'] ) ? $attributes['width'] . 'px' : $attributes['width'];
-} else {
-	$width = false;
 }
 
 // handle empty.
@@ -22,12 +21,10 @@ if ( ! empty( $attributes['lightbox'] ) ) {
 	wp_enqueue_script_module( 'surecart/lightbox' );
 }
 
-// Check if we have any videos in the gallery and enqueue video script.
-$has_videos = ! empty( array_filter( $gallery, fn( $media ) => $media->isVideo() ) );
-
 // Don't enqueue video script if there is no video in the gallery.
-if ( $has_videos ) {
+if ( $product->has_videos ) {
 	wp_enqueue_script_module( '@surecart/video' );
+	wp_enqueue_style( 'surecart-video' );
 }
 
 // handle image.

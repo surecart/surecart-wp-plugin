@@ -966,8 +966,8 @@ class Product extends Model implements PageModel {
 			array_filter(
 				array_map(
 					function ( $gallery_item ) use ( $product_featured_image ) {
-						// Extract the ID from the gallery item (can be int or object).
-						$id = is_int( $gallery_item ) ? $gallery_item : intval( ( (object) $gallery_item )->id ?? 0 );
+						// Extract the ID from the gallery item (can be int, string(ProductMedia) or object).
+						$id = is_string( $gallery_item ) ? $gallery_item : ( is_int( $gallery_item ) ? intval( $gallery_item ) : intval( ( (object) $gallery_item )->id ?? 0 ) );
 
 						// this is an attachment id.
 						if ( is_int( $id ) ) {
@@ -1161,5 +1161,14 @@ class Product extends Model implements PageModel {
 		}
 
 		return null;
+	}
+
+	/**
+	 * Get if the product has videos.
+	 *
+	 * @return bool
+	 */
+	public function getHasVideosAttribute(): bool {
+		return ! empty( array_filter( $this->gallery, fn( $media ) => $media->isVideo() ) );
 	}
 }

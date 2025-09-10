@@ -8,7 +8,6 @@ import { store as coreStore, useEntityRecord } from '@wordpress/core-data';
 import { store as noticesStore } from '@wordpress/notices';
 import AddMedia from './AddMedia';
 import EditMedia from './EditMedia';
-import ConfirmDeleteMedia from './ConfirmDeleteMedia';
 import Error from '../../../components/Error';
 import SortableList, { SortableItem } from 'react-easy-sort';
 import arrayMove from 'array-move';
@@ -18,7 +17,6 @@ import { select } from '@wordpress/data';
 import { getGalleryItemId } from '../../../util/attachments';
 
 const modals = {
-	CONFIRM_DELETE_MEDIA: 'confirm_delete_media',
 	EDIT_MEDIA: 'edit_media',
 };
 export default ({ productId, product, updateProduct }) => {
@@ -48,12 +46,17 @@ export default ({ productId, product, updateProduct }) => {
 			arrayMove(product?.gallery_ids || [], oldIndex, newIndex)
 		);
 
-	const onRemoveMedia = (id) =>
+	const onRemoveMedia = (id) => {
+		const confirm = window.confirm(
+			__('Are you sure you want to remove this media?', 'surecart')
+		);
+		if (!confirm) return;
 		updateGalleryIds(
 			(product?.gallery_ids || []).filter(
 				(item) => getGalleryItemId(item) !== id
 			)
 		);
+	};
 
 	const onSwapMedia = (oldId, newId) => {
 		// for some reason we need to select this again.
@@ -193,45 +196,15 @@ export default ({ productId, product, updateProduct }) => {
 				/>
 			</SortableList>
 
-			<ConfirmDeleteMedia
-				open={currentModal === modals.CONFIRM_DELETE_MEDIA}
-				onRequestClose={() => {
-					setSelectedMedia();
-					setCurrentModal('');
-				}}
-				selectedMedia={selectedMedia}
-			/>
-
 			{currentModal === modals.EDIT_MEDIA && (
 				<EditMedia
 					media={selectedMedia}
-					setMedia={(updatedMedia) => {
-						setSelectedMedia(updatedMedia);
-					}}
-					onSave={(updatedItem) => {
-						// Update the gallery with the new item data
-						const gallery_ids = [...(product?.gallery_ids || [])];
-						const updateIndex = gallery_ids.findIndex(
-							(item) =>
-								getGalleryItemId(item) ===
-								getGalleryItemId(selectedMedia)
-						);
-
-						if (updateIndex !== -1) {
-							gallery_ids[updateIndex] = updatedItem;
-							updateGalleryIds(gallery_ids);
-						}
-
-						// Invalidate cache for the media
-						invalidateResolution('getMedia', [
-							getGalleryItemId(updatedItem),
-						]);
-					}}
 					product={product}
 					onRequestClose={() => {
 						setCurrentModal('');
 						setSelectedMedia(null);
 					}}
+					updateProduct={updateProduct}
 				/>
 			)}
 		</Box>

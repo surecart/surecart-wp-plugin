@@ -25,10 +25,8 @@ class GalleryItemVideoAttachment extends ModelsGalleryItem implements GalleryIte
 	 * @return string The Poster image URL.
 	 */
 	public function get_video_poster_image(): string {
-		// Fallback featured_image.
-		$fallback_featured_image = $this->featured_image->guid ?? $this->featured_image->src ?? null;
-
-		return esc_url_raw( $this->getMetadata( 'thumbnail_image' )['url'] ?? $fallback_featured_image ?? trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'images/placeholder.jpg' );
+		$poster_id = $this->getMetadata( 'thumbnail_image' )['id'] ?? $this->featured_image->ID ?? null;
+		return ! empty( $poster_id ) ? wp_get_attachment_url( $poster_id ) : trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'images/placeholder.jpg';
 	}
 
 	/**
@@ -72,10 +70,11 @@ class GalleryItemVideoAttachment extends ModelsGalleryItem implements GalleryIte
 
 		return \SureCart::view( 'media/video' )->with(
 			[
-				'poster_image' => $this->get_video_poster_image(),
-				'video_url'    => wp_get_attachment_url( $this->item->ID ),
-				'alt'          => $this->item->alt_text ?? $this->item->post_title ?? '',
-				'style'        => ! empty( $this->getMetadata( 'aspect_ratio' ) ) ? 'aspect-ratio: ' . esc_attr( $this->getMetadata( 'aspect_ratio' ) ) . ';' : '',
+				'poster' => $this->get_video_poster_image(),
+				'src'    => wp_get_attachment_url( $this->item->ID ),
+				'alt'    => $this->item->alt_text ?? $this->item->post_title ?? '',
+				'title'  => $this->item->post_title ?? '',
+				'style'  => ! empty( $this->getMetadata( 'aspect_ratio' ) ) ? 'aspect-ratio: ' . esc_attr( $this->getMetadata( 'aspect_ratio' ) ) . ';' : '',
 			]
 		)->toString();
 	}
