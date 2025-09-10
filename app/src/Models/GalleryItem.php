@@ -47,6 +47,15 @@ abstract class GalleryItem implements ArrayAccess, JsonSerializable, Arrayable, 
 	}
 
 	/**
+	 * Check if the gallery item exists.
+	 *
+	 * @return bool
+	 */
+	public function exists() {
+		return isset( $this->item->ID );
+	}
+
+	/**
 	 * Convert object to array.
 	 *
 	 * @return array
@@ -89,10 +98,7 @@ abstract class GalleryItem implements ArrayAccess, JsonSerializable, Arrayable, 
 	 * @return bool
 	 */
 	public function isVideo() {
-		if ( ! isset( $this->item->post_mime_type ) ) {
-			return false;
-		}
-		return false !== strpos( $this->item->post_mime_type, 'video' );
+		return ( $this instanceof GalleryItemVideoAttachment );
 	}
 
 	/**

@@ -92,7 +92,7 @@
 						>
 							<?php
 								echo wp_kses(
-									$media->html(
+									$media->thumbnail(
 										'thumbnail',
 										array(
 											'loading' => $thumb_index > $attributes['thumbnails_per_page'] ? 'lazy' : 'eager',
