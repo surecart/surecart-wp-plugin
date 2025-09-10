@@ -42,7 +42,7 @@ abstract class GalleryItem implements ArrayAccess, JsonSerializable, Arrayable, 
 	 * @return self
 	 */
 	public function withLightbox( $with_lightbox = true ) {
-		$this->with_lightbox = $with_lightbox;
+		$this->with_lightbox = $this->isVideo() ? false : $with_lightbox;
 		return $this;
 	}
 
