@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-09-02T20:22:19",
+  "timestamp": "2025-09-11T21:55:40",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.18.3",
@@ -44375,7 +44375,7 @@
       "path": "src/types.ts"
     },
     "src/types.ts::LineItem": {
-      "declaration": "export interface LineItem extends Object {\n  id?: string;\n  ad_hoc_amount?: number;\n  ad_hoc_display_amount?: string;\n  name: string;\n  object: string;\n  quantity: number;\n  currency: string;\n  checkout: string | Checkout;\n  bump: string | Bump;\n  image: ImageAttributes;\n  fees?: {\n    object: 'list';\n    pagination: Pagination;\n    data: Array<Fee>;\n  };\n  bump_amount: number;\n  bump_display_amount: string;\n  discount_amount: number;\n  subtotal_amount: number;\n  subtotal_display_amount?: string;\n  total_amount: number;\n  total_default_currency_display_amount: string;\n  total_display_amount: string;\n  trial_amount: number;\n  tax_amount: number;\n  tax_display_amount: string;\n  fees_amount: number;\n  scratch_amount: number;\n  scratch_display_amount?: string;\n  trial: boolean;\n  total_savings_amount: number;\n  created_at: number;\n  updated_at: number;\n  price?: Price;\n  price_id: string;\n  sku: string;\n  purchasable_status: 'price_gone' | 'price_old_version' | 'variant_mising' | 'variant_gone' | 'variant_old_version' | 'out_of_stock' | 'exceeds_purchase_limit' | 'purchasable';\n  purchasable_status_display: string;\n  variant_options: Array<string>;\n  variant_display_options: string;\n  variant?: Variant;\n  locked: boolean;\n  swap?: Swap;\n  is_swappable?: boolean;\n}",
+      "declaration": "export interface LineItem extends Object {\n  id?: string;\n  ad_hoc_amount?: number;\n  ad_hoc_display_amount?: string;\n  name: string;\n  object: string;\n  quantity: number;\n  currency: string;\n  checkout: string | Checkout;\n  bump: string | Bump;\n  image: ImageAttributes;\n  fees?: {\n    object: 'list';\n    pagination: Pagination;\n    data: Array<Fee>;\n  };\n  bump_amount: number;\n  bump_display_amount: string;\n  discount_amount: number;\n  subtotal_amount: number;\n  subtotal_display_amount?: string;\n  total_amount: number;\n  total_default_currency_display_amount: string;\n  total_display_amount: string;\n  trial_amount: number;\n  tax_amount: number;\n  tax_display_amount: string;\n  fees_amount: number;\n  scratch_amount: number;\n  scratch_display_amount?: string;\n  subtotal_with_upsell_discount_display_amount?: string;\n  subtotal_with_upsell_discount_amount?: number;\n  trial: boolean;\n  total_savings_amount: number;\n  created_at: number;\n  updated_at: number;\n  price?: Price;\n  price_id: string;\n  sku: string;\n  purchasable_status: 'price_gone' | 'price_old_version' | 'variant_mising' | 'variant_gone' | 'variant_old_version' | 'out_of_stock' | 'exceeds_purchase_limit' | 'purchasable';\n  purchasable_status_display: string;\n  variant_options: Array<string>;\n  variant_display_options: string;\n  variant?: Variant;\n  locked: boolean;\n  swap?: Swap;\n  is_swappable?: boolean;\n}",
       "docstring": "",
       "path": "src/types.ts"
     },
