@@ -258,6 +258,36 @@ class LineItem extends Model {
 	}
 
 	/**
+	 * Get the display subtotal amount + upsell discount amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getSubtotalWithUpsellDiscountDisplayAmountAttribute() {
+		return Currency::format( (int) $this->subtotal_with_upsell_discount_amount, $this->currency );
+	}
+
+	/**
+	 * Get the subtotal amount + upsell discount amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getSubtotalWithUpsellDiscountAmountAttribute() {
+		if ( empty( $this->fees->data ) || ! is_array( $this->fees->data ) ) {
+			return (int) $this->subtotal_amount;
+		}
+
+		$total_upsell_discount = 0;
+
+		foreach ( $this->fees->data as $fee ) {
+			if ( 'upsell' === $fee->fee_type ) {
+				$total_upsell_discount += $fee->amount ?? 0;
+			}
+		}
+
+		return (int) $this->subtotal_amount + (int) ( $total_upsell_discount ?? 0 );
+	}
+
+	/**
 	 * Get the display full amount attribute.
 	 *
 	 * @return string
