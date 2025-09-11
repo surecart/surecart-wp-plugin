@@ -30,6 +30,7 @@ import Prices from './modules/Prices';
 import Publishing from './modules/Publishing';
 import SearchEngine from './modules/SearchEngine';
 import Tax from './modules/Tax';
+import Template from './modules/Template';
 import Variations from './modules/Variations';
 import Shipping from './modules/Shipping';
 import Inventory from './modules/Inventory';
@@ -360,6 +361,12 @@ export default ({ id, setBrowserURL }) => {
 							product={product}
 							post={post}
 							onToggleArchiveProduct={onToggleArchiveProduct}
+							updateProduct={editProduct}
+							loading={!hasLoadedProduct}
+						/>
+						<Template
+							product={product}
+							post={post}
 							updateProduct={editProduct}
 							loading={!hasLoadedProduct}
 						/>
