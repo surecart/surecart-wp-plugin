@@ -190,7 +190,7 @@ class MemberPressService extends IntegrationService implements IntegrationInterf
 		$purchase             = Purchase::with( [ 'order', 'invoice' ] )->find( $this->getPurchaseId() );
 		$status               = $add ? 'completed' : 'failed';
 		$existing             = false;
-		$transaction_num      = $purchase->id;
+		$transaction_num      = $purchase->id . '-' . $membership_id;
 		$existing_transaction = \MeprTransaction::get_one_by_trans_num( $transaction_num );
 
 		// get purchase order or invoice.
