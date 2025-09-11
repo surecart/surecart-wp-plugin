@@ -2,8 +2,15 @@ import { ObservableMap } from '@stencil/store';
 import { IconLibraryMutator, IconLibraryResolver } from './components/ui/icon/library';
 import { StripeElementChangeEvent } from '@stripe/stripe-js';
 
+export interface IconLibrary {
+  name: string;
+  resolver: IconLibraryResolver;
+  mutator?: IconLibraryMutator;
+}
+
 declare global {
   interface Window {
+    registry: IconLibrary[];
     grecaptcha: any;
     surecart?: {
       product?: {
