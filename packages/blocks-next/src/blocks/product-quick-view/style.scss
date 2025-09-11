@@ -4,9 +4,8 @@
 
 	.sc-product-quick-view-dialog {
 		position: fixed;
-		bottom: 0;
-		right: 0;
-		margin: 30px;
+		bottom: var(--sc-quick-add-inset, 30px);
+		right: var(--sc-quick-add-inset, 30px);
 		transform: scale(0.95);
 		opacity: 0;
 		z-index: 10000;
@@ -50,47 +49,47 @@
 		}
 
 		&.position-top-left {
-			top: 0;
-			left: 0;
+			top: var(--sc-quick-add-inset, 30px);
+			left: var(--sc-quick-add-inset, 30px);
 		}
 
 		&.position-top-center {
-			top: 0;
+			top: var(--sc-quick-add-inset, 30px);
 			left: 50%;
 			transform: translateX(-50%) !important;
 		}
 
 		&.position-top-right {
-			top: 0;
-			right: 0;
+			top: var(--sc-quick-add-inset, 30px);
+			right: var(--sc-quick-add-inset, 30px);
 		}
 
 		&.position-center-left {
 			top: 50%;
-			left: 0;
+			left: var(--sc-quick-add-inset, 30px);
 			transform: translateY(-50%) !important;
 		}
 
 		&.position-center-right {
 			top: 50%;
-			right: 0;
+			right: var(--sc-quick-add-inset, 30px);
 			transform: translateY(-50%) !important;
 		}
 
 		&.position-bottom-left {
-			bottom: 0;
-			left: 0;
+			bottom: var(--sc-quick-add-inset, 30px);
+			left: var(--sc-quick-add-inset, 30px);
 		}
 
 		&.position-bottom-center {
-			bottom: 0;
+			bottom: var(--sc-quick-add-inset, 30px);
 			left: 50%;
 			transform: translateX(-50%) !important;
 		}
 
 		&.position-bottom-right {
-			bottom: 0;
-			right: 0;
+			bottom: var(--sc-quick-add-inset, 30px);
+			right: var(--sc-quick-add-inset, 30px);
 		}
 	}
 
