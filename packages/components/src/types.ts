@@ -528,6 +528,8 @@ export interface LineItem extends Object {
   locked: boolean;
   swap?: Swap;
   is_swappable?: boolean;
+  note?: string;
+  display_note?: string;
 }
 
 export interface DeletedItem {
@@ -1322,6 +1324,7 @@ export interface ProductState {
   selectedVariant?: Variant;
   variantValues: { option_1?: string; option_2?: string; option_3?: string };
   isProductPage?: boolean;
+  note?: string;
 }
 export interface FeaturedProductMediaAttributes {
   alt: string;

@@ -25,14 +25,16 @@ return [
 <div class="wp-block-group"><!-- wp:surecart/cart-line-item-image {"aspectRatio":"1","width":"","height":"","style":{"layout":{"selfStretch":"fixed","flexSize":"80px"},"border":{"width":"1px","radius":"4px"},"color":{"duotone":"unset"},"spacing":{"margin":{"top":"0","bottom":"0"}}}} /-->
 
 <!-- wp:group {"style":{"layout":{"selfStretch":"fill","flexSize":null},"spacing":{"blockGap":"5px"}},"layout":{"type":"flex","orientation":"vertical","justifyContent":"stretch","flexWrap":"nowrap","verticalAlignment":"top"}} -->
-<div class="wp-block-group"><!-- wp:group {"style":{"layout":{"selfStretch":"fill","flexSize":null}},"layout":{"type":"flex","flexWrap":"nowrap","verticalAlignment":"stretch","justifyContent":"space-between"}} -->
+<div class="wp-block-group"><!-- wp:group {"style":{"layout":{"selfStretch":"fill","flexSize":null}},"spacing":{"blockGap":"var:preset|spacing|60"}},"layout":{"type":"flex","flexWrap":"nowrap","verticalAlignment":"stretch","justifyContent":"space-between"}} -->
 <div class="wp-block-group"><!-- wp:group {"style":{"layout":{"selfStretch":"fill","flexSize":null},"spacing":{"blockGap":"0px"}},"layout":{"type":"default"}} -->
 <div class="wp-block-group"><!-- wp:surecart/cart-line-item-title {"style":{"typography":{"fontStyle":"normal","fontWeight":"500","lineHeight":"1.4","textDecoration":"none"}}} /-->
 
 <!-- wp:group {"style":{"spacing":{"blockGap":"0px"}},"layout":{"type":"default"}} -->
 <div class="wp-block-group"><!-- wp:surecart/cart-line-item-price-name {"style":{"typography":{"fontSize":"14px","lineHeight":"1.4"}}} /-->
 
-<!-- wp:surecart/cart-line-item-variant {"style":{"typography":{"fontSize":"14px","lineHeight":"1.4"}}} /--></div>
+<!-- wp:surecart/cart-line-item-variant {"style":{"typography":{"fontSize":"14px","lineHeight":"1.4"}}} /-->
+
+<!-- wp:surecart/cart-line-item-note {"style":{"typography":{"fontSize":"14px","lineHeight":"1.4"}}} /--></div>
 <!-- /wp:group -->
 
 <!-- wp:surecart/cart-line-item-status {"style":{"typography":{"textAlign":"right"}}} /--></div>

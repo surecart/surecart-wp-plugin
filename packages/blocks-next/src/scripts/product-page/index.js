@@ -266,7 +266,9 @@ const { state, actions } = store('surecart/product-page', {
 		 * Line item to add to cart.
 		 */
 		get lineItem() {
-			const { adHocAmount, selectedPrice } = getContext();
+			const { adHocAmount, selectedPrice, note, noteLabel } =
+				getContext();
+
 			return {
 				price: selectedPrice?.id,
 				quantity: Math.max(
@@ -280,6 +282,10 @@ const { state, actions } = store('surecart/product-page', {
 								: adHocAmount,
 					  }
 					: {}),
+				note:
+					!!noteLabel && !!note
+						? `${noteLabel}: ${note}`
+						: note || '',
 				...(state.selectedVariant?.id
 					? { variant: state.selectedVariant?.id }
 					: {}),
@@ -479,6 +485,23 @@ const { state, actions } = store('surecart/product-page', {
 		setAdHocAmount: (e) => {
 			const context = getContext();
 			context.adHocAmount = parseFloat(e.target.value);
+		},
+
+		/**
+		 * Set the line item note.
+		 */
+		setLineItemNote: (e) => {
+			const context = getContext();
+			context.note = e.target.value || '';
+			context.noteLabel = context.label || '';
+		},
+
+		/**
+		 * Expand the product line item note textarea when clicked or focused.
+		 */
+		expandLineItemNote: (e) => {
+			const context = getContext();
+			context.rows = 3;
 		},
 
 		/**
