@@ -8,7 +8,7 @@
 	"category": "surecart-product-page",
 	"icon": "media-interactive",
 	"example": {},
-	"ancestor": ["surecart/product-buy-buttons", "surecart/product-template"],
+	"ancestor": ["surecart/product-buy-buttons"],
 	"usesContext": ["surecart/product", "postId", "providerBlock"],
 	"attributes": {
 		"add_to_cart": {
@@ -70,6 +70,21 @@
 				"radius": true,
 				"style": true,
 				"width": true
+			}
+		},
+		"__experimentalStyle": {
+			"variations": {
+				"outline": {
+					"border": {
+						"color": "currentColor",
+						"width": "2px",
+						"style": "solid"
+					},
+					"color": {
+						"text": "currentColor",
+						"gradient": "transparent none"
+					}
+				}
 			}
 		}
 	},

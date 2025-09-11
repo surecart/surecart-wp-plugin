@@ -10,6 +10,11 @@
 	> .wp-block-button {
 		display: inline-block;
 		margin: 0;
+		&[style*='font-weight'] {
+			.wp-block-button__link {
+				font-weight: inherit;
+			}
+		}
 	}
 
 	&.is-content-justification-left {

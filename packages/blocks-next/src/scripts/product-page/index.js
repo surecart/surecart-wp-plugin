@@ -1,13 +1,14 @@
 /**
  * WordPress dependencies.
  */
-import { store, getContext } from '@wordpress/interactivity';
+import { store, getContext, getElement } from '@wordpress/interactivity';
 
 /**
  * Internal dependencies.
  */
 const { actions: checkoutActions } = store('surecart/checkout');
 const { actions: cartActions, state: cartState } = store('surecart/cart');
+
 const { addQueryArgs } = wp.url; // TODO: replace with `@wordpress/url` when available.
 const { sprintf, __ } = wp.i18n;
 const { scProductViewed } = require('./events');
@@ -380,13 +381,26 @@ const { state, actions } = store('surecart/product-page', {
 		 * Handle submit callback.
 		 */
 		*handleSubmit(e) {
+			if (e.type === 'keydown' && e.key !== 'Enter') {
+				return true;
+			}
+
 			e.preventDefault(); // prevent the form from submitting.
 			e.stopPropagation(); // prevent the event from bubbling up.
+
+			// Add submitter to event if it doesn't exist (for non-form elements)
+			if (!e.submitter) {
+				const { ref } = getElement();
+				if (ref) {
+					e.submitter = ref;
+				}
+			}
 
 			// if the button hdoes not have a value, add to cart.
 			if (!e?.submitter?.value) {
 				return yield actions.addToCart(e);
 			}
+
 			// otherwise, redirect to the provided url.
 			return window.location.assign(e.submitter.value);
 		},

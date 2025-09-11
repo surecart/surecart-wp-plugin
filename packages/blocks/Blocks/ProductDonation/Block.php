@@ -30,7 +30,7 @@ class Block extends BaseBlock {
 		}
 
 		// no ad_hoc prices.
-		if ( ! count( $product->activeAdHocPrices() ) ) {
+		if ( ! count( $product->active_ad_hoc_prices ) ) {
 			return false;
 		}
 
@@ -88,14 +88,14 @@ class Block extends BaseBlock {
 	 * @return array
 	 */
 	public function getInitialLineItems( $product, $amounts ) {
-		if ( empty( $product->activeAdHocPrices()[0] ) ) {
+		if ( empty( $product->active_ad_hoc_prices[0] ) ) {
 			return array();
 		}
 
 		return array(
 			array(
-				'price'         => $product->activeAdHocPrices()[0]->id,
-				'ad_hoc_amount' => $product->activeAdHocPrices()[0]->amount,
+				'price'         => $product->active_ad_hoc_prices[0]->id,
+				'ad_hoc_amount' => $product->active_ad_hoc_prices[0]->amount,
 				'quantity'      => 1,
 			),
 		);

@@ -158,7 +158,6 @@ add_action(
 			class="sc-lightbox-overlay zoom"
 			aria-label="$dialog_label"
 			data-wp-interactive="surecart/lightbox"
-			data-wp-context='{}'
 			data-wp-bind--role="state.roleAttribute"
 			data-wp-bind--aria-modal="state.ariaModal"
 			data-wp-class--active="state.overlayEnabled"
@@ -441,6 +440,44 @@ add_action(
 				),
 				array(
 					'id'     => '@wordpress/interactivity',
+					'import' => 'dynamic',
+				),
+			),
+			$static_assets['version']
+		);
+
+		// Product Quick View.
+		$static_assets = include trailingslashit( plugin_dir_path( __FILE__ ) ) . 'build/scripts/product-quick-view/index.asset.php';
+		wp_register_script_module(
+			'@surecart/product-quick-view',
+			trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/product-quick-view/index.js',
+			array(
+				array(
+					'id'     => '@surecart/checkout',
+					'import' => 'dynamic',
+				),
+				array(
+					'id'     => '@surecart/product-page',
+					'import' => 'dynamic',
+				),
+				array(
+					'id'     => 'surecart/lightbox',
+					'import' => 'dynamic',
+				),
+				array(
+					'id'     => '@surecart/image-slider',
+					'import' => 'dynamic',
+				),
+				array(
+					'id'     => '@surecart/checkout-events',
+					'import' => 'dynamic',
+				),
+				array(
+					'id'     => '@wordpress/interactivity',
+					'import' => 'dynamic',
+				),
+				array(
+					'id'     => '@wordpress/interactivity-router',
 					'import' => 'dynamic',
 				),
 			),
