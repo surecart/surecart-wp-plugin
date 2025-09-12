@@ -15,9 +15,6 @@ class ReviewsController extends AdminController {
 	 * @return function
 	 */
 	public function index() {
-		// Handle bulk actions and individual actions.
-		$this->handleActions();
-
 		$table = new ReviewsListTable();
 		$table->prepare_items();
 		$this->withHeader(
@@ -30,41 +27,6 @@ class ReviewsController extends AdminController {
 			)
 		);
 		return \SureCart::view( 'admin/reviews/index' )->with( [ 'table' => $table ] );
-	}
-
-	/**
-	 * Handle actions.
-	 *
-	 * @return void
-	 */
-	protected function handleActions() {
-		if ( empty( $_GET['action'] ) || empty( $_GET['id'] ) ) {
-			return;
-		}
-
-		$action = sanitize_text_field( wp_unslash( $_GET['action'] ) );
-		$id     = sanitize_text_field( wp_unslash( $_GET['id'] ) );
-
-		switch ( $action ) {
-			case 'publish':
-				if ( ! wp_verify_nonce( $_GET['_wpnonce'] ?? '', 'publish_review' ) ) {
-					wp_die( esc_html__( 'Security check failed.', 'surecart' ) );
-				}
-				$this->publish();
-				break;
-			case 'unpublish':
-				if ( ! wp_verify_nonce( $_GET['_wpnonce'] ?? '', 'unpublish_review' ) ) {
-					wp_die( esc_html__( 'Security check failed.', 'surecart' ) );
-				}
-				$this->unpublish();
-				break;
-			case 'delete':
-				if ( ! wp_verify_nonce( $_GET['_wpnonce'] ?? '', 'delete_review' ) ) {
-					wp_die( esc_html__( 'Security check failed.', 'surecart' ) );
-				}
-				$this->delete();
-				break;
-		}
 	}
 
 	/**
@@ -117,13 +79,7 @@ class ReviewsController extends AdminController {
 
 		wp_safe_redirect(
 			esc_url_raw(
-				add_query_arg(
-					[
-						'action' => 'edit',
-						'id'     => $id,
-					],
-					admin_url( 'admin.php?page=sc-reviews' )
-				)
+				admin_url( 'admin.php?page=sc-reviews' )
 			)
 		);
 		exit;
@@ -152,13 +108,7 @@ class ReviewsController extends AdminController {
 
 		wp_safe_redirect(
 			esc_url_raw(
-				add_query_arg(
-					[
-						'action' => 'edit',
-						'id'     => $id,
-					],
-					admin_url( 'admin.php?page=sc-reviews' )
-				)
+				admin_url( 'admin.php?page=sc-reviews' )
 			)
 		);
 		exit;

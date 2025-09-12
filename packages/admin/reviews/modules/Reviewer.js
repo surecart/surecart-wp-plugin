@@ -14,29 +14,26 @@ import Box from '../../ui/Box';
 import { addQueryArgs } from '@wordpress/url';
 
 export default ({ customer, loading }) => {
-	if (!customer?.id || loading) {
-		return null;
-	}
-
 	return (
 		<Box
 			title={__('Customer', 'surecart')}
-			css={css`
-				margin-bottom: 1em;
-			`}
+			loading={loading}
 			footer={
-				<div>
-					<ScButton
-						size="small"
-						href={addQueryArgs('admin.php', {
-							page: 'sc-customers',
-							action: 'edit',
-							id: customer?.id,
-						})}
-					>
-						{__('View Customer', 'surecart')}
-					</ScButton>
-				</div>
+				!loading &&
+				customer?.id && (
+					<div>
+						<ScButton
+							size="small"
+							href={addQueryArgs('admin.php', {
+								page: 'sc-customers',
+								action: 'edit',
+								id: customer?.id,
+							})}
+						>
+							{__('View Customer', 'surecart')}
+						</ScButton>
+					</div>
+				)
 			}
 		>
 			<div

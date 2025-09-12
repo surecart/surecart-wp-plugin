@@ -190,9 +190,10 @@ class Review extends Model {
 	 */
 	public function getStatusTypeAttribute() {
 		$types = [
-			'published' => 'success',
-			'in_review' => 'warning',
-			'archived'  => 'default',
+			'published'   => 'success',
+			'in_review'   => 'warning',
+			'unpublished' => 'danger',
+			'archived'    => 'default',
 		];
 		return $types[ $this->status ] ?? 'default';
 	}

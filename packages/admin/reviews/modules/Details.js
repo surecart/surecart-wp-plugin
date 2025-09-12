@@ -13,7 +13,14 @@ import { ScInput, ScTextarea, ScSelect } from '@surecart/components-react';
 import Box from '../../ui/Box';
 import SaveButton from '../../templates/SaveButton';
 
-export default ({ review, updateReview, loading, saving, deleting, ...props }) => {
+export default ({
+	review,
+	updateReview,
+	loading,
+	saving,
+	deleting,
+	...props
+}) => {
 	const { title, body, stars } = review || {};
 
 	return (
@@ -21,9 +28,11 @@ export default ({ review, updateReview, loading, saving, deleting, ...props }) =
 			title={__('Review Details', 'surecart')}
 			loading={loading}
 			footer={
-				<SaveButton busy={loading || saving || deleting}>
-					{__('Save', 'surecart')}
-				</SaveButton>
+				!loading && (
+					<SaveButton busy={loading || saving || deleting}>
+						{__('Save', 'surecart')}
+					</SaveButton>
+				)
 			}
 			{...props}
 		>

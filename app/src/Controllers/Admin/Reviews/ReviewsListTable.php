@@ -352,6 +352,8 @@ class ReviewsListTable extends ListTable {
 	}
 
 	/**
+	 * Get the bulk actions.
+	 *
 	 * @return array
 	 */
 	protected function get_bulk_actions() {
@@ -368,9 +370,7 @@ class ReviewsListTable extends ListTable {
 	 * @return string|null
 	 */
 	private function getFilteredStatus() {
-		return ! empty( $_GET['status'] ) && 'all' !== $_GET['status']
-			? sanitize_text_field( wp_unslash( $_GET['status'] ) )
-			: null;
+		return ! empty( $_GET['status'] ) && 'all' !== $_GET['status'] ? sanitize_text_field( wp_unslash( $_GET['status'] ) ) : null; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 	}
 
 	/**
@@ -380,10 +380,10 @@ class ReviewsListTable extends ListTable {
 	 */
 	private function getStatuses(): array {
 		return array(
-			'all'       => __( 'All', 'surecart' ),
-			'published' => __( 'Published', 'surecart' ),
-			'in_review' => __( 'In Review', 'surecart' ),
-			'archived'  => __( 'Archived', 'surecart' ),
+			'all'         => __( 'All', 'surecart' ),
+			'in_review'   => __( 'In Review', 'surecart' ),
+			'published'   => __( 'Published', 'surecart' ),
+			'unpublished' => __( 'Unpublished', 'surecart' ),
 		);
 	}
 }

@@ -11,19 +11,18 @@ import { __ } from '@wordpress/i18n';
  */
 import Box from '../../ui/Box';
 import Definition from '../../ui/Definition';
+import { ScTag } from '@surecart/components-react';
 
 export default ({ review, loading }) => {
-	if (loading) {
-		return null;
-	}
-
 	const { status_display_text, updated_at_date_time, created_at_date_time } =
 		review || {};
 
 	return (
-		<Box title={__('Status', 'surecart')}>
+		<Box title={__('Status', 'surecart')} loading={loading}>
 			<Definition title={__('Status', 'surecart')}>
-				{status_display_text || '-'}
+				<ScTag type={review?.status_type || 'default'}>
+					{status_display_text || '-'}
+				</ScTag>
 			</Definition>
 
 			{!!created_at_date_time && (
