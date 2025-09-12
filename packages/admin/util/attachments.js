@@ -124,10 +124,10 @@ export const extractVideoThumbnail = (videoUrl, seekTime = 1, options = {}) => {
 	}
 
 	const {
-		maxWidth = 800,
-		maxHeight = 600,
+		maxWidth = 1600,
+		maxHeight = 1200,
 		quality = 0.8,
-		format = 'jpeg',
+		format = 'png',
 		timeout = 30000, // 30 seconds timeout.
 	} = options;
 
