@@ -11,12 +11,16 @@ class GalleryItemVideoAttachment extends ModelsGalleryItem implements GalleryIte
 	/**
 	 * Create a new gallery item.
 	 *
-	 * @param int|\WP_Post $item The item.
+	 * @param int|array|\WP_Post $item The item.
 	 *
 	 * @return void
 	 */
 	public function __construct( $item ) {
-		$this->item = get_post( $item['id'] ?? $item );
+		if ( is_array( $item ) && isset( $item['id'] ) ) {
+			$item = $item['id'];
+		}
+
+		$this->item = get_post( $item );
 	}
 
 	/**
@@ -135,8 +139,8 @@ class GalleryItemVideoAttachment extends ModelsGalleryItem implements GalleryIte
 		if ( empty( $this->posterId() ) ) {
 			return (object) [
 				'src'   => apply_filters( 'surecart/product-video-poster/fallback_src', trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'images/placeholder.jpg' ),
-				'alt'   => get_the_title() ?? __( 'Product Video', 'surecart' ),
-				'title' => get_the_title() ?? __( 'Product Video', 'surecart' ),
+				'alt'   => ! empty( get_the_title() ) ? get_the_title() : __( 'Product Video', 'surecart' ),
+				'title' => ! empty( get_the_title() ) ? get_the_title() : __( 'Product Video', 'surecart' ),
 			];
 		}
 
