@@ -13,9 +13,9 @@
 			<?php foreach ( $gallery as $index => $media ) : ?>
 				<div
 					data-wp-interactive='{ "namespace": "surecart/product-page" }'
-					data-wp-key="<?php echo esc_attr( $media->id ); ?>"
 					data-wp-class--swiper-slide="state.shouldDisplayImage"
 					data-wp-style--display="state.imageDisplay"
+					data-wp-key="<?php echo esc_attr( $media->id ); ?>"
 					<?php
 					echo wp_kses_data(
 						wp_interactivity_data_wp_context(
@@ -26,38 +26,10 @@
 					);
 					?>
 				>
-					<?php if ( $media->isVideo() ) : ?>
-						<?php echo $media->html( 'full' ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
-					<?php else : ?>
-						<div
-							data-wp-interactive='{ "namespace": "surecart/lightbox" }'
-							<?php echo wp_kses_data( get_block_wrapper_attributes( [ 'class' => 'sc-lightbox-container' ] ) ); ?>
-							<?php
-							echo wp_kses_data(
-								wp_interactivity_data_wp_context(
-									[
-										'imageId' => $media->id, // this is needed to keep track of the image in the lightbox.
-									]
-								)
-							);
-							?>
-						>
-							<?php
-								echo wp_kses(
-									$media->withLightbox( $attributes['lightbox'] )->html(
-										'large',
-										array_filter(
-											[
-												'loading' => $index > 0 ? 'lazy' : 'eager',
-												'style'   => ( ! empty( $width ) ? 'max-width : min(' . esc_attr( $width ) . ', 100%);' : '' ) . ';' . ( ! $auto_height && ! empty( $attributes['height'] ) ? "height: {$attributes['height']}" : '' ),
-											]
-										)
-									),
-									sc_allowed_svg_html()
-								);
-							?>
-						</div>
-					<?php endif; ?>
+					<?php
+					$loading = $thumb > 0 ? 'lazy' : 'eager';
+					include $media->isVideo() ? 'video.php' : 'image.php';
+					?>
 				</div>
 			<?php endforeach; ?>
 		</div>
@@ -92,7 +64,7 @@
 						>
 							<?php
 								echo wp_kses(
-									$media->thumbnail(
+									$media->html(
 										'thumbnail',
 										array(
 											'loading' => $thumb_index > $attributes['thumbnails_per_page'] ? 'lazy' : 'eager',
