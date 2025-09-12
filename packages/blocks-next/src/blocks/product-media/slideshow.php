@@ -27,7 +27,7 @@
 					?>
 				>
 					<?php
-					$loading = $thumb > 0 ? 'lazy' : 'eager';
+					$loading = $index > 0 ? 'lazy' : 'eager';
 					include $media->isVideo() ? 'video.php' : 'image.php';
 					?>
 				</div>
