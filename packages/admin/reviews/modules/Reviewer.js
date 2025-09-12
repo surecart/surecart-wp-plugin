@@ -1,0 +1,55 @@
+/** @jsx jsx */
+import { css, jsx } from '@emotion/core';
+
+/**
+ * External dependencies.
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
+ * Internal dependencies.
+ */
+import { ScButton, ScLineItem } from '@surecart/components-react';
+import Box from '../../ui/Box';
+import { addQueryArgs } from '@wordpress/url';
+
+export default ({ customer, loading }) => {
+	if (!customer || loading) {
+		return null;
+	}
+
+	return (
+		<Box
+			title={__('Reviewer', 'surecart')}
+			css={css`
+				margin-bottom: 1em;
+			`}
+			footer={
+				<div>
+					<ScButton
+						size="small"
+						href={addQueryArgs('admin.php', {
+							page: 'sc-customers',
+							action: 'edit',
+							id: customer?.id,
+						})}
+					>
+						{__('View Reviewer', 'surecart')}
+					</ScButton>
+				</div>
+			}
+		>
+			<div
+				css={css`
+					display: grid;
+					gap: 1em;
+				`}
+			>
+				<ScLineItem>
+					<span slot="title">{customer?.name}</span>
+					<span slot="description">{customer?.email}</span>
+				</ScLineItem>
+			</div>
+		</Box>
+	);
+};

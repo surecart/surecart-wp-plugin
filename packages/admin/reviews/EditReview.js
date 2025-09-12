@@ -32,6 +32,10 @@ import Error from '../components/Error';
 import Logo from '../templates/Logo';
 import UpdateModel from '../templates/UpdateModel';
 import Details from './modules/Details';
+import Customer from './modules/Reviewer';
+import Product from './modules/Product';
+import Purchase from './modules/Purchase';
+import Status from './modules/Status';
 
 export default () => {
 	const [loading, setLoading] = useState(false);
@@ -42,45 +46,54 @@ export default () => {
 	const { deleteEntityRecord, editEntityRecord, receiveEntityRecords } =
 		useDispatch(coreStore);
 	const id = useSelect((select) => select(dataStore).selectPageId());
+
 	const baseUrl = select(coreStore).getEntityConfig(
 		'surecart',
 		'review'
 	)?.baseURL;
 
-	const {
-		review,
-		isSaving,
-		loadError,
-		isDeleting,
-		hasLoadedReview,
-	} = useSelect(
-		(select) => {
-			const entityData = ['surecart', 'review', id];
+	const { review, isSaving, loadError, isDeleting, hasLoadedReview } =
+		useSelect(
+			(select) => {
+				const entityData = [
+					'surecart',
+					'review',
+					id,
+					{
+						expand: ['customer', 'product', 'purchase', 'product.price'],
+					},
+				];
 
-			return {
-				review: select(coreStore).getEditedEntityRecord(
-					...entityData
-				),
-				isSaving: select(coreStore)?.isSavingEntityRecord?.(
-					...entityData
-				),
-				loadError: select(coreStore)?.getResolutionError?.(
-					'getEditedEntityRecord',
-					...entityData
-				),
-				isDeleting: select(coreStore)?.isDeletingEntityRecord?.(
-					...entityData
-				),
-				hasLoadedReview: select(
-					coreStore
-				)?.hasFinishedResolution?.('getEntityRecord', [...entityData]),
-			};
-		},
-		[id]
-	);
+				return {
+					review: select(coreStore).getEditedEntityRecord(
+						...entityData
+					),
+					isSaving: select(coreStore)?.isSavingEntityRecord?.(
+						...entityData
+					),
+					loadError: select(coreStore)?.getResolutionError?.(
+						'getEditedEntityRecord',
+						...entityData
+					),
+					isDeleting: select(coreStore)?.isDeletingEntityRecord?.(
+						...entityData
+					),
+					hasLoadedReview: select(coreStore)?.hasFinishedResolution?.(
+						'getEntityRecord',
+						[...entityData]
+					),
+				};
+			},
+			[id]
+		);
+
+	console.log('review', review);
 
 	const updateReview = (data) =>
-		editEntityRecord('surecart', 'review', id, data);
+		editEntityRecord('surecart', 'review', id, {
+			...review,
+			...data,
+		});
 
 	/**
 	 * Update the review.
@@ -102,15 +115,9 @@ export default () => {
 	const onDelete = async () => {
 		try {
 			setError(null);
-			await deleteEntityRecord(
-				'surecart',
-				'review',
-				id,
-				undefined,
-				{
-					throwOnError: true,
-				}
-			);
+			await deleteEntityRecord('surecart', 'review', id, undefined, {
+				throwOnError: true,
+			});
 			window.location.assign('admin.php?page=sc-reviews');
 		} catch (e) {
 			console.error(e);
@@ -250,7 +257,9 @@ export default () => {
 								</ScMenuItem>
 							)}
 							{review?.status === 'published' && (
-								<ScMenuItem onClick={() => setModal('unpublish')}>
+								<ScMenuItem
+									onClick={() => setModal('unpublish')}
+								>
 									<ScIcon
 										slot="prefix"
 										style={{ opacity: 0.5 }}
@@ -272,6 +281,23 @@ export default () => {
 					</ScDropdown>
 				</div>
 			}
+			sidebar={
+				<>
+					<Status review={review || {}} loading={!hasLoadedReview} />
+					<Customer
+						customer={review?.customer}
+						loading={!hasLoadedReview}
+					/>
+					<Product
+						product={review?.product}
+						loading={!hasLoadedReview}
+					/>
+					<Purchase
+						purchase={review?.purchase}
+						loading={!hasLoadedReview}
+					/>
+				</>
+			}
 		>
 			<Error
 				error={error || loadError}
@@ -280,7 +306,7 @@ export default () => {
 			/>
 			<Details
 				review={review || {}}
-				onUpdate={updateReview}
+				updateReview={updateReview}
 				loading={!hasLoadedReview}
 				saving={isSaving}
 				deleting={isDeleting}
@@ -293,7 +319,10 @@ export default () => {
 				}}
 				onCancel={() => setModal(false)}
 			>
-				{__('Are you sure you want to publish this review?', 'surecart')}
+				{__(
+					'Are you sure you want to publish this review?',
+					'surecart'
+				)}
 			</ConfirmDialog>
 
 			<ConfirmDialog
@@ -304,7 +333,10 @@ export default () => {
 				}}
 				onCancel={() => setModal(false)}
 			>
-				{__('Are you sure you want to unpublish this review?', 'surecart')}
+				{__(
+					'Are you sure you want to unpublish this review?',
+					'surecart'
+				)}
 			</ConfirmDialog>
 
 			<ConfirmDialog
