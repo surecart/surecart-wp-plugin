@@ -248,6 +248,7 @@ class AdminMenuPageService {
 		$this->pages += array(
 			'coupons'                 => \add_submenu_page( $this->slug, __( 'Coupons', 'surecart' ), __( 'Coupons', 'surecart' ), 'edit_sc_coupons', 'sc-coupons', '__return_false' ),
 			'licenses'                => \add_submenu_page( $this->slug, __( 'Licenses', 'surecart' ), __( 'Licenses', 'surecart' ), 'edit_sc_products', 'sc-licenses', '__return_false' ),
+			'reviews'                 => \add_submenu_page( $this->slug, __( 'Reviews', 'surecart' ), __( 'Reviews', 'surecart' ), 'edit_sc_reviews', 'sc-reviews', '__return_false' ),
 		);
 
 		/**

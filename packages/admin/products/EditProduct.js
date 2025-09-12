@@ -36,6 +36,7 @@ import Inventory from './modules/Inventory';
 import Affiliation from './modules/Affiliation';
 import Collection from './modules/Collection';
 import Taxonomies from './modules/Taxonomies';
+import Reviews from './modules/Reviews';
 import Editor from './components/Editor';
 import ConfirmNavigation from './components/ConfirmNavigation';
 import ProductOptions from './modules/ProductOptions';
@@ -369,6 +370,11 @@ export default ({ id, setBrowserURL }) => {
 							loading={!hasLoadedProduct}
 						/>
 						<Tax
+							product={product}
+							updateProduct={editProduct}
+							loading={!hasLoadedProduct}
+						/>
+						<Reviews
 							product={product}
 							updateProduct={editProduct}
 							loading={!hasLoadedProduct}

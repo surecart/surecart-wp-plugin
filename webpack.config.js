@@ -81,6 +81,10 @@ module.exports = {
 			__dirname,
 			'packages/admin/licenses/index.js'
 		),
+		['admin/reviews']: path.resolve(
+			__dirname,
+			'packages/admin/reviews/index.js'
+		),
 		['admin/product-groups']: path.resolve(
 			__dirname,
 			'packages/admin/product-groups/index.js'
@@ -116,6 +120,10 @@ module.exports = {
 		['admin/settings/affiliation-protocol']: path.resolve(
 			__dirname,
 			'packages/admin/settings/affiliation-protocol/index.js'
+		),
+		['admin/settings/review-protocol']: path.resolve(
+			__dirname,
+			'packages/admin/settings/review-protocol/index.js'
 		),
 		['admin/settings/abandoned']: path.resolve(
 			__dirname,
