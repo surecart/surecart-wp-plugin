@@ -4,16 +4,15 @@ namespace SureCart\Models;
 /**
  * Factory for creating appropriate GalleryItem instances based on attachment type
  */
-class GalleryItemAttachmentFactory {
+class GalleryItemAttachment {
 	/**
 	 * Create a gallery item based on the attachment type.
 	 *
 	 * @param int|\WP_Post $item           The attachment item.
-	 * @param string|null  $featured_image The featured image URL for fallback.
 	 *
 	 * @return GalleryItemImageAttachment|GalleryItemVideoAttachment
 	 */
-	public static function create( $item ) {
+	protected function create( $item ) {
 		// Get the post object to check mime type.
 		$post = get_post( $item['id'] ?? $item );
 
@@ -24,5 +23,17 @@ class GalleryItemAttachmentFactory {
 
 		// Default to image attachment.
 		return new GalleryItemImageAttachment( $item );
+	}
+
+	/**
+	 * Static Facade Accessor
+	 *
+	 * @param string $method Method to call.
+	 * @param mixed  $params Method params.
+	 *
+	 * @return mixed
+	 */
+	public static function __callStatic( $method, $params ) {
+		return call_user_func_array( [ new static(), $method ], $params );
 	}
 }
