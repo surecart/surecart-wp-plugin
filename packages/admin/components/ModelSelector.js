@@ -7,7 +7,6 @@ import SelectModel from './SelectModel';
 export default ({
 	name,
 	kind = 'surecart',
-	value,
 	open = false,
 	requestQuery,
 	renderChoices,
@@ -103,7 +102,7 @@ export default ({
 		return choices.map((item) => ({
 			label: !!display ? display(item) : item.name,
 			value: item.id,
-			disabled: exclude.includes(item.id),
+			disabled: exclude?.includes(item.id) || false,
 		}));
 	};
 
