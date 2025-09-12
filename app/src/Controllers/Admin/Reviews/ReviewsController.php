@@ -24,7 +24,7 @@ class ReviewsController extends AdminController {
 			array(
 				'breadcrumbs' => [
 					'reviews' => [
-						'title' => __( 'Reviews', 'surecart' ),
+						'title' => __( 'Product Reviews', 'surecart' ),
 					],
 				],
 			)
