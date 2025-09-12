@@ -13,7 +13,7 @@ import Box from '../../ui/Box';
 import ProductLineItem from '../../ui/ProductLineItem';
 
 export default ({ product, loading }) => {
-	if (!product || loading) {
+	if (!product?.id || loading) {
 		return null;
 	}
 

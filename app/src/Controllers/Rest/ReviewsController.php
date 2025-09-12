@@ -22,18 +22,14 @@ class ReviewsController extends RestController {
 	 * @return \WP_REST_Response|\WP_Error Response object on success, or WP_Error object on failure.
 	 */
 	public function publish( \WP_REST_Request $request ) {
-		$model = $this->middleware( new $this->class(), $request );
+		$class     = new $this->class( $request->get_json_params() );
+		$class->id = $request['id'];
+		$model     = $this->middleware( $class, $request );
 		if ( is_wp_error( $model ) ) {
 			return $model;
 		}
-
-		$model = $model->publish();
-
-		if ( is_wp_error( $model ) ) {
-			return $model;
-		}
-
-		return rest_ensure_response( $model );
+		
+		return $model->where( $request->get_query_params() )->publish( $request['id'] );
 	}
 
 	/**
@@ -43,17 +39,13 @@ class ReviewsController extends RestController {
 	 * @return \WP_REST_Response|\WP_Error Response object on success, or WP_Error object on failure.
 	 */
 	public function unpublish( \WP_REST_Request $request ) {
-		$model = $this->middleware( new $this->class(), $request );
+		$class     = new $this->class( $request->get_json_params() );
+		$class->id = $request['id'];
+		$model     = $this->middleware( $class, $request );
 		if ( is_wp_error( $model ) ) {
 			return $model;
 		}
-
-		$model = $model->unpublish();
-
-		if ( is_wp_error( $model ) ) {
-			return $model;
-		}
-
-		return rest_ensure_response( $model );
+		
+		return $model->where( $request->get_query_params() )->unpublish( $request['id'] );
 	}
 }

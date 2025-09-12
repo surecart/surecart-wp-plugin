@@ -14,13 +14,13 @@ import Box from '../../ui/Box';
 import { addQueryArgs } from '@wordpress/url';
 
 export default ({ customer, loading }) => {
-	if (!customer || loading) {
+	if (!customer?.id || loading) {
 		return null;
 	}
 
 	return (
 		<Box
-			title={__('Reviewer', 'surecart')}
+			title={__('Customer', 'surecart')}
 			css={css`
 				margin-bottom: 1em;
 			`}
@@ -34,7 +34,7 @@ export default ({ customer, loading }) => {
 							id: customer?.id,
 						})}
 					>
-						{__('View Reviewer', 'surecart')}
+						{__('View Customer', 'surecart')}
 					</ScButton>
 				</div>
 			}

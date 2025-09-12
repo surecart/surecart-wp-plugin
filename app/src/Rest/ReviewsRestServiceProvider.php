@@ -24,6 +24,13 @@ class ReviewsRestServiceProvider extends RestServiceProvider implements RestServ
 	protected $controller = ReviewsController::class;
 
 	/**
+	 * Methods allowed for the model.
+	 *
+	 * @var array
+	 */
+	protected $methods = [ 'index', 'find', 'edit', 'delete', 'unpublish', 'publish' ];
+
+	/**
 	 * Register Additional REST Routes
 	 *
 	 * @return void

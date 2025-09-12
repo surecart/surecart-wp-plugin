@@ -13,7 +13,7 @@ import { ScInput } from '@surecart/components-react';
 import Box from '../../ui/Box';
 
 export default ({ purchase, loading }) => {
-	if (!purchase || loading) {
+	if (!purchase?.id || loading) {
 		return null;
 	}
 

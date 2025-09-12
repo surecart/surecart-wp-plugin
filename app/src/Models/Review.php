@@ -47,20 +47,28 @@ class Review extends Model {
 	/**
 	 * Publish the review.
 	 *
+	 * @param string $id Review ID.
+	 *
 	 * @return $this|\WP_Error
 	 */
-	public function publish() {
-		if ( empty( $this->id ) ) {
-			return new \WP_Error( 'missing_id', __( 'Missing review ID.', 'surecart' ) );
+	public function publish( $id = null ) {
+		if ( $id ) {
+			$this->setAttribute( 'id', $id );
 		}
 
-		$published = $this->makeRequest(
+		if ( $this->fireModelEvent( 'publishing' ) === false ) {
+			return $this;
+		}
+
+		if ( empty( $this->attributes['id'] ) ) {
+			return new \WP_Error( 'not_saved', 'Please create the review.' );
+		}
+
+		$published = \SureCart::request(
+			$this->endpoint . '/' . $this->attributes['id'] . '/publish',
 			[
 				'method' => 'PATCH',
-				'url'    => $this->endpoint . '/' . $this->id,
-				'body'   => [
-					'status' => 'published',
-				],
+				'query'  => $this->query,
 			]
 		);
 
@@ -68,27 +76,38 @@ class Review extends Model {
 			return $published;
 		}
 
-		$this->resetAttributes( $published );
+		$this->resetAttributes();
+		$this->fill( $published );
+		$this->fireModelEvent( 'published' );
+
 		return $this;
 	}
 
 	/**
 	 * Unpublish the review.
 	 *
+	 * @param string $id Review ID.
+	 *
 	 * @return $this|\WP_Error
 	 */
-	public function unpublish() {
-		if ( empty( $this->id ) ) {
-			return new \WP_Error( 'missing_id', __( 'Missing review ID.', 'surecart' ) );
+	public function unpublish( $id = null ) {
+		if ( $id ) {
+			$this->setAttribute( 'id', $id );
 		}
 
-		$unpublished = $this->makeRequest(
+		if ( $this->fireModelEvent( 'unpublishing' ) === false ) {
+			return $this;
+		}
+
+		if ( empty( $this->attributes['id'] ) ) {
+			return new \WP_Error( 'not_saved', 'Please create the review.' );
+		}
+
+		$unpublished = \SureCart::request(
+			$this->endpoint . '/' . $this->attributes['id'] . '/unpublish',
 			[
 				'method' => 'PATCH',
-				'url'    => $this->endpoint . '/' . $this->id,
-				'body'   => [
-					'status' => 'in_review',
-				],
+				'query'  => $this->query,
 			]
 		);
 
@@ -96,7 +115,10 @@ class Review extends Model {
 			return $unpublished;
 		}
 
-		$this->resetAttributes( $unpublished );
+		$this->resetAttributes();
+		$this->fill( $unpublished );
+		$this->fireModelEvent( 'unpublished' );
+
 		return $this;
 	}
 
@@ -144,9 +166,9 @@ class Review extends Model {
 	 */
 	public function getStatusDisplayAttribute() {
 		$statuses = [
-			'published' => __( 'Published', 'surecart' ),
-			'in_review' => __( 'In Review', 'surecart' ),
-			'archived'  => __( 'Archived', 'surecart' ),
+			'published'   => __( 'Published', 'surecart' ),
+			'unpublished' => __( 'Unpublished', 'surecart' ),
+			'archived'    => __( 'Archived', 'surecart' ),
 		];
 
 		return $statuses[ $this->status ] ?? $this->status;
