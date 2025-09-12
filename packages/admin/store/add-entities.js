@@ -484,4 +484,18 @@ dispatch(coreStore).addEntities([
 		baseURL: '/surecart/v1/swaps',
 		baseURLParams: { context: 'edit' },
 	},
+	{
+		name: 'review',
+		kind: 'surecart',
+		label: __('Review', 'surecart'),
+		baseURL: '/surecart/v1/reviews',
+		baseURLParams: { context: 'edit' },
+	},
+	{
+		name: 'review_protocol',
+		kind: 'surecart',
+		label: __('Review Protocol', 'surecart'),
+		baseURL: '/surecart/v1/review_protocol',
+		baseURLParams: { context: 'edit' },
+	},
 ]);

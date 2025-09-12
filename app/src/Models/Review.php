@@ -151,4 +151,27 @@ class Review extends Model {
 
 		return $statuses[ $this->status ] ?? $this->status;
 	}
+
+	/**
+	 * Get the status display text.
+	 *
+	 * @return string
+	 */
+	public function getStatusDisplayTextAttribute() {
+		return $this->status_display;
+	}
+
+	/**
+	 * Get the status type for tag styling.
+	 *
+	 * @return string
+	 */
+	public function getStatusTypeAttribute() {
+		$types = [
+			'published' => 'success',
+			'in_review' => 'warning',
+			'archived'  => 'default',
+		];
+		return $types[ $this->status ] ?? 'default';
+	}
 }

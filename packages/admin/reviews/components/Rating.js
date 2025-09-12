@@ -1,1 +1,0 @@
-// The sc-rating component is already loaded through the surecart-components script

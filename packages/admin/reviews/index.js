@@ -1,9 +1,21 @@
-import { __ } from '@wordpress/i18n';
-import ReviewsList from './ReviewsList';
+/**
+ * External dependencies.
+ */
+import { createRoot } from '@wordpress/element';
 
-window.addEventListener('load', () => {
-	const reviewsList = document.querySelector('sc-reviews-list');
-	if (reviewsList) {
-		wp.element.render(<ReviewsList />, reviewsList);
-	}
-});
+/**
+ * register store and entities.
+ */
+import '../store/add-entities';
+
+/**
+ * App
+ */
+import Review from './Review';
+
+/**
+ * Render
+ */
+const container = document.getElementById('app');
+const root = createRoot(container);
+root.render(<Review />);

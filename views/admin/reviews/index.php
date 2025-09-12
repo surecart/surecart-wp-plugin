@@ -1,5 +1,4 @@
 <div class="wrap">
-	<?php \SureCart::render( 'layouts/partials/admin-index-styles' ); ?>
 	<?php
 	\SureCart::render(
 		'layouts/partials/admin-index-header',
@@ -9,10 +8,10 @@
 	);
 	?>
 
-	<sc-spacing style="--spacing: var(--sc-spacing-large)">
-		<sc-reviews-list
-			api-token="<?php echo esc_attr( \SureCart::account()->api_token ); ?>"
-		>
-		</sc-reviews-list>
-	</sc-spacing>
+	<?php $table->search_form( __( 'Search', 'surecart' ), 'sc-search-reviews' ); ?>
+
+	<form id="reviews-filter" method="get">
+		<?php $table->views(); ?>
+		<?php $table->display(); ?>
+	</form>
 </div>

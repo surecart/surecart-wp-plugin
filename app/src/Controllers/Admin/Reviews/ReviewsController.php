@@ -15,10 +15,56 @@ class ReviewsController extends AdminController {
 	 * @return function
 	 */
 	public function index() {
-		// enqueue needed script.
-		add_action( 'admin_enqueue_scripts', \SureCart::closure()->method( ReviewsScriptsController::class, 'enqueue' ) );
+		// Handle bulk actions and individual actions.
+		$this->handleActions();
 
-		return \SureCart::view( 'admin/reviews/index' );
+		$table = new ReviewsListTable();
+		$table->prepare_items();
+		$this->withHeader(
+			array(
+				'breadcrumbs' => [
+					'reviews' => [
+						'title' => __( 'Reviews', 'surecart' ),
+					],
+				],
+			)
+		);
+		return \SureCart::view( 'admin/reviews/index' )->with( [ 'table' => $table ] );
+	}
+
+	/**
+	 * Handle actions.
+	 *
+	 * @return void
+	 */
+	protected function handleActions() {
+		if ( empty( $_GET['action'] ) || empty( $_GET['id'] ) ) {
+			return;
+		}
+
+		$action = sanitize_text_field( wp_unslash( $_GET['action'] ) );
+		$id     = sanitize_text_field( wp_unslash( $_GET['id'] ) );
+
+		switch ( $action ) {
+			case 'publish':
+				if ( ! wp_verify_nonce( $_GET['_wpnonce'] ?? '', 'publish_review' ) ) {
+					wp_die( esc_html__( 'Security check failed.', 'surecart' ) );
+				}
+				$this->publish();
+				break;
+			case 'unpublish':
+				if ( ! wp_verify_nonce( $_GET['_wpnonce'] ?? '', 'unpublish_review' ) ) {
+					wp_die( esc_html__( 'Security check failed.', 'surecart' ) );
+				}
+				$this->unpublish();
+				break;
+			case 'delete':
+				if ( ! wp_verify_nonce( $_GET['_wpnonce'] ?? '', 'delete_review' ) ) {
+					wp_die( esc_html__( 'Security check failed.', 'surecart' ) );
+				}
+				$this->delete();
+				break;
+		}
 	}
 
 	/**
@@ -32,16 +78,20 @@ class ReviewsController extends AdminController {
 			wp_die( esc_html__( 'Please provide a review id.', 'surecart' ) );
 		}
 
-		$review = Review::with( [ 'customer', 'product', 'purchase' ] )->find( $id );
-		if ( is_wp_error( $review ) ) {
-			wp_die( esc_html( $review->get_error_message() ) );
-		}
+		// enqueue needed script.
+		add_action( 'admin_enqueue_scripts', \SureCart::closure()->method( ReviewsScriptsController::class, 'enqueue' ) );
 
-		return \SureCart::view( 'admin/reviews/edit' )->with(
+		$this->preloadPaths(
 			[
-				'review' => $review,
+				'/wp/v2/users/me',
+				'/wp/v2/types?context=view',
+				'/wp/v2/types?context=edit',
+				'/surecart/v1/reviews/' . $id . '?context=edit',
 			]
 		);
+
+		// return view.
+		return '<div id="app"></div>';
 	}
 
 	/**
