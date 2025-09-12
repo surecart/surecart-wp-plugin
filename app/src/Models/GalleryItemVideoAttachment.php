@@ -24,7 +24,7 @@ class GalleryItemVideoAttachment extends ModelsGalleryItem implements GalleryIte
 	 *
 	 * @return int The Poster image ID.
 	 */
-	public function posterId(): int {
+	public function posterId() {
 		return $this->getMetadata( 'thumbnail_image' )['id'] ?? $this->featured_image->ID ?? null;
 	}
 
@@ -49,7 +49,7 @@ class GalleryItemVideoAttachment extends ModelsGalleryItem implements GalleryIte
 	}
 
 	/**
-	 * Get the video data.
+	 * Get the poster image attributes.
 	 *
 	 * @param string $size The size of the video.
 	 * @param array  $attr The attributes for the tag.
@@ -59,7 +59,11 @@ class GalleryItemVideoAttachment extends ModelsGalleryItem implements GalleryIte
 	public function attributes( $size = 'full', $attr = [] ): object {
 		// If the poster ID is not set, return null.
 		if ( empty( $this->posterId() ) ) {
-			return (object) [];
+			return (object) [
+				'src'   => apply_filters( 'surecart/product-video-poster/fallback_src', trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'images/placeholder.jpg' ),
+				'alt'   => get_the_title() ?? __( 'Product Video', 'surecart' ),
+				'title' => get_the_title() ?? __( 'Product Video', 'surecart' ),
+			];
 		}
 
 		$image = wp_get_attachment_image_src( $this->posterId(), $size, $attr['icon'] ?? false, $attr );
@@ -224,7 +228,7 @@ class GalleryItemVideoAttachment extends ModelsGalleryItem implements GalleryIte
 			$attr,
 			array(
 				'src'       => $video,
-				'poster'    => $image_attributes->src,
+				'poster'    => $image_attributes->src ?? '',
 				'class'     => "attachment-$size_class size-$size_class video-attachment",
 				'alt'       => trim( wp_strip_all_tags( get_post_meta( $this->item->ID, '_wp_attachment_image_alt', true ) ) ),
 				'mime_type' => get_post_mime_type( $this->item->ID ),
