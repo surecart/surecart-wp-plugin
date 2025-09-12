@@ -1,14 +1,14 @@
 <?php
 // get the video and poster attributes.
-$video = $media->video_attributes( 'large' );
+$video = $media->video_attributes( apply_filters( 'surecart/product-video-poster/size', 'large' ) );
 
 // render the video html.
 $html = SureCart::view( 'media/video' )->with(
 	[
 		'poster' => $video->poster,
 		'src'    => $video->src,
-		'alt'    => $video->alt,
-		'title'  => $video->title ?? get_the_title(),
+		'alt'    => ! empty( $video->alt ) ? $video->alt : sprintf( /* translators: %s is the video title. */ __( 'Video: %s', 'surecart' ), get_the_title() ),
+		'title'  => ! empty( $video->title ) ? $video->title : get_the_title(),
 		'style'  => ! empty( $media->getMetadata( 'aspect_ratio' ) ) ? 'aspect-ratio: ' . esc_attr( $media->getMetadata( 'aspect_ratio' ) ) . ';' : '',
 	]
 )->toString();
