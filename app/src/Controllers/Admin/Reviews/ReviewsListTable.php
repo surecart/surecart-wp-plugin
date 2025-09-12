@@ -91,20 +91,20 @@ class ReviewsListTable extends ListTable {
 	public function get_columns() {
 		return array_merge(
 			[
-				'cb'           => '<input type="checkbox" />',
-				'review'       => __( 'Review', 'surecart' ),
-				'rating'       => __( 'Rating', 'surecart' ),
-				'customer'     => __( 'Customer', 'surecart' ),
-				'product'      => __( 'Product', 'surecart' ),
-				'status'       => __( 'Status', 'surecart' ),
-				'date'         => __( 'Date', 'surecart' ),
+				'cb'       => '<input type="checkbox" />',
+				'review'   => __( 'Review', 'surecart' ),
+				'rating'   => __( 'Rating', 'surecart' ),
+				'customer' => __( 'Customer', 'surecart' ),
+				'product'  => __( 'Product', 'surecart' ),
+				'status'   => __( 'Status', 'surecart' ),
+				'date'     => __( 'Date', 'surecart' ),
 			],
 			parent::get_columns()
 		);
 	}
 
 	/**
-	 * Define which columns are hidden
+	 * Define which columns are hidden.
 	 *
 	 * @return array
 	 */
@@ -187,11 +187,11 @@ class ReviewsListTable extends ListTable {
 		?>
 		<div style="display: flex; align-items: center; gap: 0.25em;">
 			<?php for ( $i = 1; $i <= 5; $i++ ) : ?>
-				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="<?php echo $i <= $review->rating ? '#fbbf24' : 'none'; ?>" stroke="<?php echo $i <= $review->rating ? '#fbbf24' : '#e5e7eb'; ?>" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="<?php echo $i <= absint( $review->stars ) ? '#fbbf24' : 'none'; ?>" stroke="<?php echo $i <= absint( $review->stars ) ? '#fbbf24' : '#e5e7eb'; ?>" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 					<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
 				</svg>
 			<?php endfor; ?>
-			<span style="margin-left: 0.5em; color: #6b7280;">(<?php echo esc_html( $review->rating ); ?>)</span>
+			<span style="margin-left: 0.5em; color: #6b7280;">(<?php echo esc_html( $review->stars ); ?>)</span>
 		</div>
 		<?php
 		return ob_get_clean();
@@ -208,7 +208,8 @@ class ReviewsListTable extends ListTable {
 		if ( empty( $review->customer ) ) {
 			return '-';
 		}
-		return esc_html( $review->customer->name ?? $review->customer->email ?? '-' );
+		$customer_name = $review->customer->name ?? $review->customer->email ?? '-';
+		return '<a href="' . esc_url( \SureCart::getUrl()->edit( 'customer', $review->customer->id ?? '' ) ) . '">' . esc_html( $customer_name ) . '</a>';
 	}
 
 	/**
@@ -241,9 +242,9 @@ class ReviewsListTable extends ListTable {
 					<?php echo esc_html( $review->title ?: __( '(No title)', 'surecart' ) ); ?>
 				</a>
 			</strong>
-			<?php if ( ! empty( $review->comment ) ) : ?>
+			<?php if ( ! empty( $review->body ) ) : ?>
 				<div style="margin-top: 0.25em; color: #6b7280;">
-					<?php echo esc_html( wp_trim_words( $review->comment, 20 ) ); ?>
+					<?php echo esc_html( wp_trim_words( $review->body, 20 ) ); ?>
 				</div>
 			<?php endif; ?>
 			<?php echo wp_kses_post( $this->row_actions( $this->getRowActions( $review ) ) ); ?>
@@ -261,7 +262,7 @@ class ReviewsListTable extends ListTable {
 	 * @return mixed
 	 */
 	public function column_default( $review, $column_name ) {
-		// Call the parent method to handle custom columns
+		// Call the parent method to handle custom columns.
 		parent::column_default( $review, $column_name );
 
 		if ( 'date' === $column_name ) {
@@ -284,12 +285,45 @@ class ReviewsListTable extends ListTable {
 		];
 
 		if ( 'published' === $review->status ) {
-			$actions['unpublish'] = '<a href="' . esc_url( wp_nonce_url( add_query_arg( [ 'action' => 'unpublish', 'id' => $review->id ], admin_url( 'admin.php?page=sc-reviews' ) ), 'unpublish_review' ) ) . '" aria-label="' . esc_attr( 'Unpublish Review', 'surecart' ) . '">' . esc_html__( 'Unpublish', 'surecart' ) . '</a>';
-		} elseif ( 'in_review' === $review->status ) {
-			$actions['publish'] = '<a href="' . esc_url( wp_nonce_url( add_query_arg( [ 'action' => 'publish', 'id' => $review->id ], admin_url( 'admin.php?page=sc-reviews' ) ), 'publish_review' ) ) . '" aria-label="' . esc_attr( 'Publish Review', 'surecart' ) . '">' . esc_html__( 'Publish', 'surecart' ) . '</a>';
+			$actions['unpublish'] = '<a href="' . esc_url(
+				wp_nonce_url(
+					add_query_arg(
+						[
+							'action' => 'unpublish',
+							'id'     => $review->id,
+						],
+						admin_url( 'admin.php?page=sc-reviews' )
+					),
+					'unpublish_review'
+				)
+			) . '" aria-label="' . esc_attr( 'Unpublish Review', 'surecart' ) . '">' . esc_html__( 'Unpublish', 'surecart' ) . '</a>';
+		} elseif ( 'unpublished' === $review->status ) {
+			$actions['publish'] = '<a href="' . esc_url(
+				wp_nonce_url(
+					add_query_arg(
+						[
+							'action' => 'publish',
+							'id'     => $review->id,
+						],
+						admin_url( 'admin.php?page=sc-reviews' )
+					),
+					'publish_review'
+				)
+			) . '" aria-label="' . esc_attr( 'Publish Review', 'surecart' ) . '">' . esc_html__( 'Publish', 'surecart' ) . '</a>';
 		}
 
-		$actions['delete'] = '<a class="submitdelete" onclick="return confirm(\'' . esc_attr__( 'Are you sure you want to delete this review?', 'surecart' ) . '\')" href="' . esc_url( wp_nonce_url( add_query_arg( [ 'action' => 'delete', 'id' => $review->id ], admin_url( 'admin.php?page=sc-reviews' ) ), 'delete_review' ) ) . '" aria-label="' . esc_attr( 'Delete Review', 'surecart' ) . '">' . esc_html__( 'Delete', 'surecart' ) . '</a>';
+		$actions['delete'] = '<a class="submitdelete" onclick="return confirm(\'' . esc_attr__( 'Are you sure you want to delete this review?', 'surecart' ) . '\')" href="' . esc_url(
+			wp_nonce_url(
+				add_query_arg(
+					[
+						'action' => 'delete',
+						'id'     => $review->id,
+					],
+					admin_url( 'admin.php?page=sc-reviews' )
+				),
+				'delete_review'
+			)
+		) . '" aria-label="' . esc_attr( 'Delete Review', 'surecart' ) . '">' . esc_html__( 'Delete', 'surecart' ) . '</a>';
 
 		return $actions;
 	}
@@ -321,10 +355,10 @@ class ReviewsListTable extends ListTable {
 	 * @return array
 	 */
 	protected function get_bulk_actions() {
-		$actions = array();
-		$actions['publish'] = __( 'Publish', 'surecart' );
+		$actions              = array();
+		$actions['publish']   = __( 'Publish', 'surecart' );
 		$actions['unpublish'] = __( 'Unpublish', 'surecart' );
-		$actions['delete'] = __( 'Delete permanently', 'surecart' );
+		$actions['delete']    = __( 'Delete permanently', 'surecart' );
 		return $actions;
 	}
 
@@ -346,10 +380,10 @@ class ReviewsListTable extends ListTable {
 	 */
 	private function getStatuses(): array {
 		return array(
-			'all'         => __( 'All', 'surecart' ),
-			'published'   => __( 'Published', 'surecart' ),
-			'in_review'   => __( 'In Review', 'surecart' ),
-			'archived'    => __( 'Archived', 'surecart' ),
+			'all'       => __( 'All', 'surecart' ),
+			'published' => __( 'Published', 'surecart' ),
+			'in_review' => __( 'In Review', 'surecart' ),
+			'archived'  => __( 'Archived', 'surecart' ),
 		);
 	}
 }

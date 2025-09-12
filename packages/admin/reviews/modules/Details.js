@@ -14,7 +14,7 @@ import Box from '../../ui/Box';
 import SaveButton from '../../templates/SaveButton';
 
 export default ({ review, updateReview, loading, saving, deleting, ...props }) => {
-	const { title, body, rating } = review || {};
+	const { title, body, stars } = review || {};
 
 	return (
 		<Box
@@ -45,9 +45,9 @@ export default ({ review, updateReview, loading, saving, deleting, ...props }) =
 				<ScSelect
 					label={__('Rating', 'surecart')}
 					help={__('The star rating for this review.', 'surecart')}
-					value={rating || 5}
+					value={stars || 5}
 					onScChange={(e) =>
-						updateReview({ rating: parseInt(e.target.value) })
+						updateReview({ stars: parseInt(e.target.value) })
 					}
 					disabled={saving || deleting}
 					choices={[
