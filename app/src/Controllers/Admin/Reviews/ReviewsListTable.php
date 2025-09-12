@@ -247,7 +247,7 @@ class ReviewsListTable extends ListTable {
 					<?php echo esc_html( $review->body ); ?>
 				</div>
 			<?php endif; ?>
-			<?php echo wp_kses_post( $this->row_actions( $this->getRowActions( $review ) ) ); ?>
+			<?php echo $this->row_actions( $this->getRowActions( $review ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 		</div>
 		<?php
 		return ob_get_clean();
