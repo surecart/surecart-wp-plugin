@@ -135,6 +135,11 @@ class GalleryItemImageAttachment extends ModelsGalleryItem implements GalleryIte
 	 * @return object
 	 */
 	public function attributes( $size = 'full', $attr = [] ): object {
+		// If the item is not set, return null.
+		if ( ! isset( $this->item->ID ) ) {
+			return (object) [];
+		}
+
 		$image = wp_get_attachment_image_src( $this->item->ID, $size, $attr['icon'] ?? false, $attr );
 
 		if ( ! $image ) {
