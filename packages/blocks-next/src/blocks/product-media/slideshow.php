@@ -64,7 +64,7 @@
 						>
 							<?php
 								echo wp_kses(
-									$media->html(
+									$media->{ $media->isVideo() ? 'video_thumbnail_html' : 'html' }(
 										'thumbnail',
 										array(
 											'loading' => $thumb_index > $attributes['thumbnails_per_page'] ? 'lazy' : 'eager',

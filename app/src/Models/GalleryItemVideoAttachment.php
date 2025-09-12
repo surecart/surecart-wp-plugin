@@ -39,13 +39,87 @@ class GalleryItemVideoAttachment extends ModelsGalleryItem implements GalleryIte
 	 */
 	public function html( $size = 'full', $attr = [], $metadata = [] ): string {
 		// If the item is not set, return null.
-		$poster = $this->attributes( $size, $attr );
-
-		if ( empty( $poster ) ) {
+		if ( empty( $this->posterId() ) ) {
 			return '';
 		}
 
-		return \SureCart::view( 'media/video-thumbnail' )->with( (array) $poster )->toString();
+		// Handle image attachments.
+		$image = wp_get_attachment_image( $this->posterId(), $size, false, $attr );
+
+		// add any styles.
+		$tags = new \WP_HTML_Tag_Processor( $image );
+
+		// get the image tag.
+		$has_image = $tags->next_tag( 'img' );
+
+		// add inline styles.
+		if ( ! empty( $attr['style'] ) ) {
+			if ( $has_image && ! empty( $attr['style'] ) ) {
+				$tags->set_attribute( 'style', $attr['style'] );
+			}
+		}
+
+		if ( $this->with_lightbox ) {
+			$this->with_lightbox = false; // reset to false.
+
+			// get the image data.
+			$full_data = $this->attributes( 'full' );
+
+			// set the lightbox state.
+			wp_interactivity_state(
+				'surecart/lightbox',
+				array(
+					'metadata' => array(
+						// metadata keyed by unique image id.
+						$this->id => wp_parse_args(
+							$metadata,
+							array(
+								'uploadedSrc'      => $full_data->src,
+								'imgClassNames'    => $full_data->class,
+								'targetWidth'      => $full_data->width,
+								'targetHeight'     => $full_data->height,
+								'scaleAttr'        => false, // false or 'contain'.
+								'alt'              => $full_data->alt,
+								// translators: %s is the image title.
+								'screenReaderText' => sprintf( __( 'Viewing image: %s.', 'surecart' ), $this->post_title ),
+								'galleryId'        => get_the_ID(),
+							),
+						),
+					),
+				)
+			);
+
+			$tags->set_attribute( 'data-wp-on-async--load', 'callbacks.setImageRef' );
+			$tags->set_attribute( 'data-wp-init', 'callbacks.setImageRef' );
+			$tags->set_attribute( 'data-wp-on-async--click', 'actions.showLightbox' );
+			$tags->set_attribute( 'data-wp-class--sc-hide', 'state.isContentHidden' );
+			$tags->set_attribute( 'data-wp-class--sc-show', 'state.isContentVisible' );
+			$tags->add_class( 'has-image-lightbox' );
+
+			// add the lightbox trigger button.
+			return $tags->get_updated_html() .
+				'<button
+					class="lightbox-trigger"
+					type="button"
+					aria-haspopup="dialog"
+					aria-label="' . esc_attr__( 'Expand image', 'surecart' ) . '"
+					data-wp-init="callbacks.initTriggerButton"
+					data-wp-on-async--click="actions.showLightbox"
+					data-wp-style--right="state.imageButtonRight"
+					data-wp-style--top="state.imageButtonTop"
+				>
+				' . \SureCart::svg()->get(
+						'maximize',
+						[
+							'width'  => 16,
+							'height' => 16,
+						]
+					) . '
+			</button>';
+		}
+
+		// return updated html.
+		return $tags->get_updated_html();
 	}
 
 	/**
@@ -195,6 +269,21 @@ class GalleryItemVideoAttachment extends ModelsGalleryItem implements GalleryIte
 				'style'  => ! empty( $this->getMetadata( 'aspect_ratio' ) ) ? 'aspect-ratio: ' . esc_attr( $this->getMetadata( 'aspect_ratio' ) ) . ';' : '',
 			]
 		)->toString();
+	}
+
+	/**
+	 * Get the video thumbnail attribute markup.
+	 *
+	 * @param string $size The size of the video.
+	 * @param array  $attr The attributes for the tag.
+	 * @param array  $metadata Additional metadata for the lightbox.
+	 *
+	 * @return string
+	 */
+	public function video_thumbnail_html( $size = 'full', $attr = [], $metadata = [] ): string {
+		return \SureCart::view( 'media/video-thumbnail' )
+		->with( (array) $this->attributes( $size, $attr, $metadata ) )
+		->toString();
 	}
 
 	/**
