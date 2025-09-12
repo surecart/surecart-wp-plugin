@@ -12,7 +12,7 @@ class ReviewsController extends AdminController {
 	/**
 	 * Index.
 	 *
-	 * @return function
+	 * @return string
 	 */
 	public function index() {
 		$table = new ReviewsListTable();
@@ -32,10 +32,10 @@ class ReviewsController extends AdminController {
 	/**
 	 * Edit.
 	 *
-	 * @return function
+	 * @return string
 	 */
 	public function edit() {
-		$id = sanitize_text_field( wp_unslash( $_GET['id'] ?? '' ) );
+		$id = sanitize_text_field( wp_unslash( $_GET['id'] ?? '' ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		if ( ! $id ) {
 			wp_die( esc_html__( 'Please provide a review id.', 'surecart' ) );
 		}
@@ -62,7 +62,7 @@ class ReviewsController extends AdminController {
 	 * @return void
 	 */
 	public function publish() {
-		$id = sanitize_text_field( wp_unslash( $_GET['id'] ?? '' ) );
+		$id = sanitize_text_field( wp_unslash( $_GET['id'] ?? '' ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		if ( ! $id ) {
 			wp_die( esc_html__( 'Please provide a review id.', 'surecart' ) );
 		}
@@ -91,7 +91,7 @@ class ReviewsController extends AdminController {
 	 * @return void
 	 */
 	public function unpublish() {
-		$id = sanitize_text_field( wp_unslash( $_GET['id'] ?? '' ) );
+		$id = sanitize_text_field( wp_unslash( $_GET['id'] ?? '' ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		if ( ! $id ) {
 			wp_die( esc_html__( 'Please provide a review id.', 'surecart' ) );
 		}
@@ -120,7 +120,7 @@ class ReviewsController extends AdminController {
 	 * @return void
 	 */
 	public function delete() {
-		$id = sanitize_text_field( wp_unslash( $_GET['id'] ?? '' ) );
+		$id = sanitize_text_field( wp_unslash( $_GET['id'] ?? '' ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		if ( ! $id ) {
 			wp_die( esc_html__( 'Please provide a review id.', 'surecart' ) );
 		}

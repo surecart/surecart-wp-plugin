@@ -362,6 +362,27 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 /*
 |--------------------------------------------------------------------------
+| Product Reviews
+|--------------------------------------------------------------------------
+*/
+\SureCart::route()
+->where( 'admin', 'sc-reviews' )
+->middleware( 'user.can:edit_sc_reviews' )
+->middleware( 'assets.components' )
+->middleware( 'assets.admin_colors' )
+->setNamespace( '\\SureCart\\Controllers\\Admin\\Reviews\\' )
+->group(
+	function () {
+		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->handle( 'ReviewsController@index' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->handle( 'ReviewsController@edit' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'publish', 'action' )->middleware( 'nonce:publish_review' )->handle( 'ReviewsController@publish' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'unpublish', 'action' )->middleware( 'nonce:unpublish_review' )->handle( 'ReviewsController@unpublish' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'delete', 'action' )->middleware( 'nonce:delete_review' )->handle( 'ReviewsController@delete' );
+	}
+);
+
+/*
+|--------------------------------------------------------------------------
 | Affiliations
 |--------------------------------------------------------------------------
 */
@@ -563,27 +584,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	->middleware( 'nonce:resync_webhook' )
 	->middleware( 'user.can:edit_sc_webhooks' )
 	->handle( '\\SureCart\\Controllers\\Web\\WebhookController@resync' );
-
-/*
-|--------------------------------------------------------------------------
-| Reviews
-|--------------------------------------------------------------------------
-*/
-\SureCart::route()
-->where( 'admin', 'sc-reviews' )
-->middleware( 'user.can:edit_sc_reviews' )
-->middleware( 'assets.components' )
-->middleware( 'assets.admin_colors' )
-->setNamespace( '\\SureCart\\Controllers\\Admin\\Reviews\\' )
-->group(
-	function () {
-		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->handle( 'ReviewsController@index' );
-		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->handle( 'ReviewsController@edit' );
-		\SureCart::route()->get()->where( 'sc_url_var', 'publish', 'action' )->middleware( 'nonce:publish_review' )->handle( 'ReviewsController@publish' );
-		\SureCart::route()->get()->where( 'sc_url_var', 'unpublish', 'action' )->middleware( 'nonce:unpublish_review' )->handle( 'ReviewsController@unpublish' );
-		\SureCart::route()->get()->where( 'sc_url_var', 'delete', 'action' )->middleware( 'nonce:delete_review' )->handle( 'ReviewsController@delete' );
-	}
-);
 
 /*
 |--------------------------------------------------------------------------

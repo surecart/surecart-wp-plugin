@@ -239,12 +239,12 @@ class ReviewsListTable extends ListTable {
 		<div>
 			<strong>
 				<a class="row-title" aria-label="<?php esc_attr_e( 'Edit Review', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'review', $review->id ) ); ?>">
-					<?php echo esc_html( $review->title ?: __( '(No title)', 'surecart' ) ); ?>
+					<?php echo esc_html( $review->title ); ?>
 				</a>
 			</strong>
 			<?php if ( ! empty( $review->body ) ) : ?>
-				<div style="margin-top: 0.25em; color: #6b7280;">
-					<?php echo esc_html( wp_trim_words( $review->body, 20 ) ); ?>
+				<div style="margin-top: 0.25em; color: #6b7280; display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.4;">
+					<?php echo esc_html( $review->body ); ?>
 				</div>
 			<?php endif; ?>
 			<?php echo wp_kses_post( $this->row_actions( $this->getRowActions( $review ) ) ); ?>
@@ -281,49 +281,71 @@ class ReviewsListTable extends ListTable {
 	 */
 	protected function getRowActions( $review ) {
 		$actions = [
-			'edit' => '<a href="' . esc_url( \SureCart::getUrl()->edit( 'review', $review->id ) ) . '" aria-label="' . esc_attr( 'Edit Review', 'surecart' ) . '">' . esc_html__( 'Edit', 'surecart' ) . '</a>',
+			'edit' => '<a href="' . esc_url( \SureCart::getUrl()->edit( 'review', $review->id ) ) . '" aria-label="' . esc_attr__( 'Edit Review', 'surecart' ) . '">' . esc_html__( 'Edit', 'surecart' ) . '</a>',
 		];
 
-		if ( 'published' === $review->status ) {
+		if ( 'in_review' === $review->status ) {
 			$actions['unpublish'] = '<a href="' . esc_url(
-				wp_nonce_url(
-					add_query_arg(
-						[
-							'action' => 'unpublish',
-							'id'     => $review->id,
-						],
-						admin_url( 'admin.php?page=sc-reviews' )
-					),
-					'unpublish_review'
-				)
-			) . '" aria-label="' . esc_attr( 'Unpublish Review', 'surecart' ) . '">' . esc_html__( 'Unpublish', 'surecart' ) . '</a>';
-		} elseif ( 'unpublished' === $review->status ) {
-			$actions['publish'] = '<a href="' . esc_url(
-				wp_nonce_url(
-					add_query_arg(
-						[
-							'action' => 'publish',
-							'id'     => $review->id,
-						],
-						admin_url( 'admin.php?page=sc-reviews' )
-					),
-					'publish_review'
-				)
-			) . '" aria-label="' . esc_attr( 'Publish Review', 'surecart' ) . '">' . esc_html__( 'Publish', 'surecart' ) . '</a>';
-		}
-
-		$actions['delete'] = '<a class="submitdelete" onclick="return confirm(\'' . esc_attr__( 'Are you sure you want to delete this review?', 'surecart' ) . '\')" href="' . esc_url(
-			wp_nonce_url(
 				add_query_arg(
 					[
-						'action' => 'delete',
+						'action' => 'unpublish',
+						'nonce'  => wp_create_nonce( 'unpublish_review' ),
 						'id'     => $review->id,
 					],
 					admin_url( 'admin.php?page=sc-reviews' )
-				),
-				'delete_review'
-			)
-		) . '" aria-label="' . esc_attr( 'Delete Review', 'surecart' ) . '">' . esc_html__( 'Delete', 'surecart' ) . '</a>';
+				)
+			) . '" aria-label="' . esc_attr__( 'Unpublish Review', 'surecart' ) . '">' . esc_html__( 'Unpublish', 'surecart' ) . '</a>';
+
+			$actions['publish'] = '<a href="' . esc_url(
+				add_query_arg(
+					[
+						'action' => 'publish',
+						'nonce'  => wp_create_nonce( 'publish_review' ),
+						'id'     => $review->id,
+					],
+					admin_url( 'admin.php?page=sc-reviews' )
+				)
+			) . '" aria-label="' . esc_attr__( 'Publish Review', 'surecart' ) . '">' . esc_html__( 'Publish', 'surecart' ) . '</a>';
+		} elseif ( 'published' === $review->status ) {
+			$actions['unpublish'] = '<a href="' . esc_url(
+				add_query_arg(
+					[
+						'action' => 'unpublish',
+						'nonce'  => wp_create_nonce( 'unpublish_review' ),
+						'id'     => $review->id,
+					],
+					admin_url( 'admin.php?page=sc-reviews' )
+				)
+			) . '" aria-label="' . esc_attr__( 'Unpublish Review', 'surecart' ) . '">' . esc_html__( 'Unpublish', 'surecart' ) . '</a>';
+		} elseif ( 'unpublished' === $review->status ) {
+			$actions['publish'] = '<a href="' . esc_url(
+				add_query_arg(
+					[
+						'action' => 'publish',
+						'nonce'  => wp_create_nonce( 'publish_review' ),
+						'id'     => $review->id,
+					],
+					admin_url( 'admin.php?page=sc-reviews' )
+				)
+			) . '" aria-label="' . esc_attr__( 'Publish Review', 'surecart' ) . '">' . esc_html__( 'Publish', 'surecart' ) . '</a>';
+		}
+
+		$actions['delete'] = sprintf(
+			'<a class="submitdelete" onclick="return confirm(\'%1$s\')" href="%2$s" aria-label="%3$s">%4$s</a>',
+			esc_attr__( 'Are you sure you want to delete this review?', 'surecart' ),
+			esc_url(
+				add_query_arg(
+					[
+						'action' => 'delete',
+						'nonce'  => wp_create_nonce( 'delete_review' ),
+						'id'     => $review->id,
+					],
+					admin_url( 'admin.php?page=sc-reviews' )
+				)
+			),
+			esc_attr__( 'Delete Review', 'surecart' ),
+			esc_html__( 'Delete', 'surecart' )
+		);
 
 		return $actions;
 	}

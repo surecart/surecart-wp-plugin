@@ -166,6 +166,7 @@ class Review extends Model {
 	 */
 	public function getStatusDisplayAttribute() {
 		$statuses = [
+			'in_review'   => __( 'In Review', 'surecart' ),
 			'published'   => __( 'Published', 'surecart' ),
 			'unpublished' => __( 'Unpublished', 'surecart' ),
 			'archived'    => __( 'Archived', 'surecart' ),
