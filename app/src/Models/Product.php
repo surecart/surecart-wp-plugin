@@ -1008,7 +1008,7 @@ class Product extends Model implements PageModel {
 				),
 				function ( $item ) {
 					// it must have a src at least.
-					return ! empty( $item ) && ! empty( $item->attributes()->src );
+					return ! empty( $item ) && $item->exists();
 				}
 			)
 		);
