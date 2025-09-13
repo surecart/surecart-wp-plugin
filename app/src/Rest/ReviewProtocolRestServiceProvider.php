@@ -24,6 +24,41 @@ class ReviewProtocolRestServiceProvider extends RestServiceProvider implements R
 	protected $controller = ReviewProtocolController::class;
 
 	/**
+	 * Methods allowed for the model.
+	 *
+	 * @var array
+	 */
+	protected $methods = [];
+
+	/**
+	 * Register REST Routes.
+	 *
+	 * @return void
+	 */
+	public function registerRoutes() {
+		register_rest_route(
+			"$this->name/v$this->version",
+			"$this->endpoint",
+			array_filter(
+				[
+					[
+						'methods'             => \WP_REST_Server::READABLE,
+						'callback'            => $this->callback( $this->controller, 'find' ),
+						'permission_callback' => [ $this, 'get_item_permissions_check' ],
+						'args'                => $this->get_collection_params(),
+					],
+					[
+						'methods'             => \WP_REST_Server::EDITABLE,
+						'callback'            => $this->callback( $this->controller, 'edit' ),
+						'permission_callback' => [ $this, 'update_item_permissions_check' ],
+					],
+					'schema' => [ $this, 'get_item_schema' ],
+				]
+			)
+		);
+	}
+
+	/**
 	 * Get our sample schema for a post.
 	 *
 	 * @return array The sample schema for a post

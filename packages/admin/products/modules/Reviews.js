@@ -1,14 +1,24 @@
 /** @jsx jsx */
-import { jsx } from '@emotion/core';
+import { css, jsx } from '@emotion/core';
+
+/**
+ * External dependencies.
+ */
 import { __ } from '@wordpress/i18n';
+import { addQueryArgs } from '@wordpress/url';
 import { useState, useEffect } from '@wordpress/element';
-import { ToggleControl } from '@wordpress/components';
+import { PanelRow, ToggleControl } from '@wordpress/components';
 import apiFetch from '@wordpress/api-fetch';
+
+/**
+ * Internal dependencies.
+ */
+import Box from '../../ui/Box';
+import { ScButton, ScIcon } from '@surecart/components-react';
 
 export default ({ product = {}, updateProduct, loading }) => {
 	const [reviewProtocol, setReviewProtocol] = useState({});
 	const [loadingProtocol, setLoadingProtocol] = useState(true);
-
 
 	// Fetch review protocol settings on mount.
 	useEffect(() => {
@@ -34,36 +44,62 @@ export default ({ product = {}, updateProduct, loading }) => {
 	}
 
 	return (
-		<sc-dashboard-module
-			class="product-reviews"
-			heading={__('Reviews', 'surecart')}
-			style={{ '--sc-dashboard-module-spacing': '1em' }}
+		<Box
+			title={__('Reviews', 'surecart')}
+			loading={loadingProtocol || loading}
+			footer={
+				<>
+					<ScButton
+						size="small"
+						type="link"
+						target="_blank"
+						href={addQueryArgs('admin.php', {
+							page: 'sc-reviews',
+							sc_product: product?.id,
+						})}
+					>
+						{__('Product Reviews', 'surecart')}
+						<ScIcon name="external-link" slot="suffix" />
+					</ScButton>
+				</>
+			}
 		>
-			<sc-card style={{ '--sc-card-padding': '1em' }}>
-				<sc-flex direction="column" style={{ '--sc-flex-column-gap': '1em' }}>
+			<div>
+				<PanelRow css={{ justifyContent: 'space-between', gap: 10 }}>
+					<span>
+						{__('Enable Reviews on this product', 'surecart')}
+					</span>
 					<ToggleControl
-						label={__('Enable Reviews', 'surecart')}
-						help={__('Allow customers to leave reviews for this product.', 'surecart')}
+						__nextHasNoMarginBottom={true}
 						checked={product?.reviews_enabled || false}
 						onChange={(value) => {
 							updateProduct({ reviews_enabled: value });
 						}}
-						disabled={loading}
+						disabled={loading || !reviewProtocol?.reviews_enabled}
 					/>
+				</PanelRow>
 
-					{product?.reviews_enabled && reviewProtocol?.solicit_reviews && (
+				{product?.reviews_enabled && (
+					<PanelRow
+						css={{ justifyContent: 'space-between', gap: 10 }}
+					>
+						<span>
+							{__(
+								'Send automatic review request emails to customers who purchase this product.',
+								'surecart'
+							)}
+						</span>
 						<ToggleControl
-							label={__('Solicit Reviews', 'surecart')}
-							help={__('Send automatic review request emails to customers who purchase this product.', 'surecart')}
+							__nextHasNoMarginBottom={true}
 							checked={product?.solicit_reviews || false}
 							onChange={(value) => {
 								updateProduct({ solicit_reviews: value });
 							}}
 							disabled={loading}
 						/>
-					)}
-				</sc-flex>
-			</sc-card>
-		</sc-dashboard-module>
+					</PanelRow>
+				)}
+			</div>
+		</Box>
 	);
 };

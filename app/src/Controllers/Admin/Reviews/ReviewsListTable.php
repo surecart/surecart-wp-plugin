@@ -145,6 +145,15 @@ class ReviewsListTable extends ListTable {
 
 		$review_query = Review::where( $args )->with( [ 'customer', 'product', 'purchase' ] );
 
+		// Check if there is any sc_product.
+		if ( ! empty( $_GET['sc_product'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			$review_query->where(
+				array(
+					'product_ids' => array( sanitize_text_field( wp_unslash( $_GET['sc_product'] ) ) ),  // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+				)
+			);
+		}
+
 		return $review_query->paginate(
 			array(
 				'per_page' => $this->get_items_per_page( 'reviews' ),

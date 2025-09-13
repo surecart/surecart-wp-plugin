@@ -369,12 +369,12 @@ export default ({ id, setBrowserURL }) => {
 							updateProduct={editProduct}
 							loading={!hasLoadedProduct}
 						/>
-						<Tax
+						<Reviews
 							product={product}
 							updateProduct={editProduct}
 							loading={!hasLoadedProduct}
 						/>
-						<Reviews
+						<Tax
 							product={product}
 							updateProduct={editProduct}
 							loading={!hasLoadedProduct}
