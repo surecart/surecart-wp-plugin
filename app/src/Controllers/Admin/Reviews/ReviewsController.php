@@ -26,6 +26,16 @@ class ReviewsController extends AdminController {
 				],
 			)
 		);
+
+		// add notices.
+		$this->withNotices(
+			array(
+				'published'   => __( 'Review published successfully.', 'surecart' ),
+				'unpublished' => __( 'Review unpublished successfully.', 'surecart' ),
+				'deleted'     => __( 'Review deleted successfully.', 'surecart' ),
+			)
+		);
+
 		return \SureCart::view( 'admin/reviews/index' )->with( [ 'table' => $table ] );
 	}
 
@@ -79,7 +89,10 @@ class ReviewsController extends AdminController {
 
 		wp_safe_redirect(
 			esc_url_raw(
-				admin_url( 'admin.php?page=sc-reviews' )
+				add_query_arg(
+					[ 'published' => 1 ],
+					admin_url( 'admin.php?page=sc-reviews' )
+				)
 			)
 		);
 		exit;
@@ -108,7 +121,10 @@ class ReviewsController extends AdminController {
 
 		wp_safe_redirect(
 			esc_url_raw(
-				admin_url( 'admin.php?page=sc-reviews' )
+				add_query_arg(
+					[ 'unpublished' => 1 ],
+					admin_url( 'admin.php?page=sc-reviews' )
+				)
 			)
 		);
 		exit;
@@ -137,7 +153,10 @@ class ReviewsController extends AdminController {
 
 		wp_safe_redirect(
 			esc_url_raw(
-				admin_url( 'admin.php?page=sc-reviews' )
+				add_query_arg(
+					[ 'deleted' => 1 ],
+					admin_url( 'admin.php?page=sc-reviews' )
+				)
 			)
 		);
 		exit;
