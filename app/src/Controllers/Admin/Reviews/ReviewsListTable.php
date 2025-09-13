@@ -93,13 +93,25 @@ class ReviewsListTable extends ListTable {
 			[
 				'cb'       => '<input type="checkbox" />',
 				'review'   => __( 'Review', 'surecart' ),
-				'rating'   => __( 'Rating', 'surecart' ),
+				'stars'    => __( 'Rating', 'surecart' ),
 				'customer' => __( 'Customer', 'surecart' ),
 				'product'  => __( 'Product', 'surecart' ),
 				'status'   => __( 'Status', 'surecart' ),
-				'date'     => __( 'Date', 'surecart' ),
+				'date'     => __( 'Submitted on', 'surecart' ),
 			],
 			parent::get_columns()
+		);
+	}
+
+	/**
+	 * Define which columns are sortable.
+	 *
+	 * @return array
+	 */
+	public function get_sortable_columns() {
+		return array(
+			'stars' => array( 'stars', false ),
+			'date'  => array( 'created_at', false ),
 		);
 	}
 
@@ -118,12 +130,20 @@ class ReviewsListTable extends ListTable {
 	 * @return object|WP_Error
 	 */
 	private function table_data() {
-		$review_query = Review::where(
-			array(
-				'status[]' => $this->getFilteredStatus(),
-				'query'    => $this->get_search_query(),
-			)
-		)->with( [ 'customer', 'product', 'purchase' ] );
+		$args = array(
+			'status[]' => $this->getFilteredStatus(),
+			'query'    => $this->get_search_query(),
+		);
+
+		// Add sorting.
+		$orderby = $this->get_orderby();
+		$order   = $this->get_order();
+
+		if ( $orderby && in_array( $orderby, [ 'stars', 'created_at', 'updated_at' ], true ) ) {
+			$args['sort'] = $orderby . ':' . $order;
+		}
+
+		$review_query = Review::where( $args )->with( [ 'customer', 'product', 'purchase' ] );
 
 		return $review_query->paginate(
 			array(
@@ -176,13 +196,13 @@ class ReviewsListTable extends ListTable {
 	}
 
 	/**
-	 * Rating column
+	 * Stars column
 	 *
 	 * @param \SureCart\Models\Review $review Review model.
 	 *
 	 * @return string
 	 */
-	public function column_rating( $review ) {
+	public function column_stars( $review ) {
 		ob_start();
 		?>
 		<div style="display: flex; align-items: center; gap: 0.25em;">
@@ -264,10 +284,6 @@ class ReviewsListTable extends ListTable {
 	public function column_default( $review, $column_name ) {
 		// Call the parent method to handle custom columns.
 		parent::column_default( $review, $column_name );
-
-		if ( 'date' === $column_name ) {
-			return $review->created_at_date_time;
-		}
 
 		return $review->$column_name ?? '';
 	}
@@ -360,7 +376,15 @@ class ReviewsListTable extends ListTable {
 		<input type="hidden" name="page" value="sc-reviews" />
 
 		<?php if ( ! empty( $_GET['status'] ) ) : // phpcs:ignore WordPress.Security.NonceVerification.Recommended ?>
-			<input type="hidden" name="status" value="<?php echo esc_attr( $_GET['status'] ); ?>" />
+			<input type="hidden" name="status" value="<?php echo esc_attr( $_GET['status'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended ?>" />
+		<?php endif; ?>
+
+		<?php if ( ! empty( $_GET['orderby'] ) ) : // phpcs:ignore WordPress.Security.NonceVerification.Recommended ?>
+			<input type="hidden" name="orderby" value="<?php echo esc_attr( $_GET['orderby'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended ?>" />
+		<?php endif; ?>
+
+		<?php if ( ! empty( $_GET['order'] ) ) : // phpcs:ignore WordPress.Security.NonceVerification.Recommended ?>
+			<input type="hidden" name="order" value="<?php echo esc_attr( $_GET['order'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended ?>" />
 		<?php endif; ?>
 
 		<?php
