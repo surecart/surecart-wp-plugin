@@ -120,6 +120,62 @@ class ProductCard extends \Bricks\Element {
 							'_right'    => '20px',
 						],
 					],
+					[
+						'name'     => 'div',
+						'settings' => [
+							'_position' => 'absolute',
+							'_top'      => '20px',
+							'_left'     => '20px',
+						],
+						'children' => [
+							[
+								'name'     => 'surecart-product-quick-add-button',
+								'settings' => [
+									'label'              => 'Add',
+									'icon_position'      => 'before',
+									'quick_view_button_type' => 'both',
+									'direct_add_to_cart' => true,
+									'width'              => '100',
+									'_justifyContent'    => 'center',
+									'_border'            => [
+										'radius' => [
+											'top'    => '4',
+											'right'  => '4',
+											'bottom' => '4',
+											'left'   => '4',
+										],
+									],
+									'_width'             => '100%',
+									'_typography'        => [
+										'text-wrap'   => 'nowrap',
+										'font-size'   => '12',
+										'font-weight' => '500',
+										'color'       => [
+											'hex'  => '#212121',
+											'id'   => '7c9a5b',
+											'name' => 'Color #6',
+										],
+									],
+									'_padding'           => [
+										'top'    => '7',
+										'bottom' => '7',
+									],
+									'_background'        => [
+										'color' => [
+											'hex'  => '#f5f5f5',
+											'id'   => 'ceb2be',
+											'name' => 'Color #1',
+										],
+									],
+									'icon'               => [
+										'library' => 'fontawesomeSolid',
+										'icon'    => 'fas fa-plus',
+									],
+								],
+
+							],
+						],
+					],
 				],
 			],
 			[

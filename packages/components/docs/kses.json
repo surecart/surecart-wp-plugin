@@ -1731,6 +1731,7 @@
     "interval": true,
     "max": true,
     "name": true,
+    "note": true,
     "price": true,
     "purchasable-status": true,
     "quantity": true,
@@ -1740,6 +1741,13 @@
     "sku": true,
     "trial": true,
     "variant": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-product-line-item-note": {
+    "note": true,
     "style": true,
     "id": true,
     "class": true,

@@ -66,6 +66,7 @@ class TemplateUtilityService {
 			),
 			'cart'                    => array(),
 			'checkout'                => array(),
+			'product-quick-view'      => array(),
 			'sticky-purchase'         => array(),
 		);
 	}
@@ -373,6 +374,7 @@ class TemplateUtilityService {
 			'product-collection-part' => class_exists( 'WooCommerce' ) ? __( 'SureCart Product Collections', 'surecart' ) : __( 'Product Collections', 'surecart' ),
 			'cart'                    => class_exists( 'WooCommerce' ) ? __( 'SureCart Cart', 'surecart' ) : __( 'Cart', 'surecart' ),
 			'checkout'                => class_exists( 'WooCommerce' ) ? __( 'SureCart Checkout', 'surecart' ) : __( 'Checkout', 'surecart' ),
+			'product-quick-view'      => class_exists( 'WooCommerce' ) ? __( 'SureCart Product Quick Add', 'surecart' ) : __( 'Product Quick Add', 'surecart' ),
 			'single-upsell'           => __( 'Upsells', 'surecart' ),
 			'upsell-info'             => __( 'Upsells', 'surecart' ),
 			'sticky-purchase'         => __( 'Sticky Purchase', 'surecart' ),
@@ -401,6 +403,7 @@ class TemplateUtilityService {
 			'product-collection-part' => __( 'Display all individual product collections content unless a custom template has been applied.', 'surecart' ),
 			'cart'                    => __( 'The slide-out cart template.', 'surecart' ),
 			'checkout'                => __( 'Display the checkout content unless a custom template has been applied.', 'surecart' ),
+			'product-quick-view'      => __( 'Display product quick add.', 'surecart' ),
 			'sticky-purchase'         => __( 'Display a sticky purchase button when the product form is scrolled out of view.', 'surecart' ),
 		);
 

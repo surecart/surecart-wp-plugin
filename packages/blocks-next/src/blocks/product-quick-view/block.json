@@ -1,0 +1,56 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "surecart/product-quick-view",
+	"title": "Product Quick Add",
+	"description": "Display the product quick add button.",
+	"version": "1.0.0",
+	"category": "surecart-product-list",
+	"example": {},
+	"attributes": {
+		"alignment": {
+			"type": "string"
+		},
+		"width": {
+			"type": "string"
+		},
+		"height": {
+			"type": "string"
+		}
+	},
+	"supports": {
+		"inserter": false,
+		"interactivity": true,
+		"color": {
+			"__experimentalSkipSerialization": true,
+			"gradients": true,
+			"link": false,
+			"__experimentalDefaultControls": {
+				"background": true,
+				"text": true
+			}
+		},
+		"spacing": {
+			"__experimentalSkipSerialization": true,
+			"margin": true,
+			"padding": true
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true,
+			"__experimentalFontWeight": true
+		}
+	},
+	"textdomain": "surecart",
+	"render": "file:./view.php",
+	"editorScript": "file:./index.js",
+	"viewScriptModule": [
+		"@surecart/checkout",
+		"@surecart/cart",
+		"@surecart/product-page",
+		"@surecart/product-quick-view",
+		"surecart/lightbox"
+	],
+	"editorStyle": ["file:./index.css"],
+	"style": ["file:./style-index.css", "surecart-block-ui", "surecart-spinner"]
+}

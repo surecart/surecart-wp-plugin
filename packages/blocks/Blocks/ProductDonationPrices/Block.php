@@ -24,7 +24,7 @@ class Block extends BaseBlock {
 		}
 
 		// must have a minimum of 2 prices to show choices.
-		if ( count( $product->activeAdHocPrices() ?? [] ) < 2
+		if ( count( $product->active_ad_hoc_prices ?? [] ) < 2
 		) {
 			return false;
 		}

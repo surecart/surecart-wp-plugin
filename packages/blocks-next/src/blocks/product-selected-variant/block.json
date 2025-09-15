@@ -6,14 +6,20 @@
 	"description": "Displays the currently selected variant of a product.",
 	"version": "1.0.0",
 	"category": "surecart-product-page",
-	"icon": "tag",
+	"icon": "clock",
 	"ancestor": [
 		"surecart/product-page",
-		"surecart/product-template",
+		"surecart/product-quick-view",
 		"surecart/sticky-purchase"
 	],
 	"example": {
 		"attributes": {}
+	},
+	"attributes": {
+		"separator": {
+			"type": "string",
+			"default": " / "
+		}
 	},
 	"supports": {
 		"interactivity": true,
@@ -31,9 +37,11 @@
 			"fontSize": true,
 			"lineHeight": true,
 			"textAlign": true
-		}
+		},
+		"currencyConversion": true
 	},
 	"textdomain": "surecart",
 	"render": "file:./view.php",
-	"editorScript": "file:./index.js"
+	"editorScript": "file:./index.js",
+	"style": "file:./style-index.css"
 }

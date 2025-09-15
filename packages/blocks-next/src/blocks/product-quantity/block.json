@@ -9,7 +9,7 @@
 	"icon": "media-interactive",
 	"ancestor": [
 		"surecart/product-page",
-		"surecart/product-template",
+		"surecart/product-quick-view",
 		"surecart/sticky-purchase"
 	],
 	"keywords": ["quantity", "form", "product"],
