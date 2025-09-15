@@ -44,7 +44,7 @@ const ReviewProtocolSettings = () => {
 	return (
 		<SettingsTemplate
 			title={__('Product Reviews', 'surecart')}
-			icon={<ScIcon name="star"></ScIcon>}
+			icon={<ScIcon name="review"></ScIcon>}
 			onSubmit={onSubmit}
 		>
 			<Error

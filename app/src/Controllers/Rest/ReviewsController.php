@@ -16,6 +16,13 @@ class ReviewsController extends RestController {
 	protected $class = Review::class;
 
 	/**
+	 * Always fetch with these subcollections.
+	 *
+	 * @var array<string>
+	 */
+	protected $with = [ 'customer', 'product', 'purchase', 'product.price' ];
+
+	/**
 	 * Publish a review.
 	 *
 	 * @param \WP_REST_Request $request Full details about the request.
@@ -28,7 +35,7 @@ class ReviewsController extends RestController {
 		if ( is_wp_error( $model ) ) {
 			return $model;
 		}
-		
+
 		return $model->where( $request->get_query_params() )->publish( $request['id'] );
 	}
 
@@ -45,7 +52,7 @@ class ReviewsController extends RestController {
 		if ( is_wp_error( $model ) ) {
 			return $model;
 		}
-		
+
 		return $model->where( $request->get_query_params() )->unpublish( $request['id'] );
 	}
 }

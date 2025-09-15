@@ -52,19 +52,7 @@ export default () => {
 	const { review, isSaving, loadError, isDeleting, hasLoadedReview } =
 		useSelect(
 			(select) => {
-				const entityData = [
-					'surecart',
-					'review',
-					id,
-					{
-						expand: [
-							'customer',
-							'product',
-							'purchase',
-							'product.price',
-						],
-					},
-				];
+				const entityData = ['surecart', 'review', id];
 
 				return {
 					review: select(coreStore).getEditedEntityRecord(
@@ -136,7 +124,6 @@ export default () => {
 			const publishedReview = await apiFetch({
 				path: `${baseUrl}/${id}/publish`,
 				method: 'PATCH',
-				expand: ['customer', 'product', 'purchase', 'product.price'],
 			});
 
 			createSuccessNotice(__('Review published.', 'surecart'), {
@@ -175,7 +162,6 @@ export default () => {
 			const unpublishedReview = await apiFetch({
 				path: `${baseUrl}/${id}/unpublish`,
 				method: 'PATCH',
-				expand: ['customer', 'product', 'purchase', 'product.price'],
 			});
 
 			createSuccessNotice(__('Review unpublished.', 'surecart'), {
