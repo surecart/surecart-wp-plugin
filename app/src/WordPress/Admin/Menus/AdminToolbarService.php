@@ -207,7 +207,7 @@ class AdminToolbarService {
 		$wp_admin_bar->add_node(
 			[
 				'id'    => 'surecart-toolbar',
-				'title' => __( 'Edit with SureCart', 'surecart' ),
+				'title' => __( 'Edit', 'surecart' ),
 				'href'  => '#',
 			]
 		);
@@ -221,6 +221,13 @@ class AdminToolbarService {
 				'href'   => \SureCart::getUrl()->edit( 'product', $product->id ),
 			]
 		);
+
+		// Add secondary group
+		$wp_admin_bar->add_group(array(
+			'id'     => 'surecart-design',
+			'parent' => 'surecart-toolbar',
+			'meta'   => array('class' => 'ab-sub-secondary'),
+		));
 
 		$this->addProductContentAndTemplate( $wp_admin_bar );
 		$this->maybeAddStickyPurchaseTemplate( $wp_admin_bar );
@@ -242,8 +249,8 @@ class AdminToolbarService {
 		$wp_admin_bar->add_node(
 			[
 				'id'     => 'surecart-edit-product-content',
-				'parent' => 'surecart-toolbar',
-				'title'  => 'Product Content',
+				'parent' => 'surecart-design',
+				'title'  => __( 'Edit Product Content', 'surecart' ),
 				'href'   => admin_url( '/post.php?post=' . get_the_ID() . '&action=edit' ),
 			]
 		);
@@ -263,8 +270,8 @@ class AdminToolbarService {
 		$wp_admin_bar->add_node(
 			[
 				'id'     => 'surecart-edit-product-template',
-				'parent' => 'surecart-toolbar',
-				'title'  => __( 'Product Template', 'surecart' ),
+				'parent' => 'surecart-design',
+				'title'  => __( 'Edit Product Template', 'surecart' ),
 				'href'   => admin_url( '/site-editor.php?postType=' . rawurlencode( $template_type ) . '&postId=' . rawurlencode( $template_id ) . '&canvas=edit' ),
 			]
 		);
@@ -295,8 +302,8 @@ class AdminToolbarService {
 		$wp_admin_bar->add_node(
 			[
 				'id'     => 'surecart-edit-sticky-template',
-				'parent' => 'surecart-toolbar',
-				'title'  => __( 'Sticky Purchase', 'surecart' ),
+				'parent' => 'surecart-design',
+				'title'  => __( 'Edit Sticky Purchase Template', 'surecart' ),
 				'href'   => admin_url( '/site-editor.php?postType=wp_template_part&postId=' . rawurlencode( $sticky_purchase_template_id ) . '&canvas=edit' ),
 			]
 		);
