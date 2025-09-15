@@ -308,7 +308,7 @@ class GalleryItemVideoAttachment extends ModelsGalleryItem implements GalleryIte
 
 		$video = wp_get_attachment_url( $this->item->ID );
 		if ( ! $video ) {
-			return [];
+			return (object) [];
 		}
 
 		$size_class = $size;
