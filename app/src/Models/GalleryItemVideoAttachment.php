@@ -162,7 +162,7 @@ class GalleryItemVideoAttachment extends ModelsGalleryItem implements GalleryIte
 		$default_attr = array(
 			'src'    => $src,
 			'class'  => "attachment-$size_class size-$size_class",
-			'alt'    => trim( wp_strip_all_tags( get_post_meta( $this->item->ID, '_wp_attachment_image_alt', true ) ) ),
+			'alt'    => trim( wp_strip_all_tags( get_post_meta( $this->posterId(), '_wp_attachment_image_alt', true ) ) ),
 			'width'  => $width,
 			'height' => $height,
 		);
