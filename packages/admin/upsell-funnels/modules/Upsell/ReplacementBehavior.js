@@ -31,7 +31,7 @@ export default function ReplacementBehavior({ upsell, onUpdate }) {
 								)}
 							</p>
 							<ExternalLink
-								href="https://surecart.com/docs/price-boost/"
+								href="https://surecart.com/docs/enable-upsell-funnels/#add-to-or-replace-the-entire-order"
 								target="_blank"
 							>
 								{__('Learn More', 'surecart')}
