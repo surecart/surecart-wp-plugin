@@ -36,7 +36,7 @@ class ReviewsController extends RestController {
 			return $model;
 		}
 
-		return $model->where( $request->get_query_params() )->publish( $request['id'] );
+		return $model->where( $request->get_query_params() )->with( $this->with )->publish( $request['id'] );
 	}
 
 	/**
@@ -53,6 +53,6 @@ class ReviewsController extends RestController {
 			return $model;
 		}
 
-		return $model->where( $request->get_query_params() )->unpublish( $request['id'] );
+		return $model->where( $request->get_query_params() )->with( $this->with )->unpublish( $request['id'] );
 	}
 }
