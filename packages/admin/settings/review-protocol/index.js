@@ -1,10 +1,15 @@
-/** @jsx jsx */
-import { jsx } from '@emotion/react';
-import ReviewProtocolSettings from './ReviewProtocolSettings';
+import { createRoot } from '@wordpress/element';
+import ErrorBoundary from '../../components/error-boundary';
+import Settings from './ReviewProtocolSettings';
+import '../store';
 
-window.addEventListener('load', () => {
-	const reviewProtocolSettings = document.querySelector('#review-protocol-settings');
-	if (reviewProtocolSettings) {
-		wp.element.render(<ReviewProtocolSettings />, reviewProtocolSettings);
-	}
-});
+/**
+ * Render
+ */
+const container = document.getElementById('app');
+const root = createRoot(container);
+root.render(
+	<ErrorBoundary>
+		<Settings />
+	</ErrorBoundary>
+);

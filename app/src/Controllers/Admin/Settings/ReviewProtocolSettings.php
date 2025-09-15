@@ -14,6 +14,7 @@ class ReviewProtocolSettings extends BaseSettings {
 	 * @var array
 	 */
 	protected $scripts = [
-		'admin/settings/review-protocol',
+		// 'admin/settings/review-protocol',
+		'show' => [ 'surecart/scripts/admin/review-protocol', 'admin/settings/review-protocol' ],
 	];
 }

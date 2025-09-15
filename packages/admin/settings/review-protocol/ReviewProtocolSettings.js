@@ -1,91 +1,128 @@
-/** @jsx jsx */
-import { jsx } from '@emotion/react';
+/**
+ * External dependencies.
+ */
 import { __ } from '@wordpress/i18n';
-import { useContext, useState } from '@wordpress/element';
-import SettingsTemplate from '../SettingsTemplate';
-import createSettingsFactory from '../store';
-import useValidationErrors from '@admin/hooks/useValidationErrors';
-import SaveButton from '../SaveButton';
-import apiFetch from '@wordpress/api-fetch';
+import { useState } from '@wordpress/element';
 
-const { useSaveSettings, useSettings } = createSettingsFactory('review_protocol', {
-	reviews_enabled: false,
-	solicit_reviews: false,
-	solicit_reviews_after_days: 7,
-});
+/**
+ * Internal dependencies.
+ */
+import SettingsTemplate from '../SettingsTemplate';
+import useSave from '../UseSave';
+import useEntity from '../../hooks/useEntity';
+import Error from '../../components/Error';
+import SettingsBox from '../SettingsBox';
+import {
+	ScSwitch,
+	ScInput,
+	ScIcon,
+} from '@surecart/components-react';
 
 const ReviewProtocolSettings = () => {
-	const { state, setter } = useSettings();
-	const { saveSettings, isBusy } = useSaveSettings();
-	const { displayValidationErrors, clearValidationErrors } = useValidationErrors();
+	const [error, setError] = useState(null);
+	const { save } = useSave();
 
-	const save = async () => {
-		clearValidationErrors();
+	const {
+		item: reviewProtocolItem,
+		itemError: reviewProtocolItemError,
+		editItem: editReviewProtocolItem,
+		hasLoadedItem: hasLoadedReviewProtocolItem,
+	} = useEntity('store', 'review_protocol');
+
+	const onSubmit = async () => {
+		setError(null);
 		try {
-			await saveSettings();
-			wp.data.dispatch('core/notices').createSuccessNotice(__('Settings saved successfully.', 'surecart'));
-		} catch (error) {
-			displayValidationErrors(error);
+			await save({
+				successMessage: __('Settings Updated.', 'surecart'),
+			});
+		} catch (e) {
+			console.error(e);
+			setError(e);
 		}
 	};
 
 	return (
 		<SettingsTemplate
-			header={
-				<SaveButton
-					onClick={save}
-					busy={isBusy}
-					disabled={isBusy}
-				>
-					{__('Save', 'surecart')}
-				</SaveButton>
-			}
+			title={__('Product Reviews', 'surecart')}
+			icon={<ScIcon name="star"></ScIcon>}
+			onSubmit={onSubmit}
 		>
-			<sc-flex direction="column" style={{ '--sc-flex-column-gap': 'var(--sc-spacing-x-large)' }}>
-				<sc-flex direction="column" style={{ '--sc-flex-column-gap': 'var(--sc-spacing-large)' }}>
-					<sc-text style={{ '--font-size': 'var(--sc-font-size-large)', '--line-height': 'var(--sc-line-height-dense)', '--font-weight': 'var(--sc-font-weight-bold)' }}>
-						{__('Reviews Settings', 'surecart')}
-					</sc-text>
+			<Error
+				error={reviewProtocolItemError || error}
+				setError={setError}
+				margin="80px"
+			/>
 
-					<sc-flex direction="column" style={{ '--sc-flex-column-gap': 'var(--sc-spacing-medium)' }}>
-						<sc-form-control>
-							<span slot="label">{__('Enable Reviews', 'surecart')}</span>
-							<span slot="help">{__('Allow customers to leave reviews on products. Individual products must also have reviews enabled.', 'surecart')}</span>
-							<sc-switch
-								checked={state.reviews_enabled}
-								onScChange={(e) => setter('reviews_enabled')(e.target.checked)}
-							/>
-						</sc-form-control>
-
-						{state.reviews_enabled && (
-							<>
-								<sc-form-control>
-									<span slot="label">{__('Solicit Reviews', 'surecart')}</span>
-									<span slot="help">{__('Send automatic review request emails to customers after their order is fulfilled.', 'surecart')}</span>
-									<sc-switch
-										checked={state.solicit_reviews}
-										onScChange={(e) => setter('solicit_reviews')(e.target.checked)}
-									/>
-								</sc-form-control>
-
-								{state.solicit_reviews && (
-									<sc-form-control>
-										<span slot="label">{__('Days After Fulfillment', 'surecart')}</span>
-										<span slot="help">{__('Number of days after order fulfillment to send review request email.', 'surecart')}</span>
-										<sc-input
-											type="number"
-											value={state.solicit_reviews_after_days}
-											onScInput={(e) => setter('solicit_reviews_after_days')(parseInt(e.target.value) || 7)}
-											min="1"
-											max="365"
-										/>
-									</sc-form-control>
-								)}
-							</>
+			<SettingsBox
+				title={__('Product Reviews Settings', 'surecart')}
+				description={__(
+					'Configure how product reviews and review solicitation work in your store.',
+					'surecart'
+				)}
+				loading={!hasLoadedReviewProtocolItem}
+			>
+				<ScSwitch
+					checked={reviewProtocolItem?.reviews_enabled}
+					onClick={(e) => {
+						e.preventDefault();
+						editReviewProtocolItem({
+							reviews_enabled: !reviewProtocolItem?.reviews_enabled,
+						});
+					}}
+				>
+					{__('Enable Reviews', 'surecart')}
+					<span slot="description" style={{ lineHeight: '1.4' }}>
+						{__(
+							'Allow customers to leave reviews on products. Individual products must also have reviews enabled.',
+							'surecart'
 						)}
-					</sc-flex>
-				</sc-flex>
-			</sc-flex>
+					</span>
+				</ScSwitch>
+
+				{reviewProtocolItem?.reviews_enabled && (
+					<>
+						<ScSwitch
+							checked={reviewProtocolItem?.solicit_reviews}
+							onClick={(e) => {
+								e.preventDefault();
+								editReviewProtocolItem({
+									solicit_reviews: !reviewProtocolItem?.solicit_reviews,
+								});
+							}}
+						>
+							{__('Solicit Reviews', 'surecart')}
+							<span slot="description" style={{ lineHeight: '1.4' }}>
+								{__(
+									'Send automatic review request emails to customers after their order is fulfilled.',
+									'surecart'
+								)}
+							</span>
+						</ScSwitch>
+
+						{reviewProtocolItem?.solicit_reviews && (
+							<ScInput
+								label={__('Days After Fulfillment', 'surecart')}
+								help={__(
+									'Number of days after order fulfillment to send review request email.',
+									'surecart'
+								)}
+								type="number"
+								min="1"
+								max="365"
+								value={reviewProtocolItem?.solicit_reviews_after_days || 7}
+								onScInput={(e) => {
+									e.preventDefault();
+									editReviewProtocolItem({
+										solicit_reviews_after_days: parseInt(e.target.value) || 7,
+									});
+								}}
+							>
+								<span slot="suffix">{__('days', 'surecart')}</span>
+							</ScInput>
+						)}
+					</>
+				)}
+			</SettingsBox>
 		</SettingsTemplate>
 	);
 };
