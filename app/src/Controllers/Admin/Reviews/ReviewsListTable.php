@@ -10,7 +10,7 @@ use WP_Error;
  * Create a new table class that will extend the WP_List_Table
  */
 class ReviewsListTable extends ListTable {
-	public $checkbox = true;
+	public $checkbox = false;
 	public $error    = '';
 	public $pages    = array();
 
@@ -91,7 +91,6 @@ class ReviewsListTable extends ListTable {
 	public function get_columns() {
 		return array_merge(
 			[
-				'cb'       => '<input type="checkbox" />',
 				'review'   => __( 'Review', 'surecart' ),
 				'stars'    => __( 'Rating', 'surecart' ),
 				'customer' => __( 'Customer', 'surecart' ),
@@ -173,18 +172,6 @@ class ReviewsListTable extends ListTable {
 			return;
 		}
 		echo esc_html_e( 'No reviews found.', 'surecart' );
-	}
-
-	/**
-	 * Displays the checkbox column.
-	 *
-	 * @param Review $review The review model.
-	 */
-	public function column_cb( $review ) {
-		?>
-		<label class="screen-reader-text" for="cb-select-<?php echo esc_attr( $review['id'] ); ?>"><?php _e( 'Select review', 'surecart' ); ?></label>
-		<input id="cb-select-<?php echo esc_attr( $review['id'] ); ?>" type="checkbox" name="bulk_action_review_ids[]" value="<?php echo esc_attr( $review['id'] ); ?>" />
-			<?php
 	}
 
 	/**
@@ -404,19 +391,6 @@ class ReviewsListTable extends ListTable {
 		 * @param string $which The location of the extra table nav markup: 'top' or 'bottom'.
 		 */
 		do_action( 'manage_reviews_extra_tablenav', $which );
-	}
-
-	/**
-	 * Get the bulk actions.
-	 *
-	 * @return array
-	 */
-	protected function get_bulk_actions() {
-		$actions              = array();
-		$actions['publish']   = __( 'Publish', 'surecart' );
-		$actions['unpublish'] = __( 'Unpublish', 'surecart' );
-		$actions['delete']    = __( 'Delete permanently', 'surecart' );
-		return $actions;
 	}
 
 	/**
