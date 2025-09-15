@@ -343,6 +343,14 @@ class LineItem extends Model {
 		return Currency::format( (int) $this->total_amount, $this->currency, [ 'convert' => false ] );
 	}
 
+	/**
+	 * Get the note display attribute by strip out HTML tags.
+	 *
+	 * @return string
+	 */
+	public function getDisplayNoteAttribute() {
+		return ! empty( $this->note ) ? wp_strip_all_tags( $this->note, true ) : '';
+	}
 
 	/**
 	 * Purchasable status display

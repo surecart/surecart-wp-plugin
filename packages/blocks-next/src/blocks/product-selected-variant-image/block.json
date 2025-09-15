@@ -10,7 +10,8 @@
 	"ancestor": [
 		"surecart/product-page",
 		"surecart/product-template",
-		"surecart/sticky-purchase"
+		"surecart/sticky-purchase",
+		"surecart/product-quick-view"
 	],
 	"example": {
 		"attributes": {}
@@ -28,6 +29,10 @@
 		},
 		"height": {
 			"type": "string"
+		},
+		"hide_on_mobile": {
+			"type": "boolean",
+			"default": false
 		}
 	},
 	"supports": {

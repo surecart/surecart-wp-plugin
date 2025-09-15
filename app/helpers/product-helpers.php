@@ -208,7 +208,6 @@ function sc_unique_product_list_id( $prefix = '' ) {
 	return $prefix . (string) ++$id_counter;
 }
 
-
 /**
  * Get the product list query.
  *
@@ -231,6 +230,7 @@ function sc_product_list_query( $block ) {
 /**
  * Get the product list prefix.
  *
+ * @param \WP_Block $block The block.
  * @return string
  */
 function sc_product_list_prefix( $block = null ) {
