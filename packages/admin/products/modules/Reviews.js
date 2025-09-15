@@ -50,8 +50,6 @@ export default ({ product = {}, updateProduct, loading }) => {
 			footer={
 				<>
 					<ScButton
-						size="small"
-						type="link"
 						target="_blank"
 						href={addQueryArgs('admin.php', {
 							page: 'sc-reviews',
