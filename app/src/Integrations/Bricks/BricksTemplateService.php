@@ -47,4 +47,8 @@ class BricksTemplateService {
 
 		return $data;
 	}
+
+	public function isRenderedWithBricks(): bool {
+		return class_exists( '\Bricks\Helpers' ) && \Bricks\Helpers::render_with_bricks();
+	}
 }

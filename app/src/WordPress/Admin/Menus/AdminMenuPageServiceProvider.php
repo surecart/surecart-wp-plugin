@@ -15,15 +15,11 @@ class AdminMenuPageServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function register( $container ) {
-		$container['surecart.admin.menus']                    = function () {
-			return new AdminMenuPageService();
-		};
-		$container['surecart.admin.toolbar']                  = function () {
-			return new AdminToolbarService();
-		};
-		$container['surecart.product_collection_pages.menus'] = function () {
-			return new ProductCollectionsMenuService();
-		};
+		$app = $container[ SURECART_APPLICATION_KEY ];
+
+		$container['surecart.admin.menus']                    = fn() => new AdminMenuPageService();
+		$container['surecart.admin.toolbar']                  = fn() => new AdminToolbarService( $app );
+		$container['surecart.product_collection_pages.menus'] = fn() => new ProductCollectionsMenuService();
 
 		$app = $container[ SURECART_APPLICATION_KEY ];
 		$app->alias( 'adminToolbar', 'surecart.admin.toolbar' );

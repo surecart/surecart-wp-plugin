@@ -2,13 +2,28 @@
 
 namespace SureCart\WordPress\Admin\Menus;
 
-use SureCart\Integrations\Elementor\ElementorTemplatesService;
 use SureCart\Models\ApiToken;
 
 /**
  * Handles the admin toolbar menus and items.
  */
 class AdminToolbarService {
+	/**
+	 * Application instance.
+	 *
+	 * @var Application
+	 */
+	protected $app = null;
+
+	/**
+	 * Constructor.
+	 *
+	 * @param Application $app Application instance.
+	 */
+	public function __construct( $app) {
+		$this->app = $app;
+	}
+
 	/**
 	 * Bootstrap the service and hook into WordPress.
 	 *
@@ -41,23 +56,45 @@ class AdminToolbarService {
 	}
 
 	/**
+	 * Check if the admin menu should be shown.
+	 *
+	 * @return bool
+	 */
+	public function showAdminMenu(): bool {
+		if ( ! is_admin() || ! is_admin_bar_showing() ) {
+			return false;
+		}
+
+		// Show only when the user is a member of this site, or they're a super admin.
+		if ( ! $this->isBlogMember() ) {
+			return false;
+		}
+
+		// Don't display when shop page is the same of the page on front.
+		if ( intval( get_option( 'page_on_front' ) ) === \SureCart::pages()->getId( 'shop' ) ) {
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * Check if the user is a member of the site.
+	 *
+	 * @return bool
+	 */
+	public function isBlogMember(): bool {
+		return is_user_member_of_blog() || is_super_admin();
+	}
+
+	/**
 	 * Add the "Visit Store" link in admin bar main menu.
 	 *
 	 * @since 2.4.0
 	 * @param \WP_Admin_Bar $wp_admin_bar Admin bar instance.
 	 */
 	public function adminBarSiteMenu( $wp_admin_bar ) {
-		if ( ! is_admin() || ! is_admin_bar_showing() ) {
-			return;
-		}
-
-		// Show only when the user is a member of this site, or they're a super admin.
-		if ( ! is_user_member_of_blog() && ! is_super_admin() ) {
-			return;
-		}
-
-		// Don't display when shop page is the same of the page on front.
-		if ( intval( get_option( 'page_on_front' ) ) === \SureCart::pages()->getId( 'shop' ) ) {
+		if ( ! $this->showAdminMenu() ) {
 			return;
 		}
 
@@ -79,7 +116,7 @@ class AdminToolbarService {
 	 */
 	public function adminBarNewContent( $wp_admin_bar ) {
 		// Show only when the user is a member of this site, or they're a super admin.
-		if ( ! is_user_member_of_blog() && ! is_super_admin() ) {
+		if ( ! $this->isBlogMember() ) {
 			return;
 		}
 
@@ -179,6 +216,7 @@ class AdminToolbarService {
 		if ( ! ApiToken::get() || empty( sc_get_product() ) ) {
 			return;
 		}
+
 		$surecart_logo = esc_url_raw( plugin_dir_url( SURECART_PLUGIN_FILE ) . 'images/icon.svg' );
 		?>
 
@@ -202,6 +240,7 @@ class AdminToolbarService {
 				mask-size: 18px;
 			}
 		</style>
+		
 		<?php
 		$product = sc_get_product();
 		$wp_admin_bar->add_node(
@@ -229,19 +268,30 @@ class AdminToolbarService {
 			'meta'   => array('class' => 'ab-sub-secondary'),
 		));
 
-		$this->addProductContentAndTemplate( $wp_admin_bar );
+
+		$this->renderProductTemplate( $wp_admin_bar );
+		$this->renderProductContent( $wp_admin_bar );
 		$this->maybeAddStickyPurchaseTemplate( $wp_admin_bar );
 	}
 
 	/**
-	 * Add product content item to admin toolbar.
+	 * Check if the current page is rendered with blocks.
+	 *
+	 * @return bool
+	 */
+	public function isRenderedWithBlocks(): bool {
+		return ! $this->isRenderedWithBricks() && ! $this->isRenderedWithElementor();
+	}
+
+	/**
+	 * Add product content and template items to admin toolbar.
 	 *
 	 * @param \WP_Admin_Bar $wp_admin_bar The admin bar instance.
 	 *
 	 * @return void
 	 */
-	public function addProductContentAndTemplate( $wp_admin_bar ): void {
-		if ( $this->isRenderedWithBricks() || ( new ElementorTemplatesService() )->isRenderedWithElementor() ) {
+	public function renderProductContent( $wp_admin_bar ): void {
+		if ( ! $this->isRenderedWithBlocks() ) {
 			return;
 		}
 
@@ -254,6 +304,19 @@ class AdminToolbarService {
 				'href'   => admin_url( '/post.php?post=' . get_the_ID() . '&action=edit' ),
 			]
 		);
+	}
+
+	/**
+	 * Add product content item to admin toolbar.
+	 *
+	 * @param \WP_Admin_Bar $wp_admin_bar The admin bar instance.
+	 *
+	 * @return void
+	 */
+	public function renderProductTemplate( $wp_admin_bar ): void {
+		if ( ! $this->isRenderedWithBlocks() ) {
+			return;
+		}
 
 		$product       = sc_get_product();
 		$template_type = wp_is_block_theme() ? 'wp_template' : 'wp_template_part';
@@ -283,7 +346,16 @@ class AdminToolbarService {
 	 * @return bool
 	 */
 	public function isRenderedWithBricks(): bool {
-		return class_exists( '\Bricks\Helpers' ) && \Bricks\Helpers::render_with_bricks();
+		return class_exists( '\Bricks\Elements' ) && $this->app->resolve( 'surecart.bricks.template' )->isRenderedWithBricks();
+	}
+
+	/**
+	 * Check if elementor is rendering the current page.
+	 * 
+	 * @return bool
+	 */
+	public function isRenderedWithElementor(): bool {
+		return class_exists( '\Elementor\Plugin' ) && $this->app->resolve( 'elementor.templates.service' )->isRenderedWithElementor();
 	}
 
 	/**
