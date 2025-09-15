@@ -209,12 +209,12 @@ class GalleryItemVideoAttachment extends ModelsGalleryItem implements GalleryIte
 
 		// Generate 'srcset' and 'sizes' if not already present.
 		if ( empty( $attr['srcset'] ) ) {
-			$image_meta = wp_get_attachment_metadata( $this->item->ID );
+			$image_meta = wp_get_attachment_metadata( $this->posterId() );
 
 			if ( is_array( $image_meta ) ) {
 				$size_array = array( absint( $width ), absint( $height ) );
-				$srcset     = wp_calculate_image_srcset( $size_array, $src, $image_meta, $this->item->ID );
-				$sizes      = wp_calculate_image_sizes( $size_array, $src, $image_meta, $this->item->ID );
+				$srcset     = wp_calculate_image_srcset( $size_array, $src, $image_meta, $this->posterId() );
+				$sizes      = wp_calculate_image_sizes( $size_array, $src, $image_meta, $this->posterId() );
 
 				if ( $srcset && ( $sizes || ! empty( $attr['sizes'] ) ) ) {
 					$attr['srcset'] = $srcset;
