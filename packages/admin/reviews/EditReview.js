@@ -248,7 +248,13 @@ export default () => {
 						gap: 0.5em;
 					`}
 				>
-					<ActionsDropdown review={review} onDelete={onDelete} />
+					<ActionsDropdown
+						review={review}
+						onDelete={onDelete}
+						{...('in_review' === review?.status
+							? { onUnpublish }
+							: {})}
+					/>
 
 					{renderReviewPublishButton()}
 				</div>

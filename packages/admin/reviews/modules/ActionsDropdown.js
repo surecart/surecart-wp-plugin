@@ -4,10 +4,10 @@ import {
 	__experimentalConfirmDialog as ConfirmDialog,
 	MenuItem,
 } from '@wordpress/components';
-import { moreHorizontal, trash } from '@wordpress/icons';
+import { moreHorizontal, trash, unseen } from '@wordpress/icons';
 import { useState } from '@wordpress/element';
 
-export default ({ review, onDelete }) => {
+export default ({ review, onDelete, onUnpublish }) => {
 	const [modal, setModal] = useState(null);
 
 	if (!review?.id) {
@@ -30,6 +30,16 @@ export default ({ review, onDelete }) => {
 			>
 				{() => (
 					<>
+						{!!onUnpublish && (
+							<MenuItem
+								icon={unseen}
+								iconPosition="left"
+								onClick={() => setModal('unpublish')}
+							>
+								{__('Unpublish Review', 'surecart')}
+							</MenuItem>
+						)}
+
 						{!!onDelete && (
 							<MenuItem
 								icon={trash}
@@ -42,8 +52,23 @@ export default ({ review, onDelete }) => {
 					</>
 				)}
 			</DropdownMenu>
+
 			<ConfirmDialog
-				isOpen={modal === 'delete'}
+				isOpen={'unpublish' === modal}
+				onConfirm={() => {
+					onUnpublish();
+					setModal(false);
+				}}
+				onCancel={() => setModal(false)}
+			>
+				{__(
+					'Are you sure you want to unpublish this review?',
+					'surecart'
+				)}
+			</ConfirmDialog>
+
+			<ConfirmDialog
+				isOpen={'delete' === modal}
 				onConfirm={() => {
 					onDelete();
 					setModal(null);
