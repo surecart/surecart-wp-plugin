@@ -30,7 +30,7 @@ export default ({
 			footer={
 				!loading && (
 					<SaveButton busy={loading || saving || deleting}>
-						{__('Save', 'surecart')}
+						{__('Save Review', 'surecart')}
 					</SaveButton>
 				)
 			}

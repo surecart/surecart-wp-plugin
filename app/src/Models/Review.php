@@ -193,7 +193,7 @@ class Review extends Model {
 		$types = [
 			'published'   => 'success',
 			'in_review'   => 'warning',
-			'unpublished' => 'danger',
+			'unpublished' => 'info',
 			'archived'    => 'default',
 		];
 		return $types[ $this->status ] ?? 'default';

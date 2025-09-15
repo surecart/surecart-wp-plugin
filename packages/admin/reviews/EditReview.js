@@ -19,12 +19,8 @@ import {
 	ScBreadcrumb,
 	ScBreadcrumbs,
 	ScButton,
-	ScDropdown,
 	ScFlex,
 	ScIcon,
-	ScMenu,
-	ScMenuDivider,
-	ScMenuItem,
 } from '@surecart/components-react';
 import { store as dataStore } from '@surecart/data';
 import useSave from '../settings/UseSave';
@@ -36,6 +32,7 @@ import Customer from './modules/Reviewer';
 import Product from './modules/Product';
 import Purchase from './modules/Purchase';
 import Status from './modules/Status';
+import ActionsDropdown from './modules/ActionsDropdown';
 
 export default () => {
 	const [loading, setLoading] = useState(false);
@@ -60,7 +57,12 @@ export default () => {
 					'review',
 					id,
 					{
-						expand: ['customer', 'product', 'purchase', 'product.price'],
+						expand: [
+							'customer',
+							'product',
+							'purchase',
+							'product.price',
+						],
 					},
 				];
 
@@ -86,8 +88,6 @@ export default () => {
 			},
 			[id]
 		);
-
-	console.log('review', review);
 
 	const updateReview = (data) =>
 		editEntityRecord('surecart', 'review', id, {
@@ -203,6 +203,30 @@ export default () => {
 		}
 	};
 
+	const renderReviewPublishButton = () => {
+		if (review?.status === 'published') {
+			return (
+				<ScButton
+					type="primary"
+					loading={loading}
+					onClick={() => setModal('unpublish')}
+				>
+					{__('Unpublish Review', 'surecart')}
+				</ScButton>
+			);
+		}
+
+		return (
+			<ScButton
+				type="primary"
+				loading={loading}
+				onClick={() => setModal('publish')}
+			>
+				{__('Publish Review', 'surecart')}
+			</ScButton>
+		);
+	};
+
 	return (
 		<UpdateModel
 			onSubmit={onSubmit}
@@ -238,49 +262,9 @@ export default () => {
 						gap: 0.5em;
 					`}
 				>
-					<ScDropdown slot="suffix" placement="bottom-end">
-						<ScButton
-							type="primary"
-							slot="trigger"
-							caret
-							loading={loading}
-						>
-							{__('Actions', 'surecart')}
-						</ScButton>
-						<ScMenu>
-							{review?.status !== 'published' && (
-								<ScMenuItem onClick={() => setModal('publish')}>
-									<ScIcon
-										slot="prefix"
-										style={{ opacity: 0.5 }}
-										name="eye"
-									/>
-									{__('Publish', 'surecart')}
-								</ScMenuItem>
-							)}
-							{review?.status === 'published' && (
-								<ScMenuItem
-									onClick={() => setModal('unpublish')}
-								>
-									<ScIcon
-										slot="prefix"
-										style={{ opacity: 0.5 }}
-										name="eye-off"
-									/>
-									{__('Unpublish', 'surecart')}
-								</ScMenuItem>
-							)}
-							<ScMenuDivider />
-							<ScMenuItem onClick={() => setModal('delete')}>
-								<ScIcon
-									slot="prefix"
-									style={{ opacity: 0.5 }}
-									name="trash"
-								/>
-								{__('Delete', 'surecart')}
-							</ScMenuItem>
-						</ScMenu>
-					</ScDropdown>
+					<ActionsDropdown review={review} onDelete={onDelete} />
+
+					{renderReviewPublishButton()}
 				</div>
 			}
 			sidebar={
@@ -337,20 +321,6 @@ export default () => {
 			>
 				{__(
 					'Are you sure you want to unpublish this review?',
-					'surecart'
-				)}
-			</ConfirmDialog>
-
-			<ConfirmDialog
-				isOpen={'delete' === modal}
-				onConfirm={() => {
-					onDelete();
-					setModal(false);
-				}}
-				onCancel={() => setModal(false)}
-			>
-				{__(
-					'Permanently delete this review? You cannot undo this action.',
 					'surecart'
 				)}
 			</ConfirmDialog>
