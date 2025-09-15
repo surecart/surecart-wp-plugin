@@ -320,6 +320,9 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 - Improvement: Move template selection/edit UI to dedicated metabox.
 - Improvement: Add quick list to affiliate reports in clicks, payouts, referrals pages.
 
+= 3.13.4 - September 11th, 2025 =
+- Fix: Revert admin icons change as it was breaking product pages for some themes.
+
 = 3.13.3 - September 11th, 2025 =
 - Fix: Issue with MemberPress access sync if there are multiple Memberships with same price & product.
 - Fix: Issue with some admin icons not loading when all blocks in editor are v3.

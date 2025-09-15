@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-09-02T19:28:54+00:00\n"
+"POT-Creation-Date: 2025-09-11T21:56:59+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.9.0\n"
 
@@ -4149,34 +4149,34 @@ msgstr ""
 msgid "Please create the invoice first."
 msgstr ""
 
-#: src/Models/LineItem.php:329
+#: src/Models/LineItem.php:359
 msgid "No longer available"
 msgstr ""
 
-#: src/Models/LineItem.php:330
-#: src/Models/LineItem.php:332
+#: src/Models/LineItem.php:360
+#: src/Models/LineItem.php:362
 msgid "Price has changed"
 msgstr ""
 
-#: src/Models/LineItem.php:331
+#: src/Models/LineItem.php:361
 msgid "Options no longer available"
 msgstr ""
 
-#: src/Models/LineItem.php:333
+#: src/Models/LineItem.php:363
 msgid "Item no longer available"
 msgstr ""
 
-#: src/Models/LineItem.php:334
+#: src/Models/LineItem.php:364
 #: src/blocks/cart-line-item-status/edit.js:6
 #: src/blocks/product-buy-button/labels.js:34
 msgid "Out of stock"
 msgstr ""
 
-#: src/Models/LineItem.php:335
+#: src/Models/LineItem.php:365
 msgid "Exceeds purchase limit"
 msgstr ""
 
-#: src/Models/LineItem.php:339
+#: src/Models/LineItem.php:369
 msgid "Quantity unavailable"
 msgstr ""
 
