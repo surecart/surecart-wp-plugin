@@ -51,6 +51,29 @@ class HelpWidget {
 			.bb-feedback-button {
 				z-index: 99999 !important;
 			}
+			
+			/* Add bottom padding to admin pages to prevent Gleap widget from overlapping pagination */
+			body.surecart_page_sc-orders .wrap,
+			body.surecart_page_sc-products .wrap,
+			body.surecart_page_sc-coupons .wrap,
+			body.surecart_page_sc-customers .wrap,
+			body.surecart_page_sc-subscriptions .wrap,
+			body.surecart_page_sc-licenses .wrap,
+			body.surecart_page_sc-affiliates .wrap,
+			body.surecart_page_sc-affiliate-requests .wrap,
+			body.surecart_page_sc-affiliation-referrals .wrap,
+			body.surecart_page_sc-affiliation-clicks .wrap,
+			body.surecart_page_sc-affiliation-payouts .wrap,
+			body.surecart_page_sc-cancellation-insights .wrap,
+			body.surecart_page_sc-abandoned-checkouts .wrap,
+			body.surecart_page_sc-product-groups .wrap,
+			body.surecart_page_sc-product-collections .wrap,
+			body.surecart_page_sc-bumps .wrap,
+			body.surecart_page_sc-upsells .wrap,
+			body.surecart_page_sc-invoices .wrap,
+			body[class*="surecart_page_sc-"] .wrap:has(.wp-list-table) {
+				padding-bottom: 80px;
+			}
 		</style>
 
 		<?php
