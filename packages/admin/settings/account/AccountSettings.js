@@ -110,6 +110,20 @@ export default () => {
 						type="url"
 					></ScInput>
 
+					<ScInput
+						value={accountItem?.slug}
+						label={__('Store ID / Subdomain', 'surecart')}
+						placeholder={__('test_store', 'surecart')}
+						onScInput={(e) =>
+							editAccountItem({ slug: e.target.value })
+						}
+						help={__(
+							'This will be used to identify your store in URLs. It can only contain letters, numbers, and dashes.',
+							'surecart'
+						)}
+						required
+					></ScInput>
+
 					<div
 						css={css`
 							grid-column: 1 / 3;
