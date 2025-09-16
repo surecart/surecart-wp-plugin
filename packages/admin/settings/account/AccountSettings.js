@@ -113,7 +113,6 @@ export default () => {
 					<ScInput
 						value={accountItem?.slug}
 						label={__('Store ID / Subdomain', 'surecart')}
-						placeholder={__('test_store', 'surecart')}
 						onScInput={(e) =>
 							editAccountItem({ slug: e.target.value })
 						}
