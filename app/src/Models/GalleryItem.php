@@ -52,7 +52,7 @@ abstract class GalleryItem implements ArrayAccess, JsonSerializable, Arrayable, 
 	 * @return bool
 	 */
 	public function exists() {
-		return isset( $this->item->ID );
+		return isset( $this->item->ID ) || isset( $this->item->id ); // For both WP_Post and ProductMedia.
 	}
 
 	/**
@@ -97,8 +97,8 @@ abstract class GalleryItem implements ArrayAccess, JsonSerializable, Arrayable, 
 	 *
 	 * @return bool
 	 */
-	public function isVideo() {
-		return ( $this instanceof GalleryItemVideoAttachment );
+	public function isVideo(): bool {
+		return $this instanceof GalleryItemVideoAttachment;
 	}
 
 	/**
