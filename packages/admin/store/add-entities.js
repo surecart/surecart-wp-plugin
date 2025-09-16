@@ -97,13 +97,6 @@ dispatch(coreStore).addEntities([
 		baseURLParams: { context: 'edit' },
 	},
 	{
-		name: 'rule-string',
-		kind: 'surecart',
-		label: __('Rule String', 'surecart'),
-		baseURL: '/surecart/v1/rule_strings',
-		baseURLParams: { context: 'edit' },
-	},
-	{
 		name: 'customer',
 		kind: 'surecart',
 		label: __('Customer', 'surecart'),

@@ -49,10 +49,6 @@ export default ({ setId }) => {
 	const { deleteEntityRecord, editEntityRecord } = useDispatch(coreStore);
 	const id = useSelect((select) => select(dataStore).selectPageId());
 	const { saveEntityRecord } = useDispatch(coreStore);
-	const baseUrl = select(coreStore).getEntityConfig(
-		'surecart',
-		'rule-string'
-	)?.baseURL;
 
 	const [newAutoFee, updateNewAutoFee] = useReducer(
 		(currentState, newState) => {
@@ -66,12 +62,7 @@ export default ({ setId }) => {
 			discount: false,
 			start_at: Date.parse(getDate(new Date())) / 1000,
 			end_at: null,
-			rule_string: '',
-			rule_json: {
-				rule_string: '',
-				schema_id: 'auto_fees__line_item',
-				groups: [],
-			},
+			rules: {},
 		}
 	);
 
@@ -123,8 +114,6 @@ export default ({ setId }) => {
 		) {
 			return;
 		}
-
-		deconstructRuleString();
 	}, [autoFee]);
 
 	const updateAutoFee = async (data) => {
@@ -133,43 +122,6 @@ export default ({ setId }) => {
 			return;
 		}
 		editEntityRecord('surecart', 'auto-fee', id, data);
-	};
-
-	const deconstructRuleString = async () => {
-		try {
-			setLoading(true);
-			const response = await apiFetch({
-				path: `${baseUrl}/deconstruct`,
-				method: 'POST',
-				data: {
-					schema_id: SCHEMA_ID,
-					rule_string: autoFee?.rule_string,
-				},
-			});
-
-			editEntityRecord('surecart', 'auto-fee', id, {
-				rule_json: response,
-			});
-			setLoading(false);
-		} catch (e) {
-			console.error(e);
-		}
-	};
-
-	const constructRuleString = async (rule_json) => {
-		try {
-			const response = await apiFetch({
-				path: `${baseUrl}/construct`,
-				method: 'POST',
-				data: {
-					schema_id: SCHEMA_ID,
-					groups: rule_json?.groups,
-				},
-			});
-			return response;
-		} catch (e) {
-			console.error(e);
-		}
 	};
 
 	/**
@@ -188,16 +140,6 @@ export default ({ setId }) => {
 				setId(createdAutoFee.id);
 				setIsCreating(false);
 			}
-			const ruleString = await constructRuleString(autoFee?.rule_json);
-
-			if (!ruleString?.rule_string) {
-				throw new Error('Rule String not updated.');
-			}
-			//remove the rule_json from the auto fee
-			await updateAutoFee({
-				rule_string: ruleString?.rule_string,
-				rule_json: null,
-			});
 
 			await save({
 				successMessage: __('Auto Fee updated.', 'surecart'),
