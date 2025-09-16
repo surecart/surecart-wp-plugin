@@ -12,11 +12,7 @@ import useSave from '../UseSave';
 import useEntity from '../../hooks/useEntity';
 import Error from '../../components/Error';
 import SettingsBox from '../SettingsBox';
-import {
-	ScSwitch,
-	ScInput,
-	ScIcon,
-} from '@surecart/components-react';
+import { ScSwitch, ScInput, ScIcon } from '@surecart/components-react';
 
 const ReviewProtocolSettings = () => {
 	const [error, setError] = useState(null);
@@ -44,7 +40,7 @@ const ReviewProtocolSettings = () => {
 	return (
 		<SettingsTemplate
 			title={__('Product Reviews', 'surecart')}
-			icon={<ScIcon name="review"></ScIcon>}
+			icon={<ScIcon name="star"></ScIcon>}
 			onSubmit={onSubmit}
 		>
 			<Error
@@ -66,7 +62,8 @@ const ReviewProtocolSettings = () => {
 					onClick={(e) => {
 						e.preventDefault();
 						editReviewProtocolItem({
-							reviews_enabled: !reviewProtocolItem?.reviews_enabled,
+							reviews_enabled:
+								!reviewProtocolItem?.reviews_enabled,
 						});
 					}}
 				>
@@ -86,12 +83,16 @@ const ReviewProtocolSettings = () => {
 							onClick={(e) => {
 								e.preventDefault();
 								editReviewProtocolItem({
-									solicit_reviews: !reviewProtocolItem?.solicit_reviews,
+									solicit_reviews:
+										!reviewProtocolItem?.solicit_reviews,
 								});
 							}}
 						>
-							{__('Solicit Reviews', 'surecart')}
-							<span slot="description" style={{ lineHeight: '1.4' }}>
+							{__('Send Automatic Review Request Emails', 'surecart')}
+							<span
+								slot="description"
+								style={{ lineHeight: '1.4' }}
+							>
 								{__(
 									'Send automatic review request emails to customers after their order is fulfilled.',
 									'surecart'
@@ -109,15 +110,21 @@ const ReviewProtocolSettings = () => {
 								type="number"
 								min="1"
 								max="365"
-								value={reviewProtocolItem?.solicit_reviews_after_days || 7}
+								value={
+									reviewProtocolItem?.solicit_reviews_after_days ||
+									7
+								}
 								onScInput={(e) => {
 									e.preventDefault();
 									editReviewProtocolItem({
-										solicit_reviews_after_days: parseInt(e.target.value) || 7,
+										solicit_reviews_after_days:
+											parseInt(e.target.value) || 7,
 									});
 								}}
 							>
-								<span slot="suffix">{__('days', 'surecart')}</span>
+								<span slot="suffix">
+									{__('days', 'surecart')}
+								</span>
 							</ScInput>
 						)}
 					</>
