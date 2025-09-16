@@ -9,18 +9,27 @@ use SureCart\Support\Contracts\GalleryItem;
  */
 class GalleryItemVideoAttachment extends ModelsGalleryItem implements GalleryItem {
 	/**
+	 * The featured image (post thumbnail) of the product.
+	 *
+	 * @var \WP_Post|null
+	 */
+	protected $featured_image = null;
+
+	/**
 	 * Create a new gallery item.
 	 *
 	 * @param int|array|\WP_Post $item The item.
+	 * @param \WP_Post|null      $featured_image The featured image (post thumbnail) of the product.
 	 *
 	 * @return void
 	 */
-	public function __construct( $item ) {
+	public function __construct( $item, $featured_image = null ) {
 		if ( is_array( $item ) && isset( $item['id'] ) ) {
 			$item = $item['id'];
 		}
 
-		$this->item = get_post( $item );
+		$this->item           = get_post( $item );
+		$this->featured_image = $featured_image;
 	}
 
 	/**

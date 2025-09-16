@@ -991,7 +991,7 @@ class Product extends Model implements PageModel {
 
 						// this is an attachment id.
 						if ( is_int( $id ) ) {
-							$attachment = GalleryItemAttachment::create( $gallery_item );
+							$attachment = GalleryItemAttachment::create( $gallery_item, $product_featured_image );
 
 							// if the attachment does not exist, use the product featured image.
 							if ( ! $attachment->exists() ) {
