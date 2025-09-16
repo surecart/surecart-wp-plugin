@@ -36,7 +36,7 @@ export default ({ review, onDelete, onUnpublish }) => {
 								iconPosition="left"
 								onClick={() => setModal('unpublish')}
 							>
-								{__('Unpublish Review', 'surecart')}
+								{__('Unapprove Review', 'surecart')}
 							</MenuItem>
 						)}
 
@@ -62,7 +62,7 @@ export default ({ review, onDelete, onUnpublish }) => {
 				onCancel={() => setModal(false)}
 			>
 				{__(
-					'Are you sure you want to unpublish this review?',
+					'Are you sure you want to unapprove this review?',
 					'surecart'
 				)}
 			</ConfirmDialog>

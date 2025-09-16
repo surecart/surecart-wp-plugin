@@ -306,7 +306,7 @@ class ReviewsListTable extends ListTable {
 					],
 					admin_url( 'admin.php?page=sc-reviews' )
 				)
-			) . '" aria-label="' . esc_attr__( 'Unpublish Review', 'surecart' ) . '">' . esc_html__( 'Unpublish', 'surecart' ) . '</a>';
+			) . '" aria-label="' . esc_attr__( 'Unapprove Review', 'surecart' ) . '">' . esc_html__( 'Unapprove', 'surecart' ) . '</a>';
 
 			$actions['publish'] = '<a href="' . esc_url(
 				add_query_arg(
@@ -317,7 +317,7 @@ class ReviewsListTable extends ListTable {
 					],
 					admin_url( 'admin.php?page=sc-reviews' )
 				)
-			) . '" aria-label="' . esc_attr__( 'Publish Review', 'surecart' ) . '">' . esc_html__( 'Publish', 'surecart' ) . '</a>';
+			) . '" aria-label="' . esc_attr__( 'Approve Review', 'surecart' ) . '">' . esc_html__( 'Approve', 'surecart' ) . '</a>';
 		} elseif ( 'published' === $review->status ) {
 			$actions['unpublish'] = '<a href="' . esc_url(
 				add_query_arg(
@@ -328,7 +328,7 @@ class ReviewsListTable extends ListTable {
 					],
 					admin_url( 'admin.php?page=sc-reviews' )
 				)
-			) . '" aria-label="' . esc_attr__( 'Unpublish Review', 'surecart' ) . '">' . esc_html__( 'Unpublish', 'surecart' ) . '</a>';
+			) . '" aria-label="' . esc_attr__( 'Unapprove Review', 'surecart' ) . '">' . esc_html__( 'Unapprove', 'surecart' ) . '</a>';
 		} elseif ( 'unpublished' === $review->status ) {
 			$actions['publish'] = '<a href="' . esc_url(
 				add_query_arg(
@@ -339,7 +339,7 @@ class ReviewsListTable extends ListTable {
 					],
 					admin_url( 'admin.php?page=sc-reviews' )
 				)
-			) . '" aria-label="' . esc_attr__( 'Publish Review', 'surecart' ) . '">' . esc_html__( 'Publish', 'surecart' ) . '</a>';
+			) . '" aria-label="' . esc_attr__( 'Approve Review', 'surecart' ) . '">' . esc_html__( 'Approve', 'surecart' ) . '</a>';
 		}
 
 		$actions['delete'] = sprintf(
@@ -411,8 +411,8 @@ class ReviewsListTable extends ListTable {
 		return array(
 			'all'         => __( 'All', 'surecart' ),
 			'in_review'   => __( 'In Review', 'surecart' ),
-			'published'   => __( 'Published', 'surecart' ),
-			'unpublished' => __( 'Unpublished', 'surecart' ),
+			'published'   => __( 'Approved', 'surecart' ),
+			'unpublished' => __( 'Unapproved', 'surecart' ),
 		);
 	}
 }

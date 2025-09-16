@@ -1091,4 +1091,48 @@ class Product extends Model implements PageModel {
 	public function getCatalogedAtDateTimeAttribute() {
 		return ! empty( $this->cataloged_at ) ? TimeDate::formatDateAndTime( $this->cataloged_at ) : '';
 	}
+
+	/**
+	 * Get the total reviews count from reviews_breakdown.
+	 *
+	 * @return int
+	 */
+	public function getTotalReviewsAttribute() {
+		if ( empty( $this->reviews_breakdown ) ) {
+			return 0;
+		}
+		return array_sum( (array) $this->reviews_breakdown );
+	}
+
+	/**
+	 * Get the reviews breakdown as an array with proper structure.
+	 * Ensures all star ratings (1-5) are present with default value of 0.
+	 *
+	 * @return array
+	 */
+	public function getReviewsBreakdownArrayAttribute() {
+		$breakdown = array_merge(
+			array(
+				1 => 0,
+				2 => 0,
+				3 => 0,
+				4 => 0,
+				5 => 0,
+			),
+			(array) ( $this->reviews_breakdown ?? array() )
+		);
+
+		// Ensure all values are integers and sort by key.
+		ksort( $breakdown );
+		return array_map( 'intval', $breakdown );
+	}
+
+	/**
+	 * Check if the product has any reviews.
+	 *
+	 * @return bool
+	 */
+	public function getHasReviewsAttribute() {
+		return $this->total_reviews > 0;
+	}
 }

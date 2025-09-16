@@ -167,8 +167,8 @@ class Review extends Model {
 	public function getStatusDisplayAttribute() {
 		$statuses = [
 			'in_review'   => __( 'In Review', 'surecart' ),
-			'published'   => __( 'Published', 'surecart' ),
-			'unpublished' => __( 'Unpublished', 'surecart' ),
+			'published'   => __( 'Approved', 'surecart' ),
+			'unpublished' => __( 'Unapproved', 'surecart' ),
 			'archived'    => __( 'Archived', 'surecart' ),
 		];
 
@@ -193,7 +193,7 @@ class Review extends Model {
 		$types = [
 			'published'   => 'success',
 			'in_review'   => 'warning',
-			'unpublished' => 'info',
+			'unpublished' => 'danger',
 			'archived'    => 'default',
 		];
 		return $types[ $this->status ] ?? 'default';

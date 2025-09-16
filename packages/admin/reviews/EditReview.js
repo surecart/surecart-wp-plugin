@@ -197,7 +197,7 @@ export default () => {
 					loading={loading}
 					onClick={() => setModal('unpublish')}
 				>
-					{__('Unpublish Review', 'surecart')}
+					{__('Unapprove Review', 'surecart')}
 				</ScButton>
 			);
 		}
@@ -208,7 +208,7 @@ export default () => {
 				loading={loading}
 				onClick={() => setModal('publish')}
 			>
-				{__('Publish Review', 'surecart')}
+				{__('Approve Review', 'surecart')}
 			</ScButton>
 		);
 	};
@@ -298,7 +298,7 @@ export default () => {
 				onCancel={() => setModal(false)}
 			>
 				{__(
-					'Are you sure you want to publish this review?',
+					'Are you sure you want to approve this review?',
 					'surecart'
 				)}
 			</ConfirmDialog>
@@ -312,7 +312,7 @@ export default () => {
 				onCancel={() => setModal(false)}
 			>
 				{__(
-					'Are you sure you want to unpublish this review?',
+					'Are you sure you want to unapprove this review?',
 					'surecart'
 				)}
 			</ConfirmDialog>
