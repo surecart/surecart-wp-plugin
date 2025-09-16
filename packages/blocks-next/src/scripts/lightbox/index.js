@@ -514,9 +514,14 @@ const { state, actions, callbacks } = store('surecart/lightbox', {
 			// Get/update the screen position of the image to animate from there.
 			const swiper = state.currentImage.imageRef.closest('.swiper');
 			if (swiper) {
-				const { x, y } = swiper.getBoundingClientRect();
-				screenPosX = x;
-				screenPosY = y;
+				const { state: sliderState } = store('surecart/image-slider');
+
+				// Only update swiper container position if the slider is active.
+				if (sliderState && sliderState.active && sliderState.swiper) {
+					const { x, y } = swiper.getBoundingClientRect();
+					screenPosX = x;
+					screenPosY = y;
+				}
 			}
 
 			// As of this writing, using the calculations above will render the
