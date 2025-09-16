@@ -86,7 +86,13 @@ export default ({
 						name="integration"
 						required
 						onSelect={setProvider}
-					/>
+					>
+						<sc-menu-divider slot="suffix"></sc-menu-divider>
+						<sc-menu-item slot="suffix" onClick={() => window.location.href = window.scData?.admin_url + 'admin.php?page=sc-settings&tab=integrations'}>
+							{__('View More', 'surecart')}
+							<sc-icon name="external-link" slot="suffix" style={{ fontSize: '14px' }}></sc-icon>
+						</sc-menu-item>
+					</SelectModel>
 				</ScFormControl>
 			</div>
 
