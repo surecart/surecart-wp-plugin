@@ -40,7 +40,7 @@ export default ({
 		}
 
 		if (charge?.disputed_amount) {
-			return <sc-tag type="warning">{charge?.dispute_status}</sc-tag>;
+			return <sc-tag type="danger">{charge?.dispute_status}</sc-tag>;
 		}
 
 		if (charge?.refunded_amount && charge?.refunded_amount) {
