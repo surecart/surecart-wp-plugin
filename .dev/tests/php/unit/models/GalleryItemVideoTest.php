@@ -176,6 +176,74 @@ class GalleryItemVideoTest extends SureCartUnitTestCase {
 	}
 	
 	/**
+	 * Test that posterId falls back to product featured image when no thumbnail provided.
+	 *
+	 * @group media
+	 * @group video
+	 * @group poster
+	 * @group featured-image
+	 */
+	public function test_poster_id_falls_back_to_product_featured_image() {
+		// Create a product featured image attachment
+		$filename = DIR_TESTDATA . '/images/test-image.jpg';
+		$featured_image_id = self::factory()->attachment->create_upload_object($filename);
+		$featured_image_post = get_post($featured_image_id);
+		
+		// Create a video attachment without any thumbnail metadata.
+		$video_id = self::factory()->attachment->create([
+			'post_mime_type' => 'video/mp4',
+			'post_title' => 'Test Video Featured Image Fallback',
+		]);
+		
+		// Create gallery item with featured image passed as second parameter.
+		$gallery_item = new GalleryItemVideoAttachment(['id' => $video_id], $featured_image_post);
+		
+		// Verify that posterId returns the featured image ID when no thumbnail provided.
+		$this->assertEquals($featured_image_id, $gallery_item->posterId());
+		
+		// Test that attributes method uses the featured image.
+		$attributes = $gallery_item->attributes();
+		$this->assertIsObject($attributes);
+		$this->assertObjectHasProperty('src', $attributes);
+		
+		// The src should contain the featured image URL.
+		$expected_url = wp_get_attachment_image_src($featured_image_id, 'full')[0];
+		$this->assertEquals($expected_url, $attributes->src);
+	}
+	
+	/**
+	 * Test that thumbnail metadata takes priority over product featured image.
+	 *
+	 * @group media
+	 * @group video
+	 * @group poster
+	 * @group featured-image
+	 */
+	public function test_thumbnail_metadata_takes_priority_over_featured_image() {
+		// Create both a thumbnail image and a featured image
+		$filename = DIR_TESTDATA . '/images/test-image.jpg';
+		$thumbnail_id = self::factory()->attachment->create_upload_object($filename);
+		$featured_image_id = self::factory()->attachment->create_upload_object($filename);
+		$featured_image_post = get_post($featured_image_id);
+		
+		// Create a video attachment
+		$video_id = self::factory()->attachment->create([
+			'post_mime_type' => 'video/mp4',
+			'post_title' => 'Test Video Priority',
+		]);
+		
+		// Create gallery item with featured image
+		$gallery_item = new GalleryItemVideoAttachment(['id' => $video_id], $featured_image_post);
+		
+		// Set thumbnail metadata
+		$gallery_item->setMetadata('thumbnail_image', ['id' => $thumbnail_id]);
+		
+		// Verify that thumbnail metadata takes priority over featured image
+		$this->assertEquals($thumbnail_id, $gallery_item->posterId());
+		$this->assertNotEquals($featured_image_id, $gallery_item->posterId());
+	}
+	
+	/**
 	 * Test that html generates valid image markup.
 	 *
 	 * @group media
