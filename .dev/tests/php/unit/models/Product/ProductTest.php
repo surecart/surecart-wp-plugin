@@ -476,7 +476,9 @@ class ProductTest extends SureCartUnitTestCase
 
 		$this->assertEquals('Red', $gallery_items[0]->getMetadata('variant_option'));
 		$this->assertEquals('Blue', $gallery_items[1]->getMetadata('variant_option'));
-=======
+	}
+
+	/**
 	 * Test has_variants attribute
 	 */
 	public function test_has_variants_attribute()
