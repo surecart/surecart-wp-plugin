@@ -45,6 +45,8 @@ export default ({ attributes, setAttributes, className, context }) => {
 	const spacingProps = useSpacingProps(attributes);
 	const shadowProps = useShadowProps(attributes);
 
+	const minHeight = attributes.style?.dimensions?.minHeight || 'auto';
+
 	const ref = useRef();
 	const richTextRef = useRef();
 	const blockProps = useBlockProps({
@@ -96,6 +98,7 @@ export default ({ attributes, setAttributes, className, context }) => {
 						...spacingProps.style,
 						...shadowProps.style,
 						...colorProps.style,
+						minHeight: minHeight,
 					}}
 					value={text}
 					onChange={(value) => setAttributes({ text: value })}
