@@ -33,7 +33,7 @@ class PageServiceTest extends SureCartUnitTestCase {
 			'post_type' => 'sc_form',
 		) );
 
-		$found = $this->service->find( $post->ID, 'sc_form' );
+		$found = $this->service->find( $post->ID );
 		$this->assertSame( $post->ID, $found->ID );
 
 		$post = self::factory()->post->create_and_get( array(
@@ -41,7 +41,7 @@ class PageServiceTest extends SureCartUnitTestCase {
 			'post_status' => 'pending'
 		) );
 
-		$found = $this->service->find( $post->ID, 'sc_form' );
+		$found = $this->service->find( $post->ID );
 		$this->assertNull( $found );
 	}
 

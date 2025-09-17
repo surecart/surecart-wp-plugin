@@ -198,4 +198,36 @@ class AccountServiceTest extends SureCartUnitTestCase {
 		$this->assertSame($this->account->tax_protocol->address->city, $account->tax_protocol->address->city);
 		$this->assertSame($this->account->tax_protocol->id, $account->tax_protocol->id);
 	}
+
+	/**
+	 * @group account
+	 */
+	public function test_claim_expired_with_past_timestamp() {
+		$account = new Account(['claim_window_ends_at' => time() - 3600]);
+		$this->assertTrue($account->claim_expired);
+	}
+	
+	/**
+	 * @group account
+	 */
+	public function test_claim_expired_with_future_timestamp() {
+		$account = new Account(['claim_window_ends_at' => time() + 3600]);
+		$this->assertFalse($account->claim_expired);
+	}
+	
+	/**
+	 * @group account
+	 */
+	public function test_claim_expired_with_null_timestamp() {
+		$account = new Account(['claim_window_ends_at' => null]);
+		$this->assertFalse($account->claim_expired);
+	}
+	
+	/**
+	 * @group account
+	 */
+	public function test_claim_expired_with_invalid_timestamp() {
+		$account = new Account(['claim_window_ends_at' => 'invalid']);
+		$this->assertFalse($account->claim_expired);
+	}
 }

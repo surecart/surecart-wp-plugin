@@ -39,14 +39,15 @@ abstract class AdminController {
 	public function withHeader( $args ) {
 		add_action(
 			'in_admin_header',
-			function() use ( $args ) {
+			function () use ( $args ) {
 				return \SureCart::render(
 					'layouts/partials/admin-header',
 					[
-						'breadcrumbs'      => $args['breadcrumbs'] ?? [],
-						'suffix'           => $args['suffix'] ?? '',
-						'claim_url'        => ! \SureCart::account()->claimed ? \SureCart::routeUrl( 'account.claim' ) : '',
-						'report_url'       => $args['report_url'] ?? '',
+						'breadcrumbs'   => $args['breadcrumbs'] ?? [],
+						'suffix'        => $args['suffix'] ?? '',
+						'claim_url'     => ! \SureCart::account()->claimed ? \SureCart::routeUrl( 'account.claim' ) : '',
+						'claim_expired' => \SureCart::account()->claim_expired ?? false,
+						'report_url'    => $args['report_url'] ?? '',
 					]
 				);
 			}
@@ -63,7 +64,7 @@ abstract class AdminController {
 	public function withNotices( $items ) {
 		add_action(
 			'admin_notices',
-			function() use ( $items ) {
+			function () use ( $items ) {
 				foreach ( $items as $key => $item ) {
 					if ( (bool) ( $_REQUEST[ $key ] ?? false ) ) {
 						?>

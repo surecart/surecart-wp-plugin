@@ -615,6 +615,15 @@ class Product extends Model implements PageModel {
 	}
 
 	/**
+	 * Get the has variants attribute.
+	 *
+	 * @return boolean
+	 */
+	public function getHasVariantsAttribute() {
+		return ! empty( $this->variants->data ?? [] );
+	}
+
+	/**
 	 * Get the has multiple prices attribute.
 	 *
 	 * @return boolean
@@ -626,13 +635,24 @@ class Product extends Model implements PageModel {
 	/**
 	 * Return attached active prices.
 	 */
-	public function activeAdHocPrices() {
+	public function getActiveAdHocPricesAttribute() {
 		return array_filter(
 			$this->active_prices ?? array(),
 			function ( $price ) {
 				return $price->ad_hoc;
 			}
 		);
+	}
+
+	/**
+	 * Get the has options attribute.
+	 * Determines if product has options (variants, multiple prices, or ad hoc pricing).
+	 *
+	 * @return boolean
+	 */
+	public function getHasOptionsAttribute() {
+		// Check if product has variant options.
+		return $this->has_variants || $this->has_multiple_prices || ! empty( $this->active_ad_hoc_prices );
 	}
 
 	/**
@@ -686,7 +706,7 @@ class Product extends Model implements PageModel {
 	/**
 	 * Get with sorted prices.
 	 *
-	 * @return this
+	 * @return self
 	 */
 	public function withSortedPrices() {
 		if ( empty( $this->prices->data ) ) {
@@ -707,9 +727,9 @@ class Product extends Model implements PageModel {
 	}
 
 	/**
-	 * Get product with acgive and sorted prices.
+	 * Get product with active and sorted prices.
 	 *
-	 * @return this
+	 * @return self
 	 */
 	public function withActivePrices() {
 		if ( empty( $this->prices->data ) ) {
@@ -957,7 +977,7 @@ class Product extends Model implements PageModel {
 
 						return null;
 					},
-					$this->gallery_ids
+					$this->gallery_ids ?? []
 				),
 				function ( $item ) {
 					// it must have a src at least.

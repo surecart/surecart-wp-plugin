@@ -1,13 +1,14 @@
 /**
  * WordPress dependencies.
  */
-import { store, getContext } from '@wordpress/interactivity';
+import { store, getContext, getElement } from '@wordpress/interactivity';
 
 /**
  * Internal dependencies.
  */
 const { actions: checkoutActions } = store('surecart/checkout');
 const { actions: cartActions, state: cartState } = store('surecart/cart');
+
 const { addQueryArgs } = wp.url; // TODO: replace with `@wordpress/url` when available.
 const { sprintf, __ } = wp.i18n;
 const { scProductViewed } = require('./events');
@@ -76,6 +77,25 @@ const { state, actions } = store('surecart/product-page', {
 						values: variantValues || {},
 				  })
 				: {};
+		},
+
+		get selectedVariantImage() {
+			const context = getContext();
+			if (!context) {
+				return {};
+			}
+
+			const image = !!state.selectedVariant?.line_item_image?.src
+				? state.selectedVariant.line_item_image
+				: context.product?.preview_image || {};
+
+			// Compatibility with lazy loading enabled images.
+			return {
+				...image,
+				src: image?.['data-src'] || image?.src,
+				srcset: image?.['data-srcset'] || image?.srcset,
+				sizes: image?.['data-sizes'] || image?.sizes,
+			};
 		},
 
 		/**
@@ -246,7 +266,9 @@ const { state, actions } = store('surecart/product-page', {
 		 * Line item to add to cart.
 		 */
 		get lineItem() {
-			const { adHocAmount, selectedPrice } = getContext();
+			const { adHocAmount, selectedPrice, note, noteLabel } =
+				getContext();
+
 			return {
 				price: selectedPrice?.id,
 				quantity: Math.max(
@@ -260,6 +282,10 @@ const { state, actions } = store('surecart/product-page', {
 								: adHocAmount,
 					  }
 					: {}),
+				note:
+					!!noteLabel && !!note
+						? `${noteLabel}: ${note}`
+						: note || '',
 				...(state.selectedVariant?.id
 					? { variant: state.selectedVariant?.id }
 					: {}),
@@ -361,13 +387,26 @@ const { state, actions } = store('surecart/product-page', {
 		 * Handle submit callback.
 		 */
 		*handleSubmit(e) {
+			if (e.type === 'keydown' && e.key !== 'Enter') {
+				return true;
+			}
+
 			e.preventDefault(); // prevent the form from submitting.
 			e.stopPropagation(); // prevent the event from bubbling up.
+
+			// Add submitter to event if it doesn't exist (for non-form elements)
+			if (!e.submitter) {
+				const { ref } = getElement();
+				if (ref) {
+					e.submitter = ref;
+				}
+			}
 
 			// if the button hdoes not have a value, add to cart.
 			if (!e?.submitter?.value) {
 				return yield actions.addToCart(e);
 			}
+
 			// otherwise, redirect to the provided url.
 			return window.location.assign(e.submitter.value);
 		},
@@ -446,6 +485,23 @@ const { state, actions } = store('surecart/product-page', {
 		setAdHocAmount: (e) => {
 			const context = getContext();
 			context.adHocAmount = parseFloat(e.target.value);
+		},
+
+		/**
+		 * Set the line item note.
+		 */
+		setLineItemNote: (e) => {
+			const context = getContext();
+			context.note = e.target.value || '';
+			context.noteLabel = context.label || '';
+		},
+
+		/**
+		 * Expand the product line item note textarea when clicked or focused.
+		 */
+		expandLineItemNote: (e) => {
+			const context = getContext();
+			context.rows = 3;
 		},
 
 		/**

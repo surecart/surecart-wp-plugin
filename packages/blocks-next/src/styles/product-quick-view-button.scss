@@ -1,0 +1,42 @@
+.wp-block-surecart-product-quick-view-button {
+	gap: 0.5em;
+	text-decoration: none;
+	cursor: pointer;
+
+	&__icon {
+		width: 1em;
+		height: 1em;
+	}
+
+	&.wp-block-button__link {
+		display: flex;
+		align-items: center;
+		width: max-content;
+		background-color: var(--sc-color-primary-500);
+		color: var(--sc-color-white);
+		transition: background-color var(--sc-transition-fast) ease,
+			color var(--sc-transition-fast) ease;
+		line-height: 1;
+	}
+
+	&.wp-block-button__link:hover {
+		background-color: var(--sc-color-primary-500);
+		color: var(--sc-color-white);
+		text-decoration: none;
+	}
+
+	&.loading {
+		pointer-events: none;
+	}
+
+	&.is-style-show-on-hover {
+		opacity: 0;
+		transition: opacity 0.35s ease;
+	}
+}
+
+li:hover .wp-block-surecart-product-quick-view-button.is-style-show-on-hover,
+a:hover .wp-block-surecart-product-quick-view-button.is-style-show-on-hover,
+.wp-block-surecart-product-quick-view-button.is-style-show-on-hover:focus {
+	opacity: 1;
+}

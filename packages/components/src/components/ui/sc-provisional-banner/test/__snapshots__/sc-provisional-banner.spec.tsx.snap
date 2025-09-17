@@ -6,10 +6,38 @@ exports[`sc-provisional-banner renders 1`] = `
     <div class="sc-banner">
       <p>
         Complete your store setup to go live.
-        <a href="">
+        <a href="" rel="noopener noreferrer" target="_blank">
           Complete Setup
           <sc-icon name="arrow-right"></sc-icon>
         </a>
+      </p>
+    </div>
+  </mock:shadow-root>
+</sc-provisional-banner>
+`;
+
+exports[`sc-provisional-banner renders with expired prop false 1`] = `
+<sc-provisional-banner expired="false">
+  <mock:shadow-root>
+    <div class="sc-banner">
+      <p>
+        Complete your store setup to go live.
+        <a href="" rel="noopener noreferrer" target="_blank">
+          Complete Setup
+          <sc-icon name="arrow-right"></sc-icon>
+        </a>
+      </p>
+    </div>
+  </mock:shadow-root>
+</sc-provisional-banner>
+`;
+
+exports[`sc-provisional-banner renders with expired prop true 1`] = `
+<sc-provisional-banner expired="true">
+  <mock:shadow-root>
+    <div class="sc-banner">
+      <p>
+        The setup window for your store has expired. Please contact support to complete your setup.
       </p>
     </div>
   </mock:shadow-root>

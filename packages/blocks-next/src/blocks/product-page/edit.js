@@ -38,16 +38,13 @@ export default (props) => {
 	);
 
 	const blockContext = useMemo(() => {
-		if (!post) {
-			return null;
-		}
-
 		return {
-			postType: post?.type,
-			postId: post?.id,
-			classList: post?.class_list ?? '',
+			...(post?.type ? { postType: post.type } : {}),
+			...(post?.id ? { postId: post.id } : {}),
+			...(post?.class_list ? { classList: post.class_list } : {}),
+			...(name ? { providerBlock: name } : {}),
 		};
-	}, [post]);
+	}, [post, name]);
 
 	const Component = hasInnerBlocks ? QueryContent : QueryPlaceholder;
 

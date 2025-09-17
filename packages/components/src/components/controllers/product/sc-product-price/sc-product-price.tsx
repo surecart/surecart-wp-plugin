@@ -39,11 +39,11 @@ export class ScProductPrice {
     const originalAmount = variant?.display_amount ?? price?.display_amount ?? '';
 
     // maybe change for upsells.
-    const amount = upsellState?.line_item?.total_amount || price?.amount;
-    const upsellDisplayAmount = upsellState?.line_item?.total_display_amount;
+    const amount = upsellState?.line_item?.subtotal_with_upsell_discount_amount || price?.amount;
+    const upsellDisplayAmount = upsellState?.line_item?.subtotal_with_upsell_discount_display_amount;
     const displayAmount = upsellDisplayAmount ? upsellDisplayAmount : originalAmount;
 
-    const scratchAmount = upsellState?.line_item?.scratch_amount || price?.scratch_amount;
+    const scratchAmount = upsellState?.line_item?.subtotal_amount || price?.scratch_amount;
     const upsellScratchDisplayAmount = upsellState?.line_item?.subtotal_display_amount;
     const scratchDisplayAmount = upsellScratchDisplayAmount ? upsellScratchDisplayAmount : price?.scratch_display_amount;
 

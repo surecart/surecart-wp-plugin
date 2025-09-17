@@ -14,7 +14,7 @@ $style .= ! empty( $attributes['height'] )
 	? esc_attr( safecss_filter_attr( 'height:' . $attributes['height'] ) ) . ';'
 	: '';
 
-$style .= $styles['css'];
-$class .= $styles['classnames'];
+$style .= $styles['css'] ?? '';
+$class .= $styles['classnames'] ?? '';
 
 return 'file:./view.php';

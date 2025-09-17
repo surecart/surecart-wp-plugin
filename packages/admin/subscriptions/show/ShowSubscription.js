@@ -45,6 +45,7 @@ import RenewSubscriptionAtModal from './modules/modals/RenewSubscriptionAtModal'
 import Affiliates from '../../components/affiliates';
 import ForceCancelModal from './modules/modals/ForceCancelModal';
 import Confirm from '../../components/confirm';
+import SubscriptionSettings from './modules/SubscriptionSettings';
 
 export default () => {
 	const id = useSelect((select) => select(dataStore).selectPageId());
@@ -176,7 +177,10 @@ export default () => {
 	);
 
 	useEffect(() => {
-		if (id && 'canceled' !== subscription?.status) {
+		if (
+			id &&
+			!['completed', 'canceled', undefined].includes(subscription?.status)
+		) {
 			fetchUpcomingPeriod();
 		}
 	}, [id, subscription?.discount?.id, subscription?.status]);
@@ -519,6 +523,16 @@ export default () => {
 					<Purchases subscriptionId={id} />
 					<Tax
 						subscription={subscription}
+						loading={!hasLoadedSubscription}
+					/>
+					<SubscriptionSettings
+						subscription={subscription}
+						updateSubscription={(data) =>
+							editSubscription(
+								data,
+								__('Subscription settings updated.', 'surecart')
+							)
+						}
 						loading={!hasLoadedSubscription}
 					/>
 					<Affiliates

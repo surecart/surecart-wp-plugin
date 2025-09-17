@@ -228,9 +228,14 @@ export function* toggleSwap({ id, action = 'swap' }) {
 export function* addLineItem({ checkout, data, live_mode = false }) {
 	const existingLineItem = (checkout?.line_items?.data || []).find((item) => {
 		if (!item?.variant?.id) {
-			return item.price.id === data.price;
+			return item.price.id === data.price && item.note === data.note;
 		}
-		return item.variant.id === data.variant && item.price.id === data.price;
+
+		return (
+			item.variant.id === data.variant &&
+			item.price.id === data.price &&
+			item.note === data.note
+		);
 	});
 
 	// create the checkout with the line item.
@@ -262,7 +267,7 @@ export function* addLineItem({ checkout, data, live_mode = false }) {
 				existingLineItem?.id ? existingLineItem?.id : ''
 			}`,
 			{
-				consolidate: true,
+				consolidate: false,
 				expand: [
 					...(expand || []).map((item) => {
 						return item.includes('.') ? item : `checkout.${item}`;

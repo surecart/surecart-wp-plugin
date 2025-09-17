@@ -269,7 +269,7 @@ class RequestService {
 
 		// must have a token for the request.
 		if ( $this->authorized && empty( $this->token ) ) {
-			return new \WP_Error( 'missing_token', __( 'Please connect your site to SureCart.', 'surecart' ) );
+			return new \WP_Error( 'missing_token', 'Please connect your site to SureCart.' );
 		}
 
 		// make sure we send json.

@@ -28,20 +28,20 @@ class Account extends Model {
 	protected $clears_account_cache = true;
 
 	/**
-	 * Has Checklist.
-	 *
-	 * @return bool
-	 */
-	public function getHasChecklistAttribute() {
-		return ! empty( $this->gleap_checklist->gleap_id ) && ! empty( $this->is_connected );
-	}
-
-	/**
 	 * Get the account ID.
 	 *
 	 * @return string
 	 */
 	public function getIsConnectedAttribute() {
 		return ! empty( ApiToken::get() ) && ! empty( $this->id );
+	}
+
+	/**
+	 * Get the claim expired attribute.
+	 *
+	 * @return bool
+	 */
+	public function getClaimExpiredAttribute() {
+		return ! empty( $this->claim_window_ends_at ) && time() > $this->claim_window_ends_at;
 	}
 }
