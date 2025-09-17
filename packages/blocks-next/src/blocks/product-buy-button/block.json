@@ -37,11 +37,6 @@
 	"supports": {
 		"interactivity": true,
 		"anchor": true,
-		"reusable": false,
-		"dimensions": {
-			"minHeight": true,
-			"__experimentalSkipSerialization": true
-		},
 		"spacing": {
 			"__experimentalSkipSerialization": true,
 			"padding": ["horizontal", "vertical"],
@@ -63,6 +58,7 @@
 			"__experimentalFontStyle": true,
 			"__experimentalTextTransform": true
 		},
+		"reusable": false,
 		"__experimentalBorder": {
 			"color": true,
 			"radius": true,
