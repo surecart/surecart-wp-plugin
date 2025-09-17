@@ -17,6 +17,7 @@
 | `interval`             | `interval`               | Recurring interval (i.e. monthly, once, etc.) | `string`          | `undefined` |
 | `max`                  | `max`                    | The max allowed.                              | `number`          | `undefined` |
 | `name`                 | `name`                   | Product name                                  | `string`          | `undefined` |
+| `note`                 | `note`                   | The line item note                            | `string`          | `undefined` |
 | `price`                | `price`                  | Price name                                    | `string`          | `undefined` |
 | `purchasableStatus`    | `purchasable-status`     | The purchasable status display                | `string`          | `undefined` |
 | `quantity`             | `quantity`               | Quantity                                      | `number`          | `undefined` |
@@ -76,14 +77,17 @@
 
 ### Depends on
 
+- [sc-product-line-item-note](../product-line-item-note)
 - [sc-quantity-select](../quantity-select)
 - [sc-icon](../icon)
 
 ### Graph
 ```mermaid
 graph TD;
+  sc-product-line-item --> sc-product-line-item-note
   sc-product-line-item --> sc-quantity-select
   sc-product-line-item --> sc-icon
+  sc-product-line-item-note --> sc-icon
   sc-quantity-select --> sc-icon
   sc-line-items --> sc-product-line-item
   sc-order --> sc-product-line-item

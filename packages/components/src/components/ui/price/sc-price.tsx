@@ -66,7 +66,7 @@ export class ScProductPrice {
       <Host role="paragraph">
         <div class="price" id="price">
           <div class="price__amounts">
-            {!!this.scratchAmount && this.scratchAmount !== this.amount && (
+            {!!this.scratchAmount && this.scratchAmount > this.amount && (
               <Fragment>
                 {this.scratchAmount === 0 ? (
                   __('Free', 'surecart')
