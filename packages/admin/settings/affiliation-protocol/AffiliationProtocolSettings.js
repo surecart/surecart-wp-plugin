@@ -20,6 +20,7 @@ import { useCopyToClipboard } from '@wordpress/compose';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { store as noticesStore } from '@wordpress/notices';
 import { store as coreStore } from '@wordpress/core-data';
+import { addQueryArgs } from '@wordpress/url';
 import CommissionStructure from '../../components/affiliates/commission/CommissionStructure';
 
 export default () => {
@@ -194,10 +195,22 @@ export default () => {
 				</ScSwitch>
 				<ScInput
 					label={__('Signup URL', 'surecart')}
-					help={__(
-						'This is where you will send affiliates to signup for your affiliate program.',
-						'surecart'
-					)}
+					help={
+						<span>
+							{__(
+								'This is where you will send affiliates to signup for your affiliate program. To change this URL slug, ',
+								'surecart'
+							)}
+							<a
+								href={addQueryArgs('admin.php', {
+									page: 'sc-settings',
+								})}
+							>
+								{__('click here', 'surecart')}
+							</a>
+							.
+						</span>
+					}
 					type="url"
 					readonly
 					value={signupsUrl}
