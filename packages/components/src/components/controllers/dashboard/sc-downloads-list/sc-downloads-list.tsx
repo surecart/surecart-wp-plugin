@@ -19,7 +19,6 @@ export class ScDownloadsList {
   @State() downloads: Download[];
   @State() downloading: string;
   @State() busy: boolean;
-  @State() loading: boolean;
   @State() error: string;
   @State() pagination: {
     total: number;
@@ -35,23 +34,8 @@ export class ScDownloadsList {
 
   componentWillLoad() {
     onFirstVisible(this.el, () => {
-      this.initialFetch();
+      this.fetchItems();
     });
-  }
-
-  async initialFetch() {
-    if (!this.productId || !this.customerId) {
-      return;
-    }
-    try {
-      this.loading = true;
-      await this.getItems();
-    } catch (e) {
-      console.error(this.error);
-      this.error = e?.message || __('Something went wrong', 'surecart');
-    } finally {
-      this.loading = false;
-    }
   }
 
   async fetchItems() {
@@ -71,7 +55,7 @@ export class ScDownloadsList {
 
   /** Get all subscriptions */
   async getItems() {
-    const response = (await await apiFetch({
+    const response = (await apiFetch({
       path: addQueryArgs(`surecart/v1/downloads/`, {
         product_ids: [this.productId],
         customer_ids: [this.customerId],
@@ -165,10 +149,10 @@ export class ScDownloadsList {
   };
 
   renderList() {
-    if (this?.loading) {
+    if (this?.busy && !this?.downloads?.length) {
       return this.renderLoading();
     }
-    if (this?.downloads?.length === 0) {
+    if (!this?.downloads?.length) {
       return this.renderEmpty();
     }
     const downloads = this.downloads || [];
