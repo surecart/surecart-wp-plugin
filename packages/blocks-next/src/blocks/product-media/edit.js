@@ -20,6 +20,7 @@ export default ({ attributes, setAttributes, context: { postId } }) => {
 		width,
 		lightbox,
 		desktop_gallery,
+		show_thumbnails,
 	} = attributes;
 	const [images, setImages] = useState([]);
 	const blockProps = useBlockProps({});
@@ -109,8 +110,20 @@ export default ({ attributes, setAttributes, context: { postId } }) => {
 						spinControls={'custom'}
 						onChange={(width) => setAttributes({ width: width })}
 					/>
-
-					{!desktop_gallery && (
+					<ToggleControl
+						label={__('Show Thumbnails', 'surecart')}
+						help={__(
+							'Show thumbnails for the image slider.',
+							'surecart'
+						)}
+						checked={show_thumbnails}
+						onChange={(show_thumbnails) =>
+							setAttributes({
+								show_thumbnails,
+							})
+						}
+					/>
+					{!desktop_gallery && show_thumbnails && (
 						<RangeControl
 							label={__('Thumbnails Per Page', 'surecart')}
 							min={2}
@@ -157,7 +170,7 @@ export default ({ attributes, setAttributes, context: { postId } }) => {
 							<div className="swiper-button-next"></div>
 						</div>
 
-						{images?.length > 1 ? (
+						{images?.length > 1 && show_thumbnails ? (
 							<div className="sc-image-slider__thumbs">
 								<div
 									className="sc-image-slider-button__prev"
