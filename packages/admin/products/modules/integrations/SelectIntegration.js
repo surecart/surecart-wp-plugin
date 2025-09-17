@@ -5,6 +5,7 @@ import { store as coreStore } from '@wordpress/core-data';
 import SelectModel from '../../../components/SelectModel';
 import { ScFormControl } from '@surecart/components-react';
 import { useSelect } from '@wordpress/data';
+import { addQueryArgs } from '@wordpress/url';
 
 export default ({
 	model,
@@ -88,9 +89,19 @@ export default ({
 						onSelect={setProvider}
 					>
 						<sc-menu-divider slot="suffix"></sc-menu-divider>
-						<sc-menu-item slot="suffix" onClick={() => window.location.href = window.scData?.admin_url + 'admin.php?page=sc-settings&tab=integrations'}>
+						<sc-menu-item
+							slot="suffix"
+							href={addQueryArgs('admin.php', {
+								page: 'sc-settings',
+								tab: 'integrations',
+							})}
+						>
 							{__('View More', 'surecart')}
-							<sc-icon name="external-link" slot="suffix" style={{ fontSize: '14px' }}></sc-icon>
+							<sc-icon
+								name="external-link"
+								slot="suffix"
+								style={{ fontSize: '14px' }}
+							></sc-icon>
 						</sc-menu-item>
 					</SelectModel>
 				</ScFormControl>
