@@ -44,3 +44,9 @@
 		transform: scale(1.05);
 	}
 }
+
+@media (max-width: 480px) {
+	.wp-block-surecart-product-selected-variant-image.hide-on-mobile {
+		display: none;
+	}
+}

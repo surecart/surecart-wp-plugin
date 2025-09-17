@@ -114,6 +114,7 @@ export class ScSubscriptionNextPayment {
                 variant={item?.variant_display_options}
                 editable={false}
                 removable={false}
+                note={item?.display_note}
                 scratchDisplayAmount={item?.scratch_display_amount}
                 displayAmount={item?.subtotal_display_amount}
                 quantity={item?.quantity}

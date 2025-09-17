@@ -19,6 +19,7 @@
 	],
 	"supports": {
 		"interactivity": true,
+		"inserter": false,
 		"layout": {
 			"__experimentalDefault": "grid",
 			"__experimentalDefaultControls": {

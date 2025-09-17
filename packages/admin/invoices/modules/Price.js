@@ -17,12 +17,11 @@ import {
 	ScIcon,
 	ScTableCell,
 	ScTableRow,
-	ScQuantitySelect,
 	ScDialog,
 	ScPriceInput,
 	ScForm,
-	ScVisuallyHidden,
 	ScText,
+	ScQuantitySelect,
 } from '@surecart/components-react';
 import {
 	getFeaturedProductMediaAttributes,
@@ -31,6 +30,8 @@ import {
 import { intervalString } from '../../util/translations';
 import { useInvoice } from '../hooks/useInvoice';
 import LineItemLabel from '../../ui/LineItemLabel';
+import LineItemNote from './LineItemNote';
+import { Button } from '@wordpress/components';
 
 export default ({
 	price,
@@ -60,7 +61,7 @@ export default ({
 	return (
 		<ScTableRow>
 			<ScTableCell>
-				<ScFlex alignItems="center" justifyContent="flex-start">
+				<ScFlex alignItems="flex-start" justifyContent="flex-start">
 					{media?.url ? (
 						<img
 							src={media.url}
@@ -68,6 +69,10 @@ export default ({
 							{...(media.title ? { title: media.title } : {})}
 							css={css`
 								width: var(
+									--sc-product-line-item-image-size,
+									4em
+								);
+								min-width: var(
 									--sc-product-line-item-image-size,
 									4em
 								);
@@ -84,8 +89,6 @@ export default ({
 									);
 								display: block;
 								box-shadow: var(--sc-input-box-shadow);
-								-webkit-align-self: flex-start;
-								-ms-flex-item-align: start;
 								align-self: flex-start;
 							`}
 						/>
@@ -93,6 +96,10 @@ export default ({
 						<div
 							css={css`
 								width: var(
+									--sc-product-line-item-image-size,
+									4em
+								);
+								min-width: var(
 									--sc-product-line-item-image-size,
 									4em
 								);
@@ -122,63 +129,148 @@ export default ({
 							/>
 						</div>
 					)}
-					<div>
-						<div>
-							<strong>{price?.product?.name}</strong>
-							<LineItemLabel lineItem={lineItem}>
-								<div>
-									<ScFormatNumber
-										type="currency"
-										currency={price?.currency || 'usd'}
-										value={
-											!!price?.ad_hoc && ad_hoc_amount
-												? ad_hoc_amount
-												: price?.amount
-										}
-									/>
-									{intervalString(price)}
-								</div>
-							</LineItemLabel>
-						</div>
+					<div
+						css={css`
+							flex: 1;
+							display: flex;
+							flex-direction: column;
+							gap: 2px;
+						`}
+					>
+						<strong>{price?.product?.name}</strong>
+
+						<LineItemLabel lineItem={lineItem} />
+
+						<LineItemNote
+							lineItem={lineItem}
+							onChange={onChange}
+							isDraftInvoice={isDraftInvoice}
+							busy={busy}
+						/>
 					</div>
 				</ScFlex>
 			</ScTableCell>
-			<ScTableCell>
-				{!!price?.ad_hoc ? (
-					__('--', 'surecart')
-				) : (
-					<>
-						{isDraftInvoice ? (
-							<ScQuantitySelect
-								quantity={quantity}
-								onScChange={(e) =>
-									onChange({ quantity: e.detail })
-								}
-								{...(!!maxStockQuantity
-									? { max: maxStockQuantity }
-									: {})}
-								disabled={busy}
-							/>
-						) : (
-							quantity
-						)}
 
-						{maxStockQuantity && (
-							<ScText
-								css={css`
-									margin-top: var(--sc-spacing-small);
-									color: var(--sc-price-label-color, var(--sc-input-help-text-color));
-									font-size: var(--sc-price-label-font-size, var(--sc-input-help-text-font-size-medium));
-								`}
-							>
-								{sprintf(
-									__('Available: %d', 'surecart'),
-									maxStockQuantity
-								)}
-							</ScText>
+			<ScTableCell>
+				<div
+					css={css`
+						display: flex;
+						align-items: flex-start;
+						gap: 0.5em;
+						margin-bottom: var(--sc-spacing-small);
+					`}
+				>
+					<div>
+						<ScFormatNumber
+							type="currency"
+							currency={price?.currency || 'usd'}
+							value={
+								!!price?.ad_hoc && ad_hoc_amount
+									? ad_hoc_amount
+									: price?.amount
+							}
+						/>
+						{intervalString(price)}
+					</div>
+
+					{!!price?.ad_hoc && isDraftInvoice && (
+						<Button
+							label={__('Change Amount', 'surecart')}
+							variant="tertiary"
+							type="button"
+							onClick={() => setOpen(true)}
+							style={{
+								color: 'var(--sc-color-gray-500)',
+							}}
+						>
+							<ScIcon name="edit" />
+						</Button>
+					)}
+				</div>
+
+				{!!price?.trial_duration_days && (
+					<div
+						css={css`
+							opacity: 0.65;
+							font-size: 12px;
+							line-height: 1.2;
+						`}
+					>
+						{sprintf(
+							_n(
+								'Starting in %s day',
+								'Starting in %s days',
+								price.trial_duration_days,
+								'surecart'
+							),
+							price.trial_duration_days
 						)}
-					</>
+					</div>
 				)}
+
+				{!!fees?.length && (
+					<div>
+						{(fees || []).map(({ description, amount }) => {
+							return (
+								<div
+									css={css`
+										opacity: 0.65;
+										font-size: 12px;
+										line-height: 1.2;
+									`}
+								>
+									<ScFormatNumber
+										type="currency"
+										currency={price?.currency || 'usd'}
+										value={amount}
+									/>{' '}
+									{description || __('Fee', 'surecart')}
+								</div>
+							);
+						})}
+					</div>
+				)}
+			</ScTableCell>
+			<ScTableCell>
+				<div>
+					{isDraftInvoice ? (
+						<ScQuantitySelect
+							quantity={quantity}
+							disabled={price?.ad_hoc || busy}
+							css={css`
+								margin-top: -3px;
+							`}
+							size="small"
+							onScChange={(e) =>
+								onChange({ quantity: parseInt(e.detail) })
+							}
+							{...(maxStockQuantity && { max: maxStockQuantity })}
+						/>
+					) : (
+						quantity
+					)}
+
+					{isDraftInvoice && maxStockQuantity && (
+						<ScText
+							css={css`
+								margin-top: var(--sc-spacing-small);
+								color: var(
+									--sc-price-label-color,
+									var(--sc-input-help-text-color)
+								);
+								font-size: var(
+									--sc-price-label-font-size,
+									var(--sc-input-help-text-font-size-medium)
+								);
+							`}
+						>
+							{sprintf(
+								__('Available: %d', 'surecart'),
+								maxStockQuantity
+							)}
+						</ScText>
+					)}
+				</div>
 			</ScTableCell>
 			<ScTableCell>
 				<div
@@ -203,58 +295,7 @@ export default ({
 									: subtotal_amount
 							}
 						/>
-						{!!price?.ad_hoc && isDraftInvoice && (
-							<ScButton
-								size="small"
-								onClick={() => setOpen(true)}
-							>
-								<ScIcon name="edit" />
-							</ScButton>
-						)}
 					</div>
-
-					{!!price?.trial_duration_days && (
-						<div
-							css={css`
-								opacity: 0.65;
-								font-size: 12px;
-								line-height: 1.2;
-							`}
-						>
-							{sprintf(
-								_n(
-									'Starting in %s day',
-									'Starting in %s days',
-									price.trial_duration_days,
-									'surecart'
-								),
-								price.trial_duration_days
-							)}
-						</div>
-					)}
-
-					{!!fees?.length && (
-						<div>
-							{(fees || []).map(({ description, amount }) => {
-								return (
-									<div
-										css={css`
-											opacity: 0.65;
-											font-size: 12px;
-											line-height: 1.2;
-										`}
-									>
-										<ScFormatNumber
-											type="currency"
-											currency={price?.currency || 'usd'}
-											value={amount}
-										/>{' '}
-										{description || __('Fee', 'surecart')}
-									</div>
-								);
-							})}
-						</div>
-					)}
 				</div>
 			</ScTableCell>
 			{isDraftInvoice && (
@@ -263,12 +304,17 @@ export default ({
 						text-align: right;
 					`}
 				>
-					<ScButton onClick={onRemove} type="text" circle>
+					<Button
+						label={__('Remove', 'surecart')}
+						onClick={onRemove}
+						variant="tertiary"
+						style={{
+							color: 'var(--sc-color-gray-500)',
+							marginTop: '-10px',
+						}}
+					>
 						<ScIcon name="trash" />
-						<ScVisuallyHidden>
-							{__('Remove', 'surecart')}
-						</ScVisuallyHidden>
-					</ScButton>
+					</Button>
 				</ScTableCell>
 			)}
 			<ScForm
@@ -276,7 +322,6 @@ export default ({
 					if (!isDraftInvoice) {
 						return;
 					}
-
 					e.stopImmediatePropagation(); // prevents the page form from submitting.
 					setOpen(false);
 					onChange({ ad_hoc_amount: addHocAmount });

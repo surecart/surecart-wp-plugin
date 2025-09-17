@@ -111,6 +111,14 @@ const { state, actions } = store('surecart/checkout', {
 		},
 
 		/**
+		 * Get the line item note.
+		 */
+		get lineItemNote() {
+			const { line_item } = getContext();
+			return line_item?.display_note || '';
+		},
+
+		/**
 		 * Check if the discount is applied to the cart/checkout.
 		 */
 		get isDiscountApplied() {

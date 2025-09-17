@@ -15,6 +15,8 @@ import {
 	__experimentalUnitControl as UnitControl,
 	__experimentalToolsPanelItem as ToolsPanelItem,
 	__experimentalUseCustomUnits as useCustomUnits,
+	ToggleControl,
+	PanelBody,
 } from '@wordpress/components';
 
 /**
@@ -23,7 +25,7 @@ import {
 import classnames from 'classnames';
 
 export default ({
-	attributes: { sizing, aspectRatio, height, width },
+	attributes: { sizing, aspectRatio, height, width, hide_on_mobile },
 	context: { postId },
 	setAttributes,
 	clientId,
@@ -64,7 +66,7 @@ export default ({
 
 	return (
 		<>
-			<InspectorControls group="dimensions">
+			<InspectorControls>
 				<ToolsPanelItem
 					hasValue={() => !!sizing}
 					label={__('Image Cropping', 'surecart')}
@@ -144,28 +146,40 @@ export default ({
 						}
 					/>
 				</ToolsPanelItem>
-				<UnitControl
-					label={__('Height', 'surecart')}
-					labelPosition="top"
-					value={height || ''}
-					min={0}
-					onChange={(nextHeight) =>
-						onDimensionChange('height', nextHeight)
-					}
-					units={units}
-				/>
-				<UnitControl
-					label={__('Width', 'surecart')}
-					labelPosition="top"
-					value={width || ''}
-					min={0}
-					onChange={(nextWidth) =>
-						onDimensionChange('width', nextWidth)
-					}
-					units={units}
-				/>
+				<PanelBody title={__('Settings', 'surecart')}>
+					<UnitControl
+						label={__('Height', 'surecart')}
+						labelPosition="top"
+						value={height || ''}
+						min={0}
+						onChange={(nextHeight) =>
+							onDimensionChange('height', nextHeight)
+						}
+						units={units}
+					/>
+					<UnitControl
+						label={__('Width', 'surecart')}
+						labelPosition="top"
+						value={width || ''}
+						min={0}
+						onChange={(nextWidth) =>
+							onDimensionChange('width', nextWidth)
+						}
+						units={units}
+					/>
+					<ToggleControl
+						label={__('Hide on Mobile?', 'surecart')}
+						help={__(
+							'Do you want to hide the image on mobile?',
+							'surecart'
+						)}
+						checked={hide_on_mobile}
+						onChange={(hide_on_mobile) => {
+							setAttributes({ hide_on_mobile });
+						}}
+					/>
+				</PanelBody>
 			</InspectorControls>
-
 			<figure {...blockProps}>
 				{product?.preview_image?.src ? (
 					<img {...product?.preview_image} />

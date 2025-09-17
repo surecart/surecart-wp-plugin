@@ -1,13 +1,15 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-
 import { __, sprintf } from '@wordpress/i18n';
 
 /**
  * Internal dependencies.
  */
 import LineItem from './LineItem';
-import { ScFormatNumber } from '@surecart/components-react';
+import {
+	ScFormatNumber,
+	ScProductLineItemNote,
+} from '@surecart/components-react';
 import LineItemLabel from './LineItemLabel';
 
 export default ({ lineItem, suffix, showWeight, showQuantity, children }) => {
@@ -58,6 +60,7 @@ export default ({ lineItem, suffix, showWeight, showQuantity, children }) => {
 						)}
 					</div>
 				)}
+				<ScProductLineItemNote note={lineItem?.display_note} />
 				{children}
 			</LineItemLabel>
 		</LineItem>

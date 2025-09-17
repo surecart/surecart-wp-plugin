@@ -5,7 +5,7 @@
 
 	<div
 		data-wp-class--quantity--disabled="state.isQuantityDisabled"
-		style="<?php echo esc_attr( $styles['css'] ?? '' ); ?>"
+		style="<?php echo esc_attr( $styles['border']['css'] ?? '' ); ?>"
 	>
 		<?php echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 	</div>

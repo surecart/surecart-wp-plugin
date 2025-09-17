@@ -9,7 +9,7 @@
 	"icon": "money-alt",
 	"ancestor": [
 		"surecart/product-page",
-		"surecart/product-template",
+		"surecart/product-quick-view",
 		"surecart/sticky-purchase"
 	],
 	"example": {

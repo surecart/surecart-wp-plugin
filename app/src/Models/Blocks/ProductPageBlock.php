@@ -28,7 +28,7 @@ class ProductPageBlock {
 	public function getVariantsQuery() {
 		$product = sc_get_product();
 
-		if ( empty( $product ) || empty( $product->variants->data ) ) {
+		if ( empty( $product ) || empty( $product->variants->data ?? [] ) ) {
 			return null;
 		}
 
@@ -87,7 +87,7 @@ class ProductPageBlock {
 	public function getSelectedVariant() {
 		$product = sc_get_product();
 
-		if ( empty( $product ) || empty( $product->variants->data ) ) {
+		if ( empty( $product ) || empty( $product->variants->data ?? [] ) ) {
 			return null;
 		}
 
@@ -231,6 +231,8 @@ class ProductPageBlock {
 				'text'            => __( 'Add to Cart', 'surecart' ),
 				'outOfStockText'  => __( 'Sold Out', 'surecart' ),
 				'unavailableText' => __( 'Unavailable For Purchase', 'surecart' ),
+				'note'            => '',
+				'noteLabel'       => '',
 			),
 		);
 	}

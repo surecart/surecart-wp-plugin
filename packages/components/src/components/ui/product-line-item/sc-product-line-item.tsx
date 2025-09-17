@@ -83,6 +83,9 @@ export class ScProductLineItem {
   /** The purchasable status display */
   @Prop() purchasableStatus: string;
 
+  /** The line item note */
+  @Prop() note: string;
+
   /** Emitted when the quantity changes. */
   @Event({ bubbles: false }) scUpdateQuantity: EventEmitter<number>;
 
@@ -91,7 +94,7 @@ export class ScProductLineItem {
 
   render() {
     const isImageFallback = this.image?.type === 'fallback';
-  
+
     return (
       <div class="base" part="base">
         <div
@@ -104,7 +107,11 @@ export class ScProductLineItem {
             'product-line-item__removable': this.removable,
           }}
         >
-          {!!this.image?.src ? <img {...(this.image as any)} part={isImageFallback ? "placeholder__image" : "image" } class={isImageFallback ? "item__image-placeholder" : "item__image"} /> : <div class="item__image-placeholder" part="placeholder__image"></div>}
+          {!!this.image?.src ? (
+            <img {...(this.image as any)} part={isImageFallback ? 'placeholder__image' : 'image'} class={isImageFallback ? 'item__image-placeholder' : 'item__image'} />
+          ) : (
+            <div class="item__image-placeholder" part="placeholder__image"></div>
+          )}
           <div class="item__text-container">
             <div class="item__row">
               <div class="item__title" part="title">
@@ -129,6 +136,7 @@ export class ScProductLineItem {
                   </div>
                 )}
                 {!!this.purchasableStatus && <div>{this.purchasableStatus}</div>}
+                {!!this.note && <sc-product-line-item-note note={this.note} />}
               </div>
 
               <div class="item__description" part="trial-fees">
