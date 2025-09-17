@@ -58,7 +58,7 @@ class Charge extends Model {
 	/**
 	 * Get the human discount attribute.
 	 *
-	 * @return string
+	 * @return string|null
 	 */
 	public function getExternalChargeLinkAttribute() {
 		if ( ! $this->payment_method || ! $this->payment_method->processor_type ) {
@@ -134,5 +134,14 @@ class Charge extends Model {
 	 */
 	public function getDisputedDisplayAmountAttribute(): string {
 		return ! empty( $this->disputed_amount ) ? Currency::format( $this->disputed_amount, $this->currency ) : '';
+	}
+
+	/**
+	 * Get the fully disputed attribute.
+	 *
+	 * @return bool
+	 */
+	public function getFullyDisputedAttribute(): bool {
+		return $this->disputed_amount && ( $this->disputed_amount >= $this->amount );
 	}
 }

@@ -55,7 +55,7 @@ export default ({
 	};
 
 	const renderRefundButton = (charge) => {
-		if (charge?.fully_refunded || !onRefundClick) {
+		if (charge?.fully_refunded || !onRefundClick || charge?.fully_disputed) {
 			return null;
 		}
 
