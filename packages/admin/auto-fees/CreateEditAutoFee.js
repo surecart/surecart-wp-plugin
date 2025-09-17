@@ -62,7 +62,11 @@ export default ({ setId }) => {
 			discount: false,
 			start_at: Date.parse(getDate(new Date())) / 1000,
 			end_at: null,
-			rules: {},
+			rules: {
+				type: 'group',
+				combinator: 'or',
+				conditions: [],
+			},
 		}
 	);
 
@@ -104,17 +108,6 @@ export default ({ setId }) => {
 			},
 			[id, newAutoFee]
 		);
-
-	useEffect(() => {
-		if (
-			!autoFee?.rule_string ||
-			autoFee?.rule_json ||
-			!SCHEMA_ID ||
-			loading
-		) {
-			return;
-		}
-	}, [autoFee]);
 
 	const updateAutoFee = async (data) => {
 		if (!id) {
