@@ -31,6 +31,7 @@ class ContentSyncService {
         $content = get_transient( $model->metadata->{self::SYNC_KEY} );
         
         if ( $content ) {
+            delete_transient( $model->metadata->{self::SYNC_KEY} );
             return array_merge( $props, array( 'post_content' => $content ) );
         }
 
