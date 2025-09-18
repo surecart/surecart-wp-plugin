@@ -13,7 +13,7 @@ class ProductScriptsController extends AdminModelEditController {
 	 *
 	 * @var array
 	 */
-	protected $with_data = [ 'currency', 'supported_currencies', 'tax_protocol', 'checkout_page_url' ];
+	protected $with_data = [ 'currency', 'supported_currencies', 'tax_protocol', 'checkout_page_url', 'review_protocol' ];
 
 	/**
 	 * Script handle.
