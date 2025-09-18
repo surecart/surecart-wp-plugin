@@ -11,7 +11,7 @@ class ContentSyncService {
 	 *
 	 * @var \SureCart\App
 	 */
-	protected $sync_key = 'surecart_content_sync_key';
+	protected const SYNC_KEY = 'surecart_content_sync_key';
 
     /**
      * Bootstrap the service.
@@ -27,8 +27,8 @@ class ContentSyncService {
      * @param array $props The props.
      * @param \SureCart\Models\Model $model The model.
      */
-    public function setContent( $props, $model ) {
-        $content = get_transient( $model->metadata->$this->sync_key );
+    public function setContent( $props, \SureCart\Models\Model $model ) {
+        $content = get_transient( $model->metadata->{self::SYNC_KEY} );
         
         if ( $content ) {
             return array_merge( $props, array( 'post_content' => $content ) );
@@ -54,7 +54,7 @@ class ContentSyncService {
         $sync_key = wp_generate_uuid4();
 
         // set the sync key in the metadata
-        $model_data['metadata'][$this->sync_key] = $sync_key;
+        $model_data['metadata'][self::SYNC_KEY] = $sync_key;
 
         // set a transient to sync the content later (max 30 minutes)
 		set_transient( $sync_key, $model_data['content'], 30 * MINUTE_IN_SECONDS );
