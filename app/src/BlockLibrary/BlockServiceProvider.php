@@ -33,36 +33,21 @@ class BlockServiceProvider implements ServiceProviderInterface {
 	public function register( $container ) {
 		$app = $container[ SURECART_APPLICATION_KEY ];
 
-		$container['block'] = function () use ( $app ) {
-			return new BlockService( $app );
-		};
+		$container['block'] = fn () => new BlockService( $app );
 
-		$container['block.support.anchor'] = function () use ( $app ) {
-			return new BlockAnchorSupportService();
-		};
-
-		$container['block.support.currency'] = function () use ( $app ) {
-			return new BlockCurrencyConversionSupportService();
-		};
-
-		$container['blocks.patterns'] = function () use ( $app ) {
-			return new BlockPatternsService( $app );
-		};
-
-		$container['blocks.validations'] = function () {
-			return new BlockValidationService(
-				apply_filters(
-					'surecart_block_validators',
-					array(
-						new \SureCart\BlockValidator\VariantChoice(),
-					)
+		$container['block.support.anchor']   = fn () => new BlockAnchorSupportService();
+		$container['block.support.currency'] = fn () => new BlockCurrencyConversionSupportService();
+		$container['blocks.quick_view']      = fn () => new ProductQuickViewService();
+		$container['blocks.patterns']        = fn () => new BlockPatternsService( $app );
+		$container['blocks.mode_switcher']   = fn () => new FormModeSwitcherService( $app );
+		$container['blocks.validations']     = fn () => new BlockValidationService(
+			apply_filters(
+				'surecart_block_validators',
+				array(
+					new \SureCart\BlockValidator\VariantChoice(),
 				)
-			);
-		};
-
-		$container['blocks.mode_switcher'] = function () use ( $app ) {
-			return new FormModeSwitcherService( $app );
-		};
+			)
+		);
 
 		$app->alias( 'block', 'block' );
 

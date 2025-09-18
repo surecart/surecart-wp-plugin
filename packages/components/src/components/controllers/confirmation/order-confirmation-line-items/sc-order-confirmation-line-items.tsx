@@ -41,6 +41,7 @@ export class ScOrderConfirmationLineItems {
                   removable={false}
                   quantity={item.quantity}
                   fees={item?.fees?.data}
+                  note={item?.display_note}
                   amount={item.ad_hoc_display_amount ? item.ad_hoc_display_amount : item.subtotal_display_amount}
                   scratch={!item.ad_hoc_display_amount && item?.scratch_display_amount}
                   trial={item?.price?.trial_text}

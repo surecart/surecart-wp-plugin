@@ -9,7 +9,7 @@
 	"icon": "clock",
 	"ancestor": [
 		"surecart/product-page",
-		"surecart/product-template",
+		"surecart/product-quick-view",
 		"surecart/sticky-purchase"
 	],
 	"example": {
@@ -36,5 +36,6 @@
 	},
 	"textdomain": "surecart",
 	"render": "file:./view.php",
-	"editorScript": "file:./index.js"
+	"editorScript": "file:./index.js",
+	"style": "file:./style-index.css"
 }

@@ -21,6 +21,7 @@ export default function PostTemplateCreateModal({
 	product,
 	updateProduct,
 	template,
+	setTemplate,
 	post,
 }) {
 	const [title, setTitle] = useState('');
@@ -59,6 +60,11 @@ export default function PostTemplateCreateModal({
 		editEntityRecord('postType', 'sc_product', post.id, { template: slug });
 
 		setIsBusy(false);
+		setTemplate({
+			id,
+			slug,
+			title: `Product: ${title || DEFAULT_TITLE}`,
+		});
 		cancel();
 	};
 
