@@ -29,6 +29,15 @@ class Import extends Model {
 	 */
 	protected function queue( $type, $data = [] ) {
 		$this->endpoint = $this->endpoint . '/' . $type;
+
+		if ( ! is_array( $data ) ) {
+			return new \WP_Error( 'invalid_data', __( 'Data must be an array.', 'surecart' ) );
+		}
+
+		foreach ( $data as $item ) {
+			$item = \SureCart::sync()->content()->maybeStageContentSync( $item );
+		}
+
 		return parent::create( [ 'data' => $data ] );
 	}
 }

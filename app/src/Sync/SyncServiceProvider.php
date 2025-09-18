@@ -60,6 +60,7 @@ class SyncServiceProvider implements ServiceProviderInterface {
 		$container['surecart.sync.store']                = fn () => new StoreSyncService();
 		$container['surecart.process.product_post.sync'] = fn () => new PostSyncService();
 		$container['surecart.sync.customers']            = fn () => new CustomerSyncService();
+		$container['surecart.sync.content']              = fn () => new ContentSyncService();
 
 		// Alias the sync service.
 		$app->alias( 'sync', 'surecart.sync' );
