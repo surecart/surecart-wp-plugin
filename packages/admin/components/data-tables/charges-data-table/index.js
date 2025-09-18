@@ -40,7 +40,11 @@ export default ({
 		}
 
 		if (charge?.disputed_amount) {
-			return <sc-tag type="danger">{charge?.dispute_status}</sc-tag>;
+			return (
+				<sc-tag type={charge?.dispute_status_type ?? 'warning'}>
+					{charge?.dispute_status}
+				</sc-tag>
+			);
 		}
 
 		if (charge?.refunded_amount && charge?.refunded_amount) {
@@ -55,7 +59,11 @@ export default ({
 	};
 
 	const renderRefundButton = (charge) => {
-		if (charge?.fully_refunded || !onRefundClick || charge?.fully_disputed) {
+		if (
+			charge?.fully_refunded ||
+			!onRefundClick ||
+			charge?.fully_disputed
+		) {
 			return null;
 		}
 
@@ -75,7 +83,7 @@ export default ({
 				items={(data || [])
 					.sort((a, b) => b.created_at - a.created_at)
 					.map((charge) => {
-						const { currency, amount, created_at_date } = charge;
+						const { created_at_date } = charge;
 						return {
 							amount: (
 								<sc-text
@@ -98,7 +106,11 @@ export default ({
 									{!!charge?.disputed_amount && (
 										<div
 											style={{
-												color: 'var(--sc-color-warning-500)',
+												color:
+													charge?.dispute_status_type ===
+													'danger'
+														? 'var(--sc-color-danger-500)'
+														: 'var(--sc-color-warning-500)',
 											}}
 										>
 											- {charge?.disputed_display_amount}{' '}

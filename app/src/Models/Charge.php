@@ -118,13 +118,24 @@ class Charge extends Model {
 			return __( 'Multiple Disputes', 'surecart' );
 		}
 
-		$status = $this->disputes->data[0]->status ?? '';
+		return $this->disputes->data[0]->status_display ?? '';
+	}
 
-		return sprintf(
-			/* translators: %s: dispute status */
-			__( 'Disputed (%s)', 'surecart' ),
-			$status ? ucfirst( $status ) : __( 'Unknown', 'surecart' )
-		);
+	/**
+	 * Get the dispute status type attribute.
+	 *
+	 * @return string
+	 */
+	public function getDisputeStatusTypeAttribute(): string {
+		if ( ! $this->disputed_amount ) {
+			return '';
+		}
+
+		if ( ! empty( $this->disputes->data ) && count( $this->disputes->data ) > 1 ) {
+			return 'warning';
+		}
+
+		return $this->disputes->data[0]->status_type ?? '';
 	}
 
 	/**

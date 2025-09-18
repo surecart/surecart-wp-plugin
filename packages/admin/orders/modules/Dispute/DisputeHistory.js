@@ -22,27 +22,20 @@ import {
 } from '@surecart/components-react';
 
 export default ({ disputeId, onRequestClose }) => {
-	const renderDisputeStatusBadge = (status) => {
-		switch (status) {
-			case 'pending':
-				return (
-					<ScTag type="default">{__('Pending', 'surecart')}</ScTag>
-				);
-			case 'won':
-				return <ScTag type="success">{__('Won', 'surecart')}</ScTag>;
-			case 'lost':
-				return <ScTag type="danger">{__('Lost', 'surecart')}</ScTag>;
-		}
-
-		return <ScTag>{status || __('Unknown', 'surecart')}</ScTag>;
-	};
-
 	// get the dispute.
 	const { record: dispute, hasResolved } = useEntityRecord(
 		'surecart',
 		'dispute',
 		disputeId
 	);
+
+	const renderDisputeStatusBadge = (dispute) => {
+		return (
+			<ScTag type={dispute?.status_type ?? 'warning'}>
+				{dispute?.status_display}
+			</ScTag>
+		);
+	};
 
 	const renderContent = () => {
 		if (!hasResolved) {
@@ -77,7 +70,7 @@ export default ({ disputeId, onRequestClose }) => {
 					</ScTableCell>
 					<ScTableRow>
 						<ScTableCell>
-							{renderDisputeStatusBadge(dispute.status)}
+							{renderDisputeStatusBadge(dispute)}
 						</ScTableCell>
 						<ScTableCell>{dispute?.display_amount}</ScTableCell>
 						<ScTableCell>

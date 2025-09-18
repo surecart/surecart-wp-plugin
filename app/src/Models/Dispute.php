@@ -83,4 +83,30 @@ class Dispute extends Model {
 				return '';
 		}
 	}
+
+	/**
+	 * Get the display status attribute.
+	 *
+	 * @return string
+	 */
+	public function getStatusDisplayAttribute(): string {
+		return sprintf(
+			/* translators: %s: dispute status */
+			__( 'Dispute %s', 'surecart' ),
+			$this->status ? ucfirst( $this->status ) : __( 'Unknown', 'surecart' )
+		);
+	}
+
+	/**
+	 * Get the display status attribute.
+	 *
+	 * @return string
+	 */
+	public function getStatusTypeAttribute() {
+		$types = [
+			'pending' => 'warning',
+			'lost'    => 'danger',
+		];
+		return $types[ $this->status ] ?? 'warning';
+	}
 }
