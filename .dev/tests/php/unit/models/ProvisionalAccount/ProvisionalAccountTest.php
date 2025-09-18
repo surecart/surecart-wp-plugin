@@ -48,12 +48,44 @@ class ProvisionalAccountTest extends SureCartUnitTestCase
 
     public function test_does_not_make_request_if_setup_is_complete()
     {
-        $provisionalAccount = \Mockery::mock(ProvisionalAccount::class)->shouldAllowMockingProtectedMethods()->makePartial();
-        $provisionalAccount->shouldReceive('hasApiToken')->once()->andReturn(true);
-        $provisionalAccount->shouldReceive('isTesting')->once()->andReturn(false);
+        $provisional_account = \Mockery::mock(ProvisionalAccount::class)->shouldAllowMockingProtectedMethods()->makePartial();
+        $provisional_account->shouldReceive('hasApiToken')->once()->andReturn(true);
+        $provisional_account->shouldReceive('isTesting')->once()->andReturn(false);
 
-        $account = $provisionalAccount->create();
+        $account = $provisional_account->create();
         $this->assertWPError($account);
         $this->assertEquals('setup_complete', $account->get_error_code());
+    }
+
+    public function test_seeds_account_products() {
+        $provisional_account = \Mockery::mock(ProvisionalAccount::class)->shouldAllowMockingProtectedMethods()->makePartial();
+
+        // Create a mock for the RequestService
+        $requests = \Mockery::mock(RequestService::class)->makePartial();
+
+        // Set expectation that makeRequest should be called with specific arguments
+        $requests->shouldReceive('makeRequest')
+          ->once()
+          ->andReturn((object) [
+              'id' => 'test_provisional_account',
+              'account_name' => 'Test Account',
+          ]);
+
+        // Mock the unAuthorizedRequest alias to use our mock
+        \SureCart::alias('unAuthorizedRequest', function () use ($requests) {
+            return call_user_func_array([$requests, 'makeRequest'], func_get_args());
+        });
+
+        $provisional_account->shouldReceive('seed')->once()->andReturn(true);
+
+       $provisional_account::create(
+            [
+                'products' => [
+                    [
+                        'name' => 'Product 1',
+                    ]
+                ]
+            ]
+        );
     }
 }

@@ -2,6 +2,8 @@
 
 namespace SureCart\Models;
 
+use SureCart\Models\Import;
+
 /**
  * Provisional Account model
  */
@@ -76,6 +78,31 @@ class ProvisionalAccount extends Model {
 		// set source with fallback to the option.
 		$attributes['source'] = isset( $attributes['source'] ) ? sanitize_text_field( wp_unslash( $attributes['source'] ) ) : sanitize_text_field( get_option( 'surecart_source', 'surecart_wp' ) );
 
-		return parent::create( $attributes );
+		$created = parent::create( $attributes );
+		if ( is_wp_error( $created ) ) {
+			return $created;
+		}
+
+		// bulkd product createion action.
+		if ( isset( $attributes['products'] ) ) {
+			$seed = $this->seed( $attributes['products'] );
+			if ( is_wp_error( $seed ) ) {
+				return $seed;
+			}
+		}
+
+		// create the products.
+		return $created;
+	}
+
+	/**
+	 * Seed the account with products.
+	 *
+	 * @param array $products The products to seed.
+	 *
+	 * @return \SureCart\Models\Import
+	 */
+	protected function seed( $products = [] ) {
+		return Import::queue( 'products', $products );
 	}
 }
