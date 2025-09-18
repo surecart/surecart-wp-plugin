@@ -245,7 +245,7 @@ class PostSyncService {
 
 		// insert post.
 		$props   = $this->getSchemaMap( $model );
-		$post_id = wp_insert_post( wp_slash( apply_filters( 'surecart/product/sync/created/props', $props ) ), true, false );
+		$post_id = wp_insert_post( wp_slash( apply_filters( 'surecart/product/sync/created/props', $props, $model ) ), true, false );
 
 		// handle errors.
 		if ( is_wp_error( $post_id ) ) {
@@ -303,7 +303,8 @@ class PostSyncService {
 					array(
 						'ID' => $this->post->ID,
 					)
-				)
+				),
+				$model
 			),
 		);
 
