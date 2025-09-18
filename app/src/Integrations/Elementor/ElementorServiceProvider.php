@@ -19,7 +19,7 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 			return;
 		}
 
-		// Templates service.  This is used even if Elementor is not installed.
+		// Templates service. This is used even if Elementor is not installed.
 		$container['elementor.templates.service'] = fn() => new ElementorTemplatesService();
 
 		// Widgets.

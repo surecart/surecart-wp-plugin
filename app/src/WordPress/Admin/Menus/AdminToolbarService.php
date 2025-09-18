@@ -11,16 +11,16 @@ class AdminToolbarService {
 	/**
 	 * Application instance.
 	 *
-	 * @var Application
+	 * @var \SureCartCore\Application\Application
 	 */
 	protected $app = null;
 
 	/**
 	 * Constructor.
 	 *
-	 * @param Application $app Application instance.
+	 * @param \SureCartCore\Application\Application $app Application instance.
 	 */
-	public function __construct( $app) {
+	public function __construct( $app ) {
 		$this->app = $app;
 	}
 
@@ -262,12 +262,13 @@ class AdminToolbarService {
 		);
 
 		// Add secondary group
-		$wp_admin_bar->add_group(array(
-			'id'     => 'surecart-design',
-			'parent' => 'surecart-toolbar',
-			'meta'   => array('class' => 'ab-sub-secondary'),
-		));
-
+		$wp_admin_bar->add_group(
+			array(
+				'id'     => 'surecart-design',
+				'parent' => 'surecart-toolbar',
+				'meta'   => array( 'class' => 'ab-sub-secondary' ),
+			)
+		);
 
 		$this->renderProductTemplate( $wp_admin_bar );
 		$this->renderProductContent( $wp_admin_bar );
@@ -351,7 +352,7 @@ class AdminToolbarService {
 
 	/**
 	 * Check if elementor is rendering the current page.
-	 * 
+	 *
 	 * @return bool
 	 */
 	public function isRenderedWithElementor(): bool {
