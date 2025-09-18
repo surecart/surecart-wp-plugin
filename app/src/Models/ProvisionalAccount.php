@@ -33,6 +33,24 @@ class ProvisionalAccount extends Model {
 	}
 
 	/**
+	 * Check if the API token is set.
+	 *
+	 * @return bool
+	 */
+	protected function hasApiToken() {
+		return ! empty( ApiToken::get() );
+	}
+
+	/**
+	 * Check if the E2E testing is enabled.
+	 *
+	 * @return bool
+	 */
+	protected function isTesting() {
+		return defined( 'SC_E2E_TESTING' ) ? (bool) SC_E2E_TESTING : false;
+	}
+
+	/**
 	 * Create a new model
 	 *
 	 * @param array $attributes Attributes to create.
@@ -41,11 +59,8 @@ class ProvisionalAccount extends Model {
 	 */
 	protected function create( $attributes = [] ) {
 		// we only allow this if the setup is not complete.
-		if ( ! empty( ApiToken::get() ) ) {
-			$testing = defined( 'SC_E2E_TESTING' ) ? (bool) SC_E2E_TESTING : false;
-			if ( ! $testing ) {
-				return new \WP_Error( 'setup_complete', __( 'You have already set up your store.', 'surecart' ) );
-			}
+		if ( $this->hasApiToken() && ! $this->isTesting() ) {
+			return new \WP_Error( 'setup_complete', __( 'You have already set up your store.', 'surecart' ) );
 		}
 
 		// set account name as the site name if nothing is provided.
