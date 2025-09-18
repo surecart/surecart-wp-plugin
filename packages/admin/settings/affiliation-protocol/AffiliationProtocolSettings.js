@@ -221,7 +221,7 @@ export default () => {
 						`}
 					>
 						{__(
-							'This is where you will send affiliates to signup for your affiliate program. To change this subdomain, change your store subdomain in the store settings.',
+							'This is where you will send affiliates to signup for your affiliate program. To change this URL slug, ',
 							'surecart'
 						)}
 						<a
