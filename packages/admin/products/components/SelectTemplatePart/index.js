@@ -109,7 +109,7 @@ export default function SelectTemplatePart({
 			</div>
 
 			<ScSelect
-				label={__('Template', 'surecart')}
+				label={__('Product Template', 'surecart')}
 				value={
 					templatePartCreated?.slug ||
 					product?.metadata?.wp_template_part_id ||
