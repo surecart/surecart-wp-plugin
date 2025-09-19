@@ -60,14 +60,16 @@ export default ({ media, product, onRequestClose, updateProduct }) => {
 
 			const { variant_option, thumbnail_image, aspect_ratio } = formData;
 
-			// Update the gallery with the new item data
+			// Update the gallery with the new item data.
 			const ids = [...(product?.gallery_ids || [])];
-			const updateIndex = ids.findIndex(
-				(item) => getGalleryItemId(item) === getGalleryItemId(mediaData)
+
+			// Find the index of the item being edited (by original media id).
+			const originalIndex = ids.findIndex(
+				(item) => getGalleryItemId(item) === getGalleryItemId(media)
 			);
 
-			if (updateIndex !== -1) {
-				ids[updateIndex] = {
+			if (originalIndex !== -1) {
+				ids[originalIndex] = {
 					id: parseInt(mediaData.id),
 					...(variant_option ? { variant_option } : {}),
 					...(thumbnail_image ? { thumbnail_image } : {}),
