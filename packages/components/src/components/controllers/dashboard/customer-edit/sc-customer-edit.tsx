@@ -1,6 +1,6 @@
 import { Component, Prop, h, State } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
-import { Customer, Address, CountryLocaleFieldValue, CountryLocaleField } from '../../../../types';
+import { Customer, Address, CountryLocaleFieldValue } from '../../../../types';
 import apiFetch from '../../../../functions/fetch';
 import { addQueryArgs } from '@wordpress/url';
 
@@ -15,7 +15,6 @@ export class ScCustomerEdit {
   @Prop() successUrl: string;
   @Prop() i18n: {
     defaultCountryFields: Array<CountryLocaleFieldValue>;
-    countryFields: Array<CountryLocaleField>;
   };
 
   @State() loading: boolean;
@@ -138,7 +137,6 @@ export class ScCustomerEdit {
                     state: 'shipping_state',
                   }}
                   defaultCountryFields={this.i18n?.defaultCountryFields || []}
-                  countryFields={this.i18n?.countryFields || []}
                 ></sc-address>
               </div>
 
@@ -176,7 +174,6 @@ export class ScCustomerEdit {
                   }}
                   required={true}
                   defaultCountryFields={this.i18n?.defaultCountryFields || []}
-                  countryFields={this.i18n?.countryFields || []}
                 ></sc-address>
               </div>
 

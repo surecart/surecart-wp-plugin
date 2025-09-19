@@ -1,4 +1,4 @@
-import { Component, Element, h, Prop } from '@stencil/core';
+import { Component, Element, h, Prop, State } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { Address, Customer } from '../../../types';
 import { formatAddress } from 'localized-address-format';
@@ -34,6 +34,16 @@ export class ScCustomerDetails {
   @Prop() customer: Customer;
   @Prop() loading: boolean;
   @Prop() error: string;
+  /** Holds our country choices. */
+  @State() countryChoices: Array<{ value: string; label: string }>;
+
+  componentWillLoad() {
+    this.initCountryChoices();
+  }
+
+  async initCountryChoices() {
+    this.countryChoices = await countryChoices();
+  }
 
   renderContent() {
     if (this.loading) {
@@ -101,7 +111,7 @@ export class ScCustomerDetails {
 
   renderAddress(label: string = 'Address', address: Address) {
     const { name, line_1, line_2, city, state, postal_code, country } = address;
-    const countryName = countryChoices.find(({ value }) => value === country)?.label;
+    const countryName = this.countryChoices?.find(({ value }) => value === country)?.label;
     return (
       <sc-stacked-list-row style={{ '--columns': '3' }} mobileSize={480}>
         <div>

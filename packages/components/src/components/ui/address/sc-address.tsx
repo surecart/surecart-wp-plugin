@@ -1,9 +1,8 @@
 import { Component, Element, Event, EventEmitter, h, Method, Prop, State, Watch } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
-import { hasCity, hasPostal, countryChoices } from '../../../functions/address';
+import { countryChoices, getCountryDetails } from '../../../functions/address';
 import { reportChildrenValidity } from '../../../functions/form-data';
-import { Address, CountryLocaleField, CountryLocaleFieldValue } from '../../../types';
-import { sortAddressFields } from 'src/functions/address-settings';
+import { Address, CountryLocaleFieldValue } from '../../../types';
 import { state as i18nState } from '@store/i18n';
 
 /**
@@ -78,9 +77,6 @@ export class ScAddress {
   /** Default country fields */
   @Prop({ mutable: true }) defaultCountryFields: Array<CountryLocaleFieldValue>;
 
-  /** Country fields by country code */
-  @Prop({ mutable: true }) countryFields: Array<CountryLocaleField>;
-
   /** Should we show the city field? */
   @State() showCity: boolean = true;
 
@@ -91,7 +87,10 @@ export class ScAddress {
   @State() regions: Array<{ value: string; label: string }>;
 
   /** Holds our country choices. */
-  @State() countryChoices: Array<{ value: string; label: string }> = countryChoices;
+  @State() countryChoices: Array<{ value: string; label: string }>;
+
+  @State() sortedFields: Array<CountryLocaleFieldValue>;
+
 
   /** Address change event. */
   @Event() scChangeAddress: EventEmitter<Partial<Address>>;
@@ -102,10 +101,8 @@ export class ScAddress {
   /** When the state changes, we want to update city and postal fields. */
   @Watch('address')
   handleAddressChange() {
+    this.setSortedFields();
     if (!this.address?.country) return;
-    this.setRegions();
-    this.showPostal = hasPostal(this.address.country);
-    this.showCity = hasCity(this.address.country);
     this.scChangeAddress.emit(this.address);
     this.scInputAddress.emit(this.address);
   }
@@ -141,31 +138,23 @@ export class ScAddress {
     };
   }
 
-  /** Set the regions based on the country. */
-  setRegions() {
-    import('country-region-data').then(module => {
-      this.regions = (module?.[this.address.country]?.[2] || []).map(region => ({
-        value: region[1],
-        label: this.decodeHtmlEntities(region[0]),
-      }));
-
-      if ( window?.wp?.hooks?.applyFilters ) {
-        this.regions = window.wp.hooks.applyFilters('surecart_address_regions', this.regions, this.address.country) as Array<{ value: string; label: string }>;
-      }
-    });
-  }
-
   componentWillLoad() {
+    this.initCountryChoices();
     this.handleAddressChange();
-    const country = this.countryChoices.find(country => country.value === this.address?.country)?.value || null;
+    const country = this.countryChoices?.find(country => country.value === this.address?.country)?.value || null;
 
     // Set default country fields.
     this.defaultCountryFields = this.defaultCountryFields || i18nState.defaultCountryFields || [];
-    this.countryFields = this.countryFields || i18nState.countryFields || [];
 
     this.updateAddress({ country });
     this.handleNameChange();
   }
+
+  @Method()
+  async initCountryChoices() {
+    this.countryChoices = await countryChoices();
+  }
+
 
   @Method()
   async reportValidity() {
@@ -176,19 +165,30 @@ export class ScAddress {
    * Compute and return the sorted fields based on current country, defaultCountryFields and countryFields.
    * This method can be used as a computed property.
    */
-  sortedFields(): Array<CountryLocaleFieldValue> {
-    const countrySpecificFields = this.countryFields?.[this.address?.country] || {};
-    const mergedCountryFields = (this.defaultCountryFields || []).map(field => {
-      if (countrySpecificFields[field.name]) {
-        return {
-          ...field,
-          ...countrySpecificFields[field.name],
-        };
-      }
-      return field;
-    });
+  async setSortedFields() {
+    if(!this.address?.country) {
+      this.sortedFields = (this.defaultCountryFields || []).map(field => {
+        return field;
+      });
+      return;
+    }
+    const countryDetails = await getCountryDetails(this.address?.country);
+    console.log('countryDetails', countryDetails)
+    const addressFormatEdit = countryDetails?.address_formats?.edit; // this will return something like "{country}_{name}_{line_1}_{line_2}_{postal_code}{city}"
 
-    return sortAddressFields(this.address?.country, mergedCountryFields, this.countryFields);
+    this.sortedFields = addressFormatEdit?.match(/{([^}]+)}/g).map(match => match.slice(1, -1)).map(field => ({
+      name: field,
+      label: countryDetails?.address_labels?.[field] || field,
+    })) || [];
+
+    this.regions = countryDetails?.states?.map(state => ({
+      value: state?.iso_code,
+      label: state?.name
+    })) || [];
+
+    if ( window?.wp?.hooks?.applyFilters ) {
+      this.regions = window.wp.hooks.applyFilters('surecart_address_regions', this.regions, this.address.country) as Array<{ value: string; label: string }>;
+    }
   }
 
   getRoundedProps(index: number, length: number) {
@@ -203,17 +203,17 @@ export class ScAddress {
   }
 
   render() {
-    const visibleFields = (this.sortedFields() ?? []).filter(field => {
+    const visibleFields = (this.sortedFields ?? [])?.filter(field => {
       switch (field.name) {
         case 'name':
           return this.showName;
-        case 'address_2':
+        case 'line_2':
           return this.showLine2 || !!this?.address?.line_2?.length;
         case 'city':
           return this.showCity;
         case 'state':
           return !!this?.regions?.length && !!this?.address?.country;
-        case 'postcode':
+        case 'postal_code':
           return this.showPostal;
         default:
           return true;
@@ -268,7 +268,7 @@ export class ScAddress {
                   />
                 );
 
-              case 'address_1':
+              case 'line_1':
                 return (
                   <sc-input
                     exportparts="base:input__base, input, form-control, label, help-text"
@@ -285,7 +285,7 @@ export class ScAddress {
                   />
                 );
 
-              case 'address_2':
+              case 'line_2':
                 return (
                   <sc-input
                     exportparts="base:input__base, input, form-control, label, help-text"
@@ -335,7 +335,7 @@ export class ScAddress {
                   />
                 );
 
-              case 'postcode':
+              case 'postal_code':
                 return (
                   <sc-input
                     exportparts="base:input__base, input, form-control, label, help-text"

@@ -74,7 +74,7 @@ export class ScCompactAddress {
   @Event() scInputAddress: EventEmitter<Partial<Address>>;
 
   /** Holds our country choices. */
-  @State() countryChoices: Array<{ value: string; label: string }> = countryChoices;
+  @State() countryChoices: Array<{ value: string; label: string }>;
 
   /** Holds the regions for a given country. */
   @State() regions: Array<{ value: string; label: string }>;
@@ -125,11 +125,15 @@ export class ScCompactAddress {
   }
 
   componentWillLoad() {
+    this.initCountryChoices();
     this.handleAddressChange();
-    const country = this.countryChoices.find(country => country.value === this.address.country)?.value;
+    const country = this.countryChoices?.find(country => country.value === this.address.country)?.value;
     if (country) {
       this.updateAddress({ country });
     }
+  }
+  async initCountryChoices() {
+    this.countryChoices = await countryChoices();
   }
 
   @Method()

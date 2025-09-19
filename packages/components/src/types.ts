@@ -1407,7 +1407,7 @@ export interface CustomStripeElementChangeEvent extends StripeElementChangeEvent
 
 export interface CountryLocaleFieldValue {
   name: string;
-  priority: number;
+  priority?: number;
   label: boolean;
 }
 
