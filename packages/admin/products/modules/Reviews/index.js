@@ -26,7 +26,6 @@ export default ({ product = {}, updateProduct, loading }) => {
 			loading={loading}
 			footer={
 				!loading &&
-				product?.reviews_enabled &&
 				product?.total_reviews > 0 && (
 					<StarsBreakdown
 						averageStars={product?.average_stars}

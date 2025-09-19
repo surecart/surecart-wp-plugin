@@ -6,11 +6,12 @@ import { css, jsx } from '@emotion/core';
  */
 import { __, sprintf, _n } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
+import { Button } from '@wordpress/components';
 
 /**
  * Internal dependencies.
  */
-import { ScButton, ScIcon, ScText } from '@surecart/components-react';
+import { ScIcon, ScText } from '@surecart/components-react';
 import AverageStarRating from './AverageStarRating';
 
 export default function StarsBreakdown({
@@ -79,17 +80,19 @@ export default function StarsBreakdown({
 					</ScText>
 				</div>
 
-				<ScButton
+				<Button
 					target="_blank"
-					type="link"
+					variant="tertiary"
 					href={addQueryArgs('admin.php', {
 						page: 'sc-reviews',
 						sc_product: productId,
 					})}
+					style={{ padding: 0, height: 'auto' }}
+					icon={<ScIcon name="external-link" slot="suffix" />}
+					iconPosition="right"
 				>
 					{__('View reviews', 'surecart')}
-					<ScIcon name="external-link" slot="suffix" />
-				</ScButton>
+				</Button>
 			</div>
 
 			<div
