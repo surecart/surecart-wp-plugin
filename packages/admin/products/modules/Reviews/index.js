@@ -56,10 +56,10 @@ export default ({ product = {}, updateProduct, loading }) => {
 						});
 					}}
 				>
-					{__('Review request', 'surecart')}
+					{__('Review request Email', 'surecart')}
 					<span slot="description">
 						{__(
-							'Send automatic review emails to customers who purchase this product.',
+							'Send automatic review request email to customers who purchase this product.',
 							'surecart'
 						)}
 					</span>

@@ -52,7 +52,7 @@ const ReviewProtocolSettings = () => {
 			<SettingsBox
 				title={__('Product Reviews Settings', 'surecart')}
 				description={__(
-					'Configure how product reviews and review solicitation work in your store.',
+					'Configure how product reviews and automatic review requests will be sent to customers.',
 					'surecart'
 				)}
 				loading={!hasLoadedReviewProtocolItem}
@@ -88,13 +88,13 @@ const ReviewProtocolSettings = () => {
 								});
 							}}
 						>
-							{__('Send Automatic Review Request Emails', 'surecart')}
+							{__('Review request Email', 'surecart')}
 							<span
 								slot="description"
 								style={{ lineHeight: '1.4' }}
 							>
 								{__(
-									'Send automatic review request emails to customers after their order is fulfilled.',
+									'Send automatic review request email to customers after their order is fulfilled.',
 									'surecart'
 								)}
 							</span>
