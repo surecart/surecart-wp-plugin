@@ -7,8 +7,8 @@
 	data-wp-on--fullscreenchange="callbacks.handleFullscreenChange"
 	style="<?php echo esc_attr( $style ); ?>"
 >
-	<div 
-		role="button" 
+	<div
+		role="button"
 		class="sc-video-play-button" 
 		aria-label="<?php echo esc_attr__( 'Play video', 'surecart' ); ?>" 
 		data-wp-bind--hidden="context.loaded"
