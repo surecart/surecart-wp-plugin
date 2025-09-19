@@ -18,6 +18,29 @@ store('surecart/video', {
 				.filter((v) => v !== ref) // get other videos.
 				.forEach((video) => video.pause()); // pause them.
 		},
+
+		handleFullscreenChange() {
+			const { ref } = getElement();
+			const video = ref?.querySelector('video');
+
+			if (!video || !!video?.paused) {
+				return;
+			}
+
+			// Pause the video if its in a slider if not in fullscreen.
+			if (document?.fullscreenElement !== video) {
+				const swiper = video.closest('.swiper');
+				if (swiper) {
+					const { state: sliderState } = store(
+						'surecart/image-slider'
+					);
+
+					if (sliderState?.active && !!sliderState?.swiper) {
+						video.pause();
+					}
+				}
+			}
+		},
 	},
 	actions: {
 		// Play the video.

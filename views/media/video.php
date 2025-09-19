@@ -4,6 +4,7 @@
 	data-wp-context='{ "loaded": false }'
 	data-wp-on--click="actions.play"
 	data-wp-class--sc-video-loaded="context.loaded"
+	data-wp-on--fullscreenchange="callbacks.handleFullscreenChange"
 	style="<?php echo esc_attr( $style ); ?>"
 >
 	<div 
