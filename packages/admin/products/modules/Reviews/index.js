@@ -1,29 +1,47 @@
+/** @jsx jsx */
+import { css, jsx } from '@emotion/core';
+
 /**
  * External dependencies.
  */
 import { __ } from '@wordpress/i18n';
+import { addQueryArgs } from '@wordpress/url';
+
 /**
  * Internal dependencies.
  */
 import Box from '../../../ui/Box';
-import { ScSwitch } from '@surecart/components-react';
 import StarsBreakdown from './StarsBreakdown';
-import useEntity from '../../../hooks/useEntity';
+import { ScButton, ScSwitch } from '@surecart/components-react';
 
 export default ({ product = {}, updateProduct, loading }) => {
-	// TODO: Remove once account api has been updated with review_protocol
-	// and use like scData?.review_protocol instead.
-	const { item: reviewProtocol } = useEntity('store', 'review_protocol');
-
-	// Don't show if reviews are not enabled globally.
-	if (!reviewProtocol?.reviews_enabled) {
-		return null;
-	}
+	const isReviewProtocolEnabled = !!scData?.review_protocol?.reviews_enabled;
 
 	return (
 		<Box
 			title={__('Reviews', 'surecart')}
 			loading={loading}
+			header_action={
+				!isReviewProtocolEnabled && (
+					<div
+						css={css`
+							margin: -12px 0;
+						`}
+					>
+						<ScButton
+							href={addQueryArgs('admin.php', {
+								page: 'sc-settings',
+								tab: 'review_protocol',
+							})}
+							target="_blank"
+							type="link"
+							size="small"
+						>
+							{__('Review Settings', 'surecart')}
+						</ScButton>
+					</div>
+				)
+			}
 			footer={
 				!loading &&
 				product?.total_reviews > 0 && (
@@ -43,11 +61,12 @@ export default ({ product = {}, updateProduct, loading }) => {
 						reviews_enabled: e.target.checked,
 					});
 				}}
+				disabled={!isReviewProtocolEnabled}
 			>
 				{__('Enable Reviews', 'surecart')}
 			</ScSwitch>
 
-			{product?.reviews_enabled && (
+			{isReviewProtocolEnabled && !!product?.reviews_enabled && (
 				<ScSwitch
 					checked={product?.solicit_reviews}
 					onScChange={(e) => {

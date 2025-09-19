@@ -1,9 +1,17 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { __ } from '@wordpress/i18n';
-import { ScButton, ScIcon } from '@surecart/components-react';
-import { PanelRow, ToggleControl } from '@wordpress/components';
 
+/**
+ * External dependencies.
+ */
+import { __ } from '@wordpress/i18n';
+import { PanelRow, ToggleControl } from '@wordpress/components';
+import { addQueryArgs } from '@wordpress/url';
+
+/**
+ * Internal dependencies.
+ */
+import { ScButton, ScIcon } from '@surecart/components-react';
 import Box from '../../../ui/Box';
 import Type from './Type';
 
@@ -12,6 +20,27 @@ export default ({ loading, product, updateProduct }) => {
 		<Box
 			loading={loading}
 			title={__('Tax', 'surecart')}
+			header_action={
+				!scData?.tax_protocol?.tax_enabled && (
+					<div
+						css={css`
+							margin: -12px 0;
+						`}
+					>
+						<ScButton
+							href={addQueryArgs('admin.php', {
+								page: 'sc-settings',
+								tab: 'tax_protocol',
+							})}
+							target="_blank"
+							type="link"
+							size="small"
+						>
+							{__('Tax Settings', 'surecart')}
+						</ScButton>
+					</div>
+				)
+			}
 			footer={
 				product?.tax_enabled &&
 				scData?.tax_protocol?.tax_enabled &&
