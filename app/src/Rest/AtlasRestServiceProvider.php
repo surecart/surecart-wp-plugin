@@ -22,7 +22,7 @@ class AtlasRestServiceProvider extends RestServiceProvider implements RestServic
 	 * @var string
 	 */
 	protected $controller = AtlasController::class;
-	
+
 	/**
 	 * Methods allowed for the model.
 	 *
