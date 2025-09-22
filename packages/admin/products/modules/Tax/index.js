@@ -24,7 +24,7 @@ export default ({ loading, product, updateProduct }) => {
 				!scData?.tax_protocol?.tax_enabled && (
 					<div
 						css={css`
-							margin: -12px 0;
+							margin: -12px 30px;
 						`}
 					>
 						<ScButton
@@ -37,6 +37,7 @@ export default ({ loading, product, updateProduct }) => {
 							size="small"
 						>
 							{__('Tax Settings', 'surecart')}
+							<ScIcon name="external-link" slot="suffix" />
 						</ScButton>
 					</div>
 				)

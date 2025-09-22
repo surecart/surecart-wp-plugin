@@ -159,7 +159,7 @@ class ReviewsListTable extends ListTable {
 			$args['sort'] = $orderby . ':' . $order;
 		}
 
-		$review_query = Review::where( $args )->with( [ 'customer', 'product', 'purchase' ] );
+		$review_query = Review::where( $args )->with( [ 'customer', 'product' ] );
 
 		// Check if there is any sc_product.
 		if ( ! empty( $_GET['sc_product'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
@@ -309,8 +309,8 @@ class ReviewsListTable extends ListTable {
 			'edit' => '<a href="' . esc_url( \SureCart::getUrl()->edit( 'review', $review->id ) ) . '" aria-label="' . esc_attr__( 'Edit Review', 'surecart' ) . '">' . esc_html__( 'Edit', 'surecart' ) . '</a>',
 		];
 
-		$action_links = [
-			'publish'   => '<a href="' . esc_url(
+		if ( in_array( $review->status, [ 'in_review', 'unpublished' ], true ) ) {
+			$actions['publish'] = '<a href="' . esc_url(
 				add_query_arg(
 					[
 						'action' => 'publish',
@@ -319,9 +319,11 @@ class ReviewsListTable extends ListTable {
 					],
 					admin_url( 'admin.php?page=sc-reviews' )
 				)
-			) . '" aria-label="' . esc_attr__( 'Approve Review', 'surecart' ) . '">' . esc_html__( 'Approve', 'surecart' ) . '</a>',
+			) . '" aria-label="' . esc_attr__( 'Approve Review', 'surecart' ) . '">' . esc_html__( 'Approve', 'surecart' ) . '</a>';
+		}
 
-			'unpublish' => '<a href="' . esc_url(
+		if ( in_array( $review->status, [ 'in_review', 'published' ], true ) ) {
+			$actions['unpublish'] = '<a href="' . esc_url(
 				add_query_arg(
 					[
 						'action' => 'unpublish',
@@ -330,35 +332,26 @@ class ReviewsListTable extends ListTable {
 					],
 					admin_url( 'admin.php?page=sc-reviews' )
 				)
-			) . '" aria-label="' . esc_attr__( 'Unapprove Review', 'surecart' ) . '">' . esc_html__( 'Unapprove', 'surecart' ) . '</a>',
+			) . '" aria-label="' . esc_attr__( 'Unapprove Review', 'surecart' ) . '">' . esc_html__( 'Unapprove', 'surecart' ) . '</a>';
+		}
 
-			'delete'    => sprintf(
-				'<a class="submitdelete" onclick="return confirm(\'%1$s\')" href="%2$s" aria-label="%3$s">%4$s</a>',
-				esc_attr__( 'Are you sure you want to delete this review?', 'surecart' ),
-				esc_url(
-					add_query_arg(
-						[
-							'action' => 'delete',
-							'nonce'  => wp_create_nonce( 'delete_review' ),
-							'id'     => $review->id,
-						],
-						admin_url( 'admin.php?page=sc-reviews' )
-					)
-				),
-				esc_attr__( 'Delete Review', 'surecart' ),
-				esc_html__( 'Delete', 'surecart' )
+		$actions['delete'] = sprintf(
+			/* translators: 1: Confirmation message, 2: URL, 3: aria-label, 4: link text. */
+			'<a class="submitdelete" onclick="return confirm(\'%1$s\')" href="%2$s" aria-label="%3$s">%4$s</a>',
+			esc_attr__( 'Are you sure you want to delete this review?', 'surecart' ),
+			esc_url(
+				add_query_arg(
+					[
+						'action' => 'delete',
+						'nonce'  => wp_create_nonce( 'delete_review' ),
+						'id'     => $review->id,
+					],
+					admin_url( 'admin.php?page=sc-reviews' )
+				)
 			),
-		];
-
-		if ( in_array( $review->status, [ 'in_review', 'unpublished' ], true ) ) {
-			$actions['publish'] = $action_links['publish'];
-		}
-
-		if ( in_array( $review->status, [ 'in_review', 'published' ], true ) ) {
-			$actions['unpublish'] = $action_links['unpublish'];
-		}
-
-		$actions['delete'] = $action_links['delete'];
+			esc_attr__( 'Delete Review', 'surecart' ),
+			esc_html__( 'Delete', 'surecart' )
+		);
 
 		return $actions;
 	}

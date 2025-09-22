@@ -61,7 +61,7 @@ class Review extends Model {
 		}
 
 		if ( empty( $this->attributes['id'] ) ) {
-			return new \WP_Error( 'not_saved', 'Please create the review.' );
+			return new \WP_Error( 'not_saved', 'No review provided.' );
 		}
 
 		$published = \SureCart::request(
@@ -100,7 +100,7 @@ class Review extends Model {
 		}
 
 		if ( empty( $this->attributes['id'] ) ) {
-			return new \WP_Error( 'not_saved', 'Please create the review.' );
+			return new \WP_Error( 'not_saved', 'No review provided.' );
 		}
 
 		$unpublished = \SureCart::request(
@@ -137,15 +137,6 @@ class Review extends Model {
 	}
 
 	/**
-	 * Get the status display label.
-	 *
-	 * @return string
-	 */
-	public function getStatusDisplayAttribute(): string {
-		return $this->getStatuses()[ $this->status ] ?? $this->status ?? '';
-	}
-
-	/**
 	 * Get the status type for tag styling.
 	 *
 	 * @return string
@@ -157,5 +148,14 @@ class Review extends Model {
 			'unpublished' => 'danger',
 		];
 		return $types[ $this->status ] ?? 'default';
+	}
+
+	/**
+	 * Get the status display label.
+	 *
+	 * @return string
+	 */
+	public function getStatusDisplayAttribute(): string {
+		return $this->getStatuses()[ $this->status ] ?? $this->status ?? '';
 	}
 }

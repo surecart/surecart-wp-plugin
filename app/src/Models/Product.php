@@ -1117,7 +1117,7 @@ class Product extends Model implements PageModel {
 	 *
 	 * @return int
 	 */
-	public function getTotalReviewsAttribute() {
+	public function getTotalReviewsAttribute(): int {
 		if ( empty( $this->reviews_breakdown ) ) {
 			return 0;
 		}
@@ -1130,7 +1130,7 @@ class Product extends Model implements PageModel {
 	 *
 	 * @return array
 	 */
-	public function getReviewsBreakdownArrayAttribute() {
+	public function getReviewsBreakdownArrayAttribute(): array {
 		$breakdown = array_merge(
 			array(
 				1 => 0,
@@ -1145,14 +1145,5 @@ class Product extends Model implements PageModel {
 		// Ensure all values are integers and sort by key.
 		ksort( $breakdown );
 		return array_map( 'intval', $breakdown );
-	}
-
-	/**
-	 * Check if the product has any reviews.
-	 *
-	 * @return bool
-	 */
-	public function getHasReviewsAttribute() {
-		return $this->total_reviews > 0;
 	}
 }

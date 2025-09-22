@@ -5,7 +5,7 @@ namespace SureCart\Controllers\Rest;
 use SureCart\Models\Review;
 
 /**
- * Handle Review requests through the REST API
+ * Handle Review requests through the REST API.
  */
 class ReviewsController extends RestController {
 	/**

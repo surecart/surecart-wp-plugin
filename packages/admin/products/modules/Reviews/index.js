@@ -12,7 +12,7 @@ import { addQueryArgs } from '@wordpress/url';
  */
 import Box from '../../../ui/Box';
 import StarsBreakdown from './StarsBreakdown';
-import { ScButton, ScSwitch } from '@surecart/components-react';
+import { ScButton, ScIcon, ScSwitch } from '@surecart/components-react';
 
 export default ({ product, updateProduct, loading }) => {
 	const isReviewProtocolEnabled = !!scData?.review_protocol?.reviews_enabled;
@@ -25,7 +25,7 @@ export default ({ product, updateProduct, loading }) => {
 				!isReviewProtocolEnabled && (
 					<div
 						css={css`
-							margin: -12px 0;
+							margin: -12px 30px;
 						`}
 					>
 						<ScButton
@@ -38,6 +38,7 @@ export default ({ product, updateProduct, loading }) => {
 							size="small"
 						>
 							{__('Reviews Settings', 'surecart')}
+							<ScIcon name="external-link" slot="suffix" />
 						</ScButton>
 					</div>
 				)

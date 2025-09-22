@@ -5,7 +5,7 @@ namespace SureCart\Controllers\Rest;
 use SureCart\Models\ReviewProtocol;
 
 /**
- * Handle ReviewProtocol requests through the REST API
+ * Handle ReviewProtocol requests through the REST API.
  */
 class ReviewProtocolController extends RestController {
 	/**
