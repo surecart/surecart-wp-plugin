@@ -21,7 +21,8 @@ class ReviewsListTable extends ListTable {
 	 * The error message.
 	 *
 	 * @var string
-	 */ public $error = '';
+	 */
+	public $error = '';
 
 	/**
 	 * The list of pages.
@@ -193,7 +194,7 @@ class ReviewsListTable extends ListTable {
 	/**
 	 * Status column.
 	 *
-	 * @param \SureCart\Models\Review $review Review model.
+	 * @param Review $review Review model.
 	 *
 	 * @return string
 	 */
@@ -210,7 +211,7 @@ class ReviewsListTable extends ListTable {
 	/**
 	 * Stars column.
 	 *
-	 * @param \SureCart\Models\Review $review Review model.
+	 * @param Review $review Review model.
 	 *
 	 * @return string
 	 */
@@ -232,7 +233,7 @@ class ReviewsListTable extends ListTable {
 	/**
 	 * Customer column.
 	 *
-	 * @param \SureCart\Models\Review $review Review model.
+	 * @param Review $review Review model.
 	 *
 	 * @return string
 	 */
@@ -247,7 +248,7 @@ class ReviewsListTable extends ListTable {
 	/**
 	 * Product column.
 	 *
-	 * @param \SureCart\Models\Review $review Review model.
+	 * @param Review $review Review model.
 	 *
 	 * @return string
 	 */
@@ -261,7 +262,7 @@ class ReviewsListTable extends ListTable {
 	/**
 	 * Review column.
 	 *
-	 * @param \SureCart\Models\Review $review Review model.
+	 * @param Review $review Review model.
 	 *
 	 * @return string
 	 */
@@ -288,8 +289,8 @@ class ReviewsListTable extends ListTable {
 	/**
 	 * Define what data to show on each column of the table.
 	 *
-	 * @param \SureCart\Models\Review $review Review model.
-	 * @param string                  $column_name - Current column name.
+	 * @param Review $review      Review model.
+	 * @param string $column_name Current column name.
 	 *
 	 * @return mixed
 	 */
@@ -303,7 +304,7 @@ class ReviewsListTable extends ListTable {
 	/**
 	 * Get row actions.
 	 *
-	 * @param \SureCart\Models\Review $review Review model.
+	 * @param Review $review Review model.
 	 *
 	 * @return array
 	 */
