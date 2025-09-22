@@ -59,3 +59,20 @@ add_filter(
 		return $url;
 	}
 );
+
+if ( isset( $_GET['test'] ) ) {
+	$products = \SureCart\Models\Import::queue(
+		'products',
+		[
+			[
+				'name'    => 'AA New Product Import with Content',
+				'content' => '<!-- wp:paragraph {"fontSize":"medium"} --><p class="has-medium-font-size"><strong>White Irises</strong></p><!-- /wp:paragraph -->',
+			],
+		]
+	);
+
+	if ( is_wp_error( $products ) ) {
+		var_dump( $products );
+		exit;
+	}
+}

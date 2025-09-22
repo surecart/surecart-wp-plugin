@@ -69,4 +69,13 @@ class SyncService {
 	public function content() {
 		return $this->app->resolve( 'surecart.sync.content' );
 	}
+
+	/**
+	 * Get the import sync service.
+	 *
+	 * @return ImportBatchService
+	 */
+	public function import() {
+		return $this->app->resolve( 'surecart.sync.import' );
+	}
 }
