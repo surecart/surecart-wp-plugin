@@ -9,12 +9,12 @@ import { createRoot } from '@wordpress/element';
 import '../store/add-entities';
 
 /**
- * App
+ * App.
  */
 import Review from './Review';
 
 /**
- * Render
+ * Render.
  */
 const container = document.getElementById('app');
 const root = createRoot(container);
