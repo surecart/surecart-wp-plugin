@@ -141,18 +141,16 @@ export class ScAddress {
   componentWillLoad() {
     this.initCountryChoices();
     this.handleAddressChange();
-    const country = this.countryChoices?.find(country => country.value === this.address?.country)?.value || null;
-
     // Set default country fields.
     this.defaultCountryFields = this.defaultCountryFields || i18nState.defaultCountryFields || [];
-
-    this.updateAddress({ country });
     this.handleNameChange();
   }
 
   @Method()
   async initCountryChoices() {
     this.countryChoices = await countryChoices();
+    const country = this.countryChoices?.find(country => country.value === this.address?.country)?.value || null;
+    this.updateAddress({ country });
   }
 
 
