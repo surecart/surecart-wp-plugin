@@ -1,22 +1,43 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/react';
 import { SearchControl } from '@wordpress/components';
-import { allCountries } from 'country-region-data';
-import { useState } from 'react';
+import { ScSkeleton } from '@surecart/components-react';
 import Country from './Country';
 import { __ } from '@wordpress/i18n';
+import { useState, useEffect } from '@wordpress/element';
+import apiFetch from '@wordpress/api-fetch';
 
 export default ({ value, onChange }) => {
 	const [search, setSearch] = useState('');
+	const [fetching, setFetching] = useState(false);
+	const [allCountries, setAllCountries] = useState([]);
 
-	const countries = allCountries.filter(
-		(country) =>
-			country[0].toLowerCase().includes(search.toLowerCase()) ||
-			country[2].find((state) => {
-				return state[0].toLowerCase().includes(search.toLowerCase());
-			})
+	useEffect(() => {
+		console.log('useEffect');
+		fetchAllCountries();
+	}, []);
+
+	const fetchAllCountries = async () => {
+		console.log('fetchAllCountries');
+
+		try {
+			setFetching(true);
+			const countries = await apiFetch({
+				path: `surecart/v1/public/atlas`,
+			});
+			console.log(countries);
+
+			setAllCountries(countries?.data);
+		} catch (e) {
+			console.error(e);
+		} finally {
+			setFetching(false);
+		}
+	};
+	console.log(allCountries);
+	const countries = allCountries?.filter((country) =>
+		country?.name.toLowerCase().includes(search.toLowerCase())
 	);
-
 	const onChangeSelection = (newValue, country) => {
 		// country removed.
 		if (newValue === null) {
@@ -40,6 +61,23 @@ export default ({ value, onChange }) => {
 			}
 		});
 	};
+
+	if (fetching) {
+		return (
+			<div
+				css={css`
+					display: flex;
+					flex-direction: column;
+					gap: 1.5em;
+					margin-bottom: 2em;
+					padding: 1em;
+				`}
+			>
+				<ScSkeleton style={{ width: '45%' }}></ScSkeleton>
+				<ScSkeleton style={{ width: '65%' }}></ScSkeleton>
+			</div>
+		);
+	}
 
 	return (
 		<div
@@ -73,11 +111,14 @@ export default ({ value, onChange }) => {
 			>
 				{countries.map((country) => (
 					<Country
-						key={country[0]}
-						country={country}
-						value={value.find((v) => v.country === country[1])}
+						key={country?.name}
+						countryIsoCode={country?.iso_code}
+						countryName={country?.name}
+						value={value.find(
+							(v) => v.country === country?.iso_code
+						)}
 						onChange={(newValue) =>
-							onChangeSelection(newValue, country[1])
+							onChangeSelection(newValue, country?.iso_code)
 						}
 					/>
 				))}

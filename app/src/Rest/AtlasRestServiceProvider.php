@@ -129,7 +129,6 @@ class AtlasRestServiceProvider extends RestServiceProvider implements RestServic
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function get_item_permissions_check( $request ) {
-		error_log( 'get_item_permissions_check' );
 		return true;
 	}
 }
