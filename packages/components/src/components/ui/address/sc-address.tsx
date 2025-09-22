@@ -101,8 +101,8 @@ export class ScAddress {
   /** When the state changes, we want to update city and postal fields. */
   @Watch('address')
   handleAddressChange() {
-    this.setSortedFields();
     if (!this.address?.country) return;
+    this.setSortedFields();
     this.scChangeAddress.emit(this.address);
     this.scInputAddress.emit(this.address);
   }
@@ -166,19 +166,12 @@ export class ScAddress {
    * This method can be used as a computed property.
    */
   async setSortedFields() {
-    if(!this.address?.country) {
-      this.sortedFields = (this.defaultCountryFields || []).map(field => {
-        return field;
-      });
-      return;
-    }
     const countryDetails = await getCountryDetails(this.address?.country);
-    console.log('countryDetails', countryDetails)
     const addressFormatEdit = countryDetails?.address_formats?.edit; // this will return something like "{country}_{name}_{line_1}_{line_2}_{postal_code}{city}"
 
     this.sortedFields = addressFormatEdit?.match(/{([^}]+)}/g).map(match => match.slice(1, -1)).map(field => ({
       name: field,
-      label: countryDetails?.address_labels?.[field] || field,
+      label: countryDetails?.address_labels?.[field] || this.defaultCountryFields?.find(defaultField => defaultField?.name === field)?.label
     })) || [];
 
     this.regions = countryDetails?.states?.map(state => ({
@@ -203,7 +196,7 @@ export class ScAddress {
   }
 
   render() {
-    const visibleFields = (this.sortedFields ?? [])?.filter(field => {
+    const visibleFields = (this.sortedFields ?? this.defaultCountryFields ?? [])?.filter(field => {
       switch (field.name) {
         case 'name':
           return this.showName;
