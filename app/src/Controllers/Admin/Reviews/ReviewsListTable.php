@@ -255,7 +255,7 @@ class ReviewsListTable extends ListTable {
 		if ( empty( $review->product ) ) {
 			return '-';
 		}
-		return '<a href="' . esc_url( \SureCart::getUrl()->edit( 'product', $review->product->id ) ) . '">' . esc_html( $review->product->name ) . '</a>';
+		return '<a href="' . esc_url( admin_url( '/admin.php?page=sc-reviews&sc_product=' . $review->product->id ) ) . '">' . esc_html( $review->product->name ) . '</a>';
 	}
 
 	/**

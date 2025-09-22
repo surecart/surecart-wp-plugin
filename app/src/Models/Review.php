@@ -122,42 +122,6 @@ class Review extends Model {
 		return $this;
 	}
 
-	/**
-	 * Get the customer name.
-	 *
-	 * @return string
-	 */
-	public function getCustomerNameAttribute() {
-		return $this->customer->name ?? '';
-	}
-
-	/**
-	 * Get the customer email.
-	 *
-	 * @return string
-	 */
-	public function getCustomerEmailAttribute() {
-		return $this->customer->email ?? '';
-	}
-
-	/**
-	 * Get the customer avatar URL.
-	 *
-	 * @return string
-	 */
-	public function getCustomerAvatarUrlAttribute() {
-		$email = $this->customer->email ?? '';
-		return $email ? get_avatar_url( $email ) : '';
-	}
-
-	/**
-	 * Get the product name.
-	 *
-	 * @return string
-	 */
-	public function getProductNameAttribute() {
-		return $this->product->name ?? '';
-	}
 
 	/**
 	 * Get all review statuses.
@@ -177,8 +141,8 @@ class Review extends Model {
 	 *
 	 * @return string
 	 */
-	public function getStatusDisplayAttribute() {
-		return $this->getStatuses()[ $this->status ] ?? $this->status;
+	public function getStatusDisplayAttribute(): string {
+		return $this->getStatuses()[ $this->status ] ?? $this->status ?? '';
 	}
 
 	/**
@@ -186,12 +150,11 @@ class Review extends Model {
 	 *
 	 * @return string
 	 */
-	public function getStatusTypeAttribute() {
+	public function getStatusTypeAttribute(): string {
 		$types = [
-			'published'   => 'success',
 			'in_review'   => 'warning',
+			'published'   => 'success',
 			'unpublished' => 'danger',
-			'archived'    => 'default',
 		];
 		return $types[ $this->status ] ?? 'default';
 	}
