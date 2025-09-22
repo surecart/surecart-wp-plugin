@@ -11,8 +11,7 @@ import { Button } from '@wordpress/components';
 /**
  * Internal dependencies.
  */
-import { ScIcon, ScText } from '@surecart/components-react';
-import AverageStarRating from './AverageStarRating';
+import { ScIcon, ScReviewStars, ScText } from '@surecart/components-react';
 
 export default function StarsBreakdown({
 	averageStars,
@@ -60,7 +59,7 @@ export default function StarsBreakdown({
 						</span>{' '}
 						/ 5.0
 					</ScText>
-					<AverageStarRating rating={averageStars} size={20} />
+					<ScReviewStars rating={averageStars} size={20} />
 					<ScText
 						css={css`
 							color: var(--sc-color-gray-500);

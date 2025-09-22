@@ -3368,6 +3368,11 @@ export namespace Components {
          */
         "showDetails": boolean;
     }
+    interface ScReviewStars {
+        "color"?: string;
+        "rating": number;
+        "size": number;
+    }
     interface ScRichText {
         /**
           * Disables the textarea.
@@ -6195,6 +6200,12 @@ declare global {
         prototype: HTMLScRecurringPriceChoiceContainerElement;
         new (): HTMLScRecurringPriceChoiceContainerElement;
     };
+    interface HTMLScReviewStarsElement extends Components.ScReviewStars, HTMLStencilElement {
+    }
+    var HTMLScReviewStarsElement: {
+        prototype: HTMLScReviewStarsElement;
+        new (): HTMLScReviewStarsElement;
+    };
     interface HTMLScRichTextElementEventMap {
         "scChange": void;
         "scInput": void;
@@ -6911,6 +6922,7 @@ declare global {
         "sc-radio": HTMLScRadioElement;
         "sc-radio-group": HTMLScRadioGroupElement;
         "sc-recurring-price-choice-container": HTMLScRecurringPriceChoiceContainerElement;
+        "sc-review-stars": HTMLScReviewStarsElement;
         "sc-rich-text": HTMLScRichTextElement;
         "sc-secure-notice": HTMLScSecureNoticeElement;
         "sc-select": HTMLScSelectElement;
@@ -10589,6 +10601,11 @@ declare namespace LocalJSX {
          */
         "showDetails"?: boolean;
     }
+    interface ScReviewStars {
+        "color"?: string;
+        "rating"?: number;
+        "size"?: number;
+    }
     interface ScRichText {
         /**
           * Disables the textarea.
@@ -11694,6 +11711,7 @@ declare namespace LocalJSX {
         "sc-radio": ScRadio;
         "sc-radio-group": ScRadioGroup;
         "sc-recurring-price-choice-container": ScRecurringPriceChoiceContainer;
+        "sc-review-stars": ScReviewStars;
         "sc-rich-text": ScRichText;
         "sc-secure-notice": ScSecureNotice;
         "sc-select": ScSelect;
@@ -11954,6 +11972,7 @@ declare module "@stencil/core" {
             "sc-radio": LocalJSX.ScRadio & JSXBase.HTMLAttributes<HTMLScRadioElement>;
             "sc-radio-group": LocalJSX.ScRadioGroup & JSXBase.HTMLAttributes<HTMLScRadioGroupElement>;
             "sc-recurring-price-choice-container": LocalJSX.ScRecurringPriceChoiceContainer & JSXBase.HTMLAttributes<HTMLScRecurringPriceChoiceContainerElement>;
+            "sc-review-stars": LocalJSX.ScReviewStars & JSXBase.HTMLAttributes<HTMLScReviewStarsElement>;
             "sc-rich-text": LocalJSX.ScRichText & JSXBase.HTMLAttributes<HTMLScRichTextElement>;
             "sc-secure-notice": LocalJSX.ScSecureNotice & JSXBase.HTMLAttributes<HTMLScSecureNoticeElement>;
             "sc-select": LocalJSX.ScSelect & JSXBase.HTMLAttributes<HTMLScSelectElement>;

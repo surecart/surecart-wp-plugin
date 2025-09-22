@@ -218,13 +218,9 @@ class ReviewsListTable extends ListTable {
 	public function column_stars( $review ) {
 		ob_start();
 		?>
-		<div style="display: flex; align-items: center; gap: 0.25em;">
-			<?php for ( $i = 1; $i <= 5; $i++ ) : ?>
-				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="<?php echo $i <= absint( $review->stars ) ? '#fbbf24' : 'none'; ?>" stroke="<?php echo $i <= absint( $review->stars ) ? '#fbbf24' : '#e5e7eb'; ?>" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-					<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-				</svg>
-			<?php endfor; ?>
-			<span style="margin-left: 0.5em; color: #6b7280;">(<?php echo esc_html( $review->stars ); ?>)</span>
+		<div style="display: flex; gap: 0.25em;">
+			<sc-review-stars rating="<?php echo esc_attr( $review->stars ); ?>" color="#fbbf24"></sc-review-stars>
+			<span style="color: var(--sc-color-gray-500);">(<?php echo esc_html( $review->stars ); ?>)</span>
 		</div>
 		<?php
 		return ob_get_clean();
