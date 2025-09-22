@@ -160,28 +160,25 @@ class Review extends Model {
 	}
 
 	/**
+	 * Get all review statuses.
+	 *
+	 * @return array
+	 */
+	public function getStatuses(): array {
+		return [
+			'in_review'   => __( 'In Review', 'surecart' ),
+			'published'   => __( 'Approved', 'surecart' ),
+			'unpublished' => __( 'Unapproved', 'surecart' ),
+		];
+	}
+
+	/**
 	 * Get the status display label.
 	 *
 	 * @return string
 	 */
 	public function getStatusDisplayAttribute() {
-		$statuses = [
-			'in_review'   => __( 'In Review', 'surecart' ),
-			'published'   => __( 'Approved', 'surecart' ),
-			'unpublished' => __( 'Unapproved', 'surecart' ),
-			'archived'    => __( 'Archived', 'surecart' ),
-		];
-
-		return $statuses[ $this->status ] ?? $this->status;
-	}
-
-	/**
-	 * Get the status display text.
-	 *
-	 * @return string
-	 */
-	public function getStatusDisplayTextAttribute() {
-		return $this->status_display;
+		return $this->getStatuses()[ $this->status ] ?? $this->status;
 	}
 
 	/**
@@ -197,5 +194,14 @@ class Review extends Model {
 			'archived'    => 'default',
 		];
 		return $types[ $this->status ] ?? 'default';
+	}
+
+	/**
+	 * Get the status display text.
+	 *
+	 * @return string
+	 */
+	public function getStatusDisplayTextAttribute() {
+		return $this->status_display;
 	}
 }

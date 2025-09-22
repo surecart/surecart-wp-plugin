@@ -10,12 +10,28 @@ use WP_Error;
  * Create a new table class that will extend the WP_List_Table
  */
 class ReviewsListTable extends ListTable {
+	/**
+	 * The checkbox.
+	 *
+	 * @var bool
+	 */
 	public $checkbox = false;
-	public $error    = '';
-	public $pages    = array();
 
 	/**
-	 * Prepare the items for the table to process
+	 * The error message.
+	 *
+	 * @var string
+	 */ public $error = '';
+
+	/**
+	 * The list of pages.
+	 *
+	 * @var array
+	 */
+	public $pages = array();
+
+	/**
+	 * Prepare the items for the table to process.
 	 *
 	 * @return void
 	 */
@@ -84,7 +100,7 @@ class ReviewsListTable extends ListTable {
 	}
 
 	/**
-	 * Override the parent columns method. Defines the columns to use in your listing table
+	 * Override the parent columns method. Defines the columns to use in your listing table.
 	 *
 	 * @return array
 	 */
@@ -124,7 +140,7 @@ class ReviewsListTable extends ListTable {
 	}
 
 	/**
-	 * Get the table data
+	 * Get the table data.
 	 *
 	 * @return object|WP_Error
 	 */
@@ -175,7 +191,7 @@ class ReviewsListTable extends ListTable {
 	}
 
 	/**
-	 * Status column
+	 * Status column.
 	 *
 	 * @param \SureCart\Models\Review $review Review model.
 	 *
@@ -192,7 +208,7 @@ class ReviewsListTable extends ListTable {
 	}
 
 	/**
-	 * Stars column
+	 * Stars column.
 	 *
 	 * @param \SureCart\Models\Review $review Review model.
 	 *
@@ -214,7 +230,7 @@ class ReviewsListTable extends ListTable {
 	}
 
 	/**
-	 * Customer column
+	 * Customer column.
 	 *
 	 * @param \SureCart\Models\Review $review Review model.
 	 *
@@ -229,7 +245,7 @@ class ReviewsListTable extends ListTable {
 	}
 
 	/**
-	 * Product column
+	 * Product column.
 	 *
 	 * @param \SureCart\Models\Review $review Review model.
 	 *
@@ -243,7 +259,7 @@ class ReviewsListTable extends ListTable {
 	}
 
 	/**
-	 * Review column
+	 * Review column.
 	 *
 	 * @param \SureCart\Models\Review $review Review model.
 	 *
@@ -270,7 +286,7 @@ class ReviewsListTable extends ListTable {
 	}
 
 	/**
-	 * Define what data to show on each column of the table
+	 * Define what data to show on each column of the table.
 	 *
 	 * @param \SureCart\Models\Review $review Review model.
 	 * @param string                  $column_name - Current column name.
@@ -403,16 +419,14 @@ class ReviewsListTable extends ListTable {
 	}
 
 	/**
-	 * Get all statuses.
+	 * Get all review statuses.
 	 *
 	 * @return array
 	 */
-	private function getStatuses(): array {
-		return array(
-			'all'         => __( 'All', 'surecart' ),
-			'in_review'   => __( 'In Review', 'surecart' ),
-			'published'   => __( 'Approved', 'surecart' ),
-			'unpublished' => __( 'Unapproved', 'surecart' ),
+	public function getStatuses(): array {
+		return array_merge(
+			[ 'all' => __( 'All', 'surecart' ) ],
+			( new Review() )->getStatuses()
 		);
 	}
 }
