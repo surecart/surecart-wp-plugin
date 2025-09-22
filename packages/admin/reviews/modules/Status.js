@@ -14,14 +14,14 @@ import Definition from '../../ui/Definition';
 import { ScTag } from '@surecart/components-react';
 
 export default ({ review, loading }) => {
-	const { status_display_text, updated_at_date_time, created_at_date_time } =
+	const { status_display, updated_at_date_time, created_at_date_time } =
 		review || {};
 
 	return (
 		<Box title={__('Status', 'surecart')} loading={loading}>
 			<Definition title={__('Status', 'surecart')}>
 				<ScTag type={review?.status_type || 'default'}>
-					{status_display_text || '-'}
+					{status_display || '-'}
 				</ScTag>
 			</Definition>
 

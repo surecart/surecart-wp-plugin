@@ -13,7 +13,13 @@ import { addQueryArgs } from '@wordpress/url';
 import Box from '../../ui/Box';
 import ProductLineItem from '../../ui/ProductLineItem';
 
-export default ({ product, loading }) => {
+export default ({ review, loading }) => {
+	// If review has purchase, it will be shown in Purchase section.
+	if (!!review?.purchase_id) {
+		return null;
+	}
+
+	const product = review?.product || null;
 	const price = product?.active_prices ? product?.active_prices[0] : null;
 
 	return (
@@ -37,12 +43,6 @@ export default ({ product, loading }) => {
 								...price,
 								product,
 							},
-							// variant,
-							// variant_options: [
-							// 	variant?.option_1,
-							// 	variant?.option_2,
-							// 	variant?.option_3,
-							// ],
 						}}
 					></ProductLineItem>
 				</a>

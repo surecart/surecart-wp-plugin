@@ -201,7 +201,7 @@ class ReviewsListTable extends ListTable {
 		ob_start();
 		?>
 		<sc-tag type="<?php echo esc_attr( $review->status_type ); ?>">
-			<?php echo esc_html( $review->status_display_text ); ?>
+			<?php echo esc_html( $review->status_display ); ?>
 		</sc-tag>
 		<?php
 		return ob_get_clean();

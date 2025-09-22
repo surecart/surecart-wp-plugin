@@ -195,13 +195,4 @@ class Review extends Model {
 		];
 		return $types[ $this->status ] ?? 'default';
 	}
-
-	/**
-	 * Get the status display text.
-	 *
-	 * @return string
-	 */
-	public function getStatusDisplayTextAttribute() {
-		return $this->status_display;
-	}
 }

@@ -1,5 +1,8 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
+import { store as coreStore } from '@wordpress/core-data';
+import { useSelect } from '@wordpress/data';
+import { addQueryArgs } from '@wordpress/url';
 
 /**
  * External dependencies.
@@ -11,13 +14,26 @@ import { __ } from '@wordpress/i18n';
  */
 import { ScButton, ScLineItem } from '@surecart/components-react';
 import Box from '../../ui/Box';
-import { addQueryArgs } from '@wordpress/url';
 
-export default ({ customer, loading }) => {
+export default ({ review, loading }) => {
+	const { customer, customerLoading } = useSelect(
+		(select) => {
+			const queryArgs = ['surecart', 'customer', review?.customer_id];
+			return {
+				customer: select(coreStore).getEntityRecord(...queryArgs),
+				customerLoading: select(coreStore).isResolving(
+					'getEntityRecord',
+					queryArgs
+				),
+			};
+		},
+		[review?.customer_id]
+	);
+
 	return (
 		<Box
 			title={__('Customer', 'surecart')}
-			loading={loading}
+			loading={loading || customerLoading}
 			footer={
 				!loading &&
 				customer?.id && (

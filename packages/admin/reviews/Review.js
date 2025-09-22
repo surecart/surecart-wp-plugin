@@ -10,6 +10,7 @@ import { useDispatch, useSelect, select } from '@wordpress/data';
 import { store as noticesStore } from '@wordpress/notices';
 import { store as coreStore } from '@wordpress/core-data';
 import { useState } from '@wordpress/element';
+import { addQueryArgs } from '@wordpress/url';
 import apiFetch from '@wordpress/api-fetch';
 
 /**
@@ -44,6 +45,9 @@ export default () => {
 		useDispatch(coreStore);
 	const id = useSelect((select) => select(dataStore).selectPageId());
 
+	const updateReview = (data) =>
+		editEntityRecord('surecart', 'review', id, data);
+
 	const baseUrl = select(coreStore).getEntityConfig(
 		'surecart',
 		'review'
@@ -76,12 +80,6 @@ export default () => {
 			},
 			[id]
 		);
-
-	const updateReview = (data) =>
-		editEntityRecord('surecart', 'review', id, {
-			...review,
-			...data,
-		});
 
 	/**
 	 * Update the review.
@@ -122,7 +120,7 @@ export default () => {
 			setError(null);
 
 			const publishedReview = await apiFetch({
-				path: `${baseUrl}/${id}/publish`,
+				path: addQueryArgs(`${baseUrl}/${id}/publish`),
 				method: 'PATCH',
 			});
 
@@ -160,7 +158,7 @@ export default () => {
 			setError(null);
 
 			const unpublishedReview = await apiFetch({
-				path: `${baseUrl}/${id}/unpublish`,
+				path: addQueryArgs(`${baseUrl}/${id}/unpublish`),
 				method: 'PATCH',
 			});
 
@@ -262,18 +260,9 @@ export default () => {
 			sidebar={
 				<>
 					<Status review={review || {}} loading={!hasLoadedReview} />
-					<Customer
-						customer={review?.customer}
-						loading={!hasLoadedReview}
-					/>
-					<Product
-						product={review?.product}
-						loading={!hasLoadedReview}
-					/>
-					<Purchase
-						purchase={review?.purchase}
-						loading={!hasLoadedReview}
-					/>
+					<Product review={review} loading={!hasLoadedReview} />
+					<Customer review={review} loading={!hasLoadedReview} />
+					<Purchase review={review} loading={!hasLoadedReview} />
 				</>
 			}
 		>

@@ -20,7 +20,7 @@ class ReviewsController extends RestController {
 	 *
 	 * @var array<string>
 	 */
-	protected $with = [ 'customer', 'product', 'purchase', 'product.price' ];
+	protected $with = [ 'product', 'product.price' ];
 
 	/**
 	 * Publish a review.
