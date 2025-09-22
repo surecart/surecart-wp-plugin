@@ -14,7 +14,7 @@ import Box from '../../../ui/Box';
 import StarsBreakdown from './StarsBreakdown';
 import { ScButton, ScSwitch } from '@surecart/components-react';
 
-export default ({ product = {}, updateProduct, loading }) => {
+export default ({ product, updateProduct, loading }) => {
 	const isReviewProtocolEnabled = !!scData?.review_protocol?.reviews_enabled;
 
 	return (
@@ -37,7 +37,7 @@ export default ({ product = {}, updateProduct, loading }) => {
 							type="link"
 							size="small"
 						>
-							{__('Review Settings', 'surecart')}
+							{__('Reviews Settings', 'surecart')}
 						</ScButton>
 					</div>
 				)
@@ -55,7 +55,7 @@ export default ({ product = {}, updateProduct, loading }) => {
 			}
 		>
 			<ScSwitch
-				checked={product?.reviews_enabled}
+				checked={isReviewProtocolEnabled && !!product?.reviews_enabled}
 				onScChange={(e) => {
 					updateProduct({
 						reviews_enabled: e.target.checked,
@@ -75,7 +75,7 @@ export default ({ product = {}, updateProduct, loading }) => {
 						});
 					}}
 				>
-					{__('Review request Email', 'surecart')}
+					{__('Review Request Email', 'surecart')}
 					<span slot="description">
 						{__(
 							'Send automatic review request email to customers who purchase this product.',

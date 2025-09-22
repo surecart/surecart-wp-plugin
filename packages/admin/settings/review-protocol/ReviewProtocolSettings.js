@@ -67,7 +67,7 @@ const ReviewProtocolSettings = () => {
 						});
 					}}
 				>
-					{__('Enable Reviews', 'surecart')}
+					{__('Enable Product Reviews', 'surecart')}
 					<span slot="description" style={{ lineHeight: '1.4' }}>
 						{__(
 							'Allow customers to leave reviews on products. Individual products must also have reviews enabled.',
@@ -88,7 +88,7 @@ const ReviewProtocolSettings = () => {
 								});
 							}}
 						>
-							{__('Review request Email', 'surecart')}
+							{__('Review Request Email', 'surecart')}
 							<span
 								slot="description"
 								style={{ lineHeight: '1.4' }}
@@ -102,9 +102,12 @@ const ReviewProtocolSettings = () => {
 
 						{reviewProtocolItem?.solicit_reviews && (
 							<ScInput
-								label={__('Days After Fulfillment', 'surecart')}
+								label={__(
+									'When should we ask for a review?',
+									'surecart'
+								)}
 								help={__(
-									'Number of days after order fulfillment to send review request email.',
+									"Pick how many days after the order is marked fulfilled that we'd send the review request email. Most sellers use 3–14 days.",
 									'surecart'
 								)}
 								type="number"
