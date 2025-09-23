@@ -12,20 +12,21 @@ import { addQueryArgs } from '@wordpress/url';
  */
 import Box from '../../ui/Box';
 import Definition from '../../ui/Definition';
-import ProductLineItem from '../../ui/ProductLineItem';
 import { ScIcon, ScTag } from '@surecart/components-react';
 
 export default ({ review, loading }) => {
-	const { status_display, updated_at_date_time, created_at_date_time } =
-		review || {};
-
-	const product = review?.product || null;
-	const price = product?.active_prices ? product?.active_prices[0] : null;
+	const {
+		status_type,
+		status_display,
+		updated_at_date_time,
+		created_at_date_time,
+		product,
+	} = review || {};
 
 	return (
 		<Box title={__('Summary', 'surecart')} loading={loading}>
 			<Definition title={__('Status', 'surecart')}>
-				<ScTag type={review?.status_type || 'default'}>
+				<ScTag type={status_type || 'default'}>
 					{status_display || '-'}
 				</ScTag>
 			</Definition>
@@ -42,7 +43,7 @@ export default ({ review, loading }) => {
 				</Definition>
 			)}
 
-			{product?.id && product?.active_prices && (
+			{product?.id && (
 				<Definition title={__('Product', 'surecart')}>
 					<a
 						href={addQueryArgs('admin.php', {
