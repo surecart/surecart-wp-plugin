@@ -61,7 +61,7 @@ export default function SelectTemplate({
 	return (
 		<div>
 			<ScSelect
-				label={__('Template')}
+				label={__('Product Template')}
 				value={templateCreated?.slug || template?.slug}
 				choices={[
 					!!templateCreated?.id && {
@@ -76,7 +76,7 @@ export default function SelectTemplate({
 				placeholder={
 					defaultTemplate?.title?.rendered ||
 					defaultTemplate?.title ||
-					__('Select a template')
+					__('Select a product template')
 				}
 				onScChange={(e) => {
 					editEntityRecord(
