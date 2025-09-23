@@ -313,6 +313,20 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 
 == Changelog ==
 
+= 3.15.0 - September 24th, 2025 =
+- New: Product page video media.
+- New: Upsell replacement behavior.
+- New: Show disputes in admin pages.
+- Improvement: Pass noindex headers with currency parameters due to issues with some SEO plugins indexing these queries.
+- Improvement: Reposition help widget on index pages to not interfere with pagination.
+- Improvement: Better wording when restoring payment plans.
+- Improvement: Change "Edit Template" to "Edit Product Template" on product page admin UI to be more clear.
+- Fix: Issue in Safari with Quick Add popup animation.
+- Fix: Issue when updating customer's tax identifier from the order admin page.
+- Fix: Issue with Elementor where the "out of stock" label was not displaying a custom label on the front-end.
+- Fix: Missing space in resubscribe confirmation message.
+
+
 = 3.14.0 - September 15th, 2025 =
 - New: Quick add functionality for product lists.
 - New: Line item notes on product pages and invoices.
