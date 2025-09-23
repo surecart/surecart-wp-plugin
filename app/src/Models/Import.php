@@ -55,8 +55,6 @@ class Import extends Model {
 			return $created;
 		}
 
-		do_action( 'surecart/import/queued', $created, $type );
-
 		return $created;
 	}
 

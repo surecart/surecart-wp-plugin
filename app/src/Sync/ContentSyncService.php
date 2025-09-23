@@ -2,6 +2,8 @@
 
 namespace SureCart\Sync;
 
+use SureCart\Models\Import;
+
 /**
  * Syncs the content for a given sync key.
  */
@@ -18,14 +20,7 @@ class ContentSyncService {
 	 *
 	 * @var string
 	 */
-	protected const SYNC_KEY = 'surecart_content_sync_key';
-
-	/**
-	 * The batch prefix.
-	 *
-	 * @var string
-	 */
-	protected const BATCH_PREFIX = 'sc_content_batch_';
+	protected const SYNC_KEY = 'surecart_import_content_sync';
 
 	/**
 	 * Constructor.
@@ -41,9 +36,9 @@ class ContentSyncService {
 	 */
 	public function bootstrap() {
 		// set the content when the product is first synced.
-		add_action( 'surecart/product/sync/created/props', [ $this, 'setContent' ], 10, 2 );
-		// set the content when the import is complete.
-		add_action( 'surecart/import/content', [ $this, 'maybeStageContentSync' ], 10 );
+		add_filter( 'surecart/product/sync/created/props', [ $this, 'setContent' ], 10, 2 );
+		// when the import is created, set a check to make sure products are synced.
+		add_action( 'surecart/models/import/created', [ $this, 'setContentBatch' ], 10 );
 		// check the batch, if there is content to sync, sync those products.
 		add_action( 'admin_init', [ $this, 'maybeCheckImport' ] );
 	}
@@ -58,49 +53,43 @@ class ContentSyncService {
 	}
 
 	/**
-	 * Generate a unique id.
-	 *
-	 * @return string
-	 */
-	protected function generateUniqueId() {
-		return self::BATCH_PREFIX . wp_generate_uuid4();
-	}
-
-	/**
-	 * Get the unique id.
-	 *
-	 * @param \SureCart\Models\Model $model The model.
-	 *
-	 * @return string
-	 */
-	protected function getUniqueId( $model ) {
-		if ( empty( $model->metadata->{self::SYNC_KEY} ) ) {
-			return false;
-		}
-
-		return self::BATCH_PREFIX . $model->metadata->{self::SYNC_KEY};
-	}
-
-	/**
 	 * Check if there are any imports to check.
 	 *
 	 * @return array|WP_Error
 	 */
 	public function maybeCheckImport() {
-		$import = $this->batch()->getByPrefix( self::BATCH_PREFIX );
+		$imports = $this->batch()->getByPrefix( self::SYNC_KEY );
 
 		// there are not imports to check.
-		if ( empty( $import ) ) {
+		if ( empty( $imports ) ) {
 			return false;
 		}
 
-		// already syncing.
-		if ( \SureCart::sync()->products()->isActive() ) {
-			return false;
-		}
+		foreach ( $imports as $import_id ) {
+			// find the import.
+			$import = Import::find( $import_id );
 
-		// dispatch the sync.
-		return \SureCart::sync()->products()->dispatch();
+			// There was an error.
+			if ( is_wp_error( $import ) ) {
+				return false;
+			}
+
+			// The import is not invalid or completed, don't check it.
+			if ( ! in_array( $import->status, [ 'invalid', 'completed' ], true ) ) {
+				return false;
+			}
+
+			// Remove the batch check.
+			$this->removeContentBatch( $import );
+
+			// already syncing.
+			if ( \SureCart::sync()->products()->isActive() ) {
+				return false;
+			}
+
+			// dispatch the sync.
+			return \SureCart::sync()->products()->dispatch();
+		}
 	}
 
 	/**
@@ -110,40 +99,36 @@ class ContentSyncService {
 	 * @param \SureCart\Models\Model $model The model.
 	 */
 	public function setContent( $props, \SureCart\Models\Model $model ) {
-		if ( isset( $model->metadata->sc_initial_sync_pattern ) ) {
-			$post = get_post( $model->metadata->sc_initial_sync_pattern );
-			if ( ! empty( $post->post_content ) && ! empty( $post->ID ) ) {
-				$props['post_content'] = $post->post_content;
-				wp_delete_post( $post->ID, true ); // delete the post after use.
-			}
+		if ( ! isset( $model->metadata->sc_initial_sync_pattern ) ) {
+			return $props;
 		}
+
+		$post = get_post( $model->metadata->sc_initial_sync_pattern );
+		if ( empty( $post->post_content ) ) {
+			return $props;
+		}
+
+		$props['post_content'] = $post->post_content;
+		wp_delete_post( $post->ID, true ); // delete the post after use.
 
 		return $props;
 	}
 
 	/**
-	 * Set the sync key.
+	 * Set a check to make sure products are synced.
 	 *
-	 * @param array $model_data The model data.
-	 *
-	 * @return \SureCart\Models\Model
+	 * @param \SureCart\Models\Import $import The import.
 	 */
-	public function maybeStageContentSync( $model_data = [] ) {
-		// bail if no content.
-		if ( empty( $model_data['content'] ) ) {
-			return $model_data;
-		}
+	public function setContentBatch( $import ) {
+		$this->batch()->set( self::SYNC_KEY . $import->id, $import->id );
+	}
 
-		// generate a unique uuid.
-		$unique_id = $this->generateUniqueId();
-
-		// set the sync key in the metadata.
-		$model_data['metadata'][ self::SYNC_KEY ] = $unique_id;
-
-		// set the sync key in the batch.
-		$this->batch()->set( $unique_id, $model_data['content'] );
-
-		// return the model data.
-		return $model_data;
+	/**
+	 * Remove the check to make sure products are synced.
+	 *
+	 * @param \SureCart\Models\Import $import The import.
+	 */
+	public function removeContentBatch( $import ) {
+		$this->batch()->remove( self::SYNC_KEY . $import->id );
 	}
 }
