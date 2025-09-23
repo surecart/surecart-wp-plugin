@@ -35,8 +35,18 @@ class Import extends Model {
 			return new \WP_Error( 'invalid_data', __( 'Data must be an array.', 'surecart' ) );
 		}
 
-		foreach ( $data as $item ) {
-			do_action( 'surecart/import/content', $item, $type );
+		foreach ( $data as $key => $item ) {
+			if ( empty( $item['content'] ) ) {
+				continue;
+			}
+
+			$pattern_id = $this->addPattern( $item );
+			if ( is_wp_error( $pattern_id ) ) {
+				continue;
+			}
+
+			$data[ $key ]['metadata']['sc_initial_sync_pattern'] = $pattern_id;
+			unset( $item['content'] );
 		}
 
 		$created = parent::create( [ 'data' => $data ] );
@@ -48,5 +58,35 @@ class Import extends Model {
 		do_action( 'surecart/import/queued', $created, $type );
 
 		return $created;
+	}
+
+	/**
+	 * Add a pattern to the database.
+	 *
+	 * @param array $item The item.
+	 *
+	 * @return int|\WP_Error
+	 */
+	protected function addPattern( $item ) {
+		$pattern_id = wp_insert_post(
+			array(
+				// translators: %s is the product name.
+				'post_title'     => sprintf( __( '%s Content', 'surecart' ), $item['name'] ),
+				'post_content'   => $item['content'],
+				'post_status'    => 'publish',
+				'comment_status' => 'closed',
+				'ping_status'    => 'closed',
+				'post_type'      => 'wp_block',
+				'meta_input'     => [
+					'wp_pattern_sync_status' => 'unsynced',
+				],
+			)
+		);
+
+		if ( is_wp_error( $pattern_id ) ) {
+			error_log( 'Error adding pattern for sync ' . $item['name'] . ': ' . $pattern_id->get_error_message() );
+		}
+
+		return $pattern_id;
 	}
 }

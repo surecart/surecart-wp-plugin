@@ -74,6 +74,10 @@ class ContentSyncService {
 	 * @return string
 	 */
 	protected function getUniqueId( $model ) {
+		if ( empty( $model->metadata->{self::SYNC_KEY} ) ) {
+			return false;
+		}
+
 		return self::BATCH_PREFIX . $model->metadata->{self::SYNC_KEY};
 	}
 
@@ -96,7 +100,7 @@ class ContentSyncService {
 		}
 
 		// dispatch the sync.
-		// return \SureCart::sync()->products()->dispatch();
+		return \SureCart::sync()->products()->dispatch();
 	}
 
 	/**
@@ -106,15 +110,12 @@ class ContentSyncService {
 	 * @param \SureCart\Models\Model $model The model.
 	 */
 	public function setContent( $props, \SureCart\Models\Model $model ) {
-		// get the unique id.
-		$id = $this->getUniqueId( $model );
-
-		// get the content.
-		$content = $this->batch()->get( $id );
-
-		if ( $content ) {
-			$this->batch()->remove( $id );
-			return array_merge( $props, array( 'post_content' => $content ) );
+		if ( isset( $model->metadata->sc_initial_sync_pattern ) ) {
+			$post = get_post( $model->metadata->sc_initial_sync_pattern );
+			if ( ! empty( $post->post_content ) && ! empty( $post->ID ) ) {
+				$props['post_content'] = $post->post_content;
+				wp_delete_post( $post->ID, true ); // delete the post after use.
+			}
 		}
 
 		return $props;

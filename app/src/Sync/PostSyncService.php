@@ -244,7 +244,17 @@ class PostSyncService {
 		}
 
 		// insert post.
-		$props   = $this->getSchemaMap( $model );
+		$props = $this->getSchemaMap( $model );
+
+		// if there is an initial sync pattern, use that.
+		if ( isset( $model->metadata->sc_initial_sync_pattern ) ) {
+			$post = get_post( $model->metadata->sc_initial_sync_pattern );
+			if ( ! empty( $post->post_content ) && ! empty( $post->ID ) ) {
+				$props['post_content'] = $post->post_content;
+				wp_delete_post( $post->ID, true ); // delete the post after use.
+			}
+		}
+
 		$post_id = wp_insert_post( wp_slash( apply_filters( 'surecart/product/sync/created/props', $props, $model ) ), true, false );
 
 		// handle errors.
@@ -297,7 +307,8 @@ class PostSyncService {
 
 		// update the post by id.
 		$post_id = wp_update_post(
-			apply_filters( 'surecart/product/sync/updated/props',
+			apply_filters(
+				'surecart/product/sync/updated/props',
 				array_merge(
 					$props,
 					array(
