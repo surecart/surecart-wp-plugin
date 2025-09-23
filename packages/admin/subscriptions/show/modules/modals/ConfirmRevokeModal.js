@@ -99,7 +99,7 @@ export default ({ purchase, open, onRequestClose }) => {
 				!!upcoming?.checkout?.currency
 					? sprintf(
 							__(
-								'The subscription will be restored in order to restore the purchase. The customer will immediately be charged %s for the first billing period.',
+								'The subscription will be restored in order to restore the purchase. The customer will immediately be charged %s.',
 								'surecart'
 							),
 							formatNumber(
@@ -108,7 +108,7 @@ export default ({ purchase, open, onRequestClose }) => {
 							)
 					  )
 					: __(
-							'The subscription will be restored in order to restore the purchase. The customer will immediately be charged the first billing period.',
+							'The subscription will be restored in order to restore the purchase. The customer will immediately be charged.',
 							'surecart'
 					  )}
 			</ScAlert>
