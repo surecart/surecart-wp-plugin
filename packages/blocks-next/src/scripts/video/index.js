@@ -41,6 +41,26 @@ store('surecart/video', {
 				}
 			}
 		},
+
+		checkVariantChange() {
+			const {
+				state: { shouldDisplayImage },
+			} = store('surecart/product-page');
+
+			if (!shouldDisplayImage) {
+				const { ref } = getElement();
+
+				// Get the stored video element for this container.
+				const video = ref.querySelector('video');
+
+				// no video element found.
+				if (!video) {
+					return;
+				}
+
+				video.pause();
+			}
+		},
 	},
 	actions: {
 		// Play the video.

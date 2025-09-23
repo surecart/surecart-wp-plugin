@@ -5,6 +5,7 @@
 	data-wp-on--click="actions.play"
 	data-wp-class--sc-video-loaded="context.loaded"
 	data-wp-on--fullscreenchange="callbacks.handleFullscreenChange"
+	data-wp-watch--variant-change="callbacks.checkVariantChange"
 	style="<?php echo esc_attr( $style ); ?>"
 >
 	<div
