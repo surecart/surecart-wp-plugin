@@ -9,8 +9,16 @@
 
 | Property | Attribute | Description | Type     | Default     |
 | -------- | --------- | ----------- | -------- | ----------- |
+| `color`  | `color`   |             | `string` | `undefined` |
 | `rating` | `rating`  |             | `number` | `undefined` |
 | `size`   | `size`    |             | `number` | `16`        |
+
+
+## Shadow Parts
+
+| Part     | Description |
+| -------- | ----------- |
+| `"base"` |             |
 
 
 ----------------------------------------------

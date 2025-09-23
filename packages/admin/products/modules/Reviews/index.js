@@ -12,7 +12,14 @@ import { addQueryArgs } from '@wordpress/url';
  */
 import Box from '../../../ui/Box';
 import StarsBreakdown from './StarsBreakdown';
-import { ScButton, ScIcon, ScSwitch } from '@surecart/components-react';
+import {
+	ScButton,
+	ScDropdown,
+	ScIcon,
+	ScMenu,
+	ScMenuItem,
+	ScSwitch,
+} from '@surecart/components-react';
 
 export default ({ product, updateProduct, loading }) => {
 	const isReviewProtocolEnabled = !!scData?.review_protocol?.reviews_enabled;
@@ -22,26 +29,41 @@ export default ({ product, updateProduct, loading }) => {
 			title={__('Reviews', 'surecart')}
 			loading={loading}
 			header_action={
-				!isReviewProtocolEnabled && (
-					<div
-						css={css`
-							margin: -12px 30px;
-						`}
+				<ScDropdown placement="bottom-end">
+					<ScButton
+						circle
+						type="text"
+						style={{
+							'--button-color': 'var(--sc-color-gray-600)',
+							margin: '-10px',
+						}}
+						slot="trigger"
 					>
-						<ScButton
-							href={addQueryArgs('admin.php', {
-								page: 'sc-settings',
-								tab: 'review_protocol',
-							})}
-							target="_blank"
-							type="link"
-							size="small"
+						<ScIcon name="more-horizontal" />
+					</ScButton>
+					<ScMenu>
+						<ScMenuItem
+							onClick={() => {
+								window.open(
+									addQueryArgs('admin.php', {
+										page: 'sc-settings',
+										tab: 'review_protocol',
+									}),
+									'_blank'
+								);
+							}}
 						>
-							{__('Reviews Settings', 'surecart')}
-							<ScIcon name="external-link" slot="suffix" />
-						</ScButton>
-					</div>
-				)
+							<ScIcon
+								slot="prefix"
+								name="settings"
+								style={{
+									opacity: 0.5,
+								}}
+							/>
+							{__('Global Settings', 'surecart')}
+						</ScMenuItem>
+					</ScMenu>
+				</ScDropdown>
 			}
 			footer={
 				!loading &&
