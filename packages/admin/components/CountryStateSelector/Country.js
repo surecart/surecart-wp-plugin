@@ -10,17 +10,24 @@ export default ({ countryIsoCode, countryName, value, onChange }) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [fetching, setFetching] = useState(false);
 	const [country, setCountry] = useState(false);
+	const [territories, setTerritories] = useState([]);
 
 	useEffect(() => {
-		fetchCountryDetails();
-	}, []);
+		if (!isOpen) return;
 
-	const fetchCountryDetails = async () => {
+		fetchTerritories();
+	}, [isOpen]);
+
+	const fetchTerritories = async () => {
 		try {
 			setFetching(true);
 			const country = await apiFetch({
 				path: `surecart/v1/public/atlas/${countryIsoCode}`,
 			});
+			const territories = (country?.states || []).filter(
+				(region) => !!region?.iso_code
+			);
+			setTerritories(territories);
 			setCountry(country);
 		} catch (e) {
 			console.error(e);
@@ -29,9 +36,6 @@ export default ({ countryIsoCode, countryName, value, onChange }) => {
 		}
 	};
 
-	const territories = (country?.states || []).filter(
-		(region) => !!region?.iso_code
-	);
 	const territoriesCount = territories.length || 0;
 
 	// when the country is selected, set states as empty array
@@ -98,7 +102,7 @@ export default ({ countryIsoCode, countryName, value, onChange }) => {
 					flex-direction: column;
 					gap: 1.5em;
 					margin-bottom: 2em;
-					padding: 0.5em 1em;
+					padding: 1em;
 				`}
 			>
 				<ScSkeleton style={{ width: '45%' }}></ScSkeleton>
@@ -138,36 +142,34 @@ export default ({ countryIsoCode, countryName, value, onChange }) => {
 					onChange={onSelectCountry}
 				/>
 
-				{territoriesCount > 1 && (
-					<ScButton
-						type="text"
-						onClick={() => setIsOpen(!isOpen)}
-						css={css`
-							&::part(base) {
-								font-size: 400;
-							}
-						`}
-					>
-						{sprintf(
-							_n(
-								'%d region',
-								'%d regions',
-								territoriesCount,
-								'surecart'
-							),
-							territoriesCount
-						)}
-						<ScIcon
-							slot="suffix"
-							name={isOpen ? 'chevron-up' : 'chevron-down'}
-						/>
-					</ScButton>
-				)}
+				<ScButton
+					type="text"
+					onClick={() => setIsOpen(!isOpen)}
+					css={css`
+						&::part(base) {
+							font-size: 400;
+						}
+					`}
+				>
+					{sprintf(
+						_n(
+							'%d region',
+							'%d regions',
+							territoriesCount,
+							'surecart'
+						),
+						territoriesCount
+					)}
+					<ScIcon
+						slot="suffix"
+						name={isOpen ? 'chevron-up' : 'chevron-down'}
+					/>
+				</ScButton>
 			</div>
 
 			{isOpen && (
 				<div>
-					{territories.map((region) => {
+					{(territories || [])?.map((region) => {
 						return (
 							<CheckboxControl
 								label={region?.name}

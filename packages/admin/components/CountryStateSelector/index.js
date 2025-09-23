@@ -13,20 +13,15 @@ export default ({ value, onChange }) => {
 	const [allCountries, setAllCountries] = useState([]);
 
 	useEffect(() => {
-		console.log('useEffect');
 		fetchAllCountries();
 	}, []);
 
 	const fetchAllCountries = async () => {
-		console.log('fetchAllCountries');
-
 		try {
 			setFetching(true);
 			const countries = await apiFetch({
 				path: `surecart/v1/public/atlas`,
 			});
-			console.log(countries);
-
 			setAllCountries(countries?.data);
 		} catch (e) {
 			console.error(e);
@@ -34,7 +29,7 @@ export default ({ value, onChange }) => {
 			setFetching(false);
 		}
 	};
-	console.log(allCountries);
+
 	const countries = allCountries?.filter((country) =>
 		country?.name.toLowerCase().includes(search.toLowerCase())
 	);
