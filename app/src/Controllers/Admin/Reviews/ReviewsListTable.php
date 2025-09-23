@@ -332,7 +332,7 @@ class ReviewsListTable extends ListTable {
 					],
 					admin_url( 'admin.php?page=sc-reviews' )
 				)
-			) . '" aria-label="' . esc_attr__( 'Unapprove Review', 'surecart' ) . '">' . esc_html__( 'Unapprove', 'surecart' ) . '</a>';
+			) . '" aria-label="' . esc_attr__( 'Reject Review', 'surecart' ) . '">' . esc_html__( 'Reject', 'surecart' ) . '</a>';
 		}
 
 		$actions['delete'] = sprintf(

@@ -30,9 +30,8 @@ import Logo from '../templates/Logo';
 import UpdateModel from '../templates/UpdateModel';
 import Details from './modules/Details';
 import Customer from './modules/Reviewer';
-import Product from './modules/Product';
 import Purchase from './modules/Purchase';
-import Status from './modules/Status';
+import Summary from './modules/Summary';
 import ActionsDropdown from './modules/ActionsDropdown';
 
 export default () => {
@@ -124,7 +123,7 @@ export default () => {
 				method: 'PATCH',
 			});
 
-			createSuccessNotice(__('Review published.', 'surecart'), {
+			createSuccessNotice(__('Review approved.', 'surecart'), {
 				type: 'snackbar',
 			});
 
@@ -162,7 +161,7 @@ export default () => {
 				method: 'PATCH',
 			});
 
-			createSuccessNotice(__('Review unpublished.', 'surecart'), {
+			createSuccessNotice(__('Review rejected.', 'surecart'), {
 				type: 'snackbar',
 			});
 
@@ -195,7 +194,7 @@ export default () => {
 					loading={loading}
 					onClick={() => setModal('unpublish')}
 				>
-					{__('Unapprove Review', 'surecart')}
+					{__('Reject Review', 'surecart')}
 				</ScButton>
 			);
 		}
@@ -259,8 +258,7 @@ export default () => {
 			}
 			sidebar={
 				<>
-					<Status review={review || {}} loading={!hasLoadedReview} />
-					<Product review={review} loading={!hasLoadedReview} />
+					<Summary review={review} loading={!hasLoadedReview} />
 					<Customer review={review} loading={!hasLoadedReview} />
 					<Purchase review={review} loading={!hasLoadedReview} />
 				</>
@@ -301,7 +299,7 @@ export default () => {
 				onCancel={() => setModal(false)}
 			>
 				{__(
-					'Are you sure you want to unapprove this review?',
+					'Are you sure you want to reject this review?',
 					'surecart'
 				)}
 			</ConfirmDialog>

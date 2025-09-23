@@ -132,7 +132,7 @@ class Review extends Model {
 		return [
 			'in_review'   => __( 'In Review', 'surecart' ),
 			'published'   => __( 'Approved', 'surecart' ),
-			'unpublished' => __( 'Unapproved', 'surecart' ),
+			'unpublished' => __( 'Rejected', 'surecart' ),
 		];
 	}
 

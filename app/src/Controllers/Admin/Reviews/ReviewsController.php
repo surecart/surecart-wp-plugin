@@ -31,7 +31,7 @@ class ReviewsController extends AdminController {
 		$this->withNotices(
 			array(
 				'published'   => __( 'Review approved successfully.', 'surecart' ),
-				'unpublished' => __( 'Review unapproved successfully.', 'surecart' ),
+				'unpublished' => __( 'Review rejected successfully.', 'surecart' ),
 				'deleted'     => __( 'Review deleted successfully.', 'surecart' ),
 			)
 		);
