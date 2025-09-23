@@ -21,10 +21,24 @@ class GalleryItemProductMedia extends ModelsGalleryItem implements GalleryItem {
 	}
 
 	/**
+	 * Get the thumbnail attribute markup.
+	 *
+	 * @param string $size The size of the image.
+	 * @param array  $attr The attributes for the tag.
+	 * @param array  $metadata Additional metadata.
+	 *
+	 * @return string
+	 */
+	public function thumbnail( $size = 'full', $attr = [], $metadata = [] ): string {
+		return $this->html( $size, $attr, $metadata );
+	}
+
+	/**
 	 * Get the media attribute markup.
 	 *
 	 * @param string $size The size of the image.
 	 * @param array  $attr The attributes for the tag.
+	 * @param array  $metadata Additional metadata.
 	 *
 	 * @return string
 	 */
@@ -127,7 +141,7 @@ class GalleryItemProductMedia extends ModelsGalleryItem implements GalleryItem {
 	 *
 	 * @return object
 	 */
-	public function attributes( $size = 'full', $attr = array() ) {
+	public function attributes( $size = 'full', $attr = array() ): object {
 		if ( isset( $this->item->media ) ) {
 			return $this->item->media->attributes( $size, $attr );
 		}

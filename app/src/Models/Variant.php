@@ -60,7 +60,7 @@ class Variant extends Model {
 	public function getLineItemImageAttribute() {
 		// we have wp media.
 		if ( ! empty( $this->metadata->wp_media ) ) {
-			$item = new GalleryItemAttachment( $this->metadata->wp_media );
+			$item = GalleryItemAttachment::create( $this->metadata->wp_media );
 			return $item->attributes( 'thumbnail' );
 		}
 
