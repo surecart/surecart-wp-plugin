@@ -317,6 +317,7 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 - New: Product page video media.
 - New: Upsell replacement behavior.
 - New: Show disputes in admin pages.
+- New: Improved UI for assigning variants to product media.
 - Improvement: Pass noindex headers with currency parameters due to issues with some SEO plugins indexing these queries.
 - Improvement: Reposition help widget on index pages to not interfere with pagination.
 - Improvement: Better wording when restoring payment plans.
