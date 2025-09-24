@@ -7,8 +7,7 @@ if ( ! $product ) {
 	return '';
 }
 
-$average_rating = $product->average_stars;
-
+$average_rating   = $product->average_stars;
 $fill_color_attr  = $attributes['fill_color'] ?? '';
 $empty_color_attr = $attributes['empty_color'] ?? '';
 $size             = $attributes['size'] ?? 25;
@@ -20,7 +19,7 @@ if ( empty( $fill_color ) ) {
 
 $empty_color = BlockStyleAttributes::getColorValue( $empty_color_attr );
 if ( empty( $empty_color ) ) {
-	$empty_color = '#d1d5db';
+	$empty_color = 'var(--sc-color-gray-300)';
 }
 
 return 'file:./view.php';
