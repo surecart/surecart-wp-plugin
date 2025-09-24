@@ -137,8 +137,9 @@ export default ({ checkout, loading, busy, setBusy }) => {
 							onScInputAddress={(e) =>
 								setCustomerShippingAddress(e?.detail)
 							}
-							defaultCountryFields={scData.i18n.defaultCountryFields}
-							countryFields={scData.i18n.countryFields}
+							defaultCountryFields={
+								scData.i18n.defaultCountryFields
+							}
 						/>
 					</div>
 

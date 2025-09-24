@@ -213,7 +213,6 @@ export default ({ checkout }) => {
 						setCustomerShippingAddress(e?.detail)
 					}
 					defaultCountryFields={scData.i18n.defaultCountryFields}
-					countryFields={scData.i18n.countryFields}
 				/>
 
 				<ScCheckbox
@@ -243,7 +242,6 @@ export default ({ checkout }) => {
 							setCustomerBillingAddress(e?.detail)
 						}
 						defaultCountryFields={scData.i18n.defaultCountryFields}
-						countryFields={scData.i18n.countryFields}
 					/>
 				)}
 			</>

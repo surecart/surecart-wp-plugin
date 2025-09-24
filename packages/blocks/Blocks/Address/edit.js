@@ -180,7 +180,6 @@ export default ({ attributes, setAttributes }) => {
 								scBlockData.i18n.defaultCountryFields
 							}
 							showLine2={line_2}
-							countryFields={scBlockData.i18n.countryFields}
 						/>
 					)}
 				</ScFlex>
