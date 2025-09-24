@@ -16,7 +16,7 @@ export default ({ attributes, setAttributes, context: { show_label } }) => {
 					tagName="span"
 					aria-label={__('Total rating label', 'surecart')}
 					placeholder={__('reviews', 'surecart')}
-					value={label}
+					value={label || __('reviews', 'surecart')}
 					onChange={(newLabel) => setAttributes({ label: newLabel })}
 				/>
 			)}
