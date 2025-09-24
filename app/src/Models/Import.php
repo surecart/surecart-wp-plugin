@@ -29,33 +29,30 @@ class Import extends Model {
 	 * @return $this|\WP_Error
 	 */
 	protected function queue( $type, $data = [] ) {
+		// set the endpoint for this type.
 		$this->endpoint = $this->endpoint . '/' . $type;
 
+		// validate the data.
 		if ( ! is_array( $data ) ) {
 			return new \WP_Error( 'invalid_data', __( 'Data must be an array.', 'surecart' ) );
 		}
 
+		// for each item in the data, add a pattern to the database.
 		foreach ( $data as $key => $item ) {
 			if ( empty( $item['content'] ) ) {
 				continue;
 			}
 
 			$pattern_id = $this->addPattern( $item );
-			if ( is_wp_error( $pattern_id ) ) {
-				continue;
+			if ( ! is_wp_error( $pattern_id ) && ! empty( $pattern_id ) ) {
+				$data[ $key ]['metadata']['sc_initial_sync_pattern'] = $pattern_id;
 			}
 
-			$data[ $key ]['metadata']['sc_initial_sync_pattern'] = $pattern_id;
-			unset( $item['content'] );
+			// Remove content from the data array to avoid sending it to the API.
+			unset( $data[ $key ]['content'] );
 		}
 
-		$created = parent::create( [ 'data' => $data ] );
-
-		if ( is_wp_error( $created ) ) {
-			return $created;
-		}
-
-		return $created;
+		return parent::create( [ 'data' => $data ] );
 	}
 
 	/**
