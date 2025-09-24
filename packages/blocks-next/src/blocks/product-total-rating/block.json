@@ -1,0 +1,65 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "surecart/product-total-rating",
+	"title": "Product Total Rating",
+	"description": "Displays the total product rating.",
+	"version": "1.0.0",
+	"category": "surecart-product-page",
+	"ancestor": [
+		"surecart/product-page",
+		"surecart/product-quick-view",
+		"surecart/sticky-purchase"
+	],
+	"providesContext": {
+		"show_label": "show_label"
+	},
+	"attributes": {
+		"show_label": {
+			"type": "boolean",
+			"default": true
+		}
+	},
+	"example": {},
+	"supports": {
+		"interactivity": true,
+		"anchor": true,
+		"color": {
+			"gradients": true,
+			"text": true,
+			"background": false,
+			"__experimentalDefaultControls": {
+				"text": true,
+				"button": true
+			}
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true,
+			"textAlign": true
+		},
+		"layout": {
+			"allowSwitching": false,
+			"allowInheriting": false,
+			"default": {
+				"type": "flex",
+				"justifyContent": "left"
+			}
+		},
+		"spacing": {
+			"padding": true,
+			"margin": true,
+			"blockGap": {
+				"__experimentalDefault": "3px"
+			},
+			"__experimentalDefaultControls": {
+				"padding": true,
+				"margin": true,
+				"blockGap": true
+			}
+		}
+	},
+	"textdomain": "surecart",
+	"editorScript": "file:./index.js",
+	"style": "file:./style-index.css"
+}

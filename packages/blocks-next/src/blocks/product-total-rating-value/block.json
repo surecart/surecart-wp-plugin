@@ -1,0 +1,40 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "surecart/product-total-rating-value",
+	"title": "Product Total Rating Value",
+	"description": "Displays the total product rating value.",
+	"version": "1.0.0",
+	"category": "surecart-product-page",
+	"parent": [
+		"surecart/product-total-rating"
+	],
+	"attributes": {
+		"show_plus_sign": {
+			"type": "boolean",
+			"default": false
+		}
+	},
+	"example": {},
+	"supports": {
+		"interactivity": true,
+		"anchor": true,
+		"color": {
+			"gradients": true,
+			"text": true,
+			"background": false,
+			"__experimentalDefaultControls": {
+				"text": true,
+				"button": true
+			}
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true,
+			"textAlign": true
+		}
+	},
+	"textdomain": "surecart",
+	"render": "file:./view.php",
+	"editorScript": "file:./index.js"
+}
