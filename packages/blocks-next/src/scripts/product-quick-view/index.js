@@ -124,7 +124,13 @@ const { state, actions } = store('surecart/product-quick-view', {
 					document.querySelectorAll(
 						'body > :not(.sc-lightbox-overlay):not(.wp-block-surecart-product-quick-view)'
 					)
-				).filter((el) => !el.hasAttribute('inert'));
+				).filter(
+					(el) =>
+						!el.hasAttribute('inert') &&
+						!el.querySelector(
+							'.wp-block-surecart-product-quick-view'
+						)
+				);
 			}
 
 			if (state.open) {
