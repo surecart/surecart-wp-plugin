@@ -16,21 +16,32 @@
 	},
 	"example": {},
 	"supports": {
-		"interactivity": false,
+		"interactivity": true,
 		"anchor": true,
 		"color": {
 			"gradients": true,
 			"text": true,
-			"background": false,
+			"background": true,
 			"__experimentalDefaultControls": {
 				"text": true,
-				"button": true
+				"background": true
 			}
 		},
 		"typography": {
 			"fontSize": true,
 			"lineHeight": true,
-			"textAlign": true
+			"textAlign": true,
+			"__experimentalFontFamily": true,
+			"__experimentalFontWeight": true,
+			"__experimentalFontStyle": true,
+			"__experimentalTextTransform": true,
+			"__experimentalTextDecoration": true,
+			"__experimentalLetterSpacing": true,
+			"__experimentalDefaultControls": {
+				"fontSize": true,
+				"fontAppearance": true,
+				"textTransform": true
+			}
 		}
 	},
 	"textdomain": "surecart",
