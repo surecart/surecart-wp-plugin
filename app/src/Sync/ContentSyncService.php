@@ -76,6 +76,15 @@ class ContentSyncService {
 
 			// The import is not invalid or completed, don't check it.
 			if ( ! in_array( $import->status, [ 'invalid', 'completed' ], true ) ) {
+				echo wp_kses_post(
+					\SureCart::notices()->render(
+						[
+							'type'  => 'info',
+							'title' => esc_html__( 'SureCart bulk action progress status.', 'surecart' ),
+							'text'  => '<p>' . esc_html__( 'The product import failed. Please try again.', 'surecart' ) . '</p>',
+						]
+					)
+				);
 				return false;
 			}
 
