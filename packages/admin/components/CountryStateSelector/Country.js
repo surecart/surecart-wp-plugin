@@ -94,23 +94,6 @@ export default ({ countryIsoCode, countryName, value, onChange }) => {
 	// Helper to determine if all states are selected
 	const isCountryFullySelected = value?.states?.length === 0;
 
-	if (fetching) {
-		return (
-			<div
-				css={css`
-					display: flex;
-					flex-direction: column;
-					gap: 1.5em;
-					margin-bottom: 2em;
-					padding: 1em;
-				`}
-			>
-				<ScSkeleton style={{ width: '45%' }}></ScSkeleton>
-				<ScSkeleton style={{ width: '65%' }}></ScSkeleton>
-			</div>
-		);
-	}
-
 	return (
 		<div
 			css={css`
@@ -167,7 +150,7 @@ export default ({ countryIsoCode, countryName, value, onChange }) => {
 				</ScButton>
 			</div>
 
-			{isOpen && (
+			{isOpen && !fetching && (
 				<div>
 					{(territories || [])?.map((region) => {
 						return (
@@ -194,6 +177,20 @@ export default ({ countryIsoCode, countryName, value, onChange }) => {
 							/>
 						);
 					})}
+				</div>
+			)}
+			{fetching && (
+				<div
+					css={css`
+						display: flex;
+						flex-direction: column;
+						gap: 1.5em;
+						margin-bottom: 2em;
+						padding: 1em;
+					`}
+				>
+					<ScSkeleton style={{ width: '45%' }}></ScSkeleton>
+					<ScSkeleton style={{ width: '65%' }}></ScSkeleton>
 				</div>
 			)}
 		</div>
