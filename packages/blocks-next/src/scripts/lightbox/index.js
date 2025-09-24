@@ -208,8 +208,8 @@ const { state, actions, callbacks } = store('surecart/lightbox', {
 					})(imageRef);
 
 				return (
-					metadata?.galleryId === state.metadata[imageId]?.galleryId &&
-					isVisible
+					metadata?.galleryId ===
+						state.metadata[imageId]?.galleryId && isVisible
 				);
 			});
 
@@ -225,9 +225,17 @@ const { state, actions, callbacks } = store('surecart/lightbox', {
 			// make all children of the document inert exempt .sc-lightbox-overlay
 			inertElements = [];
 			document
-				.querySelectorAll('body > :not(.sc-lightbox-overlay)')
+				.querySelectorAll(
+					'body > :not(.sc-lightbox-overlay):not(.wp-block-surecart-product-quick-view)'
+				)
 				.forEach((el) => {
-					if (!el.hasAttribute('inert')) {
+					if (
+						!el.hasAttribute('inert') &&
+						!el.querySelector('.sc-lightbox-overlay') &&
+						!el.querySelector(
+							'.wp-block-surecart-product-quick-view'
+						)
+					) {
 						el.setAttribute('inert', '');
 						inertElements.push(el);
 					}

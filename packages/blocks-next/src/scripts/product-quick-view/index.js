@@ -129,7 +129,8 @@ const { state, actions } = store('surecart/product-quick-view', {
 						!el.hasAttribute('inert') &&
 						!el.querySelector(
 							'.wp-block-surecart-product-quick-view'
-						)
+						) &&
+						!el.querySelector('.sc-lightbox-overlay')
 				);
 			}
 
