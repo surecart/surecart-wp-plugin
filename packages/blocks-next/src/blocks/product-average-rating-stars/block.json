@@ -7,13 +7,8 @@
 	"version": "1.0.0",
 	"category": "surecart-product-page",
 	"example": {},
-	"usesContext": ["postId"],
-	"ancestor": [
-		"surecart/product-page",
-		"surecart/product-template",
-		"surecart/product-quick-view",
-		"surecart/sticky-purchase"
-	],
+	"usesContext": ["show_value"],
+	"parent": ["surecart/product-average-rating"],
 	"attributes": {
 		"fill_color": {
 			"type": "string",

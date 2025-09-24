@@ -1,26 +1,26 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
-	"name": "surecart/product-total-rating",
-	"title": "Product Total Rating",
-	"description": "Displays the total rating count for the product.",
+	"name": "surecart/product-average-rating",
+	"title": "Product Average Rating",
+	"description": "Displays the average product rating.",
 	"version": "1.0.0",
 	"category": "surecart-product-page",
+	"usesContext": ["postId"],
 	"ancestor": [
 		"surecart/product-page",
 		"surecart/product-quick-view",
 		"surecart/sticky-purchase"
 	],
 	"allowedBlocks": [
-		"surecart/product-total-rating-value",
-		"surecart/product-total-rating-label"
+		"surecart/product-average-rating-stars",
+		"surecart/product-average-rating-value"
 	],
-	"usesContext": ["postId"],
 	"providesContext": {
-		"show_label": "show_label"
+		"show_value": "show_value"
 	},
 	"attributes": {
-		"show_label": {
+		"show_value": {
 			"type": "boolean",
 			"default": true
 		}

@@ -7,23 +7,21 @@ import {
 	useBlockProps,
 	useInnerBlocksProps,
 } from '@wordpress/block-editor';
-import { PanelBody } from '@wordpress/components';
-import { ToggleControl } from '@wordpress/components';
+import { PanelBody, ToggleControl } from '@wordpress/components';
 
 const ALLOWED_BLOCKS = [
-	'surecart/product-total-rating-value',
-	'surecart/product-total-rating-label',
+	'surecart/product-average-rating-stars',
+	'surecart/product-average-rating-value',
 ];
 
 const TEMPLATE = [
-	['surecart/product-total-rating-value', {}],
-	['surecart/product-total-rating-label', {}],
+	['surecart/product-average-rating-stars', {}],
+	['surecart/product-average-rating-value', {}],
 ];
 
 export default ({ attributes, setAttributes, __unstableLayoutClassNames }) => {
-	const { show_label, style } = attributes;
+	const { show_value, style } = attributes;
 	const { blockGap } = style?.spacing || {};
-
 	const blockProps = useBlockProps({
 		className: __unstableLayoutClassNames,
 		style: { gap: blockGap },
@@ -38,18 +36,17 @@ export default ({ attributes, setAttributes, __unstableLayoutClassNames }) => {
 	return (
 		<>
 			<InspectorControls>
-				<PanelBody title={__('Settings', 'surecart')}>
+				<PanelBody title={__('Settings')}>
 					<ToggleControl
 						__nextHasNoMarginBottom
-						label={__('Show label text', 'surecart')}
+						label={__('Show value text')}
 						help={__(
-							'Toggle off to hide the label text, e.g. "reviews".',
-							'surecart'
+							'Toggle off to hide the value text, e.g. "reviews".'
 						)}
 						onChange={(value) =>
-							setAttributes({ show_label: value })
+							setAttributes({ show_value: value })
 						}
-						checked={show_label}
+						checked={show_value}
 					/>
 				</PanelBody>
 			</InspectorControls>

@@ -41,7 +41,9 @@ export default ({ attributes, setAttributes, clientId }) => {
 						<linearGradient id={gradientId}>
 							<stop
 								offset={`${fillPercentage}%`}
-								stopColor={fill_color || 'var(--sc-color-primary-500)'}
+								stopColor={
+									fill_color || 'var(--sc-color-primary-500)'
+								}
 							/>
 							<stop
 								offset={`${fillPercentage}%`}

@@ -1,4 +1,4 @@
-<div <?php echo wp_kses_post( get_block_wrapper_attributes() ); ?>>
+<div <?php echo wp_kses_data( get_block_wrapper_attributes() ); ?>>
 	<?php
 	for ( $i = 1; $i <= 5; $i++ ) {
 		$difference      = $average_rating - ( $i - 1 );

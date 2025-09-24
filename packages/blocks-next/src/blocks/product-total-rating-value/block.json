@@ -6,13 +6,12 @@
 	"description": "Displays the total product rating value.",
 	"version": "1.0.0",
 	"category": "surecart-product-page",
-	"parent": [
-		"surecart/product-total-rating"
-	],
+	"parent": ["surecart/product-total-rating"],
+	"usesContext": ["show_value"],
 	"attributes": {
 		"show_plus_sign": {
 			"type": "boolean",
-			"default": false
+			"default": true
 		}
 	},
 	"example": {},

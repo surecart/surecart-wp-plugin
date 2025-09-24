@@ -3,17 +3,12 @@
 	"apiVersion": 3,
 	"name": "surecart/product-average-rating-value",
 	"title": "Product Average Rating Value",
-	"description": "Display the product average rating value.",
+	"description": "Displays the average product rating value.",
 	"version": "1.0.0",
 	"category": "surecart-product-page",
+	"parent": ["surecart/product-average-rating"],
 	"example": {},
-	"usesContext": ["postId"],
-	"ancestor": [
-		"surecart/product-page",
-		"surecart/product-template",
-		"surecart/product-quick-view",
-		"surecart/sticky-purchase"
-	],
+	"usesContext": ["show_value"],
 	"attributes": {
 		"prefix": {
 			"type": "string",
@@ -30,29 +25,16 @@
 		"color": {
 			"gradients": true,
 			"text": true,
-			"background": true,
+			"background": false,
 			"__experimentalDefaultControls": {
-				"text": true,
-				"background": true
+				"text": true
 			}
 		},
 		"typography": {
 			"fontSize": true,
 			"lineHeight": true,
-			"textAlign": true,
-			"__experimentalFontFamily": true,
-			"__experimentalFontWeight": true,
-			"__experimentalFontStyle": true,
-			"__experimentalTextTransform": true,
-			"__experimentalTextDecoration": true,
-			"__experimentalLetterSpacing": true,
-			"__experimentalDefaultControls": {
-				"fontSize": true,
-				"fontAppearance": true,
-				"textTransform": true
-			}
-		},
-		"currencyConversion": true
+			"textAlign": true
+		}
 	},
 	"textdomain": "surecart",
 	"render": "file:./view.php",
