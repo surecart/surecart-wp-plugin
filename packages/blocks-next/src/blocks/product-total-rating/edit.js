@@ -3,11 +3,10 @@
  */
 import { __, _n } from '@wordpress/i18n';
 import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
-import { PanelBody } from '@wordpress/components';
-import { ToggleControl } from '@wordpress/components';
+import { PanelBody, ToggleControl } from '@wordpress/components';
 
 export default ({ attributes, setAttributes }) => {
-	const { show_label } = attributes;
+	const { show_label, show_for_zero_reviews } = attributes;
 	const blockProps = useBlockProps();
 	const totalReviews = 200; // Placeholder for total reviews.
 
@@ -26,6 +25,18 @@ export default ({ attributes, setAttributes }) => {
 							setAttributes({ show_label: value })
 						}
 						checked={show_label}
+					/>
+					<ToggleControl
+						__nextHasNoMarginBottom
+						label={__('Show for zero reviews too', 'surecart')}
+						help={__(
+							'Toggle off to hide the total rating if there are no reviews.',
+							'surecart'
+						)}
+						onChange={(value) =>
+							setAttributes({ show_for_zero_reviews: value })
+						}
+						checked={show_for_zero_reviews}
 					/>
 				</PanelBody>
 			</InspectorControls>

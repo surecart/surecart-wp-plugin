@@ -1,10 +1,3 @@
-<?php
-$product = sc_get_product();
-if ( ! $product ) {
-	return;
-}
-?>
-
 <div <?php echo wp_kses_data( get_block_wrapper_attributes() ); ?>>
 	<span class="sc-total-reviews-count"><?php echo esc_html( $product->total_reviews ); ?></span>
 

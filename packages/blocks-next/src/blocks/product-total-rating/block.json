@@ -17,9 +17,9 @@
 			"type": "boolean",
 			"default": true
 		},
-		"show_plus_sign": {
+		"show_for_zero_reviews": {
 			"type": "boolean",
-			"default": false
+			"default": true
 		}
 	},
 	"styles": [
