@@ -20,7 +20,7 @@ const TEMPLATE = [
 ];
 
 export default ({ attributes, setAttributes, __unstableLayoutClassNames }) => {
-	const { show_value, style } = attributes;
+	const { show_value, show_for_zero_reviews, style } = attributes;
 	const { blockGap } = style?.spacing || {};
 	const blockProps = useBlockProps({
 		className: __unstableLayoutClassNames,
@@ -47,6 +47,18 @@ export default ({ attributes, setAttributes, __unstableLayoutClassNames }) => {
 							setAttributes({ show_value: value })
 						}
 						checked={show_value}
+					/>
+					<ToggleControl
+						__nextHasNoMarginBottom
+						label={__('Show for zero reviews too', 'surecart')}
+						help={__(
+							'Toggle on to show the average rating even if there are zero reviews.',
+							'surecart'
+						)}
+						onChange={(show_for_zero_reviews) =>
+							setAttributes({ show_for_zero_reviews })
+						}
+						checked={show_for_zero_reviews}
 					/>
 				</PanelBody>
 			</InspectorControls>
