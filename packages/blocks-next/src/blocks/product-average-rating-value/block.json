@@ -9,16 +9,22 @@
 	"parent": ["surecart/product-average-rating"],
 	"example": {},
 	"usesContext": ["show_value"],
-	"attributes": {
-		"prefix": {
-			"type": "string",
-			"default": ""
+	"attributes": {},
+	"styles": [
+		{
+			"name": "none",
+			"label": "None",
+			"isDefault": true
 		},
-		"suffix": {
-			"type": "string",
-			"default": ""
+		{
+			"name": "parentheses",
+			"label": "Parentheses ()"
+		},
+		{
+			"name": "brackets",
+			"label": "Brackets []"
 		}
-	},
+	],
 	"supports": {
 		"interactivity": true,
 		"anchor": true,
