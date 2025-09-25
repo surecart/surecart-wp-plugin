@@ -64,13 +64,19 @@ add_action(
 	'admin_init',
 	function () {
 		if ( isset( $_GET['test'] ) ) {
-			$products = \SureCart\Models\Import::queue(
-				'products',
+			$products = \SureCart\Models\ProductImport::create(
 				[
-					[
-						'name'    => 'AA New Product Import with Content',
-						'status'  => 'published',
-						'content' => '<!-- wp:group {"metadata":{"categories":["gallery"],"patternName":"core/three-columns-with-images-and-text","name":"Three columns with images and text"},"align":"full","style":{"color":{"background":"#f5eac1"},"spacing":{"padding":{"top":"6vw","bottom":"6vw","left":"6vw","right":"6vw"}}},"layout":{"type":"default"}} -->
+					'data' => [
+						[
+							'name'        => 'AAA2 Import Product',
+							'status'      => 'published',
+							'prices'      => [
+								[
+									'amount' => 12345,
+								],
+							],
+							'gallery_ids' => [ 8511, 8507 ],
+							'content'     => '<!-- wp:group {"metadata":{"categories":["gallery"],"patternName":"core/three-columns-with-images-and-text","name":"Three columns with images and text"},"align":"full","style":{"color":{"background":"#f5eac1"},"spacing":{"padding":{"top":"6vw","bottom":"6vw","left":"6vw","right":"6vw"}}},"layout":{"type":"default"}} -->
 <div class="wp-block-group alignfull has-background" style="background-color:#f5eac1;padding-top:6vw;padding-right:6vw;padding-bottom:6vw;padding-left:6vw"><!-- wp:group {"style":{"spacing":{"blockGap":"16px","padding":{"right":"0","left":"0"}}},"layout":{"type":"flex","orientation":"vertical","flexWrap":"nowrap"}} -->
 <div class="wp-block-group" style="padding-right:0;padding-left:0"><!-- wp:heading {"level":6,"style":{"color":{"text":"#000000"},"typography":{"fontSize":"16px"}},"anchor":"ecosystem"} -->
 <h6 class="wp-block-heading has-text-color" id="ecosystem" style="color:#000000;font-size:16px">ECOSYSTEM</h6>
@@ -133,6 +139,7 @@ add_action(
 <!-- /wp:columns --></div>
 <!-- /wp:group --></div>
 <!-- /wp:group -->',
+						],
 					],
 				]
 			);

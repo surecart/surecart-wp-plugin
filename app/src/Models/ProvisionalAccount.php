@@ -103,6 +103,6 @@ class ProvisionalAccount extends Model {
 	 * @return \SureCart\Models\Import
 	 */
 	protected function seed( $products = [] ) {
-		return Import::queue( 'products', $products );
+		return ProductImport::create( [ 'data' => $products ] );
 	}
 }

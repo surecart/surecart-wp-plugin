@@ -38,7 +38,7 @@ class ContentSyncService {
 		// set the content when the product is first synced.
 		add_filter( 'surecart/product/sync/created/props', [ $this, 'setContent' ], 10, 2 );
 		// when the import is created, set a check to make sure products are synced.
-		add_action( 'surecart/models/import/created', [ $this, 'setContentBatch' ], 10 );
+		add_action( 'surecart/models/productimport/created', [ $this, 'setContentBatch' ], 10 );
 		// check the batch, if there is content to sync, sync those products.
 		add_action( 'admin_init', [ $this, 'maybeCheckImport' ] );
 	}
@@ -113,14 +113,14 @@ class ContentSyncService {
 		}
 
 		$post = get_post( $model->metadata->sc_initial_sync_pattern );
-		if ( empty( $post->post_content ) ) {
-			return $props;
+
+		// We no longer need the pattern.
+		if ( isset( $post->ID ) ) {
+			wp_delete_post( $post->ID, true );
 		}
 
-		$props['post_content'] = $post->post_content;
-		wp_delete_post( $post->ID, true ); // delete the post after use.
-
-		return $props;
+		// Return the props with the post content.
+		return array_merge( $props, [ 'post_content' => $post->post_content ?? '' ] );
 	}
 
 	/**
