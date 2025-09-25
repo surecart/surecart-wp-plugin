@@ -11,20 +11,28 @@
 		"surecart/product-quick-view",
 		"surecart/sticky-purchase"
 	],
-	"allowedBlocks": [
-		"surecart/product-total-rating-value",
-		"surecart/product-total-rating-label"
-	],
 	"usesContext": ["postId"],
-	"providesContext": {
-		"show_label": "show_label"
-	},
 	"attributes": {
 		"show_label": {
 			"type": "boolean",
 			"default": true
+		},
+		"show_plus_sign": {
+			"type": "boolean",
+			"default": false
 		}
 	},
+	"styles": [
+		{
+			"name": "default",
+			"label": "Default",
+			"isDefault": true
+		},
+		{
+			"name": "plus-sign",
+			"label": "Plus Sign"
+		}
+	],
 	"example": {},
 	"supports": {
 		"interactivity": true,
@@ -64,8 +72,8 @@
 			}
 		}
 	},
-	"render": "file:./view.php",
 	"textdomain": "surecart",
+	"render": "file:./view.php",
 	"editorScript": "file:./index.js",
 	"style": "file:./style-index.css"
 }

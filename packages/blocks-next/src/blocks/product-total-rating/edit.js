@@ -1,42 +1,18 @@
 /**
  * WordPress dependencies.
  */
-import { __ } from '@wordpress/i18n';
-import {
-	InspectorControls,
-	useBlockProps,
-	useInnerBlocksProps,
-} from '@wordpress/block-editor';
+import { __, _n } from '@wordpress/i18n';
+import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
 import { PanelBody } from '@wordpress/components';
 import { ToggleControl } from '@wordpress/components';
 
-const ALLOWED_BLOCKS = [
-	'surecart/product-total-rating-value',
-	'surecart/product-total-rating-label',
-];
-
-const TEMPLATE = [
-	['surecart/product-total-rating-value', {}],
-	['surecart/product-total-rating-label', {}],
-];
-
-export default ({ attributes, setAttributes, __unstableLayoutClassNames }) => {
-	const { show_label, style } = attributes;
-	const { blockGap } = style?.spacing || {};
-
-	const blockProps = useBlockProps({
-		className: __unstableLayoutClassNames,
-		style: { gap: blockGap },
-	});
-
-	const innerBlocksProps = useInnerBlocksProps(blockProps, {
-		allowedBlocks: ALLOWED_BLOCKS,
-		template: TEMPLATE,
-		templateLock: false,
-	});
+export default ({ attributes, setAttributes }) => {
+	const { show_label } = attributes;
+	const blockProps = useBlockProps();
+	const totalReviews = 200; // Placeholder for total reviews.
 
 	return (
-		<>
+		<div {...blockProps}>
 			<InspectorControls>
 				<PanelBody title={__('Settings', 'surecart')}>
 					<ToggleControl
@@ -53,8 +29,12 @@ export default ({ attributes, setAttributes, __unstableLayoutClassNames }) => {
 					/>
 				</PanelBody>
 			</InspectorControls>
-
-			<div {...innerBlocksProps} />
-		</>
+			<span className="sc-total-reviews-count">{totalReviews}</span>
+			&nbsp;
+			{show_label &&
+				(totalReviews <= 1
+					? __('review', 'surecart')
+					: __('reviews', 'surecart'))}
+		</div>
 	);
 };
