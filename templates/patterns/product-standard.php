@@ -25,11 +25,7 @@ return [
 			<!-- wp:surecart/product-average-rating-value {"prefix":"(","suffix":")"} /-->
 			<!-- /wp:surecart/product-average-rating -->
 
-			<!-- wp:surecart/product-total-rating {"style":{"spacing":{"blockGap":"4px"}}} -->
-			<!-- wp:surecart/product-total-rating-value /-->
-
-			<!-- wp:surecart/product-total-rating-label /-->
-			<!-- /wp:surecart/product-total-rating -->
+			<!-- wp:surecart/product-total-rating {"style":{"spacing":{"blockGap":"4px"}}} /-->
 		</div>
 		<!-- /wp:group -->
 

@@ -28,7 +28,7 @@ export default ({ attributes, setAttributes }) => {
 					/>
 					<ToggleControl
 						__nextHasNoMarginBottom
-						label={__('Show for zero reviews too', 'surecart')}
+						label={__('Show for zero reviews', 'surecart')}
 						help={__(
 							'Toggle off to hide the total rating if there are no reviews.',
 							'surecart'

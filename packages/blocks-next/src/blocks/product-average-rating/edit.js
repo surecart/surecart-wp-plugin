@@ -50,7 +50,7 @@ export default ({ attributes, setAttributes, __unstableLayoutClassNames }) => {
 					/>
 					<ToggleControl
 						__nextHasNoMarginBottom
-						label={__('Show for zero reviews too', 'surecart')}
+						label={__('Show for zero reviews', 'surecart')}
 						help={__(
 							'Toggle on to show the average rating even if there are zero reviews.',
 							'surecart'
