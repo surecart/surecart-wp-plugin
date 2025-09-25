@@ -18,11 +18,11 @@
 		},
 		{
 			"name": "parentheses",
-			"label": "Parentheses ()"
+			"label": "Parentheses"
 		},
 		{
 			"name": "brackets",
-			"label": "Brackets []"
+			"label": "Brackets"
 		}
 	],
 	"supports": {
@@ -56,5 +56,6 @@
 	},
 	"textdomain": "surecart",
 	"render": "file:./view.php",
-	"editorScript": "file:./index.js"
+	"editorScript": "file:./index.js",
+	"style": "file:./style-index.css"
 }
