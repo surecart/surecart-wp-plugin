@@ -9,7 +9,7 @@ $html = SureCart::view( 'media/video' )->with(
 		'src'    => $video->src,
 		'alt'    => ! empty( $video->alt ) ? $video->alt : sprintf( /* translators: %s is the video title. */ __( 'Video: %s', 'surecart' ), get_the_title() ),
 		'title'  => ! empty( $video->title ) ? $video->title : get_the_title(),
-		'style'  => ! empty( $media->getMetadata( 'aspect_ratio' ) ) ? 'aspect-ratio: ' . esc_attr( $media->getMetadata( 'aspect_ratio' ) ) . ';' : '',
+		'style'  => ! empty( $video->aspect_ratio ) ? 'aspect-ratio: ' . esc_attr( $video->aspect_ratio ) . ';' : '',
 	]
 )->toString();
 
