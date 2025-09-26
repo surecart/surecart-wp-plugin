@@ -22,6 +22,7 @@ import {
 	ScButton,
 	ScFlex,
 	ScIcon,
+	ScTag,
 } from '@surecart/components-react';
 import { store as dataStore } from '@surecart/data';
 import useSave from '../settings/UseSave';
@@ -29,8 +30,6 @@ import Error from '../components/Error';
 import Logo from '../templates/Logo';
 import UpdateModel from '../templates/UpdateModel';
 import Details from './modules/Details';
-import Customer from './modules/Reviewer';
-import Purchase from './modules/Purchase';
 import Summary from './modules/Summary';
 import ActionsDropdown from './modules/ActionsDropdown';
 
@@ -187,26 +186,25 @@ export default () => {
 	};
 
 	const renderReviewPublishButton = () => {
-		if (review?.status === 'published') {
-			return (
+		const isPublished = review?.status === 'published';
+		return (
+			<>
+				<ScTag type={review?.status_type}>
+					{review?.status_display}
+				</ScTag>
+
 				<ScButton
 					type="primary"
 					loading={loading}
-					onClick={() => setModal('unpublish')}
+					onClick={() =>
+						setModal(isPublished ? 'unpublish' : 'publish')
+					}
 				>
-					{__('Reject Review', 'surecart')}
+					{isPublished
+						? __('Reject Review', 'surecart')
+						: __('Approve Review', 'surecart')}
 				</ScButton>
-			);
-		}
-
-		return (
-			<ScButton
-				type="primary"
-				loading={loading}
-				onClick={() => setModal('publish')}
-			>
-				{__('Approve Review', 'surecart')}
-			</ScButton>
+			</>
 		);
 	};
 
@@ -256,13 +254,7 @@ export default () => {
 					{renderReviewPublishButton()}
 				</div>
 			}
-			sidebar={
-				<>
-					<Summary review={review} loading={!hasLoadedReview} />
-					<Customer review={review} loading={!hasLoadedReview} />
-					<Purchase review={review} loading={!hasLoadedReview} />
-				</>
-			}
+			sidebar={<Summary review={review} loading={!hasLoadedReview} />}
 		>
 			<Error
 				error={error || loadError}
@@ -298,10 +290,7 @@ export default () => {
 				}}
 				onCancel={() => setModal(false)}
 			>
-				{__(
-					'Are you sure you want to reject this review?',
-					'surecart'
-				)}
+				{__('Are you sure you want to reject this review?', 'surecart')}
 			</ConfirmDialog>
 		</UpdateModel>
 	);
