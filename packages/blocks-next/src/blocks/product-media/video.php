@@ -14,4 +14,4 @@ $html = SureCart::view( 'media/video' )->with(
 )->toString();
 
 // filter the video html.
-echo wp_kses( apply_filters( 'surecart_video_html', $html, $video->src, $video->poster ), sc_allowed_svg_html() );
+echo wp_kses( apply_filters( 'surecart_video_html', $html, $video->src, $video->poster, $video->aspect_ratio ), sc_allowed_svg_html() );
