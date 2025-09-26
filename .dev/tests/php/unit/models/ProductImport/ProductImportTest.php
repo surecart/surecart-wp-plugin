@@ -70,5 +70,6 @@ class ProductImportTest extends SureCartUnitTestCase
         // assert the pattern
         $this->assertCount(1, $posts);
         $this->assertSame('Product 1 content', $posts[0]->post_content);
+        $this->assertSame(1, did_action('surecart/models/productimport/created'));
     }
 }
