@@ -31,7 +31,7 @@ abstract class ImportModel extends Model {
 	 * @return Import|false
 	 */
 	protected function find( $id = '' ) {
-		return Import::find( $id );
+		return ( new Import() )->find( $id );
 	}
 
 	/**
@@ -41,7 +41,7 @@ abstract class ImportModel extends Model {
 	 * @return mixed
 	 */
 	protected function paginate( $args = [] ) {
-		return Import::paginate( $args );
+		return ( new Import() )->paginate( $args );
 	}
 
 	/**
@@ -50,6 +50,6 @@ abstract class ImportModel extends Model {
 	 * @return array|\WP_Error;
 	 */
 	protected function get() {
-		return Import::get();
+		return ( new Import() )->get();
 	}
 }
