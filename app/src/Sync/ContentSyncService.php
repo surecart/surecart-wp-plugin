@@ -53,6 +53,15 @@ class ContentSyncService {
 	}
 
 	/**
+	 * Get the sync service.
+	 *
+	 * @return ProductsSyncService
+	 */
+	protected function sync() {
+		return $this->app->resolve( 'surecart.sync.products' );
+	}
+
+	/**
 	 * Check if there are any imports to check.
 	 *
 	 * @return array|WP_Error
@@ -74,16 +83,14 @@ class ContentSyncService {
 				return false;
 			}
 
-			// The import is not invalid or completed, don't check it.
+			// The import is not invalid or completed, don't check it .
 			if ( ! in_array( $import->status, [ 'invalid', 'completed' ], true ) ) {
-				echo wp_kses_post(
-					\SureCart::notices()->render(
-						[
-							'type'  => 'info',
-							'title' => esc_html__( 'SureCart bulk action progress status.', 'surecart' ),
-							'text'  => '<p>' . esc_html__( 'The product import failed. Please try again.', 'surecart' ) . '</p>',
-						]
-					)
+				\SureCart::notices()->add(
+					[
+						'type'  => 'info',
+						'title' => esc_html__( 'SureCart bulk action progress status.', 'surecart' ),
+						'text'  => '<p>' . esc_html__( 'The product import failed. Please try again.', 'surecart' ) . '</p>',
+					]
 				);
 				return false;
 			}
@@ -92,12 +99,12 @@ class ContentSyncService {
 			$this->removeContentBatch( $import );
 
 			// already syncing.
-			if ( \SureCart::sync()->products()->isActive() ) {
+			if ( $this->sync()->isActive() ) {
 				return false;
 			}
 
 			// dispatch the sync.
-			return \SureCart::sync()->products()->dispatch();
+			return $this->sync()->dispatch();
 		}
 	}
 
