@@ -2,8 +2,6 @@
 
 namespace SureCart\Models;
 
-use SureCart\Models\Import;
-
 /**
  * Provisional Account model
  */
@@ -103,6 +101,7 @@ class ProvisionalAccount extends Model {
 	 * @return \SureCart\Models\Import
 	 */
 	protected function seed( $products = [] ) {
-		return ProductImport::create( [ 'data' => $products ] );
+		// static call to the ProductImport will not work since this model has access to the product import model.
+		return ( new ProductImport() )->create( [ 'data' => $products ] );
 	}
 }
