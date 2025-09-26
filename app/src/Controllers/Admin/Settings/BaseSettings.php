@@ -145,6 +145,7 @@ abstract class BaseSettings {
 				'api_url'                => \SureCart::requests()->getBaseUrl(),
 				'ajax_url'               => admin_url( 'admin-ajax.php' ),
 				'home_url'               => esc_url_raw( home_url() ),
+				'root_url'               => esc_url_raw( get_rest_url() ),
 				'plugin_installer_nonce' => wp_create_nonce( 'updates' ),
 				'currency'               => \SureCart::account()->currency,
 				'time_zones'             => TimeDate::timezoneOptions(),
