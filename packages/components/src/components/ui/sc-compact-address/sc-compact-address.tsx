@@ -1,6 +1,6 @@
 import { Component, Element, Event, EventEmitter, h, Method, Prop, State, Watch } from '@stencil/core';
 import { Address } from '../../../types';
-import { countryChoices, hasState } from '../../../functions/address';
+import { countryChoices, getCountryDetails } from '../../../functions/address';
 import { __ } from '@wordpress/i18n';
 import { reportChildrenValidity } from '../../../functions/form-data';
 
@@ -114,14 +114,14 @@ export class ScCompactAddress {
   }
 
   /** Set the regions based on the country. */
-  setRegions() {
-    if (hasState(this.address.country)) {
-      import('../address/countries.json').then(module => {
-        this.regions = module?.[this.address.country] as Array<{ value: string; label: string }>;
-      });
-    } else {
-      this.regions = [];
-    }
+  async setRegions() {
+    const countryDetails = await getCountryDetails(this.address?.country);
+    this.regions = countryDetails?.states?.map(state => ({
+      value: state?.iso_code,
+      label: state?.name
+    })) || [];
+
+    this.placeholders = countryDetails?.address_labels;
   }
 
   componentWillLoad() {
@@ -139,15 +139,6 @@ export class ScCompactAddress {
   @Method()
   async reportValidity() {
     return reportChildrenValidity(this.el);
-  }
-
-  getStatePlaceholder() {
-    if (this.placeholders?.state) return this.placeholders.state;
-
-    if (this.address?.country === 'CA') return __('Province', 'surecart');
-    if (this.address?.country === 'US') return __('State', 'surecart');
-
-    return __('Province/Region', 'surecart');
   }
 
   render() {
@@ -175,7 +166,7 @@ export class ScCompactAddress {
             {this.showState && (
               <sc-select
                 exportparts="base:select__base, input, form-control, label, help-text, trigger, panel, caret, search__base, search__input, search__form-control, menu__base, spinner__base, empty"
-                placeholder={this.getStatePlaceholder()}
+                placeholder={this.placeholders?.state}
                 name={this.names.state}
                 autocomplete={'address-level1'}
                 value={this?.address?.state}
