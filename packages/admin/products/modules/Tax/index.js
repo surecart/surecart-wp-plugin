@@ -27,24 +27,6 @@ export default ({ loading, product, updateProduct }) => {
 			loading={loading}
 			title={__('Tax', 'surecart')}
 			header_action={
-				// <div
-				// 	css={css`
-				// 		margin: -12px 30px;
-				// 	`}
-				// >
-				// 	<ScButton
-				// 		href={addQueryArgs('admin.php', {
-				// 			page: 'sc-settings',
-				// 			tab: 'tax_protocol',
-				// 		})}
-				// 		target="_blank"
-				// 		type="link"
-				// 		size="small"
-				// 	>
-				// 		{__('Global Settings', 'surecart')}
-				// 		<ScIcon name="external-link" slot="suffix" />
-				// 	</ScButton>
-				// </div>
 				<ScDropdown placement="bottom-end">
 					<ScButton
 						circle
@@ -71,7 +53,7 @@ export default ({ loading, product, updateProduct }) => {
 						>
 							<ScIcon
 								slot="prefix"
-								name="settings"
+								name="external-link"
 								style={{
 									opacity: 0.5,
 								}}
