@@ -1,41 +1,50 @@
 export const DATE_ATTRIBUTES = [
-	'created_at',
 	'customer.created_at',
-	'products.created_at',
 	'price.created_at',
 	'product.created_at',
 ];
 
-export const PRICE_ATTRIBUTES = ['subtotal_amount', 'checkout.subtotal_amount'];
+export const PRICE_ATTRIBUTES = [
+	'subtotal_amount',
+	'checkout.subtotal_amount',
+	'shipping_amount',
+];
 
 export const TEXT_ATTRIBUTES = [
-	'products.name',
-	'customer.first_name',
 	'note',
-	'customer.last_name',
+	'first_name',
+	'last_name',
+	'email_domain',
+	'metadata',
+	'checkout.metadata',
+	'checkout.email_domain',
+	'checkout.first_name',
+	'checkout.last_name',
+	'checkout.order.order_type',
+	'price.metadata',
 	'price.name',
+	'price.recurring_interval',
+	'price.price_type',
+	'product.metadata',
 	'product.name',
 	'product.sku',
 	'product.slug',
-	'product_collection.name',
-	'product_collection.slug',
-	'product_group.name',
-	'checkout.metadata',
-	'price.metadata',
-	'product.metadata',
-	'product_collection.metadata',
-	'product_group.metadata',
-	'checkout.order_type',
-	'price.recurring_interval',
-	'price.type',
+	'product.product_collections.metadata',
+	'product.product_collections.name',
+	'product.product_collections.slug',
+	'product.product_group.metadata',
+	'product.product_group.name',
+	'selected_shipping_method.name',
+	'order.order_type',
 ];
 
-export const EMAIL_ATTRIBUTES = ['customer.email'];
+export const EMAIL_ATTRIBUTES = ['email', 'checkout.email'];
 
 export const NUMBER_ATTRIBUTES = [
 	'quantity',
-	'customer.orders_count',
-	'price.recurring_count',
+	'line_item_quantity',
+	'g_weight',
+	'customer.order_count',
 	'price.recurring_period_count',
 ];
 
