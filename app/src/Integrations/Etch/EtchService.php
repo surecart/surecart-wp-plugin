@@ -3,38 +3,33 @@
 namespace SureCart\Integrations\Etch;
 
 /**
- * Controls the Etch integration.
+ * Controls the Etch Builder integration.
  */
 class EtchService {
 	/**
-	 * Bootstrap the Etch integration.
+	 * Bootstrap the Etch Builder integration.
 	 *
 	 * @return void
 	 */
 	public function bootstrap(): void {
-		add_action( 'init', array( $this, 'init' ), 20 );
+		add_filter( 'sc_cart_disabled', [ $this, 'disableCartForEtchBuilder' ] );
 	}
 
 	/**
-	 * Check if Etch Builder is active.
+	 * Determine if we should handle the cart via Etch Builder.
+	 *
+	 * @return bool
+	 */
+	public function disableCartForEtchBuilder(): bool {
+		return $this->isEtchBuilderActive();
+	}
+
+	/**
+	 * Check if the Etch Builder is active.
 	 *
 	 * @return bool
 	 */
 	private function isEtchBuilderActive(): bool {
 		return function_exists( 'etch_run_plugin' ) && isset( $_GET['etch'] ) && 'magic' === $_GET['etch']; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-	}
-
-	/**
-	 * Initialize the Etch integration.
-	 *
-	 * @return void
-	 */
-	public function init(): void {
-		if ( ! $this->isEtchBuilderActive() ) {
-			return;
-		}
-
-		// set the cart filter to be disabled in Etch.
-		add_filter( 'sc_cart_disabled', '__return_true' );
 	}
 }
