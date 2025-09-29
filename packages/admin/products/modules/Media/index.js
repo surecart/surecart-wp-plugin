@@ -24,12 +24,15 @@ export default ({ productId, product, updateProduct }) => {
 	const [currentModal, setCurrentModal] = useState('');
 	const [selectedMedia, setSelectedMedia] = useState();
 	const { createErrorNotice } = useDispatch(noticesStore);
-	const { invalidateResolution } = useDispatch(coreStore);
+	const { editEntityRecord, invalidateResolution } = useDispatch(coreStore);
 	const { record: savedProduct } = useEntityRecord(
 		'surecart',
 		'product',
 		productId
 	);
+
+	const updateMedia = (data) =>
+		editEntityRecord('root', 'media', selectedMedia?.id, data);
 
 	const updateGalleryIds = (gallery_ids) => {
 		updateProduct({
@@ -205,6 +208,7 @@ export default ({ productId, product, updateProduct }) => {
 						setSelectedMedia(null);
 					}}
 					updateProduct={updateProduct}
+					updateMedia={updateMedia}
 				/>
 			)}
 		</Box>

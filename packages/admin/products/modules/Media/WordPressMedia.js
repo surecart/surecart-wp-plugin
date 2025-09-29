@@ -26,7 +26,7 @@ export default ({
 
 	const { media, hasLoadedMedia } = useSelect((select) => {
 		return {
-			media: select(coreStore).getMedia(id),
+			media: select(coreStore).getEditedEntityRecord('root', 'media', id),
 			hasLoadedMedia: select(coreStore).hasFinishedResolution(
 				'getMedia',
 				[id]
