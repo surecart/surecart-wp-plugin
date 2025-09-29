@@ -156,11 +156,19 @@ abstract class GalleryItem implements ArrayAccess, JsonSerializable, Arrayable, 
 	/**
 	 * Get metadata for the gallery item.
 	 *
-	 * @param string $key The key to check.
+	 * If $key is provided, returns the single metadata value (or null). If no
+	 * key is provided, returns the full metadata array.
 	 *
-	 * @return string|null
+	 * @param string|null $key The key to check or null to get all metadata.
+	 *
+	 * @return mixed|null|array
 	 */
-	public function getMetadata( $key ) {
+	public function getMetadata( $key = null ) {
+		// If no key requested, return the full metadata array.
+		if ( empty( $key ) ) {
+			return $this->metadata;
+		}
+
 		if ( isset( $this->metadata[ $key ] ) ) {
 			return $this->metadata[ $key ];
 		}

@@ -329,12 +329,11 @@ class GalleryItemVideoAttachment extends ModelsGalleryItem implements GalleryIte
 		$attr = (object) wp_parse_args(
 			$attr,
 			array(
-				'src'          => $video,
-				'poster'       => $image_attributes->src ?? '',
-				'class'        => "attachment-$size_class size-$size_class video-attachment",
-				'alt'          => trim( wp_strip_all_tags( get_post_meta( $this->item->ID, '_wp_attachment_image_alt', true ) ) ),
-				'mime_type'    => get_post_mime_type( $this->item->ID ),
-				'aspect_ratio' => $this->getMetadata( 'aspect_ratio' ) ?? '',
+				'src'       => $video,
+				'poster'    => $image_attributes->src ?? '',
+				'class'     => "attachment-$size_class size-$size_class video-attachment",
+				'alt'       => trim( wp_strip_all_tags( get_post_meta( $this->item->ID, '_wp_attachment_image_alt', true ) ) ),
+				'mime_type' => get_post_mime_type( $this->item->ID ),
 			)
 		);
 
