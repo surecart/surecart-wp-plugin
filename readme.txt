@@ -313,7 +313,7 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 
 == Changelog ==
 
-= 3.15.0 - September 24th, 2025 =
+= 3.15.0 - September 29th, 2025 =
 - New: Product page video media.
 - New: Upsell replacement behavior.
 - New: Show disputes in admin pages.
