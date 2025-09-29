@@ -61,28 +61,26 @@ export default ({ review }) => {
 
 			<ScDivider spacing={12} />
 
-			{!!review?.purchase_id && (
-				<Definition title={__('Order', 'surecart')}>
-					{purchase?.initial_order?.number ? (
-						<Button
-							variant="link"
-							href={addQueryArgs('admin.php', {
-								page: 'sc-orders',
-								action: 'edit',
-								id: purchase?.initial_order?.id,
-							})}
-							target="_blank"
-							icon={<ScIcon name="external-link" />}
-							iconPosition="right"
-							style={{ textDecoration: 'none', padding: 0 }}
-						>
-							#{purchase?.initial_order?.number}
-						</Button>
-					) : (
-						'-'
-					)}
-				</Definition>
-			)}
+			<Definition title={__('Order', 'surecart')}>
+				{purchase?.initial_order?.number ? (
+					<Button
+						variant="link"
+						href={addQueryArgs('admin.php', {
+							page: 'sc-orders',
+							action: 'edit',
+							id: purchase?.initial_order?.id,
+						})}
+						target="_blank"
+						icon={<ScIcon name="external-link" />}
+						iconPosition="right"
+						style={{ textDecoration: 'none', padding: 0 }}
+					>
+						#{purchase?.initial_order?.number}
+					</Button>
+				) : (
+					'-'
+				)}
+			</Definition>
 		</>
 	);
 };
