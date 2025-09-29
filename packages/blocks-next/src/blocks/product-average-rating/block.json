@@ -10,6 +10,8 @@
 	"ancestor": [
 		"surecart/product-page",
 		"surecart/product-quick-view",
+		"surecart/product-review-list",
+		"surecart/product-review-template",
 		"surecart/sticky-purchase"
 	],
 	"allowedBlocks": [
