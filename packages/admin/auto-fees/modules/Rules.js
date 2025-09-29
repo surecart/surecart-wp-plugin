@@ -23,7 +23,6 @@ import {
 } from '@surecart/components-react';
 import Box from '../../ui/Box';
 import OrGroup from './OrGroup';
-import { SCHEMA_ID } from '../utils/constants';
 
 export default ({ autoFee = {}, onUpdate, loading }) => {
 	const [ruleSchema, setRuleSchema] = useState(null);
@@ -38,7 +37,7 @@ export default ({ autoFee = {}, onUpdate, loading }) => {
 		try {
 			setLoadingRuleSchema(true);
 			const response = await apiFetch({
-				path: addQueryArgs(`${baseUrl}/${SCHEMA_ID}`, {
+				path: addQueryArgs(`${baseUrl}/${autoFee?.fee_target}`, {
 					context: 'edit',
 					t: Date.now(), // prevents cache.
 				}),

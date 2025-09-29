@@ -38,7 +38,6 @@ import Rules from './modules/Rules';
 import SaveButton from '../templates/SaveButton';
 import Box from '../ui/Box';
 import DateTimePicker from './modules/DateTimePicker';
-import { SCHEMA_ID } from './utils/constants';
 
 export default ({ setId }) => {
 	const [error, setError] = useState(null);
@@ -62,6 +61,7 @@ export default ({ setId }) => {
 			discount: false,
 			start_at: Date.parse(getDate(new Date())) / 1000,
 			end_at: null,
+			fee_target: 'line_item',
 			rules: {
 				type: 'group',
 				combinator: 'or',

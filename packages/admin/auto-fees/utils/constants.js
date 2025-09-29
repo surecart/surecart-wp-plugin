@@ -40,5 +40,3 @@ export const NUMBER_ATTRIBUTES = [
 ];
 
 export const USER_ROLE_ATTRIBUTES = ['wp_user_role'];
-
-export const SCHEMA_ID = 'line_item';

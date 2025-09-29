@@ -14,7 +14,13 @@ import Box from '../../ui/Box';
 import { useState, useEffect } from '@wordpress/element';
 
 export default ({ autoFee, onUpdate, loading }) => {
-	const { name, amount_adjustment, percent_adjustment, discount } = autoFee;
+	const {
+		name,
+		amount_adjustment,
+		percent_adjustment,
+		discount,
+		fee_target,
+	} = autoFee;
 
 	const [adjustmentType, setAdjustmentType] = useState(
 		amount_adjustment ? 'fixed' : 'percentage'
@@ -48,6 +54,37 @@ export default ({ autoFee, onUpdate, loading }) => {
 						name: e.target.value,
 					})
 				}
+			/>
+			<ScSelect
+				label={__('Target', 'surecart')}
+				help={__(
+					'The entity to which this auto fee applies.',
+					'surecart'
+				)}
+				unselect={false}
+				value={fee_target}
+				css={css`
+					min-width: 125px;
+				`}
+				onScChange={(e) => {
+					onUpdate({
+						fee_target: e.target.value,
+					});
+				}}
+				choices={[
+					{
+						label: __('Line Item', 'surecart'),
+						value: 'line_item',
+					},
+					{
+						label: __('Checkout', 'surecart'),
+						value: 'checkout',
+					},
+					{
+						label: __('Shipping', 'surecart'),
+						value: 'shipping',
+					},
+				]}
 			/>
 			<ScSelect
 				label={__('Type', 'surecart')}
