@@ -44,6 +44,7 @@ export default ({
 		const newRuleJson = JSON.parse(JSON.stringify(rules));
 
 		newRuleJson.conditions[groupIndex].conditions[leafIndex] = {
+			type: 'condition',
 			attribute_name: attribute,
 			operator_label: operator,
 			comparison_value: value?.toString() || '',

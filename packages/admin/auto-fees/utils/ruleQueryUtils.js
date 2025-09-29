@@ -21,6 +21,7 @@ export const createEmptyOrGroup = () => {
  */
 export const createEmptyAndRule = () => {
 	return {
+		type: 'condition',
 		attribute_name: null,
 		comparison_value: null,
 		operator_label: null,
