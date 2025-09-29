@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
 import { store as coreStore } from '@wordpress/core-data';
 import { useSelect } from '@wordpress/data';
 import { addQueryArgs } from '@wordpress/url';
@@ -8,12 +6,13 @@ import { addQueryArgs } from '@wordpress/url';
  * External dependencies.
  */
 import { __ } from '@wordpress/i18n';
+import { Button } from '@wordpress/components';
 
 /**
  * Internal dependencies.
  */
-import { ScButton, ScLineItem } from '@surecart/components-react';
-import Box from '../../ui/Box';
+import Definition from '../../ui/Definition';
+import { ScIcon } from '@surecart/components-react';
 
 export default ({ review, loading }) => {
 	const { customer, customerLoading } = useSelect(
@@ -31,38 +30,25 @@ export default ({ review, loading }) => {
 	);
 
 	return (
-		<Box
-			title={__('Customer', 'surecart')}
-			loading={loading || customerLoading}
-			footer={
-				!loading &&
-				customer?.id && (
-					<div>
-						<ScButton
-							size="small"
-							href={addQueryArgs('admin.php', {
-								page: 'sc-customers',
-								action: 'edit',
-								id: customer?.id,
-							})}
-						>
-							{__('View Customer', 'surecart')}
-						</ScButton>
-					</div>
-				)
-			}
-		>
-			<div
-				css={css`
-					display: grid;
-					gap: 1em;
-				`}
-			>
-				<ScLineItem>
-					<span slot="title">{customer?.name}</span>
-					<span slot="description">{customer?.email}</span>
-				</ScLineItem>
-			</div>
-		</Box>
+		<Definition title={__('Customer', 'surecart')}>
+			{customerLoading || loading ? (
+				'-'
+			) : (
+				<Button
+					variant="link"
+					href={addQueryArgs('admin.php', {
+						page: 'sc-customers',
+						action: 'edit',
+						id: customer?.id,
+					})}
+					target="_blank"
+					icon={<ScIcon name="external-link" />}
+					iconPosition="right"
+					style={{ textDecoration: 'none', padding: 0 }}
+				>
+					{customer?.name || customer?.email || '-'}
+				</Button>
+			)}
+		</Definition>
 	);
 };

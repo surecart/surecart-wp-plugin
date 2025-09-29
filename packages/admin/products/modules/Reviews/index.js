@@ -1,6 +1,3 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
-
 /**
  * External dependencies.
  */
@@ -55,7 +52,7 @@ export default ({ product, updateProduct, loading }) => {
 						>
 							<ScIcon
 								slot="prefix"
-								name="settings"
+								name="external-link"
 								style={{
 									opacity: 0.5,
 								}}

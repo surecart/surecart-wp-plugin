@@ -42,7 +42,7 @@
 
 		<sc-tab href="<?php echo esc_url( add_query_arg( [ 'tab' => 'review_protocol' ], menu_page_url( 'sc-settings', false ) ) ); ?>" <?php echo 'review_protocol' === $tab ? 'active' : ''; ?>>
 			<sc-icon slot="prefix" style="width: 18px; height: 18px;" name="star"></sc-icon>
-			<?php esc_html_e( 'Product Reviews', 'surecart' ); ?>
+			<?php esc_html_e( 'Reviews', 'surecart' ); ?>
 		</sc-tab>
 
 		<sc-tab href="<?php echo esc_url( add_query_arg( [ 'tab' => 'tax_protocol' ], menu_page_url( 'sc-settings', false ) ) ); ?>" <?php echo 'tax_protocol' === $tab ? 'active' : ''; ?>>
