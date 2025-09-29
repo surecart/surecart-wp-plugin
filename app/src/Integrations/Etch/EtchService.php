@@ -18,10 +18,17 @@ class EtchService {
 	/**
 	 * Determine if we should handle the cart via Etch Builder.
 	 *
+	 * @param bool $disabled Whether the cart is disabled.
+	 *
 	 * @return bool
 	 */
-	public function disableCartForEtchBuilder(): bool {
-		return $this->isEtchBuilderActive();
+	public function disableCartForEtchBuilder( bool $disabled ): bool {
+		if ( $this->isEtchBuilderActive() ) {
+			return true;
+		}
+
+		// Preserve the existing disabled state.
+		return (bool) $disabled;
 	}
 
 	/**
