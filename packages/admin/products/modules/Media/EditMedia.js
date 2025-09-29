@@ -29,7 +29,13 @@ import DrawerSection from '../../../ui/DrawerSection';
 
 const ALLOWED_MEDIA_TYPES = ['image', 'video'];
 
-export default ({ media, product, onRequestClose, updateProduct }) => {
+export default ({
+	media,
+	product,
+	onRequestClose,
+	updateProduct,
+	updateMedia,
+}) => {
 	const [mediaData, setMediaData] = useState(() => normalizeMedia(media));
 	const [error, setError] = useState(null);
 	const [open, setOpen] = useState(true);
@@ -76,6 +82,13 @@ export default ({ media, product, onRequestClose, updateProduct }) => {
 					...(aspect_ratio ? { aspect_ratio } : {}),
 				};
 			}
+
+			// Remove any previous deprecated metadata from the media item.
+			updateMedia({
+				meta: {
+					sc_variant_option: null,
+				},
+			});
 
 			updateProduct({
 				metadata: {
