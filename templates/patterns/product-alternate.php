@@ -15,6 +15,17 @@ return [
 		<!-- wp:surecart/product-collection-tag /-->
 		<!-- /wp:surecart/product-collection-tags -->
 
+		<!-- wp:group {"layout":{"type":"flex","flexWrap":"nowrap"}} -->
+		<div class="wp-block-group"><!-- wp:surecart/product-average-rating {"style":{"spacing":{"blockGap":"4px"}}} -->
+			<!-- wp:surecart/product-average-rating-stars /-->
+
+			<!-- wp:surecart/product-average-rating-value {"prefix":"(","suffix":")"} /-->
+			<!-- /wp:surecart/product-average-rating -->
+
+			<!-- wp:surecart/product-total-rating {"style":{"spacing":{"blockGap":"4px"}}} /-->
+		</div>
+		<!-- /wp:group -->
+
 		<!-- wp:surecart/product-title {"style":{"typography":{"fontSize":"32px"},"spacing":{"margin":{"top":"10px","bottom":"10px"}}}} /-->
 
 		<!-- wp:group {"style":{"spacing":{"blockGap":"0"}}} -->
