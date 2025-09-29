@@ -262,6 +262,10 @@ export default ({
 											e.target.value
 										)
 									}
+									style={{
+										'--sc-input-placeholder-color':
+											'var(--sc-input-color)',
+									}}
 								/>
 							)}
 						</DrawerSection>
