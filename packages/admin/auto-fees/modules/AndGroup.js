@@ -34,7 +34,6 @@ export default ({
 	updateRuleJson,
 	leaf,
 }) => {
-	console.log('leaf', leaf);
 	const [attribute, setAttribute] = useState(leaf?.attribute_name || null);
 	const [operator, setOperator] = useState(leaf?.operator_label || null);
 	const [value, setValue] = useState(leaf?.comparison_value || null);
@@ -42,11 +41,6 @@ export default ({
 
 	// Function to update the rules when any field changes
 	const updateCurrentLeaf = () => {
-		console.log('updateCurrentLeaf');
-		console.log('attribute', attribute);
-		console.log('operator', operator);
-		console.log('value', value);
-
 		const newRuleJson = JSON.parse(JSON.stringify(rules));
 
 		newRuleJson.conditions[groupIndex].conditions[leafIndex] = {
