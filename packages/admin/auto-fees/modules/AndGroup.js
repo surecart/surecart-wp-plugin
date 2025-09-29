@@ -30,7 +30,7 @@ export default ({
 	totalLeaves,
 	leafIndex,
 	groupIndex,
-	rule_json,
+	rules,
 	updateRuleJson,
 	leaf,
 }) => {
@@ -39,11 +39,11 @@ export default ({
 	const [value, setValue] = useState(leaf?.comparison_value || null);
 	const [metadataKey, setMetadataKey] = useState(leaf?.metadata_key || null);
 
-	// Function to update the rule_json when any field changes
+	// Function to update the rules when any field changes
 	const updateCurrentLeaf = () => {
-		const newRuleJson = JSON.parse(JSON.stringify(rule_json));
+		const newRuleJson = JSON.parse(JSON.stringify(rules));
 
-		newRuleJson.groups[groupIndex].leaves[leafIndex] = {
+		newRuleJson.conditions[groupIndex].conditions[leafIndex] = {
 			attribute_name: attribute,
 			operator_label: operator,
 			comparison_value: value?.toString() || '',
@@ -70,8 +70,8 @@ export default ({
 		const operatorsChoices = [];
 		for (const operator of rule.operators) {
 			operatorsChoices.push({
-				label: operator?.label,
-				value: operator?.label,
+				label: operator,
+				value: operator,
 			});
 		}
 		operators[rule.key] = operatorsChoices;
@@ -90,7 +90,7 @@ export default ({
 		setValue(null);
 		setOperator(null);
 		setMetadataKey(null);
-		// Update rule_json when attribute changes
+		// Update rules when attribute changes
 		updateCurrentLeaf();
 	}, [attribute]);
 

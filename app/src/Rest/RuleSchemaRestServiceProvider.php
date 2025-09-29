@@ -14,7 +14,7 @@ class RuleSchemaRestServiceProvider extends RestServiceProvider implements RestS
 	 *
 	 * @var string
 	 */
-	protected $endpoint = 'rule_strings/schema';
+	protected $endpoint = 'auto_fees/rule_schema';
 
 	/**
 	 * Rest Controller

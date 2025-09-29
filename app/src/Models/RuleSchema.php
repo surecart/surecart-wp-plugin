@@ -10,7 +10,7 @@ class RuleSchema extends Model {
 	 *
 	 * @var string
 	 */
-	public $endpoint = 'rule_strings/schema';
+	public $endpoint = 'auto_fees/rule_schema';
 
 	/**
 	 * Rest API endpoint

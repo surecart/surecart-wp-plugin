@@ -25,7 +25,7 @@ export default ({
 	totalRuleGroups,
 	loading,
 	groupIndex,
-	rule_json,
+	rules,
 	updateRuleJson,
 	group,
 }) => {
@@ -46,14 +46,10 @@ export default ({
 	}
 
 	const renderRuleTitle = () => {
-		return (group?.leaves || [])
-			?.map((leaf) => {
-				if (!leaf?.attribute_name) {
-					return;
-				}
-
-				return attributeLabels?.[leaf?.attribute_name];
-			})
+		return (group?.conditions || [])
+			.filter((leaf) => leaf?.attribute_name)
+			.map((leaf) => attributeLabels?.[leaf?.attribute_name])
+			.filter(Boolean)
 			.join(', ');
 	};
 
@@ -78,7 +74,7 @@ export default ({
 			>
 				<ScIcon name="trash" />
 			</ScButton>
-			{group?.leaves?.map((leaf, leafIndex) => {
+			{group?.conditions?.map((leaf, leafIndex) => {
 				return (
 					<div
 						key={leafIndex}
@@ -106,37 +102,41 @@ export default ({
 							leaf={leaf}
 							addLeaf={() => {
 								const newRuleJson = JSON.parse(
-									JSON.stringify(rule_json)
+									JSON.stringify(rules)
 								);
-								newRuleJson.groups[groupIndex].leaves.push({
-									attribute_name: null,
+
+								newRuleJson.conditions[
+									groupIndex
+								].conditions.push({
+									type: 'condition',
 									operator_label: null,
 									comparison_value: '',
+									attribute_name: null,
 								});
 								updateRuleJson(newRuleJson);
 							}}
 							removeLeaf={() => {
 								// if there's only one leaf, remove the entire group
-								if (group?.leaves?.length === 1) {
+								if (group?.conditions?.length === 1) {
 									removeRuleGroup();
 									return;
 								}
 
 								const newRuleJson = JSON.parse(
-									JSON.stringify(rule_json)
+									JSON.stringify(rules)
 								);
-								newRuleJson.groups[groupIndex].leaves =
-									newRuleJson.groups[
+								newRuleJson.conditions[groupIndex].conditions =
+									newRuleJson.conditions[
 										groupIndex
-									].leaves.filter(
+									].conditions.filter(
 										(_, index) => index !== leafIndex
 									);
 								updateRuleJson(newRuleJson);
 							}}
-							totalLeaves={group?.leaves?.length}
+							totalLeaves={group?.conditions?.length}
 							leafIndex={leafIndex}
 							groupIndex={groupIndex}
-							rule_json={rule_json}
+							rules={rules}
 							updateRuleJson={updateRuleJson}
 						/>
 					</div>

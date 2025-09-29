@@ -93,7 +93,7 @@ dispatch(coreStore).addEntities([
 		name: 'rule-schema',
 		kind: 'surecart',
 		label: __('Rule Schema', 'surecart'),
-		baseURL: '/surecart/v1/rule_strings/schema',
+		baseURL: '/surecart/v1/auto_fees/rule_schema',
 		baseURLParams: { context: 'edit' },
 	},
 	{

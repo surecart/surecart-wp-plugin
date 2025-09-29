@@ -51,18 +51,11 @@ export default ({ autoFee = {}, onUpdate, loading }) => {
 		}
 	};
 
-	const {
-		rule_json = {
-			rule_string: '',
-			schema_id: 'auto_fees__line_item',
-			groups: [],
-		},
-	} = autoFee;
-	console.log(rule_json);
+	const { rules } = autoFee;
 
-	// Update rule_json whenever changes occur
+	// Update rules whenever changes occur
 	const updateRuleJson = (newRuleJson) => {
-		onUpdate({ rule_json: newRuleJson });
+		onUpdate({ rules: newRuleJson });
 	};
 
 	useEffect(() => {
@@ -72,7 +65,7 @@ export default ({ autoFee = {}, onUpdate, loading }) => {
 		fetchRuleSchema();
 	}, [ruleSchema]);
 
-	if (!rule_json?.groups?.length) {
+	if (!rules?.conditions?.length) {
 		return (
 			<Box
 				title={__('Auto Fee Conditions', 'surecart')}
@@ -88,14 +81,18 @@ export default ({ autoFee = {}, onUpdate, loading }) => {
 							<ScButton
 								onClick={() => {
 									updateRuleJson({
-										schema_id: SCHEMA_ID,
-										groups: [
+										type: 'group',
+										combinator: 'or',
+										conditions: [
 											{
-												leaves: [
+												type: 'group',
+												combinator: 'and',
+												conditions: [
 													{
+														type: 'condition',
+														comparison_value: '',
 														attribute_name: null,
 														operator_label: null,
-														comparison_value: '',
 													},
 												],
 											},
@@ -133,7 +130,7 @@ export default ({ autoFee = {}, onUpdate, loading }) => {
 					--sc-flex-column-gap: 0;
 				`}
 			>
-				{rule_json?.groups?.map((group, groupIndex) => {
+				{rules?.conditions?.map((group, groupIndex) => {
 					return (
 						<div
 							key={groupIndex}
@@ -160,14 +157,17 @@ export default ({ autoFee = {}, onUpdate, loading }) => {
 								ruleSchema={ruleSchema}
 								addRuleGroup={() => {
 									const newRuleJson = JSON.parse(
-										JSON.stringify(rule_json)
+										JSON.stringify(rules)
 									);
-									newRuleJson.groups.push({
-										leaves: [
+									newRuleJson.conditions.push({
+										type: 'group',
+										combinator: 'and',
+										conditions: [
 											{
+												type: 'condition',
+												comparison_value: '',
 												attribute_name: null,
 												operator_label: null,
-												comparison_value: '',
 											},
 										],
 									});
@@ -175,17 +175,17 @@ export default ({ autoFee = {}, onUpdate, loading }) => {
 								}}
 								removeRuleGroup={() => {
 									const newRuleJson = JSON.parse(
-										JSON.stringify(rule_json)
+										JSON.stringify(rules)
 									);
-									newRuleJson.groups =
-										newRuleJson.groups.filter(
+									newRuleJson.conditions =
+										newRuleJson.conditions.filter(
 											(_, index) => index !== groupIndex
 										);
 									updateRuleJson(newRuleJson);
 								}}
-								totalRuleGroups={rule_json?.groups?.length}
+								totalRuleGroups={rules?.conditions?.length}
 								groupIndex={groupIndex}
-								rule_json={rule_json}
+								rules={rules}
 								updateRuleJson={updateRuleJson}
 							/>
 						</div>
