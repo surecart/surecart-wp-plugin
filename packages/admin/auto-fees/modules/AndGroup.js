@@ -34,6 +34,7 @@ export default ({
 	updateRuleJson,
 	leaf,
 }) => {
+	console.log('leaf', leaf);
 	const [attribute, setAttribute] = useState(leaf?.attribute_name || null);
 	const [operator, setOperator] = useState(leaf?.operator_label || null);
 	const [value, setValue] = useState(leaf?.comparison_value || null);
@@ -41,6 +42,11 @@ export default ({
 
 	// Function to update the rules when any field changes
 	const updateCurrentLeaf = () => {
+		console.log('updateCurrentLeaf');
+		console.log('attribute', attribute);
+		console.log('operator', operator);
+		console.log('value', value);
+
 		const newRuleJson = JSON.parse(JSON.stringify(rules));
 
 		newRuleJson.conditions[groupIndex].conditions[leafIndex] = {
@@ -81,19 +87,6 @@ export default ({
 			value: rule.key,
 		});
 	}
-
-	useEffect(() => {
-		//do not run on initial render
-		if (attribute === null) {
-			return;
-		}
-		// Reset values when the attribute changes.
-		setValue(null);
-		setOperator(null);
-		setMetadataKey(null);
-		// Update rules when attribute changes
-		updateCurrentLeaf();
-	}, [attribute]);
 
 	useEffect(() => {
 		if (attribute === null) {
@@ -264,6 +257,10 @@ export default ({
 					value={attribute}
 					onScChange={(e) => {
 						setAttribute(e.target.value);
+						// Reset values when the attribute changes.
+						setValue(null);
+						setOperator(null);
+						setMetadataKey(null);
 					}}
 					choices={attributes}
 				/>
