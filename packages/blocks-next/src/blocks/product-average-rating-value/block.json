@@ -21,8 +21,8 @@
 			"label": "Parentheses"
 		},
 		{
-			"name": "brackets",
-			"label": "Brackets"
+			"name": "slash",
+			"label": "/ 5"
 		}
 	],
 	"supports": {
