@@ -9,7 +9,7 @@ use SureCart\Models\Import;
  */
 class ContentSyncService {
 	/**
-	 * The sync key.
+	 * The application container.
 	 *
 	 * @var \SureCart\Application
 	 */
@@ -64,12 +64,12 @@ class ContentSyncService {
 	/**
 	 * Check if there are any imports to check.
 	 *
-	 * @return array|WP_Error
+	 * @return array|bool|\WP_Error
 	 */
 	public function maybeCheckImport() {
 		$imports = $this->batch()->getByPrefix( self::SYNC_KEY );
 
-		// there are not imports to check.
+		// there are no imports to check.
 		if ( empty( $imports ) ) {
 			return false;
 		}
@@ -106,6 +106,8 @@ class ContentSyncService {
 			// dispatch the sync.
 			return $this->sync()->dispatch();
 		}
+
+		return false;
 	}
 
 	/**
@@ -113,6 +115,8 @@ class ContentSyncService {
 	 *
 	 * @param array                  $props The props.
 	 * @param \SureCart\Models\Model $model The model.
+	 *
+	 * @return array
 	 */
 	public function setContent( $props, \SureCart\Models\Model $model ) {
 		if ( ! isset( $model->metadata->sc_initial_sync_pattern ) ) {

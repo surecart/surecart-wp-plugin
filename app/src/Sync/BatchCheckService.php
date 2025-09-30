@@ -9,9 +9,9 @@ namespace SureCart\Sync;
  */
 class BatchCheckService {
 	/**
-	 * The app.
+	 * The batch check transient key.
 	 *
-	 * @var \SureCart\App
+	 * @var string
 	 */
 	protected const BATCH_CHECK_TRANSIENT = 'surecart_batches_check';
 

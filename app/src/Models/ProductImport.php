@@ -10,16 +10,17 @@ use SureCart\Models\Product;
  */
 class ProductImport extends ImportModel {
 	/**
-	 * Rest API endpoint
+	 * Rest API endpoint.
 	 *
 	 * @var string
 	 */
 	protected $endpoint = 'imports/products';
 
 	/**
-	 * Set the referrals attribute
+	 * Set the data attribute as an array of Product models.
+	 * Accepts an iterable of attribute arrays/Products or a single Product instance.
 	 *
-	 * @param object $value Array of referral objects.
+	 * @param mixed $value Iterable of product attributes or Product instance.
 	 *
 	 * @return void
 	 */
@@ -35,7 +36,7 @@ class ProductImport extends ImportModel {
 	}
 
 	/**
-	 * Create a new model
+	 * Create a new model.
 	 *
 	 * @param array $attributes Attributes to create.
 	 *

@@ -10,14 +10,14 @@ use SureCart\Models\Model;
  */
 abstract class ImportModel extends Model {
 	/**
-	 * Rest API endpoint
+	 * Rest API endpoint.
 	 *
 	 * @var string
 	 */
 	protected $endpoint = 'imports';
 
 	/**
-	 * Object name
+	 * Object name.
 	 *
 	 * @var string
 	 */
@@ -45,7 +45,7 @@ abstract class ImportModel extends Model {
 	}
 
 	/**
-	 * Fetch a list of items
+	 * Fetch a list of items.
 	 *
 	 * @return array|\WP_Error;
 	 */
