@@ -29,17 +29,13 @@ class RuleSchema extends Model {
 
 		// Add wp_user_role attribute.
 		$this->attributes['attributes'][] = (object) [
-			'key'               => 'wp_user_role',
-			'type'              => 'metadata',
-			'operators'         => [
-				(object) [
-					'label' => 'is',
-				],
-				(object) [
-					'label' => 'is not',
-				],
+			'key'       => 'wp_user_role',
+			'metadata'  => true,
+			'type'      => 'string',
+			'operators' => [
+				'is',
+				'is_not',
 			],
-			'acceptable_values' => [],
 		];
 
 		return $this->attributes['attributes'];
