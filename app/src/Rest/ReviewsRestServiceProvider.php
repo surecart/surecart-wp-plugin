@@ -36,7 +36,7 @@ class ReviewsRestServiceProvider extends RestServiceProvider implements RestServ
 				[
 					'methods'             => \WP_REST_Server::EDITABLE,
 					'callback'            => $this->callback( $this->controller, 'publish' ),
-					'permission_callback' => [ $this, 'publish_item_permissions_check' ],
+					'permission_callback' => [ $this, 'update_item_permissions_check' ],
 				],
 				// Register our schema callback.
 				'schema' => [ $this, 'get_item_schema' ],
@@ -50,7 +50,7 @@ class ReviewsRestServiceProvider extends RestServiceProvider implements RestServ
 				[
 					'methods'             => \WP_REST_Server::EDITABLE,
 					'callback'            => $this->callback( $this->controller, 'unpublish' ),
-					'permission_callback' => [ $this, 'unpublish_item_permissions_check' ],
+					'permission_callback' => [ $this, 'update_item_permissions_check' ],
 				],
 				// Register our schema callback.
 				'schema' => [ $this, 'get_item_schema' ],
@@ -223,26 +223,6 @@ class ReviewsRestServiceProvider extends RestServiceProvider implements RestServ
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function update_item_permissions_check( $request ) {
-		return current_user_can( 'edit_sc_reviews' );
-	}
-
-	/**
-	 * Who can publish a review?
-	 *
-	 * @param \WP_REST_Request $request Full details about the request.
-	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
-	 */
-	public function publish_item_permissions_check( $request ) {
-		return current_user_can( 'edit_sc_reviews' );
-	}
-
-	/**
-	 * Who can unpublish a review?
-	 *
-	 * @param \WP_REST_Request $request Full details about the request.
-	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
-	 */
-	public function unpublish_item_permissions_check( $request ) {
 		return current_user_can( 'edit_sc_reviews' );
 	}
 
