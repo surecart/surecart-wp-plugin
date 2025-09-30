@@ -39,6 +39,14 @@ export default ({
 			return <sc-tag type="danger">{__('Refunded', 'surecart')}</sc-tag>;
 		}
 
+		if (charge?.disputed_amount) {
+			return (
+				<sc-tag type={charge?.dispute_status_type ?? 'warning'}>
+					{charge?.dispute_status}
+				</sc-tag>
+			);
+		}
+
 		if (charge?.refunded_amount && charge?.refunded_amount) {
 			return (
 				<sc-tag type="warning">
@@ -51,7 +59,11 @@ export default ({
 	};
 
 	const renderRefundButton = (charge) => {
-		if (charge?.fully_refunded || !onRefundClick) {
+		if (
+			charge?.fully_refunded ||
+			!onRefundClick ||
+			charge?.fully_disputed
+		) {
 			return null;
 		}
 
@@ -60,28 +72,6 @@ export default ({
 				{__('Refund', 'surecart')}
 			</ScMenuItem>
 		);
-	};
-
-	const getExternalChargeLink = (charge) => {
-		const paymentType = charge?.payment_method?.processor_type;
-
-		if (!['stripe', 'paypal'].includes(paymentType)) return null;
-
-		const externalChargeId = charge?.external_charge_id;
-		const isLiveMode = charge?.live_mode;
-
-		if (!externalChargeId) return null;
-
-		if (paymentType === 'stripe')
-			return `https://dashboard.stripe.com/${
-				!isLiveMode ? 'test/' : ''
-			}charges/${externalChargeId}`;
-
-		if (paymentType === 'paypal') {
-			return `https://www.${
-				!isLiveMode ? 'sandbox.' : ''
-			}paypal.com/activity/payment/${externalChargeId}`;
-		}
 	};
 
 	return (
@@ -93,7 +83,7 @@ export default ({
 				items={(data || [])
 					.sort((a, b) => b.created_at - a.created_at)
 					.map((charge) => {
-						const { currency, amount, created_at_date } = charge;
+						const { created_at_date } = charge;
 						return {
 							amount: (
 								<sc-text
@@ -111,6 +101,20 @@ export default ({
 										>
 											- {charge?.refunded_display_amount}{' '}
 											{__('Refunded', 'surecart')}
+										</div>
+									)}
+									{!!charge?.disputed_amount && (
+										<div
+											style={{
+												color:
+													charge?.dispute_status_type ===
+													'danger'
+														? 'var(--sc-color-danger-500)'
+														: 'var(--sc-color-warning-500)',
+											}}
+										>
+											- {charge?.disputed_display_amount}{' '}
+											{__('Disputed', 'surecart')}
 										</div>
 									)}
 								</sc-text>

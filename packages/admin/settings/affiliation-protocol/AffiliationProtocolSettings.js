@@ -20,6 +20,7 @@ import { useCopyToClipboard } from '@wordpress/compose';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { store as noticesStore } from '@wordpress/notices';
 import { store as coreStore } from '@wordpress/core-data';
+import { addQueryArgs } from '@wordpress/url';
 import CommissionStructure from '../../components/affiliates/commission/CommissionStructure';
 
 export default () => {
@@ -192,26 +193,47 @@ export default () => {
 						)}
 					</span>
 				</ScSwitch>
-				<ScInput
-					label={__('Signup URL', 'surecart')}
-					help={__(
-						'This is where you will send affiliates to signup for your affiliate program.',
-						'surecart'
-					)}
-					type="url"
-					readonly
-					value={signupsUrl}
-				>
-					<ScButton
-						type="text"
-						circle
-						slot="suffix"
-						size="small"
-						ref={signupsUrlRef}
+				<div>
+					<ScInput
+						label={__('Signup URL', 'surecart')}
+						type="url"
+						readonly
+						value={signupsUrl}
 					>
-						<ScIcon name="clipboard" />
-					</ScButton>
-				</ScInput>
+						<ScButton
+							type="text"
+							circle
+							slot="suffix"
+							size="small"
+							ref={signupsUrlRef}
+						>
+							<ScIcon name="clipboard" />
+						</ScButton>
+					</ScInput>
+					<div
+						css={css`
+							margin-top: var(--sc-input-label-margin);
+							font-size: var(
+								--sc-input-help-text-font-size-medium
+							);
+							line-height: var(--sc-line-height-dense);
+							color: var(--sc-input-help-text-color);
+						`}
+					>
+						{__(
+							'This is where you will send affiliates to signup for your affiliate program. To change this URL slug, ',
+							'surecart'
+						)}
+						<a
+							href={addQueryArgs('admin.php', {
+								page: 'sc-settings',
+							})}
+						>
+							{__('click here', 'surecart')}
+						</a>
+						.
+					</div>
+				</div>
 			</SettingsBox>
 			<SettingsBox
 				title={__('Referral Tracking', 'surecart')}

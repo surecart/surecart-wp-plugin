@@ -5,6 +5,7 @@ import {
 	ScDrawer,
 	ScForm,
 	ScInput,
+	ScSwitch,
 } from '@surecart/components-react';
 import { __, sprintf } from '@wordpress/i18n';
 import Discount from './Discount';
@@ -16,6 +17,8 @@ import DisplayConditions from './DisplayConditions';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { createErrorString } from '../../../util';
 import Template from './Template';
+import ReplacementBehavior from './ReplacementBehavior';
+import DrawerSection from '../../../ui/DrawerSection';
 
 const OFFER_TITLE = {
 	initial: __('Initial Offer', 'surecart'),
@@ -99,6 +102,7 @@ export default ({ upsell: initialUpsell, open, onRequestClose }) => {
 				)}
 				style={{ '--sc-drawer-size': '32rem' }}
 				stickyHeader
+				stickyFooter
 				open={open}
 				onScAfterShow={() => inputRef.current.triggerFocus()}
 				onScRequestClose={checkForChanges}
@@ -106,59 +110,81 @@ export default ({ upsell: initialUpsell, open, onRequestClose }) => {
 			>
 				<div
 					css={css`
-						padding: 30px;
-						display: grid;
-						gap: 2em;
+						display: flex;
+						flex-direction: column;
+						height: 100%;
+						background: var(--sc-color-gray-50);
 					`}
 				>
-					<ScInput
-						label={__('Title', 'surecart')}
-						ref={inputRef}
-						help={__(
-							'This is shown on the upsell page.',
-							'surecart'
-						)}
-						placeholder={__(
-							'i.e. An exclusive offer, just for you.',
-							'surecart'
-						)}
-						value={upsell?.metadata?.title}
-						onScInput={(e) =>
-							editUpsell({
-								metadata: {
-									...upsell.metadata,
-									title: e.target.value,
-								},
-							})
-						}
-						required
-					/>
+					<div
+						css={css`
+							padding: 30px;
+							display: grid;
+							gap: 2em;
+						`}
+					>
+						<ScInput
+							label={__('Title', 'surecart')}
+							ref={inputRef}
+							help={__(
+								'This is shown on the upsell page.',
+								'surecart'
+							)}
+							placeholder={__(
+								'i.e. An exclusive offer, just for you.',
+								'surecart'
+							)}
+							value={upsell?.metadata?.title}
+							onScInput={(e) =>
+								editUpsell({
+									metadata: {
+										...upsell.metadata,
+										title: e.target.value,
+									},
+								})
+							}
+							required
+						/>
 
-					<Product
-						label={__('Product price', 'surecart')}
-						priceId={upsell?.price?.id || upsell?.price}
-						onSelect={(price) => editUpsell({ price })}
-					/>
+						<Product
+							label={__('Product price', 'surecart')}
+							priceId={upsell?.price?.id || upsell?.price}
+							onSelect={(price) => editUpsell({ price })}
+						/>
 
-					<Discount upsell={upsell} onUpdate={editUpsell} />
+						<DrawerSection title={__('Discount', 'surecart')}>
+							<Discount upsell={upsell} onUpdate={editUpsell} />
+						</DrawerSection>
 
-					<DisplayConditions upsell={upsell} onUpdate={editUpsell} />
+						<DrawerSection title={__('Behavior', 'surecart')}>
+							<DisplayConditions
+								upsell={upsell}
+								onUpdate={editUpsell}
+							/>
+							<ReplacementBehavior
+								upsell={upsell}
+								onUpdate={editUpsell}
+							/>
+						</DrawerSection>
 
-					<Template upsell={upsell} onUpdate={editUpsell} />
+						<DrawerSection title={__('Design', 'surecart')}>
+							<Template upsell={upsell} onUpdate={editUpsell} />
+						</DrawerSection>
 
-					<ScInput
-						label={__('Statement label', 'surecart')}
-						help={__(
-							'This is shown to the customer on invoices and line items.',
-							'surecart'
-						)}
-						placeholder={__('I.E. Bundle Discount', 'surecart')}
-						value={upsell?.fee_description}
-						onScInput={(e) =>
-							editUpsell({ fee_description: e.target.value })
-						}
-						required
-					/>
+						<ScInput
+							label={__('Statement label', 'surecart')}
+							help={__(
+								'This is shown to the customer on invoices and line items.',
+								'surecart'
+							)}
+							placeholder={__('I.E. Bundle Discount', 'surecart')}
+							value={upsell?.fee_description}
+							onScInput={(e) =>
+								editUpsell({ fee_description: e.target.value })
+							}
+							required
+						/>
+					</div>
 				</div>
 
 				<ScButton

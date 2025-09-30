@@ -171,6 +171,7 @@ class RolesService {
 			'sc_invoice',
 			'sc_price',
 			'sc_refund',
+			'sc_dispute',
 			'sc_charge',
 			'sc_media',
 			'sc_payment_method',

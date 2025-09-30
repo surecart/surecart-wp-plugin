@@ -25,6 +25,7 @@ class AsyncWebhookService extends AsyncRequest {
 		'period'           => \SureCart\Models\Period::class,
 		'order'            => \SureCart\Models\Order::class,
 		'refund'           => \SureCart\Models\Refund::class,
+		'dispute'          => \SureCart\Models\Dispute::class,
 		'subscription'     => \SureCart\Models\Subscription::class,
 		'invoice'          => \SureCart\Models\Invoice::class,
 		'account'          => \SureCart\Models\Account::class,

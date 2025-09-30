@@ -254,6 +254,12 @@ class CurrencyService {
 		}
 
 		if ( isset( $_GET['currency'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			// Add reliable HTTP header as it's sent before the HTML.
+			if ( ! headers_sent() ) {
+				header( 'X-Robots-Tag: noindex, follow', false );
+			}
+
+			// Add meta tag as fallback.
 			echo '<meta name="robots" content="noindex, follow" />' . "\n";
 		}
 	}

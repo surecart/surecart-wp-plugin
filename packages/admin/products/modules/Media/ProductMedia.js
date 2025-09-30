@@ -1,7 +1,7 @@
 import { useSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 import { store as coreStore } from '@wordpress/core-data';
-import ImageDisplay from './ImageDisplay';
+import MediaDisplay from './MediaDisplay';
 
 export default ({ id, onDownloaded, onRemove, isFeatured }) => {
 	const media = useSelect((select) => {
@@ -10,7 +10,7 @@ export default ({ id, onDownloaded, onRemove, isFeatured }) => {
 	});
 
 	return (
-		<ImageDisplay
+		<MediaDisplay
 			productMedia={media}
 			onDeleteImage={onRemove}
 			isFeatured={isFeatured}

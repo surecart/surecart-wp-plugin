@@ -17287,11 +17287,11 @@ msgid "Complete Subscription"
 msgstr ""
 
 #: subscriptions/show/modules/modals/ConfirmRevokeModal.js:101
-msgid "The subscription will be restored in order to restore the purchase. The customer will immediately be charged %s for the first billing period."
+msgid "The subscription will be restored in order to restore the purchase. The customer will immediately be charged %s."
 msgstr ""
 
 #: subscriptions/show/modules/modals/ConfirmRevokeModal.js:110
-msgid "The subscription will be restored in order to restore the purchase. The customer will immediately be charged the first billing period."
+msgid "The subscription will be restored in order to restore the purchase. The customer will immediately be charged."
 msgstr ""
 
 #: subscriptions/show/modules/modals/ConfirmRevokeModal.js:122
@@ -17396,11 +17396,11 @@ msgid "Restore Subscription"
 msgstr ""
 
 #: subscriptions/show/modules/modals/RestoreSubscriptionModal.js:63
-msgid "The customer will immediately be charged %s for the first billing period."
+msgid "The customer will immediately be charged %s."
 msgstr ""
 
 #: subscriptions/show/modules/modals/RestoreSubscriptionModal.js:69
-msgid "The customer will immediately be charged the first billing period."
+msgid "The customer will immediately be charged."
 msgstr ""
 
 #: subscriptions/show/modules/modals/RestoreSubscriptionModal.js:81
