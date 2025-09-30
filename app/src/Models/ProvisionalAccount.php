@@ -33,24 +33,6 @@ class ProvisionalAccount extends Model {
 	}
 
 	/**
-	 * Check if the API token is set.
-	 *
-	 * @return bool
-	 */
-	protected function hasApiToken() {
-		return ! empty( ApiToken::get() );
-	}
-
-	/**
-	 * Check if the E2E testing is enabled.
-	 *
-	 * @return bool
-	 */
-	protected function isTesting() {
-		return defined( 'SC_E2E_TESTING' ) ? (bool) SC_E2E_TESTING : false;
-	}
-
-	/**
 	 * Create a new model
 	 *
 	 * @param array $attributes Attributes to create.
@@ -59,8 +41,11 @@ class ProvisionalAccount extends Model {
 	 */
 	protected function create( $attributes = [] ) {
 		// we only allow this if the setup is not complete.
-		if ( $this->hasApiToken() && ! $this->isTesting() ) {
-			return new \WP_Error( 'setup_complete', __( 'You have already set up your store.', 'surecart' ) );
+		if ( ! empty( ApiToken::get() ) ) {
+			$testing = defined( 'SC_E2E_TESTING' ) ? (bool) SC_E2E_TESTING : false;
+			if ( ! $testing ) {
+				return new \WP_Error( 'setup_complete', __( 'You have already set up your store.', 'surecart' ) );
+			}
 		}
 
 		// set account name as the site name if nothing is provided.
@@ -76,32 +61,6 @@ class ProvisionalAccount extends Model {
 		// set source with fallback to the option.
 		$attributes['source'] = isset( $attributes['source'] ) ? sanitize_text_field( wp_unslash( $attributes['source'] ) ) : sanitize_text_field( get_option( 'surecart_source', 'surecart_wp' ) );
 
-		$created = parent::create( $attributes );
-		if ( is_wp_error( $created ) ) {
-			return $created;
-		}
-
-		// bulkd product createion action.
-		if ( isset( $attributes['products'] ) ) {
-			$seed = $this->seed( $attributes['products'] );
-			if ( is_wp_error( $seed ) ) {
-				return $seed;
-			}
-		}
-
-		// create the products.
-		return $created;
-	}
-
-	/**
-	 * Seed the account with products.
-	 *
-	 * @param array $products The products to seed.
-	 *
-	 * @return \SureCart\Models\Import
-	 */
-	protected function seed( $products = [] ) {
-		// static call to the ProductImport will not work since this model has access to the product import model.
-		return ( new ProductImport() )->create( [ 'data' => $products ] );
+		return parent::create( $attributes );
 	}
 }
