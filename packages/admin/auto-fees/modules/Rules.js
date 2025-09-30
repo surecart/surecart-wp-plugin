@@ -58,11 +58,11 @@ export default ({ autoFee = {}, onUpdate, loading }) => {
 	};
 
 	useEffect(() => {
-		if (ruleSchema) {
+		if (ruleSchema || !autoFee?.fee_target) {
 			return;
 		}
 		fetchRuleSchema();
-	}, [ruleSchema]);
+	}, [ruleSchema, autoFee]);
 
 	if (!rules?.conditions?.length) {
 		return (
