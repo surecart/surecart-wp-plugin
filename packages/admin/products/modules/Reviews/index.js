@@ -17,9 +17,12 @@ import {
 	ScMenuItem,
 	ScSwitch,
 } from '@surecart/components-react';
+import useEntity from '../../../hooks/useEntity';
 
 export default ({ product, updateProduct, loading }) => {
-	const isReviewProtocolEnabled = !!scData?.review_protocol?.reviews_enabled;
+	const {
+		item: { reviews_enabled: isReviewProtocolEnabled },
+	} = useEntity('store', 'review_protocol');
 
 	return (
 		<Box
