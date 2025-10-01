@@ -1,13 +1,14 @@
 <div 
 	class="sc-video-container"
 	data-wp-interactive='{ "namespace": "surecart/video" }'
-	data-wp-context='{ "loaded": false }'
+	data-wp-context='{ "loaded": <?php echo ! empty( $autoplay ) ? 'true' : 'false'; ?> }'
 	data-wp-on--click="actions.play"
 	data-wp-class--sc-video-loaded="context.loaded"
 	data-wp-on--fullscreenchange="callbacks.handleFullscreenChange"
 	data-wp-watch--variant-change="callbacks.checkVariantChange"
 	style="<?php echo esc_attr( $style ); ?>"
 >
+	<?php if ( empty( $autoplay ) ) : ?>
 	<div
 		role="button"
 		class="sc-video-play-button" 
@@ -16,6 +17,7 @@
 	>
 		<?php echo wp_kses( \SureCart::svg()->get( 'play' ), sc_allowed_svg_html() ); ?>
 	</div>
+	<?php endif; ?>
 
 	<video
 		class="sc-video"
@@ -24,8 +26,10 @@
 		src="<?php echo esc_url( $src ); ?>"
 		poster="<?php echo esc_url( $poster ); ?>"
 		playsinline
-		preload="none"
+		preload="<?php echo ! empty( $autoplay ) ? 'auto' : 'none'; ?>"
 		alt="<?php echo esc_attr( $alt ); ?>"
-		title="<?php echo esc_attr( $title ); ?>">
+		title="<?php echo esc_attr( $title ); ?>"
+		<?php echo ! empty( $autoplay ) ? 'autoplay muted controls' : ''; ?>
+		<?php echo ! empty( $loop ) ? 'loop' : ''; ?>>
 	</video>
 </div>

@@ -17,6 +17,7 @@ import {
 	ScDrawer,
 	ScForm,
 	ScSelect,
+	ScSwitch,
 } from '@surecart/components-react';
 import {
 	normalizeMedia,
@@ -48,6 +49,8 @@ export default ({
 			variant_option: normalized.variant_option || '',
 			thumbnail_image: normalized.thumbnail_image || null,
 			aspect_ratio: normalized.aspect_ratio || '',
+			autoplay: normalized.autoplay || false,
+			loop: normalized.loop || false,
 		};
 	});
 
@@ -64,7 +67,7 @@ export default ({
 			setIsSaving(true);
 			setError(null);
 
-			const { variant_option, thumbnail_image, aspect_ratio } = formData;
+			const { variant_option, thumbnail_image, aspect_ratio, autoplay, loop } = formData;
 
 			// Update the gallery with the new item data.
 			const ids = [...(product?.gallery_ids || [])];
@@ -80,6 +83,8 @@ export default ({
 					...(variant_option ? { variant_option } : {}),
 					...(thumbnail_image ? { thumbnail_image } : {}),
 					...(aspect_ratio ? { aspect_ratio } : {}),
+					...(isVideo(mediaData) && autoplay ? { autoplay } : {}),
+					...(isVideo(mediaData) && loop ? { loop } : {}),
 				};
 			}
 
@@ -225,6 +230,36 @@ export default ({
 											updateFormData(
 												'aspect_ratio',
 												e.target.value
+											)
+										}
+									/>
+
+									<ScSwitch
+										label={__('Autoplay', 'surecart')}
+										help={__(
+											'Automatically play the video when it appears on screen.',
+											'surecart'
+										)}
+										checked={formData.autoplay}
+										onScChange={(e) =>
+											updateFormData(
+												'autoplay',
+												e.target.checked
+											)
+										}
+									/>
+
+									<ScSwitch
+										label={__('Loop', 'surecart')}
+										help={__(
+											'Loop the video playback.',
+											'surecart'
+										)}
+										checked={formData.loop}
+										onScChange={(e) =>
+											updateFormData(
+												'loop',
+												e.target.checked
 											)
 										}
 									/>

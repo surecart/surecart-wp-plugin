@@ -275,11 +275,13 @@ class GalleryItemVideoAttachment extends ModelsGalleryItem implements GalleryIte
 
 		return \SureCart::view( 'media/video' )->with(
 			[
-				'poster' => $poster->src,
-				'src'    => wp_get_attachment_url( $this->item->ID ),
-				'alt'    => $this->item->alt_text ?? $this->item->post_title ?? '',
-				'title'  => $this->item->post_title ?? '',
-				'style'  => ! empty( $this->getMetadata( 'aspect_ratio' ) ) ? 'aspect-ratio: ' . esc_attr( $this->getMetadata( 'aspect_ratio' ) ) . ';' : '',
+				'poster'   => $poster->src,
+				'src'      => wp_get_attachment_url( $this->item->ID ),
+				'alt'      => $this->item->alt_text ?? $this->item->post_title ?? '',
+				'title'    => $this->item->post_title ?? '',
+				'style'    => ! empty( $this->getMetadata( 'aspect_ratio' ) ) ? 'aspect-ratio: ' . esc_attr( $this->getMetadata( 'aspect_ratio' ) ) . ';' : '',
+				'autoplay' => $this->getMetadata( 'autoplay' ) ?? false,
+				'loop'     => $this->getMetadata( 'loop' ) ?? false,
 			]
 		)->toString();
 	}

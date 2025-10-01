@@ -6,11 +6,13 @@ $metadata = $media->getMetadata();
 // render the video html.
 $html = SureCart::view( 'media/video' )->with(
 	[
-		'poster' => $video->poster,
-		'src'    => $video->src,
-		'alt'    => ! empty( $video->alt ) ? $video->alt : sprintf( /* translators: %s is the video title. */ __( 'Video: %s', 'surecart' ), get_the_title() ),
-		'title'  => ! empty( $video->title ) ? $video->title : get_the_title(),
-		'style'  => ! empty( $metadata['aspect_ratio'] ) ? 'aspect-ratio: ' . esc_attr( $metadata['aspect_ratio'] ) . ';' : '',
+		'poster'   => $video->poster,
+		'src'      => $video->src,
+		'alt'      => ! empty( $video->alt ) ? $video->alt : sprintf( /* translators: %s is the video title. */ __( 'Video: %s', 'surecart' ), get_the_title() ),
+		'title'    => ! empty( $video->title ) ? $video->title : get_the_title(),
+		'style'    => ! empty( $metadata['aspect_ratio'] ) ? 'aspect-ratio: ' . esc_attr( $metadata['aspect_ratio'] ) . ';' : '',
+		'autoplay' => ! empty( $metadata['autoplay'] ) ? $metadata['autoplay'] : false,
+		'loop'     => ! empty( $metadata['loop'] ) ? $metadata['loop'] : false,
 	]
 )->toString();
 
