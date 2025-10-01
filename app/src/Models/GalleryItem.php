@@ -28,6 +28,13 @@ abstract class GalleryItem implements ArrayAccess, JsonSerializable, Arrayable, 
 	protected $with_lightbox = false;
 
 	/**
+	 * Metadata for the gallery item.
+	 *
+	 * @var array
+	 */
+	protected $metadata = [];
+
+	/**
 	 * Set the lightbox attribute.
 	 *
 	 * @param bool $with_lightbox Whether to include lightbox.
@@ -40,9 +47,18 @@ abstract class GalleryItem implements ArrayAccess, JsonSerializable, Arrayable, 
 	}
 
 	/**
+	 * Check if the gallery item exists.
+	 *
+	 * @return bool
+	 */
+	public function exists() {
+		return isset( $this->item->ID ) || isset( $this->item->id ); // For both WP_Post and ProductMedia.
+	}
+
+	/**
 	 * Convert object to array.
 	 *
-	 * @return Array
+	 * @return array
 	 */
 	public function toArray() {
 		if ( isset( $this->item->ID ) ) {
@@ -65,11 +81,6 @@ abstract class GalleryItem implements ArrayAccess, JsonSerializable, Arrayable, 
 	 * @return string
 	 */
 	public function __get( $key ) {
-		// normalize the variant option.
-		if ( 'variant_option' === $key && isset( $this->item->ID ) ) {
-			return get_post_meta( $this->item->ID, 'sc_variant_option', true );
-		}
-
 		// normalize the ID.
 		if ( 'id' === $key && isset( $this->item->ID ) ) {
 			return $this->item->ID;
@@ -79,6 +90,15 @@ abstract class GalleryItem implements ArrayAccess, JsonSerializable, Arrayable, 
 			return $this->item->{$key};
 		}
 		return null;
+	}
+
+	/**
+	 * Check if this gallery item is a video.
+	 *
+	 * @return bool
+	 */
+	public function isVideo(): bool {
+		return $this instanceof GalleryItemVideoAttachment;
 	}
 
 	/**
@@ -130,11 +150,47 @@ abstract class GalleryItem implements ArrayAccess, JsonSerializable, Arrayable, 
 	 * @return bool
 	 */
 	public function __isset( $key ) {
-		// normalize the variant option.
-		if ( 'variant_option' === $key && isset( $this->item->ID ) ) {
-			return ! empty( get_post_meta( $this->item->ID, 'sc_variant_option', true ) );
+		return isset( $this->item->{$key} ) || isset( $this->metadata[ $key ] );
+	}
+
+	/**
+	 * Get metadata for the gallery item.
+	 *
+	 * If $key is provided, returns the single metadata value (or null). If no
+	 * key is provided, returns the full metadata array.
+	 *
+	 * @param string|null $key The key to check or null to get all metadata.
+	 *
+	 * @return mixed|null|array
+	 */
+	public function getMetadata( $key = null ) {
+		// If no key requested, return the full metadata array.
+		if ( empty( $key ) ) {
+			return $this->metadata;
 		}
 
-		return isset( $this->item->{$key} );
+		if ( isset( $this->metadata[ $key ] ) ) {
+			return $this->metadata[ $key ];
+		}
+
+		// Backward compatibility for variant_option with post meta - sc_variant_option.
+		if ( 'variant_option' === $key && isset( $this->item->ID ) ) {
+			return get_post_meta( $this->item->ID, 'sc_variant_option', true );
+		}
+
+		return null;
+	}
+
+	/**
+	 * Set the metadata for the gallery item.
+	 *
+	 * @param string $key   The key to set.
+	 * @param mixed  $value The value to set.
+	 *
+	 * @return self
+	 */
+	public function setMetadata( $key, $value ): self {
+		$this->metadata[ $key ] = $value;
+		return $this;
 	}
 }
