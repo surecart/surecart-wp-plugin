@@ -325,6 +325,24 @@ add_action(
 			$static_assets['version']
 		);
 
+		// Product review script.
+		$static_assets = include trailingslashit( plugin_dir_path( __FILE__ ) ) . 'build/scripts/product-review/index.asset.php';
+		wp_register_script_module(
+			'@surecart/product-review',
+			trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/product-review/index.js',
+			[
+				[
+					'id'     => '@wordpress/interactivity',
+					'import' => 'dynamic',
+				],
+				[
+					'id'     => '@surecart/a11y',
+					'import' => 'dynamic',
+				],
+			],
+			$static_assets['version']
+		);
+
 		// Sticky purchase button interactivity script.
 		$static_assets = include trailingslashit( plugin_dir_path( __FILE__ ) ) . 'build/scripts/sticky-purchase/index.asset.php';
 		wp_register_script_module(
