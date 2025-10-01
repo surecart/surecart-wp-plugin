@@ -61,13 +61,13 @@ export default ({ open, onRequestClose, amountDue, currency }) => {
 					{!!amountDue && !!currency
 						? sprintf(
 								__(
-									'The customer will immediately be charged %s for the first billing period.',
+									'The customer will immediately be charged %s.',
 									'surecart'
 								),
 								formatNumber(amountDue, currency)
 						  )
 						: __(
-								'The customer will immediately be charged the first billing period.',
+								'The customer will immediately be charged.',
 								'surecart'
 						  )}
 				</ScAlert>

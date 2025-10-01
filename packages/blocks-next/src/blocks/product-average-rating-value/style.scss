@@ -9,13 +9,10 @@
 		}
 	}
 
-	&.is-style-brackets {
-		&::before {
-			content: "[";
-		}
-
+	&.is-style-slash {
 		&::after {
-			content: "]";
+			content: "/ 5";
+			margin-left: 0.25rem;
 		}
 	}
 }

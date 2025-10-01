@@ -17,9 +17,12 @@ import {
 	ScMenuItem,
 	ScSwitch,
 } from '@surecart/components-react';
+import useEntity from '../../../hooks/useEntity';
 
 export default ({ product, updateProduct, loading }) => {
-	const isReviewProtocolEnabled = !!scData?.review_protocol?.reviews_enabled;
+	const {
+		item: { reviews_enabled: isReviewProtocolEnabled },
+	} = useEntity('store', 'review_protocol');
 
 	return (
 		<Box
@@ -40,15 +43,11 @@ export default ({ product, updateProduct, loading }) => {
 					</ScButton>
 					<ScMenu>
 						<ScMenuItem
-							onClick={() => {
-								window.open(
-									addQueryArgs('admin.php', {
-										page: 'sc-settings',
-										tab: 'review_protocol',
-									}),
-									'_blank'
-								);
-							}}
+							href={addQueryArgs('admin.php', {
+								page: 'sc-settings',
+								tab: 'review_protocol',
+							})}
+							target="_blank"
 						>
 							<ScIcon
 								slot="prefix"

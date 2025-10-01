@@ -189,8 +189,10 @@ class ProductsController extends AdminController {
 		if ( ! empty( $product ) ) {
 			$gallery_paths = [];
 			$gallery       = $product->gallery_ids ?? [];
-			foreach ( $gallery as $id ) {
-				if ( is_int( $id ) ) {
+			foreach ( $gallery as $gallery_item ) {
+				$id = is_numeric( $gallery_item ) ? (int) $gallery_item : intval( ( (object) $gallery_item )->id ?? 0 );
+
+				if ( $id > 0 ) {
 					$gallery_paths[] = '/wp/v2/media/' . $id . '?context=edit';
 				}
 			}

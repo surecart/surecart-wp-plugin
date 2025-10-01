@@ -41,15 +41,11 @@ export default ({ loading, product, updateProduct }) => {
 					</ScButton>
 					<ScMenu>
 						<ScMenuItem
-							onClick={() => {
-								window.open(
-									addQueryArgs('admin.php', {
-										page: 'sc-settings',
-										tab: 'tax_protocol',
-									}),
-									'_blank'
-								);
-							}}
+							href={addQueryArgs('admin.php', {
+								page: 'sc-settings',
+								tab: 'tax_protocol',
+							})}
+							target="_blank"
 						>
 							<ScIcon
 								slot="prefix"

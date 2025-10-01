@@ -15,7 +15,7 @@ function sc_allowed_svg_html(): array {
 	$svg_args = apply_filters(
 		'sc_allowed_svg_html',
 		array(
-			'svg'      => array(
+			'svg'            => array(
 				'class'             => true,
 				'aria-hidden'       => true,
 				'aria-labelledby'   => true,
@@ -24,6 +24,7 @@ function sc_allowed_svg_html(): array {
 				'width'             => true,
 				'height'            => true,
 				'viewbox'           => true,
+				'color'             => true,
 				'fill'              => true,
 				'stroke'            => true,
 				'stroke-width'      => true,
@@ -32,30 +33,43 @@ function sc_allowed_svg_html(): array {
 				'stroke-linejoin'   => true,
 				'stroke-miterlimit' => true,
 			),
-			'g'        => array(
+			'defs'           => array( 'id' => true ),
+			'clipPath'       => array( 'id' => true ),
+			'clippath'       => array( 'id' => true ),
+			'linearGradient' => array( 'id' => true ),
+			'lineargradient' => array( 'id' => true ),
+			'stop'           => array(
+				'offset'       => true,
+				'stop-color'   => true,
+				'stopOpacity'  => true,
+				'stop-opacity' => true,
+			),
+			'g'              => array(
 				'fill'      => true,
 				'transform' => true,
+				'clip-path' => true,
 			),
-			'title'    => array( 'title' => true ),
-			'path'     => array(
+			'title'          => array( 'title' => true ),
+			'path'           => array(
 				'd'         => true,
 				'fill'      => true,
 				'transform' => true,
+				'clip-path' => true,
 			),
-			'circle'   => array(
+			'circle'         => array(
 				'cx'   => true,
 				'cy'   => true,
 				'r'    => true,
 				'fill' => true,
 			),
-			'ellipse'  => array(
+			'ellipse'        => array(
 				'cx'   => true,
 				'cy'   => true,
 				'rx'   => true,
 				'ry'   => true,
 				'fill' => true,
 			),
-			'line'     => array(
+			'line'           => array(
 				'x1'           => true,
 				'y1'           => true,
 				'x2'           => true,
@@ -63,22 +77,27 @@ function sc_allowed_svg_html(): array {
 				'stroke'       => true,
 				'stroke-width' => true,
 			),
-			'polygon'  => array(
-				'points' => true,
-				'fill'   => true,
+			'polygon'        => array(
+				'points'    => true,
+				'fill'      => true,
+				'clip-path' => true,
+				'style'     => true,
 			),
-			'polyline' => array(
-				'points' => true,
-				'fill'   => true,
+			'polyline'       => array(
+				'points'    => true,
+				'fill'      => true,
+				'clip-path' => true,
 			),
-			'rect'     => array(
-				'x'      => true,
-				'y'      => true,
-				'width'  => true,
-				'height' => true,
-				'fill'   => true,
+			'rect'           => array(
+				'x'         => true,
+				'y'         => true,
+				'width'     => true,
+				'height'    => true,
+				'fill'      => true,
+				'clip-path' => true,
+				'style'     => true,
 			),
-			'text'     => array(
+			'text'           => array(
 				'x'         => true,
 				'y'         => true,
 				'dx'        => true,
