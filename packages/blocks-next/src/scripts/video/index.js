@@ -3,6 +3,22 @@
  */
 import { store, getContext, getElement } from '@wordpress/interactivity';
 
+// Return true when we should NOT pause this video (e.g. autoplay or loop enabled).
+const shouldSkipPause = (video) => {
+	if (!video) {
+		return false;
+	}
+
+	// HTMLMediaElement has boolean properties for these boolean attributes.
+	// We also defensively check attributes in case of non-standard objects.
+	return !!(
+		video?.autoplay ||
+		video?.loop ||
+		(typeof video.hasAttribute === 'function' &&
+			(video.hasAttribute('autoplay') || video.hasAttribute('loop')))
+	);
+};
+
 store('surecart/video', {
 	callbacks: {
 		// Handle the play event.
@@ -13,10 +29,17 @@ store('surecart/video', {
 			// video is loaded once it's played.
 			context.loaded = true;
 
-			// pause other videos on the page.
+			// Try to find the current video element inside this container.
+			const currentVideo = ref ? ref.querySelector('video') : null;
+
+			// pause other videos on the page unless they are autoplay/loop.
 			Array.from(document.querySelectorAll('video'))
-				.filter((v) => v !== ref) // get other videos.
-				.forEach((video) => video.pause()); // pause them.
+				.filter((v) => v !== currentVideo) // get other videos.
+				.forEach((video) => {
+					if (!shouldSkipPause(video)) {
+						video.pause();
+					}
+				});
 		},
 
 		handleFullscreenChange() {
@@ -35,7 +58,11 @@ store('surecart/video', {
 						'surecart/image-slider'
 					);
 
-					if (sliderState?.active && !!sliderState?.swiper) {
+					if (
+						sliderState?.active &&
+						!!sliderState?.swiper &&
+						!shouldSkipPause(video)
+					) {
 						video.pause();
 					}
 				}
@@ -58,7 +85,9 @@ store('surecart/video', {
 					return;
 				}
 
-				video.pause();
+				if (!shouldSkipPause(video)) {
+					video.pause();
+				}
 			}
 		},
 	},
@@ -80,7 +109,9 @@ store('surecart/video', {
 		// Pause all videos.
 		pauseVideos() {
 			Array.from(document.querySelectorAll('video')).forEach((video) => {
-				video.pause();
+				if (!shouldSkipPause(video)) {
+					video.pause();
+				}
 			});
 		},
 	},
