@@ -67,7 +67,13 @@ export default ({
 			setIsSaving(true);
 			setError(null);
 
-			const { variant_option, thumbnail_image, aspect_ratio, autoplay, loop } = formData;
+			const {
+				variant_option,
+				thumbnail_image,
+				aspect_ratio,
+				autoplay,
+				loop,
+			} = formData;
 
 			// Update the gallery with the new item data.
 			const ids = [...(product?.gallery_ids || [])];
@@ -235,11 +241,6 @@ export default ({
 									/>
 
 									<ScSwitch
-										label={__('Autoplay', 'surecart')}
-										help={__(
-											'Automatically play the video when it appears on screen.',
-											'surecart'
-										)}
 										checked={formData.autoplay}
 										onScChange={(e) =>
 											updateFormData(
@@ -247,14 +248,17 @@ export default ({
 												e.target.checked
 											)
 										}
-									/>
+									>
+										{__('Autoplay', 'surecart')}
+										<span slot="description">
+											{__(
+												'Automatically play the video when it appears on screen.',
+												'surecart'
+											)}
+										</span>
+									</ScSwitch>
 
 									<ScSwitch
-										label={__('Loop', 'surecart')}
-										help={__(
-											'Loop the video playback.',
-											'surecart'
-										)}
 										checked={formData.loop}
 										onScChange={(e) =>
 											updateFormData(
@@ -262,7 +266,15 @@ export default ({
 												e.target.checked
 											)
 										}
-									/>
+									>
+										{__('Loop', 'surecart')}
+										<span slot="description">
+											{__(
+												'Loop the video playback.',
+												'surecart'
+											)}
+										</span>
+									</ScSwitch>
 								</>
 							)}
 						</DrawerSection>
