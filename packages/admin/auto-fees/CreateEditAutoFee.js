@@ -6,11 +6,10 @@ import { css, jsx } from '@emotion/core';
  */
 import { __ } from '@wordpress/i18n';
 import { __experimentalConfirmDialog as ConfirmDialog } from '@wordpress/components';
-import { useDispatch, useSelect, select } from '@wordpress/data';
+import { useDispatch, useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
-import { useState, useReducer, useEffect } from '@wordpress/element';
+import { useState, useReducer } from '@wordpress/element';
 import { getDate } from '@wordpress/date';
-import apiFetch from '@wordpress/api-fetch';
 
 /**
  * Internal dependencies.
@@ -34,10 +33,12 @@ import Error from '../components/Error';
 import Logo from '../templates/Logo';
 import UpdateModel from '../templates/UpdateModel';
 import Details from './modules/Details';
+import TemplatesSelector from './modules/TemplatesSelector';
 import Rules from './modules/Rules';
 import SaveButton from '../templates/SaveButton';
 import Box from '../ui/Box';
 import DateTimePicker from './modules/DateTimePicker';
+import templates from './templates';
 
 export default ({ setId }) => {
 	const [error, setError] = useState(null);
@@ -300,6 +301,14 @@ export default ({ setId }) => {
 				setError={setError}
 				margin="80px"
 			/>
+			{!id && (
+				<TemplatesSelector
+					templates={templates}
+					autoFee={autoFee || {}}
+					onUpdate={updateAutoFee}
+					loading={!hasLoadedAutoFee || loading}
+				/>
+			)}
 			<Details
 				autoFee={autoFee || {}}
 				onUpdate={updateAutoFee}
