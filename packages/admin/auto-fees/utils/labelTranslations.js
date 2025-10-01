@@ -6,6 +6,13 @@ export const attributeLabels = {
 	quantity: __('Quantity', 'surecart'),
 	subtotal_amount: __('Subtotal Amount', 'surecart'),
 	wp_user_role: __('WordPress User Role', 'surecart'),
+	metadata: __('Metadata', 'surecart'),
+	line_item_quantity: __('Line Item Quantity', 'surecart'),
+	g_weight: __('Weight (g)', 'surecart'),
+	email: __('Email', 'surecart'),
+	email_domain: __('Email Domain', 'surecart'),
+	first_name: __('First Name', 'surecart'),
+	last_name: __('Last Name', 'surecart'),
 
 	// Checkout attributes
 	'checkout.email': __('Checkout Email', 'surecart'),
@@ -30,6 +37,7 @@ export const attributeLabels = {
 		'Price Recurring Period Count',
 		'surecart'
 	),
+	shipping_amount: __('Shipping Amount', 'surecart'),
 
 	// Product attributes
 	'product.created_at': __('Product Created At', 'surecart'),
@@ -55,4 +63,11 @@ export const attributeLabels = {
 	// Product group attributes
 	'product.product_group.metadata': __('Product Group Metadata', 'surecart'),
 	'product.product_group.name': __('Product Group Name', 'surecart'),
+
+	// Other attributes
+	'selected_shipping_method.name': __(
+		'Selected Shipping Method Name',
+		'surecart'
+	),
+	'order.order_type': __('Order Type', 'surecart'),
 };
