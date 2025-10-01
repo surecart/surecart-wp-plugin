@@ -74,7 +74,7 @@ class AutoFeesController extends AdminController {
 
 		$updated = $auto_fee->update(
 			[
-				'active' => ! (bool) $auto_fee->active,
+				'enabled' => ! (bool) $auto_fee->enabled,
 			]
 		);
 
