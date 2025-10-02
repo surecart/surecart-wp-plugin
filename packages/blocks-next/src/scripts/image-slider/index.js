@@ -168,9 +168,9 @@ const { state, actions } = store('surecart/image-slider', {
 							const { actions: videoActions } =
 								store('surecart/video');
 							if (
-								typeof videoActions?.pauseVideos === 'function'
+								typeof videoActions?.muteVideos === 'function'
 							) {
-								videoActions.pauseVideos();
+								videoActions.muteVideos();
 							}
 						},
 					},
