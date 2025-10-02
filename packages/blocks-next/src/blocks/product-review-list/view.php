@@ -12,5 +12,5 @@
 	?>
 >
 	<?php echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-	<div class="sc-block-ui" data-wp-bind--hidden="!state.loading" hidden></div>
+	<!-- <div class="sc-block-ui" data-wp-bind--hidden="!state.loading" hidden></div> -->
 </div>

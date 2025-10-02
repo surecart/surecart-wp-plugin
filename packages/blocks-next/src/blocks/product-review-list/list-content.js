@@ -11,7 +11,6 @@ import {
 import { TEMPLATE } from './template';
 // import ProductListInspectorControls from './inspector-controls';
 import ListToolbar from '../../utilities/patterns-toolbar';
-import { useEffect } from '@wordpress/element';
 
 /**
  * Product List Edit
@@ -37,17 +36,6 @@ export default function ProductReviewListEdit({
 	const updateQuery = (newQuery) => {
 		setAttributes({ query: { ...query, ...newQuery } });
 	};
-
-	/**
-	 * Migration from < v3.0.0
-	 */
-	useEffect(() => {
-		updateQuery({
-			perPage: limit || perPage,
-			include: ids?.length ? ids : include,
-		});
-		setAttributes({ limit: null });
-	}, [limit, ids]);
 
 	/**
 	 * Block props.

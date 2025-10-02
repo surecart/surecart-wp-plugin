@@ -47,7 +47,7 @@ class ProductReviewListBlock extends AbstractProductListBlock {
 		$args['limit']  = $per_page;
 		$args['offset'] = ( $page - 1 ) * $per_page + $offset;
 
-		return Review::where( $args )->with( [ 'product', 'product.price' ] )->get();
+		return Review::where( $args )->with( [ 'product', 'product.price', 'customer' ] )->get();
 	}
 
 	/**

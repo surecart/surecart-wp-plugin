@@ -78,6 +78,29 @@ export default ({
 		}
 	}, [layoutType]);
 
+	const demoReviews = [
+		{
+			id: 1,
+			title: { rendered: 'Great product!' },
+			body: 'I really enjoyed using this product. Highly recommend!',
+			customer: {
+				name: 'John Doe',
+			},
+			rating: 5,
+			created_date: '2023-10-01T12:34:56',
+		},
+		{
+			id: 2,
+			title: { rendered: 'Not bad' },
+			body: 'The product was okay, met my expectations.',
+			customer: {
+				name: 'Jane Smith',
+			},
+			rating: 3,
+			created_date: '2023-09-15T09:21:30',
+		},
+	];
+
 	const { records: reviews, isResolving } = useEntityRecords(
 		'postType',
 		'reviews',
@@ -130,6 +153,14 @@ export default ({
 		[`columns-${columnCount}`]: layoutType === 'grid' && columnCount,
 	});
 
+	const getReviews = () => {
+		if (reviews && reviews.length) {
+			return reviews;
+		}
+
+		return demoReviews;
+	};
+
 	return (
 		<>
 			<BlockControls>
@@ -137,7 +168,7 @@ export default ({
 			</BlockControls>
 			<TemplateListEdit
 				template={TEMPLATE}
-				blockContexts={reviews?.map((review) => ({
+				blockContexts={getReviews()?.map((review) => ({
 					postId: review?.id, // for core blocks.
 					id: review?.id,
 				}))}

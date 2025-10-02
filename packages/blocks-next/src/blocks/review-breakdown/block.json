@@ -1,9 +1,9 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
-	"name": "surecart/product-total-rating",
-	"title": "Product Total Rating",
-	"description": "Displays the total rating count for the product.",
+	"name": "surecart/review-breakdown",
+	"title": "Review Breakdown",
+	"description": "Displays a breakdown of product reviews by star rating.",
 	"version": "1.0.0",
 	"category": "surecart-product-page",
 	"ancestor": [
@@ -15,10 +15,6 @@
 	],
 	"usesContext": ["postId"],
 	"attributes": {
-		"show_label": {
-			"type": "boolean",
-			"default": true
-		},
 		"show_for_zero_reviews": {
 			"type": "boolean",
 			"default": true
@@ -29,10 +25,6 @@
 			"name": "default",
 			"label": "Default",
 			"isDefault": true
-		},
-		{
-			"name": "plus-sign",
-			"label": "Plus Sign"
 		}
 	],
 	"example": {},
@@ -42,11 +34,7 @@
 		"color": {
 			"gradients": true,
 			"text": true,
-			"background": false,
-			"__experimentalDefaultControls": {
-				"text": true,
-				"button": true
-			}
+			"background": false
 		},
 		"typography": {
 			"fontSize": true,
@@ -66,11 +54,6 @@
 			"margin": true,
 			"blockGap": {
 				"__experimentalDefault": "4px"
-			},
-			"__experimentalDefaultControls": {
-				"padding": true,
-				"margin": true,
-				"blockGap": true
 			}
 		}
 	},

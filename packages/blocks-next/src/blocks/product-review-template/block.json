@@ -17,13 +17,18 @@
 		"surecart/product-list/type",
 		"surecart/product-list/ids"
 	],
+	"providesContext": {
+		"reviewId": "id",
+		"review": "review"
+	},
 	"supports": {
 		"interactivity": true,
 		"inserter": false,
 		"layout": {
-			"__experimentalDefault": "grid",
-			"__experimentalDefaultControls": {
-				"layout": true
+			"allowSwitching": false,
+			"allowInheriting": false,
+			"default": {
+				"type": "flex"
 			}
 		},
 		"align": true,

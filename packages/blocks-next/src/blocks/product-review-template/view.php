@@ -15,7 +15,9 @@ if ( empty( $query ) ) {
 		// Set the block name to one that does not correspond to an existing registered block.
 		// This ensures that for the inner instances of the Post Template block, we do not render any block supports.
 		$block_instance['blockName'] = 'core/null';
-		$filter_block_context        = static function ( $context ) {
+		$filter_block_context        = static function ( $context ) use ( $review ) {
+			$context['review']   = $review;
+			$context['reviewId'] = $review->id;
 			return $context;
 		};
 
