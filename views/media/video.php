@@ -29,7 +29,8 @@
 		preload="<?php echo ! empty( $autoplay ) ? 'auto' : 'none'; ?>"
 		alt="<?php echo esc_attr( $alt ); ?>"
 		title="<?php echo esc_attr( $title ); ?>"
-		<?php echo ! empty( $autoplay ) ? 'autoplay muted controls' : ''; ?>
+		<?php echo ! empty( $autoplay ) ? 'autoplay controls' : ''; ?>
+		<?php echo ! empty( $muted ) ? 'muted' : ''; ?>
 		<?php echo ! empty( $loop ) ? 'loop' : ''; ?>>
 	</video>
 </div>

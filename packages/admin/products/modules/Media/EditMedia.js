@@ -245,17 +245,22 @@ export default ({
 
 									<ScSwitch
 										checked={formData.autoplay}
-										onScChange={(e) =>
+										onScChange={(e) => {
 											updateFormData(
 												'autoplay',
 												e.target.checked
-											)
-										}
+											);
+
+											// if autoplay is enabled, ensure muted is also enabled.
+											if (e.target.checked) {
+												updateFormData('muted', true);
+											}
+										}}
 									>
 										{__('Autoplay', 'surecart')}
 										<span slot="description">
 											{__(
-												'Automatically play the video when it appears on screen.',
+												'Automatically play the video when it appears on screen. This only works if the video is muted according to browser policies.',
 												'surecart'
 											)}
 										</span>
@@ -287,11 +292,12 @@ export default ({
 												e.target.checked
 											)
 										}
+										disabled={!!formData.autoplay}
 									>
 										{__('Muted', 'surecart')}
 										<span slot="description">
 											{__(
-												'Mute the video playback.',
+												'Mute the video. Most browsers require videos to be muted for autoplay to work.',
 												'surecart'
 											)}
 										</span>
