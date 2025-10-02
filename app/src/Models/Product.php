@@ -1005,6 +1005,7 @@ class Product extends Model implements PageModel {
 								$attachment->setMetadata( 'aspect_ratio', $item->aspect_ratio ?? null );
 								$attachment->setMetadata( 'autoplay', $item->autoplay ?? false );
 								$attachment->setMetadata( 'loop', $item->loop ?? false );
+								$attachment->setMetadata( 'muted', $item->muted ?? false );
 							}
 
 							return $attachment;

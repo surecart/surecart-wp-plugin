@@ -13,6 +13,7 @@ $html = SureCart::view( 'media/video' )->with(
 		'style'    => ! empty( $metadata['aspect_ratio'] ) ? 'aspect-ratio: ' . esc_attr( $metadata['aspect_ratio'] ) . ';' : '',
 		'autoplay' => ! empty( $metadata['autoplay'] ) ? $metadata['autoplay'] : false,
 		'loop'     => ! empty( $metadata['loop'] ) ? $metadata['loop'] : false,
+		'muted'    => ! empty( $metadata['muted'] ) ? $metadata['muted'] : false,
 	]
 )->toString();
 

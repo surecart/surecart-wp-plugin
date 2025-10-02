@@ -387,6 +387,7 @@ export const normalizeGalleryItem = (item) => {
 			aspect_ratio: null,
 			autoplay: false,
 			loop: false,
+			muted: false,
 		};
 	}
 
@@ -399,6 +400,7 @@ export const normalizeGalleryItem = (item) => {
 			aspect_ratio: item.aspect_ratio || null,
 			autoplay: item.autoplay || false,
 			loop: item.loop || false,
+			muted: item.muted || false,
 		};
 	}
 
@@ -409,6 +411,7 @@ export const normalizeGalleryItem = (item) => {
 		aspect_ratio: null,
 		autoplay: false,
 		loop: false,
+		muted: false,
 	};
 };
 
@@ -431,7 +434,14 @@ export const getGalleryItemId = (item) => {
  * @returns {number|Object} - Gallery item (returns just ID if no properties, otherwise object)
  */
 export const transformGalleryItem = (id, properties = {}) => {
-	const { variant_option, thumbnail_image, aspect_ratio, autoplay, loop } = properties;
+	const {
+		variant_option,
+		thumbnail_image,
+		aspect_ratio,
+		autoplay,
+		loop,
+		muted,
+	} = properties;
 	return {
 		id: parseInt(id),
 		...(variant_option ? { variant_option } : {}),
@@ -439,5 +449,6 @@ export const transformGalleryItem = (id, properties = {}) => {
 		...(aspect_ratio ? { aspect_ratio } : {}),
 		...(autoplay ? { autoplay } : {}),
 		...(loop ? { loop } : {}),
+		...(muted ? { muted } : {}),
 	};
 };

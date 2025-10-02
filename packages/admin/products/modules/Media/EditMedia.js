@@ -51,6 +51,7 @@ export default ({
 			aspect_ratio: normalized.aspect_ratio || '',
 			autoplay: normalized.autoplay || false,
 			loop: normalized.loop || false,
+			muted: normalized.muted || false,
 		};
 	});
 
@@ -73,6 +74,7 @@ export default ({
 				aspect_ratio,
 				autoplay,
 				loop,
+				muted,
 			} = formData;
 
 			// Update the gallery with the new item data.
@@ -91,6 +93,7 @@ export default ({
 					...(aspect_ratio ? { aspect_ratio } : {}),
 					...(isVideo(mediaData) && autoplay ? { autoplay } : {}),
 					...(isVideo(mediaData) && loop ? { loop } : {}),
+					...(isVideo(mediaData) && muted ? { muted } : {}),
 				};
 			}
 
@@ -271,6 +274,24 @@ export default ({
 										<span slot="description">
 											{__(
 												'Loop the video playback.',
+												'surecart'
+											)}
+										</span>
+									</ScSwitch>
+
+									<ScSwitch
+										checked={formData.muted}
+										onScChange={(e) =>
+											updateFormData(
+												'muted',
+												e.target.checked
+											)
+										}
+									>
+										{__('Muted', 'surecart')}
+										<span slot="description">
+											{__(
+												'Mute the video playback.',
 												'surecart'
 											)}
 										</span>
