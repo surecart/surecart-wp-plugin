@@ -1,14 +1,21 @@
+<?php
+$show_label = $attributes['show_label'] ?? true;
+$label      = $attributes['label'] ?? '';
+$icon_size  = isset( $attributes['icon_size'] ) ? (int) $attributes['icon_size'] : 20;
+?>
+
 <div <?php echo wp_kses_data( get_block_wrapper_attributes() ); ?>>
-	<span class="wc-block-review-verified-badge"><?php esc_html_e( 'Verified Buyer', 'woocommerce' ); ?></span>
+	<?php if ( ! empty( $show_label ) ) : ?>
+		<span class="wc-block-review-verified-badge"><?php echo esc_html( $label ?: __( 'Verified Buyer', 'woocommerce' ) ); ?></span>
+	<?php endif; ?>
+
 	<?php
 	echo wp_kses(
 		SureCart::svg()->get(
 			'verified',
 			[
-				'fill'   => 'white',
-				'color'  => 'white',
-				'width'  => 20,
-				'height' => 20,
+				'width'  => esc_attr( $icon_size ),
+				'height' => esc_attr( $icon_size ),
 			]
 		),
 		sc_allowed_svg_html()
