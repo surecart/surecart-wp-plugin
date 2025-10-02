@@ -9,7 +9,7 @@
 		.sc-average-stars {
 			font-size: 16px;
 			font-weight: 700;
-			color: var(--sc-color-gray-700);
+			color: var(--sc-color-gray-800);
 		}
 
 		.sc-star-bars {
@@ -27,7 +27,7 @@
 				font-size: var(--sc-font-size-medium);
 
 				.sc-star-label {
-					color: var(--sc-color-gray-500);
+					color: var(--sc-color-gray-800);
 					width: 40px;
 					justify-content: center;
 					display: flex;
@@ -46,7 +46,7 @@
 
 				.sc-bar-fill {
 					height: 100%;
-					background: var(--sc-color-gray-500);
+					background: var(--sc-color-gray-800);
 					border-radius: 4px;
 					transition: width 0.3s ease;
 				}
@@ -54,7 +54,7 @@
 				.sc-count {
 					width: 28px;
 					text-align: right;
-					color: var(--sc-color-gray-500);
+					color: var(--sc-color-gray-800);
 				}
 			}
 		}
