@@ -9,6 +9,10 @@ if ( empty( $query ) ) {
 <ul <?php echo wp_kses_data( get_block_wrapper_attributes( $wrapper_attributes ) ); ?>>
 	<?php
 	foreach ( $query ?? [] as $review ) :
+		if ( empty( $review->id ) ) {
+			continue;
+		}
+
 		// Get an instance of the current Post Template block.
 		$block_instance = $block->parsed_block;
 

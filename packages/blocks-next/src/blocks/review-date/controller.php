@@ -7,7 +7,7 @@ if ( empty( $block->context['review'] ) ) {
 }
 
 $classes          = array();
-$review_timestamp = $block->context['review']->created_at ?? '';
+$review_timestamp = (int) $block->context['review']->created_at ?? '';
 $unformatted_date = TimeDate::formatDateAndTime( $review_timestamp );
 
 if ( isset( $attributes['format'] ) && 'human-diff' === $attributes['format'] ) {

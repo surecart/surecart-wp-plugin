@@ -52,6 +52,8 @@
 			}
 		},
 		"layout": {
+			"allowSwitching": false,
+			"allowInheriting": false,
 			"default": {
 				"type": "flex",
 				"justifyContent": "center",
