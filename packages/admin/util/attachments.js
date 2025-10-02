@@ -117,7 +117,7 @@ export const normalizeMedia = (media) => {
  *
  * @returns {Promise<string>} - Base64 encoded PNG thumbnail.
  */
-export const extractVideoThumbnail = (videoUrl, seekTime = 1, options = {}) => {
+export const extractVideoThumbnail = (videoUrl, seekTime = 0.1, options = {}) => {
 	const cacheKey = `${videoUrl}_${seekTime}`;
 	if (thumbnailCache.has(cacheKey)) {
 		return Promise.resolve(thumbnailCache.get(cacheKey));
@@ -320,7 +320,7 @@ export const uploadThumbnailToMedia = async (
  */
 export const generateVideoThumbnail = async (
 	videoMedia,
-	seekTime = 1,
+	seekTime = 0.1,
 	options = {}
 ) => {
 	if (!videoMedia?.source_url || !videoMedia?.mime_type?.includes('video')) {
