@@ -110,6 +110,105 @@ export default ({
 				}
 			`}
 		>
+			{media?.source_url ? (
+				isVideo(media) ? (
+					<div
+						css={css`
+							display: flex;
+							align-items: center;
+							justify-content: center;
+							height: 100%;
+							width: 100%;
+							position: relative;
+						`}
+					>
+						<video
+							ref={videoRef}
+							controls={false}
+							css={css`
+								max-width: 100%;
+								max-height: 100%;
+								object-fit: contain;
+								border-radius: var(--sc-border-radius-medium);
+								pointer-events: none;
+							`}
+							src={media?.source_url}
+							muted
+							loop
+							playsInline
+							{...(typeof item === 'object' &&
+							item?.thumbnail_image?.url
+								? {
+										poster:
+											typeof item === 'object' &&
+											item?.thumbnail_image?.url,
+								  }
+								: {})}
+						>
+							<source
+								type={media?.mime_type}
+								src={media?.source_url}
+							/>
+						</video>
+						<div
+							css={css`
+								position: absolute;
+								color: var(--sc-color-white);
+								background-color: rgba(0, 0, 0, 0.5);
+								border-radius: 50%;
+								padding: var(--sc-spacing-small);
+								width: 30px;
+								height: 30px;
+								display: flex;
+								justify-content: center;
+								align-items: center;
+								backdrop-filter: blur(4px);
+
+								&::before {
+									content: '';
+									display: inline-block;
+									width: 0;
+									height: 0;
+									border-left: 18px solid
+										var(--sc-color-white);
+									border-top: 12px solid transparent;
+									border-bottom: 12px solid transparent;
+									margin-left: 2px;
+								}
+							`}
+						/>
+					</div>
+				) : (
+					<img
+						src={
+							media?.media_details?.sizes?.medium?.source_url ||
+							media?.source_url
+						}
+						css={css`
+							max-width: 100%;
+							aspect-ratio: 1 / 1;
+							object-fit: contain;
+							height: auto;
+							display: block;
+							border-radius: var(--sc-border-radius-medium);
+							pointer-events: none;
+						`}
+						alt={media?.alt_text}
+						{...(media?.title?.rendered
+							? { title: media?.title?.rendered }
+							: {})}
+						loading="lazy"
+					/>
+				)
+			) : (
+				<ScSkeleton
+					style={{
+						aspectRatio: '1 / 1',
+						'--border-radius': 'var(--sc-border-radius-medium)',
+					}}
+				/>
+			)}
+
 			{isFeatured && (
 				<ScTag
 					type="info"
@@ -239,105 +338,6 @@ export default ({
 					`}
 				></div>
 			</SortableKnob>
-
-			{media?.source_url ? (
-				isVideo(media) ? (
-					<div
-						css={css`
-							display: flex;
-							align-items: center;
-							justify-content: center;
-							height: 100%;
-							width: 100%;
-							position: relative;
-						`}
-					>
-						<video
-							ref={videoRef}
-							controls={false}
-							css={css`
-								max-width: 100%;
-								max-height: 100%;
-								object-fit: contain;
-								border-radius: var(--sc-border-radius-medium);
-								pointer-events: none;
-							`}
-							src={media?.source_url}
-							muted
-							loop
-							playsInline
-							{...(typeof item === 'object' &&
-							item?.thumbnail_image?.url
-								? {
-										poster:
-											typeof item === 'object' &&
-											item?.thumbnail_image?.url,
-								  }
-								: {})}
-						>
-							<source
-								type={media?.mime_type}
-								src={media?.source_url}
-							/>
-						</video>
-						<div
-							css={css`
-								position: absolute;
-								color: var(--sc-color-white);
-								background-color: rgba(0, 0, 0, 0.5);
-								border-radius: 50%;
-								padding: var(--sc-spacing-small);
-								width: 30px;
-								height: 30px;
-								display: flex;
-								justify-content: center;
-								align-items: center;
-								backdrop-filter: blur(4px);
-
-								&::before {
-									content: '';
-									display: inline-block;
-									width: 0;
-									height: 0;
-									border-left: 18px solid
-										var(--sc-color-white);
-									border-top: 12px solid transparent;
-									border-bottom: 12px solid transparent;
-									margin-left: 2px;
-								}
-							`}
-						/>
-					</div>
-				) : (
-					<img
-						src={
-							media?.media_details?.sizes?.medium?.source_url ||
-							media?.source_url
-						}
-						css={css`
-							max-width: 100%;
-							aspect-ratio: 1 / 1;
-							object-fit: contain;
-							height: auto;
-							display: block;
-							border-radius: var(--sc-border-radius-medium);
-							pointer-events: none;
-						`}
-						alt={media?.alt_text}
-						{...(media?.title?.rendered
-							? { title: media?.title?.rendered }
-							: {})}
-						loading="lazy"
-					/>
-				)
-			) : (
-				<ScSkeleton
-					style={{
-						aspectRatio: '1 / 1',
-						'--border-radius': 'var(--sc-border-radius-medium)',
-					}}
-				/>
-			)}
 		</div>
 	);
 };

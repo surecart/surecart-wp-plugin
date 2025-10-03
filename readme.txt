@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: ecommerce, online store, subscriptions, stripe, payments
 Requires at least: 6.6
 Tested up to: 6.8
-Stable tag: 3.15.0
+Stable tag: 3.15.1
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -313,6 +313,13 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 
 == Changelog ==
 
+= 3.15.1 - October 1st, 2025 =
+- Improvement: Improve message when customer has reached purchase limit of a product.
+- Fix: Media thumbnail badges on admin apear under the image.
+- Fix: RankMath adding unnecessary link in sitemap.
+- Fix: Issue with Etch backend showing floating cart icon.
+- Fix: Badge overlap in integrations section when integration is disabled.
+
 = 3.15.0 - September 30th, 2025 =
 - New: Product page video media.
 - New: Upsell replacement behavior.
@@ -326,7 +333,6 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 - Fix: Issue when updating customer's tax identifier from the order admin page.
 - Fix: Issue with Elementor where the "out of stock" label was not displaying a custom label on the front-end.
 - Fix: Missing space in resubscribe confirmation message.
-
 
 = 3.14.0 - September 15th, 2025 =
 - New: Quick add functionality for product lists.
