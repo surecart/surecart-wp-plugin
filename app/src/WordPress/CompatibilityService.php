@@ -144,6 +144,12 @@ class CompatibilityService {
 	 * @return string
 	 */
 	public function rankMathUrlFix( $canonical ) {
+		// Some Rank Math filters may pass boolean false to indicate the archive/link
+		// should not be included. If $canonical is empty or not a string, don't process.
+		if ( empty( $canonical ) || ! is_string( $canonical ) ) {
+			return $canonical;
+		}
+
 		return remove_query_arg( 'currency', $canonical );
 	}
 

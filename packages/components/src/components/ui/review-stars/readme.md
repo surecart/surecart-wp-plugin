@@ -9,17 +9,29 @@
 
 | Property | Attribute | Description | Type     | Default     |
 | -------- | --------- | ----------- | -------- | ----------- |
-| `color`  | `color`   |             | `string` | `undefined` |
 | `rating` | `rating`  |             | `number` | `undefined` |
 | `size`   | `size`    |             | `number` | `16`        |
 
 
 ## Shadow Parts
 
-| Part     | Description |
-| -------- | ----------- |
-| `"base"` |             |
+| Part     | Description                |
+| -------- | -------------------------- |
+| `"base"` | The elements base wrapper. |
 
+
+## Dependencies
+
+### Depends on
+
+- [sc-icon](../icon)
+
+### Graph
+```mermaid
+graph TD;
+  sc-review-stars --> sc-icon
+  style sc-review-stars fill:#f9f,stroke:#333,stroke-width:4px
+```
 
 ----------------------------------------------
 

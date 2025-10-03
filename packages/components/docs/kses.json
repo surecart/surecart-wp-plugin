@@ -1902,7 +1902,6 @@
     "slot": true
   },
   "sc-review-stars": {
-    "color": true,
     "rating": true,
     "size": true,
     "style": true,
