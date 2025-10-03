@@ -79,6 +79,7 @@ export default ({
 		attributes.push({
 			label: attributeLabels?.[rule.key],
 			value: rule.key,
+			supported_values: rule?.supported_values,
 		});
 	}
 
@@ -93,12 +94,32 @@ export default ({
 		? attribute.endsWith('.metadata') || 'metadata' === attribute
 		: false;
 
+	const attributeSupportedValues =
+		(attributes ?? []).find((attr) => attr.value === attribute)
+			?.supported_values || [];
+
 	const userRoleChoices = Object.entries(scData?.wp_user_roles).map(
 		([key, value]) => ({
 			label: value?.name,
 			value: key,
 		})
 	);
+
+	const formatLabel = (str) =>
+		str.replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
+
+	const renderSupportedValuesSelector = () => {
+		return (
+			<ScSelect
+				value={value}
+				onScChange={(e) => setValue(e.target.value)}
+				choices={(attributeSupportedValues ?? []).map((val) => ({
+					label: formatLabel(val),
+					value: val,
+				}))}
+			/>
+		);
+	};
 
 	const renderValueInput = () => {
 		const inputType = getInputType(attribute);
@@ -277,7 +298,9 @@ export default ({
 					choices={operators[attribute] || []}
 				/>
 
-				{renderValueInput()}
+				{attributeSupportedValues?.length
+					? renderSupportedValuesSelector()
+					: renderValueInput()}
 				<ScButton
 					circle
 					css={css`
