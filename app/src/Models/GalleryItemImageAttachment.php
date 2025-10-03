@@ -78,12 +78,12 @@ class GalleryItemImageAttachment extends ModelsGalleryItem implements GalleryIte
 						$this->id => wp_parse_args(
 							$metadata,
 							array(
-								'uploadedSrc'      => $full_data->src,
-								'imgClassNames'    => $full_data->class,
-								'targetWidth'      => $full_data->width,
-								'targetHeight'     => $full_data->height,
+								'uploadedSrc'      => $full_data->src ?? '',
+								'imgClassNames'    => $full_data->class ?? '',
+								'targetWidth'      => $full_data->width ?? 0,
+								'targetHeight'     => $full_data->height ?? 0,
 								'scaleAttr'        => false, // false or 'contain'.
-								'alt'              => $full_data->alt,
+								'alt'              => $full_data->alt ?? '',
 								// translators: %s is the image title.
 								'screenReaderText' => sprintf( __( 'Viewing image: %s.', 'surecart' ), $this->post_title ),
 								'galleryId'        => get_the_ID(),
