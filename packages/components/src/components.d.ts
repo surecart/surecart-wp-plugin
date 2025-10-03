@@ -3369,7 +3369,6 @@ export namespace Components {
         "showDetails": boolean;
     }
     interface ScReviewStars {
-        "color"?: string;
         "rating": number;
         "size": number;
     }
@@ -10602,7 +10601,6 @@ declare namespace LocalJSX {
         "showDetails"?: boolean;
     }
     interface ScReviewStars {
-        "color"?: string;
         "rating"?: number;
         "size"?: number;
     }
