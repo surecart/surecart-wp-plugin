@@ -4,6 +4,12 @@
 import { store, getContext, getElement } from '@wordpress/interactivity';
 
 store('surecart/video', {
+	state: {
+		get showControls() {
+			const context = getContext();
+			return !!context?.controls && !!context?.loaded;
+		},
+	},
 	callbacks: {
 		// Handle the play event.
 		handlePlay() {

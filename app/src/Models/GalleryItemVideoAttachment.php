@@ -280,6 +280,7 @@ class GalleryItemVideoAttachment extends ModelsGalleryItem implements GalleryIte
 				'alt'      => $this->item->alt_text ?? $this->item->post_title ?? '',
 				'title'    => $this->item->post_title ?? '',
 				'style'    => ! empty( $this->getMetadata( 'aspect_ratio' ) ) ? 'aspect-ratio: ' . esc_attr( $this->getMetadata( 'aspect_ratio' ) ) . ';' : '',
+				'controls' => $this->getMetadata( 'controls' ) ?? true,
 				'autoplay' => $this->getMetadata( 'autoplay' ) ?? false,
 				'loop'     => $this->getMetadata( 'loop' ) ?? false,
 				'muted'    => $this->getMetadata( 'muted' ) ?? false,
