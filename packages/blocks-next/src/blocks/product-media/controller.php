@@ -27,6 +27,8 @@ if ( $product->has_videos ) {
 	wp_enqueue_style( 'surecart-video' );
 }
 
+$auto_height = ! empty( $attributes['desktop_gallery'] ) ? true : ! empty( $attributes['auto_height'] ) && $attributes['auto_height'];
+
 // handle image.
 if ( count( $gallery ) === 1 ) {
 	$style = ! empty( $width ) ? 'max-width: min(' . esc_attr( $width ) . ', 100%);' : '';
@@ -36,8 +38,6 @@ if ( count( $gallery ) === 1 ) {
 // only enqueue if we are needing a slideshow.
 wp_enqueue_style( 'surecart-image-slider' );
 wp_enqueue_script_module( '@surecart/image-slider' );
-
-$auto_height = ! empty( $attributes['desktop_gallery'] ) ? true : ! empty( $attributes['auto_height'] ) && $attributes['auto_height'];
 
 // handle slideshow.
 $slider_options = array(
