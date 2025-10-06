@@ -76,12 +76,12 @@ export default ({ id }) => {
 	};
 
 	/**
-	 * Update the auto fee.
+	 * Update the Dynamic Price.
 	 */
 	const onSubmit = async () => {
 		try {
 			await save({
-				successMessage: __('Auto Fee updated.', 'surecart'),
+				successMessage: __('Dynamic Price updated.', 'surecart'),
 			});
 		} catch (e) {
 			console.error(e);
@@ -90,7 +90,7 @@ export default ({ id }) => {
 	};
 
 	/**
-	 * Delete the auto fee.
+	 * Delete the Dynamic Price.
 	 */
 	const onDelete = async () => {
 		try {
@@ -122,11 +122,11 @@ export default ({ id }) => {
 							<Logo display="block" />
 						</ScBreadcrumb>
 						<ScBreadcrumb href="admin.php?page=sc-auto-fees">
-							{__('Auto Fees', 'surecart')}
+							{__('Dynamic Pricing', 'surecart')}
 						</ScBreadcrumb>
 						<ScBreadcrumb>
 							<ScFlex style={{ gap: '1em' }}>
-								{__('Auto Fee', 'surecart')}
+								{__('Dynamic Price', 'surecart')}
 							</ScFlex>
 						</ScBreadcrumb>
 					</ScBreadcrumbs>
@@ -134,12 +134,12 @@ export default ({ id }) => {
 			}
 			sidebar={
 				<Box
-					title={__('Auto Fee Schedule', 'surecart')}
+					title={__('Schedule', 'surecart')}
 					loading={!hasLoadedAutoFee}
 				>
 					<ScFormControl
 						help={__(
-							'Time at which the auto fee becomes active & start being applied to the checkout.',
+							'Time at which the dynamic price becomes active & start being applied to the checkout.',
 							'surecart'
 						)}
 					>
@@ -156,7 +156,7 @@ export default ({ id }) => {
 					</ScFormControl>
 					<ScFormControl
 						help={__(
-							'Time at which the auto fee becomes inactive.',
+							'Time at which the dynamic price becomes inactive.',
 							'surecart'
 						)}
 					>
@@ -206,8 +206,8 @@ export default ({ id }) => {
 							pill
 						>
 							{autoFee?.enabled
-								? __('Auto Fee Active', 'surecart')
-								: __('Auto Fee Inactive', 'surecart')}
+								? __('Active', 'surecart')
+								: __('Inactive', 'surecart')}
 						</ScTag>
 					)}
 					<ScSwitch
@@ -221,7 +221,7 @@ export default ({ id }) => {
 					<SaveButton
 						busy={isSaving || isDeleting || !hasLoadedAutoFee}
 					>
-						{__('Save Auto Fee', 'surecart')}
+						{__('Save', 'surecart')}
 					</SaveButton>
 				</div>
 			}
@@ -250,7 +250,7 @@ export default ({ id }) => {
 				onCancel={() => setModal(false)}
 			>
 				{__(
-					'Permanently delete this Auto Fee? You cannot undo this action.',
+					'Permanently delete this Dynamic Price? You cannot undo this action.',
 					'surecart'
 				)}
 			</ConfirmDialog>

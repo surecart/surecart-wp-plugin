@@ -66,14 +66,11 @@ export default ({ autoFee = {}, onUpdate, loading }) => {
 
 	if (!rules?.conditions?.length) {
 		return (
-			<Box
-				title={__('Auto Fee Conditions', 'surecart')}
-				loading={loading}
-			>
+			<Box title={__('Conditions', 'surecart')} loading={loading}>
 				<ScCard>
 					<ScEmpty icon="settings">
 						{__(
-							'No conditions have been set for this auto fee.',
+							'No conditions have been set for this dynamic price.',
 							'surecart'
 						)}
 						<div>
@@ -111,7 +108,7 @@ export default ({ autoFee = {}, onUpdate, loading }) => {
 
 	return (
 		<Box
-			title={__('Auto Fee Conditions', 'surecart')}
+			title={__('Conditions', 'surecart')}
 			loading={loading || loadingRuleSchema}
 		>
 			<label
@@ -121,7 +118,10 @@ export default ({ autoFee = {}, onUpdate, loading }) => {
 					margin-bottom: 10px;
 				`}
 			>
-				{__('Apply this auto fee to Line Items where ', 'surecart')}
+				{__(
+					'Apply this dynamic price to Line Items where ',
+					'surecart'
+				)}
 			</label>
 			<ScFlex
 				flexDirection="column"

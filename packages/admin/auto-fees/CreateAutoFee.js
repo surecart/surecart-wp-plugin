@@ -46,7 +46,7 @@ export default ({ id, onCreateAutoFee }) => {
 			if (!createdAutoFee?.id) {
 				throw {
 					message: __(
-						'Could not auto fee. Please try again.',
+						'Could not create dynamic price. Please try again.',
 						'surecart'
 					),
 				};
@@ -66,7 +66,7 @@ export default ({ id, onCreateAutoFee }) => {
 				<span slot="title">{error}</span>
 			</ScAlert>
 
-			<Box title={__('Create New Auto Fee', 'surecart')}>
+			<Box title={__('Create New Dynamic Price', 'surecart')}>
 				<ScForm onScSubmit={onSubmit}>
 					<div
 						css={css`

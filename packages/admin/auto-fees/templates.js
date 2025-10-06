@@ -6,7 +6,7 @@ export default {
 		amount_adjustment: null,
 		discount: true,
 		fee_target: 'line_item',
-		name: __('New Blank Auto Fee', 'surecart'),
+		name: __('New Blank Dynamic Price', 'surecart'),
 		percent_adjustment: 50.0,
 	},
 	bogo: {

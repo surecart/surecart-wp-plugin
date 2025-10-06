@@ -40,11 +40,11 @@ export default ({ autoFee, onUpdate, loading }) => {
 	}, [adjustmentType, amount_adjustment, percent_adjustment]);
 
 	return (
-		<Box title={__('Auto Fee Details', 'surecart')} loading={loading}>
+		<Box title={__('Details', 'surecart')} loading={loading}>
 			<ScInput
 				label={__('Name', 'surecart')}
 				help={__(
-					"Your Auto Fee's name. This will not be visible to customers.",
+					"Your Dynamic Price's name. This will not be visible to customers.",
 					'surecart'
 				)}
 				value={name}
@@ -58,7 +58,7 @@ export default ({ autoFee, onUpdate, loading }) => {
 			<ScSelect
 				label={__('Target', 'surecart')}
 				help={__(
-					'The entity to which this auto fee applies.',
+					'The entity to which this dynamic price applies.',
 					'surecart'
 				)}
 				unselect={false}
@@ -89,7 +89,7 @@ export default ({ autoFee, onUpdate, loading }) => {
 			<ScSelect
 				label={__('Type', 'surecart')}
 				help={__(
-					'Whether this auto fee is a discount or a fee.',
+					'Whether this dynamic price is a discount or a fee.',
 					'surecart'
 				)}
 				unselect={false}
@@ -123,7 +123,7 @@ export default ({ autoFee, onUpdate, loading }) => {
 				<ScSelect
 					label={__('Adjustment Type', 'surecart')}
 					help={__(
-						'Whether this auto fee is a percentage or fixed amount adjustment.',
+						'Whether this dynamic price is a percentage or fixed amount adjustment.',
 						'surecart'
 					)}
 					unselect={false}
