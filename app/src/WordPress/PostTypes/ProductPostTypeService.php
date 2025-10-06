@@ -1202,7 +1202,7 @@ class ProductPostTypeService {
 
 		$gallery_image_urls = ! empty( $product->gallery ) ? array_map(
 			function ( $media ) {
-				return $media->attributes()->src;
+				return $media->attributes()->src ?? '';
 			},
 			$product->gallery
 		) : '';

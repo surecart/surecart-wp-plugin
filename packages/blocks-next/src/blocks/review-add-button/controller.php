@@ -1,0 +1,35 @@
+<?php
+$icon                   = $attributes['icon'] ?? 'edit-2';
+$product_id             = $block->context['postId'] ?? null;
+$show_icon              = in_array( $attributes['button_type'], [ 'icon', 'both' ], true );
+$show_text              = in_array( $attributes['button_type'], [ 'text', 'both' ], true );
+$icon_position          = $attributes['icon_position'] ?? 'before';
+$label                  = $attributes['label'] ?? __( 'Write a Review', 'surecart' );
+$gap                    = ! empty( $attributes['style']['spacing']['blockGap'] ) ? \SureCart::block()->styles()->getBlockGapPresetCssVar( $attributes['style']['spacing']['blockGap'] ) : '';
+$alignment              = ! empty( $attributes['style']['typography']['textAlign'] ) ? $attributes['style']['typography']['textAlign'] : '';
+$width_class            = ! empty( $attributes['width'] ) ? 'has-custom-width wp-block-button__width-' . $attributes['width'] : '';
+$show_loading_indicator = $attributes['show_loading_indicator'] ?? false;
+
+$style = ! empty( $gap )
+	? esc_attr( safecss_filter_attr( 'gap:' . $gap ) ) . ';'
+	: '';
+
+if ( ! empty( $alignment ) ) {
+	$style .= 'justify-content:' . esc_attr( $alignment ) . ';';
+}
+
+$styles = sc_get_block_styles();
+
+$wrapper_style = '';
+
+if ( ! empty( $styles['declarations'] ) ) {
+	$wrapper_style .= ! empty( $styles['declarations']['margin-top'] ) ? esc_attr( safecss_filter_attr( 'margin-top:' . $styles['declarations']['margin-top'] ) ) . ';' : '';
+	$wrapper_style .= ! empty( $styles['declarations']['margin-bottom'] ) ? esc_attr( safecss_filter_attr( 'margin-bottom:' . $styles['declarations']['margin-bottom'] ) ) . ';' : '';
+	$wrapper_style .= ! empty( $styles['declarations']['margin-left'] ) ? esc_attr( safecss_filter_attr( 'margin-left:' . $styles['declarations']['margin-left'] ) ) . ';' : '';
+	$wrapper_style .= ! empty( $styles['declarations']['margin-right'] ) ? esc_attr( safecss_filter_attr( 'margin-right:' . $styles['declarations']['margin-right'] ) ) . ';' : '';
+}
+
+$review_form_link = add_query_arg( 'product-review-form', $product_id );
+$product          = sc_get_product();
+
+return 'file:./button-review-write.php';

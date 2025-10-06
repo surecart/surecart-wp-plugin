@@ -7,17 +7,17 @@
 
 ## Properties
 
-| Property | Attribute | Description | Type     | Default     |
-| -------- | --------- | ----------- | -------- | ----------- |
-| `rating` | `rating`  |             | `number` | `undefined` |
-| `size`   | `size`    |             | `number` | `16`        |
+| Property | Attribute | Description | Type     | Default |
+| -------- | --------- | ----------- | -------- | ------- |
+| `rating` | `rating`  |             | `number` | `0`     |
+| `size`   | `size`    |             | `number` | `20`    |
 
 
 ## Shadow Parts
 
-| Part     | Description                |
-| -------- | -------------------------- |
-| `"base"` | The elements base wrapper. |
+| Part     | Description |
+| -------- | ----------- |
+| `"base"` |             |
 
 
 ## Dependencies

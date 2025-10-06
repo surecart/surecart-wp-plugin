@@ -13,6 +13,7 @@ const { sprintf, __ } = wp.i18n;
 const { state, actions } = store('surecart/product-review', {
 	state: {
 		loading: false,
+		open: false,
 	},
 
 	actions: {
@@ -52,6 +53,10 @@ const { state, actions } = store('surecart/product-review', {
 				context.busy = false;
 			}
 		},
+		handleOpenChange() {
+			const context = getContext();
+			console.log('context', context);
+		},
 	},
 
 	callbacks: {
@@ -65,3 +70,5 @@ const { state, actions } = store('surecart/product-review', {
 		},
 	},
 });
+
+console.log('product-review::state', state);

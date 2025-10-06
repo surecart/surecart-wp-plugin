@@ -1,0 +1,69 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "surecart/product-review-form-content",
+	"title": "Review Form Content",
+	"description": "Provide a content textarea field for product reviews.",
+	"version": "1.0.0",
+	"category": "surecart-product-page",
+	"example": {},
+	"ancestor": ["surecart/product-review-form"],
+	"attributes": {
+		"label": {
+			"type": "string",
+			"default": "Review Content"
+		},
+		"placeholder": {
+			"type": "string",
+			"default": "Share your thoughts about this product"
+		},
+		"required": {
+			"type": "boolean",
+			"default": false
+		},
+		"rows": {
+			"type": "number",
+			"default": 4
+		}
+	},
+	"supports": {
+		"interactivity": true,
+		"color": {
+			"gradients": true,
+			"link": false,
+			"__experimentalDefaultControls": {
+				"background": true,
+				"text": true
+			}
+		},
+		"spacing": {
+			"margin": true,
+			"padding": true,
+			"__experimentalDefaultControls": {
+				"padding": true
+			}
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true,
+			"__experimentalFontWeight": true
+		},
+		"__experimentalBorder": {
+			"color": true,
+			"radius": true,
+			"style": true,
+			"width": true,
+			"__experimentalDefaultControls": {
+				"color": true,
+				"radius": true,
+				"style": true,
+				"width": true
+			}
+		}
+	},
+	"textdomain": "surecart",
+	"render": "file:./view.php",
+	"editorScript": "file:./index.js",
+	"style": ["file:./style-index.css"],
+	"viewScriptModule": ["@surecart/product-review-form"]
+}
