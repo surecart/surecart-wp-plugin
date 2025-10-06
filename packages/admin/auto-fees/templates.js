@@ -1,6 +1,14 @@
 import { __ } from '@wordpress/i18n';
 
 export default {
+	start_blank: {
+		enabled: false,
+		amount_adjustment: null,
+		discount: true,
+		fee_target: 'line_item',
+		name: __('New Blank Auto Fee', 'surecart'),
+		percent_adjustment: 50.0,
+	},
 	bogo: {
 		enabled: true,
 		amount_adjustment: null,

@@ -8,8 +8,7 @@ import { __ } from '@wordpress/i18n';
 import { __experimentalConfirmDialog as ConfirmDialog } from '@wordpress/components';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
-import { useState, useReducer } from '@wordpress/element';
-import { getDate } from '@wordpress/date';
+import { useState } from '@wordpress/element';
 
 /**
  * Internal dependencies.
@@ -27,63 +26,25 @@ import {
 	ScTag,
 	ScFormControl,
 } from '@surecart/components-react';
-import { store as dataStore } from '@surecart/data';
 import useSave from '../settings/UseSave';
 import Error from '../components/Error';
 import Logo from '../templates/Logo';
 import UpdateModel from '../templates/UpdateModel';
 import Details from './modules/Details';
-import TemplatesSelector from './modules/TemplatesSelector';
 import Rules from './modules/Rules';
 import SaveButton from '../templates/SaveButton';
 import Box from '../ui/Box';
 import DateTimePicker from './modules/DateTimePicker';
-import templates from './templates';
 
-export default ({ setId }) => {
+export default ({ id }) => {
 	const [error, setError] = useState(null);
-	const [loading, setLoading] = useState(false);
 	const [modal, setModal] = useState(false);
-	const [isCreating, setIsCreating] = useState(false);
 	const { save } = useSave();
 	const { deleteEntityRecord, editEntityRecord } = useDispatch(coreStore);
-	const id = useSelect((select) => select(dataStore).selectPageId());
-	const { saveEntityRecord } = useDispatch(coreStore);
-
-	const [newAutoFee, updateNewAutoFee] = useReducer(
-		(currentState, newState) => {
-			return { ...currentState, ...newState };
-		},
-		{
-			name: '',
-			enabled: true,
-			amount_adjustment: null,
-			percent_adjustment: null,
-			discount: false,
-			start_at: Date.parse(getDate(new Date())) / 1000,
-			end_at: null,
-			fee_target: 'line_item',
-			rules: {
-				type: 'group',
-				combinator: 'or',
-				conditions: [],
-			},
-		}
-	);
 
 	const { autoFee, isSaving, loadError, isDeleting, hasLoadedAutoFee } =
 		useSelect(
 			(select) => {
-				if (!id) {
-					return {
-						autoFee: newAutoFee,
-						isSaving: false,
-						loadError: null,
-						isDeleting: false,
-						hasLoadedAutoFee: true,
-					};
-				}
-
 				const entityData = ['surecart', 'auto-fee', id];
 
 				return {
@@ -107,14 +68,10 @@ export default ({ setId }) => {
 					]),
 				};
 			},
-			[id, newAutoFee]
+			[id]
 		);
 
 	const updateAutoFee = async (data) => {
-		if (!id) {
-			updateNewAutoFee(data);
-			return;
-		}
 		editEntityRecord('surecart', 'auto-fee', id, data);
 	};
 
@@ -123,18 +80,6 @@ export default ({ setId }) => {
 	 */
 	const onSubmit = async () => {
 		try {
-			if (!id) {
-				setIsCreating(true);
-				const createdAutoFee = await saveEntityRecord(
-					'surecart',
-					'auto-fee',
-					newAutoFee,
-					{ throwOnError: true }
-				);
-				setId(createdAutoFee.id);
-				setIsCreating(false);
-			}
-
 			await save({
 				successMessage: __('Auto Fee updated.', 'surecart'),
 			});
@@ -190,7 +135,7 @@ export default ({ setId }) => {
 			sidebar={
 				<Box
 					title={__('Auto Fee Schedule', 'surecart')}
-					loading={!hasLoadedAutoFee || loading}
+					loading={!hasLoadedAutoFee}
 				>
 					<ScFormControl
 						help={__(
@@ -235,64 +180,49 @@ export default ({ setId }) => {
 						gap: 0.5em;
 					`}
 				>
-					{id && (
-						<>
-							<ScDropdown slot="suffix" placement="bottom-end">
-								<ScButton
-									type="text"
-									slot="trigger"
-									loading={isSaving || isDeleting}
-								>
-									<ScIcon name="more-horizontal" />
-								</ScButton>
-								<ScMenu>
-									<ScMenuItem
-										onClick={() => setModal('delete')}
-									>
-										<ScIcon
-											slot="prefix"
-											style={{ opacity: 0.5 }}
-											name="trash"
-										/>
-										{__('Delete', 'surecart')}
-									</ScMenuItem>
-								</ScMenu>
-							</ScDropdown>
-							{hasLoadedAutoFee && (
-								<ScTag
-									type={
-										autoFee?.enabled ? 'success' : 'default'
-									}
-									size="small"
-									pill
-								>
-									{autoFee?.enabled
-										? __('Auto Fee Active', 'surecart')
-										: __('Auto Fee Inactive', 'surecart')}
-								</ScTag>
-							)}
-							<ScSwitch
-								checked={autoFee?.enabled}
-								onScChange={(e) =>
-									updateAutoFee({
-										enabled: e.target.checked,
-									})
-								}
-							/>
-							<SaveButton
-								busy={
-									isSaving || isDeleting || !hasLoadedAutoFee
-								}
-							>
-								{__('Save Auto Fee', 'surecart')}
-							</SaveButton>
-						</>
-					)}
-					{!id && (
-						<ScButton type="primary" submit loading={isCreating}>
-							{__('Create', 'surecart')}
+					<ScDropdown slot="suffix" placement="bottom-end">
+						<ScButton
+							type="text"
+							slot="trigger"
+							loading={isSaving || isDeleting}
+						>
+							<ScIcon name="more-horizontal" />
 						</ScButton>
+						<ScMenu>
+							<ScMenuItem onClick={() => setModal('delete')}>
+								<ScIcon
+									slot="prefix"
+									style={{ opacity: 0.5 }}
+									name="trash"
+								/>
+								{__('Delete', 'surecart')}
+							</ScMenuItem>
+						</ScMenu>
+					</ScDropdown>
+					{hasLoadedAutoFee && (
+						<ScTag
+							type={autoFee?.enabled ? 'success' : 'default'}
+							size="small"
+							pill
+						>
+							{autoFee?.enabled
+								? __('Auto Fee Active', 'surecart')
+								: __('Auto Fee Inactive', 'surecart')}
+						</ScTag>
 					)}
+					<ScSwitch
+						checked={autoFee?.enabled}
+						onScChange={(e) =>
+							updateAutoFee({
+								enabled: e.target.checked,
+							})
+						}
+					/>
+					<SaveButton
+						busy={isSaving || isDeleting || !hasLoadedAutoFee}
+					>
+						{__('Save Auto Fee', 'surecart')}
+					</SaveButton>
 				</div>
 			}
 		>
@@ -301,23 +231,15 @@ export default ({ setId }) => {
 				setError={setError}
 				margin="80px"
 			/>
-			{!id && (
-				<TemplatesSelector
-					templates={templates}
-					autoFee={autoFee || {}}
-					onUpdate={updateAutoFee}
-					loading={!hasLoadedAutoFee || loading}
-				/>
-			)}
 			<Details
 				autoFee={autoFee || {}}
 				onUpdate={updateAutoFee}
-				loading={!hasLoadedAutoFee || loading}
+				loading={!hasLoadedAutoFee}
 			/>
 			<Rules
 				autoFee={autoFee || {}}
 				onUpdate={updateAutoFee}
-				loading={!hasLoadedAutoFee || loading}
+				loading={!hasLoadedAutoFee}
 			/>
 			<ConfirmDialog
 				isOpen={'delete' === modal}

@@ -9,11 +9,11 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies.
  */
-import { ScInput, ScPriceInput, ScSelect } from '@surecart/components-react';
+import { ScSelect } from '@surecart/components-react';
 import Box from '../../ui/Box';
-import { useState, useEffect } from '@wordpress/element';
+import { useState } from '@wordpress/element';
 
-export default ({ templates, loading, onUpdate, autoFee }) => {
+export default ({ templates, loading, onUpdate }) => {
 	const [currentTemplate, setCurrentTemplate] = useState(null);
 
 	const getTemplateChoices = () => {
