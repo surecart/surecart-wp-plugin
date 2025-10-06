@@ -3,7 +3,7 @@
 	\SureCart::render(
 		'layouts/partials/admin-index-header',
 		[
-			'title'    => __( 'Auto Fees & Discounts', 'surecart' ),
+			'title'    => __( 'Dynamic Pricing', 'surecart' ),
 			'new_link' => \SureCart::getUrl()->edit( 'auto-fees' ),
 		]
 	);

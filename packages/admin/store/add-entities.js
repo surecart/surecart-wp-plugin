@@ -85,7 +85,7 @@ dispatch(coreStore).addEntities([
 	{
 		name: 'auto-fee',
 		kind: 'surecart',
-		label: __('Auto Fees', 'surecart'),
+		label: __('Dynamic Pricing', 'surecart'),
 		baseURL: '/surecart/v1/auto_fees',
 		baseURLParams: { context: 'edit' },
 	},

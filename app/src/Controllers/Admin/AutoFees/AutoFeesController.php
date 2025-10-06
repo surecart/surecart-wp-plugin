@@ -21,10 +21,10 @@ class AutoFeesController extends AdminController {
 			array(
 				'breadcrumbs' => [
 					'auto_fee' => [
-						'title' => __( 'Auto Fees & Discounts', 'surecart' ),
+						'title' => __( 'Dynamic Pricing', 'surecart' ),
 					],
 				],
-				'report_url'       => SURECART_REPORTS_URL . 'subscriptions',
+				'report_url'  => SURECART_REPORTS_URL . 'subscriptions',
 			)
 		);
 
@@ -84,7 +84,7 @@ class AutoFeesController extends AdminController {
 
 		\SureCart::flash()->add(
 			'success',
-			$updated->active ? __( 'Auto Fee enabled.', 'surecart' ) : __( 'Auto Fee disabled.', 'surecart' )
+			$updated->active ? __( 'Dynamic Price enabled.', 'surecart' ) : __( 'Dynamic Price disabled.', 'surecart' )
 		);
 
 		return \SureCart::redirect()->to(

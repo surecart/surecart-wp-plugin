@@ -48,7 +48,7 @@ class AutoFeesListTable extends ListTable {
 		?>
 	<form class="search-form"
 		method="get">
-		<?php $this->search_box( __( 'Search Auto Fees', 'surecart' ), 'order' ); ?>
+		<?php $this->search_box( __( 'Search Dynamic Prices', 'surecart' ), 'order' ); ?>
 		<input type="hidden"
 			name="id"
 			value="1" />

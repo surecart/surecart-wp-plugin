@@ -341,10 +341,10 @@ class AdminMenuPageService {
 		);
 
 		/**
-		 * Auto Fees & Discounts.
+		 * Dynamic Pricing.
 		 */
 		$this->pages += array(
-			'auto_fee'                 => \add_submenu_page( $this->slug, __( 'Auto Fees & Discounts', 'surecart' ), __( 'Auto Fees & Discounts', 'surecart' ), 'edit_sc_products', 'sc-auto-fees', '__return_false' ),
+			'auto_fee'                 => \add_submenu_page( $this->slug, __( 'Dynamic Pricing', 'surecart' ), __( 'Dynamic Pricing', 'surecart' ), 'edit_sc_products', 'sc-auto-fees', '__return_false' ),
 		);
 
 		/**
