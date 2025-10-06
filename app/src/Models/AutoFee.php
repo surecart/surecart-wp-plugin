@@ -37,7 +37,15 @@ class AutoFee extends Model {
 	 * @return array $rule_json
 	 */
 	public function handleCustomAttributes( $rule_json ) {
+		if ( empty( $rule_json ) ) {
+			return [];
+		}
+
 		$rule_array = $this->convertObjectToArray( $rule_json );
+
+		if ( empty( $rule_array ) || ! is_array( $rule_array ) ) {
+			return [];
+		}
 
 		foreach ( $rule_array as $key => &$value ) {
 			if ( is_array( $value ) ) {
