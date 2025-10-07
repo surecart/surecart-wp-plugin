@@ -108,7 +108,6 @@ export class ScOrder {
   }
 
   renderCheckoutFees(checkout: Checkout) {
-    console.log('checkout', checkout);
     if (!checkout?.checkout_fees?.data?.length) {
       return null;
     }

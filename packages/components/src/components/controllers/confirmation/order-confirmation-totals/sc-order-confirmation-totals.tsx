@@ -47,12 +47,47 @@ export class ScOrderConfirmationTotals {
     );
   }
 
+  renderCheckoutFees(checkout: Checkout) {
+    if (!checkout?.checkout_fees?.data?.length) {
+      return null;
+    }
+
+    return (
+      <Fragment>
+        {checkout?.checkout_fees?.data?.map(fee => (
+          <sc-line-item key={fee?.id}>
+            <span slot="description">{fee?.description}</span>
+            <span slot="price">{fee?.display_amount}</span>
+          </sc-line-item>
+        ))}
+      </Fragment>
+    );
+  }
+
+  renderShippingFees(checkout: Checkout) {
+    if (!checkout?.shipping_fees?.data?.length) {
+      return null;
+    }
+
+    return (
+      <Fragment>
+        {checkout?.shipping_fees?.data?.map(fee => (
+          <sc-line-item key={fee?.id}>
+            <span slot="description">{fee?.description}</span>
+            <span slot="price">{fee?.display_amount}</span>
+          </sc-line-item>
+        ))}
+      </Fragment>
+    );
+  }
+
   render() {
     const shippingMethod = (this.order?.selected_shipping_choice as ShippingChoice)?.shipping_method as ShippingMethod;
     const shippingMethodName = shippingMethod?.name;
     return (
       <div class={{ 'line-item-totals': true }}>
         {this.order?.subtotal_amount !== this.order?.total_amount && (
+          <Fragment>
           <sc-line-item>
             <span slot="description">{__('Subtotal', 'surecart')}</span>
             <span
@@ -65,6 +100,8 @@ export class ScOrderConfirmationTotals {
               {this.order?.subtotal_display_amount}
             </span>
           </sc-line-item>
+          {this.renderCheckoutFees(this.order)}
+          </Fragment>
         )}
 
         {!!this.order?.trial_amount && (
@@ -120,6 +157,7 @@ export class ScOrderConfirmationTotals {
         )}
 
         {!!this.order?.shipping_amount && (
+          <Fragment>
           <sc-line-item>
             <span slot="description">{`${__('Shipping', 'surecart')} ${shippingMethodName ? `(${shippingMethodName})` : ''}`}</span>
             <span
@@ -132,6 +170,8 @@ export class ScOrderConfirmationTotals {
               {this.order?.shipping_display_amount}
             </span>
           </sc-line-item>
+          {this.renderShippingFees(this.order)}
+          </Fragment>
         )}
 
         {!!this.order?.tax_amount && (
