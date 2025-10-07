@@ -11,7 +11,7 @@ interface GalleryItem {
 	 *
 	 * @return string
 	 */
-	public function html( $size = 'full', $attr = [] ) : string;
+	public function html( $size = 'full', $attr = [] ): string;
 
 	/**
 	 * Get the page descriptoin attribute
@@ -19,7 +19,7 @@ interface GalleryItem {
 	 * @param string $size The size of the image.
 	 * @param array  $attr The attributes for the tag.
 	 *
-	 * @return string
+	 * @return object
 	 */
-	public function attributes( $size = 'full', $attr = [] );
+	public function attributes( $size = 'full', $attr = [] ): object;
 }

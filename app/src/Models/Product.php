@@ -661,11 +661,17 @@ class Product extends Model implements PageModel {
 	 * @return \SureCart\Support\Contracts\GalleryItem|null;
 	 */
 	public function getFeaturedImageAttribute() {
-		$gallery = array_values( $this->gallery ?? array() );
+		$gallery     = array_values( $this->gallery ?? array() );
+		$first_media = $gallery[0] ?? [];
 
-		if ( ! empty( $gallery ) ) {
-			return $gallery[0] ?? null;
+		if ( $first_media instanceof GalleryItemAttachment && $first_media->isVideo() ) {
+			return $this->getVideoThumbnailOrFallback( $first_media, $gallery );
 		}
+
+		if ( ! empty( $first_media ) ) {
+			return $first_media;
+		}
+
 		if ( empty( $this->featured_product_media ) ) {
 			return null;
 		}
@@ -915,16 +921,32 @@ class Product extends Model implements PageModel {
 				array_filter(
 					array_map(
 						function ( $media ) {
-							return $media->id;
+							return $media->id ?? null;
 						},
 						$this->product_medias->data ?? array()
-					)
-				),
+					),
+					function ( $id ) {
+						return ! empty( $id );
+					}
+				)
 			);
 		}
 
-		// gallery.
-		return json_decode( $this->metadata->gallery_ids ?? '' );
+		// Get the raw gallery ids from metadata.
+		$gallery_ids = $this->metadata->gallery_ids ?? '';
+
+		// Check if it's already an array, if not, we need to decode it.
+		if ( is_array( $gallery_ids ) ) {
+			return $gallery_ids;
+		}
+
+		// If the JSON has been corrupted to PHP syntax, fix it.
+		if ( is_string( $gallery_ids ) && strpos( $gallery_ids, '=>' ) !== false ) {
+			$gallery_ids = str_replace( ' => ', ': ', $gallery_ids );
+		}
+
+		$decoded = json_decode( $gallery_ids, true );
+		return is_array( $decoded ) ? $decoded : array();
 	}
 
 	/**
@@ -952,13 +974,38 @@ class Product extends Model implements PageModel {
 			return $cached;
 		}
 
+		// Get gallery_ids using the accessor method which handles metadata parsing.
+		$gallery_ids = $this->getGalleryIdsAttribute();
+		if ( ! is_array( $gallery_ids ) ) {
+			$gallery_ids = array();
+		}
+
+		$product_featured_image = $this->getFeaturedImageAttribute();
+
 		$gallery = array_values(
 			array_filter(
 				array_map(
-					function ( $id ) {
+					function ( $gallery_item ) use ( $product_featured_image ) {
+						// Extract the ID from the gallery item (can be int, string(ProductMedia) or object).
+						$id = is_string( $gallery_item ) ? $gallery_item : ( is_int( $gallery_item ) ? intval( $gallery_item ) : intval( ( (object) $gallery_item )->id ?? 0 ) );
+
 						// this is an attachment id.
 						if ( is_int( $id ) ) {
-							return new GalleryItemAttachment( $id );
+							$attachment = GalleryItemAttachment::create( $gallery_item, $product_featured_image );
+
+							// if the attachment does not exist, use the product featured image.
+							if ( ! $attachment->exists() ) {
+								$attachment = GalleryItemAttachment::create( $product_featured_image );
+							}
+
+							if ( is_object( $gallery_item ) || is_array( $gallery_item ) ) {
+								$item = (object) $gallery_item;
+								$attachment->setMetadata( 'variant_option', $item->variant_option ?? null );
+								$attachment->setMetadata( 'thumbnail_image', $item->thumbnail_image ?? null );
+								$attachment->setMetadata( 'aspect_ratio', $item->aspect_ratio ?? null );
+							}
+
+							return $attachment;
 						}
 
 						// get the product media item that matches the id.
@@ -981,7 +1028,7 @@ class Product extends Model implements PageModel {
 				),
 				function ( $item ) {
 					// it must have a src at least.
-					return ! empty( $item ) && ! empty( $item->attributes()->src );
+					return ! empty( $item ) && $item->exists();
 				}
 			)
 		);
@@ -1110,5 +1157,38 @@ class Product extends Model implements PageModel {
 	 */
 	public function getCatalogedAtDateTimeAttribute() {
 		return ! empty( $this->cataloged_at ) ? TimeDate::formatDateAndTime( $this->cataloged_at ) : '';
+	}
+
+	/**
+	 * Get the video thumbnail or fallback to the next image in the gallery.
+	 *
+	 * @param GalleryItemAttachment $first_media The first media item.
+	 * @param array                 $gallery The gallery items.
+	 *
+	 * @return GalleryItemAttachment|null
+	 */
+	private function getVideoThumbnailOrFallback( $first_media, $gallery ) {
+		$thumbnail_image = $first_media->getMetadata( 'thumbnail_image' ) ?? null;
+		if ( ! empty( $thumbnail_image ) ) {
+			return GalleryItemAttachment::create( $thumbnail_image );
+		}
+
+		// If no thumbnail, look for next image in gallery.
+		foreach ( $gallery as $media ) {
+			if ( false !== strpos( $media->post_mime_type ?? '', 'image' ) ) {
+				return $media;
+			}
+		}
+
+		return null;
+	}
+
+	/**
+	 * Get if the product has videos.
+	 *
+	 * @return bool
+	 */
+	public function getHasVideosAttribute(): bool {
+		return ! empty( array_filter( $this->gallery, fn( $media ) => $media->isVideo() ) );
 	}
 }

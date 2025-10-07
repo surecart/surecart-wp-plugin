@@ -536,8 +536,8 @@ class AddToCartButton extends \Elementor\Widget_Base {
 				array(
 					'checkoutUrl'     => esc_url( \SureCart::pages()->url( 'checkout' ) ),
 					'buttonText'      => $settings['button_text'] ?? ( $is_add_to_cart ? __( 'Add to Cart', 'surecart' ) : __( 'Buy Now', 'surecart' ) ),
-					'outOfStockText'  => esc_attr( __( 'Sold Out', 'surecart' ) ),
-					'unavailableText' => esc_attr( __( 'Unavailable For Purchase', 'surecart' ) ),
+					'outOfStockText'  => $settings['button_out_of_stock_text'] ?? esc_attr( __( 'Sold Out', 'surecart' ) ),
+					'unavailableText' => $settings['button_unavailable_text'] ?? esc_attr( __( 'Unavailable For Purchase', 'surecart' ) ),
 					'addToCart'       => $is_add_to_cart,
 				),
 				JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP

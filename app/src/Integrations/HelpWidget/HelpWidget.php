@@ -51,6 +51,11 @@ class HelpWidget {
 			.bb-feedback-button {
 				z-index: 99999 !important;
 			}
+			
+			/* Add bottom padding to admin pages to prevent Gleap widget from overlapping pagination */
+			.wrap {
+				padding-bottom: 45px;
+			}
 		</style>
 
 		<?php

@@ -47,7 +47,7 @@ export default ({ loading, checkout, onManuallyRefetchOrder }) => {
 			// Update the tax on the checkout.
 			await saveEntityRecord(
 				'surecart',
-				'checkout',
+				'draft-checkout',
 				{
 					id: checkout?.id,
 					tax_identifier: taxIdentifier,

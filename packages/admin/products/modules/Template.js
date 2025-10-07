@@ -147,7 +147,7 @@ export default ({ product, updateProduct, post, loading }) => {
 				template && (
 					<ScButton target="_blank" type="default" href={editUrl}>
 						<ScIcon name="edit" slot="prefix" />
-						{__('Edit Template', 'surecart')}
+						{__('Edit Product Template', 'surecart')}
 					</ScButton>
 				)
 			}
