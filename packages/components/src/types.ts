@@ -784,6 +784,16 @@ export interface Checkout extends Object {
     pagination: Pagination;
     data: Array<Subscription>;
   };
+  checkout_fees: {
+    object: 'list';
+    pagination: Pagination;
+    data: Array<Fee>;
+  };
+  shipping_fees: {
+    object: 'list';
+    pagination: Pagination;
+    data: Array<Fee>;
+  };
   purchases: {
     object: 'list';
     pagination: Pagination;

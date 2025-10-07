@@ -1,7 +1,8 @@
-import { Component, Host, Prop, h } from '@stencil/core';
+import { Component, Fragment, Host, Prop, h } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { state as formState } from '@store/form';
 import { state as checkoutState } from '@store/checkout';
+import { Checkout } from 'src/types';
 
 @Component({
   tag: 'sc-line-item-shipping',
@@ -12,6 +13,23 @@ export class ScLineItemShipping {
   /**Label */
   @Prop() label: string;
 
+  renderShippingFees(checkout: Checkout) {
+    if (!checkout?.shipping_fees?.data?.length) {
+      return null;
+    }
+
+    return (
+      <Fragment>
+        {checkout?.shipping_fees?.data?.map(fee => (
+          <sc-line-item key={fee.id}>
+            <span slot="description">{fee.description}</span>
+            <span slot="price">{fee.display_amount}</span>
+          </sc-line-item>
+        ))}
+      </Fragment>
+    );
+  }
+  
   render() {
     const { checkout } = checkoutState;
 
@@ -33,6 +51,7 @@ export class ScLineItemShipping {
       <sc-line-item>
         <span slot="description">{this.label || __('Shipping', 'surecart')}</span>
         <span slot="price">{checkout?.shipping_display_amount}</span>
+        {this.renderShippingFees(checkout)}
       </sc-line-item>
     );
   }
