@@ -61,7 +61,9 @@ class Variant extends Model {
 		// we have wp media.
 		if ( ! empty( $this->metadata->wp_media ) ) {
 			$item = GalleryItemAttachment::create( $this->metadata->wp_media );
-			return $item->attributes( 'thumbnail' );
+			if ( ! empty( $item ) && $item->exists() ) {
+				return $item->attributes( 'thumbnail' );
+			}
 		}
 
 		// we have a fallback model from the platform.
