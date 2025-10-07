@@ -1,5 +1,5 @@
 <div class="sc-video-thumbnail">
-	<img class="<?php echo esc_attr( $class ?? '' ); ?>" src="<?php echo esc_url( $src ); ?>" alt="<?php echo esc_attr( $alt ); ?>">
+	<img class="<?php echo esc_attr( $class ?? '' ); ?>" src="<?php echo esc_url( $src ?? '' ); ?>" alt="<?php echo esc_attr( $alt ?? '' ); ?>">
 	<div aria-role="button" tabindex="0" class="sc-video-play-button" aria-label="<?php echo esc_attr__( 'Play video', 'surecart' ); ?>">
 		<?php
 		echo wp_kses(
