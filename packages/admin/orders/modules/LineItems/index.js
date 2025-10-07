@@ -37,6 +37,8 @@ const status = {
 
 export default ({ order, checkout, chargeIds }) => {
 	const line_items = checkout?.line_items?.data;
+	const checkout_fees = checkout?.checkout_fees?.data;
+	const shipping_fees = checkout?.shipping_fees?.data;
 
 	// get the refunds.
 	const { records: refunds, hasResolved } = useEntityRecords(
@@ -249,7 +251,6 @@ export default ({ order, checkout, chargeIds }) => {
 						></ScProductLineItem>
 					);
 				})}
-
 				{/* Subtotal */}
 				{checkout?.subtotal_amount !== checkout?.total_amount && (
 					<LineItem
@@ -257,6 +258,31 @@ export default ({ order, checkout, chargeIds }) => {
 						currency={checkout?.currency}
 						value={checkout?.subtotal_amount}
 					/>
+				)}
+				{checkout_fees?.length > 0 && (
+					<Fragment>
+						{checkout_fees?.map((fee) => (
+							<LineItem
+								key={fee?.id}
+								label={fee?.description}
+								currency={checkout?.currency}
+								value={fee?.amount}
+							/>
+						))}
+					</Fragment>
+				)}
+
+				{shipping_fees?.length > 0 && (
+					<Fragment>
+						{shipping_fees?.map((fee) => (
+							<LineItem
+								key={fee?.id}
+								label={fee?.description}
+								currency={checkout?.currency}
+								value={fee?.amount}
+							/>
+						))}
+					</Fragment>
 				)}
 
 				{/* Trial */}
