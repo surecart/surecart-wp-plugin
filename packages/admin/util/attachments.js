@@ -117,7 +117,7 @@ export const normalizeMedia = (media) => {
  *
  * @returns {Promise<string>} - Base64 encoded PNG thumbnail.
  */
-export const extractVideoThumbnail = (videoUrl, seekTime = 1, options = {}) => {
+export const extractVideoThumbnail = (videoUrl, seekTime = 0.1, options = {}) => {
 	const cacheKey = `${videoUrl}_${seekTime}`;
 	if (thumbnailCache.has(cacheKey)) {
 		return Promise.resolve(thumbnailCache.get(cacheKey));
@@ -126,7 +126,7 @@ export const extractVideoThumbnail = (videoUrl, seekTime = 1, options = {}) => {
 	const {
 		maxWidth = 1600,
 		maxHeight = 1200,
-		quality = 0.8,
+		quality = 1,
 		format = 'png',
 		timeout = 30000, // 30 seconds timeout.
 	} = options;
@@ -320,7 +320,7 @@ export const uploadThumbnailToMedia = async (
  */
 export const generateVideoThumbnail = async (
 	videoMedia,
-	seekTime = 1,
+	seekTime = 0.1,
 	options = {}
 ) => {
 	if (!videoMedia?.source_url || !videoMedia?.mime_type?.includes('video')) {
@@ -328,17 +328,11 @@ export const generateVideoThumbnail = async (
 	}
 
 	const {
-		maxWidth = 800,
-		maxHeight = 600,
-		quality = 0.8,
-		format = 'jpeg',
-		skipIfExists = true,
+		maxWidth = 1600,
+		maxHeight = 1200,
+		quality = 1,
+		format = 'png',
 	} = options;
-
-	// Check if thumbnail already exists.
-	if (skipIfExists && videoMedia.thumbnail_image) {
-		return videoMedia.thumbnail_image;
-	}
 
 	try {
 		// Extract thumbnail from video with optimizations.
