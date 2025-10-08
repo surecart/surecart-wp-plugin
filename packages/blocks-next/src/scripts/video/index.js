@@ -21,7 +21,6 @@ const { state, callbacks, actions } = store('surecart/video', {
 				const video = ref?.querySelector('video[data-lazy]');
 				if (video && !video.dataset.lazyInitialized) {
 					callbacks.initLazyLoading(video, context);
-					video.dataset.lazyInitialized = 'true';
 				}
 			}
 		},
@@ -93,6 +92,7 @@ const { state, callbacks, actions } = store('surecart/video', {
 
 			// Load the video metadata.
 			video.load();
+			video.dataset.lazyInitialized = 'true';
 			video.removeAttribute('data-lazy');
 		},
 
@@ -214,11 +214,21 @@ const { state, callbacks, actions } = store('surecart/video', {
 				});
 			}
 		},
-		// mute all videos.
-		muteVideos() {
-			Array.from(document.querySelectorAll('video')).forEach(
-				(video) => (video.muted = true)
+
+		// pause all videos.
+		pauseVideos() {
+			Array.from(document.querySelectorAll('video')).forEach((video) =>
+				video.pause()
 			);
+		},
+
+		// Resume autoplay videos.
+		resumeVideos(video) {
+			if (!!video?.autoplay) {
+				video.play().catch((error) => {
+					console.warn('Video autoplay resume failed:', error);
+				});
+			}
 		},
 	},
 });

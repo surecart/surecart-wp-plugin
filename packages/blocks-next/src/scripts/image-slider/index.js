@@ -168,9 +168,23 @@ const { state, actions } = store('surecart/image-slider', {
 							const { actions: videoActions } =
 								store('surecart/video');
 							if (
-								typeof videoActions?.muteVideos === 'function'
+								typeof videoActions?.pauseVideos === 'function'
 							) {
-								videoActions.muteVideos();
+								videoActions.pauseVideos();
+							}
+						},
+						slideChangeTransitionEnd: () => {
+							// Resume autoplay videos in the active slide after transition
+							const { actions: videoActions } =
+								store('surecart/video');
+							if (
+								typeof videoActions?.resumeVideos === 'function'
+							) {
+								videoActions.resumeVideos(
+									state.swiper.slides[
+										state.swiper.activeIndex
+									].querySelector('video')
+								);
 							}
 						},
 					},
