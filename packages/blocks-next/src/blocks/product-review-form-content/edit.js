@@ -1,34 +1,55 @@
 /**
  * WordPress dependencies
  */
-import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
-import { PanelBody, TextControl, ToggleControl, RangeControl } from '@wordpress/components';
+import {
+	useBlockProps,
+	InspectorControls,
+	RichText,
+	BlockControls,
+	AlignmentControl,
+} from '@wordpress/block-editor';
+import {
+	PanelBody,
+	TextControl,
+	ToggleControl,
+	RangeControl,
+} from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
 
 export default function Edit({ attributes, setAttributes }) {
-	const { label, placeholder, required, rows } = attributes;
+	const { label, placeholder, required, rows, textAlign } = attributes;
 	const [contentValue, setContentValue] = useState('');
 
 	const blockProps = useBlockProps({
 		className: 'sc-product-review-form-content',
+		style: {
+			textAlign: textAlign,
+		},
 	});
 
 	return (
 		<>
+			<BlockControls group="block">
+				<AlignmentControl
+					value={textAlign}
+					onChange={(nextAlign) => {
+						setAttributes({ textAlign: nextAlign });
+					}}
+				/>
+			</BlockControls>
 			<InspectorControls>
 				<PanelBody title={__('Settings', 'surecart')}>
 					<TextControl
-						label={__('Label', 'surecart')}
-						value={label}
-						onChange={(value) => setAttributes({ label: value })}
-						help={__('The label for the content textarea field.', 'surecart')}
-					/>
-					<TextControl
 						label={__('Placeholder', 'surecart')}
 						value={placeholder}
-						onChange={(value) => setAttributes({ placeholder: value })}
-						help={__('Placeholder text shown in the textarea field.', 'surecart')}
+						onChange={(value) =>
+							setAttributes({ placeholder: value })
+						}
+						help={__(
+							'Placeholder text shown in the textarea field.',
+							'surecart'
+						)}
 					/>
 					<ToggleControl
 						label={__('Required', 'surecart')}
@@ -42,28 +63,35 @@ export default function Edit({ attributes, setAttributes }) {
 						onChange={(value) => setAttributes({ rows: value })}
 						min={2}
 						max={10}
-						help={__('Number of visible text lines for the textarea.', 'surecart')}
+						help={__(
+							'Number of visible text lines for the textarea.',
+							'surecart'
+						)}
 					/>
 				</PanelBody>
 			</InspectorControls>
 			<div {...blockProps}>
-				<div className="content-textarea-container">
-					{label && (
-						<label className="sc-form-label">
-							{label}
-							{required && <span className="required-indicator"> *</span>}
-						</label>
-					)}
-					<textarea
-						className="content-textarea"
-						placeholder={placeholder}
-						value={contentValue}
-						onChange={(e) => setContentValue(e.target.value)}
-						required={required}
-						rows={rows}
-						name="content"
+				{label && (
+					<RichText
+						tagName="label"
+						className="sc-form-label"
+						aria-label={__('Label', 'surecart')}
+						placeholder={__('Review Content', 'surecart')}
+						value={label}
+						onChange={(label) => setAttributes({ label })}
+						withoutInteractiveFormatting
+						allowedFormats={['core/bold', 'core/italic']}
 					/>
-				</div>
+				)}
+				<textarea
+					className="sc-form-control"
+					placeholder={placeholder}
+					value={contentValue}
+					onChange={(e) => setContentValue(e.target.value)}
+					required={required}
+					rows={rows}
+					name="content"
+				/>
 			</div>
 		</>
 	);

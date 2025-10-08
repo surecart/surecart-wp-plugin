@@ -10,7 +10,8 @@
 	"ancestor": ["surecart/product-review-form"],
 	"attributes": {
 		"label": {
-			"type": "string"
+			"type": "string",
+			"default": "How would you rate this product?"
 		},
 		"size": {
 			"type": "number",

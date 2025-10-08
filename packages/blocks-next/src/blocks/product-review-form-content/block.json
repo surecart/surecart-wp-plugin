@@ -24,6 +24,9 @@
 		"rows": {
 			"type": "number",
 			"default": 4
+		},
+		"textAlign": {
+			"type": "string"
 		}
 	},
 	"supports": {

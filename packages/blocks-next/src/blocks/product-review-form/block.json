@@ -50,6 +50,5 @@
 		"@surecart/product-page",
 		"@surecart/product-review-form"
 	],
-	"editorStyle": ["file:./index.css"],
 	"style": ["file:./style-index.css", "surecart-block-ui", "surecart-spinner"]
 }

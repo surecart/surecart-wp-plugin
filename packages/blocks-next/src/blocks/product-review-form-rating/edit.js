@@ -1,7 +1,11 @@
 /**
  * WordPress dependencies
  */
-import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
+import {
+	useBlockProps,
+	InspectorControls,
+	RichText,
+} from '@wordpress/block-editor';
 import { PanelBody, RangeControl, TextControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
@@ -71,14 +75,6 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 						max={48}
 					/>
 				</PanelBody>
-				<PanelBody title={__('Settings', 'surecart')}>
-					<TextControl
-						label={__('Label', 'surecart')}
-						value={label}
-						onChange={(value) => setAttributes({ label: value })}
-						help={__('The label for the rating field.', 'surecart')}
-					/>
-				</PanelBody>
 			</InspectorControls>
 			<ColorInspectorControl
 				settings={[
@@ -95,9 +91,19 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 			/>
 			<div {...blockProps}>
 				{label && (
-					<label className="sc-form-label rating-label">
-						{label}
-					</label>
+					<RichText
+						tagName="label"
+						className="sc-form-label"
+						aria-label={__('Label', 'surecart')}
+						placeholder={__('Review Content', 'surecart')}
+						value={
+							label ??
+							__('How would you rate this product?', 'surecart')
+						}
+						onChange={(label) => setAttributes({ label })}
+						withoutInteractiveFormatting
+						allowedFormats={['core/bold', 'core/italic']}
+					/>
 				)}
 
 				<div className="stars-container">{stars}</div>

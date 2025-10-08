@@ -59,20 +59,7 @@ export default function Edit({ attributes, setAttributes }) {
 
 			<div {...blockProps}>
 				<div className="sc-lightbox-content">
-					<div style={{ 
-						border: '2px dashed #ddd', 
-						padding: '20px', 
-						textAlign: 'center',
-						minHeight: '200px',
-						display: 'flex',
-						alignItems: 'center',
-						justifyContent: 'center',
-						flexDirection: 'column'
-					}}>
-						<h3>{__('Product Review Form Modal', 'surecart')}</h3>
-						<p>{__('This modal will display the review form when triggered by the button.', 'surecart')}</p>
-						<InnerBlocks />
-					</div>
+					<InnerBlocks />
 				</div>
 			</div>
 		</>
