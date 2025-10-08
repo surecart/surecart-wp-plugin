@@ -84,6 +84,6 @@ class GalleryItemAttachmentTest extends SureCartUnitTestCase {
 		$gallery_item = GalleryItemAttachment::create( $invalid_id );
 		
 		// Should still create an image attachment as the default fallback
-		$this->assertInstanceOf( GalleryItemImageAttachment::class, $gallery_item );
+		$this->assertNull( $gallery_item );
 	}
 }
