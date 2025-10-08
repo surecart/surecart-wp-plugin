@@ -309,6 +309,7 @@ return array(
 		\SureCart\Permissions\Models\InvoicePermissionsController::class,
 		\SureCart\Permissions\Models\PaymentMethodPermissionsController::class,
 		\SureCart\Permissions\Models\PurchasePermissionsController::class,
+		\SureCart\Permissions\Models\DownloadPermissionsController::class,
 		\SureCart\Permissions\Models\RefundPermissionsController::class,
 		\SureCart\Permissions\Models\SubscriptionPermissionsController::class,
 	),
