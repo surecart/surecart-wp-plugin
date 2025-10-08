@@ -25,11 +25,13 @@ export default ({
 	const videoRef = useRef(null);
 
 	const { media, hasLoadedMedia } = useSelect((select) => {
+		const entityData = ['root', 'media', id];
+
 		return {
-			media: select(coreStore).getEditedEntityRecord('root', 'media', id),
-			hasLoadedMedia: select(coreStore).hasFinishedResolution(
-				'getMedia',
-				[id]
+			media: select(coreStore).getEditedEntityRecord(...entityData),
+			hasLoadedMedia: select(coreStore)?.hasFinishedResolution?.(
+				'getEditedEntityRecord',
+				[...entityData]
 			),
 		};
 	});

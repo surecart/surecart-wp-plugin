@@ -16,6 +16,15 @@ class GalleryItemImageAttachment extends ModelsGalleryItem implements GalleryIte
 	 * @return void
 	 */
 	public function __construct( $item ) {
+		if ( empty( $item ) ) {
+			return;
+		}
+
+		if ( $item instanceof \WP_Post ) {
+			$this->item = $item;
+			return;
+		}
+
 		$this->item = get_post( $item['id'] ?? $item );
 	}
 
@@ -80,8 +89,8 @@ class GalleryItemImageAttachment extends ModelsGalleryItem implements GalleryIte
 							array(
 								'uploadedSrc'      => $full_data->src ?? '',
 								'imgClassNames'    => $full_data->class ?? '',
-								'targetWidth'      => $full_data->width ?? '',
-								'targetHeight'     => $full_data->height ?? '',
+								'targetWidth'      => $full_data->width ?? 0,
+								'targetHeight'     => $full_data->height ?? 0,
 								'scaleAttr'        => false, // false or 'contain'.
 								'alt'              => $full_data->alt ?? '',
 								// translators: %s is the image title.

@@ -633,8 +633,9 @@
   },
   "sc-downloads-list": {
     "customer-id": true,
-    "downloads": true,
     "heading": true,
+    "product-id": true,
+    "query": true,
     "style": true,
     "id": true,
     "class": true,

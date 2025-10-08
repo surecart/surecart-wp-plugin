@@ -1254,7 +1254,7 @@ class ProductPostTypeService {
 	 */
 	public function renderProductSeoMeta( $product ) {
 		$image_attributes  = $product->featured_image ? $product->featured_image->attributes( apply_filters( 'surecart/og:image/size', 'full' ) ) : null;
-		$product_image_url = $image_attributes ? $image_attributes->src : '';
+		$product_image_url = $image_attributes ? ( $image_attributes->src ?? '' ) : '';
 		?>
 
 		<meta name="description" content="<?php echo esc_attr( sanitize_text_field( $product->meta_description ) ); ?>">
