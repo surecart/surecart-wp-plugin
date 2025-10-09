@@ -1,144 +1,23 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import {
-	Chart as ChartJS,
-	CategoryScale,
-	LinearScale,
-	PointElement,
-	LineElement,
-	Tooltip,
-	Filler,
-} from 'chart.js';
-import { Line } from 'react-chartjs-2';
+import dayjs from 'dayjs';
+import duration from 'dayjs/plugin/duration';
+import utc from 'dayjs/plugin/utc';
+dayjs.extend(duration);
+dayjs.extend(utc);
 import {
 	ScButton,
 	ScIcon,
 	ScSelect,
 	ScSwitch,
 } from '@surecart/components-react';
+import DatePicker from '../components/DatePicker';
+import { useEffect, useState } from 'react';
+import apiFetch from '@wordpress/api-fetch';
+import { addQueryArgs } from '@wordpress/url';
+import LineChart from '../components/LineChart';
 
-ChartJS.register(
-	CategoryScale,
-	LinearScale,
-	PointElement,
-	LineElement,
-	Filler,
-	Tooltip
-);
-
-export const options = {
-	responsive: true,
-	maintainAspectRatio: false,
-	elements: {
-		line: {
-			tension: 0.4,
-		},
-	},
-	interaction: {
-		mode: 'index',
-		intersect: false,
-	},
-	plugins: {
-		tooltip: {
-			backgroundColor: 'white',
-			titleColor: 'black',
-			bodyColor: '#555',
-			boxPadding: 5,
-			padding: 15,
-			borderWidth: 2,
-			borderColor: 'rgba(0, 0, 0, 0.05)',
-		},
-	},
-	scales: {
-		y: {
-			grace: '10%', // Add 10% grace area to the Y-axis
-			border: {
-				display: false, // Hide the left axis border
-			},
-			grid: {
-				display: false, // Hides tick marks on the X-axis
-			},
-			ticks: {
-				callback: function () {
-					return '';
-				},
-			},
-		},
-		x: {
-			title: {
-				align: 'start',
-			},
-			border: {
-				display: false, // Hide the bottom axis border line
-				dash: [10, 10], // Make grid lines dashed
-			},
-			grid: {
-				color: 'rgba(0, 0, 0, 0.1)',
-				drawBorder: false, // Don't draw the border around the chart
-			},
-			ticks: {
-				maxRotation: 0,
-				minRotation: 0,
-				// For a category axis, the val is the index so the lookup via getLabelForValue is needed
-				callback: function (val, index, ticks) {
-					// only show first and last tick label
-					if (index === 0 || index === ticks.length - 1) {
-						return this.getLabelForValue(val);
-					}
-					return '';
-				},
-			},
-		},
-	},
-};
-
-const labels = [
-	['Sept 1', '2025'],
-	['February 1', '2025'],
-	['March 1', '2025'],
-	['April 1', '2025'],
-	['September', '2025'],
-	['October', '2025'],
-	['November', '2025'],
-	['December', '2025'],
-	['August 1', '2025'],
-	['September 1', '2025'],
-	['October 1', '2025'],
-	['November 1', '2025'],
-	['December 1', '2025'],
-];
-
-export const data = {
-	labels,
-	datasets: [
-		{
-			label: '2025',
-			data: [100, 200, 150, 220, 250, 300, 175, 200, 150, 220, 250, 300],
-			borderColor: '#00824C',
-			fill: true,
-			fill: 'start',
-			backgroundColor: (ctx) => {
-				const canvas = ctx.chart.ctx;
-				const gradient = canvas.createLinearGradient(0, -160, 0, 120);
-
-				gradient.addColorStop(0, '#00824cd9');
-				gradient.addColorStop(1, '#16a34a00');
-
-				return gradient;
-			},
-		},
-		{
-			label: '2024',
-			data: [
-				150, 210, 100, 200, 225, 250, 150, 210, 100, 200, 225, 250, 100,
-			],
-			borderColor: '#00824c87',
-			borderDash: [10, 10],
-		},
-	],
-};
-
-const Tab = ({ title, value, previous, trend = 'up', selected }) => {
+const Tab = ({ title, value, previous, trend = 'up', selected, ...props }) => {
 	const isUp = trend === 'up';
 
 	return (
@@ -157,6 +36,7 @@ const Tab = ({ title, value, previous, trend = 'up', selected }) => {
 					background: var(--sc-color-gray-100);
 				}
 			`}
+			{...props}
 		>
 			<div
 				css={css`
@@ -201,6 +81,82 @@ const Tab = ({ title, value, previous, trend = 'up', selected }) => {
 };
 
 export default () => {
+	const [startDate, setStartDate] = useState(dayjs().add(-1, 'month'));
+	const [endDate, setEndDate] = useState(dayjs());
+	const [reportBy, setReportBy] = useState('day');
+	const [data, setData] = useState([]);
+	const [previousData, setPreviousData] = useState([]);
+	const [liveMode, setLiveMode] = useState(false);
+	const currency = 'usd';
+	const [tab, setTab] = useState('amount');
+
+	useEffect(() => {
+		let diffDays = endDate.diff(startDate, 'day');
+
+		if (diffDays < 366 && 'year' === reportBy) {
+			setStartDate(dayjs(startDate).subtract(1, 'year'));
+		} else if (diffDays < 32 && 'month' === reportBy) {
+			setStartDate(dayjs(startDate).subtract(2, 'month'));
+		} else if (diffDays > 200 && 'day' === reportBy) {
+			setStartDate(dayjs(endDate).subtract(199, 'day'));
+		} else {
+			getOrderStats(startDate.format(), endDate.format());
+			getPreviousOrderStats(
+				dayjs(startDate).subtract(diffDays, 'day').format(),
+				startDate.format()
+			);
+		}
+	}, [startDate, endDate, reportBy]);
+
+	/**
+	 * Get order stats for the range.
+	 */
+	const getOrderStats = async (startAt, endAt) => {
+		try {
+			// setError(false);
+			// setLoading(true);
+			const { data } = await apiFetch({
+				path: addQueryArgs(`surecart/v1/stats/orders/`, {
+					start_at: startAt,
+					end_at: endAt,
+					interval: reportBy,
+					live_mode: liveMode,
+					currency,
+				}),
+			});
+			setData(data);
+		} catch (e) {
+			console.error(e);
+			// setError(e);
+		} finally {
+			// setLoading(false);
+		}
+	};
+
+	/**
+	 * Get order stats for the previous range
+	 */
+	const getPreviousOrderStats = async (startAt, endAt) => {
+		try {
+			// setError(false);
+			// setLoading(true);
+			const { data } = await apiFetch({
+				path: addQueryArgs(`surecart/v1/stats/orders/`, {
+					start_at: startAt,
+					end_at: endAt,
+					live_mode: liveMode,
+					interval: reportBy,
+				}),
+			});
+			setPreviousData(data);
+		} catch (e) {
+			console.error(e);
+			// setError(e);
+		} finally {
+			// setLoading(false);
+		}
+	};
+
 	return (
 		<div
 			css={css`
@@ -223,6 +179,12 @@ export default () => {
 						gap: 10px;
 					`}
 				>
+					<DatePicker
+						startDate={startDate}
+						endDate={endDate}
+						setStartDate={(date) => setStartDate(dayjs(date))}
+						setEndDate={(date) => setEndDate(dayjs(date))}
+					/>
 					<ScSelect
 						value="daily"
 						css={css`
@@ -237,7 +199,14 @@ export default () => {
 							{ label: 'Yearly', value: 'yearly' },
 						]}
 					/>
-					<ScSwitch>Test mode</ScSwitch>
+					<ScSwitch
+						checked={!liveMode}
+						onScChange={(e) => {
+							setLiveMode(!e.target.checked);
+						}}
+					>
+						Test mode
+					</ScSwitch>
 				</div>
 				<ScButton>
 					<ScIcon name="bar-chart-2" slot="prefix" />
@@ -275,14 +244,27 @@ export default () => {
 						value="$1,234.00"
 						previous="$978.00"
 						trend="up"
-						selected
+						selected={tab === 'amount'}
+						onClick={() => setTab('amount')}
 					/>
-					<Tab title="Orders" value="567" previous="456" trend="up" />
+					<Tab
+						title="Orders"
+						value="567"
+						previous="456"
+						trend="up"
+						selected={tab === 'count'}
+						onClick={() => {
+							console.log('count');
+							setTab('count');
+						}}
+					/>
 					<Tab
 						title="Average Order Value"
 						value="$19.00"
 						previous="$22.00"
 						trend="down"
+						selected={tab === 'average_amount'}
+						onClick={() => setTab('average_amount')}
 					/>
 				</div>
 				<div
@@ -291,7 +273,11 @@ export default () => {
 						width: 100%;
 					`}
 				>
-					<Line options={options} data={data} />
+					<LineChart
+						data={data}
+						previousData={previousData}
+						type={tab}
+					/>
 				</div>
 			</div>
 		</div>
