@@ -19,7 +19,8 @@ const { state, callbacks, actions } = store('surecart/video', {
 			// Set up lazy loading for videos those are autoplay.
 			if (!!context?.autoplay) {
 				const video = ref?.querySelector('video[data-src]');
-				if (video && !video.dataset.lazyInitialized) {
+				if (video && !video?.src) {
+					// If no src set means lazy not initialized yet.
 					callbacks.initLazyLoading(video, context);
 				}
 			}
@@ -30,7 +31,7 @@ const { state, callbacks, actions } = store('surecart/video', {
 			if (!('IntersectionObserver' in window)) {
 				// Fallback for older browsers - load immediately.
 				callbacks.loadVideo(video, context);
-				return;
+				return () => {}; // Return empty cleanup function for consistency.
 			}
 
 			const observer = new IntersectionObserver(
@@ -49,6 +50,11 @@ const { state, callbacks, actions } = store('surecart/video', {
 			);
 
 			observer.observe(video);
+
+			// Disconnect observer on cleanup.
+			return () => {
+				observer.disconnect();
+			};
 		},
 
 		// Load video src and metadata.
@@ -65,34 +71,33 @@ const { state, callbacks, actions } = store('surecart/video', {
 				video.removeAttribute('data-src');
 			}
 
-			// Set up event listeners for load events.
-			const handleLoadStart = () => {
-				context.loading = true;
-			};
-
-			const handleLoadedData = () => {
-				context.loading = false;
-				context.loaded = true;
-				video.removeEventListener('loadstart', handleLoadStart);
-				video.removeEventListener('loadeddata', handleLoadedData);
-				video.removeEventListener('error', handleError);
-			};
-
-			const handleError = () => {
-				context.loading = false;
-				console.warn('Video failed to load:', video.src);
-				video.removeEventListener('loadstart', handleLoadStart);
-				video.removeEventListener('loadeddata', handleLoadedData);
-				video.removeEventListener('error', handleError);
-			};
-
-			video.addEventListener('loadstart', handleLoadStart);
-			video.addEventListener('loadeddata', handleLoadedData);
-			video.addEventListener('error', handleError);
-
 			// Load the video metadata.
 			video.load();
-			video.dataset.lazyInitialized = 'true';
+		},
+
+		// Handle video load start event.
+		handleLoadStart() {
+			const context = getContext();
+			context.loading = true;
+		},
+
+		// Handle video loaded data event.
+		handleLoadedData() {
+			const context = getContext();
+			context.loading = false;
+			context.loaded = true;
+		},
+
+		// Handle video load error event.
+		handleError() {
+			const context = getContext();
+			const { ref } = getElement();
+
+			context.loading = false;
+			console.error(
+				'Video failed to load:',
+				(ref?.querySelector('video') ?? ref)?.src
+			);
 		},
 
 		// Handle mouse enter for preloading metadata.
@@ -116,10 +121,13 @@ const { state, callbacks, actions } = store('surecart/video', {
 			// Try to find the current video element inside this container.
 			const currentVideo = ref?.querySelector('video') ?? ref ?? null;
 
-			// Load video if it's still lazy somehow.
-			if (!!currentVideo?.dataset?.lazy) {
+			// Load video if it's still data-src (lazy) somehow.
+			if (!!currentVideo?.dataset?.src) {
 				callbacks.loadVideo(currentVideo, context);
 			}
+
+			// Ensure the current video is playing.
+			currentVideo?.play();
 
 			// pause other videos on the page unless they are autoplay/loop.
 			Array.from(document.querySelectorAll('video'))
@@ -184,8 +192,8 @@ const { state, callbacks, actions } = store('surecart/video', {
 				return;
 			}
 
-			// Load video if it's still lazy.
-			if (video.dataset.lazy) {
+			// Load video if it's still data-src (lazy).
+			if (video.dataset.src) {
 				callbacks.loadVideo(video, context);
 
 				// Wait for video to load before playing.

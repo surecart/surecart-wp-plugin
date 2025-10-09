@@ -39,6 +39,9 @@
 		class="sc-video"
 		data-wp-bind--controls="state.showControls"
 		data-wp-on--play="callbacks.handlePlay"
+		data-wp-on--loadstart="callbacks.handleLoadStart"
+		data-wp-on--loadeddata="callbacks.handleLoadedData"
+		data-wp-on--error="callbacks.handleError"
 		data-src="<?php echo esc_url( $src ); ?>"
 		poster="<?php echo esc_url( $poster ); ?>"
 		playsinline
