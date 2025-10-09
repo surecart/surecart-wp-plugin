@@ -1,12 +1,18 @@
 <div 
+	<?php
+	echo wp_kses_data(
+		wp_interactivity_data_wp_context(
+			[
+				'loaded'   => ! empty( $autoplay ),
+				'controls' => ! empty( $controls ),
+				'autoplay' => ! empty( $autoplay ),
+				'loading'  => false,
+			]
+		)
+	);
+	?>
 	class="sc-video-container"
 	data-wp-interactive='{ "namespace": "surecart/video" }'
-	data-wp-context='{
-		"loaded": <?php echo ! empty( $autoplay ) ? 'true' : 'false'; ?>,
-		"loading": false,
-		"controls": <?php echo ! empty( $controls ) ? 'true' : 'false'; ?>,
-		"autoplay": <?php echo ! empty( $autoplay ) ? 'true' : 'false'; ?>
-	}'
 	data-wp-init="callbacks.init"
 	data-wp-on--click="actions.play"
 	data-wp-class--sc-video-loaded="context.loaded"
@@ -34,7 +40,6 @@
 		data-wp-bind--controls="state.showControls"
 		data-wp-on--play="callbacks.handlePlay"
 		data-src="<?php echo esc_url( $src ); ?>"
-		data-lazy="true"
 		poster="<?php echo esc_url( $poster ); ?>"
 		playsinline
 		preload="<?php echo ! empty( $autoplay ) ? 'auto' : 'none'; ?>"

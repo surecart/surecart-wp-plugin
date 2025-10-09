@@ -18,7 +18,7 @@ const { state, callbacks, actions } = store('surecart/video', {
 
 			// Set up lazy loading for videos those are autoplay.
 			if (!!context?.autoplay) {
-				const video = ref?.querySelector('video[data-lazy]');
+				const video = ref?.querySelector('video[data-src]');
 				if (video && !video.dataset.lazyInitialized) {
 					callbacks.initLazyLoading(video, context);
 				}
@@ -93,7 +93,6 @@ const { state, callbacks, actions } = store('surecart/video', {
 			// Load the video metadata.
 			video.load();
 			video.dataset.lazyInitialized = 'true';
-			video.removeAttribute('data-lazy');
 		},
 
 		// Handle mouse enter for preloading metadata.
