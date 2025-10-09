@@ -13,7 +13,7 @@
   padding: var(--sc-card-padding, var(--sc-spacing-large));
   background: var(--sc-card-background-color, var(--sc-color-white));
   border: 1px solid var(--sc-card-border-color, var(--sc-color-gray-300));
-  border-radius: var(--sc-input-border-radius-medium);
+  border-radius: var(--sc-card-border-radius, var(--sc-input-border-radius-medium));
   box-shadow: var(--sc-shadow-small);
   &.card--no-padding {
     padding: 0;
@@ -37,8 +37,8 @@
   margin-bottom: var(--sc-form-row-spacing);
 }
 ::slotted(*:first-child) {
-  margin-top:0;
+  margin-top: 0;
 }
 ::slotted(*:last-child) {
-  margin-bottom:0 !important;
+  margin-bottom: 0 !important;
 }
