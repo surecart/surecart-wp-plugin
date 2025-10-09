@@ -139,7 +139,8 @@ const { state, callbacks, actions } = store('surecart/video', {
 			const { ref } = getElement();
 			const video = ref?.querySelector('video');
 
-			if (!video || !!video?.muted || !!video?.paused) {
+			// no video element found or video is not playing.
+			if (!video || !!video?.paused) {
 				return;
 			}
 
@@ -152,7 +153,7 @@ const { state, callbacks, actions } = store('surecart/video', {
 					);
 
 					if (sliderState?.active && !!sliderState?.swiper) {
-						video.muted = true;
+						video.pause();
 					}
 				}
 			}

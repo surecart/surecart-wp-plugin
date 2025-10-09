@@ -1,4 +1,4 @@
-<div 
+<div
 	<?php
 	echo wp_kses_data(
 		wp_interactivity_data_wp_context(
@@ -27,8 +27,8 @@
 	<?php if ( empty( $autoplay ) ) : ?>
 	<div
 		role="button"
-		class="sc-video-play-button" 
-		aria-label="<?php echo esc_attr__( 'Play video', 'surecart' ); ?>" 
+		class="sc-video-play-button"
+		aria-label="<?php echo esc_attr__( 'Play video', 'surecart' ); ?>"
 		data-wp-bind--hidden="context.loaded"
 	>
 		<?php echo wp_kses( \SureCart::svg()->get( 'play' ), sc_allowed_svg_html() ); ?>
