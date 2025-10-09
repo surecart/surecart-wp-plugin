@@ -6,8 +6,12 @@ export default {
 		amount_adjustment: null,
 		discount: true,
 		fee_target: 'line_item',
-		name: __('New Blank Dynamic Price', 'surecart'),
+		name: __('Start from Scratch', 'surecart'),
 		percent_adjustment: 50.0,
+		description: __(
+			'Start from scratch and create your own dynamic price.',
+			'surecart'
+		),
 	},
 	bogo: {
 		enabled: true,
@@ -34,6 +38,7 @@ export default {
 				},
 			],
 		},
+		description: __('Buy 1, get the 2nd one for free.', 'surecart'),
 	},
 	free_shipping: {
 		enabled: true,
@@ -60,8 +65,11 @@ export default {
 				},
 			],
 		},
+		description: __(
+			'Free shipping when the subtotal is at least $75.',
+			'surecart'
+		),
 	},
-
 	installment_payment_processing_fee: {
 		enabled: true,
 		amount_adjustment: null,
@@ -87,6 +95,10 @@ export default {
 				},
 			],
 		},
+		description: __(
+			'3% processing fee for installment payments.',
+			'surecart'
+		),
 	},
 	subscription_renewal_discount: {
 		enabled: true,
@@ -113,6 +125,7 @@ export default {
 				},
 			],
 		},
+		description: __('15% discount for subscription renewals.', 'surecart'),
 	},
 	bulk_purchase_discount: {
 		enabled: true,
@@ -139,6 +152,7 @@ export default {
 				},
 			],
 		},
+		description: __('10% discount for bulk purchases.', 'surecart'),
 	},
 	member_only_discount: {
 		enabled: true,
@@ -165,6 +179,7 @@ export default {
 				},
 			],
 		},
+		description: __('5% discount for members only.', 'surecart'),
 	},
 	first_time_customer_discount: {
 		enabled: true,
@@ -191,5 +206,6 @@ export default {
 				},
 			],
 		},
+		description: __('15% discount for first time customers.', 'surecart'),
 	},
 };

@@ -10,7 +10,9 @@ import {
 	ScAlert,
 	ScButton,
 	ScForm,
-	ScSelect,
+	ScChoice,
+	ScChoices,
+	ScInput,
 } from '@surecart/components-react';
 import CreateTemplate from '../templates/CreateModel';
 import Box from '../ui/Box';
@@ -18,6 +20,7 @@ import templates from './templates';
 
 export default ({ id, onCreateAutoFee }) => {
 	const [isSaving, setIsSaving] = useState(false);
+	const [autoFeeName, setAutoFeeName] = useState('');
 	const [currentTemplate, setCurrentTemplate] = useState(null);
 	const [error, setError] = useState('');
 	const { saveEntityRecord } = useDispatch(coreStore);
@@ -26,6 +29,7 @@ export default ({ id, onCreateAutoFee }) => {
 		return Object.entries(templates).map(([key, template]) => ({
 			label: template?.name || key,
 			value: key,
+			description: template?.description,
 		}));
 	};
 
@@ -39,6 +43,7 @@ export default ({ id, onCreateAutoFee }) => {
 				'auto-fee',
 				{
 					...templates?.[currentTemplate],
+					name: autoFeeName,
 					start_at: Date.parse(getDate(new Date())) / 1000,
 				},
 				{ throwOnError: true }
@@ -65,48 +70,69 @@ export default ({ id, onCreateAutoFee }) => {
 			<ScAlert open={error?.length} type="danger" closable scrollOnOpen>
 				<span slot="title">{error}</span>
 			</ScAlert>
-
-			<Box title={__('Create New Dynamic Price', 'surecart')}>
-				<ScForm onScSubmit={onSubmit}>
-					<div
-						css={css`
-							display: grid;
-							gap: var(--sc-spacing-large);
-						`}
-					>
-						<ScSelect
-							label={__('Recipes ', 'surecart')}
-							help={__(
-								'Start with one of our predefined recipes.',
-								'surecart'
-							)}
-							placeholder={__('Select a Recipe', 'surecart')}
-							unselect={false}
-							value={currentTemplate}
-							css={css`
-								min-width: 125px;
-							`}
-							onScChange={(e) => {
-								setCurrentTemplate(e.target.value);
-							}}
-							choices={getTemplateChoices()}
-						/>
+			<ScForm onScSubmit={onSubmit}>
+				<Box
+					title={__('Create New Dynamic Price', 'surecart')}
+					footer={
 						<div
-							css={css`display: flex gap: var(--sc-spacing-small);`}
+							css={css`
+								display: flex;
+								width: 100%;
+								justify-content: space-between;
+							`}
 						>
-							<ScButton type="primary" submit loading={isSaving}>
-								{__('Create', 'surecart')}
-							</ScButton>
 							<ScButton
 								href={'admin.php?page=sc-auto-fees'}
-								type="text"
+								type="default"
 							>
 								{__('Cancel', 'surecart')}
 							</ScButton>
+							<ScButton type="primary" submit loading={isSaving}>
+								{__('Create', 'surecart')}
+							</ScButton>
 						</div>
-					</div>
-				</ScForm>
-			</Box>
+					}
+				>
+					<ScInput
+						label={__('Name', 'surecart')}
+						help={__("Your Dynamic Price's name.", 'surecart')}
+						value={autoFeeName}
+						required
+						onScInput={(e) => setAutoFeeName(e.target.value)}
+					/>
+					<ScChoices
+						label={__('Select Recipes', 'surecart')}
+						onScChange={(e) => setCurrentTemplate(e.target.value)}
+						style={{ '--sc-choice-padding': '1.3em' }}
+						autoWidth
+						required
+					>
+						{(getTemplateChoices() || []).map((template) => {
+							return (
+								<ScChoice
+									key={template.value}
+									showControl={false}
+									checked={currentTemplate === template.value}
+									value={template.value}
+									style={{ width: '48%' }}
+								>
+									{template.label}
+									{!!template.description && (
+										<div
+											style={{
+												'margin-top': '0.5em',
+											}}
+											slot="description"
+										>
+											{template.description}
+										</div>
+									)}
+								</ScChoice>
+							);
+						})}
+					</ScChoices>
+				</Box>
+			</ScForm>
 		</CreateTemplate>
 	);
 };

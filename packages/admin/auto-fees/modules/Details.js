@@ -43,10 +43,7 @@ export default ({ autoFee, onUpdate, loading }) => {
 		<Box title={__('Details', 'surecart')} loading={loading}>
 			<ScInput
 				label={__('Name', 'surecart')}
-				help={__(
-					"Your Dynamic Price's name. This will not be visible to customers.",
-					'surecart'
-				)}
+				help={__("Your Dynamic Price's name.", 'surecart')}
 				value={name}
 				required
 				onScInput={(e) =>

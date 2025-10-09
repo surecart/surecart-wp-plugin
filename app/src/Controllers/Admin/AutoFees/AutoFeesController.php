@@ -24,7 +24,6 @@ class AutoFeesController extends AdminController {
 						'title' => __( 'Dynamic Pricing', 'surecart' ),
 					],
 				],
-				'report_url'  => SURECART_REPORTS_URL . 'subscriptions',
 			)
 		);
 
