@@ -22,7 +22,7 @@
 			echo wp_kses_data(
 				wp_interactivity_data_wp_context(
 					[
-						'url' => sanitize_url( $review_form_link ),
+						'product_id' => $product_id,
 					]
 				)
 			);

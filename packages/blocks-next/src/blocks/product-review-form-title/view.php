@@ -1,14 +1,8 @@
-<div 
-	<?php echo wp_kses_data( get_block_wrapper_attributes() ); ?>
-	data-wp-interactive="surecart/product-review-form"
-	data-wp-context='{ "title": "" }'
->
+<div <?php echo wp_kses_data( get_block_wrapper_attributes() ); ?>>
 	<?php if ( ! empty( $label ) ) : ?>
 		<label class="sc-form-label title-label" for="review-title">
 			<?php echo wp_kses_data( $label ); ?>
-			<?php if ( $required ) : ?>
-				<span class="required-indicator"> *</span>
-			<?php endif; ?>
+			<span class="required-indicator"> *</span>
 		</label>
 	<?php endif; ?>
 
@@ -20,6 +14,6 @@
 		placeholder="<?php echo esc_attr( $placeholder ); ?>"
 		data-wp-on--input="actions.setTitle"
 		data-wp-bind--value="context.title"
-		<?php echo $required ? 'required' : ''; ?>
+		required
 	/>
 </div>

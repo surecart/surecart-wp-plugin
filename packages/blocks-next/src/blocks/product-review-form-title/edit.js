@@ -1,20 +1,26 @@
 /**
  * WordPress dependencies
  */
-import { useBlockProps, InspectorControls, RichText, BlockControls, AlignmentControl } from '@wordpress/block-editor';
-import { PanelBody, TextControl, ToggleControl } from '@wordpress/components';
+import {
+	useBlockProps,
+	InspectorControls,
+	RichText,
+	BlockControls,
+	AlignmentControl,
+} from '@wordpress/block-editor';
+import { PanelBody, TextControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
 
 export default function Edit({ attributes, setAttributes }) {
-	const { label, placeholder, required, textAlign } = attributes;
+	const { label, placeholder, textAlign } = attributes;
 	const [titleValue, setTitleValue] = useState('');
 
 	const blockProps = useBlockProps({
 		className: 'sc-product-review-form-title',
 		style: {
-			textAlign: textAlign
-		}
+			textAlign: textAlign,
+		},
 	});
 
 	return (
@@ -40,12 +46,6 @@ export default function Edit({ attributes, setAttributes }) {
 							'surecart'
 						)}
 					/>
-					<ToggleControl
-						label={__('Required', 'surecart')}
-						checked={required}
-						onChange={(value) => setAttributes({ required: value })}
-						help={__('Make this field required.', 'surecart')}
-					/>
 				</PanelBody>
 			</InspectorControls>
 			<div {...blockProps}>
@@ -67,7 +67,7 @@ export default function Edit({ attributes, setAttributes }) {
 					placeholder={placeholder}
 					value={titleValue}
 					onChange={(e) => setTitleValue(e.target.value)}
-					required={required}
+					required={true}
 					name="title"
 				/>
 			</div>

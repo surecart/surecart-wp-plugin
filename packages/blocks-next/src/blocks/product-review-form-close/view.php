@@ -1,5 +1,5 @@
 <?php
-$close_url = remove_query_arg( 'product-review-form' );
+$close_url = get_permalink();
 ?>
 <a
 	<?php echo wp_kses_data( get_block_wrapper_attributes() ); ?>

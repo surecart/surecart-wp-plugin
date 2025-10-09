@@ -1,6 +1,7 @@
 <?php
 $icon                   = $attributes['icon'] ?? 'edit-2';
 $product_id             = $block->context['postId'] ?? null;
+$product                = sc_get_product();
 $show_icon              = in_array( $attributes['button_type'], [ 'icon', 'both' ], true );
 $show_text              = in_array( $attributes['button_type'], [ 'text', 'both' ], true );
 $icon_position          = $attributes['icon_position'] ?? 'before';
@@ -28,8 +29,5 @@ if ( ! empty( $styles['declarations'] ) ) {
 	$wrapper_style .= ! empty( $styles['declarations']['margin-left'] ) ? esc_attr( safecss_filter_attr( 'margin-left:' . $styles['declarations']['margin-left'] ) ) . ';' : '';
 	$wrapper_style .= ! empty( $styles['declarations']['margin-right'] ) ? esc_attr( safecss_filter_attr( 'margin-right:' . $styles['declarations']['margin-right'] ) ) . ';' : '';
 }
-
-$review_form_link = add_query_arg( 'product-review-form', $product_id );
-$product          = sc_get_product();
 
 return 'file:./button-review-write.php';

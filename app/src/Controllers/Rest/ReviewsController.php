@@ -3,6 +3,7 @@
 namespace SureCart\Controllers\Rest;
 
 use SureCart\Models\Review;
+use SureCart\Models\User;
 
 /**
  * Handle Review requests through the REST API.
@@ -21,6 +22,22 @@ class ReviewsController extends RestController {
 	 * @var array<string>
 	 */
 	protected $with = [ 'product', 'product.price', 'product.featured_product_media' ];
+
+	/**
+	 * Middleware before we make the request.
+	 *
+	 * @param \SureCart\Models\Model $class Model class instance.
+	 * @param \WP_REST_Request       $request Request object.
+	 *
+	 * @return \SureCart\Models\Model|\WP_Error
+	 */
+	protected function middleware( $class, \WP_REST_Request $request ) {
+		// set the user.
+		$class = $this->maybeSetUser( $class, $request );
+
+		// return the class.
+		return apply_filters( 'surecart/request/model', $class, $request );
+	}
 
 	/**
 	 * Publish a review.
@@ -54,5 +71,31 @@ class ReviewsController extends RestController {
 		}
 
 		return $model->where( $request->get_query_params() )->with( $this->with )->unpublish( $request['id'] );
+	}
+
+	/**
+	 * Let's set the customer's email and name if they are already logged in.
+	 *
+	 * @param \SureCart\Models\Model $class Model class instance.
+	 * @param \WP_REST_Request       $request Request object.
+	 *
+	 * @return \SureCart\Models\Model|\WP_Error
+	 */
+	protected function maybeSetUser( \SureCart\Models\Model $class, \WP_REST_Request $request ) {
+		// get current user.
+		$user = User::current();
+
+		// must be logged in.
+		if ( ! $user ) {
+			return $class;
+		}
+
+		// force the customer id, if it exists.
+		$customer_id = $user->customerId( ! empty( $request['live_mode'] ) ? 'live' : 'test' );
+		if ( ! empty( $customer_id ) ) {
+			$class['customer'] = $customer_id;
+		}
+
+		return $class;
 	}
 }

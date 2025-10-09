@@ -1,5 +1,5 @@
 /**
- * WordPress dependencies
+ * WordPress dependencies.
  */
 import {
 	store,
@@ -7,6 +7,13 @@ import {
 	getContext,
 	withScope,
 } from '@wordpress/interactivity';
+
+/**
+ * Internal dependencies.
+ */
+import apiFetch from '@surecart/api-fetch';
+const { __ } = wp.i18n;
+const { addQueryArgs } = wp.url; // TODO: replace with `@wordpress/url` when available.
 
 /**
  * Tracks elements made inert when lightbox is active.
@@ -34,10 +41,10 @@ const { state, actions } = store('surecart/product-review-form', {
 			const context = getContext();
 			const element = getElement();
 			const starNumber = parseInt(element.ref.dataset.rating);
-			const currentRating = context.rating || 0;
+			const currentRating = context.stars || 0;
 			const currentHoverRating = context.hoverRating || 0;
-			
-			// Show filled if star number is <= hover rating (when hovering) or <= actual rating
+
+			// Show filled if star number is <= hover rating (when hovering) or <= actual rating.
 			return starNumber <= (currentHoverRating || currentRating);
 		},
 	},
@@ -45,18 +52,17 @@ const { state, actions } = store('surecart/product-review-form', {
 	actions: {
 		/** Navigate using interactivity router */
 		*navigate(event) {
-			const { url } = getContext();
-
+			const { product_id } = getContext();
 			event?.preventDefault();
 
 			state.loading = true;
 
-			const { actions: routerActions } = yield import(
-				/* webpackIgnore: true */
-				'@wordpress/interactivity-router'
-			);
-
-			yield routerActions.navigate(url, { replace: true });
+			// just append the URL parameter for now.
+			if (!!product_id) {
+				const url = new URL(window.location.href);
+				url.searchParams.set('product-review-form', product_id);
+				window.history.pushState({}, '', url.toString());
+			}
 
 			state.loading = false;
 		},
@@ -128,6 +134,11 @@ const { state, actions } = store('surecart/product-review-form', {
 
 			state.open = false;
 
+			// Remove product_id from URL.
+			const url = new URL(window.location.href);
+			url.searchParams.delete('product-review-form');
+			window.history.pushState({}, '', url.toString());
+
 			setTimeout(() => state?.openButton?.focus(), 1);
 		},
 
@@ -136,12 +147,14 @@ const { state, actions } = store('surecart/product-review-form', {
 			const { ref } = getElement();
 			const rating = parseInt(ref.dataset.rating);
 			const context = getContext();
-			
+
 			// Set hover rating for immediate visual feedback
 			context.hoverRating = rating;
-			
+
 			// Update all stars in the container to show hover state
-			const container = ref.closest('.wp-block-surecart-product-review-form-rating');
+			const container = ref.closest(
+				'.wp-block-surecart-product-review-form-rating'
+			);
 			if (container) {
 				const stars = container.querySelectorAll('.star-button');
 				stars.forEach((star, index) => {
@@ -157,12 +170,14 @@ const { state, actions } = store('surecart/product-review-form', {
 		clearHoverRating() {
 			const context = getContext();
 			const { ref } = getElement();
-			
+
 			// Clear hover rating to show actual selected rating
 			context.hoverRating = 0;
-			
+
 			// Reset all stars to show actual rating state
-			const container = ref.closest('.wp-block-surecart-product-review-form-rating');
+			const container = ref.closest(
+				'.wp-block-surecart-product-review-form-rating'
+			);
 			if (container) {
 				const stars = container.querySelectorAll('.star-button');
 				const actualRating = context.rating || 0;
@@ -175,18 +190,21 @@ const { state, actions } = store('surecart/product-review-form', {
 			}
 		},
 
-		/** Set the selected rating */
-		setRating() {
+		/** Set the selected stars */
+		setStars() {
 			const { ref } = getElement();
 			const rating = parseInt(ref.dataset.rating);
 			const context = getContext();
-			
-			// Set the actual rating and clear hover state
-			context.rating = rating;
+
+			// Set the actual rating and clear hover state.
+			context.stars = rating;
 			context.hoverRating = 0;
 
-			// Update all stars to show selected state
-			const container = ref.closest('.wp-block-surecart-product-review-form-rating');
+			// Update all stars to show selected state.
+			const container = ref.closest(
+				'.wp-block-surecart-product-review-form-rating'
+			);
+
 			if (container) {
 				const stars = container.querySelectorAll('.star-button');
 				stars.forEach((star, index) => {
@@ -203,36 +221,24 @@ const { state, actions } = store('surecart/product-review-form', {
 					}
 				});
 			}
-
-			// Dispatch custom event for form integration
-			const event = new CustomEvent('surecart:rating-changed', {
-				detail: { rating },
-				bubbles: true,
-				cancelable: false
-			});
-			
-			// Dispatch from the container element
-			if (container) {
-				container.dispatchEvent(event);
-			} else {
-				ref.dispatchEvent(event);
-			}
 		},
 
 		/** Clear all form data - reset rating and any other form fields */
 		clearForm() {
 			const context = getContext();
-			
+
 			// Reset rating and hover state
 			context.rating = 0;
 			context.hoverRating = 0;
-			
+
 			// Reset title and content
 			context.title = '';
 			context.content = '';
 
 			// Clear visual state of all stars
-			const formContainer = document.querySelector('.wp-block-surecart-product-review-form');
+			const formContainer = document.querySelector(
+				'.wp-block-surecart-product-review-form'
+			);
 			if (formContainer) {
 				// Reset all stars
 				const stars = formContainer.querySelectorAll('.star-button');
@@ -242,19 +248,25 @@ const { state, actions } = store('surecart/product-review-form', {
 				});
 
 				// Clear any text inputs
-				const textInputs = formContainer.querySelectorAll('input[type="text"], input[type="email"], textarea');
+				const textInputs = formContainer.querySelectorAll(
+					'input[type="text"], input[type="email"], textarea'
+				);
 				textInputs.forEach((input) => {
 					input.value = '';
 				});
 
 				// Clear hidden rating input
-				const hiddenRatingInput = formContainer.querySelector('input[name="rating"]');
+				const hiddenRatingInput = formContainer.querySelector(
+					'input[name="rating"]'
+				);
 				if (hiddenRatingInput) {
 					hiddenRatingInput.value = '';
 				}
 
 				// Clear any other form inputs
-				const otherInputs = formContainer.querySelectorAll('input:not([type="submit"]):not([type="button"]):not([type="hidden"])');
+				const otherInputs = formContainer.querySelectorAll(
+					'input:not([type="submit"]):not([type="button"]):not([type="hidden"])'
+				);
 				otherInputs.forEach((input) => {
 					if (input.type === 'checkbox' || input.type === 'radio') {
 						input.checked = false;
@@ -274,37 +286,13 @@ const { state, actions } = store('surecart/product-review-form', {
 		/** Set the review title */
 		setTitle(event) {
 			const context = getContext();
-			const { target } = event;
-			
-			// Update the title in context
-			context.title = target.value;
-			
-			// Dispatch custom event for form integration
-			const customEvent = new CustomEvent('surecart:title-changed', {
-				detail: { title: target.value },
-				bubbles: true,
-				cancelable: false
-			});
-			
-			target.dispatchEvent(customEvent);
+			context.title = event?.target?.value ?? '';
 		},
 
 		/** Set the review content */
 		setContent(event) {
 			const context = getContext();
-			const { target } = event;
-			
-			// Update the content in context
-			context.content = target.value;
-			
-			// Dispatch custom event for form integration
-			const customEvent = new CustomEvent('surecart:content-changed', {
-				detail: { content: target.value },
-				bubbles: true,
-				cancelable: false
-			});
-			
-			target.dispatchEvent(customEvent);
+			context.body = event?.target?.value ?? '';
 		},
 	},
 
@@ -340,6 +328,64 @@ const { state, actions } = store('surecart/product-review-form', {
 			if (hiddenInput) {
 				hiddenInput.value = rating;
 			}
+		},
+
+		/**
+		 * Handle submit callback.
+		 */
+		*handleSubmit(e) {
+			if (e.type === 'keydown' && e.key !== 'Enter') {
+				return true;
+			}
+
+			e.preventDefault(); // prevent the form from submitting.
+			e.stopPropagation(); // prevent the event from bubbling up.
+
+			// Add submitter to event if it doesn't exist (for non-form elements)
+			if (!e.submitter) {
+				const { ref } = getElement();
+				if (ref) {
+					e.submitter = ref;
+				}
+			}
+
+			// if the button does not have a value, add to cart.
+			if (!e?.submitter?.value) {
+				const context = getContext();
+				const { stars, title, body, sc_product_id } = context;
+				try {
+					context.busy = true;
+
+					// Submit the review via REST API.
+					const response = yield apiFetch({
+						method: 'POST',
+						path: addQueryArgs('/surecart/v1/reviews'),
+						data: {
+							product: sc_product_id,
+							stars,
+							title,
+							body,
+						},
+					});
+
+					if (!response || !response.id) {
+						throw new Error(__('Submission failed', 'surecart'));
+					}
+
+					// Handle success - close the form and maybe show a success message
+					alert('Thank you for your review!');
+					actions.close();
+				} catch (e) {
+					console.error(e);
+				} finally {
+					context.busy = false;
+				}
+			}
+		},
+
+		init() {
+			// Ensure the inert state is correct on init.
+			console.log('init called');
 		},
 	},
 });

@@ -18,7 +18,7 @@ import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
 
 export default function Edit({ attributes, setAttributes }) {
-	const { label, placeholder, required, rows, textAlign } = attributes;
+	const { label, placeholder, rows, textAlign } = attributes;
 	const [contentValue, setContentValue] = useState('');
 
 	const blockProps = useBlockProps({
@@ -51,12 +51,6 @@ export default function Edit({ attributes, setAttributes }) {
 							'surecart'
 						)}
 					/>
-					<ToggleControl
-						label={__('Required', 'surecart')}
-						checked={required}
-						onChange={(value) => setAttributes({ required: value })}
-						help={__('Make this field required.', 'surecart')}
-					/>
 					<RangeControl
 						label={__('Rows', 'surecart')}
 						value={rows}
@@ -88,7 +82,7 @@ export default function Edit({ attributes, setAttributes }) {
 					placeholder={placeholder}
 					value={contentValue}
 					onChange={(e) => setContentValue(e.target.value)}
-					required={required}
+					required={false}
 					rows={rows}
 					name="content"
 				/>

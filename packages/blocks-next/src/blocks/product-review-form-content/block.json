@@ -17,10 +17,6 @@
 			"type": "string",
 			"default": "Share your thoughts about this product"
 		},
-		"required": {
-			"type": "boolean",
-			"default": false
-		},
 		"rows": {
 			"type": "number",
 			"default": 4

@@ -1,12 +1,12 @@
 <?php
-$product_id     = isset( $_GET['product-review-form'] ) ? (int) $_GET['product-review-form'] : null;
-$query          = new WP_Query(
-	[
-		'post__in'  => ! empty( $product_id ) ? [ $product_id ] : [ 0 ], // Ensures no posts are found if null.
-		'post_type' => 'sc_product',
-	]
-);
-$close_url      = remove_query_arg( 'product-review-form' );
+$product_id = isset( $_GET['product-review-form'] ) ? (int) $_GET['product-review-form'] : null;
+$product    = sc_get_product( $product_id );
+if ( ! $product ) {
+	return ''; // Return early if no valid product is found.
+}
+
+$sc_product_id  = $product->id ?? null;
+$close_url      = get_permalink( $product_id );
 $position_class = $attributes['alignment'] ? 'position-' . str_replace( ' ', '-', $attributes['alignment'] ) : '';
 
 $styles = sc_get_block_styles( false );
@@ -39,7 +39,7 @@ if ( ! empty( $styles['spacing']['declarations'] ) ) {
 wp_interactivity_state(
 	'surecart/product-review-form',
 	array(
-		'open' => $query->have_posts(),
+		'open' => ! empty( $product_id ),
 	)
 );
 
