@@ -9,7 +9,7 @@ import {
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import { __ } from '@wordpress/i18n';
-import { maybeConvertAmount, formatNumber } from '../../util';
+import { formatNumber } from '../../util';
 import dayjs from 'dayjs';
 
 ChartJS.register(
@@ -118,6 +118,7 @@ export default ({ data, previousData, type = 'amount' }) => {
 			borderColor: '#00824C',
 			fill: true,
 			fill: 'start',
+			borderJoinStyle: 'round',
 			backgroundColor: (ctx) => {
 				const canvas = ctx.chart.ctx;
 				const gradient = canvas.createLinearGradient(0, -160, 0, 120);
@@ -132,6 +133,7 @@ export default ({ data, previousData, type = 'amount' }) => {
 			label: __('Previous', 'surecart'),
 			data: previousData.map((item) => item[type]),
 			borderColor: '#00824c87',
+			borderJoinStyle: 'round',
 			borderDash: [10, 10],
 		},
 	];

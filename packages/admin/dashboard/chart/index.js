@@ -16,6 +16,9 @@ import { useEffect, useState } from 'react';
 import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
 import LineChart from '../components/LineChart';
+import { formatNumber } from '../../util';
+import { __, sprintf } from '@wordpress/i18n';
+import { ProgressBar } from '@wordpress/components';
 
 const Tab = ({ title, value, previous, trend = 'up', selected, ...props }) => {
 	const isUp = trend === 'up';
@@ -74,10 +77,27 @@ const Tab = ({ title, value, previous, trend = 'up', selected, ...props }) => {
 					color: var(--sc-color-gray-500);
 				`}
 			>
-				vs. {previous} last period
+				{sprintf(__('vs %s last period', 'surecart'), previous)}
 			</div>
 		</div>
 	);
+};
+
+// Helper function to calculate sum of a field across all data points
+const calculateSum = (data, field) => {
+	return data.reduce((sum, item) => sum + (item[field] || 0), 0);
+};
+
+// Helper function to calculate average of a field across all data points
+const calculateAverage = (data, field) => {
+	if (!data.length) return 0;
+	const sum = calculateSum(data, field);
+	return sum / data.length;
+};
+
+// Helper function to determine trend direction
+const calculateTrend = (current, previous) => {
+	return current >= previous ? 'up' : 'down';
 };
 
 export default () => {
@@ -85,6 +105,7 @@ export default () => {
 	const [endDate, setEndDate] = useState(dayjs());
 	const [reportBy, setReportBy] = useState('day');
 	const [data, setData] = useState([]);
+	const [loading, setLoading] = useState(false);
 	const [previousData, setPreviousData] = useState([]);
 	const [liveMode, setLiveMode] = useState(false);
 	const currency = 'usd';
@@ -106,7 +127,7 @@ export default () => {
 				startDate.format()
 			);
 		}
-	}, [startDate, endDate, reportBy]);
+	}, [startDate, endDate, reportBy, liveMode]);
 
 	/**
 	 * Get order stats for the range.
@@ -114,7 +135,7 @@ export default () => {
 	const getOrderStats = async (startAt, endAt) => {
 		try {
 			// setError(false);
-			// setLoading(true);
+			setLoading(true);
 			const { data } = await apiFetch({
 				path: addQueryArgs(`surecart/v1/stats/orders/`, {
 					start_at: startAt,
@@ -129,7 +150,7 @@ export default () => {
 			console.error(e);
 			// setError(e);
 		} finally {
-			// setLoading(false);
+			setLoading(false);
 		}
 	};
 
@@ -139,7 +160,7 @@ export default () => {
 	const getPreviousOrderStats = async (startAt, endAt) => {
 		try {
 			// setError(false);
-			// setLoading(true);
+			setLoading(true);
 			const { data } = await apiFetch({
 				path: addQueryArgs(`surecart/v1/stats/orders/`, {
 					start_at: startAt,
@@ -153,9 +174,30 @@ export default () => {
 			console.error(e);
 			// setError(e);
 		} finally {
-			// setLoading(false);
+			setLoading(false);
 		}
 	};
+
+	// Calculate current period stats
+	const currentAmountTotal = calculateSum(data, 'amount');
+	const currentCountTotal = calculateSum(data, 'count');
+	const currentAverageAmount = calculateAverage(data, 'average_amount');
+
+	// Calculate previous period stats
+	const previousAmountTotal = calculateSum(previousData, 'amount');
+	const previousCountTotal = calculateSum(previousData, 'count');
+	const previousAverageAmount = calculateAverage(
+		previousData,
+		'average_amount'
+	);
+
+	// Calculate trends
+	const amountTrend = calculateTrend(currentAmountTotal, previousAmountTotal);
+	const countTrend = calculateTrend(currentCountTotal, previousCountTotal);
+	const averageTrend = calculateTrend(
+		currentAverageAmount,
+		previousAverageAmount
+	);
 
 	return (
 		<div
@@ -186,18 +228,21 @@ export default () => {
 						setEndDate={(date) => setEndDate(dayjs(date))}
 					/>
 					<ScSelect
-						value="daily"
+						value={reportBy}
 						css={css`
 							&::part(panel) {
 								width: 150px;
 							}
 						`}
 						choices={[
-							{ label: 'Daily', value: 'daily' },
-							{ label: 'Weekly', value: 'weekly' },
-							{ label: 'Monthly', value: 'monthly' },
-							{ label: 'Yearly', value: 'yearly' },
+							{ label: 'Daily', value: 'day' },
+							{ label: 'Weekly', value: 'week' },
+							{ label: 'Monthly', value: 'month' },
+							{ label: 'Yearly', value: 'year' },
 						]}
+						onScChange={(e) => {
+							setReportBy(e.target.value);
+						}}
 					/>
 					<ScSwitch
 						checked={!liveMode}
@@ -241,17 +286,17 @@ export default () => {
 				>
 					<Tab
 						title="Revenue"
-						value="$1,234.00"
-						previous="$978.00"
-						trend="up"
+						value={formatNumber(currentAmountTotal, currency)}
+						previous={formatNumber(previousAmountTotal, currency)}
+						trend={amountTrend}
 						selected={tab === 'amount'}
 						onClick={() => setTab('amount')}
 					/>
 					<Tab
 						title="Orders"
-						value="567"
-						previous="456"
-						trend="up"
+						value={currentCountTotal.toLocaleString()}
+						previous={previousCountTotal.toLocaleString()}
+						trend={countTrend}
 						selected={tab === 'count'}
 						onClick={() => {
 							console.log('count');
@@ -260,9 +305,9 @@ export default () => {
 					/>
 					<Tab
 						title="Average Order Value"
-						value="$19.00"
-						previous="$22.00"
-						trend="down"
+						value={formatNumber(currentAverageAmount, currency)}
+						previous={formatNumber(previousAverageAmount, currency)}
+						trend={averageTrend}
 						selected={tab === 'average_amount'}
 						onClick={() => setTab('average_amount')}
 					/>
@@ -271,6 +316,7 @@ export default () => {
 					css={css`
 						aspect-ratio: 3.75/1;
 						width: 100%;
+						position: relative;
 					`}
 				>
 					<LineChart
@@ -278,6 +324,23 @@ export default () => {
 						previousData={previousData}
 						type={tab}
 					/>
+					{loading && (
+						<div
+							css={css`
+								position: absolute;
+								bottom: 0;
+								left: 0;
+								right: 0;
+								display: flex;
+								justify-content: center;
+								align-items: center;
+								height: 100%;
+								background: white;
+							`}
+						>
+							<ProgressBar />
+						</div>
+					)}
 				</div>
 			</div>
 		</div>
