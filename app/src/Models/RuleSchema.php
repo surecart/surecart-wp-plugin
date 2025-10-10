@@ -38,6 +38,16 @@ class RuleSchema extends Model {
 			],
 		];
 
+		// Remove the metadata & checkout.metadata attributes.
+		$this->attributes['attributes'] = array_values(
+			array_filter(
+				$this->attributes['attributes'],
+				function ( $attribute ) {
+					return ! in_array( $attribute->key, [ 'metadata', 'checkout.metadata' ], true );
+				}
+			)
+		);
+
 		return $this->attributes['attributes'];
 	}
 }

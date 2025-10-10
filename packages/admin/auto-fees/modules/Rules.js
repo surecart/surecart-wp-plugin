@@ -119,7 +119,7 @@ export default ({ autoFee = {}, onUpdate, loading }) => {
 				`}
 			>
 				{__(
-					'Apply this dynamic price to Line Items where ',
+					`Apply this dynamic price to ${autoFee?.fee_target} where `,
 					'surecart'
 				)}
 			</label>

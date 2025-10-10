@@ -7,28 +7,6 @@ import {
 	USER_ROLE_ATTRIBUTES,
 } from './constants';
 
-/**
- * Creates an empty OR group
- * @returns {Array} - Empty OR group with one empty AND rule
- */
-export const createEmptyOrGroup = () => {
-	return [createEmptyAndRule()];
-};
-
-/**
- * Creates an empty AND rule
- * @returns {Array} - Empty AND rule [attribute, value, metadataKey, operator]
- */
-export const createEmptyAndRule = () => {
-	return {
-		type: 'condition',
-		attribute_name: null,
-		comparison_value: null,
-		operator_label: null,
-		metadataKey: null,
-	};
-};
-
 export const getInputType = (attribute) => {
 	if (DATE_ATTRIBUTES?.includes(attribute)) return 'date';
 	if (PRICE_ATTRIBUTES?.includes(attribute)) return 'price';
