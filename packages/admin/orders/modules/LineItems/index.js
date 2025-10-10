@@ -293,19 +293,6 @@ export default ({ order, checkout, chargeIds }) => {
 					</Fragment>
 				)}
 
-				{shipping_fees?.length > 0 && (
-					<Fragment>
-						{shipping_fees?.map((fee) => (
-							<LineItem
-								key={fee?.id}
-								label={fee?.description}
-								currency={checkout?.currency}
-								value={fee?.amount}
-							/>
-						))}
-					</Fragment>
-				)}
-
 				{/* Trial */}
 				{!!checkout?.trial_amount && (
 					<LineItem
@@ -341,29 +328,46 @@ export default ({ order, checkout, chargeIds }) => {
 
 				{/* Shipping */}
 				{!!checkout?.shipping_amount && (
-					<span>
-						<LineItem
-							label={`${__('Shipping', 'surecart')} ${
-								selectedShippingMethod?.name
-									? `(${selectedShippingMethod?.name})`
-									: ''
-							}`}
-							currency={checkout?.currency}
-							value={checkout?.shipping_amount}
-						/>
-						{checkout?.selected_shipping_choice?.shipping_method
-							?.name && (
-							<span
-								css={css`
-									font-size: var(--sc-font-size-small);
-									line-height: var(--sc-line-height-dense);
-									color: var(--sc-input-label-color);
-								`}
-							>
-								{`(${checkout?.selected_shipping_choice?.shipping_method?.name})`}
-							</span>
+					<>
+						<span>
+							<LineItem
+								label={`${__('Shipping', 'surecart')} ${
+									selectedShippingMethod?.name
+										? `(${selectedShippingMethod?.name})`
+										: ''
+								}`}
+								currency={checkout?.currency}
+								value={checkout?.shipping_amount}
+							/>
+							{checkout?.selected_shipping_choice?.shipping_method
+								?.name && (
+								<span
+									css={css`
+										font-size: var(--sc-font-size-small);
+										line-height: var(
+											--sc-line-height-dense
+										);
+										color: var(--sc-input-label-color);
+									`}
+								>
+									{`(${checkout?.selected_shipping_choice?.shipping_method?.name})`}
+								</span>
+							)}
+						</span>
+
+						{shipping_fees?.length > 0 && (
+							<>
+								{shipping_fees?.map((fee) => (
+									<LineItem
+										key={fee?.id}
+										label={fee?.description}
+										currency={checkout?.currency}
+										value={fee?.amount}
+									/>
+								))}
+							</>
 						)}
-					</span>
+					</>
 				)}
 
 				{/* Tax */}

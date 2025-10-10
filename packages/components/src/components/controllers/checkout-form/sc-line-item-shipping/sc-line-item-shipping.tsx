@@ -48,11 +48,13 @@ export class ScLineItemShipping {
     }
 
     return (
+      <Fragment>
       <sc-line-item>
         <span slot="description">{this.label || __('Shipping', 'surecart')}</span>
         <span slot="price">{checkout?.shipping_display_amount}</span>
-        {this.renderShippingFees(checkout)}
       </sc-line-item>
+        {this.renderShippingFees(checkout)}
+        </Fragment>
     );
   }
 }
