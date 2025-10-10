@@ -13,6 +13,7 @@ import {
 	ScChoice,
 	ScChoices,
 	ScInput,
+	ScIcon,
 } from '@surecart/components-react';
 import CreateTemplate from '../templates/CreateModel';
 import Box from '../ui/Box';
@@ -30,6 +31,7 @@ export default ({ id, onCreateAutoFee }) => {
 			label: template?.name || key,
 			value: key,
 			description: template?.description,
+			icon: template?.icon,
 		}));
 	};
 
@@ -116,17 +118,38 @@ export default ({ id, onCreateAutoFee }) => {
 									value={template.value}
 									style={{ width: '48%' }}
 								>
-									{template.label}
-									{!!template.description && (
-										<div
+									<div
+										style={{ display: 'flex', gap: '1em' }}
+										slot="footer"
+									>
+										<ScIcon
 											style={{
-												'margin-top': '0.5em',
+												fontWeight: '600',
 											}}
-											slot="description"
-										>
-											{template.description}
+											name={template.icon}
+										/>
+										<div>
+											<div
+												style={{
+													fontWeight: 600,
+													lineHeight: 1,
+												}}
+											>
+												{template.label}
+											</div>
+											{!!template.description && (
+												<div
+													style={{
+														marginTop: '0.5em',
+														fontWeight: 400,
+														color: '#6B7280',
+													}}
+												>
+													{template.description}
+												</div>
+											)}
 										</div>
-									)}
+									</div>
 								</ScChoice>
 							);
 						})}

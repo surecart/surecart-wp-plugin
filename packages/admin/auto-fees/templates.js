@@ -12,6 +12,7 @@ export default {
 			'Start from scratch and create your own dynamic price.',
 			'surecart'
 		),
+		icon: 'file',
 	},
 	bogo: {
 		enabled: true,
@@ -39,6 +40,7 @@ export default {
 			],
 		},
 		description: __('Buy 1, get the 2nd one for free.', 'surecart'),
+		icon: 'tags',
 	},
 	free_shipping: {
 		enabled: true,
@@ -69,6 +71,7 @@ export default {
 			'Free shipping when the subtotal is at least $75.',
 			'surecart'
 		),
+		icon: 'package-check',
 	},
 	installment_payment_processing_fee: {
 		enabled: true,
@@ -99,6 +102,7 @@ export default {
 			'3% processing fee for installment payments.',
 			'surecart'
 		),
+		icon: 'credit-card',
 	},
 	subscription_renewal_discount: {
 		enabled: true,
@@ -126,6 +130,7 @@ export default {
 			],
 		},
 		description: __('15% discount for subscription renewals.', 'surecart'),
+		icon: 'hand-coins',
 	},
 	bulk_purchase_discount: {
 		enabled: true,
@@ -153,6 +158,7 @@ export default {
 			],
 		},
 		description: __('10% discount for bulk purchases.', 'surecart'),
+		icon: 'refresh-cw',
 	},
 	member_only_discount: {
 		enabled: true,
@@ -180,6 +186,7 @@ export default {
 			],
 		},
 		description: __('5% discount for members only.', 'surecart'),
+		icon: 'users',
 	},
 	first_time_customer_discount: {
 		enabled: true,
@@ -207,5 +214,6 @@ export default {
 			],
 		},
 		description: __('15% discount for first time customers.', 'surecart'),
+		icon: 'gift',
 	},
 };
