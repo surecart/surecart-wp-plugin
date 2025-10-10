@@ -110,6 +110,42 @@ export default () => {
 						type="url"
 					></ScInput>
 
+					<ScInput
+						value={accountItem?.slug}
+						label={__('Store ID / Subdomain', 'surecart')}
+						onScInput={(e) =>
+							editAccountItem({ slug: e.target.value })
+						}
+						help={__(
+							'This will be used to identify your store in URLs. It can only contain letters, numbers, and dashes.',
+							'surecart'
+						)}
+						required
+					></ScInput>
+
+					<ScSelect
+						search
+						value={accountItem?.time_zone}
+						onScChange={(e) =>
+							editAccountItem({ time_zone: e.target.value })
+						}
+						choices={Object.keys(scData?.time_zones || {}).map(
+							(value) => {
+								const label = scData?.time_zones[value];
+								return {
+									label,
+									value,
+								};
+							}
+						)}
+						label={__('Time Zone', 'surecart')}
+						help={__(
+							'Change this if you want the store to be in a different time zone than your server.',
+							'surecart'
+						)}
+						required
+					/>
+
 					<div
 						css={css`
 							grid-column: 1 / 3;
@@ -180,87 +216,70 @@ export default () => {
 						)}
 					</div>
 
-					<ScSelect
-						search
-						value={accountItem?.time_zone}
-						onScChange={(e) =>
-							editAccountItem({ time_zone: e.target.value })
-						}
-						choices={Object.keys(scData?.time_zones || {}).map(
-							(value) => {
-								const label = scData?.time_zones[value];
-								return {
-									label,
-									value,
-								};
+					<div
+						css={css`
+							grid-column: 1 / 3;
+						`}
+					>
+						<ScSelect
+							value={accountItem?.locale}
+							onScChange={(e) =>
+								editAccountItem({ locale: e.target.value })
 							}
-						)}
-						label={__('Time Zone', 'surecart')}
-						help={__(
-							'Change this if you want the store to be in a different time zone than your server.',
-							'surecart'
-						)}
-						required
-					/>
-
-					<ScSelect
-						value={accountItem?.locale}
-						onScChange={(e) =>
-							editAccountItem({ locale: e.target.value })
-						}
-						choices={[
-							{
-								value: 'en',
-								label: 'English - United States',
-							},
-							{
-								value: 'bg',
-								label: 'български (Bŭlgarski)',
-							},
-							{
-								value: 'de',
-								label: 'Deutsch',
-							},
-							{
-								value: 'es',
-								label: 'Español',
-							},
-							{
-								value: 'fr',
-								label: 'Français',
-							},
-							{
-								value: 'it',
-								label: 'Italiano',
-							},
-							{
-								value: 'ja',
-								label: '日本 (Nihon)',
-							},
-							{
-								value: 'nl',
-								label: 'Nederland',
-							},
-							{
-								value: 'pl',
-								label: 'Polski',
-							},
-							{
-								value: 'pt',
-								label: 'Português',
-							},
-							{
-								value: 'pt_br',
-								label: 'Português - Brasil',
-							},
-						]}
-						label={__('Store Language', 'surecart')}
-						help={__(
-							'The language used for notifications, invoices, etc.',
-							'surecart'
-						)}
-						required
-					/>
+							choices={[
+								{
+									value: 'en',
+									label: 'English - United States',
+								},
+								{
+									value: 'bg',
+									label: 'български (Bŭlgarski)',
+								},
+								{
+									value: 'de',
+									label: 'Deutsch',
+								},
+								{
+									value: 'es',
+									label: 'Español',
+								},
+								{
+									value: 'fr',
+									label: 'Français',
+								},
+								{
+									value: 'it',
+									label: 'Italiano',
+								},
+								{
+									value: 'ja',
+									label: '日本 (Nihon)',
+								},
+								{
+									value: 'nl',
+									label: 'Nederland',
+								},
+								{
+									value: 'pl',
+									label: 'Polski',
+								},
+								{
+									value: 'pt',
+									label: 'Português',
+								},
+								{
+									value: 'pt_br',
+									label: 'Português - Brasil',
+								},
+							]}
+							label={__('Store Language', 'surecart')}
+							help={__(
+								'The language used for notifications, invoices, etc.',
+								'surecart'
+							)}
+							required
+						/>
+					</div>
 
 					<ScInput
 						label={__('Terms Page', 'surecart')}

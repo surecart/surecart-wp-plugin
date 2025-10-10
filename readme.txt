@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: ecommerce, online store, subscriptions, stripe, payments
 Requires at least: 6.6
 Tested up to: 6.8
-Stable tag: 3.14.0
+Stable tag: 3.15.4
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -312,6 +312,38 @@ Yes, the checkout form can be customized using our visual builder. You can chang
 Accessibility is a huge priority for the entire team building SureCart. As you know, accessibility is an ongoing improvement task. Our development and QA teams are trained in accessibility best practices and build/test each new feature for accessibility. If you come across any edge issues, we want to know about it and will prioritize its resolution. Please contact us via our website.
 
 == Changelog ==
+
+= 3.15.4 - October 8th, 2025 =
+- Fix: Issue with downloads not being able to listed by customers with more restricted capabilities.
+
+= 3.15.3 - October 7th, 2025 =
+- Improvement: Increase automatic video poster quality generation.
+- Fix: Paginate download on customer dashboard if more than 20 downloads.
+- Fix: Issue with deleted WordPress media not able to be removed from product backend.
+
+= 3.15.2 - October 3rd, 2025 =
+- Fix: Auto-height issue with single media blocks.
+
+= 3.15.1 - October 1st, 2025 =
+- Improvement: Improve message when customer has reached purchase limit of a product.
+- Fix: Media thumbnail badges on admin apear under the image.
+- Fix: RankMath adding unnecessary link in sitemap.
+- Fix: Issue with Etch backend showing floating cart icon.
+- Fix: Badge overlap in integrations section when integration is disabled.
+
+= 3.15.0 - September 30th, 2025 =
+- New: Product page video media.
+- New: Upsell replacement behavior.
+- New: Show disputes in admin pages.
+- New: Improved UI for assigning variants to product media.
+- Improvement: Pass noindex headers with currency parameters due to issues with some SEO plugins indexing these queries.
+- Improvement: Reposition help widget on index pages to not interfere with pagination.
+- Improvement: Better wording when restoring payment plans.
+- Improvement: Change "Edit Template" to "Edit Product Template" on product page admin UI to be more clear.
+- Fix: Issue in Safari with Quick Add popup animation.
+- Fix: Issue when updating customer's tax identifier from the order admin page.
+- Fix: Issue with Elementor where the "out of stock" label was not displaying a custom label on the front-end.
+- Fix: Missing space in resubscribe confirmation message.
 
 = 3.14.0 - September 15th, 2025 =
 - New: Quick add functionality for product lists.
