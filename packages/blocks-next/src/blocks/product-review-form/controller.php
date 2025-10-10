@@ -43,4 +43,9 @@ wp_interactivity_state(
 	)
 );
 
+$review_confirmation_template = get_block_template( 'surecart/surecart//product-review-confirmation', 'wp_template_part' );
+if ( ! $review_confirmation_template || empty( $review_confirmation_template->content ) ) {
+	return;
+}
+
 return 'file:./view.php';

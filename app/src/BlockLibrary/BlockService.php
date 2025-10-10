@@ -210,7 +210,7 @@ class BlockService {
 	/**
 	 * Get the product review form service.
 	 *
-	 * @return ProductReviewWriteService
+	 * @return ProductReviewFormService
 	 */
 	public function reviewForm() {
 		return $this->app->resolve( 'blocks.review_form' );

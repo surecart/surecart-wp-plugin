@@ -372,9 +372,7 @@ const { state, actions } = store('surecart/product-review-form', {
 						throw new Error(__('Submission failed', 'surecart'));
 					}
 
-					// Handle success - close the form and maybe show a success message
-					alert('Thank you for your review!');
-					actions.close();
+					context.submitted = true;
 				} catch (e) {
 					console.error(e);
 				} finally {

@@ -21,6 +21,7 @@
 					'rating'        => 0,
 					'body'          => '',
 					'sc_product_id' => esc_attr( $sc_product_id ),
+					'submitted'     => false,
 				]
 			)
 		);
@@ -40,7 +41,18 @@
 			data-wp-init="callbacks.init"
 		>
 			<div class="sc-product-review-form-dialog__content" style="<?php echo esc_attr( $content_style ); ?>">
-				<?php echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+				<div
+					data-wp-bind--hidden="context.submitted"
+				>
+					<?php echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+				</div>
+
+				<div
+					class="sc-product-review-confirmation"
+					data-wp-bind--hidden="!context.submitted"
+				>
+					<?php echo do_blocks( $review_confirmation_template->content ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+				</div>
 			</div>
 		</form>
 	</div>
