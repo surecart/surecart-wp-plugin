@@ -245,12 +245,12 @@ class AdminToolbarServiceTest extends SureCartUnitTestCase {
 	public function test_render_product_content_not_added_when_rendered_with_bricks() {
 		$wp_admin_bar = \Mockery::mock('WP_Admin_Bar');
 
-		// Create a mock that returns true for Bricks rendering
+		// Create a mock that returns true for Bricks rendering.
 		$adminToolbarServiceMock = \Mockery::mock(AdminToolbarService::class, [\SureCart::make()])->makePartial();
 		$adminToolbarServiceMock->shouldReceive('isRenderedWithBricks')->andReturn(true);
 		$adminToolbarServiceMock->shouldReceive('isRenderedWithElementor')->andReturn(false);
 
-		// Since isRenderedWithBlocks() will return false, no nodes should be added
+		// Since isRenderedWithBlocks() will return false, no nodes should be added.
 		$wp_admin_bar->shouldNotReceive('add_node');
 
 		$adminToolbarServiceMock->renderProductContent($wp_admin_bar);
@@ -262,12 +262,12 @@ class AdminToolbarServiceTest extends SureCartUnitTestCase {
 	public function test_render_product_template_not_added_when_rendered_with_bricks() {
 		$wp_admin_bar = \Mockery::mock('WP_Admin_Bar');
 
-		// Create a mock that returns true for Bricks rendering
+		// Create a mock that returns true for Bricks rendering.
 		$adminToolbarServiceMock = \Mockery::mock(AdminToolbarService::class, [\SureCart::make()])->makePartial();
 		$adminToolbarServiceMock->shouldReceive('isRenderedWithBricks')->andReturn(true);
 		$adminToolbarServiceMock->shouldReceive('isRenderedWithElementor')->andReturn(false);
 
-		// Since isRenderedWithBlocks() will return false, no nodes should be added
+		// Since isRenderedWithBlocks() will return false, no nodes should be added.
 		$wp_admin_bar->shouldNotReceive('add_node');
 
 		$adminToolbarServiceMock->renderProductTemplate($wp_admin_bar);
@@ -286,12 +286,12 @@ class AdminToolbarServiceTest extends SureCartUnitTestCase {
 	public function test_render_product_content_not_added_when_rendered_with_elementor() {
 		$wp_admin_bar = \Mockery::mock('WP_Admin_Bar');
 
-		// Create a mock that returns true for Elementor rendering
+		// Create a mock that returns true for Elementor rendering.
 		$adminToolbarServiceMock = \Mockery::mock(AdminToolbarService::class, [\SureCart::make()])->makePartial();
 		$adminToolbarServiceMock->shouldReceive('isRenderedWithBricks')->andReturn(false);
 		$adminToolbarServiceMock->shouldReceive('isRenderedWithElementor')->andReturn(true);
 
-		// Since isRenderedWithBlocks() will return false, no nodes should be added
+		// Since isRenderedWithBlocks() will return false, no nodes should be added.
 		$wp_admin_bar->shouldNotReceive('add_node');
 
 		$adminToolbarServiceMock->renderProductContent($wp_admin_bar);
@@ -303,12 +303,12 @@ class AdminToolbarServiceTest extends SureCartUnitTestCase {
 	public function test_render_product_template_not_added_when_rendered_with_elementor() {
 		$wp_admin_bar = \Mockery::mock('WP_Admin_Bar');
 
-		// Create a mock that returns true for Elementor rendering
+		// Create a mock that returns true for Elementor rendering.
 		$adminToolbarServiceMock = \Mockery::mock(AdminToolbarService::class, [\SureCart::make()])->makePartial();
 		$adminToolbarServiceMock->shouldReceive('isRenderedWithBricks')->andReturn(false);
 		$adminToolbarServiceMock->shouldReceive('isRenderedWithElementor')->andReturn(true);
 
-		// Since isRenderedWithBlocks() will return false, no nodes should be added
+		// Since isRenderedWithBlocks() will return false, no nodes should be added.
 		$wp_admin_bar->shouldNotReceive('add_node');
 
 		$adminToolbarServiceMock->renderProductTemplate($wp_admin_bar);
