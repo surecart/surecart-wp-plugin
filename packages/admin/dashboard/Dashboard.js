@@ -7,6 +7,7 @@ import Setup from './Setup';
 import Chart from './chart';
 import Orders from './Orders';
 import QuickLinks from './components/QuickLinks';
+import Recommended from './Recommended';
 
 export default () => {
 	return (
@@ -27,12 +28,10 @@ export default () => {
 				</h1>
 
 				<Setup />
-
 				<Chart />
-
 				<Orders />
-
 				<QuickLinks />
+				<Recommended />
 			</UpdateModel>
 		</div>
 	);
