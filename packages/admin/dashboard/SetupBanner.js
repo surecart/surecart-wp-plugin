@@ -11,10 +11,17 @@ export default () => {
 				background-color: var(--sc-brand-color-background-inverse);
 				padding: var(--sc-spacing-small);
 				display: flex;
-				gap: var(--sc-spacing-xx-large);
-				justify-content: space-between;
-				align-items: center;
+				flex-direction: column;
+				gap: var(--sc-spacing-medium);
+				align-items: flex-start;
 				border-radius: var(--sc-border-radius-x-large);
+
+				@media (min-width: 640px) {
+					flex-direction: row;
+					gap: var(--sc-spacing-xx-large);
+					justify-content: space-between;
+					align-items: center;
+				}
 			`}
 		>
 			<div
@@ -22,13 +29,23 @@ export default () => {
 					display: flex;
 					align-items: center;
 					gap: var(--sc-spacing-x-small);
+					font-size: 14px;
+
+					@media (min-width: 640px) {
+						font-size: inherit;
+					}
 				`}
 			>
 				<ScIcon
 					name="arrow-up-right"
 					css={css`
-						font-size: var(--sc-font-size-x-large);
+						font-size: var(--sc-font-size-large);
 						padding: var(--sc-spacing-x-small);
+						flex-shrink: 0;
+
+						@media (min-width: 640px) {
+							font-size: var(--sc-font-size-x-large);
+						}
 					`}
 				/>
 				{__('Complete your store setup to go live.', 'surecart')}
@@ -40,6 +57,11 @@ export default () => {
 						--sc-brand-color-background-inverse
 					);
 					--sc-button-default-border-color: transparent;
+					width: 100%;
+
+					@media (min-width: 640px) {
+						width: auto;
+					}
 				`}
 				href="admin.php?page=sc-settings"
 			>

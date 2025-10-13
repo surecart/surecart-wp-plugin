@@ -134,6 +134,7 @@ export default () => {
 					display: flex;
 					justify-content: space-between;
 					align-items: center;
+					flex-wrap: wrap;
 				`}
 			>
 				<div
@@ -141,6 +142,7 @@ export default () => {
 						display: flex;
 						align-items: center;
 						gap: 10px;
+						flex-wrap: wrap;
 					`}
 				>
 					<DatePicker

@@ -12,12 +12,17 @@ const Card = ({
 	highlighted = false,
 }) => {
 	return (
-		<ScCard>
+		<ScCard
+			css={css`
+				height: 100%;
+			`}
+		>
 			<div
 				css={css`
 					display: flex;
 					flex-direction: column;
 					gap: 10px;
+					height: 100%;
 				`}
 			>
 				<ScIcon
@@ -33,6 +38,7 @@ const Card = ({
 					css={css`
 						margin: 0;
 						font-size: 1em;
+						line-height: 1.4;
 					`}
 				>
 					{title}
@@ -40,9 +46,11 @@ const Card = ({
 				<p
 					css={css`
 						margin: 0;
-						font-size: 1em;
+						font-size: 0.95em;
 						font-weight: 400;
 						color: var(--sc-color-gray-600);
+						line-height: 1.5;
+						flex-grow: 1;
 					`}
 				>
 					{description}
@@ -58,6 +66,13 @@ const Card = ({
 							'--primary-background':
 								'var(--sc-brand-color-background-inverse)',
 						}}
+						css={css`
+							width: 100%;
+
+							@media (min-width: 640px) {
+								width: auto;
+							}
+						`}
 					>
 						{buttonText}
 					</ScButton>
@@ -86,10 +101,18 @@ export default () => {
 		>
 			<div
 				css={css`
-					display: flex;
-					justify-content: space-between;
-					align-items: stretch;
-					gap: var(--sc-spacing-large);
+					display: grid;
+					grid-template-columns: 1fr;
+					gap: var(--sc-spacing-medium);
+
+					@media (min-width: 640px) {
+						grid-template-columns: repeat(2, 1fr);
+						gap: var(--sc-spacing-large);
+					}
+
+					@media (min-width: 1024px) {
+						grid-template-columns: repeat(3, 1fr);
+					}
 				`}
 			>
 				<Card

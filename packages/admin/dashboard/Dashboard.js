@@ -13,6 +13,7 @@ export default () => {
 		<div
 			css={css`
 				--sc-card-border-radius: var(--sc-border-radius-x-large);
+				padding: 0 var(--sc-spacing-large);
 			`}
 		>
 			<UpdateModel title={<Logo display="block" />}>

@@ -67,6 +67,7 @@ export default () => {
 				</ScButton>
 			}
 			css={css`
+				border: var(--sc-card-border);
 				sc-table-cell:first-of-type {
 					padding-left: 30px;
 				}
@@ -82,112 +83,125 @@ export default () => {
 				--sc-table-cell-spacing: var(--sc-spacing-large);
 			`}
 		>
-			<ScTable
-				style={{
-					'--shadow': 'none',
-					'--border-radius': '0',
-					borderLeft: '0',
-					borderRight: '0',
-				}}
+			<div
+				css={css`
+					overflow-x: auto;
+					width: 100%;
+				`}
 			>
-				<ScTableCell
-					slot="head"
-					css={css`
-						width: 100px;
-					`}
+				<ScTable
+					style={{
+						'--shadow': 'none',
+						'--border-radius': '0',
+						borderLeft: '0',
+						borderRight: '0',
+						margin: '0, -1px',
+					}}
 				>
-					{__('Order', 'surecart')}
-				</ScTableCell>
-				<ScTableCell slot="head">
-					{__('Fulfillment', 'surecart')}
-				</ScTableCell>
-				<ScTableCell
-					slot="head"
-					css={css`
-						width: 200px;
-					`}
-				>
-					{__('Customer', 'surecart')}
-				</ScTableCell>
-				<ScTableCell slot="head">{__('Total', 'surecart')}</ScTableCell>
-				<ScTableCell slot="head">
-					{__('Payment', 'surecart')}
-				</ScTableCell>
-				<ScTableCell
-					slot="head"
-					css={css`
-						width: 125px;
-					`}
-				>
-					{__('Date', 'surecart')}
-				</ScTableCell>
-				<ScTableCell
-					slot="head"
-					css={css`
-						width: 25px;
-					`}
-				></ScTableCell>
-
-				{(orders || []).map((order) => (
-					<ScTableRow
-						tabIndex={0}
-						key={order?.id}
-						onClick={() => {
-							navigateToOrder(order?.id);
-						}}
-						onKeyDown={(e) => {
-							if (e.key === 'Enter' || e.key === ' ') {
-								navigateToOrder(order?.id);
-							}
-						}}
-						role="button"
-						aria-label={__('View order', 'surecart')}
+					<ScTableCell
+						slot="head"
 						css={css`
-							cursor: pointer;
-							&:hover {
-								background: var(--sc-color-gray-50);
-							}
-							&:focus-visible {
-								outline: 1px solid var(--sc-color-primary-500);
-							}
+							width: 100px;
 						`}
 					>
-						<Cell>
-							<span
-								css={css`
-									font-weight: var(--sc-font-weight-semibold);
-								`}
-							>
-								#{order?.number}
-							</span>
-						</Cell>
-						<Cell muted>
-							<ScOrderFulfillmentBadge
-								status={order?.fulfillment_status}
-								pill
-							/>
-						</Cell>
-						<Cell muted>{order?.checkout?.customer?.name}</Cell>
-						<Cell muted>
-							{order?.checkout?.total_display_amount}
-						</Cell>
-						<Cell muted>
-							<ScOrderStatusBadge status={order?.status} />
-						</Cell>
-						<Cell muted>{order?.created_at_date}</Cell>
-						<Cell muted>
-							<ScIcon
-								aria-hidden="true"
-								tabIndex={-1}
-								name="chevron-right"
-								css={css`
-									font-size: 14px;
-								`}
-							/>
-						</Cell>
-					</ScTableRow>
-				))}
-			</ScTable>
+						{__('Order', 'surecart')}
+					</ScTableCell>
+					<ScTableCell slot="head">
+						{__('Fulfillment', 'surecart')}
+					</ScTableCell>
+					<ScTableCell
+						slot="head"
+						css={css`
+							width: 200px;
+						`}
+					>
+						{__('Customer', 'surecart')}
+					</ScTableCell>
+					<ScTableCell slot="head">
+						{__('Total', 'surecart')}
+					</ScTableCell>
+					<ScTableCell slot="head">
+						{__('Payment', 'surecart')}
+					</ScTableCell>
+					<ScTableCell
+						slot="head"
+						css={css`
+							width: 125px;
+						`}
+					>
+						{__('Date', 'surecart')}
+					</ScTableCell>
+					<ScTableCell
+						slot="head"
+						css={css`
+							width: 25px;
+						`}
+					></ScTableCell>
+
+					{(orders || []).map((order) => (
+						<ScTableRow
+							tabIndex={0}
+							key={order?.id}
+							onClick={() => {
+								navigateToOrder(order?.id);
+							}}
+							onKeyDown={(e) => {
+								if (e.key === 'Enter' || e.key === ' ') {
+									navigateToOrder(order?.id);
+								}
+							}}
+							role="button"
+							aria-label={__('View order', 'surecart')}
+							css={css`
+								cursor: pointer;
+								&:hover {
+									background: var(--sc-color-gray-50);
+								}
+								&:focus-visible {
+									outline: 1px solid
+										var(--sc-color-primary-500);
+								}
+							`}
+						>
+							<Cell>
+								<span
+									css={css`
+										font-weight: var(
+											--sc-font-weight-semibold
+										);
+									`}
+								>
+									#{order?.number}
+								</span>
+							</Cell>
+							<Cell muted>
+								<ScOrderFulfillmentBadge
+									status={order?.fulfillment_status}
+									pill
+								/>
+							</Cell>
+							<Cell muted>{order?.checkout?.customer?.name}</Cell>
+							<Cell muted>
+								{order?.checkout?.total_display_amount}
+							</Cell>
+							<Cell muted>
+								<ScOrderStatusBadge status={order?.status} />
+							</Cell>
+							<Cell muted>{order?.created_at_date}</Cell>
+							<Cell muted>
+								<ScIcon
+									aria-hidden="true"
+									tabIndex={-1}
+									name="chevron-right"
+									css={css`
+										font-size: 14px;
+									`}
+								/>
+							</Cell>
+						</ScTableRow>
+					))}
+				</ScTable>
+			</div>
 		</Box>
 	);
 };
