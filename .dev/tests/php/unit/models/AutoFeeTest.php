@@ -48,22 +48,46 @@ class AutoFeeTest extends SureCartUnitTestCase {
 	public function test_handle_custom_attributes_wp_user_role_transformation() {
 		$auto_fee = new AutoFee();
 		
+		// Realistic nested rule structure
 		$rule_json = [
-			[
-				'attribute_name' => 'wp_user_role',
-				'operator' => 'is',
-				'value' => 'subscriber'
+			"type" => "group",
+			"combinator" => "and",
+			"conditions" => [
+				[
+					"type" => "condition",
+					"attribute_name" => "wp_user_role",
+					"operator" => "is",
+					"comparison_value" => "subscriber",
+					"operator_label" => "is"
+				],
+				[
+					"type" => "condition",
+					"attribute_name" => "customer.email",
+					"operator" => "contains",
+					"comparison_value" => "@example.com"
+				]
 			]
 		];
 
 		$result = $auto_fee->handleCustomAttributes($rule_json);
 		
 		$this->assertIsArray($result);
-		$this->assertCount(1, $result);
-		$this->assertEquals('metadata', $result[0]['attribute_name']);
-		$this->assertEquals('wp_user_role', $result[0]['metadata_key']);
-		$this->assertEquals('is', $result[0]['operator']);
-		$this->assertEquals('subscriber', $result[0]['value']);
+		$this->assertEquals('group', $result['type']);
+		$this->assertArrayHasKey('conditions', $result);
+		$this->assertCount(2, $result['conditions']);
+		
+		// Check wp_user_role transformation
+		$wp_user_condition = $result['conditions'][0];
+		$this->assertEquals('condition', $wp_user_condition['type']);
+		$this->assertEquals('metadata', $wp_user_condition['attribute_name']);
+		$this->assertEquals('wp_user_role', $wp_user_condition['metadata_key']);
+		$this->assertEquals('is', $wp_user_condition['operator']);
+		$this->assertEquals('subscriber', $wp_user_condition['comparison_value']);
+		
+		// Check other condition remains unchanged
+		$email_condition = $result['conditions'][1];
+		$this->assertEquals('customer.email', $email_condition['attribute_name']);
+		$this->assertEquals('contains', $email_condition['operator']);
 	}
 
 	/**
@@ -75,23 +99,47 @@ class AutoFeeTest extends SureCartUnitTestCase {
 	public function test_handle_custom_attributes_metadata_to_wp_user_role() {
 		$auto_fee = new AutoFee();
 		
+		// Realistic rule structure with metadata transformation
 		$rule_json = [
-			[
-				'attribute_name' => 'metadata',
-				'metadata_key' => 'wp_user_role',
-				'operator' => 'is_not',
-				'value' => 'administrator'
+			"type" => "group",
+			"combinator" => "or",
+			"conditions" => [
+				[
+					"type" => "condition",
+					"attribute_name" => "metadata",
+					"metadata_key" => "wp_user_role",
+					"operator" => "is_not",
+					"comparison_value" => "administrator",
+					"operator_label" => "is not"
+				],
+				[
+					"type" => "condition",
+					"attribute_name" => "purchase.total_amount",
+					"operator" => "greater_than",
+					"comparison_value" => 100
+				]
 			]
 		];
 
 		$result = $auto_fee->handleCustomAttributes($rule_json);
 		
 		$this->assertIsArray($result);
-		$this->assertCount(1, $result);
-		$this->assertEquals('wp_user_role', $result[0]['attribute_name']);
-		$this->assertEquals('wp_user_role', $result[0]['metadata_key']); // metadata_key is preserved
-		$this->assertEquals('is_not', $result[0]['operator']);
-		$this->assertEquals('administrator', $result[0]['value']);
+		$this->assertEquals('group', $result['type']);
+		$this->assertEquals('or', $result['combinator']);
+		$this->assertCount(2, $result['conditions']);
+		
+		// Check metadata -> wp_user_role transformation
+		$user_role_condition = $result['conditions'][0];
+		$this->assertEquals('condition', $user_role_condition['type']);
+		$this->assertEquals('wp_user_role', $user_role_condition['attribute_name']);
+		$this->assertEquals('wp_user_role', $user_role_condition['metadata_key']); // metadata_key is preserved
+		$this->assertEquals('is_not', $user_role_condition['operator']);
+		$this->assertEquals('administrator', $user_role_condition['comparison_value']);
+		
+		// Check other condition remains unchanged
+		$amount_condition = $result['conditions'][1];
+		$this->assertEquals('purchase.total_amount', $amount_condition['attribute_name']);
+		$this->assertEquals('greater_than', $amount_condition['operator']);
 	}
 
 	/**
@@ -103,18 +151,37 @@ class AutoFeeTest extends SureCartUnitTestCase {
 	public function test_handle_custom_attributes_with_nested_arrays() {
 		$auto_fee = new AutoFee();
 		
+		// Complex multi-level nested structure
 		$rule_json = [
-			'conditions' => [
+			"type" => "group",
+			"combinator" => "and",
+			"conditions" => [
 				[
-					'attribute_name' => 'wp_user_role',
-					'operator' => 'is',
-					'value' => 'subscriber'
+					"type" => "group",
+					"combinator" => "or",
+					"conditions" => [
+						[
+							"type" => "condition",
+							"attribute_name" => "wp_user_role",
+							"operator" => "is",
+							"comparison_value" => "subscriber",
+							"operator_label" => "is"
+						],
+						[
+							"type" => "condition",
+							"attribute_name" => "metadata",
+							"metadata_key" => "wp_user_role",
+							"operator" => "is_not",
+							"comparison_value" => "admin",
+							"operator_label" => "is not"
+						]
+						]
 				],
 				[
-					'attribute_name' => 'metadata',
-					'metadata_key' => 'wp_user_role',
-					'operator' => 'is_not',
-					'value' => 'admin'
+					"type" => "condition",
+					"attribute_name" => "customer.country",
+					"operator" => "is",
+					"comparison_value" => "US"
 				]
 			]
 		];
@@ -122,15 +189,30 @@ class AutoFeeTest extends SureCartUnitTestCase {
 		$result = $auto_fee->handleCustomAttributes($rule_json);
 		
 		$this->assertIsArray($result);
+		$this->assertEquals('group', $result['type']);
 		$this->assertArrayHasKey('conditions', $result);
 		$this->assertCount(2, $result['conditions']);
 		
+		// Check nested group transformations
+		$nested_group = $result['conditions'][0];
+		$this->assertEquals('group', $nested_group['type']);
+		$this->assertEquals('or', $nested_group['combinator']);
+		$this->assertCount(2, $nested_group['conditions']);
+		
 		// First condition: wp_user_role -> metadata
-		$this->assertEquals('metadata', $result['conditions'][0]['attribute_name']);
-		$this->assertEquals('wp_user_role', $result['conditions'][0]['metadata_key']);
+		$first_condition = $nested_group['conditions'][0];
+		$this->assertEquals('metadata', $first_condition['attribute_name']);
+		$this->assertEquals('wp_user_role', $first_condition['metadata_key']);
 		
 		// Second condition: metadata -> wp_user_role
-		$this->assertEquals('wp_user_role', $result['conditions'][1]['attribute_name']);
+		$second_condition = $nested_group['conditions'][1];
+		$this->assertEquals('wp_user_role', $second_condition['attribute_name']);
+		$this->assertEquals('wp_user_role', $second_condition['metadata_key']);
+		
+		// Check top-level condition remains unchanged
+		$country_condition = $result['conditions'][1];
+		$this->assertEquals('customer.country', $country_condition['attribute_name']);
+		$this->assertEquals('is', $country_condition['operator']);
 	}
 
 	/**
@@ -267,22 +349,49 @@ class AutoFeeTest extends SureCartUnitTestCase {
 	public function test_set_rules_attribute_preserves_object_type() {
 		$auto_fee = new AutoFee();
 		
-		// Test with an array containing the object (which is how rules are usually structured)
+		// Test with a complex nested rule structure
 		$rule_object = (object) [
-			[
-				'attribute_name' => 'metadata',
-				'metadata_key' => 'wp_user_role',
-				'operator' => 'is',
-				'value' => 'subscriber'
+			"type" => "group",
+			"combinator" => "or",
+			"conditions" => [
+				(object) [
+					"type" => "group",
+					"combinator" => "and",
+					"conditions" => [
+						(object) [
+							"type" => "condition",
+							"attribute_name" => "wp_user_role",
+							"operator_label" => "is",
+							"comparison_value" => "administrator"
+						]
+					]
+				]
 			]
 		];
 
 		$auto_fee->setRulesAttribute($rule_object);
 		$result = $auto_fee->rules;
 		
+		// Verify the object structure is preserved
 		$this->assertIsObject($result);
-		$this->assertIsArray($result->{0}); // First item should be array
-		$this->assertEquals('wp_user_role', $result->{0}['attribute_name']);
+		$this->assertEquals('group', $result->type);
+		$this->assertEquals('or', $result->combinator);
+		$this->assertIsArray($result->conditions);
+		
+		// Check nested group structure
+		$first_condition_group = $result->conditions[0];
+		$this->assertIsArray($first_condition_group); // Nested objects get converted to arrays
+		$this->assertEquals('group', $first_condition_group['type']);
+		$this->assertEquals('and', $first_condition_group['combinator']);
+		
+		// Check the wp_user_role transformation occurred
+		$condition = $first_condition_group['conditions'][0];
+		$this->assertIsArray($condition); // Transformed to array by handleCustomAttributes
+		$this->assertEquals('condition', $condition['type']);
+		$this->assertEquals('metadata', $condition['attribute_name']); // wp_user_role -> metadata
+		$this->assertEquals('wp_user_role', $condition['metadata_key']); // metadata_key added
+		$this->assertEquals('is', $condition['operator_label']);
+		$this->assertEquals('administrator', $condition['comparison_value']);
 	}
 
 	/**
@@ -294,22 +403,51 @@ class AutoFeeTest extends SureCartUnitTestCase {
 	public function test_complex_nested_rule_transformation() {
 		$auto_fee = new AutoFee();
 		
+		// Real-world complex rule structure with multiple nesting levels
 		$complex_rules = [
-			'conditions' => [
-				'group1' => [
-					[
-						'attribute_name' => 'wp_user_role',
-						'operator' => 'is',
-						'value' => 'subscriber'
-					]
+			"type" => "group",
+			"combinator" => "and",
+			"conditions" => [
+				[
+					"type" => "group",
+					"combinator" => "or",
+					"name" => "user_restrictions",
+					"conditions" => [
+						[
+							"type" => "condition",
+							"attribute_name" => "wp_user_role",
+							"operator" => "is",
+							"comparison_value" => "subscriber",
+							"operator_label" => "is"
+						],
+						[
+							"type" => "condition",
+							"attribute_name" => "customer.email",
+							"operator" => "ends_with",
+							"comparison_value" => "@premium.com"
+						]
+						]
 				],
-				'group2' => [
-					[
-						'attribute_name' => 'metadata',
-						'metadata_key' => 'wp_user_role',
-						'operator' => 'is_not',
-						'value' => 'admin'
-					]
+				[
+					"type" => "group",
+					"combinator" => "and",
+					"name" => "metadata_restrictions",
+					"conditions" => [
+						[
+							"type" => "condition",
+							"attribute_name" => "metadata",
+							"metadata_key" => "wp_user_role",
+							"operator" => "is_not",
+							"comparison_value" => "admin",
+							"operator_label" => "is not"
+						],
+						[
+							"type" => "condition",
+							"attribute_name" => "purchase.total_amount",
+							"operator" => "greater_than",
+							"comparison_value" => 50
+						]
+						]
 				]
 			]
 		];
@@ -317,17 +455,44 @@ class AutoFeeTest extends SureCartUnitTestCase {
 		$result = $auto_fee->handleCustomAttributes($complex_rules);
 		
 		$this->assertIsArray($result);
+		$this->assertEquals('group', $result['type']);
+		$this->assertEquals('and', $result['combinator']);
 		$this->assertArrayHasKey('conditions', $result);
+		$this->assertCount(2, $result['conditions']);
 		
-		// Check group1 transformation
-		$group1 = $result['conditions']['group1'][0];
-		$this->assertEquals('metadata', $group1['attribute_name']);
-		$this->assertEquals('wp_user_role', $group1['metadata_key']);
+		// Check first group (user_restrictions) transformation
+		$user_group = $result['conditions'][0];
+		$this->assertEquals('group', $user_group['type']);
+		$this->assertEquals('user_restrictions', $user_group['name']);
+		$this->assertCount(2, $user_group['conditions']);
 		
-		// Check group2 transformation
-		$group2 = $result['conditions']['group2'][0];
-		$this->assertEquals('wp_user_role', $group2['attribute_name']);
-		$this->assertEquals('wp_user_role', $group2['metadata_key']); // metadata_key is preserved
+		// First condition: wp_user_role -> metadata
+		$wp_role_condition = $user_group['conditions'][0];
+		$this->assertEquals('metadata', $wp_role_condition['attribute_name']);
+		$this->assertEquals('wp_user_role', $wp_role_condition['metadata_key']);
+		$this->assertEquals('subscriber', $wp_role_condition['comparison_value']);
+		
+		// Second condition: email (unchanged)
+		$email_condition = $user_group['conditions'][1];
+		$this->assertEquals('customer.email', $email_condition['attribute_name']);
+		$this->assertEquals('ends_with', $email_condition['operator']);
+		
+		// Check second group (metadata_restrictions) transformation
+		$metadata_group = $result['conditions'][1];
+		$this->assertEquals('group', $metadata_group['type']);
+		$this->assertEquals('metadata_restrictions', $metadata_group['name']);
+		$this->assertCount(2, $metadata_group['conditions']);
+		
+		// First condition: metadata -> wp_user_role
+		$metadata_condition = $metadata_group['conditions'][0];
+		$this->assertEquals('wp_user_role', $metadata_condition['attribute_name']);
+		$this->assertEquals('wp_user_role', $metadata_condition['metadata_key']); // preserved
+		$this->assertEquals('admin', $metadata_condition['comparison_value']);
+		
+		// Second condition: purchase amount (unchanged)
+		$amount_condition = $metadata_group['conditions'][1];
+		$this->assertEquals('purchase.total_amount', $amount_condition['attribute_name']);
+		$this->assertEquals('greater_than', $amount_condition['operator']);
 	}
 
 	/**
