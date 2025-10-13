@@ -19,11 +19,21 @@ export default ({
 				background: ${selected
 					? 'var(--sc-color-gray-100)'
 					: 'transparent'};
-				padding: 16px;
-				border-radius: 10px;
+				padding: 12px;
+				border-radius: 8px;
 				flex: 1;
 				cursor: pointer;
 				transition: background 0.2s ease;
+				min-width: 0;
+
+				@media (min-width: 640px) {
+					padding: 14px;
+					border-radius: 10px;
+				}
+
+				@media (min-width: 768px) {
+					padding: 16px;
+				}
 
 				&:hover {
 					background: var(--sc-color-gray-100);
@@ -39,20 +49,32 @@ export default ({
 			<div
 				css={css`
 					color: var(--sc-color-gray-600);
-					margin-bottom: 8px;
+					margin-bottom: 6px;
+					font-size: 13px;
+
+					@media (min-width: 640px) {
+						margin-bottom: 8px;
+						font-size: 14px;
+					}
 				`}
 			>
 				{title}
 			</div>
 			<div
 				css={css`
-					font-size: 18px;
+					font-size: 16px;
 					font-weight: 600;
 					color: var(--sc-color-gray-900);
 					display: flex;
 					align-items: center;
-					gap: 6px;
+					gap: 4px;
 					margin-bottom: 4px;
+					flex-wrap: wrap;
+
+					@media (min-width: 640px) {
+						font-size: 18px;
+						gap: 6px;
+					}
 				`}
 			>
 				{value}
@@ -62,14 +84,22 @@ export default ({
 						color: ${isUp
 							? '#16A34A'
 							: 'var(--sc-color-danger-500)'};
-						font-size: 18px;
+						font-size: 16px;
+
+						@media (min-width: 640px) {
+							font-size: 18px;
+						}
 					`}
 				/>
 			</div>
 			<div
 				css={css`
-					font-size: 12px;
+					font-size: 11px;
 					color: var(--sc-color-gray-500);
+
+					@media (min-width: 640px) {
+						font-size: 12px;
+					}
 				`}
 			>
 				{sprintf(__('vs %s last period', 'surecart'), previous)}

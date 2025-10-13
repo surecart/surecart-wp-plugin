@@ -204,9 +204,13 @@ export default () => {
 				<div
 					css={css`
 						display: flex;
-						justify-content: stretch;
-						align-items: stretch;
-						gap: 10px;
+						flex-direction: column;
+						gap: 8px;
+
+						@media (min-width: 640px) {
+							flex-direction: row;
+							gap: 10px;
+						}
 					`}
 				>
 					<Tab
