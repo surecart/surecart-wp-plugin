@@ -1,91 +1,69 @@
-import PluginActivationButton from './PluginActivationButton';
 import { ScButton, ScIcon } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
-import { addQueryArgs } from '@wordpress/url';
+import { useDispatch } from '@wordpress/data';
+import { store as noticesStore } from '@wordpress/notices';
+import useIntegrationActivation from '../hooks/useIntegrationActivation';
 
-const ActivateButton = ({ record, onActivated }) => {
-	if (record?.plugin_slug && record?.plugin_file) {
-		return (
-			<PluginActivationButton
-				plugin={record?.plugin_file}
-				slug={record?.plugin_slug}
-				onActivated={onActivated}
-			/>
-		);
-	}
+export default ({ record, onActivated }) => {
+	const { createErrorNotice, createSuccessNotice } =
+		useDispatch(noticesStore);
 
-	if (record?.theme_slug && !record?.activation_link) {
+	const { canActivate, isLoading, activate, activationLink, activationType } =
+		useIntegrationActivation(record, {
+			onActivated,
+			onSuccess: (message) => {
+				createSuccessNotice(__(message, 'surecart'), {
+					type: 'snackbar',
+				});
+			},
+			onError: (error) => {
+				createErrorNotice(
+					error?.message || __('Something went wrong', 'surecart'),
+					{ type: 'snackbar' }
+				);
+			},
+		});
+
+	// Active or pre-installed states (text button)
+	if (['active', 'pre-installed'].includes(record?.status)) {
 		return (
 			<ScButton
-				type="primary"
-				href={addQueryArgs('theme-install.php', {
-					theme: record?.theme_slug,
-				})}
-				target="_blank"
+				type="text"
+				href={activationLink}
+				target={activationLink ? '_blank' : undefined}
+				disabled={!activationLink}
 			>
-				{__('Enable', 'surecart')}
-				<ScIcon name="external-link" slot="suffix" />
+				{record?.button_text}
+				{activationLink && (
+					<ScIcon name="external-link" slot="suffix" />
+				)}
 			</ScButton>
 		);
 	}
 
-	if (!!record?.activation_link) {
+	// Plugin activation (primary button with onClick)
+	if (activationType === 'plugin') {
 		return (
 			<ScButton
 				type="primary"
-				href={record?.activation_link}
-				target="_blank"
+				onClick={activate}
+				disabled={!canActivate}
+				busy={isLoading}
 			>
-				{__('Enable', 'surecart')}
+				{record?.button_text}
+			</ScButton>
+		);
+	}
+
+	// Theme/external activation (primary button with link)
+	if (activationLink) {
+		return (
+			<ScButton type="primary" href={activationLink} target="_blank">
+				{record?.button_text}
 				<ScIcon name="external-link" slot="suffix" />
 			</ScButton>
 		);
 	}
 
 	return null;
-};
-
-const ActivatedButton = ({ record }) => {
-	if (record?.plugin_slug && record?.plugin_file) {
-		return (
-			<PluginActivationButton
-				plugin={record?.plugin_file}
-				slug={record?.plugin_slug}
-			/>
-		);
-	}
-
-	if (record?.is_pre_installed) {
-		if (!!record?.activation_link) {
-			return (
-				<ScButton
-					type="text"
-					href={record?.activation_link}
-					target="_blank"
-				>
-					{__('Pre-installed', 'surecart')}
-					<ScIcon name="external-link" slot="suffix" />
-				</ScButton>
-			);
-		}
-		return (
-			<ScButton type="text" disabled>
-				{__('Pre-installed', 'surecart')}
-			</ScButton>
-		);
-	}
-
-	return (
-		<ScButton type="text" disabled>
-			{__('Installed', 'surecart')}
-		</ScButton>
-	);
-};
-
-export default ({ record, onActivated }) => {
-	return record?.is_enabled || record?.is_pre_installed ? (
-		<ActivatedButton record={record} />
-	) : (
-		<ActivateButton record={record} onActivated={onActivated} />
-	);
 };

@@ -33,6 +33,75 @@ class IntegrationCatalog extends ExternalApiModel {
 	protected $base_url = 'https://integrations-catalog.surecart.com/';
 
 	/**
+	 * Get the activation type attribute.
+	 *
+	 * @return string
+	 */
+	public function getActivationTypeAttribute() {
+		if ( $this->acf['is_pre_installed'] ) {
+			return 'pre-installed';
+		}
+		if ( $this->acf['plugin_slug'] && $this->acf['plugin_file'] ) {
+			return 'plugin';
+		}
+		if ( $this->acf['theme_slug'] && ! $this->acf['activation_link'] ) {
+			return 'theme';
+		}
+		if ( $this->acf['activation_link'] ) {
+			return 'external';
+		}
+		return null;
+	}
+
+	public function getButtonTextAttribute() {
+		if ( $this->status === 'active' ) {
+			return $this->activation_type === 'plugin'
+				? 'Enabled'
+				: 'Installed';
+		}
+		if ( $this->status === 'pre-installed' ) {
+			return 'Pre-installed';
+		}
+		if ( $this->activation_type === 'plugin' ) {
+			return $this->status === 'inactive'
+				? 'Activate'
+				: 'Install & Activate';
+		}
+		if (
+			$this->activation_type === 'theme' ||
+			$this->activation_type === 'external'
+		) {
+			return 'Enable';
+		}
+
+		return null;
+	}
+
+	/**
+	 * Get the status attribute.
+	 *
+	 * @return string
+	 */
+	public function getStatusAttribute() {
+		if ( $this->acf['is_pre_installed'] ) {
+			return 'pre-installed';
+		}
+		if ( $this->acf['is_enabled'] ) {
+			return 'active';
+		}
+		if ( 'plugin' === $this->activation_type ) {
+			if ( 'active' === $this->acf['plugin_data']['status'] ) {
+				return 'active';
+			}
+			if ( 'inactive' === $this->acf['plugin_data']['status'] ) {
+				return 'inactive';
+			}
+			return 'not-installed';
+		}
+		return 'inactive';
+	}
+
+	/**
 	 * Get the is plugin active attribute.
 	 *
 	 * @return bool
