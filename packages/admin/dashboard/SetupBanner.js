@@ -5,7 +5,7 @@ import { ScButton, ScIcon } from '@surecart/components-react';
 
 export default () => {
 	// if there is no claim url or no claim expired, return null.
-	if (!scData?.claim_url) {
+	if (!scData?.claim_url && !scData?.claim_expired) {
 		return null;
 	}
 
