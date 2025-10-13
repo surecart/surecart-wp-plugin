@@ -5,6 +5,7 @@ import UpdateModel from '../templates/UpdateModel';
 import Logo from '../templates/Logo';
 import Setup from './Setup';
 import Chart from './chart';
+import Orders from './Orders';
 
 export default () => {
 	return (
@@ -26,6 +27,8 @@ export default () => {
 				<Setup />
 
 				<Chart />
+
+				<Orders />
 			</UpdateModel>
 		</div>
 	);

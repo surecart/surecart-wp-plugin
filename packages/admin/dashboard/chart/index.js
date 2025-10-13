@@ -38,7 +38,12 @@ const Tab = ({ title, value, previous, trend = 'up', selected, ...props }) => {
 				&:hover {
 					background: var(--sc-color-gray-100);
 				}
+
+				&:focus-visible {
+					outline: 1px solid var(--sc-color-primary-500);
+				}
 			`}
+			tabIndex={0}
 			{...props}
 		>
 			<div
