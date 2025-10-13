@@ -106,6 +106,7 @@ const { state, actions } = store('surecart/product-review-form', {
 		/** Close the product review form dialog. */
 		*close(event) {
 			if (!state.open || !isValidEvent(event)) return;
+			const context = getContext();
 
 			// prevent default to avoid page reload.
 			event?.preventDefault();
@@ -133,6 +134,7 @@ const { state, actions } = store('surecart/product-review-form', {
 			dialog.addEventListener('transitionend', handleTransitionEnd); // Wait for the closing animation to finish before navigating.
 
 			state.open = false;
+			context.submitted = false;
 
 			// Remove product_id from URL.
 			const url = new URL(window.location.href);
@@ -383,7 +385,6 @@ const { state, actions } = store('surecart/product-review-form', {
 
 		init() {
 			// Ensure the inert state is correct on init.
-			console.log('init called');
 		},
 	},
 });
