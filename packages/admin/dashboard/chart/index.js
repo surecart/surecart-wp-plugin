@@ -17,93 +17,10 @@ import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
 import LineChart from '../components/LineChart';
 import { formatNumber } from '../../util';
-import { __, sprintf } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 import { ProgressBar } from '@wordpress/components';
-
-const Tab = ({ title, value, previous, trend = 'up', selected, ...props }) => {
-	const isUp = trend === 'up';
-
-	return (
-		<div
-			css={css`
-				background: ${selected
-					? 'var(--sc-color-gray-100)'
-					: 'transparent'};
-				padding: 16px;
-				border-radius: 10px;
-				flex: 1;
-				cursor: pointer;
-				transition: background 0.2s ease;
-
-				&:hover {
-					background: var(--sc-color-gray-100);
-				}
-
-				&:focus-visible {
-					outline: 1px solid var(--sc-color-primary-500);
-				}
-			`}
-			tabIndex={0}
-			{...props}
-		>
-			<div
-				css={css`
-					color: var(--sc-color-gray-600);
-					margin-bottom: 8px;
-				`}
-			>
-				{title}
-			</div>
-			<div
-				css={css`
-					font-size: 18px;
-					font-weight: 600;
-					color: var(--sc-color-gray-900);
-					display: flex;
-					align-items: center;
-					gap: 6px;
-					margin-bottom: 4px;
-				`}
-			>
-				{value}
-				<ScIcon
-					name={isUp ? 'arrow-up-right' : 'arrow-down-right'}
-					css={css`
-						color: ${isUp
-							? '#16A34A'
-							: 'var(--sc-color-danger-500)'};
-						font-size: 18px;
-					`}
-				/>
-			</div>
-			<div
-				css={css`
-					font-size: 12px;
-					color: var(--sc-color-gray-500);
-				`}
-			>
-				{sprintf(__('vs %s last period', 'surecart'), previous)}
-			</div>
-		</div>
-	);
-};
-
-// Helper function to calculate sum of a field across all data points
-const calculateSum = (data, field) => {
-	return data.reduce((sum, item) => sum + (item[field] || 0), 0);
-};
-
-// Helper function to calculate average of a field across all data points
-const calculateAverage = (data, field) => {
-	if (!data.length) return 0;
-	const sum = calculateSum(data, field);
-	return sum / data.length;
-};
-
-// Helper function to determine trend direction
-const calculateTrend = (current, previous) => {
-	return current >= previous ? 'up' : 'down';
-};
+import Tab from './Tab';
+import { calculateSum, calculateAverage, calculateTrend } from './utils';
 
 export default () => {
 	const [startDate, setStartDate] = useState(dayjs().add(-1, 'month'));
@@ -240,10 +157,13 @@ export default () => {
 							}
 						`}
 						choices={[
-							{ label: 'Daily', value: 'day' },
-							{ label: 'Weekly', value: 'week' },
-							{ label: 'Monthly', value: 'month' },
-							{ label: 'Yearly', value: 'year' },
+							{ label: __('Daily', 'surecart'), value: 'day' },
+							{ label: __('Weekly', 'surecart'), value: 'week' },
+							{
+								label: __('Monthly', 'surecart'),
+								value: 'month',
+							},
+							{ label: __('Yearly', 'surecart'), value: 'year' },
 						]}
 						onScChange={(e) => {
 							setReportBy(e.target.value);
@@ -255,12 +175,12 @@ export default () => {
 							setLiveMode(!e.target.checked);
 						}}
 					>
-						Test mode
+						{__('Test mode', 'surecart')}
 					</ScSwitch>
 				</div>
 				<ScButton>
 					<ScIcon name="bar-chart-2" slot="prefix" />
-					All Reports
+					{__('All Reports', 'surecart')}
 					<ScIcon name="arrow-up-right" slot="suffix" />
 				</ScButton>
 			</div>
@@ -290,7 +210,7 @@ export default () => {
 					`}
 				>
 					<Tab
-						title="Revenue"
+						title={__('Revenue', 'surecart')}
 						value={formatNumber(currentAmountTotal, currency)}
 						previous={formatNumber(previousAmountTotal, currency)}
 						trend={amountTrend}
@@ -298,7 +218,7 @@ export default () => {
 						onClick={() => setTab('amount')}
 					/>
 					<Tab
-						title="Orders"
+						title={__('Orders', 'surecart')}
 						value={currentCountTotal.toLocaleString()}
 						previous={previousCountTotal.toLocaleString()}
 						trend={countTrend}
@@ -309,7 +229,7 @@ export default () => {
 						}}
 					/>
 					<Tab
-						title="Average Order Value"
+						title={__('Average Order Value', 'surecart')}
 						value={formatNumber(currentAverageAmount, currency)}
 						previous={formatNumber(previousAverageAmount, currency)}
 						trend={averageTrend}

@@ -4,69 +4,6 @@ import Box from '../ui/Box';
 import { ScButton, ScCard, ScIcon } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 
-const Card = ({
-	title,
-	buttonText,
-	description,
-	icon,
-	highlighted = false,
-}) => {
-	return (
-		<ScCard>
-			<div
-				css={css`
-					display: flex;
-					flex-direction: column;
-					gap: 10px;
-				`}
-			>
-				<ScIcon
-					name={icon}
-					style={{
-						'font-size': '24px',
-						color: 'var(--sc-color-brand-secondary)',
-						margin: 0,
-						marginBottom: '6px',
-					}}
-				/>
-				<h3
-					css={css`
-						margin: 0;
-						font-size: 1em;
-					`}
-				>
-					{title}
-				</h3>
-				<p
-					css={css`
-						margin: 0;
-						font-size: 1em;
-						font-weight: 400;
-						color: var(--sc-color-gray-600);
-					`}
-				>
-					{description}
-				</p>
-				<div
-					css={css`
-						margin-top: 6px;
-					`}
-				>
-					<ScButton
-						type={highlighted ? 'primary' : 'default'}
-						style={{
-							'--primary-background':
-								'var(--sc-brand-color-background-inverse)',
-						}}
-					>
-						{buttonText}
-					</ScButton>
-				</div>
-			</div>
-		</ScCard>
-	);
-};
-
 export default () => {
 	return (
 		<Box

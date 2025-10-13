@@ -6,6 +6,7 @@ import Logo from '../templates/Logo';
 import Setup from './Setup';
 import Chart from './chart';
 import Orders from './Orders';
+import QuickLinks from './components/QuickLinks';
 
 export default () => {
 	return (
@@ -21,7 +22,7 @@ export default () => {
 						margin-bottom: var(--sc-spacing-x-large);
 					`}
 				>
-					{__('Wecome to SureCart', 'surecart')}
+					{__('Welcome to SureCart', 'surecart')}
 				</h1>
 
 				<Setup />
@@ -29,6 +30,8 @@ export default () => {
 				<Chart />
 
 				<Orders />
+
+				<QuickLinks />
 			</UpdateModel>
 		</div>
 	);
