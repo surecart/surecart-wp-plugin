@@ -106,7 +106,12 @@ export default () => {
 					>
 						{__('Order', 'surecart')}
 					</ScTableCell>
-					<ScTableCell slot="head">
+					<ScTableCell
+						slot="head"
+						css={css`
+							width: 75px;
+						`}
+					>
 						{__('Fulfillment', 'surecart')}
 					</ScTableCell>
 					<ScTableCell
