@@ -16,6 +16,15 @@ class GalleryItemImageAttachment extends ModelsGalleryItem implements GalleryIte
 	 * @return void
 	 */
 	public function __construct( $item ) {
+		if ( empty( $item ) ) {
+			return;
+		}
+
+		if ( $item instanceof \WP_Post ) {
+			$this->item = $item;
+			return;
+		}
+
 		$this->item = get_post( $item['id'] ?? $item );
 	}
 

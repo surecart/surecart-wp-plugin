@@ -97,7 +97,7 @@ class DownloadRestServiceProvider extends RestServiceProvider implements RestSer
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function get_items_permissions_check( $request ) {
-		return current_user_can( 'read_sc_medias' );
+		return current_user_can( 'read_sc_downloads', $request->get_params() );
 	}
 
 	/**
