@@ -2,6 +2,7 @@
 
 namespace SureCart\Controllers\Rest;
 
+use SureCart;
 use SureCart\Models\Review;
 use SureCart\Models\User;
 
@@ -91,10 +92,15 @@ class ReviewsController extends RestController {
 		}
 
 		// force the customer id, if it exists.
-		$customer_id = $user->customerId( ! empty( $request['live_mode'] ) ? 'live' : 'test' );
-		if ( ! empty( $customer_id ) ) {
-			$class['customer'] = $customer_id;
+		$customer_id = $user->customerId( 'live' );
+		if ( empty( $customer_id ) ) {
+			// First find the test customer id.
+			$customer_id = $user->customerId( 'test' );
+			// Create a customer for live mode if it doesn't exist.
+			// $user->createCustomer( 'live' );
 		}
+
+		$class['customer'] = $customer_id;
 
 		return $class;
 	}

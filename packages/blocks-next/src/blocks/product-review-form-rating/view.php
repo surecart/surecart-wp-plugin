@@ -1,6 +1,5 @@
 <div 
 	<?php echo wp_kses_data( get_block_wrapper_attributes() ); ?>
-	data-wp-watch="callbacks.updateRatingValue"
 >
 	<?php if ( ! empty( $label ) ) : ?>
 		<label class="sc-form-label">
@@ -8,21 +7,17 @@
 		</label>
 	<?php endif; ?>
 
-	<div class="stars-container">
-		<?php for ( $i = 1; $i <= 5; $i++ ) : ?>
-			<button 
-				type="button" 
-				class="star-button"
-				style="width: <?php echo esc_attr( $size ); ?>px; height: <?php echo esc_attr( $size ); ?>px;"
-				data-wp-on--mouseenter="actions.setHoverRating"
-				data-wp-on--mouseleave="actions.clearHoverRating"
-				data-wp-on--click="actions.setStars"
+	<fieldset class="stars-container rating-input">
+		<?php for ( $i = 5; $i >= 1; $i-- ) : ?>
+			<input 
+				type="radio" 
+				value="<?php echo esc_attr( $i ); ?>" 
+				id="stars-star<?php echo esc_attr( $i ); ?>" 
+				name="stars"
+				data-wp-on--change="actions.setStars" 
 				data-rating="<?php echo esc_attr( $i ); ?>"
-				data-wp-class--filled="state.isStarFilled"
-				data-wp-key="star-<?php echo esc_attr( $i ); ?>"
-				<?php /* translators: %d: star rating number */ ?>
-				aria-label="<?php echo esc_attr( sprintf( __( 'Rate %d stars', 'surecart' ), $i ) ); ?>"
 			>
+			<label for="stars-star<?php echo esc_attr( $i ); ?>" title="<?php echo esc_attr( sprintf( __( '%d Stars', 'surecart' ), $i ) ); ?>">
 				<?php
 				echo wp_kses(
 					SureCart::svg()->get(
@@ -30,15 +25,14 @@
 						[
 							'height' => esc_attr( $size ),
 							'width'  => esc_attr( $size ),
-							'fill'   => 'currentColor',
-							'stroke' => esc_attr( $fill_color ),
+							'stroke' => $fill_color ?? 'var(--sc-color-primary-500)',
 							'class'  => 'star-svg',
 						]
 					),
 					sc_allowed_svg_html()
 				);
 				?>
-			</button>
+			</label>
 		<?php endfor; ?>
-	</div>
+	</fieldset>
 </div>

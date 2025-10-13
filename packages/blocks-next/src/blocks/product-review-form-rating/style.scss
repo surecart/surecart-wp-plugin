@@ -3,66 +3,66 @@
 	flex-direction: column;
 	gap: 0.5rem;
 
-	.stars-container {
-		display: flex;
-		gap: 4px;
-		align-items: center;
-		flex-direction: row;
-		justify-content: flex-start;
+	// Base star styling.
+	%base-star {
+		display: inline-block;
+		cursor: pointer;
+
+		.star-svg {
+			transition: all 0.15s ease;
+		}
 	}
 
-	.star-button {
-		background: none;
-		border: none;
-		box-shadow: none;
-		padding: 0;
-		cursor: pointer;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		transition: transform 0.15s ease, color 0.15s ease;
-		position: relative;
+	%full-star {
+		.star-svg {
+			fill: var(--sc-color-primary-500);
+			stroke: var(--sc-color-primary-500);
+		}
+	}
 
-		&:hover {
-			transform: scale(1.05);
+	%empty-star {
+		.star-svg {
+			fill: none;
+		}
+	}
+
+	// Rating input fieldset
+	.rating-input {
+		border: none;
+		display: inline-flex;
+		flex-direction: row-reverse;
+		justify-content: flex-end;
+		margin: 0;
+		padding: 0;
+		gap: 4px;
+
+		> input {
+			display: none;
 		}
 
-		// &:focus {
-		// 	outline: 2px solid var(--sc-color-primary-500);
-		// 	outline-offset: 2px;
-		// 	border-radius: 2px;
-		// }
+		> label {
+			@extend %base-star;
+			@extend %empty-star;
 
-		&.filled,
-		&[data-wp-class--filled="true"] {
-			color: var(--sc-color-primary-500);
-
-			&.filled {
-				animation: starFill 0.25s ease-out;
+			&:hover {
+				transform: scale(1.05);
 			}
 		}
 
-		.star-svg {
-			width: 100%;
-			height: 100%;
-			// fill: currentColor;
-			// stroke: currentColor;
-			// stroke-width: 1;
-			pointer-events: none;
-			transition: inherit;
+		// Selected star color - fill all stars up to and including the selected one
+		> input:checked ~ label {
+			@extend %full-star;
 		}
-	}
 
-	// Animation for star fill
-	@keyframes starFill {
-		0% {
-			transform: scale(1);
+		// On hover, reset all stars to empty by default
+		&:hover > input + label {
+			@extend %empty-star;
 		}
-		50% {
-			transform: scale(1.15);
-		}
-		100% {
-			transform: scale(1);
+
+		// Hover effect - fill the hovered star and all stars after it (to the right)
+		&:hover > input + label:hover,
+		&:hover > input + label:hover ~ input + label {
+			@extend %full-star;
 		}
 	}
 }

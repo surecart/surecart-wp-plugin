@@ -37,16 +37,6 @@ const { state, actions } = store('surecart/product-review-form', {
 		open: false,
 		loading: false,
 		openButton: null,
-		get isStarFilled() {
-			const context = getContext();
-			const element = getElement();
-			const starNumber = parseInt(element.ref.dataset.rating);
-			const currentRating = context.stars || 0;
-			const currentHoverRating = context.hoverRating || 0;
-
-			// Show filled if star number is <= hover rating (when hovering) or <= actual rating.
-			return starNumber <= (currentHoverRating || currentRating);
-		},
 	},
 
 	actions: {
@@ -83,6 +73,14 @@ const { state, actions } = store('surecart/product-review-form', {
 
 			// prevent default to avoid page reload.
 			event?.preventDefault();
+
+			const context = getContext();
+
+			// If redirect URL is set, redirect to it instead of opening the form
+			if (context.redirect_url) {
+				window.location.href = context.redirect_url;
+				return;
+			}
 
 			state.openButton = event?.target?.closest(
 				'.wp-block-surecart-review-add-button'
@@ -195,60 +193,29 @@ const { state, actions } = store('surecart/product-review-form', {
 		/** Set the selected stars */
 		setStars() {
 			const { ref } = getElement();
-			const rating = parseInt(ref.dataset.rating);
+			const rating = parseInt(ref.dataset.rating || ref.value);
 			const context = getContext();
 
-			// Set the actual rating and clear hover state.
+			// Set the actual rating
 			context.stars = rating;
-			context.hoverRating = 0;
-
-			// Update all stars to show selected state.
-			const container = ref.closest(
-				'.wp-block-surecart-product-review-form-rating'
-			);
-
-			if (container) {
-				const stars = container.querySelectorAll('.star-button');
-				stars.forEach((star, index) => {
-					const starNumber = index + 1;
-					if (starNumber <= rating) {
-						star.style.color = 'var(--sc-color-primary-500)';
-						// Add animation to the clicked star
-						if (starNumber === rating) {
-							star.classList.add('filled');
-							setTimeout(() => {
-								star.classList.remove('filled');
-							}, 250);
-						}
-					}
-				});
-			}
 		},
 
 		/** Clear all form data - reset rating and any other form fields */
 		clearForm() {
 			const context = getContext();
 
-			// Reset rating and hover state
-			context.rating = 0;
-			context.hoverRating = 0;
+			// Reset rating
+			context.stars = 0;
 
 			// Reset title and content
 			context.title = '';
 			context.content = '';
 
-			// Clear visual state of all stars
+			// Clear form inputs
 			const formContainer = document.querySelector(
 				'.wp-block-surecart-product-review-form'
 			);
 			if (formContainer) {
-				// Reset all stars
-				const stars = formContainer.querySelectorAll('.star-button');
-				stars.forEach((star) => {
-					star.style.color = '';
-					star.classList.remove('filled');
-				});
-
 				// Clear any text inputs
 				const textInputs = formContainer.querySelectorAll(
 					'input[type="text"], input[type="email"], textarea'
@@ -257,17 +224,17 @@ const { state, actions } = store('surecart/product-review-form', {
 					input.value = '';
 				});
 
-				// Clear hidden rating input
-				const hiddenRatingInput = formContainer.querySelector(
+				// Clear radio inputs for rating
+				const radioInputs = formContainer.querySelectorAll(
 					'input[name="rating"]'
 				);
-				if (hiddenRatingInput) {
-					hiddenRatingInput.value = '';
-				}
+				radioInputs.forEach((input) => {
+					input.checked = false;
+				});
 
 				// Clear any other form inputs
 				const otherInputs = formContainer.querySelectorAll(
-					'input:not([type="submit"]):not([type="button"]):not([type="hidden"])'
+					'input:not([type="submit"]):not([type="button"]):not([name="rating"])'
 				);
 				otherInputs.forEach((input) => {
 					if (input.type === 'checkbox' || input.type === 'radio') {
@@ -319,16 +286,6 @@ const { state, actions } = store('surecart/product-review-form', {
 		handleKeyDown(event) {
 			if (event?.key === 'Escape') {
 				actions.close(event);
-			}
-		},
-
-		/** Update the hidden input value when rating changes */
-		updateRatingValue() {
-			const { ref } = getElement();
-			const { rating } = getContext();
-			const hiddenInput = ref.querySelector('input[name="rating"]');
-			if (hiddenInput) {
-				hiddenInput.value = rating;
 			}
 		},
 

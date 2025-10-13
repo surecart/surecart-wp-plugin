@@ -1,4 +1,7 @@
 <?php
+
+use SureCart\Models\User;
+
 $icon                   = $attributes['icon'] ?? 'edit-2';
 $product_id             = $block->context['postId'] ?? null;
 $product                = sc_get_product();
@@ -30,4 +33,11 @@ if ( ! empty( $styles['declarations'] ) ) {
 	$wrapper_style .= ! empty( $styles['declarations']['margin-right'] ) ? esc_attr( safecss_filter_attr( 'margin-right:' . $styles['declarations']['margin-right'] ) ) . ';' : '';
 }
 
-return 'file:./button-review-write.php';
+// if no authenticated user found, redirect to Customer dashboard login with the redirect URL set to product page.
+$user         = User::current();
+$redirect_url = '';
+if ( empty( $user->ID ) ) {
+	$redirect_url = esc_url_raw( SureCart::pages()->url( 'dashboard' ) . '?product_id=' . $product_id . '&type=review&sc_redirect=1' );
+}
+
+return 'file:./view.php';

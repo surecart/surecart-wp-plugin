@@ -22,7 +22,8 @@
 			echo wp_kses_data(
 				wp_interactivity_data_wp_context(
 					[
-						'product_id' => $product_id,
+						'product_id'   => $product_id,
+						'redirect_url' => $redirect_url,
 					]
 				)
 			);

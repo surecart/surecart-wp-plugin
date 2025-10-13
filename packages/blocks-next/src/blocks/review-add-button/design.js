@@ -8,7 +8,7 @@ import { __, _x } from '@wordpress/i18n';
 import { useToolsPanelDropdownMenuProps } from '../utils';
 
 export default ({ attributes, setAttributes }) => {
-	const { quick_view_button_type, width } = attributes;
+	const { button_type, width } = attributes;
 	const dropdownMenuProps = useToolsPanelDropdownMenuProps();
 
 	return (
@@ -16,26 +16,22 @@ export default ({ attributes, setAttributes }) => {
 			label={__('Design', 'surecart')}
 			resetAll={() =>
 				setAttributes({
-					quick_view_button_type: 'both',
+					button_type: 'both',
 					width: null,
 				})
 			}
 			dropdownMenuProps={dropdownMenuProps}
 		>
 			<ToolsPanelItem
-				hasValue={() => !!quick_view_button_type}
+				hasValue={() => !!button_type}
 				label={__('Icon & Text', 'surecart')}
-				onDeselect={() =>
-					setAttributes({ quick_view_button_type: 'both' })
-				}
+				onDeselect={() => setAttributes({ button_type: 'both' })}
 				isShownByDefault
 			>
 				<ToggleGroupControl
 					label={__('Icon & Text', 'surecart')}
-					value={quick_view_button_type}
-					onChange={(quick_view_button_type) =>
-						setAttributes({ quick_view_button_type })
-					}
+					value={button_type}
+					onChange={(button_type) => setAttributes({ button_type })}
 					help={__(
 						'A decorative way to show quick view trigger of the product.',
 						'surecart'
