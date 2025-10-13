@@ -180,7 +180,11 @@ export default () => {
 						{__('Test mode', 'surecart')}
 					</ScSwitch>
 				</div>
-				<ScButton>
+				<ScButton
+					href={`${scData?.surecart_app_url}?switch_account_id=${scData?.account_id}`}
+					target="_blank"
+					rel="noopener noreferrer"
+				>
 					<ScIcon name="bar-chart-2" slot="prefix" />
 					{__('All Reports', 'surecart')}
 					<ScIcon name="arrow-up-right" slot="suffix" />
