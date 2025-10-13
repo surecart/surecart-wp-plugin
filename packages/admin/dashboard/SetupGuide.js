@@ -3,6 +3,8 @@ import { css, jsx } from '@emotion/core';
 import Box from '../ui/Box';
 import { ScButton, ScCard, ScIcon } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
+import { useDispatch, useSelect } from '@wordpress/data';
+import { store as preferencesStore } from '@wordpress/preferences';
 
 const Card = ({
 	title,
@@ -83,13 +85,30 @@ const Card = ({
 };
 
 export default () => {
+	const { set } = useDispatch(preferencesStore);
+	const hideGetStarted = useSelect((select) =>
+		select(preferencesStore).get('surecart/dashboard', 'hideGetStarted')
+	);
+	const removeGetStarted = () => {
+		set('surecart/dashboard', 'hideGetStarted', true);
+	};
+
+	if (hideGetStarted) {
+		return null;
+	}
+
 	return (
 		<Box
 			title={__('Setup Guide', 'surecart')}
 			isBorderLess={false}
 			hasDivider={false}
 			header_action={
-				<ScButton type="text" size="small" rounded>
+				<ScButton
+					type="text"
+					size="small"
+					rounded
+					onClick={removeGetStarted}
+				>
 					<ScIcon
 						name="x"
 						css={css`
