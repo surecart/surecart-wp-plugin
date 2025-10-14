@@ -1,4 +1,3 @@
-
 <!-- wp:surecart/product-review-form {"alignment":"center center","width":"700px","style":{"typography":{"fontSize":"16px"},"spacing":{"padding":{"right":"0","left":"0"}}}} -->
 <!-- wp:group {"style":{"typography":{"fontSize":"1em"},"spacing":{"padding":{"top":"2rem","bottom":"2rem","left":"2rem","right":"2rem"}}},"layout":{"type":"constrained","contentSize":"500px"}} -->
 <div class="wp-block-group"

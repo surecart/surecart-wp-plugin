@@ -1,6 +1,5 @@
-<?php
-$close_url = get_permalink();
-?>
+<?php $close_url = get_permalink(); ?>
+
 <a
 	<?php echo wp_kses_data( get_block_wrapper_attributes() ); ?>
 	<?php
@@ -17,7 +16,7 @@ $close_url = get_permalink();
 	data-wp-on--keydown="actions.close"
 	role="button"
 	tabindex="0"
-	aria-label="<?php esc_attr_e( 'Close product review', 'surecart' ); ?>"
+	aria-label="<?php esc_attr_e( 'Close product review form', 'surecart' ); ?>"
 	href="<?php echo esc_url( $close_url ); ?>">
 	<?php echo wp_kses( SureCart::svg()->get( 'x' ), sc_allowed_svg_html() ); ?>
 </a>

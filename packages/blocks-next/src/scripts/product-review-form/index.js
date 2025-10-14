@@ -33,12 +33,6 @@ const isValidEvent = (event) =>
 	event?.key ? [' ', 'Enter', 'Escape'].includes(event.key) : true;
 
 const { state, actions } = store('surecart/product-review-form', {
-	state: {
-		open: false,
-		loading: false,
-		openButton: null,
-	},
-
 	actions: {
 		/** Navigate using interactivity router */
 		*navigate(event) {
@@ -47,7 +41,7 @@ const { state, actions } = store('surecart/product-review-form', {
 
 			state.loading = true;
 
-			// just append the URL parameter for now.
+			// Append the URL parameter.
 			if (!!product_id) {
 				const url = new URL(window.location.href);
 				url.searchParams.set('product-review-form', product_id);
@@ -55,16 +49,6 @@ const { state, actions } = store('surecart/product-review-form', {
 			}
 
 			state.loading = false;
-		},
-
-		/** Prefetch URL */
-		*prefetch() {
-			const { url } = getContext();
-			const { actions: routerActions } = yield import(
-				/* webpackIgnore: true */
-				'@wordpress/interactivity-router'
-			);
-			yield routerActions.prefetch(url);
 		},
 
 		/** Open review form modal */
@@ -88,8 +72,8 @@ const { state, actions } = store('surecart/product-review-form', {
 
 			// navigate to the product page.
 			if (event) yield actions.navigate(event);
-			// open the dialog UI.
 
+			// open the dialog UI.
 			state.open = true;
 
 			// focus the first focusable element.
@@ -145,11 +129,11 @@ const { state, actions } = store('surecart/product-review-form', {
 		/** Set the selected stars */
 		setStars() {
 			const { ref } = getElement();
-			const rating = parseInt(ref.dataset.rating || ref.value);
+			const stars = parseInt(ref.dataset.stars || ref.value);
 			const context = getContext();
 
-			// Set the actual rating.
-			context.stars = rating;
+			// Set the actual stars.
+			context.stars = stars;
 		},
 
 		/** Clear all form data */
@@ -177,7 +161,6 @@ const { state, actions } = store('surecart/product-review-form', {
 
 	callbacks: {
 		handleOpenChange() {
-			console.log('handleOpenChange triggered::', state.open);
 			if (!inertElements.length) {
 				inertElements = Array.from(
 					document.querySelectorAll(
@@ -249,10 +232,6 @@ const { state, actions } = store('surecart/product-review-form', {
 					context.busy = false;
 				}
 			}
-		},
-
-		init() {
-			// Ensure the inert state is correct on init.
 		},
 	},
 });
