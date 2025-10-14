@@ -4,13 +4,12 @@ import { useDispatch } from '@wordpress/data';
 import { store as noticesStore } from '@wordpress/notices';
 import useIntegrationActivation from '../hooks/useIntegrationActivation';
 
-export default ({ record, onActivated }) => {
+export default ({ record }) => {
 	const { createErrorNotice, createSuccessNotice } =
 		useDispatch(noticesStore);
 
 	const { canActivate, isLoading, activate, activationLink, activationType } =
 		useIntegrationActivation(record, {
-			onActivated,
 			onSuccess: (message) => {
 				createSuccessNotice(__(message, 'surecart'), {
 					type: 'snackbar',

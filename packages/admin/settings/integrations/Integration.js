@@ -17,7 +17,6 @@ const getYouTubeSrc = (embedCode) => {
 
 export default ({ id }) => {
 	const location = useLocation();
-	const { invalidateResolutionForStore } = useDispatch(coreStore);
 	const { record } = useEntityRecord('surecart', 'integration_catalog', id);
 	const { id: _, ...rest } = location.params;
 	const { href, onClick } = useLink({ ...rest });
@@ -213,10 +212,7 @@ export default ({ id }) => {
 								margin-left: auto;
 							`}
 						>
-							<ActivateButton
-								record={record}
-								onActivated={invalidateResolutionForStore}
-							/>
+							<ActivateButton record={record} />
 						</div>
 					</div>
 

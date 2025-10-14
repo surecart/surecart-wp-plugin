@@ -4,13 +4,12 @@ import { useDispatch } from '@wordpress/data';
 import { store as noticesStore } from '@wordpress/notices';
 import useIntegrationActivation from '../../settings/integrations/hooks/useIntegrationActivation';
 
-export default ({ record, onActivated }) => {
+export default ({ record }) => {
 	const { createErrorNotice, createSuccessNotice } =
 		useDispatch(noticesStore);
 
-	const { isLoading, activate, activationLink, activationType } =
+	const { isLoading, activate, activationLink, canActivate } =
 		useIntegrationActivation(record, {
-			onActivated,
 			onSuccess: (message) => {
 				createSuccessNotice(__(message, 'surecart'), {
 					type: 'snackbar',
@@ -50,7 +49,7 @@ export default ({ record, onActivated }) => {
 	}
 
 	// Plugin activation (primary button with onClick)
-	if (activationType === 'plugin') {
+	if (canActivate) {
 		return (
 			<ScButton onClick={activate} busy={isLoading}>
 				{record?.button_text}

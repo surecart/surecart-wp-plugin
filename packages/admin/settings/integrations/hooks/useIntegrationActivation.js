@@ -11,7 +11,6 @@ import apiFetch from '@wordpress/api-fetch';
  *
  * @param {Object} record - The integration record
  * @param {Object} options - Configuration options
- * @param {Function} options.onActivated - Callback when activation completes successfully
  * @param {Function} options.onSuccess - Callback with success message when plugin activated
  * @param {Function} options.onError - Callback with error when activation fails
  *
@@ -19,7 +18,7 @@ import apiFetch from '@wordpress/api-fetch';
  */
 export default function useIntegrationActivation(
 	record,
-	{ onActivated, onSuccess, onError } = {}
+	{ onSuccess, onError } = {}
 ) {
 	const { saveEntityRecord, invalidateResolutionForStore } =
 		useDispatch(coreStore);
@@ -27,7 +26,7 @@ export default function useIntegrationActivation(
 	const { receiveEntityRecords } = useDispatch(coreStore);
 
 	// Only fetch plugin data if this is a plugin activation
-	const shouldFetchPlugin = record?.activation_type === 'plugin';
+	const shouldFetchPlugin = !!record?.plugin_file;
 
 	const { record: pluginData } = useEntityRecord(
 		'root',
@@ -84,8 +83,6 @@ export default function useIntegrationActivation(
 				updatedRecord
 			);
 
-			onActivated?.();
-
 			onSuccess?.(__('Plugin activated.', 'surecart'));
 		} catch (err) {
 			console.error(err);
@@ -98,11 +95,12 @@ export default function useIntegrationActivation(
 		}
 	};
 
+	console.log(pluginData);
+
 	return {
 		isLoading: isSaving,
 		activate,
-		canActivate: record?.activation_type === 'plugin' && !!pluginData,
+		canActivate: !!pluginData,
 		activationLink,
-		activationType: record?.activation_type,
 	};
 }
