@@ -2,22 +2,17 @@
 import { css, jsx } from '@emotion/core';
 import Box from '../ui/Box';
 import { __ } from '@wordpress/i18n';
-import Card from './components/Card';
-import { useEntityRecord, useEntityRecords } from '@wordpress/core-data';
+import { useEntityRecords } from '@wordpress/core-data';
+import ActivationButton from './components/ActivationButton';
 
 export default () => {
-	const { records, hasResolved } = useEntityRecords(
-		'surecart',
-		'integration_catalog',
-		{
-			per_page: 100,
-		}
-	);
+	const { records } = useEntityRecords('surecart', 'integration_catalog', {
+		per_page: 100,
+	});
 
 	// Get all recommended plugins.
 	const recommendedPlugins = (records || [])
 		.filter((record) => {
-			console.log(record);
 			return (
 				(record._embedded['wp:term'][0] || []).some(
 					(record) => record.slug === 'recommended'
@@ -26,20 +21,7 @@ export default () => {
 				!record?.theme_slug
 			);
 		})
-		.sort(() => Math.random() - 0.5)
 		.slice(0, 4);
-
-	// const recommended = records?.filter((record) =>
-	// 	[144, 145, 146, 147].includes(record.id)
-	// );
-
-	// console.log(records);
-	// useSelect to get the existing invoice
-	// const {
-	// 	isResolving: loading,
-	// 	editedRecord: integrationCatalog,
-	// 	edit: editIntegrationCatalog,
-	// } = useEntityRecord('surecart', 'integration_catalog', id);
 
 	return (
 		<Box
@@ -64,50 +46,69 @@ export default () => {
 					}
 				`}
 			>
-				<Card
-					icon="starter-templates"
-					title={__('Starter Templates', 'surecart')}
-					description={__(
-						'A large library of beautiful store templates.',
-						'surecart'
-					)}
-					href="https://startertemplates.com/"
-					target="_blank"
-					buttonText={__('Install', 'surecart')}
-				/>
-				<Card
-					icon="ottokit"
-					title={__('Ottokit', 'surecart')}
-					description={__(
-						'Build intelligent store automations.',
-						'surecart'
-					)}
-					href="https://ottokit.com/"
-					target="_blank"
-					buttonText={__('Install', 'surecart')}
-				/>
-				<Card
-					icon="surerank"
-					title={__('SureRank', 'surecart')}
-					description={__(
-						'Help your store rise in the rankings.',
-						'surecart'
-					)}
-					href="https://surerank.com/"
-					target="_blank"
-					buttonText={__('Install', 'surecart')}
-				/>
-				<Card
-					icon="suremembers"
-					title={__('SureMembers', 'surecart')}
-					description={__(
-						'Build and monitize your membership program.',
-						'surecart'
-					)}
-					href="https://suremembers.com/"
-					target="_blank"
-					buttonText={__('Install', 'surecart')}
-				/>
+				{recommendedPlugins.map((plugin) => (
+					<div
+						css={css`
+							display: flex;
+							flex-direction: column;
+							gap: var(--sc-spacing-small);
+							padding: var(
+								--sc-card-padding,
+								var(--sc-spacing-large)
+							);
+							background: var(
+								--sc-card-background-color,
+								var(--sc-color-white)
+							);
+							border: 1px solid
+								var(
+									--sc-card-border-color,
+									var(--sc-color-gray-300)
+								);
+							border-radius: var(
+								--sc-card-border-radius,
+								var(--sc-input-border-radius-medium)
+							);
+							box-shadow: var(--sc-shadow-small);
+						`}
+					>
+						<img
+							src={plugin.logo_url}
+							alt={plugin.title?.rendered}
+							css={css`
+								width: 20px;
+								height: 20px;
+								flex: 0 0 20px;
+							`}
+						/>
+						<div>
+							<h3
+								css={css`
+									font-size: 16px;
+									margin: 0;
+								`}
+							>
+								{plugin.title?.rendered}
+							</h3>
+						</div>
+						<div
+							css={css`
+								font-size: var(--sc-font-size-small);
+								margin: 0;
+								color: var(--sc-input-help-text-color);
+							`}
+						>
+							{plugin.summary}
+						</div>
+						<div
+							css={css`
+								margin-top: auto;
+							`}
+						>
+							<ActivationButton record={plugin} />
+						</div>
+					</div>
+				))}
 			</div>
 		</Box>
 	);

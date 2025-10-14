@@ -53,28 +53,22 @@ class IntegrationCatalog extends ExternalApiModel {
 		return null;
 	}
 
+	/**
+	 * Get the button text attribute.
+	 *
+	 * @return string
+	 */
 	public function getButtonTextAttribute() {
-		if ( $this->status === 'active' ) {
-			return $this->activation_type === 'plugin'
-				? 'Enabled'
-				: 'Installed';
+		if ( 'pre-installed' === $this->status ) {
+			return __( 'Pre-installed', 'surecart' );
 		}
-		if ( $this->status === 'pre-installed' ) {
-			return 'Pre-installed';
+		if ( 'active' === $this->status ) {
+			return __( 'Enabled', 'surecart' );
 		}
-		if ( $this->activation_type === 'plugin' ) {
-			return $this->status === 'inactive'
-				? 'Activate'
-				: 'Install & Activate';
+		if ( in_array( $this->activation_type, [ 'plugin', 'theme' ], true ) ) {
+			return __( 'Install', 'surecart' );
 		}
-		if (
-			$this->activation_type === 'theme' ||
-			$this->activation_type === 'external'
-		) {
-			return 'Enable';
-		}
-
-		return null;
+		return __( 'Enable', 'surecart' );
 	}
 
 	/**
@@ -86,14 +80,11 @@ class IntegrationCatalog extends ExternalApiModel {
 		if ( $this->acf['is_pre_installed'] ) {
 			return 'pre-installed';
 		}
-		if ( $this->acf['is_enabled'] ) {
+		if ( $this->is_enabled ) {
 			return 'active';
 		}
 		if ( 'plugin' === $this->activation_type ) {
-			if ( 'active' === $this->acf['plugin_data']['status'] ) {
-				return 'active';
-			}
-			if ( 'inactive' === $this->acf['plugin_data']['status'] ) {
+			if ( ! $this->is_plugin_active ) {
 				return 'inactive';
 			}
 			return 'not-installed';

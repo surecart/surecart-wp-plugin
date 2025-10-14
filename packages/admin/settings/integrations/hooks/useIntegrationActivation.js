@@ -1,8 +1,10 @@
 import { useState } from '@wordpress/element';
-import { useDispatch } from '@wordpress/data';
+import { useDispatch, select } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import { useEntityRecord } from '@wordpress/core-data';
 import { addQueryArgs } from '@wordpress/url';
+import { __ } from '@wordpress/i18n';
+import apiFetch from '@wordpress/api-fetch';
 
 /**
  * Hook for managing integration/plugin/theme activation
@@ -22,10 +24,12 @@ export default function useIntegrationActivation(
 	const { saveEntityRecord, invalidateResolutionForStore } =
 		useDispatch(coreStore);
 	const [isSaving, setIsSaving] = useState(false);
+	const { receiveEntityRecords } = useDispatch(coreStore);
 
 	// Only fetch plugin data if this is a plugin activation
 	const shouldFetchPlugin = record?.activation_type === 'plugin';
-	const { record: pluginData, hasResolved } = useEntityRecord(
+
+	const { record: pluginData } = useEntityRecord(
 		'root',
 		'plugin',
 		shouldFetchPlugin ? record?.plugin_file?.replace(/\.php$/, '') : null,
@@ -50,18 +54,8 @@ export default function useIntegrationActivation(
 
 	// Plugin activation function
 	const activate = async () => {
-		if (record?.activation_type !== 'plugin') {
-			const err = new Error('Only plugins can be activated directly');
-			setError(err);
-			onError?.(err);
-			return;
-		}
-
 		try {
-			setError(null);
 			setIsSaving(true);
-
-			const wasInactive = record?.status === 'inactive';
 
 			await saveEntityRecord(
 				'root',
@@ -75,19 +69,28 @@ export default function useIntegrationActivation(
 				}
 			);
 
-			// Success - call callbacks directly
+			const baseURL = select(coreStore).getEntityConfig(
+				'surecart',
+				'integration_catalog'
+			)?.baseURL;
+
+			const updatedRecord = await apiFetch({
+				path: `${baseURL}/${record.id}`,
+			});
+
+			receiveEntityRecords(
+				'surecart',
+				'integration_catalog',
+				updatedRecord
+			);
+
 			onActivated?.();
 
-			const message = wasInactive
-				? 'Plugin activated.'
-				: 'Plugin installed and activated.';
-			onSuccess?.(message);
+			onSuccess?.(__('Plugin activated.', 'surecart'));
 		} catch (err) {
 			console.error(err);
-			await invalidateResolutionForStore();
 			// Don't set error for invalid_json errors (common with plugin activation redirects)
 			if (err?.code !== 'invalid_json') {
-				setError(err);
 				onError?.(err);
 			}
 		} finally {
@@ -96,9 +99,9 @@ export default function useIntegrationActivation(
 	};
 
 	return {
-		isLoading:
-			(record?.activation_type === 'plugin' && !hasResolved) || isSaving,
+		isLoading: isSaving,
 		activate,
+		canActivate: record?.activation_type === 'plugin' && !!pluginData,
 		activationLink,
 		activationType: record?.activation_type,
 	};
