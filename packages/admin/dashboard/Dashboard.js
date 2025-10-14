@@ -1,6 +1,7 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
+import { useState } from 'react';
 import UpdateModel from '../templates/UpdateModel';
 import Logo from '../templates/Logo';
 import Setup from './Setup';
@@ -10,6 +11,8 @@ import QuickLinks from './components/QuickLinks';
 import Recommended from './Recommended';
 
 export default () => {
+	const [liveMode, setLiveMode] = useState(true);
+
 	return (
 		<UpdateModel
 			title={<Logo display="block" />}
@@ -28,8 +31,8 @@ export default () => {
 			</h1>
 
 			<Setup />
-			<Chart />
-			<Orders />
+			<Chart liveMode={liveMode} setLiveMode={setLiveMode} />
+			<Orders liveMode={liveMode} />
 			<QuickLinks />
 			<Recommended />
 		</UpdateModel>

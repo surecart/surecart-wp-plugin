@@ -22,14 +22,13 @@ import { ProgressBar } from '@wordpress/components';
 import Tab from './Tab';
 import { calculateSum, calculateAverage, calculateTrend } from './utils';
 
-export default () => {
+export default ({ liveMode, setLiveMode }) => {
 	const [startDate, setStartDate] = useState(dayjs().add(-1, 'month'));
 	const [endDate, setEndDate] = useState(dayjs());
 	const [reportBy, setReportBy] = useState('day');
 	const [data, setData] = useState([]);
 	const [loading, setLoading] = useState(false);
 	const [previousData, setPreviousData] = useState([]);
-	const [liveMode, setLiveMode] = useState(false);
 	const currency = 'usd';
 	const [tab, setTab] = useState('amount');
 

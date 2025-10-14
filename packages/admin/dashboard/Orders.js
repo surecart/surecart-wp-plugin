@@ -35,11 +35,12 @@ const Cell = ({ children, muted }) => {
 	);
 };
 
-export default () => {
+export default ({ liveMode }) => {
 	const orders = useSelect((select) => {
 		return select(coreStore).getEntityRecords('surecart', 'order', {
 			per_page: 10,
 			expand: ['checkout', 'checkout.customer'],
+			live_mode: liveMode,
 		});
 	});
 
@@ -117,15 +118,25 @@ export default () => {
 					<ScTableCell
 						slot="head"
 						css={css`
-							width: 200px;
+							width: 150px;
 						`}
 					>
 						{__('Customer', 'surecart')}
 					</ScTableCell>
-					<ScTableCell slot="head">
+					<ScTableCell
+						slot="head"
+						css={css`
+							width: 50px;
+						`}
+					>
 						{__('Total', 'surecart')}
 					</ScTableCell>
-					<ScTableCell slot="head">
+					<ScTableCell
+						slot="head"
+						css={css`
+							width: 100px;
+						`}
+					>
 						{__('Payment', 'surecart')}
 					</ScTableCell>
 					<ScTableCell
