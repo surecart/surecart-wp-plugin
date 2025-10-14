@@ -1,7 +1,12 @@
 <?php
 
+$product = sc_get_product();
+if ( empty( $product ) ) {
+	return '';
+}
+
 // For Analytics.
-$query   = sc_product_review_list_query( $block );
+$query   = sc_product_review_list_query( $block, $product->id );
 $reviews = $query;
 
 // Determine the wrapper attributes.

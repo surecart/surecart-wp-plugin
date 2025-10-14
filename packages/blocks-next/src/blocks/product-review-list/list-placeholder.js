@@ -43,16 +43,10 @@ const BLANK = [
 				},
 			],
 			[
-				'core/buttons',
-				[
-					[
-						'core/button',
-						{
-							text: __('Write a review', 'surecart'),
-							className: 'is-style-surecart-primary',
-						},
-					],
-				],
+				'surecart/review-add-button',
+				{
+					label: __('Write a review', 'surecart'),
+				},
 			],
 		],
 	],

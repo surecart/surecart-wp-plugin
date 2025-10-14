@@ -142,114 +142,24 @@ const { state, actions } = store('surecart/product-review-form', {
 			setTimeout(() => state?.openButton?.focus(), 1);
 		},
 
-		/** Set the hover rating for visual feedback */
-		setHoverRating() {
-			const { ref } = getElement();
-			const rating = parseInt(ref.dataset.rating);
-			const context = getContext();
-
-			// Set hover rating for immediate visual feedback
-			context.hoverRating = rating;
-
-			// Update all stars in the container to show hover state
-			const container = ref.closest(
-				'.wp-block-surecart-product-review-form-rating'
-			);
-			if (container) {
-				const stars = container.querySelectorAll('.star-button');
-				stars.forEach((star, index) => {
-					const starNumber = index + 1;
-					if (starNumber <= rating) {
-						star.style.color = 'var(--sc-color-primary-500)';
-					}
-				});
-			}
-		},
-
-		/** Clear the hover rating */
-		clearHoverRating() {
-			const context = getContext();
-			const { ref } = getElement();
-
-			// Clear hover rating to show actual selected rating
-			context.hoverRating = 0;
-
-			// Reset all stars to show actual rating state
-			const container = ref.closest(
-				'.wp-block-surecart-product-review-form-rating'
-			);
-			if (container) {
-				const stars = container.querySelectorAll('.star-button');
-				const actualRating = context.rating || 0;
-				stars.forEach((star, index) => {
-					const starNumber = index + 1;
-					if (starNumber <= actualRating) {
-						star.style.color = 'var(--sc-color-primary-500)';
-					}
-				});
-			}
-		},
-
 		/** Set the selected stars */
 		setStars() {
 			const { ref } = getElement();
 			const rating = parseInt(ref.dataset.rating || ref.value);
 			const context = getContext();
 
-			// Set the actual rating
+			// Set the actual rating.
 			context.stars = rating;
 		},
 
-		/** Clear all form data - reset rating and any other form fields */
+		/** Clear all form data */
 		clearForm() {
 			const context = getContext();
 
-			// Reset rating
+			// Reset all form fields.
 			context.stars = 0;
-
-			// Reset title and content
 			context.title = '';
 			context.content = '';
-
-			// Clear form inputs
-			const formContainer = document.querySelector(
-				'.wp-block-surecart-product-review-form'
-			);
-			if (formContainer) {
-				// Clear any text inputs
-				const textInputs = formContainer.querySelectorAll(
-					'input[type="text"], input[type="email"], textarea'
-				);
-				textInputs.forEach((input) => {
-					input.value = '';
-				});
-
-				// Clear radio inputs for rating
-				const radioInputs = formContainer.querySelectorAll(
-					'input[name="rating"]'
-				);
-				radioInputs.forEach((input) => {
-					input.checked = false;
-				});
-
-				// Clear any other form inputs
-				const otherInputs = formContainer.querySelectorAll(
-					'input:not([type="submit"]):not([type="button"]):not([name="rating"])'
-				);
-				otherInputs.forEach((input) => {
-					if (input.type === 'checkbox' || input.type === 'radio') {
-						input.checked = false;
-					} else {
-						input.value = '';
-					}
-				});
-
-				// Clear any select elements
-				const selects = formContainer.querySelectorAll('select');
-				selects.forEach((select) => {
-					select.selectedIndex = 0;
-				});
-			}
 		},
 
 		/** Set the review title */
@@ -267,6 +177,7 @@ const { state, actions } = store('surecart/product-review-form', {
 
 	callbacks: {
 		handleOpenChange() {
+			console.log('handleOpenChange triggered::', state.open);
 			if (!inertElements.length) {
 				inertElements = Array.from(
 					document.querySelectorAll(

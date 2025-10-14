@@ -68,7 +68,7 @@ export const TEMPLATE = [
 	],
 	['surecart/product-pagination'],
 	[
-		'surecart/product-list-no-products',
+		'surecart/product-review-list-no-reviews',
 		{},
 		[
 			[

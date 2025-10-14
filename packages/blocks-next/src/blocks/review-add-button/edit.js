@@ -1,5 +1,5 @@
 /**
- * WordPress dependencies
+ * WordPress dependencies.
  */
 import {
 	useBlockProps,
@@ -10,18 +10,18 @@ import { __ } from '@wordpress/i18n';
 import classnames from 'classnames';
 
 /**
- * Internal dependencies
+ * Internal dependencies.
  */
 import ScIcon from '../../components/ScIcon';
 import { getSpacingPresetCssVar } from '../../../../blocks/util';
 
 /**
- * Inspector controls
+ * Inspector controls.
  */
 import Design from './design';
 
 export default ({ attributes, setAttributes }) => {
-	const { icon, quick_view_button_type, label, style, width, icon_position } =
+	const { icon, button_type, label, style, width, icon_position } =
 		attributes;
 
 	const blockProps = useBlockProps({
@@ -32,14 +32,14 @@ export default ({ attributes, setAttributes }) => {
 	});
 
 	const renderButton = () => {
-		const showIcon = ['icon', 'both'].includes(quick_view_button_type);
-		const showText = ['text', 'both'].includes(quick_view_button_type);
+		const showIcon = ['icon', 'both'].includes(button_type);
+		const showText = ['text', 'both'].includes(button_type);
 
 		return (
 			<>
 				{showIcon && 'before' === icon_position && (
 					<ScIcon
-						className="wp-block-surecart-product-quick-view-button__icon"
+						className="wp-block-surecart-product-review-add-button__icon"
 						name={icon ?? 'edit-2'}
 					/>
 				)}
@@ -57,7 +57,7 @@ export default ({ attributes, setAttributes }) => {
 				)}
 				{showIcon && 'after' === icon_position && (
 					<ScIcon
-						className="wp-block-surecart-product-quick-view-button__icon"
+						className="wp-block-surecart-product-review-add-button__icon"
 						name={icon ?? 'edit-2'}
 					/>
 				)}

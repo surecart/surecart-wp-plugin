@@ -6,7 +6,7 @@ import {
 	InspectorControls,
 	RichText,
 } from '@wordpress/block-editor';
-import { PanelBody, RangeControl, TextControl } from '@wordpress/components';
+import { PanelBody, RangeControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
 
@@ -32,9 +32,9 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 		const isFilled = i <= (hoverRating || selectedRating);
 
 		stars.push(
-			<button
+			<span
 				key={i}
-				type="button"
+				role="button"
 				className={`star-button ${isFilled ? 'filled' : ''}`}
 				style={{ width: `${size}px`, height: `${size}px` }}
 				onMouseEnter={() => setHoverRating(i)}
@@ -59,7 +59,7 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 						strokeWidth="1"
 					/>
 				</svg>
-			</button>
+			</span>
 		);
 	}
 

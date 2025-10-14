@@ -9,6 +9,25 @@ use SureCart\Models\Review;
  */
 class ProductReviewListBlock extends AbstractProductListBlock {
 	/**
+	 * Product ID.
+	 *
+	 * @var string
+	 */
+	public $product_id;
+
+	/**
+	 * Constructor.
+	 *
+	 * @param \WP_Block $block The block.
+	 * @param string    $product_id The product ID.
+	 */
+	public function __construct( \WP_Block $block, $product_id ) {
+		$this->block      = $block;
+		$this->url        = \SureCart::block()->urlParams( 'products' );
+		$this->product_id = $product_id;
+	}
+
+	/**
 	 * Get the query context.
 	 *
 	 * @return array
@@ -36,7 +55,8 @@ class ProductReviewListBlock extends AbstractProductListBlock {
 		$page     = $this->url->getCurrentPage();
 
 		$args = array(
-			'status[]' => 'published',
+			'status[]'      => 'published',
+			'product_ids[]' => [ $this->product_id ],
 		);
 
 		if ( $orderby && in_array( $orderby, [ 'stars', 'created_at', 'updated_at' ], true ) ) {
@@ -47,7 +67,9 @@ class ProductReviewListBlock extends AbstractProductListBlock {
 		$args['limit']  = $per_page;
 		$args['offset'] = ( $page - 1 ) * $per_page + $offset;
 
-		return Review::where( $args )->with( [ 'product', 'product.price', 'customer' ] )->get();
+		return Review::where( $args )
+			->with( [ 'product', 'product.price', 'customer' ] )
+			->get();
 	}
 
 	/**

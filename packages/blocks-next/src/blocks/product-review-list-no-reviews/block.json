@@ -17,16 +17,8 @@
 				}
 			},
 			{
-				"name": "core/buttons",
-				"attributes": {},
-				"innerBlocks": [
-					{
-						"name": "core/button",
-						"attributes": {
-							"text": "Write a review"
-						}
-					}
-				]
+				"name": "surecart/review-add-button",
+				"attributes": {}
 			}
 		]
 	},

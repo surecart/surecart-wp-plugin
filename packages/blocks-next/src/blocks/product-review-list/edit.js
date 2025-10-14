@@ -29,6 +29,7 @@ export default (props) => {
 					setIsPatternSelectionModalOpen(true)
 				}
 			/>
+
 			{isPatternSelectionModalOpen && (
 				<PatternSelectionModal
 					clientId={clientId}

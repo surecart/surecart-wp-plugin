@@ -2,8 +2,8 @@
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
 	"name": "surecart/review-add-button",
-	"title": "Write a Review",
-	"description": "Display the product write a review button.",
+	"title": "Write a Review Button",
+	"description": "A button to open the product review form.",
 	"version": "1.0.0",
 	"category": "surecart-product-page",
 	"example": {

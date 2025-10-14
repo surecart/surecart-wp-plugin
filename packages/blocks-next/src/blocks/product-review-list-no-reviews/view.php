@@ -1,10 +1,10 @@
 <?php
+
 use SureCart\Models\Blocks\ProductReviewListBlock;
 
-$controller = new ProductReviewListBlock( $block );
-$reviews    = $controller->query();
+$reviews = new ProductReviewListBlock( $block, $product->id );
 
-if ( empty( $reviews ) ) {
+if ( ! empty( $reviews ) ) {
 	return '';
 }
 
@@ -13,8 +13,8 @@ if ( empty( trim( $content ) ) ) {
 }
 
 $classes = ( isset( $attributes['style']['elements']['link']['color']['text'] ) ) ? 'has-link-color' : '';
-
 ?>
+
 <div <?php echo wp_kses_data( get_block_wrapper_attributes( array( 'class' => $classes ) ) ); ?>>
 	<?php echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 </div>

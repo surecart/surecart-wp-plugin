@@ -1,3 +1,6 @@
+/**
+ * WordPress dependencies.
+ */
 import {
 	__experimentalToolsPanelItem as ToolsPanelItem,
 	__experimentalToolsPanel as ToolsPanel,
@@ -5,6 +8,10 @@ import {
 	__experimentalToggleGroupControlOption as ToggleGroupControlOption,
 } from '@wordpress/components';
 import { __, _x } from '@wordpress/i18n';
+
+/**
+ * Internal dependencies.
+ */
 import { useToolsPanelDropdownMenuProps } from '../utils';
 
 export default ({ attributes, setAttributes }) => {
@@ -33,7 +40,7 @@ export default ({ attributes, setAttributes }) => {
 					value={button_type}
 					onChange={(button_type) => setAttributes({ button_type })}
 					help={__(
-						'A decorative way to show quick view trigger of the product.',
+						'A decorative way to show review add button of the product.',
 						'surecart'
 					)}
 					isBlock
@@ -42,7 +49,7 @@ export default ({ attributes, setAttributes }) => {
 						value="icon"
 						label={_x(
 							'Icon',
-							'Button option for product quick view button.',
+							'Button option for product review add button button.',
 							'surecart'
 						)}
 					/>
@@ -50,7 +57,7 @@ export default ({ attributes, setAttributes }) => {
 						value="text"
 						label={_x(
 							'Text',
-							'Button option for product quick view button.',
+							'Button option for product review add button button.',
 							'surecart'
 						)}
 					/>
@@ -58,7 +65,7 @@ export default ({ attributes, setAttributes }) => {
 						value="both"
 						label={_x(
 							'Both',
-							'Button option for product quick view button.',
+							'Button option for product review add button button.',
 							'surecart'
 						)}
 					/>

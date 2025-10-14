@@ -11,9 +11,6 @@ const { state, actions } = store('surecart/product-review', {
 	},
 
 	actions: {
-		handleOpenChange() {
-			// Update the URL with product-review-form param when opened.
-		},
 	},
 
 	callbacks: {

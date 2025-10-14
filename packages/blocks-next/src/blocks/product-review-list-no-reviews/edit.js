@@ -1,5 +1,5 @@
 /**
- * WordPress dependencies
+ * WordPress dependencies.
  */
 import { useBlockProps, useInnerBlocksProps } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
@@ -17,16 +17,10 @@ const TEMPLATE = [
 		},
 	],
 	[
-		'core/buttons',
-		[
-			[
-				'core/button',
-				{
-					text: __('Write a review', 'surecart'),
-					className: 'is-style-surecart-primary',
-				},
-			],
-		],
+		'surecart/review-add-button',
+		{
+			label: __('Write a review', 'surecart'),
+		},
 	],
 ];
 
