@@ -4,6 +4,7 @@ import Box from '../ui/Box';
 import { ScButton, ScIcon } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 import { useDispatch, useSelect } from '@wordpress/data';
+import { store as coreStore } from '@wordpress/core-data';
 import { store as preferencesStore } from '@wordpress/preferences';
 import Card from './components/Card';
 
@@ -15,6 +16,26 @@ export default () => {
 	const removeGetStarted = () => {
 		set('surecart/dashboard', 'hideGetStarted', true);
 	};
+
+	const { product, loading } = useSelect((select) => {
+		const queryArgs = [
+			'surecart',
+			'product',
+			{
+				ad_hoc: false,
+				archived: false,
+				status: ['published'],
+				per_page: 1,
+			},
+		];
+		return {
+			product: select(coreStore).getEntityRecords(...queryArgs)?.[0],
+			loading: select(coreStore).isResolving(
+				'getEntityRecords',
+				queryArgs
+			),
+		};
+	});
 
 	if (hideGetStarted) {
 		return null;
@@ -65,6 +86,7 @@ export default () => {
 						'surecart'
 					)}
 					buttonText={__('Create product', 'surecart')}
+					href="admin.php?page=sc-products&action=edit"
 					highlighted
 				/>
 				<Card
@@ -74,6 +96,7 @@ export default () => {
 						'Connect to a payment gateway to start taking orders.',
 						'surecart'
 					)}
+					href="admin.php?page=sc-settings&tab=processors"
 					buttonText={__('Connect now', 'surecart')}
 				/>
 				<Card
@@ -83,6 +106,7 @@ export default () => {
 						'Place a test order to experience the payment flow.',
 						'surecart'
 					)}
+					href={product?.permalink ?? null}
 					buttonText={__('Test your checkout', 'surecart')}
 				/>
 			</div>
