@@ -11,28 +11,27 @@ import Recommended from './Recommended';
 
 export default () => {
 	return (
-		<div
+		<UpdateModel
+			title={<Logo display="block" />}
 			css={css`
 				--sc-card-border-radius: var(--sc-border-radius-x-large);
 				padding: 0 var(--sc-spacing-large);
 			`}
 		>
-			<UpdateModel title={<Logo display="block" />}>
-				<h1
-					css={css`
-						font-size: var(--sc-font-size-xx-large);
-						margin-bottom: var(--sc-spacing-x-large);
-					`}
-				>
-					{__('Welcome to SureCart', 'surecart')}
-				</h1>
+			<h1
+				css={css`
+					font-size: var(--sc-font-size-xx-large);
+					margin-bottom: var(--sc-spacing-x-large);
+				`}
+			>
+				{__('Welcome to SureCart', 'surecart')}
+			</h1>
 
-				<Setup />
-				<Chart />
-				<Orders />
-				<QuickLinks />
-				<Recommended />
-			</UpdateModel>
-		</div>
+			<Setup />
+			<Chart />
+			<Orders />
+			<QuickLinks />
+			<Recommended />
+		</UpdateModel>
 	);
 };
