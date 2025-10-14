@@ -3,6 +3,7 @@
  */
 import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
+import { useEntityProp } from '@wordpress/core-data';
 
 /**
  * Internal dependencies.
@@ -24,6 +25,12 @@ const ReviewProtocolSettings = () => {
 		editItem: editReviewProtocolItem,
 		hasLoadedItem: hasLoadedReviewProtocolItem,
 	} = useEntity('store', 'review_protocol');
+
+	const [hideVerifiedBadge, setHideVerifiedBadge] = useEntityProp(
+		'root',
+		'site',
+		'surecart_hide_verified_buyer_badge'
+	);
 
 	const onSubmit = async () => {
 		setError(null);
@@ -130,6 +137,25 @@ const ReviewProtocolSettings = () => {
 								</span>
 							</ScInput>
 						)}
+
+						<ScSwitch
+							checked={!hideVerifiedBadge}
+							onClick={(e) => {
+								e.preventDefault();
+								setHideVerifiedBadge(!hideVerifiedBadge);
+							}}
+						>
+							{__('Verified Buyer', 'surecart')}
+							<span
+								slot="description"
+								style={{ lineHeight: '1.4' }}
+							>
+								{__(
+									'Show "Verified Buyer" badge for reviews left by customers who purchased the product.',
+									'surecart'
+								)}
+							</span>
+						</ScSwitch>
 					</>
 				)}
 			</SettingsBox>
