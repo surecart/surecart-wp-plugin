@@ -21,10 +21,10 @@ class ProductReviewListBlock extends AbstractProductListBlock {
 	 * @param \WP_Block $block The block.
 	 * @param string    $product_id The product ID.
 	 */
-	public function __construct( \WP_Block $block, $product_id ) {
+	public function __construct( \WP_Block $block, $product_id = null ) {
 		$this->block      = $block;
-		$this->url        = \SureCart::block()->urlParams( 'products' );
-		$this->product_id = $product_id;
+		$this->url        = \SureCart::block()->urlParams( 'reviews' );
+		$this->product_id = $product_id ?? ( $block->context['postId'] ?? null );
 	}
 
 	/**
@@ -58,6 +58,12 @@ class ProductReviewListBlock extends AbstractProductListBlock {
 			'status[]'      => 'published',
 			'product_ids[]' => [ $this->product_id ],
 		);
+
+		// Filter by star rating if provided.
+		$stars_filter = $this->url->getArg( 'stars' );
+		if ( ! empty( $stars_filter ) && is_numeric( $stars_filter ) && $stars_filter >= 1 && $stars_filter <= 5 ) {
+			$args['stars'] = (int) $stars_filter;
+		}
 
 		if ( $orderby && in_array( $orderby, [ 'stars', 'created_at', 'updated_at' ], true ) ) {
 			$args['sort'] = $orderby . ':' . $order;

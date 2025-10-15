@@ -48,7 +48,6 @@ export const TEMPLATE = [
 						'surecart/product-review-list-sidebar-toggle',
 						{ label: 'Filters' },
 					],
-					['surecart/product-review-list-sort', {}],
 				],
 			],
 			[
@@ -89,6 +88,7 @@ export const TEMPLATE = [
 		'surecart/product-review-list-filter-tags',
 		{},
 		[['surecart/product-review-list-filter-tag', {}]],
+		['surecart/product-review-list-sort', {}],
 	],
 	[
 		'surecart/product-review-list-content',
@@ -120,7 +120,7 @@ export const TEMPLATE = [
 							blockGap: '0px',
 						},
 						layout: {
-							selfStretch: 'fit',
+							selfStretch: 'fill',
 							flexSize: null,
 						},
 					},

@@ -29,15 +29,6 @@ export default function ProductReviewListEdit({
 	openPatternSelectionModal,
 }) {
 	/**
-	 * Update the query attributes.
-	 *
-	 * @param {Object} newQuery - The new query object.
-	 */
-	const updateQuery = (newQuery) => {
-		setAttributes({ query: { ...query, ...newQuery } });
-	};
-
-	/**
 	 * Block props.
 	 */
 	const blockProps = useBlockProps();

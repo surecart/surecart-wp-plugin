@@ -2,9 +2,14 @@
 
 use SureCart\Models\Blocks\ProductReviewListBlock;
 
+$product = sc_get_product();
+if ( empty( $product ) ) {
+	return '';
+}
+
 $reviews = new ProductReviewListBlock( $block, $product->id );
 
-if ( ! empty( $reviews ) ) {
+if ( ! empty( $reviews->data ) ) {
 	return '';
 }
 

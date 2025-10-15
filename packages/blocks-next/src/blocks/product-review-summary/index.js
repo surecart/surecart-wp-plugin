@@ -1,11 +1,11 @@
 /**
- * WordPress dependencies
+ * WordPress dependencies.
  */
 import { registerBlockType } from '@wordpress/blocks';
-import { postContent as icon } from '@wordpress/icons';
+import { starFilled as icon } from '@wordpress/icons';
 
 /**
- * Internal dependencies
+ * Internal dependencies.
  */
 import edit from './edit';
 import save from './save';
@@ -13,7 +13,7 @@ import metadata from './block.json';
 import './style.scss';
 
 /**
- * Register block
+ * Register block.
  */
 registerBlockType(metadata, {
 	icon,
