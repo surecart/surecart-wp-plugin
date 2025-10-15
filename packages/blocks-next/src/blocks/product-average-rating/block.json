@@ -12,7 +12,8 @@
 		"surecart/product-quick-view",
 		"surecart/product-review-list",
 		"surecart/product-review-template",
-		"surecart/sticky-purchase"
+		"surecart/sticky-purchase",
+		"surecart/product-review-summary"
 	],
 	"allowedBlocks": [
 		"surecart/product-average-rating-stars",
