@@ -88,7 +88,7 @@ class AdminToolbarService {
 	 * @return bool
 	 */
 	public function showAdminMenu(): bool {
-		if ( $this->isAdmin() || ! $this->isAdminBarShowing() ) {
+		if ( ! $this->isAdmin() || ! $this->isAdminBarShowing() ) {
 			return false;
 		}
 

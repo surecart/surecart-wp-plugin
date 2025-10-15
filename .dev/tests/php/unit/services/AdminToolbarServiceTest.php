@@ -77,7 +77,7 @@ class AdminToolbarServiceTest extends SureCartUnitTestCase {
 
 	public function test_show_admin_menu() {
 		$this->assertFalse($this->service->showAdminMenu());
-		$this->service->shouldReceive('isAdmin')->andReturn(false);
+		$this->service->shouldReceive('isAdmin')->andReturn(true);
 		$this->assertFalse($this->service->showAdminMenu());
 		$this->service->shouldReceive('isAdminBarShowing')->andReturn(true);
 		$this->assertFalse($this->service->showAdminMenu());
