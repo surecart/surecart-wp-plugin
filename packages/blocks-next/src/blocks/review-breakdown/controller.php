@@ -1,5 +1,7 @@
 <?php
+
 $product = sc_get_product();
+
 if ( ! $product ) {
 	return;
 }

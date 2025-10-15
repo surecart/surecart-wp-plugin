@@ -12,7 +12,7 @@
 				"name": "surecart/product-list",
 				"attributes": {
 					"metadata": {
-						"categories": ["surecart_shop"],
+						"categories": ["surecart_review_list"],
 						"patternName": "surecart-list-standard",
 						"name": "Standard"
 					},

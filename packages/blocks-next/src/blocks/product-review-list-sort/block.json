@@ -1,0 +1,40 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "surecart/product-review-list-sort",
+	"title": "Sort (Dropdown)",
+	"description": "Display the product review sort by rating.",
+	"version": "1.0.0",
+	"category": "surecart-product-page",
+	"icon": "media-interactive",
+	"example": {},
+	"ancestor": ["surecart/product-review-list"],
+	"attributes": {
+		"label": {
+			"type": "string"
+		}
+	},
+	"usesContext": ["postId"],
+	"supports": {
+		"interactivity": true,
+		"spacing": {
+			"padding": true,
+			"margin": ["top", "bottom"]
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true,
+			"__experimentalFontWeight": true
+		},
+		"color": {
+			"text": true,
+			"background": false,
+			"enableContrastChecker": true
+		}
+	},
+	"render": "file:./view.php",
+	"textdomain": "surecart",
+	"editorScript": "file:./index.js",
+	"style": ["file:./style-index.css", "surecart-button", "surecart-checkbox"],
+	"viewScriptModule": "@surecart/dropdown"
+}

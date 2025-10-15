@@ -1,69 +1,64 @@
 .wp-block-surecart-review-breakdown {
 	display: block;
+	justify-content: end;
 
-	.sc-review-summary {
+	.sc-average-stars {
+		font-size: 16px;
+		font-weight: 700;
+		color: var(--sc-color-gray-800);
+	}
+
+	.sc-star-bars {
+		flex: 1;
 		display: flex;
-		gap: 16px;
-		align-items: flex-end;
+		flex-direction: column;
+		gap: 8px;
+		min-width: 150px;
 
-		.sc-average-stars {
-			font-size: 16px;
-			font-weight: 700;
-			color: var(--sc-color-gray-800);
-		}
-
-		.sc-star-bars {
-			flex: 1;
+		.sc-star-row {
 			display: flex;
-			flex-direction: column;
+			align-items: center;
+			justify-content: flex-end;
 			gap: 8px;
-			min-width: 150px;
+			font-size: var(--sc-font-size-medium);
+			text-decoration: none;
+			color: inherit;
+			cursor: pointer;
+			transition: opacity 0.2s ease;
 
-			.sc-star-row {
+			&:hover {
+				opacity: 0.7;
+			}
+
+			.sc-star-label {
+				color: var(--sc-color-gray-800);
+				width: 40px;
+				justify-content: center;
 				display: flex;
-				align-items: center;
-                justify-content: flex-end;
-				gap: 8px;
-				font-size: var(--sc-font-size-medium);
-				text-decoration: none;
-				color: inherit;
-				cursor: pointer;
-				transition: opacity 0.2s ease;
+				gap: 10px;
+			}
 
-				&:hover {
-					opacity: 0.7;
-				}
+			.sc-bar-wrap {
+				flex: 1;
+				height: 8px;
+				background: var(--sc-color-gray-200);
+				border-radius: 4px;
+				overflow: hidden;
+				position: relative;
+				min-width: 300px;
+			}
 
-				.sc-star-label {
-					color: var(--sc-color-gray-800);
-					width: 40px;
-					justify-content: center;
-					display: flex;
-					gap: 10px;
-				}
+			.sc-bar-fill {
+				height: 100%;
+				background: var(--sc-color-gray-800);
+				border-radius: 4px;
+				transition: width 0.3s ease;
+			}
 
-				.sc-bar-wrap {
-					flex: 1;
-					height: 8px;
-					background: var(--sc-color-gray-200);
-					border-radius: 4px;
-					overflow: hidden;
-					position: relative;
-                    min-width: 300px;
-				}
-
-				.sc-bar-fill {
-					height: 100%;
-					background: var(--sc-color-gray-800);
-					border-radius: 4px;
-					transition: width 0.3s ease;
-				}
-
-				.sc-count {
-					width: 28px;
-					text-align: right;
-					color: var(--sc-color-gray-800);
-				}
+			.sc-count {
+				width: 28px;
+				text-align: right;
+				color: var(--sc-color-gray-800);
 			}
 		}
 	}

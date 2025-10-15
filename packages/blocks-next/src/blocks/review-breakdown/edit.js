@@ -63,68 +63,64 @@ export default function ({ attributes, setAttributes, clientId }) {
 			/>
 
 			<div {...blockProps}>
-				<div className="sc-review-breakdown">
-					<div className="sc-review-summary">
-						<div className="sc-star-bars">
-							{[5, 4, 3, 2, 1].map((star) => {
-								const count = reviewsBreakdown[star] || 0;
-								const percentage =
-									totalReviews > 0
-										? (count / totalReviews) * 100
-										: 0;
+				<div className="sc-star-bars">
+					{[5, 4, 3, 2, 1].map((star) => {
+						const count = reviewsBreakdown[star] || 0;
+						const percentage =
+							totalReviews > 0
+								? (count / totalReviews) * 100
+								: 0;
 
-								return (
-									<div className="sc-star-row" key={star}>
-										<div className="sc-star-label">
-											<span className="sc-star-text">
-												{star}
-											</span>
-											<span
-												className="sc-star-svg"
-												style={{
-													display: 'inline-block',
-													width: `${size}px`,
-													height: `${size}px`,
-													verticalAlign: 'middle',
-													marginLeft: 6,
-												}}
-											>
-												<svg
-													viewBox="0 0 24 24"
-													width={size}
-													height={size}
-												>
-													<polygon
-														points={points}
-														fill={
-															fill_color ||
-															'var(--sc-color-primary-500)'
-														}
-														stroke={
-															fill_color ||
-															'var(--sc-color-primary-500)'
-														}
-														strokeWidth="1"
-													/>
-												</svg>
-											</span>
-										</div>
-
-										<div className="sc-bar-wrap">
-											<div
-												className="sc-bar-fill"
-												style={{
-													width: `${percentage}%`,
-												}}
+						return (
+							<div className="sc-star-row" key={star}>
+								<div className="sc-star-label">
+									<span className="sc-star-text">
+										{star}
+									</span>
+									<span
+										className="sc-star-svg"
+										style={{
+											display: 'inline-block',
+											width: `${size}px`,
+											height: `${size}px`,
+											verticalAlign: 'middle',
+											marginLeft: 6,
+										}}
+									>
+										<svg
+											viewBox="0 0 24 24"
+											width={size}
+											height={size}
+										>
+											<polygon
+												points={points}
+												fill={
+													fill_color ||
+													'var(--sc-color-primary-500)'
+												}
+												stroke={
+													fill_color ||
+													'var(--sc-color-primary-500)'
+												}
+												strokeWidth="1"
 											/>
-										</div>
+										</svg>
+									</span>
+								</div>
 
-										<div className="sc-count">{count}</div>
-									</div>
-								);
-							})}
-						</div>
-					</div>
+								<div className="sc-bar-wrap">
+									<div
+										className="sc-bar-fill"
+										style={{
+											width: `${percentage}%`,
+										}}
+									/>
+								</div>
+
+								<div className="sc-count">{count}</div>
+							</div>
+						);
+					})}
 				</div>
 			</div>
 		</>
