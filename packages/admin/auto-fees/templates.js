@@ -5,7 +5,6 @@ export default {
 		enabled: false,
 		amount_adjustment: null,
 		discount: true,
-		fee_target: 'line_item',
 		name: __('Start from Scratch', 'surecart'),
 		percent_adjustment: 50.0,
 		description: __(

@@ -9,7 +9,12 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies.
  */
-import { ScInput, ScPriceInput, ScSelect } from '@surecart/components-react';
+import {
+	ScInput,
+	ScPriceInput,
+	ScSelect,
+	ScTag,
+} from '@surecart/components-react';
 import Box from '../../ui/Box';
 import { useState, useEffect } from '@wordpress/element';
 
@@ -40,7 +45,19 @@ export default ({ autoFee, onUpdate, loading }) => {
 	}, [adjustmentType, amount_adjustment, percent_adjustment]);
 
 	return (
-		<Box title={__('Details', 'surecart')} loading={loading}>
+		<Box
+			title={__('Details', 'surecart')}
+			loading={loading}
+			header_action={
+				fee_target && (
+					<ScTag type="info" size="medium">
+						{`Target: ${fee_target
+							.replace('_', ' ')
+							.toUpperCase()}`}
+					</ScTag>
+				)
+			}
+		>
 			<ScInput
 				label={__('Name', 'surecart')}
 				help={__("Your Dynamic Price's name.", 'surecart')}
@@ -51,37 +68,6 @@ export default ({ autoFee, onUpdate, loading }) => {
 						name: e.target.value,
 					})
 				}
-			/>
-			<ScSelect
-				label={__('Target', 'surecart')}
-				help={__(
-					'The entity to which this dynamic price applies.',
-					'surecart'
-				)}
-				unselect={false}
-				value={fee_target}
-				css={css`
-					min-width: 125px;
-				`}
-				onScChange={(e) => {
-					onUpdate({
-						fee_target: e.target.value,
-					});
-				}}
-				choices={[
-					{
-						label: __('Line Item', 'surecart'),
-						value: 'line_item',
-					},
-					{
-						label: __('Checkout', 'surecart'),
-						value: 'checkout',
-					},
-					{
-						label: __('Shipping', 'surecart'),
-						value: 'shipping',
-					},
-				]}
 			/>
 			<ScSelect
 				label={__('Type', 'surecart')}

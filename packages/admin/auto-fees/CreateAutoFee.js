@@ -14,6 +14,7 @@ import {
 	ScChoices,
 	ScInput,
 	ScIcon,
+	ScSelect,
 } from '@surecart/components-react';
 import CreateTemplate from '../templates/CreateModel';
 import Box from '../ui/Box';
@@ -22,6 +23,7 @@ import templates from './templates';
 export default ({ id, onCreateAutoFee }) => {
 	const [isSaving, setIsSaving] = useState(false);
 	const [autoFeeName, setAutoFeeName] = useState('');
+	const [autoFeeTarget, setAutoFeeTarget] = useState('');
 	const [currentTemplate, setCurrentTemplate] = useState(null);
 	const [error, setError] = useState('');
 	const { saveEntityRecord } = useDispatch(coreStore);
@@ -46,6 +48,7 @@ export default ({ id, onCreateAutoFee }) => {
 				{
 					...templates?.[currentTemplate],
 					name: autoFeeName,
+					fee_target: autoFeeTarget,
 					start_at: Date.parse(getDate(new Date())) / 1000,
 				},
 				{ throwOnError: true }
@@ -154,6 +157,38 @@ export default ({ id, onCreateAutoFee }) => {
 							);
 						})}
 					</ScChoices>
+					{'start_blank' === currentTemplate && (
+						<ScSelect
+							label={__('Target', 'surecart')}
+							help={__(
+								'The entity to which this dynamic price applies.',
+								'surecart'
+							)}
+							unselect={false}
+							value={autoFeeTarget}
+							css={css`
+								min-width: 125px;
+							`}
+							onScChange={(e) => {
+								setAutoFeeTarget(e.target.value);
+							}}
+							choices={[
+								{
+									label: __('Line Item', 'surecart'),
+									value: 'line_item',
+								},
+								{
+									label: __('Checkout', 'surecart'),
+									value: 'checkout',
+								},
+								{
+									label: __('Shipping', 'surecart'),
+									value: 'shipping',
+								},
+							]}
+							required
+						/>
+					)}
 				</Box>
 			</ScForm>
 		</CreateTemplate>
