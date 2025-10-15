@@ -1,6 +1,7 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { ScIcon } from '@surecart/components-react';
+import { __ } from '@wordpress/i18n';
 
 const QuickLink = ({ icon, text, href, target = '_self' }) => {
 	return (
@@ -34,6 +35,7 @@ const QuickLink = ({ icon, text, href, target = '_self' }) => {
 			>
 				<ScIcon
 					name={icon}
+					aria-hidden="true"
 					style={{
 						'font-size': '18px',
 						color: 'var(--sc-color-gray-700)',
@@ -47,6 +49,8 @@ const QuickLink = ({ icon, text, href, target = '_self' }) => {
 						font-weight: var(--sc-font-weight-medium);
 						color: var(--sc-color-gray-900);
 					`}
+					// translators: %s is the text of the link
+					aria-label={__(`${text} (opens in new window)`, 'surecart')}
 				>
 					{text}
 				</span>

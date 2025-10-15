@@ -61,6 +61,7 @@ export default ({ liveMode }) => {
 						margin: -10px 0;
 					`}
 					type="text"
+					aria-label={__('View all orders', 'surecart')}
 					href="admin.php?page=sc-orders"
 				>
 					{__('View all', 'surecart')}
@@ -167,7 +168,17 @@ export default ({ liveMode }) => {
 								}
 							}}
 							role="button"
-							aria-label={__('View order', 'surecart')}
+							aria-label={sprintf(
+								// translators: %1s is the order number, %2s is the customer name, %3s is the total amount, %4s is the order status.
+								__(
+									'View order number %1s by %2s for %3s. %4s',
+									'surecart'
+								),
+								order?.number,
+								order?.checkot?.customer?.name,
+								order?.checkout?.total_display_amount,
+								order?.status
+							)}
 							css={css`
 								cursor: pointer;
 								&:hover {

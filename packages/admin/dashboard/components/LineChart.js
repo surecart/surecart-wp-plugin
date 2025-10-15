@@ -34,6 +34,14 @@ export const options = (type) => ({
 		intersect: false,
 	},
 	plugins: {
+		title: {
+			display: false, // Display is handled by wrapper aria-label
+			text: type === 'amount'
+				? __('Revenue Chart', 'surecart')
+				: type === 'count'
+				? __('Orders Chart', 'surecart')
+				: __('Average Order Value Chart', 'surecart'),
+		},
 		tooltip: {
 			backgroundColor: 'white',
 			titleColor: 'black',
@@ -138,5 +146,22 @@ export default ({ data, previousData, type = 'amount' }) => {
 		},
 	];
 
-	return <Line options={options(type)} data={{ labels, datasets }} />;
+	// Get chart title for accessibility
+	const chartTitle =
+		type === 'amount'
+			? __('Revenue Chart', 'surecart')
+			: type === 'count'
+			? __('Orders Chart', 'surecart')
+			: __('Average Order Value Chart', 'surecart');
+
+	const chartDescription = __('Line chart comparing current period with previous period data over time', 'surecart');
+
+	return (
+		<div
+			role="img"
+			aria-label={`${chartTitle}. ${chartDescription}. ${__('Showing', 'surecart')} ${data.length} ${__('data points', 'surecart')}.`}
+		>
+			<Line options={options(type)} data={{ labels, datasets }} />
+		</div>
+	);
 };

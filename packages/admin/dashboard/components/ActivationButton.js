@@ -39,10 +39,15 @@ export default ({ record }) => {
 				href={activationLink}
 				target={activationLink ? '_blank' : undefined}
 				disabled={!activationLink}
+				aria-label={
+					activationLink
+						? `${record?.button_text} ${__('(opens in new window)', 'surecart')}`
+						: record?.button_text
+				}
 			>
 				{record?.button_text}
 				{activationLink && (
-					<ScIcon name="external-link" slot="suffix" />
+					<ScIcon name="external-link" slot="suffix" aria-hidden="true" />
 				)}
 			</ScButton>
 		);
@@ -60,9 +65,13 @@ export default ({ record }) => {
 	// Theme/external activation (primary button with link)
 	if (activationLink) {
 		return (
-			<ScButton href={activationLink} target="_blank">
+			<ScButton
+				href={activationLink}
+				target="_blank"
+				aria-label={`${record?.button_text} ${__('(opens in new window)', 'surecart')}`}
+			>
 				{record?.button_text}
-				<ScIcon name="arrow-up-right" slot="suffix" />
+				<ScIcon name="arrow-up-right" slot="suffix" aria-hidden="true" />
 			</ScButton>
 		);
 	}

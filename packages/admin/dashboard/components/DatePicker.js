@@ -220,6 +220,8 @@ export default ({ startDate, setStartDate, endDate, setEndDate }) => {
 				className="surecart-settings__date-select"
 				ref={dateRef}
 				size={inputSize}
+				aria-label={__('Select date range', 'surecart')}
+				placeholder={__('Select dates', 'surecart')}
 			/>
 		</div>
 	);

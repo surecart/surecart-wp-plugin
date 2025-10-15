@@ -120,6 +120,15 @@ export default ({ liveMode, setLiveMode }) => {
 		previousAverageAmount
 	);
 
+	// Tab navigation
+
+	const handleTabKeyDown = (e, tab) => {
+		if (e.key === 'Enter' || e.key === ' ') {
+			e.preventDefault();
+			setTab(tab);
+		}
+	};
+
 	return (
 		<div
 			css={css`
@@ -183,10 +192,22 @@ export default ({ liveMode, setLiveMode }) => {
 					href={`${scData?.surecart_app_url}?switch_account_id=${scData?.account_id}`}
 					target="_blank"
 					rel="noopener noreferrer"
+					aria-label={__(
+						'All Reports (opens in new window)',
+						'surecart'
+					)}
 				>
-					<ScIcon name="bar-chart-2" slot="prefix" />
+					<ScIcon
+						name="bar-chart-2"
+						slot="prefix"
+						aria-hidden="true"
+					/>
 					{__('All Reports', 'surecart')}
-					<ScIcon name="arrow-up-right" slot="suffix" />
+					<ScIcon
+						name="arrow-up-right"
+						slot="suffix"
+						aria-hidden="true"
+					/>
 				</ScButton>
 			</div>
 			<div
@@ -207,6 +228,8 @@ export default ({ liveMode, setLiveMode }) => {
 				`}
 			>
 				<div
+					role="tablist"
+					aria-label={__('Chart metrics', 'surecart')}
 					css={css`
 						display: flex;
 						flex-direction: column;
@@ -225,6 +248,7 @@ export default ({ liveMode, setLiveMode }) => {
 						trend={amountTrend}
 						selected={tab === 'amount'}
 						onClick={() => setTab('amount')}
+						onKeyDown={(e) => handleTabKeyDown(e, 'amount')}
 					/>
 					<Tab
 						title={__('Orders', 'surecart')}
@@ -236,6 +260,7 @@ export default ({ liveMode, setLiveMode }) => {
 							console.log('count');
 							setTab('count');
 						}}
+						onKeyDown={(e) => handleTabKeyDown(e, 'count')}
 					/>
 					<Tab
 						title={__('Average Order Value', 'surecart')}
@@ -244,6 +269,7 @@ export default ({ liveMode, setLiveMode }) => {
 						trend={averageTrend}
 						selected={tab === 'average_amount'}
 						onClick={() => setTab('average_amount')}
+						onKeyDown={(e) => handleTabKeyDown(e, 'average_amount')}
 					/>
 				</div>
 				<div
@@ -260,6 +286,9 @@ export default ({ liveMode, setLiveMode }) => {
 					/>
 					{loading && (
 						<div
+							role="status"
+							aria-live="polite"
+							aria-label={__('Loading chart data', 'surecart')}
 							css={css`
 								position: absolute;
 								bottom: 0;
@@ -273,6 +302,24 @@ export default ({ liveMode, setLiveMode }) => {
 							`}
 						>
 							<ProgressBar />
+							<span
+								css={css`
+									position: absolute;
+									width: 1px;
+									height: 1px;
+									padding: 0;
+									margin: -1px;
+									overflow: hidden;
+									clip: rect(0, 0, 0, 0);
+									white-space: nowrap;
+									border-width: 0;
+								`}
+							>
+								{__(
+									'Loading chart data, please wait...',
+									'surecart'
+								)}
+							</span>
 						</div>
 					)}
 				</div>

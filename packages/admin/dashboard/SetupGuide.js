@@ -52,9 +52,11 @@ export default () => {
 					size="small"
 					rounded
 					onClick={removeGetStarted}
+					aria-label={__('Close setup guide', 'surecart')}
 				>
 					<ScIcon
 						name="x"
+						aria-hidden="true"
 						css={css`
 							font-size: 18px;
 						`}

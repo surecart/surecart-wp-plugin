@@ -15,6 +15,8 @@ export default ({
 
 	return (
 		<div
+			role="tab"
+			aria-selected={selected}
 			css={css`
 				background: ${selected
 					? 'var(--sc-color-gray-100)'
@@ -41,6 +43,7 @@ export default ({
 
 				&:focus-visible {
 					outline: 1px solid var(--sc-color-primary-500);
+					outline-offset: 2px;
 				}
 			`}
 			tabIndex={0}
@@ -80,6 +83,11 @@ export default ({
 				{value}
 				<ScIcon
 					name={isUp ? 'arrow-up-right' : 'arrow-down-right'}
+					aria-label={
+						isUp
+							? __('Trending up', 'surecart')
+							: __('Trending down', 'surecart')
+					}
 					css={css`
 						color: ${isUp
 							? '#16A34A'
