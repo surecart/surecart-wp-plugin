@@ -56,12 +56,39 @@ class AdminToolbarService {
 	}
 
 	/**
+	 * Check if the current user is in the admin area.
+	 *
+	 * @return bool
+	 */
+	public function isAdmin(): bool {
+		return is_admin();
+	}
+
+	/**
+	 * Check if the admin bar is showing.
+	 *
+	 * @return bool
+	 */
+	public function isAdminBarShowing(): bool {
+		return is_admin_bar_showing();
+	}
+
+	/**
+	 * Check if the current page is the admin area.
+	 *
+	 * @return bool
+	 */
+	public function isShopPageOnFront(): bool {
+		return intval( get_option( 'page_on_front' ) ) === \SureCart::pages()->getId( 'shop' );
+	}
+
+	/**
 	 * Check if the admin menu should be shown.
 	 *
 	 * @return bool
 	 */
 	public function showAdminMenu(): bool {
-		if ( ! is_admin() || ! is_admin_bar_showing() ) {
+		if ( $this->isAdmin() || ! $this->isAdminBarShowing() ) {
 			return false;
 		}
 
@@ -71,7 +98,7 @@ class AdminToolbarService {
 		}
 
 		// Don't display when shop page is the same of the page on front.
-		if ( intval( get_option( 'page_on_front' ) ) === \SureCart::pages()->getId( 'shop' ) ) {
+		if ( $this->isShopPageOnFront() ) {
 			return false;
 		}
 
@@ -240,7 +267,7 @@ class AdminToolbarService {
 				mask-size: 18px;
 			}
 		</style>
-		
+
 		<?php
 		$product = sc_get_product();
 		$wp_admin_bar->add_node(

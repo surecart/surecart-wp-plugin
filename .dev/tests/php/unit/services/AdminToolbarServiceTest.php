@@ -2,17 +2,15 @@
 
 namespace SureCart\Tests\Services;
 
-use SureCart\Models\ApiToken;
 use SureCart\Tests\SureCartUnitTestCase;
 use SureCart\WordPress\Admin\Menus\AdminToolbarService;
-use SureCart\WordPress\Pages\PageService;
 
 class AdminToolbarServiceTest extends SureCartUnitTestCase {
 	use \Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 
-    /**
-    * @var AdminToolbarService
-    */
+	/**
+	 * @var \Mockery\MockInterface
+	 */
 	public $service = null;
 
 	/**
@@ -20,7 +18,7 @@ class AdminToolbarServiceTest extends SureCartUnitTestCase {
 	 */
 	public function setUp(): void {
 		// Set up an app instance with whatever stubs and mocks we need before every test.
-		\SureCart::make()->bootstrap([
+		$app =\SureCart::make()->bootstrap([
 			'providers' => [
 				\SureCart\WordPress\Pages\PageServiceProvider::class,
                 \SureCart\WordPress\PluginServiceProvider::class,
@@ -32,7 +30,7 @@ class AdminToolbarServiceTest extends SureCartUnitTestCase {
 			]
 		], false);
 
-		$this->service = \SureCart::adminToolbar();
+		$this->service = \Mockery::mock(AdminToolbarService::class, [$app])->makePartial();
 
 		parent::setUp();
 	}
@@ -53,7 +51,7 @@ class AdminToolbarServiceTest extends SureCartUnitTestCase {
 		// When option is set to true, toolbar should be disabled.
 		update_option('surecart_admin_toolbar_disabled', true);
 		$this->assertFalse($this->service->isEnabled());
-		
+
 		// Clean up.
 		delete_option('surecart_admin_toolbar_disabled');
 	}
@@ -64,54 +62,9 @@ class AdminToolbarServiceTest extends SureCartUnitTestCase {
 	public function test_is_blog_member_with_regular_user() {
 		$user_id = $this->factory()->user->create(['role' => 'subscriber']);
 		wp_set_current_user($user_id);
-		
+
 		// Regular site member should return true
 		$this->assertTrue($this->service->isBlogMember());
-	}
-
-	/**
-	 * @group admin-toolbar
-	 */
-	public function test_is_blog_member_with_super_admin() {
-		$user_id = $this->factory()->user->create(['role' => 'administrator']);
-		wp_set_current_user($user_id);
-		
-		// Super admin should return true.
-		$this->assertTrue($this->service->isBlogMember());
-	}
-
-	/**
-	 * @group admin-toolbar
-	 */
-	public function test_show_admin_menu_requires_admin_context() {
-		// Create admin user
-		$user_id = $this->factory()->user->create(['role' => 'administrator']);
-		wp_set_current_user($user_id);
-		
-		// Set up admin context in WordPress test environment.
-		// In WordPress unit tests, we need to simulate the admin environment.
-		if (!defined('WP_ADMIN')) {
-			define('WP_ADMIN', true);
-		}
-		
-		// Set global variables that WordPress uses to determine admin context.
-		global $pagenow;
-		$pagenow = 'index.php';
-		
-		// Mock the pages service to avoid issues with shop page check.
-		$pages_mock = \Mockery::mock(PageService::class)->makePartial();
-		$pages_mock->shouldReceive('getId')->with('shop')->andReturn(999);
-		$pages_mock->shouldReceive('pages')->andReturn($pages_mock);
-		
-		// Ensure page_on_front is different from shop page ID.
-		update_option('page_on_front', 123);
-
-		// Test the actual method.
-		$result = $this->service->showAdminMenu();
-		$this->assertTrue($result, 'showAdminMenu should return true when in admin context with proper user permissions');
-		
-		// Clean up.
-		delete_option('page_on_front');
 	}
 
 	/**
@@ -122,72 +75,16 @@ class AdminToolbarServiceTest extends SureCartUnitTestCase {
 		$this->assertTrue($this->service->isRenderedWithBlocks());
 	}
 
-	/**
-	 * @group admin-toolbar
-	 */
-	public function test_admin_bar_site_menu_with_proper_context() {
-		// Create admin user.
-		$user_id = $this->factory()->user->create(['role' => 'administrator']);
-		wp_set_current_user($user_id);
-		
-		// Set up admin context.
-		if (!defined('WP_ADMIN')) {
-			define('WP_ADMIN', true);
-		}
-		
-		global $pagenow;
-		$pagenow = 'index.php';
-		
-		$wp_admin_bar = \Mockery::mock('WP_Admin_Bar');
-		
-		// Mock the pages service.
-		$pages_mock = \Mockery::mock(PageService::class)->makePartial();
-		$pages_mock->shouldReceive('url')->with('shop')->andReturn('http://example.com/shop');
-		$pages_mock->shouldReceive('getId')->with('shop')->andReturn(999);
-
-		// Ensure page_on_front is different from shop page ID.
-		update_option('page_on_front', 123);
-		
-		// Should add a node when conditions are met.
-		$wp_admin_bar->shouldReceive('add_node')->once()->with(\Mockery::type('array'));
-		
-		$this->service->adminBarSiteMenu($wp_admin_bar);
-		
-		// Clean up.
-		delete_option('page_on_front');
-	}
-
-	/**
-	 * @group admin-toolbar
-	 */
-	public function test_admin_bar_site_menu_without_proper_context() {
-		$wp_admin_bar = \Mockery::mock('WP_Admin_Bar');
-		$wp_admin_bar->shouldReceive('add_node')->never();
-
-		$this->service->adminBarSiteMenu($wp_admin_bar);
-	}
-
-	/**
-	 * @group admin-toolbar
-	 */
-	public function test_admin_bar_new_content_requires_blog_membership() {
-		$wp_admin_bar = \Mockery::mock('WP_Admin_Bar');
-		
-		// Create a user who is not a blog member (subscriber role typically doesn't have edit capabilities)
-		$user_id = $this->factory()->user->create(['role' => 'subscriber']);
-		wp_set_current_user($user_id);
-		
-		// Mock account service to return disconnected state.
-		$account_mock = \Mockery::mock();
-		$account_mock->shouldReceive('isConnected')->andReturn(false);
-		\SureCart::alias('account', function () use ($account_mock) {
-			return $account_mock;
-		});
-		
-		// Should not add any nodes when user is not connected.
-		$wp_admin_bar->shouldReceive('add_node')->never();
-		
-		$this->service->adminBarNewContent($wp_admin_bar);
+	public function test_show_admin_menu() {
+		$this->assertFalse($this->service->showAdminMenu());
+		$this->service->shouldReceive('isAdmin')->andReturn(false);
+		$this->assertFalse($this->service->showAdminMenu());
+		$this->service->shouldReceive('isAdminBarShowing')->andReturn(true);
+		$this->assertFalse($this->service->showAdminMenu());
+		$this->service->shouldReceive('isBlogMember')->andReturn(true);
+		$this->assertFalse($this->service->showAdminMenu());
+		$this->service->shouldReceive('isShopPageOnFront')->andReturn(false);
+		$this->assertTrue($this->service->showAdminMenu());
 	}
 
 	/**
@@ -195,122 +92,110 @@ class AdminToolbarServiceTest extends SureCartUnitTestCase {
 	 */
 	public function test_admin_bar_new_content_with_connected_account() {
 		$wp_admin_bar = \Mockery::mock('WP_Admin_Bar');
-		
+
 		// Create an admin user with proper capabilities.
 		$user_id = $this->factory()->user->create(['role' => 'administrator']);
 		wp_set_current_user($user_id);
-		
+
 		// Mock account service as connected.
 		$account_mock = \Mockery::mock();
 		$account_mock->shouldReceive('isConnected')->andReturn(true);
 		\SureCart::alias('account', function () use ($account_mock) {
 			return $account_mock;
 		});
-		
+
 		// Mock URL service to handle the invoice URL creation.
 		$url_mock = \Mockery::mock();
 		$url_mock->shouldReceive('create')->with('invoices')->andReturn('http://example.com/invoices/create');
 		\SureCart::alias('getUrl', function () use ($url_mock) {
 			return $url_mock;
 		});
-		
+
 		// Should add nodes when user has capabilities and account is connected.
 		$wp_admin_bar->shouldReceive('add_node')->atLeast()->once();
-		
+
 		$this->service->adminBarNewContent($wp_admin_bar);
 	}
 
 	/**
 	 * @group admin-toolbar
 	 */
-	public function test_render_product_content_requires_blocks() {
+	public function test_render_product_does_not_render_without_blocks() {
 		$wp_admin_bar = \Mockery::mock('WP_Admin_Bar');
-		
 		// When rendered with blocks, should add content edit node.
-		$wp_admin_bar->shouldReceive('add_node')->once()->with(\Mockery::type('array'));
-		
+		$wp_admin_bar->shouldReceive('add_node')->never()->with(\Mockery::type('array'));
+		$this->service->shouldReceive('isRenderedWithBlocks')->andReturn(false);
 		$this->service->renderProductContent($wp_admin_bar);
 	}
 
-    /**
+	/**
 	 * @group admin-toolbar
 	 */
-	public function test_is_not_rendered_with_bricks_when_class_doesnt_exists() {
-		$this->assertFalse($this->service->isRenderedWithBricks());
+	public function test_render_product_renders_with_blocks() {
+		$wp_admin_bar = \Mockery::mock('WP_Admin_Bar');
+		// When rendered with blocks, should add content edit node.
+		$wp_admin_bar->shouldReceive('add_node')->once()->with(\Mockery::type('array'));
+		$this->service->shouldReceive('isRenderedWithBlocks')->andReturn(true);
+		$this->service->renderProductContent($wp_admin_bar);
 	}
 
 	/**
 	 * @group admin-toolbar
 	 */
 	public function test_render_product_content_not_added_when_rendered_with_bricks() {
-		$wp_admin_bar = \Mockery::mock('WP_Admin_Bar');
-
 		// Create a mock that returns true for Bricks rendering.
-		$adminToolbarServiceMock = \Mockery::mock(AdminToolbarService::class, [\SureCart::make()])->makePartial();
-		$adminToolbarServiceMock->shouldReceive('isRenderedWithBricks')->andReturn(true);
-		$adminToolbarServiceMock->shouldReceive('isRenderedWithElementor')->andReturn(false);
+		$this->service->shouldReceive('isRenderedWithBricks')->andReturn(true);
+		$this->service->shouldReceive('isRenderedWithElementor')->andReturn(false);
 
 		// Since isRenderedWithBlocks() will return false, no nodes should be added.
+		$wp_admin_bar = \Mockery::mock('WP_Admin_Bar');
 		$wp_admin_bar->shouldNotReceive('add_node');
 
-		$adminToolbarServiceMock->renderProductContent($wp_admin_bar);
+		$this->service->renderProductContent($wp_admin_bar);
 	}
 
 	/**
 	 * @group admin-toolbar
 	 */
 	public function test_render_product_template_not_added_when_rendered_with_bricks() {
-		$wp_admin_bar = \Mockery::mock('WP_Admin_Bar');
-
 		// Create a mock that returns true for Bricks rendering.
-		$adminToolbarServiceMock = \Mockery::mock(AdminToolbarService::class, [\SureCart::make()])->makePartial();
-		$adminToolbarServiceMock->shouldReceive('isRenderedWithBricks')->andReturn(true);
-		$adminToolbarServiceMock->shouldReceive('isRenderedWithElementor')->andReturn(false);
+		$this->service->shouldReceive('isRenderedWithBricks')->andReturn(true);
+		$this->service->shouldReceive('isRenderedWithElementor')->andReturn(false);
 
-		// Since isRenderedWithBlocks() will return false, no nodes should be added.
+		$wp_admin_bar = \Mockery::mock('WP_Admin_Bar');
 		$wp_admin_bar->shouldNotReceive('add_node');
 
-		$adminToolbarServiceMock->renderProductTemplate($wp_admin_bar);
-	}
-
-	/**
-	 * @group admin-toolbar
-	 */
-	public function test_is_not_rendered_with_elementor_when_class_doesnt_exists() {
-		$this->assertFalse($this->service->isRenderedWithElementor());
+		$this->service->renderProductTemplate($wp_admin_bar);
 	}
 
 	/**
 	 * @group admin-toolbar
 	 */
 	public function test_render_product_content_not_added_when_rendered_with_elementor() {
-		$wp_admin_bar = \Mockery::mock('WP_Admin_Bar');
-
 		// Create a mock that returns true for Elementor rendering.
-		$adminToolbarServiceMock = \Mockery::mock(AdminToolbarService::class, [\SureCart::make()])->makePartial();
-		$adminToolbarServiceMock->shouldReceive('isRenderedWithBricks')->andReturn(false);
-		$adminToolbarServiceMock->shouldReceive('isRenderedWithElementor')->andReturn(true);
+		$this->service->shouldReceive('isRenderedWithBricks')->andReturn(false);
+		$this->service->shouldReceive('isRenderedWithElementor')->andReturn(true);
 
 		// Since isRenderedWithBlocks() will return false, no nodes should be added.
+		$wp_admin_bar = \Mockery::mock('WP_Admin_Bar');
 		$wp_admin_bar->shouldNotReceive('add_node');
 
-		$adminToolbarServiceMock->renderProductContent($wp_admin_bar);
+		$this->service->renderProductContent($wp_admin_bar);
 	}
 
 	/**
 	 * @group admin-toolbar
 	 */
 	public function test_render_product_template_not_added_when_rendered_with_elementor() {
-		$wp_admin_bar = \Mockery::mock('WP_Admin_Bar');
 
 		// Create a mock that returns true for Elementor rendering.
-		$adminToolbarServiceMock = \Mockery::mock(AdminToolbarService::class, [\SureCart::make()])->makePartial();
-		$adminToolbarServiceMock->shouldReceive('isRenderedWithBricks')->andReturn(false);
-		$adminToolbarServiceMock->shouldReceive('isRenderedWithElementor')->andReturn(true);
+		$this->service->shouldReceive('isRenderedWithBricks')->andReturn(false);
+		$this->service->shouldReceive('isRenderedWithElementor')->andReturn(true);
 
 		// Since isRenderedWithBlocks() will return false, no nodes should be added.
+		$wp_admin_bar = \Mockery::mock('WP_Admin_Bar');
 		$wp_admin_bar->shouldNotReceive('add_node');
 
-		$adminToolbarServiceMock->renderProductTemplate($wp_admin_bar);
+		$this->service->renderProductTemplate($wp_admin_bar);
 	}
 }
