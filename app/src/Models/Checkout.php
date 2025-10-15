@@ -336,6 +336,24 @@ class Checkout extends Model {
 	}
 
 	/**
+	 * Get the display checkout fees amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getCheckoutFeesDisplayAmountAttribute() {
+		return ! empty( $this->checkout_fees_amount ) ? Currency::format( $this->checkout_fees_amount, $this->currency ) : '';
+	}
+
+	/**
+	 * Get the display shipping fees amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getShippingFeesDisplayAmountAttribute() {
+		return ! empty( $this->shipping_fees_amount ) ? Currency::format( $this->shipping_fees_amount, $this->currency ) : '';
+	}
+
+	/**
 	 * Create a new model
 	 *
 	 * @param array $attributes Attributes to create.
