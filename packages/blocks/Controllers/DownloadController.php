@@ -134,14 +134,7 @@ class DownloadController extends BaseController {
 						[
 							'heading'    => __( 'Downloads', 'surecart' ),
 							'customerId' => $purchase->customer->id ?? '',
-							'downloads'  => array_values(
-								array_filter(
-									$purchase->product->downloads->data ?? [],
-									function( $download ) {
-										return ! $download->archived;
-									}
-								)
-							),
+							'productId'  => $purchase->product->id ?? '',
 						]
 					)->render()
 				);

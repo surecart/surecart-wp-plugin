@@ -30,6 +30,9 @@ class ProductPostTypeService {
 		// register meta.
 		add_action( 'init', array( $this, 'registerMeta' ) );
 
+		// Add thumbnail support for attachments.
+		add_action( 'init', array( $this, 'addThumbnailSupportForAttachments' ) );
+
 		// Hide trash button in block editor.
 		add_action( 'enqueue_block_editor_assets', array( $this, 'modifyProductContentEditor' ) );
 
@@ -115,6 +118,15 @@ class ProductPostTypeService {
 			// validate FSE template and return single if invalid.
 			add_filter( 'template_include', array( $this, 'validateFSETemplate' ), 10, 1 );
 		}
+	}
+
+	/**
+	 * Add thumbnail support for attachments.
+	 *
+	 * @return void
+	 */
+	public function addThumbnailSupportForAttachments() {
+		add_post_type_support( 'attachment', 'thumbnail' );
 	}
 
 	/**
@@ -307,11 +319,12 @@ class ProductPostTypeService {
 	 * @param array $post The post.
 	 * @param array $attachment The attachment.
 	 *
-	 * @return void
+	 * @return array
 	 */
 	public function saveAttachmentFields( $post, $attachment ) {
 		$attachid = $post['ID']; // yes this is actually an array here.
 		update_post_meta( $attachid, 'sc_variant_option', $attachment['sc_variant_option'] ?? '' );
+
 		return $post;
 	}
 
@@ -331,6 +344,7 @@ class ProductPostTypeService {
 			'value'    => get_post_meta( $post->ID, 'sc_variant_option', true ),
 			'helps'    => esc_html__( 'Enter the variant name as it appears in Option Values (e.g., Black, White, Light Green).', 'surecart' ) . ' <a href="https://surecart.com/docs/variant-swatches/" target="_blank">' . esc_html__( 'Learn More.', 'surecart' ) . '</a>',
 		);
+
 		return $form_fields;
 	}
 
@@ -564,6 +578,9 @@ class ProductPostTypeService {
 			)
 		);
 
+		/*
+		* @deprecated, we use gallery instead to store the product media informations.
+		*/
 		register_meta(
 			'post',
 			'sc_variant_option',
@@ -1185,7 +1202,7 @@ class ProductPostTypeService {
 
 		$gallery_image_urls = ! empty( $product->gallery ) ? array_map(
 			function ( $media ) {
-				return $media->attributes()->src;
+				return $media->attributes()->src ?? '';
 			},
 			$product->gallery
 		) : '';
@@ -1237,7 +1254,7 @@ class ProductPostTypeService {
 	 */
 	public function renderProductSeoMeta( $product ) {
 		$image_attributes  = $product->featured_image ? $product->featured_image->attributes( apply_filters( 'surecart/og:image/size', 'full' ) ) : null;
-		$product_image_url = $image_attributes ? $image_attributes->src : '';
+		$product_image_url = $image_attributes ? ( $image_attributes->src ?? '' ) : '';
 		?>
 
 		<meta name="description" content="<?php echo esc_attr( sanitize_text_field( $product->meta_description ) ); ?>">

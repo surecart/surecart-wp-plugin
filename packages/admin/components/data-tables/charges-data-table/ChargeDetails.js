@@ -246,6 +246,18 @@ export default ({ charge, onRequestClose }) => {
 						</ScLineItem>
 					</>
 				)}
+				{charge?.disputed_amount && (
+					<ScLineItem
+						style={{ color: 'var(--sc-color-warning-500)' }}
+					>
+						<span slot="description">
+							{__('Disputed Amount', 'surecart')}
+						</span>
+						<span slot="price">
+							{charge?.disputed_display_amount}
+						</span>
+					</ScLineItem>
+				)}
 			</div>
 		</ScDrawer>
 	);

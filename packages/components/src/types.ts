@@ -625,6 +625,7 @@ export interface Charge extends Object {
   checkout: string | Checkout;
   payment_method: string | PaymentMethod;
   refunded_amount: number;
+  disputed_amount: number;
   status: 'pending' | 'succeeded' | 'failed';
   updated_at: number;
   updated_at_date: string;
