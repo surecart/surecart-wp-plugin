@@ -6,7 +6,13 @@ import { useState, useEffect } from '@wordpress/element';
 import { _n } from '@wordpress/i18n';
 import apiFetch from '@wordpress/api-fetch';
 
-export default ({ countryIsoCode, countryName, value, onChange }) => {
+export default ({
+	countryIsoCode,
+	countryName,
+	statesCount = 0,
+	value,
+	onChange,
+}) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [fetching, setFetching] = useState(false);
 	const [country, setCountry] = useState(false);
@@ -35,8 +41,6 @@ export default ({ countryIsoCode, countryName, value, onChange }) => {
 			setFetching(false);
 		}
 	};
-
-	const territoriesCount = territories.length || 0;
 
 	// when the country is selected, set states as empty array
 	const onSelectCountry = (checked) => {
@@ -70,7 +74,7 @@ export default ({ countryIsoCode, countryName, value, onChange }) => {
 			const newStates = [...(value?.states || []), region];
 
 			// If all states are selected, set to empty array
-			if (newStates.length === territoriesCount) {
+			if (newStates.length === statesCount) {
 				onChange({
 					country: countryIsoCode,
 					states: [],
@@ -110,7 +114,7 @@ export default ({ countryIsoCode, countryName, value, onChange }) => {
 				<CheckboxControl
 					indeterminate={
 						value?.states?.length > 0 &&
-						value?.states?.length < territoriesCount
+						value?.states?.length < statesCount
 					}
 					label={countryName}
 					css={css`
@@ -120,34 +124,35 @@ export default ({ countryIsoCode, countryName, value, onChange }) => {
 					checked={
 						value?.country === countryIsoCode &&
 						(value?.states?.length === 0 ||
-							value?.states?.length === territoriesCount)
+							value?.states?.length === statesCount)
 					}
 					onChange={onSelectCountry}
 				/>
-
-				<ScButton
-					type="text"
-					onClick={() => setIsOpen(!isOpen)}
-					css={css`
-						&::part(base) {
-							font-size: 400;
-						}
-					`}
-				>
-					{sprintf(
-						_n(
-							'%d region',
-							'%d regions',
-							territoriesCount,
-							'surecart'
-						),
-						territoriesCount
-					)}
-					<ScIcon
-						slot="suffix"
-						name={isOpen ? 'chevron-up' : 'chevron-down'}
-					/>
-				</ScButton>
+				{statesCount > 0 && (
+					<ScButton
+						type="text"
+						onClick={() => setIsOpen(!isOpen)}
+						css={css`
+							&::part(base) {
+								font-size: 400;
+							}
+						`}
+					>
+						{sprintf(
+							_n(
+								'%d region',
+								'%d regions',
+								statesCount,
+								'surecart'
+							),
+							statesCount
+						)}
+						<ScIcon
+							slot="suffix"
+							name={isOpen ? 'chevron-up' : 'chevron-down'}
+						/>
+					</ScButton>
+				)}
 			</div>
 
 			{isOpen && !fetching && (

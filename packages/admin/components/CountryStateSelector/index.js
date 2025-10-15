@@ -115,6 +115,7 @@ export default ({ value, onChange }) => {
 						onChange={(newValue) =>
 							onChangeSelection(newValue, country?.iso_code)
 						}
+						statesCount={country?.states_count}
 					/>
 				))}
 			</div>
