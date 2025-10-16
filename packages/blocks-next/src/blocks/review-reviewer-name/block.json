@@ -14,6 +14,12 @@
 		"surecart/sticky-purchase"
 	],
 	"usesContext": ["reviewId", "review"],
+	"attributes": {
+		"format": {
+			"type": "string",
+			"default": "display_name"
+		}
+	},
 	"example": {},
 	"supports": {
 		"interactivity": true,

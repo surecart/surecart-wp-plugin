@@ -1,3 +1,3 @@
 <div <?php echo wp_kses_data( get_block_wrapper_attributes() ); ?>>
-	<?php echo esc_html( $customer->name ?? $customer->email ?? '' ); ?>
+	<?php echo esc_html( $formatted_name ); ?>
 </div>

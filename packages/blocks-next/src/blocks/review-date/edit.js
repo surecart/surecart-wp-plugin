@@ -74,7 +74,6 @@ export default ({
 	const postTypeSlug = 'sc_product';
 
 	const {
-		postType,
 		siteFormat = dateSettings.formats.date,
 		siteTimeFormat = dateSettings.formats.time,
 	} = useSelect(
