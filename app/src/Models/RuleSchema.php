@@ -22,6 +22,13 @@ class RuleSchema extends Model {
 	/**
 	 * Rule Schema.
 	 */
+	protected function getIdAttribute() {
+		return str_replace( 'auto_fee__', '', $this->schema_id );
+	}
+
+	/**
+	 * Rule Schema.
+	 */
 	protected function getRuleSchemaAttribute() {
 		if ( empty( $this->attributes ) || empty( $this->attributes['attributes'] ) ) {
 			return [];
