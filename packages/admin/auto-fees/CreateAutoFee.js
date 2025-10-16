@@ -48,7 +48,7 @@ export default ({ id, onCreateAutoFee }) => {
 				{
 					...templates?.[currentTemplate],
 					name: autoFeeName,
-					fee_target: autoFeeTarget,
+					...(autoFeeTarget && { fee_target: autoFeeTarget }),
 					start_at: Date.parse(getDate(new Date())) / 1000,
 				},
 				{ throwOnError: true }
