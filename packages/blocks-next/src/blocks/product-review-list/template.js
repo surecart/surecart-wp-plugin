@@ -113,7 +113,8 @@ export const TEMPLATE = [
 											className: 'is-style-plus-sign',
 											style: {
 												spacing: {
-													blockGap: 'var:preset|spacing|20',
+													blockGap:
+														'var:preset|spacing|20',
 													margin: {
 														right: '0',
 														left: '0',
@@ -371,7 +372,8 @@ export const TEMPLATE = [
 												{
 													style: {
 														spacing: {
-															blockGap: 'var:preset|spacing|20',
+															blockGap:
+																'var:preset|spacing|20',
 														},
 													},
 													layout: {
@@ -391,8 +393,10 @@ export const TEMPLATE = [
 																	},
 																},
 																typography: {
-																	fontStyle: 'normal',
-																	fontWeight: '500',
+																	fontStyle:
+																		'normal',
+																	fontWeight:
+																		'500',
 																},
 															},
 														},
@@ -400,27 +404,35 @@ export const TEMPLATE = [
 													[
 														'surecart/review-verified-badge',
 														{
-															show_label: false,
+															show_label: true,
 															label: 'Verified Buyer',
 															icon_size: 16,
 															style: {
 																typography: {
-																	fontStyle: 'normal',
-																	fontWeight: '400',
+																	fontStyle:
+																		'normal',
+																	fontWeight:
+																		'400',
 																},
 																spacing: {
-																	blockGap: 'var:preset|spacing|30',
+																	blockGap:
+																		'var:preset|spacing|30',
 																},
 																layout: {
-																	selfStretch: 'fit',
-																	flexSize: null,
+																	selfStretch:
+																		'fit',
+																	flexSize:
+																		null,
 																},
 															},
 															layout: {
 																type: 'flex',
-																justifyContent: 'center',
-																verticalAlignment: 'center',
-																orientation: 'horizontal',
+																justifyContent:
+																	'center',
+																verticalAlignment:
+																	'center',
+																orientation:
+																	'horizontal',
 															},
 														},
 													],
@@ -429,7 +441,8 @@ export const TEMPLATE = [
 											[
 												'surecart/review-date',
 												{
-													datetime: '2025-10-02T09:37:00.225Z',
+													datetime:
+														'2025-10-02T09:37:00.225Z',
 													format: 'human-diff',
 												},
 											],

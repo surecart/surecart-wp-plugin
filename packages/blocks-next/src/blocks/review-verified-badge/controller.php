@@ -15,10 +15,8 @@ if ( empty( $block->context['review']->verified ) ) {
 	return;
 }
 
-// Ensure attributes exist and provide sensible defaults.
-$attributes['icon_color'] = $attributes['icon_color'] ?? '';
-$attributes['icon_size']  = $attributes['icon_size'] ?? 20;
-$attributes['show_label'] = $attributes['show_label'] ?? true;
-$attributes['label']      = $attributes['label'] ?? '';
+$show_label = $attributes['show_label'] ?? true;
+$label      = $attributes['label'] ?? '';
+$icon_size  = isset( $attributes['icon_size'] ) ? (int) $attributes['icon_size'] : 20;
 
 return 'file:./view.php';

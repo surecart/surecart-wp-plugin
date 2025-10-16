@@ -1,12 +1,8 @@
-<?php
-$show_label = $attributes['show_label'] ?? true;
-$label      = $attributes['label'] ?? '';
-$icon_size  = isset( $attributes['icon_size'] ) ? (int) $attributes['icon_size'] : 20;
-?>
-
 <div <?php echo wp_kses_data( get_block_wrapper_attributes() ); ?>>
 	<?php if ( ! empty( $show_label ) ) : ?>
-		<span class="wc-block-review-verified-badge"><?php echo esc_html( $label ?: __( 'Verified Buyer', 'woocommerce' ) ); ?></span>
+		<span class="wc-block-review-verified-badge">
+			<?php echo $label ? esc_html( $label ) : esc_html__( 'Verified Buyer', 'surecart' ); ?>
+		</span>
 	<?php endif; ?>
 
 	<?php

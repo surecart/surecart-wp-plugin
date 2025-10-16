@@ -56,7 +56,7 @@ return [
 <div class="wp-block-group"><!-- wp:group {"style":{"spacing":{"blockGap":"var:preset|spacing|20"}},"layout":{"type":"flex","flexWrap":"nowrap"}} -->
 <div class="wp-block-group"><!-- wp:surecart/review-reviewer-name {"style":{"spacing":{"padding":{"top":"0","bottom":"0"}},"typography":{"fontStyle":"normal","fontWeight":"500"}}} /-->
 
-<!-- wp:surecart/review-verified-badge {"show_label":false,"label":"Verified Buyer","icon_size":16,"style":{"typography":{"fontStyle":"normal","fontWeight":"400"},"spacing":{"blockGap":"var:preset|spacing|30"},"layout":{"selfStretch":"fit","flexSize":null}},"layout":{"type":"flex","justifyContent":"center","verticalAlignment":"center","orientation":"horizontal"}} /--></div>
+<!-- wp:surecart/review-verified-badge {"show_label":true,"label":"Verified Buyer","icon_size":16,"style":{"typography":{"fontStyle":"normal","fontWeight":"400"},"spacing":{"blockGap":"var:preset|spacing|30"},"layout":{"selfStretch":"fit","flexSize":null}},"layout":{"type":"flex","justifyContent":"center","verticalAlignment":"center","orientation":"horizontal"}} /--></div>
 <!-- /wp:group -->
 
 <!-- wp:surecart/review-date {"datetime":"2025-10-02T09:37:00.225Z","format":"human-diff"} /--></div>
