@@ -1,3 +1,6 @@
+/**
+ * WordPress dependencies.
+ */
 import { __ } from '@wordpress/i18n';
 import {
 	useBlockProps,
@@ -8,8 +11,11 @@ import {
 	UnitControl as __stableUnitControl,
 	__experimentalUnitControl,
 } from '@wordpress/components';
+
+/**
+ * Internal dependencies.
+ */
 import { TEMPLATE } from './template';
-// import ProductListInspectorControls from './inspector-controls';
 import ListToolbar from '../../utilities/patterns-toolbar';
 
 /**

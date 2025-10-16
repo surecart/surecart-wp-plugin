@@ -1,22 +1,25 @@
 <?php
+
 $product = sc_get_product();
+
 if ( ! $product || empty( $product->total_reviews ) ) {
 	return '';
 }
 
 $params        = \SureCart::block()->urlParams( 'reviews' );
 $rating_filter = $params->getArg( 'rating' ) ?? '';
-
-$options = [];
+$options       = [];
 
 // Generate options for each star rating (5 to 1).
 for ( $star = 5; $star >= 1; $star-- ) {
 	$count = $product->reviews_breakdown->$star ?? 0;
 
 	// Create label with count.
-	$star_text = 1 === $star
-		? esc_html__( '1 Star', 'surecart' )
-		: sprintf( esc_html__( '%d Stars', 'surecart' ), $star );
+	$star_text = sprintf(
+		// translators: %d is the number of stars.
+		esc_html( _n( '%d Star', '%d Stars', $star, 'surecart' ) ),
+		$star
+	);
 
 	$label = sprintf( '%s (%d)', $star_text, $count );
 
@@ -29,9 +32,4 @@ for ( $star = 5; $star >= 1; $star-- ) {
 	];
 }
 
-// get the currently selected option.
-$selected_options = array_filter( $options, fn( $option ) => $option['checked'] );
-$selected_option  = array_shift( $selected_options ) ?? $options[0];
-
-// return the view.
 return 'file:./view.php';

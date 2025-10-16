@@ -14,48 +14,11 @@ import {
 import { Button, Placeholder } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 
-const BLANK = [
-	[
-		'surecart/product-review-template',
-		{
-			style: {
-				spacing: { blockGap: '30px' },
-			},
-			layout: {
-				type: 'grid',
-				columnCount: 4,
-			},
-		},
-	],
-	[
-		'surecart/product-review-list-no-reviews',
-		{},
-		[
-			[
-				'core/paragraph',
-				{
-					placeholder: __(
-						'Add text or blocks that will display when a query returns no reviews.',
-						'surecart'
-					),
-					align: 'left',
-					content: __('No reviews yet, write one now?', 'surecart'),
-				},
-			],
-			[
-				'surecart/review-add-button',
-				{
-					label: __('Write a review', 'surecart'),
-				},
-			],
-		],
-	],
-];
-
 /**
  * Internal dependencies
  */
 import { useBlockNameForPatterns } from '../utils';
+import { TEMPLATE } from './template';
 
 export default function QueryPlaceholder({
 	attributes,
@@ -117,7 +80,7 @@ export default function QueryPlaceholder({
 					onClick={() => {
 						replaceInnerBlocks(
 							clientId,
-							createBlocksFromInnerBlocksTemplate(BLANK),
+							createBlocksFromInnerBlocksTemplate(TEMPLATE),
 							false
 						);
 					}}

@@ -8,22 +8,234 @@ export const TEMPLATE = [
 			level: 2,
 		},
 	],
-	['surecart/product-review-summary'],
-	['surecart/product-review-list-content-header'],
 	[
-		'surecart/product-review-list-filter-tags',
+		'surecart/product-review-summary',
 		{},
-		[['surecart/product-review-list-filter-tag', {}]],
-		['surecart/product-review-list-sort', {}],
+		[
+			[
+				'core/group',
+				{
+					style: {
+						color: {
+							background: '#f7f9fb',
+						},
+						spacing: {
+							padding: {
+								top: 'var:preset|spacing|60',
+								bottom: 'var:preset|spacing|60',
+								left: 'var:preset|spacing|60',
+								right: 'var:preset|spacing|60',
+							},
+							margin: {
+								bottom: 'var:preset|spacing|50',
+							},
+						},
+					},
+					layout: {
+						type: 'flex',
+						flexWrap: 'nowrap',
+					},
+				},
+				[
+					[
+						'core/group',
+						{
+							style: {
+								spacing: {
+									padding: {
+										top: 'var:preset|spacing|50',
+										bottom: 'var:preset|spacing|50',
+										left: 'var:preset|spacing|50',
+										right: 'var:preset|spacing|50',
+									},
+									blockGap: 'var:preset|spacing|30',
+									layout: {
+										selfStretch: 'fill',
+										flexSize: null,
+									},
+								},
+							},
+							layout: {
+								type: 'flex',
+								flexWrap: 'nowrap',
+								orientation: 'vertical',
+							},
+						},
+						[
+							[
+								'surecart/product-average-rating',
+								{
+									style: {
+										spacing: {
+											blockGap: 'var:preset|spacing|20',
+										},
+										layout: {
+											selfStretch: 'fit',
+											flexSize: null,
+										},
+									},
+									layout: {
+										type: 'flex',
+										justifyContent: 'left',
+										orientation: 'vertical',
+									},
+								},
+								[
+									[
+										'surecart/product-average-rating-value',
+										{
+											className: 'is-style-slash',
+										},
+									],
+									[
+										'surecart/product-average-rating-stars',
+										{},
+									],
+								],
+							],
+							[
+								'core/group',
+								{
+									style: {
+										spacing: {
+											blockGap: 'var:preset|spacing|20',
+										},
+									},
+									layout: {
+										type: 'flex',
+										flexWrap: 'nowrap',
+									},
+								},
+								[
+									[
+										'surecart/product-total-rating',
+										{
+											className: 'is-style-plus-sign',
+											style: {
+												spacing: {
+													blockGap: 'var:preset|spacing|20',
+													margin: {
+														right: '0',
+														left: '0',
+													},
+													padding: {
+														right: '0',
+														left: '0',
+													},
+												},
+											},
+										},
+									],
+								],
+							],
+						],
+					],
+					[
+						'surecart/review-breakdown',
+						{
+							className: 'is-style-default',
+							style: {
+								layout: {
+									selfStretch: 'fill',
+									flexSize: null,
+								},
+							},
+							layout: {
+								type: 'flex',
+								justifyContent: 'left',
+								orientation: 'horizontal',
+							},
+						},
+					],
+				],
+			],
+		],
+	],
+	[
+		'surecart/product-review-list-content-header',
+		{
+			style: {
+				border: {
+					bottom: {
+						color: '#eeeeee',
+						width: '1px',
+					},
+				},
+				spacing: {
+					padding: {
+						top: 'var:preset|spacing|40',
+						bottom: 'var:preset|spacing|40',
+					},
+					margin: {
+						top: '0',
+						bottom: '0',
+					},
+				},
+			},
+			layout: {
+				type: 'flex',
+				orientation: 'horizontal',
+				verticalAlignment: 'top',
+				flexWrap: 'nowrap',
+				justifyContent: 'space-between',
+			},
+		},
+		[
+			[
+				'surecart/product-review-list-sidebar-toggle',
+				{
+					label: 'Filters',
+				},
+			],
+			[
+				'core/group',
+				{
+					layout: {
+						type: 'constrained',
+					},
+				},
+				[
+					[
+						'surecart/review-add-button',
+						{
+							width: 100,
+							className: 'is-style-fill',
+							style: {
+								elements: {
+									link: {
+										color: {
+											text: 'var:preset|color|white',
+										},
+									},
+								},
+								spacing: {
+									blockGap: 'var:preset|spacing|30',
+								},
+							},
+							backgroundColor: 'surecart',
+							textColor: 'white',
+						},
+					],
+				],
+			],
+		],
 	],
 	[
 		'surecart/product-review-list-content',
-		{},
+		{
+			style: {
+				spacing: {
+					margin: {
+						top: 'var:preset|spacing|50',
+						bottom: 'var:preset|spacing|50',
+					},
+				},
+			},
+		},
 		[
 			[
 				'surecart/product-review-list-sidebar',
 				{
-					label: 'Filters',
 					style: {
 						layout: {
 							selfStretch: 'fixed',
@@ -31,12 +243,51 @@ export const TEMPLATE = [
 							type: 'flex',
 							orientation: 'vertical',
 						},
+						position: {
+							type: 'sticky',
+							top: '0px',
+						},
 					},
 					layout: {
 						type: 'flex',
 						orientation: 'vertical',
 					},
 				},
+				[
+					[
+						'surecart/product-review-list-filter-checkboxes',
+						{
+							layout: {
+								type: 'flex',
+								orientation: 'vertical',
+								verticalAlignment: 'top',
+								flexWrap: 'nowrap',
+							},
+						},
+						[
+							[
+								'surecart/product-review-list-filter-checkboxes-label',
+								{},
+							],
+							[
+								'surecart/product-review-list-filter-checkboxes-template',
+								{
+									style: {
+										spacing: {
+											blockGap: 'var:preset|spacing|20',
+										},
+									},
+								},
+								[
+									[
+										'surecart/product-review-list-filter-checkbox',
+										{},
+									],
+								],
+							],
+						],
+					],
+				],
 			],
 			[
 				'core/group',
@@ -120,8 +371,7 @@ export const TEMPLATE = [
 												{
 													style: {
 														spacing: {
-															blockGap:
-																'var:preset|spacing|20',
+															blockGap: 'var:preset|spacing|20',
 														},
 													},
 													layout: {
@@ -141,10 +391,8 @@ export const TEMPLATE = [
 																	},
 																},
 																typography: {
-																	fontStyle:
-																		'normal',
-																	fontWeight:
-																		'500',
+																	fontStyle: 'normal',
+																	fontWeight: '500',
 																},
 															},
 														},
@@ -152,44 +400,27 @@ export const TEMPLATE = [
 													[
 														'surecart/review-verified-badge',
 														{
+															show_label: false,
 															label: 'Verified Buyer',
-															icon_size: 17,
+															icon_size: 16,
 															style: {
 																typography: {
-																	fontStyle:
-																		'normal',
-																	fontWeight:
-																		'400',
-																},
-																color: {
-																	text: '#6b7280',
-																},
-																elements: {
-																	link: {
-																		color: {
-																			text: '#6b7280',
-																		},
-																	},
+																	fontStyle: 'normal',
+																	fontWeight: '400',
 																},
 																spacing: {
-																	blockGap:
-																		'var:preset|spacing|30',
+																	blockGap: 'var:preset|spacing|30',
 																},
 																layout: {
-																	selfStretch:
-																		'fit',
-																	flexSize:
-																		null,
+																	selfStretch: 'fit',
+																	flexSize: null,
 																},
 															},
 															layout: {
 																type: 'flex',
-																justifyContent:
-																	'center',
-																verticalAlignment:
-																	'center',
-																orientation:
-																	'horizontal',
+																justifyContent: 'center',
+																verticalAlignment: 'center',
+																orientation: 'horizontal',
 															},
 														},
 													],
@@ -198,8 +429,7 @@ export const TEMPLATE = [
 											[
 												'surecart/review-date',
 												{
-													datetime:
-														'2025-10-02T09:37:00.225Z',
+													datetime: '2025-10-02T09:37:00.225Z',
 													format: 'human-diff',
 												},
 											],
@@ -253,7 +483,6 @@ export const TEMPLATE = [
 					[
 						'surecart/review-add-button',
 						{
-							label: 'Write a Review',
 							width: 100,
 							className: 'is-style-fill',
 							style: {

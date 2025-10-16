@@ -1,19 +1,19 @@
 /**
- * WordPress dependencies.
+ * External dependencies
  */
 import { registerBlockType } from '@wordpress/blocks';
+import { homeButton as icon } from '@wordpress/icons';
 
 /**
- * Internal dependencies.
+ * Internal dependencies
  */
 import edit from './edit';
 import metadata from './block.json';
 
 /**
- * Block style.
+ * Every block starts by registering a new block type definition.
  */
-import './style.scss';
-
 registerBlockType(metadata.name, {
+	icon,
 	edit,
 });

@@ -1,20 +1,14 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
-	"name": "surecart/product-review-list-sort",
-	"title": "Sort (Dropdown)",
-	"description": "Display the product review sort by rating.",
+	"name": "surecart/product-review-list-filter-checkbox",
+	"title": "Checkbox",
+	"description": "Display the filter checkbox.",
 	"version": "1.0.0",
 	"category": "surecart-product-page",
-	"icon": "media-interactive",
 	"example": {},
-	"ancestor": ["surecart/product-review-list"],
-	"attributes": {
-		"label": {
-			"type": "string"
-		}
-	},
-	"usesContext": ["postId"],
+	"usesContext": ["surecart/checkbox/name"],
+	"ancestor": ["surecart/product-review-list-filter-checkboxes-template"],
 	"supports": {
 		"interactivity": true,
 		"spacing": {
@@ -24,17 +18,17 @@
 		"typography": {
 			"fontSize": true,
 			"lineHeight": true,
+			"__experimentalFontStyle": true,
 			"__experimentalFontWeight": true
 		},
 		"color": {
 			"text": true,
-			"background": false,
+			"background": true,
 			"enableContrastChecker": true
 		}
 	},
-	"render": "file:./view.php",
 	"textdomain": "surecart",
 	"editorScript": "file:./index.js",
-	"style": ["file:./style-index.css", "surecart-button", "surecart-checkbox"],
-	"viewScriptModule": "@surecart/dropdown"
+	"render": "file:./view.php",
+	"style": ["surecart-radio-checkbox"]
 }
