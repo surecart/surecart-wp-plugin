@@ -1,18 +1,3 @@
-<?php
-/**
- * Product Review List Sidebar Block Template.
- *
- * @package SureCart
- */
-
-$review_count = 0;
-if ( ! empty( $block->context['postId'] ) ) {
-	$product = \SureCart\Models\Product::with( [ 'reviews' ] )->find( $block->context['postId'] );
-	if ( $product && isset( $product->reviews_count ) ) {
-		$review_count = $product->reviews_count;
-	}
-}
-?>
 <div
 	<?php
 	echo wp_kses_data(
@@ -77,7 +62,7 @@ if ( ! empty( $block->context['postId'] ) ) {
 				>
 					<?php
 						// translators: %d is the current count of reviews.
-						printf( esc_html__( 'View Results (%d)', 'surecart' ), (int) $review_count );
+						printf( esc_html__( 'View Results (%d)', 'surecart' ), (int) $product->total_reviews ?? 0 );
 					?>
 				</button>
 			</div>
