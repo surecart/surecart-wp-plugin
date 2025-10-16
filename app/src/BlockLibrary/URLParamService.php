@@ -170,6 +170,28 @@ class URLParamService {
 	}
 
 	/**
+	 * Get the star rating arguments.
+	 *
+	 * @param  string $instance_id Unique instance ID.
+	 *
+	 * @return array
+	 */
+	public function getAllStarArgs( $instance_id = '' ) {
+		$instance_id = $instance_id ? $instance_id : $this->instance_id;
+		$args        = $this->getArgs( $instance_id ); // Use getArgs to get filtered arguments.
+		$star_args   = [];
+
+		foreach ( $args as $key => $value ) {
+			$star_name = $this->getName( $key, $instance_id );
+			if ( 'ratings' === $star_name ) {
+				$star_args[ $star_name ] = $value;
+			}
+		}
+
+		return $star_args;
+	}
+
+	/**
 	 * Get the current page.
 	 *
 	 * @param  string $instance_id Unique instance ID.
@@ -302,6 +324,33 @@ class URLParamService {
 		// gather keys to remove using existing taxonomies keys.
 		foreach ( $existing_filters as $taxonomy_key => $terms ) {
 			$keys_to_remove[] = $this->getKey( $taxonomy_key, $instance_id );
+		}
+
+		// return the new URL without pagination for filtering.
+		return remove_query_arg( $keys_to_remove, $this->url );
+	}
+
+	/**
+	 * Remove all star rating arguments from the URL.
+	 *
+	 * @param  string $instance_id Unique instance ID.
+	 */
+	public function removeAllStarArgs( $instance_id = '' ) {
+		// get the instance ID.
+		$instance_id = $instance_id ? $instance_id : $this->instance_id;
+
+		// get the existing filters.
+		$existing_filters = $this->getAllStarArgs( $instance_id );
+
+		// prepare keys to remove.
+		$keys_to_remove = [
+			$this->getKey( $this->pagination_key, $instance_id ),
+			$this->getKey( $this->search_key, $instance_id ),
+		];
+
+		// gather keys to remove using existing star keys.
+		foreach ( $existing_filters as $star_key => $terms ) {
+			$keys_to_remove[] = $this->getKey( $star_key, $instance_id );
 		}
 
 		// return the new URL without pagination for filtering.

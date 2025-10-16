@@ -256,6 +256,37 @@ export const TEMPLATE = [
 				},
 				[
 					[
+						'surecart/product-review-list-filter-tags',
+						{
+							layout: {
+								type: 'flex',
+								orientation: 'vertical',
+								verticalAlignment: 'top',
+								flexWrap: 'nowrap',
+							},
+						},
+						[
+							[
+								'surecart/product-review-list-filter-tags-label',
+								{},
+							],
+							[
+								'surecart/product-review-list-filter-tags-template',
+								{},
+								[
+									[
+										'surecart/product-review-list-filter-tag',
+										{},
+									],
+								],
+							],
+							[
+								'surecart/product-review-list-filter-tags-clear-all',
+								{},
+							],
+						],
+					],
+					[
 						'surecart/product-review-list-filter-checkboxes',
 						{
 							layout: {
