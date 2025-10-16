@@ -4,12 +4,12 @@
 		get_block_wrapper_attributes(
 			[
 				'role'             => 'list',
-				'aria-describedby' => 'filter-checkboxes-label-' . $block->context['taxonomySlug'] . '-' . $sc_query_id,
+				'aria-describedby' => 'filter-checkboxes-label-ratings-' . $sc_query_id,
 			]
 		)
 	);
 	?>
-	<?php echo wp_kses_data( wp_interactivity_data_wp_context( [ 'collections' => $options ] ) ); ?>
+	<?php echo wp_kses_data( wp_interactivity_data_wp_context( [ 'reviews-ratings' => $options ] ) ); ?>
 >
 <?php
 foreach ( $options as $checkbox ) :

@@ -9,6 +9,8 @@
 		)
 	);
 	?>
+	data-wp-interactive='{ "namespace": "surecart/product-review" }'
+	data-wp-router-region="<?php echo esc_attr( 'product-reviews-' . $product->id ); ?>"
 >
 	<?php echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 </div>

@@ -183,7 +183,7 @@ class URLParamService {
 
 		foreach ( $args as $key => $value ) {
 			$star_name = $this->getName( $key, $instance_id );
-			if ( 'ratings' === $star_name ) {
+			if ( 'reviews-ratings' === $star_name ) {
 				$star_args[ $star_name ] = $value;
 			}
 		}
@@ -352,6 +352,8 @@ class URLParamService {
 		foreach ( $existing_filters as $star_key => $terms ) {
 			$keys_to_remove[] = $this->getKey( $star_key, $instance_id );
 		}
+
+		error_log(print_r($keys_to_remove, true));
 
 		// return the new URL without pagination for filtering.
 		return remove_query_arg( $keys_to_remove, $this->url );

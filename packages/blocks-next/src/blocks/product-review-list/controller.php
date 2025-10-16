@@ -4,8 +4,7 @@ if ( empty( $product ) ) {
 	return '';
 }
 
-$query   = sc_product_review_list_query( $block, $product->id );
-$reviews = $query;
+$reviews = sc_product_review_list_query( $block, $product->id );
 
 // return the view.
 return 'file:./view.php';

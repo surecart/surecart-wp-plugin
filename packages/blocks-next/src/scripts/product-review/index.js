@@ -34,6 +34,7 @@ const { state, actions } = store('surecart/product-review', {
 	actions: {
 		/** Navigate to a url using the router region. */
 		*navigate(event) {
+			console.log('navigating', event);
 			const { ref } = getElement();
 			const queryRef = ref.closest('[data-wp-router-region]');
 			if (isValidLink(ref) && isValidEvent(event) && queryRef) {
@@ -50,6 +51,7 @@ const { state, actions } = store('surecart/product-review', {
 		},
 		/** Prefetch upcoming urls. */
 		*prefetch() {
+			console.log('prefetching::')
 			const { ref } = getElement();
 			if (isValidLink(ref)) {
 				const { actions } = yield import(

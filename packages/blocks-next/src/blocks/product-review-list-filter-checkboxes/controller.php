@@ -5,9 +5,10 @@ if ( ! $product || empty( $product->total_reviews ) ) {
 	return '';
 }
 
-$params        = \SureCart::block()->urlParams( 'reviews' );
-$rating_filter = $params->getArg( 'rating' ) ?? '';
-$options       = [];
+$params         = \SureCart::block()->urlParams( 'reviews-ratings' );
+$ratings_filter = $params->getArg( 'reviews-ratings' ) ?? [];
+$ratings_filter = is_array( $ratings_filter ) ? $ratings_filter : [];
+$options        = [];
 
 // Generate options for each star rating (5 to 1).
 for ( $star = 5; $star >= 1; $star-- ) {
@@ -22,12 +23,20 @@ for ( $star = 5; $star >= 1; $star-- ) {
 
 	$label = sprintf( '%s (%d)', $star_text, $count );
 
+	$star_value = (string) $star;
+	$is_checked = in_array( $star_value, $ratings_filter, true );
+
+	// If checked, remove from URL; if not checked, add to URL.
+	$href = $is_checked
+		? $params->removeFilterArg( 'reviews-ratings', $star_value )
+		: $params->addFilterArg( 'reviews-ratings', $star_value );
+
 	$options[] = [
-		'value'   => (string) $star,
-		'href'    => $params->addArg( 'rating', (string) $star )->url(),
+		'value'   => $star_value,
+		'href'    => $href,
 		'label'   => $label,
 		'count'   => $count,
-		'checked' => (string) $star === $rating_filter,
+		'checked' => $is_checked,
 	];
 }
 

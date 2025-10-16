@@ -393,5 +393,6 @@
 		"surecart-block-ui",
 		"surecart-tag",
 		"surecart-theme-base"
-	]
+	],
+	"viewScriptModule": ["@surecart/product-review"]
 }

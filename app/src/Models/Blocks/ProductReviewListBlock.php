@@ -23,7 +23,7 @@ class ProductReviewListBlock extends AbstractProductListBlock {
 	 */
 	public function __construct( \WP_Block $block, $product_id = null ) {
 		$this->block      = $block;
-		$this->url        = \SureCart::block()->urlParams( 'reviews' );
+		$this->url        = \SureCart::block()->urlParams( 'reviews-ratings' );
 		$this->product_id = $product_id ?? ( $block->context['postId'] ?? null );
 	}
 
@@ -60,7 +60,7 @@ class ProductReviewListBlock extends AbstractProductListBlock {
 		);
 
 		// Filter by star rating if provided.
-		$stars_filter = $this->url->getArg( 'stars' );
+		$stars_filter = $this->url->getArg( 'reviews-ratings' );
 		if ( ! empty( $stars_filter ) && is_numeric( $stars_filter ) && $stars_filter >= 1 && $stars_filter <= 5 ) {
 			$args['stars'] = (int) $stars_filter;
 		}

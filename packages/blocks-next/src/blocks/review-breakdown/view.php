@@ -1,7 +1,7 @@
 <div <?php echo wp_kses_data( get_block_wrapper_attributes() ); ?>>
 	<div class="sc-star-bars">
 		<?php
-		$params = \SureCart::block()->urlParams( 'reviews' );
+		$params = \SureCart::block()->urlParams( 'reviews-ratings' );
 		for ( $star = 5; $star >= 1; $star-- ) {
 			$count      = isset( $product->reviews_breakdown->$star ) ? (int) $product->reviews_breakdown->$star : 0;
 			$percentage = $total > 0 ? ( $count / $total ) * 100 : 0;

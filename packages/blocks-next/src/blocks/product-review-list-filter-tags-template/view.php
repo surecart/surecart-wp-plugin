@@ -9,10 +9,10 @@
 		)
 	);
 	?>
-	<?php echo wp_kses_data( wp_interactivity_data_wp_context( [ 'collections' => $product_terms ] ) ); ?>
+	<?php echo wp_kses_data( wp_interactivity_data_wp_context( [ 'reviews-ratings' => $rating_tags ] ) ); ?>
 >
 <?php
-foreach ( $product_terms as $filter_tag ) :
+foreach ( $rating_tags as $filter_tag ) :
 	// Get an instance of the current Post Template block.
 		$block_instance = $block->parsed_block;
 
