@@ -9,7 +9,7 @@
 		)
 	);
 	?>
-	<?php echo wp_kses_data( wp_interactivity_data_wp_context( [ 'reviews-ratings' => $options ] ) ); ?>
+	<?php echo wp_kses_data( wp_interactivity_data_wp_context( [ 'ratings' => $options ] ) ); ?>
 >
 <?php
 foreach ( $options as $checkbox ) :

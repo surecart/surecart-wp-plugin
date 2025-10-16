@@ -183,7 +183,7 @@ class URLParamService {
 
 		foreach ( $args as $key => $value ) {
 			$star_name = $this->getName( $key, $instance_id );
-			if ( 'reviews-ratings' === $star_name ) {
+			if ( 'ratings' === $star_name ) {
 				$star_args[ $star_name ] = $value;
 			}
 		}

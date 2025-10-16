@@ -1,5 +1,5 @@
 <?php
-$params        = \SureCart::block()->urlParams( 'reviews-ratings' );
+$params        = \SureCart::block()->urlParams( 'reviews' );
 $clear_all_url = $params->removeAllStarArgs();
 $all_stars     = $params->getAllStarArgs();
 

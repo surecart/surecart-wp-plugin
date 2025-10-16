@@ -5,8 +5,8 @@ if ( ! $product || empty( $product->total_reviews ) ) {
 	return '';
 }
 
-$params         = \SureCart::block()->urlParams( 'reviews-ratings' );
-$ratings_filter = $params->getArg( 'reviews-ratings' ) ?? [];
+$params         = \SureCart::block()->urlParams( 'reviews' );
+$ratings_filter = $params->getArg( 'ratings' ) ?? [];
 $ratings_filter = is_array( $ratings_filter ) ? $ratings_filter : [];
 $options        = [];
 
@@ -28,8 +28,8 @@ for ( $star = 5; $star >= 1; $star-- ) {
 
 	// If checked, remove from URL; if not checked, add to URL.
 	$href = $is_checked
-		? $params->removeFilterArg( 'reviews-ratings', $star_value )
-		: $params->addFilterArg( 'reviews-ratings', $star_value );
+		? $params->removeFilterArg( 'ratings', $star_value )
+		: $params->addFilterArg( 'ratings', $star_value );
 
 	$options[] = [
 		'value'   => $star_value,

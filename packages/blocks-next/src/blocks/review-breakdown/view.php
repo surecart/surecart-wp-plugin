@@ -1,11 +1,11 @@
 <div <?php echo wp_kses_data( get_block_wrapper_attributes() ); ?>>
 	<div class="sc-star-bars">
 		<?php
-		$params = \SureCart::block()->urlParams( 'reviews-ratings' );
+		$params = \SureCart::block()->urlParams( 'reviews' );
 		for ( $star = 5; $star >= 1; $star-- ) {
 			$count      = isset( $product->reviews_breakdown->$star ) ? (int) $product->reviews_breakdown->$star : 0;
 			$percentage = $total > 0 ? ( $count / $total ) * 100 : 0;
-			$filter_url = $params->addArg( 'rating', (string) $star )->url();
+			$filter_url = $params->addArg( 'ratings', (string) $star )->url();
 			?>
 			<a
 				href="<?php echo esc_url( $filter_url ); ?>"

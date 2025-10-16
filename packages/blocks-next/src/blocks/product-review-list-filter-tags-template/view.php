@@ -9,7 +9,7 @@
 		)
 	);
 	?>
-	<?php echo wp_kses_data( wp_interactivity_data_wp_context( [ 'reviews-ratings' => $rating_tags ] ) ); ?>
+	<?php echo wp_kses_data( wp_interactivity_data_wp_context( [ 'ratings' => $rating_tags ] ) ); ?>
 >
 <?php
 foreach ( $rating_tags as $filter_tag ) :
