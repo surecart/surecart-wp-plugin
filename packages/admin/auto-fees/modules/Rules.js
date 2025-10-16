@@ -172,6 +172,7 @@ export default ({ autoFee = {}, onUpdate, loading }) => {
 									});
 									updateRuleJson(newRuleJson);
 								}}
+								feeTarget={autoFee?.fee_target}
 								removeRuleGroup={() => {
 									const newRuleJson = JSON.parse(
 										JSON.stringify(rules)

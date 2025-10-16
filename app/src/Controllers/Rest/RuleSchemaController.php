@@ -23,6 +23,6 @@ class RuleSchemaController extends RestController {
 	 * @return \SureCart\Models\RuleSchema|\WP_Error
 	 */
 	public function find( \WP_REST_Request $request ) {
-		return RuleSchema::find( $request['schema_id'] );
+		return RuleSchema::find( $request['id'] );
 	}
 }

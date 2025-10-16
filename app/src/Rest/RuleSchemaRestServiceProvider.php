@@ -73,7 +73,20 @@ class RuleSchemaRestServiceProvider extends RestServiceProvider implements RestS
 	public function registerRoutes() {
 		register_rest_route(
 			"$this->name/v$this->version",
-			$this->endpoint . '/(?P<schema_id>\S+)',
+			$this->endpoint . '/(?P<id>\S+)',
+			[
+				[
+					'methods'             => \WP_REST_Server::READABLE,
+					'callback'            => $this->callback( $this->controller, 'find' ),
+					'permission_callback' => [ $this, 'get_item_permissions_check' ],
+				],
+				// Register our schema callback.
+				'schema' => [ $this, 'get_item_schema' ],
+			]
+		);
+		register_rest_route(
+			"$this->name/v$this->version",
+			$this->endpoint,
 			[
 				[
 					'methods'             => \WP_REST_Server::READABLE,

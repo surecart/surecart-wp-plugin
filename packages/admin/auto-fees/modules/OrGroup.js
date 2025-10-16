@@ -28,6 +28,7 @@ export default ({
 	rules,
 	updateRuleJson,
 	group,
+	feeTarget,
 }) => {
 	if (loading || !ruleSchema?.length) {
 		return (
@@ -133,6 +134,7 @@ export default ({
 									);
 								updateRuleJson(newRuleJson);
 							}}
+							feeTarget={feeTarget}
 							totalLeaves={group?.conditions?.length}
 							leafIndex={leafIndex}
 							groupIndex={groupIndex}

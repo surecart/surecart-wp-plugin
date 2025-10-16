@@ -6,6 +6,7 @@ import { css, jsx } from '@emotion/core';
  */
 import { __ } from '@wordpress/i18n';
 import { useState, useEffect } from '@wordpress/element';
+import { useEntityRecord } from '@wordpress/core-data';
 
 /**
  * Internal dependencies.
@@ -33,12 +34,14 @@ export default ({
 	rules,
 	updateRuleJson,
 	leaf,
+	feeTarget,
 }) => {
 	const [attribute, setAttribute] = useState(leaf?.attribute_name || null);
 	const [operator, setOperator] = useState(leaf?.operator_label || null);
 	const [value, setValue] = useState(leaf?.comparison_value || null);
 	const [metadataKey, setMetadataKey] = useState(leaf?.metadata_key || null);
-
+	const { record } = useEntityRecord('surecart', 'rule-schema', feeTarget);
+	console.log('record', record);
 	// Function to update the rules when any field changes
 	const updateCurrentLeaf = () => {
 		const newRuleJson = JSON.parse(JSON.stringify(rules));
