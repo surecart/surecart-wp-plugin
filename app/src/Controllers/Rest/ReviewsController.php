@@ -3,6 +3,7 @@
 namespace SureCart\Controllers\Rest;
 
 use SureCart;
+use SureCart\Models\Customer;
 use SureCart\Models\Review;
 use SureCart\Models\User;
 
@@ -83,25 +84,65 @@ class ReviewsController extends RestController {
 	 * @return \SureCart\Models\Model|\WP_Error
 	 */
 	protected function maybeSetUser( \SureCart\Models\Model $class, \WP_REST_Request $request ) {
-		// get current user.
 		$user = User::current();
 
-		// must be logged in.
+		// Must be logged in.
 		if ( ! $user ) {
-			return $class;
+			return new \WP_Error(
+				'surecart_rest_review_no_user',
+				__( 'You must be logged in to submit a review.', 'surecart' ),
+				[ 'status' => 401 ]
+			);
 		}
 
-		// force the customer id, if it exists.
-		$customer_id = $user->customerId( 'live' );
+		// Get or create live customer.
+		$customer_id = $this->getLiveCustomerByUser( $user );
+
 		if ( empty( $customer_id ) ) {
-			// First find the test customer id.
-			$customer_id = $user->customerId( 'test' );
-			// Create a customer for live mode if it doesn't exist.
-			// $user->createCustomer( 'live' );
+			return new \WP_Error(
+				'surecart_rest_review_no_customer',
+				__( 'Unable to identify customer for the current user.', 'surecart' ),
+				[ 'status' => 400 ]
+			);
 		}
 
+		// Set the customer ID on the review.
 		$class['customer'] = $customer_id;
-
 		return $class;
+	}
+
+	/**
+	 * Get or create a live customer for the given user.
+	 *
+	 * @param User $user The user object.
+	 *
+	 * @return string|null The live customer ID or null if not found/created.
+	 */
+	protected function getLiveCustomerByUser( User $user ) {
+		// Try to get the customer id from live mode first.
+		$customer_id = $user->customerId( 'live' );
+
+		if ( ! empty( $customer_id ) ) {
+			return $customer_id;
+		}
+
+		// If not in live mode, check test mode customer.
+		$customer_id = $user->customerId( 'test' );
+
+		// If we have a test customer but no live customer, create a live customer.
+		if ( ! empty( $customer_id ) ) {
+			$customer = Customer::create(
+				[
+					'name'      => $user->display_name,
+					'email'     => strtolower( $user->user_email ),
+					'live_mode' => true,
+				],
+				false // don't create a user.
+			);
+
+			return $customer->id ?? null;
+		}
+
+		return null;
 	}
 }
