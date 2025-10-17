@@ -2,7 +2,7 @@
  * WordPress dependencies.
  */
 import { registerBlockType } from '@wordpress/blocks';
-import { grid as icon } from '@wordpress/icons';
+import { queryPagination as icon } from '@wordpress/icons';
 
 /**
  * Internal dependencies.

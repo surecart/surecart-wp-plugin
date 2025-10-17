@@ -13,4 +13,5 @@
 	data-wp-router-region="<?php echo esc_attr( 'product-reviews-' . $product->id ); ?>"
 >
 	<?php echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+	<div class="sc-block-ui" data-wp-bind--hidden="!state.loading" hidden></div>
 </div>

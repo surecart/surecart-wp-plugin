@@ -16,6 +16,13 @@ class ProductReviewListBlock extends AbstractProductListBlock {
 	public $product_id;
 
 	/**
+	 * The collection result.
+	 *
+	 * @var \SureCart\Models\Collection
+	 */
+	protected $collection;
+
+	/**
 	 * Constructor.
 	 *
 	 * @param \WP_Block $block The block.
@@ -73,9 +80,16 @@ class ProductReviewListBlock extends AbstractProductListBlock {
 		$args['limit']  = $per_page;
 		$args['offset'] = ( $page - 1 ) * $per_page + $offset;
 
-		return Review::where( $args )
+		$this->collection = Review::where( $args )
 			->with( [ 'product', 'product.price', 'customer' ] )
-			->get();
+			->paginate(
+				[
+					'page'     => $page,
+					'per_page' => $per_page,
+				]
+			);
+
+		return $this;
 	}
 
 	/**
@@ -100,5 +114,56 @@ class ProductReviewListBlock extends AbstractProductListBlock {
 	 */
 	public function query() {
 		return $this->parse_query();
+	}
+
+	/**
+	 * Magic getter for pagination properties.
+	 *
+	 * @param string $key The property key.
+	 * @return mixed
+	 */
+	public function __get( $key ) {
+		// Handle collection data access.
+		if ( 'data' === $key && $this->collection ) {
+			return $this->collection->data ?? [];
+		}
+
+		// Handle max_num_pages for pagination.
+		if ( 'max_num_pages' === $key && $this->collection ) {
+			$pagination = $this->collection->pagination ?? new \stdClass();
+			$count      = $pagination->count ?? 0;
+			$limit      = $pagination->limit ?? 1;
+			$pages      = $limit > 0 ? (int) ceil( $count / $limit ) : 1;
+			return $pages;
+		}
+
+		// Handle paged (current page).
+		if ( 'paged' === $key && $this->collection ) {
+			$pagination = $this->collection->pagination ?? new \stdClass();
+			return $pagination->page ?? 1;
+		}
+
+		// Handle found_posts.
+		if ( 'found_posts' === $key && $this->collection ) {
+			$pagination = $this->collection->pagination ?? new \stdClass();
+			return $pagination->count ?? 0;
+		}
+
+		// Handle has_pagination specifically for collection-based queries.
+		if ( 'has_pagination' === $key && $this->collection ) {
+			$max_page = $this->getQueryAttribute( 'pages', 0 );
+
+			// if the max page is 1, we don't have a next page.
+			if ( 1 === $max_page ) {
+				return false;
+			}
+
+			$max_num_pages = $this->__get( 'max_num_pages' );
+			$result        = $max_num_pages > 1;
+			return $result;
+		}
+
+		// Delegate to parent for other properties.
+		return parent::__get( $key );
 	}
 }

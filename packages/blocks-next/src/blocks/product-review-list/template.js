@@ -549,4 +549,13 @@ export const TEMPLATE = [
 			],
 		],
 	],
+	[
+		'surecart/product-review-pagination',
+		{},
+		[
+			['surecart/product-review-pagination-previous'],
+			['surecart/product-review-pagination-numbers'],
+			['surecart/product-review-pagination-next'],
+		],
+	],
 ];
