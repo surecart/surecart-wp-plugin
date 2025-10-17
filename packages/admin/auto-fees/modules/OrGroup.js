@@ -19,7 +19,6 @@ import AndGroup from './AndGroup';
 import { attributeLabels } from '../utils/labelTranslations';
 
 export default ({
-	ruleSchema = [],
 	addRuleGroup,
 	removeRuleGroup,
 	totalRuleGroups,
@@ -30,7 +29,7 @@ export default ({
 	group,
 	feeTarget,
 }) => {
-	if (loading || !ruleSchema?.length) {
+	if (loading) {
 		return (
 			<div
 				css={css`
@@ -99,7 +98,6 @@ export default ({
 						)}
 						<AndGroup
 							key={leafIndex}
-							ruleSchema={ruleSchema}
 							leaf={leaf}
 							addLeaf={() => {
 								const newRuleJson = JSON.parse(

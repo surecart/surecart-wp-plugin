@@ -25,7 +25,6 @@ import { getInputType } from '../utils/ruleQueryUtils';
 import { attributeLabels } from '../utils/labelTranslations';
 
 export default ({
-	ruleSchema = [],
 	addLeaf,
 	removeLeaf,
 	totalLeaves,
@@ -40,8 +39,12 @@ export default ({
 	const [operator, setOperator] = useState(leaf?.operator_label || null);
 	const [value, setValue] = useState(leaf?.comparison_value || null);
 	const [metadataKey, setMetadataKey] = useState(leaf?.metadata_key || null);
-	const { record } = useEntityRecord('surecart', 'rule-schema', feeTarget);
-	console.log('record', record);
+	const { record: ruleSchema } = useEntityRecord(
+		'surecart',
+		'rule-schema',
+		feeTarget
+	);
+
 	// Function to update the rules when any field changes
 	const updateCurrentLeaf = () => {
 		const newRuleJson = JSON.parse(JSON.stringify(rules));
@@ -70,7 +73,7 @@ export default ({
 	let operators = [];
 	let attributes = [];
 
-	for (const rule of ruleSchema) {
+	for (const rule of ruleSchema?.attributes ?? []) {
 		const operatorsChoices = [];
 		for (const operator of rule.operators) {
 			operatorsChoices.push({

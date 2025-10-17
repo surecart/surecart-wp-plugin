@@ -25,44 +25,12 @@ import Box from '../../ui/Box';
 import OrGroup from './OrGroup';
 
 export default ({ autoFee = {}, onUpdate, loading }) => {
-	const [ruleSchema, setRuleSchema] = useState(null);
-	const [loadingRuleSchema, setLoadingRuleSchema] = useState(false);
-
-	const baseUrl = select(coreStore).getEntityConfig(
-		'surecart',
-		'rule-schema'
-	)?.baseURL;
-
-	const fetchRuleSchema = async () => {
-		try {
-			setLoadingRuleSchema(true);
-			const response = await apiFetch({
-				path: addQueryArgs(`${baseUrl}/${autoFee?.fee_target}`, {
-					context: 'edit',
-					t: Date.now(), // prevents cache.
-				}),
-			});
-
-			setRuleSchema(response?.rule_schema);
-			setLoadingRuleSchema(false);
-		} catch (e) {
-			console.error(e);
-		}
-	};
-
 	const { rules } = autoFee;
 
 	// Update rules whenever changes occur
 	const updateRuleJson = (newRuleJson) => {
 		onUpdate({ rules: newRuleJson });
 	};
-
-	useEffect(() => {
-		if (!autoFee?.fee_target) {
-			return;
-		}
-		fetchRuleSchema();
-	}, [autoFee?.fee_target]);
 
 	if (!rules?.conditions?.length) {
 		return (
@@ -107,10 +75,7 @@ export default ({ autoFee = {}, onUpdate, loading }) => {
 	}
 
 	return (
-		<Box
-			title={__('Conditions', 'surecart')}
-			loading={loading || loadingRuleSchema}
-		>
+		<Box title={__('Conditions', 'surecart')} loading={loading}>
 			<label
 				css={css`
 					display: block;
@@ -153,7 +118,6 @@ export default ({ autoFee = {}, onUpdate, loading }) => {
 							)}
 							<OrGroup
 								group={group}
-								ruleSchema={ruleSchema}
 								addRuleGroup={() => {
 									const newRuleJson = JSON.parse(
 										JSON.stringify(rules)
