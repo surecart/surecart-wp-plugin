@@ -11,12 +11,7 @@
 		"attributes": {}
 	},
 	"ancestor": ["surecart/product-review-list"],
-	"usesContext": [
-		"query",
-		"surecart/product-list/limit",
-		"surecart/product-list/type",
-		"surecart/product-list/ids"
-	],
+	"usesContext": ["query", "surecart/product-review/limit"],
 	"providesContext": {
 		"reviewId": "id",
 		"review": "review"

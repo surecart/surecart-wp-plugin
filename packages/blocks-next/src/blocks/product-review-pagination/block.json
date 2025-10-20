@@ -7,12 +7,7 @@
 	"version": "1.0.0",
 	"category": "surecart-product-page",
 	"example": {},
-	"usesContext": [
-		"query",
-		"surecart/product-list/limit",
-		"surecart/product-list/type",
-		"surecart/product-list/ids"
-	],
+	"usesContext": ["query", "surecart/product-review/limit"],
 	"ancestor": ["surecart/product-page", "surecart/product-review-list"],
 	"allowedBlocks": [
 		"surecart/product-review-pagination-previous",

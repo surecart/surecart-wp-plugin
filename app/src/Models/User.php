@@ -10,6 +10,7 @@ use SureCart\Models\Traits\SyncsCustomer;
  */
 class User implements ArrayAccess, JsonSerializable {
 	use SyncsCustomer;
+
 	/**
 	 * Holds the user.
 	 *
@@ -87,7 +88,7 @@ class User implements ArrayAccess, JsonSerializable {
 		$live_customer = current(
 			array_filter(
 				$customers,
-				function( $customer ) {
+				function ( $customer ) {
 					return $customer->live_mode;
 				}
 			)
@@ -96,7 +97,7 @@ class User implements ArrayAccess, JsonSerializable {
 		$test_customer = current(
 			array_filter(
 				$customers,
-				function( $customer ) {
+				function ( $customer ) {
 					return ! $customer->live_mode;
 				}
 			)
@@ -220,6 +221,35 @@ class User implements ArrayAccess, JsonSerializable {
 
 		// return this.
 		return $this;
+	}
+
+	/**
+	 * Get or create the live customer for this user.
+	 *
+	 * @return string|null
+	 */
+	protected function getLiveCustomer() {
+		$customer_id = $this->customerId( 'live' );
+
+		if ( ! empty( $customer_id ) ) {
+			return $customer_id;
+		}
+
+		$customer_id = $this->customerId( 'test' );
+
+		if ( ! empty( $customer_id ) ) {
+			$customer = Customer::create(
+				[
+					'name'      => $this->user->display_name,
+					'email'     => strtolower( $this->user->user_email ),
+					'live_mode' => true,
+				],
+				false
+			);
+			return $customer->id ?? null;
+		}
+
+		return null;
 	}
 
 	/**
@@ -539,7 +569,7 @@ class User implements ArrayAccess, JsonSerializable {
 	 * @param  mixed $offset Name.
 	 * @return void
 	 */
-	public function offsetUnset( $offset ) : void {
+	public function offsetUnset( $offset ): void {
 		$this->user->$offset = null;
 	}
 

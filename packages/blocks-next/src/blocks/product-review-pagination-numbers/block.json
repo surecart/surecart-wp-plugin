@@ -10,9 +10,7 @@
 	"ancestor": ["surecart/product-review-pagination"],
 	"usesContext": [
 		"query",
-		"surecart/product-list/limit",
-		"surecart/product-list/type",
-		"surecart/product-list/ids",
+		"surecart/product-review/limit",
 		"paginationArrow",
 		"showLabel"
 	],

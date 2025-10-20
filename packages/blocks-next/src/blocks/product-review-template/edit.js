@@ -1,83 +1,153 @@
-import TemplateListEdit from '../../components/TemplateListEdit';
+/**
+ * External dependencies.
+ */
+import classnames from 'classnames';
+
+/**
+ * WordPress dependencies.
+ */
 import { __ } from '@wordpress/i18n';
-import { useEntityRecords } from '@wordpress/core-data';
 import {
-	Spinner,
-	Placeholder,
 	UnitControl as __stableUnitControl,
 	__experimentalUnitControl,
-	ToolbarGroup,
 } from '@wordpress/components';
-import { BlockControls } from '@wordpress/block-editor';
-import { list, grid } from '@wordpress/icons';
-import classnames from 'classnames';
-import { useEffect } from '@wordpress/element';
 
-const ALLOWED_ORDER_BY_VALUES = [
-	'author',
-	'date',
-	'id',
-	'include',
-	'modified',
-	'parent',
-	'relevance',
-	'slug',
-	'include_slugs',
-	'title',
-	'menu_order',
-];
+/**
+ * Internal dependencies.
+ */
+import TemplateListEdit from '../../components/TemplateListEdit';
 
 const TEMPLATE = [
 	[
 		'core/group',
 		{
-			layout: { type: 'default' },
+			style: {
+				spacing: {
+					blockGap: 'var:preset|spacing|20',
+					padding: {
+						top: 'var:preset|spacing|40',
+						bottom: 'var:preset|spacing|40',
+					},
+					margin: {
+						top: '0',
+						bottom: '0',
+					},
+				},
+				border: {
+					bottom: {
+						color: '#e5e7eb',
+						width: '1px',
+					},
+				},
+			},
+			layout: {
+				type: 'constrained',
+			},
 		},
 		[
 			[
 				'core/group',
 				{
-					style: {
-						color: { background: '#0000000d' },
-						border: { radius: '10px' },
-						spacing: {
-							padding: {
-								top: '0px',
-								bottom: '0px',
-								left: '0px',
-								right: '0px',
+					layout: {
+						type: 'flex',
+						flexWrap: 'nowrap',
+						justifyContent: 'space-between',
+					},
+				},
+				[
+					[
+						'core/group',
+						{
+							style: {
+								spacing: {
+									blockGap: 'var:preset|spacing|20',
+								},
 							},
-							margin: { top: '0px', bottom: '0px' },
+							layout: {
+								type: 'flex',
+								flexWrap: 'nowrap',
+							},
+						},
+						[
+							[
+								'surecart/review-reviewer-name',
+								{
+									style: {
+										spacing: {
+											padding: {
+												top: '0',
+												bottom: '0',
+											},
+										},
+										typography: {
+											fontStyle: 'normal',
+											fontWeight: '500',
+										},
+									},
+								},
+							],
+							[
+								'surecart/review-verified-badge',
+								{
+									show_label: true,
+									label: 'Verified Buyer',
+									icon_size: 16,
+									style: {
+										typography: {
+											fontStyle: 'normal',
+											fontWeight: '400',
+										},
+										spacing: {
+											blockGap: 'var:preset|spacing|30',
+										},
+										layout: {
+											selfStretch: 'fit',
+											flexSize: null,
+										},
+									},
+									layout: {
+										type: 'flex',
+										justifyContent: 'center',
+										verticalAlignment: 'center',
+										orientation: 'horizontal',
+									},
+								},
+							],
+						],
+					],
+					[
+						'surecart/review-date',
+						{
+							datetime: '2025-10-02T09:37:00.225Z',
+							format: 'human-diff',
+						},
+					],
+				],
+			],
+			['surecart/review-rating-stars', {}],
+			[
+				'surecart/review-title',
+				{
+					style: {
+						typography: {
+							fontStyle: 'normal',
+							fontWeight: '700',
 						},
 					},
-					layout: { type: 'constrained' },
 				},
 			],
+			['surecart/review-content', {}],
 		],
 	],
 ];
 
 export default ({
 	clientId,
-	attributes: { layout },
 	__unstableLayoutClassNames,
-	setAttributes,
 	context: {
-		query: { perPage, offset = 0, search, order, orderBy },
-		'surecart/product-list/type': type,
+		query: { perPage, offset = 0 },
 	},
 }) => {
-	const { type: layoutType, columnCount = 3 } = layout || {};
-
-	useEffect(() => {
-		if (!layoutType) {
-			setDisplayLayout({
-				type: 'grid',
-				columnCount,
-			});
-		}
-	}, [layoutType]);
-
 	const demoReviews = [
 		{
 			id: 1,
@@ -86,7 +156,7 @@ export default ({
 			customer: {
 				name: 'John Doe',
 			},
-			rating: 5,
+			stars: 5,
 			created_date: '2023-10-01T12:34:56',
 		},
 		{
@@ -96,85 +166,54 @@ export default ({
 			customer: {
 				name: 'Jane Smith',
 			},
-			rating: 3,
+			stars: 3,
 			created_date: '2023-09-15T09:21:30',
 		},
-	];
-
-	const { records: reviews, isResolving } = useEntityRecords(
-		'postType',
-		'reviews',
 		{
-			page: 1,
-			per_page: perPage || 15,
-			orderby: ALLOWED_ORDER_BY_VALUES.includes(orderBy)
-				? orderBy
-				: 'date',
-			order: order || 'desc',
-			status: ['published'],
-			offset: offset || 0,
-			...(search ? { search } : {}),
-		}
-	);
-
-	const setDisplayLayout = (newDisplayLayout) =>
-		setAttributes({
-			layout: { ...layout, ...newDisplayLayout },
-		});
-
-	const displayLayoutControls = [
-		{
-			icon: list,
-			title: __('List view', 'surecart'),
-			onClick: () => setDisplayLayout({ type: 'default' }),
-			isActive: layoutType === 'default' || layoutType === 'constrained',
+			id: 3,
+			title: { rendered: 'Excellent quality' },
+			body: 'Exceeded my expectations. The quality is outstanding and delivery was fast!',
+			customer: {
+				name: 'Michael Johnson',
+			},
+			stars: 5,
+			created_date: '2023-10-10T14:45:22',
 		},
 		{
-			icon: grid,
-			title: __('Grid view', 'surecart'),
-			onClick: () =>
-				setDisplayLayout({
-					type: 'grid',
-					columnCount,
-				}),
-			isActive: layoutType === 'grid',
+			id: 4,
+			title: { rendered: 'Good value' },
+			body: 'Great value for money. Would purchase again.',
+			customer: {
+				name: 'Sarah Williams',
+			},
+			stars: 4,
+			created_date: '2023-10-05T10:15:08',
+		},
+		{
+			id: 5,
+			title: { rendered: 'Could be better' },
+			body: 'The product works as described, but I expected more features for the price.',
+			customer: {
+				name: 'Robert Brown',
+			},
+			stars: 2,
+			created_date: '2023-09-28T16:20:45',
 		},
 	];
 
-	if (isResolving) {
-		return (
-			<Placeholder>
-				<Spinner />
-			</Placeholder>
-		);
-	}
 	const className = classnames(__unstableLayoutClassNames, {
-		'product-item-list': true,
-		[`columns-${columnCount}`]: layoutType === 'grid' && columnCount,
+		'product-review-list': true,
 	});
 
-	const getReviews = () => {
-		if (reviews && reviews.length) {
-			return reviews;
-		}
-
-		return demoReviews;
-	};
-
 	return (
-		<>
-			<BlockControls>
-				<ToolbarGroup controls={displayLayoutControls} />
-			</BlockControls>
-			<TemplateListEdit
-				template={TEMPLATE}
-				blockContexts={getReviews()?.map((review) => ({
-					postId: review?.id, // for core blocks.
-					id: review?.id,
-				}))}
-				clientId={clientId}
-				className={className}
-			/>
-		</>
+		<TemplateListEdit
+			template={TEMPLATE}
+			blockContexts={demoReviews?.map((review) => ({
+				postId: review?.id, // for core blocks.
+				id: review?.id,
+			}))}
+			clientId={clientId}
+			className={className}
+		/>
 	);
 };

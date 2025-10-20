@@ -334,6 +334,8 @@ class URLParamService {
 	 * Remove all star rating arguments from the URL.
 	 *
 	 * @param  string $instance_id Unique instance ID.
+	 *
+	 * @return string
 	 */
 	public function removeAllStarArgs( $instance_id = '' ) {
 		// get the instance ID.
@@ -352,8 +354,6 @@ class URLParamService {
 		foreach ( $existing_filters as $star_key => $terms ) {
 			$keys_to_remove[] = $this->getKey( $star_key, $instance_id );
 		}
-
-		error_log(print_r($keys_to_remove, true));
 
 		// return the new URL without pagination for filtering.
 		return remove_query_arg( $keys_to_remove, $this->url );

@@ -17,6 +17,7 @@ import {
  */
 import { TEMPLATE } from './template';
 import ListToolbar from '../../utilities/patterns-toolbar';
+import InspectorControls from './inspector-controls';
 
 /**
  * Product List Edit
@@ -24,12 +25,7 @@ import ListToolbar from '../../utilities/patterns-toolbar';
 export default function ProductReviewListEdit({
 	setAttributes,
 	attributes,
-	attributes: {
-		limit,
-		ids,
-		query,
-		query: { perPage, include },
-	},
+	attributes: { query },
 	name,
 	clientId,
 	openPatternSelectionModal,
@@ -42,8 +38,23 @@ export default function ProductReviewListEdit({
 		template: TEMPLATE,
 	});
 
+	/**
+	 * Update the query attributes.
+	 *
+	 * @param {Object} newQuery - The new query object.
+	 */
+	const updateQuery = (newQuery) => {
+		setAttributes({ query: { ...query, ...newQuery } });
+	};
+
 	return (
 		<>
+			<InspectorControls
+				attributes={attributes}
+				setAttributes={setAttributes}
+				onUpdateQuery={updateQuery}
+			/>
+
 			<BlockControls>
 				<ListToolbar
 					name={name}
