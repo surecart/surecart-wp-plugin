@@ -95,8 +95,6 @@ export default function useIntegrationActivation(
 		}
 	};
 
-	console.log(pluginData);
-
 	return {
 		isLoading: isSaving,
 		activate,
