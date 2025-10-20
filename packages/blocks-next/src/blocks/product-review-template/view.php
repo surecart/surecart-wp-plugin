@@ -43,7 +43,7 @@ use SureCart\Models\Blocks\ProductReviewBlock;
 		wp_interactivity_state( 'surecart/product-review', $state );
 		?>
 
-		<li class="sc-product-item sc-has-animation-fade-up" data-wp-key="review-template-item-<?php echo (int) $review->id; ?>">
+		<li class="sc-has-animation-fade-up" data-wp-key="review-template-item-<?php echo (int) $review->id; ?>">
 			<form 
 				data-wp-interactive='{ "namespace": "surecart/product-review" }'
 				data-wp-on--submit="callbacks.handleSubmit"
