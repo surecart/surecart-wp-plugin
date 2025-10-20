@@ -274,7 +274,6 @@ export default ({ liveMode, setLiveMode }) => {
 				</div>
 				<div
 					css={css`
-						aspect-ratio: 3.75/1;
 						width: 100%;
 						position: relative;
 					`}
@@ -283,6 +282,11 @@ export default ({ liveMode, setLiveMode }) => {
 						data={data}
 						previousData={previousData}
 						type={tab}
+						css={css`
+							aspect-ratio: 3.75/1;
+							width: 100%;
+							position: relative;
+						`}
 					/>
 					{loading && (
 						<div

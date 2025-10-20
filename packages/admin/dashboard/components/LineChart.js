@@ -36,11 +36,12 @@ export const options = (type) => ({
 	plugins: {
 		title: {
 			display: false, // Display is handled by wrapper aria-label
-			text: type === 'amount'
-				? __('Revenue Chart', 'surecart')
-				: type === 'count'
-				? __('Orders Chart', 'surecart')
-				: __('Average Order Value Chart', 'surecart'),
+			text:
+				type === 'amount'
+					? __('Revenue Chart', 'surecart')
+					: type === 'count'
+					? __('Orders Chart', 'surecart')
+					: __('Average Order Value Chart', 'surecart'),
 		},
 		tooltip: {
 			backgroundColor: 'white',
@@ -113,7 +114,7 @@ export const options = (type) => ({
 	},
 });
 
-export default ({ data, previousData, type = 'amount' }) => {
+export default ({ data, previousData, type = 'amount', className }) => {
 	const labels = data.map((item) => {
 		// Format unix timestamp to short date
 		return dayjs.unix(item.interval_at).format('MMM D');
@@ -154,12 +155,19 @@ export default ({ data, previousData, type = 'amount' }) => {
 			? __('Orders Chart', 'surecart')
 			: __('Average Order Value Chart', 'surecart');
 
-	const chartDescription = __('Line chart comparing current period with previous period data over time', 'surecart');
+	const chartDescription = __(
+		'Line chart comparing current period with previous period data over time',
+		'surecart'
+	);
 
 	return (
 		<div
 			role="img"
-			aria-label={`${chartTitle}. ${chartDescription}. ${__('Showing', 'surecart')} ${data.length} ${__('data points', 'surecart')}.`}
+			aria-label={`${chartTitle}. ${chartDescription}. ${__(
+				'Showing',
+				'surecart'
+			)} ${data.length} ${__('data points', 'surecart')}.`}
+			className={className}
 		>
 			<Line options={options(type)} data={{ labels, datasets }} />
 		</div>
