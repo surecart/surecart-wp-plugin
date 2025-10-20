@@ -8,7 +8,7 @@ export default ({ record }) => {
 	const { createErrorNotice, createSuccessNotice } =
 		useDispatch(noticesStore);
 
-	const { canActivate, isLoading, activate, activationLink, activationType } =
+	const { isLoading, activate, activationLink, canActivate } =
 		useIntegrationActivation(record, {
 			onSuccess: (message) => {
 				createSuccessNotice(__(message, 'surecart'), {
@@ -22,6 +22,15 @@ export default ({ record }) => {
 				);
 			},
 		});
+
+	if (record?.status === 'active') {
+		return (
+			<ScButton disabled type="text">
+				<ScIcon name="check" slot="prefix" />
+				{record?.button_text}
+			</ScButton>
+		);
+	}
 
 	// Active or pre-installed states (text button)
 	if (['active', 'pre-installed'].includes(record?.status)) {
@@ -41,14 +50,9 @@ export default ({ record }) => {
 	}
 
 	// Plugin activation (primary button with onClick)
-	if (activationType === 'plugin') {
+	if (canActivate) {
 		return (
-			<ScButton
-				type="primary"
-				onClick={activate}
-				disabled={!canActivate}
-				busy={isLoading}
-			>
+			<ScButton type="primary" onClick={activate} busy={isLoading}>
 				{record?.button_text}
 			</ScButton>
 		);
@@ -57,7 +61,15 @@ export default ({ record }) => {
 	// Theme/external activation (primary button with link)
 	if (activationLink) {
 		return (
-			<ScButton type="primary" href={activationLink} target="_blank">
+			<ScButton
+				type="primary"
+				href={activationLink}
+				target="_blank"
+				aria-label={`${record?.button_text} ${__(
+					'(opens in new window)',
+					'surecart'
+				)}`}
+			>
 				{record?.button_text}
 				<ScIcon name="external-link" slot="suffix" />
 			</ScButton>

@@ -1,8 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/react';
 import { ScButton, ScCard, ScIcon } from '@surecart/components-react';
-import { useDispatch } from '@wordpress/data';
-import { store as coreStore } from '@wordpress/core-data';
 import { useLink, useLocation } from '../../router';
 import { useEntityRecord } from '@wordpress/core-data';
 import { __ } from '@wordpress/i18n';
