@@ -20,6 +20,10 @@
 		overflow: auto;
 		transition: opacity var(--sc-transition-medium);
 
+		&[hidden] {
+			display: none;
+		}
+
 		&__content {
 			padding: 30px;
 		}

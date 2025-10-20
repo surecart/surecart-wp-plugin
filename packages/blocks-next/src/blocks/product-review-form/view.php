@@ -35,7 +35,8 @@
 		aria-modal="true"
 		aria-label="<?php esc_attr_e( 'Write a product review', 'surecart' ); ?>"
 		data-wp-on--keydown="callbacks.handleKeyDown"
-		>
+		data-wp-bind--hidden="!state.open"
+	>
 		<form data-wp-on--submit="callbacks.handleSubmit">
 			<div class="sc-product-review-form-dialog__content" style="<?php echo esc_attr( $content_style ); ?>">
 				<div data-wp-bind--hidden="context.submitted">
@@ -52,7 +53,7 @@
 	<div
 		class="sc-product-review-form-overlay"
 		data-wp-on--click="actions.close"
-		data-wp-bind--hidden="surecart/product-list::state.loading"
+		data-wp-bind--hidden="surecart/product-review::state.loading"
 		aria-hidden="true"
 		<?php
 		echo wp_kses_data(

@@ -34,7 +34,7 @@ const isValidEvent = (event) =>
 
 const { state, actions } = store('surecart/product-review-form', {
 	actions: {
-		/** Navigate using interactivity router */
+		/** Browser Navigate */
 		*navigate(event) {
 			const { product_id } = getContext();
 			event?.preventDefault();
@@ -93,7 +93,7 @@ const { state, actions } = store('surecart/product-review-form', {
 			// prevent default to avoid page reload.
 			event?.preventDefault();
 
-			// Clear the form when closing
+			// Clear the form when closing.
 			actions.clearForm();
 
 			const { ref } = getElement();
@@ -105,8 +105,9 @@ const { state, actions } = store('surecart/product-review-form', {
 				const isTransitioning = dialog?.getAnimations()?.length > 0;
 				if (isTransitioning) return; // Wait for the transition to finish.
 				// navigate to the product page.
+
 				actions.navigate(event);
-				//remove the event listener to avoid memory leaks.
+				// remove the event listener to avoid memory leaks.
 				dialog.removeEventListener(
 					'transitionend',
 					handleTransitionEnd
@@ -177,6 +178,7 @@ const { state, actions } = store('surecart/product-review-form', {
 				inertElements.forEach((el) => el.removeAttribute('inert'));
 			}
 		},
+
 		handleKeyDown(event) {
 			if (event?.key === 'Escape') {
 				actions.close(event);

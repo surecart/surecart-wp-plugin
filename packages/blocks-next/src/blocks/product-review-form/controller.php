@@ -1,12 +1,12 @@
 <?php
-$product_id = isset( $_GET['product-review-form'] ) ? (int) $_GET['product-review-form'] : null;
-$product    = sc_get_product( $product_id );
-if ( ! $product ) {
-	return ''; // Return early if no valid product is found.
-}
+$product_id     = isset( $_GET['product-review-form'] ) ? (int) $_GET['product-review-form'] : null;
+$has_product_id = ! empty( $product_id );
 
-$sc_product_id  = $product->id ?? null;
-$close_url      = get_permalink( $product_id );
+// Only fetch product if we have an ID (for server-side rendering when opened via URL).
+$product       = $has_product_id ? sc_get_product( $product_id ) : null;
+$sc_product_id = $product ? $product->id : '';
+
+$close_url      = $has_product_id ? get_permalink( $product_id ) : '';
 $position_class = $attributes['alignment'] ? 'position-' . str_replace( ' ', '-', $attributes['alignment'] ) : '';
 
 $styles = sc_get_block_styles( false );
@@ -39,7 +39,7 @@ if ( ! empty( $styles['spacing']['declarations'] ) ) {
 wp_interactivity_state(
 	'surecart/product-review-form',
 	array(
-		'open' => ! empty( $product_id ),
+		'open' => $has_product_id,
 	)
 );
 
