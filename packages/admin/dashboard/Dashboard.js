@@ -11,7 +11,7 @@ import QuickLinks from './components/QuickLinks';
 import Recommended from './Recommended';
 
 export default () => {
-	const [liveMode, setLiveMode] = useState(true);
+	const [liveMode, setLiveMode] = useState(!scData?.claim_url);
 
 	return (
 		<UpdateModel
