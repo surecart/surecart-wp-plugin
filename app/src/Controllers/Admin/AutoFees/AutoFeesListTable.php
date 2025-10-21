@@ -140,7 +140,7 @@ class AutoFeesListTable extends ListTable {
 	 */
 	protected function table_data() {
 		$conditions = [
-			'query'  => $this->get_search_query(),
+			'query' => $this->get_search_query(),
 		];
 
 		if ( 'active' === $this->getStatus() ) {
@@ -201,9 +201,32 @@ class AutoFeesListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_name( $auto_fees ) {
-		return '<a href="' . \SureCart::getUrl()->edit( 'auto-fee', $auto_fees->id ) . '">'
-				. $auto_fees->name
-				. '</a>';
+		ob_start();
+		?>
+		<a href="<?php echo \SureCart::getUrl()->edit( 'auto-fee', $auto_fees->id ); ?>">
+			<?php echo esc_html( $auto_fees->name ); ?>
+		</a>
+		<?php echo wp_kses_post( $this->getRowActions( $auto_fees ) ); ?>
+
+		<?php
+		return ob_get_clean();
+	}
+
+	/**
+	 * Get row actions.
+	 *
+	 * @param \SureCart\Models\AutoFee $auto_fees Auto Fee model.
+	 *
+	 * @return array
+	 */
+	public function getRowActions( $auto_fees ) {
+		return $this->row_actions(
+			array_filter(
+				[
+					'edit' => '<a href="' . esc_url( \SureCart::getUrl()->edit( 'auto-fee', $auto_fees->id ) ) . '" aria-label="' . esc_attr( 'Edit Dynamic Pricing', 'surecart' ) . '">' . esc_html__( 'Edit', 'surecart' ) . '</a>',
+				]
+			)
+		);
 	}
 
 	/**
