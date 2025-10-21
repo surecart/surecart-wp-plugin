@@ -175,7 +175,7 @@ export default ({ liveMode }) => {
 									'surecart'
 								),
 								order?.number,
-								order?.checkot?.customer?.name,
+								order?.checkout?.customer?.name,
 								order?.checkout?.total_display_amount,
 								order?.status
 							)}
