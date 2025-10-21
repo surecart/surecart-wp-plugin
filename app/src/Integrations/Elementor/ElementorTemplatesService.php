@@ -60,6 +60,22 @@ class ElementorTemplatesService {
 				'priority'    => 40,
 				'hidden'      => true,
 			],
+			'surecart-product-reviews'      => [
+				'name'        => __( 'Product Reviews', 'surecart' ),
+				'image'       => 'product-reviews-template.png',
+				'type'        => 'others',
+				'widget_name' => 'surecart-product-reviews',
+				'priority'    => 50,
+				'hidden'      => true,
+			],
+			'surecart-product-rating'       => [
+				'name'        => __( 'Product Rating', 'surecart' ),
+				'image'       => 'product-rating-template.png',
+				'type'        => 'others',
+				'widget_name' => 'surecart-product-rating',
+				'priority'    => 60,
+				'hidden'      => true,
+			],
 		];
 
 		// Get config or create default.
