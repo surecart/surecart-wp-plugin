@@ -1,0 +1,66 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "surecart/product-review-breakdown",
+	"title": "Review Breakdown",
+	"description": "Displays a breakdown of product reviews by star rating.",
+	"version": "1.0.0",
+	"category": "surecart-product-page",
+	"ancestor": [
+		"surecart/product-page",
+		"surecart/product-quick-view",
+		"surecart/product-review-list",
+		"surecart/product-review-template",
+		"surecart/sticky-purchase",
+		"surecart/product-review-summary"
+	],
+	"usesContext": ["postId"],
+	"attributes": {
+		"show_for_zero_reviews": {
+			"type": "boolean",
+			"default": true
+		},
+		"fill_color": {
+			"type": "string",
+			"default": ""
+		},
+		"size": {
+			"type": "number",
+			"default": 25
+		}
+	},
+	"example": {},
+	"supports": {
+		"interactivity": true,
+		"anchor": true,
+		"color": {
+			"gradients": true,
+			"text": true,
+			"background": false
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true,
+			"textAlign": true
+		},
+		"layout": {
+			"allowSwitching": false,
+			"allowInheriting": false,
+			"default": {
+				"type": "flex",
+				"justifyContent": "left"
+			}
+		},
+		"spacing": {
+			"padding": true,
+			"margin": true,
+			"blockGap": {
+				"__experimentalDefault": "4px"
+			}
+		}
+	},
+	"textdomain": "surecart",
+	"render": "file:./view.php",
+	"editorScript": "file:./index.js",
+	"style": ["file:./style-index.css"]
+}

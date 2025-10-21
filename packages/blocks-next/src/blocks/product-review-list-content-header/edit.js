@@ -57,7 +57,7 @@ const TEMPLATE = [
 				},
 				[
 					[
-						'surecart/review-add-button',
+						'surecart/product-review-add-button',
 						{
 							width: 100,
 							className: 'is-style-fill',

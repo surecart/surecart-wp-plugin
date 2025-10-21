@@ -1,12 +1,12 @@
 <div <?php echo wp_kses_data( get_block_wrapper_attributes() ); ?>>
 	<?php if ( ! empty( $label ) ) : ?>
-		<label class="sc-form-label" for="review-content">
+		<label class="sc-form-label" for="product-review-content">
 			<?php echo wp_kses_data( $label ); ?>
 		</label>
 	<?php endif; ?>
 
 	<textarea
-		id="review-content"
+		id="product-review-content"
 		name="content"
 		class="sc-form-control"
 		placeholder="<?php echo esc_attr( $placeholder ); ?>"

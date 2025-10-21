@@ -17,7 +17,7 @@ const TEMPLATE = [
 		},
 	],
 	[
-		'surecart/review-add-button',
+		'surecart/product-review-add-button',
 		{
 			label: __('Write a review', 'surecart'),
 		},

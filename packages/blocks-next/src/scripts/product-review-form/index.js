@@ -67,7 +67,7 @@ const { state, actions } = store('surecart/product-review-form', {
 			}
 
 			state.openButton = event?.target?.closest(
-				'.wp-block-surecart-review-add-button'
+				'.wp-block-surecart-product-review-add-button'
 			);
 
 			// navigate to the product page.

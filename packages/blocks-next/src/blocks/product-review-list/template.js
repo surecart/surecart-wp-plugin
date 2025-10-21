@@ -82,13 +82,13 @@ export const TEMPLATE = [
 								},
 								[
 									[
-										'surecart/product-average-rating-value',
+										'surecart/product-review-average-rating-value',
 										{
 											className: 'is-style-slash',
 										},
 									],
 									[
-										'surecart/product-average-rating-stars',
+										'surecart/product-review-average-rating-stars',
 										{},
 									],
 								],
@@ -108,7 +108,7 @@ export const TEMPLATE = [
 								},
 								[
 									[
-										'surecart/product-total-rating',
+										'surecart/product-review-total-rating',
 										{
 											className: 'is-style-plus-sign',
 											style: {
@@ -132,7 +132,7 @@ export const TEMPLATE = [
 						],
 					],
 					[
-						'surecart/review-breakdown',
+						'surecart/product-review-breakdown',
 						{
 							className: 'is-style-default',
 							style: {
@@ -197,7 +197,7 @@ export const TEMPLATE = [
 				},
 				[
 					[
-						'surecart/review-add-button',
+						'surecart/product-review-add-button',
 						{
 							width: 100,
 							className: 'is-style-fill',
@@ -414,7 +414,7 @@ export const TEMPLATE = [
 												},
 												[
 													[
-														'surecart/review-reviewer-name',
+														'surecart/product-review-reviewer-name',
 														{
 															style: {
 																spacing: {
@@ -433,7 +433,7 @@ export const TEMPLATE = [
 														},
 													],
 													[
-														'surecart/review-verified-badge',
+														'surecart/product-review-verified-badge',
 														{
 															show_label: true,
 															label: 'Verified Buyer',
@@ -470,7 +470,7 @@ export const TEMPLATE = [
 												],
 											],
 											[
-												'surecart/review-date',
+												'surecart/product-review-date',
 												{
 													datetime:
 														'2025-10-02T09:37:00.225Z',
@@ -479,9 +479,9 @@ export const TEMPLATE = [
 											],
 										],
 									],
-									['surecart/review-rating-stars', {}],
+									['surecart/product-review-rating-stars', {}],
 									[
-										'surecart/review-title',
+										'surecart/product-review-title',
 										{
 											style: {
 												typography: {
@@ -491,7 +491,7 @@ export const TEMPLATE = [
 											},
 										},
 									],
-									['surecart/review-content', {}],
+									['surecart/product-review-content', {}],
 								],
 							],
 						],
@@ -525,7 +525,7 @@ export const TEMPLATE = [
 				},
 				[
 					[
-						'surecart/review-add-button',
+						'surecart/product-review-add-button',
 						{
 							width: 100,
 							className: 'is-style-fill',

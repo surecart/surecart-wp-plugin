@@ -70,7 +70,7 @@ const TEMPLATE = [
 						},
 						[
 							[
-								'surecart/review-reviewer-name',
+								'surecart/product-review-reviewer-name',
 								{
 									style: {
 										spacing: {
@@ -87,7 +87,7 @@ const TEMPLATE = [
 								},
 							],
 							[
-								'surecart/review-verified-badge',
+								'surecart/product-review-verified-badge',
 								{
 									show_label: true,
 									label: 'Verified Buyer',
@@ -116,7 +116,7 @@ const TEMPLATE = [
 						],
 					],
 					[
-						'surecart/review-date',
+						'surecart/product-review-date',
 						{
 							datetime: '2025-10-02T09:37:00.225Z',
 							format: 'human-diff',
@@ -124,9 +124,9 @@ const TEMPLATE = [
 					],
 				],
 			],
-			['surecart/review-rating-stars', {}],
+			['surecart/product-review-rating-stars', {}],
 			[
-				'surecart/review-title',
+				'surecart/product-review-title',
 				{
 					style: {
 						typography: {
@@ -136,7 +136,7 @@ const TEMPLATE = [
 					},
 				},
 			],
-			['surecart/review-content', {}],
+			['surecart/product-review-content', {}],
 		],
 	],
 ];

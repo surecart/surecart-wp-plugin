@@ -61,7 +61,7 @@ export default function Edit() {
 					},
 					[
 						[
-							'surecart/product-average-rating',
+							'surecart/product-review-average-rating',
 							{
 								style: {
 									spacing: {
@@ -80,12 +80,12 @@ export default function Edit() {
 							},
 							[
 								[
-									'surecart/product-average-rating-value',
+									'surecart/product-review-average-rating-value',
 									{
 										className: 'is-style-slash',
 									},
 								],
-								['surecart/product-average-rating-stars'],
+								['surecart/product-review-average-rating-stars'],
 							],
 						],
 						[
@@ -103,7 +103,7 @@ export default function Edit() {
 							},
 							[
 								[
-									'surecart/product-total-rating',
+									'surecart/product-review-total-rating',
 									{
 										className: 'is-style-plus-sign',
 										style: {
@@ -127,7 +127,7 @@ export default function Edit() {
 					],
 				],
 				[
-					'surecart/review-breakdown',
+					'surecart/product-review-breakdown',
 					{
 						className: 'is-style-default',
 						style: {

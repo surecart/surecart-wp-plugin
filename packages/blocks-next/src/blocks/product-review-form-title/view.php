@@ -1,6 +1,6 @@
 <div <?php echo wp_kses_data( get_block_wrapper_attributes() ); ?>>
 	<?php if ( ! empty( $label ) ) : ?>
-		<label class="sc-form-label title-label" for="review-title">
+		<label class="sc-form-label title-label" for="product-review-title">
 			<?php echo wp_kses_data( $label ); ?>
 			<span class="required-indicator"> *</span>
 		</label>
@@ -8,7 +8,7 @@
 
 	<input
 		type="text"
-		id="review-title"
+		id="product-review-title"
 		name="title"
 		class="sc-form-control title-input"
 		placeholder="<?php echo esc_attr( $placeholder ); ?>"

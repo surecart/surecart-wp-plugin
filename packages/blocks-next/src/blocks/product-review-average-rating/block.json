@@ -1,0 +1,78 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "surecart/product-review-average-rating",
+	"title": "Product Average Rating",
+	"description": "Displays the average product rating.",
+	"version": "1.0.0",
+	"category": "surecart-product-page",
+	"usesContext": ["postId"],
+	"ancestor": [
+		"surecart/product-page",
+		"surecart/product-quick-view",
+		"surecart/product-review-list",
+		"surecart/product-review-template",
+		"surecart/sticky-purchase",
+		"surecart/product-review-summary"
+	],
+	"allowedBlocks": [
+		"surecart/product-review-average-rating-stars",
+		"surecart/product-review-average-rating-value"
+	],
+	"providesContext": {
+		"show_value": "show_value"
+	},
+	"attributes": {
+		"show_value": {
+			"type": "boolean",
+			"default": true
+		},
+		"show_for_zero_reviews": {
+			"type": "boolean",
+			"default": true
+		}
+	},
+	"example": {},
+	"supports": {
+		"interactivity": true,
+		"anchor": true,
+		"color": {
+			"gradients": true,
+			"text": true,
+			"background": false,
+			"__experimentalDefaultControls": {
+				"text": true,
+				"button": true
+			}
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true,
+			"textAlign": true
+		},
+		"layout": {
+			"allowSwitching": false,
+			"allowInheriting": false,
+			"default": {
+				"type": "flex",
+				"justifyContent": "left"
+			}
+		},
+		"spacing": {
+			"padding": true,
+			"margin": true,
+			"blockGap": {
+				"__experimentalDefault": "4px"
+			},
+			"__experimentalDefaultControls": {
+				"padding": true,
+				"margin": true,
+				"blockGap": true
+			}
+		}
+	},
+	"render": "file:./view.php",
+	"textdomain": "surecart",
+	"editorScript": "file:./index.js",
+	"style": "file:./style-index.css"
+}

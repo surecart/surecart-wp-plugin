@@ -2,7 +2,7 @@
 use SureCart\Models\Blocks\ProductReviewBlock;
 ?>
 
-<ul <?php echo wp_kses_data( get_block_wrapper_attributes( $wrapper_attributes ) ); ?>>
+<ul <?php echo wp_kses_data( get_block_wrapper_attributes() ); ?>>
 	<?php
 	foreach ( $reviews ?? [] as $review ) :
 		if ( empty( $review->id ) ) {

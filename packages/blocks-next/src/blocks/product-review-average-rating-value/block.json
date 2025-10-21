@@ -1,0 +1,61 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "surecart/product-review-average-rating-value",
+	"title": "Product Average Rating Value",
+	"description": "Displays the average product rating value.",
+	"version": "1.0.0",
+	"category": "surecart-product-page",
+	"parent": ["surecart/product-review-average-rating"],
+	"example": {},
+	"usesContext": ["show_value"],
+	"attributes": {},
+	"styles": [
+		{
+			"name": "none",
+			"label": "None",
+			"isDefault": true
+		},
+		{
+			"name": "parentheses",
+			"label": "Parentheses"
+		},
+		{
+			"name": "slash",
+			"label": "/ 5"
+		}
+	],
+	"supports": {
+		"interactivity": true,
+		"anchor": true,
+		"color": {
+			"gradients": true,
+			"text": true,
+			"background": true,
+			"__experimentalDefaultControls": {
+				"text": true,
+				"background": true
+			}
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true,
+			"textAlign": true,
+			"__experimentalFontFamily": true,
+			"__experimentalFontWeight": true,
+			"__experimentalFontStyle": true,
+			"__experimentalTextTransform": true,
+			"__experimentalTextDecoration": true,
+			"__experimentalLetterSpacing": true,
+			"__experimentalDefaultControls": {
+				"fontSize": true,
+				"fontAppearance": true,
+				"textTransform": true
+			}
+		}
+	},
+	"textdomain": "surecart",
+	"render": "file:./view.php",
+	"editorScript": "file:./index.js",
+	"style": "file:./style-index.css"
+}
