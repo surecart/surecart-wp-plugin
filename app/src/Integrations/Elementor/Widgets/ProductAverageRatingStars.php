@@ -112,9 +112,8 @@ class ProductAverageRatingStars extends \Elementor\Widget_Base {
 				'global'    => [
 					'default' => \Elementor\Core\Kits\Documents\Tabs\Global_Colors::COLOR_PRIMARY,
 				],
-				'default'   => '',
 				'selectors' => [
-					'{{WRAPPER}} .wp-block-surecart-product-review-average-rating-stars svg' => 'stroke: {{VALUE}}; color: {{VALUE}};',
+					'{{WRAPPER}} .wp-block-surecart-product-review-average-rating-stars svg' => 'stroke: {{VALUE}}; color: {{VALUE}}; fill: {{VALUE}};',
 				],
 			)
 		);
@@ -189,11 +188,16 @@ class ProductAverageRatingStars extends \Elementor\Widget_Base {
 	protected function render() {
 		$settings   = $this->get_settings_for_display();
 		$size       = $settings['size']['size'] ?? 25;
-		$fill_color = $settings['fill_color'] ?? 'none';
+		$fill_color = 'var(--e-global-color-primary)'; // fallback for block.
 
 		if ( \Elementor\Plugin::$instance->editor->is_edit_mode() ) {
 			$this->render_preview( $size );
 			return;
+		}
+
+		$product = sc_get_product();
+		if ( empty( $product ) || empty( $product->total_reviews ) ) {
+			$fill_color = 'none';
 		}
 		?>
 		<div <?php $this->print_render_attribute_string( 'wrapper' ); ?>>
@@ -215,7 +219,7 @@ class ProductAverageRatingStars extends \Elementor\Widget_Base {
 			<?php
 			for ( $i = 1; $i <= 5; $i++ ) {
 				$is_full = $i <= 4;
-				$is_half = $i === 5;
+				$is_half = 5 === $i;
 				?>
 				<svg height="<?php echo esc_attr( $size ); ?>" width="<?php echo esc_attr( $size ); ?>" viewBox="0 0 24 24" fill="<?php echo $is_full ? 'currentColor' : 'none'; ?>" stroke="currentColor" stroke-width="2">
 					<?php if ( $is_half ) : ?>
