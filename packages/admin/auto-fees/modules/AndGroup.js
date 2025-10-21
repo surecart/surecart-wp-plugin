@@ -73,7 +73,7 @@ export default ({
 	let operators = [];
 	let attributes = [];
 
-	for (const rule of ruleSchema?.attributes ?? []) {
+	for (const rule of ruleSchema?.rule_schema ?? []) {
 		const operatorsChoices = [];
 		for (const operator of rule.operators) {
 			operatorsChoices.push({
