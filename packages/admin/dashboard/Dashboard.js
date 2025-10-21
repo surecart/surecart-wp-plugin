@@ -3,6 +3,7 @@ import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import { useState } from 'react';
 import UpdateModel from '../templates/UpdateModel';
+import { ScButton, ScIcon } from '@surecart/components-react';
 import Logo from '../templates/Logo';
 import Setup from './Setup';
 import Chart from './chart';
@@ -15,7 +16,27 @@ export default () => {
 
 	return (
 		<UpdateModel
-			title={<Logo display="block" />}
+			title={
+				<sc-breadcrumbs>
+					<sc-breadcrumb>
+						<Logo display="block" />
+					</sc-breadcrumb>
+					<sc-breadcrumb>{__('Dashboard', 'surecart')}</sc-breadcrumb>
+				</sc-breadcrumbs>
+			}
+			button={
+				<ScButton
+					href={`https://app.surecart.com/dashboard?switch_account_id=${scData?.account_id}`}
+					target="_blank"
+				>
+					{__('App Dashboard', 'surecart')}
+					<ScIcon
+						name="arrow-up-right"
+						slot="suffix"
+						aria-hidden="true"
+					/>
+				</ScButton>
+			}
 			css={css`
 				--sc-card-border-radius: var(--sc-border-radius-x-large);
 				padding: 0 var(--sc-spacing-large);
