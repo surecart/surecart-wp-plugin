@@ -4,6 +4,7 @@ import { useRef, useEffect, useState } from 'react';
 import { __ } from '@wordpress/i18n';
 import Litepicker from 'litepicker';
 import 'litepicker/dist/plugins/ranges';
+import dayjs from 'dayjs';
 
 export default ({ startDate, setStartDate, endDate, setEndDate }) => {
 	const dateRef = useRef();
@@ -34,8 +35,11 @@ export default ({ startDate, setStartDate, endDate, setEndDate }) => {
 				picker.setDateRange(startDate, endDate);
 				setInputSize(dateRef.current.value.length);
 				picker.on('button:apply', (start, end) => {
-					setStartDate(start.dateInstance);
-					setEndDate(end.dateInstance);
+					// Normalize dates to start and end of day for API
+					setStartDate(
+						dayjs(start.dateInstance).startOf('day').toDate()
+					);
+					setEndDate(dayjs(end.dateInstance).endOf('day').toDate());
 					setInputSize(dateRef.current.value.length);
 				});
 			},

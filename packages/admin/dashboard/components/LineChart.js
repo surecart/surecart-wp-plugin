@@ -114,10 +114,17 @@ export const options = (type) => ({
 	},
 });
 
-export default ({ data, previousData, type = 'amount', className }) => {
+export default ({
+	data,
+	previousData,
+	type = 'amount',
+	interval = 'day',
+	className,
+}) => {
 	const labels = data.map((item) => {
-		// Format unix timestamp to short date
-		return dayjs.unix(item.interval_at).format('MMM D');
+		// Format unix timestamp - include time only for hourly intervals
+		const format = interval === 'hour' ? 'MMM D hA' : 'MMM D';
+		return dayjs.unix(item.interval_at).format(format);
 	});
 
 	const datasets = [

@@ -20,7 +20,13 @@ import { formatNumber } from '../../util';
 import { __ } from '@wordpress/i18n';
 import { ProgressBar } from '@wordpress/components';
 import Tab from './Tab';
-import { calculateSum, calculateAverage, calculateTrend } from './utils';
+import {
+	calculateSum,
+	calculateAverage,
+	calculateTrend,
+	getValidReportByOptions,
+	getOptimalReportBy,
+} from './utils';
 
 export default ({ liveMode, setLiveMode }) => {
 	const [startDate, setStartDate] = useState(dayjs().add(-1, 'month'));
@@ -31,23 +37,33 @@ export default ({ liveMode, setLiveMode }) => {
 	const [previousData, setPreviousData] = useState([]);
 	const currency = 'usd';
 	const [tab, setTab] = useState('amount');
+	const [validReportByOptions, setValidReportByOptions] = useState({
+		hour: true,
+		day: true,
+		week: true,
+		month: true,
+		year: true,
+	});
 
 	useEffect(() => {
-		let diffDays = endDate.diff(startDate, 'day');
+		// Calculate valid reportBy options based on date range (max 100 data points)
+		const validOptions = getValidReportByOptions(startDate, endDate, 100);
+		setValidReportByOptions(validOptions);
 
-		if (diffDays < 366 && 'year' === reportBy) {
-			setStartDate(dayjs(startDate).subtract(1, 'year'));
-		} else if (diffDays < 32 && 'month' === reportBy) {
-			setStartDate(dayjs(startDate).subtract(2, 'month'));
-		} else if (diffDays > 200 && 'day' === reportBy) {
-			setStartDate(dayjs(endDate).subtract(199, 'day'));
-		} else {
-			getOrderStats(startDate.format(), endDate.format());
-			getPreviousOrderStats(
-				dayjs(startDate).subtract(diffDays, 'day').format(),
-				startDate.format()
-			);
+		// If current reportBy would exceed max data points, auto-adjust to optimal interval
+		if (!validOptions[reportBy]) {
+			const optimalInterval = getOptimalReportBy(startDate, endDate, 100);
+			setReportBy(optimalInterval);
+			return; // Exit early, will re-trigger with new reportBy
 		}
+
+		// Fetch data for current and previous periods
+		// Calculate the time difference in milliseconds to get exact previous period
+		const diffMs = endDate.diff(startDate, 'millisecond');
+		const previousStart = dayjs(startDate).subtract(diffMs, 'millisecond');
+
+		getOrderStats(startDate.format(), endDate.format());
+		getPreviousOrderStats(previousStart.format(), startDate.format());
 	}, [startDate, endDate, reportBy, liveMode]);
 
 	/**
@@ -167,14 +183,29 @@ export default ({ liveMode, setLiveMode }) => {
 							}
 						`}
 						choices={[
-							{ label: __('Daily', 'surecart'), value: 'day' },
-							{ label: __('Weekly', 'surecart'), value: 'week' },
+							{
+								label: __('Hourly', 'surecart'),
+								value: 'hour',
+							},
+							{
+								label: __('Daily', 'surecart'),
+								value: 'day',
+							},
+							{
+								label: __('Weekly', 'surecart'),
+								value: 'week',
+							},
 							{
 								label: __('Monthly', 'surecart'),
 								value: 'month',
 							},
-							{ label: __('Yearly', 'surecart'), value: 'year' },
-						]}
+							{
+								label: __('Yearly', 'surecart'),
+								value: 'year',
+							},
+						].filter(
+							(choice) => validReportByOptions[choice.value]
+						)}
 						onScChange={(e) => {
 							setReportBy(e.target.value);
 						}}
@@ -282,6 +313,7 @@ export default ({ liveMode, setLiveMode }) => {
 						data={data}
 						previousData={previousData}
 						type={tab}
+						interval={reportBy}
 						css={css`
 							aspect-ratio: 3.75/1;
 							width: 100%;
