@@ -22,7 +22,7 @@ import {
 import DateTimePicker from './DateTimePicker';
 import { formatDateTime } from '../../util/time';
 import { getInputType } from '../utils/ruleQueryUtils';
-import { attributeLabels } from '../utils/labelTranslations';
+import { attributeLabels, operatorLabels } from '../utils/labelTranslations';
 
 export default ({
 	addLeaf,
@@ -77,7 +77,7 @@ export default ({
 		const operatorsChoices = [];
 		for (const operator of rule.operators) {
 			operatorsChoices.push({
-				label: operator,
+				label: operatorLabels?.[operator],
 				value: operator,
 			});
 		}

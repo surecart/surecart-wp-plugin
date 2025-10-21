@@ -71,3 +71,12 @@ export const attributeLabels = {
 	),
 	'order.order_type': __('Order Type', 'surecart'),
 };
+
+export const operatorLabels = {
+	is: __('is', 'surecart'),
+	is_not: __('is not', 'surecart'),
+	is_more_than: __('is more than', 'surecart'),
+	is_less_than: __('is less than', 'surecart'),
+	is_at_least: __('is at least', 'surecart'),
+	is_at_most: __('is at most', 'surecart'),
+};
