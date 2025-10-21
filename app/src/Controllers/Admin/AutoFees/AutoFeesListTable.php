@@ -223,7 +223,8 @@ class AutoFeesListTable extends ListTable {
 		return $this->row_actions(
 			array_filter(
 				[
-					'edit' => '<a href="' . esc_url( \SureCart::getUrl()->edit( 'auto-fee', $auto_fees->id ) ) . '" aria-label="' . esc_attr( 'Edit Dynamic Pricing', 'surecart' ) . '">' . esc_html__( 'Edit', 'surecart' ) . '</a>',
+					'edit'   => '<a href="' . esc_url( \SureCart::getUrl()->edit( 'auto-fee', $auto_fees->id ) ) . '" aria-label="' . esc_attr( 'Edit Dynamic Pricing', 'surecart' ) . '">' . esc_html__( 'Edit', 'surecart' ) . '</a>',
+					'delete' => '<a href="' . esc_url( $this->get_action_url( $auto_fees->id, 'delete' ) ) . '">' . esc_html__( 'Delete', 'surecart' ) . '</a>',
 				]
 			)
 		);
@@ -282,5 +283,26 @@ class AutoFeesListTable extends ListTable {
 		 * @param string $which The location of the extra table nav markup: 'top' or 'bottom'.
 		 */
 		do_action( 'manage_auto_fees_extra_tablenav', $which );
+	}
+
+	/**
+	 * Get action url.
+	 *
+	 * @param int    $id     The id.
+	 * @param string $action The action.
+	 *
+	 * @return string
+	 */
+	public function get_action_url( $id, $action ) {
+		return esc_url(
+			add_query_arg(
+				[
+					'action' => $action,
+					'nonce'  => wp_create_nonce( $action . '_auto_fee' ),
+					'id'     => $id,
+				],
+				esc_url_raw( admin_url( 'admin.php?page=sc-auto-fees' ) )
+			)
+		);
 	}
 }

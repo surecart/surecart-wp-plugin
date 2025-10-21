@@ -27,6 +27,12 @@ class AutoFeesController extends AdminController {
 			)
 		);
 
+		$this->withNotices(
+			array(
+				'deleted' => __( 'Dynamic Price deleted.', 'surecart' ),
+			)
+		);
+
 		return \SureCart::view( 'admin/auto-fees/index' )->with(
 			[
 				'table' => $table,
@@ -89,5 +95,22 @@ class AutoFeesController extends AdminController {
 		return \SureCart::redirect()->to(
 			esc_url_raw( add_query_arg( 'status', $status, admin_url( 'admin.php?page=sc-auto-fees' ) ) )
 		);
+	}
+
+	/**
+	 * Delete a dynamic price.
+	 *
+	 * @param \SureCartCore\Http\Request $request Request object.
+	 *
+	 * @return \SureCartCore\Responses\RedirectResponse
+	 */
+	public function delete( $request ) {
+		$deleted = AutoFee::delete( $request->query( 'id' ) );
+
+		if ( is_wp_error( $deleted ) ) {
+			wp_die( implode( ' ', array_map( 'esc_html', $deleted->get_error_messages() ) ) );
+		}
+
+		return \SureCart::redirect()->to( add_query_arg( array( 'deleted' => true ), \SureCart::getUrl()->index( 'auto-fees' ) ) );
 	}
 }
