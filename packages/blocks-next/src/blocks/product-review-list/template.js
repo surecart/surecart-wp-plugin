@@ -63,7 +63,7 @@ export const TEMPLATE = [
 						},
 						[
 							[
-								'surecart/product-average-rating',
+								'surecart/product-review-average-rating',
 								{
 									style: {
 										spacing: {
