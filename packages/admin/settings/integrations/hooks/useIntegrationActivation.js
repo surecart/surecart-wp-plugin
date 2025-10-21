@@ -20,8 +20,7 @@ export default function useIntegrationActivation(
 	record,
 	{ onSuccess, onError } = {}
 ) {
-	const { saveEntityRecord, invalidateResolutionForStore } =
-		useDispatch(coreStore);
+	const { saveEntityRecord } = useDispatch(coreStore);
 	const [isSaving, setIsSaving] = useState(false);
 	const { receiveEntityRecords } = useDispatch(coreStore);
 
@@ -98,7 +97,7 @@ export default function useIntegrationActivation(
 	return {
 		isLoading: isSaving,
 		activate,
-		canActivate: !!pluginData,
+		canActivate: !!record?.plugin_file,
 		activationLink,
 	};
 }

@@ -66,9 +66,12 @@ class IntegrationCatalog extends ExternalApiModel {
 			return __( 'Enabled', 'surecart' );
 		}
 		if ( in_array( $this->activation_type, [ 'plugin', 'theme' ], true ) ) {
-			return __( 'Install', 'surecart' );
+			if ( 'inactive' === $this->status ) {
+				return __( 'Activate', 'surecart' );
+			}
+			return __( 'Install & Activate', 'surecart' );
 		}
-		return __( 'Enable', 'surecart' );
+		return __( 'Activate', 'surecart' );
 	}
 
 	/**
@@ -84,12 +87,28 @@ class IntegrationCatalog extends ExternalApiModel {
 			return 'active';
 		}
 		if ( 'plugin' === $this->activation_type ) {
-			if ( ! $this->is_plugin_active ) {
+			if ( $this->is_plugin_installed && ! $this->is_plugin_active ) {
 				return 'inactive';
 			}
-			return 'not-installed';
+			if ( ! $this->is_plugin_installed ) {
+				return 'not-installed';
+			}
 		}
 		return 'inactive';
+	}
+
+	/**
+	 * Get the is plugin installed attribute.
+	 *
+	 * @return bool
+	 */
+	public function getIsPluginInstalledAttribute() {
+		if ( empty( $this->acf['plugin_file'] ) ) {
+			return false;
+		}
+
+		$plugin_path = WP_PLUGIN_DIR . '/' . $this->acf['plugin_file'];
+		return file_exists( $plugin_path );
 	}
 
 	/**
