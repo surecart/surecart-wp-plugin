@@ -11,7 +11,7 @@ import {
 } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
-import MetaDataEditModal from './MetaDataEditModal';
+import MetaDataModal from './MetaDataModal';
 
 export default ({ order, loading, onUpdate }) => {
 	const [modalOpen, setModalOpen] = useState(false);
@@ -28,14 +28,11 @@ export default ({ order, loading, onUpdate }) => {
 		return null;
 	}
 
-	const handleMetadataUpdate = (updatedCheckout) => {
-		if (onUpdate) {
-			onUpdate({
-				...order,
-				checkout: updatedCheckout,
-			});
-		}
-	};
+	const metadatas = Object.keys(metadata || {}).map((key) => ({
+		key,
+		label: key.charAt(0).toUpperCase() + key.slice(1).replaceAll('_', ' '),
+		value: metadata[key],
+	}));
 
 	return (
 		<>
@@ -61,36 +58,37 @@ export default ({ order, loading, onUpdate }) => {
 				}
 			>
 				<div
-				css={css`
-					display: grid;
-					gap: 0.5em;
-				`}
-			>
-				{Object.keys(metadata).map((key) => (
-					<div key={key}>
-						<ScText
-							tag="h3"
-							style={{
-								'--font-weight': 'var(--sc-font-weight-bold)',
-								'--font-size': 'var(--sc-font-size-medium)',
-							}}
-						>
-							{key.replaceAll('_', ' ')}
-						</ScText>
-						<div>{metadata[key]}</div>
-					</div>
-				))}
-			</div>
-		</Box>
+					css={css`
+						display: grid;
+						gap: 0.5em;
+					`}
+				>
+					{metadatas.map(({ key, label, value }) => (
+						<div key={key}>
+							<ScText
+								tag="h3"
+								style={{
+									'--font-weight':
+										'var(--sc-font-weight-bold)',
+									'--font-size': 'var(--sc-font-size-medium)',
+								}}
+							>
+								{label}
+							</ScText>
+							<div>{value}</div>
+						</div>
+					))}
+				</div>
+			</Box>
 
-		<MetaDataEditModal
-			open={modalOpen}
-			onRequestClose={() => setModalOpen(false)}
-			metadata={metadata}
-			orderId={order?.id}
-			checkoutId={order?.checkout?.id}
-			onSuccess={handleMetadataUpdate}
-		/>
+			{modalOpen && (
+				<MetaDataModal
+					open={modalOpen}
+					onRequestClose={() => setModalOpen(false)}
+					order={order}
+					metadatas={metadatas}
+				/>
+			)}
 		</>
 	);
 };
