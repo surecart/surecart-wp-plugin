@@ -105,9 +105,6 @@ export default function MetaDataModal({
 				label={__('Edit Additional Order Data', 'surecart')}
 				open={open}
 				onScAfterHide={onRequestClose}
-				css={css`
-					--sc-form-row-spacing: var(--sc-spacing-large);
-				`}
 			>
 				<div
 					css={css`
