@@ -2,6 +2,7 @@
  * External dependencies.
  */
 import { useEntityRecords } from '@wordpress/core-data';
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies.
