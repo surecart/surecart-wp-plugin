@@ -14,7 +14,7 @@ export default {
 		icon: 'file',
 	},
 	bogo: {
-		enabled: true,
+		enabled: false,
 		amount_adjustment: null,
 		discount: true,
 		fee_target: 'line_item',
@@ -42,7 +42,7 @@ export default {
 		icon: 'tags',
 	},
 	free_shipping: {
-		enabled: true,
+		enabled: false,
 		amount_adjustment: null,
 		discount: true,
 		fee_target: 'shipping',
@@ -73,7 +73,7 @@ export default {
 		icon: 'package-check',
 	},
 	installment_payment_processing_fee: {
-		enabled: true,
+		enabled: false,
 		amount_adjustment: null,
 		discount: false,
 		fee_target: 'line_item',
@@ -104,7 +104,7 @@ export default {
 		icon: 'credit-card',
 	},
 	subscription_renewal_discount: {
-		enabled: true,
+		enabled: false,
 		amount_adjustment: null,
 		discount: true,
 		fee_target: 'line_item',
@@ -132,7 +132,7 @@ export default {
 		icon: 'hand-coins',
 	},
 	bulk_purchase_discount: {
-		enabled: true,
+		enabled: false,
 		amount_adjustment: null,
 		discount: true,
 		fee_target: 'line_item',
@@ -160,7 +160,7 @@ export default {
 		icon: 'refresh-cw',
 	},
 	member_only_discount: {
-		enabled: true,
+		enabled: false,
 		amount_adjustment: null,
 		discount: true,
 		fee_target: 'checkout',
@@ -188,7 +188,7 @@ export default {
 		icon: 'users',
 	},
 	first_time_customer_discount: {
-		enabled: true,
+		enabled: false,
 		amount_adjustment: null,
 		discount: true,
 		fee_target: 'checkout',
