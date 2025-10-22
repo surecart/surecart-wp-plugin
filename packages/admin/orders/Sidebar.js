@@ -97,7 +97,16 @@ export default ({ order, checkout, loading, onManuallyRefetchOrder }) => {
 			/>
 
 			<Purchases checkoutId={checkout?.id} />
-			<MetaData order={order} loading={loading} />
+			<MetaData
+				order={order}
+				loading={loading}
+				onUpdate={(updatedOrder) => {
+					receiveEntityRecords('surecart', 'order', updatedOrder);
+					createSuccessNotice(__('Order data updated.', 'surecart'), {
+						type: 'snackbar',
+					});
+				}}
+			/>
 
 			<EditAddressModal
 				open={modal === modals.EDIT_ADDRESS}
