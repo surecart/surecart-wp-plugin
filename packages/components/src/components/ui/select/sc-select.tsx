@@ -397,7 +397,7 @@ export class ScSelectDropdown {
 
   renderItem(choice: ChoiceItem, index: number) {
     const uniqueKey = `${choice?.value || choice?.label || 'item'}-${index}`;
-    
+
     if (choice?.choices?.length) {
       return <sc-menu-label key={uniqueKey}>{choice?.label}</sc-menu-label>;
     }
@@ -512,7 +512,12 @@ export class ScSelectDropdown {
               </sc-input>
             )}
 
-            <sc-menu style={{ maxHeight: '210px', overflow: 'auto' }} exportparts="base:menu__base" onScroll={e => this.handleMenuScroll(e)} aria-multiselectable="false">
+            <sc-menu
+              style={{ maxHeight: this.open ? '210px' : '0px', overflow: 'auto' }}
+              exportparts="base:menu__base"
+              onScroll={e => this.handleMenuScroll(e)}
+              aria-multiselectable="false"
+            >
               <slot name="prefix"></slot>
               {(this.filteredChoices || []).map((choice, index) => {
                 return [this.renderItem(choice, index), (choice.choices || []).map(choice => this.renderItem(choice, index))];

@@ -6,7 +6,6 @@
 		position: fixed;
 		bottom: var(--sc-quick-add-inset, 30px);
 		right: var(--sc-quick-add-inset, 30px);
-		transform: scale(0.95);
 		opacity: 0;
 		z-index: 10000;
 		box-sizing: border-box;
@@ -19,7 +18,7 @@
 		box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.3);
 		background: var(--sc-panel-background-color);
 		overflow: auto;
-		transition: opacity, transform, var(--sc-transition-medium);
+		transition: opacity var(--sc-transition-medium);
 
 		&__content {
 			padding: 30px;
@@ -45,51 +44,69 @@
 		&.position-center-center {
 			top: 50%;
 			left: 50%;
-			transform: translate(-50%, -50%) !important;
+			bottom: auto;
+			right: auto;
+			transform: translate(-50%, -50%);
 		}
 
 		&.position-top-left {
 			top: var(--sc-quick-add-inset, 30px);
 			left: var(--sc-quick-add-inset, 30px);
+			bottom: auto;
+			right: auto;
 		}
 
 		&.position-top-center {
 			top: var(--sc-quick-add-inset, 30px);
 			left: 50%;
-			transform: translateX(-50%) !important;
+			bottom: auto;
+			right: auto;
+			transform: translateX(-50%);
 		}
 
 		&.position-top-right {
 			top: var(--sc-quick-add-inset, 30px);
 			right: var(--sc-quick-add-inset, 30px);
+			bottom: auto;
+			left: auto;
 		}
 
 		&.position-center-left {
 			top: 50%;
 			left: var(--sc-quick-add-inset, 30px);
-			transform: translateY(-50%) !important;
+			bottom: auto;
+			right: auto;
+			transform: translateY(-50%);
 		}
 
 		&.position-center-right {
 			top: 50%;
 			right: var(--sc-quick-add-inset, 30px);
-			transform: translateY(-50%) !important;
+			bottom: auto;
+			left: auto;
+			transform: translateY(-50%);
 		}
 
 		&.position-bottom-left {
 			bottom: var(--sc-quick-add-inset, 30px);
 			left: var(--sc-quick-add-inset, 30px);
+			top: auto;
+			right: auto;
 		}
 
 		&.position-bottom-center {
 			bottom: var(--sc-quick-add-inset, 30px);
 			left: 50%;
-			transform: translateX(-50%) !important;
+			top: auto;
+			right: auto;
+			transform: translateX(-50%);
 		}
 
 		&.position-bottom-right {
 			bottom: var(--sc-quick-add-inset, 30px);
 			right: var(--sc-quick-add-inset, 30px);
+			top: auto;
+			left: auto;
 		}
 	}
 
@@ -110,7 +127,6 @@
 	&.sc-modal-active {
 		.sc-product-quick-view-dialog {
 			opacity: 1;
-			transform: scale(1);
 		}
 
 		.sc-product-quick-view-overlay {

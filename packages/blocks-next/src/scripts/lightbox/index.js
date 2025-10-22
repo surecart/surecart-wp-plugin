@@ -181,7 +181,7 @@ const { state, actions, callbacks } = store('surecart/lightbox', {
 			const { imageId, images } = getContext();
 
 			// Bails out if the image has not loaded yet.
-			if (!state.metadata[imageId].imageRef?.complete) {
+			if (!state.metadata[imageId]?.imageRef?.complete) {
 				return;
 			}
 
@@ -191,27 +191,35 @@ const { state, actions, callbacks } = store('surecart/lightbox', {
 			state.scrollLeftReset = document.documentElement.scrollLeft;
 
 			// get only the image ids that share the same galleryId as the imageId and are not hidden
-			state.images = (images || [imageId]).filter((id) => {
-				const metadata = state.metadata[id];
-				const imageRef = metadata?.imageRef;
+			state.images = (images || [imageId])
+				.filter((item) => {
+					const id = item?.id || item;
+					const metadata = state?.metadata[id];
+					const imageRef = metadata?.imageRef;
 
-				// Check if image exists and check visibility of image and all its parents
-				const isVisible =
-					imageRef &&
-					(function isElementVisible(element) {
-						while (element) {
-							const style = window.getComputedStyle(element);
-							if (style.display === 'none') return false;
-							element = element.parentElement;
-						}
-						return true;
-					})(imageRef);
+					// Don't show the lightbox if the image is not loaded or its a video.
+					if (!imageRef) {
+						return false;
+					}
 
-				return (
-					metadata?.galleryId ===
-						state.metadata[imageId]?.galleryId && isVisible
-				);
-			});
+					// Check if image exists and check visibility of image and all its parents
+					const isVisible =
+						imageRef &&
+						(function isElementVisible(element) {
+							while (element) {
+								const style = window.getComputedStyle(element);
+								if (style.display === 'none') return false;
+								element = element.parentElement;
+							}
+							return true;
+						})(imageRef);
+
+					return (
+						metadata?.galleryId ===
+							state.metadata[imageId]?.galleryId && isVisible
+					);
+				})
+				.map((item) => (item?.id ? item.id : item));
 
 			// Sets the current image index to the one that was clicked.
 			callbacks.setCurrentImageIndex(imageId);
@@ -510,6 +518,19 @@ const { state, actions, callbacks } = store('surecart/lightbox', {
 				imgMaxWidth * (containerWidth / containerMaxWidth);
 			const lightboxImgHeight =
 				imgMaxHeight * (containerHeight / containerMaxHeight);
+
+			// Get/update the screen position of the image to animate from there.
+			const swiper = state.currentImage.imageRef.closest('.swiper');
+			if (swiper) {
+				const { state: sliderState } = store('surecart/image-slider');
+
+				// Only update swiper container position if the slider is active.
+				if (sliderState && sliderState.active && sliderState.swiper) {
+					const { x, y } = swiper.getBoundingClientRect();
+					screenPosX = x;
+					screenPosY = y;
+				}
+			}
 
 			// As of this writing, using the calculations above will render the
 			// lightbox with a small, erroneous whitespace on the left side of the
