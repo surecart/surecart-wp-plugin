@@ -86,7 +86,7 @@ export default function MetaDataModal({
 					}
 				);
 
-				createSuccessNotice(__('Additional order data updated.', 'surecart'), {
+				createSuccessNotice(__('Order updated.', 'surecart'), {
 					type: 'snackbar',
 				});
 
