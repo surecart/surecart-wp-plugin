@@ -39,10 +39,11 @@ export default ({
 	const [operator, setOperator] = useState(leaf?.operator_label || null);
 	const [value, setValue] = useState(leaf?.comparison_value || null);
 	const [metadataKey, setMetadataKey] = useState(leaf?.metadata_key || null);
+	const target = 'shipping' === feeTarget ? 'checkout' : feeTarget;
 	const { record: ruleSchema } = useEntityRecord(
 		'surecart',
 		'rule-schema',
-		feeTarget
+		target
 	);
 
 	// Function to update the rules when any field changes
