@@ -1,7 +1,7 @@
 /**
  * External dependencies.
  */
-import { addQueryArgs } from '@wordpress/url';
+import { addQueryArgs, removeQueryArgs } from '@wordpress/url';
 import { useState } from '@wordpress/element';
 import { store } from '@surecart/data';
 import { useSelect } from '@wordpress/data';
@@ -15,16 +15,20 @@ import CreateAutoFee from './CreateAutoFee';
 /**
  * Returns the Model Edit URL.
  *
- * @param {number} postId Post ID.
+ * @param {number} id Auto Fee ID.
+ * @param {string} status Auto Fee status.
  *
- * @return {string} Post edit URL.
+ * @return {string} Auto Fee edit URL.
  */
-export function getEditURL(id) {
-	return addQueryArgs(window.location.href, { id });
+export function getEditURL({ id, ...query }) {
+	return addQueryArgs(removeQueryArgs(window.location.href, 'status'), {
+		id,
+		...(!!query ? query : {}),
+	});
 }
 
 export default () => {
-	const [historyId, setHistoryId] = useState(null);
+	const [history, setHistory] = useState(null);
 
 	/**
 	 * Replaces the browser URL with a edit link for a given id ID.
@@ -34,22 +38,30 @@ export default () => {
 	 * produced by the server. Otherwise, the URL will change unexpectedly.
 	 *
 	 * @param {number} id id for the model for which to generate edit URL.
+	 * @param {string} status Auto Fee status.
 	 */
-	const setBrowserURL = (id) => {
-		window.history.replaceState({ id }, 'Post ' + id, getEditURL(id));
-		setHistoryId(id);
+	const setBrowserURL = (args) => {
+		const { id } = args;
+		// we need an id.
+		if (!id) return;
+		// history didn't change.
+		if (JSON.stringify(args) === JSON.stringify(history)) return;
+		// replace the state
+		window.history.replaceState({ id }, 'Post ' + id, getEditURL(args));
+		// set history for next time.
+		setHistory(args);
 	};
 
-	const setId = (id) => {
-		if (id && id !== historyId) {
-			setBrowserURL(id);
-		}
-	};
 	// get the id from the store.
 	const id = useSelect((select) => select(store).selectPageId());
+
 	return id ? (
-		<EditAutoFee id={id} />
+		<EditAutoFee id={id} setBrowserURL={setBrowserURL} />
 	) : (
-		<CreateAutoFee onCreateAutoFee={setId} />
+		<CreateAutoFee
+			onCreateAutoFee={(id) => {
+				window.location.assign(getEditURL({ id, status: 'publish' }));
+			}}
+		/>
 	);
 };

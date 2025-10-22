@@ -8,7 +8,8 @@ import { __ } from '@wordpress/i18n';
 import { __experimentalConfirmDialog as ConfirmDialog } from '@wordpress/components';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
-import { useState } from '@wordpress/element';
+import { useState, useEffect } from '@wordpress/element';
+import { getQueryArg } from '@wordpress/url';
 
 /**
  * Internal dependencies.
@@ -36,11 +37,15 @@ import SaveButton from '../templates/SaveButton';
 import Box from '../ui/Box';
 import DateTimePicker from './modules/DateTimePicker';
 
-export default ({ id }) => {
+export default ({ id, setBrowserURL }) => {
 	const [error, setError] = useState(null);
+	const [publishing, setPublishing] = useState(false);
 	const [modal, setModal] = useState(false);
 	const { save } = useSave();
 	const { deleteEntityRecord, editEntityRecord } = useDispatch(coreStore);
+
+	const status = getQueryArg(window.location.href, 'status') || false;
+	const willPublish = 'publish' === status && !autoFee?.enabled;
 
 	const { autoFee, isSaving, loadError, isDeleting, hasLoadedAutoFee } =
 		useSelect(
@@ -75,6 +80,14 @@ export default ({ id }) => {
 		editEntityRecord('surecart', 'auto-fee', id, data);
 	};
 
+	useEffect(() => {
+		if (!willPublish || !autoFee || autoFee.enabled || publishing) return;
+		updateAutoFee({
+			enabled: true,
+		});
+		setPublishing(true);
+	}, [autoFee, status, willPublish]);
+
 	/**
 	 * Update the Dynamic Price.
 	 */
@@ -83,6 +96,7 @@ export default ({ id }) => {
 			await save({
 				successMessage: __('Dynamic Price updated.', 'surecart'),
 			});
+			setBrowserURL({ id });
 		} catch (e) {
 			console.error(e);
 			setError(e);
@@ -221,7 +235,9 @@ export default ({ id }) => {
 					<SaveButton
 						busy={isSaving || isDeleting || !hasLoadedAutoFee}
 					>
-						{__('Save', 'surecart')}
+						{willPublish && autoFee?.enabled
+							? __('Save & Publish', 'surecart')
+							: __('Update', 'surecart')}
 					</SaveButton>
 				</div>
 			}
