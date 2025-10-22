@@ -8,6 +8,7 @@ import { useState, useEffect } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { useDispatch, select } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
+import { store as noticesStore } from '@wordpress/notices';
 import apiFetch from '@wordpress/api-fetch';
 
 /**
@@ -32,6 +33,7 @@ export default function MetaDataModal({
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
 	const { receiveEntityRecords } = useDispatch(coreStore);
+	const { createSuccessNotice } = useDispatch(noticesStore);
 
 	const { baseURL } = select(coreStore).getEntityConfig(
 		'surecart',
@@ -83,6 +85,11 @@ export default function MetaDataModal({
 						},
 					}
 				);
+
+				createSuccessNotice(__('Additional order data updated.', 'surecart'), {
+					type: 'snackbar',
+				});
+
 				onRequestClose();
 			}
 		} catch (err) {

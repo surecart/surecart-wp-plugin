@@ -13,7 +13,7 @@ import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
 import MetaDataModal from './MetaDataModal';
 
-export default ({ order, loading, onUpdate }) => {
+export default ({ order, loading }) => {
 	const [modalOpen, setModalOpen] = useState(false);
 
 	const {
