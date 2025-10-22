@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: ecommerce, online store, subscriptions, stripe, payments
 Requires at least: 6.6
 Tested up to: 6.8
-Stable tag: 3.15.4
+Stable tag: 3.15.5
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -312,6 +312,14 @@ Yes, the checkout form can be customized using our visual builder. You can chang
 Accessibility is a huge priority for the entire team building SureCart. As you know, accessibility is an ongoing improvement task. Our development and QA teams are trained in accessibility best practices and build/test each new feature for accessibility. If you come across any edge issues, we want to know about it and will prioritize its resolution. Please contact us via our website.
 
 == Changelog ==
+
+= 3.15.5 - October 22nd, 2025 =
+- Improvement: Add php filter to disable setting first price choice by default.
+- Improvement: Do not use "grab" cursor for video media.
+- Fix: Disputes incorrectly showing for manual payment methods.
+- Fix: Various edge cases with product, prices, customer dropdowns in admin.
+- Fix: Resubscribe button not opening popup after merchant cancels subscription manual payment method.
+- Fix: PHP error on collections page if collections page was not re-saved.
 
 = 3.15.4 - October 8th, 2025 =
 - Fix: Issue with downloads not being able to listed by customers with more restricted capabilities.
