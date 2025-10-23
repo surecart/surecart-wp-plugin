@@ -66,10 +66,16 @@ class ProductReviewListBlock extends AbstractProductListBlock {
 			'product_ids[]' => [ $this->product_id ],
 		);
 
-		// Filter by star rating if provided.
+		// Filter by star ratings if provided.
 		$stars_filter = $this->url->getArg( 'ratings' );
-		if ( ! empty( $stars_filter ) && is_numeric( $stars_filter ) && $stars_filter >= 1 && $stars_filter <= 5 ) {
-			$args['stars'] = (int) $stars_filter;
+		if ( ! empty( $stars_filter ) ) {
+			$stars = is_array( $stars_filter ) ? $stars_filter : [ $stars_filter ];
+
+			foreach ( $stars as $star ) {
+				if ( (int) $star >= 1 && (int) $star <= 5 ) {
+					$args['stars'][] = (int) $star;
+				}
+			}
 		}
 
 		if ( $orderby && in_array( $orderby, [ 'stars', 'created_at', 'updated_at' ], true ) ) {
