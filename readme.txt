@@ -313,6 +313,14 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 
 == Changelog ==
 
+= 3.16.0 - October 23rd, 2025 =
+- New: Refreshed admin dashboard.
+- New: Admin toolbar content edit quicklinks.
+- New: Edit order metadata on admin.
+- Fix: Issue with quick add popup in Avada theme.
+- Fix: Add extra validation for currency switcher block.
+- Fix: Extra markup on product quick add admin UI.
+
 = 3.15.5 - October 22nd, 2025 =
 - Improvement: Add php filter to disable setting first price choice by default.
 - Improvement: Do not use "grab" cursor for video media.
