@@ -4,6 +4,7 @@ namespace SureCart\Models;
 use ArrayAccess;
 use JsonSerializable;
 use SureCart\Models\Traits\SyncsCustomer;
+use WP_Error;
 
 /**
  * User class.
@@ -226,7 +227,7 @@ class User implements ArrayAccess, JsonSerializable {
 	/**
 	 * Get or create the live customer for this user.
 	 *
-	 * @return string|null
+	 * @return string|null|WP_Error
 	 */
 	protected function getLiveCustomer() {
 		$customer_id = $this->customerId( 'live' );
@@ -235,21 +236,33 @@ class User implements ArrayAccess, JsonSerializable {
 			return $customer_id;
 		}
 
-		$customer_id = $this->customerId( 'test' );
+		$customer = Customer::create(
+			[
+				'name'      => $this->user->display_name,
+				'email'     => strtolower( $this->user->user_email ),
+				'live_mode' => true,
+			],
+			false
+		);
 
-		if ( ! empty( $customer_id ) ) {
-			$customer = Customer::create(
-				[
-					'name'      => $this->user->display_name,
-					'email'     => strtolower( $this->user->user_email ),
-					'live_mode' => true,
-				],
-				false
-			);
-			return $customer->id ?? null;
+		if ( is_wp_error( $customer ) ) {
+			return $customer;
 		}
 
-		return null;
+		$customer_id = $customer->id ?? null;
+		if ( empty( $customer_id ) ) {
+			return new WP_Error(
+				'sc_no_customer_created',
+				__( 'Sorry, no customer is being created, please contact with admin.', 'surecart' )
+			);
+		}
+
+		$linked = $this->setCustomerId( $customer_id, 'live' );
+		if ( is_wp_error( $linked ) ) {
+			return $linked;
+		}
+
+		return $customer_id;
 	}
 
 	/**

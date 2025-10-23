@@ -264,6 +264,7 @@ class URLParamService {
 
 		// get the existing filters.
 		$existing_filters = $_GET[ $key ] ?? [];
+		$existing_filters = is_array( $existing_filters ) ? $existing_filters : [];
 
 		// add the new filter.
 		$filters = array_unique( array_merge( $existing_filters, [ $value ] ) );
@@ -377,6 +378,7 @@ class URLParamService {
 
 		// get the existing filters.
 		$existing_filters = $_GET[ $key ] ?? [];
+		$existing_filters = is_array( $existing_filters ) ? $existing_filters : [];
 
 		// remove the new filter.
 		$filters = array_diff( $existing_filters, [ $value ] );

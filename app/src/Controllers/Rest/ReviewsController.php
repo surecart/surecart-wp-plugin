@@ -33,8 +33,11 @@ class ReviewsController extends RestController {
 	 * @return \SureCart\Models\Model|\WP_Error
 	 */
 	protected function middleware( $class, \WP_REST_Request $request ) {
-		// set the user.
-		$class = $this->maybeSetUser( $class, $request );
+		// Only set the user for create operations (user review submissions).
+		// Skip for read operations (admin viewing) and other operations that don't require customer association runtime.
+		if ( 'POST' === $request->get_method() ) {
+			$class = $this->maybeSetUser( $class, $request );
+		}
 
 		// return the class.
 		return apply_filters( 'surecart/request/model', $class, $request );
@@ -95,14 +98,9 @@ class ReviewsController extends RestController {
 		}
 
 		// Get or create live customer.
-		$customer_id = $this->getLiveCustomerByUser( $user );
-
-		if ( empty( $customer_id ) ) {
-			return new \WP_Error(
-				'surecart_rest_review_no_customer',
-				__( 'Unable to identify customer for the current user.', 'surecart' ),
-				[ 'status' => 400 ]
-			);
+		$customer_id = $user->getLiveCustomer();
+		if ( is_wp_error( $customer_id ) ) {
+			return $customer_id;
 		}
 
 		// Set the customer ID on the review.

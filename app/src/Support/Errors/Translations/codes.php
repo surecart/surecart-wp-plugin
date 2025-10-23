@@ -151,4 +151,5 @@ return array(
 	'invoice.memo.too_long'                                => __( 'The memo is too long. Please enter a shorter memo. Maximum allowed length is 1000 characters.', 'surecart' ),
 	'invoice.footer.too_long'                              => __( 'The footer is too long. Please enter a shorter footer. Maximum allowed length is 1000 characters.', 'surecart' ),
 	'swap.swap_price.circular_with_existing_swap'          => __( 'This price swap would create a loop. Please select a different swap option.', 'surecart' ),
+	'review.product.blank'                                 => __( 'Please select a product to review.', 'surecart' ),
 );

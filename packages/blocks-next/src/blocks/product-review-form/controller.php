@@ -3,7 +3,7 @@ $product_id     = isset( $_GET['product-review-form'] ) ? (int) $_GET['product-r
 $has_product_id = ! empty( $product_id );
 
 // Only fetch product if we have an ID (for server-side rendering when opened via URL).
-$product       = $has_product_id ? sc_get_product( $product_id ) : null;
+$product       = sc_get_product( $product_id );
 $sc_product_id = $product ? $product->id : '';
 
 $close_url      = $has_product_id ? get_permalink( $product_id ) : '';
