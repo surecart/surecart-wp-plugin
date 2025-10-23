@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-10-23T16:20:35+00:00\n"
+"POT-Creation-Date: 2025-10-23T19:36:34+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.9.0\n"
 
@@ -340,7 +340,7 @@ msgstr ""
 #: customers/modules/Balance/ViewTransactions.js:114
 #: customers/modules/Charges.js:66
 #: customers/modules/Orders.js:65
-#: dashboard/Orders.js:149
+#: dashboard/Orders.js:151
 #: orders/modules/Charges.js:79
 #: orders/modules/Dispute/DisputeHistory.js:66
 #: orders/modules/Refund/RefundHistory.js:132
@@ -365,7 +365,7 @@ msgstr ""
 #: checkouts/modules/Payment.js:153
 #: checkouts/modules/Prices.js:140
 #: customers/modules/Orders.js:58
-#: dashboard/Orders.js:133
+#: dashboard/Orders.js:135
 #: invoices/modules/Payment.js:47
 #: invoices/modules/Prices.js:61
 #: orders/modules/LineItems/index.js:148
@@ -743,7 +743,7 @@ msgstr ""
 #: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:122
 #: src/Controllers/Admin/Orders/OrdersListTable.php:115
 #: affiliations/modules/Referrals.js:64
-#: dashboard/Orders.js:109
+#: dashboard/Orders.js:111
 #: invoices/components/OrderPageLink.js:19
 #: store/add-entities.js:188
 #: Controllers/OrderController.php:126
@@ -785,7 +785,6 @@ msgstr ""
 #: src/Controllers/Admin/Upsells/UpsellsListTable.php:249
 #: src/Integrations/Beaver/BeaverFormModule.php:95
 #: src/Integrations/Elementor/Widgets/ReusableFormWidget.php:122
-#: src/WordPress/Admin/Menus/AdminToolbarService.php:276
 #: checkouts/modules/Address.js:101
 #: checkouts/modules/Tax/index.js:114
 #: components/address/ViewAddress.js:62
@@ -1144,7 +1143,7 @@ msgstr ""
 #: abandoned-checkouts/modules/Customer.js:14
 #: checkouts/modules/SelectCustomer/index.js:94
 #: coupons/modules/NewRestriction.js:91
-#: dashboard/Orders.js:125
+#: dashboard/Orders.js:127
 #: invoices/modules/SelectCustomer/index.js:51
 #: licenses/modules/Customer.js:42
 #: orders/modules/ContactInfo/index.js:67
@@ -1547,6 +1546,7 @@ msgstr ""
 #: src/Controllers/Admin/Licenses/LicensesListTable.php:155
 #: src/Controllers/Admin/Products/ProductsListTable.php:449
 #: src/Controllers/Web/BuyPageController.php:56
+#: src/WordPress/Admin/Menus/AdminToolbarService.php:276
 #: src/WordPress/PostTypes/ProductPostTypeService.php:425
 #: src/WordPress/PostTypes/ProductPostTypeService.php:1060
 #: products/EditProduct.js:302
@@ -1580,7 +1580,7 @@ msgid "Failed"
 msgstr ""
 
 #: src/Controllers/Admin/Orders/OrdersListTable.php:117
-#: dashboard/Orders.js:117
+#: dashboard/Orders.js:119
 #: store/add-entities.js:124
 msgid "Fulfillment"
 msgstr ""
@@ -7756,16 +7756,17 @@ msgid "SureCart Invoice"
 msgstr ""
 
 #: src/WordPress/Admin/Menus/AdminToolbarService.php:331
-msgid "Edit Product Content"
+msgid "Content Designer"
 msgstr ""
 
 #: src/WordPress/Admin/Menus/AdminToolbarService.php:365
-#: products/modules/Template.js:150
-msgid "Edit Product Template"
+#: products/components/SelectTemplate/index.js:64
+#: products/components/SelectTemplatePart/index.js:112
+msgid "Product Template"
 msgstr ""
 
 #: src/WordPress/Admin/Menus/AdminToolbarService.php:406
-msgid "Edit Sticky Purchase Template"
+msgid "Sticky Purchase Template"
 msgstr ""
 
 #: src/WordPress/Admin/Menus/ProductCollectionsMenuService.php:63
@@ -9192,7 +9193,7 @@ msgstr ""
 #: web/buy-template.php:52
 #: web/dashboard/orders/show.php:34
 #: checkouts/modules/Payment.js:263
-#: dashboard/Orders.js:141
+#: dashboard/Orders.js:143
 #: invoices/modules/Payment.js:35
 #: settings/order/OrderProtocol.js:118
 msgid "Payment"
@@ -11800,15 +11801,15 @@ msgstr ""
 msgid "Revenue"
 msgstr ""
 
-#: dashboard/chart/index.js:297
+#: dashboard/chart/index.js:296
 msgid "Average Order Value"
 msgstr ""
 
-#: dashboard/chart/index.js:327
+#: dashboard/chart/index.js:326
 msgid "Loading chart data"
 msgstr ""
 
-#: dashboard/chart/index.js:354
+#: dashboard/chart/index.js:353
 msgid "Loading chart data, please wait..."
 msgstr ""
 
@@ -11825,7 +11826,7 @@ msgid "vs %s last period"
 msgstr ""
 
 #: dashboard/components/ActivationButton.js:44
-#: dashboard/components/ActivationButton.js:71
+#: dashboard/components/ActivationButton.js:78
 #: settings/integrations/components/ActivateButton.js:68
 msgid "(opens in new window)"
 msgstr ""
@@ -11916,7 +11917,7 @@ msgid "View all"
 msgstr ""
 
 #. translators: %1s is the order number, %2s is the customer name, %3s is the total amount, %4s is the order status.
-#: dashboard/Orders.js:173
+#: dashboard/Orders.js:175
 msgid "View order number %1s by %2s for %3s. %4s"
 msgstr ""
 
@@ -11932,47 +11933,51 @@ msgstr ""
 msgid "Complete your store setup to go live."
 msgstr ""
 
-#: dashboard/SetupGuide.js:46
+#: dashboard/SetupGuide.js:48
 msgid "Setup Guide"
 msgstr ""
 
-#: dashboard/SetupGuide.js:55
+#: dashboard/SetupGuide.js:57
 msgid "Close setup guide"
 msgstr ""
 
-#: dashboard/SetupGuide.js:85
+#: dashboard/SetupGuide.js:87
 msgid "Create your first product"
 msgstr ""
 
-#: dashboard/SetupGuide.js:86
+#: dashboard/SetupGuide.js:88
 msgid "Create your first product to start selling to buyers."
 msgstr ""
 
-#: dashboard/SetupGuide.js:90
+#: dashboard/SetupGuide.js:92
 msgid "Create product"
 msgstr ""
 
-#: dashboard/SetupGuide.js:96
+#: dashboard/SetupGuide.js:98
 msgid "Connect payments"
 msgstr ""
 
-#: dashboard/SetupGuide.js:97
+#: dashboard/SetupGuide.js:99
 msgid "Connect to a payment gateway to start taking orders."
 msgstr ""
 
-#: dashboard/SetupGuide.js:102
+#: dashboard/SetupGuide.js:104
 msgid "Connect now"
 msgstr ""
 
-#: dashboard/SetupGuide.js:106
+#: dashboard/SetupGuide.js:108
 msgid "Complete setup"
 msgstr ""
 
-#: dashboard/SetupGuide.js:107
+#: dashboard/SetupGuide.js:109
 msgid "Place a test order to experience the payment flow."
 msgstr ""
 
-#: dashboard/SetupGuide.js:112
+#: dashboard/SetupGuide.js:120
+msgid "You must first create a product to test your checkout."
+msgstr ""
+
+#: dashboard/SetupGuide.js:127
 msgid "Test your checkout"
 msgstr ""
 
@@ -13704,11 +13709,6 @@ msgstr ""
 msgid "Describe the template, e.g. \"T-Shirt Template\". A custom template can be manually applied to any product."
 msgstr ""
 
-#: products/components/SelectTemplate/index.js:64
-#: products/components/SelectTemplatePart/index.js:112
-msgid "Product Template"
-msgstr ""
-
 #: products/components/SelectTemplate/index.js:79
 msgid "Select a product template"
 msgstr ""
@@ -14509,6 +14509,10 @@ msgstr ""
 #: Controllers/SubscriptionController.php:356
 #: Controllers/SubscriptionController.php:364
 msgid "Terms"
+msgstr ""
+
+#: products/modules/Template.js:150
+msgid "Edit Product Template"
 msgstr ""
 
 #: products/modules/Upgrades.js:73
@@ -15914,7 +15918,7 @@ msgstr ""
 msgid "Refunds"
 msgstr ""
 
-#: settings/integrations/hooks/useIntegrationActivation.js:85
+#: settings/integrations/hooks/useIntegrationActivation.js:84
 #: settings/integrations/Suretriggers.js:103
 msgid "Plugin activated."
 msgstr ""
