@@ -276,7 +276,7 @@ class ProductReviewList extends \Elementor\Widget_Base {
 					'default' => \Elementor\Core\Kits\Documents\Tabs\Global_Colors::COLOR_PRIMARY,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wp-block-surecart-product-review-rating-stars svg' => 'fill: {{VALUE}}; stroke: {{VALUE}}; color: {{VALUE}};',
+					'{{WRAPPER}} .wp-block-surecart-product-review-rating-stars svg' => 'stroke: {{VALUE}};',
 				],
 			)
 		);
@@ -423,6 +423,12 @@ class ProductReviewList extends \Elementor\Widget_Base {
 		$show_content    = 'yes' === ( $settings['show_content'] ?? 'yes' );
 		$no_reviews_text = $settings['no_reviews_text'] ?? esc_html__( 'No reviews yet, write one now?', 'surecart' );
 
+		$fill_color = 'var(--e-global-color-primary)'; // fallback for block.
+		$product    = sc_get_product();
+		if ( empty( $product ) || empty( $product->total_reviews ) ) {
+			$fill_color = 'none';
+		}
+
 		$content = '<!-- wp:surecart/product-review-list {"metadata":{"categories":["surecart_review_list"],"patternName":"surecart-product-review-standard","name":"Default Review List"}} -->';
 
 		// Header.
@@ -482,7 +488,7 @@ class ProductReviewList extends \Elementor\Widget_Base {
 			<!-- wp:surecart/product-review-verified-badge {"icon_size":16,"style":{"typography":{"fontStyle":"normal","fontWeight":"400"},"spacing":{"blockGap":"var:preset|spacing|30"},"layout":{"selfStretch":"fit","flexSize":null}},"layout":{"type":"flex","justifyContent":"center","verticalAlignment":"center","orientation":"horizontal"}} /--></div>
 			<!-- /wp:group -->' . $date_block . '</div>
 			<!-- /wp:group -->
-			<!-- wp:surecart/product-review-rating-stars /-->
+			<!-- wp:surecart/product-review-rating-stars {"fill_color": "' . esc_attr( $fill_color ) . '"}  /-->
 			<!-- wp:surecart/product-review-title {"style":{"typography":{"fontStyle":"normal","fontWeight":"700"}}} /-->' .
 			$content_block . '</div>
 			<!-- /wp:group -->
@@ -715,7 +721,7 @@ class ProductReviewList extends \Elementor\Widget_Base {
 		$stars_html = '';
 		for ( $s = 1; $s <= 5; $s++ ) {
 			$is_full     = $s <= 5;
-			$fill        = $is_full ? 'currentColor' : 'none';
+			$fill        = $is_full ? 'var(--e-global-color-primary)' : 'none';
 			$stars_html .= '
 				<svg height="18" width="18" viewBox="0 0 24 24" fill="' . $fill . '" stroke="currentColor" stroke-width="2">
 					<path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
@@ -833,7 +839,7 @@ class ProductReviewList extends \Elementor\Widget_Base {
 			<div class="wp-block-surecart-product-review-rating-stars" style="display: inline-flex; gap: 2px; margin-bottom: 8px;">
 				<# for ( var s = 1; s <= 5; s++ ) {
 					var isFull = s <= 5;
-					var fill = isFull ? "currentColor" : "none";
+					var fill = isFull ? "var(--e-global-color-primary)" : "none";
 				#>
 					<svg height="18" width="18" viewBox="0 0 24 24" fill="{{ fill }}" stroke="currentColor" stroke-width="2">
 						<path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
