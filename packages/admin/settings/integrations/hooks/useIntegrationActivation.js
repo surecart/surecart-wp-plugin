@@ -24,14 +24,13 @@ export default function useIntegrationActivation(
 	const [isSaving, setIsSaving] = useState(false);
 	const { receiveEntityRecords } = useDispatch(coreStore);
 
-	// Only fetch plugin data if this is a plugin activation
-	const shouldFetchPlugin = !!record?.plugin_file;
-
 	const { record: pluginData } = useEntityRecord(
 		'root',
 		'plugin',
-		shouldFetchPlugin ? record?.plugin_file?.replace(/\.php$/, '') : null,
-		{ enabled: shouldFetchPlugin }
+		record?.plugin_file?.replace(/\.php$/, ''),
+		{
+			enabled: !!record?.plugin_file,
+		}
 	);
 
 	// Compute activation link for themes and external integrations
@@ -94,10 +93,25 @@ export default function useIntegrationActivation(
 		}
 	};
 
+	const canActivate = (() => {
+		// not a plugin file.
+		if (!record?.plugin_file) {
+			return false;
+		}
+
+		// if it's external and the plugin is inactive, we can activate it.
+		if (activationLink) {
+			console.log(pluginData?.status);
+			return pluginData?.status === 'inactive';
+		}
+
+		return true;
+	})();
+
 	return {
 		isLoading: isSaving,
 		activate,
-		canActivate: !!record?.plugin_file,
+		canActivate,
 		activationLink,
 	};
 }
