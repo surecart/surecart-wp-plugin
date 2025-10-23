@@ -1,5 +1,5 @@
 /**
- * WordPress dependencies
+ * WordPress dependencies.
  */
 import {
 	useBlockProps,
@@ -8,9 +8,13 @@ import {
 	BlockControls,
 	AlignmentControl,
 } from '@wordpress/block-editor';
-import { PanelBody, TextControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
+
+/**
+ * Internal dependencies.
+ */
+import Labels from './labels';
 
 export default function Edit({ attributes, setAttributes }) {
 	const { label, placeholder, textAlign } = attributes;
@@ -34,19 +38,7 @@ export default function Edit({ attributes, setAttributes }) {
 				/>
 			</BlockControls>
 			<InspectorControls>
-				<PanelBody title={__('Settings', 'surecart')}>
-					<TextControl
-						label={__('Placeholder', 'surecart')}
-						value={placeholder}
-						onChange={(value) =>
-							setAttributes({ placeholder: value })
-						}
-						help={__(
-							'Placeholder text shown in the input field.',
-							'surecart'
-						)}
-					/>
-				</PanelBody>
+				<Labels attributes={attributes} setAttributes={setAttributes} />
 			</InspectorControls>
 			<div {...blockProps}>
 				{label && (
