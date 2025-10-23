@@ -101,7 +101,6 @@ export default function useIntegrationActivation(
 
 		// if it's external and the plugin is inactive, we can activate it.
 		if (activationLink) {
-			console.log(pluginData?.status);
 			return pluginData?.status === 'inactive';
 		}
 
