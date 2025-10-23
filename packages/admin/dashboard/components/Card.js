@@ -11,6 +11,7 @@ export default ({
 	description,
 	icon,
 	highlighted = false,
+	onClick = undefined,
 }) => {
 	return (
 		<div
@@ -70,6 +71,7 @@ export default ({
 			>
 				<ScButton
 					type={highlighted ? 'primary' : 'default'}
+					onClick={onClick}
 					href={href}
 					target={target}
 					style={{
