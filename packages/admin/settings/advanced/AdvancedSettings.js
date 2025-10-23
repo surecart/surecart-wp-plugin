@@ -96,6 +96,11 @@ export default () => {
 		'site',
 		'surecart_hide_help_widget'
 	);
+	const [disableAdminToolbar, setDisableAdminToolbar] = useEntityProp(
+		'root',
+		'site',
+		'surecart_admin_toolbar_disabled'
+	);
 
 	/**
 	 * Form is submitted.
@@ -402,6 +407,18 @@ export default () => {
 					<span slot="description" style={{ lineHeight: '1.4' }}>
 						{__(
 							'Hide the help widget that appears in the bottom right corner of SureCart admin pages.',
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
+				<ScSwitch
+					checked={!disableAdminToolbar}
+					onClick={(e) => setDisableAdminToolbar(!e.target.checked)}
+				>
+					{__('Enable Admin Toolbar', 'surecart')}
+					<span slot="description" style={{ lineHeight: '1.4' }}>
+						{__(
+							'This will enable the SureCart toolbar in the WordPress admin bar for easy access to SureCart features.',
 							'surecart'
 						)}
 					</span>
