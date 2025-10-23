@@ -288,7 +288,6 @@ export default ({ liveMode, setLiveMode }) => {
 						trend={countTrend}
 						selected={tab === 'count'}
 						onClick={() => {
-							console.log('count');
 							setTab('count');
 						}}
 						onKeyDown={(e) => handleTabKeyDown(e, 'count')}
