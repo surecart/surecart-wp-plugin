@@ -41,13 +41,20 @@ export default ({ record }) => {
 				disabled={!activationLink}
 				aria-label={
 					activationLink
-						? `${record?.button_text} ${__('(opens in new window)', 'surecart')}`
+						? `${record?.button_text} ${__(
+								'(opens in new window)',
+								'surecart'
+						  )}`
 						: record?.button_text
 				}
 			>
 				{record?.button_text}
 				{activationLink && (
-					<ScIcon name="external-link" slot="suffix" aria-hidden="true" />
+					<ScIcon
+						name="external-link"
+						slot="suffix"
+						aria-hidden="true"
+					/>
 				)}
 			</ScButton>
 		);
@@ -68,10 +75,17 @@ export default ({ record }) => {
 			<ScButton
 				href={activationLink}
 				target="_blank"
-				aria-label={`${record?.button_text} ${__('(opens in new window)', 'surecart')}`}
+				aria-label={`${record?.button_text} ${__(
+					'(opens in new window)',
+					'surecart'
+				)}`}
 			>
 				{record?.button_text}
-				<ScIcon name="arrow-up-right" slot="suffix" aria-hidden="true" />
+				<ScIcon
+					name="arrow-up-right"
+					slot="suffix"
+					aria-hidden="true"
+				/>
 			</ScButton>
 		);
 	}
