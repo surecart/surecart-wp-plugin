@@ -273,7 +273,7 @@ class AdminToolbarService {
 		$wp_admin_bar->add_node(
 			[
 				'id'    => 'surecart-toolbar',
-				'title' => __( 'Edit', 'surecart' ),
+				'title' => __( 'Edit Product', 'surecart' ),
 				'href'  => '#',
 			]
 		);
@@ -283,7 +283,7 @@ class AdminToolbarService {
 			[
 				'id'     => 'surecart-edit-product',
 				'parent' => 'surecart-toolbar',
-				'title'  => 'Edit Product',
+				'title'  => 'Product Details',
 				'href'   => \SureCart::getUrl()->edit( 'product', $product->id ),
 			]
 		);
@@ -297,8 +297,8 @@ class AdminToolbarService {
 			)
 		);
 
-		$this->renderProductTemplate( $wp_admin_bar );
 		$this->renderProductContent( $wp_admin_bar );
+		$this->renderProductTemplate( $wp_admin_bar );
 		$this->maybeAddStickyPurchaseTemplate( $wp_admin_bar );
 	}
 
@@ -328,7 +328,7 @@ class AdminToolbarService {
 			[
 				'id'     => 'surecart-edit-product-content',
 				'parent' => 'surecart-design',
-				'title'  => __( 'Edit Product Content', 'surecart' ),
+				'title'  => __( 'Content Designer', 'surecart' ),
 				'href'   => admin_url( '/post.php?post=' . get_the_ID() . '&action=edit' ),
 			]
 		);
@@ -362,7 +362,7 @@ class AdminToolbarService {
 			[
 				'id'     => 'surecart-edit-product-template',
 				'parent' => 'surecart-design',
-				'title'  => __( 'Edit Product Template', 'surecart' ),
+				'title'  => __( 'Product Template', 'surecart' ),
 				'href'   => admin_url( '/site-editor.php?postType=' . rawurlencode( $template_type ) . '&postId=' . rawurlencode( $template_id ) . '&canvas=edit' ),
 			]
 		);
@@ -403,7 +403,7 @@ class AdminToolbarService {
 			[
 				'id'     => 'surecart-edit-sticky-template',
 				'parent' => 'surecart-design',
-				'title'  => __( 'Edit Sticky Purchase Template', 'surecart' ),
+				'title'  => __( 'Sticky Purchase Template', 'surecart' ),
 				'href'   => admin_url( '/site-editor.php?postType=wp_template_part&postId=' . rawurlencode( $sticky_purchase_template_id ) . '&canvas=edit' ),
 			]
 		);
