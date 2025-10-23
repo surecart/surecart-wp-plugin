@@ -357,6 +357,7 @@ dispatch(coreStore).addEntities([
 		label: __('Affiliations', 'surecart'),
 		baseURL: '/surecart/v1/affiliations',
 		baseURLParams: { context: 'edit' },
+		supportsPagination: true,
 	},
 	{
 		name: 'affiliation-product',
