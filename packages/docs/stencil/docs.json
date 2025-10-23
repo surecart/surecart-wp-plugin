@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-09-30T17:07:38",
+  "timestamp": "2025-10-23T19:35:24",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.18.3",
@@ -1414,6 +1414,7 @@
         "sc-custom-order-price-input",
         "sc-customer-edit",
         "sc-donation-choices",
+        "sc-downloads-list",
         "sc-express-payment",
         "sc-form-state-provider",
         "sc-invoices-list",
@@ -1481,6 +1482,9 @@
           "sc-block-ui"
         ],
         "sc-donation-choices": [
+          "sc-block-ui"
+        ],
+        "sc-downloads-list": [
           "sc-block-ui"
         ],
         "sc-express-payment": [
@@ -12685,6 +12689,7 @@
       ],
       "dependents": [
         "sc-customer-details",
+        "sc-downloads-list",
         "sc-express-payment",
         "sc-form-components-validator",
         "sc-invoices-list",
@@ -12707,6 +12712,9 @@
       "dependencies": [],
       "dependencyGraph": {
         "sc-customer-details": [
+          "sc-divider"
+        ],
+        "sc-downloads-list": [
           "sc-divider"
         ],
         "sc-express-payment": [
@@ -13114,32 +13122,6 @@
           "required": false
         },
         {
-          "name": "downloads",
-          "type": "Download[]",
-          "complexType": {
-            "original": "Download[]",
-            "resolved": "Download[]",
-            "references": {
-              "Download": {
-                "location": "import",
-                "path": "../../../../types",
-                "id": "src/types.ts::Download"
-              }
-            }
-          },
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "Download[]"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
           "name": "heading",
           "type": "string",
           "complexType": {
@@ -13155,6 +13137,49 @@
           "values": [
             {
               "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "productId",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "product-id",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "query",
+          "type": "any",
+          "complexType": {
+            "original": "any",
+            "resolved": "any",
+            "references": {}
+          },
+          "mutable": true,
+          "attr": "query",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "{\n    page: 1,\n    per_page: 20,\n  }",
+          "values": [
+            {
+              "type": "any"
             }
           ],
           "optional": false,
@@ -13175,26 +13200,42 @@
       "dependents": [],
       "dependencies": [
         "sc-icon",
-        "sc-dashboard-module",
         "sc-card",
         "sc-stacked-list",
         "sc-stacked-list-row",
         "sc-flex",
         "sc-format-bytes",
         "sc-tag",
-        "sc-button"
+        "sc-button",
+        "sc-skeleton",
+        "sc-divider",
+        "sc-empty",
+        "sc-dashboard-module",
+        "sc-pagination",
+        "sc-block-ui"
       ],
       "dependencyGraph": {
         "sc-downloads-list": [
           "sc-icon",
-          "sc-dashboard-module",
           "sc-card",
           "sc-stacked-list",
           "sc-stacked-list-row",
           "sc-flex",
           "sc-format-bytes",
           "sc-tag",
-          "sc-button"
+          "sc-button",
+          "sc-skeleton",
+          "sc-divider",
+          "sc-empty",
+          "sc-dashboard-module",
+          "sc-pagination",
+          "sc-block-ui"
+        ],
+        "sc-button": [
+          "sc-spinner"
+        ],
+        "sc-empty": [
+          "sc-icon"
         ],
         "sc-dashboard-module": [
           "sc-alert"
@@ -13202,7 +13243,13 @@
         "sc-alert": [
           "sc-icon"
         ],
-        "sc-button": [
+        "sc-pagination": [
+          "sc-flex",
+          "sc-button",
+          "sc-visually-hidden",
+          "sc-icon"
+        ],
+        "sc-block-ui": [
           "sc-spinner"
         ]
       }
@@ -13979,6 +14026,7 @@
       ],
       "dependents": [
         "sc-customer-details",
+        "sc-downloads-list",
         "sc-invoices-list",
         "sc-license",
         "sc-licenses-list",
@@ -13999,6 +14047,9 @@
           "sc-icon"
         ],
         "sc-customer-details": [
+          "sc-empty"
+        ],
+        "sc-downloads-list": [
           "sc-empty"
         ],
         "sc-invoices-list": [
@@ -24905,6 +24956,7 @@
       "dependents": [
         "sc-charges-list",
         "sc-dashboard-downloads-list",
+        "sc-downloads-list",
         "sc-invoices-list",
         "sc-license",
         "sc-licenses-list",
@@ -24932,6 +24984,9 @@
           "sc-pagination"
         ],
         "sc-dashboard-downloads-list": [
+          "sc-pagination"
+        ],
+        "sc-downloads-list": [
           "sc-pagination"
         ],
         "sc-invoices-list": [
@@ -36188,6 +36243,7 @@
         "sc-custom-order-price-input",
         "sc-customer-details",
         "sc-donation-choices",
+        "sc-downloads-list",
         "sc-fulfillments",
         "sc-invoice-memo",
         "sc-invoices-list",
@@ -36247,6 +36303,9 @@
           "sc-skeleton"
         ],
         "sc-donation-choices": [
+          "sc-skeleton"
+        ],
+        "sc-downloads-list": [
           "sc-skeleton"
         ],
         "sc-fulfillments": [
@@ -44546,11 +44605,6 @@
     },
     "src/types.ts::CancellationReason": {
       "declaration": "export interface CancellationReason {\n  id: string;\n  object: 'cancellation_reason';\n  archived: boolean;\n  comment_enabled: false;\n  comment_prompt: string | null;\n  coupon_enabled: boolean;\n  label: string;\n  position: number;\n  archived_at: number;\n  discarded_at: number;\n  created_at: number;\n  updated_at: number;\n}",
-      "docstring": "",
-      "path": "src/types.ts"
-    },
-    "src/types.ts::Download": {
-      "declaration": "export interface Download {\n  id: string;\n  object: 'download';\n  archived: boolean;\n  archived_at?: number;\n  media: string | Media;\n  name?: string;\n  product: string | Product;\n  update_at: number;\n  created_at: number;\n  url?: string;\n}",
       "docstring": "",
       "path": "src/types.ts"
     },

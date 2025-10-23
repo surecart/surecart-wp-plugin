@@ -66,6 +66,8 @@ sc-button-group > sc-tooltip > sc-button.sc-focus {
   --sc-color-brand-pastel-purple: #f7f6fe;
   --sc-color-brand-pastel-green: #e6f9ee;
 
+  --sc-brand-color-background-inverse: #111827;
+
   /** Colors */
   --sc-color-black: #000;
   --sc-color-white: #fff;
