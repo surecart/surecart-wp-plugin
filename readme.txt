@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: ecommerce, online store, subscriptions, stripe, payments
 Requires at least: 6.6
 Tested up to: 6.8
-Stable tag: 3.15.5
+Stable tag: 3.16.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -314,7 +314,7 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 == Changelog ==
 
 = 3.16.0 - October 23rd, 2025 =
-- New: Refreshed admin dashboard.
+- New: Refreshed admin dashboard page.
 - New: Admin toolbar content edit quicklinks.
 - New: Edit order metadata on admin.
 - Fix: Issue with quick add popup in Avada theme.
