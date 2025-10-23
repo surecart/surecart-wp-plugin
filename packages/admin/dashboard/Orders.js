@@ -88,6 +88,8 @@ export default ({ liveMode }) => {
 			<div
 				css={css`
 					overflow-x: auto;
+					overflow-y: hidden;
+					box-sizing: border-box;
 					width: 100%;
 				`}
 			>
@@ -97,7 +99,7 @@ export default ({ liveMode }) => {
 						'--border-radius': '0',
 						borderLeft: '0',
 						borderRight: '0',
-						margin: '0, -1px',
+						margin: '0 -1px',
 					}}
 				>
 					<ScTableCell
