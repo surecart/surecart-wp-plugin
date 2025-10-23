@@ -7,9 +7,11 @@ import { useDispatch, useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import { store as preferencesStore } from '@wordpress/preferences';
 import Card from './components/Card';
+import { store as noticesStore } from '@wordpress/notices';
 
 export default () => {
 	const { set } = useDispatch(preferencesStore);
+	const { createErrorNotice } = useDispatch(noticesStore);
 	const hideGetStarted = useSelect((select) =>
 		select(preferencesStore).get('surecart/dashboard', 'hideGetStarted')
 	);
@@ -17,7 +19,7 @@ export default () => {
 		set('surecart/dashboard', 'hideGetStarted', true);
 	};
 
-	const { product, loading } = useSelect((select) => {
+	const { product } = useSelect((select) => {
 		const queryArgs = [
 			'surecart',
 			'product',
@@ -109,6 +111,19 @@ export default () => {
 						'surecart'
 					)}
 					href={product?.permalink ?? null}
+					onClick={(e) => {
+						if (product?.permalink) {
+							return true;
+						}
+						e.preventDefault();
+						createErrorNotice(
+							__(
+								'You must first create a product to test your checkout.',
+								'surecart'
+							),
+							{ type: 'snackbar' }
+						);
+					}}
 					buttonText={__('Test your checkout', 'surecart')}
 				/>
 			</div>
