@@ -4,6 +4,7 @@ import Box from '../ui/Box';
 import { __ } from '@wordpress/i18n';
 import { useEntityRecords } from '@wordpress/core-data';
 import ActivationButton from './components/ActivationButton';
+import { ScButton, ScIcon } from '@surecart/components-react';
 
 export default () => {
 	const { records } = useEntityRecords('surecart', 'integration_catalog', {
@@ -25,7 +26,20 @@ export default () => {
 
 	return (
 		<Box
-			title={__('Picked for you', 'surecart')}
+			title={__('Featured Integrations', 'surecart')}
+			header_action={
+				<ScButton
+					css={css`
+						margin: -10px 0;
+					`}
+					type="text"
+					aria-label={__('View all integrations', 'surecart')}
+					href="admin.php?page=sc-settings&tab=integrations"
+				>
+					{__('View all', 'surecart')}
+					<ScIcon name="arrow-right" slot="suffix"></ScIcon>
+				</ScButton>
+			}
 			isBorderLess={false}
 			hasDivider={false}
 		>
