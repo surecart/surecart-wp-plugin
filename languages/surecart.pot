@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-10-23T19:36:34+00:00\n"
+"POT-Creation-Date: 2025-10-23T21:14:17+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.9.0\n"
 
@@ -11907,6 +11907,7 @@ msgid "View all orders"
 msgstr ""
 
 #: dashboard/Orders.js:67
+#: dashboard/Recommended.js:39
 #: Blocks/Dashboard/CustomerDownloads/edit.js:43
 #: Blocks/Dashboard/CustomerInvoices/edit.js:43
 #: Blocks/Dashboard/CustomerLicenses/edit.js:45
@@ -11921,8 +11922,12 @@ msgstr ""
 msgid "View order number %1s by %2s for %3s. %4s"
 msgstr ""
 
-#: dashboard/Recommended.js:28
-msgid "Picked for you"
+#: dashboard/Recommended.js:29
+msgid "Featured Integrations"
+msgstr ""
+
+#: dashboard/Recommended.js:36
+msgid "View all integrations"
 msgstr ""
 
 #: dashboard/SetupBanner.js:57
