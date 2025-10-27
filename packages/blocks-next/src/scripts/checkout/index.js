@@ -274,7 +274,6 @@ const { state, actions } = store('surecart/checkout', {
 		 */
 		get showLineItemsCount() {
 			const { line_item } = getContext();
-			console.log(line_item?.quantity > 1);
 			return line_item?.quantity > 1;
 		},
 	},
