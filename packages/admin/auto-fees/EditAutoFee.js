@@ -36,6 +36,7 @@ import Rules from './modules/Rules';
 import SaveButton from '../templates/SaveButton';
 import Box from '../ui/Box';
 import DateTimePicker from './modules/DateTimePicker';
+import { feeTargetLabels } from './utils/labelTranslations';
 
 export default ({ id, setBrowserURL }) => {
 	const [error, setError] = useState(null);
@@ -147,44 +148,77 @@ export default ({ id, setBrowserURL }) => {
 				</ScFlex>
 			}
 			sidebar={
-				<Box
-					title={__('Schedule', 'surecart')}
-					loading={!hasLoadedAutoFee}
-				>
-					<ScFormControl
-						help={__(
-							'Time at which the dynamic price becomes active & start being applied to the checkout.',
-							'surecart'
-						)}
+				<>
+					<Box
+						title={__('Price Type', 'surecart')}
+						loading={!hasLoadedAutoFee}
 					>
-						<DateTimePicker
-							label={__('Start Date', 'surecart')}
-							currentDate={autoFee?.start_at}
-							setDate={(date) =>
-								updateAutoFee({
-									start_at: date,
-								})
-							}
-							required
-						/>
-					</ScFormControl>
-					<ScFormControl
-						help={__(
-							'Time at which the dynamic price becomes inactive.',
-							'surecart'
-						)}
+						<div
+							style={{
+								display: 'flex',
+								gap: '8px',
+								fontWeight: 500,
+								fontSize: '14px',
+								alignItems: 'center',
+							}}
+						>
+							<ScIcon
+								name="shopping-cart"
+								style={{ width: '16px', height: '16px' }}
+							/>
+							<div>{feeTargetLabels[autoFee?.fee_target]}</div>
+						</div>
+						<div
+							style={{
+								fontSize: '12px',
+								color: '#6B7280',
+							}}
+						>
+							{__(
+								'This dynamic price will be applied and displayed on the checkout page total price.',
+								'surecart'
+							)}
+						</div>
+					</Box>
+					<Box
+						title={__('Schedule', 'surecart')}
+						loading={!hasLoadedAutoFee}
 					>
-						<DateTimePicker
-							label={__('End Date', 'surecart')}
-							currentDate={autoFee?.end_at}
-							setDate={(date) =>
-								updateAutoFee({
-									end_at: date,
-								})
-							}
-						/>
-					</ScFormControl>
-				</Box>
+						<ScFormControl
+							help={__(
+								'Time at which the dynamic price becomes active & start being applied to the checkout.',
+								'surecart'
+							)}
+						>
+							<DateTimePicker
+								label={__('Start Date', 'surecart')}
+								currentDate={autoFee?.start_at}
+								setDate={(date) =>
+									updateAutoFee({
+										start_at: date,
+									})
+								}
+								required
+							/>
+						</ScFormControl>
+						<ScFormControl
+							help={__(
+								'Time at which the dynamic price becomes inactive.',
+								'surecart'
+							)}
+						>
+							<DateTimePicker
+								label={__('End Date', 'surecart')}
+								currentDate={autoFee?.end_at}
+								setDate={(date) =>
+									updateAutoFee({
+										end_at: date,
+									})
+								}
+							/>
+						</ScFormControl>
+					</Box>
+				</>
 			}
 			button={
 				<div

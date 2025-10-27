@@ -17,6 +17,7 @@ import {
 } from '@surecart/components-react';
 import Box from '../../ui/Box';
 import { useState, useEffect } from '@wordpress/element';
+import { feeTargetLabels } from '../utils/labelTranslations';
 
 export default ({ autoFee, onUpdate, loading }) => {
 	const {
@@ -51,7 +52,7 @@ export default ({ autoFee, onUpdate, loading }) => {
 			header_action={
 				fee_target && (
 					<ScTag type="info" size="medium">
-						{`Type: ${fee_target.replace('_', ' ').toUpperCase()}`}
+						{`Type: ${feeTargetLabels[fee_target]}`}
 					</ScTag>
 				)
 			}
