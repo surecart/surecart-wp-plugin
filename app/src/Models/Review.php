@@ -31,6 +31,20 @@ class Review extends Model {
 	protected $object_name = 'review';
 
 	/**
+	 * Is this cachable?
+	 *
+	 * @var boolean
+	 */
+	protected $cachable = true;
+
+	/**
+	 * Clear cache when reviews are updated.
+	 *
+	 * @var string
+	 */
+	protected $cache_key = 'reviews';
+
+	/**
 	 * Publish the review.
 	 *
 	 * @param string $id Review ID.
