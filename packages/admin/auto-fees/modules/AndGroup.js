@@ -296,7 +296,7 @@ export default ({
 					/>
 				)}
 				<ScSelect
-					placeholder={__('Select an operator', 'surecart')}
+					placeholder={__('Select a condition', 'surecart')}
 					unselect={false}
 					value={operator}
 					onScChange={(e) => {

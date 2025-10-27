@@ -1,3 +1,5 @@
+import { __ } from '@wordpress/i18n';
+
 export const DATE_ATTRIBUTES = [
 	'customer.created_at',
 	'price.created_at',
@@ -49,3 +51,18 @@ export const NUMBER_ATTRIBUTES = [
 ];
 
 export const USER_ROLE_ATTRIBUTES = ['wp_user_role'];
+
+export const TYPE_CHOICES = [
+	{
+		label: __('Line Item', 'surecart'),
+		value: 'line_item',
+	},
+	{
+		label: __('Checkout', 'surecart'),
+		value: 'checkout',
+	},
+	{
+		label: __('Shipping', 'surecart'),
+		value: 'shipping',
+	},
+];

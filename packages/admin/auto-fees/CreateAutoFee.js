@@ -14,17 +14,17 @@ import {
 	ScChoices,
 	ScInput,
 	ScIcon,
-	ScSelect,
 } from '@surecart/components-react';
 import CreateTemplate from '../templates/CreateModel';
 import Box from '../ui/Box';
 import templates from './templates';
+import { TYPE_CHOICES } from './utils/constants';
 
 export default ({ id, onCreateAutoFee }) => {
 	const [isSaving, setIsSaving] = useState(false);
 	const [autoFeeName, setAutoFeeName] = useState('');
 	const [autoFeeTarget, setAutoFeeTarget] = useState('');
-	const [currentTemplate, setCurrentTemplate] = useState(null);
+	const [currentTemplate, setCurrentTemplate] = useState('start_blank');
 	const [error, setError] = useState('');
 	const { saveEntityRecord } = useDispatch(coreStore);
 
@@ -77,7 +77,7 @@ export default ({ id, onCreateAutoFee }) => {
 			</ScAlert>
 			<ScForm onScSubmit={onSubmit}>
 				<Box
-					title={__('Create New Dynamic Price', 'surecart')}
+					title={__('Create new dynamic price', 'surecart')}
 					footer={
 						<div
 							css={css`
@@ -92,7 +92,12 @@ export default ({ id, onCreateAutoFee }) => {
 							>
 								{__('Cancel', 'surecart')}
 							</ScButton>
-							<ScButton type="primary" submit loading={isSaving}>
+							<ScButton
+								type="primary"
+								submit
+								loading={isSaving}
+								disabled={!autoFeeName}
+							>
 								{__('Create', 'surecart')}
 							</ScButton>
 						</div>
@@ -100,16 +105,20 @@ export default ({ id, onCreateAutoFee }) => {
 				>
 					<ScInput
 						label={__('Name', 'surecart')}
-						help={__("Your Dynamic Price's name.", 'surecart')}
+						help={__("Your dynamic price's name.", 'surecart')}
 						value={autoFeeName}
-						required
 						onScInput={(e) => setAutoFeeName(e.target.value)}
+						required
+						tabIndex="0"
+						autofocus
 					/>
 					<ScChoices
-						label={__('Select Recipes', 'surecart')}
+						label={__('Recipe', 'surecart')}
 						onScChange={(e) => setCurrentTemplate(e.target.value)}
-						style={{ '--sc-choice-padding': '1.3em' }}
-						autoWidth
+						style={{
+							'--sc-choice-padding': '1.3em',
+							'--columns': 2,
+						}}
 						required
 					>
 						{(getTemplateChoices() || []).map((template) => {
@@ -119,7 +128,6 @@ export default ({ id, onCreateAutoFee }) => {
 									showControl={false}
 									checked={currentTemplate === template.value}
 									value={template.value}
-									style={{ width: '48%' }}
 								>
 									<div
 										style={{ display: 'flex', gap: '1em' }}
@@ -128,6 +136,8 @@ export default ({ id, onCreateAutoFee }) => {
 										<ScIcon
 											style={{
 												fontWeight: '600',
+												width: '20px',
+												height: '20px',
 											}}
 											name={template.icon}
 										/>
@@ -158,36 +168,35 @@ export default ({ id, onCreateAutoFee }) => {
 						})}
 					</ScChoices>
 					{'start_blank' === currentTemplate && (
-						<ScSelect
-							label={__('Target', 'surecart')}
-							help={__(
-								'The entity to which this dynamic price applies.',
-								'surecart'
-							)}
-							unselect={false}
-							value={autoFeeTarget}
-							css={css`
-								min-width: 125px;
-							`}
-							onScChange={(e) => {
-								setAutoFeeTarget(e.target.value);
+						<ScChoices
+							label={__('Type', 'surecart')}
+							onScChange={(e) => setAutoFeeTarget(e.target.value)}
+							style={{
+								'--sc-choice-padding': '1.3em',
+								'--columns': 2,
 							}}
-							choices={[
-								{
-									label: __('Line Item', 'surecart'),
-									value: 'line_item',
-								},
-								{
-									label: __('Checkout', 'surecart'),
-									value: 'checkout',
-								},
-								{
-									label: __('Shipping', 'surecart'),
-									value: 'shipping',
-								},
-							]}
 							required
-						/>
+						>
+							{(TYPE_CHOICES || []).map((type) => {
+								return (
+									<ScChoice
+										key={type.value}
+										showControl={false}
+										checked={autoFeeTarget === type.value}
+										value={type.value}
+									>
+										<div
+											style={{
+												fontWeight: 600,
+												lineHeight: 1,
+											}}
+										>
+											{type.label}
+										</div>
+									</ScChoice>
+								);
+							})}
+						</ScChoices>
 					)}
 				</Box>
 			</ScForm>

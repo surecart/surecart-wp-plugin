@@ -51,9 +51,7 @@ export default ({ autoFee, onUpdate, loading }) => {
 			header_action={
 				fee_target && (
 					<ScTag type="info" size="medium">
-						{`Target: ${fee_target
-							.replace('_', ' ')
-							.toUpperCase()}`}
+						{`Type: ${fee_target.replace('_', ' ').toUpperCase()}`}
 					</ScTag>
 				)
 			}
@@ -104,7 +102,7 @@ export default ({ autoFee, onUpdate, loading }) => {
 				`}
 			>
 				<ScSelect
-					label={__('Adjustment Type', 'surecart')}
+					label={__('Apply As', 'surecart')}
 					help={__(
 						'Whether this dynamic price is a percentage or fixed amount adjustment.',
 						'surecart'
