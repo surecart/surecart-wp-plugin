@@ -1,0 +1,117 @@
+/** @jsx jsx */
+import { css, jsx } from '@emotion/core';
+import { ScIcon } from '@surecart/components-react';
+import { __, sprintf } from '@wordpress/i18n';
+
+export default ({
+	title,
+	value,
+	previous,
+	trend = 'up',
+	selected,
+	...props
+}) => {
+	const isUp = trend === 'up';
+
+	return (
+		<div
+			role="tab"
+			aria-selected={selected}
+			css={css`
+				background: ${selected
+					? 'var(--sc-color-gray-100)'
+					: 'transparent'};
+				padding: 12px;
+				border-radius: 8px;
+				flex: 1;
+				cursor: pointer;
+				transition: background 0.2s ease;
+				min-width: 0;
+
+				@media (min-width: 640px) {
+					padding: 14px;
+					border-radius: 10px;
+				}
+
+				@media (min-width: 768px) {
+					padding: 16px;
+				}
+
+				&:hover {
+					background: var(--sc-color-gray-100);
+				}
+
+				&:focus-visible {
+					outline: 1px solid var(--sc-color-primary-500);
+					outline-offset: 2px;
+				}
+			`}
+			tabIndex={0}
+			{...props}
+		>
+			<div
+				css={css`
+					color: var(--sc-color-gray-600);
+					margin-bottom: 6px;
+					font-size: 13px;
+
+					@media (min-width: 640px) {
+						margin-bottom: 8px;
+						font-size: 14px;
+					}
+				`}
+			>
+				{title}
+			</div>
+			<div
+				css={css`
+					font-size: 16px;
+					font-weight: 600;
+					color: var(--sc-color-gray-900);
+					display: flex;
+					align-items: center;
+					gap: 4px;
+					margin-bottom: 4px;
+					flex-wrap: wrap;
+
+					@media (min-width: 640px) {
+						font-size: 18px;
+						gap: 6px;
+					}
+				`}
+			>
+				{value}
+				<ScIcon
+					name={isUp ? 'arrow-up-right' : 'arrow-down-right'}
+					aria-label={
+						isUp
+							? __('Trending up', 'surecart')
+							: __('Trending down', 'surecart')
+					}
+					css={css`
+						color: ${isUp
+							? '#16A34A'
+							: 'var(--sc-color-danger-500)'};
+						font-size: 16px;
+
+						@media (min-width: 640px) {
+							font-size: 18px;
+						}
+					`}
+				/>
+			</div>
+			<div
+				css={css`
+					font-size: 11px;
+					color: var(--sc-color-gray-500);
+
+					@media (min-width: 640px) {
+						font-size: 12px;
+					}
+				`}
+			>
+				{sprintf(__('vs %s last period', 'surecart'), previous)}
+			</div>
+		</div>
+	);
+};

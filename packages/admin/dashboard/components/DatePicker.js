@@ -4,6 +4,7 @@ import { useRef, useEffect, useState } from 'react';
 import { __ } from '@wordpress/i18n';
 import Litepicker from 'litepicker';
 import 'litepicker/dist/plugins/ranges';
+import dayjs from 'dayjs';
 
 export default ({ startDate, setStartDate, endDate, setEndDate }) => {
 	const dateRef = useRef();
@@ -32,9 +33,13 @@ export default ({ startDate, setStartDate, endDate, setEndDate }) => {
 			},
 			setup: (picker) => {
 				picker.setDateRange(startDate, endDate);
+				setInputSize(dateRef.current.value.length);
 				picker.on('button:apply', (start, end) => {
-					setStartDate(start.dateInstance);
-					setEndDate(end.dateInstance);
+					// Normalize dates to start and end of day for API
+					setStartDate(
+						dayjs(start.dateInstance).startOf('day').toDate()
+					);
+					setEndDate(dayjs(end.dateInstance).endOf('day').toDate());
 					setInputSize(dateRef.current.value.length);
 				});
 			},
@@ -154,24 +159,74 @@ export default ({ startDate, setStartDate, endDate, setEndDate }) => {
 
 					.surecart-settings__date-select {
 						height: 42px;
-						border: solid 1px #d3e7ec;
-						border-radius: 3.5px;
-						font-weight: 400;
-						font-size: 16px;
-						line-height: 28px;
-						width: 250px;
+						border-style: solid;
+						border-width: var(--sc-input-border-width);
+						background-color: var(
+							--sc-select-background-color,
+							var(--sc-color-white)
+						);
+						border-color: var(
+							--sc-select-border-color,
+							var(--sc-color-gray-300)
+						);
+						color: var(--sc-input-color);
+						text-decoration: none;
+						user-select: none;
+						white-space: nowrap;
+						vertical-align: middle;
+						transition: var(
+									--sc-input-transition,
+									var(--sc-transition-medium)
+								)
+								background-color,
+							var(
+									--sc-input-transition,
+									var(--sc-transition-medium)
+								)
+								color,
+							var(
+									--sc-input-transition,
+									var(--sc-transition-medium)
+								)
+								border,
+							var(
+									--sc-input-transition,
+									var(--sc-transition-medium)
+								)
+								box-shadow;
+						cursor: inherit;
+						box-shadow: var(--sc-shadow-small);
+						font-size: var(--sc-button-font-size-medium);
+						min-height: var(--sc-input-height-medium);
+						line-height: calc(
+							var(--sc-input-height-medium) -
+								var(--sc-input-border-width) * 2
+						);
+						border-radius: var(--sc-input-border-radius-medium);
+						padding: 0 var(--sc-spacing-medium);
+						cursor: pointer;
+						user-select: none;
+
+						&:active,
+						&:focus {
+							background-color: var(
+								--sc-input-background-color-focus
+							);
+							border-color: var(--sc-input-border-color-focus);
+							box-shadow: var(--focus-ring);
+							outline: none;
+						}
 					}
 				`}
 			/>
-			<div className="component-base-control">
-				<div className="components-base-control__field">
-					<input
-						className="components-text-control__input surecart-settings__date-select"
-						ref={dateRef}
-						size={inputSize}
-					/>
-				</div>
-			</div>
+
+			<input
+				className="surecart-settings__date-select"
+				ref={dateRef}
+				size={inputSize}
+				aria-label={__('Select date range', 'surecart')}
+				placeholder={__('Select dates', 'surecart')}
+			/>
 		</div>
 	);
 };

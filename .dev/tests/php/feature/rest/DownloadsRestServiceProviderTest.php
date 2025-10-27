@@ -42,7 +42,7 @@ class DownloadRestServiceProviderTest extends SureCartUnitTestCase
 		return [
 			'List: Unauthenticated' => [null, 'GET', '/surecart/v1/downloads', 401],
 			'List: Missing Capability' => [[], 'GET', '/surecart/v1/downloads', 403],
-			'List: Has Capability' => [['read_sc_medias'],'GET', '/surecart/v1/downloads', 200],
+			'List: Has Capability' => [['read_sc_downloads'],'GET', '/surecart/v1/downloads', 200],
 			'Find: Unauthenticated' => [null, 'GET', '/surecart/v1/downloads/test', 401],
 			'Find: Missing Capability' => [[], 'GET', '/surecart/v1/downloads/test', 403],
 			'Find: Has Capability' => [['read_sc_medias'], 'GET', '/surecart/v1/downloads/test', 200],
