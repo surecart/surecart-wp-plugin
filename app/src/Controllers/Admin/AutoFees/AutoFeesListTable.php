@@ -109,6 +109,7 @@ class AutoFeesListTable extends ListTable {
 			[
 				'name'   => __( 'Name', 'surecart' ),
 				'status' => __( 'Status', 'surecart' ),
+				'type'   => __( 'Type', 'surecart' ),
 				'date'   => __( 'Date', 'surecart' ),
 			],
 			parent::get_columns()
@@ -210,6 +211,24 @@ class AutoFeesListTable extends ListTable {
 
 		<?php
 		return ob_get_clean();
+	}
+
+	/**
+	 * Handle the target.
+	 *
+	 * @param \SureCart\Models\AutoFees $auto_fees AutoFees model.
+	 *
+	 * @return string
+	 */
+	public function column_type( $auto_fees ) {
+		$translations = [
+			'checkout'  => __( 'Checkout', 'surecart' ),
+			'line_item' => __( 'Line Item', 'surecart' ),
+			'shipping'  => __( 'Shipping', 'surecart' ),
+
+		];
+
+		return '<sc-tag>' . esc_html( $translations[ $auto_fees->fee_target ] ) . '</sc-tag>';
 	}
 
 	/**
