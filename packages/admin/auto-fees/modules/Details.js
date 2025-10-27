@@ -46,17 +46,7 @@ export default ({ autoFee, onUpdate, loading }) => {
 	}, [adjustmentType, amount_adjustment, percent_adjustment]);
 
 	return (
-		<Box
-			title={__('Details', 'surecart')}
-			loading={loading}
-			header_action={
-				fee_target && (
-					<ScTag type="info" size="medium">
-						{`Type: ${feeTargetLabels[fee_target]}`}
-					</ScTag>
-				)
-			}
-		>
+		<Box title={__('Details', 'surecart')} loading={loading}>
 			<ScInput
 				label={__('Name', 'surecart')}
 				help={__("Your Dynamic Price's name.", 'surecart')}
