@@ -112,7 +112,7 @@ export default ({ attributes, setAttributes }) => {
 					</ToolsPanelItem>
 				</ToolsPanel>
 			</InspectorControls>
-			<div {...innerBlocksProps}></div>;
+			<div {...innerBlocksProps}></div>
 		</>
 	);
 };
