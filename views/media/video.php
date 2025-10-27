@@ -12,7 +12,7 @@
 	?>
 	class="sc-video-container"
 	data-wp-interactive='{ "namespace": "surecart/video" }'
-	data-wp-on--click="actions.play"
+	data-wp-on--click="callbacks.play"
 	style="<?php echo esc_attr( $style ); ?>"
 >
 	<div
