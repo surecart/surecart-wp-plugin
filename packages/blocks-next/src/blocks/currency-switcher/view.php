@@ -11,6 +11,10 @@ use SureCart\Support\Currency;
 // Get all display currencies.
 $currencies = DisplayCurrency::get();
 
+if ( is_wp_error( $currencies ) || empty( $currencies ) ) {
+	return;
+}
+
 // Sort by currency name.
 usort(
 	$currencies,

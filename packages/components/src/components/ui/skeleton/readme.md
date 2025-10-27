@@ -40,6 +40,7 @@
  - [sc-custom-order-price-input](../../controllers/checkout-form/custom-order-price-input)
  - [sc-customer-details](../customer-details)
  - [sc-donation-choices](../../controllers/checkout-form/donation-choices)
+ - [sc-downloads-list](../../controllers/dashboard/sc-downloads-list)
  - [sc-fulfillments](../../controllers/dashboard/fulfillments)
  - [sc-invoice-memo](../../controllers/checkout-form/invoice-memo)
  - [sc-invoices-list](../../controllers/dashboard/invoices-list)
@@ -88,6 +89,7 @@ graph TD;
   sc-custom-order-price-input --> sc-skeleton
   sc-customer-details --> sc-skeleton
   sc-donation-choices --> sc-skeleton
+  sc-downloads-list --> sc-skeleton
   sc-fulfillments --> sc-skeleton
   sc-invoice-memo --> sc-skeleton
   sc-invoices-list --> sc-skeleton

@@ -14,49 +14,37 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function register( $container ) {
+		// Check if Elementor is installed.
 		if ( ! class_exists( '\Elementor\Plugin' ) ) {
 			return;
 		}
 
-		// Widgets.
-		$container['surecart.elementor.widgets'] = function () {
-			return new ElementorWidgetsService();
-		};
+		// Templates service. This is used even if Elementor is not installed.
+		$container['elementor.templates.service'] = fn() => new ElementorTemplatesService();
 
 		// Widgets.
-		$container['surecart.elementor.editor'] = function () {
-			return new ElementorEditorService();
-		};
+		$container['surecart.elementor.widgets'] = fn() => new ElementorWidgetsService();
+
+		// Widgets.
+		$container['surecart.elementor.editor'] = fn() => new ElementorEditorService();
 
 		// Documents.
-		$container['surecart.elementor.documents'] = function () {
-			return new ElementorDocumentsService();
-		};
+		$container['surecart.elementor.documents'] = fn() => new ElementorDocumentsService();
 
 		// Dynamic tags.
-		$container['surecart.elementor.dynamic_tags'] = function () {
-			return new ElementorDynamicTagsService();
-		};
+		$container['surecart.elementor.dynamic_tags'] = fn() => new ElementorDynamicTagsService();
 
 		// Core block styles.
-		$container['elementor.core.block.styles.service'] = function () {
-			return new ElementorCoreBlockStylesService();
-		};
+		$container['elementor.core.block.styles.service'] = fn() => new ElementorCoreBlockStylesService();
 
 		// Shortcode service.
-		$container['elementor.shortcode.service'] = function () {
-			return new ElementorShortcodeService();
-		};
+		$container['elementor.shortcode.service'] = fn() => new ElementorShortcodeService();
 
 		// Block adapter service.
-		$container['elementor.block.adapter.service'] = function () {
-			return new ElementorBlockAdapterService();
-		};
+		$container['elementor.block.adapter.service'] = fn() => new ElementorBlockAdapterService();
 
 		// FSE script loader service for Elementor.
-		$container['elementor.fse.script.loader'] = function () {
-			return new ElementorFseScriptLoaderService();
-		};
+		$container['elementor.fse.script.loader'] = fn() => new ElementorFseScriptLoaderService();
 	}
 
 	/**
