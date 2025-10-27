@@ -9,6 +9,7 @@ import {
 	useEffect,
 } from '@wordpress/interactivity';
 
+// useInView hook to check if the video is in view.
 const useInView = () => {
 	const [inView, setInView] = useState(false);
 	useEffect(() => {
@@ -32,22 +33,29 @@ store('surecart/video', {
 	callbacks: {
 		loadInView() {
 			const inView = useInView();
+
 			useEffect(() => {
 				const { ref } = getElement();
-				const context = getContext();
-				if (inView) {
-					// Set the video src from data-src attribute.
-					if (ref.dataset.src && !ref?.src) {
-						ref.src = ref.dataset.src;
-					}
-					if (ref.readyState < 4) {
-						ref.load();
-					}
-					if (ref.autoplay && ref.muted) {
-						ref.play();
-					}
-				} else {
+
+				// pause if not in view.
+				if (!inView) {
 					ref.pause();
+					return;
+				}
+
+				// Set the video src from data-src attribute.
+				if (ref.dataset.src && !ref?.src) {
+					ref.src = ref.dataset.src;
+				}
+
+				// load the video if not loaded.
+				if (ref.readyState < 4) {
+					ref.load();
+				}
+
+				// play the video if autoplay and muted.
+				if (ref.autoplay && ref.muted) {
+					ref.play();
 				}
 			}, [inView]);
 		},
@@ -60,10 +68,10 @@ store('surecart/video', {
 			// Try to find the current video element inside this container.
 			const currentVideo = ref?.querySelector('video') ?? ref ?? null;
 
-			// loaded, remove large play b  utton.
+			// loaded, remove large play button.
 			context.loaded = true;
 
-			// Ensure the current video is playing.
+			// Ensure the current video plays.
 			currentVideo?.play();
 
 			// pause other videos on the page unless they are autoplay/loop.
@@ -71,14 +79,10 @@ store('surecart/video', {
 				.filter((v) => v !== currentVideo) // get other videos.
 				.forEach((video) => {
 					video.muted = true;
-					if (!video.autoplay) {
-						video.pause();
-					}
+					!video.autoplay && video.pause();
 				});
 		},
-	},
-	actions: {
-		// Play the video.
+
 		play() {
 			const { ref } = getElement();
 
@@ -90,9 +94,11 @@ store('surecart/video', {
 				return;
 			}
 
-			video.play().catch((error) => {
-				console.warn('Video autoplay failed:', error);
-			});
+			video
+				.play()
+				.catch((error) =>
+					console.warn('Video autoplay failed:', error)
+				);
 		},
 	},
 });
