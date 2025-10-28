@@ -177,6 +177,7 @@ export default ({ id, onCreateAutoFee }) => {
 							style={{
 								'--sc-choice-padding': '1.3em',
 								'--columns': 2,
+								marginTop: '8px',
 							}}
 							required
 						>
