@@ -157,7 +157,7 @@ export default ({ product, updateProduct }) => {
 									}}
 									onDelete={() => onDelete(index)}
 									index={index}
-									canAddValue={total < 300}
+									canAddValue={total <= 300}
 								/>
 							</div>
 						</SortableItem>
