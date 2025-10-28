@@ -118,6 +118,9 @@ export default ({ id, onCreateAutoFee }) => {
 						style={{
 							'--sc-choice-padding': '1.3em',
 							'--columns': 2,
+							maxHeight: '250px',
+							overflow: 'scroll',
+							padding: '0 1px',
 						}}
 						required
 					>
@@ -187,11 +190,38 @@ export default ({ id, onCreateAutoFee }) => {
 									>
 										<div
 											style={{
-												fontWeight: 600,
-												lineHeight: 1,
+												display: 'flex',
+												gap: '1em',
 											}}
+											slot="footer"
 										>
-											{type.label}
+											<ScIcon
+												style={{
+													fontWeight: '600',
+													width: '20px',
+													height: '20px',
+												}}
+												name={type.icon}
+											/>
+											<div>
+												<div
+													style={{
+														fontWeight: 600,
+														lineHeight: 1,
+													}}
+												>
+													{type.label}
+												</div>
+												<div
+													style={{
+														marginTop: '0.5em',
+														fontWeight: 400,
+														color: '#6B7280',
+													}}
+												>
+													{type.description}
+												</div>
+											</div>
 										</div>
 									</ScChoice>
 								);

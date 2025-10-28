@@ -56,13 +56,28 @@ export const TYPE_CHOICES = [
 	{
 		label: __('Line Item', 'surecart'),
 		value: 'line_item',
+		description: __(
+			'Apply this dynamic price to a line item that qualifies.',
+			'surecart'
+		),
+		icon: 'layout-list',
 	},
 	{
 		label: __('Checkout', 'surecart'),
 		value: 'checkout',
+		description: __(
+			'Apply this dynamic price to the entire checkout.',
+			'surecart'
+		),
+		icon: 'shopping-cart',
 	},
 	{
 		label: __('Shipping', 'surecart'),
 		value: 'shipping',
+		description: __(
+			'Apply this dynamic price to the shipping cost.',
+			'surecart'
+		),
+		icon: 'truck',
 	},
 ];
