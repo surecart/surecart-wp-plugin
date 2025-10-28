@@ -80,18 +80,6 @@ class ElementorWidgetsService {
 	}
 
 	/**
-	 * Get the widgets that do not require Elementor Pro.
-	 *
-	 * @return array
-	 */
-	public function getWidgetsNotRequiringPro(): array {
-		return [
-			'ReusableFormWidget',
-			'CartMenuIcon',
-		];
-	}
-
-	/**
 	 * Register the widgets.
 	 *
 	 * @param \Elementor\Widgets_Manager $widget_manager Widget manager.
