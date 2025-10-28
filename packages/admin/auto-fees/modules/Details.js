@@ -17,7 +17,6 @@ import {
 } from '@surecart/components-react';
 import Box from '../../ui/Box';
 import { useState, useEffect } from '@wordpress/element';
-import { feeTargetLabels } from '../utils/labelTranslations';
 
 export default ({ autoFee, onUpdate, loading }) => {
 	const {

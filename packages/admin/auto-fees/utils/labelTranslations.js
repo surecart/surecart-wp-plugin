@@ -80,9 +80,3 @@ export const operatorLabels = {
 	is_at_least: __('is at least', 'surecart'),
 	is_at_most: __('is at most', 'surecart'),
 };
-
-export const feeTargetLabels = {
-	checkout: __('Checkout', 'surecart'),
-	line_item: __('Line Item', 'surecart'),
-	shipping: __('Shipping', 'surecart'),
-};

@@ -5,11 +5,6 @@ import { css, jsx } from '@emotion/core';
  * External dependencies.
  */
 import { __ } from '@wordpress/i18n';
-import { useState, useEffect } from '@wordpress/element';
-import { store as coreStore } from '@wordpress/core-data';
-import { select } from '@wordpress/data';
-import apiFetch from '@wordpress/api-fetch';
-import { addQueryArgs } from '@wordpress/url';
 
 /**
  * Internal dependencies.
@@ -23,6 +18,7 @@ import {
 } from '@surecart/components-react';
 import Box from '../../ui/Box';
 import OrGroup from './OrGroup';
+import { TYPE_CHOICES } from '../utils/constants';
 
 export default ({ autoFee = {}, onUpdate, loading }) => {
 	const { rules } = autoFee;
@@ -74,6 +70,10 @@ export default ({ autoFee = {}, onUpdate, loading }) => {
 		);
 	}
 
+	const autoFeeAppliesTo = TYPE_CHOICES?.find(
+		(choice) => choice.value === autoFee?.fee_target
+	);
+
 	return (
 		<Box title={__('Conditions', 'surecart')} loading={loading}>
 			<label
@@ -84,7 +84,7 @@ export default ({ autoFee = {}, onUpdate, loading }) => {
 				`}
 			>
 				{__(
-					`Apply this dynamic price to ${autoFee?.fee_target} where `,
+					`Apply this dynamic price to ${autoFeeAppliesTo?.label} where `,
 					'surecart'
 				)}
 			</label>

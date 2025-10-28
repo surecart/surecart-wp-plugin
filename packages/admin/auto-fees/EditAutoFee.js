@@ -36,7 +36,6 @@ import Rules from './modules/Rules';
 import SaveButton from '../templates/SaveButton';
 import Box from '../ui/Box';
 import DateTimePicker from './modules/DateTimePicker';
-import { feeTargetLabels } from './utils/labelTranslations';
 import { TYPE_CHOICES } from './utils/constants';
 
 export default ({ id, setBrowserURL }) => {
