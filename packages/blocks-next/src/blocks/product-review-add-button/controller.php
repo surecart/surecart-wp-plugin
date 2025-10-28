@@ -2,9 +2,13 @@
 
 use SureCart\Models\User;
 
-$icon                   = $attributes['icon'] ?? 'edit-2';
-$product_id             = $block->context['postId'] ?? null;
-$product                = sc_get_product();
+$icon       = $attributes['icon'] ?? 'edit-2';
+$product_id = $block->context['postId'] ?? null;
+$product    = sc_get_product();
+if ( empty( $product ) ) {
+	return '';
+}
+
 $show_icon              = in_array( $attributes['button_type'], [ 'icon', 'both' ], true );
 $show_text              = in_array( $attributes['button_type'], [ 'text', 'both' ], true );
 $icon_position          = $attributes['icon_position'] ?? 'before';
@@ -37,7 +41,7 @@ if ( ! empty( $styles['declarations'] ) ) {
 $user         = User::current();
 $redirect_url = '';
 if ( empty( $user->ID ) ) {
-	$redirect_url = esc_url_raw( SureCart::pages()->url( 'dashboard' ) . '?product_id=' . $product_id . '&type=review&sc_redirect=1' );
+	$redirect_url = esc_url_raw( SureCart::pages()->url( 'dashboard' ) . '?product_id=' . $product->id . '&context=customer.order.solicit_reviews&sc_redirect=1' );
 }
 
 return 'file:./view.php';
