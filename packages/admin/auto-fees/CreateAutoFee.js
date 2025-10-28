@@ -4,7 +4,7 @@ import { __ } from '@wordpress/i18n';
 import { useDispatch } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import { getDate } from '@wordpress/date';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import {
 	ScAlert,
@@ -37,6 +37,13 @@ export default ({ id, onCreateAutoFee }) => {
 			fee_target: template?.fee_target,
 		}));
 	};
+
+	useEffect(() => {
+		const currentTarget =
+			getTemplateChoices()?.find((t) => t.value === currentTemplate)
+				?.fee_target || '';
+		setAutoFeeTarget(currentTarget);
+	}, [currentTemplate]);
 
 	// create the auto-fee.
 	const onSubmit = async (e) => {
@@ -72,9 +79,7 @@ export default ({ id, onCreateAutoFee }) => {
 	};
 
 	const isTargetEditable = currentTemplate === 'start_blank';
-	const currentTarget = getTemplateChoices()?.find(
-		(t) => t.value === currentTemplate
-	)?.fee_target;
+
 	return (
 		<CreateTemplate id={id}>
 			<ScAlert open={error?.length} type="danger" closable scrollOnOpen>
@@ -241,11 +246,11 @@ export default ({ id, onCreateAutoFee }) => {
 								{(TYPE_CHOICES || []).map((type) => {
 									const disabled =
 										!isTargetEditable &&
-										type.value !== currentTarget;
+										type.value !== autoFeeTarget;
 
 									const showLock =
 										!isTargetEditable &&
-										type.value === currentTarget;
+										type.value === autoFeeTarget;
 									return (
 										<ScChoice
 											key={type.value}
