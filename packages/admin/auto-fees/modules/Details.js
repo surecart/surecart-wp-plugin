@@ -59,7 +59,7 @@ export default ({ autoFee, onUpdate, loading }) => {
 				}
 			/>
 			<ScSelect
-				label={__('Type', 'surecart')}
+				label={__('Price Type', 'surecart')}
 				help={__(
 					'Whether this dynamic price is a discount or a fee.',
 					'surecart'

@@ -37,6 +37,7 @@ import SaveButton from '../templates/SaveButton';
 import Box from '../ui/Box';
 import DateTimePicker from './modules/DateTimePicker';
 import { feeTargetLabels } from './utils/labelTranslations';
+import { TYPE_CHOICES } from './utils/constants';
 
 export default ({ id, setBrowserURL }) => {
 	const [error, setError] = useState(null);
@@ -120,6 +121,10 @@ export default ({ id, setBrowserURL }) => {
 		}
 	};
 
+	const autoFeeAppliesTo = TYPE_CHOICES?.find(
+		(choice) => choice.value === autoFee?.fee_target
+	);
+
 	return (
 		<UpdateModel
 			onSubmit={onSubmit}
@@ -150,7 +155,7 @@ export default ({ id, setBrowserURL }) => {
 			sidebar={
 				<>
 					<Box
-						title={__('Price Type', 'surecart')}
+						title={__('Applies To', 'surecart')}
 						loading={!hasLoadedAutoFee}
 					>
 						<div
@@ -166,7 +171,7 @@ export default ({ id, setBrowserURL }) => {
 								name="shopping-cart"
 								style={{ width: '16px', height: '16px' }}
 							/>
-							<div>{feeTargetLabels[autoFee?.fee_target]}</div>
+							<div>{autoFeeAppliesTo?.label}</div>
 						</div>
 						<div
 							style={{
@@ -174,10 +179,7 @@ export default ({ id, setBrowserURL }) => {
 								color: '#6B7280',
 							}}
 						>
-							{__(
-								'This dynamic price will be applied and displayed on the checkout page total price.',
-								'surecart'
-							)}
+							{autoFeeAppliesTo?.description}
 						</div>
 					</Box>
 					<Box

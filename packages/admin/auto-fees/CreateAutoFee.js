@@ -172,7 +172,7 @@ export default ({ id, onCreateAutoFee }) => {
 					</ScChoices>
 					{'start_blank' === currentTemplate && (
 						<ScChoices
-							label={__('Type', 'surecart')}
+							label={__('Applies To', 'surecart')}
 							onScChange={(e) => setAutoFeeTarget(e.target.value)}
 							style={{
 								'--sc-choice-padding': '1.3em',
