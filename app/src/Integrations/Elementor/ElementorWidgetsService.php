@@ -7,6 +7,16 @@ namespace SureCart\Integrations\Elementor;
  */
 class ElementorWidgetsService {
 	/**
+	 * The widgets.
+	 *
+	 * @var array
+	 */
+	protected $free_widgets = [
+		'ReusableFormWidget',
+		'CartMenuIcon',
+	];
+
+	/**
 	 * Bootstrap the service.
 	 *
 	 * @return void
@@ -93,17 +103,15 @@ class ElementorWidgetsService {
 			return;
 		}
 
-		$pro_is_active             = class_exists( '\ElementorPro\Plugin' );
-		$widgets_not_requiring_pro = array_flip( $this->getWidgetsNotRequiringPro() );
+		$is_pro_active = class_exists( '\ElementorPro\Plugin' );
 
 		foreach ( glob( __DIR__ . '/Widgets/*.php' ) as $file ) {
 			if ( ! is_readable( $file ) ) {
 				continue;
 			}
 
-			// Skip widgets that require Pro when Pro is not active.
-			$widget_name = basename( $file, '.php' );
-			if ( ! isset( $widgets_not_requiring_pro[ $widget_name ] ) && ! $pro_is_active ) {
+			// pro is not active and the widget is not in the free widgets array.
+			if ( ! $is_pro_active && ! in_array( basename( $file, '.php' ), $this->free_widgets, true ) ) {
 				continue;
 			}
 
