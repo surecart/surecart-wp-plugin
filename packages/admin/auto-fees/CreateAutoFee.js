@@ -120,6 +120,7 @@ export default ({ id, onCreateAutoFee }) => {
 							display: 'flex',
 							flexDirection: 'column',
 							gap: '16px',
+							position: 'relative',
 						}}
 					>
 						<ScInput
@@ -194,12 +195,31 @@ export default ({ id, onCreateAutoFee }) => {
 								);
 							})}
 						</ScChoices>
+						<div
+							css={css`
+								&::before {
+									content: '';
+									position: absolute;
+									top: -20px;
+									left: 0;
+									right: 0;
+									height: 20px;
+									background: linear-gradient(
+										to top,
+										rgba(255, 255, 255, 0.95),
+										rgba(255, 255, 255, 0)
+									);
+									pointer-events: none;
+								}
+							`}
+							style={{ position: 'sticky', bottom: 0 }}
+						></div>
 					</div>
 
 					<ScChoices
 						onScChange={(e) => setAutoFeeTarget(e.target.value)}
 						style={{
-							marginTop: '16px',
+							marginTop: '8px',
 						}}
 						required
 					>
