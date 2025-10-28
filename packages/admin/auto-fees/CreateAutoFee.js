@@ -34,6 +34,7 @@ export default ({ id, onCreateAutoFee }) => {
 			value: key,
 			description: template?.description,
 			icon: template?.icon,
+			fee_target: template?.fee_target,
 		}));
 	};
 
@@ -70,6 +71,10 @@ export default ({ id, onCreateAutoFee }) => {
 		}
 	};
 
+	const isTargetEditable = currentTemplate === 'start_blank';
+	const currentTarget = getTemplateChoices()?.find(
+		(t) => t.value === currentTemplate
+	)?.fee_target;
 	return (
 		<CreateTemplate id={id}>
 			<ScAlert open={error?.length} type="danger" closable scrollOnOpen>
@@ -103,91 +108,45 @@ export default ({ id, onCreateAutoFee }) => {
 						</div>
 					}
 				>
-					<ScInput
-						label={__('Name', 'surecart')}
-						help={__("Your dynamic price's name.", 'surecart')}
-						value={autoFeeName}
-						onScInput={(e) => setAutoFeeName(e.target.value)}
-						required
-						tabIndex="0"
-						autofocus
-					/>
-					<ScChoices
-						label={__('Recipe', 'surecart')}
-						onScChange={(e) => setCurrentTemplate(e.target.value)}
+					<div
 						style={{
-							'--sc-choice-padding': '1.3em',
-							'--columns': 2,
-							maxHeight: '250px',
+							maxHeight: '380px',
 							overflow: 'scroll',
-							padding: '0 1px',
+							display: 'flex',
+							flexDirection: 'column',
+							gap: '16px',
 						}}
-						required
 					>
-						{(getTemplateChoices() || []).map((template) => {
-							return (
-								<ScChoice
-									key={template.value}
-									showControl={false}
-									checked={currentTemplate === template.value}
-									value={template.value}
-								>
-									<div
-										style={{ display: 'flex', gap: '1em' }}
-										slot="footer"
-									>
-										<ScIcon
-											style={{
-												fontWeight: '600',
-												width: '20px',
-												height: '20px',
-											}}
-											name={template.icon}
-										/>
-										<div>
-											<div
-												style={{
-													fontWeight: 600,
-													lineHeight: 1,
-												}}
-											>
-												{template.label}
-											</div>
-											{!!template.description && (
-												<div
-													style={{
-														marginTop: '0.5em',
-														fontWeight: 400,
-														color: '#6B7280',
-													}}
-												>
-													{template.description}
-												</div>
-											)}
-										</div>
-									</div>
-								</ScChoice>
-							);
-						})}
-					</ScChoices>
-					{'start_blank' === currentTemplate && (
+						<ScInput
+							label={__('Name', 'surecart')}
+							help={__("Your dynamic price's name.", 'surecart')}
+							value={autoFeeName}
+							onScInput={(e) => setAutoFeeName(e.target.value)}
+							required
+							tabIndex="0"
+							autofocus
+						/>
 						<ScChoices
-							label={__('Applies To', 'surecart')}
-							onScChange={(e) => setAutoFeeTarget(e.target.value)}
+							label={__('Recipe', 'surecart')}
+							onScChange={(e) =>
+								setCurrentTemplate(e.target.value)
+							}
 							style={{
 								'--sc-choice-padding': '1.3em',
 								'--columns': 2,
-								marginTop: '8px',
+								padding: '0 1px',
 							}}
 							required
 						>
-							{(TYPE_CHOICES || []).map((type) => {
+							{(getTemplateChoices() || []).map((template) => {
 								return (
 									<ScChoice
-										key={type.value}
+										key={template.value}
 										showControl={false}
-										checked={autoFeeTarget === type.value}
-										value={type.value}
+										checked={
+											currentTemplate === template.value
+										}
+										value={template.value}
 									>
 										<div
 											style={{
@@ -202,7 +161,7 @@ export default ({ id, onCreateAutoFee }) => {
 													width: '20px',
 													height: '20px',
 												}}
-												name={type.icon}
+												name={template.icon}
 											/>
 											<div>
 												<div
@@ -211,24 +170,141 @@ export default ({ id, onCreateAutoFee }) => {
 														lineHeight: 1,
 													}}
 												>
-													{type.label}
+													{template.label}
 												</div>
-												<div
-													style={{
-														marginTop: '0.5em',
-														fontWeight: 400,
-														color: '#6B7280',
-													}}
-												>
-													{type.description}
-												</div>
+												{!!template.description && (
+													<div
+														style={{
+															marginTop: '0.5em',
+															fontWeight: 400,
+															color: '#6B7280',
+														}}
+													>
+														{template.description}
+													</div>
+												)}
 											</div>
 										</div>
 									</ScChoice>
 								);
 							})}
 						</ScChoices>
-					)}
+					</div>
+
+					<ScChoices
+						onScChange={(e) => setAutoFeeTarget(e.target.value)}
+						style={{
+							marginTop: '16px',
+						}}
+						required
+					>
+						<div
+							style={{
+								display: 'flex',
+								width: '100%',
+								justifyContent: 'space-between',
+								flexWrap: 'nowrap',
+							}}
+						>
+							<div
+								style={{
+									display: 'flex',
+									flexDirection: 'column',
+								}}
+							>
+								<label for="choices-2">
+									{__('Applies To', 'surecart')}
+									<span aria-hidden="true" class="required">
+										{' '}
+										*
+									</span>
+								</label>
+								<span
+									style={{
+										color: '#6b7280',
+										fontSize: '12px',
+									}}
+								>
+									{__(
+										'Choose who the fee applies to',
+										'surecart'
+									)}
+								</span>
+							</div>
+							<div
+								style={{
+									display: 'flex',
+									justifyContent: 'flex-end',
+									gap: '8px',
+								}}
+							>
+								{(TYPE_CHOICES || []).map((type) => {
+									const disabled =
+										!isTargetEditable &&
+										type.value !== currentTarget;
+
+									const showLock =
+										!isTargetEditable &&
+										type.value === currentTarget;
+									return (
+										<ScChoice
+											key={type.value}
+											showControl={false}
+											checked={
+												autoFeeTarget === type.value
+											}
+											value={type.value}
+											style={{
+												'--sc-choice-padding': '10px',
+												'--sc-choice-border-radius':
+													'8px',
+											}}
+											disabled={disabled}
+										>
+											<div
+												style={{
+													display: 'flex',
+													gap: '1em',
+													alignItems: 'center',
+												}}
+												slot="footer"
+											>
+												{showLock && (
+													<ScIcon
+														style={{
+															fontWeight: '600',
+															width: '20px',
+															height: '20px',
+														}}
+														name="lock"
+													/>
+												)}
+												{!showLock && (
+													<ScIcon
+														style={{
+															fontWeight: '600',
+															width: '20px',
+															height: '20px',
+														}}
+														name={type.icon}
+													/>
+												)}
+
+												<div
+													style={{
+														fontWeight: 600,
+														lineHeight: 1,
+													}}
+												>
+													{type.label}
+												</div>
+											</div>
+										</ScChoice>
+									);
+								})}
+							</div>
+						</div>
+					</ScChoices>
 				</Box>
 			</ScForm>
 		</CreateTemplate>
