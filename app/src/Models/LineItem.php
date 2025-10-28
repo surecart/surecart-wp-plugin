@@ -354,15 +354,6 @@ class LineItem extends Model {
 	}
 
 	/**
-	 * Get the is quantity more than one attribute.
-	 *
-	 * @return string
-	 */
-	public function getIsQuantityMoreThanOneAttribute() {
-		return $this->quantity > 1;
-	}
-
-	/**
 	 * Purchasable status display
 	 *
 	 * @return string
