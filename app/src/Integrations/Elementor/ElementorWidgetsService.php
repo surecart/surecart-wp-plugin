@@ -91,15 +91,13 @@ class ElementorWidgetsService {
 			return;
 		}
 
-		$is_pro_active = class_exists( '\ElementorPro\Plugin' );
-
 		foreach ( glob( __DIR__ . '/Widgets/*.php' ) as $file ) {
 			if ( ! is_readable( $file ) ) {
 				continue;
 			}
 
 			// pro is not active and the widget is not in the free widgets array.
-			if ( ! $is_pro_active && ! in_array( basename( $file, '.php' ), $this->free_widgets, true ) ) {
+			if ( ! $this->is_pro_active() && ! in_array( basename( $file, '.php' ), $this->free_widgets, true ) ) {
 				continue;
 			}
 
@@ -109,5 +107,14 @@ class ElementorWidgetsService {
 
 			$widget_manager->register( new $widget_class_name() );
 		}
+	}
+
+	/**
+	 * Check if Elementor Pro is active.
+	 *
+	 * @return bool
+	 */
+	protected function is_pro_active(): bool {
+		return class_exists( '\ElementorPro\Plugin' );
 	}
 }
