@@ -70,6 +70,18 @@ class ElementorWidgetsService {
 	}
 
 	/**
+	 * Get the widgets that do not require Elementor Pro.
+	 *
+	 * @return array
+	 */
+	public function getWidgetsNotRequiringPro(): array {
+		return [
+			'ReusableFormWidget',
+			'CartMenuIcon',
+		];
+	}
+
+	/**
 	 * Register the widgets.
 	 *
 	 * @param \Elementor\Widgets_Manager $widget_manager Widget manager.
@@ -77,12 +89,21 @@ class ElementorWidgetsService {
 	 * @return void
 	 */
 	public function registerWidgets( $widget_manager ) {
-		if ( ! class_exists( '\Elementor\Widget_Base' ) || ! class_exists( '\ElementorPro\Plugin' ) ) {
+		if ( ! class_exists( '\Elementor\Widget_Base' ) ) {
 			return;
 		}
 
+		$pro_is_active             = class_exists( '\ElementorPro\Plugin' );
+		$widgets_not_requiring_pro = array_flip( $this->getWidgetsNotRequiringPro() );
+
 		foreach ( glob( __DIR__ . '/Widgets/*.php' ) as $file ) {
 			if ( ! is_readable( $file ) ) {
+				continue;
+			}
+
+			// Skip widgets that require Pro when Pro is not active.
+			$widget_name = basename( $file, '.php' );
+			if ( ! isset( $widgets_not_requiring_pro[ $widget_name ] ) && ! $pro_is_active ) {
 				continue;
 			}
 
