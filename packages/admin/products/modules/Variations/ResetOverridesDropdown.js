@@ -25,7 +25,14 @@ export default ({ fields = [], isOverridden, onReset }) => {
 
 	// Don't render if no overrides
 	if (overriddenFields.length === 0) {
-		return null;
+		// prevent layout shift
+		return (
+			<ScButton
+				size="small"
+				type="text"
+				style={{ visibility: 'hidden', opacity: 0 }}
+			/>
+		);
 	}
 
 	return (

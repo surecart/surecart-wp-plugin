@@ -10,10 +10,13 @@ import {
 	ScInput,
 } from '@surecart/components-react';
 import { useState } from '@wordpress/element';
+import useVariantValue from '../../hooks/useVariantValue';
+
 import DrawerSection from '../../../ui/DrawerSection';
 import Image from './Image';
 import Inventory from './Inventory';
-import useVariantValue from '../../hooks/useVariantValue';
+import Purchases from './Purchases';
+import Licensing from './Licensing';
 
 export default ({
 	variant,
@@ -128,13 +131,17 @@ export default ({
 							updateVariant={updateVariant}
 						/>
 
-						<DrawerSection title={__('Purchases', 'surecart')}>
-							sdafsdf
-						</DrawerSection>
+						<Purchases
+							variant={variant}
+							product={product}
+							updateVariant={updateVariant}
+						/>
 
-						<DrawerSection title={__('Licensing', 'surecart')}>
-							sdafsdf
-						</DrawerSection>
+						<Licensing
+							variant={variant}
+							product={product}
+							updateVariant={updateVariant}
+						/>
 
 						<DrawerSection title={__('Shipping', 'surecart')}>
 							sdafsdf
