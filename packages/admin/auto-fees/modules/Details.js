@@ -9,12 +9,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies.
  */
-import {
-	ScInput,
-	ScPriceInput,
-	ScSelect,
-	ScTag,
-} from '@surecart/components-react';
+import { ScInput, ScPriceInput, ScSelect } from '@surecart/components-react';
 import Box from '../../ui/Box';
 import { useState, useEffect } from '@wordpress/element';
 
