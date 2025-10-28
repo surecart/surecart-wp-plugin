@@ -23,8 +23,10 @@ if ( ! function_exists( 'sc_get_product' ) ) {
 				[
 					'post_type'  => 'sc_product',
 					'meta_query' => [
-						'key'   => 'sc_id',
-						'value' => $post,
+						[
+							'key'   => 'sc_id',
+							'value' => $post,
+						],
 					],
 				]
 			);
