@@ -133,6 +133,7 @@ export default ({ product, updateProduct }) => {
 				itemContent={(_, variant) => (
 					<VariantItem
 						variant={variant}
+						product={product}
 						updateVariant={(data) =>
 							updateVariant(data, variant?.position)
 						}
@@ -142,6 +143,7 @@ export default ({ product, updateProduct }) => {
 							variant?.amount !== null
 						}
 						defaultSku={product?.sku}
+						variantOptions={product?.variant_options}
 						defaultAmount={
 							prices?.[0]
 								? maybeConvertAmount(
