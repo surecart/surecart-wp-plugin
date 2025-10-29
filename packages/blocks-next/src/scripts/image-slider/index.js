@@ -163,31 +163,6 @@ const { state, actions } = store('surecart/image-slider', {
 					'.swiper:not(.sc-image-slider__thumbs .swiper)'
 				),
 				{
-					on: {
-						slideChange: () => {
-							const { actions: videoActions } =
-								store('surecart/video');
-							if (
-								typeof videoActions?.pauseVideos === 'function'
-							) {
-								videoActions.pauseVideos();
-							}
-						},
-						slideChangeTransitionEnd: () => {
-							// Resume autoplay videos in the active slide after transition
-							const { actions: videoActions } =
-								store('surecart/video');
-							if (
-								typeof videoActions?.resumeVideos === 'function'
-							) {
-								videoActions.resumeVideos(
-									state.swiper.slides[
-										state.swiper.activeIndex
-									].querySelector('video')
-								);
-							}
-						},
-					},
 					modules: [Thumbs, A11y, Navigation, Pagination],
 					direction: 'horizontal',
 					loop: false,
