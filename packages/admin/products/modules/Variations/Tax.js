@@ -1,0 +1,180 @@
+/** @jsx jsx */
+import { css, jsx } from '@emotion/core';
+
+/**
+ * External dependencies.
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
+ * Internal dependencies.
+ */
+import {
+	ScInput,
+	ScMenu,
+	ScSwitch,
+	ScToggle,
+	ScDropdown,
+	ScButton,
+	ScIcon,
+	ScMenuItem,
+} from '@surecart/components-react';
+import DrawerSection from '../../../ui/DrawerSection';
+import useVariantValue from '../../hooks/useVariantValue';
+import ResetOverridesDropdown from './ResetOverridesDropdown';
+
+const WEIGHT_UNIT_TYPES = [
+	__('lb', 'surecart'),
+	__('kg', 'surecart'),
+	__('oz', 'surecart'),
+	__('g', 'surecart'),
+];
+
+export default ({ variant, updateVariant, product }) => {
+	const { getValue, isOverridden } = useVariantValue({ variant, product });
+
+	return (
+		<DrawerSection
+			title={__('Tax', 'surecart')}
+			style={{
+				'--sc-card-background-color': 'transparent',
+				'--sc-card-padding': '0',
+				'--sc-card-border-color': 'transparent',
+				'--sc-card-shadow': 'none',
+			}}
+			suffix={
+				<ResetOverridesDropdown
+					fields={[
+						{
+							key: 'shipping_enabled',
+							label: __('Shipping enabled', 'surecart'),
+						},
+						{
+							key: 'weight',
+							label: __('Weight', 'surecart'),
+						},
+						{
+							key: 'weight_unit',
+							label: __('Weight unit', 'surecart'),
+						},
+						{
+							key: 'auto_fulfill_enabled',
+							label: __('Auto fulfill', 'surecart'),
+						},
+					]}
+					isOverridden={isOverridden}
+					onReset={(fieldKey) => updateVariant({ [fieldKey]: null })}
+				/>
+			}
+		>
+			<div
+				css={css`
+					display: grid;
+					gap: var(--sc-spacing-small);
+				`}
+			>
+				<ScToggle
+					showControl
+					open={!!getValue('shipping_enabled')}
+					onClick={() => {
+						updateVariant({
+							shipping_enabled: true,
+						});
+					}}
+				>
+					<span
+						slot="summary"
+						css={css`
+							font-weight: var(--sc-input-label-font-weight);
+						`}
+					>
+						{__('Physical product', 'surecart')}
+					</span>
+
+					<ScInput
+						label={__('Shipping Weight', 'surecart')}
+						value={getValue('weight')}
+						onScInput={(e) =>
+							updateVariant({ weight: e.target.value })
+						}
+					>
+						<ScDropdown slot="suffix" placement="bottom-end">
+							<ScButton type="text" slot="trigger" circle>
+								{getValue('weight_unit')}{' '}
+								<ScIcon name="chevron-down" />
+							</ScButton>
+							<ScMenu>
+								{WEIGHT_UNIT_TYPES.map((unit) => (
+									<ScMenuItem
+										onClick={() =>
+											updateVariant({ weight_unit: unit })
+										}
+										key={unit}
+									>
+										{unit}
+									</ScMenuItem>
+								))}
+							</ScMenu>
+						</ScDropdown>
+					</ScInput>
+				</ScToggle>
+
+				<ScToggle
+					showControl
+					open={!getValue('shipping_enabled')}
+					onClick={() => {
+						updateVariant({
+							shipping_enabled: false,
+						});
+					}}
+				>
+					<span
+						slot="summary"
+						css={css`
+							font-weight: var(--sc-input-label-font-weight);
+						`}
+					>
+						{__('Digital product or service', 'surecart')}
+					</span>
+					<div
+						css={css`
+							display: grid;
+							gap: var(--sc-spacing-large);
+						`}
+					>
+						<div
+							css={css`
+								color: var(--sc-input-help-text-color);
+								font-size: var(
+									--sc-input-help-text-font-size-medium
+								);
+							`}
+						>
+							{__(
+								'Customers won’t enter shipping details at checkout.',
+								'surecart'
+							)}
+						</div>
+
+						<ScSwitch
+							checked={getValue('auto_fulfill_enabled')}
+							onScChange={(e) => {
+								updateVariant({
+									auto_fulfill_enabled: e.target.checked,
+								});
+							}}
+						>
+							{__('Auto Fulfill', 'surecart')}
+							<span slot="description">
+								{__(
+									'Turn this off if you do not wish to automatically fulfill this product when an order is placed.',
+									'surecart'
+								)}
+							</span>
+						</ScSwitch>
+					</div>
+				</ScToggle>
+			</div>
+		</DrawerSection>
+	);
+};

@@ -144,7 +144,7 @@ export default ({ product, updateProduct }) => {
 							.length || 1);
 					return (
 						<SortableItem key={index}>
-							<div class="variant-option">
+							<div className="variant-option">
 								<VariantOption
 									product={product}
 									updateProduct={updateProduct}

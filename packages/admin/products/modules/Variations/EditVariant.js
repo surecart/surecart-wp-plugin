@@ -17,6 +17,7 @@ import Image from './Image';
 import Inventory from './Inventory';
 import Purchases from './Purchases';
 import Licensing from './Licensing';
+import Shipping from './Shipping';
 
 export default ({
 	variant,
@@ -54,7 +55,13 @@ export default ({
 
 	return (
 		<ScForm
-			onScFormSubmit={() => {
+			onScSubmit={(e) => {
+				e.preventDefault();
+				e.stopImmediatePropagation();
+			}}
+			onScFormSubmit={(e) => {
+				e.preventDefault();
+				e.stopImmediatePropagation();
 				// close the drawer maybe
 				console.log('submit');
 				setOpen(false);
@@ -68,8 +75,8 @@ export default ({
 				}}
 				onScAfterHide={onRequestClose}
 				open={open}
-				onScAfterShow={() => ref.current.triggerFocus()}
 				stickyHeader
+				stickyFooter
 			>
 				<div
 					css={css`
@@ -83,7 +90,7 @@ export default ({
 						css={css`
 							padding: 30px;
 							display: grid;
-							gap: 2em;
+							gap: var(--sc-spacing-large);
 						`}
 					>
 						<Image
@@ -143,9 +150,11 @@ export default ({
 							updateVariant={updateVariant}
 						/>
 
-						<DrawerSection title={__('Shipping', 'surecart')}>
-							sdafsdf
-						</DrawerSection>
+						<Shipping
+							variant={variant}
+							product={product}
+							updateVariant={updateVariant}
+						/>
 
 						<DrawerSection title={__('Tax', 'surecart')}>
 							sdafsdf

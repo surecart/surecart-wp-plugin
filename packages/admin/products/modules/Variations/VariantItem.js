@@ -78,7 +78,6 @@ export default ({
 	 * Render the variant name.
 	 */
 	const renderName = () => {
-		console.log(variant);
 		const { option_1, option_2, option_3, status } = variant;
 		const Tag = status === 'draft' ? 'del' : 'span';
 		const colorStyle =

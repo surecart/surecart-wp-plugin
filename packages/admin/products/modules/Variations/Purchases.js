@@ -1,4 +1,4 @@
-import { ScSwitch } from '@surecart/components-react';
+import { ScInput, ScSwitch } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 import DrawerSection from '../../../ui/DrawerSection';
 import useVariantValue from '../../hooks/useVariantValue';
@@ -24,10 +24,10 @@ export default ({ variant, updateVariant, product }) => {
 			}
 		>
 			<ScSwitch
-				checked={!!getValue('purchase_limit')}
+				checked={parseInt(getValue('purchase_limit')) > 0}
 				onScChange={(e) => {
 					updateVariant({
-						purchase_limit: e.target.checked ? 1 : null,
+						purchase_limit: e.target.checked ? 1 : 0,
 					});
 				}}
 			>
@@ -39,6 +39,18 @@ export default ({ variant, updateVariant, product }) => {
 					)}
 				</span>
 			</ScSwitch>
+			{!!getValue('purchase_limit') && (
+				<ScInput
+					label={__('Purchase limit', 'surecart')}
+					type="number"
+					value={getValue('purchase_limit')}
+					onScInput={(e) => {
+						updateVariant({
+							purchase_limit: e.target.value || null,
+						});
+					}}
+				/>
+			)}
 		</DrawerSection>
 	);
 };
