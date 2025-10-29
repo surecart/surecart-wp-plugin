@@ -7,10 +7,11 @@
 			SureCart::svg()->get(
 				'star',
 				[
-					'height' => esc_attr( $size ),
-					'width'  => esc_attr( $size ),
-					'fill'   => $is_full ? $fill_color : 'none',
-					'stroke' => $fill_color ?? 'none',
+					'height'       => esc_attr( $size ),
+					'width'        => esc_attr( $size ),
+					'fill'         => $is_full ? $fill_color : 'none',
+					'stroke'       => $fill_color ?? 'none',
+					'stroke-width' => 2,
 				]
 			),
 			sc_allowed_svg_html()

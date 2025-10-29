@@ -61,7 +61,7 @@ export default ({ attributes, setAttributes, context, clientId }) => {
 								stroke={
 									fill_color || 'var(--sc-color-primary-500)'
 								}
-								strokeWidth="1"
+								strokeWidth="2"
 							/>
 						</>
 					) : isFull ? (
@@ -69,14 +69,14 @@ export default ({ attributes, setAttributes, context, clientId }) => {
 							points={points}
 							fill={fill_color || 'var(--sc-color-primary-500)'}
 							stroke={fill_color || 'var(--sc-color-primary-500)'}
-							strokeWidth="1"
+							strokeWidth="2"
 						/>
 					) : (
 						<polygon
 							points={points}
 							fill="none"
-							stroke={'var(--sc-color-gray-300)'}
-							strokeWidth="1"
+							stroke={fill_color || 'var(--sc-color-primary-500)'}
+							strokeWidth="2"
 						/>
 					)}
 				</svg>
