@@ -322,14 +322,7 @@ export default ({
 				</ScButton>
 			</div>
 			{totalLeaves === leafIndex + 1 && (
-				<ScButton
-					type="link"
-					css={css`
-						text-align: left;
-						--sc-button-link-color: #388051;
-					`}
-					onClick={addLeaf}
-				>
+				<ScButton type="link" onClick={addLeaf}>
 					{__('+ AND', 'surecart')}
 				</ScButton>
 			)}

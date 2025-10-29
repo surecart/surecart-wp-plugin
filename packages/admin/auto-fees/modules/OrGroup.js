@@ -53,6 +53,8 @@ export default ({
 			.join(', ');
 	};
 
+	console.log(rules);
+
 	return (
 		<ScToggle
 			open
@@ -143,15 +145,8 @@ export default ({
 				);
 			})}
 			{totalRuleGroups === groupIndex + 1 && (
-				<ScButton
-					type="link"
-					css={css`
-						text-align: left;
-						--sc-button-link-color: #388051;
-					`}
-					onClick={addRuleGroup}
-				>
-					{__('+ Add OR Group', 'surecart')}
+				<ScButton type="link" onClick={addRuleGroup}>
+					{__('+ OR', 'surecart')}
 				</ScButton>
 			)}
 		</ScToggle>
