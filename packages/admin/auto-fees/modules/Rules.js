@@ -32,9 +32,9 @@ export default ({ autoFee = {}, onUpdate, loading }) => {
 		return (
 			<Box title={__('Conditions', 'surecart')} loading={loading}>
 				<ScCard>
-					<ScEmpty icon="settings">
+					<ScEmpty icon="sliders">
 						{__(
-							'No conditions have been set for this dynamic price.',
+							'To get started, add some conditions for this dynamic price.',
 							'surecart'
 						)}
 						<div>
