@@ -29,7 +29,7 @@ export class ScLineItemShipping {
       </Fragment>
     );
   }
-  
+
   render() {
     const { checkout } = checkoutState;
 
@@ -49,12 +49,12 @@ export class ScLineItemShipping {
 
     return (
       <Fragment>
-      <sc-line-item>
-        <span slot="description">{this.label || __('Shipping', 'surecart')}</span>
-        <span slot="price">{checkout?.shipping_display_amount}</span>
-      </sc-line-item>
+        <sc-line-item>
+          <span slot="description">{this.label || __('Shipping', 'surecart')}</span>
+          <span slot="price">{checkout?.shipping_display_amount}</span>
+        </sc-line-item>
         {this.renderShippingFees(checkout)}
-        </Fragment>
+      </Fragment>
     );
   }
 }
