@@ -3,9 +3,7 @@
 namespace SureCart\Controllers\Admin\Customers;
 
 use SureCart\Controllers\Admin\AdminController;
-use SureCart\Models\Product;
 use SureCart\Models\Customer;
-use SureCartCore\Responses\RedirectResponse;
 use SureCart\Controllers\Admin\Customers\CustomersListTable;
 use SureCart\Background\BulkActionService;
 
@@ -15,7 +13,7 @@ use SureCart\Background\BulkActionService;
 class CustomersController extends AdminController {
 
 	/**
-	 * Products index.
+	 * Customers index.
 	 */
 	public function index() {
 		// instantiate the bulk actions service.

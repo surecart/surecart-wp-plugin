@@ -2,7 +2,6 @@
 
 namespace SureCart\Controllers\Admin\Customers;
 
-use SureCart\Models\Product;
 use SureCart\Models\Customer;
 use SureCart\Controllers\Admin\Tables\ListTable;
 use SureCart\Controllers\Admin\Tables\HasModeFilter;
@@ -86,7 +85,7 @@ class CustomersListTable extends ListTable {
 	/**
 	 * Override the parent columns method. Defines the columns to use in your listing table
 	 *
-	 * @return Array
+	 * @return array
 	 */
 	public function get_columns() {
 		return array_merge(
@@ -116,7 +115,7 @@ class CustomersListTable extends ListTable {
 	/**
 	 * Define which columns are hidden
 	 *
-	 * @return Array
+	 * @return array
 	 */
 	public function get_hidden_columns() {
 		return array();
@@ -125,7 +124,7 @@ class CustomersListTable extends ListTable {
 	/**
 	 * Define the sortable columns
 	 *
-	 * @return Array
+	 * @return array
 	 */
 	public function get_sortable_columns() {
 		return array( 'title' => array( 'title', false ) );
@@ -240,21 +239,18 @@ class CustomersListTable extends ListTable {
 	/**
 	 * Define what data to show on each column of the table
 	 *
-	 * @param \SureCart\Models\Product $product Product model.
-	 * @param String                   $column_name - Current column name.
+	 * @param Customer $customer Customer model.
+	 * @param string   $column_name - Current column name.
 	 *
-	 * @return Mixed
+	 * @return mixed
 	 */
-	public function column_default( $product, $column_name ) {
+	public function column_default( $customer, $column_name ) {
 		// Call the parent method to handle custom columns.
-		parent::column_default( $product, $column_name );
+		parent::column_default( $customer, $column_name );
 
 		switch ( $column_name ) {
-			case 'name':
-				return '<a href="' . \SureCart::getUrl()->edit( 'product', $product->id ) . '">' . $product->name . '</a>';
-			case 'name':
 			case 'description':
-				return $product->$column_name ?? '';
+				return $customer->$column_name ?? '';
 		}
 	}
 
