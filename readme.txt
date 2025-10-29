@@ -313,7 +313,14 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 
 == Changelog ==
 
-= 3.16.2 - Octover 27th, 2025 =
+= 3.16.3 - October 29th, 2025 =
+- Change: Allow up to 300 variants per product.
+- Fix: Issue with Elementor form selection module not appearing when only the free version of Elementor is installed.
+- Fix: Error with product list shortcode with multiple collection ids passed.
+- Fix: Manual payment methods not appearing on customer dashboard "Add Payment Methods" page.
+- Fix: Recurring commissions with AffilaiteWP when a free trial becomes active.
+
+= 3.16.2 - October 27th, 2025 =
 - Fix: Issue with dashboard charts not using correct currency.
 
 = 3.16.1 - October 24th, 2025 =
