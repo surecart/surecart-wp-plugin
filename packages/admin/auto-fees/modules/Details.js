@@ -60,9 +60,6 @@ export default ({ autoFee, onUpdate, loading }) => {
 				)}
 				unselect={false}
 				value={discount ? 'discount' : 'fee'}
-				css={css`
-					min-width: 125px;
-				`}
 				onScChange={(e) => {
 					onUpdate({
 						discount: 'discount' === e.target.value ? true : false,
@@ -94,9 +91,6 @@ export default ({ autoFee, onUpdate, loading }) => {
 					)}
 					unselect={false}
 					value={adjustmentType}
-					css={css`
-						min-width: 125px;
-					`}
 					onScChange={(e) => setAdjustmentType(e.target.value)}
 					choices={[
 						{
