@@ -24,7 +24,7 @@ export default ({ id, onCreateAutoFee }) => {
 	const [isSaving, setIsSaving] = useState(false);
 	const [autoFeeName, setAutoFeeName] = useState('');
 	const [autoFeeTarget, setAutoFeeTarget] = useState('');
-	const [currentTemplate, setCurrentTemplate] = useState('start_blank');
+	const [currentTemplate, setCurrentTemplate] = useState('');
 	const [error, setError] = useState('');
 	const { saveEntityRecord } = useDispatch(coreStore);
 
@@ -113,9 +113,18 @@ export default ({ id, onCreateAutoFee }) => {
 						</div>
 					}
 				>
+					<ScInput
+						label={__('Name', 'surecart')}
+						help={__("Your dynamic price's name.", 'surecart')}
+						value={autoFeeName}
+						onScInput={(e) => setAutoFeeName(e.target.value)}
+						required
+						tabIndex="0"
+						autofocus
+					/>
 					<div
 						style={{
-							maxHeight: '380px',
+							maxHeight: '480px',
 							overflow: 'scroll',
 							display: 'flex',
 							flexDirection: 'column',
@@ -123,15 +132,6 @@ export default ({ id, onCreateAutoFee }) => {
 							position: 'relative',
 						}}
 					>
-						<ScInput
-							label={__('Name', 'surecart')}
-							help={__("Your dynamic price's name.", 'surecart')}
-							value={autoFeeName}
-							onScInput={(e) => setAutoFeeName(e.target.value)}
-							required
-							tabIndex="0"
-							autofocus
-						/>
 						<ScChoices
 							label={__('Recipe', 'surecart')}
 							onScChange={(e) =>
