@@ -283,6 +283,9 @@ export default ({ id, onCreateAutoFee }) => {
 												'--sc-choice-padding': '10px',
 												'--sc-choice-border-radius':
 													'8px',
+												pointerEvents: disabled
+													? 'none'
+													: 'auto',
 											}}
 											disabled={disabled}
 										>
