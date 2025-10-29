@@ -33,6 +33,85 @@ class IntegrationCatalog extends ExternalApiModel {
 	protected $base_url = 'https://integrations-catalog.surecart.com/';
 
 	/**
+	 * Get the activation type attribute.
+	 *
+	 * @return string
+	 */
+	public function getActivationTypeAttribute() {
+		if ( $this->acf['is_pre_installed'] ) {
+			return 'pre-installed';
+		}
+		if ( $this->acf['plugin_slug'] && $this->acf['plugin_file'] ) {
+			return 'plugin';
+		}
+		if ( $this->acf['theme_slug'] && ! $this->acf['activation_link'] ) {
+			return 'theme';
+		}
+		if ( $this->acf['activation_link'] ) {
+			return 'external';
+		}
+		return null;
+	}
+
+	/**
+	 * Get the button text attribute.
+	 *
+	 * @return string
+	 */
+	public function getButtonTextAttribute() {
+		if ( 'pre-installed' === $this->status ) {
+			return __( 'Pre-installed', 'surecart' );
+		}
+		if ( 'active' === $this->status ) {
+			return __( 'Enabled', 'surecart' );
+		}
+		if ( in_array( $this->activation_type, [ 'plugin', 'theme' ], true ) ) {
+			if ( 'inactive' === $this->status ) {
+				return __( 'Activate', 'surecart' );
+			}
+			return __( 'Install & Activate', 'surecart' );
+		}
+		return __( 'Activate', 'surecart' );
+	}
+
+	/**
+	 * Get the status attribute.
+	 *
+	 * @return string
+	 */
+	public function getStatusAttribute() {
+		if ( $this->acf['is_pre_installed'] ) {
+			return 'pre-installed';
+		}
+		if ( $this->is_enabled ) {
+			return 'active';
+		}
+		if ( 'plugin' === $this->activation_type ) {
+			if ( $this->is_plugin_installed && ! $this->is_plugin_active ) {
+				return 'inactive';
+			}
+			if ( ! $this->is_plugin_installed ) {
+				return 'not-installed';
+			}
+		}
+		return 'inactive';
+	}
+
+	/**
+	 * Get the is plugin installed attribute.
+	 *
+	 * @return bool
+	 */
+	public function getIsPluginInstalledAttribute() {
+		if ( empty( $this->acf['plugin_file'] ) ) {
+			return false;
+		}
+
+		$plugin_path = WP_PLUGIN_DIR . '/' . $this->acf['plugin_file'];
+		return file_exists( $plugin_path );
+	}
+
+	/**
 	 * Get the is plugin active attribute.
 	 *
 	 * @return bool

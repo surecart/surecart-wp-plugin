@@ -1,118 +1,61 @@
 /** @jsx jsx */
-// template
-import DashboardModel from '../templates/DashboardModel';
-import Logo from '../templates/Logo';
-import GetStarted from './components/GetStarted';
-import LearnMore from './components/LearnMore';
-import RecentOrders from './components/RecentOrders';
-import Overview from './components/overview/Overview';
 import { css, jsx } from '@emotion/core';
-import {
-	ScFlex,
-	ScDivider,
-	ScBreadcrumbs,
-	ScBreadcrumb,
-	ScProvisionalBanner,
-	ScAlert,
-	ScButton,
-	ScIcon,
-} from '@surecart/components-react';
-import { Fragment } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { useState } from 'react';
-import { hasQueryArg, removeQueryArgs } from '@wordpress/url';
-import { useEffect } from 'react';
+import UpdateModel from '../templates/UpdateModel';
+import { ScButton, ScIcon } from '@surecart/components-react';
+import Logo from '../templates/Logo';
+import Setup from './Setup';
+import Chart from './chart';
+import Orders from './Orders';
+import QuickLinks from './components/QuickLinks';
+import Recommended from './Recommended';
 
 export default () => {
-	const [liveMode, setLiveMode] = useState(true);
-	const showClaimSuccess = hasQueryArg(
-		window.location.href,
-		'account_claimed_success'
-	);
-
-	useEffect(() => {
-		if (showClaimSuccess) {
-			window.history.replaceState(
-				{},
-				document.title,
-				removeQueryArgs(window.location.href, 'account_claimed_success')
-			);
-		}
-	}, [showClaimSuccess]);
+	const [liveMode, setLiveMode] = useState(!scData?.claim_url);
 
 	return (
-		<>
-			{!!scData?.claim_url && (
-				<ScProvisionalBanner
-					claimUrl={scData?.claim_url}
-					expired={scData?.claim_expired || false}
-				/>
-			)}
-
-			<DashboardModel
-				title={
-					<div
-						css={css`
-							display: flex;
-							align-items: center;
-							gap: 1em;
-						`}
-					>
-						<ScBreadcrumbs>
-							<ScBreadcrumb>
-								<Logo display="block" />
-							</ScBreadcrumb>
-							<ScBreadcrumb href="admin.php?page=sc-dashboard">
-								{__('Dashboard', 'surecart')}
-							</ScBreadcrumb>
-						</ScBreadcrumbs>
-					</div>
-				}
-				end={
-					<ScFlex
-						alignItems="center"
-						justifyContent="flex-end"
-						gap="1em"
-					>
-						<ScButton
-							href={`${scData?.surecart_app_url}?switch_account_id=${scData?.account_id}`}
-							target="_blank"
-							rel="noopener noreferrer"
-						>
-							<ScIcon name="bar-chart-2" slot="prefix" />
-							{__('View Reports', 'surecart')}
-							<ScIcon name="external-link" slot="suffix" />
-						</ScButton>
-					</ScFlex>
-				}
+		<UpdateModel
+			title={
+				<sc-breadcrumbs>
+					<sc-breadcrumb>
+						<Logo display="block" />
+					</sc-breadcrumb>
+					<sc-breadcrumb>{__('Dashboard', 'surecart')}</sc-breadcrumb>
+				</sc-breadcrumbs>
+			}
+			button={
+				<ScButton
+					href={`https://app.surecart.com/dashboard?switch_account_id=${scData?.account_id}`}
+					target="_blank"
+				>
+					{__('App Dashboard', 'surecart')}
+					<ScIcon
+						name="arrow-up-right"
+						slot="suffix"
+						aria-hidden="true"
+					/>
+				</ScButton>
+			}
+			css={css`
+				--sc-card-border-radius: var(--sc-border-radius-x-large);
+				padding: 0 var(--sc-spacing-large);
+			`}
+		>
+			<h1
+				css={css`
+					font-size: var(--sc-font-size-xx-large);
+					margin-bottom: var(--sc-spacing-x-large);
+				`}
 			>
-				<Fragment>
-					{!!showClaimSuccess && (
-						<ScAlert
-							title={__('Setup Complete!', 'surecart')}
-							type="success"
-							open={!!showClaimSuccess}
-							closable
-							style={{ fontSize: '16px' }}
-						>
-							{__(
-								'Your store is now connected to SureCart.',
-								'surecart'
-							)}
-						</ScAlert>
-					)}
-					<GetStarted />
-					<Overview liveMode={liveMode} setLiveMode={setLiveMode} />
-					<ScDivider style={{ '--spacing': '1em' }} />
-					<ScFlex
-						style={{ '--sc-flex-column-gap': '2em' }}
-						stack="tablet"
-					>
-						<RecentOrders liveMode={liveMode} />
-						<LearnMore />
-					</ScFlex>
-				</Fragment>
-			</DashboardModel>
-		</>
+				{__('Welcome to SureCart', 'surecart')}
+			</h1>
+
+			<Setup />
+			<Chart liveMode={liveMode} setLiveMode={setLiveMode} />
+			<Orders liveMode={liveMode} />
+			<QuickLinks />
+			<Recommended />
+		</UpdateModel>
 	);
 };

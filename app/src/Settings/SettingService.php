@@ -187,6 +187,16 @@ class SettingService {
 		);
 		$this->register(
 			'surecart',
+			'admin_toolbar_disabled',
+			[
+				'type'              => 'boolean',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'boolval',
+				'default'           => false,
+			]
+		);
+		$this->register(
+			'surecart',
 			'password_validation_enabled',
 			[
 				'type'              => 'boolean',

@@ -158,4 +158,48 @@ class ElementorTemplatesService {
 			return [];
 		}
 	}
+
+	/**
+	 * Check if the current page/template is rendered by Elementor and contains SureCart product template.
+	 *
+	 * @return bool
+	 */
+	public function isRenderedWithElementor(): bool {
+		if ( ! class_exists( 'Elementor\Plugin' ) ) {
+			return false;
+		}
+
+		// If has custom page template, means its rendering from SureCart template, not with Elementor.
+		if ( ! empty( get_post_meta( get_the_ID(), '_wp_page_template', true ) ) ) {
+			return false;
+		}
+
+		return $this->hasActiveSureCartElementorTemplate();
+	}
+
+	/**
+	 * Check if surecart-product Elementor template is active.
+	 *
+	 * @return bool
+	 */
+	public function hasActiveSureCartElementorTemplate(): bool {
+		$templates = get_posts(
+			[
+				'post_type'      => 'elementor_library',
+				'meta_query'     => [
+					[
+						'key'   => '_elementor_template_type',
+						'value' => 'surecart-product',
+					],
+					[
+						'key'   => '_elementor_edit_mode',
+						'value' => 'builder',
+					],
+				],
+				'posts_per_page' => 1,
+			]
+		);
+
+		return ! empty( $templates );
+	}
 }
