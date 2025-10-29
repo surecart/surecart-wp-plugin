@@ -10,7 +10,12 @@ import { postDate as icon } from '@wordpress/icons';
 import edit from './edit';
 import metadata from './block.json';
 
+/**
+ * Styles.
+ */
+import './style.scss';
+
 registerBlockType(metadata.name, {
-    icon,
-    edit,
+	icon,
+	edit,
 });
