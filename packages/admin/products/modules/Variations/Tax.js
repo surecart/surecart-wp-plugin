@@ -65,7 +65,7 @@ export default ({ variant, updateVariant, product }) => {
 						);
 					}}
 				>
-					{__('Charge tax on this variant', 'surecart')}
+					{__('Charge tax', 'surecart')}
 				</ScSwitch>
 
 				{getValue('tax_enabled') &&
@@ -101,9 +101,6 @@ export default ({ variant, updateVariant, product }) => {
 								display: flex;
 								align-items: center;
 								gap: var(--sc-spacing-small);
-								padding: var(--sc-spacing-small);
-								background: var(--sc-color-gray-100);
-								border-radius: var(--sc-border-radius-small);
 								font-size: var(--sc-font-size-small);
 								color: var(--sc-color-gray-600);
 							`}

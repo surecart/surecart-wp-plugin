@@ -2,11 +2,10 @@
 import { css, jsx } from '@emotion/core';
 
 import { __ } from '@wordpress/i18n';
-import { ScButton, ScIcon, ScDrawer, ScForm } from '@surecart/components-react';
+import { ScButton, ScDrawer, ScForm } from '@surecart/components-react';
 import { useState } from '@wordpress/element';
 import useVariantValue from '../../hooks/useVariantValue';
 
-import DrawerSection from '../../../ui/DrawerSection';
 import Image from './Image';
 import Inventory from './Inventory';
 import Purchases from './Purchases';
@@ -202,35 +201,6 @@ export default ({
 						<ScButton type="text" onClick={() => setOpen(false)}>
 							{__('Cancel', 'surecart')}
 						</ScButton>
-					</div>
-					<div
-						css={css`
-							align-content: center;
-						`}
-					>
-						{getValue('tax_enabled') &&
-							scData?.tax_protocol?.tax_enabled &&
-							scData?.tax_protocol?.tax_behavior ===
-								'inclusive' && (
-								<span
-									css={css`
-										text-align: right;
-									`}
-								>
-									<ScButton
-										size="small"
-										type="text"
-										target="_blank"
-										href="admin.php?page=sc-settings&tab=tax_protocol"
-									>
-										{__('Tax is included', 'surecart')}
-										<ScIcon
-											name="external-link"
-											slot="suffix"
-										/>
-									</ScButton>
-								</span>
-							)}
 					</div>
 				</div>
 			</ScDrawer>
