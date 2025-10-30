@@ -125,6 +125,8 @@ export default ({ id, onCreateAutoFee }) => {
 					<div
 						style={{
 							maxHeight: '480px',
+							padding: '0 10px',
+							margin: '0 -10px',
 							overflow: 'scroll',
 							display: 'flex',
 							flexDirection: 'column',
