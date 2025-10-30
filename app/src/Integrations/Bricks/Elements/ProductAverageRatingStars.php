@@ -67,24 +67,25 @@ class ProductAverageRatingStars extends \Bricks\Element {
 		];
 
 		$this->controls['fill_color'] = [
-			'tab'     => 'content',
-			'label'   => esc_html__( 'Fill Color', 'surecart' ),
-			'type'    => 'color',
-			'default' => [
+			'tab'      => 'content',
+			'label'    => esc_html__( 'Fill Color', 'surecart' ),
+			'type'     => 'color',
+			'rerender' => true,
+			'default'  => [
 				'hex' => 'var(--bricks-color-primary)',
 			],
-			'css'     => [
+			'css'      => [
 				[
 					'property' => 'color',
-					'selector' => '.wp-block-surecart-product-review-average-rating-stars svg',
+					'selector' => 'svg',
 				],
 				[
 					'property' => 'fill',
-					'selector' => '.wp-block-surecart-product-review-average-rating-stars svg',
+					'selector' => 'svg',
 				],
 				[
 					'property' => 'stroke',
-					'selector' => '.wp-block-surecart-product-review-average-rating-stars svg',
+					'selector' => 'svg',
 				],
 			],
 		];
@@ -98,9 +99,12 @@ class ProductAverageRatingStars extends \Bricks\Element {
 	public function render() {
 		$size       = ! empty( $this->settings['size'] ) ? $this->settings['size'] : '25px';
 		$fill_color = $this->get_raw_color( 'fill_color' );
+		if ( empty( $fill_color ) ) {
+			$fill_color = 'var(--bricks-color-primary)';
+		}
 
 		if ( $this->is_admin_editor() ) {
-			$this->render_preview( $size );
+			$this->render_preview( $size, $fill_color );
 			return;
 		}
 
@@ -121,14 +125,14 @@ class ProductAverageRatingStars extends \Bricks\Element {
 	 * Render preview in editor.
 	 *
 	 * @param string $size Star size.
+	 * @param string $fill_color Star fill color.
 	 *
 	 * @return void
 	 */
-	private function render_preview( $size ) {
+	private function render_preview( $size, $fill_color ) {
 		$stars_html = '';
 		for ( $i = 1; $i <= 5; $i++ ) {
 			$is_half = 5 === $i;
-			$fill    = $this->get_raw_color( 'fill_color' );
 
 			if ( $is_half ) {
 				$stars_html .= \SureCart::svg()->get(
@@ -136,8 +140,8 @@ class ProductAverageRatingStars extends \Bricks\Element {
 					[
 						'height' => esc_attr( $size ),
 						'width'  => esc_attr( $size ),
-						'stroke' => esc_attr( $fill ),
-						'color'  => esc_attr( $fill ),
+						'stroke' => esc_attr( $fill_color ),
+						'color'  => esc_attr( $fill_color ),
 					]
 				);
 			} else {
@@ -146,8 +150,8 @@ class ProductAverageRatingStars extends \Bricks\Element {
 					[
 						'height' => esc_attr( $size ),
 						'width'  => esc_attr( $size ),
-						'fill'   => esc_attr( $fill ),
-						'stroke' => esc_attr( $fill ),
+						'fill'   => esc_attr( $fill_color ),
+						'stroke' => esc_attr( $fill_color ),
 					]
 				);
 			}
