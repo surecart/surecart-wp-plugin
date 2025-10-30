@@ -34,7 +34,8 @@ export default ({ variant, product }) => {
 		(attribute) => {
 			return (
 				variant?.[attribute] !== null &&
-				variant?.[attribute] !== undefined
+				variant?.[attribute] !== undefined &&
+				variant?.[attribute] !== product?.[attribute]
 			);
 		},
 		[variant]
@@ -63,10 +64,26 @@ export default ({ variant, product }) => {
 		[isOverridden]
 	);
 
+	/**
+	 * Get update values with automatic null conversion for matching product values.
+	 * If a variant value matches the product value, set it to null to inherit.
+	 * This prevents storing duplicate values and ensures proper override tracking.
+	 */
+	const getUpdateValue = useCallback(
+		(updates = {}) => {
+			return Object.keys(updates).reduce((acc, key) => {
+				acc[key] = updates[key] == product?.[key] ? null : updates[key];
+				return acc;
+			}, {});
+		},
+		[product]
+	);
+
 	return {
 		getValue,
 		isOverridden,
 		getValues,
 		hasOverrides,
+		getUpdateValue,
 	};
 };

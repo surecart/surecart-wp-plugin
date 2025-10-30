@@ -5,7 +5,10 @@ import useVariantValue from '../../hooks/useVariantValue';
 import ResetOverridesDropdown from './ResetOverridesDropdown';
 
 export default ({ variant, updateVariant, product }) => {
-	const { getValue, isOverridden } = useVariantValue({ variant, product });
+	const { getValue, isOverridden, getUpdateValue } = useVariantValue({
+		variant,
+		product,
+	});
 
 	return (
 		<DrawerSection
@@ -26,9 +29,13 @@ export default ({ variant, updateVariant, product }) => {
 			<ScSwitch
 				checked={parseInt(getValue('purchase_limit')) > 0}
 				onScChange={(e) => {
-					updateVariant({
-						purchase_limit: e.target.checked ? 1 : 0,
-					});
+					updateVariant(
+						getUpdateValue({
+							purchase_limit: e.target.checked
+								? product?.purchase_limit || 1
+								: 0,
+						})
+					);
 				}}
 			>
 				{__('Limit per-customer purchases', 'surecart')}
@@ -45,9 +52,11 @@ export default ({ variant, updateVariant, product }) => {
 					type="number"
 					value={getValue('purchase_limit')}
 					onScInput={(e) => {
-						updateVariant({
-							purchase_limit: e.target.value || null,
-						});
+						updateVariant(
+							getUpdateValue({
+								purchase_limit: e.target.value || null,
+							})
+						);
 					}}
 				/>
 			)}

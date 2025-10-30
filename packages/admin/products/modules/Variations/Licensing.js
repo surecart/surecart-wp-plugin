@@ -5,7 +5,10 @@ import useVariantValue from '../../hooks/useVariantValue';
 import ResetOverridesDropdown from './ResetOverridesDropdown';
 
 export default ({ variant, updateVariant, product }) => {
-	const { getValue, isOverridden } = useVariantValue({ variant, product });
+	const { getValue, isOverridden, getUpdateValue } = useVariantValue({
+		variant,
+		product,
+	});
 
 	if (!product?.licensing_enabled) {
 		return null;
@@ -37,9 +40,11 @@ export default ({ variant, updateVariant, product }) => {
 				placeholder={'∞'}
 				value={getValue('license_activation_limit')}
 				onScInput={(e) => {
-					updateVariant({
-						license_activation_limit: e.target.value || null,
-					});
+					updateVariant(
+						getUpdateValue({
+							license_activation_limit: e.target.value || null,
+						})
+					);
 				}}
 			/>
 		</DrawerSection>

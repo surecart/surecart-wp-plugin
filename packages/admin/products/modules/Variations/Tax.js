@@ -20,7 +20,10 @@ import useVariantValue from '../../hooks/useVariantValue';
 import ResetOverridesDropdown from './ResetOverridesDropdown';
 
 export default ({ variant, updateVariant, product }) => {
-	const { getValue, isOverridden } = useVariantValue({ variant, product });
+	const { getValue, isOverridden, getUpdateValue } = useVariantValue({
+		variant,
+		product,
+	});
 
 	return (
 		<DrawerSection
@@ -55,9 +58,11 @@ export default ({ variant, updateVariant, product }) => {
 					}
 					disabled={!scData?.tax_protocol?.tax_enabled}
 					onScChange={(e) => {
-						updateVariant({
-							tax_enabled: e.target.checked,
-						});
+						updateVariant(
+							getUpdateValue({
+								tax_enabled: e.target.checked,
+							})
+						);
 					}}
 				>
 					{__('Charge tax on this variant', 'surecart')}
@@ -69,9 +74,11 @@ export default ({ variant, updateVariant, product }) => {
 							label={__('Taxable Product Type', 'surecart')}
 							value={getValue('tax_category')}
 							onScChange={(e) => {
-								updateVariant({
-									tax_category: e.target.value,
-								});
+								updateVariant(
+									getUpdateValue({
+										tax_category: e.target.value,
+									})
+								);
 							}}
 							choices={[
 								{

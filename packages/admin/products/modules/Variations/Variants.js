@@ -34,12 +34,20 @@ export default ({ product, updateProduct }) => {
 	/**
 	 * Update a variant by position.
 	 */
-	const updateVariant = (data, position) =>
-		updateProduct({
-			variants: product?.variants.map((item) =>
-				item?.position !== position ? item : { ...item, ...data }
-			),
+	const updateVariant = (data, position) => {
+		const updatedVariants = product?.variants.map((item) =>
+			item?.position !== position ? item : { ...item, ...data }
+		);
+		console.log('Variants.js updateVariant called:', {
+			data,
+			position,
+			oldVariants: product?.variants,
+			updatedVariants,
 		});
+		return updateProduct({
+			variants: updatedVariants,
+		});
+	};
 
 	const activeVariants = (product?.variants ?? []).filter(
 		(variant) => 'deleted' !== variant?.status

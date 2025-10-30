@@ -31,7 +31,10 @@ const WEIGHT_UNIT_TYPES = [
 ];
 
 export default ({ variant, updateVariant, product }) => {
-	const { getValue, isOverridden } = useVariantValue({ variant, product });
+	const { getValue, isOverridden, getUpdateValue } = useVariantValue({
+		variant,
+		product,
+	});
 
 	return (
 		<>
@@ -84,9 +87,11 @@ export default ({ variant, updateVariant, product }) => {
 					showControl
 					open={!!getValue('shipping_enabled')}
 					onClick={() => {
-						updateVariant({
-							shipping_enabled: true,
-						});
+						updateVariant(
+							getUpdateValue({
+								shipping_enabled: true,
+							})
+						);
 					}}
 				>
 					<span
@@ -102,7 +107,9 @@ export default ({ variant, updateVariant, product }) => {
 						label={__('Shipping Weight', 'surecart')}
 						value={getValue('weight')}
 						onScInput={(e) =>
-							updateVariant({ weight: e.target.value })
+							updateVariant(
+								getUpdateValue({ weight: e.target.value })
+							)
 						}
 					>
 						<ScDropdown slot="suffix" placement="bottom-end">
@@ -113,9 +120,16 @@ export default ({ variant, updateVariant, product }) => {
 							<ScMenu>
 								{WEIGHT_UNIT_TYPES.map((unit) => (
 									<ScMenuItem
-										onClick={() =>
-											updateVariant({ weight_unit: unit })
-										}
+										onClick={() => {
+											const updates = getUpdateValue({
+												weight_unit: unit,
+											});
+											console.log(
+												'Calling updateVariant with:',
+												updates
+											);
+											updateVariant(updates);
+										}}
 										key={unit}
 									>
 										{unit}
@@ -130,9 +144,11 @@ export default ({ variant, updateVariant, product }) => {
 					showControl
 					open={!getValue('shipping_enabled')}
 					onClick={() => {
-						updateVariant({
-							shipping_enabled: false,
-						});
+						updateVariant(
+							getUpdateValue({
+								shipping_enabled: false,
+							})
+						);
 					}}
 				>
 					<span
@@ -166,9 +182,11 @@ export default ({ variant, updateVariant, product }) => {
 						<ScSwitch
 							checked={getValue('auto_fulfill_enabled')}
 							onScChange={(e) => {
-								updateVariant({
-									auto_fulfill_enabled: e.target.checked,
-								});
+								updateVariant(
+									getUpdateValue({
+										auto_fulfill_enabled: e.target.checked,
+									})
+								);
 							}}
 						>
 							{__('Auto Fulfill', 'surecart')}

@@ -27,7 +27,10 @@ import ResetOverridesDropdown from './ResetOverridesDropdown';
 
 export default ({ variant, updateVariant, product }) => {
 	const [model, setModel] = useState(false);
-	const { getValue, isOverridden } = useVariantValue({ variant, product });
+	const { getValue, isOverridden, getUpdateValue } = useVariantValue({
+		variant,
+		product,
+	});
 
 	/**
 	 * Reset a specific field to use product default.
@@ -73,9 +76,11 @@ export default ({ variant, updateVariant, product }) => {
 					<ScSwitch
 						checked={!!getValue('stock_enabled')}
 						onScChange={(e) => {
-							updateVariant({
-								stock_enabled: e.target.checked ? 1 : 0,
-							});
+							updateVariant(
+								getUpdateValue({
+									stock_enabled: e.target.checked ? 1 : 0,
+								})
+							);
 						}}
 						name="stock_enabled"
 						css={css`
@@ -104,12 +109,14 @@ export default ({ variant, updateVariant, product }) => {
 						<ScSwitch
 							checked={!!getValue('allow_out_of_stock_purchases')}
 							onScChange={(e) => {
-								updateVariant({
-									allow_out_of_stock_purchases: e.target
-										.checked
-										? 1
-										: 0,
-								});
+								updateVariant(
+									getUpdateValue({
+										allow_out_of_stock_purchases: e.target
+											.checked
+											? 1
+											: 0,
+									})
+								);
 							}}
 							css={css`
 								flex: 1;
