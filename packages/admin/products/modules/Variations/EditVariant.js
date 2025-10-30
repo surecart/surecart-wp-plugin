@@ -2,13 +2,7 @@
 import { css, jsx } from '@emotion/core';
 
 import { __ } from '@wordpress/i18n';
-import {
-	ScButton,
-	ScIcon,
-	ScDrawer,
-	ScForm,
-	ScInput,
-} from '@surecart/components-react';
+import { ScButton, ScIcon, ScDrawer, ScForm } from '@surecart/components-react';
 import { useState } from '@wordpress/element';
 import useVariantValue from '../../hooks/useVariantValue';
 
@@ -18,6 +12,7 @@ import Inventory from './Inventory';
 import Purchases from './Purchases';
 import Licensing from './Licensing';
 import Shipping from './Shipping';
+import Tax from './Tax';
 
 export default ({
 	variant,
@@ -93,44 +88,73 @@ export default ({
 							gap: var(--sc-spacing-large);
 						`}
 					>
-						<Image
-							variant={variant}
-							onAdd={onLinkMedia}
-							onRemove={onUnlinkMedia}
-							size={'98px'}
-						/>
-						<DrawerSection title={__('Options', 'surecart')}>
+						<div
+							css={css`
+								background: var(--sc-color-white);
+								border: 1px solid var(--sc-color-gray-200);
+								border-radius: var(--sc-border-radius-medium);
+								padding: var(--sc-spacing-large);
+								display: flex;
+								align-items: flex-start;
+								gap: var(--sc-spacing-large);
+							`}
+						>
+							<Image
+								variant={variant}
+								onAdd={onLinkMedia}
+								onRemove={onUnlinkMedia}
+								size={'98px'}
+							/>
 							<div
 								css={css`
-									display: grid;
+									flex: 1;
+									display: flex;
+									flex-direction: column;
 									gap: var(--sc-spacing-small);
+									justify-content: center;
+									min-height: 98px;
 								`}
 							>
-								{variantOptions?.map((option, index) => (
-									<ScInput
-										key={index}
-										css={css`
-											margin-bottom: var(
-												--sc-spacing-small
-											);
-										`}
-										value={
-											variant?.[`option_${index + 1}`] ??
-											''
-										}
-										label={option?.name}
-										required
-										tabindex="0"
-										onScInput={(e) =>
-											updateVariant({
-												[`option_${index + 1}`]:
-													e.target.value,
-											})
-										}
-									/>
-								))}
+								{variantOptions?.map((option, index) => {
+									const value =
+										variant?.[`option_${index + 1}`] ?? '';
+									return (
+										<div
+											key={index}
+											css={css`
+												display: flex;
+												gap: var(--sc-spacing-x-small);
+												font-size: var(
+													--sc-font-size-medium
+												);
+												line-height: 1.5;
+											`}
+										>
+											<span
+												css={css`
+													color: var(
+														--sc-color-gray-500
+													);
+													font-weight: 500;
+												`}
+											>
+												{option?.name}:
+											</span>
+											<span
+												css={css`
+													color: var(
+														--sc-color-gray-900
+													);
+													font-weight: 600;
+												`}
+											>
+												{value}
+											</span>
+										</div>
+									);
+								})}
 							</div>
-						</DrawerSection>
+						</div>
 
 						<Inventory
 							variant={variant}
@@ -156,9 +180,11 @@ export default ({
 							updateVariant={updateVariant}
 						/>
 
-						<DrawerSection title={__('Tax', 'surecart')}>
-							sdafsdf
-						</DrawerSection>
+						<Tax
+							variant={variant}
+							product={product}
+							updateVariant={updateVariant}
+						/>
 					</div>
 				</div>
 
