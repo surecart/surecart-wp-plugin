@@ -38,12 +38,6 @@ export default ({ product, updateProduct }) => {
 		const updatedVariants = product?.variants.map((item) =>
 			item?.position !== position ? item : { ...item, ...data }
 		);
-		console.log('Variants.js updateVariant called:', {
-			data,
-			position,
-			oldVariants: product?.variants,
-			updatedVariants,
-		});
 		return updateProduct({
 			variants: updatedVariants,
 		});
