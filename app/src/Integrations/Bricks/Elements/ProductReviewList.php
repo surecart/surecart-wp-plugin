@@ -57,6 +57,11 @@ class ProductReviewList extends \Bricks\Element {
 	 * @return void
 	 */
 	public function set_controls() {
+		$this->controls['header_separator'] = [
+			'label' => esc_html__( 'Header', 'surecart' ),
+			'type'  => 'separator',
+		];
+
 		$this->controls['show_header'] = [
 			'tab'     => 'content',
 			'label'   => esc_html__( 'Show Header', 'surecart' ),
@@ -78,6 +83,11 @@ class ProductReviewList extends \Bricks\Element {
 			'default' => true,
 		];
 
+		$this->controls['content_separator'] = [
+			'label' => esc_html__( 'Content', 'surecart' ),
+			'type'  => 'separator',
+		];
+
 		$this->controls['show_review_date'] = [
 			'tab'     => 'content',
 			'label'   => esc_html__( 'Show Review Date', 'surecart' ),
@@ -92,19 +102,24 @@ class ProductReviewList extends \Bricks\Element {
 			'default' => true,
 		];
 
-		$this->controls['show_pagination'] = [
-			'tab'     => 'content',
-			'label'   => esc_html__( 'Show Pagination', 'surecart' ),
-			'type'    => 'checkbox',
-			'default' => true,
-		];
-
 		$this->controls['no_reviews_text'] = [
 			'tab'         => 'content',
 			'label'       => esc_html__( 'No Reviews Text', 'surecart' ),
 			'type'        => 'text',
 			'default'     => esc_html__( 'No reviews yet, write one now?', 'surecart' ),
 			'placeholder' => esc_html__( 'Enter text for when no reviews exist', 'surecart' ),
+		];
+
+		$this->controls['paginationSeparator'] = [
+			'label' => esc_html__( 'Pagination', 'surecart' ),
+			'type'  => 'separator',
+		];
+
+		$this->controls['show_pagination'] = [
+			'tab'     => 'content',
+			'label'   => esc_html__( 'Show Pagination', 'surecart' ),
+			'type'    => 'checkbox',
+			'default' => true,
 		];
 	}
 
@@ -310,7 +325,7 @@ class ProductReviewList extends \Bricks\Element {
 			$content .= '<div style="display: flex; gap: 10px; align-items: center;">';
 			$content .= '<span style="font-weight: 500;">' . esc_html__( 'John Doe', 'surecart' ) . '</span>';
 			$content .= '<span style="display: inline-flex; align-items: center; gap: 4px; font-size: 14px;">';
-			$content .= esc_html__( 'Verified', 'surecart' );
+			$content .= esc_html__( 'Verified Buyer', 'surecart' );
 			$content .= wp_kses(
 				\SureCart::svg()->get(
 					'verified',

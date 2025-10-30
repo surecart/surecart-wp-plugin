@@ -62,9 +62,9 @@ class ProductReviewList extends \Elementor\Widget_Base {
 	 */
 	private function register_content_settings() {
 		$this->start_controls_section(
-			'section_review_list',
+			'section_review_list_header',
 			[
-				'label' => esc_html__( 'Review List', 'surecart' ),
+				'label' => esc_html__( 'Header', 'surecart' ),
 			]
 		);
 
@@ -107,6 +107,15 @@ class ProductReviewList extends \Elementor\Widget_Base {
 			]
 		);
 
+		$this->end_controls_section();
+
+		$this->start_controls_section(
+			'section_review_list_content',
+			[
+				'label' => esc_html__( 'Content', 'surecart' ),
+			]
+		);
+
 		$this->add_control(
 			'show_review_date',
 			[
@@ -134,6 +143,25 @@ class ProductReviewList extends \Elementor\Widget_Base {
 		);
 
 		$this->add_control(
+			'no_reviews_text',
+			[
+				'label'       => esc_html__( 'No Reviews Text', 'surecart' ),
+				'type'        => \Elementor\Controls_Manager::TEXT,
+				'default'     => esc_html__( 'No reviews yet, write one now?', 'surecart' ),
+				'placeholder' => esc_html__( 'Enter text for when no reviews exist', 'surecart' ),
+			]
+		);
+
+		$this->end_controls_section();
+
+		$this->start_controls_section(
+			'section_review_list_pagination',
+			[
+				'label' => esc_html__( 'Pagination', 'surecart' ),
+			]
+		);
+
+		$this->add_control(
 			'show_pagination',
 			[
 				'label'        => esc_html__( 'Show Pagination', 'surecart' ),
@@ -143,16 +171,6 @@ class ProductReviewList extends \Elementor\Widget_Base {
 				'return_value' => 'yes',
 				'default'      => 'yes',
 				'description'  => esc_html__( 'Show pagination controls at the bottom.', 'surecart' ),
-			]
-		);
-
-		$this->add_control(
-			'no_reviews_text',
-			[
-				'label'       => esc_html__( 'No Reviews Text', 'surecart' ),
-				'type'        => \Elementor\Controls_Manager::TEXT,
-				'default'     => esc_html__( 'No reviews yet, write one now?', 'surecart' ),
-				'placeholder' => esc_html__( 'Enter text for when no reviews exist', 'surecart' ),
 			]
 		);
 
