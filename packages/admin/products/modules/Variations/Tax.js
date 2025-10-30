@@ -71,7 +71,7 @@ export default ({ variant, updateVariant, product }) => {
 				{getValue('tax_enabled') &&
 					scData?.tax_protocol?.tax_enabled && (
 						<ScSelect
-							label={__('Taxable Product Type', 'surecart')}
+							label={__('Product Type', 'surecart')}
 							value={getValue('tax_category')}
 							onScChange={(e) => {
 								updateVariant(

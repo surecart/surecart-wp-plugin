@@ -7,6 +7,7 @@ import { useState } from '@wordpress/element';
 import useVariantValue from '../../hooks/useVariantValue';
 
 import Image from './Image';
+import Price from './Price';
 import Inventory from './Inventory';
 import Purchases from './Purchases';
 import Licensing from './Licensing';
@@ -154,6 +155,12 @@ export default ({
 								})}
 							</div>
 						</div>
+
+						<Price
+							variant={variant}
+							product={product}
+							updateVariant={updateVariant}
+						/>
 
 						<Inventory
 							variant={variant}

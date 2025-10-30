@@ -126,7 +126,7 @@ export default ({ variant, updateVariant, product }) => {
 				</div>
 			</ScRadioGroup>
 
-			{getValue('shipping_enabled') ? (
+			{getValue('shipping_enabled') && (
 				<ScInput
 					label={__('Shipping Weight', 'surecart')}
 					value={getValue('weight')}
@@ -161,26 +161,26 @@ export default ({ variant, updateVariant, product }) => {
 						</ScMenu>
 					</ScDropdown>
 				</ScInput>
-			) : (
-				<ScSwitch
-					checked={getValue('auto_fulfill_enabled')}
-					onScChange={(e) => {
-						updateVariant(
-							getUpdateValue({
-								auto_fulfill_enabled: e.target.checked,
-							})
-						);
-					}}
-				>
-					{__('Auto Fulfill', 'surecart')}
-					<span slot="description">
-						{__(
-							'Turn this off if you do not wish to automatically fulfill this product when an order is placed.',
-							'surecart'
-						)}
-					</span>
-				</ScSwitch>
 			)}
+
+			<ScSwitch
+				checked={getValue('auto_fulfill_enabled')}
+				onScChange={(e) => {
+					updateVariant(
+						getUpdateValue({
+							auto_fulfill_enabled: e.target.checked,
+						})
+					);
+				}}
+			>
+				{__('Auto Fulfill', 'surecart')}
+				<span slot="description">
+					{__(
+						'Turn this off if you do not wish to automatically fulfill this product when an order is placed.',
+						'surecart'
+					)}
+				</span>
+			</ScSwitch>
 		</DrawerSection>
 	);
 };

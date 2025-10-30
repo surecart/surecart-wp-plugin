@@ -78,7 +78,7 @@ export default ({ variant, updateVariant, product }) => {
 						onScChange={(e) => {
 							updateVariant(
 								getUpdateValue({
-									stock_enabled: e.target.checked ? 1 : 0,
+									stock_enabled: e.target.checked,
 								})
 							);
 						}}
@@ -111,10 +111,8 @@ export default ({ variant, updateVariant, product }) => {
 							onScChange={(e) => {
 								updateVariant(
 									getUpdateValue({
-										allow_out_of_stock_purchases: e.target
-											.checked
-											? 1
-											: 0,
+										allow_out_of_stock_purchases:
+											e.target.checked,
 									})
 								);
 							}}
