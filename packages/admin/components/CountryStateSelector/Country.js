@@ -31,7 +31,7 @@ export default ({
 				path: `surecart/v1/public/atlas/${countryIsoCode}`,
 			});
 			const territories = (country?.states || []).filter(
-				(region) => !!region?.iso_code
+				(region) => !!region?.code
 			);
 			setTerritories(territories);
 			setCountry(country);
@@ -59,7 +59,7 @@ export default ({
 		if (isCountryFullySelected && !checked) {
 			// Select all states except the one being unchecked
 			const allStatesExceptCurrent = territories
-				.map((territory) => territory?.iso_code)
+				.map((territory) => territory?.code)
 				.filter((state) => state !== region);
 
 			onChange({
@@ -163,12 +163,10 @@ export default ({
 								label={region?.name}
 								checked={
 									isCountryFullySelected ||
-									(value?.states || []).includes(
-										region?.iso_code
-									)
+									(value?.states || []).includes(region?.code)
 								}
 								onChange={(checked) =>
-									onChangeTerritory(checked, region?.iso_code)
+									onChangeTerritory(checked, region?.code)
 								}
 								__nextHasNoMarginBottom
 								css={css`

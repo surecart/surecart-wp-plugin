@@ -91,7 +91,6 @@ export class ScAddress {
 
   @State() sortedFields: Array<CountryLocaleFieldValue>;
 
-
   /** Address change event. */
   @Event() scChangeAddress: EventEmitter<Partial<Address>>;
 
@@ -153,7 +152,6 @@ export class ScAddress {
     this.updateAddress({ country });
   }
 
-
   @Method()
   async reportValidity() {
     return reportChildrenValidity(this.el);
@@ -167,17 +165,22 @@ export class ScAddress {
     const countryDetails = await getCountryDetails(this.address?.country);
     const addressFormatEdit = countryDetails?.address_formats?.edit; // this will return something like "{country}_{name}_{line_1}_{line_2}_{postal_code}{city}"
 
-    this.sortedFields = addressFormatEdit?.match(/{([^}]+)}/g).map(match => match.slice(1, -1)).map(field => ({
-      name: field,
-      label: countryDetails?.address_labels?.[field] || this.defaultCountryFields?.find(defaultField => defaultField?.name === field)?.label
-    })) || [];
+    this.sortedFields =
+      addressFormatEdit
+        ?.match(/{([^}]+)}/g)
+        .map(match => match.slice(1, -1))
+        .map(field => ({
+          name: field,
+          label: countryDetails?.address_labels?.[field] || this.defaultCountryFields?.find(defaultField => defaultField?.name === field)?.label,
+        })) || [];
 
-    this.regions = countryDetails?.states?.map(state => ({
-      value: state?.iso_code,
-      label: state?.name
-    })) || [];
+    this.regions =
+      countryDetails?.states?.map(state => ({
+        value: state?.code,
+        label: state?.name,
+      })) || [];
 
-    if ( window?.wp?.hooks?.applyFilters ) {
+    if (window?.wp?.hooks?.applyFilters) {
       this.regions = window.wp.hooks.applyFilters('surecart_address_regions', this.regions, this.address.country) as Array<{ value: string; label: string }>;
     }
   }

@@ -28,6 +28,6 @@ class AtlasController extends RestController {
 		if ( is_wp_error( $model ) ) {
 			return $model;
 		}
-		return $model->getCountryDetails( $request['iso_code'] );
+		return $model->getCountryDetails( $request['code'] );
 	}
 }

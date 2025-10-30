@@ -52,7 +52,7 @@ class AtlasRestServiceProvider extends RestServiceProvider implements RestServic
 		);
 		register_rest_route(
 			"$this->name/v$this->version",
-			$this->endpoint . '/(?P<iso_code>\S+)',
+			$this->endpoint . '/(?P<code>\S+)',
 			array(
 				array(
 					'methods'             => \WP_REST_Server::READABLE,

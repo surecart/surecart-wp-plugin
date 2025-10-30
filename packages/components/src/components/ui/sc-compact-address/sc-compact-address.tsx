@@ -116,10 +116,11 @@ export class ScCompactAddress {
   /** Set the regions based on the country. */
   async setRegions() {
     const countryDetails = await getCountryDetails(this.address?.country);
-    this.regions = countryDetails?.states?.map(state => ({
-      value: state?.iso_code,
-      label: state?.name
-    })) || [];
+    this.regions =
+      countryDetails?.states?.map(state => ({
+        value: state?.code,
+        label: state?.name,
+      })) || [];
 
     this.placeholders = countryDetails?.address_labels;
   }

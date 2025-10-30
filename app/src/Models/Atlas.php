@@ -23,17 +23,17 @@ class Atlas extends Model {
 	/**
 	 * Get a specific country details.
 	 *
-	 * @param string $iso_code Country iso code.
+	 * @param string $code Country iso code.
 	 *
 	 * @return $this|\WP_Error
 	 */
-	protected function getCountryDetails( $iso_code = false ) {
-		if ( empty( $iso_code ) ) {
+	protected function getCountryDetails( $code = false ) {
+		if ( empty( $code ) ) {
 			return new \WP_Error( 'not_saved', 'Please share the country iso code.' );
 		}
 
 		$country = \SureCart::request(
-			$this->endpoint . '/' . $iso_code,
+			$this->endpoint . '/' . $code,
 		);
 
 		if ( is_wp_error( $country ) ) {

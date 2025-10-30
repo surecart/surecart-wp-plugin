@@ -107,13 +107,11 @@ export default ({ value, onChange }) => {
 				{countries.map((country) => (
 					<Country
 						key={country?.name}
-						countryIsoCode={country?.iso_code}
+						countryIsoCode={country?.code}
 						countryName={country?.name}
-						value={value.find(
-							(v) => v.country === country?.iso_code
-						)}
+						value={value.find((v) => v.country === country?.code)}
 						onChange={(newValue) =>
-							onChangeSelection(newValue, country?.iso_code)
+							onChangeSelection(newValue, country?.code)
 						}
 						statesCount={country?.states_count}
 					/>
