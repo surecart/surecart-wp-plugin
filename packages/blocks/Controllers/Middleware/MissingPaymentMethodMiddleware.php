@@ -2,6 +2,7 @@
 namespace SureCartBlocks\Controllers\Middleware;
 
 use Closure;
+use SureCart\Models\ManualPaymentMethod;
 use SureCart\Models\Subscription;
 use SureCartBlocks\Controllers\PaymentMethodController;
 
@@ -26,6 +27,18 @@ class MissingPaymentMethodMiddleware {
 
 		// no payment method, show the payment method form.
 		if ( empty( $subscription->payment_method ) && empty( $subscription->manual_payment_method ) ) {
+			// Check if there is a manual payment method available for merchant.
+			// If available, skip redirecting to payment method form.
+			$manual_payment_methods = ManualPaymentMethod::where(
+				[
+					'archived' => false,
+					'reusable' => true,
+				]
+			)->get();
+			if ( ! empty( $manual_payment_methods ) ) {
+				return $next();
+			}
+
 			$current_url = home_url( add_query_arg( [ 'tab' => esc_attr( $tab ) ] ) );
 
 			return ( new PaymentMethodController() )->create(

@@ -35,7 +35,7 @@ export default ({ liveMode, setLiveMode }) => {
 	const [data, setData] = useState([]);
 	const [loading, setLoading] = useState(false);
 	const [previousData, setPreviousData] = useState([]);
-	const currency = 'usd';
+	const currency = window?.scData?.currency_code ?? 'usd';
 	const [tab, setTab] = useState('amount');
 	const [validReportByOptions, setValidReportByOptions] = useState({
 		hour: true,
