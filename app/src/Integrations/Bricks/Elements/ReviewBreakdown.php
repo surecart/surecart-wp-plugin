@@ -96,6 +96,30 @@ class ReviewBreakdown extends \Bricks\Element {
 			],
 		];
 
+		$this->controls['fill_color'] = [
+			'tab'      => 'content',
+			'label'    => esc_html__( 'Fill Color', 'surecart' ),
+			'type'     => 'color',
+			'rerender' => true,
+			'default'  => [
+				'hex' => 'var(--bricks-color-primary)',
+			],
+			'css'      => [
+				[
+					'property' => 'color',
+					'selector' => '.sc-star-label svg',
+				],
+				[
+					'property' => 'fill',
+					'selector' => '.sc-star-label svg',
+				],
+				[
+					'property' => 'stroke',
+					'selector' => '.sc-star-label svg',
+				],
+			],
+		];
+
 		$this->controls['bar_color'] = [
 			'tab'     => 'style',
 			'label'   => esc_html__( 'Bar Fill Color', 'surecart' ),
@@ -135,21 +159,26 @@ class ReviewBreakdown extends \Bricks\Element {
 	public function render() {
 		$show_for_zero_reviews = ! empty( $this->settings['show_for_zero_reviews'] );
 		$star_size             = ! empty( $this->settings['star_size'] ) ? (int) $this->settings['star_size'] : 25;
+		$fill_color            = $this->get_raw_color( 'fill_color' );
+		if ( empty( $fill_color ) ) {
+			$fill_color = 'var(--bricks-color-primary)';
+		}
 
 		if ( $this->is_admin_editor() ) {
-			$this->render_preview( $star_size );
+			$this->render_preview( $star_size, $fill_color );
 			return;
 		}
 
-		echo $this->raw( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-			'<!-- wp:surecart/product-review-summary -->' .
-			$this->html(
-				[
-					'show_for_zero_reviews' => $show_for_zero_reviews,
-					'size'                  => $star_size,
-				]
-			) .
-			'<!-- /wp:surecart/product-review-summary -->'
+		$content = $this->html(
+			[
+				'show_for_zero_reviews' => $show_for_zero_reviews,
+				'size'                  => $star_size,
+				'fill_color'            => esc_attr( $fill_color ),
+			]
+		);
+
+		echo $this->preview( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			'<!-- wp:surecart/product-review-summary -->' . $content . '<!-- /wp:surecart/product-review-summary -->' // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		);
 	}
 
@@ -160,7 +189,7 @@ class ReviewBreakdown extends \Bricks\Element {
 	 *
 	 * @return void
 	 */
-	private function render_preview( $star_size ) {
+	private function render_preview( $star_size, $fill_color ) {
 		$breakdown_data = [
 			5 => 45,
 			4 => 25,
@@ -175,10 +204,10 @@ class ReviewBreakdown extends \Bricks\Element {
 			$count      = $breakdown_data[ $star ];
 			$percentage = $total > 0 ? ( $count / $total ) * 100 : 0;
 
-			$content .= '<a href="#" class="sc-star-row" onclick="event.preventDefault();" style="display: flex; align-items: center; gap: 12px; padding: 8px; text-decoration: none; color: inherit;">';
+			$content .= '<a href="#" class="sc-star-row" onclick="event.preventDefault();" style="display: flex; align-items: center; gap: 12px; padding: 8px; text-decoration: none; color: inherit; flex-grow: 1; min-width: 200px;">';
 			$content .= '<div class="sc-star-label" style="display: flex; align-items: center; gap: 4px; min-width: 50px;">';
 			$content .= esc_html( $star );
-			$content .= '<svg height="' . esc_attr( $star_size ) . '" width="' . esc_attr( $star_size ) . '" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2">';
+			$content .= '<svg height="' . esc_attr( $star_size ) . '" width="' . esc_attr( $star_size ) . '" viewBox="0 0 24 24" fill="' . esc_attr( $fill_color ) . '" stroke="' . esc_attr( $fill_color ) . '" stroke-width="2">';
 			$content .= '<path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>';
 			$content .= '</svg>';
 			$content .= '</div>';
