@@ -7,6 +7,16 @@ namespace SureCart\Integrations\Elementor;
  */
 class ElementorWidgetsService {
 	/**
+	 * The widgets.
+	 *
+	 * @var array
+	 */
+	protected $free_widgets = [
+		'ReusableFormWidget',
+		'CartMenuIcon',
+	];
+
+	/**
 	 * Bootstrap the service.
 	 *
 	 * @return void
@@ -77,12 +87,17 @@ class ElementorWidgetsService {
 	 * @return void
 	 */
 	public function registerWidgets( $widget_manager ) {
-		if ( ! class_exists( '\Elementor\Widget_Base' ) || ! class_exists( '\ElementorPro\Plugin' ) ) {
+		if ( ! class_exists( '\Elementor\Widget_Base' ) ) {
 			return;
 		}
 
 		foreach ( glob( __DIR__ . '/Widgets/*.php' ) as $file ) {
 			if ( ! is_readable( $file ) ) {
+				continue;
+			}
+
+			// pro is not active and the widget is not in the free widgets array.
+			if ( ! $this->is_pro_active() && ! in_array( basename( $file, '.php' ), $this->free_widgets, true ) ) {
 				continue;
 			}
 
@@ -92,5 +107,14 @@ class ElementorWidgetsService {
 
 			$widget_manager->register( new $widget_class_name() );
 		}
+	}
+
+	/**
+	 * Check if Elementor Pro is active.
+	 *
+	 * @return bool
+	 */
+	protected function is_pro_active(): bool {
+		return class_exists( '\ElementorPro\Plugin' );
 	}
 }

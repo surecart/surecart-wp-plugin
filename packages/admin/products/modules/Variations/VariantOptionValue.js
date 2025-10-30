@@ -89,7 +89,7 @@ export default ({
 					!disabled
 						? placeholder
 						: __(
-								'You have reached the variant limit of 100',
+								'You have reached the variant limit of 300',
 								'surecart'
 						  )
 				}

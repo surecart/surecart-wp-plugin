@@ -157,6 +157,7 @@ class ProductListBlock extends AbstractProductListBlock {
 			// backward compatibility.
 
 			$ids = ! empty( $query['include'] ) ? $query['include'] : ( ! empty( $this->block->context['surecart/product-list/ids'] ) ? $this->block->context['surecart/product-list/ids'] : ( ! empty( $this->block->parsed_block['attrs']['ids'] ) ? $this->block->parsed_block['attrs']['ids'] : [] ) );
+			$ids = is_array( $ids ) ? $ids : explode( ',', $ids );
 
 			// fallback for older strings - get the ids of legacy products.
 			$legacy_ids           = [];
