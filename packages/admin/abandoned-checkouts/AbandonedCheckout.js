@@ -207,23 +207,11 @@ export default () => {
 						abandoned={abandoned}
 						loading={!hasLoadedAbandoned}
 					/>
-					{!!abandoned?.checkout?.shipping_address && (
-						<Address
-							label={__('Shipping & Tax Address', 'surecart')}
-							address={abandoned?.checkout?.shipping_address}
-							loading={!hasLoadedAbandoned}
-						/>
-					)}
+					{!!abandoned?.checkout?.shipping_address_display &&
+						abandoned?.checkout?.shipping_address_display}
 
-					{!!abandoned?.checkout?.billing_address_display && (
-						<Address
-							label={__('Billing Address', 'surecart')}
-							address={
-								abandoned?.checkout?.billing_address_display
-							}
-							loading={!hasLoadedAbandoned}
-						/>
-					)}
+					{!!abandoned?.checkout?.billing_address_display &&
+						abandoned?.checkout?.billing_address_display}
 
 					<MetaData
 						abandoned={abandoned}

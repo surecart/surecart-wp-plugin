@@ -1,6 +1,5 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import AddressDisplay from '../../components/AddressDisplay';
 import Box from '../../ui/Box';
 import { __ } from '@wordpress/i18n';
 import {
@@ -91,7 +90,7 @@ export default ({ checkout, loading, busy, setBusy }) => {
 							justify-content: space-between;
 						`}
 					>
-						<AddressDisplay address={checkout?.shipping_address} />
+						{checkout?.shipping_address?.formatted_string}
 						<ScDropdown placement="bottom-end">
 							<ScButton slot="trigger" type="text" circle>
 								<ScIcon name="more-horizontal" />

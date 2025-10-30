@@ -17,7 +17,6 @@ import { store as noticesStore } from '@wordpress/notices';
 import { useDispatch } from '@wordpress/data';
 import { __, _n, sprintf } from '@wordpress/i18n';
 import { useState, useEffect } from 'react';
-import AddressDisplay from '../../../components/AddressDisplay';
 import Tracking from './components/Tracking';
 import ProductLineItem from '../../../ui/ProductLineItem';
 
@@ -35,19 +34,8 @@ export default ({
 
 	const copy = async () => {
 		try {
-			const { name, line_1, line_2, city, state, postal_code, country } =
-				checkout?.shipping_address;
-			const address = [
-				name,
-				line_1,
-				line_2,
-				city,
-				state,
-				country,
-				postal_code,
-			];
 			await navigator.clipboard.writeText(
-				address.filter((item) => !!item).join('\n ')
+				checkout?.shipping_address_display
 			);
 			createSuccessNotice(__('Copied to clipboard.', 'surecart'), {
 				type: 'snackbar',
@@ -274,10 +262,7 @@ export default ({
 										</ScTooltip>
 									)}
 								</div>
-
-								<AddressDisplay
-									address={checkout?.shipping_address}
-								/>
+								{checkout?.shipping_address?.formatted_string}
 							</ScFormControl>
 						) : (
 							<div

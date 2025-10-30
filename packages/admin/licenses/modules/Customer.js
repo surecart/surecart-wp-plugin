@@ -7,7 +7,6 @@ import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 
 import Box from '../../ui/Box';
-import AddressDisplay from '../../components/AddressDisplay';
 
 export default ({ licenseId }) => {
 	const { customer, loading, loadingError } = useSelect(
@@ -73,7 +72,7 @@ export default ({ licenseId }) => {
 					{customer?.name}
 				</ScText>
 				<div>{customer?.email}</div>
-				<AddressDisplay address={customer?.billing_address} />
+				{customer?.billing_address?.formatted_string}
 			</div>
 		</Box>
 	);

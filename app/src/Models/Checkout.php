@@ -563,16 +563,25 @@ class Checkout extends Model {
 	}
 
 	/**
+	 * Get the shipping address attribute
+	 *
+	 * @return array|null The shipping address.
+	 */
+	public function getShippingAddressDisplayAttribute() {
+		return $this->shipping_address->formatted_string ?? null;
+	}
+
+	/**
 	 * Get the billing address attribute
 	 *
 	 * @return array|null The billing address.
 	 */
 	public function getBillingAddressDisplayAttribute() {
 		if ( $this->billing_matches_shipping ) {
-			return $this->shipping_address;
+			return $this->shipping_address->formatted_string;
 		}
 
-		return $this->attributes['billing_address'] ?? null;
+		return $this->attributes['billing_address']->formatted_string ?? null;
 	}
 
 	/**

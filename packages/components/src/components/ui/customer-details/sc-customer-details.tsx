@@ -1,7 +1,6 @@
 import { Component, Element, h, Prop, State } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { Address, Customer } from '../../../types';
-import { formatAddress } from 'localized-address-format';
 import { countryChoices } from '../../../functions/address';
 import { zones } from '../../../functions/tax';
 
@@ -110,26 +109,12 @@ export class ScCustomerDetails {
   }
 
   renderAddress(label: string = 'Address', address: Address) {
-    const { name, line_1, line_2, city, state, postal_code, country } = address;
-    const countryName = this.countryChoices?.find(({ value }) => value === country)?.label;
     return (
       <sc-stacked-list-row style={{ '--columns': '3' }} mobileSize={480}>
         <div>
           <strong>{label}</strong>
         </div>
-        <div>
-          {[
-            ...(formatAddress({
-              name: name || '',
-              postalCountry: country || '',
-              administrativeArea: state || '',
-              locality: city || '',
-              postalCode: postal_code || '',
-              addressLines: [line_1, line_2].filter(Boolean),
-            }) || []),
-            countryName || country,
-          ].join('\n')}
-        </div>
+        <div>{address}</div>
         <div></div>
       </sc-stacked-list-row>
     );

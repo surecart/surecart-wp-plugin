@@ -96,11 +96,11 @@ class AtlasRestServiceProvider extends RestServiceProvider implements RestServic
 					'description' => esc_html__( 'The city field is required or not.', 'surecart' ),
 					'type'        => 'boolean',
 				),
-				'full_name'            => array(
+				'name'                 => array(
 					'description' => esc_html__( 'The full name of Country.', 'surecart' ),
 					'type'        => 'string',
 				),
-				'iso_code'             => array(
+				'code'                 => array(
 					'description' => esc_html__( 'The iso code of Country.', 'surecart' ),
 					'type'        => 'string',
 				),

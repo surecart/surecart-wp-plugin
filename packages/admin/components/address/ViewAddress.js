@@ -19,7 +19,6 @@ import {
 	ScText,
 } from '@surecart/components-react';
 import Box from '../../ui/Box';
-import AddressDisplay from '../AddressDisplay';
 
 export default ({
 	title,
@@ -120,7 +119,7 @@ export default ({
 							<ScFormControl
 								label={__('Shipping Address', 'surecart')}
 							>
-								<AddressDisplay address={shippingAddress} />
+								{shippingAddress?.formatted_string}
 							</ScFormControl>
 						</div>
 					)}
@@ -149,13 +148,9 @@ export default ({
 							<ScFormControl
 								label={__('Billing Address', 'surecart')}
 							>
-								<AddressDisplay
-									address={
-										billingMatchesShipping
-											? shippingAddress
-											: billingAddress
-									}
-								/>
+								{billingMatchesShipping
+									? shippingAddress?.formatted_string
+									: billingAddress?.formatted_string}
 							</ScFormControl>
 						</div>
 					)}
