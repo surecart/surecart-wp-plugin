@@ -283,6 +283,13 @@ export default ({
 					</ScButton>
 					<ScMenu>
 						<ScMenuItem
+							aria-label={__('Edit variant', 'surecart')}
+							onClick={() => setEdit(true)}
+						>
+							{__('Edit more...', 'surecart')}
+						</ScMenuItem>
+						<ScMenuDivider />
+						<ScMenuItem
 							aria-label={__('Delete variant', 'surecart')}
 							onClick={() =>
 								updateVariant({
@@ -296,13 +303,6 @@ export default ({
 							{variant?.status === 'draft'
 								? __('Restore', 'surecart')
 								: __('Delete', 'surecart')}
-						</ScMenuItem>
-						<ScMenuDivider />
-						<ScMenuItem
-							aria-label={__('Edit variant', 'surecart')}
-							onClick={() => setEdit(true)}
-						>
-							{__('Edit', 'surecart')}
 						</ScMenuItem>
 						{!!variant?.image_url && (
 							<ScMenuItem
