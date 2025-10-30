@@ -89,6 +89,13 @@ class ProductRating extends \Bricks\Element {
 	 * @return void
 	 */
 	public function render() {
-		echo $this->html( [], \Bricks\Frontend::render_children( $this ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		$output = "<div {$this->render_attributes( '_root' )}>";
+
+		// Render children elements (= individual items).
+		$output .= \Bricks\Frontend::render_children( $this );
+
+		$output .= '</div>';
+
+		echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 }

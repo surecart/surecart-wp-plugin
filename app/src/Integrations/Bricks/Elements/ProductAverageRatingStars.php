@@ -71,7 +71,7 @@ class ProductAverageRatingStars extends \Bricks\Element {
 			'label'   => esc_html__( 'Fill Color', 'surecart' ),
 			'type'    => 'color',
 			'default' => [
-				'hex' => '#6c63ff',
+				'hex' => 'var(--bricks-color-primary)',
 			],
 			'css'     => [
 				[
@@ -112,7 +112,7 @@ class ProductAverageRatingStars extends \Bricks\Element {
 		echo $this->html( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			[
 				'size'       => (int) $size,
-				'fill_color' => $fill_color,
+				'fill_color' => esc_attr( $fill_color ),
 			]
 		);
 	}

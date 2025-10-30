@@ -67,19 +67,15 @@ class ProductReviews extends \Bricks\Element {
 		return [
 			[
 				'name'     => 'block',
-				'label'    => esc_html__( 'Reviews Container', 'surecart' ),
-				'settings' => [
-					'_direction' => 'column',
-					'_rowGap'    => '30px',
-				],
+				'label'    => esc_html__( 'Product Reviews', 'surecart' ),
 				'children' => [
 					[
-						'name'     => 'block',
+						'name'     => 'container',
 						'label'    => esc_html__( 'Rating Summary', 'surecart' ),
 						'settings' => [
-							'_direction'     => 'row',
-							'_alignItems'    => 'flex-start',
-							'_columnGap'     => '30px',
+							'_direction'      => 'row',
+							'_alignItems'     => 'flex-start',
+							'_columnGap'      => '30px',
 							'_justifyContent' => 'space-between',
 						],
 						'children' => [
@@ -111,6 +107,13 @@ class ProductReviews extends \Bricks\Element {
 	 * @return void
 	 */
 	public function render() {
-		echo $this->html( [], \Bricks\Frontend::render_children( $this ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		$output = "<div {$this->render_attributes( '_root' )}>";
+
+		// Render children elements (= individual items).
+		$output .= \Bricks\Frontend::render_children( $this );
+
+		$output .= '</div>';
+
+		echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 }
