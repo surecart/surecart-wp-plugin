@@ -163,12 +163,12 @@ export class ScAddress {
    */
   async setSortedFields() {
     const countryDetails = await getCountryDetails(this.address?.country);
-    const addressFormatEdit = countryDetails?.address_formats?.edit; // this will return something like "{country}_{name}_{line_1}_{line_2}_{postal_code}{city}"
+    const addressFormatEdit = countryDetails?.address_formats?.edit;
 
     this.sortedFields =
       addressFormatEdit
-        ?.match(/{([^}]+)}/g)
-        .map(match => match.slice(1, -1))
+        ?.match(/{{([^}]+)}}/g)
+        .map(match => match.slice(2, -2))
         .map(field => ({
           name: field,
           label: countryDetails?.address_labels?.[field] || this.defaultCountryFields?.find(defaultField => defaultField?.name === field)?.label,

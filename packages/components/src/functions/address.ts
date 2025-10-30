@@ -54,7 +54,7 @@ export const countryChoices = async () => {
       locale: 'en',
     }),
   });
-  return response?.data.map(({ iso_code, name }) => ({ value: iso_code, label: name })) as Array<{ value: string; label: string }>;
+  return response?.data.map(({ code, name }) => ({ value: code, label: name })) as Array<{ value: string; label: string }>;
 };
 
 export const getCountryDetails = async (countryCode: string) => {
