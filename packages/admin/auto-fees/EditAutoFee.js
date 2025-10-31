@@ -8,7 +8,7 @@ import { __ } from '@wordpress/i18n';
 import { __experimentalConfirmDialog as ConfirmDialog } from '@wordpress/components';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
-import { useState, useEffect } from '@wordpress/element';
+import { useState, useEffect, useMemo } from '@wordpress/element';
 import { getQueryArg } from '@wordpress/url';
 
 /**
@@ -120,8 +120,12 @@ export default ({ id, setBrowserURL }) => {
 		}
 	};
 
-	const autoFeeAppliesTo = TYPE_CHOICES?.find(
-		(choice) => choice.value === autoFee?.fee_target
+	const autoFeeAppliesTo = useMemo(
+		() =>
+			TYPE_CHOICES?.find(
+				(choice) => choice.value === autoFee?.fee_target
+			),
+		[autoFee?.fee_target]
 	);
 
 	return (
@@ -166,11 +170,18 @@ export default ({ id, setBrowserURL }) => {
 								alignItems: 'center',
 							}}
 						>
-							<ScIcon
-								name="shopping-cart"
-								style={{ width: '16px', height: '16px' }}
-							/>
-							<div>{autoFeeAppliesTo?.label}</div>
+							<ScTag type="info" pill>
+								<div
+									css={css`
+										display: flex;
+										align-items: center;
+										gap: 0.5em;
+									`}
+								>
+									<ScIcon name={autoFeeAppliesTo?.icon} />
+									{autoFeeAppliesTo?.label}
+								</div>
+							</ScTag>
 						</div>
 						<div
 							style={{
