@@ -43,6 +43,8 @@ class AutoFeesController extends AdminController {
 	/**
 	 * Edit
 	 *
+	 * @param \SureCartCore\Requests\RequestInterface $request Request.
+	 *
 	 * @return string
 	 */
 	public function edit( $request ) {
