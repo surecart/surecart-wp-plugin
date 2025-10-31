@@ -5,7 +5,7 @@ import { css, jsx } from '@emotion/core';
  * External dependencies.
  */
 import { __ } from '@wordpress/i18n';
-import { useState, useEffect } from '@wordpress/element';
+import { useState, useEffect, useMemo } from '@wordpress/element';
 import { useEntityRecord } from '@wordpress/core-data';
 
 /**
@@ -46,9 +46,49 @@ export default ({
 		target
 	);
 
-	// Function to update the rules when any field changes
-	const updateCurrentLeaf = () => {
-		const newRuleJson = JSON.parse(JSON.stringify(rules));
+	// Initialize from existing leaf if available
+	useEffect(() => {
+		if (leaf) {
+			setAttribute(leaf.attribute_name);
+			setValue(leaf.comparison_value);
+			setMetadataKey(leaf.metadata_key);
+			setOperator(leaf.operator_label);
+		}
+	}, [
+		leaf?.attribute_name,
+		leaf?.comparison_value,
+		leaf?.metadata_key,
+		leaf?.operator_label,
+	]);
+
+	const { operators, attributes } = useMemo(() => {
+		const ops = {};
+		const attrs = [];
+
+		for (const rule of ruleSchema?.rule_schema ?? []) {
+			const operatorsChoices = rule.operators.map((operator) => ({
+				label: operatorLabels?.[operator] || operator,
+				value: operator,
+			}));
+
+			ops[rule.key] = operatorsChoices;
+			attrs.push({
+				label: attributeLabels?.[rule.key] || rule.key,
+				value: rule.key,
+				supported_values: rule?.supported_values,
+			});
+		}
+
+		return { operators: ops, attributes: attrs };
+	}, [ruleSchema]);
+
+	// Update the rules when any field changes
+	useEffect(() => {
+		if (attribute === null) {
+			return;
+		}
+
+		const newRuleJson = structuredClone(rules);
 
 		newRuleJson.conditions[groupIndex].conditions[leafIndex] = {
 			type: 'condition',
@@ -59,43 +99,7 @@ export default ({
 		};
 
 		updateRuleJson(newRuleJson);
-	};
-
-	// Initialize from existing leaf if available
-	useEffect(() => {
-		if (leaf) {
-			setAttribute(leaf.attribute_name);
-			setValue(leaf.comparison_value);
-			setMetadataKey(leaf.metadata_key);
-			setOperator(leaf.operator_label);
-		}
-	}, [leaf]);
-
-	let operators = [];
-	let attributes = [];
-
-	for (const rule of ruleSchema?.rule_schema ?? []) {
-		const operatorsChoices = [];
-		for (const operator of rule.operators) {
-			operatorsChoices.push({
-				label: operatorLabels?.[operator],
-				value: operator,
-			});
-		}
-		operators[rule.key] = operatorsChoices;
-		attributes.push({
-			label: attributeLabels?.[rule.key],
-			value: rule.key,
-			supported_values: rule?.supported_values,
-		});
-	}
-
-	useEffect(() => {
-		if (attribute === null) {
-			return;
-		}
-		updateCurrentLeaf();
-	}, [operator, value, metadataKey]);
+	}, [attribute, operator, value, metadataKey]);
 
 	const isAttributeMetadata = attribute
 		? attribute.endsWith('.metadata') || 'metadata' === attribute
@@ -105,15 +109,18 @@ export default ({
 		(attributes ?? []).find((attr) => attr.value === attribute)
 			?.supported_values || [];
 
-	const userRoleChoices = Object.entries(scData?.wp_user_roles).map(
-		([key, value]) => ({
-			label: value?.name,
+	const userRoleChoices = useMemo(() => {
+		if (!scData?.wp_user_roles) return [];
+		return Object.entries(scData.wp_user_roles).map(([key, value]) => ({
+			label: value?.name || key,
 			value: key,
-		})
-	);
+		}));
+	}, []);
 
 	const formatLabel = (str) =>
 		str.replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
+
+	const fullWidthClass = !isAttributeMetadata ? 'sc-grid-full-width' : '';
 
 	const renderSupportedValuesSelector = () => {
 		return (
@@ -139,9 +146,7 @@ export default ({
 						setDate={(date) => {
 							setValue(date);
 						}}
-						className={
-							!isAttributeMetadata ? 'sc-grid-full-width' : ''
-						}
+						className={fullWidthClass}
 						renderButton={({ isOpen, onToggle, date }) => (
 							<ScInput
 								value={
@@ -178,9 +183,7 @@ export default ({
 						}}
 						currency={scData?.currency_code}
 						placeholder={__('Enter an amount', 'surecart')}
-						className={
-							!isAttributeMetadata ? 'sc-grid-full-width' : ''
-						}
+						className={fullWidthClass}
 					/>
 				);
 			case 'text':
@@ -191,9 +194,7 @@ export default ({
 							setValue(e.target.value);
 						}}
 						placeholder={__('Enter a value', 'surecart')}
-						className={
-							!isAttributeMetadata ? 'sc-grid-full-width' : ''
-						}
+						className={fullWidthClass}
 					/>
 				);
 			case 'email':
@@ -205,9 +206,7 @@ export default ({
 							setValue(e.target.value);
 						}}
 						placeholder={__('Enter a value', 'surecart')}
-						className={
-							!isAttributeMetadata ? 'sc-grid-full-width' : ''
-						}
+						className={fullWidthClass}
 					/>
 				);
 			case 'number':
@@ -219,9 +218,7 @@ export default ({
 							setValue(e.target.value);
 						}}
 						placeholder={__('Enter a value', 'surecart')}
-						className={
-							!isAttributeMetadata ? 'sc-grid-full-width' : ''
-						}
+						className={fullWidthClass}
 					/>
 				);
 			case 'user_role':
@@ -242,9 +239,7 @@ export default ({
 							setValue(e.target.value);
 						}}
 						placeholder={__('Enter a value', 'surecart')}
-						className={
-							!isAttributeMetadata ? 'sc-grid-full-width' : ''
-						}
+						className={fullWidthClass}
 					/>
 				);
 		}
@@ -285,6 +280,7 @@ export default ({
 						setMetadataKey(null);
 					}}
 					choices={attributes}
+					required
 				/>
 				{isAttributeMetadata && attribute !== 'wp_user_role' && (
 					<ScInput
@@ -293,6 +289,7 @@ export default ({
 							setMetadataKey(e.target.value);
 						}}
 						placeholder={__("Enter metadata's key", 'surecart')}
+						required
 					/>
 				)}
 				<ScSelect
@@ -303,6 +300,7 @@ export default ({
 						setOperator(e.target.value);
 					}}
 					choices={operators[attribute] || []}
+					required
 				/>
 
 				{attributeSupportedValues?.length
