@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { __, sprintf } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 import { useCallback, useMemo } from '@wordpress/element';
 
 import {
@@ -9,6 +9,7 @@ import {
 	ScEmpty,
 	ScIcon,
 	ScFlex,
+	ScTag,
 } from '@surecart/components-react';
 import Box from '../../ui/Box';
 import OrGroup from './OrGroup';
@@ -35,7 +36,7 @@ const INITIAL_RULES = {
 };
 
 export default ({ autoFee = {}, onUpdate, loading }) => {
-	const { rules } = autoFee;
+	const { rules, discount } = autoFee;
 
 	const autoFeeAppliesTo = useMemo(
 		() =>
@@ -105,13 +106,44 @@ export default ({ autoFee = {}, onUpdate, loading }) => {
 					display: block;
 					font-size: 1em;
 					margin-bottom: 10px;
+					display: flex;
+					align-items: center;
+					gap: 0.25em;
 				`}
 			>
-				{sprintf(
-					/* translators: %s: the target of the dynamic price */
-					__('Apply this dynamic price to %s where', 'surecart'),
-					autoFeeAppliesTo?.label
-				)}{' '}
+				{__('Apply a', 'surecart')}{' '}
+				<ScTag type={'success'} pill>
+					<div
+						css={css`
+							display: flex;
+							align-items: center;
+							gap: 0.25em;
+						`}
+					>
+						<ScIcon
+							name={
+								discount ? 'arrow-down-right' : 'arrow-up-right'
+							}
+						/>
+						{discount
+							? __('Discount', 'surecart')
+							: __('Fee', 'surecart')}
+					</div>
+				</ScTag>{' '}
+				{__('to', 'surecart')}{' '}
+				<ScTag type="info" pill>
+					<div
+						css={css`
+							display: flex;
+							align-items: center;
+							gap: 0.5em;
+						`}
+					>
+						<ScIcon name={autoFeeAppliesTo?.icon} />
+						{autoFeeAppliesTo?.label}
+					</div>
+				</ScTag>{' '}
+				{__('where', 'surecart')}
 			</label>
 			<ScFlex
 				flexDirection="column"
