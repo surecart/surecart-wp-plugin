@@ -40,9 +40,7 @@ export class ScOrderConfirmationTotals {
             ({humanDiscount})
           </span>
         )}
-        <span slot="price">
-          {this.order?.discounts_display_amount}
-        </span>
+        <span slot="price">{this.order?.discounts_display_amount}</span>
       </sc-line-item>
     );
   }
@@ -88,19 +86,19 @@ export class ScOrderConfirmationTotals {
       <div class={{ 'line-item-totals': true }}>
         {this.order?.subtotal_amount !== this.order?.total_amount && (
           <Fragment>
-          <sc-line-item>
-            <span slot="description">{__('Subtotal', 'surecart')}</span>
-            <span
-              slot="price"
-              style={{
-                'font-weight': 'var(--sc-font-weight-semibold)',
-                'color': 'var(--sc-color-gray-800)',
-              }}
-            >
-              {this.order?.subtotal_display_amount}
-            </span>
-          </sc-line-item>
-          {this.renderCheckoutFees(this.order)}
+            <sc-line-item>
+              <span slot="description">{__('Subtotal', 'surecart')}</span>
+              <span
+                slot="price"
+                style={{
+                  'font-weight': 'var(--sc-font-weight-semibold)',
+                  'color': 'var(--sc-color-gray-800)',
+                }}
+              >
+                {this.order?.subtotal_display_amount}
+              </span>
+            </sc-line-item>
+            {this.renderCheckoutFees(this.order)}
           </Fragment>
         )}
 
@@ -158,19 +156,19 @@ export class ScOrderConfirmationTotals {
 
         {!!this.order?.shipping_amount && (
           <Fragment>
-          <sc-line-item>
-            <span slot="description">{`${__('Shipping', 'surecart')} ${shippingMethodName ? `(${shippingMethodName})` : ''}`}</span>
-            <span
-              slot="price"
-              style={{
-                'font-weight': 'var(--sc-font-weight-semibold)',
-                'color': 'var(--sc-color-gray-800)',
-              }}
-            >
-              {this.order?.shipping_display_amount}
-            </span>
-          </sc-line-item>
-          {this.renderShippingFees(this.order)}
+            <sc-line-item>
+              <span slot="description">{`${__('Shipping', 'surecart')} ${shippingMethodName ? `(${shippingMethodName})` : ''}`}</span>
+              <span
+                slot="price"
+                style={{
+                  'font-weight': 'var(--sc-font-weight-semibold)',
+                  'color': 'var(--sc-color-gray-800)',
+                }}
+              >
+                {this.order?.shipping_display_amount}
+              </span>
+            </sc-line-item>
+            {this.renderShippingFees(this.order)}
           </Fragment>
         )}
 
