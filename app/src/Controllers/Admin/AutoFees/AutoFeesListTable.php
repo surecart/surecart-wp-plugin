@@ -2,7 +2,6 @@
 
 namespace SureCart\Controllers\Admin\AutoFees;
 
-use SureCart\Support\Currency;
 use SureCart\Controllers\Admin\Tables\ListTable;
 use SureCart\Models\AutoFee;
 
@@ -57,9 +56,9 @@ class AutoFeesListTable extends ListTable {
 	}
 
 	/**
-	 * @global int $post_id
-	 * @global string $comment_status
-	 * @global string $comment_type
+	 * Get the views for the list table.
+	 *
+	 * @return array
 	 */
 	protected function get_views() {
 		$stati = [
@@ -102,7 +101,7 @@ class AutoFeesListTable extends ListTable {
 	/**
 	 * Override the parent columns method. Defines the columns to use in your listing table
 	 *
-	 * @return Array
+	 * @return array
 	 */
 	public function get_columns() {
 		return array_merge(
@@ -119,7 +118,7 @@ class AutoFeesListTable extends ListTable {
 	/**
 	 * Define which columns are hidden
 	 *
-	 * @return Array
+	 * @return array
 	 */
 	public function get_hidden_columns() {
 		return array();
@@ -128,7 +127,7 @@ class AutoFeesListTable extends ListTable {
 	/**
 	 * Define the sortable columns
 	 *
-	 * @return Array
+	 * @return array
 	 */
 	public function get_sortable_columns() {
 		return array( 'name' => array( 'name', false ) );
@@ -137,7 +136,7 @@ class AutoFeesListTable extends ListTable {
 	/**
 	 * Get the table data
 	 *
-	 * @return Array
+	 * @return \SureCart\Models\AutoFee[]|\WP_Error
 	 */
 	protected function table_data() {
 		$conditions = [
@@ -164,7 +163,7 @@ class AutoFeesListTable extends ListTable {
 	/**
 	 * Get the archive query status.
 	 *
-	 * @return boolean|null
+	 * @return bool|null
 	 */
 	public function getStatus() {
 		$status = sanitize_text_field( wp_unslash( $_GET['status'] ?? false ) );
@@ -175,9 +174,9 @@ class AutoFeesListTable extends ListTable {
 	/**
 	 * Handle the status
 	 *
-	 * @param \SureCart\Models\AutoFees $auto_fees AutoFees model.
+	 * @param \SureCart\Models\AutoFee $auto_fees Auto Fee model.
 	 *
-	 * @return string
+	 * @return void
 	 */
 	public function column_status( $auto_fees ) {
 		$toggle_url = add_query_arg(
@@ -204,7 +203,7 @@ class AutoFeesListTable extends ListTable {
 	public function column_name( $auto_fees ) {
 		ob_start();
 		?>
-		<a href="<?php echo \SureCart::getUrl()->edit( 'auto-fee', $auto_fees->id ); ?>">
+		<a href="<?php echo esc_url_raw( \SureCart::getUrl()->edit( 'auto-fee', $auto_fees->id ) ); ?>">
 			<?php echo esc_html( $auto_fees->name ); ?>
 		</a>
 		<?php echo wp_kses_post( $this->getRowActions( $auto_fees ) ); ?>
