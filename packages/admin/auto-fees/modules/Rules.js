@@ -1,14 +1,8 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-
-/**
- * External dependencies.
- */
 import { __ } from '@wordpress/i18n';
+import { useCallback, useMemo } from '@wordpress/element';
 
-/**
- * Internal dependencies.
- */
 import {
 	ScCard,
 	ScButton,
@@ -20,14 +14,87 @@ import Box from '../../ui/Box';
 import OrGroup from './OrGroup';
 import { TYPE_CHOICES } from '../utils/constants';
 
+// Extract default condition structure as a constant
+const DEFAULT_CONDITION = {
+	type: 'condition',
+	comparison_value: '',
+	attribute_name: null,
+	operator_label: null,
+};
+
+const DEFAULT_RULE_GROUP = {
+	type: 'group',
+	combinator: 'and',
+	conditions: [DEFAULT_CONDITION],
+};
+
+const INITIAL_RULES = {
+	type: 'group',
+	combinator: 'or',
+	conditions: [DEFAULT_RULE_GROUP],
+};
+
+/**
+ * Deep clone utility function for rule objects
+ */
+const cloneRules = (rules) => {
+	if (!rules) return null;
+	return {
+		...rules,
+		conditions: rules.conditions?.map((group) => ({
+			...group,
+			conditions: group.conditions?.map((condition) => ({
+				...condition,
+			})),
+		})),
+	};
+};
+
 export default ({ autoFee = {}, onUpdate, loading }) => {
 	const { rules } = autoFee;
 
-	// Update rules whenever changes occur
-	const updateRuleJson = (newRuleJson) => {
-		onUpdate({ rules: newRuleJson });
-	};
+	// Memoize the fee target label
+	const autoFeeAppliesTo = useMemo(
+		() =>
+			TYPE_CHOICES?.find(
+				(choice) => choice.value === autoFee?.fee_target
+			),
+		[autoFee?.fee_target]
+	);
 
+	// Update rules whenever changes occur
+	const updateRuleJson = useCallback(
+		(newRuleJson) => {
+			onUpdate({ rules: newRuleJson });
+		},
+		[onUpdate]
+	);
+
+	// Handler to add initial conditions
+	const handleAddInitialConditions = useCallback(() => {
+		updateRuleJson(INITIAL_RULES);
+	}, [updateRuleJson]);
+
+	// Handler to add a new rule group
+	const handleAddRuleGroup = useCallback(() => {
+		const newRuleJson = cloneRules(rules);
+		newRuleJson.conditions.push({ ...DEFAULT_RULE_GROUP });
+		updateRuleJson(newRuleJson);
+	}, [rules, updateRuleJson]);
+
+	// Handler to remove a rule group
+	const handleRemoveRuleGroup = useCallback(
+		(groupIndex) => {
+			const newRuleJson = cloneRules(rules);
+			newRuleJson.conditions = newRuleJson.conditions.filter(
+				(_, index) => index !== groupIndex
+			);
+			updateRuleJson(newRuleJson);
+		},
+		[rules, updateRuleJson]
+	);
+
+	// Empty state
 	if (!rules?.conditions?.length) {
 		return (
 			<Box title={__('Conditions', 'surecart')} loading={loading}>
@@ -38,28 +105,7 @@ export default ({ autoFee = {}, onUpdate, loading }) => {
 							'surecart'
 						)}
 						<div>
-							<ScButton
-								onClick={() => {
-									updateRuleJson({
-										type: 'group',
-										combinator: 'or',
-										conditions: [
-											{
-												type: 'group',
-												combinator: 'and',
-												conditions: [
-													{
-														type: 'condition',
-														comparison_value: '',
-														attribute_name: null,
-														operator_label: null,
-													},
-												],
-											},
-										],
-									});
-								}}
-							>
+							<ScButton onClick={handleAddInitialConditions}>
 								<ScIcon name="plus" slot="prefix" />
 								{__('Add Conditions', 'surecart')}
 							</ScButton>
@@ -70,10 +116,6 @@ export default ({ autoFee = {}, onUpdate, loading }) => {
 		);
 	}
 
-	const autoFeeAppliesTo = TYPE_CHOICES?.find(
-		(choice) => choice.value === autoFee?.fee_target
-	);
-
 	return (
 		<Box title={__('Conditions', 'surecart')} loading={loading}>
 			<label
@@ -83,10 +125,10 @@ export default ({ autoFee = {}, onUpdate, loading }) => {
 					margin-bottom: 10px;
 				`}
 			>
-				{__(
-					`Apply this dynamic price to ${autoFeeAppliesTo?.label} where `,
-					'surecart'
-				)}
+				{/* Better i18n: use sprintf-style formatting or separate the dynamic part */}
+				{__('Apply this dynamic price to', 'surecart')}{' '}
+				<strong>{autoFeeAppliesTo?.label}</strong>{' '}
+				{__('where', 'surecart')}
 			</label>
 			<ScFlex
 				flexDirection="column"
@@ -95,9 +137,12 @@ export default ({ autoFee = {}, onUpdate, loading }) => {
 				`}
 			>
 				{rules?.conditions?.map((group, groupIndex) => {
+					// Use a more stable key if available (e.g., group.id)
+					const groupKey = group.id || `group-${groupIndex}`;
+
 					return (
 						<div
-							key={groupIndex}
+							key={groupKey}
 							css={css`
 								display: flex;
 								flex-direction: column;
@@ -118,35 +163,11 @@ export default ({ autoFee = {}, onUpdate, loading }) => {
 							)}
 							<OrGroup
 								group={group}
-								addRuleGroup={() => {
-									const newRuleJson = JSON.parse(
-										JSON.stringify(rules)
-									);
-									newRuleJson.conditions.push({
-										type: 'group',
-										combinator: 'and',
-										conditions: [
-											{
-												type: 'condition',
-												comparison_value: '',
-												attribute_name: null,
-												operator_label: null,
-											},
-										],
-									});
-									updateRuleJson(newRuleJson);
-								}}
+								addRuleGroup={handleAddRuleGroup}
 								feeTarget={autoFee?.fee_target}
-								removeRuleGroup={() => {
-									const newRuleJson = JSON.parse(
-										JSON.stringify(rules)
-									);
-									newRuleJson.conditions =
-										newRuleJson.conditions.filter(
-											(_, index) => index !== groupIndex
-										);
-									updateRuleJson(newRuleJson);
-								}}
+								removeRuleGroup={() =>
+									handleRemoveRuleGroup(groupIndex)
+								}
 								totalRuleGroups={rules?.conditions?.length}
 								groupIndex={groupIndex}
 								rules={rules}
