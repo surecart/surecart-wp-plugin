@@ -1,10 +1,13 @@
-<div <?php echo wp_kses_data(
-	get_block_wrapper_attributes(
-		array(
-			'class' => 'sc-input-group sc-input-group-sm',
+<div 
+	<?php echo wp_kses_data(
+		get_block_wrapper_attributes(
+			array(
+				'class' => 'sc-input-group sc-input-group-sm',
+			)
 		)
-	)
-); ?>>
+	); ?>
+	data-wp-interactive='{ "namespace": "surecart/product-list" }'
+>
 	<span class="sc-input-group-text">
 		<?php
 		echo wp_kses(
@@ -24,7 +27,7 @@
 	<input
 		class="sc-form-control"
 		type="search"
-		data-wp-on--input="surecart/product-list::actions.onSearchInput"
+		data-wp-on--input="actions.onSearchInput"
 		placeholder="<?php esc_attr_e( 'Search', 'surecart' ); ?>"
 		value="<?php echo esc_attr( $value ); ?>"
 	>
@@ -33,9 +36,9 @@
 		<span class="sc-input-group-text"
 			role="button"
 			tabindex="0"
-			data-wp-bind--hidden="surecart/product-list::state.searching"
-			data-wp-on--click="surecart/product-list::actions.clearSearch"
-			data-wp-on--keydown="surecart/product-list::actions.clearSearch"
+			data-wp-bind--hidden="state.searching"
+			data-wp-on--click="actions.clearSearch"
+			data-wp-on--keydown="actions.clearSearch"
 		>
 			<?php
 			echo wp_kses(
@@ -55,7 +58,7 @@
 		</span>
 	<?php endif; ?>
 
-	<span class="sc-input-group-text" data-wp-bind--hidden="!surecart/product-list::state.searching" hidden>
+	<span class="sc-input-group-text" data-wp-bind--hidden="!state.searching" hidden>
 		<span class="sc-spinner" aria-hidden="true"></span>
 	</span>
 </div>
