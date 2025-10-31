@@ -11,16 +11,10 @@ import { __ } from '@wordpress/i18n';
  */
 import { ScInput, ScPriceInput, ScSelect } from '@surecart/components-react';
 import Box from '../../ui/Box';
-import { useState, useEffect } from '@wordpress/element';
+import { useState, useEffect, useCallback } from '@wordpress/element';
 
-export default ({ autoFee, onUpdate, loading }) => {
-	const {
-		name,
-		amount_adjustment,
-		percent_adjustment,
-		discount,
-		fee_target,
-	} = autoFee;
+const Details = ({ autoFee, onUpdate, loading }) => {
+	const { name, amount_adjustment, percent_adjustment, discount } = autoFee;
 
 	const [adjustmentType, setAdjustmentType] = useState(
 		amount_adjustment ? 'fixed' : 'percentage'
@@ -37,7 +31,43 @@ export default ({ autoFee, onUpdate, loading }) => {
 			onUpdate({ percent_adjustment: null });
 			return;
 		}
-	}, [adjustmentType, amount_adjustment, percent_adjustment]);
+	}, [adjustmentType, amount_adjustment, percent_adjustment, onUpdate]);
+
+	const handleNameChange = useCallback(
+		(e) => {
+			onUpdate({ name: e.target.value });
+		},
+		[onUpdate]
+	);
+
+	const handlePriceTypeChange = useCallback(
+		(e) => {
+			onUpdate({ discount: e.target.value === 'discount' });
+		},
+		[onUpdate]
+	);
+
+	const handleAdjustmentTypeChange = useCallback((e) => {
+		setAdjustmentType(e.target.value);
+	}, []);
+
+	const handlePercentChange = useCallback(
+		(e) => {
+			onUpdate({ percent_adjustment: e.target.value });
+		},
+		[onUpdate]
+	);
+
+	const handleAmountChange = useCallback(
+		(e) => {
+			onUpdate({ amount_adjustment: e.target.value });
+		},
+		[onUpdate]
+	);
+
+	// Get currency code from global or autoFee
+	const currencyCode =
+		autoFee?.currency || window?.scData?.currency_code || 'USD';
 
 	return (
 		<Box title={__('Details', 'surecart')} loading={loading}>
@@ -46,11 +76,7 @@ export default ({ autoFee, onUpdate, loading }) => {
 				help={__("Your Dynamic Price's name.", 'surecart')}
 				value={name}
 				required
-				onScInput={(e) =>
-					onUpdate({
-						name: e.target.value,
-					})
-				}
+				onScInput={handleNameChange}
 			/>
 			<ScSelect
 				label={__('Price Type', 'surecart')}
@@ -60,11 +86,7 @@ export default ({ autoFee, onUpdate, loading }) => {
 				)}
 				unselect={false}
 				value={discount ? 'discount' : 'fee'}
-				onScChange={(e) => {
-					onUpdate({
-						discount: 'discount' === e.target.value ? true : false,
-					});
-				}}
+				onScChange={handlePriceTypeChange}
 				choices={[
 					{
 						label: __('Discount', 'surecart'),
@@ -91,7 +113,7 @@ export default ({ autoFee, onUpdate, loading }) => {
 					)}
 					unselect={false}
 					value={adjustmentType}
-					onScChange={(e) => setAdjustmentType(e.target.value)}
+					onScChange={handleAdjustmentTypeChange}
 					choices={[
 						{
 							label: __('Percentage', 'surecart'),
@@ -107,40 +129,30 @@ export default ({ autoFee, onUpdate, loading }) => {
 				{adjustmentType === 'percentage' ? (
 					<ScInput
 						type="number"
-						disabled={adjustmentType !== 'percentage'}
 						min="0"
 						max="100"
 						step="0.01"
 						attribute="percent_adjustment"
 						label={__('Percent', 'surecart')}
 						value={percent_adjustment}
-						onScInput={(e) =>
-							onUpdate({
-								percent_adjustment: e.target.value,
-							})
-						}
-						required={adjustmentType === 'percentage'}
+						onScInput={handlePercentChange}
+						required
 					>
 						<span slot="suffix">%</span>
 					</ScInput>
 				) : (
 					<ScPriceInput
-						currencyCode={
-							autoFee?.currency || scData?.currency_code
-						}
-						disabled={adjustmentType === 'percentage'}
+						currencyCode={currencyCode}
 						attribute="amount_adjustment"
 						label={__('Amount', 'surecart')}
 						value={amount_adjustment || null}
-						required={adjustmentType === 'fixed'}
-						onScInput={(e) => {
-							onUpdate({
-								amount_adjustment: e.target.value,
-							});
-						}}
+						required
+						onScInput={handleAmountChange}
 					/>
 				)}
 			</div>
 		</Box>
 	);
 };
+
+export default Details;
