@@ -207,13 +207,13 @@ class AdminMenuPageService {
 		 * Promotions
 		 */
 		$this->pages += array(
-			'promotions' => \add_submenu_page( $this->slug, __( 'Promotions', 'surecart' ), __( 'Promotions', 'surecart' ), 'edit_sc_coupons', 'sc-coupons', '__return_false' ),
+			'promotion' => \add_submenu_page( $this->slug, __( 'Promotion', 'surecart' ), __( 'Promotion', 'surecart' ), 'edit_sc_coupons', 'sc-coupons', '__return_false' ),
 		);
 
 		// Promotions submenu pages.
-		$is_promotions_menu_opened = in_array( $_GET['page'] ?? '', array( 'sc-coupons', 'sc-bumps', 'sc-upsell-funnels', 'sc-auto-fees' ), true );
+		$is_promotion_menu_opened = in_array( $_GET['page'] ?? '', array( 'sc-coupons', 'sc-bumps', 'sc-upsell-funnels', 'sc-auto-fees' ), true );
 
-		if ( $is_promotions_menu_opened ) {
+		if ( $is_promotion_menu_opened ) {
 			/**
 			 * Coupons
 			 */
