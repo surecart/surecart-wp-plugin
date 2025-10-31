@@ -39,8 +39,8 @@ export default ({
 					margin-bottom: 2em;
 				`}
 			>
-				<ScSkeleton style={{ width: '45%' }}></ScSkeleton>
-				<ScSkeleton style={{ width: '65%' }}></ScSkeleton>
+				<ScSkeleton style={{ width: '45%' }} />
+				<ScSkeleton style={{ width: '65%' }} />
 			</div>
 		);
 	}
@@ -53,7 +53,33 @@ export default ({
 			.join(', ');
 	};
 
-	console.log(rules);
+	const handleAddLeaf = () => {
+		const newRuleJson = structuredClone(rules);
+
+		newRuleJson.conditions[groupIndex].conditions.push({
+			type: 'condition',
+			operator_label: null,
+			comparison_value: '',
+			attribute_name: null,
+		});
+		updateRuleJson(newRuleJson);
+	};
+
+	const handleRemoveLeaf = (leafIndex) => {
+		// If there's only one leaf, remove the entire group
+		if (group?.conditions?.length === 1) {
+			removeRuleGroup();
+			return;
+		}
+
+		const newRuleJson = structuredClone(rules);
+		newRuleJson.conditions[groupIndex].conditions = newRuleJson.conditions[
+			groupIndex
+		].conditions.filter((_, index) => index !== leafIndex);
+		updateRuleJson(newRuleJson);
+	};
+
+	const isLastGroup = totalRuleGroups === groupIndex + 1;
 
 	return (
 		<ScToggle
@@ -73,6 +99,7 @@ export default ({
 					right: -12px;
 				`}
 				onClick={removeRuleGroup}
+				aria-label={__('Remove rule group', 'surecart')}
 			>
 				<ScIcon name="trash" />
 			</ScButton>
@@ -94,46 +121,15 @@ export default ({
 								pill
 								type="default"
 								size="small"
+								aria-label={__('AND operator', 'surecart')}
 							>
 								{__('AND', 'surecart')}
 							</ScButton>
 						)}
 						<AndGroup
-							key={leafIndex}
 							leaf={leaf}
-							addLeaf={() => {
-								const newRuleJson = JSON.parse(
-									JSON.stringify(rules)
-								);
-
-								newRuleJson.conditions[
-									groupIndex
-								].conditions.push({
-									type: 'condition',
-									operator_label: null,
-									comparison_value: '',
-									attribute_name: null,
-								});
-								updateRuleJson(newRuleJson);
-							}}
-							removeLeaf={() => {
-								// if there's only one leaf, remove the entire group
-								if (group?.conditions?.length === 1) {
-									removeRuleGroup();
-									return;
-								}
-
-								const newRuleJson = JSON.parse(
-									JSON.stringify(rules)
-								);
-								newRuleJson.conditions[groupIndex].conditions =
-									newRuleJson.conditions[
-										groupIndex
-									].conditions.filter(
-										(_, index) => index !== leafIndex
-									);
-								updateRuleJson(newRuleJson);
-							}}
+							addLeaf={handleAddLeaf}
+							removeLeaf={() => handleRemoveLeaf(leafIndex)}
 							feeTarget={feeTarget}
 							totalLeaves={group?.conditions?.length}
 							leafIndex={leafIndex}
@@ -144,8 +140,14 @@ export default ({
 					</div>
 				);
 			})}
-			{totalRuleGroups === groupIndex + 1 && (
-				<ScButton type="link" onClick={addRuleGroup}>
+			{isLastGroup && (
+				<ScButton
+					type="link"
+					onClick={addRuleGroup}
+					css={css`
+						margin: 1em auto 0;
+					`}
+				>
 					{__('+ OR', 'surecart')}
 				</ScButton>
 			)}
