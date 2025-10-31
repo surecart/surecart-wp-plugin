@@ -94,6 +94,12 @@ store('surecart/video', {
 				return;
 			}
 
+			// If already playing, pause it.
+			if (!video?.paused) {
+				video.pause();
+				return;
+			}
+
 			video
 				.play()
 				.catch((error) =>
