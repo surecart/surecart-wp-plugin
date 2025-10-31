@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 import { useCallback, useMemo } from '@wordpress/element';
 
 import {
@@ -14,7 +14,7 @@ import Box from '../../ui/Box';
 import OrGroup from './OrGroup';
 import { TYPE_CHOICES } from '../utils/constants';
 
-// Extract default condition structure as a constant
+// Extract default condition structure as constants
 const DEFAULT_CONDITION = {
 	type: 'condition',
 	comparison_value: '',
@@ -34,26 +34,9 @@ const INITIAL_RULES = {
 	conditions: [DEFAULT_RULE_GROUP],
 };
 
-/**
- * Deep clone utility function for rule objects
- */
-const cloneRules = (rules) => {
-	if (!rules) return null;
-	return {
-		...rules,
-		conditions: rules.conditions?.map((group) => ({
-			...group,
-			conditions: group.conditions?.map((condition) => ({
-				...condition,
-			})),
-		})),
-	};
-};
-
 export default ({ autoFee = {}, onUpdate, loading }) => {
 	const { rules } = autoFee;
 
-	// Memoize the fee target label
 	const autoFeeAppliesTo = useMemo(
 		() =>
 			TYPE_CHOICES?.find(
@@ -62,7 +45,6 @@ export default ({ autoFee = {}, onUpdate, loading }) => {
 		[autoFee?.fee_target]
 	);
 
-	// Update rules whenever changes occur
 	const updateRuleJson = useCallback(
 		(newRuleJson) => {
 			onUpdate({ rules: newRuleJson });
@@ -70,31 +52,31 @@ export default ({ autoFee = {}, onUpdate, loading }) => {
 		[onUpdate]
 	);
 
-	// Handler to add initial conditions
 	const handleAddInitialConditions = useCallback(() => {
 		updateRuleJson(INITIAL_RULES);
 	}, [updateRuleJson]);
 
-	// Handler to add a new rule group
+	// No cloning needed - just create new object immutably
 	const handleAddRuleGroup = useCallback(() => {
-		const newRuleJson = cloneRules(rules);
-		newRuleJson.conditions.push({ ...DEFAULT_RULE_GROUP });
-		updateRuleJson(newRuleJson);
+		updateRuleJson({
+			...rules,
+			conditions: [...rules.conditions, { ...DEFAULT_RULE_GROUP }],
+		});
 	}, [rules, updateRuleJson]);
 
-	// Handler to remove a rule group
+	// No cloning needed - filter creates a new array
 	const handleRemoveRuleGroup = useCallback(
 		(groupIndex) => {
-			const newRuleJson = cloneRules(rules);
-			newRuleJson.conditions = newRuleJson.conditions.filter(
-				(_, index) => index !== groupIndex
-			);
-			updateRuleJson(newRuleJson);
+			updateRuleJson({
+				...rules,
+				conditions: rules.conditions.filter(
+					(_, index) => index !== groupIndex
+				),
+			});
 		},
 		[rules, updateRuleJson]
 	);
 
-	// Empty state
 	if (!rules?.conditions?.length) {
 		return (
 			<Box title={__('Conditions', 'surecart')} loading={loading}>
@@ -125,10 +107,11 @@ export default ({ autoFee = {}, onUpdate, loading }) => {
 					margin-bottom: 10px;
 				`}
 			>
-				{/* Better i18n: use sprintf-style formatting or separate the dynamic part */}
-				{__('Apply this dynamic price to', 'surecart')}{' '}
-				<strong>{autoFeeAppliesTo?.label}</strong>{' '}
-				{__('where', 'surecart')}
+				{sprintf(
+					/* translators: %s: the target of the dynamic price */
+					__('Apply this dynamic price to %s where', 'surecart'),
+					autoFeeAppliesTo?.label
+				)}{' '}
 			</label>
 			<ScFlex
 				flexDirection="column"
@@ -137,7 +120,6 @@ export default ({ autoFee = {}, onUpdate, loading }) => {
 				`}
 			>
 				{rules?.conditions?.map((group, groupIndex) => {
-					// Use a more stable key if available (e.g., group.id)
 					const groupKey = group.id || `group-${groupIndex}`;
 
 					return (
