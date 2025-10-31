@@ -73,29 +73,55 @@ class ProductReviews extends \Bricks\Element {
 						'name'     => 'container',
 						'label'    => esc_html__( 'Rating Summary', 'surecart' ),
 						'settings' => [
-							'_direction'      => 'row',
-							'_alignItems'     => 'flex-start',
-							'_columnGap'      => '30px',
-							'_justifyContent' => 'space-between',
+							'_direction'  => 'column',
+							'_alignItems' => 'flex-start',
 						],
 						'children' => [
 							[
-								'name'     => 'block',
-								'label'    => esc_html__( 'Rating Info', 'surecart' ),
+								'name'     => 'heading',
 								'settings' => [
-									'_direction' => 'column',
-									'_rowGap'    => '10px',
-								],
-								'children' => [
-									[ 'name' => 'surecart-product-review-average-rating-value' ],
-									[ 'name' => 'surecart-product-review-average-rating-stars' ],
-									[ 'name' => 'surecart-product-review-total-rating' ],
+									'text' => esc_html__( 'Customer Reviews', 'surecart' ),
+									'tag'  => 'h2',
 								],
 							],
-							[ 'name' => 'surecart-product-review-breakdown' ],
+							[
+								'name'     => 'container',
+								'label'    => esc_html__( 'Rating Summary', 'surecart' ),
+								'settings' => [
+									'_direction'      => 'row',
+									'_alignItems'     => 'flex-start',
+									'_columnGap'      => '30px',
+									'_justifyContent' => 'space-between',
+									'_padding'        => '20px',
+									'_background'     => [
+										'color' => [ 'hex' => '#f5f5f5' ],
+									],
+								],
+								'children' => [
+									[
+										'name'     => 'block',
+										'label'    => esc_html__( 'Rating Info', 'surecart' ),
+										'settings' => [
+											'_direction' => 'column',
+											'_rowGap'    => '10px',
+										],
+										'children' => [
+											[
+												'name'     => 'surecart-product-review-average-rating-value',
+												'settings' => [
+													'format_style' => 'slash',
+												],
+											],
+											[ 'name' => 'surecart-product-review-average-rating-stars' ],
+											[ 'name' => 'surecart-product-review-total-rating' ],
+										],
+									],
+									[ 'name' => 'surecart-product-review-breakdown' ],
+								],
+							],
+							[ 'name' => 'surecart-product-review-list' ],
 						],
 					],
-					[ 'name' => 'surecart-product-review-list' ],
 				],
 			],
 		];

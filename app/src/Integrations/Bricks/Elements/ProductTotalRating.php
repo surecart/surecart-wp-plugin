@@ -38,7 +38,6 @@ class ProductTotalRating extends \Bricks\Element {
 	/**
 	 * Element icon.
 	 *
-
 	 * @var string
 	 */
 	public $icon = 'ti-write';

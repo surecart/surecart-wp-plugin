@@ -12,7 +12,7 @@ export default ({ context: { 'surecart/checkbox/name': name } }) => {
 	return (
 		<div {...blockProps}>
 			<input className="sc-check-input" type="checkbox" />
-			<label>{name}</label>
+			<label className='sc-form-label'>{name}</label>
 		</div>
 	);
 };

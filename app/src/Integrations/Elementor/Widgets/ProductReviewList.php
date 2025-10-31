@@ -107,6 +107,15 @@ class ProductReviewList extends \Elementor\Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'button_text',
+			[
+				'label'   => esc_html__( 'Button Text', 'surecart' ),
+				'type'    => \Elementor\Controls_Manager::TEXT,
+				'default' => esc_html__( 'Write a Review', 'surecart' ),
+			]
+		);
+
 		$this->end_controls_section();
 
 		$this->start_controls_section(
@@ -455,11 +464,38 @@ class ProductReviewList extends \Elementor\Widget_Base {
 			$content .= $show_sidebar ? '<!-- wp:surecart/product-review-list-sidebar-toggle {"label":"Filters","style":{"typography":{"fontWeight":"600","fontStyle":"normal"}}} /-->' : '&nbsp;';
 
 			if ( $show_add_button ) {
-				$content .= '
-					<!-- wp:group {"layout":{"type":"constrained"}} -->
-					<div class="wp-block-group">
-					<!-- wp:surecart/product-review-add-button {"width":100,"className":"is-style-fill","style":{"elements":{"link":{"color":{"text":"var:preset|color|white"}}},"spacing":{"blockGap":"var:preset|spacing|30"}},"backgroundColor":"surecart","textColor":"white"} /--></div>
-					<!-- /wp:group -->';
+				// build add button attributes from settings.
+				$btn_label      = $settings['button_text'] ?? esc_html__( 'Write a Review', 'surecart' );
+				$btn_text_color = $settings['button_text_color'] ?? null;
+				$btn_bg_color   = $settings['button_background_color'] ?? null;
+
+				$btn_attrs = [
+					'width'     => 100,
+					'className' => 'is-style-fill',
+					'label'     => $btn_label,
+				];
+
+				$style = [ 'spacing' => [ 'blockGap' => 'var:preset|spacing|30' ] ];
+				if ( $btn_text_color || $btn_bg_color ) {
+					$style['color'] = [];
+					if ( $btn_text_color ) {
+						$style['color']['text'] = $btn_text_color;
+					}
+					if ( $btn_bg_color ) {
+						$style['color']['background'] = $btn_bg_color;
+					}
+				} else {
+					$style                        = [
+						'elements' => [ 'link' => [ 'color' => [ 'text' => 'var:preset|color|white' ] ] ],
+						'spacing'  => [ 'blockGap' => 'var:preset|spacing|30' ],
+					];
+					$btn_attrs['backgroundColor'] = 'surecart';
+					$btn_attrs['textColor']       = 'white';
+				}
+
+				$btn_attrs['style'] = $style;
+
+				$content .= '<!-- wp:group {"layout":{"type":"constrained"}} --><div class="wp-block-group"><!-- wp:surecart/product-review-add-button ' . wp_json_encode( $btn_attrs ) . ' /--></div><!-- /wp:group -->';
 			}
 
 			$content .= '<!-- /wp:surecart/product-review-list-content-header -->';
@@ -515,14 +551,38 @@ class ProductReviewList extends \Elementor\Widget_Base {
 			<!-- /wp:surecart/product-review-list-content -->
 		';
 
-		$content .= '
-			<!-- wp:surecart/product-review-list-no-reviews -->
-			<!-- wp:paragraph {"align":"left","placeholder":"Add text or blocks that will display when a query returns no reviews."} -->
-			<p class="has-text-align-left">' . esc_html( $no_reviews_text ) . '</p><!-- /wp:paragraph -->
-			<!-- wp:group {"layout":{"type":"flex","flexWrap":"nowrap"}} -->
-			<div class="wp-block-group"><!-- wp:surecart/product-review-add-button {"width":100,"className":"is-style-fill","style":{"elements":{"link":{"color":{"text":"var:preset|color|white"}}},"spacing":{"blockGap":"var:preset|spacing|30"}},"backgroundColor":"surecart","textColor":"white"} /--></div>
-			<!-- /wp:group -->
-			<!-- /wp:surecart/product-review-list-no-reviews -->';
+		// build no-reviews add button attributes.
+		$btn_label      = $settings['button_text'] ?? esc_html__( 'Write a Review', 'surecart' );
+		$btn_text_color = $settings['button_text_color'] ?? null;
+		$btn_bg_color   = $settings['button_background_color'] ?? null;
+
+		$btn_attrs = [
+			'width'     => 100,
+			'className' => 'is-style-fill',
+			'label'     => $btn_label,
+		];
+
+		$style = [ 'spacing' => [ 'blockGap' => 'var:preset|spacing|30' ] ];
+		if ( $btn_text_color || $btn_bg_color ) {
+			$style['color'] = [];
+			if ( $btn_text_color ) {
+				$style['color']['text'] = $btn_text_color;
+			}
+			if ( $btn_bg_color ) {
+				$style['color']['background'] = $btn_bg_color;
+			}
+		} else {
+			$style                        = [
+				'elements' => [ 'link' => [ 'color' => [ 'text' => 'var:preset|color|white' ] ] ],
+				'spacing'  => [ 'blockGap' => 'var:preset|spacing|30' ],
+			];
+			$btn_attrs['backgroundColor'] = 'surecart';
+			$btn_attrs['textColor']       = 'white';
+		}
+
+		$btn_attrs['style'] = $style;
+
+		$content .= '\n\t\t<!-- wp:surecart/product-review-list-no-reviews -->\n\t\t<!-- wp:paragraph {"align":"left","placeholder":"Add text or blocks that will display when a query returns no reviews."} -->\n\t\t<p class="has-text-align-left">' . esc_html( $no_reviews_text ) . '</p><!-- /wp:paragraph -->\n\t\t<!-- wp:group {"layout":{"type":"flex","flexWrap":"nowrap"}} -->\n\t\t<div class="wp-block-group">' . '<!-- wp:surecart/product-review-add-button ' . wp_json_encode( $btn_attrs ) . ' /-->' . '</div>\n\t\t<!-- /wp:group -->\n\t\t<!-- /wp:surecart/product-review-list-no-reviews -->';
 
 		// Pagination.
 		if ( $show_pagination ) {
@@ -613,13 +673,18 @@ class ProductReviewList extends \Elementor\Widget_Base {
 	/**
 	 * Get add review button HTML string (reusable for both PHP and JS templates).
 	 *
+	 * @param array $settings Widget settings.
+	 *
 	 * @return void
 	 */
-	private function get_add_button_html() {
+	private function get_add_button_html( $settings ) {
+		$btn_label      = $settings['button_text'] ?? __( 'Write a Review', 'surecart' );
+		$btn_text_color = $settings['button_text_color'] ?? null;
+		$btn_bg_color   = $settings['button_background_color'] ?? 'var(--e-global-color-primary, #6c63ff)';
 		?>
 		<div class="wp-block-buttons">
 			<div class="wp-block-button">
-				<div class="wp-block-button__link sc-button__link wp-block-surecart-product-review-add-button" style="background-color: var(--e-global-color-primary, #6c63ff); color: white; padding: 15px 30px; border-radius: 50px; display: inline-flex; align-items: center; gap: 8px; cursor: pointer;">
+				<div class="wp-block-button__link sc-button__link wp-block-surecart-product-review-add-button" style="background-color: <?php echo esc_attr( $btn_bg_color ); ?>; color: <?php echo esc_attr( $btn_text_color ); ?>; padding: 15px 30px; border-radius: 50px; display: inline-flex; align-items: center; gap: 8px; cursor: pointer;">
 				<?php
 				echo wp_kses(
 					\SureCart::svg()->get(
@@ -634,7 +699,7 @@ class ProductReviewList extends \Elementor\Widget_Base {
 					sc_allowed_svg_html()
 				);
 				?>
-					<span><?php echo esc_html__( 'Write a Review', 'surecart' ); ?></span>
+					<span><?php echo esc_html( $btn_label ); ?></span>
 				</div>
 			</div>
 		</div>
@@ -802,7 +867,7 @@ class ProductReviewList extends \Elementor\Widget_Base {
 								<?php endif; ?>
 							</div>
 						<?php if ( $show_add_button ) : ?>
-							<?php $this->get_add_button_html(); ?>
+							<?php $this->get_add_button_html( $settings ); ?>
 						<?php endif; ?>
 					</div>
 				<?php endif; ?>
@@ -902,7 +967,7 @@ class ProductReviewList extends \Elementor\Widget_Base {
 				</div>
 
 				<# if ( settings.show_add_button === 'yes' ) { #>
-					<?php $this->get_add_button_html(); ?>
+					<?php $this->get_add_button_html( [] ); ?>
 				<# } #>
 			</div>
 			<# } #>

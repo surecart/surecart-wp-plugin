@@ -84,6 +84,31 @@ class Product extends \Bricks\Element {
 			array( 'name' => 'post-title' ),
 			array(
 				'name'     => 'block',
+				'label'    => esc_html__( 'Rating Info', 'surecart' ),
+				'settings' => array(
+					'_direction' => 'row',
+					'_columnGap' => '10px',
+				),
+				'children' => array(
+					array( 'name' => 'surecart-product-review-average-rating-stars' ),
+					array(
+						'name'     => 'surecart-product-review-average-rating-value',
+						'settings' => array(
+							'format_style' => 'parentheses',
+						),
+					),
+					array(
+						'name'     => 'surecart-product-review-total-rating',
+						'settings' => array(
+							'style_variant' => 'plus-sign',
+							'show_label'    => true,
+						),
+					),
+				),
+			),
+
+			array(
+				'name'     => 'block',
 				'label'    => esc_html__( 'Pricing', 'surecart' ),
 				'settings' => [
 					'_rowGap' => '8px',

@@ -1,7 +1,9 @@
 .wp-block-surecart-product-review-list {
 	position: relative;
 	box-sizing: border-box;
+	width: 100%;
 }
+
 .alignwide.wp-block-group:has(.wp-block-surecart-product-review-list),
 .alignwide.wp-block-group:has(+ .wp-block-surecart-product-review-list),
 .alignwide.wp-block-surecart-product-review-list {
@@ -14,6 +16,7 @@
 .is-layout-flex {
 	display: flex;
 }
+
 .is-layout-grid {
 	display: grid;
 }
