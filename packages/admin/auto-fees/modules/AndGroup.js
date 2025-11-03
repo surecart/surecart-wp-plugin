@@ -150,29 +150,43 @@ export default ({
 						}}
 						className={fullWidthClass}
 						renderButton={({ isOpen, onToggle, date }) => (
-							<ScInput
-								value={
-									date
-										? formatDateTime(date * 1000)
-										: __('Set Date', 'surecart')
-								}
-								onClick={onToggle}
-								placeholder={__('Select a date', 'surecart')}
-								readonly
+							<div
 								css={css`
-									--sc-input-cursor: pointer;
+									display: flex;
 								`}
 							>
-								<ScIcon
-									name="calendar"
-									slot="suffix"
-									style={{
-										width: '20px',
-										height: '20px',
-										cursor: 'pointer',
-									}}
-								/>
-							</ScInput>
+								<ScInput
+									value={
+										date
+											? formatDateTime(date * 1000)
+											: __('Set Date', 'surecart')
+									}
+									onClick={onToggle}
+									placeholder={__(
+										'Select a date',
+										'surecart'
+									)}
+									readonly
+									css={css`
+										--sc-input-cursor: pointer;
+										width: -webkit-fill-available;
+									`}
+								>
+									<ScIcon
+										name="calendar"
+										slot="suffix"
+										style={{
+											width: '20px',
+											height: '20px',
+											cursor: 'pointer',
+										}}
+									/>
+								</ScInput>
+								<span aria-hidden="true" className="required">
+									{' '}
+									*
+								</span>
+							</div>
 						)}
 					/>
 				);

@@ -48,7 +48,7 @@ export default ({
 					{showLabel && (
 						<span>{label || __('Select Date', 'surecart')}</span>
 					)}
-					{required && (
+					{showLabel && required && (
 						<span aria-hidden="true" className="required">
 							{' '}
 							*
@@ -59,15 +59,24 @@ export default ({
 			<Dropdown
 				popoverProps={popoverProps}
 				focusOnMount
-				renderToggle={({ isOpen, onToggle }) => (
-					<RenderDropdownButton
-						isOpen={isOpen}
-						onClick={onToggle}
-						date={currentDate}
-						label={label || __('Select Date', 'surecart')}
-						placeholder={placeholder}
-					/>
-				)}
+				renderToggle={({ isOpen, onToggle }) =>
+					renderButton ? (
+						renderButton({
+							isOpen,
+							onToggle,
+							date: currentDate,
+							label,
+						})
+					) : (
+						<RenderDropdownButton
+							isOpen={isOpen}
+							onClick={onToggle}
+							date={currentDate}
+							label={label || __('Select Date', 'surecart')}
+							placeholder={placeholder}
+						/>
+					)
+				}
 				renderContent={({ onClose }) => (
 					<div
 						css={css`
