@@ -203,6 +203,7 @@ export default ({ id, setBrowserURL }) => {
 							)}
 						>
 							<DateTimePicker
+								dateTime={true}
 								label={__('Start Date', 'surecart')}
 								currentDate={autoFee?.start_at}
 								setDate={(date) =>
@@ -220,6 +221,7 @@ export default ({ id, setBrowserURL }) => {
 							)}
 						>
 							<DateTimePicker
+								dateTime={true}
 								label={__('End Date', 'surecart')}
 								currentDate={autoFee?.end_at}
 								setDate={(date) =>

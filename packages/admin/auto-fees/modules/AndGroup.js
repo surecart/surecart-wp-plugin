@@ -142,7 +142,7 @@ export default ({
 			case 'date':
 				return (
 					<DateTimePicker
-						required
+						dateTime={false}
 						showLabel={false}
 						currentDate={value}
 						setDate={(date) => {
@@ -153,6 +153,7 @@ export default ({
 							<div
 								css={css`
 									display: flex;
+									gap: 4px;
 								`}
 							>
 								<ScInput

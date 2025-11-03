@@ -10,6 +10,7 @@ import {
 	Dropdown,
 	Button,
 	DateTimePicker,
+	DatePicker,
 } from '@wordpress/components';
 import { __experimentalInspectorPopoverHeader as InspectorPopoverHeader } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
@@ -25,6 +26,7 @@ export default ({
 	className,
 	renderButton = false,
 	placeholder = null,
+	dateTime = true,
 }) => {
 	// Use internal state instead of a ref to make sure that the component
 	// re-renders when the popover's anchor updates.
@@ -120,14 +122,26 @@ export default ({
 								},
 							]}
 						/>
-
-						<DateTimePicker
-							currentDate={
-								currentDate ? getDate(currentDate * 1000) : null
-							}
-							onChange={onChangeDate}
-							is12Hour
-						/>
+						{dateTime ? (
+							<DateTimePicker
+								currentDate={
+									currentDate
+										? getDate(currentDate * 1000)
+										: null
+								}
+								onChange={onChangeDate}
+								is12Hour
+							/>
+						) : (
+							<DatePicker
+								currentDate={
+									currentDate
+										? getDate(currentDate * 1000)
+										: null
+								}
+								onChange={onChangeDate}
+							/>
+						)}
 					</div>
 				)}
 			/>
