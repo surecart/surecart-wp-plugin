@@ -93,20 +93,19 @@ class ProductTotalRating extends \Bricks\Element {
 		$show_label            = ! empty( $this->settings['show_label'] );
 		$show_for_zero_reviews = ! empty( $this->settings['show_for_zero_reviews'] );
 		$style_variant         = ! empty( $this->settings['style_variant'] ) ? $this->settings['style_variant'] : 'default';
-		$class_name            = 'default' === $style_variant ? '' : 'is-style-' . $style_variant;
 
 		if ( $this->is_admin_editor() ) {
 			$this->render_preview( $show_label, $style_variant );
 			return;
 		}
 
-		echo $this->html( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-			[
-				'show_label'            => $show_label,
-				'show_for_zero_reviews' => $show_for_zero_reviews,
-				'className'             => $class_name,
-			]
-		);
+		$attributes = [
+			'show_label'            => $show_label,
+			'show_for_zero_reviews' => $show_for_zero_reviews,
+			'style_variant'         => $style_variant,
+		];
+
+		echo $this->html( $attributes ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	/**
@@ -119,7 +118,7 @@ class ProductTotalRating extends \Bricks\Element {
 	 */
 	private function render_preview( $show_label, $style_variant ) {
 		$plus_sign = 'plus-sign' === $style_variant ? '+' : '';
-		$content   = '<span class="sc-total-reviews-count">42' . esc_html( $plus_sign ) . '</span>';
+		$content   = '<span class="sc-total-reviews-count">42' . $plus_sign . '</span>';
 
 		if ( $show_label ) {
 			$content .= ' ' . esc_html__( 'reviews', 'surecart' );
@@ -127,7 +126,7 @@ class ProductTotalRating extends \Bricks\Element {
 
 		echo $this->preview( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			$content,
-			'wp-block-surecart-product-review-total-rating' . ( 'default' !== $style_variant ? ' is-style-' . esc_attr( $style_variant ) : '' ),
+			'wp-block-surecart-product-review-total-rating',
 			'div'
 		);
 	}

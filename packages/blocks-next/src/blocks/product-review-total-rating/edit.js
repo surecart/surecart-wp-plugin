@@ -3,15 +3,14 @@
  */
 import { __, _n } from '@wordpress/i18n';
 import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
-import { PanelBody, ToggleControl } from '@wordpress/components';
+import { PanelBody, ToggleControl, SelectControl } from '@wordpress/components';
 
 export default ({ attributes, setAttributes }) => {
-	const { show_label, show_for_zero_reviews } = attributes;
+	const { show_label, show_for_zero_reviews, style_variant } = attributes;
 	const blockProps = useBlockProps();
-	const totalReviews = 200; // Placeholder for total reviews.
 
 	return (
-		<div {...blockProps}>
+		<>
 			<InspectorControls>
 				<PanelBody title={__('Settings', 'surecart')}>
 					<ToggleControl
@@ -38,14 +37,31 @@ export default ({ attributes, setAttributes }) => {
 						}
 						checked={show_for_zero_reviews}
 					/>
+					<SelectControl
+						label={__('Style', 'surecart')}
+						value={style_variant}
+						options={[
+							{
+								value: 'default',
+								label: __('Default', 'surecart'),
+							},
+							{
+								value: 'plus-sign',
+								label: __('Plus Sign', 'surecart'),
+							},
+						]}
+						onChange={(value) =>
+							setAttributes({ style_variant: value })
+						}
+					/>
 				</PanelBody>
 			</InspectorControls>
-			<span className="sc-total-reviews-count">{totalReviews}</span>
-			&nbsp;
-			{show_label &&
-				(totalReviews <= 1
-					? __('review', 'surecart')
-					: __('reviews', 'surecart'))}
-		</div>
+
+			<div {...blockProps}>
+				42{style_variant === 'plus-sign' ? '+' : ''}
+				&nbsp;
+				{show_label && __('reviews', 'surecart')}
+			</div>
+		</>
 	);
 };

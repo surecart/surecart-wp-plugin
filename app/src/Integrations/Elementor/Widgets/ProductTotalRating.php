@@ -263,16 +263,20 @@ class ProductTotalRating extends \Elementor\Widget_Base {
 		$show_label            = 'yes' === ( $settings['show_label'] ?? 'yes' );
 		$show_for_zero_reviews = 'yes' === ( $settings['show_for_zero_reviews'] ?? 'yes' );
 		$style_variant         = $settings['style_variant'] ?? 'default';
-		$class_name            = 'default' === $style_variant ? '' : ' is-style-' . $style_variant;
 
 		if ( \Elementor\Plugin::$instance->editor->is_edit_mode() ) {
-			$this->render_preview( $show_label, $class_name );
+			$this->render_preview( $show_label );
 			return;
 		}
 
+		$attributes = [
+			'show_label'            => $show_label,
+			'show_for_zero_reviews' => $show_for_zero_reviews,
+			'style_variant'         => $style_variant,
+		];
 		?>
 		<div <?php $this->print_render_attribute_string( 'wrapper' ); ?>>
-			<!-- wp:surecart/product-review-total-rating {"show_label":<?php echo $show_label ? 'true' : 'false'; ?>,"show_for_zero_reviews":<?php echo $show_for_zero_reviews ? 'true' : 'false'; ?>,"className":"<?php echo esc_attr( trim( $class_name ) ); ?>"} /-->
+			<!-- wp:surecart/product-review-total-rating <?php echo wp_json_encode( $attributes ); ?> /-->
 		</div>
 		<?php
 	}
@@ -280,17 +284,16 @@ class ProductTotalRating extends \Elementor\Widget_Base {
 	/**
 	 * Render preview in editor.
 	 *
-	 * @param bool   $show_label Show label flag.
-	 * @param string $class_name Additional class name.
+	 * @param bool $show_label Show label flag.
 	 *
 	 * @return void
 	 */
-	private function render_preview( $show_label, $class_name ) {
+	private function render_preview( $show_label ) {
 		$settings  = $this->get_settings_for_display();
 		$is_plus   = 'plus-sign' === ( $settings['style_variant'] ?? 'default' );
 		$plus_sign = $is_plus ? '+' : '';
 		?>
-		<div class="wp-block-surecart-product-review-total-rating<?php echo esc_attr( $class_name ); ?>" style="display: flex; gap: 4px;">
+		<div class="wp-block-surecart-product-review-total-rating" style="display: flex; gap: 4px;">
 			<span class="sc-total-reviews-count">42<?php echo esc_html( $plus_sign ); ?></span>
 			<?php if ( $show_label ) : ?>
 				<?php echo esc_html__( 'reviews', 'surecart' ); ?>

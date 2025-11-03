@@ -22,19 +22,12 @@
 		"show_for_zero_reviews": {
 			"type": "boolean",
 			"default": true
+		},
+		"style_variant": {
+			"type": "string",
+			"default": "default"
 		}
 	},
-	"styles": [
-		{
-			"name": "default",
-			"label": "Default",
-			"isDefault": true
-		},
-		{
-			"name": "plus-sign",
-			"label": "Plus Sign"
-		}
-	],
 	"example": {},
 	"supports": {
 		"interactivity": true,

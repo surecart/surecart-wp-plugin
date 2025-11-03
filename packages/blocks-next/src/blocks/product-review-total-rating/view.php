@@ -1,4 +1,4 @@
-<div <?php echo wp_kses_data( $wrapper_attrs ); ?>>
+<div <?php echo wp_kses_data( get_block_wrapper_attributes() ); ?>>
 	<?php
 	if ( ! empty( $attributes['show_label'] ) ) {
 		$label = _n( 'review', 'reviews', $count, 'surecart' );
