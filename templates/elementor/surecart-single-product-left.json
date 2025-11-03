@@ -122,7 +122,7 @@
 						},
 						{
 							"id": "1b166aaa",
-							"settings": { "format_style": "slash" },
+							"settings": { "format_style": "parentheses" },
 							"elements": [],
 							"isInner": false,
 							"widgetType": "surecart-product-review-average-rating-value",
@@ -727,9 +727,6 @@
 								},
 								{
 									"id": "6e46994b",
-									"settings": {
-										"style_variant": "plus-sign"
-									},
 									"elements": [],
 									"isInner": false,
 									"widgetType": "surecart-product-review-total-rating",
