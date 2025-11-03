@@ -109,6 +109,10 @@ class ReviewBreakdown extends \Elementor\Widget_Base {
 	 * @return void
 	 */
 	private function register_style_settings() {
+		$selector      = '{{WRAPPER}} .wp-block-surecart-product-review-breakdown';
+		$bar_selector  = '{{WRAPPER}} .wp-block-surecart-product-review-breakdown .sc-star-bars .sc-bar-wrap';
+		$fill_selector = '{{WRAPPER}} .wp-block-surecart-product-review-breakdown .sc-star-bars .sc-bar-wrap .sc-bar-fill';
+
 		$this->start_controls_section(
 			'section_review_breakdown_style',
 			array(
@@ -126,7 +130,7 @@ class ReviewBreakdown extends \Elementor\Widget_Base {
 					'default' => \Elementor\Core\Kits\Documents\Tabs\Global_Colors::COLOR_PRIMARY,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .sc-star-label svg' => 'fill: {{VALUE}}; stroke: {{VALUE}}; color: {{VALUE}};',
+					"{$selector} .sc-star-label svg" => 'fill: {{VALUE}}; stroke: {{VALUE}};',
 				],
 			)
 		);
@@ -140,7 +144,7 @@ class ReviewBreakdown extends \Elementor\Widget_Base {
 					'default' => \Elementor\Core\Kits\Documents\Tabs\Global_Colors::COLOR_PRIMARY,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .sc-bar-fill' => 'background-color: {{VALUE}};',
+					$fill_selector => 'background-color: {{VALUE}};',
 				],
 			)
 		);
@@ -152,7 +156,7 @@ class ReviewBreakdown extends \Elementor\Widget_Base {
 				'type'      => \Elementor\Controls_Manager::COLOR,
 				'default'   => '#e0e0e0',
 				'selectors' => [
-					'{{WRAPPER}} .sc-bar-wrap' => 'background-color: {{VALUE}};',
+					$bar_selector => 'background-color: {{VALUE}};',
 				],
 			)
 		);
@@ -163,18 +167,7 @@ class ReviewBreakdown extends \Elementor\Widget_Base {
 				'label'     => esc_html__( 'Text Color', 'surecart' ),
 				'type'      => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .wp-block-surecart-product-review-breakdown' => 'color: {{VALUE}};',
-				],
-			)
-		);
-
-		$this->add_control(
-			'hover_background_color',
-			array(
-				'label'     => esc_html__( 'Row Hover Background', 'surecart' ),
-				'type'      => \Elementor\Controls_Manager::COLOR,
-				'selectors' => [
-					'{{WRAPPER}} .sc-star-row:hover' => 'background-color: {{VALUE}};',
+					$selector => 'color: {{VALUE}};',
 				],
 			)
 		);
@@ -184,7 +177,7 @@ class ReviewBreakdown extends \Elementor\Widget_Base {
 			[
 				'name'     => 'typography',
 				'label'    => esc_html__( 'Typography', 'surecart' ),
-				'selector' => '{{WRAPPER}} .wp-block-surecart-product-review-breakdown',
+				'selector' => $selector,
 			]
 		);
 
@@ -233,7 +226,7 @@ class ReviewBreakdown extends \Elementor\Widget_Base {
 					'unit' => 'px',
 				],
 				'selectors'  => [
-					'{{WRAPPER}} .sc-bar-wrap' => 'height: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .sc-star-bars .sc-bar-wrap' => 'height: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
@@ -259,8 +252,8 @@ class ReviewBreakdown extends \Elementor\Widget_Base {
 					'unit' => 'px',
 				],
 				'selectors'  => [
-					'{{WRAPPER}} .sc-bar-wrap' => 'border-radius: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .sc-bar-fill' => 'border-radius: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .sc-star-bars .sc-bar-wrap' => 'border-radius: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .sc-star-bars .sc-bar-wrap .sc-bar-fill' => 'border-radius: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);

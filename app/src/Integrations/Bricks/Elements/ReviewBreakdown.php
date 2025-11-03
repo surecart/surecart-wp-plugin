@@ -73,32 +73,14 @@ class ReviewBreakdown extends \Bricks\Element {
 			'placeholder' => '25px',
 		];
 
-		$this->controls['star_color'] = [
-			'tab'     => 'style',
-			'label'   => esc_html__( 'Star Color', 'surecart' ),
-			'type'    => 'color',
-			'default' => [
-				'hex' => 'var(--bricks-color-primary)',
-			],
-			'css'     => [
-				[
-					'property' => 'fill',
-					'selector' => '.sc-star-label svg',
-				],
-				[
-					'property' => 'stroke',
-					'selector' => '.sc-star-label svg',
-				],
-				[
-					'property' => 'color',
-					'selector' => '.sc-star-label svg',
-				],
-			],
+		$this->controls['colors_separator'] = [
+			'label' => esc_html__( 'Styling', 'surecart' ),
+			'type'  => 'separator',
 		];
 
 		$this->controls['fill_color'] = [
 			'tab'      => 'content',
-			'label'    => esc_html__( 'Fill Color', 'surecart' ),
+			'label'    => esc_html__( 'Star Color', 'surecart' ),
 			'type'     => 'color',
 			'rerender' => true,
 			'default'  => [
@@ -120,8 +102,8 @@ class ReviewBreakdown extends \Bricks\Element {
 			],
 		];
 
-		$this->controls['bar_color'] = [
-			'tab'     => 'style',
+		$this->controls['bar_fill_color'] = [
+			'tab'     => 'content',
 			'label'   => esc_html__( 'Bar Fill Color', 'surecart' ),
 			'type'    => 'color',
 			'default' => [
@@ -130,13 +112,13 @@ class ReviewBreakdown extends \Bricks\Element {
 			'css'     => [
 				[
 					'property' => 'background-color',
-					'selector' => '.sc-bar-fill',
+					'selector' => '.sc-star-bars .sc-bar-wrap .sc-bar-fill',
 				],
 			],
 		];
 
 		$this->controls['bar_background_color'] = [
-			'tab'     => 'style',
+			'tab'     => 'content',
 			'label'   => esc_html__( 'Bar Background Color', 'surecart' ),
 			'type'    => 'color',
 			'default' => [
@@ -169,13 +151,13 @@ class ReviewBreakdown extends \Bricks\Element {
 			return;
 		}
 
-		$content = $this->html(
-			[
-				'show_for_zero_reviews' => $show_for_zero_reviews,
-				'size'                  => $star_size,
-				'fill_color'            => esc_attr( $fill_color ),
-			]
-		);
+		$attributes = [
+			'show_for_zero_reviews' => $show_for_zero_reviews,
+			'size'                  => $star_size,
+			'fill_color'            => esc_attr( $fill_color ),
+		];
+
+		$content = $this->html( $attributes );
 
 		echo $this->preview( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			'<!-- wp:surecart/product-review-summary -->' . $content . '<!-- /wp:surecart/product-review-summary -->' // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
@@ -211,8 +193,8 @@ class ReviewBreakdown extends \Bricks\Element {
 			$content .= '<path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>';
 			$content .= '</svg>';
 			$content .= '</div>';
-			$content .= '<div class="sc-bar-wrap" style="flex: 1; height: 12px; background-color: #e0e0e0; border-radius: 4px; overflow: hidden;">';
-			$content .= '<div class="sc-bar-fill" style="height: 100%; background-color: var(--bricks-color-primary); border-radius: 4px; width: ' . esc_attr( $percentage ) . '%;"></div>';
+			$content .= '<div class="sc-bar-wrap" style="flex: 1; height: 12px; border-radius: 4px; overflow: hidden;">';
+			$content .= '<div class="sc-bar-fill" style="height: 100%; background-color: border-radius: 4px; width: ' . esc_attr( $percentage ) . '%;"></div>';
 			$content .= '</div>';
 			$content .= '<div class="sc-count" style="min-width: 30px; text-align: right;">' . esc_html( $count ) . '</div>';
 			$content .= '</a>';

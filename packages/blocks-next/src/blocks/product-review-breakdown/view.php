@@ -22,19 +22,19 @@
 							SureCart::svg()->get(
 								'star',
 								[
-									'height' => esc_attr( 25 ),
-									'width'  => esc_attr( 25 ),
-									'fill'   => 'var(--sc-color-primary-500)',
-									'color'  => 'var(--sc-color-primary-500)',
-									'stroke' => 'var(--sc-color-primary-500)',
+									'height' => esc_attr( $attributes['size'] ?? 25 ),
+									'width'  => esc_attr( $attributes['size'] ?? 25 ),
+									'fill'   => esc_attr( $attributes['fill_color'] ?? 'var(--sc-color-primary-500)' ),
+									'color'  => esc_attr( $attributes['fill_color'] ?? 'var(--sc-color-primary-500)' ),
+									'stroke' => esc_attr( $attributes['fill_color'] ?? 'var(--sc-color-primary-500)' ),
 								]
 							),
 							sc_allowed_svg_html()
 						);
 					?>
 				</div>
-				<div class="sc-bar-wrap">
-					<div class="sc-bar-fill" style="width: <?php echo esc_attr( $percentage ); ?>%;"></div>
+				<div class="sc-bar-wrap" <?php echo ! empty( $attributes['bar_background_color'] ) ? 'style="background-color: ' . esc_attr( $attributes['bar_background_color'] ) . ';"' : ''; ?>>
+					<div class="sc-bar-fill" style="width: <?php echo esc_attr( $percentage ); ?>%;<?php echo ! empty( $attributes['bar_fill_color'] ) ? ' background-color: ' . esc_attr( $attributes['bar_fill_color'] ) . ';' : ''; ?>"></div>
 				</div>
 				<div class="sc-count"><?php echo esc_html( $count ); ?></div>
 			</a>

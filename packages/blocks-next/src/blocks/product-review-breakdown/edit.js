@@ -11,7 +11,13 @@ import { PanelBody, ToggleControl, RangeControl } from '@wordpress/components';
 import ColorInspectorControl from '../../components/ColorInspectorControl';
 
 export default function ({ attributes, setAttributes, clientId }) {
-	const { show_for_zero_reviews = true, size = 16, fill_color } = attributes;
+	const {
+		show_for_zero_reviews = true,
+		size = 16,
+		fill_color,
+		bar_fill_color,
+		bar_background_color,
+	} = attributes;
 	const blockProps = useBlockProps();
 
 	// Placeholder values for editor preview.
@@ -58,6 +64,22 @@ export default function ({ attributes, setAttributes, clientId }) {
 						resetAllFilter: () =>
 							setAttributes({ fill_color: undefined }),
 					},
+					{
+						colorValue: bar_fill_color,
+						label: __('Bar Fill Color', 'surecart'),
+						onColorChange: (color) =>
+							setAttributes({ bar_fill_color: color }),
+						resetAllFilter: () =>
+							setAttributes({ bar_fill_color: undefined }),
+					},
+					{
+						colorValue: bar_background_color,
+						label: __('Bar Background Color', 'surecart'),
+						onColorChange: (color) =>
+							setAttributes({ bar_background_color: color }),
+						resetAllFilter: () =>
+							setAttributes({ bar_background_color: undefined }),
+					},
 				]}
 				panelId={clientId}
 			/>
@@ -67,16 +89,12 @@ export default function ({ attributes, setAttributes, clientId }) {
 					{[5, 4, 3, 2, 1].map((star) => {
 						const count = reviewsBreakdown[star] || 0;
 						const percentage =
-							totalReviews > 0
-								? (count / totalReviews) * 100
-								: 0;
+							totalReviews > 0 ? (count / totalReviews) * 100 : 0;
 
 						return (
 							<div className="sc-star-row" key={star}>
 								<div className="sc-star-label">
-									<span className="sc-star-text">
-										{star}
-									</span>
+									<span className="sc-star-text">{star}</span>
 									<span
 										className="sc-star-svg"
 										style={{
@@ -108,11 +126,19 @@ export default function ({ attributes, setAttributes, clientId }) {
 									</span>
 								</div>
 
-								<div className="sc-bar-wrap">
+								<div
+									className="sc-bar-wrap"
+									style={{
+										backgroundColor:
+											bar_background_color || undefined,
+									}}
+								>
 									<div
 										className="sc-bar-fill"
 										style={{
 											width: `${percentage}%`,
+											backgroundColor:
+												bar_fill_color || undefined,
 										}}
 									/>
 								</div>

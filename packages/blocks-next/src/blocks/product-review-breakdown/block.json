@@ -27,6 +27,14 @@
 		"size": {
 			"type": "number",
 			"default": 25
+		},
+		"bar_fill_color": {
+			"type": "string",
+			"default": ""
+		},
+		"bar_background_color": {
+			"type": "string",
+			"default": ""
 		}
 	},
 	"example": {},

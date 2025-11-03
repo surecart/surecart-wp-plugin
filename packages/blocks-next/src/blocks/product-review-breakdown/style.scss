@@ -2,12 +2,6 @@
 	display: block;
 	justify-content: end;
 
-	.sc-average-stars {
-		font-size: 16px;
-		font-weight: 700;
-		color: var(--sc-color-gray-800);
-	}
-
 	.sc-star-bars {
 		flex: 1;
 		display: flex;
@@ -27,7 +21,7 @@
 			transition: opacity 0.2s ease;
 
 			&:hover {
-				opacity: 0.7;
+				opacity: 0.8;
 			}
 
 			.sc-star-label {
@@ -50,7 +44,7 @@
 
 			.sc-bar-fill {
 				height: 100%;
-				background: var(--sc-color-gray-800);
+				background-color: var(--sc-color-gray-800);
 				border-radius: 4px;
 				transition: width 0.3s ease;
 			}
