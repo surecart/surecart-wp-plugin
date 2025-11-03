@@ -283,6 +283,7 @@ class Checkout extends Model {
 		if ( isset( $_COOKIE['sc_click_id'] ) ) {
 			$this->setAttribute( 'last_click', $_COOKIE['sc_click_id'] );
 		}
+		$this->metadata->wp_user_role = wp_get_current_user()->roles;
 	}
 
 	/**

@@ -131,7 +131,6 @@ class ScriptsService {
 						'manage_sc_shop_settings' => current_user_can( 'manage_sc_shop_settings' ),
 					),
 					'is_account_connected' => \SureCart::account()->isConnected(),
-					'current_user_roles'   => wp_get_current_user()->roles,
 				]
 			)
 		);

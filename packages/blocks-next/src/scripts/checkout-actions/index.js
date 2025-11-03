@@ -71,9 +71,6 @@ export const withDefaultData = (data) => {
 				buy_page_product_id: checkoutState?.product?.id,
 			}),
 			page_url: window.location.href,
-			...(window?.scData?.current_user_roles && {
-				wp_user_role: window?.scData?.current_user_roles[0],
-			}),
 		},
 		...(checkoutState?.checkout?.email && {
 			email: checkoutState?.checkout?.email,
