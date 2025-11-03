@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: ecommerce, online store, subscriptions, stripe, payments
 Requires at least: 6.6
 Tested up to: 6.8
-Stable tag: 3.16.2
+Stable tag: 3.16.3
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -313,7 +313,15 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 
 == Changelog ==
 
-= 3.16.2 - Octover 27th, 2025 =
+= 3.16.3 - October 30th, 2025 =
+- Change: Allow up to 300 variants per product.
+- Fix: Issue with Elementor form selection module not appearing when only the free version of Elementor is installed.
+- Fix: Error with product list shortcode when multiple collection IDs are passed.
+- Fix: Manual payment methods not appearing on the customer dashboard "Add Payment Methods" page.
+- Fix: Recurring commissions with AffiliateWP when a free trial becomes active.
+- Fix: Issue where tax override could not be set to 0%.
+
+= 3.16.2 - October 27th, 2025 =
 - Fix: Issue with dashboard charts not using correct currency.
 
 = 3.16.1 - October 24th, 2025 =

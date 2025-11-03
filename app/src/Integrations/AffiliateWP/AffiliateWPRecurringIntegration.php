@@ -53,25 +53,26 @@ class AffiliateWPRecurringIntegration extends \Affiliate_WP_Recurring_Base {
 
 		// Get the order reference.
 		$reference = $purchase->initial_order ?? null;
+		$checkout  = $purchase->subscription->current_period->checkout ?? null;
 
 		// We must have an order id.
-		if ( ! $reference->id ) {
+		if ( empty( $reference->id ) || empty( $checkout->id ) ) {
 			affiliate_wp()->utils->log( 'Draft referral creation failed. No order attached.' );
 			return;
 		}
 
-		// Get the parent referral
+		// Get the parent referral.
 		$parent_referral = affiliate_wp()->referrals->get_by( 'reference', $reference->id, $this->context );
 
-		// This signup wasn't referred or is the very first payment of a referred subscription
+		// This signup wasn't referred or is the very first payment of a referred subscription.
 		if ( ! $parent_referral || ! is_object( $parent_referral ) || 'rejected' == $parent_referral->status ) {
 			affiliate_wp()->utils->log( 'Recurring Referrals: No referral found or referral is rejected.' );
 			return false;
 		}
 
-		$amount_due    = $purchase->subscription->current_period->checkout->amount_due;
-		$currency      = $reference->currency;
-		$description   = $purchase->product->name;
+		$amount_due  = $checkout->amount_due;
+		$currency    = $checkout->currency;
+		$description = $purchase->product->name;
 
 		if ( Currency::isZeroDecimal( $currency ) ) {
 			$amount = $amount_due;
@@ -80,13 +81,13 @@ class AffiliateWPRecurringIntegration extends \Affiliate_WP_Recurring_Base {
 		}
 
 		// Calculate referral amount
-		$referral_amount = $this->calc_referral_amount( $amount, $reference, $parent_referral->referral_id );
+		$referral_amount = $this->calc_referral_amount( $amount, $checkout->order, $parent_referral->referral_id );
 
 		// Create referral for subscription.
 		$referral_id = $this->insert_referral(
 			[
 				'amount'       => $referral_amount,
-				'reference'    => $reference,
+				'reference'    => $checkout->order,
 				'description'  => $description,
 				'affiliate_id' => $parent_referral->affiliate_id,
 				'context'      => $this->context,
@@ -103,7 +104,5 @@ class AffiliateWPRecurringIntegration extends \Affiliate_WP_Recurring_Base {
 			affiliate_wp()->utils->log( 'Referral completed successfully during insert_referral()' );
 			return;
 		}
-
 	}
-
 }
