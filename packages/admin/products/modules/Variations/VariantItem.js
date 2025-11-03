@@ -286,7 +286,8 @@ export default ({
 							aria-label={__('Edit variant', 'surecart')}
 							onClick={() => setEdit(true)}
 						>
-							{__('Edit more...', 'surecart')}
+							<ScIcon name="edit" slot="prefix" />
+							{__('Edit all fields', 'surecart')}
 						</ScMenuItem>
 						<ScMenuDivider />
 						<ScMenuItem
@@ -300,6 +301,14 @@ export default ({
 								})
 							}
 						>
+							<ScIcon
+								name={
+									variant?.status === 'draft'
+										? 'refresh-cw'
+										: 'trash'
+								}
+								slot="prefix"
+							/>
 							{variant?.status === 'draft'
 								? __('Restore', 'surecart')
 								: __('Delete', 'surecart')}
