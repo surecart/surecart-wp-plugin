@@ -95,7 +95,7 @@ export default ({
 								border-radius: var(--sc-border-radius-medium);
 								padding: var(--sc-spacing-large);
 								display: flex;
-								align-items: flex-start;
+								align-items: center;
 								gap: var(--sc-spacing-large);
 							`}
 						>
@@ -103,16 +103,15 @@ export default ({
 								variant={variant}
 								onAdd={onLinkMedia}
 								onRemove={onUnlinkMedia}
-								size={'98px'}
+								size={'80px'}
 							/>
 							<div
 								css={css`
 									flex: 1;
 									display: flex;
 									flex-direction: column;
-									gap: var(--sc-spacing-small);
+									gap: var(--sc-spacing-xx-small);
 									justify-content: center;
-									min-height: 98px;
 								`}
 							>
 								{variantOptions?.map((option, index) => {
