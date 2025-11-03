@@ -106,6 +106,21 @@ class AdminMenuPageService {
 				content: "";
 				width: calc(100% + 26px);
 			}
+			.sc-new-badge {
+				position: absolute;
+				right: 2px;
+				background: #10b981;
+				color: #ffffff;
+				font-size: 9px;
+				font-weight: 600;
+				letter-spacing: 0.5px;
+				padding: 1px 3px;
+				border-radius: 8px;
+				text-transform: uppercase;
+				vertical-align: middle;
+				opacity: 0.9;
+				align-self: center;
+			}
 		</style>';
 	}
 
@@ -207,7 +222,7 @@ class AdminMenuPageService {
 		 * Promotions
 		 */
 		$this->pages += array(
-			'promotion' => \add_submenu_page( $this->slug, __( 'Promotion', 'surecart' ), __( 'Promotion', 'surecart' ), 'edit_sc_coupons', 'sc-coupons', '__return_false' ),
+			'promotion' => \add_submenu_page( $this->slug, __( 'Promotions', 'surecart' ), __( 'Promotions', 'surecart' ), 'edit_sc_coupons', 'sc-coupons', '__return_false' ),
 		);
 
 		// Promotions submenu pages.
@@ -221,7 +236,7 @@ class AdminMenuPageService {
 				'coupons'  => \add_submenu_page( $this->slug, __( 'Coupons', 'surecart' ), '↳ ' . __( 'Coupons', 'surecart' ), 'edit_sc_coupons', 'sc-coupons', '__return_false' ),
 				'bumps'    => \add_submenu_page( $this->slug, __( 'Order Bumps', 'surecart' ), '↳ ' . __( 'Order Bumps', 'surecart' ), 'edit_sc_products', 'sc-bumps', '__return_false' ),
 				'upsells'  => \add_submenu_page( $this->slug, __( 'Upsells', 'surecart' ), '↳ ' . __( 'Upsells', 'surecart' ), 'edit_sc_products', 'sc-upsell-funnels', '__return_false' ),
-				'auto_fee' => \add_submenu_page( $this->slug, __( 'Dynamic Pricing', 'surecart' ), '↳ ' . __( 'Dynamic Pricing', 'surecart' ), 'edit_sc_products', 'sc-auto-fees', '__return_false' ),
+				'auto_fee' => \add_submenu_page( $this->slug, __( 'Dynamic Pricing', 'surecart' ), '↳ ' . __( 'Dynamic Pricing', 'surecart' ) . '<span class="sc-new-badge">' . __( 'New', 'surecart' ) . '<span>', 'edit_sc_products', 'sc-auto-fees', '__return_false' ),
 			);
 		}
 
