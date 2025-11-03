@@ -57,7 +57,7 @@ export default ({ id, onCreateAutoFee }) => {
 					...templates?.[currentTemplate],
 					name: autoFeeName,
 					...(autoFeeTarget && { fee_target: autoFeeTarget }),
-					start_at: Date.parse(getDate(new Date())) / 1000,
+					start_at: Math.floor(Date.now() / 1000),
 				},
 				{ throwOnError: true }
 			);
@@ -239,7 +239,7 @@ export default ({ id, onCreateAutoFee }) => {
 									flexDirection: 'column',
 								}}
 							>
-								<label for="choices-2">
+								<label htmlFor="choices-2">
 									{__('Applies To', 'surecart')}
 									<span aria-hidden="true" class="required">
 										{' '}

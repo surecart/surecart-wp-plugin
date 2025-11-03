@@ -81,3 +81,14 @@ export const TYPE_CHOICES = [
 		icon: 'truck',
 	},
 ];
+
+export const ATTRIBUTE_TYPE_MAP = {
+	...Object.fromEntries(DATE_ATTRIBUTES.map((attr) => [attr, 'date'])),
+	...Object.fromEntries(PRICE_ATTRIBUTES.map((attr) => [attr, 'price'])),
+	...Object.fromEntries(EMAIL_ATTRIBUTES.map((attr) => [attr, 'email'])),
+	...Object.fromEntries(TEXT_ATTRIBUTES.map((attr) => [attr, 'text'])),
+	...Object.fromEntries(NUMBER_ATTRIBUTES.map((attr) => [attr, 'number'])),
+	...Object.fromEntries(
+		USER_ROLE_ATTRIBUTES.map((attr) => [attr, 'user_role'])
+	),
+};

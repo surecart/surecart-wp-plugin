@@ -24,6 +24,7 @@ export default ({
 	showLabel = true,
 	className,
 	renderButton = false,
+	placeholder = null,
 }) => {
 	// Use internal state instead of a ref to make sure that the component
 	// re-renders when the popover's anchor updates.
@@ -58,23 +59,15 @@ export default ({
 			<Dropdown
 				popoverProps={popoverProps}
 				focusOnMount
-				renderToggle={({ isOpen, onToggle }) =>
-					renderButton ? (
-						renderButton({
-							isOpen,
-							onToggle,
-							date: currentDate,
-							label,
-						})
-					) : (
-						<RenderDropdownButton
-							isOpen={isOpen}
-							onClick={onToggle}
-							date={currentDate}
-							label={label || __('Select Date', 'surecart')}
-						/>
-					)
-				}
+				renderToggle={({ isOpen, onToggle }) => (
+					<RenderDropdownButton
+						isOpen={isOpen}
+						onClick={onToggle}
+						date={currentDate}
+						label={label || __('Select Date', 'surecart')}
+						placeholder={placeholder}
+					/>
+				)}
 				renderContent={({ onClose }) => (
 					<div
 						css={css`
@@ -110,6 +103,12 @@ export default ({
 										);
 									},
 								},
+								{
+									label: __('Reset', 'surecart'),
+									onClick: () => {
+										setDate(null);
+									},
+								},
 							]}
 						/>
 
@@ -127,7 +126,7 @@ export default ({
 	);
 };
 
-function RenderDropdownButton({ isOpen, onClick, date, label }) {
+function RenderDropdownButton({ isOpen, onClick, date, label, placeholder }) {
 	return (
 		<Button
 			className="edit-post-post-url__toggle"
@@ -140,7 +139,11 @@ function RenderDropdownButton({ isOpen, onClick, date, label }) {
 				text-align: right;
 			`}
 		>
-			{date ? formatDateTime(date * 1000) : __('Set Date', 'surecart')}
+			{date
+				? formatDateTime(date * 1000)
+				: placeholder
+				? placeholder
+				: __('Set Date', 'surecart')}
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				fill="none"

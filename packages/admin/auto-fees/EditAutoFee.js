@@ -227,6 +227,7 @@ export default ({ id, setBrowserURL }) => {
 										end_at: date,
 									})
 								}
+								placeholder={__('Never', 'surecart')}
 							/>
 						</ScFormControl>
 					</Box>

@@ -131,6 +131,7 @@ export default ({
 					label: formatLabel(val),
 					value: val,
 				}))}
+				required
 			/>
 		);
 	};
@@ -141,6 +142,7 @@ export default ({
 			case 'date':
 				return (
 					<DateTimePicker
+						required
 						showLabel={false}
 						currentDate={value}
 						setDate={(date) => {
@@ -177,6 +179,7 @@ export default ({
 			case 'price':
 				return (
 					<ScPriceInput
+						required
 						value={value}
 						onScInput={(e) => {
 							setValue(e.target.value);
@@ -200,6 +203,7 @@ export default ({
 			case 'email':
 				return (
 					<ScInput
+						required
 						type="email"
 						value={value}
 						onScInput={(e) => {
@@ -213,6 +217,7 @@ export default ({
 				return (
 					<ScInput
 						type="number"
+						required
 						value={value}
 						onScInput={(e) => {
 							setValue(e.target.value);
@@ -228,6 +233,7 @@ export default ({
 						onScChange={(e) => {
 							setValue(e.target.value);
 						}}
+						required
 						choices={userRoleChoices}
 					/>
 				);
@@ -238,6 +244,7 @@ export default ({
 						onScInput={(e) => {
 							setValue(e.target.value);
 						}}
+						required
 						placeholder={__('Enter a value', 'surecart')}
 						className={fullWidthClass}
 					/>

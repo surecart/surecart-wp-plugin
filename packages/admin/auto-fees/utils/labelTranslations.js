@@ -79,4 +79,8 @@ export const operatorLabels = {
 	is_less_than: __('is less than', 'surecart'),
 	is_at_least: __('is at least', 'surecart'),
 	is_at_most: __('is at most', 'surecart'),
+	is_after: __('is after', 'surecart'),
+	is_before: __('is before', 'surecart'),
+	is_on_or_after: __('is on or after', 'surecart'),
+	is_on_or_before: __('is on or before', 'surecart'),
 };
