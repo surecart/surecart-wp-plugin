@@ -3,7 +3,7 @@ import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import { store as coreStore } from '@wordpress/core-data';
 import { useSelect } from '@wordpress/data';
-import { ScPriceInput, ScTooltip } from '@surecart/components-react';
+import { ScPriceInput, ScEmpty } from '@surecart/components-react';
 import DrawerSection from '../../../ui/DrawerSection';
 import useVariantValue from '../../hooks/useVariantValue';
 import ResetOverridesDropdown from './ResetOverridesDropdown';
@@ -45,19 +45,23 @@ export default ({ variant, updateVariant, product }) => {
 		<DrawerSection
 			title={__('Price', 'surecart')}
 			suffix={
-				<ResetOverridesDropdown
-					fields={[
-						{
-							key: 'amount',
-							label: __('Price', 'surecart'),
-						},
-					]}
-					isOverridden={isOverridden}
-					onReset={(fieldKey) => updateVariant({ [fieldKey]: null })}
-				/>
+				canOverride && (
+					<ResetOverridesDropdown
+						fields={[
+							{
+								key: 'amount',
+								label: __('Price', 'surecart'),
+							},
+						]}
+						isOverridden={isOverridden}
+						onReset={(fieldKey) =>
+							updateVariant({ [fieldKey]: null })
+						}
+					/>
+				)
 			}
 		>
-			{canOverride && (
+			{canOverride ? (
 				<ScPriceInput
 					type="number"
 					min="0"
@@ -78,6 +82,13 @@ export default ({ variant, updateVariant, product }) => {
 						)
 					}
 				/>
+			) : (
+				<ScEmpty icon="info">
+					{__(
+						'To set a custom price on this variant, the product must have only one price.',
+						'surecart'
+					)}
+				</ScEmpty>
 			)}
 		</DrawerSection>
 	);
