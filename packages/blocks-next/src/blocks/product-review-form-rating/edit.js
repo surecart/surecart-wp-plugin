@@ -43,7 +43,7 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 				aria-label={__(`Rate ${i} stars`, 'surecart')}
 			>
 				<svg
-					className="star-svg"
+					className="sc-star-svg"
 					viewBox="0 0 24 24"
 					width={size}
 					height={size}
@@ -56,7 +56,7 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 								: 'none'
 						}
 						stroke={fill_color || 'var(--sc-color-primary-500)'}
-						strokeWidth="1"
+						strokeWidth="2"
 					/>
 				</svg>
 			</span>
@@ -106,7 +106,7 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 					/>
 				)}
 
-				<div className="stars-container">{stars}</div>
+				<div>{stars}</div>
 			</div>
 			<input type="hidden" name="rating" value={selectedRating} />
 		</>

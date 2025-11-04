@@ -145,6 +145,14 @@ const { state, actions } = store('surecart/product-review-form', {
 			context.stars = 0;
 			context.title = '';
 			context.content = '';
+
+			// Manually uncheck all radio buttons.
+			const radioButtons = document.querySelectorAll(
+				'.wp-block-surecart-product-review-form-rating input[type="radio"][name="stars"]'
+			);
+			radioButtons.forEach((radio) => {
+				radio.checked = false;
+			});
 		},
 
 		/** Set the review title */
@@ -227,6 +235,7 @@ const { state, actions } = store('surecart/product-review-form', {
 						throw new Error(__('Submission failed', 'surecart'));
 					}
 
+					actions.clearForm();
 					context.submitted = true;
 				} catch (e) {
 					console.error(e);
