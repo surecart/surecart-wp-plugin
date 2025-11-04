@@ -23,6 +23,13 @@ class AccountService {
 	protected $cache_key = 'surecart_account';
 
 	/**
+	 * The application instance.
+	 *
+	 * @var \SureCart\Application\Application
+	 */
+	protected $app = null;
+
+	/**
 	 * Bootstrap the service.
 	 *
 	 * @return void
@@ -40,7 +47,7 @@ class AccountService {
 	 * @return \SureCart\Models\Import|\WP_Error
 	 */
 	public function seed( $products = [] ) {
-		return $this->app->resolve( 'seed_account' )->seed( $products );
+		return $this->app->resolve( 'surecart.account.seed' )->seed( $products );
 	}
 
 	/**
@@ -51,9 +58,14 @@ class AccountService {
 	 * This is also cached in a 60 second transient to prevent
 	 * rate limited calls to the API.
 	 *
-	 * @param \SureCart\Support\Server $server The server utility to use.
+	 * @param \SureCart\Support\Server              $server The server utility to use.
+	 * @param \SureCartCore\Application\Application $app The application instance.
+	 *
+	 * @return void
 	 */
-	public function __construct( \SureCart\Support\Server $server ) {
+	public function __construct( \SureCart\Support\Server $server, \SureCartCore\Application\Application $app ) {
+		$this->app = $app;
+
 		$cache = null;
 
 		if ( defined( 'SURECART_CACHE_ACCOUNT' ) ) {
@@ -62,21 +74,24 @@ class AccountService {
 
 		// do not cache requests if specifically set to false.
 		if ( false === $cache ) {
-			return $this->fetchAccount();
+			$this->fetchAccount();
+			return;
 		}
 
 		// cache requests if specifically set to true.
 		if ( true === $cache ) {
-			return $this->fetchCachedAccount();
+			$this->fetchCachedAccount();
+			return;
 		}
 
 		// don't cache on localhost if constant is not set.
 		if ( $server->isLocalHost() ) {
-			return $this->fetchAccount();
+			$this->fetchAccount();
+			return;
 		}
 
 		// cache requests if not explicitly set.
-		return $this->fetchCachedAccount();
+		$this->fetchCachedAccount();
 	}
 
 	/**
