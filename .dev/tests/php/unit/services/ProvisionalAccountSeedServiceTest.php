@@ -4,9 +4,6 @@ namespace SureCart\Tests\Services;
 
 use SureCart\Tests\SureCartUnitTestCase;
 use SureCart\Account\ProvisionalAccountSeedService;
-use SureCart\Models\ProductCollectionImport;
-use SureCart\Models\ProductImport;
-use WP_Error;
 
 class ProvisionalAccountSeedServiceTest extends SureCartUnitTestCase {
 	/**
@@ -34,16 +31,8 @@ class ProvisionalAccountSeedServiceTest extends SureCartUnitTestCase {
 			false
 		);
 
+		// Create a new instance of the service.
 		$this->service = new ProvisionalAccountSeedService();
-	}
-
-	/**
-	 * Tear down after tests.
-	 */
-	public function tearDown() : void {
-		parent::tearDown();
-		\SureCart::setApplication( null );
-		\Mockery::close();
 	}
 
 	/**
