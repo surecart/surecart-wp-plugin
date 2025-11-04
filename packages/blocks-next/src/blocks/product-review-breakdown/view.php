@@ -24,9 +24,9 @@
 								[
 									'height' => esc_attr( $attributes['size'] ?? 25 ),
 									'width'  => esc_attr( $attributes['size'] ?? 25 ),
-									'fill'   => esc_attr( $attributes['fill_color'] ?? 'var(--sc-color-primary-500)' ),
-									'color'  => esc_attr( $attributes['fill_color'] ?? 'var(--sc-color-primary-500)' ),
-									'stroke' => esc_attr( $attributes['fill_color'] ?? 'var(--sc-color-primary-500)' ),
+									'fill'   => esc_attr( $fill_color ),
+									'color'  => esc_attr( $fill_color ),
+									'stroke' => esc_attr( $fill_color ),
 								]
 							),
 							sc_allowed_svg_html()

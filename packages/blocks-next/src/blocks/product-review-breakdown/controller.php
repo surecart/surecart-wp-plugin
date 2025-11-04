@@ -13,6 +13,7 @@ if ( ! $show_for_zero_reviews && 0 === (int) $product->total_reviews ) {
 	return;
 }
 
-$total = (int) $product->total_reviews;
+$total      = (int) $product->total_reviews;
+$fill_color = ! empty( $attributes['fill_color'] ) ? $attributes['fill_color'] : 'var(--sc-color-primary-500)';
 
 return 'file:./view.php';
