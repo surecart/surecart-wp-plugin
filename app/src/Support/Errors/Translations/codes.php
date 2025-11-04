@@ -7,6 +7,7 @@
 
 return array(
 	'http_request_failed'                                  => __( 'Could not complete the request. Please try again.', 'surecart' ),
+	'coupon.invalid'                                       => __( 'Failed to save coupon.', 'surecart' ),
 	'price.dependent_locked'                               => __( 'The price is already being used in subscriptions or checkout sessions. Please archive the price and create another one.', 'surecart' ),
 	'checkout.discount.promotion_code.invalid_code'        => __( 'Invalid promotion code.', 'surecart' ),
 	'checkout.invalid'                                     => __( 'Failed to update. Please check for errors and try again.', 'surecart' ),
@@ -71,7 +72,6 @@ return array(
 	'shipping_zone.countries.inclusion'                    => __( 'The selected countries are not valid.', 'surecart' ),
 	'shipping_methodname.blank'                            => __( 'The shipping method name cannot be blank.', 'surecart' ),
 	'shipping_method.name.too_long'                        => __( 'The shipping method name is too long. Please enter a shorter name.', 'surecart' ),
-	'shipping_method.name.taken'                           => __( 'The shipping method name is already in use.', 'surecart' ),
 	'shipping_method.description.too_long'                 => __( 'The shipping method description is too long. Please enter a shorter description.', 'surecart' ),
 	'shipping_rate.rate_type.blank'                        => __( 'The shipping rate type cannot be blank.', 'surecart' ),
 	'shipping_rate.rate_type.inclusion'                    => __( 'The shipping rate type is not valid.', 'surecart' ),
