@@ -1,0 +1,206 @@
+<svg
+    width="23"
+    height="24"
+    viewBox="0 0 23 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+>
+    <g filter="url(#filter0_d_4228_41569)">
+        <g clip-path="url(#clip0_4228_41569)">
+            <rect
+                x="1.5"
+                y="2"
+                width="20"
+                height="20"
+                rx="4"
+                fill="#D2F059"
+            />
+            <g filter="url(#filter1_dddd_4228_41569)">
+                <path
+                    d="M11.498 4.88477C14.8994 4.88477 17.742 7.27182 18.4453 10.4619H20.3447V13.5391H18.4453C17.7419 16.729 14.8993 19.1162 11.498 19.1162C8.09695 19.116 5.25511 16.7289 4.55176 13.5391H2.65234V10.4619H4.55176C5.25501 7.27197 8.09685 4.88496 11.498 4.88477ZM11.498 7.96777C9.27131 7.968 7.46698 9.77338 7.4668 12C7.4668 14.2268 9.27119 16.032 11.498 16.0322C13.7251 16.0322 15.5303 14.2269 15.5303 12C15.5301 9.77324 13.725 7.96777 11.498 7.96777Z"
+                    fill="url(#paint0_linear_4228_41569)"
+                />
+            </g>
+        </g>
+    </g>
+    <defs>
+        <filter
+            id="filter0_d_4228_41569"
+            x="0.115385"
+            y="0.615385"
+            width="22.7692"
+            height="22.7692"
+            filterUnits="userSpaceOnUse"
+            color-interpolation-filters="sRGB"
+        >
+            <feFlood
+                flood-opacity="0"
+                result="BackgroundImageFix"
+            />
+            <feColorMatrix
+                in="SourceAlpha"
+                type="matrix"
+                values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                result="hardAlpha"
+            />
+            <feMorphology
+                radius="1.38462"
+                operator="dilate"
+                in="SourceAlpha"
+                result="effect1_dropShadow_4228_41569"
+            />
+            <feOffset />
+            <feComposite
+                in2="hardAlpha"
+                operator="out"
+            />
+            <feColorMatrix
+                type="matrix"
+                values="0 0 0 0 0.777287 0 0 0 0 0.9125 0 0 0 0 0.231927 0 0 0 1 0"
+            />
+            <feBlend
+                mode="normal"
+                in2="BackgroundImageFix"
+                result="effect1_dropShadow_4228_41569"
+            />
+            <feBlend
+                mode="normal"
+                in="SourceGraphic"
+                in2="effect1_dropShadow_4228_41569"
+                result="shape"
+            />
+        </filter>
+        <filter
+            id="filter1_dddd_4228_41569"
+            x="-5.22958"
+            y="2.25746"
+            width="33.4562"
+            height="29.9953"
+            filterUnits="userSpaceOnUse"
+            color-interpolation-filters="sRGB"
+        >
+            <feFlood
+                flood-opacity="0"
+                result="BackgroundImageFix"
+            />
+            <feColorMatrix
+                in="SourceAlpha"
+                type="matrix"
+                values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                result="hardAlpha"
+            />
+            <feOffset dy="5.25461" />
+            <feGaussianBlur stdDeviation="3.94096" />
+            <feComposite
+                in2="hardAlpha"
+                operator="out"
+            />
+            <feColorMatrix
+                type="matrix"
+                values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.06 0"
+            />
+            <feBlend
+                mode="normal"
+                in2="BackgroundImageFix"
+                result="effect1_dropShadow_4228_41569"
+            />
+            <feColorMatrix
+                in="SourceAlpha"
+                type="matrix"
+                values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                result="hardAlpha"
+            />
+            <feOffset dx="-1.18229" dy="3.94096" />
+            <feGaussianBlur stdDeviation="2.29889" />
+            <feComposite
+                in2="hardAlpha"
+                operator="out"
+            />
+            <feColorMatrix
+                type="matrix"
+                values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.04 0"
+            />
+            <feBlend
+                mode="normal"
+                in2="effect1_dropShadow_4228_41569"
+                result="effect2_dropShadow_4228_41569"
+            />
+            <feColorMatrix
+                in="SourceAlpha"
+                type="matrix"
+                values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                result="hardAlpha"
+            />
+            <feOffset dy="1.31365" />
+            <feGaussianBlur stdDeviation="1.31365" />
+            <feComposite
+                in2="hardAlpha"
+                operator="out"
+            />
+            <feColorMatrix
+                type="matrix"
+                values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.03 0"
+            />
+            <feBlend
+                mode="normal"
+                in2="effect2_dropShadow_4228_41569"
+                result="effect3_dropShadow_4228_41569"
+            />
+            <feColorMatrix
+                in="SourceAlpha"
+                type="matrix"
+                values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                result="hardAlpha"
+            />
+            <feOffset dy="1.31365" />
+            <feGaussianBlur stdDeviation="0.656827" />
+            <feComposite
+                in2="hardAlpha"
+                operator="out"
+            />
+            <feColorMatrix
+                type="matrix"
+                values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.08 0"
+            />
+            <feBlend
+                mode="normal"
+                in2="effect3_dropShadow_4228_41569"
+                result="effect4_dropShadow_4228_41569"
+            />
+            <feBlend
+                mode="normal"
+                in="SourceGraphic"
+                in2="effect4_dropShadow_4228_41569"
+                result="shape"
+            />
+        </filter>
+        <linearGradient
+            id="paint0_linear_4228_41569"
+            x1="11.4985"
+            y1="19.1162"
+            x2="11.4985"
+            y2="4.88477"
+            gradientUnits="userSpaceOnUse"
+        >
+            <stop
+                stop-color="#072F50"
+                stop-opacity="0.95"
+            />
+            <stop
+                offset="1"
+                stop-color="#172A39"
+                stop-opacity="0.75"
+            />
+        </linearGradient>
+        <clipPath id="clip0_4228_41569">
+            <rect
+                x="1.5"
+                y="2"
+                width="20"
+                height="20"
+                rx="4"
+                fill="white"
+            />
+        </clipPath>
+    </defs>
+</svg>

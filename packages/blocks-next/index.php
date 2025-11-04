@@ -397,6 +397,19 @@ add_action(
 			$static_assets['version']
 		);
 
+		$static_assets = include trailingslashit( plugin_dir_path( __FILE__ ) ) . 'build/scripts/video/index.asset.php';
+		wp_register_script_module(
+			'@surecart/video',
+			trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/video/index.js',
+			array(
+				array(
+					'id'     => '@wordpress/interactivity',
+					'import' => 'dynamic',
+				),
+			),
+			$static_assets['version']
+		);
+
 		// Checkout actions.
 		$static_assets = include trailingslashit( plugin_dir_path( __FILE__ ) ) . 'build/scripts/checkout-actions/index.asset.php';
 		wp_register_script_module(

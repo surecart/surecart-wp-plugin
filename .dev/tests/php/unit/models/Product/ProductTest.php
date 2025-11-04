@@ -387,6 +387,98 @@ class ProductTest extends SureCartUnitTestCase
 	}
 
 	/**
+	 * @group media
+	 * @group product
+	 */
+	public function test_has_gallery_ids_or_object_can_return_valid_ids()
+	{
+		$this->shouldSyncProduct('test-object-product');
+
+		$queue_service = \Mockery::mock(QueueService::class)->makePartial();
+		\SureCart::alias('queue', function () use ($queue_service) {
+			return $queue_service;
+		});
+		$queue_service->shouldReceive('async')->andReturn(true);
+
+		$filename = DIR_TESTDATA . '/images/test-image-large.jpg';
+		$id = $this->factory()->attachment->create_upload_object( $filename );
+
+		$filename = DIR_TESTDATA . '/images/test-image.jpg';
+		$id_2 = $this->factory()->attachment->create_upload_object( $filename );
+
+		$product = new Product([
+			'id' => 'test-object-product',
+			'name' => 'test-object-product',
+			'updated_at' => time(),
+			'created_at' => time(),
+			'metadata' => [
+				'gallery_ids' => [
+					$id,
+					['id' => $id_2],
+				]
+			]
+		]);
+
+		$product = $product->sync();
+		$gallery_items = $product->gallery;
+
+		$this->assertIsArray($gallery_items, 'Gallery IDs should be an array');
+		$this->assertCount(2, $gallery_items, 'Gallery IDs should contain 2 items');
+
+		$this->assertEquals($id, $gallery_items[0]->id ?? $gallery_items[0]);
+		$this->assertEquals($id_2, $gallery_items[1]->id ?? $gallery_items[1]);
+	}
+
+	/**
+	 * @group media
+	 * @group product
+	 */
+	public function test_variant_option_compatibility()
+	{
+		$this->shouldSyncProduct('test-variant-product');
+
+		$queue_service = \Mockery::mock(QueueService::class)->makePartial();
+		\SureCart::alias('queue', function () use ($queue_service) {
+			return $queue_service;
+		});
+		$queue_service->shouldReceive('async')->andReturn(true);
+
+		$filename = DIR_TESTDATA . '/images/test-image-large.jpg';
+		$id = $this->factory()->attachment->create_upload_object( $filename );
+
+		$filename = DIR_TESTDATA . '/images/test-image.jpg';
+		$id_2 = $this->factory()->attachment->create_upload_object( $filename );
+
+		$product = new Product([
+			'id' => 'test-variant-product',
+			'name' => 'test-variant-product',
+			'updated_at' => time(),
+			'created_at' => time(),
+			'metadata' => [
+				'gallery_ids' => [
+					[
+						'id' => $id,
+						'variant_option' => 'Red',
+					],
+					$id_2, // We don't set variant_option here, instead set as post meta to check compatibility.
+				]
+			]
+		]);
+
+		// For attachment $id_2, add sc_variant_option metadata as Blue.
+		update_post_meta($id_2, 'sc_variant_option', 'Blue');
+
+		$product = $product->sync();
+		$gallery_items = $product->gallery;
+
+		$this->assertIsArray($gallery_items, 'Gallery IDs should be an array');
+		$this->assertCount(2, $gallery_items, 'Gallery IDs should contain 2 items');
+
+		$this->assertEquals('Red', $gallery_items[0]->getMetadata('variant_option'));
+		$this->assertEquals('Blue', $gallery_items[1]->getMetadata('variant_option'));
+	}
+
+	/**
 	 * Test has_variants attribute
 	 */
 	public function test_has_variants_attribute()

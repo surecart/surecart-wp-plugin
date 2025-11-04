@@ -23,7 +23,7 @@ class BlockStylesService {
 		$block_type       = \WP_Block_Type_Registry::get_instance()->get_registered(
 			$block['blockName']
 		);
-		$block_attributes = $block['attrs'];
+		$block_attributes = $block['attrs'] ?? [];
 
 		$attributes          = array();
 		$has_padding_support = block_has_support( $block_type, array( 'spacing', 'padding' ), false );
@@ -58,7 +58,7 @@ class BlockStylesService {
 		$block_type       = \WP_Block_Type_Registry::get_instance()->get_registered(
 			$block['blockName']
 		);
-		$block_attributes = $block['attrs'];
+		$block_attributes = $block['attrs'] ?? [];
 
 		$border_block_styles      = array();
 		$has_border_color_support = wp_has_border_feature_support( $block_type, 'color' );
@@ -136,7 +136,7 @@ class BlockStylesService {
 		$block_type       = \WP_Block_Type_Registry::get_instance()->get_registered(
 			$block['blockName']
 		);
-		$block_attributes = $block['attrs'];
+		$block_attributes = $block['attrs'] ?? [];
 
 		$color_support = isset( $block_type->supports['color'] ) ? $block_type->supports['color'] : false;
 

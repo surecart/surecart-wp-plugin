@@ -23,7 +23,7 @@ import BuyLink from './modules/BuyLink';
 import Advanced from './modules/Advanced';
 import Details from './modules/Details';
 import Downloads from './modules/Downloads';
-import Image from './modules/Image';
+import Media from './modules/Media';
 import Integrations from './modules/integrations/Integrations';
 import Licensing from './modules/Licensing';
 import Prices from './modules/Prices';
@@ -424,7 +424,7 @@ export default ({ id, setBrowserURL }) => {
 						loading={!hasLoadedProduct}
 					/>
 
-					<Image
+					<Media
 						productId={id}
 						product={product}
 						updateProduct={editProduct}
