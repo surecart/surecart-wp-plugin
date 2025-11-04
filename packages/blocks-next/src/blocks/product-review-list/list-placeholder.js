@@ -1,5 +1,5 @@
 /**
- * WordPress dependencies
+ * WordPress dependencies.
  */
 import { useSelect, useDispatch } from '@wordpress/data';
 import {
@@ -15,7 +15,7 @@ import { Button, Placeholder } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 
 /**
- * Internal dependencies
+ * Internal dependencies.
  */
 import { useBlockNameForPatterns } from '../utils';
 import { TEMPLATE } from './template';

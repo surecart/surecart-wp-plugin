@@ -84,6 +84,13 @@ export const TEMPLATE = [
 									[
 										'surecart/product-review-average-rating-value',
 										{
+											style: {
+												typography: {
+													fontStyle: 'normal',
+													fontWeight: '600',
+												},
+											},
+											fontSize: 'large',
 											className: 'is-style-slash',
 										},
 									],
@@ -135,6 +142,8 @@ export const TEMPLATE = [
 						'surecart/product-review-breakdown',
 						{
 							className: 'is-style-default',
+							columns: 2,
+							row_gap: 20,
 							style: {
 								layout: {
 									selfStretch: 'fill',
@@ -479,7 +488,10 @@ export const TEMPLATE = [
 											],
 										],
 									],
-									['surecart/product-review-rating-stars', {}],
+									[
+										'surecart/product-review-rating-stars',
+										{},
+									],
 									[
 										'surecart/product-review-title',
 										{

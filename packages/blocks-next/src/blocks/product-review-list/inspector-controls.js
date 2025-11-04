@@ -1,25 +1,20 @@
 /**
- * WordPress dependencies
+ * WordPress dependencies.
  */
 import { InspectorControls } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
 import { PanelBody } from '@wordpress/components';
 import { RangeControl } from '@wordpress/components';
-import { useViewportMatch } from '@wordpress/compose';
 
 /**
- * Product List Inspector Controls
+ * Product List Inspector Controls.
  */
 export default function ProductReviewListInspectorControls({
 	onUpdateQuery,
-	setAttributes,
 	attributes: {
-		type,
-		query,
-		query: { perPage, offset, taxQuery, order, orderBy },
+		query: { perPage, offset },
 	},
 }) {
-	const isMobile = useViewportMatch('medium', '<');
 	return (
 		<InspectorControls>
 			<PanelBody title={__('Attributes', 'surecart')}>
