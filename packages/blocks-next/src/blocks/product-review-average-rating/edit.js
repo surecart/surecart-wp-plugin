@@ -16,7 +16,12 @@ const ALLOWED_BLOCKS = [
 
 const TEMPLATE = [
 	['surecart/product-review-average-rating-stars', {}],
-	['surecart/product-review-average-rating-value', {}],
+	[
+		'surecart/product-review-average-rating-value',
+		{
+			className: 'is-style-parentheses',
+		},
+	],
 ];
 
 export default ({ attributes, setAttributes, __unstableLayoutClassNames }) => {
