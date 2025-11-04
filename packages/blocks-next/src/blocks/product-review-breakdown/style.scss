@@ -1,13 +1,30 @@
 .wp-block-surecart-product-review-breakdown {
 	display: block;
-	justify-content: end;
 
 	.sc-star-bars {
 		flex: 1;
 		display: flex;
 		flex-direction: column;
-		gap: 8px;
+		flex-wrap: wrap;
 		min-width: 150px;
+		align-content: flex-start;
+
+		// Column-based layouts.
+		&.sc-star-bars--columns-2 {
+			max-height: 150px;
+
+			.sc-star-row {
+				width: calc(50% - var(--sc-row-gap, 8px) / 2); // Equal width for 2 columns
+			}
+		}
+
+		&.sc-star-bars--columns-3 {
+			max-height: 85px;
+
+			.sc-star-row {
+				width: calc(33.333% - var(--sc-row-gap, 8px) * 2 / 3); // Equal width for 3 columns
+			}
+		}
 
 		.sc-star-row {
 			display: flex;
@@ -19,6 +36,7 @@
 			color: inherit;
 			cursor: pointer;
 			transition: opacity 0.2s ease;
+			width: 100%;
 
 			&:hover {
 				opacity: 0.8;
@@ -26,10 +44,9 @@
 
 			.sc-star-label {
 				color: var(--sc-color-gray-800);
-				width: 40px;
 				justify-content: center;
 				display: flex;
-				gap: 10px;
+				gap: 4px;
 			}
 
 			.sc-bar-wrap {
@@ -39,7 +56,7 @@
 				border-radius: 4px;
 				overflow: hidden;
 				position: relative;
-				min-width: 300px;
+				min-width: 100px;
 			}
 
 			.sc-bar-fill {
@@ -50,7 +67,6 @@
 			}
 
 			.sc-count {
-				width: 28px;
 				text-align: right;
 				color: var(--sc-color-gray-800);
 			}

@@ -3,7 +3,12 @@
  */
 import { __ } from '@wordpress/i18n';
 import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
-import { PanelBody, ToggleControl, RangeControl } from '@wordpress/components';
+import {
+	PanelBody,
+	ToggleControl,
+	RangeControl,
+	SelectControl,
+} from '@wordpress/components';
 
 /**
  * Internal dependencies.
@@ -13,7 +18,9 @@ import ColorInspectorControl from '../../components/ColorInspectorControl';
 export default function ({ attributes, setAttributes, clientId }) {
 	const {
 		show_for_zero_reviews = true,
-		size = 16,
+		columns,
+		row_gap,
+		size,
 		fill_color,
 		bar_fill_color,
 		bar_background_color,
@@ -42,6 +49,44 @@ export default function ({ attributes, setAttributes, clientId }) {
 							setAttributes({ show_for_zero_reviews: value })
 						}
 						checked={show_for_zero_reviews}
+					/>
+
+					<SelectControl
+						label={__('Columns', 'surecart')}
+						value={columns}
+						options={[
+							{
+								label: __('1 Column', 'surecart'),
+								value: 1,
+							},
+							{
+								label: __('2 Columns', 'surecart'),
+								value: 2,
+							},
+							{
+								label: __('3 Columns', 'surecart'),
+								value: 3,
+							},
+						]}
+						onChange={(value) =>
+							setAttributes({ columns: parseInt(value) })
+						}
+						help={__(
+							'Choose the number of columns to display the review breakdown.',
+							'surecart'
+						)}
+					/>
+
+					<RangeControl
+						label={__('Row gap', 'surecart')}
+						value={row_gap}
+						onChange={(value) => setAttributes({ row_gap: value })}
+						min={0}
+						max={50}
+						help={__(
+							'Adjust the spacing between rows.',
+							'surecart'
+						)}
 					/>
 
 					<RangeControl
@@ -85,7 +130,10 @@ export default function ({ attributes, setAttributes, clientId }) {
 			/>
 
 			<div {...blockProps}>
-				<div className="sc-star-bars">
+				<div
+					className={`sc-star-bars sc-star-bars--columns-${columns}`}
+					style={{ gap: `${row_gap}px` }}
+				>
 					{[5, 4, 3, 2, 1].map((star) => {
 						const count = reviewsBreakdown[star] || 0;
 						const percentage =
@@ -102,7 +150,6 @@ export default function ({ attributes, setAttributes, clientId }) {
 											width: `${size}px`,
 											height: `${size}px`,
 											verticalAlign: 'middle',
-											marginLeft: 6,
 										}}
 									>
 										<svg

@@ -20,6 +20,14 @@
 			"type": "boolean",
 			"default": true
 		},
+		"columns": {
+			"type": "number",
+			"default": 1
+		},
+		"row_gap": {
+			"type": "number",
+			"default": 20
+		},
 		"fill_color": {
 			"type": "string",
 			"default": ""
