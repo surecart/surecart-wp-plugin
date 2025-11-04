@@ -1,18 +1,22 @@
 /**
- * WordPress dependencies
+ * WordPress dependencies.
  */
 import { registerBlockType } from '@wordpress/blocks';
 
 /**
- * Internal dependencies
+ * Internal dependencies.
  */
 import edit from './edit';
 import save from './save';
 import metadata from './block.json';
+
+/**
+ * Styles.
+ */
 import './style.scss';
 
 /**
- * Register block
+ * Register block.
  */
 registerBlockType(metadata, {
 	edit,

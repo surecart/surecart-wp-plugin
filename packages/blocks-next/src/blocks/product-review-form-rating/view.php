@@ -1,13 +1,11 @@
-<div 
-	<?php echo wp_kses_data( get_block_wrapper_attributes() ); ?>
->
+<div <?php echo wp_kses_data( get_block_wrapper_attributes() ); ?>>
 	<?php if ( ! empty( $label ) ) : ?>
 		<label class="sc-form-label">
 			<?php echo wp_kses_data( $label ); ?>
 		</label>
 	<?php endif; ?>
 
-	<fieldset class="stars-container rating-input">
+	<fieldset class="sc-rating-input">
 		<?php for ( $i = 5; $i >= 1; $i-- ) : ?>
 			<input 
 				type="radio" 
@@ -26,7 +24,7 @@
 							'height' => esc_attr( $size ),
 							'width'  => esc_attr( $size ),
 							'stroke' => $fill_color ?? 'var(--sc-color-primary-500)',
-							'class'  => 'star-svg',
+							'class'  => 'sc-star-svg',
 						]
 					),
 					sc_allowed_svg_html()

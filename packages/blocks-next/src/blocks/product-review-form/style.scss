@@ -9,9 +9,6 @@
 		opacity: 0;
 		z-index: 10000;
 		box-sizing: border-box;
-		// width: calc(100vw - 60px);
-		// max-width: 850px;
-		// height: fit-content;
 		max-height: 90vh;
 		border: none;
 		border-radius: var(--sc-border-radius-medium);
@@ -27,6 +24,7 @@
 		&__content {
 			padding: 30px;
 		}
+
 		.sc-view-product-page-sticky {
 			position: sticky;
 			display: flex;

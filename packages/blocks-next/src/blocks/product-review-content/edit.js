@@ -10,7 +10,7 @@ export default ({ context }) => {
 
 	return (
 		<div {...blockProps}>
-			{review?.content || __('Review Content', 'surecart')}
+			{review?.content || __('Review content', 'surecart')}
 		</div>
 	);
 };

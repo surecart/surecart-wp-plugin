@@ -8,26 +8,26 @@
 		display: inline-block;
 		cursor: pointer;
 
-		.star-svg {
+		.sc-star-svg {
 			transition: all 0.15s ease;
 		}
 	}
 
 	%full-star {
-		.star-svg {
+		.sc-star-svg {
 			fill: var(--sc-color-primary-500);
 			stroke: var(--sc-color-primary-500);
 		}
 	}
 
 	%empty-star {
-		.star-svg {
+		.sc-star-svg {
 			fill: none;
 		}
 	}
 
 	// Rating input fieldset
-	.rating-input {
+	.sc-rating-input {
 		border: none;
 		display: inline-flex;
 		flex-direction: row-reverse;
