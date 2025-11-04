@@ -100,7 +100,7 @@ export default ({ value, onChange }) => {
 			</div>
 			<div
 				css={css`
-					height: 400px;
+					height: 200px;
 					overflow-y: auto;
 				`}
 			>
