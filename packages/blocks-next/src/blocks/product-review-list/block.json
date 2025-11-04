@@ -9,100 +9,31 @@
 	"example": {
 		"innerBlocks": [
 			{
-				"name": "surecart/product-list",
+				"name": "core/heading",
 				"attributes": {
-					"metadata": {
-						"categories": ["surecart_review_list"],
-						"patternName": "surecart-list-standard",
-						"name": "Standard"
-					},
-					"align": "wide",
-					"style": {
-						"spacing": {
-							"blockGap": "10px",
-							"margin": {
-								"left": "0px",
-								"right": "0px"
-							}
-						}
-					}
-				},
+					"content": "Customer Reviews",
+					"level": 2
+				}
+			},
+			{
+				"name": "surecart/product-review-summary",
 				"innerBlocks": [
 					{
 						"name": "core/group",
 						"attributes": {
 							"style": {
-								"spacing": {
-									"margin": {
-										"bottom": "10px"
-									},
-									"padding": {
-										"top": "0",
-										"bottom": "0",
-										"left": "0",
-										"right": "0"
-									}
-								}
-							},
-							"layout": {
-								"type": "flex",
-								"justifyContent": "space-between"
-							}
-						},
-						"innerBlocks": [
-							{
-								"name": "core/group",
-								"attributes": {
-									"style": {
-										"spacing": {
-											"padding": {
-												"top": "0",
-												"bottom": "0",
-												"left": "0",
-												"right": "0"
-											}
-										}
-									},
-									"layout": {
-										"type": "flex",
-										"flexWrap": "nowrap"
-									}
+								"color": {
+									"background": "#f7f9fb"
 								},
-								"innerBlocks": [
-									{
-										"name": "surecart/product-list-sort"
-									},
-									{
-										"name": "surecart/product-list-filter"
-									}
-								]
-							},
-							{
-								"name": "surecart/product-list-search",
-								"attributes": {
-									"style": {
-										"layout": {
-											"selfStretch": "fixed",
-											"flexSize": "250px"
-										}
-									}
-								}
-							}
-						]
-					},
-					{
-						"name": "core/group",
-						"attributes": {
-							"style": {
 								"spacing": {
-									"margin": {
-										"bottom": "10px"
-									},
 									"padding": {
-										"top": "0",
-										"bottom": "0",
-										"left": "0",
-										"right": "0"
+										"top": "var:preset|spacing|60",
+										"bottom": "var:preset|spacing|60",
+										"left": "var:preset|spacing|60",
+										"right": "var:preset|spacing|60"
+									},
+									"margin": {
+										"bottom": "var:preset|spacing|50"
 									}
 								}
 							},
@@ -113,139 +44,73 @@
 						},
 						"innerBlocks": [
 							{
-								"name": "surecart/product-list-filter-tags",
-								"innerBlocks": [
-									{
-										"name": "surecart/product-list-filter-tag"
-									}
-								]
-							}
-						]
-					},
-					{
-						"name": "surecart/product-template",
-						"attributes": {
-							"style": {
-								"spacing": {
-									"blockGap": "2rem"
-								}
-							},
-							"layout": {
-								"type": "grid",
-								"columnCount": null,
-								"minimumColumnWidth": "14rem"
-							}
-						},
-						"innerBlocks": [
-							{
 								"name": "core/group",
+								"attributes": {
+									"style": {
+										"spacing": {
+											"padding": {
+												"top": "var:preset|spacing|50",
+												"bottom": "var:preset|spacing|50",
+												"left": "var:preset|spacing|50",
+												"right": "var:preset|spacing|50"
+											},
+											"blockGap": "var:preset|spacing|30",
+											"layout": {
+												"selfStretch": "fill",
+												"flexSize": null
+											}
+										}
+									},
+									"layout": {
+										"type": "flex",
+										"flexWrap": "nowrap",
+										"orientation": "vertical"
+									}
+								},
 								"innerBlocks": [
 									{
-										"name": "core/group",
+										"name": "surecart/product-review-average-rating",
 										"attributes": {
 											"style": {
-												"color": {
-													"background": "#0000000d"
+												"spacing": {
+													"blockGap": "var:preset|spacing|20"
 												},
-												"border": {
-													"radius": "10px"
+												"layout": {
+													"selfStretch": "fit",
+													"flexSize": null
 												}
 											},
 											"layout": {
-												"type": "constrained"
+												"type": "flex",
+												"justifyContent": "left",
+												"orientation": "vertical"
 											}
 										},
 										"innerBlocks": [
 											{
-												"name": "core/cover",
+												"name": "surecart/product-review-average-rating-value",
 												"attributes": {
-													"useFeaturedImage": true,
-													"dimRatio": 0,
-													"isUserOverlayColor": true,
-													"focalPoint": {
-														"x": 0.5,
-														"y": 0.5
-													},
-													"contentPosition": "top right",
-													"isDark": false,
 													"style": {
-														"dimensions": {
-															"aspectRatio": "3/4"
-														},
-														"layout": {
-															"selfStretch": "fit",
-															"flexSize": null
-														},
-														"spacing": {
-															"margin": {
-																"bottom": "15px"
-															}
-														},
-														"border": {
-															"radius": "10px"
+														"typography": {
+															"fontStyle": "normal",
+															"fontWeight": "600"
 														}
-													}
-												},
-												"innerBlocks": [
-													{
-														"name": "surecart/product-sale-badge",
-														"attributes": {
-															"style": {
-																"typography": {
-																	"fontSize": "12px"
-																},
-																"border": {
-																	"radius": "100px"
-																}
-															}
-														}
-													}
-												]
+													},
+													"fontSize": "large",
+													"className": "is-style-slash"
+												}
+											},
+											{
+												"name": "surecart/product-review-average-rating-stars"
 											}
 										]
-									},
-									{
-										"name": "surecart/product-title",
-										"attributes": {
-											"level": 2,
-											"style": {
-												"typography": {
-													"fontSize": "15px",
-													"fontStyle": "normal",
-													"fontWeight": "400"
-												},
-												"spacing": {
-													"margin": {
-														"bottom": "5px",
-														"top": "0px"
-													}
-												}
-											}
-										}
 									},
 									{
 										"name": "core/group",
 										"attributes": {
 											"style": {
 												"spacing": {
-													"blockGap": "0.5em",
-													"margin": {
-														"top": "0px",
-														"bottom": "0px"
-													},
-													"padding": {
-														"top": "0",
-														"bottom": "0",
-														"left": "0",
-														"right": "0"
-													}
-												},
-												"margin": {
-													"top": "0px",
-													"bottom": "0px"
-												},
-												"typography": {
-													"lineHeight": "1"
+													"blockGap": "var:preset|spacing|20"
 												}
 											},
 											"layout": {
@@ -255,36 +120,19 @@
 										},
 										"innerBlocks": [
 											{
-												"name": "surecart/product-list-price",
+												"name": "surecart/product-review-total-rating",
 												"attributes": {
+													"className": "is-style-plus-sign",
 													"style": {
-														"typography": {
-															"fontSize": "18px",
-															"fontStyle": "normal",
-															"fontWeight": "600"
-														},
 														"spacing": {
+															"blockGap": "var:preset|spacing|20",
 															"margin": {
-																"top": "5px",
-																"bottom": "5px"
-															}
-														}
-													}
-												}
-											},
-											{
-												"name": "surecart/product-scratch-price",
-												"attributes": {
-													"style": {
-														"typography": {
-															"fontSize": "18px",
-															"fontStyle": "normal",
-															"fontWeight": "600"
-														},
-														"spacing": {
-															"margin": {
-																"top": "5px",
-																"bottom": "5px"
+																"right": "0",
+																"left": "0"
+															},
+															"padding": {
+																"right": "0",
+																"left": "0"
 															}
 														}
 													}
@@ -293,40 +141,190 @@
 										]
 									}
 								]
+							},
+							{
+								"name": "surecart/product-review-breakdown",
+								"attributes": {
+									"className": "is-style-default",
+									"columns": 2,
+									"row_gap": 20,
+									"style": {
+										"layout": {
+											"selfStretch": "fill",
+											"flexSize": null
+										}
+									},
+									"layout": {
+										"type": "flex",
+										"justifyContent": "left",
+										"orientation": "horizontal"
+									}
+								}
 							}
 						]
+					}
+				]
+			},
+			{
+				"name": "surecart/product-review-template",
+				"attributes": {
+					"style": {
+						"spacing": {
+							"blockGap": "0px",
+							"margin": {
+								"top": "0",
+								"bottom": "0"
+							},
+							"padding": {
+								"top": "0",
+								"bottom": "0"
+							}
+						}
 					},
+					"layout": {
+						"type": "grid",
+						"columnCount": 1
+					}
+				},
+				"innerBlocks": [
 					{
-						"name": "surecart/product-pagination",
+						"name": "core/group",
 						"attributes": {
 							"style": {
-								"elements": {
-									"link": {
-										"color": {
-											"text": "#000000"
-										}
+								"spacing": {
+									"blockGap": "var:preset|spacing|20",
+									"padding": {
+										"top": "var:preset|spacing|40",
+										"bottom": "var:preset|spacing|40"
+									},
+									"margin": {
+										"top": "0",
+										"bottom": "0"
 									}
 								},
-								"spacing": {
-									"padding": {
-										"top": "15px",
-										"bottom": "15px"
+								"border": {
+									"bottom": {
+										"color": "#e5e7eb",
+										"width": "1px"
 									}
 								}
 							},
-							"textColor": "black"
+							"layout": {
+								"type": "constrained"
+							}
 						},
 						"innerBlocks": [
 							{
-								"name": "surecart/product-pagination-previous"
+								"name": "core/group",
+								"attributes": {
+									"layout": {
+										"type": "flex",
+										"flexWrap": "nowrap",
+										"justifyContent": "space-between"
+									}
+								},
+								"innerBlocks": [
+									{
+										"name": "core/group",
+										"attributes": {
+											"style": {
+												"spacing": {
+													"blockGap": "var:preset|spacing|20"
+												}
+											},
+											"layout": {
+												"type": "flex",
+												"flexWrap": "nowrap"
+											}
+										},
+										"innerBlocks": [
+											{
+												"name": "surecart/product-review-reviewer-name",
+												"attributes": {
+													"style": {
+														"spacing": {
+															"padding": {
+																"top": "0",
+																"bottom": "0"
+															}
+														},
+														"typography": {
+															"fontStyle": "normal",
+															"fontWeight": "500"
+														}
+													}
+												}
+											},
+											{
+												"name": "surecart/product-review-verified-badge",
+												"attributes": {
+													"show_label": true,
+													"label": "Verified Buyer",
+													"icon_size": 16,
+													"style": {
+														"typography": {
+															"fontStyle": "normal",
+															"fontWeight": "400"
+														},
+														"spacing": {
+															"blockGap": "var:preset|spacing|30"
+														},
+														"layout": {
+															"selfStretch": "fit",
+															"flexSize": null
+														}
+													},
+													"layout": {
+														"type": "flex",
+														"justifyContent": "center",
+														"verticalAlignment": "center",
+														"orientation": "horizontal"
+													}
+												}
+											}
+										]
+									},
+									{
+										"name": "surecart/product-review-date",
+										"attributes": {
+											"datetime": "2025-10-02T09:37:00.225Z",
+											"format": "human-diff"
+										}
+									}
+								]
 							},
 							{
-								"name": "surecart/product-pagination-numbers"
+								"name": "surecart/product-review-rating-stars"
 							},
 							{
-								"name": "surecart/product-pagination-next"
+								"name": "surecart/product-review-title",
+								"attributes": {
+									"style": {
+										"typography": {
+											"fontStyle": "normal",
+											"fontWeight": "700"
+										}
+									}
+								}
+							},
+							{
+								"name": "surecart/product-review-content"
 							}
 						]
+					}
+				]
+			},
+			{
+				"name": "surecart/product-review-pagination",
+				"innerBlocks": [
+					{
+						"name": "surecart/product-review-pagination-previous"
+					},
+					{
+						"name": "surecart/product-review-pagination-numbers"
+					},
+					{
+						"name": "surecart/product-review-pagination-next"
 					}
 				]
 			}
