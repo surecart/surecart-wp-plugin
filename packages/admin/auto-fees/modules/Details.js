@@ -73,7 +73,10 @@ const Details = ({ autoFee, onUpdate, loading }) => {
 		<Box title={__('Details', 'surecart')} loading={loading}>
 			<ScInput
 				label={__('Name', 'surecart')}
-				help={__("Your Dynamic Price's name.", 'surecart')}
+				help={__(
+					'Your dynamic price name. This will be displayed to the customer.',
+					'surecart'
+				)}
 				value={name}
 				required
 				onScInput={handleNameChange}
