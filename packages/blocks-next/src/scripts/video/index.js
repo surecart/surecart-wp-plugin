@@ -78,7 +78,6 @@ store('surecart/video', {
 			Array.from(document.querySelectorAll('video'))
 				.filter((v) => v !== currentVideo) // get other videos.
 				.forEach((video) => {
-					video.muted = true;
 					!video.autoplay && video.pause();
 				});
 		},
