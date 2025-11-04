@@ -98,10 +98,9 @@ class ProvisionalAccount extends Model {
 	 *
 	 * @param array $products The products to seed.
 	 *
-	 * @return \SureCart\Models\Import
+	 * @return \SureCart\Models\Import|\WP_Error
 	 */
 	protected function seed( $products = [] ) {
-		// static call to the ProductImport will not work since this model has access to the product import model.
-		return ( new ProductImport() )->create( [ 'data' => $products ] );
+		return \SureCart::account()->seed( $products );
 	}
 }

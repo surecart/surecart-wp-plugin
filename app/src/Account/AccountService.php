@@ -33,6 +33,17 @@ class AccountService {
 	}
 
 	/**
+	 * Seed the account with products and collections.
+	 *
+	 * @param array $products The products to seed.
+	 *
+	 * @return \SureCart\Models\Import|\WP_Error
+	 */
+	public function seed( $products = [] ) {
+		return $this->app->resolve( 'seed_account' )->seed( $products );
+	}
+
+	/**
 	 * We get the account when the service is loaded.
 	 * Since this is loaded in a service container, its
 	 * cached so it only fetches once, no matter how many calls.
