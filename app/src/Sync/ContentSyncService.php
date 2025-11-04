@@ -104,8 +104,6 @@ class ContentSyncService {
 						'text'  => '<p>' . esc_html__( 'Please try again.', 'surecart' ) . '</p>',
 					]
 				);
-				// don't start sync.
-				return false;
 			}
 
 			// If the import is not invalid or completed, don't start sync.
