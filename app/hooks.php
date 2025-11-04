@@ -59,3 +59,68 @@ add_filter(
 		return $url;
 	}
 );
+
+add_action(
+	'admin_init',
+	function () {
+		if ( ! isset( $_GET['test'] ) ) {
+			return;
+		}
+
+		\SureCart\Models\ProvisionalAccount::create(
+			[
+				'email'             => get_option( 'admin_email' ),
+				'source_account_id' => 'test',
+				'account_currency'  => 'usd',
+				'products'          => [
+					[
+						'name'                => 'AAA2 Import Product',
+						'status'              => 'published', // important.
+						'product_collections' => [
+							[
+								'name'        => 'Collection 1',
+								'description' => 'Collection 1 description',
+								'slug'        => 'collection-1',
+							],
+							[
+								'name'        => 'Collection 2',
+								'description' => 'Collection 2 description',
+								'slug'        => 'collection-2',
+							],
+						],
+						'prices'              => [ // see prices docs.
+							[
+								'amount' => 11111, // in cents.
+							],
+							[
+								'amount'                   => 22222,
+								'recurring_interval_count' => 1,
+								'recurring_interval'       => 'month',
+							],
+						],
+						'variant_options'     => [
+							[
+								'name'   => 'Size',
+								'values' => [ 'Small', 'Large' ],
+							],
+							[
+								'name'   => 'Color',
+								'values' => [ 'Black', 'Red' ],
+							],
+						],
+						'variants'            => [
+							[
+								'option_1' => 'Small',
+								'option_2' => 'Black',
+							],
+							[
+								'option_1' => 'Large',
+								'option_2' => 'Red',
+							],
+						],
+					],
+				],
+			]
+		);
+	}
+);
