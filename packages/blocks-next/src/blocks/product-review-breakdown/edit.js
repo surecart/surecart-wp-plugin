@@ -103,7 +103,7 @@ export default function ({ attributes, setAttributes, clientId }) {
 				settings={[
 					{
 						colorValue: fill_color,
-						label: __('Fill Color', 'surecart'),
+						label: __('Star Color', 'surecart'),
 						onColorChange: (color) =>
 							setAttributes({ fill_color: color }),
 						resetAllFilter: () =>
@@ -111,7 +111,7 @@ export default function ({ attributes, setAttributes, clientId }) {
 					},
 					{
 						colorValue: bar_fill_color,
-						label: __('Bar Fill Color', 'surecart'),
+						label: __('Bar Active Color', 'surecart'),
 						onColorChange: (color) =>
 							setAttributes({ bar_fill_color: color }),
 						resetAllFilter: () =>

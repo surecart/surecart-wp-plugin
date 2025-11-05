@@ -82,6 +82,41 @@ class ReviewBreakdown extends \Elementor\Widget_Base {
 		);
 
 		$this->add_control(
+			'columns',
+			[
+				'label'       => esc_html__( 'Columns', 'surecart' ),
+				'type'        => \Elementor\Controls_Manager::SELECT,
+				'options'     => [
+					'1' => esc_html__( '1 Column', 'surecart' ),
+					'2' => esc_html__( '2 Columns', 'surecart' ),
+					'3' => esc_html__( '3 Columns', 'surecart' ),
+				],
+				'default'     => '1',
+				'description' => esc_html__( 'Choose the number of columns to display the review breakdown.', 'surecart' ),
+			]
+		);
+
+		$this->add_control(
+			'row_gap',
+			[
+				'label'       => esc_html__( 'Row Gap', 'surecart' ),
+				'type'        => \Elementor\Controls_Manager::SLIDER,
+				'size_units'  => [ 'px' ],
+				'range'       => [
+					'px' => [
+						'min' => 0,
+						'max' => 50,
+					],
+				],
+				'default'     => [
+					'size' => 20,
+					'unit' => 'px',
+				],
+				'description' => esc_html__( 'Adjust the spacing between rows.', 'surecart' ),
+			]
+		);
+
+		$this->add_control(
 			'star_size',
 			[
 				'label'      => esc_html__( 'Star Size', 'surecart' ),
@@ -138,7 +173,7 @@ class ReviewBreakdown extends \Elementor\Widget_Base {
 		$this->add_control(
 			'bar_color',
 			array(
-				'label'     => esc_html__( 'Bar Fill Color', 'surecart' ),
+				'label'     => esc_html__( 'Bar Active Color', 'surecart' ),
 				'type'      => \Elementor\Controls_Manager::COLOR,
 				'global'    => [
 					'default' => \Elementor\Core\Kits\Documents\Tabs\Global_Colors::COLOR_PRIMARY,
@@ -304,16 +339,18 @@ class ReviewBreakdown extends \Elementor\Widget_Base {
 		$settings              = $this->get_settings_for_display();
 		$show_for_zero_reviews = 'yes' === ( $settings['show_for_zero_reviews'] ?? 'yes' );
 		$star_size             = $settings['star_size']['size'] ?? 25;
+		$columns               = $settings['columns'] ?? 1;
+		$row_gap               = $settings['row_gap']['size'] ?? 20;
 
 		if ( \Elementor\Plugin::$instance->editor->is_edit_mode() ) {
-			$this->render_preview( $star_size );
+			$this->render_preview( $star_size, $columns, $row_gap );
 			return;
 		}
 
 		?>
 		<div <?php $this->print_render_attribute_string( 'wrapper' ); ?>>
 			<!-- wp:surecart/product-review-summary -->
-			<!-- wp:surecart/product-review-breakdown {"show_for_zero_reviews":<?php echo $show_for_zero_reviews ? 'true' : 'false'; ?>,"size":<?php echo absint( $star_size ); ?>} /-->
+			<!-- wp:surecart/product-review-breakdown {"show_for_zero_reviews":<?php echo $show_for_zero_reviews ? 'true' : 'false'; ?>,"size":<?php echo absint( $star_size ); ?>,"columns":<?php echo absint( $columns ); ?>,"row_gap":<?php echo absint( $row_gap ); ?>} /-->
 			<!-- /wp:surecart/product-review-summary -->
 		</div>
 		<?php
@@ -323,10 +360,12 @@ class ReviewBreakdown extends \Elementor\Widget_Base {
 	 * Render preview in editor.
 	 *
 	 * @param int $star_size Star size.
+	 * @param int $columns Number of columns.
+	 * @param int $row_gap Row gap in pixels.
 	 *
 	 * @return void
 	 */
-	private function render_preview( $star_size ) {
+	private function render_preview( $star_size, $columns = 1, $row_gap = 20 ) {
 		$breakdown_data = [
 			5 => 45,
 			4 => 25,
@@ -335,15 +374,35 @@ class ReviewBreakdown extends \Elementor\Widget_Base {
 			1 => 3,
 		];
 		$total          = array_sum( $breakdown_data );
+		$columns        = absint( $columns );
+		$row_gap        = absint( $row_gap );
+
+		// Calculate max height for multi-column layouts.
+		$max_height_style = '';
+		if ( 2 === $columns ) {
+			$max_height_style = 'max-height: 150px;';
+		} elseif ( 3 === $columns ) {
+			$max_height_style = 'max-height: 85px;';
+		}
 		?>
 		<div class="wp-block-surecart-product-review-breakdown">
-			<div class="sc-star-bars">
+			<div class="sc-star-bars sc-star-bars--columns-<?php echo esc_attr( $columns ); ?>" style="gap: <?php echo esc_attr( $row_gap ); ?>px; <?php echo esc_attr( $max_height_style ); ?>">
 				<?php
 				for ( $star = 5; $star >= 1; $star-- ) {
 					$count      = $breakdown_data[ $star ];
 					$percentage = $total > 0 ? ( $count / $total ) * 100 : 0;
+
+					// Calculate width for multi-column layouts.
+					$width_style = '';
+					if ( 2 === $columns ) {
+						$width_calc  = 'calc(50% - ' . ( $row_gap / 2 ) . 'px)';
+						$width_style = 'width: ' . $width_calc . ';';
+					} elseif ( 3 === $columns ) {
+						$width_calc  = 'calc(33.333% - ' . ( $row_gap * 2 / 3 ) . 'px)';
+						$width_style = 'width: ' . $width_calc . ';';
+					}
 					?>
-					<a href="#" class="sc-star-row" onclick="event.preventDefault();">
+					<a href="#" class="sc-star-row" onclick="event.preventDefault();" style="<?php echo esc_attr( $width_style ); ?>">
 						<div class="sc-star-label">
 							<?php echo esc_html( $star ); ?>
 							<svg height="<?php echo esc_attr( $star_size ); ?>" width="<?php echo esc_attr( $star_size ); ?>" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2">
@@ -364,39 +423,44 @@ class ReviewBreakdown extends \Elementor\Widget_Base {
 			.wp-block-surecart-product-review-breakdown .sc-star-bars {
 				display: flex;
 				flex-direction: column;
-				gap: 8px;
+				flex-wrap: wrap;
+				align-content: flex-start;
 			}
 			.wp-block-surecart-product-review-breakdown .sc-star-row {
 				display: flex;
 				align-items: center;
-				gap: 12px;
+				gap: 8px;
 				text-decoration: none;
 				color: inherit;
-				padding: 8px;
-				border-radius: 4px;
-				transition: background-color 0.2s;
+				cursor: pointer;
+				transition: opacity 0.2s ease;
+				width: 100%;
+			}
+			.wp-block-surecart-product-review-breakdown .sc-star-row:hover {
+				opacity: 0.8;
 			}
 			.wp-block-surecart-product-review-breakdown .sc-star-label {
 				display: flex;
 				align-items: center;
+				justify-content: center;
 				gap: 4px;
-				min-width: 50px;
 			}
 			.wp-block-surecart-product-review-breakdown .sc-bar-wrap {
 				flex: 1;
-				height: 12px;
+				height: 8px;
 				background-color: #e0e0e0;
 				border-radius: 4px;
 				overflow: hidden;
+				position: relative;
+				min-width: 100px;
 			}
 			.wp-block-surecart-product-review-breakdown .sc-bar-fill {
 				height: 100%;
 				background-color: var(--e-global-color-primary, #6c63ff);
 				border-radius: 4px;
-				transition: width 0.3s;
+				transition: width 0.3s ease;
 			}
 			.wp-block-surecart-product-review-breakdown .sc-count {
-				min-width: 30px;
 				text-align: right;
 			}
 		</style>
@@ -412,16 +476,37 @@ class ReviewBreakdown extends \Elementor\Widget_Base {
 		?>
 		<#
 		var starSize = settings.star_size.size || 25;
+		var columns = parseInt(settings.columns) || 1;
+		var rowGap = settings.row_gap.size || 20;
 		var breakdownData = {5: 45, 4: 25, 3: 10, 2: 5, 1: 3};
 		var total = 88;
+
+		// Calculate max height for multi-column layouts
+		var maxHeightStyle = '';
+		if (columns === 2) {
+			maxHeightStyle = 'max-height: 150px;';
+		} else if (columns === 3) {
+			maxHeightStyle = 'max-height: 85px;';
+		}
+
+		// Calculate width style for multi-column layouts
+		var getWidthStyle = function(cols, gap) {
+			if (cols === 2) {
+				return 'width: calc(50% - ' + (gap / 2) + 'px);';
+			} else if (cols === 3) {
+				return 'width: calc(33.333% - ' + (gap * 2 / 3) + 'px);';
+			}
+			return '';
+		};
 		#>
 		<div class="wp-block-surecart-product-review-breakdown">
-			<div class="sc-star-bars">
+			<div class="sc-star-bars sc-star-bars--columns-{{ columns }}" style="gap: {{ rowGap }}px; {{ maxHeightStyle }}">
 				<# for (var star = 5; star >= 1; star--) {
 					var count = breakdownData[star];
 					var percentage = (count / total) * 100;
+					var widthStyle = getWidthStyle(columns, rowGap);
 				#>
-					<a href="#" class="sc-star-row" onclick="event.preventDefault();">
+					<a href="#" class="sc-star-row" onclick="event.preventDefault();" style="{{ widthStyle }}">
 						<div class="sc-star-label">
 							{{ star }}
 							<svg height="{{ starSize }}" width="{{ starSize }}" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2">
@@ -440,39 +525,44 @@ class ReviewBreakdown extends \Elementor\Widget_Base {
 			.wp-block-surecart-product-review-breakdown .sc-star-bars {
 				display: flex;
 				flex-direction: column;
-				gap: 8px;
+				flex-wrap: wrap;
+				align-content: flex-start;
 			}
 			.wp-block-surecart-product-review-breakdown .sc-star-row {
 				display: flex;
 				align-items: center;
-				gap: 12px;
+				gap: 8px;
 				text-decoration: none;
 				color: inherit;
-				padding: 8px;
-				border-radius: 4px;
-				transition: background-color 0.2s;
+				cursor: pointer;
+				transition: opacity 0.2s ease;
+				width: 100%;
+			}
+			.wp-block-surecart-product-review-breakdown .sc-star-row:hover {
+				opacity: 0.8;
 			}
 			.wp-block-surecart-product-review-breakdown .sc-star-label {
 				display: flex;
 				align-items: center;
+				justify-content: center;
 				gap: 4px;
-				min-width: 50px;
 			}
 			.wp-block-surecart-product-review-breakdown .sc-bar-wrap {
 				flex: 1;
-				height: 12px;
+				height: 8px;
 				background-color: #e0e0e0;
 				border-radius: 4px;
 				overflow: hidden;
+				position: relative;
+				min-width: 100px;
 			}
 			.wp-block-surecart-product-review-breakdown .sc-bar-fill {
 				height: 100%;
 				background-color: var(--e-global-color-primary, #6c63ff);
 				border-radius: 4px;
-				transition: width 0.3s;
+				transition: width 0.3s ease;
 			}
 			.wp-block-surecart-product-review-breakdown .sc-count {
-				min-width: 30px;
 				text-align: right;
 			}
 		</style>

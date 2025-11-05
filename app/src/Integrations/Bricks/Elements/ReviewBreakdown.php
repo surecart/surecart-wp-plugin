@@ -64,6 +64,30 @@ class ReviewBreakdown extends \Bricks\Element {
 			'default' => true,
 		];
 
+		$this->controls['columns'] = [
+			'tab'         => 'content',
+			'label'       => esc_html__( 'Columns', 'surecart' ),
+			'type'        => 'select',
+			'options'     => [
+				'1' => esc_html__( '1 Column', 'surecart' ),
+				'2' => esc_html__( '2 Columns', 'surecart' ),
+				'3' => esc_html__( '3 Columns', 'surecart' ),
+			],
+			'default'     => '1',
+			'placeholder' => esc_html__( '1 Column', 'surecart' ),
+			'description' => esc_html__( 'Choose the number of columns to display the review breakdown.', 'surecart' ),
+		];
+
+		$this->controls['row_gap'] = [
+			'tab'         => 'content',
+			'label'       => esc_html__( 'Row Gap', 'surecart' ),
+			'type'        => 'number',
+			'units'       => true,
+			'default'     => '20px',
+			'placeholder' => '20px',
+			'description' => esc_html__( 'Adjust the spacing between rows.', 'surecart' ),
+		];
+
 		$this->controls['star_size'] = [
 			'tab'         => 'content',
 			'label'       => esc_html__( 'Star Size', 'surecart' ),
@@ -104,7 +128,7 @@ class ReviewBreakdown extends \Bricks\Element {
 
 		$this->controls['bar_fill_color'] = [
 			'tab'     => 'content',
-			'label'   => esc_html__( 'Bar Fill Color', 'surecart' ),
+			'label'   => esc_html__( 'Bar Active Color', 'surecart' ),
 			'type'    => 'color',
 			'default' => [
 				'hex' => 'var(--bricks-color-primary)',
@@ -127,7 +151,7 @@ class ReviewBreakdown extends \Bricks\Element {
 			'css'     => [
 				[
 					'property' => 'background-color',
-					'selector' => '.sc-bar-wrap',
+					'selector' => '.sc-star-bars .sc-bar-wrap',
 				],
 			],
 		];
@@ -141,19 +165,23 @@ class ReviewBreakdown extends \Bricks\Element {
 	public function render() {
 		$show_for_zero_reviews = ! empty( $this->settings['show_for_zero_reviews'] );
 		$star_size             = ! empty( $this->settings['star_size'] ) ? (int) $this->settings['star_size'] : 25;
+		$columns               = ! empty( $this->settings['columns'] ) ? (int) $this->settings['columns'] : 1;
+		$row_gap               = ! empty( $this->settings['row_gap'] ) ? (int) $this->settings['row_gap'] : 20;
 		$fill_color            = $this->get_raw_color( 'fill_color' );
 		if ( empty( $fill_color ) ) {
 			$fill_color = 'var(--bricks-color-primary)';
 		}
 
 		if ( $this->is_admin_editor() ) {
-			$this->render_preview( $star_size, $fill_color );
+			$this->render_preview( $star_size, $fill_color, $columns, $row_gap );
 			return;
 		}
 
 		$attributes = [
 			'show_for_zero_reviews' => $show_for_zero_reviews,
 			'size'                  => $star_size,
+			'columns'               => $columns,
+			'row_gap'               => $row_gap,
 			'fill_color'            => esc_attr( $fill_color ),
 		];
 
@@ -167,11 +195,14 @@ class ReviewBreakdown extends \Bricks\Element {
 	/**
 	 * Render preview in editor.
 	 *
-	 * @param int $star_size Star size.
+	 * @param int    $star_size Star size.
+	 * @param string $fill_color Fill color.
+	 * @param int    $columns Number of columns.
+	 * @param int    $row_gap Row gap in pixels.
 	 *
 	 * @return void
 	 */
-	private function render_preview( $star_size, $fill_color ) {
+	private function render_preview( $star_size, $fill_color, $columns = 1, $row_gap = 20 ) {
 		$breakdown_data = [
 			5 => 45,
 			4 => 25,
@@ -181,22 +212,38 @@ class ReviewBreakdown extends \Bricks\Element {
 		];
 		$total          = array_sum( $breakdown_data );
 
-		$content = '<div class="sc-star-bars">';
+		// Calculate max height for multi-column layouts.
+		$max_height = '';
+		if ( 2 === $columns ) {
+			$max_height = 'max-height: 150px;';
+		} elseif ( 3 === $columns ) {
+			$max_height = 'max-height: 85px;';
+		}
+
+		$content = '<div class="sc-star-bars sc-star-bars--columns-' . esc_attr( $columns ) . '" style="display: flex; flex-direction: column; flex-wrap: wrap; gap: ' . esc_attr( $row_gap ) . 'px; align-content: flex-start; ' . $max_height . '">';
 		for ( $star = 5; $star >= 1; $star-- ) {
 			$count      = $breakdown_data[ $star ];
 			$percentage = $total > 0 ? ( $count / $total ) * 100 : 0;
 
-			$content .= '<a href="#" class="sc-star-row" onclick="event.preventDefault();" style="display: flex; align-items: center; gap: 12px; padding: 8px; text-decoration: none; color: inherit; flex-grow: 1; min-width: 200px;">';
-			$content .= '<div class="sc-star-label" style="display: flex; align-items: center; gap: 4px; min-width: 50px;">';
+			// Calculate width for multi-column layouts.
+			$width_style = '';
+			if ( 2 === $columns ) {
+				$width_style = 'width: calc(50% - ' . esc_attr( $row_gap / 2 ) . 'px);';
+			} elseif ( 3 === $columns ) {
+				$width_style = 'width: calc(33.333% - ' . esc_attr( $row_gap * 2 / 3 ) . 'px);';
+			}
+
+			$content .= '<a href="#" class="sc-star-row" onclick="event.preventDefault();" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: inherit; cursor: pointer; transition: opacity 0.2s ease; ' . $width_style . '">';
+			$content .= '<div class="sc-star-label" style="display: flex; align-items: center; gap: 4px; justify-content: center;">';
 			$content .= esc_html( $star );
 			$content .= '<svg height="' . esc_attr( $star_size ) . '" width="' . esc_attr( $star_size ) . '" viewBox="0 0 24 24" fill="' . esc_attr( $fill_color ) . '" stroke="' . esc_attr( $fill_color ) . '" stroke-width="2">';
 			$content .= '<path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>';
 			$content .= '</svg>';
 			$content .= '</div>';
-			$content .= '<div class="sc-bar-wrap" style="flex: 1; height: 12px; border-radius: 4px; overflow: hidden;">';
-			$content .= '<div class="sc-bar-fill" style="height: 100%; background-color: border-radius: 4px; width: ' . esc_attr( $percentage ) . '%;"></div>';
+			$content .= '<div class="sc-bar-wrap" style="flex: 1; height: 8px; border-radius: 4px; overflow: hidden; position: relative; min-width: 100px;">';
+			$content .= '<div class="sc-bar-fill" style="height: 100%; border-radius: 4px; width: ' . esc_attr( $percentage ) . '%; transition: width 0.3s ease;"></div>';
 			$content .= '</div>';
-			$content .= '<div class="sc-count" style="min-width: 30px; text-align: right;">' . esc_html( $count ) . '</div>';
+			$content .= '<div class="sc-count" style="text-align: right;">' . esc_html( $count ) . '</div>';
 			$content .= '</a>';
 		}
 		$content .= '</div>';
