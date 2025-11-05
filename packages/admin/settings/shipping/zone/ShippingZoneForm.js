@@ -13,7 +13,6 @@ import {
 	ScIcon,
 } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
-import { Tooltip } from '@wordpress/components';
 import { useState, useEffect, Fragment, useRef } from '@wordpress/element';
 import { store as coreStore } from '@wordpress/core-data';
 import { store as noticesStore } from '@wordpress/notices';
@@ -252,6 +251,7 @@ export default ({
 								}
 								slot="label-end"
 								position="top left"
+								width="400px"
 							>
 								<ScIcon
 									slot="label-end"
