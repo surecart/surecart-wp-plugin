@@ -204,6 +204,15 @@ class Customer extends Model {
 	}
 
 	/**
+	 * Get the shipping address attribute
+	 *
+	 * @return array|null The shipping address.
+	 */
+	public function getShippingAddressDisplayAttribute() {
+		return $this->shipping_address->formatted_string ?? null;
+	}
+
+	/**
 	 * Get the billing address attribute
 	 *
 	 * @return array|null The billing address.
