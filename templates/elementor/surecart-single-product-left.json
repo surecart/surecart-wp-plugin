@@ -784,7 +784,15 @@
 				},
 				{
 					"id": "55aa5be1",
-					"settings": {},
+					"settings": {
+						"review_border_style": "solid",
+						"review_border_color": "#e5e7eb",
+						"spacing": {
+							"unit": "px",
+							"size": 15,
+							"sizes": []
+						}
+					},
 					"elements": [],
 					"isInner": false,
 					"widgetType": "surecart-product-review-list",
