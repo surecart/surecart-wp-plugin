@@ -107,13 +107,13 @@ class ProductAverageRatingStars extends \Elementor\Widget_Base {
 		$this->add_control(
 			'fill_color',
 			array(
-				'label'     => esc_html__( 'Fill Color', 'surecart' ),
+				'label'     => esc_html__( 'Star Color', 'surecart' ),
 				'type'      => \Elementor\Controls_Manager::COLOR,
 				'global'    => [
 					'default' => \Elementor\Core\Kits\Documents\Tabs\Global_Colors::COLOR_PRIMARY,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wp-block-surecart-product-review-average-rating-stars svg' => 'stroke: {{VALUE}}; color: {{VALUE}}; fill: {{VALUE}};',
+					'{{WRAPPER}} .wp-block-surecart-product-review-average-rating-stars svg' => 'stroke: {{VALUE}}; color: {{VALUE}};',
 				],
 			)
 		);

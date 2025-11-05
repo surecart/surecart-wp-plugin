@@ -101,7 +101,7 @@ export default ({ attributes, setAttributes, context, clientId }) => {
 				settings={[
 					{
 						colorValue: fill_color,
-						label: __('Fill Color', 'surecart'),
+						label: __('Star Color', 'surecart'),
 						onColorChange: (color) =>
 							setAttributes({ fill_color: color }),
 						resetAllFilter: () =>

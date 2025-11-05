@@ -59,7 +59,7 @@ class ProductAverageRatingStars extends \Bricks\Element {
 	public function set_controls() {
 		$this->controls['size'] = [
 			'tab'         => 'content',
-			'label'       => esc_html__( 'Size', 'surecart' ),
+			'label'       => esc_html__( 'Star Size', 'surecart' ),
 			'type'        => 'number',
 			'units'       => true,
 			'default'     => '25px',
@@ -68,7 +68,7 @@ class ProductAverageRatingStars extends \Bricks\Element {
 
 		$this->controls['fill_color'] = [
 			'tab'      => 'content',
-			'label'    => esc_html__( 'Fill Color', 'surecart' ),
+			'label'    => esc_html__( 'Star Color', 'surecart' ),
 			'type'     => 'color',
 			'rerender' => true,
 			'default'  => [

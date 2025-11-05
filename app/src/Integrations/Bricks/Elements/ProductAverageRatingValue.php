@@ -64,7 +64,7 @@ class ProductAverageRatingValue extends \Bricks\Element {
 			'options' => [
 				'none'        => esc_html__( 'None', 'surecart' ),
 				'parentheses' => esc_html__( 'Parentheses', 'surecart' ),
-				'slash'       => esc_html__( '/ 5', 'surecart' ),
+				'slash'       => esc_html__( '/ 5.0', 'surecart' ),
 			],
 			'default' => 'none',
 			'inline'  => true,
@@ -85,7 +85,7 @@ class ProductAverageRatingValue extends \Bricks\Element {
 			if ( 'parentheses' === $format_style ) {
 				$display_value = '(4.3)';
 			} elseif ( 'slash' === $format_style ) {
-				$display_value = '4.3 / 5';
+				$display_value = '4.3 / 5.0';
 			}
 
 			echo $this->preview( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
