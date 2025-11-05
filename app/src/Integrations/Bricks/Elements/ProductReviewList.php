@@ -84,29 +84,33 @@ class ProductReviewList extends \Bricks\Element {
 		];
 
 		$this->controls['add_button_separator'] = [
-			'label' => esc_html__( 'Add Review Button', 'surecart' ),
-			'type'  => 'separator',
+			'label'    => esc_html__( 'Add Review Button', 'surecart' ),
+			'type'     => 'separator',
+			'required' => [ 'show_add_button', '=', true ],
 		];
 
 		$this->controls['add_button_label'] = [
-			'tab'     => 'content',
-			'label'   => esc_html__( 'Button Text', 'surecart' ),
-			'type'    => 'text',
-			'default' => esc_html__( 'Write a Review', 'surecart' ),
+			'tab'      => 'content',
+			'label'    => esc_html__( 'Button Text', 'surecart' ),
+			'type'     => 'text',
+			'default'  => esc_html__( 'Write a Review', 'surecart' ),
+			'required' => [ 'show_add_button', '=', true ],
 		];
 
 		$this->controls['add_button_text_color'] = [
-			'tab'   => 'content',
-			'label' => esc_html__( 'Button Text Color', 'surecart' ),
-			'type'  => 'color',
-			'reset' => true,
+			'tab'      => 'content',
+			'label'    => esc_html__( 'Button Text Color', 'surecart' ),
+			'type'     => 'color',
+			'reset'    => true,
+			'required' => [ 'show_add_button', '=', true ],
 		];
 
 		$this->controls['add_button_background_color'] = [
-			'tab'   => 'content',
-			'label' => esc_html__( 'Button Background Color', 'surecart' ),
-			'type'  => 'color',
-			'reset' => true,
+			'tab'      => 'content',
+			'label'    => esc_html__( 'Button Background Color', 'surecart' ),
+			'type'     => 'color',
+			'reset'    => true,
+			'required' => [ 'show_add_button', '=', true ],
 		];
 
 		$this->controls['content_separator'] = [
@@ -131,7 +135,7 @@ class ProductReviewList extends \Bricks\Element {
 		// Rating stars fill color for content stars.
 		$this->controls['rating_fill_color'] = [
 			'tab'      => 'content',
-			'label'    => esc_html__( 'Rating Fill Color', 'surecart' ),
+			'label'    => esc_html__( 'Star color', 'surecart' ),
 			'type'     => 'color',
 			'rerender' => true,
 			'default'  => [
@@ -428,7 +432,20 @@ class ProductReviewList extends \Bricks\Element {
 		if ( $show_sidebar ) {
 			$content .= '<div style="width: 250px; min-width: 250px;">';
 			$content .= '<div style="margin-bottom: 20px;"><div style="font-weight: 600; margin-bottom: 10px;">' . esc_html__( 'Active Filters', 'surecart' ) . '</div>';
-			$content .= '<div style="display: flex; gap: 8px; flex-wrap: wrap;"><span style="padding: 6px 12px; background: #f3f4f6; border-radius: 16px; font-size: 14px;">5 Stars</span></div></div>';
+			$content .= '<div style="display: flex; gap: 8px; flex-wrap: wrap;">';
+			$content .= '<span style="padding: 6px 12px; background: #f3f4f6; border-radius: 16px; font-size: 14px; display: inline-flex; align-items: center; gap: 6px;">5 Stars';
+			$content .= wp_kses(
+				\SureCart::svg()->get(
+					'x',
+					[
+						'class'      => 'sc-tag__clear',
+						'aria-label' => __( 'Remove tag', 'surecart' ),
+						'width'      => 12,
+					]
+				),
+				sc_allowed_svg_html()
+			);
+			$content .= '</span></div></div>';
 			$content .= '<div><div style="font-weight: 600; margin-bottom: 12px;">' . esc_html__( 'Filter by', 'surecart' ) . '</div>';
 			$content .= '<div style="display: flex; flex-direction: column; gap: 10px;">';
 			for ( $i = 5; $i >= 1; $i-- ) {
@@ -499,14 +516,6 @@ class ProductReviewList extends \Bricks\Element {
 			$content .= '<div style="padding: 10px 16px; background: #f9fafb; border-radius: 4px;">' . esc_html__( 'Next', 'surecart' ) . '</div>';
 			$content .= '</nav>';
 		}
-
-		$content .= '<div class="bricks-element-placeholder" data-type="info" draggable="false">';
-		$content .= '<i class="ti-list"></i>';
-		$content .= '<div class="placeholder-inner">';
-		$content .= '<div class="placeholder-description">' . __( 'The accurate preview for this element is only available on frontend due to compatibility issues.', 'surecart' ) . '</div>';
-		$content .= '</div>';
-		$content .= '</div>';
-
 		$content .= '</div>';
 
 		echo $this->preview( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped

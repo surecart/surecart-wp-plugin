@@ -110,9 +110,12 @@ class ProductReviewList extends \Elementor\Widget_Base {
 		$this->add_control(
 			'button_text',
 			[
-				'label'   => esc_html__( 'Button Text', 'surecart' ),
-				'type'    => \Elementor\Controls_Manager::TEXT,
-				'default' => esc_html__( 'Write a Review', 'surecart' ),
+				'label'     => esc_html__( 'Button Text', 'surecart' ),
+				'type'      => \Elementor\Controls_Manager::TEXT,
+				'default'   => esc_html__( 'Write a Review', 'surecart' ),
+				'condition' => [
+					'show_add_button' => 'yes',
+				],
 			]
 		);
 
