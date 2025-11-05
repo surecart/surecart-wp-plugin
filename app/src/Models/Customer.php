@@ -210,7 +210,7 @@ class Customer extends Model {
 	 */
 	public function getBillingAddressDisplayAttribute() {
 		if ( $this->billing_matches_shipping ) {
-			return $this->shipping_address->formatted_string;
+			return $this->shipping_address->formatted_string ?? null;
 		}
 
 		return $this->attributes['billing_address']->formatted_string ?? null;
