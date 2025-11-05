@@ -80,8 +80,11 @@ class ProductReviews extends \Bricks\Element {
 							[
 								'name'     => 'heading',
 								'settings' => [
-									'text' => esc_html__( 'Customer Reviews', 'surecart' ),
-									'tag'  => 'h2',
+									'text'    => esc_html__( 'Customer Reviews', 'surecart' ),
+									'tag'     => 'h2',
+									'_margin' => [
+										'bottom' => '20',
+									],
 								],
 							],
 							[
@@ -104,19 +107,35 @@ class ProductReviews extends \Bricks\Element {
 										'settings' => [
 											'_direction' => 'column',
 											'_rowGap'    => '10px',
+											'_width'     => '30%',
 										],
 										'children' => [
 											[
 												'name'     => 'surecart-product-review-average-rating-value',
 												'settings' => [
 													'format_style' => 'slash',
+													'_typography' => array(
+														'font-size' => '2em',
+														'font-weight' => '600',
+													),
 												],
 											],
 											[ 'name' => 'surecart-product-review-average-rating-stars' ],
 											[ 'name' => 'surecart-product-review-total-rating' ],
 										],
 									],
-									[ 'name' => 'surecart-product-review-breakdown' ],
+									[
+										'name'     => 'surecart-product-review-breakdown',
+										'settings' => [
+											'columns' => 2,
+											'bar_fill_color' => [
+												'hex' => 'var(--bricks-color-primary)',
+											],
+											'bar_background_color' => [
+												'hex' => '#e0e0e0',
+											],
+										],
+									],
 								],
 							],
 							[ 'name' => 'surecart-product-review-list' ],
