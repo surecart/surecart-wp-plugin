@@ -445,7 +445,9 @@ class ProductReviewList extends \Bricks\Element {
 				),
 				sc_allowed_svg_html()
 			);
-			$content .= '</span></div></div>';
+			$content .= '</span></div>';
+			$content .= '<div style="margin-top: 10px; text-decoration: underline; font-size: 14px; cursor: pointer; color: var(--bricks-color-primary, #6c63ff);">' . esc_html__( 'Clear All', 'surecart' ) . '</div>';
+			$content .= '</div>';
 			$content .= '<div><div style="font-weight: 600; margin-bottom: 12px;">' . esc_html__( 'Filter by', 'surecart' ) . '</div>';
 			$content .= '<div style="display: flex; flex-direction: column; gap: 10px;">';
 			for ( $i = 5; $i >= 1; $i-- ) {
