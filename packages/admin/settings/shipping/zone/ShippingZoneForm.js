@@ -156,9 +156,9 @@ export default ({
 				>
 					<ScFlex
 						flexDirection="column"
-						css={css`
-							gap: var(--sc-spacing-medium);
-						`}
+						style={{
+							'--sc-flex-column-gap': '1.5em',
+						}}
 					>
 						<Error error={error} setError={setError} />
 						<ScInput
