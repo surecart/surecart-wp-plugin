@@ -132,6 +132,32 @@ export class ScPayment {
     );
   }
 
+  renderRazorpay(processor) {
+    const title = hasOtherAvailableCreditCardProcessor('razorpay') ? __('Credit Card (Razorpay)', 'surecart') : __('Credit Card', 'surecart');
+
+    // if system currency is not in the supported currency list, then stop.
+    if (!(processor?.supported_currencies ?? []).includes(window?.scData?.currency)) {
+      return;
+    }
+
+    return (
+      <sc-payment-method-choice key={processor?.id} processor-id="razorpay">
+        <span slot="summary" class="sc-payment-toggle-summary">
+          <sc-icon name="credit-card" style={{ fontSize: '24px' }} aria-hidden="true"></sc-icon>
+          <span>{title}</span>
+        </span>
+
+        <sc-card>
+          <sc-payment-selected label={__('Credit Card selected for check out.', 'surecart')}>
+            <sc-icon slot="icon" name="credit-card" aria-hidden="true"></sc-icon>
+            {__('Another step will appear after submitting your order to complete your purchase details.', 'surecart')}
+          </sc-payment-selected>
+        </sc-card>
+        <sc-checkout-razorpay-payment-provider />
+      </sc-payment-method-choice>
+    );
+  }
+
   render() {
     // payment is not required for this order.
     if (checkoutState.checkout?.payment_method_required === false) {
@@ -182,6 +208,8 @@ export class ScPayment {
                     return this.renderPayPal(processor);
                   case 'paystack':
                     return this.renderPaystack(processor);
+                  case 'razorpay':
+                    return this.renderRazorpay(processor);
                   case 'mock':
                     return this.renderMock(processor);
                 }

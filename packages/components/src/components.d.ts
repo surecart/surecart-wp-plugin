@@ -540,6 +540,8 @@ export namespace Components {
          */
         "selectorTitle": string;
     }
+    interface ScCheckoutRazorpayPaymentProvider {
+    }
     /**
      * This component listens for stock requirements and displays a dialog to the user.
      */
@@ -4811,6 +4813,12 @@ declare global {
         prototype: HTMLScCheckoutProductPriceVariantSelectorElement;
         new (): HTMLScCheckoutProductPriceVariantSelectorElement;
     };
+    interface HTMLScCheckoutRazorpayPaymentProviderElement extends Components.ScCheckoutRazorpayPaymentProvider, HTMLStencilElement {
+    }
+    var HTMLScCheckoutRazorpayPaymentProviderElement: {
+        prototype: HTMLScCheckoutRazorpayPaymentProviderElement;
+        new (): HTMLScCheckoutRazorpayPaymentProviderElement;
+    };
     interface HTMLScCheckoutStockAlertElementEventMap {
         "scUpdateLineItem": LineItemData;
     }
@@ -6827,6 +6835,7 @@ declare global {
         "sc-checkout-mollie-payment": HTMLScCheckoutMolliePaymentElement;
         "sc-checkout-paystack-payment-provider": HTMLScCheckoutPaystackPaymentProviderElement;
         "sc-checkout-product-price-variant-selector": HTMLScCheckoutProductPriceVariantSelectorElement;
+        "sc-checkout-razorpay-payment-provider": HTMLScCheckoutRazorpayPaymentProviderElement;
         "sc-checkout-stock-alert": HTMLScCheckoutStockAlertElement;
         "sc-checkout-test-complete": HTMLScCheckoutTestCompleteElement;
         "sc-checkout-unsaved-changes-warning": HTMLScCheckoutUnsavedChangesWarningElement;
@@ -7581,6 +7590,8 @@ declare namespace LocalJSX {
           * The title for price and variant selections
          */
         "selectorTitle"?: string;
+    }
+    interface ScCheckoutRazorpayPaymentProvider {
     }
     /**
      * This component listens for stock requirements and displays a dialog to the user.
@@ -11652,6 +11663,7 @@ declare namespace LocalJSX {
         "sc-checkout-mollie-payment": ScCheckoutMolliePayment;
         "sc-checkout-paystack-payment-provider": ScCheckoutPaystackPaymentProvider;
         "sc-checkout-product-price-variant-selector": ScCheckoutProductPriceVariantSelector;
+        "sc-checkout-razorpay-payment-provider": ScCheckoutRazorpayPaymentProvider;
         "sc-checkout-stock-alert": ScCheckoutStockAlert;
         "sc-checkout-test-complete": ScCheckoutTestComplete;
         "sc-checkout-unsaved-changes-warning": ScCheckoutUnsavedChangesWarning;
@@ -11893,6 +11905,7 @@ declare module "@stencil/core" {
             "sc-checkout-mollie-payment": LocalJSX.ScCheckoutMolliePayment & JSXBase.HTMLAttributes<HTMLScCheckoutMolliePaymentElement>;
             "sc-checkout-paystack-payment-provider": LocalJSX.ScCheckoutPaystackPaymentProvider & JSXBase.HTMLAttributes<HTMLScCheckoutPaystackPaymentProviderElement>;
             "sc-checkout-product-price-variant-selector": LocalJSX.ScCheckoutProductPriceVariantSelector & JSXBase.HTMLAttributes<HTMLScCheckoutProductPriceVariantSelectorElement>;
+            "sc-checkout-razorpay-payment-provider": LocalJSX.ScCheckoutRazorpayPaymentProvider & JSXBase.HTMLAttributes<HTMLScCheckoutRazorpayPaymentProviderElement>;
             /**
              * This component listens for stock requirements and displays a dialog to the user.
              */
