@@ -30,8 +30,6 @@ export default () => {
 		};
 	});
 
-	console.log('processors', processors);
-
 	const renderStatus = (type) => {
 		const test = (processors || []).some(
 			(p) =>
