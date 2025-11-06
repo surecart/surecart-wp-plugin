@@ -143,6 +143,9 @@ class PaymentMethodController extends BaseController {
 			)
 		);
 
+		error_log('processors::');
+		error_log(print_r($processor_names, true));
+
 		if ( empty( $processor_names ) ) {
 			return '<sc-alert type="info" open>' . __( 'You cannot currently add a payment method. Please contact us for support.', 'surecart' ) . '</sc-alert>';
 		}
@@ -242,6 +245,23 @@ class PaymentMethodController extends BaseController {
 							currency="<?php echo esc_attr( \SureCart::account()->currency ); ?>"
 							customer-id="<?php echo esc_attr( User::current()->customerId( $this->isLiveMode() ? 'live' : 'test' ) ); ?>">
 						</sc-paystack-add-method>
+					</sc-toggle>
+				<?php endif; ?>
+
+				<?php if ( in_array( 'razorpay', $processor_names ) && ! in_array( 'stripe', $processor_names ) && ! in_array( 'paystack', $processor_names ) ) : ?>
+					<sc-toggle class="sc-razorpay-toggle" show-control shady borderless>
+						<span slot="summary" class="sc-payment-toggle-summary">
+							<sc-flex>
+								<sc-icon name="creditcard" style="font-size:24px"></sc-icon>
+								<span><?php esc_html_e( 'Credit Card', 'surecart' ); ?></span>
+							</sc-flex>
+						</span>
+						<sc-razorpay-add-method
+							success-url="<?php echo esc_url( $success_url ); ?>"
+							live-mode="<?php echo esc_attr( $this->isLiveMode() ? 'true' : 'false' ); ?>"
+							currency="<?php echo esc_attr( \SureCart::account()->currency ); ?>"
+							customer-id="<?php echo esc_attr( User::current()->customerId( $this->isLiveMode() ? 'live' : 'test' ) ); ?>">
+						</sc-razorpay-add-method>
 					</sc-toggle>
 				<?php endif; ?>
 			</sc-toggles>
