@@ -164,8 +164,8 @@ export default ({
 					)}
 				</>
 			</td>
-			{quantityEnabled && (
-				<td class="variant-quantity">
+			<td class="variant-quantity">
+				{quantityEnabled ? (
 					<ScDropdown placement="bottom-end">
 						<ScButton
 							type="text"
@@ -259,8 +259,16 @@ export default ({
 							</div>
 						</ScMenu>
 					</ScDropdown>
-				</td>
-			)}
+				) : (
+					<div
+						css={css`
+							color: var(--sc-color-gray-400);
+						`}
+					>
+						–
+					</div>
+				)}
+			</td>
 			<td class="variant-sku">
 				<ScInput
 					value={sku}
