@@ -57,19 +57,19 @@ export default ({ id }) => {
 		}
 	);
 
-	// Paginate active promotions
+	// Paginate active promotions.
 	const paginatedActivePromotions = (promotions || []).slice(
 		(activePage - 1) * perPage,
 		activePage * perPage
 	);
 
-	// Paginate archived promotions
+	// Paginate archived promotions.
 	const paginatedArchivedPromotions = (archivedPromotions || []).slice(
 		(archivedPage - 1) * perPage,
 		archivedPage * perPage
 	);
 
-	// Calculate pagination states
+	// Calculate pagination states.
 	const { hasPagination: hasActivePagination } = usePagination({
 		data: paginatedActivePromotions,
 		page: activePage,
@@ -84,32 +84,60 @@ export default ({ id }) => {
 		totalItems: archivedPromotions?.length,
 	});
 
+	const renderPagination = () => {
+		if (!hasActivePagination && !hasArchivedPagination) {
+			return null;
+		}
+
+		if (showArchived && hasArchivedPagination) {
+			return (
+				<PrevNextButtons
+					data={paginatedArchivedPromotions}
+					page={archivedPage}
+					setPage={setArchivedPage}
+					perPage={perPage}
+					loading={isBusy}
+				/>
+			);
+		}
+
+		return (
+			<PrevNextButtons
+				data={paginatedActivePromotions}
+				page={activePage}
+				setPage={setActivePage}
+				perPage={perPage}
+				loading={isBusy}
+			/>
+		);
+	};
+
 	return (
 		<Box
 			title={__('Promotion Codes', 'surecart')}
 			loading={isLoading}
+			footerStyle={{ flexDirection: 'column' }}
 			footer={
 				!isLoading && (
 					<Fragment>
-						<ScFlex style={{ width: '100%' }} direction="column" gap={16}>
-							<ScFlex
-								style={{ width: '100%' }}
-								justifyContent="space-between"
-								alignItems="center"
-							>
-								<ScButton onClick={() => setModal(true)}>
-									<ScIcon slot="prefix" name="plus" />
-									{__('Add Promotion Code', 'surecart')}
-								</ScButton>
-								{!!archivedPromotions?.length && (
+						{renderPagination()}
+
+						<ScFlex
+							justifyContent="space-between"
+							alignItems="center"
+							style={{ width: '100%' }}
+						>
+							<ScButton onClick={() => setModal(true)}>
+								<ScIcon slot="prefix" name="plus" />
+								{__('Add Promotion Code', 'surecart')}
+							</ScButton>
+							{!!archivedPromotions?.length && (
+								<ScFlex justifyContent="flex-end">
 									<ScSwitch
 										checked={!!showArchived}
 										onClick={(e) => {
 											e.preventDefault();
 											setShowArchived(!showArchived);
-											if (!showArchived) {
-												setArchivedPage(1);
-											}
 										}}
 									>
 										{sprintf(
@@ -125,16 +153,7 @@ export default ({ id }) => {
 											archivedPromotions?.length
 										)}
 									</ScSwitch>
-								)}
-							</ScFlex>
-							{!showArchived && hasActivePagination && (
-								<PrevNextButtons
-									data={paginatedActivePromotions}
-									page={activePage}
-									setPage={setActivePage}
-									perPage={perPage}
-									loading={isBusy}
-								/>
+								</ScFlex>
 							)}
 						</ScFlex>
 					</Fragment>
