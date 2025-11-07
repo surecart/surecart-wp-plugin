@@ -81,7 +81,7 @@ class ProductAverageRatingStars extends \Elementor\Widget_Base {
 					],
 				],
 				'default'    => [
-					'size' => 25,
+					'size' => 20,
 					'unit' => 'px',
 				],
 			]
@@ -187,7 +187,7 @@ class ProductAverageRatingStars extends \Elementor\Widget_Base {
 	 */
 	protected function render() {
 		$settings   = $this->get_settings_for_display();
-		$size       = $settings['size']['size'] ?? 25;
+		$size       = $settings['size']['size'] ?? 20;
 		$fill_color = 'var(--e-global-color-primary)'; // fallback for block.
 
 		if ( \Elementor\Plugin::$instance->editor->is_edit_mode() ) {
@@ -249,7 +249,7 @@ class ProductAverageRatingStars extends \Elementor\Widget_Base {
 	protected function content_template() {
 		?>
 		<#
-		var size = settings.size.size || 25;
+		var size = settings.size.size || 20;
 		#>
 		<div class="wp-block-surecart-product-review-average-rating-stars" style="display: inline-flex; gap: 2px;">
 			<# for ( var i = 1; i <= 5; i++ ) {

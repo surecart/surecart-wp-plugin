@@ -16,7 +16,7 @@ import { useState } from '@wordpress/element';
 import ColorInspectorControl from '../../components/ColorInspectorControl';
 
 export default function Edit({ attributes, setAttributes, clientId }) {
-	const { label, fill_color, size = 24 } = attributes;
+	const { label, fill_color, size = 20 } = attributes;
 	const [hoverRating, setHoverRating] = useState(0);
 	const [selectedRating, setSelectedRating] = useState(0);
 

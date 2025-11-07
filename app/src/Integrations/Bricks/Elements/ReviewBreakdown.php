@@ -93,8 +93,8 @@ class ReviewBreakdown extends \Bricks\Element {
 			'label'       => esc_html__( 'Star Size', 'surecart' ),
 			'type'        => 'number',
 			'units'       => true,
-			'default'     => '25px',
-			'placeholder' => '25px',
+			'default'     => '0px',
+			'placeholder' => '20px',
 		];
 
 		$this->controls['colors_separator'] = [
@@ -164,7 +164,7 @@ class ReviewBreakdown extends \Bricks\Element {
 	 */
 	public function render() {
 		$show_for_zero_reviews = ! empty( $this->settings['show_for_zero_reviews'] );
-		$star_size             = ! empty( $this->settings['star_size'] ) ? (int) $this->settings['star_size'] : 25;
+		$star_size             = ! empty( $this->settings['star_size'] ) ? (int) $this->settings['star_size'] : 20;
 		$columns               = ! empty( $this->settings['columns'] ) ? (int) $this->settings['columns'] : 1;
 		$row_gap               = ! empty( $this->settings['row_gap'] ) ? (int) $this->settings['row_gap'] : 20;
 		$fill_color            = $this->get_raw_color( 'fill_color' );

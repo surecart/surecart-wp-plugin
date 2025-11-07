@@ -15,7 +15,7 @@
 		},
 		"size": {
 			"type": "number",
-			"default": 25
+			"default": 20
 		},
 		"fill_color": {
 			"type": "string"

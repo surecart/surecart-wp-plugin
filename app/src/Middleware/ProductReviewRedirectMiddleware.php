@@ -27,22 +27,26 @@ class ProductReviewRedirectMiddleware {
 			return $next( $request );
 		}
 
-		// If not logged in, redirect to customer login.
-		if ( ! is_user_logged_in() ) {
-			return ( new RedirectResponse( $request ) )->to(
-				esc_url_raw( add_query_arg( (array) $request->query(), \SureCart::pages()->url( 'dashboard' ) ) )
-			);
-		}
-
 		$product = sc_get_product( $product_id );
 		if ( empty( $product->post ) ) {
 			return $next( $request );
 		}
 
-		// Get the product page URL.
+		// Get the product page URL with review form.
 		$product_page_url = get_permalink( $product->post ) . '?product-review-form=' . $product->post->ID;
 
-		// Redirect to the product page if it exists.
+		// If not logged in, redirect to customer login with redirect_to parameter.
+		if ( ! is_user_logged_in() ) {
+			$login_url = add_query_arg(
+				array(
+					'redirect_to' => urlencode( $product_page_url ),
+				),
+				\SureCart::pages()->url( 'dashboard' )
+			);
+			return ( new RedirectResponse( $request ) )->to( esc_url_raw( $login_url ) );
+		}
+
+		// Redirect to the product page if user is logged in.
 		if ( $product_page_url ) {
 			return ( new RedirectResponse( $request ) )->to( $product_page_url );
 		}

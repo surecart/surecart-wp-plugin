@@ -62,8 +62,8 @@ class ProductAverageRatingStars extends \Bricks\Element {
 			'label'       => esc_html__( 'Star Size', 'surecart' ),
 			'type'        => 'number',
 			'units'       => true,
-			'default'     => '25px',
-			'placeholder' => '25px',
+			'default'     => '20px',
+			'placeholder' => '20px',
 		];
 
 		$this->controls['fill_color'] = [
@@ -97,7 +97,7 @@ class ProductAverageRatingStars extends \Bricks\Element {
 	 * @return void
 	 */
 	public function render() {
-		$size       = ! empty( $this->settings['size'] ) ? $this->settings['size'] : '25px';
+		$size       = ! empty( $this->settings['size'] ) ? $this->settings['size'] : '20px';
 		$fill_color = $this->get_raw_color( 'fill_color' );
 		if ( empty( $fill_color ) ) {
 			$fill_color = 'var(--bricks-color-primary)';

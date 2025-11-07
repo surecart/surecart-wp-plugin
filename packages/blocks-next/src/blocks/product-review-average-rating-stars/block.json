@@ -16,7 +16,7 @@
 		},
 		"size": {
 			"type": "number",
-			"default": 25
+			"default": 20
 		}
 	},
 	"supports": {
