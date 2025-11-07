@@ -19,10 +19,15 @@ import {
 } from '@surecart/components-react';
 import Code from './Code';
 import EditPromotionCode from './EditPromotionCode';
+import PrevNextButtons from '../../ui/PrevNextButtons';
+import usePagination from '../../hooks/usePagination';
 
 export default ({ id }) => {
 	const [showArchived, setShowArchived] = useState(false);
 	const [modal, setModal] = useState(false);
+	const [activePage, setActivePage] = useState(1);
+	const [archivedPage, setArchivedPage] = useState(1);
+	const perPage = 10;
 
 	const { promotions, archivedPromotions, isLoading, isBusy } = useSelect(
 		(select) => {
@@ -52,6 +57,33 @@ export default ({ id }) => {
 		}
 	);
 
+	// Paginate active promotions
+	const paginatedActivePromotions = (promotions || []).slice(
+		(activePage - 1) * perPage,
+		activePage * perPage
+	);
+
+	// Paginate archived promotions
+	const paginatedArchivedPromotions = (archivedPromotions || []).slice(
+		(archivedPage - 1) * perPage,
+		archivedPage * perPage
+	);
+
+	// Calculate pagination states
+	const { hasPagination: hasActivePagination } = usePagination({
+		data: paginatedActivePromotions,
+		page: activePage,
+		perPage,
+		totalItems: promotions?.length,
+	});
+
+	const { hasPagination: hasArchivedPagination } = usePagination({
+		data: paginatedArchivedPromotions,
+		page: archivedPage,
+		perPage,
+		totalItems: archivedPromotions?.length,
+	});
+
 	return (
 		<Box
 			title={__('Promotion Codes', 'surecart')}
@@ -59,46 +91,74 @@ export default ({ id }) => {
 			footer={
 				!isLoading && (
 					<Fragment>
-						<ScButton onClick={() => setModal(true)}>
-							<ScIcon slot="prefix" name="plus" />
-							{__('Add Promotion Code', 'surecart')}
-						</ScButton>
-						{!!archivedPromotions?.length && (
-							<ScFlex justifyContent="flex-end">
-								<ScSwitch
-									checked={!!showArchived}
-									onClick={(e) => {
-										e.preventDefault();
-										setShowArchived(!showArchived);
-									}}
-								>
-									{sprintf(
-										!showArchived
-											? __(
-													'Show %d Archived Promotion Codes',
-													'surecart'
-											  )
-											: __(
-													'Hide %d Archived Promotion Codes',
-													'surecart'
-											  ),
-										archivedPromotions?.length
-									)}
-								</ScSwitch>
+						<ScFlex style={{ width: '100%' }} direction="column" gap={16}>
+							<ScFlex
+								style={{ width: '100%' }}
+								justifyContent="space-between"
+								alignItems="center"
+							>
+								<ScButton onClick={() => setModal(true)}>
+									<ScIcon slot="prefix" name="plus" />
+									{__('Add Promotion Code', 'surecart')}
+								</ScButton>
+								{!!archivedPromotions?.length && (
+									<ScSwitch
+										checked={!!showArchived}
+										onClick={(e) => {
+											e.preventDefault();
+											setShowArchived(!showArchived);
+											if (!showArchived) {
+												setArchivedPage(1);
+											}
+										}}
+									>
+										{sprintf(
+											!showArchived
+												? __(
+														'Show %d Archived Promotion Codes',
+														'surecart'
+												  )
+												: __(
+														'Hide %d Archived Promotion Codes',
+														'surecart'
+												  ),
+											archivedPromotions?.length
+										)}
+									</ScSwitch>
+								)}
 							</ScFlex>
-						)}
+							{!showArchived && hasActivePagination && (
+								<PrevNextButtons
+									data={paginatedActivePromotions}
+									page={activePage}
+									setPage={setActivePage}
+									perPage={perPage}
+									loading={isBusy}
+								/>
+							)}
+						</ScFlex>
 					</Fragment>
 				)
 			}
 		>
-			{(promotions || []).map((promotion) => (
+			{paginatedActivePromotions.map((promotion) => (
 				<Code promotion={promotion} key={promotion?.id} />
 			))}
 
 			{!!showArchived &&
-				(archivedPromotions || []).map((promotion) => (
+				paginatedArchivedPromotions.map((promotion) => (
 					<Code promotion={promotion} key={promotion?.id} />
 				))}
+
+			{!!showArchived && hasArchivedPagination && (
+				<PrevNextButtons
+					data={paginatedArchivedPromotions}
+					page={archivedPage}
+					setPage={setArchivedPage}
+					perPage={perPage}
+					loading={isBusy}
+				/>
+			)}
 
 			{!!modal && (
 				<EditPromotionCode
