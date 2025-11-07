@@ -313,14 +313,6 @@ export default ({
 								? __('Restore', 'surecart')
 								: __('Delete', 'surecart')}
 						</ScMenuItem>
-						{!!variant?.image_url && (
-							<ScMenuItem
-								onClick={onUnlinkMedia}
-								aria-label={__('Remove image', 'surecart')}
-							>
-								{__('Remove Image', 'surecart')}
-							</ScMenuItem>
-						)}
 					</ScMenu>
 				</ScDropdown>
 			</td>
