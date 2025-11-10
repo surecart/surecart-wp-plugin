@@ -35,11 +35,11 @@ class ProductReviewRedirectMiddleware {
 		// Get the product page URL with review form.
 		$product_page_url = get_permalink( $product->post ) . '?product-review-form=' . $product->post->ID;
 
-		// If not logged in, redirect to customer login with redirect_to parameter.
+		// If not logged in, redirect to customer login with the target URL.
 		if ( ! is_user_logged_in() ) {
 			$login_url = add_query_arg(
 				array(
-					'redirect_to' => urlencode( $product_page_url ),
+					'redirect_to' => rawurlencode( $product_page_url ),
 				),
 				\SureCart::pages()->url( 'dashboard' )
 			);
@@ -48,7 +48,7 @@ class ProductReviewRedirectMiddleware {
 
 		// Redirect to the product page if user is logged in.
 		if ( $product_page_url ) {
-			return ( new RedirectResponse( $request ) )->to( $product_page_url );
+			return ( new RedirectResponse( $request ) )->to( esc_url_raw( $product_page_url ) );
 		}
 
 		return $next( $request );
