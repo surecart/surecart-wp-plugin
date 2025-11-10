@@ -88,6 +88,16 @@ class ReviewBreakdown extends \Bricks\Element {
 			'description' => esc_html__( 'Adjust the spacing between rows.', 'surecart' ),
 		];
 
+		$this->controls['column_gap'] = [
+			'tab'         => 'content',
+			'label'       => esc_html__( 'Column Gap', 'surecart' ),
+			'type'        => 'number',
+			'units'       => true,
+			'default'     => '20px',
+			'placeholder' => '20px',
+			'description' => esc_html__( 'Adjust the spacing between columns.', 'surecart' ),
+		];
+
 		$this->controls['star_size'] = [
 			'tab'         => 'content',
 			'label'       => esc_html__( 'Star Size', 'surecart' ),
@@ -167,13 +177,14 @@ class ReviewBreakdown extends \Bricks\Element {
 		$star_size             = ! empty( $this->settings['star_size'] ) ? (int) $this->settings['star_size'] : 20;
 		$columns               = ! empty( $this->settings['columns'] ) ? (int) $this->settings['columns'] : 1;
 		$row_gap               = ! empty( $this->settings['row_gap'] ) ? (int) $this->settings['row_gap'] : 20;
+		$column_gap            = ! empty( $this->settings['column_gap'] ) ? (int) $this->settings['column_gap'] : 20;
 		$fill_color            = $this->get_raw_color( 'fill_color' );
 		if ( empty( $fill_color ) ) {
 			$fill_color = 'var(--bricks-color-primary)';
 		}
 
 		if ( $this->is_admin_editor() ) {
-			$this->render_preview( $star_size, $fill_color, $columns, $row_gap );
+			$this->render_preview( $star_size, $fill_color, $columns, $row_gap, $column_gap );
 			return;
 		}
 
@@ -182,6 +193,7 @@ class ReviewBreakdown extends \Bricks\Element {
 			'size'                  => $star_size,
 			'columns'               => $columns,
 			'row_gap'               => $row_gap,
+			'column_gap'            => $column_gap,
 			'fill_color'            => esc_attr( $fill_color ),
 		];
 
@@ -199,10 +211,11 @@ class ReviewBreakdown extends \Bricks\Element {
 	 * @param string $fill_color Fill color.
 	 * @param int    $columns Number of columns.
 	 * @param int    $row_gap Row gap in pixels.
+	 * @param int    $column_gap Column gap in pixels.
 	 *
 	 * @return void
 	 */
-	private function render_preview( $star_size, $fill_color, $columns = 1, $row_gap = 20 ) {
+	private function render_preview( $star_size, $fill_color, $columns = 1, $row_gap = 20, $column_gap = 20 ) {
 		$breakdown_data = [
 			5 => 45,
 			4 => 25,
@@ -220,7 +233,7 @@ class ReviewBreakdown extends \Bricks\Element {
 			$max_height = 'max-height: 85px;';
 		}
 
-		$content = '<div class="sc-star-bars sc-star-bars--columns-' . esc_attr( $columns ) . '" style="display: flex; flex-direction: column; flex-wrap: wrap; gap: ' . esc_attr( $row_gap ) . 'px; align-content: flex-start; ' . $max_height . '">';
+		$content = '<div class="sc-star-bars sc-star-bars--columns-' . esc_attr( $columns ) . '" style="display: flex; flex-direction: column; flex-wrap: wrap; row-gap: ' . esc_attr( $row_gap ) . 'px; column-gap: ' . esc_attr( $column_gap ) . 'px; align-content: flex-start; ' . $max_height . '">';
 		for ( $star = 5; $star >= 1; $star-- ) {
 			$count      = $breakdown_data[ $star ];
 			$percentage = $total > 0 ? ( $count / $total ) * 100 : 0;
@@ -228,9 +241,9 @@ class ReviewBreakdown extends \Bricks\Element {
 			// Calculate width for multi-column layouts.
 			$width_style = '';
 			if ( 2 === $columns ) {
-				$width_style = 'width: calc(50% - ' . esc_attr( $row_gap / 2 ) . 'px);';
+				$width_style = 'width: calc(50% - ' . esc_attr( $column_gap / 2 ) . 'px);';
 			} elseif ( 3 === $columns ) {
-				$width_style = 'width: calc(33.333% - ' . esc_attr( $row_gap * 2 / 3 ) . 'px);';
+				$width_style = 'width: calc(33.333% - ' . esc_attr( $column_gap * 2 / 3 ) . 'px);';
 			}
 
 			$content .= '<a href="#" class="sc-star-row" onclick="event.preventDefault();" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: inherit; cursor: pointer; transition: opacity 0.2s ease; ' . $width_style . '">';

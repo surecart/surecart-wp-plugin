@@ -14,7 +14,7 @@
 			max-height: 150px;
 
 			.sc-star-row {
-				width: calc(50% - var(--sc-row-gap, 8px) / 2); // Equal width for 2 columns
+				width: calc(50% - var(--sc-column-gap, 20px) / 2); // Equal width for 2 columns
 			}
 		}
 
@@ -22,7 +22,7 @@
 			max-height: 85px;
 
 			.sc-star-row {
-				width: calc(33.333% - var(--sc-row-gap, 8px) * 2 / 3); // Equal width for 3 columns
+				width: calc(33.333% - var(--sc-column-gap, 20px) * 2 / 3); // Equal width for 3 columns
 			}
 		}
 

@@ -20,6 +20,7 @@ export default function ({ attributes, setAttributes, clientId }) {
 		show_for_zero_reviews = true,
 		columns,
 		row_gap,
+		column_gap,
 		size,
 		fill_color,
 		bar_fill_color,
@@ -90,6 +91,20 @@ export default function ({ attributes, setAttributes, clientId }) {
 					/>
 
 					<RangeControl
+						label={__('Column gap', 'surecart')}
+						value={column_gap}
+						onChange={(value) =>
+							setAttributes({ column_gap: value })
+						}
+						min={0}
+						max={50}
+						help={__(
+							'Adjust the spacing between columns.',
+							'surecart'
+						)}
+					/>
+
+					<RangeControl
 						label={__('Star size', 'surecart')}
 						value={size}
 						onChange={(value) => setAttributes({ size: value })}
@@ -132,7 +147,10 @@ export default function ({ attributes, setAttributes, clientId }) {
 			<div {...blockProps}>
 				<div
 					className={`sc-star-bars sc-star-bars--columns-${columns}`}
-					style={{ gap: `${row_gap}px` }}
+					style={{
+						rowGap: `${row_gap}px`,
+						columnGap: `${column_gap}px`,
+					}}
 				>
 					{[5, 4, 3, 2, 1].map((star) => {
 						const count = reviewsBreakdown[star] || 0;

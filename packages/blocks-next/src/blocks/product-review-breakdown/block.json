@@ -28,6 +28,10 @@
 			"type": "number",
 			"default": 20
 		},
+		"column_gap": {
+			"type": "number",
+			"default": 20
+		},
 		"fill_color": {
 			"type": "string",
 			"default": ""

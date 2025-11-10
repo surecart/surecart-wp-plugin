@@ -117,6 +117,26 @@ class ReviewBreakdown extends \Elementor\Widget_Base {
 		);
 
 		$this->add_control(
+			'column_gap',
+			[
+				'label'       => esc_html__( 'Column Gap', 'surecart' ),
+				'type'        => \Elementor\Controls_Manager::SLIDER,
+				'size_units'  => [ 'px' ],
+				'range'       => [
+					'px' => [
+						'min' => 0,
+						'max' => 50,
+					],
+				],
+				'default'     => [
+					'size' => 20,
+					'unit' => 'px',
+				],
+				'description' => esc_html__( 'Adjust the spacing between columns.', 'surecart' ),
+			]
+		);
+
+		$this->add_control(
 			'star_size',
 			[
 				'label'      => esc_html__( 'Star Size', 'surecart' ),
@@ -341,16 +361,17 @@ class ReviewBreakdown extends \Elementor\Widget_Base {
 		$star_size             = $settings['star_size']['size'] ?? 25;
 		$columns               = $settings['columns'] ?? 1;
 		$row_gap               = $settings['row_gap']['size'] ?? 20;
+		$column_gap            = $settings['column_gap']['size'] ?? 20;
 
 		if ( \Elementor\Plugin::$instance->editor->is_edit_mode() ) {
-			$this->render_preview( $star_size, $columns, $row_gap );
+			$this->render_preview( $star_size, $columns, $row_gap, $column_gap );
 			return;
 		}
 
 		?>
 		<div <?php $this->print_render_attribute_string( 'wrapper' ); ?>>
 			<!-- wp:surecart/product-review-summary -->
-			<!-- wp:surecart/product-review-breakdown {"show_for_zero_reviews":<?php echo $show_for_zero_reviews ? 'true' : 'false'; ?>,"size":<?php echo absint( $star_size ); ?>,"columns":<?php echo absint( $columns ); ?>,"row_gap":<?php echo absint( $row_gap ); ?>} /-->
+			<!-- wp:surecart/product-review-breakdown {"show_for_zero_reviews":<?php echo $show_for_zero_reviews ? 'true' : 'false'; ?>,"size":<?php echo absint( $star_size ); ?>,"columns":<?php echo absint( $columns ); ?>,"row_gap":<?php echo absint( $row_gap ); ?>,"column_gap":<?php echo absint( $column_gap ); ?>} /-->
 			<!-- /wp:surecart/product-review-summary -->
 		</div>
 		<?php
@@ -362,10 +383,11 @@ class ReviewBreakdown extends \Elementor\Widget_Base {
 	 * @param int $star_size Star size.
 	 * @param int $columns Number of columns.
 	 * @param int $row_gap Row gap in pixels.
+	 * @param int $column_gap Column gap in pixels.
 	 *
 	 * @return void
 	 */
-	private function render_preview( $star_size, $columns = 1, $row_gap = 20 ) {
+	private function render_preview( $star_size, $columns = 1, $row_gap = 20, $column_gap = 20 ) {
 		$breakdown_data = [
 			5 => 45,
 			4 => 25,
@@ -376,6 +398,7 @@ class ReviewBreakdown extends \Elementor\Widget_Base {
 		$total          = array_sum( $breakdown_data );
 		$columns        = absint( $columns );
 		$row_gap        = absint( $row_gap );
+		$column_gap     = absint( $column_gap );
 
 		// Calculate max height for multi-column layouts.
 		$max_height_style = '';
@@ -386,7 +409,7 @@ class ReviewBreakdown extends \Elementor\Widget_Base {
 		}
 		?>
 		<div class="wp-block-surecart-product-review-breakdown">
-			<div class="sc-star-bars sc-star-bars--columns-<?php echo esc_attr( $columns ); ?>" style="gap: <?php echo esc_attr( $row_gap ); ?>px; <?php echo esc_attr( $max_height_style ); ?>">
+			<div class="sc-star-bars sc-star-bars--columns-<?php echo esc_attr( $columns ); ?>" style="row-gap: <?php echo esc_attr( $row_gap ); ?>px; column-gap: <?php echo esc_attr( $column_gap ); ?>px; <?php echo esc_attr( $max_height_style ); ?>">
 				<?php
 				for ( $star = 5; $star >= 1; $star-- ) {
 					$count      = $breakdown_data[ $star ];
@@ -395,10 +418,10 @@ class ReviewBreakdown extends \Elementor\Widget_Base {
 					// Calculate width for multi-column layouts.
 					$width_style = '';
 					if ( 2 === $columns ) {
-						$width_calc  = 'calc(50% - ' . ( $row_gap / 2 ) . 'px)';
+						$width_calc  = 'calc(50% - ' . ( $column_gap / 2 ) . 'px)';
 						$width_style = 'width: ' . $width_calc . ';';
 					} elseif ( 3 === $columns ) {
-						$width_calc  = 'calc(33.333% - ' . ( $row_gap * 2 / 3 ) . 'px)';
+						$width_calc  = 'calc(33.333% - ' . ( $column_gap * 2 / 3 ) . 'px)';
 						$width_style = 'width: ' . $width_calc . ';';
 					}
 					?>

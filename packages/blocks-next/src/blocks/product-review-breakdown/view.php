@@ -1,5 +1,5 @@
 <div <?php echo wp_kses_data( get_block_wrapper_attributes() ); ?>>
-	<div class="sc-star-bars sc-star-bars--columns-<?php echo esc_attr( $columns ); ?>" style="gap: <?php echo esc_attr( $row_gap ); ?>px;">
+	<div class="sc-star-bars sc-star-bars--columns-<?php echo esc_attr( $columns ); ?>" style="--sc-row-gap: <?php echo esc_attr( $row_gap ); ?>px; --sc-column-gap: <?php echo esc_attr( $column_gap ); ?>px; row-gap: <?php echo esc_attr( $row_gap ); ?>px; column-gap: <?php echo esc_attr( $column_gap ); ?>px;">
 		<?php
 		$params = \SureCart::block()->urlParams( 'reviews' );
 		for ( $star = 5; $star >= 1; $star-- ) {

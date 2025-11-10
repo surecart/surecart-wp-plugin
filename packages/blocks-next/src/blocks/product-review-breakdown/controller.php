@@ -17,5 +17,6 @@ $total      = (int) $product->total_reviews;
 $fill_color = ! empty( $attributes['fill_color'] ) ? $attributes['fill_color'] : 'var(--sc-color-primary-500)';
 $columns    = ! empty( $attributes['columns'] ) ? (int) $attributes['columns'] : 1;
 $row_gap    = ! empty( $attributes['row_gap'] ) ? (int) $attributes['row_gap'] : 8;
+$column_gap = ! empty( $attributes['column_gap'] ) ? (int) $attributes['column_gap'] : 20;
 
 return 'file:./view.php';
