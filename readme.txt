@@ -315,10 +315,10 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 
 = 3.16.4 - November 10th, 2025 =
 - New: Ability to bulk delete customers.
-- Fix: Issue where user wants to override menu order on products.
+- Fix: Issue where a user wants to override menu order on products.
 - Fix: Product search does not work inside product list sidebar.
-- Fix: Issue with FSE themes where "Edit Template" button takes you to the default template instead of the assigned one.
-- Fix: Issue with block variants block not rendering properly on the upsell edit UI.
+- Fix: Issue with FSE themes where the "Edit Template" button takes you to the default template instead of the assigned one.
+- Fix: Issue with the block variants block not rendering properly on the upsell edit UI.
 - Fix: Issue where attribute-related error messages were not being prioritized over specific error code messages.
 - Fix: Incorrect download file quantity on customer dashboard if more than 20 downloads.
 
