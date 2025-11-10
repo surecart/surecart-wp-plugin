@@ -9,11 +9,16 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies.
  */
 import ColorInspectorControl from '../../components/ColorInspectorControl';
+import { getSpacingPresetCssVar } from '../../../../blocks/util';
 
 export default ({ attributes, setAttributes, clientId }) => {
-	const { fill_color, size } = attributes;
+	const { fill_color, size, style } = attributes;
 
-	const blockProps = useBlockProps();
+	const blockProps = useBlockProps({
+		style: {
+			gap: getSpacingPresetCssVar(style?.spacing?.blockGap),
+		},
+	});
 
 	const rating = 4.5;
 	const stars = [];
@@ -30,57 +35,47 @@ export default ({ attributes, setAttributes, clientId }) => {
 		const clipId = `half-clip-${i}`;
 
 		stars.push(
-			<div
-				className="star-container"
-				key={i}
-				style={{ width: `${size}px`, height: `${size}px` }}
+			<svg
+				className="sc-star-svg"
+				viewBox="0 0 24 24"
+				width={size}
+				height={size}
 			>
-				<svg
-					className="star-svg"
-					viewBox="0 0 24 24"
-					width={size}
-					height={size}
-				>
-					{isHalf ? (
-						<>
-							<defs>
-								<clipPath id={clipId}>
-									<rect x="0" y="0" width="12" height="24" />
-								</clipPath>
-							</defs>
-							<polygon
-								points={points}
-								clipPath={`url(#${clipId})`}
-								fill={
-									fill_color || 'var(--sc-color-primary-500)'
-								}
-							/>
-							<polygon
-								points={points}
-								fill="none"
-								stroke={
-									fill_color || 'var(--sc-color-primary-500)'
-								}
-								strokeWidth="2"
-							/>
-						</>
-					) : isFull ? (
+				{isHalf ? (
+					<>
+						<defs>
+							<clipPath id={clipId}>
+								<rect x="0" y="0" width="12" height="24" />
+							</clipPath>
+						</defs>
 						<polygon
 							points={points}
+							clipPath={`url(#${clipId})`}
 							fill={fill_color || 'var(--sc-color-primary-500)'}
-							stroke={fill_color || 'var(--sc-color-primary-500)'}
-							strokeWidth="1"
 						/>
-					) : (
 						<polygon
 							points={points}
 							fill="none"
-							stroke={'var(--sc-color-gray-300)'}
+							stroke={fill_color || 'var(--sc-color-primary-500)'}
 							strokeWidth="2"
 						/>
-					)}
-				</svg>
-			</div>
+					</>
+				) : isFull ? (
+					<polygon
+						points={points}
+						fill={fill_color || 'var(--sc-color-primary-500)'}
+						stroke={fill_color || 'var(--sc-color-primary-500)'}
+						strokeWidth="1"
+					/>
+				) : (
+					<polygon
+						points={points}
+						fill="none"
+						stroke={'var(--sc-color-gray-300)'}
+						strokeWidth="2"
+					/>
+				)}
+			</svg>
 		);
 	}
 

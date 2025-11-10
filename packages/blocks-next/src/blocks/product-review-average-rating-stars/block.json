@@ -32,7 +32,15 @@
 		},
 		"spacing": {
 			"margin": true,
-			"padding": true
+			"padding": true,
+			"blockGap": {
+				"__experimentalDefault": "2px"
+			},
+			"__experimentalDefaultControls": {
+				"padding": true,
+				"margin": true,
+				"blockGap": true
+			}
 		}
 	},
 	"textdomain": "surecart",

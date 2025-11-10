@@ -23,4 +23,7 @@ if ( empty( $fill_color ) ) {
 	$fill_color = 'var(--sc-color-primary-500)';
 }
 
+$gap   = ! empty( $attributes['style']['spacing']['blockGap'] ) ? \SureCart::block()->styles()->getBlockGapPresetCssVar( $attributes['style']['spacing']['blockGap'] ) : '';
+$style = ! empty( $gap ) ? 'gap:' . esc_attr( $gap ) . ';' : '';
+
 return 'file:./view.php';
