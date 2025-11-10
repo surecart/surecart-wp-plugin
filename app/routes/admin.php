@@ -193,6 +193,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->group(
 	function () {
 		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->handle( 'CustomersController@index' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'delete', 'action' )->handle( 'CustomersController@confirmBulkDelete' );
+		\SureCart::route()->post()->middleware( 'nonce:bulk_delete_nonce' )->handle( 'CustomersController@bulkDelete' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->handle( 'CustomersController@edit' );
 	}
 );
