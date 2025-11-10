@@ -3,4 +3,10 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
+
+	&.is-style-outline.wp-block-button__link {
+		background-color: transparent;
+		border: 2px solid currentColor;
+		color: currentColor;
+	}
 }

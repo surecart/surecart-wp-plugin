@@ -6,6 +6,7 @@ import {
 	__experimentalToolsPanel as ToolsPanel,
 	__experimentalToggleGroupControl as ToggleGroupControl,
 	__experimentalToggleGroupControlOption as ToggleGroupControlOption,
+	__experimentalNumberControl as NumberControl,
 } from '@wordpress/components';
 import { __, _x } from '@wordpress/i18n';
 
@@ -15,7 +16,7 @@ import { __, _x } from '@wordpress/i18n';
 import { useToolsPanelDropdownMenuProps } from '../utils';
 
 export default ({ attributes, setAttributes }) => {
-	const { button_type, width } = attributes;
+	const { button_type, width, icon_size } = attributes;
 	const dropdownMenuProps = useToolsPanelDropdownMenuProps();
 
 	return (
@@ -25,6 +26,7 @@ export default ({ attributes, setAttributes }) => {
 				setAttributes({
 					button_type: 'both',
 					width: null,
+					icon_size: 15,
 				})
 			}
 			dropdownMenuProps={dropdownMenuProps}
@@ -101,6 +103,24 @@ export default ({ attributes, setAttributes }) => {
 						);
 					})}
 				</ToggleGroupControl>
+			</ToolsPanelItem>
+			<ToolsPanelItem
+				label={__('Icon Size', 'surecart')}
+				hasValue={() => icon_size !== 15}
+				onDeselect={() => setAttributes({ icon_size: 15 })}
+				isShownByDefault
+			>
+				<NumberControl
+					label={__('Icon Size', 'surecart')}
+					help={__('Size of the icon in pixels.', 'surecart')}
+					value={icon_size}
+					onChange={(value) =>
+						setAttributes({ icon_size: parseInt(value) || 15 })
+					}
+					min={10}
+					max={100}
+					step={1}
+				/>
 			</ToolsPanelItem>
 		</ToolsPanel>
 	);

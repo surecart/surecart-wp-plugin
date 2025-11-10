@@ -21,10 +21,11 @@ import { getSpacingPresetCssVar } from '../../../../blocks/util';
 import Design from './design';
 
 export default ({ attributes, setAttributes }) => {
-	const { icon, button_type, label, style, width, icon_position } =
+	const { icon, button_type, label, style, width, icon_position, icon_size } =
 		attributes;
 
 	const blockProps = useBlockProps({
+		className: 'wp-block-buttons',
 		style: {
 			gap: getSpacingPresetCssVar(style?.spacing?.blockGap),
 			justifyContent: style?.typography?.textAlign,
@@ -41,6 +42,8 @@ export default ({ attributes, setAttributes }) => {
 					<ScIcon
 						className="wp-block-surecart-product-review-add-button__icon"
 						name={icon ?? 'edit-2'}
+						width={icon_size}
+						height={icon_size}
 					/>
 				)}
 				{showText && (
@@ -59,6 +62,8 @@ export default ({ attributes, setAttributes }) => {
 					<ScIcon
 						className="wp-block-surecart-product-review-add-button__icon"
 						name={icon ?? 'edit-2'}
+						width={icon_size}
+						height={icon_size}
 					/>
 				)}
 			</>
@@ -75,6 +80,7 @@ export default ({ attributes, setAttributes }) => {
 				<div
 					className={classnames({
 						'wp-block-button': true,
+						'sc-block-button': true,
 						[`has-custom-width wp-block-button__width-${width}`]:
 							width,
 						[`has-custom-width sc-block-button__width-${width}`]:

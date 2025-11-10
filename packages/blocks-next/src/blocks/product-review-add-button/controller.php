@@ -3,6 +3,7 @@
 use SureCart\Models\User;
 
 $icon       = $attributes['icon'] ?? 'edit-2';
+$icon_size  = $attributes['icon_size'] ?? 15;
 $product_id = $block->context['postId'] ?? null;
 $product    = sc_get_product();
 if ( empty( $product ) ) {

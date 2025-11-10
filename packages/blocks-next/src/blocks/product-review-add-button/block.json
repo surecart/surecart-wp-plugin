@@ -30,6 +30,10 @@
 			"type": "string",
 			"default": "before"
 		},
+		"icon_size": {
+			"type": "number",
+			"default": 15
+		},
 		"label": {
 			"type": "string",
 			"default": "Write a Review"
@@ -40,26 +44,25 @@
 		},
 		"width": {
 			"type": "number"
-		},
-		"direct_add_to_cart": {
-			"type": "boolean",
-			"default": true
 		}
 	},
 	"supports": {
 		"interactivity": true,
+		"anchor": true,
+		"spacing": {
+			"__experimentalSkipSerialization": true,
+			"margin": true,
+			"padding": true,
+			"blockGap": true
+		},
 		"color": {
+			"__experimentalSkipSerialization": true,
 			"gradients": true,
 			"link": false,
 			"__experimentalDefaultControls": {
 				"background": true,
 				"text": true
 			}
-		},
-		"spacing": {
-			"margin": true,
-			"padding": true,
-			"blockGap": true
 		},
 		"typography": {
 			"fontSize": true,
@@ -81,17 +84,43 @@
 			"color": true,
 			"radius": true,
 			"style": true,
-			"width": true
+			"width": true,
+			"__experimentalSkipSerialization": true,
+			"__experimentalDefaultControls": {
+				"color": true,
+				"radius": true,
+				"style": true,
+				"width": true
+			}
+		},
+		"__experimentalStyle": {
+			"variations": {
+				"outline": {
+					"border": {
+						"color": "currentColor",
+						"width": "2px",
+						"style": "solid"
+					},
+					"color": {
+						"text": "currentColor",
+						"gradient": "transparent none"
+					}
+				}
+			}
 		},
 		"__experimentalSelector": ".wp-block-button .wp-block-button__link"
 	},
 	"styles": [
-		{ "name": "default", "label": "Default", "isDefault": true },
-		{ "name": "show-on-hover", "label": "Show on hover" }
+		{ "name": "fill", "label": "Fill", "isDefault": true },
+		{ "name": "outline", "label": "Outline" }
 	],
 	"textdomain": "surecart",
 	"render": "file:./controller.php",
 	"editorScript": "file:./index.js",
-	"editorStyle": "file:./index.css",
-	"style": "file:./style-index.css"
+	"style": [
+		"surecart-wp-button",
+		"surecart-spinner",
+		"file:./style-index.css"
+	],
+	"editorStyle": ["surecart-wp-button"]
 }

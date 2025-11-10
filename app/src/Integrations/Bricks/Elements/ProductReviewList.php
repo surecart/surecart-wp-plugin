@@ -97,6 +97,18 @@ class ProductReviewList extends \Bricks\Element {
 			'required' => [ 'show_add_button', '=', true ],
 		];
 
+		$this->controls['add_button_icon_size'] = [
+			'tab'         => 'content',
+			'label'       => esc_html__( 'Icon Size', 'surecart' ),
+			'type'        => 'number',
+			'default'     => 15,
+			'min'         => 10,
+			'max'         => 100,
+			'step'        => 1,
+			'required'    => [ 'show_add_button', '=', true ],
+			'description' => esc_html__( 'Size of the icon in pixels.', 'surecart' ),
+		];
+
 		$this->controls['add_button_text_color'] = [
 			'tab'      => 'content',
 			'label'    => esc_html__( 'Button Text Color', 'surecart' ),
@@ -222,6 +234,7 @@ class ProductReviewList extends \Bricks\Element {
 
 			if ( $show_add_button ) {
 				$btn_label      = ! empty( $this->settings['add_button_label'] ) ? $this->settings['add_button_label'] : esc_html__( 'Write a Review', 'surecart' );
+				$btn_icon_size  = ! empty( $this->settings['add_button_icon_size'] ) ? absint( $this->settings['add_button_icon_size'] ) : 15;
 				$btn_text_color = ! empty( $this->settings['add_button_text_color'] ) ? $this->get_raw_color( 'add_button_text_color' ) : '#000000';
 				$btn_bg_color   = ! empty( $this->settings['add_button_background_color'] ) ? $this->get_raw_color( 'add_button_background_color' ) : 'var(--bricks-color-primary)';
 
@@ -229,6 +242,7 @@ class ProductReviewList extends \Bricks\Element {
 					'width'     => 100,
 					'className' => 'is-style-fill',
 					'label'     => $btn_label,
+					'icon_size' => $btn_icon_size,
 				];
 
 				// spacing default.
@@ -310,6 +324,7 @@ class ProductReviewList extends \Bricks\Element {
 
 		// no-reviews button with configured attributes.
 		$btn_label      = ! empty( $this->settings['add_button_label'] ) ? $this->settings['add_button_label'] : esc_html__( 'Write a Review', 'surecart' );
+		$btn_icon_size  = ! empty( $this->settings['add_button_icon_size'] ) ? absint( $this->settings['add_button_icon_size'] ) : 15;
 		$btn_text_color = ! empty( $this->settings['add_button_text_color'] ) ? $this->get_raw_color( 'add_button_text_color' ) : '#000000';
 		$btn_bg_color   = ! empty( $this->settings['add_button_background_color'] ) ? $this->get_raw_color( 'add_button_background_color' ) : 'var(--bricks-color-primary)';
 
@@ -317,6 +332,7 @@ class ProductReviewList extends \Bricks\Element {
 			'width'     => 100,
 			'className' => 'is-style-fill',
 			'label'     => $btn_label,
+			'icon_size' => $btn_icon_size,
 		];
 
 		$style = [ 'spacing' => [ 'blockGap' => 'var:preset|spacing|30' ] ];

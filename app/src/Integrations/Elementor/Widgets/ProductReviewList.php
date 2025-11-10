@@ -119,6 +119,22 @@ class ProductReviewList extends \Elementor\Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'button_icon_size',
+			[
+				'label'       => esc_html__( 'Icon Size', 'surecart' ),
+				'type'        => \Elementor\Controls_Manager::NUMBER,
+				'default'     => 15,
+				'min'         => 10,
+				'max'         => 100,
+				'step'        => 1,
+				'condition'   => [
+					'show_add_button' => 'yes',
+				],
+				'description' => esc_html__( 'Size of the icon in pixels.', 'surecart' ),
+			]
+		);
+
 		$this->end_controls_section();
 
 		$this->start_controls_section(
@@ -536,6 +552,7 @@ class ProductReviewList extends \Elementor\Widget_Base {
 	 */
 	private function get_button_attributes( $settings ) {
 		$btn_label      = $settings['button_text'] ?? esc_html__( 'Write a Review', 'surecart' );
+		$btn_icon_size  = ! empty( $settings['button_icon_size'] ) ? absint( $settings['button_icon_size'] ) : 15;
 		$btn_text_color = $settings['button_text_color'] ?? null;
 		$btn_bg_color   = $settings['button_background_color'] ?? null;
 
@@ -543,6 +560,7 @@ class ProductReviewList extends \Elementor\Widget_Base {
 			'width'     => 100,
 			'className' => 'is-style-fill',
 			'label'     => $btn_label,
+			'icon_size' => $btn_icon_size,
 		];
 
 		$style = [ 'spacing' => [ 'blockGap' => 'var:preset|spacing|30' ] ];
