@@ -9,7 +9,8 @@
 	"ancestor": [
 		"surecart/product-page",
 		"surecart/product-quick-view",
-		"surecart/sticky-purchase"
+		"surecart/sticky-purchase",
+		"surecart/upsell"
 	],
 	"usesContext": ["postId"],
 	"supports": {

@@ -37,6 +37,15 @@ class DownloadRestServiceProviderTest extends SureCartUnitTestCase
 		], false);
 	}
 
+	/**
+	 * Clean up after each test.
+	 */
+	public function tearDown() : void
+	{
+		wp_set_current_user(0);
+		parent::tearDown();
+	}
+
 	public function requestProvider()
 	{
 		return [
@@ -80,22 +89,17 @@ class DownloadRestServiceProviderTest extends SureCartUnitTestCase
 
 	public function customerRequestProvider()
 	{
-
-		$user = self::factory()->user->create_and_get();
-		$user = \SureCart\Models\User::find($user->ID);
-		$user->setCustomerId('correct_customer_id');
-
 		return [
-			'List: All' => [$user, 'GET', '/surecart/v1/downloads', 403],
-			'List: Own' => [$user, 'GET', '/surecart/v1/downloads', 200, ['query' => ['customer_ids' => ['correct_customer_id']]]],
-			'List: Others' => [$user, 'GET', '/surecart/v1/downloads', 403, ['query' => ['customer_ids' => ['wrong_customer_id']]]],
+			'List: All' => ['GET', '/surecart/v1/downloads', 403, []],
+			'List: Own' => ['GET', '/surecart/v1/downloads', 200, ['query' => ['customer_ids' => ['correct_customer_id']]]],
+			'List: Others' => ['GET', '/surecart/v1/downloads', 403, ['query' => ['customer_ids' => ['wrong_customer_id']]]],
 		];
 	}
 
 	/**
 	 * @dataProvider customerRequestProvider
 	 */
-	public function test_customer_permissions($user, $method, $route, $status, $params = []){
+	public function test_customer_permissions($method, $route, $status, $params = []){
 		//mock the requests in the container
         $requests = \Mockery::mock(RequestService::class);
         \SureCart::alias('request', function () use ($requests) {
@@ -107,7 +111,12 @@ class DownloadRestServiceProviderTest extends SureCartUnitTestCase
                 'id' => 'test',
             ]);
 
-        wp_set_current_user($user->ID);
+		// Create user with customer ID in the test method, not in the data provider
+		$wp_user = self::factory()->user->create_and_get();
+		$user = \SureCart\Models\User::find($wp_user->ID);
+		$user->setCustomerId('correct_customer_id');
+
+        wp_set_current_user($wp_user->ID);
 
         $request = new \WP_REST_Request($method, $route);
 		if (is_array($params) && isset($params['query'])) {
