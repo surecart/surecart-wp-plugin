@@ -1,4 +1,4 @@
-<div <?php echo wp_kses_data( get_block_wrapper_attributes() ); ?>>
+<div <?php echo wp_kses_data( get_block_wrapper_attributes( [ 'style' => $style ] ) ); ?>>
 	<?php
 	for ( $i = 1; $i <= 5; $i++ ) {
 		$is_full = $i <= (int) $block->context['review']->stars;
@@ -7,6 +7,7 @@
 			SureCart::svg()->get(
 				'star',
 				[
+					'class'        => 'sc-star-svg',
 					'height'       => esc_attr( $size ),
 					'width'        => esc_attr( $size ),
 					'fill'         => $is_full ? $fill_color : 'none',
