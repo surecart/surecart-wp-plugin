@@ -38,7 +38,7 @@ export default ({ variant, product }) => {
 				variant?.[attribute] !== product?.[attribute]
 			);
 		},
-		[variant]
+		[variant, product]
 	);
 
 	/**
