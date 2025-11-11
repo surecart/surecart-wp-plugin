@@ -53,7 +53,7 @@ export default ({ variant, updateVariant, product }) => {
 								getUpdateValue({
 									purchase_limit: e.target.checked
 										? product?.purchase_limit || 1
-										: 0,
+										: null,
 								})
 							);
 						}}
