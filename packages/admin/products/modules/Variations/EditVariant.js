@@ -57,8 +57,6 @@ export default ({
 			onScFormSubmit={(e) => {
 				e.preventDefault();
 				e.stopImmediatePropagation();
-				// close the drawer maybe
-				console.log('submit');
 				setOpen(false);
 			}}
 		>
