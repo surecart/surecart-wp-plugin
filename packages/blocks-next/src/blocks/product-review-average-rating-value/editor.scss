@@ -1,0 +1,23 @@
+.block-editor-block-list__block:not([contenteditable="true"]):focus {
+	&.is-style-slash,
+	&.is-style-parentheses {
+		outline: 1.5px solid var(--wp-admin-theme-color);
+
+		&::after {
+			outline: none;
+			position: relative;
+		}
+	}
+
+	&.is-style-parentheses::after {
+		content: ")";
+	}
+
+	&.is-style-parentheses::before {
+		content: "(";
+	}
+
+	&.is-style-slash::after {
+		content: "/ 5.0";
+	}
+}
