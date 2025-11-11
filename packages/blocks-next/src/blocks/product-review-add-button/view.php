@@ -34,7 +34,19 @@
 			<?php } ?>
 			
 			<?php if ( $show_icon && 'before' === $icon_position ) { ?>
-				<?php echo wp_kses( SureCart::svg()->get( $icon, [ 'class' => 'wp-block-surecart-product-review-form-button__icon sc-button__link-text' ] ), sc_allowed_svg_html() ); ?>
+				<?php
+				echo wp_kses(
+					SureCart::svg()->get(
+						$icon,
+						[
+							'class'  => 'wp-block-surecart-product-review-form-button__icon sc-button__link-text',
+							'width'  => $icon_size,
+							'height' => $icon_size,
+						]
+					),
+					sc_allowed_svg_html()
+				);
+				?>
 			<?php } ?>
 
 			<?php if ( $show_text ) { ?>
@@ -44,7 +56,19 @@
 			<?php } ?>
 
 			<?php if ( $show_icon && 'after' === $icon_position ) { ?>
-				<?php echo wp_kses( SureCart::svg()->get( $icon, [ 'class' => 'wp-block-surecart-product-review-form-button__icon sc-button__link-text' ] ), sc_allowed_svg_html() ); ?>
+				<?php
+				echo wp_kses(
+					SureCart::svg()->get(
+						$icon,
+						[
+							'class'  => 'wp-block-surecart-product-review-form-button__icon sc-button__link-text',
+							'width'  => $icon_size,
+							'height' => $icon_size,
+						]
+					),
+					sc_allowed_svg_html()
+				);
+				?>
 			<?php } ?>
 		</div>
 	</div>

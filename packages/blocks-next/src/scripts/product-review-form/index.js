@@ -216,6 +216,18 @@ const { state, actions } = store('surecart/product-review-form', {
 			if (!e?.submitter?.value) {
 				const context = getContext();
 				const { stars, title, body, sc_product_id } = context;
+
+				// Validate rating data.
+				if (
+					!stars ||
+					stars < 1 ||
+					stars > 5 ||
+					!title ||
+					title.trim() === ''
+				) {
+					return;
+				}
+
 				try {
 					context.busy = true;
 
