@@ -5,15 +5,25 @@ import {
 	useBlockProps,
 	InnerBlocks,
 	InspectorControls,
+	__experimentalUseColorProps as useColorProps,
+	__experimentalGetSpacingClassesAndStyles as useSpacingProps,
 } from '@wordpress/block-editor';
 import { PanelBody, SelectControl, TextControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 
 export default function Edit({ attributes, setAttributes }) {
 	const { alignment, width, height } = attributes;
+	const colorProps = useColorProps(attributes);
+	const spacingProps = useSpacingProps(attributes);
 
 	const blockProps = useBlockProps({
 		className: 'sc-lightbox-overlay',
+		style: {
+			maxWidth: width || '',
+			height: height || '',
+			...spacingProps.style,
+			...colorProps.style,
+		},
 	});
 
 	return (

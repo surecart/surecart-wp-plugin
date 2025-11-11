@@ -14,6 +14,7 @@ import metadata from './block.json';
  * Styles.
  */
 import './style.scss';
+import './editor.scss';
 
 /**
  * Register block.
