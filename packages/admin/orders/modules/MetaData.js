@@ -21,6 +21,7 @@ export default ({ order, loading }) => {
 		page_id,
 		page_url,
 		buy_page_product_id,
+		wp_user_role,
 		...metadata
 	} = order?.checkout?.metadata || {};
 
@@ -31,7 +32,7 @@ export default ({ order, loading }) => {
 	const metadatas = Object.keys(metadata || {}).map((key) => ({
 		key,
 		label: key.charAt(0).toUpperCase() + key.slice(1).replaceAll('_', ' '),
-		value: metadata[key],
+		value: JSON.stringify(metadata[key]),
 	}));
 
 	return (

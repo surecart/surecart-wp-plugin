@@ -51,12 +51,20 @@ export default function MetaDataModal({
 		}
 	}, [metadatas]);
 
+	const validateFormDataJSON = () => {
+		for (const value of Object.values(formData)) {
+			if (typeof value !== 'string') continue;
+			return JSON.parse(value);
+		}
+	};
+
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		setLoading(true);
 		setError(null);
 
 		try {
+			validateFormDataJSON();
 			const checkout = await apiFetch({
 				path: `${baseURL}/${order?.checkout?.id}`,
 				method: 'PATCH',
