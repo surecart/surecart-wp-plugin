@@ -9,9 +9,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Product Rating element.
+ * Product Review Rating element.
  */
-class ProductRating extends \Bricks\Element {
+class ProductReviewRating extends \Bricks\Element {
 	use ConvertsBlocks;
 
 	/**

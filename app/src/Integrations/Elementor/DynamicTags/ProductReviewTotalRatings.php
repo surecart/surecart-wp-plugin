@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Product Total Ratings Dynamic Tag.
  */
-class ProductTotalRatings extends \Elementor\Core\DynamicTags\Tag {
+class ProductReviewTotalRatings extends \Elementor\Core\DynamicTags\Tag {
 	/**
 	 * Get the tag name.
 	 *

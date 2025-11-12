@@ -9,9 +9,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Review Breakdown element.
+ * Product Review Breakdown element.
  */
-class ReviewBreakdown extends \Bricks\Element {
+class ProductReviewBreakdown extends \Bricks\Element {
 	use ConvertsBlocks;
 
 	/**

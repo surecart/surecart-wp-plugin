@@ -18,7 +18,8 @@
 		},
 		"_title": "Product Rating",
 		"flex_direction": "row",
-		"flex_justify_content": "flex-start"
+		"flex_justify_content": "flex-start",
+		"flex_align_items": "center"
 	},
 	"elements": [
 		{

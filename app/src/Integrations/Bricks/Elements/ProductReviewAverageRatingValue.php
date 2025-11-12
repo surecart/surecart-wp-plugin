@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Product Average Rating Value element.
  */
-class ProductAverageRatingValue extends \Bricks\Element {
+class ProductReviewAverageRatingValue extends \Bricks\Element {
 	use ConvertsBlocks;
 
 	/**

@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Product Average Rating Stars widget.
  */
-class ProductAverageRatingStars extends \Elementor\Widget_Base {
+class ProductReviewAverageRatingStars extends \Elementor\Widget_Base {
 	/**
 	 * Get widget name.
 	 *
@@ -193,11 +193,6 @@ class ProductAverageRatingStars extends \Elementor\Widget_Base {
 		if ( \Elementor\Plugin::$instance->editor->is_edit_mode() ) {
 			$this->render_preview( $size );
 			return;
-		}
-
-		$product = sc_get_product();
-		if ( empty( $product ) || empty( $product->total_reviews ) ) {
-			$fill_color = 'none';
 		}
 		?>
 		<div <?php $this->print_render_attribute_string( 'wrapper' ); ?>>

@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Product Average Rating Value widget.
  */
-class ProductAverageRatingValue extends \Elementor\Widget_Base {
+class ProductReviewAverageRatingValue extends \Elementor\Widget_Base {
 	/**
 	 * Get widget name.
 	 *
@@ -236,11 +236,6 @@ class ProductAverageRatingValue extends \Elementor\Widget_Base {
 				?>
 			</span>
 			<?php
-			return;
-		}
-
-		$product = sc_get_product();
-		if ( empty( $product ) || empty( $product->total_reviews ) ) {
 			return;
 		}
 		?>

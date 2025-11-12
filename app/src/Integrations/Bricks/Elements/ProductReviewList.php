@@ -147,7 +147,7 @@ class ProductReviewList extends \Bricks\Element {
 		// Rating stars fill color for content stars.
 		$this->controls['rating_fill_color'] = [
 			'tab'      => 'content',
-			'label'    => esc_html__( 'Star color', 'surecart' ),
+			'label'    => esc_html__( 'Star Color', 'surecart' ),
 			'type'     => 'color',
 			'rerender' => true,
 			'default'  => [

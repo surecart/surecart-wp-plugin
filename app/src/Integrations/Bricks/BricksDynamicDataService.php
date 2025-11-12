@@ -166,6 +166,18 @@ class BricksDynamicDataService {
 					'label' => esc_html__( 'Price setup fee', 'surecart' ),
 					'group' => esc_html__( 'SureCart Product', 'surecart' ),
 				],
+				[
+					'slug'  => 'sc_product_review_average_ratings',
+					'name'  => '{sc_product_review_average_ratings}',
+					'label' => esc_html__( 'Product review average ratings', 'surecart' ),
+					'group' => esc_html__( 'SureCart Product', 'surecart' ),
+				],
+				[
+					'slug'  => 'sc_product_review_total_ratings',
+					'name'  => '{sc_product_review_total_ratings}',
+					'label' => esc_html__( 'Product review total ratings', 'surecart' ),
+					'group' => esc_html__( 'SureCart Product', 'surecart' ),
+				],
 			]
 		);
 	}
@@ -343,6 +355,18 @@ class BricksDynamicDataService {
 				}
 				// IMPORTANT: Don't remove the trailing space or the block may break in some contexts.
 				return '<!-- wp:surecart/price-setup-fee --><!-- /wp:surecart/price-setup-fee --> ';
+
+			case 'product_review_average_ratings':
+				if ( $this->is_admin_editor() ) {
+					return '4.5';
+				}
+				return esc_html( $product ? $product->average_stars : '' );
+
+			case 'product_review_total_ratings':
+				if ( $this->is_admin_editor() ) {
+					return '125';
+				}
+				return esc_html( $product ? $product->total_reviews : '' );
 		}
 
 		return $name;

@@ -7,9 +7,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Review Breakdown widget.
+ * Product Review Breakdown widget.
  */
-class ReviewBreakdown extends \Elementor\Widget_Base {
+class ProductReviewBreakdown extends \Elementor\Widget_Base {
 	/**
 	 * Get widget name.
 	 *
