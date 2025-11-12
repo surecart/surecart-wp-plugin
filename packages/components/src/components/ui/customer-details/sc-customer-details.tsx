@@ -114,7 +114,7 @@ export class ScCustomerDetails {
         <div>
           <strong>{label}</strong>
         </div>
-        <div>{address}</div>
+        <div style={{ whiteSpace: 'pre-line' }}>{address}</div>
         <div></div>
       </sc-stacked-list-row>
     );

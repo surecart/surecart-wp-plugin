@@ -16,7 +16,6 @@ import {
 	ScIcon,
 	ScMenu,
 	ScMenuItem,
-	ScText,
 } from '@surecart/components-react';
 import Box from '../../ui/Box';
 

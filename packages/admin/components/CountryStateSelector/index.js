@@ -6,11 +6,14 @@ import Country from './Country';
 import { __ } from '@wordpress/i18n';
 import { useState, useEffect } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
+import { useDispatch } from '@wordpress/data';
+import { store as noticesStore } from '@wordpress/notices';
 
 export default ({ value, onChange }) => {
 	const [search, setSearch] = useState('');
 	const [fetching, setFetching] = useState(false);
 	const [allCountries, setAllCountries] = useState([]);
+	const { createErrorNotice } = useDispatch(noticesStore);
 
 	useEffect(() => {
 		fetchAllCountries();
@@ -25,14 +28,21 @@ export default ({ value, onChange }) => {
 			setAllCountries(countries?.data);
 		} catch (e) {
 			console.error(e);
+			createErrorNotice(e?.message, { type: 'snackbar' });
 		} finally {
 			setFetching(false);
 		}
 	};
 
-	const countries = allCountries?.filter((country) =>
-		country?.name.toLowerCase().includes(search.toLowerCase())
-	);
+	const countries = useMemo(() => {
+		if (!allCountries?.length) return [];
+
+		const searchLower = search.toLowerCase();
+		return allCountries.filter((country) =>
+			country?.name?.toLowerCase().includes(searchLower)
+		);
+	}, [allCountries, search]);
+
 	const onChangeSelection = (newValue, country) => {
 		// country removed.
 		if (newValue === null) {
@@ -103,10 +113,12 @@ export default ({ value, onChange }) => {
 					height: 200px;
 					overflow-y: auto;
 				`}
+				role="listbox"
+				aria-label={__('Countries and regions list', 'surecart')}
 			>
 				{countries.map((country) => (
 					<Country
-						key={country?.name}
+						key={country?.code}
 						countryIsoCode={country?.code}
 						countryName={country?.name}
 						value={value.find((v) => v.country === country?.code)}

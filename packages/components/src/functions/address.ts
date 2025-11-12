@@ -48,10 +48,12 @@ export const hasRequiredFields = ({ city, country, line_1, postal_code, state })
   return !!line_1;
 };
 
+const lang = navigator.language || (navigator as any)?.browserLanguage || (navigator.languages || ['en'])[0];
+
 export const countryChoices = async () => {
   const response: any = await apiFetch({
     path: addQueryArgs(`surecart/v1/public/atlas`, {
-      locale: 'en',
+      locale: lang,
     }),
   });
   return response?.data.map(({ code, name }) => ({ value: code, label: name })) as Array<{ value: string; label: string }>;
@@ -60,7 +62,7 @@ export const countryChoices = async () => {
 export const getCountryDetails = async (countryCode: string) => {
   const response: any = await apiFetch({
     path: addQueryArgs(`surecart/v1/public/atlas/${countryCode}`, {
-      locale: 'en',
+      locale: lang,
     }),
   });
   return response;

@@ -9,7 +9,6 @@ import {
 	ScFormControl,
 	ScTextarea,
 	ScForm,
-	ScTag,
 	ScIcon,
 } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';

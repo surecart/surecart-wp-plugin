@@ -26,7 +26,7 @@ export default ({
 		fetchTerritories();
 	}, [isOpen]);
 
-	const fetchTerritories = async () => {
+	const fetchTerritories = useCallback(async () => {
 		try {
 			setFetching(true);
 			const country = await apiFetch({
@@ -42,7 +42,7 @@ export default ({
 		} finally {
 			setFetching(false);
 		}
-	};
+	}, [countryIsoCode, apiFetch, createErrorNotice]);
 
 	// when the country is selected, set states as empty array
 	const onSelectCountry = (checked) => {
