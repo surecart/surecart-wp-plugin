@@ -2,9 +2,11 @@
 import { css, jsx } from '@emotion/react';
 import { ScButton, ScIcon, ScSkeleton } from '@surecart/components-react';
 import { CheckboxControl } from '@wordpress/components';
+import { useDispatch } from '@wordpress/data';
 import { useState, useEffect } from '@wordpress/element';
-import { _n } from '@wordpress/i18n';
+import { _n, sprintf } from '@wordpress/i18n';
 import apiFetch from '@wordpress/api-fetch';
+import { store as noticesStore } from '@wordpress/notices';
 
 export default ({
 	countryIsoCode,
@@ -15,8 +17,8 @@ export default ({
 }) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [fetching, setFetching] = useState(false);
-	const [country, setCountry] = useState(false);
 	const [territories, setTerritories] = useState([]);
+	const { createErrorNotice } = useDispatch(noticesStore);
 
 	useEffect(() => {
 		if (!isOpen) return;
@@ -34,9 +36,9 @@ export default ({
 				(region) => !!region?.code
 			);
 			setTerritories(territories);
-			setCountry(country);
 		} catch (e) {
 			console.error(e);
+			createErrorNotice(e?.message, { type: 'snackbar' });
 		} finally {
 			setFetching(false);
 		}

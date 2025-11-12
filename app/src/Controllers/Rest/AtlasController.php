@@ -24,7 +24,7 @@ class AtlasController extends RestController {
 	 */
 	public function getCountryDetails( \WP_REST_Request $request ) {
 		$class = new $this->class( $request->get_json_params() );
-		$model = $this->middleware( $class, $request, 'getCountryDetails' );
+		$model = $this->middleware( $class, $request );
 		if ( is_wp_error( $model ) ) {
 			return $model;
 		}
