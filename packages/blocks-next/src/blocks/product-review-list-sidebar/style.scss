@@ -1,13 +1,13 @@
 .wp-block-surecart-product-review-list-sidebar.is-position-sticky {
 	overflow: auto;
-	height: 100svh;
+	max-height: 100svh;
 	flex-wrap: nowrap;
 	top: 0;
 	padding-bottom: 40px;
 
 	.admin-bar & {
 		top: 40px;
-		height: calc(100svh - 40px);
+		max-height: calc(100svh - 40px);
 	}
 }
 
