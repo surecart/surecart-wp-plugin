@@ -11,17 +11,8 @@
 	"attributes": {},
 	"supports": {
 		"interactivity": true,
-		"layout": {
-			"allowSwitching": false,
-			"allowInheriting": false,
-			"allowSizingOnChildren": true,
-			"default": {
-				"type": "flex",
-				"orientation": "horizontal",
-				"verticalAlignment": "top",
-				"flexWrap": "nowrap"
-			}
-		},
+		"layout": true,
+		"align": true,
 		"spacing": {
 			"padding": true,
 			"margin": true,

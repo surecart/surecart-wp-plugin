@@ -161,15 +161,7 @@ export default function ({ attributes, setAttributes, clientId }) {
 							<div className="sc-star-row" key={star}>
 								<div className="sc-star-label">
 									<span className="sc-star-text">{star}</span>
-									<span
-										className="sc-star-svg"
-										style={{
-											display: 'inline-block',
-											width: `${size}px`,
-											height: `${size}px`,
-											verticalAlign: 'middle',
-										}}
-									>
+									<span className="sc-star-svg">
 										<svg
 											viewBox="0 0 24 24"
 											width={size}

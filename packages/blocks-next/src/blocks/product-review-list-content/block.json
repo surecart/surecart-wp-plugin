@@ -22,6 +22,7 @@
 				"flexWrap": "nowrap"
 			}
 		},
+		"align": true,
 		"spacing": {
 			"padding": true,
 			"margin": true,

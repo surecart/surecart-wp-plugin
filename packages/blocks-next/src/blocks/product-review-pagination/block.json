@@ -52,7 +52,8 @@
 				"type": "flex",
 				"justifyContent": "space-between"
 			}
-		}
+		},
+		"align": true
 	},
 	"render": "file:./view.php",
 	"textdomain": "surecart",
