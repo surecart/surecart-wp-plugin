@@ -108,7 +108,7 @@ export default ({ upsell, onUpdate }) => {
 						href={addQueryArgs('site-editor.php', {
 							postType: 'wp_template',
 							postId:
-								upsell?.metadata?.template_id ||
+								upsell?.metadata?.wp_template_id ||
 								'surecart/surecart//single-upsell',
 							canvas: 'edit',
 						})}
