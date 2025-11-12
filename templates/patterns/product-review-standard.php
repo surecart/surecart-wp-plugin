@@ -7,7 +7,6 @@ return [
 	'blockTypes' => [ 'surecart/product-review-list' ],
 	'priority'   => 1,
 	'content'    => '
-
 <!-- wp:surecart/product-review-list {"metadata":{"categories":["surecart_review_list"],"patternName":"surecart-product-review-standard","name":"Default Review List"}} -->
 <!-- wp:heading -->
 <h2 class="wp-block-heading">Customer Reviews</h2>
