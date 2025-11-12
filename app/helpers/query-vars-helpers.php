@@ -15,6 +15,14 @@ function sc_get_noindex_query_vars(): array {
 		'currency',
 	];
 
+	// Add all registered taxonomies for sc_product.
+	$product_taxonomies = get_object_taxonomies( 'sc_product', 'names' );
+	if ( ! empty( $product_taxonomies ) ) {
+		foreach ( $product_taxonomies as $taxonomy ) {
+			$query_vars[] = 'products-' . $taxonomy;
+		}
+	}
+
 	/**
 	 * Filter the query variables that should trigger noindex in SEO plugins.
 	 *
