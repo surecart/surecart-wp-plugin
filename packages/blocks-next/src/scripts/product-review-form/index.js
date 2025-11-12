@@ -223,7 +223,8 @@ const { state, actions } = store('surecart/product-review-form', {
 					stars < 1 ||
 					stars > 5 ||
 					!title ||
-					title.trim() === ''
+					title.trim() === '' ||
+					!sc_product_id
 				) {
 					return;
 				}
