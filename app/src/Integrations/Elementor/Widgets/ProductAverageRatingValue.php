@@ -229,7 +229,7 @@ class ProductAverageRatingValue extends \Elementor\Widget_Base {
 				if ( 'parentheses' === $format_style ) {
 					echo '(4.3)';
 				} elseif ( 'slash' === $format_style ) {
-					echo '4.3 / 5';
+					echo '4.3 / 5.0';
 				} else {
 					echo '4.3';
 				}
