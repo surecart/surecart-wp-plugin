@@ -133,8 +133,6 @@ export class ScPayment {
   }
 
   renderRazorpay(processor) {
-    const title = hasOtherAvailableCreditCardProcessor('razorpay') ? __('Credit Card (Razorpay)', 'surecart') : __('Credit Card', 'surecart');
-
     // if system currency is not in the supported currency list, then stop.
     if (!(processor?.supported_currencies ?? []).includes(window?.scData?.currency)) {
       return;
@@ -143,8 +141,8 @@ export class ScPayment {
     return (
       <sc-payment-method-choice key={processor?.id} processor-id="razorpay">
         <span slot="summary" class="sc-payment-toggle-summary">
-          <sc-icon name="credit-card" style={{ fontSize: '24px' }} aria-hidden="true"></sc-icon>
-          <span>{title}</span>
+          <sc-icon name="razorpay" style={{ fontSize: '24px' }} aria-hidden="true"></sc-icon>
+          <span>{__('Cards, Netbanking, Wallet & UPI', 'surecart')}</span>
         </span>
 
         <sc-card>
