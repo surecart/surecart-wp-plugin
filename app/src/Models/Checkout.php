@@ -276,14 +276,25 @@ class Checkout extends Model {
 	/**
 	 * Set attributes during write actions.
 	 *
-	 * @return void
+	 * @param array $attributes The attributes to set.
+	 * @return array The attributes to set.
 	 */
-	protected function setWriteAttributes() {
+	protected function setWriteAttributes( $attributes = [] ) {
 		$this->setAttribute( 'ip_address', $this->getIPAddress() );
 		if ( isset( $_COOKIE['sc_click_id'] ) ) {
 			$this->setAttribute( 'last_click', $_COOKIE['sc_click_id'] );
 		}
-		$this->metadata->wp_user_role = wp_get_current_user()->roles;
+
+		$metadata = array_merge(
+			$attributes['metadata'] ?? [],
+			[
+				'wp_user_role' => wp_get_current_user()->roles,
+			]
+		);
+
+		$this->setMetadataAttribute( $metadata );
+
+		return array_merge( $attributes, $this->attributes );
 	}
 
 	/**
@@ -374,8 +385,7 @@ class Checkout extends Model {
 	 * @return $this|\WP_Error|false
 	 */
 	protected function update( $attributes = [] ) {
-		$this->setWriteAttributes();
-
+		$attributes = $this->setWriteAttributes( $attributes );
 		return parent::update( $attributes );
 	}
 
