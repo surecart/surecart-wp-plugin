@@ -235,7 +235,7 @@ export default () => {
 				'Connect with paystack to add a paystack express button to your checkout.',
 				'surecart'
 			),
-			isBeta: true,
+			isBeta: false,
 			status: renderStatus('paystack'),
 		},
 		{
