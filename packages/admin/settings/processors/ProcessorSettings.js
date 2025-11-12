@@ -255,7 +255,7 @@ export default () => {
 				</svg>
 			),
 			description: __(
-				'Connect with Razorpay to add a Razorpay express button to your checkout.',
+				'Connect with Razorpay to accept payments via Cards, Netbanking, Wallet & UPI.',
 				'surecart'
 			),
 			isBeta: true,
