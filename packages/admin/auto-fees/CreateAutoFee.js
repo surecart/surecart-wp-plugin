@@ -107,7 +107,8 @@ export default ({ id, onCreateAutoFee }) => {
 								loading={isSaving}
 								disabled={!autoFeeName}
 							>
-								{__('Create', 'surecart')}
+								{__('Continue', 'surecart')}
+								<ScIcon slot="suffix" name="arrow-right" />
 							</ScButton>
 						</div>
 					}
