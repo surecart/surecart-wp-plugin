@@ -5,7 +5,7 @@ export default {
 		enabled: false,
 		amount_adjustment: null,
 		discount: true,
-		name: __('Start from Scratch', 'surecart'),
+		name: __('Start from scratch', 'surecart'),
 		percent_adjustment: 50.0,
 		description: __(
 			'Start from scratch and create your own dynamic price.',
@@ -18,7 +18,7 @@ export default {
 		amount_adjustment: null,
 		discount: true,
 		fee_target: 'line_item',
-		name: __('Buy‑One‑Get‑One (BOGO)', 'surecart'),
+		name: __('Buy‑one‑get‑one (BOGO)', 'surecart'),
 		percent_adjustment: 50.0,
 		rules: {
 			type: 'group',
@@ -77,7 +77,7 @@ export default {
 		amount_adjustment: null,
 		discount: false,
 		fee_target: 'line_item',
-		name: __('Installment‑Payment Processing Fee', 'surecart'),
+		name: __('Installment payment processing fee', 'surecart'),
 		percent_adjustment: 3,
 		rules: {
 			type: 'group',
@@ -108,7 +108,7 @@ export default {
 		amount_adjustment: null,
 		discount: true,
 		fee_target: 'line_item',
-		name: __('Subscription Renewal Discount', 'surecart'),
+		name: __('Subscription renewal discount', 'surecart'),
 		percent_adjustment: 15,
 		rules: {
 			type: 'group',
@@ -136,7 +136,7 @@ export default {
 		amount_adjustment: null,
 		discount: true,
 		fee_target: 'line_item',
-		name: __('Bulk‐purchase discount', 'surecart'),
+		name: __('Bulk purchase discount', 'surecart'),
 		percent_adjustment: 10.0,
 		rules: {
 			type: 'group',
@@ -192,7 +192,7 @@ export default {
 		amount_adjustment: null,
 		discount: true,
 		fee_target: 'checkout',
-		name: __('First‑time customer discount', 'surecart'),
+		name: __('First-time customer discount', 'surecart'),
 		percent_adjustment: 15,
 		rules: {
 			type: 'group',
