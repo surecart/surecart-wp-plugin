@@ -130,7 +130,7 @@ export default ({ id, onCreateAutoFee }) => {
 							maxHeight: '480px',
 							padding: '0 10px',
 							margin: '0 -10px',
-							overflow: 'scroll',
+							overflow: 'auto',
 							display: 'flex',
 							flexDirection: 'column',
 							gap: '16px',
