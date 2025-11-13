@@ -26,18 +26,29 @@ class AutoFee extends Model {
 	 * @return void
 	 */
 	public function setRulesAttribute( $value ) {
-		$this->attributes['rules'] = $this->handleCustomAttributes( $value );
+		$this->attributes['rules'] = $this->handleCustomAttributes( $value, 'set' );
 	}
+
+	/**
+	 * Get the rules attribute.
+	 *
+	 * @param  string $value Product properties.
+	 * @return array
+	 */
+	public function getRulesAttribute( $value ) {
+		return $this->handleCustomAttributes( $value, 'get' );
+	}
+
 
 	/**
 	 * Handle Custom Attributes.
 	 *
-	 * @param array $rule_json Rule JSON.
-	 *
+	 * @param array  $rule_json Rule JSON.
+	 * @param string $type get or set.
 	 * @return array $rule_json
 	 */
-	public function handleCustomAttributes( $rule_json ) {
-		if ( empty( $rule_json ) ) {
+	public function handleCustomAttributes( $rule_json, $type ) {
+		if ( empty( $rule_json ) || empty( $type ) ) {
 			return [];
 		}
 
@@ -49,13 +60,13 @@ class AutoFee extends Model {
 
 		foreach ( $rule_array as $key => &$value ) {
 			if ( is_array( $value ) ) {
-				$value = $this->handleCustomAttributes( $value );
+				$value = $this->handleCustomAttributes( $value, $type );
 
 				if ( empty( $value['attribute_name'] ) ) {
 					continue;
 				}
 
-				if ( 'wp_user_role' === $value['attribute_name'] ) {
+				if ( 'wp_user_role' === $value['attribute_name'] && 'set' === $type ) {
 					$value['attribute_name'] = 'metadata';
 					$value['metadata_key']   = 'wp_user_role';
 					continue;
@@ -65,7 +76,7 @@ class AutoFee extends Model {
 					continue;
 				}
 
-				if ( 'metadata' === $value['attribute_name'] && 'wp_user_role' === $value['metadata_key'] ) {
+				if ( 'metadata' === $value['attribute_name'] && 'wp_user_role' === $value['metadata_key'] && 'get' === $type ) {
 					$value['attribute_name'] = 'wp_user_role';
 				}
 			}

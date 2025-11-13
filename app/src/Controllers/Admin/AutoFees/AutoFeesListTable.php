@@ -184,6 +184,7 @@ class AutoFeesListTable extends ListTable {
 				'action' => 'toggle_active',
 				'nonce'  => wp_create_nonce( 'archive_product' ), // use archive product nonce.
 				'id'     => $auto_fees->id,
+				'status' => 'all',
 			]
 		);
 		?>
