@@ -15,6 +15,7 @@ class GalleryItemAttachment {
 	 */
 	protected function create( $item, $product_featured_image = null ) {
 		// Get the post object to check mime type.
+		$item = (array) $item;
 		$post = get_post( $item['id'] ?? $item );
 
 		if ( empty( $post ) ) {
