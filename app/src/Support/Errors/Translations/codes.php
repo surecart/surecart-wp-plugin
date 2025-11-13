@@ -7,6 +7,7 @@
 
 return array(
 	'http_request_failed'                                  => __( 'Could not complete the request. Please try again.', 'surecart' ),
+	'auto_fee.start_at.blank'                              => __( 'They dynamic price must have a start date.', 'surecart' ),
 	'coupon.invalid'                                       => __( 'Failed to save coupon.', 'surecart' ),
 	'checkout.discount.coupon.currency_mismatch'           => __( 'This coupon is for a different currency and cannot be applied.', 'surecart' ),
 	'price.dependent_locked'                               => __( 'The price is already being used in subscriptions or checkout sessions. Please archive the price and create another one.', 'surecart' ),
