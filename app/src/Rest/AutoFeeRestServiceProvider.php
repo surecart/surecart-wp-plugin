@@ -54,17 +54,17 @@ class AutoFeeRestServiceProvider extends RestServiceProvider implements RestServ
 	}
 
 	/**
-	 * Anyone can get a specific price.
+	 * Get item permissions.
 	 *
 	 * @param \WP_REST_Request $request Full details about the request.
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function get_item_permissions_check( $request ) {
-		return true;
+		return current_user_can( 'edit_sc_prices' );
 	}
 
 	/**
-	 * Who can list prices
+	 * List items permissions.
 	 *
 	 * @param \WP_REST_Request $request Full details about the request.
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
@@ -74,7 +74,7 @@ class AutoFeeRestServiceProvider extends RestServiceProvider implements RestServ
 	}
 
 	/**
-	 * Create model.
+	 * Create item permissions.
 	 *
 	 * @param \WP_REST_Request $request Full details about the request.
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
@@ -84,7 +84,7 @@ class AutoFeeRestServiceProvider extends RestServiceProvider implements RestServ
 	}
 
 	/**
-	 * Update model.
+	 * Update item permissions.
 	 *
 	 * @param \WP_REST_Request $request Full details about the request.
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
@@ -94,7 +94,7 @@ class AutoFeeRestServiceProvider extends RestServiceProvider implements RestServ
 	}
 
 	/**
-	 * Delete model.
+	 * Delete item permissions.
 	 *
 	 * @param \WP_REST_Request $request Full details about the request.
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
