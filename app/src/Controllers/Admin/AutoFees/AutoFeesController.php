@@ -27,6 +27,20 @@ class AutoFeesController extends AdminController {
 			)
 		);
 
+		\SureCart::notices()->add(
+			[
+				'name'  => 'auto_fees_getting_started',
+				'type'  => 'info',
+				'title' => esc_html__( 'What is dynamic pricing?', 'surecart' ),
+				'text'  => sprintf(
+					'<p>%s</p> <p><a href="%s" target="_blank" rel="noopener noreferrer">%s</a></p>',
+					__( 'Dynamic pricing allows you to automatically discount or add fees to your products in checkout based on a variety of factors. Some popular use cases include "buy one, get one free" discounts, free shipping minimums, subscription renewal discounts. Get started by creating your first dynamic price.', 'surecart' ),
+					'https://surecart.com/docs/dynamic-pricing/',
+					__( 'Learn More ↗', 'surecart' )
+				),
+			]
+		);
+
 		$this->withNotices(
 			array(
 				'deleted' => __( 'Dynamic Price deleted.', 'surecart' ),
