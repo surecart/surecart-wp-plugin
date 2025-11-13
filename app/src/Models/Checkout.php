@@ -373,7 +373,7 @@ class Checkout extends Model {
 	 * @return $this|\WP_Error|false
 	 */
 	protected function create( $attributes = [] ) {
-		$this->setWriteAttributes( $attributes );
+		$attributes = $this->setWriteAttributes( $attributes );
 		return parent::create( $attributes );
 	}
 
