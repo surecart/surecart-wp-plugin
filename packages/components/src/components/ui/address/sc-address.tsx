@@ -83,13 +83,11 @@ export class ScAddress {
   /** Should we show the postal field? */
   @State() showPostal: boolean = true;
 
-  /** Holds the regions for a given country. */
-  @State() regions: Array<{ value: string; label: string }>;
+  /** Country details. */
+  @State() countryDetails: any = null;
 
   /** Holds our country choices. */
   @State() countryChoices: Array<{ value: string; label: string }>;
-
-  @State() sortedFields: Array<CountryLocaleFieldValue>;
 
   /** Address change event. */
   @Event() scChangeAddress: EventEmitter<Partial<Address>>;
@@ -99,9 +97,11 @@ export class ScAddress {
 
   /** When the state changes, we want to update city and postal fields. */
   @Watch('address')
-  handleAddressChange() {
+  async handleAddressChange() {
     if (!this.address?.country) return;
-    this.setSortedFields();
+    if (!this.countryDetails || this.countryDetails?.code !== this.address.country) {
+      this.countryDetails = await getCountryDetails(this.address.country);
+    }
     this.scChangeAddress.emit(this.address);
     this.scInputAddress.emit(this.address);
   }
@@ -157,32 +157,32 @@ export class ScAddress {
     return reportChildrenValidity(this.el);
   }
 
-  /**
-   * Compute and return the sorted fields based on current country, defaultCountryFields and countryFields.
-   * This method can be used as a computed property.
-   */
-  async setSortedFields() {
-    const countryDetails = await getCountryDetails(this.address?.country);
-    const addressFormatEdit = countryDetails?.address_formats?.edit;
+  sortedFields() {
+    if (!this.countryDetails || !this?.address?.country) {
+      return this.defaultCountryFields;
+    }
 
-    this.sortedFields =
-      addressFormatEdit
-        ?.match(/{{([^}]+)}}/g)
-        .map(match => match.slice(2, -2))
-        .map(field => ({
-          name: field,
-          label: countryDetails?.address_labels?.[field] || this.defaultCountryFields?.find(defaultField => defaultField?.name === field)?.label,
-        })) || [];
+    return (this?.countryDetails?.address_formats?.edit
+      ?.match(/{{([^}]+)}}/g)
+      .map(match => match.slice(2, -2))
+      .map(field => ({
+        name: field,
+        label: this?.countryDetails?.address_labels?.[field] || this.defaultCountryFields?.find(defaultField => defaultField?.name === field)?.label,
+      })) || []) as CountryLocaleFieldValue[];
+  }
 
-    this.regions =
-      countryDetails?.states?.map(state => ({
+  regions() {
+    let regions =
+      this?.countryDetails?.states?.map(state => ({
         value: state?.code,
         label: state?.name,
       })) || [];
 
     if (window?.wp?.hooks?.applyFilters) {
-      this.regions = window.wp.hooks.applyFilters('surecart_address_regions', this.regions, this.address.country) as Array<{ value: string; label: string }>;
+      regions = window.wp.hooks.applyFilters('surecart_address_regions', regions, this.address.country) as Array<{ value: string; label: string }>;
     }
+
+    return regions as Array<{ value: string; label: string }>;
   }
 
   getRoundedProps(index: number, length: number) {
@@ -197,7 +197,7 @@ export class ScAddress {
   }
 
   render() {
-    const visibleFields = (this.sortedFields ?? this.defaultCountryFields ?? [])?.filter(field => {
+    const visibleFields = (this.sortedFields() ?? [])?.filter(field => {
       switch (field.name) {
         case 'name':
           return this.showName;
@@ -206,7 +206,7 @@ export class ScAddress {
         case 'city':
           return this.showCity;
         case 'state':
-          return !!this?.regions?.length && !!this?.address?.country;
+          return !!this?.regions()?.length && !!this?.address?.country;
         case 'postal_code':
           return this.showPostal;
         default:
@@ -320,7 +320,7 @@ export class ScAddress {
                     autocomplete={'address-level1'}
                     value={this?.address?.state}
                     onScChange={(e: any) => this.updateAddress({ state: e.target.value || e.detail?.value || null })}
-                    choices={this.regions}
+                    choices={this.regions()}
                     required={this.required}
                     disabled={this.disabled}
                     search
