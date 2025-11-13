@@ -132,29 +132,15 @@ class ProductReviewAverageRatingStars extends \Bricks\Element {
 	private function render_preview( $size, $fill_color ) {
 		$stars_html = '';
 		for ( $i = 1; $i <= 5; $i++ ) {
-			$is_half = 5 === $i;
-
-			if ( $is_half ) {
-				$stars_html .= \SureCart::svg()->get(
-					'half-star',
-					[
-						'height' => esc_attr( $size ),
-						'width'  => esc_attr( $size ),
-						'stroke' => esc_attr( $fill_color ),
-						'color'  => esc_attr( $fill_color ),
-					]
-				);
-			} else {
-				$stars_html .= \SureCart::svg()->get(
-					'star',
-					[
-						'height' => esc_attr( $size ),
-						'width'  => esc_attr( $size ),
-						'fill'   => esc_attr( $fill_color ),
-						'stroke' => esc_attr( $fill_color ),
-					]
-				);
-			}
+			$stars_html .= \SureCart::svg()->get(
+				'star',
+				[
+					'height' => esc_attr( $size ),
+					'width'  => esc_attr( $size ),
+					'fill'   => esc_attr( $fill_color ),
+					'stroke' => esc_attr( $fill_color ),
+				]
+			);
 		}
 
 		echo $this->preview( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped

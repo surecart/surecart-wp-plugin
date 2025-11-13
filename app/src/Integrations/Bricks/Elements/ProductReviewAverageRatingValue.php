@@ -103,7 +103,7 @@ class ProductReviewAverageRatingValue extends \Bricks\Element {
 
 		echo $this->html( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			[
-				'className' => $class_name,
+				'className' => esc_attr( $class_name ),
 			]
 		);
 	}

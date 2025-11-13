@@ -75,9 +75,27 @@ class ProductReviewRating extends \Bricks\Element {
 					'_justifyContent' => 'flex-start',
 				),
 				'children' => array(
-					array( 'name' => 'surecart-product-review-average-rating-stars' ),
-					array( 'name' => 'surecart-product-review-average-rating-value' ),
-					array( 'name' => 'surecart-product-review-total-rating' ),
+					array(
+						'name'     => 'surecart-product-review-average-rating-stars',
+						'settings' => array(
+							'_typography' => array(
+								'line-height' => '1',
+							),
+						),
+					),
+					array(
+						'name'     => 'surecart-product-review-average-rating-value',
+						'settings' => array(
+							'format_style' => 'parentheses',
+						),
+					),
+					array(
+						'name'     => 'surecart-product-review-total-rating',
+						'settings' => array(
+							'style_variant' => 'plus-sign',
+							'show_label'    => true,
+						),
+					),
 				),
 			),
 		);
