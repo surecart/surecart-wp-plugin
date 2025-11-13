@@ -124,6 +124,7 @@ export default ({ autoFee = {}, onUpdate, loading }) => {
 							name={
 								discount ? 'arrow-down-right' : 'arrow-up-right'
 							}
+							type={discount ? 'success' : 'danger'}
 						/>
 						{discount
 							? __('Discount', 'surecart')
