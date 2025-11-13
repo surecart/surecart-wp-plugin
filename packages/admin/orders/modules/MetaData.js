@@ -21,7 +21,6 @@ export default ({ order, loading }) => {
 		page_id,
 		page_url,
 		buy_page_product_id,
-		wp_user_role,
 		...metadata
 	} = order?.checkout?.metadata || {};
 
@@ -76,7 +75,17 @@ export default ({ order, loading }) => {
 							>
 								{label}
 							</ScText>
-							<div>{value}</div>
+							<div
+								css={css`
+									white-space: pre-wrap;
+									word-wrap: break-word;
+									word-break: break-all;
+									overflow-wrap: break-word;
+									overflow-x: auto;
+								`}
+							>
+								{value}
+							</div>
 						</div>
 					))}
 				</div>

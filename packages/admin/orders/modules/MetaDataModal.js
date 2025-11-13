@@ -18,18 +18,13 @@ import Error from '../../components/Error';
 import {
 	ScForm,
 	ScButton,
-	ScInput,
+	ScTextarea,
 	ScDrawer,
 	ScBlockUi,
 } from '@surecart/components-react';
 
-export default function MetaDataModal({
-	onRequestClose,
-	order,
-	metadatas,
-	open,
-}) {
-	const [formData, setFormData] = useState({});
+export default function MetaDataModal({ onRequestClose, order, open }) {
+	const [jsonValue, setJsonValue] = useState('');
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
 	const { receiveEntityRecords } = useDispatch(coreStore);
@@ -37,26 +32,27 @@ export default function MetaDataModal({
 
 	const { baseURL } = select(coreStore).getEntityConfig(
 		'surecart',
-		'checkout'
+		'draft-checkout'
 	);
 
-	useEffect(() => {
-		if (!!metadatas) {
-			setFormData(
-				metadatas.reduce((acc, { key, value }) => {
-					acc[key] = value;
-					return acc;
-				}, {})
-			);
-		}
-	}, [metadatas]);
-
-	const validateFormDataJSON = () => {
-		for (const value of Object.values(formData)) {
-			if (typeof value !== 'string') continue;
-			return JSON.parse(value);
-		}
+	// Get original metadata object (excluding reserved keys).
+	const getOriginalMetadata = () => {
+		const {
+			wp_created_by,
+			page_id,
+			page_url,
+			buy_page_product_id,
+			...metadata
+		} = order?.checkout?.metadata || {};
+		return metadata;
 	};
+
+	useEffect(() => {
+		if (open && order) {
+			const metadata = getOriginalMetadata();
+			setJsonValue(JSON.stringify(metadata, null, 2));
+		}
+	}, [open, order]);
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -64,12 +60,40 @@ export default function MetaDataModal({
 		setError(null);
 
 		try {
-			validateFormDataJSON();
+			// Parse the JSON string to an object.
+			const parsedMetadata = JSON.parse(jsonValue);
+
+			// Validate it's an object.
+			if (
+				typeof parsedMetadata !== 'object' ||
+				parsedMetadata === null ||
+				Array.isArray(parsedMetadata)
+			) {
+				throw new Error(
+					__('Metadata must be a valid JSON object.', 'surecart')
+				);
+			}
+
+			// Merge with reserved keys to preserve them.
+			const originalMetadata = order?.checkout?.metadata || {};
+			const { wp_created_by, page_id, page_url, buy_page_product_id } =
+				originalMetadata;
+
+			const fullMetadata = {
+				...(wp_created_by !== undefined && { wp_created_by }),
+				...(page_id !== undefined && { page_id }),
+				...(page_url !== undefined && { page_url }),
+				...(buy_page_product_id !== undefined && {
+					buy_page_product_id,
+				}),
+				...parsedMetadata,
+			};
+
 			const checkout = await apiFetch({
 				path: `${baseURL}/${order?.checkout?.id}`,
 				method: 'PATCH',
 				data: {
-					metadata: formData,
+					metadata: fullMetadata,
 				},
 			});
 
@@ -107,13 +131,6 @@ export default function MetaDataModal({
 		}
 	};
 
-	const handleChange = (key, value) => {
-		setFormData((prev) => ({
-			...prev,
-			[key]: value,
-		}));
-	};
-
 	return (
 		<ScForm onScFormSubmit={handleSubmit}>
 			<ScDrawer
@@ -130,14 +147,25 @@ export default function MetaDataModal({
 				>
 					<Error error={error} setError={setError} />
 
-					{metadatas.map(({ key, label }) => (
-						<ScInput
-							key={key}
-							label={label}
-							value={formData[key] || ''}
-							onScInput={(e) => handleChange(key, e.target.value)}
+					<div
+						css={css`
+							sc-textarea {
+								--sc-textarea-font-family: monospace;
+								--sc-textarea-font-size: 0.875em;
+							}
+						`}
+					>
+						<ScTextarea
+							label={__('Metadata', 'surecart')}
+							value={jsonValue}
+							onScInput={(e) => setJsonValue(e.target.value)}
+							rows={15}
+							help={__(
+								'Edit the metadata as raw JSON.',
+								'surecart'
+							)}
 						/>
-					))}
+					</div>
 				</div>
 
 				<ScButton
