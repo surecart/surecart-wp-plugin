@@ -3,7 +3,7 @@ import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import { useDispatch } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 import {
 	ScAlert,
@@ -26,6 +26,15 @@ export default ({ id, onCreateAutoFee }) => {
 	const [currentTemplate, setCurrentTemplate] = useState('');
 	const [error, setError] = useState('');
 	const { saveEntityRecord } = useDispatch(coreStore);
+	const nameInputRef = useRef(null);
+
+	useEffect(() => {
+		if (nameInputRef.current) {
+			setTimeout(() => {
+				nameInputRef.current.triggerFocus();
+			}, 250);
+		}
+	}, []);
 
 	const getTemplateChoices = () => {
 		return Object.entries(templates).map(([key, template]) => ({
@@ -123,6 +132,7 @@ export default ({ id, onCreateAutoFee }) => {
 						onScInput={(e) => setAutoFeeName(e.target.value)}
 						required
 						tabIndex="0"
+						ref={nameInputRef}
 						autofocus
 					/>
 					<div
