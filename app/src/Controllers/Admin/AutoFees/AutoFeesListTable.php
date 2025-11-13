@@ -222,13 +222,53 @@ class AutoFeesListTable extends ListTable {
 	 */
 	public function column_type( $auto_fees ) {
 		$translations = [
-			'checkout'  => __( 'Checkout', 'surecart' ),
-			'line_item' => __( 'Line Item', 'surecart' ),
-			'shipping'  => __( 'Shipping', 'surecart' ),
-
+			'checkout'  => [
+				'label' => __( 'Checkout', 'surecart' ),
+				'icon'  => 'shopping-cart',
+			],
+			'line_item' => [
+				'label' => __( 'Line Item', 'surecart' ),
+				'icon'  => 'layout-list',
+			],
+			'shipping'  => [
+				'label' => __( 'Shipping', 'surecart' ),
+				'icon'  => 'truck',
+			],
 		];
 
-		return '<sc-tag>' . esc_html( $translations[ $auto_fees->fee_target ] ) . '</sc-tag>';
+		// Determine fee/discount type.
+		$is_discount    = (bool) $auto_fees->discount;
+		$type_label     = $is_discount ? __( 'Discount', 'surecart' ) : __( 'Fee', 'surecart' );
+		$type_tag_type  = $is_discount ? 'success' : 'danger';
+		$type_icon_name = $is_discount ? 'arrow-down-right' : 'arrow-up-right';
+
+		// Get target information.
+		$target_data  = $translations[ $auto_fees->fee_target ] ?? $translations['checkout'];
+		$target_label = $target_data['label'];
+		$target_icon  = $target_data['icon'];
+
+		// Build the fee/discount tag.
+		$type_tag = sprintf(
+			'<sc-tag type="%s" pill><div style="display: flex; align-items: center; gap: 0.5em;"><sc-icon name="%s"></sc-icon>%s</div></sc-tag>',
+			esc_attr( $type_tag_type ),
+			esc_attr( $type_icon_name ),
+			esc_html( $type_label )
+		);
+
+		// Build the target tag.
+		$target_tag = sprintf(
+			'<sc-tag type="info" pill><div style="display: flex; align-items: center; gap: 0.5em;"><sc-icon name="%s"></sc-icon>%s</div></sc-tag>',
+			esc_attr( $target_icon ),
+			esc_html( $target_label )
+		);
+
+		// Build the translated sentence.
+		return sprintf(
+			/* translators: %1$s: Fee or Discount tag HTML, %2$s: Target tag HTML (e.g., Checkout, Line Item, Shipping) */
+			__( 'Apply a %1$s to %2$s', 'surecart' ),
+			$type_tag,
+			$target_tag
+		);
 	}
 
 	/**
