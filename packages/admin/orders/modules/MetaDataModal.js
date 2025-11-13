@@ -15,10 +15,10 @@ import apiFetch from '@wordpress/api-fetch';
  * Internal dependencies.
  */
 import Error from '../../components/Error';
+import CodeEditor from '../../components/CodeEditor';
 import {
 	ScForm,
 	ScButton,
-	ScTextarea,
 	ScDrawer,
 	ScBlockUi,
 } from '@surecart/components-react';
@@ -147,25 +147,14 @@ export default function MetaDataModal({ onRequestClose, order, open }) {
 				>
 					<Error error={error} setError={setError} />
 
-					<div
-						css={css`
-							sc-textarea {
-								--sc-textarea-font-family: monospace;
-								--sc-textarea-font-size: 0.875em;
-							}
-						`}
-					>
-						<ScTextarea
-							label={__('Metadata', 'surecart')}
-							value={jsonValue}
-							onScInput={(e) => setJsonValue(e.target.value)}
-							rows={15}
-							help={__(
-								'Edit the metadata as raw JSON.',
-								'surecart'
-							)}
-						/>
-					</div>
+					<CodeEditor
+						value={jsonValue}
+						onChange={setJsonValue}
+						label={__('Metadata', 'surecart')}
+						help={__('Edit the metadata JSON format.', 'surecart')}
+						mode="application/json"
+						rows={15}
+					/>
 				</div>
 
 				<ScButton
