@@ -24,7 +24,6 @@ export class ScPhoneInput {
   private inputId: string = `phone-input-${++id}`;
   private helpId = `phone-input-help-text-${id}`;
   private labelId = `phone-input-label-${id}`;
-  private hasBlurred: boolean = false;
 
   /** Element */
   @Element() el: HTMLScInputElement;
@@ -165,13 +164,7 @@ export class ScPhoneInput {
 
   handleBlur() {
     this.hasFocus = false;
-    this.hasBlurred = true;
     this.scBlur.emit();
-
-    // Validate on blur.
-    if (this.input) {
-      this.invalid = !this.input.checkValidity();
-    }
   }
 
   handleFocus() {
@@ -209,8 +202,7 @@ export class ScPhoneInput {
 
   @Watch('value')
   handleValueChange() {
-    // Only validate if the user has interacted with the input.
-    if (this.input && this.hasBlurred) {
+    if (this.input) {
       this.invalid = !this.input.checkValidity();
     }
   }
