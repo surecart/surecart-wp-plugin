@@ -3,7 +3,6 @@ import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import { useDispatch } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
-import { getDate } from '@wordpress/date';
 import { useState, useEffect } from 'react';
 
 import {
