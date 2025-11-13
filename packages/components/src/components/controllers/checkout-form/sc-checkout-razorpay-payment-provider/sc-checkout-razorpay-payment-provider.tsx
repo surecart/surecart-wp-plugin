@@ -22,6 +22,8 @@ import { Customer, RazorpayConstructor } from 'src/types';
 export class ScCheckoutRazorpayPaymentProvider {
   private unlistenToFormState: () => void;
   private razorpayInstance: RazorpayConstructor | null = null;
+  private confirming: boolean = false;
+  private loadPromise: Promise<void> | null = null;
 
   componentWillLoad() {
     this.loadRazorpay();
@@ -44,7 +46,11 @@ export class ScCheckoutRazorpayPaymentProvider {
       return;
     }
 
-    return new Promise((resolve, reject) => {
+    if (this.loadPromise) {
+      return this.loadPromise;
+    }
+
+    this.loadPromise = new Promise((resolve, reject) => {
       const script = document.createElement('script');
       script.src = 'https://checkout.razorpay.com/v1/checkout.js';
       script.async = true;
@@ -58,6 +64,8 @@ export class ScCheckoutRazorpayPaymentProvider {
       };
       document.head.appendChild(script);
     });
+
+    return this.loadPromise;
   }
 
   async confirm() {
@@ -67,6 +75,10 @@ export class ScCheckoutRazorpayPaymentProvider {
     if (!checkoutState?.checkout?.payment_intent?.processor_data?.razorpay) return;
     // Prevent if already paid.
     if (checkoutState?.checkout?.status === 'paid') return;
+    // Prevent multiple simultaneous payment attempts
+    if (this.confirming) return;
+
+    this.confirming = true;
 
     try {
       // must have a public_key and external_intent_id.
@@ -88,7 +100,14 @@ export class ScCheckoutRazorpayPaymentProvider {
         return;
       }
 
-      const { name, email, phone } = checkoutState?.checkout?.customer as Customer;
+      const customer = checkoutState?.checkout?.customer as Customer | undefined;
+      const prefill = customer
+        ? {
+            ...(customer.name && { name: customer.name }),
+            ...(customer.email && { email: customer.email }),
+            ...(customer.phone && { contact: customer.phone }),
+          }
+        : undefined;
 
       /*
        * Razorpay options.
@@ -97,16 +116,15 @@ export class ScCheckoutRazorpayPaymentProvider {
       let options = {
         key: public_key,
         order_id: external_intent_id,
-        prefill: {
-          name,
-          email,
-          contact: phone,
-        },
+        prefill,
         customer_id,
         recurring: reusable,
         handler: (response: any) => {
           if (response?.razorpay_payment_id) {
             return updateFormState('PAID');
+          } else {
+            createErrorNotice({ message: __('Payment verification failed. Please contact support.', 'surecart') });
+            updateFormState('REJECT');
           }
         },
         modal: {
@@ -135,6 +153,8 @@ export class ScCheckoutRazorpayPaymentProvider {
       createErrorNotice(err);
       console.error(err);
       updateFormState('REJECT');
+    } finally {
+      this.confirming = false;
     }
   }
 }
