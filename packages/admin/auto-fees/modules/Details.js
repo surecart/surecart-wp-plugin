@@ -74,7 +74,7 @@ const Details = ({ autoFee, onUpdate, loading }) => {
 			<ScInput
 				label={__('Name', 'surecart')}
 				help={__(
-					'Your dynamic price name. This will be displayed to the customer.',
+					'A friendly name for your price change. This will be displayed to the customer.',
 					'surecart'
 				)}
 				value={name}
@@ -84,7 +84,7 @@ const Details = ({ autoFee, onUpdate, loading }) => {
 			<ScSelect
 				label={__('Price Type', 'surecart')}
 				help={__(
-					'Whether this dynamic price is a discount or a fee.',
+					'Select whether you want to give a discount or charge a fee.',
 					'surecart'
 				)}
 				unselect={false}
@@ -111,7 +111,7 @@ const Details = ({ autoFee, onUpdate, loading }) => {
 				<ScSelect
 					label={__('Apply As', 'surecart')}
 					help={__(
-						'Whether this dynamic price is a percentage or fixed amount adjustment.',
+						'Choose between a percentage or a fixed amount.',
 						'surecart'
 					)}
 					unselect={false}
