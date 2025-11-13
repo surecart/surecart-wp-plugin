@@ -87,7 +87,7 @@ class Product extends \Bricks\Element {
 				'label'    => esc_html__( 'Rating Info', 'surecart' ),
 				'settings' => array(
 					'_direction'  => 'row',
-					'_columnGap'  => '10px',
+					'_columnGap'  => '6px',
 					'_alignItems' => 'center',
 				),
 				'children' => array(

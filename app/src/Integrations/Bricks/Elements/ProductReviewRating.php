@@ -71,7 +71,7 @@ class ProductReviewRating extends \Bricks\Element {
 				'settings' => array(
 					'_direction'      => 'row',
 					'_alignItems'     => 'center',
-					'_columnGap'      => '8px',
+					'_columnGap'      => '6px',
 					'_justifyContent' => 'flex-start',
 				),
 				'children' => array(

@@ -96,11 +96,6 @@ class ProductReviewAverageRatingValue extends \Bricks\Element {
 			return;
 		}
 
-		$product = sc_get_product();
-		if ( empty( $product ) || empty( $product->total_reviews ) ) {
-			return;
-		}
-
 		echo $this->html( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			[
 				'className' => esc_attr( $class_name ),

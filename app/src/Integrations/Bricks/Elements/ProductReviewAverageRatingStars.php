@@ -108,11 +108,6 @@ class ProductReviewAverageRatingStars extends \Bricks\Element {
 			return;
 		}
 
-		$product = sc_get_product();
-		if ( empty( $product ) || empty( $product->total_reviews ) ) {
-			$fill_color = 'none';
-		}
-
 		echo $this->html( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			[
 				'size'       => (int) $size,
