@@ -46,7 +46,7 @@ export default {
 		amount_adjustment: null,
 		discount: true,
 		fee_target: 'shipping',
-		name: __('Free‑shipping threshold', 'surecart'),
+		name: __('Free‑shipping minimum', 'surecart'),
 		percent_adjustment: 100,
 		rules: {
 			type: 'group',
