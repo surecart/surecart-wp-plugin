@@ -24,6 +24,7 @@ import {
 	ScCard,
 } from '@surecart/components-react';
 import { useInvoice } from '../hooks/useInvoice';
+import AddressDisplay from '../../components/AddressDisplay';
 import Box from '../../ui/Box';
 
 export default ({ checkout }) => {
@@ -136,12 +137,12 @@ export default ({ checkout }) => {
 							`}
 						>
 							{!!checkout?.shipping_address?.country ? (
-								<>
-									{
+								<AddressDisplay
+									address={
 										checkout?.shipping_address
 											?.formatted_string
 									}
-								</>
+								/>
 							) : (
 								<ScText
 									style={{
@@ -184,7 +185,9 @@ export default ({ checkout }) => {
 							`}
 						>
 							{!!billingAddress?.country ? (
-								<>{billingAddress?.formatted_string}</>
+								<AddressDisplay
+									address={billingAddress?.formatted_string}
+								/>
 							) : (
 								<ScText
 									style={{

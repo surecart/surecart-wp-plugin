@@ -17,6 +17,7 @@ import { store as noticesStore } from '@wordpress/notices';
 import { useDispatch } from '@wordpress/data';
 import { __, _n, sprintf } from '@wordpress/i18n';
 import { useState, useEffect } from 'react';
+import AddressDisplay from '../../../components/AddressDisplay';
 import Tracking from './components/Tracking';
 import ProductLineItem from '../../../ui/ProductLineItem';
 
@@ -262,7 +263,12 @@ export default ({
 										</ScTooltip>
 									)}
 								</div>
-								{checkout?.shipping_address?.formatted_string}
+								<AddressDisplay
+									address={
+										checkout?.shipping_address
+											?.formatted_string
+									}
+								/>
 							</ScFormControl>
 						) : (
 							<div

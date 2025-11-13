@@ -1,5 +1,6 @@
 import Box from '../../ui/Box';
 import { __ } from '@wordpress/i18n';
+import AddressDisplay from '../../components/AddressDisplay';
 
 export default ({ address = {}, label, loading }) => {
 	if (!loading && !address?.id) {
@@ -7,7 +8,7 @@ export default ({ address = {}, label, loading }) => {
 	}
 	return (
 		<Box title={label || __('Address', 'surecart')} loading={loading}>
-			{address?.formatted_string}
+			<AddressDisplay address={address} />
 		</Box>
 	);
 };
