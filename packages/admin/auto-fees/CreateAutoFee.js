@@ -125,7 +125,7 @@ export default ({ id, onCreateAutoFee }) => {
 					<ScInput
 						label={__('Name', 'surecart')}
 						help={__(
-							'Your dynamic price name. This will be displayed to the customer.',
+							'A friendly name for your price change. This will be displayed to the customer.',
 							'surecart'
 						)}
 						value={autoFeeName}
