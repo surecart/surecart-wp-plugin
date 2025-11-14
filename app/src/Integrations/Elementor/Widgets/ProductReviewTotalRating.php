@@ -62,9 +62,9 @@ class ProductReviewTotalRating extends \Elementor\Widget_Base {
 	 */
 	private function register_content_settings() {
 		$this->start_controls_section(
-			'section_total_rating',
+			'settings',
 			[
-				'label' => esc_html__( 'Total Rating', 'surecart' ),
+				'label' => esc_html__( 'Settings', 'surecart' ),
 			]
 		);
 
@@ -117,9 +117,9 @@ class ProductReviewTotalRating extends \Elementor\Widget_Base {
 	 */
 	private function register_style_settings() {
 		$this->start_controls_section(
-			'section_total_rating_style',
+			'settings_style',
 			array(
-				'label' => esc_html__( 'Total Rating Style', 'surecart' ),
+				'label' => esc_html__( 'Style', 'surecart' ),
 				'tab'   => \Elementor\Controls_Manager::TAB_STYLE,
 			)
 		);
@@ -135,108 +135,12 @@ class ProductReviewTotalRating extends \Elementor\Widget_Base {
 			)
 		);
 
-		$this->add_control(
-			'count_color',
-			array(
-				'label'     => esc_html__( 'Count Color', 'surecart' ),
-				'type'      => \Elementor\Controls_Manager::COLOR,
-				'selectors' => [
-					'{{WRAPPER}} .sc-total-reviews-count' => 'color: {{VALUE}};',
-				],
-			)
-		);
-
 		$this->add_group_control(
 			\Elementor\Group_Control_Typography::get_type(),
 			[
 				'name'     => 'typography',
 				'label'    => esc_html__( 'Typography', 'surecart' ),
 				'selector' => '{{WRAPPER}} .wp-block-surecart-product-review-total-rating',
-			]
-		);
-
-		$this->add_group_control(
-			\Elementor\Group_Control_Typography::get_type(),
-			[
-				'name'     => 'count_typography',
-				'label'    => esc_html__( 'Count Typography', 'surecart' ),
-				'selector' => '{{WRAPPER}} .sc-total-reviews-count',
-			]
-		);
-
-		$this->add_responsive_control(
-			'text_align',
-			[
-				'label'     => esc_html__( 'Alignment', 'surecart' ),
-				'type'      => \Elementor\Controls_Manager::CHOOSE,
-				'options'   => [
-					'left'   => [
-						'title' => esc_html__( 'Left', 'surecart' ),
-						'icon'  => 'eicon-text-align-left',
-					],
-					'center' => [
-						'title' => esc_html__( 'Center', 'surecart' ),
-						'icon'  => 'eicon-text-align-center',
-					],
-					'right'  => [
-						'title' => esc_html__( 'Right', 'surecart' ),
-						'icon'  => 'eicon-text-align-right',
-					],
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wp-block-surecart-product-review-total-rating' => 'justify-content: {{VALUE}};',
-				],
-			]
-		);
-
-		$this->add_control(
-			'gap',
-			[
-				'label'      => esc_html__( 'Gap', 'surecart' ),
-				'type'       => \Elementor\Controls_Manager::SLIDER,
-				'size_units' => [ 'px', 'em' ],
-				'range'      => [
-					'px' => [
-						'min' => 0,
-						'max' => 50,
-					],
-					'em' => [
-						'min'  => 0,
-						'max'  => 5,
-						'step' => 0.1,
-					],
-				],
-				'default'    => [
-					'size' => 4,
-					'unit' => 'px',
-				],
-				'selectors'  => [
-					'{{WRAPPER}} .wp-block-surecart-product-review-total-rating' => 'gap: {{SIZE}}{{UNIT}};',
-				],
-			]
-		);
-
-		$this->add_control(
-			'padding',
-			[
-				'label'      => esc_html__( 'Padding', 'surecart' ),
-				'type'       => \Elementor\Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', 'em', '%' ],
-				'selectors'  => [
-					'{{WRAPPER}} .wp-block-surecart-product-review-total-rating' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				],
-			]
-		);
-
-		$this->add_control(
-			'margin',
-			[
-				'label'      => esc_html__( 'Margin', 'surecart' ),
-				'type'       => \Elementor\Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', 'em', '%' ],
-				'selectors'  => [
-					'{{WRAPPER}} .wp-block-surecart-product-review-total-rating' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				],
 			]
 		);
 
@@ -292,8 +196,8 @@ class ProductReviewTotalRating extends \Elementor\Widget_Base {
 		$is_plus   = 'plus-sign' === ( $settings['style_variant'] ?? 'default' );
 		$plus_sign = $is_plus ? '+' : '';
 		?>
-		<div class="wp-block-surecart-product-review-total-rating" style="display: flex; gap: 4px;">
-			<span class="sc-total-reviews-count">42<?php echo esc_html( $plus_sign ); ?></span>
+		<div class="wp-block-surecart-product-review-total-rating">
+			<span>42<?php echo esc_html( $plus_sign ); ?></span>
 			<?php if ( $show_label ) : ?>
 				<?php echo esc_html__( 'reviews', 'surecart' ); ?>
 			<?php endif; ?>
@@ -314,8 +218,8 @@ class ProductReviewTotalRating extends \Elementor\Widget_Base {
 		var className = 'default' === styleVariant ? '' : ' is-style-' + styleVariant;
 		var plusSign = 'plus-sign' === styleVariant ? '+' : '';
 		#>
-		<div class="wp-block-surecart-product-review-total-rating{{ className }}" style="display: flex; gap: 4px;">
-			<span class="sc-total-reviews-count">42{{{ plusSign }}}</span>
+		<div class="wp-block-surecart-product-review-total-rating{{ className }}">
+			<span>42{{{ plusSign }}}</span>
 			<# if ( showLabel ) { #>
 				<?php echo esc_html__( 'reviews', 'surecart' ); ?>
 			<# } #>

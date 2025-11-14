@@ -64,7 +64,7 @@ class ProductReviewAverageRatingValue extends \Bricks\Element {
 			'options' => [
 				'none'        => esc_html__( 'None', 'surecart' ),
 				'parentheses' => esc_html__( 'Parentheses', 'surecart' ),
-				'slash'       => esc_html__( '/ 5.0', 'surecart' ),
+				'slash'       => '/ 5.0',
 			],
 			'default' => 'none',
 			'inline'  => true,
