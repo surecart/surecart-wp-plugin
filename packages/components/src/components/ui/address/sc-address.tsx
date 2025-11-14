@@ -179,7 +179,7 @@ export class ScAddress {
       })) || [];
 
     if (window?.wp?.hooks?.applyFilters) {
-      regions = window.wp.hooks.applyFilters('surecart_address_regions', regions, this.address.country) as Array<{ value: string; label: string }>;
+      regions = window.wp.hooks.applyFilters('surecart_address_regions', regions, this?.address?.country) as Array<{ value: string; label: string }>;
     }
 
     return regions as Array<{ value: string; label: string }>;
