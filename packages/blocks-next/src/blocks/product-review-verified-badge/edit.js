@@ -13,10 +13,15 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies.
  */
 import ScIcon from '../../components/ScIcon';
+import { getSpacingPresetCssVar } from '../../../../blocks/util';
 
 export default ({ attributes, setAttributes }) => {
-	const blockProps = useBlockProps();
-	const { show_label, label, icon_size } = attributes;
+	const { show_label, label, icon_size, style } = attributes;
+	const blockProps = useBlockProps({
+		style: {
+			gap: getSpacingPresetCssVar(style?.spacing?.blockGap),
+		},
+	});
 
 	return (
 		<>
@@ -56,8 +61,8 @@ export default ({ attributes, setAttributes }) => {
 
 				<ScIcon
 					name="verified"
-					width={icon_size || 20}
-					height={icon_size || 20}
+					width={icon_size || 16}
+					height={icon_size || 16}
 				/>
 			</div>
 		</>

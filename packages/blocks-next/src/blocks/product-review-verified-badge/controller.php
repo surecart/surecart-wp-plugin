@@ -17,6 +17,6 @@ if ( empty( $block->context['review']->verified ) ) {
 
 $show_label = $attributes['show_label'] ?? true;
 $label      = $attributes['label'] ?? '';
-$icon_size  = isset( $attributes['icon_size'] ) ? (int) $attributes['icon_size'] : 20;
+$icon_size  = $attributes['icon_size'] ?? 16;
 
 return 'file:./view.php';
