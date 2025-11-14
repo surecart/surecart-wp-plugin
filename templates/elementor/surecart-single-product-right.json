@@ -60,7 +60,7 @@
 					"settings": {
 						"content_width": "full",
 						"flex_gap": {
-							"column": "12",
+							"column": "6",
 							"row": "0",
 							"isLinked": false,
 							"unit": "px",
