@@ -8,7 +8,7 @@ if ( ! $product ) {
 }
 
 $average_rating = (float) ( $product->average_stars ?? 0 );
-$size           = $attributes['size'] ?? 25;
+$size           = $attributes['size'] ?? 20;
 
 /*
  * Calculate whole and half stars based on average rating.

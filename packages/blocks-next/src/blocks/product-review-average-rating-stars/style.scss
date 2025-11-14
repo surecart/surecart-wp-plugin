@@ -1,4 +1,10 @@
 .wp-block-surecart-product-review-average-rating-stars {
 	display: flex;
 	line-height: 1;
+
+	.sc-star-svg {
+		fill: var(--sc-fill-color, var(--sc-color-primary-500, currentColor));
+		stroke: var(--sc-fill-color, var(--sc-color-primary-500, currentColor));
+		color: var(--sc-fill-color, var(--sc-color-primary-500, currentColor));
+	}
 }
