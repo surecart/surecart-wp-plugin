@@ -171,7 +171,7 @@ class ProductReviewBreakdown extends \Elementor\Widget_Base {
 		$this->start_controls_section(
 			'star_bar_style',
 			array(
-				'label' => esc_html__( 'Star & Bar', 'surecart' ),
+				'label' => esc_html__( 'Star & Bar Colors', 'surecart' ),
 				'tab'   => \Elementor\Controls_Manager::TAB_STYLE,
 			)
 		);
