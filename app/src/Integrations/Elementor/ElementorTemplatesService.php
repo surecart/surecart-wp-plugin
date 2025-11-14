@@ -54,7 +54,7 @@ class ElementorTemplatesService {
 			],
 			'surecart-product-pricing'      => [
 				'name'        => __( 'Product Pricing', 'surecart' ),
-				'image'       => 'product-pricing-template.png',
+				'image'       => '',
 				'type'        => 'others',
 				'widget_name' => 'surecart-product-pricing',
 				'priority'    => 40,
@@ -62,7 +62,7 @@ class ElementorTemplatesService {
 			],
 			'surecart-product-reviews'      => [
 				'name'        => __( 'Product Reviews', 'surecart' ),
-				'image'       => 'product-reviews-template.png',
+				'image'       => '',
 				'type'        => 'others',
 				'widget_name' => 'surecart-product-reviews',
 				'priority'    => 50,
@@ -70,7 +70,7 @@ class ElementorTemplatesService {
 			],
 			'surecart-product-rating'       => [
 				'name'        => __( 'Product Rating', 'surecart' ),
-				'image'       => 'product-rating-template.png',
+				'image'       => '',
 				'type'        => 'others',
 				'widget_name' => 'surecart-product-rating',
 				'priority'    => 60,
