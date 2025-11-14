@@ -26,10 +26,9 @@ const TEMPLATE = [
 
 export default ({ attributes, setAttributes, __unstableLayoutClassNames }) => {
 	const { show_value, show_for_zero_reviews, style } = attributes;
-	const { blockGap } = style?.spacing || {};
 	const blockProps = useBlockProps({
 		className: __unstableLayoutClassNames,
-		style: { gap: blockGap },
+		style,
 	});
 
 	const innerBlocksProps = useInnerBlocksProps(blockProps, {
