@@ -69,19 +69,6 @@ class ProductReviewTotalRating extends \Elementor\Widget_Base {
 		);
 
 		$this->add_control(
-			'show_label',
-			[
-				'label'        => esc_html__( 'Show Label', 'surecart' ),
-				'type'         => \Elementor\Controls_Manager::SWITCHER,
-				'label_on'     => esc_html__( 'Show', 'surecart' ),
-				'label_off'    => esc_html__( 'Hide', 'surecart' ),
-				'return_value' => 'yes',
-				'default'      => 'yes',
-				'description'  => esc_html__( 'Show "review" or "reviews" label after the count.', 'surecart' ),
-			]
-		);
-
-		$this->add_control(
 			'show_for_zero_reviews',
 			[
 				'label'        => esc_html__( 'Show For Zero Reviews', 'surecart' ),
@@ -91,6 +78,19 @@ class ProductReviewTotalRating extends \Elementor\Widget_Base {
 				'return_value' => 'yes',
 				'default'      => 'yes',
 				'description'  => esc_html__( 'Display the block even when there are zero reviews.', 'surecart' ),
+			]
+		);
+
+		$this->add_control(
+			'show_label',
+			[
+				'label'        => esc_html__( 'Show Label', 'surecart' ),
+				'type'         => \Elementor\Controls_Manager::SWITCHER,
+				'label_on'     => esc_html__( 'Show', 'surecart' ),
+				'label_off'    => esc_html__( 'Hide', 'surecart' ),
+				'return_value' => 'yes',
+				'default'      => 'yes',
+				'description'  => esc_html__( 'Show "review" or "reviews" label after the count.', 'surecart' ),
 			]
 		);
 

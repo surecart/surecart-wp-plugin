@@ -57,16 +57,16 @@ class ProductReviewTotalRating extends \Bricks\Element {
 	 * @return void
 	 */
 	public function set_controls() {
-		$this->controls['show_label'] = [
+		$this->controls['show_for_zero_reviews'] = [
 			'tab'     => 'content',
-			'label'   => esc_html__( 'Show Label', 'surecart' ),
+			'label'   => esc_html__( 'Show For Zero Reviews', 'surecart' ),
 			'type'    => 'checkbox',
 			'default' => true,
 		];
 
-		$this->controls['show_for_zero_reviews'] = [
+		$this->controls['show_label'] = [
 			'tab'     => 'content',
-			'label'   => esc_html__( 'Show For Zero Reviews', 'surecart' ),
+			'label'   => esc_html__( 'Show Label', 'surecart' ),
 			'type'    => 'checkbox',
 			'default' => true,
 		];
