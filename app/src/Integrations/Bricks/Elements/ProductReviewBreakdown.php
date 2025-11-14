@@ -52,6 +52,19 @@ class ProductReviewBreakdown extends \Bricks\Element {
 	}
 
 	/**
+	 * Set control groups.
+	 *
+	 * @return void
+	 */
+	public function set_control_groups() {
+		$this->control_groups['star_bar_colors'] = [
+			'title' => esc_html__( 'Star & Bar Colors', 'surecart' ),
+			'tab'   => 'content',
+			'icon'  => 'ti-star',
+		];
+	}
+
+	/**
 	 * Set controls.
 	 *
 	 * @return void
@@ -59,9 +72,18 @@ class ProductReviewBreakdown extends \Bricks\Element {
 	public function set_controls() {
 		$this->controls['show_for_zero_reviews'] = [
 			'tab'     => 'content',
-			'label'   => esc_html__( 'Show For Zero Reviews', 'surecart' ),
+			'label'   => esc_html__( 'Show for Zero Reviews', 'surecart' ),
 			'type'    => 'checkbox',
-			'default' => true,
+			'default' => false,
+		];
+
+		$this->controls['star_size'] = [
+			'tab'         => 'content',
+			'label'       => esc_html__( 'Star Size', 'surecart' ),
+			'type'        => 'number',
+			'units'       => true,
+			'default'     => '0px',
+			'placeholder' => '20px',
 		];
 
 		$this->controls['columns'] = [
@@ -75,45 +97,31 @@ class ProductReviewBreakdown extends \Bricks\Element {
 			],
 			'default'     => '1',
 			'placeholder' => esc_html__( '1 Column', 'surecart' ),
-			'description' => esc_html__( 'Choose the number of columns to display the review breakdown.', 'surecart' ),
+			'description' => esc_html__( 'Choose the number of columns to display the review breakdown . ', 'surecart' ),
 		];
 
 		$this->controls['row_gap'] = [
-			'tab'         => 'content',
+			'group'       => 'settings',
 			'label'       => esc_html__( 'Row Gap', 'surecart' ),
 			'type'        => 'number',
 			'units'       => true,
 			'default'     => '20px',
 			'placeholder' => '20px',
-			'description' => esc_html__( 'Adjust the spacing between rows.', 'surecart' ),
+			'description' => esc_html__( 'Adjust the spacing between rows . ', 'surecart' ),
 		];
 
 		$this->controls['column_gap'] = [
-			'tab'         => 'content',
+			'group'       => 'settings',
 			'label'       => esc_html__( 'Column Gap', 'surecart' ),
 			'type'        => 'number',
 			'units'       => true,
 			'default'     => '20px',
 			'placeholder' => '20px',
-			'description' => esc_html__( 'Adjust the spacing between columns.', 'surecart' ),
-		];
-
-		$this->controls['star_size'] = [
-			'tab'         => 'content',
-			'label'       => esc_html__( 'Star Size', 'surecart' ),
-			'type'        => 'number',
-			'units'       => true,
-			'default'     => '0px',
-			'placeholder' => '20px',
-		];
-
-		$this->controls['colors_separator'] = [
-			'label' => esc_html__( 'Styling', 'surecart' ),
-			'type'  => 'separator',
+			'description' => esc_html__( 'Adjust the spacing between columns . ', 'surecart' ),
 		];
 
 		$this->controls['fill_color'] = [
-			'tab'      => 'content',
+			'group'    => 'star_bar_colors',
 			'label'    => esc_html__( 'Star Color', 'surecart' ),
 			'type'     => 'color',
 			'rerender' => true,
@@ -137,7 +145,7 @@ class ProductReviewBreakdown extends \Bricks\Element {
 		];
 
 		$this->controls['bar_fill_color'] = [
-			'tab'     => 'content',
+			'group'   => 'star_bar_colors',
 			'label'   => esc_html__( 'Bar Active Color', 'surecart' ),
 			'type'    => 'color',
 			'default' => [
@@ -152,7 +160,7 @@ class ProductReviewBreakdown extends \Bricks\Element {
 		];
 
 		$this->controls['bar_background_color'] = [
-			'tab'     => 'content',
+			'group'   => 'star_bar_colors',
 			'label'   => esc_html__( 'Bar Background Color', 'surecart' ),
 			'type'    => 'color',
 			'default' => [
