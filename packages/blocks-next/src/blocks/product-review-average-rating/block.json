@@ -19,6 +19,7 @@
 		"surecart/product-review-average-rating-stars",
 		"surecart/product-review-average-rating-value"
 	],
+	"keywords": ["review", "average", "rating"],
 	"providesContext": {
 		"show_value": "show_value"
 	},

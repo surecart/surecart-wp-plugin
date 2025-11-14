@@ -6,13 +6,8 @@
 	"description": "Displays the content of a product review.",
 	"version": "1.0.0",
 	"category": "surecart-product-page",
-	"ancestor": [
-		"surecart/product-page",
-		"surecart/product-quick-view",
-		"surecart/product-review-list",
-		"surecart/product-review-template",
-		"surecart/sticky-purchase"
-	],
+	"ancestor": ["surecart/product-review-template"],
+	"keywords": ["review", "content", "details"],
 	"usesContext": ["reviewId", "review"],
 	"example": {},
 	"supports": {
@@ -43,6 +38,11 @@
 			"margin": true,
 			"blockGap": {
 				"__experimentalDefault": "4px"
+			},
+			"__experimentalDefaultControls": {
+				"padding": true,
+				"margin": true,
+				"blockGap": true
 			}
 		}
 	},

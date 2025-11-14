@@ -14,6 +14,7 @@
 		"surecart/sticky-purchase",
 		"surecart/product-review-summary"
 	],
+	"keywords": ["review", "breakdown", "summary"],
 	"usesContext": ["postId"],
 	"attributes": {
 		"show_for_zero_reviews": {

@@ -11,7 +11,6 @@ import {
 	humanTimeDiff,
 	getSettings as getDateSettings,
 } from '@wordpress/date';
-
 import {
 	InspectorControls,
 	useBlockProps,
@@ -35,10 +34,7 @@ import { useToolsPanelDropdownMenuProps } from '../utils';
 export default ({
 	attributes: { datetime, textAlign, format, metadata },
 	setAttributes,
-	context,
 }) => {
-	// const { review } = context;
-
 	const blockProps = useBlockProps({
 		className: clsx({
 			[`has-text-align-${textAlign}`]: textAlign,
@@ -69,14 +65,10 @@ export default ({
 		}
 	}, [datetime]);
 
-	const isDescendentOfQueryLoop = true;
 	const dateSettings = getDateSettings();
 	const postTypeSlug = 'sc_product';
 
-	const {
-		siteFormat = dateSettings.formats.date,
-		siteTimeFormat = dateSettings.formats.time,
-	} = useSelect(
+	const { siteFormat = dateSettings.formats.date } = useSelect(
 		(select) => {
 			const { getPostType, getEntityRecord } = select(coreStore);
 			const siteSettings = getEntityRecord('root', 'site');
@@ -102,7 +94,7 @@ export default ({
 		<>
 			<InspectorControls>
 				<ToolsPanel
-					label={__('Settings')}
+					label={__('Settings', 'surecart')}
 					resetAll={() => {
 						setAttributes({
 							datetime: undefined,
@@ -113,7 +105,7 @@ export default ({
 				>
 					<ToolsPanelItem
 						hasValue={() => !!format}
-						label={__('Date Format')}
+						label={__('Date Format', 'surecart')}
 						onDeselect={() => setAttributes({ format: undefined })}
 						isShownByDefault
 					>

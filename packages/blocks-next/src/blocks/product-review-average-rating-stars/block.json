@@ -9,6 +9,7 @@
 	"example": {},
 	"usesContext": ["show_value"],
 	"parent": ["surecart/product-review-average-rating"],
+	"keywords": ["review", "average", "rating", "stars"],
 	"attributes": {
 		"fill_color": {
 			"type": "string",

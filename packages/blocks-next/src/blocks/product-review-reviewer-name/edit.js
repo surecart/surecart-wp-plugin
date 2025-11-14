@@ -16,27 +16,23 @@ export default ({ attributes, setAttributes, context }) => {
 			return __('Reviewer Name', 'surecart');
 		}
 
-		const customer = review.customer;
+		const customer = review?.customer;
 
 		switch (format) {
 			case 'first_name':
-				return (
-					customer.first_name || customer.name || customer.email || ''
-				);
+				return customer?.first_name || customer?.name || '';
 			case 'last_name':
-				return (
-					customer.last_name || customer.name || customer.email || ''
-				);
+				return customer?.last_name || customer?.name || '';
 			case 'first_last':
-				const firstName = customer.first_name || '';
-				const lastName = customer.last_name || '';
+				const firstName = customer?.first_name || '';
+				const lastName = customer?.last_name || '';
 				if (firstName && lastName) {
 					return `${firstName} ${lastName}`;
 				}
-				return customer.name || customer.email || '';
+				return customer?.name || '';
 			case 'display_name':
 			default:
-				return customer.name || customer.email || '';
+				return customer?.name || '';
 		}
 	};
 

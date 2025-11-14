@@ -7,6 +7,7 @@
 	"version": "1.0.0",
 	"category": "surecart-product-page",
 	"parent": ["surecart/product-review-average-rating"],
+	"keywords": ["review", "average", "rating", "value"],
 	"example": {},
 	"usesContext": ["show_value"],
 	"attributes": {},

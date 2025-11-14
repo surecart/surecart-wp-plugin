@@ -21,6 +21,7 @@
 		"product-review-list-content-header",
 		"surecart/sticky-purchase"
 	],
+	"keywords": ["review", "button", "write review"],
 	"attributes": {
 		"icon": {
 			"type": "string",

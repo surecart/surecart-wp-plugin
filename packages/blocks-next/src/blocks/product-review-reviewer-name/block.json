@@ -6,13 +6,8 @@
 	"description": "Displays the name of the reviewer for a product review.",
 	"version": "1.0.0",
 	"category": "surecart-product-page",
-	"ancestor": [
-		"surecart/product-page",
-		"surecart/product-quick-view",
-		"surecart/product-review-list",
-		"surecart/product-review-template",
-		"surecart/sticky-purchase"
-	],
+	"ancestor": ["surecart/product-review-template"],
+	"keywords": ["review", "reviewer", "name"],
 	"usesContext": ["reviewId", "review"],
 	"attributes": {
 		"format": {
