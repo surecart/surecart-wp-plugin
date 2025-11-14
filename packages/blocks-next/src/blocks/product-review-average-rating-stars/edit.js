@@ -54,18 +54,21 @@ export default ({ attributes, setAttributes, clientId }) => {
 						name="star"
 						width={size}
 						height={size}
-						fill={fill_color}
-						strokeColor={fill_color}
+						fill={fill_color || 'var(--sc-color-primary-500)'}
+						stroke={fill_color || 'var(--sc-color-primary-500)'}
 						className="sc-star-svg"
+						strokeWidth="2"
 					/>
 				))}
 				<ScIcon
 					name="half-star"
 					width={size}
 					height={size}
-					fill={fill_color}
-					strokeColor={fill_color}
+					fill={fill_color || 'var(--sc-color-primary-500)'}
+					stroke={fill_color || 'var(--sc-color-primary-500)'}
+					color={fill_color || 'var(--sc-color-primary-500)'}
 					className="sc-star-svg"
+					strokeWidth="2"
 				/>
 			</div>
 		</>

@@ -14,6 +14,7 @@ import {
  * Internal dependencies.
  */
 import ColorInspectorControl from '../../components/ColorInspectorControl';
+import ScIcon from '../../components/ScIcon';
 
 export default function ({ attributes, setAttributes, clientId }) {
 	const {
@@ -31,9 +32,6 @@ export default function ({ attributes, setAttributes, clientId }) {
 	// Placeholder values for editor preview.
 	const totalReviews = 9;
 	const reviewsBreakdown = { 5: 6, 4: 2, 3: 1, 2: 0, 1: 0 };
-
-	const points =
-		'12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2';
 
 	return (
 		<>
@@ -162,24 +160,20 @@ export default function ({ attributes, setAttributes, clientId }) {
 								<div className="sc-star-label">
 									<span className="sc-star-text">{star}</span>
 									<span className="sc-star-svg">
-										<svg
-											viewBox="0 0 24 24"
+										<ScIcon
+											name="star"
 											width={size}
 											height={size}
-										>
-											<polygon
-												points={points}
-												fill={
-													fill_color ||
-													'var(--sc-color-primary-500)'
-												}
-												stroke={
-													fill_color ||
-													'var(--sc-color-primary-500)'
-												}
-												strokeWidth="1"
-											/>
-										</svg>
+											fill={
+												fill_color ||
+												'var(--sc-color-primary-500)'
+											}
+											stroke={
+												fill_color ||
+												'var(--sc-color-primary-500)'
+											}
+											strokeWidth="2"
+										/>
 									</span>
 								</div>
 

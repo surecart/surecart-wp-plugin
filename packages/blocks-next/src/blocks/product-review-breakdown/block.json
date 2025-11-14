@@ -76,6 +76,11 @@
 			"margin": true,
 			"blockGap": {
 				"__experimentalDefault": "4px"
+			},
+			"__experimentalDefaultControls": {
+				"padding": true,
+				"margin": true,
+				"blockGap": true
 			}
 		}
 	},
