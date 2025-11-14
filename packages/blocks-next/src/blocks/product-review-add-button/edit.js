@@ -13,12 +13,8 @@ import classnames from 'classnames';
  * Internal dependencies.
  */
 import ScIcon from '../../components/ScIcon';
-import { getSpacingPresetCssVar } from '../../../../blocks/util';
-
-/**
- * Inspector controls.
- */
 import Design from './design';
+import { getSpacingPresetCssVar } from '../../../../blocks/util';
 
 export default ({ attributes, setAttributes }) => {
 	const { icon, button_type, label, style, width, icon_position, icon_size } =

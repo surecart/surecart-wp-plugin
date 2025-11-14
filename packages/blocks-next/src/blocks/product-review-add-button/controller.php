@@ -42,7 +42,16 @@ if ( ! empty( $styles['declarations'] ) ) {
 $user         = User::current();
 $redirect_url = '';
 if ( empty( $user->ID ) ) {
-	$redirect_url = esc_url_raw( SureCart::pages()->url( 'dashboard' ) . '?product_id=' . $product->id . '&context=customer.order.solicit_reviews&sc_redirect=1' );
+	$redirect_url = esc_url_raw(
+		add_query_arg(
+			[
+				'product_id'  => $product->id,
+				'context'     => 'customer.order.solicit_reviews',
+				'sc_redirect' => '1',
+			],
+			\SureCart::pages()->url( 'dashboard' )
+		)
+	);
 }
 
 return 'file:./view.php';

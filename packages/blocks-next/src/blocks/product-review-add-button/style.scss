@@ -6,7 +6,7 @@
 
 	&.is-style-outline.wp-block-button__link {
 		background-color: transparent;
-		border: 2px solid currentColor;
-		color: currentColor;
+		border: 2px solid var(--sc-color-primary-500, currentColor);
+		color: var(--sc-color-primary-500, currentColor);
 	}
 }
