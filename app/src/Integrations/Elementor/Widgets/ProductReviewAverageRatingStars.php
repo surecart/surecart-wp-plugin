@@ -64,7 +64,7 @@ class ProductReviewAverageRatingStars extends \Elementor\Widget_Base {
 		$this->start_controls_section(
 			'section_rating_stars',
 			[
-				'label' => esc_html__( 'Rating Stars', 'surecart' ),
+				'label' => esc_html__( 'Rating Star', 'surecart' ),
 			]
 		);
 
@@ -88,9 +88,48 @@ class ProductReviewAverageRatingStars extends \Elementor\Widget_Base {
 		);
 
 		$this->add_control(
-			'star_gap',
+			'fill_color',
+			array(
+				'label'     => esc_html__( 'Star Color', 'surecart' ),
+				'type'      => \Elementor\Controls_Manager::COLOR,
+				'global'    => [
+					'default' => \Elementor\Core\Kits\Documents\Tabs\Global_Colors::COLOR_PRIMARY,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wp-block-surecart-product-review-average-rating-stars svg' => 'stroke: {{VALUE}}; color: {{VALUE}};',
+				],
+			)
+		);
+
+		$this->end_controls_section();
+
+		$this->start_controls_section(
+			'section_layout',
 			[
-				'label'      => esc_html__( 'Star Gap', 'surecart' ),
+				'label' => esc_html__( 'Spacing', 'surecart' ),
+			]
+		);
+
+		$this->add_control(
+			'display',
+			[
+				'label'     => esc_html__( 'Display', 'surecart' ),
+				'type'      => \Elementor\Controls_Manager::SELECT,
+				'options'   => [
+					'inline-flex' => esc_html__( 'Inline Flex', 'surecart' ),
+					'flex'        => esc_html__( 'Flex', 'surecart' ),
+				],
+				'default'   => 'flex',
+				'selectors' => [
+					'{{WRAPPER}} .wp-block-surecart-product-review-average-rating-stars' => 'display: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'gap',
+			[
+				'label'      => esc_html__( 'Gap Between Stars', 'surecart' ),
 				'type'       => \Elementor\Controls_Manager::SLIDER,
 				'size_units' => [ 'px' ],
 				'range'      => [
@@ -107,20 +146,6 @@ class ProductReviewAverageRatingStars extends \Elementor\Widget_Base {
 					'{{WRAPPER}} .wp-block-surecart-product-review-average-rating-stars' => 'gap: {{SIZE}}{{UNIT}};',
 				],
 			]
-		);
-
-		$this->add_control(
-			'fill_color',
-			array(
-				'label'     => esc_html__( 'Star Color', 'surecart' ),
-				'type'      => \Elementor\Controls_Manager::COLOR,
-				'global'    => [
-					'default' => \Elementor\Core\Kits\Documents\Tabs\Global_Colors::COLOR_PRIMARY,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wp-block-surecart-product-review-average-rating-stars svg' => 'stroke: {{VALUE}}; color: {{VALUE}};',
-				],
-			)
 		);
 
 		$this->end_controls_section();
