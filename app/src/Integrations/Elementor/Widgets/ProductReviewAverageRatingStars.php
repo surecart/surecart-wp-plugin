@@ -206,38 +206,4 @@ class ProductReviewAverageRatingStars extends \Elementor\Widget_Base {
 		</div>
 		<?php
 	}
-
-	/**
-	 * Render the widget output on the editor.
-	 *
-	 * @return void
-	 */
-	protected function content_template() {
-		?>
-		<#
-		var size = settings.size.size || 20;
-		#>
-		<div class="wp-block-surecart-product-review-average-rating-stars" style="display: inline-flex; gap: 2px;">
-			<# for ( var i = 1; i <= 5; i++ ) {
-				var isFull = i <= 4;
-				var isHalf = i === 5;
-				var fill = isFull ? 'currentColor' : 'none';
-			#>
-				<svg height="{{ size }}" width="{{ size }}" viewBox="0 0 24 24" fill="{{ fill }}" stroke="currentColor" stroke-width="2">
-					<# if ( isHalf ) { #>
-						<defs>
-							<linearGradient id="half-fill-{{ i }}">
-								<stop offset="50%" stop-color="currentColor"/>
-								<stop offset="50%" stop-color="transparent"/>
-							</linearGradient>
-						</defs>
-						<path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="url(#half-fill-{{ i }})" stroke="currentColor"/>
-					<# } else { #>
-						<path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-					<# } #>
-				</svg>
-			<# } #>
-		</div>
-		<?php
-	}
 }

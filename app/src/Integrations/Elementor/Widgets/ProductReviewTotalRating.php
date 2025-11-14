@@ -204,26 +204,4 @@ class ProductReviewTotalRating extends \Elementor\Widget_Base {
 		</div>
 		<?php
 	}
-
-	/**
-	 * Render the widget output on the editor.
-	 *
-	 * @return void
-	 */
-	protected function content_template() {
-		?>
-		<#
-		var showLabel = settings.show_label === 'yes';
-		var styleVariant = settings.style_variant || 'default';
-		var className = 'default' === styleVariant ? '' : ' is-style-' + styleVariant;
-		var plusSign = 'plus-sign' === styleVariant ? '+' : '';
-		#>
-		<div class="wp-block-surecart-product-review-total-rating{{ className }}">
-			<span>42{{{ plusSign }}}</span>
-			<# if ( showLabel ) { #>
-				<?php echo esc_html__( 'reviews', 'surecart' ); ?>
-			<# } #>
-		</div>
-		<?php
-	}
 }
