@@ -56,11 +56,11 @@ class ProductReviewAverageRatingStars extends \Elementor\Widget_Base {
 	}
 
 	/**
-	 * Register the widget content settings.
+	 * Register the widget controls.
 	 *
 	 * @return void
 	 */
-	private function register_content_settings() {
+	protected function register_controls() {
 		$this->start_controls_section(
 			'section_rating_stars',
 			[
@@ -71,7 +71,7 @@ class ProductReviewAverageRatingStars extends \Elementor\Widget_Base {
 		$this->add_control(
 			'size',
 			[
-				'label'      => esc_html__( 'Size', 'surecart' ),
+				'label'      => esc_html__( 'Star Size', 'surecart' ),
 				'type'       => \Elementor\Controls_Manager::SLIDER,
 				'size_units' => [ 'px' ],
 				'range'      => [
@@ -87,21 +87,26 @@ class ProductReviewAverageRatingStars extends \Elementor\Widget_Base {
 			]
 		);
 
-		$this->end_controls_section();
-	}
-
-	/**
-	 * Register the widget style settings.
-	 *
-	 * @return void
-	 */
-	private function register_style_settings() {
-		$this->start_controls_section(
-			'section_rating_stars_style',
-			array(
-				'label' => esc_html__( 'Stars Style', 'surecart' ),
-				'tab'   => \Elementor\Controls_Manager::TAB_STYLE,
-			)
+		$this->add_control(
+			'star_gap',
+			[
+				'label'      => esc_html__( 'Star Gap', 'surecart' ),
+				'type'       => \Elementor\Controls_Manager::SLIDER,
+				'size_units' => [ 'px' ],
+				'range'      => [
+					'px' => [
+						'min' => 0,
+						'max' => 50,
+					],
+				],
+				'default'    => [
+					'size' => 2,
+					'unit' => 'px',
+				],
+				'selectors'  => [
+					'{{WRAPPER}} .wp-block-surecart-product-review-average-rating-stars' => 'gap: {{SIZE}}{{UNIT}};',
+				],
+			]
 		);
 
 		$this->add_control(
@@ -118,66 +123,7 @@ class ProductReviewAverageRatingStars extends \Elementor\Widget_Base {
 			)
 		);
 
-		$this->add_responsive_control(
-			'alignment',
-			[
-				'label'     => esc_html__( 'Alignment', 'surecart' ),
-				'type'      => \Elementor\Controls_Manager::CHOOSE,
-				'options'   => [
-					'left'   => [
-						'title' => esc_html__( 'Left', 'surecart' ),
-						'icon'  => 'eicon-text-align-left',
-					],
-					'center' => [
-						'title' => esc_html__( 'Center', 'surecart' ),
-						'icon'  => 'eicon-text-align-center',
-					],
-					'right'  => [
-						'title' => esc_html__( 'Right', 'surecart' ),
-						'icon'  => 'eicon-text-align-right',
-					],
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wp-block-surecart-product-review-average-rating-stars' => 'text-align: {{VALUE}};',
-				],
-			]
-		);
-
-		$this->add_control(
-			'margin',
-			[
-				'label'      => esc_html__( 'Margin', 'surecart' ),
-				'type'       => \Elementor\Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', 'em', '%' ],
-				'selectors'  => [
-					'{{WRAPPER}} .wp-block-surecart-product-review-average-rating-stars' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				],
-			]
-		);
-
-		$this->add_control(
-			'padding',
-			[
-				'label'      => esc_html__( 'Padding', 'surecart' ),
-				'type'       => \Elementor\Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', 'em', '%' ],
-				'selectors'  => [
-					'{{WRAPPER}} .wp-block-surecart-product-review-average-rating-stars' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				],
-			]
-		);
-
 		$this->end_controls_section();
-	}
-
-	/**
-	 * Register the widget controls.
-	 *
-	 * @return void
-	 */
-	protected function register_controls() {
-		$this->register_content_settings();
-		$this->register_style_settings();
 	}
 
 	/**
@@ -210,7 +156,7 @@ class ProductReviewAverageRatingStars extends \Elementor\Widget_Base {
 	 */
 	private function render_preview( $size ) {
 		?>
-		<div class="wp-block-surecart-product-review-average-rating-stars" style="display: inline-flex; gap: 2px;">
+		<div class="wp-block-surecart-product-review-average-rating-stars" style="display: flex; line-height:1;">
 			<?php
 			for ( $i = 1; $i <= 5; $i++ ) {
 				$is_full = $i <= 4;

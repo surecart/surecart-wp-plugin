@@ -262,7 +262,6 @@ class ProductReviewTotalRating extends \Elementor\Widget_Base {
 		$settings              = $this->get_settings_for_display();
 		$show_label            = 'yes' === ( $settings['show_label'] ?? 'yes' );
 		$show_for_zero_reviews = 'yes' === ( $settings['show_for_zero_reviews'] ?? 'yes' );
-		$style_variant         = $settings['style_variant'] ?? 'default';
 
 		if ( \Elementor\Plugin::$instance->editor->is_edit_mode() ) {
 			$this->render_preview( $show_label );
@@ -272,7 +271,7 @@ class ProductReviewTotalRating extends \Elementor\Widget_Base {
 		$attributes = [
 			'show_label'            => $show_label,
 			'show_for_zero_reviews' => $show_for_zero_reviews,
-			'style_variant'         => $style_variant,
+			'style_variant'         => $settings['style_variant'] ?? 'default',
 		];
 		?>
 		<div <?php $this->print_render_attribute_string( 'wrapper' ); ?>>

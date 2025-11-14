@@ -103,6 +103,8 @@ class ProductReviewAverageRatingStars extends \Bricks\Element {
 			$fill_color = 'var(--bricks-color-primary)';
 		}
 
+		$this->set_attribute( '_root', 'style', 'display: flex;' );
+
 		if ( $this->is_admin_editor() ) {
 			$this->render_preview( $size, $fill_color );
 			return;
