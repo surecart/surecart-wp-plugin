@@ -1,6 +1,19 @@
 <?php
-$size       = $attributes['size'] ?? 25;
-$fill_color = $attributes['fill_color'] ?? 'var(--sc-color-primary-500)';
-$label      = $attributes['label'] ?? __( 'How would you rate this product?', 'surecart' );
+$size               = $attributes['size'] ?? 20;
+$fill_color         = $attributes['fill_color'] ?? 'var(--sc-color-primary-500)';
+$label              = $attributes['label'] ?? __( 'How would you rate this product?', 'surecart' );
+$wrapper_attributes = get_block_wrapper_attributes(
+	[
+		'style' => "text-align: {$attributes['text_align']};",
+	]
+);
+
+?>
+<style>
+	:root {
+		--sc-product-review-form-rating-star-fill-color: <?php echo esc_attr( $fill_color ); ?>;
+	}
+</style>
+<?php
 
 return 'file:./view.php';

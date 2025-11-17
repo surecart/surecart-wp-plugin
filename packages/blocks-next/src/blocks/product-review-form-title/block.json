@@ -11,13 +11,13 @@
 	"attributes": {
 		"label": {
 			"type": "string",
-			"default": "Review Title"
+			"default": "Review title"
 		},
 		"placeholder": {
 			"type": "string",
 			"default": "Enter a title for your review"
 		},
-		"textAlign": {
+		"text_align": {
 			"type": "string"
 		}
 	},

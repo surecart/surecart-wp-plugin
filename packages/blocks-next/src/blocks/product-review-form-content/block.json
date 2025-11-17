@@ -15,13 +15,13 @@
 		},
 		"placeholder": {
 			"type": "string",
-			"default": "Share your thoughts about this product"
+			"default": ""
 		},
 		"rows": {
 			"type": "number",
 			"default": 4
 		},
-		"textAlign": {
+		"text_align": {
 			"type": "string"
 		}
 	},
@@ -63,5 +63,6 @@
 	"textdomain": "surecart",
 	"render": "file:./view.php",
 	"editorScript": "file:./index.js",
+	"style": ["surecart-form-control", "file:./style-index.css"],
 	"viewScriptModule": ["@surecart/product-review-form"]
 }

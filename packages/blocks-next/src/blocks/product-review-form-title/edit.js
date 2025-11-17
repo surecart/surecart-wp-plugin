@@ -9,7 +9,6 @@ import {
 	AlignmentControl,
 } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
-import { useState } from '@wordpress/element';
 
 /**
  * Internal dependencies.
@@ -17,13 +16,10 @@ import { useState } from '@wordpress/element';
 import Labels from './labels';
 
 export default function Edit({ attributes, setAttributes }) {
-	const { label, placeholder, textAlign } = attributes;
-	const [titleValue, setTitleValue] = useState('');
-
+	const { label, placeholder, text_align } = attributes;
 	const blockProps = useBlockProps({
-		className: 'sc-product-review-form-title',
 		style: {
-			textAlign: textAlign,
+			textAlign: text_align || 'left',
 		},
 	});
 
@@ -31,20 +27,21 @@ export default function Edit({ attributes, setAttributes }) {
 		<>
 			<BlockControls group="block">
 				<AlignmentControl
-					value={textAlign}
+					value={text_align}
 					onChange={(nextAlign) => {
-						setAttributes({ textAlign: nextAlign });
+						setAttributes({ text_align: nextAlign });
 					}}
 				/>
 			</BlockControls>
 			<InspectorControls>
 				<Labels attributes={attributes} setAttributes={setAttributes} />
 			</InspectorControls>
+
 			<div {...blockProps}>
 				{label && (
 					<RichText
 						tagName="label"
-						className="sc-form-label title-label"
+						className="sc-form-label"
 						aria-label={__('Label', 'surecart')}
 						placeholder={__('Review Title', 'surecart')}
 						value={label}
@@ -53,14 +50,13 @@ export default function Edit({ attributes, setAttributes }) {
 						allowedFormats={['core/bold', 'core/italic']}
 					/>
 				)}
+
 				<input
 					type="text"
-					className="sc-form-control title-input"
-					placeholder={placeholder}
-					value={titleValue}
-					onChange={(e) => setTitleValue(e.target.value)}
-					required={true}
 					name="title"
+					className="sc-form-control"
+					placeholder={placeholder}
+					required={true}
 				/>
 			</div>
 		</>

@@ -10,7 +10,6 @@ import {
 } from '@wordpress/block-editor';
 import { PanelBody, RangeControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
-import { useState } from '@wordpress/element';
 
 /**
  * Internal dependencies.
@@ -18,13 +17,11 @@ import { useState } from '@wordpress/element';
 import Labels from './labels';
 
 export default function Edit({ attributes, setAttributes }) {
-	const { label, placeholder, rows, textAlign } = attributes;
-	const [contentValue, setContentValue] = useState('');
+	const { label, placeholder, rows, text_align } = attributes;
 
 	const blockProps = useBlockProps({
-		className: 'sc-product-review-form-content',
 		style: {
-			textAlign: textAlign,
+			textAlign: text_align,
 		},
 	});
 
@@ -32,9 +29,9 @@ export default function Edit({ attributes, setAttributes }) {
 		<>
 			<BlockControls group="block">
 				<AlignmentControl
-					value={textAlign}
+					value={text_align}
 					onChange={(nextAlign) => {
-						setAttributes({ textAlign: nextAlign });
+						setAttributes({ text_align: nextAlign });
 					}}
 				/>
 			</BlockControls>
@@ -54,6 +51,7 @@ export default function Edit({ attributes, setAttributes }) {
 				</PanelBody>
 				<Labels attributes={attributes} setAttributes={setAttributes} />
 			</InspectorControls>
+
 			<div {...blockProps}>
 				{label && (
 					<RichText
@@ -67,14 +65,13 @@ export default function Edit({ attributes, setAttributes }) {
 						allowedFormats={['core/bold', 'core/italic']}
 					/>
 				)}
+
 				<textarea
+					name="content"
 					className="sc-form-control"
 					placeholder={placeholder}
-					value={contentValue}
-					onChange={(e) => setContentValue(e.target.value)}
 					required={false}
 					rows={rows}
-					name="content"
 				/>
 			</div>
 		</>

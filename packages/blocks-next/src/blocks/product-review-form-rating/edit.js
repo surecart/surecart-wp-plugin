@@ -1,78 +1,48 @@
 /**
- * WordPress dependencies
+ * WordPress dependencies.
  */
 import {
 	useBlockProps,
 	InspectorControls,
+	BlockControls,
+	AlignmentControl,
 	RichText,
 } from '@wordpress/block-editor';
 import { PanelBody, RangeControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
-import { useState } from '@wordpress/element';
 
 /**
  * Internal dependencies.
  */
 import ColorInspectorControl from '../../components/ColorInspectorControl';
+import ScIcon from '../../components/ScIcon';
 
 export default function Edit({ attributes, setAttributes, clientId }) {
-	const { label, fill_color, size = 20 } = attributes;
-	const [hoverRating, setHoverRating] = useState(0);
-	const [selectedRating, setSelectedRating] = useState(0);
-
+	const { label, fill_color, size, text_align } = attributes;
 	const blockProps = useBlockProps({
-		className: 'sc-product-review-form-rating',
+		style: {
+			textAlign: text_align || 'left',
+		},
 	});
-
-	const stars = [];
-	const points =
-		'12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2';
-
-	for (let i = 1; i <= 5; i++) {
-		const isFilled = i <= (hoverRating || selectedRating);
-
-		stars.push(
-			<span
-				key={i}
-				role="button"
-				className={`star-button ${isFilled ? 'filled' : ''}`}
-				style={{ width: `${size}px`, height: `${size}px` }}
-				onMouseEnter={() => setHoverRating(i)}
-				onMouseLeave={() => setHoverRating(0)}
-				onClick={() => setSelectedRating(i)}
-				aria-label={__(`Rate ${i} stars`, 'surecart')}
-			>
-				<svg
-					className="sc-star-svg"
-					viewBox="0 0 24 24"
-					width={size}
-					height={size}
-				>
-					<polygon
-						points={points}
-						fill={
-							isFilled
-								? fill_color || 'var(--sc-color-primary-500)'
-								: 'none'
-						}
-						stroke={fill_color || 'var(--sc-color-primary-500)'}
-						strokeWidth="2"
-					/>
-				</svg>
-			</span>
-		);
-	}
 
 	return (
 		<>
+			<BlockControls group="block">
+				<AlignmentControl
+					value={text_align}
+					onChange={(nextAlign) => {
+						setAttributes({ text_align: nextAlign });
+					}}
+				/>
+			</BlockControls>
 			<InspectorControls>
 				<PanelBody title={__('Appearance', 'surecart')}>
 					<RangeControl
 						label={__('Star Size', 'surecart')}
 						value={size}
 						onChange={(value) => setAttributes({ size: value })}
-						min={16}
-						max={48}
+						min={10}
+						max={60}
 					/>
 				</PanelBody>
 			</InspectorControls>
@@ -89,6 +59,7 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 				]}
 				panelId={clientId}
 			/>
+
 			<div {...blockProps}>
 				{label && (
 					<RichText
@@ -106,9 +77,27 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 					/>
 				)}
 
-				<div>{stars}</div>
+				<div>
+					{[1, 2, 3, 4].map((star) => (
+						<ScIcon
+							key={star}
+							name="star"
+							width={size}
+							height={size}
+							fill={fill_color || 'var(--sc-color-primary-500)'}
+							stroke={fill_color || 'var(--sc-color-primary-500)'}
+							strokeWidth={2}
+						/>
+					))}
+					<ScIcon
+						name="star"
+						width={size}
+						height={size}
+						stroke={fill_color || 'var(--sc-color-primary-500)'}
+						strokeWidth={2}
+					/>
+				</div>
 			</div>
-			<input type="hidden" name="rating" value={selectedRating} />
 		</>
 	);
 }

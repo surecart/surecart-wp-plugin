@@ -3,6 +3,10 @@
 	flex-direction: column;
 	gap: 0.5rem;
 
+	.sc-form-label {
+		color: inherit;
+	}
+
 	// Base star styling.
 	%base-star {
 		display: inline-block;
@@ -15,8 +19,8 @@
 
 	%full-star {
 		.sc-star-svg {
-			fill: var(--sc-color-primary-500);
-			stroke: var(--sc-color-primary-500);
+			fill: var(--sc-product-review-form-rating-star-fill-color);
+			stroke: var(--sc-product-review-form-rating-star-fill-color);
 		}
 	}
 
@@ -26,15 +30,14 @@
 		}
 	}
 
-	// Rating input fieldset
+	// Rating input fieldset.
 	.sc-rating-input {
 		border: none;
-		display: inline-flex;
-		flex-direction: row-reverse;
-		justify-content: flex-end;
 		margin: 0;
 		padding: 0;
-		gap: 4px;
+		display: flex;
+		flex-direction: row-reverse;
+		justify-content: start;
 
 		> input {
 			display: none;
@@ -49,17 +52,17 @@
 			}
 		}
 
-		// Selected star color - fill all stars up to and including the selected one
+		// Selected star color - fill all stars up to and including the selected one.
 		> input:checked ~ label {
 			@extend %full-star;
 		}
 
-		// On hover, reset all stars to empty by default
+		// On hover, reset all stars to empty by default.
 		&:hover > input + label {
 			@extend %empty-star;
 		}
 
-		// Hover effect - fill the hovered star and all stars after it (to the right)
+		// Hover effect - fill the hovered star and all stars after it (to the right).
 		&:hover > input + label:hover,
 		&:hover > input + label:hover ~ input + label {
 			@extend %full-star;

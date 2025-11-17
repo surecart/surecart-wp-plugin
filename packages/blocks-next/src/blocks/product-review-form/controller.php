@@ -1,5 +1,5 @@
 <?php
-$product_id     = isset( $_GET['product-review-form'] ) ? (int) $_GET['product-review-form'] : null;
+$product_id     = isset( $_GET['product-review-form'] ) ? absint( $_GET['product-review-form'] ) : null;
 $has_product_id = ! empty( $product_id );
 
 // Only fetch product if we have an ID (for server-side rendering when opened via URL).
