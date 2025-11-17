@@ -5,7 +5,7 @@ import { registerBlockType } from '@wordpress/blocks';
 import { queryPaginationPrevious as icon } from '@wordpress/icons';
 
 /**
- * Internal dependencies
+ * Internal dependencies.
  */
 import edit from './edit';
 import metadata from './block.json';

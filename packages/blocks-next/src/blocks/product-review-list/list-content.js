@@ -20,7 +20,7 @@ import ListToolbar from '../../utilities/patterns-toolbar';
 import InspectorControls from './inspector-controls';
 
 /**
- * Product List Edit
+ * Product Review List Edit.
  */
 export default function ProductReviewListEdit({
 	setAttributes,

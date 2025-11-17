@@ -1,18 +1,14 @@
 /**
- * External dependencies
+ * External dependencies.
  */
 import { registerBlockType } from '@wordpress/blocks';
 import { menu as icon } from '@wordpress/icons';
 
 /**
- * Internal dependencies
+ * Internal dependencies.
  */
 import edit from './edit';
 import metadata from './block.json';
-
-/**
- * Styles
- */
 import './style.scss';
 
 /**

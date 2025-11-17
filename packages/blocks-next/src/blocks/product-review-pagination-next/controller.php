@@ -1,11 +1,10 @@
 <?php
-// Get the arrows and label show/hide from context.
-
 $product = sc_get_product();
 if ( empty( $product ) || empty( $product->total_reviews ) ) {
 	return;
 }
 
+// Get the arrows and label show/hide from context.
 $pagination_arrow = $block->context['paginationArrow'] ?? '';
 $show_label       = $block->context['showLabel'] ?? true;
 
