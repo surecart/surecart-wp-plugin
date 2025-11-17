@@ -25,7 +25,7 @@ const isValidEvent = (event) =>
 	!event.defaultPrevented;
 
 // controls the product review.
-const { state, actions } = store('surecart/product-review', {
+const { state } = store('surecart/product-review', {
 	state: {
 		loading: false,
 		open: false,
