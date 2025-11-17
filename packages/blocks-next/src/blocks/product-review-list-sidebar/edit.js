@@ -19,6 +19,15 @@ const TEMPLATE = [
 			},
 		},
 	],
+	[
+		'surecart/product-review-list-filter-checkboxes',
+		{
+			layout: {
+				type: 'flex',
+				orientation: 'vertical',
+			},
+		},
+	],
 ];
 
 export default ({
