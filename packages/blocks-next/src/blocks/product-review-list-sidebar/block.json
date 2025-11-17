@@ -18,7 +18,6 @@
 			"default": true
 		}
 	},
-	"usesContext": ["postId"],
 	"supports": {
 		"interactivity": true,
 		"layout": {
