@@ -165,6 +165,18 @@ class ProductReviewList extends \Bricks\Element {
 			'default' => true,
 		];
 
+		$this->controls['verified_badge_icon_size'] = [
+			'tab'         => 'content',
+			'group'       => 'review_content',
+			'label'       => esc_html__( 'Verified Badge Icon Size', 'surecart' ),
+			'type'        => 'number',
+			'default'     => 16,
+			'min'         => 10,
+			'max'         => 50,
+			'step'        => 1,
+			'description' => esc_html__( 'Size of the verified badge icon in pixels.', 'surecart' ),
+		];
+
 		// Rating stars fill color for content stars.
 		$this->controls['rating_fill_color'] = [
 			'tab'      => 'content',
@@ -315,8 +327,9 @@ class ProductReviewList extends \Bricks\Element {
 		}
 
 		// Review Template.
-		$date_block    = $show_date ? '<!-- wp:surecart/product-review-date {"format":"human-diff"} /-->' : '';
-		$content_block = $show_content ? '<!-- wp:surecart/product-review-content /-->' : '';
+		$verified_icon_size = ! empty( $this->settings['verified_badge_icon_size'] ) ? absint( $this->settings['verified_badge_icon_size'] ) : 16;
+		$date_block         = $show_date ? '<!-- wp:surecart/product-review-date {"format":"human-diff"} /-->' : '';
+		$content_block      = $show_content ? '<!-- wp:surecart/product-review-content /-->' : '';
 
 		$content .= '<!-- wp:group {"style":{"spacing":{"blockGap":"0px"},"layout":{"selfStretch":"fill","flexSize":null}},"layout":{"type":"flex","orientation":"vertical"}} -->';
 		$content .= '<div class="wp-block-group"><!-- wp:surecart/product-review-template {"style":{"spacing":{"blockGap":"0px","margin":{"top":"0","bottom":"0"},"padding":{"top":"0","bottom":"0"}}},"layout":{"type":"grid","columnCount":1}} -->';
@@ -324,7 +337,7 @@ class ProductReviewList extends \Bricks\Element {
 		$content .= '<div class="wp-block-group" style="border-bottom-color:#e5e7eb;border-bottom-width:1px;margin-top:0;margin-bottom:0;padding-top:var(--wp--preset--spacing--40);padding-bottom:var(--wp--preset--spacing--40)"><!-- wp:group {"layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"space-between"}} -->';
 		$content .= '<div class="wp-block-group"><!-- wp:group {"style":{"spacing":{"blockGap":"var:preset|spacing|20"}},"layout":{"type":"flex","flexWrap":"nowrap"}} -->';
 		$content .= '<div class="wp-block-group"><!-- wp:surecart/product-review-reviewer-name {"style":{"spacing":{"padding":{"top":"0","bottom":"0"},"blockGap":"var:preset|spacing|20"},"typography":{"fontStyle":"normal","fontWeight":"500"}}} /-->';
-		$content .= '<!-- wp:surecart/product-review-verified-badge {"icon_size":16,"style":{"typography":{"fontStyle":"normal","fontWeight":"400"},"spacing":{"blockGap":"var:preset|spacing|30"},"layout":{"selfStretch":"fit","flexSize":null}},"layout":{"type":"flex","justifyContent":"center","verticalAlignment":"center","orientation":"horizontal"}} /--></div>';
+		$content .= '<!-- wp:surecart/product-review-verified-badge {"icon_size":' . esc_attr( $verified_icon_size ) . ',"style":{"typography":{"fontStyle":"normal","fontWeight":"400"},"spacing":{"blockGap":"var:preset|spacing|30"},"layout":{"selfStretch":"fit","flexSize":null}},"layout":{"type":"flex","justifyContent":"center","verticalAlignment":"center","orientation":"horizontal"}} /--></div>';
 		$content .= '<!-- /wp:group -->' . $date_block . '</div>';
 		$content .= '<!-- /wp:group -->';
 		$content .= '<!-- wp:surecart/product-review-rating-stars {"fill_color":"' . esc_attr( $fill_color ) . '"}  /-->';
@@ -494,7 +507,8 @@ class ProductReviewList extends \Bricks\Element {
 		}
 
 		// Reviews.
-		$content .= '<div style="flex: 1;">';
+		$verified_icon_size = ! empty( $this->settings['verified_badge_icon_size'] ) ? absint( $this->settings['verified_badge_icon_size'] ) : 16;
+		$content           .= '<div style="flex: 1;">';
 		for ( $i = 0; $i < 2; $i++ ) {
 			$content .= '<div style="border-bottom: 1px solid #e5e7eb; padding: 20px 0;">';
 			$content .= '<div style="display: flex; justify-content: space-between; margin-bottom: 12px;">';
@@ -506,8 +520,8 @@ class ProductReviewList extends \Bricks\Element {
 				\SureCart::svg()->get(
 					'verified',
 					[
-						'width'  => 16,
-						'height' => 16,
+						'width'  => $verified_icon_size,
+						'height' => $verified_icon_size,
 					]
 				),
 				sc_allowed_svg_html()
