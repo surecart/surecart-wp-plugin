@@ -6,7 +6,7 @@
 	<?php endif; ?>
 
 	<fieldset class="sc-rating-input" style="justify-content: <?php echo esc_attr( 'center' === $text_align ? 'center' : ( 'right' === $text_align ? 'flex-start' : 'flex-end' ) ); ?>;">
-		<?php for ( $i = 1; $i <= 5; $i++ ) : ?>
+		<?php for ( $i = 5; $i >= 1; $i-- ) : ?>
 			<input 
 				type="radio"
 				name="stars"
