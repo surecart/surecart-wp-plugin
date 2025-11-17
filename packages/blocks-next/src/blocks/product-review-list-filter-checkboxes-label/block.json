@@ -9,7 +9,6 @@
 	"icon": "media-interactive",
 	"example": {},
 	"ancestor": ["surecart/product-review-list-filter-checkboxes"],
-	"usesContext": ["taxonomySlug"],
 	"attributes": {
 		"label": {
 			"type": "string",

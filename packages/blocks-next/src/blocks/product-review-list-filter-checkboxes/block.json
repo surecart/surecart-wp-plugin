@@ -9,9 +9,6 @@
 	"example": {},
 	"ancestor": ["surecart/product-review-list"],
 	"attributes": {},
-	"providesContext": {
-		"taxonomySlug": "taxonomy"
-	},
 	"supports": {
 		"interactivity": true,
 		"layout": {
