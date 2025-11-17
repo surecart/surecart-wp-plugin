@@ -1,12 +1,7 @@
 /**
  * WordPress dependencies.
  */
-import {
-	store,
-	getElement,
-	getContext,
-	withScope,
-} from '@wordpress/interactivity';
+import { store, getElement, getContext } from '@wordpress/interactivity';
 
 /**
  * Internal dependencies.
@@ -25,64 +20,66 @@ let inertElements = [];
 
 /**
  * Validate if the event triggers an open/close action.
- *
- * @param {Event} event
- * @returns {boolean}
  */
 const isValidEvent = (event) =>
 	event?.key ? [' ', 'Enter', 'Escape'].includes(event.key) : true;
 
-const { state, actions } = store('surecart/product-review-form', {
+/**
+ * Validate the review input.
+ */
+const isInvalidInput = (context) => {
+	const { stars, title, sc_product_id } = context;
+
+	return (
+		!stars ||
+		stars < 1 ||
+		stars > 5 ||
+		!title ||
+		title?.trim() === '' ||
+		!sc_product_id
+	);
+};
+
+/**
+ * Remove the product-review-form URL parameter.
+ */
+const removeProductReviewFormUrlParameter = () => {
+	const url = new URL(window.location.href);
+	url.searchParams.delete('product-review-form');
+	window.history.pushState({}, '', url.toString());
+};
+
+/**
+ * Append the product-review-form URL parameter.
+ */
+const appendProductReviewFormUrlParameter = (productId) => {
+	const url = new URL(window.location.href);
+	url.searchParams.set('product-review-form', productId);
+	window.history.pushState({}, '', url.toString());
+};
+
+const { state, actions, callbacks } = store('surecart/product-review-form', {
 	actions: {
-		/** Browser Navigate */
-		*navigate(event) {
-			const { product_id } = getContext();
-			event?.preventDefault();
-
-			state.loading = true;
-
-			// Append the URL parameter.
-			if (!!product_id) {
-				const url = new URL(window.location.href);
-				url.searchParams.set('product-review-form', product_id);
-				window.history.pushState({}, '', url.toString());
-			}
-
-			state.loading = false;
-		},
-
-		/** Open review form modal */
+		/** Open product review form modal */
 		*open(event) {
 			if (!isValidEvent(event)) return;
 
 			// prevent default to avoid page reload.
 			event?.preventDefault();
 
-			const context = getContext();
+			const { redirect_url, product_id } = getContext();
 
 			// If redirect URL is set, redirect to it instead of opening the form
-			if (context.redirect_url) {
-				window.location.href = context.redirect_url;
+			if (redirect_url) {
+				window.location.href = redirect_url;
 				return;
 			}
 
-			state.openButton = event?.target?.closest(
-				'.wp-block-surecart-product-review-add-button'
-			);
-
-			// navigate to the product page.
-			if (event) yield actions.navigate(event);
+			// append the URL parameter.
+			appendProductReviewFormUrlParameter(product_id);
 
 			// open the dialog UI.
 			state.open = true;
-
-			// focus the first focusable element.
-			const firstFocusable = document
-				.querySelector('.wp-block-surecart-product-review-form')
-				?.querySelector(
-					'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-				);
-			firstFocusable?.focus();
 		},
 
 		/** Close the product review form dialog. */
@@ -94,65 +91,21 @@ const { state, actions } = store('surecart/product-review-form', {
 			event?.preventDefault();
 
 			// Clear the form when closing.
-			actions.clearForm();
+			callbacks.clearForm();
 
-			const { ref } = getElement();
-			const dialog = ref?.closest(
-				'.wp-block-surecart-product-review-form'
-			);
-
-			const handleTransitionEnd = withScope((event) => {
-				const isTransitioning = dialog?.getAnimations()?.length > 0;
-				if (isTransitioning) return; // Wait for the transition to finish.
-				// navigate to the product page.
-
-				actions.navigate(event);
-				// remove the event listener to avoid memory leaks.
-				dialog.removeEventListener(
-					'transitionend',
-					handleTransitionEnd
-				);
-			});
-
-			dialog.addEventListener('transitionend', handleTransitionEnd); // Wait for the closing animation to finish before navigating.
-
+			// close the dialog UI and reset submitted state.
 			state.open = false;
 			context.submitted = false;
+			removeProductReviewFormUrlParameter();
 
-			// Remove product_id from URL.
-			const url = new URL(window.location.href);
-			url.searchParams.delete('product-review-form');
-			window.history.pushState({}, '', url.toString());
-
+			// restore focus to the open button.
 			setTimeout(() => state?.openButton?.focus(), 1);
 		},
 
-		/** Set the selected stars */
-		setStars() {
-			const { ref } = getElement();
-			const stars = parseInt(ref.dataset.stars || ref.value);
+		/** Set the stars */
+		setStars(event) {
 			const context = getContext();
-
-			// Set the actual stars.
-			context.stars = stars;
-		},
-
-		/** Clear all form data */
-		clearForm() {
-			const context = getContext();
-
-			// Reset all form fields.
-			context.stars = 0;
-			context.title = '';
-			context.content = '';
-
-			// Manually uncheck all radio buttons.
-			const radioButtons = document.querySelectorAll(
-				'.wp-block-surecart-product-review-form-rating input[type="radio"][name="stars"]'
-			);
-			radioButtons.forEach((radio) => {
-				radio.checked = false;
-			});
+			context.stars = event?.target?.value ?? 0;
 		},
 
 		/** Set the review title */
@@ -212,20 +165,12 @@ const { state, actions } = store('surecart/product-review-form', {
 				}
 			}
 
-			// if the button does not have a value, add to cart.
+			// if the button does not have a value, it's the main submit button.
 			if (!e?.submitter?.value) {
 				const context = getContext();
-				const { stars, title, body, sc_product_id } = context;
+				const { stars, title, sc_product_id, body } = context;
 
-				// Validate rating data.
-				if (
-					!stars ||
-					stars < 1 ||
-					stars > 5 ||
-					!title ||
-					title.trim() === '' ||
-					!sc_product_id
-				) {
+				if (isInvalidInput(context)) {
 					return;
 				}
 
@@ -244,11 +189,16 @@ const { state, actions } = store('surecart/product-review-form', {
 						},
 					});
 
-					if (!response || !response.id) {
-						throw new Error(__('Submission failed', 'surecart'));
+					if (!response || !response?.id) {
+						throw new Error(
+							__(
+								'Failed to submit review, please try again.',
+								'surecart'
+							)
+						);
 					}
 
-					actions.clearForm();
+					callbacks.clearForm();
 					context.submitted = true;
 				} catch (e) {
 					console.error(e);
@@ -256,6 +206,27 @@ const { state, actions } = store('surecart/product-review-form', {
 					context.busy = false;
 				}
 			}
+		},
+
+		/**
+		 * Clear the form fields.
+		 */
+		clearForm() {
+			const context = getContext();
+
+			// Reset all form fields.
+			context.stars = 0;
+			context.title = '';
+			context.body = '';
+
+			// Manually uncheck the radio buttons.
+			const radioButtons = document.querySelectorAll(
+				'.wp-block-surecart-product-review-form-rating input[type="radio"][name="stars"]'
+			);
+
+			radioButtons.forEach((radio) => {
+				radio.checked = false;
+			});
 		},
 	},
 });
