@@ -5,7 +5,7 @@
 		</label>
 	<?php endif; ?>
 
-	<fieldset class="sc-rating-input" style="justify-content: <?php echo esc_attr( 'center' === $attributes['text_align'] ? 'center' : ( 'right' === $attributes['text_align'] ? 'flex-start' : 'flex-end' ) ); ?>;">
+	<fieldset class="sc-rating-input" style="justify-content: <?php echo esc_attr( 'center' === $text_align ? 'center' : ( 'right' === $text_align ? 'flex-start' : 'flex-end' ) ); ?>;">
 		<?php for ( $i = 1; $i <= 5; $i++ ) : ?>
 			<input 
 				type="radio"
