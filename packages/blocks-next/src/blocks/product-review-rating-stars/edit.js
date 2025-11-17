@@ -10,12 +10,15 @@ import { __ } from '@wordpress/i18n';
  */
 import ColorInspectorControl from '../../components/ColorInspectorControl';
 import ScIcon from '../../components/ScIcon';
+import { getSpacingPresetCssVar } from '../../../../blocks/util';
 
 export default ({ attributes, setAttributes, clientId }) => {
 	const { fill_color, size, style } = attributes;
 
 	const blockProps = useBlockProps({
-		style,
+		style: {
+			gap: getSpacingPresetCssVar(style?.spacing?.blockGap),
+		},
 	});
 
 	return (
