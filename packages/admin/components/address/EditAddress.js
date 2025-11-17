@@ -78,7 +78,6 @@ export default ({
 						showLine2
 						showName
 						required={shippingAddressRequired}
-						defaultCountryFields={scData.i18n.defaultCountryFields}
 					/>
 
 					<ScCheckbox
@@ -107,9 +106,6 @@ export default ({
 							showLine2
 							showName
 							required={billingAddressRequired}
-							defaultCountryFields={
-								scData.i18n.defaultCountryFields
-							}
 						/>
 					)}
 				</div>

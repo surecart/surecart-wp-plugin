@@ -3,7 +3,7 @@ import { __ } from '@wordpress/i18n';
 import { countryChoices, getCountryDetails } from '../../../functions/address';
 import { reportChildrenValidity } from '../../../functions/form-data';
 import { Address, CountryLocaleFieldValue } from '../../../types';
-import { state as i18nState } from '@store/i18n';
+import { defaultCountryFields } from './default-country-fields';
 
 /**
  * @part base - The elements base wrapper.
@@ -74,9 +74,6 @@ export class ScAddress {
   /** Is the name required */
   @Prop({ reflect: true }) requireName: boolean = false;
 
-  /** Default country fields */
-  @Prop({ mutable: true }) defaultCountryFields: Array<CountryLocaleFieldValue>;
-
   /** Should we show the city field? */
   @State() showCity: boolean = true;
 
@@ -140,8 +137,6 @@ export class ScAddress {
   componentWillLoad() {
     this.initCountryChoices();
     this.handleAddressChange();
-    // Set default country fields.
-    this.defaultCountryFields = this.defaultCountryFields || i18nState.defaultCountryFields || [];
     this.handleNameChange();
   }
 
@@ -159,7 +154,7 @@ export class ScAddress {
 
   sortedFields() {
     if (!this.countryDetails || !this?.address?.country) {
-      return this.defaultCountryFields;
+      return defaultCountryFields;
     }
 
     return (this?.countryDetails?.address_formats?.edit
@@ -167,7 +162,7 @@ export class ScAddress {
       .map(match => match.slice(2, -2))
       .map(field => ({
         name: field,
-        label: this?.countryDetails?.address_labels?.[field] || this.defaultCountryFields?.find(defaultField => defaultField?.name === field)?.label,
+        label: this?.countryDetails?.address_labels?.[field] || defaultCountryFields?.find(defaultField => defaultField?.name === field)?.label,
       })) || []) as CountryLocaleFieldValue[];
   }
 

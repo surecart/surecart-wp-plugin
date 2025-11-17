@@ -156,7 +156,6 @@ abstract class BaseSettings {
 				'is_block_theme'         => (bool) wp_is_block_theme(),
 				'claim_url'              => ! \SureCart::account()->claimed ? \SureCart::routeUrl( 'account.claim' ) : '',
 				'claim_expired'          => \SureCart::account()->claim_expired ?? false,
-				'i18n'                   => \SureCart::state()->i18n()->get(),
 			]
 		);
 	}

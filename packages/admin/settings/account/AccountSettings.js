@@ -405,7 +405,6 @@ export default () => {
 					onScInputAddress={(e) =>
 						brandEditItem({ address: e.detail })
 					}
-					defaultCountryFields={scData.i18n.defaultCountryFields}
 				/>
 			</SettingsBox>
 		</SettingsTemplate>
