@@ -33,10 +33,5 @@
 	"textdomain": "surecart",
 	"render": "file:./view.php",
 	"editorScript": "file:./index.js",
-	"viewScriptModule": [
-		"@surecart/checkout",
-		"@surecart/cart",
-		"@surecart/product-page"
-	],
 	"style": ["file:./style-index.css", "surecart-block-ui", "surecart-spinner"]
 }

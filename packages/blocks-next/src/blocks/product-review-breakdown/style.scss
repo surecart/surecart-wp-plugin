@@ -49,6 +49,7 @@
 			.sc-star-label {
 				display: flex;
 				align-items: center;
+				gap: var(--sc-star-label-gap, 4px);
 				color: var(--sc-color-gray-800);
 
 				.sc-star-svg {

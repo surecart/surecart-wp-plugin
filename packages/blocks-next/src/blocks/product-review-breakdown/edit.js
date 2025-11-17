@@ -22,6 +22,7 @@ export default function ({ attributes, setAttributes, clientId }) {
 		columns,
 		row_gap,
 		column_gap,
+		star_label_gap,
 		size,
 		fill_color,
 		bar_fill_color,
@@ -109,6 +110,16 @@ export default function ({ attributes, setAttributes, clientId }) {
 						min={8}
 						max={64}
 					/>
+
+					<RangeControl
+						label={__('Star and label gap', 'surecart')}
+						value={star_label_gap}
+						onChange={(value) =>
+							setAttributes({ star_label_gap: value })
+						}
+						min={0}
+						max={20}
+					/>
 				</PanelBody>
 			</InspectorControls>
 
@@ -157,7 +168,10 @@ export default function ({ attributes, setAttributes, clientId }) {
 
 						return (
 							<div className="sc-star-row" key={star}>
-								<div className="sc-star-label">
+								<div
+									className="sc-star-label"
+									style={{ gap: `${star_label_gap}px` }}
+								>
 									<span className="sc-star-text">{star}</span>
 									<span className="sc-star-svg">
 										<ScIcon

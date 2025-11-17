@@ -33,6 +33,10 @@
 			"type": "number",
 			"default": 20
 		},
+		"star_label_gap": {
+			"type": "number",
+			"default": 4
+		},
 		"fill_color": {
 			"type": "string",
 			"default": ""

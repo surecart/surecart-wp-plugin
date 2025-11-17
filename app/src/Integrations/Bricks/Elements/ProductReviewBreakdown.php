@@ -82,8 +82,24 @@ class ProductReviewBreakdown extends \Bricks\Element {
 			'label'       => esc_html__( 'Star Size', 'surecart' ),
 			'type'        => 'number',
 			'units'       => true,
-			'default'     => '0px',
+			'default'     => '20px',
 			'placeholder' => '20px',
+		];
+
+		$this->controls['star_label_gap'] = [
+			'tab'         => 'content',
+			'label'       => esc_html__( 'Star Label Gap', 'surecart' ),
+			'type'        => 'number',
+			'units'       => true,
+			'default'     => '4px',
+			'placeholder' => '4px',
+			'description' => esc_html__( 'Adjust the spacing between the star number and star icon.', 'surecart' ),
+			'css'         => [
+				[
+					'property' => 'gap',
+					'selector' => '.sc-star-label',
+				],
+			],
 		];
 
 		$this->controls['columns'] = [
@@ -101,23 +117,35 @@ class ProductReviewBreakdown extends \Bricks\Element {
 		];
 
 		$this->controls['row_gap'] = [
-			'group'       => 'settings',
+			'tab'         => 'content',
 			'label'       => esc_html__( 'Row Gap', 'surecart' ),
 			'type'        => 'number',
 			'units'       => true,
 			'default'     => '20px',
 			'placeholder' => '20px',
 			'description' => esc_html__( 'Adjust the spacing between rows . ', 'surecart' ),
+			'css'         => [
+				[
+					'property' => 'row-gap',
+					'selector' => '.sc-star-bars',
+				],
+			],
 		];
 
 		$this->controls['column_gap'] = [
-			'group'       => 'settings',
+			'tab'         => 'content',
 			'label'       => esc_html__( 'Column Gap', 'surecart' ),
 			'type'        => 'number',
 			'units'       => true,
 			'default'     => '20px',
 			'placeholder' => '20px',
 			'description' => esc_html__( 'Adjust the spacing between columns . ', 'surecart' ),
+			'css'         => [
+				[
+					'property' => 'column-gap',
+					'selector' => '.sc-star-bars',
+				],
+			],
 		];
 
 		$this->controls['fill_color'] = [
@@ -183,6 +211,7 @@ class ProductReviewBreakdown extends \Bricks\Element {
 	public function render() {
 		$show_for_zero_reviews = ! empty( $this->settings['show_for_zero_reviews'] );
 		$star_size             = ! empty( $this->settings['star_size'] ) ? (int) $this->settings['star_size'] : 20;
+		$star_label_gap        = ! empty( $this->settings['star_label_gap'] ) ? (int) $this->settings['star_label_gap'] : 4;
 		$columns               = ! empty( $this->settings['columns'] ) ? (int) $this->settings['columns'] : 1;
 		$row_gap               = ! empty( $this->settings['row_gap'] ) ? (int) $this->settings['row_gap'] : 20;
 		$column_gap            = ! empty( $this->settings['column_gap'] ) ? (int) $this->settings['column_gap'] : 20;
@@ -192,13 +221,14 @@ class ProductReviewBreakdown extends \Bricks\Element {
 		}
 
 		if ( $this->is_admin_editor() ) {
-			$this->render_preview( $star_size, $fill_color, $columns, $row_gap, $column_gap );
+			$this->render_preview( $star_size, $fill_color, $columns, $column_gap );
 			return;
 		}
 
 		$attributes = [
 			'show_for_zero_reviews' => $show_for_zero_reviews,
 			'size'                  => $star_size,
+			'star_label_gap'        => $star_label_gap,
 			'columns'               => $columns,
 			'row_gap'               => $row_gap,
 			'column_gap'            => $column_gap,
@@ -218,12 +248,11 @@ class ProductReviewBreakdown extends \Bricks\Element {
 	 * @param int    $star_size Star size.
 	 * @param string $fill_color Fill color.
 	 * @param int    $columns Number of columns.
-	 * @param int    $row_gap Row gap in pixels.
 	 * @param int    $column_gap Column gap in pixels.
 	 *
 	 * @return void
 	 */
-	private function render_preview( $star_size, $fill_color, $columns = 1, $row_gap = 20, $column_gap = 20 ) {
+	private function render_preview( $star_size = 20, $fill_color, $columns = 1, $column_gap = 20 ) {
 		$breakdown_data = [
 			5 => 45,
 			4 => 25,
@@ -241,7 +270,7 @@ class ProductReviewBreakdown extends \Bricks\Element {
 			$max_height = 'max-height: 85px;';
 		}
 
-		$content = '<div class="sc-star-bars sc-star-bars--columns-' . esc_attr( $columns ) . '" style="display: flex; flex-direction: column; flex-wrap: wrap; row-gap: ' . esc_attr( $row_gap ) . 'px; column-gap: ' . esc_attr( $column_gap ) . 'px; align-content: flex-start; ' . $max_height . '">';
+		$content = '<div class="sc-star-bars sc-star-bars--columns-' . esc_attr( $columns ) . '" style="display: flex; flex-direction: column; flex-wrap: wrap; align-content: flex-start; ' . $max_height . '">';
 		for ( $star = 5; $star >= 1; $star-- ) {
 			$count      = $breakdown_data[ $star ];
 			$percentage = $total > 0 ? ( $count / $total ) * 100 : 0;
@@ -255,11 +284,21 @@ class ProductReviewBreakdown extends \Bricks\Element {
 			}
 
 			$content .= '<a href="#" class="sc-star-row" onclick="event.preventDefault();" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: inherit; cursor: pointer; transition: opacity 0.2s ease; ' . $width_style . '">';
-			$content .= '<div class="sc-star-label" style="display: flex; align-items: center; gap: 4px; justify-content: center;">';
+			$content .= '<div class="sc-star-label" style="display: flex; align-items: center; justify-content: center;">';
 			$content .= esc_html( $star );
-			$content .= '<svg height="' . esc_attr( $star_size ) . '" width="' . esc_attr( $star_size ) . '" viewBox="0 0 24 24" fill="' . esc_attr( $fill_color ) . '" stroke="' . esc_attr( $fill_color ) . '" stroke-width="2">';
-			$content .= '<path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>';
-			$content .= '</svg>';
+			$content .= wp_kses(
+				\SureCart::svg()->get(
+					'star',
+					[
+						'height'       => esc_attr( $star_size ),
+						'width'        => esc_attr( $star_size ),
+						'fill'         => esc_attr( $fill_color ),
+						'stroke'       => esc_attr( $fill_color ),
+						'stroke-width' => 2,
+					]
+				),
+				sc_allowed_svg_html()
+			);
 			$content .= '</div>';
 			$content .= '<div class="sc-bar-wrap" style="flex: 1; height: 8px; border-radius: 4px; overflow: hidden; position: relative; min-width: 100px;">';
 			$content .= '<div class="sc-bar-fill" style="height: 100%; border-radius: 4px; width: ' . esc_attr( $percentage ) . '%; transition: width 0.3s ease;"></div>';

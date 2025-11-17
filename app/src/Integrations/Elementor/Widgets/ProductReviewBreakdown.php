@@ -101,6 +101,29 @@ class ProductReviewBreakdown extends \Elementor\Widget_Base {
 		);
 
 		$this->add_control(
+			'star_label_gap',
+			[
+				'label'       => esc_html__( 'Star Label Gap', 'surecart' ),
+				'type'        => \Elementor\Controls_Manager::SLIDER,
+				'size_units'  => [ 'px' ],
+				'range'       => [
+					'px' => [
+						'min' => 0,
+						'max' => 20,
+					],
+				],
+				'default'     => [
+					'size' => 4,
+					'unit' => 'px',
+				],
+				'description' => esc_html__( 'Adjust the spacing between the star number and star icon.', 'surecart' ),
+				'selectors'   => [
+					'{{WRAPPER}} .wp-block-surecart-product-review-breakdown .sc-star-label' => 'gap: {{SIZE}}{{UNIT}};',
+				],
+			]
+		);
+
+		$this->add_control(
 			'columns',
 			[
 				'label'       => esc_html__( 'Columns', 'surecart' ),
@@ -132,6 +155,9 @@ class ProductReviewBreakdown extends \Elementor\Widget_Base {
 					'unit' => 'px',
 				],
 				'description' => esc_html__( 'Adjust the spacing between rows.', 'surecart' ),
+				'selectors'   => [
+					'{{WRAPPER}} .wp-block-surecart-product-review-breakdown .sc-star-bars' => 'row-gap: {{SIZE}}{{UNIT}};',
+				],
 			]
 		);
 
@@ -152,6 +178,9 @@ class ProductReviewBreakdown extends \Elementor\Widget_Base {
 					'unit' => 'px',
 				],
 				'description' => esc_html__( 'Adjust the spacing between columns.', 'surecart' ),
+				'selectors'   => [
+					'{{WRAPPER}} .wp-block-surecart-product-review-breakdown .sc-star-bars' => 'column-gap: {{SIZE}}{{UNIT}};',
+				],
 			]
 		);
 
@@ -268,18 +297,20 @@ class ProductReviewBreakdown extends \Elementor\Widget_Base {
 		$settings              = $this->get_settings_for_display();
 		$show_for_zero_reviews = 'yes' === ( $settings['show_for_zero_reviews'] ?? 'no' );
 		$star_size             = $settings['star_size']['size'] ?? 20;
+		$star_label_gap        = $settings['star_label_gap']['size'] ?? 4;
 		$columns               = $settings['columns'] ?? 1;
 		$row_gap               = $settings['row_gap']['size'] ?? 20;
 		$column_gap            = $settings['column_gap']['size'] ?? 20;
 
 		if ( \Elementor\Plugin::$instance->editor->is_edit_mode() ) {
-			$this->render_preview( $star_size, $columns, $row_gap, $column_gap );
+			$this->render_preview( $star_size, $columns, $column_gap );
 			return;
 		}
 
 		$attributes = [
 			'show_for_zero_reviews' => $show_for_zero_reviews,
 			'size'                  => absint( $star_size ),
+			'star_label_gap'        => absint( $star_label_gap ),
 			'columns'               => absint( $columns ),
 			'row_gap'               => absint( $row_gap ),
 			'column_gap'            => absint( $column_gap ),
@@ -299,12 +330,11 @@ class ProductReviewBreakdown extends \Elementor\Widget_Base {
 	 *
 	 * @param int $star_size Star size.
 	 * @param int $columns Number of columns.
-	 * @param int $row_gap Row gap in pixels.
 	 * @param int $column_gap Column gap in pixels.
 	 *
 	 * @return void
 	 */
-	private function render_preview( $star_size, $columns = 1, $row_gap = 20, $column_gap = 20 ) {
+	private function render_preview( $star_size, $columns = 1, $column_gap = 20 ) {
 		$breakdown_data = [
 			5 => 45,
 			4 => 25,
@@ -314,19 +344,13 @@ class ProductReviewBreakdown extends \Elementor\Widget_Base {
 		];
 		$total          = array_sum( $breakdown_data );
 		$columns        = absint( $columns );
-		$row_gap        = absint( $row_gap );
 		$column_gap     = absint( $column_gap );
 
 		// Calculate max height for multi-column layouts.
-		$max_height = '';
-		if ( 2 === $columns ) {
-			$max_height = 'max-height: 150px;';
-		} elseif ( 3 === $columns ) {
-			$max_height = 'max-height: 85px;';
-		}
+		$max_height = 2 === $columns ? 150 : ( 3 === $columns ? 85 : '' );
 		?>
 		<div class="wp-block-surecart-product-review-breakdown">
-			<div class="sc-star-bars sc-star-bars--columns-<?php echo esc_attr( $columns ); ?>" style="display: flex; flex-direction: column; flex-wrap: wrap; row-gap: <?php echo esc_attr( $row_gap ); ?>px; column-gap: <?php echo esc_attr( $column_gap ); ?>px; align-content: flex-start; <?php echo esc_attr( $max_height ); ?>">
+			<div class="sc-star-bars sc-star-bars--columns-<?php echo esc_attr( $columns ); ?>" style="display: flex; flex-direction: column; flex-wrap: wrap; align-content: flex-start; max-height: <?php echo esc_attr( $max_height ); ?>px;">
 				<?php
 				for ( $star = 5; $star >= 1; $star-- ) {
 					$count      = $breakdown_data[ $star ];
@@ -341,7 +365,7 @@ class ProductReviewBreakdown extends \Elementor\Widget_Base {
 					}
 					?>
 					<a href="#" class="sc-star-row" onclick="event.preventDefault();" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: inherit; cursor: pointer; transition: opacity 0.2s ease; <?php echo esc_attr( $width_style ); ?>">
-						<div class="sc-star-label" style="display: flex; align-items: center; gap: 4px;">
+						<div class="sc-star-label" style="display: flex; align-items: center;">
 							<?php echo esc_html( $star ); ?>
 							<svg height="<?php echo esc_attr( $star_size ); ?>" width="<?php echo esc_attr( $star_size ); ?>" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2">
 								<path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>

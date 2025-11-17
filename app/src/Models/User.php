@@ -297,7 +297,7 @@ class User implements ArrayAccess, JsonSerializable {
 	 */
 	protected function login() {
 		if ( empty( $this->user->ID ) ) {
-			return new \Error( 'not_found', esc_html__( 'This user could not be found.', 'surecart' ) );
+			return new WP_Error( 'not_found', esc_html__( 'This user could not be found.', 'surecart' ) );
 		}
 
 		clean_user_cache( $this->user->ID );

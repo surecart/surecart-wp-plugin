@@ -1,5 +1,5 @@
 /**
- * WordPress dependencies
+ * WordPress dependencies.
  */
 import { useBlockProps, useInnerBlocksProps } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
@@ -83,9 +83,18 @@ export default function Edit() {
 									'surecart/product-review-average-rating-value',
 									{
 										className: 'is-style-slash',
+										style: {
+											typography: {
+												fontStyle: 'normal',
+												fontWeight: '600',
+											},
+										},
+										fontSize: 'large',
 									},
 								],
-								['surecart/product-review-average-rating-stars'],
+								[
+									'surecart/product-review-average-rating-stars',
+								],
 							],
 						],
 						[
@@ -129,6 +138,7 @@ export default function Edit() {
 				[
 					'surecart/product-review-breakdown',
 					{
+						columns: 2,
 						className: 'is-style-default',
 						style: {
 							layout: {
