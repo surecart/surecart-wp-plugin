@@ -436,6 +436,7 @@ class ProductReviewList extends \Bricks\Element {
 			}
 
 			if ( $show_add_button ) {
+				$btn_icon_size  = ! empty( $this->settings['add_button_icon_size'] ) ? absint( $this->settings['add_button_icon_size'] ) : 15;
 				$btn_label      = ! empty( $this->settings['add_button_label'] ) ? $this->settings['add_button_label'] : esc_html__( 'Write a Review', 'surecart' );
 				$btn_text_color = ! empty( $this->settings['add_button_text_color'] ) ? $this->get_raw_color( 'add_button_text_color' ) : '#000000';
 				$btn_bg_color   = ! empty( $this->settings['add_button_background_color'] ) ? $this->get_raw_color( 'add_button_background_color' ) : 'var(--bricks-color-primary)';
@@ -445,9 +446,10 @@ class ProductReviewList extends \Bricks\Element {
 					\SureCart::svg()->get(
 						'edit-2',
 						[
+							'class'      => 'sc-add-review-button__icon',
 							'aria-label' => __( 'Add Review', 'surecart' ),
-							'width'      => 16,
-							'height'     => 16,
+							'width'      => $btn_icon_size,
+							'height'     => $btn_icon_size,
 						]
 					),
 					sc_allowed_svg_html()

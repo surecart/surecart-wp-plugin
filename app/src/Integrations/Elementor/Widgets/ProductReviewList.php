@@ -141,6 +141,9 @@ class ProductReviewList extends \Elementor\Widget_Base {
 					'show_add_button' => 'yes',
 				],
 				'description' => esc_html__( 'Size of the icon in pixels.', 'surecart' ),
+				'selectors'   => [
+					'{{WRAPPER}} .wp-block-surecart-product-review-add-button .sc-product-review-add-button__icon' => 'width: {{VALUE}}px; height: {{VALUE}}px;',
+				],
 			]
 		);
 
@@ -634,7 +637,7 @@ class ProductReviewList extends \Elementor\Widget_Base {
 		if ( \Elementor\Plugin::$instance->editor->is_edit_mode() ) {
 			?>
 			<div <?php $this->print_render_attribute_string( 'wrapper' ); ?>>
-				<?php $this->render_preview(); ?>
+				<?php $this->render_preview( $settings ); ?>
 			</div>
 			<?php
 			return;
@@ -738,8 +741,6 @@ class ProductReviewList extends \Elementor\Widget_Base {
 						[
 							'aria-label' => __( 'Add Review', 'surecart' ),
 							'class'      => 'sc-product-review-add-button__icon',
-							'width'      => 16,
-							'height'     => 16,
 						],
 					),
 					sc_allowed_svg_html()
@@ -913,8 +914,7 @@ class ProductReviewList extends \Elementor\Widget_Base {
 	 *
 	 * @return void
 	 */
-	private function render_preview() {
-		$settings        = $this->get_settings_for_display();
+	private function render_preview( $settings ) {
 		$show_header     = 'yes' === ( $settings['show_header'] ?? 'yes' );
 		$show_sidebar    = 'yes' === ( $settings['show_sidebar'] ?? 'yes' );
 		$show_add_button = 'yes' === ( $settings['show_add_button'] ?? 'yes' );
