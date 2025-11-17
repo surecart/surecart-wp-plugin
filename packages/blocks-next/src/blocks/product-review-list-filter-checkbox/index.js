@@ -1,11 +1,11 @@
 /**
- * External dependencies
+ * External dependencies.
  */
 import { registerBlockType } from '@wordpress/blocks';
 import { homeButton as icon } from '@wordpress/icons';
 
 /**
- * Internal dependencies
+ * Internal dependencies.
  */
 import edit from './edit';
 import metadata from './block.json';

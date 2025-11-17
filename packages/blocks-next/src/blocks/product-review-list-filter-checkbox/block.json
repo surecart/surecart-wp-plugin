@@ -3,7 +3,7 @@
 	"apiVersion": 3,
 	"name": "surecart/product-review-list-filter-checkbox",
 	"title": "Checkbox",
-	"description": "Display the filter checkbox.",
+	"description": "Display the product review filter checkbox.",
 	"version": "1.0.0",
 	"category": "surecart-product-page",
 	"example": {},

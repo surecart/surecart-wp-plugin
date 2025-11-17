@@ -1,11 +1,11 @@
 /**
- * External dependencies
+ * External dependencies.
  */
 import { registerBlockType } from '@wordpress/blocks';
 import { layout as icon } from '@wordpress/icons';
 
 /**
- * Internal dependencies
+ * Internal dependencies.
  */
 import edit from './edit';
 import save from './save';

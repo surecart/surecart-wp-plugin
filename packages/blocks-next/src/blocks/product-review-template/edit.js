@@ -141,13 +141,7 @@ const TEMPLATE = [
 	],
 ];
 
-export default ({
-	clientId,
-	__unstableLayoutClassNames,
-	context: {
-		query: { perPage, offset = 0 },
-	},
-}) => {
+export default ({ clientId, __unstableLayoutClassNames }) => {
 	const demoReviews = [
 		{
 			id: 1,

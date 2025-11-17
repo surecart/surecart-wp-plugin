@@ -5,7 +5,6 @@ if ( empty( $product ) ) {
 	return '';
 }
 
-// For Analytics.
 $query   = sc_product_review_list_query( $block, $product->id );
 $reviews = $query->data ?? [];
 

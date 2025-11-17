@@ -1,7 +1,3 @@
-<?php
-use SureCart\Models\Blocks\ProductReviewBlock;
-?>
-
 <ul <?php echo wp_kses_data( get_block_wrapper_attributes() ); ?>>
 	<?php
 	foreach ( $reviews ?? [] as $review ) :
@@ -36,7 +32,7 @@ use SureCart\Models\Blocks\ProductReviewBlock;
 		// Wrap the render inner blocks in a `li` element with the appropriate post classes.
 		$post_classes = implode( ' ', get_post_class( 'wp-block-post' ) );
 
-		$controller = new ProductReviewBlock();
+		$controller = new \SureCart\Models\Blocks\ProductReviewBlock();
 		$state      = $controller->state();
 		$context    = $controller->context();
 
@@ -48,10 +44,8 @@ use SureCart\Models\Blocks\ProductReviewBlock;
 				data-wp-interactive='{ "namespace": "surecart/product-review" }'
 				data-wp-on--submit="callbacks.handleSubmit"
 				data-wp-init="callbacks.init"
-				<?php
-					echo wp_kses_data( wp_interactivity_data_wp_context( $context ) );
-				?>
-				>
+				<?php echo wp_kses_data( wp_interactivity_data_wp_context( $context ) ); ?>
+			>
 				<div class="sc-product-review-link">
 					<?php echo $block_content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 				</div>
