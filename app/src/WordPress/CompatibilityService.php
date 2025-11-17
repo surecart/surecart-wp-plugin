@@ -98,7 +98,7 @@ class CompatibilityService {
 	public function bricksCompatibility() {
 		$active_theme = wp_get_theme();
 
-		if ( empty( $active_theme ) || ! 'Bricks' === $active_theme->get( 'Name' ) ) {
+		if ( empty( $active_theme ) || 'Bricks' !== $active_theme->get( 'Name' ) ) {
 			return;
 		}
 
