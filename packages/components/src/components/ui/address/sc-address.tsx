@@ -3,7 +3,44 @@ import { __ } from '@wordpress/i18n';
 import { countryChoices, getCountryDetails } from '../../../functions/address';
 import { reportChildrenValidity } from '../../../functions/form-data';
 import { Address, CountryLocaleFieldValue } from '../../../types';
-import { defaultCountryFields } from './default-country-fields';
+
+const DEFAULT_COUNTRY_FIELDS: Array<CountryLocaleFieldValue> = [
+  {
+    name: 'country',
+    priority: 30,
+    label: __('Country', 'surecart'),
+  },
+  {
+    name: 'name',
+    priority: 40,
+    label: __('Name or Company Name', 'surecart'),
+  },
+  {
+    name: 'line_1',
+    priority: 50,
+    label: __('Address', 'surecart'),
+  },
+  {
+    name: 'line_2',
+    priority: 60,
+    label: __('Line 2', 'surecart'),
+  },
+  {
+    name: 'city',
+    priority: 70,
+    label: __('City', 'surecart'),
+  },
+  {
+    name: 'state',
+    priority: 80,
+    label: __('State / County', 'surecart'),
+  },
+  {
+    name: 'postal_code',
+    priority: 90,
+    label: __('Postal Code', 'surecart'),
+  },
+];
 
 /**
  * @part base - The elements base wrapper.
@@ -154,7 +191,7 @@ export class ScAddress {
 
   sortedFields() {
     if (!this.countryDetails || !this?.address?.country) {
-      return defaultCountryFields;
+      return DEFAULT_COUNTRY_FIELDS;
     }
 
     return (this?.countryDetails?.address_formats?.edit
@@ -162,7 +199,7 @@ export class ScAddress {
       .map(match => match.slice(2, -2))
       .map(field => ({
         name: field,
-        label: this?.countryDetails?.address_labels?.[field] || defaultCountryFields?.find(defaultField => defaultField?.name === field)?.label,
+        label: this?.countryDetails?.address_labels?.[field] || DEFAULT_COUNTRY_FIELDS?.find(defaultField => defaultField?.name === field)?.label,
       })) || []) as CountryLocaleFieldValue[];
   }
 
