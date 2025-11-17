@@ -548,10 +548,32 @@ class ProductReviewList extends \Bricks\Element {
 
 		// Pagination.
 		if ( $show_pagination ) {
+			$prev_arrow = wp_kses(
+				\SureCart::svg()->get(
+					is_rtl() ? 'arrow-right' : 'arrow-left',
+					[
+						'class'       => 'wp-block-surecart-product-review-pagination-prev__icon',
+						'aria-hidden' => true,
+					]
+				),
+				sc_allowed_svg_html()
+			);
+
+			$next_arrow = wp_kses(
+				\SureCart::svg()->get(
+					is_rtl() ? 'arrow-left' : 'arrow-right',
+					[
+						'class'       => 'wp-block-surecart-product-review-pagination-next__icon',
+						'aria-hidden' => true,
+					]
+				),
+				sc_allowed_svg_html()
+			);
+
 			$content .= '<nav style="display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-top: 20px;">';
-			$content .= '<div style="padding: 10px 16px; background: #f9fafb; border-radius: 4px;">' . esc_html__( 'Previous', 'surecart' ) . '</div>';
+			$content .= '<div style="padding: 10px 16px; background: transparent; border-radius: 4px; display: inline-flex; align-items: center; gap: 6px;">' . $prev_arrow . esc_html__( 'Previous', 'surecart' ) . '</div>';
 			$content .= '<div style="display: flex; gap: 4px;"><span style="padding: 8px 12px;">1</span><span style="padding: 8px 12px; opacity: 0.5;">2</span><span style="padding: 8px 12px; opacity: 0.5;">3</span></div>';
-			$content .= '<div style="padding: 10px 16px; background: #f9fafb; border-radius: 4px;">' . esc_html__( 'Next', 'surecart' ) . '</div>';
+			$content .= '<div style="padding: 10px 16px; background: transparent; border-radius: 4px; display: inline-flex; align-items: center; gap: 6px;">' . esc_html__( 'Next', 'surecart' ) . $next_arrow . '</div>';
 			$content .= '</nav>';
 		}
 		$content .= '</div>';
