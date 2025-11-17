@@ -13,7 +13,7 @@ const TEMPLATE = [
 				'surecart'
 			),
 			align: 'left',
-			content: __('No reviews found.', 'surecart'),
+			content: __('No reviews yet, write one now?', 'surecart'),
 		},
 	],
 	[
