@@ -64,7 +64,7 @@ class ProductReviewList extends \Elementor\Widget_Base {
 		$this->start_controls_section(
 			'section_review_list_header',
 			[
-				'label' => esc_html__( 'Header', 'surecart' ),
+				'label' => esc_html__( 'Review Header', 'surecart' ),
 			]
 		);
 
@@ -107,6 +107,15 @@ class ProductReviewList extends \Elementor\Widget_Base {
 			]
 		);
 
+		$this->end_controls_section();
+
+		$this->start_controls_section(
+			'section_review_button',
+			[
+				'label' => esc_html__( 'Review Button', 'surecart' ),
+			]
+		);
+
 		$this->add_control(
 			'button_text',
 			[
@@ -140,7 +149,7 @@ class ProductReviewList extends \Elementor\Widget_Base {
 		$this->start_controls_section(
 			'section_review_list_content',
 			[
-				'label' => esc_html__( 'Content', 'surecart' ),
+				'label' => esc_html__( 'Review Content', 'surecart' ),
 			]
 		);
 

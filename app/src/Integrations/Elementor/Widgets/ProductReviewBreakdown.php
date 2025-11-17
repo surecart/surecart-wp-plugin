@@ -123,6 +123,16 @@ class ProductReviewBreakdown extends \Elementor\Widget_Base {
 			]
 		);
 
+		$this->end_controls_section();
+
+		$this->start_controls_section(
+			'column_spacing',
+			array(
+				'label' => esc_html__( 'Column & Spacing', 'surecart' ),
+				'tab'   => \Elementor\Controls_Manager::TAB_CONTENT,
+			)
+		);
+
 		$this->add_control(
 			'columns',
 			[

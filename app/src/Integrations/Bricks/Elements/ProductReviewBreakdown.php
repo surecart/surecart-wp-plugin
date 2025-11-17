@@ -57,10 +57,14 @@ class ProductReviewBreakdown extends \Bricks\Element {
 	 * @return void
 	 */
 	public function set_control_groups() {
+		$this->control_groups['column_spacing'] = [
+			'title' => esc_html__( 'Column & Spacing', 'surecart' ),
+			'tab'   => 'content',
+		];
+
 		$this->control_groups['star_bar_colors'] = [
 			'title' => esc_html__( 'Star & Bar Colors', 'surecart' ),
 			'tab'   => 'content',
-			'icon'  => 'ti-star',
 		];
 	}
 
@@ -104,6 +108,7 @@ class ProductReviewBreakdown extends \Bricks\Element {
 
 		$this->controls['columns'] = [
 			'tab'         => 'content',
+			'group'       => 'column_spacing',
 			'label'       => esc_html__( 'Columns', 'surecart' ),
 			'type'        => 'select',
 			'options'     => [
@@ -118,6 +123,7 @@ class ProductReviewBreakdown extends \Bricks\Element {
 
 		$this->controls['row_gap'] = [
 			'tab'         => 'content',
+			'group'       => 'column_spacing',
 			'label'       => esc_html__( 'Row Gap', 'surecart' ),
 			'type'        => 'number',
 			'units'       => true,
@@ -134,6 +140,7 @@ class ProductReviewBreakdown extends \Bricks\Element {
 
 		$this->controls['column_gap'] = [
 			'tab'         => 'content',
+			'group'       => 'column_spacing',
 			'label'       => esc_html__( 'Column Gap', 'surecart' ),
 			'type'        => 'number',
 			'units'       => true,

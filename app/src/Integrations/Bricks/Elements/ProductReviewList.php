@@ -52,18 +52,42 @@ class ProductReviewList extends \Bricks\Element {
 	}
 
 	/**
+	 * Set control groups.
+	 *
+	 * @return void
+	 */
+	public function set_control_groups() {
+		$this->control_groups['review_header'] = [
+			'title' => esc_html__( 'Review Header', 'surecart' ),
+			'tab'   => 'content',
+		];
+
+		$this->control_groups['review_button'] = [
+			'title'    => esc_html__( 'Review Button', 'surecart' ),
+			'tab'      => 'content',
+			'required' => [ 'show_add_button', '=', true ],
+		];
+
+		$this->control_groups['review_content'] = [
+			'title' => esc_html__( 'Review Content', 'surecart' ),
+			'tab'   => 'content',
+		];
+
+		$this->control_groups['pagination'] = [
+			'title' => esc_html__( 'Pagination', 'surecart' ),
+			'tab'   => 'content',
+		];
+	}
+
+	/**
 	 * Set controls.
 	 *
 	 * @return void
 	 */
 	public function set_controls() {
-		$this->controls['header_separator'] = [
-			'label' => esc_html__( 'Header', 'surecart' ),
-			'type'  => 'separator',
-		];
-
 		$this->controls['show_header'] = [
 			'tab'     => 'content',
+			'group'   => 'review_header',
 			'label'   => esc_html__( 'Show Header', 'surecart' ),
 			'type'    => 'checkbox',
 			'default' => true,
@@ -71,6 +95,7 @@ class ProductReviewList extends \Bricks\Element {
 
 		$this->controls['show_sidebar'] = [
 			'tab'     => 'content',
+			'group'   => 'review_header',
 			'label'   => esc_html__( 'Show Filter & Sidebar', 'surecart' ),
 			'type'    => 'checkbox',
 			'default' => true,
@@ -78,19 +103,15 @@ class ProductReviewList extends \Bricks\Element {
 
 		$this->controls['show_add_button'] = [
 			'tab'     => 'content',
+			'group'   => 'review_header',
 			'label'   => esc_html__( 'Show Add Review Button', 'surecart' ),
 			'type'    => 'checkbox',
 			'default' => true,
 		];
 
-		$this->controls['add_button_separator'] = [
-			'label'    => esc_html__( 'Add Review Button', 'surecart' ),
-			'type'     => 'separator',
-			'required' => [ 'show_add_button', '=', true ],
-		];
-
 		$this->controls['add_button_label'] = [
 			'tab'      => 'content',
+			'group'    => 'review_button',
 			'label'    => esc_html__( 'Button Text', 'surecart' ),
 			'type'     => 'text',
 			'default'  => esc_html__( 'Write a Review', 'surecart' ),
@@ -99,6 +120,7 @@ class ProductReviewList extends \Bricks\Element {
 
 		$this->controls['add_button_icon_size'] = [
 			'tab'         => 'content',
+			'group'       => 'review_button',
 			'label'       => esc_html__( 'Icon Size', 'surecart' ),
 			'type'        => 'number',
 			'default'     => 15,
@@ -111,6 +133,7 @@ class ProductReviewList extends \Bricks\Element {
 
 		$this->controls['add_button_text_color'] = [
 			'tab'      => 'content',
+			'group'    => 'review_button',
 			'label'    => esc_html__( 'Button Text Color', 'surecart' ),
 			'type'     => 'color',
 			'reset'    => true,
@@ -119,19 +142,16 @@ class ProductReviewList extends \Bricks\Element {
 
 		$this->controls['add_button_background_color'] = [
 			'tab'      => 'content',
+			'group'    => 'review_button',
 			'label'    => esc_html__( 'Button Background Color', 'surecart' ),
 			'type'     => 'color',
 			'reset'    => true,
 			'required' => [ 'show_add_button', '=', true ],
 		];
 
-		$this->controls['content_separator'] = [
-			'label' => esc_html__( 'Content', 'surecart' ),
-			'type'  => 'separator',
-		];
-
 		$this->controls['show_review_date'] = [
 			'tab'     => 'content',
+			'group'   => 'review_content',
 			'label'   => esc_html__( 'Show Review Date', 'surecart' ),
 			'type'    => 'checkbox',
 			'default' => true,
@@ -139,6 +159,7 @@ class ProductReviewList extends \Bricks\Element {
 
 		$this->controls['show_content'] = [
 			'tab'     => 'content',
+			'group'   => 'review_content',
 			'label'   => esc_html__( 'Show Review Content', 'surecart' ),
 			'type'    => 'checkbox',
 			'default' => true,
@@ -147,6 +168,7 @@ class ProductReviewList extends \Bricks\Element {
 		// Rating stars fill color for content stars.
 		$this->controls['rating_fill_color'] = [
 			'tab'      => 'content',
+			'group'    => 'review_content',
 			'label'    => esc_html__( 'Star Color', 'surecart' ),
 			'type'     => 'color',
 			'rerender' => true,
@@ -158,19 +180,16 @@ class ProductReviewList extends \Bricks\Element {
 
 		$this->controls['no_reviews_text'] = [
 			'tab'         => 'content',
+			'group'       => 'review_content',
 			'label'       => esc_html__( 'No Reviews Text', 'surecart' ),
 			'type'        => 'text',
 			'default'     => esc_html__( 'No reviews yet, write one now?', 'surecart' ),
 			'placeholder' => esc_html__( 'Enter text for when no reviews exist', 'surecart' ),
 		];
 
-		$this->controls['paginationSeparator'] = [
-			'label' => esc_html__( 'Pagination', 'surecart' ),
-			'type'  => 'separator',
-		];
-
 		$this->controls['show_pagination'] = [
 			'tab'     => 'content',
+			'group'   => 'pagination',
 			'label'   => esc_html__( 'Show Pagination', 'surecart' ),
 			'type'    => 'checkbox',
 			'default' => true,
@@ -213,7 +232,6 @@ class ProductReviewList extends \Bricks\Element {
 	 * @return string
 	 */
 	private function get_review_list_content( $show_header, $show_sidebar, $show_add_button, $show_pagination, $show_date, $show_content, $no_reviews_text ) {
-		// Prefer configured fill color; fall back to theme primary. If there are no reviews, use 'none'.
 		$fill_color = $this->get_raw_color( 'rating_fill_color' );
 		if ( empty( $fill_color ) ) {
 			$fill_color = 'var(--bricks-color-primary)';
