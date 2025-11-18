@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-10-29T21:25:43+00:00\n"
+"POT-Creation-Date: 2025-11-10T16:47:42+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.9.0\n"
 
@@ -441,7 +441,7 @@ msgstr ""
 #: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:281
 #: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:393
 #: src/Controllers/Admin/CancellationInsights/CancellationInsightsListTable.php:268
-#: src/Controllers/Admin/Customers/CustomersListTable.php:218
+#: src/Controllers/Admin/Customers/CustomersListTable.php:293
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:330
 #: src/Controllers/Admin/Orders/OrdersListTable.php:464
 #: src/Controllers/Admin/Products/ProductsListTable.php:568
@@ -630,6 +630,7 @@ msgstr ""
 
 #: src/Controllers/Admin/AffiliationPayouts/AffiliationPayoutsListTable.php:138
 #: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:152
+#: admin/customers/confirm-bulk-delete.php:67
 #: admin/products/confirm-bulk-delete.php:67
 #: affiliation-referrals/EditAffiliationReferral.js:277
 #: affiliation-requests/EditAffiliationRequest.js:283
@@ -776,7 +777,7 @@ msgstr ""
 #: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:148
 #: src/Controllers/Admin/Bumps/BumpsListTable.php:257
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:263
-#: src/Controllers/Admin/Customers/CustomersListTable.php:152
+#: src/Controllers/Admin/Customers/CustomersListTable.php:234
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:265
 #: src/Controllers/Admin/Licenses/LicensesListTable.php:114
 #: src/Controllers/Admin/ProductCollections/ProductCollectionsListTable.php:127
@@ -894,7 +895,7 @@ msgstr ""
 #: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:94
 #: src/Controllers/Admin/Bumps/BumpsListTable.php:96
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:74
-#: src/Controllers/Admin/Customers/CustomersListTable.php:52
+#: src/Controllers/Admin/Customers/CustomersListTable.php:94
 #: src/Controllers/Admin/ProductCollections/ProductCollectionsListTable.php:48
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:105
 #: src/Controllers/Admin/Products/ProductsListTable.php:145
@@ -936,7 +937,7 @@ msgstr ""
 
 #: src/Controllers/Admin/AffiliationRequests/AffiliationRequestsListTable.php:95
 #: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:95
-#: src/Controllers/Admin/Customers/CustomersListTable.php:53
+#: src/Controllers/Admin/Customers/CustomersListTable.php:95
 #: web/buy-template.php:46
 #: affiliation-payouts/ExportAffiliationPayout.js:84
 #: affiliation-requests/modules/Details.js:85
@@ -1095,7 +1096,6 @@ msgstr ""
 
 #: src/Controllers/Admin/Bumps/BumpsListTable.php:114
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:91
-#: src/Controllers/Admin/Customers/CustomersListTable.php:68
 #: src/Controllers/Admin/Orders/OrdersListTable.php:137
 #: src/Controllers/Admin/Products/ProductsListTable.php:168
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:128
@@ -1193,8 +1193,8 @@ msgid "No cancellation acts."
 msgstr ""
 
 #: src/Controllers/Admin/CancellationInsights/CancellationInsightsListTable.php:157
-#: src/Controllers/Admin/Customers/CustomersListTable.php:145
-#: src/Controllers/Admin/Customers/CustomersListTable.php:152
+#: src/Controllers/Admin/Customers/CustomersListTable.php:203
+#: src/Controllers/Admin/Customers/CustomersListTable.php:234
 #: src/Controllers/Admin/Licenses/LicensesListTable.php:138
 #: customers/EditCustomer.js:160
 msgid "Edit Customer"
@@ -1365,6 +1365,7 @@ msgid "Not spam"
 msgstr ""
 
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:365
+#: src/Controllers/Admin/Customers/CustomersListTable.php:317
 #: src/Controllers/Admin/Products/ProductsListTable.php:589
 msgid "Delete permanently"
 msgstr ""
@@ -1373,7 +1374,7 @@ msgstr ""
 msgid "Move to Trash"
 msgstr ""
 
-#: src/Controllers/Admin/Customers/CustomersController.php:25
+#: src/Controllers/Admin/Customers/CustomersController.php:30
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:245
 #: admin/customers/index.php:7
 #: bumps/modules/Conditions.js:80
@@ -1385,7 +1386,32 @@ msgstr ""
 msgid "Customers"
 msgstr ""
 
-#: src/Controllers/Admin/Customers/CustomersListTable.php:54
+#: src/Controllers/Admin/Customers/CustomersController.php:69
+msgid "No customers selected. Please choose at least one customer to delete."
+msgstr ""
+
+#: src/Controllers/Admin/Customers/CustomersController.php:71
+#: src/Controllers/Admin/Products/ProductsController.php:84
+#: invoices/modules/InvoiceResendModal.js:58
+#: orders/modules/OrderCancelConfirmModal.js:69
+#: orders/modules/OrderResendNotificationModal.js:61
+#: orders/modules/ReturnRequest/ReturnCancelConfirmModal.js:63
+msgid "Go Back"
+msgstr ""
+
+#: src/Controllers/Admin/Customers/CustomersController.php:84
+msgid "This customer has already been deleted."
+msgid_plural "These customers have already been deleted."
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/Controllers/Admin/Customers/CustomersController.php:96
+msgid "Delete Customer"
+msgid_plural "Delete Customers."
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/Controllers/Admin/Customers/CustomersListTable.php:96
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:58
 #: src/Controllers/Admin/Licenses/LicensesListTable.php:66
 #: src/Controllers/Admin/ProductCollections/ProductCollectionsListTable.php:51
@@ -1401,8 +1427,22 @@ msgstr ""
 msgid "Created"
 msgstr ""
 
-#: src/Controllers/Admin/Customers/CustomersListTable.php:121
+#: src/Controllers/Admin/Customers/CustomersListTable.php:110
+msgid "Select customer"
+msgstr ""
+
+#: src/Controllers/Admin/Customers/CustomersListTable.php:167
 msgid "No customers found."
+msgstr ""
+
+#: src/Controllers/Admin/Customers/CustomersListTable.php:225
+#: src/Controllers/Admin/Products/ProductsListTable.php:471
+msgid "Successfully deleted."
+msgstr ""
+
+#: src/Controllers/Admin/Customers/CustomersListTable.php:229
+#: src/Controllers/Admin/Products/ProductsListTable.php:475
+msgid "Queued for deletion."
 msgstr ""
 
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:51
@@ -1775,14 +1815,6 @@ msgstr ""
 msgid "No products selected. Please choose at least one product to delete."
 msgstr ""
 
-#: src/Controllers/Admin/Products/ProductsController.php:84
-#: invoices/modules/InvoiceResendModal.js:58
-#: orders/modules/OrderCancelConfirmModal.js:69
-#: orders/modules/OrderResendNotificationModal.js:61
-#: orders/modules/ReturnRequest/ReturnCancelConfirmModal.js:63
-msgid "Go Back"
-msgstr ""
-
 #: src/Controllers/Admin/Products/ProductsController.php:97
 msgid "This product has already been deleted."
 msgid_plural "These products have already been deleted."
@@ -1873,14 +1905,6 @@ msgstr ""
 #: products/modules/BuyLink.js:123
 #: products/modules/Tax/Category.js:109
 msgid "Published"
-msgstr ""
-
-#: src/Controllers/Admin/Products/ProductsListTable.php:471
-msgid "Successfully deleted."
-msgstr ""
-
-#: src/Controllers/Admin/Products/ProductsListTable.php:475
-msgid "Queued for deletion."
 msgstr ""
 
 #: src/Controllers/Admin/Products/ProductsListTable.php:483
@@ -8786,7 +8810,7 @@ msgstr ""
 #: admin/affiliations/index.php:11
 #: Blocks/ProductCollection/edit.js:273
 #: Blocks/ProductItemList/edit.js:325
-#: src/blocks/product-list-search/view.php:28
+#: src/blocks/product-list-search/view.php:31
 #: src/blocks/product-list-search/edit.js:29
 #: src/utilities/pattern-selection-modal.js:86
 msgid "Search"
@@ -8858,6 +8882,130 @@ msgstr ""
 #: admin/plugin.php:80
 #: settings/connection/ConnectionSettings.js:60
 msgid "Update your api token to change or update the connection to SureCart."
+msgstr ""
+
+#: admin/customers/confirm-bulk-delete.php:49
+msgid "Delete Customers"
+msgstr ""
+
+#: admin/customers/confirm-bulk-delete.php:52
+msgid "Are you sure you want to permanently delete this customer? All associated subscriptions, payments, and purchases will also be deleted. This cannot be undone."
+msgid_plural "Are you sure you want to permanently delete these customers? All associated subscriptions, payments, and purchases will also be deleted. This cannot be undone."
+msgstr[0] ""
+msgstr[1] ""
+
+#: admin/customers/confirm-bulk-delete.php:68
+#: admin/products/confirm-bulk-delete.php:68
+#: admin/restore/index.php:43
+#: affiliation-payouts-groups/CreateAffiliationPayoutGroup.js:92
+#: affiliation-payouts/CreateAffiliationPayout.js:89
+#: affiliation-payouts/ExportAffiliationPayout.js:108
+#: affiliation-referrals/CreateAffiliationReferral.js:76
+#: affiliation-requests/CreateAffiliationRequest.js:76
+#: bumps/CreateBump.js:106
+#: bumps/modules/NewCondition.js:169
+#: checkouts/CreateCheckout.js:358
+#: checkouts/modules/Address.js:150
+#: checkouts/modules/PaymentMethods.js:154
+#: checkouts/modules/Price.js:271
+#: checkouts/modules/SelectCustomer/CreateCustomer.js:128
+#: checkouts/modules/Tax/index.js:142
+#: components/address/EditAddress.js:125
+#: components/affiliates/commission/CommissionForm.js:104
+#: components/affiliates/UpdateExpireAtModal.js:55
+#: components/data-tables/subscriptions-data-table/Cancel.js:70
+#: components/data-tables/subscriptions-data-table/Cancel.js:92
+#: components/data-tables/subscriptions-data-table/subscription-item.js:99
+#: components/DatePicker.js:104
+#: components/DateTimePicker.js:104
+#: components/subscriptions/Cancel.js:32
+#: components/subscriptions/Cancel.js:54
+#: components/subscriptions/CancelPendingUpdate.js:150
+#: coupons/components/DisableModal.js:30
+#: coupons/CreateCoupon.js:144
+#: coupons/EditCoupon.js:246
+#: coupons/modules/Code.js:208
+#: coupons/modules/CustomerSelector.js:155
+#: coupons/modules/EditPromotionCode.js:171
+#: coupons/modules/NewRestriction.js:185
+#: coupons/modules/SelectCustomer.js:252
+#: customers/CreateCustomer.js:116
+#: dashboard/components/DatePicker.js:26
+#: hocs/withConfirm.js:54
+#: invoices/modules/LineItemNote/LineItemNoteInput.js:74
+#: invoices/modules/PaymentMethods.js:168
+#: invoices/modules/Price.js:358
+#: invoices/modules/SelectCustomer/CreateCustomer.js:131
+#: invoices/modules/SendNotificationConfirmModal.js:116
+#: licenses/modules/modals/EditKeyModal.js:132
+#: orders/modules/ContactInfo/EditContactInfo.js:164
+#: orders/modules/Fulfillment/components/AddTracking.js:117
+#: orders/modules/Fulfillment/CreateFulfillment.js:338
+#: orders/modules/MetaDataModal.js:150
+#: orders/modules/OrderStatusConfirmModal.js:73
+#: orders/modules/Refund/CreateRefund.js:456
+#: orders/modules/ReturnRequest/CreateReturnRequest.js:284
+#: orders/modules/TaxInfo/EditTaxInfo.js:109
+#: product-collections/components/SelectTemplate/create-modal.js:87
+#: product-collections/components/SelectTemplatePart/create-modal.js:87
+#: product-collections/CreateProductCollection.js:146
+#: product-collections/modules/DeleteModal.js:76
+#: product-groups/CreateProductGroup.js:80
+#: product-groups/modules/NewProduct.js:78
+#: products/components/ConfirmNavigation.js:11
+#: products/components/DuplicateModel.js:53
+#: products/components/SelectTemplate/create-modal.js:95
+#: products/components/SelectTemplatePart/create-modal.js:99
+#: products/CreateProduct.js:87
+#: products/modules/AddExternalUrlModal.js:93
+#: products/modules/Collection/NewCollection.js:89
+#: products/modules/integrations/NewIntegration.js:233
+#: products/modules/Inventory/StockAdjustmentModal.js:136
+#: products/modules/Media/EditMedia.js:285
+#: products/modules/Prices/NewPrice/index.js:214
+#: products/modules/Prices/Price/index.js:320
+#: products/modules/Upgrades.js:130
+#: products/modules/Variations/NewVariant.js:198
+#: settings/advanced/components/CustomerSyncModal.js:106
+#: settings/display-currency/components/DisplayCurrenciesSettings.js:317
+#: settings/processors/CreateEditPaymentMethod.js:152
+#: settings/shipping/method/ShippingMethodForm.js:153
+#: settings/shipping/profile/AddShippingProfile.js:110
+#: settings/shipping/profile/DeleteShippingProfile.js:76
+#: settings/shipping/rate/ShippingRateForm.js:511
+#: settings/shipping/zone/ConfirmDeleteZone.js:49
+#: settings/shipping/zone/ShippingZoneForm.js:189
+#: settings/subscription-preservation/EditReason.js:149
+#: settings/tax-override/TaxOverrideDeleteModal.js:116
+#: settings/tax-override/TaxOverrideModal.js:263
+#: subscriptions/edit/modules/Modals/UpdateAmount.js:41
+#: subscriptions/edit/modules/Modals/UpdatePrice.js:50
+#: subscriptions/edit/modules/Modals/UpdateRecentPrice.js:335
+#: subscriptions/edit/modules/PaymentMethod/EditPaymentMethod.js:171
+#: subscriptions/show/modules/modals/CancelUpdateModal.js:66
+#: subscriptions/show/modules/modals/CompleteSubscriptionModal.js:56
+#: subscriptions/show/modules/modals/ConfirmRevokeModal.js:176
+#: subscriptions/show/modules/modals/DontCancelModal.js:59
+#: subscriptions/show/modules/modals/PayOffSubscriptionModal.js:74
+#: subscriptions/show/modules/modals/RenewSubscriptionAtModal.js:107
+#: subscriptions/show/modules/modals/RestoreSubscriptionAtModal.js:150
+#: subscriptions/show/modules/modals/RestoreSubscriptionModal.js:93
+#: subscriptions/show/modules/modals/RetryPaymentModal.js:89
+#: upsell-funnels/components/SelectTemplate/create-modal.js:87
+#: upsell-funnels/components/SelectTemplatePart/create-modal.js:93
+#: upsell-funnels/CreateFunnel.js:91
+#: upsell-funnels/modules/NewCondition.js:171
+#: upsell-funnels/modules/Upsell/EditUpsell.js:208
+#: Controllers/SubscriptionController.php:610
+#: Blocks/BuyButton/Placeholder.js:61
+#: Blocks/CheckoutForm/components/Empty.js:110
+#: Blocks/CheckoutForm/components/Empty.js:150
+#: Blocks/CheckoutForm/components/SelectProductModal.js:142
+#: Blocks/ConditionalForm/rules.js:267
+#: components/ColorPopup.js:80
+#: controls/AddPriceUI.js:71
+#: formats/AddPriceUI.js:113
+msgid "Cancel"
 msgstr ""
 
 #: admin/customers/index.php:13
@@ -9006,119 +9154,6 @@ msgid "Are you sure you want to permanently delete this product? This cannot be 
 msgid_plural "Are you sure you want to permanently delete these products? This cannot be undone."
 msgstr[0] ""
 msgstr[1] ""
-
-#: admin/products/confirm-bulk-delete.php:68
-#: admin/restore/index.php:43
-#: affiliation-payouts-groups/CreateAffiliationPayoutGroup.js:92
-#: affiliation-payouts/CreateAffiliationPayout.js:89
-#: affiliation-payouts/ExportAffiliationPayout.js:108
-#: affiliation-referrals/CreateAffiliationReferral.js:76
-#: affiliation-requests/CreateAffiliationRequest.js:76
-#: bumps/CreateBump.js:106
-#: bumps/modules/NewCondition.js:169
-#: checkouts/CreateCheckout.js:358
-#: checkouts/modules/Address.js:150
-#: checkouts/modules/PaymentMethods.js:154
-#: checkouts/modules/Price.js:271
-#: checkouts/modules/SelectCustomer/CreateCustomer.js:128
-#: checkouts/modules/Tax/index.js:142
-#: components/address/EditAddress.js:125
-#: components/affiliates/commission/CommissionForm.js:104
-#: components/affiliates/UpdateExpireAtModal.js:55
-#: components/data-tables/subscriptions-data-table/Cancel.js:70
-#: components/data-tables/subscriptions-data-table/Cancel.js:92
-#: components/data-tables/subscriptions-data-table/subscription-item.js:99
-#: components/DatePicker.js:104
-#: components/DateTimePicker.js:104
-#: components/subscriptions/Cancel.js:32
-#: components/subscriptions/Cancel.js:54
-#: components/subscriptions/CancelPendingUpdate.js:150
-#: coupons/components/DisableModal.js:30
-#: coupons/CreateCoupon.js:144
-#: coupons/EditCoupon.js:246
-#: coupons/modules/Code.js:208
-#: coupons/modules/CustomerSelector.js:155
-#: coupons/modules/EditPromotionCode.js:171
-#: coupons/modules/NewRestriction.js:185
-#: coupons/modules/SelectCustomer.js:252
-#: customers/CreateCustomer.js:116
-#: dashboard/components/DatePicker.js:26
-#: hocs/withConfirm.js:54
-#: invoices/modules/LineItemNote/LineItemNoteInput.js:74
-#: invoices/modules/PaymentMethods.js:168
-#: invoices/modules/Price.js:358
-#: invoices/modules/SelectCustomer/CreateCustomer.js:131
-#: invoices/modules/SendNotificationConfirmModal.js:116
-#: licenses/modules/modals/EditKeyModal.js:132
-#: orders/modules/ContactInfo/EditContactInfo.js:164
-#: orders/modules/Fulfillment/components/AddTracking.js:117
-#: orders/modules/Fulfillment/CreateFulfillment.js:338
-#: orders/modules/MetaDataModal.js:150
-#: orders/modules/OrderStatusConfirmModal.js:73
-#: orders/modules/Refund/CreateRefund.js:456
-#: orders/modules/ReturnRequest/CreateReturnRequest.js:284
-#: orders/modules/TaxInfo/EditTaxInfo.js:109
-#: product-collections/components/SelectTemplate/create-modal.js:87
-#: product-collections/components/SelectTemplatePart/create-modal.js:87
-#: product-collections/CreateProductCollection.js:146
-#: product-collections/modules/DeleteModal.js:76
-#: product-groups/CreateProductGroup.js:80
-#: product-groups/modules/NewProduct.js:78
-#: products/components/ConfirmNavigation.js:11
-#: products/components/DuplicateModel.js:53
-#: products/components/SelectTemplate/create-modal.js:95
-#: products/components/SelectTemplatePart/create-modal.js:99
-#: products/CreateProduct.js:87
-#: products/modules/AddExternalUrlModal.js:93
-#: products/modules/Collection/NewCollection.js:89
-#: products/modules/integrations/NewIntegration.js:233
-#: products/modules/Inventory/StockAdjustmentModal.js:136
-#: products/modules/Media/EditMedia.js:285
-#: products/modules/Prices/NewPrice/index.js:214
-#: products/modules/Prices/Price/index.js:320
-#: products/modules/Upgrades.js:130
-#: products/modules/Variations/NewVariant.js:198
-#: settings/advanced/components/CustomerSyncModal.js:106
-#: settings/display-currency/components/DisplayCurrenciesSettings.js:317
-#: settings/processors/CreateEditPaymentMethod.js:152
-#: settings/shipping/method/ShippingMethodForm.js:153
-#: settings/shipping/profile/AddShippingProfile.js:110
-#: settings/shipping/profile/DeleteShippingProfile.js:76
-#: settings/shipping/rate/ShippingRateForm.js:511
-#: settings/shipping/zone/ConfirmDeleteZone.js:49
-#: settings/shipping/zone/ShippingZoneForm.js:189
-#: settings/subscription-preservation/EditReason.js:149
-#: settings/tax-override/TaxOverrideDeleteModal.js:116
-#: settings/tax-override/TaxOverrideModal.js:263
-#: subscriptions/edit/modules/Modals/UpdateAmount.js:41
-#: subscriptions/edit/modules/Modals/UpdatePrice.js:50
-#: subscriptions/edit/modules/Modals/UpdateRecentPrice.js:335
-#: subscriptions/edit/modules/PaymentMethod/EditPaymentMethod.js:171
-#: subscriptions/show/modules/modals/CancelUpdateModal.js:66
-#: subscriptions/show/modules/modals/CompleteSubscriptionModal.js:56
-#: subscriptions/show/modules/modals/ConfirmRevokeModal.js:176
-#: subscriptions/show/modules/modals/DontCancelModal.js:59
-#: subscriptions/show/modules/modals/PayOffSubscriptionModal.js:74
-#: subscriptions/show/modules/modals/RenewSubscriptionAtModal.js:107
-#: subscriptions/show/modules/modals/RestoreSubscriptionAtModal.js:150
-#: subscriptions/show/modules/modals/RestoreSubscriptionModal.js:93
-#: subscriptions/show/modules/modals/RetryPaymentModal.js:89
-#: upsell-funnels/components/SelectTemplate/create-modal.js:87
-#: upsell-funnels/components/SelectTemplatePart/create-modal.js:93
-#: upsell-funnels/CreateFunnel.js:91
-#: upsell-funnels/modules/NewCondition.js:171
-#: upsell-funnels/modules/Upsell/EditUpsell.js:208
-#: Controllers/SubscriptionController.php:610
-#: Blocks/BuyButton/Placeholder.js:61
-#: Blocks/CheckoutForm/components/Empty.js:110
-#: Blocks/CheckoutForm/components/Empty.js:150
-#: Blocks/CheckoutForm/components/SelectProductModal.js:142
-#: Blocks/ConditionalForm/rules.js:267
-#: components/ColorPopup.js:80
-#: controls/AddPriceUI.js:71
-#: formats/AddPriceUI.js:113
-msgid "Cancel"
-msgstr ""
 
 #: admin/restore/index.php:39
 msgid "This page is important for certain SureCart eCommerce features. Bringing back this page will make sure SureCart works as expected."
@@ -22197,7 +22232,7 @@ msgstr ""
 msgid "Filter by: %s"
 msgstr ""
 
-#: src/blocks/product-list-search/view.php:54
+#: src/blocks/product-list-search/view.php:57
 msgid "Clear search"
 msgstr ""
 

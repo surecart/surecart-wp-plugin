@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: ecommerce, online store, subscriptions, stripe, payments
 Requires at least: 6.6
 Tested up to: 6.8
-Stable tag: 3.16.3
+Stable tag: 3.16.4
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -312,6 +312,15 @@ Yes, the checkout form can be customized using our visual builder. You can chang
 Accessibility is a huge priority for the entire team building SureCart. As you know, accessibility is an ongoing improvement task. Our development and QA teams are trained in accessibility best practices and build/test each new feature for accessibility. If you come across any edge issues, we want to know about it and will prioritize its resolution. Please contact us via our website.
 
 == Changelog ==
+
+= 3.16.4 - November 10th, 2025 =
+- New: Ability to bulk delete customers.
+- Fix: Issue where a user wants to override menu order on products.
+- Fix: Product search does not work inside product list sidebar.
+- Fix: Issue with FSE themes where the "Edit Template" button takes you to the default template instead of the assigned one.
+- Fix: Issue with the block variants block not rendering properly on the upsell edit UI.
+- Fix: Issue where attribute-related error messages were not being prioritized over specific error code messages.
+- Fix: Incorrect download file quantity on customer dashboard if more than 20 downloads.
 
 = 3.16.3 - October 30th, 2025 =
 - Change: Allow up to 300 variants per product.
