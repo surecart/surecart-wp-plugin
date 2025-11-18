@@ -21,6 +21,7 @@ export const attributeLabels = {
 	'checkout.last_name': __('Checkout Last Name', 'surecart'),
 	'checkout.metadata': __('Checkout Metadata', 'surecart'),
 	'checkout.order.order_type': __('Checkout Order Type', 'surecart'),
+	'checkout.order_type': __('Checkout Order Type', 'surecart'),
 	'checkout.subtotal_amount': __('Checkout Subtotal Amount', 'surecart'),
 
 	// Customer attributes
@@ -70,6 +71,7 @@ export const attributeLabels = {
 		'surecart'
 	),
 	'order.order_type': __('Order Type', 'surecart'),
+	order_type: __('Order Type', 'surecart'),
 };
 
 export const operatorLabels = {
