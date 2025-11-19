@@ -94,7 +94,7 @@ export default ({
 			type: 'condition',
 			attribute_name: attribute,
 			operator_label: operator,
-			comparison_value: value?.toString() || '',
+			comparison_value: value || '',
 			...(metadataKey ? { metadata_key: metadataKey } : {}),
 		};
 
