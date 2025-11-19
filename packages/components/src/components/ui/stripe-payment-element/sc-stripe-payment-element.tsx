@@ -147,10 +147,10 @@ export class ScStripePaymentElement {
       }
       this.element = null;
     }
-    if(processorsState?.instances?.stripeElements) {
+    if (processorsState?.instances?.stripeElements) {
       processorsState.instances.stripeElements = null;
     }
-    if(processorsState?.instances?.stripe) {
+    if (processorsState?.instances?.stripe) {
       processorsState.instances.stripe = null;
     }
   }
@@ -167,7 +167,7 @@ export class ScStripePaymentElement {
       mode: checkoutState.checkout?.remaining_amount_due > 0 ? 'payment' : 'setup',
       amount: checkoutState.checkout?.remaining_amount_due,
       currency: checkoutState.checkout?.currency,
-      setupFutureUsage: checkoutState.checkout?.reusable_payment_method_required ? 'off_session' : null,
+      setupFutureUsage: checkoutState.checkout?.reusable_payment_method_required ? 'off_session' : 'on_session',
       appearance: {
         variables: {
           colorPrimary: styles.getPropertyValue('--sc-color-primary-500') || 'black',
