@@ -7,13 +7,6 @@ namespace SureCart\Models\Blocks;
  */
 class RelatedProductsBlock extends AbstractProductListBlock {
 	/**
-	 * The cached query result.
-	 *
-	 * @var \WP_Query|null
-	 */
-	protected static $cached_query = null;
-
-	/**
 	 * Build the query.
 	 *
 	 * @param array $include_term_ids The term ids to include in the query.
@@ -63,12 +56,6 @@ class RelatedProductsBlock extends AbstractProductListBlock {
 	 * @return $this|\WP_Error
 	 */
 	public function query() {
-		// Return cached query if it exists.
-		if ( null !== self::$cached_query ) {
-			$this->query = self::$cached_query;
-			return $this;
-		}
-
 		global $wpdb;
 
 		$page     = $this->url->getCurrentPage();
@@ -121,12 +108,10 @@ class RelatedProductsBlock extends AbstractProductListBlock {
 					'posts_per_page' => absint( $per_page ),
 					'paged'          => absint( $page ),
 					'post__not_in'   => [ get_the_ID() ],
+					'instance_id'    => $this->instance_id,
 				],
 			)
 		);
-
-		// Cache the query result.
-		self::$cached_query = $this->query;
 
 		// return the query.
 		return $this;
