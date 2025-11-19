@@ -108,7 +108,6 @@ class RelatedProductsBlock extends AbstractProductListBlock {
 					'posts_per_page' => absint( $per_page ),
 					'paged'          => absint( $page ),
 					'post__not_in'   => [ get_the_ID() ],
-					'instance_id'    => $this->instance_id,
 				],
 			)
 		);
