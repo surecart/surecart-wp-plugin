@@ -167,7 +167,7 @@ export class ScStripePaymentElement {
       mode: checkoutState.checkout?.remaining_amount_due > 0 ? 'payment' : 'setup',
       amount: checkoutState.checkout?.remaining_amount_due,
       currency: checkoutState.checkout?.currency,
-      setupFutureUsage: checkoutState.checkout?.reusable_payment_method_required ? 'off_session' : 'on_session',
+      setupFutureUsage: checkoutState.checkout?.reusable_payment_method_required ? 'off_session' : null,
       appearance: {
         variables: {
           colorPrimary: styles.getPropertyValue('--sc-color-primary-500') || 'black',
