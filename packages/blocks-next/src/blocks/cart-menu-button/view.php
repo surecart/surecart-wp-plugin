@@ -1,4 +1,5 @@
-<a
+<button
+	type="button"
 	data-wp-interactive='{ "namespace": "surecart/checkout" }'
 	<?php echo wp_kses_data( get_block_wrapper_attributes( [ 'class' => 'menu-link' ] ) ); ?>
 	<?php
@@ -15,7 +16,6 @@
 	data-wp-on--click="surecart/cart::actions.toggle"
 	data-wp-on--keydown="surecart/cart::actions.toggle"
 	data-wp-bind--hidden="!state.showCartMenuIcon"
-	tabindex="0"
 >
 	<div class="sc-cart-icon" aria-label="<?php esc_attr_e( 'Open cart', 'surecart' ); ?>">
 		<?php echo wp_kses( $icon, sc_allowed_svg_html() ); ?>
@@ -27,4 +27,4 @@
 			hidden
 		></span>
 	</div>
-</a>
+</button>
