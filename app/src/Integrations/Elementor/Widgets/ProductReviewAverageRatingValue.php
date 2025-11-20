@@ -91,6 +91,7 @@ class ProductReviewAverageRatingValue extends \Elementor\Widget_Base {
 	 * @return void
 	 */
 	private function register_style_settings() {
+		$selector = '{{WRAPPER}} .wp-block-surecart-product-review-average-rating-value';
 		$this->start_controls_section(
 			'section_style',
 			array(
@@ -105,7 +106,7 @@ class ProductReviewAverageRatingValue extends \Elementor\Widget_Base {
 				'label'     => esc_html__( 'Text Color', 'surecart' ),
 				'type'      => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .wp-block-surecart-product-review-average-rating-value' => 'color: {{VALUE}};',
+					$selector => 'color: {{VALUE}};',
 				],
 			)
 		);
@@ -114,7 +115,7 @@ class ProductReviewAverageRatingValue extends \Elementor\Widget_Base {
 			\Elementor\Group_Control_Typography::get_type(),
 			[
 				'name'     => 'typography',
-				'selector' => '{{WRAPPER}} .wp-block-surecart-product-review-average-rating-value',
+				'selector' => $selector,
 			]
 		);
 
@@ -142,25 +143,37 @@ class ProductReviewAverageRatingValue extends \Elementor\Widget_Base {
 		$class_name   = 'none' === $format_style ? '' : ' is-style-' . $format_style;
 
 		if ( \Elementor\Plugin::$instance->editor->is_edit_mode() ) {
-			?>
-			<span class="wp-block-surecart-product-review-average-rating-value <?php echo esc_attr( $class_name ); ?>">
-				<?php
-				if ( 'parentheses' === $format_style ) {
-					echo '(4.3)';
-				} elseif ( 'slash' === $format_style ) {
-					echo '4.3 / 5.0';
-				} else {
-					echo '4.3';
-				}
-				?>
-			</span>
-			<?php
+			$this->render_preview( $class_name );
 			return;
 		}
 		?>
 		<div <?php $this->print_render_attribute_string( 'wrapper' ); ?>>
 			<!-- wp:surecart/product-review-average-rating-value {"className":"<?php echo esc_attr( trim( $class_name ) ); ?>"} /-->
 		</div>
+		<?php
+	}
+
+	/**
+	 * Render preview in editor.
+	 *
+	 * @param string $class_name Class name for styling.
+	 *
+	 * We need to add the styles manually, because if on demand block assets load settings are enabled,
+	 * then those styles won't be loaded and that's mandatory for editor preview.
+	 *
+	 * @return void
+	 */
+	public function render_preview( $class_name ): void {
+		?>
+			<style>
+				.wp-block-surecart-product-review-average-rating-value.is-style-parentheses::before {content: "(";}
+				.wp-block-surecart-product-review-average-rating-value.is-style-parentheses::after {content: ")";}
+				.wp-block-surecart-product-review-average-rating-value.is-style-slash::after {content: "/ 5.0";}
+			</style>
+
+			<span class="wp-block-surecart-product-review-average-rating-value <?php echo esc_attr( trim( $class_name ) ); ?>">
+				4.3
+			</span>
 		<?php
 	}
 }
