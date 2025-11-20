@@ -4,7 +4,7 @@ import { SearchControl } from '@wordpress/components';
 import { ScSkeleton } from '@surecart/components-react';
 import Country from './Country';
 import { __ } from '@wordpress/i18n';
-import { useState, useEffect } from '@wordpress/element';
+import { useState, useEffect, useMemo } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
 import { useDispatch } from '@wordpress/data';
 import { store as noticesStore } from '@wordpress/notices';

@@ -3,7 +3,7 @@ import { css, jsx } from '@emotion/react';
 import { ScButton, ScIcon, ScSkeleton } from '@surecart/components-react';
 import { CheckboxControl } from '@wordpress/components';
 import { useDispatch } from '@wordpress/data';
-import { useState, useEffect } from '@wordpress/element';
+import { useState, useEffect, useCallback } from '@wordpress/element';
 import { _n, sprintf } from '@wordpress/i18n';
 import apiFetch from '@wordpress/api-fetch';
 import { store as noticesStore } from '@wordpress/notices';
