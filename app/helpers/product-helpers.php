@@ -209,18 +209,6 @@ function sc_unique_product_list_id( $prefix = '' ) {
 }
 
 /**
- * Get the related product list id.
- *
- * @param string $prefix The prefix.
- *
- * @return string
- */
-function sc_unique_related_product_list_id( $prefix = '' ) {
-	static $id_counter = -1;
-	return $prefix . (string) ++$id_counter;
-}
-
-/**
  * Get the product list query.
  *
  * @param \WP_Block $block The block.
