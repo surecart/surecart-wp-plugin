@@ -679,7 +679,32 @@
 						"content_width": "full",
 						"_title": "Review summary",
 						"background_background": "classic",
-						"background_color": "#F7F9FB"
+						"background_color": "#F7F9FB",
+						"border_border": "solid",
+						"border_width": {
+							"unit": "px",
+							"top": "1",
+							"right": "1",
+							"bottom": "1",
+							"left": "1",
+							"isLinked": true
+						},
+						"border_radius": {
+							"unit": "px",
+							"top": "12",
+							"right": "12",
+							"bottom": "12",
+							"left": "12",
+							"isLinked": true
+						},
+						"padding": {
+							"unit": "px",
+							"top": "32",
+							"right": "32",
+							"bottom": "32",
+							"left": "32",
+							"isLinked": true
+						}
 					},
 					"elements": [
 						{
@@ -785,7 +810,20 @@
 				},
 				{
 					"id": "55aa5be1",
-					"settings": {},
+					"settings": {
+						"review_border_style": "solid",
+						"review_border_color": "#e5e7eb",
+						"review_border_width": {
+							"unit": "px",
+							"size": 1,
+							"sizes": []
+						},
+						"spacing": {
+							"unit": "px",
+							"size": 32,
+							"sizes": []
+						}
+					},
 					"elements": [],
 					"isInner": false,
 					"widgetType": "surecart-product-review-list",

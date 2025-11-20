@@ -39,17 +39,8 @@
 		wp_interactivity_state( 'surecart/product-review', $state );
 		?>
 
-		<li class="sc-has-animation-fade-up" data-wp-key="review-template-item-<?php echo (int) $review->id; ?>">
-			<form 
-				data-wp-interactive='{ "namespace": "surecart/product-review" }'
-				data-wp-on--submit="callbacks.handleSubmit"
-				data-wp-init="callbacks.init"
-				<?php echo wp_kses_data( wp_interactivity_data_wp_context( $context ) ); ?>
-			>
-				<div class="sc-product-review-link">
-					<?php echo $block_content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-				</div>
-			</form>
+		<li class="sc-product-review-link sc-has-animation-fade-up" data-wp-key="review-template-item-<?php echo (int) $review->id; ?>">
+			<?php echo $block_content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 		</li>
 	<?php endforeach; ?>
 </ul>
