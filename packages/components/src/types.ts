@@ -44,6 +44,7 @@ declare global {
       root_url: string;
       account_id: string;
       account_slug: string;
+      locale: string;
       api_url: string;
       home_url: string;
       plugin_url: string;

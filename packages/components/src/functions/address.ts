@@ -48,7 +48,7 @@ export const hasRequiredFields = ({ city, country, line_1, postal_code, state })
   return !!line_1;
 };
 
-const lang = navigator.language || (navigator as any)?.browserLanguage || (navigator.languages || ['en'])[0];
+const lang = window.scData?.locale || navigator.language || (navigator as any)?.browserLanguage || (navigator.languages || ['en'])[0];
 
 export const countryChoices = async () => {
   const response: any = await apiFetch({
