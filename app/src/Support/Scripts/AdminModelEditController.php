@@ -136,6 +136,7 @@ abstract class AdminModelEditController {
 		$this->data['account_slug']         = \SureCart::account()->slug ?? '';
 		$this->data['api_url']              = \SureCart::requests()->getBaseUrl();
 		$this->data['plugin_url']           = \SureCart::core()->assets()->getUrl();
+		$this->data['root_url']             = esc_url_raw( get_rest_url() );
 		$this->data['home_url']             = untrailingslashit( get_home_url() );
 		$this->data['buy_page_slug']        = untrailingslashit( \SureCart::settings()->permalinks()->getBase( 'buy_page' ) );
 		$this->data['product_page_slug']    = untrailingslashit( \SureCart::settings()->permalinks()->getBase( 'product_page' ) );
