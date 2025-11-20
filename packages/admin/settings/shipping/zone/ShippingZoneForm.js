@@ -198,7 +198,7 @@ export default ({
 										</strong>
 										<p>
 											{__(
-												'Postal code filtering is applied in addition to territory filtering - an address must match both a territory and a postal code pattern (if provided) to be included in this shipping zone.',
+												'Postal code filtering is applied in addition to territory filtering - an address must match both a territory and a postal code pattern (if provided) to be included in this shipping zone. If left empty, no postal code filtering is applied and all addresses within the territories will match.',
 												'surecart'
 											)}
 										</p>
@@ -217,7 +217,7 @@ export default ({
 													)}
 												</strong>
 												{__(
-													'Provide the complete postal code as a string (e.g., "90210", "SW1A 1AA").',
+													'Provide the complete postal code (e.g., 90210 or SW1A 1AA).',
 													'surecart'
 												)}{' '}
 											</li>
@@ -229,7 +229,7 @@ export default ({
 													)}
 												</strong>
 												{__(
-													'Use three dots ("...") to specify a numeric range (e.g., "90210...99000" matches all postal codes from 90210 to 99000). Only numeric postal codes are supported for ranges.',
+													'Use three dots ("...") to specify a numeric range (e.g., 90210...99000 matches all postal codes from 90210 to 99000). Only numeric postal codes are supported for ranges.',
 													'surecart'
 												)}{' '}
 											</li>
@@ -241,7 +241,7 @@ export default ({
 													)}
 												</strong>
 												{__(
-													'Use asterisk ("") for prefix matching (e.g., "902" matches "90210", "90211", "902AB", etc.). All postal codes are normalized (uppercased and trimmed) before matching. If the array is empty, no postal code filtering is applied and all addresses within the territories will match.',
+													'Use asterisk (*) for partial matching (e.g., "902*" matches "90210", "90211", "902AB", etc.). All postal codes are normalized (uppercased and trimmed) before matching.',
 													'surecart'
 												)}{' '}
 											</li>
@@ -269,9 +269,6 @@ export default ({
 								}
 								rows="5"
 								columns="25"
-								css={css`
-									font-size: 12px;
-								`}
 								maxLength={500}
 							/>
 						</ScFormControl>
