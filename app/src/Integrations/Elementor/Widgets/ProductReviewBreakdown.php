@@ -377,9 +377,21 @@ class ProductReviewBreakdown extends \Elementor\Widget_Base {
 					<a href="#" class="sc-star-row" onclick="event.preventDefault();" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: inherit; cursor: pointer; transition: opacity 0.2s ease; <?php echo esc_attr( $width_style ); ?>">
 						<div class="sc-star-label" style="display: flex; align-items: center;">
 							<?php echo esc_html( $star ); ?>
-							<svg height="<?php echo esc_attr( $star_size ); ?>" width="<?php echo esc_attr( $star_size ); ?>" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2">
-								<path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-							</svg>
+							<?php
+								echo wp_kses(
+									\SureCart::svg()->get(
+										'star',
+										[
+											'width'        => esc_attr( $star_size ),
+											'height'       => esc_attr( $star_size ),
+											'fill'         => 'currentColor',
+											'stroke'       => 'currentColor',
+											'stroke-width' => 2,
+										]
+									),
+									sc_allowed_svg_html()
+								)
+							?>
 						</div>
 						<div class="sc-bar-wrap" style="flex: 1; height: 8px; border-radius: 4px; overflow: hidden; position: relative; min-width: 100px;">
 							<div class="sc-bar-fill" style="height: 100%; border-radius: 4px; width: <?php echo esc_attr( $percentage ); ?>%; transition: width 0.3s ease;"></div>
