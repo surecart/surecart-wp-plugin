@@ -142,6 +142,7 @@ abstract class BaseSettings {
 				'app_url'                => defined( 'SURECART_APP_URL' ) ? untrailingslashit( SURECART_APP_URL ) : 'https://app.surecart.com',
 				'account_id'             => \SureCart::account()->id,
 				'account_slug'           => \SureCart::account()->slug,
+				'locale'                 => str_replace( '_', '-', get_locale() ),
 				'api_url'                => \SureCart::requests()->getBaseUrl(),
 				'ajax_url'               => admin_url( 'admin-ajax.php' ),
 				'home_url'               => esc_url_raw( home_url() ),

@@ -23,7 +23,9 @@ export default ({ value, onChange }) => {
 		try {
 			setFetching(true);
 			const countries = await apiFetch({
-				path: `surecart/v1/public/atlas`,
+				path: `surecart/v1/public/atlas?locale=${
+					window?.scData?.locale || 'en'
+				}`,
 			});
 			setAllCountries(countries?.data);
 		} catch (e) {
