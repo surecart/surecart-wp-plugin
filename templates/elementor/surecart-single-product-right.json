@@ -793,7 +793,11 @@
 											"size": 10,
 											"sizes": []
 										},
-										"columns": "2"
+										"row_gap": {
+											"unit": "px",
+											"size": 2,
+											"sizes": []
+										}
 									},
 									"elements": [],
 									"isInner": false,

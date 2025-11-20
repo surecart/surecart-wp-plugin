@@ -161,7 +161,7 @@ class ProductReviewBreakdown extends \Elementor\Widget_Base {
 					],
 				],
 				'default'     => [
-					'size' => 20,
+					'size' => 2,
 					'unit' => 'px',
 				],
 				'description' => esc_html__( 'Adjust the spacing between rows.', 'surecart' ),
@@ -190,6 +190,9 @@ class ProductReviewBreakdown extends \Elementor\Widget_Base {
 				'description' => esc_html__( 'Adjust the spacing between columns.', 'surecart' ),
 				'selectors'   => [
 					'{{WRAPPER}} .wp-block-surecart-product-review-breakdown .sc-star-bars' => 'column-gap: {{SIZE}}{{UNIT}};',
+				],
+				'condition'   => [
+					'columns' => [ '2', '3' ],
 				],
 			]
 		);
@@ -309,7 +312,7 @@ class ProductReviewBreakdown extends \Elementor\Widget_Base {
 		$star_size             = $settings['star_size']['size'] ?? 20;
 		$star_label_gap        = $settings['star_label_gap']['size'] ?? 4;
 		$columns               = $settings['columns'] ?? 1;
-		$row_gap               = $settings['row_gap']['size'] ?? 20;
+		$row_gap               = $settings['row_gap']['size'] ?? 2;
 		$column_gap            = $settings['column_gap']['size'] ?? 20;
 
 		if ( \Elementor\Plugin::$instance->editor->is_edit_mode() ) {

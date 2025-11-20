@@ -127,8 +127,8 @@ class ProductReviewBreakdown extends \Bricks\Element {
 			'label'       => esc_html__( 'Row Gap', 'surecart' ),
 			'type'        => 'number',
 			'units'       => true,
-			'default'     => '20px',
-			'placeholder' => '20px',
+			'default'     => '2px',
+			'placeholder' => '2px',
 			'description' => esc_html__( 'Adjust the spacing between rows . ', 'surecart' ),
 			'css'         => [
 				[
@@ -153,6 +153,7 @@ class ProductReviewBreakdown extends \Bricks\Element {
 					'selector' => '.sc-star-bars',
 				],
 			],
+			'required'    => [ 'columns', '!=', '1' ],
 		];
 
 		$this->controls['fill_color'] = [
@@ -220,7 +221,7 @@ class ProductReviewBreakdown extends \Bricks\Element {
 		$star_size             = ! empty( $this->settings['star_size'] ) ? (int) $this->settings['star_size'] : 20;
 		$star_label_gap        = ! empty( $this->settings['star_label_gap'] ) ? (int) $this->settings['star_label_gap'] : 4;
 		$columns               = ! empty( $this->settings['columns'] ) ? (int) $this->settings['columns'] : 1;
-		$row_gap               = ! empty( $this->settings['row_gap'] ) ? (int) $this->settings['row_gap'] : 20;
+		$row_gap               = ! empty( $this->settings['row_gap'] ) ? (int) $this->settings['row_gap'] : 2;
 		$column_gap            = ! empty( $this->settings['column_gap'] ) ? (int) $this->settings['column_gap'] : 20;
 		$fill_color            = $this->get_raw_color( 'fill_color' );
 		if ( empty( $fill_color ) ) {
@@ -290,7 +291,7 @@ class ProductReviewBreakdown extends \Bricks\Element {
 				$width_style = 'width: calc(33.333% - ' . esc_attr( $column_gap * 2 / 3 ) . 'px);';
 			}
 
-			$content .= '<a href="#" class="sc-star-row" onclick="event.preventDefault();" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: inherit; cursor: pointer; transition: opacity 0.2s ease; ' . $width_style . '">';
+			$content .= '<a href="#" class="sc-star-row" onclick="event.preventDefault();" style="display: flex; width: 100%; align-items: center; gap: 8px; text-decoration: none; color: inherit; cursor: pointer; transition: opacity 0.2s ease; ' . $width_style . '">';
 			$content .= '<div class="sc-star-label" style="display: flex; align-items: center; justify-content: center;">';
 			$content .= esc_html( $star );
 			$content .= wp_kses(

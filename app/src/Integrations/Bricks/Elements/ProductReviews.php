@@ -107,7 +107,7 @@ class ProductReviews extends \Bricks\Element {
 										'settings' => [
 											'_direction' => 'column',
 											'_rowGap'    => '10px',
-											'_width'     => '30%',
+											'_width'     => '50%',
 										],
 										'children' => [
 											[
@@ -127,10 +127,11 @@ class ProductReviews extends \Bricks\Element {
 									[
 										'name'     => 'surecart-product-review-breakdown',
 										'settings' => [
-											'columns'    => 2,
-											'row_gap'    => 20,
-											'column_gap' => 30,
+											'columns'    => 1,
+											'row_gap'    => 2,
+											'column_gap' => 20,
 											'star_label_gap' => 4,
+											'_width'     => '50%',
 											'star_size'  => 20,
 											'bar_fill_color' => [
 												'hex' => 'var(--bricks-color-primary)',
