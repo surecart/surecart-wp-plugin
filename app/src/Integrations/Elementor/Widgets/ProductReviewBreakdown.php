@@ -367,7 +367,7 @@ class ProductReviewBreakdown extends \Elementor\Widget_Base {
 					$percentage = $total > 0 ? ( $count / $total ) * 100 : 0;
 
 					// Calculate width for multi-column layouts.
-					$width_style = '';
+					$width_style = 'width: 100%;';
 					if ( 2 === $columns ) {
 						$width_style = 'width: calc(50% - ' . ( $column_gap / 2 ) . 'px);';
 					} elseif ( 3 === $columns ) {
