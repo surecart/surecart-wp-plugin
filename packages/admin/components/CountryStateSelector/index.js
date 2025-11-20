@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/react';
 import { SearchControl } from '@wordpress/components';
-import { ScSkeleton } from '@surecart/components-react';
+import { ScSkeleton, ScTag } from '@surecart/components-react';
 import Country from './Country';
 import { __ } from '@wordpress/i18n';
 import { useState, useEffect, useMemo } from '@wordpress/element';
@@ -108,6 +108,36 @@ export default ({ value, onChange }) => {
 					__nextHasNoMarginBottom
 				/>
 			</div>
+			{value?.length > 0 && (
+				<div
+					css={css`
+						padding: 0 var(--sc-spacing-medium)
+							var(--sc-spacing-medium);
+						display: flex;
+						flex-wrap: wrap;
+						gap: var(--sc-spacing-x-small);
+					`}
+				>
+					{value.map((item) => {
+						const country = allCountries.find(
+							(c) => c.code === item.country
+						);
+						return (
+							<ScTag
+								key={item.country}
+								size="small"
+								clearable
+								pill
+								onScClear={() =>
+									onChangeSelection(null, item.country)
+								}
+							>
+								{country?.name || item.country}
+							</ScTag>
+						);
+					})}
+				</div>
+			)}
 			<div
 				css={css`
 					height: 300px;
