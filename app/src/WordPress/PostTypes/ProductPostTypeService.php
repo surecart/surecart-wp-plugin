@@ -1241,8 +1241,10 @@ class ProductPostTypeService {
 
 		return array(
 			'@type'       => 'AggregateRating',
-			'ratingValue' => (string) $product->average_stars,
+			'ratingValue' => (float) $product->average_stars,
 			'reviewCount' => (int) $product->total_reviews,
+			'bestRating'  => 5,
+			'worstRating' => 1,
 		);
 	}
 
