@@ -110,7 +110,7 @@ export default ({ value, onChange }) => {
 			</div>
 			<div
 				css={css`
-					height: 200px;
+					height: 300px;
 					overflow-y: auto;
 				`}
 				role="listbox"

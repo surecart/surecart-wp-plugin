@@ -267,7 +267,7 @@ export default ({
 								onScInput={(e) =>
 									onPostalCodeChange(e.target.value)
 								}
-								rows="5"
+								rows="3"
 								columns="25"
 								maxLength={500}
 							/>
@@ -319,7 +319,6 @@ export default ({
 			}}
 			style={{
 				'--width': '38rem',
-				'--dialog-body-overflow': 'visible',
 				...(!isEdit
 					? { '--body-spacing': 'var(--sc-spacing-xx-large)' }
 					: {}),
