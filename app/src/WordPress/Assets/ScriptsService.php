@@ -346,6 +346,7 @@ class ScriptsService {
 					'plugin_url'           => \SureCart::core()->assets()->getUrl(),
 					'api_url'              => \SureCart::requests()->getBaseUrl(),
 					'currency'             => \SureCart::account()->currency,
+					'locale'               => str_replace( '_', '-', get_locale() ),
 					'currency_symbol'      => html_entity_decode( Currency::getCurrencySymbol( \SureCart::account()->currency ) ),
 					'theme'                => get_option( 'surecart_theme', 'light' ),
 					'pages'                => [
