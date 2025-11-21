@@ -1,8 +1,6 @@
 <div <?php echo wp_kses_data( get_block_wrapper_attributes() ); ?>>
 	<?php if ( ! empty( $show_label ) ) : ?>
-		<span class="wc-block-product-review-verified-badge">
-			<?php echo $label ? esc_html( $label ) : esc_html__( 'Verified Buyer', 'surecart' ); ?>
-		</span>
+		<?php echo ( ! empty( $label ) ? esc_html( $label ) : esc_html__( 'Verified Buyer', 'surecart' ) ); ?>
 	<?php endif; ?>
 
 	<?php

@@ -27,6 +27,14 @@ if ( ! empty( $alignment ) ) {
 	$style .= 'justify-content:' . esc_attr( $alignment ) . ';';
 }
 
+// Hanlde Colors from third party block editors like Bricks.
+if ( ! empty( $attributes['style']['color']['text'] ) ) {
+	$style .= esc_attr( safecss_filter_attr( 'color:' . $attributes['style']['color']['text'] ) ) . ';';
+}
+if ( ! empty( $attributes['style']['color']['background'] ) ) {
+	$style .= esc_attr( safecss_filter_attr( 'background-color:' . $attributes['style']['color']['background'] ) ) . ';';
+}
+
 $styles = sc_get_block_styles();
 
 $wrapper_style = '';

@@ -55,7 +55,6 @@ export default ({ attributes, setAttributes }) => {
 						value={label || __('Verified Buyer', 'surecart')}
 						onChange={(value) => setAttributes({ label: value })}
 						placeholder={__('Verified Buyer', 'surecart')}
-						className="wc-block-product-review-verified-badge"
 					/>
 				)}
 

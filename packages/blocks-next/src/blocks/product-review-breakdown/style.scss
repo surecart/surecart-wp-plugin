@@ -9,6 +9,10 @@
 		min-width: 150px;
 		align-content: flex-start;
 
+		&__columns-1 {
+			width: 100%;
+		}
+
 		// Column-based layouts.
 		&__columns-2 {
 			max-height: 150px;
