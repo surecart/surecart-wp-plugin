@@ -378,7 +378,7 @@ class ProductReviewBreakdown extends \Elementor\Widget_Base {
 					}
 					?>
 					<a href="#" class="sc-star-row" onclick="event.preventDefault();" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: inherit; cursor: pointer; transition: opacity 0.2s ease; <?php echo esc_attr( $width_style ); ?>">
-						<div class="sc-star-row__label" style="display: flex; align-items: center;">
+						<div class="sc-star-row__label" style="display: flex; align-items: center; min-width: 35px;">
 							<?php echo esc_html( $star ); ?>
 							<?php
 								echo wp_kses(
@@ -399,7 +399,7 @@ class ProductReviewBreakdown extends \Elementor\Widget_Base {
 						<div class="sc-star-row__bar" style="flex: 1; height: 8px; border-radius: 4px; overflow: hidden; position: relative; min-width: 100px;">
 							<div class="sc-star-row__bar-fill" style="height: 100%; border-radius: 4px; width: <?php echo esc_attr( $percentage ); ?>%; transition: width 0.3s ease;"></div>
 						</div>
-						<div class="sc-star-row__count" style="text-align: right;"><?php echo esc_html( $count ); ?></div>
+						<div class="sc-star-row__count" style="text-align: right; min-width: 20px;"><?php echo esc_html( $count ); ?></div>
 					</a>
 					<?php
 				}

@@ -292,7 +292,7 @@ class ProductReviewBreakdown extends \Bricks\Element {
 			}
 
 			$content .= '<a href="#" class="sc-star-row" onclick="event.preventDefault();" style="display: flex; width: 100%; align-items: center; gap: 8px; text-decoration: none; color: inherit; cursor: pointer; transition: opacity 0.2s ease; ' . $width_style . '">';
-			$content .= '<div class="sc-star-row__label" style="display: flex; align-items: center; justify-content: center;">';
+			$content .= '<div class="sc-star-row__label" style="display: flex; align-items: center; justify-content: center; min-width: 35px;">';
 			$content .= esc_html( $star );
 			$content .= wp_kses(
 				\SureCart::svg()->get(
@@ -311,7 +311,7 @@ class ProductReviewBreakdown extends \Bricks\Element {
 			$content .= '<div class="sc-star-row__bar" style="flex: 1; height: 8px; border-radius: 4px; overflow: hidden; position: relative; min-width: 100px;">';
 			$content .= '<div class="sc-star-row__bar-fill" style="height: 100%; border-radius: 4px; width: ' . esc_attr( $percentage ) . '%; transition: width 0.3s ease;"></div>';
 			$content .= '</div>';
-			$content .= '<div class="sc-star-row__count" style="text-align: right;">' . esc_html( $count ) . '</div>';
+			$content .= '<div class="sc-star-row__count" style="text-align: right;min-width: 20px;">' . esc_html( $count ) . '</div>';
 			$content .= '</a>';
 		}
 		$content .= '</div>';
