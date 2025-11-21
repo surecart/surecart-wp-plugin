@@ -95,9 +95,28 @@ class ProductReviews extends \Bricks\Element {
 									'_alignItems'     => 'flex-start',
 									'_columnGap'      => '30px',
 									'_justifyContent' => 'space-between',
-									'_padding'        => '20px',
+									'_padding'        => '32px',
+									'_margin'         => [
+										'bottom' => '30px',
+									],
 									'_background'     => [
 										'color' => [ 'hex' => '#f5f5f5' ],
+									],
+									'_border'         => [
+										'width'  => [
+											'top'    => '1',
+											'bottom' => '1',
+											'right'  => '1',
+											'left'   => '1',
+										],
+										'style'  => 'solid',
+										'color'  => [ 'hex' => '#eeeeee' ],
+										'radius' => [
+											'top'    => '14',
+											'right'  => '14',
+											'bottom' => '14',
+											'left'   => '14',
+										],
 									],
 								],
 								'children' => [
@@ -107,7 +126,7 @@ class ProductReviews extends \Bricks\Element {
 										'settings' => [
 											'_direction' => 'column',
 											'_rowGap'    => '10px',
-											'_width'     => '50%',
+											'_width'     => '100%',
 										],
 										'children' => [
 											[
@@ -131,7 +150,7 @@ class ProductReviews extends \Bricks\Element {
 											'row_gap'    => 2,
 											'column_gap' => 20,
 											'star_label_gap' => 4,
-											'_width'     => '50%',
+											'_width'     => '100%',
 											'star_size'  => 20,
 											'bar_fill_color' => [
 												'hex' => 'var(--bricks-color-primary)',

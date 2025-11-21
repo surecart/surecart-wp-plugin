@@ -129,6 +129,16 @@ class ProductReviewList extends \Bricks\Element {
 			'step'        => 1,
 			'required'    => [ 'show_add_button', '=', true ],
 			'description' => esc_html__( 'Size of the icon in pixels.', 'surecart' ),
+			'css'         => [
+				[
+					'property' => 'width',
+					'selector' => '.wp-block-surecart-product-review-add-button svg',
+				],
+				[
+					'property' => 'height',
+					'selector' => '.wp-block-surecart-product-review-add-button svg',
+				],
+			],
 		];
 
 		$this->controls['add_button_text_color'] = [
@@ -138,6 +148,15 @@ class ProductReviewList extends \Bricks\Element {
 			'type'     => 'color',
 			'reset'    => true,
 			'required' => [ 'show_add_button', '=', true ],
+			'default'  => [
+				'hex' => '#000000',
+			],
+			'css'      => [
+				[
+					'property' => 'color',
+					'selector' => '.wp-block-surecart-product-review-add-button',
+				],
+			],
 		];
 
 		$this->controls['add_button_background_color'] = [
@@ -147,6 +166,15 @@ class ProductReviewList extends \Bricks\Element {
 			'type'     => 'color',
 			'reset'    => true,
 			'required' => [ 'show_add_button', '=', true ],
+			'default'  => [
+				'hex' => 'var(--bricks-color-primary)',
+			],
+			'css'      => [
+				[
+					'property' => 'background-color',
+					'selector' => '.wp-block-surecart-product-review-add-button',
+				],
+			],
 		];
 
 		$this->controls['show_review_date'] = [
@@ -170,24 +198,68 @@ class ProductReviewList extends \Bricks\Element {
 			'group'       => 'review_content',
 			'label'       => esc_html__( 'Verified Badge Icon Size', 'surecart' ),
 			'type'        => 'number',
+			'units'       => true,
 			'default'     => 16,
 			'min'         => 10,
 			'max'         => 50,
 			'step'        => 1,
 			'description' => esc_html__( 'Size of the verified badge icon in pixels.', 'surecart' ),
+			'css'         => [
+				[
+					'property' => 'width',
+					'selector' => '.wp-block-surecart-product-review-verified-badge svg',
+
+				],
+				[
+					'property' => 'height',
+					'selector' => '.wp-block-surecart-product-review-verified-badge svg',
+				],
+			],
 		];
 
-		// Rating stars fill color for content stars.
-		$this->controls['rating_fill_color'] = [
-			'tab'      => 'content',
-			'group'    => 'review_content',
-			'label'    => esc_html__( 'Star Color', 'surecart' ),
-			'type'     => 'color',
-			'rerender' => true,
-			'default'  => [
+		$this->controls['fill_color'] = [
+			'tab'     => 'content',
+			'group'   => 'review_content',
+			'label'   => esc_html__( 'Star Color', 'surecart' ),
+			'type'    => 'color',
+			'default' => [
 				'hex' => 'var(--bricks-color-primary)',
 			],
-			'reset'    => true,
+			'reset'   => true,
+			'css'     => [
+				[
+					'property' => 'fill',
+					'selector' => '.sc-star-row__label__svg',
+				],
+				[
+					'property' => 'stroke',
+					'selector' => '.sc-star-row__label__svg',
+				],
+			],
+		];
+
+		// Star Icon size.
+		$this->controls['star_size'] = [
+			'tab'         => 'content',
+			'group'       => 'review_content',
+			'label'       => esc_html__( 'Star Icon Size', 'surecart' ),
+			'type'        => 'number',
+			'units'       => true,
+			'default'     => 20,
+			'min'         => 10,
+			'max'         => 100,
+			'step'        => 1,
+			'description' => esc_html__( 'Size of the star icon in pixels.', 'surecart' ),
+			'css'         => [
+				[
+					'property' => 'width',
+					'selector' => '.sc-star-row__label__svg',
+				],
+				[
+					'property' => 'height',
+					'selector' => '.sc-star-row__label__svg',
+				],
+			],
 		];
 
 		$this->controls['no_reviews_text'] = [
@@ -243,16 +315,7 @@ class ProductReviewList extends \Bricks\Element {
 	 *
 	 * @return string
 	 */
-	private function get_review_list_content( $show_header, $show_sidebar, $show_add_button, $show_pagination, $show_date, $show_content, $no_reviews_text ) {
-		$fill_color = $this->get_raw_color( 'rating_fill_color' );
-		if ( empty( $fill_color ) ) {
-			$fill_color = 'var(--bricks-color-primary)';
-		}
-		$product = sc_get_product();
-		if ( empty( $product ) || empty( $product->total_reviews ) ) {
-			$fill_color = 'none';
-		}
-
+	private function get_review_list_content( $show_header, $show_sidebar, $show_add_button, $show_pagination, $show_date, $show_content, $no_reviews_text ): string {
 		$rendered_attributes = $this->get_block_rendered_attributes();
 
 		$content = '<!-- wp:surecart/product-review-list {"metadata":{"categories":["surecart_review_list"],"patternName":"surecart-product-review-standard","name":"Default Review List"},"className":"' . esc_attr( $rendered_attributes['class'] ) . '","anchor":"' . esc_attr( $rendered_attributes['id'] ) . '"} -->';
@@ -263,42 +326,7 @@ class ProductReviewList extends \Bricks\Element {
 			$content .= $show_sidebar ? '<!-- wp:surecart/product-review-list-sidebar-toggle {"label":"Filters","style":{"typography":{"fontWeight":"600","fontStyle":"normal"}}} /-->' : '&nbsp;';
 
 			if ( $show_add_button ) {
-				$btn_label      = ! empty( $this->settings['add_button_label'] ) ? $this->settings['add_button_label'] : esc_html__( 'Write a Review', 'surecart' );
-				$btn_icon_size  = ! empty( $this->settings['add_button_icon_size'] ) ? absint( $this->settings['add_button_icon_size'] ) : 15;
-				$btn_text_color = ! empty( $this->settings['add_button_text_color'] ) ? $this->get_raw_color( 'add_button_text_color' ) : '#000000';
-				$btn_bg_color   = ! empty( $this->settings['add_button_background_color'] ) ? $this->get_raw_color( 'add_button_background_color' ) : 'var(--bricks-color-primary)';
-
-				$btn_attrs = [
-					'width'     => 100,
-					'className' => 'is-style-fill',
-					'label'     => $btn_label,
-					'icon_size' => $btn_icon_size,
-				];
-
-				// spacing default.
-				$style = [ 'spacing' => [ 'blockGap' => 'var:preset|spacing|30' ] ];
-
-				if ( $btn_text_color || $btn_bg_color ) {
-					$style['color'] = [];
-					if ( $btn_text_color ) {
-						$style['color']['text'] = $btn_text_color;
-					}
-					if ( $btn_bg_color ) {
-						$style['color']['background'] = $btn_bg_color;
-					}
-				} else {
-					// default (theme preset).
-					$style                        = [
-						'elements' => [ 'link' => [ 'color' => [ 'text' => 'var:preset|color|white' ] ] ],
-						'spacing'  => [ 'blockGap' => 'var:preset|spacing|30' ],
-					];
-					$btn_attrs['backgroundColor'] = 'surecart';
-					$btn_attrs['textColor']       = 'white';
-				}
-
-				$btn_attrs['style'] = $style;
-
-				$content .= '<!-- wp:group {"layout":{"type":"constrained"}} --><div class="wp-block-group"><!-- wp:surecart/product-review-add-button ' . wp_json_encode( $btn_attrs ) . ' /--></div><!-- /wp:group -->';
+				$content .= '<!-- wp:group {"layout":{"type":"constrained"}} --><div class="wp-block-group">' . $this->get_review_add_button_content() . '</div><!-- /wp:group -->';
 			}
 
 			$content .= '<!-- /wp:surecart/product-review-list-content-header -->';
@@ -327,67 +355,20 @@ class ProductReviewList extends \Bricks\Element {
 		}
 
 		// Review Template.
-		$verified_icon_size = ! empty( $this->settings['verified_badge_icon_size'] ) ? absint( $this->settings['verified_badge_icon_size'] ) : 16;
-		$date_block         = $show_date ? '<!-- wp:surecart/product-review-date {"format":"human-diff"} /-->' : '';
-		$content_block      = $show_content ? '<!-- wp:surecart/product-review-content /-->' : '';
-
 		$content .= '<!-- wp:group {"style":{"spacing":{"blockGap":"0px"},"layout":{"selfStretch":"fill","flexSize":null}},"layout":{"type":"flex","orientation":"vertical"}} -->';
-		$content .= '<div class="wp-block-group"><!-- wp:surecart/product-review-template {"style":{"spacing":{"blockGap":"0px","margin":{"top":"0","bottom":"0"},"padding":{"top":"0","bottom":"0"}}},"layout":{"type":"grid","columnCount":1}} -->';
-		$content .= '<!-- wp:group {"style":{"spacing":{"blockGap":"var:preset|spacing|20","margin":{"top":"0","bottom":"0"}},"border":{"bottom":{"color":"#e5e7eb","width":"1px"}}},"layout":{"type":"constrained"}} -->';
-		$content .= '<div class="wp-block-group" style="border-bottom-color:#e5e7eb;border-bottom-width:1px;margin-top:0;margin-bottom:0;padding-top:var(--wp--preset--spacing--40);padding-bottom:var(--wp--preset--spacing--40)"><!-- wp:group {"layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"space-between"}} -->';
-		$content .= '<div class="wp-block-group"><!-- wp:group {"style":{"spacing":{"blockGap":"var:preset|spacing|20"}},"layout":{"type":"flex","flexWrap":"nowrap"}} -->';
-		$content .= '<div class="wp-block-group"><!-- wp:surecart/product-review-reviewer-name {"style":{"spacing":{"padding":{"top":"0","bottom":"0"},"blockGap":"var:preset|spacing|20"},"typography":{"fontStyle":"normal","fontWeight":"500"}}} /-->';
-		$content .= '<!-- wp:surecart/product-review-verified-badge {"icon_size":' . esc_attr( $verified_icon_size ) . ',"style":{"typography":{"fontStyle":"normal","fontWeight":"400"},"spacing":{"blockGap":"var:preset|spacing|30"},"layout":{"selfStretch":"fit","flexSize":null}},"layout":{"type":"flex","justifyContent":"center","verticalAlignment":"center","orientation":"horizontal"}} /--></div>';
-		$content .= '<!-- /wp:group -->' . $date_block . '</div>';
-		$content .= '<!-- /wp:group -->';
-		$content .= '<!-- wp:surecart/product-review-rating-stars {"fill_color":"' . esc_attr( $fill_color ) . '"}  /-->';
-		$content .= '<!-- wp:surecart/product-review-title {"style":{"typography":{"fontStyle":"normal","fontWeight":"700"}}} /-->';
-		$content .= $content_block . '</div>';
-		$content .= '<!-- /wp:group -->';
-		$content .= '<!-- /wp:surecart/product-review-template --></div>';
+		$content .= '<div class="wp-block-group">';
+		$content .= $this->get_review_template_content( $show_date, $show_content );
+		$content .= '</div>';
 		$content .= '<!-- /wp:group -->';
 		$content .= '<!-- /wp:surecart/product-review-list-content -->';
 
 		$content .= '<!-- wp:surecart/product-review-list-no-reviews -->';
-		$content .= '<!-- wp:paragraph {"align":"left","placeholder":"Add text or blocks that will display when a query returns no reviews."} -->';
+		$content .= '<!-- wp:paragraph {"align":"left"} -->';
 		$content .= '<p class="has-text-align-left">' . esc_html( $no_reviews_text ) . '</p><!-- /wp:paragraph -->';
 		$content .= '<!-- wp:group {"layout":{"type":"flex","flexWrap":"nowrap"}} -->';
 
 		// no-reviews button with configured attributes.
-		$btn_label      = ! empty( $this->settings['add_button_label'] ) ? $this->settings['add_button_label'] : esc_html__( 'Write a Review', 'surecart' );
-		$btn_icon_size  = ! empty( $this->settings['add_button_icon_size'] ) ? absint( $this->settings['add_button_icon_size'] ) : 15;
-		$btn_text_color = ! empty( $this->settings['add_button_text_color'] ) ? $this->get_raw_color( 'add_button_text_color' ) : '#000000';
-		$btn_bg_color   = ! empty( $this->settings['add_button_background_color'] ) ? $this->get_raw_color( 'add_button_background_color' ) : 'var(--bricks-color-primary)';
-
-		$btn_attrs = [
-			'width'     => 100,
-			'className' => 'is-style-fill',
-			'label'     => $btn_label,
-			'icon_size' => $btn_icon_size,
-		];
-
-		$style = [ 'spacing' => [ 'blockGap' => 'var:preset|spacing|30' ] ];
-		if ( $btn_text_color || $btn_bg_color ) {
-			$style['color'] = [];
-			if ( $btn_text_color ) {
-				$style['color']['text'] = $btn_text_color;
-			}
-			if ( $btn_bg_color ) {
-				$style['color']['background'] = $btn_bg_color;
-			}
-		} else {
-			$style                        = [
-				'elements' => [ 'link' => [ 'color' => [ 'text' => 'var:preset|color|white' ] ] ],
-				'spacing'  => [ 'blockGap' => 'var:preset|spacing|30' ],
-			];
-			$btn_attrs['backgroundColor'] = 'surecart';
-			$btn_attrs['textColor']       = 'white';
-		}
-
-		$btn_attrs['style'] = $style;
-
-		$content .= '<div class="wp-block-group"><!-- wp:surecart/product-review-add-button ' . wp_json_encode( $btn_attrs ) . ' /--></div>';
-		$content .= '<!-- /wp:group -->';
+		$content .= '<div class="wp-block-group">' . $this->get_review_add_button_content() . '</div><!-- /wp:group -->';
 		$content .= '<!-- /wp:surecart/product-review-list-no-reviews -->';
 
 		// Pagination.
@@ -405,6 +386,62 @@ class ProductReviewList extends \Bricks\Element {
 	}
 
 	/**
+	 * Get the review template block content.
+	 *
+	 * @param bool $show_date    Show date.
+	 * @param bool $show_content Show content.
+	 *
+	 * @return string
+	 */
+	private function get_review_template_content( $show_date, $show_content ): string {
+		$rating_star_attrs = [
+			'fill_color' => empty( $this->get_raw_color( 'fill_color' ) ) ? 'var(--bricks-color-primary)' : $this->get_raw_color( 'fill_color' ),
+			'size'       => ! empty( $this->settings['star_size'] ) ? absint( $this->settings['star_size'] ) : 20,
+		];
+
+		$verified_icon_attrs = [
+			'icon_size' => ! empty( $this->settings['verified_badge_icon_size'] ) ? absint( $this->settings['verified_badge_icon_size'] ) : 16,
+		];
+
+		$date_block    = $show_date ? '<!-- wp:surecart/product-review-date {"format":"human-diff"} /-->' : '';
+		$content_block = $show_content ? '<!-- wp:surecart/product-review-content /-->' : '';
+
+		return '<!-- wp:surecart/product-review-template {"style":{"spacing":{"blockGap":"0px","margin":{"top":"0","bottom":"0"},"padding":{"top":"0","bottom":"0"}}},"layout":{"type":"grid","columnCount":1}} -->' .
+			'<!-- wp:group {"style":{"spacing":{"blockGap":"var:preset|spacing|20","margin":{"top":"0","bottom":"0"}},"border":{"bottom":{"color":"#e5e7eb","width":"1px"}}},"layout":{"type":"constrained"}} -->' .
+			'<div class="wp-block-group" style="border-bottom-color:#e5e7eb;border-bottom-width:1px;margin-top:0;margin-bottom:0;padding-top:var(--wp--preset--spacing--40);padding-bottom:var(--wp--preset--spacing--40)"><!-- wp:group {"layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"space-between"}} -->' .
+			'<div class="wp-block-group"><!-- wp:group {"style":{"spacing":{"blockGap":"var:preset|spacing|20"}},"layout":{"type":"flex","flexWrap":"nowrap"}} -->' .
+			'<div class="wp-block-group"><!-- wp:surecart/product-review-reviewer-name {"style":{"spacing":{"padding":{"top":"0","bottom":"0"},"blockGap":"var:preset|spacing|20"},"typography":{"fontStyle":"normal","fontWeight":"500"}}} /-->' .
+			'<!-- wp:surecart/product-review-verified-badge ' . wp_json_encode( $verified_icon_attrs ) . ' /--></div>' .
+			'<!-- /wp:group -->' . $date_block . '</div>' .
+			'<!-- /wp:group -->' .
+			'<!-- wp:surecart/product-review-rating-stars ' . wp_json_encode( $rating_star_attrs ) . ' /-->' .
+			'<!-- wp:surecart/product-review-title {"style":{"typography":{"fontStyle":"normal","fontWeight":"700"}}} /-->' . $content_block . '</div>' .
+			'<!-- /wp:group -->' .
+			'<!-- /wp:surecart/product-review-template -->';
+	}
+
+	/**
+	 * Get the review add button block content.
+	 *
+	 * @return string
+	 */
+	private function get_review_add_button_content(): string {
+		$btn_attrs = [
+			'width'     => 100,
+			'label'     => ! empty( $this->settings['add_button_label'] ) ? wp_kses_post( $this->settings['add_button_label'] ) : esc_html__( 'Write a Review', 'surecart' ),
+			'icon_size' => ! empty( $this->settings['add_button_icon_size'] ) ? absint( $this->settings['add_button_icon_size'] ) : 15,
+			'style'     => [
+				'color' => [
+					'text'       => ! empty( $this->settings['add_button_text_color'] ) ? $this->get_raw_color( 'add_button_text_color' ) : '#000000',
+					'background' => ! empty( $this->settings['add_button_background_color'] ) ? $this->get_raw_color( 'add_button_background_color' ) : 'var(--bricks-color-primary)',
+				],
+			],
+		];
+
+		return '<!-- wp:surecart/product-review-add-button ' . wp_json_encode( $btn_attrs ) . ' /-->';
+	}
+
+	/**
 	 * Render preview in editor.
 	 *
 	 * @param bool $show_header     Show header.
@@ -418,7 +455,7 @@ class ProductReviewList extends \Bricks\Element {
 	 */
 	private function render_preview( $show_header, $show_sidebar, $show_add_button, $show_date, $show_content, $show_pagination ) {
 		$content    = '<div class="wp-block-surecart-product-review-list" style="padding: 20px;">';
-		$fill_color = $this->get_raw_color( 'rating_fill_color' );
+		$fill_color = $this->get_raw_color( 'fill_color' );
 		if ( empty( $fill_color ) ) {
 			$fill_color = 'var(--bricks-color-primary)';
 		}
@@ -449,13 +486,10 @@ class ProductReviewList extends \Bricks\Element {
 			}
 
 			if ( $show_add_button ) {
-				$btn_icon_size  = ! empty( $this->settings['add_button_icon_size'] ) ? absint( $this->settings['add_button_icon_size'] ) : 15;
-				$btn_label      = ! empty( $this->settings['add_button_label'] ) ? $this->settings['add_button_label'] : esc_html__( 'Write a Review', 'surecart' );
-				$btn_text_color = ! empty( $this->settings['add_button_text_color'] ) ? $this->get_raw_color( 'add_button_text_color' ) : '#000000';
-				$btn_bg_color   = ! empty( $this->settings['add_button_background_color'] ) ? $this->get_raw_color( 'add_button_background_color' ) : 'var(--bricks-color-primary)';
-
-				$content .= '<div style="padding: 10px 20px; background: ' . esc_attr( $btn_bg_color ) . '; color: ' . esc_attr( $btn_text_color ) . '; border-radius: 50px; display: inline-flex; align-items: center; gap: 8px;">';
-				$content .= wp_kses(
+				$btn_icon_size = ! empty( $this->settings['add_button_icon_size'] ) ? absint( $this->settings['add_button_icon_size'] ) : 15;
+				$btn_label     = ! empty( $this->settings['add_button_label'] ) ? wp_kses_post( $this->settings['add_button_label'] ) : esc_html__( 'Write a Review', 'surecart' );
+				$content      .= '<div style="padding: 10px 20px; border-radius: 50px; display: inline-flex; align-items: center; gap: 8px;" class="wp-block-surecart-product-review-add-button">';
+				$content      .= wp_kses(
 					\SureCart::svg()->get(
 						'edit-2',
 						[
@@ -467,8 +501,8 @@ class ProductReviewList extends \Bricks\Element {
 					),
 					sc_allowed_svg_html()
 				);
-				$content .= '<span>' . esc_html( $btn_label ) . '</span>';
-				$content .= '</div>';
+				$content      .= '<span>' . esc_html( $btn_label ) . '</span>';
+				$content      .= '</div>';
 			}
 
 			$content .= '</div>';
@@ -520,8 +554,7 @@ class ProductReviewList extends \Bricks\Element {
 				\SureCart::svg()->get(
 					'verified',
 					[
-						'width'  => $verified_icon_size,
-						'height' => $verified_icon_size,
+						'class' => 'sc-verified-badge__icon',
 					]
 				),
 				sc_allowed_svg_html()
@@ -533,16 +566,13 @@ class ProductReviewList extends \Bricks\Element {
 			$content .= '</div>';
 
 			// Stars.
-			$content .= '<div style="display: inline-flex; gap: 2px; margin-bottom: 8px;">';
+			$content .= '<div style="display: inline-flex; gap: 2px; margin-bottom: 8px;" class="wp-block-surecart-product-review-rating-stars">';
 			for ( $s = 1; $s <= 5; $s++ ) {
 				$content .= wp_kses(
 					\SureCart::svg()->get(
 						'star',
 						[
-							'width'  => 16,
-							'height' => 16,
-							'fill'   => ( $s <= 4 ) ? $fill_color : 'none',
-							'stroke' => $fill_color,
+							'class' => 'sc-star-row__label__svg',
 						]
 					),
 					sc_allowed_svg_html()
@@ -552,7 +582,7 @@ class ProductReviewList extends \Bricks\Element {
 
 			$content .= '<div style="font-weight: 700; margin-bottom: 8px;">' . esc_html__( 'Great Product!', 'surecart' ) . '</div>';
 			if ( $show_content ) {
-				$content .= '<p style="color: #4b5563; margin: 0; line-height: 1.6;">' . esc_html__( 'This is an excellent product. I highly recommend it to anyone looking for quality and reliability.', 'surecart' ) . '</p>';
+				$content .= '<p style="margin: 0; line-height: 1.6;">' . esc_html__( 'This is an excellent product. I highly recommend it to anyone looking for quality and reliability.', 'surecart' ) . '</p>';
 			}
 			$content .= '</div>';
 		}
