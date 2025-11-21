@@ -23,7 +23,15 @@
 			"id": "13fc627e",
 			"settings": {
 				"content_width": "full",
-				"_title": "Review List"
+				"_title": "Review List",
+				"padding": {
+					"unit": "px",
+					"top": "0",
+					"right": "0",
+					"bottom": "0",
+					"left": "0",
+					"isLinked": true
+				}
 			},
 			"elements": [
 				{
