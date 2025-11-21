@@ -262,6 +262,46 @@ class ProductReviewList extends \Bricks\Element {
 			],
 		];
 
+		// Review border color.
+		$this->controls['review_border_color'] = [
+			'tab'     => 'content',
+			'group'   => 'review_content',
+			'label'   => esc_html__( 'Review Border Color', 'surecart' ),
+			'type'    => 'color',
+			'reset'   => true,
+			'default' => [
+				'hex' => '#e5e7eb',
+			],
+			'css'     => [
+				[
+					'property' => 'border-bottom-color',
+					'selector' => '.wp-block-surecart-product-review-list .sc-product-review-link > .wp-block-group',
+				],
+			],
+		];
+
+		// Review spacing (padding top/bottom).
+		$this->controls['review_spacing'] = [
+			'tab'     => 'content',
+			'group'   => 'review_content',
+			'label'   => esc_html__( 'Review Spacing', 'surecart' ),
+			'type'    => 'number',
+			'units'   => true,
+			'default' => 32,
+			'min'     => 0,
+			'max'     => 200,
+			'css'     => [
+				[
+					'property' => 'padding-top',
+					'selector' => '.wp-block-surecart-product-review-list .sc-product-review-link > .wp-block-group',
+				],
+				[
+					'property' => 'padding-bottom',
+					'selector' => '.wp-block-surecart-product-review-list .sc-product-review-link > .wp-block-group',
+				],
+			],
+		];
+
 		$this->controls['no_reviews_text'] = [
 			'tab'         => 'content',
 			'group'       => 'review_content',
@@ -406,9 +446,17 @@ class ProductReviewList extends \Bricks\Element {
 		$date_block    = $show_date ? '<!-- wp:surecart/product-review-date {"format":"human-diff"} /-->' : '';
 		$content_block = $show_content ? '<!-- wp:surecart/product-review-content /-->' : '';
 
+		// Use configured border color and spacing (fallbacks provided).
+		$border_color = $this->get_raw_color( 'review_border_color' );
+		if ( empty( $border_color ) ) {
+			$border_color = '#e5e7eb';
+		}
+
+		$spacing = ! empty( $this->settings['review_spacing'] ) ? absint( $this->settings['review_spacing'] ) : 32;
+
 		return '<!-- wp:surecart/product-review-template {"style":{"spacing":{"blockGap":"0px","margin":{"top":"0","bottom":"0"},"padding":{"top":"0","bottom":"0"}}},"layout":{"type":"grid","columnCount":1}} -->' .
-			'<!-- wp:group {"style":{"spacing":{"blockGap":"var:preset|spacing|20","margin":{"top":"0","bottom":"0"}},"border":{"bottom":{"color":"#e5e7eb","width":"1px"}}},"layout":{"type":"constrained"}} -->' .
-			'<div class="wp-block-group" style="border-bottom-color:#e5e7eb;border-bottom-width:1px;margin-top:0;margin-bottom:0;padding-top:var(--wp--preset--spacing--40);padding-bottom:var(--wp--preset--spacing--40)"><!-- wp:group {"layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"space-between"}} -->' .
+			'<!-- wp:group {"style":{"spacing":{"blockGap":"var:preset|spacing|20","margin":{"top":"0","bottom":"0"}},"border":{"bottom":{"color":"' . esc_attr( $border_color ) . '","width":"1px"}}},"layout":{"type":"constrained"}} -->' .
+			'<div class="wp-block-group" style="border-bottom-color:' . esc_attr( $border_color ) . ';border-bottom-width:1px;margin-top:0;margin-bottom:0;padding-top:' . $spacing . 'px;padding-bottom:' . $spacing . 'px"><!-- wp:group {"layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"space-between"}} -->' .
 			'<div class="wp-block-group"><!-- wp:group {"style":{"spacing":{"blockGap":"var:preset|spacing|20"}},"layout":{"type":"flex","flexWrap":"nowrap"}} -->' .
 			'<div class="wp-block-group"><!-- wp:surecart/product-review-reviewer-name {"style":{"spacing":{"padding":{"top":"0","bottom":"0"},"blockGap":"var:preset|spacing|20"},"typography":{"fontStyle":"normal","fontWeight":"500"}}} /-->' .
 			'<!-- wp:surecart/product-review-verified-badge ' . wp_json_encode( $verified_icon_attrs ) . ' /--></div>' .
@@ -541,10 +589,17 @@ class ProductReviewList extends \Bricks\Element {
 		}
 
 		// Reviews.
-		$verified_icon_size = ! empty( $this->settings['verified_badge_icon_size'] ) ? absint( $this->settings['verified_badge_icon_size'] ) : 16;
-		$content           .= '<div style="flex: 1;">';
+		$content .= '<div style="flex: 1;">';
+		// Preview values for border color and spacing.
+		$preview_border_color = $this->get_raw_color( 'review_border_color' );
+		if ( empty( $preview_border_color ) ) {
+			$preview_border_color = '#e5e7eb';
+		}
+		$preview_spacing = ! empty( $this->settings['review_spacing'] ) ? absint( $this->settings['review_spacing'] ) : 32;
 		for ( $i = 0; $i < 2; $i++ ) {
-			$content .= '<div style="border-bottom: 1px solid #e5e7eb; padding: 20px 0;">';
+			// Each review link contains a wp-block-group that gets the border and spacing.
+			$content .= '<div class="sc-product-review-link">';
+			$content .= '<div class="wp-block-group" style="border-bottom: 1px solid ' . esc_attr( $preview_border_color ) . '; padding: ' . esc_attr( $preview_spacing ) . 'px 0; margin-top: 0; margin-bottom: 0;">';
 			$content .= '<div style="display: flex; justify-content: space-between; margin-bottom: 12px;">';
 			$content .= '<div style="display: flex; gap: 10px; align-items: center;">';
 			$content .= '<span style="font-weight: 500;">' . esc_html__( 'John Doe', 'surecart' ) . '</span>';
@@ -584,7 +639,8 @@ class ProductReviewList extends \Bricks\Element {
 			if ( $show_content ) {
 				$content .= '<p style="margin: 0; line-height: 1.6;">' . esc_html__( 'This is an excellent product. I highly recommend it to anyone looking for quality and reliability.', 'surecart' ) . '</p>';
 			}
-			$content .= '</div>';
+			$content .= '</div>'; // close .wp-block-group.
+			$content .= '</div>'; // close .sc-product-review-link.
 		}
 		$content .= '</div>';
 
