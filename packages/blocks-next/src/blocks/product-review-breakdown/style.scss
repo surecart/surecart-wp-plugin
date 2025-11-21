@@ -12,6 +12,7 @@
 		// Column-based layouts.
 		&__columns-2 {
 			max-height: 150px;
+			width: 50%;
 
 			.sc-star-row {
 				width: calc(
@@ -22,6 +23,7 @@
 
 		&__columns-3 {
 			max-height: 85px;
+			width: 33.333%;
 
 			.sc-star-row {
 				width: calc(

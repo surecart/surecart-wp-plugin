@@ -118,7 +118,7 @@ class ProductReviewBreakdown extends \Bricks\Element {
 			],
 			'default'     => '1',
 			'placeholder' => esc_html__( '1 Column', 'surecart' ),
-			'description' => esc_html__( 'Choose the number of columns to display the review breakdown . ', 'surecart' ),
+			'description' => esc_html__( 'Choose the number of columns to display the review breakdown. You may need to adjust the row & column gap accordingly.', 'surecart' ),
 		];
 
 		$this->controls['row_gap'] = [

@@ -144,7 +144,7 @@ class ProductReviewBreakdown extends \Elementor\Widget_Base {
 					'3' => esc_html__( '3 Columns', 'surecart' ),
 				],
 				'default'     => '1',
-				'description' => esc_html__( 'Choose the number of columns to display the review breakdown.', 'surecart' ),
+				'description' => esc_html__( 'Choose the number of columns to display the review breakdown. You may need to adjust the row & column gap accordingly.', 'surecart' ),
 			]
 		);
 
