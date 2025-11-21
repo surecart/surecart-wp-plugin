@@ -63,7 +63,7 @@ class ProductReviewList extends \Bricks\Element {
 		];
 
 		$this->control_groups['review_button'] = [
-			'title'    => esc_html__( 'Review Button', 'surecart' ),
+			'title'    => esc_html__( 'Add Review Button', 'surecart' ),
 			'tab'      => 'content',
 			'required' => [ 'show_add_button', '=', true ],
 		];

@@ -112,7 +112,7 @@ class ProductReviewList extends \Elementor\Widget_Base {
 		$this->start_controls_section(
 			'section_review_button',
 			[
-				'label' => esc_html__( 'Review Button', 'surecart' ),
+				'label' => esc_html__( 'Add Review Button', 'surecart' ),
 			]
 		);
 
@@ -600,7 +600,7 @@ class ProductReviewList extends \Elementor\Widget_Base {
 
 		// Sidebar.
 		if ( $show_sidebar ) {
-			$content .= $this->get_sidebar_block_markup();
+			$content .= $this->get_sidebar_block_content();
 		}
 
 		// Review Template.
@@ -651,39 +651,14 @@ class ProductReviewList extends \Elementor\Widget_Base {
 	 * @return array
 	 */
 	private function get_button_attributes( $settings ) {
-		$btn_label      = $settings['button_text'] ?? esc_html__( 'Write a Review', 'surecart' );
-		$btn_icon_size  = ! empty( $settings['button_icon_size'] ) ? absint( $settings['button_icon_size'] ) : 15;
-		$btn_text_color = $settings['button_text_color'] ?? null;
-		$btn_bg_color   = $settings['button_background_color'] ?? null;
+		$btn_label     = $settings['button_text'] ?? esc_html__( 'Write a Review', 'surecart' );
+		$btn_icon_size = ! empty( $settings['button_icon_size'] ) ? absint( $settings['button_icon_size'] ) : 15;
 
-		$btn_attrs = [
+		return [
 			'width'     => 100,
-			'className' => 'is-style-fill',
 			'label'     => $btn_label,
 			'icon_size' => $btn_icon_size,
 		];
-
-		$style = [ 'spacing' => [ 'blockGap' => 'var:preset|spacing|30' ] ];
-		if ( $btn_text_color || $btn_bg_color ) {
-			$style['color'] = [];
-			if ( $btn_text_color ) {
-				$style['color']['text'] = $btn_text_color;
-			}
-			if ( $btn_bg_color ) {
-				$style['color']['background'] = $btn_bg_color;
-			}
-		} else {
-			$style                        = [
-				'elements' => [ 'link' => [ 'color' => [ 'text' => 'var:preset|color|white' ] ] ],
-				'spacing'  => [ 'blockGap' => 'var:preset|spacing|30' ],
-			];
-			$btn_attrs['backgroundColor'] = 'surecart';
-			$btn_attrs['textColor']       = 'white';
-		}
-
-		$btn_attrs['style'] = $style;
-
-		return $btn_attrs;
 	}
 
 	/**
@@ -691,9 +666,8 @@ class ProductReviewList extends \Elementor\Widget_Base {
 	 *
 	 * @return string
 	 */
-	private function get_sidebar_block_markup() {
-		return '
-			<!-- wp:surecart/product-review-list-sidebar {"style":{"layout":{"selfStretch":"fixed","flexSize":"300px","type":"flex","orientation":"vertical"},"position":{"type":"sticky","top":"0px"},"spacing":{"blockGap":"var:preset|spacing|60"}},"layout":{"type":"flex","orientation":"vertical"}} -->
+	private function get_sidebar_block_content() {
+		return '<!-- wp:surecart/product-review-list-sidebar {"style":{"layout":{"selfStretch":"fixed","flexSize":"300px","type":"flex","orientation":"vertical"},"position":{"type":"sticky","top":"0px"},"spacing":{"blockGap":"var:preset|spacing|60"}},"layout":{"type":"flex","orientation":"vertical"}} -->
 			<div class="wp-block-surecart-product-review-list-sidebar"><!-- wp:surecart/product-review-list-filter-tags {"layout":{"type":"flex","orientation":"vertical","verticalAlignment":"top","flexWrap":"nowrap"}} -->
 			<!-- wp:surecart/product-review-list-filter-tags-label {"style":{"typography":{"fontWeight":"600","fontStyle":"normal"}}} /-->
 
@@ -813,13 +787,11 @@ class ProductReviewList extends \Elementor\Widget_Base {
 	 * @return void
 	 */
 	private function get_add_button_html( $settings ) {
-		$btn_label      = $settings['button_text'] ?? __( 'Write a Review', 'surecart' );
-		$btn_text_color = $settings['button_text_color'] ?? null;
-		$btn_bg_color   = $settings['button_background_color'] ?? 'var( --e - global - color - primary, // 6c63ff)';
+		$btn_label = $settings['button_text'] ?? __( 'Write a Review', 'surecart' );
 		?>
 		<div class="wp-block-buttons">
 			<div class="wp-block-button">
-				<div class="wp-block-button__link sc-button__link wp-block-surecart-product-review-add-button" style="background-color: <?php echo esc_attr( $btn_bg_color ); ?>; color: <?php echo esc_attr( $btn_text_color ); ?>; padding: 15px 30px; border-radius: 50px; display: inline-flex; align-items: center; gap: 8px; cursor: pointer;">
+				<div class="wp-block-button__link sc-button__link wp-block-surecart-product-review-add-button" style="border-radius: 50px; display: inline-flex; align-items: center; gap: 8px; cursor: pointer;">
 			<?php
 			echo wp_kses(
 				\SureCart::svg()->get(
