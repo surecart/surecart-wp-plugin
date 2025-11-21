@@ -1,31 +1,12 @@
 <div <?php echo wp_kses_data( get_block_wrapper_attributes() ); ?>>
-	<div class="sc-star-bars sc-star-bars--columns-<?php echo esc_attr( $columns ); ?>" style="--sc-row-gap: <?php echo esc_attr( $row_gap ); ?>px; --sc-column-gap: <?php echo esc_attr( $column_gap ); ?>px; --sc-star-label-gap: <?php echo esc_attr( $attributes['star_label_gap'] ?? 4 ); ?>px; row-gap: <?php echo esc_attr( $row_gap ); ?>px; column-gap: <?php echo esc_attr( $column_gap ); ?>px;">
-		<?php
-		$params = \SureCart::block()->urlParams( 'reviews' );
-		for ( $star = 5; $star >= 1; $star-- ) {
+	<div class="sc-star-bars sc-star-bars__columns-<?php echo esc_attr( $columns ); ?>" style="--sc-row-gap: <?php echo esc_attr( $row_gap ); ?>px; --sc-column-gap: <?php echo esc_attr( $column_gap ); ?>px; --sc-star-label-gap: <?php echo esc_attr( $attributes['star_label_gap'] ?? 4 ); ?>px; row-gap: <?php echo esc_attr( $row_gap ); ?>px; column-gap: <?php echo esc_attr( $column_gap ); ?>px;">
+		<?php for ( $star = 5; $star >= 1; $star-- ) : ?>
+			<?php
 			$count      = isset( $product->reviews_breakdown->$star ) ? (int) $product->reviews_breakdown->$star : 0;
 			$percentage = $total > 0 ? ( $count / $total ) * 100 : 0;
-			$filter_url = $params->addArg( 'ratings', (string) $star )->url();
 			?>
-			<a
-				href="<?php echo esc_url( $filter_url ); ?>"
-				class="sc-star-row"
-				data-wp-interactive='{ "namespace": "surecart/product-review" }'
-				data-wp-on--click="actions.navigate"
-				data-wp-on--mouseenter="actions.prefetch"
-				aria-label="
-				<?php
-				echo esc_attr(
-					sprintf(
-					/* translators: %d: star rating */
-						__( 'Filter by %d star reviews', 'surecart' ),
-						$star
-					)
-				);
-				?>
-				"
-			>
-				<div class="sc-star-label" style="gap: <?php echo esc_attr( $attributes['star_label_gap'] ?? 4 ); ?>px;">
+			<div class="sc-star-row">
+				<div class="sc-star-row__label" style="gap: <?php echo esc_attr( $attributes['star_label_gap'] ?? 4 ); ?>px;">
 					<?php echo esc_html( $star ); ?>
 					<?php
 						echo wp_kses(
@@ -43,13 +24,13 @@
 						);
 					?>
 				</div>
-				<div class="sc-bar-wrap" <?php echo ! empty( $attributes['bar_background_color'] ) ? 'style="background-color: ' . esc_attr( $attributes['bar_background_color'] ) . ';"' : ''; ?>>
-					<div class="sc-bar-fill" style="width: <?php echo esc_attr( $percentage ); ?>%;<?php echo ! empty( $attributes['bar_fill_color'] ) ? ' background-color: ' . esc_attr( $attributes['bar_fill_color'] ) . ';' : ''; ?>"></div>
+				<div class="sc-star-row__bar" <?php echo ! empty( $attributes['bar_background_color'] ) ? 'style="background-color: ' . esc_attr( $attributes['bar_background_color'] ) . ';"' : ''; ?>>
+					<div class="sc-star-row__bar-fill" style="width: <?php echo esc_attr( $percentage ); ?>%;<?php echo ! empty( $attributes['bar_fill_color'] ) ? ' background-color: ' . esc_attr( $attributes['bar_fill_color'] ) . ';' : ''; ?>"></div>
 				</div>
-				<div class="sc-count"><?php echo esc_html( $count ); ?></div>
-			</a>
+				<div class="sc-star-row__count"><?php echo esc_html( $count ); ?></div>
+			</div>
 			<?php
-		}
+		endfor;
 		?>
 	</div>
 </div>

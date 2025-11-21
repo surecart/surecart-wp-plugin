@@ -12,20 +12,20 @@
 		display: inline-block;
 		cursor: pointer;
 
-		.sc-star-svg {
+		.sc-star-row__label__svg {
 			transition: all 0.15s ease;
 		}
 	}
 
 	%full-star {
-		.sc-star-svg {
+		.sc-star-row__label__svg {
 			fill: var(--sc-product-review-form-rating-star-fill-color);
 			stroke: var(--sc-product-review-form-rating-star-fill-color);
 		}
 	}
 
 	%empty-star {
-		.sc-star-svg {
+		.sc-star-row__label__svg {
 			fill: none;
 		}
 	}

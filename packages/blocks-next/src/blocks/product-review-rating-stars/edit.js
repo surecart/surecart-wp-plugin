@@ -56,7 +56,7 @@ export default ({ attributes, setAttributes, clientId }) => {
 						height={size}
 						fill={fill_color || 'var(--sc-color-primary-500)'}
 						stroke={fill_color || 'var(--sc-color-primary-500)'}
-						className="sc-star-svg"
+						className="sc-star-row__label__svg"
 						strokeWidth="2"
 					/>
 				))}
@@ -67,7 +67,7 @@ export default ({ attributes, setAttributes, clientId }) => {
 					fill="none"
 					stroke={fill_color || 'var(--sc-color-primary-500)'}
 					color={fill_color || 'var(--sc-color-primary-500)'}
-					className="sc-star-svg"
+					className="sc-star-row__label__svg"
 					strokeWidth="2"
 				/>
 			</div>

@@ -118,7 +118,7 @@ class ProductReviewBreakdown extends \Elementor\Widget_Base {
 				],
 				'description' => esc_html__( 'Adjust the spacing between the star number and star icon.', 'surecart' ),
 				'selectors'   => [
-					'{{WRAPPER}} .wp-block-surecart-product-review-breakdown .sc-star-label' => 'gap: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wp-block-surecart-product-review-breakdown .sc-star-row__label' => 'gap: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
@@ -207,8 +207,8 @@ class ProductReviewBreakdown extends \Elementor\Widget_Base {
 	 */
 	private function register_style_settings() {
 		$selector      = '{{WRAPPER}} .wp-block-surecart-product-review-breakdown';
-		$bar_selector  = '{{WRAPPER}} .wp-block-surecart-product-review-breakdown .sc-star-bars .sc-bar-wrap';
-		$fill_selector = '{{WRAPPER}} .wp-block-surecart-product-review-breakdown .sc-star-bars .sc-bar-wrap .sc-bar-fill';
+		$bar_selector  = '{{WRAPPER}} .wp-block-surecart-product-review-breakdown .sc-star-bars .sc-star-row__bar';
+		$fill_selector = '{{WRAPPER}} .wp-block-surecart-product-review-breakdown .sc-star-bars .sc-star-row__bar .sc-star-row__bar-fill';
 
 		$this->start_controls_section(
 			'star_bar_style',
@@ -227,7 +227,7 @@ class ProductReviewBreakdown extends \Elementor\Widget_Base {
 					'default' => \Elementor\Core\Kits\Documents\Tabs\Global_Colors::COLOR_PRIMARY,
 				],
 				'selectors' => [
-					"{$selector} .sc-star-label svg" => 'fill: {{VALUE}}; stroke: {{VALUE}};',
+					"{$selector} .sc-star-row__label svg" => 'fill: {{VALUE}}; stroke: {{VALUE}};',
 				],
 			)
 		);
@@ -363,7 +363,7 @@ class ProductReviewBreakdown extends \Elementor\Widget_Base {
 		$max_height = 2 === $columns ? 150 : ( 3 === $columns ? 85 : '' );
 		?>
 		<div class="wp-block-surecart-product-review-breakdown">
-			<div class="sc-star-bars sc-star-bars--columns-<?php echo esc_attr( $columns ); ?>" style="display: flex; flex-direction: column; flex-wrap: wrap; align-content: flex-start; max-height: <?php echo esc_attr( $max_height ); ?>px;">
+			<div class="sc-star-bars sc-star-bars__columns-<?php echo esc_attr( $columns ); ?>" style="display: flex; flex-direction: column; flex-wrap: wrap; align-content: flex-start; max-height: <?php echo esc_attr( $max_height ); ?>px;">
 				<?php
 				for ( $star = 5; $star >= 1; $star-- ) {
 					$count      = $breakdown_data[ $star ];
@@ -378,7 +378,7 @@ class ProductReviewBreakdown extends \Elementor\Widget_Base {
 					}
 					?>
 					<a href="#" class="sc-star-row" onclick="event.preventDefault();" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: inherit; cursor: pointer; transition: opacity 0.2s ease; <?php echo esc_attr( $width_style ); ?>">
-						<div class="sc-star-label" style="display: flex; align-items: center;">
+						<div class="sc-star-row__label" style="display: flex; align-items: center;">
 							<?php echo esc_html( $star ); ?>
 							<?php
 								echo wp_kses(
@@ -396,10 +396,10 @@ class ProductReviewBreakdown extends \Elementor\Widget_Base {
 								)
 							?>
 						</div>
-						<div class="sc-bar-wrap" style="flex: 1; height: 8px; border-radius: 4px; overflow: hidden; position: relative; min-width: 100px;">
-							<div class="sc-bar-fill" style="height: 100%; border-radius: 4px; width: <?php echo esc_attr( $percentage ); ?>%; transition: width 0.3s ease;"></div>
+						<div class="sc-star-row__bar" style="flex: 1; height: 8px; border-radius: 4px; overflow: hidden; position: relative; min-width: 100px;">
+							<div class="sc-star-row__bar-fill" style="height: 100%; border-radius: 4px; width: <?php echo esc_attr( $percentage ); ?>%; transition: width 0.3s ease;"></div>
 						</div>
-						<div class="sc-count" style="text-align: right;"><?php echo esc_html( $count ); ?></div>
+						<div class="sc-star-row__count" style="text-align: right;"><?php echo esc_html( $count ); ?></div>
 					</a>
 					<?php
 				}

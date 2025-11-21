@@ -7,7 +7,7 @@
 			SureCart::svg()->get(
 				'star',
 				[
-					'class'        => 'sc-star-svg',
+					'class'        => 'sc-star-row__label__svg',
 					'height'       => esc_attr( $size ),
 					'width'        => esc_attr( $size ),
 					'fill'         => $is_full ? $fill_color : 'none',

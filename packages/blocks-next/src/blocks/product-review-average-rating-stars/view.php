@@ -8,7 +8,7 @@
 			SureCart::svg()->get(
 				$is_half_star ? 'half-star' : 'star',
 				[
-					'class'  => 'sc-star-svg',
+					'class'  => 'sc-star-row__label__svg',
 					'height' => esc_attr( $size ),
 					'width'  => esc_attr( $size ),
 					'fill'   => $is_full_star || $is_half_star ? esc_attr( $fill_color ) : 'none',

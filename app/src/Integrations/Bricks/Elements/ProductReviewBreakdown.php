@@ -101,7 +101,7 @@ class ProductReviewBreakdown extends \Bricks\Element {
 			'css'         => [
 				[
 					'property' => 'gap',
-					'selector' => '.sc-star-label',
+					'selector' => '.sc-star-row__label',
 				],
 			],
 		];
@@ -167,15 +167,15 @@ class ProductReviewBreakdown extends \Bricks\Element {
 			'css'      => [
 				[
 					'property' => 'color',
-					'selector' => '.sc-star-label svg',
+					'selector' => '.sc-star-row__label svg',
 				],
 				[
 					'property' => 'fill',
-					'selector' => '.sc-star-label svg',
+					'selector' => '.sc-star-row__label svg',
 				],
 				[
 					'property' => 'stroke',
-					'selector' => '.sc-star-label svg',
+					'selector' => '.sc-star-row__label svg',
 				],
 			],
 		];
@@ -190,7 +190,7 @@ class ProductReviewBreakdown extends \Bricks\Element {
 			'css'     => [
 				[
 					'property' => 'background-color',
-					'selector' => '.sc-star-bars .sc-bar-wrap .sc-bar-fill',
+					'selector' => '.sc-star-bars .sc-star-row__bar .sc-star-row__bar-fill',
 				],
 			],
 		];
@@ -205,7 +205,7 @@ class ProductReviewBreakdown extends \Bricks\Element {
 			'css'     => [
 				[
 					'property' => 'background-color',
-					'selector' => '.sc-star-bars .sc-bar-wrap',
+					'selector' => '.sc-star-bars .sc-star-row__bar',
 				],
 			],
 		];
@@ -278,7 +278,7 @@ class ProductReviewBreakdown extends \Bricks\Element {
 			$max_height = 'max-height: 85px;';
 		}
 
-		$content = '<div class="sc-star-bars sc-star-bars--columns-' . esc_attr( $columns ) . '" style="display: flex; flex-direction: column; flex-wrap: wrap; align-content: flex-start; ' . $max_height . '">';
+		$content = '<div class="sc-star-bars sc-star-bars__columns-' . esc_attr( $columns ) . '" style="display: flex; flex-direction: column; flex-wrap: wrap; align-content: flex-start; ' . $max_height . '">';
 		for ( $star = 5; $star >= 1; $star-- ) {
 			$count      = $breakdown_data[ $star ];
 			$percentage = $total > 0 ? ( $count / $total ) * 100 : 0;
@@ -292,7 +292,7 @@ class ProductReviewBreakdown extends \Bricks\Element {
 			}
 
 			$content .= '<a href="#" class="sc-star-row" onclick="event.preventDefault();" style="display: flex; width: 100%; align-items: center; gap: 8px; text-decoration: none; color: inherit; cursor: pointer; transition: opacity 0.2s ease; ' . $width_style . '">';
-			$content .= '<div class="sc-star-label" style="display: flex; align-items: center; justify-content: center;">';
+			$content .= '<div class="sc-star-row__label" style="display: flex; align-items: center; justify-content: center;">';
 			$content .= esc_html( $star );
 			$content .= wp_kses(
 				\SureCart::svg()->get(
@@ -308,10 +308,10 @@ class ProductReviewBreakdown extends \Bricks\Element {
 				sc_allowed_svg_html()
 			);
 			$content .= '</div>';
-			$content .= '<div class="sc-bar-wrap" style="flex: 1; height: 8px; border-radius: 4px; overflow: hidden; position: relative; min-width: 100px;">';
-			$content .= '<div class="sc-bar-fill" style="height: 100%; border-radius: 4px; width: ' . esc_attr( $percentage ) . '%; transition: width 0.3s ease;"></div>';
+			$content .= '<div class="sc-star-row__bar" style="flex: 1; height: 8px; border-radius: 4px; overflow: hidden; position: relative; min-width: 100px;">';
+			$content .= '<div class="sc-star-row__bar-fill" style="height: 100%; border-radius: 4px; width: ' . esc_attr( $percentage ) . '%; transition: width 0.3s ease;"></div>';
 			$content .= '</div>';
-			$content .= '<div class="sc-count" style="text-align: right;">' . esc_html( $count ) . '</div>';
+			$content .= '<div class="sc-star-row__count" style="text-align: right;">' . esc_html( $count ) . '</div>';
 			$content .= '</a>';
 		}
 		$content .= '</div>';

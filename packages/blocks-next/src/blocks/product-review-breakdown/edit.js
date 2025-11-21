@@ -155,7 +155,7 @@ export default function ({ attributes, setAttributes, clientId }) {
 
 			<div {...blockProps}>
 				<div
-					className={`sc-star-bars sc-star-bars--columns-${columns}`}
+					className={`sc-star-bars sc-star-bars__columns-${columns}`}
 					style={{
 						rowGap: `${row_gap}px`,
 						columnGap: `${column_gap}px`,
@@ -169,11 +169,11 @@ export default function ({ attributes, setAttributes, clientId }) {
 						return (
 							<div className="sc-star-row" key={star}>
 								<div
-									className="sc-star-label"
+									className="sc-star-row__label"
 									style={{ gap: `${star_label_gap}px` }}
 								>
 									<span className="sc-star-text">{star}</span>
-									<span className="sc-star-svg">
+									<span className="sc-star-row__label__svg">
 										<ScIcon
 											name="star"
 											width={size}
@@ -192,14 +192,14 @@ export default function ({ attributes, setAttributes, clientId }) {
 								</div>
 
 								<div
-									className="sc-bar-wrap"
+									className="sc-star-row__bar"
 									style={{
 										backgroundColor:
 											bar_background_color || undefined,
 									}}
 								>
 									<div
-										className="sc-bar-fill"
+										className="sc-star-row__bar-fill"
 										style={{
 											width: `${percentage}%`,
 											backgroundColor:
@@ -208,7 +208,7 @@ export default function ({ attributes, setAttributes, clientId }) {
 									/>
 								</div>
 
-								<div className="sc-count">{count}</div>
+								<div className="sc-star-row__count">{count}</div>
 							</div>
 						);
 					})}

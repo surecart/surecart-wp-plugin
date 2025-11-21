@@ -45,6 +45,7 @@
 						"_title": "Review summary",
 						"background_background": "classic",
 						"background_color": "#F7F9FB",
+						"border_color": "#EEEEEE",
 						"border_border": "solid",
 						"border_width": {
 							"unit": "px",
