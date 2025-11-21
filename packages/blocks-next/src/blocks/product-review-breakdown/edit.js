@@ -72,7 +72,7 @@ export default function ({ attributes, setAttributes, clientId }) {
 							setAttributes({ columns: parseInt(value) })
 						}
 						help={__(
-							'Choose the number of columns to display the review breakdown.',
+							'Choose the number of columns to display the review breakdown. You may need to adjust the row & column gap accordingly.',
 							'surecart'
 						)}
 					/>
@@ -89,19 +89,21 @@ export default function ({ attributes, setAttributes, clientId }) {
 						)}
 					/>
 
-					<RangeControl
-						label={__('Column gap', 'surecart')}
-						value={column_gap}
-						onChange={(value) =>
-							setAttributes({ column_gap: value })
-						}
-						min={0}
-						max={50}
-						help={__(
-							'Adjust the spacing between columns.',
-							'surecart'
-						)}
-					/>
+					{columns > 1 && (
+						<RangeControl
+							label={__('Column gap', 'surecart')}
+							value={column_gap}
+							onChange={(value) =>
+								setAttributes({ column_gap: value })
+							}
+							min={0}
+							max={50}
+							help={__(
+								'Adjust the spacing between columns.',
+								'surecart'
+							)}
+						/>
+					)}
 
 					<RangeControl
 						label={__('Star size', 'surecart')}
@@ -208,7 +210,9 @@ export default function ({ attributes, setAttributes, clientId }) {
 									/>
 								</div>
 
-								<div className="sc-star-row__count">{count}</div>
+								<div className="sc-star-row__count">
+									{count}
+								</div>
 							</div>
 						);
 					})}

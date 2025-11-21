@@ -29,6 +29,10 @@ export const TEMPLATE = [
 							margin: {
 								bottom: 'var:preset|spacing|50',
 							},
+							layout: {
+								selfStretch: 'fill',
+								flexSize: null,
+							},
 						},
 					},
 					layout: {
@@ -49,10 +53,10 @@ export const TEMPLATE = [
 										right: 'var:preset|spacing|50',
 									},
 									blockGap: 'var:preset|spacing|30',
-									layout: {
-										selfStretch: 'fill',
-										flexSize: null,
-									},
+								},
+								layout: {
+									selfStretch: 'fill',
+									flexSize: null,
 								},
 							},
 							layout: {
@@ -142,8 +146,8 @@ export const TEMPLATE = [
 						'surecart/product-review-breakdown',
 						{
 							className: 'is-style-default',
-							columns: 2,
-							row_gap: 20,
+							columns: 1,
+							row_gap: 2,
 							style: {
 								layout: {
 									selfStretch: 'fill',

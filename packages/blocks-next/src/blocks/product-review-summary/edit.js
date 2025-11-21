@@ -55,6 +55,7 @@ export default function Edit() {
 						},
 						layout: {
 							type: 'flex',
+							selfStretch: 'fill',
 							flexWrap: 'nowrap',
 							orientation: 'vertical',
 						},
@@ -138,7 +139,8 @@ export default function Edit() {
 				[
 					'surecart/product-review-breakdown',
 					{
-						columns: 2,
+						columns: 1,
+						row_gap: 2,
 						className: 'is-style-default',
 						style: {
 							layout: {
