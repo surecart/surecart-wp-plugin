@@ -85,7 +85,7 @@ add_filter(
 add_filter(
 	'surecart/subscription/can_be_changed',
 	function ( $can_be_switched = true, $subscription = null ) {
-		if ( empty( $subscription ) || empty( $subscription->current_period ) ) {
+		if ( empty( $can_be_switched ) || empty( $subscription ) || empty( $subscription->current_period ) ) {
 			return $can_be_switched;
 		}
 		$current_period = $subscription->current_period;
@@ -95,6 +95,31 @@ add_filter(
 		}
 
 		return false;
+	},
+	10,
+	2
+);
+
+add_filter(
+	'surecart_after_current_plan_details',
+	function ( $content = '', $subscription = null ) {
+		if ( empty( $subscription ) || empty( $subscription->current_period ) ) {
+			return null;
+		}
+		$current_period = $subscription->current_period;
+
+		if ( empty( $current_period->checkout ) || empty( $current_period->checkout->metadata ) || empty( $current_period->checkout->metadata->wp_created_by ) ) {
+			return null;
+		}
+
+		ob_start();
+		?>
+		<sc-button type="primary" href="https://vault.brainstormforce.com/customer-dashboard" target="_blank">
+			<sc-icon name="inbox" slot="prefix"></sc-icon>
+			<?php echo __( 'Manage from Vault', 'surecart' ); ?>
+		</sc-button>
+		<?php
+		return ob_get_clean();
 	},
 	10,
 	2
