@@ -147,10 +147,10 @@ export class ScStripePaymentElement {
       }
       this.element = null;
     }
-    if(processorsState?.instances?.stripeElements) {
+    if (processorsState?.instances?.stripeElements) {
       processorsState.instances.stripeElements = null;
     }
-    if(processorsState?.instances?.stripe) {
+    if (processorsState?.instances?.stripe) {
       processorsState.instances.stripe = null;
     }
   }
