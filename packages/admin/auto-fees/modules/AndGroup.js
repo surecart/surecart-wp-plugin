@@ -20,7 +20,7 @@ import {
 	ScIcon,
 } from '@surecart/components-react';
 import DateTimePicker from './DateTimePicker';
-import { formatDateTime } from '../../util/time';
+import { formatDate } from '../../util/time';
 import { getInputType } from '../utils/ruleQueryUtils';
 import { attributeLabels, operatorLabels } from '../utils/labelTranslations';
 
@@ -159,7 +159,7 @@ export default ({
 								<ScInput
 									value={
 										date
-											? formatDateTime(date * 1000)
+											? formatDate(date * 1000)
 											: __('Set Date', 'surecart')
 									}
 									onClick={onToggle}
