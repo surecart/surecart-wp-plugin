@@ -204,7 +204,12 @@ class SubscriptionController extends BaseController {
 				)->render()
 			);
 			?>
-		<?php echo wp_kses_post( apply_filters( 'surecart_after_current_plan_details', 'Testing', $subscription ) ); ?>
+		<?php
+		$after_current_plan = apply_filters( 'surecart_after_current_plan_details', '', $subscription );
+		if ( ! empty( $after_current_plan ) ) {
+			echo wp_kses_post( $after_current_plan );
+		}
+		?>
 		<?php
 		// show switch if we can change it.
 		if ( $subscription->canBeSwitched() ) :
