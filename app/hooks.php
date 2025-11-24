@@ -59,3 +59,43 @@ add_filter(
 		return $url;
 	}
 );
+
+// Will remove this from this branch & provide BSF Bundle Team.
+
+// Do not display the cancel, update/add payment method buttons, restore/resubscribe buttons if current purchase is a BSF Vault purchase.
+add_filter(
+	'surecart_plan_show_action_buttons',
+	function ( $subscription = null ) {
+		if ( empty( $subscription ) || empty( $subscription->current_period ) ) {
+			return true;
+		}
+		$current_period = $subscription->current_period;
+
+		if ( empty( $current_period->checkout ) || empty( $current_period->checkout->metadata ) || empty( $current_period->checkout->metadata->wp_created_by ) ) {
+			return true;
+		}
+
+		return false;
+	},
+	10,
+	1
+);
+
+// Do not display the Update Plan/ Change Plan section if current purchase is a BSF Vault purchase.
+add_filter(
+	'surecart/subscription/can_be_changed',
+	function ( $can_be_switched = true, $subscription = null ) {
+		if ( empty( $subscription ) || empty( $subscription->current_period ) ) {
+			return $can_be_switched;
+		}
+		$current_period = $subscription->current_period;
+
+		if ( empty( $current_period->checkout ) || empty( $current_period->checkout->metadata ) || empty( $current_period->checkout->metadata->wp_created_by ) ) {
+			return $can_be_switched;
+		}
+
+		return false;
+	},
+	10,
+	2
+);

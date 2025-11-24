@@ -3652,6 +3652,10 @@ export namespace Components {
          */
         "query": object;
         /**
+          * Whether to show the subscription actions
+         */
+        "showActionButtons": boolean;
+        /**
           * Whether to show the cancel button
          */
         "showCancel": boolean;
@@ -3687,6 +3691,10 @@ export namespace Components {
         "subscription": Subscription;
     }
     interface ScSubscriptionNextPayment {
+        /**
+          * Whether to show the subscription actions
+         */
+        "showActionButtons": boolean;
         "subscription": Subscription;
         /**
           * Update the payment method url
@@ -10930,6 +10938,10 @@ declare namespace LocalJSX {
          */
         "query"?: object;
         /**
+          * Whether to show the subscription actions
+         */
+        "showActionButtons"?: boolean;
+        /**
           * Whether to show the cancel button
          */
         "showCancel"?: boolean;
@@ -10967,6 +10979,10 @@ declare namespace LocalJSX {
         "subscription"?: Subscription;
     }
     interface ScSubscriptionNextPayment {
+        /**
+          * Whether to show the subscription actions
+         */
+        "showActionButtons"?: boolean;
         "subscription"?: Subscription;
         /**
           * Update the payment method url

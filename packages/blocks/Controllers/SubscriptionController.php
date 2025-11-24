@@ -186,6 +186,7 @@ class SubscriptionController extends BaseController {
 					[
 						'heading'                => __( 'Current Plan', 'surecart' ),
 						'showCancel'             => \SureCart::account()->customer_portal_protocol->subscription_cancellations_enabled && ! $subscription->remaining_period_count && ! $should_delay_cancellation,
+						'showActionButtons'      => apply_filters( 'surecart_plan_show_action_buttons', $subscription ),
 						'protocol'               => SubscriptionProtocol::with( [ 'preservation_coupon' ] )->find(), // \SureCart::account()->subscription_protocol,
 						'subscription'           => $subscription,
 						'updatePaymentMethodUrl' => esc_url_raw(
