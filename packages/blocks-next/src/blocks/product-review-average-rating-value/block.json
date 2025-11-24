@@ -23,7 +23,7 @@
 		},
 		{
 			"name": "slash",
-			"label": "/ 5.0"
+			"label": " / 5.0"
 		}
 	],
 	"supports": {
@@ -57,7 +57,5 @@
 	},
 	"textdomain": "surecart",
 	"render": "file:./view.php",
-	"editorScript": "file:./index.js",
-	"editorStyle": "file:./index.css",
-	"style": "file:./style-index.css"
+	"editorScript": "file:./index.js"
 }

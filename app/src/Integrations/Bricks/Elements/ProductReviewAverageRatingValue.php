@@ -81,18 +81,7 @@ class ProductReviewAverageRatingValue extends \Bricks\Element {
 		$class_name   = 'none' === $format_style ? '' : 'is-style-' . $format_style;
 
 		if ( $this->is_admin_editor() ) {
-			$display_value = '4.3';
-			if ( 'parentheses' === $format_style ) {
-				$display_value = '(4.3)';
-			} elseif ( 'slash' === $format_style ) {
-				$display_value = '4.3 / 5.0';
-			}
-
-			echo $this->preview( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-				esc_html( $display_value ),
-				'wp-block-surecart-product-review-average-rating-value ' . esc_attr( $class_name ),
-				'span'
-			);
+			$this->render_preview( $format_style );
 			return;
 		}
 
@@ -101,5 +90,24 @@ class ProductReviewAverageRatingValue extends \Bricks\Element {
 				'className' => esc_attr( $class_name ),
 			]
 		);
+	}
+
+	/**
+	 * Render admin preview.
+	 *
+	 * @param string $format_style Format style.
+	 *
+	 * @return void
+	 */
+	public function render_preview( $format_style ) {
+		$content = '4.5';
+
+		if ( 'parentheses' === $format_style ) {
+			$content = '(' . $content . ')';
+		} elseif ( 'slash' === $format_style ) {
+			$content = $content . ' / 5.0';
+		}
+
+		echo $this->preview( $content ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 }

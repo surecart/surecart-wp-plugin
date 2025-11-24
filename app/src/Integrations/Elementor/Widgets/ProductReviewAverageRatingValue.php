@@ -164,16 +164,16 @@ class ProductReviewAverageRatingValue extends \Elementor\Widget_Base {
 	 * @return void
 	 */
 	public function render_preview( $class_name ): void {
-		?>
-			<style>
-				.wp-block-surecart-product-review-average-rating-value.is-style-parentheses::before {content: "(";}
-				.wp-block-surecart-product-review-average-rating-value.is-style-parentheses::after {content: ")";}
-				.wp-block-surecart-product-review-average-rating-value.is-style-slash::after {content: "/ 5.0";}
-			</style>
+		$product = sc_get_product();
+		$content = ! empty( $product->average_stars ) ? (string) $product->average_stars : '4.5';
 
-			<span class="wp-block-surecart-product-review-average-rating-value <?php echo esc_attr( trim( $class_name ) ); ?>">
-				4.3
-			</span>
-		<?php
+		if ( str_contains( $class_name, 'is-style-parentheses' ) ) {
+			$content = '(' . $content . ')';
+		} elseif ( str_contains( $class_name, 'is-style-slash' ) ) {
+			$content = $content . ' / 5.0';
+		}
+
+		echo $this->get_render_attribute_string( 'wrapper' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo '<div class="' . esc_attr( trim( $class_name ) ) . '">' . esc_html( $content ) . '</div>';
 	}
 }
