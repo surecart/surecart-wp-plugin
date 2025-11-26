@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: ecommerce, online store, subscriptions, stripe, payments
 Requires at least: 6.6
 Tested up to: 6.8
-Stable tag: 3.16.2
+Stable tag: 3.16.6
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -313,7 +313,30 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 
 == Changelog ==
 
-= 3.16.2 - Octover 27th, 2025 =
+= 3.16.6 - Novermber 18th, 2025 =
+- Fix: Revert previous Stripe change as they are rolling out a fix on their end.
+
+= 3.16.5 - Novermber 18th, 2025 =
+- Fix: Issue with Stripe payment element not loading for non-recurring payments due to remote API change.
+
+= 3.16.4 - November 10th, 2025 =
+- New: Ability to bulk delete customers.
+- Fix: Issue where a user wants to override menu order on products.
+- Fix: Product search does not work inside product list sidebar.
+- Fix: Issue with FSE themes where the "Edit Template" button takes you to the default template instead of the assigned one.
+- Fix: Issue with the block variants block not rendering properly on the upsell edit UI.
+- Fix: Issue where attribute-related error messages were not being prioritized over specific error code messages.
+- Fix: Incorrect download file quantity on customer dashboard if more than 20 downloads.
+
+= 3.16.3 - October 30th, 2025 =
+- Change: Allow up to 300 variants per product.
+- Fix: Issue with Elementor form selection module not appearing when only the free version of Elementor is installed.
+- Fix: Error with product list shortcode when multiple collection IDs are passed.
+- Fix: Manual payment methods not appearing on the customer dashboard "Add Payment Methods" page.
+- Fix: Recurring commissions with AffiliateWP when a free trial becomes active.
+- Fix: Issue where tax override could not be set to 0%.
+
+= 3.16.2 - October 27th, 2025 =
 - Fix: Issue with dashboard charts not using correct currency.
 
 = 3.16.1 - October 24th, 2025 =
