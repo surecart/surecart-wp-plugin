@@ -126,48 +126,48 @@ export class ScSubscriptionNextPayment {
 
             <sc-line-item>
               <span slot="description">{__('Subtotal', 'surecart')}</span>
-              {checkout?.subtotal_display_amount}
+              <span slot="price-description">{checkout?.subtotal_display_amount}</span>
             </sc-line-item>
 
             {!!checkout.proration_amount && (
               <sc-line-item>
                 <span slot="description">{__('Proration Credit', 'surecart')}</span>
-                {checkout?.proration_display_amount}
+                <span slot="price-description">{checkout?.proration_display_amount}</span>
               </sc-line-item>
             )}
 
             {!!checkout.applied_balance_amount && (
               <sc-line-item>
                 <span slot="description">{__('Applied Balance', 'surecart')}</span>
-                {checkout?.applied_balance_display_amount}
+                <span slot="price-description">{checkout?.applied_balance_display_amount}</span>
               </sc-line-item>
             )}
 
             {!!checkout.trial_amount && (
               <sc-line-item>
                 <span slot="description">{__('Trial', 'surecart')}</span>
-                {checkout?.trial_display_amount}
+                <span slot="price-description">{checkout?.trial_display_amount}</span>
               </sc-line-item>
             )}
 
             {!!checkout?.discount_amount && (
               <sc-line-item>
                 <span slot="description">{__('Discounts', 'surecart')}</span>
-                {checkout?.discounts_display_amount}
+                <span slot="price-description">{checkout?.discounts_display_amount}</span>
               </sc-line-item>
             )}
 
             {!!checkout?.shipping_amount && (
               <sc-line-item style={{ marginTop: 'var(--sc-spacing-small)' }}>
                 <span slot="description">{__('Shipping', 'surecart')}</span>
-                {checkout?.shipping_display_amount}
+                <span slot="price-description">{checkout?.shipping_display_amount}</span>
               </sc-line-item>
             )}
 
             {!!checkout.tax_amount && (
               <sc-line-item>
                 <span slot="description">{formatTaxDisplay(checkout?.tax_label)}</span>
-                {checkout?.tax_display_amount}
+                <span slot="price-description">{checkout?.tax_display_amount}</span>
               </sc-line-item>
             )}
 
