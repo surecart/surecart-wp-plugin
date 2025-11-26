@@ -172,8 +172,10 @@ class ProductReviewAverageRatingValue extends \Elementor\Widget_Base {
 		} elseif ( str_contains( $class_name, 'is-style-slash' ) ) {
 			$content = $content . ' / 5.0';
 		}
-
-		echo $this->get_render_attribute_string( 'wrapper' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-		echo '<div class="' . esc_attr( trim( $class_name ) ) . '">' . esc_html( $content ) . '</div>';
+		?>
+		<div class="wp-block-surecart-product-review-average-rating-value">
+			<span class="<?php echo esc_attr( trim( $class_name ) ); ?>"><?php echo esc_html( $content ); ?></span>
+		</div>
+		<?php
 	}
 }
