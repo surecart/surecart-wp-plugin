@@ -27,7 +27,7 @@
 		},
 		"row_gap": {
 			"type": "number",
-			"default": 20
+			"default": 2
 		},
 		"column_gap": {
 			"type": "number",

@@ -12,7 +12,8 @@
 				"name": "core/heading",
 				"attributes": {
 					"content": "Customer Reviews",
-					"level": 2
+					"level": 2,
+					"style": { "spacing": { "margin": { "bottom": "32px" } } }
 				}
 			},
 			{
@@ -146,8 +147,8 @@
 								"name": "surecart/product-review-breakdown",
 								"attributes": {
 									"className": "is-style-default",
-									"columns": 2,
-									"row_gap": 20,
+									"columns": 1,
+									"row_gap": 2,
 									"style": {
 										"layout": {
 											"selfStretch": "fill",

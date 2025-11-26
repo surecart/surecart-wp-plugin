@@ -6,6 +6,13 @@ export const TEMPLATE = [
 		{
 			content: __('Customer Reviews', 'surecart'),
 			level: 2,
+			style: {
+				spacing: {
+					margin: {
+						bottom: '32px',
+					},
+				},
+			},
 		},
 	],
 	[
@@ -189,7 +196,7 @@ export const TEMPLATE = [
 			layout: {
 				type: 'flex',
 				orientation: 'horizontal',
-				verticalAlignment: 'top',
+				verticalAlignment: 'center',
 				flexWrap: 'nowrap',
 				justifyContent: 'space-between',
 			},
@@ -404,6 +411,14 @@ export const TEMPLATE = [
 									[
 										'core/group',
 										{
+											className: 'sc-review-header-group',
+											style: {
+												spacing: {
+													margin: {
+														bottom: '16px',
+													},
+												},
+											},
 											layout: {
 												type: 'flex',
 												flexWrap: 'nowrap',
@@ -434,6 +449,9 @@ export const TEMPLATE = [
 																	padding: {
 																		top: '0',
 																		bottom: '0',
+																	},
+																	margin: {
+																		right: '8px',
 																	},
 																},
 																typography: {
@@ -494,7 +512,15 @@ export const TEMPLATE = [
 									],
 									[
 										'surecart/product-review-rating-stars',
-										{},
+										{
+											style: {
+												spacing: {
+													margin: {
+														bottom: '16px',
+													},
+												},
+											},
+										},
 									],
 									[
 										'surecart/product-review-title',
@@ -503,6 +529,11 @@ export const TEMPLATE = [
 												typography: {
 													fontStyle: 'normal',
 													fontWeight: '700',
+												},
+												spacing: {
+													margin: {
+														bottom: '8px',
+													},
 												},
 											},
 										},
