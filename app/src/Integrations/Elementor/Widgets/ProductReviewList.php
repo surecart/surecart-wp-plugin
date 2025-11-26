@@ -150,9 +150,9 @@ class ProductReviewList extends \Elementor\Widget_Base {
 		$this->end_controls_section();
 
 		$this->start_controls_section(
-			'section_review_list_content',
+			'section_review_list_item',
 			[
-				'label' => esc_html__( 'Review Content', 'surecart' ),
+				'label' => esc_html__( 'Review Item', 'surecart' ),
 			]
 		);
 
@@ -584,7 +584,7 @@ class ProductReviewList extends \Elementor\Widget_Base {
 
 		// Header.
 		if ( $show_header ) {
-			$content .= '<!-- wp:surecart/product-review-list-content-header {"style":{"border":{"bottom":{"color":"#eeeeee","width":"1px"}},"spacing":{"padding":{"top":"var:preset|spacing|40","bottom":"var:preset|spacing|40"},"margin":{"top":"0","bottom":"0"}}},"layout":{"type":"flex","orientation":"horizontal","verticalAlignment":"top","flexWrap":"nowrap","justifyContent":"space-between"}} -->';
+			$content .= '<!-- wp:surecart/product-review-list-content-header {"style":{"border":{"bottom":{"color":"#eeeeee","width":"1px"}},"spacing":{"padding":{"top":"var:preset|spacing|40","bottom":"var:preset|spacing|40"},"margin":{"top":"0","bottom":"0"}}},"layout":{"type":"flex","orientation":"horizontal","verticalAlignment":"center","flexWrap":"nowrap","justifyContent":"space-between"}} -->';
 			$content .= $show_sidebar ? '<!-- wp:surecart/product-review-list-sidebar-toggle {"style":{"typography":{"fontWeight":"600","fontStyle":"normal"}}} /-->' : '&nbsp;';
 
 			if ( $show_add_button ) {

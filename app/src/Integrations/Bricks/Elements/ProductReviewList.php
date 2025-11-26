@@ -68,8 +68,8 @@ class ProductReviewList extends \Bricks\Element {
 			'required' => [ 'show_add_button', '=', true ],
 		];
 
-		$this->control_groups['review_content'] = [
-			'title' => esc_html__( 'Review Content', 'surecart' ),
+		$this->control_groups['review_item'] = [
+			'title' => esc_html__( 'Review Item', 'surecart' ),
 			'tab'   => 'content',
 		];
 
@@ -179,7 +179,7 @@ class ProductReviewList extends \Bricks\Element {
 
 		$this->controls['show_review_date'] = [
 			'tab'     => 'content',
-			'group'   => 'review_content',
+			'group'   => 'review_item',
 			'label'   => esc_html__( 'Show Review Date', 'surecart' ),
 			'type'    => 'checkbox',
 			'default' => true,
@@ -187,7 +187,7 @@ class ProductReviewList extends \Bricks\Element {
 
 		$this->controls['show_content'] = [
 			'tab'     => 'content',
-			'group'   => 'review_content',
+			'group'   => 'review_item',
 			'label'   => esc_html__( 'Show Review Content', 'surecart' ),
 			'type'    => 'checkbox',
 			'default' => true,
@@ -195,7 +195,7 @@ class ProductReviewList extends \Bricks\Element {
 
 		$this->controls['verified_badge_icon_size'] = [
 			'tab'         => 'content',
-			'group'       => 'review_content',
+			'group'       => 'review_item',
 			'label'       => esc_html__( 'Verified Badge Icon Size', 'surecart' ),
 			'type'        => 'number',
 			'units'       => true,
@@ -219,7 +219,7 @@ class ProductReviewList extends \Bricks\Element {
 
 		$this->controls['fill_color'] = [
 			'tab'     => 'content',
-			'group'   => 'review_content',
+			'group'   => 'review_item',
 			'label'   => esc_html__( 'Star Color', 'surecart' ),
 			'type'    => 'color',
 			'default' => [
@@ -241,7 +241,7 @@ class ProductReviewList extends \Bricks\Element {
 		// Star Icon size.
 		$this->controls['star_size'] = [
 			'tab'         => 'content',
-			'group'       => 'review_content',
+			'group'       => 'review_item',
 			'label'       => esc_html__( 'Star Icon Size', 'surecart' ),
 			'type'        => 'number',
 			'units'       => true,
@@ -265,7 +265,7 @@ class ProductReviewList extends \Bricks\Element {
 		// Review border color.
 		$this->controls['review_border_color'] = [
 			'tab'     => 'content',
-			'group'   => 'review_content',
+			'group'   => 'review_item',
 			'label'   => esc_html__( 'Review Border Color', 'surecart' ),
 			'type'    => 'color',
 			'reset'   => true,
@@ -283,7 +283,7 @@ class ProductReviewList extends \Bricks\Element {
 		// Review spacing (padding top/bottom).
 		$this->controls['review_spacing'] = [
 			'tab'     => 'content',
-			'group'   => 'review_content',
+			'group'   => 'review_item',
 			'label'   => esc_html__( 'Review Spacing', 'surecart' ),
 			'type'    => 'number',
 			'units'   => true,
@@ -304,7 +304,7 @@ class ProductReviewList extends \Bricks\Element {
 
 		$this->controls['no_reviews_text'] = [
 			'tab'         => 'content',
-			'group'       => 'review_content',
+			'group'       => 'review_item',
 			'label'       => esc_html__( 'No Reviews Text', 'surecart' ),
 			'type'        => 'text',
 			'default'     => esc_html__( 'No reviews yet, write one now?', 'surecart' ),
@@ -363,7 +363,7 @@ class ProductReviewList extends \Bricks\Element {
 		// Header.
 		if ( $show_header ) {
 			$content .= '<!-- wp:surecart/product-review-list-content-header {"style":{"border":{"bottom":{"color":"#eeeeee","width":"1px"}},"spacing":{"padding":{"top":"var:preset|spacing|40","bottom":"var:preset|spacing|40"},"margin":{"top":"0","bottom":"0"}}},"layout":{"type":"flex","orientation":"horizontal","verticalAlignment":"center","flexWrap":"nowrap","justifyContent":"space-between"}} -->';
-			$content .= $show_sidebar ? '<!-- wp:surecart/product-review-list-sidebar-toggle {"label":"Filters","style":{"typography":{"fontWeight":"600","fontStyle":"normal"}}} /-->' : '&nbsp;';
+			$content .= $show_sidebar ? '<!-- wp:surecart/product-review-list-sidebar-toggle {"style":{"typography":{"fontWeight":"600","fontStyle":"normal"}}} /-->' : '&nbsp;';
 
 			if ( $show_add_button ) {
 				$content .= '<!-- wp:group {"layout":{"type":"constrained"}} --><div class="wp-block-group">' . $this->get_review_add_button_content() . '</div><!-- /wp:group -->';
