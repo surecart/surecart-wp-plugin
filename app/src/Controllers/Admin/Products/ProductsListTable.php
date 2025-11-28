@@ -251,7 +251,10 @@ class ProductsListTable extends ListTable {
 	 * @return array
 	 */
 	public function get_sortable_columns() {
-		return array( 'title' => array( 'title', false ) );
+		return array(
+			'name' => array( 'name', true ),
+			'date' => array( 'cataloged_at', true ),
+		);
 	}
 
 	/**
@@ -283,6 +286,27 @@ class ProductsListTable extends ListTable {
 			$product_query->where(
 				array(
 					'product_collection_ids' => array( sanitize_text_field( wp_unslash( $_GET['sc_collection'] ) ) ),  // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+				)
+			);
+		}
+
+		// Add sorting parameters.
+		$orderby = ! empty( $_GET['orderby'] ) ? sanitize_text_field( wp_unslash( $_GET['orderby'] ) ) : 'created_at'; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$order   = ! empty( $_GET['order'] ) ? sanitize_text_field( wp_unslash( $_GET['order'] ) ) : 'desc'; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+
+		// Map WordPress column names to API sort columns.
+		$sort_map = array(
+			'name'         => 'name',
+			'cataloged_at' => 'cataloged_at',
+			'created_at'   => 'created_at',
+			'updated_at'   => 'updated_at',
+		);
+
+		// Apply sort parameter if valid.
+		if ( isset( $sort_map[ $orderby ] ) ) {
+			$product_query->where(
+				array(
+					'sort' => $sort_map[ $orderby ] . ':' . $order,
 				)
 			);
 		}
