@@ -258,6 +258,21 @@ class ProductsListTable extends ListTable {
 	}
 
 	/**
+	 * Get the sort map.
+	 *
+	 * @return array
+	 */
+	public function get_sort_map(): array {
+		return array_merge(
+			array(
+				'name'         => 'name',
+				'cataloged_at' => 'cataloged_at',
+			),
+			parent::get_sort_map()
+		);
+	}
+
+	/**
 	 * Get the table data
 	 *
 	 * @return array|\WP_Error
@@ -294,19 +309,11 @@ class ProductsListTable extends ListTable {
 		$orderby = ! empty( $_GET['orderby'] ) ? sanitize_text_field( wp_unslash( $_GET['orderby'] ) ) : 'created_at'; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		$order   = ! empty( $_GET['order'] ) ? sanitize_text_field( wp_unslash( $_GET['order'] ) ) : 'desc'; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
-		// Map WordPress column names to API sort columns.
-		$sort_map = array(
-			'name'         => 'name',
-			'cataloged_at' => 'cataloged_at',
-			'created_at'   => 'created_at',
-			'updated_at'   => 'updated_at',
-		);
-
 		// Apply sort parameter if valid.
-		if ( isset( $sort_map[ $orderby ] ) ) {
+		if ( isset( $this->get_sort_map()[ $orderby ] ) ) {
 			$product_query->where(
 				array(
-					'sort' => $sort_map[ $orderby ] . ':' . $order,
+					'sort' => $this->get_sort_map()[ $orderby ] . ':' . $order,
 				)
 			);
 		}
