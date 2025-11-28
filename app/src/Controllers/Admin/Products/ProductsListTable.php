@@ -306,14 +306,16 @@ class ProductsListTable extends ListTable {
 		}
 
 		// Add sorting parameters.
-		$orderby = ! empty( $_GET['orderby'] ) ? sanitize_text_field( wp_unslash( $_GET['orderby'] ) ) : 'created_at'; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$orderby = ! empty( $_GET['orderby'] ) ? sanitize_text_field( wp_unslash( $_GET['orderby'] ) ) : 'cataloged_at'; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		$order   = ! empty( $_GET['order'] ) ? sanitize_text_field( wp_unslash( $_GET['order'] ) ) : 'desc'; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$order   = ( 'asc' === strtolower( $order ) ) ? 'asc' : 'desc';
 
 		// Apply sort parameter if valid.
-		if ( isset( $this->get_sort_map()[ $orderby ] ) ) {
+		$sort_map = $this->get_sort_map();
+		if ( isset( $sort_map[ $orderby ] ) ) {
 			$product_query->where(
 				array(
-					'sort' => $this->get_sort_map()[ $orderby ] . ':' . $order,
+					'sort' => $sort_map[ $orderby ] . ':' . $order,
 				)
 			);
 		}
