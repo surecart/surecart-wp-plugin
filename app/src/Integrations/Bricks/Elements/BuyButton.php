@@ -122,7 +122,7 @@ class BuyButton extends \Bricks\Element {
 			'reset' => true,
 		];
 
-		// Icon
+		// Icon.
 		$this->controls['iconSeparator'] = [
 			'label' => esc_html__( 'Icon', 'surecart' ),
 			'type'  => 'separator',
@@ -240,9 +240,9 @@ class BuyButton extends \Bricks\Element {
 
 		// Set tag and attributes.
 		if ( $is_buy_now ) {
-			$this->tag = 'a';
+			$this->tag = 'button';
 			$this->set_attribute( '_root', 'data-wp-bind--disabled', 'state.isUnavailable' );
-			$this->set_attribute( '_root', 'data-wp-bind--href', 'state.checkoutUrl' );
+			$this->set_attribute( '_root', 'data-wp-on--click', 'callbacks.redirectToCheckout' );
 		} else {
 			$this->tag = 'button';
 			$this->set_attribute( '_root', 'data-wp-bind--disabled', 'state.isUnavailable' );
