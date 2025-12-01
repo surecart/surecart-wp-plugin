@@ -316,6 +316,7 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 = 3.16.7 - December 1st, 2025 =
 - New: Internal product and collection seeding feature.
 - Fix: WordPress 6.9 compatibility.
+- Fix: Small Bricks css compatibility script was sometimes loading on non-Bricks themes.
 
 = 3.16.6 - Novermber 18th, 2025 =
 - Fix: Revert previous Stripe change as they are rolling out a fix on their end.
