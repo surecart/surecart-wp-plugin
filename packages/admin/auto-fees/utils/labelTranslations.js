@@ -23,6 +23,10 @@ export const attributeLabels = {
 	'checkout.order.order_type': __('Checkout Order Type', 'surecart'),
 	'checkout.order_type': __('Checkout Order Type', 'surecart'),
 	'checkout.subtotal_amount': __('Checkout Subtotal Amount', 'surecart'),
+	'original_checkout.not_revoked_purchases_quantity': __(
+		'Original Checkout Not Revoked Purchases Quantity',
+		'surecart'
+	),
 
 	// Customer attributes
 	'customer.created_at': __('Customer Created At', 'surecart'),
