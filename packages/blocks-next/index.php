@@ -207,16 +207,7 @@ add_action(
 		wp_register_script_module(
 			'@surecart/api-fetch',
 			trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/fetch/index.js',
-			array(
-				array(
-					'id'     => 'wp-url',
-					'import' => 'dynamic',
-				),
-				array(
-					'id'     => 'wp-api-fetch',
-					'import' => 'dynamic',
-				),
-			),
+			$static_assets['dependencies'],
 			$static_assets['version']
 		);
 
