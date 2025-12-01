@@ -19,6 +19,7 @@
 		"surecart/product-review-list",
 		"surecart/product-review-template",
 		"product-review-list-content-header",
+		"product-review-list-no-reviews",
 		"surecart/sticky-purchase"
 	],
 	"keywords": ["review", "button", "write review"],
@@ -117,6 +118,7 @@
 	],
 	"textdomain": "surecart",
 	"render": "file:./controller.php",
+	"viewScriptModule": ["@surecart/product-review-form"],
 	"editorScript": "file:./index.js",
 	"style": [
 		"surecart-wp-button",
