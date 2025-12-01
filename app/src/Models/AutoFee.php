@@ -58,6 +58,10 @@ class AutoFee extends Model {
 			return [];
 		}
 
+		if ( isset( $rule_array['conditions'] ) && empty( $rule_array['conditions'] ) ) {
+			return (object) [];
+		}
+
 		foreach ( $rule_array as $key => &$value ) {
 			if ( is_array( $value ) ) {
 				$value = $this->handleCustomAttributes( $value, $type );
