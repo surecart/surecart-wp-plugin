@@ -403,8 +403,8 @@ class ProductReviewList extends \Bricks\Element {
 		$content .= '<!-- /wp:surecart/product-review-list-content -->';
 
 		$content .= '<!-- wp:surecart/product-review-list-no-reviews -->';
-		$content .= '<!-- wp:paragraph {"align":"left"} -->';
-		$content .= '<p class="has-text-align-left">' . esc_html( $no_reviews_text ) . '</p><!-- /wp:paragraph -->';
+		$content .= '<!-- wp:paragraph {"align":"left","style":{"spacing":{"padding":{"top":"0","bottom":"32"}}}} -->';
+		$content .= '<p class="has-text-align-left" style="padding-top:0;padding-bottom:32px;">' . esc_html( $no_reviews_text ) . '</p><!-- /wp:paragraph -->';
 		$content .= '<!-- wp:group {"layout":{"type":"flex","flexWrap":"nowrap"}} -->';
 
 		// no-reviews button with configured attributes.

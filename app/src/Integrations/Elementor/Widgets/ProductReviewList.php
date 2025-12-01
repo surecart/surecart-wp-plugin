@@ -626,7 +626,7 @@ class ProductReviewList extends \Elementor\Widget_Base {
 
 		// No Reviews.
 		$btn_attrs = $this->get_button_attributes( $settings );
-		$content  .= '<!-- wp:surecart/product-review-list-no-reviews --><!-- wp:paragraph {"align":"left","placeholder":"Add text or blocks that will display when a query returns no reviews."} --><p class="has-text-align-left">' . esc_html( $no_reviews_text ) . '</p><!-- /wp:paragraph --><!-- wp:group {"layout":{"type":"flex","flexWrap":"nowrap"}} --><div class="wp-block-group"><!-- wp:surecart/product-review-add-button ' . wp_json_encode( $btn_attrs ) . ' /--></div><!-- /wp:group --><!-- /wp:surecart/product-review-list-no-reviews -->';
+		$content  .= '<!-- wp:surecart/product-review-list-no-reviews --><!-- wp:paragraph {"align":"left","style":{"spacing":{"padding":{"top":"0","bottom":"32"}}}} --><p class="has-text-align-left" style="padding-top:0;padding-bottom:32px;">' . esc_html( $no_reviews_text ) . '</p><!-- /wp:paragraph --><!-- wp:group {"layout":{"type":"flex","flexWrap":"nowrap"}} --><div class="wp-block-group"><!-- wp:surecart/product-review-add-button ' . wp_json_encode( $btn_attrs ) . ' /--></div><!-- /wp:group --><!-- /wp:surecart/product-review-list-no-reviews -->';
 
 		// Pagination.
 		if ( $show_pagination ) {
