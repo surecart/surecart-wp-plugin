@@ -240,11 +240,9 @@ class BuyButton extends \Bricks\Element {
 
 		// Set tag and attributes.
 		if ( $is_buy_now ) {
-			$this->tag = 'button';
 			$this->set_attribute( '_root', 'data-wp-bind--disabled', 'state.isUnavailable' );
 			$this->set_attribute( '_root', 'data-wp-on--click', 'callbacks.redirectToCheckout' );
 		} else {
-			$this->tag = 'button';
 			$this->set_attribute( '_root', 'data-wp-bind--disabled', 'state.isUnavailable' );
 			$this->set_attribute( '_root', 'data-wp-class--sc-button__link--busy', 'context.busy' );
 		}
@@ -254,7 +252,7 @@ class BuyButton extends \Bricks\Element {
 			$this->set_attribute( '_root', 'data-wp-on-async-window--resize', 'surecart/sticky-purchase::actions.toggleVisibility' );
 		}
 
-		$output = "<{$this->tag} {$this->render_attributes( '_root' )}>";
+		$output = "<button {$this->render_attributes( '_root' )}>";
 
 		// Icon.
 		$icon          = ! empty( $settings['icon'] ) ? self::render_icon( $settings['icon'] ) : false;
@@ -277,7 +275,7 @@ class BuyButton extends \Bricks\Element {
 			$output .= $icon;
 		}
 
-		$output .= "</{$this->tag}>";
+		$output .= '</button>';
 
 		echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
