@@ -4,7 +4,6 @@ import { addQueryArgs } from '@wordpress/url';
 import apiFetch from '../../../../functions/fetch';
 import { CancellationReason, SubscriptionProtocol } from '../../../../types';
 import { Subscription } from '../../../../types';
-import { applyFilters } from '@wordpress/hooks';
 @Component({
   tag: 'sc-subscription-cancel',
   styleUrl: 'sc-subscription-cancel.scss',
@@ -74,14 +73,29 @@ export class ScSubscriptionCancel {
   }
 
   render() {
-    const heading = applyFilters('surecart/dashboard/subscription/cancel_popup/heading', this.heading || __('Cancel your plan', 'surecart')) as string;
-    const cancelButtonText = applyFilters('surecart/dashboard/subscription/cancel_popup/cancel_button_text', __('Cancel Plan', 'surecart')) as string;
-    const keepButtonText = applyFilters('surecart/dashboard/subscription/cancel_popup/keep_button_text', __('Keep My Plan', 'surecart')) as string;
+    let heading = this.heading || __('Cancel your plan', 'surecart');
+    let cancelButtonText = __('Cancel Plan', 'surecart');
+    let keepButtonText = __('Keep My Plan', 'surecart');
+    let content = this.renderContent();
+
+    if (window?.wp?.hooks?.applyFilters) {
+      heading = window.wp.hooks.applyFilters(
+        'surecart_dashboard_subscription_cancel_popup_heading',
+        this.heading || __('Cancel your plan', 'surecart'),
+        this?.subscription,
+      ) as string;
+      cancelButtonText = window.wp.hooks.applyFilters(
+        'surecart_dashboard_subscription_cancel_popup_cancel_button_text',
+        __('Cancel Plan', 'surecart'),
+        this?.subscription,
+      ) as string;
+      keepButtonText = window.wp.hooks.applyFilters('surecart_dashboard_subscription_cancel_popup_keep_button_text', __('Keep My Plan', 'surecart'), this?.subscription) as string;
+      content = window.wp.hooks.applyFilters('surecart_dashboard_subscription_cancel_popup_content', this.renderContent(), this?.subscription);
+    }
 
     return (
       <sc-dashboard-module heading={heading} class="subscription-cancel" error={this.error} style={{ '--sc-dashboard-module-spacing': '1em' }}>
-        {applyFilters('surecart/dashboard/subscription/cancel_popup/content', this.renderContent())}
-
+        {content}
         <sc-flex justifyContent="flex-start">
           <sc-button type="primary" loading={this.loading || this.busy} disabled={this.loading || this.busy} onClick={() => this.cancelSubscription()}>
             {cancelButtonText}
