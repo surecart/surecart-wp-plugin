@@ -79,18 +79,10 @@ export class ScSubscriptionCancel {
     let content = this.renderContent();
 
     if (window?.wp?.hooks?.applyFilters) {
-      heading = window.wp.hooks.applyFilters(
-        'surecart_dashboard_subscription_cancel_popup_heading',
-        this.heading || __('Cancel your plan', 'surecart'),
-        this?.subscription,
-      ) as string;
-      cancelButtonText = window.wp.hooks.applyFilters(
-        'surecart_dashboard_subscription_cancel_popup_cancel_button_text',
-        __('Cancel Plan', 'surecart'),
-        this?.subscription,
-      ) as string;
-      keepButtonText = window.wp.hooks.applyFilters('surecart_dashboard_subscription_cancel_popup_keep_button_text', __('Keep My Plan', 'surecart'), this?.subscription) as string;
-      content = window.wp.hooks.applyFilters('surecart_dashboard_subscription_cancel_popup_content', this.renderContent(), this?.subscription);
+      heading = window.wp.hooks.applyFilters('surecart_dashboard_subscription_cancel_popup_heading', heading, this?.subscription) as string;
+      cancelButtonText = window.wp.hooks.applyFilters('surecart_dashboard_subscription_cancel_popup_cancel_button_text', cancelButtonText, this?.subscription) as string;
+      keepButtonText = window.wp.hooks.applyFilters('surecart_dashboard_subscription_cancel_popup_keep_button_text', keepButtonText, this?.subscription) as string;
+      content = window.wp.hooks.applyFilters('surecart_dashboard_subscription_cancel_popup_content', content, this?.subscription);
     }
 
     return (
