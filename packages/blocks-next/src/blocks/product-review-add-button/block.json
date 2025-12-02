@@ -118,12 +118,16 @@
 	],
 	"textdomain": "surecart",
 	"render": "file:./controller.php",
-	"viewScriptModule": ["@surecart/product-review-form"],
+	"viewScriptModule": [
+		"@surecart/product-page",
+		"@surecart/product-review-form"
+	],
 	"editorScript": "file:./index.js",
 	"style": [
+		"surecart-wp-buttons",
 		"surecart-wp-button",
+		"wp-block-button",
 		"surecart-spinner",
 		"file:./style-index.css"
-	],
-	"editorStyle": ["surecart-wp-button"]
+	]
 }

@@ -402,6 +402,7 @@ class ProductReviewList extends \Bricks\Element {
 		$content .= '<!-- /wp:group -->';
 		$content .= '<!-- /wp:surecart/product-review-list-content -->';
 
+		// No reviews content.
 		$content .= '<!-- wp:surecart/product-review-list-no-reviews -->';
 		$content .= '<!-- wp:paragraph {"align":"left","style":{"spacing":{"padding":{"top":"0","bottom":"32"}}}} -->';
 		$content .= '<p class="has-text-align-left" style="padding-top:0;padding-bottom:32px;">' . esc_html( $no_reviews_text ) . '</p><!-- /wp:paragraph -->';

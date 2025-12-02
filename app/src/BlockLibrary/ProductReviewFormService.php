@@ -52,6 +52,12 @@ class ProductReviewFormService {
 			return '';
 		}
 
+		// WordPress 6.9+ dequeues styles for blocks when their parent returns empty content.
+		// Since the review form is rendered in wp_footer (outside normal block flow),
+		// we need to force WordPress to keep the block assets enqueued.
+		// @see https://core.trac.wordpress.org/ticket/63676.
+		add_filter( 'enqueue_empty_block_content_assets', '__return_true' );
+
 		ob_start();
 
 		// Render the product review form modal.
