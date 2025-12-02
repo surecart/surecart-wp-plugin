@@ -52,6 +52,14 @@ class BuyButton extends \Bricks\Element {
 	}
 
 	/**
+	 * Enqueue element-specific styles and scripts.
+	 */
+	public function enqueue_scripts() {
+		wp_enqueue_style( 'surecart-spinner' );
+		wp_enqueue_style( 'surecart-wp-button' );
+	}
+
+	/**
 	 * Set controls.
 	 *
 	 * @return void
@@ -237,14 +245,12 @@ class BuyButton extends \Bricks\Element {
 
 		// Link class for busy state.
 		$this->set_attribute( '_root', 'class', 'sc-button__link' );
+		$this->set_attribute( '_root', 'data-wp-class--sc-button__link--busy', 'context.busy' );
+		$this->set_attribute( '_root', 'data-wp-bind--disabled', 'state.isUnavailable' );
 
 		// Set tag and attributes.
 		if ( $is_buy_now ) {
-			$this->set_attribute( '_root', 'data-wp-bind--disabled', 'state.isUnavailable' );
 			$this->set_attribute( '_root', 'data-wp-on--click', 'callbacks.redirectToCheckout' );
-		} else {
-			$this->set_attribute( '_root', 'data-wp-bind--disabled', 'state.isUnavailable' );
-			$this->set_attribute( '_root', 'data-wp-class--sc-button__link--busy', 'context.busy' );
 		}
 
 		if ( ! empty( $settings['show_sticky_purchase_button'] ) && 'never' !== $settings['show_sticky_purchase_button'] ) {
