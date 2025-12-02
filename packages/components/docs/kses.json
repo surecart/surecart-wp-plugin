@@ -2057,7 +2057,6 @@
     "heading": true,
     "protocol": true,
     "query": true,
-    "show-action-buttons": true,
     "show-cancel": true,
     "subscription": true,
     "subscription-id": true,
@@ -2098,7 +2097,6 @@
     "slot": true
   },
   "sc-subscription-next-payment": {
-    "show-action-buttons": true,
     "subscription": true,
     "update-payment-method-url": true,
     "style": true,

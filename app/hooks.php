@@ -64,14 +64,14 @@ add_filter(
 
 // Do not display the cancel, update/add payment method buttons, restore/resubscribe buttons if current purchase is a BSF Vault purchase.
 add_filter(
-	'surecart_plan_show_action_buttons',
+	'surecart/subscription/can_modify',
 	function ( $subscription = null ) {
 		if ( empty( $subscription ) || empty( $subscription->current_period ) ) {
 			return true;
 		}
 		$current_period = $subscription->current_period;
 
-		if ( empty( $current_period->checkout ) || empty( $current_period->checkout->metadata ) || empty( $current_period->checkout->metadata->wp_created_by ) ) {
+		if ( empty( $current_period->checkout ) || empty( $current_period->checkout->metadata ) || empty( $current_period->checkout->metadata->vault_checkout ) ) {
 			return true;
 		}
 
@@ -90,7 +90,7 @@ add_filter(
 		}
 		$current_period = $subscription->current_period;
 
-		if ( empty( $current_period->checkout ) || empty( $current_period->checkout->metadata ) || empty( $current_period->checkout->metadata->wp_created_by ) ) {
+		if ( empty( $current_period->checkout ) || empty( $current_period->checkout->metadata ) || empty( $current_period->checkout->metadata->vault_checkout ) ) {
 			return $can_be_switched;
 		}
 
@@ -100,27 +100,24 @@ add_filter(
 	2
 );
 
-add_filter(
-	'surecart_after_current_plan_details',
-	function ( $content = '', $subscription = null ) {
+add_action(
+	'surecart/dashboard/subscription/after_current_plan',
+	function ( $subscription = null ) {
 		if ( empty( $subscription ) || empty( $subscription->current_period ) ) {
 			return null;
 		}
 		$current_period = $subscription->current_period;
 
-		if ( empty( $current_period->checkout ) || empty( $current_period->checkout->metadata ) || empty( $current_period->checkout->metadata->wp_created_by ) ) {
+		if ( empty( $current_period->checkout ) || empty( $current_period->checkout->metadata ) || empty( $current_period->checkout->metadata->vault_checkout ) ) {
 			return null;
 		}
-
-		ob_start();
 		?>
 		<sc-button type="primary" href="https://vault.brainstormforce.com/customer-dashboard" target="_blank">
 			<sc-icon name="inbox" slot="prefix"></sc-icon>
 			<?php echo __( 'Manage from Vault', 'surecart' ); ?>
 		</sc-button>
 		<?php
-		return ob_get_clean();
 	},
 	10,
-	2
+	1
 );

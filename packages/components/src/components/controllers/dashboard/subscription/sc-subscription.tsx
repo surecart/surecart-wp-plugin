@@ -19,9 +19,6 @@ export class ScSubscription {
   /** Whether to show the cancel button */
   @Prop() showCancel: boolean;
 
-  /** Whether to show the subscription actions */
-  @Prop() showActionButtons: boolean;
-
   /** Heading to display */
   @Prop() heading: string;
 
@@ -211,7 +208,7 @@ export class ScSubscription {
 
     return (
       <sc-dashboard-module heading={this.heading || __('Current Plan', 'surecart')} class="subscription" error={this.error}>
-        {!!this.subscription && this.showActionButtons && (
+        {!!this.subscription && this?.subscription?.can_modify && (
           <sc-flex slot="end" class="subscription__action-buttons">
             {this.updatePaymentMethodUrl && paymentMethodExists && (
               <sc-button type="link" href={this.updatePaymentMethodUrl}>

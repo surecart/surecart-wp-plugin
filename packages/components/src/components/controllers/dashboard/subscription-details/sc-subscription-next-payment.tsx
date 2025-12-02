@@ -13,8 +13,6 @@ export class ScSubscriptionNextPayment {
   @Prop() subscription: Subscription;
   /** Update the payment method url */
   @Prop() updatePaymentMethodUrl: string;
-  /** Whether to show the subscription actions */
-  @Prop() showActionButtons: boolean;
 
   @State() period: Period;
   @State() loading: boolean = true;
@@ -175,7 +173,7 @@ export class ScSubscriptionNextPayment {
 
             <sc-divider style={{ '--spacing': '0' }}></sc-divider>
 
-            {this.showActionButtons && (
+            {this?.subscription?.can_modify && (
               <sc-line-item>
                 <span slot="description">{__('Payment', 'surecart')}</span>
                 {paymentMethodExists && (
