@@ -4,7 +4,7 @@ import { addQueryArgs } from '@wordpress/url';
 import apiFetch from '../../../../functions/fetch';
 import { CancellationReason, SubscriptionProtocol } from '../../../../types';
 import { Subscription } from '../../../../types';
-
+import { applyFilters } from '@wordpress/hooks';
 @Component({
   tag: 'sc-subscription-cancel',
   styleUrl: 'sc-subscription-cancel.scss',
@@ -74,18 +74,17 @@ export class ScSubscriptionCancel {
   }
 
   render() {
+    const heading = applyFilters('surecart/dashboard/subscription/cancel_popup/heading', this.heading || __('Cancel your plan', 'surecart')) as string;
+    const cancelButtonText = applyFilters('surecart/dashboard/subscription/cancel_popup/cancel_button_text', __('Cancel Plan', 'surecart')) as string;
+    const keepButtonText = applyFilters('surecart/dashboard/subscription/cancel_popup/keep_button_text', __('Keep My Plan', 'surecart')) as string;
+
     return (
-      <sc-dashboard-module
-        heading={this.heading || __('Cancel your plan', 'surecart')}
-        class="subscription-cancel"
-        error={this.error}
-        style={{ '--sc-dashboard-module-spacing': '1em' }}
-      >
-        {this.renderContent()}
+      <sc-dashboard-module heading={heading} class="subscription-cancel" error={this.error} style={{ '--sc-dashboard-module-spacing': '1em' }}>
+        {applyFilters('surecart/dashboard/subscription/cancel_popup/content', this.renderContent())}
 
         <sc-flex justifyContent="flex-start">
           <sc-button type="primary" loading={this.loading || this.busy} disabled={this.loading || this.busy} onClick={() => this.cancelSubscription()}>
-            {__('Cancel Plan', 'surecart')}
+            {cancelButtonText}
           </sc-button>
 
           <sc-button
@@ -95,7 +94,7 @@ export class ScSubscriptionCancel {
             loading={this.loading || this.busy}
             disabled={this.loading || this.busy}
           >
-            {__('Keep My Plan', 'surecart')}
+            {keepButtonText}
           </sc-button>
         </sc-flex>
 
