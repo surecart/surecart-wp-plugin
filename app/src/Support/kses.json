@@ -1,8 +1,6 @@
 {
   "sc-address": {
     "address": true,
-    "country-fields": true,
-    "default-country-fields": true,
     "disabled": true,
     "label": true,
     "loading": true,
@@ -468,7 +466,6 @@
   "sc-customer-edit": {
     "customer": true,
     "heading": true,
-    "i18n": true,
     "success-url": true,
     "style": true,
     "id": true,

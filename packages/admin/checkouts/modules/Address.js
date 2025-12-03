@@ -91,7 +91,11 @@ export default ({ checkout, loading, busy, setBusy }) => {
 							justify-content: space-between;
 						`}
 					>
-						<AddressDisplay address={checkout?.shipping_address} />
+						<AddressDisplay
+							address={
+								checkout?.shipping_address?.formatted_string
+							}
+						/>
 						<ScDropdown placement="bottom-end">
 							<ScButton slot="trigger" type="text" circle>
 								<ScIcon name="more-horizontal" />
@@ -137,8 +141,6 @@ export default ({ checkout, loading, busy, setBusy }) => {
 							onScInputAddress={(e) =>
 								setCustomerShippingAddress(e?.detail)
 							}
-							defaultCountryFields={scData.i18n.defaultCountryFields}
-							countryFields={scData.i18n.countryFields}
 						/>
 					</div>
 

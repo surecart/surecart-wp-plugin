@@ -138,7 +138,10 @@ export default ({ checkout }) => {
 						>
 							{!!checkout?.shipping_address?.country ? (
 								<AddressDisplay
-									address={checkout?.shipping_address}
+									address={
+										checkout?.shipping_address
+											?.formatted_string
+									}
 								/>
 							) : (
 								<ScText
@@ -182,7 +185,9 @@ export default ({ checkout }) => {
 							`}
 						>
 							{!!billingAddress?.country ? (
-								<AddressDisplay address={billingAddress} />
+								<AddressDisplay
+									address={billingAddress?.formatted_string}
+								/>
 							) : (
 								<ScText
 									style={{
@@ -212,8 +217,6 @@ export default ({ checkout }) => {
 					onScChangeAddress={(e) =>
 						setCustomerShippingAddress(e?.detail)
 					}
-					defaultCountryFields={scData.i18n.defaultCountryFields}
-					countryFields={scData.i18n.countryFields}
 				/>
 
 				<ScCheckbox
@@ -242,8 +245,6 @@ export default ({ checkout }) => {
 						onScChangeAddress={(e) =>
 							setCustomerBillingAddress(e?.detail)
 						}
-						defaultCountryFields={scData.i18n.defaultCountryFields}
-						countryFields={scData.i18n.countryFields}
 					/>
 				)}
 			</>

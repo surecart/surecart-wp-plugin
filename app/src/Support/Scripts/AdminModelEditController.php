@@ -136,6 +136,8 @@ abstract class AdminModelEditController {
 		$this->data['account_slug']         = \SureCart::account()->slug ?? '';
 		$this->data['api_url']              = \SureCart::requests()->getBaseUrl();
 		$this->data['plugin_url']           = \SureCart::core()->assets()->getUrl();
+		$this->data['locale']               = str_replace( '_', '-', get_locale() );
+		$this->data['root_url']             = esc_url_raw( get_rest_url() );
 		$this->data['home_url']             = untrailingslashit( get_home_url() );
 		$this->data['buy_page_slug']        = untrailingslashit( \SureCart::settings()->permalinks()->getBase( 'buy_page' ) );
 		$this->data['product_page_slug']    = untrailingslashit( \SureCart::settings()->permalinks()->getBase( 'product_page' ) );
@@ -164,9 +166,6 @@ abstract class AdminModelEditController {
 			foreach ( array_keys( \SureCart::getAdminPageNames() ) as $name ) {
 				$this->data['links'][ $name ] = esc_url_raw( add_query_arg( [ 'action' => 'edit' ], \SureCart::getUrl()->index( $name ) ) );
 			}
-		}
-		if ( in_array( 'i18n', $this->with_data ) ) {
-			$this->data['i18n'] = \SureCart::state()->i18n()->get();
 		}
 
 		// pass entitlements to page.

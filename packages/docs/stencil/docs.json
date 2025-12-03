@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-12-01T15:57:22",
+  "timestamp": "2025-11-26T05:56:04",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.18.3",
@@ -114,66 +114,6 @@
           "values": [
             {
               "type": "{ name?: string; line_1?: string; line_2?: string; city?: string; state?: string; postal_code?: string; country?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "countryFields",
-          "type": "CountryLocaleField[]",
-          "complexType": {
-            "original": "Array<CountryLocaleField>",
-            "resolved": "CountryLocaleField[]",
-            "references": {
-              "Array": {
-                "location": "global",
-                "id": "global::Array"
-              },
-              "CountryLocaleField": {
-                "location": "import",
-                "path": "../../../types",
-                "id": "src/types.ts::CountryLocaleField"
-              }
-            }
-          },
-          "mutable": true,
-          "reflectToAttr": false,
-          "docs": "Country fields by country code",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "CountryLocaleField[]"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "defaultCountryFields",
-          "type": "CountryLocaleFieldValue[]",
-          "complexType": {
-            "original": "Array<CountryLocaleFieldValue>",
-            "resolved": "CountryLocaleFieldValue[]",
-            "references": {
-              "Array": {
-                "location": "global",
-                "id": "global::Array"
-              },
-              "CountryLocaleFieldValue": {
-                "location": "import",
-                "path": "../../../types",
-                "id": "src/types.ts::CountryLocaleFieldValue"
-              }
-            }
-          },
-          "mutable": true,
-          "reflectToAttr": false,
-          "docs": "Default country fields",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "CountryLocaleFieldValue[]"
             }
           ],
           "optional": false,
@@ -362,6 +302,28 @@
         }
       ],
       "methods": [
+        {
+          "name": "initCountryChoices",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "complexType": {
+            "signature": "() => Promise<void>",
+            "parameters": [],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              }
+            },
+            "return": "Promise<void>"
+          },
+          "signature": "initCountryChoices() => Promise<void>",
+          "parameters": [],
+          "docs": "",
+          "docsTags": []
+        },
         {
           "name": "reportValidity",
           "returns": {
@@ -9449,41 +9411,6 @@
           "values": [
             {
               "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "i18n",
-          "type": "{ defaultCountryFields: CountryLocaleFieldValue[]; countryFields: CountryLocaleField[]; }",
-          "complexType": {
-            "original": "{\n    defaultCountryFields: Array<CountryLocaleFieldValue>;\n    countryFields: Array<CountryLocaleField>;\n  }",
-            "resolved": "{ defaultCountryFields: CountryLocaleFieldValue[]; countryFields: CountryLocaleField[]; }",
-            "references": {
-              "Array": {
-                "location": "global",
-                "id": "global::Array"
-              },
-              "CountryLocaleFieldValue": {
-                "location": "import",
-                "path": "../../../../types",
-                "id": "src/types.ts::CountryLocaleFieldValue"
-              },
-              "CountryLocaleField": {
-                "location": "import",
-                "path": "../../../../types",
-                "id": "src/types.ts::CountryLocaleField"
-              }
-            }
-          },
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "{ defaultCountryFields: CountryLocaleFieldValue[]; countryFields: CountryLocaleField[]; }"
             }
           ],
           "optional": false,
@@ -31009,7 +30936,7 @@
             "references": {
               "LayoutConfig": {
                 "location": "local",
-                "path": "/Users/andre/sites/surecart/wp-content/plugins/surecart/packages/components/src/components/controllers/products/sc-product-item-list/sc-product-item-list.tsx",
+                "path": "/Users/rajkiranbagal/LocalSites/app/public/wp-content/plugins/surecart/packages/components/src/components/controllers/products/sc-product-item-list/sc-product-item-list.tsx",
                 "id": "src/components/controllers/products/sc-product-item-list/sc-product-item-list.tsx::LayoutConfig"
               }
             }
@@ -34901,7 +34828,7 @@
           },
           "mutable": false,
           "attr": "autocomplete",
-          "reflectToAttr": false,
+          "reflectToAttr": true,
           "docs": "The input's autocomplete attribute.",
           "docsTags": [],
           "values": [
@@ -44509,7 +44436,7 @@
       "path": "src/types.ts"
     },
     "src/types.ts::Customer": {
-      "declaration": "export interface Customer extends Object {\n  id: string;\n  email: string;\n  name?: string;\n  first_name?: string;\n  last_name?: string;\n  phone?: string;\n  billing_address?: string | Address;\n  billing_address_display?: string | Address;\n  shipping_address?: string | Address;\n  billing_matches_shipping: boolean;\n  live_mode: boolean;\n  unsubscribed: boolean;\n  default_payment_method: string | PaymentMethod;\n  tax_identifier: {\n    number: string;\n    number_type: string;\n  };\n  created_at: number;\n  updated_at: number;\n}",
+      "declaration": "export interface Customer extends Object {\n  id: string;\n  email: string;\n  name?: string;\n  first_name?: string;\n  last_name?: string;\n  phone?: string;\n  billing_address?: string | Address;\n  billing_address_display?: string | Address;\n  shipping_address?: string | Address;\n  shipping_address_display?: string | Address;\n  billing_matches_shipping: boolean;\n  live_mode: boolean;\n  unsubscribed: boolean;\n  default_payment_method: string | PaymentMethod;\n  tax_identifier: {\n    number: string;\n    number_type: string;\n  };\n  created_at: number;\n  updated_at: number;\n}",
       "docstring": "",
       "path": "src/types.ts"
     },
@@ -44580,16 +44507,6 @@
     },
     "src/types.ts::Order": {
       "declaration": "export interface Order extends Object {\n  id?: string;\n  object: 'order';\n  number?: string;\n  order_type?: 'checkout' | 'subscription';\n  statement_url?: string;\n  status?: OrderStatus;\n  shipment_status?: OrderShipmentStatus;\n  checkout?: Checkout | string;\n  invoice?: Invoice | string;\n  created_at: number;\n  created_at_date: string;\n  updated_at: number;\n  updated_at_date: string;\n}",
-      "docstring": "",
-      "path": "src/types.ts"
-    },
-    "src/types.ts::CountryLocaleFieldValue": {
-      "declaration": "export interface CountryLocaleFieldValue {\n  name: string;\n  priority: number;\n  label: boolean;\n}",
-      "docstring": "",
-      "path": "src/types.ts"
-    },
-    "src/types.ts::CountryLocaleField": {
-      "declaration": "export interface CountryLocaleField {\n  [key: string]: {\n    name: CountryLocaleFieldValue;\n    address_1: CountryLocaleFieldValue;\n    address_2: CountryLocaleFieldValue;\n    city: CountryLocaleFieldValue;\n    state: CountryLocaleFieldValue;\n    postcode: CountryLocaleFieldValue;\n  };\n}",
       "docstring": "",
       "path": "src/types.ts"
     },

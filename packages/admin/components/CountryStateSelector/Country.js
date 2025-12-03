@@ -1,22 +1,54 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/react';
-import { ScButton, ScIcon } from '@surecart/components-react';
+import { ScButton, ScIcon, ScSkeleton } from '@surecart/components-react';
 import { CheckboxControl } from '@wordpress/components';
-import { useState } from '@wordpress/element';
+import { useDispatch } from '@wordpress/data';
+import { useState, useEffect, useCallback } from '@wordpress/element';
 import { _n, sprintf } from '@wordpress/i18n';
+import apiFetch from '@wordpress/api-fetch';
+import { store as noticesStore } from '@wordpress/notices';
 
-export default ({ country, value, onChange }) => {
+export default ({
+	countryIsoCode,
+	countryName,
+	statesCount = 0,
+	value,
+	onChange,
+}) => {
 	const [isOpen, setIsOpen] = useState(false);
-	const territories = (country[2] || []).filter(
-		(region) => region[1] && region[1] !== 'undefined'
-	);
-	const territoriesCount = territories.length || 0;
+	const [fetching, setFetching] = useState(false);
+	const [territories, setTerritories] = useState([]);
+	const { createErrorNotice } = useDispatch(noticesStore);
+
+	useEffect(() => {
+		if (!isOpen) return;
+
+		fetchTerritories();
+	}, [isOpen]);
+
+	const fetchTerritories = useCallback(async () => {
+		try {
+			setFetching(true);
+			const country = await apiFetch({
+				path: `surecart/v1/public/atlas/${countryIsoCode}`,
+			});
+			const territories = (country?.states || []).filter(
+				(region) => !!region?.code
+			);
+			setTerritories(territories);
+		} catch (e) {
+			console.error(e);
+			createErrorNotice(e?.message, { type: 'snackbar' });
+		} finally {
+			setFetching(false);
+		}
+	}, [countryIsoCode, apiFetch, createErrorNotice]);
 
 	// when the country is selected, set states as empty array
 	const onSelectCountry = (checked) => {
 		if (checked) {
 			onChange({
-				country: country[1],
+				country: countryIsoCode,
 				states: [],
 			});
 		} else {
@@ -29,11 +61,11 @@ export default ({ country, value, onChange }) => {
 		if (isCountryFullySelected && !checked) {
 			// Select all states except the one being unchecked
 			const allStatesExceptCurrent = territories
-				.map((territory) => territory[1])
+				.map((territory) => territory?.code)
 				.filter((state) => state !== region);
 
 			onChange({
-				country: country[1],
+				country: countryIsoCode,
 				states: allStatesExceptCurrent,
 			});
 			return;
@@ -44,20 +76,20 @@ export default ({ country, value, onChange }) => {
 			const newStates = [...(value?.states || []), region];
 
 			// If all states are selected, set to empty array
-			if (newStates.length === territoriesCount) {
+			if (newStates.length === statesCount) {
 				onChange({
-					country: country[1],
+					country: countryIsoCode,
 					states: [],
 				});
 			} else {
 				onChange({
-					country: country[1],
+					country: countryIsoCode,
 					states: newStates,
 				});
 			}
 		} else {
 			onChange({
-				country: country[1],
+				country: countryIsoCode,
 				states: (value?.states || []).filter(
 					(state) => state !== region
 				),
@@ -84,22 +116,21 @@ export default ({ country, value, onChange }) => {
 				<CheckboxControl
 					indeterminate={
 						value?.states?.length > 0 &&
-						value?.states?.length < territoriesCount
+						value?.states?.length < statesCount
 					}
-					label={country[0]}
+					label={countryName}
 					css={css`
 						padding: var(--sc-spacing-large);
 					`}
 					__nextHasNoMarginBottom
 					checked={
-						value?.country === country[1] &&
+						value?.country === countryIsoCode &&
 						(value?.states?.length === 0 ||
-							value?.states?.length === territoriesCount)
+							value?.states?.length === statesCount)
 					}
 					onChange={onSelectCountry}
 				/>
-
-				{territoriesCount > 1 && (
+				{statesCount > 0 && (
 					<ScButton
 						type="text"
 						onClick={() => setIsOpen(!isOpen)}
@@ -113,10 +144,10 @@ export default ({ country, value, onChange }) => {
 							_n(
 								'%d region',
 								'%d regions',
-								territoriesCount,
+								statesCount,
 								'surecart'
 							),
-							territoriesCount
+							statesCount
 						)}
 						<ScIcon
 							slot="suffix"
@@ -126,18 +157,18 @@ export default ({ country, value, onChange }) => {
 				)}
 			</div>
 
-			{isOpen && (
+			{isOpen && !fetching && (
 				<div>
-					{territories.map((region) => {
+					{(territories || [])?.map((region) => {
 						return (
 							<CheckboxControl
-								label={region[0]}
+								label={region?.name}
 								checked={
 									isCountryFullySelected ||
-									(value?.states || []).includes(region[1])
+									(value?.states || []).includes(region?.code)
 								}
 								onChange={(checked) =>
-									onChangeTerritory(checked, region[1])
+									onChangeTerritory(checked, region?.code)
 								}
 								__nextHasNoMarginBottom
 								css={css`
@@ -147,10 +178,24 @@ export default ({ country, value, onChange }) => {
 										margin-bottom: var(--sc-spacing-medium);
 									}
 								`}
-								key={region[0]}
+								key={region?.name}
 							/>
 						);
 					})}
+				</div>
+			)}
+			{fetching && (
+				<div
+					css={css`
+						display: flex;
+						flex-direction: column;
+						gap: 1.5em;
+						margin-bottom: 2em;
+						padding: 1em;
+					`}
+				>
+					<ScSkeleton style={{ width: '45%' }}></ScSkeleton>
+					<ScSkeleton style={{ width: '65%' }}></ScSkeleton>
 				</div>
 			)}
 		</div>
