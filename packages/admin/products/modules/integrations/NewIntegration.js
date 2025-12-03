@@ -9,7 +9,7 @@ import { Modal } from '@wordpress/components';
 import { store as coreStore } from '@wordpress/core-data';
 import { useDispatch } from '@wordpress/data';
 import { Fragment, useState } from '@wordpress/element';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
 
 /**
@@ -84,18 +84,19 @@ export default ({ onRequestClose, id, product }) => {
 				return {
 					value: variant.id,
 					label: `
-					(${variantLabel}) ${variant?.amount
+					(${variantLabel}) ${
+						variant?.amount
 							? ` - ${formatNumber(
-								variant?.amount,
-								priceData?.currency || 'usd'
-							)}`
+									variant?.amount,
+									priceData?.currency || 'usd'
+							  )}`
 							: ''
-						}`,
+					}`,
 					suffixDescription: product?.stock_enabled
 						? sprintf(
-							__('%s available', 'surecart'),
-							variant?.available_stock
-						)
+								__('%s available', 'surecart'),
+								variant?.available_stock
+						  )
 						: null,
 					variant_id: variant?.id,
 				};
@@ -182,7 +183,11 @@ export default ({ onRequestClose, id, product }) => {
 									]}
 									onSelect={({ price_id }) => {
 										// find the price and set it.
-										setPrice(active?.find((p) => p.id === price_id));
+										setPrice(
+											active?.find(
+												(p) => p.id === price_id
+											)
+										);
 									}}
 									placeholder={__('All Prices', 'surecart')}
 								/>

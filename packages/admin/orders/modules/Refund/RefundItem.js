@@ -4,7 +4,7 @@
  * External dependencies.
  */
 import { css, jsx } from '@emotion/core';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 import { useEntityRecords } from '@wordpress/core-data';
 import { ProgressBar } from '@wordpress/components';
 import {

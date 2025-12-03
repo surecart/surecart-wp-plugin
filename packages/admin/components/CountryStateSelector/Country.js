@@ -3,7 +3,7 @@ import { css, jsx } from '@emotion/react';
 import { ScButton, ScIcon } from '@surecart/components-react';
 import { CheckboxControl } from '@wordpress/components';
 import { useState } from '@wordpress/element';
-import { _n } from '@wordpress/i18n';
+import { _n, sprintf } from '@wordpress/i18n';
 
 export default ({ country, value, onChange }) => {
 	const [isOpen, setIsOpen] = useState(false);
