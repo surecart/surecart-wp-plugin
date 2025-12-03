@@ -50,7 +50,7 @@ class CompatibilityService {
 		add_action( 'wp_enqueue_scripts', [ $this, 'bricksCompatibility' ] );
 
 		// Load Blocks Global Styles if enabled by Merchant in the setting.
-		if ( (bool) get_option( 'surecart_load_block_assets_on_demand', false ) ) {
+		if ( (bool) get_option( 'surecart_load_block_assets_on_demand', false ) && \SureCart::theme()->shouldLoadOnDemandBlockAssets() ) {
 			add_filter( 'should_load_separate_core_block_assets', '__return_true' );
 		}
 
@@ -98,7 +98,7 @@ class CompatibilityService {
 	public function bricksCompatibility() {
 		$active_theme = wp_get_theme();
 
-		if ( empty( $active_theme ) || ! 'Bricks' === $active_theme->get( 'Name' ) ) {
+		if ( empty( $active_theme ) || 'Bricks' !== $active_theme->get( 'Name' ) ) {
 			return;
 		}
 
