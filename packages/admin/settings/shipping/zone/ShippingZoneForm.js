@@ -186,6 +186,10 @@ export default ({
 								'Limit to specific ZIP/postal codes',
 								'surecart'
 							)}
+							help={__(
+								'Enter one postal code or range per line. Supports exact codes, ranges (90210...99000), and wildcards (902*).',
+								'surecart'
+							)}
 						>
 							<HelpTooltip
 								content={
