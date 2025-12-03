@@ -143,9 +143,11 @@ abstract class BaseSettings {
 				'account_id'                   => \SureCart::account()->id,
 				'account_slug'                 => \SureCart::account()->slug,
 				'locale'                       => str_replace( '_', '-', get_locale() ),
+				'locale'                       => str_replace( '_', '-', get_locale() ),
 				'api_url'                      => \SureCart::requests()->getBaseUrl(),
 				'ajax_url'                     => admin_url( 'admin-ajax.php' ),
 				'home_url'                     => esc_url_raw( home_url() ),
+				'root_url'                     => esc_url_raw( get_rest_url() ),
 				'root_url'                     => esc_url_raw( get_rest_url() ),
 				'plugin_installer_nonce'       => wp_create_nonce( 'updates' ),
 				'currency'                     => \SureCart::account()->currency,
@@ -158,7 +160,6 @@ abstract class BaseSettings {
 				'should_load_on_demand_assets' => (bool) \SureCart::theme()->shouldLoadOnDemandBlockAssets(),
 				'claim_url'                    => ! \SureCart::account()->claimed ? \SureCart::routeUrl( 'account.claim' ) : '',
 				'claim_expired'                => \SureCart::account()->claim_expired ?? false,
-				'i18n'                         => \SureCart::state()->i18n()->get(),
 			]
 		);
 	}
