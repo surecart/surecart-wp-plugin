@@ -5,7 +5,6 @@ import {
 	ScDrawer,
 	ScForm,
 	ScInput,
-	ScSwitch,
 } from '@surecart/components-react';
 import { __, sprintf } from '@wordpress/i18n';
 import Discount from './Discount';
