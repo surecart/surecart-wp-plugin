@@ -1144,7 +1144,7 @@ class Product extends Model implements PageModel {
 				'checkoutUrl'     => \SureCart::pages()->url( 'checkout' ),
 				'variant_options' => $this->variant_options->data ?? [],
 				'variants'        => $this->variants->data ?? [],
-				'selectedVariant' => $this->first_variant_with_stock ?? null,
+				'selectedVariant' => $this->initial_variant ?? null,
 				'isProductPage'   => ! empty( get_query_var( 'surecart_current_product' )->id ),
 			]
 		);
