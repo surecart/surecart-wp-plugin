@@ -17,6 +17,8 @@ import {
 	ScDrawer,
 	ScForm,
 	ScSelect,
+	ScSwitch,
+	ScText,
 } from '@surecart/components-react';
 import {
 	normalizeMedia,
@@ -48,6 +50,10 @@ export default ({
 			variant_option: normalized.variant_option || '',
 			thumbnail_image: normalized.thumbnail_image || null,
 			aspect_ratio: normalized.aspect_ratio || '',
+			controls: normalized.controls !== false, // default to true
+			autoplay: normalized.autoplay || false,
+			loop: normalized.loop || false,
+			muted: normalized.muted || false,
 		};
 	});
 
@@ -64,7 +70,17 @@ export default ({
 			setIsSaving(true);
 			setError(null);
 
-			const { variant_option, thumbnail_image, aspect_ratio } = formData;
+			const {
+				variant_option,
+				thumbnail_image,
+				aspect_ratio,
+				controls,
+				autoplay,
+				loop,
+				muted,
+			} = formData;
+
+			console.log('formData', formData);
 
 			// Update the gallery with the new item data.
 			const ids = [...(product?.gallery_ids || [])];
@@ -80,6 +96,18 @@ export default ({
 					...(variant_option ? { variant_option } : {}),
 					...(thumbnail_image ? { thumbnail_image } : {}),
 					...(aspect_ratio ? { aspect_ratio } : {}),
+					...(isVideo(mediaData) && typeof controls === 'boolean'
+						? { controls }
+						: {}),
+					...(isVideo(mediaData) && typeof autoplay === 'boolean'
+						? { autoplay }
+						: {}),
+					...(isVideo(mediaData) && typeof loop === 'boolean'
+						? { loop }
+						: {}),
+					...(isVideo(mediaData) && typeof muted === 'boolean'
+						? { muted }
+						: {}),
 				};
 			}
 
@@ -228,6 +256,93 @@ export default ({
 											)
 										}
 									/>
+
+									<div
+										css={css`
+											display: flex;
+											flex-direction: column;
+											gap: var(--sc-spacing-medium);
+										`}
+									>
+										<ScText as="h2" style={{ margin: 0 }}>
+											{__('Settings', 'surecart')}
+										</ScText>
+
+										<ScSwitch
+											checked={formData.autoplay}
+											onScChange={(e) => {
+												updateFormData(
+													'autoplay',
+													e.target.checked
+												);
+
+												// if autoplay is enabled, ensure muted is also enabled.
+												if (e.target.checked) {
+													updateFormData(
+														'muted',
+														true
+													);
+												}
+											}}
+										>
+											{__('Autoplay', 'surecart')}
+
+											<span slot="description">
+												{!!formData.autoplay &&
+													__(
+														'Autoplay may cause usability issues for some users.',
+														'surecart'
+													)}
+											</span>
+										</ScSwitch>
+
+										<ScSwitch
+											checked={formData.loop}
+											onScChange={(e) =>
+												updateFormData(
+													'loop',
+													e.target.checked
+												)
+											}
+										>
+											{__('Loop', 'surecart')}
+										</ScSwitch>
+
+										<ScSwitch
+											checked={formData.muted}
+											onScChange={(e) =>
+												updateFormData(
+													'muted',
+													e.target.checked
+												)
+											}
+											disabled={!!formData.autoplay}
+										>
+											{__('Muted', 'surecart')}
+											<span slot="description">
+												{!!formData.autoplay &&
+													__(
+														'Muted because of Autoplay.',
+														'surecart'
+													)}
+											</span>
+										</ScSwitch>
+
+										<ScSwitch
+											checked={formData.controls}
+											onScChange={(e) =>
+												updateFormData(
+													'controls',
+													e.target.checked
+												)
+											}
+										>
+											{__(
+												'Playback controls',
+												'surecart'
+											)}
+										</ScSwitch>
+									</div>
 								</>
 							)}
 						</DrawerSection>

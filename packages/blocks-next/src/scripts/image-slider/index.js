@@ -163,17 +163,6 @@ const { state, actions } = store('surecart/image-slider', {
 					'.swiper:not(.sc-image-slider__thumbs .swiper)'
 				),
 				{
-					on: {
-						slideChange: () => {
-							const { actions: videoActions } =
-								store('surecart/video');
-							if (
-								typeof videoActions?.pauseVideos === 'function'
-							) {
-								videoActions.pauseVideos();
-							}
-						},
-					},
 					modules: [Thumbs, A11y, Navigation, Pagination],
 					direction: 'horizontal',
 					loop: false,
