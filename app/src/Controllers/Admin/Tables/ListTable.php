@@ -230,4 +230,16 @@ abstract class ListTable extends \WP_List_Table {
 		</form>
 		<?php
 	}
+
+	/**
+	 * Get the sort map.
+	 *
+	 * @return array
+	 */
+	public function get_sort_map(): array {
+		return array(
+			'created_at' => 'created_at',
+			'updated_at' => 'updated_at',
+		);
+	}
 }
