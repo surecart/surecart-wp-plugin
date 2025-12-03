@@ -313,6 +313,18 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 
 == Changelog ==
 
+= 3.17.0 - December 4th, 2025=
+- New: Product variant overrides. Customize variants with custom tax, shipping, weights, purchase limits and more.
+- New: Autoplay and loop options for product page video.
+- New: Order admin product list by name, cataloged_at.
+- Change: Updated address components for better internationalization.
+- Improvement: Clean up error keys to avoid duplicates.
+- Fix: Issue with loading icon not appearing on bricks add to cart.
+- Fix: Min/Max validation issue with bricks name your own price.
+- Fix: Issue where user role was not removed in some cases during plan downgrade.
+- Fix: Ensure filter urls have noindex when Rankmath or SureRank plugins may not be outputting canonical tag correctly.
+- Fix: Issue with Google trying to crawl menu cart button due to missing role.
+
 = 3.16.8 - December 3rd, 2025 =
 - Fix: Resolved internal errors on Dashboard with WordPress 6.9 compatibility.
 
