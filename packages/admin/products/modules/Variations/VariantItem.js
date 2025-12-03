@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-
+import { useState } from 'react';
 /**
  * External dependencies.
  */
@@ -19,28 +19,36 @@ import {
 	ScMenuItem,
 	ScPriceInput,
 	ScQuantitySelect,
+	ScMenuDivider,
 	ScTooltip,
 } from '@surecart/components-react';
 import Image from './Image';
+import EditVariant from './EditVariant';
 
 export default ({
 	variant,
+	product,
 	updateVariant,
 	defaultAmount,
 	defaultSku,
 	canOverride,
 	quantityEnabled,
+	variantOptions,
 }) => {
 	const {
 		sku,
 		status,
-		image_id,
 		stock,
 		available_stock,
 		stock_adjustment,
 		amount,
 		currency,
 	} = variant;
+
+	/**
+	 * Edit variant.
+	 */
+	const [edit, setEdit] = useState(false);
 
 	/**
 	 * Link media.
@@ -156,8 +164,8 @@ export default ({
 					)}
 				</>
 			</td>
-			{quantityEnabled && (
-				<td class="variant-quantity">
+			<td class="variant-quantity">
+				{quantityEnabled ? (
 					<ScDropdown placement="bottom-end">
 						<ScButton
 							type="text"
@@ -251,8 +259,16 @@ export default ({
 							</div>
 						</ScMenu>
 					</ScDropdown>
-				</td>
-			)}
+				) : (
+					<div
+						css={css`
+							color: var(--sc-color-gray-400);
+						`}
+					>
+						–
+					</div>
+				)}
+			</td>
 			<td class="variant-sku">
 				<ScInput
 					value={sku}
@@ -275,6 +291,14 @@ export default ({
 					</ScButton>
 					<ScMenu>
 						<ScMenuItem
+							aria-label={__('Edit variant', 'surecart')}
+							onClick={() => setEdit(true)}
+						>
+							<ScIcon name="edit" slot="prefix" />
+							{__('Edit all fields', 'surecart')}
+						</ScMenuItem>
+						<ScMenuDivider />
+						<ScMenuItem
 							aria-label={__('Delete variant', 'surecart')}
 							onClick={() =>
 								updateVariant({
@@ -285,21 +309,30 @@ export default ({
 								})
 							}
 						>
+							<ScIcon
+								name={
+									variant?.status === 'draft'
+										? 'refresh-cw'
+										: 'trash'
+								}
+								slot="prefix"
+							/>
 							{variant?.status === 'draft'
 								? __('Restore', 'surecart')
 								: __('Delete', 'surecart')}
 						</ScMenuItem>
-						{!!variant?.image_url && (
-							<ScMenuItem
-								onClick={onUnlinkMedia}
-								aria-label={__('Remove image', 'surecart')}
-							>
-								{__('Remove Image', 'surecart')}
-							</ScMenuItem>
-						)}
 					</ScMenu>
 				</ScDropdown>
 			</td>
+			{edit && (
+				<EditVariant
+					variant={variant}
+					product={product}
+					updateVariant={updateVariant}
+					variantOptions={variantOptions}
+					onRequestClose={() => setEdit(false)}
+				/>
+			)}
 		</>
 	);
 };

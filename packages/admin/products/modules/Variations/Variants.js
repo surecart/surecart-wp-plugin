@@ -34,12 +34,14 @@ export default ({ product, updateProduct }) => {
 	/**
 	 * Update a variant by position.
 	 */
-	const updateVariant = (data, position) =>
-		updateProduct({
-			variants: product?.variants.map((item) =>
-				item?.position !== position ? item : { ...item, ...data }
-			),
+	const updateVariant = (data, position) => {
+		const updatedVariants = product?.variants.map((item) =>
+			item?.position !== position ? item : { ...item, ...data }
+		);
+		return updateProduct({
+			variants: updatedVariants,
 		});
+	};
 
 	const activeVariants = (product?.variants ?? []).filter(
 		(variant) => 'deleted' !== variant?.status
@@ -118,11 +120,9 @@ export default ({ product, updateProduct }) => {
 							<th css={cell} style={{ minWidth: '150px' }}>
 								{__('Price', 'surecart')}
 							</th>
-							{!!product?.stock_enabled && (
-								<th css={cell} style={{ minWidth: '150px' }}>
-									{__('Quantity', 'surecart')}
-								</th>
-							)}
+							<th css={cell} style={{ minWidth: '150px' }}>
+								{__('Quantity', 'surecart')}
+							</th>
 							<th css={cell} style={{ width: '185px' }}>
 								{__('SKU', 'surecart')}
 							</th>
@@ -130,28 +130,39 @@ export default ({ product, updateProduct }) => {
 						</tr>
 					);
 				}}
-				itemContent={(_, variant) => (
-					<VariantItem
-						variant={variant}
-						updateVariant={(data) =>
-							updateVariant(data, variant?.position)
-						}
-						quantityEnabled={!!product?.stock_enabled}
-						canOverride={
-							(prices || [])?.length <= 1 ||
-							variant?.amount !== null
-						}
-						defaultSku={product?.sku}
-						defaultAmount={
-							prices?.[0]
-								? maybeConvertAmount(
-										prices?.[0]?.amount,
-										prices?.[0]?.currency || 'usd'
-								  )
-								: ''
-						}
-					/>
-				)}
+				itemContent={(_, variant) => {
+					// Check if variant has stock_enabled override, otherwise fall back to product
+					const variantStockEnabled =
+						variant?.stock_enabled !== null &&
+						variant?.stock_enabled !== undefined
+							? variant.stock_enabled
+							: product?.stock_enabled;
+
+					return (
+						<VariantItem
+							variant={variant}
+							product={product}
+							updateVariant={(data) =>
+								updateVariant(data, variant?.position)
+							}
+							quantityEnabled={!!variantStockEnabled}
+							canOverride={
+								(prices || [])?.length <= 1 ||
+								variant?.amount !== null
+							}
+							defaultSku={product?.sku}
+							variantOptions={product?.variant_options}
+							defaultAmount={
+								prices?.[0]
+									? maybeConvertAmount(
+											prices?.[0]?.amount,
+											prices?.[0]?.currency || 'usd'
+									  )
+									: ''
+							}
+						/>
+					);
+				}}
 			/>
 		</div>
 	);
