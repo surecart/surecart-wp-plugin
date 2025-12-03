@@ -281,7 +281,9 @@ export class ScSubscription {
           open={this.cancelModal}
           onScRequestClose={() => (this.cancelModal = false)}
           onScRefresh={() => this.getSubscription()}
-        />
+        >
+          <slot name="cancel-popup-content" slot="cancel-popup-content" />
+        </sc-cancel-dialog>
         <sc-subscription-reactivate
           subscription={this.subscription}
           open={this.resubscribeModal}

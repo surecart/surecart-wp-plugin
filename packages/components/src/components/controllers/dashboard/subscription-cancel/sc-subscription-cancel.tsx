@@ -88,6 +88,9 @@ export class ScSubscriptionCancel {
     return (
       <sc-dashboard-module heading={heading} class="subscription-cancel" error={this.error} style={{ '--sc-dashboard-module-spacing': '1em' }}>
         {content}
+        <div slot="description">
+          <slot name="cancel-popup-content"></slot>
+        </div>
         <sc-flex justifyContent="flex-start">
           <sc-button type="primary" loading={this.loading || this.busy} disabled={this.loading || this.busy} onClick={() => this.cancelSubscription()}>
             {cancelButtonText}
