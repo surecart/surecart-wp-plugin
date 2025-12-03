@@ -136,6 +136,7 @@ class SubscriptionController extends BaseController {
 		$subscription = Subscription::with(
 			[
 				'price',
+				'periods',
 				'price.product',
 				'product.product_group',
 				'current_period',
