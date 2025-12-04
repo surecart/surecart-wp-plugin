@@ -32,12 +32,14 @@ export class ScCustomerEdit {
         'tax_identifier.number': tax_identifier_number,
         shipping_country,
         shipping_line_1,
+        shipping_line_2,
         shipping_postal_code,
         shipping_state,
         billing_name,
         billing_city,
         billing_country,
         billing_line_1,
+        billing_line_2,
         billing_postal_code,
         billing_state,
       } = await e.target.getFormJson();
@@ -46,6 +48,7 @@ export class ScCustomerEdit {
         city: billing_city,
         country: billing_country,
         line_1: billing_line_1,
+        line_2: billing_line_2,
         postal_code: billing_postal_code,
         state: billing_state,
       };
@@ -54,6 +57,7 @@ export class ScCustomerEdit {
         city: shipping_city,
         country: shipping_country,
         line_1: shipping_line_1,
+        line_2: shipping_line_2,
         postal_code: shipping_postal_code,
         state: shipping_state,
       };
