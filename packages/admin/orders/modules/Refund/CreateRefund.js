@@ -34,7 +34,13 @@ import Box from '../../../ui/Box';
 import { refundResasonOptions } from '../../../util/refunds';
 import RefundItem from './RefundItem';
 
-export default ({ checkout, charge, chargeIds, onRequestClose, onRefunded }) => {
+export default ({
+	checkout,
+	charge,
+	chargeIds,
+	onRequestClose,
+	onRefunded,
+}) => {
 	if (!checkout.line_items) {
 		return null;
 	}
@@ -97,6 +103,11 @@ export default ({ checkout, charge, chargeIds, onRequestClose, onRefunded }) => 
 		);
 	}, [checkout?.line_items?.data]);
 
+	// Only recalculate amount when refund quantities change, not when restock/revokePurchase changes.
+	const refundItemsQuantity = refundItems?.reduce((total, item) => {
+		return total + item.refundQuantity;
+	}, 0);
+
 	useEffect(() => {
 		const totalAmount = refundItems.reduce((total, refundItem) => {
 			return (
@@ -108,7 +119,7 @@ export default ({ checkout, charge, chargeIds, onRequestClose, onRefunded }) => 
 				? availableRefundAmount
 				: totalAmount
 		);
-	}, [refundItems.map(item => item.refundQuantity).join(','), availableRefundAmount]);
+	}, [refundItemsQuantity, availableRefundAmount]);
 
 	const totalQuantity = refundItems.reduce((total, refundItem) => {
 		return total + refundItem.refundQuantity;
