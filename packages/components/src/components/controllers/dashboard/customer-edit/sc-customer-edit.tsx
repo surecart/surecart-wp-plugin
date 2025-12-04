@@ -123,6 +123,7 @@ export class ScCustomerEdit {
                   address={{
                     ...(this.customer?.shipping_address as Address),
                   }}
+                  showLine2={true}
                   required={false}
                   names={{
                     name: 'shipping_name',
@@ -159,6 +160,7 @@ export class ScCustomerEdit {
                   address={{
                     ...(this.customer?.billing_address as Address),
                   }}
+                  showLine2={true}
                   names={{
                     name: 'billing_name',
                     country: 'billing_country',
