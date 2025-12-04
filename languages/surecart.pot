@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-11-19T02:05:49+00:00\n"
+"POT-Creation-Date: 2025-12-01T15:58:17+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.9.0\n"
 
@@ -2628,11 +2628,11 @@ msgstr ""
 msgid "$12 Signup Fee"
 msgstr ""
 
-#: src/Integrations/Bricks/BricksElementsService.php:157
+#: src/Integrations/Bricks/BricksElementsService.php:162
 msgid "SureCart - Single Product"
 msgstr ""
 
-#: src/Integrations/Bricks/BricksElementsService.php:158
+#: src/Integrations/Bricks/BricksElementsService.php:163
 msgid "SureCart - Collection Archive"
 msgstr ""
 
