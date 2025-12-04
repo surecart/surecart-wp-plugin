@@ -27,6 +27,10 @@ export const attributeLabels = {
 		'Original Checkout Not Revoked Purchases Quantity',
 		'surecart'
 	),
+	'original_checkout.billable_purchases_quantity': __(
+		'Original Checkout Billable Purchases Quantity',
+		'surecart'
+	),
 
 	// Customer attributes
 	'customer.created_at': __('Customer Created At', 'surecart'),
