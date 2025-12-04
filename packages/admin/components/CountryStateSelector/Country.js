@@ -5,7 +5,6 @@ import { CheckboxControl } from '@wordpress/components';
 import { useDispatch } from '@wordpress/data';
 import { useState, useEffect, useCallback } from '@wordpress/element';
 import { _n, sprintf } from '@wordpress/i18n';
-import apiFetch from '@wordpress/api-fetch';
 import { store as noticesStore } from '@wordpress/notices';
 
 export default ({
@@ -29,9 +28,10 @@ export default ({
 	const fetchTerritories = useCallback(async () => {
 		try {
 			setFetching(true);
-			const country = await apiFetch({
-				path: `surecart/v1/public/atlas/${countryIsoCode}`,
-			});
+			const response = await fetch(
+				`https://api.surecart.com/v1/public/atlas/${countryIsoCode}`
+			);
+			const country = await response.json();
 			const territories = (country?.states || []).filter(
 				(region) => !!region?.code
 			);
@@ -42,7 +42,7 @@ export default ({
 		} finally {
 			setFetching(false);
 		}
-	}, [countryIsoCode, apiFetch, createErrorNotice]);
+	}, [countryIsoCode, createErrorNotice]);
 
 	// when the country is selected, set states as empty array
 	const onSelectCountry = (checked) => {

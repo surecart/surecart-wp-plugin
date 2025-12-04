@@ -5,7 +5,6 @@ import { ScSkeleton, ScTag } from '@surecart/components-react';
 import Country from './Country';
 import { __ } from '@wordpress/i18n';
 import { useState, useEffect, useMemo } from '@wordpress/element';
-import apiFetch from '@wordpress/api-fetch';
 import { useDispatch } from '@wordpress/data';
 import { store as noticesStore } from '@wordpress/notices';
 
@@ -22,11 +21,12 @@ export default ({ value, onChange }) => {
 	const fetchAllCountries = async () => {
 		try {
 			setFetching(true);
-			const countries = await apiFetch({
-				path: `surecart/v1/public/atlas?locale=${
+			const response = await fetch(
+				`https://api.surecart.com/v1/public/atlas?locale=${
 					window?.scData?.locale || 'en'
-				}`,
-			});
+				}`
+			);
+			const countries = await response.json();
 			setAllCountries(countries?.data);
 		} catch (e) {
 			console.error(e);

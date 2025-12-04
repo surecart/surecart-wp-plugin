@@ -1,7 +1,6 @@
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 import { Address } from '../types';
-import apiFetch from './fetch';
 export const STATE_INCLUDED_COUNTRIES = ['AU', 'BR', 'CA', 'CH', 'ES', 'HK', 'IE', 'IN', 'IT', 'JP', 'MY', 'MX', 'US'];
 export const POSTAL_CODE_EXCLUDED_COUNTRIES = ['HK'];
 export const CITY_EXCLUDED_COUNTRIES = ['SG'];
@@ -51,21 +50,20 @@ export const hasRequiredFields = ({ city, country, line_1, postal_code, state })
 const lang = window.scData?.locale || navigator.language || (navigator as any)?.browserLanguage || (navigator.languages || ['en'])[0];
 
 export const countryChoices = async () => {
-  const response: any = await apiFetch({
-    path: addQueryArgs(`surecart/v1/public/atlas`, {
-      locale: lang,
-    }),
+  const url = addQueryArgs(`https://api.surecart.com/v1/public/atlas`, {
+    locale: lang,
   });
-  return response?.data.map(({ code, name }) => ({ value: code, label: name })) as Array<{ value: string; label: string }>;
+  const response = await fetch(url);
+  const data: any = await response.json();
+  return data?.data.map(({ code, name }) => ({ value: code, label: name })) as Array<{ value: string; label: string }>;
 };
 
 export const getCountryDetails = async (countryCode: string) => {
-  const response: any = await apiFetch({
-    path: addQueryArgs(`surecart/v1/public/atlas/${countryCode}`, {
-      locale: lang,
-    }),
+  const url = addQueryArgs(`https://api.surecart.com/v1/public/atlas/${countryCode}`, {
+    locale: lang,
   });
-  return response;
+  const response = await fetch(url);
+  return await response.json();
 };
 
 export const isAddressComplete = (address: Partial<Address>) => {
