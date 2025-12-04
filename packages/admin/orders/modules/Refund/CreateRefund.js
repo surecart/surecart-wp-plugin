@@ -108,7 +108,7 @@ export default ({ checkout, charge, chargeIds, onRequestClose, onRefunded }) => 
 				? availableRefundAmount
 				: totalAmount
 		);
-	}, [refundItems]);
+	}, [refundItems.map(item => item.refundQuantity).join(','), availableRefundAmount]);
 
 	const totalQuantity = refundItems.reduce((total, refundItem) => {
 		return total + refundItem.refundQuantity;
