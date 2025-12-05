@@ -51,12 +51,12 @@ export class ScSubscriptionCancel {
     return (
       <Fragment>
         {this?.protocol?.cancel_behavior === 'pending' ? (
-          <div slot="description">
+          <Fragment>
             {__('Your plan will be canceled, but is still available until the end of your billing period on', 'surecart')}{' '}
             <strong>{this?.subscription?.current_period_end_at_date}</strong>. {__('If you change your mind, you can renew your subscription.', 'surecart')}
-          </div>
+          </Fragment>
         ) : (
-          <div slot="description">{__('Your plan will be canceled immediately and cannot be modified later.', 'surecart')}</div>
+          <Fragment>{__('Your plan will be canceled immediately and cannot be modified later.', 'surecart')}</Fragment>
         )}
       </Fragment>
     );
@@ -87,8 +87,8 @@ export class ScSubscriptionCancel {
 
     return (
       <sc-dashboard-module heading={heading} class="subscription-cancel" error={this.error} style={{ '--sc-dashboard-module-spacing': '1em' }}>
-        {content}
         <div slot="description">
+          {content}
           <slot name="cancel-popup-content"></slot>
         </div>
         <sc-flex justifyContent="flex-start">
