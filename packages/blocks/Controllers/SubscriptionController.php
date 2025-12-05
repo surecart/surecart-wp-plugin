@@ -201,7 +201,7 @@ class SubscriptionController extends BaseController {
 							)
 						),
 					]
-				)->render( apply_filters( 'surecart/dashboard/subscription/inner_html', '', $subscription ) )
+				)->render()
 			);
 			?>
 		<?php do_action( 'surecart/dashboard/subscription/after_current_plan', $subscription ); ?>
