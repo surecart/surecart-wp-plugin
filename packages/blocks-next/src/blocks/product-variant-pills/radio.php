@@ -2,7 +2,33 @@
 	<?php echo wp_kses_post( $option->name ); ?>
 </label>
 
-<div class="sc-pill-option__wrapper">
+<?php
+// Get highlight styles from the inner product-variant-pill block.
+$highlight_styles = [];
+$pill_block_attrs = [];
+$inner_blocks     = $block->parsed_block['innerBlocks'] ?? [];
+
+foreach ( $inner_blocks as $inner_block ) {
+	if ( 'surecart/product-variant-pill' === ( $inner_block['blockName'] ?? '' ) ) {
+		$pill_block_attrs = $inner_block['attrs'] ?? [];
+		break;
+	}
+}
+
+if ( ! empty( $pill_block_attrs['highlight_background'] ) ) {
+	$highlight_styles[] = '--sc-pill-option-active-background-color:' . esc_attr( $pill_block_attrs['highlight_background'] );
+}
+if ( ! empty( $pill_block_attrs['highlight_text'] ) ) {
+	$highlight_styles[] = '--sc-pill-option-active-text-color:' . esc_attr( $pill_block_attrs['highlight_text'] );
+}
+if ( ! empty( $pill_block_attrs['highlight_border'] ) ) {
+	$highlight_styles[] = '--sc-pill-option-active-border-color:' . esc_attr( $pill_block_attrs['highlight_border'] );
+}
+
+$wrapper_style = ! empty( $highlight_styles ) ? 'style="' . esc_attr( implode( ';', $highlight_styles ) ) . '"' : '';
+?>
+
+<div class="sc-pill-option__wrapper" <?php echo $wrapper_style; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 	<?php
 	foreach ( $option->values as $value ) :
 		// Get an instance of the current Post Template block.

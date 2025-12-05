@@ -64,8 +64,8 @@ a.sc-pill-option__button,
 			var(--sc-color-primary-500)
 		);
 		border-color: var(
-			--sc-pill-option-active-background-color,
-			var(--sc-color-primary-500)
+			--sc-pill-option-active-border-color,
+			var(--sc-pill-option-active-background-color, var(--sc-color-primary-500))
 		);
 		color: var(--sc-pill-option-active-text-color, white);
 		box-shadow: var(--sc-shadow-small);
