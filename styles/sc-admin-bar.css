@@ -1,0 +1,4 @@
+#wpadminbar #wp-admin-bar-sc_change_checkout_mode > .ab-item:before {
+	content: "\f186"/ "";
+	top: 2px;
+}
