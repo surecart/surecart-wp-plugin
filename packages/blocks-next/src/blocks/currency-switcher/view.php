@@ -47,11 +47,8 @@ $current_currency = Currency::getCurrentCurrency();
 	data-wp-on--keyup="surecart/dropdown::actions.menuKeyUp"
 	data-wp-on--keydown="surecart/dropdown::actions.menuKeyDown"
 	data-wp-init="surecart/currency-switcher::callbacks.initialize"
-	role="menu"
 	tabindex="-1"
 	data-wp-bind--aria-labelledby="context.activeMenuItemId"
-	aria-description="<?php esc_html_e( 'Press the arrow keys then enter to make a selection.', 'surecart' ); ?>"
-	aria-orientation="vertical"
 >
 	<div
 		class="wp-block-surecart-currency-switcher__trigger"
@@ -89,6 +86,9 @@ $current_currency = Currency::getCurrentCurrency();
 		data-wp-bind--hidden="!context.isMenuOpen"
 		data-wp-bind--aria-hidden="!context.isMenuOpen"
 		hidden
+		role="menu"
+		aria-description="<?php esc_html_e( 'Press the arrow keys then enter to make a selection.', 'surecart' ); ?>"
+		aria-orientation="vertical"
 	>
 		<?php foreach ( $currencies as $currency ) : ?>
 			<?php
