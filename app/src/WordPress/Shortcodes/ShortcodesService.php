@@ -26,30 +26,6 @@ class ShortcodesService {
 	];
 
 	/**
-	 * Convert the block
-	 *
-	 * @param string $name Block name.
-	 * @param string $block Block block.
-	 * @param array  $defaults Default attributes.
-	 *
-	 * @return void
-	 */
-	public function registerBlockShortcode( $name, $block, $defaults = array() ) {
-		add_shortcode(
-			$name,
-			function ( $attributes, $content ) use ( $name, $block, $defaults ) {
-				return ( new ShortcodesBlockConversionService( $attributes, $content ) )->convert(
-					$name,
-					$block,
-					$defaults
-				);
-			},
-			10,
-			2
-		);
-	}
-
-	/**
 	 * Render shortcode notice
 	 *
 	 * @param string $name Name.
