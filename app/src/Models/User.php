@@ -10,6 +10,7 @@ use SureCart\Models\Traits\SyncsCustomer;
  */
 class User implements ArrayAccess, JsonSerializable {
 	use SyncsCustomer;
+
 	/**
 	 * Holds the user.
 	 *
@@ -87,7 +88,7 @@ class User implements ArrayAccess, JsonSerializable {
 		$live_customer = current(
 			array_filter(
 				$customers,
-				function( $customer ) {
+				function ( $customer ) {
 					return $customer->live_mode;
 				}
 			)
@@ -96,7 +97,7 @@ class User implements ArrayAccess, JsonSerializable {
 		$test_customer = current(
 			array_filter(
 				$customers,
-				function( $customer ) {
+				function ( $customer ) {
 					return ! $customer->live_mode;
 				}
 			)
@@ -258,7 +259,9 @@ class User implements ArrayAccess, JsonSerializable {
 		}
 
 		clean_user_cache( $this->user->ID );
-		wp_clear_auth_cookie();
+		if ( class_exists( \WP_Session_Tokens::class ) ) {
+			\WP_Session_Tokens::get_instance( $this->user->ID )->destroy_all();
+		}
 		wp_set_current_user( $this->user->ID );
 		wp_set_auth_cookie( $this->user->ID );
 		update_user_caches( $this->user );
@@ -539,7 +542,7 @@ class User implements ArrayAccess, JsonSerializable {
 	 * @param  mixed $offset Name.
 	 * @return void
 	 */
-	public function offsetUnset( $offset ) : void {
+	public function offsetUnset( $offset ): void {
 		$this->user->$offset = null;
 	}
 
