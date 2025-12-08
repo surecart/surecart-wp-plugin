@@ -313,7 +313,7 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 
 == Changelog ==
 
-= 3.17.0 - December 8th, 2025=
+= 3.17.0 - December 8th, 2025 =
 - New: Product variant overrides. Customize variants with custom tax, shipping, weights, purchase limits and more.
 - New: Limit shipping to specific ZIP/postal codes, code ranges, or partial matches of codes.
 - New: Autoplay and loop options for product page video.
