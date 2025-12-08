@@ -1521,6 +1521,20 @@
     "class": true,
     "slot": true
   },
+  "sc-popover": {
+    "click-el": true,
+    "disabled": true,
+    "distance": true,
+    "hoist": true,
+    "open": true,
+    "placement": true,
+    "position": true,
+    "skidding": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-premium-tag": {
     "size": true,
     "style": true,

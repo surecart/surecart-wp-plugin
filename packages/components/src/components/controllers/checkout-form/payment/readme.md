@@ -40,6 +40,7 @@
 - [sc-checkout-paystack-payment-provider](../sc-checkout-paystack-payment-provider)
 - [sc-form-control](../../../ui/form-control)
 - [sc-tag](../../../ui/tag)
+- [sc-popover](../../../ui/popover)
 - [sc-checkout-mollie-payment](../sc-checkout-mollie-payment)
 - [sc-alert](../../../ui/alert)
 
@@ -54,6 +55,7 @@ graph TD;
   sc-payment --> sc-checkout-paystack-payment-provider
   sc-payment --> sc-form-control
   sc-payment --> sc-tag
+  sc-payment --> sc-popover
   sc-payment --> sc-checkout-mollie-payment
   sc-payment --> sc-alert
   sc-payment-method-choice --> sc-card

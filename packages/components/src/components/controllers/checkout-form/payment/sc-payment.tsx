@@ -44,10 +44,10 @@ export class ScPayment {
   /** Hide the test mode badge */
   @Prop() hideTestModeBadge: boolean;
 
-  componentWillLoad() {    
+  componentWillLoad() {
     processorsState.disabled = {
       ...processorsState.disabled,
-      processors: this.disabledProcessorTypes
+      processors: this.disabledProcessorTypes,
     };
   }
 
@@ -149,6 +149,30 @@ export class ScPayment {
             {checkoutState.mode === 'test' && !this.hideTestModeBadge && (
               <sc-tag type="warning" size="small" exportparts="base:test-badge__base, content:test-badge__content">
                 {__('Test Mode', 'surecart')}
+                <sc-popover style={{ '--panel-width': '35em' }} skidding={30}>
+                  <sc-icon name="info" slot="trigger" style={{ 'marginLeft': '5px', 'verticalAlign': 'middle', 'marginBottom': '3px', '--width': '1.2em', '--height': '1.2em' }} />
+                  <span slot="title"> {__('How to change to Live mode?', 'surecart')}</span>
+                  <div slot="content">
+                    <ol style={{ paddingLeft: '1em', margin: '0', fontSize: '12px' }}>
+                      <li>
+                        {__('From the Editor', 'surecart')}
+                        <ul style={{ paddingLeft: '1em' }}>
+                          <li>{__('Navigate to the custom Forms section under SureCart.', 'surecart')}</li>
+                          <li>{__('Select the checkout form.', 'surecart')}</li>
+                          <li>{__('Select "Live" from the dropdown. Hit Update!', 'surecart')}</li>
+                        </ul>
+                      </li>
+                      <li>
+                        {__('From the Admin Bar', 'surecart')}
+                        <ul style={{ paddingLeft: '1em' }}>
+                          <li>{__("Select any product & proceed to it's checkout page.", 'surecart')}</li>
+                          <li>{__('Access the dropdown menu & select the live mode.', 'surecart')}</li>
+                        </ul>
+                      </li>
+                    </ol>
+                  </div>
+                  <span slot="footer"> {__('Need help?', 'surecart')}</span>
+                </sc-popover>
               </sc-tag>
             )}
           </div>
