@@ -7,7 +7,7 @@ import { css, jsx } from '@emotion/core';
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { InspectorControls } from '@wordpress/block-editor';
+import { InspectorControls, PanelColorSettings } from '@wordpress/block-editor';
 import { RichText } from '@wordpress/block-editor';
 import {
 	PanelBody,
@@ -33,6 +33,8 @@ export default ({ className, attributes, setAttributes }) => {
 		show_icon,
 		show_secure_notice,
 		secure_notice_text,
+		background_color,
+		text_color,
 	} = attributes;
 
 	return (
@@ -123,6 +125,24 @@ export default ({ className, attributes, setAttributes }) => {
 						/>
 					</PanelRow>
 				</PanelBody>
+
+				<PanelColorSettings
+					title={__('Color Settings')}
+					colorSettings={[
+						{
+							value: background_color,
+							onChange: (background_color) =>
+								setAttributes({ background_color }),
+							label: __('Background Color', 'surecart'),
+						},
+						{
+							value: text_color,
+							onChange: (text_color) =>
+								setAttributes({ text_color }),
+							label: __('Text Color', 'surecart'),
+						},
+					]}
+				></PanelColorSettings>
 			</InspectorControls>
 
 			<div
@@ -138,6 +158,10 @@ export default ({ className, attributes, setAttributes }) => {
 					submit={submit}
 					icon={show_icon ? 'lock' : false}
 					{...(full ? { full: true } : {})}
+					style={{
+						'--sc-color-primary-text': text_color,
+						'--sc-color-primary-500': background_color,
+					}}
 					size={size}
 				>
 					{show_icon && (

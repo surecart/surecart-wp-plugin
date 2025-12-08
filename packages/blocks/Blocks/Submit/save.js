@@ -8,6 +8,8 @@ export default ({ attributes }) => {
 		show_icon,
 		secure_notice_text,
 		show_secure_notice,
+		background_color,
+		text_color,
 	} = attributes;
 
 	return (
@@ -19,6 +21,8 @@ export default ({ attributes }) => {
 			show-total={show_total ? 'true' : false}
 			secure-notice={show_secure_notice ? 'true' : 'false'}
 			secure-notice-text={secure_notice_text}
+			text-color={text_color}
+			background-color={background_color}
 		>
 			{text}
 		</sc-order-submit>

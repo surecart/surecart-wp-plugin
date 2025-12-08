@@ -43,6 +43,14 @@
 		"size": {
 			"type": "string",
 			"default": "large"
+		},
+		"background_color": {
+			"type": "string",
+			"default": ""
+		},
+		"text_color": {
+			"type": "string",
+			"default": ""
 		}
 	}
 }
