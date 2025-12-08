@@ -80,8 +80,6 @@ export default ({
 				muted,
 			} = formData;
 
-			console.log('formData', formData);
-
 			// Update the gallery with the new item data.
 			const ids = [...(product?.gallery_ids || [])];
 
