@@ -1,6 +1,6 @@
 import { Component, Prop, h, State } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
-import { Customer, Address, CountryLocaleFieldValue, CountryLocaleField } from '../../../../types';
+import { Customer, Address } from '../../../../types';
 import apiFetch from '../../../../functions/fetch';
 import { addQueryArgs } from '@wordpress/url';
 
@@ -13,10 +13,6 @@ export class ScCustomerEdit {
   @Prop() heading: string;
   @Prop({ mutable: true }) customer: Customer;
   @Prop() successUrl: string;
-  @Prop() i18n: {
-    defaultCountryFields: Array<CountryLocaleFieldValue>;
-    countryFields: Array<CountryLocaleField>;
-  };
 
   @State() loading: boolean;
   @State() error: string;
@@ -36,12 +32,14 @@ export class ScCustomerEdit {
         'tax_identifier.number': tax_identifier_number,
         shipping_country,
         shipping_line_1,
+        shipping_line_2,
         shipping_postal_code,
         shipping_state,
         billing_name,
         billing_city,
         billing_country,
         billing_line_1,
+        billing_line_2,
         billing_postal_code,
         billing_state,
       } = await e.target.getFormJson();
@@ -50,6 +48,7 @@ export class ScCustomerEdit {
         city: billing_city,
         country: billing_country,
         line_1: billing_line_1,
+        line_2: billing_line_2,
         postal_code: billing_postal_code,
         state: billing_state,
       };
@@ -58,6 +57,7 @@ export class ScCustomerEdit {
         city: shipping_city,
         country: shipping_country,
         line_1: shipping_line_1,
+        line_2: shipping_line_2,
         postal_code: shipping_postal_code,
         state: shipping_state,
       };
@@ -127,6 +127,7 @@ export class ScCustomerEdit {
                   address={{
                     ...(this.customer?.shipping_address as Address),
                   }}
+                  showLine2={true}
                   required={false}
                   names={{
                     name: 'shipping_name',
@@ -137,8 +138,6 @@ export class ScCustomerEdit {
                     postal_code: 'shipping_postal_code',
                     state: 'shipping_state',
                   }}
-                  defaultCountryFields={this.i18n?.defaultCountryFields || []}
-                  countryFields={this.i18n?.countryFields || []}
                 ></sc-address>
               </div>
 
@@ -165,6 +164,7 @@ export class ScCustomerEdit {
                   address={{
                     ...(this.customer?.billing_address as Address),
                   }}
+                  showLine2={true}
                   names={{
                     name: 'billing_name',
                     country: 'billing_country',
@@ -175,8 +175,6 @@ export class ScCustomerEdit {
                     state: 'billing_state',
                   }}
                   required={true}
-                  defaultCountryFields={this.i18n?.defaultCountryFields || []}
-                  countryFields={this.i18n?.countryFields || []}
                 ></sc-address>
               </div>
 

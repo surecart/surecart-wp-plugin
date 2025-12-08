@@ -44,6 +44,7 @@ declare global {
       root_url: string;
       account_id: string;
       account_slug: string;
+      locale: string;
       api_url: string;
       home_url: string;
       plugin_url: string;
@@ -1198,6 +1199,7 @@ export interface Customer extends Object {
   billing_address?: string | Address;
   billing_address_display?: string | Address;
   shipping_address?: string | Address;
+  shipping_address_display?: string | Address;
   billing_matches_shipping: boolean;
   live_mode: boolean;
   unsubscribed: boolean;
@@ -1408,8 +1410,8 @@ export interface CustomStripeElementChangeEvent extends StripeElementChangeEvent
 
 export interface CountryLocaleFieldValue {
   name: string;
-  priority: number;
-  label: boolean;
+  priority?: number;
+  label: string;
 }
 
 export interface CountryLocaleField {

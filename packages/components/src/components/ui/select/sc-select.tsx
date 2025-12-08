@@ -44,7 +44,7 @@ export class ScSelectDropdown {
   private labelId = `select-label-${id}`;
 
   /** The input's autocomplete attribute. */
-  @Prop() autocomplete: string;
+  @Prop({ reflect: true }) autocomplete: string;
 
   /** Placeholder for no value */
   @Prop() placeholder: string = '';
@@ -230,6 +230,20 @@ export class ScSelectDropdown {
     }
 
     this.scChange.emit(choice);
+  }
+
+  handleInputChange() {
+    // Sync autofilled value to component state
+    if (!this.input || this.input.value === this.value) return;
+
+    const inputValue = this.input.value;
+    // Match by value (code) or label (name) since Chrome may autofill either
+    const choice = this.choices.find(c => c.value === inputValue || c.label === inputValue);
+
+    if (choice) {
+      this.value = choice.value;
+      this.scChange.emit(choice);
+    }
   }
 
   @Watch('searchTerm')
@@ -467,10 +481,12 @@ export class ScSelectDropdown {
             value={this.value}
             required={this.required}
             disabled={this.disabled}
-            aria-hidden="true"
+            autocomplete={this.autocomplete}
+            tabindex="-1"
             aria-label={this.displayValue() || this.label || this.placeholder}
             onBlur={() => this.handleBlur()}
             onFocus={() => this.handleFocus()}
+            onChange={() => this.handleInputChange()}
           ></input>
 
           <sc-dropdown
