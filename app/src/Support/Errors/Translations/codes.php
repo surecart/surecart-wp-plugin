@@ -18,6 +18,7 @@ return array(
 	'checkout.shipping_address.missing_tax_info'           => __( 'Please fill out your address.', 'surecart' ),
 	'checkout.discount.coupon.invalid'                     => __( 'This coupon is not valid. Please double-check it and try again.', 'surecart' ),
 	'checkout.customer.blank'                              => __( 'Please select a customer.', 'surecart' ),
+	'checkout.line_items.not_purchasable'                  => __( 'Some items in your cart have reached their purchase limit. Please update your order to continue.', 'surecart' ),
 	'download.current_release'                             => __( 'This download cannot be removed or archived when it is set as the current release.', 'surecart' ),
 	'refund.amount.greater_than_refundable_amount'         => __( 'The refund amount is greater than the refundable amount.', 'surecart' ),
 	'subscription.payment_method.not_reusable'             => __( 'This payment method cannot be used for subscriptions.', 'surecart' ),

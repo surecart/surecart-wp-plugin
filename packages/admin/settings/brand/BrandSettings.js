@@ -211,7 +211,7 @@ export default () => {
 					</ScUpgradeRequired>
 				</div>
 			</SettingsBox>
-			
+
 			<SettingsBox
 				title={__('Cart', 'surecart')}
 				loading={!hasLoadedSettingItem}

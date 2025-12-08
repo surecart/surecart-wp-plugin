@@ -166,14 +166,14 @@ class ErrorsTranslationService {
 	 * @return \WP_Error
 	 */
 	public function translateErrorMessage( $response, $fallback = null ) {
-		// translate specific error code.
-		$translated = $this->codeTranslation( $response['code'] ?? '' );
+		// translate attribute.
+		$translated = $this->attributeTranslation( $response['attribute'] ?? '', $response['type'] ?? '', $response['options'] ?? [] );
 		if ( $translated ) {
 			return apply_filters( 'surecart/translated_error', $translated, $response );
 		}
 
-		// translate attribute.
-		$translated = $this->attributeTranslation( $response['attribute'] ?? '', $response['type'] ?? '', $response['options'] ?? [] );
+		// translate specific error code.
+		$translated = $this->codeTranslation( $response['code'] ?? '' );
 		if ( $translated ) {
 			return apply_filters( 'surecart/translated_error', $translated, $response );
 		}

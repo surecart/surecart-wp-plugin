@@ -90,6 +90,10 @@ class CartService {
 	 * Is the cart enabled?
 	 */
 	public function isCartEnabled() {
+		if ( apply_filters( 'sc_cart_disabled', false ) ) {
+			return false;
+		}
+
 		return ! (bool) get_option( 'sc_slide_out_cart_disabled', false );
 	}
 

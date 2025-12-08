@@ -290,6 +290,13 @@ dispatch(coreStore).addEntities([
 		baseURLParams: { context: 'edit' },
 	},
 	{
+		name: 'dispute',
+		kind: 'surecart',
+		label: __('Dispute', 'surecart'),
+		baseURL: '/surecart/v1/disputes',
+		baseURLParams: { context: 'edit' },
+	},
+	{
 		name: 'refund',
 		kind: 'surecart',
 		label: __('Refund', 'surecart'),
@@ -350,6 +357,7 @@ dispatch(coreStore).addEntities([
 		label: __('Affiliations', 'surecart'),
 		baseURL: '/surecart/v1/affiliations',
 		baseURLParams: { context: 'edit' },
+		supportsPagination: true,
 	},
 	{
 		name: 'affiliation-product',

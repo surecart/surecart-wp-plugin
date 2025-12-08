@@ -23,8 +23,8 @@ import { useEntityRecords } from '@wordpress/core-data';
 import Box from '../../../ui/Box';
 import { formatTaxDisplay } from '../../../util/tax';
 import LineItem from './LineItem';
-import { getSKUText } from '../../../util/products';
 import RefundLineItem from '../Refund/RefundLineItem';
+import DisputeLineItems from '../Dispute/DisputeLineItems';
 
 const status = {
 	processing: __('Processing', 'surecart'),
@@ -215,6 +215,8 @@ export default ({ order, checkout, chargeIds }) => {
 							/>
 						</>
 					)}
+
+					<DisputeLineItems chargeIds={chargeIds} order={order} />
 
 					{checkout?.tax_reverse_charged_amount > 0 && (
 						<LineItem

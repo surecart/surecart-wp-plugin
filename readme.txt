@@ -3,8 +3,8 @@ Contributors: 2winfactor, wpcrafter
 Donate link: https://surecart.com
 Tags: ecommerce, online store, subscriptions, stripe, payments
 Requires at least: 6.6
-Tested up to: 6.8
-Stable tag: 3.14.0
+Tested up to: 6.9
+Stable tag: 3.16.8
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -312,6 +312,91 @@ Yes, the checkout form can be customized using our visual builder. You can chang
 Accessibility is a huge priority for the entire team building SureCart. As you know, accessibility is an ongoing improvement task. Our development and QA teams are trained in accessibility best practices and build/test each new feature for accessibility. If you come across any edge issues, we want to know about it and will prioritize its resolution. Please contact us via our website.
 
 == Changelog ==
+
+= 3.16.8 - December 3rd, 2025 =
+- Fix: Resolved internal errors on Dashboard with WordPress 6.9 compatibility.
+
+= 3.16.7 - December 1st, 2025 =
+- New: Internal product and collection seeding feature.
+- Fix: WordPress 6.9 compatibility.
+- Fix: Small Bricks css compatibility script was sometimes loading on non-Bricks themes.
+
+= 3.16.6 - Novermber 18th, 2025 =
+- Fix: Revert previous Stripe change as they are rolling out a fix on their end.
+
+= 3.16.5 - Novermber 18th, 2025 =
+- Fix: Issue with Stripe payment element not loading for non-recurring payments due to remote API change.
+
+= 3.16.4 - November 10th, 2025 =
+- New: Ability to bulk delete customers.
+- Fix: Issue where a user wants to override menu order on products.
+- Fix: Product search does not work inside product list sidebar.
+- Fix: Issue with FSE themes where the "Edit Template" button takes you to the default template instead of the assigned one.
+- Fix: Issue with the block variants block not rendering properly on the upsell edit UI.
+- Fix: Issue where attribute-related error messages were not being prioritized over specific error code messages.
+- Fix: Incorrect download file quantity on customer dashboard if more than 20 downloads.
+
+= 3.16.3 - October 30th, 2025 =
+- Change: Allow up to 300 variants per product.
+- Fix: Issue with Elementor form selection module not appearing when only the free version of Elementor is installed.
+- Fix: Error with product list shortcode when multiple collection IDs are passed.
+- Fix: Manual payment methods not appearing on the customer dashboard "Add Payment Methods" page.
+- Fix: Recurring commissions with AffiliateWP when a free trial becomes active.
+- Fix: Issue where tax override could not be set to 0%.
+
+= 3.16.2 - October 27th, 2025 =
+- Fix: Issue with dashboard charts not using correct currency.
+
+= 3.16.1 - October 24th, 2025 =
+- Fix: Issue with single product media getting squished on instant checkout page.
+
+= 3.16.0 - October 23rd, 2025 =
+- New: Refreshed admin dashboard page.
+- New: Admin toolbar content edit quicklinks.
+- New: Edit order metadata on admin.
+- Fix: Issue with quick add popup in Avada theme.
+- Fix: Add extra validation for currency switcher block.
+- Fix: Extra markup on product quick add admin UI.
+
+= 3.15.5 - October 22nd, 2025 =
+- Improvement: Add php filter to disable setting first price choice by default.
+- Improvement: Do not use "grab" cursor for video media.
+- Fix: Disputes incorrectly showing for manual payment methods.
+- Fix: Various edge cases with product, prices, customer dropdowns in admin.
+- Fix: Resubscribe button not opening popup after merchant cancels subscription manual payment method.
+- Fix: PHP error on collections page if collections page was not re-saved.
+
+= 3.15.4 - October 8th, 2025 =
+- Fix: Issue with downloads not being able to listed by customers with more restricted capabilities.
+
+= 3.15.3 - October 7th, 2025 =
+- Improvement: Increase automatic video poster quality generation.
+- Fix: Paginate download on customer dashboard if more than 20 downloads.
+- Fix: Issue with deleted WordPress media not able to be removed from product backend.
+
+= 3.15.2 - October 3rd, 2025 =
+- Fix: Auto-height issue with single media blocks.
+
+= 3.15.1 - October 1st, 2025 =
+- Improvement: Improve message when customer has reached purchase limit of a product.
+- Fix: Media thumbnail badges on admin apear under the image.
+- Fix: RankMath adding unnecessary link in sitemap.
+- Fix: Issue with Etch backend showing floating cart icon.
+- Fix: Badge overlap in integrations section when integration is disabled.
+
+= 3.15.0 - September 30th, 2025 =
+- New: Product page video media.
+- New: Upsell replacement behavior.
+- New: Show disputes in admin pages.
+- New: Improved UI for assigning variants to product media.
+- Improvement: Pass noindex headers with currency parameters due to issues with some SEO plugins indexing these queries.
+- Improvement: Reposition help widget on index pages to not interfere with pagination.
+- Improvement: Better wording when restoring payment plans.
+- Improvement: Change "Edit Template" to "Edit Product Template" on product page admin UI to be more clear.
+- Fix: Issue in Safari with Quick Add popup animation.
+- Fix: Issue when updating customer's tax identifier from the order admin page.
+- Fix: Issue with Elementor where the "out of stock" label was not displaying a custom label on the front-end.
+- Fix: Missing space in resubscribe confirmation message.
 
 = 3.14.0 - September 15th, 2025 =
 - New: Quick add functionality for product lists.
