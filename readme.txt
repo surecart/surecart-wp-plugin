@@ -325,6 +325,7 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 - Fix: Issue where user role was not removed in some cases during plan downgrade.
 - Fix: Ensure filter urls have noindex when Rankmath or SureRank plugins may not be outputting canonical tag correctly.
 - Fix: Issue with Google trying to crawl menu cart button due to missing role.
+- Fix: Don't clear existing login cookies upon login to prevent issues where webservers will serve headers out of order.
 
 = 3.16.8 - December 3rd, 2025 =
 - Fix: Resolved internal errors on Dashboard with WordPress 6.9 compatibility.
