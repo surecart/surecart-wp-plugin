@@ -17,6 +17,7 @@ const HelpTooltip = ({
 	position = 'bottom right',
 	slot,
 	style = {},
+	width = '300px',
 }) => {
 	const [isVisible, setIsVisible] = useState(false);
 	const [anchorRef, setAnchorRef] = useState(null);
@@ -67,7 +68,7 @@ const HelpTooltip = ({
 					>
 						<div
 							css={css`
-								min-width: 300px;
+								min-width: ${width};
 								padding: var(--sc-spacing-x-large);
 								*:last-child {
 									margin-bottom: 0;

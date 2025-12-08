@@ -86,7 +86,7 @@ export default ({ attributes, setAttributes }) => {
 						<ToggleControl
 							label={__('Always show cart', 'surecart')}
 							help={__(
-								'Enable to always show the cart button, even your cart is empty.',
+								'Enable to always show the cart button, even when your cart is empty.',
 								'surecart'
 							)}
 							checked={cart_menu_always_shown}

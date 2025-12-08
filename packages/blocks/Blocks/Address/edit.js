@@ -151,11 +151,7 @@ export default ({ attributes, setAttributes }) => {
 						address={{
 							country: default_country,
 						}}
-						defaultCountryFields={
-							scBlockData.i18n.defaultCountryFields
-						}
 						showLine2={line_2}
-						countryFields={scBlockData.i18n.countryFields}
 					/>
 
 					{collect_billing && (
@@ -176,11 +172,7 @@ export default ({ attributes, setAttributes }) => {
 							address={{
 								country: default_country,
 							}}
-							defaultCountryFields={
-								scBlockData.i18n.defaultCountryFields
-							}
 							showLine2={line_2}
-							countryFields={scBlockData.i18n.countryFields}
 						/>
 					)}
 				</ScFlex>

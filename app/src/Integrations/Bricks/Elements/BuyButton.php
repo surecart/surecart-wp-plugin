@@ -52,6 +52,14 @@ class BuyButton extends \Bricks\Element {
 	}
 
 	/**
+	 * Enqueue element-specific styles and scripts.
+	 */
+	public function enqueue_scripts() {
+		wp_enqueue_style( 'surecart-spinner' );
+		wp_enqueue_style( 'surecart-wp-button' );
+	}
+
+	/**
 	 * Set controls.
 	 *
 	 * @return void
@@ -122,7 +130,7 @@ class BuyButton extends \Bricks\Element {
 			'reset' => true,
 		];
 
-		// Icon
+		// Icon.
 		$this->controls['iconSeparator'] = [
 			'label' => esc_html__( 'Icon', 'surecart' ),
 			'type'  => 'separator',
@@ -237,16 +245,12 @@ class BuyButton extends \Bricks\Element {
 
 		// Link class for busy state.
 		$this->set_attribute( '_root', 'class', 'sc-button__link' );
+		$this->set_attribute( '_root', 'data-wp-class--sc-button__link--busy', 'context.busy' );
+		$this->set_attribute( '_root', 'data-wp-bind--disabled', 'state.isUnavailable' );
 
 		// Set tag and attributes.
 		if ( $is_buy_now ) {
-			$this->tag = 'a';
-			$this->set_attribute( '_root', 'data-wp-bind--disabled', 'state.isUnavailable' );
-			$this->set_attribute( '_root', 'data-wp-bind--href', 'state.checkoutUrl' );
-		} else {
-			$this->tag = 'button';
-			$this->set_attribute( '_root', 'data-wp-bind--disabled', 'state.isUnavailable' );
-			$this->set_attribute( '_root', 'data-wp-class--sc-button__link--busy', 'context.busy' );
+			$this->set_attribute( '_root', 'data-wp-on--click', 'callbacks.redirectToCheckout' );
 		}
 
 		if ( ! empty( $settings['show_sticky_purchase_button'] ) && 'never' !== $settings['show_sticky_purchase_button'] ) {
@@ -254,7 +258,7 @@ class BuyButton extends \Bricks\Element {
 			$this->set_attribute( '_root', 'data-wp-on-async-window--resize', 'surecart/sticky-purchase::actions.toggleVisibility' );
 		}
 
-		$output = "<{$this->tag} {$this->render_attributes( '_root' )}>";
+		$output = "<button {$this->render_attributes( '_root' )}>";
 
 		// Icon.
 		$icon          = ! empty( $settings['icon'] ) ? self::render_icon( $settings['icon'] ) : false;
@@ -277,7 +281,7 @@ class BuyButton extends \Bricks\Element {
 			$output .= $icon;
 		}
 
-		$output .= "</{$this->tag}>";
+		$output .= '</button>';
 
 		echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
