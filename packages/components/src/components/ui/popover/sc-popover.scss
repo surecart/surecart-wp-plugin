@@ -67,14 +67,14 @@ slot[name='title'] {
   color: var(--sc-input-label-color);
   background-color: var(--sc-panel-background-color);
   border: solid 1px var(--sc-panel-border-color);
-  border-radius: var(--sc-border-radius-medium);
+  border-radius: var(--sc-border-radius-x-large);
   box-shadow: var(--sc-shadow-large);
   overflow: auto;
   overscroll-behavior: none;
   // pointer-events: none;
   transition: var(--sc-transition-fast) opacity, var(--sc-transition-fast) transform;
   z-index: 5;
-  padding: 1em;
+  padding: var(--sc-spacing-medium);
 
   &--top-left {
     bottom: calc(100% + 10px);

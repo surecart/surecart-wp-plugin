@@ -2307,6 +2307,12 @@
     "class": true,
     "slot": true
   },
+  "sc-test-mode-info": {
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-text": {
     "tag": true,
     "truncate": true,

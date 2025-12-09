@@ -3993,6 +3993,8 @@ export namespace Components {
          */
         "type": string;
     }
+    interface ScTestModeInfo {
+    }
     interface ScText {
         "tag": 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p';
         "truncate": boolean;
@@ -6672,6 +6674,12 @@ declare global {
         prototype: HTMLScTaxIdInputElement;
         new (): HTMLScTaxIdInputElement;
     };
+    interface HTMLScTestModeInfoElement extends Components.ScTestModeInfo, HTMLStencilElement {
+    }
+    var HTMLScTestModeInfoElement: {
+        prototype: HTMLScTestModeInfoElement;
+        new (): HTMLScTestModeInfoElement;
+    };
     interface HTMLScTextElement extends Components.ScText, HTMLStencilElement {
     }
     var HTMLScTextElement: {
@@ -7015,6 +7023,7 @@ declare global {
         "sc-table-row": HTMLScTableRowElement;
         "sc-tag": HTMLScTagElement;
         "sc-tax-id-input": HTMLScTaxIdInputElement;
+        "sc-test-mode-info": HTMLScTestModeInfoElement;
         "sc-text": HTMLScTextElement;
         "sc-textarea": HTMLScTextareaElement;
         "sc-toggle": HTMLScToggleElement;
@@ -11384,6 +11393,8 @@ declare namespace LocalJSX {
          */
         "type"?: string;
     }
+    interface ScTestModeInfo {
+    }
     interface ScText {
         "tag"?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p';
         "truncate"?: boolean;
@@ -11850,6 +11861,7 @@ declare namespace LocalJSX {
         "sc-table-row": ScTableRow;
         "sc-tag": ScTag;
         "sc-tax-id-input": ScTaxIdInput;
+        "sc-test-mode-info": ScTestModeInfo;
         "sc-text": ScText;
         "sc-textarea": ScTextarea;
         "sc-toggle": ScToggle;
@@ -12111,6 +12123,7 @@ declare module "@stencil/core" {
             "sc-table-row": LocalJSX.ScTableRow & JSXBase.HTMLAttributes<HTMLScTableRowElement>;
             "sc-tag": LocalJSX.ScTag & JSXBase.HTMLAttributes<HTMLScTagElement>;
             "sc-tax-id-input": LocalJSX.ScTaxIdInput & JSXBase.HTMLAttributes<HTMLScTaxIdInputElement>;
+            "sc-test-mode-info": LocalJSX.ScTestModeInfo & JSXBase.HTMLAttributes<HTMLScTestModeInfoElement>;
             "sc-text": LocalJSX.ScText & JSXBase.HTMLAttributes<HTMLScTextElement>;
             "sc-textarea": LocalJSX.ScTextarea & JSXBase.HTMLAttributes<HTMLScTextareaElement>;
             "sc-toggle": LocalJSX.ScToggle & JSXBase.HTMLAttributes<HTMLScToggleElement>;

@@ -1,0 +1,53 @@
+import { Component, h } from '@stencil/core';
+import { __ } from '@wordpress/i18n';
+
+/**
+ * @part base - The elements base wrapper.
+ * @part trigger - The trigger.
+ * @part panel - The panel.
+ */
+@Component({
+  tag: 'sc-test-mode-info',
+  styleUrl: 'sc-test-mode-info.scss',
+  shadow: true,
+})
+export class ScPopover {
+  render() {
+    return (
+      <sc-popover style={{ '--panel-width': '35em' }} skidding={30}>
+        <sc-icon class="trigger-icon" name="info" slot="trigger" />
+        <span slot="title"> {__('How to change to Live mode?', 'surecart')}</span>
+        <div slot="content">
+          <ol>
+            <li>
+              {__('From the Editor', 'surecart')}
+              <ul>
+                <li>{__('Navigate to the custom Forms section under SureCart.', 'surecart')}</li>
+                <li>{__('Select the checkout form.', 'surecart')}</li>
+                <li>{__('Select "Live" from the dropdown. Hit Update!', 'surecart')}</li>
+              </ul>
+              <img style={{ width: '320px', marginTop: '12px' }} src={`${window?.scData?.plugin_url}/images/change-from-editor.png`} />
+            </li>
+            <li>
+              {__('From the Admin Bar', 'surecart')}
+              <ul>
+                <li>{__("Select any product & proceed to it's checkout page.", 'surecart')}</li>
+                <li>{__('Access the dropdown menu & select the live mode.', 'surecart')}</li>
+              </ul>
+              <img style={{ width: '320px', marginTop: '12px' }} src={`${window?.scData?.plugin_url}/images/change-from-adminbar.png`} />
+            </li>
+          </ol>
+        </div>
+        <div style={{ display: 'flex', justifyContent: 'space-between' }} slot="footer">
+          <sc-button type="text">{__('Need help?', 'surecart')}</sc-button>
+          <sc-button type="link" target="_blank" href="https://surecart.com/docs">
+            {__('Documentation ', 'surecart')} <sc-icon style={{ marginLeft: '4px' }} name="external-link" />
+          </sc-button>
+          <sc-button type="link" target="_blank" href="https://surecart.com/contact-us/">
+            {__('Open a ticket ', 'surecart')} <sc-icon style={{ marginLeft: '4px' }} name="external-link" />
+          </sc-button>
+        </div>
+      </sc-popover>
+    );
+  }
+}

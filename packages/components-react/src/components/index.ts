@@ -222,6 +222,7 @@ export const ScTableHead = /*@__PURE__*/createReactComponent<JSX.ScTableHead, HT
 export const ScTableRow = /*@__PURE__*/createReactComponent<JSX.ScTableRow, HTMLScTableRowElement>('sc-table-row');
 export const ScTag = /*@__PURE__*/createReactComponent<JSX.ScTag, HTMLScTagElement>('sc-tag');
 export const ScTaxIdInput = /*@__PURE__*/createReactComponent<JSX.ScTaxIdInput, HTMLScTaxIdInputElement>('sc-tax-id-input');
+export const ScTestModeInfo = /*@__PURE__*/createReactComponent<JSX.ScTestModeInfo, HTMLScTestModeInfoElement>('sc-test-mode-info');
 export const ScText = /*@__PURE__*/createReactComponent<JSX.ScText, HTMLScTextElement>('sc-text');
 export const ScTextarea = /*@__PURE__*/createReactComponent<JSX.ScTextarea, HTMLScTextareaElement>('sc-textarea');
 export const ScToggle = /*@__PURE__*/createReactComponent<JSX.ScToggle, HTMLScToggleElement>('sc-toggle');
