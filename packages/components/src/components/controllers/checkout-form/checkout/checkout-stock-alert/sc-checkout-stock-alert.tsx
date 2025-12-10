@@ -44,9 +44,11 @@ export class ScCheckoutStockAlert {
   }
 
   /**
-   * Update the checkout line items stock to the max available.
+   * Build line items with adjusted quantities for out-of-stock items.
+   *
+   * Returns all line items, with out-of-stock items adjusted to max available stock.
    */
-  async onSubmit() {
+  getStockAdjustedLineItems() {
     // Get the IDs of out-of-stock line items and their adjusted quantities.
     const outOfStockItemsMap = new Map<string, number>();
     this.getOutOfStockLineItems().forEach(lineItem => {
@@ -56,7 +58,7 @@ export class ScCheckoutStockAlert {
     });
 
     // Build the complete line items array with all items, adjusting only the out-of-stock ones.
-    const allLineItems = (checkoutState.checkout?.line_items?.data || []).map(lineItem => {
+    return (checkoutState.checkout?.line_items?.data || []).map(lineItem => {
       const adjustedQuantity = outOfStockItemsMap.get(lineItem.id);
       return {
         id: lineItem.id,
@@ -65,13 +67,18 @@ export class ScCheckoutStockAlert {
         ...(lineItem?.variant?.id ? { variant: lineItem.variant.id } : {}),
       };
     });
+  }
 
+  /**
+   * Update the checkout line items stock to the max available.
+   */
+  async onSubmit() {
     try {
       this.busy = true;
       checkoutState.checkout = (await updateCheckout({
         id: checkoutState.checkout.id,
         data: {
-          line_items: allLineItems.filter(lineItem => !!lineItem.quantity),
+          line_items: this.getStockAdjustedLineItems().filter(lineItem => !!lineItem.quantity),
         },
       })) as Checkout;
     } catch (error) {
