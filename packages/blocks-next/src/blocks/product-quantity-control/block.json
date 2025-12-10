@@ -28,17 +28,27 @@
 			}
 		},
 		"typography": {
-			"fontSize": true
+			"fontSize": true,
+			"lineHeight": true,
+			"textAlign": true,
+			"__experimentalFontFamily": true,
+			"__experimentalFontWeight": true,
+			"__experimentalFontStyle": true,
+			"__experimentalTextTransform": true,
+			"__experimentalTextDecoration": true,
+			"__experimentalLetterSpacing": true,
+			"__experimentalDefaultControls": {
+				"fontSize": true,
+				"fontAppearance": true,
+				"textTransform": true
+			}
 		},
 		"shadow": true,
 		"spacing": {
 			"padding": true,
 			"margin": true
 		},
-		"color": {
-			"gradients": false,
-			"background": false
-		},
+		"color": true,
 		"__experimentalBorder": {
 			"radius": true,
 			"color": true,

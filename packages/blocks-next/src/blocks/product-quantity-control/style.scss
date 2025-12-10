@@ -1,7 +1,7 @@
 // Avoid specificity issue with style_data block style registration.
 :where(.wp-block-surecart-product-quantity-control) {
 	border-radius: var(--sc-border-radius-medium);
-	height: var(--sc-quantity-control-height, var(--sc-input-height-small));
+	min-height: var(--sc-quantity-control-height, var(--sc-input-height-small));
 	border: var(--sc-input-border-width) solid var(--sc-input-border-color);
 	box-shadow: var(--sc-input-box-shadow);
 
@@ -10,8 +10,4 @@
 		cursor: not-allowed;
 		pointer-events: none;
 	}
-}
-
-.wp-block-surecart-product-quantity-control.is-layout-flex {
-	gap: 0; // default gap.
 }
