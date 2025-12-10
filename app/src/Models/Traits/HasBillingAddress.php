@@ -13,4 +13,17 @@ trait HasBillingAddress {
 		$this->attributes['billing_address'] = (object) $value;
 		return $this;
 	}
+
+	/**
+	 * Get the billing address attribute
+	 *
+	 * @return string|null The billing address.
+	 */
+	public function getBillingAddressDisplayAttribute() {
+		if ( $this->billing_matches_shipping ) {
+			return $this->shipping_address->formatted_string ?? null;
+		}
+
+		return $this->billing_address->formatted_string ?? null;
+	}
 }
