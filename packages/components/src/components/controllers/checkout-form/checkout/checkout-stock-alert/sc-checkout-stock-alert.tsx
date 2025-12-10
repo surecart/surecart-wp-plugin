@@ -47,19 +47,24 @@ export class ScCheckoutStockAlert {
    * Update the checkout line items stock to the max available.
    */
   async onSubmit() {
-    const lineItems = this.getOutOfStockLineItems().map(lineItem => {
+    // Get the IDs of out-of-stock line items and their adjusted quantities.
+    const outOfStockItemsMap = new Map<string, number>();
+    this.getOutOfStockLineItems().forEach(lineItem => {
       const product = lineItem.price?.product as Product;
+      const adjustedQuantity = lineItem?.variant?.id
+        ? Math.max(lineItem?.variant?.available_stock || 0, 0)
+        : Math.max(product?.available_stock || 0, 0);
+      outOfStockItemsMap.set(lineItem.id, adjustedQuantity);
+    });
 
-      if (lineItem?.variant?.id) {
-        return {
-          ...lineItem,
-          quantity: Math.max(lineItem?.variant?.available_stock || 0, 0),
-        };
-      }
-
+    // Build the complete line items array with all items, adjusting only the out-of-stock ones.
+    const allLineItems = (checkoutState.checkout?.line_items?.data || []).map(lineItem => {
+      const adjustedQuantity = outOfStockItemsMap.get(lineItem.id);
       return {
-        ...lineItem,
-        quantity: Math.max(product?.available_stock || 0, 0),
+        id: lineItem.id,
+        price_id: lineItem.price?.id,
+        quantity: adjustedQuantity !== undefined ? adjustedQuantity : lineItem.quantity,
+        ...(lineItem?.variant?.id ? { variant: lineItem.variant.id } : {}),
       };
     });
 
@@ -68,16 +73,7 @@ export class ScCheckoutStockAlert {
       checkoutState.checkout = (await updateCheckout({
         id: checkoutState.checkout.id,
         data: {
-          line_items: (lineItems || [])
-            .filter(lineItem => !!lineItem.quantity)
-            .map(lineItem => {
-              return {
-                id: lineItem.id,
-                price_id: lineItem.price?.id,
-                quantity: lineItem.quantity,
-                ...(lineItem?.variant?.id ? { variant: lineItem.variant.id } : {}),
-              };
-            }),
+          line_items: allLineItems.filter(lineItem => !!lineItem.quantity),
         },
       })) as Checkout;
     } catch (error) {
