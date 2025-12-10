@@ -51,9 +51,7 @@ export class ScCheckoutStockAlert {
     const outOfStockItemsMap = new Map<string, number>();
     this.getOutOfStockLineItems().forEach(lineItem => {
       const product = lineItem.price?.product as Product;
-      const adjustedQuantity = lineItem?.variant?.id
-        ? Math.max(lineItem?.variant?.available_stock || 0, 0)
-        : Math.max(product?.available_stock || 0, 0);
+      const adjustedQuantity = lineItem?.variant?.id ? Math.max(lineItem?.variant?.available_stock || 0, 0) : Math.max(product?.available_stock || 0, 0);
       outOfStockItemsMap.set(lineItem.id, adjustedQuantity);
     });
 
@@ -92,6 +90,7 @@ export class ScCheckoutStockAlert {
 
       return {
         name: product?.name,
+        variant: lineItem?.variant_display_options,
         image: lineItem?.image,
         quantity: lineItem.quantity,
         available_stock,
@@ -134,7 +133,10 @@ export class ScCheckoutStockAlert {
                       <sc-table-cell>
                         <sc-flex justifyContent="flex-start" alignItems="center">
                           {item?.image && <img {...(item.image as any)} class="stock-alert__image" />}
-                          <h4>{item.name}</h4>
+                          <div class="stock-alert__product-info">
+                            <h4>{item.name}</h4>
+                            {item?.variant && <span class="stock-alert__variant">{item.variant}</span>}
+                          </div>
                         </sc-flex>
                       </sc-table-cell>
                       <sc-table-cell style={{ width: '100px', textAlign: 'right' }}>
