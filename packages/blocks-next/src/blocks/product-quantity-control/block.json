@@ -12,7 +12,8 @@
 	"supports": {
 		"interactivity": true,
 		"dimensions": {
-			"minHeight": true
+			"minHeight": true,
+			"width": true
 		},
 		"layout": {
 			"allowSizingOnChildren": true,

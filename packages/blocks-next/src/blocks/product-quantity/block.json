@@ -32,6 +32,14 @@
 	"supports": {
 		"interactivity": true,
 		"anchor": true,
+		"layout": {
+			"allowSizingOnChildren": true,
+			"default": {
+				"type": "constrained",
+				"contentSize": "150px",
+				"justifyContent": "left"
+			}
+		},
 		"typography": {
 			"fontSize": true,
 			"lineHeight": true,
@@ -67,19 +75,6 @@
 				"link": true
 			}
 		},
-		"__experimentalBorder": {
-			"radius": true,
-			"color": true,
-			"style": true,
-			"width": true,
-			"__experimentalSkipSerialization": true,
-			"__experimentalDefaultControls": {
-				"radius": true,
-				"color": true,
-				"style": true,
-				"width": true
-			}
-		},
 		"dimensions": {
 			"minHeight": true
 		}
@@ -87,7 +82,11 @@
 	"textdomain": "surecart",
 	"render": "file:./view.php",
 	"editorScript": "file:./index.js",
-	"editorStyle": ["surecart-quantity-selector", "surecart-input-group"],
+	"editorStyle": [
+		"surecart-quantity-selector",
+		"surecart-input-group",
+		"file:./index.css"
+	],
 	"style": [
 		"surecart-quantity-selector",
 		"surecart-input-group",
