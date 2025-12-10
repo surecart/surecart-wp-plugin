@@ -158,6 +158,8 @@ return array(
 		\SureCart\Integrations\Avada\AvadaServiceProvider::class,
 		\SureCart\Integrations\Etch\EtchServiceProvider::class,
 		\SureCart\Integrations\HelpWidget\HelpWidgetServiceProvider::class,
+		\SureCart\Integrations\RankMath\RankMathServiceProvider::class,
+		\SureCart\Integrations\SureRank\SureRankServiceProvider::class,
 	),
 
 	/**
