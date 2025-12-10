@@ -138,6 +138,8 @@ return array(
 		\SureCart\Rest\AffiliationsRestServiceProvider::class,
 		\SureCart\Rest\ExportsRestServiceProvider::class,
 		\SureCart\Rest\SwapRestServiceProvider::class,
+		\SureCart\Rest\AutoFeeRestServiceProvider::class,
+		\SureCart\Rest\RuleSchemaRestServiceProvider::class,
 
 		// integrations.
 		\SureCart\Integrations\DiviServiceProvider::class,

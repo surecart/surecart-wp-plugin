@@ -455,6 +455,26 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 /*
 |--------------------------------------------------------------------------
+| Dynamic Pricing
+|--------------------------------------------------------------------------
+*/
+\SureCart::route()
+->where( 'admin', 'sc-auto-fees' )
+->middleware( 'user.can:edit_sc_products' )
+->middleware( 'assets.components' )
+->middleware( 'assets.admin_colors' )
+->setNamespace( '\\SureCart\\Controllers\\Admin\\AutoFees\\' )
+->group(
+	function () {
+		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->handle( 'AutoFeesController@index' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->handle( 'AutoFeesController@edit' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'toggle_active', 'action' )->middleware( 'archive_model:product' )->handle( 'AutoFeesController@toggleActive' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'delete', 'action' )->middleware( 'nonce:delete_auto_fee' )->handle( 'AutoFeesController@delete' );
+	}
+);
+
+/*
+|--------------------------------------------------------------------------
 | Settings
 |--------------------------------------------------------------------------
 */
