@@ -13,30 +13,14 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      
-      - name: Setup Node.js
+      - name: Use Node.js 20.x
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          
-      - name: Install dependencies
-        run: |
-          cd packages/components
-          yarn install --frozen-lockfile
-        env:
-          SKIP_SASS_BINARY_DOWNLOAD_FOR_CI: true
-          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
-          NODE_OPTIONS: "--max-old-space-size=4096"
-          SASS_BINARY_SITE: https://github.com/sass/node-sass/releases/download
-          npm_config_cache: /tmp/.npm
-          YARN_CACHE_FOLDER: /tmp/.yarn
-        
-      - name: Run Stencil tests
-        run: cd packages/components && yarn test --spec --e2e
-        timeout-minutes: 20
+          node-version: 20.x
+      - run: cd packages/components && yarn
+      - run: cd packages/components && rm -rf dist
+      - run: cd packages/components && yarn test --spec --e2e
         env:
           CI: true
           NODE_OPTIONS: "--max-old-space-size=4096"
           PUPPETEER_ARGS: "--no-sandbox --disable-setuid-sandbox --disable-dev-shm-usage --disable-gpu --disable-extensions"
-          CHROME_BIN: /usr/bin/google-chrome
-          CHROME_ARGS: "--no-sandbox --disable-setuid-sandbox --disable-dev-shm-usage --disable-gpu"
