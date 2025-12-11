@@ -23,13 +23,14 @@ import BuyLink from './modules/BuyLink';
 import Advanced from './modules/Advanced';
 import Details from './modules/Details';
 import Downloads from './modules/Downloads';
-import Image from './modules/Image';
+import Media from './modules/Media';
 import Integrations from './modules/integrations/Integrations';
 import Licensing from './modules/Licensing';
 import Prices from './modules/Prices';
 import Publishing from './modules/Publishing';
 import SearchEngine from './modules/SearchEngine';
 import Tax from './modules/Tax';
+import Template from './modules/Template';
 import Variations from './modules/Variations';
 import Shipping from './modules/Shipping';
 import Inventory from './modules/Inventory';
@@ -363,6 +364,12 @@ export default ({ id, setBrowserURL }) => {
 							updateProduct={editProduct}
 							loading={!hasLoadedProduct}
 						/>
+						<Template
+							product={product}
+							post={post}
+							updateProduct={editProduct}
+							loading={!hasLoadedProduct}
+						/>
 						<Shipping
 							product={product}
 							updateProduct={editProduct}
@@ -417,7 +424,7 @@ export default ({ id, setBrowserURL }) => {
 						loading={!hasLoadedProduct}
 					/>
 
-					<Image
+					<Media
 						productId={id}
 						product={product}
 						updateProduct={editProduct}

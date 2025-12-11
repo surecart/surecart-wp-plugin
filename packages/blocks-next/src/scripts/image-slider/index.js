@@ -8,7 +8,34 @@ const { __ } = wp.i18n;
  * External dependencies
  */
 import Swiper from 'swiper';
-import { Thumbs, Navigation, A11y } from 'swiper/modules';
+import { Thumbs, Navigation, A11y, Pagination } from 'swiper/modules';
+
+const mapLightboxIndexToSliderIndex = (lightboxImageIndex) => {
+	const { state: lightboxState } = store('surecart/lightbox');
+	const { ref } = getElement();
+
+	if (
+		lightboxImageIndex === -1 ||
+		!lightboxState.images?.[lightboxImageIndex]
+	) {
+		return -1;
+	}
+
+	const targetImageId = lightboxState.images[lightboxImageIndex];
+	const slides = Array.from(ref.querySelectorAll('.swiper-slide'));
+
+	return slides.findIndex((slide) => {
+		const slideId = slide.getAttribute('data-wp-key');
+		const hasVideo = slide.querySelector('video');
+
+		return (
+			slideId &&
+			!hasVideo &&
+			lightboxState.metadata?.[slideId]?.imageRef &&
+			slideId.toString() === targetImageId.toString()
+		);
+	});
+};
 
 // controls the slider
 const { state, actions } = store('surecart/image-slider', {
@@ -26,7 +53,13 @@ const { state, actions } = store('surecart/image-slider', {
 				lightboxState?.currentImageIndex !== undefined &&
 				lightboxState.currentImageIndex !== -1
 			) {
-				state.swiper?.slideTo(lightboxState.currentImageIndex, 0);
+				const sliderIndex = mapLightboxIndexToSliderIndex(
+					lightboxState.currentImageIndex
+				);
+
+				if (sliderIndex !== -1) {
+					state.swiper?.slideTo(sliderIndex, 0);
+				}
 			}
 
 			// the selected variant has not changed.
@@ -130,7 +163,7 @@ const { state, actions } = store('surecart/image-slider', {
 					'.swiper:not(.sc-image-slider__thumbs .swiper)'
 				),
 				{
-					modules: [Thumbs, A11y, Navigation],
+					modules: [Thumbs, A11y, Navigation, Pagination],
 					direction: 'horizontal',
 					loop: false,
 					centeredSlides: true,
@@ -140,6 +173,14 @@ const { state, actions } = store('surecart/image-slider', {
 						nextEl: ref.querySelector('.swiper-button-next'),
 						prevEl: ref.querySelector('.swiper-button-prev'),
 					},
+					...(!thumbs && {
+						pagination: {
+							el: ref.querySelector('.swiper-pagination'),
+							dynamicBullets: true,
+							dynamicMainBullets: 6,
+							clickable: true,
+						},
+					}),
 					...(!!thumbs &&
 						state.thumbsSwiper && {
 							thumbs: {
@@ -152,6 +193,9 @@ const { state, actions } = store('surecart/image-slider', {
 		},
 
 		init: () => {
+			if (state.active) {
+				actions.destroy(); // destroy the existing slider if it exists.
+			}
 			const context = getContext();
 			if (context.activeBreakpoint) {
 				if (window.innerWidth >= context.activeBreakpoint) {

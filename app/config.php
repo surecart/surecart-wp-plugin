@@ -89,6 +89,7 @@ return array(
 		\SureCart\Rest\BalanceTransactionRestServiceProvider::class,
 		\SureCart\Rest\ChargesRestServiceProvider::class,
 		\SureCart\Rest\RefundsRestServiceProvider::class,
+		\SureCart\Rest\DisputesRestServiceProvider::class,
 		\SureCart\Rest\DownloadRestServiceProvider::class,
 		\SureCart\Rest\LicenseRestServiceProvider::class,
 		\SureCart\Rest\LineItemsRestServiceProvider::class,
@@ -153,7 +154,10 @@ return array(
 		\SureCart\Integrations\Elementor\ElementorServiceProvider::class,
 		\SureCart\Integrations\Beaver\BeaverServiceProvider::class,
 		\SureCart\Integrations\Avada\AvadaServiceProvider::class,
+		\SureCart\Integrations\Etch\EtchServiceProvider::class,
 		\SureCart\Integrations\HelpWidget\HelpWidgetServiceProvider::class,
+		\SureCart\Integrations\RankMath\RankMathServiceProvider::class,
+		\SureCart\Integrations\SureRank\SureRankServiceProvider::class,
 	),
 
 	/**
@@ -307,6 +311,7 @@ return array(
 		\SureCart\Permissions\Models\InvoicePermissionsController::class,
 		\SureCart\Permissions\Models\PaymentMethodPermissionsController::class,
 		\SureCart\Permissions\Models\PurchasePermissionsController::class,
+		\SureCart\Permissions\Models\DownloadPermissionsController::class,
 		\SureCart\Permissions\Models\RefundPermissionsController::class,
 		\SureCart\Permissions\Models\SubscriptionPermissionsController::class,
 	),

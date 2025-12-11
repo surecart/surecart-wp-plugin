@@ -72,6 +72,7 @@
  - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
  - [sc-product-item-list](../../controllers/products/sc-product-item-list)
  - [sc-product-line-item](../product-line-item)
+ - [sc-product-line-item-note](../product-line-item-note)
  - [sc-product-selected-price](../../controllers/checkout-form/sc-product-selected-price)
  - [sc-provisional-banner](../sc-provisional-banner)
  - [sc-purchase-downloads-list](../purchase-downloads-list)
@@ -137,6 +138,7 @@ graph TD;
   sc-payment-methods-list --> sc-icon
   sc-product-item-list --> sc-icon
   sc-product-line-item --> sc-icon
+  sc-product-line-item-note --> sc-icon
   sc-product-selected-price --> sc-icon
   sc-provisional-banner --> sc-icon
   sc-purchase-downloads-list --> sc-icon

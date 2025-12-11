@@ -14,7 +14,6 @@
 	min-width: 0;
 	align-self: stretch;
 	background: var(--sc-choice-background-color);
-	font-family: var(--sc-input-font-family);
 	font-size: var(--sc-input-font-size-medium);
 	font-weight: var(--sc-input-font-weight);
 	user-select: none;
@@ -32,7 +31,6 @@
 		var(--sc-choice-padding-left, 1.1em);
 	position: relative;
 	text-decoration: none;
-	color: var(--sc-choice-text-color, var(--sc-input-color));
 	transition: background-color 150ms ease, border-color 150ms ease,
 		color 150ms ease, box-shadow 150ms ease;
 	box-sizing: border-box;

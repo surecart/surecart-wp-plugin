@@ -49,7 +49,7 @@
 				data-wp-on-async-window--resize="surecart/sticky-purchase::actions.toggleVisibility"
 			<?php } ?>
 		>
-			<span class="sc-spinner" aria-hidden="false"></span>
+			<span class="sc-spinner" aria-hidden="true"></span>
 			<span class="sc-button__link-text" data-wp-text="state.buttonText">
 			</span>
 		</button>

@@ -1,8 +1,6 @@
 {
   "sc-address": {
     "address": true,
-    "country-fields": true,
-    "default-country-fields": true,
     "disabled": true,
     "label": true,
     "loading": true,
@@ -468,7 +466,6 @@
   "sc-customer-edit": {
     "customer": true,
     "heading": true,
-    "i18n": true,
     "success-url": true,
     "style": true,
     "id": true,
@@ -633,8 +630,9 @@
   },
   "sc-downloads-list": {
     "customer-id": true,
-    "downloads": true,
     "heading": true,
+    "product-id": true,
+    "query": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1731,6 +1729,7 @@
     "interval": true,
     "max": true,
     "name": true,
+    "note": true,
     "price": true,
     "purchasable-status": true,
     "quantity": true,
@@ -1740,6 +1739,13 @@
     "sku": true,
     "trial": true,
     "variant": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-product-line-item-note": {
+    "note": true,
     "style": true,
     "id": true,
     "class": true,

@@ -5,7 +5,6 @@ import { __ } from '@wordpress/i18n';
 import IntegrationCard from './IntegrationCard';
 import { useEntityRecords } from '@wordpress/core-data';
 import { ProgressBar } from '@wordpress/components';
-import { ScCard } from '@surecart/components-react';
 
 export default () => {
 	const { records, hasResolved } = useEntityRecords(

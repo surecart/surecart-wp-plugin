@@ -98,7 +98,7 @@ class MemberPressService extends IntegrationService implements IntegrationInterf
 
 		if ( ( isset( $membership_query->posts ) ) && ( ! empty( $membership_query->posts ) ) ) {
 			$items = array_map(
-				function( $post ) {
+				function ( $post ) {
 					return (object) [
 						'id'    => $post->ID,
 						'label' => $post->post_title,
@@ -187,11 +187,18 @@ class MemberPressService extends IntegrationService implements IntegrationInterf
 		}
 
 		// get order, invoice needed to sync the purchase.
-		$purchase             = Purchase::with( [ 'order', 'invoice' ] )->find( $this->getPurchaseId() );
-		$status               = $add ? 'completed' : 'failed';
-		$existing             = false;
+		$purchase = Purchase::with( [ 'order', 'invoice' ] )->find( $this->getPurchaseId() );
+		$status   = $add ? 'completed' : 'failed';
+		$existing = false;
+
+		// older fallback.
 		$transaction_num      = $purchase->id;
 		$existing_transaction = \MeprTransaction::get_one_by_trans_num( $transaction_num );
+
+		if ( ! isset( $existing_transaction->id ) || empty( $existing_transaction->id ) ) {
+			$transaction_num      = $purchase->id . '-' . $membership_id;
+			$existing_transaction = \MeprTransaction::get_one_by_trans_num( $transaction_num );
+		}
 
 		// get purchase order or invoice.
 		if ( ! empty( $purchase->order->id ) ) {

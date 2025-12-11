@@ -5,11 +5,11 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Address, Bump, CancellationReason, Checkout, ChoiceItem, CountryLocaleField, CountryLocaleFieldValue, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, ImageAttributes, InvoiceStatus, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentInfoAddedParams, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, ProductsSearchedParams, ProductsViewedParams, Purchase, ResponseError, ReturnRequestStatus, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxProtocol, WordPressUser } from "./types";
+import { Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Fee, FormState, FormStateSetter, FulfillmentStatus, ImageAttributes, InvoiceStatus, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentInfoAddedParams, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, ProductsSearchedParams, ProductsViewedParams, Purchase, ResponseError, ReturnRequestStatus, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxProtocol, WordPressUser } from "./types";
 import { LineItemData, Price as Price1, Product as Product1, ProductMetrics, Subscription as Subscription1 } from "./types";
 import { LayoutConfig } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 import { LayoutConfig as LayoutConfig1 } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
-export { Address, Bump, CancellationReason, Checkout, ChoiceItem, CountryLocaleField, CountryLocaleFieldValue, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, ImageAttributes, InvoiceStatus, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentInfoAddedParams, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, ProductsSearchedParams, ProductsViewedParams, Purchase, ResponseError, ReturnRequestStatus, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxProtocol, WordPressUser } from "./types";
+export { Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Fee, FormState, FormStateSetter, FulfillmentStatus, ImageAttributes, InvoiceStatus, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentInfoAddedParams, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, ProductsSearchedParams, ProductsViewedParams, Purchase, ResponseError, ReturnRequestStatus, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxProtocol, WordPressUser } from "./types";
 export { LineItemData, Price as Price1, Product as Product1, ProductMetrics, Subscription as Subscription1 } from "./types";
 export { LayoutConfig } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 export { LayoutConfig as LayoutConfig1 } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
@@ -20,17 +20,10 @@ export namespace Components {
          */
         "address": Partial<Address>;
         /**
-          * Country fields by country code
-         */
-        "countryFields": Array<CountryLocaleField>;
-        /**
-          * Default country fields
-         */
-        "defaultCountryFields": Array<CountryLocaleFieldValue>;
-        /**
           * Is this disabled?
          */
         "disabled": boolean;
+        "initCountryChoices": () => Promise<void>;
         /**
           * The label for the field.
          */
@@ -887,10 +880,6 @@ export namespace Components {
     interface ScCustomerEdit {
         "customer": Customer;
         "heading": string;
-        "i18n": {
-    defaultCountryFields: Array<CountryLocaleFieldValue>;
-    countryFields: Array<CountryLocaleField>;
-  };
         "successUrl": string;
     }
     interface ScCustomerEmail {
@@ -1256,8 +1245,9 @@ export namespace Components {
     }
     interface ScDownloadsList {
         "customerId": string;
-        "downloads": Download[];
         "heading": string;
+        "productId": string;
+        "query": any;
     }
     interface ScDrawer {
         /**
@@ -3099,6 +3089,10 @@ export namespace Components {
          */
         "name": string;
         /**
+          * The line item note
+         */
+        "note": string;
+        /**
           * Price name
          */
         "price"?: string;
@@ -3134,6 +3128,9 @@ export namespace Components {
           * Product variant label
          */
         "variant": string;
+    }
+    interface ScProductLineItemNote {
+        "note": string;
     }
     interface ScProductPillsVariantOption {
         /**
@@ -6021,6 +6018,12 @@ declare global {
         prototype: HTMLScProductLineItemElement;
         new (): HTMLScProductLineItemElement;
     };
+    interface HTMLScProductLineItemNoteElement extends Components.ScProductLineItemNote, HTMLStencilElement {
+    }
+    var HTMLScProductLineItemNoteElement: {
+        prototype: HTMLScProductLineItemNoteElement;
+        new (): HTMLScProductLineItemNoteElement;
+    };
     interface HTMLScProductPillsVariantOptionElement extends Components.ScProductPillsVariantOption, HTMLStencilElement {
     }
     var HTMLScProductPillsVariantOptionElement: {
@@ -6882,6 +6885,7 @@ declare global {
         "sc-product-item-price": HTMLScProductItemPriceElement;
         "sc-product-item-title": HTMLScProductItemTitleElement;
         "sc-product-line-item": HTMLScProductLineItemElement;
+        "sc-product-line-item-note": HTMLScProductLineItemNoteElement;
         "sc-product-pills-variant-option": HTMLScProductPillsVariantOptionElement;
         "sc-product-price": HTMLScProductPriceElement;
         "sc-product-price-choices": HTMLScProductPriceChoicesElement;
@@ -6960,14 +6964,6 @@ declare namespace LocalJSX {
           * The address.
          */
         "address"?: Partial<Address>;
-        /**
-          * Country fields by country code
-         */
-        "countryFields"?: Array<CountryLocaleField>;
-        /**
-          * Default country fields
-         */
-        "defaultCountryFields"?: Array<CountryLocaleFieldValue>;
         /**
           * Is this disabled?
          */
@@ -7871,10 +7867,6 @@ declare namespace LocalJSX {
     interface ScCustomerEdit {
         "customer"?: Customer;
         "heading"?: string;
-        "i18n"?: {
-    defaultCountryFields: Array<CountryLocaleFieldValue>;
-    countryFields: Array<CountryLocaleField>;
-  };
         "successUrl"?: string;
     }
     interface ScCustomerEmail {
@@ -8347,8 +8339,9 @@ declare namespace LocalJSX {
     }
     interface ScDownloadsList {
         "customerId"?: string;
-        "downloads"?: Download[];
         "heading"?: string;
+        "productId"?: string;
+        "query"?: any;
     }
     interface ScDrawer {
         /**
@@ -10275,6 +10268,10 @@ declare namespace LocalJSX {
          */
         "name"?: string;
         /**
+          * The line item note
+         */
+        "note"?: string;
+        /**
           * Emitted when the quantity changes.
          */
         "onScRemove"?: (event: ScProductLineItemCustomEvent<void>) => void;
@@ -10318,6 +10315,9 @@ declare namespace LocalJSX {
           * Product variant label
          */
         "variant"?: string;
+    }
+    interface ScProductLineItemNote {
+        "note"?: string;
     }
     interface ScProductPillsVariantOption {
         /**
@@ -11657,6 +11657,7 @@ declare namespace LocalJSX {
         "sc-product-item-price": ScProductItemPrice;
         "sc-product-item-title": ScProductItemTitle;
         "sc-product-line-item": ScProductLineItem;
+        "sc-product-line-item-note": ScProductLineItemNote;
         "sc-product-pills-variant-option": ScProductPillsVariantOption;
         "sc-product-price": ScProductPrice;
         "sc-product-price-choices": ScProductPriceChoices;
@@ -11916,6 +11917,7 @@ declare module "@stencil/core" {
             "sc-product-item-price": LocalJSX.ScProductItemPrice & JSXBase.HTMLAttributes<HTMLScProductItemPriceElement>;
             "sc-product-item-title": LocalJSX.ScProductItemTitle & JSXBase.HTMLAttributes<HTMLScProductItemTitleElement>;
             "sc-product-line-item": LocalJSX.ScProductLineItem & JSXBase.HTMLAttributes<HTMLScProductLineItemElement>;
+            "sc-product-line-item-note": LocalJSX.ScProductLineItemNote & JSXBase.HTMLAttributes<HTMLScProductLineItemNoteElement>;
             "sc-product-pills-variant-option": LocalJSX.ScProductPillsVariantOption & JSXBase.HTMLAttributes<HTMLScProductPillsVariantOptionElement>;
             "sc-product-price": LocalJSX.ScProductPrice & JSXBase.HTMLAttributes<HTMLScProductPriceElement>;
             "sc-product-price-choices": LocalJSX.ScProductPriceChoices & JSXBase.HTMLAttributes<HTMLScProductPriceChoicesElement>;

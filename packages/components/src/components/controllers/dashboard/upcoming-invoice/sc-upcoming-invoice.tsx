@@ -242,6 +242,7 @@ export class ScUpcomingInvoice {
             editable={this.quantityUpdatesEnabled}
             purchasableStatus={item?.purchasable_status_display}
             removable={false}
+            note={item?.display_note}
             quantity={item?.quantity}
             amount={item?.subtotal_display_amount}
             interval={`${item?.price?.short_interval_text} ${item?.price?.short_interval_count_text}`}

@@ -191,7 +191,7 @@ export default ({
 							padding: 0 5px;
 							display: grid;
 							margin: auto;
-							max-width: ${sidebar ? '1160px' : '752px'};
+							max-width: ${sidebar ? '1160px' : '866px'};
 							${sidebar &&
 							`@media screen and (min-width: 960px) {
 								grid-template-columns: 1fr 380px;

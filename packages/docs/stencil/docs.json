@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-09-02T20:22:19",
+  "timestamp": "2025-12-08T17:18:32",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.18.3",
@@ -114,66 +114,6 @@
           "values": [
             {
               "type": "{ name?: string; line_1?: string; line_2?: string; city?: string; state?: string; postal_code?: string; country?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "countryFields",
-          "type": "CountryLocaleField[]",
-          "complexType": {
-            "original": "Array<CountryLocaleField>",
-            "resolved": "CountryLocaleField[]",
-            "references": {
-              "Array": {
-                "location": "global",
-                "id": "global::Array"
-              },
-              "CountryLocaleField": {
-                "location": "import",
-                "path": "../../../types",
-                "id": "src/types.ts::CountryLocaleField"
-              }
-            }
-          },
-          "mutable": true,
-          "reflectToAttr": false,
-          "docs": "Country fields by country code",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "CountryLocaleField[]"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "defaultCountryFields",
-          "type": "CountryLocaleFieldValue[]",
-          "complexType": {
-            "original": "Array<CountryLocaleFieldValue>",
-            "resolved": "CountryLocaleFieldValue[]",
-            "references": {
-              "Array": {
-                "location": "global",
-                "id": "global::Array"
-              },
-              "CountryLocaleFieldValue": {
-                "location": "import",
-                "path": "../../../types",
-                "id": "src/types.ts::CountryLocaleFieldValue"
-              }
-            }
-          },
-          "mutable": true,
-          "reflectToAttr": false,
-          "docs": "Default country fields",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "CountryLocaleFieldValue[]"
             }
           ],
           "optional": false,
@@ -362,6 +302,28 @@
         }
       ],
       "methods": [
+        {
+          "name": "initCountryChoices",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "complexType": {
+            "signature": "() => Promise<void>",
+            "parameters": [],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              }
+            },
+            "return": "Promise<void>"
+          },
+          "signature": "initCountryChoices() => Promise<void>",
+          "parameters": [],
+          "docs": "",
+          "docsTags": []
+        },
         {
           "name": "reportValidity",
           "returns": {
@@ -1414,6 +1376,7 @@
         "sc-custom-order-price-input",
         "sc-customer-edit",
         "sc-donation-choices",
+        "sc-downloads-list",
         "sc-express-payment",
         "sc-form-state-provider",
         "sc-invoices-list",
@@ -1481,6 +1444,9 @@
           "sc-block-ui"
         ],
         "sc-donation-choices": [
+          "sc-block-ui"
+        ],
+        "sc-downloads-list": [
           "sc-block-ui"
         ],
         "sc-express-payment": [
@@ -9451,41 +9417,6 @@
           "required": false
         },
         {
-          "name": "i18n",
-          "type": "{ defaultCountryFields: CountryLocaleFieldValue[]; countryFields: CountryLocaleField[]; }",
-          "complexType": {
-            "original": "{\n    defaultCountryFields: Array<CountryLocaleFieldValue>;\n    countryFields: Array<CountryLocaleField>;\n  }",
-            "resolved": "{ defaultCountryFields: CountryLocaleFieldValue[]; countryFields: CountryLocaleField[]; }",
-            "references": {
-              "Array": {
-                "location": "global",
-                "id": "global::Array"
-              },
-              "CountryLocaleFieldValue": {
-                "location": "import",
-                "path": "../../../../types",
-                "id": "src/types.ts::CountryLocaleFieldValue"
-              },
-              "CountryLocaleField": {
-                "location": "import",
-                "path": "../../../../types",
-                "id": "src/types.ts::CountryLocaleField"
-              }
-            }
-          },
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "{ defaultCountryFields: CountryLocaleFieldValue[]; countryFields: CountryLocaleField[]; }"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
           "name": "successUrl",
           "type": "string",
           "complexType": {
@@ -12685,6 +12616,7 @@
       ],
       "dependents": [
         "sc-customer-details",
+        "sc-downloads-list",
         "sc-express-payment",
         "sc-form-components-validator",
         "sc-invoices-list",
@@ -12707,6 +12639,9 @@
       "dependencies": [],
       "dependencyGraph": {
         "sc-customer-details": [
+          "sc-divider"
+        ],
+        "sc-downloads-list": [
           "sc-divider"
         ],
         "sc-express-payment": [
@@ -13114,32 +13049,6 @@
           "required": false
         },
         {
-          "name": "downloads",
-          "type": "Download[]",
-          "complexType": {
-            "original": "Download[]",
-            "resolved": "Download[]",
-            "references": {
-              "Download": {
-                "location": "import",
-                "path": "../../../../types",
-                "id": "src/types.ts::Download"
-              }
-            }
-          },
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "Download[]"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
           "name": "heading",
           "type": "string",
           "complexType": {
@@ -13155,6 +13064,49 @@
           "values": [
             {
               "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "productId",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "product-id",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "query",
+          "type": "any",
+          "complexType": {
+            "original": "any",
+            "resolved": "any",
+            "references": {}
+          },
+          "mutable": true,
+          "attr": "query",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "{\n    page: 1,\n    per_page: 20,\n  }",
+          "values": [
+            {
+              "type": "any"
             }
           ],
           "optional": false,
@@ -13175,26 +13127,42 @@
       "dependents": [],
       "dependencies": [
         "sc-icon",
-        "sc-dashboard-module",
         "sc-card",
         "sc-stacked-list",
         "sc-stacked-list-row",
         "sc-flex",
         "sc-format-bytes",
         "sc-tag",
-        "sc-button"
+        "sc-button",
+        "sc-skeleton",
+        "sc-divider",
+        "sc-empty",
+        "sc-dashboard-module",
+        "sc-pagination",
+        "sc-block-ui"
       ],
       "dependencyGraph": {
         "sc-downloads-list": [
           "sc-icon",
-          "sc-dashboard-module",
           "sc-card",
           "sc-stacked-list",
           "sc-stacked-list-row",
           "sc-flex",
           "sc-format-bytes",
           "sc-tag",
-          "sc-button"
+          "sc-button",
+          "sc-skeleton",
+          "sc-divider",
+          "sc-empty",
+          "sc-dashboard-module",
+          "sc-pagination",
+          "sc-block-ui"
+        ],
+        "sc-button": [
+          "sc-spinner"
+        ],
+        "sc-empty": [
+          "sc-icon"
         ],
         "sc-dashboard-module": [
           "sc-alert"
@@ -13202,7 +13170,13 @@
         "sc-alert": [
           "sc-icon"
         ],
-        "sc-button": [
+        "sc-pagination": [
+          "sc-flex",
+          "sc-button",
+          "sc-visually-hidden",
+          "sc-icon"
+        ],
+        "sc-block-ui": [
           "sc-spinner"
         ]
       }
@@ -13979,6 +13953,7 @@
       ],
       "dependents": [
         "sc-customer-details",
+        "sc-downloads-list",
         "sc-invoices-list",
         "sc-license",
         "sc-licenses-list",
@@ -13999,6 +13974,9 @@
           "sc-icon"
         ],
         "sc-customer-details": [
+          "sc-empty"
+        ],
+        "sc-downloads-list": [
           "sc-empty"
         ],
         "sc-invoices-list": [
@@ -16642,6 +16620,7 @@
         "sc-payment-methods-list",
         "sc-product-item-list",
         "sc-product-line-item",
+        "sc-product-line-item-note",
         "sc-product-selected-price",
         "sc-provisional-banner",
         "sc-purchase-downloads-list",
@@ -16782,6 +16761,9 @@
           "sc-icon"
         ],
         "sc-product-line-item": [
+          "sc-icon"
+        ],
+        "sc-product-line-item-note": [
           "sc-icon"
         ],
         "sc-product-selected-price": [
@@ -19802,7 +19784,11 @@
           "sc-swap"
         ],
         "sc-product-line-item": [
+          "sc-product-line-item-note",
           "sc-quantity-select",
+          "sc-icon"
+        ],
+        "sc-product-line-item-note": [
           "sc-icon"
         ],
         "sc-quantity-select": [
@@ -20885,7 +20871,11 @@
           "sc-icon"
         ],
         "sc-product-line-item": [
+          "sc-product-line-item-note",
           "sc-quantity-select",
+          "sc-icon"
+        ],
+        "sc-product-line-item-note": [
           "sc-icon"
         ],
         "sc-quantity-select": [
@@ -21840,7 +21830,11 @@
           "sc-product-line-item"
         ],
         "sc-product-line-item": [
+          "sc-product-line-item-note",
           "sc-quantity-select",
+          "sc-icon"
+        ],
+        "sc-product-line-item-note": [
           "sc-icon"
         ],
         "sc-quantity-select": [
@@ -21936,7 +21930,11 @@
           "sc-product-line-item"
         ],
         "sc-product-line-item": [
+          "sc-product-line-item-note",
           "sc-quantity-select",
+          "sc-icon"
+        ],
+        "sc-product-line-item-note": [
           "sc-icon"
         ],
         "sc-quantity-select": [
@@ -24885,6 +24883,7 @@
       "dependents": [
         "sc-charges-list",
         "sc-dashboard-downloads-list",
+        "sc-downloads-list",
         "sc-invoices-list",
         "sc-license",
         "sc-licenses-list",
@@ -24912,6 +24911,9 @@
           "sc-pagination"
         ],
         "sc-dashboard-downloads-list": [
+          "sc-pagination"
+        ],
+        "sc-downloads-list": [
           "sc-pagination"
         ],
         "sc-invoices-list": [
@@ -31744,6 +31746,27 @@
           "required": false
         },
         {
+          "name": "note",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "note",
+          "reflectToAttr": false,
+          "docs": "The line item note",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "price",
           "type": "string",
           "complexType": {
@@ -32067,12 +32090,17 @@
         "sc-upcoming-invoice"
       ],
       "dependencies": [
+        "sc-product-line-item-note",
         "sc-quantity-select",
         "sc-icon"
       ],
       "dependencyGraph": {
         "sc-product-line-item": [
+          "sc-product-line-item-note",
           "sc-quantity-select",
+          "sc-icon"
+        ],
+        "sc-product-line-item-note": [
           "sc-icon"
         ],
         "sc-quantity-select": [
@@ -32092,6 +32120,63 @@
         ],
         "sc-upcoming-invoice": [
           "sc-product-line-item"
+        ]
+      }
+    },
+    {
+      "filePath": "src/components/ui/product-line-item-note/sc-product-line-item-note.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-product-line-item-note",
+      "readme": "# sc-product-line-item-note\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "note",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "note",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [
+        {
+          "name": "base",
+          "docs": ""
+        }
+      ],
+      "dependents": [
+        "sc-product-line-item"
+      ],
+      "dependencies": [
+        "sc-icon"
+      ],
+      "dependencyGraph": {
+        "sc-product-line-item-note": [
+          "sc-icon"
+        ],
+        "sc-product-line-item": [
+          "sc-product-line-item-note"
         ]
       }
     },
@@ -34743,7 +34828,7 @@
           },
           "mutable": false,
           "attr": "autocomplete",
-          "reflectToAttr": false,
+          "reflectToAttr": true,
           "docs": "The input's autocomplete attribute.",
           "docsTags": [],
           "values": [
@@ -36085,6 +36170,7 @@
         "sc-custom-order-price-input",
         "sc-customer-details",
         "sc-donation-choices",
+        "sc-downloads-list",
         "sc-fulfillments",
         "sc-invoice-memo",
         "sc-invoices-list",
@@ -36144,6 +36230,9 @@
           "sc-skeleton"
         ],
         "sc-donation-choices": [
+          "sc-skeleton"
+        ],
+        "sc-downloads-list": [
           "sc-skeleton"
         ],
         "sc-fulfillments": [
@@ -37846,7 +37935,11 @@
           "sc-spinner"
         ],
         "sc-product-line-item": [
+          "sc-product-line-item-note",
           "sc-quantity-select",
+          "sc-icon"
+        ],
+        "sc-product-line-item-note": [
           "sc-icon"
         ],
         "sc-quantity-select": [
@@ -38538,7 +38631,11 @@
           "sc-spinner"
         ],
         "sc-product-line-item": [
+          "sc-product-line-item-note",
           "sc-quantity-select",
+          "sc-icon"
+        ],
+        "sc-product-line-item-note": [
           "sc-icon"
         ],
         "sc-quantity-select": [
@@ -43540,7 +43637,11 @@
           "sc-block-ui"
         ],
         "sc-product-line-item": [
+          "sc-product-line-item-note",
           "sc-quantity-select",
+          "sc-icon"
+        ],
+        "sc-product-line-item-note": [
           "sc-icon"
         ],
         "sc-quantity-select": [
@@ -44335,7 +44436,7 @@
       "path": "src/types.ts"
     },
     "src/types.ts::Customer": {
-      "declaration": "export interface Customer extends Object {\n  id: string;\n  email: string;\n  name?: string;\n  first_name?: string;\n  last_name?: string;\n  phone?: string;\n  billing_address?: string | Address;\n  billing_address_display?: string | Address;\n  shipping_address?: string | Address;\n  billing_matches_shipping: boolean;\n  live_mode: boolean;\n  unsubscribed: boolean;\n  default_payment_method: string | PaymentMethod;\n  tax_identifier: {\n    number: string;\n    number_type: string;\n  };\n  created_at: number;\n  updated_at: number;\n}",
+      "declaration": "export interface Customer extends Object {\n  id: string;\n  email: string;\n  name?: string;\n  first_name?: string;\n  last_name?: string;\n  phone?: string;\n  billing_address?: string | Address;\n  billing_address_display?: string | Address;\n  shipping_address?: string | Address;\n  shipping_address_display?: string | Address;\n  billing_matches_shipping: boolean;\n  live_mode: boolean;\n  unsubscribed: boolean;\n  default_payment_method: string | PaymentMethod;\n  tax_identifier: {\n    number: string;\n    number_type: string;\n  };\n  created_at: number;\n  updated_at: number;\n}",
       "docstring": "",
       "path": "src/types.ts"
     },
@@ -44375,7 +44476,7 @@
       "path": "src/types.ts"
     },
     "src/types.ts::LineItem": {
-      "declaration": "export interface LineItem extends Object {\n  id?: string;\n  ad_hoc_amount?: number;\n  ad_hoc_display_amount?: string;\n  name: string;\n  object: string;\n  quantity: number;\n  currency: string;\n  checkout: string | Checkout;\n  bump: string | Bump;\n  image: ImageAttributes;\n  fees?: {\n    object: 'list';\n    pagination: Pagination;\n    data: Array<Fee>;\n  };\n  bump_amount: number;\n  bump_display_amount: string;\n  discount_amount: number;\n  subtotal_amount: number;\n  subtotal_display_amount?: string;\n  total_amount: number;\n  total_default_currency_display_amount: string;\n  total_display_amount: string;\n  trial_amount: number;\n  tax_amount: number;\n  tax_display_amount: string;\n  fees_amount: number;\n  scratch_amount: number;\n  scratch_display_amount?: string;\n  trial: boolean;\n  total_savings_amount: number;\n  created_at: number;\n  updated_at: number;\n  price?: Price;\n  price_id: string;\n  sku: string;\n  purchasable_status: 'price_gone' | 'price_old_version' | 'variant_mising' | 'variant_gone' | 'variant_old_version' | 'out_of_stock' | 'exceeds_purchase_limit' | 'purchasable';\n  purchasable_status_display: string;\n  variant_options: Array<string>;\n  variant_display_options: string;\n  variant?: Variant;\n  locked: boolean;\n  swap?: Swap;\n  is_swappable?: boolean;\n}",
+      "declaration": "export interface LineItem extends Object {\n  id?: string;\n  ad_hoc_amount?: number;\n  ad_hoc_display_amount?: string;\n  name: string;\n  object: string;\n  quantity: number;\n  currency: string;\n  checkout: string | Checkout;\n  bump: string | Bump;\n  image: ImageAttributes;\n  fees?: {\n    object: 'list';\n    pagination: Pagination;\n    data: Array<Fee>;\n  };\n  bump_amount: number;\n  bump_display_amount: string;\n  discount_amount: number;\n  subtotal_amount: number;\n  subtotal_display_amount?: string;\n  total_amount: number;\n  total_default_currency_display_amount: string;\n  total_display_amount: string;\n  trial_amount: number;\n  tax_amount: number;\n  tax_display_amount: string;\n  fees_amount: number;\n  scratch_amount: number;\n  scratch_display_amount?: string;\n  subtotal_with_upsell_discount_display_amount?: string;\n  subtotal_with_upsell_discount_amount?: number;\n  trial: boolean;\n  total_savings_amount: number;\n  created_at: number;\n  updated_at: number;\n  price?: Price;\n  price_id: string;\n  sku: string;\n  purchasable_status: 'price_gone' | 'price_old_version' | 'variant_mising' | 'variant_gone' | 'variant_old_version' | 'out_of_stock' | 'exceeds_purchase_limit' | 'purchasable';\n  purchasable_status_display: string;\n  variant_options: Array<string>;\n  variant_display_options: string;\n  variant?: Variant;\n  locked: boolean;\n  swap?: Swap;\n  is_swappable?: boolean;\n  note?: string;\n  display_note?: string;\n}",
       "docstring": "",
       "path": "src/types.ts"
     },
@@ -44409,16 +44510,6 @@
       "docstring": "",
       "path": "src/types.ts"
     },
-    "src/types.ts::CountryLocaleFieldValue": {
-      "declaration": "export interface CountryLocaleFieldValue {\n  name: string;\n  priority: number;\n  label: boolean;\n}",
-      "docstring": "",
-      "path": "src/types.ts"
-    },
-    "src/types.ts::CountryLocaleField": {
-      "declaration": "export interface CountryLocaleField {\n  [key: string]: {\n    name: CountryLocaleFieldValue;\n    address_1: CountryLocaleFieldValue;\n    address_2: CountryLocaleFieldValue;\n    city: CountryLocaleFieldValue;\n    state: CountryLocaleFieldValue;\n    postcode: CountryLocaleFieldValue;\n  };\n}",
-      "docstring": "",
-      "path": "src/types.ts"
-    },
     "src/types.ts::SubscriptionProtocol": {
       "declaration": "export interface SubscriptionProtocol {\n  id: string;\n  object: 'subscription_protocol';\n  cancel_behavior: 'pending' | 'immediate';\n  downgrade_behavior: 'pending' | 'immediate';\n  payment_retry_window_weeks: number;\n  upgrade_behavior: 'pending' | 'immediate';\n  preservation_enabled: boolean;\n  preservation_locales: {\n    reasons_title: string;\n    reasons_description: string;\n    skip_link: string;\n    preserve_title: string;\n    preserve_description: string;\n    preserve_button: string;\n    cancel_link: string;\n  };\n  preservation_coupon: Coupon | string;\n  created_at: number;\n  updated_at: number;\n}",
       "docstring": "",
@@ -44431,11 +44522,6 @@
     },
     "src/types.ts::CancellationReason": {
       "declaration": "export interface CancellationReason {\n  id: string;\n  object: 'cancellation_reason';\n  archived: boolean;\n  comment_enabled: false;\n  comment_prompt: string | null;\n  coupon_enabled: boolean;\n  label: string;\n  position: number;\n  archived_at: number;\n  discarded_at: number;\n  created_at: number;\n  updated_at: number;\n}",
-      "docstring": "",
-      "path": "src/types.ts"
-    },
-    "src/types.ts::Download": {
-      "declaration": "export interface Download {\n  id: string;\n  object: 'download';\n  archived: boolean;\n  archived_at?: number;\n  media: string | Media;\n  name?: string;\n  product: string | Product;\n  update_at: number;\n  created_at: number;\n  url?: string;\n}",
       "docstring": "",
       "path": "src/types.ts"
     },

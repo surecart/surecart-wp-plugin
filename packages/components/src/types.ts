@@ -44,6 +44,7 @@ declare global {
       root_url: string;
       account_id: string;
       account_slug: string;
+      locale: string;
       api_url: string;
       home_url: string;
       plugin_url: string;
@@ -513,6 +514,8 @@ export interface LineItem extends Object {
   fees_amount: number;
   scratch_amount: number;
   scratch_display_amount?: string;
+  subtotal_with_upsell_discount_display_amount?: string;
+  subtotal_with_upsell_discount_amount?: number;
   trial: boolean;
   total_savings_amount: number;
   created_at: number;
@@ -528,6 +531,8 @@ export interface LineItem extends Object {
   locked: boolean;
   swap?: Swap;
   is_swappable?: boolean;
+  note?: string;
+  display_note?: string;
 }
 
 export interface DeletedItem {
@@ -621,6 +626,7 @@ export interface Charge extends Object {
   checkout: string | Checkout;
   payment_method: string | PaymentMethod;
   refunded_amount: number;
+  disputed_amount: number;
   status: 'pending' | 'succeeded' | 'failed';
   updated_at: number;
   updated_at_date: string;
@@ -1193,6 +1199,7 @@ export interface Customer extends Object {
   billing_address?: string | Address;
   billing_address_display?: string | Address;
   shipping_address?: string | Address;
+  shipping_address_display?: string | Address;
   billing_matches_shipping: boolean;
   live_mode: boolean;
   unsubscribed: boolean;
@@ -1322,6 +1329,7 @@ export interface ProductState {
   selectedVariant?: Variant;
   variantValues: { option_1?: string; option_2?: string; option_3?: string };
   isProductPage?: boolean;
+  note?: string;
 }
 export interface FeaturedProductMediaAttributes {
   alt: string;
@@ -1402,8 +1410,8 @@ export interface CustomStripeElementChangeEvent extends StripeElementChangeEvent
 
 export interface CountryLocaleFieldValue {
   name: string;
-  priority: number;
-  label: boolean;
+  priority?: number;
+  label: string;
 }
 
 export interface CountryLocaleField {

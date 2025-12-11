@@ -53,7 +53,7 @@ export default ({ type, taxOverrides, onRemove, onEdit }) => {
 						taxOverride?.tax_zone?.country_name}
 				</ScText>
 				<ScText>
-					{taxOverride?.rate || taxOverride?.tax_zone?.default_rate}%
+					{taxOverride?.rate ?? taxOverride?.tax_zone?.default_rate}%
 				</ScText>
 			</div>
 
