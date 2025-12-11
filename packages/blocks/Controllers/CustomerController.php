@@ -123,7 +123,6 @@ class CustomerController extends BaseController {
 						'header'     => __( 'Update Billing Details', 'surecart' ),
 						'customer'   => $customer,
 						'successUrl' => esc_url_raw( $back ),
-						'i18n'       => \SureCart::state()->i18n()->get(),
 					]
 				)->render()
 			);

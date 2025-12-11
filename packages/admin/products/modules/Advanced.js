@@ -13,7 +13,7 @@ export default ({ product, updateProduct, loading }) => {
 					});
 				}}
 			>
-				{__('Limit Per-Customer Purchases', 'surecart')}
+				{__('Limit per-customer purchases', 'surecart')}
 				<span slot="description">
 					{__(
 						'Limit the number of times a single customer can purchase this product.',

@@ -5,7 +5,7 @@ import {
 	ScOrderStatusBadge,
 	ScText,
 } from '@surecart/components-react';
-import { __, _n } from '@wordpress/i18n';
+import { __, _n, sprintf } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 
 export default ({

@@ -301,7 +301,9 @@ class User implements ArrayAccess, JsonSerializable {
 		}
 
 		clean_user_cache( $this->user->ID );
-		wp_clear_auth_cookie();
+		if ( class_exists( \WP_Session_Tokens::class ) ) {
+			\WP_Session_Tokens::get_instance( $this->user->ID )->destroy_all();
+		}
 		wp_set_current_user( $this->user->ID );
 		wp_set_auth_cookie( $this->user->ID );
 		update_user_caches( $this->user );
