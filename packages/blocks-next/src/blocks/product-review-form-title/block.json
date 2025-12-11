@@ -11,7 +11,7 @@
 	"attributes": {
 		"label": {
 			"type": "string",
-			"default": "Review title"
+			"default": "Title"
 		},
 		"placeholder": {
 			"type": "string",
