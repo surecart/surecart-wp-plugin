@@ -13,10 +13,21 @@
 				value="<?php echo esc_attr( $i ); ?>"
 				id="stars-star<?php echo esc_attr( $i ); ?>"
 				data-wp-on--change="actions.setStars"
+				required
 			>
 			<label
 				for="stars-star<?php echo esc_attr( $i ); ?>"
-				title="<?php echo esc_attr( sprintf( __( '%d Stars', 'surecart' ), $i ) ); ?>"
+				title="
+				<?php
+				echo esc_attr(
+					sprintf(
+					/* translators: %d: number of star rating */
+						__( '%d Stars', 'surecart' ),
+						$i
+					)
+				);
+				?>
+				"
 			>
 				<?php
 				echo wp_kses(
