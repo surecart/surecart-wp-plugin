@@ -67,8 +67,17 @@ class ErrorsTranslationService {
 
 	public function attributeOptionsTranslation( $attribute, $type, $options ) {
 		if ( 'line_items.ad_hoc_amount' === $attribute && 'outside_range' === $type ) {
+			$min = Currency::format( $options['min'] );
+			$max = $options['max'] ?? null;
+
+			// If max is empty, show a message without the upper limit.
+			if ( empty( $max ) ) {
+				// translators: %s is the minimum amount.
+				return sprintf( __( 'You must enter an amount of at least %s', 'surecart' ), $min );
+			}
+
 			// translators: 1. minimum amount, 2. maximum amount.
-			return sprintf( __( 'You must enter an amount between %1$s and %2$s', 'surecart' ), $options['min'] / 100, $options['max'] / 100 );
+			return sprintf( __( 'You must enter an amount between %1$s and %2$s', 'surecart' ), $min, Currency::format( $max ) );
 		}
 
 		if ( 'line_items.quantity' === $attribute && 'greater_than_or_equal_to' === $type ) {
