@@ -80,6 +80,8 @@ class Review extends Model {
 		$this->fill( $published );
 		$this->fireModelEvent( 'published' );
 
+		\SureCart::account()->clearCache();
+
 		return $this;
 	}
 
@@ -118,6 +120,8 @@ class Review extends Model {
 		$this->resetAttributes();
 		$this->fill( $unpublished );
 		$this->fireModelEvent( 'unpublished' );
+
+		\SureCart::account()->clearCache();
 
 		return $this;
 	}
