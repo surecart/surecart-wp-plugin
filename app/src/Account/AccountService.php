@@ -74,7 +74,7 @@ class AccountService {
 	 * @return \SureCart\Models\Account
 	 */
 	public function fetchCachedAccount() {
-		$this->account = get_transient( $this->cache_key );
+		$this->account = $this->convertArrayToAccount( get_transient( $this->cache_key ) );
 
 		// we don't have a cached account.
 		if ( false === $this->account ) {
@@ -84,7 +84,7 @@ class AccountService {
 			// there was an error or the account could not be fetched by other means.
 			if ( is_wp_error( $this->account ) || empty( $this->account->id ) ) {
 				// get the previously working account.
-				$previously_working_account = $this->convertArrayToAccount( get_option( 'sc_previous_account' ) );
+				$previously_working_account = get_option( 'sc_previous_account' );
 
 				// if there was no previously working account, return the error.
 				if ( empty( $previously_working_account ) || empty( $previously_working_account->id ) ) {
@@ -154,13 +154,13 @@ class AccountService {
 	 * @return \SureCart\Models\Account|null
 	 */
 	public function convertArrayToAccount( $data ) {
+		if ( empty( $data ) || ! isset( $data['id'] ) ) {
+			return null;
+		}
+
 		// Handle Backward Compatibility. If it's already an account, return it.
 		if ( $data instanceof Account ) {
 			return $data;
-		}
-
-		if ( empty( $data ) || ! isset( $data['id'] ) ) {
-			return null;
 		}
 
 		$data = json_decode( wp_json_encode( $data ) );
