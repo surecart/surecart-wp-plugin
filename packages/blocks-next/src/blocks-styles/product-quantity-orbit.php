@@ -7,7 +7,7 @@ register_block_style(
 	array(
 		'name'         => 'orbit',
 		'label'        => __( 'Orbit', 'surecart' ),
-		'inline_style' => '.wp-block-surecart-product-quantity.is-style-orbit {
+		'inline_style' => '.wp-block-surecart-product-quantity.is-style-orbit .wp-block-surecart-product-quantity-control {
 			min-width: 135px;
 		}',
 		'style_data'   => array(

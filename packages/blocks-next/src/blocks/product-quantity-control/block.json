@@ -9,6 +9,11 @@
 	"icon": "media-interactive",
 	"ancestor": ["surecart/product-quantity"],
 	"keywords": ["quantity", "form", "product"],
+	"attributes": {
+		"width": {
+			"type": "string"
+		}
+	},
 	"supports": {
 		"interactivity": true,
 		"dimensions": {
@@ -47,7 +52,8 @@
 		"shadow": true,
 		"spacing": {
 			"padding": true,
-			"margin": true
+			"margin": true,
+			"blockGap": true
 		},
 		"color": true,
 		"__experimentalBorder": {

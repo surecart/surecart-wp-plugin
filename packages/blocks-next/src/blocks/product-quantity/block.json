@@ -32,14 +32,6 @@
 	"supports": {
 		"interactivity": true,
 		"anchor": true,
-		"layout": {
-			"allowSizingOnChildren": true,
-			"default": {
-				"type": "constrained",
-				"contentSize": "150px",
-				"justifyContent": "left"
-			}
-		},
 		"typography": {
 			"fontSize": true,
 			"lineHeight": true,

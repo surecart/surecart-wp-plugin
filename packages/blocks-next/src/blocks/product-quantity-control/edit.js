@@ -2,11 +2,23 @@
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { useBlockProps, useInnerBlocksProps } from '@wordpress/block-editor';
-import { __experimentalGetElementClassName } from '@wordpress/block-editor';
-
-export default () => {
-	const blockProps = useBlockProps();
+import {
+	useBlockProps,
+	useInnerBlocksProps,
+	__experimentalGetElementClassName,
+	InspectorControls,
+} from '@wordpress/block-editor';
+import {
+	__experimentalUnitControl as UnitControl,
+	PanelBody,
+} from '@wordpress/components';
+export default ({ attributes, setAttributes }) => {
+	const { width } = attributes;
+	const blockProps = useBlockProps({
+		style: {
+			...(width ? { 'min-width': width } : undefined),
+		},
+	});
 	const innerBlocksProps = useInnerBlocksProps(blockProps, {
 		allowedBlocks: [
 			'surecart/product-quantity-input-decrease',
@@ -21,5 +33,24 @@ export default () => {
 		templateLock: false,
 	});
 
-	return <div {...innerBlocksProps} />;
+	return (
+		<>
+			<InspectorControls>
+				<PanelBody title={__('Settings')}>
+					<UnitControl
+						label={__('Width')}
+						labelPosition="edge"
+						__unstableInputWidth="80px"
+						value={width || ''}
+						onChange={(nextWidth) => {
+							nextWidth =
+								0 > parseFloat(nextWidth) ? '0' : nextWidth;
+							setAttributes({ width: nextWidth });
+						}}
+					/>
+				</PanelBody>
+			</InspectorControls>
+			<div {...innerBlocksProps} />
+		</>
+	);
 };
