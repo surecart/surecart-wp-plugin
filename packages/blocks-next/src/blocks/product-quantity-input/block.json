@@ -33,7 +33,8 @@
 		},
 		"color": {
 			"gradients": false,
-			"background": true
+			"background": true,
+			"border": true
 		},
 		"__experimentalBorder": {
 			"radius": true,

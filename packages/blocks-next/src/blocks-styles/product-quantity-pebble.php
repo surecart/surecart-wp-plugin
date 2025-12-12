@@ -8,7 +8,7 @@ register_block_style(
 		'name'         => 'pebble',
 		'label'        => __( 'Pebble', 'surecart' ),
 		'inline_style' => '.wp-block-surecart-product-quantity.is-style-pebble .wp-block-surecart-product-quantity-control {
-			min-width: 150px;
+			min-width: 160px;
 		}',
 		'style_data'   => array(
 			'layout' => array(

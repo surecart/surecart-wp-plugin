@@ -8,7 +8,7 @@ register_block_style(
 		'name'         => 'borderless',
 		'label'        => __( 'Borderless', 'surecart' ),
 		'inline_style' => '.wp-block-surecart-product-quantity.is-style-borderless .wp-block-surecart-product-quantity-control {
-			min-width: 110px;
+			min-width: 135px;
 		}',
 		'style_data'   => array(
 			'layout' => array(

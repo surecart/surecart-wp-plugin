@@ -54,8 +54,7 @@
 			"__experimentalDefaultControls": {
 				"padding": true,
 				"margin": true
-			},
-			"__experimentalSkipSerialization": true
+			}
 		},
 		"color": {
 			"gradients": false,
