@@ -12,6 +12,7 @@ import {
 	ScMenuItem,
 	ScUpgradeRequired,
 	ScPremiumTag,
+	ScTooltip,
 } from '@surecart/components-react';
 import { store as dataStore } from '@surecart/data';
 import { store as coreStore } from '@wordpress/core-data';
@@ -357,11 +358,33 @@ export default () => {
 
 		if (!['past_due', 'active'].includes(subscription?.status)) return null;
 
-		return (
-			<ScMenuItem onClick={() => setModal('renew_at')}>
+		const isPastDue = subscription?.status === 'past_due';
+
+		const menuItem = (
+			<ScMenuItem 
+				onClick={() => !isPastDue && setModal('renew_at')}
+				disabled={isPastDue}
+			>
 				{__('Change Renewal Date', 'surecart')}
 			</ScMenuItem>
 		);
+
+		// For past_due subscriptions, wrap in tooltip
+		if (isPastDue) {
+			return (
+				<ScTooltip
+					type="text"
+					text={__(
+						'To change the renewal date on a past due subscription, please add a trial period instead.',
+						'surecart'
+					)}
+				>
+					{menuItem}
+				</ScTooltip>
+			);
+		}
+
+		return menuItem;
 	};
 
 	// If any of the menu items are shown, show the action button.
