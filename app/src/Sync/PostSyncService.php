@@ -232,6 +232,13 @@ class PostSyncService {
 	 * @return \WP_Post|\WP_Error
 	 */
 	protected function create( \SureCart\Models\Model $model ) {
+		$lock_key = "sc_sync_create_post_lock_{$model->id}";
+
+		if ( ! add_option( $lock_key, time(), '', 'no' ) ) { // WordPress will return false if option is already created.
+			// Another process is already syncing this product.
+			return $this->findByModelId( $model->id );
+		}
+
 		// don't do these actions as they can slow down the sync.
 		foreach ( array( 'do_pings', 'transition_post_status', 'save_post', 'pre_post_update', 'add_attachment', 'edit_attachment', 'edit_post', 'post_updated', 'wp_insert_post', 'save_post_' . $this->post_type ) as $action ) {
 			remove_all_actions( $action );
@@ -267,6 +274,8 @@ class PostSyncService {
 
 		// set the post on the model.
 		$this->post = get_post( $post_id );
+
+		delete_option( $lock_key ); // Delete the option after creation, as we want to let it sync afterwards.
 
 		return $this->post;
 	}
