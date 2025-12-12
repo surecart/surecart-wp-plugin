@@ -26,4 +26,7 @@ if ( empty( $fill_color ) ) {
 $gap   = ! empty( $attributes['style']['spacing']['blockGap'] ) ? \SureCart::block()->styles()->getBlockGapPresetCssVar( $attributes['style']['spacing']['blockGap'] ) : '';
 $style = ! empty( $gap ) ? 'gap:' . esc_attr( $gap ) . ';' : '';
 
+// Get link_to_reviews from context (parent block) or fallback to attribute (for standalone usage like Elementor/Bricks).
+$link_to_reviews = $block->context['link_to_reviews'] ?? $attributes['link_to_reviews'] ?? false;
+
 return 'file:./view.php';

@@ -82,6 +82,19 @@ class ProductReviewAverageRatingValue extends \Elementor\Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'link_to_reviews',
+			[
+				'label'        => esc_html__( 'Link to Reviews', 'surecart' ),
+				'type'         => \Elementor\Controls_Manager::SWITCHER,
+				'label_on'     => esc_html__( 'Yes', 'surecart' ),
+				'label_off'    => esc_html__( 'No', 'surecart' ),
+				'return_value' => 'yes',
+				'default'      => 'no',
+				'description'  => esc_html__( 'Link to the reviews section.', 'surecart' ),
+			]
+		);
+
 		$this->end_controls_section();
 	}
 
@@ -138,17 +151,23 @@ class ProductReviewAverageRatingValue extends \Elementor\Widget_Base {
 	 * @return void
 	 */
 	protected function render() {
-		$settings     = $this->get_settings_for_display();
-		$format_style = $settings['format_style'] ?? 'none';
-		$class_name   = 'none' === $format_style ? '' : ' is-style-' . $format_style;
+		$settings        = $this->get_settings_for_display();
+		$format_style    = $settings['format_style'] ?? 'none';
+		$class_name      = 'none' === $format_style ? '' : ' is-style-' . $format_style;
+		$link_to_reviews = 'yes' === ( $settings['link_to_reviews'] ?? 'yes' );
 
 		if ( \Elementor\Plugin::$instance->editor->is_edit_mode() ) {
 			$this->render_preview( $class_name );
 			return;
 		}
+
+		$attributes = [
+			'className'       => trim( $class_name ),
+			'link_to_reviews' => $link_to_reviews,
+		];
 		?>
 		<div <?php $this->print_render_attribute_string( 'wrapper' ); ?>>
-			<!-- wp:surecart/product-review-average-rating-value {"className":"<?php echo esc_attr( trim( $class_name ) ); ?>"} /-->
+			<!-- wp:surecart/product-review-average-rating-value <?php echo wp_json_encode( $attributes ); ?> /-->
 		</div>
 		<?php
 	}
@@ -156,14 +175,15 @@ class ProductReviewAverageRatingValue extends \Elementor\Widget_Base {
 	/**
 	 * Render preview in editor.
 	 *
-	 * @param string $class_name Class name for styling.
+	 * @param string $class_name      Class name for styling.
+	 * @param bool   $link_to_reviews Link to reviews flag.
 	 *
 	 * We need to add the styles manually, because if on demand block assets load settings are enabled,
 	 * then those styles won't be loaded and that's mandatory for editor preview.
 	 *
 	 * @return void
 	 */
-	public function render_preview( $class_name ): void {
+	public function render_preview( $class_name, $link_to_reviews = true ): void {
 		$product = sc_get_product();
 		$content = ! empty( $product->average_stars ) ? (string) $product->average_stars : '4.5';
 
@@ -172,9 +192,17 @@ class ProductReviewAverageRatingValue extends \Elementor\Widget_Base {
 		} elseif ( str_contains( $class_name, 'is-style-slash' ) ) {
 			$content = $content . ' / 5.0';
 		}
+
+		$reviews_url = ! empty( $product->permalink ) ? esc_url( $product->permalink . '#surecart-reviews' ) : '#surecart-reviews';
 		?>
 		<div class="wp-block-surecart-product-review-average-rating-value">
-			<span class="<?php echo esc_attr( trim( $class_name ) ); ?>"><?php echo esc_html( $content ); ?></span>
+			<span class="<?php echo esc_attr( trim( $class_name ) ); ?>">
+				<?php if ( $link_to_reviews ) : ?>
+					<a href="<?php echo $reviews_url; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>" class="sc-review-link"><?php echo esc_html( $content ); ?></a>
+				<?php else : ?>
+					<?php echo esc_html( $content ); ?>
+				<?php endif; ?>
+			</span>
 		</div>
 		<?php
 	}

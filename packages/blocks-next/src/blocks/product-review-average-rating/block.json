@@ -13,7 +13,8 @@
 		"surecart/product-review-list",
 		"surecart/product-review-template",
 		"surecart/sticky-purchase",
-		"surecart/product-review-summary"
+		"surecart/product-review-summary",
+		"surecart/product-template"
 	],
 	"allowedBlocks": [
 		"surecart/product-review-average-rating-stars",
@@ -21,7 +22,8 @@
 	],
 	"keywords": ["review", "average", "rating"],
 	"providesContext": {
-		"show_value": "show_value"
+		"show_value": "show_value",
+		"link_to_reviews": "link_to_reviews"
 	},
 	"attributes": {
 		"show_value": {
@@ -31,6 +33,10 @@
 		"show_for_zero_reviews": {
 			"type": "boolean",
 			"default": true
+		},
+		"link_to_reviews": {
+			"type": "boolean",
+			"default": false
 		}
 	},
 	"example": {},

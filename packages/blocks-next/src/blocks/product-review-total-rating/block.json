@@ -25,6 +25,10 @@
 		"style_variant": {
 			"type": "string",
 			"default": "default"
+		},
+		"link_to_reviews": {
+			"type": "boolean",
+			"default": false
 		}
 	},
 	"example": {},
@@ -68,5 +72,6 @@
 	},
 	"textdomain": "surecart",
 	"render": "file:./view.php",
-	"editorScript": "file:./index.js"
+	"editorScript": "file:./index.js",
+	"style": "file:./style-index.css"
 }

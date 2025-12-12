@@ -82,6 +82,13 @@ class ProductReviewTotalRating extends \Bricks\Element {
 			'default' => 'default',
 			'inline'  => true,
 		];
+
+		$this->controls['link_to_reviews'] = [
+			'tab'     => 'content',
+			'label'   => esc_html__( 'Link to Reviews', 'surecart' ),
+			'type'    => 'checkbox',
+			'default' => false,
+		];
 	}
 
 	/**
@@ -93,6 +100,7 @@ class ProductReviewTotalRating extends \Bricks\Element {
 		$show_label            = ! empty( $this->settings['show_label'] );
 		$show_for_zero_reviews = ! empty( $this->settings['show_for_zero_reviews'] );
 		$style_variant         = ! empty( $this->settings['style_variant'] ) ? $this->settings['style_variant'] : 'default';
+		$link_to_reviews       = ! empty( $this->settings['link_to_reviews'] );
 
 		if ( $this->is_admin_editor() ) {
 			$this->render_preview( $show_label, $style_variant );
@@ -103,6 +111,7 @@ class ProductReviewTotalRating extends \Bricks\Element {
 			'show_label'            => $show_label,
 			'show_for_zero_reviews' => $show_for_zero_reviews,
 			'style_variant'         => $style_variant,
+			'link_to_reviews'       => $link_to_reviews,
 		];
 
 		echo $this->html( $attributes ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
