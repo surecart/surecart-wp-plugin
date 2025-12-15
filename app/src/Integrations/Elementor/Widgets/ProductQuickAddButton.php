@@ -302,7 +302,7 @@ class ProductQuickAddButton extends \Elementor\Widget_Base {
 			'padding',
 			[
 				'type'       => \Elementor\Controls_Manager::DIMENSIONS,
-				'label'      => esc_html__( 'Padding', 'textdomain' ),
+				'label'      => esc_html__( 'Padding', 'surecart' ),
 				'size_units' => [ 'px', '%', 'em', 'rem', 'custom' ],
 				'selectors'  => [
 					$button_selector => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
@@ -314,7 +314,7 @@ class ProductQuickAddButton extends \Elementor\Widget_Base {
 			'margin',
 			[
 				'type'       => \Elementor\Controls_Manager::DIMENSIONS,
-				'label'      => esc_html__( 'Margin', 'textdomain' ),
+				'label'      => esc_html__( 'Margin', 'surecart' ),
 				'size_units' => [ 'px', '%', 'em', 'rem', 'custom' ],
 				'selectors'  => [
 					$button_selector => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',

@@ -254,7 +254,7 @@ class CouponsListTable extends ListTable {
 		ob_start();
 		?>
 		<a class="row-title" aria-label="<?php esc_attr_e( 'Edit Coupon', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'coupon', $coupon->id ) ); ?>">
-			<?php echo esc_html_e( $coupon->name, 'surecart' ); ?>
+			<?php echo esc_html( $coupon->name ); ?>
 		</a>
 
 		<?php
