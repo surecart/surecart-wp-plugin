@@ -271,26 +271,26 @@ class SubscriptionsListTable extends ListTable {
 		switch ( $interval ) {
 			case 'day':
 				return " $separator " . sprintf(
-					// translators: number of days.
-					$show_single ? _n( '%d day', '%d days', $count, 'surecart' ) : _n( 'day', '%d days', $count, 'surecart' ),
+					// translators: %d is the number of days.
+					$show_single ? _n( '%d day', '%d days', $count, 'surecart' ) : _n( '%d day', '%d days', $count, 'surecart' ),
 					$count
 				);
 			case 'week':
 				return " $separator " . sprintf(
-					// translators: number of weeks.
-					$show_single ? _n( '%d week', '%d weeks', $count, 'surecart' ) : _n( 'week', '%d weeks', $count, 'surecart' ),
+					// translators: %d is the number of weeks.
+					$show_single ? _n( '%d week', '%d weeks', $count, 'surecart' ) : _n( '%d week', '%d weeks', $count, 'surecart' ),
 					$count
 				);
 			case 'month':
 				return " $separator " . sprintf(
-					// translators: number of months
-					$show_single ? _n( '%d month', '%d months', $count, 'surecart' ) : _n( 'month', '%d months', $count, 'surecart' ),
+					// translators: %d is the number of months.
+					$show_single ? _n( '%d month', '%d months', $count, 'surecart' ) : _n( '%d month', '%d months', $count, 'surecart' ),
 					$count
 				);
 			case 'year':
 				return " $separator " . sprintf(
-					// translators: number of yearls
-					$show_single ? _n( '%d year', '%d years', $count, 'surecart' ) : _n( 'year', '%d years', $count, 'surecart' ),
+					// translators: %d is the number of years.
+					$show_single ? _n( '%d year', '%d years', $count, 'surecart' ) : _n( '%d year', '%d years', $count, 'surecart' ),
 					$count
 				);
 		}

@@ -577,6 +577,7 @@ class Checkout extends Model {
 				return Currency::format( $this->discount->coupon->amount_off, $this->currency );
 			}
 
+			// translators: %1d is the percentage discount.
 			return sprintf( __( '%1d%% off', 'surecart' ), $this->discount->coupon->percent_off | 0 );
 		}
 
@@ -600,6 +601,7 @@ class Checkout extends Model {
 			case 'once':
 				return sprintf( '%s %s', $this->human_discount, __( 'once', 'surecart' ) );
 			case 'repeating':
+				// translators: %d is the number of months.
 				$months_label = sprintf( _n( '%d month', '%d months', $duration_in_months, 'surecart' ), $duration_in_months );
 				return sprintf( '%s for %s', $this->human_discount, $months_label );
 			default:
