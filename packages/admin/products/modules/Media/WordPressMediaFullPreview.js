@@ -18,7 +18,10 @@ export default ({ media, settings = {} }) => {
 					display: block;
 					aspect-ratio: ${settings?.aspect_ratio || '16/9'};
 				`}
-				controls
+				{...settings?.controls ? { controls: true } : {}}
+				{...settings?.autoplay ? { autoplay: true } : {}}
+				{...settings?.loop ? { loop: true } : {}}
+				{...settings?.muted ? { muted: true } : {}}
 				src={media?.source_url}
 				preload="metadata"
 			>

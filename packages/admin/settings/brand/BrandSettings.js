@@ -203,7 +203,7 @@ export default () => {
 							)}
 							<span slot="description">
 								{__(
-									'Remove "Powered By SureCart" in the footer of emails and reciepts/invoices.',
+									'Remove "Powered By SureCart" in the footer of emails and receipts/invoices.',
 									'surecart'
 								)}
 							</span>
