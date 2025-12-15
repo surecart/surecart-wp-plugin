@@ -20,7 +20,7 @@ import { Modal } from '@wordpress/components';
 import { useState } from 'react';
 import EditPromotionCode from './EditPromotionCode';
 
-export default ({ promotion: { id }, index }) => {
+export default ({ promotion: { id }, index, onUpdate }) => {
 	const [modal, setModal] = useState(false);
 	const { editEntityRecord, saveEntityRecord, deleteEntityRecord } =
 		useDispatch(coreStore);
@@ -39,6 +39,7 @@ export default ({ promotion: { id }, index }) => {
 				type: 'snackbar',
 			});
 			setModal(false);
+			onUpdate?.();
 		} catch (e) {
 			console.error(e);
 			createErrorNotice(
@@ -61,6 +62,7 @@ export default ({ promotion: { id }, index }) => {
 					type: 'snackbar',
 				}
 			);
+			onUpdate?.();
 		} catch (e) {
 			console.error(e);
 		}
@@ -114,11 +116,11 @@ export default ({ promotion: { id }, index }) => {
 					onScInput={(e) => updatePromotion({ code: e.target.value })}
 					readonly={true}
 				>
-					{promotion?.archived && (
+					{/* {promotion?.archived && (
 						<ScTag type="warning" slot="suffix">
 							{__('Archived', 'surecart')}
 						</ScTag>
-					)}
+					)} */}
 					<ScTag slot="suffix">
 						{promotion?.times_redeemed}
 						{promotion?.max_redemptions

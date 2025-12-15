@@ -1,10 +1,12 @@
 /**
  * External dependencies.
  */
-import { sprintf, __ } from '@wordpress/i18n';
-import { useSelect } from '@wordpress/data';
-import { store as coreStore } from '@wordpress/core-data';
-import { useState, Fragment } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
+import { useState, useEffect, Fragment } from '@wordpress/element';
+import apiFetch from '@wordpress/api-fetch';
+import { addQueryArgs } from '@wordpress/url';
+import { useDispatch } from '@wordpress/data';
+import { store as noticesStore } from '@wordpress/notices';
 
 /**
  * Internal dependencies.
@@ -15,102 +17,65 @@ import {
 	ScButton,
 	ScFlex,
 	ScIcon,
-	ScSwitch,
 } from '@surecart/components-react';
 import Code from './Code';
 import EditPromotionCode from './EditPromotionCode';
 import PrevNextButtons from '../../ui/PrevNextButtons';
-import usePagination from '../../hooks/usePagination';
+import ArchivedPromotions from './ArchivedPromotions';
 
 export default ({ id }) => {
-	const [showArchived, setShowArchived] = useState(false);
+	const { createErrorNotice } = useDispatch(noticesStore);
 	const [modal, setModal] = useState(false);
-	const [activePage, setActivePage] = useState(1);
-	const [archivedPage, setArchivedPage] = useState(1);
+	const [archivedDrawer, setArchivedDrawer] = useState(false);
+	const [page, setPage] = useState(1);
+	const [promotions, setPromotions] = useState([]);
+	const [totalCount, setTotalCount] = useState(0);
+	const [isLoading, setIsLoading] = useState(true);
+	const [isBusy, setIsBusy] = useState(false);
 	const perPage = 10;
 
-	const { promotions, archivedPromotions, isLoading, isBusy } = useSelect(
-		(select) => {
-			const queryArgs = [
-				'surecart',
-				'promotion',
-				{
+	const fetchPromotions = async () => {
+		try {
+			if (promotions.length) {
+				setIsBusy(true);
+			} else {
+				setIsLoading(true);
+			}
+
+			const response = await apiFetch({
+				path: addQueryArgs('/surecart/v1/promotions', {
 					coupon_ids: [id],
-					per_page: 100,
-				},
-			];
-			const promotions = select(coreStore).getEntityRecords(...queryArgs);
-			const resolving = select(coreStore).isResolving(
-				'getEntityRecords',
-				queryArgs
+					archived: false,
+					per_page: perPage,
+					page,
+				}),
+				parse: false,
+			});
+
+			const data = await response.json();
+			const total = parseInt(
+				response.headers.get('X-WP-Total') || '0',
+				10
 			);
-			return {
-				promotions: (promotions || []).filter(
-					(promotion) => !promotion.archived
-				),
-				archivedPromotions: (promotions || []).filter(
-					(promotion) => promotion.archived
-				),
-				isLoading: !promotions?.length && resolving,
-				isBusy: promotions?.length && resolving,
-			};
-		}
-	);
 
-	// Paginate active promotions.
-	const paginatedActivePromotions = (promotions || []).slice(
-		(activePage - 1) * perPage,
-		activePage * perPage
-	);
-
-	// Paginate archived promotions.
-	const paginatedArchivedPromotions = (archivedPromotions || []).slice(
-		(archivedPage - 1) * perPage,
-		archivedPage * perPage
-	);
-
-	// Calculate pagination states.
-	const { hasPagination: hasActivePagination } = usePagination({
-		data: paginatedActivePromotions,
-		page: activePage,
-		perPage,
-		totalItems: promotions?.length,
-	});
-
-	const { hasPagination: hasArchivedPagination } = usePagination({
-		data: paginatedArchivedPromotions,
-		page: archivedPage,
-		perPage,
-		totalItems: archivedPromotions?.length,
-	});
-
-	const renderPagination = () => {
-		if (!hasActivePagination && !hasArchivedPagination) {
-			return null;
-		}
-
-		if (showArchived && hasArchivedPagination) {
-			return (
-				<PrevNextButtons
-					data={paginatedArchivedPromotions}
-					page={archivedPage}
-					setPage={setArchivedPage}
-					perPage={perPage}
-					loading={isBusy}
-				/>
+			setPromotions(data);
+			setTotalCount(total);
+		} catch (e) {
+			console.error(e);
+			createErrorNotice(
+				e?.message || __('Something went wrong', 'surecart')
 			);
+		} finally {
+			setIsLoading(false);
+			setIsBusy(false);
 		}
-
-		return (
-			<PrevNextButtons
-				data={paginatedActivePromotions}
-				page={activePage}
-				setPage={setActivePage}
-				perPage={perPage}
-				loading={isBusy}
-			/>
-		);
 	};
+
+	useEffect(() => {
+		fetchPromotions();
+	}, [id, page]);
+
+	const hasPagination = totalCount > perPage;
 
 	return (
 		<Box
@@ -120,71 +85,61 @@ export default ({ id }) => {
 			footer={
 				!isLoading && (
 					<Fragment>
-						{renderPagination()}
+						{hasPagination && (
+							<PrevNextButtons
+								data={promotions}
+								page={page}
+								setPage={setPage}
+								perPage={perPage}
+								totalItems={totalCount}
+								loading={isBusy}
+							/>
+						)}
 
 						<ScFlex
 							justifyContent="space-between"
 							alignItems="center"
-							style={{ width: '100%' }}
+							style={{
+								width: '100%',
+								marginTop: 'var(--sc-spacing-medium)',
+							}}
 						>
 							<ScButton onClick={() => setModal(true)}>
 								<ScIcon slot="prefix" name="plus" />
 								{__('Add Promotion Code', 'surecart')}
 							</ScButton>
-							{!!archivedPromotions?.length && (
-								<ScFlex justifyContent="flex-end">
-									<ScSwitch
-										checked={!!showArchived}
-										onClick={(e) => {
-											e.preventDefault();
-											setShowArchived(!showArchived);
-										}}
-									>
-										{sprintf(
-											!showArchived
-												? __(
-														'Show %d Archived Promotion Codes',
-														'surecart'
-												  )
-												: __(
-														'Hide %d Archived Promotion Codes',
-														'surecart'
-												  ),
-											archivedPromotions?.length
-										)}
-									</ScSwitch>
-								</ScFlex>
-							)}
+
+							<ScButton onClick={() => setArchivedDrawer(true)}>
+								<ScIcon slot="prefix" name="archive" />
+								{__('View Archived', 'surecart')}
+							</ScButton>
 						</ScFlex>
 					</Fragment>
 				)
 			}
 		>
-			{paginatedActivePromotions.map((promotion) => (
-				<Code promotion={promotion} key={promotion?.id} />
-			))}
-
-			{!!showArchived &&
-				paginatedArchivedPromotions.map((promotion) => (
-					<Code promotion={promotion} key={promotion?.id} />
-				))}
-
-			{!!showArchived && hasArchivedPagination && (
-				<PrevNextButtons
-					data={paginatedArchivedPromotions}
-					page={archivedPage}
-					setPage={setArchivedPage}
-					perPage={perPage}
-					loading={isBusy}
+			{promotions.map((promotion) => (
+				<Code
+					promotion={promotion}
+					key={promotion?.id}
+					onUpdate={fetchPromotions}
 				/>
-			)}
+			))}
 
 			{!!modal && (
 				<EditPromotionCode
 					couponId={id}
 					onRequestClose={() => setModal(false)}
+					onSuccess={fetchPromotions}
 				/>
 			)}
+
+			<ArchivedPromotions
+				open={archivedDrawer}
+				couponId={id}
+				onRequestClose={() => setArchivedDrawer(false)}
+				onUpdate={fetchPromotions}
+			/>
 
 			{!!isBusy && <ScBlockUi spinner />}
 		</Box>

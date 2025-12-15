@@ -18,7 +18,12 @@ import Error from '../../components/Error';
 import SelectCustomer from './SelectCustomer';
 import SelectAffiliate from './SelectAffiliate';
 
-export default ({ onRequestClose, couponId, promotion: existingPromotion }) => {
+export default ({
+	onRequestClose,
+	couponId,
+	promotion: existingPromotion,
+	onSuccess,
+}) => {
 	const { createSuccessNotice } = useDispatch(noticesStore);
 	const { saveEntityRecord } = useDispatch(coreStore);
 	const [promotion, setPromotion] = useState(
@@ -50,6 +55,7 @@ export default ({ onRequestClose, couponId, promotion: existingPromotion }) => {
 					type: 'snackbar',
 				}
 			);
+			onSuccess?.();
 			onRequestClose();
 		} catch (e) {
 			console.error(e);
