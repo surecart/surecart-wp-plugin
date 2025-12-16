@@ -47,7 +47,7 @@ export class ScSubscriptionReactivate {
         },
       });
     } catch (e) {
-      this.error = e?.message || __('Something went wrong', 'surecart');
+      this.error = e?.additional_errors?.length ? e.additional_errors.map(err => err.message).join(', ') : e?.message || __('Something went wrong', 'surecart');
     } finally {
       this.loading = false;
     }
@@ -64,7 +64,7 @@ export class ScSubscriptionReactivate {
       this.scRefresh.emit();
       this.scRequestClose.emit('close-button');
     } catch (e) {
-      this.error = e?.message || __('Something went wrong', 'surecart');
+      this.error = e?.additional_errors?.length ? e.additional_errors.map(err => err.message).join(', ') : e?.message || __('Something went wrong', 'surecart');
     } finally {
       this.busy = false;
     }
