@@ -89,6 +89,61 @@
 					"elType": "widget"
 				},
 				{
+					"id": "751ce78f",
+					"settings": {
+						"content_width": "full",
+						"flex_gap": {
+							"column": "6",
+							"row": "0",
+							"isLinked": false,
+							"unit": "px",
+							"size": 0
+						},
+						"padding": {
+							"unit": "px",
+							"top": "0",
+							"right": "0",
+							"bottom": "0",
+							"left": "0",
+							"isLinked": true
+						},
+						"_title": "Rating",
+						"flex_direction": "row",
+						"flex_justify_content": "flex-start",
+						"flex_align_items": "center"
+					},
+					"elements": [
+						{
+							"id": "5146cd72",
+							"settings": [],
+							"elements": [],
+							"isInner": false,
+							"widgetType": "surecart-product-review-average-rating-stars",
+							"elType": "widget"
+						},
+						{
+							"id": "1b166aaa",
+							"settings": { "format_style": "parentheses" },
+							"elements": [],
+							"isInner": false,
+							"widgetType": "surecart-product-review-average-rating-value",
+							"elType": "widget"
+						},
+						{
+							"id": "5885e97b",
+							"settings": {
+								"style_variant": "plus-sign"
+							},
+							"elements": [],
+							"isInner": false,
+							"widgetType": "surecart-product-review-total-rating",
+							"elType": "widget"
+						}
+					],
+					"isInner": true,
+					"elType": "container"
+				},
+				{
 					"id": "28f6fb60",
 					"settings": {
 						"content_width": "full",
@@ -598,6 +653,198 @@
 			"isInner": false,
 			"widgetType": "surecart-product-content",
 			"elType": "widget"
+		},
+		{
+			"id": "13fc627e",
+			"settings": {
+				"content_width": "full",
+				"_title": "Review List",
+				"padding": {
+					"unit": "px",
+					"top": "0",
+					"right": "0",
+					"bottom": "0",
+					"left": "0",
+					"isLinked": true
+				}
+			},
+			"elements": [
+				{
+					"id": "377a3e17",
+					"settings": {
+						"title": "Customer Reviews",
+						"title_color": "#000000"
+					},
+					"elements": [],
+					"isInner": false,
+					"widgetType": "heading",
+					"elType": "widget"
+				},
+				{
+					"id": "34118611",
+					"settings": {
+						"flex_direction": "row",
+						"content_width": "full",
+						"_title": "Review summary",
+						"background_background": "classic",
+						"background_color": "#F7F9FB",
+						"border_color": "#EEEEEE",
+						"border_border": "solid",
+						"border_width": {
+							"unit": "px",
+							"top": "1",
+							"right": "1",
+							"bottom": "1",
+							"left": "1",
+							"isLinked": true
+						},
+						"border_radius": {
+							"unit": "px",
+							"top": "12",
+							"right": "12",
+							"bottom": "12",
+							"left": "12",
+							"isLinked": true
+						},
+						"padding": {
+							"unit": "px",
+							"top": "32",
+							"right": "32",
+							"bottom": "32",
+							"left": "32",
+							"isLinked": true
+						}
+					},
+					"elements": [
+						{
+							"id": "2c6e5e6b",
+							"settings": {
+								"content_width": "full",
+								"flex_gap": {
+									"column": "10",
+									"row": "10",
+									"isLinked": false,
+									"unit": "px",
+									"size": 10
+								},
+								"padding": {
+									"unit": "px",
+									"top": "0",
+									"right": "0",
+									"bottom": "0",
+									"left": "0",
+									"isLinked": true
+								},
+								"_title": "Product Rating",
+								"flex_direction": "column",
+								"flex_justify_content": "center"
+							},
+							"elements": [
+								{
+									"id": "1645083",
+									"settings": {
+										"format_style": "slash",
+										"typography_typography": "custom",
+										"typography_font_weight": "600",
+										"typography_font_size": {
+											"unit": "px",
+											"size": 30,
+											"sizes": []
+										}
+									},
+									"elements": [],
+									"isInner": false,
+									"widgetType": "surecart-product-review-average-rating-value",
+									"elType": "widget"
+								},
+								{
+									"id": "4051c2eb",
+									"settings": [],
+									"elements": [],
+									"isInner": false,
+									"widgetType": "surecart-product-review-average-rating-stars",
+									"elType": "widget"
+								},
+								{
+									"id": "6f722a43",
+									"settings": [],
+									"elements": [],
+									"isInner": false,
+									"widgetType": "surecart-product-review-total-rating",
+									"elType": "widget"
+								}
+							],
+							"isInner": true,
+							"elType": "container"
+						},
+						{
+							"id": "608ef914",
+							"settings": {
+								"content_width": "full",
+								"_title": "Breakdowns"
+							},
+							"elements": [
+								{
+									"id": "6f10659f",
+									"settings": {
+										"row_spacing": {
+											"unit": "px",
+											"size": 0,
+											"sizes": []
+										},
+										"bar_height": {
+											"unit": "px",
+											"size": 9,
+											"sizes": []
+										},
+										"bar_radius": {
+											"unit": "px",
+											"size": 10,
+											"sizes": []
+										},
+										"row_gap": {
+											"unit": "px",
+											"size": 2,
+											"sizes": []
+										}
+									},
+									"elements": [],
+									"isInner": false,
+									"widgetType": "surecart-product-review-breakdown",
+									"elType": "widget"
+								}
+							],
+							"isInner": true,
+							"elType": "container"
+						}
+					],
+					"isInner": true,
+					"elType": "container"
+				},
+				{
+					"id": "55aa5be1",
+					"settings": {
+						"review_border_style": "solid",
+						"review_border_color": "#e5e7eb",
+						"review_border_width": {
+							"unit": "px",
+							"size": 1,
+							"sizes": []
+						},
+						"spacing": {
+							"unit": "px",
+							"size": 32,
+							"sizes": []
+						}
+					},
+					"elements": [],
+					"isInner": false,
+					"widgetType": "surecart-product-review-list",
+					"elType": "widget"
+				}
+			],
+			"isInner": true,
+			"elType": "container"
 		}
 	]
 }

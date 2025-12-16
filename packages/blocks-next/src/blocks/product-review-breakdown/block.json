@@ -1,0 +1,96 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "surecart/product-review-breakdown",
+	"title": "Review Breakdown",
+	"description": "Displays a breakdown of product reviews by star rating.",
+	"version": "1.0.0",
+	"category": "surecart-product-page",
+	"ancestor": [
+		"surecart/product-page",
+		"surecart/product-quick-view",
+		"surecart/product-review-list",
+		"surecart/product-review-template",
+		"surecart/sticky-purchase",
+		"surecart/product-review-summary"
+	],
+	"keywords": ["review", "breakdown", "summary"],
+	"usesContext": ["postId"],
+	"attributes": {
+		"show_for_zero_reviews": {
+			"type": "boolean",
+			"default": true
+		},
+		"columns": {
+			"type": "number",
+			"default": 1
+		},
+		"row_gap": {
+			"type": "number",
+			"default": 2
+		},
+		"column_gap": {
+			"type": "number",
+			"default": 20
+		},
+		"star_label_gap": {
+			"type": "number",
+			"default": 4
+		},
+		"fill_color": {
+			"type": "string",
+			"default": ""
+		},
+		"size": {
+			"type": "number",
+			"default": 20
+		},
+		"bar_fill_color": {
+			"type": "string",
+			"default": ""
+		},
+		"bar_background_color": {
+			"type": "string",
+			"default": ""
+		}
+	},
+	"example": {},
+	"supports": {
+		"interactivity": true,
+		"anchor": true,
+		"color": {
+			"gradients": true,
+			"text": true,
+			"background": false
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true,
+			"textAlign": true
+		},
+		"layout": {
+			"allowSwitching": false,
+			"allowInheriting": false,
+			"default": {
+				"type": "flex",
+				"justifyContent": "left"
+			}
+		},
+		"spacing": {
+			"padding": true,
+			"margin": true,
+			"blockGap": {
+				"__experimentalDefault": "4px"
+			},
+			"__experimentalDefaultControls": {
+				"padding": true,
+				"margin": true,
+				"blockGap": true
+			}
+		}
+	},
+	"textdomain": "surecart",
+	"render": "file:./view.php",
+	"editorScript": "file:./index.js",
+	"style": ["file:./style-index.css"]
+}

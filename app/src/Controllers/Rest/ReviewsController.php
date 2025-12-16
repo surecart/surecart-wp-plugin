@@ -2,7 +2,9 @@
 
 namespace SureCart\Controllers\Rest;
 
+use SureCart\Models\Customer;
 use SureCart\Models\Review;
+use SureCart\Models\User;
 
 /**
  * Handle Review requests through the REST API.
@@ -21,6 +23,25 @@ class ReviewsController extends RestController {
 	 * @var array<string>
 	 */
 	protected $with = [ 'product', 'product.price', 'product.featured_product_media' ];
+
+	/**
+	 * Middleware before we make the request.
+	 *
+	 * @param \SureCart\Models\Model $class Model class instance.
+	 * @param \WP_REST_Request       $request Request object.
+	 *
+	 * @return \SureCart\Models\Model|\WP_Error
+	 */
+	protected function middleware( $class, \WP_REST_Request $request ) {
+		// Only set the user for create operations (user review submissions).
+		// Skip for read operations (admin viewing) and other operations that don't require customer association runtime.
+		if ( 'POST' === $request->get_method() ) {
+			$class = $this->maybeSetUser( $class, $request );
+		}
+
+		// return the class.
+		return apply_filters( 'surecart/request/model', $class, $request );
+	}
 
 	/**
 	 * Publish a review.
@@ -54,5 +75,36 @@ class ReviewsController extends RestController {
 		}
 
 		return $model->where( $request->get_query_params() )->with( $this->with )->unpublish( $request['id'] );
+	}
+
+	/**
+	 * Let's set the customer's email and name if they are already logged in.
+	 *
+	 * @param \SureCart\Models\Model $class Model class instance.
+	 * @param \WP_REST_Request       $request Request object.
+	 *
+	 * @return \SureCart\Models\Model|\WP_Error
+	 */
+	protected function maybeSetUser( \SureCart\Models\Model $class, \WP_REST_Request $request ) {
+		$user = User::current();
+
+		// Must be logged in.
+		if ( ! $user ) {
+			return new \WP_Error(
+				'surecart_rest_review_no_user',
+				__( 'You must be logged in to submit a review.', 'surecart' ),
+				[ 'status' => 401 ]
+			);
+		}
+
+		// Get or create live customer.
+		$customer_id = $user->getLiveCustomer();
+		if ( is_wp_error( $customer_id ) ) {
+			return $customer_id;
+		}
+
+		// Set the customer ID on the review.
+		$class['customer'] = $customer_id;
+		return $class;
 	}
 }

@@ -1,0 +1,19 @@
+.wp-block-surecart-product-review-total-rating {
+	font-size: var(--sc-font-size-small);
+
+	a.sc-review-link,
+	.sc-review-link {
+		color: inherit !important;
+		border-bottom: none !important;
+		box-shadow: none !important;
+
+		&:hover,
+		&:focus,
+		&:active,
+		&:visited {
+			color: inherit !important;
+			border-bottom: none !important;
+			box-shadow: none !important;
+		}
+	}
+}

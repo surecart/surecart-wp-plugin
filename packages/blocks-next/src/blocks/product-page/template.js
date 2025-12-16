@@ -18,6 +18,40 @@ export default [
 					[
 						'core/group',
 						{
+							style: {
+								spacing: {
+									blockGap: '4px',
+									padding: { right: '0px', left: '0px' },
+								},
+							},
+							layout: { type: 'flex', flexWrap: 'nowrap' },
+						},
+						[
+							[
+								'surecart/product-review-average-rating',
+								{ style: { spacing: { blockGap: '4px' } } },
+								[
+									[
+										'surecart/product-review-average-rating-stars',
+									],
+									[
+										'surecart/product-review-average-rating-value',
+										{ className: 'is-style-parentheses' },
+									],
+								],
+							],
+							[
+								'surecart/product-review-total-rating',
+								{
+									style_variant: 'plus-sign',
+									style: { spacing: { blockGap: '4px' } },
+								},
+							],
+						],
+					],
+					[
+						'core/group',
+						{
 							style: { spacing: { blockGap: '0' } },
 							layout: { type: 'constrained' },
 						},

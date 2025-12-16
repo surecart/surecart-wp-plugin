@@ -7,9 +7,9 @@ import {
 	ScInput,
 	ScFlex,
 	ScFormControl,
-	ScSelect,
-	ScTag,
+	ScTextarea,
 	ScForm,
+	ScIcon,
 } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 import { useState, useEffect, Fragment, useRef } from '@wordpress/element';
@@ -17,7 +17,8 @@ import { store as coreStore } from '@wordpress/core-data';
 import { store as noticesStore } from '@wordpress/notices';
 import { useDispatch } from '@wordpress/data';
 import Error from '../../../components/Error';
-import { countryChoices } from '@surecart/components';
+import HelpTooltip from '../../../components/HelpTooltip';
+
 import ProgressBar from './ProgressBar';
 import ShippingRateForm from '../rate/ShippingRateForm';
 import CountryStateSelector from '../../../components/CountryStateSelector';
@@ -39,6 +40,7 @@ export default ({
 	const [loading, setLoading] = useState(false);
 	const [zoneName, setZoneName] = useState('');
 	const [zoneTerritories, setZoneTerritories] = useState([]);
+	const [zonePostalCodes, setZonePostalCodes] = useState([]);
 	const { saveEntityRecord } = useDispatch(coreStore);
 	const { createSuccessNotice } = useDispatch(noticesStore);
 	const [section, setSection] = useState(sections.SECTION_ADD_ZONE);
@@ -54,6 +56,7 @@ export default ({
 		return () => {
 			setZoneTerritories([]);
 			setZoneName('');
+			setZonePostalCodes([]);
 			setError();
 		};
 	}, [open]);
@@ -62,6 +65,7 @@ export default ({
 		if (isEdit) {
 			setZoneName(selectedZone?.name || '');
 			setZoneTerritories(selectedZone?.territories || []);
+			setZonePostalCodes(selectedZone?.postal_codes || []);
 		}
 	}, [isEdit]);
 
@@ -71,6 +75,7 @@ export default ({
 			'shipping-zone',
 			{
 				name: zoneName,
+				postal_codes: zonePostalCodes,
 				shipping_profile_id: shippingProfileId,
 				territories: zoneTerritories,
 			},
@@ -88,6 +93,7 @@ export default ({
 			{
 				id: selectedZone.id,
 				name: zoneName,
+				postal_codes: zonePostalCodes,
 				territories: zoneTerritories,
 			},
 			{ throwOnError: true }
@@ -127,6 +133,11 @@ export default ({
 		}
 	};
 
+	const onPostalCodeChange = (value) => {
+		const postcodes = value?.split('\n')?.filter((line) => line.length > 0);
+		setZonePostalCodes(postcodes);
+	};
+
 	const renderZoneForm = () => {
 		return (
 			<Fragment>
@@ -143,9 +154,9 @@ export default ({
 				>
 					<ScFlex
 						flexDirection="column"
-						css={css`
-							gap: var(--sc-spacing-medium);
-						`}
+						style={{
+							'--sc-flex-column-gap': '1.5em',
+						}}
 					>
 						<Error error={error} setError={setError} />
 						<ScInput
@@ -168,6 +179,101 @@ export default ({
 							<CountryStateSelector
 								value={zoneTerritories}
 								onChange={setZoneTerritories}
+							/>
+						</ScFormControl>
+						<ScFormControl
+							label={__(
+								'Limit to specific ZIP/postal codes',
+								'surecart'
+							)}
+							help={__(
+								'Enter one postal code or range per line. Supports exact codes, ranges (90210...99000), and wildcards (902*).',
+								'surecart'
+							)}
+						>
+							<HelpTooltip
+								content={
+									<div>
+										<strong>
+											{__(
+												'Postal code filtering',
+												'surecart'
+											)}
+										</strong>
+										<p>
+											{__(
+												'Postal code filtering is applied in addition to territory filtering - an address must match both a territory and a postal code pattern (if provided) to be included in this shipping zone. If left empty, no postal code filtering is applied and all addresses within the territories will match.',
+												'surecart'
+											)}
+										</p>
+										<p>
+											{__(
+												'Supports three matching modes:',
+												'surecart'
+											)}
+										</p>
+										<ol>
+											<li>
+												<strong>
+													{__(
+														'Exact match: ',
+														'surecart'
+													)}
+												</strong>
+												{__(
+													'Provide the complete postal code (e.g., 90210 or SW1A 1AA).',
+													'surecart'
+												)}{' '}
+											</li>
+											<li>
+												<strong>
+													{__(
+														'Range match: ',
+														'surecart'
+													)}
+												</strong>
+												{__(
+													'Use three dots ("...") to specify a numeric range (e.g., 90210...99000 matches all postal codes from 90210 to 99000). Only numeric postal codes are supported for ranges.',
+													'surecart'
+												)}{' '}
+											</li>
+											<li>
+												<strong>
+													{__(
+														'Wildcard match: ',
+														'surecart'
+													)}
+												</strong>
+												{__(
+													'Use asterisk (*) for partial matching (e.g., "902*" matches "90210", "90211", "902AB", etc.). All postal codes are normalized (uppercased and trimmed) before matching.',
+													'surecart'
+												)}{' '}
+											</li>
+										</ol>
+									</div>
+								}
+								slot="label-end"
+								position="top left"
+								width="400px"
+							>
+								<ScIcon
+									slot="label-end"
+									name="info"
+									style={{ opacity: '0.5' }}
+								/>
+							</HelpTooltip>
+							<ScTextarea
+								value={zonePostalCodes?.join('\n')}
+								placeholder={__(
+									'Add one postal code per line',
+									'surecart'
+								)}
+								onScInput={(e) =>
+									onPostalCodeChange(e.target.value)
+								}
+								rows="3"
+								columns="25"
+								maxLength={500}
 							/>
 						</ScFormControl>
 					</ScFlex>
@@ -217,7 +323,6 @@ export default ({
 			}}
 			style={{
 				'--width': '38rem',
-				'--dialog-body-overflow': 'visible',
 				...(!isEdit
 					? { '--body-spacing': 'var(--sc-spacing-xx-large)' }
 					: {}),

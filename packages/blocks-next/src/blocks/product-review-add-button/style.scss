@@ -1,0 +1,12 @@
+.wp-block-surecart-product-review-add-button {
+	gap: var(--wp--preset--spacing--30);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	&.is-style-outline.wp-block-button__link {
+		background-color: transparent;
+		border: 2px solid var(--sc-color-primary-500, currentColor);
+		color: var(--sc-color-primary-500, currentColor);
+	}
+}

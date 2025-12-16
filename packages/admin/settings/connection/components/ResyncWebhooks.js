@@ -2,7 +2,7 @@
 import { css, jsx } from '@emotion/core';
 import { ScAlert, ScButton, ScIcon } from '@surecart/components-react';
 import { store as noticesStore } from '@wordpress/notices';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 import apiFetch from '@wordpress/api-fetch';
 import { useDispatch } from '@wordpress/data';
 import { useState } from '@wordpress/element';

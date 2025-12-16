@@ -4,12 +4,14 @@ namespace SureCart\Models;
 use ArrayAccess;
 use JsonSerializable;
 use SureCart\Models\Traits\SyncsCustomer;
+use WP_Error;
 
 /**
  * User class.
  */
 class User implements ArrayAccess, JsonSerializable {
 	use SyncsCustomer;
+
 	/**
 	 * Holds the user.
 	 *
@@ -87,7 +89,7 @@ class User implements ArrayAccess, JsonSerializable {
 		$live_customer = current(
 			array_filter(
 				$customers,
-				function( $customer ) {
+				function ( $customer ) {
 					return $customer->live_mode;
 				}
 			)
@@ -96,7 +98,7 @@ class User implements ArrayAccess, JsonSerializable {
 		$test_customer = current(
 			array_filter(
 				$customers,
-				function( $customer ) {
+				function ( $customer ) {
 					return ! $customer->live_mode;
 				}
 			)
@@ -223,6 +225,47 @@ class User implements ArrayAccess, JsonSerializable {
 	}
 
 	/**
+	 * Get or create the live customer for this user.
+	 *
+	 * @return string|null|WP_Error
+	 */
+	protected function getLiveCustomer() {
+		$customer_id = $this->customerId( 'live' );
+
+		if ( ! empty( $customer_id ) ) {
+			return $customer_id;
+		}
+
+		$customer = Customer::create(
+			[
+				'name'      => $this->user->display_name,
+				'email'     => strtolower( $this->user->user_email ),
+				'live_mode' => true,
+			],
+			false
+		);
+
+		if ( is_wp_error( $customer ) ) {
+			return $customer;
+		}
+
+		$customer_id = $customer->id ?? null;
+		if ( empty( $customer_id ) ) {
+			return new WP_Error(
+				'sc_no_customer_created',
+				__( 'Sorry, no customer is being created, please contact with admin.', 'surecart' )
+			);
+		}
+
+		$linked = $this->setCustomerId( $customer_id, 'live' );
+		if ( is_wp_error( $linked ) ) {
+			return $linked;
+		}
+
+		return $customer_id;
+	}
+
+	/**
 	 * Disallow overriding the constructor in child classes and make the code safe that way.
 	 */
 	final public function __construct() {
@@ -254,11 +297,13 @@ class User implements ArrayAccess, JsonSerializable {
 	 */
 	protected function login() {
 		if ( empty( $this->user->ID ) ) {
-			return new \Error( 'not_found', esc_html__( 'This user could not be found.', 'surecart' ) );
+			return new WP_Error( 'not_found', esc_html__( 'This user could not be found.', 'surecart' ) );
 		}
 
 		clean_user_cache( $this->user->ID );
-		wp_clear_auth_cookie();
+		if ( class_exists( \WP_Session_Tokens::class ) ) {
+			\WP_Session_Tokens::get_instance( $this->user->ID )->destroy_all();
+		}
 		wp_set_current_user( $this->user->ID );
 		wp_set_auth_cookie( $this->user->ID );
 		update_user_caches( $this->user );
@@ -539,7 +584,7 @@ class User implements ArrayAccess, JsonSerializable {
 	 * @param  mixed $offset Name.
 	 * @return void
 	 */
-	public function offsetUnset( $offset ) : void {
+	public function offsetUnset( $offset ): void {
 		$this->user->$offset = null;
 	}
 

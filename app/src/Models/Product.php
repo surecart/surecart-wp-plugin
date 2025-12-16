@@ -1003,6 +1003,10 @@ class Product extends Model implements PageModel {
 								$attachment->setMetadata( 'variant_option', $item->variant_option ?? null );
 								$attachment->setMetadata( 'thumbnail_image', $item->thumbnail_image ?? null );
 								$attachment->setMetadata( 'aspect_ratio', $item->aspect_ratio ?? null );
+								$attachment->setMetadata( 'controls', $item->controls ?? true );
+								$attachment->setMetadata( 'autoplay', $item->autoplay ?? false );
+								$attachment->setMetadata( 'loop', $item->loop ?? false );
+								$attachment->setMetadata( 'muted', $item->muted ?? false );
 							}
 
 							return $attachment;
@@ -1144,7 +1148,7 @@ class Product extends Model implements PageModel {
 				'checkoutUrl'     => \SureCart::pages()->url( 'checkout' ),
 				'variant_options' => $this->variant_options->data ?? [],
 				'variants'        => $this->variants->data ?? [],
-				'selectedVariant' => $this->first_variant_with_stock ?? null,
+				'selectedVariant' => $this->initial_variant ?? null,
 				'isProductPage'   => ! empty( get_query_var( 'surecart_current_product' )->id ),
 			]
 		);
