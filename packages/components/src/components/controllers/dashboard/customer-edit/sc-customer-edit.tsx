@@ -89,7 +89,7 @@ export class ScCustomerEdit {
         this.loading = false;
       }
     } catch (e) {
-      this.error = e?.message || __('Something went wrong', 'surecart');
+      this.error = e?.additional_errors?.length ? e.additional_errors.map(err => err.message).join(', ') : e?.message || __('Something went wrong', 'surecart');
       this.loading = false;
     }
   }
