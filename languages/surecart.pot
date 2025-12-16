@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-12-08T17:19:32+00:00\n"
+"POT-Creation-Date: 2025-12-16T15:09:51+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.9.0\n"
 
@@ -263,7 +263,7 @@ msgstr ""
 #: src/Integrations/Bricks/Elements/Product.php:87
 #: src/Integrations/Bricks/Elements/ProductCard.php:198
 #: src/Integrations/Elementor/Widgets/PriceChooser.php:88
-#: src/WordPress/Shortcodes/ShortcodesServiceProvider.php:200
+#: src/WordPress/Shortcodes/ShortcodesServiceProvider.php:208
 #: web/buy-template.php:25
 #: products/components/price/parts/PaymentType.js:144
 #: products/modules/Prices/index.js:59
@@ -2316,7 +2316,7 @@ msgid "Downloads"
 msgstr ""
 
 #: src/Controllers/Web/DashboardController.php:212
-#: src/Models/User.php:257
+#: src/Models/User.php:258
 msgid "This user could not be found."
 msgstr ""
 
@@ -2421,7 +2421,7 @@ msgstr ""
 #: src/WordPress/PluginActionLinksService.php:46
 #: layouts/partials/admin-settings-header.php:83
 #: invoices/modules/Tax/index.js:52
-#: products/modules/Media/EditMedia.js:268
+#: products/modules/Media/EditMedia.js:266
 #: Blocks/CartMenuButton/edit.js:31
 #: Blocks/StoreLogo/edit.js:150
 #: src/blocks/cart-line-item-remove/edit.js:30
@@ -2660,8 +2660,8 @@ msgstr ""
 #: src/Integrations/Bricks/Elements/BuyButton.php:273
 #: src/Integrations/Elementor/Widgets/AddToCartButton.php:28
 #: src/Integrations/Elementor/Widgets/AddToCartButton.php:64
-#: src/WordPress/Shortcodes/ShortcodesServiceProvider.php:226
-#: src/WordPress/Shortcodes/ShortcodesServiceProvider.php:246
+#: src/WordPress/Shortcodes/ShortcodesServiceProvider.php:234
+#: src/WordPress/Shortcodes/ShortcodesServiceProvider.php:254
 #: src/blocks/product-buy-buttons/edit.js:49
 msgid "Add To Cart"
 msgstr ""
@@ -2865,7 +2865,7 @@ msgstr ""
 
 #: src/Integrations/Bricks/Elements/CartMenuIcon.php:121
 #: src/Integrations/Elementor/Widgets/CartMenuIcon.php:381
-#: src/blocks/cart-menu-button/view.php:21
+#: src/blocks/cart-menu-button/view.php:20
 msgid "Open cart"
 msgstr ""
 
@@ -3384,7 +3384,7 @@ msgstr ""
 #: src/Integrations/Bricks/Elements/SelectedPriceAdHocAmount.php:73
 #: src/Integrations/Elementor/Widgets/SelectedPriceAdHocAmount.php:85
 #: src/Integrations/Elementor/Widgets/SelectedPriceAdHocAmount.php:86
-#: src/WordPress/Shortcodes/ShortcodesServiceProvider.php:261
+#: src/WordPress/Shortcodes/ShortcodesServiceProvider.php:269
 msgid "Enter an amount"
 msgstr ""
 
@@ -3415,7 +3415,7 @@ msgid "Product Variant Pills"
 msgstr ""
 
 #: src/Integrations/Bricks/Elements/VariantPills.php:79
-#: products/modules/Media/EditMedia.js:350
+#: products/modules/Media/EditMedia.js:348
 msgid "Variation"
 msgstr ""
 
@@ -4776,6 +4776,10 @@ msgstr ""
 msgid "You have already set up your store."
 msgstr ""
 
+#: src/Models/ProvisionalAccount.php:58
+msgid "Store name must be at least 3 characters long. Please choose a different name for your store."
+msgstr ""
+
 #: src/Models/Referral.php:169
 msgid "Cancelled"
 msgstr ""
@@ -4787,7 +4791,7 @@ msgid_plural "%d payments remaining"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Models/User.php:191
+#: src/Models/User.php:192
 msgid "This user is already linked to a customer."
 msgstr ""
 
@@ -6330,407 +6334,417 @@ msgid "One of these products is no longer purchaseable."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:17
-#: src/Support/Errors/Translations/codes.php:91
+#: src/Support/Errors/Translations/codes.php:95
 msgid "Please fill out your address."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:18
-msgid "Please select a customer."
+#: src/Support/Errors/Translations/codes.php:20
+msgid "This postal code does not match the format required for the selected country. Please enter a valid postal code for shipping."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:19
-msgid "Some items in your cart have reached their purchase limit. Please update your order to continue."
-msgstr ""
-
-#: src/Support/Errors/Translations/codes.php:20
-msgid "This download cannot be removed or archived when it is set as the current release."
-msgstr ""
-
 #: src/Support/Errors/Translations/codes.php:21
-msgid "The refund amount is greater than the refundable amount."
+msgid "This postal code does not match the format required for the selected country. Please enter a valid postal code for billing."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:22
-msgid "This payment method cannot be used for subscriptions."
+msgid "Please select a customer."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:23
-msgid "The payment method is not valid (chargeable fingerprint blank). Please double-check it and try again."
+msgid "Some items in your cart have reached their purchase limit. Please update your order to continue."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:24
-msgid "You cannot add a one-time product to a subscription."
+msgid "This download cannot be removed or archived when it is set as the current release."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:25
-msgid "The price cannot be blank."
+msgid "The refund amount is greater than the refundable amount."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:26
-msgid "The compare at price must be greater than the price."
+msgid "This payment method cannot be used for subscriptions."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:27
-msgid "A price with this currency and recurring interval already exists. Please create a new product to create this price."
+msgid "The payment method is not valid (chargeable fingerprint blank). Please double-check it and try again."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:28
-msgid "This promotion code already exists. Please archive the old code or use a different code."
+msgid "You cannot add a one-time product to a subscription."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:29
-msgid "There are no processors to make the payment. Please contact us for assistance."
+msgid "The price cannot be blank."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:30
-msgid "This product has prices that are currently being used. Please archive the product instead if it is not already archived."
+msgid "The compare at price must be greater than the price."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:31
-msgid "The product image must be an image."
+msgid "A price with this currency and recurring interval already exists. Please create a new product to create this price."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:32
-msgid "Please enter a valid tax number."
+msgid "This promotion code already exists. Please archive the old code or use a different code."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:33
-msgid "The prices in this checkout session have changed. Please recheck it before submitting again."
+msgid "There are no processors to make the payment. Please contact us for assistance."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:34
-msgid "This coupon code is invalid."
+msgid "This product has prices that are currently being used. Please archive the product instead if it is not already archived."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:35
-msgid "This discount is not redeemable."
+msgid "The product image must be an image."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:36
-msgid "You cannot enable abandoned checkouts until you have updated your business contact address. Please add an address to your store branding."
+msgid "Please enter a valid tax number."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:37
-msgid "Your postal code is not valid."
+msgid "The prices in this checkout session have changed. Please recheck it before submitting again."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:38
-msgid "Please enter additional shipping address information."
+msgid "This coupon code is invalid."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:39
-msgid "This coupon has expired."
+msgid "This discount is not redeemable."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:40
-msgid "This discount code does not apply to this currency."
+msgid "You cannot enable abandoned checkouts until you have updated your business contact address. Please add an address to your store branding."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:41
-msgid "This is not a valid coupon code"
+msgid "Your postal code is not valid."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:42
-msgid "This address cannot be removed if customer has active subscriptions."
+msgid "Please enter additional shipping address information."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:43
-msgid "Please double-check your prefix does not contain any spaces, underscores, dashes or special characters."
+msgid "This coupon has expired."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:44
-msgid "This prefix is too long. Please enter a shorter prefix."
+msgid "This discount code does not apply to this currency."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:45
-msgid "This prefix is too short. Please enter a longer prefix."
+msgid "This is not a valid coupon code"
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:46
-msgid "You can only apply this offer once."
+msgid "This address cannot be removed if customer has active subscriptions."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:47
-msgid "This product is no longer purchaseable."
+msgid "Please double-check your prefix does not contain any spaces, underscores, dashes or special characters."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:48
-msgid "This price is currently being used in subscriptions or checkout sessions. Please archive the price and create another one."
+msgid "This prefix is too long. Please enter a shorter prefix."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:49
-msgid "The maximum price must be smaller."
+msgid "This prefix is too short. Please enter a longer prefix."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:50
-msgid "The minimum price must be smaller."
+msgid "You can only apply this offer once."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:51
-msgid "The maximum price must be greater than the minimum price."
+msgid "This product is no longer purchaseable."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:52
-msgid "You are already collecting tax for this zone."
+msgid "This price is currently being used in subscriptions or checkout sessions. Please archive the price and create another one."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:53
-msgid "You cannot enable EU Micro Exemption if your address is outside of the EU."
+msgid "The maximum price must be smaller."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:54
-msgid "You cannot enable taxes unless a valid tax address is provided"
+msgid "The minimum price must be smaller."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:55
-msgid "You cannot delete this media item because it is currently being used."
+msgid "The maximum price must be greater than the minimum price."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:56
-msgid "This file type is not supported."
+msgid "You are already collecting tax for this zone."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:57
-msgid "Your storage limit has been reached. Please remove some media items before adding more."
+msgid "You cannot enable EU Micro Exemption if your address is outside of the EU."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:58
-msgid "You have already requested a code in the last 60 seconds. Please wait before requesting again."
+msgid "You cannot enable taxes unless a valid tax address is provided"
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:59
-msgid "This option name is already taken. Please use a different name."
+msgid "You cannot delete this media item because it is currently being used."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:60
-msgid "You have reached the maximum number of options for this product."
+msgid "This file type is not supported."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:61
-msgid "This name is already taken. Please choose another name."
+msgid "Your storage limit has been reached. Please remove some media items before adding more."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:62
-msgid "The name cannot be blank."
+msgid "You have already requested a code in the last 60 seconds. Please wait before requesting again."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:63
-msgid "This URL part is already taken. Please choose another URL part."
+msgid "This option name is already taken. Please use a different name."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:64
-msgid "We don't currently ship to your address."
+msgid "You have reached the maximum number of options for this product."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:65
-msgid "The shipping method name is already in use ."
+msgid "This name is already taken. Please choose another name."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:66
-msgid "The shipping profile name cannot be blank."
+msgid "The name cannot be blank."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:67
-msgid "The shipping profile name is too long. Please enter a shorter name."
+msgid "This URL part is already taken. Please choose another URL part."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:68
-msgid "The shipping zone name cannot be blank."
+msgid "We don't currently ship to your address."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:69
-msgid "The shipping zone name is already in use."
+msgid "The shipping method name is already in use ."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:70
-msgid "The shipping zone name is too long. Please enter a shorter name."
+msgid "The shipping profile name cannot be blank."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:71
-msgid "The selected countries are already used in another shipping zone."
+msgid "The shipping profile name is too long. Please enter a shorter name."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:72
-msgid "The selected countries are not valid."
+msgid "The shipping zone name cannot be blank."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:73
-msgid "The shipping method name cannot be blank."
+msgid "The shipping zone name is already in use."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:74
-msgid "The shipping method name is too long. Please enter a shorter name."
+msgid "The shipping zone name is too long. Please enter a shorter name."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:75
-msgid "The shipping method description is too long. Please enter a shorter description."
+msgid "The selected countries are already used in another shipping zone."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:76
-msgid "The shipping rate type cannot be blank."
+msgid "The selected countries are not valid."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:77
-msgid "The shipping rate type is not valid."
+msgid "The shipping method name cannot be blank."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:78
-msgid "The shipping weight unit cannot be blank."
+msgid "The shipping method name is too long. Please enter a shorter name."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:79
-msgid "The shipping weight unit is not valid."
+msgid "The shipping method description is too long. Please enter a shorter description."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:80
-msgid "The shipping method cannot be blank."
+msgid "The shipping rate type cannot be blank."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:81
-msgid "The maximum weight must be greater than or equal to the minimum weight."
+msgid "The shipping rate type is not valid."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:82
-msgid "The maximum weight must be a number."
+msgid "The shipping weight unit cannot be blank."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:83
-msgid "The minimum weight must be greater than or equal to zero."
+msgid "The shipping weight unit is not valid."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:84
-msgid "The minimum weight must be a number."
+msgid "The shipping method cannot be blank."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:85
-msgid "The maximum amount must be greater than or equal to the minimum amount."
+msgid "The maximum weight must be greater than or equal to the minimum weight."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:86
-msgid "The maximum amount must be a number."
+msgid "The maximum weight must be a number."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:87
-msgid "The minimum amount must be greater than or equal to zero."
+msgid "The minimum weight must be greater than or equal to zero."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:88
-msgid "The minimum amount must be a number."
+msgid "The minimum weight must be a number."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:89
-msgid "This coupon is not applicable to this subscription."
+msgid "The maximum amount must be greater than or equal to the minimum amount."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:90
-msgid "The renewal date should be greater than or equal to the subscription end date."
+msgid "The maximum amount must be a number."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:91
+msgid "The minimum amount must be greater than or equal to zero."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:92
+msgid "The minimum amount must be a number."
+msgstr ""
+
 #: src/Support/Errors/Translations/codes.php:93
-msgid "This payment method is not valid or reusable."
+msgid "This coupon is not applicable to this subscription."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:94
-msgid "This payment method cannot be deleted because there are no other valid or reusable saved payment methods available."
-msgstr ""
-
-#: src/Support/Errors/Translations/codes.php:95
-msgid "There are no applicable referrals for this payout."
+msgid "The renewal date should be greater than or equal to the subscription end date."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:96
-#: src/Support/Errors/Translations/codes.php:98
-msgid "You have exceeded the purchase limit for this product."
+#: src/Support/Errors/Translations/codes.php:97
+msgid "This payment method is not valid or reusable."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:97
-msgid "This amount is outside the allowed amount."
+#: src/Support/Errors/Translations/codes.php:98
+msgid "This payment method cannot be deleted because there are no other valid or reusable saved payment methods available."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:99
-msgid "This product is out of stock."
+msgid "There are no applicable referrals for this payout."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:100
-#: src/Support/Errors/Translations/codes.php:101
-msgid "This product is no longer available for purchase."
+#: src/Support/Errors/Translations/codes.php:102
+msgid "You have exceeded the purchase limit for this product."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:102
+#: src/Support/Errors/Translations/codes.php:101
+msgid "This amount is outside the allowed amount."
+msgstr ""
+
 #: src/Support/Errors/Translations/codes.php:103
-msgid "The currency of this product's price is different from the store currency."
+msgid "This product is out of stock."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:104
-msgid "The quantity returned is greater than the quantity fulfilled."
-msgstr ""
-
 #: src/Support/Errors/Translations/codes.php:105
-msgid "This email is already in use."
+msgid "This product is no longer available for purchase."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:106
-msgid "This upsell has already been applied."
-msgstr ""
-
 #: src/Support/Errors/Translations/codes.php:107
-msgid "This upsell has expired."
+msgid "The currency of this product's price is different from the store currency."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:108
-msgid "This product cannot be updated as it is locked and not allowed to be changed."
+msgid "The quantity returned is greater than the quantity fulfilled."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:109
-msgid "Please select an initial upsell offer."
+msgid "This email is already in use."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:110
-msgid "The affiliate request's name cannot be blank."
+msgid "This upsell has already been applied."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:111
-msgid "The affiliate request's email cannot be blank."
+msgid "This upsell has expired."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:112
-msgid "The affiliate request's bio cannot be blank."
+msgid "This product cannot be updated as it is locked and not allowed to be changed."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:113
-msgid "The affiliate request's email is already in use."
+msgid "Please select an initial upsell offer."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:114
-msgid "Affiliate commission already exists for this product. Please choose a different product."
+msgid "The affiliate request's name cannot be blank."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:115
-msgid "No affiliates have earned more than the minimum commission amount within the selected date range."
+msgid "The affiliate request's email cannot be blank."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:116
-msgid "Please add a valid payment method to enable automatic collection."
+msgid "The affiliate request's bio cannot be blank."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:117
-msgid "This invoice is in draft status and cannot be paid yet. Please contact support or wait for it to be finalized."
+msgid "The affiliate request's email is already in use."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:118
-msgid "The due date must be greater than or equal to the issue date."
+msgid "Affiliate commission already exists for this product. Please choose a different product."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:119
-msgid "The memo is too long. Please enter a shorter memo. Maximum allowed length is 1000 characters."
+msgid "No affiliates have earned more than the minimum commission amount within the selected date range."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:120
-msgid "The footer is too long. Please enter a shorter footer. Maximum allowed length is 1000 characters."
+msgid "Please add a valid payment method to enable automatic collection."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:121
+msgid "This invoice is in draft status and cannot be paid yet. Please contact support or wait for it to be finalized."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:122
+msgid "The due date must be greater than or equal to the issue date."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:123
+msgid "The memo is too long. Please enter a shorter memo. Maximum allowed length is 1000 characters."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:124
+msgid "The footer is too long. Please enter a shorter footer. Maximum allowed length is 1000 characters."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:125
 msgid "This price swap would create a loop. Please select a different swap option."
 msgstr ""
 
@@ -8327,11 +8341,11 @@ msgid "Invalid recaptcha score. Please try again."
 msgstr ""
 
 #. translators: %s: shortcode name
-#: src/WordPress/Shortcodes/ShortcodesService.php:66
+#: src/WordPress/Shortcodes/ShortcodesService.php:42
 msgid "Please visit the frontend of your page builder to view the %s shortcode contents."
 msgstr ""
 
-#: src/WordPress/Shortcodes/ShortcodesServiceProvider.php:344
+#: src/WordPress/Shortcodes/ShortcodesServiceProvider.php:352
 msgid "This form is not available or has been deleted."
 msgstr ""
 
@@ -8719,7 +8733,7 @@ msgstr[1] ""
 #: orders/modules/Fulfillment/CreateFulfillment.js:329
 #: orders/modules/MetaDataModal.js:150
 #: orders/modules/OrderStatusConfirmModal.js:73
-#: orders/modules/Refund/CreateRefund.js:456
+#: orders/modules/Refund/CreateRefund.js:467
 #: orders/modules/ReturnRequest/CreateReturnRequest.js:284
 #: orders/modules/TaxInfo/EditTaxInfo.js:109
 #: product-collections/components/SelectTemplate/create-modal.js:87
@@ -8737,7 +8751,7 @@ msgstr[1] ""
 #: products/modules/Collection/NewCollection.js:89
 #: products/modules/integrations/NewIntegration.js:238
 #: products/modules/Inventory/StockAdjustmentModal.js:134
-#: products/modules/Media/EditMedia.js:400
+#: products/modules/Media/EditMedia.js:398
 #: products/modules/Prices/NewPrice/index.js:214
 #: products/modules/Prices/Price/index.js:320
 #: products/modules/Upgrades.js:130
@@ -9507,7 +9521,7 @@ msgstr ""
 #: affiliation-referrals/modules/Affiliation.js:104
 #: affiliations/modules/affiliation-products/Product.js:104
 #: bumps/modules/Price.js:52
-#: products/modules/Media/EditMedia.js:212
+#: products/modules/Media/EditMedia.js:210
 #: subscriptions/edit/modules/Price.js:68
 #: subscriptions/show/modules/CurrentPlan.js:155
 #: upsell-funnels/modules/Upsell/Product.js:88
@@ -9591,7 +9605,7 @@ msgstr ""
 
 #: affiliation-referrals/modules/Summary.js:9
 #: coupons/Sidebar.js:52
-#: orders/modules/Refund/CreateRefund.js:278
+#: orders/modules/Refund/CreateRefund.js:289
 #: subscriptions/edit/modules/UpcomingPeriod.js:94
 #: Blocks/Totals/edit.js:145
 msgid "Summary"
@@ -9602,7 +9616,7 @@ msgid "Creation Mode"
 msgstr ""
 
 #: affiliation-referrals/modules/Summary.js:18
-#: orders/modules/Refund/CreateRefund.js:349
+#: orders/modules/Refund/CreateRefund.js:360
 #: settings/tax-region/RegistrationForm.js:246
 msgid "Manual"
 msgstr ""
@@ -10649,7 +10663,7 @@ msgstr ""
 
 #: components/data-tables/charges-data-table/index.js:72
 #: orders/modules/LineItems/index.js:208
-#: orders/modules/Refund/CreateRefund.js:453
+#: orders/modules/Refund/CreateRefund.js:464
 #: orders/Order.js:242
 #: settings/customer/CustomerSettings.js:450
 #: store/add-entities.js:302
@@ -12680,59 +12694,59 @@ msgstr ""
 msgid "Attempt"
 msgstr ""
 
-#: orders/modules/Refund/CreateRefund.js:81
+#: orders/modules/Refund/CreateRefund.js:87
 msgid "Some items in this order have been removed or added to a return."
 msgstr ""
 
-#: orders/modules/Refund/CreateRefund.js:85
+#: orders/modules/Refund/CreateRefund.js:91
 msgid "All items in this order have been refunded."
 msgstr ""
 
-#: orders/modules/Refund/CreateRefund.js:157
+#: orders/modules/Refund/CreateRefund.js:168
 msgid "We were unable to issue a refund with this payment processor. Please check with your payment processor and try issuing the refund directly through the processor."
 msgstr ""
 
-#: orders/modules/Refund/CreateRefund.js:233
+#: orders/modules/Refund/CreateRefund.js:244
 msgid "Refund item(s)"
 msgstr ""
 
-#: orders/modules/Refund/CreateRefund.js:249
+#: orders/modules/Refund/CreateRefund.js:260
 msgid "Reason for refund"
 msgstr ""
 
-#: orders/modules/Refund/CreateRefund.js:258
+#: orders/modules/Refund/CreateRefund.js:269
 msgid "Select a reason"
 msgstr ""
 
-#: orders/modules/Refund/CreateRefund.js:282
+#: orders/modules/Refund/CreateRefund.js:293
 msgid "No items selected."
 msgstr ""
 
-#: orders/modules/Refund/CreateRefund.js:289
+#: orders/modules/Refund/CreateRefund.js:300
 msgid "Items subtotal"
 msgstr ""
 
-#: orders/modules/Refund/CreateRefund.js:321
+#: orders/modules/Refund/CreateRefund.js:332
 msgid "Refund Amount"
 msgstr ""
 
-#: orders/modules/Refund/CreateRefund.js:339
+#: orders/modules/Refund/CreateRefund.js:350
 msgid "Refunds can take 5-10 days to appear on a customer's statement. Processing fees are typically not returned."
 msgstr ""
 
-#: orders/modules/Refund/CreateRefund.js:365
+#: orders/modules/Refund/CreateRefund.js:376
 msgid "Available for refund: "
 msgstr ""
 
-#: orders/modules/Refund/CreateRefund.js:387
+#: orders/modules/Refund/CreateRefund.js:398
 msgid "Adjust referral commission"
 msgstr ""
 
-#: orders/modules/Refund/CreateRefund.js:398
+#: orders/modules/Refund/CreateRefund.js:409
 msgid "Enable this to automatically adjust the referral commission in proportion to the refund amount."
 msgstr ""
 
-#: orders/modules/Refund/CreateRefund.js:425
+#: orders/modules/Refund/CreateRefund.js:436
 msgid "Refund Payment"
 msgstr ""
 
@@ -13945,72 +13959,72 @@ msgstr ""
 msgid "Please select a media item."
 msgstr ""
 
-#: products/modules/Media/EditMedia.js:134
+#: products/modules/Media/EditMedia.js:132
 msgid "An error occurred while updating media."
 msgstr ""
 
-#: products/modules/Media/EditMedia.js:168
+#: products/modules/Media/EditMedia.js:166
 msgid "Edit Media"
 msgstr ""
 
-#: products/modules/Media/EditMedia.js:196
+#: products/modules/Media/EditMedia.js:194
 #: products/modules/Media/index.js:102
 #: store/add-entities.js:181
 msgid "Media"
 msgstr ""
 
-#: products/modules/Media/EditMedia.js:240
+#: products/modules/Media/EditMedia.js:238
 #: Blocks/ProductItemImage/aspect-ratio-dropdown.js:40
 #: Blocks/ProductItemImage/edit.js:84
 msgid "Aspect Ratio"
 msgstr ""
 
-#: products/modules/Media/EditMedia.js:241
+#: products/modules/Media/EditMedia.js:239
 msgid "The aspect ratio of the media."
 msgstr ""
 
-#: products/modules/Media/EditMedia.js:247
+#: products/modules/Media/EditMedia.js:245
 msgid "Select aspect ratio"
 msgstr ""
 
-#: products/modules/Media/EditMedia.js:288
+#: products/modules/Media/EditMedia.js:286
 msgid "Autoplay"
 msgstr ""
 
-#: products/modules/Media/EditMedia.js:292
+#: products/modules/Media/EditMedia.js:290
 msgid "Autoplay may cause usability issues for some users."
 msgstr ""
 
-#: products/modules/Media/EditMedia.js:308
+#: products/modules/Media/EditMedia.js:306
 msgid "Loop"
 msgstr ""
 
-#: products/modules/Media/EditMedia.js:321
+#: products/modules/Media/EditMedia.js:319
 msgid "Muted"
 msgstr ""
 
-#: products/modules/Media/EditMedia.js:324
+#: products/modules/Media/EditMedia.js:322
 msgid "Muted because of Autoplay."
 msgstr ""
 
-#: products/modules/Media/EditMedia.js:340
+#: products/modules/Media/EditMedia.js:338
 msgid "Playback controls"
 msgstr ""
 
-#: products/modules/Media/EditMedia.js:353
+#: products/modules/Media/EditMedia.js:351
 msgid "Option"
 msgstr ""
 
-#: products/modules/Media/EditMedia.js:354
+#: products/modules/Media/EditMedia.js:352
 msgid "Display only when this variant option is selected."
 msgstr ""
 
-#: products/modules/Media/EditMedia.js:362
-#: products/modules/Media/EditMedia.js:370
+#: products/modules/Media/EditMedia.js:360
+#: products/modules/Media/EditMedia.js:368
 msgid "(All Variations)"
 msgstr ""
 
-#: products/modules/Media/EditMedia.js:397
+#: products/modules/Media/EditMedia.js:395
 #: products/modules/Prices/Price/BuyLink.js:131
 #: products/modules/Variations/EditVariant.js:203
 #: products/modules/Variations/VariantOption.js:226
@@ -15347,7 +15361,7 @@ msgid "Remove SureCart Branding"
 msgstr ""
 
 #: settings/brand/BrandSettings.js:205
-msgid "Remove \"Powered By SureCart\" in the footer of emails and reciepts/invoices."
+msgid "Remove \"Powered By SureCart\" in the footer of emails and receipts/invoices."
 msgstr ""
 
 #: settings/brand/BrandSettings.js:218
@@ -15390,7 +15404,7 @@ msgstr ""
 #: settings/brand/components/CartSettings.js:205
 #: Blocks/CartMenuButton/edit.js:71
 #: src/blocks/cart-menu-button/edit.js:88
-msgid "Enable to always show the cart button, even your cart is empty."
+msgid "Enable to always show the cart button, even when your cart is empty."
 msgstr ""
 
 #: settings/brand/components/CartSettings.js:256
@@ -22187,14 +22201,14 @@ msgstr ""
 msgid "Use setting"
 msgstr ""
 
-#: src/blocks/currency-switcher/view.php:53
+#: src/blocks/currency-switcher/view.php:58
+msgid "Select Currency"
+msgstr ""
+
+#: src/blocks/currency-switcher/view.php:90
 #: src/blocks/product-list-filter/view.php:23
 #: src/blocks/product-list-sort/view.php:23
 msgid "Press the arrow keys then enter to make a selection."
-msgstr ""
-
-#: src/blocks/currency-switcher/view.php:61
-msgid "Select Currency"
 msgstr ""
 
 #. translators: %1$s: amount.
