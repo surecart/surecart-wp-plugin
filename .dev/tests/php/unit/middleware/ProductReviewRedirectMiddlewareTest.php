@@ -61,281 +61,213 @@ class ProductReviewRedirectMiddlewareTest extends SureCartUnitTestCase {
 	 * Test that middleware passes to next when product_id is missing.
 	 */
 	public function test_should_pass_to_next_when_product_id_is_missing() {
-		$request = Mockery::mock(RequestInterface::class);
-		$request->shouldReceive('query')
-			->with('product_id')
-			->andReturn(null);
-		$request->shouldReceive('query')
-			->with('context')
-			->andReturn('customer.order.solicit_reviews');
+		$request = Mockery::mock( RequestInterface::class );
+		$request->shouldReceive('query')->with('product_id')->andReturn( null );
+		$request->shouldReceive('query')->with('context')->andReturn('customer.order.solicit_reviews');
 
 		$next_called = false;
-		$next = function ($req) use (&$next_called) {
+		$next        = function ( $req ) use ( &$next_called ) {
 			$next_called = true;
 			return 'next_response';
 		};
 
-		$response = $this->middleware->handle($request, $next);
+		$response = $this->middleware->handle( $request, $next );
 
-		$this->assertTrue($next_called, 'Next middleware should be called when product_id is missing');
-		$this->assertSame('next_response', $response);
+		$this->assertTrue( $next_called );
+		$this->assertSame( 'next_response', $response );
 	}
 
 	/**
 	 * Test that middleware passes to next when context is missing.
 	 */
 	public function test_should_pass_to_next_when_context_is_missing() {
-		$request = Mockery::mock(RequestInterface::class);
-		$request->shouldReceive('query')
-			->with('product_id')
-			->andReturn('123');
-		$request->shouldReceive('query')
-			->with('context')
-			->andReturn(null);
+		$request = Mockery::mock( RequestInterface::class );
+		$request->shouldReceive('query')->with('product_id')->andReturn( '123' );
+		$request->shouldReceive('query')->with('context')->andReturn( null );
 
 		$next_called = false;
-		$next = function ($req) use (&$next_called) {
+		$next        = function ( $req ) use ( &$next_called ) {
 			$next_called = true;
 			return 'next_response';
 		};
 
-		$response = $this->middleware->handle($request, $next);
+		$response = $this->middleware->handle( $request, $next );
 
-		$this->assertTrue($next_called, 'Next middleware should be called when context is missing');
-		$this->assertSame('next_response', $response);
+		$this->assertTrue( $next_called );
+		$this->assertSame( 'next_response', $response );
 	}
 
 	/**
 	 * Test that middleware passes to next when context is incorrect.
 	 */
 	public function test_should_pass_to_next_when_context_is_incorrect() {
-		$request = Mockery::mock(RequestInterface::class);
-		$request->shouldReceive('query')
-			->with('product_id')
-			->andReturn('123');
-		$request->shouldReceive('query')
-			->with('context')
-			->andReturn('some.other.context');
+		$request = Mockery::mock( RequestInterface::class );
+		$request->shouldReceive('query')->with('product_id')->andReturn( '123' );
+		$request->shouldReceive('query')->with('context')->andReturn('some.other.context');
 
 		$next_called = false;
-		$next = function ($req) use (&$next_called) {
+		$next        = function ( $req ) use ( &$next_called ) {
 			$next_called = true;
 			return 'next_response';
 		};
 
-		$response = $this->middleware->handle($request, $next);
+		$response = $this->middleware->handle( $request, $next );
 
-		$this->assertTrue($next_called, 'Next middleware should be called when context is incorrect');
-		$this->assertSame('next_response', $response);
+		$this->assertTrue( $next_called );
+		$this->assertSame( 'next_response', $response );
 	}
 
 	/**
 	 * Test that middleware passes to next when product doesn't exist.
 	 */
 	public function test_should_pass_to_next_when_product_does_not_exist() {
-		$request = Mockery::mock(RequestInterface::class);
-		$request->shouldReceive('query')
-			->with('product_id')
-			->andReturn('999999'); // Non-existent product ID
-		$request->shouldReceive('query')
-			->with('context')
-			->andReturn('customer.order.solicit_reviews');
+		$request = Mockery::mock( RequestInterface::class );
+		$request->shouldReceive('query')->with('product_id')->andReturn( '999999' );
+		$request->shouldReceive('query')->with('context')->andReturn('customer.order.solicit_reviews');
 
 		$next_called = false;
-		$next = function ($req) use (&$next_called) {
+		$next        = function ( $req ) use ( &$next_called ) {
 			$next_called = true;
 			return 'next_response';
 		};
 
-		$response = $this->middleware->handle($request, $next);
+		$response = $this->middleware->handle( $request, $next );
 
-		$this->assertTrue($next_called, 'Next middleware should be called when product does not exist');
-		$this->assertSame('next_response', $response);
+		$this->assertTrue( $next_called );
+		$this->assertSame( 'next_response', $response );
 	}
 
 	/**
 	 * Test that middleware passes to next when product has no post.
 	 */
 	public function test_should_pass_to_next_when_product_has_no_post() {
-		// Create a trashed product post to simulate no valid post
-		$post_id = self::factory()->post->create([
+		self::factory()->post->create([
 			'post_type'   => 'sc_product',
 			'post_status' => 'trash',
 			'post_title'  => 'Test Product',
 			'meta_input'  => [
-				'sc_id' => 'sc_test_product_123',
-				'product' => wp_json_encode([
-					'id'         => 'sc_test_product_123',
-					'name'       => 'Test Product',
-				]),
+				'sc_id'   => 'sc_test_product_123',
+				'product' => [
+					'id'   => 'sc_test_product_123',
+					'name' => 'Test Product',
+				],
 			],
 		]);
 
 		$request = Mockery::mock(RequestInterface::class);
-		$request->shouldReceive('query')
-			->with('product_id')
-			->andReturn('sc_test_product_123');
-		$request->shouldReceive('query')
-			->with('context')
-			->andReturn('customer.order.solicit_reviews');
+		$request->shouldReceive('query')->with('product_id')->andReturn('sc_test_product_123');
+		$request->shouldReceive('query')->with('context')->andReturn('customer.order.solicit_reviews');
 
 		$next_called = false;
-		$next = function ($req) use (&$next_called) {
+		$next        = function ( $req ) use ( &$next_called ) {
 			$next_called = true;
 			return 'next_response';
 		};
 
-		$response = $this->middleware->handle($request, $next);
+		$response = $this->middleware->handle( $request, $next );
 
-		$this->assertTrue($next_called, 'Next middleware should be called when product has no valid post');
-		$this->assertSame('next_response', $response);
-
-		// Clean up
-		wp_delete_post($post_id, true);
+		$this->assertTrue( $next_called );
+		$this->assertSame( 'next_response', $response );
 	}
 
 	/**
 	 * Test that middleware redirects to product review page when user is logged in.
 	 */
 	public function test_should_redirect_to_product_review_page_when_logged_in() {
-		// Create a test user and log them in
-		$user_id = self::factory()->user->create();
-		wp_set_current_user($user_id);
+		wp_set_current_user( self::factory()->user->create() );
 
-		// Create a product post
 		$post_id = self::factory()->post->create([
-			'post_type'   => 'sc_product',
+			'post_type'  => 'sc_product',
 			'post_status' => 'publish',
-			'post_title'  => 'Test Product',
-			'meta_input'  => [
-				'sc_id' => 'sc_test_product_456',
+			'meta_input' => [
+				'sc_id'   => 'sc_test_product_456',
 				'product' => [
-					'id'         => 'sc_test_product_456',
-					'name'       => 'Test Product',
+					'id'   => 'sc_test_product_456',
+					'name' => 'Test Product',
 				],
 			],
 		]);
 
-		$request = Mockery::mock(RequestInterface::class);
-		$request->shouldReceive('query')
-			->with('product_id')
-			->andReturn('sc_test_product_456');
-		$request->shouldReceive('query')
-			->with('context')
-			->andReturn('customer.order.solicit_reviews');
+		$request = Mockery::mock( RequestInterface::class );
+		$request->shouldReceive('query')->with('product_id')->andReturn('sc_test_product_456');
+		$request->shouldReceive('query')->with('context')->andReturn('customer.order.solicit_reviews');
 
-		$response = $this->middleware->handle($request, function ($req) {
-			return 'next_response';
-		});
+		$response = $this->middleware->handle( $request, fn( $req ) => 'next_response' );
 
-		$this->assertInstanceOf(RedirectResponse::class, $response, 'Should return RedirectResponse');
+		$this->assertInstanceOf( RedirectResponse::class, $response );
 
-		// Get the redirect URL from the Location header
-		$redirect_url = $response->getHeaderLine('Location');
-		$this->assertStringContainsString('product-review-form=' . $post_id, $redirect_url, 'Redirect URL should contain product-review-form query parameter');
-		$this->assertStringContainsString(get_permalink($post_id), $redirect_url, 'Redirect URL should contain product permalink');
-
-		// Clean up
-		wp_delete_post($post_id, true);
-		wp_delete_user($user_id);
+		$redirect_url = $response->getHeaderLine( 'Location' );
+		$this->assertStringContainsString( 'product-review-form=' . $post_id, $redirect_url );
+		$this->assertStringContainsString( get_permalink( $post_id ), $redirect_url );
 	}
 
 	/**
 	 * Test that middleware redirects to dashboard with redirect_to when user is not logged in.
 	 */
 	public function test_should_redirect_to_dashboard_with_redirect_to_when_not_logged_in() {
-		// Ensure no user is logged in
-		wp_set_current_user(0);
+		wp_set_current_user( 0 );
 
-		// Create a product post
 		$post_id = self::factory()->post->create([
-			'post_type'   => 'sc_product',
+			'post_type'  => 'sc_product',
 			'post_status' => 'publish',
-			'post_title'  => 'Test Product',
-			'meta_input'  => [
-				'sc_id' => 'sc_test_product_789',
+			'meta_input' => [
+				'sc_id'   => 'sc_test_product_789',
 				'product' => [
-					'id'         => 'sc_test_product_789',
-					'name'       => 'Test Product',
+					'id'   => 'sc_test_product_789',
+					'name' => 'Test Product',
 				],
 			],
 		]);
 
-		$request = Mockery::mock(RequestInterface::class);
-		$request->shouldReceive('query')
-			->with('product_id')
-			->andReturn('sc_test_product_789');
-		$request->shouldReceive('query')
-			->with('context')
-			->andReturn('customer.order.solicit_reviews');
+		$request = Mockery::mock( RequestInterface::class );
+		$request->shouldReceive('query')->with('product_id')->andReturn('sc_test_product_789');
+		$request->shouldReceive('query')->with('context')->andReturn('customer.order.solicit_reviews');
 
-		$next = function ($req) {
-			return 'next_response';
-		};
+		$response = $this->middleware->handle( $request, fn( $req ) => 'next_response' );
 
-		$response = $this->middleware->handle($request, $next);
+		$this->assertInstanceOf( RedirectResponse::class, $response );
 
-		$this->assertInstanceOf(RedirectResponse::class, $response, 'Should return RedirectResponse');
+		$redirect_url = $response->getHeaderLine( 'Location' );
+		$this->assertStringContainsString( 'redirect_to=', $redirect_url );
 
-		// Get the redirect URL from the Location header
-		$redirect_url = $response->getHeaderLine('Location');
-		$this->assertStringContainsString('redirect_to=', $redirect_url, 'Redirect URL should contain redirect_to parameter');
+		$parsed_url = parse_url( $redirect_url );
+		parse_str( $parsed_url['query'] ?? '', $query_params );
 
-		// Parse the URL to check the redirect_to parameter
-		$parsed_url = parse_url($redirect_url);
-		parse_str($parsed_url['query'] ?? '', $query_params);
-
-		$this->assertArrayHasKey('redirect_to', $query_params, 'Should have redirect_to query parameter');
-
-		// Decode the redirect_to parameter and check it contains the product review form
-		$redirect_to = rawurldecode($query_params['redirect_to']);
-		$this->assertStringContainsString('product-review-form=' . $post_id, $redirect_to, 'redirect_to should contain product-review-form parameter');
+		$this->assertArrayHasKey( 'redirect_to', $query_params );
+		$this->assertStringContainsString( 'product-review-form=' . $post_id, rawurldecode( $query_params['redirect_to'] ) );
 	}
 
 	/**
 	 * Test that middleware handles correct context value.
 	 */
 	public function test_should_handle_correct_context() {
-		// Create a test user and log them in
-		$user_id = self::factory()->user->create([
-			'user_login' => 'testuser2',
-			'user_email' => 'test2@example.com',
-		]);
+		wp_set_current_user( self::factory()->user->create() );
 
-		// Set the current user
-		wp_set_current_user($user_id);
-
-		// Create a product post
 		self::factory()->post->create([
-			'post_type'   => 'sc_product',
+			'post_type'  => 'sc_product',
 			'post_status' => 'publish',
-			'post_title'  => 'Test Product 2',
-			'meta_input'  => [
-				'sc_id' => 'sc_test_product_context',
+			'meta_input' => [
+				'sc_id'   => 'sc_test_product_context',
 				'product' => [
-					'id'         => 'sc_test_product_context',
-					'name'       => 'Test Product 2',
+					'id'   => 'sc_test_product_context',
+					'name' => 'Test Product',
 				],
 			],
 		]);
 
-		$request = Mockery::mock(RequestInterface::class);
-		$request->shouldReceive('query')
-			->with('product_id')
-			->andReturn('sc_test_product_context');
-		$request->shouldReceive('query')
-			->with('context')
-			->andReturn('customer.order.solicit_reviews');
+		$request = Mockery::mock( RequestInterface::class );
+		$request->shouldReceive('query')->with('product_id')->andReturn('sc_test_product_context');
+		$request->shouldReceive('query')->with('context')->andReturn('customer.order.solicit_reviews');
 
 		$next_called = false;
-		$next = function ($req) use (&$next_called) {
+		$next        = function ( $req ) use ( &$next_called ) {
 			$next_called = true;
 			return 'next_response';
 		};
 
-		$response = $this->middleware->handle($request, $next);
+		$response = $this->middleware->handle( $request, $next );
 
-		$this->assertFalse($next_called, 'Next middleware should not be called when context is correct');
-		$this->assertInstanceOf(RedirectResponse::class, $response, 'Should return RedirectResponse for correct context');
+		$this->assertFalse( $next_called );
+		$this->assertInstanceOf( RedirectResponse::class, $response );
 	}
 }
