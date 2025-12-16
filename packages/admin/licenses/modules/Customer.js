@@ -73,7 +73,9 @@ export default ({ licenseId }) => {
 					{customer?.name}
 				</ScText>
 				<div>{customer?.email}</div>
-				<AddressDisplay address={customer?.billing_address} />
+				<AddressDisplay
+					address={customer?.billing_address?.formatted_string}
+				/>
 			</div>
 		</Box>
 	);

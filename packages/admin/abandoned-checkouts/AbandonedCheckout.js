@@ -207,14 +207,15 @@ export default () => {
 						abandoned={abandoned}
 						loading={!hasLoadedAbandoned}
 					/>
-					{!!abandoned?.checkout?.shipping_address && (
+					{!!abandoned?.checkout?.shipping_address_display && (
 						<Address
 							label={__('Shipping & Tax Address', 'surecart')}
-							address={abandoned?.checkout?.shipping_address}
+							address={
+								abandoned?.checkout?.shipping_address_display
+							}
 							loading={!hasLoadedAbandoned}
 						/>
 					)}
-
 					{!!abandoned?.checkout?.billing_address_display && (
 						<Address
 							label={__('Billing Address', 'surecart')}
@@ -224,7 +225,6 @@ export default () => {
 							loading={!hasLoadedAbandoned}
 						/>
 					)}
-
 					<MetaData
 						abandoned={abandoned}
 						loading={!hasLoadedAbandoned}
