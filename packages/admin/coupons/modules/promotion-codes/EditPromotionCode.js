@@ -8,15 +8,19 @@ import {
 	ScInput,
 	ScSwitch,
 } from '@surecart/components-react';
+import { useRef, useEffect, useState } from 'react';
 import { Modal } from '@wordpress/components';
 import { useDispatch } from '@wordpress/data';
 import { _n, __ } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
 import { store as coreStore } from '@wordpress/core-data';
-import { useRef, useEffect, useState } from 'react';
-import Error from '../../components/Error';
-import SelectCustomer from './SelectCustomer';
-import SelectAffiliate from './SelectAffiliate';
+
+/**
+ * Internal dependencies.
+ */
+import SelectAffiliate from '../SelectAffiliate';
+import Error from '../../../components/Error';
+import SelectCustomer from '../SelectCustomer';
 
 export default ({
 	onRequestClose,
