@@ -23,7 +23,7 @@
 	$stars_output = ob_get_clean();
 
 	if ( $link_to_reviews ) {
-		$reviews_url = esc_url( $product->permalink . '#surecart-reviews' );
+		$reviews_url = sc_get_product_review_link();
 		// translators: %1$s: reviews URL, %2$s: stars output.
 		printf( '<a href="%1$s" class="sc-review-link">%2$s</a>', $reviews_url, $stars_output ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	} else {

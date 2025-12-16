@@ -193,7 +193,7 @@ class ProductReviewAverageRatingValue extends \Elementor\Widget_Base {
 			$content = $content . ' / 5.0';
 		}
 
-		$reviews_url = ! empty( $product->permalink ) ? esc_url( $product->permalink . '#surecart-reviews' ) : '#surecart-reviews';
+		$reviews_url = sc_get_product_review_link();
 		?>
 		<div class="wp-block-surecart-product-review-average-rating-value">
 			<span class="<?php echo esc_attr( trim( $class_name ) ); ?>">

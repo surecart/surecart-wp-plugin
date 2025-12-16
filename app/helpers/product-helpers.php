@@ -180,7 +180,7 @@ if ( ! function_exists( 'sc_get_product_review_link' ) ) {
 			return '';
 		}
 
-		return esc_url( $product->permalink . '#surecart-reviews' );
+		return esc_url( $product->permalink . '#reviews' );
 	}
 }
 
