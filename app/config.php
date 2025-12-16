@@ -158,6 +158,7 @@ return array(
 		\SureCart\Integrations\HelpWidget\HelpWidgetServiceProvider::class,
 		\SureCart\Integrations\RankMath\RankMathServiceProvider::class,
 		\SureCart\Integrations\SureRank\SureRankServiceProvider::class,
+		\SureCart\Integrations\Yoast\YoastServiceProvider::class,
 	),
 
 	/**
