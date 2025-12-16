@@ -13,7 +13,7 @@
 
 	if ( $link_to_reviews ) {
 		// translators: 1: reviews URL, 2: review output.
-		printf( '<a href="%1$s" class="sc-review-link">%2$s</a>', esc_url( sc_get_product_review_link( $product ) ), $output ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		printf( '<a href="%1$s" class="sc-review-link">%2$s</a>', esc_url( sc_get_product_review_link() ), $output ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	} else {
 		echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}

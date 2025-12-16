@@ -170,12 +170,13 @@ if ( ! function_exists( 'sc_get_product_review_link' ) ) {
 	/**
 	 * Get the product review link.
 	 *
-	 * @param \SureCart\Models\Product $product The product.
+	 * @param \SureCart\Models\Product|int|string $product The product.
 	 *
 	 * @return string
 	 */
-	function sc_get_product_review_link( $product ): string {
-		if ( empty( $product ) ) {
+	function sc_get_product_review_link( $product = null ): string {
+		$product = sc_get_product( $product );
+		if ( empty( $product ) || empty( $product->permalink ) ) {
 			return '';
 		}
 
