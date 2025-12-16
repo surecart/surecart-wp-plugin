@@ -28,5 +28,6 @@ $style = ! empty( $gap ) ? 'gap:' . esc_attr( $gap ) . ';' : '';
 
 // Get link_to_reviews from context (parent block) or fallback to attribute (for standalone usage like Elementor/Bricks).
 $link_to_reviews = $block->context['link_to_reviews'] ?? $attributes['link_to_reviews'] ?? false;
+$html_tag        = $link_to_reviews ? 'a' : 'div';
 
 return 'file:./view.php';
