@@ -1,20 +1,19 @@
-// Review link styles - no underline, inherit color.
-// Using high specificity to override theme and browser defaults.
-.wp-block-surecart-product-review-total-rating a.sc-review-link,
-.wp-block-surecart-product-review-total-rating .sc-review-link,
-a.sc-review-link {
-	text-decoration: none !important;
-	color: inherit !important;
-	border-bottom: none !important;
-	box-shadow: none !important;
+.wp-block-surecart-product-review-total-rating {
+	font-size: var(--sc-font-size-small);
 
-	&:hover,
-	&:focus,
-	&:active,
-	&:visited {
-		text-decoration: none !important;
+	a.sc-review-link,
+	.sc-review-link {
 		color: inherit !important;
 		border-bottom: none !important;
 		box-shadow: none !important;
+
+		&:hover,
+		&:focus,
+		&:active,
+		&:visited {
+			color: inherit !important;
+			border-bottom: none !important;
+			box-shadow: none !important;
+		}
 	}
 }

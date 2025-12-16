@@ -49,14 +49,6 @@
 			"lineHeight": true,
 			"textAlign": true
 		},
-		"layout": {
-			"allowSwitching": false,
-			"allowInheriting": false,
-			"default": {
-				"type": "flex",
-				"justifyContent": "left"
-			}
-		},
 		"spacing": {
 			"padding": true,
 			"margin": true,
