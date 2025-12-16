@@ -25,10 +25,14 @@ const TEMPLATE = [
 ];
 
 export default ({ attributes, setAttributes, __unstableLayoutClassNames }) => {
-	const { show_value, show_for_zero_reviews, style } = attributes;
+	const { show_value, show_for_zero_reviews, link_to_reviews, style } =
+		attributes;
 	const blockProps = useBlockProps({
 		className: __unstableLayoutClassNames,
-		style,
+		style: {
+			...style,
+			gap: style?.spacing?.blockGap ?? `4px`,
+		},
 	});
 
 	const innerBlocksProps = useInnerBlocksProps(blockProps, {
@@ -63,6 +67,18 @@ export default ({ attributes, setAttributes, __unstableLayoutClassNames }) => {
 							setAttributes({ show_for_zero_reviews })
 						}
 						checked={show_for_zero_reviews}
+					/>
+					<ToggleControl
+						__nextHasNoMarginBottom
+						label={__('Link to reviews', 'surecart')}
+						help={__(
+							'Toggle on to link to the reviews section.',
+							'surecart'
+						)}
+						onChange={(link_to_reviews) =>
+							setAttributes({ link_to_reviews })
+						}
+						checked={link_to_reviews}
 					/>
 				</PanelBody>
 			</InspectorControls>

@@ -1,4 +1,19 @@
-<div <?php echo wp_kses_data( get_block_wrapper_attributes( [ 'style' => $style ] ) ); ?>>
+<<?php echo esc_html( $html_tag ); ?> <?php
+echo wp_kses_data(
+	get_block_wrapper_attributes(
+		array_filter(
+			[
+				'style'      => $style,
+				'class'      => $link_to_reviews ? 'sc-review-link' : null,
+				'href'       => $link_to_reviews ? sc_get_product_review_link() : null,
+				// translators: %s: whole stars.
+				'aria-label' => sprintf( __( '%d out of 5 stars', 'surecart' ), $average_rating ),
+			]
+		)
+	)
+);
+?>
+>
 	<?php
 	for ( $i = 1; $i <= 5; $i++ ) {
 		$is_full_star = $i <= $whole_stars;
@@ -20,4 +35,4 @@
 		);
 	}
 	?>
-</div>
+</<?php echo esc_html( $html_tag ); ?>>

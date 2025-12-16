@@ -69,6 +69,13 @@ class ProductReviewAverageRatingValue extends \Bricks\Element {
 			'default' => 'none',
 			'inline'  => true,
 		];
+
+		$this->controls['link_to_reviews'] = [
+			'tab'     => 'content',
+			'label'   => esc_html__( 'Link to Reviews', 'surecart' ),
+			'type'    => 'checkbox',
+			'default' => false,
+		];
 	}
 
 	/**
@@ -77,8 +84,9 @@ class ProductReviewAverageRatingValue extends \Bricks\Element {
 	 * @return void
 	 */
 	public function render() {
-		$format_style = ! empty( $this->settings['format_style'] ) ? $this->settings['format_style'] : 'none';
-		$class_name   = 'none' === $format_style ? '' : 'is-style-' . $format_style;
+		$format_style    = ! empty( $this->settings['format_style'] ) ? $this->settings['format_style'] : 'none';
+		$class_name      = 'none' === $format_style ? '' : 'is-style-' . $format_style;
+		$link_to_reviews = ! empty( $this->settings['link_to_reviews'] );
 
 		if ( $this->is_admin_editor() ) {
 			$this->render_preview( $format_style );
@@ -87,7 +95,8 @@ class ProductReviewAverageRatingValue extends \Bricks\Element {
 
 		echo $this->html( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			[
-				'className' => esc_attr( $class_name ),
+				'className'       => esc_attr( $class_name ),
+				'link_to_reviews' => $link_to_reviews, //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			]
 		);
 	}

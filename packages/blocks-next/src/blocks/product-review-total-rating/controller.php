@@ -22,4 +22,7 @@ if ( 'plus-sign' === $style_variant && $count > 1 ) {
 	$display_number = $number . '+';
 }
 
+$link_to_reviews = $attributes['link_to_reviews'] ?? false;
+$html_tag        = $link_to_reviews ? 'a' : 'div';
+
 return 'file:./view.php';

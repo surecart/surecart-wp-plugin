@@ -1,13 +1,26 @@
-<div <?php echo wp_kses_data( get_block_wrapper_attributes() ); ?>>
+<<?php echo esc_html( $html_tag ); ?>
 	<?php
-	if ( ! empty( $attributes['show_label'] ) ) {
-		$label = _n( 'review', 'reviews', $count, 'surecart' );
-		echo esc_html(
-			// translators: 1: number of reviews, 2: label "review" or "reviews".
-			sprintf( '%s %s', $display_number, $label )
-		);
-	} else {
-		echo esc_html( $display_number );
-	}
+	echo wp_kses_data(
+		get_block_wrapper_attributes(
+			array_filter(
+				[
+					'class'      => $link_to_reviews ? 'sc-review-link' : null,
+					'href'       => $link_to_reviews ? sc_get_product_review_link() : null,
+					'aria-label' => $link_to_reviews ? __( 'View all reviews.', 'surecart' ) : null,
+				]
+			)
+		)
+	);
 	?>
-</div>
+	>
+
+	<?php echo esc_html( $display_number ); ?>
+
+	<span class="<?php echo esc_attr( empty( $attributes['show_label'] ) ? 'sc-screen-reader-text' : 'surecart-review-label' ); ?>">
+		<?php
+		// translators: 1: number of reviews, 2: label "review" or "reviews".
+		echo ' ' . esc_html( _n( 'review', 'reviews', $count, 'surecart' ) );
+		?>
+	</span>
+
+</<?php echo esc_html( $html_tag ); ?>>

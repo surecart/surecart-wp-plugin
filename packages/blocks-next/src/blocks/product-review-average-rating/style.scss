@@ -2,3 +2,23 @@
 	display: flex;
 	gap: 4px;
 }
+
+// Review link styles - no underline, inherit color.
+// Using high specificity to override theme and browser defaults.
+.wp-block-surecart-product-review-average-rating a.sc-review-link,
+.wp-block-surecart-product-review-average-rating-stars a.sc-review-link,
+.wp-block-surecart-product-review-average-rating-value a.sc-review-link {
+	color: inherit !important;
+	display: inline-flex;
+	border-bottom: none !important;
+	box-shadow: none !important;
+
+	&:hover,
+	&:focus,
+	&:active,
+	&:visited {
+		color: inherit !important;
+		border-bottom: none !important;
+		box-shadow: none !important;
+	}
+}

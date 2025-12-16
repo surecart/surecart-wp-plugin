@@ -166,6 +166,24 @@ if ( ! function_exists( 'sc_get_product_featured_image_attributes' ) ) {
 	}
 }
 
+if ( ! function_exists( 'sc_get_product_review_link' ) ) {
+	/**
+	 * Get the product review link.
+	 *
+	 * @param \SureCart\Models\Product|int|string $product The product.
+	 *
+	 * @return string
+	 */
+	function sc_get_product_review_link( $product = null ): string {
+		$product = sc_get_product( $product );
+		if ( empty( $product ) || empty( $product->permalink ) ) {
+			return '';
+		}
+
+		return $product->permalink . '#reviews';
+	}
+}
+
 if ( ! function_exists( 'sc_html_attributes' ) ) {
 	/**
 	 * Get the html attributes.

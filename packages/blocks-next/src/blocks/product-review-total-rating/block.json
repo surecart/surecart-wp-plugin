@@ -25,6 +25,10 @@
 		"style_variant": {
 			"type": "string",
 			"default": "default"
+		},
+		"link_to_reviews": {
+			"type": "boolean",
+			"default": false
 		}
 	},
 	"example": {},
@@ -45,14 +49,6 @@
 			"lineHeight": true,
 			"textAlign": true
 		},
-		"layout": {
-			"allowSwitching": false,
-			"allowInheriting": false,
-			"default": {
-				"type": "flex",
-				"justifyContent": "left"
-			}
-		},
 		"spacing": {
 			"padding": true,
 			"margin": true,
@@ -68,5 +64,6 @@
 	},
 	"textdomain": "surecart",
 	"render": "file:./view.php",
-	"editorScript": "file:./index.js"
+	"editorScript": "file:./index.js",
+	"style": "file:./style-index.css"
 }
