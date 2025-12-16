@@ -32,3 +32,16 @@ jobs:
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           files: '@surecart/surecart.zip'
+
+      - name: Push to release repository
+        id: push_directory
+        uses: cpina/github-action-push-to-another-repository@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          source-directory: .
+          destination-github-username: 'surecart'
+          destination-repository-name: 'surecart-wp-plugin'
+          user-email: support@surecart.com
+          commit-message: Release version ${{ github.ref_name }}
+          target-branch: main
