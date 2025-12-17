@@ -233,6 +233,9 @@ The second type of integrations are done with [Ottokit](https://wordpress.org/pl
 ## Join The SureCart Facebook Group ##
 Join our [Facebook group community](https://www.facebook.com/groups/surecrafted): Learn the tricks and techniques that other SureCart users are using to grow their business. Also, get exciting insider information on upcoming feature releases.
 
+## Want to contribute to the plugin? ##
+You may now contribute to the plugin on Github: [SureCart WordPress Plugin on Github](https://github.com/surecart/surecart-wp-plugin)
+
 [Terms And Conditions](https://surecart.com/terms)
 [Privacy Policy](https://surecart.com/privacy)
 
