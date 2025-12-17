@@ -59,7 +59,7 @@ export default ({ id }) => {
 		totalActiveItems,
 	} = useSelect(
 		(select) => {
-			const isResolvingActive = select(coreStore).isResolving(
+			const isResolving = select(coreStore).isResolving(
 				'getEntityRecords',
 				activeQueryArgs
 			);
@@ -68,14 +68,14 @@ export default ({ id }) => {
 				activePromotions: select(coreStore).getEntityRecords(
 					...activeQueryArgs
 				),
-				isLoadingActive: isResolvingActive && activePage === 1,
-				isBusyActive: isResolvingActive && activePage !== 1,
+				isLoadingActive: isResolving && activePage === 1,
+				isBusyActive: isResolving && activePage !== 1,
 				totalActiveItems: select(coreStore).getEntityRecordsTotalItems(
 					...activeQueryArgs
 				),
 			};
 		},
-		[id, activePage, archivedPage]
+		[id, activePage]
 	);
 
 	const {
@@ -85,7 +85,7 @@ export default ({ id }) => {
 		totalArchivedItems,
 	} = useSelect(
 		(select) => {
-			const isResolvingArchived = select(coreStore).isResolving(
+			const isResolving = select(coreStore).isResolving(
 				'getEntityRecords',
 				archivedQueryArgs
 			);
@@ -94,19 +94,22 @@ export default ({ id }) => {
 				archivedPromotions: select(coreStore).getEntityRecords(
 					...archivedQueryArgs
 				),
-				isLoadingArchived: isResolvingArchived && archivedPage === 1,
-				isBusyArchived: isResolvingArchived && archivedPage !== 1,
+				isLoadingArchived: isResolving && archivedPage === 1,
+				isBusyArchived: isResolving && archivedPage !== 1,
 				totalArchivedItems: select(
 					coreStore
 				).getEntityRecordsTotalItems(...archivedQueryArgs),
 			};
 		},
-		[id, activePage, archivedPage]
+		[id, archivedPage]
 	);
 
 	const refreshAll = () => {
-		invalidateResolution('getEntityRecords', activeQueryArgs);
-		invalidateResolution('getEntityRecords', archivedQueryArgs);
+		if (isActive) {
+			invalidateResolution('getEntityRecords', activeQueryArgs);
+		} else {
+			invalidateResolution('getEntityRecords', archivedQueryArgs);
+		}
 	};
 
 	const { hasPagination: hasActivePagination } = usePagination({
