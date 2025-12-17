@@ -133,10 +133,10 @@ add_action(
 			return;
 		}
 
-		$close_button_label = esc_attr__( 'Close' );
-		$dialog_label       = esc_attr__( 'Enlarged images' );
-		$prev_button_label  = esc_attr__( 'Previous' );
-		$next_button_label  = esc_attr__( 'Next' );
+		$close_button_label = esc_attr__( 'Close', 'surecart' );
+		$dialog_label       = esc_attr__( 'Enlarged images', 'surecart' );
+		$prev_button_label  = esc_attr__( 'Previous', 'surecart' );
+		$next_button_label  = esc_attr__( 'Next', 'surecart' );
 
 		// If the current theme does NOT have a `theme.json`, or the colors are not
 		// defined, it needs to set the background color & close button color to some

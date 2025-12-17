@@ -353,14 +353,17 @@ class SubscriptionController extends BaseController {
 		$terms_url   = $account->customer_portal_protocol->terms_url ?? '';
 
 		if ( ! empty( $privacy_url ) && ! empty( $terms_url ) ) {
+			// translators: %1$s is the terms URL, %2$s is the terms link text, %3$s is the privacy URL, %4$s is the privacy link text.
 			return sprintf( __( 'By updating or canceling your plan, you agree to the <a href="%1$1s" target="_blank">%2$2s</a> and <a href="%3$3s" target="_blank">%4$4s</a>', 'surecart' ), esc_url( $terms_url ), __( 'Terms', 'surecart' ), esc_url( $privacy_url ), __( 'Privacy Policy', 'surecart' ) );
 		}
 
 		if ( ! empty( $privacy_url ) ) {
+			// translators: %1$s is the privacy policy URL, %2$s is the privacy policy link text.
 			return sprintf( __( 'By updating or canceling your plan, you agree to the <a href="%1$1s" target="_blank">%2$2s</a>', 'surecart' ), esc_url( $privacy_url ), __( 'Privacy Policy', 'surecart' ) );
 		}
 
 		if ( ! empty( $terms_url ) ) {
+			// translators: %1$s is the terms URL, %2$s is the terms link text.
 			return sprintf( __( 'By updating or canceling your plan, you agree to the <a href="%1$1s" target="_blank">%2$2s</a>', 'surecart' ), esc_url( $terms_url ), __( 'Terms', 'surecart' ) );
 		}
 
