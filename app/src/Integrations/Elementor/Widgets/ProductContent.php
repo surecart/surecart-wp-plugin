@@ -45,7 +45,7 @@ class ProductContent extends \Elementor\Widget_Base {
 		$this->start_controls_section(
 			'section_style',
 			[
-				'label' => esc_html__( 'Style', 'elementor-pro' ),
+				'label' => esc_html__( 'Style', 'surecart' ),
 				'tab'   => \Elementor\Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -53,23 +53,23 @@ class ProductContent extends \Elementor\Widget_Base {
 		$this->add_responsive_control(
 			'align',
 			[
-				'label'     => esc_html__( 'Alignment', 'elementor-pro' ),
+				'label'     => esc_html__( 'Alignment', 'surecart' ),
 				'type'      => \Elementor\Controls_Manager::CHOOSE,
 				'options'   => [
 					'left'    => [
-						'title' => esc_html__( 'Left', 'elementor-pro' ),
+						'title' => esc_html__( 'Left', 'surecart' ),
 						'icon'  => 'eicon-text-align-left',
 					],
 					'center'  => [
-						'title' => esc_html__( 'Center', 'elementor-pro' ),
+						'title' => esc_html__( 'Center', 'surecart' ),
 						'icon'  => 'eicon-text-align-center',
 					],
 					'right'   => [
-						'title' => esc_html__( 'Right', 'elementor-pro' ),
+						'title' => esc_html__( 'Right', 'surecart' ),
 						'icon'  => 'eicon-text-align-right',
 					],
 					'justify' => [
-						'title' => esc_html__( 'Justified', 'elementor-pro' ),
+						'title' => esc_html__( 'Justified', 'surecart' ),
 						'icon'  => 'eicon-text-align-justify',
 					],
 				],
@@ -82,7 +82,7 @@ class ProductContent extends \Elementor\Widget_Base {
 		$this->add_control(
 			'text_color',
 			[
-				'label'     => esc_html__( 'Text Color', 'elementor-pro' ),
+				'label'     => esc_html__( 'Text Color', 'surecart' ),
 				'type'      => \Elementor\Controls_Manager::COLOR,
 				'default'   => '',
 				'selectors' => [
