@@ -5,168 +5,136 @@ import { css, jsx } from '@emotion/core';
  * External dependencies.
  */
 import { __ } from '@wordpress/i18n';
-import { useState, useEffect, useRef, Fragment } from '@wordpress/element';
-import apiFetch from '@wordpress/api-fetch';
-import { addQueryArgs } from '@wordpress/url';
-import { useDispatch } from '@wordpress/data';
-import { store as noticesStore } from '@wordpress/notices';
+import { useState, Fragment } from '@wordpress/element';
+import { useDispatch, useSelect } from '@wordpress/data';
+import { store as coreStore } from '@wordpress/core-data';
+import { Button } from '@wordpress/components';
 
 /**
  * Internal dependencies.
  */
 import Box from '../../../ui/Box';
-import { ScBlockUi, ScButton, ScIcon } from '@surecart/components-react';
+import { ScButton, ScIcon, ScSkeleton } from '@surecart/components-react';
 import EditPromotionCode from './EditPromotionCode';
 import PrevNextButtons from '../../../ui/PrevNextButtons';
 import PromotionCodesList from './PromotionCodesList';
+import usePagination from '../../../hooks/usePagination';
 
 export default ({ id }) => {
-	const { createErrorNotice } = useDispatch(noticesStore);
 	const [modal, setModal] = useState(false);
-	const [activeTab, setActiveTab] = useState('active');
-
-	// Active promotions.
+	const [isActive, setIsActive] = useState(true);
 	const [activePage, setActivePage] = useState(1);
-	const [activePromotions, setActivePromotions] = useState([]);
-	const [activeTotalCount, setActiveTotalCount] = useState(0);
-	const [isLoadingActive, setIsLoadingActive] = useState(true);
-	const [isBusyActive, setIsBusyActive] = useState(false);
-
-	// Archived promotions.
 	const [archivedPage, setArchivedPage] = useState(1);
-	const [archivedPromotions, setArchivedPromotions] = useState([]);
-	const [archivedTotalCount, setArchivedTotalCount] = useState(0);
-	const [isLoadingArchived, setIsLoadingArchived] = useState(true);
-	const [isBusyArchived, setIsBusyArchived] = useState(false);
-
+	const { invalidateResolution } = useDispatch(coreStore);
 	const perPage = 10;
 
-	const fetchPromotions = async (
-		archived,
-		page,
-		setPromotions,
-		setTotalCount,
-		setLoading,
-		setBusy,
-		currentPromotions
-	) => {
-		try {
-			if (currentPromotions.length) {
-				setBusy(true);
-			} else {
-				setLoading(true);
-			}
+	// Active promotions query args.
+	const activeQueryArgs = [
+		'surecart',
+		'promotion',
+		{
+			coupon_ids: [id],
+			archived: false,
+			per_page: perPage,
+			page: activePage,
+		},
+	];
 
-			const response = await apiFetch({
-				path: addQueryArgs('/surecart/v1/promotions', {
-					coupon_ids: [id],
-					archived,
-					per_page: perPage,
-					page,
-				}),
-				parse: false,
-			});
+	// Archived promotions query args.
+	const archivedQueryArgs = [
+		'surecart',
+		'promotion',
+		{
+			coupon_ids: [id],
+			archived: true,
+			per_page: perPage,
+			page: archivedPage,
+		},
+	];
 
-			const data = await response.json();
-			const total = parseInt(
-				response.headers.get('X-WP-Total') || '0',
-				10
+	const {
+		activePromotions,
+		isLoadingActive,
+		isBusyActive,
+		totalActiveItems,
+	} = useSelect(
+		(select) => {
+			const isResolvingActive = select(coreStore).isResolving(
+				'getEntityRecords',
+				activeQueryArgs
 			);
 
-			setPromotions(data);
-			setTotalCount(total);
-		} catch (e) {
-			console.error(e);
-			createErrorNotice(
-				e?.message || __('Something went wrong', 'surecart')
+			return {
+				activePromotions: select(coreStore).getEntityRecords(
+					...activeQueryArgs
+				),
+				isLoadingActive: isResolvingActive && activePage === 1,
+				isBusyActive: isResolvingActive && activePage !== 1,
+				totalActiveItems: select(coreStore).getEntityRecordsTotalItems(
+					...activeQueryArgs
+				),
+			};
+		},
+		[id, activePage, archivedPage]
+	);
+
+	const {
+		archivedPromotions,
+		isLoadingArchived,
+		isBusyArchived,
+		totalArchivedItems,
+	} = useSelect(
+		(select) => {
+			const isResolvingArchived = select(coreStore).isResolving(
+				'getEntityRecords',
+				archivedQueryArgs
 			);
-		} finally {
-			setLoading(false);
-			setBusy(false);
-		}
-	};
 
-	const fetchActivePromotions = () => {
-		fetchPromotions(
-			false,
-			activePage,
-			setActivePromotions,
-			setActiveTotalCount,
-			setIsLoadingActive,
-			setIsBusyActive,
-			activePromotions
-		);
-	};
-
-	const fetchArchivedPromotions = () => {
-		fetchPromotions(
-			true,
-			archivedPage,
-			setArchivedPromotions,
-			setArchivedTotalCount,
-			setIsLoadingArchived,
-			setIsBusyArchived,
-			archivedPromotions
-		);
-	};
+			return {
+				archivedPromotions: select(coreStore).getEntityRecords(
+					...archivedQueryArgs
+				),
+				isLoadingArchived: isResolvingArchived && archivedPage === 1,
+				isBusyArchived: isResolvingArchived && archivedPage !== 1,
+				totalArchivedItems: select(
+					coreStore
+				).getEntityRecordsTotalItems(...archivedQueryArgs),
+			};
+		},
+		[id, activePage, archivedPage]
+	);
 
 	const refreshAll = () => {
-		fetchActivePromotions();
-		fetchArchivedPromotions();
+		invalidateResolution('getEntityRecords', activeQueryArgs);
+		invalidateResolution('getEntityRecords', archivedQueryArgs);
 	};
 
-	// Track if it's the first render for pagination
-	const isFirstActivePageRender = useRef(true);
-	const isFirstArchivedPageRender = useRef(true);
+	const { hasPagination: hasActivePagination } = usePagination({
+		data: activePromotions,
+		page: activePage,
+		perPage,
+		totalItems: totalActiveItems,
+	});
 
-	// Fetch both active and archived promotions in parallel on mount
-	useEffect(() => {
-		fetchActivePromotions();
-		fetchArchivedPromotions();
-	}, [id]);
-
-	// Fetch active promotions when active page changes (skip first render)
-	useEffect(() => {
-		if (isFirstActivePageRender.current) {
-			isFirstActivePageRender.current = false;
-			return;
-		}
-		fetchActivePromotions();
-	}, [activePage]);
-
-	// Fetch archived promotions when archived page changes (skip first render)
-	useEffect(() => {
-		if (isFirstArchivedPageRender.current) {
-			isFirstArchivedPageRender.current = false;
-			return;
-		}
-		fetchArchivedPromotions();
-	}, [archivedPage]);
-
-	// Switch to active tab if archived becomes empty while on archived tab.
-	useEffect(() => {
-		if (
-			activeTab === 'archived' &&
-			archivedTotalCount === 0 &&
-			!isLoadingArchived
-		) {
-			setActiveTab('active');
-		}
-	}, [archivedTotalCount, isLoadingArchived, activeTab]);
+	const { hasPagination: hasArchivedPagination } = usePagination({
+		data: archivedPromotions,
+		page: archivedPage,
+		perPage,
+		totalItems: totalArchivedItems,
+	});
 
 	const isLoading = isLoadingActive || isLoadingArchived;
-	const isBusy = activeTab === 'active' ? isBusyActive : isBusyArchived;
-	const hasArchivedPromotions = archivedTotalCount > 0;
+	const isBusy = isBusyActive || isBusyArchived;
+	const hasArchivedPromotions =
+		archivedPromotions?.length > 0 || archivedPage > 1;
 	const showTabs = hasArchivedPromotions;
 
-	const currentPromotions =
-		activeTab === 'active' ? activePromotions : archivedPromotions;
-	const currentTotalCount =
-		activeTab === 'active' ? activeTotalCount : archivedTotalCount;
-	const currentPage = activeTab === 'active' ? activePage : archivedPage;
-	const setCurrentPage =
-		activeTab === 'active' ? setActivePage : setArchivedPage;
-	const hasPagination = currentTotalCount > perPage;
+	const currentPromotions = isActive ? activePromotions : archivedPromotions;
+	const currentPage = isActive ? activePage : archivedPage;
+	const setCurrentPage = isActive ? setActivePage : setArchivedPage;
+	const hasPagination = isActive
+		? hasActivePagination
+		: hasArchivedPagination;
 
 	const renderTabs = () => {
 		if (!showTabs) {
@@ -177,30 +145,28 @@ export default ({ id }) => {
 			<div
 				css={css`
 					display: flex;
-					gap: var(--sc-spacing-xx-small);
+					gap: var(--sc-spacing-medium);
 					margin-bottom: var(--sc-spacing-medium);
 				`}
 			>
-				<button
-					type="button"
-					onClick={() => setActiveTab('active')}
+				<Button
+					variant="tertiary"
+					onClick={() => {
+						setIsActive(true);
+						setActivePage(1);
+					}}
 					css={css`
-						background: none;
-						border: none;
-						padding: var(--sc-spacing-small);
-						padding-left: 0;
-						font-size: var(--sc-font-size-medium);
-						font-weight: ${activeTab === 'active' ? '600' : '400'};
-						color: ${activeTab === 'active'
-							? 'var(--sc-color-gray-800)'
-							: 'var(--sc-color-gray-500)'};
-						cursor: pointer;
-						transition: all 0.2s ease;
+						color: ${isActive
+							? 'var(--sc-color-gray-800) !important'
+							: 'var(--sc-color-gray-500) !important'};
+						font-weight: ${isActive ? '600' : '400'};
+						padding: var(--sc-spacing-xx-small) 0;
 					`}
 					role="tab"
 				>
-					{__('Active', 'surecart')} ({activeTotalCount})
-				</button>
+					{__('Active', 'surecart')}{' '}
+					{!isLoadingActive && `(${totalActiveItems})`}
+				</Button>
 				<div
 					css={css`
 						height: 12px;
@@ -209,64 +175,25 @@ export default ({ id }) => {
 						background: var(--sc-color-gray-300);
 					`}
 				></div>
-				<button
-					type="button"
-					onClick={() => setActiveTab('archived')}
+				<Button
+					variant="tertiary"
+					onClick={() => {
+						setIsActive(false);
+						setArchivedPage(1);
+					}}
 					css={css`
-						background: none;
-						border: none;
-						padding: var(--sc-spacing-small);
-						font-size: var(--sc-font-size-medium);
-						font-weight: ${activeTab === 'archived'
-							? '600'
-							: '400'};
-						color: ${activeTab === 'archived'
-							? 'var(--sc-color-gray-800)'
-							: 'var(--sc-color-gray-500)'};
-						cursor: pointer;
-						transition: all 0.2s ease;
+						color: ${!isActive
+							? 'var(--sc-color-gray-800) !important'
+							: 'var(--sc-color-gray-500) !important'};
+						font-weight: ${!isActive ? '600' : '400'};
+						padding: var(--sc-spacing-xx-small) 0;
 					`}
 					role="tab"
 				>
-					{__('Archived', 'surecart')} ({archivedTotalCount})
-				</button>
+					{__('Archived', 'surecart')}{' '}
+					{!isLoadingArchived && `(${totalArchivedItems})`}
+				</Button>
 			</div>
-		);
-	};
-
-	const renderContent = () => {
-		return (
-			<>
-				<PromotionCodesList
-					promotions={currentPromotions}
-					onUpdate={refreshAll}
-					emptyIcon={activeTab === 'archived' ? 'archive' : 'tag'}
-					emptyMessage={
-						activeTab === 'archived'
-							? __('No archived promotion codes.', 'surecart')
-							: __('No promotion codes found.', 'surecart')
-					}
-				/>
-
-				{hasPagination && (
-					<div
-						css={css`
-							margin-top: var(--sc-spacing-medium);
-							padding: var(--sc-spacing-medium);
-						`}
-					>
-						<PrevNextButtons
-							data={currentPromotions}
-							page={currentPage}
-							setPage={setCurrentPage}
-							perPage={perPage}
-							totalItems={currentTotalCount}
-							loading={isBusy}
-							justifyContent="center"
-						/>
-					</div>
-				)}
-			</>
 		);
 	};
 
@@ -283,10 +210,10 @@ export default ({ id }) => {
 		);
 	};
 
-	const title = showTabs
+	const title = hasArchivedPromotions
 		? __('Promotion Codes', 'surecart')
 		: `${__('Promotion Codes', 'surecart')}${
-				!isLoading ? ` (${activeTotalCount})` : ''
+				!isLoading ? ` (${totalActiveItems ?? '0'})` : ''
 		  }`;
 
 	return (
@@ -294,8 +221,49 @@ export default ({ id }) => {
 			<Box title={title} loading={isLoading} footer={renderFooter()}>
 				<div>
 					{renderTabs()}
-					{renderContent()}
-					{!!isBusy && <ScBlockUi spinner />}
+
+					<PromotionCodesList
+						promotions={currentPromotions}
+						onUpdate={refreshAll}
+						emptyIcon={!isActive ? 'archive' : 'tag'}
+						emptyMessage={
+							!isActive
+								? __('No archived promotion codes.', 'surecart')
+								: __('No promotion codes found.', 'surecart')
+						}
+						loading={isBusy}
+					/>
+
+					{!!isBusy && (
+						<div
+							css={css`
+								display: grid;
+								gap: 0.5em;
+								padding: var(--sc-drawer-body-spacing);
+							`}
+						>
+							<ScSkeleton style={{ width: '100%' }}></ScSkeleton>
+							<ScSkeleton style={{ width: '40%' }}></ScSkeleton>
+						</div>
+					)}
+
+					{hasPagination && (
+						<div
+							css={css`
+								margin-top: var(--sc-spacing-medium);
+								padding: var(--sc-spacing-medium);
+							`}
+						>
+							<PrevNextButtons
+								data={currentPromotions}
+								page={currentPage}
+								setPage={setCurrentPage}
+								perPage={perPage}
+								loading={isBusy}
+								justifyContent="center"
+							/>
+						</div>
+					)}
 				</div>
 			</Box>
 

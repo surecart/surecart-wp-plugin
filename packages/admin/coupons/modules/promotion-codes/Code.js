@@ -17,7 +17,7 @@ import { useDispatch, useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import { store as noticesStore } from '@wordpress/notices';
 import { Modal } from '@wordpress/components';
-import { useState } from 'react';
+import { useState } from '@wordpress/element';
 import EditPromotionCode from './EditPromotionCode';
 
 export default ({ promotion: { id }, index, onUpdate }) => {
@@ -39,7 +39,7 @@ export default ({ promotion: { id }, index, onUpdate }) => {
 				type: 'snackbar',
 			});
 			setModal(false);
-			onUpdate?.();
+			onUpdate();
 		} catch (e) {
 			console.error(e);
 			createErrorNotice(
@@ -62,7 +62,7 @@ export default ({ promotion: { id }, index, onUpdate }) => {
 					type: 'snackbar',
 				}
 			);
-			onUpdate?.();
+			onUpdate();
 		} catch (e) {
 			console.error(e);
 		}
