@@ -1,4 +1,5 @@
 /** @jsx jsx */
+import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import {
 	ScInput,
@@ -12,7 +13,6 @@ import {
 	ScIcon,
 } from '@surecart/components-react';
 import { Icon, moreHorizontalMobile } from '@wordpress/icons';
-import { css, jsx } from '@emotion/core';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import { store as noticesStore } from '@wordpress/notices';
@@ -116,11 +116,6 @@ export default ({ promotion: { id }, index, onUpdate }) => {
 					onScInput={(e) => updatePromotion({ code: e.target.value })}
 					readonly={true}
 				>
-					{/* {promotion?.archived && (
-						<ScTag type="warning" slot="suffix">
-							{__('Archived', 'surecart')}
-						</ScTag>
-					)} */}
 					<ScTag slot="suffix">
 						{promotion?.times_redeemed}
 						{promotion?.max_redemptions

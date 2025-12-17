@@ -188,6 +188,7 @@ export default ({ id }) => {
 						background: none;
 						border: none;
 						padding: var(--sc-spacing-small);
+						padding-left: 0;
 						font-size: var(--sc-font-size-medium);
 						font-weight: ${activeTab === 'active' ? '600' : '400'};
 						color: ${activeTab === 'active'
@@ -196,6 +197,7 @@ export default ({ id }) => {
 						cursor: pointer;
 						transition: all 0.2s ease;
 					`}
+					role="tab"
 				>
 					{__('Active', 'surecart')} ({activeTotalCount})
 				</button>
@@ -224,6 +226,7 @@ export default ({ id }) => {
 						cursor: pointer;
 						transition: all 0.2s ease;
 					`}
+					role="tab"
 				>
 					{__('Archived', 'surecart')} ({archivedTotalCount})
 				</button>
@@ -248,6 +251,7 @@ export default ({ id }) => {
 				{hasPagination && (
 					<div
 						css={css`
+							margin-top: var(--sc-spacing-medium);
 							padding: var(--sc-spacing-medium);
 						`}
 					>
