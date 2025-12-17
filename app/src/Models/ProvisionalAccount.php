@@ -53,6 +53,11 @@ class ProvisionalAccount extends Model {
 			$attributes['account_name'] = get_bloginfo( 'name' ) ? get_bloginfo( 'name' ) : get_bloginfo( 'url' );
 		}
 
+		// Prevent minimum 3 character requirement error for account name.
+		if ( strlen( $attributes['account_name'] ) < 3 ) {
+			return new \WP_Error( 'invalid_account_name', __( 'Store name must be at least 3 characters long. Please choose a different name for your store.', 'surecart' ) );
+		}
+
 		// set the account url from the blog url.
 		if ( empty( $attributes['account_url'] ) ) {
 			$attributes['account_url'] = get_bloginfo( 'url' );
