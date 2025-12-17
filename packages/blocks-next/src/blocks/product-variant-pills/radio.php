@@ -15,11 +15,13 @@ echo wp_kses_data(
 		[
 			'class' => 'sc-pill-option__wrapper',
 			'style' => sc_get_inline_styles(
-				[
-					'--sc-pill-option-active-background-color' => $pill_block_attrs['highlight_background'] ?? '',
-					'--sc-pill-option-active-text-color'   => $pill_block_attrs['highlight_text'] ?? '',
-					'--sc-pill-option-active-border-color' => $pill_block_attrs['highlight_border'] ?? '',
-				]
+				array_filter(
+					[
+						'--sc-pill-option-active-background-color' => $pill_block_attrs['highlight_background'] ?? '',
+						'--sc-pill-option-active-text-color'       => $pill_block_attrs['highlight_text'] ?? '',
+						'--sc-pill-option-active-border-color'     => $pill_block_attrs['highlight_border'] ?? '',
+					]
+				)
 			),
 		]
 	)
