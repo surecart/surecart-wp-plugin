@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-12-16T15:09:51+00:00\n"
+"POT-Creation-Date: 2025-12-17T22:05:04+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.9.0\n"
 
@@ -115,7 +115,8 @@ msgstr ""
 msgid "Every Minute"
 msgstr ""
 
-#: src/Background/BackgroundProcess.php:683
+#. translators: %d is the number of minutes.
+#: src/Background/BackgroundProcess.php:684
 msgid "Every %d Minutes"
 msgstr ""
 
@@ -814,7 +815,7 @@ msgid "Edit"
 msgstr ""
 
 #: src/Controllers/Admin/AffiliationReferrals/AffiliationReferralsListTable.php:149
-#: src/Controllers/Admin/Coupons/CouponsListTable.php:352
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:353
 #: affiliation-referrals/EditAffiliationReferral.js:253
 #: affiliation-requests/EditAffiliationRequest.js:261
 msgid "Approve"
@@ -1161,11 +1162,11 @@ msgstr ""
 #: Blocks/Dashboard/CustomerSubscriptions/Block.php:79
 #: Controllers/SubscriptionController.php:177
 #: Controllers/SubscriptionController.php:306
-#: Controllers/SubscriptionController.php:400
-#: Controllers/SubscriptionController.php:485
-#: Controllers/SubscriptionController.php:544
-#: Controllers/SubscriptionController.php:607
-#: Controllers/SubscriptionController.php:674
+#: Controllers/SubscriptionController.php:403
+#: Controllers/SubscriptionController.php:488
+#: Controllers/SubscriptionController.php:547
+#: Controllers/SubscriptionController.php:610
+#: Controllers/SubscriptionController.php:677
 msgid "Plan"
 msgstr ""
 
@@ -1299,11 +1300,12 @@ msgstr ""
 msgid "No code specified"
 msgstr ""
 
-#: src/Controllers/Admin/Coupons/CouponsListTable.php:284
+#. translators: %d is the number of additional coupons.
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:285
 msgid "+ %d more"
 msgstr ""
 
-#: src/Controllers/Admin/Coupons/CouponsListTable.php:296
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:297
 #: src/Controllers/Admin/Licenses/LicensesListTable.php:169
 #: src/Controllers/Admin/Products/ProductsListTable.php:531
 #: bumps/EditBump.js:127
@@ -1317,7 +1319,7 @@ msgstr ""
 msgid "Un-Archive"
 msgstr ""
 
-#: src/Controllers/Admin/Coupons/CouponsListTable.php:296
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:297
 #: src/Controllers/Admin/Licenses/LicensesListTable.php:169
 #: src/Controllers/Admin/Products/ProductsListTable.php:531
 #: bumps/EditBump.js:128
@@ -1331,28 +1333,28 @@ msgstr ""
 msgid "Archive"
 msgstr ""
 
-#: src/Controllers/Admin/Coupons/CouponsListTable.php:297
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:298
 msgid "Are you sure you want to restore this coupon? This will be be available to purchase."
 msgstr ""
 
-#: src/Controllers/Admin/Coupons/CouponsListTable.php:297
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:298
 msgid "Are you sure you want to archive this coupon? This will be unavailable for purchase."
 msgstr ""
 
-#: src/Controllers/Admin/Coupons/CouponsListTable.php:304
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:305
 msgid "Toggle Coupon Archive"
 msgstr ""
 
-#: src/Controllers/Admin/Coupons/CouponsListTable.php:349
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:350
 msgid "Unapprove"
 msgstr ""
 
-#: src/Controllers/Admin/Coupons/CouponsListTable.php:355
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:356
 msgctxt "comment"
 msgid "Mark as spam"
 msgstr ""
 
-#: src/Controllers/Admin/Coupons/CouponsListTable.php:359
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:360
 #: src/Controllers/Admin/Restore/RestoreController.php:26
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:253
 #: admin/restore/index.php:37
@@ -1362,18 +1364,18 @@ msgstr ""
 msgid "Restore"
 msgstr ""
 
-#: src/Controllers/Admin/Coupons/CouponsListTable.php:361
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:362
 msgctxt "comment"
 msgid "Not spam"
 msgstr ""
 
-#: src/Controllers/Admin/Coupons/CouponsListTable.php:365
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:366
 #: src/Controllers/Admin/Customers/CustomersListTable.php:317
 #: src/Controllers/Admin/Products/ProductsListTable.php:622
 msgid "Delete permanently"
 msgstr ""
 
-#: src/Controllers/Admin/Coupons/CouponsListTable.php:367
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:368
 msgid "Move to Trash"
 msgstr ""
 
@@ -2046,88 +2048,48 @@ msgstr ""
 msgid "No Product"
 msgstr ""
 
-#. translators: number of days.
+#. translators: %d is the number of days.
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:275
-#: src/Support/Interval.php:29
+#: src/Support/Interval.php:30
 #: util/translations.js:14
 msgid "%d day"
 msgid_plural "%d days"
 msgstr[0] ""
 msgstr[1] ""
 
-#. translators: number of days.
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:275
-#: src/Models/Price.php:310
-#: src/Models/Price.php:354
-#: src/Support/Interval.php:29
-#: util/translations.js:15
-msgid "day"
-msgid_plural "%d days"
-msgstr[0] ""
-msgstr[1] ""
-
-#. translators: number of weeks.
+#. translators: %d is the number of weeks.
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:281
-#: src/Support/Interval.php:35
+#: src/Support/Interval.php:37
 #: util/translations.js:21
 msgid "%d week"
 msgid_plural "%d weeks"
 msgstr[0] ""
 msgstr[1] ""
 
-#. translators: number of weeks.
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:281
-#: src/Models/Price.php:314
-#: src/Support/Interval.php:35
-#: util/translations.js:22
-msgid "week"
-msgid_plural "%d weeks"
-msgstr[0] ""
-msgstr[1] ""
-
-#. translators: number of months
+#. translators: %d is the number of months.
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:287
-#: src/Models/Checkout.php:603
-#: src/Support/Interval.php:41
+#: src/Models/Checkout.php:605
+#: src/Support/Interval.php:44
 #: util/translations.js:28
 msgid "%d month"
 msgid_plural "%d months"
 msgstr[0] ""
 msgstr[1] ""
 
-#. translators: number of months
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:287
-#: src/Models/Price.php:318
-#: src/Support/Interval.php:41
-#: util/translations.js:29
-msgid "month"
-msgid_plural "%d months"
-msgstr[0] ""
-msgstr[1] ""
-
-#. translators: number of yearls
+#. translators: %d is the number of years.
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:293
-#: src/Support/Interval.php:47
+#: src/Support/Interval.php:51
 #: util/translations.js:35
 msgid "%d year"
 msgid_plural "%d years"
 msgstr[0] ""
 msgstr[1] ""
 
-#. translators: number of yearls
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:293
-#: src/Models/Price.php:322
-#: src/Support/Interval.php:47
-#: util/translations.js:36
-msgid "year"
-msgid_plural "%d years"
-msgstr[0] ""
-msgstr[1] ""
-
 #. translators: Coupon % off.
+#. translators: %1d is the percentage discount.
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:337
-#: src/Models/Checkout.php:580
-#: src/Models/Coupon.php:54
+#: src/Models/Checkout.php:581
+#: src/Models/Coupon.php:55
 #: util.js:49
 msgid "%1d%% off"
 msgstr ""
@@ -2286,11 +2248,11 @@ msgstr ""
 #: Controllers/SubscriptionController.php:111
 #: Controllers/SubscriptionController.php:158
 #: Controllers/SubscriptionController.php:273
-#: Controllers/SubscriptionController.php:383
-#: Controllers/SubscriptionController.php:468
-#: Controllers/SubscriptionController.php:527
-#: Controllers/SubscriptionController.php:604
-#: Controllers/SubscriptionController.php:671
+#: Controllers/SubscriptionController.php:386
+#: Controllers/SubscriptionController.php:471
+#: Controllers/SubscriptionController.php:530
+#: Controllers/SubscriptionController.php:607
+#: Controllers/SubscriptionController.php:674
 #: Controllers/UserController.php:61
 #: Blocks/Dashboard/CustomerDashboard/edit.js:173
 msgid "Dashboard"
@@ -2392,16 +2354,16 @@ msgstr ""
 #: src/WordPress/Admin/SSLCheck/AdminSSLCheckService.php:31
 #: src/WordPress/CompatibilityService.php:237
 #: src/WordPress/HealthService.php:32
-#: src/WordPress/HealthService.php:83
-#: src/WordPress/HealthService.php:92
-#: src/WordPress/HealthService.php:96
-#: src/WordPress/HealthService.php:115
-#: src/WordPress/HealthService.php:118
-#: src/WordPress/HealthService.php:143
-#: src/WordPress/HealthService.php:172
-#: src/WordPress/HealthService.php:177
-#: src/WordPress/HealthService.php:181
-#: src/WordPress/HealthService.php:191
+#: src/WordPress/HealthService.php:84
+#: src/WordPress/HealthService.php:93
+#: src/WordPress/HealthService.php:97
+#: src/WordPress/HealthService.php:116
+#: src/WordPress/HealthService.php:119
+#: src/WordPress/HealthService.php:144
+#: src/WordPress/HealthService.php:174
+#: src/WordPress/HealthService.php:179
+#: src/WordPress/HealthService.php:183
+#: src/WordPress/HealthService.php:193
 #: src/WordPress/Templates/TemplatesService.php:154
 #: src/WordPress/ThemeService.php:88
 #: admin/user-profile.php:1
@@ -4376,14 +4338,14 @@ msgstr ""
 msgid "Multiple Disputes"
 msgstr ""
 
-#: src/Models/Checkout.php:601
+#: src/Models/Checkout.php:602
 #: util/translations.js:7
 #: util/translations.js:53
 #: util/translations.js:60
 msgid "once"
 msgstr ""
 
-#: src/Models/Checkout.php:616
+#: src/Models/Checkout.php:618
 #: src/Models/Price.php:142
 #: checkouts/modules/SelectShipping.js:130
 #: invoices/modules/SelectShipping.js:95
@@ -4685,6 +4647,14 @@ msgid_plural "%d payments"
 msgstr[0] ""
 msgstr[1] ""
 
+#: src/Models/Price.php:310
+#: src/Models/Price.php:354
+#: util/translations.js:15
+msgid "day"
+msgid_plural "%d days"
+msgstr[0] ""
+msgstr[1] ""
+
 #: src/Models/Price.php:311
 #: src/Models/Price.php:355
 #: products/components/price/parts/RevokeAfterDays.js:59
@@ -4693,14 +4663,35 @@ msgstr[1] ""
 msgid "days"
 msgstr ""
 
+#: src/Models/Price.php:314
+#: util/translations.js:22
+msgid "week"
+msgid_plural "%d weeks"
+msgstr[0] ""
+msgstr[1] ""
+
 #: src/Models/Price.php:315
 msgid "weeks"
 msgstr ""
+
+#: src/Models/Price.php:318
+#: util/translations.js:29
+msgid "month"
+msgid_plural "%d months"
+msgstr[0] ""
+msgstr[1] ""
 
 #: src/Models/Price.php:319
 #: components/coupon/CouponDiscountDuration.js:81
 msgid "months"
 msgstr ""
+
+#: src/Models/Price.php:322
+#: util/translations.js:36
+msgid "year"
+msgid_plural "%d years"
+msgstr[0] ""
+msgstr[1] ""
 
 #: src/Models/Price.php:323
 msgid "years"
@@ -4708,39 +4699,30 @@ msgstr ""
 
 #. translators: %1$d is the number of intervals, %2$s is the interval.
 #: src/Models/Price.php:335
-msgid "every %2$2s"
-msgid_plural "every %1$1s %2$2s"
+msgid "every %1$d %2$s"
+msgid_plural "every %1$d %2$s"
 msgstr[0] ""
 msgstr[1] ""
 
 #: src/Models/Price.php:358
-#: src/Support/Interval.php:80
 msgid "wk"
-msgid_plural "%d wks"
-msgstr[0] ""
-msgstr[1] ""
+msgstr ""
 
 #: src/Models/Price.php:359
 msgid "wks"
 msgstr ""
 
 #: src/Models/Price.php:362
-#: src/Support/Interval.php:86
 msgid "mo"
-msgid_plural "%d mos"
-msgstr[0] ""
-msgstr[1] ""
+msgstr ""
 
 #: src/Models/Price.php:363
 msgid "mos"
 msgstr ""
 
 #: src/Models/Price.php:366
-#: src/Support/Interval.php:92
 msgid "yr"
-msgid_plural "%d yrs"
-msgstr[0] ""
-msgstr[1] ""
+msgstr ""
 
 #: src/Models/Price.php:367
 msgid "yrs"
@@ -4748,8 +4730,8 @@ msgstr ""
 
 #. translators: %1$d is the number of intervals, %2$s is the interval.
 #: src/Models/Price.php:379
-msgid "/ %2$2s"
-msgid_plural "/ %1$1s %2$2s"
+msgid "/ %1$d %2$s"
+msgid_plural "/ %1$d %2$s"
 msgstr[0] ""
 msgstr[1] ""
 
@@ -6900,31 +6882,29 @@ msgstr ""
 msgid "This is outside the allowed amount."
 msgstr ""
 
-#: src/Support/Interval.php:74
+#. translators: %d is the number of days (abbreviated).
+#: src/Support/Interval.php:79
 msgid "%d d"
 msgid_plural "%d d"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Support/Interval.php:74
-msgid "d"
-msgid_plural "%d d"
-msgstr[0] ""
-msgstr[1] ""
-
-#: src/Support/Interval.php:80
+#. translators: %d is the number of weeks (abbreviated).
+#: src/Support/Interval.php:86
 msgid "%d wk"
 msgid_plural "%d wks"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Support/Interval.php:86
+#. translators: %d is the number of months (abbreviated).
+#: src/Support/Interval.php:93
 msgid "%d mo"
 msgid_plural "%d mos"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Support/Interval.php:92
+#. translators: %d is the number of years (abbreviated).
+#: src/Support/Interval.php:100
 msgid "%d yr"
 msgid_plural "%d yrs"
 msgstr[0] ""
@@ -7846,99 +7826,103 @@ msgid "Not registered"
 msgstr ""
 
 #: src/WordPress/HealthService.php:55
-#: src/WordPress/HealthService.php:92
+#: src/WordPress/HealthService.php:93
 msgid "Webhooks Processing"
 msgstr ""
 
-#: src/WordPress/HealthService.php:56
+#. translators: %d is the number of unprocessed webhooks.
+#: src/WordPress/HealthService.php:57
 msgid "%d Unprocessed webhooks"
 msgstr ""
 
-#: src/WordPress/HealthService.php:56
+#. translators: %d is the number of unprocessed webhooks.
+#: src/WordPress/HealthService.php:57
 msgid "Working"
 msgstr ""
 
-#: src/WordPress/HealthService.php:60
+#: src/WordPress/HealthService.php:61
 msgid "Encryption Key"
 msgstr ""
 
-#: src/WordPress/HealthService.php:61
-#: src/WordPress/HealthService.php:66
+#: src/WordPress/HealthService.php:62
+#: src/WordPress/HealthService.php:67
 msgid "Defined"
 msgstr ""
 
-#: src/WordPress/HealthService.php:61
-#: src/WordPress/HealthService.php:66
+#: src/WordPress/HealthService.php:62
+#: src/WordPress/HealthService.php:67
 msgid "Not defined"
 msgstr ""
 
-#: src/WordPress/HealthService.php:65
+#: src/WordPress/HealthService.php:66
 msgid "Number Formatter"
 msgstr ""
 
-#: src/WordPress/HealthService.php:83
-#: src/WordPress/HealthService.php:115
+#: src/WordPress/HealthService.php:84
+#: src/WordPress/HealthService.php:116
 msgid "API connectivity"
 msgstr ""
 
-#: src/WordPress/HealthService.php:96
+#: src/WordPress/HealthService.php:97
 msgid "Webhooks Connection"
 msgstr ""
 
-#: src/WordPress/HealthService.php:123
+#: src/WordPress/HealthService.php:124
 msgid "API for is reachable."
 msgstr ""
 
-#: src/WordPress/HealthService.php:123
+#: src/WordPress/HealthService.php:124
 msgid "API for is not reachable."
 msgstr ""
 
-#: src/WordPress/HealthService.php:140
+#: src/WordPress/HealthService.php:141
 msgid "SureCart Webhooks Processing Error"
 msgstr ""
 
-#: src/WordPress/HealthService.php:140
+#: src/WordPress/HealthService.php:141
 msgid "SureCart Webhooks Processing"
 msgstr ""
 
-#: src/WordPress/HealthService.php:148
+#. translators: %d is the number of failed webhooks.
+#: src/WordPress/HealthService.php:150
 msgid "%d of your webhooks failed to process on your site. Please check your error logs to make sure errors did not occur in webhook processing."
 msgstr ""
 
-#: src/WordPress/HealthService.php:148
+#. translators: %d is the number of failed webhooks.
+#: src/WordPress/HealthService.php:150
 msgid "Webhook processing is working normally."
 msgstr ""
 
-#: src/WordPress/HealthService.php:153
-#: src/WordPress/HealthService.php:201
+#: src/WordPress/HealthService.php:155
+#: src/WordPress/HealthService.php:203
 msgid "Troubleshoot Connection"
 msgstr ""
 
-#: src/WordPress/HealthService.php:171
+#: src/WordPress/HealthService.php:173
 msgid "Webhooks are working normally."
 msgstr ""
 
-#: src/WordPress/HealthService.php:172
+#: src/WordPress/HealthService.php:174
 msgid "Webhooks"
 msgstr ""
 
-#: src/WordPress/HealthService.php:177
+#: src/WordPress/HealthService.php:179
 msgid "webhook is disabled."
 msgstr ""
 
-#: src/WordPress/HealthService.php:178
+#: src/WordPress/HealthService.php:180
 msgid "The SureCart webhook is currently disabled which can cause issues with integrations. This can happen automatically due to repeated errors, or could have been disabled manually. Please re-enable the webhook and troubleshoot the issue if integrations are important to your store."
 msgstr ""
 
-#: src/WordPress/HealthService.php:181
+#: src/WordPress/HealthService.php:183
 msgid "webhook connection is being monitored for errors."
 msgstr ""
 
-#: src/WordPress/HealthService.php:182
+#: src/WordPress/HealthService.php:184
 msgid "The SureCart webhook has received repeated errors."
 msgstr ""
 
-#: src/WordPress/HealthService.php:184
+#: src/WordPress/HealthService.php:186
 msgid "Please troubleshoot the issue if integrations are important to your store."
 msgstr ""
 
@@ -8787,7 +8771,7 @@ msgstr[1] ""
 #: upsell-funnels/CreateFunnel.js:91
 #: upsell-funnels/modules/NewCondition.js:171
 #: upsell-funnels/modules/Upsell/EditUpsell.js:207
-#: Controllers/SubscriptionController.php:610
+#: Controllers/SubscriptionController.php:613
 #: Blocks/BuyButton/Placeholder.js:61
 #: Blocks/CheckoutForm/components/Empty.js:110
 #: Blocks/CheckoutForm/components/Empty.js:150
@@ -10632,7 +10616,7 @@ msgstr ""
 #: components/data-tables/charges-data-table/ChargeDetails.js:82
 #: store/add-entities.js:209
 #: subscriptions/edit/modules/PaymentMethod/index.js:46
-#: Controllers/SubscriptionController.php:680
+#: Controllers/SubscriptionController.php:683
 msgid "Payment Method"
 msgstr ""
 
@@ -11843,8 +11827,8 @@ msgstr ""
 #: subscriptions/show/modules/modals/ForceCancelModal.js:71
 #: subscriptions/show/modules/modals/PayOffSubscriptionModal.js:52
 #: subscriptions/show/modules/modals/RetryPaymentModal.js:75
-#: Controllers/SubscriptionController.php:547
-#: Controllers/SubscriptionController.php:677
+#: Controllers/SubscriptionController.php:550
+#: Controllers/SubscriptionController.php:680
 msgid "Confirm"
 msgstr ""
 
@@ -12423,9 +12407,11 @@ msgstr ""
 msgid "and"
 msgstr ""
 
+#. translators: %1$s is the terms URL, %2$s is the terms link text, %3$s is the privacy URL, %4$s is the privacy link text.
+#. translators: %1$s is the privacy policy URL, %2$s is the privacy policy link text.
 #: onboarding/components/InitialSetup.js:106
-#: Controllers/SubscriptionController.php:356
-#: Controllers/SubscriptionController.php:360
+#: Controllers/SubscriptionController.php:357
+#: Controllers/SubscriptionController.php:362
 msgid "Privacy Policy"
 msgstr ""
 
@@ -14401,9 +14387,11 @@ msgstr ""
 msgid "Search Terms"
 msgstr ""
 
+#. translators: %1$s is the terms URL, %2$s is the terms link text, %3$s is the privacy URL, %4$s is the privacy link text.
+#. translators: %1$s is the terms URL, %2$s is the terms link text.
 #: products/modules/Taxonomies/hierarchical-term-selector.js:407
-#: Controllers/SubscriptionController.php:356
-#: Controllers/SubscriptionController.php:364
+#: Controllers/SubscriptionController.php:357
+#: Controllers/SubscriptionController.php:367
 msgid "Terms"
 msgstr ""
 
@@ -18317,32 +18305,35 @@ msgstr ""
 msgid "Change Payment Method"
 msgstr ""
 
-#: Controllers/SubscriptionController.php:356
+#. translators: %1$s is the terms URL, %2$s is the terms link text, %3$s is the privacy URL, %4$s is the privacy link text.
+#: Controllers/SubscriptionController.php:357
 msgid "By updating or canceling your plan, you agree to the <a href=\"%1$1s\" target=\"_blank\">%2$2s</a> and <a href=\"%3$3s\" target=\"_blank\">%4$4s</a>"
 msgstr ""
 
-#: Controllers/SubscriptionController.php:360
-#: Controllers/SubscriptionController.php:364
+#. translators: %1$s is the privacy policy URL, %2$s is the privacy policy link text.
+#. translators: %1$s is the terms URL, %2$s is the terms link text.
+#: Controllers/SubscriptionController.php:362
+#: Controllers/SubscriptionController.php:367
 msgid "By updating or canceling your plan, you agree to the <a href=\"%1$1s\" target=\"_blank\">%2$2s</a>"
 msgstr ""
 
-#: Controllers/SubscriptionController.php:403
+#: Controllers/SubscriptionController.php:406
 msgid "Enter Amount"
 msgstr ""
 
-#: Controllers/SubscriptionController.php:414
+#: Controllers/SubscriptionController.php:417
 msgid "Enter An Amount"
 msgstr ""
 
-#: Controllers/SubscriptionController.php:488
+#: Controllers/SubscriptionController.php:491
 msgid "Choose Variation"
 msgstr ""
 
-#: Controllers/SubscriptionController.php:499
+#: Controllers/SubscriptionController.php:502
 msgid "Choose a Variation"
 msgstr ""
 
-#: Controllers/SubscriptionController.php:563
+#: Controllers/SubscriptionController.php:566
 msgid "New Plan"
 msgstr ""
 
