@@ -33,6 +33,11 @@ class SEOPressService extends NoIndexService {
 		$robots = array_filter(
 			$robots,
 			function ( $value ) {
+				// Skip non-string values.
+				if ( ! is_string( $value ) ) {
+					return true;
+				}
+
 				// Remove 'index, follow' combined string.
 				if ( strpos( $value, 'index' ) !== false && strpos( $value, 'noindex' ) === false ) {
 					return false;
