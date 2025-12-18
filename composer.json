@@ -98,6 +98,14 @@
 			"dealerdirect/phpcodesniffer-composer-installer": true,
 			"composer/installers": true,
 			"typisttech/imposter-plugin": true
+		},
+		"audit": {
+			"ignore": [
+				"PKSA-wws7-mr54-jsny",
+				"PKSA-b8f7-zn44-r4gz",
+				"PKSA-s25b-vbmp-jvhh",
+				"PKSA-jn72-4kr8-gj3h"
+			]
 		}
 	}
 }

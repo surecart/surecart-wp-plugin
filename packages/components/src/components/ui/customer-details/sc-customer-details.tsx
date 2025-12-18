@@ -1,7 +1,6 @@
-import { Component, Element, h, Prop } from '@stencil/core';
+import { Component, Element, h, Prop, State } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { Address, Customer } from '../../../types';
-import { formatAddress } from 'localized-address-format';
 import { countryChoices } from '../../../functions/address';
 import { zones } from '../../../functions/tax';
 
@@ -34,6 +33,16 @@ export class ScCustomerDetails {
   @Prop() customer: Customer;
   @Prop() loading: boolean;
   @Prop() error: string;
+  /** Holds our country choices. */
+  @State() countryChoices: Array<{ value: string; label: string }>;
+
+  componentWillLoad() {
+    this.initCountryChoices();
+  }
+
+  async initCountryChoices() {
+    this.countryChoices = await countryChoices();
+  }
 
   renderContent() {
     if (this.loading) {
@@ -66,7 +75,7 @@ export class ScCustomerDetails {
               <div></div>
             </sc-stacked-list-row>
           )}
-          {!!Object.keys(this?.customer?.shipping_address || {}).length && this.renderAddress(__('Shipping Address', 'surecart'), this.customer.shipping_address)}
+          {!!Object.keys(this?.customer?.shipping_address_display || {}).length && this.renderAddress(__('Shipping Address', 'surecart'), this.customer.shipping_address_display)}
           {!!Object.keys(this.customer?.billing_address_display).length && this.renderAddress(__('Billing Address', 'surecart'), this.customer.billing_address_display)}
           {!!this?.customer?.phone && (
             <sc-stacked-list-row style={{ '--columns': '3' }} mobileSize={480}>
@@ -100,26 +109,12 @@ export class ScCustomerDetails {
   }
 
   renderAddress(label: string = 'Address', address: Address) {
-    const { name, line_1, line_2, city, state, postal_code, country } = address;
-    const countryName = countryChoices.find(({ value }) => value === country)?.label;
     return (
       <sc-stacked-list-row style={{ '--columns': '3' }} mobileSize={480}>
         <div>
           <strong>{label}</strong>
         </div>
-        <div>
-          {[
-            ...(formatAddress({
-              name: name || '',
-              postalCountry: country || '',
-              administrativeArea: state || '',
-              locality: city || '',
-              postalCode: postal_code || '',
-              addressLines: [line_1, line_2].filter(Boolean),
-            }) || []),
-            countryName || country,
-          ].join('\n')}
-        </div>
+        <div style={{ whiteSpace: 'pre-line' }}>{address}</div>
         <div></div>
       </sc-stacked-list-row>
     );

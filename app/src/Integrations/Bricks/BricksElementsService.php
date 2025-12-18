@@ -12,6 +12,11 @@ class BricksElementsService {
 	 * @return void
 	 */
 	public function bootstrap() {
+		// disable core block assets if we are in the bricks editor.
+		if ( isset( $_GET['bricks'] ) && 'run' === $_GET['bricks'] ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			add_filter( 'should_load_separate_core_block_assets', '__return_false' );
+		}
+
 		// Register the elements.
 		add_action( 'init', [ $this, 'registerElements' ], 11 );
 

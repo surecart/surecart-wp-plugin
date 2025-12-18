@@ -17,9 +17,12 @@ class ThemeServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function register( $container ) {
-		$container['surecart.theme'] = function() {
+		$container['surecart.theme'] = function () {
 			return new ThemeService();
 		};
+
+		$app = $container[ SURECART_APPLICATION_KEY ];
+		$app->alias( 'theme', 'surecart.theme' );
 	}
 
 	/**
