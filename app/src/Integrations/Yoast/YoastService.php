@@ -16,15 +16,13 @@ class YoastService extends NoIndexService {
 	protected $hook_name = 'wpseo_robots_array';
 
 	/**
-	 * Get the noindex robots array.
+	 * The noindex robots.
 	 * Yoast uses boolean values instead of strings.
 	 *
-	 * @return array
+	 * @var array
 	 */
-	protected function getNoIndexRobots(): array {
-		return [
-			'noindex'  => true,
-			'nofollow' => true,
-		];
-	}
+	protected $noindex_robots = [
+		'noindex'  => true,
+		'nofollow' => true,
+	];
 }

@@ -14,6 +14,29 @@ abstract class NoIndexService {
 	protected $hook_name = '';
 
 	/**
+	 * The query vars that should trigger noindex.
+	 *
+	 * @var array
+	 */
+	protected $query_vars = [
+		'products-search',
+		'products-order',
+		'products-orderby',
+		'line_items',
+		'currency',
+	];
+
+	/**
+	 * The noindex robots.
+	 *
+	 * @var array
+	 */
+	protected $noindex_robots = [
+		'noindex'  => 'noindex',
+		'nofollow' => 'nofollow',
+	];
+
+	/**
 	 * Bootstrap the service.
 	 *
 	 * @throws \RuntimeException If hook_name is not set.
@@ -37,7 +60,7 @@ abstract class NoIndexService {
 	 */
 	public function addNoindexForQueryVars( array $robots ): array {
 		if ( $this->hasNoIndexQueryVars() ) {
-			return $this->getNoIndexRobots();
+			return $this->noindex_robots;
 		}
 
 		return $robots;
@@ -52,13 +75,7 @@ abstract class NoIndexService {
 		$query_vars = $this->getNoIndexQueryVars();
 
 		foreach ( $query_vars as $query_var ) {
-			// Check in $_GET for query parameters.
-			if ( isset( $_GET[ $query_var ] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-				return true;
-			}
-
-			// Check in WP_Query.
-			if ( get_query_var( $query_var ) ) {
+			if ( isset( $_GET[ $query_var ] ) || get_query_var( $query_var ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 				return true;
 			}
 		}
@@ -72,20 +89,11 @@ abstract class NoIndexService {
 	 * @return array List of query variable names.
 	 */
 	protected function getNoIndexQueryVars(): array {
-		$query_vars = [
-			'products-sc_collection',
-			'products-search',
-			'products-order',
-			'products-orderby',
-			'line_items',
-			'currency',
-		];
-
 		// Add all registered taxonomies for sc_product.
 		$product_taxonomies = get_object_taxonomies( 'sc_product', 'names' );
 		if ( ! empty( $product_taxonomies ) ) {
 			foreach ( $product_taxonomies as $taxonomy ) {
-				$query_vars[] = 'products-' . $taxonomy;
+				$this->query_vars[] = 'products-' . $taxonomy;
 			}
 		}
 
@@ -94,18 +102,6 @@ abstract class NoIndexService {
 		 *
 		 * @param array $query_vars Array of query variable names.
 		 */
-		return apply_filters( 'surecart/noindex_query_vars', $query_vars );
-	}
-
-	/**
-	 * Get the noindex robots array.
-	 *
-	 * @return array
-	 */
-	protected function getNoIndexRobots(): array {
-		return [
-			'noindex'  => 'noindex',
-			'nofollow' => 'nofollow',
-		];
+		return apply_filters( 'surecart/noindex_query_vars', $this->query_vars, $this );
 	}
 }
