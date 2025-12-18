@@ -2,20 +2,16 @@
 
 namespace SureCart\Integrations\SureRank;
 
-use SureCart\Concerns\HasNoIndexRobots;
+use SureCart\Integrations\Contracts\NoIndexService;
 
 /**
  * Controls the SureRank integration.
  */
-class SureRankService {
-	use HasNoIndexRobots;
-
+class SureRankService extends NoIndexService {
 	/**
-	 * Bootstrap the SureRank integration.
+	 * The filter hook name for the robots meta.
 	 *
-	 * @return void
+	 * @var string
 	 */
-	public function bootstrap(): void {
-		add_filter( 'surerank_robots_meta_array', [ $this, 'addNoindexForQueryVars' ] );
-	}
+	protected $hook_name = 'surerank_robots_meta_array';
 }

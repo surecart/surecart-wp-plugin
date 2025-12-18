@@ -2,22 +2,18 @@
 
 namespace SureCart\Integrations\Yoast;
 
-use SureCart\Concerns\HasNoIndexRobots;
+use SureCart\Integrations\Contracts\NoIndexService;
 
 /**
  * Controls the Yoast SEO integration.
  */
-class YoastService {
-	use HasNoIndexRobots;
-
+class YoastService extends NoIndexService {
 	/**
-	 * Bootstrap the Yoast SEO integration.
+	 * The filter hook name for the robots meta.
 	 *
-	 * @return void
+	 * @var string
 	 */
-	public function bootstrap(): void {
-		add_filter( 'wpseo_robots_array', [ $this, 'addNoindexForQueryVars' ] );
-	}
+	protected $hook_name = 'wpseo_robots_array';
 
 	/**
 	 * Get the noindex robots array.

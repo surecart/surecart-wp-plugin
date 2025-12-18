@@ -2,20 +2,16 @@
 
 namespace SureCart\Integrations\RankMath;
 
-use SureCart\Concerns\HasNoIndexRobots;
+use SureCart\Integrations\Contracts\NoIndexService;
 
 /**
  * Controls the Rank Math integration.
  */
-class RankMathService {
-	use HasNoIndexRobots;
-
+class RankMathService extends NoIndexService {
 	/**
-	 * Bootstrap the Rank Math integration.
+	 * The filter hook name for the robots meta.
 	 *
-	 * @return void
+	 * @var string
 	 */
-	public function bootstrap(): void {
-		add_filter( 'rank_math/frontend/robots', [ $this, 'addNoindexForQueryVars' ] );
-	}
+	protected $hook_name = 'rank_math/frontend/robots';
 }
