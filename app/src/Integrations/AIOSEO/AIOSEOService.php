@@ -2,7 +2,7 @@
 
 namespace SureCart\Integrations\AIOSEO;
 
-use SureCart\Integrations\Contracts\NoIndexService;
+use SureCart\Integrations\Abstracts\NoIndexService;
 
 /**
  * Controls the All in One SEO integration.

@@ -2,7 +2,7 @@
 
 namespace SureCart\Integrations\SureRank;
 
-use SureCart\Integrations\Contracts\NoIndexService;
+use SureCart\Integrations\Abstracts\NoIndexService;
 
 /**
  * Controls the SureRank integration.

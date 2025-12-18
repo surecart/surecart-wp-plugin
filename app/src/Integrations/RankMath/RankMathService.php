@@ -2,7 +2,7 @@
 
 namespace SureCart\Integrations\RankMath;
 
-use SureCart\Integrations\Contracts\NoIndexService;
+use SureCart\Integrations\Abstracts\NoIndexService;
 
 /**
  * Controls the Rank Math integration.

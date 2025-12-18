@@ -1,6 +1,6 @@
 <?php
 
-namespace SureCart\Integrations\Contracts;
+namespace SureCart\Integrations\Abstracts;
 
 /**
  * Abstract base class for SEO plugin integrations that handle noindex robots meta.

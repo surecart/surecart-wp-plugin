@@ -2,7 +2,7 @@
 
 namespace SureCart\Integrations\Yoast;
 
-use SureCart\Integrations\Contracts\NoIndexService;
+use SureCart\Integrations\Abstracts\NoIndexService;
 
 /**
  * Controls the Yoast SEO integration.
