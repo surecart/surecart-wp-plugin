@@ -89,19 +89,16 @@ abstract class NoIndexService {
 	 * @return array List of query variable names.
 	 */
 	protected function getNoIndexQueryVars(): array {
+		$query_vars = $this->query_vars;
+
 		// Add all registered taxonomies for sc_product.
 		$product_taxonomies = get_object_taxonomies( 'sc_product', 'names' );
 		if ( ! empty( $product_taxonomies ) ) {
 			foreach ( $product_taxonomies as $taxonomy ) {
-				$this->query_vars[] = 'products-' . $taxonomy;
+				$query_vars[] = 'products-' . $taxonomy;
 			}
 		}
 
-		/**
-		 * Filter the query variables that should trigger noindex in SEO plugins.
-		 *
-		 * @param array $query_vars Array of query variable names.
-		 */
-		return apply_filters( 'surecart/noindex_query_vars', array_unique( $this->query_vars ), $this );
+		return apply_filters( 'surecart/noindex_query_vars', array_unique( $query_vars ), $this );
 	}
 }
