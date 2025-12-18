@@ -1,11 +1,14 @@
 <?php
 
-if ( ! ( $block->context['show_value'] ?? true ) ) {
+$product = sc_get_product();
+if ( ! $product ) {
 	return '';
 }
 
-$product = sc_get_product();
-if ( ! $product ) {
+$show_for_zero_reviews = $attributes['show_for_zero_reviews'] ?? true;
+
+// If show_for_zero_reviews is false and there are no reviews, return early.
+if ( ! $show_for_zero_reviews && 0 === (int) $product->total_reviews ) {
 	return '';
 }
 
@@ -20,7 +23,7 @@ if ( str_contains( $wrapper, 'is-style-parentheses' ) ) {
 	$content .= ' / 5.0';
 }
 
-// Get link_to_reviews from context (parent block) or fallback to attribute.
-$link_to_reviews = $block->context['link_to_reviews'] ?? $attributes['link_to_reviews'] ?? false;
+// Get link_to_reviews from attribute.
+$link_to_reviews = $attributes['link_to_reviews'] ?? false;
 
 return 'file:./view.php';

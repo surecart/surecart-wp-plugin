@@ -2,7 +2,7 @@
  * WordPress dependencies.
  */
 import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
-import { PanelBody, RangeControl } from '@wordpress/components';
+import { PanelBody, RangeControl, ToggleControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -13,7 +13,8 @@ import { getSpacingPresetCssVar } from '../../../../blocks/util';
 import ScIcon from '../../components/ScIcon';
 
 export default ({ attributes, setAttributes, clientId }) => {
-	const { fill_color, size, style } = attributes;
+	const { fill_color, size, style, link_to_reviews, show_for_zero_reviews } =
+		attributes;
 
 	const blockProps = useBlockProps({
 		style: {
@@ -31,6 +32,32 @@ export default ({ attributes, setAttributes, clientId }) => {
 						onChange={(value) => setAttributes({ size: value })}
 						min={10}
 						max={100}
+					/>
+				</PanelBody>
+				<PanelBody title={__('Settings', 'surecart')}>
+					<ToggleControl
+						__nextHasNoMarginBottom
+						label={__('Link to reviews', 'surecart')}
+						help={__(
+							'Toggle on to link to the reviews section.',
+							'surecart'
+						)}
+						onChange={(link_to_reviews) =>
+							setAttributes({ link_to_reviews })
+						}
+						checked={link_to_reviews}
+					/>
+					<ToggleControl
+						__nextHasNoMarginBottom
+						label={__('Show for zero reviews', 'surecart')}
+						help={__(
+							'Toggle on to show the average rating even if there are zero reviews.',
+							'surecart'
+						)}
+						onChange={(show_for_zero_reviews) =>
+							setAttributes({ show_for_zero_reviews })
+						}
+						checked={show_for_zero_reviews}
 					/>
 				</PanelBody>
 			</InspectorControls>

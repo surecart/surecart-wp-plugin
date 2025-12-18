@@ -7,6 +7,13 @@ if ( ! $product ) {
 	return '';
 }
 
+$show_for_zero_reviews = $attributes['show_for_zero_reviews'] ?? true;
+
+// If show_for_zero_reviews is false and there are no reviews, return early.
+if ( ! $show_for_zero_reviews && 0 === (int) $product->total_reviews ) {
+	return '';
+}
+
 $average_rating = (float) ( $product->average_stars ?? 0 );
 $size           = $attributes['size'] ?? 20;
 
@@ -26,8 +33,8 @@ if ( empty( $fill_color ) ) {
 $gap   = ! empty( $attributes['style']['spacing']['blockGap'] ) ? \SureCart::block()->styles()->getBlockGapPresetCssVar( $attributes['style']['spacing']['blockGap'] ) : '';
 $style = ! empty( $gap ) ? 'gap:' . esc_attr( $gap ) . ';' : '';
 
-// Get link_to_reviews from context (parent block) or fallback to attribute (for standalone usage like Elementor/Bricks).
-$link_to_reviews = $block->context['link_to_reviews'] ?? $attributes['link_to_reviews'] ?? false;
+// Get link_to_reviews from attribute.
+$link_to_reviews = $attributes['link_to_reviews'] ?? false;
 $html_tag        = $link_to_reviews ? 'a' : 'div';
 
 return 'file:./view.php';
