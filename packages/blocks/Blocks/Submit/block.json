@@ -9,7 +9,13 @@
 	"supports": {
 		"reusable": false,
 		"html": false,
-		"multiple": false
+		"multiple": false,
+		"color": {
+			"__experimentalSkipSerialization": true,
+			"text": true,
+			"link": false,
+			"background": true
+		}
 	},
 	"attributes": {
 		"text": {
@@ -43,14 +49,6 @@
 		"size": {
 			"type": "string",
 			"default": "large"
-		},
-		"background_color": {
-			"type": "string",
-			"default": ""
-		},
-		"text_color": {
-			"type": "string",
-			"default": ""
 		}
 	}
 }
