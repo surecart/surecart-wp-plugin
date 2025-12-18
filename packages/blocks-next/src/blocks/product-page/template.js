@@ -29,10 +29,6 @@ export default [
 						[
 							['surecart/product-review-average-rating-stars'],
 							[
-								'surecart/product-review-average-rating-value',
-								{ className: 'is-style-parentheses' },
-							],
-							[
 								'surecart/product-review-total-rating',
 								{
 									style_variant: 'plus-sign',

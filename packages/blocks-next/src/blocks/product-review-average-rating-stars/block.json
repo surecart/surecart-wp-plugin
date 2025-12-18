@@ -7,15 +7,7 @@
 	"version": "1.0.0",
 	"category": "surecart-product-page",
 	"example": {},
-	"ancestor": [
-		"surecart/product-page",
-		"surecart/product-quick-view",
-		"surecart/product-review-list",
-		"surecart/product-review-template",
-		"surecart/sticky-purchase",
-		"surecart/product-review-summary",
-		"surecart/product-template"
-	],
+	"usesContext": ["show_value", "link_to_reviews"],
 	"keywords": ["review", "average", "rating", "stars"],
 	"attributes": {
 		"fill_color": {
@@ -29,10 +21,6 @@
 		"link_to_reviews": {
 			"type": "boolean",
 			"default": false
-		},
-		"show_for_zero_reviews": {
-			"type": "boolean",
-			"default": true
 		}
 	},
 	"supports": {

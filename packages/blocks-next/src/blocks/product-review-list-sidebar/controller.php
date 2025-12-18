@@ -12,5 +12,6 @@ wp_interactivity_state(
 	]
 );
 
+
 // return the view.
 return 'file:./view.php';

@@ -28,7 +28,7 @@
 		},
 		"link_to_reviews": {
 			"type": "boolean",
-			"default": false
+			"default": true
 		}
 	},
 	"example": {},
