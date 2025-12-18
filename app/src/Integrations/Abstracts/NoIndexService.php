@@ -102,6 +102,6 @@ abstract class NoIndexService {
 		 *
 		 * @param array $query_vars Array of query variable names.
 		 */
-		return apply_filters( 'surecart/noindex_query_vars', $this->query_vars, $this );
+		return apply_filters( 'surecart/noindex_query_vars', array_unique( $this->query_vars ), $this );
 	}
 }
