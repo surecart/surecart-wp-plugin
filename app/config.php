@@ -159,6 +159,7 @@ return array(
 		\SureCart\Integrations\AIOSEO\AIOSEOServiceProvider::class,
 		\SureCart\Integrations\RankMath\RankMathServiceProvider::class,
 		\SureCart\Integrations\SEOPress\SEOPressServiceProvider::class,
+		\SureCart\Integrations\TheSEOFramework\TheSEOFrameworkServiceProvider::class,
 		\SureCart\Integrations\SureRank\SureRankServiceProvider::class,
 		\SureCart\Integrations\Yoast\YoastServiceProvider::class,
 	),
