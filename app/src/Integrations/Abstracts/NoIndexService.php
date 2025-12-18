@@ -75,6 +75,7 @@ abstract class NoIndexService {
 		$query_vars = $this->getNoIndexQueryVars();
 
 		foreach ( $query_vars as $query_var ) {
+			// Safe to use $_GET directly as we only check existence, not values.
 			if ( isset( $_GET[ $query_var ] ) || get_query_var( $query_var ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 				return true;
 			}
