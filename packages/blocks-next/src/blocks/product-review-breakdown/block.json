@@ -17,10 +17,6 @@
 	"keywords": ["review", "breakdown", "summary"],
 	"usesContext": ["postId"],
 	"attributes": {
-		"show_for_zero_reviews": {
-			"type": "boolean",
-			"default": true
-		},
 		"columns": {
 			"type": "number",
 			"default": 1

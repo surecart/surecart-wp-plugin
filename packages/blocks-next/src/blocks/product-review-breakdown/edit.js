@@ -54,19 +54,6 @@ export default function ({ attributes, setAttributes, clientId }) {
 		<>
 			<InspectorControls>
 				<PanelBody title={__('Settings', 'surecart')}>
-					<ToggleControl
-						__nextHasNoMarginBottom
-						label={__('Show for zero reviews', 'surecart')}
-						help={__(
-							'Toggle off to hide the breakdown when there are no reviews.',
-							'surecart'
-						)}
-						onChange={(value) =>
-							setAttributes({ show_for_zero_reviews: value })
-						}
-						checked={show_for_zero_reviews}
-					/>
-
 					<RangeControl
 						label={__('Columns', 'surecart')}
 						value={columns}
@@ -87,6 +74,7 @@ export default function ({ attributes, setAttributes, clientId }) {
 					hasValue={() => size !== undefined}
 					label={__('Star size', 'surecart')}
 					onDeselect={() => setAttributes({ size: undefined })}
+					resetAllFilter={() => setAttributes({ size: undefined })}
 					isShownByDefault
 					panelId={clientId}
 				>
@@ -102,6 +90,7 @@ export default function ({ attributes, setAttributes, clientId }) {
 					hasValue={() => row_gap !== undefined}
 					label={__('Row gap', 'surecart')}
 					onDeselect={() => setAttributes({ row_gap: undefined })}
+					resetAllFilter={() => setAttributes({ row_gap: undefined })}
 					isShownByDefault
 					panelId={clientId}
 				>
@@ -118,6 +107,9 @@ export default function ({ attributes, setAttributes, clientId }) {
 						hasValue={() => column_gap !== undefined}
 						label={__('Column gap', 'surecart')}
 						onDeselect={() =>
+							setAttributes({ column_gap: undefined })
+						}
+						resetAllFilter={() =>
 							setAttributes({ column_gap: undefined })
 						}
 						isShownByDefault
@@ -177,19 +169,16 @@ export default function ({ attributes, setAttributes, clientId }) {
 
 						return (
 							<div className="sc-star-row" key={star}>
-								<div className="sc-star-row__label">
-									<span className="sc-star-text">{star}</span>
-									<span className="sc-star-row__label__svg">
-										<ScIcon
-											name="star"
-											width="100%"
-											height="100%"
-											fill="var(--sc-star-fill-color)"
-											stroke="var(--sc-star-stroke-color)"
-											strokeWidth="2"
-										/>
-									</span>
-								</div>
+								<span className="sc-star-text">{star}</span>
+
+								<ScIcon
+									name="star"
+									width="100%"
+									height="100%"
+									className="sc-star-icon"
+									fill="var(--sc-star-fill-color)"
+									stroke="var(--sc-star-stroke-color)"
+								/>
 
 								<div className="sc-star-row__bar">
 									<div

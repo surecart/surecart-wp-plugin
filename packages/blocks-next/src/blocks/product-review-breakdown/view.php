@@ -8,28 +8,28 @@
 			$percentage = $total > 0 ? ( $count / $total ) * 100 : 0;
 			?>
 			<div class="sc-star-row">
-				<div class="sc-star-row__label">
-					<?php echo (int) $star; ?>
-					<?php
-						echo wp_kses(
-							SureCart::svg()->get(
-								'star',
-								[
-									'fill'   => 'var(--sc-star-fill-color)',
-									'stroke' => 'var(--sc-star-fill-color)',
-								]
-							),
-							sc_allowed_svg_html()
-						);
-					?>
-				</div>
+				<span class="sc-star-text"><?php echo (int) $star; ?></span>
+
+				<?php
+					echo wp_kses(
+						SureCart::svg()->get(
+							'star',
+							[
+								'class'  => 'sc-star-icon',
+								'fill'   => 'var(--sc-star-fill-color)',
+								'stroke' => 'var(--sc-star-fill-color)',
+							]
+						),
+						sc_allowed_svg_html()
+					);
+				?>
+
 				<div class="sc-star-row__bar">
-					<div class="sc-star-row__bar-fill" style="width: <?php echo esc_attr( $percentage ); ?>%;<?php echo ! empty( $attributes['bar_fill_color'] ) ? ' background-color: ' . esc_attr( $attributes['bar_fill_color'] ) . ';' : ''; ?>"></div>
+					<div class="sc-star-row__bar-fill" style="width: <?php echo esc_attr( $percentage ); ?>%;"></div>
 				</div>
+
 				<div class="sc-star-row__count"><?php echo esc_html( $count ); ?></div>
 			</div>
-			<?php
-		endfor;
-		?>
+		<?php endfor; ?>
 	</div>
 </div>
