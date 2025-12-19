@@ -6,6 +6,7 @@ echo wp_kses_data(
 				'style'      => $style,
 				'class'      => $link_to_reviews ? 'sc-review-link' : null,
 				'href'       => $link_to_reviews ? sc_get_product_review_link() : null,
+				'nofollow'   => $link_to_reviews ? true : false,
 				// translators: %s: whole stars.
 				'aria-label' => sprintf( __( '%d out of 5 stars', 'surecart' ), $average_rating ),
 			]
