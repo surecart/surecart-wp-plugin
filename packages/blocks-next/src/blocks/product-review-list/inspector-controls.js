@@ -19,7 +19,7 @@ export default function ProductReviewListInspectorControls({
 		<InspectorControls>
 			<PanelBody title={__('Attributes', 'surecart')}>
 				<RangeControl
-					label={__('Products Review Per Page', 'surecart')}
+					label={__('Reviews Per Page', 'surecart')}
 					value={perPage}
 					onChange={(perPage) => onUpdateQuery({ perPage })}
 					step={1}
