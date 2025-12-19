@@ -8,7 +8,12 @@
 	"category": "surecart-product-page",
 	"example": {},
 	"ancestor": ["surecart/product-review-pagination"],
-	"usesContext": ["query", "surecart/product-review/limit", "showLabel"],
+	"usesContext": [
+		"query",
+		"surecart/product-review/limit",
+		"paginationArrow",
+		"showLabel"
+	],
 	"attributes": {
 		"label": {
 			"type": "string"
