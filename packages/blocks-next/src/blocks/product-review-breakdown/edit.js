@@ -7,7 +7,7 @@ import {
 	PanelBody,
 	ToggleControl,
 	RangeControl,
-	SelectControl,
+	__experimentalToolsPanelItem as ToolsPanelItem,
 } from '@wordpress/components';
 
 /**
@@ -15,6 +15,7 @@ import {
  */
 import ColorInspectorControl from '../../components/ColorInspectorControl';
 import ScIcon from '../../components/ScIcon';
+import UnitSpacingControl from '../../components/UnitSpacingControl';
 
 export default function ({ attributes, setAttributes, clientId }) {
 	const {
@@ -22,13 +23,28 @@ export default function ({ attributes, setAttributes, clientId }) {
 		columns,
 		row_gap,
 		column_gap,
-		star_label_gap,
 		size,
 		fill_color,
 		bar_fill_color,
 		bar_background_color,
 	} = attributes;
-	const blockProps = useBlockProps();
+
+	const blockProps = useBlockProps({
+		style: {
+			...(row_gap ? { '--sc-row-gap': row_gap } : {}),
+			...(column_gap ? { '--sc-column-gap': column_gap } : {}),
+			...(fill_color
+				? {
+						'--sc-star-fill-color': fill_color,
+						'--sc-star-stroke-color': fill_color,
+				  }
+				: {}),
+			...(size ? { '--sc-star-size': size } : {}),
+			...(bar_background_color
+				? { '--sc-star-bar-background-color': bar_background_color }
+				: {}),
+		},
+	});
 
 	// Placeholder values for editor preview.
 	const totalReviews = 9;
@@ -51,78 +67,73 @@ export default function ({ attributes, setAttributes, clientId }) {
 						checked={show_for_zero_reviews}
 					/>
 
-					<SelectControl
+					<RangeControl
 						label={__('Columns', 'surecart')}
 						value={columns}
-						options={[
-							{
-								label: __('1 Column', 'surecart'),
-								value: 1,
-							},
-							{
-								label: __('2 Columns', 'surecart'),
-								value: 2,
-							},
-							{
-								label: __('3 Columns', 'surecart'),
-								value: 3,
-							},
-						]}
-						onChange={(value) =>
-							setAttributes({ columns: parseInt(value) })
-						}
+						onChange={(value) => setAttributes({ columns: value })}
+						min={1}
+						max={3}
+						step={1}
 						help={__(
-							'Choose the number of columns to display the review breakdown. You may need to adjust the row & column gap accordingly.',
+							'Choose the number of columns to display the review breakdown. Keep in mind the mumber of columns may shrink if the width is too narrow.',
 							'surecart'
 						)}
 					/>
+				</PanelBody>
+			</InspectorControls>
 
-					<RangeControl
-						label={__('Row gap', 'surecart')}
-						value={row_gap}
-						onChange={(value) => setAttributes({ row_gap: value })}
-						min={0}
-						max={50}
-						help={__(
-							'Adjust the spacing between rows.',
-							'surecart'
-						)}
-					/>
-
-					{columns > 1 && (
-						<RangeControl
-							label={__('Column gap', 'surecart')}
-							value={column_gap}
-							onChange={(value) =>
-								setAttributes({ column_gap: value })
-							}
-							min={0}
-							max={50}
-							help={__(
-								'Adjust the spacing between columns.',
-								'surecart'
-							)}
-						/>
-					)}
-
-					<RangeControl
+			<InspectorControls group="dimensions">
+				<ToolsPanelItem
+					hasValue={() => size !== undefined}
+					label={__('Star size', 'surecart')}
+					onDeselect={() => setAttributes({ size: undefined })}
+					isShownByDefault
+					panelId={clientId}
+				>
+					<UnitSpacingControl
 						label={__('Star size', 'surecart')}
 						value={size}
 						onChange={(value) => setAttributes({ size: value })}
 						min={8}
 						max={64}
 					/>
-
-					<RangeControl
-						label={__('Star and label gap', 'surecart')}
-						value={star_label_gap}
-						onChange={(value) =>
-							setAttributes({ star_label_gap: value })
-						}
+				</ToolsPanelItem>
+				<ToolsPanelItem
+					hasValue={() => row_gap !== undefined}
+					label={__('Row gap', 'surecart')}
+					onDeselect={() => setAttributes({ row_gap: undefined })}
+					isShownByDefault
+					panelId={clientId}
+				>
+					<UnitSpacingControl
+						label={__('Row gap', 'surecart')}
+						value={row_gap}
+						onChange={(value) => setAttributes({ row_gap: value })}
 						min={0}
-						max={20}
+						max={50}
 					/>
-				</PanelBody>
+				</ToolsPanelItem>
+				{columns > 1 && (
+					<ToolsPanelItem
+						hasValue={() => column_gap !== undefined}
+						label={__('Column gap', 'surecart')}
+						onDeselect={() =>
+							setAttributes({ column_gap: undefined })
+						}
+						isShownByDefault
+						panelId={clientId}
+					>
+						<UnitSpacingControl
+							label={__('Column gap', 'surecart')}
+							value={column_gap}
+							onChange={(value) =>
+								setAttributes({ column_gap: value })
+							}
+							min={0}
+							max={100}
+						/>
+					</ToolsPanelItem>
+				)}
 			</InspectorControls>
 
 			<ColorInspectorControl
@@ -158,10 +169,6 @@ export default function ({ attributes, setAttributes, clientId }) {
 			<div {...blockProps}>
 				<div
 					className={`sc-star-bars sc-star-bars__columns-${columns}`}
-					style={{
-						rowGap: `${row_gap}px`,
-						columnGap: `${column_gap}px`,
-					}}
 				>
 					{[5, 4, 3, 2, 1].map((star) => {
 						const count = reviewsBreakdown[star] || 0;
@@ -170,36 +177,21 @@ export default function ({ attributes, setAttributes, clientId }) {
 
 						return (
 							<div className="sc-star-row" key={star}>
-								<div
-									className="sc-star-row__label"
-									style={{ gap: `${star_label_gap}px` }}
-								>
+								<div className="sc-star-row__label">
 									<span className="sc-star-text">{star}</span>
 									<span className="sc-star-row__label__svg">
 										<ScIcon
 											name="star"
-											width={size}
-											height={size}
-											fill={
-												fill_color ||
-												'var(--sc-color-primary-500)'
-											}
-											stroke={
-												fill_color ||
-												'var(--sc-color-primary-500)'
-											}
+											width="100%"
+											height="100%"
+											fill="var(--sc-star-fill-color)"
+											stroke="var(--sc-star-stroke-color)"
 											strokeWidth="2"
 										/>
 									</span>
 								</div>
 
-								<div
-									className="sc-star-row__bar"
-									style={{
-										backgroundColor:
-											bar_background_color || undefined,
-									}}
-								>
+								<div className="sc-star-row__bar">
 									<div
 										className="sc-star-row__bar-fill"
 										style={{

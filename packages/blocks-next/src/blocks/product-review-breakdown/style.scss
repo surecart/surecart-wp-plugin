@@ -6,10 +6,9 @@
 	.sc-star-bars {
 		flex: 1;
 		display: grid;
-		min-width: 150px;
 		width: 100%;
 		row-gap: var(--sc-row-gap, 2px);
-		column-gap: var(--sc-column-gap, 20px);
+		column-gap: var(--sc-column-gap, 30px);
 
 		&__columns-1 {
 			grid-template-columns: 1fr;
@@ -61,13 +60,29 @@
 
 				&__svg {
 					line-height: 1;
+					height: var(--sc-star-size, 16px);
+					width: var(--sc-star-size, 16px);
+
+					svg {
+						fill: var(
+							--sc-star-fill-color,
+							var(--sc-color-primary-500)
+						);
+						stroke: var(
+							--sc-star-stroke-color,
+							var(--sc-color-primary-500)
+						);
+					}
 				}
 			}
 
 			&__bar {
 				flex: 1;
 				height: 8px;
-				background: var(--sc-color-gray-200);
+				background: var(
+					--sc-star-bar-background-color,
+					var(--sc-color-gray-200)
+				);
 				border-radius: 4px;
 				overflow: hidden;
 				position: relative;
