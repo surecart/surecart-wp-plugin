@@ -149,7 +149,6 @@ class ProductReviews extends \Bricks\Element {
 											'columns'    => 1,
 											'row_gap'    => 2,
 											'column_gap' => 20,
-											'star_label_gap' => 4,
 											'_width'     => '100%',
 											'star_size'  => 20,
 											'bar_fill_color' => [
