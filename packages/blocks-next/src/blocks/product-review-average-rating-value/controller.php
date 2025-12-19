@@ -10,7 +10,7 @@ if ( ! $product ) {
 }
 
 // Get rating and wrapper attributes.
-$content = (string) $product->average_stars;
+$content = (string) number_format( $product->average_stars, 1 );
 $wrapper = get_block_wrapper_attributes();
 
 // Check for style classes and format accordingly.
