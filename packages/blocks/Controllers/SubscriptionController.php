@@ -96,7 +96,7 @@ class SubscriptionController extends BaseController {
 					'surecart/dashboard/subscription_list/query',
 					[
 						'customer_ids' => array_values( User::current()->customerIds() ),
-						'status'       => [ 'active', 'trialing', 'canceled' ],
+						'status'       => [ 'active', 'trialing', 'canceled', 'past_due' ],
 						'page'         => 1,
 						'per_page'     => 20,
 					]
