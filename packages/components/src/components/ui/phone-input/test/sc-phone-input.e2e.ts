@@ -91,6 +91,7 @@ describe('sc-phone-input', () => {
     expect(value).toBe('');
 
     await input.press('8');
+    await page.waitForChanges();
     await input.press('8');
     await page.waitForChanges();
 
