@@ -57,6 +57,9 @@ jobs:
       - name: Yarn Install
         run: yarn
 
+      - name: Build blocks-next package
+        run: yarn workspace @surecart/blocks-next build
+
       - name: Install WordPress
         run: |
           chmod -R 767 ./ # TODO: Possibly integrate in wp-env
