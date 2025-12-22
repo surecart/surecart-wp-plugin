@@ -6,7 +6,7 @@ on:
 
 jobs:
     e2e-playwright:
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-22.04
         name: Playwright e2e tests
         strategy:
           matrix:
