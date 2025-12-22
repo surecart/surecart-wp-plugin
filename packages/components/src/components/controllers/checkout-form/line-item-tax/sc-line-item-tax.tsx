@@ -19,11 +19,7 @@ export class ScLineItemTax {
       label = this.order?.tax_label || '';
     }
 
-    return (
-      <Fragment>
-        {`${__('Tax', 'surecart')} ${label}`}
-      </Fragment>
-    );
+    return <Fragment>{`${__('Tax', 'surecart')} ${label}`}</Fragment>;
   }
 
   render() {
@@ -41,8 +37,7 @@ export class ScLineItemTax {
         {this.order?.tax_inclusive_amount && (
           <span slot="price-description">
             {'('}
-            {this.order?.tax_inclusive_display_amount}
-            {__('included', 'surecart')}
+            {this.order?.tax_inclusive_display_amount} {__('included', 'surecart')}
             {')'}
           </span>
         )}
