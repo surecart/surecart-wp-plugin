@@ -55,6 +55,9 @@ jobs:
               run: |
                   yarn run wp-env start
 
+                  # Activate a theme for rendering pages.
+                  yarn run wp-env run tests-cli wp theme activate twentytwentyfour
+
                   # Set the permalink structure
                   yarn run wp-env run tests-cli wp rewrite structure /%postname%/
                   yarn run wp-env run tests-cli wp rewrite flush --hard

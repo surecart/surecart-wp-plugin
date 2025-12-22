@@ -44,7 +44,7 @@ export default defineConfig({
 	reportSlowTests: null,
 
 	/* https://playwright.dev/docs/test-timeouts#set-test-timeout-in-the-config */
-	timeout: parseInt(TIMEOUT || '', 1000) || 1000_000, // 1000 seconds.
+	timeout: parseInt(TIMEOUT || '', 10) || 120_000,
 
 	/* Web-first assertions - separate timeout. See https://playwright.dev/docs/test-timeouts#expect-timeout */
 	expect: {
