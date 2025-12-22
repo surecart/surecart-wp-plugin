@@ -57,8 +57,8 @@ jobs:
       - name: Yarn Install
         run: yarn
 
-      - name: Build blocks-next package
-        run: yarn workspace @surecart/blocks-next build
+      - name: Build packages
+        run: yarn bootstrap && yarn workspace @surecart/blocks-next build
 
       - name: Install WordPress
         run: |
