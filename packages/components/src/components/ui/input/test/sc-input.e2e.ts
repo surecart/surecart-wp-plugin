@@ -1,26 +1,20 @@
 import { newE2EPage } from '@stencil/core/testing';
 
 describe('sc-input', () => {
-  let page, element, wrapper, input;
-
   const selector = 'sc-input';
 
-  beforeEach(async () => {
-    page = await newE2EPage();
-    await page.setContent(`<${selector}></${selector}>`);
-    element = await page.find(`${selector}`);
-    wrapper = await page.find(`${selector} >>> .input`);
-    input = await page.find(`${selector} >>> .input__control`);
-    input.focus = jest.fn();
-    input.blur = jest.fn();
-  });
-
   it('renders', async () => {
+    const page = await newE2EPage();
+    await page.setContent(`<${selector}></${selector}>`);
+    const element = await page.find(`${selector}`);
     expect(element).toHaveClass('hydrated');
   });
 
   it('Has sizes', async () => {
-    wrapper = await page.find(`${selector} >>> .input`);
+    const page = await newE2EPage();
+    await page.setContent(`<${selector}></${selector}>`);
+
+    let wrapper = await page.find(`${selector} >>> .input`);
     expect(wrapper).toHaveClass('input--medium');
 
     await page.$eval(selector, (elm: any) => {
@@ -40,14 +34,18 @@ describe('sc-input', () => {
 
   // checks clicks, public methods, and hasFocus prop changes
   it('Can be focused and blurred', async () => {
-    wrapper = await page.find(`${selector} >>> .input`);
+    const page = await newE2EPage();
+    await page.setContent(`<${selector}></${selector}>`);
+
+    const element = await page.find(`${selector}`);
+    let wrapper = await page.find(`${selector} >>> .input`);
     const scBlur = await page.spyOnEvent('scBlur');
     const scFocus = await page.spyOnEvent('scFocus');
 
     expect(wrapper).not.toHaveClass('input--focused');
 
     // clicking
-    input = await page.find(`${selector} >>> .input__control`);
+    let input = await page.find(`${selector} >>> .input__control`);
     await input.click();
     await page.waitForChanges();
     wrapper = await page.find(`${selector} >>> .input`);
@@ -78,6 +76,12 @@ describe('sc-input', () => {
   });
 
   it('Changes value', async () => {
+    const page = await newE2EPage();
+    await page.setContent(`<${selector}></${selector}>`);
+
+    const element = await page.find(`${selector}`);
+    let input = await page.find(`${selector} >>> .input__control`);
+
     const scChange = await page.spyOnEvent('scChange');
     let value = await input.getProperty('value');
     expect(value).toBe('');
@@ -96,6 +100,10 @@ describe('sc-input', () => {
   });
 
   it('Has a name', async () => {
+    const page = await newE2EPage();
+    await page.setContent(`<${selector}></${selector}>`);
+
+    let input = await page.find(`${selector} >>> .input__control`);
     let prop = await input.getAttribute('name');
     expect(prop).toBe(null);
     await page.$eval(selector, (elm: any) => {
@@ -109,7 +117,10 @@ describe('sc-input', () => {
   });
 
   it('Can be disabled', async () => {
-    input = await page.find(`${selector} >>> .input__control`);
+    const page = await newE2EPage();
+    await page.setContent(`<${selector}></${selector}>`);
+
+    let input = await page.find(`${selector} >>> .input__control`);
     let prop = await input.getAttribute('disabled');
     expect(prop).toBe(null);
     await page.$eval(selector, (elm: any) => {
@@ -121,7 +132,10 @@ describe('sc-input', () => {
   });
 
   it('Can be readonly', async () => {
-    input = await page.find(`${selector} >>> .input__control`);
+    const page = await newE2EPage();
+    await page.setContent(`<${selector}></${selector}>`);
+
+    let input = await page.find(`${selector} >>> .input__control`);
     let prop = await input.getAttribute('readonly');
     expect(prop).toBe(null);
     await page.$eval(selector, (elm: any) => {
@@ -133,7 +147,10 @@ describe('sc-input', () => {
   });
 
   it('Can be required', async () => {
-    input = await page.find(`${selector} >>> .input__control`);
+    const page = await newE2EPage();
+    await page.setContent(`<${selector}></${selector}>`);
+
+    let input = await page.find(`${selector} >>> .input__control`);
     let prop = await input.getAttribute('required');
     expect(prop).toBe(null);
     await page.$eval(selector, (elm: any) => {
@@ -145,7 +162,10 @@ describe('sc-input', () => {
   });
 
   it('Has a placeholder', async () => {
-    input = await page.find(`${selector} >>> .input__control`);
+    const page = await newE2EPage();
+    await page.setContent(`<${selector}></${selector}>`);
+
+    let input = await page.find(`${selector} >>> .input__control`);
     let prop = await input.getAttribute('placeholder');
     expect(prop).toBe(null);
     await page.$eval(selector, (elm: any) => {
@@ -159,7 +179,10 @@ describe('sc-input', () => {
   });
 
   it('Can set min and max length', async () => {
-    input = await page.find(`${selector} >>> .input__control`);
+    const page = await newE2EPage();
+    await page.setContent(`<${selector}></${selector}>`);
+
+    let input = await page.find(`${selector} >>> .input__control`);
     let minProp = await input.getAttribute('minlength');
     let maxProp = await input.getAttribute('maxlength');
     expect(minProp).toBe(null);
@@ -179,7 +202,10 @@ describe('sc-input', () => {
   });
 
   it('Can set min and max and step', async () => {
-    input = await page.find(`${selector} >>> .input__control`);
+    const page = await newE2EPage();
+    await page.setContent(`<${selector}></${selector}>`);
+
+    let input = await page.find(`${selector} >>> .input__control`);
     let minProp = await input.getAttribute('min');
     let maxProp = await input.getAttribute('max');
     let stepProp = await input.getAttribute('step');
