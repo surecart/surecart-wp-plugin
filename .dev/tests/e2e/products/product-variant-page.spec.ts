@@ -25,45 +25,46 @@ test.describe('Product Page With Variant', () => {
 		// Wait for the page to load.
 		await page.waitForLoadState('networkidle');
 
-		expect(
-			await page.getByRole('radio', {
-				name: 'Select Size Small',
+		// The accessible name format is "Select {Label}: {Value}."
+		await expect(
+			page.getByRole('radio', {
+				name: /Select Size: Small/i,
 			})
 		).toHaveAttribute('aria-checked', 'true');
 
-		expect(
-			await page.getByRole('radio', { name: 'Select Color Black' })
+		await expect(
+			page.getByRole('radio', { name: /Select Color: Black/i })
 		).toHaveAttribute('aria-disabled', 'true');
 
-		expect(await page.getByText('Add To Cart').first()).toBeVisible();
+		await expect(page.getByText('Add To Cart').first()).toBeVisible();
 
 		await page
-			.getByRole('radio', { name: 'Select Size Large' })
+			.getByRole('radio', { name: /Select Size: Large/i })
 			.click({ force: true });
 
-		expect(
-			await page.getByRole('radio', { name: 'Select Color Red' })
+		await expect(
+			page.getByRole('radio', { name: /Select Color: Red/i })
 		).toHaveAttribute('aria-disabled', 'true');
-		expect(
-			await page.getByRole('radio', { name: 'Select Color Red' })
+		await expect(
+			page.getByRole('radio', { name: /Select Color: Red/i })
 		).toHaveAttribute('aria-checked', 'true');
-		expect(
-			await page.getByRole('radio', { name: 'Select Color Black' })
+		await expect(
+			page.getByRole('radio', { name: /Select Color: Black/i })
 		).toHaveAttribute('aria-disabled', 'true');
 
 		// expect(await page.getByRole('button', { name: 'Sold Out' }).first()).toBeVisible();
 
 		await page
-			.getByRole('radio', { name: 'Select Color Blue' })
+			.getByRole('radio', { name: /Select Color: Blue/i })
 			.click({ force: true });
 
-		expect(await page.getByText('Unavailable').first()).toBeVisible();
+		await expect(page.getByText('Unavailable').first()).toBeVisible();
 
 		await page
-			.getByRole('radio', { name: 'Select Size Small' })
+			.getByRole('radio', { name: /Select Size: Small/i })
 			.click({ force: true });
 		await page
-			.getByRole('radio', { name: 'Select Color Red' })
+			.getByRole('radio', { name: /Select Color: Red/i })
 			.click({ force: true });
 
 		await page
