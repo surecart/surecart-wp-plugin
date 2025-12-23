@@ -53,10 +53,10 @@ test.describe('Coupon', () => {
 		await page
 			.getByPlaceholder('Enter coupon code')
 			.locator('input')
-			.fill('Hello');
+			.fill('Test');
 
 		await page
-			.locator('sc-coupon-form sc-input')
+			.locator('sc-coupon-form sc-input sc-button')
 			.getByText('Apply')
 			.click();
 
@@ -72,7 +72,7 @@ test.describe('Coupon', () => {
 		await page.keyboard.type('Valid');
 
 		await page
-			.locator('sc-coupon-form sc-input')
+			.locator('sc-coupon-form sc-input sc-button')
 			.getByText('Apply')
 			.click();
 
@@ -83,7 +83,7 @@ test.describe('Coupon', () => {
 
 		await page.waitForLoadState('networkidle');
 
-		const coupon = await page.getByText('VALID');
+		const coupon = await page.getByText('Valid');
 		expect(coupon).toBeDefined();
 	});
 });
