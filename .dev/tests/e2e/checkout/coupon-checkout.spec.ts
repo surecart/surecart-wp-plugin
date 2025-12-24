@@ -55,26 +55,20 @@ test.describe('Coupon', () => {
 			.locator('input')
 			.fill('Test');
 
-		await page
-			.locator('sc-coupon-form sc-input sc-button')
-			.getByText('Apply')
-			.click();
+		await page.getByText('Apply').nth(1).click();
 
 		// Wait for the page to load.
 		await page.waitForResponse((resp) =>
 			resp.url().includes('surecart/v1/checkout')
 		);
 
-		const text = await page.getByText('coupon code is invalid');
+		await page.waitForLoadState('networkidle');
+		const text = await page.getByText('This coupon code is invalid.');
 		expect(text).toBeVisible();
 
 		await page.locator('sc-coupon-form sc-input input').clear();
 		await page.keyboard.type('Valid');
-
-		await page
-			.locator('sc-coupon-form sc-input sc-button')
-			.getByText('Apply')
-			.click();
+		await page.getByText('Apply').nth(1).click();
 
 		// Wait for the page to load.
 		await page.waitForResponse((resp) =>
