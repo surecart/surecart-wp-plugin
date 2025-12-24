@@ -143,9 +143,6 @@ class PaymentMethodController extends BaseController {
 			)
 		);
 
-		error_log('processors::');
-		error_log(print_r($processor_names, true));
-
 		if ( empty( $processor_names ) ) {
 			return '<sc-alert type="info" open>' . __( 'You cannot currently add a payment method. Please contact us for support.', 'surecart' ) . '</sc-alert>';
 		}
