@@ -31,14 +31,21 @@ export class ScRazorpayAddMethod {
   @State() paymentIntent: PaymentIntent;
 
   private razorpayInstance: RazorpayConstructor | null = null;
+  private loadPromise: Promise<void> | null = null;
+  private confirming: boolean = false;
 
   @Watch('paymentIntent')
   async handlePaymentIntentCreate() {
-    const razorpayData = this.paymentIntent?.processor_data?.razorpay || {};
-    const { public_key, order_id, customer_id } = razorpayData as any;
+    // Prevent multiple simultaneous payment attempts
+    if (this.confirming) return;
+
+    const { external_intent_id, processor_data } = this.paymentIntent || {};
+    const { public_key, customer_id } = (processor_data?.razorpay || {}) as any;
 
     // we need this data.
-    if (!public_key || !order_id) return;
+    if (!public_key || !external_intent_id) return;
+
+    this.confirming = true;
 
     try {
       // Load Razorpay if not loaded yet.
@@ -52,12 +59,15 @@ export class ScRazorpayAddMethod {
 
       const options = {
         key: public_key,
-        order_id: order_id,
+        order_id: external_intent_id,
         customer_id,
         recurring: true,
         handler: async (response: any) => {
           if (response?.razorpay_payment_id) {
             window.location.assign(this.successUrl);
+          } else {
+            this.error = __('Payment verification failed. Please contact support.', 'surecart');
+            this.loading = false;
           }
         },
         modal: {
@@ -79,6 +89,8 @@ export class ScRazorpayAddMethod {
     } catch (e) {
       this.error = e?.message || __('Something went wrong', 'surecart');
       this.loading = false;
+    } finally {
+      this.confirming = false;
     }
   }
 
@@ -87,7 +99,11 @@ export class ScRazorpayAddMethod {
       return;
     }
 
-    return new Promise((resolve, reject) => {
+    if (this.loadPromise) {
+      return this.loadPromise;
+    }
+
+    this.loadPromise = new Promise((resolve, reject) => {
       const script = document.createElement('script');
       script.src = 'https://checkout.razorpay.com/v1/checkout.js';
       script.async = true;
@@ -100,6 +116,8 @@ export class ScRazorpayAddMethod {
       };
       document.head.appendChild(script);
     });
+
+    return this.loadPromise;
   }
 
   async createPaymentIntent() {
