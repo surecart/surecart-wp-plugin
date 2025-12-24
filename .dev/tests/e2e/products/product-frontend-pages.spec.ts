@@ -135,7 +135,7 @@ test.describe('Product', () => {
 
 	test('Product page - Product Collection', async ({ page }) => {
 		await page.goto('/collections/collection-1');
-		await page.waitForTimeout(2000);
+		await page.waitForLoadState('networkidle');
 
 		await expect(
 			page.getByRole('heading').getByText('Collection 1', { exact: true })
@@ -162,7 +162,14 @@ export const getOrCreateProductCollection = async (
 	});
 
 	if (existingCollections?.[0]) {
-		return existingCollections?.[0];
+		// Trigger update to ensure collection sync.
+		return await requestUtils.rest({
+			method: 'PATCH',
+			path: PRODUCT_COLLECTION_API_PATH + '/' + existingCollections[0].id,
+			data: {
+				name: collectionName,
+			},
+		});
 	}
 
 	// create the collection.
@@ -204,7 +211,6 @@ export const createProduct = async (requestUtils, data) => {
 
 	if (!product?.id) {
 		throw new Error('Product not found');
-		return;
 	}
 
 	// Create a product media.
