@@ -252,8 +252,8 @@ class PaymentMethodController extends BaseController {
 					<sc-toggle class="sc-razorpay-toggle" show-control shady borderless>
 						<span slot="summary" class="sc-payment-toggle-summary">
 							<sc-flex>
-								<sc-icon name="creditcard" style="font-size:24px"></sc-icon>
-								<span><?php esc_html_e( 'Credit Card', 'surecart' ); ?></span>
+								<sc-icon name="razorpay" style="font-size:24px"></sc-icon>
+								<span><?php esc_html_e( 'Cards, Netbanking, Wallet & UPI', 'surecart' ); ?></span>
 							</sc-flex>
 						</span>
 						<sc-razorpay-add-method
