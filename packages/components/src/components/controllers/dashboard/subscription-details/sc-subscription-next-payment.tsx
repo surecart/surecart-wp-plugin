@@ -133,20 +133,20 @@ export class ScSubscriptionNextPayment {
 
             <sc-line-item>
               <span slot="description">{__('Subtotal', 'surecart')}</span>
-              <span slot="price">{checkout?.subtotal_display_amount}</span>
+              <span slot="price-description">{checkout?.subtotal_display_amount}</span>
             </sc-line-item>
 
             {!!checkout.proration_amount && (
               <sc-line-item>
                 <span slot="description">{__('Proration Credit', 'surecart')}</span>
-                <span slot="price">{checkout?.proration_display_amount}</span>
+                <span slot="price-description">{checkout?.proration_display_amount}</span>
               </sc-line-item>
             )}
 
             {!!checkout.applied_balance_amount && (
               <sc-line-item>
                 <span slot="description">{__('Applied Balance', 'surecart')}</span>
-                <span slot="price">{checkout?.applied_balance_display_amount}</span>
+                <span slot="price-description">{checkout?.applied_balance_display_amount}</span>
               </sc-line-item>
             )}
 
@@ -164,41 +164,28 @@ export class ScSubscriptionNextPayment {
             {!!checkout.trial_amount && (
               <sc-line-item>
                 <span slot="description">{__('Trial', 'surecart')}</span>
-                <span slot="price">{checkout?.trial_display_amount}</span>
+                <span slot="price-description">{checkout?.trial_display_amount}</span>
               </sc-line-item>
             )}
 
             {!!checkout?.discount_amount && (
               <sc-line-item>
                 <span slot="description">{__('Discounts', 'surecart')}</span>
-                <span slot="price">{checkout?.discounts_display_amount}</span>
+                <span slot="price-description">{checkout?.discounts_display_amount}</span>
               </sc-line-item>
             )}
 
             {!!checkout?.shipping_amount && (
-              <Fragment>
-                <sc-line-item style={{ marginTop: 'var(--sc-spacing-small)' }}>
-                  <span slot="description">{__('Shipping', 'surecart')}</span>
-                  <span slot="price">{checkout?.shipping_display_amount}</span>
-                </sc-line-item>
-
-                {shipping_fees?.length > 0 && (
-                  <Fragment>
-                    {shipping_fees?.map(fee => (
-                      <sc-line-item>
-                        <span slot="description">{fee?.description}</span>
-                        <span slot="price">{fee?.display_amount}</span>
-                      </sc-line-item>
-                    ))}
-                  </Fragment>
-                )}
-              </Fragment>
+              <sc-line-item style={{ marginTop: 'var(--sc-spacing-small)' }}>
+                <span slot="description">{__('Shipping', 'surecart')}</span>
+                <span slot="price-description">{checkout?.shipping_display_amount}</span>
+              </sc-line-item>
             )}
 
             {!!checkout.tax_amount && (
               <sc-line-item>
                 <span slot="description">{formatTaxDisplay(checkout?.tax_label)}</span>
-                <span slot="price">{checkout?.tax_display_amount}</span>
+                <span slot="price-description">{checkout?.tax_display_amount}</span>
               </sc-line-item>
             )}
 
