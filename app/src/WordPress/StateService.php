@@ -53,15 +53,6 @@ class StateService {
 	}
 
 	/**
-	 * Get the localization service.
-	 *
-	 * @return LocalizationStateService
-	 */
-	public function i18n(): LocalizationStateService {
-		return new LocalizationStateService();
-	}
-
-	/**
 	 * Merge data.
 	 *
 	 * @param array $data The data that will be merged with the existing store.

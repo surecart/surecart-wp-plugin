@@ -90,8 +90,8 @@ class DeactivationSurveyForm {
 										<?php
 										echo wp_kses_post(
 											sprintf(
-											/* translators: %1$s: link html start, %2$s: link html end*/
-												__( 'Need help from our experts? %1$sClick here to contact us.%2$s' ),
+												/* translators: %1$s: link html start, %2$s: link html end*/
+												__( 'Need help from our experts? %1$sClick here to contact us.%2$s', 'surecart' ),
 												'<a href="' . esc_url( $args['support_url'] ) . '" target="_blank">',
 												'</a>'
 											)

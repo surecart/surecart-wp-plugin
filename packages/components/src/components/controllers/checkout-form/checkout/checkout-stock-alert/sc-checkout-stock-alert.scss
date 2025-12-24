@@ -24,6 +24,15 @@ h4 {
     margin-right: 10px;
     display: block;
   }
+  &__product-info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sc-spacing-xx-small);
+  }
+  &__variant {
+    color: var(--sc-color-gray-500);
+    font-size: var(--sc-font-size-small);
+  }
   &__quantity {
     color: var(--sc-color-gray-500);
     font-weight: var(--sc-font-weight-bold);
