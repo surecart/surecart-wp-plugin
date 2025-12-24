@@ -122,6 +122,21 @@ class Collection {
 
 		// handle errors.
 		if ( is_wp_error( $term ) ) {
+			// If term already exists & for E2E tests, use the existing term and update its metadata.
+			$testing = defined( 'SC_E2E_TESTING' ) ? (bool) SC_E2E_TESTING : false;
+			if ( 'term_exists' === $term->get_error_code() && $testing ) {
+				$existing_term_id = $term->get_error_data( 'term_exists' );
+				if ( $existing_term_id ) {
+					$this->term = get_term( $existing_term_id, $this->taxonomy );
+					if ( ! is_wp_error( $this->term ) && ! empty( $this->term ) ) {
+						update_term_meta( $this->term->term_id, 'sc_account', \SureCart::account()->id );
+						update_term_meta( $this->term->term_id, 'sc_id', $collection->id );
+						update_term_meta( $this->term->term_id, 'collection', $collection->toArray() );
+						return $this->term;
+					}
+				}
+			}
+
 			return $term;
 		}
 
