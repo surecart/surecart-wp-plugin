@@ -176,10 +176,22 @@ export class ScSubscriptionNextPayment {
             )}
 
             {!!checkout?.shipping_amount && (
-              <sc-line-item style={{ marginTop: 'var(--sc-spacing-small)' }}>
-                <span slot="description">{__('Shipping', 'surecart')}</span>
-                <span slot="price-description">{checkout?.shipping_display_amount}</span>
-              </sc-line-item>
+              <Fragment>
+                <sc-line-item style={{ marginTop: 'var(--sc-spacing-small)' }}>
+                  <span slot="description">{__('Shipping', 'surecart')}</span>
+                  <span slot="price-description">{checkout?.shipping_display_amount}</span>
+                </sc-line-item>
+                {shipping_fees?.length > 0 && (
+                  <Fragment>
+                    {shipping_fees?.map(fee => (
+                      <sc-line-item>
+                        <span slot="description">{fee?.description}</span>
+                        <span slot="price">{fee?.display_amount}</span>
+                      </sc-line-item>
+                    ))}
+                  </Fragment>
+                )}
+              </Fragment>
             )}
 
             {!!checkout.tax_amount && (
