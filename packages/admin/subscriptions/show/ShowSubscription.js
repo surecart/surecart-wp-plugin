@@ -22,6 +22,7 @@ import { store as noticesStore } from '@wordpress/notices';
 import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
 import { useEffect, useState } from 'react';
+import { Tooltip } from '@wordpress/components';
 
 import Logo from '../../templates/Logo';
 import Template from '../../templates/UpdateModel';
@@ -361,7 +362,7 @@ export default () => {
 		const isPastDue = subscription?.status === 'past_due';
 
 		const menuItem = (
-			<ScMenuItem 
+			<ScMenuItem
 				onClick={() => !isPastDue && setModal('renew_at')}
 				disabled={isPastDue}
 			>
@@ -372,15 +373,14 @@ export default () => {
 		// For past_due subscriptions, wrap in tooltip
 		if (isPastDue) {
 			return (
-				<ScTooltip
-					type="text"
+				<Tooltip
 					text={__(
 						'To change the renewal date on a past due subscription, please add a trial period instead.',
 						'surecart'
 					)}
 				>
 					{menuItem}
-				</ScTooltip>
+				</Tooltip>
 			);
 		}
 
