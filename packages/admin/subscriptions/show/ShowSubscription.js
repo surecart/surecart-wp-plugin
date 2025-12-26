@@ -12,7 +12,6 @@ import {
 	ScMenuItem,
 	ScUpgradeRequired,
 	ScPremiumTag,
-	ScTooltip,
 } from '@surecart/components-react';
 import { store as dataStore } from '@surecart/data';
 import { store as coreStore } from '@wordpress/core-data';
