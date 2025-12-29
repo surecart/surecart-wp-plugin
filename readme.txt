@@ -316,7 +316,7 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 
 == Changelog ==
 
-= 3.17.3 = December 29th, 2025 =
+= 3.17.3 - December 29th, 2025 =
 - Fix: Issue with dashboard not loading if integration category is missing.
 - Fix: Default country not able to be selected for address block at checkout.
 - Fix: Issue with multiple related products pagination on the same page.
