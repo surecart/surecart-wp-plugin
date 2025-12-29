@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { ScSelect } from '@surecart/components-react';
+import { ScFlex, ScRadioGroup, ScRadio } from '@surecart/components-react';
 import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
@@ -48,6 +48,17 @@ export default () => {
 		},
 	];
 
+	const radioChoices = (selectionStrategyChoices || []).map((strategy) => {
+		return (
+			<ScRadio
+				value={strategy?.value}
+				checked={'all' === strategy?.value}
+			>
+				{strategy?.label}
+			</ScRadio>
+		);
+	});
+
 	return (
 		<SettingsTemplate
 			title={__('Dynamic Pricing Settings', 'surecart')}
@@ -62,56 +73,96 @@ export default () => {
 				description={__('Selection Strategy', 'surecart')}
 				loading={false}
 			>
-				<ScSelect
-					value={'all'}
-					onScChange={(e) => console.log(e.target.value)}
-					choices={selectionStrategyChoices}
+				<ScRadioGroup
 					label={__('Checkout', 'surecart')}
+					onScChange={(e) => console.log(e.target.value)}
 					help={__('Checkout selection strategy.', 'surecart')}
-				/>
-
-				<ScSelect
-					value={'all'}
-					onScChange={(e) => console.log(e.target.value)}
-					choices={selectionStrategyChoices}
+				>
+					<ScFlex
+						style={{
+							'--sc-flex-column-gap': '1.5em',
+							'--sc-flex-space-between': 'flex-start',
+						}}
+					>
+						{radioChoices}
+					</ScFlex>
+				</ScRadioGroup>
+				<ScRadioGroup
 					label={__('Line Item', 'surecart')}
-					help={__('Line Item selection strategy.', 'surecart')}
-				/>
-				<ScSelect
-					value={'all'}
 					onScChange={(e) => console.log(e.target.value)}
-					choices={selectionStrategyChoices}
+					help={__('Line Item selection strategy.', 'surecart')}
+				>
+					<ScFlex
+						style={{
+							'--sc-flex-column-gap': '1.5em',
+							'--sc-flex-space-between': 'flex-start',
+						}}
+					>
+						{radioChoices}
+					</ScFlex>
+				</ScRadioGroup>
+				<ScRadioGroup
 					label={__('Shipping', 'surecart')}
+					onScChange={(e) => console.log(e.target.value)}
 					help={__('Shipping selection strategy.', 'surecart')}
-				/>
+				>
+					<ScFlex
+						style={{
+							'--sc-flex-column-gap': '1.5em',
+							'--sc-flex-space-between': 'flex-start',
+						}}
+					>
+						{radioChoices}
+					</ScFlex>
+				</ScRadioGroup>
 			</SettingsBox>
 			<SettingsBox
 				title={__('Discount Selection Strategy', 'surecart')}
 				description={__('Selection Strategy', 'surecart')}
 				loading={false}
 			>
-				<ScSelect
-					value={'all'}
-					onScChange={(e) => console.log(e.target.value)}
-					choices={selectionStrategyChoices}
+				<ScRadioGroup
 					label={__('Checkout', 'surecart')}
+					onScChange={(e) => console.log(e.target.value)}
 					help={__('Checkout selection strategy.', 'surecart')}
-				/>
-
-				<ScSelect
-					value={'all'}
-					onScChange={(e) => console.log(e.target.value)}
-					choices={selectionStrategyChoices}
+				>
+					<ScFlex
+						style={{
+							'--sc-flex-column-gap': '1.5em',
+							'--sc-flex-space-between': 'flex-start',
+						}}
+					>
+						{radioChoices}
+					</ScFlex>
+				</ScRadioGroup>
+				<ScRadioGroup
 					label={__('Line Item', 'surecart')}
-					help={__('Line Item selection strategy.', 'surecart')}
-				/>
-				<ScSelect
-					value={'all'}
 					onScChange={(e) => console.log(e.target.value)}
-					choices={selectionStrategyChoices}
+					help={__('Line Item selection strategy.', 'surecart')}
+				>
+					<ScFlex
+						style={{
+							'--sc-flex-column-gap': '1.5em',
+							'--sc-flex-space-between': 'flex-start',
+						}}
+					>
+						{radioChoices}
+					</ScFlex>
+				</ScRadioGroup>
+				<ScRadioGroup
 					label={__('Shipping', 'surecart')}
+					onScChange={(e) => console.log(e.target.value)}
 					help={__('Shipping selection strategy.', 'surecart')}
-				/>
+				>
+					<ScFlex
+						style={{
+							'--sc-flex-column-gap': '1.5em',
+							'--sc-flex-space-between': 'flex-start',
+						}}
+					>
+						{radioChoices}
+					</ScFlex>
+				</ScRadioGroup>
 			</SettingsBox>
 		</SettingsTemplate>
 	);
