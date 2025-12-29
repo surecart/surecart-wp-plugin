@@ -1,5 +1,5 @@
 {
-	"apiVersion": 2,
+	"apiVersion": 3,
 	"name": "surecart/product-collection-description",
 	"title": "Product Collection Description",
 	"description": "Display the product collection description",

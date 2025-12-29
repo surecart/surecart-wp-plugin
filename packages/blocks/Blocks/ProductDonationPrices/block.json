@@ -1,5 +1,5 @@
 {
-	"apiVersion": 2,
+	"apiVersion": 3,
 	"name": "surecart/product-donation-prices",
 	"title": "Prices",
 	"description": "Displays a donation price and interval selector.",
