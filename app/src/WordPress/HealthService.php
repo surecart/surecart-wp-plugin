@@ -53,6 +53,7 @@ class HealthService {
 				),
 				'webhooks_processing' => array(
 					'label'   => __( 'Webhooks Processing', 'surecart' ),
+					// translators: %d is the number of unprocessed webhooks.
 					'value'   => ! empty( $total_failed ) ? sprintf( __( '%d Unprocessed webhooks', 'surecart' ), $total_failed ) : __( 'Working', 'surecart' ),
 					'private' => false,
 				),
@@ -145,6 +146,7 @@ class HealthService {
 			),
 			'description' => sprintf(
 				'<p>%s</p>',
+				// translators: %d is the number of failed webhooks.
 				$has_errors ? sprintf( __( '%d of your webhooks failed to process on your site. Please check your error logs to make sure errors did not occur in webhook processing.', 'surecart' ), (int) $total_failed ) : __( 'Webhook processing is working normally.', 'surecart' )
 			),
 			'actions'     => $has_errors ? sprintf(

@@ -680,6 +680,7 @@ abstract class BackgroundProcess extends AsyncRequest {
 		if ( 1 === $interval ) {
 			$display = __( 'Every Minute', 'surecart' );
 		} else {
+			// translators: %d is the number of minutes.
 			$display = sprintf( __( 'Every %d Minutes', 'surecart' ), $interval );
 		}
 

@@ -3,6 +3,12 @@ name: Release
 on:
   release:
     types: [published]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to use in commit message'
+        required: false
+        default: 'test'
 
 jobs:
   release:
@@ -37,11 +43,11 @@ jobs:
         id: push_directory
         uses: cpina/github-action-push-to-another-repository@main
         env:
-          API_TOKEN_GITHUB: ${{ secrets.GITHUB_TOKEN }}
+          API_TOKEN_GITHUB: ${{ secrets.RELEASE_REPO_TOKEN }}
         with:
           source-directory: .
           destination-github-username: 'surecart'
           destination-repository-name: 'surecart-wp-plugin'
           user-email: support@surecart.com
-          commit-message: Release version ${{ github.ref_name }}
+          commit-message: Release version ${{ github.event.inputs.version || github.ref_name}}
           target-branch: main
