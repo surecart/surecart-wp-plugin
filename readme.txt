@@ -320,6 +320,7 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 - Fix: Issue with dashboard not loading if integration category is missing.
 - Fix: Default country not able to be selected for address block at checkout.
 - Fix: Issue with multiple related products pagination on the same page.
+- Fix: Show past due subscriptions in customer dashboard.
 
 = 3.17.2 - December 17th, 2025 =
 - Improvement: Add link to github repository.
