@@ -33,6 +33,7 @@ export default () => {
 		{
 			label: __('All', 'surecart'),
 			value: 'all',
+			help: __('All', 'surecart'),
 		},
 		{
 			label: __('First', 'surecart'),
@@ -48,6 +49,36 @@ export default () => {
 		},
 	];
 
+	const HELP_TEXT_MAP = {
+		fee: {
+			all: __('All fees will be applied in checkout', 'surecart'),
+			first: __('First fee will be applied for line item', 'surecart'),
+			biggest: __(
+				'The biggest fee will be applied for shipping',
+				'surecart'
+			),
+			lowest: __(
+				'The lowest discount will be applied for shipping',
+				'surecart'
+			),
+		},
+		discount: {
+			all: __('All discounts will be applied in checkout', 'surecart'),
+			first: __(
+				'First discount will be applied for line item',
+				'surecart'
+			),
+			lowest: __(
+				'The lowest discount will be applied for shipping',
+				'surecart'
+			),
+			biggest: __(
+				'The biggest fee will be applied for shipping',
+				'surecart'
+			),
+		},
+	};
+
 	const radioChoices = (selectionStrategyChoices || []).map((strategy) => {
 		return (
 			<ScRadio
@@ -58,6 +89,9 @@ export default () => {
 			</ScRadio>
 		);
 	});
+
+	const getHelpText = (type = 'discount', value = 'all') =>
+		HELP_TEXT_MAP[type]?.[value] ?? '';
 
 	return (
 		<SettingsTemplate
@@ -86,6 +120,16 @@ export default () => {
 					>
 						{radioChoices}
 					</ScFlex>
+					<div
+						style={{
+							opacity: '0.85',
+							marginTop: 'var(--sc-input-label-margin)',
+							color: 'var(--sc-color-gray-500)',
+							fontSize: 'var(--sc-font-size-medium)',
+						}}
+					>
+						{getHelpText()}
+					</div>
 				</ScRadioGroup>
 				<ScRadioGroup
 					label={__('Line Item', 'surecart')}
