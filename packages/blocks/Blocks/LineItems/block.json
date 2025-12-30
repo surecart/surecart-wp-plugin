@@ -1,10 +1,11 @@
 {
 	"name": "surecart/line-items",
 	"title": "Line Items",
+	"apiVersion": 3,
 	"description": "Displays checkout line items.",
 	"category": "surecart",
 	"keywords": ["total", "line-items"],
-  "textdomain": "surecart",
+	"textdomain": "surecart",
 	"ancestor": ["surecart/totals"],
 	"supports": {
 		"reusable": false,

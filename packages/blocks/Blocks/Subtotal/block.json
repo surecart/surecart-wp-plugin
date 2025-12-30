@@ -1,6 +1,7 @@
 {
 	"name": "surecart/subtotal",
 	"title": "Subtotal Line Item",
+	"apiVersion": 3,
 	"description": "Display a subtotal line item.",
 	"category": "surecart",
 	"ancestor": ["surecart/totals"],

@@ -1,6 +1,7 @@
 {
 	"name": "surecart/submit",
 	"title": "Submit Button",
+	"apiVersion": 3,
 	"description": "Display a submit button.",
 	"category": "surecart",
 	"keywords": ["submit", "button"],

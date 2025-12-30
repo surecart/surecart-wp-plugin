@@ -1,6 +1,7 @@
 {
 	"name": "surecart/customer-shipping-address",
 	"title": "Customer Shipping and Tax Address",
+	"apiVersion": 3,
 	"description": "Displays the customers shipping addresses and lets them update details.",
 	"category": "surecart",
 	"keywords": ["name", "customer", "dashboard"],

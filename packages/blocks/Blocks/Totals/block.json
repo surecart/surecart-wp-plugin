@@ -1,6 +1,7 @@
 {
 	"name": "surecart/totals",
 	"title": "Totals",
+	"apiVersion": 3,
 	"description": "Display the session totals.",
 	"category": "surecart",
 	"keywords": ["totals", "summary"],

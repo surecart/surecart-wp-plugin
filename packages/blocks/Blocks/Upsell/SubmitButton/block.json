@@ -1,6 +1,7 @@
 {
 	"name": "surecart/upsell-submit",
 	"title": "Upsell Submit Button",
+	"apiVersion": 3,
 	"description": "Display an upsell submit button.",
 	"category": "surecart-upsell-page",
 	"keywords": ["submit", "button", "order", "upsell"],

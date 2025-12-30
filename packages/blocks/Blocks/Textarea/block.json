@@ -1,6 +1,7 @@
 {
 	"name": "surecart/textarea",
 	"title": "Textarea",
+	"apiVersion": 3,
 	"description": "Displays a form text textarea field. This is saved with the order as additional metadata.",
 	"category": "surecart",
 	"keywords": ["textarea", "input", "custom", "field"],

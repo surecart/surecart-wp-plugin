@@ -1,6 +1,7 @@
 {
 	"name": "surecart/phone",
 	"title": "Phone",
+	"apiVersion": 3,
 	"description": "Display a phone number collection field.",
 	"category": "surecart",
 	"keywords": ["phone", "tel", "customer"],

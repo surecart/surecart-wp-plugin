@@ -1,10 +1,11 @@
 {
 	"name": "surecart/name-your-price",
 	"title": "Name Your Own Price",
+	"apiVersion": 3,
 	"description": "Display a name your own price field.",
 	"category": "surecart",
 	"keywords": ["name", "customer"],
-  "textdomain": "surecart",
+	"textdomain": "surecart",
 	"ancestor": ["surecart/form"],
 	"supports": {
 		"reusable": false,

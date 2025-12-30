@@ -1,6 +1,7 @@
 {
 	"name": "surecart/invoice-memo",
 	"title": "Invoice Memo",
+	"apiVersion": 3,
 	"description": "Displays the invoice memo.",
 	"category": "surecart",
 	"ancestor": ["surecart/invoice-details"],

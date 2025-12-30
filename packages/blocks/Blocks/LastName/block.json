@@ -1,6 +1,7 @@
 {
 	"name": "surecart/last-name",
 	"title": "Last Name",
+	"apiVersion": 3,
 	"description": "Display a last name collection field.",
 	"category": "surecart",
 	"keywords": ["last-name", "name", "customer"],

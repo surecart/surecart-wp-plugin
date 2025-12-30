@@ -1,10 +1,11 @@
 {
 	"name": "surecart/express-payment",
 	"title": "Express Payment",
+	"apiVersion": 3,
 	"description": "Display express payment options (Google Pay, Apple Pay, etc.)",
 	"category": "surecart",
 	"keywords": ["apple", "google", "android"],
-  "textdomain": "surecart",
+	"textdomain": "surecart",
 	"ancestor": ["surecart/form"],
 	"supports": {
 		"reusable": false,
