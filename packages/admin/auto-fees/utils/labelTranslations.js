@@ -35,6 +35,10 @@ export const attributeLabels = {
 	// Customer attributes
 	'customer.created_at': __('Customer Created At', 'surecart'),
 	'customer.order_count': __('Customer Order Count', 'surecart'),
+	customer_prior_product_purchase_quantity: __(
+		'Customer Prior Product Purchase Count',
+		'surecart'
+	),
 
 	// Price attributes
 	'price.created_at': __('Price Created At', 'surecart'),
@@ -53,6 +57,7 @@ export const attributeLabels = {
 	'product.metadata': __('Product Metadata', 'surecart'),
 	'product.name': __('Product Name', 'surecart'),
 	'product.sku': __('Product SKU', 'surecart'),
+	sku: __('SKU (Product/Variant)', 'surecart'),
 	'product.slug': __('Product Slug', 'surecart'),
 
 	// Product collections attributes
@@ -93,4 +98,7 @@ export const operatorLabels = {
 	is_before: __('is before', 'surecart'),
 	is_on_or_after: __('is on or after', 'surecart'),
 	is_on_or_before: __('is on or before', 'surecart'),
+	contains: __('contains', 'surecart'),
+	start_with: __('starts with', 'surecart'),
+	end_with: __('ends with', 'surecart'),
 };
