@@ -250,6 +250,36 @@ const { state, actions } = store('surecart/checkout', {
 		},
 
 		/**
+		 * Get the aria label for the cart icon count.
+		 */
+		get lineItemAriaLabel() {
+			const { line_item } = getContext('surecart/checkout');
+			return sprintf(
+				__('Cart item: %s. Quantity %d. Total price %s.', 'surecart'),
+				line_item?.price?.product?.name,
+				line_item?.quantity,
+				line_item?.price?.amount
+			);
+		},
+
+		/**
+		 * The cart dialog label.
+		 */
+		get removeItemAriaLabel() {
+			const { line_item } = getContext('surecart/checkout');
+			console.log(
+				sprintf(
+					__('Remove %s from cart.', 'surecart'),
+					line_item?.price?.product?.name
+				)
+			);
+			return sprintf(
+				__('Remove %s from cart.', 'surecart'),
+				line_item?.price?.product?.name
+			);
+		},
+
+		/**
 		 * Get the line item variant.
 		 */
 		get lineItemVariant() {
