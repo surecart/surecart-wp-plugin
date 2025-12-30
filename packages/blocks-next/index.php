@@ -5,6 +5,35 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
+ * Register all css at src/styles folder.
+ * Priority 9 ensures styles are registered before blocks (priority 10).
+ */
+add_action(
+	'init',
+	function () {
+		$css_files = glob( __DIR__ . '/build/styles/*.css' ) ?? [];
+
+		foreach ( $css_files as $css_file ) {
+			// Skip RTL files - they're handled automatically by WordPress.
+			if ( strpos( basename( $css_file ), '-rtl.css' ) !== false ) {
+				continue;
+			}
+
+			// Extract the file name without the extension and prepend with 'surecart-'.
+			$handle = 'surecart-' . basename( $css_file, '.css' );
+
+			wp_register_style(
+				$handle,
+				plugins_url( 'build/styles/' . basename( $css_file ), __FILE__ ),
+				[],
+				filemtime( $css_file )
+			);
+		}
+	},
+	9
+);
+
+/**
  * Register all blocks.
  */
 add_action(
@@ -102,28 +131,6 @@ add_filter(
 	},
 	10,
 	2
-);
-
-/**
- * Register all css at src/styles folder.
- */
-add_action(
-	'init',
-	function () {
-		$css_files = glob( __DIR__ . '/build/styles/*.css' ) ?? [];
-
-		foreach ( $css_files as $css_file ) {
-			// Extract the file name without the extension and prepend with 'surecart-'.
-			$handle = 'surecart-' . basename( $css_file, '.css' );
-
-			wp_register_style(
-				$handle,
-				plugins_url( 'build/styles/' . basename( $css_file ), __FILE__ ),
-				[],
-				filemtime( $css_file )
-			);
-		}
-	}
 );
 
 add_action(

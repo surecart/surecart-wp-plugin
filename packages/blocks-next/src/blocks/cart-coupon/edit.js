@@ -21,6 +21,7 @@ import useCartStyles from '../../hooks/useCartStyles';
 export default ({ attributes, setAttributes }) => {
 	const { text, button_text, collapsed, placeholder } = attributes;
 	const discountInputRef = useRef();
+	const wrapperRef = useRef();
 
 	const blockProps = useBlockProps({
 		style: useCartStyles({ attributes }),
@@ -43,11 +44,14 @@ export default ({ attributes, setAttributes }) => {
 			}
 		}
 
+		// Get the ownerDocument from the wrapper ref for iframe compatibility
+		const ownerDocument = wrapperRef.current?.ownerDocument || document;
+
 		// Bind the event listener
-		document.addEventListener('mousedown', handleOutsideClick);
+		ownerDocument.addEventListener('mousedown', handleOutsideClick);
 		return () => {
 			// Unbind the event listener on clean up
-			document.removeEventListener('mousedown', handleOutsideClick);
+			ownerDocument.removeEventListener('mousedown', handleOutsideClick);
 		};
 	}, [discountInputOpen]);
 
@@ -173,7 +177,7 @@ export default ({ attributes, setAttributes }) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<div {...blockProps}>
+			<div {...blockProps} ref={wrapperRef}>
 				<div className="sc-cart-coupon__wrapper">
 					{promotionApplied ? (
 						renderDiscountedState()
