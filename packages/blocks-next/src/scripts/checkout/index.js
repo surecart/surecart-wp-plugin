@@ -258,7 +258,7 @@ const { state, actions } = store('surecart/checkout', {
 				__('Cart item: %s. Quantity %d. Total price %s.', 'surecart'),
 				line_item?.price?.product?.name,
 				line_item?.quantity,
-				line_item?.price?.amount
+				line_item?.subtotal_display_amount
 			);
 		},
 
@@ -739,7 +739,14 @@ const { state, actions } = store('surecart/checkout', {
 				/* webpackIgnore: true */
 				'@surecart/a11y'
 			);
-			speak(__('Removing line item.', 'surecart'), 'assertive');
+
+			speak(
+				sprintf(
+					__('Removing %s from cart.', 'surecart'),
+					line_item?.price?.product?.name
+				),
+				'assertive'
+			);
 
 			const { removeCheckoutLineItem } = yield import(
 				/* webpackIgnore: true */
@@ -751,6 +758,14 @@ const { state, actions } = store('surecart/checkout', {
 			actions.setCheckout(checkout, mode, formId);
 
 			state.loading = false;
+
+			speak(
+				sprintf(
+					__('Removed %s from your cart.', 'surecart'),
+					line_item?.price?.product?.name
+				),
+				'assertive'
+			);
 		},
 		updateCheckout(e) {
 			const { checkout, mode, formId } = e.detail;
