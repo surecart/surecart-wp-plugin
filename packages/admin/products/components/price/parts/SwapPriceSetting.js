@@ -9,7 +9,7 @@ import {
 	ScMenuLabel,
 } from '@surecart/components-react';
 import { ExternalLink } from '@wordpress/components';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 import PriceSelector from '@admin/components/PriceSelector';
 import SwapPriceDisplay from './SwapPriceDisplay';
 import HelpTooltip from '../../../../components/HelpTooltip';

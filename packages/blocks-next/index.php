@@ -85,7 +85,7 @@ add_filter(
 		}
 
 		// pass a unique id to each product list block.
-		if ( 'surecart/product-list' === $parsed_block['blockName'] ) {
+		if ( in_array( $parsed_block['blockName'], [ 'surecart/product-list', 'surecart/product-list-related' ], true ) ) {
 			// we use our own counter to ensure uniqueness so that product page urls don't have ids.
 			global $sc_query_id;
 			$sc_query_id = sc_unique_product_list_id();
@@ -97,6 +97,7 @@ add_filter(
 			global $sc_query_id;
 			$sc_query_id = sc_unique_product_page_id();
 		}
+
 		return $context;
 	},
 	10,
@@ -133,10 +134,10 @@ add_action(
 			return;
 		}
 
-		$close_button_label = esc_attr__( 'Close' );
-		$dialog_label       = esc_attr__( 'Enlarged images' );
-		$prev_button_label  = esc_attr__( 'Previous' );
-		$next_button_label  = esc_attr__( 'Next' );
+		$close_button_label = esc_attr__( 'Close', 'surecart' );
+		$dialog_label       = esc_attr__( 'Enlarged images', 'surecart' );
+		$prev_button_label  = esc_attr__( 'Previous', 'surecart' );
+		$next_button_label  = esc_attr__( 'Next', 'surecart' );
 
 		// If the current theme does NOT have a `theme.json`, or the colors are not
 		// defined, it needs to set the background color & close button color to some
@@ -207,16 +208,7 @@ add_action(
 		wp_register_script_module(
 			'@surecart/api-fetch',
 			trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/fetch/index.js',
-			array(
-				array(
-					'id'     => 'wp-url',
-					'import' => 'dynamic',
-				),
-				array(
-					'id'     => 'wp-api-fetch',
-					'import' => 'dynamic',
-				),
-			),
+			$static_assets['dependencies'],
 			$static_assets['version']
 		);
 
