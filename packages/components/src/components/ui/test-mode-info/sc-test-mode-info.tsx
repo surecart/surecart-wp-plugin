@@ -16,9 +16,17 @@ export class ScPopover {
     return (
       <sc-popover style={{ '--panel-width': '35em' }} skidding={30}>
         <sc-icon class="trigger-icon" name="info" slot="trigger" />
-        <span slot="title"> {__('How to change to Live mode?', 'surecart')}</span>
+        <span slot="title"> {__('How to switch from Test to Live mode', 'surecart')}</span>
         <div slot="content">
           <ol>
+            <li>
+              {__('From the Admin Bar', 'surecart')}
+              <ul>
+                <li>{__("Select any product & proceed to it's checkout page.", 'surecart')}</li>
+                <li>{__('Access the dropdown menu & select the live mode.', 'surecart')}</li>
+              </ul>
+              <img style={{ width: '320px', marginTop: '12px' }} src={`${window?.scData?.plugin_url}/images/change-from-adminbar.png`} />
+            </li>
             <li>
               {__('From the Editor', 'surecart')}
               <ul>
@@ -27,14 +35,6 @@ export class ScPopover {
                 <li>{__('Select "Live" from the dropdown. Hit Update!', 'surecart')}</li>
               </ul>
               <img style={{ width: '320px', marginTop: '12px' }} src={`${window?.scData?.plugin_url}/images/change-from-editor.png`} />
-            </li>
-            <li>
-              {__('From the Admin Bar', 'surecart')}
-              <ul>
-                <li>{__("Select any product & proceed to it's checkout page.", 'surecart')}</li>
-                <li>{__('Access the dropdown menu & select the live mode.', 'surecart')}</li>
-              </ul>
-              <img style={{ width: '320px', marginTop: '12px' }} src={`${window?.scData?.plugin_url}/images/change-from-adminbar.png`} />
             </li>
           </ol>
         </div>
