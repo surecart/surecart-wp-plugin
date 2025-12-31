@@ -73,6 +73,7 @@ export default ({ className, attributes, setAttributes, clientId }) => {
 				<PanelBody title={__('Border', 'surecart')}>
 					<PanelRow>
 						<ToggleControl
+							__nextHasNoMarginBottom
 							label={__('Bottom Border', 'surecart')}
 							checked={border}
 							onChange={(border) => setAttributes({ border })}
@@ -82,6 +83,8 @@ export default ({ className, attributes, setAttributes, clientId }) => {
 				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
 						<TextControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							label={__('Button Text', 'surecart')}
 							value={text}
 							onChange={(text) => setAttributes({ text })}

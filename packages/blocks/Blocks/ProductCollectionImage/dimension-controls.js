@@ -148,6 +148,7 @@ const DimensionControls = ({
 				panelId={clientId}
 			>
 				<UnitControl
+					__next40pxDefaultSize
 					label={__('Height', 'surecart')}
 					labelPosition="top"
 					value={height || ''}
@@ -170,6 +171,7 @@ const DimensionControls = ({
 				panelId={clientId}
 			>
 				<UnitControl
+					__next40pxDefaultSize
 					label={__('Width', 'surecart')}
 					labelPosition="top"
 					value={width || ''}

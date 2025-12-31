@@ -22,7 +22,12 @@ export default ({ attributes, setAttributes }) => {
 	const colorProps = useColorProps(attributes);
 
 	const units = useCustomUnits({
-		availableUnits: useSettings('spacing.units') || ['%', 'px', 'em', 'rem'],
+		availableUnits: useSettings('spacing.units') || [
+			'%',
+			'px',
+			'em',
+			'rem',
+		],
 	});
 
 	return (
@@ -30,6 +35,7 @@ export default ({ attributes, setAttributes }) => {
 			<InspectorControls>
 				<PanelBody title={__('Custom Amount Settings')}>
 					<UnitControl
+						__next40pxDefaultSize
 						label={__('Width')}
 						labelPosition="edge"
 						__unstableInputWidth="80px"

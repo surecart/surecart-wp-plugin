@@ -131,6 +131,7 @@ export default ({ attributes, setAttributes, clientId, isSelected }) => {
 
 					<RangeControl
 						__nextHasNoMarginBottom
+						__next40pxDefaultSize
 						label={__('Columns', 'surecart')}
 						value={columns}
 						onChange={(columns) => setAttributes({ columns })}

@@ -89,6 +89,7 @@ export default ({ attributes, setAttributes, context }) => {
 					</PanelRow>
 					<RangeControl
 						__nextHasNoMarginBottom
+						__next40pxDefaultSize
 						label={__('Columns')}
 						value={columns}
 						onChange={(columns) => setAttributes({ columns })}

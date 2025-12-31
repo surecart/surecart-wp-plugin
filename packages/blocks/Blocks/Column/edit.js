@@ -137,6 +137,7 @@ function ColumnEdit({ attributes, setAttributes, clientId }) {
 
 				<PanelBody title={__('Column settings')}>
 					<UnitControl
+						__next40pxDefaultSize
 						label={__('Width')}
 						labelPosition="edge"
 						__unstableInputWidth="80px"
@@ -158,6 +159,7 @@ function ColumnEdit({ attributes, setAttributes, clientId }) {
 					/>
 					{sticky && (
 						<UnitControl
+							__next40pxDefaultSize
 							label={__('Top Offset')}
 							labelPosition="edge"
 							__unstableInputWidth="80px"

@@ -72,6 +72,7 @@ export default ({ attributes, setAttributes }) => {
 						className="sc-form-control sc-quantity-selector__control"
 						value={0}
 						type="number"
+						onChange={() => {}}
 					/>
 					<div className="sc-input-group-text sc-quantity-selector__increase">
 						<svg

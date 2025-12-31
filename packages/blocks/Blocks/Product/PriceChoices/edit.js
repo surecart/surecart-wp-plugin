@@ -33,6 +33,7 @@ export default ({ attributes, setAttributes, context }) => {
 				<PanelBody>
 					<RangeControl
 						__nextHasNoMarginBottom
+						__next40pxDefaultSize
 						label={__('Columns', 'surecart')}
 						value={columns}
 						onChange={(columns) => setAttributes({ columns })}

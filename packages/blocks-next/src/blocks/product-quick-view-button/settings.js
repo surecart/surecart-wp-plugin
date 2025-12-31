@@ -27,6 +27,7 @@ export default ({ attributes, setAttributes }) => {
 				isShownByDefault
 			>
 				<ToggleControl
+					__nextHasNoMarginBottom
 					label={__('Direct add to cart', 'surecart')}
 					help={__(
 						'Add the product directly to cart if it has no options.',

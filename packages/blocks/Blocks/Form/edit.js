@@ -13,7 +13,7 @@ import {
 	InnerBlocks,
 	InspectorControls,
 	store as blockEditorStore,
-	__experimentalLinkControl as LinkControl,
+	LinkControl,
 } from '@wordpress/block-editor';
 import { parse } from '@wordpress/blocks';
 import { createBlocksFromInnerBlocksTemplate } from '@wordpress/blocks';
@@ -286,6 +286,7 @@ export default function edit({ clientId, attributes, setAttributes }) {
 					</PanelRow>
 					<PanelRow>
 						<UnitControl
+							__next40pxDefaultSize
 							label={__('Row Gap')}
 							onChange={(gap) => setAttributes({ gap })}
 							value={gap}

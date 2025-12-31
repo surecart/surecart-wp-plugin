@@ -194,6 +194,7 @@ export default ({ attributes, setAttributes, clientId }) => {
 				<PanelBody title={__('Attributes', 'surecart')}>
 					<RangeControl
 						__nextHasNoMarginBottom
+						__next40pxDefaultSize
 						label={__('Columns', 'surecart')}
 						value={columns}
 						onChange={(columns) => setAttributes({ columns })}
@@ -216,6 +217,7 @@ export default ({ attributes, setAttributes, clientId }) => {
 					)}
 					<RangeControl
 						__nextHasNoMarginBottom
+						__next40pxDefaultSize
 						label={__('Limit', 'surecart')}
 						value={limit}
 						onChange={(limit) => setAttributes({ limit })}
@@ -288,6 +290,7 @@ export default ({ attributes, setAttributes, clientId }) => {
 				<PanelBody>
 					<PanelRow>
 						<UnitControl
+							__next40pxDefaultSize
 							label={__('Pagination Font Size', 'surecart')}
 							onChange={(pagination_size) =>
 								setAttributes({ pagination_size })

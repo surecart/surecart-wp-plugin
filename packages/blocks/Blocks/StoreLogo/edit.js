@@ -150,6 +150,7 @@ export default ({
 				<PanelBody title={__('Settings', 'surecart')}>
 					<RangeControl
 						__nextHasNoMarginBottom
+						__next40pxDefaultSize
 						label={__('Width', 'surecart')}
 						value={width}
 						min={10}
@@ -174,6 +175,7 @@ export default ({
 					{maxHeight !== null && (
 						<RangeControl
 							__nextHasNoMarginBottom
+							__next40pxDefaultSize
 							label={__('Maximum height', 'surecart')}
 							value={maxHeight}
 							min={10}

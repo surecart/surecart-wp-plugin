@@ -2,7 +2,7 @@
 import { ToggleControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { css, jsx } from '@emotion/core';
-import { __experimentalLinkControl as LinkControl } from '@wordpress/block-editor';
+import { LinkControl } from '@wordpress/block-editor';
 
 import { ScButton } from '@surecart/components-react';
 import { useEffect, useState } from '@wordpress/element';

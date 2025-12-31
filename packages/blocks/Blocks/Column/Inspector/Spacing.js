@@ -94,6 +94,7 @@ export default ({ attributes, setAttributes }) => {
 					<div className="block-editor-hooks__layout-controls">
 						<div className="block-editor-hooks__layout-controls-unit">
 							<UnitControl
+								__next40pxDefaultSize
 								label={__('Content', 'surecart')}
 								labelPosition="top"
 								__unstableInputWidth="80px"
@@ -114,6 +115,7 @@ export default ({ attributes, setAttributes }) => {
 						</div>
 						<div className="block-editor-hooks__layout-controls-unit">
 							<UnitControl
+								__next40pxDefaultSize
 								label={__('Wide', 'surecart')}
 								labelPosition="top"
 								__unstableInputWidth="80px"
@@ -140,6 +142,8 @@ export default ({ attributes, setAttributes }) => {
 						)}
 					</p>
 					<ToggleGroupControl
+						__next40pxDefaultSize
+						__nextHasNoMarginBottom
 						__experimentalIsBorderless
 						label={__('Justification', 'surecart')}
 						value={justifyContent}

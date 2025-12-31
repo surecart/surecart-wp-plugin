@@ -131,6 +131,7 @@ function ColumnsEditContainer({
 						<>
 							<RangeControl
 								__nextHasNoMarginBottom
+								__next40pxDefaultSize
 								label={__('Columns')}
 								value={count}
 								onChange={(value) =>

@@ -55,6 +55,7 @@ export default ({ attributes, setAttributes, isSelected }) => {
 
 					{!auto_height && (
 						<UnitControl
+							__next40pxDefaultSize
 							label={__('Slider Height', 'surecart')}
 							labelPosition="edge"
 							__unstableInputWidth="100px"
@@ -77,6 +78,7 @@ export default ({ attributes, setAttributes, isSelected }) => {
 
 					<RangeControl
 						__nextHasNoMarginBottom
+						__next40pxDefaultSize
 						label={__('Thumbnails Per Page', 'surecart')}
 						min={2}
 						max={20}
