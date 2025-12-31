@@ -53,14 +53,16 @@ export default () => {
 				)}
 				loading={!hasLoadedItem}
 			>
-				{FEE_STRATEGIES.map(({ label, key, target }) => (
+				{FEE_STRATEGIES.map(({ label, attribute, target }) => (
 					<StrategyRadioGroup
-						key={key}
+						key={attribute}
 						label={label}
-						value={item?.[key]}
+						value={item?.[attribute]}
 						type="fee"
 						target={target}
-						onChange={(e) => editItem({ [key]: e.target.value })}
+						onChange={(e) =>
+							editItem({ [attribute]: e.target.value })
+						}
 					/>
 				))}
 			</SettingsBox>
@@ -72,14 +74,16 @@ export default () => {
 				)}
 				loading={!hasLoadedItem}
 			>
-				{DISCOUNT_STRATEGIES.map(({ label, key, target }) => (
+				{DISCOUNT_STRATEGIES.map(({ label, attribute, target }) => (
 					<StrategyRadioGroup
-						key={key}
+						key={attribute}
 						label={label}
-						value={item?.[key]}
+						value={item?.[attribute]}
 						type="discount"
 						target={target}
-						onChange={(e) => editItem({ [key]: e.target.value })}
+						onChange={(e) =>
+							editItem({ [attribute]: e.target.value })
+						}
 					/>
 				))}
 			</SettingsBox>
