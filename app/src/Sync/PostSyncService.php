@@ -251,7 +251,7 @@ class PostSyncService {
 
 		// insert post.
 		$props   = $this->getSchemaMap( $model );
-		$post_id = wp_insert_post( wp_slash( $props ), true, false );
+		$post_id = wp_insert_post( wp_slash( apply_filters( 'surecart/product/sync/created/props', $props, $model ) ), true, false );
 
 		// handle errors.
 		if ( is_wp_error( $post_id ) ) {
@@ -276,6 +276,8 @@ class PostSyncService {
 		$this->post = get_post( $post_id );
 
 		delete_option( $lock_key ); // Delete the option after creation, as we want to let it sync afterwards.
+		// fire action.
+		do_action( 'surecart/product/sync/created', $this->post, $model );
 
 		return $this->post;
 	}
@@ -302,12 +304,16 @@ class PostSyncService {
 
 		// update the post by id.
 		$post_id = wp_update_post(
-			array_merge(
-				$props,
-				array(
-					'ID' => $this->post->ID,
-				)
-			)
+			apply_filters(
+				'surecart/product/sync/updated/props',
+				array_merge(
+					$props,
+					array(
+						'ID' => $this->post->ID,
+					)
+				),
+				$model
+			),
 		);
 
 		if ( is_wp_error( $post_id ) ) {
@@ -330,6 +336,9 @@ class PostSyncService {
 		}
 
 		$this->post = get_post( $post_id );
+
+		// fire action.
+		do_action( 'surecart/product/sync/updated', $this->post, $model );
 
 		return $this->post;
 	}
