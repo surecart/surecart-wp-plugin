@@ -6,12 +6,14 @@ use SureCart\Models\Concerns\Facade;
 
 use SureCart\Models\VariantOptionValue;
 use SureCart\Support\Currency;
+use SureCart\Sync\Concerns\HasLockProcess;
 
 /**
  * This class syncs product records to WordPress posts.
  */
 class PostSyncService {
 	use Facade;
+	use HasLockProcess;
 
 	/**
 	 * The product model.
@@ -232,27 +234,25 @@ class PostSyncService {
 	 * @return \WP_Post|\WP_Error
 	 */
 	protected function create( \SureCart\Models\Model $model ) {
-		$lock_key = "sc_sync_create_post_lock_{$model->id}";
-
-		if ( get_transient( $lock_key ) ) { // WordPress will return true if transient is already created & not yet deleted (Process is active).
-			// Another process is already syncing this product.
+		// Another process is already syncing this product.
+		if ( $this->hasLock( $model ) ) {
 			return $this->findByModelId( $model->id );
 		}
 
-		// Acquire lock (expires automatically).
-		set_transient( $lock_key, time(), 30 ); // Lock the syncing of this product for 30 seconds.
-
-		// don't do these actions as they can slow down the sync.
-		foreach ( array( 'do_pings', 'transition_post_status', 'save_post', 'pre_post_update', 'add_attachment', 'edit_attachment', 'edit_post', 'post_updated', 'wp_insert_post', 'save_post_' . $this->post_type ) as $action ) {
-			remove_all_actions( $action );
-		}
-
-		// we are importing.
-		if ( ! defined( 'WP_IMPORTING' ) ) {
-			define( 'WP_IMPORTING', true );
-		}
-
 		try {
+			// Acquire lock.
+			$this->acquireLock( $model );
+
+			// don't do these actions as they can slow down the sync.
+			foreach ( array( 'do_pings', 'transition_post_status', 'save_post', 'pre_post_update', 'add_attachment', 'edit_attachment', 'edit_post', 'post_updated', 'wp_insert_post', 'save_post_' . $this->post_type ) as $action ) {
+				remove_all_actions( $action );
+			}
+
+			// we are importing.
+			if ( ! defined( 'WP_IMPORTING' ) ) {
+				define( 'WP_IMPORTING', true );
+			}
+
 			// insert post.
 			$props   = $this->getSchemaMap( $model );
 			$post_id = wp_insert_post( wp_slash( apply_filters( 'surecart/product/sync/created/props', $props, $model ) ), true, false );
@@ -285,7 +285,7 @@ class PostSyncService {
 			return $this->post;
 		} finally {
 			// Always release the lock, if any error occurs.
-			delete_transient( $lock_key );
+			$this->releaseLock( $model );
 		}
 	}
 
