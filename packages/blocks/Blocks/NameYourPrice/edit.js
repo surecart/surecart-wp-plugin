@@ -27,7 +27,7 @@ export default ({ attributes, setAttributes }) => {
 			<div {...blockProps}>
 				<PriceSelector
 					ad_hoc={true}
-					onSelect={({price_id}) => setAttributes({ price_id })}
+					onSelect={({ price_id }) => setAttributes({ price_id })}
 				/>
 			</div>
 		);
@@ -39,6 +39,7 @@ export default ({ attributes, setAttributes }) => {
 				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
 						<ToggleControl
+							__nextHasNoMarginBottom
 							label={__('Required', 'surecart')}
 							checked={required}
 							onChange={(required) => setAttributes({ required })}
@@ -46,6 +47,8 @@ export default ({ attributes, setAttributes }) => {
 					</PanelRow>
 					<PanelRow>
 						<TextControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							label={__('Label', 'surecart')}
 							value={label}
 							onChange={(label) => setAttributes({ label })}
@@ -53,6 +56,8 @@ export default ({ attributes, setAttributes }) => {
 					</PanelRow>
 					<PanelRow>
 						<TextControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							label={__('Placeholder', 'surecart')}
 							value={placeholder}
 							onChange={(placeholder) =>
@@ -62,6 +67,8 @@ export default ({ attributes, setAttributes }) => {
 					</PanelRow>
 					<PanelRow>
 						<TextControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							label={__('Help', 'surecart')}
 							value={help}
 							onChange={(help) => setAttributes({ help })}
@@ -69,6 +76,7 @@ export default ({ attributes, setAttributes }) => {
 					</PanelRow>
 					<PanelRow>
 						<ToggleControl
+							__nextHasNoMarginBottom
 							label={__('Show Currency Code', 'surecart')}
 							checked={show_currency_code}
 							onChange={(show_currency_code) =>

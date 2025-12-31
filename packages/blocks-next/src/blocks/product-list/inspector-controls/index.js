@@ -81,6 +81,8 @@ export default function ProductListInspectorControls({
 				/>
 
 				<SelectControl
+					__next40pxDefaultSize
+					__nextHasNoMarginBottom
 					__nextHasNoMarginBottom
 					__next40pxDefaultSize
 					label={__('Default Sorting', 'surecart')}
@@ -98,6 +100,8 @@ export default function ProductListInspectorControls({
 
 			<PanelBody title={__('Products', 'surecart')}>
 				<SelectControl
+					__next40pxDefaultSize
+					__nextHasNoMarginBottom
 					label={__('Products To Show', 'surecart')}
 					value={type}
 					options={[

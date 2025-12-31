@@ -163,6 +163,7 @@ export default ({
 					/>
 
 					<ToggleControl
+						__nextHasNoMarginBottom
 						label={__('Set a maximum height', 'surecart')}
 						onChange={() =>
 							setAttributes({ maxHeight: maxHeight ? null : 100 })
@@ -190,6 +191,7 @@ export default ({
 					)}
 
 					<ToggleControl
+						__nextHasNoMarginBottom
 						label={__('Link image to home', 'surecart')}
 						onChange={() =>
 							setAttributes({ isLinkToHome: !isLinkToHome })

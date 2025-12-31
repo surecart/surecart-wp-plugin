@@ -31,6 +31,8 @@ export default ({ className, attributes, setAttributes }) => {
 				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
 						<TextControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							label={__('Button Text', 'surecart')}
 							value={label}
 							onChange={(label) => setAttributes({ label })}
@@ -38,6 +40,7 @@ export default ({ className, attributes, setAttributes }) => {
 					</PanelRow>
 					<PanelRow>
 						<ToggleControl
+							__nextHasNoMarginBottom
 							checked={show_icon}
 							label={__('Show Icon', 'surecart')}
 							onChange={(show_icon) =>
@@ -47,6 +50,7 @@ export default ({ className, attributes, setAttributes }) => {
 					</PanelRow>
 					<PanelRow>
 						<ToggleControl
+							__nextHasNoMarginBottom
 							label={__('Full', 'surecart')}
 							checked={full}
 							onChange={(full) => setAttributes({ full })}
@@ -54,6 +58,8 @@ export default ({ className, attributes, setAttributes }) => {
 					</PanelRow>
 					<PanelRow>
 						<SelectControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							label={__('Size', 'surecart')}
 							value={size}
 							onChange={(size) => {
@@ -82,6 +88,8 @@ export default ({ className, attributes, setAttributes }) => {
 					</PanelRow>
 					<PanelRow>
 						<SelectControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							label={__('Type', 'surecart')}
 							value={type}
 							onChange={(type) => {

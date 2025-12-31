@@ -1,5 +1,5 @@
 import { __, sprintf } from '@wordpress/i18n';
-import { useRef } from '@wordpress/element';
+import { useRef, useEffect } from '@wordpress/element';
 import { ScSelect, ScDivider, ScMenuItem } from '@surecart/components-react';
 import throttle from 'lodash/throttle';
 import { formatNumber } from '../../admin/util';
@@ -164,6 +164,47 @@ export default ({
 			};
 		});
 
+	// Set choices directly on the web component for iframe compatibility.
+	useEffect(() => {
+		if (selectRef.current && choices?.length) {
+			selectRef.current.choices = choices;
+		}
+	}, [choices]);
+
+	// Register event listeners directly for iframe compatibility.
+	useEffect(() => {
+		const element = selectRef.current;
+		if (!element) return;
+
+		const handleChange = (e) => {
+			if (!e?.target?.value) return;
+			if (e?.detail?.suffixUnavailable) {
+				alert(__('Variant Out of Stock.', 'surecart'));
+				return;
+			}
+			onSelect({
+				price_id: e?.target?.value,
+				variant_id: e?.detail?.variant_id,
+			});
+		};
+
+		const handleSearch = (e) => findProduct(e.detail);
+		const handleOpen = () => onFetch?.();
+		const handleScrollEnd = () => onScrollEnd?.();
+
+		element.addEventListener('scChange', handleChange);
+		element.addEventListener('scSearch', handleSearch);
+		element.addEventListener('scOpen', handleOpen);
+		element.addEventListener('scScrollEnd', handleScrollEnd);
+
+		return () => {
+			element.removeEventListener('scChange', handleChange);
+			element.removeEventListener('scSearch', handleSearch);
+			element.removeEventListener('scOpen', handleOpen);
+			element.removeEventListener('scScrollEnd', handleScrollEnd);
+		};
+	}, [onSelect, onFetch, onScrollEnd]);
+
 	return (
 		<ScSelect
 			style={styles}
@@ -176,21 +217,7 @@ export default ({
 			placeholder={__('Select a product', 'surecart')}
 			searchPlaceholder={__('Search for a product...', 'surecart')}
 			search
-			onScOpen={onFetch}
-			onScSearch={(e) => findProduct(e.detail)}
-			onScChange={(e) => {
-				if (!e?.target?.value) return;
-				if (e?.detail?.suffixUnavailable) {
-					alert(__('Variant Out of Stock.', 'surecart'));
-					return;
-				}
-				onSelect({
-					price_id: e?.target?.value,
-					variant_id: e?.detail?.variant_id,
-				});
-			}}
 			choices={choices}
-			onScScrollEnd={onScrollEnd}
 			{...props}
 		>
 			{onNew && (

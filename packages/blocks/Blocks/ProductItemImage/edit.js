@@ -81,6 +81,7 @@ export default ({ attributes, setAttributes }) => {
 						onRequestClose={() => setModal(false)}
 					>
 						<RangeControl
+							__nextHasNoMarginBottom
 							label={__('Aspect Ratio', 'surecart')}
 							value={ratio}
 							onChange={(value) =>

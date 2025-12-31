@@ -62,6 +62,7 @@ export default ({ attributes, setAttributes }) => {
 	return (
 		<>
 			<ToggleControl
+				__nextHasNoMarginBottom
 				className="block-editor-hooks__toggle-control"
 				label={__('Inner blocks use content width', 'surecart')}
 				checked={layout?.type === 'constrained'}

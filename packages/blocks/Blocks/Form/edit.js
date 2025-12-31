@@ -303,6 +303,7 @@ export default function edit({ clientId, attributes, setAttributes }) {
 				<PanelBody title={__('Thank You Page', 'surecart')}>
 					<PanelRow>
 						<ToggleControl
+							__nextHasNoMarginBottom
 							label={__('Custom Thank You Page', 'surecart')}
 							checked={custom_success_url}
 							onChange={(custom_success_url) =>
@@ -351,6 +352,7 @@ export default function edit({ clientId, attributes, setAttributes }) {
 					>
 						<PanelRow>
 							<ToggleControl
+								__nextHasNoMarginBottom
 								label={__('Persist Across Pages', 'surecart')}
 								help={__(
 									'Allow the cart for this form to persist across page views instead using the chosen products each page view.',
@@ -375,6 +377,8 @@ export default function edit({ clientId, attributes, setAttributes }) {
 				>
 					<PanelRow>
 						<TextControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							label={__('Submitting', 'surecart')}
 							value={loading_text?.finalizing}
 							placeholder={__('Submitting...', 'surecart')}
@@ -390,6 +394,8 @@ export default function edit({ clientId, attributes, setAttributes }) {
 					</PanelRow>
 					<PanelRow>
 						<TextControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							label={__('Processing', 'surecart')}
 							value={loading_text?.paying}
 							placeholder={__('Processing...', 'surecart')}
@@ -405,6 +411,8 @@ export default function edit({ clientId, attributes, setAttributes }) {
 					</PanelRow>
 					<PanelRow>
 						<TextControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							label={__('Confirming', 'surecart')}
 							value={loading_text?.confirming}
 							placeholder={__('Finalizing...', 'surecart')}
@@ -420,6 +428,8 @@ export default function edit({ clientId, attributes, setAttributes }) {
 					</PanelRow>
 					<PanelRow>
 						<TextControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							label={__('Success', 'surecart')}
 							value={loading_text?.confirmed}
 							placeholder={__(
@@ -439,6 +449,8 @@ export default function edit({ clientId, attributes, setAttributes }) {
 					{custom_success_url && (
 						<PanelRow>
 							<TextControl
+								__next40pxDefaultSize
+								__nextHasNoMarginBottom
 								label={__('Success & Redirecting', 'surecart')}
 								value={loading_text?.redirecting}
 								placeholder={__(
@@ -462,6 +474,8 @@ export default function edit({ clientId, attributes, setAttributes }) {
 					initialOpen={false}
 				>
 					<TextControl
+						__next40pxDefaultSize
+						__nextHasNoMarginBottom
 						label={__('Title', 'surecart')}
 						value={success_text?.title}
 						placeholder={__('Thank you!', 'surecart')}
@@ -476,6 +490,8 @@ export default function edit({ clientId, attributes, setAttributes }) {
 					/>
 
 					<TextareaControl
+						__next40pxDefaultSize
+						__nextHasNoMarginBottom
 						label={__('Description', 'surecart')}
 						value={success_text?.description}
 						placeholder={__(
@@ -493,6 +509,8 @@ export default function edit({ clientId, attributes, setAttributes }) {
 					/>
 
 					<TextControl
+						__next40pxDefaultSize
+						__nextHasNoMarginBottom
 						label={__('Button Text', 'surecart')}
 						value={success_text?.button}
 						placeholder={__('Continue', 'surecart')}
@@ -685,9 +703,13 @@ export default function edit({ clientId, attributes, setAttributes }) {
 								css={css`
 									*
 										> *
-										> .wp-block:not(sc-choice):not(sc-column):not(sc-radio):not(sc-price-choice):not(sc-choices
-											> *):not(.sc-invoice-details
-											> *):not(:last-child) {
+										> .wp-block:not(sc-choice):not(
+											sc-column
+										):not(sc-radio):not(
+											sc-price-choice
+										):not(sc-choices > *):not(
+											.sc-invoice-details > *
+										):not(:last-child) {
 										margin-bottom: ${gap} !important;
 									}
 									// prevents issues with our shadow dom.

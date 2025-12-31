@@ -43,6 +43,7 @@ export default ({ attributes, setAttributes, isSelected }) => {
 			<InspectorControls>
 				<PanelBody title={__('Attributes', 'surecart')}>
 					<ToggleControl
+						__nextHasNoMarginBottom
 						label={__('Auto Height', 'surecart')}
 						checked={auto_height}
 						onChange={(auto_height) =>
@@ -75,6 +76,7 @@ export default ({ attributes, setAttributes, isSelected }) => {
 					/>
 
 					<RangeControl
+						__nextHasNoMarginBottom
 						label={__('Thumbnails Per Page', 'surecart')}
 						min={2}
 						max={20}

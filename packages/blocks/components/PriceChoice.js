@@ -12,11 +12,14 @@ import {
 import { Spinner } from '@wordpress/components';
 import { store as coreStore } from '@wordpress/core-data';
 import { useSelect } from '@wordpress/data';
+import { useRef, useEffect } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { intervalString } from '../../admin/util/translations';
 import LineItemLabel from '../../admin/ui/LineItemLabel';
 
 export default ({ choice, onUpdate, hideQuantity, onRemove }) => {
+	const quantityInputRef = useRef();
+	const priceInputRef = useRef();
 	// get price from choice.
 	const price = useSelect(
 		(select) => {
@@ -62,19 +65,10 @@ export default ({ choice, onUpdate, hideQuantity, onRemove }) => {
 		if (price?.ad_hoc) {
 			return (
 				<ScPriceInput
+					ref={priceInputRef}
 					placeholder={__('Enter Custom Amount', 'surecart')}
 					currencyCode={scData.currency}
 					value={choice?.ad_hoc_amount || price?.amount}
-					onScInput={(e) => {
-						onUpdate({
-							id: choice?.id,
-							ad_hoc_amount: e.target.value,
-							quantity: choice?.quantity || 1,
-							...(choice?.variant_id
-								? { variant_id: choice.variant_id }
-								: {}),
-						});
-					}}
 					max={price?.ad_hoc_max_amount}
 					min={price?.ad_hoc_min_amount}
 					css={css`
@@ -94,6 +88,45 @@ export default ({ choice, onUpdate, hideQuantity, onRemove }) => {
 	};
 
 	const amount = variant?.amount ?? price?.amount;
+
+	// Register quantity input event listener for iframe compatibility.
+	useEffect(() => {
+		const element = quantityInputRef.current;
+		if (!element) return;
+
+		const handleChange = (e) => {
+			onUpdate({
+				id: choice?.id,
+				quantity: e.target.value,
+				...(choice?.variant_id
+					? { variant_id: choice.variant_id }
+					: {}),
+			});
+		};
+
+		element.addEventListener('scChange', handleChange);
+		return () => element.removeEventListener('scChange', handleChange);
+	}, [choice?.id, choice?.variant_id, onUpdate]);
+
+	// Register price input event listener for iframe compatibility.
+	useEffect(() => {
+		const element = priceInputRef.current;
+		if (!element) return;
+
+		const handleInput = (e) => {
+			onUpdate({
+				id: choice?.id,
+				ad_hoc_amount: e.target.value,
+				quantity: choice?.quantity || 1,
+				...(choice?.variant_id
+					? { variant_id: choice.variant_id }
+					: {}),
+			});
+		};
+
+		element.addEventListener('scInput', handleInput);
+		return () => element.removeEventListener('scInput', handleInput);
+	}, [choice?.id, choice?.variant_id, choice?.quantity, onUpdate]);
 
 	return (
 		<sc-table-row>
@@ -137,17 +170,9 @@ export default ({ choice, onUpdate, hideQuantity, onRemove }) => {
 			{!hideQuantity && (
 				<sc-table-cell style={{ width: '100px' }}>
 					<ScInput
+						ref={quantityInputRef}
 						type="number"
 						value={choice?.quantity}
-						onScChange={(e) =>
-							onUpdate({
-								id: choice?.id,
-								quantity: e.target.value,
-								...(choice?.variant_id
-									? { variant_id: choice.variant_id }
-									: {}),
-							})
-						}
 						disabled={!!price?.ad_hoc}
 					/>
 				</sc-table-cell>

@@ -102,6 +102,8 @@ export default ({ attributes, setAttributes, clientId, isSelected }) => {
 				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
 						<TextControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							label={__('Label', 'surecart')}
 							value={label}
 							onChange={(label) => setAttributes({ label })}
@@ -109,6 +111,7 @@ export default ({ attributes, setAttributes, clientId, isSelected }) => {
 					</PanelRow>
 					<PanelRow>
 						<RadioControl
+							__nextHasNoMarginBottom
 							label={__('Type', 'surecart')}
 							help="The type of product selection"
 							selected={type}
@@ -127,6 +130,7 @@ export default ({ attributes, setAttributes, clientId, isSelected }) => {
 					</PanelRow>
 
 					<RangeControl
+						__nextHasNoMarginBottom
 						label={__('Columns', 'surecart')}
 						value={columns}
 						onChange={(columns) => setAttributes({ columns })}

@@ -151,6 +151,7 @@ function ColumnEdit({ attributes, setAttributes, clientId }) {
 				</PanelBody>
 				<PanelBody title={__('Sticky')}>
 					<ToggleControl
+						__nextHasNoMarginBottom
 						label={__('Sticky', 'surecart')}
 						checked={sticky}
 						onChange={(sticky) => setAttributes({ sticky })}

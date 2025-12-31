@@ -84,6 +84,7 @@ export default ({ onCreate, templates }) => {
 
 				<sc-dashboard-module heading={__('Thank You Page', 'surecart')}>
 					<ToggleControl
+						__nextHasNoMarginBottom
 						label={__('Custom Thank You Page', 'surecart')}
 						checked={custom_success_url}
 						onChange={(custom_success_url) =>

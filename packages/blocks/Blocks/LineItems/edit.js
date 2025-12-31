@@ -20,6 +20,7 @@ export default ({ attributes, setAttributes }) => {
 				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
 						<ToggleControl
+							__nextHasNoMarginBottom
 							label={__('Removable', 'surecart')}
 							help={__(
 								'Allow line items to be removed.',
@@ -33,6 +34,7 @@ export default ({ attributes, setAttributes }) => {
 					</PanelRow>
 					<PanelRow>
 						<ToggleControl
+							__nextHasNoMarginBottom
 							label={__('Editable', 'surecart')}
 							help={__(
 								'Allow line item quantities to be editable.',
