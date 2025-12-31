@@ -18,12 +18,6 @@
 			"type": "number",
 			"default": 24
 		},
-		"width": {
-			"type": "string"
-		},
-		"height": {
-			"type": "string"
-		},
 		"stroke_width": {
 			"type": "number",
 			"default": 2

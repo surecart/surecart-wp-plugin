@@ -33,8 +33,6 @@ export default function Edit({ attributes, setAttributes }) {
 	const {
 		icon_name,
 		size,
-		width,
-		height,
 		stroke_width,
 		alignment,
 		link_url,
@@ -60,8 +58,8 @@ export default function Edit({ attributes, setAttributes }) {
 	}, [searchTerm]);
 
 	const iconStyle = {
-		width: width || `${size}px`,
-		height: height || `${size}px`,
+		width: `${size}px`,
+		height: `${size}px`,
 		display: 'inline-block',
 		strokeWidth: stroke_width,
 	};
@@ -91,16 +89,7 @@ export default function Edit({ attributes, setAttributes }) {
 			);
 		}
 		return iconContent;
-	}, [
-		icon_name,
-		size,
-		width,
-		height,
-		stroke_width,
-		link_url,
-		link_target,
-		link_rel,
-	]);
+	}, [icon_name, size, stroke_width, link_url, link_target, link_rel]);
 
 	return (
 		<>
@@ -187,28 +176,6 @@ export default function Edit({ attributes, setAttributes }) {
 						min={1}
 						max={5}
 						step={0.5}
-					/>
-
-					<TextControl
-						label={__('Custom Width', 'surecart')}
-						value={width}
-						onChange={(value) => setAttributes({ width: value })}
-						placeholder={__('e.g., 100px, 50%, auto', 'surecart')}
-						help={__(
-							'Leave empty to use size setting.',
-							'surecart'
-						)}
-					/>
-
-					<TextControl
-						label={__('Custom Height', 'surecart')}
-						value={height}
-						onChange={(value) => setAttributes({ height: value })}
-						placeholder={__('e.g., 100px, 50%, auto', 'surecart')}
-						help={__(
-							'Leave empty to use size setting.',
-							'surecart'
-						)}
 					/>
 				</PanelBody>
 
