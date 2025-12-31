@@ -234,10 +234,13 @@ class PostSyncService {
 	protected function create( \SureCart\Models\Model $model ) {
 		$lock_key = "sc_sync_create_post_lock_{$model->id}";
 
-		if ( ! add_option( $lock_key, time(), '', 'no' ) ) { // WordPress will return false if option is already created.
+		if ( get_transient( $lock_key ) ) { // WordPress will return true if transient is already created & not yet deleted (Process is active).
 			// Another process is already syncing this product.
 			return $this->findByModelId( $model->id );
 		}
+
+		// Acquire lock (expires automatically).
+		set_transient( $lock_key, time(), 30 ); // Lock the syncing of this product for 30 seconds.
 
 		// don't do these actions as they can slow down the sync.
 		foreach ( array( 'do_pings', 'transition_post_status', 'save_post', 'pre_post_update', 'add_attachment', 'edit_attachment', 'edit_post', 'post_updated', 'wp_insert_post', 'save_post_' . $this->post_type ) as $action ) {
@@ -249,37 +252,41 @@ class PostSyncService {
 			define( 'WP_IMPORTING', true );
 		}
 
-		// insert post.
-		$props   = $this->getSchemaMap( $model );
-		$post_id = wp_insert_post( wp_slash( apply_filters( 'surecart/product/sync/created/props', $props, $model ) ), true, false );
+		try {
+			// insert post.
+			$props   = $this->getSchemaMap( $model );
+			$post_id = wp_insert_post( wp_slash( apply_filters( 'surecart/product/sync/created/props', $props, $model ) ), true, false );
 
-		// handle errors.
-		if ( is_wp_error( $post_id ) ) {
-			return $post_id;
+			// handle errors.
+			if ( is_wp_error( $post_id ) ) {
+				return $post_id;
+			}
+
+			// If there is a page template, use that, otherwise use the default.
+			update_post_meta( $post_id, '_wp_page_template', $this->convertTemplateId( $model->template_id ?? '' ) );
+			update_post_meta( $post_id, '_wp_page_template_part', $this->convertTemplateId( $model->template_part_id ?? '' ) );
+
+			$this->syncCollections( $post_id, $model );
+
+			// we need to do this because tax_input checks permissions for some ungodly reason.
+			wp_set_post_terms( $post_id, \SureCart::account()->id, 'sc_account' );
+
+			$values = $this->syncVariantValues( $model, $post_id );
+			if ( is_wp_error( $values ) ) {
+				return $values;
+			}
+
+			// set the post on the model.
+			$this->post = get_post( $post_id );
+
+			// fire action.
+			do_action( 'surecart/product/sync/created', $this->post, $model );
+
+			return $this->post;
+		} finally {
+			// Always release the lock, if any error occurs.
+			delete_transient( $lock_key );
 		}
-
-		// If there is a page template, use that, otherwise use the default.
-		update_post_meta( $post_id, '_wp_page_template', $this->convertTemplateId( $model->template_id ?? '' ) );
-		update_post_meta( $post_id, '_wp_page_template_part', $this->convertTemplateId( $model->template_part_id ?? '' ) );
-
-		$this->syncCollections( $post_id, $model );
-
-		// we need to do this because tax_input checks permissions for some ungodly reason.
-		wp_set_post_terms( $post_id, \SureCart::account()->id, 'sc_account' );
-
-		$values = $this->syncVariantValues( $model, $post_id );
-		if ( is_wp_error( $values ) ) {
-			return $values;
-		}
-
-		// set the post on the model.
-		$this->post = get_post( $post_id );
-
-		delete_option( $lock_key ); // Delete the option after creation, as we want to let it sync afterwards.
-		// fire action.
-		do_action( 'surecart/product/sync/created', $this->post, $model );
-
-		return $this->post;
 	}
 
 	/**
