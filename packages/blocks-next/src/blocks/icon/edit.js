@@ -66,18 +66,18 @@ export default function Edit({ attributes, setAttributes }) {
 		strokeWidth: stroke_width,
 	};
 
-	const IconContent = () => (
-		<div style={iconStyle}>
-			<ScIcon
-				name={icon_name}
-				width={size}
-				height={size}
-				strokeWidth={stroke_width}
-			/>
-		</div>
-	);
+	const IconDisplay = useMemo(() => {
+		const iconContent = (
+			<div style={iconStyle}>
+				<ScIcon
+					name={icon_name}
+					width={size}
+					height={size}
+					strokeWidth={stroke_width}
+				/>
+			</div>
+		);
 
-	const IconDisplay = () => {
 		if (link_url) {
 			return (
 				<a
@@ -86,12 +86,21 @@ export default function Edit({ attributes, setAttributes }) {
 					rel={link_rel}
 					onClick={(e) => e.preventDefault()}
 				>
-					<IconContent />
+					{iconContent}
 				</a>
 			);
 		}
-		return <IconContent />;
-	};
+		return iconContent;
+	}, [
+		icon_name,
+		size,
+		width,
+		height,
+		stroke_width,
+		link_url,
+		link_target,
+		link_rel,
+	]);
 
 	return (
 		<>
@@ -226,9 +235,7 @@ export default function Edit({ attributes, setAttributes }) {
 				)}
 			</InspectorControls>
 
-			<div {...blockProps}>
-				<IconDisplay />
-			</div>
+			<div {...blockProps}>{IconDisplay}</div>
 
 			{isEditingURL && (
 				<Popover
