@@ -9,13 +9,12 @@ import { __ } from '@wordpress/i18n';
 
 export const StrategyRadioGroup = ({
 	label,
-	help,
 	value,
 	onChange,
 	type,
 	target,
 }) => (
-	<ScRadioGroup label={label} help={help} onScChange={onChange}>
+	<ScRadioGroup label={label} onScChange={onChange}>
 		<ScFlex style={FLEX_STYLE}>
 			{STRATEGY_VALUES.map((option) => (
 				<ScRadio key={option} value={option} checked={option === value}>

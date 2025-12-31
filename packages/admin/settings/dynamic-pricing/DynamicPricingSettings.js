@@ -47,14 +47,16 @@ export default () => {
 
 			<SettingsBox
 				title={__('Fees Selection Strategy', 'surecart')}
-				description={__('Selection Strategy', 'surecart')}
+				description={__(
+					'You can set how the fee will be applied.',
+					'surecart'
+				)}
 				loading={!hasLoadedItem}
 			>
 				{FEE_STRATEGIES.map(({ label, key, target }) => (
 					<StrategyRadioGroup
 						key={key}
 						label={label}
-						help={__('Selection strategy.', 'surecart')}
 						value={item?.[key]}
 						type="fee"
 						target={target}
@@ -64,14 +66,16 @@ export default () => {
 			</SettingsBox>
 			<SettingsBox
 				title={__('Discount Selection Strategy', 'surecart')}
-				description={__('Selection Strategy', 'surecart')}
+				description={__(
+					'You can set how the discount will be applied.',
+					'surecart'
+				)}
 				loading={!hasLoadedItem}
 			>
 				{DISCOUNT_STRATEGIES.map(({ label, key, target }) => (
 					<StrategyRadioGroup
 						key={key}
 						label={label}
-						help={__('Selection strategy.', 'surecart')}
 						value={item?.[key]}
 						type="discount"
 						target={target}
