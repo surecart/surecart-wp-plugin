@@ -26,25 +26,29 @@ class Interval {
 		switch ( $interval ) {
 			case 'day':
 				$text = sprintf(
-					$showSingle ? _n( '%d day', '%d days', $amount, 'surecart' ) : _n( 'day', '%d days', $amount, 'surecart' ),
+					// translators: %d is the number of days.
+					$showSingle ? _n( '%d day', '%d days', $amount, 'surecart' ) : _n( '%d day', '%d days', $amount, 'surecart' ),
 					$amount
 				);
 				return "$prefix $text";
 			case 'week':
 				$text = sprintf(
-					$showSingle ? _n( '%d week', '%d weeks', $amount, 'surecart' ) : _n( 'week', '%d weeks', $amount, 'surecart' ),
+					// translators: %d is the number of weeks.
+					$showSingle ? _n( '%d week', '%d weeks', $amount, 'surecart' ) : _n( '%d week', '%d weeks', $amount, 'surecart' ),
 					$amount
 				);
 				return "$prefix $text";
 			case 'month':
 				$text = sprintf(
-					$showSingle ? _n( '%d month', '%d months', $amount, 'surecart' ) : _n( 'month', '%d months', $amount, 'surecart' ),
+					// translators: %d is the number of months.
+					$showSingle ? _n( '%d month', '%d months', $amount, 'surecart' ) : _n( '%d month', '%d months', $amount, 'surecart' ),
 					$amount
 				);
 				return "$prefix $text";
 			case 'year':
 				$text = sprintf(
-					$showSingle ? _n( '%d year', '%d years', $amount, 'surecart' ) : _n( 'year', '%d years', $amount, 'surecart' ),
+					// translators: %d is the number of years.
+					$showSingle ? _n( '%d year', '%d years', $amount, 'surecart' ) : _n( '%d year', '%d years', $amount, 'surecart' ),
 					$amount
 				);
 				return "$prefix $text";
@@ -71,25 +75,29 @@ class Interval {
 		switch ( $interval ) {
 			case 'day':
 				$text = sprintf(
-					$showSingle ? _n( '%d d', '%d d', $amount, 'surecart' ) : _n( 'd', '%d d', $amount, 'surecart' ),
+					// translators: %d is the number of days (abbreviated).
+					$showSingle ? _n( '%d d', '%d d', $amount, 'surecart' ) : _n( '%d d', '%d d', $amount, 'surecart' ),
 					$amount
 				);
 				return " / $text";
 			case 'week':
 				$text = sprintf(
-					$showSingle ? _n( '%d wk', '%d wks', $amount, 'surecart' ) : _n( 'wk', '%d wks', $amount, 'surecart' ),
+					// translators: %d is the number of weeks (abbreviated).
+					$showSingle ? _n( '%d wk', '%d wks', $amount, 'surecart' ) : _n( '%d wk', '%d wks', $amount, 'surecart' ),
 					$amount
 				);
 				return " / $text";
 			case 'month':
 				$text = sprintf(
-					$showSingle ? _n( '%d mo', '%d mos', $amount, 'surecart' ) : _n( 'mo', '%d mos', $amount, 'surecart' ),
+					// translators: %d is the number of months (abbreviated).
+					$showSingle ? _n( '%d mo', '%d mos', $amount, 'surecart' ) : _n( '%d mo', '%d mos', $amount, 'surecart' ),
 					$amount
 				);
 				return " / $text";
 			case 'year':
 				$text = sprintf(
-					$showSingle ? _n( '%d yr', '%d yrs', $amount, 'surecart' ) : _n( 'yr', '%d yrs', $amount, 'surecart' ),
+					// translators: %d is the number of years (abbreviated).
+					$showSingle ? _n( '%d yr', '%d yrs', $amount, 'surecart' ) : _n( '%d yr', '%d yrs', $amount, 'surecart' ),
 					$amount
 				);
 				return " / $text";

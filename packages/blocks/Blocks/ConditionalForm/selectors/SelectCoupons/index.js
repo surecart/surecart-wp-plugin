@@ -9,7 +9,7 @@ import {
 	ScIcon,
 	ScStackedList,
 } from '@surecart/components-react';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 import CouponItem from './CouponItem';
 import { getFormattedPrice } from '../../../../../admin/util';
 

@@ -15,7 +15,7 @@ export default () => {
 	const recommendedPlugins = (records || [])
 		.filter((record) => {
 			return (
-				(record._embedded['wp:term'][0] || []).some(
+				(record?._embedded['wp:term']?.[0] || []).some(
 					(record) => record.slug === 'recommended'
 				) &&
 				!!record?.slug &&
