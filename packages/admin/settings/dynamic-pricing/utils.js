@@ -4,17 +4,17 @@ export const FEE_STRATEGIES = [
 	{
 		label: __('Checkout', 'surecart'),
 		target: 'checkout',
-		key: 'negative_checkout_fee_selection_strategy',
+		attribute: 'negative_checkout_fee_selection_strategy',
 	},
 	{
 		label: __('Line Item', 'surecart'),
 		target: 'line_item',
-		key: 'negative_line_item_fee_selection_strategy',
+		attribute: 'negative_line_item_fee_selection_strategy',
 	},
 	{
 		label: __('Shipping', 'surecart'),
 		target: 'shipping',
-		key: 'negative_shipping_fee_selection_strategy',
+		attribute: 'negative_shipping_fee_selection_strategy',
 	},
 ];
 
@@ -22,17 +22,17 @@ export const DISCOUNT_STRATEGIES = [
 	{
 		label: __('Checkout', 'surecart'),
 		target: 'checkout',
-		key: 'positive_checkout_fee_selection_strategy',
+		attribute: 'positive_checkout_fee_selection_strategy',
 	},
 	{
 		label: __('Line Item', 'surecart'),
 		target: 'line_item',
-		key: 'positive_line_item_fee_selection_strategy',
+		attribute: 'positive_line_item_fee_selection_strategy',
 	},
 	{
 		label: __('Shipping', 'surecart'),
 		target: 'shipping',
-		key: 'positive_shipping_fee_selection_strategy',
+		attribute: 'positive_shipping_fee_selection_strategy',
 	},
 ];
 
