@@ -1,5 +1,5 @@
 :host {
-  .trigger-icon {
+  & > sc-popover > sc-tag > sc-icon {
     margin-left: 5px;
     margin-bottom: 3px;
     --width: 1.2em;

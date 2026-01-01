@@ -147,10 +147,12 @@ export class ScPayment {
           <div class="sc-payment-label" slot="label">
             <div>{this.label}</div>
             {checkoutState.mode === 'test' && !this.hideTestModeBadge && (
-              <sc-tag type="warning" size="small" exportparts="base:test-badge__base, content:test-badge__content">
-                {__('Test Mode', 'surecart')}
-                <sc-test-mode-info />
-              </sc-tag>
+              <sc-test-mode-info>
+                <sc-tag slot="trigger" type="warning" size="small" exportparts="base:test-badge__base, content:test-badge__content">
+                  {__('Test Mode', 'surecart')}
+                  <sc-icon style={{ 'marginLeft': '5px', 'marginBottom': '3px', '--width': '1.2em', '--height': '1.2em', 'verticalAlign': 'middle' }} name="info" />
+                </sc-tag>
+              </sc-test-mode-info>
             )}
           </div>
 
