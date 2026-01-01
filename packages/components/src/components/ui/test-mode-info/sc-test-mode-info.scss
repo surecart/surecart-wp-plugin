@@ -6,17 +6,31 @@
     --height: 1.2em;
     vertical-align: middle;
   }
-  ol {
-    padding-left: 1em;
-    margin: 0;
-    font-size: 12px;
+  .sc-test-mode-info-content {
+    ol {
+      padding-left: 1em;
+      margin: 0;
+      font-size: 12px;
 
-    img {
-      width: 320px;
-      margin-top: 12px;
+      img {
+        width: 320px;
+        margin-top: 12px;
+      }
+    }
+    ul {
+      padding-left: 1em;
     }
   }
-  ul {
-    padding-left: 1em;
+
+  .sc-test-mode-info-footer {
+    display: flex;
+    justify-content: space-between;
+    sc-button > sc-icon {
+      margin-left: 4px;
+    }
+  }
+
+  sc-popover {
+    --panel-width: 35em;
   }
 }
