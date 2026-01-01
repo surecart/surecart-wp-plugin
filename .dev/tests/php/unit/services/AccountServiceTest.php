@@ -150,6 +150,9 @@ class AccountServiceTest extends SureCartUnitTestCase {
 		$this->account = $account;
 	}
 
+	/**
+	 * @group account
+	 */
 	public function test_account_service_when_transient_is_set() {
 		$accountService = \SureCart::account();
 
@@ -161,6 +164,9 @@ class AccountServiceTest extends SureCartUnitTestCase {
 
 	}
 
+	/**
+	 * @group account
+	 */
 	public function test_convert_account_to_array() {
 		update_option( 'sc_previous_account', $this->account->toArray() );
 
