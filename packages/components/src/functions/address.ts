@@ -56,7 +56,7 @@ export const countryChoices = async () => {
   const response = await fetch(url);
   const data: any = await response.json();
   const countries = data?.data.map(({ code, name }) => ({ value: code, label: name })) as Array<{ value: string; label: string }>;
-  return (window?.wp?.hooks?.applyFilters('surecart_address_countries', countries) as Array<{ value: string; label: string }>) || countries;
+  return (window?.wp?.hooks?.applyFilters?.('surecart_address_countries', countries) as Array<{ value: string; label: string }>) || countries;
 };
 
 export const getCountryDetails = async (countryCode: string) => {
