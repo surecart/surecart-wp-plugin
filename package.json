@@ -27,6 +27,7 @@
 		"styles/",
 		"!node_modules",
 		"LICENSE",
+		"composer.json",
 		"README.md",
 		"readme.txt",
 		"screenshot-1.png",

@@ -76,8 +76,8 @@ class Block extends ProductBlock {
 			</figure>',
 			get_block_wrapper_attributes(),
 			esc_url( $product->product_medias->data[0]->getUrl( 800 ) ),
-			esc_attr( $product->featured_media->alt ),
-			esc_attr( $product->featured_media->title )
+			esc_attr( $product->featured_media->alt ?? '' ),
+			esc_attr( $product->featured_media->title ?? '' )
 		);
 	}
 

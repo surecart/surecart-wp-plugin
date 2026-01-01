@@ -275,6 +275,10 @@ abstract class IntegrationService extends AbstractIntegration implements Integra
 
 		// product removed.
 		$integrations = (array) $this->getIntegrationData( $previous_purchase ) ?? [];
+
+		// Check if product has changed for Product upgrade group change.
+		$product_changed = $purchase->product_id !== $previous_purchase->product_id;
+
 		foreach ( $integrations as $integration ) {
 			if ( ! $integration->id ) {
 				continue;
@@ -285,7 +289,8 @@ abstract class IntegrationService extends AbstractIntegration implements Integra
 			}
 
 			// If no price & variant has been added for the integration, don't revoke it.
-			if ( empty( $integration->price_id ) && empty( $integration->variant_id ) ) {
+			// unless the product has changed with the upgrade group.
+			if ( empty( $integration->price_id ) && empty( $integration->variant_id ) && ! $product_changed ) {
 				continue;
 			}
 

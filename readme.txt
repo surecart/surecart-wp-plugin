@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: ecommerce, online store, subscriptions, stripe, payments
 Requires at least: 6.6
 Tested up to: 6.9
-Stable tag: 3.16.8
+Stable tag: 3.17.3
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -233,6 +233,9 @@ The second type of integrations are done with [Ottokit](https://wordpress.org/pl
 ## Join The SureCart Facebook Group ##
 Join our [Facebook group community](https://www.facebook.com/groups/surecrafted): Learn the tricks and techniques that other SureCart users are using to grow their business. Also, get exciting insider information on upcoming feature releases.
 
+## Want to contribute to the plugin? ##
+You may now contribute to the plugin on Github: [SureCart WordPress Plugin on Github](https://github.com/surecart/surecart-wp-plugin)
+
 [Terms And Conditions](https://surecart.com/terms)
 [Privacy Policy](https://surecart.com/privacy)
 
@@ -312,6 +315,39 @@ Yes, the checkout form can be customized using our visual builder. You can chang
 Accessibility is a huge priority for the entire team building SureCart. As you know, accessibility is an ongoing improvement task. Our development and QA teams are trained in accessibility best practices and build/test each new feature for accessibility. If you come across any edge issues, we want to know about it and will prioritize its resolution. Please contact us via our website.
 
 == Changelog ==
+
+= 3.17.3 - December 29th, 2025 =
+- Fix: Issue with dashboard not loading if integration category is missing.
+- Fix: Default country not able to be selected for address block at checkout.
+- Fix: Issue with multiple related products pagination on the same page.
+- Fix: Show past due subscriptions in customer dashboard.
+
+= 3.17.2 - December 17th, 2025 =
+- Improvement: Add link to github repository.
+- Improvement: Include composer.json in released version to share more about used packages.
+- Fix: Some missing translation textdomains and invalid variable translations.
+
+= 3.17.1 - December 16th, 2025 =
+- Improvement: More specific error messages for address inputs that have the wrong format.
+- Fix: Issue with cart menu icon not rendering in WordPress 6.9 when used as a shortcode.
+- Fix: Quantity "Out of stock" modal on checkout page to properly account for variants.
+- Fix: Add validation to make sure stores cannot be created if site name is 2 letters or less.
+- Fix: Missing space in tax included settings for GST tax included.
+
+= 3.17.0 - December 8th, 2025 =
+- New: Product variant overrides. Customize variants with custom tax, shipping, weights, purchase limits and more.
+- New: Limit shipping to specific ZIP/postal codes, code ranges, or partial matches of codes.
+- New: Autoplay and loop options for product page video.
+- New: Order admin product list by name, cataloged_at.
+- Change: Updated address components for better internationalization.
+- Improvement: Clean up error keys to avoid duplicates.
+- Fix: Issue with loading icon not appearing on bricks add to cart.
+- Fix: Min/Max validation issue with bricks name your own price.
+- Fix: Issue where user role was not removed in some cases during plan downgrade.
+- Fix: Ensure filter urls have noindex when Rankmath or SureRank plugins may not be outputting canonical tag correctly.
+- Fix: Issue with Google trying to crawl menu cart button due to missing role.
+- Fix: Don't clear existing login cookies upon login to prevent issues where webservers will serve headers out of order.
+- Fix: Issue with Bricks not loading shortcode javascript files since WordPress 6.9 performance update.
 
 = 3.16.8 - December 3rd, 2025 =
 - Fix: Resolved internal errors on Dashboard with WordPress 6.9 compatibility.
