@@ -28,7 +28,7 @@ export default ({ attributes, setAttributes }) => {
 	});
 
 	const [discountInputOpen, setDiscountInputOpen] = useState(false);
-	const [prmotionCode, setPromotionCode] = useState('');
+	const [promotionCode, setPromotionCode] = useState('');
 	const [promotionApplied, setPromotionApplied] = useState(false);
 	const [discountIsRedeemable, setDiscountIsRedeemable] = useState(true);
 
@@ -65,7 +65,7 @@ export default ({ attributes, setAttributes }) => {
 					<div class="sc-line-item__description">
 						{__('Discount', 'surecart')}
 						<div class="sc-tag sc-tag--default">
-							{prmotionCode}
+							{promotionCode}
 
 							<button
 								onClick={() => {
@@ -113,12 +113,12 @@ export default ({ attributes, setAttributes }) => {
 					placeholder={
 						placeholder || __('Enter coupon code', 'surecart')
 					}
-					value={prmotionCode}
+					value={promotionCode}
 					onChange={(e) => setPromotionCode(e.target.value)}
 				/>
 				<span class="sc-input-group-text" id="basic-addon1">
 					<button
-						hidden={!prmotionCode}
+						hidden={!promotionCode}
 						onClick={() => {
 							setDiscountInputOpen(false);
 							setPromotionApplied(true);
