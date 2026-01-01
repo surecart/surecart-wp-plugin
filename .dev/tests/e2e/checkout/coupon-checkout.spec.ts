@@ -63,8 +63,10 @@ test.describe('Coupon', () => {
 		);
 
 		await page.waitForLoadState('networkidle');
-		const text = await page.getByText('This coupon code is invalid.');
-		expect(text).toBeVisible();
+
+		const errorAlert = page.locator('sc-alert[type="danger"][open]');
+		await expect(errorAlert).toBeVisible();
+		await expect(errorAlert.getByText('This coupon code is invalid.')).toBeVisible();
 
 		await page.locator('sc-coupon-form sc-input input').clear();
 		await page.keyboard.type('Valid');
@@ -77,7 +79,8 @@ test.describe('Coupon', () => {
 
 		await page.waitForLoadState('networkidle');
 
-		const coupon = await page.getByText('Valid');
-		expect(coupon).toBeDefined();
+		// Verify the valid coupon is applied and visible.
+		const couponTag = page.locator('sc-tag').getByText('Valid');
+		await expect(couponTag).toBeVisible();
 	});
 });
