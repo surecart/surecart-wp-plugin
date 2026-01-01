@@ -14,6 +14,11 @@ import { Component, h, Host, Prop, State, Watch } from '@stencil/core';
 import apiFetch from '../../../functions/fetch';
 import { PaymentIntent, RazorpayConstructor } from '../../../types';
 
+/**
+ * Razorpay Checkout JS SDK URL.
+ */
+const RAZORPAY_CHECKOUT_SCRIPT_URL = 'https://checkout.razorpay.com/v1/checkout.js';
+
 @Component({
   tag: 'sc-razorpay-add-method',
   styleUrl: 'sc-razorpay-add-method.scss',
@@ -89,6 +94,7 @@ export class ScRazorpayAddMethod {
     } catch (e) {
       this.error = e?.message || __('Something went wrong', 'surecart');
       this.loading = false;
+      console.error(e);
     } finally {
       this.confirming = false;
     }
@@ -105,7 +111,7 @@ export class ScRazorpayAddMethod {
 
     this.loadPromise = new Promise((resolve, reject) => {
       const script = document.createElement('script');
-      script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+      script.src = RAZORPAY_CHECKOUT_SCRIPT_URL;
       script.async = true;
       script.onload = () => {
         this.razorpayInstance = (window as any).Razorpay;
