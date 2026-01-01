@@ -1,7 +1,7 @@
 {
 	"name": "surecart/payment",
 	"title": "Payment",
-	"apiVersion": 3,
+	"apiVersion": 2,
 	"description": "Display payment options",
 	"category": "surecart",
 	"keywords": ["credit", "card", "paypal", "stripe"],

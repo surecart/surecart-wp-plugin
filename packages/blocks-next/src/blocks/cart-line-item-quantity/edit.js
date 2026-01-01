@@ -32,6 +32,7 @@ export default ({ context: { editable = true } }) => {
 				step="1"
 				autoComplete="off"
 				role="spinbutton"
+				onChange={() => {}}
 			/>
 			<div
 				className="sc-input-group-text sc-quantity-selector__increase"
