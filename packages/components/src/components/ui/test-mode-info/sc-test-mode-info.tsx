@@ -11,7 +11,7 @@ import { __ } from '@wordpress/i18n';
   styleUrl: 'sc-test-mode-info.scss',
   shadow: true,
 })
-export class ScPopover {
+export class ScTestModeInfo {
   render() {
     return (
       <Host>
