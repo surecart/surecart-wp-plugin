@@ -76,19 +76,19 @@ test.describe('Product', () => {
 		// Test: Search Product list using unique product name.
 		await page.getByPlaceholder('Search').fill(product2.name);
 		await page.getByPlaceholder('Search').press('Enter');
-		await page.waitForLoadState('networkidle');
 
-		// Test: Verify searched product is visible and other product is not.
+		// Wait for the non-matching product to be filtered out.
+		await expect(page.getByText(product1.name, { exact: true })).toBeHidden({ timeout: 15000 });
+
+		// Test: Verify searched product is still visible.
 		await expect(page.getByText(product2.name, { exact: true })).toBeVisible();
-		await expect(page.getByText(product1.name, { exact: true })).not.toBeVisible();
 
 		// Test: Clear search.
 		await page.getByPlaceholder('Search').fill('');
 		await page.getByPlaceholder('Search').press('Enter');
-		await page.waitForLoadState('networkidle');
 
-		// Test: Both products should be visible again after clearing search.
-		await expect(page.getByText(product1.name, { exact: true })).toBeVisible();
+		// Wait for both products to reappear after clearing search.
+		await expect(page.getByText(product1.name, { exact: true })).toBeVisible({ timeout: 15000 });
 		await expect(page.getByText(product2.name, { exact: true })).toBeVisible();
 
 		// Test: Product image.
