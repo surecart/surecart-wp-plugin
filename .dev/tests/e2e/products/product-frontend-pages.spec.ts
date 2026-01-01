@@ -37,8 +37,8 @@ test.describe('Product', () => {
 	test.beforeEach(async ({ requestUtils }) => {
 		await createAccount(requestUtils);
 
-		// Generate unique suffix for this test run to avoid conflicts.
-		testId = Date.now().toString();
+		// Generate unique suffix for this test run to avoid conflicts and not 1,2 with it for search tests.
+		testId = Math.random().toString(36).substring(2, 8).replace(/[12]/g, '');
 
 		// Insert some product collections with unique names.
 		collection1 = await getOrCreateProductCollection(requestUtils, `Collection 1 ${testId}`);
