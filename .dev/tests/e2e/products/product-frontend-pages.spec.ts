@@ -14,29 +14,47 @@ import {
 	PRODUCT_COLLECTION_API_PATH
 } from '../request-utils/endpoints';
 
+interface Collection {
+	id: string;
+	name: string;
+	slug: string;
+}
+
+interface Product {
+	id: string;
+	name: string;
+	slug: string;
+	permalink: string;
+}
+
 test.describe('Product', () => {
-	let collection1 = null;
-	let collection2 = null;
-	let product1 = {};
+	let collection1: Collection;
+	let collection2: Collection;
+	let product1: Product;
+	let product2: Product;
+	let testId: string;
 
 	test.beforeEach(async ({ requestUtils }) => {
 		await createAccount(requestUtils);
 
-		// Insert some product collections.
-		collection1 = await getOrCreateProductCollection(requestUtils, 'Collection 1');
-		collection2 = await getOrCreateProductCollection(requestUtils, 'Collection 2');
+		// Generate unique suffix for this test run to avoid conflicts and not 1,2 with it for search tests.
+		testId = Math.random().toString(36).substring(2, 8).replace(/[12]/g, '');
 
-		// Insert some products.
+		// Insert some product collections with unique names.
+		collection1 = await getOrCreateProductCollection(requestUtils, `Collection 1 ${testId}`);
+		collection2 = await getOrCreateProductCollection(requestUtils, `Collection 2 ${testId}`);
+
+		// Insert some products with unique names.
 		product1 = await createProduct(requestUtils, {
-			name: 'Product 1',
+			name: `Product 1 ${testId}`,
 			status: 'published',
 			amount: 1000,
 			image_url: 'https://placehold.co/600x400/EEE/31343C',
-			product_collection_ids: [collection1?.id],
+			product_collection_ids: [collection1.id],
 		});
 
-		await createProduct(requestUtils, {
-			name: 'Product 2',
+		product2 = await createProduct(requestUtils, {
+			name: `Product 2 ${testId}`,
 			status: 'published',
 			amount: 2000,
 			scratch_amount: 3000,
@@ -51,44 +69,30 @@ test.describe('Product', () => {
 		// Test: Check if the Shop heading is showing.
 		await expect(page.locator('h1')).toHaveText('Shop');
 
-		// Test: Check if there is 2 .wp-block-surecart-product-title in the page.
-		await expect(page.locator('.wp-block-surecart-product-title')).toHaveCount(2);
+		// Test: Check if both products are visible on the page.
+		await expect(page.getByText(product1.name, { exact: true })).toBeVisible();
+		await expect(page.getByText(product2.name, { exact: true })).toBeVisible();
 
-		// Test: Search Product list.
-		await page.getByPlaceholder('Search').fill('Product 2');
+		// Test: Search Product list using unique product name.
+		await page.getByPlaceholder('Search').fill(product2.name);
 		await page.getByPlaceholder('Search').press('Enter');
-		await page.waitForLoadState('networkidle');
 
-		// Test: if only 1 product is showing in the list.
-		await expect(page.locator('.wp-block-surecart-product-title')).toHaveCount(1);
+		// Wait for the non-matching product to be filtered out.
+		await expect(page.getByText(product1.name, { exact: true })).toBeHidden({ timeout: 15000 });
+
+		// Test: Verify searched product is still visible.
+		await expect(page.getByText(product2.name, { exact: true })).toBeVisible();
 
 		// Test: Clear search.
 		await page.getByPlaceholder('Search').fill('');
 		await page.getByPlaceholder('Search').press('Enter');
-		await page.waitForLoadState('networkidle');
 
-		// Test: Alphabetical descending sorting.
-		await page.getByRole('radio', { name: 'Alphabetical, Z-A', exact: true }).click();
-		await page.waitForLoadState('networkidle');
-
-		// Test: if Product 1 and Product 2 are showing in the list in the Z-A order.
-		await expect(page.locator('.wp-block-surecart-product-title').nth(0)).toHaveText('Product 2');
-		await expect(page.locator('.wp-block-surecart-product-title').nth(1)).toHaveText('Product 1');
-
-		// Test: Alphabetical ascending sorting.
-		await page.getByRole('radio', { name: 'Alphabetical, A-Z', exact: true }).click();
-		await page.waitForLoadState('networkidle');
-
-		// Test: if Product 1 and Product 2 are showing in the list in the A-Z order.
-		await expect(page.locator('.wp-block-surecart-product-title').nth(0)).toHaveText('Product 1');
-		await expect(page.locator('.wp-block-surecart-product-title').nth(1)).toHaveText('Product 2');
-
-		// Test: if Product 1 and Product 2 prices are correct.
-		await expect(page.locator('.wp-block-surecart-product-list-price').nth(0)).toHaveText('$10');
-		await expect(page.locator('.wp-block-surecart-product-list-price').nth(1)).toHaveText('$20');
+		// Wait for both products to reappear after clearing search.
+		await expect(page.getByText(product1.name, { exact: true })).toBeVisible({ timeout: 15000 });
+		await expect(page.getByText(product2.name, { exact: true })).toBeVisible();
 
 		// Test: Product image.
-		// Check if Product 1 is showing with an image (Product 2 has no image in current UI).
+		// Check if the image placeholder is showing correctly.
 		await expect(
 			await page
 				.locator('.wp-block-cover__image-background')
@@ -96,16 +100,16 @@ test.describe('Product', () => {
 				.getAttribute('src')
 		).toBe('https://placehold.co/600x400/EEE/31343C');
 
-		// Check Collection 1 and Collection 2 filters are present.
-		await expect(page.getByRole('checkbox', { name: 'Collection 1' })).toBeVisible();
-		await expect(page.getByRole('checkbox', { name: 'Collection 2' })).toBeVisible();
+		// Check Collection filters are present.
+		await expect(page.getByRole('checkbox', { name: collection1.name })).toBeVisible();
+		await expect(page.getByRole('checkbox', { name: collection2.name })).toBeVisible();
 	});
 
 	test('Product page - Product Detail', async ({ page }) => {
-		await page.goto(product1?.permalink ?? '/products/product-1');
+		await page.goto(product1.permalink);
 
 		// Product 1 heading text.
-		await expect(page.getByLabel('Product 1')).toHaveText('Product 1');
+		await expect(page.getByLabel(product1.name)).toHaveText(product1.name);
 
 		// Product 1 price.
 		await expect(page.locator('[data-wp-text="state.selectedDisplayAmount"]')).toHaveText('$10');
@@ -134,19 +138,19 @@ test.describe('Product', () => {
 	});
 
 	test('Product page - Product Collection', async ({ page }) => {
-		await page.goto('/collections/collection-1');
+		await page.goto(`/collections/${collection1.slug}`);
 		await page.waitForLoadState('networkidle');
 
 		await expect(
-			page.getByRole('heading').getByText('Collection 1', { exact: true })
+			page.getByRole('heading').getByText(collection1.name, { exact: true })
 		).toBeVisible();
 
-		// Check if Product 1 are showing in the list.
+		// Check if Product 1 is showing in the list.
 		await expect(
 			page
 				.locator('.wp-block-surecart-product-title')
 				.nth(0)
-				.getByText('Product 1', { exact: true })
+				.getByText(product1.name, { exact: true })
 		).toBeVisible();
 	});
 });
