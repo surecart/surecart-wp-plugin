@@ -3330,6 +3330,12 @@ export namespace Components {
          */
         "value": string;
     }
+    interface ScRazorpayAddMethod {
+        "currency": string;
+        "customerId": string;
+        "liveMode": boolean;
+        "successUrl": string;
+    }
     interface ScRecurringPriceChoiceContainer {
         /**
           * Label for the choice.
@@ -6176,6 +6182,12 @@ declare global {
         prototype: HTMLScRadioGroupElement;
         new (): HTMLScRadioGroupElement;
     };
+    interface HTMLScRazorpayAddMethodElement extends Components.ScRazorpayAddMethod, HTMLStencilElement {
+    }
+    var HTMLScRazorpayAddMethodElement: {
+        prototype: HTMLScRazorpayAddMethodElement;
+        new (): HTMLScRazorpayAddMethodElement;
+    };
     interface HTMLScRecurringPriceChoiceContainerElementEventMap {
         "scChange": string;
     }
@@ -6909,6 +6921,7 @@ declare global {
         "sc-quantity-select": HTMLScQuantitySelectElement;
         "sc-radio": HTMLScRadioElement;
         "sc-radio-group": HTMLScRadioGroupElement;
+        "sc-razorpay-add-method": HTMLScRazorpayAddMethodElement;
         "sc-recurring-price-choice-container": HTMLScRecurringPriceChoiceContainerElement;
         "sc-rich-text": HTMLScRichTextElement;
         "sc-secure-notice": HTMLScSecureNoticeElement;
@@ -10545,6 +10558,12 @@ declare namespace LocalJSX {
          */
         "value"?: string;
     }
+    interface ScRazorpayAddMethod {
+        "currency"?: string;
+        "customerId"?: string;
+        "liveMode"?: boolean;
+        "successUrl"?: string;
+    }
     interface ScRecurringPriceChoiceContainer {
         /**
           * Label for the choice.
@@ -11684,6 +11703,7 @@ declare namespace LocalJSX {
         "sc-quantity-select": ScQuantitySelect;
         "sc-radio": ScRadio;
         "sc-radio-group": ScRadioGroup;
+        "sc-razorpay-add-method": ScRazorpayAddMethod;
         "sc-recurring-price-choice-container": ScRecurringPriceChoiceContainer;
         "sc-rich-text": ScRichText;
         "sc-secure-notice": ScSecureNotice;
@@ -11945,6 +11965,7 @@ declare module "@stencil/core" {
             "sc-quantity-select": LocalJSX.ScQuantitySelect & JSXBase.HTMLAttributes<HTMLScQuantitySelectElement>;
             "sc-radio": LocalJSX.ScRadio & JSXBase.HTMLAttributes<HTMLScRadioElement>;
             "sc-radio-group": LocalJSX.ScRadioGroup & JSXBase.HTMLAttributes<HTMLScRadioGroupElement>;
+            "sc-razorpay-add-method": LocalJSX.ScRazorpayAddMethod & JSXBase.HTMLAttributes<HTMLScRazorpayAddMethodElement>;
             "sc-recurring-price-choice-container": LocalJSX.ScRecurringPriceChoiceContainer & JSXBase.HTMLAttributes<HTMLScRecurringPriceChoiceContainerElement>;
             "sc-rich-text": LocalJSX.ScRichText & JSXBase.HTMLAttributes<HTMLScRichTextElement>;
             "sc-secure-notice": LocalJSX.ScSecureNotice & JSXBase.HTMLAttributes<HTMLScSecureNoticeElement>;
