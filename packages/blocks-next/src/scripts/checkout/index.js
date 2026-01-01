@@ -267,12 +267,6 @@ const { state, actions } = store('surecart/checkout', {
 		 */
 		get removeItemAriaLabel() {
 			const { line_item } = getContext('surecart/checkout');
-			console.log(
-				sprintf(
-					__('Remove %s from cart.', 'surecart'),
-					line_item?.price?.product?.name
-				)
-			);
 			return sprintf(
 				__('Remove %s from cart.', 'surecart'),
 				line_item?.price?.product?.name
