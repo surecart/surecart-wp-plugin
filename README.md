@@ -168,3 +168,4 @@ Avoid adding any PHP logic in any of these views, unless it pertains to layoutin
 ## Credits
 
 SureCart is powered by the [WP Emerge framework](https://wpemerge.com/).
+# wp-bulgaria-dual-pricing
