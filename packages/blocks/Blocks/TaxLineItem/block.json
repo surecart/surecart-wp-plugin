@@ -1,7 +1,7 @@
 {
 	"name": "surecart/tax-line-item",
 	"title": "Tax Line Item",
-	"apiVersion": 3,
+	"apiVersion": 2,
 	"description": "Displays the order tax. (if there is tax)",
 	"category": "surecart",
 	"ancestor": ["surecart/totals"],

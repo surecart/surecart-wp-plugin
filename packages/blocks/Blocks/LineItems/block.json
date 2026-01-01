@@ -1,7 +1,7 @@
 {
 	"name": "surecart/line-items",
 	"title": "Line Items",
-	"apiVersion": 3,
+	"apiVersion": 2,
 	"description": "Displays checkout line items.",
 	"category": "surecart",
 	"keywords": ["total", "line-items"],
