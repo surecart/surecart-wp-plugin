@@ -38,11 +38,12 @@ export class ScTestModeInfo {
           </ol>
         </div>
         <div class="sc-test-mode-info-footer" slot="footer">
-          <sc-button type="text">{__('Need help?', 'surecart')}</sc-button>
-          <sc-button type="link" target="_blank" href="https://surecart.com/docs">
+          <span>{__('Need help?', 'surecart')}</span>
+
+          <sc-button size="small" type="link" target="_blank" href="https://surecart.com/docs">
             {__('Documentation ', 'surecart')} <sc-icon name="external-link" />
           </sc-button>
-          <sc-button type="link" target="_blank" href="https://surecart.com/contact-us/">
+          <sc-button size="small" type="link" target="_blank" href="https://surecart.com/contact-us/">
             {__('Open a ticket ', 'surecart')} <sc-icon name="external-link" />
           </sc-button>
         </div>

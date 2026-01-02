@@ -63,6 +63,15 @@ class Block extends BaseBlock {
 			<?php else : ?>
 				<sc-stripe-element slot="stripe"></sc-stripe-element>
 			<?php endif; ?>
+			
+			<?php if ( 'test' === $mode ) : ?>
+				<sc-test-mode-info slot="test-mode-info">
+					<sc-tag slot="trigger" type="warning" size="small" exportparts="base:test-badge__base, content:test-badge__content">
+						<?php echo esc_html__( 'Test Mode', 'surecart' ); ?>
+						<sc-icon name="info" style="margin-left: 5px; margin-bottom: 3px; --width: 1.2em; --height: 1.2em; vertical-align: middle;" />
+					</sc-tag>
+				</sc-test-mode-info>
+			<?php endif; ?>
 		</sc-payment>
 		<?php
 		return ob_get_clean();

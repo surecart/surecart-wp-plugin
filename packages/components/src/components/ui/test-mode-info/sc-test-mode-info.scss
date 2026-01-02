@@ -1,11 +1,4 @@
-:host {
-  & > sc-popover > sc-tag > sc-icon {
-    margin-left: 5px;
-    margin-bottom: 3px;
-    --width: 1.2em;
-    --height: 1.2em;
-    vertical-align: middle;
-  }
+sc-test-mode-info {
   .sc-test-mode-info-content {
     ol {
       padding-left: 1em;
@@ -28,9 +21,14 @@
     sc-button > sc-icon {
       margin-left: 4px;
     }
+    & > span {
+      font-size: var(--sc-button-font-size-small);
+      align-content: center;
+      opacity: 0.75;
+    }
   }
 
   sc-popover {
-    --panel-width: 35em;
+    --panel-width: 25em;
   }
 }
