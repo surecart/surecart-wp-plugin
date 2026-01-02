@@ -1,7 +1,6 @@
 {
 	"name": "surecart/bump-line-item",
 	"title": "Bump Discount",
-	"apiVersion": 3,
 	"description": "Displays the order bump discount.",
 	"category": "surecart",
 	"ancestor": ["surecart/totals"],
