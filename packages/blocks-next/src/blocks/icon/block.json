@@ -22,9 +22,6 @@
 			"type": "number",
 			"default": 2
 		},
-		"alignment": {
-			"type": "string"
-		},
 		"link_url": {
 			"type": "string"
 		},
@@ -34,6 +31,10 @@
 		},
 		"link_rel": {
 			"type": "string"
+		},
+		"nofollow": {
+			"type": "boolean",
+			"default": false
 		}
 	},
 	"supports": {

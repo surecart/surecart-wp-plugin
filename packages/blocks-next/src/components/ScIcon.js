@@ -25,20 +25,16 @@ export default function ({ name, ...props }) {
 		return null;
 	}
 
-	// Create a new SVG element and copy over the attributes from the original SVG element
-	const svgProps = Array.from(svgElement.attributes).reduce((acc, attr) => {
-		acc[attr.name] = attr.value;
-		return acc;
-	}, {});
-
-	// Merge the original SVG props with the passed props
-	const mergedProps = { ...svgProps, ...props };
-
-	// Convert the SVG element to a React element
-	const svgReactElement = React.createElement(svgElement.tagName, {
-		...mergedProps,
-		dangerouslySetInnerHTML: { __html: svgElement.innerHTML },
+	// Clone the SVG element and apply passed props as attributes
+	const clonedSvg = svgElement.cloneNode(true);
+	Object.entries(props).forEach(([key, value]) => {
+		if (value !== undefined && value !== null) {
+			// Convert React prop names to HTML attribute names
+			const attrName = key === 'className' ? 'class' : key;
+			clonedSvg.setAttribute(attrName, value);
+		}
 	});
 
-	return svgReactElement;
+	// Return the SVG as innerHTML wrapped in a span
+	return <span dangerouslySetInnerHTML={{ __html: clonedSvg.outerHTML }} />;
 }

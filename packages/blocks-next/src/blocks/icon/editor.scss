@@ -5,9 +5,10 @@
 }
 
 .surecart-icon-picker {
-	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
-	gap: 8px;
+	padding: 8px;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	background: #fff;
 	margin-top: 12px;
 	margin-bottom: 16px;
 	max-height: 400px;
@@ -16,6 +17,12 @@
 	border: 1px solid #ddd;
 	border-radius: 4px;
 	background: #fff;
+
+	&_items {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
+		gap: 8px;
+	}
 
 	&__item {
 		display: flex;

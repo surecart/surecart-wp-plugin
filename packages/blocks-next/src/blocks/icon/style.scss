@@ -7,22 +7,23 @@
 		stroke: currentColor;
 	}
 
-	a {
-		display: inline-block;
-		text-decoration: none;
-		color: inherit;
-
-		&:hover {
-			opacity: 0.8;
-		}
-	}
-
 	span {
 		display: inline-block;
+	}
+}
+
+a.wp-block-surecart-icon {
+	display: inline-block;
+	text-decoration: none;
+	color: inherit;
+
+	&:hover {
+		opacity: 0.8;
 	}
 }
 
 .surecart-icon {
 	width: 100%;
 	height: 100%;
+	display: inline-block;
 }

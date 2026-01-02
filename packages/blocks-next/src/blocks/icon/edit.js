@@ -7,25 +7,30 @@ import {
 	InspectorControls,
 	__experimentalLinkControl as LinkControl,
 	BlockControls,
-	AlignmentToolbar,
 } from '@wordpress/block-editor';
 import {
 	PanelBody,
 	RangeControl,
 	TextControl,
-	ToggleControl,
 	Popover,
 	Button,
 	SearchControl,
 	ProgressBar,
+	ExternalLink,
 } from '@wordpress/components';
-import { useState, useMemo, useEffect } from '@wordpress/element';
+import {
+	useState,
+	useMemo,
+	useEffect,
+	createInterpolateElement,
+} from '@wordpress/element';
 import { link, linkOff } from '@wordpress/icons';
 
 /**
  * Internal dependencies.
  */
 import ScIcon from '../../components/ScIcon';
+import Icon from './Icon';
 import { getAvailableIcons } from './icon-list';
 
 export default function Edit({ attributes, setAttributes }) {
@@ -33,25 +38,26 @@ export default function Edit({ attributes, setAttributes }) {
 		icon_name,
 		size,
 		stroke_width,
-		alignment,
 		link_url,
 		link_target,
 		link_rel,
+		nofollow,
 	} = attributes;
 
 	const [isEditingURL, setIsEditingURL] = useState(false);
 	const [searchTerm, setSearchTerm] = useState('');
 	const [iconList, setIconList] = useState([]);
+	const [loading, setLoading] = useState(false);
 
 	useEffect(() => {
-		getAvailableIcons().then((icons) => setIconList(icons));
-	}, []);
-
-	const blockProps = useBlockProps({
-		className: 'wp-block-surecart-icon',
-		style: {
-			textAlign: alignment,
-		},
+		setLoading(true);
+		getAvailableIcons()
+			.then((icons) => {
+				setIconList(icons);
+			})
+			.finally(() => {
+				setLoading(false);
+			});
 	});
 
 	const filteredIcons = useMemo(() => {
@@ -61,49 +67,13 @@ export default function Edit({ attributes, setAttributes }) {
 		);
 	}, [searchTerm, iconList]);
 
-	const iconStyle = {
-		width: `${size}px`,
-		height: `${size}px`,
-		display: 'inline-block',
-		strokeWidth: stroke_width,
-	};
-
-	const IconDisplay = useMemo(() => {
-		const iconContent = (
-			<div style={iconStyle}>
-				<ScIcon
-					name={icon_name}
-					width={size}
-					height={size}
-					strokeWidth={stroke_width}
-				/>
-			</div>
-		);
-
-		if (link_url) {
-			return (
-				<a
-					href={link_url}
-					target={link_target}
-					rel={link_rel}
-					onClick={(e) => e.preventDefault()}
-				>
-					{iconContent}
-				</a>
-			);
-		}
-		return iconContent;
-	}, [icon_name, size, stroke_width, link_url, link_target, link_rel]);
+	const blockProps = useBlockProps({
+		className: 'wp-block-surecart-icon',
+	});
 
 	return (
 		<>
 			<BlockControls group="block">
-				<AlignmentToolbar
-					value={alignment}
-					onChange={(newAlignment) =>
-						setAttributes({ alignment: newAlignment })
-					}
-				/>
 				<Button
 					icon={link_url ? link : linkOff}
 					label={
@@ -128,42 +98,41 @@ export default function Edit({ attributes, setAttributes }) {
 					/>
 
 					<div className="surecart-icon-picker">
-						{!filteredIcons?.length ? (
+						{loading ? (
 							<ProgressBar />
 						) : (
-							filteredIcons.slice(0, 100).map((icon) => (
-								<button
-									key={icon}
-									className={`surecart-icon-picker__item ${
-										icon_name === icon ? 'is-selected' : ''
-									}`}
-									onClick={() =>
-										setAttributes({ icon_name: icon })
-									}
-									title={icon}
-								>
-									<ScIcon name={icon} />
-								</button>
-							))
+							<div className="surecart-icon-picker_items">
+								{(filteredIcons || []).map((icon) => (
+									<Icon
+										onClick={() =>
+											setAttributes({
+												icon_name: icon,
+											})
+										}
+										selected={icon_name === icon}
+										title={icon}
+										name={icon}
+									/>
+								))}
+							</div>
+						)}
+
+						{!loading && !filteredIcons?.length && (
+							<p
+								style={{
+									textAlign: 'center',
+									color: '#666',
+									fontSize: '12px',
+									margin: 0,
+								}}
+							>
+								{__(
+									'No icons found. Try a different search.',
+									'surecart'
+								)}
+							</p>
 						)}
 					</div>
-
-					{filteredIcons.length > 100 && (
-						<p
-							style={{
-								textAlign: 'center',
-								color: '#666',
-								fontSize: '12px',
-							}}
-						>
-							{__('Showing 100 of ', 'surecart')}
-							{filteredIcons.length}
-							{__(
-								' icons. Refine your search to see more.',
-								'surecart'
-							)}
-						</p>
-					)}
 
 					<RangeControl
 						label={__('Size (px)', 'surecart')}
@@ -184,32 +153,45 @@ export default function Edit({ attributes, setAttributes }) {
 						max={5}
 						step={0.5}
 					/>
-				</PanelBody>
 
-				{link_url && (
-					<PanelBody title={__('Link Settings', 'surecart')}>
-						<ToggleControl
-							label={__('Open in new tab', 'surecart')}
-							checked={link_target === '_blank'}
-							onChange={(value) =>
-								setAttributes({
-									link_target: value ? '_blank' : '_self',
-								})
-							}
-						/>
+					{link_url && (
 						<TextControl
-							label={__('Link Rel', 'surecart')}
-							value={link_rel}
-							onChange={(value) =>
-								setAttributes({ link_rel: value })
-							}
-							placeholder="nofollow"
+							__next40pxDefaultSize
+							label={__('Link relation')}
+							help={createInterpolateElement(
+								__(
+									'The <a>Link Relation</a> attribute defines the relationship between a linked resource and the current document.',
+									'surecart'
+								),
+								{
+									a: (
+										<ExternalLink href="https://developer.mozilla.org/docs/Web/HTML/Attributes/rel" />
+									),
+								}
+							)}
+							value={link_rel || ''}
+							onChange={(link_rel) => setAttributes({ link_rel })}
 						/>
-					</PanelBody>
-				)}
+					)}
+				</PanelBody>
 			</InspectorControls>
 
-			<div {...blockProps}>{IconDisplay}</div>
+			<div {...blockProps}>
+				<span
+					style={{
+						width: `${size}px`,
+						height: `${size}px`,
+						display: 'inline-block',
+					}}
+				>
+					<ScIcon
+						name={icon_name}
+						width={size}
+						height={size}
+						strokeWidth={stroke_width}
+					/>
+				</span>
+			</div>
 
 			{isEditingURL && (
 				<Popover
@@ -217,14 +199,23 @@ export default function Edit({ attributes, setAttributes }) {
 					onClose={() => setIsEditingURL(false)}
 				>
 					<LinkControl
+						settings={[
+							...LinkControl.DEFAULT_LINK_SETTINGS,
+							{
+								id: 'nofollow',
+								title: __('Mark as nofollow'),
+							},
+						]}
 						value={{
 							url: link_url,
 							opensInNewTab: link_target === '_blank',
+							nofollow,
 						}}
-						onChange={({ url, opensInNewTab }) => {
+						onChange={({ url, opensInNewTab, nofollow }) => {
 							setAttributes({
 								link_url: url,
 								link_target: opensInNewTab ? '_blank' : '_self',
+								nofollow,
 							});
 						}}
 						onRemove={() => {
@@ -232,6 +223,7 @@ export default function Edit({ attributes, setAttributes }) {
 								link_url: undefined,
 								link_target: '_self',
 								link_rel: undefined,
+								nofollow: false,
 							});
 							setIsEditingURL(false);
 						}}
