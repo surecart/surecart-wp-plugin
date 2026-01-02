@@ -87,7 +87,7 @@ describe('sc-form', () => {
       'name': 'Testy McTesterson',
       'phone': '0987654321',
       'password': 'pass',
-      'tax_identifier.number_type': 'other',
+      'tax_identifier.number_type': 'eu_vat',
     });
   });
 });
