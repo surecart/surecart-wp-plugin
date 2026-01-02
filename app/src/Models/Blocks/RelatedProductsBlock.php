@@ -32,9 +32,7 @@ class RelatedProductsBlock extends AbstractProductListBlock {
 				AND p.post_status = 'publish'
 				AND p.post_type = 'sc_product'
 			",
-			'limits' => '
-				LIMIT ' . esc_sql( $limit ) . '
-			',
+			'limits' => $wpdb->prepare( 'LIMIT %d', $limit ),
 		);
 
 		if ( count( $exclude_term_ids ) ) {
