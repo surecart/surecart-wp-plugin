@@ -47,6 +47,10 @@ export default () => {
 
 			<SettingsBox
 				title={__('Selection Strategy', 'surecart')}
+				description={__(
+					'Control which applicable fees and discounts are applied when multiple options are available.',
+					'surecart'
+				)}
 				loading={!hasLoadedItem}
 			>
 				{TARGETS.map((target) => (
