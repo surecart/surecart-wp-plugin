@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-12-17T22:05:04+00:00\n"
+"POT-Creation-Date: 2025-12-29T14:13:52+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.9.0\n"
 
@@ -10527,7 +10527,7 @@ msgid "For how long should future purchase commissions be awarded? (Leave empty 
 msgstr ""
 
 #: components/affiliates/commission/GuideModal.js:32
-#: index.php:136
+#: index.php:137
 #: src/blocks/cart-close-button/edit.js:78
 msgid "Close"
 msgstr ""
@@ -11681,7 +11681,7 @@ msgstr ""
 
 #: dashboard/components/LineChart.js:149
 #: ui/PrevNextButtons.js:28
-#: index.php:138
+#: index.php:139
 #: src/blocks/product-pagination-previous/view.php:36
 #: src/blocks/product-pagination-previous/edit.js:39
 msgid "Previous"
@@ -16494,7 +16494,7 @@ msgstr ""
 #: ui/PrevNextButtons.js:37
 #: Blocks/CheckoutForm/components/Empty.js:100
 #: Blocks/Form/components/ChooseDesign.js:28
-#: index.php:139
+#: index.php:140
 #: src/blocks/product-pagination-next/view.php:22
 #: src/blocks/product-pagination-next/edit.js:29
 msgid "Next"
@@ -17004,7 +17004,7 @@ msgstr ""
 #: settings/tax-region/RegistrationForm.js:33
 #: settings/tax-region/RegistrationForm.js:34
 #: settings/tax-region/RegistrationForm.js:35
-#: Blocks/Address/edit.js:130
+#: Blocks/Address/edit.js:135
 msgid "Country"
 msgstr ""
 
@@ -18350,7 +18350,7 @@ msgstr ""
 msgid "Update Password"
 msgstr ""
 
-#: Blocks/Address/edit.js:33
+#: Blocks/Address/edit.js:38
 #: Blocks/BumpLineItem/edit.js:13
 #: Blocks/Card/edit.js:25
 #: Blocks/CartBumpLineItem/edit.js:30
@@ -18428,7 +18428,7 @@ msgstr ""
 msgid "Attributes"
 msgstr ""
 
-#: Blocks/Address/edit.js:35
+#: Blocks/Address/edit.js:40
 #: Blocks/Checkbox/edit.js:31
 #: Blocks/FirstName/edit.js:29
 #: Blocks/Input/edit.js:28
@@ -18444,55 +18444,55 @@ msgstr ""
 msgid "Required"
 msgstr ""
 
-#: Blocks/Address/edit.js:40
+#: Blocks/Address/edit.js:45
 msgid "If tax or shipping is required for checkout the address field will automatically be required."
 msgstr ""
 
-#: Blocks/Address/edit.js:48
+#: Blocks/Address/edit.js:53
 msgid "Shipping Address Label"
 msgstr ""
 
-#: Blocks/Address/edit.js:54
+#: Blocks/Address/edit.js:59
 msgid "Collect Billing Address"
 msgstr ""
 
-#: Blocks/Address/edit.js:59
+#: Blocks/Address/edit.js:64
 msgid "If enabled, the user can enter a separate billing address. Otherwise, the billing address will be the same as the shipping address."
 msgstr ""
 
-#: Blocks/Address/edit.js:67
+#: Blocks/Address/edit.js:72
 msgid "Billing Address Toggle"
 msgstr ""
 
-#: Blocks/Address/edit.js:77
+#: Blocks/Address/edit.js:82
 msgid "Billing Address Label"
 msgstr ""
 
-#: Blocks/Address/edit.js:86
+#: Blocks/Address/edit.js:91
 msgid "Use a compact address"
 msgstr ""
 
-#: Blocks/Address/edit.js:94
+#: Blocks/Address/edit.js:99
 msgid "If products in the cart require tax but not shipping, we will show a condensed version specifically for tax collection."
 msgstr ""
 
-#: Blocks/Address/edit.js:102
+#: Blocks/Address/edit.js:107
 msgid "Name or company name"
 msgstr ""
 
-#: Blocks/Address/edit.js:103
+#: Blocks/Address/edit.js:108
 msgid "If enabled, the name or company name field will be shown."
 msgstr ""
 
-#: Blocks/Address/edit.js:116
+#: Blocks/Address/edit.js:121
 msgid "Show address line 2"
 msgstr ""
 
-#: Blocks/Address/edit.js:118
+#: Blocks/Address/edit.js:123
 msgid "If enabled, the address line 2 field will be shown."
 msgstr ""
 
-#: Blocks/Address/edit.js:129
+#: Blocks/Address/edit.js:134
 msgid "Default country"
 msgstr ""
 
@@ -18966,7 +18966,7 @@ msgstr ""
 msgid "Search for payment method..."
 msgstr ""
 
-#: Blocks/ConditionalForm/conditions.js:284
+#: Blocks/ConditionalForm/conditions.js:297
 #: Blocks/ConditionalForm/rules.js:220
 msgid "AND"
 msgstr ""
@@ -22154,7 +22154,7 @@ msgctxt "block description"
 msgid "Displays a selector for selecting product prices and/or variants."
 msgstr ""
 
-#: index.php:137
+#: index.php:138
 msgid "Enlarged images"
 msgstr ""
 
