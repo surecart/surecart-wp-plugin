@@ -6,8 +6,8 @@ import SettingsBox from '../SettingsBox';
 import SettingsTemplate from '../SettingsTemplate';
 import useSave from '../UseSave';
 import useEntity from '../../hooks/useEntity';
-import { StrategyRadioGroup } from './components/StrategyRadioGroup';
-import { FEE_STRATEGIES, DISCOUNT_STRATEGIES } from './utils';
+import { TargetStrategyRow } from './components/TargetStrategyRow';
+import { TARGETS } from './utils';
 
 export default () => {
 	const [error, setError] = useState(null);
@@ -46,44 +46,15 @@ export default () => {
 			/>
 
 			<SettingsBox
-				title={__('Fees Selection Strategy', 'surecart')}
-				description={__(
-					'You can set how the fee will be applied.',
-					'surecart'
-				)}
+				title={__('Selection Strategy', 'surecart')}
 				loading={!hasLoadedItem}
 			>
-				{FEE_STRATEGIES.map(({ label, attribute, target }) => (
-					<StrategyRadioGroup
-						key={attribute}
-						label={label}
-						value={item?.[attribute]}
-						type="fee"
+				{TARGETS.map((target) => (
+					<TargetStrategyRow
+						key={target.id}
 						target={target}
-						onChange={(e) =>
-							editItem({ [attribute]: e.target.value })
-						}
-					/>
-				))}
-			</SettingsBox>
-			<SettingsBox
-				title={__('Discount Selection Strategy', 'surecart')}
-				description={__(
-					'You can set how the discount will be applied.',
-					'surecart'
-				)}
-				loading={!hasLoadedItem}
-			>
-				{DISCOUNT_STRATEGIES.map(({ label, attribute, target }) => (
-					<StrategyRadioGroup
-						key={attribute}
-						label={label}
-						value={item?.[attribute]}
-						type="discount"
-						target={target}
-						onChange={(e) =>
-							editItem({ [attribute]: e.target.value })
-						}
+						item={item}
+						editItem={editItem}
 					/>
 				))}
 			</SettingsBox>

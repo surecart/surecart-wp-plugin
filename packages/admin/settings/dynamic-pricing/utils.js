@@ -1,5 +1,26 @@
 import { __, sprintf } from '@wordpress/i18n';
 
+export const TARGETS = [
+	{
+		id: 'checkout',
+		label: __('Checkout', 'surecart'),
+		feeKey: 'negative_checkout_fee_selection_strategy',
+		discountKey: 'positive_checkout_fee_selection_strategy',
+	},
+	{
+		id: 'line_item',
+		label: __('Line Item', 'surecart'),
+		feeKey: 'negative_line_item_fee_selection_strategy',
+		discountKey: 'positive_line_item_fee_selection_strategy',
+	},
+	{
+		id: 'shipping',
+		label: __('Shipping', 'surecart'),
+		feeKey: 'negative_shipping_fee_selection_strategy',
+		discountKey: 'positive_shipping_fee_selection_strategy',
+	},
+];
+
 export const FEE_STRATEGIES = [
 	{
 		label: __('Checkout', 'surecart'),
@@ -53,14 +74,8 @@ export const TARGET_PHRASE = {
 
 export const HELP_TEXT_STYLE = {
 	opacity: '0.85',
-	marginTop: 'var(--sc-input-label-margin)',
 	color: 'var(--sc-color-gray-500)',
-	fontSize: 'var(--sc-font-size-medium)',
-};
-
-export const FLEX_STYLE = {
-	'--sc-flex-column-gap': '1.5em',
-	'--sc-flex-space-between': 'flex-start',
+	fontSize: 'var(--sc-font-size-small)',
 };
 
 export const getHelpText = (

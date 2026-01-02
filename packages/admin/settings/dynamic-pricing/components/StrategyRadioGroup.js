@@ -1,11 +1,12 @@
-import { ScFlex, ScRadioGroup, ScRadio } from '@surecart/components-react';
-import {
-	FLEX_STYLE,
-	STRATEGY_VALUES,
-	HELP_TEXT_STYLE,
-	getHelpText,
-} from '../utils';
+/** @jsx jsx */
+import { css, jsx } from '@emotion/core';
+import { STRATEGY_VALUES, HELP_TEXT_STYLE, getHelpText } from '../utils';
 import { __ } from '@wordpress/i18n';
+import {
+	__experimentalToggleGroupControl as ToggleGroupControl,
+	__experimentalToggleGroupControlOption as ToggleGroupControlOption,
+} from '@wordpress/components';
+import { ScFlex } from '@surecart/components-react';
 
 export const StrategyRadioGroup = ({
 	label,
@@ -14,18 +15,32 @@ export const StrategyRadioGroup = ({
 	type,
 	target,
 }) => (
-	<ScRadioGroup label={label} onScChange={onChange}>
-		<ScFlex style={FLEX_STYLE}>
+	<ScFlex
+		style={{
+			'--sc-flex-column-gap': '0',
+			'--sc-flex-space-between': 'flex-start',
+			width: '100%',
+		}}
+		flexDirection="column"
+	>
+		<ToggleGroupControl
+			value={value}
+			label={label}
+			onChange={onChange}
+			isBlock
+			__next40pxDefaultSize
+		>
 			{STRATEGY_VALUES.map((option) => (
-				<ScRadio key={option} value={option} checked={option === value}>
-					{__(
+				<ToggleGroupControlOption
+					key={option}
+					value={option}
+					label={__(
 						option.charAt(0).toUpperCase() + option.slice(1),
 						'surecart'
 					)}
-				</ScRadio>
+				/>
 			))}
-		</ScFlex>
-
+		</ToggleGroupControl>
 		<div style={HELP_TEXT_STYLE}>{getHelpText(value, type, target)}</div>
-	</ScRadioGroup>
+	</ScFlex>
 );
