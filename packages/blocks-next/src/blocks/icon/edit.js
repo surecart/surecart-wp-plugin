@@ -17,8 +17,9 @@ import {
 	Popover,
 	Button,
 	SearchControl,
+	ProgressBar,
 } from '@wordpress/components';
-import { useState, useMemo } from '@wordpress/element';
+import { useState, useMemo, useEffect } from '@wordpress/element';
 import { link, linkOff } from '@wordpress/icons';
 
 /**
@@ -26,8 +27,6 @@ import { link, linkOff } from '@wordpress/icons';
  */
 import ScIcon from '../../components/ScIcon';
 import { getAvailableIcons } from './icon-list';
-
-const ICON_LIST = getAvailableIcons();
 
 export default function Edit({ attributes, setAttributes }) {
 	const {
@@ -42,6 +41,11 @@ export default function Edit({ attributes, setAttributes }) {
 
 	const [isEditingURL, setIsEditingURL] = useState(false);
 	const [searchTerm, setSearchTerm] = useState('');
+	const [iconList, setIconList] = useState([]);
+
+	useEffect(() => {
+		getAvailableIcons().then((icons) => setIconList(icons));
+	}, []);
 
 	const blockProps = useBlockProps({
 		className: 'wp-block-surecart-icon',
@@ -51,11 +55,11 @@ export default function Edit({ attributes, setAttributes }) {
 	});
 
 	const filteredIcons = useMemo(() => {
-		if (!searchTerm) return ICON_LIST;
-		return ICON_LIST.filter((icon) =>
+		if (!searchTerm) return iconList;
+		return iconList.filter((icon) =>
 			icon.toLowerCase().includes(searchTerm.toLowerCase())
 		);
-	}, [searchTerm]);
+	}, [searchTerm, iconList]);
 
 	const iconStyle = {
 		width: `${size}px`,
@@ -124,20 +128,24 @@ export default function Edit({ attributes, setAttributes }) {
 					/>
 
 					<div className="surecart-icon-picker">
-						{filteredIcons.slice(0, 100).map((icon) => (
-							<button
-								key={icon}
-								className={`surecart-icon-picker__item ${
-									icon_name === icon ? 'is-selected' : ''
-								}`}
-								onClick={() =>
-									setAttributes({ icon_name: icon })
-								}
-								title={icon}
-							>
-								<ScIcon name={icon} />
-							</button>
-						))}
+						{!filteredIcons?.length ? (
+							<ProgressBar />
+						) : (
+							filteredIcons.slice(0, 100).map((icon) => (
+								<button
+									key={icon}
+									className={`surecart-icon-picker__item ${
+										icon_name === icon ? 'is-selected' : ''
+									}`}
+									onClick={() =>
+										setAttributes({ icon_name: icon })
+									}
+									title={icon}
+								>
+									<ScIcon name={icon} />
+								</button>
+							))
+						)}
 					</div>
 
 					{filteredIcons.length > 100 && (
@@ -146,7 +154,6 @@ export default function Edit({ attributes, setAttributes }) {
 								textAlign: 'center',
 								color: '#666',
 								fontSize: '12px',
-								marginTop: '10px',
 							}}
 						>
 							{__('Showing 100 of ', 'surecart')}

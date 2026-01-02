@@ -1,26 +1,26 @@
-/**
- * Dynamically import all icons from the icon-assets directory
- */
-const iconContext = require.context(
-	'../../../../components/src/components/ui/icon/icon-assets',
-	false,
-	/\.svg$/
-);
+// store in-memory icons list
+let icons = null;
 
 /**
- * Get all available icon names from the icon-assets directory
+ * Get all available icon names from icons.json
  *
- * @returns {string[]} Array of icon names (without .svg extension)
+ * @returns {Promise<string[]>} Array of icon names
  */
-export const getAvailableIcons = () => {
-	return iconContext
-		.keys()
-		.map((key) => {
-			// Extract filename without path and extension
-			// ./icon-name.svg -> icon-name
-			return key.replace(/^\.\//, '').replace(/\.svg$/, '');
-		})
-		.sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
+export const getAvailableIcons = async () => {
+	if (icons) return icons;
+
+	try {
+		icons = [];
+		const response = await fetch(
+			`${window?.scData?.plugin_url}/dist/icon-assets/icons.json`
+		);
+		if (!response.ok) throw new Error(response.statusText);
+		icons = await response.json();
+		return icons;
+	} catch (error) {
+		console.error('Failed to load icons:', error);
+		return [];
+	}
 };
 
 export default getAvailableIcons;
