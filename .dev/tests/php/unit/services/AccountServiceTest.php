@@ -167,6 +167,21 @@ class AccountServiceTest extends SureCartUnitTestCase {
 	/**
 	 * @group account
 	 */
+	public function test_fetch_cached_account_when_transient_is_array() {
+		set_transient('surecart_account', $this->account->toArray());
+
+		$service = \SureCart::account();
+		$account = $service->fetchCachedAccount();
+
+		$this->assertInstanceOf(Account::class, $account);
+		$this->assertSame($this->account->id, $account->id);
+
+		delete_transient('surecart_account');
+	}
+
+	/**
+	 * @group account
+	 */
 	public function test_convert_account_to_array() {
 		update_option( 'sc_previous_account', $this->account->toArray() );
 
@@ -204,6 +219,41 @@ class AccountServiceTest extends SureCartUnitTestCase {
 		$this->assertSame($this->account->tax_protocol->address->city, $account->tax_protocol->address->city);
 		$this->assertSame($this->account->tax_protocol->id, $account->tax_protocol->id);
 	}
+
+	/**
+	 * @group account
+	 */
+	public function test_convert_array_to_account_accepts_model_object() {
+		$accountService = \SureCart::account();
+
+		$result = $accountService->convertArrayToAccount($this->account);
+
+		$this->assertInstanceOf(Account::class, $result);
+		$this->assertSame($this->account->id, $result->id);
+	}
+
+	/**
+	 * @group account
+	 */
+	public function test_convert_array_to_account_with_empty_array() {
+		$accountService = \SureCart::account();
+
+		$result = $accountService->convertArrayToAccount([]);
+
+		$this->assertNull($result);
+	}
+
+	/**
+	 * @group account
+	 */
+	public function test_convert_array_to_account_with_null() {
+		$accountService = \SureCart::account();
+
+		$result = $accountService->convertArrayToAccount(null);
+
+		$this->assertNull($result);
+	}
+
 
 	/**
 	 * @group account
