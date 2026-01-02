@@ -2,7 +2,7 @@
  * WordPress dependencies.
  */
 import { registerBlockType } from '@wordpress/blocks';
-import { icon as iconSymbol } from '@wordpress/icons';
+import { shadow as icon } from '@wordpress/icons';
 
 /**
  * Internal dependencies.
@@ -16,6 +16,6 @@ import './style.scss';
 import './editor.scss';
 
 registerBlockType('surecart/icon', {
-	icon: iconSymbol,
+	icon,
 	edit,
 });
