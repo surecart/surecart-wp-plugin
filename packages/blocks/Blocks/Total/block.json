@@ -1,7 +1,6 @@
 {
 	"name": "surecart/total",
 	"title": "Total",
-	"apiVersion": 2,
 	"description": "Displays the total line item.",
 	"category": "surecart",
 	"ancestor": ["surecart/totals"],

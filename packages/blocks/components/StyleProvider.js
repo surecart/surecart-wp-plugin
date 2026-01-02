@@ -5,7 +5,7 @@ import { CacheProvider } from '@emotion/core';
 import createCache from '@emotion/cache';
 import memoize from 'memize';
 import * as uuid from 'uuid';
-import { useRef, useState, useEffect } from 'react';
+import { useRef } from 'react';
 
 const uuidCache = new Set();
 
@@ -22,20 +22,11 @@ const memoizedCreateCacheWithContainer = memoize((container) => {
 
 export function StyleProvider({ children }) {
 	const ref = useRef();
-	const [ready, setReady] = useState(false);
-
-	// Wait for the ref to be attached before rendering children.
-	// This ensures @emotion styles are injected into the correct document (iframe).
-	useEffect(() => {
-		if (ref.current?.ownerDocument) {
-			setReady(true);
-		}
-	}, []);
 
 	return (
 		<>
 			<div ref={ref} style={{ display: 'none' }} />
-			{ready && ref?.current?.ownerDocument ? (
+			{ref?.current?.ownerDocument ? (
 				<CacheProvider
 					value={memoizedCreateCacheWithContainer(
 						ref?.current?.ownerDocument?.head

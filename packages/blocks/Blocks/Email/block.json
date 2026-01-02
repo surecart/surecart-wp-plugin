@@ -1,7 +1,6 @@
 {
 	"name": "surecart/email",
 	"title": "Email",
-	"apiVersion": 3,
 	"description": "Displays an email form field.",
 	"category": "surecart",
 	"keywords": ["email", "mail"],

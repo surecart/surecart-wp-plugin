@@ -1,7 +1,6 @@
 {
 	"name": "surecart/first-name",
 	"title": "First Name",
-	"apiVersion": 3,
 	"description": "Display a first name collection field.",
 	"category": "surecart",
 	"keywords": ["first-name", "name", "customer"],
