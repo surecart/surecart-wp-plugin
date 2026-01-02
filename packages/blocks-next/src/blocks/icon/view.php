@@ -1,7 +1,7 @@
 <div <?php echo wp_kses_data( $wrapper_attributes ); ?>>
 	<?php if ( ! empty( $link_url ) ) : ?>
-		<a 
-			href="<?php echo esc_url( $link_url ); ?>" 
+		<a
+			href="<?php echo esc_url( $link_url ); ?>"
 			target="<?php echo esc_attr( $link_target ); ?>"
 			<?php if ( ! empty( $link_rel ) ) : ?>
 				rel="<?php echo esc_attr( $link_rel ); ?>"
