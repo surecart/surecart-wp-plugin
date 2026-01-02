@@ -58,7 +58,7 @@ class RelatedProductsBlock extends AbstractProductListBlock {
 	public function offsetFoundPosts( $found_posts ) {
 		$offset = absint( $this->getQueryAttribute( 'offset', 0 ) );
 
-		return $found_posts - $offset;
+		return max( 0, $found_posts - $offset );
 	}
 
 	/**
