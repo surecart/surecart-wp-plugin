@@ -4,10 +4,9 @@
 		get_block_wrapper_attributes(
 			array_filter(
 				[
-					'href'     => esc_url( $link_url ),
-					'target'   => esc_attr( $link_target ),
-					'rel'      => esc_attr( $link_rel ),
-					'nofollow' => (bool) $nofollow,
+					'href'   => esc_url( $link_url ),
+					'target' => esc_attr( $link_target ),
+					'rel'    => esc_attr( trim( $link_rel . ( $nofollow ? ' nofollow' : '' ) ) ),
 				]
 			)
 		)
