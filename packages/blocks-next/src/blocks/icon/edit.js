@@ -58,7 +58,7 @@ export default function Edit({ attributes, setAttributes }) {
 			.finally(() => {
 				setLoading(false);
 			});
-	});
+	}, []);
 
 	const filteredIcons = useMemo(() => {
 		if (!searchTerm) return iconList;
@@ -111,6 +111,7 @@ export default function Edit({ attributes, setAttributes }) {
 										}
 										selected={icon_name === icon}
 										title={icon}
+										key={icon}
 										name={icon}
 									/>
 								))}
