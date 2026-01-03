@@ -39,7 +39,6 @@ export default function Icon({ name, selected, ...props }) {
 		const observer = new IntersectionObserver(
 			(entries) => {
 				entries.forEach((entry) => {
-					console.log(entry.isIntersecting);
 					if (entry.isIntersecting) {
 						// Set the icon name when it enters the viewport
 						setIconName(name);
@@ -72,6 +71,7 @@ export default function Icon({ name, selected, ...props }) {
 			className={`surecart-icon-picker__item ${
 				selected ? 'is-selected' : ''
 			}`}
+			aria-label={title}
 			{...props}
 		>
 			{!!iconName && <ScIcon name={iconName} />}
