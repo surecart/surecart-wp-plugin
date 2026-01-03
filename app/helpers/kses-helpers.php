@@ -25,6 +25,7 @@ function sc_allowed_svg_html(): array {
 				'height'            => true,
 				'viewbox'           => true,
 				'fill'              => true,
+				'color'             => true,
 				'stroke'            => true,
 				'stroke-width'      => true,
 				'fill-rule'         => true,
