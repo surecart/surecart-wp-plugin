@@ -321,7 +321,7 @@ class URLParamService {
 		];
 
 		// gather keys to remove using existing filter keys.
-		foreach ( $existing_filters as $filter_key => $value ) {
+		foreach ( array_keys( $existing_filters ) as $filter_key ) {
 			$keys_to_remove[] = $this->getKey( $filter_key, $instance_id );
 		}
 
