@@ -50,7 +50,7 @@ export default ({ id }) => {
 	const { editEntityRecord, receiveEntityRecords, deleteEntityRecord } =
 		useDispatch(coreStore);
 
-	const { affiliation, hasLoadedAffiliation } = useSelect(
+	const { affiliation, hasLoadedAffiliation, isSaving } = useSelect(
 		(select) => {
 			const entityData = ['surecart', 'affiliation', id];
 			return {
@@ -60,6 +60,9 @@ export default ({ id }) => {
 				hasLoadedAffiliation: select(coreStore).hasFinishedResolution(
 					'getEditedEntityRecord',
 					entityData
+				),
+				isSaving: select(coreStore)?.isSavingEntityRecord?.(
+					...entityData
 				),
 			};
 		},
@@ -290,7 +293,9 @@ export default ({ id }) => {
 				<>
 					<Details
 						affiliation={affiliation || {}}
+						onUpdate={updateAffiliation}
 						loading={!hasLoadedAffiliation}
+						saving={isSaving}
 					/>
 					<Urls
 						referralUrl={affiliation?.referral_url}
