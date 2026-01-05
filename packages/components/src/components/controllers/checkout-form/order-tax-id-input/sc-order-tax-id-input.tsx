@@ -87,12 +87,17 @@ export class ScOrderTaxIdInput {
   }
 
   isRequired() {
-    // If the block has explicitly set required, use that value
+    // If the block has explicitly set required, use that value.
     if (this.required) {
       return true;
     }
-    // Otherwise, fall back to the EU VAT protocol requirement
-    return checkoutState.taxProtocol?.eu_vat_required && checkoutState.checkout?.tax_identifier?.number_type === 'eu_vat';
+
+    // Only apply EU VAT requirement if eu_vat is one of the allowed tax types.
+    // If taxIdTypesData is empty, all types are allowed.
+    const isEuVatAllowed = !this.taxIdTypesData?.length || this.taxIdTypesData.includes('eu_vat');
+
+    // Fall back to EU VAT protocol requirement only if EU VAT is an allowed type.
+    return isEuVatAllowed && checkoutState.taxProtocol?.eu_vat_required && checkoutState.checkout?.tax_identifier?.number_type === 'eu_vat';
   }
 
   render() {

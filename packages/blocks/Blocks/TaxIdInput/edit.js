@@ -195,7 +195,7 @@ export default ({ attributes, setAttributes }) => {
 				euVatLabel={eu_vat_label || null}
 				helpText={help_text || null}
 				taxIdTypes={JSON.stringify(tax_id_types)}
-				required={required}
+				required={required || false}
 			></ScOrderTaxIdInput>
 		</Fragment>
 	);
