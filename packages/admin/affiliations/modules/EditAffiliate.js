@@ -16,6 +16,7 @@ import apiFetch from '@wordpress/api-fetch';
  * Internal dependencies.
  */
 import {
+	ScBlockUi,
 	ScButton,
 	ScDrawer,
 	ScForm,
@@ -59,6 +60,8 @@ export default ({ affiliation, open, onRequestClose }) => {
 	};
 
 	const onSubmit = async () => {
+		if (busy) return;
+
 		try {
 			setBusy(true);
 			setError(null);
@@ -110,7 +113,7 @@ export default ({ affiliation, open, onRequestClose }) => {
 				<div
 					css={css`
 						display: grid;
-						gap: var(--sc-spacing-medium);
+						gap: var(--sc-spacing-large);
 						padding: var(--sc-spacing-x-large);
 					`}
 				>
@@ -185,6 +188,8 @@ export default ({ affiliation, open, onRequestClose }) => {
 				<ScButton type="text" slot="footer" onClick={onRequestClose}>
 					{__('Cancel', 'surecart')}
 				</ScButton>
+
+				{busy && <ScBlockUi spinner></ScBlockUi>}
 			</ScDrawer>
 		</ScForm>
 	);
