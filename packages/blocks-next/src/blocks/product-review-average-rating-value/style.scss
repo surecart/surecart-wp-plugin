@@ -1,3 +1,6 @@
 .wp-block-surecart-product-review-average-rating-value {
-	color: var(--sc-cart-main-label-text-color);
+	color: var(
+		--sc-product-review-average-rating-value-color,
+		var(--sc-input-label-color)
+	);
 }
