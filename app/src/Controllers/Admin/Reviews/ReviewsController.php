@@ -4,6 +4,7 @@ namespace SureCart\Controllers\Admin\Reviews;
 
 use SureCart\Controllers\Admin\AdminController;
 use SureCart\Models\Review;
+use SureCartVendors\Psr\Http\Message\ResponseInterface;
 
 /**
  * Handle the reviews admin page.
@@ -69,96 +70,69 @@ class ReviewsController extends AdminController {
 	/**
 	 * Publish a review.
 	 *
-	 * @return void
+	 * @param \SureCartCore\Requests\RequestInterface $request Request.
+	 *
+	 * @return ResponseInterface
 	 */
-	public function publish() {
-		$id = sanitize_text_field( wp_unslash( $_GET['id'] ?? '' ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		if ( ! $id ) {
-			wp_die( esc_html__( 'Please provide a review id.', 'surecart' ) );
-		}
+	public function publish( $request ): ResponseInterface {
+		$published = Review::publish( sanitize_text_field( wp_unslash( $request->query( 'id' ) ) ) );
 
-		$review = Review::find( $id );
-		if ( is_wp_error( $review ) ) {
-			wp_die( esc_html( $review->get_error_message() ) );
-		}
-
-		$published = $review->publish();
 		if ( is_wp_error( $published ) ) {
-			wp_die( esc_html( $published->get_error_message() ) );
+			wp_die( implode( ' ', array_map( 'esc_html', $published->get_error_messages() ) ) );
 		}
 
-		wp_safe_redirect(
-			esc_url_raw(
+		return \SureCart::redirect()
+			->to(
 				add_query_arg(
-					[ 'published' => 1 ],
-					admin_url( 'admin.php?page=sc-reviews' )
+					[ 'published' => true ],
+					\SureCart::getUrl()->index( 'reviews' )
 				)
-			)
-		);
-		exit;
+			);
 	}
 
 	/**
 	 * Unpublish a review.
 	 *
-	 * @return void
+	 * @param \SureCartCore\Requests\RequestInterface $request Request.
+	 *
+	 * @return ResponseInterface
 	 */
-	public function unpublish() {
-		$id = sanitize_text_field( wp_unslash( $_GET['id'] ?? '' ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		if ( ! $id ) {
-			wp_die( esc_html__( 'Please provide a review id.', 'surecart' ) );
-		}
+	public function unpublish( $request ): ResponseInterface {
+		$unpublished = Review::unpublish( sanitize_text_field( wp_unslash( $request->query( 'id' ) ) ) );
 
-		$review = Review::find( $id );
-		if ( is_wp_error( $review ) ) {
-			wp_die( esc_html( $review->get_error_message() ) );
-		}
-
-		$unpublished = $review->unpublish();
 		if ( is_wp_error( $unpublished ) ) {
-			wp_die( esc_html( $unpublished->get_error_message() ) );
+			wp_die( implode( ' ', array_map( 'esc_html', $unpublished->get_error_messages() ) ) );
 		}
 
-		wp_safe_redirect(
-			esc_url_raw(
+		return \SureCart::redirect()
+			->to(
 				add_query_arg(
-					[ 'unpublished' => 1 ],
-					admin_url( 'admin.php?page=sc-reviews' )
+					[ 'unpublished' => true ],
+					\SureCart::getUrl()->index( 'reviews' )
 				)
-			)
-		);
-		exit;
+			);
 	}
 
 	/**
 	 * Delete a review.
 	 *
-	 * @return void
+	 * @param \SureCartCore\Requests\RequestInterface $request Request.
+	 *
+	 * @return ResponseInterface
 	 */
-	public function delete() {
-		$id = sanitize_text_field( wp_unslash( $_GET['id'] ?? '' ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		if ( ! $id ) {
-			wp_die( esc_html__( 'Please provide a review id.', 'surecart' ) );
-		}
+	public function delete( $request ): ResponseInterface {
+		$deleted = Review::delete( sanitize_text_field( wp_unslash( $request->query( 'id' ) ) ) );
 
-		$review = Review::find( $id );
-		if ( is_wp_error( $review ) ) {
-			wp_die( esc_html( $review->get_error_message() ) );
-		}
-
-		$deleted = $review->delete();
 		if ( is_wp_error( $deleted ) ) {
-			wp_die( esc_html( $deleted->get_error_message() ) );
+			wp_die( implode( ' ', array_map( 'esc_html', $deleted->get_error_messages() ) ) );
 		}
 
-		wp_safe_redirect(
-			esc_url_raw(
+		return \SureCart::redirect()
+			->to(
 				add_query_arg(
-					[ 'deleted' => 1 ],
-					admin_url( 'admin.php?page=sc-reviews' )
+					[ 'deleted' => true ],
+					\SureCart::getUrl()->index( 'reviews' )
 				)
-			)
-		);
-		exit;
+			);
 	}
 }

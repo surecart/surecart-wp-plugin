@@ -51,7 +51,7 @@ class Review extends Model {
 	 *
 	 * @return $this|\WP_Error
 	 */
-	public function publish( $id = null ) {
+	protected function publish( $id = null ) {
 		if ( $id ) {
 			$this->setAttribute( 'id', $id );
 		}
@@ -92,7 +92,7 @@ class Review extends Model {
 	 *
 	 * @return $this|\WP_Error
 	 */
-	public function unpublish( $id = null ) {
+	protected function unpublish( $id = null ) {
 		if ( $id ) {
 			$this->setAttribute( 'id', $id );
 		}
