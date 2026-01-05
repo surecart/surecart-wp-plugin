@@ -71,7 +71,7 @@ export default function Icon({ name, selected, ...props }) {
 			className={`surecart-icon-picker__item ${
 				selected ? 'is-selected' : ''
 			}`}
-			aria-label={title}
+			aria-label={name}
 			{...props}
 		>
 			{!!iconName && <ScIcon name={iconName} />}
