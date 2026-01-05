@@ -11,8 +11,11 @@ use SureCart\Request\RequestServiceProvider;
 use SureCart\Models\AffiliationProtocol;
 use SureCart\Models\ShippingProtocol;
 use SureCart\Models\CustomerPortalProtocol;
+use SureCart\Account\AccountService;
 
 class AccountServiceTest extends SureCartUnitTestCase {
+	use \Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+
 	/**
 	 * Set up a new app instance to use for tests.
 	 */
@@ -177,6 +180,77 @@ class AccountServiceTest extends SureCartUnitTestCase {
 		$this->assertSame($this->account->id, $account->id);
 
 		delete_transient('surecart_account');
+	}
+
+	/**
+	 * @group account
+	 */
+	public function test_fetch_cached_account_falls_back_to_previous_account_array() {
+		delete_transient('surecart_account');
+
+		update_option('sc_previous_account', $this->account->toArray());
+
+		$service = \Mockery::mock( AccountService::class )->makePartial()->shouldAllowMockingProtectedMethods();;
+	
+		$service->shouldReceive('fetchAccount')->once()->andReturn(new \WP_Error('api_error'));
+
+		$account = $service->fetchCachedAccount();
+
+		$this->assertInstanceOf(Account::class, $account);
+		$this->assertSame($this->account->id, $account->id);
+	}
+	/**
+	 * @group account
+	 */
+	public function test_fetch_cached_account_returns_error_when_no_fallback_exists() {
+		delete_transient('surecart_account');
+		delete_option('sc_previous_account');
+
+		$service = \Mockery::mock( AccountService::class )->makePartial()->shouldAllowMockingProtectedMethods();;
+	
+		$service->shouldReceive('fetchAccount')->once()->andReturn(new \WP_Error('api_error'));
+
+		$account = $service->fetchCachedAccount();
+
+		$this->assertInstanceOf(\WP_Error::class, $account);
+	}
+
+	/**
+	 * @group account
+	 */
+	public function test_fetch_cached_account_fallback_accepts_model_object() {
+		delete_transient('surecart_account');
+		update_option('sc_previous_account', $this->account);
+
+		$service = \Mockery::mock( AccountService::class )->makePartial()->shouldAllowMockingProtectedMethods();;
+	
+		$service->shouldReceive('fetchAccount')->once()->andReturn(new \WP_Error('api_error'));
+
+		$account = $service->fetchCachedAccount();
+
+		$this->assertInstanceOf(Account::class, $account);
+		$this->assertSame($this->account->id, $account->id);
+	}
+
+	/**
+	 * @group account
+	 */
+	public function test_fetch_cached_account_successfully_sets_cache_and_option() {
+		delete_transient('surecart_account');
+		delete_option('sc_previous_account');
+
+		$service = \Mockery::mock( AccountService::class )->makePartial()->shouldAllowMockingProtectedMethods();;
+
+		$service->shouldReceive('fetchAccount')->once()->andReturn($this->account);
+
+		$account = $service->fetchCachedAccount();
+
+		$this->assertSame($this->account->id, $account->id);
+
+		$this->assertIsArray(get_transient('surecart_account'));
+		$this->assertIsArray(get_option('sc_previous_account'));
+		$this->assertSame($this->account->id, get_option('sc_previous_account')['id']);
+		$this->assertSame($this->account->id, get_transient('surecart_account')['id']);
 	}
 
 	/**
