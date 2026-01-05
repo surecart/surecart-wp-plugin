@@ -325,13 +325,6 @@ dispatch(coreStore).addEntities([
 		baseURLParams: { context: 'edit' },
 	},
 	{
-		name: 'auto-fee-protocol',
-		kind: 'surecart',
-		label: __('Auto Fee Protocol', 'surecart'),
-		baseURL: '/surecart/v1/auto_fee_protocol',
-		baseURLParams: { context: 'edit' },
-	},
-	{
 		kind: 'surecart',
 		label: __('Shipping Protocol', 'surecart'),
 		baseURL: '/surecart/v1/shipping_protocol',
