@@ -316,7 +316,7 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 
 == Changelog ==
 
-= 3.17.4 - January 1st, 2026 =
+= 3.17.4 - January 5th, 2026 =
 - Improvement: Pass noindex headers when currency parameters are present to prevent unintended indexing by Yoast, AIOSEO, SEOPress, and The SEO Framework.
 - Improvement: Provisional account product seeder enhancements and related improvements.
 - Fix: Price Selector Block in the editor occasionally loading cached products.
