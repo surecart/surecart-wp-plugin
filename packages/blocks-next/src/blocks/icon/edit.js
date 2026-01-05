@@ -150,9 +150,9 @@ export default function Edit({ attributes, setAttributes }) {
 						onChange={(value) =>
 							setAttributes({ stroke_width: value })
 						}
-						min={1}
-						max={5}
-						step={0.5}
+						min={0.25}
+						max={10}
+						step={0.25}
 					/>
 
 					{link_url && (
