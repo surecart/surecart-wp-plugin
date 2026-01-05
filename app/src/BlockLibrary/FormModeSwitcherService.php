@@ -32,23 +32,6 @@ class FormModeSwitcherService {
 		add_action( 'admin_bar_menu', [ $this, 'addAdminBarMenu' ], 99 );
 		// add the script to confirm changing the cart.
 		add_action( 'wp_after_admin_bar_render', [ $this, 'confirmScript' ] );
-
-		add_action( 'wp_enqueue_scripts', [ $this, 'loadAdminBarStyles' ] );
-	}
-
-	/**
-	 * Load Admin Bar styles.
-	 *
-	 * This function loads the necessary styles for the Admin Bar.
-	 *
-	 * @return void
-	 */
-	public function loadAdminBarStyles() {
-		if ( ! is_admin_bar_showing() || ! current_user_can( 'edit_posts' ) ) {
-			return;
-		}
-
-		wp_enqueue_style( 'sc-admin-bar', plugins_url( 'dist/styles/sc-admin-bar.css', SURECART_PLUGIN_FILE ), array(), \SureCart::plugin()->version() );
 	}
 
 	/**

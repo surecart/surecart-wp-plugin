@@ -32,3 +32,9 @@ sc-test-mode-info {
     --panel-width: 25em;
   }
 }
+
+// We need this CSS to set the Icon of the Admin Bar Setting to change the Mode.
+#wpadminbar #wp-admin-bar-sc_change_checkout_mode > .ab-item:before {
+  content: '\f186'/ '';
+  top: 2px;
+}

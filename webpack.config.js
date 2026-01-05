@@ -236,13 +236,6 @@ module.exports = {
 			__dirname,
 			'scripts/plugin-deactivation-feedback.js'
 		),
-		/**
-		 * Admin Bar.
-		 */
-		['styles/sc-admin-bar']: path.resolve(
-			__dirname,
-			'styles/sc-admin-bar.css'
-		),
 	},
 	output: {
 		filename: '[name].js',
