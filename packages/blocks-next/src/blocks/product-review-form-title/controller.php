@@ -1,5 +1,5 @@
 <?php
-$label       = $attributes['label'] ?? __( 'Review title', 'surecart' );
+$label       = $attributes['label'] ?? __( 'Title', 'surecart' );
 $placeholder = $attributes['placeholder'] ?? __( 'Enter a title for your review', 'surecart' );
 $text_align  = $attributes['text_align'] ?? 'left';
 

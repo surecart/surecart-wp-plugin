@@ -40,7 +40,10 @@
 		justify-content: start;
 
 		> input {
-			display: none;
+			// we hide the input but keep it for accessibility, and validation.
+			position: absolute;
+			left: 0;
+			opacity: 0;
 		}
 
 		> label {

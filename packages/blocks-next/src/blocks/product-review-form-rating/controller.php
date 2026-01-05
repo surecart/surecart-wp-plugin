@@ -1,7 +1,7 @@
 <?php
 $size       = $attributes['size'] ?? 20;
 $fill_color = $attributes['fill_color'] ?? 'var(--sc-color-primary-500)';
-$label      = $attributes['label'] ?? __( 'How would you rate this product?', 'surecart' );
+$label      = $attributes['label'] ?? __( 'Your rating', 'surecart' );
 $text_align = $attributes['text_align'] ?? 'left';
 
 $wrapper_attributes = get_block_wrapper_attributes(

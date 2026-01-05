@@ -58,7 +58,7 @@ export default function Edit({ attributes, setAttributes }) {
 						tagName="label"
 						className="sc-form-label"
 						aria-label={__('Label', 'surecart')}
-						placeholder={__('Review content', 'surecart')}
+						placeholder={__('Your review', 'surecart')}
 						value={label}
 						onChange={(label) => setAttributes({ label })}
 						withoutInteractiveFormatting

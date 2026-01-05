@@ -19,6 +19,7 @@
 		"surecart/product-review-list",
 		"surecart/product-review-template",
 		"product-review-list-content-header",
+		"product-review-list-no-reviews",
 		"surecart/sticky-purchase"
 	],
 	"keywords": ["review", "button", "write review"],
@@ -117,11 +118,16 @@
 	],
 	"textdomain": "surecart",
 	"render": "file:./controller.php",
+	"viewScriptModule": [
+		"@surecart/product-page",
+		"@surecart/product-review-form"
+	],
 	"editorScript": "file:./index.js",
 	"style": [
+		"surecart-wp-buttons",
 		"surecart-wp-button",
+		"wp-block-button",
 		"surecart-spinner",
 		"file:./style-index.css"
-	],
-	"editorStyle": ["surecart-wp-button"]
+	]
 }

@@ -11,7 +11,7 @@
 	"attributes": {
 		"label": {
 			"type": "string",
-			"default": "How would you rate this product?"
+			"default": "Your rating"
 		},
 		"size": {
 			"type": "number",

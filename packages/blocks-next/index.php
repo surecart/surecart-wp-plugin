@@ -345,6 +345,10 @@ add_action(
 					'import' => 'dynamic',
 				],
 				[
+					'id'     => 'surecart/lightbox',
+					'import' => 'dynamic',
+				],
+				[
 					'id'     => '@surecart/a11y',
 					'import' => 'dynamic',
 				],

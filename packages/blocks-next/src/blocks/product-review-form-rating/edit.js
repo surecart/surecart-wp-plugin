@@ -67,10 +67,7 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 						className="sc-form-label"
 						aria-label={__('Label', 'surecart')}
 						placeholder={__('Review Content', 'surecart')}
-						value={
-							label ??
-							__('How would you rate this product?', 'surecart')
-						}
+						value={label ?? __('Your rating', 'surecart')}
 						onChange={(label) => setAttributes({ label })}
 						withoutInteractiveFormatting
 						allowedFormats={['core/bold', 'core/italic']}
