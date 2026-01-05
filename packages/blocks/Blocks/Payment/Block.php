@@ -66,14 +66,14 @@ class Block extends BaseBlock {
 			
 			<?php if ( 'test' === $mode ) : ?>
 				<?php if ( current_user_can( 'edit_posts' ) ) : ?>
-					<sc-test-mode-info slot="test-mode-info">
+					<sc-test-mode-info slot="label-end">
 						<sc-tag slot="trigger" type="warning" size="small" exportparts="base:test-badge__base, content:test-badge__content">
 							<?php echo esc_html__( 'Test Mode', 'surecart' ); ?>
 							<sc-icon slot="suffix" name="info"  />
 						</sc-tag>
 					</sc-test-mode-info>
 				<?php else : ?>
-					<sc-tag slot="test-mode-info" type="warning" size="small" exportparts="base:test-badge__base, content:test-badge__content">
+					<sc-tag slot="label-end" type="warning" size="small" exportparts="base:test-badge__base, content:test-badge__content">
 						<?php echo esc_html__( 'Test Mode', 'surecart' ); ?>
 					</sc-tag>
 				<?php endif; ?>

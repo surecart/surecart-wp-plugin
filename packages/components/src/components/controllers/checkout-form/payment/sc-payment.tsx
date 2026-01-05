@@ -146,7 +146,7 @@ export class ScPayment {
         <sc-form-control label={this.label} exportparts="label, help-text, form-control">
           <div class="sc-payment-label" slot="label">
             <div>{this.label}</div>
-            <slot name="test-mode-info" />
+            <slot name="label-end" />
           </div>
 
           {mollie?.id ? (
