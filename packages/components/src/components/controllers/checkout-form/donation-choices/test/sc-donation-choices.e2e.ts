@@ -34,10 +34,10 @@ describe('sc-donation-choices', () => {
     ]);
     await page.waitForChanges();
 
-    const lower = await page.find('sc-choice[value="100"]');
+    let lower = await page.find('sc-choice[value="100"]');
     expect(lower).toHaveAttribute('disabled');
     expect(await lower.isVisible()).toBe(false);
-    const higher = await page.find('sc-choice[value="1500"]');
+    let higher = await page.find('sc-choice[value="1500"]');
     expect(higher).toHaveAttribute('disabled');
     expect(await higher.isVisible()).toBe(false);
 
@@ -53,6 +53,8 @@ describe('sc-donation-choices', () => {
       } as LineItem,
     ]);
     await page.waitForChanges();
+    lower = await page.find('sc-choice[value="100"]');
+    higher = await page.find('sc-choice[value="1500"]');
 
     expect(lower).toHaveAttribute('disabled');
     expect(await lower.isVisible()).toBe(false);
@@ -71,6 +73,8 @@ describe('sc-donation-choices', () => {
       } as LineItem,
     ]);
     await page.waitForChanges();
+    lower = await page.find('sc-choice[value="100"]');
+    higher = await page.find('sc-choice[value="1500"]');
 
     expect(lower).not.toHaveAttribute('disabled');
     expect(await lower.isVisible()).toBe(true);

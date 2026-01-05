@@ -203,6 +203,12 @@ add_action(
 add_action(
 	'init',
 	function () {
+		// Skip script module registration if build files don't exist.
+		$build_path = trailingslashit( plugin_dir_path( __FILE__ ) ) . 'build/scripts/';
+		if ( ! is_dir( $build_path ) ) {
+			return;
+		}
+
 		// instead, use a static loader that injects the script at runtime.
 		$static_assets = include trailingslashit( plugin_dir_path( __FILE__ ) ) . 'build/scripts/fetch/index.asset.php';
 		wp_register_script_module(
