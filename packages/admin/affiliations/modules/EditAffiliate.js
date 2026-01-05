@@ -100,7 +100,7 @@ export default ({ affiliation, open, onRequestClose }) => {
 	return (
 		<ScForm onScFormSubmit={onSubmit}>
 			<ScDrawer
-				label={__('Edit Profile', 'surecart')}
+				label={__('Edit Affiliate', 'surecart')}
 				style={{ '--sc-drawer-size': '32rem' }}
 				open={open}
 				onScAfterHide={onRequestClose}

@@ -14,7 +14,7 @@ import Box from '../../ui/Box';
 import Definition from '../../ui/Definition';
 import { ScAvatar, ScButton, ScIcon, ScTag } from '@surecart/components-react';
 import useAvatar from '../../hooks/useAvatar';
-import EditProfile from './EditProfile';
+import EditAffiliate from './EditAffiliate';
 
 export default ({ affiliation, loading }) => {
 	const [modal, setModal] = useState(false);
@@ -55,8 +55,8 @@ export default ({ affiliation, loading }) => {
 							margin: -10px;
 						`}
 						type="text"
-						aria-label={__('Edit profile', 'surecart')}
-						title={__('Edit profile', 'surecart')}
+						aria-label={__('Edit Affiliate', 'surecart')}
+						title={__('Edit Affiliate', 'surecart')}
 						onClick={() => setModal(true)}
 					>
 						<ScIcon name="edit-2" slot="prefix" />
@@ -134,7 +134,7 @@ export default ({ affiliation, loading }) => {
 				</Fragment>
 			</Box>
 
-			<EditProfile
+			<EditAffiliate
 				affiliation={affiliation}
 				open={!!modal}
 				onRequestClose={() => setModal(false)}
