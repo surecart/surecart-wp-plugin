@@ -6,17 +6,30 @@ if ( ! $product ) {
 	return;
 }
 
-$show_for_zero_reviews = $attributes['show_for_zero_reviews'] ?? true;
+$total   = (int) $product->total_reviews;
+$columns = $attributes['columns'] ?? null;
 
-// If show_for_zero_reviews is false and there are no reviews, skip rendering the block.
-if ( ! $show_for_zero_reviews && 0 === (int) $product->total_reviews ) {
-	return;
-}
+$style_vars = array_filter(
+	[
+		'--sc-row-gap'                   => $attributes['row_gap'] ?? null,
+		'--sc-column-gap'                => $attributes['column_gap'] ?? null,
+		'--sc-star-fill-color'           => $attributes['fill_color'] ?? null,
+		'--sc-star-stroke-color'         => $attributes['fill_color'] ?? null,
+		'--sc-star-size'                 => $attributes['size'] ?? null,
+		'--sc-star-bar-background-color' => $attributes['bar_background_color'] ?? null,
+		'--sc-star-bar-fill-color'       => $attributes['bar_fill_color'] ?? null,
+	]
+);
 
-$total      = (int) $product->total_reviews;
-$fill_color = ! empty( $attributes['fill_color'] ) ? $attributes['fill_color'] : 'var(--sc-color-primary-500)';
-$columns    = ! empty( $attributes['columns'] ) ? (int) $attributes['columns'] : 1;
-$row_gap    = ! empty( $attributes['row_gap'] ) ? (int) $attributes['row_gap'] : 8;
-$column_gap = ! empty( $attributes['column_gap'] ) ? (int) $attributes['column_gap'] : 20;
+$style = implode(
+	' ',
+	array_map(
+		function ( $property, $value ) {
+			return esc_attr( $property ) . ': ' . esc_attr( $value ) . ';';
+		},
+		array_keys( $style_vars ),
+		$style_vars
+	)
+);
 
 return 'file:./view.php';

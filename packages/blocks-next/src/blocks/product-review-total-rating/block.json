@@ -25,6 +25,10 @@
 		"style_variant": {
 			"type": "string",
 			"default": "default"
+		},
+		"link_to_reviews": {
+			"type": "boolean",
+			"default": true
 		}
 	},
 	"example": {},
@@ -44,14 +48,6 @@
 			"fontSize": true,
 			"lineHeight": true,
 			"textAlign": true
-		},
-		"layout": {
-			"allowSwitching": false,
-			"allowInheriting": false,
-			"default": {
-				"type": "flex",
-				"justifyContent": "left"
-			}
 		},
 		"spacing": {
 			"padding": true,

@@ -1,38 +1,45 @@
 .wp-block-surecart-product-review-breakdown {
 	display: block;
+	container-type: inline-size;
+	container-name: review-breakdown;
+	color: var(--sc-color-gray-800);
 
 	.sc-star-bars {
 		flex: 1;
-		display: flex;
-		flex-direction: column;
-		flex-wrap: wrap;
-		min-width: 150px;
-		align-content: flex-start;
+		display: grid;
+		width: 100%;
+		row-gap: var(--sc-row-gap, 2px);
+		column-gap: var(--sc-column-gap, 48px);
 
 		&__columns-1 {
-			width: 100%;
+			grid-template-columns: 1fr;
 		}
 
-		// Column-based layouts.
 		&__columns-2 {
-			max-height: 150px;
-			width: 50%;
+			grid-template-columns: 1fr;
 
-			.sc-star-row {
-				width: calc(
-					50% - var(--sc-column-gap, 20px) / 2
-				); // Equal width for 2 columns
+			// If container is wide enough for 2 columns (>= 420px with 20px gap)
+			@container review-breakdown (min-width: 420px) {
+				grid-template-columns: repeat(2, 1fr);
+				grid-auto-flow: column;
+				grid-template-rows: repeat(3, minmax(auto, 1fr));
 			}
 		}
 
 		&__columns-3 {
-			max-height: 85px;
-			width: 33.333%;
+			grid-template-columns: 1fr;
 
-			.sc-star-row {
-				width: calc(
-					33.333% - var(--sc-column-gap, 20px) * 2 / 3
-				); // Equal width for 3 columns
+			// If container is wide enough for 3 columns (>= 640px with 20px gaps)
+			@container review-breakdown (min-width: 640px) {
+				grid-template-columns: repeat(3, 1fr);
+				grid-auto-flow: column;
+				grid-template-rows: repeat(2, minmax(auto, 1fr));
+			}
+			// If container is wide enough for 2 columns but not 3
+			@container review-breakdown (min-width: 420px) and (max-width: 639px) {
+				grid-template-columns: repeat(2, 1fr);
+				grid-auto-flow: column;
+				grid-template-rows: repeat(3, minmax(auto, 1fr));
 			}
 		}
 
@@ -44,24 +51,25 @@
 			font-size: var(--sc-font-size-medium);
 			color: inherit;
 			transition: opacity 0.2s ease;
-			width: 100%;
 
-			&__label {
-				display: flex;
-				align-items: center;
-				gap: var(--sc-star-label-gap, 4px);
-				color: var(--sc-color-gray-800);
-				min-width: 35px;
-
-				&__svg {
-					line-height: 1;
-				}
+			.sc-star-icon {
+				line-height: 1;
+				height: var(--sc-star-size, 16px);
+				width: var(--sc-star-size, 16px);
+				fill: var(--sc-star-fill-color, var(--sc-color-primary-500));
+				stroke: var(
+					--sc-star-stroke-color,
+					var(--sc-color-primary-500)
+				);
 			}
 
 			&__bar {
 				flex: 1;
 				height: 8px;
-				background: var(--sc-color-gray-200);
+				background: var(
+					--sc-star-bar-background-color,
+					var(--sc-color-gray-200)
+				);
 				border-radius: 4px;
 				overflow: hidden;
 				position: relative;
@@ -70,15 +78,15 @@
 
 			&__bar-fill {
 				height: 100%;
-				background-color: var(--sc-color-gray-800);
+				background-color: var(
+					--sc-star-bar-fill-color,
+					var(--sc-color-gray-800)
+				);
 				border-radius: 4px;
-				transition: width 0.3s ease;
 			}
 
 			&__count {
 				text-align: right;
-				color: var(--sc-color-gray-800);
-				min-width: 20px;
 			}
 		}
 	}

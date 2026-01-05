@@ -100,29 +100,6 @@ class ProductReviewBreakdown extends \Elementor\Widget_Base {
 			]
 		);
 
-		$this->add_control(
-			'star_label_gap',
-			[
-				'label'       => esc_html__( 'Star Label Gap', 'surecart' ),
-				'type'        => \Elementor\Controls_Manager::SLIDER,
-				'size_units'  => [ 'px' ],
-				'range'       => [
-					'px' => [
-						'min' => 0,
-						'max' => 20,
-					],
-				],
-				'default'     => [
-					'size' => 4,
-					'unit' => 'px',
-				],
-				'description' => esc_html__( 'Adjust the spacing between the star number and star icon.', 'surecart' ),
-				'selectors'   => [
-					'{{WRAPPER}} .wp-block-surecart-product-review-breakdown .sc-star-row__label' => 'gap: {{SIZE}}{{UNIT}};',
-				],
-			]
-		);
-
 		$this->end_controls_section();
 
 		$this->start_controls_section(
@@ -310,7 +287,6 @@ class ProductReviewBreakdown extends \Elementor\Widget_Base {
 		$settings              = $this->get_settings_for_display();
 		$show_for_zero_reviews = 'yes' === ( $settings['show_for_zero_reviews'] ?? 'no' );
 		$star_size             = $settings['star_size']['size'] ?? 20;
-		$star_label_gap        = $settings['star_label_gap']['size'] ?? 4;
 		$columns               = $settings['columns'] ?? 1;
 		$row_gap               = $settings['row_gap']['size'] ?? 2;
 		$column_gap            = $settings['column_gap']['size'] ?? 20;
@@ -323,7 +299,6 @@ class ProductReviewBreakdown extends \Elementor\Widget_Base {
 		$attributes = [
 			'show_for_zero_reviews' => $show_for_zero_reviews,
 			'size'                  => absint( $star_size ),
-			'star_label_gap'        => absint( $star_label_gap ),
 			'columns'               => absint( $columns ),
 			'row_gap'               => absint( $row_gap ),
 			'column_gap'            => absint( $column_gap ),

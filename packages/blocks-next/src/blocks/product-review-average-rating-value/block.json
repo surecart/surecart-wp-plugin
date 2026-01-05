@@ -6,11 +6,15 @@
 	"description": "Displays the average product rating value.",
 	"version": "1.0.0",
 	"category": "surecart-product-page",
-	"parent": ["surecart/product-review-average-rating"],
 	"keywords": ["review", "average", "rating", "value"],
 	"example": {},
-	"usesContext": ["show_value"],
-	"attributes": {},
+	"usesContext": ["show_value", "link_to_reviews"],
+	"attributes": {
+		"link_to_reviews": {
+			"type": "boolean",
+			"default": false
+		}
+	},
 	"styles": [
 		{
 			"name": "none",

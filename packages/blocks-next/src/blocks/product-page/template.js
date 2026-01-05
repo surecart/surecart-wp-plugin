@@ -27,19 +27,7 @@ export default [
 							layout: { type: 'flex', flexWrap: 'nowrap' },
 						},
 						[
-							[
-								'surecart/product-review-average-rating',
-								{ style: { spacing: { blockGap: '4px' } } },
-								[
-									[
-										'surecart/product-review-average-rating-stars',
-									],
-									[
-										'surecart/product-review-average-rating-value',
-										{ className: 'is-style-parentheses' },
-									],
-								],
-							],
+							['surecart/product-review-average-rating-stars'],
 							[
 								'surecart/product-review-total-rating',
 								{

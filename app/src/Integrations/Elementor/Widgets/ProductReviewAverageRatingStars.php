@@ -64,7 +64,20 @@ class ProductReviewAverageRatingStars extends \Elementor\Widget_Base {
 		$this->start_controls_section(
 			'section_rating_stars',
 			[
-				'label' => esc_html__( 'Rating Star', 'surecart' ),
+				'label' => esc_html__( 'Rating Star Settings', 'surecart' ),
+			]
+		);
+
+		$this->add_control(
+			'link_to_reviews',
+			[
+				'label'        => esc_html__( 'Link to Reviews', 'surecart' ),
+				'type'         => \Elementor\Controls_Manager::SWITCHER,
+				'label_on'     => esc_html__( 'Yes', 'surecart' ),
+				'label_off'    => esc_html__( 'No', 'surecart' ),
+				'return_value' => 'yes',
+				'default'      => 'no',
+				'description'  => esc_html__( 'Link to the reviews section.', 'surecart' ),
 			]
 		);
 
@@ -157,17 +170,24 @@ class ProductReviewAverageRatingStars extends \Elementor\Widget_Base {
 	 * @return void
 	 */
 	protected function render() {
-		$settings   = $this->get_settings_for_display();
-		$size       = $settings['size']['size'] ?? 20;
-		$fill_color = 'var(--e-global-color-primary)'; // fallback for block.
+		$settings        = $this->get_settings_for_display();
+		$size            = $settings['size']['size'] ?? 20;
+		$fill_color      = 'var(--e-global-color-primary)'; // fallback for block.
+		$link_to_reviews = 'yes' === ( $settings['link_to_reviews'] ?? 'yes' );
 
 		if ( \Elementor\Plugin::$instance->editor->is_edit_mode() ) {
 			$this->render_preview( $size );
 			return;
 		}
+
+		$attributes = [
+			'fill_color'      => $fill_color,
+			'size'            => absint( $size ),
+			'link_to_reviews' => $link_to_reviews,
+		];
 		?>
 		<div <?php $this->print_render_attribute_string( 'wrapper' ); ?>>
-			<!-- wp:surecart/product-review-average-rating-stars {"fill_color": "<?php echo esc_attr( $fill_color ); ?>","size":<?php echo absint( $size ); ?>} /-->
+			<!-- wp:surecart/product-review-average-rating-stars <?php echo wp_json_encode( $attributes ); ?> /-->
 		</div>
 		<?php
 	}

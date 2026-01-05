@@ -7,8 +7,7 @@
 	"version": "1.0.0",
 	"category": "surecart-product-page",
 	"example": {},
-	"usesContext": ["show_value"],
-	"parent": ["surecart/product-review-average-rating"],
+	"usesContext": ["show_value", "link_to_reviews"],
 	"keywords": ["review", "average", "rating", "stars"],
 	"attributes": {
 		"fill_color": {
@@ -18,6 +17,10 @@
 		"size": {
 			"type": "number",
 			"default": 20
+		},
+		"link_to_reviews": {
+			"type": "boolean",
+			"default": false
 		}
 	},
 	"supports": {

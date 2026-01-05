@@ -89,6 +89,13 @@ class ProductReviewAverageRatingStars extends \Bricks\Element {
 				],
 			],
 		];
+
+		$this->controls['link_to_reviews'] = [
+			'tab'     => 'content',
+			'label'   => esc_html__( 'Link to Reviews', 'surecart' ),
+			'type'    => 'checkbox',
+			'default' => false,
+		];
 	}
 
 	/**
@@ -97,8 +104,10 @@ class ProductReviewAverageRatingStars extends \Bricks\Element {
 	 * @return void
 	 */
 	public function render() {
-		$size       = ! empty( $this->settings['size'] ) ? $this->settings['size'] : '20px';
-		$fill_color = $this->get_raw_color( 'fill_color' );
+		$size            = ! empty( $this->settings['size'] ) ? $this->settings['size'] : '20px';
+		$fill_color      = $this->get_raw_color( 'fill_color' );
+		$link_to_reviews = ! empty( $this->settings['link_to_reviews'] );
+
 		if ( empty( $fill_color ) ) {
 			$fill_color = 'var(--bricks-color-primary)';
 		}
@@ -112,8 +121,9 @@ class ProductReviewAverageRatingStars extends \Bricks\Element {
 
 		echo $this->html( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			[
-				'size'       => (int) $size,
-				'fill_color' => esc_attr( $fill_color ),
+				'size'            => (int) $size,
+				'fill_color'      => esc_attr( $fill_color ),
+				'link_to_reviews' => $link_to_reviews, //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			]
 		);
 	}
@@ -121,7 +131,7 @@ class ProductReviewAverageRatingStars extends \Bricks\Element {
 	/**
 	 * Render preview in editor.
 	 *
-	 * @param string $size Star size.
+	 * @param string $size       Star size.
 	 * @param string $fill_color Star fill color.
 	 *
 	 * @return void

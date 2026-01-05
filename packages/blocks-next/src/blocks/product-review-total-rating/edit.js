@@ -6,7 +6,12 @@ import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
 import { PanelBody, ToggleControl, SelectControl } from '@wordpress/components';
 
 export default ({ attributes, setAttributes }) => {
-	const { show_label, show_for_zero_reviews, style_variant } = attributes;
+	const {
+		show_label,
+		show_for_zero_reviews,
+		style_variant,
+		link_to_reviews,
+	} = attributes;
 	const blockProps = useBlockProps();
 
 	return (
@@ -53,6 +58,18 @@ export default ({ attributes, setAttributes }) => {
 						onChange={(value) =>
 							setAttributes({ style_variant: value })
 						}
+					/>
+					<ToggleControl
+						__nextHasNoMarginBottom
+						label={__('Link to reviews', 'surecart')}
+						help={__(
+							'Toggle on to link to the reviews section.',
+							'surecart'
+						)}
+						onChange={(value) =>
+							setAttributes({ link_to_reviews: value })
+						}
+						checked={link_to_reviews}
 					/>
 				</PanelBody>
 			</InspectorControls>

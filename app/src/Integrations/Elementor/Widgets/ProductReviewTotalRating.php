@@ -107,6 +107,19 @@ class ProductReviewTotalRating extends \Elementor\Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'link_to_reviews',
+			[
+				'label'        => esc_html__( 'Link to Reviews', 'surecart' ),
+				'type'         => \Elementor\Controls_Manager::SWITCHER,
+				'label_on'     => esc_html__( 'Yes', 'surecart' ),
+				'label_off'    => esc_html__( 'No', 'surecart' ),
+				'return_value' => 'yes',
+				'default'      => 'no',
+				'description'  => esc_html__( 'Link to the reviews section.', 'surecart' ),
+			]
+		);
+
 		$this->end_controls_section();
 	}
 
@@ -166,6 +179,7 @@ class ProductReviewTotalRating extends \Elementor\Widget_Base {
 		$settings              = $this->get_settings_for_display();
 		$show_label            = 'yes' === ( $settings['show_label'] ?? 'yes' );
 		$show_for_zero_reviews = 'yes' === ( $settings['show_for_zero_reviews'] ?? 'yes' );
+		$link_to_reviews       = 'yes' === ( $settings['link_to_reviews'] ?? 'yes' );
 
 		if ( \Elementor\Plugin::$instance->editor->is_edit_mode() ) {
 			$this->render_preview( $show_label );
@@ -176,6 +190,7 @@ class ProductReviewTotalRating extends \Elementor\Widget_Base {
 			'show_label'            => $show_label,
 			'show_for_zero_reviews' => $show_for_zero_reviews,
 			'style_variant'         => $settings['style_variant'] ?? 'default',
+			'link_to_reviews'       => $link_to_reviews,
 		];
 		?>
 		<div <?php $this->print_render_attribute_string( 'wrapper' ); ?>>

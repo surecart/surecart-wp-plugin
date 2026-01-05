@@ -90,22 +90,6 @@ class ProductReviewBreakdown extends \Bricks\Element {
 			'placeholder' => '20px',
 		];
 
-		$this->controls['star_label_gap'] = [
-			'tab'         => 'content',
-			'label'       => esc_html__( 'Star Label Gap', 'surecart' ),
-			'type'        => 'number',
-			'units'       => true,
-			'default'     => '4px',
-			'placeholder' => '4px',
-			'description' => esc_html__( 'Adjust the spacing between the star number and star icon.', 'surecart' ),
-			'css'         => [
-				[
-					'property' => 'gap',
-					'selector' => '.sc-star-row__label',
-				],
-			],
-		];
-
 		$this->controls['columns'] = [
 			'tab'         => 'content',
 			'group'       => 'column_spacing',
@@ -219,7 +203,6 @@ class ProductReviewBreakdown extends \Bricks\Element {
 	public function render() {
 		$show_for_zero_reviews = ! empty( $this->settings['show_for_zero_reviews'] );
 		$star_size             = ! empty( $this->settings['star_size'] ) ? (int) $this->settings['star_size'] : 20;
-		$star_label_gap        = ! empty( $this->settings['star_label_gap'] ) ? (int) $this->settings['star_label_gap'] : 4;
 		$columns               = ! empty( $this->settings['columns'] ) ? (int) $this->settings['columns'] : 1;
 		$row_gap               = ! empty( $this->settings['row_gap'] ) ? (int) $this->settings['row_gap'] : 2;
 		$column_gap            = ! empty( $this->settings['column_gap'] ) ? (int) $this->settings['column_gap'] : 20;
@@ -236,7 +219,6 @@ class ProductReviewBreakdown extends \Bricks\Element {
 		$attributes = [
 			'show_for_zero_reviews' => $show_for_zero_reviews,
 			'size'                  => $star_size,
-			'star_label_gap'        => $star_label_gap,
 			'columns'               => $columns,
 			'row_gap'               => $row_gap,
 			'column_gap'            => $column_gap,

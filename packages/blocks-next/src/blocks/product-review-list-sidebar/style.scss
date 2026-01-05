@@ -1,3 +1,8 @@
+.wp-block-surecart-product-review-list-sidebar {
+	// Prevent shrinking when fixed width is set
+	flex-shrink: 0;
+}
+
 .wp-block-surecart-product-review-list-sidebar.is-position-sticky {
 	overflow: auto;
 	max-height: 100svh;

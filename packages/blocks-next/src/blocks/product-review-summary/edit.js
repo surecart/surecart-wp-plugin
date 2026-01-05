@@ -62,99 +62,75 @@ export default function Edit() {
 					},
 					[
 						[
-							'surecart/product-review-average-rating',
+							'surecart/product-review-average-rating-value',
 							{
+								className: 'is-style-slash',
 								style: {
-									spacing: {
-										blockGap: 'var:preset|spacing|20',
-									},
-									layout: {
-										selfStretch: 'fit',
-										flexSize: null,
+									typography: {
+										fontStyle: 'normal',
+										fontWeight: '600',
 									},
 								},
-								layout: {
-									type: 'flex',
-									justifyContent: 'left',
-									orientation: 'vertical',
-								},
+								fontSize: 'large',
 							},
-							[
-								[
-									'surecart/product-review-average-rating-value',
-									{
-										className: 'is-style-slash',
-										style: {
-											typography: {
-												fontStyle: 'normal',
-												fontWeight: '600',
-											},
-										},
-										fontSize: 'large',
-									},
-								],
-								[
-									'surecart/product-review-average-rating-stars',
-								],
-							],
 						],
-						[
-							'core/group',
-							{
-								style: {
-									spacing: {
-										blockGap: 'var:preset|spacing|20',
-									},
-								},
-								layout: {
-									type: 'flex',
-									flexWrap: 'nowrap',
+						['surecart/product-review-average-rating-stars'],
+					],
+					[
+						'core/group',
+						{
+							style: {
+								spacing: {
+									blockGap: 'var:preset|spacing|20',
 								},
 							},
+							layout: {
+								type: 'flex',
+								flexWrap: 'nowrap',
+							},
+						},
+						[
 							[
-								[
-									'surecart/product-review-total-rating',
-									{
-										className: 'is-style-plus-sign',
-										style: {
-											spacing: {
-												blockGap:
-													'var:preset|spacing|20',
-												margin: {
-													right: '0',
-													left: '0',
-												},
-												padding: {
-													right: '0',
-													left: '0',
-												},
+								'surecart/product-review-total-rating',
+								{
+									className: 'is-style-plus-sign',
+									style: {
+										spacing: {
+											blockGap: 'var:preset|spacing|20',
+											margin: {
+												right: '0',
+												left: '0',
+											},
+											padding: {
+												right: '0',
+												left: '0',
 											},
 										},
 									},
-								],
+								},
 							],
 						],
 					],
 				],
-				[
-					'surecart/product-review-breakdown',
-					{
-						columns: 1,
-						row_gap: 2,
-						className: 'is-style-default',
-						style: {
-							layout: {
-								selfStretch: 'fill',
-								flexSize: null,
-							},
-						},
+			],
+			[
+				'surecart/product-review-breakdown',
+				{
+					columns: 1,
+					row_gap: 2,
+					className: 'is-style-default',
+					style: {
 						layout: {
-							type: 'flex',
-							justifyContent: 'left',
-							orientation: 'horizontal',
+							selfStretch: 'fill',
+							flexSize: null,
 						},
 					},
-				],
+					layout: {
+						type: 'flex',
+						justifyContent: 'left',
+						orientation: 'horizontal',
+					},
+				},
 			],
 		],
 	];

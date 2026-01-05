@@ -74,42 +74,21 @@ export const TEMPLATE = [
 						},
 						[
 							[
-								'surecart/product-review-average-rating',
+								'surecart/product-review-average-rating-value',
 								{
 									style: {
-										spacing: {
-											blockGap: 'var:preset|spacing|20',
-										},
-										layout: {
-											selfStretch: 'fit',
-											flexSize: null,
+										typography: {
+											fontStyle: 'normal',
+											fontWeight: '600',
 										},
 									},
-									layout: {
-										type: 'flex',
-										justifyContent: 'left',
-										orientation: 'vertical',
-									},
+									fontSize: 'large',
+									className: 'is-style-slash',
 								},
-								[
-									[
-										'surecart/product-review-average-rating-value',
-										{
-											style: {
-												typography: {
-													fontStyle: 'normal',
-													fontWeight: '600',
-												},
-											},
-											fontSize: 'large',
-											className: 'is-style-slash',
-										},
-									],
-									[
-										'surecart/product-review-average-rating-stars',
-										{},
-									],
-								],
+							],
+							[
+								'surecart/product-review-average-rating-stars',
+								{},
 							],
 							[
 								'core/group',

@@ -17,41 +17,27 @@
 	"keywords": ["review", "breakdown", "summary"],
 	"usesContext": ["postId"],
 	"attributes": {
-		"show_for_zero_reviews": {
-			"type": "boolean",
-			"default": true
-		},
 		"columns": {
 			"type": "number",
 			"default": 1
 		},
 		"row_gap": {
-			"type": "number",
-			"default": 2
+			"type": "string"
 		},
 		"column_gap": {
-			"type": "number",
-			"default": 20
-		},
-		"star_label_gap": {
-			"type": "number",
-			"default": 4
+			"type": "string"
 		},
 		"fill_color": {
-			"type": "string",
-			"default": ""
+			"type": "string"
 		},
 		"size": {
-			"type": "number",
-			"default": 20
+			"type": "string"
 		},
 		"bar_fill_color": {
-			"type": "string",
-			"default": ""
+			"type": "string"
 		},
 		"bar_background_color": {
-			"type": "string",
-			"default": ""
+			"type": "string"
 		}
 	},
 	"example": {},
