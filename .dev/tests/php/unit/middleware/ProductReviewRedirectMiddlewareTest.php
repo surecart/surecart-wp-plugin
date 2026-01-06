@@ -171,6 +171,42 @@ class ProductReviewRedirectMiddlewareTest extends SureCartUnitTestCase {
 	}
 
 	/**
+	 * Test that middleware passes to next when product is not published and user cannot edit.
+	 */
+	public function test_should_pass_to_next_when_product_is_not_published_and_user_cannot_edit() {
+		// Create a regular user without edit_sc_products capability.
+		wp_set_current_user( self::factory()->user->create( [ 'role' => 'subscriber' ] ) );
+
+		self::factory()->post->create([
+			'post_type'   => 'sc_product',
+			'post_status' => 'draft',
+			'post_title'  => 'Test Draft Product',
+			'meta_input'  => [
+				'sc_id'   => 'sc_test_product_draft',
+				'product' => [
+					'id'   => 'sc_test_product_draft',
+					'name' => 'Test Draft Product',
+				],
+			],
+		]);
+
+		$request = Mockery::mock( RequestInterface::class );
+		$request->shouldReceive('query')->with('product_id')->andReturn('sc_test_product_draft');
+		$request->shouldReceive('query')->with('context')->andReturn('customer.order.solicit_reviews');
+
+		$next_called = false;
+		$next        = function ( $req ) use ( &$next_called ) {
+			$next_called = true;
+			return 'next_response';
+		};
+
+		$response = $this->middleware->handle( $request, $next );
+
+		$this->assertTrue( $next_called );
+		$this->assertSame( 'next_response', $response );
+	}
+
+	/**
 	 * Test that middleware redirects to product review page when user is logged in.
 	 */
 	public function test_should_redirect_to_product_review_page_when_logged_in() {

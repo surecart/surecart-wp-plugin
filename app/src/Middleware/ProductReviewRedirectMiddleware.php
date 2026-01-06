@@ -7,11 +7,11 @@ use SureCartCore\Requests\RequestInterface;
 use SureCartCore\Responses\RedirectResponse;
 
 /**
- * Middleware for product review.
+ * Middleware to redirect users to product review pages from solicit review emails.
  */
 class ProductReviewRedirectMiddleware {
 	/**
-	 * Enqueue component assets.
+	 * Handle the request and redirect to review page if applicable.
 	 *
 	 * @param RequestInterface $request Request.
 	 * @param Closure          $next Next.
@@ -19,18 +19,18 @@ class ProductReviewRedirectMiddleware {
 	 * @return RedirectResponse|mixed
 	 */
 	public function handle( RequestInterface $request, Closure $next ) {
-		if ( ! $this->shouldHandleReviewRedirect( $request ) ) {
+		if ( ! ( $this->shouldHandle( $request ) ) ) {
 			return $next( $request );
 		}
 
+		// there's no product, next request.
 		$product = sc_get_product( $request->query( 'product_id' ) );
 		if ( empty( $product->post ) ) {
 			return $next( $request );
 		}
 
+		// there's no product page url, next request.
 		$product_page_url = $this->getProductReviewUrl( $product->post );
-
-		// Only redirect if we have a valid product page URL.
 		if ( empty( $product_page_url ) ) {
 			return $next( $request );
 		}
@@ -44,13 +44,9 @@ class ProductReviewRedirectMiddleware {
 	 * @param RequestInterface $request Request.
 	 * @return bool
 	 */
-	private function shouldHandleReviewRedirect( RequestInterface $request ): bool {
-		$product_id = $request->query( 'product_id' );
-		$context    = $request->query( 'context' );
-
-		return ! empty( $product_id )
-			&& ! empty( $context )
-			&& 'customer.order.solicit_reviews' === $context;
+	private function shouldHandle( RequestInterface $request ): bool {
+		return $request->query( 'product_id' )
+			&& 'customer.order.solicit_reviews' === $request->query( 'context' );
 	}
 
 	/**
@@ -59,17 +55,12 @@ class ProductReviewRedirectMiddleware {
 	 * @param \WP_Post $post Product post.
 	 * @return string|false
 	 */
-	private function getProductReviewUrl( $post ) {
+	private function getProductReviewUrl( \WP_Post $post ) {
 		$permalink = get_permalink( $post );
 
-		if ( ! $permalink ) {
-			return false;
-		}
-
-		return add_query_arg(
-			[ 'product-review-form' => $post->ID ],
-			$permalink
-		);
+		return $permalink
+			? add_query_arg( [ 'product-review-form' => $post->ID ], $permalink )
+			: false;
 	}
 
 	/**
@@ -80,13 +71,12 @@ class ProductReviewRedirectMiddleware {
 	 * @return RedirectResponse
 	 */
 	private function redirectToReviewPage( RequestInterface $request, string $product_page_url ): RedirectResponse {
-		$redirect_url = $product_page_url;
-		if ( ! is_user_logged_in() ) {
-			$redirect_url = add_query_arg(
+		$redirect_url = is_user_logged_in()
+			? $product_page_url
+			: add_query_arg(
 				[ 'redirect_to' => rawurlencode( $product_page_url ) ],
 				\SureCart::pages()->url( 'dashboard' )
 			);
-		}
 
 		return ( new RedirectResponse( $request ) )->to( esc_url_raw( $redirect_url ) );
 	}
