@@ -338,7 +338,7 @@ class ReviewsListTable extends ListTable {
 		$actions['delete'] = sprintf(
 			/* translators: 1: Confirmation message, 2: URL, 3: aria-label, 4: link text. */
 			'<a class="submitdelete" onclick="return confirm(\'%1$s\')" href="%2$s" aria-label="%3$s">%4$s</a>',
-			esc_attr__( 'Are you sure you want to delete this review?', 'surecart' ),
+			esc_attr__( 'Are you sure? This cannot be undone.', 'surecart' ),
 			esc_url(
 				add_query_arg(
 					[
