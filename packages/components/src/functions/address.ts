@@ -55,7 +55,7 @@ export const countryChoices = async () => {
   });
   const response = await fetch(url);
   const data: any = await response.json();
-  return data?.data.map(({ code, name }) => ({ value: code, label: name })) as Array<{ value: string; label: string }>;
+  return ((data?.data || [])?.map(({ code, name }) => ({ value: code, label: name })) ?? []) as Array<{ value: string; label: string }>;
 };
 
 export const getCountryDetails = async (countryCode: string) => {

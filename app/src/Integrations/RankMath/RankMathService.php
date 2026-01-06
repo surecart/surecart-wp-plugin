@@ -2,38 +2,29 @@
 
 namespace SureCart\Integrations\RankMath;
 
+use SureCart\Integrations\Abstracts\NoIndexService;
+
 /**
  * Controls the Rank Math integration.
  */
-class RankMathService {
+class RankMathService extends NoIndexService {
 	/**
-	 * Bootstrap the Rank Math integration.
+	 * The filter hook name for the robots meta.
 	 *
-	 * @return void
+	 * @var string
+	 */
+	protected $hook_name = 'rank_math/frontend/robots';
+
+	/**
+	 * The filter hook name for the robots meta.
+	 *
+	 * @var string
 	 */
 	public function bootstrap(): void {
-		add_filter( 'rank_math/frontend/robots', [ $this, 'addNoindexForQueryVars' ] );
+		parent::bootstrap();
 
 		// Skip product model filter registration during sitemap generation to prevent memory exhaustion.
 		add_filter( 'surecart/product/skip_filters', [ $this, 'skipFiltersOnSitemap' ] );
-	}
-
-	/**
-	 * Modify robots to add noindex for SureCart query vars.
-	 *
-	 * @param array $robots Robots array.
-	 *
-	 * @return array Modified robots.
-	 */
-	public function addNoindexForQueryVars( array $robots ): array {
-		if ( sc_has_no_index_query_vars() ) {
-			return [
-				'noindex'  => 'noindex',
-				'nofollow' => 'nofollow',
-			];
-		}
-
-		return $robots;
 	}
 
 	/**
