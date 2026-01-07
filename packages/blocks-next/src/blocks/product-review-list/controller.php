@@ -1,4 +1,8 @@
 <?php
+if ( ! \SureCart::account()->review_protocol->reviews_enabled ) {
+	return '';
+}
+
 $product = sc_get_product();
 if ( empty( $product ) ) {
 	return '';
