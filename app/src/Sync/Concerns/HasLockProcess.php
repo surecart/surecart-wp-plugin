@@ -56,6 +56,6 @@ trait HasLockProcess {
 	 * @return bool
 	 */
 	protected function releaseLock( \SureCart\Models\Model $model ): bool {
-		return delete_transient( $this->getLockKey( $model ) );
+		return (bool) delete_transient( $this->getLockKey( $model ) );
 	}
 }
