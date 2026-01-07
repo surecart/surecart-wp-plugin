@@ -1,10 +1,7 @@
+import { IconLibrary } from '../../../types';
+
 export type IconLibraryResolver = (name: string) => string;
 export type IconLibraryMutator = (svg: SVGElement) => void;
-export interface IconLibrary {
-  name: string;
-  resolver: IconLibraryResolver;
-  mutator?: IconLibraryMutator;
-}
 
 let registry: IconLibrary[] = [];
 let watchedIcons: any[] = [];
@@ -18,7 +15,7 @@ export function unwatchIcon(icon: any) {
 }
 
 export function getIconLibrary(name?: string) {
-  return registry.filter(lib => lib.name === name)[0];
+  return window?.registry?.filter(lib => lib.name === name)[0];
 }
 
 export function registerIconLibrary(name: string, options: { resolver: IconLibraryResolver; mutator?: IconLibraryMutator }) {
@@ -28,6 +25,8 @@ export function registerIconLibrary(name: string, options: { resolver: IconLibra
     resolver: options.resolver,
     mutator: options.mutator,
   });
+  window.registry = registry;
+
   // Redraw watched icons
   watchedIcons.map(icon => {
     if (icon.library === name) {
@@ -37,7 +36,7 @@ export function registerIconLibrary(name: string, options: { resolver: IconLibra
 }
 
 export function unregisterIconLibrary(name: string) {
-  registry = registry.filter(lib => lib.name !== name);
+  window.registry = window?.registry?.filter(lib => lib.name !== name);
 }
 
 window.ceRegisterIconLibrary = registerIconLibrary;
