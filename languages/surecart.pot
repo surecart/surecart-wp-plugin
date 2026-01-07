@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-12-29T14:13:52+00:00\n"
+"POT-Creation-Date: 2025-12-31T17:13:11+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.9.0\n"
 
@@ -121,15 +121,15 @@ msgid "Every %d Minutes"
 msgstr ""
 
 #. translators: %1$d is Count of specific deletions, %2$s is bulk deletion progress status.
-#: src/Background/BulkActionService.php:206
+#: src/Background/BulkActionService.php:212
 msgid "%1$d %2$s"
 msgstr ""
 
-#: src/Background/BulkActionService.php:211
+#: src/Background/BulkActionService.php:217
 msgid "Bulk Action Summary:"
 msgstr ""
 
-#: src/Background/BulkActionService.php:216
+#: src/Background/BulkActionService.php:222
 msgid "SureCart bulk action progress status."
 msgstr ""
 
@@ -4754,11 +4754,16 @@ msgstr ""
 msgid "%1$1s - %2$2s"
 msgstr ""
 
-#: src/Models/ProvisionalAccount.php:47
+#. translators: %s is the product name.
+#: src/Models/ProductImport.php:79
+msgid "%s Content"
+msgstr ""
+
+#: src/Models/ProvisionalAccount.php:63
 msgid "You have already set up your store."
 msgstr ""
 
-#: src/Models/ProvisionalAccount.php:58
+#: src/Models/ProvisionalAccount.php:73
 msgid "Store name must be at least 3 characters long. Please choose a different name for your store."
 msgstr ""
 
@@ -7604,16 +7609,29 @@ msgstr ""
 msgid "(GMT+13:00) Tokelau Is."
 msgstr ""
 
+#: src/Sync/ContentSyncService.php:91
+#: src/Sync/ProductsSyncService.php:73
+msgid "SureCart: Getting things ready..."
+msgstr ""
+
+#: src/Sync/ContentSyncService.php:92
+msgid "We are creating your products and collections in the background. This may take a few minutes."
+msgstr ""
+
+#: src/Sync/ContentSyncService.php:103
+msgid "SureCart: There was an issue creating your products."
+msgstr ""
+
+#: src/Sync/ContentSyncService.php:104
+msgid "Please try again."
+msgstr ""
+
 #: src/Sync/CustomerSyncService.php:47
 msgid "SureCart customer sync in progress"
 msgstr ""
 
 #: src/Sync/CustomerSyncService.php:48
 msgid "SureCart is syncing customers in the background. The process may take a little while, so please be patient."
-msgstr ""
-
-#: src/Sync/ProductsSyncService.php:73
-msgid "SureCart: Getting things ready..."
 msgstr ""
 
 #: src/Sync/ProductsSyncService.php:76
@@ -10528,7 +10546,7 @@ msgstr ""
 
 #: components/affiliates/commission/GuideModal.js:32
 #: index.php:137
-#: src/blocks/cart-close-button/edit.js:78
+#: src/blocks/cart-close-button/edit.js:82
 msgid "Close"
 msgstr ""
 
@@ -22160,8 +22178,8 @@ msgstr ""
 
 #: src/blocks/cart-close-button/view.php:7
 #: src/blocks/cart-header/view.php:15
-#: src/blocks/cart-close-button/edit.js:69
-#: src/blocks/cart-close-button/edit.js:77
+#: src/blocks/cart-close-button/edit.js:73
+#: src/blocks/cart-close-button/edit.js:81
 msgid "Close cart"
 msgstr ""
 
@@ -22357,19 +22375,19 @@ msgstr ""
 msgid "A decorative arrow appended to the next and previous page link."
 msgstr ""
 
-#: src/blocks/cart-close-button/edit.js:44
+#: src/blocks/cart-close-button/edit.js:45
 #: src/blocks/product-pagination/query-pagination-arrow-controls.js:31
 msgctxt "Arrow option for Query Pagination Next/Previous blocks"
 msgid "Arrow"
 msgstr ""
 
-#: src/blocks/cart-close-button/edit.js:51
+#: src/blocks/cart-close-button/edit.js:53
 #: src/blocks/product-pagination/query-pagination-arrow-controls.js:38
 msgctxt "Arrow option for Query Pagination Next/Previous blocks"
 msgid "Chevron"
 msgstr ""
 
-#: src/blocks/cart-close-button/edit.js:58
+#: src/blocks/cart-close-button/edit.js:61
 msgctxt "Arrow option for Query Pagination Next/Previous blocks"
 msgid "Close"
 msgstr ""
