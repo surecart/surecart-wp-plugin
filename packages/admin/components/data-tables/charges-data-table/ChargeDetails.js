@@ -246,7 +246,7 @@ export default ({ charge, onRequestClose }) => {
 						</ScLineItem>
 					</>
 				)}
-				{charge?.disputed_amount && (
+				{!!charge?.disputed_amount && (
 					<ScLineItem
 						style={{ color: 'var(--sc-color-warning-500)' }}
 					>

@@ -32,7 +32,7 @@ export default defineConfig({
 	forbidOnly: !!CI,
 
 	/* Retry */
-	retries: 4,
+	retries: 0,
 
 	/* Opt out of parallel tests on CI. */
 	workers: 1,
@@ -44,7 +44,7 @@ export default defineConfig({
 	reportSlowTests: null,
 
 	/* https://playwright.dev/docs/test-timeouts#set-test-timeout-in-the-config */
-	timeout: parseInt(TIMEOUT || '', 1000) || 1000_000, // 1000 seconds.
+	timeout: parseInt(TIMEOUT || '', 10) || 60_000,
 
 	/* Web-first assertions - separate timeout. See https://playwright.dev/docs/test-timeouts#expect-timeout */
 	expect: {
