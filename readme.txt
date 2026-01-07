@@ -322,6 +322,7 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 - Improvement: Added offset support for related product list block.
 - Improvement: Refactored variant pills blocks for better performance and optimization.
 - Fix: Disallow changing renewal date when subscription is past due.
+- Fix: Resolved a TypeError that could occur when releasing sync locks on sites using certain object cache systems.
 
 = 3.17.4 - January 5th, 2026 =
 - Improvement: Pass noindex headers when currency parameters are present to prevent unintended indexing by Yoast, AIOSEO, SEOPress, and The SEO Framework.
