@@ -5,11 +5,31 @@ namespace SureCart\Middleware;
 use Closure;
 use SureCartCore\Requests\RequestInterface;
 use SureCartCore\Responses\RedirectResponse;
+use SureCartCore\Responses\ResponseService;
 
 /**
  * Middleware to redirect users to product review pages from solicit review emails.
  */
 class ProductReviewRedirectMiddleware {
+
+	/**
+	 * Response service.
+	 *
+	 * @var ResponseService
+	 */
+	protected $response_service = null;
+
+	/**
+	 * Constructor.
+	 *
+	 * @codeCoverageIgnore
+	 *
+	 * @param ResponseService $response_service Response service.
+	 */
+	public function __construct( ResponseService $response_service ) {
+		$this->response_service = $response_service;
+	}
+
 	/**
 	 * Handle the request and redirect to review page if applicable.
 	 *
@@ -78,6 +98,6 @@ class ProductReviewRedirectMiddleware {
 				\SureCart::pages()->url( 'dashboard' )
 			);
 
-		return ( new RedirectResponse( $request ) )->to( esc_url_raw( $redirect_url ) );
+		return $this->response_service->redirect( $request )->to( esc_url_raw( $redirect_url ) );
 	}
 }

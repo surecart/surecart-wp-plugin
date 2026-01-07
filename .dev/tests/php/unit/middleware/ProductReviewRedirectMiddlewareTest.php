@@ -46,7 +46,7 @@ class ProductReviewRedirectMiddlewareTest extends SureCartUnitTestCase {
 			return $mock_account;
 		});
 
-		$this->middleware = new ProductReviewRedirectMiddleware();
+		$this->middleware = new ProductReviewRedirectMiddleware( \SureCart::responses() );
 	}
 
 	/**
