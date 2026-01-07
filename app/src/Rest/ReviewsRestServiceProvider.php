@@ -213,6 +213,11 @@ class ReviewsRestServiceProvider extends RestServiceProvider implements RestServ
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function create_item_permissions_check( $request ) {
+		// If customer, product, or purchase are passed, user must have edit_sc_reviews permission.
+		if ( $request->get_param( 'customer' ) || $request->get_param( 'purchase' ) ) {
+			return current_user_can( 'edit_sc_reviews' );
+		}
+
 		return is_user_logged_in();
 	}
 
