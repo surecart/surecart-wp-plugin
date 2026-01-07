@@ -43,7 +43,7 @@ class ReviewsRestServiceProviderTest extends SureCartUnitTestCase
 
 			'Find: Unauthenticated' => [null, 'GET', '/surecart/v1/reviews/test', 401],
 			'Find: Missing Capability' => [[], 'GET', '/surecart/v1/reviews/test', 403],
-			'Find: Has Capability' => [['read_sc_review'], 'GET', '/surecart/v1/reviews/test', 200],
+			'Find: Has Capability' => [['read_sc_reviews'], 'GET', '/surecart/v1/reviews/test', 200],
 
 			'Edit: Unauthenticated' => [null, 'PATCH', '/surecart/v1/reviews/test', 401],
 			'Edit: Missing Capability' => [[], 'PATCH', '/surecart/v1/reviews/test', 403],
@@ -51,7 +51,7 @@ class ReviewsRestServiceProviderTest extends SureCartUnitTestCase
 
 			'Delete: Unauthenticated' => [null, 'DELETE', '/surecart/v1/reviews/test', 401],
 			'Delete: Missing Capability' => [[], 'DELETE', '/surecart/v1/reviews/test', 403],
-			'Delete: Has Capability' => [['delete_sc_review'], 'DELETE', '/surecart/v1/reviews/test', 200],
+			'Delete: Has Capability' => [['delete_sc_reviews'], 'DELETE', '/surecart/v1/reviews/test', 200],
 
 			'Publish: Unauthenticated' => [null, 'PATCH', '/surecart/v1/reviews/test/publish', 401],
 			'Publish: Missing Capability' => [[], 'PATCH', '/surecart/v1/reviews/test/publish', 403],
@@ -61,8 +61,17 @@ class ReviewsRestServiceProviderTest extends SureCartUnitTestCase
 			'Unpublish: Missing Capability' => [[], 'PATCH', '/surecart/v1/reviews/test/unpublish', 403],
 			'Unpublish: Has Capability' => [['edit_sc_reviews'], 'PATCH', '/surecart/v1/reviews/test/unpublish', 200],
 
-			// Any authenticated user can create a review.
+			// Any authenticated user can create a review without customer/purchase params.
 			'Create: Unauthenticated' => [null, 'POST', '/surecart/v1/reviews', 401],
+			'Create: Logged In User' => [[], 'POST', '/surecart/v1/reviews', 200, ['title' => 'Test Review', 'body' => 'Test body', 'stars' => 5]],
+
+			// Creating with customer param requires edit_sc_reviews capability.
+			'Create: With Customer Param - Missing Capability' => [[], 'POST', '/surecart/v1/reviews', 403, ['title' => 'Test Review', 'body' => 'Test body', 'stars' => 5, 'customer' => 'test_customer_id']],
+			'Create: With Customer Param - Has Capability' => [['edit_sc_reviews'], 'POST', '/surecart/v1/reviews', 200, ['title' => 'Test Review', 'body' => 'Test body', 'stars' => 5, 'customer' => 'test_customer_id']],
+
+			// Creating with purchase param requires edit_sc_reviews capability.
+			'Create: With Purchase Param - Missing Capability' => [[], 'POST', '/surecart/v1/reviews', 403, ['title' => 'Test Review', 'body' => 'Test body', 'stars' => 5, 'purchase' => 'test_purchase_id']],
+			'Create: With Purchase Param - Has Capability' => [['edit_sc_reviews'], 'POST', '/surecart/v1/reviews', 200, ['title' => 'Test Review', 'body' => 'Test body', 'stars' => 5, 'purchase' => 'test_purchase_id']],
 		];
 	}
 
@@ -70,7 +79,7 @@ class ReviewsRestServiceProviderTest extends SureCartUnitTestCase
 	 * @dataProvider requestProvider
      * @group reviews
 	 */
-	public function test_permissions($caps, $method, $route, $status){
+	public function test_permissions($caps, $method, $route, $status, $body_params = null){
 		//mock the requests in the container
         $requests = \Mockery::mock(RequestService::class);
         \SureCart::alias('request', function () use ($requests) {
@@ -92,6 +101,12 @@ class ReviewsRestServiceProviderTest extends SureCartUnitTestCase
         }
 
         $request = new \WP_REST_Request($method, $route);
+
+        // Set body params if provided
+        if (is_array($body_params)) {
+            $request->set_body_params($body_params);
+        }
+
         $response = rest_do_request($request);
         $this->assertSame($status, $response->get_status());
 	}
