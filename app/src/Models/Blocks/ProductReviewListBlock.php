@@ -51,15 +51,23 @@ class ProductReviewListBlock extends AbstractProductListBlock {
 	public function parse_query() {
 		$query = $this->getQueryContext();
 
+		// pagination.
 		$offset   = absint( $query['offset'] ?? 0 );
-		$per_page = $this->block->parsed_block['attrs']['query']['perPage'] ?? $this->block->parsed_block['attrs']['limit'] ?? $query['perPage'] ?? 15;
-		$order    = ! empty( $this->url->getArg( 'order' ) )
-			? sanitize_text_field( $this->url->getArg( 'order' ) )
-			: ( ! empty( $query['order'] ) ? $query['order'] : 'desc' );
-		$orderby  = ! empty( $this->url->getArg( 'orderby' ) )
-			? sanitize_text_field( $this->url->getArg( 'orderby' ) )
-			: ( ! empty( $query['orderBy'] ) ? $query['orderBy'] : 'date' );
-		$page     = $this->url->getCurrentPage();
+		$per_page = $this->block->parsed_block['attrs']['query']['perPage']
+			?? $this->block->parsed_block['attrs']['limit']
+			?? $query['perPage']
+			?? 15;
+
+		// order.
+		$url_order = $this->url->getArg( 'order' );
+		$order     = ! empty( $url_order ) ? sanitize_text_field( $url_order ) : ( $query['order'] ?? 'desc' );
+
+		// orderby.
+		$url_orderby = $this->url->getArg( 'orderby' );
+		$orderby     = ! empty( $url_orderby ) ? sanitize_text_field( $url_orderby ) : ( $query['orderBy'] ?? 'date' );
+
+		// page.
+		$page = $this->url->getCurrentPage();
 
 		$args = array(
 			'status[]'      => 'published',
