@@ -186,7 +186,7 @@ class UserTest extends SureCartUnitTestCase {
 	/**
 	 * @group user-model
 	 */
-	public function test_getLiveCustomerReturnsExistingCustomerId()
+	public function test_getOrCreateLiveCustomerIdReturnsExistingCustomerId()
 	{
 		// Create a user
 		$user = self::factory()->user->create_and_get([
@@ -200,14 +200,14 @@ class UserTest extends SureCartUnitTestCase {
 		$model->setCustomerId('existing_live_customer_id', 'live');
 
 		// Get live customer should return the existing ID
-		$customer_id = $model->getLiveCustomer();
+		$customer_id = $model->getOrCreateLiveCustomerId();
 		$this->assertSame('existing_live_customer_id', $customer_id);
 	}
 
 	/**
 	 * @group user-model
 	 */
-	public function test_getLiveCustomerCreatesNewCustomer()
+	public function test_getOrCreateLiveCustomerIdCreatesNewCustomer()
 	{
 		// Mock the requests in the container
 		$requests = \Mockery::mock(RequestService::class);
@@ -236,7 +236,7 @@ class UserTest extends SureCartUnitTestCase {
 			]);
 
 		// Get live customer should create a new customer and return the ID
-		$customer_id = $model->getLiveCustomer();
+		$customer_id = $model->getOrCreateLiveCustomerId();
 		$this->assertSame('new_live_customer_id', $customer_id);
 
 		// Verify the customer ID was set in user meta
@@ -246,7 +246,7 @@ class UserTest extends SureCartUnitTestCase {
 	/**
 	 * @group user-model
 	 */
-	public function test_getLiveCustomerReturnsWPErrorOnCustomerCreationFailure()
+	public function test_getOrCreateLiveCustomerIdReturnsWPErrorOnCustomerCreationFailure()
 	{
 		// Mock the requests in the container,
 		$requests = \Mockery::mock(RequestService::class);
@@ -268,7 +268,7 @@ class UserTest extends SureCartUnitTestCase {
 			->andReturn(new \WP_Error('api_error', 'API request failed'));
 
 		// Get live customer should return WP_Error
-		$result = $model->getLiveCustomer();
+		$result = $model->getOrCreateLiveCustomerId();
 		$this->assertWPError($result);
 		$this->assertSame('api_error', $result->get_error_code());
 	}
@@ -276,7 +276,7 @@ class UserTest extends SureCartUnitTestCase {
 	/**
 	 * @group user-model
 	 */
-	public function test_getLiveCustomerReturnsWPErrorWhenNoCustomerIdInResponse()
+	public function test_getOrCreateLiveCustomerIdReturnsWPErrorWhenNoCustomerIdInResponse()
 	{
 		// Mock the requests in the container
 		$requests = \Mockery::mock(RequestService::class);
@@ -303,7 +303,7 @@ class UserTest extends SureCartUnitTestCase {
 			]);
 
 		// Get live customer should return WP_Error
-		$result = $model->getLiveCustomer();
+		$result = $model->getOrCreateLiveCustomerId();
 		$this->assertWPError($result);
 		$this->assertSame('sc_no_customer_created', $result->get_error_code());
 	}
@@ -311,7 +311,7 @@ class UserTest extends SureCartUnitTestCase {
 	/**
 	 * @group user-model
 	 */
-	public function test_getLiveCustomer_returnsExistingWhenAlreadyLinked()
+	public function test_getOrCreateLiveCustomerId_returnsExistingWhenAlreadyLinked()
 	{
 		// Create a user
 		$user = self::factory()->user->create_and_get([
@@ -325,7 +325,7 @@ class UserTest extends SureCartUnitTestCase {
 		$model->setCustomerId('existing_customer_id', 'live');
 
 		// Now when we try to get live customer, it should return the existing one
-		$result = $model->getLiveCustomer();
+		$result = $model->getOrCreateLiveCustomerId();
 
 		// Since customer ID already exists, it should just return it without creating a new one
 		$this->assertSame('existing_customer_id', $result);

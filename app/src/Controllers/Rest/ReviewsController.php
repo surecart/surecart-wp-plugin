@@ -98,7 +98,7 @@ class ReviewsController extends RestController {
 		}
 
 		// Get or create live customer.
-		$customer_id = $user->getLiveCustomer();
+		$customer_id = $user->getOrCreateLiveCustomerId();
 		if ( is_wp_error( $customer_id ) ) {
 			return $customer_id;
 		}

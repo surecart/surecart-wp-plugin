@@ -225,11 +225,11 @@ class User implements ArrayAccess, JsonSerializable {
 	}
 
 	/**
-	 * Get or create the live customer for this user.
+	 * Get or create the live customer id for this user.
 	 *
 	 * @return string|null|WP_Error
 	 */
-	protected function getLiveCustomer() {
+	protected function getOrCreateLiveCustomerId() {
 		$customer_id = $this->customerId( 'live' );
 
 		if ( ! empty( $customer_id ) ) {
