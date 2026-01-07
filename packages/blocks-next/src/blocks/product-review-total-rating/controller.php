@@ -1,6 +1,13 @@
 <?php
 $product = sc_get_product();
-if ( ! $product ) {
+
+// no product.
+if ( empty( $product ) ) {
+	return;
+}
+
+// reviews are not enabled.
+if ( ! apply_filters( 'surecart/review_count/enabled', $product->reviews_enabled ) ) {
 	return;
 }
 

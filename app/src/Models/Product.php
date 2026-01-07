@@ -1200,6 +1200,18 @@ class Product extends Model implements PageModel {
 	}
 
 	/**
+	 * Get if the product reviews are enabled.
+	 *
+	 * @return bool
+	 */
+	public function getReviewsEnabledAttribute(): bool {
+		if ( empty( \SureCart::account()->review_protocol->reviews_enabled ) ) {
+			return false;
+		}
+		return $this->attributes['reviews_enabled'] ?? false;
+	}
+
+	/**
 	 * Get the total reviews count from reviews_breakdown.
 	 *
 	 * @return int

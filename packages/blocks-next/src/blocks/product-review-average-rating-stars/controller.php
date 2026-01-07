@@ -3,8 +3,15 @@
 use SureCartBlocks\Util\BlockStyleAttributes;
 
 $product = sc_get_product();
-if ( ! $product ) {
-	return '';
+
+// no product.
+if ( empty( $product ) ) {
+	return;
+}
+
+// reviews are not enabled.
+if ( ! apply_filters( 'surecart/review_stars/enabled', $product->reviews_enabled ) ) {
+	return;
 }
 
 $average_rating = (float) ( $product->average_stars ?? 0 );

@@ -1,12 +1,18 @@
 <?php
-
 if ( ! ( $block->context['show_value'] ?? true ) ) {
-	return '';
+	return;
 }
 
 $product = sc_get_product();
-if ( ! $product ) {
-	return '';
+
+// no product.
+if ( empty( $product ) ) {
+	return;
+}
+
+// reviews are not enabled.
+if ( ! apply_filters( 'surecart/review_average/enabled', $product->reviews_enabled ) ) {
+	return;
 }
 
 // Get rating and wrapper attributes.
