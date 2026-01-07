@@ -7,6 +7,7 @@ export default ({ attributes }) => {
 		eu_vat_label,
 		help_text,
 		tax_id_types,
+		required,
 	} = attributes;
 	return (
 		<sc-order-tax-id-input
@@ -17,6 +18,7 @@ export default ({ attributes }) => {
 			eu-vat-label={eu_vat_label || null}
 			help-text={help_text || null}
 			tax-id-types={JSON.stringify(tax_id_types)}
+			required={required || false}
 		></sc-order-tax-id-input>
 	);
 };
