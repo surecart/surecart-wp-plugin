@@ -1,0 +1,27 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "surecart/cart-order-bump-pagination-next",
+	"title": "Order Bump Next",
+	"description": "Navigate to the next page of order bumps.",
+	"version": "1.0.0",
+	"category": "surecart-cart",
+	"ancestor": ["surecart/cart-order-bump-pagination"],
+	"usesContext": ["paginationArrow"],
+	"supports": {
+		"interactivity": true,
+		"color": {
+			"text": true,
+			"background": true
+		},
+		"__experimentalBorder": {
+			"color": true,
+			"radius": true,
+			"width": true
+		}
+	},
+	"render": "file:./view.php",
+	"textdomain": "surecart",
+	"editorScript": "file:./index.js",
+	"style": "file:./style-index.css"
+}

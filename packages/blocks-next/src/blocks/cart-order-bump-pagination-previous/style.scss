@@ -1,0 +1,24 @@
+.wp-block-surecart-cart-order-bump-pagination-previous {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 28px;
+	height: 28px;
+	padding: 0;
+	background: transparent !important;
+	border: none;
+	outline: none;
+	color: var(--sc-input-label-color);
+	cursor: pointer;
+	transition: all 0.15s ease;
+
+	svg,
+	&:hover:not(:disabled) svg {
+		fill: var(--sc-input-label-color);
+	}
+
+	&:disabled {
+		opacity: 0.35;
+		cursor: not-allowed;
+	}
+}
