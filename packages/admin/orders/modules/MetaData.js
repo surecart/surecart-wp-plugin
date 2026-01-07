@@ -12,6 +12,7 @@ import {
 import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
 import MetaDataModal from './MetaDataModal';
+import AddNewMetaDataPopup from './AddNewMetaDataPopup';
 
 export default ({ order, loading }) => {
 	const [modalOpen, setModalOpen] = useState(false);
@@ -49,9 +50,13 @@ export default ({ order, loading }) => {
 							<ScIcon name="more-horizontal" />
 						</ScButton>
 						<ScMenu>
-							<ScMenuItem onClick={() => setModalOpen(true)}>
+							<ScMenuItem onClick={() => setModalOpen('edit')}>
 								<ScIcon name="edit" slot="prefix" />
 								{__('Edit', 'surecart')}
+							</ScMenuItem>
+							<ScMenuItem onClick={() => setModalOpen('add')}>
+								<ScIcon name="plus" slot="prefix" />
+								{__('Add New', 'surecart')}
 							</ScMenuItem>
 						</ScMenu>
 					</ScDropdown>
@@ -81,12 +86,19 @@ export default ({ order, loading }) => {
 				</div>
 			</Box>
 
-			{modalOpen && (
+			{'edit' === modalOpen && (
 				<MetaDataModal
 					open={modalOpen}
 					onRequestClose={() => setModalOpen(false)}
 					order={order}
 					metadatas={metadatas}
+				/>
+			)}
+			{'add' === modalOpen && (
+				<AddNewMetaDataPopup
+					open={modalOpen}
+					onRequestClose={() => setModalOpen(false)}
+					order={order}
 				/>
 			)}
 		</>
