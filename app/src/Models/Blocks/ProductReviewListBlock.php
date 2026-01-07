@@ -95,7 +95,7 @@ class ProductReviewListBlock extends AbstractProductListBlock {
 		$args['offset'] = ( $page - 1 ) * $per_page + $offset;
 
 		$this->collection = Review::where( $args )
-			->with( [ 'product', 'product.price', 'customer' ] )
+			->with( [ 'customer' ] )
 			->paginate(
 				[
 					'page'     => $page,
