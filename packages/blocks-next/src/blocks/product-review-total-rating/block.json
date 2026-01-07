@@ -2,8 +2,8 @@
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
 	"name": "surecart/product-review-total-rating",
-	"title": "Product Total Rating",
-	"description": "Displays the total rating count for the product.",
+	"title": "Reviews Count",
+	"description": "Displays the total reviews count for the product.",
 	"version": "1.0.0",
 	"category": "surecart-product-page",
 	"ancestor": [
