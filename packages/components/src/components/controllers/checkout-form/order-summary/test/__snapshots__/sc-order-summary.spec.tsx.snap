@@ -6,7 +6,7 @@ exports[`sc-order-summary does not render scratch price amount_due is different 
     <div class="summary">
       <sc-line-item style="--price-size: var(--sc-font-size-x-large);">
         <span aria-label="Order Summary collapsed" class="collapse-link" slot="title" tabindex="0">
-          Show Summary
+          Summary
           <svg class="collapse-link__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
           </svg>
@@ -50,7 +50,7 @@ exports[`sc-order-summary renders scratch price if no trial has total savings am
     <div class="summary">
       <sc-line-item style="--price-size: var(--sc-font-size-x-large);">
         <span aria-label="Order Summary collapsed" class="collapse-link" slot="title" tabindex="0">
-          Show Summary
+          Summary
           <svg class="collapse-link__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
           </svg>
@@ -59,7 +59,7 @@ exports[`sc-order-summary renders scratch price if no trial has total savings am
           <slot name="description"></slot>
         </span>
         <span class="price price--collapsed" slot="price">
-          <sc-format-number class="scratch-price total-price" currency="usd" type="currency" value="1100"></sc-format-number>
+          <span class="scratch-price total-price"></span>
           <sc-total class="total-price" total="total"></sc-total>
         </span>
       </sc-line-item>
@@ -80,7 +80,7 @@ exports[`sc-order-summary should render when collapsible, collapsed on desktop a
     <div class="summary">
       <sc-line-item style="--price-size: var(--sc-font-size-x-large);">
         <span aria-label="Order Summary collapsed" class="collapse-link" slot="title" tabindex="0">
-          Show Summary
+          Summary
           <svg class="collapse-link__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
           </svg>
@@ -109,7 +109,7 @@ exports[`sc-order-summary should render when collapsible, collapsed on desktop a
     <div class="summary">
       <sc-line-item style="--price-size: var(--sc-font-size-x-large);">
         <span aria-label="Order Summary collapsed" class="collapse-link" slot="title" tabindex="0">
-          Show Summary
+          Summary
           <svg class="collapse-link__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
           </svg>
@@ -138,7 +138,7 @@ exports[`sc-order-summary should render when collapsible, collapsed on desktop a
     <div class="summary">
       <sc-line-item style="--price-size: var(--sc-font-size-x-large);">
         <span aria-label="Order Summary collapsed" class="collapse-link" slot="title" tabindex="0">
-          Show Summary
+          Summary
           <svg class="collapse-link__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
           </svg>
@@ -167,7 +167,7 @@ exports[`sc-order-summary should render when collapsible, collapsed on desktop a
     <div class="summary">
       <sc-line-item style="--price-size: var(--sc-font-size-x-large);">
         <span aria-label="Order Summary collapsed" class="collapse-link" slot="title" tabindex="0">
-          Show Summary
+          Summary
           <svg class="collapse-link__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
           </svg>

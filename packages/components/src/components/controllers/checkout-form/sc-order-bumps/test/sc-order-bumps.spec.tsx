@@ -1,3 +1,22 @@
+// Mock the checkout store.
+jest.mock('@store/checkouts/store', () => ({
+  __esModule: true,
+  default: {
+    state: { live: {}, test: {} },
+    set: jest.fn(),
+    get: jest.fn(),
+    onChange: jest.fn(),
+    on: jest.fn(),
+    dispose: jest.fn(),
+  },
+  state: { live: {}, test: {} },
+  set: jest.fn(),
+  get: jest.fn(),
+  onChange: jest.fn(),
+  on: jest.fn(),
+  dispose: jest.fn(),
+}));
+
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 import { Bump, Checkout, Product } from '../../../../../types';
