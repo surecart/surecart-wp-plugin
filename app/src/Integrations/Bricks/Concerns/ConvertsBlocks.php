@@ -105,13 +105,9 @@ trait ConvertsBlocks {
 		}
 
 		$rendered_attributes = $this->get_block_rendered_attributes();
-		if ( is_array( $rendered_attributes ) ) {
-			$block_attributes['className'] = ( $block_attributes['className'] ?? '' ) . ' ' . ( $rendered_attributes['class'] ?? '' );
-			$block_attributes['anchor']    = $rendered_attributes['id'] ?? '';
-		} else {
-			$block_attributes['className'] = $block_attributes['className'] ?? '';
-			$block_attributes['anchor']    = '';
-		}
+
+		$block_attributes['className'] = implode( ' ', array_filter( [ $block_attributes['className'] ?? '', $rendered_attributes['class'] ?? '' ] ) );
+		$block_attributes['anchor']    = $rendered_attributes['id'] ?? '';
 
 		return '<!-- wp:' . $this->block_name . ' ' . ( is_array( $block_attributes ) ? wp_json_encode( $block_attributes, JSON_FORCE_OBJECT ) : '' ) . ' -->' . $content . '<!-- /wp:' . $this->block_name . ' -->';
 	}
