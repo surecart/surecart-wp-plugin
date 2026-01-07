@@ -49,7 +49,7 @@ const sortingOptions = [
 export default function ProductListInspectorControls({
 	onUpdateQuery,
 	attributes: {
-		query: { perPage, pages, order, orderBy, taxonomy, fallback, shuffle },
+		query: { perPage, pages, offset, order, orderBy, taxonomy, fallback },
 	},
 }) {
 	const { records: allTaxonomies } = useEntityRecords('root', 'taxonomy', {
@@ -107,6 +107,15 @@ export default function ProductListInspectorControls({
 					step={1}
 					min={1}
 					max={40}
+				/>
+
+				<RangeControl
+					label={__('Offset', 'surecart')}
+					value={offset || 0}
+					onChange={(offset) => onUpdateQuery({ offset })}
+					step={1}
+					min={0}
+					max={50}
 				/>
 
 				{orderBy !== 'rand' && (
