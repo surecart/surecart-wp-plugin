@@ -203,7 +203,7 @@ class ReviewsRestServiceProvider extends RestServiceProvider implements RestServ
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function get_item_permissions_check( $request ) {
-		return current_user_can( 'read_sc_review' );
+		return current_user_can( 'read_sc_reviews' );
 	}
 
 	/**
@@ -238,6 +238,6 @@ class ReviewsRestServiceProvider extends RestServiceProvider implements RestServ
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function delete_item_permissions_check( $request ) {
-		return current_user_can( 'delete_sc_review' );
+		return current_user_can( 'delete_sc_reviews' );
 	}
 }
