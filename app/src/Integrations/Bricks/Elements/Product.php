@@ -100,12 +100,6 @@ class Product extends \Bricks\Element {
 						),
 					),
 					array(
-						'name'     => 'surecart-product-review-average-rating-value',
-						'settings' => array(
-							'format_style' => 'parentheses',
-						),
-					),
-					array(
 						'name'     => 'surecart-product-review-total-rating',
 						'settings' => array(
 							'style_variant' => 'plus-sign',
@@ -309,7 +303,7 @@ class Product extends \Bricks\Element {
 							'_width:mobile_portrait'  => '100%',
 							'_width:mobile_landscape' => '100%',
 							'_direction'              => 'column',
-							'_rowGap'                 => '0.75em',
+							'_rowGap'                 => '0.75rem',
 						),
 						'children' => $right_column_children,
 					),

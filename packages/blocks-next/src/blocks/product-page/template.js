@@ -14,13 +14,12 @@ export default [
 						{ count: 1 },
 						[['surecart/product-collection-tag']],
 					],
-					['surecart/product-title'],
 					[
 						'core/group',
 						{
 							style: {
 								spacing: {
-									blockGap: '4px',
+									blockGap: '10px',
 									padding: { right: '0px', left: '0px' },
 								},
 							},
@@ -32,10 +31,22 @@ export default [
 								'surecart/product-review-total-rating',
 								{
 									style_variant: 'plus-sign',
-									style: { spacing: { blockGap: '4px' } },
+									style: {
+										spacing: {
+											blockGap: '4px',
+										},
+									},
 								},
 							],
 						],
+					],
+					[
+						'surecart/product-title',
+						{
+							style: {
+								typography: { fontSize: '32px' },
+							},
+						},
 					],
 					[
 						'core/group',

@@ -31,14 +31,6 @@
 			"elType": "widget"
 		},
 		{
-			"id": "1b166aaa",
-			"settings": { "format_style": "parentheses" },
-			"elements": [],
-			"isInner": false,
-			"widgetType": "surecart-product-review-average-rating-value",
-			"elType": "widget"
-		},
-		{
 			"id": "5885e97b",
 			"settings": {
 				"style_variant": "plus-sign"
