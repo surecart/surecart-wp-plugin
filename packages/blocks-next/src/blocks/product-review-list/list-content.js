@@ -10,7 +10,10 @@ import {
 import {
 	UnitControl as __stableUnitControl,
 	__experimentalUnitControl,
+	Notice,
+	Button,
 } from '@wordpress/components';
+import { useEntityRecord } from '@wordpress/core-data';
 
 /**
  * Internal dependencies.
@@ -30,6 +33,16 @@ export default function ProductReviewListEdit({
 	clientId,
 	openPatternSelectionModal,
 }) {
+	/**
+	 * Fetch review protocol settings.
+	 */
+	const { record: reviewProtocol } = useEntityRecord(
+		'surecart',
+		'store',
+		'review_protocol'
+	);
+	const isReviewsDisabled = reviewProtocol && !reviewProtocol.reviews_enabled;
+
 	/**
 	 * Block props.
 	 */
@@ -62,6 +75,24 @@ export default function ProductReviewListEdit({
 					openPatternSelectionModal={openPatternSelectionModal}
 				/>
 			</BlockControls>
+
+			{isReviewsDisabled && (
+				<Notice status="warning" isDismissible={false}>
+					{__(
+						'Product reviews are disabled in global settings.',
+						'surecart'
+					)}{' '}
+					<Button
+						variant="link"
+						onClick={() => {
+							window.parent.location.href =
+								'admin.php?page=sc-settings&tab=review_protocol';
+						}}
+					>
+						{__('Enable reviews', 'surecart')}
+					</Button>
+				</Notice>
+			)}
 
 			<div {...innerBlocksProps} />
 		</>
