@@ -1,39 +1,76 @@
 /**
- * External dependencies.
+ * WordPress dependencies
  */
 import {
-	InnerBlocks,
-	useBlockProps,
 	InspectorControls,
+	useBlockProps,
+	useInnerBlocksProps,
+	store as blockEditorStore,
 } from '@wordpress/block-editor';
-import { PanelBody, SelectControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
+import { useSelect } from '@wordpress/data';
+import { PanelBody } from '@wordpress/components';
 
-export default ({ attributes, setAttributes }) => {
-	const blockProps = useBlockProps({
-		className: 'sc-cart-order-bump-pagination',
+/**
+ * Internal dependencies
+ */
+import { QueryPaginationArrowControls } from './query-pagination-arrow-controls';
+import { QueryPaginationArrowSizeControl } from './query-pagination-arrow-size-control';
+
+const TEMPLATE = [
+	['surecart/cart-order-bump-pagination-previous'],
+	['surecart/cart-order-bump-pagination-next'],
+];
+
+export default ({
+	clientId,
+	attributes: { paginationArrow, paginationArrowSize },
+	setAttributes,
+}) => {
+	const blockProps = useBlockProps();
+	const innerBlocksProps = useInnerBlocksProps(blockProps, {
+		template: TEMPLATE,
 	});
+
+	const hasNextPreviousBlocks = useSelect(
+		(select) => {
+			const { getBlocks } = select(blockEditorStore);
+			const innerBlocks = getBlocks(clientId);
+			/**
+			 * Show the `paginationArrow` and `paginationArrowSize` controls only if a
+			 * `CartOrderBumpPaginationNext/Previous` block exists.
+			 */
+			return innerBlocks?.find((innerBlock) => {
+				return [
+					'surecart/cart-order-bump-pagination-next',
+					'surecart/cart-order-bump-pagination-previous',
+				].includes(innerBlock.name);
+			});
+		},
+		[clientId]
+	);
 
 	return (
 		<>
-			<InspectorControls>
-				<PanelBody title={__('Settings', 'surecart')}>
-					<SelectControl
-						label={__('Arrow Style', 'surecart')}
-						value={attributes.paginationArrow}
-						options={[
-							{ label: 'Chevron', value: 'chevron' },
-							{ label: 'Arrow', value: 'arrow' },
-						]}
-						onChange={(paginationArrow) =>
-							setAttributes({ paginationArrow })
-						}
-					/>
-				</PanelBody>
-			</InspectorControls>
-			<nav {...blockProps}>
-				<InnerBlocks />
-			</nav>
+			{hasNextPreviousBlocks && (
+				<InspectorControls>
+					<PanelBody title={__('Settings', 'surecart')}>
+						<QueryPaginationArrowControls
+							value={paginationArrow}
+							onChange={(value) => {
+								setAttributes({ paginationArrow: value });
+							}}
+						/>
+						<QueryPaginationArrowSizeControl
+							value={paginationArrowSize}
+							onChange={(value) => {
+								setAttributes({ paginationArrowSize: value });
+							}}
+						/>
+					</PanelBody>
+				</InspectorControls>
+			)}
+			<nav {...innerBlocksProps} />
 		</>
 	);
 };

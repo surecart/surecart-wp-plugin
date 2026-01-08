@@ -1,5 +1,5 @@
 <nav
-	<?php echo wp_kses_data( get_block_wrapper_attributes( array( 'class' => 'sc-cart-order-bump-pagination' ) ) ); ?>
+	<?php echo wp_kses_data( get_block_wrapper_attributes() ); ?>
 	data-wp-bind--hidden="!state.showPagination"
 	aria-label="<?php esc_attr_e( 'Order bumps pagination', 'surecart' ); ?>"
 	hidden

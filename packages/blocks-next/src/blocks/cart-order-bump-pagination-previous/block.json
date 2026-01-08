@@ -7,17 +7,28 @@
 	"version": "1.0.0",
 	"category": "surecart-cart",
 	"ancestor": ["surecart/cart-order-bump-pagination"],
-	"usesContext": ["paginationArrow"],
+	"usesContext": ["paginationArrow", "paginationArrowSize"],
 	"supports": {
 		"interactivity": true,
-		"color": {
-			"text": true,
-			"background": true
+		"spacing": {
+			"padding": true,
+			"margin": ["top", "bottom"]
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true,
+			"__experimentalFontWeight": true
 		},
 		"__experimentalBorder": {
 			"color": true,
 			"radius": true,
+			"style": true,
 			"width": true
+		},
+		"color": {
+			"text": true,
+			"background": true,
+			"enableContrastChecker": true
 		}
 	},
 	"render": "file:./view.php",

@@ -6,28 +6,50 @@
 	"description": "Pagination controls for order bumps.",
 	"version": "1.0.0",
 	"category": "surecart-cart",
+	"example": {},
 	"ancestor": ["surecart/cart-order-bumps"],
+	"allowedBlocks": [
+		"surecart/cart-order-bump-pagination-previous",
+		"surecart/cart-order-bump-pagination-next"
+	],
 	"providesContext": {
-		"paginationArrow": "paginationArrow"
+		"paginationArrow": "paginationArrow",
+		"paginationArrowSize": "paginationArrowSize"
 	},
 	"attributes": {
 		"paginationArrow": {
 			"type": "string",
 			"default": "chevron"
+		},
+		"paginationArrowSize": {
+			"type": "number",
+			"default": 20
 		}
 	},
 	"supports": {
 		"interactivity": true,
+		"spacing": {
+			"padding": true,
+			"margin": ["top", "bottom"],
+			"blockGap": true
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true,
+			"__experimentalFontWeight": true
+		},
+		"color": {
+			"text": true,
+			"background": false,
+			"enableContrastChecker": true
+		},
 		"layout": {
-			"type": "flex",
+			"allowSwitching": false,
+			"allowInheriting": false,
 			"default": {
 				"type": "flex",
 				"justifyContent": "center"
 			}
-		},
-		"spacing": {
-			"padding": true,
-			"margin": true
 		}
 	},
 	"render": "file:./view.php",

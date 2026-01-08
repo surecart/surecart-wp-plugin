@@ -2,24 +2,33 @@
  * External dependencies.
  */
 import { useBlockProps } from '@wordpress/block-editor';
+import { isRTL } from '@wordpress/i18n';
 
 /**
  * Internal dependencies.
  */
-import ScIcon from '../../components/ScIcon';
+import Icon from '../../components/Icon';
+
+const ARROWS = {
+	arrow: isRTL() ? 'arrow-left' : 'arrow-right',
+	chevron: isRTL() ? 'chevron-left' : 'chevron-right',
+};
 
 export default ({ context }) => {
-	const blockProps = useBlockProps({
-		className: 'sc-cart-order-bump-pagination-next',
-	});
-
+	const blockProps = useBlockProps();
 	const paginationArrow = context?.paginationArrow || 'chevron';
-	const iconName =
-		paginationArrow === 'arrow' ? 'arrow-right' : 'chevron-right';
+	const paginationArrowSize = context?.paginationArrowSize || 20;
+	const icon = ARROWS[paginationArrow];
 
 	return (
 		<button {...blockProps} type="button" disabled>
-			<ScIcon name={iconName} width={24} height={24} />
+			<Icon
+				name={icon}
+				width={paginationArrowSize}
+				height={paginationArrowSize}
+				className="wp-block-surecart-cart-order-bump-pagination-next__icon"
+				aria-hidden={true}
+			/>
 		</button>
 	);
 };
