@@ -8,24 +8,44 @@
 	"category": "surecart-cart",
 	"ancestor": ["surecart/cart-order-bump-template"],
 	"attributes": {
+		"sizing": {
+			"type": "string",
+			"default": "cover"
+		},
 		"aspectRatio": {
 			"type": "string",
 			"default": "1"
 		},
 		"width": {
-			"type": "string",
-			"default": "80px"
+			"type": "string"
+		},
+		"height": {
+			"type": "string"
 		}
 	},
 	"supports": {
 		"interactivity": true,
+		"align": ["left", "center", "right", "wide", "full"],
+		"color": {
+			"text": false,
+			"background": false
+		},
+		"filter": {
+			"duotone": true
+		},
 		"spacing": {
 			"margin": true
 		},
 		"__experimentalBorder": {
 			"color": true,
 			"radius": true,
-			"width": true
+			"width": true,
+			"__experimentalSkipSerialization": true,
+			"__experimentalDefaultControls": {
+				"color": true,
+				"radius": true,
+				"width": true
+			}
 		}
 	},
 	"render": "file:./view.php",
