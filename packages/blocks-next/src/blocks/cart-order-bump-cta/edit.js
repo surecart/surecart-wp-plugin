@@ -8,8 +8,6 @@ export default () => {
 	const blockProps = useBlockProps();
 
 	return (
-		<div {...blockProps}>
-			{__('Product bump description will appear here...', 'surecart')}
-		</div>
+		<span {...blockProps}>{__('Call to action text...', 'surecart')}</span>
 	);
 };
