@@ -18,16 +18,12 @@ if ( ! $show_for_zero_reviews && 0 === (int) $product->total_reviews ) {
 	return;
 }
 
-// Show number alone or number + label depending on the show_label attribute.
-$count          = (int) $product->total_reviews;
-$number         = number_format_i18n( $count );
-$display_number = $number;
+// Get the review count.
+$count  = (int) $product->total_reviews;
+$number = number_format_i18n( $count );
 
-// If plus-sign style is selected and there are multiple reviews, append a plus.
-$style_variant = $attributes['style_variant'] ?? 'default';
-if ( 'plus-sign' === $style_variant && $count > 1 ) {
-	$display_number = $number . '+';
-}
+// Add class for CSS to conditionally show "+" only when count > 1.
+$has_multiple_reviews = $count > 1 ? 'has-multiple-reviews' : '';
 
 $link_to_reviews = $attributes['link_to_reviews'] ?? false;
 $html_tag        = $link_to_reviews ? 'a' : 'div';

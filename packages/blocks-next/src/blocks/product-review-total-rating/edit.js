@@ -1,18 +1,15 @@
 /**
  * WordPress dependencies.
  */
-import { __, _n } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
-import { PanelBody, ToggleControl, SelectControl } from '@wordpress/components';
+import { PanelBody, ToggleControl } from '@wordpress/components';
 
 export default ({ attributes, setAttributes }) => {
-	const {
-		show_label,
-		show_for_zero_reviews,
-		style_variant,
-		link_to_reviews,
-	} = attributes;
-	const blockProps = useBlockProps();
+	const { show_label, show_for_zero_reviews, link_to_reviews } = attributes;
+	const blockProps = useBlockProps({
+		className: 'has-multiple-reviews',
+	});
 
 	return (
 		<>
@@ -42,23 +39,6 @@ export default ({ attributes, setAttributes }) => {
 						}
 						checked={show_for_zero_reviews}
 					/>
-					<SelectControl
-						label={__('Style', 'surecart')}
-						value={style_variant}
-						options={[
-							{
-								value: 'default',
-								label: __('Default', 'surecart'),
-							},
-							{
-								value: 'plus-sign',
-								label: __('Plus Sign', 'surecart'),
-							},
-						]}
-						onChange={(value) =>
-							setAttributes({ style_variant: value })
-						}
-					/>
 					<ToggleControl
 						__nextHasNoMarginBottom
 						label={__('Link to reviews', 'surecart')}
@@ -75,7 +55,7 @@ export default ({ attributes, setAttributes }) => {
 			</InspectorControls>
 
 			<div {...blockProps}>
-				42{style_variant === 'plus-sign' ? '+' : ''}
+				<span className="sc-review-count">42</span>
 				&nbsp;
 				{show_label && __('reviews', 'surecart')}
 			</div>

@@ -30,7 +30,7 @@ export default [
 							[
 								'surecart/product-review-total-rating',
 								{
-									style_variant: 'plus-sign',
+									className: 'is-style-plus-sign',
 									style: {
 										spacing: {
 											blockGap: '4px',

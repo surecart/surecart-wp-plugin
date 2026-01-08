@@ -16,4 +16,9 @@
 			box-shadow: none !important;
 		}
 	}
+
+	// Plus sign style variation - adds "+" after the count (only when count > 1).
+	&.is-style-plus-sign.has-multiple-reviews .sc-review-count::after {
+		content: "+";
+	}
 }
