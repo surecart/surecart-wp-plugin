@@ -19,6 +19,11 @@ const isBumpInCart = (bump) => {
 };
 
 /**
+ * Track previous bump count to detect changes.
+ */
+let previousBumpCount = null;
+
+/**
  * Order Bumps store.
  */
 const { state, actions } = store('surecart/order-bumps', {
@@ -35,7 +40,7 @@ const { state, actions } = store('surecart/order-bumps', {
 			const context = getContext();
 			const hideAddedItems = context?.hideAddedItems ?? true;
 
-			return (
+			const bumps = (
 				checkoutState?.checkout?.recommended_bumps?.data || []
 			).filter((bump) => {
 				const product = bump?.price?.product;
@@ -49,6 +54,23 @@ const { state, actions } = store('surecart/order-bumps', {
 				}
 				return true;
 			});
+
+			// Reset pagination when bump count changes (item added/removed from cart).
+			if (
+				previousBumpCount !== null &&
+				previousBumpCount !== bumps.length
+			) {
+				state.currentIndex = 0;
+				// Scroll carousel to start after DOM updates.
+				setTimeout(() => {
+					document
+						.querySelector('.sc-cart-order-bump-template')
+						?.scrollTo({ left: 0, behavior: 'smooth' });
+				}, 100);
+			}
+			previousBumpCount = bumps.length;
+
+			return bumps;
 		},
 
 		/**
@@ -152,7 +174,9 @@ const { state, actions } = store('surecart/order-bumps', {
 			const { bump } = context;
 
 			// Get mode and formId from parent checkout context.
-			const mode = context.mode || (checkoutState?.checkout?.live_mode ? 'live' : 'test');
+			const mode =
+				context.mode ||
+				(checkoutState?.checkout?.live_mode ? 'live' : 'test');
 			const formId = context.formId;
 
 			if (!bump || state.isBumpInCart) {
@@ -230,23 +254,27 @@ const { state, actions } = store('surecart/order-bumps', {
 			const container = button.closest('.sc-cart-order-bumps');
 			if (!container) return;
 
-			const carousel = container.querySelector('.sc-cart-order-bump-template');
-			const items = carousel?.querySelectorAll('.sc-cart-order-bump-item');
+			actions.scrollCarouselToIndex(container, state.currentIndex);
+		},
 
-			if (items && items[state.currentIndex]) {
-				items[state.currentIndex].scrollIntoView({
+		/**
+		 * Scroll carousel to a specific index.
+		 */
+		scrollCarouselToIndex(container, index) {
+			const carousel = container?.querySelector(
+				'.sc-cart-order-bump-template'
+			);
+			const items = carousel?.querySelectorAll(
+				'.sc-cart-order-bump-item'
+			);
+
+			if (items && items[index]) {
+				items[index].scrollIntoView({
 					behavior: 'smooth',
 					block: 'nearest',
 					inline: 'start',
 				});
 			}
-		},
-
-		/**
-		 * Reset scroll position.
-		 */
-		resetPagination() {
-			state.currentIndex = 0;
 		},
 	},
 
