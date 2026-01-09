@@ -164,6 +164,7 @@ export class ScProductLineItem {
                     /** translators: %1$s: product name, %2$s: product price name */
                     sprintf(__('Change Quantity - %1$s %2$s', 'surecart'), this.name, this.price)
                   }
+                  productName={this.name}
                 ></sc-quantity-select>
               ) : (
                 <span class="item__description" part="static-quantity">

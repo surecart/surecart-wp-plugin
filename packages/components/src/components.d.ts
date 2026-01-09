@@ -3269,6 +3269,7 @@ export namespace Components {
         "hasFocus": boolean;
         "max": number;
         "min": number;
+        "productName": string;
         "quantity": number;
         "size": 'small' | 'medium' | 'large';
     }
@@ -10478,6 +10479,7 @@ declare namespace LocalJSX {
           * Emitted when the control receives input.
          */
         "onScInput"?: (event: ScQuantitySelectCustomEvent<number>) => void;
+        "productName"?: string;
         "quantity"?: number;
         "size"?: 'small' | 'medium' | 'large';
     }
