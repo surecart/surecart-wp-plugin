@@ -13,7 +13,7 @@ import { onChange as onChangeFormState } from '@store/form';
 import { currentFormState } from '@store/form/getters';
 import { updateFormState } from '@store/form/mutations';
 import { createErrorNotice } from '@store/notices/mutations';
-import { loadRazorpay } from '../../../../functions/razorpay';
+import { loadRazorpay } from 'src/functions/razorpay';
 import { Customer, RazorpayConstructor } from 'src/types';
 
 @Component({

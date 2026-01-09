@@ -12,8 +12,8 @@ import { Component, h, Host, Prop, State, Watch } from '@stencil/core';
  * Internal dependencies.
  */
 import apiFetch from '../../../functions/fetch';
-import { loadRazorpay } from '../../../functions/razorpay';
-import { PaymentIntent, RazorpayConstructor } from '../../../types';
+import { loadRazorpay } from 'src/functions/razorpay';
+import { PaymentIntent, RazorpayConstructor } from 'src/types';
 
 @Component({
   tag: 'sc-razorpay-add-method',

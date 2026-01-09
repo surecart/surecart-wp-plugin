@@ -40,7 +40,6 @@ export const loadRazorpay = (): Promise<RazorpayConstructor> => {
     script.async = true;
     script.onload = () => {
       razorpayInstance = (window as any).Razorpay;
-      console.log('resolved ', razorpayInstance);
       resolve(razorpayInstance);
     };
     script.onerror = () => {
