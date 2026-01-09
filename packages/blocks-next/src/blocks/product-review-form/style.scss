@@ -1,6 +1,7 @@
 .wp-block-surecart-product-review-form {
 	width: 100%;
 	interpolate-size: allow-keywords;
+	padding: 2rem;
 
 	.sc-product-review-form-dialog {
 		position: fixed;
@@ -19,10 +20,6 @@
 
 		&[hidden] {
 			display: none;
-		}
-
-		&__content {
-			padding: 30px;
 		}
 
 		.sc-view-product-page-sticky {

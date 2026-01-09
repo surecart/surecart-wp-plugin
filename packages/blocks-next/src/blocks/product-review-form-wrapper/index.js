@@ -2,14 +2,14 @@
  * WordPress dependencies.
  */
 import { registerBlockType } from '@wordpress/blocks';
-import { closeSmall as icon } from '@wordpress/icons';
+import { edit as icon } from '@wordpress/icons';
 
 /**
  * Internal dependencies.
  */
 import edit from './edit';
+import save from './save';
 import metadata from './block.json';
-import './style.scss';
 
 /**
  * Register block.
@@ -17,4 +17,5 @@ import './style.scss';
 registerBlockType(metadata, {
 	icon,
 	edit,
+	save,
 });

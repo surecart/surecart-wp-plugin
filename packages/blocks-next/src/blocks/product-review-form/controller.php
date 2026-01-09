@@ -43,9 +43,25 @@ wp_interactivity_state(
 	)
 );
 
-$review_confirmation_template = get_block_template( 'surecart/surecart//product-review-confirmation', 'wp_template_part' );
-if ( ! $review_confirmation_template || empty( $review_confirmation_template->content ) ) {
-	return;
+// Parse inner blocks to separate form and confirmation sections.
+$form_content         = '';
+$confirmation_content = '';
+
+if ( ! empty( $block->inner_blocks ) ) {
+	foreach ( $block->inner_blocks as $inner_block ) {
+		$block_name = $inner_block->parsed_block['blockName'] ?? '';
+
+		// Check if this is the form wrapper block.
+		if ( 'surecart/product-review-form-wrapper' === $block_name ) {
+			$form_content .= render_block( $inner_block );
+		} elseif ( 'surecart/product-review-confirmation-wrapper' === $block_name ) {
+			// Check if this is the confirmation wrapper block.
+			$confirmation_content .= render_block( $inner_block );
+		} else {
+			// If no specific wrapper, add to form content by default.
+			$form_content .= render_block( $inner_block );
+		}
+	}
 }
 
 return 'file:./view.php';

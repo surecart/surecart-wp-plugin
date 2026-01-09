@@ -40,11 +40,11 @@
 		<form data-wp-on--submit="callbacks.handleSubmit">
 			<div class="sc-product-review-form-dialog__content" style="<?php echo esc_attr( $content_style ); ?>">
 				<div data-wp-bind--hidden="context.submitted">
-					<?php echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+					<?php echo $form_content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 				</div>
 
 				<div class="sc-product-review-confirmation" data-wp-bind--hidden="!context.submitted">
-					<?php echo do_blocks( $review_confirmation_template->content ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+					<?php echo $confirmation_content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 				</div>
 			</div>
 		</form>

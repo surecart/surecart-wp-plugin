@@ -16,7 +16,14 @@
 		},
 		"height": {
 			"type": "string"
+		},
+		"editingView": {
+			"type": "string",
+			"default": "form"
 		}
+	},
+	"providesContext": {
+		"surecart/editingView": "editingView"
 	},
 	"supports": {
 		"inserter": false,

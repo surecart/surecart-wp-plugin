@@ -5,16 +5,56 @@ import {
 	useBlockProps,
 	InnerBlocks,
 	InspectorControls,
+	BlockControls,
 	__experimentalUseColorProps as useColorProps,
 	__experimentalGetSpacingClassesAndStyles as useSpacingProps,
 } from '@wordpress/block-editor';
-import { PanelBody, SelectControl, TextControl } from '@wordpress/components';
+import {
+	PanelBody,
+	SelectControl,
+	TextControl,
+	ToolbarGroup,
+	ToolbarButton,
+} from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
+import { edit, check } from '@wordpress/icons';
+import { useEffect } from '@wordpress/element';
+
+// Render toolbar controls for the review form
+function ReviewFormToolbar({ editingView, onChangeEditingView }) {
+	return (
+		<BlockControls>
+			<ToolbarGroup>
+				<ToolbarButton
+					// icon={edit}
+					isPressed={editingView === 'form'}
+					onClick={() => onChangeEditingView('form')}
+				>
+					{__('Edit Form', 'surecart')}
+				</ToolbarButton>
+				<ToolbarButton
+					// icon={check}
+					isPressed={editingView === 'confirmation'}
+					onClick={() => onChangeEditingView('confirmation')}
+				>
+					{__('Edit Confirmation', 'surecart')}
+				</ToolbarButton>
+			</ToolbarGroup>
+		</BlockControls>
+	);
+}
 
 export default function Edit({ attributes, setAttributes }) {
-	const { alignment, width, height } = attributes;
+	const { alignment, width, height, editingView = 'form' } = attributes;
 	const colorProps = useColorProps(attributes);
 	const spacingProps = useSpacingProps(attributes);
+
+	// Always start with form view on load.
+	useEffect(() => {
+		if (editingView !== 'form') {
+			setAttributes({ editingView: 'form' });
+		}
+	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 	const blockProps = useBlockProps({
 		className: 'sc-lightbox-overlay',
@@ -28,6 +68,13 @@ export default function Edit({ attributes, setAttributes }) {
 
 	return (
 		<>
+			<ReviewFormToolbar
+				editingView={editingView}
+				onChangeEditingView={(view) =>
+					setAttributes({ editingView: view })
+				}
+			/>
+
 			<InspectorControls>
 				<PanelBody title={__('Modal Settings', 'surecart')}>
 					<SelectControl
@@ -106,3 +153,6 @@ export default function Edit({ attributes, setAttributes }) {
 		</>
 	);
 }
+
+// Export the toolbar component for use in child blocks
+export { ReviewFormToolbar };

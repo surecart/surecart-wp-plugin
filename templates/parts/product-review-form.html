@@ -1,27 +1,51 @@
-<!-- wp:surecart/product-review-form {"alignment":"center center","width":"500px","style":{"typography":{"fontSize":"16px"},"spacing":{"padding":{"right":"0","left":"0"}}}} -->
-<!-- wp:group {"style":{"typography":{"fontSize":"1em"},"spacing":{"padding":{"top":"1rem","bottom":"1rem","left":"1rem","right":"1rem"}}},"layout":{"type":"constrained","contentSize":"500px"}} -->
-<div class="wp-block-group"
-    style="padding-top:1rem;padding-right:1rem;padding-bottom:1rem;padding-left:1rem;font-size:1em">
-    <!-- wp:group {"layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"space-between","verticalAlignment":"top"}} -->
-    <div class="wp-block-group">
-        <!-- wp:heading {"style":{"typography":{"fontSize":"1.5em","fontWeight":"600","fontStyle":"normal"}}} -->
-        <h2 class="wp-block-heading" style="font-size:1.5em;font-style:normal;font-weight:600">Write a review</h2>
-        <!-- /wp:heading -->
+<!-- wp:surecart/product-review-form {"alignment":"center center","width":"500px","style":{"typography":{"fontSize":"16px"}}} -->
+<!-- wp:surecart/product-review-form-wrapper {"style":{"typography":{"fontSize":"1em"}},"layout":{"type":"default"}} -->
+<div style="font-size:1em" class="wp-block-surecart-product-review-form-wrapper">
+	<!-- wp:group {"layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"space-between","verticalAlignment":"top"}} -->
+	<div class="wp-block-group">
+		<!-- wp:heading {"style":{"typography":{"fontSize":"1.5em","fontWeight":"600","fontStyle":"normal"}}} -->
+		<h2 class="wp-block-heading" style="font-size:1.5em;font-style:normal;font-weight:600">Write a review</h2>
+		<!-- /wp:heading -->
 
-        <!-- wp:surecart/product-review-form-close /-->
-    </div>
-    <!-- /wp:group -->
+		<!-- wp:surecart/product-review-form-close /-->
+	</div>
+	<!-- /wp:group -->
 
-    <!-- wp:group {"style":{"spacing":{"margin":{"top":"2rem","bottom":"0"},"blockGap":"1.5rem"}},"layout":{"type":"constrained","contentSize":""}} -->
-    <div class="wp-block-group" style="margin-top:2rem;margin-bottom:0"><!-- wp:surecart/product-review-form-rating /-->
+	<!-- wp:group {"style":{"spacing":{"margin":{"top":"2rem","bottom":"0"},"blockGap":"1.5rem"}},"layout":{"type":"constrained","contentSize":""}} -->
+	<div class="wp-block-group" style="margin-top:2rem;margin-bottom:0"><!-- wp:surecart/product-review-form-rating /-->
 
-        <!-- wp:surecart/product-review-form-title {"placeholder":"","textAlign":"left"} /-->
+		<!-- wp:surecart/product-review-form-title {"placeholder":""} /-->
 
-        <!-- wp:surecart/product-review-form-content {"placeholder":"","required":true,"textAlign":"left"} /-->
+		<!-- wp:surecart/product-review-form-content /-->
 
-        <!-- wp:surecart/product-review-form-submit-button {"text":"Submit Review","className":"is-style-fill","style":{"border":{"radius":"50px"}}} /-->
-    </div>
-    <!-- /wp:group -->
+		<!-- wp:surecart/product-review-form-submit-button {"text":"Submit Review","className":"is-style-fill","style":{"border":{"radius":"50px"}}} /-->
+	</div>
+	<!-- /wp:group -->
 </div>
-<!-- /wp:group -->
+<!-- /wp:surecart/product-review-form-wrapper -->
+
+<!-- wp:surecart/product-review-confirmation-wrapper {"style":{"typography":{"fontSize":"1em"}},"layout":{"type":"default"}} -->
+<div style="font-size:1em" class="wp-block-surecart-product-review-confirmation-wrapper">
+	<!-- wp:group {"style":{"spacing":{"margin":{"top":"var:preset|spacing|40","bottom":"-10px"}}},"layout":{"type":"flex","orientation":"vertical","justifyContent":"right"}} -->
+	<div class="wp-block-group" style="margin-top:var(--wp--preset--spacing--40);margin-bottom:-10px">
+		<!-- wp:surecart/product-review-form-close /--></div>
+	<!-- /wp:group -->
+
+	<!-- wp:group {"style":{"spacing":{"margin":{"top":"-20px"}}},"layout":{"type":"flex","orientation":"vertical","justifyContent":"center"}} -->
+	<div class="wp-block-group" style="margin-top:-20px">
+		<!-- wp:surecart/icon {"icon_name":"check-circle-2","size":38,"style":{"elements":{"link":{"color":{"text":"#00a86a"}}},"color":{"text":"#00a86a"}}} /-->
+	</div>
+	<!-- /wp:group -->
+
+	<!-- wp:heading {"textAlign":"center","style":{"typography":{"fontSize":"1.5em","fontWeight":"600","fontStyle":"normal"}}} -->
+	<h2 class="wp-block-heading has-text-align-center" style="font-size:1.5em;font-style:normal;font-weight:600">
+		Thanks for your review!
+	</h2>
+	<!-- /wp:heading -->
+
+	<!-- wp:paragraph {"align":"center"} -->
+	<p class="has-text-align-center">We are processing it and it will appear on the store soon.</p>
+	<!-- /wp:paragraph -->
+</div>
+<!-- /wp:surecart/product-review-confirmation-wrapper -->
 <!-- /wp:surecart/product-review-form -->
