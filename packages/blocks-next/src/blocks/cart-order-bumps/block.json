@@ -11,6 +11,29 @@
 		"hideAddedItems": {
 			"type": "boolean",
 			"default": true
+		},
+		"style": {
+			"type": "object",
+			"default": {
+				"spacing": {
+					"margin": {
+						"bottom": "1em",
+						"top": "1em"
+					},
+					"padding": {
+						"top": "1.5em",
+						"bottom": "1.5em",
+						"left": "2em",
+						"right": "2em"
+					}
+				},
+				"border": {
+					"top": {
+						"color": "#b0b0b069",
+						"width": "1px"
+					}
+				}
+			}
 		}
 	},
 	"supports": {
@@ -32,7 +55,12 @@
 		"__experimentalBorder": {
 			"color": true,
 			"radius": true,
-			"width": true
+			"width": true,
+			"style": true,
+			"__experimentalDefaultControls": {
+				"color": true,
+				"width": true
+			}
 		}
 	},
 	"render": "file:./view.php",

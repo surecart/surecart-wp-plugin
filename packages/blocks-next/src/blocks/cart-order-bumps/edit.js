@@ -2,18 +2,27 @@
  * External dependencies.
  */
 import {
-	InnerBlocks,
 	useBlockProps,
+	useInnerBlocksProps,
 	InspectorControls,
 } from '@wordpress/block-editor';
 import { PanelBody, ToggleControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
+
+/**
+ * Internal dependencies.
+ */
+import { TEMPLATE } from './template';
 
 export default ({ attributes, setAttributes }) => {
 	const { hideAddedItems } = attributes;
 
 	const blockProps = useBlockProps({
 		className: 'sc-cart-order-bumps',
+	});
+
+	const innerBlocksProps = useInnerBlocksProps(blockProps, {
+		template: TEMPLATE,
 	});
 
 	return (
@@ -33,9 +42,7 @@ export default ({ attributes, setAttributes }) => {
 					/>
 				</PanelBody>
 			</InspectorControls>
-			<div {...blockProps}>
-				<InnerBlocks />
-			</div>
+			<div {...innerBlocksProps} />
 		</>
 	);
 };
