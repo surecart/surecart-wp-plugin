@@ -188,7 +188,14 @@ export class ScCouponForm {
               onKeyDown={e => {
                 if (!this.editable) return;
                 if (e.key === 'Enter' || e.key === 'Escape') {
-                  speak(__('Coupon was removed.', 'surecart'), 'assertive');
+                  speak(
+                    sprintf(
+                      __('Coupon code %1$s was removed & now order total is %2$s -  ', 'surecart'),
+                      this?.discount?.promotion?.code,
+                      checkoutState.checkout?.total_display_amount,
+                    ),
+                    'assertive',
+                  );
                   this.scApplyCoupon.emit(null);
                   this.open = false;
                 }
