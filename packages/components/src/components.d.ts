@@ -2269,6 +2269,10 @@ export namespace Components {
         "otherLabel": string;
         "reportValidity": () => Promise<boolean>;
         /**
+          * Whether tax input is required
+         */
+        "required": boolean;
+        /**
           * Force show the field.
          */
         "show": boolean;
@@ -9428,6 +9432,10 @@ declare namespace LocalJSX {
           * Other zones label
          */
         "otherLabel"?: string;
+        /**
+          * Whether tax input is required
+         */
+        "required"?: boolean;
         /**
           * Force show the field.
          */

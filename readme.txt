@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: ecommerce, online store, subscriptions, stripe, payments
 Requires at least: 6.6
 Tested up to: 6.9
-Stable tag: 3.17.3
+Stable tag: 3.17.5
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -315,6 +315,20 @@ Yes, the checkout form can be customized using our visual builder. You can chang
 Accessibility is a huge priority for the entire team building SureCart. As you know, accessibility is an ongoing improvement task. Our development and QA teams are trained in accessibility best practices and build/test each new feature for accessibility. If you come across any edge issues, we want to know about it and will prioritize its resolution. Please contact us via our website.
 
 == Changelog ==
+
+= 3.17.5 - January 7th, 2026 =
+- New: Option to make VAT & Tax ID field required on checkout.
+- New: Add a filter to customise the countries list selection for Shipping, Billing & Compact Address settings.
+- Improvement: Added offset support for related product list block.
+- Improvement: Refactored variant pills blocks for better performance and optimization.
+- Fix: Disallow changing renewal date when subscription is past due.
+- Fix: Resolved a TypeError that could occur when releasing sync locks on sites using certain object cache systems.
+
+= 3.17.4 - January 5th, 2026 =
+- Improvement: Pass noindex headers when currency parameters are present to prevent unintended indexing by Yoast, AIOSEO, SEOPress, and The SEO Framework.
+- Improvement: Provisional account product seeder enhancements and related improvements.
+- Fix: Price Selector Block in the editor occasionally loading cached products.
+- Fix: Issue with Product List bulk deletion causing problems with background sync.
 
 = 3.17.3 - December 29th, 2025 =
 - Fix: Issue with dashboard not loading if integration category is missing.

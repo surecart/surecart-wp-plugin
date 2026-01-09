@@ -55,20 +55,32 @@ a.sc-pill-option__button,
 		text-decoration: line-through;
 	}
 
-	&--selected,
-	&--selected:focus,
-	&--selected:hover,
-	&--selected:active {
-		background-color: var(
-			--sc-pill-option-active-background-color,
-			var(--sc-color-primary-500)
-		);
-		border-color: var(
-			--sc-pill-option-active-background-color,
-			var(--sc-color-primary-500)
-		);
-		color: var(--sc-pill-option-active-text-color, white);
-		box-shadow: var(--sc-shadow-small);
+	&--selected {
+		&,
+		&:focus,
+		&:hover,
+		&:active {
+			&,
+			&.has-text-color,
+			&.has-background-color {
+				background-color: var(
+					--sc-pill-option-active-background-color,
+					var(--sc-color-primary-500)
+				) !important;
+				border-color: var(
+					--sc-pill-option-active-border-color,
+					var(
+						--sc-pill-option-active-background-color,
+						var(--sc-color-primary-500)
+					)
+				) !important;
+				color: var(
+					--sc-pill-option-active-text-color,
+					white
+				) !important;
+				box-shadow: var(--sc-shadow-small);
+			}
+		}
 	}
 
 	&:focus-visible {

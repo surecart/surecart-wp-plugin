@@ -26,7 +26,7 @@ exports[`sc-rich-text renders 1`] = `
           </sc-button>
         </div>
         <div class="editor" part="editor">
-          <div class="ProseMirror" contenteditable="true" tabindex="0" translate="no">
+          <div class="ProseMirror tiptap" contenteditable="true" tabindex="0" translate="no">
             <p class="is-editor-empty is-empty">
               <br class="ProseMirror-trailingBreak">
             </p>

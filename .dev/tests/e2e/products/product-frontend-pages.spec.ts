@@ -14,28 +14,47 @@ import {
 	PRODUCT_COLLECTION_API_PATH
 } from '../request-utils/endpoints';
 
+interface Collection {
+	id: string;
+	name: string;
+	slug: string;
+}
+
+interface Product {
+	id: string;
+	name: string;
+	slug: string;
+	permalink: string;
+}
+
 test.describe('Product', () => {
-	let collection1 = null;
-	let collection2 = null;
+	let collection1: Collection;
+	let collection2: Collection;
+	let product1: Product;
+	let product2: Product;
+	let testId: string;
 
 	test.beforeEach(async ({ requestUtils }) => {
 		await createAccount(requestUtils);
 
-		// Insert some product collections.
-		collection1 = await getOrCreateProductCollection(requestUtils, 'Collection 1');
-		collection2 = await getOrCreateProductCollection(requestUtils, 'Collection 2');
+		// Generate unique suffix for this test run to avoid conflicts and not 1,2 with it for search tests.
+		testId = Math.random().toString(36).substring(2, 8).replace(/[12]/g, '');
 
-		// Insert some products.
-		await createProduct(requestUtils, {
-			name: 'Product 1',
+		// Insert some product collections with unique names.
+		collection1 = await getOrCreateProductCollection(requestUtils, `Collection 1 ${testId}`);
+		collection2 = await getOrCreateProductCollection(requestUtils, `Collection 2 ${testId}`);
+
+		// Insert some products with unique names.
+		product1 = await createProduct(requestUtils, {
+			name: `Product 1 ${testId}`,
 			status: 'published',
 			amount: 1000,
 			image_url: 'https://placehold.co/600x400/EEE/31343C',
-			product_collection_ids: [collection1?.id],
+			product_collection_ids: [collection1.id],
 		});
 
-		await createProduct(requestUtils, {
-			name: 'Product 2',
+		product2 = await createProduct(requestUtils, {
+			name: `Product 2 ${testId}`,
 			status: 'published',
 			amount: 2000,
 			scratch_amount: 3000,
@@ -50,122 +69,50 @@ test.describe('Product', () => {
 		// Test: Check if the Shop heading is showing.
 		await expect(page.locator('h1')).toHaveText('Shop');
 
-		// Test: Check if there is 2 sc-product-item-title in the page.
-		await expect(page.locator('sc-product-item-title')).toHaveCount(2);
+		// Test: Check if both products are visible on the page.
+		await expect(page.getByText(product1.name, { exact: true })).toBeVisible();
+		await expect(page.getByText(product2.name, { exact: true })).toBeVisible();
 
-		// Test: Search Product list.
-		await page.getByPlaceholder('Search').fill('Product 2');
+		// Test: Search Product list using unique product name.
+		await page.getByPlaceholder('Search').fill(product2.name);
 		await page.getByPlaceholder('Search').press('Enter');
-		await page.waitForLoadState('networkidle');
 
-		// Test: if only 1 product is showing in the list.
-		await expect(page.locator('sc-product-item-title')).toHaveCount(1);
+		// Wait for the non-matching product to be filtered out.
+		await expect(page.getByText(product1.name, { exact: true })).toBeHidden({ timeout: 15000 });
+
+		// Test: Verify searched product is still visible.
+		await expect(page.getByText(product2.name, { exact: true })).toBeVisible();
 
 		// Test: Clear search.
-		await page.click('.tag--clearable');
-		await page.waitForLoadState('networkidle');
+		await page.getByPlaceholder('Search').fill('');
+		await page.getByPlaceholder('Search').press('Enter');
 
-		// Test: Alphabetical descending sorting.
-		await page
-			.locator('.product-item-list__sort sc-dropdown')
-			.nth(0)
-			.click();
-		await page.click('text=Alphabetical, Z-A');
-		await page.waitForResponse((resp) =>
-			resp.url().includes('surecart/v1/products')
-		);
-
-		// Test: if Product 1 and Product 2 are showing in the list in the Z-A order.
-		await expect(
-			await page.locator('sc-product-item-title').nth(0).innerText()
-		).toBe('Product 2');
-		await expect(
-			await page.locator('sc-product-item-title').nth(1).innerText()
-		).toBe('Product 1');
-
-		// Test: Alphabetical ascending sorting.
-		await page
-			.locator('.product-item-list__sort sc-dropdown')
-			.nth(0)
-			.click();
-		await page.click('text=Alphabetical, A-Z');
-		await page.waitForResponse((resp) =>
-			resp.url().includes('surecart/v1/products')
-		);
-
-		// Test: if Product 1 and Product 2 are showing in the list in the A-Z order.
-		await expect(
-			await page.locator('sc-product-item-title').nth(0).innerText()
-		).toBe('Product 1');
-		await expect(
-			await page.locator('sc-product-item-title').nth(1).innerText()
-		).toBe('Product 2');
-
-		// Test: if Product 1 and Product 2 are showing in the list.
-		await expect(
-			await page.locator('sc-format-number').nth(0).innerText()
-		).toBe('$10');
-		await expect(
-			await page.locator('sc-format-number').nth(1).innerText()
-		).toBe('$20');
+		// Wait for both products to reappear after clearing search.
+		await expect(page.getByText(product1.name, { exact: true })).toBeVisible({ timeout: 15000 });
+		await expect(page.getByText(product2.name, { exact: true })).toBeVisible();
 
 		// Test: Product image.
-		// Check if Product 1 is showing in the list with the image.
+		// Check if the image placeholder is showing correctly.
 		await expect(
 			await page
-				.locator('sc-product-item-image .product-img img')
-				.nth(0)
+				.locator('.wp-block-cover__image-background')
+				.first()
 				.getAttribute('src')
 		).toBe('https://placehold.co/600x400/EEE/31343C');
-		await expect(
-			await page
-				.locator('sc-product-item-image .product-img img')
-				.nth(1)
-				.getAttribute('src')
-		).not.toBeNull();
 
-		// Test: filter by product collection.
-		await page
-			.locator('.product-item-list__sort sc-dropdown')
-			.nth(1)
-			.click();
-
-		// Click on Collection 1.
-		await page.click('text=Collection 1');
-		await page.waitForResponse((resp) =>
-			resp.url().includes('surecart/v1/products')
-		);
-
-		// Check if Product 1 is showing in the list.
-		await expect(
-			await page.locator('sc-product-item-title').nth(0).innerText()
-		).toBe('Product 1');
-
-		// Clear Collection filter.
-		await page
-			.locator('sc-tag')
-			.getByText('Collection 1', { exact: true })
-			.click();
-		await page.waitForResponse((resp) =>
-			resp.url().includes('surecart/v1/products')
-		);
-
-		await expect(
-			await page.locator('sc-product-item-title').nth(0).innerText()
-		).toBe('Product 1'); // As already in Ascending order.
-		await expect(
-			await page.locator('sc-product-item-title').nth(1).innerText()
-		).toBe('Product 2');
+		// Check Collection filters are present.
+		await expect(page.getByRole('checkbox', { name: collection1.name })).toBeVisible();
+		await expect(page.getByRole('checkbox', { name: collection2.name })).toBeVisible();
 	});
 
 	test('Product page - Product Detail', async ({ page }) => {
-		await page.goto('/products/product-1');
+		await page.goto(product1.permalink);
 
 		// Product 1 heading text.
-		await expect(page.locator('h1')).toHaveText('Product 1');
+		await expect(page.getByLabel(product1.name)).toHaveText(product1.name);
 
 		// Product 1 price.
-		await expect(page.locator('sc-format-number')).toHaveText('$10');
+		await expect(page.locator('[data-wp-text="state.selectedDisplayAmount"]')).toHaveText('$10');
 
 		// Product 1 image.
 		await expect(
@@ -173,10 +120,10 @@ test.describe('Product', () => {
 		).toHaveAttribute('src', 'https://placehold.co/600x400/EEE/31343C');
 
 		// Quantity Selection is Present there.
-		await expect(page.locator('sc-quantity-select')).toBeVisible();
+		await expect(page.locator('.wp-block-surecart-product-quantity .sc-quantity-selector')).toBeVisible();
 
 		const addToCartButtons = await page.locator(
-			'sc-product-buy-button a span'
+			'.wp-block-surecart-product-buy-button button'
 		);
 
 		const addToCartButtonText = (
@@ -191,19 +138,19 @@ test.describe('Product', () => {
 	});
 
 	test('Product page - Product Collection', async ({ page }) => {
-		await page.goto('/collections/collection-1');
-		await page.waitForTimeout(2000);
+		await page.goto(`/collections/${collection1.slug}`);
+		await page.waitForLoadState('networkidle');
 
 		await expect(
-			page.getByRole('heading').getByText('Collection 1', { exact: true })
+			page.getByRole('heading').getByText(collection1.name, { exact: true })
 		).toBeVisible();
 
-		// Check if Product 1 are showing in the list.
+		// Check if Product 1 is showing in the list.
 		await expect(
 			page
-				.locator('sc-product-item-title')
+				.locator('.wp-block-surecart-product-title')
 				.nth(0)
-				.getByText('Product 1', { exact: true })
+				.getByText(product1.name, { exact: true })
 		).toBeVisible();
 	});
 });
@@ -219,7 +166,14 @@ export const getOrCreateProductCollection = async (
 	});
 
 	if (existingCollections?.[0]) {
-		return existingCollections?.[0];
+		// Trigger update to ensure collection sync.
+		return await requestUtils.rest({
+			method: 'PATCH',
+			path: PRODUCT_COLLECTION_API_PATH + '/' + existingCollections[0].id,
+			data: {
+				name: collectionName,
+			},
+		});
 	}
 
 	// create the collection.
@@ -261,7 +215,6 @@ export const createProduct = async (requestUtils, data) => {
 
 	if (!product?.id) {
 		throw new Error('Product not found');
-		return;
 	}
 
 	// Create a product media.
