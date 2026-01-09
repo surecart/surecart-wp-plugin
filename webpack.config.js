@@ -1,5 +1,6 @@
 const defaultConfig = require('@wordpress/scripts/config/webpack.config');
 const path = require('path');
+const fs = require('fs');
 const CopyPlugin = require('copy-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 
@@ -299,5 +300,31 @@ module.exports = {
 				},
 			],
 		}),
+		// Generate icons.json list from icon-assets
+		{
+			apply: (compiler) => {
+				compiler.hooks.afterEmit.tap('GenerateIconsList', () => {
+					const iconDir = path.resolve(
+						__dirname,
+						'./packages/components/src/components/ui/icon/icon-assets'
+					);
+					const iconNames = fs
+						.readdirSync(iconDir)
+						.filter((f) => f.endsWith('.svg'))
+						.map((f) => path.basename(f, '.svg'))
+						.sort((a, b) =>
+							a.toLowerCase().localeCompare(b.toLowerCase())
+						);
+
+					fs.writeFileSync(
+						path.resolve(__dirname, 'dist/icon-assets/icons.json'),
+						JSON.stringify(iconNames, null, 2)
+					);
+					console.log(
+						`✓ Generated icons.json with ${iconNames.length} icons`
+					);
+				});
+			},
+		},
 	],
 };

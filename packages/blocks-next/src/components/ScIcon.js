@@ -25,20 +25,59 @@ export default function ({ name, ...props }) {
 		return null;
 	}
 
-	// Create a new SVG element and copy over the attributes from the original SVG element
-	const svgProps = Array.from(svgElement.attributes).reduce((acc, attr) => {
-		acc[attr.name] = attr.value;
-		return acc;
-	}, {});
+	// Clone the SVG element and apply passed props as attributes
+	const clonedSvg = svgElement.cloneNode(true);
 
-	// Merge the original SVG props with the passed props
-	const mergedProps = { ...svgProps, ...props };
+	// Map React prop names to SVG attribute names for presentation attributes
+	const svgPresentationProps = {
+		fill: 'fill',
+		stroke: 'stroke',
+		strokeWidth: 'stroke-width',
+		strokeLinecap: 'stroke-linecap',
+		strokeLinejoin: 'stroke-linejoin',
+		strokeDasharray: 'stroke-dasharray',
+		strokeDashoffset: 'stroke-dashoffset',
+		strokeOpacity: 'stroke-opacity',
+		strokeMiterlimit: 'stroke-miterlimit',
+		fillOpacity: 'fill-opacity',
+		fillRule: 'fill-rule',
+	};
 
-	// Convert the SVG element to a React element
-	const svgReactElement = React.createElement(svgElement.tagName, {
-		...mergedProps,
-		dangerouslySetInnerHTML: { __html: svgElement.innerHTML },
+	// Separate presentation props from other props
+	const presentationAttrs = {};
+	const otherProps = {};
+
+	Object.entries(props).forEach(([key, value]) => {
+		if (svgPresentationProps[key]) {
+			presentationAttrs[svgPresentationProps[key]] = value;
+		} else {
+			otherProps[key] = value;
+		}
 	});
 
-	return svgReactElement;
+	// Apply presentation attributes to inner SVG elements
+	if (Object.keys(presentationAttrs).length > 0) {
+		const innerElements = clonedSvg.querySelectorAll(
+			'path, circle, rect, ellipse, line, polyline, polygon'
+		);
+		innerElements.forEach((el) => {
+			Object.entries(presentationAttrs).forEach(([attr, value]) => {
+				if (value !== undefined && value !== null) {
+					el.setAttribute(attr, value);
+				}
+			});
+		});
+	}
+
+	// Apply remaining props to the root SVG element
+	Object.entries(otherProps).forEach(([key, value]) => {
+		if (value !== undefined && value !== null) {
+			// Convert React prop names to HTML attribute names
+			const attrName = key === 'className' ? 'class' : key;
+			clonedSvg.setAttribute(attrName, value);
+		}
+	});
+
+	// Return the SVG as innerHTML wrapped in a span
+	return <span dangerouslySetInnerHTML={{ __html: clonedSvg.outerHTML }} />;
 }
