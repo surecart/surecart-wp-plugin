@@ -12,12 +12,8 @@ import { Component, h, Host, Prop, State, Watch } from '@stencil/core';
  * Internal dependencies.
  */
 import apiFetch from '../../../functions/fetch';
+import { loadRazorpay } from '../../../functions/razorpay';
 import { PaymentIntent, RazorpayConstructor } from '../../../types';
-
-/**
- * Razorpay Checkout JS SDK URL.
- */
-const RAZORPAY_CHECKOUT_SCRIPT_URL = 'https://checkout.razorpay.com/v1/checkout.js';
 
 @Component({
   tag: 'sc-razorpay-add-method',
@@ -36,7 +32,6 @@ export class ScRazorpayAddMethod {
   @State() paymentIntent: PaymentIntent;
 
   private razorpayInstance: RazorpayConstructor | null = null;
-  private loadPromise: Promise<void> | null = null;
   private confirming: boolean = false;
 
   @Watch('paymentIntent')
@@ -55,11 +50,7 @@ export class ScRazorpayAddMethod {
     try {
       // Load Razorpay if not loaded yet.
       if (!this.razorpayInstance) {
-        await this.loadRazorpay();
-      }
-
-      if (!this.razorpayInstance) {
-        throw new Error(__('Razorpay script failed to load. Please try again.', 'surecart'));
+        this.razorpayInstance = await loadRazorpay();
       }
 
       const options = {
@@ -98,32 +89,6 @@ export class ScRazorpayAddMethod {
     } finally {
       this.confirming = false;
     }
-  }
-
-  async loadRazorpay(): Promise<void> {
-    if (this.razorpayInstance) {
-      return;
-    }
-
-    if (this.loadPromise) {
-      return this.loadPromise;
-    }
-
-    this.loadPromise = new Promise((resolve, reject) => {
-      const script = document.createElement('script');
-      script.src = RAZORPAY_CHECKOUT_SCRIPT_URL;
-      script.async = true;
-      script.onload = () => {
-        this.razorpayInstance = (window as any).Razorpay;
-        resolve();
-      };
-      script.onerror = () => {
-        reject(new Error(__('Failed to load Razorpay script.', 'surecart')));
-      };
-      document.head.appendChild(script);
-    });
-
-    return this.loadPromise;
   }
 
   async createPaymentIntent() {
