@@ -13,6 +13,7 @@ import { onChange as onChangeFormState } from '@store/form';
 import { currentFormState } from '@store/form/getters';
 import { updateFormState } from '@store/form/mutations';
 import { createErrorNotice } from '@store/notices/mutations';
+import { loadRazorpay } from '../../../../functions/razorpay';
 import { Customer, RazorpayConstructor } from 'src/types';
 
 @Component({
@@ -23,10 +24,12 @@ export class ScCheckoutRazorpayPaymentProvider {
   private unlistenToFormState: () => void;
   private razorpayInstance: RazorpayConstructor | null = null;
   private confirming: boolean = false;
-  private loadPromise: Promise<void> | null = null;
 
   componentWillLoad() {
-    this.loadRazorpay();
+    // Preload Razorpay script.
+    loadRazorpay()
+      .then(instance => (this.razorpayInstance = instance))
+      .catch(err => createErrorNotice({ message: err.message }));
 
     // we need to listen to the form state and pay when the form state enters the paying state.
     this.unlistenToFormState = onChangeFormState('formState', () => {
@@ -39,33 +42,6 @@ export class ScCheckoutRazorpayPaymentProvider {
 
   disconnectedCallback() {
     this.unlistenToFormState();
-  }
-
-  async loadRazorpay(): Promise<void> {
-    if (this.razorpayInstance) {
-      return;
-    }
-
-    if (this.loadPromise) {
-      return this.loadPromise;
-    }
-
-    this.loadPromise = new Promise((resolve, reject) => {
-      const script = document.createElement('script');
-      script.src = 'https://checkout.razorpay.com/v1/checkout.js';
-      script.async = true;
-      script.onload = () => {
-        this.razorpayInstance = (window as any).Razorpay;
-        resolve();
-      };
-      script.onerror = () => {
-        createErrorNotice({ message: __('Failed to load Razorpay script.', 'surecart') });
-        reject(new Error(__('Failed to load Razorpay script.', 'surecart')));
-      };
-      document.head.appendChild(script);
-    });
-
-    return this.loadPromise;
   }
 
   async confirm() {
@@ -91,13 +67,7 @@ export class ScCheckoutRazorpayPaymentProvider {
 
       // Wait for script to load if not loaded yet.
       if (!this.razorpayInstance) {
-        await this.loadRazorpay();
-      }
-
-      if (!this.razorpayInstance) {
-        createErrorNotice({ message: __('Razorpay script failed to load. Please try again.', 'surecart') });
-        updateFormState('REJECT');
-        return;
+        this.razorpayInstance = await loadRazorpay();
       }
 
       const customer = checkoutState?.checkout?.customer as Customer | undefined;
