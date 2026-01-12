@@ -36,10 +36,12 @@
 	box-sizing: border-box;
 	display: flex; // Make item a flex container to stretch inner content
 
-	// When multiple bumps, use 85% to show peek of next item
+	// When multiple bumps, use 85% to show peek of next item (desktop only)
 	.sc-cart-order-bump-template--has-overflow & {
-		flex: 0 0 85% !important;
-		width: 85% !important;
+		@media (min-width: 600px) {
+			flex: 0 0 85% !important;
+			width: 85% !important;
+		}
 	}
 
 	> * {

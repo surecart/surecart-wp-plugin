@@ -19,7 +19,7 @@
 	&:disabled,
 	&--added {
 		cursor: default;
-		border-radius: 1em;
+		border-radius: 1em !important;
 		min-width: auto;
 		min-height: auto;
 	}
