@@ -19,11 +19,4 @@ class AutoFeeProtocol extends Model {
 	 * @var string
 	 */
 	protected $object_name = 'auto_fee_protocol';
-
-	/**
-	 * Does an update clear account cache?
-	 *
-	 * @var boolean
-	 */
-	protected $clears_account_cache = true;
 }
