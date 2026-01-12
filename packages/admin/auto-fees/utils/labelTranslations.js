@@ -99,6 +99,12 @@ export const operatorLabels = {
 	is_on_or_after: __('is on or after', 'surecart'),
 	is_on_or_before: __('is on or before', 'surecart'),
 	contains: __('contains', 'surecart'),
+	not_contains: __('not contains', 'surecart'),
 	start_with: __('starts with', 'surecart'),
 	end_with: __('ends with', 'surecart'),
+};
+
+export const supportedValuesLabels = {
+	checkout: __('Checkout', 'surecart'),
+	subscription: __('Renewal', 'surecart'),
 };

@@ -22,7 +22,11 @@ import {
 import DateTimePicker from './DateTimePicker';
 import { formatDate } from '../../util/time';
 import { getInputType } from '../utils/ruleQueryUtils';
-import { attributeLabels, operatorLabels } from '../utils/labelTranslations';
+import {
+	attributeLabels,
+	operatorLabels,
+	supportedValuesLabels,
+} from '../utils/labelTranslations';
 
 export default ({
 	addLeaf,
@@ -129,7 +133,7 @@ export default ({
 				value={value}
 				onScChange={(e) => setValue(e.target.value)}
 				choices={(attributeSupportedValues ?? []).map((val) => ({
-					label: formatLabel(val),
+					label: supportedValuesLabels?.[val] || formatLabel(val),
 					value: val,
 				}))}
 				required
