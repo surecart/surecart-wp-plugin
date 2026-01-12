@@ -21,6 +21,7 @@ import { store as noticesStore } from '@wordpress/notices';
 import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
 import { useEffect, useState } from 'react';
+import { Tooltip } from '@wordpress/components';
 
 import Logo from '../../templates/Logo';
 import Template from '../../templates/UpdateModel';
@@ -357,11 +358,32 @@ export default () => {
 
 		if (!['past_due', 'active'].includes(subscription?.status)) return null;
 
-		return (
-			<ScMenuItem onClick={() => setModal('renew_at')}>
+		const isPastDue = subscription?.status === 'past_due';
+
+		const menuItem = (
+			<ScMenuItem
+				onClick={() => !isPastDue && setModal('renew_at')}
+				disabled={isPastDue}
+			>
 				{__('Change Renewal Date', 'surecart')}
 			</ScMenuItem>
 		);
+
+		// For past_due subscriptions, wrap in tooltip
+		if (isPastDue) {
+			return (
+				<Tooltip
+					text={__(
+						'To change the renewal date on a past due subscription, please add a trial period instead.',
+						'surecart'
+					)}
+				>
+					{menuItem}
+				</Tooltip>
+			);
+		}
+
+		return menuItem;
 	};
 
 	// If any of the menu items are shown, show the action button.
