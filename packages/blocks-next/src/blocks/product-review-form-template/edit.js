@@ -5,7 +5,7 @@ import { useBlockProps, useInnerBlocksProps } from '@wordpress/block-editor';
 
 export default function Edit({ context }) {
 	const editingView = context['surecart/editingView'] || 'form';
-	const isActive = editingView === 'confirmation';
+	const isActive = editingView === 'form';
 
 	const blockProps = useBlockProps({
 		style: {

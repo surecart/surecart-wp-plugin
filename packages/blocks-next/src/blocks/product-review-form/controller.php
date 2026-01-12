@@ -51,14 +51,14 @@ if ( ! empty( $block->inner_blocks ) ) {
 	foreach ( $block->inner_blocks as $inner_block ) {
 		$block_name = $inner_block->parsed_block['blockName'] ?? '';
 
-		// Check if this is the form wrapper block.
-		if ( 'surecart/product-review-form-wrapper' === $block_name ) {
+		// Check if this is the form template block.
+		if ( 'surecart/product-review-form-template' === $block_name ) {
 			$form_content .= render_block( $inner_block );
-		} elseif ( 'surecart/product-review-confirmation-wrapper' === $block_name ) {
-			// Check if this is the confirmation wrapper block.
+		} elseif ( 'surecart/product-review-confirmation-template' === $block_name ) {
+			// Check if this is the confirmation template block.
 			$confirmation_content .= render_block( $inner_block );
 		} else {
-			// If no specific wrapper, add to form content by default.
+			// If no specific template, add to form content by default.
 			$form_content .= render_block( $inner_block );
 		}
 	}

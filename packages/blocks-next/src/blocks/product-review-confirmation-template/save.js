@@ -8,3 +8,4 @@ export default function Save() {
 	const innerBlocksProps = useInnerBlocksProps.save(blockProps);
 	return <div {...innerBlocksProps} />;
 }
+

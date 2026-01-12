@@ -17,3 +17,4 @@ export default function Edit({ context }) {
 
 	return <div {...innerBlocksProps} />;
 }
+

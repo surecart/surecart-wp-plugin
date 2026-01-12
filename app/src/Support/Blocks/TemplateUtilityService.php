@@ -368,17 +368,17 @@ class TemplateUtilityService {
 	 */
 	public function getBlockTemplateTitle( $template_slug ) {
 		$translations = array(
-			'single-sc_product'           => class_exists( 'WooCommerce' ) ? __( 'SureCart Products', 'surecart' ) : __( 'Products', 'surecart' ),
-			'product-info'                => class_exists( 'WooCommerce' ) ? __( 'SureCart Products', 'surecart' ) : __( 'Products', 'surecart' ),
-			'taxonomy-sc_collection'      => class_exists( 'WooCommerce' ) ? __( 'SureCart Product Collections', 'surecart' ) : __( 'Product Collections', 'surecart' ),
-			'product-collection-part'     => class_exists( 'WooCommerce' ) ? __( 'SureCart Product Collections', 'surecart' ) : __( 'Product Collections', 'surecart' ),
-			'cart'                        => class_exists( 'WooCommerce' ) ? __( 'SureCart Cart', 'surecart' ) : __( 'Cart', 'surecart' ),
-			'checkout'                    => class_exists( 'WooCommerce' ) ? __( 'SureCart Checkout', 'surecart' ) : __( 'Checkout', 'surecart' ),
-			'product-quick-view'          => class_exists( 'WooCommerce' ) ? __( 'SureCart Product Quick Add', 'surecart' ) : __( 'Product Quick Add', 'surecart' ),
-			'product-review-form'         => class_exists( 'WooCommerce' ) ? __( 'SureCart Product Review Form', 'surecart' ) : __( 'Product Review Form', 'surecart' ),
-			'single-upsell'               => __( 'Upsells', 'surecart' ),
-			'upsell-info'                 => __( 'Upsells', 'surecart' ),
-			'sticky-purchase'             => __( 'Sticky Purchase', 'surecart' ),
+			'single-sc_product'       => class_exists( 'WooCommerce' ) ? __( 'SureCart Products', 'surecart' ) : __( 'Products', 'surecart' ),
+			'product-info'            => class_exists( 'WooCommerce' ) ? __( 'SureCart Products', 'surecart' ) : __( 'Products', 'surecart' ),
+			'taxonomy-sc_collection'  => class_exists( 'WooCommerce' ) ? __( 'SureCart Product Collections', 'surecart' ) : __( 'Product Collections', 'surecart' ),
+			'product-collection-part' => class_exists( 'WooCommerce' ) ? __( 'SureCart Product Collections', 'surecart' ) : __( 'Product Collections', 'surecart' ),
+			'cart'                    => class_exists( 'WooCommerce' ) ? __( 'SureCart Cart', 'surecart' ) : __( 'Cart', 'surecart' ),
+			'checkout'                => class_exists( 'WooCommerce' ) ? __( 'SureCart Checkout', 'surecart' ) : __( 'Checkout', 'surecart' ),
+			'product-quick-view'      => class_exists( 'WooCommerce' ) ? __( 'SureCart Product Quick Add', 'surecart' ) : __( 'Product Quick Add', 'surecart' ),
+			'product-review-form'     => class_exists( 'WooCommerce' ) ? __( 'SureCart Product Review Form', 'surecart' ) : __( 'Product Review Form', 'surecart' ),
+			'single-upsell'           => __( 'Upsells', 'surecart' ),
+			'upsell-info'             => __( 'Upsells', 'surecart' ),
+			'sticky-purchase'         => __( 'Sticky Purchase', 'surecart' ),
 		);
 
 		if ( isset( $translations[ $template_slug ] ) ) {
@@ -396,17 +396,17 @@ class TemplateUtilityService {
 	 */
 	public function getBlockTemplateDescription( $template_slug ) {
 		$translations = array(
-			'single-sc_product'           => __( 'Display all individual products unless a custom template has been applied.', 'surecart' ),
-			'product-info'                => __( 'Display all individual products content unless a custom template has been applied.', 'surecart' ),
-			'single-upsell'               => __( 'Display all individual upsells unless a custom template has been applied.', 'surecart' ),
-			'upsell-info'                 => __( 'Display all individual upsells content unless a custom template has been applied.', 'surecart' ),
-			'taxonomy-sc_collection'      => __( 'Display all individual product collections unless a custom template has been applied.', 'surecart' ),
-			'product-collection-part'     => __( 'Display all individual product collections content unless a custom template has been applied.', 'surecart' ),
-			'cart'                        => __( 'The slide-out cart template.', 'surecart' ),
-			'checkout'                    => __( 'Display the checkout content unless a custom template has been applied.', 'surecart' ),
-			'product-quick-view'          => __( 'Display product quick add.', 'surecart' ),
-			'product-review-form'         => __( 'Display product review form modal.', 'surecart' ),
-			'sticky-purchase'             => __( 'Display a sticky purchase button when the product form is scrolled out of view.', 'surecart' ),
+			'single-sc_product'       => __( 'Display all individual products unless a custom template has been applied.', 'surecart' ),
+			'product-info'            => __( 'Display all individual products content unless a custom template has been applied.', 'surecart' ),
+			'single-upsell'           => __( 'Display all individual upsells unless a custom template has been applied.', 'surecart' ),
+			'upsell-info'             => __( 'Display all individual upsells content unless a custom template has been applied.', 'surecart' ),
+			'taxonomy-sc_collection'  => __( 'Display all individual product collections unless a custom template has been applied.', 'surecart' ),
+			'product-collection-part' => __( 'Display all individual product collections content unless a custom template has been applied.', 'surecart' ),
+			'cart'                    => __( 'The slide-out cart template.', 'surecart' ),
+			'checkout'                => __( 'Display the checkout content unless a custom template has been applied.', 'surecart' ),
+			'product-quick-view'      => __( 'Display product quick add.', 'surecart' ),
+			'product-review-form'     => __( 'Display product review form modal.', 'surecart' ),
+			'sticky-purchase'         => __( 'Display a sticky purchase button when the product form is scrolled out of view.', 'surecart' ),
 		);
 
 		if ( isset( $translations[ $template_slug ] ) ) {
