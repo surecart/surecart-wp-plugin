@@ -1,6 +1,6 @@
 import { __ } from '@wordpress/i18n';
 
-export default {
+const TEMPLATES = {
 	start_blank: {
 		enabled: false,
 		amount_adjustment: null,
@@ -216,3 +216,15 @@ export default {
 		icon: 'gift',
 	},
 };
+
+const TEMPLATE_CHOICES = Object.entries(TEMPLATES).map(
+	([value, { name, description, icon, fee_target }]) => ({
+		label: name || value,
+		value,
+		description,
+		icon,
+		fee_target,
+	})
+);
+
+export { TEMPLATES, TEMPLATE_CHOICES };

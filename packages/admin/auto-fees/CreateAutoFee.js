@@ -16,7 +16,7 @@ import {
 } from '@surecart/components-react';
 import CreateTemplate from '../templates/CreateModel';
 import Box from '../ui/Box';
-import templates from './templates';
+import { TEMPLATES, TEMPLATE_CHOICES } from './templates';
 import { TYPE_CHOICES } from './utils/constants';
 
 export default ({ id, onCreateAutoFee }) => {
@@ -28,6 +28,7 @@ export default ({ id, onCreateAutoFee }) => {
 	const { saveEntityRecord } = useDispatch(coreStore);
 	const nameInputRef = useRef(null);
 
+	// focus the name input.
 	useEffect(() => {
 		if (nameInputRef.current) {
 			setTimeout(() => {
@@ -36,21 +37,31 @@ export default ({ id, onCreateAutoFee }) => {
 		}
 	}, []);
 
-	const getTemplateChoices = () => {
-		return Object.entries(templates).map(([key, template]) => ({
-			label: template?.name || key,
-			value: key,
-			description: template?.description,
-			icon: template?.icon,
-			fee_target: template?.fee_target,
-		}));
-	};
-
+	// set the auto-fee target.
 	useEffect(() => {
-		const currentTarget =
-			getTemplateChoices()?.find((t) => t.value === currentTemplate)
+		const feeTarget =
+			TEMPLATE_CHOICES?.find((t) => t.value === currentTemplate)
 				?.fee_target || '';
-		setAutoFeeTarget(currentTarget);
+		setAutoFeeTarget(feeTarget);
+	}, [currentTemplate]);
+
+	// set the auto-fee name from template label when template changes (except start_blank).
+	useEffect(() => {
+		const templateLabel =
+			TEMPLATE_CHOICES?.find((t) => t.value === currentTemplate)?.label ||
+			'';
+
+		// Check if current name matches any template label
+		const currentNameMatchesTemplate = TEMPLATE_CHOICES?.some(
+			(t) => t.label === autoFeeName
+		);
+
+		// Only update if name is empty or matches an existing template label
+		if (templateLabel && (!autoFeeName || currentNameMatchesTemplate)) {
+			const label =
+				currentTemplate === 'start_blank' ? '' : templateLabel;
+			setAutoFeeName(label);
+		}
 	}, [currentTemplate]);
 
 	// create the auto-fee.
@@ -62,9 +73,9 @@ export default ({ id, onCreateAutoFee }) => {
 				'surecart',
 				'auto-fee',
 				{
-					...templates?.[currentTemplate],
-					name: autoFeeName,
+					...TEMPLATES?.[currentTemplate],
 					...(autoFeeTarget && { fee_target: autoFeeTarget }),
+					name: autoFeeName,
 					start_at: Math.floor(Date.now() / 1000),
 				},
 				{ throwOnError: true }
@@ -159,56 +170,57 @@ export default ({ id, onCreateAutoFee }) => {
 							}}
 							required
 						>
-							{(getTemplateChoices() || []).map((template) => {
-								return (
-									<ScChoice
-										key={template.value}
-										showControl={false}
-										checked={
-											currentTemplate === template.value
-										}
-										value={template.value}
-									>
-										<div
-											style={{
-												display: 'flex',
-												gap: '1em',
-											}}
-											slot="footer"
+							{(TEMPLATE_CHOICES || []).map(
+								({ value, label, description, icon }) => {
+									return (
+										<ScChoice
+											key={value}
+											showControl={false}
+											checked={currentTemplate === value}
+											value={value}
 										>
-											<ScIcon
+											<div
 												style={{
-													fontWeight: '600',
-													width: '20px',
-													height: '20px',
+													display: 'flex',
+													gap: '1em',
 												}}
-												name={template.icon}
-											/>
-											<div>
-												<div
+												slot="footer"
+											>
+												<ScIcon
 													style={{
-														fontWeight: 600,
-														lineHeight: 1,
+														fontWeight: '600',
+														width: '20px',
+														height: '20px',
 													}}
-												>
-													{template.label}
-												</div>
-												{!!template.description && (
+													name={icon}
+												/>
+												<div>
 													<div
 														style={{
-															marginTop: '0.5em',
-															fontWeight: 400,
-															color: '#6B7280',
+															fontWeight: 600,
+															lineHeight: 1,
 														}}
 													>
-														{template.description}
+														{label}
 													</div>
-												)}
+													{!!description && (
+														<div
+															style={{
+																marginTop:
+																	'0.5em',
+																fontWeight: 400,
+																color: '#6B7280',
+															}}
+														>
+															{description}
+														</div>
+													)}
+												</div>
 											</div>
-										</div>
-									</ScChoice>
-								);
-							})}
+										</ScChoice>
+									);
+								}
+							)}
 						</ScChoices>
 						<div
 							css={css`
