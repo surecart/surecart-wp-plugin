@@ -67,7 +67,7 @@ class AutoFeesListTable extends ListTable {
 		];
 
 		foreach ( $stati as $status => $label ) {
-			$link                    = \SureCart::getUrl()->index( 'auto-fees' );
+			$link                    = esc_url_raw( \SureCart::getUrl()->index( 'auto-fees' ) );
 			$current_link_attributes = '';
 
 			if ( ! empty( $_GET['status'] ) ) {
@@ -348,7 +348,7 @@ class AutoFeesListTable extends ListTable {
 					'nonce'  => wp_create_nonce( $action . '_auto_fee' ),
 					'id'     => $id,
 				],
-				\SureCart::getUrl()->index( 'auto-fees' )
+				esc_url_raw( \SureCart::getUrl()->index( 'auto-fees' ) )
 			)
 		);
 	}
