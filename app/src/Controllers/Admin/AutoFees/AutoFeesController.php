@@ -109,7 +109,7 @@ class AutoFeesController extends AdminController {
 		);
 
 		return \SureCart::redirect()->to(
-			esc_url_raw( add_query_arg( 'status', $status, esc_url_raw( \SureCart::getUrl()->index( 'auto-fees' ) ) ) )
+			esc_url_raw( add_query_arg( [ 'status' => $status ], \SureCart::getUrl()->index( 'auto-fees' ) ) )
 		);
 	}
 
@@ -127,6 +127,8 @@ class AutoFeesController extends AdminController {
 			wp_die( implode( ' ', array_map( 'esc_html', $deleted->get_error_messages() ) ) );
 		}
 
-		return \SureCart::redirect()->to( add_query_arg( array( 'deleted' => true ), esc_url_raw( \SureCart::getUrl()->index( 'auto-fees' ) ) ) );
+		return \SureCart::redirect()->to(
+			esc_url_raw( add_query_arg( [ 'deleted' => true ], \SureCart::getUrl()->index( 'auto-fees' ) ) )
+		);
 	}
 }
