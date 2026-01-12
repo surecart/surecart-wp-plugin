@@ -105,7 +105,8 @@ export const getHelpText = (
 	}
 
 	return sprintf(
-		__('%s will be applied %s.', 'surecart'),
+		/* translators: %1$s: strategy value (e.g. all, first, largest, smallest), %2$s: target (e.g. checkout, line_item, shipping) */
+		__('%1$s will be applied %2$s.', 'surecart'),
 		sprintf(VALUE_PHRASE[value], type),
 		TARGET_PHRASE[target]
 	);
