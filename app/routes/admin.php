@@ -468,7 +468,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	function () {
 		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->handle( 'AutoFeesController@index' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->handle( 'AutoFeesController@edit' );
-		\SureCart::route()->get()->where( 'sc_url_var', 'toggle_active', 'action' )->middleware( 'archive_model:product' )->handle( 'AutoFeesController@toggleActive' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'toggle_active', 'action' )->middleware( 'nonce:archive_dynamic_price' )->handle( 'AutoFeesController@toggleActive' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'delete', 'action' )->middleware( 'nonce:delete_auto_fee' )->handle( 'AutoFeesController@delete' );
 	}
 );

@@ -8,11 +8,11 @@ use SureCart\Controllers\Admin\AutoFees\AutoFeesScriptsController;
 use SureCart\Models\AutoFee;
 
 /**
- * Handles product admin requests.
+ * Handles auto fees admin requests.
  */
 class AutoFeesController extends AdminController {
 	/**
-	 * Orders index.
+	 * Auto Fees index.
 	 */
 	public function index() {
 		$table = new AutoFeesListTable();
@@ -79,7 +79,7 @@ class AutoFeesController extends AdminController {
 	}
 
 	/**
-	 * Change the active state od the model.
+	 * Change the active state of the model.
 	 *
 	 * @param \SureCartCore\Requests\RequestInterface $request Request.
 	 *
@@ -109,7 +109,7 @@ class AutoFeesController extends AdminController {
 		);
 
 		return \SureCart::redirect()->to(
-			esc_url_raw( add_query_arg( 'status', $status, admin_url( 'admin.php?page=sc-auto-fees' ) ) )
+			esc_url_raw( add_query_arg( 'status', $status, \SureCart::getUrl()->index( 'auto-fees' ) ) )
 		);
 	}
 

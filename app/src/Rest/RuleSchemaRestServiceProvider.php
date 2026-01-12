@@ -17,6 +17,13 @@ class RuleSchemaRestServiceProvider extends RestServiceProvider implements RestS
 	protected $endpoint = 'auto_fees/rule_schema';
 
 	/**
+	 * Methods allowed for the model.
+	 *
+	 * @var array
+	 */
+	protected $methods = [ 'find' ];
+
+	/**
 	 * Rest Controller
 	 *
 	 * @var string
@@ -42,19 +49,19 @@ class RuleSchemaRestServiceProvider extends RestServiceProvider implements RestS
 			'type'       => 'object',
 			// In JSON Schema you can specify object properties in the properties attribute.
 			'properties' => [
-				'schema_id'           => [
+				'schema_id'  => [
 					'description' => esc_html__( 'Unique identifier for the object.', 'surecart' ),
 					'type'        => 'string',
 					'context'     => [ 'view', 'edit', 'embed' ],
 					'readonly'    => true,
 				],
-				'object'       => [
+				'object'     => [
 					'description' => esc_html__( 'Type of object (rule_schema)', 'surecart' ),
 					'type'        => 'string',
 					'context'     => [ 'view', 'edit' ],
 					'readonly'    => true,
 				],
-				'attributes'   => [
+				'attributes' => [
 					'description' => esc_html__( 'Attributes of a Rule Schema', 'surecart' ),
 					'type'        => 'array',
 					'context'     => [ 'view', 'edit', 'embed' ],

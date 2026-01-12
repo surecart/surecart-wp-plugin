@@ -5,7 +5,7 @@ namespace SureCart\Controllers\Admin\AutoFees;
 use SureCart\Support\Scripts\AdminModelEditController;
 
 /**
- * Affiliation Requests Scripts Controller
+ * Auto Fees Requests Scripts Controller
  */
 class AutoFeesScriptsController extends AdminModelEditController {
 	/**

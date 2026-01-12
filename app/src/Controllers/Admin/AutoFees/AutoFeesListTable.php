@@ -15,11 +15,10 @@ class AutoFeesListTable extends ListTable {
 	 * @return Void
 	 */
 	public function prepare_items() {
-		$columns  = $this->get_columns();
-		$hidden   = $this->get_hidden_columns();
-		$sortable = $this->get_sortable_columns();
+		$columns = $this->get_columns();
+		$hidden  = $this->get_hidden_columns();
 
-		$this->_column_headers = array( $columns, $hidden, $sortable );
+		$this->_column_headers = array( $columns, $hidden );
 
 		$query = $this->table_data();
 
@@ -31,7 +30,7 @@ class AutoFeesListTable extends ListTable {
 		$this->set_pagination_args(
 			[
 				'total_items' => $query->pagination->count,
-				'per_page'    => $this->get_items_per_page( 'orders' ),
+				'per_page'    => $this->get_items_per_page( 'auto-fees' ),
 			]
 		);
 
@@ -125,15 +124,6 @@ class AutoFeesListTable extends ListTable {
 	}
 
 	/**
-	 * Define the sortable columns
-	 *
-	 * @return array
-	 */
-	public function get_sortable_columns() {
-		return array( 'name' => array( 'name', false ) );
-	}
-
-	/**
 	 * Get the table data
 	 *
 	 * @return \SureCart\Models\AutoFee[]|\WP_Error
@@ -154,7 +144,7 @@ class AutoFeesListTable extends ListTable {
 		return AutoFee::where( $conditions )
 		->paginate(
 			[
-				'per_page' => $this->get_items_per_page( 'subscriptions' ),
+				'per_page' => $this->get_items_per_page( 'auto-fees' ),
 				'page'     => $this->get_pagenum(),
 			]
 		);
@@ -166,9 +156,7 @@ class AutoFeesListTable extends ListTable {
 	 * @return bool|null
 	 */
 	public function getStatus() {
-		$status = sanitize_text_field( wp_unslash( $_GET['status'] ?? false ) );
-
-		return $status;
+		return sanitize_text_field( wp_unslash( $_GET['status'] ?? false ) );
 	}
 
 	/**
@@ -182,7 +170,7 @@ class AutoFeesListTable extends ListTable {
 		$toggle_url = add_query_arg(
 			[
 				'action' => 'toggle_active',
-				'nonce'  => wp_create_nonce( 'archive_product' ), // use archive product nonce.
+				'nonce'  => wp_create_nonce( 'archive_dynamic_price' ),
 				'id'     => $auto_fees->id,
 				'status' => 'all',
 			]
@@ -305,10 +293,10 @@ class AutoFeesListTable extends ListTable {
 			$this->mode_dropdown();
 
 			/**
-			 * Fires before the Filter button on the Posts and Pages list tables.
+			 * Fires before the Filter button on the Auto fees list tables.
 			 *
 			 * The Filter button allows sorting by date and/or category on the
-			 * Posts list table, and sorting by date on the Pages list table.
+			 * auto fees list table, and sorting by date on the Pages list table.
 			 *
 			 * @since 2.1.0
 			 * @since 4.4.0 The `$post_type` parameter was added.
@@ -334,7 +322,7 @@ class AutoFeesListTable extends ListTable {
 
 		<?php
 		/**
-		 * Fires immediately following the closing "actions" div in the tablenav for the posts
+		 * Fires immediately following the closing "actions" div in the tablenav for the auto fees
 		 * list table.
 		 *
 		 * @since 4.4.0
@@ -360,7 +348,7 @@ class AutoFeesListTable extends ListTable {
 					'nonce'  => wp_create_nonce( $action . '_auto_fee' ),
 					'id'     => $id,
 				],
-				esc_url_raw( admin_url( 'admin.php?page=sc-auto-fees' ) )
+				\SureCart::getUrl()->index( 'auto-fees' )
 			)
 		);
 	}
