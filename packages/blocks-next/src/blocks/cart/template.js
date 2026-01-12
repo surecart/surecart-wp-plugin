@@ -81,90 +81,92 @@ export const TEMPLATE = [
 		],
 	],
 	[
-		'surecart/slide-out-cart-line-items',
+		'core/group',
 		{
-			border: false,
-			padding: { top: '0em', right: '0em', bottom: '0em', left: '0em' },
-			metadata: {
-				ignoredHookedBlocks: ['surecart/cart-line-item-divider'],
-			},
+			className: 'sc-cart-scrollable',
 			style: {
-				spacing: {
-					padding: {
-						top: '2em',
-						bottom: '2em',
-						left: '2em',
-						right: '2em',
-					},
-					blockGap: '2em',
-				},
+				layout: { selfStretch: 'fill', flexSize: null },
 			},
+			layout: { type: 'default' },
 		},
 		[
 			[
-				'core/group',
+				'surecart/slide-out-cart-line-items',
 				{
-					style: {
-						layout: { selfStretch: 'fill', flexSize: null },
-						dimensions: { minHeight: '' },
+					border: false,
+					padding: {
+						top: '0em',
+						right: '0em',
+						bottom: '0em',
+						left: '0em',
 					},
-					layout: { type: 'default' },
+					metadata: {
+						ignoredHookedBlocks: ['surecart/cart-line-item-divider'],
+					},
+					style: {
+						spacing: {
+							padding: {
+								top: '2em',
+								bottom: '2em',
+								left: '2em',
+								right: '2em',
+							},
+							blockGap: '2em',
+						},
+					},
 				},
 				[
 					[
 						'core/group',
 						{
 							style: {
-								layout: { selfStretch: 'fit', flexSize: null },
+								layout: { selfStretch: 'fill', flexSize: null },
+								dimensions: { minHeight: '' },
 							},
-							layout: {
-								type: 'flex',
-								flexWrap: 'nowrap',
-								verticalAlignment: 'stretch',
-							},
+							layout: { type: 'default' },
 						},
 						[
-							[
-								'surecart/cart-line-item-image',
-								{
-									aspectRatio: '1',
-									width: '',
-									height: '',
-									style: {
-										layout: {
-											selfStretch: 'fixed',
-											flexSize: '80px',
-										},
-										border: {
-											width: '1px',
-											radius: '4px',
-										},
-										color: { duotone: 'unset' },
-										spacing: {
-											margin: { top: '0', bottom: '0' },
-										},
-									},
-								},
-							],
 							[
 								'core/group',
 								{
 									style: {
 										layout: {
-											selfStretch: 'fill',
+											selfStretch: 'fit',
 											flexSize: null,
 										},
-										spacing: { blockGap: '5px' },
 									},
 									layout: {
 										type: 'flex',
-										orientation: 'vertical',
-										justifyContent: 'stretch',
 										flexWrap: 'nowrap',
-										verticalAlignment: 'top',
+										verticalAlignment: 'stretch',
 									},
 								},
 								[
+									[
+										'surecart/cart-line-item-image',
+										{
+											aspectRatio: '1',
+											width: '',
+											height: '',
+											style: {
+												layout: {
+													selfStretch: 'fixed',
+													flexSize: '80px',
+												},
+												border: {
+													width: '1px',
+													radius: '4px',
+												},
+												color: { duotone: 'unset' },
+												spacing: {
+													margin: {
+														top: '0',
+														bottom: '0',
+													},
+												},
+											},
+										},
+									],
 									[
 										'core/group',
 										{
@@ -173,246 +175,14 @@ export const TEMPLATE = [
 													selfStretch: 'fill',
 													flexSize: null,
 												},
+												spacing: { blockGap: '5px' },
 											},
 											layout: {
 												type: 'flex',
+												orientation: 'vertical',
+												justifyContent: 'stretch',
 												flexWrap: 'nowrap',
-												verticalAlignment: 'stretch',
-												justifyContent: 'space-between',
-											},
-										},
-										[
-											[
-												'core/group',
-												{
-													style: {
-														layout: {
-															selfStretch:
-																'fixed',
-															flexSize: '50%',
-														},
-														spacing: {
-															blockGap: '0px',
-														},
-													},
-													layout: { type: 'default' },
-												},
-												[
-													[
-														'surecart/cart-line-item-title',
-														{
-															style: {
-																typography: {
-																	fontStyle:
-																		'normal',
-																	fontWeight:
-																		'500',
-																	lineHeight:
-																		'1.4',
-																	textDecoration:
-																		'none',
-																},
-															},
-														},
-													],
-													[
-														'core/group',
-														{
-															style: {
-																spacing: {
-																	blockGap:
-																		'0px',
-																},
-															},
-															layout: {
-																type: 'default',
-															},
-														},
-														[
-															[
-																'surecart/cart-line-item-price-name',
-																{
-																	style: {
-																		typography:
-																			{
-																				fontSize:
-																					'14px',
-																				lineHeight:
-																					'1.4',
-																			},
-																	},
-																},
-															],
-															[
-																'surecart/cart-line-item-variant',
-																{
-																	style: {
-																		typography:
-																			{
-																				fontSize:
-																					'14px',
-																				lineHeight:
-																					'1.4',
-																			},
-																	},
-																},
-															],
-															[
-																'surecart/cart-line-item-note',
-																{
-																	style: {
-																		typography:
-																			{
-																				fontSize:
-																					'14px',
-																				lineHeight:
-																					'1.4',
-																			},
-																	},
-																},
-															],
-														],
-													],
-													[
-														'surecart/cart-line-item-status',
-														{
-															style: {
-																typography: {
-																	textAlign:
-																		'right',
-																},
-															},
-														},
-													],
-												],
-											],
-											[
-												'core/group',
-												{
-													style: {
-														layout: {
-															selfStretch: 'fit',
-															flexSize: null,
-														},
-														spacing: {
-															blockGap: '0px',
-														},
-													},
-													layout: { type: 'default' },
-												},
-												[
-													[
-														'core/group',
-														{
-															style: {
-																spacing: {
-																	blockGap:
-																		'4px',
-																},
-																typography: {
-																	lineHeight:
-																		'1.4',
-																},
-															},
-															layout: {
-																type: 'flex',
-																flexWrap:
-																	'nowrap',
-																justifyContent:
-																	'right',
-															},
-														},
-														[
-															[
-																'surecart/cart-line-item-scratch-amount',
-																{},
-															],
-															[
-																'surecart/cart-line-item-amount',
-																{
-																	style: {
-																		typography:
-																			{
-																				fontStyle:
-																					'normal',
-																				fontWeight:
-																					'500',
-																				textAlign:
-																					'right',
-																			},
-																	},
-																},
-															],
-															[
-																'surecart/cart-line-item-interval',
-																{
-																	style: {
-																		typography:
-																			{
-																				fontSize:
-																					'14px',
-																			},
-																	},
-																},
-															],
-														],
-													],
-													[
-														'core/group',
-														{
-															style: {
-																spacing: {
-																	blockGap:
-																		'0px',
-																},
-															},
-															layout: {
-																type: 'default',
-															},
-														},
-														[
-															[
-																'surecart/cart-line-item-trial',
-																{
-																	style: {
-																		typography:
-																			{
-																				fontSize:
-																					'14px',
-																				textAlign:
-																					'right',
-																			},
-																	},
-																},
-															],
-															[
-																'surecart/cart-line-item-fees',
-																{
-																	style: {
-																		typography:
-																			{
-																				fontSize:
-																					'14px',
-																				textAlign:
-																					'right',
-																			},
-																	},
-																},
-															],
-														],
-													],
-												],
-											],
-										],
-									],
-									[
-										'core/group',
-										{
-											layout: {
-												type: 'flex',
-												flexWrap: 'nowrap',
-												justifyContent: 'space-between',
-												verticalAlignment: 'center',
+												verticalAlignment: 'top',
 											},
 										},
 										[
@@ -425,45 +195,536 @@ export const TEMPLATE = [
 															flexSize: null,
 														},
 													},
-													layout: { type: 'default' },
+													layout: {
+														type: 'flex',
+														flexWrap: 'nowrap',
+														verticalAlignment:
+															'stretch',
+														justifyContent:
+															'space-between',
+													},
 												},
 												[
 													[
-														'surecart/cart-line-item-quantity',
-														{},
+														'core/group',
+														{
+															style: {
+																layout: {
+																	selfStretch:
+																		'fixed',
+																	flexSize:
+																		'50%',
+																},
+																spacing: {
+																	blockGap:
+																		'0px',
+																},
+															},
+															layout: {
+																type: 'default',
+															},
+														},
+														[
+															[
+																'surecart/cart-line-item-title',
+																{
+																	style: {
+																		typography:
+																			{
+																				fontStyle:
+																					'normal',
+																				fontWeight:
+																					'500',
+																				lineHeight:
+																					'1.4',
+																				textDecoration:
+																					'none',
+																			},
+																	},
+																},
+															],
+															[
+																'core/group',
+																{
+																	style: {
+																		spacing:
+																			{
+																				blockGap:
+																					'0px',
+																			},
+																	},
+																	layout: {
+																		type: 'default',
+																	},
+																},
+																[
+																	[
+																		'surecart/cart-line-item-price-name',
+																		{
+																			style: {
+																				typography:
+																					{
+																						fontSize:
+																							'14px',
+																						lineHeight:
+																							'1.4',
+																					},
+																			},
+																		},
+																	],
+																	[
+																		'surecart/cart-line-item-variant',
+																		{
+																			style: {
+																				typography:
+																					{
+																						fontSize:
+																							'14px',
+																						lineHeight:
+																							'1.4',
+																					},
+																			},
+																		},
+																	],
+																	[
+																		'surecart/cart-line-item-note',
+																		{
+																			style: {
+																				typography:
+																					{
+																						fontSize:
+																							'14px',
+																						lineHeight:
+																							'1.4',
+																					},
+																			},
+																		},
+																	],
+																],
+															],
+															[
+																'surecart/cart-line-item-status',
+																{
+																	style: {
+																		typography:
+																			{
+																				textAlign:
+																					'right',
+																			},
+																	},
+																},
+															],
+														],
+													],
+													[
+														'core/group',
+														{
+															style: {
+																layout: {
+																	selfStretch:
+																		'fit',
+																	flexSize:
+																		null,
+																},
+																spacing: {
+																	blockGap:
+																		'0px',
+																},
+															},
+															layout: {
+																type: 'default',
+															},
+														},
+														[
+															[
+																'core/group',
+																{
+																	style: {
+																		spacing:
+																			{
+																				blockGap:
+																					'4px',
+																			},
+																		typography:
+																			{
+																				lineHeight:
+																					'1.4',
+																			},
+																	},
+																	layout: {
+																		type: 'flex',
+																		flexWrap:
+																			'nowrap',
+																		justifyContent:
+																			'right',
+																	},
+																},
+																[
+																	[
+																		'surecart/cart-line-item-scratch-amount',
+																		{},
+																	],
+																	[
+																		'surecart/cart-line-item-amount',
+																		{
+																			style: {
+																				typography:
+																					{
+																						fontStyle:
+																							'normal',
+																						fontWeight:
+																							'500',
+																						textAlign:
+																							'right',
+																					},
+																			},
+																		},
+																	],
+																	[
+																		'surecart/cart-line-item-interval',
+																		{
+																			style: {
+																				typography:
+																					{
+																						fontSize:
+																							'14px',
+																					},
+																			},
+																		},
+																	],
+																],
+															],
+															[
+																'core/group',
+																{
+																	style: {
+																		spacing:
+																			{
+																				blockGap:
+																					'0px',
+																			},
+																	},
+																	layout: {
+																		type: 'default',
+																	},
+																},
+																[
+																	[
+																		'surecart/cart-line-item-trial',
+																		{
+																			style: {
+																				typography:
+																					{
+																						fontSize:
+																							'14px',
+																						textAlign:
+																							'right',
+																					},
+																			},
+																		},
+																	],
+																	[
+																		'surecart/cart-line-item-fees',
+																		{
+																			style: {
+																				typography:
+																					{
+																						fontSize:
+																							'14px',
+																						textAlign:
+																							'right',
+																					},
+																			},
+																		},
+																	],
+																],
+															],
+														],
 													],
 												],
 											],
 											[
 												'core/group',
 												{
-													style: {
-														layout: {
-															selfStretch: 'fit',
-															flexSize: null,
-														},
-														spacing: {
-															blockGap: '0px',
-														},
-													},
 													layout: {
 														type: 'flex',
-														orientation: 'vertical',
-														justifyContent: 'right',
+														flexWrap: 'nowrap',
+														justifyContent:
+															'space-between',
+														verticalAlignment:
+															'center',
 													},
 												},
 												[
 													[
-														'surecart/cart-line-item-remove',
+														'core/group',
+														{
+															style: {
+																layout: {
+																	selfStretch:
+																		'fill',
+																	flexSize:
+																		null,
+																},
+															},
+															layout: {
+																type: 'default',
+															},
+														},
+														[
+															[
+																'surecart/cart-line-item-quantity',
+																{},
+															],
+														],
+													],
+													[
+														'core/group',
+														{
+															style: {
+																layout: {
+																	selfStretch:
+																		'fit',
+																	flexSize:
+																		null,
+																},
+																spacing: {
+																	blockGap:
+																		'0px',
+																},
+															},
+															layout: {
+																type: 'flex',
+																orientation:
+																	'vertical',
+																justifyContent:
+																	'right',
+															},
+														},
+														[
+															[
+																'surecart/cart-line-item-remove',
+																{
+																	style: {
+																		typography:
+																			{
+																				fontSize:
+																					'14px',
+																				fontStyle:
+																					'normal',
+																				fontWeight:
+																					'400',
+																			},
+																	},
+																},
+															],
+														],
+													],
+												],
+											],
+										],
+									],
+								],
+							],
+						],
+					],
+				],
+			],
+			[
+				'surecart/cart-order-bumps',
+				{
+					style: {
+						spacing: {
+							padding: {
+								top: '1.5em',
+								bottom: '1.5em',
+								left: '2em',
+								right: '2em',
+							},
+						},
+						border: {
+							top: { color: '#b0b0b069', width: '1px' },
+						},
+					},
+				},
+				[
+					[
+						'core/group',
+						{
+							style: {
+								spacing: { margin: { bottom: '0.75em' } },
+							},
+							layout: {
+								type: 'flex',
+								flexWrap: 'nowrap',
+								justifyContent: 'space-between',
+								verticalAlignment: 'center',
+							},
+						},
+						[
+							[
+								'core/paragraph',
+								{
+									content: 'Suggested for you',
+									style: {
+										typography: {
+											fontStyle: 'normal',
+											fontWeight: '500',
+										},
+										spacing: {
+											margin: { top: '0', bottom: '0' },
+										},
+									},
+								},
+							],
+							[
+								'surecart/cart-order-bump-pagination',
+								{
+									style: {
+										spacing: { blockGap: '0.25em' },
+									},
+								},
+								[
+									[
+										'surecart/cart-order-bump-pagination-previous',
+										{},
+									],
+									[
+										'surecart/cart-order-bump-pagination-next',
+										{},
+									],
+								],
+							],
+						],
+					],
+					[
+						'surecart/cart-order-bump-template',
+						{
+							style: {
+								spacing: { blockGap: '0.75em' },
+							},
+							layout: { type: 'flex' },
+						},
+						[
+							[
+								'core/group',
+								{
+									style: {
+										border: {
+											radius: '12px',
+											width: '1px',
+											color: '#e0e0e0',
+										},
+										spacing: {
+											padding: {
+												top: '0.75em',
+												bottom: '0.75em',
+												left: '0.75em',
+												right: '1em',
+											},
+										},
+										layout: {
+											selfStretch: 'fill',
+											flexSize: null,
+										},
+									},
+									layout: {
+										type: 'flex',
+										flexWrap: 'nowrap',
+										verticalAlignment: 'center',
+									},
+								},
+								[
+									[
+										'surecart/cart-order-bump-image',
+										{
+											width: '72px',
+											style: {
+												border: { radius: '8px' },
+												layout: {
+													selfStretch: 'fixed',
+													flexSize: '72px',
+												},
+											},
+										},
+									],
+									[
+										'core/group',
+										{
+											style: {
+												layout: {
+													selfStretch: 'fill',
+													flexSize: null,
+												},
+												spacing: { blockGap: '2px' },
+											},
+											layout: {
+												type: 'flex',
+												orientation: 'vertical',
+											},
+										},
+										[
+											[
+												'surecart/cart-order-bump-title',
+												{
+													style: {
+														typography: {
+															fontSize: '15px',
+															fontStyle: 'normal',
+															fontWeight: '600',
+															lineHeight: '1.3',
+														},
+													},
+												},
+											],
+											[
+												'surecart/cart-order-bump-description',
+												{
+													style: {
+														typography: {
+															fontSize: '13px',
+															lineHeight: '1.3',
+														},
+														color: {
+															text: '#6b7280',
+														},
+													},
+												},
+											],
+											[
+												'core/group',
+												{
+													style: {
+														spacing: {
+															blockGap: '4px',
+														},
+													},
+													layout: {
+														type: 'flex',
+														flexWrap: 'nowrap',
+													},
+												},
+												[
+													[
+														'surecart/cart-order-bump-scratch-amount',
 														{
 															style: {
 																typography: {
 																	fontSize:
 																		'14px',
-																	fontStyle:
-																		'normal',
+																},
+															},
+														},
+													],
+													[
+														'surecart/cart-order-bump-amount',
+														{
+															style: {
+																typography: {
+																	fontSize:
+																		'14px',
 																	fontWeight:
-																		'400',
+																		'500',
 																},
 															},
 														},
@@ -471,6 +732,36 @@ export const TEMPLATE = [
 												],
 											],
 										],
+									],
+									[
+										'surecart/cart-order-bump-add-button',
+										{
+											style: {
+												typography: {
+													fontSize: '18px',
+													fontWeight: '400',
+													fontStyle: 'normal',
+												},
+												border: {
+													radius: {
+														topLeft: '74.6%',
+														topRight: '74.6%',
+														bottomLeft: '74.6%',
+														bottomRight: '74.6%',
+													},
+													width: '1px',
+													color: '#d1d5db',
+												},
+												spacing: {
+													padding: {
+														top: '0.5em',
+														bottom: '0.5em',
+														left: '0.5em',
+														right: '0.5em',
+													},
+												},
+											},
+										},
 									],
 								],
 							],

@@ -21,6 +21,13 @@
 	}
 }
 
+// Scrollable wrapper for cart items and order bumps.
+.sc-cart-scrollable {
+	flex: 1 1 auto;
+	overflow: auto;
+	min-height: 0;
+}
+
 // Stop the body from scrolling when the cart drawer is open.
 html:has(dialog.sc-drawer[open]) {
 	overflow: hidden;

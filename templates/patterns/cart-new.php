@@ -18,7 +18,8 @@ return [
 <!-- wp:surecart/cart-count {"style":{"layout":{"selfStretch":"fit","flexSize":null},"typography":{"lineHeight":"1","fontWeight":"600","fontSize":"14px","fontStyle":"normal"},"spacing":{"padding":{"top":"6px","bottom":"6px","left":"10px","right":"10px"}},"border":{"radius":"4px"}}} /--></div>
 <!-- /wp:group -->
 
-<!-- wp:surecart/slide-out-cart-line-items {"border":false,"padding":{"top":"0em","right":"0em","bottom":"0em","left":"0em"},"metadata":{"ignoredHookedBlocks":["surecart/cart-line-item-divider"]},"style":{"spacing":{"padding":{"top":"2em","bottom":"2em","left":"2em","right":"2em"},"blockGap":"2em"}}} -->
+<!-- wp:group {"className":"sc-cart-scrollable","style":{"layout":{"selfStretch":"fill","flexSize":null}},"layout":{"type":"default"}} -->
+<div class="wp-block-group sc-cart-scrollable"><!-- wp:surecart/slide-out-cart-line-items {"border":false,"padding":{"top":"0em","right":"0em","bottom":"0em","left":"0em"},"metadata":{"ignoredHookedBlocks":["surecart/cart-line-item-divider"]},"style":{"spacing":{"padding":{"top":"2em","bottom":"2em","left":"2em","right":"2em"},"blockGap":"2em"}}} -->
 <!-- wp:group {"style":{"layout":{"selfStretch":"fill","flexSize":null},"dimensions":{"minHeight":""}},"layout":{"type":"default"}} -->
 <div class="wp-block-group"><!-- wp:group {"style":{"layout":{"selfStretch":"fit","flexSize":null}},"layout":{"type":"flex","flexWrap":"nowrap","verticalAlignment":"stretch"}} -->
 <div class="wp-block-group"><!-- wp:surecart/cart-line-item-image {"aspectRatio":"1","width":"","height":"","style":{"layout":{"selfStretch":"fixed","flexSize":"80px"},"border":{"width":"1px","radius":"4px"},"color":{"duotone":"unset"},"spacing":{"margin":{"top":"0","bottom":"0"}}}} /-->
@@ -102,7 +103,8 @@ return [
 <!-- wp:surecart/cart-order-bump-add-button {"style":{"typography":{"fontSize":"18px","fontWeight":"400","fontStyle":"normal"},"border":{"radius":{"topLeft":"74.6%","topRight":"74.6%","bottomLeft":"74.6%","bottomRight":"74.6%"},"width":"1px","color":"#d1d5db"},"spacing":{"padding":{"top":"0.5em","bottom":"0.5em","left":"0.5em","right":"0.5em"}}}} /--></div>
 <!-- /wp:group -->
 <!-- /wp:surecart/cart-order-bump-template -->
-<!-- /wp:surecart/cart-order-bumps -->
+<!-- /wp:surecart/cart-order-bumps --></div>
+<!-- /wp:group -->
 
 <!-- wp:group {"style":{"spacing":{"padding":{"top":"2em","bottom":"2em","left":"2em","right":"2em"}},"border":{"top":{"color":"#b0b0b069","width":"1px"}}},"layout":{"type":"default"}} -->
 <div class="wp-block-group" style="border-top-color:#b0b0b069;border-top-width:1px;padding-top:2em;padding-right:2em;padding-bottom:2em;padding-left:2em"><!-- wp:surecart/slide-out-cart-items-subtotal {"layout":{"type":"flex","justifyContent":"space-between","flexWrap":"nowrap","verticalAlignment":"top"}} -->
