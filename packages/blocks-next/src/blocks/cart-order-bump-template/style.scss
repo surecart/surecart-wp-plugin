@@ -1,5 +1,4 @@
-.wp-block-surecart-cart-order-bump-template,
-.sc-cart-order-bump-template {
+.wp-block-surecart-cart-order-bump-template {
 	list-style: none !important;
 	padding: 0;
 	margin: 0;
@@ -20,7 +19,7 @@
 	}
 
 	// Enable horizontal scroll only when multiple bumps
-	&--has-overflow {
+	&.has-overflow {
 		overflow-x: auto;
 		overflow-y: hidden;
 	}
@@ -37,7 +36,7 @@
 	display: flex; // Make item a flex container to stretch inner content
 
 	// When multiple bumps, use 85% to show peek of next item (desktop only)
-	.sc-cart-order-bump-template--has-overflow & {
+	.wp-block-surecart-cart-order-bump-template.has-overflow & {
 		@media (min-width: 600px) {
 			flex: 0 0 85% !important;
 			width: 85% !important;

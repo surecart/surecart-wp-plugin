@@ -1,6 +1,6 @@
 <ul
-	<?php echo wp_kses_data( get_block_wrapper_attributes( array( 'class' => 'sc-cart-order-bump-template', 'role' => 'list' ) ) ); ?>
-	data-wp-class--sc-cart-order-bump-template--has-overflow="state.hasMultipleBumps"
+	<?php echo wp_kses_data( get_block_wrapper_attributes( [ 'role' => 'list' ] ) ); ?>
+	data-wp-class--has-overflow="state.hasMultipleBumps"
 >
 	<template
 		data-wp-each--bump="state.orderBumps"

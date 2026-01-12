@@ -64,7 +64,7 @@ const { state, actions } = store('surecart/order-bumps', {
 				// Scroll carousel to start after DOM updates.
 				setTimeout(() => {
 					document
-						.querySelector('.sc-cart-order-bump-template')
+						.querySelector('.wp-block-surecart-cart-order-bump-template')
 						?.scrollTo({ left: 0, behavior: 'smooth' });
 				}, 100);
 			}
@@ -251,7 +251,7 @@ const { state, actions } = store('surecart/order-bumps', {
 			if (!button) return;
 
 			// Find the carousel container
-			const container = button.closest('.sc-cart-order-bumps');
+			const container = button.closest('.wp-block-surecart-cart-order-bumps');
 			if (!container) return;
 
 			actions.scrollCarouselToIndex(container, state.currentIndex);
@@ -262,7 +262,7 @@ const { state, actions } = store('surecart/order-bumps', {
 		 */
 		scrollCarouselToIndex(container, index) {
 			const carousel = container?.querySelector(
-				'.sc-cart-order-bump-template'
+				'.wp-block-surecart-cart-order-bump-template'
 			);
 			const items = carousel?.querySelectorAll(
 				'.sc-cart-order-bump-item'

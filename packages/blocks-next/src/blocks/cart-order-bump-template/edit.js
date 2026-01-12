@@ -4,9 +4,7 @@
 import { InnerBlocks, useBlockProps } from '@wordpress/block-editor';
 
 export default () => {
-	const blockProps = useBlockProps({
-		className: 'sc-cart-order-bump-template',
-	});
+	const blockProps = useBlockProps();
 
 	return (
 		<ul {...blockProps}>
