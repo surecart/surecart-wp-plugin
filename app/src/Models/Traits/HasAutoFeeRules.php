@@ -60,7 +60,7 @@ trait HasAutoFeeRules {
 				}
 
 				if ( 'wp_user_role' === $value['attribute_name'] && 'set' === $type ) {
-					$value['attribute_name'] = 'checkout.metadata';
+					$value['attribute_name'] = 'metadata';
 					$value['metadata_key']   = 'wp_user_role';
 					continue;
 				}
@@ -69,7 +69,7 @@ trait HasAutoFeeRules {
 					continue;
 				}
 
-				if ( 'checkout.metadata' === $value['attribute_name'] && 'wp_user_role' === $value['metadata_key'] && 'get' === $type ) {
+				if ( 'metadata' === $value['attribute_name'] && 'wp_user_role' === $value['metadata_key'] && 'get' === $type ) {
 					$value['attribute_name'] = 'wp_user_role';
 				}
 			}
