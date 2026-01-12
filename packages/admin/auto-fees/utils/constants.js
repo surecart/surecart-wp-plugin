@@ -38,6 +38,9 @@ export const TEXT_ATTRIBUTES = [
 	'product.product_group.name',
 	'selected_shipping_method.name',
 	'order.order_type',
+	'sku',
+	'order_type',
+	'checkout.order_type',
 ];
 
 export const EMAIL_ATTRIBUTES = ['email', 'checkout.email'];
@@ -48,6 +51,9 @@ export const NUMBER_ATTRIBUTES = [
 	'g_weight',
 	'customer.order_count',
 	'price.recurring_period_count',
+	'customer_prior_product_purchase_quantity',
+	'original_checkout.not_revoked_purchases_quantity',
+	'original_checkout.billable_purchases_quantity',
 ];
 
 export const USER_ROLE_ATTRIBUTES = ['wp_user_role'];
