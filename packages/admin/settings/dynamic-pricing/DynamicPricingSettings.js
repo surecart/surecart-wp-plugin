@@ -38,6 +38,10 @@ export default () => {
 			title={__('Dynamic Pricing Settings', 'surecart')}
 			icon={<sc-icon name="badge-percent"></sc-icon>}
 			onSubmit={onSubmit}
+			style={{
+				'--wp-components-color-foreground':
+					'var(--sc-color-primary-500)',
+			}}
 		>
 			<Error
 				error={itemError || error}
