@@ -14,7 +14,7 @@ import {
 import Box from '../../ui/Box';
 import OrGroup from './OrGroup';
 import { TYPE_CHOICES } from '../utils/constants';
-import { getCurrencyCode } from '../utils/ruleQueryUtils';
+import { getCurrencyCode } from '../utils/helper';
 
 // Extract default condition structure as constants
 const DEFAULT_CONDITION = {

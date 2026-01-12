@@ -16,7 +16,7 @@ import {
 	ScSkeleton,
 } from '@surecart/components-react';
 import AndGroup from './AndGroup';
-import { attributeLabels } from '../utils/labelTranslations';
+import { attributeLabels } from '../utils/constants';
 
 export default ({
 	addRuleGroup,

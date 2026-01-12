@@ -12,7 +12,7 @@ import { __ } from '@wordpress/i18n';
 import { ScInput, ScPriceInput, ScSelect } from '@surecart/components-react';
 import Box from '../../ui/Box';
 import { useState, useEffect, useCallback } from '@wordpress/element';
-import { getCurrencyCode } from '../utils/ruleQueryUtils';
+import { getCurrencyCode } from '../utils/helper';
 
 const Details = ({ autoFee, onUpdate, loading }) => {
 	const { name, amount_adjustment, percent_adjustment, discount } = autoFee;

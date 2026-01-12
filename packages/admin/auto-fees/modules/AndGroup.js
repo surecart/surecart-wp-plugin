@@ -21,12 +21,12 @@ import {
 } from '@surecart/components-react';
 import DateTimePicker from './DateTimePicker';
 import { formatDate } from '../../util/time';
-import { getInputType } from '../utils/ruleQueryUtils';
+import { getInputType } from '../utils/helper';
 import {
 	attributeLabels,
 	operatorLabels,
 	supportedValuesLabels,
-} from '../utils/labelTranslations';
+} from '../utils/constants';
 
 export default ({
 	addLeaf,
