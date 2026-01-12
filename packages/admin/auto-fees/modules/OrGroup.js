@@ -28,6 +28,7 @@ export default ({
 	updateRuleJson,
 	group,
 	feeTarget,
+	currencyCode,
 }) => {
 	if (loading) {
 		return (
@@ -136,6 +137,7 @@ export default ({
 							groupIndex={groupIndex}
 							rules={rules}
 							updateRuleJson={updateRuleJson}
+							currencyCode={currencyCode}
 						/>
 					</div>
 				);

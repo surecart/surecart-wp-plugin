@@ -6,3 +6,7 @@ export const getInputType = (attribute, operator = false) => {
 	}
 	return ATTRIBUTE_TYPE_MAP[attribute] || 'text';
 };
+
+export const getCurrencyCode = (autoFee) => {
+	return autoFee?.currency || window?.scData?.currency_code || 'USD';
+};

@@ -14,6 +14,7 @@ import {
 import Box from '../../ui/Box';
 import OrGroup from './OrGroup';
 import { TYPE_CHOICES } from '../utils/constants';
+import { getCurrencyCode } from '../utils/ruleQueryUtils';
 
 // Extract default condition structure as constants
 const DEFAULT_CONDITION = {
@@ -187,6 +188,7 @@ export default ({ autoFee = {}, onUpdate, loading }) => {
 								groupIndex={groupIndex}
 								rules={rules}
 								updateRuleJson={updateRuleJson}
+								currencyCode={getCurrencyCode(autoFee)}
 							/>
 						</div>
 					);

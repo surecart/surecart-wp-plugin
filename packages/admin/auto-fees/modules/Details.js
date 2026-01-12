@@ -12,6 +12,7 @@ import { __ } from '@wordpress/i18n';
 import { ScInput, ScPriceInput, ScSelect } from '@surecart/components-react';
 import Box from '../../ui/Box';
 import { useState, useEffect, useCallback } from '@wordpress/element';
+import { getCurrencyCode } from '../utils/ruleQueryUtils';
 
 const Details = ({ autoFee, onUpdate, loading }) => {
 	const { name, amount_adjustment, percent_adjustment, discount } = autoFee;
@@ -64,10 +65,6 @@ const Details = ({ autoFee, onUpdate, loading }) => {
 		},
 		[onUpdate]
 	);
-
-	// Get currency code from global or autoFee
-	const currencyCode =
-		autoFee?.currency || window?.scData?.currency_code || 'USD';
 
 	return (
 		<Box title={__('Details', 'surecart')} loading={loading}>
@@ -145,7 +142,7 @@ const Details = ({ autoFee, onUpdate, loading }) => {
 					</ScInput>
 				) : (
 					<ScPriceInput
-						currencyCode={currencyCode}
+						currencyCode={getCurrencyCode(autoFee)}
 						attribute="amount_adjustment"
 						label={__('Amount', 'surecart')}
 						value={amount_adjustment || null}

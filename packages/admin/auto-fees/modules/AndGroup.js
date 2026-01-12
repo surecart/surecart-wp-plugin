@@ -34,6 +34,7 @@ export default ({
 	updateRuleJson,
 	leaf,
 	feeTarget,
+	currencyCode,
 }) => {
 	const [attribute, setAttribute] = useState(leaf?.attribute_name || null);
 	const [operator, setOperator] = useState(leaf?.operator_label || null);
@@ -199,7 +200,7 @@ export default ({
 						onScInput={(e) => {
 							setValue(e.target.value);
 						}}
-						currency={scData?.currency_code}
+						currencyCode={currencyCode}
 						placeholder={__('Enter an amount', 'surecart')}
 						className={fullWidthClass}
 					/>
