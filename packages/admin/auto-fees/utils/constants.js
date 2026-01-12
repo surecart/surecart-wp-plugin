@@ -92,3 +92,5 @@ export const ATTRIBUTE_TYPE_MAP = {
 		USER_ROLE_ATTRIBUTES.map((attr) => [attr, 'user_role'])
 	),
 };
+
+export const STRING_OPERATORS = ['contains', 'start_with', 'end_with'];

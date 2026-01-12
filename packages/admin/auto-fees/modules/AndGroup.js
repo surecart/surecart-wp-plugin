@@ -137,7 +137,7 @@ export default ({
 	};
 
 	const renderValueInput = () => {
-		const inputType = getInputType(attribute);
+		const inputType = getInputType(attribute, operator);
 		switch (inputType) {
 			case 'date':
 				return (
