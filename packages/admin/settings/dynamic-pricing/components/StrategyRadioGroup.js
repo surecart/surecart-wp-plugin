@@ -1,7 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { STRATEGY_VALUES, HELP_TEXT_STYLE, getHelpText } from '../utils';
-import { __ } from '@wordpress/i18n';
+import { STRATEGY_VALUES, STRATEGY_LABELS, getHelpText } from '../utils';
 import {
 	__experimentalToggleGroupControl as ToggleGroupControl,
 	__experimentalToggleGroupControlOption as ToggleGroupControlOption,
@@ -21,12 +20,28 @@ export const StrategyRadioGroup = ({
 			'--sc-flex-space-between': 'flex-start',
 			width: '100%',
 		}}
+		css={css`
+			font-size: 16px;
+			.components-base-control__label {
+				color: var(--sc-input-label-color);
+				font-weight: var(--sc-input-label-font-weight);
+				text-transform: var(--sc-input-label-text-transform, none);
+				letter-spacing: var(--sc-input-label-letter-spacing, 0);
+				font-size: var(--sc-input-label-font-size-medium);
+			}
+			.components-base-control__help {
+				color: var(--sc-input-help-text-color);
+				font-size: 12px;
+				margin-bottom: 0;
+			}
+		`}
 		flexDirection="column"
 	>
 		<ToggleGroupControl
 			value={value}
 			label={label}
 			onChange={onChange}
+			help={getHelpText(value, type, target)}
 			isBlock
 			__next40pxDefaultSize
 		>
@@ -34,13 +49,9 @@ export const StrategyRadioGroup = ({
 				<ToggleGroupControlOption
 					key={option}
 					value={option}
-					label={__(
-						option.charAt(0).toUpperCase() + option.slice(1),
-						'surecart'
-					)}
+					label={STRATEGY_LABELS[option]}
 				/>
 			))}
 		</ToggleGroupControl>
-		<div style={HELP_TEXT_STYLE}>{getHelpText(value, type, target)}</div>
 	</ScFlex>
 );
