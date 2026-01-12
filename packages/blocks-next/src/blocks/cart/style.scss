@@ -26,6 +26,15 @@
 	flex: 1 1 auto;
 	overflow: auto;
 	min-height: 0;
+	display: flex;
+	flex-direction: column;
+
+	// Push order bumps to the bottom of scrollable area.
+	> .sc-cart-order-bumps,
+	> .wp-block-surecart-cart-order-bumps {
+		margin-top: auto;
+		flex-shrink: 0;
+	}
 }
 
 // Stop the body from scrolling when the cart drawer is open.

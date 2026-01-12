@@ -1,15 +1,15 @@
 /**
- * External dependencies
+ * External dependencies.
  */
 import { registerBlockType } from '@wordpress/blocks';
 import { grid as icon } from '@wordpress/icons';
-import { InnerBlocks } from '@wordpress/block-editor';
 
 /**
- * Internal dependencies
+ * Internal dependencies.
  */
 import edit from './edit';
 import metadata from './block.json';
+import save from './save';
 import './style.scss';
 import './editor.scss';
 
@@ -19,5 +19,5 @@ import './editor.scss';
 registerBlockType(metadata.name, {
 	icon,
 	edit,
-	save: () => <InnerBlocks.Content />,
+	save,
 });

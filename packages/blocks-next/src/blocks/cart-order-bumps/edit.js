@@ -16,10 +16,7 @@ import { TEMPLATE } from './template';
 
 export default ({ attributes, setAttributes }) => {
 	const { hideAddedItems } = attributes;
-
-	const blockProps = useBlockProps({
-		className: 'sc-cart-order-bumps',
-	});
+	const blockProps = useBlockProps();
 
 	const innerBlocksProps = useInnerBlocksProps(blockProps, {
 		template: TEMPLATE,
