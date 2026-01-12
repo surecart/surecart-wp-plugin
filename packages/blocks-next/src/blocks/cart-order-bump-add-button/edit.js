@@ -2,13 +2,12 @@
  * External dependencies.
  */
 import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
-import { PanelBody, TextControl } from '@wordpress/components';
-import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies.
  */
 import ScIcon from '../../components/ScIcon';
+import Label from './label';
 
 export default ({ attributes, setAttributes }) => {
 	const blockProps = useBlockProps({
@@ -18,14 +17,9 @@ export default ({ attributes, setAttributes }) => {
 	return (
 		<>
 			<InspectorControls>
-				<PanelBody title={__('Settings', 'surecart')}>
-					<TextControl
-						label={__('Added Label', 'surecart')}
-						value={attributes.addedLabel}
-						onChange={(addedLabel) => setAttributes({ addedLabel })}
-					/>
-				</PanelBody>
+				<Label attributes={attributes} setAttributes={setAttributes} />
 			</InspectorControls>
+
 			<button {...blockProps} type="button">
 				<ScIcon name="plus" />
 			</button>

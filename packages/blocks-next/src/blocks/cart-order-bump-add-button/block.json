@@ -9,8 +9,7 @@
 	"ancestor": ["surecart/cart-order-bump-template"],
 	"attributes": {
 		"addedLabel": {
-			"type": "string",
-			"default": "Added"
+			"type": "string"
 		}
 	},
 	"supports": {
