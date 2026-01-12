@@ -17,16 +17,27 @@
 		"typography": {
 			"fontSize": true,
 			"lineHeight": true,
-			"__experimentalFontWeight": true
+			"__experimentalFontWeight": true,
+			"__experimentalDefaultControls": {
+				"fontSize": true
+			}
 		},
 		"color": {
 			"text": true,
-			"background": true
+			"background": true,
+			"__experimentalDefaultControls": {
+				"background": true,
+				"text": true
+			}
 		},
 		"__experimentalBorder": {
 			"color": true,
 			"radius": true,
-			"width": true
+			"width": true,
+			"__experimentalDefaultControls": {
+				"color": true,
+				"width": true
+			}
 		},
 		"spacing": {
 			"padding": true

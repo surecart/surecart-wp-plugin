@@ -1,39 +1,25 @@
-.sc-cart-order-bump-add-button {
+.wp-block-surecart-cart-order-bump-add-button {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	min-width: 32px;
-	min-height: 32px;
-	padding: 0.25em 0.5em;
-	border: 1px solid #d1d5db;
+	min-width: 2em;
+	min-height: 2em;
 	border-radius: 50%;
 	background-color: transparent;
-	color: #374151;
-	font-size: 16px;
-	font-weight: 400;
+	color: inherit;
 	cursor: pointer;
-	transition: all 0.15s ease;
 	flex-shrink: 0;
 
-	svg {
+	.sc-cart-order-bump-add-button__icon,
+	.sc-cart-order-bump-add-button__icon svg {
 		width: 1em;
 		height: 1em;
-		display: block;
-	}
-
-	&__icon {
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
 	}
 
 	&:disabled,
 	&--added {
 		cursor: default;
-		border-radius: 14px !important;
-		font-size: 14px !important;
-		padding: 0.35em 0.75em !important;
-		font-weight: 500;
+		border-radius: 1em;
 		min-width: auto;
 		min-height: auto;
 	}
