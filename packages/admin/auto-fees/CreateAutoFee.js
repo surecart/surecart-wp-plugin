@@ -266,7 +266,7 @@ export default ({ id, onCreateAutoFee }) => {
 									}}
 								>
 									{__(
-										'Choose who the fee applies to',
+										'Choose where the fee applies to',
 										'surecart'
 									)}
 								</span>
