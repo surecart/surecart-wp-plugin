@@ -36,7 +36,7 @@
 			<div class="sc-product-line-item__text">
 				<div class="sc-product-line-item__text-details">
 					<div class="sc-product-line-item__description">
-						<?php esc_html_e( 'Total Installment Payments', 'surecart' ); ?>
+						<?php esc_html_e( 'Total Installments (before discounts)', 'surecart' ); ?>
 					</div>
 				</div>
 			</div>
