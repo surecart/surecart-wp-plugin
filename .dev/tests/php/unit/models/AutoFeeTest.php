@@ -79,7 +79,7 @@ class AutoFeeTest extends SureCartUnitTestCase {
 		// Check wp_user_role transformation
 		$wp_user_condition = $result['conditions'][0];
 		$this->assertEquals('condition', $wp_user_condition['type']);
-		$this->assertEquals('metadata', $wp_user_condition['attribute_name']);
+		$this->assertEquals('checkout.metadata', $wp_user_condition['attribute_name']);
 		$this->assertEquals('wp_user_role', $wp_user_condition['metadata_key']);
 		$this->assertEquals('is', $wp_user_condition['operator']);
 		$this->assertEquals('subscriber', $wp_user_condition['comparison_value']);
@@ -106,7 +106,7 @@ class AutoFeeTest extends SureCartUnitTestCase {
 			"conditions" => [
 				[
 					"type" => "condition",
-					"attribute_name" => "metadata",
+					"attribute_name" => "checkout.metadata",
 					"metadata_key" => "wp_user_role",
 					"operator" => "is_not",
 					"comparison_value" => "administrator",
@@ -169,7 +169,7 @@ class AutoFeeTest extends SureCartUnitTestCase {
 						],
 						[
 							"type" => "condition",
-							"attribute_name" => "metadata",
+							"attribute_name" => "checkout.metadata",
 							"metadata_key" => "wp_user_role",
 							"operator" => "is_not",
 							"comparison_value" => "admin",
@@ -201,12 +201,12 @@ class AutoFeeTest extends SureCartUnitTestCase {
 
 		// First condition: wp_user_role -> metadata
 		$first_condition = $nested_group['conditions'][0];
-		$this->assertEquals('metadata', $first_condition['attribute_name']);
+		$this->assertEquals('checkout.metadata', $first_condition['attribute_name']);
 		$this->assertEquals('wp_user_role', $first_condition['metadata_key']);
 
 		// Second condition: metadata stays as metadata on 'set'
 		$second_condition = $nested_group['conditions'][1];
-		$this->assertEquals('metadata', $second_condition['attribute_name']);
+		$this->assertEquals('checkout.metadata', $second_condition['attribute_name']);
 		$this->assertEquals('wp_user_role', $second_condition['metadata_key']);
 
 		// Check top-level condition remains unchanged
@@ -246,7 +246,7 @@ class AutoFeeTest extends SureCartUnitTestCase {
 		$this->assertEquals('is', $result[0]['operator']);
 
 		// Second item should be transformed
-		$this->assertEquals('metadata', $result[1]['attribute_name']);
+		$this->assertEquals('checkout.metadata', $result[1]['attribute_name']);
 		$this->assertEquals('wp_user_role', $result[1]['metadata_key']);
 	}
 
@@ -261,7 +261,7 @@ class AutoFeeTest extends SureCartUnitTestCase {
 
 		$rule_json = [
 			[
-				'attribute_name' => 'metadata',
+				'attribute_name' => 'checkout.metadata',
 				'operator' => 'is',
 				'value' => 'test'
 			]
@@ -273,7 +273,7 @@ class AutoFeeTest extends SureCartUnitTestCase {
 		$this->assertCount(1, $result);
 
 		// Should remain unchanged since no metadata_key
-		$this->assertEquals('metadata', $result[0]['attribute_name']);
+		$this->assertEquals('checkout.metadata', $result[0]['attribute_name']);
 		$this->assertArrayNotHasKey('metadata_key', $result[0]);
 	}
 
@@ -434,7 +434,7 @@ class AutoFeeTest extends SureCartUnitTestCase {
 					"conditions" => [
 						[
 							"type" => "condition",
-							"attribute_name" => "metadata",
+							"attribute_name" => "checkout.metadata",
 							"metadata_key" => "wp_user_role",
 							"operator" => "is_not",
 							"comparison_value" => "admin",
@@ -467,7 +467,7 @@ class AutoFeeTest extends SureCartUnitTestCase {
 
 		// First condition: wp_user_role -> metadata
 		$wp_role_condition = $user_group['conditions'][0];
-		$this->assertEquals('metadata', $wp_role_condition['attribute_name']);
+		$this->assertEquals('checkout.metadata', $wp_role_condition['attribute_name']);
 		$this->assertEquals('wp_user_role', $wp_role_condition['metadata_key']);
 		$this->assertEquals('subscriber', $wp_role_condition['comparison_value']);
 
@@ -484,7 +484,7 @@ class AutoFeeTest extends SureCartUnitTestCase {
 
 		// First condition: metadata stays as metadata on 'set'
 		$metadata_condition = $metadata_group['conditions'][0];
-		$this->assertEquals('metadata', $metadata_condition['attribute_name']);
+		$this->assertEquals('checkout.metadata', $metadata_condition['attribute_name']);
 		$this->assertEquals('wp_user_role', $metadata_condition['metadata_key']);
 		$this->assertEquals('admin', $metadata_condition['comparison_value']);
 
