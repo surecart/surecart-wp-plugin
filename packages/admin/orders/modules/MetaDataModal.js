@@ -62,6 +62,7 @@ export default function MetaDataModal({
 				method: 'PATCH',
 				data: {
 					metadata: formData,
+					avoidSetUser: true,
 				},
 			});
 

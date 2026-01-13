@@ -55,6 +55,7 @@ export default ({ open, checkout, onRequestClose, onManuallyRefetchOrder }) => {
 				{
 					id: checkout?.id,
 					...(info || {}),
+					avoidSetUser: true,
 				},
 				{
 					throwOnError: true,
