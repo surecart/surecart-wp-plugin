@@ -5,7 +5,7 @@
 			[
 				'data-wp-interactive'            => '{ "namespace": "surecart/product-review-form" }',
 				'data-wp-class--sc-modal-active' => 'state.open',
-				'data-wp-watch--open'            => 'callbacks.handleOpenChange',
+				'data-wp-watch---open'           => 'callbacks.handleOpenChange',
 			]
 		)
 	);
@@ -39,13 +39,18 @@
 	>
 		<form data-wp-on--submit="callbacks.handleSubmit">
 			<div class="sc-product-review-form-dialog__content" style="<?php echo esc_attr( $content_style ); ?>">
-				<div data-wp-bind--hidden="context.submitted">
-					<?php echo $form_content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-				</div>
 
-				<div class="sc-product-review-confirmation" data-wp-bind--hidden="!context.submitted">
-					<?php echo $confirmation_content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-				</div>
+				<?php if ( isset( $form_template ) ) : ?>
+					<div data-wp-bind--hidden="context.submitted">
+						<?php echo $form_template->render(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+					</div>
+				<?php endif; ?>
+
+				<?php if ( isset( $confirmation_template ) ) : ?>
+					<div class="sc-product-review-confirmation" data-wp-bind--hidden="!context.submitted">
+						<?php echo $confirmation_template->render(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+					</div>
+				<?php endif; ?>
 			</div>
 		</form>
 	</div>
