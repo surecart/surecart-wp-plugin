@@ -53,13 +53,13 @@ if ( ! empty( $block->inner_blocks ) ) {
 
 		// Check if this is the form template block.
 		if ( 'surecart/product-review-form-template' === $block_name ) {
-			$form_content .= render_block( $inner_block );
+			$form_content .= $inner_block->render();
 		} elseif ( 'surecart/product-review-confirmation-template' === $block_name ) {
 			// Check if this is the confirmation template block.
-			$confirmation_content .= render_block( $inner_block );
+			$confirmation_content .= $inner_block->render();
 		} else {
 			// If no specific template, add to form content by default.
-			$form_content .= render_block( $inner_block );
+			$form_content .= $inner_block->render();
 		}
 	}
 }
