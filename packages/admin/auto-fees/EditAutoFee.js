@@ -27,7 +27,7 @@ import {
 	ScTag,
 	ScFormControl,
 } from '@surecart/components-react';
-import useSave from '../settings/UseSave';
+import useSave from './utils/UseSave';
 import Error from '../components/Error';
 import Logo from '../templates/Logo';
 import UpdateModel from '../templates/UpdateModel';

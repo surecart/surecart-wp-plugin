@@ -51,6 +51,8 @@ trait HasAutoFeeRules {
 			return (object) [];
 		}
 
+		$attribute_name = 'line_item' === $this->attributes['fee_target'] ? 'checkout.metadata' : 'metadata';
+
 		foreach ( $rule_array as $key => &$value ) {
 			if ( is_array( $value ) ) {
 				$value = $this->handleCustomAttributes( $value, $type );
@@ -60,7 +62,7 @@ trait HasAutoFeeRules {
 				}
 
 				if ( 'wp_user_role' === $value['attribute_name'] && 'set' === $type ) {
-					$value['attribute_name'] = 'checkout.metadata';
+					$value['attribute_name'] = $attribute_name;
 					$value['metadata_key']   = 'wp_user_role';
 					continue;
 				}
@@ -69,7 +71,7 @@ trait HasAutoFeeRules {
 					continue;
 				}
 
-				if ( 'checkout.metadata' === $value['attribute_name'] && 'wp_user_role' === $value['metadata_key'] && 'get' === $type ) {
+				if ( $attribute_name === $value['attribute_name'] && 'wp_user_role' === $value['metadata_key'] && 'get' === $type ) {
 					$value['attribute_name'] = 'wp_user_role';
 				}
 			}
