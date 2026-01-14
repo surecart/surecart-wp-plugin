@@ -240,8 +240,8 @@ const { state, actions } = store('surecart/checkout', {
 			return sprintf(
 				_n(
 					/* translators: %d: number of items in the cart */
-					'Total of %d item in the cart',
-					'Total of %d items in the cart',
+					'Total of %d item in your cart',
+					'Total of %d items in your cart',
 					count,
 					'surecart'
 				),
@@ -268,7 +268,7 @@ const { state, actions } = store('surecart/checkout', {
 		get removeItemAriaLabel() {
 			const { line_item } = getContext('surecart/checkout');
 			return sprintf(
-				__('Remove %s from cart.', 'surecart'),
+				__('Remove %s from your cart.', 'surecart'),
 				line_item?.price?.product?.name
 			);
 		},
@@ -772,7 +772,7 @@ const { state, actions } = store('surecart/checkout', {
 
 			speak(
 				sprintf(
-					__('Removing %s from cart.', 'surecart'),
+					__('Removing %s from your cart.', 'surecart'),
 					line_item?.price?.product?.name
 				),
 				'assertive'
