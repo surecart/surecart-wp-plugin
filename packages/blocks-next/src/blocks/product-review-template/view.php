@@ -39,7 +39,7 @@
 		wp_interactivity_state( 'surecart/product-review', $state );
 		?>
 
-		<li class="sc-product-review-link sc-has-animation-fade-up" data-wp-key="review-template-item-<?php echo (int) $review->id; ?>">
+		<li class="sc-product-review-link sc-has-animation-fade-up" data-wp-key="review-template-item-<?php echo esc_attr( $review->id ); ?>">
 			<?php echo $block_content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 		</li>
 	<?php endforeach; ?>
