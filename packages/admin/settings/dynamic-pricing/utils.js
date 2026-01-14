@@ -69,13 +69,13 @@ export const DISCOUNT_STRATEGIES = [
 	},
 ];
 
-export const STRATEGY_VALUES = ['all', 'first', 'largest', 'smallest'];
+export const STRATEGY_VALUES = ['all', 'first', 'biggest', 'lowest'];
 
 export const STRATEGY_LABELS = {
 	all: __('All', 'surecart'),
 	first: __('First', 'surecart'),
-	largest: __('Largest', 'surecart'),
-	smallest: __('Smallest', 'surecart'),
+	biggest: __('Biggest', 'surecart'),
+	lowest: __('Lowest', 'surecart'),
 };
 
 export const VALUE_PHRASE = {
@@ -84,9 +84,9 @@ export const VALUE_PHRASE = {
 	/* translators: %s: discount type (e.g. discount, coupon) */
 	first: __('Only the first matching %s', 'surecart'),
 	/* translators: %s: discount type (e.g. discount, coupon, fee) */
-	largest: __('Only the largest matching %s', 'surecart'),
+	biggest: __('Only the biggest matching %s', 'surecart'),
 	/* translators: %s: discount type (e.g. discount, coupon, fee) */
-	smallest: __('Only the smallest matching %s', 'surecart'),
+	lowest: __('Only the lowest matching %s', 'surecart'),
 };
 
 export const TARGET_PHRASE = {
@@ -105,7 +105,7 @@ export const getHelpText = (
 	}
 
 	return sprintf(
-		/* translators: %1$s: strategy value (e.g. all, first, largest, smallest), %2$s: target (e.g. checkout, line_item, shipping) */
+		/* translators: %1$s: strategy value (e.g. all, first, biggest, lowest), %2$s: target (e.g. checkout, line_item, shipping) */
 		__('%1$s will be applied %2$s.', 'surecart'),
 		sprintf(VALUE_PHRASE[value], type),
 		TARGET_PHRASE[target]
