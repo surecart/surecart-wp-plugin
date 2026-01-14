@@ -16,6 +16,7 @@ exports[`sc-checkout renders 1`] = `
         </sc-form-error-provider>
       </sc-form-state-provider>
     </sc-login-provider>
+    <sc-checkout-test-complete checkout-status="draft" success-url=""></sc-checkout-test-complete>
   </div>
 </sc-checkout>
 `;
