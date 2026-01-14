@@ -2,7 +2,6 @@
 
 namespace SureCart\Controllers\Rest;
 
-use SureCart\Models\Customer;
 use SureCart\Models\Review;
 use SureCart\Models\User;
 
