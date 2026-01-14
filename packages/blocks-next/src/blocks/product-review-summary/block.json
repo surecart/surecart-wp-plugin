@@ -33,5 +33,5 @@
 	"textdomain": "surecart",
 	"render": "file:./view.php",
 	"editorScript": "file:./index.js",
-	"style": ["file:./style-index.css", "surecart-block-ui", "surecart-spinner"]
+	"style": ["surecart-block-ui", "surecart-spinner"]
 }
