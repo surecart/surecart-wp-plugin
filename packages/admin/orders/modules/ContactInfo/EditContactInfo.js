@@ -51,11 +51,10 @@ export default ({ open, checkout, onRequestClose, onManuallyRefetchOrder }) => {
 			// update the checkout
 			await saveEntityRecord(
 				'surecart',
-				'checkout',
+				'draft-checkout',
 				{
 					id: checkout?.id,
 					...(info || {}),
-					avoidSetUser: true,
 				},
 				{
 					throwOnError: true,

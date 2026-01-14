@@ -37,7 +37,7 @@ export default function MetaDataModal({
 
 	const { baseURL } = select(coreStore).getEntityConfig(
 		'surecart',
-		'checkout'
+		'draft-checkout'
 	);
 
 	useEffect(() => {
@@ -62,7 +62,6 @@ export default function MetaDataModal({
 				method: 'PATCH',
 				data: {
 					metadata: formData,
-					avoidSetUser: true,
 				},
 			});
 

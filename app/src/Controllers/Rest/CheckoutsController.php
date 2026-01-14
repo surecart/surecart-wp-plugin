@@ -36,10 +36,9 @@ class CheckoutsController extends RestController {
 			return apply_filters( 'surecart/request/model', $class, $request );
 		}
 
-		if ( empty( $request->get_param( 'avoidSetUser' ) ) ) { // If avoidSetUser is not set only then try setting user.
-			// set the user.
-			$class = $this->maybeSetUser( $class, $request );
-		}
+		// set the user.
+		$class = $this->maybeSetUser( $class, $request );
+
 		// return the class.
 		return apply_filters( 'surecart/request/model', $class, $request );
 	}
