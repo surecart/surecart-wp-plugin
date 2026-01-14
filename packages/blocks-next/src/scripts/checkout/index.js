@@ -274,6 +274,42 @@ const { state, actions } = store('surecart/checkout', {
 		},
 
 		/**
+		 * Get the aria label for increasing quantity.
+		 */
+		get increaseQuantityAriaLabel() {
+			const { line_item } = getContext('surecart/checkout');
+			return sprintf(
+				/* translators: %s: product name */
+				__('Increase quantity for %s.', 'surecart'),
+				line_item?.price?.product?.name
+			);
+		},
+
+		/**
+		 * Get the aria label for decreasing quantity.
+		 */
+		get decreaseQuantityAriaLabel() {
+			const { line_item } = getContext('surecart/checkout');
+			return sprintf(
+				/* translators: %s: product name */
+				__('Decrease quantity for %s.', 'surecart'),
+				line_item?.price?.product?.name
+			);
+		},
+
+		/**
+		 * Get the aria label for quantity input.
+		 */
+		get quantityInputAriaLabel() {
+			const { line_item } = getContext('surecart/checkout');
+			return sprintf(
+				/* translators: %s: product name */
+				__('Quantity for %s.', 'surecart'),
+				line_item?.price?.product?.name
+			);
+		},
+
+		/**
 		 * Get the line item variant.
 		 */
 		get lineItemVariant() {
