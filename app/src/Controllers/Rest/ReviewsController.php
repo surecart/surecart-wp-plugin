@@ -85,16 +85,16 @@ class ReviewsController extends RestController {
 	 * @return \SureCart\Models\Model|\WP_Error
 	 */
 	protected function maybeSetUser( \SureCart\Models\Model $class, \WP_REST_Request $request ) {
-		$user = User::current();
-
 		// Must be logged in.
-		if ( ! $user ) {
+		if ( ! is_user_logged_in() ) {
 			return new \WP_Error(
 				'surecart_rest_review_no_user',
 				__( 'You must be logged in to submit a review.', 'surecart' ),
 				[ 'status' => 401 ]
 			);
 		}
+
+		$user = User::current();
 
 		// Get or create live customer.
 		$customer_id = $user->getOrCreateLiveCustomerId();
