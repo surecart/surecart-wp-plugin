@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { InspectorControls } from '@wordpress/block-editor';
-import { PanelBody, PanelRow, TextControl } from '@wordpress/components';
+import { PanelBody, PanelRow, TextControl, ToggleControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { Fragment } from '@wordpress/element';
 
@@ -24,6 +24,7 @@ export default ({ attributes, setAttributes }) => {
 		eu_vat_label,
 		help_text,
 		tax_id_types,
+		required,
 	} = attributes;
 
 	const zones = [
@@ -38,6 +39,19 @@ export default ({ attributes, setAttributes }) => {
 		<Fragment>
 			<InspectorControls>
 				<PanelBody title={__('Attributes', 'surecart')}>
+					<PanelRow>
+						<ToggleControl
+							label={__('Required', 'surecart')}
+							checked={required}
+							onChange={(required) =>
+								setAttributes({ required })
+							}
+							help={__(
+								'Make this field required for all customers',
+								'surecart'
+							)}
+						/>
+					</PanelRow>
 					<PanelRow>
 						<TextControl
 							label={__('CA GST Label', 'surecart')}
@@ -181,6 +195,7 @@ export default ({ attributes, setAttributes }) => {
 				euVatLabel={eu_vat_label || null}
 				helpText={help_text || null}
 				taxIdTypes={JSON.stringify(tax_id_types)}
+				required={required || false}
 			></ScOrderTaxIdInput>
 		</Fragment>
 	);

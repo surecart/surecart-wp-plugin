@@ -247,18 +247,24 @@ test.describe('Checkout Urls', () => {
 			})
 		);
 
+		// Wait for the checkout to initialize and potentially redirect
+		await page.waitForLoadState('networkidle');
+
 		await expect(page.getByText('Test URL Product')).toBeVisible();
 
-		// page url should not have checkout id
-		expect(page.url()).toContain('checkout_id');
+		// For unpersisted carts, checkout_id should be in the URL
+		await expect(async () => {
+			expect(page.url()).toContain('checkout_id');
+		}).toPass({ timeout: 10000 });
 
 		// reload without checkout id
 		await page.reload();
+		await page.waitForLoadState('networkidle');
 
-		// page url should not have checkout id
+		// After reload, checkout_id should still be in the URL
 		expect(page.url()).toContain('checkout_id');
 
-		// page url should not have checkout id
+		// Product should still be visible after reload
 		await expect(page.getByText('Test URL Product')).toBeVisible();
 	});
 

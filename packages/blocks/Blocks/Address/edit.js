@@ -1,4 +1,4 @@
-import { Fragment, useState } from '@wordpress/element';
+import { Fragment, useState, useEffect } from '@wordpress/element';
 import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
 import { TextControl, PanelBody, ToggleControl } from '@wordpress/components';
@@ -24,7 +24,12 @@ export default ({ attributes, setAttributes }) => {
 		line_2,
 	} = attributes;
 	const [sameAsShipping, setSameAsShipping] = useState(false);
+	const [choices, setChoices] = useState([]);
 	const blockProps = useBlockProps();
+
+	useEffect(() => {
+		countryChoices().then((data) => setChoices(data));
+	}, []);
 	const Tag = full ? ScAddress : ScCompactAddress;
 
 	return (
@@ -128,7 +133,7 @@ export default ({ attributes, setAttributes }) => {
 						search
 						label={__('Default country', 'surecart')}
 						placeholder={__('Country', 'surecart')}
-						choices={countryChoices}
+						choices={choices}
 						value={default_country}
 						onScChange={(e) =>
 							setAttributes({
@@ -151,11 +156,7 @@ export default ({ attributes, setAttributes }) => {
 						address={{
 							country: default_country,
 						}}
-						defaultCountryFields={
-							scBlockData.i18n.defaultCountryFields
-						}
 						showLine2={line_2}
-						countryFields={scBlockData.i18n.countryFields}
 					/>
 
 					{collect_billing && (
@@ -176,11 +177,7 @@ export default ({ attributes, setAttributes }) => {
 							address={{
 								country: default_country,
 							}}
-							defaultCountryFields={
-								scBlockData.i18n.defaultCountryFields
-							}
 							showLine2={line_2}
-							countryFields={scBlockData.i18n.countryFields}
 						/>
 					)}
 				</ScFlex>

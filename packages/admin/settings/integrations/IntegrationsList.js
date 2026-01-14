@@ -17,7 +17,7 @@ export default () => {
 
 	// Group records by category
 	const groupedRecords = (records || []).reduce((acc, record) => {
-		(record._embedded['wp:term'][0] || []).forEach(({ name }) => {
+		(record?._embedded['wp:term']?.[0] || []).forEach(({ name }) => {
 			if (!acc[name]) {
 				acc[name] = [];
 			}
