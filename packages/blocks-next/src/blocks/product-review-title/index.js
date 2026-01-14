@@ -9,7 +9,7 @@ import { title as icon } from '@wordpress/icons';
  */
 import edit from './edit';
 import metadata from './block.json';
-import style from './style.scss';
+import './style.scss';
 
 registerBlockType(metadata.name, {
 	icon,
