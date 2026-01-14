@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-01-01T09:54:47",
+  "timestamp": "2026-01-14T16:55:01",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.18.3",
@@ -25777,8 +25777,6 @@
         "sc-payment-selected",
         "sc-checkout-paystack-payment-provider",
         "sc-form-control",
-        "sc-tag",
-        "sc-test-mode-info",
         "sc-checkout-mollie-payment",
         "sc-alert"
       ],
@@ -25791,8 +25789,6 @@
           "sc-payment-selected",
           "sc-checkout-paystack-payment-provider",
           "sc-form-control",
-          "sc-tag",
-          "sc-test-mode-info",
           "sc-checkout-mollie-payment",
           "sc-alert"
         ],
@@ -25804,17 +25800,6 @@
         ],
         "sc-form-control": [
           "sc-visually-hidden"
-        ],
-        "sc-test-mode-info": [
-          "sc-popover",
-          "sc-icon",
-          "sc-button"
-        ],
-        "sc-popover": [
-          "sc-icon"
-        ],
-        "sc-button": [
-          "sc-spinner"
         ],
         "sc-checkout-mollie-payment": [
           "sc-card",
@@ -31282,7 +31267,7 @@
             "references": {
               "LayoutConfig": {
                 "location": "local",
-                "path": "/Users/rajkiranbagal/LocalSites/app/public/wp-content/plugins/surecart/packages/components/src/components/controllers/products/sc-product-item-list/sc-product-item-list.tsx",
+                "path": "/Users/andre/sites/surecart/wp-content/plugins/surecart/packages/components/src/components/controllers/products/sc-product-item-list/sc-product-item-list.tsx",
                 "id": "src/components/controllers/products/sc-product-item-list/sc-product-item-list.tsx::LayoutConfig"
               }
             }
@@ -41545,6 +41530,14 @@
         {
           "name": "content",
           "docs": ""
+        },
+        {
+          "name": "prefix",
+          "docs": ""
+        },
+        {
+          "name": "suffix",
+          "docs": ""
         }
       ],
       "dependents": [
@@ -41567,7 +41560,6 @@
         "sc-order-shipment-badge",
         "sc-order-status-badge",
         "sc-orders-list",
-        "sc-payment",
         "sc-payment-method",
         "sc-payment-methods-list",
         "sc-premium-tag",
@@ -41635,9 +41627,6 @@
           "sc-tag"
         ],
         "sc-orders-list": [
-          "sc-tag"
-        ],
-        "sc-payment": [
           "sc-tag"
         ],
         "sc-payment-method": [
@@ -42125,7 +42114,7 @@
     },
     {
       "filePath": "src/components/ui/test-mode-info/sc-test-mode-info.tsx",
-      "encapsulation": "shadow",
+      "encapsulation": "none",
       "tag": "sc-test-mode-info",
       "docs": "",
       "docsTags": [
@@ -42163,28 +42152,23 @@
           "docs": "The trigger."
         }
       ],
-      "dependents": [
-        "sc-payment"
-      ],
+      "dependents": [],
       "dependencies": [
         "sc-popover",
-        "sc-icon",
-        "sc-button"
+        "sc-button",
+        "sc-icon"
       ],
       "dependencyGraph": {
         "sc-test-mode-info": [
           "sc-popover",
-          "sc-icon",
-          "sc-button"
+          "sc-button",
+          "sc-icon"
         ],
         "sc-popover": [
           "sc-icon"
         ],
         "sc-button": [
           "sc-spinner"
-        ],
-        "sc-payment": [
-          "sc-test-mode-info"
         ]
       }
     },

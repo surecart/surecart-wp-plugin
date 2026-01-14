@@ -11,7 +11,7 @@
 | ----------- | ----------- | ----------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------- |
 | `clickEl`   | --          |                                                                                                                                           | `HTMLElement`                                                                                                                                                        | `undefined`      |
 | `disabled`  | `disabled`  | Is this disabled.                                                                                                                         | `boolean`                                                                                                                                                            | `undefined`      |
-| `distance`  | `distance`  | The distance in pixels from which to offset the panel away from its trigger.                                                              | `number`                                                                                                                                                             | `10`             |
+| `distance`  | `distance`  | The distance in pixels from which to offset the panel away from its trigger.                                                              | `number`                                                                                                                                                             | `0`              |
 | `hoist`     | `hoist`     | Enable this option to prevent the panel from being clipped when the component is placed inside a container with `overflow: auto\|scroll`. | `boolean`                                                                                                                                                            | `false`          |
 | `open`      | `open`      | Indicates whether or not the popover is open. You can use this in lieu of the show/hide methods.                                          | `boolean`                                                                                                                                                            | `false`          |
 | `placement` | `placement` | The placement of the popover.                                                                                                             | `"bottom" \| "bottom-end" \| "bottom-start" \| "left" \| "left-end" \| "left-start" \| "right" \| "right-end" \| "right-start" \| "top" \| "top-end" \| "top-start"` | `'bottom-start'` |
@@ -40,12 +40,17 @@
 
 ### Used by
 
- - [sc-payment](../../controllers/checkout-form/payment)
+ - [sc-test-mode-info](../test-mode-info)
+
+### Depends on
+
+- [sc-icon](../icon)
 
 ### Graph
 ```mermaid
 graph TD;
-  sc-payment --> sc-popover
+  sc-popover --> sc-icon
+  sc-test-mode-info --> sc-popover
   style sc-popover fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
