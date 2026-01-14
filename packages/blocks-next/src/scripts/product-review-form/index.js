@@ -41,6 +41,18 @@ const isInvalidInput = (context) => {
 };
 
 /**
+ * Check if the form has unsaved changes.
+ */
+const hasUnsavedChanges = (context) => {
+	const { stars, title, body } = context;
+	return (
+		stars > 0 ||
+		(title && title.trim() !== '') ||
+		(body && body.trim() !== '')
+	);
+};
+
+/**
  * Remove the product-review-form URL parameter.
  */
 const removeProductReviewFormUrlParameter = () => {
@@ -89,6 +101,14 @@ const { state, actions, callbacks } = store('surecart/product-review-form', {
 
 			// prevent default to avoid page reload.
 			event?.preventDefault();
+
+			// Confirm before closing if there are unsaved changes.
+			if (hasUnsavedChanges(context)) {
+				// eslint-disable-next-line no-alert
+				if (!window.confirm(__('Discard your review?', 'surecart'))) {
+					return;
+				}
+			}
 
 			// Clear the form when closing.
 			callbacks.clearForm();
