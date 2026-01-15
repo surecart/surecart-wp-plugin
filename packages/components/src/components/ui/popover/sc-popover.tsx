@@ -21,8 +21,6 @@ export class ScPopover {
 
   private positionerCleanup: ReturnType<typeof autoUpdate> | undefined;
 
-  @Prop() clickEl?: HTMLElement;
-
   /** Is this disabled. */
   @Prop() disabled: boolean;
 
@@ -73,7 +71,7 @@ export class ScPopover {
     this.open ? this.show() : this.hide();
   }
 
-  handleOutsideClick(evt) {
+  handleOutsideClick(evt: MouseEvent) {
     const path = evt.composedPath();
     if (
       !path.some(item => {
@@ -161,8 +159,17 @@ export class ScPopover {
     trigger.focus();
   }
 
+  private handleDocumentMouseDown = (evt: MouseEvent) => {
+    this.handleOutsideClick(evt);
+  };
+
   componentWillLoad() {
-    document.addEventListener('mousedown', evt => this.handleOutsideClick(evt));
+    document.addEventListener('mousedown', this.handleDocumentMouseDown);
+  }
+
+  disconnectedCallback() {
+    document.removeEventListener('mousedown', this.handleDocumentMouseDown);
+    this.stopPositioner(); // 👈 important cleanup
   }
 
   handleHide() {

@@ -1519,7 +1519,6 @@
     "slot": true
   },
   "sc-popover": {
-    "click-el": true,
     "disabled": true,
     "distance": true,
     "hoist": true,

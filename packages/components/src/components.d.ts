@@ -2632,7 +2632,6 @@ export namespace Components {
         "isUnavailable": boolean;
     }
     interface ScPopover {
-        "clickEl"?: HTMLElement;
         /**
           * Is this disabled.
          */
@@ -9853,7 +9852,6 @@ declare namespace LocalJSX {
         "isUnavailable"?: boolean;
     }
     interface ScPopover {
-        "clickEl"?: HTMLElement;
         /**
           * Is this disabled.
          */

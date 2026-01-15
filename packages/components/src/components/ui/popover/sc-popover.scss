@@ -29,7 +29,7 @@ slot[name='title'] {
     }
   }
   &__footer {
-    border-top: 1px solid #e4e4e4;
+    border-top: 1px solid var(--sc-input-border-color);
     padding-top: 0.5em;
     margin-top: 1em;
   }
