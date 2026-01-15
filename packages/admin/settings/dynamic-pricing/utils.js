@@ -74,8 +74,8 @@ export const STRATEGY_VALUES = ['all', 'first', 'biggest', 'lowest'];
 export const STRATEGY_LABELS = {
 	all: __('All', 'surecart'),
 	first: __('First', 'surecart'),
-	biggest: __('Biggest', 'surecart'),
-	lowest: __('Lowest', 'surecart'),
+	biggest: __('Largest', 'surecart'),
+	lowest: __('Smallest', 'surecart'),
 };
 
 export const VALUE_PHRASE = {
