@@ -36,10 +36,8 @@
 			<div class="sc-product-line-item__text">
 				<div class="sc-product-line-item__text-details">
 					<div class="sc-product-line-item__description">
-						<span data-wp-bind--hidden="state.hasDiscountAmount"><?php esc_html_e( 'Total Installments', 'surecart' ); ?></span>
+						<?php esc_html_e( 'Total Installments', 'surecart' ); ?>
 						<span data-wp-bind--hidden="!state.hasDiscountAmount" hidden>
-							<?php esc_html_e( 'Total Installments', 'surecart' ); ?>
-							&nbsp;
 							<?php esc_html_e( '(before discounts)', 'surecart' ); ?>
 						</span>
 					</div>
