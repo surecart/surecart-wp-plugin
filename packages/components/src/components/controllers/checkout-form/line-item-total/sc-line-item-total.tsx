@@ -186,9 +186,15 @@ export class ScLineItemTotal {
           <sc-line-item style={this.size === 'large' ? { '--price-size': 'var(--sc-font-size-x-large)' } : {}}>
             <span slot="description">
               {!!checkout?.discount_amount ? (
-                <sc-tooltip type="text" text={__('This is the total of all installment payments at full price, before any discounts are applied.', 'surecart')} width="250px">
+                <sc-tooltip
+                  class="total-payments-tooltip"
+                  type="text"
+                  text={__('This is the total of all installment payments at full price, before any discounts are applied.', 'surecart')}
+                  width="275px"
+                >
                   <slot name="total-payments-description">{__('Total Installments', 'surecart')}</slot> {__('(before discounts)', 'surecart')}
-                  <sc-icon name="info" style={{ opacity: '0.45', fontSize: '13px', marginInlineStart: '4px' }}></sc-icon>
+                  <sc-icon name="info" aria-hidden="true"></sc-icon>
+                  <sc-visually-hidden>{__('This is the total of all installment payments at full price, before any discounts are applied.', 'surecart')}</sc-visually-hidden>
                 </sc-tooltip>
               ) : (
                 <slot name="total-payments-description">{__('Total Installments', 'surecart')}</slot>
