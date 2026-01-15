@@ -8,8 +8,8 @@ export const TARGETS = [
 			'Choose the behavior when multiple fees or discounts apply to the order total.',
 			'surecart'
 		),
-		feeKey: 'negative_checkout_fee_selection_strategy',
-		discountKey: 'positive_checkout_fee_selection_strategy',
+		feeKey: 'positive_checkout_fee_selection_strategy',
+		discountKey: 'negative_checkout_fee_selection_strategy',
 	},
 	{
 		id: 'line_item',
@@ -18,8 +18,8 @@ export const TARGETS = [
 			'Choose the behavior when multiple fees or discounts apply to individual products in the cart.',
 			'surecart'
 		),
-		feeKey: 'negative_line_item_fee_selection_strategy',
-		discountKey: 'positive_line_item_fee_selection_strategy',
+		feeKey: 'positive_line_item_fee_selection_strategy',
+		discountKey: 'negative_line_item_fee_selection_strategy',
 	},
 	{
 		id: 'shipping',
@@ -28,44 +28,8 @@ export const TARGETS = [
 			'Choose the behavior when multiple fees or discounts apply to the shipping total.',
 			'surecart'
 		),
-		feeKey: 'negative_shipping_fee_selection_strategy',
-		discountKey: 'positive_shipping_fee_selection_strategy',
-	},
-];
-
-export const FEE_STRATEGIES = [
-	{
-		label: __('Checkout', 'surecart'),
-		target: 'checkout',
-		attribute: 'negative_checkout_fee_selection_strategy',
-	},
-	{
-		label: __('Line Item', 'surecart'),
-		target: 'line_item',
-		attribute: 'negative_line_item_fee_selection_strategy',
-	},
-	{
-		label: __('Shipping', 'surecart'),
-		target: 'shipping',
-		attribute: 'negative_shipping_fee_selection_strategy',
-	},
-];
-
-export const DISCOUNT_STRATEGIES = [
-	{
-		label: __('Checkout', 'surecart'),
-		target: 'checkout',
-		attribute: 'positive_checkout_fee_selection_strategy',
-	},
-	{
-		label: __('Line Item', 'surecart'),
-		target: 'line_item',
-		attribute: 'positive_line_item_fee_selection_strategy',
-	},
-	{
-		label: __('Shipping', 'surecart'),
-		target: 'shipping',
-		attribute: 'positive_shipping_fee_selection_strategy',
+		feeKey: 'positive_shipping_fee_selection_strategy',
+		discountKey: 'negative_shipping_fee_selection_strategy',
 	},
 ];
 
