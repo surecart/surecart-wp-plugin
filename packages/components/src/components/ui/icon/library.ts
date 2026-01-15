@@ -15,7 +15,7 @@ export function unwatchIcon(icon: any) {
 }
 
 export function getIconLibrary(name?: string) {
-  return window?.registry?.filter(lib => lib.name === name)[0];
+  return registry.filter(lib => lib.name === name)[0];
 }
 
 export function registerIconLibrary(name: string, options: { resolver: IconLibraryResolver; mutator?: IconLibraryMutator }) {
@@ -36,7 +36,8 @@ export function registerIconLibrary(name: string, options: { resolver: IconLibra
 }
 
 export function unregisterIconLibrary(name: string) {
-  window.registry = window?.registry?.filter(lib => lib.name !== name);
+  registry = registry.filter(lib => lib.name !== name);
+  window.registry = registry;
 }
 
 window.ceRegisterIconLibrary = registerIconLibrary;

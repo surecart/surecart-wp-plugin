@@ -1,9 +1,9 @@
 import { defineCustomElements } from '@surecart/components/loader';
 defineCustomElements();
 
-if (window?.registerSureCartIconPath) {
+if (window?.registerSureCartIconPath && window?.scData?.plugin_url) {
 	window.registerSureCartIconPath(
-		window?.scData?.plugin_url + '/dist/icon-assets'
+		window.scData.plugin_url + '/dist/icon-assets'
 	);
 }
 
