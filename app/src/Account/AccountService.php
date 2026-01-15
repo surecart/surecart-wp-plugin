@@ -180,13 +180,13 @@ class AccountService {
 	 * @return \SureCart\Models\Account|null
 	 */
 	public function convertArrayToAccount( $data ) {
-		if ( empty( $data ) || ( ! isset( $data['id'] ) && ! isset( $data->id ) ) ) {
-			return null;
-		}
-
 		// Handle Backward Compatibility. If it's already an account, return it.
 		if ( $data instanceof Account ) {
 			return $data;
+		}
+
+		if ( empty( $data ) || ( ! isset( $data['id'] ) && ! isset( $data->id ) ) ) {
+			return null;
 		}
 
 		$data = json_decode( wp_json_encode( $data ) );
