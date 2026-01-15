@@ -27,9 +27,9 @@ export default function SelectTemplate({
 			const { canUser, getEntityRecords } = select(coreStore);
 			const selectorArgs = ['postType', 'wp_template', { per_page: -1 }];
 			const templates = getEntityRecords(...selectorArgs) || [];
-			const { type, slug } = post;
+			const { type, slug } = post || {};
 			const defaultTemplateId = select(coreStore).getDefaultTemplateId({
-				slug: post?.slug ? `single-${type}-${slug}` : `single-${type}`,
+				slug: slug ? `single-${type}-${slug}` : `single-${type}`,
 			});
 			return {
 				templates: templates.filter((t) => {

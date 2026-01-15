@@ -31,11 +31,12 @@ export default ({ attributes: { label, showLabel, icon }, setAttributes }) => {
 				<PanelBody>
 					<ToggleGroupControl
 						__nextHasNoMarginBottom
-						label={__('Arrow')}
+						label={__('Arrow', 'surecart')}
 						value={icon}
 						onChange={(icon) => setAttributes({ icon })}
 						help={__(
-							'A decorative arrow appended to the next and previous page link.'
+							'A decorative arrow appended to the next and previous page link.',
+							'surecart'
 						)}
 						isBlock
 					>
@@ -43,21 +44,24 @@ export default ({ attributes: { label, showLabel, icon }, setAttributes }) => {
 							value="arrow"
 							label={_x(
 								'Arrow',
-								'Arrow option for Query Pagination Next/Previous blocks'
+								'Arrow option for Query Pagination Next/Previous blocks',
+								'surecart'
 							)}
 						/>
 						<ToggleGroupControlOption
 							value="chevron"
 							label={_x(
 								'Chevron',
-								'Arrow option for Query Pagination Next/Previous blocks'
+								'Arrow option for Query Pagination Next/Previous blocks',
+								'surecart'
 							)}
 						/>
 						<ToggleGroupControlOption
 							value="x"
 							label={_x(
 								'Close',
-								'Arrow option for Query Pagination Next/Previous blocks'
+								'Arrow option for Query Pagination Next/Previous blocks',
+								'surecart'
 							)}
 						/>
 					</ToggleGroupControl>
@@ -74,8 +78,8 @@ export default ({ attributes: { label, showLabel, icon }, setAttributes }) => {
 					<PlainText
 						__experimentalVersion={2}
 						tagName="span"
-						aria-label={__('Close cart')}
-						placeholder={__('Close')}
+						aria-label={__('Close cart', 'surecart')}
+						placeholder={__('Close', 'surecart')}
 						value={label}
 						onChange={(newLabel) =>
 							setAttributes({ label: newLabel })

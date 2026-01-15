@@ -20,7 +20,7 @@ exports[`sc-compact-address renders CA address fields 1`] = `
       <sc-form-control class="sc-address__control" exportparts="label, help-text, form-control" label="Country or region" part="control">
         <sc-select autocomplete="country-name" exportparts="base:select__base, input, form-control, label, help-text, trigger, panel, caret, search__base, search__input, search__form-control, menu__base, spinner__base, empty" name="shipping_country" placeholder="Select Your Country" search="" squared-bottom="" value="CA"></sc-select>
         <div class="sc-address__columns">
-          <sc-select autocomplete="address-level1" exportparts="base:select__base, input, form-control, label, help-text, trigger, panel, caret, search__base, search__input, search__form-control, menu__base, spinner__base, empty" name="shipping_state" placeholder="Province/Region" search="" squared-top="" value="WI"></sc-select>
+          <sc-select autocomplete="address-level1" exportparts="base:select__base, input, form-control, label, help-text, trigger, panel, caret, search__base, search__input, search__form-control, menu__base, spinner__base, empty" name="shipping_state" search="" squared-top="" value="WI"></sc-select>
         </div>
       </sc-form-control>
     </div>
@@ -48,7 +48,7 @@ exports[`sc-compact-address renders US address fields 1`] = `
       <sc-form-control class="sc-address__control" exportparts="label, help-text, form-control" label="Country or region" part="control">
         <sc-select autocomplete="country-name" exportparts="base:select__base, input, form-control, label, help-text, trigger, panel, caret, search__base, search__input, search__form-control, menu__base, spinner__base, empty" name="shipping_country" placeholder="Select Your Country" search="" squared-bottom="" value="US"></sc-select>
         <div class="sc-address__columns">
-          <sc-select autocomplete="address-level1" exportparts="base:select__base, input, form-control, label, help-text, trigger, panel, caret, search__base, search__input, search__form-control, menu__base, spinner__base, empty" name="shipping_state" placeholder="State" search="" squared-right="" squared-top="" value="WI"></sc-select>
+          <sc-select autocomplete="address-level1" exportparts="base:select__base, input, form-control, label, help-text, trigger, panel, caret, search__base, search__input, search__form-control, menu__base, spinner__base, empty" name="shipping_state" search="" squared-right="" squared-top="" value="WI"></sc-select>
           <sc-input autocomplete="postal-code" exportparts="base:input__base, input, form-control, label, help-text" maxlength="5" name="shipping_postal_code" placeholder="Postal Code/Zip" squared-left="" squared-top="" value="12345"></sc-input>
         </div>
       </sc-form-control>
