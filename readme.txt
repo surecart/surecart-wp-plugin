@@ -316,7 +316,7 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 
 == Changelog ==
 
-= 3.17.6 - January 13th, 2026 =
+= 3.17.6 - January 15th, 2026 =
 - Fix: SVG icons not rendering in the editor.
 - Fix: Order confirmation shortcode not rendering on the frontend.
 
