@@ -50,7 +50,7 @@ jobs:
       pages: write
     outputs:
       pr_number: ${{ steps.get-pr.outputs.pr_number }}
-      playground_url: ${{ steps.build-url.outputs.playground_url }}
+      plugin_url: ${{ steps.build-url.outputs.plugin_url }}
     steps:
       - name: Get PR number
         id: get-pr
@@ -97,33 +97,6 @@ jobs:
           git commit -m "Add preview for PR #${{ steps.get-pr.outputs.pr_number }}" || echo "No changes to commit"
           git push origin gh-pages
 
-      - name: Build Playground URL
-        id: build-url
-        run: |
-          PLUGIN_URL="https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/pr-${{ steps.get-pr.outputs.pr_number }}/surecart.zip"
-
-          # PHP code with single backslashes - jq --arg will escape them properly for JSON
-          PHP_CODE='<?php require_once '"'"'/wordpress/wp-load.php'"'"'; \SureCart\Models\ProvisionalAccount::create(); $product = \SureCart\Models\Product::create(['"'"'name'"'"' => '"'"'Test Product'"'"', '"'"'status'"'"' => '"'"'published'"'"', '"'"'variant_options'"'"' => [['"'"'name'"'"' => '"'"'Size'"'"', '"'"'values'"'"' => ['"'"'Small'"'"', '"'"'Large'"'"']], ['"'"'name'"'"' => '"'"'Color'"'"', '"'"'values'"'"' => ['"'"'Black'"'"', '"'"'Red'"'"']]], '"'"'variants'"'"' => [['"'"'option_1'"'"' => '"'"'Small'"'"', '"'"'option_2'"'"' => '"'"'Black'"'"'], ['"'"'option_1'"'"' => '"'"'Large'"'"', '"'"'option_2'"'"' => '"'"'Red'"'"']]]); \SureCart\Models\Price::create(['"'"'amount'"'"' => 11111, '"'"'product'"'"' => $product->id]);'
-
-          # Build compact JSON using jq with --arg for safe variable injection
-          BLUEPRINT=$(jq -c -n \
-            --arg url "$PLUGIN_URL" \
-            --arg code "$PHP_CODE" \
-            '{
-              "steps": [
-                {"step": "installPlugin", "pluginData": {"resource": "url", "url": $url}},
-                {"step": "activatePlugin", "pluginPath": "surecart/surecart.php"},
-                {"step": "installTheme", "themeData": {"resource": "wordpress.org/themes", "slug": "astra"}, "options": {"activate": true, "importStarterContent": true}},
-                {"step": "runPHP", "code": $code}
-              ]
-            }')
-
-          # URL encode without trailing newline
-          ENCODED_BLUEPRINT=$(printf '%s' "$BLUEPRINT" | jq -sRr @uri)
-          PLAYGROUND_URL="https://playground.wordpress.net/#$ENCODED_BLUEPRINT"
-          echo "playground_url=$PLAYGROUND_URL" >> $GITHUB_OUTPUT
-          echo "Playground URL: $PLAYGROUND_URL"
-
       - name: Post Playground preview button
         if: github.event_name != 'workflow_dispatch'
         uses: WordPress/action-wp-playground-pr-preview@v2
@@ -162,6 +135,13 @@ jobs:
             }
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Output plugin URL for manual testing
+        id: build-url
+        run: |
+          PLUGIN_URL="https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/pr-${{ steps.get-pr.outputs.pr_number }}/surecart.zip"
+          echo "plugin_url=$PLUGIN_URL" >> $GITHUB_OUTPUT
+          echo "Plugin ZIP available at: $PLUGIN_URL"
+
 
   claude-qa:
     needs: [playground-preview, build]
@@ -175,16 +155,46 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Get PR number and Playground URL
+      - name: Extract Playground Preview URL from PR
         id: get-context
-        run: |
-          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
-            echo "pr_number=${{ inputs.pr_number }}" >> $GITHUB_OUTPUT
-            echo "playground_url=${{ needs.playground-preview.outputs.playground_url }}" >> $GITHUB_OUTPUT
-          else
-            echo "pr_number=${{ github.event.pull_request.number }}" >> $GITHUB_OUTPUT
-            echo "playground_url=${{ needs.playground-preview.outputs.playground_url }}" >> $GITHUB_OUTPUT
-          fi
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const isWorkflowDispatch = '${{ github.event_name }}' === 'workflow_dispatch';
+            const prNumber = isWorkflowDispatch
+              ? '${{ inputs.pr_number }}'
+              : '${{ github.event.pull_request.number }}';
+
+            core.setOutput('pr_number', prNumber);
+
+            if (!prNumber || isWorkflowDispatch) {
+              // For manual runs without a PR, use the plugin URL directly
+              const pluginUrl = '${{ needs.playground-preview.outputs.plugin_url }}' ||
+                `https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/pr-${{ needs.playground-preview.outputs.pr_number }}/surecart.zip`;
+              core.setOutput('plugin_url', pluginUrl);
+              console.log('Manual run - plugin URL:', pluginUrl);
+              return;
+            }
+
+            // For PR events, extract the playground URL from PR description
+            const { data: pr } = await github.rest.pulls.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: parseInt(prNumber)
+            });
+
+            const description = pr.body || '';
+            const playgroundMatch = description.match(/href="(https:\/\/playground\.wordpress\.net[^"]+)"/);
+
+            if (playgroundMatch) {
+              core.setOutput('playground_url', playgroundMatch[1]);
+              console.log('Found playground URL:', playgroundMatch[1]);
+            } else {
+              console.log('Playground URL not found in PR description yet');
+              // Fallback to plugin URL
+              const pluginUrl = `https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/pr-${prNumber}/surecart.zip`;
+              core.setOutput('plugin_url', pluginUrl);
+            }
 
       - name: Run Claude QA
         id: claude-qa
@@ -220,7 +230,8 @@ jobs:
 
             ## Test This PR
 
-            The WordPress Playground preview URL is: ${{ steps.get-context.outputs.playground_url }}
+            ${{ steps.get-context.outputs.playground_url && format('The WordPress Playground preview URL is: {0}', steps.get-context.outputs.playground_url) }}
+            ${{ !steps.get-context.outputs.playground_url && format('Navigate to https://playground.wordpress.net and install the plugin from: {0}', steps.get-context.outputs.plugin_url) }}
             ${{ steps.get-context.outputs.pr_number && format('For a better understanding of what to test, please review the PR diff at: {0}/{1}/pull/{2}/files', github.server_url, github.repository, steps.get-context.outputs.pr_number) }}
 
             Please:
@@ -282,7 +293,7 @@ jobs:
         run: |
           echo "## 🔍 Claude QA Report" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "**Playground URL**: ${{ steps.get-context.outputs.playground_url }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Plugin URL**: ${{ steps.get-context.outputs.plugin_url }}" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           if [ -f qa-report.md ]; then
             cat qa-report.md >> $GITHUB_STEP_SUMMARY
