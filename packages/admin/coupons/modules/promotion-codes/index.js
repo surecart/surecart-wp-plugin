@@ -9,6 +9,7 @@ import { useState, Fragment } from '@wordpress/element';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import { Button } from '@wordpress/components';
+import { ScTag } from '@surecart/components-react';
 
 /**
  * Internal dependencies.
@@ -149,11 +150,14 @@ export default ({ id }) => {
 				css={css`
 					display: flex;
 					gap: var(--sc-spacing-medium);
-					margin-bottom: var(--sc-spacing-medium);
+					min-width: unset !important;
 				`}
 			>
 				<Button
 					variant="tertiary"
+					size="compact"
+					label={__('Show active promotion codes', 'surecart')}
+					showTooltip={true}
 					onClick={() => {
 						setIsActive(true);
 						setActivePage(1);
@@ -163,23 +167,27 @@ export default ({ id }) => {
 							? 'var(--sc-color-gray-800) !important'
 							: 'var(--sc-color-gray-500) !important'};
 						font-weight: ${isActive ? '600' : '400'};
-						padding: var(--sc-spacing-xx-small) 0;
+						padding: var(--sc-spacing-xx-small)
+							var(--sc-spacing-small);
+						display: flex;
+						align-items: center;
+						gap: var(--sc-spacing-xx-small);
 					`}
 					role="tab"
 				>
 					{__('Active', 'surecart')}{' '}
-					{!isLoadingActive && `(${totalActiveItems})`}
+					{!isLoadingActive && (
+						<ScTag size="small" pill>
+							{totalActiveItems}
+						</ScTag>
+					)}
 				</Button>
-				<div
-					css={css`
-						height: 12px;
-						width: 1px;
-						align-self: center;
-						background: var(--sc-color-gray-300);
-					`}
-				></div>
+
 				<Button
 					variant="tertiary"
+					size="compact"
+					showTooltip={true}
+					label={__('Show archived promotion codes', 'surecart')}
 					onClick={() => {
 						setIsActive(false);
 						setArchivedPage(1);
@@ -189,12 +197,20 @@ export default ({ id }) => {
 							? 'var(--sc-color-gray-800) !important'
 							: 'var(--sc-color-gray-500) !important'};
 						font-weight: ${!isActive ? '600' : '400'};
-						padding: var(--sc-spacing-xx-small) 0;
+						padding: var(--sc-spacing-xx-small)
+							var(--sc-spacing-small);
+						display: flex;
+						align-items: center;
+						gap: var(--sc-spacing-xx-small);
 					`}
 					role="tab"
 				>
 					{__('Archived', 'surecart')}{' '}
-					{!isLoadingArchived && `(${totalArchivedItems})`}
+					{!isLoadingArchived && (
+						<ScTag size="small" pill>
+							{totalArchivedItems}
+						</ScTag>
+					)}
 				</Button>
 			</div>
 		);
@@ -221,10 +237,13 @@ export default ({ id }) => {
 
 	return (
 		<Fragment>
-			<Box title={title} loading={isLoading} footer={renderFooter()}>
+			<Box
+				title={title}
+				loading={isLoading}
+				footer={renderFooter()}
+				header_action={renderTabs()}
+			>
 				<div>
-					{renderTabs()}
-
 					<PromotionCodesList
 						promotions={currentPromotions}
 						onUpdate={refreshAll}
