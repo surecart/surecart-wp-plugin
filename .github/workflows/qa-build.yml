@@ -102,37 +102,21 @@ jobs:
         run: |
           PLUGIN_URL="https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/pr-${{ steps.get-pr.outputs.pr_number }}/surecart.zip"
 
-          # Build blueprint JSON using jq for proper escaping
-          BLUEPRINT=$(jq -n --arg url "$PLUGIN_URL" '{
-            "steps": [
-              {
-                "step": "installPlugin",
-                "pluginData": {
-                  "resource": "url",
-                  "url": $url
-                }
-              },
-              {
-                "step": "activatePlugin",
-                "pluginPath": "surecart/surecart.php"
-              },
-              {
-                "step": "installTheme",
-                "themeData": {
-                  "resource": "wordpress.org/themes",
-                  "slug": "astra"
-                },
-                "options": {
-                  "activate": true,
-                  "importStarterContent": true
-                }
-              },
-              {
-                "step": "runPHP",
-                "code": "<?php require_once \u0027/wordpress/wp-load.php\u0027; \\SureCart\\Models\\ProvisionalAccount::create(); $product = \\SureCart\\Models\\Product::create([\u0027name\u0027 => \u0027Test Product\u0027, \u0027status\u0027 => \u0027published\u0027, \u0027variant_options\u0027 => [[\u0027name\u0027 => \u0027Size\u0027, \u0027values\u0027 => [\u0027Small\u0027, \u0027Large\u0027]], [\u0027name\u0027 => \u0027Color\u0027, \u0027values\u0027 => [\u0027Black\u0027, \u0027Red\u0027]]], \u0027variants\u0027 => [[\u0027option_1\u0027 => \u0027Small\u0027, \u0027option_2\u0027 => \u0027Black\u0027], [\u0027option_1\u0027 => \u0027Large\u0027, \u0027option_2\u0027 => \u0027Red\u0027]]]); \\SureCart\\Models\\Price::create([\u0027amount\u0027 => 11111, \u0027product\u0027 => $product->id]);"
-              }
-            ]
-          }')
+          # PHP code with single backslashes - jq --arg will escape them properly for JSON
+          PHP_CODE='<?php require_once '"'"'/wordpress/wp-load.php'"'"'; \SureCart\Models\ProvisionalAccount::create(); $product = \SureCart\Models\Product::create(['"'"'name'"'"' => '"'"'Test Product'"'"', '"'"'status'"'"' => '"'"'published'"'"', '"'"'variant_options'"'"' => [['"'"'name'"'"' => '"'"'Size'"'"', '"'"'values'"'"' => ['"'"'Small'"'"', '"'"'Large'"'"']], ['"'"'name'"'"' => '"'"'Color'"'"', '"'"'values'"'"' => ['"'"'Black'"'"', '"'"'Red'"'"']]], '"'"'variants'"'"' => [['"'"'option_1'"'"' => '"'"'Small'"'"', '"'"'option_2'"'"' => '"'"'Black'"'"'], ['"'"'option_1'"'"' => '"'"'Large'"'"', '"'"'option_2'"'"' => '"'"'Red'"'"']]]); \SureCart\Models\Price::create(['"'"'amount'"'"' => 11111, '"'"'product'"'"' => $product->id]);'
+
+          # Build compact JSON using jq with --arg for safe variable injection
+          BLUEPRINT=$(jq -c -n \
+            --arg url "$PLUGIN_URL" \
+            --arg code "$PHP_CODE" \
+            '{
+              "steps": [
+                {"step": "installPlugin", "pluginData": {"resource": "url", "url": $url}},
+                {"step": "activatePlugin", "pluginPath": "surecart/surecart.php"},
+                {"step": "installTheme", "themeData": {"resource": "wordpress.org/themes", "slug": "astra"}, "options": {"activate": true, "importStarterContent": true}},
+                {"step": "runPHP", "code": $code}
+              ]
+            }')
 
           # URL encode without trailing newline
           ENCODED_BLUEPRINT=$(printf '%s' "$BLUEPRINT" | jq -sRr @uri)
