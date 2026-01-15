@@ -97,7 +97,7 @@ class ReviewsRestServiceProvider extends RestServiceProvider implements RestServ
 				'status'   => [
 					'description' => esc_html__( 'Review status.', 'surecart' ),
 					'type'        => 'string',
-					'enum'        => [ 'published', 'in_review', 'archived' ],
+					'enum'        => [ 'published', 'in_review', 'unpublished' ],
 					'context'     => [ 'view', 'edit' ],
 				],
 				'title'    => [
