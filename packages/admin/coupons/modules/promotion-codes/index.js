@@ -281,7 +281,6 @@ export default ({ id }) => {
 								page={currentPage}
 								setPage={setCurrentPage}
 								perPage={perPage}
-								loading={isBusy}
 								justifyContent="center"
 							/>
 						</div>
