@@ -15,8 +15,11 @@ export class ScTestModeInfo {
     return (
       <sc-popover skidding={30}>
         <slot name="trigger" slot="trigger" />
-        <span slot="title"> {__('How to switch from Test to Live mode', 'surecart')}</span>
-        <div class="sc-test-mode-info-content" slot="content">
+        <span tabindex="0" slot="title">
+          {' '}
+          {__('How to switch from Test to Live mode', 'surecart')}
+        </span>
+        <div tabindex="0" class="sc-test-mode-info-content" slot="content">
           <ol>
             <li>
               {__('From the Admin Bar', 'surecart')}
