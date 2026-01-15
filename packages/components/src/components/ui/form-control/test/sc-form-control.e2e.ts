@@ -1,6 +1,8 @@
 import { newE2EPage } from '@stencil/core/testing';
 
 describe('sc-form-control', () => {
+  let input;
+
   it('renders', async () => {
     const page = await newE2EPage();
     await page.setContent('<sc-form-control></sc-form-control>');
@@ -14,25 +16,27 @@ describe('sc-form-control', () => {
     await page.setContent('<sc-form-control></sc-form-control>');
 
     // we'll check class here
-    const input = await page.find('sc-form-control >>> .form-control');
+    input = await page.find('sc-form-control >>> .form-control');
 
     await page.$eval('sc-form-control', (elm: any) => {
       elm.size = 'large';
     });
     await page.waitForChanges();
+    input = await page.find('sc-form-control >>> .form-control');
     expect(input).toHaveClass('form-control--large');
 
     await page.$eval('sc-form-control', (elm: any) => {
       elm.size = 'small';
     });
     await page.waitForChanges();
+    input = await page.find('sc-form-control >>> .form-control');
     expect(input).toHaveClass('form-control--small');
   });
 
   it('Can have a label', async () => {
     const page = await newE2EPage();
     await page.setContent('<sc-form-control></sc-form-control>');
-    const input = await page.find('sc-form-control >>> .form-control');
+    input = await page.find('sc-form-control >>> .form-control');
 
     // classes
     expect(input).not.toHaveClass('form-control--has-label');
@@ -42,6 +46,7 @@ describe('sc-form-control', () => {
       elm.label = 'Test Label Text';
     });
     await page.waitForChanges();
+    input = await page.find('sc-form-control >>> .form-control');
     expect(input).toHaveClass('form-control--has-label');
 
     // content
@@ -53,6 +58,7 @@ describe('sc-form-control', () => {
       elm.showLabel = false;
     });
     await page.waitForChanges();
+    input = await page.find('sc-form-control >>> .form-control');
     expect(input).not.toHaveClass('form-control--has-label');
     expect(label).toHaveAttribute('aria-hidden');
   });
@@ -60,12 +66,13 @@ describe('sc-form-control', () => {
   it('Can have help text', async () => {
     const page = await newE2EPage();
     await page.setContent('<sc-form-control></sc-form-control>');
-    const input = await page.find('sc-form-control >>> .form-control');
+    input = await page.find('sc-form-control >>> .form-control');
 
     await page.$eval('sc-form-control', (elm: any) => {
       elm.help = 'Help Text Test';
     });
     await page.waitForChanges();
+    input = await page.find('sc-form-control >>> .form-control');
     expect(input).toHaveClass('form-control--has-help-text');
     const help = await page.find('sc-form-control >>> .form-control__help-text');
     let visibility = await help.isVisible();

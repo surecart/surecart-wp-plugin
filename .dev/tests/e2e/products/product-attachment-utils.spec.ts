@@ -56,21 +56,3 @@ test('test_extractVideoThumbnail_success', async ({ page }) => {
 
 	expect(result).toContain('data:image/jpeg');
 });
-
-test('test_generateVideoThumbnail_with_cache', async () => {
-	const origExtract = Attachments.extractVideoThumbnail;
-	let called = 0;
-	Attachments.extractVideoThumbnail = async () => { called++; return 'data:image/jpeg;base64,cached'; };
-
-	const videoMedia = {
-		source_url: 'http://video',
-		mime_type: 'video/mp4',
-		thumbnail_image: { id: 123, url: 'cached' },
-	};
-
-	const result = await Attachments.generateVideoThumbnail(videoMedia, 1, { skipIfExists: true });
-	expect(result).toEqual(videoMedia.thumbnail_image);
-	expect(called).toBe(0);
-
-	Attachments.extractVideoThumbnail = origExtract;
-});

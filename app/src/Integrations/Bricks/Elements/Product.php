@@ -220,7 +220,17 @@ class Product extends \Bricks\Element {
 			array(
 				'name'     => 'surecart-product-variant-pills',
 				'children' => array(
-					array( 'name' => 'surecart-product-variant-pill' ),
+					array(
+						'name'     => 'surecart-product-variant-pill',
+						'settings' => array(
+							'highlight_background' => array(
+								'hex' => '#FFD64F',
+							),
+							'highlight_border'     => array(
+								'hex' => '#FFD64F',
+							),
+						),
+					),
 				),
 			),
 			array( 'name' => 'surecart-product-quantity' ),
