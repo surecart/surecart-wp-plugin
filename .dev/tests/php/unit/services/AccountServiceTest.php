@@ -190,7 +190,7 @@ class AccountServiceTest extends SureCartUnitTestCase {
 
 		update_option('sc_previous_account', $this->account->toArray());
 
-		$service = \Mockery::mock( AccountService::class )->makePartial()->shouldAllowMockingProtectedMethods();;
+		$service = \Mockery::mock( AccountService::class )->makePartial()->shouldAllowMockingProtectedMethods();
 	
 		$service->shouldReceive('fetchAccount')->once()->andReturn(new \WP_Error('api_error'));
 
@@ -206,7 +206,7 @@ class AccountServiceTest extends SureCartUnitTestCase {
 		delete_transient('surecart_account');
 		delete_option('sc_previous_account');
 
-		$service = \Mockery::mock( AccountService::class )->makePartial()->shouldAllowMockingProtectedMethods();;
+		$service = \Mockery::mock( AccountService::class )->makePartial()->shouldAllowMockingProtectedMethods();
 	
 		$service->shouldReceive('fetchAccount')->once()->andReturn(new \WP_Error('api_error'));
 
@@ -222,7 +222,7 @@ class AccountServiceTest extends SureCartUnitTestCase {
 		delete_transient('surecart_account');
 		update_option('sc_previous_account', $this->account);
 
-		$service = \Mockery::mock( AccountService::class )->makePartial()->shouldAllowMockingProtectedMethods();;
+		$service = \Mockery::mock( AccountService::class )->makePartial()->shouldAllowMockingProtectedMethods();
 	
 		$service->shouldReceive('fetchAccount')->once()->andReturn(new \WP_Error('api_error'));
 
@@ -239,7 +239,7 @@ class AccountServiceTest extends SureCartUnitTestCase {
 		delete_transient('surecart_account');
 		delete_option('sc_previous_account');
 
-		$service = \Mockery::mock( AccountService::class )->makePartial()->shouldAllowMockingProtectedMethods();;
+		$service = \Mockery::mock( AccountService::class )->makePartial()->shouldAllowMockingProtectedMethods();
 
 		$service->shouldReceive('fetchAccount')->once()->andReturn($this->account);
 
