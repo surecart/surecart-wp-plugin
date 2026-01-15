@@ -30,7 +30,7 @@ export default ({ attributes, setAttributes }) => {
 								setAttributes({ total_payments_text })
 							}
 							placeholder={__(
-								'Total Installments (before discounts)',
+								'Total Installments',
 								'surecart'
 							)}
 						/>
@@ -54,7 +54,7 @@ export default ({ attributes, setAttributes }) => {
 				</span>
 				<span slot="total-payments-description">
 					{total_payments_text ||
-						__('Total Installments (before discounts)', 'surecart')}
+						__('Total Installments', 'surecart')}
 				</span>
 				<span slot="first-payment-subtotal-description">
 					{first_payment_subtotal_text ||

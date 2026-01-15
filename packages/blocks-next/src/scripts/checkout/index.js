@@ -126,6 +126,13 @@ const { state, actions } = store('surecart/checkout', {
 		},
 
 		/**
+		 * Check if the checkout has a discount amount applied.
+		 */
+		get hasDiscountAmount() {
+			return !!state?.checkout?.discount_amount;
+		},
+
+		/**
 		 * Get the checkout line items.
 		 */
 		get checkoutLineItems() {
