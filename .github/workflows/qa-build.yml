@@ -105,6 +105,7 @@ jobs:
           mode: "append-to-description"
           blueprint: |
             {
+              "login": true,
               "steps": [
                 {
                   "step": "installPlugin",
@@ -116,21 +117,6 @@ jobs:
                 {
                   "step": "activatePlugin",
                   "pluginPath": "surecart/surecart.php"
-                },
-                {
-                  "step": "installTheme",
-                  "themeData": {
-                      "resource": "wordpress.org/themes",
-                      "slug": "astra"
-                  },
-                  "options": {
-                      "activate": true,
-                      "importStarterContent": true
-                  }
-                },
-                {
-                  "step": "runPHP",
-                  "code": "<?php require_once '/wordpress/wp-load.php'; \\SureCart\\Models\\ProvisionalAccount::create(); $product = \\SureCart\\Models\\Product::create(['name' => 'Test Product', 'status' => 'published', 'variant_options' => [['name' => 'Size', 'values' => ['Small', 'Large']], ['name' => 'Color', 'values' => ['Black', 'Red']]], 'variants' => [['option_1' => 'Small', 'option_2' => 'Black'], ['option_1' => 'Large', 'option_2' => 'Red']]]); \\SureCart\\Models\\Price::create(['amount' => 11111, 'product' => $product->id]);"
                 }
               ]
             }
