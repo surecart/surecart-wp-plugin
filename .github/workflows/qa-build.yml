@@ -115,6 +115,7 @@ jobs:
         id: playground
         uses: WordPress/action-wp-playground-pr-preview@v2
         with:
+          pr-number: ${{ steps.get-pr.outputs.pr_number }}
           mode: "append-to-description"
           blueprint: |
             {
