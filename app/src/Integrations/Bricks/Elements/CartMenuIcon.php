@@ -107,7 +107,7 @@ class CartMenuIcon extends \Bricks\Element {
 
 		$cart_menu_always_shown = ! empty( $settings['cart_menu_always_shown'] ) ? true : false;
 
-		$this->cart_icon = ! empty( $settings['cart_icon']['icon'] ) ? self::render_icon( $settings['cart_icon'], [ 'icon' ] ) : self::render_icon(
+		$this->cart_icon = ! empty( $settings['cart_icon'] ) ? self::render_icon( $settings['cart_icon'], [ 'icon' ] ) : self::render_icon(
 			[
 				'icon' => 'ti-bag',
 			],
