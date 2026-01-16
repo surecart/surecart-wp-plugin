@@ -1,14 +1,37 @@
 name: QA Build
+# Automated QA workflow for PRs - triggers on 'qa ready' label or PR approval
 
 on:
   pull_request:
     types: [ labeled ]
   pull_request_review:
       types: [submitted]
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: 'PR number to test (required for full flow)'
+        required: false
+        type: string
+      skip_claude_qa:
+        description: 'Skip Claude QA step (useful for testing build/preview only)'
+        required: false
+        type: boolean
+        default: false
+      skip_build:
+        description: 'Skip build/preview steps (useful for testing Claude QA only when PR already has preview)'
+        required: false
+        type: boolean
+        default: false
 
 jobs:
   build:
-    if: github.event.label.name == 'qa ready' || github.event.review.state == 'APPROVED'
+    if: >
+      !inputs.skip_build && (
+        github.event_name == 'workflow_dispatch' ||
+        github.event.label.name == 'qa ready' ||
+        github.event.label.name == 'AI QA' ||
+        github.event.review.state == 'APPROVED'
+      )
     name: "Build Zip For QA"
     runs-on: ubuntu-latest
     steps:
@@ -23,5 +46,269 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: surecart
-          path: '@surecart/surecart'
+          path: '@surecart/surecart.zip'
 
+  playground-preview:
+    needs: build
+    if: ${{ always() && (needs.build.result == 'success' || needs.build.result == 'skipped') }}
+    name: "Playground Preview"
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      actions: read
+      pages: write
+    outputs:
+      pr_number: ${{ steps.get-pr.outputs.pr_number }}
+      plugin_url: ${{ steps.build-url.outputs.plugin_url }}
+      preview_url: ${{ steps.playground.outputs.preview-url }}
+    steps:
+      - name: Get PR number
+        id: get-pr
+        run: |
+          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+            PR_NUMBER="${{ inputs.pr_number }}"
+            if [ -z "$PR_NUMBER" ]; then
+              PR_NUMBER="manual-$(date +%s)"
+            fi
+          else
+            PR_NUMBER="${{ github.event.pull_request.number }}"
+          fi
+          echo "pr_number=$PR_NUMBER" >> $GITHUB_OUTPUT
+          echo "Using PR number: $PR_NUMBER"
+
+      - uses: actions/checkout@v4
+        if: ${{ !inputs.skip_build }}
+        with:
+          ref: gh-pages
+          fetch-depth: 0
+        continue-on-error: true
+
+      - name: Create gh-pages branch if needed
+        if: ${{ !inputs.skip_build }}
+        run: |
+          if ! git rev-parse --verify gh-pages >/dev/null 2>&1; then
+            git checkout --orphan gh-pages
+            git reset --hard
+            git commit --allow-empty -m "Initialize gh-pages"
+            git push origin gh-pages
+          fi
+
+      - name: Download artifact
+        if: ${{ !inputs.skip_build }}
+        uses: actions/download-artifact@v4
+        with:
+          name: surecart
+          path: ./pr-artifacts
+
+      - name: Deploy to GitHub Pages
+        if: ${{ !inputs.skip_build }}
+        run: |
+          mkdir -p pr-${{ steps.get-pr.outputs.pr_number }}
+          cp ./pr-artifacts/surecart.zip pr-${{ steps.get-pr.outputs.pr_number }}/
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add pr-${{ steps.get-pr.outputs.pr_number }}/
+          git commit -m "Add preview for PR #${{ steps.get-pr.outputs.pr_number }}" || echo "No changes to commit"
+          git push origin gh-pages
+
+      - name: Post Playground preview button
+        id: playground
+        uses: WordPress/action-wp-playground-pr-preview@v2
+        with:
+          pr-number: ${{ steps.get-pr.outputs.pr_number }}
+          mode: "append-to-description"
+          blueprint: |
+            {
+              "login": true,
+              "steps": [
+                {
+                  "step": "installPlugin",
+                  "pluginData": {
+                    "resource": "url",
+                    "url": "https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/pr-${{ steps.get-pr.outputs.pr_number }}/surecart.zip"
+                  }
+                },
+                {
+                  "step": "activatePlugin",
+                  "pluginPath": "surecart/surecart.php"
+                },
+                {
+                  "step": "installTheme",
+                  "themeData": {
+                      "resource": "wordpress.org/themes",
+                      "slug": "astra"
+                  },
+                  "options": {
+                      "activate": true,
+                      "importStarterContent": true
+                  }
+                },
+                {
+                  "step": "runPHP",
+                  "code": "<?php require_once '/wordpress/wp-load.php'; \\SureCart\\Models\\ProvisionalAccount::create(); $product = \\SureCart\\Models\\Product::create(['name' => 'Test Product', 'status' => 'published', 'variant_options' => [['name' => 'Size', 'values' => ['Small', 'Large']], ['name' => 'Color', 'values' => ['Black', 'Red']]], 'variants' => [['option_1' => 'Small', 'option_2' => 'Black'], ['option_1' => 'Large', 'option_2' => 'Red']]]); \\SureCart\\Models\\Price::create(['amount' => 11111, 'product' => $product->id]);"
+                }
+              ]
+            }
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Output plugin URL for manual testing
+        id: build-url
+        run: |
+          PLUGIN_URL="https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/pr-${{ steps.get-pr.outputs.pr_number }}/surecart.zip"
+          echo "plugin_url=$PLUGIN_URL" >> $GITHUB_OUTPUT
+          echo "Plugin ZIP available at: $PLUGIN_URL"
+
+
+  claude-qa:
+    needs: [playground-preview, build]
+    # Run if: not skipping QA AND playground-preview succeeded AND triggered by 'AI QA' label or manual dispatch
+    if: >
+      always() &&
+      !inputs.skip_claude_qa &&
+      needs.playground-preview.result == 'success' &&
+      (
+        github.event_name == 'workflow_dispatch' ||
+        github.event.label.name == 'AI QA'
+      )
+    name: "Run Claude QA"
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Get context
+        id: get-context
+        run: |
+          # Determine PR number
+          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+            PR_NUMBER="${{ inputs.pr_number }}"
+          else
+            PR_NUMBER="${{ github.event.pull_request.number }}"
+          fi
+          echo "pr_number=$PR_NUMBER" >> $GITHUB_OUTPUT
+
+          # Use preview URL from playground-preview job output if available
+          PREVIEW_URL="${{ needs.playground-preview.outputs.preview_url }}"
+          if [ -n "$PREVIEW_URL" ]; then
+            echo "playground_url=$PREVIEW_URL" >> $GITHUB_OUTPUT
+            echo "Using preview URL from action output: $PREVIEW_URL"
+          else
+            # Fallback: construct plugin URL for skip_build scenarios
+            PLUGIN_URL="https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/pr-${PR_NUMBER}/surecart.zip"
+            echo "plugin_url=$PLUGIN_URL" >> $GITHUB_OUTPUT
+            echo "Using fallback plugin URL: $PLUGIN_URL"
+          fi
+
+      - name: Run Claude QA
+        id: claude-qa
+        uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          prompt: |
+            You are **Quinn**, a veteran QA engineer with 12 years
+            of experience breaking software. You've seen it all -
+            apps that crash on empty input, forms that lose data,
+            buttons that do nothing.
+
+            ## Your Philosophy
+
+            - **Trust nothing.** Developers say it works? Prove it.
+            - **Users are creative.** They'll do things no one anticipated.
+            - **Edge cases are where bugs hide.** The happy path is boring.
+
+            ## Non-Negotiable Rules
+
+            1. **UI ONLY.** You interact through the browser like a
+               real user. You cannot read source code.
+            2. **SCREENSHOT BUGS.** Every bug gets a screenshot.
+            3. **CONTINUE AFTER BUGS.** Finding a bug is not the end.
+               Document it, then KEEP TESTING.
+
+            ## Your Mission
+
+            This PR claims to implement something. Your job is to:
+              1. **Verify** the claimed changes actually work
+              2. **Break** them with edge cases
+              3. **Ensure** no regressions in related features
+
+            ## Test This PR
+
+            ${{ steps.get-context.outputs.playground_url && format('The WordPress Playground preview URL is: {0}', steps.get-context.outputs.playground_url) }}
+            ${{ !steps.get-context.outputs.playground_url && format('Navigate to https://playground.wordpress.net and install the plugin from: {0}', steps.get-context.outputs.plugin_url) }}
+            ${{ steps.get-context.outputs.pr_number && format('For a better understanding of what to test, use `gh pr view {0} --repo {1}` to see the PR description and `gh pr diff {0} --repo {1}` to see the code changes.', steps.get-context.outputs.pr_number, github.repository) }}
+
+            Please:
+            1. Navigate to the playground preview URL and test the plugin functionality
+            2. Review the PR changes and verify they work as expected
+            3. Report any bugs, issues, or suggestions for improvement
+
+            ## Important
+            - The WordPress playground loads the site inside an iframe, so to take action on the site, you must first use page.frameLocator('iframe#wp').locator(selector) to locate in the iframe context.
+            - You can use the site manager button in the toolbar to change php settings, view logs, and more.
+            - You may see logs about scheduled actions in the log viewer. This is expected in the playground context.
+
+            ## Output
+            When finished testing, write your complete QA report to a file called `qa-report.md` with:
+            - **Summary**: ✅ Pass or ❌ Fail with brief explanation
+            - **Tests Performed**: List of test cases executed
+            - **Bugs Found**: Any issues discovered (reference screenshots)
+            - **Recommendations**: Suggestions for improvement
+          claude_args: |
+            --max-turns 100
+            --mcp-config '{"mcpServers":{"playwright":{"command":"npx","args":["@playwright/mcp@latest","--headless","--isolated","--caps=vision,testing"]}}}'
+            --allowedTools "Bash,mcp__playwright__browser_navigate,mcp__playwright__browser_navigate_back,mcp__playwright__browser_click,mcp__playwright__browser_type,mcp__playwright__browser_snapshot,mcp__playwright__browser_take_screenshot,mcp__playwright__browser_console_messages,mcp__playwright__browser_wait_for,mcp__playwright__browser_hover,mcp__playwright__browser_resize,mcp__playwright__browser_drag,mcp__playwright__browser_select_option,mcp__playwright__browser_press_key,mcp__playwright__browser_tabs,mcp__playwright__browser_file_upload,mcp__playwright__browser_fill_form,mcp__playwright__browser_handle_dialog,mcp__playwright__browser_close,mcp__playwright__browser_verify_element_visible,mcp__playwright__browser_verify_text_visible,mcp__playwright__browser_verify_value,Write"
+
+      - name: Post results to PR
+        if: always() && steps.get-context.outputs.pr_number && github.event_name != 'workflow_dispatch'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const prNumber = '${{ steps.get-context.outputs.pr_number }}';
+            if (!prNumber) return;
+
+            let qaReport = '';
+            try {
+              qaReport = fs.readFileSync('qa-report.md', 'utf8');
+            } catch (e) {
+              qaReport = '⚠️ QA report not generated. Check [workflow logs](' +
+                `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId})`;
+            }
+
+            const runUrl = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
+            const body = [
+              `## 🔍 Claude QA Report`,
+              '',
+              `**Run**: [View Logs](${runUrl})`,
+              '',
+              '---',
+              '',
+              qaReport,
+              '',
+              '---',
+              '_Automated QA by Claude Code_'
+            ].join('\n');
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: parseInt(prNumber),
+              body: body
+            });
+
+      - name: Output results for manual runs
+        if: always() && github.event_name == 'workflow_dispatch'
+        run: |
+          echo "## 🔍 Claude QA Report" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Plugin URL**: ${{ steps.get-context.outputs.plugin_url }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          if [ -f qa-report.md ]; then
+            cat qa-report.md >> $GITHUB_STEP_SUMMARY
+          else
+            echo "⚠️ QA report not generated. Check workflow logs." >> $GITHUB_STEP_SUMMARY
+          fi
