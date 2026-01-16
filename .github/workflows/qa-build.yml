@@ -60,6 +60,7 @@ jobs:
     outputs:
       pr_number: ${{ steps.get-pr.outputs.pr_number }}
       plugin_url: ${{ steps.build-url.outputs.plugin_url }}
+      preview_url: ${{ steps.playground.outputs.preview-url }}
     steps:
       - name: Get PR number
         id: get-pr
@@ -107,6 +108,7 @@ jobs:
           git push origin gh-pages
 
       - name: Post Playground preview button
+        id: playground
         if: github.event_name != 'workflow_dispatch'
         uses: WordPress/action-wp-playground-pr-preview@v2
         with:
@@ -155,46 +157,28 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Extract Playground Preview URL from PR
+      - name: Get context
         id: get-context
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const isWorkflowDispatch = '${{ github.event_name }}' === 'workflow_dispatch';
-            const prNumber = isWorkflowDispatch
-              ? '${{ inputs.pr_number }}'
-              : '${{ github.event.pull_request.number }}';
+        run: |
+          # Determine PR number
+          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+            PR_NUMBER="${{ inputs.pr_number }}"
+          else
+            PR_NUMBER="${{ github.event.pull_request.number }}"
+          fi
+          echo "pr_number=$PR_NUMBER" >> $GITHUB_OUTPUT
 
-            core.setOutput('pr_number', prNumber);
-
-            if (!prNumber) {
-              // No PR number provided, use plugin URL directly
-              const pluginUrl = '${{ needs.playground-preview.outputs.plugin_url }}' ||
-                `https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/pr-${{ needs.playground-preview.outputs.pr_number }}/surecart.zip`;
-              core.setOutput('plugin_url', pluginUrl);
-              console.log('No PR number - using plugin URL:', pluginUrl);
-              return;
-            }
-
-            // For PR events OR workflow_dispatch with PR number, extract the playground URL from PR description
-            const { data: pr } = await github.rest.pulls.get({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              pull_number: parseInt(prNumber)
-            });
-
-            const description = pr.body || '';
-            const playgroundMatch = description.match(/href="(https:\/\/playground\.wordpress\.net[^"]+)"/);
-
-            if (playgroundMatch) {
-              core.setOutput('playground_url', playgroundMatch[1]);
-              console.log('Found playground URL:', playgroundMatch[1]);
-            } else {
-              console.log('Playground URL not found in PR description yet');
-              // Fallback to plugin URL
-              const pluginUrl = `https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/pr-${prNumber}/surecart.zip`;
-              core.setOutput('plugin_url', pluginUrl);
-            }
+          # Use preview URL from playground-preview job output if available
+          PREVIEW_URL="${{ needs.playground-preview.outputs.preview_url }}"
+          if [ -n "$PREVIEW_URL" ]; then
+            echo "playground_url=$PREVIEW_URL" >> $GITHUB_OUTPUT
+            echo "Using preview URL from action output: $PREVIEW_URL"
+          else
+            # Fallback: construct plugin URL for skip_build scenarios
+            PLUGIN_URL="https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/pr-${PR_NUMBER}/surecart.zip"
+            echo "plugin_url=$PLUGIN_URL" >> $GITHUB_OUTPUT
+            echo "Using fallback plugin URL: $PLUGIN_URL"
+          fi
 
       - name: Run Claude QA
         id: claude-qa
