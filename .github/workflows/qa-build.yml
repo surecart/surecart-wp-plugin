@@ -42,11 +42,11 @@ jobs:
           bootstrap: true
           package: true
 
-      - name: Upload Zip
+      - name: Upload Plugin
         uses: actions/upload-artifact@v4
         with:
           name: surecart
-          path: '@surecart/surecart.zip'
+          path: '@surecart/surecart'
 
   playground-preview:
     needs: build
@@ -99,13 +99,14 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: surecart
-          path: ./pr-artifacts
+          path: ./pr-artifacts/surecart
 
       - name: Deploy to GitHub Pages
         if: ${{ !inputs.skip_build }}
         run: |
           mkdir -p pr-${{ steps.get-pr.outputs.pr_number }}
-          cp ./pr-artifacts/surecart.zip pr-${{ steps.get-pr.outputs.pr_number }}/
+          cd ./pr-artifacts && zip -r surecart.zip surecart && cd ..
+          mv ./pr-artifacts/surecart.zip pr-${{ steps.get-pr.outputs.pr_number }}/
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add pr-${{ steps.get-pr.outputs.pr_number }}/
@@ -203,6 +204,10 @@ jobs:
             echo "Using fallback plugin URL: $PLUGIN_URL"
           fi
 
+          # Screenshot base URL for GitHub Pages
+          SCREENSHOT_BASE="https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/pr-${PR_NUMBER}/screenshots"
+          echo "screenshot_base=$SCREENSHOT_BASE" >> $GITHUB_OUTPUT
+
       - name: Run Claude QA
         id: claude-qa
         uses: anthropics/claude-code-action@v1
@@ -235,6 +240,22 @@ jobs:
               2. **Break** them with edge cases
               3. **Ensure** no regressions in related features
 
+            ## Environment Setup
+
+            The WordPress Playground starts fresh with only:
+            - SureCart plugin installed and activated
+            - A provisional account created
+            - One basic test product with variants
+
+            **Before testing, you MUST set up the environment:**
+            1. Navigate to **SureCart → Products** in the WordPress admin
+            2. Create any additional products needed for the PR's features
+            3. Navigate to **SureCart → Forms** and create checkout forms if needed
+            4. Create WordPress pages with checkout form blocks if needed
+            5. Set up any other data the PR's features require
+
+            **Do not assume any forms, pages, or customer data exists.** Create what you need through the admin UI, then test the frontend.
+
             ## Test This PR
 
             ${{ steps.get-context.outputs.playground_url && format('The WordPress Playground preview URL is: {0}', steps.get-context.outputs.playground_url) }}
@@ -242,14 +263,26 @@ jobs:
             ${{ steps.get-context.outputs.pr_number && format('For a better understanding of what to test, use `gh pr view {0} --repo {1}` to see the PR description and `gh pr diff {0} --repo {1}` to see the code changes.', steps.get-context.outputs.pr_number, github.repository) }}
 
             Please:
-            1. Navigate to the playground preview URL and test the plugin functionality
-            2. Review the PR changes and verify they work as expected
-            3. Report any bugs, issues, or suggestions for improvement
+            1. Review the PR changes to understand what features need testing
+            2. Navigate to the WordPress admin and SET UP required test data (products, forms, pages)
+            3. Test the plugin functionality on the frontend
+            4. Verify the PR changes work as expected
+            5. Report any bugs, issues, or suggestions for improvement
 
             ## Important
             - The WordPress playground loads the site inside an iframe, so to take action on the site, you must first use page.frameLocator('iframe#wp').locator(selector) to locate in the iframe context.
             - You can use the site manager button in the toolbar to change php settings, view logs, and more.
             - You may see logs about scheduled actions in the log viewer. This is expected in the playground context.
+
+            ## Screenshots
+
+            Save all screenshots to the `./screenshots/` directory with descriptive names.
+            When referencing screenshots in qa-report.md, use this URL pattern:
+            ${{ steps.get-context.outputs.screenshot_base }}/filename.png
+
+            Example:
+            - Save screenshot: `mcp__playwright__browser_take_screenshot` with filename `screenshots/checkout-error.png`
+            - Reference in markdown: `![Checkout Error](${{ steps.get-context.outputs.screenshot_base }}/checkout-error.png)`
 
             ## Output
             When finished testing, write your complete QA report to a file called `qa-report.md` with:
@@ -261,6 +294,23 @@ jobs:
             --max-turns 100
             --mcp-config '{"mcpServers":{"playwright":{"command":"npx","args":["@playwright/mcp@latest","--headless","--isolated","--caps=vision,testing"]}}}'
             --allowedTools "Bash,mcp__playwright__browser_navigate,mcp__playwright__browser_navigate_back,mcp__playwright__browser_click,mcp__playwright__browser_type,mcp__playwright__browser_snapshot,mcp__playwright__browser_take_screenshot,mcp__playwright__browser_console_messages,mcp__playwright__browser_wait_for,mcp__playwright__browser_hover,mcp__playwright__browser_resize,mcp__playwright__browser_drag,mcp__playwright__browser_select_option,mcp__playwright__browser_press_key,mcp__playwright__browser_tabs,mcp__playwright__browser_file_upload,mcp__playwright__browser_fill_form,mcp__playwright__browser_handle_dialog,mcp__playwright__browser_close,mcp__playwright__browser_verify_element_visible,mcp__playwright__browser_verify_text_visible,mcp__playwright__browser_verify_value,Write"
+
+      - name: Upload screenshots to GitHub Pages
+        if: always() && steps.get-context.outputs.pr_number
+        run: |
+          if [ -d "./screenshots" ] && [ "$(ls -A ./screenshots 2>/dev/null)" ]; then
+            git clone --single-branch --branch gh-pages https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git gh-pages-repo
+            cd gh-pages-repo
+            mkdir -p pr-${{ steps.get-context.outputs.pr_number }}/screenshots
+            cp ../screenshots/* pr-${{ steps.get-context.outputs.pr_number }}/screenshots/
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git add .
+            git commit -m "Add QA screenshots for PR #${{ steps.get-context.outputs.pr_number }}" || echo "No screenshots to commit"
+            git push
+          else
+            echo "No screenshots directory found or directory is empty"
+          fi
 
       - name: Post results to PR
         if: always() && steps.get-context.outputs.pr_number && github.event_name != 'workflow_dispatch'
