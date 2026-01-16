@@ -234,7 +234,7 @@ jobs:
 
             ${{ steps.get-context.outputs.playground_url && format('The WordPress Playground preview URL is: {0}', steps.get-context.outputs.playground_url) }}
             ${{ !steps.get-context.outputs.playground_url && format('Navigate to https://playground.wordpress.net and install the plugin from: {0}', steps.get-context.outputs.plugin_url) }}
-            ${{ steps.get-context.outputs.pr_number && format('For a better understanding of what to test, please review the PR diff at: {0}/{1}/pull/{2}/files', github.server_url, github.repository, steps.get-context.outputs.pr_number) }}
+            ${{ steps.get-context.outputs.pr_number && format('For a better understanding of what to test, use `gh pr view {0} --repo {1}` to see the PR description and `gh pr diff {0} --repo {1}` to see the code changes.', steps.get-context.outputs.pr_number, github.repository) }}
 
             Please:
             1. Navigate to the playground preview URL and test the plugin functionality
