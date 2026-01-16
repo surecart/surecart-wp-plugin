@@ -240,21 +240,19 @@ jobs:
               2. **Break** them with edge cases
               3. **Ensure** no regressions in related features
 
-            ## Environment Setup
+            ## REQUIRED: Create Test Products First
 
-            The WordPress Playground starts fresh with only:
-            - SureCart plugin installed and activated
-            - A provisional account created
-            - One basic test product with variants
+            ⚠️ **The Playground only has ONE basic test product.** Most features require proper product setup.
 
-            **Before testing, you MUST set up the environment:**
-            1. Navigate to **SureCart → Products** in the WordPress admin
-            2. Create any additional products needed for the PR's features
-            3. Navigate to **SureCart → Forms** and create checkout forms if needed
-            4. Create WordPress pages with checkout form blocks if needed
-            5. Set up any other data the PR's features require
+            Before testing, you MUST create products through the admin UI:
+            1. Go to wp-admin → **SureCart → Products**
+            2. **Create products** appropriate for the PR's features:
+               - For subscription testing: create a product with recurring prices
+               - For variant testing: create a product with size/color options
+               - For checkout testing: create products with different price types
+            3. Each product needs at least one **published price**
 
-            **Do not assume any forms, pages, or customer data exists.** Create what you need through the admin UI, then test the frontend.
+            **This is not optional.** The default checkout page exists, but without proper products configured, you cannot test most features.
 
             ## Test This PR
 
@@ -264,8 +262,8 @@ jobs:
 
             Please:
             1. Review the PR changes to understand what features need testing
-            2. Navigate to the WordPress admin and SET UP required test data (products, forms, pages)
-            3. Test the plugin functionality on the frontend
+            2. Navigate to wp-admin and CREATE PRODUCTS needed for testing (see REQUIRED section above)
+            3. Test the plugin functionality on the default checkout page
             4. Verify the PR changes work as expected
             5. Report any bugs, issues, or suggestions for improvement
 
@@ -276,13 +274,22 @@ jobs:
 
             ## Screenshots
 
-            Save all screenshots to the `./screenshots/` directory with descriptive names.
-            When referencing screenshots in qa-report.md, use this URL pattern:
-            ${{ steps.get-context.outputs.screenshot_base }}/filename.png
+            **IMPORTANT:** First create the screenshots directory:
+            ```
+            mkdir -p ./screenshots
+            ```
 
-            Example:
-            - Save screenshot: `mcp__playwright__browser_take_screenshot` with filename `screenshots/checkout-error.png`
-            - Reference in markdown: `![Checkout Error](${{ steps.get-context.outputs.screenshot_base }}/checkout-error.png)`
+            Then save screenshots using the `filename` parameter with the `screenshots/` prefix:
+            - Tool: `mcp__playwright__browser_take_screenshot`
+            - Filename: `screenshots/descriptive-name.png`
+
+            When referencing in qa-report.md, use this URL:
+            `${{ steps.get-context.outputs.screenshot_base }}/descriptive-name.png`
+
+            Example workflow:
+            1. Run: `mkdir -p ./screenshots` (using Bash tool)
+            2. Take screenshot with filename: `screenshots/checkout-bug.png`
+            3. In markdown: `![Checkout Bug](${{ steps.get-context.outputs.screenshot_base }}/checkout-bug.png)`
 
             ## Output
             When finished testing, write your complete QA report to a file called `qa-report.md` with:
