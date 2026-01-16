@@ -6,6 +6,7 @@
 				'data-wp-interactive'            => '{ "namespace": "surecart/product-review-form" }',
 				'data-wp-class--sc-modal-active' => 'state.open',
 				'data-wp-watch---open'           => 'callbacks.handleOpenChange',
+				'data-wp-init'                   => 'callbacks.handleInit',
 			]
 		)
 	);
@@ -47,7 +48,12 @@
 				<?php endif; ?>
 
 				<?php if ( isset( $confirmation_template ) ) : ?>
-					<div class="sc-product-review-confirmation" data-wp-bind--hidden="!context.submitted">
+					<div
+						class="sc-product-review-confirmation"
+						data-wp-bind--hidden="!context.submitted"
+						role="status"
+						aria-label="<?php esc_attr_e( 'Review submission confirmation', 'surecart' ); ?>"
+					>
 						<?php echo $confirmation_template->render(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 					</div>
 				<?php endif; ?>
@@ -70,4 +76,9 @@
 		);
 		?>
 	></div>
+
+	<!-- Screen reader announcements -->
+	<p id="a11y-speak-intro-text" class="a11y-speak-intro-text" style="position: absolute;margin: -1px;padding: 0;height: 1px;width: 1px;overflow: hidden;clip: rect(1px, 1px, 1px, 1px);-webkit-clip-path: inset(50%);clip-path: inset(50%);border: 0;word-wrap: normal !important;" hidden></p>
+	<div id="a11y-speak-assertive" class="a11y-speak-region" style="position: absolute;margin: -1px;padding: 0;height: 1px;width: 1px;overflow: hidden;clip: rect(1px, 1px, 1px, 1px);-webkit-clip-path: inset(50%);clip-path: inset(50%);border: 0;word-wrap: normal !important;" aria-live="assertive" aria-relevant="additions text" aria-atomic="true"></div>
+	<div id="a11y-speak-polite" class="a11y-speak-region" style="position: absolute;margin: -1px;padding: 0;height: 1px;width: 1px;overflow: hidden;clip: rect(1px, 1px, 1px, 1px);-webkit-clip-path: inset(50%);clip-path: inset(50%);border: 0;word-wrap: normal !important;" aria-live="polite" aria-relevant="additions text" aria-atomic="true"></div>
 </div>

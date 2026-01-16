@@ -70,6 +70,22 @@ const appendProductReviewFormUrlParameter = (productId) => {
 	window.history.pushState({}, '', url.toString());
 };
 
+/**
+ * Set focus to the first focusable element in the dialog.
+ */
+const setInitialFocus = () => {
+	// Use requestAnimationFrame to ensure DOM is ready after state change.
+	requestAnimationFrame(() => {
+		const dialog = document.querySelector(
+			'.wp-block-surecart-product-review-form .sc-product-review-form-dialog'
+		);
+		const firstFocusable = dialog?.querySelector(
+			'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+		);
+		firstFocusable?.focus();
+	});
+};
+
 const { state, actions, callbacks } = store('surecart/product-review-form', {
 	actions: {
 		/** Open product review form modal */
@@ -80,6 +96,11 @@ const { state, actions, callbacks } = store('surecart/product-review-form', {
 			event?.preventDefault();
 
 			const { redirect_url, product_id } = getContext();
+
+			// Store the button that triggered the open action for focus restoration.
+			state.openButton = event?.target?.closest(
+				'.wp-block-surecart-product-review-add-button'
+			);
 
 			// If redirect URL is set, redirect to it instead of opening the form
 			if (redirect_url) {
@@ -92,6 +113,16 @@ const { state, actions, callbacks } = store('surecart/product-review-form', {
 
 			// open the dialog UI.
 			state.open = true;
+
+			// Announce modal open to screen readers.
+			const { speak } = yield import(
+				/* webpackIgnore: true */
+				'@surecart/a11y'
+			);
+			speak(__('Product review form opened.', 'surecart'), 'assertive');
+
+			// Set initial focus to the first focusable element.
+			setInitialFocus();
 		},
 
 		/** Close the product review form dialog. */
@@ -118,6 +149,13 @@ const { state, actions, callbacks } = store('surecart/product-review-form', {
 			context.submitted = false;
 			removeProductReviewFormUrlParameter();
 
+			// Announce modal close to screen readers.
+			const { speak } = yield import(
+				/* webpackIgnore: true */
+				'@surecart/a11y'
+			);
+			speak(__('Product review form closed.', 'surecart'), 'assertive');
+
 			// restore focus to the open button.
 			setTimeout(() => state?.openButton?.focus(), 1);
 		},
@@ -126,6 +164,29 @@ const { state, actions, callbacks } = store('surecart/product-review-form', {
 		setStars(event) {
 			const context = getContext();
 			context.stars = event?.target?.value ?? 0;
+		},
+
+		/** Handle keyboard selection of stars */
+		handleStarKeydown(event) {
+			if (event.key === ' ' || event.key === 'Enter') {
+				event.preventDefault();
+				actions.selectStar(event.target);
+			}
+		},
+
+		/** Handle click selection of stars */
+		handleStarClick(event) {
+			actions.selectStar(event.target);
+		},
+
+		/** Select a star by label element */
+		selectStar(label) {
+			const starValue = label.getAttribute('data-star');
+			const input = document.getElementById(`stars-star${starValue}`);
+			if (input) {
+				input.checked = true;
+				input.dispatchEvent(new Event('change', { bubbles: true }));
+			}
 		},
 
 		/** Set the review title */
@@ -142,21 +203,39 @@ const { state, actions, callbacks } = store('surecart/product-review-form', {
 	},
 
 	callbacks: {
+		/**
+		 * Handle initial focus on page load when modal is opened via URL.
+		 */
+		handleInit() {
+			if (state.open) {
+				setInitialFocus();
+			}
+		},
+
 		handleOpenChange() {
-			if (!inertElements.length) {
+			if (state.open) {
+				// Capture elements to make inert when opening.
+				// This ensures we get fresh elements each time in case the DOM has changed.
 				inertElements = Array.from(
 					document.querySelectorAll(
 						'body > :not(.sc-lightbox-overlay):not(.wp-block-surecart-product-review-form)'
 					)
-				).filter((el) => !el.hasAttribute('inert'));
-			}
+				).filter(
+					(el) =>
+						!el.hasAttribute('inert') &&
+						!el.querySelector(
+							'.wp-block-surecart-product-review-form'
+						) &&
+						!el.querySelector('.sc-lightbox-overlay')
+				);
 
-			if (state.open) {
 				document.body.classList.add('sc-product-review-form-open');
 				inertElements.forEach((el) => el.setAttribute('inert', ''));
 			} else {
 				document.body.classList.remove('sc-product-review-form-open');
 				inertElements.forEach((el) => el.removeAttribute('inert'));
+				// Clear the array so fresh elements are captured on next open.
+				inertElements = [];
 			}
 		},
 
@@ -190,12 +269,32 @@ const { state, actions, callbacks } = store('surecart/product-review-form', {
 				const context = getContext();
 				const { stars, title, sc_product_id, body } = context;
 
+				// Import speak function for screen reader announcements.
+				const { speak } = yield import(
+					/* webpackIgnore: true */
+					'@surecart/a11y'
+				);
+
 				if (isInvalidInput(context)) {
+					// Announce validation error to screen readers.
+					speak(
+						__(
+							'Please fill in all required fields including a star rating and review title.',
+							'surecart'
+						),
+						'assertive'
+					);
 					return;
 				}
 
 				try {
 					context.busy = true;
+
+					// Announce submitting state to screen readers.
+					speak(
+						__('Submitting your review.', 'surecart'),
+						'assertive'
+					);
 
 					// Submit the review via REST API.
 					const response = yield apiFetch({
@@ -220,8 +319,44 @@ const { state, actions, callbacks } = store('surecart/product-review-form', {
 
 					callbacks.clearForm();
 					context.submitted = true;
-				} catch (e) {
-					console.error(e);
+
+					// Announce success and confirmation to screen readers.
+					speak(
+						__(
+							'Review submitted successfully. Thank you for your feedback.',
+							'surecart'
+						),
+						'assertive'
+					);
+
+					// Move focus to the confirmation content for accessibility.
+					requestAnimationFrame(() => {
+						const confirmation = document.querySelector(
+							'.sc-product-review-confirmation'
+						);
+						const firstFocusable = confirmation?.querySelector(
+							'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+						);
+						if (firstFocusable) {
+							firstFocusable.focus();
+						} else if (confirmation) {
+							// If no focusable element, make the confirmation focusable and focus it.
+							confirmation.setAttribute('tabindex', '-1');
+							confirmation.focus();
+						}
+					});
+				} catch (error) {
+					console.error(error);
+
+					// Announce error to screen readers.
+					speak(
+						error?.message ||
+							__(
+								'Failed to submit review. Please try again.',
+								'surecart'
+							),
+						'assertive'
+					);
 				} finally {
 					context.busy = false;
 				}
