@@ -17,13 +17,20 @@ on:
         required: false
         type: boolean
         default: false
+      skip_build:
+        description: 'Skip build/preview steps (useful for testing Claude QA only when PR already has preview)'
+        required: false
+        type: boolean
+        default: false
 
 jobs:
   build:
     if: >
-      github.event_name == 'workflow_dispatch' ||
-      github.event.label.name == 'qa ready' ||
-      github.event.review.state == 'APPROVED'
+      !inputs.skip_build && (
+        github.event_name == 'workflow_dispatch' ||
+        github.event.label.name == 'qa ready' ||
+        github.event.review.state == 'APPROVED'
+      )
     name: "Build Zip For QA"
     runs-on: ubuntu-latest
     steps:
@@ -42,6 +49,7 @@ jobs:
 
   playground-preview:
     needs: build
+    if: ${{ !inputs.skip_build }}
     name: "Playground Preview"
     runs-on: ubuntu-latest
     permissions:
@@ -132,7 +140,12 @@ jobs:
 
   claude-qa:
     needs: [playground-preview, build]
-    if: ${{ !inputs.skip_claude_qa }}
+    # Run if: not skipping QA AND (build jobs succeeded OR were skipped due to skip_build)
+    if: >
+      always() &&
+      !inputs.skip_claude_qa &&
+      (needs.build.result == 'success' || needs.build.result == 'skipped') &&
+      (needs.playground-preview.result == 'success' || needs.playground-preview.result == 'skipped')
     name: "Run Claude QA"
     runs-on: ubuntu-latest
     permissions:
