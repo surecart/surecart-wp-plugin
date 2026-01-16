@@ -274,22 +274,14 @@ jobs:
 
             ## Screenshots
 
-            **IMPORTANT:** First create the screenshots directory:
-            ```
-            mkdir -p ./screenshots
-            ```
+            Use `mcp__playwright__browser_take_screenshot` with a `filename` parameter like `screenshots/descriptive-name.png`.
 
-            Then save screenshots using the `filename` parameter with the `screenshots/` prefix:
-            - Tool: `mcp__playwright__browser_take_screenshot`
-            - Filename: `screenshots/descriptive-name.png`
-
-            When referencing in qa-report.md, use this URL:
+            When referencing in qa-report.md, use this URL pattern:
             `${{ steps.get-context.outputs.screenshot_base }}/descriptive-name.png`
 
-            Example workflow:
-            1. Run: `mkdir -p ./screenshots` (using Bash tool)
-            2. Take screenshot with filename: `screenshots/checkout-bug.png`
-            3. In markdown: `![Checkout Bug](${{ steps.get-context.outputs.screenshot_base }}/checkout-bug.png)`
+            Example:
+            - Take screenshot with filename: `screenshots/checkout-bug.png`
+            - In markdown: `![Checkout Bug](${{ steps.get-context.outputs.screenshot_base }}/checkout-bug.png)`
 
             ## Output
             When finished testing, write your complete QA report to a file called `qa-report.md` with:
@@ -305,18 +297,22 @@ jobs:
       - name: Upload screenshots to GitHub Pages
         if: always() && steps.get-context.outputs.pr_number
         run: |
-          if [ -d "./screenshots" ] && [ "$(ls -A ./screenshots 2>/dev/null)" ]; then
+          # Playwright MCP saves to .playwright-mcp/screenshots/
+          if [ -d "./.playwright-mcp/screenshots" ] && [ "$(ls -A ./.playwright-mcp/screenshots 2>/dev/null)" ]; then
+            echo "Found screenshots in .playwright-mcp/screenshots:"
+            ls -la ./.playwright-mcp/screenshots/
+
             git clone --single-branch --branch gh-pages https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git gh-pages-repo
             cd gh-pages-repo
             mkdir -p pr-${{ steps.get-context.outputs.pr_number }}/screenshots
-            cp ../screenshots/* pr-${{ steps.get-context.outputs.pr_number }}/screenshots/
+            cp ../.playwright-mcp/screenshots/*.png pr-${{ steps.get-context.outputs.pr_number }}/screenshots/
             git config user.name "github-actions[bot]"
             git config user.email "github-actions[bot]@users.noreply.github.com"
             git add .
             git commit -m "Add QA screenshots for PR #${{ steps.get-context.outputs.pr_number }}" || echo "No screenshots to commit"
             git push
           else
-            echo "No screenshots directory found or directory is empty"
+            echo "No screenshots found in .playwright-mcp/screenshots/"
           fi
 
       - name: Post results to PR
