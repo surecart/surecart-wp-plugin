@@ -176,6 +176,7 @@ export default ({ promotion: { id }, index, onUpdate }) => {
 				<EditPromotionCode
 					promotion={promotion}
 					onRequestClose={() => setModal(null)}
+					onSuccess={onUpdate}
 				/>
 			)}
 			{modal === 'delete' && (

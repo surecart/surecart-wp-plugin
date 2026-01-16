@@ -5,17 +5,20 @@ import { css, jsx } from '@emotion/core';
  * External dependencies.
  */
 import { __ } from '@wordpress/i18n';
-import { useState, Fragment } from '@wordpress/element';
+import { useState, useEffect, Fragment } from '@wordpress/element';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import { Button } from '@wordpress/components';
-import { ScTag } from '@surecart/components-react';
-
 /**
  * Internal dependencies.
  */
 import Box from '../../../ui/Box';
-import { ScButton, ScIcon, ScSkeleton } from '@surecart/components-react';
+import {
+	ScButton,
+	ScIcon,
+	ScSkeleton,
+	ScTag,
+} from '@surecart/components-react';
 import EditPromotionCode from './EditPromotionCode';
 import PrevNextButtons from '../../../ui/PrevNextButtons';
 import PromotionCodesList from './PromotionCodesList';
@@ -112,6 +115,19 @@ export default ({ id }) => {
 			invalidateResolution('getEntityRecords', archivedQueryArgs);
 		}
 	};
+
+	// Switch to active tab when archived becomes empty.
+	useEffect(() => {
+		if (
+			!isActive &&
+			archivedPage === 1 &&
+			!isLoadingArchived &&
+			Array.isArray(archivedPromotions) &&
+			archivedPromotions.length === 0
+		) {
+			setIsActive(true);
+		}
+	}, [isActive, archivedPage, isLoadingArchived, archivedPromotions]);
 
 	const { hasPagination: hasActivePagination } = usePagination({
 		data: activePromotions,
