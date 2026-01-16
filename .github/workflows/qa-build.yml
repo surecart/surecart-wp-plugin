@@ -241,6 +241,11 @@ jobs:
             2. Review the PR changes and verify they work as expected
             3. Report any bugs, issues, or suggestions for improvement
 
+            ## Important
+            - The WordPress playground loads the site inside an iframe, so to take action on the site, you must first use page.frameLocator('iframe#wp').locator(selector) to locate in the iframe context.
+            - You can use the site manager button in the toolbar to change php settings, view logs, and more.
+            - You may see logs about scheduled actions in the log viewer. This is expected in the playground context.
+
             ## Output
             When finished testing, write your complete QA report to a file called `qa-report.md` with:
             - **Summary**: ✅ Pass or ❌ Fail with brief explanation
@@ -250,7 +255,7 @@ jobs:
           claude_args: |
             --max-turns 100
             --mcp-config '{"mcpServers":{"playwright":{"command":"npx","args":["@playwright/mcp@latest","--headless","--isolated","--caps=vision,testing"]}}}'
-            --allowedTools "mcp__playwright__browser_navigate,mcp__playwright__browser_navigate_back,mcp__playwright__browser_click,mcp__playwright__browser_type,mcp__playwright__browser_snapshot,mcp__playwright__browser_take_screenshot,mcp__playwright__browser_console_messages,mcp__playwright__browser_wait_for,mcp__playwright__browser_hover,mcp__playwright__browser_resize,mcp__playwright__browser_drag,mcp__playwright__browser_select_option,mcp__playwright__browser_press_key,mcp__playwright__browser_tabs,mcp__playwright__browser_file_upload,mcp__playwright__browser_fill_form,mcp__playwright__browser_handle_dialog,mcp__playwright__browser_close,mcp__playwright__browser_verify_element_visible,mcp__playwright__browser_verify_text_visible,mcp__playwright__browser_verify_value,Write"
+            --allowedTools "Bash,mcp__playwright__browser_navigate,mcp__playwright__browser_navigate_back,mcp__playwright__browser_click,mcp__playwright__browser_type,mcp__playwright__browser_snapshot,mcp__playwright__browser_take_screenshot,mcp__playwright__browser_console_messages,mcp__playwright__browser_wait_for,mcp__playwright__browser_hover,mcp__playwright__browser_resize,mcp__playwright__browser_drag,mcp__playwright__browser_select_option,mcp__playwright__browser_press_key,mcp__playwright__browser_tabs,mcp__playwright__browser_file_upload,mcp__playwright__browser_fill_form,mcp__playwright__browser_handle_dialog,mcp__playwright__browser_close,mcp__playwright__browser_verify_element_visible,mcp__playwright__browser_verify_text_visible,mcp__playwright__browser_verify_value,Write"
 
       - name: Post results to PR
         if: always() && steps.get-context.outputs.pr_number && github.event_name != 'workflow_dispatch'
