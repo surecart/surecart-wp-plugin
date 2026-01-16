@@ -29,6 +29,7 @@ jobs:
       !inputs.skip_build && (
         github.event_name == 'workflow_dispatch' ||
         github.event.label.name == 'qa ready' ||
+        github.event.label.name == 'AI QA' ||
         github.event.review.state == 'APPROVED'
       )
     name: "Build Zip For QA"
@@ -161,11 +162,15 @@ jobs:
 
   claude-qa:
     needs: [playground-preview, build]
-    # Run if: not skipping QA AND playground-preview succeeded (build can be skipped)
+    # Run if: not skipping QA AND playground-preview succeeded AND triggered by 'AI QA' label or manual dispatch
     if: >
       always() &&
       !inputs.skip_claude_qa &&
-      needs.playground-preview.result == 'success'
+      needs.playground-preview.result == 'success' &&
+      (
+        github.event_name == 'workflow_dispatch' ||
+        github.event.label.name == 'AI QA'
+      )
     name: "Run Claude QA"
     runs-on: ubuntu-latest
     permissions:
