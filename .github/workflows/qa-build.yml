@@ -49,7 +49,7 @@ jobs:
 
   playground-preview:
     needs: build
-    if: ${{ !inputs.skip_build }}
+    if: ${{ always() && (needs.build.result == 'success' || needs.build.result == 'skipped') }}
     name: "Playground Preview"
     runs-on: ubuntu-latest
     permissions:
@@ -77,12 +77,14 @@ jobs:
           echo "Using PR number: $PR_NUMBER"
 
       - uses: actions/checkout@v4
+        if: ${{ !inputs.skip_build }}
         with:
           ref: gh-pages
           fetch-depth: 0
         continue-on-error: true
 
       - name: Create gh-pages branch if needed
+        if: ${{ !inputs.skip_build }}
         run: |
           if ! git rev-parse --verify gh-pages >/dev/null 2>&1; then
             git checkout --orphan gh-pages
@@ -92,12 +94,14 @@ jobs:
           fi
 
       - name: Download artifact
+        if: ${{ !inputs.skip_build }}
         uses: actions/download-artifact@v4
         with:
           name: surecart
           path: ./pr-artifacts
 
       - name: Deploy to GitHub Pages
+        if: ${{ !inputs.skip_build }}
         run: |
           mkdir -p pr-${{ steps.get-pr.outputs.pr_number }}
           cp ./pr-artifacts/surecart.zip pr-${{ steps.get-pr.outputs.pr_number }}/
@@ -109,7 +113,6 @@ jobs:
 
       - name: Post Playground preview button
         id: playground
-        if: github.event_name != 'workflow_dispatch'
         uses: WordPress/action-wp-playground-pr-preview@v2
         with:
           mode: "append-to-description"
@@ -142,12 +145,11 @@ jobs:
 
   claude-qa:
     needs: [playground-preview, build]
-    # Run if: not skipping QA AND (build jobs succeeded OR were skipped due to skip_build)
+    # Run if: not skipping QA AND playground-preview succeeded (build can be skipped)
     if: >
       always() &&
       !inputs.skip_claude_qa &&
-      (needs.build.result == 'success' || needs.build.result == 'skipped') &&
-      (needs.playground-preview.result == 'success' || needs.playground-preview.result == 'skipped')
+      needs.playground-preview.result == 'success'
     name: "Run Claude QA"
     runs-on: ubuntu-latest
     permissions:
