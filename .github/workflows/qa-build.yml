@@ -1,4 +1,5 @@
 name: QA Build
+# Automated QA workflow for PRs - triggers on 'qa ready' label or PR approval
 
 on:
   pull_request:
