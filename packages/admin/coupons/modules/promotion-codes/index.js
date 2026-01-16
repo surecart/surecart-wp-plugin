@@ -120,14 +120,12 @@ export default ({ id }) => {
 	useEffect(() => {
 		if (
 			!isActive &&
-			archivedPage === 1 &&
 			!isLoadingArchived &&
-			Array.isArray(archivedPromotions) &&
-			archivedPromotions.length === 0
+			archivedPromotions?.length === 0
 		) {
 			setIsActive(true);
 		}
-	}, [isActive, archivedPage, isLoadingArchived, archivedPromotions]);
+	}, [isActive, isLoadingArchived, archivedPromotions]);
 
 	const { hasPagination: hasActivePagination } = usePagination({
 		data: activePromotions,
