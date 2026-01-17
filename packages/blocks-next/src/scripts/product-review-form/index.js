@@ -200,53 +200,9 @@ const { state, actions, callbacks } = store('surecart/product-review-form', {
 			const context = getContext();
 			context.body = event?.target?.value ?? '';
 		},
-	},
-
-	callbacks: {
-		/**
-		 * Handle initial focus on page load when modal is opened via URL.
-		 */
-		handleInit() {
-			if (state.open) {
-				setInitialFocus();
-			}
-		},
-
-		handleOpenChange() {
-			if (state.open) {
-				// Capture elements to make inert when opening.
-				// This ensures we get fresh elements each time in case the DOM has changed.
-				inertElements = Array.from(
-					document.querySelectorAll(
-						'body > :not(.sc-lightbox-overlay):not(.wp-block-surecart-product-review-form)'
-					)
-				).filter(
-					(el) =>
-						!el.hasAttribute('inert') &&
-						!el.querySelector(
-							'.wp-block-surecart-product-review-form'
-						) &&
-						!el.querySelector('.sc-lightbox-overlay')
-				);
-
-				document.body.classList.add('sc-product-review-form-open');
-				inertElements.forEach((el) => el.setAttribute('inert', ''));
-			} else {
-				document.body.classList.remove('sc-product-review-form-open');
-				inertElements.forEach((el) => el.removeAttribute('inert'));
-				// Clear the array so fresh elements are captured on next open.
-				inertElements = [];
-			}
-		},
-
-		handleKeyDown(event) {
-			if (event?.key === 'Escape') {
-				actions.close(event);
-			}
-		},
 
 		/**
-		 * Handle submit callback.
+		 * Handle form submit.
 		 */
 		*handleSubmit(e) {
 			if (e.type === 'keydown' && e.key !== 'Enter') {
@@ -360,6 +316,50 @@ const { state, actions, callbacks } = store('surecart/product-review-form', {
 				} finally {
 					context.busy = false;
 				}
+			}
+		},
+	},
+
+	callbacks: {
+		/**
+		 * Handle initial focus on page load when modal is opened via URL.
+		 */
+		handleInit() {
+			if (state.open) {
+				setInitialFocus();
+			}
+		},
+
+		handleOpenChange() {
+			if (state.open) {
+				// Capture elements to make inert when opening.
+				// This ensures we get fresh elements each time in case the DOM has changed.
+				inertElements = Array.from(
+					document.querySelectorAll(
+						'body > :not(.sc-lightbox-overlay):not(.wp-block-surecart-product-review-form)'
+					)
+				).filter(
+					(el) =>
+						!el.hasAttribute('inert') &&
+						!el.querySelector(
+							'.wp-block-surecart-product-review-form'
+						) &&
+						!el.querySelector('.sc-lightbox-overlay')
+				);
+
+				document.body.classList.add('sc-product-review-form-open');
+				inertElements.forEach((el) => el.setAttribute('inert', ''));
+			} else {
+				document.body.classList.remove('sc-product-review-form-open');
+				inertElements.forEach((el) => el.removeAttribute('inert'));
+				// Clear the array so fresh elements are captured on next open.
+				inertElements = [];
+			}
+		},
+
+		handleKeyDown(event) {
+			if (event?.key === 'Escape') {
+				actions.close(event);
 			}
 		},
 

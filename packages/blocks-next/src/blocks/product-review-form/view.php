@@ -38,7 +38,7 @@
 		data-wp-on--keydown="callbacks.handleKeyDown"
 		data-wp-bind--hidden="!state.open"
 	>
-		<form data-wp-on--submit="callbacks.handleSubmit">
+		<form data-wp-on--submit="actions.handleSubmit">
 			<div class="sc-product-review-form-dialog__content" style="<?php echo esc_attr( $content_style ); ?>">
 
 				<?php if ( isset( $form_template ) ) : ?>
