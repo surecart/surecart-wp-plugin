@@ -24,12 +24,14 @@ echo wp_kses_data(
 			SureCart::svg()->get(
 				$is_half_star ? 'half-star' : 'star',
 				[
-					'class'  => 'sc-star-row__label__svg',
-					'height' => esc_attr( $size ),
-					'width'  => esc_attr( $size ),
-					'fill'   => $is_full_star || $is_half_star ? esc_attr( $fill_color ) : 'none',
-					'color'  => $is_half_star ? esc_attr( $fill_color ) : 'none',
-					'stroke' => esc_attr( $fill_color ) ?? 'none',
+					'class'        => 'sc-star-row__label__svg',
+					'height'       => esc_attr( $size ),
+					'width'        => esc_attr( $size ),
+					'fill'         => $is_full_star || $is_half_star ? esc_attr( $fill_color ) : 'none',
+					'color'        => $is_half_star ? esc_attr( $fill_color ) : 'none',
+					'stroke'       => esc_attr( $fill_color ) ?? 'none',
+					'stroke-width' => 2,
+					'aria-hidden'  => 'true',
 				]
 			),
 			sc_allowed_svg_html()

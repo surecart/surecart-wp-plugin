@@ -18,5 +18,5 @@
 	tabindex="0"
 	aria-label="<?php esc_attr_e( 'Close product review form', 'surecart' ); ?>"
 	href="<?php echo esc_url( $close_url ); ?>">
-	<?php echo wp_kses( SureCart::svg()->get( 'x' ), sc_allowed_svg_html() ); ?>
+	<?php echo wp_kses( SureCart::svg()->get( 'x', [ 'aria-hidden' => 'true' ] ), sc_allowed_svg_html() ); ?>
 </a>

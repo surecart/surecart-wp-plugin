@@ -15,8 +15,9 @@ if ( empty( $block->context['review']->verified ) ) {
 	return;
 }
 
-$show_label = $attributes['show_label'] ?? true;
-$label      = $attributes['label'] ?? '';
-$icon_size  = $attributes['icon_size'] ?? 16;
+$show_label  = $attributes['show_label'] ?? true;
+$label       = $attributes['label'] ?? '';
+$badge_label = ! empty( $label ) ? $label : __( 'Verified Buyer', 'surecart' );
+$icon_size   = $attributes['icon_size'] ?? 16;
 
 return 'file:./view.php';

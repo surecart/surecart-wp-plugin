@@ -39,9 +39,10 @@
 					SureCart::svg()->get(
 						$icon,
 						[
-							'class'  => 'wp-block-surecart-product-review-form-button__icon sc-button__link-text',
-							'width'  => $icon_size,
-							'height' => $icon_size,
+							'class'       => 'wp-block-surecart-product-review-form-button__icon sc-button__link-text',
+							'width'       => $icon_size,
+							'height'      => $icon_size,
+							'aria-hidden' => 'true',
 						]
 					),
 					sc_allowed_svg_html()
@@ -61,9 +62,10 @@
 					SureCart::svg()->get(
 						$icon,
 						[
-							'class'  => 'wp-block-surecart-product-review-form-button__icon sc-button__link-text',
-							'width'  => $icon_size,
-							'height' => $icon_size,
+							'class'       => 'wp-block-surecart-product-review-form-button__icon sc-button__link-text',
+							'width'       => $icon_size,
+							'height'      => $icon_size,
+							'aria-hidden' => 'true',
 						]
 					),
 					sc_allowed_svg_html()

@@ -37,17 +37,13 @@ $buttons = array(
 			SureCart::svg()->get(
 				$attributes['icon'],
 				[
-					'aria-label' => __(
-						'Open sidebar',
-						'surecart'
-					),
-					'class'      => 'sc-sidebar-toggle__icon',
+					'aria-hidden' => 'true',
+					'class'       => 'sc-sidebar-toggle__icon',
 				],
 			),
 			sc_allowed_svg_html()
 		) : '';
-
-		echo wp_kses_post( $attributes['label'] ?? __( 'Filter', 'surecart' ) );
 	?>
+	<span aria-hidden="true"><?php echo wp_kses_post( $attributes['label'] ?? __( 'Filter', 'surecart' ) ); ?></span>
 </div>
 <?php endforeach; ?>

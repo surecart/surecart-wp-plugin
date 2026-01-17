@@ -46,7 +46,7 @@
 				tabindex="0"
 				aria-label="<?php esc_attr_e( 'Close sidebar', 'surecart' ); ?>"
 			>
-				<?php echo wp_kses( SureCart::svg()->get( 'arrow-right' ), sc_allowed_svg_html() ); ?>
+				<?php echo wp_kses( SureCart::svg()->get( 'arrow-right', [ 'aria-hidden' => 'true' ] ), sc_allowed_svg_html() ); ?>
 			</div>
 
 		</div>

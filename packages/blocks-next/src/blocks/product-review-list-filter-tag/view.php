@@ -20,11 +20,8 @@
 		SureCart::svg()->get(
 			'x',
 			[
-				'class'      => 'sc-tag__clear',
-				'aria-label' => __(
-					'Remove tag',
-					'surecart'
-				),
+				'class'       => 'sc-tag__clear',
+				'aria-hidden' => 'true',
 			],
 		),
 		sc_allowed_svg_html()
