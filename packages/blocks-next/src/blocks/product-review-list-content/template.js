@@ -197,6 +197,19 @@ export default [
 			metadata: {
 				name: 'Header',
 			},
+			style: {
+				spacing: {
+					margin: {
+						bottom: '10px',
+					},
+					padding: {
+						top: '0',
+						bottom: '0',
+						left: '0',
+						right: '0',
+					},
+				},
+			},
 			layout: {
 				type: 'flex',
 				flexWrap: 'nowrap',
@@ -284,8 +297,9 @@ export default [
 								{
 									style: {
 										typography: {
-											fontWeight: '600',
+											fontWeight: '700',
 											fontStyle: 'normal',
+											fontSize: '16px',
 										},
 									},
 								},
@@ -297,8 +311,27 @@ export default [
 										type: 'flex',
 										orientation: 'horizontal',
 									},
+									style: {
+										spacing: {
+											blockGap: '8px',
+										},
+										typography: {
+											fontSize: '16px',
+										},
+									},
 								},
-								[['surecart/product-review-list-filter-tag']],
+								[
+									[
+										'surecart/product-review-list-filter-tag',
+										{
+											style: {
+												typography: {
+													fontSize: '14px',
+												},
+											},
+										},
+									],
+								],
 							],
 							[
 								'surecart/product-review-list-filter-tags-clear-all',
@@ -306,8 +339,11 @@ export default [
 									style: {
 										typography: {
 											textDecoration: 'underline',
+											fontWeight: '700',
+											fontStyle: 'normal',
 										},
 									},
+									fontSize: 'small',
 								},
 							],
 						],
@@ -322,6 +358,11 @@ export default [
 								verticalAlignment: 'top',
 								flexWrap: 'nowrap',
 							},
+							style: {
+								spacing: {
+									blockGap: '8px',
+								},
+							},
 						},
 						[
 							[
@@ -329,8 +370,9 @@ export default [
 								{
 									style: {
 										typography: {
-											fontWeight: '600',
+											fontWeight: '700',
 											fontStyle: 'normal',
+											fontSize: '16px',
 										},
 									},
 								},
@@ -340,13 +382,27 @@ export default [
 								{
 									style: {
 										spacing: {
-											blockGap: 'var:preset|spacing|20',
+											blockGap: '6px',
+											margin: {
+												top: '0',
+												bottom: '0',
+											},
+										},
+										typography: {
+											fontSize: '16px',
 										},
 									},
 								},
 								[
 									[
 										'surecart/product-review-list-filter-checkbox',
+										{
+											style: {
+												typography: {
+													fontSize: '16px',
+												},
+											},
+										},
 									],
 								],
 							],
