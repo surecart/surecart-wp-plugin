@@ -24,7 +24,7 @@ export class ScTestModeInfo {
             <li>
               {__('From the Admin Bar', 'surecart')}
               <ul>
-                <li>{__("Select any product & proceed to it's checkout page.", 'surecart')}</li>
+                <li>{__("Select any product & proceed to its checkout page.", 'surecart')}</li>
                 <li>{__('Access the dropdown menu & select the live mode.', 'surecart')}</li>
               </ul>
               <img src={`${window?.scData?.plugin_url}/images/change-from-adminbar.png`} />
