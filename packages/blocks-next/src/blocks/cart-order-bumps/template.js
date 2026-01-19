@@ -1,3 +1,4 @@
+import { __ } from '@wordpress/i18n';
 export const TEMPLATE = [
 	[
 		'core/group',
@@ -33,7 +34,7 @@ export const TEMPLATE = [
 							},
 						},
 					},
-					content: 'Suggested for you',
+					content: __('Suggested for you', 'surecart'),
 				},
 			],
 			[
