@@ -75,34 +75,4 @@ slot[name='title'] {
   z-index: 5;
   padding: var(--sc-spacing-medium);
 
-  .focus-sentinel {
-    position: fixed;
-    width: 1px;
-    height: 1px;
-    opacity: 0;
-    pointer-events: none;
-  }
-  &--top-left {
-    bottom: calc(100% + 10px);
-    left: 0;
-    transform-origin: top left;
-  }
-
-  &--top-right {
-    bottom: calc(100% + 10px);
-    right: 0;
-    transform-origin: top right;
-  }
-
-  &--bottom-left {
-    top: calc(100% + 10px);
-    left: 0;
-    transform-origin: bottom left;
-  }
-
-  &--bottom-right {
-    top: calc(100% + 10px);
-    right: 0;
-    transform-origin: bottom right;
-  }
 }

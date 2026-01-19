@@ -27,9 +27,6 @@ export class ScPopover {
   /** Indicates whether or not the popover is open. You can use this in lieu of the show/hide methods. */
   @Prop({ reflect: true, mutable: true }) open?: boolean = false;
 
-  /** The placement of the popover panel */
-  @Prop() position: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
-
   /** The placement of the popover. */
   @Prop({ reflect: true }) placement:
     | 'top'
@@ -203,13 +200,7 @@ export class ScPopover {
         <div class="popover__positioner" ref={el => (this.positioner = el as HTMLDivElement)}>
           <div
             part="panel"
-            class={{
-              'popover__panel': true,
-              'popover__panel--top-left': this.position === 'top-left',
-              'popover__panel--top-right': this.position === 'top-right',
-              'popover__panel--bottom-left': this.position === 'bottom-left',
-              'popover__panel--bottom-right': this.position === 'bottom-right',
-            }}
+            class="popover__panel"
             aria-orientation="vertical"
             tabindex="-1"
             ref={el => (this.panel = el as HTMLElement)}
