@@ -21,6 +21,8 @@ export class ScPopover {
 
   private positionerCleanup: ReturnType<typeof autoUpdate> | undefined;
   private boundHandleOutsideClick = (evt: MouseEvent) => this.handleOutsideClick(evt);
+  private boundHandleKeyDown = (evt: KeyboardEvent) => this.handleKeyDown(evt);
+  private boundHandleFocusOut = (evt: FocusEvent) => this.handleFocusOut(evt);
 
   /** Is this disabled. */
   @Prop() disabled: boolean;
@@ -69,13 +71,44 @@ export class ScPopover {
     this.open ? this.show() : this.hide();
   }
 
-  handleOutsideClick(evt) {
+  handleOutsideClick(evt: MouseEvent) {
     const path = evt.composedPath();
     if (
       !path.some(item => {
         return item === this.el;
       })
     ) {
+      this.open = false;
+    }
+  }
+
+  handleKeyDown(event: KeyboardEvent) {
+    if (event.key === 'Escape') {
+      event.stopPropagation();
+      this.hide();
+    }
+  }
+
+  handleTriggerKeyDown(event: KeyboardEvent) {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      if (this.disabled) return;
+      if (this.open) {
+        this.hide();
+      } else {
+        this.show();
+      }
+    }
+  }
+
+  /**
+   * Handles focus leaving the popover.
+   * Closes the popover if focus moves outside of it.
+   */
+  handleFocusOut(event: FocusEvent) {
+    const relatedTarget = event.relatedTarget as Node;
+    // If focus is moving to something outside the popover, close it
+    if (relatedTarget && !this.el.contains(relatedTarget)) {
       this.open = false;
     }
   }
@@ -130,7 +163,7 @@ export class ScPopover {
   }
 
   show() {
-    speak(__('Popover opened.', 'surecart'), 'assertive');
+    speak(__('Popover opened. Press Escape to close.', 'surecart'), 'assertive');
     this.scShow.emit();
     // Prevent subsequent calls to the method, whether manually or triggered by the `open` watcher
     if (this.isVisible) {
@@ -139,6 +172,8 @@ export class ScPopover {
     this.isVisible = true;
     this.open = true;
     this.startPositioner();
+    document.addEventListener('keydown', this.boundHandleKeyDown);
+    this.el.addEventListener('focusout', this.boundHandleFocusOut);
     this.panel.focus();
   }
 
@@ -150,6 +185,8 @@ export class ScPopover {
       return;
     }
     this.stopPositioner();
+    document.removeEventListener('keydown', this.boundHandleKeyDown);
+    this.el.removeEventListener('focusout', this.boundHandleFocusOut);
     this.isVisible = false;
     this.open = false;
     const slotted = this.el.shadowRoot.querySelector('slot[name="trigger"]') as HTMLSlotElement;
@@ -163,6 +200,8 @@ export class ScPopover {
 
   disconnectedCallback() {
     document.removeEventListener('mousedown', this.boundHandleOutsideClick);
+    document.removeEventListener('keydown', this.boundHandleKeyDown);
+    this.el.removeEventListener('focusout', this.boundHandleFocusOut);
   }
 
   handleHide() {
@@ -194,8 +233,12 @@ export class ScPopover {
               }, 0);
             }
           }}
+          onKeyDown={e => this.handleTriggerKeyDown(e)}
+          tabindex="0"
+          role="button"
           aria-expanded={this.open ? 'true' : 'false'}
-          aria-haspopup="true"
+          aria-haspopup="dialog"
+          aria-label={__('Press Enter to open popover', 'surecart')}
         >
           <slot name="trigger"></slot>
         </span>
@@ -206,7 +249,8 @@ export class ScPopover {
           <div
             part="panel"
             class="popover__panel"
-            aria-orientation="vertical"
+            role="dialog"
+            aria-modal="false"
             tabindex="-1"
             ref={el => (this.panel = el as HTMLElement)}
           >
