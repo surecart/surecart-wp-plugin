@@ -183,6 +183,8 @@ jobs:
 
       - name: Get context
         id: get-context
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           # Determine PR number
           if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
@@ -191,6 +193,14 @@ jobs:
             PR_NUMBER="${{ github.event.pull_request.number }}"
           fi
           echo "pr_number=$PR_NUMBER" >> $GITHUB_OUTPUT
+
+          # Pull PR description for better test context
+          if [ -n "$PR_NUMBER" ]; then
+            PR_DESCRIPTION="$(gh pr view "$PR_NUMBER" --repo "${{ github.repository }}" --json body -q '.body' || true)"
+            echo "pr_description<<EOF_PR_DESCRIPTION" >> $GITHUB_OUTPUT
+            echo "$PR_DESCRIPTION" >> $GITHUB_OUTPUT
+            echo "EOF_PR_DESCRIPTION" >> $GITHUB_OUTPUT
+          fi
 
           # Use preview URL from playground-preview job output if available
           PREVIEW_URL="${{ needs.playground-preview.outputs.preview_url }}"
@@ -240,25 +250,30 @@ jobs:
               2. **Break** them with edge cases
               3. **Ensure** no regressions in related features
 
-            ## REQUIRED: Create Test Products First
+            ## REQUIRED: Create Test Data First
 
-            ⚠️ **The Playground only has ONE basic test product.** Most features require proper product setup.
+            ⚠️ **The Playground only has ONE basic test product.** Most features require additional setup.
 
-            Before testing, you MUST create products through the admin UI:
-            1. Go to wp-admin → **SureCart → Products**
-            2. **Create products** appropriate for the PR's features:
-               - For subscription testing: create a product with recurring prices
-               - For variant testing: create a product with size/color options
-               - For checkout testing: create products with different price types
-            3. Each product needs at least one **published price**
+            Before testing, you MUST create the necessary data through the admin UI:
+            1. Go to wp-admin → **SureCart**
+            2. **Create data** appropriate for the PR's features:
+               - Products with published prices (one-time, recurring, variants)
+               - Coupons or discount rules
+               - Order bumps or upsells
+               - Checkout pages, forms, or embedded blocks
+               - Any other entities required by the PR
 
-            **This is not optional.** The default checkout page exists, but without proper products configured, you cannot test most features.
+            **This is not optional.** The default checkout page and a sample product exists, but without proper data configured, you cannot test most features.
 
             ## Test This PR
 
             ${{ steps.get-context.outputs.playground_url && format('The WordPress Playground preview URL is: {0}', steps.get-context.outputs.playground_url) }}
             ${{ !steps.get-context.outputs.playground_url && format('Navigate to https://playground.wordpress.net and install the plugin from: {0}', steps.get-context.outputs.plugin_url) }}
-            ${{ steps.get-context.outputs.pr_number && format('For a better understanding of what to test, use `gh pr view {0} --repo {1}` to see the PR description and `gh pr diff {0} --repo {1}` to see the code changes.', steps.get-context.outputs.pr_number, github.repository) }}
+            ${{ steps.get-context.outputs.pr_number && format('For a better understanding of what to test, use `gh pr diff {0} --repo {1}` to see the code changes.', steps.get-context.outputs.pr_number, github.repository) }}
+
+            ## PR Description (Source of Truth)
+
+            ${{ steps.get-context.outputs.pr_description || 'No PR description available.' }}
 
             Please:
             1. Review the PR changes to understand what features need testing
