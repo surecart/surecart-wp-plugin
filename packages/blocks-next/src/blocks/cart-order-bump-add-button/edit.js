@@ -20,9 +20,9 @@ export default ({ attributes, setAttributes }) => {
 				<Label attributes={attributes} setAttributes={setAttributes} />
 			</InspectorControls>
 
-			<button {...blockProps} type="button">
+			<div {...blockProps} role="button" tabindex="0">
 				<ScIcon name="plus" />
-			</button>
+			</div>
 		</>
 	);
 };
