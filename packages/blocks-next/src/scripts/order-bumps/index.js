@@ -24,6 +24,21 @@ const isBumpInCart = (bump) => {
 let previousBumpCount = null;
 
 /**
+ * Scroll carousel to start after DOM updates.
+ * Uses requestAnimationFrame to wait for the browser's next paint cycle,
+ * ensuring DOM updates from the Interactivity API have been applied.
+ */
+const scrollCarouselToStart = () => {
+	requestAnimationFrame(() => {
+		requestAnimationFrame(() => {
+			document
+				.querySelector('.wp-block-surecart-cart-order-bump-template')
+				?.scrollTo({ left: 0, behavior: 'instant' });
+		});
+	});
+};
+
+/**
  * Order Bumps store.
  */
 const { state, actions } = store('surecart/order-bumps', {
@@ -61,12 +76,7 @@ const { state, actions } = store('surecart/order-bumps', {
 				previousBumpCount !== bumps.length
 			) {
 				state.currentIndex = 0;
-				// Scroll carousel to start after DOM updates.
-				setTimeout(() => {
-					document
-						.querySelector('.wp-block-surecart-cart-order-bump-template')
-						?.scrollTo({ left: 0, behavior: 'smooth' });
-				}, 100);
+				scrollCarouselToStart();
 			}
 			previousBumpCount = bumps.length;
 
