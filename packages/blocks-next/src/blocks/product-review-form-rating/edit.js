@@ -8,7 +8,7 @@ import {
 	AlignmentControl,
 	RichText,
 } from '@wordpress/block-editor';
-import { PanelBody, RangeControl } from '@wordpress/components';
+import { __experimentalToolsPanelItem as ToolsPanelItem } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -16,6 +16,7 @@ import { __ } from '@wordpress/i18n';
  */
 import ColorInspectorControl from '../../components/ColorInspectorControl';
 import ScIcon from '../../components/ScIcon';
+import UnitSpacingControl from '../../components/UnitSpacingControl';
 
 export default function Edit({ attributes, setAttributes, clientId }) {
 	const { label, fill_color, size, text_align } = attributes;
@@ -35,16 +36,23 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 					}}
 				/>
 			</BlockControls>
-			<InspectorControls>
-				<PanelBody title={__('Appearance', 'surecart')}>
-					<RangeControl
+			<InspectorControls group="dimensions">
+				<ToolsPanelItem
+					hasValue={() => size !== undefined}
+					label={__('Star Size', 'surecart')}
+					onDeselect={() => setAttributes({ size: undefined })}
+					resetAllFilter={() => setAttributes({ size: undefined })}
+					isShownByDefault
+					panelId={clientId}
+				>
+					<UnitSpacingControl
 						label={__('Star Size', 'surecart')}
 						value={size}
 						onChange={(value) => setAttributes({ size: value })}
 						min={10}
 						max={60}
 					/>
-				</PanelBody>
+				</ToolsPanelItem>
 			</InspectorControls>
 			<ColorInspectorControl
 				settings={[

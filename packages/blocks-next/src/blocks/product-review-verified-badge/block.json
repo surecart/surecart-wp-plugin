@@ -19,8 +19,8 @@
 			"type": "string"
 		},
 		"icon_size": {
-			"type": "number",
-			"default": 16
+			"type": "string",
+			"default": "16px"
 		}
 	},
 	"supports": {

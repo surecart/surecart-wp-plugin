@@ -6,16 +6,21 @@ import {
 	InspectorControls,
 	RichText,
 } from '@wordpress/block-editor';
-import { PanelBody, ToggleControl, RangeControl } from '@wordpress/components';
+import {
+	PanelBody,
+	ToggleControl,
+	__experimentalToolsPanelItem as ToolsPanelItem,
+} from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies.
  */
 import ScIcon from '../../components/ScIcon';
+import UnitSpacingControl from '../../components/UnitSpacingControl';
 import { getSpacingPresetCssVar } from '../../../../blocks/util';
 
-export default ({ attributes, setAttributes }) => {
+export default ({ attributes, setAttributes, clientId }) => {
 	const { show_label, label, icon_size, style } = attributes;
 	const blockProps = useBlockProps({
 		style: {
@@ -35,8 +40,20 @@ export default ({ attributes, setAttributes }) => {
 						}
 						checked={!!show_label}
 					/>
-
-					<RangeControl
+				</PanelBody>
+			</InspectorControls>
+			<InspectorControls group="dimensions">
+				<ToolsPanelItem
+					hasValue={() => icon_size !== undefined}
+					label={__('Icon size', 'surecart')}
+					onDeselect={() => setAttributes({ icon_size: undefined })}
+					resetAllFilter={() =>
+						setAttributes({ icon_size: undefined })
+					}
+					isShownByDefault
+					panelId={clientId}
+				>
+					<UnitSpacingControl
 						label={__('Icon size', 'surecart')}
 						value={icon_size}
 						onChange={(value) =>
@@ -45,7 +62,7 @@ export default ({ attributes, setAttributes }) => {
 						min={8}
 						max={64}
 					/>
-				</PanelBody>
+				</ToolsPanelItem>
 			</InspectorControls>
 
 			<div {...blockProps}>

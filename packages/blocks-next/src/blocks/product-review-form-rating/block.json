@@ -14,8 +14,8 @@
 			"default": "Your rating"
 		},
 		"size": {
-			"type": "number",
-			"default": 20
+			"type": "string",
+			"default": "20px"
 		},
 		"fill_color": {
 			"type": "string"
