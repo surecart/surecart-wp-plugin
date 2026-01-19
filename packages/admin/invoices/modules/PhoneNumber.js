@@ -41,7 +41,7 @@ export default ({ checkout }) => {
 		<ScPhoneInput
 			label={__('Phone', 'surecart')}
 			value={phone}
-			onScInput={(e) => {
+			onScChange={(e) => {
 				setPhone(e.target.value);
 				savePhone(e.target.value);
 			}}
