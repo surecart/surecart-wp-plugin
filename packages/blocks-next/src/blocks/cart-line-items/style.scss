@@ -5,12 +5,6 @@
 	flex-direction: column;
 	white-space: nowrap;
 
-	// When inside scrollable wrapper, let the wrapper handle scrolling
-	.sc-cart-scrollable & {
-		flex: 0 0 auto;
-		overflow: visible;
-	}
-
 	.sc-quantity-selector {
 		&[hidden] {
 			display: none;
