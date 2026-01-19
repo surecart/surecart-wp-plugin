@@ -33,6 +33,10 @@
 		"tax_id_types": {
 			"type": "array",
 			"default": []
+		},
+		"required": {
+			"type": "boolean",
+			"default": false
 		}
 	}
 }

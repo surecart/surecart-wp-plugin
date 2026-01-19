@@ -53,6 +53,7 @@ export default ({
 			archived: false,
 			per_page: perPage,
 			...requestQuery,
+			context: 'edit',
 		};
 
 		try {

@@ -80,13 +80,13 @@
     "@storybook/html": "^6.5.6",
     "@types/jest": "^27.0.3",
     "@types/node": "^15.0.3",
-    "@types/puppeteer": "^5.4.0",
+    "@types/puppeteer": "^7.0.4",
     "babel-loader": "^8.2.3",
     "copy-webpack-plugin": "^10.2.4",
     "jest": "^27.4.5",
     "jest-cli": "^27.4.5",
     "prettier": "^2.5.1",
-    "puppeteer": "^10.0.0",
+    "puppeteer": "^24.1.0",
     "rollup-plugin-external-globals": "^0.6.1",
     "storybook-addon-mock": "^2.4.1"
   }

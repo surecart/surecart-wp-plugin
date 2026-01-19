@@ -4,6 +4,10 @@ exports[`sc-subscription-payment-method renders 1`] = `
 <sc-subscription-payment-method>
   <mock:shadow-root>
     <sc-dashboard-module class="subscription" heading="Update Payment Method">
+      <sc-button href="http://testing.stenciljs.com/?action=create&amp;model=payment_method&amp;success_url=http%3A%2F%2Ftesting.stenciljs.com%2F" slot="end" type="link">
+        <sc-icon name="plus" slot="prefix"></sc-icon>
+        Add New
+      </sc-button>
       <slot name="empty">
         <sc-card>
           <sc-empty icon="credit-card">
