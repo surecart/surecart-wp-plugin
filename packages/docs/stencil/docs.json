@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-01-14T16:55:01",
+  "timestamp": "2026-01-19T20:26:01",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.18.3",
@@ -28107,31 +28107,6 @@
       "usage": {},
       "props": [
         {
-          "name": "clickEl",
-          "type": "HTMLElement",
-          "complexType": {
-            "original": "HTMLElement",
-            "resolved": "HTMLElement",
-            "references": {
-              "HTMLElement": {
-                "location": "global",
-                "id": "global::HTMLElement"
-              }
-            }
-          },
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "HTMLElement"
-            }
-          ],
-          "optional": true,
-          "required": false
-        },
-        {
           "name": "disabled",
           "type": "boolean",
           "complexType": {
@@ -28279,40 +28254,6 @@
             },
             {
               "value": "top-start",
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "position",
-          "type": "\"bottom-left\" | \"bottom-right\" | \"top-left\" | \"top-right\"",
-          "complexType": {
-            "original": "'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'",
-            "resolved": "\"bottom-left\" | \"bottom-right\" | \"top-left\" | \"top-right\"",
-            "references": {}
-          },
-          "mutable": false,
-          "attr": "position",
-          "reflectToAttr": false,
-          "docs": "The placement of the popover panel",
-          "docsTags": [],
-          "values": [
-            {
-              "value": "bottom-left",
-              "type": "string"
-            },
-            {
-              "value": "bottom-right",
-              "type": "string"
-            },
-            {
-              "value": "top-left",
-              "type": "string"
-            },
-            {
-              "value": "top-right",
               "type": "string"
             }
           ],
@@ -42116,6 +42057,7 @@
       "filePath": "src/components/ui/test-mode-info/sc-test-mode-info.tsx",
       "encapsulation": "none",
       "tag": "sc-test-mode-info",
+      "readme": "# sc-test-mode-info\n\n\n",
       "docs": "",
       "docsTags": [
         {

@@ -2664,10 +2664,6 @@ export namespace Components {
     | 'left-start'
     | 'left-end';
         /**
-          * The placement of the popover panel
-         */
-        "position": 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
-        /**
           * The distance in pixels from which to offset the panel along its trigger.
          */
         "skidding": number;
@@ -9891,10 +9887,6 @@ declare namespace LocalJSX {
     | 'left'
     | 'left-start'
     | 'left-end';
-        /**
-          * The placement of the popover panel
-         */
-        "position"?: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
         /**
           * The distance in pixels from which to offset the panel along its trigger.
          */

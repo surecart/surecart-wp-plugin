@@ -1524,7 +1524,6 @@
     "hoist": true,
     "open": true,
     "placement": true,
-    "position": true,
     "skidding": true,
     "style": true,
     "id": true,

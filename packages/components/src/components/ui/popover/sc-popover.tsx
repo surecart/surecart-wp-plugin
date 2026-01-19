@@ -20,6 +20,7 @@ export class ScPopover {
   private positioner?: HTMLDivElement;
 
   private positionerCleanup: ReturnType<typeof autoUpdate> | undefined;
+  private boundHandleOutsideClick = (evt: MouseEvent) => this.handleOutsideClick(evt);
 
   /** Is this disabled. */
   @Prop() disabled: boolean;
@@ -124,7 +125,7 @@ export class ScPopover {
     if (this.positionerCleanup) {
       this.positionerCleanup();
       this.positionerCleanup = undefined;
-      this.positioner.removeAttribute('data-placement');
+      this.positioner?.removeAttribute('data-placement');
     }
   }
 
@@ -157,7 +158,11 @@ export class ScPopover {
   }
 
   componentWillLoad() {
-    document.addEventListener('mousedown', evt => this.handleOutsideClick(evt));
+    document.addEventListener('mousedown', this.boundHandleOutsideClick);
+  }
+
+  disconnectedCallback() {
+    document.removeEventListener('mousedown', this.boundHandleOutsideClick);
   }
 
   handleHide() {
@@ -207,7 +212,15 @@ export class ScPopover {
           >
             <div class="popover__header">
               <slot name="title" />
-              <sc-icon class="popover__header-close-icon" onClick={() => this.handleHide()} name="x" />
+              <button
+                type="button"
+                class="popover__header-close-button"
+                onClick={() => this.handleHide()}
+                onKeyDown={e => e.key === 'Enter' && this.handleHide()}
+                aria-label={__('Close', 'surecart')}
+              >
+                <sc-icon class="popover__header-close-icon" name="x" />
+              </button>
             </div>
             <slot name="content"></slot>
             <div class="popover__footer">

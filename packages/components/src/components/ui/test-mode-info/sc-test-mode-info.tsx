@@ -15,11 +15,10 @@ export class ScTestModeInfo {
     return (
       <sc-popover skidding={30}>
         <slot name="trigger" slot="trigger" />
-        <span tabindex="0" slot="title">
-          {' '}
+        <span slot="title">
           {__('How to switch from Test to Live mode', 'surecart')}
         </span>
-        <div tabindex="0" class="sc-test-mode-info-content" slot="content">
+        <div class="sc-test-mode-info-content" slot="content">
           <ol>
             <li>
               {__('From the Admin Bar', 'surecart')}
@@ -27,7 +26,7 @@ export class ScTestModeInfo {
                 <li>{__("Select any product & proceed to its checkout page.", 'surecart')}</li>
                 <li>{__('Access the dropdown menu & select the live mode.', 'surecart')}</li>
               </ul>
-              <img src={`${window?.scData?.plugin_url}/images/change-from-adminbar.png`} />
+              <img src={`${window?.scData?.plugin_url}/images/change-from-adminbar.png`} alt={__('Screenshot showing how to change mode from the admin bar', 'surecart')} />
             </li>
             <li>
               {__('From the Editor', 'surecart')}
@@ -36,7 +35,7 @@ export class ScTestModeInfo {
                 <li>{__('Select the checkout form.', 'surecart')}</li>
                 <li>{__('Select "Live" from the dropdown. Hit Update!', 'surecart')}</li>
               </ul>
-              <img src={`${window?.scData?.plugin_url}/images/change-from-editor.png`} />
+              <img src={`${window?.scData?.plugin_url}/images/change-from-editor.png`} alt={__('Screenshot showing how to change mode from the editor', 'surecart')} />
             </li>
           </ol>
         </div>
