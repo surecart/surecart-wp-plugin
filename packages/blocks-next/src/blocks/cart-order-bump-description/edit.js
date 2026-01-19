@@ -9,7 +9,7 @@ export default () => {
 
 	return (
 		<div {...blockProps}>
-			{__('Product bump description will appear here...', 'surecart')}
+			{__('Order bump description will appear here...', 'surecart')}
 		</div>
 	);
 };
