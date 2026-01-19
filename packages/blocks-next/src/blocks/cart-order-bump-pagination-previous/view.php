@@ -1,4 +1,4 @@
-<button
+<div
 	<?php
 	echo wp_kses_data(
 		get_block_wrapper_attributes(
@@ -12,6 +12,8 @@
 	data-wp-bind--disabled="!state.hasPreviousPage"
 	data-wp-bind--aria-disabled="!state.hasPreviousPage"
 	aria-label="<?php esc_attr_e( 'Previous page', 'surecart' ); ?>"
+	role="button"
+	tabindex="0"
 >
 	<?php
 	echo wp_kses(
@@ -27,4 +29,4 @@
 		sc_allowed_svg_html()
 	);
 	?>
-</button>
+</div>

@@ -21,7 +21,7 @@ export default ({ context }) => {
 	const icon = ARROWS[paginationArrow];
 
 	return (
-		<button {...blockProps} type="button" disabled>
+		<div {...blockProps} role="button" tabindex="0" disabled>
 			<Icon
 				name={icon}
 				width={paginationArrowSize}
@@ -29,6 +29,6 @@ export default ({ context }) => {
 				className="wp-block-surecart-cart-order-bump-pagination-next__icon"
 				aria-hidden={true}
 			/>
-		</button>
+		</div>
 	);
 };
