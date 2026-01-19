@@ -71,9 +71,15 @@ export class ScPopover {
     this.open ? this.show() : this.hide();
   }
 
-  constructor() {
-    // Bind the submit function to the component instance
-    this.handleDocumentMouseDown = this.handleDocumentMouseDown.bind(this);
+  handleOutsideClick(evt) {
+    const path = evt.composedPath();
+    if (
+      !path.some(item => {
+        return item === this.el;
+      })
+    ) {
+      this.open = false;
+    }
   }
 
   startPositioner() {
@@ -135,10 +141,7 @@ export class ScPopover {
     this.isVisible = true;
     this.open = true;
     this.startPositioner();
-
-    requestAnimationFrame(() => {
-      this.focusFirst();
-    });
+    this.panel.focus();
   }
 
   hide() {
@@ -156,84 +159,13 @@ export class ScPopover {
     trigger.focus();
   }
 
-  handleDocumentMouseDown(evt: MouseEvent) {
-    const path = evt.composedPath();
-    if (
-      !path.some(item => {
-        return item === this.el;
-      })
-    ) {
-      this.hide();
-    }
-  }
-
-  private getFocusableElements(): HTMLElement[] {
-    if (!this.panel) return [];
-
-    const focusableSelector = 'button, [href], input, textarea, select, details, [tabindex]:not([tabindex="-1"]), sc-button';
-    const focusables: HTMLElement[] = [];
-
-    // 1. Focusables inside the shadow DOM itself (e.g. close button)
-    const shadowFocusables = this.panel?.querySelectorAll<HTMLElement>(focusableSelector);
-
-    shadowFocusables?.forEach(el => focusables.push(el));
-
-    // 2. Focusables inside slotted content
-    const slots = this.panel?.querySelectorAll('slot');
-
-    slots?.forEach(slot => {
-      const assigned = slot?.assignedElements({ flatten: true });
-
-      assigned?.forEach(el => {
-        // If the slotted element itself is focusable
-        if (el?.matches?.(focusableSelector)) {
-          focusables?.push(el as HTMLElement);
-        }
-
-        // If it contains focusable children
-        el?.querySelectorAll?.<HTMLElement>(focusableSelector)?.forEach(child => focusables?.push(child));
-      });
-    });
-
-    // 3. Deduplicate + filter disabled / hidden
-    return Array.from(new Set(focusables))?.filter(el => !el?.hasAttribute('disabled') && el?.getAttribute('aria-hidden') !== 'true');
-  }
-
   componentWillLoad() {
-    document.addEventListener('mousedown', this.handleDocumentMouseDown);
-  }
-
-  disconnectedCallback() {
-    document.removeEventListener('mousedown', this.handleDocumentMouseDown);
-    this.stopPositioner(); // 👈 important cleanup
+    document.addEventListener('mousedown', evt => this.handleOutsideClick(evt));
   }
 
   handleHide() {
     this.open = false;
     this.trigger.focus();
-  }
-
-  handleClick() {
-    if (this.disabled) return;
-    if (this.open) {
-      this.hide();
-    } else {
-      setTimeout(() => {
-        this.show();
-      }, 0);
-    }
-  }
-
-  private focusFirst() {
-    const focusables = this.getFocusableElements();
-    requestAnimationFrame(() => {
-      focusables[0]?.focus();
-    });
-  }
-
-  private focusLast() {
-    const focusables = this.getFocusableElements();
-    focusables[focusables?.length - 1]?.focus();
   }
 
   render() {
@@ -250,14 +182,18 @@ export class ScPopover {
           part="trigger"
           class="popover__trigger"
           ref={el => (this.trigger = el as HTMLElement)}
-          onClick={() => this.handleClick()}
-          aria-expanded={this.open ? 'true' : 'false'}
-          aria-haspopup="true"
-          onKeyDown={e => {
-            if (e.key === 'Enter' || e.key === 'Escape') {
-              this.handleClick();
+          onClick={() => {
+            if (this.disabled) return;
+            if (this.open) {
+              this.hide();
+            } else {
+              setTimeout(() => {
+                this.show();
+              }, 0);
             }
           }}
+          aria-expanded={this.open ? 'true' : 'false'}
+          aria-haspopup="true"
         >
           <slot name="trigger"></slot>
         </span>
@@ -277,27 +213,15 @@ export class ScPopover {
             aria-orientation="vertical"
             tabindex="-1"
             ref={el => (this.panel = el as HTMLElement)}
-            onKeyDown={(e: KeyboardEvent) => {
-              if (e.key === 'Escape') {
-                e.stopPropagation();
-                this.hide();
-              }
-            }}
-            role="dialog"
-            aria-label={__('Information on switching checkout from Test Mode to Live Mode', 'surecart')}
           >
-            <span tabindex="0" class="focus-sentinel" onFocusin={() => this.focusLast()} />
             <div class="popover__header">
               <slot name="title" />
-              <sc-button size="small" type="text" class="popover__header-close-icon" aria-label={__('Close popover', 'surecart')} onClick={() => this.handleHide()}>
-                <sc-icon aria-hidden="true" class="popover__header-close-icon" name="x" />
-              </sc-button>
+              <sc-icon class="popover__header-close-icon" onClick={() => this.handleHide()} name="x" />
             </div>
             <slot name="content"></slot>
             <div class="popover__footer">
               <slot name="footer"></slot>
             </div>
-            <span tabindex="0" class="focus-sentinel" onFocusin={() => this.focusFirst()} />
           </div>
         </div>
       </div>
