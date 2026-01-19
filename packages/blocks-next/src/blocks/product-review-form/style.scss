@@ -32,7 +32,7 @@
 			inset-inline-start: 0;
 			justify-content: space-between;
 			padding: 1em;
-			background-color: #fff;
+			background-color: var(--sc-panel-background-color, #fff);
 			border-top: solid var(--sc-input-border-width)
 				var(--sc-input-border-color);
 			z-index: 99;

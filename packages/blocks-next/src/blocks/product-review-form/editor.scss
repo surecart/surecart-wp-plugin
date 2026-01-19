@@ -1,8 +1,6 @@
 .wp-block-surecart-product-review-form {
 	margin-right: auto !important;
 	margin-left: auto !important;
-	// border: var(--sc-drawer-border);
-	box-shadow: 0 1px 2px #0d131e1a;
 	overflow: auto;
-	box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.3);
+	box-shadow: var(--sc-drawer-box-shadow, 0px 10px 30px rgba(0, 0, 0, 0.3));
 }
