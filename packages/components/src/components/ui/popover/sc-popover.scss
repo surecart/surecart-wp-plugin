@@ -71,7 +71,6 @@ slot[name='title'] {
   box-shadow: var(--sc-shadow-large);
   overflow: auto;
   overscroll-behavior: none;
-  // pointer-events: none;
   transition: var(--sc-transition-fast) opacity, var(--sc-transition-fast) transform;
   z-index: 5;
   padding: var(--sc-spacing-medium);
