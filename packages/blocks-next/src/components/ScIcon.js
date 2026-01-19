@@ -7,7 +7,14 @@ export default function ({ name, ...props }) {
 	const [svgElement, setSvgElement] = useState(null);
 	const assetDir = window?.scData?.plugin_url + '/dist/icon-assets';
 
+	// Validate icon name to prevent path traversal and XSS.
+	const isValidName = /^[a-zA-Z0-9_-]+$/.test(name);
+
 	useEffect(() => {
+		if (!isValidName) {
+			return;
+		}
+
 		fetch(`${assetDir}/${name}.svg`)
 			.then((response) => response.text())
 			.then((svgContent) => {
@@ -19,7 +26,7 @@ export default function ({ name, ...props }) {
 				setSvgElement(svgDoc?.documentElement);
 			})
 			.catch(console.error);
-	}, [name]);
+	}, [name, isValidName]);
 
 	if (!svgElement) {
 		return null;
@@ -78,6 +85,17 @@ export default function ({ name, ...props }) {
 		}
 	});
 
-	// Return the SVG as innerHTML wrapped in a span
-	return <span dangerouslySetInnerHTML={{ __html: clonedSvg.outerHTML }} />;
+	// Get SVG attributes to spread on the element.
+	const svgAttrs = {};
+	for (const attr of clonedSvg.attributes) {
+		const name = attr.name === 'class' ? 'className' : attr.name;
+		svgAttrs[name] = attr.value;
+	}
+
+	return (
+		<svg
+			{...svgAttrs}
+			dangerouslySetInnerHTML={{ __html: clonedSvg.innerHTML }}
+		/>
+	);
 }
