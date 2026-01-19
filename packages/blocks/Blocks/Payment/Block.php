@@ -63,13 +63,13 @@ class Block extends BaseBlock {
 			<?php else : ?>
 				<sc-stripe-element slot="stripe"></sc-stripe-element>
 			<?php endif; ?>
-			
+
 			<?php if ( 'test' === $mode ) : ?>
 				<?php if ( current_user_can( 'edit_posts' ) ) : ?>
 					<sc-test-mode-info slot="label-end">
 						<sc-tag tabindex="0" slot="trigger" type="warning" size="small" exportparts="base:test-badge__base, content:test-badge__content" aria-label="<?php echo esc_html__( 'Test Mode Info, Press Enter to open the Information Popover', 'surecart' ); ?>">
 							<?php echo esc_html__( 'Test Mode', 'surecart' ); ?>
-							<sc-icon slot="suffix" name="info"  />
+							<sc-icon slot="suffix" name="info" />
 						</sc-tag>
 					</sc-test-mode-info>
 				<?php else : ?>
