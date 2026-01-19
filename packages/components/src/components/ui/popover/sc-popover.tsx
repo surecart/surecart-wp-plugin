@@ -156,7 +156,7 @@ export class ScPopover {
     this.open = false;
     const slotted = this.el.shadowRoot.querySelector('slot[name="trigger"]') as HTMLSlotElement;
     const trigger = slotted.assignedElements({ flatten: true })[0] as HTMLElement;
-    trigger.focus();
+    trigger?.focus?.();
   }
 
   componentWillLoad() {
