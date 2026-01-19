@@ -5,9 +5,8 @@ export const TEMPLATE = [
 		{
 			style: {
 				spacing: {
-					padding: {
-						top: '0.5em',
-						bottom: '0.5em',
+					margin: {
+						bottom: '0.75em',
 					},
 				},
 			},
@@ -204,21 +203,16 @@ export const TEMPLATE = [
 									fontStyle: 'normal',
 								},
 								border: {
-									radius: {
-										topLeft: '74.6%',
-										topRight: '74.6%',
-										bottomLeft: '74.6%',
-										bottomRight: '74.6%',
-									},
+									radius: '50%',
 									width: '1px',
 									color: '#d1d5db',
 								},
 								spacing: {
 									padding: {
-										top: '0.5em',
-										bottom: '0.5em',
-										left: '0.5em',
-										right: '0.5em',
+										top: '0.4em',
+										bottom: '0.4em',
+										left: '0.4em',
+										right: '0.4em',
 									},
 								},
 							},
