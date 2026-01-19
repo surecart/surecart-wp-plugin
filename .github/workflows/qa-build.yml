@@ -42,11 +42,11 @@ jobs:
           bootstrap: true
           package: true
 
-      - name: Upload Zip
+      - name: Upload Plugin
         uses: actions/upload-artifact@v4
         with:
           name: surecart
-          path: '@surecart/surecart.zip'
+          path: '@surecart/surecart'
 
   playground-preview:
     needs: build
@@ -99,13 +99,14 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: surecart
-          path: ./pr-artifacts
+          path: ./pr-artifacts/surecart
 
       - name: Deploy to GitHub Pages
         if: ${{ !inputs.skip_build }}
         run: |
           mkdir -p pr-${{ steps.get-pr.outputs.pr_number }}
-          cp ./pr-artifacts/surecart.zip pr-${{ steps.get-pr.outputs.pr_number }}/
+          cd ./pr-artifacts && zip -r surecart.zip surecart && cd ..
+          mv ./pr-artifacts/surecart.zip pr-${{ steps.get-pr.outputs.pr_number }}/
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add pr-${{ steps.get-pr.outputs.pr_number }}/
@@ -174,7 +175,7 @@ jobs:
     name: "Run Claude QA"
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
       pull-requests: write
       id-token: write
     steps:
@@ -182,6 +183,8 @@ jobs:
 
       - name: Get context
         id: get-context
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           # Determine PR number
           if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
@@ -190,6 +193,14 @@ jobs:
             PR_NUMBER="${{ github.event.pull_request.number }}"
           fi
           echo "pr_number=$PR_NUMBER" >> $GITHUB_OUTPUT
+
+          # Pull PR description for better test context
+          if [ -n "$PR_NUMBER" ]; then
+            PR_DESCRIPTION="$(gh pr view "$PR_NUMBER" --repo "${{ github.repository }}" --json body -q '.body' || true)"
+            echo "pr_description<<EOF_PR_DESCRIPTION" >> $GITHUB_OUTPUT
+            echo "$PR_DESCRIPTION" >> $GITHUB_OUTPUT
+            echo "EOF_PR_DESCRIPTION" >> $GITHUB_OUTPUT
+          fi
 
           # Use preview URL from playground-preview job output if available
           PREVIEW_URL="${{ needs.playground-preview.outputs.preview_url }}"
@@ -202,6 +213,10 @@ jobs:
             echo "plugin_url=$PLUGIN_URL" >> $GITHUB_OUTPUT
             echo "Using fallback plugin URL: $PLUGIN_URL"
           fi
+
+          # Screenshot base URL for GitHub Pages
+          SCREENSHOT_BASE="https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/pr-${PR_NUMBER}/screenshots"
+          echo "screenshot_base=$SCREENSHOT_BASE" >> $GITHUB_OUTPUT
 
       - name: Run Claude QA
         id: claude-qa
@@ -235,21 +250,53 @@ jobs:
               2. **Break** them with edge cases
               3. **Ensure** no regressions in related features
 
+            ## REQUIRED: Create Test Data First
+
+            ⚠️ **The Playground only has ONE basic test product.** Most features require additional setup.
+
+            Before testing, you MUST create the necessary data through the admin UI:
+            1. Go to wp-admin → **SureCart**
+            2. **Create data** appropriate for the PR's features:
+               - Products with published prices (one-time, recurring, variants)
+               - Coupons or discount rules
+               - Order bumps or upsells
+               - Checkout pages, forms, or embedded blocks
+               - Any other entities required by the PR
+
+            **This is not optional.** The default checkout page and a sample product exists, but without proper data configured, you cannot test most features.
+
             ## Test This PR
 
             ${{ steps.get-context.outputs.playground_url && format('The WordPress Playground preview URL is: {0}', steps.get-context.outputs.playground_url) }}
             ${{ !steps.get-context.outputs.playground_url && format('Navigate to https://playground.wordpress.net and install the plugin from: {0}', steps.get-context.outputs.plugin_url) }}
-            ${{ steps.get-context.outputs.pr_number && format('For a better understanding of what to test, use `gh pr view {0} --repo {1}` to see the PR description and `gh pr diff {0} --repo {1}` to see the code changes.', steps.get-context.outputs.pr_number, github.repository) }}
+            ${{ steps.get-context.outputs.pr_number && format('For a better understanding of what to test, use `gh pr diff {0} --repo {1}` to see the code changes.', steps.get-context.outputs.pr_number, github.repository) }}
+
+            ## PR Description (Source of Truth)
+
+            ${{ steps.get-context.outputs.pr_description || 'No PR description available.' }}
 
             Please:
-            1. Navigate to the playground preview URL and test the plugin functionality
-            2. Review the PR changes and verify they work as expected
-            3. Report any bugs, issues, or suggestions for improvement
+            1. Review the PR changes to understand what features need testing
+            2. Navigate to wp-admin and CREATE PRODUCTS needed for testing (see REQUIRED section above)
+            3. Test the plugin functionality on the default checkout page
+            4. Verify the PR changes work as expected
+            5. Report any bugs, issues, or suggestions for improvement
 
             ## Important
             - The WordPress playground loads the site inside an iframe, so to take action on the site, you must first use page.frameLocator('iframe#wp').locator(selector) to locate in the iframe context.
             - You can use the site manager button in the toolbar to change php settings, view logs, and more.
             - You may see logs about scheduled actions in the log viewer. This is expected in the playground context.
+
+            ## Screenshots
+
+            Use `mcp__playwright__browser_take_screenshot` with a `filename` parameter like `screenshots/descriptive-name.png`.
+
+            When referencing in qa-report.md, use this URL pattern:
+            `${{ steps.get-context.outputs.screenshot_base }}/descriptive-name.png`
+
+            Example:
+            - Take screenshot with filename: `screenshots/checkout-bug.png`
+            - In markdown: `![Checkout Bug](${{ steps.get-context.outputs.screenshot_base }}/checkout-bug.png)`
 
             ## Output
             When finished testing, write your complete QA report to a file called `qa-report.md` with:
@@ -261,6 +308,27 @@ jobs:
             --max-turns 100
             --mcp-config '{"mcpServers":{"playwright":{"command":"npx","args":["@playwright/mcp@latest","--headless","--isolated","--caps=vision,testing"]}}}'
             --allowedTools "Bash,mcp__playwright__browser_navigate,mcp__playwright__browser_navigate_back,mcp__playwright__browser_click,mcp__playwright__browser_type,mcp__playwright__browser_snapshot,mcp__playwright__browser_take_screenshot,mcp__playwright__browser_console_messages,mcp__playwright__browser_wait_for,mcp__playwright__browser_hover,mcp__playwright__browser_resize,mcp__playwright__browser_drag,mcp__playwright__browser_select_option,mcp__playwright__browser_press_key,mcp__playwright__browser_tabs,mcp__playwright__browser_file_upload,mcp__playwright__browser_fill_form,mcp__playwright__browser_handle_dialog,mcp__playwright__browser_close,mcp__playwright__browser_verify_element_visible,mcp__playwright__browser_verify_text_visible,mcp__playwright__browser_verify_value,Write"
+
+      - name: Upload screenshots to GitHub Pages
+        if: always() && steps.get-context.outputs.pr_number
+        run: |
+          # Playwright MCP saves to .playwright-mcp/screenshots/
+          if [ -d "./.playwright-mcp/screenshots" ] && [ "$(ls -A ./.playwright-mcp/screenshots 2>/dev/null)" ]; then
+            echo "Found screenshots in .playwright-mcp/screenshots:"
+            ls -la ./.playwright-mcp/screenshots/
+
+            git clone --single-branch --branch gh-pages https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git gh-pages-repo
+            cd gh-pages-repo
+            mkdir -p pr-${{ steps.get-context.outputs.pr_number }}/screenshots
+            cp ../.playwright-mcp/screenshots/*.png pr-${{ steps.get-context.outputs.pr_number }}/screenshots/
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git add .
+            git commit -m "Add QA screenshots for PR #${{ steps.get-context.outputs.pr_number }}" || echo "No screenshots to commit"
+            git push
+          else
+            echo "No screenshots found in .playwright-mcp/screenshots/"
+          fi
 
       - name: Post results to PR
         if: always() && steps.get-context.outputs.pr_number && github.event_name != 'workflow_dispatch'
