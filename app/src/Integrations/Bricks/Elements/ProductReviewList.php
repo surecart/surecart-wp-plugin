@@ -373,7 +373,7 @@ class ProductReviewList extends \Bricks\Element {
 		}
 
 		// Content with Sidebar.
-		$content .= '<!-- wp:surecart/product-review-list-content {"style":{"spacing":{"margin":{"top":"var:preset|spacing|50","bottom":"var:preset|spacing|50"}}}} -->';
+		$content .= '<!-- wp:surecart/product-review-list-content {"style":{"spacing":{"margin":{"top":"var:preset|spacing|50","bottom":"var:preset|spacing|50"}}},"layout":{"type":"flex","flexWrap":"nowrap","verticalAlignment":"top"}} -->';
 
 		// Sidebar.
 		if ( $show_sidebar ) {

@@ -140,12 +140,29 @@ class ProductReviewTotalRating extends \Elementor\Widget_Base {
 		$this->add_control(
 			'text_color',
 			array(
-				'label'     => esc_html__( 'Text Color', 'surecart' ),
+				'label'     => esc_html__( 'Color', 'surecart' ),
 				'type'      => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .wp-block-surecart-product-review-total-rating' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .wp-block-surecart-product-review-total-rating.sc-review-link' => 'color: {{VALUE}};',
+					'{{WRAPPER}} a.wp-block-surecart-product-review-total-rating.sc-review-link' => 'color: {{VALUE}};',
 				],
 			)
+		);
+
+		$this->add_control(
+			'hover_color',
+			[
+				'label'     => esc_html__( 'Hover Color', 'surecart' ),
+				'type'      => \Elementor\Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .wp-block-surecart-product-review-total-rating.sc-review-link:hover' => 'color: {{VALUE}};',
+					'{{WRAPPER}} a.wp-block-surecart-product-review-total-rating.sc-review-link:hover' => 'color: {{VALUE}};',
+				],
+				'condition' => [
+					'link_to_reviews' => 'yes',
+				],
+			]
 		);
 
 		$this->add_group_control(
@@ -153,7 +170,7 @@ class ProductReviewTotalRating extends \Elementor\Widget_Base {
 			[
 				'name'     => 'typography',
 				'label'    => esc_html__( 'Typography', 'surecart' ),
-				'selector' => '{{WRAPPER}} .wp-block-surecart-product-review-total-rating',
+				'selector' => '{{WRAPPER}} .wp-block-surecart-product-review-total-rating, {{WRAPPER}} a.wp-block-surecart-product-review-total-rating.sc-review-link',
 			]
 		);
 
@@ -207,16 +224,28 @@ class ProductReviewTotalRating extends \Elementor\Widget_Base {
 	 * @return void
 	 */
 	private function render_preview( $show_label ) {
-		$settings  = $this->get_settings_for_display();
-		$is_plus   = 'plus-sign' === ( $settings['style_variant'] ?? 'default' );
-		$plus_sign = $is_plus ? '+' : '';
-		?>
-		<div class="wp-block-surecart-product-review-total-rating">
-			<span>42<?php echo esc_html( $plus_sign ); ?></span>
-			<?php if ( $show_label ) : ?>
-				<?php echo esc_html__( 'reviews', 'surecart' ); ?>
-			<?php endif; ?>
-		</div>
-		<?php
+		$settings        = $this->get_settings_for_display();
+		$is_plus         = 'plus-sign' === ( $settings['style_variant'] ?? 'default' );
+		$plus_sign       = $is_plus ? '+' : '';
+		$link_to_reviews = 'yes' === ( $settings['link_to_reviews'] ?? 'no' );
+
+		$content = '<span>42' . esc_html( $plus_sign ) . '</span>';
+		if ( $show_label ) {
+			$content .= ' ' . esc_html__( 'reviews', 'surecart' );
+		}
+
+		if ( $link_to_reviews ) {
+			?>
+			<a href="#reviews" class="wp-block-surecart-product-review-total-rating sc-review-link">
+				<?php echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+			</a>
+			<?php
+		} else {
+			?>
+			<div class="wp-block-surecart-product-review-total-rating">
+				<?php echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+			</div>
+			<?php
+		}
 	}
 }

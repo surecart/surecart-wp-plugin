@@ -204,7 +204,8 @@ class ProductReviewBreakdown extends \Elementor\Widget_Base {
 					'default' => \Elementor\Core\Kits\Documents\Tabs\Global_Colors::COLOR_PRIMARY,
 				],
 				'selectors' => [
-					"{$selector} .sc-star-row__label svg" => 'fill: {{VALUE}}; stroke: {{VALUE}};',
+					"{$selector} .sc-star-row svg" => 'fill: {{VALUE}}; stroke: {{VALUE}};',
+					"{$selector} .sc-star-row .sc-star-icon" => 'fill: {{VALUE}}; stroke: {{VALUE}};',
 				],
 			)
 		);
