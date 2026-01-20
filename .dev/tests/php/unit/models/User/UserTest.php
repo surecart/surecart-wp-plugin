@@ -330,4 +330,189 @@ class UserTest extends SureCartUnitTestCase {
 		// Since customer ID already exists, it should just return it without creating a new one
 		$this->assertSame('existing_customer_id', $result);
 	}
+
+	/**
+	 * @group user-model
+	 */
+	public function test_getOrCreateLiveCustomerIdFindsExistingCustomerByEmail()
+	{
+		// Mock the requests in the container
+		$requests = \Mockery::mock(RequestService::class);
+		\SureCart::alias('request', function () use ($requests) {
+			return call_user_func_array([$requests, 'makeRequest'], func_get_args());
+		});
+
+		// Create a user without linked customer
+		$user = self::factory()->user->create_and_get([
+			'user_email' => 'existing@test.com',
+			'display_name' => 'Existing User',
+		]);
+
+		$model = User::find($user->ID);
+
+		// Mock the Customer::where request to find existing customer by email
+		$requests->shouldReceive('makeRequest')
+			->once()
+			->withSomeOfArgs('customers')
+			->andReturn((object)[
+				'data' => [
+					(object)[
+						'id' => 'existing_customer_from_email',
+						'object' => 'customer',
+						'email' => 'existing@test.com',
+						'live_mode' => true,
+					]
+				]
+			]);
+
+		// Get live customer should find the existing customer and link it
+		$customer_id = $model->getOrCreateLiveCustomerId();
+		$this->assertSame('existing_customer_from_email', $customer_id);
+
+		// Verify the customer ID was set in user meta
+		$this->assertSame('existing_customer_from_email', $model->customerId('live'));
+	}
+
+	/**
+	 * @group user-model
+	 */
+	public function test_findAndLinkLiveCustomerByEmailReturnsNullWhenNoCustomerFound()
+	{
+		// Mock the requests in the container
+		$requests = \Mockery::mock(RequestService::class);
+		\SureCart::alias('request', function () use ($requests) {
+			return call_user_func_array([$requests, 'makeRequest'], func_get_args());
+		});
+
+		// Create a user without linked customer
+		$user = self::factory()->user->create_and_get([
+			'user_email' => 'notfound@test.com',
+			'display_name' => 'Not Found User',
+		]);
+
+		$model = User::find($user->ID);
+
+		// Mock the Customer::where request to return empty result
+		$requests->shouldReceive('makeRequest')
+			->once()
+			->withSomeOfArgs('customers')
+			->andReturn((object)[
+				'data' => []
+			]);
+
+		// findAndLinkLiveCustomerByEmail should return null when no customer found
+		$result = $model->findAndLinkLiveCustomerByEmail();
+		$this->assertNull($result);
+	}
+
+	/**
+	 * @group user-model
+	 */
+	public function test_findAndLinkLiveCustomerByEmailLinksExistingCustomer()
+	{
+		// Mock the requests in the container
+		$requests = \Mockery::mock(RequestService::class);
+		\SureCart::alias('request', function () use ($requests) {
+			return call_user_func_array([$requests, 'makeRequest'], func_get_args());
+		});
+
+		// Create a user without linked customer
+		$user = self::factory()->user->create_and_get([
+			'user_email' => 'link@test.com',
+			'display_name' => 'Link User',
+		]);
+
+		$model = User::find($user->ID);
+
+		// Mock the Customer::where request to find existing customer
+		$requests->shouldReceive('makeRequest')
+			->once()
+			->withSomeOfArgs('customers')
+			->andReturn((object)[
+				'data' => [
+					(object)[
+						'id' => 'found_customer_id',
+						'object' => 'customer',
+						'email' => 'link@test.com',
+						'live_mode' => true,
+					]
+				]
+			]);
+
+		// findAndLinkLiveCustomerByEmail should find and link the customer
+		$result = $model->findAndLinkLiveCustomerByEmail();
+		$this->assertSame('found_customer_id', $result);
+
+		// Verify the customer ID was linked to user
+		$this->assertSame('found_customer_id', $model->customerId('live'));
+	}
+
+	/**
+	 * @group user-model
+	 */
+	public function test_createAndLinkLiveCustomerCreatesAndLinksNewCustomer()
+	{
+		// Mock the requests in the container
+		$requests = \Mockery::mock(RequestService::class);
+		\SureCart::alias('request', function () use ($requests) {
+			return call_user_func_array([$requests, 'makeRequest'], func_get_args());
+		});
+
+		// Create a user without linked customer
+		$user = self::factory()->user->create_and_get([
+			'user_email' => 'create@test.com',
+			'display_name' => 'Create User',
+		]);
+
+		$model = User::find($user->ID);
+
+		// Mock the Customer::create request
+		$requests->shouldReceive('makeRequest')
+			->once()
+			->withSomeOfArgs('customers')
+			->andReturn((object)[
+				'id' => 'newly_created_customer_id',
+				'object' => 'customer',
+				'email' => 'create@test.com',
+				'name' => 'Create User',
+				'live_mode' => true,
+			]);
+
+		// createAndLinkLiveCustomer should create and link the customer
+		$result = $model->createAndLinkLiveCustomer();
+		$this->assertSame('newly_created_customer_id', $result);
+
+		// Verify the customer ID was linked to user
+		$this->assertSame('newly_created_customer_id', $model->customerId('live'));
+	}
+
+	/**
+	 * @group user-model
+	 */
+	public function test_createAndLinkLiveCustomerReturnsWPErrorOnFailure()
+	{
+		// Mock the requests in the container
+		$requests = \Mockery::mock(RequestService::class);
+		\SureCart::alias('request', function () use ($requests) {
+			return call_user_func_array([$requests, 'makeRequest'], func_get_args());
+		});
+
+		// Create a user without linked customer
+		$user = self::factory()->user->create_and_get([
+			'user_email' => 'fail@test.com',
+			'display_name' => 'Fail User',
+		]);
+
+		$model = User::find($user->ID);
+
+		// Mock the Customer::create request to fail
+		$requests->shouldReceive('makeRequest')
+			->once()
+			->andReturn(new \WP_Error('creation_failed', 'Customer creation failed'));
+
+		// createAndLinkLiveCustomer should return WP_Error
+		$result = $model->createAndLinkLiveCustomer();
+		$this->assertWPError($result);
+		$this->assertSame('creation_failed', $result->get_error_code());
+	}
 }

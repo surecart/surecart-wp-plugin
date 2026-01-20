@@ -304,15 +304,16 @@ const { state, actions, callbacks } = store('surecart/product-review-form', {
 				} catch (error) {
 					console.error(error);
 
-					// Announce error to screen readers.
-					speak(
+					const errorMessage =
 						error?.message ||
-							__(
-								'Failed to submit review. Please try again.',
-								'surecart'
-							),
-						'assertive'
-					);
+						__('Failed to submit review. Please try again.', 'surecart');
+
+					// Show alert to user.
+					// eslint-disable-next-line no-alert
+					window.alert(errorMessage);
+
+					// Announce error to screen readers.
+					speak(errorMessage, 'assertive');
 				} finally {
 					context.busy = false;
 				}

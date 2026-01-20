@@ -225,21 +225,47 @@ class User implements ArrayAccess, JsonSerializable {
 	}
 
 	/**
-	 * Get or create the live customer id for this user.
+	 * Find an existing live customer by email and link it to this user.
 	 *
-	 * @return string|null|WP_Error
+	 * @return string|null|WP_Error Customer ID if found and linked, null if not found, WP_Error on failure.
 	 */
-	protected function getOrCreateLiveCustomerId() {
-		$customer_id = $this->customerId( 'live' );
+	protected function findAndLinkLiveCustomerByEmail() {
+		$email = strtolower( $this->user->user_email );
 
-		if ( ! empty( $customer_id ) ) {
-			return $customer_id;
+		// Try to find an existing customer by email.
+		$existing_customer = Customer::where(
+			[
+				'email'     => $email,
+				'live_mode' => true,
+			]
+		)->first();
+
+		// No customer found or error occurred.
+		if ( is_wp_error( $existing_customer ) || empty( $existing_customer->id ) ) {
+			return null;
 		}
+
+		// Link the existing customer to this user.
+		$linked = $this->setCustomerId( $existing_customer->id, 'live' );
+		if ( is_wp_error( $linked ) ) {
+			return $linked;
+		}
+
+		return $existing_customer->id;
+	}
+
+	/**
+	 * Create a new live customer and link it to this user.
+	 *
+	 * @return string|WP_Error Customer ID on success, WP_Error on failure.
+	 */
+	protected function createAndLinkLiveCustomer() {
+		$email = strtolower( $this->user->user_email );
 
 		$customer = Customer::create(
 			[
 				'name'      => $this->user->display_name,
-				'email'     => strtolower( $this->user->user_email ),
+				'email'     => $email,
 				'live_mode' => true,
 			],
 			false
@@ -263,6 +289,35 @@ class User implements ArrayAccess, JsonSerializable {
 		}
 
 		return $customer_id;
+	}
+
+	/**
+	 * Get or create the live customer id for this user.
+	 *
+	 * This method first checks for an existing linked customer ID,
+	 * then tries to find and link an existing customer by email,
+	 * and finally creates a new customer if none is found.
+	 *
+	 * @return string|null|WP_Error Customer ID on success, WP_Error on failure.
+	 */
+	protected function getOrCreateLiveCustomerId() {
+		// Check for already linked customer.
+		$customer_id = $this->customerId( 'live' );
+		if ( ! empty( $customer_id ) ) {
+			return $customer_id;
+		}
+
+		// Try to find and link existing customer by email.
+		$found_customer_id = $this->findAndLinkLiveCustomerByEmail();
+		if ( is_wp_error( $found_customer_id ) ) {
+			return $found_customer_id;
+		}
+		if ( ! empty( $found_customer_id ) ) {
+			return $found_customer_id;
+		}
+
+		// No existing customer found, create a new one.
+		return $this->createAndLinkLiveCustomer();
 	}
 
 	/**
