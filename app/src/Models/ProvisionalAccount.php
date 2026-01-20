@@ -94,6 +94,9 @@ class ProvisionalAccount extends Model {
 			}
 		}
 
+		// clear account cache.
+		\SureCart::account()->clearCache();
+
 		// create the products.
 		return $created;
 	}
