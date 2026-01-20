@@ -7,13 +7,6 @@ namespace SureCart\Models\Blocks;
  */
 class RelatedProductsBlock extends AbstractProductListBlock {
 	/**
-	 * The cached query result.
-	 *
-	 * @var \WP_Query|null
-	 */
-	protected static $cached_query = null;
-
-	/**
 	 * Build the query.
 	 *
 	 * @param array $include_term_ids The term ids to include in the query.
@@ -25,7 +18,9 @@ class RelatedProductsBlock extends AbstractProductListBlock {
 
 		$per_page         = $this->getQueryAttribute( 'perPage', 15 );
 		$total_pages      = $this->getQueryAttribute( 'pages', 3 );
+		$offset           = $this->getQueryAttribute( 'offset', 0 );
 		$exclude_term_ids = $this->getQueryAttribute( 'exclude_term_ids', [] );
+		$limit            = absint( apply_filters( 'surecart_product_related_posts_query_limit', ( $per_page * $total_pages ) + $offset ) );
 
 		$query = array(
 			'fields' => "
@@ -37,9 +32,7 @@ class RelatedProductsBlock extends AbstractProductListBlock {
 				AND p.post_status = 'publish'
 				AND p.post_type = 'sc_product'
 			",
-			'limits' => '
-				LIMIT ' . absint( apply_filters( 'surecart_product_related_posts_query_limit', ( $per_page * $total_pages ) + 10 ) ) . '
-			',
+			'limits' => $wpdb->prepare( 'LIMIT %d', $limit ),
 		);
 
 		if ( count( $exclude_term_ids ) ) {
@@ -55,6 +48,20 @@ class RelatedProductsBlock extends AbstractProductListBlock {
 	}
 
 	/**
+	 * Offset the found posts.
+	 * See: https://codex.wordpress.org/Making_Custom_Queries_using_Offset_and_Pagination
+	 *
+	 * @param int $found_posts The found posts.
+	 *
+	 * @return int The found posts with offset.
+	 */
+	public function offsetFoundPosts( $found_posts ) {
+		$offset = absint( $this->getQueryAttribute( 'offset', 0 ) );
+
+		return max( 0, $found_posts - $offset );
+	}
+
+	/**
 	 * Run the query.
 	 *
 	 * This first gets post ids based on shared object terms.
@@ -63,16 +70,11 @@ class RelatedProductsBlock extends AbstractProductListBlock {
 	 * @return $this|\WP_Error
 	 */
 	public function query() {
-		// Return cached query if it exists.
-		if ( null !== self::$cached_query ) {
-			$this->query = self::$cached_query;
-			return $this;
-		}
-
 		global $wpdb;
 
 		$page     = $this->url->getCurrentPage();
 		$per_page = $this->getQueryAttribute( 'perPage', 3 );
+		$offset   = $this->getQueryAttribute( 'offset', 0 );
 		$order    = $this->getQueryAttribute( 'order', 'desc' );
 		$orderby  = $this->getQueryAttribute( 'orderBy', 'date' );
 		$taxonomy = $this->getQueryAttribute( 'taxonomy', 'sc_collection' );
@@ -108,7 +110,8 @@ class RelatedProductsBlock extends AbstractProductListBlock {
 			[ get_the_ID() ]
 		);
 
-		// Create WP_Query object with found post IDs.
+		add_filter( 'found_posts', [ $this, 'offsetFoundPosts' ], 1 );
+
 		$this->query = new \WP_Query(
 			apply_filters(
 				'surecart_related_products_query_args',
@@ -119,14 +122,14 @@ class RelatedProductsBlock extends AbstractProductListBlock {
 					'post_status'    => 'publish',
 					'order'          => esc_sql( $order ),
 					'posts_per_page' => absint( $per_page ),
+					'offset'         => ( $per_page * ( $page - 1 ) ) + $offset,
 					'paged'          => absint( $page ),
 					'post__not_in'   => [ get_the_ID() ],
 				],
 			)
 		);
 
-		// Cache the query result.
-		self::$cached_query = $this->query;
+		remove_filter( 'found_posts', [ $this, 'offsetFoundPosts' ], 1 );
 
 		// return the query.
 		return $this;

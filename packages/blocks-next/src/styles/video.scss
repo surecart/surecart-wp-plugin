@@ -27,6 +27,37 @@
 		height: 100%;
 		max-width: 100%;
 		display: block;
+		transition: opacity 0.3s ease;
+	}
+
+	// Loading state for lazy loading.
+	&.sc-video-loading {
+		.sc-video-play-button::after {
+			content: "";
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			width: 20px;
+			height: 20px;
+			margin: -10px 0 0 -10px;
+			border: 2px solid transparent;
+			border-top: 2px solid currentColor;
+			border-radius: 50%;
+			animation: sc-video-spinner 1s linear infinite;
+		}
+
+		.sc-video-play-button svg {
+			opacity: 0.5;
+		}
+	}
+
+	@keyframes sc-video-spinner {
+		0% {
+			transform: rotate(0deg);
+		}
+		100% {
+			transform: rotate(360deg);
+		}
 	}
 }
 
