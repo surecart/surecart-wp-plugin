@@ -3,6 +3,7 @@
  */
 import { registerBlockType } from '@wordpress/blocks';
 import { button as icon } from '@wordpress/icons';
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies.
@@ -17,4 +18,5 @@ import './style.scss';
 registerBlockType(metadata.name, {
 	icon,
 	edit,
+	__experimentalLabel: () => __('CTA', 'surecart'),
 });

@@ -4,6 +4,7 @@
 import { registerBlockType } from '@wordpress/blocks';
 import { queryPagination as icon } from '@wordpress/icons';
 import { InnerBlocks } from '@wordpress/block-editor';
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies.
@@ -19,4 +20,5 @@ registerBlockType(metadata.name, {
 	icon,
 	edit,
 	save: () => <InnerBlocks.Content />,
+	__experimentalLabel: () => __('Pagination', 'surecart'),
 });

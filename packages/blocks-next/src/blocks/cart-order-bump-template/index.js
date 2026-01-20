@@ -3,6 +3,7 @@
  */
 import { registerBlockType } from '@wordpress/blocks';
 import { grid as icon } from '@wordpress/icons';
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies.
@@ -20,4 +21,5 @@ registerBlockType(metadata.name, {
 	icon,
 	edit,
 	save,
+	__experimentalLabel: () => __('Template', 'surecart'),
 });
