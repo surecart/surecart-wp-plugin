@@ -1,5 +1,6 @@
 // Avoid specificity issue with style_data block style registration.
 :where(.wp-block-surecart-product-quantity-control) {
+	width: fit-content;
 	border-radius: var(--sc-border-radius-medium);
 	min-height: var(--sc-quantity-control-height, var(--sc-input-height-small));
 	border: var(--sc-input-border-width) solid var(--sc-input-border-color);
