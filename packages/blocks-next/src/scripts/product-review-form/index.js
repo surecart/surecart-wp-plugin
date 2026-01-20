@@ -176,7 +176,7 @@ const { state, actions, callbacks } = store('surecart/product-review-form', {
 
 		/** Handle click selection of stars */
 		handleStarClick(event) {
-			actions.selectStar(event.target);
+			actions.selectStar(event.currentTarget);
 		},
 
 		/** Select a star by label element */
