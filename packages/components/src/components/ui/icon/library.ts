@@ -15,7 +15,7 @@ export function unwatchIcon(icon: any) {
 }
 
 export function getIconLibrary(name?: string) {
-  return registry.filter(lib => lib.name === name)[0];
+  return window?.registry?.filter(lib => lib.name === name)[0];
 }
 
 export function registerIconLibrary(name: string, options: { resolver: IconLibraryResolver; mutator?: IconLibraryMutator }) {
