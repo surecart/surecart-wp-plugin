@@ -9,7 +9,7 @@
 	color: inherit;
 	cursor: pointer;
 	flex-shrink: 0;
-  line-height: 1;
+	line-height: 1;
 
 	.sc-cart-order-bump-add-button__icon,
 	.sc-cart-order-bump-add-button__icon svg {
@@ -20,8 +20,5 @@
 	&:disabled,
 	&--added {
 		cursor: default;
-		border-radius: 1em !important;
-		min-width: auto;
-		min-height: auto;
 	}
 }

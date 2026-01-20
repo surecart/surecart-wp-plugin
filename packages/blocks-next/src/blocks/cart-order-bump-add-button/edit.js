@@ -1,28 +1,21 @@
 /**
  * External dependencies.
  */
-import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
+import { useBlockProps } from '@wordpress/block-editor';
 
 /**
  * Internal dependencies.
  */
 import ScIcon from '../../components/ScIcon';
-import Label from './label';
 
-export default ({ attributes, setAttributes }) => {
+export default () => {
 	const blockProps = useBlockProps({
 		className: 'sc-cart-order-bump-add-button',
 	});
 
 	return (
-		<>
-			<InspectorControls>
-				<Label attributes={attributes} setAttributes={setAttributes} />
-			</InspectorControls>
-
-			<div {...blockProps} role="button" tabindex="0">
-				<ScIcon name="plus" />
-			</div>
-		</>
+		<div {...blockProps} role="button" tabIndex="0">
+			<ScIcon name="plus" />
+		</div>
 	);
 };
