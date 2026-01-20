@@ -175,6 +175,16 @@ const { state, actions } = store('surecart/order-bumps', {
 
 	actions: {
 		/**
+		 * Handle keydown on add button (Enter/Space to add).
+		 */
+		handleAddButtonKeydown: function* (e) {
+			if (e.key === 'Enter' || e.key === ' ') {
+				e.preventDefault();
+				yield* actions.addBumpToCart(e);
+			}
+		},
+
+		/**
 		 * Add bump to cart.
 		 */
 		addBumpToCart: function* (e) {
