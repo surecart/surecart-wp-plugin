@@ -15,15 +15,13 @@ export class ScTestModeInfo {
     return (
       <sc-popover skidding={30}>
         <slot name="trigger" slot="trigger" />
-        <span slot="title">
-          {__('How to switch from Test to Live mode', 'surecart')}
-        </span>
+        <span slot="title">{__('How to switch from Test to Live mode', 'surecart')}</span>
         <div class="sc-test-mode-info-content" slot="content">
           <ol>
             <li>
               {__('From the Admin Bar', 'surecart')}
               <ul>
-                <li>{__("Select any product & proceed to its checkout page.", 'surecart')}</li>
+                <li>{__('Select any product & proceed to its checkout page.', 'surecart')}</li>
                 <li>{__('Access the dropdown menu & select the live mode.', 'surecart')}</li>
               </ul>
               <img src={`${window?.scData?.plugin_url}/images/change-from-adminbar.png`} alt={__('Screenshot showing how to change mode from the admin bar', 'surecart')} />
@@ -40,7 +38,7 @@ export class ScTestModeInfo {
           </ol>
         </div>
         <div class="sc-test-mode-info-footer" slot="footer">
-          <sc-button size="small" type="link" target="_blank" href="https://surecart.com/docs">
+          <sc-button size="small" type="link" target="_blank" href="https://surecart.com/docs/how-to-make-test-payments/">
             {__('Documentation ', 'surecart')} <sc-icon name="external-link" />
           </sc-button>
           <sc-button size="small" type="link" target="_blank" href="https://surecart.com/contact-us/">
