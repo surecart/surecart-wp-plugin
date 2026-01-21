@@ -1,8 +1,8 @@
 /**
  * WordPress dependencies.
  */
-import { useBlockProps, useInnerBlocksProps } from '@wordpress/block-editor';
+import { InnerBlocks } from '@wordpress/block-editor';
 
-export default () => {
-	return <div {...useInnerBlocksProps.save(useBlockProps.save())} />;
-};
+export default function save() {
+	return <InnerBlocks.Content />;
+}

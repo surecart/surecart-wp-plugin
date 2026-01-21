@@ -378,7 +378,7 @@ class ProductReviewList extends \Bricks\Element {
 		// Sidebar.
 		if ( $show_sidebar ) {
 			$content .= '<!-- wp:surecart/product-review-list-sidebar {"style":{"layout":{"selfStretch":"fixed","flexSize":"300px","type":"flex","orientation":"vertical"},"position":{"type":"sticky","top":"0px"},"spacing":{"blockGap":"var:preset|spacing|60"}},"layout":{"type":"flex","orientation":"vertical"}} -->';
-			$content .= '<div class="wp-block-surecart-product-review-list-sidebar"><!-- wp:surecart/product-review-list-filter-tags {"layout":{"type":"flex","orientation":"vertical","verticalAlignment":"top","flexWrap":"nowrap"}} -->';
+			$content .= '<!-- wp:surecart/product-review-list-filter-tags {"layout":{"type":"flex","orientation":"vertical","verticalAlignment":"top","flexWrap":"nowrap"}} -->';
 			$content .= '<!-- wp:surecart/product-review-list-filter-tags-label {"style":{"typography":{"fontWeight":"600","fontStyle":"normal"}}} /-->';
 			$content .= '<!-- wp:surecart/product-review-list-filter-tags-template {"layout":{"type":"flex","orientation":"horizontal"}} -->';
 			$content .= '<!-- wp:surecart/product-review-list-filter-tag /-->';
@@ -390,7 +390,7 @@ class ProductReviewList extends \Bricks\Element {
 			$content .= '<!-- wp:surecart/product-review-list-filter-checkboxes-template {"style":{"spacing":{"blockGap":"var:preset|spacing|20"}}} -->';
 			$content .= '<!-- wp:surecart/product-review-list-filter-checkbox /-->';
 			$content .= '<!-- /wp:surecart/product-review-list-filter-checkboxes-template -->';
-			$content .= '<!-- /wp:surecart/product-review-list-filter-checkboxes --></div>';
+			$content .= '<!-- /wp:surecart/product-review-list-filter-checkboxes -->';
 			$content .= '<!-- /wp:surecart/product-review-list-sidebar -->';
 		}
 
