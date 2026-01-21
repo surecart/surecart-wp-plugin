@@ -71,10 +71,16 @@ class ProductReviews extends \Bricks\Element {
 				'children' => [
 					[
 						'name'     => 'container',
-						'label'    => esc_html__( 'Rating Summary', 'surecart' ),
+						'label'    => esc_html__( 'Review List', 'surecart' ),
 						'settings' => [
 							'_direction'  => 'column',
 							'_alignItems' => 'flex-start',
+							'_padding'    => [
+								'top'    => '0',
+								'right'  => '0',
+								'bottom' => '0',
+								'left'   => '0',
+							],
 						],
 						'children' => [
 							[
@@ -89,73 +95,117 @@ class ProductReviews extends \Bricks\Element {
 							],
 							[
 								'name'     => 'container',
-								'label'    => esc_html__( 'Rating Summary', 'surecart' ),
+								'label'    => esc_html__( 'Review Summary', 'surecart' ),
 								'settings' => [
 									'_direction'      => 'row',
 									'_alignItems'     => 'flex-start',
 									'_columnGap'      => '30px',
-									'_justifyContent' => 'space-between',
-									'_padding'        => '32px',
+									'_justifyContent' => 'flex-start',
 									'_margin'         => [
-										'bottom' => '30px',
+										'top'    => '0',
+										'right'  => '0',
+										'bottom' => '0',
+										'left'   => '0',
 									],
-									'_background'     => [
-										'color' => [ 'hex' => '#f5f5f5' ],
-									],
-									'_border'         => [
-										'width'  => [
-											'top'    => '1',
-											'bottom' => '1',
-											'right'  => '1',
-											'left'   => '1',
-										],
-										'style'  => 'solid',
-										'color'  => [ 'hex' => '#eeeeee' ],
-										'radius' => [
-											'top'    => '14',
-											'right'  => '14',
-											'bottom' => '14',
-											'left'   => '14',
-										],
+									'_padding'        => [
+										'top'    => '0',
+										'right'  => '0',
+										'bottom' => '0',
+										'left'   => '0',
 									],
 								],
 								'children' => [
 									[
-										'name'     => 'block',
-										'label'    => esc_html__( 'Rating Info', 'surecart' ),
+										'name'     => 'container',
+										'label'    => esc_html__( 'Product Rating', 'surecart' ),
 										'settings' => [
-											'_direction' => 'column',
-											'_rowGap'    => '10px',
-											'_width'     => '100%',
+											'_direction'  => 'column',
+											'_rowGap'     => '10px',
+											'_justifyContent' => 'center',
+											'_flexShrink' => 0,
+											'_flexGrow'   => 0,
+											'_width'      => 'auto',
+											'_padding'    => [
+												'top'    => '0',
+												'right'  => '0',
+												'bottom' => '0',
+												'left'   => '0',
+											],
 										],
 										'children' => [
 											[
 												'name'     => 'surecart-product-review-average-rating-value',
 												'settings' => [
 													'format_style' => 'slash',
-													'_typography' => array(
-														'font-size' => '2em',
+													'_typography'  => [
+														'font-size'   => '30px',
 														'font-weight' => '600',
-													),
+													],
 												],
 											],
 											[ 'name' => 'surecart-product-review-average-rating-stars' ],
-											[ 'name' => 'surecart-product-review-total-rating' ],
+											[
+												'name'     => 'container',
+												'label'    => esc_html__( 'Product Total Rating', 'surecart' ),
+												'settings' => [
+													'_direction'      => 'row',
+													'_columnGap'      => '4px',
+													'_alignItems'     => 'flex-start',
+													'_justifyContent' => 'flex-start',
+													'_margin'         => [
+														'top'    => '0',
+														'right'  => '0',
+														'bottom' => '0',
+														'left'   => '0',
+													],
+													'_padding'        => [
+														'top'    => '0',
+														'right'  => '0',
+														'bottom' => '0',
+														'left'   => '0',
+													],
+													'_width' => 'auto',
+												],
+												'children' => [
+													[
+														'name'     => 'text-basic',
+														'settings' => [
+															'text'        => esc_html__( 'Based on', 'surecart' ),
+															'_typography' => [
+																'font-size'   => '14px',
+																'font-weight' => '400',
+															],
+														],
+													],
+													[
+														'name'     => 'surecart-product-review-total-rating',
+														'settings' => [
+															'show_label'  => true,
+															'_typography' => [
+																'font-size' => '14px',
+															],
+														],
+													],
+												],
+											],
 										],
 									],
 									[
-										'name'     => 'surecart-product-review-breakdown',
+										'name'     => 'container',
+										'label'    => esc_html__( 'Breakdowns', 'surecart' ),
 										'settings' => [
-											'columns'    => 1,
-											'row_gap'    => 2,
-											'column_gap' => 20,
-											'_width'     => '100%',
-											'star_size'  => 20,
-											'bar_fill_color' => [
-												'hex' => 'var(--bricks-color-primary)',
-											],
-											'bar_background_color' => [
-												'hex' => '#e0e0e0',
+											'_flexGrow'   => 1,
+											'_flexShrink' => 1,
+											'_flexBasis'  => '0%',
+											'_overflow'   => 'hidden',
+										],
+										'children' => [
+											[
+												'name'     => 'surecart-product-review-breakdown',
+												'settings' => [
+													'columns' => 2,
+													'row_gap' => 15,
+												],
 											],
 										],
 									],

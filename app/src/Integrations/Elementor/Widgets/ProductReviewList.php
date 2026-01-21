@@ -853,7 +853,7 @@ class ProductReviewList extends \Elementor\Widget_Base {
 
 			return '<div class="wp-block-surecart-product-review-list-sidebar" style="width: 250px; min-width: 250px;">
 				<div style="margin-bottom: 30px;">
-					<div style="font-weight: 600; margin-bottom: 10px;">' . esc_html__( 'Active Filters', 'surecart' ) . '</div>
+					<div style="font-weight: 600; margin-bottom: 10px;">' . esc_html__( 'Applied Filters', 'surecart' ) . '</div>
 					<div style="display: flex; gap: 8px; flex-wrap: wrap;">
 						<span style="padding: 6px 12px; background: #f3f4f6; border-radius: 16px; font-size: 14px; display: inline-flex; align-items: center; gap: 6px;">
 							5 Stars

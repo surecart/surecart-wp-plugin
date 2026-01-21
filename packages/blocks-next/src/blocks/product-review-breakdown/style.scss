@@ -1,5 +1,8 @@
 .wp-block-surecart-product-review-breakdown {
 	display: block;
+	width: 100%;
+	min-width: 0; // Prevent overflow in flex containers.
+	overflow: hidden;
 	container-type: inline-size;
 	container-name: review-breakdown;
 	color: var(--sc-color-gray-800);

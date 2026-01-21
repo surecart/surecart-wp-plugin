@@ -81,7 +81,6 @@ class Product extends \Bricks\Element {
 					),
 				),
 			),
-			array( 'name' => 'post-title' ),
 			array(
 				'name'     => 'block',
 				'label'    => esc_html__( 'Rating Info', 'surecart' ),
@@ -102,13 +101,14 @@ class Product extends \Bricks\Element {
 					array(
 						'name'     => 'surecart-product-review-total-rating',
 						'settings' => array(
-							'style_variant' => 'plus-sign',
-							'show_label'    => true,
+							'style_variant'   => 'plus-sign',
+							'show_label'      => true,
+							'link_to_reviews' => true,
 						),
 					),
 				),
 			),
-
+			array( 'name' => 'post-title' ),
 			array(
 				'name'     => 'block',
 				'label'    => esc_html__( 'Pricing', 'surecart' ),

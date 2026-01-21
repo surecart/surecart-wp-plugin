@@ -503,7 +503,7 @@ class ProductReviewList extends \Bricks\Element {
 	 * @return void
 	 */
 	private function render_preview( $show_header, $show_sidebar, $show_add_button, $show_date, $show_content, $show_pagination ) {
-		$content    = '<div class="wp-block-surecart-product-review-list" style="padding: 20px;">';
+		$content    = '<div class="wp-block-surecart-product-review-list" style="width: 100%; padding: 20px;">';
 		$fill_color = $this->get_raw_color( 'fill_color' );
 		if ( empty( $fill_color ) ) {
 			$fill_color = 'var(--bricks-color-primary)';
@@ -563,7 +563,7 @@ class ProductReviewList extends \Bricks\Element {
 		// Sidebar.
 		if ( $show_sidebar ) {
 			$content .= '<div style="width: 250px; min-width: 250px;">';
-			$content .= '<div style="margin-bottom: 20px;"><div style="font-weight: 600; margin-bottom: 10px;">' . esc_html__( 'Active Filters', 'surecart' ) . '</div>';
+			$content .= '<div style="margin-bottom: 20px;"><div style="font-weight: 600; margin-bottom: 10px;">' . esc_html__( 'Applied Filters', 'surecart' ) . '</div>';
 			$content .= '<div style="display: flex; gap: 8px; flex-wrap: wrap;">';
 			$content .= '<span style="padding: 6px 12px; background: #f3f4f6; border-radius: 16px; font-size: 14px; display: inline-flex; align-items: center; gap: 6px;">5 Stars';
 			$content .= wp_kses(
@@ -655,6 +655,8 @@ class ProductReviewList extends \Bricks\Element {
 					[
 						'class'       => 'wp-block-surecart-product-review-pagination-prev__icon',
 						'aria-hidden' => true,
+						'width'       => 16,
+						'height'      => 16,
 					]
 				),
 				sc_allowed_svg_html()
@@ -666,6 +668,8 @@ class ProductReviewList extends \Bricks\Element {
 					[
 						'class'       => 'wp-block-surecart-product-review-pagination-next__icon',
 						'aria-hidden' => true,
+						'width'       => 16,
+						'height'      => 16,
 					]
 				),
 				sc_allowed_svg_html()
