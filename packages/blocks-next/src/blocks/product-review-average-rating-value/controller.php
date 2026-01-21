@@ -20,9 +20,9 @@ $content = (string) number_format( $product->average_stars, 1 );
 $wrapper = get_block_wrapper_attributes();
 
 // Check for style classes and format accordingly.
-if ( str_contains( $wrapper, 'is-style-parentheses' ) ) {
+if ( strpos( $wrapper, 'is-style-parentheses' ) !== false ) {
 	$content = '(' . $content . ')';
-} elseif ( str_contains( $wrapper, 'is-style-slash' ) ) {
+} elseif ( strpos( $wrapper, 'is-style-slash' ) !== false ) {
 	$content .= ' / 5.0';
 }
 

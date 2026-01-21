@@ -187,9 +187,9 @@ class ProductReviewAverageRatingValue extends \Elementor\Widget_Base {
 		$product = sc_get_product();
 		$content = ! empty( $product->average_stars ) ? (string) $product->average_stars : '4.5';
 
-		if ( str_contains( $class_name, 'is-style-parentheses' ) ) {
+		if ( strpos( $class_name, 'is-style-parentheses' ) !== false ) {
 			$content = '(' . $content . ')';
-		} elseif ( str_contains( $class_name, 'is-style-slash' ) ) {
+		} elseif ( strpos( $class_name, 'is-style-slash' ) !== false ) {
 			$content = $content . ' / 5.0';
 		}
 
