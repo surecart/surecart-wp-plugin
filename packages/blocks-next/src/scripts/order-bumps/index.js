@@ -49,11 +49,6 @@ const { state, actions } = store('surecart/order-bumps', {
 		currentIndex: 0,
 
 		/**
-		 * Scroll timeout for debouncing (internal use).
-		 */
-		_scrollTimeout: null,
-
-		/**
 		 * Get all recommended bumps (excludes products with variants and optionally added items).
 		 */
 		get orderBumps() {
@@ -315,40 +310,29 @@ const { state, actions } = store('surecart/order-bumps', {
 		},
 
 		/**
-		 * Handle carousel scroll for manual swipe detection.
+		 * Handle carousel scroll end for manual swipe detection.
 		 * Updates currentIndex based on scroll position.
 		 */
 		onCarouselScroll() {
 			const { ref: carousel } = getElement();
 			if (!carousel) return;
 
-			// Clear any existing timeout for debouncing.
-			clearTimeout(state._scrollTimeout);
+			const items = carousel.querySelectorAll('.sc-cart-order-bump-item');
+			if (!items.length) return;
 
-			// Debounce to detect scroll end.
-			state._scrollTimeout = setTimeout(() => {
-				const items = carousel.querySelectorAll(
-					'.sc-cart-order-bump-item'
-				);
-				if (!items.length) return;
+			// Calculate which item is most visible based on scroll position.
+			const scrollLeft = carousel.scrollLeft;
+			const itemWidth = items[0].offsetWidth;
+			const gap = parseFloat(getComputedStyle(carousel).gap) || 0;
 
-				// Calculate which item is most visible based on scroll position.
-				const scrollLeft = carousel.scrollLeft;
-				const itemWidth = items[0].offsetWidth;
-				const gap = parseFloat(getComputedStyle(carousel).gap) || 0;
+			// Calculate the index based on scroll position.
+			const newIndex = Math.round(scrollLeft / (itemWidth + gap));
 
-				// Calculate the index based on scroll position.
-				const newIndex = Math.round(scrollLeft / (itemWidth + gap));
-
-				// Clamp to valid range and update if changed.
-				const clampedIndex = Math.max(
-					0,
-					Math.min(newIndex, items.length - 1)
-				);
-				if (state.currentIndex !== clampedIndex) {
-					state.currentIndex = clampedIndex;
-				}
-			}, 50); // 50ms debounce for scroll end detection.
+			// Clamp to valid range and update if changed.
+			const clampedIndex = Math.max(0, Math.min(newIndex, items.length - 1));
+			if (state.currentIndex !== clampedIndex) {
+				state.currentIndex = clampedIndex;
+			}
 		},
 	},
 });
