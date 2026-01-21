@@ -681,43 +681,50 @@
 					"elType": "widget"
 				},
 				{
-					"id": "34118611",
+					"id": "70e51c8c",
 					"settings": {
 						"flex_direction": "row",
 						"content_width": "full",
 						"_title": "Review summary",
 						"background_background": "classic",
-						"background_color": "#F7F9FB",
 						"border_color": "#EEEEEE",
 						"border_border": "solid",
 						"border_width": {
 							"unit": "px",
-							"top": "1",
-							"right": "1",
-							"bottom": "1",
-							"left": "1",
+							"top": "0",
+							"right": "0",
+							"bottom": "0",
+							"left": "0",
 							"isLinked": true
 						},
 						"border_radius": {
 							"unit": "px",
-							"top": "12",
-							"right": "12",
-							"bottom": "12",
-							"left": "12",
+							"top": "0",
+							"right": "0",
+							"bottom": "0",
+							"left": "0",
 							"isLinked": true
 						},
 						"padding": {
 							"unit": "px",
-							"top": "32",
-							"right": "32",
-							"bottom": "32",
-							"left": "32",
+							"top": "0",
+							"right": "0",
+							"bottom": "0",
+							"left": "0",
+							"isLinked": true
+						},
+						"margin": {
+							"unit": "px",
+							"top": "0",
+							"right": "0",
+							"bottom": "0",
+							"left": "0",
 							"isLinked": true
 						}
 					},
 					"elements": [
 						{
-							"id": "2c6e5e6b",
+							"id": "4be7d8",
 							"settings": {
 								"content_width": "full",
 								"flex_gap": {
@@ -741,7 +748,7 @@
 							},
 							"elements": [
 								{
-									"id": "1645083",
+									"id": "41cd9b37",
 									"settings": {
 										"format_style": "slash",
 										"text_color": "#000000",
@@ -759,7 +766,7 @@
 									"elType": "widget"
 								},
 								{
-									"id": "4051c2eb",
+									"id": "6b8a3f86",
 									"settings": [],
 									"elements": [],
 									"isInner": false,
@@ -767,7 +774,7 @@
 									"elType": "widget"
 								},
 								{
-									"id": "1f714dfe",
+									"id": "69007e70",
 									"settings": {
 										"content_width": "full",
 										"flex_direction": "row",
@@ -800,9 +807,9 @@
 									},
 									"elements": [
 										{
-											"id": "4e2bf78d",
+											"id": "b8086be",
 											"settings": {
-												"editor": "<span>Based on</span>",
+												"editor": "<p>Based on</p>",
 												"_margin": {
 													"unit": "px",
 													"top": "0",
@@ -838,7 +845,7 @@
 											"elType": "widget"
 										},
 										{
-											"id": "38e56095",
+											"id": "ae3ecce",
 											"settings": {
 												"typography_typography": "custom",
 												"typography_font_size": {
@@ -864,14 +871,14 @@
 							"elType": "container"
 						},
 						{
-							"id": "608ef914",
+							"id": "4fa6f510",
 							"settings": {
 								"content_width": "full",
 								"_title": "Breakdowns"
 							},
 							"elements": [
 								{
-									"id": "6f10659f",
+									"id": "39afe21f",
 									"settings": {
 										"row_spacing": {
 											"unit": "px",
@@ -890,9 +897,10 @@
 										},
 										"row_gap": {
 											"unit": "px",
-											"size": 2,
+											"size": 15,
 											"sizes": []
-										}
+										},
+										"columns": "2"
 									},
 									"elements": [],
 									"isInner": false,
