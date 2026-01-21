@@ -24,7 +24,8 @@ register_block_style(
 						'minHeight' => '50px',
 					),
 					'spacing'    => array(
-						'padding' => '0 10px',
+						'padding'  => '0 10px',
+						'blockGap' => '5px',
 					),
 				),
 			),

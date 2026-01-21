@@ -22,7 +22,8 @@ register_block_style(
 					),
 					'shadow'  => 'none',
 					'spacing' => array(
-						'padding' => '0',
+						'padding'  => '0',
+						'blockGap' => '5px',
 					),
 				),
 				'surecart/product-quantity-input-increase' => array(
