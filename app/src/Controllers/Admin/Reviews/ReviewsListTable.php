@@ -69,12 +69,13 @@ class ReviewsListTable extends ListTable {
 	 * @global string $comment_type
 	 */
 	protected function get_views() {
+		$requested_status = ! empty( $_GET['status'] ) ? sanitize_text_field( wp_unslash( $_GET['status'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		foreach ( $this->getStatuses() as $status => $label ) {
 			$link                    = admin_url( 'admin.php?page=sc-reviews' );
 			$current_link_attributes = '';
 
-			if ( ! empty( $_GET['status'] ) ) {
-				if ( $status === $_GET['status'] ) {
+			if ( ! empty( $requested_status ) ) {
+				if ( $status === $requested_status ) {
 					$current_link_attributes = ' class="current" aria-current="page"';
 				}
 			} elseif ( 'all' === $status ) {
@@ -83,7 +84,7 @@ class ReviewsListTable extends ListTable {
 
 			$link = add_query_arg( 'status', $status, $link );
 
-			$link = esc_url( $link );
+			$link = esc_url( $link ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
 			$status_links[ $status ] = "<a href='$link'$current_link_attributes>" . $label . '</a>';
 		}
@@ -362,19 +363,22 @@ class ReviewsListTable extends ListTable {
 	 * @param string $which Top or bottom placement.
 	 */
 	protected function extra_tablenav( $which ) {
+		$status   = ! empty( $_GET['status'] ) ? sanitize_text_field( wp_unslash( $_GET['status'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$order_by = ! empty( $_GET['orderby'] ) ? sanitize_text_field( wp_unslash( $_GET['orderby'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$order    = ! empty( $_GET['order'] ) ? sanitize_text_field( wp_unslash( $_GET['order'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		?>
 		<input type="hidden" name="page" value="sc-reviews" />
 
-		<?php if ( ! empty( $_GET['status'] ) ) : // phpcs:ignore WordPress.Security.NonceVerification.Recommended ?>
-			<input type="hidden" name="status" value="<?php echo esc_attr( $_GET['status'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended ?>" />
+		<?php if ( ! empty( $status ) ) : ?>
+			<input type="hidden" name="status" value="<?php echo esc_attr( $status ); ?>" />
 		<?php endif; ?>
 
-		<?php if ( ! empty( $_GET['orderby'] ) ) : // phpcs:ignore WordPress.Security.NonceVerification.Recommended ?>
-			<input type="hidden" name="orderby" value="<?php echo esc_attr( $_GET['orderby'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended ?>" />
+		<?php if ( ! empty( $order_by ) ) : ?>
+			<input type="hidden" name="orderby" value="<?php echo esc_attr( $order_by ); ?>" />
 		<?php endif; ?>
 
-		<?php if ( ! empty( $_GET['order'] ) ) : // phpcs:ignore WordPress.Security.NonceVerification.Recommended ?>
-			<input type="hidden" name="order" value="<?php echo esc_attr( $_GET['order'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended ?>" />
+		<?php if ( ! empty( $order ) ) : ?>
+			<input type="hidden" name="order" value="<?php echo esc_attr( $order ); ?>" />
 		<?php endif; ?>
 
 		<?php
