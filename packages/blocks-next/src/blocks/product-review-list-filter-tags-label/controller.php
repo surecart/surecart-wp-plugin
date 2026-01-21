@@ -1,6 +1,6 @@
 <?php
 global $sc_query_id;
-$params        = \SureCart::block()->urlParams( 'ratings' );
+$params        = \SureCart::block()->urlParams( 'reviews' );
 $clear_all_url = $params->removeAllStarArgs();
 $all_stars     = $params->getAllStarArgs();
 
