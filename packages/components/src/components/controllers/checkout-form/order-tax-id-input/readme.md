@@ -15,6 +15,7 @@
 | `gbVatLabel` | `gb-vat-label` | UK zone label                                               | `string`             | `undefined` |
 | `helpText`   | `help-text`    | Help text                                                   | `string`             | `undefined` |
 | `otherLabel` | `other-label`  | Other zones label                                           | `string`             | `undefined` |
+| `required`   | `required`     | Whether tax input is required                               | `boolean`            | `false`     |
 | `show`       | `show`         | Force show the field.                                       | `boolean`            | `false`     |
 | `taxIdTypes` | `tax-id-types` | Tax ID Types which will be shown Eg: '["eu_vat", "gb_vat"]' | `string \| string[]` | `undefined` |
 

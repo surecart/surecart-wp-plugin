@@ -41,6 +41,9 @@ export class ScOrderTaxIdInput {
   /** Tax ID Types which will be shown Eg: '["eu_vat", "gb_vat"]' */
   @Prop() taxIdTypes: string | string[];
 
+  /** Whether tax input is required */
+  @Prop() required: boolean = false;
+
   /** Tax ID Types data as array */
   @State() taxIdTypesData: string[] = [];
 
@@ -83,8 +86,18 @@ export class ScOrderTaxIdInput {
     this.handleTaxIdTypesChange();
   }
 
-  required() {
-    return checkoutState.taxProtocol?.eu_vat_required && checkoutState.checkout?.tax_identifier?.number_type === 'eu_vat';
+  isRequired() {
+    // If the block has explicitly set required, use that value.
+    if (this.required) {
+      return true;
+    }
+
+    // Only apply EU VAT requirement if eu_vat is one of the allowed tax types.
+    // If taxIdTypesData is empty, all types are allowed.
+    const isEuVatAllowed = !this.taxIdTypesData?.length || this.taxIdTypesData.includes('eu_vat');
+
+    // Fall back to EU VAT protocol requirement only if EU VAT is an allowed type.
+    return isEuVatAllowed && checkoutState.taxProtocol?.eu_vat_required && checkoutState.checkout?.tax_identifier?.number_type === 'eu_vat';
   }
 
   render() {
@@ -108,7 +121,7 @@ export class ScOrderTaxIdInput {
         euVatLabel={this.euVatLabel}
         help={this.helpText}
         taxIdTypes={this.taxIdTypesData}
-        required={this.required()}
+        required={this.isRequired()}
       ></sc-tax-id-input>
     );
   }

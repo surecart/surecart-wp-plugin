@@ -39,6 +39,7 @@ exports[`sc-licenses-list Should render heading that is passed as a prop 1`] = `
           </sc-empty>
         </slot>
       </div>
+      <sc-pagination page="1" perpage="10" total="0" totalpages="0" totalshowing="0"></sc-pagination>
     </sc-dashboard-module>
   </mock:shadow-root>
 </sc-licenses-list>
@@ -61,6 +62,7 @@ exports[`sc-licenses-list renders 1`] = `
           </sc-empty>
         </slot>
       </div>
+      <sc-pagination page="1" perpage="10" total="0" totalpages="0" totalshowing="0"></sc-pagination>
     </sc-dashboard-module>
   </mock:shadow-root>
 </sc-licenses-list>

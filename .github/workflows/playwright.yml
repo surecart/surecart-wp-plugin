@@ -6,15 +6,40 @@ on:
 
 jobs:
     e2e-playwright:
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-22.04
         name: Playwright e2e tests
         strategy:
           matrix:
             browser: [chromium] #For now, skips - firefox, webkit
         steps:
-            - uses: actions/checkout@3df4ab11eba7bda6032a0b82a6bb43b11571feac # v4.0.0
+            - uses: actions/checkout@v4
               with:
                   show-progress: ${{ runner.debug == '1' && 'true' || 'false' }}
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 16
+
+            - name: Setup PHP
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: '8.1'
+
+            - name: Get yarn cache directory path
+              id: yarn-cache-dir-path
+              run: echo "dir=$(yarn config get cacheFolder)" >> $GITHUB_OUTPUT
+
+            - name: Cache yarn dependencies
+              uses: actions/cache@v4
+              with:
+                  path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+                  key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+                  restore-keys: |
+                      ${{ runner.os }}-yarn-
+
+            - name: Composer Install
+              run: composer install --optimize-autoloader --prefer-dist
 
             - name: Yarn Install
               run: yarn
@@ -29,6 +54,9 @@ jobs:
             - name: Install WordPress and start the server
               run: |
                   yarn run wp-env start
+
+                  # Activate a theme for rendering pages.
+                  yarn run wp-env run tests-cli wp theme activate twentytwentyfour
 
                   # Set the permalink structure
                   yarn run wp-env run tests-cli wp rewrite structure /%postname%/
