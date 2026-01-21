@@ -223,7 +223,15 @@ class UserTest extends SureCartUnitTestCase {
 
 		$model = User::find($user->ID);
 
-		// Mock the Customer::create request
+		// First call: Search for existing customer by email - return empty
+		$requests->shouldReceive('makeRequest')
+			->once()
+			->withSomeOfArgs('customers')
+			->andReturn((object)[
+				'data' => []
+			]);
+
+		// Second call: Create new customer
 		$requests->shouldReceive('makeRequest')
 			->once()
 			->withSomeOfArgs('customers')
@@ -262,9 +270,18 @@ class UserTest extends SureCartUnitTestCase {
 
 		$model = User::find($user->ID);
 
-		// Mock the Customer::create request to return WP_Error
+		// First call: Search for existing customer by email - return empty
 		$requests->shouldReceive('makeRequest')
 			->once()
+			->withSomeOfArgs('customers')
+			->andReturn((object)[
+				'data' => []
+			]);
+
+		// Second call: Create customer - return WP_Error
+		$requests->shouldReceive('makeRequest')
+			->once()
+			->withSomeOfArgs('customers')
 			->andReturn(new \WP_Error('api_error', 'API request failed'));
 
 		// Get live customer should return WP_Error
@@ -292,9 +309,18 @@ class UserTest extends SureCartUnitTestCase {
 
 		$model = User::find($user->ID);
 
-		// Mock the Customer::create request to return object without id
+		// First call: Search for existing customer by email - return empty
 		$requests->shouldReceive('makeRequest')
 			->once()
+			->withSomeOfArgs('customers')
+			->andReturn((object)[
+				'data' => []
+			]);
+
+		// Second call: Create customer - return object without id
+		$requests->shouldReceive('makeRequest')
+			->once()
+			->withSomeOfArgs('customers')
 			->andReturn((object)[
 				'object' => 'customer',
 				'email' => 'noid@test.com',

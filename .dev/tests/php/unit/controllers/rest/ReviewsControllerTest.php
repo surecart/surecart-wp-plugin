@@ -76,6 +76,17 @@ class ReviewsControllerTest extends SureCartUnitTestCase {
 			}
 		);
 
+		// First call: Search for existing customer by email - return empty
+		$requests->shouldReceive( 'makeRequest' )
+			->once()
+			->withSomeOfArgs( 'customers' )
+			->andReturn(
+				(object) [
+					'data' => [],
+				]
+			);
+
+		// Second call: Create customer - return error
 		$requests->shouldReceive( 'makeRequest' )
 			->once()
 			->withSomeOfArgs( 'customers' )
@@ -151,6 +162,17 @@ class ReviewsControllerTest extends SureCartUnitTestCase {
 			}
 		);
 
+		// First call: Search for existing customer by email - return empty
+		$requests->shouldReceive( 'makeRequest' )
+			->once()
+			->withSomeOfArgs( 'customers' )
+			->andReturn(
+				(object) [
+					'data' => [],
+				]
+			);
+
+		// Second call: Create new customer
 		$requests->shouldReceive( 'makeRequest' )
 			->once()
 			->withSomeOfArgs( 'customers' )
