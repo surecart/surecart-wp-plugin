@@ -1,4 +1,4 @@
-export const TEMPLATE = [
+export default [
 	[
 		'core/group',
 		{

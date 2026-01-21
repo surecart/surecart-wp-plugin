@@ -1,5 +1,5 @@
 import { __ } from '@wordpress/i18n';
-export const TEMPLATE = [
+export default [
 	[
 		'core/group',
 		{

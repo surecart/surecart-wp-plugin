@@ -12,7 +12,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies.
  */
-import { TEMPLATE } from './template';
+import TEMPLATE from './template';
 
 export default ({ attributes, setAttributes }) => {
 	const { hideAddedItems } = attributes;
