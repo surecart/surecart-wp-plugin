@@ -20,7 +20,7 @@ class User implements ArrayAccess, JsonSerializable {
 	protected $user;
 
 	/**
-	 * Holds the cutomser
+	 * Holds the customer
 	 *
 	 * @var \SureCart\Models\Customer;
 	 */
