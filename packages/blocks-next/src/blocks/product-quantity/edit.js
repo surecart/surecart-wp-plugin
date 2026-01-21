@@ -6,14 +6,11 @@ import {
 	useBlockProps,
 	useInnerBlocksProps,
 	RichText,
-	BlockControls,
 } from '@wordpress/block-editor';
-import { ToolbarButton } from '@wordpress/components';
 import {
 	__experimentalUseColorProps as useColorProps,
 	__experimentalGetElementClassName,
 } from '@wordpress/block-editor';
-import { pencil, closeSmall } from '@wordpress/icons';
 import { useState } from '@wordpress/element';
 import LabelControl from '../../components/LabelControl';
 import StyleContentsControl from '../../components/StyleContentsControl';
