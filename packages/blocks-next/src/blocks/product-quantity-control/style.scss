@@ -1,5 +1,11 @@
-// Avoid specificity issue with style_data block style registration.
-:where(.wp-block-surecart-product-quantity-control) {
+// Fallback gap for blocks without any style class (existing templates).
+// :not() adds specificity, beating WordPress's :where(.is-layout-flex) { gap: 24px } rule.
+:root .wp-block-surecart-product-quantity-control:not([class*="is-style-"]) {
+	gap: 1px;
+}
+
+// Use :where() to avoid specificity issues with style_data block style registration.
+:root :where(.wp-block-surecart-product-quantity-control) {
 	width: fit-content;
 	border-radius: var(--sc-border-radius-medium);
 	min-height: var(--sc-quantity-control-height, var(--sc-input-height-small));
@@ -11,6 +17,11 @@
 		opacity: 0.5;
 		cursor: not-allowed;
 		pointer-events: none;
+	}
+
+	&:has(.wp-block-surecart-product-quantity-input:focus) {
+		outline: 2px solid var(--sc-focus-ring-color, var(--wp--preset--color--primary, currentColor));
+		outline-offset: 2px;
 	}
 }
 
