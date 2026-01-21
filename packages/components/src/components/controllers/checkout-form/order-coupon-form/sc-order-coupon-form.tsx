@@ -40,7 +40,16 @@ export class ScOrderCouponForm {
           },
         },
       })) as Checkout;
-      speak(sprintf(__('Coupon code %1$s applied & now order total is %2$s -  ', 'surecart'), promotion_code, checkoutState.checkout?.total_display_amount), 'assertive');
+      speak(
+        // translators: %1$s is the coupon code, %2$s is the discount amount, %3$s is the order total
+        sprintf(
+          __('Coupon code %1$s applied, discount is %2$s & now order total is %3$s -  ', 'surecart'),
+          promotion_code,
+          checkoutState.checkout?.discounts_display_amount,
+          checkoutState.checkout?.total_display_amount,
+        ),
+        'assertive',
+      );
 
       updateFormState('RESOLVE');
       await this.couponForm?.triggerFocus();
