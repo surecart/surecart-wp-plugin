@@ -157,7 +157,7 @@ class ProductReviewAverageRatingValue extends \Elementor\Widget_Base {
 		$link_to_reviews = 'yes' === ( $settings['link_to_reviews'] ?? 'yes' );
 
 		if ( \Elementor\Plugin::$instance->editor->is_edit_mode() ) {
-			$this->render_preview( $class_name );
+			$this->render_preview( $class_name, $link_to_reviews );
 			return;
 		}
 
