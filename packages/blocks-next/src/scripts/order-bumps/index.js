@@ -1,7 +1,7 @@
 /**
  * WordPress dependencies.
  */
-import { store, getContext } from '@wordpress/interactivity';
+import { store, getContext, getElement } from '@wordpress/interactivity';
 
 const { __ } = wp.i18n;
 const { state: checkoutState, actions: checkoutActions } =
@@ -47,6 +47,11 @@ const { state, actions } = store('surecart/order-bumps', {
 		 * Current scroll index.
 		 */
 		currentIndex: 0,
+
+		/**
+		 * Scroll timeout for debouncing (internal use).
+		 */
+		_scrollTimeout: null,
 
 		/**
 		 * Get all recommended bumps (excludes products with variants and optionally added items).
@@ -270,8 +275,10 @@ const { state, actions } = store('surecart/order-bumps', {
 			const button = e?.target;
 			if (!button) return;
 
-			// Find the carousel container
-			const container = button.closest('.wp-block-surecart-cart-order-bumps');
+			// Find the carousel container.
+			const container = button.closest(
+				'.wp-block-surecart-cart-order-bumps'
+			);
 			if (!container) return;
 
 			actions.scrollCarouselToIndex(container, state.currentIndex);
@@ -305,6 +312,43 @@ const { state, actions } = store('surecart/order-bumps', {
 		init() {
 			// Reset index when component initializes
 			state.currentIndex = 0;
+		},
+
+		/**
+		 * Handle carousel scroll for manual swipe detection.
+		 * Updates currentIndex based on scroll position.
+		 */
+		onCarouselScroll() {
+			const { ref: carousel } = getElement();
+			if (!carousel) return;
+
+			// Clear any existing timeout for debouncing.
+			clearTimeout(state._scrollTimeout);
+
+			// Debounce to detect scroll end.
+			state._scrollTimeout = setTimeout(() => {
+				const items = carousel.querySelectorAll(
+					'.sc-cart-order-bump-item'
+				);
+				if (!items.length) return;
+
+				// Calculate which item is most visible based on scroll position.
+				const scrollLeft = carousel.scrollLeft;
+				const itemWidth = items[0].offsetWidth;
+				const gap = parseFloat(getComputedStyle(carousel).gap) || 0;
+
+				// Calculate the index based on scroll position.
+				const newIndex = Math.round(scrollLeft / (itemWidth + gap));
+
+				// Clamp to valid range and update if changed.
+				const clampedIndex = Math.max(
+					0,
+					Math.min(newIndex, items.length - 1)
+				);
+				if (state.currentIndex !== clampedIndex) {
+					state.currentIndex = clampedIndex;
+				}
+			}, 50); // 50ms debounce for scroll end detection.
 		},
 	},
 });
