@@ -21,6 +21,7 @@ import { TYPE_CHOICES } from './utils/constants';
 
 export default ({ id, onCreateAutoFee }) => {
 	const [isSaving, setIsSaving] = useState(false);
+	const [autoFeeDisplayName, setAutoFeeDisplayName] = useState('');
 	const [autoFeeName, setAutoFeeName] = useState('');
 	const [autoFeeTarget, setAutoFeeTarget] = useState('');
 	const [currentTemplate, setCurrentTemplate] = useState('');
@@ -53,14 +54,17 @@ export default ({ id, onCreateAutoFee }) => {
 
 		// Check if current name matches any template label
 		const currentNameMatchesTemplate = TEMPLATE_CHOICES?.some(
-			(t) => t.label === autoFeeName
+			(t) => t.label === autoFeeDisplayName
 		);
 
 		// Only update if name is empty or matches an existing template label
-		if (templateLabel && (!autoFeeName || currentNameMatchesTemplate)) {
+		if (
+			templateLabel &&
+			(!autoFeeDisplayName || currentNameMatchesTemplate)
+		) {
 			const label =
 				currentTemplate === 'start_blank' ? '' : templateLabel;
-			setAutoFeeName(label);
+			setAutoFeeDisplayName(label);
 		}
 	}, [currentTemplate]);
 
@@ -75,8 +79,11 @@ export default ({ id, onCreateAutoFee }) => {
 				{
 					...TEMPLATES?.[currentTemplate],
 					...(autoFeeTarget && { fee_target: autoFeeTarget }),
-					name: autoFeeName,
+					name: autoFeeDisplayName,
 					start_at: Math.floor(Date.now() / 1000),
+					metadata: {
+						internal_name: autoFeeName,
+					},
 				},
 				{ throwOnError: true }
 			);
@@ -125,7 +132,7 @@ export default ({ id, onCreateAutoFee }) => {
 								type="primary"
 								submit
 								loading={isSaving}
-								disabled={!autoFeeName}
+								disabled={!autoFeeDisplayName}
 							>
 								{__('Continue', 'surecart')}
 								<ScIcon slot="suffix" name="arrow-right" />
@@ -136,7 +143,7 @@ export default ({ id, onCreateAutoFee }) => {
 					<ScInput
 						label={__('Name', 'surecart')}
 						help={__(
-							'A friendly name for your price change. This will be displayed to the customer.',
+							'This is the internal name for your dynamic price. This is not visible to the customer.',
 							'surecart'
 						)}
 						value={autoFeeName}
@@ -145,6 +152,17 @@ export default ({ id, onCreateAutoFee }) => {
 						tabIndex="0"
 						ref={nameInputRef}
 						autofocus
+					/>
+					<ScInput
+						label={__('Display Name', 'surecart')}
+						help={__(
+							'A friendly name for your dynamic price. This will be displayed to the customer.',
+							'surecart'
+						)}
+						value={autoFeeDisplayName}
+						onScInput={(e) => setAutoFeeDisplayName(e.target.value)}
+						required
+						tabIndex="0"
 					/>
 					<div
 						style={{
