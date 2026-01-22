@@ -52,7 +52,7 @@
 						class="sc-product-review-confirmation"
 						data-wp-bind--hidden="!context.submitted"
 						role="status"
-						aria-label="<?php esc_attr_e( 'Review submission confirmation', 'surecart' ); ?>"
+						aria-label="<?php esc_attr_e( 'Thanks for your review! Your review has been submitted successfully.', 'surecart' ); ?>"
 					>
 						<?php echo $confirmation_template->render(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 					</div>

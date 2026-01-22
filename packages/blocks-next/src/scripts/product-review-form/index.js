@@ -304,13 +304,21 @@ const { state, actions, callbacks } = store('surecart/product-review-form', {
 				} catch (error) {
 					console.error(error);
 
-					const errorMessage =
+					let errorMessage =
 						error?.message ||
 						__('Failed to submit review. Please try again.', 'surecart');
 
+					// Append additional error messages if available.
+					if (error?.additional_errors && Array.isArray(error.additional_errors)) {
+						const additionalMessages = error.additional_errors
+							.map((err) => err.message)
+							.join(' ');
+						errorMessage += ' ' + additionalMessages;
+					}
+
 					// Show alert to user.
 					// eslint-disable-next-line no-alert
-					window.alert(errorMessage);
+					alert(errorMessage);
 
 					// Announce error to screen readers.
 					speak(errorMessage, 'assertive');
