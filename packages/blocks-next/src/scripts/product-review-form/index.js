@@ -319,9 +319,6 @@ const { state, actions, callbacks } = store('surecart/product-review-form', {
 					// Show alert to user.
 					// eslint-disable-next-line no-alert
 					alert(errorMessage);
-
-					// Announce error to screen readers.
-					speak(errorMessage, 'assertive');
 				} finally {
 					context.busy = false;
 				}
