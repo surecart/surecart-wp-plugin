@@ -14,7 +14,7 @@ return [
 	'priority'   => 1,
 	'content'    => '
 
-	<!-- wp:surecart/product-review-list {"query":{"perPage":10,"pages":0,"offset":0},"metadata":{"categories":["surecart_review_list"],"patternName":"surecart-product-review-standard","name":"Default Review List"},"layout":{"type":"constrained"}} -->
+	<!-- wp:surecart/product-review-list {"align":"wide","query":{"perPage":10,"pages":0,"offset":0},"metadata":{"categories":["surecart_review_list"],"patternName":"surecart-product-review-standard","name":"Default Review List"},"layout":{"type":"constrained"}} -->
 	<!-- wp:heading {"className":"wp-block-heading","style":{"spacing":{"margin":{"top":"32px","bottom":"32px"}},"typography":{"lineHeight":"1"}}} -->
 	<h2 class="wp-block-heading" style="margin-top:32px;margin-bottom:32px;line-height:1">' . $customer_reviews . '</h2>
 	<!-- /wp:heading -->
