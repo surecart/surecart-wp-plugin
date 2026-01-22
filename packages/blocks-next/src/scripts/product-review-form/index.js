@@ -232,14 +232,6 @@ const { state, actions, callbacks } = store('surecart/product-review-form', {
 				);
 
 				if (isInvalidInput(context)) {
-					// Announce validation error to screen readers.
-					speak(
-						__(
-							'Please fill in all required fields including a star rating and review title.',
-							'surecart'
-						),
-						'assertive'
-					);
 					return;
 				}
 
@@ -275,15 +267,6 @@ const { state, actions, callbacks } = store('surecart/product-review-form', {
 
 					callbacks.clearForm();
 					context.submitted = true;
-
-					// Announce success and confirmation to screen readers.
-					speak(
-						__(
-							'Review submitted successfully. Thank you for your feedback.',
-							'surecart'
-						),
-						'assertive'
-					);
 
 					// Move focus to the confirmation content for accessibility.
 					requestAnimationFrame(() => {
