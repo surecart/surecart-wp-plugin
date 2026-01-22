@@ -1893,6 +1893,16 @@
     "class": true,
     "slot": true
   },
+  "sc-razorpay-add-method": {
+    "currency": true,
+    "customer-id": true,
+    "live-mode": true,
+    "success-url": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-recurring-price-choice-container": {
     "label": true,
     "prices": true,
