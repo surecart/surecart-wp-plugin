@@ -4,6 +4,7 @@ import { StripeElementChangeEvent } from '@stripe/stripe-js';
 
 declare global {
   interface Window {
+    registry: IconLibrary[];
     grecaptcha: any;
     surecart?: {
       product?: {
@@ -90,6 +91,11 @@ interface Model {
   updated_at: number;
 }
 
+export interface IconLibrary {
+  name: string;
+  resolver: IconLibraryResolver;
+  mutator?: IconLibraryMutator;
+}
 export interface ChoiceItem extends Object {
   value: string;
   label: string;

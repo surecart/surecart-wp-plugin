@@ -141,7 +141,7 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 		// confirmation.
 		$this->container['surecart.shortcodes']->registerBlockShortcodeByName(
 			'sc_order_confirmation',
-			'surecart/confirmation',
+			'surecart/order-confirmation',
 		);
 		$this->container['surecart.shortcodes']->registerBlockShortcodeByName(
 			'sc_order_confirmation_line_items',
