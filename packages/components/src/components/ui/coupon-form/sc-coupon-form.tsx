@@ -189,6 +189,7 @@ export class ScCouponForm {
                 if (!this.editable) return;
                 if (e.key === 'Enter' || e.key === 'Escape') {
                   speak(
+                    // translators: %1$s is the coupon code, %2$s is the order total
                     sprintf(
                       __('Coupon code %1$s was removed & now order total is %2$s -  ', 'surecart'),
                       this?.discount?.promotion?.code,
