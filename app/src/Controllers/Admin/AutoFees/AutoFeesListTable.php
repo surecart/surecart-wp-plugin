@@ -105,10 +105,11 @@ class AutoFeesListTable extends ListTable {
 	public function get_columns() {
 		return array_merge(
 			[
-				'name'   => __( 'Name', 'surecart' ),
-				'status' => __( 'Status', 'surecart' ),
-				'type'   => __( 'Type', 'surecart' ),
-				'date'   => __( 'Date', 'surecart' ),
+				'internal_name' => __( 'Name', 'surecart' ),
+				'name'          => __( 'Display Name', 'surecart' ),
+				'status'        => __( 'Status', 'surecart' ),
+				'type'          => __( 'Type', 'surecart' ),
+				'date'          => __( 'Date', 'surecart' ),
 			],
 			parent::get_columns()
 		);
@@ -183,17 +184,28 @@ class AutoFeesListTable extends ListTable {
 	}
 
 	/**
-	 * Handle the status
+	 * Name
 	 *
 	 * @param \SureCart\Models\AutoFees $auto_fees AutoFees model.
 	 *
 	 * @return string
 	 */
 	public function column_name( $auto_fees ) {
+		return $auto_fees->name;
+	}
+
+	/**
+	 * Internal name.
+	 *
+	 * @param \SureCart\Models\AutoFees $auto_fees AutoFees model.
+	 *
+	 * @return string
+	 */
+	public function column_internal_name( $auto_fees ) {
 		ob_start();
 		?>
 		<a href="<?php echo esc_url_raw( \SureCart::getUrl()->edit( 'auto-fee', $auto_fees->id ) ); ?>">
-			<?php echo esc_html( $auto_fees->name ); ?>
+			<?php echo esc_html( $auto_fees->metadata->internal_name ?? '' ); ?>
 		</a>
 		<?php echo wp_kses_post( $this->getRowActions( $auto_fees ) ); ?>
 
