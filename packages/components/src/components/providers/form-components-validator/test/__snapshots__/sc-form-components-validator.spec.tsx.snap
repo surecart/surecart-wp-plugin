@@ -25,9 +25,19 @@ exports[`sc-form-components-validator appends missing tax id input if required 1
   <mock:shadow-root>
     <slot></slot>
   </mock:shadow-root>
-  <sc-order-shipping-address></sc-order-shipping-address>
   <sc-order-tax-id-input></sc-order-tax-id-input>
   <sc-payment></sc-payment>
+</sc-form-components-validator>
+`;
+
+exports[`sc-form-components-validator appends missing trial line item if required 1`] = `
+<sc-form-components-validator>
+  <mock:shadow-root>
+    <slot></slot>
+  </mock:shadow-root>
+  <sc-order-summary>
+    <sc-line-item-total total="subtotal"></sc-line-item-total>
+  </sc-order-summary>
 </sc-form-components-validator>
 `;
 
@@ -44,9 +54,17 @@ exports[`sc-form-components-validator requires the customer name on sc-customer-
   <mock:shadow-root>
     <slot></slot>
   </mock:shadow-root>
-  <sc-order-shipping-address></sc-order-shipping-address>
   <sc-payment></sc-payment>
-  <sc-customer-name></sc-customer-name>
+  <sc-customer-name required="" size="medium">
+    <mock:shadow-root>
+      <sc-input autocomplete="name" help="" name="name" required="" type="text"></sc-input>
+    </mock:shadow-root>
+  </sc-customer-name>
+  <sc-order-shipping-address required="">
+    <mock:shadow-root>
+      <sc-compact-address required=""></sc-compact-address>
+    </mock:shadow-root>
+  </sc-order-shipping-address>
 </sc-form-components-validator>
 `;
 
@@ -55,7 +73,11 @@ exports[`sc-form-components-validator requires the customer name on sc-order-shi
   <mock:shadow-root>
     <slot></slot>
   </mock:shadow-root>
-  <sc-order-shipping-address></sc-order-shipping-address>
   <sc-payment></sc-payment>
+  <sc-order-shipping-address require-name="" required="" show-name="">
+    <mock:shadow-root>
+      <sc-address exportparts="label, help-text, form-control, input__base, select__base, columns, search__base, menu__base" label="Shipping Address" require-name="" required="" show-name=""></sc-address>
+    </mock:shadow-root>
+  </sc-order-shipping-address>
 </sc-form-components-validator>
 `;

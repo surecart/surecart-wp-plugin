@@ -379,6 +379,10 @@ export const normalizeGalleryItem = (item) => {
 			variant_option: null,
 			thumbnail_image: null,
 			aspect_ratio: null,
+			controls: true,
+			autoplay: false,
+			loop: false,
+			muted: false,
 		};
 	}
 
@@ -389,6 +393,10 @@ export const normalizeGalleryItem = (item) => {
 				item.variant_option || item?.meta?.sc_variant_option || null,
 			thumbnail_image: item.thumbnail_image || null,
 			aspect_ratio: item.aspect_ratio || null,
+			controls: item.controls !== false, // default to true
+			autoplay: item.autoplay || false,
+			loop: item.loop || false,
+			muted: item.muted || false,
 		};
 	}
 
@@ -397,6 +405,10 @@ export const normalizeGalleryItem = (item) => {
 		variant_option: null,
 		thumbnail_image: null,
 		aspect_ratio: null,
+		controls: true,
+		autoplay: false,
+		loop: false,
+		muted: false,
 	};
 };
 
@@ -419,11 +431,23 @@ export const getGalleryItemId = (item) => {
  * @returns {number|Object} - Gallery item (returns just ID if no properties, otherwise object)
  */
 export const transformGalleryItem = (id, properties = {}) => {
-	const { variant_option, thumbnail_image, aspect_ratio } = properties;
+	const {
+		variant_option,
+		thumbnail_image,
+		aspect_ratio,
+		controls,
+		autoplay,
+		loop,
+		muted,
+	} = properties;
 	return {
 		id: parseInt(id),
 		...(variant_option ? { variant_option } : {}),
 		...(thumbnail_image ? { thumbnail_image } : {}),
 		...(aspect_ratio ? { aspect_ratio } : {}),
+		...(controls ? { controls } : {}),
+		...(autoplay ? { autoplay } : {}),
+		...(loop ? { loop } : {}),
+		...(muted ? { muted } : {}),
 	};
 };

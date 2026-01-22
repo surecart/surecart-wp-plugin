@@ -44,6 +44,7 @@
 	"textdomain": "surecart",
 	"render": "file:./view.php",
 	"editorScript": "file:./index.js",
+	"viewScript": ["wp-url", "wp-api-fetch"],
 	"viewScriptModule": [
 		"@surecart/checkout",
 		"@surecart/cart",

@@ -1,8 +1,6 @@
 {
   "sc-address": {
     "address": true,
-    "country-fields": true,
-    "default-country-fields": true,
     "disabled": true,
     "label": true,
     "loading": true,
@@ -474,7 +472,6 @@
   "sc-customer-edit": {
     "customer": true,
     "heading": true,
-    "i18n": true,
     "success-url": true,
     "style": true,
     "id": true,
@@ -1329,6 +1326,7 @@
     "gb-vat-label": true,
     "help-text": true,
     "other-label": true,
+    "required": true,
     "show": true,
     "tax-id-types": true,
     "style": true,

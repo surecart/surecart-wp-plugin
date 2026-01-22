@@ -99,4 +99,24 @@ class ThemeService {
 		// Apply the color palette containing the original colors and 2 new colors.
 		add_theme_support( 'editor-color-palette', $new_color_palette );
 	}
+
+	/**
+	 * Should load on demand block assets setting & functionality or not?
+	 *
+	 * @return boolean
+	 */
+	public function shouldLoadOnDemandBlockAssets() {
+		$wp_version     = wp_get_wp_version();
+		$is_block_theme = (bool) wp_is_block_theme();
+
+		if ( empty( $wp_version ) || $is_block_theme ) {
+			return false;
+		}
+
+		if ( version_compare( $wp_version, '6.8', '>' ) ) {
+			return false;
+		}
+
+		return true;
+	}
 }
