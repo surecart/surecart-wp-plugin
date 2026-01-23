@@ -47,20 +47,10 @@ class Block extends BaseBlock {
 		$seen_forms[ $attributes['id'] ] = true;
 
 		global $sc_form_id;
-		$sc_form_id = $attributes['id'];
+		$sc_form_id         = $attributes['id'];
+		$wrapper_attributes = get_block_wrapper_attributes( [ 'class' => $attributes['textalign'] ?? '' ] );
+		$result             = do_blocks( $form->post_content );
 		unset( $seen_forms[ $attributes['id'] ] );
-		ob_start();
-		?>
-		<div 
-			<?php
-			echo wp_kses_data(
-				get_block_wrapper_attributes( [ 'class' => $attributes['textalign'] ?? '' ] )
-			)
-			?>
-		>
-			<?php echo do_blocks( $form->post_content ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-		</div>
-		<?php
-		return ob_get_clean();
+		return '<div ' . $wrapper_attributes . '>' . $result . '</div>';
 	}
 }
