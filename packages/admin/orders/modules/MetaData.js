@@ -31,7 +31,7 @@ export default ({ order, loading }) => {
 	const metadatas = Object.keys(metadata || {}).map((key) => ({
 		key,
 		label: key.charAt(0).toUpperCase() + key.slice(1).replaceAll('_', ' '),
-		value: metadata[key],
+		value: JSON.stringify(metadata[key]),
 	}));
 
 	return (
@@ -75,7 +75,17 @@ export default ({ order, loading }) => {
 							>
 								{label}
 							</ScText>
-							<div>{value}</div>
+							<div
+								css={css`
+									white-space: pre-wrap;
+									word-wrap: break-word;
+									word-break: break-all;
+									overflow-wrap: break-word;
+									overflow-x: auto;
+								`}
+							>
+								{value}
+							</div>
 						</div>
 					))}
 				</div>

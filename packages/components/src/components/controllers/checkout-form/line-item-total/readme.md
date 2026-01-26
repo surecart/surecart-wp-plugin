@@ -18,16 +18,16 @@
 
 ### Depends on
 
-- [sc-divider](../../../ui/divider)
 - [sc-line-item](../../../ui/line-item)
+- [sc-divider](../../../ui/divider)
 - [sc-skeleton](../../../ui/skeleton)
 - [sc-total](../total)
 
 ### Graph
 ```mermaid
 graph TD;
-  sc-line-item-total --> sc-divider
   sc-line-item-total --> sc-line-item
+  sc-line-item-total --> sc-divider
   sc-line-item-total --> sc-skeleton
   sc-line-item-total --> sc-total
   style sc-line-item-total fill:#f9f,stroke:#333,stroke-width:4px
