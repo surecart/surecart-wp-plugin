@@ -67,7 +67,9 @@ const { state, actions } = store('surecart/cart', {
 			// make all children of the document inert exempt .sc-lightbox-overlay
 			inertElements = [];
 			document
-				.querySelectorAll('body > :not(.sc-cart-wrapper)')
+				.querySelectorAll(
+					'body > :not(.sc-cart-wrapper):not(.a11y-speak-region)'
+				)
 				.forEach((el) => {
 					if (!el.hasAttribute('inert')) {
 						el.setAttribute('inert', '');

@@ -2,8 +2,8 @@
  * WordPress dependencies.
  */
 import { store, getContext, getElement } from '@wordpress/interactivity';
-
 const { __, sprintf, _n } = wp.i18n;
+import { speak } from '@surecart/a11y';
 const LOCAL_STORAGE_KEY = 'surecart-local-storage';
 
 /**
@@ -531,7 +531,7 @@ const { state, actions } = store('surecart/checkout', {
 				);
 				state.error = '';
 				actions.setCheckout(checkout, mode, formId);
-
+				actions.announceLatestCheckout();
 				// Move focus back to #sc-coupon-remove-discount button.
 				moveFocusToElement('#sc-coupon-remove-discount');
 			}
@@ -563,7 +563,7 @@ const { state, actions } = store('surecart/checkout', {
 					__('Promotion code has been removed.', 'surecart'),
 					'assertive'
 				);
-
+				actions.announceLatestCheckout();
 				// Move focus back to #sc-coupon-trigger button.
 				moveFocusToElement('#sc-coupon-trigger');
 			}
@@ -682,6 +682,7 @@ const { state, actions } = store('surecart/checkout', {
 				),
 				'assertive'
 			);
+			actions.announceLatestCheckout();
 		},
 
 		/**
@@ -709,6 +710,7 @@ const { state, actions } = store('surecart/checkout', {
 				),
 				'assertive'
 			);
+			actions.announceLatestCheckout();
 		},
 
 		/**
@@ -730,6 +732,7 @@ const { state, actions } = store('surecart/checkout', {
 				),
 				'assertive'
 			);
+			actions.announceLatestCheckout();
 		},
 
 		/**
@@ -796,10 +799,25 @@ const { state, actions } = store('surecart/checkout', {
 				),
 				'assertive'
 			);
+			actions.announceLatestCheckout();
 		},
 		updateCheckout(e) {
 			const { checkout, mode, formId } = e.detail;
 			actions.setCheckout(checkout, mode, formId);
+		},
+		announceLatestCheckout() {
+			setTimeout(() => {
+				speak(
+					sprintf(
+						__(
+							'Checkout updated. The subtotal is %1$s.',
+							'surecart'
+						),
+						state?.checkout?.subtotal_display_amount
+					),
+					'polite'
+				);
+			}, 1000);
 		},
 	},
 });
