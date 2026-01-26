@@ -2297,6 +2297,7 @@
         "sc-subscription-variation-confirm",
         "sc-subscriptions-list",
         "sc-tax-id-input",
+        "sc-test-mode-info",
         "sc-upcoming-invoice",
         "sc-upgrade-required",
         "sc-upsell",
@@ -2444,6 +2445,9 @@
           "sc-button"
         ],
         "sc-tax-id-input": [
+          "sc-button"
+        ],
+        "sc-test-mode-info": [
           "sc-button"
         ],
         "sc-upcoming-invoice": [
@@ -16618,6 +16622,7 @@
         "sc-payment-method",
         "sc-payment-method-details",
         "sc-payment-methods-list",
+        "sc-popover",
         "sc-product-item-list",
         "sc-product-line-item",
         "sc-product-line-item-note",
@@ -16637,6 +16642,7 @@
         "sc-subscription-variation-confirm",
         "sc-subscriptions-list",
         "sc-tax-id-input",
+        "sc-test-mode-info",
         "sc-toggle",
         "sc-upcoming-invoice",
         "sc-upgrade-required",
@@ -16757,6 +16763,9 @@
         "sc-payment-methods-list": [
           "sc-icon"
         ],
+        "sc-popover": [
+          "sc-icon"
+        ],
         "sc-product-item-list": [
           "sc-icon"
         ],
@@ -16812,6 +16821,9 @@
           "sc-icon"
         ],
         "sc-tax-id-input": [
+          "sc-icon"
+        ],
+        "sc-test-mode-info": [
           "sc-icon"
         ],
         "sc-toggle": [
@@ -25787,7 +25799,6 @@
         "sc-payment-selected",
         "sc-checkout-paystack-payment-provider",
         "sc-form-control",
-        "sc-tag",
         "sc-checkout-mollie-payment",
         "sc-alert"
       ],
@@ -25800,7 +25811,6 @@
           "sc-payment-selected",
           "sc-checkout-paystack-payment-provider",
           "sc-form-control",
-          "sc-tag",
           "sc-checkout-mollie-payment",
           "sc-alert"
         ],
@@ -28093,6 +28103,268 @@
         ],
         "sc-product-pills-variant-option": [
           "sc-pill-option"
+        ]
+      }
+    },
+    {
+      "filePath": "src/components/ui/popover/sc-popover.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-popover",
+      "readme": "# sc-popover\n\n\n",
+      "docs": "",
+      "docsTags": [
+        {
+          "name": "part",
+          "text": "base - The elements base wrapper."
+        },
+        {
+          "name": "part",
+          "text": "trigger - The trigger."
+        },
+        {
+          "name": "part",
+          "text": "panel - The panel."
+        }
+      ],
+      "usage": {},
+      "props": [
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "complexType": {
+            "original": "boolean",
+            "resolved": "boolean",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "disabled",
+          "reflectToAttr": false,
+          "docs": "Is this disabled.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "distance",
+          "type": "number",
+          "complexType": {
+            "original": "number",
+            "resolved": "number",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "distance",
+          "reflectToAttr": false,
+          "docs": "The distance in pixels from which to offset the panel away from its trigger.",
+          "docsTags": [],
+          "default": "0",
+          "values": [
+            {
+              "type": "number"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "hoist",
+          "type": "boolean",
+          "complexType": {
+            "original": "boolean",
+            "resolved": "boolean",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "hoist",
+          "reflectToAttr": false,
+          "docs": "Enable this option to prevent the panel from being clipped when the component is placed inside a container with\n`overflow: auto|scroll`.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "open",
+          "type": "boolean",
+          "complexType": {
+            "original": "boolean",
+            "resolved": "boolean",
+            "references": {}
+          },
+          "mutable": true,
+          "attr": "open",
+          "reflectToAttr": true,
+          "docs": "Indicates whether or not the popover is open. You can use this in lieu of the show/hide methods.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": true,
+          "required": false
+        },
+        {
+          "name": "placement",
+          "type": "\"bottom\" | \"bottom-end\" | \"bottom-start\" | \"left\" | \"left-end\" | \"left-start\" | \"right\" | \"right-end\" | \"right-start\" | \"top\" | \"top-end\" | \"top-start\"",
+          "complexType": {
+            "original": "| 'top'\n    | 'top-start'\n    | 'top-end'\n    | 'bottom'\n    | 'bottom-start'\n    | 'bottom-end'\n    | 'right'\n    | 'right-start'\n    | 'right-end'\n    | 'left'\n    | 'left-start'\n    | 'left-end'",
+            "resolved": "\"bottom\" | \"bottom-end\" | \"bottom-start\" | \"left\" | \"left-end\" | \"left-start\" | \"right\" | \"right-end\" | \"right-start\" | \"top\" | \"top-end\" | \"top-start\"",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "placement",
+          "reflectToAttr": true,
+          "docs": "The placement of the popover.",
+          "docsTags": [],
+          "default": "'bottom-start'",
+          "values": [
+            {
+              "value": "bottom",
+              "type": "string"
+            },
+            {
+              "value": "bottom-end",
+              "type": "string"
+            },
+            {
+              "value": "bottom-start",
+              "type": "string"
+            },
+            {
+              "value": "left",
+              "type": "string"
+            },
+            {
+              "value": "left-end",
+              "type": "string"
+            },
+            {
+              "value": "left-start",
+              "type": "string"
+            },
+            {
+              "value": "right",
+              "type": "string"
+            },
+            {
+              "value": "right-end",
+              "type": "string"
+            },
+            {
+              "value": "right-start",
+              "type": "string"
+            },
+            {
+              "value": "top",
+              "type": "string"
+            },
+            {
+              "value": "top-end",
+              "type": "string"
+            },
+            {
+              "value": "top-start",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "skidding",
+          "type": "number",
+          "complexType": {
+            "original": "number",
+            "resolved": "number",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "skidding",
+          "reflectToAttr": false,
+          "docs": "The distance in pixels from which to offset the panel along its trigger.",
+          "docsTags": [],
+          "default": "0",
+          "values": [
+            {
+              "type": "number"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [
+        {
+          "event": "scHide",
+          "detail": "void",
+          "bubbles": true,
+          "complexType": {
+            "original": "void",
+            "resolved": "void",
+            "references": {}
+          },
+          "cancelable": true,
+          "composed": true,
+          "docs": "Emitted when the popover closes. Calling `event.preventDefault()` will prevent it from being closed.",
+          "docsTags": []
+        },
+        {
+          "event": "scShow",
+          "detail": "void",
+          "bubbles": true,
+          "complexType": {
+            "original": "void",
+            "resolved": "void",
+            "references": {}
+          },
+          "cancelable": true,
+          "composed": true,
+          "docs": "Emitted when the popover opens. Calling `event.preventDefault()` will prevent it from being opened.",
+          "docsTags": []
+        }
+      ],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [
+        {
+          "name": "base",
+          "docs": "The elements base wrapper."
+        },
+        {
+          "name": "panel",
+          "docs": "The panel."
+        },
+        {
+          "name": "trigger",
+          "docs": "The trigger."
+        }
+      ],
+      "dependents": [
+        "sc-test-mode-info"
+      ],
+      "dependencies": [
+        "sc-icon"
+      ],
+      "dependencyGraph": {
+        "sc-popover": [
+          "sc-icon"
+        ],
+        "sc-test-mode-info": [
+          "sc-popover"
         ]
       }
     },
@@ -41221,6 +41493,14 @@
         {
           "name": "content",
           "docs": ""
+        },
+        {
+          "name": "prefix",
+          "docs": ""
+        },
+        {
+          "name": "suffix",
+          "docs": ""
         }
       ],
       "dependents": [
@@ -41243,7 +41523,6 @@
         "sc-order-shipment-badge",
         "sc-order-status-badge",
         "sc-orders-list",
-        "sc-payment",
         "sc-payment-method",
         "sc-payment-methods-list",
         "sc-premium-tag",
@@ -41311,9 +41590,6 @@
           "sc-tag"
         ],
         "sc-orders-list": [
-          "sc-tag"
-        ],
-        "sc-payment": [
           "sc-tag"
         ],
         "sc-payment-method": [
@@ -41796,6 +42072,67 @@
         ],
         "sc-order-tax-id-input": [
           "sc-tax-id-input"
+        ]
+      }
+    },
+    {
+      "filePath": "src/components/ui/test-mode-info/sc-test-mode-info.tsx",
+      "encapsulation": "none",
+      "tag": "sc-test-mode-info",
+      "readme": "# sc-test-mode-info\n\n\n",
+      "docs": "",
+      "docsTags": [
+        {
+          "name": "part",
+          "text": "base - The elements base wrapper."
+        },
+        {
+          "name": "part",
+          "text": "trigger - The trigger."
+        },
+        {
+          "name": "part",
+          "text": "panel - The panel."
+        }
+      ],
+      "usage": {},
+      "props": [],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [
+        {
+          "name": "base",
+          "docs": "The elements base wrapper."
+        },
+        {
+          "name": "panel",
+          "docs": "The panel."
+        },
+        {
+          "name": "trigger",
+          "docs": "The trigger."
+        }
+      ],
+      "dependents": [],
+      "dependencies": [
+        "sc-popover",
+        "sc-button",
+        "sc-icon"
+      ],
+      "dependencyGraph": {
+        "sc-test-mode-info": [
+          "sc-popover",
+          "sc-button",
+          "sc-icon"
+        ],
+        "sc-popover": [
+          "sc-icon"
+        ],
+        "sc-button": [
+          "sc-spinner"
         ]
       }
     },
