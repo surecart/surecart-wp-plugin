@@ -37,7 +37,8 @@
 
 	&.open {
 		opacity: 1;
-		display: block;
+		display: flex;
+		flex-direction: column;
 		animation: slide-in
 			var(--sc-drawer-transition-speed, var(--sc-transition-medium))
 			cubic-bezier(0.4, 0, 0.2, 1);
