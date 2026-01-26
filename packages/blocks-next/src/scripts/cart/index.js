@@ -7,8 +7,17 @@ const { state: checkoutState, actions: checkoutActions } =
 	store('surecart/checkout');
 const { __ } = wp.i18n;
 
+/**
+ * Holds all elements that are made inert when the lightbox is open; used to
+ * remove inert attribute of only those elements explicitly made inert.
+ *
+ * @type {Array}
+ */
+let inertElements = [];
+
 const { state, actions } = store('surecart/cart', {
 	state: {
+		open: false,
 		/**
 		 * The cart dialog label.
 		 */
@@ -27,14 +36,9 @@ const { state, actions } = store('surecart/cart', {
 				const { ref } = getElement();
 
 				dialog =
-					ref.parentElement.querySelector('dialog') || // Sibling dialog.
-					ref.closest('dialog') || // Parent dialog.
+					ref.parentElement.querySelector('.sc-cart-drawer') || // Sibling .sc-cart-drawer.
+					ref.closest('.sc-cart-drawer') || // Parent .sc-cart-drawer.
 					null;
-			}
-
-			// No dialog is found.
-			if (dialog instanceof HTMLDialogElement === false) {
-				return;
 			}
 
 			return dialog;
@@ -46,7 +50,8 @@ const { state, actions } = store('surecart/cart', {
 		 * Open the cart dialog.
 		 */
 		open() {
-			state.dialog?.showModal();
+			state.open = true;
+
 			// speak the cart dialog state.
 			state.label = __('Cart opened.', 'surecart');
 
@@ -58,6 +63,17 @@ const { state, actions } = store('surecart/cart', {
 
 			// close the quick view dialog if it is open.
 			quickViewActions?.close?.();
+
+			// make all children of the document inert exempt .sc-lightbox-overlay
+			inertElements = [];
+			document
+				.querySelectorAll('body > :not(.sc-cart-wrapper)')
+				.forEach((el) => {
+					if (!el.hasAttribute('inert')) {
+						el.setAttribute('inert', '');
+						inertElements.push(el);
+					}
+				});
 		},
 
 		processCartViewEvent: function* (checkout) {
@@ -72,8 +88,14 @@ const { state, actions } = store('surecart/cart', {
 		 * Close the cart dialog.
 		 */
 		close: () => {
-			state.dialog?.close();
+			state.open = false;
+
 			state.label = __('Cart closed.', 'surecart');
+
+			// remove inert attribute from all elements that were made inert.
+			inertElements.forEach((el) => {
+				el.removeAttribute('inert');
+			});
 		},
 
 		/**
@@ -89,16 +111,27 @@ const { state, actions } = store('surecart/cart', {
 			e?.preventDefault();
 
 			// If the dialog is open, close it. Otherwise, open it.
-			state?.dialog?.open ? actions.close() : actions.open();
+			state?.open ? actions.close() : actions.open();
 		},
 
 		/**
 		 * Close the dialog if the target is the dialog.
 		 */
 		closeOverlay: (e) => {
-			// If the target is the dialog, close it.
 			if (e.target === e.currentTarget) {
-				e.currentTarget.close();
+				actions.close();
+			}
+		},
+
+		/**
+		 * Handle keydown events.
+		 */
+		handleKeydown(event) {
+			if (state.open) {
+				// Closes the lightbox when the user presses the escape key.
+				if (event.key === 'Escape') {
+					actions.close();
+				}
 			}
 		},
 	},
