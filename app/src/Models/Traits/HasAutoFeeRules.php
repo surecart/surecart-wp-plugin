@@ -51,7 +51,8 @@ trait HasAutoFeeRules {
 			return (object) [];
 		}
 
-		$attribute_name = 'line_item' === $this->attributes['fee_target'] ? 'checkout.metadata' : 'metadata';
+		$fee_target     = $this->attributes['fee_target'] ?? 'line_item';
+		$attribute_name = 'line_item' === $fee_target ? 'checkout.metadata' : 'metadata';
 
 		foreach ( $rule_array as $key => &$value ) {
 			if ( is_array( $value ) ) {
