@@ -11426,7 +11426,7 @@ msgid "Customer updated."
 msgstr ""
 
 #: customers/EditCustomer.js:84
-msgid "Warning: Deleting \"%s\" will permanently remove all associated subscriptions, payments and purchases within a day. This action cannot be undone. Are you sure you want to continue?"
+msgid "Warning: Deleting \"%s\" will permanently remove all associated subscriptions, payments, and purchases within a day. This action cannot be undone. Are you sure you want to continue?"
 msgstr ""
 
 #: customers/EditCustomer.js:90
