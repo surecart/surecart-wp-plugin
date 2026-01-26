@@ -71,7 +71,7 @@ class AutoFeesListTable extends ListTable {
 			$current_link_attributes = '';
 
 			if ( ! empty( $_GET['status'] ) ) {
-				if ( $status === $_GET['status'] ) {
+				if ( $status === sanitize_text_field( wp_unslash( $_GET['status'] ) ) ) {
 					$current_link_attributes = ' class="current" aria-current="page"';
 				}
 			} elseif ( 'all' === $status ) {
