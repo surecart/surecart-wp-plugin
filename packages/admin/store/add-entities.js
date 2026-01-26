@@ -295,6 +295,7 @@ dispatch(coreStore).addEntities([
 		label: __('Promotion', 'surecart'),
 		baseURL: '/surecart/v1/promotions',
 		baseURLParams: { context: 'edit' },
+		supportsPagination: true,
 	},
 	{
 		name: 'purchase',
