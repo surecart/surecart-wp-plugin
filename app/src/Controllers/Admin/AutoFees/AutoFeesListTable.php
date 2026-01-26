@@ -262,10 +262,10 @@ class AutoFeesListTable extends ListTable {
 			esc_html( $target_label )
 		);
 
-		// Build the translated sentence.
+		// Build the translated sentence with flex container for vertical alignment.
 		return sprintf(
 			/* translators: %1$s: Fee or Discount tag HTML, %2$s: Target tag HTML (e.g., Checkout, Line Item, Shipping) */
-			__( 'Apply a %1$s to %2$s', 'surecart' ),
+			'<sc-flex align-items="center" justify-content="flex-start" style="--sc-flex-column-gap: 0.35em; flex-wrap: wrap;">' . __( 'Apply a %1$s to %2$s', 'surecart' ) . '</sc-flex>',
 			$type_tag,
 			$target_tag
 		);
