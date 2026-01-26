@@ -36,6 +36,17 @@ class CheckoutsController extends RestController {
 			return apply_filters( 'surecart/request/model', $class, $request );
 		}
 
+		$request->set_param(
+			'metadata',
+			array_merge(
+				$request->get_param( 'metadata' ) ?? [],
+				[
+					// this must always be set to ensure the user cannot override the user role.
+					'wp_user_role' => is_user_logged_in() ? wp_get_current_user()->roles : null,
+				]
+			)
+		);
+
 		// set the user.
 		$class = $this->maybeSetUser( $class, $request );
 

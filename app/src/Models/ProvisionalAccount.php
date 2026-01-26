@@ -86,13 +86,16 @@ class ProvisionalAccount extends Model {
 			return $created;
 		}
 
-		// bulkd product createion action.
+		// bulk product creation action.
 		if ( isset( $attributes['products'] ) ) {
 			$seed = $this->seed( $attributes['products'] );
 			if ( is_wp_error( $seed ) ) {
 				return $seed;
 			}
 		}
+
+		// clear account cache.
+		\SureCart::account()->clearCache();
 
 		// create the products.
 		return $created;

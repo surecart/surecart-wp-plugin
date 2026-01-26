@@ -1320,6 +1320,7 @@
     "gb-vat-label": true,
     "help-text": true,
     "other-label": true,
+    "required": true,
     "show": true,
     "tax-id-types": true,
     "style": true,
