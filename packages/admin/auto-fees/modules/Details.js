@@ -78,7 +78,7 @@ const Details = ({ autoFee, onUpdate, loading }) => {
 		},
 		[onUpdate]
 	);
-	console.log(autoFee);
+
 	return (
 		<Box title={__('Details', 'surecart')} loading={loading}>
 			<ScInput
