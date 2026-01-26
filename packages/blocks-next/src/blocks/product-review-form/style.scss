@@ -7,7 +7,7 @@
 		bottom: var(--sc-quick-add-inset, 30px);
 		right: var(--sc-quick-add-inset, 30px);
 		opacity: 0;
-		z-index: 10000;
+		z-index: 99999;
 		box-sizing: border-box;
 		max-height: 90vh;
 		border: none;
