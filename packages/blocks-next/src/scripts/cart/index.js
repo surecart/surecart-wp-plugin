@@ -52,6 +52,13 @@ const { state, actions } = store('surecart/cart', {
 		open() {
 			state.open = true;
 
+			// focus the close button.
+			requestAnimationFrame(() => {
+				state.dialog
+					?.querySelector('.wp-block-surecart-cart-close-button')
+					?.focus();
+			});
+
 			// speak the cart dialog state.
 			state.label = __('Cart opened.', 'surecart');
 
@@ -68,7 +75,7 @@ const { state, actions } = store('surecart/cart', {
 			inertElements = [];
 			document
 				.querySelectorAll(
-					'body > :not(.sc-cart-wrapper):not(.a11y-speak-region)'
+					'body > :not(.sc-cart-wrapper):not(.a11y-speak-region):not(:has(.a11y-speak-region))'
 				)
 				.forEach((el) => {
 					if (!el.hasAttribute('inert')) {
