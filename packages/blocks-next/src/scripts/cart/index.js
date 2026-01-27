@@ -64,7 +64,7 @@ const { state, actions } = store('surecart/cart', {
 			// close the quick view dialog if it is open.
 			quickViewActions?.close?.();
 
-			// make all children of the document inert exempt .sc-lightbox-overlay
+			// make all children of the document inert exempt .sc-cart-wrapper
 			inertElements = [];
 			document
 				.querySelectorAll(

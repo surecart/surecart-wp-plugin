@@ -4,8 +4,17 @@
 import { store, getElement } from '@wordpress/interactivity';
 const { __ } = wp.i18n;
 
+/**
+ * Holds all elements that are made inert when the lightbox is open; used to
+ * remove inert attribute of only those elements explicitly made inert.
+ *
+ * @type {Array}
+ */
+let inertElements = [];
+
 const { state, actions } = store('surecart/sidebar', {
 	state: {
+		mobileOpen: false,
 		/**
 		 * The sidebar dialog element.
 		 * This gets cached so we can call this many times without querying the DOM.
@@ -17,14 +26,9 @@ const { state, actions } = store('surecart/sidebar', {
 				const { ref } = getElement();
 
 				dialog =
-					ref.parentElement.querySelector('dialog') || // Sibling dialog.
-					ref.closest('dialog') || // Parent dialog.
+					ref.parentElement.querySelector('.sc-sidebar-drawer') || // Sibling sc-sidebar-drawer.
+					ref.closest('.sc-sidebar-drawer') || // Parent sc-sidebar-drawer.
 					null;
-			}
-
-			// No dialog is found.
-			if (dialog instanceof HTMLDialogElement === false) {
-				return;
 			}
 
 			return dialog;
@@ -42,7 +46,11 @@ const { state, actions } = store('surecart/sidebar', {
 		 * Open the sidebar dialog.
 		 */
 		open: function* () {
-			state.dialog?.showModal();
+			state.mobileOpen = true;
+			// also do not add inert for the parent of the current element
+			actions.inertEverythingExcept(
+				document.querySelector('.sc-sidebar-drawer')
+			);
 			state.ariaLabelMobile = __('Close sidebar', 'surecart');
 		},
 
@@ -50,7 +58,12 @@ const { state, actions } = store('surecart/sidebar', {
 		 * Close the sidebar dialog.
 		 */
 		close: () => {
-			state.dialog?.close();
+			state.mobileOpen = false;
+			// remove inert attribute from all elements that were made inert
+			inertElements.forEach((el) => {
+				el.removeAttribute('inert');
+			});
+			inertElements = [];
 			state.ariaLabelMobile = __('Open sidebar', 'surecart');
 		},
 
@@ -96,7 +109,7 @@ const { state, actions } = store('surecart/sidebar', {
 			// Prevent default behavior.
 			e?.preventDefault();
 
-			state?.dialog?.open ? actions.close() : actions.open();
+			state?.mobileOpen ? actions.close() : actions.open();
 		},
 
 		/**
@@ -105,7 +118,30 @@ const { state, actions } = store('surecart/sidebar', {
 		closeOverlay: (e) => {
 			// If the target is the dialog, close it.
 			if (e.target === e.currentTarget) {
-				e.currentTarget.close();
+				actions.close();
+			}
+		},
+		/**
+		 * Make all children of the document inert exempt the current element.
+		 */
+		inertEverythingExcept: (element) => {
+			let current = element;
+
+			while (current && current !== document?.body) {
+				const parent = current?.parentElement;
+				if (!parent) break;
+
+				Array.from(parent?.children)?.forEach((sibling) => {
+					if (
+						sibling !== current &&
+						!sibling?.hasAttribute('inert')
+					) {
+						sibling?.setAttribute('inert', '');
+						inertElements?.push(sibling);
+					}
+				});
+
+				current = parent;
 			}
 		},
 	},

@@ -14,12 +14,13 @@
 	<?php echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 </div>
 
-<dialog
+<div
 	class="sc-drawer sc-sidebar-drawer wp-block-surecart-product-list-sidebar"
 	data-wp-interactive='{ "namespace": "surecart/sidebar" }'
 	aria-label="<?php echo esc_attr( $attributes['label'] ); ?>"
-	data-wp-on--click='actions.closeOverlay'
 	data-wp-on-window--resize="actions.close"
+	data-wp-class--open="surecart/sidebar::state.mobileOpen"
+	data-wp-on--keydown="surecart/sidebar::actions.handleKeydown"
 >
 	<div
 		<?php
@@ -67,8 +68,4 @@
 		</div>
 	</div>
 	<div class="sc-block-ui" data-wp-interactive='{ "namespace": "surecart/product-list" }' data-wp-bind--hidden="!state.loading" hidden aria-busy="true" aria-label="<?php esc_attr_e( 'Loading filters', 'surecart' ); ?>"></div>
-	<!-- speak element -->
-	<p id="a11y-speak-intro-text" class="a11y-speak-intro-text" style="position: absolute;margin: -1px;padding: 0;height: 1px;width: 1px;overflow: hidden;clip: rect(1px, 1px, 1px, 1px);-webkit-clip-path: inset(50%);clip-path: inset(50%);border: 0;word-wrap: normal !important;"></p>
-	<div id="a11y-speak-assertive" class="a11y-speak-region" style="position: absolute;margin: -1px;padding: 0;height: 1px;width: 1px;overflow: hidden;clip: rect(1px, 1px, 1px, 1px);-webkit-clip-path: inset(50%);clip-path: inset(50%);border: 0;word-wrap: normal !important;" aria-live="assertive" aria-relevant="additions text" aria-atomic="true">&nbsp;</div>
-	<div id="a11y-speak-polite" class="a11y-speak-region" style="position: absolute;margin: -1px;padding: 0;height: 1px;width: 1px;overflow: hidden;clip: rect(1px, 1px, 1px, 1px);-webkit-clip-path: inset(50%);clip-path: inset(50%);border: 0;word-wrap: normal !important;" aria-live="polite" aria-relevant="additions text" aria-atomic="true"></div>
-</dialog>
+</div>
