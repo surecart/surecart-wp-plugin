@@ -8,8 +8,10 @@ import {
 	ScFormControl,
 	ScInput,
 	ScDivider,
+	ScButton,
 } from '@surecart/components-react';
-import { useState } from '@wordpress/element';
+import { Modal } from '@wordpress/components';
+import { useState, useEffect, useRef } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 import Error from '../../components/Error';
@@ -20,8 +22,10 @@ import useSave from '../UseSave';
 
 export default () => {
 	const [error, setError] = useState(null);
+	const [showConfirmModal, setShowConfirmModal] = useState(false);
+	const [pendingSave, setPendingSave] = useState(false);
 	const { save } = useSave();
-	const { item, itemError, editItem, hasLoadedItem } = useEntity(
+	const { item, itemError, editItem, hasLoadedItem, edits } = useEntity(
 		'store',
 		'subscription_protocol'
 	);
@@ -33,19 +37,82 @@ export default () => {
 		hasLoadedItem: portalHasLoadedItem,
 	} = useEntity('store', 'customer_portal_protocol');
 
+	// Track original reminder values
+	const originalReminders = useRef(null);
+
+	// Store original values when item first loads
+	useEffect(() => {
+		if (hasLoadedItem && item && !originalReminders.current) {
+			originalReminders.current = {
+				remind_after_days: item.remind_after_days,
+				remind_at_period_percent_remaining: item.remind_at_period_percent_remaining,
+			};
+		}
+	}, [hasLoadedItem, item]);
+
+	/**
+	 * Check if reminder settings have changed.
+	 */
+	const hasReminderChanges = () => {
+		if (!originalReminders.current || !edits) {
+			return false;
+		}
+
+		const hasRemindAfterDaysChange =
+			edits.remind_after_days !== undefined &&
+			edits.remind_after_days !== originalReminders.current.remind_after_days;
+
+		const hasRemindAtPercentChange =
+			edits.remind_at_period_percent_remaining !== undefined &&
+			edits.remind_at_period_percent_remaining !== originalReminders.current.remind_at_period_percent_remaining;
+
+		return hasRemindAfterDaysChange || hasRemindAtPercentChange;
+	};
+
+	/**
+	 * Perform the actual save operation.
+	 */
+	const performSave = async (rescheduleReminders = false) => {
+		setError(null);
+		try {
+			// If we need to reschedule reminders, add the flag to the edits
+			if (rescheduleReminders && hasReminderChanges()) {
+				editItem({ reschedule_existing_reminders: true });
+			}
+
+			await save({
+				successMessage: __('Settings Updated.', 'surecart'),
+			});
+
+			// Update original values after successful save
+			if (item) {
+				originalReminders.current = {
+					remind_after_days: item.remind_after_days,
+					remind_at_period_percent_remaining: item.remind_at_period_percent_remaining,
+				};
+			}
+		} catch (e) {
+			console.error(e);
+			setError(e);
+		} finally {
+			setPendingSave(false);
+			setShowConfirmModal(false);
+		}
+	};
+
 	/**
 	 * Form is submitted.
 	 */
 	const onSubmit = async () => {
-		setError(null);
-		try {
-			await save({
-				successMessage: __('Settings Updated.', 'surecart'),
-			});
-		} catch (e) {
-			console.error(e);
-			setError(e);
+		// Check if reminder settings changed
+		if (hasReminderChanges()) {
+			setShowConfirmModal(true);
+			setPendingSave(true);
+			return;
 		}
+
+		// No reminder changes, proceed with normal save
+		await performSave(false);
 	};
 
 	const choices = [
@@ -500,6 +567,52 @@ export default () => {
 					</span>
 				</ScSwitch>
 			</SettingsBox>
+
+			{showConfirmModal && (
+				<Modal
+					title={__('Reschedule Existing Reminders?', 'surecart')}
+					onRequestClose={() => {
+						setShowConfirmModal(false);
+						setPendingSave(false);
+					}}
+					shouldCloseOnClickOutside={false}
+				>
+					<p>
+						{__(
+							'You have changed the reminder settings. Would you like to reschedule existing subscription reminders based on the new settings?',
+							'surecart'
+						)}
+					</p>
+					<p style={{ color: 'var(--sc-color-gray-500)', fontSize: '0.9em' }}>
+						{__(
+							'Note: Reminders scheduled within 2 hours will not be rescheduled.',
+							'surecart'
+						)}
+					</p>
+					<div
+						css={css`
+							display: flex;
+							gap: var(--sc-spacing-small);
+							margin-top: var(--sc-spacing-large);
+						`}
+					>
+						<ScButton
+							type="primary"
+							loading={pendingSave}
+							onClick={() => performSave(true)}
+						>
+							{__('Yes, Reschedule Reminders', 'surecart')}
+						</ScButton>
+						<ScButton
+							type="default"
+							disabled={pendingSave}
+							onClick={() => performSave(false)}
+						>
+							{__('No, Keep Existing Reminders', 'surecart')}
+						</ScButton>
+					</div>
+				</Modal>
+			)}
 		</SettingsTemplate>
 	);
 };
