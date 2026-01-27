@@ -28,6 +28,8 @@ import {
 	supportedValuesLabels,
 } from '../utils/constants';
 
+const SEARCH_RESULT_LIMIT = 8;
+
 export default ({
 	addLeaf,
 	removeLeaf,
@@ -136,6 +138,7 @@ export default ({
 					label: supportedValuesLabels?.[val] || formatLabel(val),
 					value: val,
 				}))}
+        search={(attributeSupportedValues ?? []).length > SEARCH_RESULT_LIMIT}
 				required
 			/>
 		);
@@ -249,6 +252,9 @@ export default ({
 			case 'user_role':
 				return (
 					<ScSelect
+						search={userRoleChoices.length > SEARCH_RESULT_LIMIT}
+						searchPlaceholder={__('Search for a user role', 'surecart')}
+            searchPlaceholderValue={__('Search for a user role...', 'surecart')}
 						value={value}
 						onScChange={(e) => {
 							setValue(e.target.value);
@@ -296,6 +302,7 @@ export default ({
 				`}
 			>
 				<ScSelect
+					search={attributes.length > SEARCH_RESULT_LIMIT}
 					placeholder={__('Select an attribute', 'surecart')}
 					unselect={false}
 					value={attribute}
@@ -320,6 +327,7 @@ export default ({
 					/>
 				)}
 				<ScSelect
+					search={operators[attribute]?.length > SEARCH_RESULT_LIMIT}
 					placeholder={__('Select a condition', 'surecart')}
 					unselect={false}
 					value={operator}
