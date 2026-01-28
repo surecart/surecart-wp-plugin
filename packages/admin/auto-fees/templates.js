@@ -12,7 +12,6 @@ const TEMPLATES = {
 			'surecart'
 		),
 		icon: 'file',
-		applies_while: 'both',
 	},
 	bogo: {
 		enabled: false,
