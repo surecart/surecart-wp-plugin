@@ -138,13 +138,21 @@ export default ({ id, onCreateAutoFee }) => {
 			const templateRule =
 				TEMPLATES?.[currentTemplate]?.rules?.conditions?.[0]
 					?.conditions?.[0];
+
+			// Build conditions array - only include rules if there are actual conditions.
+			const innerConditions = [
+				appliesRule && { ...appliesRule },
+				templateRule && { ...templateRule },
+			].filter(Boolean);
+
 			const createdAutoFee = await saveEntityRecord(
 				'surecart',
 				'auto-fee',
 				{
 					...TEMPLATES?.[currentTemplate],
 					...(appliesWhile &&
-						autoFeeTarget && {
+						autoFeeTarget &&
+						innerConditions.length > 0 && {
 							rules: {
 								type: 'group',
 								combinator: 'or',
@@ -152,10 +160,7 @@ export default ({ id, onCreateAutoFee }) => {
 									{
 										type: 'group',
 										combinator: 'and',
-										conditions: [
-											appliesRule && { ...appliesRule },
-											templateRule && { ...templateRule },
-										].filter(Boolean),
+										conditions: innerConditions,
 									},
 								],
 							},
