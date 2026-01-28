@@ -168,4 +168,31 @@ export const TYPE_CHOICES = [
 	},
 ];
 
+export const APPLIES_WHILE_CHOICES = [
+	{
+		label: __('Initial Checkout', 'surecart'),
+		value: 'initial',
+		description: __(
+			'Apply this dynamic price to the initial checkout only.',
+			'surecart'
+		),
+	},
+	{
+		label: __('Renewals/Upgrades/Downgrades', 'surecart'),
+		value: 'renewal',
+		description: __(
+			'Apply this dynamic price to the renewals, upgrades, and downgrades only.',
+			'surecart'
+		),
+	},
+	{
+		label: __('Both	', 'surecart'),
+		value: 'both',
+		description: __(
+			'Apply this dynamic price to both the initial checkout and renewals, upgrades, and downgrades.',
+			'surecart'
+		),
+	},
+];
+
 export const STRING_OPERATORS = ['contains', 'start_with', 'end_with'];

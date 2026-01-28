@@ -12,11 +12,14 @@ import {
 	ScChoices,
 	ScInput,
 	ScIcon,
+	ScRadioGroup,
+	ScRadio,
 } from '@surecart/components-react';
 import CreateTemplate from '../templates/CreateModel';
 import Box from '../ui/Box';
 import { TEMPLATES, TEMPLATE_CHOICES } from './templates';
-import { TYPE_CHOICES } from './utils/constants';
+import { TYPE_CHOICES, APPLIES_WHILE_CHOICES } from './utils/constants';
+import { getAppliesWhileRule } from './utils/helper';
 import Error from '../components/Error';
 
 export default ({ id, onCreateAutoFee }) => {
@@ -25,6 +28,7 @@ export default ({ id, onCreateAutoFee }) => {
 	const [autoFeeName, setAutoFeeName] = useState('');
 	const [autoFeeTarget, setAutoFeeTarget] = useState('');
 	const [currentTemplate, setCurrentTemplate] = useState('');
+	const [appliesWhile, setAppliesWhile] = useState('');
 	const [error, setError] = useState('');
 	const { saveEntityRecord } = useDispatch(coreStore);
 	const nameInputRef = useRef(null);
@@ -44,6 +48,11 @@ export default ({ id, onCreateAutoFee }) => {
 			TEMPLATE_CHOICES?.find((t) => t.value === currentTemplate)
 				?.fee_target || '';
 		setAutoFeeTarget(feeTarget);
+
+		const appliesWhile =
+			TEMPLATE_CHOICES?.find((t) => t.value === currentTemplate)
+				?.applies_while || '';
+		setAppliesWhile(appliesWhile);
 	}, [currentTemplate]);
 
 	// set the auto-fee name from template label when template changes (except start_blank).
@@ -73,11 +82,36 @@ export default ({ id, onCreateAutoFee }) => {
 		e.preventDefault();
 		try {
 			setIsSaving(true);
+
+			const appliesRule = getAppliesWhileRule(
+				appliesWhile,
+				autoFeeTarget
+			);
+			const templateRule =
+				TEMPLATES?.[currentTemplate]?.rules?.conditions?.[0]
+					?.conditions?.[0];
 			const createdAutoFee = await saveEntityRecord(
 				'surecart',
 				'auto-fee',
 				{
 					...TEMPLATES?.[currentTemplate],
+					...(appliesWhile &&
+						autoFeeTarget && {
+							rules: {
+								type: 'group',
+								combinator: 'or',
+								conditions: [
+									{
+										type: 'group',
+										combinator: 'and',
+										conditions: [
+											appliesRule && { ...appliesRule },
+											templateRule && { ...templateRule },
+										].filter(Boolean),
+									},
+								],
+							},
+						}),
 					...(autoFeeTarget && { fee_target: autoFeeTarget }),
 					name: autoFeeDisplayName,
 					start_at: Math.floor(Date.now() / 1000),
@@ -258,7 +292,6 @@ export default ({ id, onCreateAutoFee }) => {
 							style={{ position: 'sticky', bottom: 0 }}
 						></div>
 					</div>
-
 					<ScChoices
 						onScChange={(e) => setAutoFeeTarget(e.target.value)}
 						style={{
@@ -282,7 +315,10 @@ export default ({ id, onCreateAutoFee }) => {
 							>
 								<label htmlFor="choices-2">
 									{__('Applies To', 'surecart')}
-									<span aria-hidden="true" class="required">
+									<span
+										aria-hidden="true"
+										className="required"
+									>
 										{' '}
 										*
 									</span>
@@ -376,6 +412,71 @@ export default ({ id, onCreateAutoFee }) => {
 							</div>
 						</div>
 					</ScChoices>
+
+					<div
+						style={{
+							display: 'flex',
+							width: '100%',
+							justifyContent: 'space-between',
+							flexWrap: 'nowrap',
+						}}
+					>
+						<div
+							style={{
+								display: 'flex',
+								flexDirection: 'column',
+							}}
+						>
+							<label htmlFor="choices-2">
+								{__('When to Apply?', 'surecart')}
+								<span aria-hidden="true" className="required">
+									{' '}
+									*
+								</span>
+							</label>
+							<span
+								style={{
+									color: '#6b7280',
+									fontSize: '12px',
+								}}
+							>
+								{__(
+									'Choose when the fee should be applied',
+									'surecart'
+								)}
+							</span>
+						</div>
+						<div
+							style={{
+								display: 'flex',
+								justifyContent: 'flex-end',
+								gap: '8px',
+								width: '52%',
+							}}
+						>
+							<ScRadioGroup>
+								{(APPLIES_WHILE_CHOICES || []).map(
+									({ value, label, description }) => {
+										return (
+											<ScRadio
+												checked={appliesWhile === value}
+												value={value}
+												onClick={() =>
+													setAppliesWhile(value)
+												}
+												key={value}
+											>
+												{label}
+												<span slot="description">
+													{description}
+												</span>
+											</ScRadio>
+										);
+									}
+								)}
+							</ScRadioGroup>
+						</div>
+					</div>
 				</Box>
 			</ScForm>
 		</CreateTemplate>
