@@ -142,7 +142,7 @@ export default ({ autoFee = {}, onUpdate, loading }) => {
               style={{
                 fontSize: '12px',
               }}
-							href="https://surecart.com/docs/dynamic-pricing/"
+							href="https://surecart.com/docs/dynamic-pricing/#when-to-apply"
 						>
 							{__('Learn More', 'surecart')}{' '}
 							<ScIcon name="external-link" slot="suffix" />
