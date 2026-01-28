@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: ecommerce, online store, subscriptions, stripe, payments
 Requires at least: 6.6
 Tested up to: 6.9
-Stable tag: 3.17.6
+Stable tag: 3.18.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -316,7 +316,7 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 
 == Changelog ==
 
-= 3.18.0 - January 27th, 2026 =
+= 3.18.0 - January 28th, 2026 =
 - New: Dynamic Pricing. Automatically apply fees or discounts based on checkout conditions like user role, cart total, products, customer type and more.
 - New: Improved test mode indicator on checkout with quick switching between test and live modes.
 - New: Admins can now update affiliate email address and profile information on their behalf.
