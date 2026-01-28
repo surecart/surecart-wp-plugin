@@ -33,6 +33,10 @@ module.exports = {
 			__dirname,
 			'packages/admin/coupons/index.js'
 		),
+		['admin/auto-fees']: path.resolve(
+			__dirname,
+			'packages/admin/auto-fees/index.js'
+		),
 		['admin/products']: path.resolve(
 			__dirname,
 			'packages/admin/products/index.js'
@@ -112,6 +116,10 @@ module.exports = {
 		['admin/settings/account']: path.resolve(
 			__dirname,
 			'packages/admin/settings/account/index.js'
+		),
+		['admin/settings/dynamic-pricing']: path.resolve(
+			__dirname,
+			'packages/admin/settings/dynamic-pricing/index.js'
 		),
 		['admin/settings/affiliation-protocol']: path.resolve(
 			__dirname,

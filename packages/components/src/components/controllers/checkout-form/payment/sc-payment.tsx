@@ -44,10 +44,10 @@ export class ScPayment {
   /** Hide the test mode badge */
   @Prop() hideTestModeBadge: boolean;
 
-  componentWillLoad() {    
+  componentWillLoad() {
     processorsState.disabled = {
       ...processorsState.disabled,
-      processors: this.disabledProcessorTypes
+      processors: this.disabledProcessorTypes,
     };
   }
 
@@ -146,11 +146,7 @@ export class ScPayment {
         <sc-form-control label={this.label} exportparts="label, help-text, form-control">
           <div class="sc-payment-label" slot="label">
             <div>{this.label}</div>
-            {checkoutState.mode === 'test' && !this.hideTestModeBadge && (
-              <sc-tag type="warning" size="small" exportparts="base:test-badge__base, content:test-badge__content">
-                {__('Test Mode', 'surecart')}
-              </sc-tag>
-            )}
+            <slot name="label-end" />
           </div>
 
           {mollie?.id ? (

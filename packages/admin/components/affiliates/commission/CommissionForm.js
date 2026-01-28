@@ -45,6 +45,7 @@ export default ({
 				onScAfterHide={onRequestClose}
 				open={open}
 				stickyHeader
+				stickyFooter
 			>
 				<div
 					css={css`

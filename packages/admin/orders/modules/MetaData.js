@@ -28,7 +28,7 @@ export default ({ order, loading }) => {
 	const metadatas = Object.keys(metadata || {}).map((key) => ({
 		key,
 		label: key.charAt(0).toUpperCase() + key.slice(1).replaceAll('_', ' '),
-		value: metadata[key],
+		value: JSON.stringify(metadata[key]),
 	}));
 
 	const isEmpty = !metadatas?.length;
@@ -73,31 +73,38 @@ export default ({ order, loading }) => {
 				}
 				loading={loading}
 			>
-				{!isEmpty && (
-					<div
-						css={css`
-							display: grid;
-							gap: 0.5em;
-						`}
-					>
-						{metadatas.map(({ key, label, value }) => (
-							<div key={key}>
-								<ScText
-									tag="h3"
-									style={{
-										'--font-weight':
-											'var(--sc-font-weight-bold)',
-										'--font-size':
-											'var(--sc-font-size-medium)',
-									}}
-								>
-									{label}
-								</ScText>
-								<div>{value}</div>
+				<div
+					css={css`
+						display: grid;
+						gap: 0.5em;
+					`}
+				>
+					{metadatas.map(({ key, label, value }) => (
+						<div key={key}>
+							<ScText
+								tag="h3"
+								style={{
+									'--font-weight':
+										'var(--sc-font-weight-bold)',
+									'--font-size': 'var(--sc-font-size-medium)',
+								}}
+							>
+								{label}
+							</ScText>
+							<div
+								css={css`
+									white-space: pre-wrap;
+									word-wrap: break-word;
+									word-break: break-all;
+									overflow-wrap: break-word;
+									overflow-x: auto;
+								`}
+							>
+								{value}
 							</div>
-						))}
-					</div>
-				)}
+						</div>
+					))}
+				</div>
 			</Box>
 
 			{'edit' === modalOpen && (

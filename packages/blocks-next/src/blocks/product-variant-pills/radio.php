@@ -1,8 +1,33 @@
+<?php
+// Get highlight styles from the inner product-variant-pill block.
+$pill_block       = wp_get_first_block( $block->parsed_block['innerBlocks'], 'surecart/product-variant-pill' );
+$pill_block_attrs = $pill_block['attrs'] ?? [];
+?>
+
 <label class="sc-form-label">
 	<?php echo wp_kses_post( $option->name ); ?>
 </label>
 
-<div class="sc-pill-option__wrapper">
+<div
+<?php
+echo wp_kses_data(
+	get_block_wrapper_attributes(
+		[
+			'class' => 'sc-pill-option__wrapper',
+			'style' => sc_get_inline_styles(
+				array_filter(
+					[
+						'--sc-pill-option-active-background-color' => $pill_block_attrs['highlight_background'] ?? '',
+						'--sc-pill-option-active-text-color'       => $pill_block_attrs['highlight_text'] ?? '',
+						'--sc-pill-option-active-border-color'     => $pill_block_attrs['highlight_border'] ?? '',
+					]
+				)
+			),
+		]
+	)
+);
+?>
+>
 	<?php
 	foreach ( $option->values as $value ) :
 		// Get an instance of the current Post Template block.

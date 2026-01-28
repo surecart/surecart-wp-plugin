@@ -1320,6 +1320,7 @@
     "gb-vat-label": true,
     "help-text": true,
     "other-label": true,
+    "required": true,
     "show": true,
     "tax-id-types": true,
     "style": true,
@@ -1513,6 +1514,18 @@
   "sc-pill-option": {
     "is-selected": true,
     "is-unavailable": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-popover": {
+    "disabled": true,
+    "distance": true,
+    "hoist": true,
+    "open": true,
+    "placement": true,
+    "skidding": true,
     "style": true,
     "id": true,
     "class": true,
@@ -2285,6 +2298,12 @@
     "status": true,
     "tax-id-types": true,
     "type": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-test-mode-info": {
     "style": true,
     "id": true,
     "class": true,

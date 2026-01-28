@@ -285,7 +285,7 @@ class VariantPills extends \Elementor\Widget_Base {
 				'label'     => esc_html__( 'Text Color', 'surecart' ),
 				'type'      => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .sc-pill-option__wrapper .wp-block-surecart-product-variant-pill:not(.sc-pill-option__button--selected)' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .sc-pill-option__wrapper .wp-block-surecart-product-variant-pill:not(.sc-pill-option__button--selected)' => 'color: {{VALUE}} !important',
 				],
 			]
 		);
@@ -299,7 +299,7 @@ class VariantPills extends \Elementor\Widget_Base {
 					'default' => \Elementor\Core\Kits\Documents\Tabs\Global_Colors::COLOR_PRIMARY,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .sc-pill-option__wrapper .wp-block-surecart-product-variant-pill:not(.sc-pill-option__button--selected)' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .sc-pill-option__wrapper .wp-block-surecart-product-variant-pill:not(.sc-pill-option__button--selected)' => 'background-color: {{VALUE}} !important',
 				],
 			]
 		);
@@ -310,7 +310,7 @@ class VariantPills extends \Elementor\Widget_Base {
 				'label'     => esc_html__( 'Highlight Text', 'surecart' ),
 				'type'      => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .sc-pill-option__wrapper .wp-block-surecart-product-variant-pill.sc-pill-option__button--selected' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .sc-pill-option__wrapper .wp-block-surecart-product-variant-pill.sc-pill-option__button--selected' => 'color: {{VALUE}} !important',
 				],
 			]
 		);
@@ -324,7 +324,7 @@ class VariantPills extends \Elementor\Widget_Base {
 					'default' => \Elementor\Core\Kits\Documents\Tabs\Global_Colors::COLOR_PRIMARY,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .sc-pill-option__wrapper .wp-block-surecart-product-variant-pill.sc-pill-option__button--selected' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .sc-pill-option__wrapper .wp-block-surecart-product-variant-pill.sc-pill-option__button--selected' => 'background-color: {{VALUE}} !important',
 				],
 			]
 		);
@@ -338,7 +338,7 @@ class VariantPills extends \Elementor\Widget_Base {
 					'default' => \Elementor\Core\Kits\Documents\Tabs\Global_Colors::COLOR_PRIMARY,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .sc-pill-option__wrapper .wp-block-surecart-product-variant-pill.sc-pill-option__button--selected' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}} .sc-pill-option__wrapper .wp-block-surecart-product-variant-pill.sc-pill-option__button--selected' => 'border-color: {{VALUE}} !important',
 				],
 			]
 		);
