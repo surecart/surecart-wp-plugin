@@ -99,6 +99,22 @@ export default ({ order, loading }) => {
 							</div>
 						</div>
 					))}
+					{isEmpty && (
+						<>
+							{__(
+								'Add custom data to this order as a JSON object.',
+								'surecart'
+							)}
+							<br />
+							{__('Example:', 'surecart')}
+							<code>
+								{__(
+									'{ "source": "google", "gift": true }',
+									'surecart'
+								)}
+							</code>
+						</>
+					)}
 				</div>
 			</Box>
 
