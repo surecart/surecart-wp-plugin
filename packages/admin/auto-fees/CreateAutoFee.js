@@ -197,16 +197,16 @@ export default ({ id, onCreateAutoFee }) => {
 						tabIndex="0"
 					/>
 					<div
-						style={{
-							maxHeight: '480px',
-							padding: '0 10px',
-							margin: '0 -10px',
-							overflow: 'auto',
-							display: 'flex',
-							flexDirection: 'column',
-							gap: '16px',
-							position: 'relative',
-						}}
+						css={css`
+							max-height: 480px;
+							padding: 0 10px;
+							margin: 0 -10px;
+							overflow: auto;
+							display: flex;
+							flex-direction: column;
+							gap: 16px;
+							position: relative;
+						`}
 					>
 						<ScChoices
 							label={__('Recipe', 'surecart')}
@@ -289,16 +289,143 @@ export default ({ id, onCreateAutoFee }) => {
 									pointer-events: none;
 								}
 							`}
-							style={{ position: 'sticky', bottom: 0 }}
+							style={{
+								position: 'sticky',
+								bottom: 0,
+							}}
 						></div>
 					</div>
-					<ScChoices
-						onScChange={(e) => setAutoFeeTarget(e.target.value)}
-						style={{
-							marginTop: '8px',
-						}}
-						required
+
+					<div
+						css={css`
+							display: grid;
+              gap: 3em;
+						`}
 					>
+						<ScChoices
+							onScChange={(e) => setAutoFeeTarget(e.target.value)}
+							style={{
+								marginTop: '8px',
+							}}
+							required
+						>
+							<div
+								style={{
+									display: 'flex',
+									width: '100%',
+									justifyContent: 'space-between',
+									flexWrap: 'nowrap',
+								}}
+							>
+								<div
+									style={{
+										display: 'flex',
+										flexDirection: 'column',
+									}}
+								>
+									<label htmlFor="choices-2">
+										{__('Applies to', 'surecart')}
+										<span
+											aria-hidden="true"
+											className="required"
+										>
+											{' '}
+											*
+										</span>
+									</label>
+									<span
+										style={{
+											color: '#6b7280',
+											fontSize: '12px',
+										}}
+									>
+										{__(
+											'Choose where the fee applies to',
+											'surecart'
+										)}
+									</span>
+								</div>
+								<div
+									style={{
+										display: 'flex',
+										justifyContent: 'flex-end',
+										gap: '8px',
+									}}
+								>
+									{(TYPE_CHOICES || []).map((type) => {
+										const disabled =
+											!isTargetEditable &&
+											type.value !== autoFeeTarget;
+
+										const showLock =
+											!isTargetEditable &&
+											type.value === autoFeeTarget;
+										return (
+											<ScChoice
+												key={type.value}
+												showControl={false}
+												checked={
+													autoFeeTarget === type.value
+												}
+												value={type.value}
+												style={{
+													'--sc-choice-padding':
+														'10px',
+													'--sc-choice-border-radius':
+														'8px',
+													pointerEvents: disabled
+														? 'none'
+														: 'auto',
+												}}
+												disabled={disabled}
+											>
+												<div
+													style={{
+														display: 'flex',
+														gap: '1em',
+														alignItems: 'center',
+													}}
+													slot="footer"
+												>
+													{showLock && (
+														<ScIcon
+															style={{
+																fontWeight:
+																	'600',
+																width: '20px',
+																height: '20px',
+															}}
+															name="lock"
+														/>
+													)}
+													{!showLock && (
+														<ScIcon
+															style={{
+																fontWeight:
+																	'600',
+																width: '20px',
+																height: '20px',
+															}}
+															name={type.icon}
+														/>
+													)}
+
+													<div
+														style={{
+															fontWeight: 600,
+															lineHeight: 1,
+														}}
+													>
+														{type.label}
+													</div>
+												</div>
+											</ScChoice>
+										);
+									})}
+								</div>
+							</div>
+						</ScChoices>
+
 						<div
 							style={{
 								display: 'flex',
@@ -314,7 +441,7 @@ export default ({ id, onCreateAutoFee }) => {
 								}}
 							>
 								<label htmlFor="choices-2">
-									{__('Applies To', 'surecart')}
+									{__('When to apply', 'surecart')}
 									<span
 										aria-hidden="true"
 										className="required"
@@ -330,7 +457,7 @@ export default ({ id, onCreateAutoFee }) => {
 									}}
 								>
 									{__(
-										'Choose where the fee applies to',
+										'Choose when the fee should be applied',
 										'surecart'
 									)}
 								</span>
@@ -340,141 +467,44 @@ export default ({ id, onCreateAutoFee }) => {
 									display: 'flex',
 									justifyContent: 'flex-end',
 									gap: '8px',
+									width: '52%',
 								}}
 							>
-								{(TYPE_CHOICES || []).map((type) => {
-									const disabled =
-										!isTargetEditable &&
-										type.value !== autoFeeTarget;
-
-									const showLock =
-										!isTargetEditable &&
-										type.value === autoFeeTarget;
-									return (
-										<ScChoice
-											key={type.value}
-											showControl={false}
-											checked={
-												autoFeeTarget === type.value
+								<ScRadioGroup>
+									<div
+										css={css`
+											display: flex;
+											flex-direction: column;
+											gap: 1em;
+										`}
+									>
+										{(APPLIES_WHILE_CHOICES || []).map(
+											({ value, label, description }) => {
+												return (
+													<ScRadio
+														checked={
+															appliesWhile ===
+															value
+														}
+														value={value}
+														onClick={() =>
+															setAppliesWhile(
+																value
+															)
+														}
+														key={value}
+													>
+														{label}
+														<span slot="description">
+															{description}
+														</span>
+													</ScRadio>
+												);
 											}
-											value={type.value}
-											style={{
-												'--sc-choice-padding': '10px',
-												'--sc-choice-border-radius':
-													'8px',
-												pointerEvents: disabled
-													? 'none'
-													: 'auto',
-											}}
-											disabled={disabled}
-										>
-											<div
-												style={{
-													display: 'flex',
-													gap: '1em',
-													alignItems: 'center',
-												}}
-												slot="footer"
-											>
-												{showLock && (
-													<ScIcon
-														style={{
-															fontWeight: '600',
-															width: '20px',
-															height: '20px',
-														}}
-														name="lock"
-													/>
-												)}
-												{!showLock && (
-													<ScIcon
-														style={{
-															fontWeight: '600',
-															width: '20px',
-															height: '20px',
-														}}
-														name={type.icon}
-													/>
-												)}
-
-												<div
-													style={{
-														fontWeight: 600,
-														lineHeight: 1,
-													}}
-												>
-													{type.label}
-												</div>
-											</div>
-										</ScChoice>
-									);
-								})}
+										)}
+									</div>
+								</ScRadioGroup>
 							</div>
-						</div>
-					</ScChoices>
-
-					<div
-						style={{
-							display: 'flex',
-							width: '100%',
-							justifyContent: 'space-between',
-							flexWrap: 'nowrap',
-						}}
-					>
-						<div
-							style={{
-								display: 'flex',
-								flexDirection: 'column',
-							}}
-						>
-							<label htmlFor="choices-2">
-								{__('When to Apply?', 'surecart')}
-								<span aria-hidden="true" className="required">
-									{' '}
-									*
-								</span>
-							</label>
-							<span
-								style={{
-									color: '#6b7280',
-									fontSize: '12px',
-								}}
-							>
-								{__(
-									'Choose when the fee should be applied',
-									'surecart'
-								)}
-							</span>
-						</div>
-						<div
-							style={{
-								display: 'flex',
-								justifyContent: 'flex-end',
-								gap: '8px',
-								width: '52%',
-							}}
-						>
-							<ScRadioGroup>
-								{(APPLIES_WHILE_CHOICES || []).map(
-									({ value, label, description }) => {
-										return (
-											<ScRadio
-												checked={appliesWhile === value}
-												value={value}
-												onClick={() =>
-													setAppliesWhile(value)
-												}
-												key={value}
-											>
-												{label}
-												<span slot="description">
-													{description}
-												</span>
-											</ScRadio>
-										);
-									}
-								)}
-							</ScRadioGroup>
 						</div>
 					</div>
 				</Box>
