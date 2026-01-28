@@ -134,8 +134,8 @@ export const operatorLabels = {
 };
 
 export const supportedValuesLabels = {
-	checkout: __('Checkout', 'surecart'),
-	subscription: __('Renewal', 'surecart'),
+	checkout: __('Initial Checkout', 'surecart'),
+	subscription: __('Renewal & Plan Changes', 'surecart'),
 };
 
 export const TYPE_CHOICES = [
@@ -165,6 +165,27 @@ export const TYPE_CHOICES = [
 			'surecart'
 		),
 		icon: 'truck',
+	},
+];
+
+export const APPLIES_WHILE_CHOICES = [
+	{
+		label: __('All transactions', 'surecart'),
+		value: 'both',
+		description: __(
+			'Initial checkout, renewals, upgrades, and downgrades.',
+			'surecart'
+		),
+	},
+	{
+		label: __('Initial checkout', 'surecart'),
+		value: 'initial',
+		description: __('New purchases only.', 'surecart'),
+	},
+	{
+		label: __('Renewals & plan changes', 'surecart'),
+		value: 'renewal',
+		description: __('Renewals, upgrades, and downgrades only.', 'surecart'),
 	},
 ];
 
