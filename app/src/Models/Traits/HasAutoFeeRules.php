@@ -48,7 +48,7 @@ trait HasAutoFeeRules {
 		}
 
 		if ( isset( $rule_array['conditions'] ) && empty( $rule_array['conditions'] ) ) {
-			return (object) [];
+			return is_object( $rule_json ) ? (object) [] : [];
 		}
 
 		$fee_target     = $this->attributes['fee_target'] ?? 'line_item';
