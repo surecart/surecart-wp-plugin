@@ -170,28 +170,22 @@ export const TYPE_CHOICES = [
 
 export const APPLIES_WHILE_CHOICES = [
 	{
-		label: __('Initial checkout', 'surecart'),
-		value: 'initial',
+		label: __('All transactions', 'surecart'),
+		value: 'both',
 		description: __(
-			'Apply this dynamic price to the first purchase only.',
+			'Initial checkout, renewals, upgrades, and downgrades.',
 			'surecart'
 		),
+	},
+	{
+		label: __('Initial checkout', 'surecart'),
+		value: 'initial',
+		description: __('New purchases only.', 'surecart'),
 	},
 	{
 		label: __('Renewals & plan changes', 'surecart'),
 		value: 'renewal',
-		description: __(
-			'Apply this dynamic price to the renewals, upgrades, and downgrades only.',
-			'surecart'
-		),
-	},
-	{
-		label: __('Both	', 'surecart'),
-		value: 'both',
-		description: __(
-			'Apply this dynamic price to both the initial checkout and renewals, upgrades, and downgrades.',
-			'surecart'
-		),
+		description: __('Renewals, upgrades, and downgrades only.', 'surecart'),
 	},
 ];
 
