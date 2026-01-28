@@ -12,7 +12,6 @@ import {
 import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
 import MetaDataModal from './MetaDataModal';
-import AddNewMetaDataPopup from './AddNewMetaDataPopup';
 
 export default ({ order, loading }) => {
 	const [modalOpen, setModalOpen] = useState(false);
@@ -55,17 +54,13 @@ export default ({ order, loading }) => {
 									<ScIcon name="edit" slot="prefix" />
 									{__('Edit', 'surecart')}
 								</ScMenuItem>
-								<ScMenuItem onClick={() => setModalOpen('add')}>
-									<ScIcon name="plus" slot="prefix" />
-									{__('Add New', 'surecart')}
-								</ScMenuItem>
 							</ScMenu>
 						</ScDropdown>
 					)
 				}
 				footer={
 					isEmpty && (
-						<ScButton onClick={() => setModalOpen('add')}>
+						<ScButton onClick={() => setModalOpen('edit')}>
 							<ScIcon name="plus" slot="prefix" />
 							{__('Add Custom Data', 'surecart')}
 						</ScButton>
@@ -113,13 +108,6 @@ export default ({ order, loading }) => {
 					onRequestClose={() => setModalOpen(false)}
 					order={order}
 					metadatas={metadatas}
-				/>
-			)}
-			{'add' === modalOpen && (
-				<AddNewMetaDataPopup
-					open={modalOpen}
-					onRequestClose={() => setModalOpen(false)}
-					order={order}
 				/>
 			)}
 		</>
