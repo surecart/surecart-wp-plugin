@@ -30,6 +30,12 @@ const TEMPLATES = {
 					conditions: [
 						{
 							type: 'condition',
+							attribute_name: 'checkout.order_type',
+							operator_label: 'is',
+							comparison_value: 'checkout',
+						},
+						{
+							type: 'condition',
 							attribute_name: 'quantity',
 							operator_label: 'is',
 							comparison_value: '2',
@@ -56,6 +62,12 @@ const TEMPLATES = {
 					type: 'group',
 					combinator: 'and',
 					conditions: [
+						{
+							type: 'condition',
+							attribute_name: 'checkout.order_type',
+							operator_label: 'is',
+							comparison_value: 'checkout',
+						},
 						{
 							type: 'condition',
 							attribute_name: 'subtotal_amount',
@@ -87,6 +99,12 @@ const TEMPLATES = {
 					type: 'group',
 					combinator: 'and',
 					conditions: [
+						{
+							type: 'condition',
+							attribute_name: 'checkout.order_type',
+							operator_label: 'is',
+							comparison_value: 'checkout',
+						},
 						{
 							type: 'condition',
 							attribute_name: 'price.price_type',
@@ -148,6 +166,12 @@ const TEMPLATES = {
 					conditions: [
 						{
 							type: 'condition',
+							attribute_name: 'checkout.order_type',
+							operator_label: 'is',
+							comparison_value: 'checkout',
+						},
+						{
+							type: 'condition',
 							attribute_name: 'quantity',
 							operator_label: 'is_at_least',
 							comparison_value: '5',
@@ -176,6 +200,12 @@ const TEMPLATES = {
 					conditions: [
 						{
 							type: 'condition',
+							attribute_name: 'checkout.order_type',
+							operator_label: 'is',
+							comparison_value: 'checkout',
+						},
+						{
+							type: 'condition',
 							attribute_name: 'wp_user_role',
 							operator_label: 'is',
 							comparison_value: 'administrator',
@@ -202,6 +232,12 @@ const TEMPLATES = {
 					type: 'group',
 					combinator: 'and',
 					conditions: [
+						{
+							type: 'condition',
+							attribute_name: 'checkout.order_type',
+							operator_label: 'is',
+							comparison_value: 'checkout',
+						},
 						{
 							type: 'condition',
 							attribute_name: 'customer.order_count',

@@ -6,7 +6,6 @@ import { store as coreStore } from '@wordpress/core-data';
 import { useState, useEffect, useRef } from 'react';
 
 import {
-	ScAlert,
 	ScButton,
 	ScForm,
 	ScChoice,
@@ -18,6 +17,7 @@ import CreateTemplate from '../templates/CreateModel';
 import Box from '../ui/Box';
 import { TEMPLATES, TEMPLATE_CHOICES } from './templates';
 import { TYPE_CHOICES } from './utils/constants';
+import Error from '../components/Error';
 
 export default ({ id, onCreateAutoFee }) => {
 	const [isSaving, setIsSaving] = useState(false);
@@ -99,7 +99,7 @@ export default ({ id, onCreateAutoFee }) => {
 			onCreateAutoFee(createdAutoFee.id);
 		} catch (e) {
 			console.error(e);
-			setError(e?.message || __('Something went wrong.', 'surecart'));
+			setError(e);
 			setIsSaving(false);
 		}
 	};
@@ -108,9 +108,7 @@ export default ({ id, onCreateAutoFee }) => {
 
 	return (
 		<CreateTemplate id={id}>
-			<ScAlert open={error?.length} type="danger" closable scrollOnOpen>
-				<span slot="title">{error}</span>
-			</ScAlert>
+			<Error error={error} />
 			<ScForm onScSubmit={onSubmit}>
 				<Box
 					title={__('Create new dynamic price', 'surecart')}
@@ -156,7 +154,7 @@ export default ({ id, onCreateAutoFee }) => {
 					<ScInput
 						label={__('Display Name', 'surecart')}
 						help={__(
-							'A friendly name for your dynamic price. This will be displayed to the customer.',
+							'A friendly name for your dynamic price. This will be displayed to the customer. This should be unique.',
 							'surecart'
 						)}
 						value={autoFeeDisplayName}
