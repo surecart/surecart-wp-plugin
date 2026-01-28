@@ -217,7 +217,7 @@ export default ({ id, onCreateAutoFee }) => {
 								type="primary"
 								submit
 								loading={isSaving}
-								disabled={!autoFeeDisplayName || !autoFeeTarget}
+								disabled={!autoFeeDisplayName || !autoFeeTarget || !autoFeeName || !appliesWhile || !currentTemplate}
 							>
 								{__('Continue', 'surecart')}
 								<ScIcon slot="suffix" name="arrow-right" />
