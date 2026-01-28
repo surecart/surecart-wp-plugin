@@ -365,7 +365,7 @@ export default ({ id, onCreateAutoFee }) => {
 								</label>
 								<span css={helpTextStyles}>
 									{__(
-										'Choose where the fee applies to',
+										'Choose where the dynamic price applies to',
 										'surecart'
 									)}
 								</span>
@@ -454,7 +454,7 @@ export default ({ id, onCreateAutoFee }) => {
 								</label>
 								<span css={helpTextStyles}>
 									{__(
-										'Choose when the fee should be applied',
+										'Choose when the dynamic price should be applied',
 										'surecart'
 									)}
 								</span>
