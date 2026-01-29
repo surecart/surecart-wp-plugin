@@ -45,7 +45,8 @@ export default () => {
 		if (hasLoadedItem && item && !originalReminders.current) {
 			originalReminders.current = {
 				remind_after_days: item.remind_after_days,
-				remind_at_period_percent_remaining: item.remind_at_period_percent_remaining,
+				remind_at_period_percent_remaining:
+					item.remind_at_period_percent_remaining,
 			};
 		}
 	}, [hasLoadedItem, item]);
@@ -60,11 +61,13 @@ export default () => {
 
 		const hasRemindAfterDaysChange =
 			edits.remind_after_days !== undefined &&
-			edits.remind_after_days !== originalReminders.current.remind_after_days;
+			edits.remind_after_days !==
+				originalReminders.current.remind_after_days;
 
 		const hasRemindAtPercentChange =
 			edits.remind_at_period_percent_remaining !== undefined &&
-			edits.remind_at_period_percent_remaining !== originalReminders.current.remind_at_period_percent_remaining;
+			edits.remind_at_period_percent_remaining !==
+				originalReminders.current.remind_at_period_percent_remaining;
 
 		return hasRemindAfterDaysChange || hasRemindAtPercentChange;
 	};
@@ -75,6 +78,7 @@ export default () => {
 	const performSave = async (rescheduleReminders = false) => {
 		setError(null);
 		try {
+			setPendingSave(true);
 			// If we need to reschedule reminders, add the flag to the edits
 			if (rescheduleReminders && hasReminderChanges()) {
 				editItem({ reschedule_existing_reminders: true });
@@ -88,7 +92,8 @@ export default () => {
 			if (item) {
 				originalReminders.current = {
 					remind_after_days: item.remind_after_days,
-					remind_at_period_percent_remaining: item.remind_at_period_percent_remaining,
+					remind_at_period_percent_remaining:
+						item.remind_at_period_percent_remaining,
 				};
 			}
 		} catch (e) {
@@ -107,7 +112,6 @@ export default () => {
 		// Check if reminder settings changed
 		if (hasReminderChanges()) {
 			setShowConfirmModal(true);
-			setPendingSave(true);
 			return;
 		}
 
@@ -583,7 +587,12 @@ export default () => {
 							'surecart'
 						)}
 					</p>
-					<p style={{ color: 'var(--sc-color-gray-500)', fontSize: '0.9em' }}>
+					<p
+						style={{
+							color: 'var(--sc-color-gray-500)',
+							fontSize: '0.9em',
+						}}
+					>
 						{__(
 							'Note: Reminders scheduled within 2 hours will not be rescheduled.',
 							'surecart'
