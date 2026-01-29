@@ -150,6 +150,16 @@ export const TEMPLATE = [
 																		},
 																	},
 																},
+																spacing: {
+																	padding: {
+																		top: '0',
+																		bottom: '0',
+																	},
+																	margin: {
+																		top: '0',
+																		bottom: '0',
+																	},
+																},
 															},
 														},
 													],
@@ -561,6 +571,7 @@ export const TEMPLATE = [
 											},
 											layout: {
 												type: 'constrained',
+												contentSize: '100%',
 											},
 										},
 										[

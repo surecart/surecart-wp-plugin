@@ -101,6 +101,16 @@ export default [
 																},
 															},
 														},
+														spacing: {
+															padding: {
+																top: '0',
+																bottom: '0',
+															},
+															margin: {
+																top: '0',
+																bottom: '0',
+															},
+														},
 													},
 													content: '/ 5.0',
 												},
@@ -487,6 +497,7 @@ export default [
 									},
 									layout: {
 										type: 'constrained',
+										contentSize: '100%',
 									},
 								},
 								[

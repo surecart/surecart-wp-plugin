@@ -137,6 +137,16 @@
 																		},
 																		"color": {
 																			"text": "#4b5563"
+																		},
+																		"spacing": {
+																			"padding": {
+																				"top": "0",
+																				"bottom": "0"
+																			},
+																			"margin": {
+																				"top": "0",
+																				"bottom": "0"
+																			}
 																		}
 																	}
 																}
@@ -489,7 +499,8 @@
 														}
 													},
 													"layout": {
-														"type": "constrained"
+														"type": "constrained",
+														"contentSize": "100%"
 													}
 												},
 												"innerBlocks": [
