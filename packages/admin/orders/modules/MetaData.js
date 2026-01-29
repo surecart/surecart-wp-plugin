@@ -68,54 +68,41 @@ export default ({ order, loading }) => {
 				}
 				loading={loading}
 			>
-				<div
-					css={css`
-						display: grid;
-						gap: 0.5em;
-					`}
-				>
-					{metadatas.map(({ key, label, value }) => (
-						<div key={key}>
-							<ScText
-								tag="h3"
-								style={{
-									'--font-weight':
-										'var(--sc-font-weight-bold)',
-									'--font-size': 'var(--sc-font-size-medium)',
-								}}
-							>
-								{label}
-							</ScText>
-							<div
-								css={css`
-									white-space: pre-wrap;
-									word-wrap: break-word;
-									word-break: break-all;
-									overflow-wrap: break-word;
-									overflow-x: auto;
-								`}
-							>
-								{value}
+				{!isEmpty && (
+					<div
+						css={css`
+							display: grid;
+							gap: 0.5em;
+						`}
+					>
+						{metadatas.map(({ key, label, value }) => (
+							<div key={key}>
+								<ScText
+									tag="h3"
+									style={{
+										'--font-weight':
+											'var(--sc-font-weight-bold)',
+										'--font-size':
+											'var(--sc-font-size-medium)',
+									}}
+								>
+									{label}
+								</ScText>
+								<div
+									css={css`
+										white-space: pre-wrap;
+										word-wrap: break-word;
+										word-break: break-all;
+										overflow-wrap: break-word;
+										overflow-x: auto;
+									`}
+								>
+									{value}
+								</div>
 							</div>
-						</div>
-					))}
-					{isEmpty && (
-						<>
-							{__(
-								'Add custom data to this order as a JSON object.',
-								'surecart'
-							)}
-							<br />
-							{__('Example:', 'surecart')}
-							<code>
-								{__(
-									'{ "source": "google", "gift": true }',
-									'surecart'
-								)}
-							</code>
-						</>
-					)}
-				</div>
+						))}
+					</div>
+				)}
 			</Box>
 
 			{'edit' === modalOpen && (
