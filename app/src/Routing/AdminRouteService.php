@@ -26,6 +26,8 @@ class AdminRouteService {
 		'upsells'                 => 'sc-upsell-funnels',
 		'invoice'                 => 'sc-invoices',
 		'invoices'                => 'sc-invoices',
+		'auto-fee'                => 'sc-auto-fees',
+		'auto-fees'               => 'sc-auto-fees',
 		'customers'               => 'sc-customers',
 		'customer'                => 'sc-customers',
 		'subscriptions'           => 'sc-subscriptions',

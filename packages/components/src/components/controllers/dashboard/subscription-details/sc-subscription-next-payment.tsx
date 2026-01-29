@@ -1,4 +1,4 @@
-import { Component, h, Prop, State, Host, Watch } from '@stencil/core';
+import { Component, Fragment, h, Prop, State, Host, Watch } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 import apiFetch from '../../../../functions/fetch';
@@ -46,6 +46,8 @@ export class ScSubscriptionNextPayment {
           expand: [
             'period.checkout',
             'checkout.line_items',
+            'checkout.checkout_fees',
+            'checkout.shipping_fees',
             'checkout.payment_method',
             'checkout.manual_payment_method',
             'payment_method.card',
@@ -53,6 +55,7 @@ export class ScSubscriptionNextPayment {
             'payment_method.paypal_account',
             'payment_method.bank_account',
             'line_item.price',
+            'line_item.fees',
             'price.product',
             'period.subscription',
           ],
@@ -93,6 +96,9 @@ export class ScSubscriptionNextPayment {
     const manualPaymentMethod = checkout?.manual_payment ? (checkout?.manual_payment_method as ManualPaymentMethod) : null;
     const paymentMethodExists = this?.subscription.payment_method || this?.subscription.manual_payment;
 
+    const checkout_fees = checkout?.checkout_fees?.data;
+    const shipping_fees = checkout?.shipping_fees?.data;
+
     return (
       <Host>
         <sc-toggle borderless shady>
@@ -121,6 +127,7 @@ export class ScSubscriptionNextPayment {
                 amount={item?.subtotal_display_amount}
                 interval={`${item?.price?.short_interval_text} ${item?.price?.short_interval_count_text}`}
                 purchasableStatus={item?.purchasable_status_display}
+                fees={item?.fees?.data}
               ></sc-product-line-item>
             ))}
 
@@ -143,6 +150,17 @@ export class ScSubscriptionNextPayment {
               </sc-line-item>
             )}
 
+            {checkout_fees?.length > 0 && (
+              <Fragment>
+                {checkout_fees?.map(fee => (
+                  <sc-line-item>
+                    <span slot="description">{fee?.description}</span>
+                    <span slot="price">{fee?.display_amount}</span>
+                  </sc-line-item>
+                ))}
+              </Fragment>
+            )}
+
             {!!checkout.trial_amount && (
               <sc-line-item>
                 <span slot="description">{__('Trial', 'surecart')}</span>
@@ -158,10 +176,22 @@ export class ScSubscriptionNextPayment {
             )}
 
             {!!checkout?.shipping_amount && (
-              <sc-line-item style={{ marginTop: 'var(--sc-spacing-small)' }}>
-                <span slot="description">{__('Shipping', 'surecart')}</span>
-                <span slot="price-description">{checkout?.shipping_display_amount}</span>
-              </sc-line-item>
+              <Fragment>
+                <sc-line-item style={{ marginTop: 'var(--sc-spacing-small)' }}>
+                  <span slot="description">{__('Shipping', 'surecart')}</span>
+                  <span slot="price-description">{checkout?.shipping_display_amount}</span>
+                </sc-line-item>
+                {shipping_fees?.length > 0 && (
+                  <Fragment>
+                    {shipping_fees?.map(fee => (
+                      <sc-line-item>
+                        <span slot="description">{fee?.description}</span>
+                        <span slot="price">{fee?.display_amount}</span>
+                      </sc-line-item>
+                    ))}
+                  </Fragment>
+                )}
+              </Fragment>
             )}
 
             {!!checkout.tax_amount && (
