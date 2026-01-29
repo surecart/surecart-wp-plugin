@@ -3662,6 +3662,7 @@ export namespace Components {
         "updatePaymentMethodUrl": string;
     }
     interface ScSubscriptionAdHocConfirm {
+        "currencyCode": string;
         "heading": string;
         "price": Price;
     }
@@ -10932,6 +10933,7 @@ declare namespace LocalJSX {
         "updatePaymentMethodUrl"?: string;
     }
     interface ScSubscriptionAdHocConfirm {
+        "currencyCode"?: string;
         "heading"?: string;
         "price"?: Price;
     }
