@@ -9,6 +9,9 @@ import {
 	ScInput,
 	ScDivider,
 	ScButton,
+	ScTag,
+	ScIcon,
+	ScProse,
 } from '@surecart/components-react';
 import { Modal } from '@wordpress/components';
 import { useState, useEffect, useRef } from '@wordpress/element';
@@ -582,23 +585,21 @@ export default () => {
 					shouldCloseOnClickOutside={false}
 					style={{ maxWidth: '600px' }}
 				>
-					<p>
-						{__(
-							'Apply the new reminder settings to existing subscription reminders?',
-							'surecart'
-						)}
-					</p>
-					<p
-						style={{
-							color: 'var(--sc-color-gray-500)',
-							fontSize: '0.9em',
-						}}
-					>
-						{__(
-							"Reminders within 2 hours won't be affected.",
-							'surecart'
-						)}
-					</p>
+					<ScProse>
+						<p>
+							{__(
+								'Apply the new reminder settings to existing subscription reminders?',
+								'surecart'
+							)}
+						</p>
+						<ScTag type="default" pill>
+							<ScIcon name="info" slot="prefix" />
+							{__(
+								"Reminders within 2 hours won't be affected.",
+								'surecart'
+							)}
+						</ScTag>
+					</ScProse>
 					<div
 						css={css`
 							display: flex;
