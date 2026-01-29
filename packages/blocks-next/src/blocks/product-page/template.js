@@ -51,14 +51,24 @@ export default [
 					[
 						'core/group',
 						{
-							style: { spacing: { blockGap: '0' } },
+							style: {
+								spacing: {
+									blockGap: '0',
+									padding: { right: '0px', left: '0px' },
+								},
+							},
 							layout: { type: 'constrained' },
 						},
 						[
 							[
 								'core/group',
 								{
-									style: { spacing: { blockGap: '0.5em' } },
+									style: {
+										spacing: {
+											blockGap: '0.5em',
+											padding: { right: '0px', left: '0px' },
+										},
+									},
 									layout: {
 										type: 'flex',
 										flexWrap: 'nowrap',
@@ -125,7 +135,12 @@ export default [
 							[
 								'core/group',
 								{
-									style: { spacing: { blockGap: '0.5em' } },
+									style: {
+										spacing: {
+											blockGap: '0.5em',
+											padding: { right: '0px', left: '0px' },
+										},
+									},
 									layout: {
 										type: 'flex',
 										flexWrap: 'nowrap',
@@ -197,6 +212,7 @@ export default [
 											style: {
 												spacing: {
 													blockGap: '0px',
+													padding: { right: '0px', left: '0px' },
 												},
 											},
 											layout: {
@@ -212,6 +228,7 @@ export default [
 													style: {
 														spacing: {
 															blockGap: '0.5rem',
+															padding: { right: '0px', left: '0px' },
 														},
 													},
 													layout: {
