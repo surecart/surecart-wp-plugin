@@ -95,6 +95,7 @@
  - [sc-subscription-variation-confirm](../../controllers/dashboard/subscription-variation-confirm)
  - [sc-subscriptions-list](../../controllers/dashboard/subscriptions-list)
  - [sc-tax-id-input](../tax-id-input)
+ - [sc-test-mode-info](../test-mode-info)
  - [sc-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
  - [sc-upgrade-required](../sc-upgrade-required)
  - [sc-upsell](../../controllers/upsell/sc-upsell)
@@ -155,6 +156,7 @@ graph TD;
   sc-subscription-variation-confirm --> sc-button
   sc-subscriptions-list --> sc-button
   sc-tax-id-input --> sc-button
+  sc-test-mode-info --> sc-button
   sc-upcoming-invoice --> sc-button
   sc-upgrade-required --> sc-button
   sc-upsell --> sc-button

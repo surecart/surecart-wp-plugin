@@ -7,8 +7,6 @@
  * @package SureCart
  */
 
-use SureCart\Rest\IntegrationProvidersRestServiceProvider;
-
 return array(
 	/**
 	 * Array of service providers you wish to enable.
@@ -140,6 +138,9 @@ return array(
 		\SureCart\Rest\SwapRestServiceProvider::class,
 		\SureCart\Rest\ReviewsRestServiceProvider::class,
 		\SureCart\Rest\ReviewProtocolRestServiceProvider::class,
+		\SureCart\Rest\AutoFeeRestServiceProvider::class,
+		\SureCart\Rest\AutoFeeProtocolRestServiceProvider::class,
+		\SureCart\Rest\RuleSchemaRestServiceProvider::class,
 
 		// integrations.
 		\SureCart\Integrations\DiviServiceProvider::class,

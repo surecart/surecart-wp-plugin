@@ -83,6 +83,20 @@ dispatch(coreStore).addEntities([
 		baseURLParams: { context: 'edit' },
 	},
 	{
+		name: 'auto-fee',
+		kind: 'surecart',
+		label: __('Dynamic Pricing', 'surecart'),
+		baseURL: '/surecart/v1/auto_fees',
+		baseURLParams: { context: 'edit' },
+	},
+	{
+		name: 'rule-schema',
+		kind: 'surecart',
+		label: __('Rule Schema', 'surecart'),
+		baseURL: '/surecart/v1/auto_fees/rule_schema',
+		baseURLParams: { context: 'edit' },
+	},
+	{
 		name: 'customer',
 		kind: 'surecart',
 		label: __('Customer', 'surecart'),
@@ -281,6 +295,7 @@ dispatch(coreStore).addEntities([
 		label: __('Promotion', 'surecart'),
 		baseURL: '/surecart/v1/promotions',
 		baseURLParams: { context: 'edit' },
+		supportsPagination: true,
 	},
 	{
 		name: 'purchase',

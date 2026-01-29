@@ -75,6 +75,7 @@ declare global {
       user_permissions: {
         manage_sc_shop_settings: boolean;
       };
+      current_user_roles: string[];
     };
     ceRegisterIconLibrary: any;
     ResizeObserver: any;
@@ -790,6 +791,16 @@ export interface Checkout extends Object {
     object: 'list';
     pagination: Pagination;
     data: Array<Subscription>;
+  };
+  checkout_fees: {
+    object: 'list';
+    pagination: Pagination;
+    data: Array<Fee>;
+  };
+  shipping_fees: {
+    object: 'list';
+    pagination: Pagination;
+    data: Array<Fee>;
   };
   purchases: {
     object: 'list';

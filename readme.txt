@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: ecommerce, online store, subscriptions, stripe, payments
 Requires at least: 6.6
 Tested up to: 6.9
-Stable tag: 3.17.6
+Stable tag: 3.18.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -315,6 +315,18 @@ Yes, the checkout form can be customized using our visual builder. You can chang
 Accessibility is a huge priority for the entire team building SureCart. As you know, accessibility is an ongoing improvement task. Our development and QA teams are trained in accessibility best practices and build/test each new feature for accessibility. If you come across any edge issues, we want to know about it and will prioritize its resolution. Please contact us via our website.
 
 == Changelog ==
+
+= 3.18.0 - January 28th, 2026 =
+- New: Dynamic Pricing. Automatically apply fees or discounts based on checkout conditions like user role, cart total, products, customer type and more.
+- New: Improved test mode indicator on checkout with quick switching between test and live modes.
+- New: Admins can now update affiliate email address and profile information on their behalf.
+- Improvement: Reorganized admin menu with new Promotions section for better navigation.
+- Improvement: Pagination support for promotion codes when you have more than 100 codes.
+- Improvement: Option to show line items count in the slide-out cart.
+- Fix: Better initial dark mode support for cart drawer background and count badge.
+- Fix: Bricks Cart Toggle Icon not rendering custom SVG icons properly if no SVG was initially selected.
+- Fix: Order metadata sometimes incorrectly including merchant's details when editing from admin.
+- Fix: Account transient storage format causing issues with certain cache configurations.
 
 = 3.17.6 - January 21st, 2026 =
 - Fix: SVG icons not rendering in the editor.

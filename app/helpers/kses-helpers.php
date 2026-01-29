@@ -61,6 +61,8 @@ function sc_allowed_svg_html(): array {
 				'stroke-miterlimit' => true,
 				'transform'         => true,
 				'clip-path'         => true,
+				'fill-rule'         => true,
+				'clip-rule'         => true,
 			),
 			'circle'         => array(
 				'stroke'            => true,
