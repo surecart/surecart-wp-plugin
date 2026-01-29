@@ -1519,6 +1519,18 @@
     "class": true,
     "slot": true
   },
+  "sc-popover": {
+    "disabled": true,
+    "distance": true,
+    "hoist": true,
+    "open": true,
+    "placement": true,
+    "skidding": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-premium-tag": {
     "size": true,
     "style": true,
@@ -2286,6 +2298,12 @@
     "status": true,
     "tax-id-types": true,
     "type": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-test-mode-info": {
     "style": true,
     "id": true,
     "class": true,

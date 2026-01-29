@@ -49,6 +49,7 @@ abstract class BaseSettings {
 			'customer_notification_protocol' => __( 'Notifications', 'surecart' ),
 			'subscription_protocol'          => __( 'Subscriptions', 'surecart' ),
 			'subscription_preservation'      => __( 'Subscription Saver', 'surecart' ),
+			'dynamic_pricing'                => __( 'Dynamic Pricing', 'surecart' ),
 			'tax_protocol'                   => __( 'Taxes', 'surecart' ),
 			'processors'                     => __( 'Payment Processors', 'surecart' ),
 			'export'                         => __( 'Data Export', 'surecart' ),
