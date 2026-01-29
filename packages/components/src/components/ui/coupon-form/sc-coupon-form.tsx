@@ -191,7 +191,7 @@ export class ScCouponForm {
                   speak(
                     // translators: %1$s is the coupon code, %2$s is the order total
                     sprintf(
-                      __('Coupon code %1$s was removed & now order total is %2$s -  ', 'surecart'),
+                      __('Coupon code %1$s was removed and now order total is %2$s', 'surecart'),
                       this?.discount?.promotion?.code,
                       checkoutState.checkout?.total_display_amount,
                     ),

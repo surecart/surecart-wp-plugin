@@ -48,7 +48,7 @@ export class ScQuantitySelect {
     if (this.disabled) return;
     this.quantity = Math.max(this.quantity - 1, this.min);
     // translators: %1$s is the product name
-    speak(sprintf(__('Decreased %1$s Quantity by one -  ', 'surecart'), this.productName), 'assertive');
+    speak(sprintf(__('Decreased %1$s quantity by one', 'surecart'), this.productName), 'assertive');
     this.scChange.emit(this.quantity);
     this.scInput.emit(this.quantity);
   }
@@ -57,7 +57,7 @@ export class ScQuantitySelect {
     if (this.disabled) return;
     this.quantity = Math.min(this.quantity + 1, this.max);
     // translators: %1$s is the product name
-    speak(sprintf(__('Increased %1$s Quantity by one -  ', 'surecart'), this.productName), 'assertive');
+    speak(sprintf(__('Increased %1$s quantity by one', 'surecart'), this.productName), 'assertive');
     this.scChange.emit(this.quantity);
     this.scInput.emit(this.quantity);
   }
@@ -75,7 +75,7 @@ export class ScQuantitySelect {
   handleChange() {
     this.quantity = parseInt(this.input.value) > this.max ? this.max : parseInt(this.input.value);
     // translators: %1$s is the product name, %2$s is the quantity
-    speak(sprintf(__('Quantity of %1$s changed to %2$s -  ', 'surecart'), this.productName, this.quantity), 'assertive');
+    speak(sprintf(__('Quantity of %1$s changed to %2$s', 'surecart'), this.productName, this.quantity), 'assertive');
     this.scChange.emit(this.quantity);
   }
 
@@ -101,7 +101,7 @@ export class ScQuantitySelect {
           part="minus"
           aria-label={
             /** translators: %1$s: product name */
-            sprintf(__('Decrease %1$s Quantity by one -  ', 'surecart'), this.productName)
+            sprintf(__('Decrease %1$s quantity by one', 'surecart'), this.productName)
           }
           aria-disabled={this.disabled || (this.quantity <= this.min && this.min > 1)}
           class={{ 'button__decrease': true, 'button--disabled': this.quantity <= this.min && this.min > 1 }}
@@ -132,16 +132,16 @@ export class ScQuantitySelect {
           onFocus={() => this.handleFocus()}
           onBlur={() => this.handleBlur()}
           aria-label={
-            /** translators: %1$s: product name, %2$s: product price name */
-            sprintf(__('Quanity input for %1$s product -  ', 'surecart'), this.productName)
+            /** translators: %1$s: product name */
+            sprintf(__('Quantity input for %1$s product', 'surecart'), this.productName)
           }
         />
 
         <button
           part="plus"
           aria-label={
-            /** translators: %1$s: product name, %2$s: product price name */
-            sprintf(__('Increase %1$s Quantity by one -  ', 'surecart'), this.productName)
+            /** translators: %1$s: product name */
+            sprintf(__('Increase %1$s quantity by one', 'surecart'), this.productName)
           }
           class={{ 'button__increase': true, 'button--disabled': this.quantity >= this.max }}
           onClick={() => this.quantity < this.max && this.increase()}
