@@ -41,6 +41,8 @@ function sc_allowed_svg_html(): array {
 				'd'         => true,
 				'fill'      => true,
 				'transform' => true,
+				'fill-rule' => true,
+				'clip-rule' => true,
 			),
 			'circle'   => array(
 				'cx'   => true,

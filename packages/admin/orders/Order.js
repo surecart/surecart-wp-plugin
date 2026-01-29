@@ -60,6 +60,8 @@ export default () => {
 				context: 'edit',
 				expand: [
 					'checkout',
+					'checkout.checkout_fees',
+					'checkout.shipping_fees',
 					'checkout.charge',
 					'checkout.customer',
 					'checkout.tax_identifier',
@@ -93,6 +95,8 @@ export default () => {
 				{
 					expand: [
 						'checkout',
+						'checkout.checkout_fees',
+						'checkout.shipping_fees',
 						'checkout.charge',
 						'checkout.customer',
 						'checkout.tax_identifier',
