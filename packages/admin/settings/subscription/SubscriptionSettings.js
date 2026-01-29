@@ -580,10 +580,11 @@ export default () => {
 						setPendingSave(false);
 					}}
 					shouldCloseOnClickOutside={false}
+					style={{ maxWidth: '600px' }}
 				>
 					<p>
 						{__(
-							'You have changed the reminder settings. Would you like to reschedule existing subscription reminders based on the new settings?',
+							'Apply the new reminder settings to existing subscription reminders?',
 							'surecart'
 						)}
 					</p>
@@ -594,13 +595,14 @@ export default () => {
 						}}
 					>
 						{__(
-							'Note: Reminders scheduled within 2 hours will not be rescheduled.',
+							"Reminders within 2 hours won't be affected.",
 							'surecart'
 						)}
 					</p>
 					<div
 						css={css`
 							display: flex;
+							flex-wrap: wrap;
 							gap: var(--sc-spacing-small);
 							margin-top: var(--sc-spacing-large);
 						`}
@@ -610,14 +612,14 @@ export default () => {
 							loading={pendingSave}
 							onClick={() => performSave(true)}
 						>
-							{__('Yes, Reschedule Reminders', 'surecart')}
+							{__('Yes, Reschedule', 'surecart')}
 						</ScButton>
 						<ScButton
 							type="default"
 							disabled={pendingSave}
 							onClick={() => performSave(false)}
 						>
-							{__('No, Keep Existing Reminders', 'surecart')}
+							{__('No, Keep Current', 'surecart')}
 						</ScButton>
 					</div>
 				</Modal>
