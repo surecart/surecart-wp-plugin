@@ -61,6 +61,10 @@ export const TEMPLATE = [
 											style: {
 												spacing: {
 													blockGap: '14px',
+													padding: {
+														right: '0px',
+														left: '0px',
+													},
 												},
 												layout: {
 													selfStretch: 'fill',
@@ -81,6 +85,10 @@ export const TEMPLATE = [
 													style: {
 														spacing: {
 															blockGap: '5px',
+															padding: {
+																right: '0px',
+																left: '0px',
+															},
 														},
 													},
 													layout: {
@@ -149,6 +157,10 @@ export const TEMPLATE = [
 													style: {
 														spacing: {
 															blockGap: '5px',
+															padding: {
+																right: '0px',
+																left: '0px',
+															},
 														},
 													},
 													layout: {
@@ -184,7 +196,7 @@ export const TEMPLATE = [
 															style: {
 																spacing: {
 																	blockGap:
-																		'var:preset|spacing|20',
+																		'4px',
 																	margin: {
 																		right: '0',
 																		left: '0',
@@ -283,6 +295,14 @@ export const TEMPLATE = [
 			[
 				'core/group',
 				{
+					style: {
+						spacing: {
+							padding: {
+								right: '0px',
+								left: '0px',
+							},
+						},
+					},
 					layout: {
 						type: 'flex',
 						flexWrap: 'nowrap',
@@ -446,6 +466,10 @@ export const TEMPLATE = [
 							style: {
 								spacing: {
 									blockGap: '0px',
+									padding: {
+										right: '0px',
+										left: '0px',
+									},
 								},
 								layout: {
 									selfStretch: 'fill',
@@ -486,11 +510,12 @@ export const TEMPLATE = [
 										{
 											style: {
 												spacing: {
-													blockGap:
-														'var:preset|spacing|20',
+													blockGap: '8px',
 													padding: {
-														top: 'var:preset|spacing|40',
-														bottom: 'var:preset|spacing|40',
+														top: '24px',
+														bottom: '24px',
+														right: '0px',
+														left: '0px',
 													},
 													margin: {
 														top: '0',
@@ -519,6 +544,10 @@ export const TEMPLATE = [
 															margin: {
 																bottom: '16px',
 															},
+															padding: {
+																right: '0px',
+																left: '0px',
+															},
 														},
 													},
 													layout: {
@@ -535,7 +564,11 @@ export const TEMPLATE = [
 															style: {
 																spacing: {
 																	blockGap:
-																		'var:preset|spacing|20',
+																		'8px',
+																	padding: {
+																		right: '0px',
+																		left: '0px',
+																	},
 																},
 															},
 															layout: {
@@ -724,6 +757,14 @@ export const TEMPLATE = [
 			[
 				'core/group',
 				{
+					style: {
+						spacing: {
+							padding: {
+								right: '0px',
+								left: '0px',
+							},
+						},
+					},
 					layout: {
 						type: 'flex',
 						flexWrap: 'nowrap',
