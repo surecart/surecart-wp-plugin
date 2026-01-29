@@ -65,6 +65,10 @@ export const TEMPLATE = [
 														right: '0px',
 														left: '0px',
 													},
+													margin: {
+														top: '0',
+														bottom: '0',
+													},
 												},
 												layout: {
 													selfStretch: 'fill',
@@ -88,6 +92,10 @@ export const TEMPLATE = [
 															padding: {
 																right: '0px',
 																left: '0px',
+															},
+															margin: {
+																top: '0',
+																bottom: '0',
 															},
 														},
 													},
@@ -161,6 +169,10 @@ export const TEMPLATE = [
 																right: '0px',
 																left: '0px',
 															},
+															margin: {
+																top: '0',
+																bottom: '0',
+															},
 														},
 													},
 													layout: {
@@ -183,6 +195,16 @@ export const TEMPLATE = [
 																typography: {
 																	fontSize:
 																		'14px',
+																},
+																spacing: {
+																	padding: {
+																		top: '0',
+																		bottom: '0',
+																	},
+																	margin: {
+																		top: '0',
+																		bottom: '0',
+																	},
 																},
 															},
 														},
@@ -300,6 +322,10 @@ export const TEMPLATE = [
 							padding: {
 								right: '0px',
 								left: '0px',
+							},
+							margin: {
+								top: '0',
+								bottom: '0',
 							},
 						},
 					},
@@ -470,6 +496,10 @@ export const TEMPLATE = [
 										right: '0px',
 										left: '0px',
 									},
+									margin: {
+										top: '0',
+										bottom: '0',
+									},
 								},
 								layout: {
 									selfStretch: 'fill',
@@ -542,6 +572,7 @@ export const TEMPLATE = [
 													style: {
 														spacing: {
 															margin: {
+																top: '0',
 																bottom: '16px',
 															},
 															padding: {
@@ -568,6 +599,10 @@ export const TEMPLATE = [
 																	padding: {
 																		right: '0px',
 																		left: '0px',
+																	},
+																	margin: {
+																		top: '0',
+																		bottom: '0',
 																	},
 																},
 															},
@@ -762,6 +797,10 @@ export const TEMPLATE = [
 							padding: {
 								right: '0px',
 								left: '0px',
+							},
+							margin: {
+								top: '0',
+								bottom: '0',
 							},
 						},
 					},

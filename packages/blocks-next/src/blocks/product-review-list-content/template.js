@@ -134,6 +134,16 @@ export default [
 														typography: {
 															fontSize: '14px',
 														},
+														spacing: {
+															padding: {
+																top: '0',
+																bottom: '0',
+															},
+															margin: {
+																top: '0',
+																bottom: '0',
+															},
+														},
 													},
 													content: 'Based on',
 												},

@@ -1,6 +1,6 @@
 .wp-block-surecart-product-review-add-button {
 	gap: var(--sc-product-review-add-button-gap, 8px);
-	display: flex;
+	display: flex !important;
 	justify-content: center;
 	align-items: center;
 
