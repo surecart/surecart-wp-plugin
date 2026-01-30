@@ -305,11 +305,12 @@ class ProductReviewBreakdown extends \Elementor\Widget_Base {
 			'column_gap'            => absint( $column_gap ),
 		];
 
+		// The summary wrapper causes width issues in flex containers.
+		$block_content = '<!-- wp:surecart/product-review-breakdown ' . wp_json_encode( $attributes ) . ' /-->';
+
 		?>
 		<div <?php $this->print_render_attribute_string( 'wrapper' ); ?>>
-			<!-- wp:surecart/product-review-summary -->
-			<!-- wp:surecart/product-review-breakdown <?php echo wp_json_encode( $attributes ); ?> /-->
-			<!-- /wp:surecart/product-review-summary -->
+			<?php echo sc_pre_render_blocks( $block_content ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 		</div>
 		<?php
 	}
@@ -335,26 +336,25 @@ class ProductReviewBreakdown extends \Elementor\Widget_Base {
 		$columns        = absint( $columns );
 		$column_gap     = absint( $column_gap );
 
-		// Calculate max height for multi-column layouts.
-		$max_height = 2 === $columns ? 150 : ( 3 === $columns ? 85 : '' );
+		// Use CSS Grid for proper column layout (matching the actual block).
+		$grid_style = 'display: grid; width: 100%; row-gap: 2px; column-gap: ' . esc_attr( $column_gap ) . 'px;';
+		if ( 2 === $columns ) {
+			$grid_style .= ' grid-template-columns: repeat(2, 1fr); grid-auto-flow: column; grid-template-rows: repeat(3, minmax(auto, 1fr));';
+		} elseif ( 3 === $columns ) {
+			$grid_style .= ' grid-template-columns: repeat(3, 1fr); grid-auto-flow: column; grid-template-rows: repeat(2, minmax(auto, 1fr));';
+		} else {
+			$grid_style .= ' grid-template-columns: 1fr;';
+		}
 		?>
 		<div class="wp-block-surecart-product-review-breakdown">
-			<div class="sc-star-bars sc-star-bars__columns-<?php echo esc_attr( $columns ); ?>" style="display: flex; flex-direction: column; flex-wrap: wrap; align-content: flex-start; max-height: <?php echo esc_attr( $max_height ); ?>px;">
+			<div class="sc-star-bars sc-star-bars__columns-<?php echo esc_attr( $columns ); ?>" style="<?php echo esc_attr( $grid_style ); ?>">
 				<?php
 				for ( $star = 5; $star >= 1; $star-- ) {
 					$count      = $breakdown_data[ $star ];
 					$percentage = $total > 0 ? ( $count / $total ) * 100 : 0;
-
-					// Calculate width for multi-column layouts.
-					$width_style = 'width: 100%;';
-					if ( 2 === $columns ) {
-						$width_style = 'width: calc(50% - ' . ( $column_gap / 2 ) . 'px);';
-					} elseif ( 3 === $columns ) {
-						$width_style = 'width: calc(33.333% - ' . ( $column_gap * 2 / 3 ) . 'px);';
-					}
 					?>
-					<a href="#" class="sc-star-row" onclick="event.preventDefault();" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: inherit; cursor: pointer; transition: opacity 0.2s ease; <?php echo esc_attr( $width_style ); ?>">
-						<div class="sc-star-row__label" style="display: flex; align-items: center; min-width: 35px;">
+					<a href="#" class="sc-star-row" onclick="event.preventDefault();" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: inherit; cursor: pointer; transition: opacity 0.2s ease;">
+						<div class="sc-star-row__label" style="display: flex; align-items: center; min-width: 35px; gap: 4px;">
 							<?php echo esc_html( $star ); ?>
 							<?php
 								echo wp_kses(

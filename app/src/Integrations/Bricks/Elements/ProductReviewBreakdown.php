@@ -216,6 +216,8 @@ class ProductReviewBreakdown extends \Bricks\Element {
 			return;
 		}
 
+		$rendered_attributes = $this->get_block_rendered_attributes();
+
 		$attributes = [
 			'show_for_zero_reviews' => $show_for_zero_reviews,
 			'size'                  => $star_size,
@@ -223,13 +225,16 @@ class ProductReviewBreakdown extends \Bricks\Element {
 			'row_gap'               => $row_gap,
 			'column_gap'            => $column_gap,
 			'fill_color'            => esc_attr( $fill_color ),
+			'className'             => $rendered_attributes['class'],
+			'anchor'                => $rendered_attributes['id'],
 		];
 
-		$content = $this->html( $attributes );
+		// Render the breakdown block directly without the summary wrapper.
+		// The summary wrapper causes width issues in flex containers.
+		$block_content = '<!-- wp:surecart/product-review-breakdown ' . wp_json_encode( $attributes ) . ' /-->';
 
-		echo $this->preview( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-			'<!-- wp:surecart/product-review-summary -->' . $content . '<!-- /wp:surecart/product-review-summary -->' // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-		);
+		// Use sc_pre_render_blocks to handle interactivity API debug notices.
+		echo sc_pre_render_blocks( $block_content ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	/**
@@ -242,7 +247,7 @@ class ProductReviewBreakdown extends \Bricks\Element {
 	 *
 	 * @return void
 	 */
-	private function render_preview( $star_size = 20, $fill_color, $columns = 1, $column_gap = 20 ) {
+	private function render_preview( $star_size = 20, $fill_color = '', $columns = 1, $column_gap = 20 ) {
 		$breakdown_data = [
 			5 => 45,
 			4 => 25,
@@ -250,30 +255,28 @@ class ProductReviewBreakdown extends \Bricks\Element {
 			2 => 5,
 			1 => 3,
 		];
-		$total          = array_sum( $breakdown_data );
+		$total = array_sum( $breakdown_data );
 
-		// Calculate max height for multi-column layouts.
-		$max_height = '';
-		if ( 2 === $columns ) {
-			$max_height = 'max-height: 150px;';
-		} elseif ( 3 === $columns ) {
-			$max_height = 'max-height: 85px;';
+		if ( empty( $fill_color ) ) {
+			$fill_color = 'var(--bricks-color-primary)';
 		}
 
-		$content = '<div class="sc-star-bars sc-star-bars__columns-' . esc_attr( $columns ) . '" style="display: flex; flex-direction: column; flex-wrap: wrap; align-content: flex-start; ' . $max_height . '">';
+		// Use CSS Grid for proper column layout (matching the actual block).
+		$grid_style = 'display: grid; width: 100%; min-width: 0; row-gap: 2px; column-gap: ' . esc_attr( $column_gap ) . 'px;';
+		if ( 2 === $columns ) {
+			$grid_style .= ' grid-template-columns: repeat(2, 1fr); grid-auto-flow: column; grid-template-rows: repeat(3, minmax(auto, 1fr));';
+		} elseif ( 3 === $columns ) {
+			$grid_style .= ' grid-template-columns: repeat(3, 1fr); grid-auto-flow: column; grid-template-rows: repeat(2, minmax(auto, 1fr));';
+		} else {
+			$grid_style .= ' grid-template-columns: 1fr;';
+		}
+
+		$content = '<div style="width: 100%; min-width: 0; overflow: hidden;"><div class="sc-star-bars sc-star-bars__columns-' . esc_attr( $columns ) . '" style="' . esc_attr( $grid_style ) . '">';
 		for ( $star = 5; $star >= 1; $star-- ) {
 			$count      = $breakdown_data[ $star ];
 			$percentage = $total > 0 ? ( $count / $total ) * 100 : 0;
 
-			// Calculate width for multi-column layouts.
-			$width_style = '';
-			if ( 2 === $columns ) {
-				$width_style = 'width: calc(50% - ' . esc_attr( $column_gap / 2 ) . 'px);';
-			} elseif ( 3 === $columns ) {
-				$width_style = 'width: calc(33.333% - ' . esc_attr( $column_gap * 2 / 3 ) . 'px);';
-			}
-
-			$content .= '<a href="#" class="sc-star-row" onclick="event.preventDefault();" style="display: flex; width: 100%; align-items: center; gap: 8px; text-decoration: none; color: inherit; cursor: pointer; transition: opacity 0.2s ease; ' . $width_style . '">';
+			$content .= '<a href="#" class="sc-star-row" onclick="event.preventDefault();" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: inherit; cursor: pointer; transition: opacity 0.2s ease;">';
 			$content .= '<div class="sc-star-row__label" style="display: flex; align-items: center; justify-content: center; min-width: 35px;">';
 			$content .= esc_html( $star );
 			$content .= wp_kses(
@@ -290,13 +293,13 @@ class ProductReviewBreakdown extends \Bricks\Element {
 				sc_allowed_svg_html()
 			);
 			$content .= '</div>';
-			$content .= '<div class="sc-star-row__bar" style="flex: 1; height: 8px; border-radius: 4px; overflow: hidden; position: relative; min-width: 100px;">';
+			$content .= '<div class="sc-star-row__bar" style="flex: 1; height: 8px; border-radius: 4px; overflow: hidden; position: relative; min-width: 50px;">';
 			$content .= '<div class="sc-star-row__bar-fill" style="height: 100%; border-radius: 4px; width: ' . esc_attr( $percentage ) . '%; transition: width 0.3s ease;"></div>';
 			$content .= '</div>';
 			$content .= '<div class="sc-star-row__count" style="text-align: right;min-width: 20px;">' . esc_html( $count ) . '</div>';
 			$content .= '</a>';
 		}
-		$content .= '</div>';
+		$content .= '</div></div>'; // Close both the grid and overflow wrapper.
 
 		echo $this->preview( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			$content,

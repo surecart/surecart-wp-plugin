@@ -826,6 +826,11 @@
 													"left": "0",
 													"isLinked": true
 												},
+												"paragraph_spacing": {
+													"unit": "px",
+													"size": 0,
+													"sizes": []
+												},
 												"_flex_align_self": "flex-start",
 												"typography_typography": "custom",
 												"typography_font_family": "Roboto",

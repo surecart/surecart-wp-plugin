@@ -7,10 +7,7 @@
 	"version": "1.0.0",
 	"category": "surecart-product-page",
 	"example": {},
-	"ancestor": [
-		"surecart/product-review-list",
-		"product-review-list-content-header"
-	],
+	"ancestor": ["surecart/product-review-list"],
 	"attributes": {
 		"label": {
 			"type": "string",
