@@ -83,8 +83,10 @@ export default () => {
 		try {
 			setPendingSave(true);
 			// If we need to reschedule reminders, add the flag to the edits
-			if (rescheduleReminders && hasReminderChanges()) {
-				editItem({ reschedule_existing_reminders: true });
+			if (hasReminderChanges()) {
+				editItem({
+					reschedule_existing_reminders: rescheduleReminders,
+				});
 			}
 
 			await save({
@@ -583,7 +585,7 @@ export default () => {
 						setPendingSave(false);
 					}}
 					shouldCloseOnClickOutside={false}
-					style={{ maxWidth: '600px' }}
+					style={{ maxWidth: '600px', height: 'fit-content' }}
 				>
 					<ScProse>
 						<p>
