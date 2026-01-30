@@ -585,7 +585,7 @@ export default () => {
 						setPendingSave(false);
 					}}
 					shouldCloseOnClickOutside={false}
-					style={{ maxWidth: '600px', height: 'fit-content' }}
+					style={{ maxWidth: '600px' }}
 				>
 					<ScProse>
 						<p>
