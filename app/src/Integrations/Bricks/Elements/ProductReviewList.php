@@ -423,8 +423,8 @@ class ProductReviewList extends \Bricks\Element {
 
 		// No reviews content (outside of product-reviews wrapper).
 		$content .= '<!-- wp:surecart/product-review-list-no-reviews -->';
-		$content .= '<!-- wp:paragraph {"align":"left","placeholder":"Add text or blocks that will display when a query returns no reviews."} -->';
-		$content .= '<p class="has-text-align-left">' . esc_html( $no_reviews_text ) . '</p><!-- /wp:paragraph -->';
+		$content .= '<!-- wp:paragraph {"align":"left","placeholder":"Add text or blocks that will display when a query returns no reviews.","style":{"spacing":{"margin":{"bottom":"16px"}}}} -->';
+		$content .= '<p class="has-text-align-left" style="margin-bottom:16px">' . esc_html( $no_reviews_text ) . '</p><!-- /wp:paragraph -->';
 		$content .= '<!-- wp:group {"style":{"spacing":{"padding":{"right":"0px","left":"0px"},"margin":{"top":"0","bottom":"0"}}},"layout":{"type":"flex","flexWrap":"nowrap"}} -->';
 
 		// no-reviews button with configured attributes.
@@ -445,9 +445,19 @@ class ProductReviewList extends \Bricks\Element {
 	 * @return string
 	 */
 	private function get_review_template_content( $show_date, $show_content ): string {
+		$fill_color = empty( $this->get_raw_color( 'fill_color' ) ) ? 'var(--bricks-color-primary)' : $this->get_raw_color( 'fill_color' );
+		$star_size  = ! empty( $this->settings['star_size'] ) ? absint( $this->settings['star_size'] ) : 20;
+
 		$rating_star_attrs = [
-			'fill_color' => empty( $this->get_raw_color( 'fill_color' ) ) ? 'var(--bricks-color-primary)' : $this->get_raw_color( 'fill_color' ),
-			'size'       => ! empty( $this->settings['star_size'] ) ? absint( $this->settings['star_size'] ) : 20,
+			'fill_color' => $fill_color,
+			'size'       => $star_size,
+			'style'      => [
+				'spacing' => [
+					'margin' => [
+						'bottom' => '16px',
+					],
+				],
+			],
 		];
 
 		$verified_icon_attrs = [
@@ -473,7 +483,7 @@ class ProductReviewList extends \Bricks\Element {
 			'<!-- wp:surecart/product-review-verified-badge ' . wp_json_encode( $verified_icon_attrs ) . ' /--></div>' .
 			'<!-- /wp:group -->' . $date_block . '</div>' .
 			'<!-- /wp:group -->' .
-			'<!-- wp:surecart/product-review-rating-stars {"style":{"spacing":{"margin":{"bottom":"16px"}}}} ' . wp_json_encode( $rating_star_attrs ) . ' /-->' .
+			'<!-- wp:surecart/product-review-rating-stars ' . wp_json_encode( $rating_star_attrs ) . ' /-->' .
 			'<!-- wp:surecart/product-review-title {"style":{"typography":{"fontStyle":"normal","fontWeight":"700","fontSize":"18px"},"spacing":{"margin":{"bottom":"8px"}}}} /-->' . $content_block . '</div>' .
 			'<!-- /wp:group -->' .
 			'<!-- /wp:surecart/product-review-template -->';
@@ -513,7 +523,7 @@ class ProductReviewList extends \Bricks\Element {
 	 * @return void
 	 */
 	private function render_preview( $show_header, $show_sidebar, $show_add_button, $show_date, $show_content, $show_pagination ) {
-		$content    = '<div class="wp-block-surecart-product-review-list" style="width: 100%; padding: 20px;">';
+		$content    = '<div class="wp-block-surecart-product-review-list" style="width: 100%;">';
 		$fill_color = $this->get_raw_color( 'fill_color' );
 		if ( empty( $fill_color ) ) {
 			$fill_color = 'var(--bricks-color-primary)';
@@ -521,7 +531,7 @@ class ProductReviewList extends \Bricks\Element {
 
 		// Header.
 		if ( $show_header ) {
-			$content .= '<div style="padding: 20px 0; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">';
+			$content .= '<div style="padding: 0; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;">';
 
 			if ( $show_sidebar ) {
 				$content .= '<div style="display: flex; align-items: center; gap: 8px; font-weight: 600; cursor: pointer;">';
@@ -545,10 +555,12 @@ class ProductReviewList extends \Bricks\Element {
 			}
 
 			if ( $show_add_button ) {
-				$btn_icon_size = ! empty( $this->settings['add_button_icon_size'] ) ? absint( $this->settings['add_button_icon_size'] ) : 15;
-				$btn_label     = ! empty( $this->settings['add_button_label'] ) ? wp_kses_post( $this->settings['add_button_label'] ) : esc_html__( 'Write a Review', 'surecart' );
-				$content      .= '<div style="padding: 10px 20px; border-radius: 50px; display: inline-flex; align-items: center; gap: 8px;" class="wp-block-surecart-product-review-add-button">';
-				$content      .= wp_kses(
+				$btn_icon_size  = ! empty( $this->settings['add_button_icon_size'] ) ? absint( $this->settings['add_button_icon_size'] ) : 15;
+				$btn_label      = ! empty( $this->settings['add_button_label'] ) ? wp_kses_post( $this->settings['add_button_label'] ) : esc_html__( 'Write a Review', 'surecart' );
+				$btn_bg_color   = ! empty( $this->settings['add_button_background_color'] ) ? $this->get_raw_color( 'add_button_background_color' ) : 'var(--bricks-color-primary)';
+				$btn_text_color = ! empty( $this->settings['add_button_text_color'] ) ? $this->get_raw_color( 'add_button_text_color' ) : '#000000';
+				$content       .= '<div style="padding: 10px 20px; border-radius: 50px; display: inline-flex; align-items: center; gap: 8px; background-color: ' . esc_attr( $btn_bg_color ) . '; color: ' . esc_attr( $btn_text_color ) . ';" class="wp-block-surecart-product-review-add-button">';
+				$content       .= wp_kses(
 					\SureCart::svg()->get(
 						'edit-2',
 						[
@@ -560,8 +572,8 @@ class ProductReviewList extends \Bricks\Element {
 					),
 					sc_allowed_svg_html()
 				);
-				$content      .= '<span>' . esc_html( $btn_label ) . '</span>';
-				$content      .= '</div>';
+				$content       .= '<span>' . esc_html( $btn_label ) . '</span>';
+				$content       .= '</div>';
 			}
 
 			$content .= '</div>';

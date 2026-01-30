@@ -277,7 +277,7 @@ class ProductReviewBreakdown extends \Bricks\Element {
 			$percentage = $total > 0 ? ( $count / $total ) * 100 : 0;
 
 			$content .= '<a href="#" class="sc-star-row" onclick="event.preventDefault();" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: inherit; cursor: pointer; transition: opacity 0.2s ease;">';
-			$content .= '<div class="sc-star-row__label" style="display: flex; align-items: center; justify-content: center; min-width: 35px;">';
+			$content .= '<div class="sc-star-row__label" style="display: flex; align-items: center; justify-content: center; min-width: 35px; gap: 4px;">';
 			$content .= esc_html( $star );
 			$content .= wp_kses(
 				\SureCart::svg()->get(

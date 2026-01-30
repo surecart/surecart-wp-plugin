@@ -80,10 +80,6 @@ class ProductReviewAverageRatingStars extends \Bricks\Element {
 					'selector' => 'svg',
 				],
 				[
-					'property' => 'fill',
-					'selector' => 'svg',
-				],
-				[
 					'property' => 'stroke',
 					'selector' => 'svg',
 				],

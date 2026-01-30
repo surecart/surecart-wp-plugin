@@ -100,11 +100,12 @@ class ProductReviews extends \Bricks\Element {
 									'_direction'      => 'row',
 									'_alignItems'     => 'flex-start',
 									'_columnGap'      => '30px',
-									'_justifyContent' => 'flex-start',
+									'_justifyContent' => 'space-between',
+									'_alignSelf'      => 'stretch',
 									'_margin'         => [
 										'top'    => '0',
 										'right'  => '0',
-										'bottom' => '0',
+										'bottom' => '20px',
 										'left'   => '0',
 									],
 									'_padding'        => [
@@ -124,7 +125,7 @@ class ProductReviews extends \Bricks\Element {
 											'_justifyContent' => 'center',
 											'_flexShrink' => 0,
 											'_flexGrow'   => 0,
-											'_width'      => 'auto',
+											'_width'      => '180px',
 											'_padding'    => [
 												'top'    => '0',
 												'right'  => '0',
@@ -143,7 +144,14 @@ class ProductReviews extends \Bricks\Element {
 													],
 												],
 											],
-											[ 'name' => 'surecart-product-review-average-rating-stars' ],
+											[
+												'name'     => 'surecart-product-review-average-rating-stars',
+												'settings' => [
+													'fill_color' => [
+														'hex' => 'var(--bricks-color-primary)',
+													],
+												],
+											],
 											[
 												'name'     => 'container',
 												'label'    => esc_html__( 'Product Total Rating', 'surecart' ),
@@ -197,21 +205,43 @@ class ProductReviews extends \Bricks\Element {
 											'_flexGrow'   => 1,
 											'_flexShrink' => 1,
 											'_flexBasis'  => '0%',
+											'_maxWidth'   => '500px',
 											'_overflow'   => 'hidden',
+											'_alignItems' => 'flex-end',
 										],
 										'children' => [
 											[
 												'name'     => 'surecart-product-review-breakdown',
 												'settings' => [
-													'columns' => 2,
-													'row_gap' => 15,
+													'columns'    => 2,
+													'row_gap'    => 15,
+													'fill_color' => [
+														'hex' => 'var(--bricks-color-primary)',
+													],
+													'bar_fill_color' => [
+														'hex' => 'var(--bricks-color-primary)',
+													],
 												],
 											],
 										],
 									],
 								],
 							],
-							[ 'name' => 'surecart-product-review-list' ],
+							[
+								'name'     => 'surecart-product-review-list',
+								'settings' => [
+									'_width'           => '100%',
+									'show_header'      => true,
+									'show_sidebar'     => true,
+									'show_add_button'  => true,
+									'show_review_date' => true,
+									'show_content'     => true,
+									'show_pagination'  => true,
+									'fill_color'       => [
+										'hex' => 'var(--bricks-color-primary)',
+									],
+								],
+							],
 						],
 					],
 				],

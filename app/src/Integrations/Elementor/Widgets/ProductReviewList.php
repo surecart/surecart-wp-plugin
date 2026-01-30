@@ -645,8 +645,8 @@ class ProductReviewList extends \Elementor\Widget_Base {
 		// No Reviews (outside of product-reviews wrapper).
 		$btn_attrs = $this->get_button_attributes( $settings );
 		$content  .= '<!-- wp:surecart/product-review-list-no-reviews -->';
-		$content  .= '<!-- wp:paragraph {"align":"left","placeholder":"Add text or blocks that will display when a query returns no reviews."} -->';
-		$content  .= '<p class="has-text-align-left">' . esc_html( $no_reviews_text ) . '</p><!-- /wp:paragraph -->';
+		$content  .= '<!-- wp:paragraph {"align":"left","placeholder":"Add text or blocks that will display when a query returns no reviews.","style":{"spacing":{"margin":{"bottom":"16px"}}}} -->';
+		$content  .= '<p class="has-text-align-left" style="margin-bottom:16px">' . esc_html( $no_reviews_text ) . '</p><!-- /wp:paragraph -->';
 		$content  .= '<!-- wp:group {"style":{"spacing":{"padding":{"right":"0px","left":"0px"},"margin":{"top":"0","bottom":"0"}}},"layout":{"type":"flex","flexWrap":"nowrap"}} -->';
 		$content  .= '<div class="wp-block-group" style="padding-right:0px;padding-left:0px;margin-top:0;margin-bottom:0"><!-- wp:surecart/product-review-add-button ' . wp_json_encode( $btn_attrs ) . ' /--></div><!-- /wp:group -->';
 		$content  .= '<!-- /wp:surecart/product-review-list-no-reviews -->';
