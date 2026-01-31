@@ -16,6 +16,7 @@
 			"left": "0",
 			"isLinked": true
 		},
+		"surecart_container_type": "surecart_form",
 		"_title": "Product Reviews"
 	},
 	"elements": [
@@ -88,6 +89,14 @@
 						}
 					},
 					"elements": [
+						{
+							"id": "5f4d3e2e",
+							"settings": [],
+							"elements": [],
+							"isInner": false,
+							"widgetType": "surecart-product-review-content",
+							"elType": "widget"
+						},
 						{
 							"id": "4be7d8",
 							"settings": {
