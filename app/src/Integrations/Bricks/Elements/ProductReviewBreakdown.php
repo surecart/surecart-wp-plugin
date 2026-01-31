@@ -74,22 +74,6 @@ class ProductReviewBreakdown extends \Bricks\Element {
 	 * @return void
 	 */
 	public function set_controls() {
-		$this->controls['show_for_zero_reviews'] = [
-			'tab'     => 'content',
-			'label'   => esc_html__( 'Show for Zero Reviews', 'surecart' ),
-			'type'    => 'checkbox',
-			'default' => false,
-		];
-
-		$this->controls['star_size'] = [
-			'tab'         => 'content',
-			'label'       => esc_html__( 'Star Size', 'surecart' ),
-			'type'        => 'number',
-			'units'       => true,
-			'default'     => '20px',
-			'placeholder' => '20px',
-		];
-
 		$this->controls['columns'] = [
 			'tab'         => 'content',
 			'group'       => 'column_spacing',
@@ -102,7 +86,19 @@ class ProductReviewBreakdown extends \Bricks\Element {
 			],
 			'default'     => '1',
 			'placeholder' => esc_html__( '1 Column', 'surecart' ),
-			'description' => esc_html__( 'Choose the number of columns to display the review breakdown. You may need to adjust the row & column gap accordingly.', 'surecart' ),
+			'description' => esc_html__( 'Choose the number of columns to display the review breakdown. Keep in mind the number of columns may shrink if the width is too narrow.', 'surecart' ),
+		];
+
+		$this->controls['star_size'] = [
+			'tab'         => 'content',
+			'group'       => 'column_spacing',
+			'label'       => esc_html__( 'Star Size', 'surecart' ),
+			'type'        => 'number',
+			'units'       => true,
+			'min'         => 8,
+			'max'         => 64,
+			'default'     => '20px',
+			'placeholder' => '20px',
 		];
 
 		$this->controls['row_gap'] = [
@@ -111,9 +107,10 @@ class ProductReviewBreakdown extends \Bricks\Element {
 			'label'       => esc_html__( 'Row Gap', 'surecart' ),
 			'type'        => 'number',
 			'units'       => true,
+			'min'         => 0,
+			'max'         => 50,
 			'default'     => '2px',
 			'placeholder' => '2px',
-			'description' => esc_html__( 'Adjust the spacing between rows . ', 'surecart' ),
 			'css'         => [
 				[
 					'property' => 'row-gap',
@@ -128,9 +125,10 @@ class ProductReviewBreakdown extends \Bricks\Element {
 			'label'       => esc_html__( 'Column Gap', 'surecart' ),
 			'type'        => 'number',
 			'units'       => true,
+			'min'         => 0,
+			'max'         => 100,
 			'default'     => '20px',
 			'placeholder' => '20px',
-			'description' => esc_html__( 'Adjust the spacing between columns . ', 'surecart' ),
 			'css'         => [
 				[
 					'property' => 'column-gap',
@@ -201,12 +199,11 @@ class ProductReviewBreakdown extends \Bricks\Element {
 	 * @return void
 	 */
 	public function render() {
-		$show_for_zero_reviews = ! empty( $this->settings['show_for_zero_reviews'] );
-		$star_size             = ! empty( $this->settings['star_size'] ) ? (int) $this->settings['star_size'] : 20;
-		$columns               = ! empty( $this->settings['columns'] ) ? (int) $this->settings['columns'] : 1;
-		$row_gap               = ! empty( $this->settings['row_gap'] ) ? (int) $this->settings['row_gap'] : 2;
-		$column_gap            = ! empty( $this->settings['column_gap'] ) ? (int) $this->settings['column_gap'] : 20;
-		$fill_color            = $this->get_raw_color( 'fill_color' );
+		$star_size  = ! empty( $this->settings['star_size'] ) ? (int) $this->settings['star_size'] : 20;
+		$columns    = ! empty( $this->settings['columns'] ) ? (int) $this->settings['columns'] : 1;
+		$row_gap    = ! empty( $this->settings['row_gap'] ) ? (int) $this->settings['row_gap'] : 2;
+		$column_gap = ! empty( $this->settings['column_gap'] ) ? (int) $this->settings['column_gap'] : 20;
+		$fill_color = $this->get_raw_color( 'fill_color' );
 		if ( empty( $fill_color ) ) {
 			$fill_color = 'var(--bricks-color-primary)';
 		}
@@ -219,14 +216,13 @@ class ProductReviewBreakdown extends \Bricks\Element {
 		$rendered_attributes = $this->get_block_rendered_attributes();
 
 		$attributes = [
-			'show_for_zero_reviews' => $show_for_zero_reviews,
-			'size'                  => $star_size,
-			'columns'               => $columns,
-			'row_gap'               => $row_gap,
-			'column_gap'            => $column_gap,
-			'fill_color'            => esc_attr( $fill_color ),
-			'className'             => $rendered_attributes['class'],
-			'anchor'                => $rendered_attributes['id'],
+			'size'       => $star_size,
+			'columns'    => $columns,
+			'row_gap'    => $row_gap,
+			'column_gap' => $column_gap,
+			'fill_color' => esc_attr( $fill_color ),
+			'className'  => $rendered_attributes['class'],
+			'anchor'     => $rendered_attributes['id'],
 		];
 
 		// Render the breakdown block directly without the summary wrapper.
@@ -255,7 +251,7 @@ class ProductReviewBreakdown extends \Bricks\Element {
 			2 => 5,
 			1 => 3,
 		];
-		$total = array_sum( $breakdown_data );
+		$total          = array_sum( $breakdown_data );
 
 		if ( empty( $fill_color ) ) {
 			$fill_color = 'var(--bricks-color-primary)';

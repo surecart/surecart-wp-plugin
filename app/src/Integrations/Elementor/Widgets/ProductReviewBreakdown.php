@@ -69,19 +69,6 @@ class ProductReviewBreakdown extends \Elementor\Widget_Base {
 		);
 
 		$this->add_control(
-			'show_for_zero_reviews',
-			[
-				'label'        => esc_html__( 'Show For Zero Reviews', 'surecart' ),
-				'type'         => \Elementor\Controls_Manager::SWITCHER,
-				'label_on'     => esc_html__( 'Show', 'surecart' ),
-				'label_off'    => esc_html__( 'Hide', 'surecart' ),
-				'return_value' => 'yes',
-				'default'      => 'no',
-				'description'  => esc_html__( 'Display the breakdown even when there are zero reviews.', 'surecart' ),
-			]
-		);
-
-		$this->add_control(
 			'star_size',
 			[
 				'label'      => esc_html__( 'Star Size', 'surecart' ),
@@ -89,8 +76,8 @@ class ProductReviewBreakdown extends \Elementor\Widget_Base {
 				'size_units' => [ 'px' ],
 				'range'      => [
 					'px' => [
-						'min' => 10,
-						'max' => 50,
+						'min' => 8,
+						'max' => 64,
 					],
 				],
 				'default'    => [
@@ -121,28 +108,27 @@ class ProductReviewBreakdown extends \Elementor\Widget_Base {
 					'3' => esc_html__( '3 Columns', 'surecart' ),
 				],
 				'default'     => '1',
-				'description' => esc_html__( 'Choose the number of columns to display the review breakdown. You may need to adjust the row & column gap accordingly.', 'surecart' ),
+				'description' => esc_html__( 'Choose the number of columns to display the review breakdown. Keep in mind the number of columns may shrink if the width is too narrow.', 'surecart' ),
 			]
 		);
 
 		$this->add_control(
 			'row_gap',
 			[
-				'label'       => esc_html__( 'Row Gap', 'surecart' ),
-				'type'        => \Elementor\Controls_Manager::SLIDER,
-				'size_units'  => [ 'px' ],
-				'range'       => [
+				'label'      => esc_html__( 'Row Gap', 'surecart' ),
+				'type'       => \Elementor\Controls_Manager::SLIDER,
+				'size_units' => [ 'px' ],
+				'range'      => [
 					'px' => [
 						'min' => 0,
 						'max' => 50,
 					],
 				],
-				'default'     => [
+				'default'    => [
 					'size' => 2,
 					'unit' => 'px',
 				],
-				'description' => esc_html__( 'Adjust the spacing between rows.', 'surecart' ),
-				'selectors'   => [
+				'selectors'  => [
 					'{{WRAPPER}} .wp-block-surecart-product-review-breakdown .sc-star-bars' => 'row-gap: {{SIZE}}{{UNIT}};',
 				],
 			]
@@ -151,24 +137,23 @@ class ProductReviewBreakdown extends \Elementor\Widget_Base {
 		$this->add_control(
 			'column_gap',
 			[
-				'label'       => esc_html__( 'Column Gap', 'surecart' ),
-				'type'        => \Elementor\Controls_Manager::SLIDER,
-				'size_units'  => [ 'px' ],
-				'range'       => [
+				'label'      => esc_html__( 'Column Gap', 'surecart' ),
+				'type'       => \Elementor\Controls_Manager::SLIDER,
+				'size_units' => [ 'px' ],
+				'range'      => [
 					'px' => [
 						'min' => 0,
-						'max' => 50,
+						'max' => 100,
 					],
 				],
-				'default'     => [
+				'default'    => [
 					'size' => 20,
 					'unit' => 'px',
 				],
-				'description' => esc_html__( 'Adjust the spacing between columns.', 'surecart' ),
-				'selectors'   => [
+				'selectors'  => [
 					'{{WRAPPER}} .wp-block-surecart-product-review-breakdown .sc-star-bars' => 'column-gap: {{SIZE}}{{UNIT}};',
 				],
-				'condition'   => [
+				'condition'  => [
 					'columns' => [ '2', '3' ],
 				],
 			]
@@ -285,12 +270,11 @@ class ProductReviewBreakdown extends \Elementor\Widget_Base {
 	 * @return void
 	 */
 	protected function render() {
-		$settings              = $this->get_settings_for_display();
-		$show_for_zero_reviews = 'yes' === ( $settings['show_for_zero_reviews'] ?? 'no' );
-		$star_size             = $settings['star_size']['size'] ?? 20;
-		$columns               = $settings['columns'] ?? 1;
-		$row_gap               = $settings['row_gap']['size'] ?? 2;
-		$column_gap            = $settings['column_gap']['size'] ?? 20;
+		$settings   = $this->get_settings_for_display();
+		$star_size  = $settings['star_size']['size'] ?? 20;
+		$columns    = $settings['columns'] ?? 1;
+		$row_gap    = $settings['row_gap']['size'] ?? 2;
+		$column_gap = $settings['column_gap']['size'] ?? 20;
 
 		if ( \Elementor\Plugin::$instance->editor->is_edit_mode() ) {
 			$this->render_preview( $star_size, $columns, $column_gap );
@@ -298,11 +282,10 @@ class ProductReviewBreakdown extends \Elementor\Widget_Base {
 		}
 
 		$attributes = [
-			'show_for_zero_reviews' => $show_for_zero_reviews,
-			'size'                  => absint( $star_size ),
-			'columns'               => absint( $columns ),
-			'row_gap'               => absint( $row_gap ),
-			'column_gap'            => absint( $column_gap ),
+			'size'       => absint( $star_size ),
+			'columns'    => absint( $columns ),
+			'row_gap'    => absint( $row_gap ),
+			'column_gap' => absint( $column_gap ),
 		];
 
 		// The summary wrapper causes width issues in flex containers.
