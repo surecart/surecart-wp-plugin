@@ -3,7 +3,6 @@
 namespace SureCart\Integrations\Bricks\Elements;
 
 use SureCart\Integrations\Bricks\Concerns\ConvertsBlocks;
-use SureCart\Models\Review;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -74,6 +73,23 @@ class ProductReviewContent extends \Bricks\Element {
 	}
 
 	/**
+	 * Set controls.
+	 *
+	 * @return void
+	 */
+	public function set_controls() {
+		$this->controls['info_notice'] = [
+			'tab'     => 'content',
+			'type'    => 'info',
+			'content' => sprintf(
+				'<strong>%s</strong><br><br>%s',
+				esc_html__( 'Conditional Visibility Wrapper', 'surecart' ),
+				esc_html__( 'This wrapper conditionally hides its contents when no reviews exist for the product. Place your review summary elements (Average Rating, Stars, Breakdown, etc.) inside this wrapper. Do not remove this element if you want conditional visibility.', 'surecart' )
+			),
+		];
+	}
+
+	/**
 	 * Render element.
 	 *
 	 * @return void
@@ -92,26 +108,12 @@ class ProductReviewContent extends \Bricks\Element {
 		$product = sc_get_product();
 
 		// No product - don't render.
-		if ( empty( $product ) ) {
+		if ( empty( $product ) || empty( $product->total_reviews ) ) {
 			return;
 		}
 
 		// Reviews are not enabled - don't render.
 		if ( ! apply_filters( 'surecart/review_form/enabled', $product->reviews_enabled ) ) {
-			return;
-		}
-
-		// Check if there are any published reviews for this product.
-		$reviews = Review::where(
-			[
-				'status[]'      => 'published',
-				'product_ids[]' => [ $product->id ],
-				'limit'         => 1, // We only need to know if at least one exists.
-			]
-		)->get();
-
-		// No reviews - don't render the content.
-		if ( empty( $reviews ) || is_wp_error( $reviews ) ) {
 			return;
 		}
 

@@ -77,7 +77,7 @@ class ProductReviewContent extends \Elementor\Widget_Base {
 			[
 				'type'            => \Elementor\Controls_Manager::RAW_HTML,
 				'raw'             => sprintf(
-					'<div style="padding: 10px; background: #f0f0f1; border-radius: 3px;">
+					'<div style="padding: 10px; border-radius: 3px;">
 						<strong>%s</strong><br><br>%s
 					</div>',
 					esc_html__( 'Conditional Visibility Widget', 'surecart' ),
