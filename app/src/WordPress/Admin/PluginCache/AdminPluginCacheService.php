@@ -7,6 +7,18 @@ namespace SureCart\WordPress\Admin\PluginCache;
  */
 class AdminPluginCacheService {
 	/**
+	 * Default documentation URL for cache plugins.
+	 */
+	private const DEFAULT_DOCS_URL = 'https://surecart.com/docs/caching/';
+
+	/**
+	 * Plugin-specific documentation URLs.
+	 */
+	private const PLUGIN_DOCS_URLS = [
+		'litespeed-cache/litespeed-cache.php' => 'https://surecart.com/docs/lsp-config/',
+	];
+
+	/**
 	 * Bootstrap related hooks.
 	 *
 	 * @return void
@@ -55,15 +67,9 @@ class AdminPluginCacheService {
 	 * @return string Documentation URL.
 	 */
 	public function getDocumentationUrl( string $plugin ): string {
-		$plugin_docs = apply_filters(
-			'surecart_cache_plugin_docs',
-			[
-				'litespeed-cache/litespeed-cache.php' => 'https://surecart.com/docs/lsp-config/',
-			]
-		);
+		$plugin_docs = apply_filters( 'surecart_cache_plugin_documentation_urls', self::PLUGIN_DOCS_URLS );
 
-		// Return plugin-specific URL if exists, otherwise return default.
-		return $plugin_docs[ $plugin ] ?? 'https://surecart.com/docs/caching/';
+		return $plugin_docs[ $plugin ] ?? self::DEFAULT_DOCS_URL;
 	}
 
 	/**
