@@ -93,6 +93,19 @@ export default ({ attributes, setAttributes }) => {
 					</PanelRow>
 				)}
 
+				{hasProcessor('razorpay') && (
+					<PanelRow>
+						<PaymentMethodCheckbox
+							name={__('Razorpay', 'surecart')}
+							help={__('Enable Razorpay payment', 'surecart')}
+							id={'razorpay'}
+							attributes={attributes}
+							setAttributes={setAttributes}
+							disabled={isMollieEnabled}
+						/>
+					</PanelRow>
+				)}
+
 				{hasProcessor('mock') && (
 					<PanelRow>
 						<PaymentMethodCheckbox

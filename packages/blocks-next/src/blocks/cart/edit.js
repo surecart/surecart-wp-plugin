@@ -24,7 +24,7 @@ import { store as blockEditorStore } from '@wordpress/block-editor';
 /**
  * Internal dependencies.
  */
-import { TEMPLATE } from './template';
+import TEMPLATE from './template';
 import classNames from 'classnames';
 import PatternSelectionModal from '../../utilities/pattern-selection-modal';
 import PatternsToolbar from '../../utilities/patterns-toolbar';
