@@ -28,7 +28,6 @@ export class ScSubscriptionAdHocConfirm {
   }
 
   render() {
-    console.log(this.currencyCode);
     return (
       <sc-dashboard-module heading={this.heading || __('Enter An Amount', 'surecart')} class="subscription-switch">
         <sc-card>
