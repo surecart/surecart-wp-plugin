@@ -15,11 +15,11 @@ import {
 } from '@surecart/components-react';
 
 export default ({ processor }) => {
-	const { id, icon, description, isBeta, status } = processor;
+	const { icon, description, isBeta, status } = processor;
 
 	const link = scData?.claim_url
 		? scData?.claim_url
-		: `${scData?.app_url}/processor_types/${id}?switch_account_id=${scData?.account_id}`;
+		: `${scData?.app_url}/processor_types?switch_account_id=${scData?.account_id}`;
 
 	return (
 		<ScStackedListRow href={link} target="_blank" rel="noopener noreferrer">

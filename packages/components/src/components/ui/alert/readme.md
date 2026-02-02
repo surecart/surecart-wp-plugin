@@ -89,7 +89,6 @@ Type: `Promise<void>`
  - [sc-product-buy-button](../../controllers/product/sc-product-buy-button)
  - [sc-product-item-list](../../controllers/products/sc-product-item-list)
  - [sc-product-price-modal](../../controllers/product/sc-product-price-modal)
- - [sc-razorpay-add-method](../sc-razorpay-add-method)
  - [sc-stripe-add-method](../sc-stripe-add-method)
  - [sc-stripe-payment-request](../stripe-payment-request)
  - [sc-subscription-reactivate](../../controllers/dashboard/subscription-reactivate)
@@ -128,7 +127,6 @@ graph TD;
   sc-product-buy-button --> sc-alert
   sc-product-item-list --> sc-alert
   sc-product-price-modal --> sc-alert
-  sc-razorpay-add-method --> sc-alert
   sc-stripe-add-method --> sc-alert
   sc-stripe-payment-request --> sc-alert
   sc-subscription-reactivate --> sc-alert

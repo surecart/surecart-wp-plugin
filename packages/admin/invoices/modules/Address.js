@@ -7,8 +7,6 @@ import { css, jsx } from '@emotion/core';
 import { useState, useEffect } from '@wordpress/element';
 import { __experimentalConfirmDialog as ConfirmDialog } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
-import { useSelect } from '@wordpress/data';
-import { store as coreStore } from '@wordpress/core-data';
 
 /**
  * Internal dependencies.
@@ -23,12 +21,11 @@ import {
 	ScCheckbox,
 	ScText,
 	ScFormControl,
+	ScCard,
 } from '@surecart/components-react';
 import { useInvoice } from '../hooks/useInvoice';
 import AddressDisplay from '../../components/AddressDisplay';
 import Box from '../../ui/Box';
-import PhoneNumberDisplay from './PhoneNumberDisplay';
-import PhoneNumberInput from './PhoneNumber';
 
 export default ({ checkout }) => {
 	if (!checkout?.id) {
@@ -36,27 +33,7 @@ export default ({ checkout }) => {
 	}
 
 	const [modal, setModal] = useState(false);
-	const { loading, isDraftInvoice, updateCheckout, invoice } = useInvoice();
-
-	// Check if Razorpay processor is enabled for the current mode.
-	const isRazorpayEnabled = useSelect(
-		(select) => {
-			const processors = select(coreStore).getEntityRecords(
-				'surecart',
-				'processor',
-				{ context: 'edit', per_page: 100 }
-			);
-			return (processors || []).some(
-				(p) =>
-					p?.processor_type === 'razorpay' &&
-					p?.live_mode === invoice?.live_mode &&
-					p?.enabled &&
-					p?.approved
-			);
-		},
-		[invoice?.live_mode]
-	);
-
+	const { loading, isDraftInvoice, updateCheckout } = useInvoice();
 	const [customerShippingAddress, setCustomerShippingAddress] = useState(
 		checkout?.shipping_address
 	);
@@ -225,10 +202,6 @@ export default ({ checkout }) => {
 							)}
 						</ScFormControl>
 					</div>
-
-					{isRazorpayEnabled && (
-						<PhoneNumberDisplay phone={checkout?.phone} />
-					)}
 				</div>
 			);
 		}
@@ -274,8 +247,6 @@ export default ({ checkout }) => {
 						}
 					/>
 				)}
-
-				{isRazorpayEnabled && <PhoneNumberInput checkout={checkout} />}
 			</>
 		);
 	};

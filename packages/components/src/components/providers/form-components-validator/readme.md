@@ -24,7 +24,6 @@
 - [sc-order-shipping-address](../../controllers/checkout-form/order-shipping-address)
 - [sc-order-billing-address](../../controllers/checkout-form/sc-order-billing-address)
 - [sc-order-tax-id-input](../../controllers/checkout-form/order-tax-id-input)
-- [sc-customer-phone](../../controllers/checkout-form/customer-phone)
 - [sc-order-bumps](../../controllers/checkout-form/sc-order-bumps)
 - [sc-line-item-tax](../../controllers/checkout-form/line-item-tax)
 - [sc-shipping-choices](../../ui/sc-shipping-choices)
@@ -43,7 +42,6 @@ graph TD;
   sc-form-components-validator --> sc-order-shipping-address
   sc-form-components-validator --> sc-order-billing-address
   sc-form-components-validator --> sc-order-tax-id-input
-  sc-form-components-validator --> sc-customer-phone
   sc-form-components-validator --> sc-order-bumps
   sc-form-components-validator --> sc-line-item-tax
   sc-form-components-validator --> sc-shipping-choices
@@ -87,8 +85,6 @@ graph TD;
   sc-tax-id-input --> sc-menu
   sc-tax-id-input --> sc-menu-item
   sc-button --> sc-spinner
-  sc-customer-phone --> sc-phone-input
-  sc-phone-input --> sc-form-control
   sc-order-bumps --> sc-form-control
   sc-order-bumps --> sc-order-bump
   sc-order-bump --> sc-choice

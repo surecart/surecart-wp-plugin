@@ -31,7 +31,7 @@ export const getAvailableProcessor = (type: string) => availableProcessors().fin
  * Check if there is any available credit card processor except the given processor type.
  */
 export const hasOtherAvailableCreditCardProcessor = (type: string) =>
-  availableProcessors().some(({ processor_type }) => processor_type !== type && 'paypal' !== processor_type && 'mock' !== processor_type && 'razorpay' !== processor_type);
+  availableProcessors().some(({ processor_type }) => processor_type !== type && 'paypal' !== processor_type && 'mock' !== processor_type);
 
 /**
  * Get a sorted array of manual payment methods
