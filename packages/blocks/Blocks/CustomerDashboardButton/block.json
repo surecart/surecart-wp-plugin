@@ -1,5 +1,5 @@
 {
-	"apiVersion": 2,
+	"apiVersion": 3,
 	"name": "surecart/customer-dashboard-button",
 	"title": "Customer Dashboard Button",
 	"description": "Display a button to link the user to their customer dashboard.",

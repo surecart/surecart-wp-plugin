@@ -1,6 +1,7 @@
 {
 	"name": "surecart/session-detail",
 	"title": "Session Info",
+	"apiVersion": 3,
 	"description": "Display information for a specific session.",
 	"category": "surecart",
 	"keywords": ["meta", "customer"],

@@ -76,12 +76,18 @@ export default ({ onSelect, createNew, ad_hoc, value, open = true }) => {
 					shouldCloseOnClickOutside={false}
 					onRequestClose={() => setNewModal(false)}
 				>
-					<p>Dialog for creating a new product</p>
-					<Button isPrimary onClick={() => setNewModal(false)}>
-						Create
+					<p>{__('Dialog for creating a new product', 'surecart')}</p>
+					<Button
+						variant="primary"
+						onClick={() => setNewModal(false)}
+					>
+						{__('Create', 'surecart')}
 					</Button>
-					<Button isTertiary onClick={() => setNewModal(false)}>
-						Cancel
+					<Button
+						variant="tertiary"
+						onClick={() => setNewModal(false)}
+					>
+						{__('Cancel', 'surecart')}
 					</Button>
 				</Modal>
 			)}

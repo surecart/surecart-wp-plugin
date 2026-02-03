@@ -30,6 +30,7 @@ export default ({ attributes: { label, showLabel, icon }, setAttributes }) => {
 			<InspectorControls>
 				<PanelBody>
 					<ToggleGroupControl
+						__next40pxDefaultSize
 						__nextHasNoMarginBottom
 						label={__('Arrow', 'surecart')}
 						value={icon}

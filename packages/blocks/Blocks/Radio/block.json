@@ -1,11 +1,11 @@
 {
-	"apiVersion": 2,
+	"apiVersion": 3,
 	"name": "surecart/radio",
 	"title": "Radio",
 	"description": "Display a radio input",
 	"category": "surecart",
 	"keywords": ["radio", "surecart"],
-  "textdomain": "surecart",
+	"textdomain": "surecart",
 	"ancestor": ["surecart/radio-group"],
 	"supports": {
 		"reusable": false,

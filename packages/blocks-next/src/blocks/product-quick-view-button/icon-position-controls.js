@@ -10,6 +10,7 @@ import {
 export function IconPositionControls({ value, onChange }) {
 	return (
 		<ToggleGroupControl
+			__next40pxDefaultSize
 			__nextHasNoMarginBottom
 			label={__('Icon Position')}
 			value={value}
