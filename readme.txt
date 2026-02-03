@@ -316,6 +316,17 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 
 == Changelog ==
 
+= 3.19.0 - February 4th, 2026 =
+- New: Razorpay payment processor for India.
+- Fix: Issue with incorrect currency for customer dashboard when updating Name Your Own Price.
+- Improvement: Dedicated documentation for Lightspeed caching.
+- Improvement: Ability to edit order metadata on order administration screen.
+- Improvement: Update customer deletion warning to more accurately describe the asynchronous timeline for deleting related data.
+- Improvement: Move many blocks from v2 to v3 block API.
+- Improvement: Update total installment payments wording to be more accurate in the case of coupons or discounts.
+- Fix: Multicurrency overflow issue on full-site editing themes.
+- Fix: Shipping zone summary crashing for some countries due to country code mismatch.
+
 = 3.18.0 - January 28th, 2026 =
 - New: Dynamic Pricing. Automatically apply fees or discounts based on checkout conditions like user role, cart total, products, customer type and more.
 - New: Improved test mode indicator on checkout with quick switching between test and live modes.
