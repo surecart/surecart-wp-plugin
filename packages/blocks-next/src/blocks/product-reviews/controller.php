@@ -12,13 +12,10 @@ if ( ! apply_filters( 'surecart/review_form/enabled', $product->reviews_enabled 
 	return;
 }
 
-$query   = sc_product_review_list_query( $block, $product->id );
-$reviews = $query->data ?? [];
-
-if ( empty( $reviews ) ) {
-    return;
+// Hide if there are no reviews at all (total_reviews = 0).
+if ( empty( $product->total_reviews ) ) {
+	return;
 }
-
 
 // return the view.
 return 'file:./view.php';
