@@ -303,6 +303,16 @@ class ProductsController extends AdminController {
 	}
 
 	/**
+	 * Import products.
+	 *
+	 * @return \SureCartCore\Responses\RedirectResponse
+	 */
+	public function import() {
+		error_log( 'Importing products' );
+		return 'Importing Products';
+	}
+
+	/**
 	 * Start product sync.
 	 *
 	 * @param \SureCartCore\Requests\RequestInterface $request Request.
