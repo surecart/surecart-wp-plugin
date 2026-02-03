@@ -3,31 +3,35 @@
 namespace SureCart\WordPress\Cache;
 
 /**
- * WP Fastest Cache Service.
+ * WP Super Cache Service.
  *
- * Handles WP Fastest Cache integration for SureCart including:
+ * Handles WP Super Cache integration for SureCart including:
  * - Excluding dynamic pages from caching (checkout, dashboard, cart)
  * - Excluding SureCart REST API requests from caching
  * - Purging cache on purchase events
  */
-class WpFastestCacheService extends CacheService {
+class WPSuperCacheService extends CacheService {
 	/**
-	 * Check if WP Fastest Cache plugin is active.
+	 * Check if WP Super Cache plugin is active.
 	 *
 	 * @return bool
 	 */
 	protected function isCachePluginActive(): bool {
-		return function_exists( 'wpfc_exclude_current_page' );
+		return defined( 'WPCACHEHOME' ) || function_exists( 'wp_cache_clear_cache' );
 	}
 
 	/**
 	 * Disable cache for the current page.
 	 *
+	 * WP Super Cache respects the DONOTCACHEPAGE constant.
+	 *
 	 * @param string $reason Reason for disabling cache.
 	 * @return void
 	 */
 	protected function disableCache( string $reason ): void {
-		wpfc_exclude_current_page();
+		if ( ! defined( 'DONOTCACHEPAGE' ) ) {
+			define( 'DONOTCACHEPAGE', true );
+		}
 	}
 
 	/**
@@ -50,15 +54,11 @@ class WpFastestCacheService extends CacheService {
 		$post_id = $product->metadata->wp_id ?? null;
 
 		if ( ! empty( $post_id ) ) {
-			// Try targeted cache clear first (via action hook).
-			if ( has_action( 'wpfc_clear_post_cache_by_id' ) ) {
-				do_action( 'wpfc_clear_post_cache_by_id', false, $post_id );
-			} elseif ( class_exists( 'WpFastestCache' ) ) {
-				// Fallback to clearing all cache if targeted purge not available.
-				$wpfc = new \WpFastestCache();
-				if ( method_exists( $wpfc, 'deleteCache' ) ) {
-					$wpfc->deleteCache( true );
-				}
+			// Use WP Super Cache function if available.
+			if ( function_exists( 'wpsc_delete_post_cache' ) ) {
+				wpsc_delete_post_cache( $post_id );
+			} elseif ( function_exists( 'wp_cache_post_change' ) ) {
+				wp_cache_post_change( $post_id );
 			}
 		}
 
