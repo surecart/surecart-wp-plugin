@@ -7,10 +7,11 @@
 
 ## Properties
 
-| Property  | Attribute | Description | Type     | Default     |
-| --------- | --------- | ----------- | -------- | ----------- |
-| `heading` | `heading` |             | `string` | `undefined` |
-| `price`   | --        |             | `Price`  | `undefined` |
+| Property       | Attribute       | Description | Type     | Default     |
+| -------------- | --------------- | ----------- | -------- | ----------- |
+| `currencyCode` | `currency-code` |             | `string` | `undefined` |
+| `heading`      | `heading`       |             | `string` | `undefined` |
+| `price`        | --              |             | `Price`  | `undefined` |
 
 
 ## Dependencies

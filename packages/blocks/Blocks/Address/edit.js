@@ -37,6 +37,7 @@ export default ({ attributes, setAttributes }) => {
 			<InspectorControls>
 				<PanelBody title={__('Attributes', 'surecart')}>
 					<ToggleControl
+						__nextHasNoMarginBottom
 						label={__('Required', 'surecart')}
 						checked={required}
 						onChange={(required) => setAttributes({ required })}
@@ -50,12 +51,15 @@ export default ({ attributes, setAttributes }) => {
 					/>
 
 					<TextControl
+						__next40pxDefaultSize
+						__nextHasNoMarginBottom
 						label={__('Shipping Address Label', 'surecart')}
 						value={label}
 						onChange={(label) => setAttributes({ label })}
 					/>
 
 					<ToggleControl
+						__nextHasNoMarginBottom
 						label={__('Collect Billing Address', 'surecart')}
 						checked={collect_billing}
 						onChange={(collect_billing) =>
@@ -69,6 +73,8 @@ export default ({ attributes, setAttributes }) => {
 
 					{collect_billing && (
 						<TextControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							label={__('Billing Address Toggle', 'surecart')}
 							value={billing_toggle_label}
 							onChange={(billing_toggle_label) =>
@@ -79,6 +85,8 @@ export default ({ attributes, setAttributes }) => {
 
 					{!sameAsShipping && collect_billing && (
 						<TextControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							label={__('Billing Address Label', 'surecart')}
 							value={billing_label}
 							onChange={(billing_label) =>
@@ -88,6 +96,7 @@ export default ({ attributes, setAttributes }) => {
 					)}
 
 					<ToggleControl
+						__nextHasNoMarginBottom
 						label={__('Use a compact address', 'surecart')}
 						checked={!full}
 						onChange={(full) => {
@@ -104,6 +113,7 @@ export default ({ attributes, setAttributes }) => {
 
 					{full && (
 						<ToggleControl
+							__nextHasNoMarginBottom
 							label={__('Name or company name', 'surecart')}
 							help={__(
 								'If enabled, the name or company name field will be shown.',
@@ -118,6 +128,7 @@ export default ({ attributes, setAttributes }) => {
 
 					{full && (
 						<ToggleControl
+							__nextHasNoMarginBottom
 							label={__('Show address line 2', 'surecart')}
 							checked={line_2}
 							help={__(

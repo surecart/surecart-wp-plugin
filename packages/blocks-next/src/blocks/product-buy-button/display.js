@@ -33,12 +33,12 @@ export default function Display({ attributes, setAttributes, context }) {
 				__nextHasNoMarginBottom
 			>
 				<ToggleGroupControl
+					__next40pxDefaultSize
+					__nextHasNoMarginBottom
 					label={__('Width', 'surecart')}
 					value={width}
 					onChange={(width) => setAttributes({ width })}
 					isBlock
-					__next40pxDefaultSize
-					__nextHasNoMarginBottom
 				>
 					{[25, 50, 75, 100].map((widthValue) => {
 						return (
@@ -69,6 +69,8 @@ export default function Display({ attributes, setAttributes, context }) {
 					__nextHasNoMarginBottom
 				>
 					<ToggleGroupControl
+						__next40pxDefaultSize
+						__nextHasNoMarginBottom
 						label={__('Show sticky button', 'surecart')}
 						value={show_sticky_purchase_button}
 						onChange={(show_sticky_purchase_button) =>
@@ -97,8 +99,6 @@ export default function Display({ attributes, setAttributes, context }) {
 							)
 						}
 						isBlock
-						__next40pxDefaultSize
-						__nextHasNoMarginBottom
 					>
 						<ToggleGroupControlOption
 							key={'never'}

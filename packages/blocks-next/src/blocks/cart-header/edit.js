@@ -33,6 +33,8 @@ export default ({ attributes, setAttributes }) => {
 
 				<PanelBody>
 					<TextControl
+						__next40pxDefaultSize
+						__nextHasNoMarginBottom
 						label={__('Header Text')}
 						value={text}
 						onChange={(text) => setAttributes({ text })}

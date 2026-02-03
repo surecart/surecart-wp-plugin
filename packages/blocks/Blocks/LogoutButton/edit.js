@@ -26,6 +26,8 @@ export default ({ className, attributes, setAttributes }) => {
 				<PanelBody title={__('Logout button settings')}>
 					<PanelRow>
 						<TextControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							label={__('Label', 'surecart')}
 							value={label}
 							onChange={(label) => setAttributes({ label })}
@@ -33,6 +35,7 @@ export default ({ className, attributes, setAttributes }) => {
 					</PanelRow>
 					<PanelRow>
 						<ToggleControl
+							__nextHasNoMarginBottom
 							label={__('Redirect to current URL')}
 							checked={redirectToCurrent}
 							onChange={() =>
@@ -44,6 +47,7 @@ export default ({ className, attributes, setAttributes }) => {
 					</PanelRow>
 					<PanelRow>
 						<ToggleControl
+							__nextHasNoMarginBottom
 							label={__('Show icon')}
 							checked={show_icon}
 							onChange={() =>

@@ -275,6 +275,14 @@ const { state, actions } = store('surecart/checkout', {
 			const { line_item } = getContext();
 			return line_item.price.name ?? '';
 		},
+
+		/**
+		 * Get the line item variant.
+		 */
+		get showLineItemsCount() {
+			const { line_item } = getContext();
+			return line_item?.quantity > 1;
+		},
 	},
 
 	callbacks: {

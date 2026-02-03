@@ -29,6 +29,8 @@
 | ----------- | ----------- |
 | `"base"`    |             |
 | `"content"` |             |
+| `"prefix"`  |             |
+| `"suffix"`  |             |
 
 
 ## Dependencies
@@ -54,7 +56,6 @@
  - [sc-order-shipment-badge](../order-shipment-badge)
  - [sc-order-status-badge](../order-status-badge)
  - [sc-orders-list](../../controllers/dashboard/orders-list)
- - [sc-payment](../../controllers/checkout-form/payment)
  - [sc-payment-method](../sc-payment-method)
  - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
  - [sc-premium-tag](../sc-premium-tag)
@@ -87,7 +88,6 @@ graph TD;
   sc-order-shipment-badge --> sc-tag
   sc-order-status-badge --> sc-tag
   sc-orders-list --> sc-tag
-  sc-payment --> sc-tag
   sc-payment-method --> sc-tag
   sc-payment-methods-list --> sc-tag
   sc-premium-tag --> sc-tag

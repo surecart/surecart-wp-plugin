@@ -13,6 +13,8 @@ export default ({ attributes, setAttributes }) => {
 				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
 						<TextControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							label={__('Subtotal Label', 'surecart')}
 							value={text}
 							onChange={(text) => setAttributes({ text })}
@@ -21,6 +23,8 @@ export default ({ attributes, setAttributes }) => {
 					</PanelRow>
 					<PanelRow>
 						<TextControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							label={__(
 								'Total Installment Payments Label',
 								'surecart'
@@ -30,13 +34,15 @@ export default ({ attributes, setAttributes }) => {
 								setAttributes({ total_payments_text })
 							}
 							placeholder={__(
-								'Total Installments',
+								'Total Installment Payments',
 								'surecart'
 							)}
 						/>
 					</PanelRow>
 					<PanelRow>
 						<TextControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							label={__('Initial Payment Label', 'surecart')}
 							value={first_payment_subtotal_text}
 							onChange={(first_payment_subtotal_text) =>
@@ -54,7 +60,7 @@ export default ({ attributes, setAttributes }) => {
 				</span>
 				<span slot="total-payments-description">
 					{total_payments_text ||
-						__('Total Installments', 'surecart')}
+						__('Total Installment Payments', 'surecart')}
 				</span>
 				<span slot="first-payment-subtotal-description">
 					{first_payment_subtotal_text ||

@@ -53,6 +53,23 @@ export class ScLineItemTotal {
     );
   }
 
+  renderCheckoutFees(checkout: Checkout) {
+    if (!checkout?.checkout_fees?.data?.length) {
+      return null;
+    }
+
+    return (
+      <Fragment>
+        {checkout?.checkout_fees?.data?.map(fee => (
+          <sc-line-item key={fee.id}>
+            <span slot="description">{fee.description}</span>
+            <span slot="price">{fee.display_amount}</span>
+          </sc-line-item>
+        ))}
+      </Fragment>
+    );
+  }
+
   renderLineItemDescription(checkout: Checkout) {
     if (this.total === 'subtotal' && this.hasInstallmentPlan(checkout)) {
       return (
@@ -214,6 +231,7 @@ export class ScLineItemTotal {
         </sc-line-item>
 
         {this.renderConversion()}
+        {this.total === 'subtotal' && this.renderCheckoutFees(checkout)}
       </Fragment>
     );
   }

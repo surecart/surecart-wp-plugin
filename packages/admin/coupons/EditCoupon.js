@@ -21,7 +21,7 @@ import Error from '../components/Error';
 // hocs
 import Logo from '../templates/Logo';
 import Template from '../templates/UpdateModel';
-import Codes from './modules/Codes';
+import Codes from './modules/promotion-codes';
 import Limits from './modules/Limits';
 
 // modules

@@ -8,14 +8,31 @@ class GalleryItemAttachment {
 	/**
 	 * Create a gallery item based on the attachment type.
 	 *
-	 * @param int|\WP_Post  $item           The attachment item.
-	 * @param \WP_Post|null $product_featured_image The featured image (post thumbnail) of the product.
+	 * @param int|array|\WP_Post $item The attachment item (ID, array with 'id' key, or WP_Post object).
+	 * @param \WP_Post|null      $product_featured_image The featured image (post thumbnail) of the product.
 	 *
 	 * @return null|GalleryItemImageAttachment|GalleryItemVideoAttachment
 	 */
 	protected function create( $item, $product_featured_image = null ) {
+		// Normalize the item to a post ID.
+		$post_id = null;
+
+		if ( is_numeric( $item ) ) {
+			// It's an integer ID.
+			$post_id = (int) $item;
+		} elseif ( is_array( $item ) && isset( $item['id'] ) ) {
+			// It's an array with an 'id' key.
+			$post_id = (int) $item['id'];
+		} elseif ( $item instanceof \WP_Post ) {
+			// It's already a WP_Post object.
+			$post_id = $item->ID;
+		} else {
+			// Invalid type, return null.
+			return null;
+		}
+
 		// Get the post object to check mime type.
-		$post = get_post( $item['id'] ?? $item );
+		$post = get_post( $post_id );
 
 		if ( empty( $post ) ) {
 			return null;

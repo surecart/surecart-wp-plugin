@@ -59,7 +59,11 @@ export default ({ attributes, setAttributes }) => {
 			'sc_form',
 			id
 		);
-		const canEdit = select(coreStore).canUserEditEntityRecord('sc_form');
+		const canEdit = select(coreStore).canUser('update', {
+			kind: 'postType',
+			name: 'sc_form',
+			id,
+		});
 		return {
 			canEdit,
 			isMissing: hasResolved && !form,
@@ -99,6 +103,8 @@ export default ({ attributes, setAttributes }) => {
 				<PanelBody title={__('Form Title', 'surecart')}>
 					<PanelRow>
 						<TextControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							label={__('Form Title', 'surecart')}
 							value={title}
 							onChange={(title) => setTitle(title)}
