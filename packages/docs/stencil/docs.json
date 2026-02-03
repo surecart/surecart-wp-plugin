@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-01-12T18:29:33",
+  "timestamp": "2026-01-29T15:28:56",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.18.3",
@@ -31230,7 +31230,7 @@
             "references": {
               "LayoutConfig": {
                 "location": "local",
-                "path": "/Users/andre/sites/surecart/wp-content/plugins/surecart/packages/components/src/components/controllers/products/sc-product-item-list/sc-product-item-list.tsx",
+                "path": "/Users/rajkiranbagal/LocalSites/app/public/wp-content/plugins/surecart/packages/components/src/components/controllers/products/sc-product-item-list/sc-product-item-list.tsx",
                 "id": "src/components/controllers/products/sc-product-item-list/sc-product-item-list.tsx::LayoutConfig"
               }
             }
@@ -38324,6 +38324,27 @@
       "docsTags": [],
       "usage": {},
       "props": [
+        {
+          "name": "currencyCode",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "currency-code",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
         {
           "name": "heading",
           "type": "string",

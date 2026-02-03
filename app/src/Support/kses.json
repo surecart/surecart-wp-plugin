@@ -2093,6 +2093,7 @@
     "slot": true
   },
   "sc-subscription-ad-hoc-confirm": {
+    "currency-code": true,
     "heading": true,
     "price": true,
     "style": true,
