@@ -1,6 +1,7 @@
 {
 	"name": "surecart/invoice-number",
 	"title": "Invoice Number",
+	"apiVersion": 3,
 	"description": "Displays the invoice number line item.",
 	"category": "surecart",
 	"ancestor": ["surecart/invoice-details"],

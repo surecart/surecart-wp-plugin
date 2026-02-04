@@ -2,7 +2,7 @@
 import { ToggleControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { css, jsx } from '@emotion/core';
-import { __experimentalLinkControl as LinkControl } from '@wordpress/block-editor';
+import { LinkControl } from '@wordpress/block-editor';
 
 import { ScButton } from '@surecart/components-react';
 import { useEffect, useState } from '@wordpress/element';
@@ -84,6 +84,7 @@ export default ({ onCreate, templates }) => {
 
 				<sc-dashboard-module heading={__('Thank You Page', 'surecart')}>
 					<ToggleControl
+						__nextHasNoMarginBottom
 						label={__('Custom Thank You Page', 'surecart')}
 						checked={custom_success_url}
 						onChange={(custom_success_url) =>

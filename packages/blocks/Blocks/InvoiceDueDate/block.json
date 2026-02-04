@@ -1,6 +1,7 @@
 {
 	"name": "surecart/invoice-due-date",
 	"title": "Inovoice Due Date",
+	"apiVersion": 3,
 	"description": "Displays the invoice due date line item.",
 	"category": "surecart",
 	"ancestor": ["surecart/invoice-details"],

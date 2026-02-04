@@ -37,6 +37,7 @@ export default ({ attributes, setAttributes }) => {
 					initialOpen={true}
 				>
 					<UnitControl
+						__next40pxDefaultSize
 						label={__('Width', 'surecart')}
 						labelPosition="top"
 						__unstableInputWidth="80px"

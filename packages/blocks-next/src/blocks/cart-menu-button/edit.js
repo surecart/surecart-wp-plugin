@@ -84,6 +84,7 @@ export default ({ attributes, setAttributes }) => {
 
 					<PanelRow>
 						<ToggleControl
+							__nextHasNoMarginBottom
 							label={__('Always show cart', 'surecart')}
 							help={__(
 								'Enable to always show the cart button, even when your cart is empty.',

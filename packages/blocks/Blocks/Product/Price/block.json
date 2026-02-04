@@ -1,5 +1,5 @@
 {
-	"apiVersion": 2,
+	"apiVersion": 3,
 	"name": "surecart/product-price",
 	"title": "Product Price",
 	"description": "Displays the product price or price range.",

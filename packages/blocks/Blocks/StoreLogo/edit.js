@@ -150,6 +150,7 @@ export default ({
 				<PanelBody title={__('Settings', 'surecart')}>
 					<RangeControl
 						__nextHasNoMarginBottom
+						__next40pxDefaultSize
 						label={__('Width', 'surecart')}
 						value={width}
 						min={10}
@@ -163,6 +164,7 @@ export default ({
 					/>
 
 					<ToggleControl
+						__nextHasNoMarginBottom
 						label={__('Set a maximum height', 'surecart')}
 						onChange={() =>
 							setAttributes({ maxHeight: maxHeight ? null : 100 })
@@ -173,6 +175,7 @@ export default ({
 					{maxHeight !== null && (
 						<RangeControl
 							__nextHasNoMarginBottom
+							__next40pxDefaultSize
 							label={__('Maximum height', 'surecart')}
 							value={maxHeight}
 							min={10}
@@ -190,6 +193,7 @@ export default ({
 					)}
 
 					<ToggleControl
+						__nextHasNoMarginBottom
 						label={__('Link image to home', 'surecart')}
 						onChange={() =>
 							setAttributes({ isLinkToHome: !isLinkToHome })

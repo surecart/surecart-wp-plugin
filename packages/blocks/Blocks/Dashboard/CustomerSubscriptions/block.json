@@ -1,7 +1,7 @@
 {
-	"apiVersion": 2,
 	"name": "surecart/customer-subscriptions",
 	"title": "Customer Subscriptions",
+	"apiVersion": 2,
 	"description": "Displays a customer's subscriptions.",
 	"category": "surecart-customer-dashboard",
 	"keywords": ["name", "customer", "dashboard"],

@@ -62,6 +62,8 @@ export default ({ attributes, setAttributes, isSelected, clientId }) => {
 				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
 						<TextControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							label={__('Label Name', 'surecart')}
 							value={label}
 							onChange={(label) => setAttributes({ label })}
@@ -69,6 +71,7 @@ export default ({ attributes, setAttributes, isSelected, clientId }) => {
 					</PanelRow>
 					<PanelRow>
 						<ToggleControl
+							__nextHasNoMarginBottom
 							label={__('Required', 'surecart')}
 							checked={required}
 							onChange={(required) => setAttributes({ required })}
