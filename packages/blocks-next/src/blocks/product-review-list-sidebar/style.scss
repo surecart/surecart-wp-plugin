@@ -95,6 +95,11 @@ html:has(dialog.sc-drawer[open]) {
 	scrollbar-gutter: auto;
 }
 
+// Prevent the sidebar from shrinking below its flex-basis.
+.sc-sidebar-desktop.wp-block-surecart-product-review-list-sidebar {
+	flex-shrink: 0;
+}
+
 @media (max-width: 779px) {
 	.sc-sidebar-desktop.wp-block-surecart-product-review-list-sidebar {
 		display: none;
