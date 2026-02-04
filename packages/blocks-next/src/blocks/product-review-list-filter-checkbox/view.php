@@ -17,4 +17,3 @@
 	<input tabindex="-1" class="sc-check-input" type="checkbox" id="<?php echo (int) $checkbox->value; ?>" <?php checked( $checkbox->checked ); ?> />
 	<label for="<?php echo (int) $checkbox->value; ?>" class="sc-form-label"><?php echo esc_html( $checkbox->label ); ?></label>
 </a>
-

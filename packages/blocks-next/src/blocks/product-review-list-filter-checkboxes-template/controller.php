@@ -34,11 +34,12 @@ for ( $star = 5; $star >= 1; $star-- ) {
 		: $params->addFilterArg( 'ratings', $star_value );
 
 	$options[] = [
-		'value'   => $star_value,
-		'href'    => $href,
-		'label'   => $label,
-		'count'   => $count,
-		'checked' => $is_checked,
+		'value'    => $star_value,
+		'href'     => $href,
+		'label'    => $label,
+		'count'    => $count,
+		'checked'  => $is_checked,
+		'disabled' => 0 === $count,
 	];
 }
 
