@@ -26,6 +26,7 @@ import useSave from '../UseSave';
 export default () => {
 	const [error, setError] = useState(null);
 	const [showConfirmModal, setShowConfirmModal] = useState(false);
+	const [rescheduleReminders, setRescheduleReminders] = useState(false);
 	const [pendingSave, setPendingSave] = useState(false);
 	const { save } = useSave();
 	const { item, itemError, editItem, hasLoadedItem, edits } = useEntity(
@@ -78,7 +79,7 @@ export default () => {
 	/**
 	 * Perform the actual save operation.
 	 */
-	const performSave = async (rescheduleReminders = false) => {
+	const performSave = async () => {
 		setError(null);
 		try {
 			setPendingSave(true);
@@ -117,11 +118,12 @@ export default () => {
 		// Check if reminder settings changed
 		if (hasReminderChanges()) {
 			setShowConfirmModal(true);
+			setRescheduleReminders(false);
 			return;
 		}
 
 		// No reminder changes, proceed with normal save
-		await performSave(false);
+		await performSave();
 	};
 
 	const choices = [
@@ -579,27 +581,65 @@ export default () => {
 
 			{showConfirmModal && (
 				<Modal
-					title={__('Reschedule Existing Reminders?', 'surecart')}
+					title={__('Save Changes', 'surecart')}
 					onRequestClose={() => {
 						setShowConfirmModal(false);
 						setPendingSave(false);
 					}}
 					shouldCloseOnClickOutside={false}
-					style={{ maxWidth: '600px' }}
+					style={{ maxWidth: '450px' }}
 				>
 					<ScProse>
-						<p>
+						<p style={{ color: 'var(--sc-color-gray-500)' }}>
 							{__(
-								'Apply the new reminder settings to existing subscription reminders?',
+								'These changes will affect to all new subscription reminders. Should we include existing subscription reminders too?',
 								'surecart'
 							)}
 						</p>
-						<ScTag type="default" pill>
-							<ScIcon name="info" slot="prefix" />
-							{__(
-								"Reminders within 2 hours won't be affected.",
-								'surecart'
-							)}
+						<ScSwitch
+							checked={rescheduleReminders}
+							onScChange={(e) => {
+								e.preventDefault();
+								setRescheduleReminders(!rescheduleReminders);
+							}}
+							css={css`
+								--sc-toggle-size: 20px;
+							`}
+						>
+							{__('Reschedule Existing Reminders', 'surecart')}
+						</ScSwitch>
+						<ScTag
+							css={css`
+								margin-top: var(--sc-spacing-x-large);
+								--sc-tag-default-background-color: var(
+									--sc-color-gray-50
+								);
+								border: 1px solid var(--sc-color-gray-200);
+								--sc-tag-prefix-margin-right: 8px;
+								width: 100%;
+							`}
+						>
+							<ScIcon
+								style={{
+									width: '16px',
+									height: '16px',
+									color: 'var(--sc-color-gray-500)',
+								}}
+								name="info"
+								slot="prefix"
+							/>
+							<p
+								style={{
+									color: '#111827',
+									fontSize: '12px',
+									fontWeight: 400,
+								}}
+							>
+								{__(
+									"Reminders within 2 hours won't be affected.",
+									'surecart'
+								)}
+							</p>
 						</ScTag>
 					</ScProse>
 					<div
@@ -607,22 +647,25 @@ export default () => {
 							display: flex;
 							flex-wrap: wrap;
 							gap: var(--sc-spacing-small);
-							margin-top: var(--sc-spacing-large);
+							margin-top: var(--sc-spacing-x-large);
 						`}
 					>
 						<ScButton
 							type="primary"
 							loading={pendingSave}
-							onClick={() => performSave(true)}
+							onClick={() => performSave()}
 						>
-							{__('Yes, Reschedule', 'surecart')}
+							{__('Confirm', 'surecart')}
 						</ScButton>
 						<ScButton
 							type="default"
 							disabled={pendingSave}
-							onClick={() => performSave(false)}
+							onClick={() => {
+								setShowConfirmModal(false);
+								setPendingSave(false);
+							}}
 						>
-							{__('No, Keep Current', 'surecart')}
+							{__('Cancel', 'surecart')}
 						</ScButton>
 					</div>
 				</Modal>
