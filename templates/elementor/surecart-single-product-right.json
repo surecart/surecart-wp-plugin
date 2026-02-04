@@ -753,7 +753,13 @@
 								},
 								"_title": "Product Rating",
 								"flex_direction": "column",
-								"flex_justify_content": "center"
+								"flex_justify_content": "center",
+								"width": {
+									"unit": "px",
+									"size": 280,
+									"sizes": []
+								},
+								"_flex_size": "none"
 							},
 							"elements": [
 								{
