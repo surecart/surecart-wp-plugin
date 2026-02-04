@@ -15,6 +15,15 @@ const templates = [
 		name: __('Start With Demo Products', 'surecart'),
 		imgUrl: `${scData?.plugin_url}/images/starter-templates/seed.jpg`,
 	},
+	...(scData?.is_woocommerce_active
+		? [
+				{
+					id: 'import_woocommerce_products',
+					name: __('Import WooCommerce Products', 'surecart'),
+					imgUrl: `${scData?.plugin_url}/images/starter-templates/import_woocommerce.png`,
+				},
+		  ]
+		: []),
 ];
 
 export default ({
@@ -50,11 +59,14 @@ export default ({
 					margin: 0 auto;
 					@media (min-width: 680px) {
 						padding: 30px 20px;
-						max-width: 780px;
-						grid-template-columns: repeat(2, 1fr);
+						max-width: 980px;
+						grid-template-columns: repeat(
+							${templates?.length || 3},
+							1fr
+						);
 					}
 					@media (min-width: 1024px) {
-						max-width: 760px;
+						max-width: 960px;
 					}
 				`}
 			>

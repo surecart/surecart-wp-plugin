@@ -23,11 +23,6 @@ class WooCommerceProductsSyncService {
 	 * @return void
 	 */
 	public function bootstrap() {
-		// do not run this if WooCommerce is not active.
-		if ( ! class_exists( 'WooCommerce' ) ) {
-			return;
-		}
-
 		add_action( 'admin_notices', [ $this, 'showSyncNotice' ] );
 		add_action( 'surecart/sync/woocommerce_products', [ $this, 'sync' ], 10, 2 );
 	}
@@ -71,6 +66,10 @@ class WooCommerceProductsSyncService {
 	 * @return void
 	 */
 	public function sync( $page = 1, $batch_size = 100 ) {
+		if ( ! class_exists( 'WooCommerce' ) ) {
+			return;
+		}
+
 		// get WooCommerce products.
 		$products = wc_get_products(
 			[

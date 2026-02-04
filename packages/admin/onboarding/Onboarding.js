@@ -87,6 +87,8 @@ export default () => {
 					account_currency: accountCurrency,
 					email,
 					seed: !!selectedTemplate,
+					import_woocommerce_products:
+						selectedTemplate === 'import_woocommerce_products',
 				},
 				{
 					throwOnError: true,
