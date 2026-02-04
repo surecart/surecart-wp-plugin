@@ -24,6 +24,7 @@
 - [sc-total](../total)
 - [sc-tooltip](../../../ui/tooltip)
 - [sc-icon](../../../ui/icon)
+- [sc-visually-hidden](../../../util/visually-hidden)
 
 ### Graph
 ```mermaid
@@ -34,6 +35,7 @@ graph TD;
   sc-line-item-total --> sc-total
   sc-line-item-total --> sc-tooltip
   sc-line-item-total --> sc-icon
+  sc-line-item-total --> sc-visually-hidden
   style sc-line-item-total fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
