@@ -3,6 +3,7 @@
 namespace SureCart\Sync;
 
 use SureCart\Sync\CustomerSyncService;
+use SureCart\Sync\WooCommerceProductsSyncService;
 use SureCart\Sync\PostSyncService;
 use SureCart\Sync\ProductSyncService;
 use SureCart\Sync\Jobs\Cleanup\CollectionsCleanupJob;
@@ -60,6 +61,7 @@ class SyncServiceProvider implements ServiceProviderInterface {
 		$container['surecart.sync.store']                = fn () => new StoreSyncService();
 		$container['surecart.process.product_post.sync'] = fn () => new PostSyncService();
 		$container['surecart.sync.customers']            = fn () => new CustomerSyncService();
+		$container['surecart.sync.woocommerce_products'] = fn () => new WooCommerceProductsSyncService( $app );
 		$container['surecart.sync.batch']                = fn () => new BatchCheckService();
 		$container['surecart.sync.content']              = fn () => new ContentSyncService( $app );
 
@@ -82,6 +84,7 @@ class SyncServiceProvider implements ServiceProviderInterface {
 		// bootstrap services.
 		$container['surecart.sync.products']->bootstrap();
 		$container['surecart.sync.customers']->bootstrap();
+		$container['surecart.sync.woocommerce_products']->bootstrap();
 		$container['surecart.sync.store']->bootstrap();
 		$container['surecart.sync.content']->bootstrap();
 

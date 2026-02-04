@@ -308,8 +308,18 @@ class ProductsController extends AdminController {
 	 * @return \SureCartCore\Responses\RedirectResponse
 	 */
 	public function import() {
-		error_log( 'Importing products' );
-		return 'Importing Products';
+		// enqueue action.
+		as_enqueue_async_action(
+			'surecart/sync/woocommerce_products',
+			[
+				'page'       => 1,
+				'batch_size' => apply_filters( 'surecart/sync/woocommerce_products/batch_size', 100 ),
+			],
+			'surecart'
+		);
+
+		// redirect to products page.
+		return \SureCart::redirect()->to( esc_url_raw( \SureCart::getUrl()->index( 'products' ) ) );
 	}
 
 	/**
