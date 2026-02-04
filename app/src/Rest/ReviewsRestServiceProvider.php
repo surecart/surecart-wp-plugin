@@ -214,7 +214,7 @@ class ReviewsRestServiceProvider extends RestServiceProvider implements RestServ
 	 */
 	public function create_item_permissions_check( $request ) {
 		// If customer, product, or purchase are passed, user must have edit_sc_reviews permission.
-		if ( $request->get_param( 'customer' ) || $request->get_param( 'purchase' ) ) {
+		if ( ! empty( $request->get_param( 'customer' ) ) || ! empty( $request->get_param( 'purchase' ) ) ) {
 			return current_user_can( 'edit_sc_reviews' );
 		}
 
