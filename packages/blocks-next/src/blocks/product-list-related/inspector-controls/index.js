@@ -101,6 +101,8 @@ export default function ProductListInspectorControls({
 				)}
 
 				<RangeControl
+					__nextHasNoMarginBottom
+					__next40pxDefaultSize
 					label={__('Products Per Page', 'surecart')}
 					value={perPage}
 					onChange={(perPage) => onUpdateQuery({ perPage })}
@@ -120,6 +122,8 @@ export default function ProductListInspectorControls({
 
 				{orderBy !== 'rand' && (
 					<RangeControl
+						__nextHasNoMarginBottom
+						__next40pxDefaultSize
 						label={__('Max pages to show', 'surecart')}
 						value={pages}
 						onChange={(pages) => onUpdateQuery({ pages })}
@@ -134,6 +138,7 @@ export default function ProductListInspectorControls({
 				)}
 
 				<ToggleControl
+					__nextHasNoMarginBottom
 					label={__('All Products Fallback', 'surecart')}
 					help={__(
 						'If there are no related products, show all products.',

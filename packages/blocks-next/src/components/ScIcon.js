@@ -3,6 +3,53 @@
  */
 import React, { useEffect, useState } from 'react';
 
+/**
+ * Allowed SVG attributes matching server-side sc_allowed_svg_html().
+ * This whitelist prevents XSS through dangerous attributes like onload, onerror, etc.
+ *
+ * @see app/helpers/kses-helpers.php
+ */
+const SAFE_SVG_ATTRS = [
+	// svg element
+	'class',
+	'aria-hidden',
+	'aria-labelledby',
+	'role',
+	'xmlns',
+	'width',
+	'height',
+	'viewBox',
+	'fill',
+	'stroke',
+	'stroke-width',
+	'fill-rule',
+	'stroke-linecap',
+	'stroke-linejoin',
+	'stroke-miterlimit',
+	// g, path elements
+	'transform',
+	'd',
+	// circle, ellipse elements
+	'cx',
+	'cy',
+	'r',
+	'rx',
+	'ry',
+	// line element
+	'x1',
+	'y1',
+	'x2',
+	'y2',
+	// polygon, polyline elements
+	'points',
+	// rect, text elements
+	'x',
+	'y',
+	'dx',
+	'dy',
+	'font-size',
+];
+
 export default function ({ name, ...props }) {
 	const [svgElement, setSvgElement] = useState(null);
 	const assetDir = window?.scData?.plugin_url + '/dist/icon-assets';
@@ -23,7 +70,14 @@ export default function ({ name, ...props }) {
 					svgContent,
 					'image/svg+xml'
 				);
-				setSvgElement(svgDoc?.documentElement);
+				const element = svgDoc?.documentElement;
+
+				// Only accept valid SVG elements.
+				if (element?.tagName?.toLowerCase() !== 'svg') {
+					return;
+				}
+
+				setSvgElement(element);
 			})
 			.catch(console.error);
 	}, [name, isValidName]);

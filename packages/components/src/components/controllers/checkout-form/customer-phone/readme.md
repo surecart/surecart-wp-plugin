@@ -51,6 +51,10 @@ Type: `Promise<boolean>`
 
 ## Dependencies
 
+### Used by
+
+ - [sc-form-components-validator](../../../providers/form-components-validator)
+
 ### Depends on
 
 - [sc-phone-input](../../../ui/phone-input)
@@ -61,6 +65,7 @@ graph TD;
   sc-customer-phone --> sc-phone-input
   sc-phone-input --> sc-form-control
   sc-form-control --> sc-visually-hidden
+  sc-form-components-validator --> sc-customer-phone
   style sc-customer-phone fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

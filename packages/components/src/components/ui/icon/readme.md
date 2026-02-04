@@ -59,6 +59,7 @@
  - [sc-license](../../controllers/dashboard/sc-license)
  - [sc-licenses-list](../../controllers/dashboard/sc-licenses-list)
  - [sc-line-item-invoice-receipt-download](../../controllers/checkout-form/invoice-receipt-download)
+ - [sc-line-item-total](../../controllers/checkout-form/line-item-total)
  - [sc-login-form](../../controllers/login)
  - [sc-order](../../controllers/dashboard/order)
  - [sc-order-confirm-provider](../../providers/order-confirm-provider)
@@ -128,6 +129,7 @@ graph TD;
   sc-license --> sc-icon
   sc-licenses-list --> sc-icon
   sc-line-item-invoice-receipt-download --> sc-icon
+  sc-line-item-total --> sc-icon
   sc-login-form --> sc-icon
   sc-order --> sc-icon
   sc-order-confirm-provider --> sc-icon
