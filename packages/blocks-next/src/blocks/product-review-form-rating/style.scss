@@ -9,7 +9,7 @@
 
 	// Base star styling.
 	%base-star {
-		display: contents;
+		display: inline-flex;
 		cursor: pointer;
 
 		.sc-star-row__label__svg {
@@ -54,11 +54,16 @@
 				transform: scale(1.05);
 			}
 
-			// Focus visible state for keyboard navigation.
-			&:focus-visible {
+			// Focus state for keyboard navigation.
+			&:focus {
 				outline: 2px solid var(--sc-product-review-form-rating-star-fill-color, var(--sc-color-primary-500));
 				outline-offset: 2px;
 				border-radius: 4px;
+			}
+
+			// Hide focus outline for mouse users, show only for keyboard.
+			&:focus:not(:focus-visible) {
+				outline: none;
 			}
 		}
 
