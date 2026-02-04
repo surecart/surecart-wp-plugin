@@ -276,7 +276,7 @@
 										},
 										"row_gap": {
 											"unit": "px",
-											"size": 15,
+											"size": 2,
 											"sizes": []
 										},
 										"columns": "2"

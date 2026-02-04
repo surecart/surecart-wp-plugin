@@ -201,8 +201,8 @@ class ProductReviewBreakdown extends \Bricks\Element {
 	public function render() {
 		$star_size  = ! empty( $this->settings['star_size'] ) ? (int) $this->settings['star_size'] : 20;
 		$columns    = ! empty( $this->settings['columns'] ) ? (int) $this->settings['columns'] : 1;
-		$row_gap    = ! empty( $this->settings['row_gap'] ) ? (int) $this->settings['row_gap'] : 2;
-		$column_gap = ! empty( $this->settings['column_gap'] ) ? (int) $this->settings['column_gap'] : 20;
+		$row_gap    = ! empty( $this->settings['row_gap'] ) ? $this->settings['row_gap'] : '2px';
+		$column_gap = ! empty( $this->settings['column_gap'] ) ? $this->settings['column_gap'] : '40px';
 		$fill_color = $this->get_raw_color( 'fill_color' );
 		if ( empty( $fill_color ) ) {
 			$fill_color = 'var(--bricks-color-primary)';
