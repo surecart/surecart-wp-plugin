@@ -318,6 +318,18 @@ class ProductReviewList extends \Bricks\Element {
 			'type'    => 'checkbox',
 			'default' => true,
 		];
+
+		$this->controls['reviews_per_page'] = [
+			'tab'         => 'content',
+			'group'       => 'pagination',
+			'label'       => esc_html__( 'Reviews Per Page', 'surecart' ),
+			'type'        => 'number',
+			'default'     => 10,
+			'min'         => 1,
+			'max'         => 100,
+			'step'        => 1,
+			'description' => esc_html__( 'Number of reviews to display per page.', 'surecart' ),
+		];
 	}
 
 	/**
@@ -357,8 +369,25 @@ class ProductReviewList extends \Bricks\Element {
 	 */
 	private function get_review_list_content( $show_header, $show_sidebar, $show_add_button, $show_pagination, $show_date, $show_content, $no_reviews_text ): string {
 		$rendered_attributes = $this->get_block_rendered_attributes();
+		$reviews_per_page    = ! empty( $this->settings['reviews_per_page'] ) ? absint( $this->settings['reviews_per_page'] ) : 10;
 
-		$content = '<!-- wp:surecart/product-review-list {"metadata":{"categories":["surecart_review_list"],"patternName":"surecart-product-review-standard","name":"Default Review List"},"className":"' . esc_attr( $rendered_attributes['class'] ) . '","anchor":"' . esc_attr( $rendered_attributes['id'] ) . '"} -->';
+		// Build block attributes.
+		$block_attrs = [
+			'metadata'  => [
+				'categories'  => [ 'surecart_review_list' ],
+				'patternName' => 'surecart-product-review-standard',
+				'name'        => 'Default Review List',
+			],
+			'query'     => [
+				'perPage' => $reviews_per_page,
+				'pages'   => 0,
+				'offset'  => 0,
+			],
+			'className' => $rendered_attributes['class'],
+			'anchor'    => $rendered_attributes['id'],
+		];
+
+		$content = '<!-- wp:surecart/product-review-list ' . wp_json_encode( $block_attrs ) . ' -->';
 
 		// Product Reviews wrapper - only shows content when reviews exist.
 		$content .= '<!-- wp:surecart/product-reviews -->';

@@ -238,6 +238,19 @@ class ProductReviewList extends \Elementor\Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'reviews_per_page',
+			[
+				'label'       => esc_html__( 'Reviews Per Page', 'surecart' ),
+				'type'        => \Elementor\Controls_Manager::NUMBER,
+				'default'     => 10,
+				'min'         => 1,
+				'max'         => 100,
+				'step'        => 1,
+				'description' => esc_html__( 'Number of reviews to display per page.', 'surecart' ),
+			]
+		);
+
 		$this->end_controls_section();
 	}
 
@@ -571,16 +584,31 @@ class ProductReviewList extends \Elementor\Widget_Base {
 	 * @return string
 	 */
 	private function get_review_list_content( $settings ) {
-		$show_header     = 'yes' === ( $settings['show_header'] ?? 'yes' );
-		$show_sidebar    = 'yes' === ( $settings['show_sidebar'] ?? 'yes' );
-		$show_add_button = 'yes' === ( $settings['show_add_button'] ?? 'yes' );
-		$show_pagination = 'yes' === ( $settings['show_pagination'] ?? 'yes' );
-		$show_date       = 'yes' === ( $settings['show_review_date'] ?? 'yes' );
-		$show_content    = 'yes' === ( $settings['show_content'] ?? 'yes' );
-		$no_reviews_text = $settings['no_reviews_text'] ?? esc_html__( 'No reviews yet, write one now?', 'surecart' );
+		$show_header      = 'yes' === ( $settings['show_header'] ?? 'yes' );
+		$show_sidebar     = 'yes' === ( $settings['show_sidebar'] ?? 'yes' );
+		$show_add_button  = 'yes' === ( $settings['show_add_button'] ?? 'yes' );
+		$show_pagination  = 'yes' === ( $settings['show_pagination'] ?? 'yes' );
+		$show_date        = 'yes' === ( $settings['show_review_date'] ?? 'yes' );
+		$show_content     = 'yes' === ( $settings['show_content'] ?? 'yes' );
+		$no_reviews_text  = $settings['no_reviews_text'] ?? esc_html__( 'No reviews yet, write one now?', 'surecart' );
+		$reviews_per_page = ! empty( $settings['reviews_per_page'] ) ? absint( $settings['reviews_per_page'] ) : 10;
+
+		// Build block attributes.
+		$block_attrs = [
+			'metadata' => [
+				'categories'  => [ 'surecart_review_list' ],
+				'patternName' => 'surecart-product-review-standard',
+				'name'        => 'Default Review List',
+			],
+			'query'    => [
+				'perPage' => $reviews_per_page,
+				'pages'   => 0,
+				'offset'  => 0,
+			],
+		];
 
 		// Start Review List Block content.
-		$content = '<!-- wp:surecart/product-review-list {"metadata":{"categories":["surecart_review_list"],"patternName":"surecart-product-review-standard","name":"Default Review List"}} -->';
+		$content = '<!-- wp:surecart/product-review-list ' . wp_json_encode( $block_attrs ) . ' -->';
 
 		// Product Reviews wrapper - only shows content when reviews exist.
 		$content .= '<!-- wp:surecart/product-reviews -->';
