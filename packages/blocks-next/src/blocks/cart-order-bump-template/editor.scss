@@ -22,6 +22,14 @@
 		box-sizing: border-box !important;
 	}
 
+	// Change the border to match cart line items.
+	> .block-editor-inner-blocks
+		> .block-editor-block-list__layout
+		> .wp-block-group {
+		border: 1px solid var(--sc-input-border-color);
+		border-radius: 12px;
+	}
+
 	&--preview {
 		// Hide preview item completely in editor
 		display: none !important;

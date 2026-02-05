@@ -100,7 +100,9 @@ export const TEMPLATE = [
 						left: '0em',
 					},
 					metadata: {
-						ignoredHookedBlocks: ['surecart/cart-line-item-divider'],
+						ignoredHookedBlocks: [
+							'surecart/cart-line-item-divider',
+						],
 					},
 					style: {
 						spacing: {
@@ -560,7 +562,10 @@ export const TEMPLATE = [
 								},
 								border: {
 									right: {},
-									bottom: { color: '#b0b0b069', width: '1px' },
+									bottom: {
+										color: '#b0b0b069',
+										width: '1px',
+									},
 									left: {},
 								},
 							},
@@ -570,7 +575,9 @@ export const TEMPLATE = [
 								'core/group',
 								{
 									style: {
-										spacing: { margin: { bottom: '0.75em' } },
+										spacing: {
+											margin: { bottom: '0.75em' },
+										},
 									},
 									layout: {
 										type: 'flex',
@@ -590,7 +597,10 @@ export const TEMPLATE = [
 													fontWeight: '500',
 												},
 												spacing: {
-													margin: { top: '0', bottom: '0' },
+													margin: {
+														top: '0',
+														bottom: '0',
+													},
 												},
 											},
 										},
@@ -628,11 +638,6 @@ export const TEMPLATE = [
 										'core/group',
 										{
 											style: {
-												border: {
-													radius: '12px',
-													width: '1px',
-													color: '#e0e0e0',
-												},
 												spacing: {
 													padding: {
 														top: '0.75em',
@@ -658,9 +663,12 @@ export const TEMPLATE = [
 												{
 													width: '72px',
 													style: {
-														border: { radius: '8px' },
+														border: {
+															radius: '8px',
+														},
 														layout: {
-															selfStretch: 'fixed',
+															selfStretch:
+																'fixed',
 															flexSize: '72px',
 														},
 													},
@@ -674,7 +682,9 @@ export const TEMPLATE = [
 															selfStretch: 'fill',
 															flexSize: null,
 														},
-														spacing: { blockGap: '2px' },
+														spacing: {
+															blockGap: '2px',
+														},
 													},
 													layout: {
 														type: 'flex',
@@ -687,10 +697,14 @@ export const TEMPLATE = [
 														{
 															style: {
 																typography: {
-																	fontSize: '15px',
-																	fontStyle: 'normal',
-																	fontWeight: '600',
-																	lineHeight: '1.3',
+																	fontSize:
+																		'15px',
+																	fontStyle:
+																		'normal',
+																	fontWeight:
+																		'600',
+																	lineHeight:
+																		'1.3',
 																},
 															},
 														},
@@ -700,8 +714,10 @@ export const TEMPLATE = [
 														{
 															style: {
 																typography: {
-																	fontSize: '13px',
-																	lineHeight: '1.3',
+																	fontSize:
+																		'13px',
+																	lineHeight:
+																		'1.3',
 																},
 																color: {
 																	text: '#6b7280',
@@ -714,12 +730,14 @@ export const TEMPLATE = [
 														{
 															style: {
 																spacing: {
-																	blockGap: '4px',
+																	blockGap:
+																		'4px',
 																},
 															},
 															layout: {
 																type: 'flex',
-																flexWrap: 'nowrap',
+																flexWrap:
+																	'nowrap',
 															},
 														},
 														[
@@ -727,10 +745,11 @@ export const TEMPLATE = [
 																'surecart/cart-order-bump-scratch-amount',
 																{
 																	style: {
-																		typography: {
-																			fontSize:
-																				'14px',
-																		},
+																		typography:
+																			{
+																				fontSize:
+																					'14px',
+																			},
 																	},
 																},
 															],
@@ -738,12 +757,13 @@ export const TEMPLATE = [
 																'surecart/cart-order-bump-amount',
 																{
 																	style: {
-																		typography: {
-																			fontSize:
-																				'14px',
-																			fontWeight:
-																				'500',
-																		},
+																		typography:
+																			{
+																				fontSize:
+																					'14px',
+																				fontWeight:
+																					'500',
+																			},
 																	},
 																},
 															],
@@ -762,10 +782,14 @@ export const TEMPLATE = [
 														},
 														border: {
 															radius: {
-																topLeft: '74.6%',
-																topRight: '74.6%',
-																bottomLeft: '74.6%',
-																bottomRight: '74.6%',
+																topLeft:
+																	'74.6%',
+																topRight:
+																	'74.6%',
+																bottomLeft:
+																	'74.6%',
+																bottomRight:
+																	'74.6%',
 															},
 															width: '1px',
 															color: '#d1d5db',
@@ -818,7 +842,9 @@ export const TEMPLATE = [
 									[
 										'core/group',
 										{
-											style: { spacing: { blockGap: '0px' } },
+											style: {
+												spacing: { blockGap: '0px' },
+											},
 											layout: { type: 'default' },
 										},
 										[
