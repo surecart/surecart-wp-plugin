@@ -131,10 +131,8 @@ class WooCommerceProductsSyncService {
 		$product_import_data = [
 			'name'        => $product_data['name'],
 			'slug'        => $product_data['slug'],
-			'created_at'  => $product_data['date_created'],
-			'updated_at'  => $product_data['date_modified'],
 			'featured'    => $product_data['featured'],
-			'status'      => $product_data['status'],
+			'status'      => 'publish' === $product_data['status'] ? 'published' : 'draft',
 			'description' => $product_data['description'],
 			'sku'         => $product_data['sku'],
 		];
