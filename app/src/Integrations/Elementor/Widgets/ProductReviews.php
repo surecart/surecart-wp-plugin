@@ -52,6 +52,6 @@ class ProductReviews extends \Elementor\Widget_Base {
 	 * @return array
 	 */
 	public function get_categories() {
-		return array( 'surecart-elementor-elements' );
+		return [ 'surecart-elementor-layout' ];
 	}
 }

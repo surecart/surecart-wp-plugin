@@ -685,6 +685,7 @@
 					"id": "70e51c8c",
 					"settings": {
 						"flex_direction": "row",
+						"flex_align_items": "center",
 						"content_width": "full",
 						"_title": "Review summary",
 						"background_background": "classic",
