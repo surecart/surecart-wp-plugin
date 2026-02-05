@@ -540,6 +540,8 @@ export namespace Components {
          */
         "selectorTitle": string;
     }
+    interface ScCheckoutRazorpayPaymentProvider {
+    }
     /**
      * This component listens for stock requirements and displays a dialog to the user.
      */
@@ -3332,6 +3334,12 @@ export namespace Components {
          */
         "value": string;
     }
+    interface ScRazorpayAddMethod {
+        "currency": string;
+        "customerId": string;
+        "liveMode": boolean;
+        "successUrl": string;
+    }
     interface ScRecurringPriceChoiceContainer {
         /**
           * Label for the choice.
@@ -4768,6 +4776,12 @@ declare global {
         prototype: HTMLScCheckoutProductPriceVariantSelectorElement;
         new (): HTMLScCheckoutProductPriceVariantSelectorElement;
     };
+    interface HTMLScCheckoutRazorpayPaymentProviderElement extends Components.ScCheckoutRazorpayPaymentProvider, HTMLStencilElement {
+    }
+    var HTMLScCheckoutRazorpayPaymentProviderElement: {
+        prototype: HTMLScCheckoutRazorpayPaymentProviderElement;
+        new (): HTMLScCheckoutRazorpayPaymentProviderElement;
+    };
     interface HTMLScCheckoutStockAlertElementEventMap {
         "scUpdateLineItem": LineItemData;
     }
@@ -6172,6 +6186,12 @@ declare global {
         prototype: HTMLScRadioGroupElement;
         new (): HTMLScRadioGroupElement;
     };
+    interface HTMLScRazorpayAddMethodElement extends Components.ScRazorpayAddMethod, HTMLStencilElement {
+    }
+    var HTMLScRazorpayAddMethodElement: {
+        prototype: HTMLScRazorpayAddMethodElement;
+        new (): HTMLScRazorpayAddMethodElement;
+    };
     interface HTMLScRecurringPriceChoiceContainerElementEventMap {
         "scChange": string;
     }
@@ -6760,6 +6780,7 @@ declare global {
         "sc-checkout-mollie-payment": HTMLScCheckoutMolliePaymentElement;
         "sc-checkout-paystack-payment-provider": HTMLScCheckoutPaystackPaymentProviderElement;
         "sc-checkout-product-price-variant-selector": HTMLScCheckoutProductPriceVariantSelectorElement;
+        "sc-checkout-razorpay-payment-provider": HTMLScCheckoutRazorpayPaymentProviderElement;
         "sc-checkout-stock-alert": HTMLScCheckoutStockAlertElement;
         "sc-checkout-test-complete": HTMLScCheckoutTestCompleteElement;
         "sc-checkout-unsaved-changes-warning": HTMLScCheckoutUnsavedChangesWarningElement;
@@ -6904,6 +6925,7 @@ declare global {
         "sc-quantity-select": HTMLScQuantitySelectElement;
         "sc-radio": HTMLScRadioElement;
         "sc-radio-group": HTMLScRadioGroupElement;
+        "sc-razorpay-add-method": HTMLScRazorpayAddMethodElement;
         "sc-recurring-price-choice-container": HTMLScRecurringPriceChoiceContainerElement;
         "sc-rich-text": HTMLScRichTextElement;
         "sc-secure-notice": HTMLScSecureNoticeElement;
@@ -7512,6 +7534,8 @@ declare namespace LocalJSX {
           * The title for price and variant selections
          */
         "selectorTitle"?: string;
+    }
+    interface ScCheckoutRazorpayPaymentProvider {
     }
     /**
      * This component listens for stock requirements and displays a dialog to the user.
@@ -10542,6 +10566,12 @@ declare namespace LocalJSX {
          */
         "value"?: string;
     }
+    interface ScRazorpayAddMethod {
+        "currency"?: string;
+        "customerId"?: string;
+        "liveMode"?: boolean;
+        "successUrl"?: string;
+    }
     interface ScRecurringPriceChoiceContainer {
         /**
           * Label for the choice.
@@ -11536,6 +11566,7 @@ declare namespace LocalJSX {
         "sc-checkout-mollie-payment": ScCheckoutMolliePayment;
         "sc-checkout-paystack-payment-provider": ScCheckoutPaystackPaymentProvider;
         "sc-checkout-product-price-variant-selector": ScCheckoutProductPriceVariantSelector;
+        "sc-checkout-razorpay-payment-provider": ScCheckoutRazorpayPaymentProvider;
         "sc-checkout-stock-alert": ScCheckoutStockAlert;
         "sc-checkout-test-complete": ScCheckoutTestComplete;
         "sc-checkout-unsaved-changes-warning": ScCheckoutUnsavedChangesWarning;
@@ -11680,6 +11711,7 @@ declare namespace LocalJSX {
         "sc-quantity-select": ScQuantitySelect;
         "sc-radio": ScRadio;
         "sc-radio-group": ScRadioGroup;
+        "sc-razorpay-add-method": ScRazorpayAddMethod;
         "sc-recurring-price-choice-container": ScRecurringPriceChoiceContainer;
         "sc-rich-text": ScRichText;
         "sc-secure-notice": ScSecureNotice;
@@ -11775,6 +11807,7 @@ declare module "@stencil/core" {
             "sc-checkout-mollie-payment": LocalJSX.ScCheckoutMolliePayment & JSXBase.HTMLAttributes<HTMLScCheckoutMolliePaymentElement>;
             "sc-checkout-paystack-payment-provider": LocalJSX.ScCheckoutPaystackPaymentProvider & JSXBase.HTMLAttributes<HTMLScCheckoutPaystackPaymentProviderElement>;
             "sc-checkout-product-price-variant-selector": LocalJSX.ScCheckoutProductPriceVariantSelector & JSXBase.HTMLAttributes<HTMLScCheckoutProductPriceVariantSelectorElement>;
+            "sc-checkout-razorpay-payment-provider": LocalJSX.ScCheckoutRazorpayPaymentProvider & JSXBase.HTMLAttributes<HTMLScCheckoutRazorpayPaymentProviderElement>;
             /**
              * This component listens for stock requirements and displays a dialog to the user.
              */
@@ -11940,6 +11973,7 @@ declare module "@stencil/core" {
             "sc-quantity-select": LocalJSX.ScQuantitySelect & JSXBase.HTMLAttributes<HTMLScQuantitySelectElement>;
             "sc-radio": LocalJSX.ScRadio & JSXBase.HTMLAttributes<HTMLScRadioElement>;
             "sc-radio-group": LocalJSX.ScRadioGroup & JSXBase.HTMLAttributes<HTMLScRadioGroupElement>;
+            "sc-razorpay-add-method": LocalJSX.ScRazorpayAddMethod & JSXBase.HTMLAttributes<HTMLScRazorpayAddMethodElement>;
             "sc-recurring-price-choice-container": LocalJSX.ScRecurringPriceChoiceContainer & JSXBase.HTMLAttributes<HTMLScRecurringPriceChoiceContainerElement>;
             "sc-rich-text": LocalJSX.ScRichText & JSXBase.HTMLAttributes<HTMLScRichTextElement>;
             "sc-secure-notice": LocalJSX.ScSecureNotice & JSXBase.HTMLAttributes<HTMLScSecureNoticeElement>;

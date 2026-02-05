@@ -304,6 +304,12 @@
     "class": true,
     "slot": true
   },
+  "sc-checkout-razorpay-payment-provider": {
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-checkout-stock-alert": {
     "style": true,
     "id": true,
@@ -1882,6 +1888,16 @@
     "label": true,
     "required": true,
     "value": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-razorpay-add-method": {
+    "currency": true,
+    "customer-id": true,
+    "live-mode": true,
+    "success-url": true,
     "style": true,
     "id": true,
     "class": true,
