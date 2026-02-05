@@ -5,6 +5,8 @@ import {
 	ScSelect,
 	ScAddress,
 	ScIcon,
+	ScAlert,
+	ScButton,
 } from '@surecart/components-react';
 import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
@@ -20,6 +22,7 @@ export default () => {
 	const { save } = useSave();
 
 	const {
+		record: savedAccount,
 		editedRecord: accountItem,
 		edit: editAccountItem,
 		hasResolved: hasLoadedAccountItem,
@@ -171,50 +174,57 @@ export default () => {
 							)}
 							label={__('Store Currency', 'surecart')}
 							required
-							disabled={accountItem?.currency_locked}
-							{...(accountItem?.currency_locked
-								? {}
-								: {
-										help: __(
-											'The default currency for new products.',
-											'surecart'
-										),
-								  })}
+							help={__(
+								'The currency for your store checkouts and default currency for new products.',
+								'surecart'
+							)}
 						/>
-						{accountItem?.currency_locked && (
-							<div
+					</div>
+
+					{savedAccount?.currency &&
+						savedAccount?.currency !== accountItem?.currency && (
+							<ScAlert
+								type="warning"
+								open={true}
 								css={css`
-									padding: var(--sc-spacing-small);
-									margin: 0;
-									margin-top: var(--sc-spacing-small);
-									background: var(
-										--sc-color-brand-main-background
-									);
-									display: flex;
-									align-items: center;
-									gap: var(--sc-spacing-small);
-									border-radius: var(
-										--sc-border-radius-small
-									);
+									grid-column: 1 / 3;
+									&::part(base) {
+										margin: 0;
+									}
 								`}
 							>
-								<ScIcon name="alert-circle" />
-								<div>
+								<strong>{__('Important:', 'surecart')}</strong>
+								&nbsp;
+								{__(
+									"Customers can only make purchases in your active store currency. Changing your store currency will cause existing product checkouts to fail until those products and prices are recreated in the new currency. If you have existing orders, analytics reports will also become inaccurate as they don't separate by currency.",
+									'surecart'
+								)}
+								<br />
+								<ScButton
+									href="https://surecart.com/docs/switching-store-currency"
+									target="_blank"
+									rel="noreferrer"
+									type="link"
+									style={{
+										'--sc-button-link-color':
+											'var(--sc-color-warning-600)',
+									}}
+								>
 									{__(
-										'This option is locked after live orders are placed. To change your store currency, please',
+										'Learn about all implications before switching',
 										'surecart'
-									)}{' '}
-									<a
-										href="https://surecart.com/support/open-a-ticket/"
-										target="_blank"
-										rel="noreferrer"
-									>
-										{__('contact support.', 'surecart')}
-									</a>
-								</div>
-							</div>
+									)}
+									<ScIcon
+										name="arrow-up-right"
+										slot="suffix"
+										style={{
+											width: '14px',
+											height: '14px',
+										}}
+									/>
+								</ScButton>
+							</ScAlert>
 						)}
-					</div>
 
 					<div
 						css={css`
