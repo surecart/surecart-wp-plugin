@@ -95,14 +95,7 @@ class ProvisionalAccount extends Model {
 		}
 
 		if ( ! empty( $attributes['import_woocommerce_products'] ) ) {
-			$import = as_enqueue_async_action(
-				'surecart/sync/woocommerce_products',
-				[
-					'page'       => 1,
-					'batch_size' => apply_filters( 'surecart/sync/woocommerce_products/batch_size', 100 ),
-				],
-				'surecart'
-			);
+			$import = \SureCart::sync()->woocommerce_products()->dispatch();
 
 			if ( is_wp_error( $import ) ) {
 				return $import;

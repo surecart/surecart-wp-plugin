@@ -58,6 +58,25 @@ class WooCommerceProductsSyncService {
 	}
 
 	/**
+	 * Enqueue Sync Action.
+	 *
+	 * @param string  $page Current page.
+	 * @param integer $batch_size Batch size.
+	 *
+	 * @return object
+	 */
+	public function dispatch( $page = 1, $batch_size = 100 ) {
+		return as_enqueue_async_action(
+			'surecart/sync/woocommerce_products',
+			[
+				'page'       => $page,
+				'batch_size' => apply_filters( 'surecart/sync/woocommerce_products/batch_size', $batch_size ),
+			],
+			'surecart'
+		);
+	}
+
+	/**
 	 * Sync customers.
 	 *
 	 * @param string  $page Current page.
@@ -94,14 +113,7 @@ class WooCommerceProductsSyncService {
 		}
 
 		// get the next batch.
-		return as_enqueue_async_action(
-			'surecart/sync/woocommerce_products',
-			[
-				'page'       => $page + 1,
-				'batch_size' => $batch_size,
-			],
-			'surecart'
-		);
+		return $this->dispatch( $page + 1, $batch_size );
 	}
 
 	/**

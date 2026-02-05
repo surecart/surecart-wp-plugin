@@ -309,14 +309,7 @@ class ProductsController extends AdminController {
 	 */
 	public function import() {
 		// enqueue action.
-		as_enqueue_async_action(
-			'surecart/sync/woocommerce_products',
-			[
-				'page'       => 1,
-				'batch_size' => apply_filters( 'surecart/sync/woocommerce_products/batch_size', 100 ),
-			],
-			'surecart'
-		);
+		\SureCart::sync()->woocommerce_products()->dispatch();
 
 		// redirect to products page.
 		return \SureCart::redirect()->to( esc_url_raw( \SureCart::getUrl()->index( 'products' ) ) );
