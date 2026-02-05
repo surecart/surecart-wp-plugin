@@ -15,7 +15,7 @@ class WooCommerceProductsSyncService {
 	 *
 	 * @var array
 	 */
-	private $products_import_data = [];
+	private $products_import_batch = [];
 
 	/**
 	 * Bootstrap any actions.
@@ -104,7 +104,7 @@ class WooCommerceProductsSyncService {
 			$this->syncProduct( $product_id );
 		}
 
-		( new ProductImport() )->create( [ 'data' => $this->products_import_data ] );
+		( new ProductImport() )->create( [ 'data' => $this->products_import_batch ] );
 
 		// if the total number of pages less than or equal to the current page, we don't have another page.
 		if ( $products->max_num_pages <= $page ) {
@@ -125,18 +125,118 @@ class WooCommerceProductsSyncService {
 		// get the product.
 		$product = wc_get_product( $product_id );
 
-		// get the product data.
-		$product_data = $product->get_data();
+		// map the WooCommerce Product to SureCart and save in the imports batch.
+		$this->mapWooCommerceProductToSureCart( $product );
+	}
 
+	/**
+	 * Map the WooCommerce Product to SureCart.
+	 *
+	 * @param array $product WooCoomerce Product.
+	 *
+	 * @return void
+	 */
+	public function mapWooCommerceProductToSureCart( $product ) {
+		// Core Fields.
 		$product_import_data = [
-			'name'        => $product_data['name'],
-			'slug'        => $product_data['slug'],
-			'featured'    => $product_data['featured'],
-			'status'      => 'publish' === $product_data['status'] ? 'published' : 'draft',
-			'description' => $product_data['description'],
-			'sku'         => $product_data['sku'],
+			'name'        => $product->get_name(),
+			'slug'        => $product->get_slug(),
+			'featured'    => $product->is_featured(),
+			'status'      => $product->get_status() === 'publish' ? 'published' : 'draft',
+			'description' => $product->get_description() ?? null,
+			'sku'         => $product->get_sku() ?? null,
 		];
 
-		$this->products_import_data[] = $product_import_data;
+		// Stock Fields.
+		$managing_stock = $product->managing_stock();
+
+		if ( $managing_stock ) {
+			$product_import_data = array_merge(
+				$product_import_data,
+				[
+					'stock_enabled'                => $managing_stock,
+					'allow_out_of_stock_purchases' => $product->backorders_allowed(),
+					'stock_adjustment'             => $managing_stock ? (int) $product->get_stock_quantity() : 0,
+				]
+			);
+		}
+
+		// Shipping Fields.
+		$is_digital = $product->is_virtual();
+
+		if ( ! $is_digital ) {
+			$product_import_data = array_merge(
+				$product_import_data,
+				[
+					'shipping_enabled'     => true,
+					'auto_fulfill_enabled' => false,
+
+					'weight'               => (float) $product->get_weight(),
+					'weight_unit'          => get_option( 'woocommerce_weight_unit' ),
+
+					'dimensions'           => [
+						'length' => (float) $product->get_length(),
+						'width'  => (float) $product->get_width(),
+						'height' => (float) $product->get_height(),
+						'unit'   => get_option( 'woocommerce_dimension_unit' ),
+					],
+				]
+			);
+		} else {
+			$product_import_data = array_merge(
+				$product_import_data,
+				[
+					'shipping_enabled'     => false,
+					'auto_fulfill_enabled' => true,
+				]
+			);
+		}
+
+		// Tax Fields.
+		$taxable      = $product->is_taxable();
+		$tax_category = $is_digital || $product->is_downloadable() ? 'digital' : 'tangible';
+
+		$product_import_data = array_merge(
+			$product_import_data,
+			[
+				'tax_enabled'  => $taxable,
+				'tax_category' => $tax_category,
+			]
+		);
+
+		// Reviews Fields.
+		$product_import_data = array_merge(
+			$product_import_data,
+			[
+				'reviews_enabled' => comments_open( $product->get_id() ),
+				'solicit_reviews' => true,
+			]
+		);
+
+		// Media Fields.
+		$media = [];
+
+		if ( $image_id === $product->get_image_id() ) {
+			$media[] = [
+				'type' => 'image',
+				'url'  => wp_get_attachment_url( $image_id ),
+			];
+		}
+
+		foreach ( $product->get_gallery_image_ids() as $id ) {
+			$media[] = [
+				'type' => 'image',
+				'url'  => wp_get_attachment_url( $id ),
+			];
+		}
+
+		$product_import_data = array_merge(
+			$product_import_data,
+			[
+				'product_medias' => $media,
+			]
+		);
+
+		$this->products_import_batch[] = $product_import_data;
 	}
 }
