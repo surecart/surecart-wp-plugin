@@ -40,10 +40,42 @@ export class ScOrderConfirmationTotals {
             ({humanDiscount})
           </span>
         )}
-        <span slot="price">
-          {this.order?.discounts_display_amount}
-        </span>
+        <span slot="price">{this.order?.discounts_display_amount}</span>
       </sc-line-item>
+    );
+  }
+
+  renderCheckoutFees(checkout: Checkout) {
+    if (!checkout?.checkout_fees?.data?.length) {
+      return null;
+    }
+
+    return (
+      <Fragment>
+        {checkout?.checkout_fees?.data?.map(fee => (
+          <sc-line-item key={fee?.id}>
+            <span slot="description">{fee?.description}</span>
+            <span slot="price">{fee?.display_amount}</span>
+          </sc-line-item>
+        ))}
+      </Fragment>
+    );
+  }
+
+  renderShippingFees(checkout: Checkout) {
+    if (!checkout?.shipping_fees?.data?.length) {
+      return null;
+    }
+
+    return (
+      <Fragment>
+        {checkout?.shipping_fees?.data?.map(fee => (
+          <sc-line-item key={fee?.id}>
+            <span slot="description">{fee?.description}</span>
+            <span slot="price">{fee?.display_amount}</span>
+          </sc-line-item>
+        ))}
+      </Fragment>
     );
   }
 
@@ -53,18 +85,21 @@ export class ScOrderConfirmationTotals {
     return (
       <div class={{ 'line-item-totals': true }}>
         {this.order?.subtotal_amount !== this.order?.total_amount && (
-          <sc-line-item>
-            <span slot="description">{__('Subtotal', 'surecart')}</span>
-            <span
-              slot="price"
-              style={{
-                'font-weight': 'var(--sc-font-weight-semibold)',
-                'color': 'var(--sc-color-gray-800)',
-              }}
-            >
-              {this.order?.subtotal_display_amount}
-            </span>
-          </sc-line-item>
+          <Fragment>
+            <sc-line-item>
+              <span slot="description">{__('Subtotal', 'surecart')}</span>
+              <span
+                slot="price"
+                style={{
+                  'font-weight': 'var(--sc-font-weight-semibold)',
+                  'color': 'var(--sc-color-gray-800)',
+                }}
+              >
+                {this.order?.subtotal_display_amount}
+              </span>
+            </sc-line-item>
+            {this.renderCheckoutFees(this.order)}
+          </Fragment>
         )}
 
         {!!this.order?.trial_amount && (
@@ -120,18 +155,21 @@ export class ScOrderConfirmationTotals {
         )}
 
         {!!this.order?.shipping_amount && (
-          <sc-line-item>
-            <span slot="description">{`${__('Shipping', 'surecart')} ${shippingMethodName ? `(${shippingMethodName})` : ''}`}</span>
-            <span
-              slot="price"
-              style={{
-                'font-weight': 'var(--sc-font-weight-semibold)',
-                'color': 'var(--sc-color-gray-800)',
-              }}
-            >
-              {this.order?.shipping_display_amount}
-            </span>
-          </sc-line-item>
+          <Fragment>
+            <sc-line-item>
+              <span slot="description">{`${__('Shipping', 'surecart')} ${shippingMethodName ? `(${shippingMethodName})` : ''}`}</span>
+              <span
+                slot="price"
+                style={{
+                  'font-weight': 'var(--sc-font-weight-semibold)',
+                  'color': 'var(--sc-color-gray-800)',
+                }}
+              >
+                {this.order?.shipping_display_amount}
+              </span>
+            </sc-line-item>
+            {this.renderShippingFees(this.order)}
+          </Fragment>
         )}
 
         {!!this.order?.tax_amount && (

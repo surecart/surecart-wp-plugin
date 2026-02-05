@@ -21,13 +21,14 @@ import useCartStyles from '../../hooks/useCartStyles';
 export default ({ attributes, setAttributes }) => {
 	const { text, button_text, collapsed, placeholder } = attributes;
 	const discountInputRef = useRef();
+	const wrapperRef = useRef();
 
 	const blockProps = useBlockProps({
 		style: useCartStyles({ attributes }),
 	});
 
 	const [discountInputOpen, setDiscountInputOpen] = useState(false);
-	const [prmotionCode, setPromotionCode] = useState('');
+	const [promotionCode, setPromotionCode] = useState('');
 	const [promotionApplied, setPromotionApplied] = useState(false);
 	const [discountIsRedeemable, setDiscountIsRedeemable] = useState(true);
 
@@ -43,11 +44,14 @@ export default ({ attributes, setAttributes }) => {
 			}
 		}
 
+		// Get the ownerDocument from the wrapper ref for iframe compatibility
+		const ownerDocument = wrapperRef.current?.ownerDocument || document;
+
 		// Bind the event listener
-		document.addEventListener('mousedown', handleOutsideClick);
+		ownerDocument.addEventListener('mousedown', handleOutsideClick);
 		return () => {
 			// Unbind the event listener on clean up
-			document.removeEventListener('mousedown', handleOutsideClick);
+			ownerDocument.removeEventListener('mousedown', handleOutsideClick);
 		};
 	}, [discountInputOpen]);
 
@@ -61,7 +65,7 @@ export default ({ attributes, setAttributes }) => {
 					<div class="sc-line-item__description">
 						{__('Discount', 'surecart')}
 						<div class="sc-tag sc-tag--default">
-							{prmotionCode}
+							{promotionCode}
 
 							<button
 								onClick={() => {
@@ -109,12 +113,12 @@ export default ({ attributes, setAttributes }) => {
 					placeholder={
 						placeholder || __('Enter coupon code', 'surecart')
 					}
-					value={prmotionCode}
+					value={promotionCode}
 					onChange={(e) => setPromotionCode(e.target.value)}
 				/>
 				<span class="sc-input-group-text" id="basic-addon1">
 					<button
-						hidden={!prmotionCode}
+						hidden={!promotionCode}
 						onClick={() => {
 							setDiscountInputOpen(false);
 							setPromotionApplied(true);
@@ -147,6 +151,8 @@ export default ({ attributes, setAttributes }) => {
 					</PanelRow>
 					<PanelRow>
 						<TextControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							label={__('Label', 'surecart')}
 							value={text}
 							onChange={(text) => setAttributes({ text })}
@@ -154,6 +160,8 @@ export default ({ attributes, setAttributes }) => {
 					</PanelRow>
 					<PanelRow>
 						<TextControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							label={__('Placeholder', 'surecart')}
 							value={placeholder}
 							onChange={(placeholder) =>
@@ -163,6 +171,8 @@ export default ({ attributes, setAttributes }) => {
 					</PanelRow>
 					<PanelRow>
 						<TextControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							label={__('Button Text', 'surecart')}
 							value={button_text}
 							onChange={(button_text) =>
@@ -173,7 +183,7 @@ export default ({ attributes, setAttributes }) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<div {...blockProps}>
+			<div {...blockProps} ref={wrapperRef}>
 				<div className="sc-cart-coupon__wrapper">
 					{promotionApplied ? (
 						renderDiscountedState()

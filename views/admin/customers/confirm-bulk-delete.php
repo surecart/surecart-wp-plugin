@@ -49,7 +49,7 @@
 					<sc-heading size="large"><?php esc_html_e( 'Delete Customers', 'surecart' ); ?></sc-heading>
 
 					<sc-text>
-						<?php echo esc_html( _n( 'Are you sure you want to permanently delete this customer? All associated subscriptions, payments, and purchases will also be deleted. This cannot be undone.', 'Are you sure you want to permanently delete these customers? All associated subscriptions, payments, and purchases will also be deleted. This cannot be undone.', count( $customers ), 'surecart' ) ); ?>
+						<?php echo esc_html( _n( 'Are you sure you want to permanently delete this customer? All associated subscriptions, payments, and purchases will also be deleted within 24 hours. This cannot be undone.', 'Are you sure you want to permanently delete these customers? All associated subscriptions, payments, and purchases will also be deleted within 24 hours. This cannot be undone.', count( $customers ), 'surecart' ) ); ?>
 					</sc-text>
 
 					<ul class="sc-customer-list">

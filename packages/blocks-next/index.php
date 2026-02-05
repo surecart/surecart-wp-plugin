@@ -543,6 +543,20 @@ add_action(
 			$static_assets['version']
 		);
 
+		// Line Item Note.
+		$static_assets = include trailingslashit( plugin_dir_path( __FILE__ ) ) . 'build/scripts/line-item-note/index.asset.php';
+		wp_register_script_module(
+			'@surecart/line-item-note',
+			trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/line-item-note/index.js',
+			array(
+				array(
+					'id'     => '@wordpress/interactivity',
+					'import' => 'dynamic',
+				),
+			),
+			$static_assets['version']
+		);
+
 		// Order Bumps.
 		$static_assets = include trailingslashit( plugin_dir_path( __FILE__ ) ) . 'build/scripts/order-bumps/index.asset.php';
 		wp_register_script_module(
@@ -563,20 +577,6 @@ add_action(
 				),
 				array(
 					'id'     => '@surecart/a11y',
-					'import' => 'dynamic',
-				),
-			),
-			$static_assets['version']
-		);
-
-		// Line Item Note.
-		$static_assets = include trailingslashit( plugin_dir_path( __FILE__ ) ) . 'build/scripts/line-item-note/index.asset.php';
-		wp_register_script_module(
-			'@surecart/line-item-note',
-			trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/line-item-note/index.js',
-			array(
-				array(
-					'id'     => '@wordpress/interactivity',
 					'import' => 'dynamic',
 				),
 			),

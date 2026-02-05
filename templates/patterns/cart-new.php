@@ -7,7 +7,7 @@ return [
 	'categories' => [ 'surecart_cart' ],
 	'blockTypes' => [ 'surecart/slide-out-cart' ],
 	'priority'   => 2,
-	'content'    => '<!-- wp:surecart/slide-out-cart {"metadata":{"categories":["surecart_cart"],"patternName":"surecart-cart-new","name":"Cart"},"style":{"color":{"background":"#ffffff"},"typography":{"fontSize":"15px"},"spacing":{"blockGap":"0px"}},"layout":{"type":"default"}} -->
+	'content'    => '<!-- wp:surecart/slide-out-cart {"metadata":{"categories":["surecart_cart"],"patternName":"surecart-cart-new","name":"Cart"},"style":{"typography":{"fontSize":"15px"},"spacing":{"blockGap":"0px"}},"layout":{"type":"default"}} -->
 <!-- wp:group {"style":{"spacing":{"padding":{"top":"1.5em","bottom":"0em","left":"2em","right":"2em"}}},"layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"space-between"}} -->
 <div class="wp-block-group" style="padding-top:1.5em;padding-right:2em;padding-bottom:0em;padding-left:2em"><!-- wp:surecart/cart-close-button {"style":{"typography":{"lineHeight":"1"}}} /-->
 

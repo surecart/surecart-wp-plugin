@@ -19,6 +19,8 @@ export default ({ attributes, setAttributes }) => {
 			<PanelBody title={__('Attributes', 'surecart')}>
 				<PanelRow>
 					<TextControl
+						__next40pxDefaultSize
+						__nextHasNoMarginBottom
 						label={__('Label', 'surecart')}
 						value={label}
 						onChange={(label) => setAttributes({ label })}
@@ -86,6 +88,19 @@ export default ({ attributes, setAttributes }) => {
 							name={__('Paystack', 'surecart')}
 							help={__('Enable Paystack payment', 'surecart')}
 							id={'paystack'}
+							attributes={attributes}
+							setAttributes={setAttributes}
+							disabled={isMollieEnabled}
+						/>
+					</PanelRow>
+				)}
+
+				{hasProcessor('razorpay') && (
+					<PanelRow>
+						<PaymentMethodCheckbox
+							name={__('Razorpay', 'surecart')}
+							help={__('Enable Razorpay payment', 'surecart')}
+							id={'razorpay'}
 							attributes={attributes}
 							setAttributes={setAttributes}
 							disabled={isMollieEnabled}
