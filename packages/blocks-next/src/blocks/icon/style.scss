@@ -10,6 +10,10 @@
 	span {
 		display: inline-block;
 	}
+
+	&.aligncenter {
+		text-align: center;
+	}
 }
 
 a.wp-block-surecart-icon {

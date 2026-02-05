@@ -10,6 +10,7 @@
 	"example": {},
 	"supports": {
 		"interactivity": true,
+		"align": ["left", "center", "right"],
 		"color": {
 			"gradients": true,
 			"link": false,

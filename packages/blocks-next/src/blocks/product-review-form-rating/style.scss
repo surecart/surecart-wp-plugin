@@ -1,7 +1,7 @@
 .wp-block-surecart-product-review-form-rating {
 	display: flex;
 	flex-direction: column;
-	gap: 0.5rem;
+	gap: 0px;
 
 	.sc-form-label {
 		color: inherit;
@@ -56,7 +56,11 @@
 
 			// Focus state for keyboard navigation.
 			&:focus {
-				outline: 2px solid var(--sc-product-review-form-rating-star-fill-color, var(--sc-color-primary-500));
+				outline: 2px solid
+					var(
+						--sc-product-review-form-rating-star-fill-color,
+						var(--sc-color-primary-500)
+					);
 				outline-offset: 2px;
 				border-radius: 4px;
 			}
