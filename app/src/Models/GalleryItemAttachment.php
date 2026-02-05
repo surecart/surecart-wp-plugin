@@ -26,6 +26,9 @@ class GalleryItemAttachment {
 		} elseif ( $item instanceof \WP_Post ) {
 			// It's already a WP_Post object.
 			$post_id = $item->ID;
+		} elseif ( is_object( $item ) && isset( $item->id ) ) {
+			// It's an object with an 'id' property (e.g., stdClass from JSON decode).
+			$post_id = (int) $item->id;
 		} else {
 			// Invalid type, return null.
 			return null;
