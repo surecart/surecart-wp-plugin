@@ -9,6 +9,7 @@
 	);
 	?>
 	data-wp-on--click="surecart/order-bumps::actions.nextPage"
+	data-wp-on--keydown="surecart/order-bumps::actions.handleNextKeydown"
 	data-wp-bind--disabled="!state.hasNextPage"
 	data-wp-bind--aria-disabled="!state.hasNextPage"
 	aria-label="<?php esc_attr_e( 'Next page', 'surecart' ); ?>"

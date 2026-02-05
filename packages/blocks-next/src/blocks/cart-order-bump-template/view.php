@@ -2,6 +2,9 @@
 	<?php echo wp_kses_data( get_block_wrapper_attributes( [ 'role' => 'list' ] ) ); ?>
 	data-wp-class--has-overflow="state.hasMultipleBumps"
 	data-wp-on-async--scrollend="callbacks.onCarouselScroll"
+	data-wp-on--keydown="actions.handleCarouselKeydown"
+	tabindex="0"
+	aria-label="<?php esc_attr_e( 'Order bumps carousel. Use left and right arrow keys to navigate.', 'surecart' ); ?>"
 >
 	<template
 		data-wp-each--bump="state.orderBumps"

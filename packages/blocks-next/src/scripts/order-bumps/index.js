@@ -185,6 +185,64 @@ const { state, actions } = store('surecart/order-bumps', {
 		},
 
 		/**
+		 * Scroll to previous item.
+		 */
+		previousPage: function* (e) {
+			e?.preventDefault();
+			if (state.hasPreviousPage) {
+				state.currentIndex--;
+				actions.scrollToCurrentItem(e);
+			}
+		},
+
+		/**
+		 * Scroll to next item.
+		 */
+		nextPage: function* (e) {
+			e?.preventDefault();
+			if (state.hasNextPage) {
+				state.currentIndex++;
+				actions.scrollToCurrentItem(e);
+			}
+		},
+
+		/**
+		 * Handle keydown on previous button (Enter/Space to navigate).
+		 */
+		handlePreviousKeydown(e) {
+			if (e.key === 'Enter' || e.key === ' ') {
+				e.preventDefault();
+				actions.previousPage(e);
+			}
+		},
+
+		/**
+		 * Handle keydown on next button (Enter/Space to navigate).
+		 */
+		handleNextKeydown(e) {
+			if (e.key === 'Enter' || e.key === ' ') {
+				e.preventDefault();
+				actions.nextPage(e);
+			}
+		},
+
+		/**
+		 * Handle keydown on carousel for arrow key navigation.
+		 */
+		handleCarouselKeydown(e) {
+			// Only handle arrow keys.
+			if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+				e.preventDefault();
+
+				if (e.key === 'ArrowLeft') {
+					actions.previousPage(e);
+				} else if (e.key === 'ArrowRight') {
+					actions.nextPage(e);
+				}
+			}
+		},
+
+		/**
 		 * Add bump to cart.
 		 */
 		addBumpToCart: function* (e) {
@@ -238,28 +296,6 @@ const { state, actions } = store('surecart/order-bumps', {
 				checkoutState.error = error;
 			} finally {
 				checkoutState.loading = false;
-			}
-		},
-
-		/**
-		 * Scroll to previous item.
-		 */
-		previousPage(e) {
-			e?.preventDefault();
-			if (state.hasPreviousPage) {
-				state.currentIndex--;
-				actions.scrollToCurrentItem(e);
-			}
-		},
-
-		/**
-		 * Scroll to next item.
-		 */
-		nextPage(e) {
-			e?.preventDefault();
-			if (state.hasNextPage) {
-				state.currentIndex++;
-				actions.scrollToCurrentItem(e);
 			}
 		},
 
@@ -329,7 +365,10 @@ const { state, actions } = store('surecart/order-bumps', {
 			const newIndex = Math.round(scrollLeft / (itemWidth + gap));
 
 			// Clamp to valid range and update if changed.
-			const clampedIndex = Math.max(0, Math.min(newIndex, items.length - 1));
+			const clampedIndex = Math.max(
+				0,
+				Math.min(newIndex, items.length - 1)
+			);
 			if (state.currentIndex !== clampedIndex) {
 				state.currentIndex = clampedIndex;
 			}
