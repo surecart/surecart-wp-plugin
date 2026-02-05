@@ -150,7 +150,11 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, Object
 	 * @param array $attributes Optional attributes.
 	 */
 	public function __construct( $attributes = [] ) {
-		// filter meta data setting.
+		// Allow skipping filter registration during bulk operations (e.g., sitemap generation).
+		if ( apply_filters( "surecart/$this->object_name/skip_filters", false ) ) {
+			return;
+		}
+
 		add_filter( "surecart/$this->object_name/set_meta_data", [ $this, 'filterMetaData' ], 9 );
 
 		// if we have string here, assume it's the id.

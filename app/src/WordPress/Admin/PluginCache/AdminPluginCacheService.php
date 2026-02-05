@@ -7,6 +7,18 @@ namespace SureCart\WordPress\Admin\PluginCache;
  */
 class AdminPluginCacheService {
 	/**
+	 * Default documentation URL for cache plugins.
+	 */
+	private const DEFAULT_DOCS_URL = 'https://surecart.com/docs/caching/';
+
+	/**
+	 * Plugin-specific documentation URLs.
+	 */
+	private const PLUGIN_DOCS_URLS = [
+		'litespeed-cache/litespeed-cache.php' => 'https://surecart.com/docs/lsp-config/',
+	];
+
+	/**
 	 * Bootstrap related hooks.
 	 *
 	 * @return void
@@ -49,6 +61,18 @@ class AdminPluginCacheService {
 	}
 
 	/**
+	 * Get documentation URL for a specific cache plugin.
+	 *
+	 * @param string $plugin Plugin path/slug.
+	 * @return string Documentation URL.
+	 */
+	public function getDocumentationUrl( string $plugin ): string {
+		$plugin_docs = apply_filters( 'surecart_cache_plugin_documentation_urls', self::PLUGIN_DOCS_URLS );
+
+		return $plugin_docs[ $plugin ] ?? self::DEFAULT_DOCS_URL;
+	}
+
+	/**
 	 * Show the plugin cache notice.
 	 *
 	 * @return void
@@ -71,6 +95,9 @@ class AdminPluginCacheService {
 				continue;
 			}
 
+			// Get the documentation URL for this plugin.
+			$docs_url = $this->getDocumentationUrl( $plugin );
+
 			// Render the notice.
 			echo wp_kses_post(
 				\SureCart::notices()->render(
@@ -89,7 +116,7 @@ class AdminPluginCacheService {
 							$plugin_data['Version']
 						)
 						.
-						'<p><a href="https://surecart.com/docs/caching/" target="_blank">' . esc_html__( 'Review Configuration Guide', 'surecart' ) . '</a></p>',
+						'<p><a href="' . esc_url( $docs_url ) . '" target="_blank">' . esc_html__( 'Review Configuration Guide', 'surecart' ) . '</a></p>',
 					]
 				)
 			);

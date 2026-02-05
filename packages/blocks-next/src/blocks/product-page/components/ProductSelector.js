@@ -1,7 +1,7 @@
 /**
  * External dependencies.
  */
-import { __experimentalLinkControl as LinkControl } from '@wordpress/block-editor';
+import { LinkControl } from '@wordpress/block-editor';
 import { Popover } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 

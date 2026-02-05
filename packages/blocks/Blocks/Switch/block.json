@@ -1,10 +1,11 @@
 {
 	"name": "surecart/switch",
 	"title": "Switch",
+	"apiVersion": 3,
 	"description": "Display a toggle switch.",
 	"category": "surecart",
 	"keywords": ["submit", "button"],
-  "textdomain": "surecart",
+	"textdomain": "surecart",
 	"ancestor": ["surecart/form"],
 	"supports": {
 		"reusable": false,
