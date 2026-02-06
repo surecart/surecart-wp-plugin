@@ -94,6 +94,9 @@ export class ScInput {
   /** A pattern to validate input against. */
   @Prop() pattern: string;
 
+  /** Custom validation message to show when the input is invalid (replaces browser default). */
+  @Prop() customValidity: string;
+
   /** Makes the input a required field. */
   @Prop({ reflect: true }) required = false;
 
@@ -194,7 +197,15 @@ export class ScInput {
 
   handleInput() {
     this.value = this.input.value;
+    // Clear custom validity so browser can re-validate.
+    this.input.setCustomValidity('');
     this.scInput.emit();
+  }
+
+  handleInvalid() {
+    if (this.customValidity) {
+      this.input.setCustomValidity(this.customValidity);
+    }
   }
 
   handleClearClick(event: MouseEvent) {
@@ -306,7 +317,7 @@ export class ScInput {
                 value={this.value}
                 onChange={() => this.handleChange()}
                 onInput={() => this.handleInput()}
-                // onInvalid={this.handleInvalid}
+                onInvalid={() => this.handleInvalid()}
                 onFocus={() => this.handleFocus()}
                 onBlur={() => this.handleBlur()}
                 onKeyDown={e => {

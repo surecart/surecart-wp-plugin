@@ -82,6 +82,9 @@ export class ScCompactAddress {
   @State() showState: boolean;
   @State() showPostal: boolean;
 
+  /** Postal code regex pattern for validation. */
+  @State() postalCodeRegex: string;
+
   /** When the state changes, we want to update city and postal fields. */
   @Watch('address')
   handleAddressChange() {
@@ -123,6 +126,7 @@ export class ScCompactAddress {
       })) || [];
 
     this.placeholders = countryDetails?.address_labels;
+    this.postalCodeRegex = countryDetails?.postal_code_regex || null;
   }
 
   componentWillLoad() {
@@ -192,6 +196,8 @@ export class ScCompactAddress {
                 value={this?.address?.postal_code}
                 squared-top
                 maxlength={5}
+                pattern={this.postalCodeRegex}
+                customValidity={this.postalCodeRegex ? __('Please enter a valid postal code', 'surecart') : undefined}
                 squared-left={this.showState}
               />
             )}

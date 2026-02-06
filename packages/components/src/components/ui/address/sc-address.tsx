@@ -373,7 +373,9 @@ export class ScAddress {
                     required={this.required}
                     value={this?.address?.postal_code}
                     disabled={this.disabled}
-                    maxlength={this.address?.country === 'US' ? 5 : null}
+                    maxlength={this.address?.country === 'US' ? 5 : undefined}
+                    pattern={this.countryDetails?.postal_code_regex || undefined}
+                    customValidity={this.countryDetails?.postal_code_regex ? __('Please enter a valid postal code', 'surecart') : undefined}
                     aria-label={field.label}
                     {...roundedProps}
                   />
