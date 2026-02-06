@@ -17,14 +17,14 @@ export function inertEverythingExcept(element) {
 	inertElements = [];
 	let current = element;
 
-	while (current && current !== document?.body) {
-		const parent = current?.parentElement;
+	while (current && current !== document.body) {
+		const parent = current.parentElement;
 		if (!parent) break;
 
-		Array.from(parent?.children)?.forEach((sibling) => {
-			if (sibling !== current && !sibling?.hasAttribute('inert')) {
-				sibling?.setAttribute('inert', '');
-				inertElements?.push(sibling);
+		Array.from(parent.children).forEach((sibling) => {
+			if (sibling !== current && !sibling.hasAttribute('inert')) {
+				sibling.setAttribute('inert', '');
+				inertElements.push(sibling);
 			}
 		});
 
