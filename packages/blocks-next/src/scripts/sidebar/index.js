@@ -1,16 +1,9 @@
 /**
  * WordPress dependencies
  */
-import { store, getElement } from '@wordpress/interactivity';
+import { store, getElement, withSyncEvent } from '@wordpress/interactivity';
+import { inertEverythingExcept, removeInert } from '../utils/inert';
 const { __ } = wp.i18n;
-
-/**
- * Holds all elements that are made inert when the lightbox is open; used to
- * remove inert attribute of only those elements explicitly made inert.
- *
- * @type {Array}
- */
-let inertElements = [];
 
 const { state, actions } = store('surecart/sidebar', {
 	state: {
@@ -48,7 +41,7 @@ const { state, actions } = store('surecart/sidebar', {
 		open: function* () {
 			state.mobileOpen = true;
 			// also do not add inert for the parent of the current element
-			actions.inertEverythingExcept(
+			inertEverythingExcept(
 				document.querySelector('.sc-sidebar-drawer')
 			);
 			state.ariaLabelMobile = __('Close sidebar', 'surecart');
@@ -60,10 +53,7 @@ const { state, actions } = store('surecart/sidebar', {
 		close: () => {
 			state.mobileOpen = false;
 			// remove inert attribute from all elements that were made inert
-			inertElements.forEach((el) => {
-				el.removeAttribute('inert');
-			});
-			inertElements = [];
+			removeInert();
 			state.ariaLabelMobile = __('Open sidebar', 'surecart');
 		},
 
@@ -85,7 +75,7 @@ const { state, actions } = store('surecart/sidebar', {
 		 * Toggle the sidebar dialog.
 		 * This is used for the desktop sidebar.
 		 */
-		toggleDesktop: (e) => {
+		toggleDesktop: withSyncEvent((e) => {
 			// If the key is not space or enter, return.
 			if (e?.key && e?.key !== ' ' && e?.key !== 'Enter') {
 				return;
@@ -95,12 +85,12 @@ const { state, actions } = store('surecart/sidebar', {
 			e?.preventDefault();
 
 			state.open = !state.open;
-		},
+		}),
 
 		/**
 		 * Toggle the sidebar dialog.
 		 */
-		toggleMobile: (e) => {
+		toggleMobile: withSyncEvent((e) => {
 			// If the key is not space or enter, return.
 			if (e?.key && e?.key !== ' ' && e?.key !== 'Enter') {
 				return;
@@ -110,39 +100,29 @@ const { state, actions } = store('surecart/sidebar', {
 			e?.preventDefault();
 
 			state?.mobileOpen ? actions.close() : actions.open();
-		},
+		}),
 
 		/**
 		 * Close the dialog if the target is the dialog.
 		 */
-		closeOverlay: (e) => {
+		closeOverlay: withSyncEvent((e) => {
 			// If the target is the dialog, close it.
 			if (e.target === e.currentTarget) {
 				actions.close();
 			}
-		},
+		}),
+
 		/**
-		 * Make all children of the document inert exempt the current element.
+		 * Handle keydown events.
 		 */
-		inertEverythingExcept: (element) => {
-			let current = element;
-
-			while (current && current !== document?.body) {
-				const parent = current?.parentElement;
-				if (!parent) break;
-
-				Array.from(parent?.children)?.forEach((sibling) => {
-					if (
-						sibling !== current &&
-						!sibling?.hasAttribute('inert')
-					) {
-						sibling?.setAttribute('inert', '');
-						inertElements?.push(sibling);
-					}
-				});
-
-				current = parent;
+		handleKeydown: withSyncEvent((event) => {
+			if (state.mobileOpen) {
+				if (event.key === 'Escape') {
+					event.preventDefault();
+					event.stopPropagation();
+					actions.close();
+				}
 			}
-		},
+		}),
 	},
 });
