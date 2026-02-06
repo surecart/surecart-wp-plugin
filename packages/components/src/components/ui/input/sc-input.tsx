@@ -203,7 +203,8 @@ export class ScInput {
   }
 
   handleInvalid() {
-    if (this.customValidity) {
+    // Only show custom validity message for pattern mismatch, not for required/empty fields.
+    if (this.customValidity && this.input.validity.patternMismatch) {
       this.input.setCustomValidity(this.customValidity);
     }
   }
