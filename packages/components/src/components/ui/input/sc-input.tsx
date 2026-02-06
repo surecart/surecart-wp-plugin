@@ -206,6 +206,10 @@ export class ScInput {
     // Only show custom validity message for pattern mismatch, not for required/empty fields.
     if (this.customValidity && this.input.validity.patternMismatch) {
       this.input.setCustomValidity(this.customValidity);
+    } else {
+      // this is needed if the user switches from a country with a regex to one without.
+      // we want to clear out the custom validity so it does not persist.
+      this.input.setCustomValidity('');
     }
   }
 
