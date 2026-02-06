@@ -85,6 +85,7 @@ export default () => {
 			}
 		>
 			<ToggleControl
+				__nextHasNoMarginBottom
 				label={__('Show Logo', 'surecart')}
 				checked={_surecart_dashboard_show_logo}
 				onChange={(_surecart_dashboard_show_logo) =>
@@ -97,6 +98,7 @@ export default () => {
 			/>
 			{!!_surecart_dashboard_show_logo && (
 				<UnitControl
+					__next40pxDefaultSize
 					label={__('Logo Width', 'surecart')}
 					value={_surecart_dashboard_logo_width}
 					onChange={(_surecart_dashboard_logo_width) =>
@@ -116,6 +118,7 @@ export default () => {
 						{__('Navigation', 'surecart')}
 					</BaseControl.VisualLabel>
 					<ToggleControl
+						__nextHasNoMarginBottom
 						label={__('Orders', 'surecart')}
 						checked={_surecart_dashboard_navigation_orders}
 						onChange={(_surecart_dashboard_navigation_orders) =>
@@ -127,6 +130,7 @@ export default () => {
 						}
 					/>
 					<ToggleControl
+						__nextHasNoMarginBottom
 						label={__('Invoices', 'surecart')}
 						checked={_surecart_dashboard_navigation_invoices}
 						onChange={(_surecart_dashboard_navigation_invoices) =>
@@ -138,6 +142,7 @@ export default () => {
 						}
 					/>
 					<ToggleControl
+						__nextHasNoMarginBottom
 						label={__('Plans', 'surecart')}
 						checked={_surecart_dashboard_navigation_subscriptions}
 						onChange={(
@@ -151,6 +156,7 @@ export default () => {
 						}
 					/>
 					<ToggleControl
+						__nextHasNoMarginBottom
 						label={__('Downloads', 'surecart')}
 						checked={_surecart_dashboard_navigation_downloads}
 						onChange={(_surecart_dashboard_navigation_downloads) =>
@@ -162,6 +168,7 @@ export default () => {
 						}
 					/>
 					<ToggleControl
+						__nextHasNoMarginBottom
 						label={__('WordPress Account', 'surecart')}
 						checked={_surecart_dashboard_navigation_account}
 						onChange={(_surecart_dashboard_navigation_account) =>
@@ -173,6 +180,7 @@ export default () => {
 						}
 					/>
 					<ToggleControl
+						__nextHasNoMarginBottom
 						label={__('Billing Details', 'surecart')}
 						checked={_surecart_dashboard_navigation_billing}
 						onChange={(_surecart_dashboard_navigation_billing) =>

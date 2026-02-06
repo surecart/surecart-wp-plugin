@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-12-29T14:12:46",
+  "timestamp": "2026-02-03T20:39:14",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.18.3",
@@ -880,6 +880,7 @@
         "sc-product-buy-button",
         "sc-product-item-list",
         "sc-product-price-modal",
+        "sc-razorpay-add-method",
         "sc-stripe-add-method",
         "sc-stripe-payment-request",
         "sc-subscription-reactivate",
@@ -961,6 +962,9 @@
           "sc-alert"
         ],
         "sc-product-price-modal": [
+          "sc-alert"
+        ],
+        "sc-razorpay-add-method": [
           "sc-alert"
         ],
         "sc-stripe-add-method": [
@@ -2285,6 +2289,7 @@
         "sc-product-price-modal",
         "sc-product-selected-price",
         "sc-purchase-downloads-list",
+        "sc-razorpay-add-method",
         "sc-rich-text",
         "sc-stripe-add-method",
         "sc-subscription",
@@ -2297,6 +2302,7 @@
         "sc-subscription-variation-confirm",
         "sc-subscriptions-list",
         "sc-tax-id-input",
+        "sc-test-mode-info",
         "sc-upcoming-invoice",
         "sc-upgrade-required",
         "sc-upsell",
@@ -2410,6 +2416,9 @@
         "sc-purchase-downloads-list": [
           "sc-button"
         ],
+        "sc-razorpay-add-method": [
+          "sc-button"
+        ],
         "sc-rich-text": [
           "sc-button"
         ],
@@ -2444,6 +2453,9 @@
           "sc-button"
         ],
         "sc-tax-id-input": [
+          "sc-button"
+        ],
+        "sc-test-mode-info": [
           "sc-button"
         ],
         "sc-upcoming-invoice": [
@@ -5531,6 +5543,7 @@
           "sc-order-shipping-address",
           "sc-order-billing-address",
           "sc-order-tax-id-input",
+          "sc-customer-phone",
           "sc-order-bumps",
           "sc-line-item-tax",
           "sc-shipping-choices",
@@ -5584,6 +5597,12 @@
           "sc-button",
           "sc-menu",
           "sc-menu-item"
+        ],
+        "sc-customer-phone": [
+          "sc-phone-input"
+        ],
+        "sc-phone-input": [
+          "sc-form-control"
         ],
         "sc-order-bumps": [
           "sc-form-control",
@@ -5932,6 +5951,31 @@
           "sc-choice-container",
           "sc-skeleton",
           "sc-visually-hidden"
+        ]
+      }
+    },
+    {
+      "filePath": "src/components/controllers/checkout-form/sc-checkout-razorpay-payment-provider/sc-checkout-razorpay-payment-provider.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-checkout-razorpay-payment-provider",
+      "readme": "# sc-checkout-razorpay-payment-provider\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [
+        "sc-payment"
+      ],
+      "dependencies": [],
+      "dependencyGraph": {
+        "sc-payment": [
+          "sc-checkout-razorpay-payment-provider"
         ]
       }
     },
@@ -10445,11 +10489,11 @@
         },
         {
           "event": "scUpdateOrderState",
-          "detail": "{ id?: string; status?: \"draft\" | \"paid\" | \"finalized\" | \"payment_failed\" | \"processing\" | \"canceled\" | \"payment_intent_canceled\"; tax_amount?: number; tax_display_amount?: string; tax_inclusive_amount?: number; tax_exclusive_amount?: number; tax_status?: \"disabled\" | \"address_invalid\" | \"estimated\" | \"calculated\"; tax_label?: string; tax_percent?: number; tax_enabled?: boolean; email_exists?: boolean; show_converted_total?: boolean; staged_payment_intents?: { object: \"list\"; pagination: Pagination; data: PaymentIntent[]; }; abandoned_checkout_enabled?: boolean; billing_matches_shipping?: boolean; bump_amount?: number; bump_display_amount?: string; payment_method_required?: boolean; manual_payment?: boolean; manual_payment_method?: string | ManualPaymentMethod; reusable_payment_method_required?: boolean; number?: string; amount_due?: number; amount_due_display_amount?: string; amount_due_default_currency_display_amount?: string; remaining_amount_due?: number; remaining_amount_due_display_amount?: string; trial_amount?: number; trial_display_amount?: string; charge?: string | Charge; name?: string; first_name?: string; last_name?: string; email?: string; phone?: string; live_mode?: boolean; currency?: string; current_currency?: string; discounts_display_amount?: string; discounts_display?: string; tax_exclusive_display_amount?: string; tax_inclusive_display_amount?: string; total_amount?: number; total_display_amount?: string; subtotal_amount?: number; subtotal_display_amount?: string; full_amount?: number; full_display_amount?: string; paid_amount?: number; paid_display_amount?: string; proration_amount?: number; proration_display_amount?: string; total_savings_amount?: number; total_savings_display_amount?: string; total_scratch_display_amount?: string; applied_balance_amount?: number; applied_balance_display_amount?: string; scratch_display_amount?: string; discounts?: number; shipping_address_required?: boolean; shipping_address_accuracy_requirement?: \"none\" | \"full\" | \"tax\"; line_items?: lineItems; recommended_bumps?: { object: \"list\"; pagination: Pagination; data: Bump[]; }; current_upsell?: Upsell; recommended_upsells?: { object: \"list\"; pagination: Pagination; data: Upsell[]; }; metadata?: any; payment_intent?: PaymentIntent; payment_method?: PaymentMethod; order?: string | Order; customer?: string | Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; purchases?: { object: \"list\"; pagination: Pagination; data: Purchase[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string | Address; shipping_amount?: number; shipping_display_amount?: string; shipping_address?: string | Address; shipping_enabled?: boolean; shipping_choices?: { object: \"list\"; pagination: Pagination; data: ShippingChoice[]; }; selected_shipping_choice?: string | ShippingChoice; selected_shipping_choice_required?: boolean; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; updated_at?: number; variant?: string; upsells_expire_at?: number; invoice?: string | Invoice; pdf_url?: string; refunded_amount?: number; refunded_display_amount?: string; net_paid_amount?: number; net_paid_display_amount?: string; credited_balance_amount?: number; credited_balance_display_amount?: string; tax_reverse_charged_amount?: number; tax_reverse_charged_display_amount?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
+          "detail": "{ id?: string; status?: \"draft\" | \"paid\" | \"finalized\" | \"payment_failed\" | \"processing\" | \"canceled\" | \"payment_intent_canceled\"; tax_amount?: number; tax_display_amount?: string; tax_inclusive_amount?: number; tax_exclusive_amount?: number; tax_status?: \"disabled\" | \"address_invalid\" | \"estimated\" | \"calculated\"; tax_label?: string; tax_percent?: number; tax_enabled?: boolean; email_exists?: boolean; show_converted_total?: boolean; staged_payment_intents?: { object: \"list\"; pagination: Pagination; data: PaymentIntent[]; }; abandoned_checkout_enabled?: boolean; billing_matches_shipping?: boolean; bump_amount?: number; bump_display_amount?: string; payment_method_required?: boolean; manual_payment?: boolean; manual_payment_method?: string | ManualPaymentMethod; reusable_payment_method_required?: boolean; number?: string; amount_due?: number; amount_due_display_amount?: string; amount_due_default_currency_display_amount?: string; remaining_amount_due?: number; remaining_amount_due_display_amount?: string; trial_amount?: number; trial_display_amount?: string; charge?: string | Charge; name?: string; first_name?: string; last_name?: string; email?: string; phone?: string; live_mode?: boolean; currency?: string; current_currency?: string; discounts_display_amount?: string; discounts_display?: string; tax_exclusive_display_amount?: string; tax_inclusive_display_amount?: string; total_amount?: number; total_display_amount?: string; subtotal_amount?: number; subtotal_display_amount?: string; full_amount?: number; full_display_amount?: string; paid_amount?: number; paid_display_amount?: string; proration_amount?: number; proration_display_amount?: string; total_savings_amount?: number; total_savings_display_amount?: string; total_scratch_display_amount?: string; applied_balance_amount?: number; applied_balance_display_amount?: string; scratch_display_amount?: string; discounts?: number; shipping_address_required?: boolean; shipping_address_accuracy_requirement?: \"none\" | \"full\" | \"tax\"; line_items?: lineItems; recommended_bumps?: { object: \"list\"; pagination: Pagination; data: Bump[]; }; current_upsell?: Upsell; recommended_upsells?: { object: \"list\"; pagination: Pagination; data: Upsell[]; }; metadata?: any; payment_intent?: PaymentIntent; payment_method?: PaymentMethod; order?: string | Order; customer?: string | Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; checkout_fees?: { object: \"list\"; pagination: Pagination; data: Fee[]; }; shipping_fees?: { object: \"list\"; pagination: Pagination; data: Fee[]; }; purchases?: { object: \"list\"; pagination: Pagination; data: Purchase[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string | Address; shipping_amount?: number; shipping_display_amount?: string; shipping_address?: string | Address; shipping_enabled?: boolean; shipping_choices?: { object: \"list\"; pagination: Pagination; data: ShippingChoice[]; }; selected_shipping_choice?: string | ShippingChoice; selected_shipping_choice_required?: boolean; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; updated_at?: number; variant?: string; upsells_expire_at?: number; invoice?: string | Invoice; pdf_url?: string; refunded_amount?: number; refunded_display_amount?: string; net_paid_amount?: number; net_paid_display_amount?: string; credited_balance_amount?: number; credited_balance_display_amount?: string; tax_reverse_charged_amount?: number; tax_reverse_charged_display_amount?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
           "bubbles": true,
           "complexType": {
             "original": "Partial<Checkout>",
-            "resolved": "{ id?: string; status?: \"draft\" | \"paid\" | \"finalized\" | \"payment_failed\" | \"processing\" | \"canceled\" | \"payment_intent_canceled\"; tax_amount?: number; tax_display_amount?: string; tax_inclusive_amount?: number; tax_exclusive_amount?: number; tax_status?: \"disabled\" | \"address_invalid\" | \"estimated\" | \"calculated\"; tax_label?: string; tax_percent?: number; tax_enabled?: boolean; email_exists?: boolean; show_converted_total?: boolean; staged_payment_intents?: { object: \"list\"; pagination: Pagination; data: PaymentIntent[]; }; abandoned_checkout_enabled?: boolean; billing_matches_shipping?: boolean; bump_amount?: number; bump_display_amount?: string; payment_method_required?: boolean; manual_payment?: boolean; manual_payment_method?: string | ManualPaymentMethod; reusable_payment_method_required?: boolean; number?: string; amount_due?: number; amount_due_display_amount?: string; amount_due_default_currency_display_amount?: string; remaining_amount_due?: number; remaining_amount_due_display_amount?: string; trial_amount?: number; trial_display_amount?: string; charge?: string | Charge; name?: string; first_name?: string; last_name?: string; email?: string; phone?: string; live_mode?: boolean; currency?: string; current_currency?: string; discounts_display_amount?: string; discounts_display?: string; tax_exclusive_display_amount?: string; tax_inclusive_display_amount?: string; total_amount?: number; total_display_amount?: string; subtotal_amount?: number; subtotal_display_amount?: string; full_amount?: number; full_display_amount?: string; paid_amount?: number; paid_display_amount?: string; proration_amount?: number; proration_display_amount?: string; total_savings_amount?: number; total_savings_display_amount?: string; total_scratch_display_amount?: string; applied_balance_amount?: number; applied_balance_display_amount?: string; scratch_display_amount?: string; discounts?: number; shipping_address_required?: boolean; shipping_address_accuracy_requirement?: \"none\" | \"full\" | \"tax\"; line_items?: lineItems; recommended_bumps?: { object: \"list\"; pagination: Pagination; data: Bump[]; }; current_upsell?: Upsell; recommended_upsells?: { object: \"list\"; pagination: Pagination; data: Upsell[]; }; metadata?: any; payment_intent?: PaymentIntent; payment_method?: PaymentMethod; order?: string | Order; customer?: string | Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; purchases?: { object: \"list\"; pagination: Pagination; data: Purchase[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string | Address; shipping_amount?: number; shipping_display_amount?: string; shipping_address?: string | Address; shipping_enabled?: boolean; shipping_choices?: { object: \"list\"; pagination: Pagination; data: ShippingChoice[]; }; selected_shipping_choice?: string | ShippingChoice; selected_shipping_choice_required?: boolean; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; updated_at?: number; variant?: string; upsells_expire_at?: number; invoice?: string | Invoice; pdf_url?: string; refunded_amount?: number; refunded_display_amount?: string; net_paid_amount?: number; net_paid_display_amount?: string; credited_balance_amount?: number; credited_balance_display_amount?: string; tax_reverse_charged_amount?: number; tax_reverse_charged_display_amount?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
+            "resolved": "{ id?: string; status?: \"draft\" | \"paid\" | \"finalized\" | \"payment_failed\" | \"processing\" | \"canceled\" | \"payment_intent_canceled\"; tax_amount?: number; tax_display_amount?: string; tax_inclusive_amount?: number; tax_exclusive_amount?: number; tax_status?: \"disabled\" | \"address_invalid\" | \"estimated\" | \"calculated\"; tax_label?: string; tax_percent?: number; tax_enabled?: boolean; email_exists?: boolean; show_converted_total?: boolean; staged_payment_intents?: { object: \"list\"; pagination: Pagination; data: PaymentIntent[]; }; abandoned_checkout_enabled?: boolean; billing_matches_shipping?: boolean; bump_amount?: number; bump_display_amount?: string; payment_method_required?: boolean; manual_payment?: boolean; manual_payment_method?: string | ManualPaymentMethod; reusable_payment_method_required?: boolean; number?: string; amount_due?: number; amount_due_display_amount?: string; amount_due_default_currency_display_amount?: string; remaining_amount_due?: number; remaining_amount_due_display_amount?: string; trial_amount?: number; trial_display_amount?: string; charge?: string | Charge; name?: string; first_name?: string; last_name?: string; email?: string; phone?: string; live_mode?: boolean; currency?: string; current_currency?: string; discounts_display_amount?: string; discounts_display?: string; tax_exclusive_display_amount?: string; tax_inclusive_display_amount?: string; total_amount?: number; total_display_amount?: string; subtotal_amount?: number; subtotal_display_amount?: string; full_amount?: number; full_display_amount?: string; paid_amount?: number; paid_display_amount?: string; proration_amount?: number; proration_display_amount?: string; total_savings_amount?: number; total_savings_display_amount?: string; total_scratch_display_amount?: string; applied_balance_amount?: number; applied_balance_display_amount?: string; scratch_display_amount?: string; discounts?: number; shipping_address_required?: boolean; shipping_address_accuracy_requirement?: \"none\" | \"full\" | \"tax\"; line_items?: lineItems; recommended_bumps?: { object: \"list\"; pagination: Pagination; data: Bump[]; }; current_upsell?: Upsell; recommended_upsells?: { object: \"list\"; pagination: Pagination; data: Upsell[]; }; metadata?: any; payment_intent?: PaymentIntent; payment_method?: PaymentMethod; order?: string | Order; customer?: string | Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; checkout_fees?: { object: \"list\"; pagination: Pagination; data: Fee[]; }; shipping_fees?: { object: \"list\"; pagination: Pagination; data: Fee[]; }; purchases?: { object: \"list\"; pagination: Pagination; data: Purchase[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string | Address; shipping_amount?: number; shipping_display_amount?: string; shipping_address?: string | Address; shipping_enabled?: boolean; shipping_choices?: { object: \"list\"; pagination: Pagination; data: ShippingChoice[]; }; selected_shipping_choice?: string | ShippingChoice; selected_shipping_choice_required?: boolean; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; updated_at?: number; variant?: string; upsells_expire_at?: number; invoice?: string | Invoice; pdf_url?: string; refunded_amount?: number; refunded_display_amount?: string; net_paid_amount?: number; net_paid_display_amount?: string; credited_balance_amount?: number; credited_balance_display_amount?: string; tax_reverse_charged_amount?: number; tax_reverse_charged_display_amount?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
             "references": {
               "Partial": {
                 "location": "global",
@@ -11709,7 +11753,9 @@
       "styles": [],
       "slots": [],
       "parts": [],
-      "dependents": [],
+      "dependents": [
+        "sc-form-components-validator"
+      ],
       "dependencies": [
         "sc-phone-input"
       ],
@@ -11722,6 +11768,9 @@
         ],
         "sc-form-control": [
           "sc-visually-hidden"
+        ],
+        "sc-form-components-validator": [
+          "sc-customer-phone"
         ]
       }
     },
@@ -14942,6 +14991,7 @@
         "sc-order-shipping-address",
         "sc-order-billing-address",
         "sc-order-tax-id-input",
+        "sc-customer-phone",
         "sc-order-bumps",
         "sc-line-item-tax",
         "sc-shipping-choices",
@@ -14959,6 +15009,7 @@
           "sc-order-shipping-address",
           "sc-order-billing-address",
           "sc-order-tax-id-input",
+          "sc-customer-phone",
           "sc-order-bumps",
           "sc-line-item-tax",
           "sc-shipping-choices",
@@ -15024,6 +15075,12 @@
         ],
         "sc-button": [
           "sc-spinner"
+        ],
+        "sc-customer-phone": [
+          "sc-phone-input"
+        ],
+        "sc-phone-input": [
+          "sc-form-control"
         ],
         "sc-order-bumps": [
           "sc-form-control",
@@ -16607,6 +16664,7 @@
         "sc-license",
         "sc-licenses-list",
         "sc-line-item-invoice-receipt-download",
+        "sc-line-item-total",
         "sc-login-form",
         "sc-order",
         "sc-order-confirm-provider",
@@ -16618,6 +16676,7 @@
         "sc-payment-method",
         "sc-payment-method-details",
         "sc-payment-methods-list",
+        "sc-popover",
         "sc-product-item-list",
         "sc-product-line-item",
         "sc-product-line-item-note",
@@ -16637,6 +16696,7 @@
         "sc-subscription-variation-confirm",
         "sc-subscriptions-list",
         "sc-tax-id-input",
+        "sc-test-mode-info",
         "sc-toggle",
         "sc-upcoming-invoice",
         "sc-upgrade-required",
@@ -16724,6 +16784,9 @@
         "sc-line-item-invoice-receipt-download": [
           "sc-icon"
         ],
+        "sc-line-item-total": [
+          "sc-icon"
+        ],
         "sc-login-form": [
           "sc-icon"
         ],
@@ -16755,6 +16818,9 @@
           "sc-icon"
         ],
         "sc-payment-methods-list": [
+          "sc-icon"
+        ],
+        "sc-popover": [
           "sc-icon"
         ],
         "sc-product-item-list": [
@@ -16812,6 +16878,9 @@
           "sc-icon"
         ],
         "sc-tax-id-input": [
+          "sc-icon"
+        ],
+        "sc-test-mode-info": [
           "sc-icon"
         ],
         "sc-toggle": [
@@ -19487,17 +19556,23 @@
       "parts": [],
       "dependents": [],
       "dependencies": [
-        "sc-divider",
         "sc-line-item",
+        "sc-divider",
         "sc-skeleton",
-        "sc-total"
+        "sc-total",
+        "sc-tooltip",
+        "sc-icon",
+        "sc-visually-hidden"
       ],
       "dependencyGraph": {
         "sc-line-item-total": [
-          "sc-divider",
           "sc-line-item",
+          "sc-divider",
           "sc-skeleton",
-          "sc-total"
+          "sc-total",
+          "sc-tooltip",
+          "sc-icon",
+          "sc-visually-hidden"
         ]
       }
     },
@@ -20829,9 +20904,9 @@
       "dependencies": [
         "sc-flex",
         "sc-skeleton",
+        "sc-line-item",
         "sc-empty",
         "sc-product-line-item",
-        "sc-line-item",
         "sc-tag",
         "sc-divider",
         "sc-spacing",
@@ -20850,9 +20925,9 @@
         "sc-order": [
           "sc-flex",
           "sc-skeleton",
+          "sc-line-item",
           "sc-empty",
           "sc-product-line-item",
-          "sc-line-item",
           "sc-tag",
           "sc-divider",
           "sc-spacing",
@@ -24452,6 +24527,28 @@
           "required": false
         },
         {
+          "name": "required",
+          "type": "boolean",
+          "complexType": {
+            "original": "boolean",
+            "resolved": "boolean",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "required",
+          "reflectToAttr": false,
+          "docs": "Whether tax input is required",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "show",
           "type": "boolean",
           "complexType": {
@@ -25764,8 +25861,8 @@
         "sc-card",
         "sc-payment-selected",
         "sc-checkout-paystack-payment-provider",
+        "sc-checkout-razorpay-payment-provider",
         "sc-form-control",
-        "sc-tag",
         "sc-checkout-mollie-payment",
         "sc-alert"
       ],
@@ -25777,8 +25874,8 @@
           "sc-card",
           "sc-payment-selected",
           "sc-checkout-paystack-payment-provider",
+          "sc-checkout-razorpay-payment-provider",
           "sc-form-control",
-          "sc-tag",
           "sc-checkout-mollie-payment",
           "sc-alert"
         ],
@@ -28071,6 +28168,268 @@
         ],
         "sc-product-pills-variant-option": [
           "sc-pill-option"
+        ]
+      }
+    },
+    {
+      "filePath": "src/components/ui/popover/sc-popover.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-popover",
+      "readme": "# sc-popover\n\n\n",
+      "docs": "",
+      "docsTags": [
+        {
+          "name": "part",
+          "text": "base - The elements base wrapper."
+        },
+        {
+          "name": "part",
+          "text": "trigger - The trigger."
+        },
+        {
+          "name": "part",
+          "text": "panel - The panel."
+        }
+      ],
+      "usage": {},
+      "props": [
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "complexType": {
+            "original": "boolean",
+            "resolved": "boolean",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "disabled",
+          "reflectToAttr": false,
+          "docs": "Is this disabled.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "distance",
+          "type": "number",
+          "complexType": {
+            "original": "number",
+            "resolved": "number",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "distance",
+          "reflectToAttr": false,
+          "docs": "The distance in pixels from which to offset the panel away from its trigger.",
+          "docsTags": [],
+          "default": "0",
+          "values": [
+            {
+              "type": "number"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "hoist",
+          "type": "boolean",
+          "complexType": {
+            "original": "boolean",
+            "resolved": "boolean",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "hoist",
+          "reflectToAttr": false,
+          "docs": "Enable this option to prevent the panel from being clipped when the component is placed inside a container with\n`overflow: auto|scroll`.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "open",
+          "type": "boolean",
+          "complexType": {
+            "original": "boolean",
+            "resolved": "boolean",
+            "references": {}
+          },
+          "mutable": true,
+          "attr": "open",
+          "reflectToAttr": true,
+          "docs": "Indicates whether or not the popover is open. You can use this in lieu of the show/hide methods.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": true,
+          "required": false
+        },
+        {
+          "name": "placement",
+          "type": "\"bottom\" | \"bottom-end\" | \"bottom-start\" | \"left\" | \"left-end\" | \"left-start\" | \"right\" | \"right-end\" | \"right-start\" | \"top\" | \"top-end\" | \"top-start\"",
+          "complexType": {
+            "original": "| 'top'\n    | 'top-start'\n    | 'top-end'\n    | 'bottom'\n    | 'bottom-start'\n    | 'bottom-end'\n    | 'right'\n    | 'right-start'\n    | 'right-end'\n    | 'left'\n    | 'left-start'\n    | 'left-end'",
+            "resolved": "\"bottom\" | \"bottom-end\" | \"bottom-start\" | \"left\" | \"left-end\" | \"left-start\" | \"right\" | \"right-end\" | \"right-start\" | \"top\" | \"top-end\" | \"top-start\"",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "placement",
+          "reflectToAttr": true,
+          "docs": "The placement of the popover.",
+          "docsTags": [],
+          "default": "'bottom-start'",
+          "values": [
+            {
+              "value": "bottom",
+              "type": "string"
+            },
+            {
+              "value": "bottom-end",
+              "type": "string"
+            },
+            {
+              "value": "bottom-start",
+              "type": "string"
+            },
+            {
+              "value": "left",
+              "type": "string"
+            },
+            {
+              "value": "left-end",
+              "type": "string"
+            },
+            {
+              "value": "left-start",
+              "type": "string"
+            },
+            {
+              "value": "right",
+              "type": "string"
+            },
+            {
+              "value": "right-end",
+              "type": "string"
+            },
+            {
+              "value": "right-start",
+              "type": "string"
+            },
+            {
+              "value": "top",
+              "type": "string"
+            },
+            {
+              "value": "top-end",
+              "type": "string"
+            },
+            {
+              "value": "top-start",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "skidding",
+          "type": "number",
+          "complexType": {
+            "original": "number",
+            "resolved": "number",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "skidding",
+          "reflectToAttr": false,
+          "docs": "The distance in pixels from which to offset the panel along its trigger.",
+          "docsTags": [],
+          "default": "0",
+          "values": [
+            {
+              "type": "number"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [
+        {
+          "event": "scHide",
+          "detail": "void",
+          "bubbles": true,
+          "complexType": {
+            "original": "void",
+            "resolved": "void",
+            "references": {}
+          },
+          "cancelable": true,
+          "composed": true,
+          "docs": "Emitted when the popover closes. Calling `event.preventDefault()` will prevent it from being closed.",
+          "docsTags": []
+        },
+        {
+          "event": "scShow",
+          "detail": "void",
+          "bubbles": true,
+          "complexType": {
+            "original": "void",
+            "resolved": "void",
+            "references": {}
+          },
+          "cancelable": true,
+          "composed": true,
+          "docs": "Emitted when the popover opens. Calling `event.preventDefault()` will prevent it from being opened.",
+          "docsTags": []
+        }
+      ],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [
+        {
+          "name": "base",
+          "docs": "The elements base wrapper."
+        },
+        {
+          "name": "panel",
+          "docs": "The panel."
+        },
+        {
+          "name": "trigger",
+          "docs": "The trigger."
+        }
+      ],
+      "dependents": [
+        "sc-test-mode-info"
+      ],
+      "dependencies": [
+        "sc-icon"
+      ],
+      "dependencyGraph": {
+        "sc-popover": [
+          "sc-icon"
+        ],
+        "sc-test-mode-info": [
+          "sc-popover"
         ]
       }
     },
@@ -34138,6 +34497,125 @@
       }
     },
     {
+      "filePath": "src/components/ui/sc-razorpay-add-method/sc-razorpay-add-method.tsx",
+      "encapsulation": "none",
+      "tag": "sc-razorpay-add-method",
+      "readme": "# sc-razorpay-add-method\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "currency",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "currency",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "customerId",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "customer-id",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "liveMode",
+          "type": "boolean",
+          "complexType": {
+            "original": "boolean",
+            "resolved": "boolean",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "live-mode",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "true",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "successUrl",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "success-url",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [
+        "sc-alert",
+        "sc-button"
+      ],
+      "dependencyGraph": {
+        "sc-razorpay-add-method": [
+          "sc-alert",
+          "sc-button"
+        ],
+        "sc-alert": [
+          "sc-icon"
+        ],
+        "sc-button": [
+          "sc-spinner"
+        ]
+      }
+    },
+    {
       "filePath": "src/components/ui/sc-recurring-price-choice-container/sc-recurring-price-choice-container.tsx",
       "encapsulation": "none",
       "tag": "sc-recurring-price-choice-container",
@@ -38031,6 +38509,27 @@
       "usage": {},
       "props": [
         {
+          "name": "currencyCode",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "currency-code",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "heading",
           "type": "string",
           "complexType": {
@@ -41199,6 +41698,14 @@
         {
           "name": "content",
           "docs": ""
+        },
+        {
+          "name": "prefix",
+          "docs": ""
+        },
+        {
+          "name": "suffix",
+          "docs": ""
         }
       ],
       "dependents": [
@@ -41221,7 +41728,6 @@
         "sc-order-shipment-badge",
         "sc-order-status-badge",
         "sc-orders-list",
-        "sc-payment",
         "sc-payment-method",
         "sc-payment-methods-list",
         "sc-premium-tag",
@@ -41289,9 +41795,6 @@
           "sc-tag"
         ],
         "sc-orders-list": [
-          "sc-tag"
-        ],
-        "sc-payment": [
           "sc-tag"
         ],
         "sc-payment-method": [
@@ -41774,6 +42277,67 @@
         ],
         "sc-order-tax-id-input": [
           "sc-tax-id-input"
+        ]
+      }
+    },
+    {
+      "filePath": "src/components/ui/test-mode-info/sc-test-mode-info.tsx",
+      "encapsulation": "none",
+      "tag": "sc-test-mode-info",
+      "readme": "# sc-test-mode-info\n\n\n",
+      "docs": "",
+      "docsTags": [
+        {
+          "name": "part",
+          "text": "base - The elements base wrapper."
+        },
+        {
+          "name": "part",
+          "text": "trigger - The trigger."
+        },
+        {
+          "name": "part",
+          "text": "panel - The panel."
+        }
+      ],
+      "usage": {},
+      "props": [],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [
+        {
+          "name": "base",
+          "docs": "The elements base wrapper."
+        },
+        {
+          "name": "panel",
+          "docs": "The panel."
+        },
+        {
+          "name": "trigger",
+          "docs": "The trigger."
+        }
+      ],
+      "dependents": [],
+      "dependencies": [
+        "sc-popover",
+        "sc-button",
+        "sc-icon"
+      ],
+      "dependencyGraph": {
+        "sc-test-mode-info": [
+          "sc-popover",
+          "sc-button",
+          "sc-icon"
+        ],
+        "sc-popover": [
+          "sc-icon"
+        ],
+        "sc-button": [
+          "sc-spinner"
         ]
       }
     },
@@ -43267,10 +43831,14 @@
         }
       ],
       "dependents": [
+        "sc-line-item-total",
         "sc-payment-method"
       ],
       "dependencies": [],
       "dependencyGraph": {
+        "sc-line-item-total": [
+          "sc-tooltip"
+        ],
         "sc-payment-method": [
           "sc-tooltip"
         ]
@@ -43993,6 +44561,7 @@
         "sc-checkout-product-price-variant-selector",
         "sc-form-control",
         "sc-image-slider",
+        "sc-line-item-total",
         "sc-order-submit",
         "sc-pagination",
         "sc-payment",
@@ -44012,6 +44581,9 @@
           "sc-visually-hidden"
         ],
         "sc-image-slider": [
+          "sc-visually-hidden"
+        ],
+        "sc-line-item-total": [
           "sc-visually-hidden"
         ],
         "sc-order-submit": [
@@ -44456,7 +45028,7 @@
       "path": "src/types.ts"
     },
     "src/types.ts::Checkout": {
-      "declaration": "export interface Checkout extends Object {\n  id?: string;\n  status?: 'canceled' | 'draft' | 'finalized' | 'paid' | 'payment_intent_canceled' | 'payment_failed' | 'processing';\n  tax_amount: number;\n  tax_display_amount: string;\n  tax_inclusive_amount: number;\n  tax_exclusive_amount: number;\n  tax_status: 'disabled' | 'address_invalid' | 'estimated' | 'calculated';\n  tax_label: string;\n  tax_percent: number;\n  tax_enabled: boolean;\n  email_exists: boolean;\n  show_converted_total: boolean;\n  staged_payment_intents: {\n    object: 'list';\n    pagination: Pagination;\n    data: Array<PaymentIntent>;\n  };\n  abandoned_checkout_enabled: boolean;\n  billing_matches_shipping: boolean;\n  bump_amount: number;\n  bump_display_amount: string;\n  payment_method_required?: boolean;\n  manual_payment: boolean;\n  manual_payment_method?: string | ManualPaymentMethod;\n  reusable_payment_method_required?: boolean;\n  number?: string;\n  amount_due?: number;\n  amount_due_display_amount?: string;\n  amount_due_default_currency_display_amount?: string;\n  remaining_amount_due?: number;\n  remaining_amount_due_display_amount?: string;\n  trial_amount?: number;\n  trial_display_amount?: string;\n  charge?: string | Charge;\n  name?: string;\n  first_name?: string;\n  last_name?: string;\n  email?: string;\n  phone?: string;\n  live_mode?: boolean;\n  currency?: string;\n  current_currency?: string;\n  discounts_display_amount?: string;\n  discounts_display?: string;\n  tax_exclusive_display_amount?: string;\n  tax_inclusive_display_amount?: string;\n  total_amount?: number;\n  total_display_amount?: string;\n  subtotal_amount?: number;\n  subtotal_display_amount?: string;\n  full_amount?: number;\n  full_display_amount?: string;\n  paid_amount?: number;\n  paid_display_amount?: string;\n  proration_amount?: number;\n  proration_display_amount?: string;\n  total_savings_amount?: number;\n  total_savings_display_amount?: string;\n  total_scratch_display_amount?: string;\n  applied_balance_amount?: number;\n  applied_balance_display_amount?: string;\n  scratch_display_amount?: string;\n  discounts?: number;\n  shipping_address_required?: boolean;\n  shipping_address_accuracy_requirement?: 'full' | 'tax' | 'none';\n  line_items: lineItems;\n  recommended_bumps?: {\n    object: 'list';\n    pagination: Pagination;\n    data: Array<Bump>;\n  };\n  current_upsell: Upsell;\n  recommended_upsells?: {\n    object: 'list';\n    pagination: Pagination;\n    data: Array<Upsell>;\n  };\n  metadata?: any;\n  payment_intent?: PaymentIntent;\n  payment_method?: PaymentMethod;\n  order?: string | Order;\n  customer: string | Customer;\n  subscriptions: {\n    object: 'list';\n    pagination: Pagination;\n    data: Array<Subscription>;\n  };\n  purchases: {\n    object: 'list';\n    pagination: Pagination;\n    data: Array<Purchase>;\n  };\n  discount_amount?: number;\n  discount?: DiscountResponse;\n  billing_address?: string | Address;\n  shipping_amount?: number;\n  shipping_display_amount?: string;\n  shipping_address?: string | Address;\n  shipping_enabled?: boolean;\n  shipping_choices?: {\n    object: 'list';\n    pagination: Pagination;\n    data: Array<ShippingChoice>;\n  };\n  selected_shipping_choice?: string | ShippingChoice;\n  selected_shipping_choice_required: boolean;\n  processor_data?: ProcessorData;\n  tax_identifier?: {\n    number: string;\n    number_type: string;\n  };\n  url: string;\n  created_at?: number;\n  updated_at: number;\n  variant: string;\n  upsells_expire_at?: number;\n  invoice?: string | Invoice;\n  pdf_url?: string;\n  refunded_amount?: number;\n  refunded_display_amount?: string;\n  net_paid_amount?: number;\n  net_paid_display_amount?: string;\n  credited_balance_amount?: number;\n  credited_balance_display_amount?: string;\n  tax_reverse_charged_amount?: number;\n  tax_reverse_charged_display_amount?: string;\n}",
+      "declaration": "export interface Checkout extends Object {\n  id?: string;\n  status?: 'canceled' | 'draft' | 'finalized' | 'paid' | 'payment_intent_canceled' | 'payment_failed' | 'processing';\n  tax_amount: number;\n  tax_display_amount: string;\n  tax_inclusive_amount: number;\n  tax_exclusive_amount: number;\n  tax_status: 'disabled' | 'address_invalid' | 'estimated' | 'calculated';\n  tax_label: string;\n  tax_percent: number;\n  tax_enabled: boolean;\n  email_exists: boolean;\n  show_converted_total: boolean;\n  staged_payment_intents: {\n    object: 'list';\n    pagination: Pagination;\n    data: Array<PaymentIntent>;\n  };\n  abandoned_checkout_enabled: boolean;\n  billing_matches_shipping: boolean;\n  bump_amount: number;\n  bump_display_amount: string;\n  payment_method_required?: boolean;\n  manual_payment: boolean;\n  manual_payment_method?: string | ManualPaymentMethod;\n  reusable_payment_method_required?: boolean;\n  number?: string;\n  amount_due?: number;\n  amount_due_display_amount?: string;\n  amount_due_default_currency_display_amount?: string;\n  remaining_amount_due?: number;\n  remaining_amount_due_display_amount?: string;\n  trial_amount?: number;\n  trial_display_amount?: string;\n  charge?: string | Charge;\n  name?: string;\n  first_name?: string;\n  last_name?: string;\n  email?: string;\n  phone?: string;\n  live_mode?: boolean;\n  currency?: string;\n  current_currency?: string;\n  discounts_display_amount?: string;\n  discounts_display?: string;\n  tax_exclusive_display_amount?: string;\n  tax_inclusive_display_amount?: string;\n  total_amount?: number;\n  total_display_amount?: string;\n  subtotal_amount?: number;\n  subtotal_display_amount?: string;\n  full_amount?: number;\n  full_display_amount?: string;\n  paid_amount?: number;\n  paid_display_amount?: string;\n  proration_amount?: number;\n  proration_display_amount?: string;\n  total_savings_amount?: number;\n  total_savings_display_amount?: string;\n  total_scratch_display_amount?: string;\n  applied_balance_amount?: number;\n  applied_balance_display_amount?: string;\n  scratch_display_amount?: string;\n  discounts?: number;\n  shipping_address_required?: boolean;\n  shipping_address_accuracy_requirement?: 'full' | 'tax' | 'none';\n  line_items: lineItems;\n  recommended_bumps?: {\n    object: 'list';\n    pagination: Pagination;\n    data: Array<Bump>;\n  };\n  current_upsell: Upsell;\n  recommended_upsells?: {\n    object: 'list';\n    pagination: Pagination;\n    data: Array<Upsell>;\n  };\n  metadata?: any;\n  payment_intent?: PaymentIntent;\n  payment_method?: PaymentMethod;\n  order?: string | Order;\n  customer: string | Customer;\n  subscriptions: {\n    object: 'list';\n    pagination: Pagination;\n    data: Array<Subscription>;\n  };\n  checkout_fees: {\n    object: 'list';\n    pagination: Pagination;\n    data: Array<Fee>;\n  };\n  shipping_fees: {\n    object: 'list';\n    pagination: Pagination;\n    data: Array<Fee>;\n  };\n  purchases: {\n    object: 'list';\n    pagination: Pagination;\n    data: Array<Purchase>;\n  };\n  discount_amount?: number;\n  discount?: DiscountResponse;\n  billing_address?: string | Address;\n  shipping_amount?: number;\n  shipping_display_amount?: string;\n  shipping_address?: string | Address;\n  shipping_enabled?: boolean;\n  shipping_choices?: {\n    object: 'list';\n    pagination: Pagination;\n    data: Array<ShippingChoice>;\n  };\n  selected_shipping_choice?: string | ShippingChoice;\n  selected_shipping_choice_required: boolean;\n  processor_data?: ProcessorData;\n  tax_identifier?: {\n    number: string;\n    number_type: string;\n  };\n  url: string;\n  created_at?: number;\n  updated_at: number;\n  variant: string;\n  upsells_expire_at?: number;\n  invoice?: string | Invoice;\n  pdf_url?: string;\n  refunded_amount?: number;\n  refunded_display_amount?: string;\n  net_paid_amount?: number;\n  net_paid_display_amount?: string;\n  credited_balance_amount?: number;\n  credited_balance_display_amount?: string;\n  tax_reverse_charged_amount?: number;\n  tax_reverse_charged_display_amount?: string;\n}",
       "docstring": "",
       "path": "src/types.ts"
     },

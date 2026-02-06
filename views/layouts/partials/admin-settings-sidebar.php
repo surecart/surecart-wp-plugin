@@ -35,6 +35,12 @@
 			<?php esc_html_e( 'Subscription Saver', 'surecart' ); ?>
 		</sc-tab>
 
+		<sc-tab href="<?php echo esc_url( add_query_arg( [ 'tab' => 'dynamic_pricing' ], menu_page_url( 'sc-settings', false ) ) ); ?>" <?php echo 'dynamic_pricing' === $tab ? 'active' : ''; ?>>
+			<sc-icon slot="prefix" style="width: 18px; height: 18px;" name="badge-percent"></sc-icon>
+			<?php esc_html_e( 'Dynamic Pricing', 'surecart' ); ?>
+			<span class="sc-new-badge"></span>
+		</sc-tab>
+
 		<sc-tab href="<?php echo esc_url( add_query_arg( [ 'tab' => 'affiliation_protocol' ], menu_page_url( 'sc-settings', false ) ) ); ?>" <?php echo 'affiliation_protocol' === $tab ? 'active' : ''; ?> >
 			<sc-icon style="font-size: 18px; width: 18px; stroke-width: 4;" name="mouse-pointer" slot="prefix"></sc-icon>
 			<?php esc_html_e( 'Affiliates', 'surecart' ); ?>

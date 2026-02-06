@@ -5,6 +5,7 @@ namespace SureCart\Models;
 use SureCart\Models\Traits\HasCustomer;
 use SureCart\Models\Traits\HasSubscriptions;
 use SureCart\Models\LineItem;
+use SureCart\Models\Fee;
 use SureCart\Models\Traits\CanFinalize;
 use SureCart\Models\Traits\HasBillingAddress;
 use SureCart\Models\Traits\HasDiscount;
@@ -312,6 +313,44 @@ class Checkout extends Model {
 	 */
 	public function setRecommendedBumpsAttribute( $value ) {
 		$this->setCollection( 'recommended_bumps', $value, Bump::class );
+	}
+
+	/**
+	 * Set the checkout fees attribute
+	 *
+	 * @param  object $value Subscription data array.
+	 * @return void
+	 */
+	public function setCheckoutFeesAttribute( $value ) {
+		$this->setCollection( 'checkout_fees', $value, Fee::class );
+	}
+
+	/**
+	 * Set the shipping fees attribute
+	 *
+	 * @param  object $value Subscription data array.
+	 * @return void
+	 */
+	public function setShippingFeesAttribute( $value ) {
+		$this->setCollection( 'shipping_fees', $value, Fee::class );
+	}
+
+	/**
+	 * Get the display checkout fees amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getCheckoutFeesDisplayAmountAttribute() {
+		return ! empty( $this->checkout_fees_amount ) ? Currency::format( $this->checkout_fees_amount, $this->currency ) : '';
+	}
+
+	/**
+	 * Get the display shipping fees amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getShippingFeesDisplayAmountAttribute() {
+		return ! empty( $this->shipping_fees_amount ) ? Currency::format( $this->shipping_fees_amount, $this->currency ) : '';
 	}
 
 	/**

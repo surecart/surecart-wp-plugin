@@ -1,5 +1,5 @@
 {
-	"apiVersion": 2,
+	"apiVersion": 3,
 	"name": "surecart/address",
 	"title": "Address",
 	"description": "Display a shipping address form. This is used for shipping and tax calculations.",

@@ -61,6 +61,8 @@ export default ({ attributes, setAttributes, isSelected }) => {
 				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
 						<TextControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							label={__('Label', 'surecart')}
 							value={label}
 							onChange={(label) => setAttributes({ label })}
@@ -68,6 +70,8 @@ export default ({ attributes, setAttributes, isSelected }) => {
 					</PanelRow>
 					<PanelRow>
 						<TextControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							label={__('Description', 'surecart')}
 							value={description}
 							onChange={(description) =>
@@ -77,6 +81,7 @@ export default ({ attributes, setAttributes, isSelected }) => {
 					</PanelRow>
 					<PanelRow>
 						<ToggleControl
+							__nextHasNoMarginBottom
 							label={__('Checked By Default', 'surecart')}
 							checked={checked}
 							onChange={(checked) => setAttributes({ checked })}
@@ -84,6 +89,7 @@ export default ({ attributes, setAttributes, isSelected }) => {
 					</PanelRow>
 					<PanelRow>
 						<ToggleControl
+							__nextHasNoMarginBottom
 							label={__('Show Label', 'surecart')}
 							checked={show_label}
 							onChange={(show_label) =>
@@ -93,6 +99,7 @@ export default ({ attributes, setAttributes, isSelected }) => {
 					</PanelRow>
 					<PanelRow>
 						<ToggleControl
+							__nextHasNoMarginBottom
 							label={__('Show Price Amount', 'surecart')}
 							checked={show_price}
 							onChange={(show_price) =>
@@ -102,6 +109,7 @@ export default ({ attributes, setAttributes, isSelected }) => {
 					</PanelRow>
 					<PanelRow>
 						<ToggleControl
+							__nextHasNoMarginBottom
 							label={__('Show control', 'surecart')}
 							checked={show_control}
 							onChange={(show_control) =>

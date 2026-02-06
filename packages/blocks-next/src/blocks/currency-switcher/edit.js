@@ -1,9 +1,13 @@
-/** @jsx jsx */
 import { __ } from '@wordpress/i18n';
-import { css, jsx } from '@emotion/react';
 import { useBlockProps, BlockControls } from '@wordpress/block-editor';
 import { ToolbarDropdownMenu } from '@wordpress/components';
 import { useEntityRecord } from '@wordpress/core-data';
+
+const iconStyle = {
+	width: '18px',
+	height: '18px',
+	fill: 'none',
+};
 
 const ICONS = {
 	right: (
@@ -16,11 +20,7 @@ const ICONS = {
 			fill="none"
 			strokeLinecap="round"
 			strokeLinejoin="round"
-			css={css`
-				width: 18px;
-				height: 18px;
-				fill: none !important;
-			`}
+			style={iconStyle}
 		>
 			<polyline points="9 10 4 15 9 20"></polyline>
 			<path d="M20 4v7a4 4 0 0 1-4 4H4"></path>
@@ -36,11 +36,7 @@ const ICONS = {
 			fill="none"
 			strokeLinecap="round"
 			strokeLinejoin="round"
-			css={css`
-				width: 18px;
-				height: 18px;
-				fill: none !important;
-			`}
+			style={iconStyle}
 		>
 			<polyline points="15 10 20 15 15 20"></polyline>
 			<path d="M4 4v7a4 4 0 0 0 4 4h12"></path>
@@ -56,11 +52,7 @@ const ICONS = {
 			fill="none"
 			strokeLinecap="round"
 			strokeLinejoin="round"
-			css={css`
-				width: 18px;
-				height: 18px;
-				fill: none !important;
-			`}
+			style={iconStyle}
 		>
 			<polyline points="14 9 9 4 4 9"></polyline>
 			<path d="M20 20h-7a4 4 0 0 1-4-4V4"></path>
@@ -76,11 +68,7 @@ const ICONS = {
 			fill="none"
 			strokeLinecap="round"
 			strokeLinejoin="round"
-			css={css`
-				width: 18px;
-				height: 18px;
-				fill: none !important;
-			`}
+			style={iconStyle}
 		>
 			<polyline points="10 9 15 4 20 9"></polyline>
 			<path d="M4 20h7a4 4 0 0 0 4-4V4"></path>

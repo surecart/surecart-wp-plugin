@@ -24,64 +24,88 @@ export default ({ order, loading }) => {
 		...metadata
 	} = order?.checkout?.metadata || {};
 
-	if (!Object.keys(metadata).length || loading) {
-		return null;
-	}
-
 	const metadatas = Object.keys(metadata || {}).map((key) => ({
 		key,
 		label: key.charAt(0).toUpperCase() + key.slice(1).replaceAll('_', ' '),
-		value: metadata[key],
+		value: JSON.stringify(metadata[key]),
 	}));
+
+	const isEmpty = !metadatas?.length;
 
 	return (
 		<>
 			<Box
 				title={__('Additional Order Data', 'surecart')}
 				header_action={
-					<ScDropdown
-						placement="bottom-end"
+					!isEmpty && (
+						<ScDropdown
+							placement="bottom-end"
+							css={css`
+								margin: -12px 0px;
+							`}
+						>
+							<ScButton slot="trigger" type="text" circle>
+								<ScIcon name="more-horizontal" />
+							</ScButton>
+							<ScMenu>
+								<ScMenuItem
+									onClick={() => setModalOpen('edit')}
+								>
+									<ScIcon name="edit" slot="prefix" />
+									{__('Edit', 'surecart')}
+								</ScMenuItem>
+							</ScMenu>
+						</ScDropdown>
+					)
+				}
+				footer={
+					isEmpty && (
+						<ScButton onClick={() => setModalOpen('edit')}>
+							<ScIcon name="plus" slot="prefix" />
+							{__('Add Custom Data', 'surecart')}
+						</ScButton>
+					)
+				}
+				loading={loading}
+			>
+				{!isEmpty && (
+					<div
 						css={css`
-							margin: -12px 0px;
+							display: grid;
+							gap: 0.5em;
 						`}
 					>
-						<ScButton slot="trigger" type="text" circle>
-							<ScIcon name="more-horizontal" />
-						</ScButton>
-						<ScMenu>
-							<ScMenuItem onClick={() => setModalOpen(true)}>
-								<ScIcon name="edit" slot="prefix" />
-								{__('Edit', 'surecart')}
-							</ScMenuItem>
-						</ScMenu>
-					</ScDropdown>
-				}
-			>
-				<div
-					css={css`
-						display: grid;
-						gap: 0.5em;
-					`}
-				>
-					{metadatas.map(({ key, label, value }) => (
-						<div key={key}>
-							<ScText
-								tag="h3"
-								style={{
-									'--font-weight':
-										'var(--sc-font-weight-bold)',
-									'--font-size': 'var(--sc-font-size-medium)',
-								}}
-							>
-								{label}
-							</ScText>
-							<div>{value}</div>
-						</div>
-					))}
-				</div>
+						{metadatas.map(({ key, label, value }) => (
+							<div key={key}>
+								<ScText
+									tag="h3"
+									style={{
+										'--font-weight':
+											'var(--sc-font-weight-bold)',
+										'--font-size':
+											'var(--sc-font-size-medium)',
+									}}
+								>
+									{label}
+								</ScText>
+								<div
+									css={css`
+										white-space: pre-wrap;
+										word-wrap: break-word;
+										word-break: break-all;
+										overflow-wrap: break-word;
+										overflow-x: auto;
+									`}
+								>
+									{value}
+								</div>
+							</div>
+						))}
+					</div>
+				)}
 			</Box>
 
-			{modalOpen && (
+			{'edit' === modalOpen && (
 				<MetaDataModal
 					open={modalOpen}
 					onRequestClose={() => setModalOpen(false)}

@@ -1,5 +1,4 @@
 import { __ } from '@wordpress/i18n';
-import styled from '@emotion/styled';
 import { __experimentalUseMultipleOriginColorsAndGradients as useMultipleOriginColorsAndGradients } from '@wordpress/block-editor';
 import {
 	__experimentalBorderBoxControl as BorderBoxControl,
@@ -8,16 +7,12 @@ import {
 } from '@wordpress/components';
 import { InspectorControls } from '@wordpress/block-editor';
 
+const singleColumnItemStyle = {
+	gridColumn: '1 / -1',
+};
+
 export default (props) => {
 	const colorGradientSettings = useMultipleOriginColorsAndGradients();
-
-	const SingleColumnItem = styled.div`
-		grid-column: 1 / -1;
-
-		.components-base-control {
-			margin-bottom: 0 !important;
-		}
-	`;
 
 	return (
 		<InspectorControls group="styles">
@@ -32,7 +27,7 @@ export default (props) => {
 					label={__('Size', 'surecart')}
 					onDeselect={() => {}}
 				>
-					<SingleColumnItem>
+					<div style={singleColumnItemStyle} className="sc-single-column-item">
 						<BorderBoxControl
 							__experimentalIsRenderedInSidebar={true}
 							popoverOffset={40}
@@ -42,7 +37,7 @@ export default (props) => {
 							{...colorGradientSettings}
 							{...props}
 						/>
-					</SingleColumnItem>
+					</div>
 				</ToolsPanelItem>
 			</ToolsPanel>
 		</InspectorControls>

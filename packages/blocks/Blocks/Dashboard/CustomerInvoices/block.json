@@ -1,5 +1,5 @@
 {
-	"apiVersion": 2,
+	"apiVersion": 3,
 	"name": "surecart/customer-invoices",
 	"title": "Customer Invoices",
 	"description": "Displays the customers invoices.",
