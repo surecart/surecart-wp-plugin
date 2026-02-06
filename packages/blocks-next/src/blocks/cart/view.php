@@ -22,6 +22,8 @@
 				array(
 					'style'                    => $style,
 					'class'                    => 'sc-drawer sc-cart-drawer',
+					'role'                     => 'dialog',
+					'aria-modal'               => 'true',
 					'data-wp-bind--aria-label' => 'surecart/cart::state.ariaLabel',
 					'data-wp-class--open'      => 'surecart/cart::state.open',
 					'data-wp-on--keydown'      => 'surecart/cart::actions.handleKeydown',
