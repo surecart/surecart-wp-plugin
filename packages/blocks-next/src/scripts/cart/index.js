@@ -1,19 +1,12 @@
 /**
  * WordPress dependencies
  */
-import { store, getElement } from '@wordpress/interactivity';
+import { store, getElement, withSyncEvent } from '@wordpress/interactivity';
+import { inertEverythingExcept, removeInert } from '../utils/inert';
 const { actions: quickViewActions } = store('surecart/product-quick-view');
 const { state: checkoutState, actions: checkoutActions } =
 	store('surecart/checkout');
 const { __ } = wp.i18n;
-
-/**
- * Holds all elements that are made inert when the lightbox is open; used to
- * remove inert attribute of only those elements explicitly made inert.
- *
- * @type {Array}
- */
-let inertElements = [];
 
 const { state, actions } = store('surecart/cart', {
 	state: {
@@ -72,17 +65,7 @@ const { state, actions } = store('surecart/cart', {
 			quickViewActions?.close?.();
 
 			// make all children of the document inert exempt .sc-cart-wrapper
-			inertElements = [];
-			document
-				.querySelectorAll(
-					'body > :not(.sc-cart-wrapper):not(.a11y-speak-region):not(:has(.a11y-speak-region))'
-				)
-				.forEach((el) => {
-					if (!el.hasAttribute('inert')) {
-						el.setAttribute('inert', '');
-						inertElements.push(el);
-					}
-				});
+			inertEverythingExcept(document.querySelector('.sc-cart-wrapper'));
 		},
 
 		processCartViewEvent: function* (checkout) {
@@ -102,15 +85,13 @@ const { state, actions } = store('surecart/cart', {
 			state.label = __('Cart closed.', 'surecart');
 
 			// remove inert attribute from all elements that were made inert.
-			inertElements.forEach((el) => {
-				el.removeAttribute('inert');
-			});
+			removeInert();
 		},
 
 		/**
 		 * Toggle the cart dialog.
 		 */
-		toggle: (e) => {
+		toggle: withSyncEvent((e) => {
 			// If the key is not space or enter, return.
 			if (e?.key && e?.key !== ' ' && e?.key !== 'Enter') {
 				return;
@@ -121,28 +102,30 @@ const { state, actions } = store('surecart/cart', {
 
 			// If the dialog is open, close it. Otherwise, open it.
 			state?.open ? actions.close() : actions.open();
-		},
+		}),
 
 		/**
 		 * Close the dialog if the target is the dialog.
 		 */
-		closeOverlay: (e) => {
+		closeOverlay: withSyncEvent((e) => {
 			if (e.target === e.currentTarget) {
 				actions.close();
 			}
-		},
+		}),
 
 		/**
 		 * Handle keydown events.
 		 */
-		handleKeydown(event) {
+		handleKeydown: withSyncEvent((event) => {
 			if (state.open) {
 				// Closes the lightbox when the user presses the escape key.
 				if (event.key === 'Escape') {
+					event.preventDefault();
+					event.stopPropagation();
 					actions.close();
 				}
 			}
-		},
+		}),
 	},
 });
 
