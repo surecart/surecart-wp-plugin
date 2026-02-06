@@ -3,8 +3,8 @@
  */
 import { store, getContext, getElement } from '@wordpress/interactivity';
 const { __, sprintf, _n } = wp.i18n;
-import { speak } from '@surecart/a11y';
 const LOCAL_STORAGE_KEY = 'surecart-local-storage';
+let announceTimeout = null;
 
 /**
  * Get checkout data from local storage based on mode and formId.
@@ -805,8 +805,13 @@ const { state, actions } = store('surecart/checkout', {
 			const { checkout, mode, formId } = e.detail;
 			actions.setCheckout(checkout, mode, formId);
 		},
-		announceLatestCheckout() {
-			setTimeout(() => {
+		announceLatestCheckout: function* () {
+			clearTimeout(announceTimeout);
+			const { speak } = yield import(
+				/* webpackIgnore: true */
+				'@surecart/a11y'
+			);
+			announceTimeout = setTimeout(() => {
 				speak(
 					sprintf(
 						__(
