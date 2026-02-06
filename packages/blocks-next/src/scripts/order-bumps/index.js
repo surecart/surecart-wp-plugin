@@ -3,7 +3,7 @@
  */
 import { store, getContext, getElement } from '@wordpress/interactivity';
 
-const { __ } = wp.i18n;
+const { __, sprintf } = wp.i18n;
 const { state: checkoutState, actions: checkoutActions } =
 	store('surecart/checkout');
 
@@ -170,6 +170,22 @@ const { state, actions } = store('surecart/order-bumps', {
 		get bumpCta() {
 			const { bump } = getContext();
 			return bump?.metadata?.cta || '';
+		},
+
+		/**
+		 * Get accessible label for add button that includes product name.
+		 */
+		get addButtonAriaLabel() {
+			const { bump } = getContext();
+			const productName = bump?.name || bump?.price?.product?.name || '';
+
+			if (state.isBumpInCart) {
+				// translators: %s: product name
+				return sprintf(__('%s added to cart', 'surecart'), productName);
+			}
+
+			// translators: %s: product name
+			return sprintf(__('Add %s to cart', 'surecart'), productName);
 		},
 	},
 
