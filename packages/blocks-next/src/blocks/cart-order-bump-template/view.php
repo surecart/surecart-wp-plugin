@@ -4,6 +4,7 @@
 	data-wp-on-async--scrollend="callbacks.onCarouselScroll"
 	data-wp-on--keydown="actions.handleCarouselKeydown"
 	tabindex="0"
+	data-wp-bind--aria-label="state.orderBumpsListAriaLabel"
 	aria-label="<?php esc_attr_e( 'Order bumps carousel. Use left and right arrow keys to navigate.', 'surecart' ); ?>"
 >
 	<template

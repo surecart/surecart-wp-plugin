@@ -173,6 +173,18 @@ const { state, actions } = store('surecart/order-bumps', {
 		},
 
 		/**
+		 * Get accessible label for order bumps list/carousel.
+		 */
+		get orderBumpsListAriaLabel() {
+			return state.hasMultipleBumps
+				? __(
+						'Order bumps carousel. Use left and right arrow keys to navigate.',
+						'surecart'
+				  )
+				: __('Order bump', 'surecart');
+		},
+
+		/**
 		 * Get accessible label for add button that includes product name.
 		 */
 		get addButtonAriaLabel() {
