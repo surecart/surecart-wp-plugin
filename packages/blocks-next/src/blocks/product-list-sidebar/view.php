@@ -16,6 +16,8 @@
 
 <div
 	class="sc-drawer sc-sidebar-drawer wp-block-surecart-product-list-sidebar"
+	role="dialog"
+	aria-modal="true"
 	data-wp-interactive='{ "namespace": "surecart/sidebar" }'
 	aria-label="<?php echo esc_attr( $attributes['label'] ); ?>"
 	data-wp-on-window--resize="actions.close"
@@ -69,3 +71,10 @@
 	</div>
 	<div class="sc-block-ui" data-wp-interactive='{ "namespace": "surecart/product-list" }' data-wp-bind--hidden="!state.loading" hidden aria-busy="true" aria-label="<?php esc_attr_e( 'Loading filters', 'surecart' ); ?>"></div>
 </div>
+<div
+	class="sc-drawer__backdrop"
+	data-wp-interactive='{ "namespace": "surecart/sidebar" }'
+	data-wp-on--mousedown="surecart/sidebar::actions.closeOverlay"
+	data-wp-on--touchstart="surecart/sidebar::actions.closeOverlay"
+	data-wp-class--show="surecart/sidebar::state.mobileOpen"
+></div>
