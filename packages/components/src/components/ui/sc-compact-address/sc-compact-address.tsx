@@ -126,7 +126,7 @@ export class ScCompactAddress {
       })) || [];
 
     this.placeholders = countryDetails?.address_labels;
-    this.postalCodeRegex = countryDetails?.postal_code_regex || null;
+    this.postalCodeRegex = countryDetails?.postal_code_regex || undefined;
   }
 
   componentWillLoad() {
@@ -195,7 +195,7 @@ export class ScCompactAddress {
                 required={this.required}
                 value={this?.address?.postal_code}
                 squared-top
-                maxlength={5}
+                maxlength={this.address?.country === 'US' ? 5 : undefined}
                 pattern={this.postalCodeRegex}
                 customValidity={this.postalCodeRegex ? __('Please enter a valid postal code', 'surecart') : undefined}
                 squared-left={this.showState}
