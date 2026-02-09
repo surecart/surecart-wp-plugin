@@ -30,9 +30,6 @@ class CacheServiceProvider implements ServiceProviderInterface {
 		$container['surecart.w3total_cache']   = function () {
 			return new W3TotalCacheService();
 		};
-		$container['surecart.wpsuper_cache']   = function () {
-			return new WPSuperCacheService();
-		};
 	}
 
 	/**
@@ -44,6 +41,5 @@ class CacheServiceProvider implements ServiceProviderInterface {
 		$container['surecart.litespeed_cache']->bootstrap();
 		$container['surecart.wpfastest_cache']->bootstrap();
 		$container['surecart.w3total_cache']->bootstrap();
-		$container['surecart.wpsuper_cache']->bootstrap();
 	}
 }

@@ -4,12 +4,6 @@ namespace SureCart\WordPress\Cache;
 
 /**
  * W3 Total Cache Service.
- *
- * Handles W3 Total Cache integration for SureCart including:
- * - Excluding dynamic pages from caching (checkout, dashboard, cart)
- * - Excluding SureCart REST API requests from caching
- * - Purging cache on purchase events
- * - Excluding critical scripts from minification/defer
  */
 class W3TotalCacheService extends CacheService {
 	/**
@@ -19,6 +13,9 @@ class W3TotalCacheService extends CacheService {
 	 */
 	public function bootstrap() {
 		parent::bootstrap();
+
+		// Use W3TC's filter to prevent caching of SureCart pages.
+		add_filter( 'w3tc_can_cache', [ $this, 'maybePreventCaching' ], 10, 2 );
 
 		// Exclude critical WordPress scripts from minification.
 		add_filter( 'w3tc_minify_js_do_tag_minification', [ $this, 'excludeScriptsFromMinify' ], 10, 3 );
@@ -37,9 +34,28 @@ class W3TotalCacheService extends CacheService {
 	}
 
 	/**
-	 * Disable cache for the current page.
+	 * Prevent W3TC from caching SureCart dynamic pages.
 	 *
-	 * W3 Total Cache respects the DONOTCACHEPAGE constant.
+	 * @param bool  $can_cache Whether W3TC can cache this page.
+	 * @param mixed $page_grabber The W3TC page grabber object.
+	 * @return bool
+	 */
+	public function maybePreventCaching( $can_cache, $page_grabber = null ) {
+		// If already not caching, return early.
+		if ( ! $can_cache ) {
+			return $can_cache;
+		}
+
+		// Check if this is a SureCart page that should not be cached.
+		if ( $this->shouldExcludeFromCache() ) {
+			return false;
+		}
+
+		return $can_cache;
+	}
+
+	/**
+	 * Disable cache for the current page.
 	 *
 	 * @param string $reason Reason for disabling cache.
 	 * @return void
@@ -52,8 +68,6 @@ class W3TotalCacheService extends CacheService {
 
 	/**
 	 * Purge product cache when a purchase is created or revoked.
-	 *
-	 * This helps keep product pages up-to-date with stock levels.
 	 *
 	 * @param \SureCart\Models\Purchase $purchase The purchase model.
 	 * @return void
@@ -91,18 +105,16 @@ class W3TotalCacheService extends CacheService {
 	 * Exclude critical scripts from W3TC minification.
 	 *
 	 * @param bool   $do_minification Whether to minify this script.
-	 * @param string $script_tag      The script tag HTML.
-	 * @param string $file            The script file URL.
-	 * @return bool Whether to minify this script.
+	 * @param string $script_tag The script tag HTML.
+	 * @param string $file The script file URL.
+	 * @return bool
 	 */
 	public function excludeScriptsFromMinify( $do_minification, $script_tag, $file ) {
 		if ( ! $do_minification ) {
 			return $do_minification;
 		}
 
-		$excludes = $this->getJsDeferExcludes();
-
-		foreach ( $excludes as $exclude ) {
+		foreach ( $this->getJsDeferExcludes() as $exclude ) {
 			if ( strpos( $file, $exclude ) !== false || strpos( $script_tag, $exclude ) !== false ) {
 				return false;
 			}
@@ -115,19 +127,16 @@ class W3TotalCacheService extends CacheService {
 	 * Exclude critical scripts from W3TC defer.
 	 *
 	 * @param array $script_tags Array of script tags.
-	 * @return array Modified script tags.
+	 * @return array
 	 */
 	public function excludeScriptsFromDefer( $script_tags ) {
-		if ( ! \is_array( $script_tags ) ) {
+		if ( ! is_array( $script_tags ) ) {
 			return $script_tags;
 		}
 
-		$excludes = $this->getJsDeferExcludes();
-
 		foreach ( $script_tags as $key => $tag ) {
-			foreach ( $excludes as $exclude ) {
+			foreach ( $this->getJsDeferExcludes() as $exclude ) {
 				if ( strpos( $tag, $exclude ) !== false ) {
-					// Add data-cfasync="false" or data-no-defer attribute to prevent deferring.
 					$script_tags[ $key ] = str_replace( '<script', '<script data-no-defer="1"', $tag );
 					break;
 				}

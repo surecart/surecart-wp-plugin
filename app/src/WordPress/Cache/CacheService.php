@@ -4,8 +4,6 @@ namespace SureCart\WordPress\Cache;
 
 /**
  * Abstract Cache Service.
- *
- * Provides common functionality for cache plugin integrations.
  */
 abstract class CacheService {
 	/**
@@ -34,7 +32,7 @@ abstract class CacheService {
 	abstract protected function disableCache( string $reason ): void;
 
 	/**
-	 * Check if the cache plugin is active/available.
+	 * Check if the cache plugin is active.
 	 *
 	 * @return bool
 	 */
@@ -62,25 +60,21 @@ abstract class CacheService {
 			return;
 		}
 
-		// Disable cache for customer dashboard.
 		if ( $this->isCustomerDashboardPage() ) {
 			$this->disableCacheWithBrowserHeaders( 'SureCart customer dashboard' );
 			return;
 		}
 
-		// Disable cache for checkout page.
 		if ( $this->isCheckoutPage() ) {
 			$this->disableCacheWithBrowserHeaders( 'SureCart checkout page' );
 			return;
 		}
 
-		// Disable cache for pages with checkout form blocks.
 		if ( $this->hasCheckoutFormBlock() ) {
 			$this->disableCacheWithBrowserHeaders( 'SureCart checkout form block' );
 			return;
 		}
 
-		// Disable cache for buy pages (product-specific checkout).
 		if ( $this->isBuyPage() ) {
 			$this->disableCacheWithBrowserHeaders( 'SureCart buy page' );
 			return;
@@ -88,14 +82,7 @@ abstract class CacheService {
 	}
 
 	/**
-	 * Disable both server-side and browser caching for the current page.
-	 *
-	 * This ensures that:
-	 * 1. The cache plugin doesn't cache the page (server-side)
-	 * 2. The browser doesn't cache the page (client-side)
-	 *
-	 * Browser caching of dynamic eCommerce pages like checkouts, carts, and
-	 * customer accounts can lead to stale data being displayed.
+	 * Disable both server-side and browser caching.
 	 *
 	 * @param string $reason Reason for disabling cache.
 	 * @return void
@@ -105,8 +92,6 @@ abstract class CacheService {
 		$this->disableCache( $reason );
 
 		// Disable browser caching by sending no-cache headers.
-		// This sends: Cache-Control: no-cache, must-revalidate, max-age=0
-		// And other headers to prevent browser caching.
 		if ( ! headers_sent() ) {
 			nocache_headers();
 		}
@@ -115,10 +100,6 @@ abstract class CacheService {
 	/**
 	 * Maybe disable cache for SureCart REST API requests.
 	 *
-	 * SureCart relies on REST API for dynamic content like customer data,
-	 * product information, and checkout processes. Caching these can cause
-	 * issues like incorrect cart data or failed orders.
-	 *
 	 * @return void
 	 */
 	public function maybeDisableCacheForRestApi() {
@@ -126,7 +107,6 @@ abstract class CacheService {
 			return;
 		}
 
-		// Check if this is a SureCart REST API request.
 		if ( $this->isSureCartRestRequest() ) {
 			$this->disableCacheWithBrowserHeaders( 'SureCart REST API request' );
 		}
@@ -142,14 +122,12 @@ abstract class CacheService {
 		$request_uri = $_SERVER['REQUEST_URI'] ?? '';
 
 		// Check if the request is for SureCart REST endpoints.
-		// SureCart uses /wp-json/surecart/ namespace.
 		if ( strpos( $request_uri, '/surecart/' ) !== false && strpos( $request_uri, 'wp-json' ) !== false ) {
 			return true;
 		}
 
 		// Also check for the REST route query parameter.
-		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		$rest_route = $_GET['rest_route'] ?? '';
+		$rest_route = $_GET['rest_route'] ?? ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		if ( strpos( $rest_route, '/surecart/' ) !== false ) {
 			return true;
 		}
@@ -160,15 +138,11 @@ abstract class CacheService {
 	/**
 	 * Purge product cache when a purchase is created or revoked.
 	 *
-	 * Override this method in child classes if the cache plugin
-	 * supports purging specific posts/URLs.
-	 *
 	 * @param \SureCart\Models\Purchase $purchase The purchase model.
 	 * @return void
 	 */
 	public function purgeProductCacheOnPurchase( $purchase ) {
-		// Default implementation does nothing.
-		// Override in child classes that support targeted purging.
+		// Override in child classes if needed.
 	}
 
 	/**
@@ -211,7 +185,7 @@ abstract class CacheService {
 	}
 
 	/**
-	 * Check if the current page is a buy page (product-specific checkout).
+	 * Check if the current page is a buy page.
 	 *
 	 * @return bool
 	 */
@@ -227,9 +201,9 @@ abstract class CacheService {
 	 */
 	protected function getVaryCookies(): array {
 		$cookies = [
-			'sc_checkout_id', // Checkout session ID.
-			'sc_customer_id', // Customer ID.
-			'sc_order_id',    // Order ID.
+			'sc_checkout_id',
+			'sc_customer_id',
+			'sc_order_id',
 		];
 
 		/**
@@ -241,23 +215,19 @@ abstract class CacheService {
 	}
 
 	/**
-	 * Get scripts that should be excluded from JS defer.
+	 * Get core WordPress scripts that should be excluded from JS defer.
 	 *
-	 * Core WordPress scripts like wp-api-fetch, wp-a11y, and wp-i18n are essential
-	 * for dynamic functionality and accessibility. Deferring them can break SureCart
-	 * checkout and other dynamic features.
-	 *
-	 * @return array Array of script patterns to exclude from defer.
+	 * @return array
 	 */
 	protected function getJsDeferExcludes(): array {
 		$scripts = [
-			'wp-api-fetch',   // /wp-includes/js/dist/api-fetch.min.js - Required for REST API calls.
-			'wp-a11y',        // /wp-includes/js/dist/a11y.min.js - Required for accessibility.
-			'wp-i18n',        // /wp-includes/js/dist/i18n.min.js - Required for translations.
-			'wp-url',         // /wp-includes/js/dist/url.min.js - Required for URL handling.
-			'dom-ready',      // /wp-includes/js/dist/dom-ready.min.js - Required for DOM ready handling.
-			'wp-hooks',       // /wp-includes/js/dist/hooks.min.js - Required for WordPress hooks.
-			'api-fetch',      // Alternative pattern.
+			'wp-api-fetch',
+			'wp-a11y',
+			'wp-i18n',
+			'wp-url',
+			'dom-ready',
+			'wp-hooks',
+			'api-fetch',
 			'a11y.min.js',
 			'i18n.min.js',
 			'url.min.js',
