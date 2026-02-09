@@ -137,7 +137,7 @@ class W3TotalCacheService extends CacheService {
 		foreach ( $script_tags as $key => $tag ) {
 			foreach ( $this->getJsDeferExcludes() as $exclude ) {
 				if ( strpos( $tag, $exclude ) !== false ) {
-					$script_tags[ $key ] = str_replace( '<script', '<script data-no-defer="1"', $tag );
+					$script_tags[ $key ] = preg_replace( '/^<script\b/', '<script data-no-defer="1"', $tag, 1 );
 					break;
 				}
 			}

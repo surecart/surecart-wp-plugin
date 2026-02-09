@@ -189,7 +189,7 @@ abstract class CacheService {
 	 */
 	protected function isBuyPage(): bool {
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		return ! empty( $_GET['sc-buy'] ) || ! empty( get_query_var( 'sc-buy' ) );
+		return isset( $_GET['sc-buy'] ) || ! empty( get_query_var( 'sc-buy' ) );
 	}
 
 	/**

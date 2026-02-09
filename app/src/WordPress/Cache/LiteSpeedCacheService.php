@@ -17,9 +17,6 @@ class LiteSpeedCacheService extends CacheService {
 		// Use LiteSpeed's finalize hook for cache control decisions.
 		add_action( 'litespeed_control_finalize', [ $this, 'onControlFinalize' ] );
 
-		// Disable cache for SureCart REST API requests.
-		add_action( 'rest_api_init', [ $this, 'maybeDisableCacheForRestApi' ], 1 );
-
 		// Add vary cookies for SureCart sessions.
 		add_filter( 'litespeed_vary_cookies', [ $this, 'addVaryCookies' ] );
 
