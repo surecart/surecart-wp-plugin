@@ -118,16 +118,14 @@ abstract class CacheService {
 	 * @return bool
 	 */
 	protected function isSureCartRestRequest(): bool {
-		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-		$request_uri = $_SERVER['REQUEST_URI'] ?? '';
+		$request_uri = isset( $_SERVER['REQUEST_URI'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '';
 
-		// Check if the request is for SureCart REST endpoints.
 		if ( strpos( $request_uri, '/surecart/' ) !== false && strpos( $request_uri, 'wp-json' ) !== false ) {
 			return true;
 		}
 
-		// Also check for the REST route query parameter.
-		$rest_route = $_GET['rest_route'] ?? ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$rest_route = isset( $_GET['rest_route'] ) ? sanitize_text_field( wp_unslash( $_GET['rest_route'] ) ) : '';
 		if ( strpos( $rest_route, '/surecart/' ) !== false ) {
 			return true;
 		}
