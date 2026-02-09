@@ -86,7 +86,7 @@ class LiteSpeedCacheService extends CacheService {
 	 * @return array
 	 */
 	public function addVaryCookies( $cookies ) {
-		if ( ! \is_array( $cookies ) ) {
+		if ( ! is_array( $cookies ) ) {
 			$cookies = [];
 		}
 
@@ -100,7 +100,7 @@ class LiteSpeedCacheService extends CacheService {
 	 * @return array
 	 */
 	public function excludeScriptsFromDefer( $excludes ) {
-		if ( ! \is_array( $excludes ) ) {
+		if ( ! is_array( $excludes ) ) {
 			$excludes = [];
 		}
 
