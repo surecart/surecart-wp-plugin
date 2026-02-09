@@ -12,8 +12,6 @@ class LiteSpeedCacheService extends CacheService {
 	 * @return void
 	 */
 	public function bootstrap() {
-		parent::bootstrap();
-
 		// Use LiteSpeed's finalize hook for cache control decisions.
 		add_action( 'litespeed_control_finalize', [ $this, 'onControlFinalize' ] );
 
@@ -22,6 +20,13 @@ class LiteSpeedCacheService extends CacheService {
 
 		// Exclude critical WordPress scripts from JS defer.
 		add_filter( 'litespeed_optm_js_defer_exc', [ $this, 'excludeScriptsFromDefer' ] );
+
+		// Disable cache for SureCart REST API requests.
+		add_action( 'rest_api_init', [ $this, 'maybeDisableCacheForRestApi' ], 1 );
+
+		// Purge cache on purchase events.
+		add_action( 'surecart/purchase_created', [ $this, 'purgeProductCacheOnPurchase' ] );
+		add_action( 'surecart/purchase_revoked', [ $this, 'purgeProductCacheOnPurchase' ] );
 	}
 
 	/**
