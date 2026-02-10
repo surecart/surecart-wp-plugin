@@ -7,6 +7,8 @@ use SureCart\Models\ProductImport;
 
 /**
  * Syncs WooCommerce products records to SureCart Products.
+ *
+ * @package SureCart
  */
 class WooCommerceProductsSyncService {
 
@@ -16,6 +18,13 @@ class WooCommerceProductsSyncService {
 	 * @var array
 	 */
 	private $products_import_batch = [];
+
+	/**
+	 * Collections cache (per batch) to avoid duplicate API calls.
+	 *
+	 * @var array
+	 */
+	private $collections_cache = [];
 
 	/**
 	 * Bootstrap any actions.
@@ -37,7 +46,7 @@ class WooCommerceProductsSyncService {
 	}
 
 	/**
-	 * Show an admin notice if customers are being synced.
+	 * Show an admin notice if products are being synced.
 	 *
 	 * @return void
 	 */
@@ -77,7 +86,7 @@ class WooCommerceProductsSyncService {
 	}
 
 	/**
-	 * Sync customers.
+	 * Sync products.
 	 *
 	 * @param string  $page Current page.
 	 * @param integer $batch_size Batch size.
@@ -99,16 +108,19 @@ class WooCommerceProductsSyncService {
 			]
 		);
 
-		// enqueue actions to sync an individual customer.
+		// Sync each product.
 		foreach ( $products->products as $product_id ) {
 			$this->syncProduct( $product_id );
 		}
 
-		( new ProductImport() )->create( [ 'data' => $this->products_import_batch ] );
+		// Create import batch if we have products.
+		if ( ! empty( $this->products_import_batch ) ) {
+			( new ProductImport() )->create( [ 'data' => $this->products_import_batch ] );
+			$this->products_import_batch = []; // Clear batch after import.
+		}
 
 		// if the total number of pages less than or equal to the current page, we don't have another page.
 		if ( $products->max_num_pages <= $page ) {
-			// we don't have another page.
 			return;
 		}
 
@@ -120,123 +132,834 @@ class WooCommerceProductsSyncService {
 	 * Sync a single product.
 	 *
 	 * @param int $product_id Product ID.
+	 * @return void
 	 */
 	public function syncProduct( $product_id ) {
-		// get the product.
-		$product = wc_get_product( $product_id );
+		try {
+			$product = wc_get_product( $product_id );
 
-		// map the WooCommerce Product to SureCart and save in the imports batch.
-		$this->mapWooCommerceProductToSureCart( $product );
+			if ( ! $product ) {
+				return;
+			}
+
+			// Skip unsupported product types.
+			$product_type = $product->get_type();
+			if ( in_array( $product_type, [ 'grouped' ], true ) ) {
+				return;
+			}
+
+			// Map the WooCommerce Product to SureCart and save in the imports batch.
+			$this->mapWooCommerceProductToSureCart( $product );
+
+		} catch ( \Exception $e ) { // phpcs:ignore Generic.CodeAnalysis.EmptyStatement.DetectedCatch
+		}
 	}
 
 	/**
 	 * Map the WooCommerce Product to SureCart.
 	 *
-	 * @param array $product WooCoomerce Product.
-	 *
+	 * @param \WC_Product $product WooCommerce Product.
 	 * @return void
 	 */
 	public function mapWooCommerceProductToSureCart( $product ) {
-		// Core Fields.
-		$product_import_data = [
-			'name'        => $product->get_name(),
-			'slug'        => $product->get_slug(),
-			'featured'    => $product->is_featured(),
-			'status'      => $product->get_status() === 'publish' ? 'published' : 'draft',
-			'description' => $product->get_description() ?? null,
-			'sku'         => $product->get_sku() ?? null,
-		];
+		// Build product data using helper methods.
+		$product_import_data = $this->mapCoreFields( $product );
 
-		// Stock Fields.
-		$managing_stock = $product->managing_stock();
+		// Prices (CRITICAL).
+		$product_import_data['prices'] = $this->mapPrices( $product );
 
-		if ( $managing_stock ) {
-			$product_import_data = array_merge(
-				$product_import_data,
-				[
-					'stock_enabled'                => $managing_stock,
-					'allow_out_of_stock_purchases' => $product->backorders_allowed(),
-					'stock_adjustment'             => $managing_stock ? (int) $product->get_stock_quantity() : 0,
-				]
-			);
+		// Categories to collections (CRITICAL).
+		$product_import_data = array_merge( $product_import_data, $this->mapCategories( $product ) );
+
+		// Variants (for variable products).
+		if ( $product->is_type( 'variable' ) ) {
+			$product_import_data = array_merge( $product_import_data, $this->mapVariants( $product ) );
 		}
 
-		// Shipping Fields.
-		$is_digital = $product->is_virtual();
+		// Stock, shipping, tax.
+		$product_import_data = array_merge( $product_import_data, $this->mapStockFields( $product ) );
+		$product_import_data = array_merge( $product_import_data, $this->mapShippingFields( $product ) );
+		$product_import_data = array_merge( $product_import_data, $this->mapTaxFields( $product ) );
 
-		if ( ! $is_digital ) {
-			$product_import_data = array_merge(
-				$product_import_data,
-				[
-					'shipping_enabled'     => true,
-					'auto_fulfill_enabled' => false,
+		// Reviews.
+		$product_import_data            = array_merge( $product_import_data, $this->mapReviewsFields( $product ) );
+		$product_import_data['reviews'] = $this->mapReviews( $product );
 
-					'weight'               => (float) $product->get_weight(),
-					'weight_unit'          => get_option( 'woocommerce_weight_unit' ),
+		// Media (with bug fix).
+		$product_import_data['product_medias'] = $this->mapMedia( $product );
 
-					'dimensions'           => [
-						'length' => (float) $product->get_length(),
-						'width'  => (float) $product->get_width(),
-						'height' => (float) $product->get_height(),
-						'unit'   => get_option( 'woocommerce_dimension_unit' ),
-					],
-				]
-			);
-		} else {
-			$product_import_data = array_merge(
-				$product_import_data,
-				[
-					'shipping_enabled'     => false,
-					'auto_fulfill_enabled' => true,
-				]
-			);
-		}
+		// Metadata (comprehensive WooCommerce data).
+		$product_import_data['metadata'] = $this->mapMetadata( $product );
 
-		// Tax Fields.
-		$taxable      = $product->is_taxable();
-		$tax_category = $is_digital || $product->is_downloadable() ? 'digital' : 'tangible';
-
-		$product_import_data = array_merge(
-			$product_import_data,
-			[
-				'tax_enabled'  => $taxable,
-				'tax_category' => $tax_category,
-			]
-		);
-
-		// Reviews Fields.
-		$product_import_data = array_merge(
-			$product_import_data,
-			[
-				'reviews_enabled' => comments_open( $product->get_id() ),
-				'solicit_reviews' => true,
-			]
-		);
-
-		// Media Fields.
-		$media = [];
-
-		if ( $image_id === $product->get_image_id() ) {
-			$media[] = [
-				'type' => 'image',
-				'url'  => wp_get_attachment_url( $image_id ),
-			];
-		}
-
-		foreach ( $product->get_gallery_image_ids() as $id ) {
-			$media[] = [
-				'type' => 'image',
-				'url'  => wp_get_attachment_url( $id ),
-			];
-		}
-
-		$product_import_data = array_merge(
-			$product_import_data,
-			[
-				'product_medias' => $media,
-			]
-		);
+		// Allow filtering.
+		$product_import_data = apply_filters( 'surecart/woocommerce_sync/product_data', $product_import_data, $product );
 
 		$this->products_import_batch[] = $product_import_data;
+	}
+
+	/**
+	 * Map core product fields.
+	 *
+	 * @param \WC_Product $product WooCommerce Product.
+	 * @return array
+	 */
+	public function mapCoreFields( $product ) {
+		$core_fields = [
+			'name'         => $product->get_name(),
+			'slug'         => $product->get_slug(),
+			'featured'     => $product->is_featured(),
+			'status'       => $this->mapStatus( $product ),
+			'description'  => $product->get_description() ?? null,
+			'sku'          => $product->get_sku() ?? null,
+			'archived'     => $product->get_status() === 'trash',
+			'recurring'    => $this->isSubscriptionProduct( $product ),
+			'cataloged_at' => $product->get_date_created() ? $product->get_date_created()->format( 'c' ) : null,
+			'position'     => (int) $product->get_menu_order(),
+		];
+
+		// Purchase limit (sold individually).
+		if ( $product->get_sold_individually() ) {
+			$core_fields['purchase_limit'] = 1;
+		}
+
+		// Licensing (if applicable).
+		if ( $this->hasLicensing( $product ) ) {
+			$core_fields['licensing_enabled']        = true;
+			$core_fields['license_activation_limit'] = $this->getLicenseActivationLimit( $product );
+		}
+
+		return $core_fields;
+	}
+
+	/**
+	 * Map product status considering catalog visibility.
+	 *
+	 * @param \WC_Product $product WooCommerce Product.
+	 * @return string
+	 */
+	public function mapStatus( $product ) {
+		$status             = $product->get_status();
+		$catalog_visibility = $product->get_catalog_visibility();
+
+		// Hidden products map to draft.
+		if ( 'hidden' === $catalog_visibility || 'private' === $status ) {
+			return 'draft';
+		}
+
+		return 'publish' === $status ? 'published' : 'draft';
+	}
+
+	/**
+	 * Check if product is a subscription.
+	 *
+	 * @param \WC_Product $product WooCommerce Product.
+	 * @return bool
+	 */
+	public function isSubscriptionProduct( $product ) {
+		return class_exists( 'WC_Subscriptions_Product' ) && \WC_Subscriptions_Product::is_subscription( $product );
+	}
+
+	/**
+	 * Check if product has licensing enabled.
+	 *
+	 * @param \WC_Product $product WooCommerce Product.
+	 * @return bool
+	 */
+	public function hasLicensing( $product ) {
+		return 'yes' === get_post_meta( $product->get_id(), '_has_license', true );
+	}
+
+	/**
+	 * Get license activation limit.
+	 *
+	 * @param \WC_Product $product WooCommerce Product.
+	 * @return int|null
+	 */
+	public function getLicenseActivationLimit( $product ) {
+		$limit = get_post_meta( $product->get_id(), '_license_activation_limit', true );
+		return $limit ? (int) $limit : null;
+	}
+
+	/**
+	 * Map prices array.
+	 *
+	 * @param \WC_Product $product WooCommerce Product.
+	 * @return array
+	 */
+	public function mapPrices( $product ) {
+		$prices = [];
+
+		// Subscription products.
+		if ( $this->isSubscriptionProduct( $product ) ) {
+			return $this->mapSubscriptionPrices( $product );
+		}
+
+		// Simple products.
+		$price_data = [
+			'amount'   => $this->convertPriceToInteger( $product->get_price() ),
+			'currency' => \get_woocommerce_currency(),
+			// translators: %s: Product name.
+			'name'     => sprintf( __( '%s Price', 'surecart' ), $product->get_name() ),
+			'position' => 0,
+			'archived' => false,
+		];
+
+		// Sale price -> scratch_amount.
+		if ( $product->is_on_sale() && $product->get_sale_price() ) {
+			$price_data['scratch_amount'] = $this->convertPriceToInteger( $product->get_regular_price() );
+			$price_data['amount']         = $this->convertPriceToInteger( $product->get_sale_price() );
+		}
+
+		// Metadata.
+		$price_data['metadata'] = [
+			'wc_product_id'    => $product->get_id(),
+			'wc_price_type'    => 'regular',
+			'wc_tax_class'     => $product->get_tax_class(),
+			'wc_regular_price' => $product->get_regular_price(),
+			'wc_sale_price'    => $product->get_sale_price(),
+		];
+
+		// Sale dates.
+		if ( $product->get_date_on_sale_from() ) {
+			$price_data['metadata']['wc_sale_start'] = $product->get_date_on_sale_from()->format( 'c' );
+		}
+		if ( $product->get_date_on_sale_to() ) {
+			$price_data['metadata']['wc_sale_end'] = $product->get_date_on_sale_to()->format( 'c' );
+		}
+
+		$prices[] = apply_filters( 'surecart/woocommerce_sync/price', $price_data, $product );
+
+		return $prices;
+	}
+
+	/**
+	 * Map subscription prices.
+	 *
+	 * @param \WC_Product $product WooCommerce Product.
+	 * @return array
+	 */
+	public function mapSubscriptionPrices( $product ) {
+		if ( ! class_exists( 'WC_Subscriptions_Product' ) ) {
+			return [];
+		}
+
+		$price_data = [
+			'amount'                             => $this->convertPriceToInteger( $product->get_price() ),
+			'currency'                           => \get_woocommerce_currency(),
+			// translators: %s: Product name.
+			'name'                               => sprintf( __( '%s Subscription', 'surecart' ), $product->get_name() ),
+			'position'                           => 0,
+			'archived'                           => false,
+
+			// Recurring fields.
+			'recurring_interval'                 => \WC_Subscriptions_Product::get_period( $product ),
+			'recurring_interval_count'           => (int) \WC_Subscriptions_Product::get_interval( $product ),
+			'recurring_period_count'             => (int) \WC_Subscriptions_Product::get_length( $product ) ?? null,
+
+			// Trial.
+			'trial_duration_days'                => $this->getTrialDays( $product ),
+
+			// Setup fee.
+			'setup_fee_enabled'                  => \WC_Subscriptions_Product::get_sign_up_fee( $product ) > 0,
+			'setup_fee_amount'                   => $this->convertPriceToInteger( \WC_Subscriptions_Product::get_sign_up_fee( $product ) ),
+			'setup_fee_name'                     => __( 'Sign-up Fee', 'surecart' ),
+			'setup_fee_trial_enabled'            => false,
+
+			// Portal.
+			'portal_subscription_update_enabled' => true,
+
+			// Metadata.
+			'metadata'                           => [
+				'wc_subscription_product' => true,
+				'wc_product_id'           => $product->get_id(),
+			],
+		];
+
+		// Sale price.
+		if ( $product->is_on_sale() && $product->get_sale_price() ) {
+			$price_data['scratch_amount'] = $this->convertPriceToInteger( $product->get_regular_price() );
+		}
+
+		return [ $price_data ];
+	}
+
+	/**
+	 * Calculate trial period in days.
+	 *
+	 * @param \WC_Product $product WooCommerce Product.
+	 * @return int|null
+	 */
+	public function getTrialDays( $product ) {
+		if ( ! class_exists( 'WC_Subscriptions_Product' ) ) {
+			return null;
+		}
+
+		$trial_length = \WC_Subscriptions_Product::get_trial_length( $product );
+		$trial_period = \WC_Subscriptions_Product::get_trial_period( $product );
+
+		if ( ! $trial_length || ! $trial_period ) {
+			return null;
+		}
+
+		$days_map = [
+			'day'   => 1,
+			'week'  => 7,
+			'month' => 30,
+			'year'  => 365,
+		];
+
+		return (int) ( $trial_length * ( $days_map[ $trial_period ] ?? 1 ) );
+	}
+
+	/**
+	 * Convert price to integer (cents).
+	 *
+	 * @param string|float $price Price.
+	 * @return int
+	 */
+	public function convertPriceToInteger( $price ) {
+		if ( empty( $price ) ) {
+			return 0;
+		}
+
+		$currency = \get_woocommerce_currency();
+
+		// Zero-decimal currencies (no cents).
+		$zero_decimal = in_array(
+			$currency,
+			[ 'JPY', 'KRW', 'VND', 'CLP', 'PYG', 'BIF', 'DJF', 'GNF', 'ISK', 'KMF', 'XAF', 'XOF', 'XPF' ],
+			true
+		);
+
+		return $zero_decimal ? (int) $price : (int) ( $price * 100 );
+	}
+
+	/**
+	 * Get or create ProductCollections from WooCommerce taxonomy terms using API.
+	 *
+	 * @param array $terms_data Array of term data with 'term' and 'source' keys.
+	 * @return array Array of ProductCollection objects from API.
+	 */
+	public function getOrCreateCollections( $terms_data ) {
+		$collections = [];
+
+		foreach ( $terms_data as $slug => $data ) {
+			$wc_term         = $data['term'];
+			$taxonomy_source = $data['source'];
+
+			// Normalize slug for cache key (lowercase, trim).
+			$cache_key = strtolower( trim( $slug ) );
+
+			try {
+				// Check cache first to avoid duplicate API calls.
+				if ( isset( $this->collections_cache[ $cache_key ] ) ) {
+					$collections[] = $this->collections_cache[ $cache_key ];
+					continue;
+				}
+
+				// Find existing ProductCollection by slug using API.
+				$collection = \SureCart\Models\ProductCollection::where( [ 'query' => $cache_key ] )->first();
+
+				// If collection exists on API, cache and use it.
+				if ( ! empty( $collection->id ) && ! is_wp_error( $collection ) ) {
+					$this->collections_cache[ $cache_key ] = $collection;
+					$collections[]                          = $collection;
+					continue;
+				}
+
+				// Collection doesn't exist - create it via API.
+				$collection = \SureCart\Models\ProductCollection::create(
+					[
+						'name'        => $wc_term->name,
+						'slug'        => $cache_key,
+						'description' => $wc_term->description ?? '',
+						'metadata'    => [
+							'wc_source'  => $taxonomy_source,
+							'wc_term_id' => $wc_term->term_id,
+						],
+					]
+				);
+
+				// Check for errors.
+				if ( is_wp_error( $collection ) ) {
+					continue;
+				}
+
+				$this->collections_cache[ $cache_key ] = $collection;
+				$collections[]                          = $collection;
+			} catch ( \Exception $e ) { // phpcs:ignore Generic.CodeAnalysis.EmptyStatement.DetectedCatch
+			}
+		}
+
+		return $collections;
+	}
+
+	/**
+	 * Map categories to product collections.
+	 *
+	 * @param \WC_Product $product WooCommerce Product.
+	 * @return array
+	 */
+	public function mapCategories( $product ) {
+		$category_ids = $product->get_category_ids();
+		$tag_ids      = $product->get_tag_ids();
+
+		if ( empty( $category_ids ) && empty( $tag_ids ) ) {
+			return [];
+		}
+
+		$all_terms = [];
+
+		// Collect categories.
+		foreach ( $category_ids as $cat_id ) {
+			$category = get_term( $cat_id, 'product_cat' );
+			if ( $category && ! is_wp_error( $category ) ) {
+				// Normalize slug for deduplication (lowercase, trim).
+				$normalized_slug = strtolower( trim( $category->slug ) );
+				$all_terms[ $normalized_slug ] = [
+					'term'   => $category,
+					'source' => 'product_cat',
+				];
+			}
+		}
+
+		// Collect tags.
+		foreach ( $tag_ids as $tag_id ) {
+			$tag = get_term( $tag_id, 'product_tag' );
+			if ( $tag && ! is_wp_error( $tag ) ) {
+				// Normalize slug for deduplication - if slug exists from category, keep the first source.
+				$normalized_slug = strtolower( trim( $tag->slug ) );
+				if ( ! isset( $all_terms[ $normalized_slug ] ) ) {
+					$all_terms[ $normalized_slug ] = [
+						'term'   => $tag,
+						'source' => 'product_tag',
+					];
+				}
+			}
+		}
+
+		// Collect brands (if WC Brands is active).
+		if ( taxonomy_exists( 'product_brand' ) ) {
+			$brand_ids = wp_get_post_terms( $product->get_id(), 'product_brand', [ 'fields' => 'ids' ] );
+			if ( ! is_wp_error( $brand_ids ) ) {
+				foreach ( $brand_ids as $brand_id ) {
+					$brand = get_term( $brand_id, 'product_brand' );
+					if ( $brand && ! is_wp_error( $brand ) ) {
+						$normalized_slug = strtolower( trim( $brand->slug ) );
+						if ( ! isset( $all_terms[ $normalized_slug ] ) ) {
+							$all_terms[ $normalized_slug ] = [
+								'term'   => $brand,
+								'source' => 'product_brand',
+							];
+						}
+					}
+				}
+			}
+		}
+
+		// Get or create collections for all unique terms.
+		$all_collections = $this->getOrCreateCollections( $all_terms );
+
+		// Return just the collection IDs if we have any.
+		if ( empty( $all_collections ) ) {
+			return [];
+		}
+
+		// Extract just the IDs from the ProductCollection objects.
+		$collection_ids = array_map(
+			function ( $collection ) {
+				return $collection->id;
+			},
+			$all_collections
+		);
+
+		return [
+			'product_collections' => $collection_ids,
+		];
+	}
+
+	/**
+	 * Map variants for variable products.
+	 *
+	 * @param \WC_Product $product WooCommerce Product.
+	 * @return array
+	 */
+	public function mapVariants( $product ) {
+		if ( ! $product->is_type( 'variable' ) ) {
+			return [];
+		}
+
+		$variant_options = [];
+		$variants        = [];
+
+		// Extract variant_options from attributes.
+		$attributes      = $product->get_attributes();
+		$option_position = 0;
+
+		foreach ( $attributes as $attribute ) {
+			if ( ! $attribute->get_variation() ) {
+				continue;
+			}
+
+			// Extract values array (CRITICAL).
+			$values = [];
+			if ( $attribute->is_taxonomy() ) {
+				$terms = get_terms(
+					[
+						'taxonomy'   => $attribute->get_name(),
+						'hide_empty' => false,
+					]
+				);
+				if ( ! is_wp_error( $terms ) ) {
+					foreach ( $terms as $term ) {
+						$values[] = $term->name;
+					}
+				}
+			} else {
+				$values = $attribute->get_options();
+			}
+
+			$variant_options[] = [
+				'name'         => wc_attribute_label( $attribute->get_name() ),
+				'values'       => $values,
+				'display_type' => 'dropdown',
+				'position'     => $option_position++,
+			];
+		}
+
+		// Map variations to variants.
+		$variations       = $product->get_available_variations();
+		$variant_position = 0;
+
+		foreach ( $variations as $variation_data ) {
+			$variation = wc_get_product( $variation_data['variation_id'] );
+			if ( ! $variation ) {
+				continue;
+			}
+
+			$variant = [
+				'sku'                          => $variation->get_sku() ?? null,
+				'position'                     => $variant_position++,
+
+				// Pricing (CRITICAL - include currency).
+				'amount'                       => $this->convertPriceToInteger( $variation->get_price() ),
+				'currency'                     => \get_woocommerce_currency(),
+
+				// Sale price.
+				'scratch_amount'               => $variation->is_on_sale() && $variation->get_sale_price() ?
+					$this->convertPriceToInteger( $variation->get_regular_price() ) : null,
+
+				// Stock.
+				'stock_enabled'                => $variation->managing_stock(),
+				'stock_adjustment'             => $variation->managing_stock() ? (int) $variation->get_stock_quantity() : 0,
+				'allow_out_of_stock_purchases' => $variation->backorders_allowed(),
+
+				// Shipping.
+				'auto_fulfill_enabled'         => $variation->is_virtual(),
+				'shipping_enabled'             => ! $variation->is_virtual(),
+
+				// Tax.
+				'tax_enabled'                  => $variation->is_taxable(),
+				'tax_category'                 => $variation->is_virtual() ? 'digital' : 'tangible',
+
+				// Metadata.
+				'metadata'                     => [
+					'wc_variation_id'  => $variation->get_id(),
+					'wc_parent_id'     => $product->get_id(),
+					'wc_regular_price' => $variation->get_regular_price(),
+					'wc_sale_price'    => $variation->get_sale_price(),
+				],
+			];
+
+			// Only include weight if it's set and greater than 0.
+			$variant_weight = (float) $variation->get_weight();
+			if ( $variant_weight > 0 ) {
+				$variant['weight']      = $variant_weight;
+				$variant['weight_unit'] = get_option( 'woocommerce_weight_unit' );
+			}
+
+			// Only include dimensions if at least one dimension is set and greater than 0.
+			$variant_length = (float) $variation->get_length();
+			$variant_width  = (float) $variation->get_width();
+			$variant_height = (float) $variation->get_height();
+
+			if ( $variant_length > 0 || $variant_width > 0 || $variant_height > 0 ) {
+				$variant['dimensions'] = [
+					'length' => $variant_length,
+					'width'  => $variant_width,
+					'height' => $variant_height,
+					'unit'   => get_option( 'woocommerce_dimension_unit' ),
+				];
+			}
+
+			// Map attribute values to option_1, option_2, option_3.
+			// Only include options if they have values.
+			$attributes_map = $variation->get_variation_attributes();
+			$option_index   = 1;
+
+			foreach ( $attributes_map as $attr_name => $attr_value ) {
+				if ( $option_index <= 3 && ! empty( $attr_value ) ) {
+					$variant[ "option_$option_index" ] = $attr_value;
+					++$option_index;
+				}
+			}
+
+			// Variation image.
+			$image_id = $variation->get_image_id();
+			if ( $image_id ) {
+				$variant['metadata']['wp_image_id'] = $image_id;
+			}
+
+			$variants[] = $variant;
+		}
+
+		return [
+			'variant_options' => $variant_options,
+			'variants'        => apply_filters( 'surecart/woocommerce_sync/variants', $variants, $product ),
+		];
+	}
+
+	/**
+	 * Map stock fields.
+	 *
+	 * @param \WC_Product $product WooCommerce Product.
+	 * @return array
+	 */
+	public function mapStockFields( $product ) {
+		$managing_stock = $product->managing_stock();
+
+		if ( ! $managing_stock ) {
+			return [];
+		}
+
+		return [
+			'stock_enabled'                => true,
+			'allow_out_of_stock_purchases' => $product->backorders_allowed(),
+			'stock_adjustment'             => (int) $product->get_stock_quantity(),
+		];
+	}
+
+	/**
+	 * Map shipping fields.
+	 *
+	 * @param \WC_Product $product WooCommerce Product.
+	 * @return array
+	 */
+	public function mapShippingFields( $product ) {
+		$is_digital = $product->is_virtual() || $product->is_downloadable();
+
+		if ( $is_digital ) {
+			return [
+				'shipping_enabled'     => false,
+				'auto_fulfill_enabled' => true,
+			];
+		}
+
+		$shipping_fields = [
+			'shipping_enabled'     => true,
+			'auto_fulfill_enabled' => false,
+		];
+
+		// Only include weight if it's set and greater than 0.
+		$weight = (float) $product->get_weight();
+		if ( $weight > 0 ) {
+			$shipping_fields['weight']      = $weight;
+			$shipping_fields['weight_unit'] = get_option( 'woocommerce_weight_unit' );
+		}
+
+		// Only include dimensions if at least one dimension is set and greater than 0.
+		$length = (float) $product->get_length();
+		$width  = (float) $product->get_width();
+		$height = (float) $product->get_height();
+
+		if ( $length > 0 || $width > 0 || $height > 0 ) {
+			$shipping_fields['dimensions'] = [
+				'length' => $length,
+				'width'  => $width,
+				'height' => $height,
+				'unit'   => get_option( 'woocommerce_dimension_unit' ),
+			];
+		}
+
+		return $shipping_fields;
+	}
+
+	/**
+	 * Map tax fields.
+	 *
+	 * @param \WC_Product $product WooCommerce Product.
+	 * @return array
+	 */
+	public function mapTaxFields( $product ) {
+		$taxable    = $product->is_taxable();
+		$is_digital = $product->is_virtual() || $product->is_downloadable();
+
+		return [
+			'tax_enabled'  => $taxable,
+			'tax_category' => $is_digital ? 'digital' : 'tangible',
+		];
+	}
+
+	/**
+	 * Map reviews fields (settings).
+	 *
+	 * @param \WC_Product $product WooCommerce Product.
+	 * @return array
+	 */
+	public function mapReviewsFields( $product ) {
+		return [
+			'reviews_enabled' => comments_open( $product->get_id() ),
+			'solicit_reviews' => comments_open( $product->get_id() ),
+		];
+	}
+
+	/**
+	 * Map individual reviews.
+	 *
+	 * @param \WC_Product $product WooCommerce Product.
+	 * @return array
+	 */
+	public function mapReviews( $product ) {
+		$reviews = [];
+
+		// Get product reviews from WordPress comments.
+		$comments = get_comments(
+			[
+				'post_id' => $product->get_id(),
+				'type'    => 'review',
+				'status'  => 'approve',
+				'orderby' => 'comment_date',
+				'order'   => 'DESC',
+			]
+		);
+
+		foreach ( $comments as $comment ) {
+			$rating = get_comment_meta( $comment->comment_ID, 'rating', true );
+
+			$reviews[] = [
+				'title'    => get_comment_meta( $comment->comment_ID, 'review_title', true ) ?? null,
+				'body'     => $comment->comment_content,
+				'stars'    => $rating ? (float) $rating : null,
+				'metadata' => [
+					'wc_comment_id'     => $comment->comment_ID,
+					'customer_name'     => $comment->comment_author,
+					'customer_email'    => $comment->comment_author_email,
+					'review_date'       => $comment->comment_date,
+					'verified_purchase' => wc_review_is_from_verified_owner( $comment->comment_ID ),
+				],
+			];
+		}
+
+		return $reviews;
+	}
+
+	/**
+	 * Map media (with bug fix).
+	 *
+	 * @param \WC_Product $product WooCommerce Product.
+	 * @return array
+	 */
+	public function mapMedia( $product ) {
+		$media    = [];
+		$position = 0;
+
+		// Featured image (FIX: line 219 bug).
+		$featured_image_id = $product->get_image_id();
+		if ( $featured_image_id ) {
+			$image_url = wp_get_attachment_url( $featured_image_id );
+			if ( $image_url ) {
+				$media[] = [
+					'type'     => 'image',
+					'url'      => $image_url,
+					'position' => $position++,
+				];
+			}
+		}
+
+		// Gallery images.
+		foreach ( $product->get_gallery_image_ids() as $id ) {
+			$image_url = wp_get_attachment_url( $id );
+			if ( $image_url ) {
+				$media[] = [
+					'type'     => 'image',
+					'url'      => $image_url,
+					'position' => $position++,
+				];
+			}
+		}
+
+		return $media;
+	}
+
+	/**
+	 * Map comprehensive metadata.
+	 *
+	 * @param \WC_Product $product WooCommerce Product.
+	 * @return array
+	 */
+	public function mapMetadata( $product ) {
+		$metadata = [
+			// Traceability (Critical).
+			'wc_product_id'          => $product->get_id(),
+			'wc_product_type'        => $product->get_type(),
+			'wc_synced_at'           => current_time( 'c' ),
+			'wc_permalink'           => get_permalink( $product->get_id() ),
+
+			// Product Analytics.
+			'wc_total_sales'         => (int) $product->get_total_sales(),
+			'wc_average_rating'      => (float) $product->get_average_rating(),
+			'wc_rating_counts'       => $product->get_rating_counts(),
+			'wc_review_count'        => (int) $product->get_review_count(),
+
+			// Product Flags.
+			'is_virtual'             => $product->is_virtual(),
+			'is_downloadable'        => $product->is_downloadable(),
+			'catalog_visibility'     => $product->get_catalog_visibility(),
+
+			// Relationships (Marketing Value).
+			'wc_upsell_ids'          => $product->get_upsell_ids(),
+			'wc_cross_sell_ids'      => $product->get_cross_sell_ids(),
+
+			// SEO & Content.
+			'short_description'      => $product->get_short_description(),
+			'purchase_note'          => $product->get_purchase_note(),
+
+			// Dates.
+			'wc_date_created'        => $product->get_date_created() ? $product->get_date_created()->format( 'c' ) : null,
+			'wc_date_modified'       => $product->get_date_modified() ? $product->get_date_modified()->format( 'c' ) : null,
+
+			// Advanced Stock.
+			'wc_low_stock_threshold' => $product->get_low_stock_amount(),
+			'wc_stock_status'        => $product->get_stock_status(),
+
+			// Tax.
+			'wc_tax_class'           => $product->get_tax_class(),
+		];
+
+		// Downloadable files (Critical for digital products).
+		if ( $product->is_downloadable() ) {
+			$downloads = [];
+			foreach ( $product->get_downloads() as $download ) {
+				$downloads[] = [
+					'name' => $download->get_name(),
+					'file' => $download->get_file(),
+					'id'   => $download->get_id(),
+				];
+			}
+			$metadata['download_files']  = $downloads;
+			$metadata['download_limit']  = $product->get_download_limit();
+			$metadata['download_expiry'] = $product->get_download_expiry();
+		}
+
+		// Shipping class.
+		$shipping_class_id = $product->get_shipping_class_id();
+		if ( $shipping_class_id ) {
+			$shipping_class = get_term( $shipping_class_id, 'product_shipping_class' );
+			if ( $shipping_class && ! is_wp_error( $shipping_class ) ) {
+				$metadata['wc_shipping_class'] = $shipping_class->slug;
+			}
+		}
+
+		return apply_filters( 'surecart/woocommerce_sync/product_metadata', $metadata, $product );
 	}
 }
