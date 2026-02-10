@@ -25,6 +25,10 @@ async function globalSetup(config: FullConfig) {
 	// Authenticate and save the storageState to disk.
 	await requestUtils.setupRest();
 
+	// Reactivate the plugin to trigger activation hook which seeds checkout pages/forms all the time.
+	await requestUtils.deactivatePlugin('surecart');
+	await requestUtils.activatePlugin('surecart');
+
 	await requestContext.dispose();
 }
 

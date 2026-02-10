@@ -5,11 +5,11 @@ import { InspectorControls } from '@wordpress/block-editor';
 import {
 	__experimentalToolsPanel as ToolsPanel,
 	__experimentalToolsPanelItem as ToolsPanelItem,
+	PanelBody,
+	RangeControl,
+	SelectControl
 } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
-import { PanelBody } from '@wordpress/components';
-import { RangeControl } from '@wordpress/components';
-import { SelectControl } from '@wordpress/components';
 import { useViewportMatch } from '@wordpress/compose';
 
 /**
@@ -63,6 +63,8 @@ export default function ProductListInspectorControls({
 		<InspectorControls>
 			<PanelBody title={__('Attributes', 'surecart')}>
 				<RangeControl
+					__next40pxDefaultSize
+					__nextHasNoMarginBottom
 					label={__('Products Per Page', 'surecart')}
 					value={perPage}
 					onChange={(perPage) => onUpdateQuery({ perPage })}
@@ -72,6 +74,8 @@ export default function ProductListInspectorControls({
 				/>
 
 				<RangeControl
+					__next40pxDefaultSize
+					__nextHasNoMarginBottom
 					label={__('Offset', 'surecart')}
 					value={offset}
 					onChange={(offset) => onUpdateQuery({ offset })}
@@ -81,8 +85,8 @@ export default function ProductListInspectorControls({
 				/>
 
 				<SelectControl
-					__nextHasNoMarginBottom
 					__next40pxDefaultSize
+					__nextHasNoMarginBottom
 					label={__('Default Sorting', 'surecart')}
 					options={sortingOptions}
 					value={`${orderBy}:${order}`}
@@ -98,6 +102,8 @@ export default function ProductListInspectorControls({
 
 			<PanelBody title={__('Products', 'surecart')}>
 				<SelectControl
+					__next40pxDefaultSize
+					__nextHasNoMarginBottom
 					label={__('Products To Show', 'surecart')}
 					value={type}
 					options={[

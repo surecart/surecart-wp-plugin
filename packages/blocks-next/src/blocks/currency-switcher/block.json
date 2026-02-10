@@ -10,7 +10,7 @@
 	"attributes": {
 		"position": {
 			"type": "string",
-			"default": "left"
+			"default": "right"
 		}
 	},
 	"supports": {

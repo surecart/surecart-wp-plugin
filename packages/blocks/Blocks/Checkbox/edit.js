@@ -28,6 +28,7 @@ export default ({ className, attributes, setAttributes }) => {
 				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
 						<ToggleControl
+							__nextHasNoMarginBottom
 							label={__('Required', 'surecart')}
 							checked={required}
 							onChange={(required) => setAttributes({ required })}
@@ -35,6 +36,8 @@ export default ({ className, attributes, setAttributes }) => {
 					</PanelRow>
 					<PanelRow>
 						<TextControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							label={__('Name', 'surecart')}
 							value={name}
 							onChange={(name) => setAttributes({ name })}
@@ -42,6 +45,8 @@ export default ({ className, attributes, setAttributes }) => {
 					</PanelRow>
 					<PanelRow>
 						<TextControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							label={__('Value', 'surecart')}
 							value={value}
 							onChange={(value) => setAttributes({ value })}
@@ -49,6 +54,7 @@ export default ({ className, attributes, setAttributes }) => {
 					</PanelRow>
 					<PanelRow>
 						<ToggleControl
+							__nextHasNoMarginBottom
 							label={__('Checked by default', 'surecart')}
 							checked={checked}
 							onChange={(checked) => setAttributes({ checked })}

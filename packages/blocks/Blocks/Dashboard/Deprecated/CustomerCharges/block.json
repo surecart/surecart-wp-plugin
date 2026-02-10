@@ -1,6 +1,7 @@
 {
 	"name": "surecart/customer-charges",
 	"title": "Customer Charges",
+	"apiVersion": 3,
 	"description": "Displays the customers charges.",
 	"category": "surecart",
 	"keywords": ["name", "customer", "dashboard"],

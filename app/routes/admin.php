@@ -455,6 +455,26 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 /*
 |--------------------------------------------------------------------------
+| Dynamic Pricing
+|--------------------------------------------------------------------------
+*/
+\SureCart::route()
+->where( 'admin', 'sc-auto-fees' )
+->middleware( 'user.can:edit_sc_products' )
+->middleware( 'assets.components' )
+->middleware( 'assets.admin_colors' )
+->setNamespace( '\\SureCart\\Controllers\\Admin\\AutoFees\\' )
+->group(
+	function () {
+		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->handle( 'AutoFeesController@index' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->handle( 'AutoFeesController@edit' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'toggle_active', 'action' )->middleware( 'nonce:archive_dynamic_price' )->handle( 'AutoFeesController@toggleActive' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'delete', 'action' )->middleware( 'nonce:delete_auto_fee' )->handle( 'AutoFeesController@delete' );
+	}
+);
+
+/*
+|--------------------------------------------------------------------------
 | Settings
 |--------------------------------------------------------------------------
 */
@@ -486,6 +506,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 		// Settings.
 		\SureCart::route()->get()->where( 'sc_url_var', false, 'tab' )->name( 'settings.account' )->handle( 'AccountSettings@show' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'dynamic_pricing', 'tab' )->name( 'settings.dynamic_pricing' )->handle( 'DynamicPricingSettings@show' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'brand', 'tab' )->name( 'settings.brand' )->handle( 'BrandSettings@show' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'order', 'tab' )->name( 'settings.order' )->handle( 'OrderSettings@show' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'abandoned_checkout', 'tab' )->name( 'settings.abandoned_checkout' )->handle( 'AbandonedCheckoutSettings@show' );

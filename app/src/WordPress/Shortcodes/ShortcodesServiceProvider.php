@@ -131,7 +131,7 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 
 		$this->container['surecart.shortcodes']->registerBlockShortcodeByName(
 			'sc_cart_menu_icon',
-			'surecart/cart-menu-button',
+			'surecart/cart-menu-icon-button',
 			[
 				'cart_icon'              => 'shopping-bag',
 				'cart_menu_always_shown' => true,
@@ -141,7 +141,7 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 		// confirmation.
 		$this->container['surecart.shortcodes']->registerBlockShortcodeByName(
 			'sc_order_confirmation',
-			'surecart/confirmation',
+			'surecart/order-confirmation',
 		);
 		$this->container['surecart.shortcodes']->registerBlockShortcodeByName(
 			'sc_order_confirmation_line_items',

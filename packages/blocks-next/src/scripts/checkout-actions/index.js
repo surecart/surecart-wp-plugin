@@ -241,6 +241,7 @@ export function* addLineItem({ checkout, data, live_mode = false }) {
 			method: 'POST', // create
 			path: addQueryArgs(parsePath(null)),
 			data: {
+				...withDefaultData(data),
 				line_items: [data],
 				live_mode,
 			},

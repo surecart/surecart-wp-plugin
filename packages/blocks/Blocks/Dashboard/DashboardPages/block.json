@@ -1,5 +1,5 @@
 {
-	"apiVersion": 2,
+	"apiVersion": 3,
 	"name": "surecart/dashboard-pages",
 	"title": "Customer Dashboard Pages",
 	"description": "Displays the users customer dashboard pages.",

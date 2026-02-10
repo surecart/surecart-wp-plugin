@@ -1,6 +1,7 @@
 {
 	"name": "surecart/tax-id-input",
 	"title": "VAT or Tax ID Input",
+	"apiVersion": 3,
 	"description": "Display a VAT/GST field for VAT collection.",
 	"category": "surecart",
 	"keywords": ["totals", "summary"],
@@ -33,6 +34,10 @@
 		"tax_id_types": {
 			"type": "array",
 			"default": []
+		},
+		"required": {
+			"type": "boolean",
+			"default": false
 		}
 	}
 }

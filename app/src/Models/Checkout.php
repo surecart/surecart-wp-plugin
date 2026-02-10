@@ -5,6 +5,7 @@ namespace SureCart\Models;
 use SureCart\Models\Traits\HasCustomer;
 use SureCart\Models\Traits\HasSubscriptions;
 use SureCart\Models\LineItem;
+use SureCart\Models\Fee;
 use SureCart\Models\Traits\CanFinalize;
 use SureCart\Models\Traits\HasBillingAddress;
 use SureCart\Models\Traits\HasDiscount;
@@ -315,6 +316,44 @@ class Checkout extends Model {
 	}
 
 	/**
+	 * Set the checkout fees attribute
+	 *
+	 * @param  object $value Subscription data array.
+	 * @return void
+	 */
+	public function setCheckoutFeesAttribute( $value ) {
+		$this->setCollection( 'checkout_fees', $value, Fee::class );
+	}
+
+	/**
+	 * Set the shipping fees attribute
+	 *
+	 * @param  object $value Subscription data array.
+	 * @return void
+	 */
+	public function setShippingFeesAttribute( $value ) {
+		$this->setCollection( 'shipping_fees', $value, Fee::class );
+	}
+
+	/**
+	 * Get the display checkout fees amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getCheckoutFeesDisplayAmountAttribute() {
+		return ! empty( $this->checkout_fees_amount ) ? Currency::format( $this->checkout_fees_amount, $this->currency ) : '';
+	}
+
+	/**
+	 * Get the display shipping fees amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getShippingFeesDisplayAmountAttribute() {
+		return ! empty( $this->shipping_fees_amount ) ? Currency::format( $this->shipping_fees_amount, $this->currency ) : '';
+	}
+
+	/**
 	 * Create a new model
 	 *
 	 * @param array $attributes Attributes to create.
@@ -577,6 +616,7 @@ class Checkout extends Model {
 				return Currency::format( $this->discount->coupon->amount_off, $this->currency );
 			}
 
+			// translators: %1d is the percentage discount.
 			return sprintf( __( '%1d%% off', 'surecart' ), $this->discount->coupon->percent_off | 0 );
 		}
 
@@ -600,6 +640,7 @@ class Checkout extends Model {
 			case 'once':
 				return sprintf( '%s %s', $this->human_discount, __( 'once', 'surecart' ) );
 			case 'repeating':
+				// translators: %d is the number of months.
 				$months_label = sprintf( _n( '%d month', '%d months', $duration_in_months, 'surecart' ), $duration_in_months );
 				return sprintf( '%s for %s', $this->human_discount, $months_label );
 			default:

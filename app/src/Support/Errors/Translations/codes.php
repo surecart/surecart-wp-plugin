@@ -7,6 +7,7 @@
 
 return array(
 	'http_request_failed'                                  => __( 'Could not complete the request. Please try again.', 'surecart' ),
+	'auto_fee.start_at.blank'                              => __( 'The dynamic price must have a start date.', 'surecart' ),
 	'coupon.invalid'                                       => __( 'Failed to save coupon.', 'surecart' ),
 	'price.dependent_locked'                               => __( 'The price is already being used in subscriptions or checkout sessions. Please archive the price and create another one.', 'surecart' ),
 	'checkout.discount.promotion_code.invalid_code'        => __( 'Invalid promotion code.', 'surecart' ),
@@ -14,7 +15,12 @@ return array(
 	'checkout.line_items.required'                         => __( 'Please add at least one product.', 'surecart' ),
 	'checkout.line_items.blank'                            => __( 'No products found. Please add at least one product.', 'surecart' ),
 	'checkout.line_items.unpurchasable_prices'             => __( 'One of these products is no longer purchaseable.', 'surecart' ),
+	'checkout.phone.required'                              => __( 'Please provide a valid phone number.', 'surecart' ),
 	'checkout.shipping_address.missing_tax_info'           => __( 'Please fill out your address.', 'surecart' ),
+	'checkout.shipping_address.postal_code.invalid_format' => __( 'This postal code does not match the format required for the selected country. Please enter a valid postal code for shipping.', 'surecart' ),
+	'checkout.billing_address.postal_code.invalid_format'  => __( 'This postal code does not match the format required for the selected country. Please enter a valid postal code for billing.', 'surecart' ),
+	'customer.shipping_address.postal_code.invalid_format' => __( 'This postal code does not match the format required for the selected country. Please enter a valid postal code for shipping.', 'surecart' ),
+	'customer.billing_address.postal_code.invalid_format'  => __( 'This postal code does not match the format required for the selected country. Please enter a valid postal code for billing.', 'surecart' ),
 	'checkout.customer.blank'                              => __( 'Please select a customer.', 'surecart' ),
 	'checkout.line_items.not_purchasable'                  => __( 'Some items in your cart have reached their purchase limit. Please update your order to continue.', 'surecart' ),
 	'download.current_release'                             => __( 'This download cannot be removed or archived when it is set as the current release.', 'surecart' ),

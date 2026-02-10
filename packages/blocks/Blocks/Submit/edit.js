@@ -41,6 +41,8 @@ export default ({ className, attributes, setAttributes }) => {
 				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
 						<TextControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							label={__('Button Text', 'surecart')}
 							value={text}
 							onChange={(text) => setAttributes({ text })}
@@ -48,6 +50,7 @@ export default ({ className, attributes, setAttributes }) => {
 					</PanelRow>
 					<PanelRow>
 						<ToggleControl
+							__nextHasNoMarginBottom
 							label={__('Full', 'surecart')}
 							checked={full}
 							onChange={(full) => setAttributes({ full })}
@@ -55,6 +58,7 @@ export default ({ className, attributes, setAttributes }) => {
 					</PanelRow>
 					<PanelRow>
 						<ToggleControl
+							__nextHasNoMarginBottom
 							label={__(
 								'Show total due in button text.',
 								'surecart'
@@ -67,6 +71,7 @@ export default ({ className, attributes, setAttributes }) => {
 					</PanelRow>
 					<PanelRow>
 						<ToggleControl
+							__nextHasNoMarginBottom
 							label={__('Show a secure lock icon.', 'surecart')}
 							checked={show_icon}
 							onChange={(show_icon) =>
@@ -76,6 +81,7 @@ export default ({ className, attributes, setAttributes }) => {
 					</PanelRow>
 					<PanelRow>
 						<ToggleControl
+							__nextHasNoMarginBottom
 							label={__('Show secure notice.', 'surecart')}
 							checked={show_secure_notice}
 							onChange={(show_secure_notice) =>
@@ -86,6 +92,8 @@ export default ({ className, attributes, setAttributes }) => {
 					{show_secure_notice && (
 						<PanelRow>
 							<TextControl
+								__next40pxDefaultSize
+								__nextHasNoMarginBottom
 								label={__('Secure Payment Text', 'surecart')}
 								value={secure_notice_text}
 								onChange={(secure_notice_text) =>
@@ -96,6 +104,8 @@ export default ({ className, attributes, setAttributes }) => {
 					)}
 					<PanelRow>
 						<SelectControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							label={__('Size', 'surecart')}
 							value={size}
 							onChange={(size) => {

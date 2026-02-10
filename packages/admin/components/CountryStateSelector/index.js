@@ -4,37 +4,12 @@ import { SearchControl } from '@wordpress/components';
 import { ScSkeleton, ScTag } from '@surecart/components-react';
 import Country from './Country';
 import { __ } from '@wordpress/i18n';
-import { useState, useEffect, useMemo } from '@wordpress/element';
-import { useDispatch } from '@wordpress/data';
-import { store as noticesStore } from '@wordpress/notices';
+import { useState, useMemo } from '@wordpress/element';
+import { useCountries } from '../../hooks/useAtlas';
 
 export default ({ value, onChange }) => {
 	const [search, setSearch] = useState('');
-	const [fetching, setFetching] = useState(false);
-	const [allCountries, setAllCountries] = useState([]);
-	const { createErrorNotice } = useDispatch(noticesStore);
-
-	useEffect(() => {
-		fetchAllCountries();
-	}, []);
-
-	const fetchAllCountries = async () => {
-		try {
-			setFetching(true);
-			const response = await fetch(
-				`https://api.surecart.com/v1/public/atlas?locale=${
-					window?.scData?.locale || 'en'
-				}`
-			);
-			const countries = await response.json();
-			setAllCountries(countries?.data);
-		} catch (e) {
-			console.error(e);
-			createErrorNotice(e?.message, { type: 'snackbar' });
-		} finally {
-			setFetching(false);
-		}
-	};
+	const { countries: allCountries, loading: fetching } = useCountries();
 
 	const countries = useMemo(() => {
 		if (!allCountries?.length) return [];
