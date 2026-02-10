@@ -1,4 +1,11 @@
 .wp-block-surecart-product-review-average-rating-stars {
 	display: flex;
 	line-height: 1;
+
+	.sc-star-row__label__svg {
+		// Ensure fill attribute cascades to polygon child element.
+		polygon {
+			fill: inherit;
+		}
+	}
 }
