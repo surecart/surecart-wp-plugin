@@ -55,6 +55,12 @@
 			color: inherit;
 			transition: opacity 0.2s ease;
 
+			.sc-star-text {
+				min-width: 1ch; // Ensure consistent width for single-digit numbers.
+				text-align: right;
+				font-variant-numeric: tabular-nums; // Use fixed-width digits for alignment.
+			}
+
 			.sc-star-icon {
 				line-height: 1;
 				height: var(--sc-star-size, 16px);
@@ -89,7 +95,9 @@
 			}
 
 			&__count {
+				min-width: 2ch; // Ensure consistent width for count numbers.
 				text-align: right;
+				font-variant-numeric: tabular-nums; // Use fixed-width digits for alignment.
 			}
 		}
 	}

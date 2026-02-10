@@ -18,7 +18,6 @@ import UnitSpacingControl from '../../components/UnitSpacingControl';
 
 export default function ({ attributes, setAttributes, clientId }) {
 	const {
-		show_for_zero_reviews = true,
 		columns,
 		row_gap,
 		column_gap,
