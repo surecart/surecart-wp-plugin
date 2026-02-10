@@ -23,6 +23,10 @@
 
 		&__content {
 			padding: 40px;
+
+			@media (max-width: 540px) {
+				padding: 24px;
+			}
 		}
 
 		.sc-view-product-page-sticky {
@@ -50,6 +54,12 @@
 			right: auto;
 			transform: translate(-50%, -50%);
 			min-width: 500px;
+
+			@media (max-width: 540px) {
+				min-width: auto;
+				width: calc(100vw - 32px);
+				max-width: 500px;
+			}
 		}
 
 		&.position-top-left {
