@@ -203,6 +203,7 @@ class PostSyncService {
 					'is_on_sale'                   => $model->is_on_sale,
 					'total_reviews'                => $model->total_reviews,
 					'average_stars'                => $model->average_stars,
+					'reviews_enabled'              => $model->reviews_enabled ?? false,
 				)
 			),
 		);
