@@ -271,6 +271,11 @@ class ReviewsListTable extends ListTable {
 				<a class="row-title" aria-label="<?php esc_attr_e( 'Edit Review', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'review', $review->id ) ); ?>">
 					<?php echo esc_html( $review->title ); ?>
 				</a>
+				<?php if ( ! empty( $review->verified ) ) : ?>
+					<sc-tooltip text="<?php esc_attr_e( 'Verified Buyer', 'surecart' ); ?>" type="text" style="display: inline-flex; align-items: center; margin-left: 4px;">
+						<sc-icon name="verified" style="font-size: 18px; color: var(--sc-color-success-500); vertical-align: middle;"></sc-icon>
+					</sc-tooltip>
+				<?php endif; ?>
 			</strong>
 			<?php if ( ! empty( $review->body ) ) : ?>
 				<div style="margin-top: 0.25em; color: #6b7280; display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.4;">
