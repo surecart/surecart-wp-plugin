@@ -415,9 +415,10 @@ class SubscriptionController extends BaseController {
 				->id( 'subscription-ad-hoc-confirm' )
 				->with(
 					[
-						'heading' => __( 'Enter An Amount', 'surecart' ),
-						'price'   => $price,
-						'variant' => $this->getParam( 'variant' ),
+						'heading'      => __( 'Enter An Amount', 'surecart' ),
+						'price'        => $price,
+						'variant'      => $this->getParam( 'variant' ),
+						'currencyCode' => \SureCart::account()->currency,
 					]
 				)->render()
 			);

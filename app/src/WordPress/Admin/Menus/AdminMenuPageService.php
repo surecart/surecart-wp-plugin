@@ -114,6 +114,7 @@ class AdminMenuPageService {
 				letter-spacing: 0.5px;
 				width: 6px;
 				height: 6px;
+				margin-top: -2px;
 				margin-left: 6px;
 				border-radius: 8px;
 				text-transform: uppercase;

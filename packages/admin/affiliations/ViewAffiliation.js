@@ -27,7 +27,6 @@ import {
 	ScMenuDivider,
 	ScMenuItem,
 } from '@surecart/components-react';
-import useSave from '../settings/UseSave';
 import Error from '../components/Error';
 import Logo from '../templates/Logo';
 import UpdateModel from '../templates/UpdateModel';
@@ -42,13 +41,11 @@ import Commission from './modules/Commission';
 import Metadata from '../components/affiliates/Metadata';
 
 export default ({ id }) => {
-	const { save } = useSave();
 	const [loading, setLoading] = useState(false);
 	const [modal, setModal] = useState(false);
 	const [error, setError] = useState(null);
 	const { createSuccessNotice } = useDispatch(noticesStore);
-	const { editEntityRecord, receiveEntityRecords, deleteEntityRecord } =
-		useDispatch(coreStore);
+	const { receiveEntityRecords, deleteEntityRecord } = useDispatch(coreStore);
 
 	const { affiliation, hasLoadedAffiliation } = useSelect(
 		(select) => {
@@ -70,23 +67,6 @@ export default ({ id }) => {
 		'surecart',
 		'affiliation'
 	)?.baseURL;
-
-	/**
-	 * Handle the form submission
-	 */
-	const onSubmit = async () => {
-		try {
-			setLoading(true);
-			await save({
-				successMessage: __('Affiliate updated.', 'surecart'),
-			});
-		} catch (e) {
-			console.error(e);
-			setError(e);
-		} finally {
-			setLoading(false);
-		}
-	};
 
 	/**
 	 * Activate the affiliation.
@@ -195,12 +175,8 @@ export default ({ id }) => {
 		}
 	};
 
-	const updateAffiliation = (data) =>
-		editEntityRecord('surecart', 'affiliation', id, data);
-
 	return (
 		<UpdateModel
-			onSubmit={onSubmit}
 			title={
 				<ScFlex style={{ gap: '1em' }} align-items="center">
 					<ScButton

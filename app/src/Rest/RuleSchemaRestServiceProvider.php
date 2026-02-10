@@ -17,6 +17,13 @@ class RuleSchemaRestServiceProvider extends RestServiceProvider implements RestS
 	protected $endpoint = 'auto_fees/rule_schema';
 
 	/**
+	 * Methods allowed for the model.
+	 *
+	 * @var array
+	 */
+	protected $methods = [ 'find' ];
+
+	/**
 	 * Rest Controller
 	 *
 	 * @var string
@@ -42,19 +49,19 @@ class RuleSchemaRestServiceProvider extends RestServiceProvider implements RestS
 			'type'       => 'object',
 			// In JSON Schema you can specify object properties in the properties attribute.
 			'properties' => [
-				'schema_id'           => [
+				'schema_id'  => [
 					'description' => esc_html__( 'Unique identifier for the object.', 'surecart' ),
 					'type'        => 'string',
 					'context'     => [ 'view', 'edit', 'embed' ],
 					'readonly'    => true,
 				],
-				'object'       => [
+				'object'     => [
 					'description' => esc_html__( 'Type of object (rule_schema)', 'surecart' ),
 					'type'        => 'string',
 					'context'     => [ 'view', 'edit' ],
 					'readonly'    => true,
 				],
-				'attributes'   => [
+				'attributes' => [
 					'description' => esc_html__( 'Attributes of a Rule Schema', 'surecart' ),
 					'type'        => 'array',
 					'context'     => [ 'view', 'edit', 'embed' ],
@@ -99,12 +106,12 @@ class RuleSchemaRestServiceProvider extends RestServiceProvider implements RestS
 		);
 	}
 	/**
-	 * Anyone can get a specific data.
+	 * Only users with the edit_sc_prices capability can get a specific data.
 	 *
 	 * @param \WP_REST_Request $request Full details about the request.
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function get_item_permissions_check( $request ) {
-		return true;
+		return current_user_can( 'edit_sc_prices' );
 	}
 }

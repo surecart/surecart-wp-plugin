@@ -2,34 +2,59 @@
 
 namespace SureCart\Integrations\RankMath;
 
+use SureCart\Integrations\Abstracts\NoIndexService;
+
 /**
  * Controls the Rank Math integration.
  */
-class RankMathService {
+class RankMathService extends NoIndexService {
 	/**
-	 * Bootstrap the Rank Math integration.
+	 * The filter hook name for the robots meta.
 	 *
-	 * @return void
+	 * @var string
+	 */
+	protected $hook_name = 'rank_math/frontend/robots';
+
+	/**
+	 * The filter hook name for the robots meta.
+	 *
+	 * @var string
 	 */
 	public function bootstrap(): void {
-		add_filter( 'rank_math/frontend/robots', [ $this, 'addNoindexForQueryVars' ] );
+		parent::bootstrap();
+
+		// Skip product model filter registration during sitemap generation to prevent memory exhaustion.
+		add_filter( 'surecart/product/skip_filters', [ $this, 'skipFiltersOnSitemap' ] );
 	}
 
 	/**
-	 * Modify robots to add noindex for SureCart query vars.
+	 * Skip model filters during sitemap generation.
 	 *
-	 * @param array $robots Robots array.
+	 * @param bool $skip Whether to skip filters.
 	 *
-	 * @return array Modified robots.
+	 * @return bool
 	 */
-	public function addNoindexForQueryVars( array $robots ): array {
-		if ( sc_has_no_index_query_vars() ) {
-			return [
-				'noindex'  => 'noindex',
-				'nofollow' => 'nofollow',
-			];
+	public function skipFiltersOnSitemap( $skip ): bool {
+		if ( $skip ) {
+			return $skip;
 		}
 
-		return $robots;
+		return $this->isSitemapRequest();
+	}
+
+	/**
+	 * Check if current request is a sitemap request.
+	 *
+	 * @return bool
+	 */
+	private function isSitemapRequest(): bool {
+		if ( isset( $_SERVER['REQUEST_URI'] ) ) {
+			$uri = sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) );
+			if ( false !== strpos( $uri, 'sitemap' ) && '.xml' === substr( $uri, -4 ) ) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 }

@@ -23,6 +23,13 @@ class AccountService {
 	protected $cache_key = 'surecart_account';
 
 	/**
+	 * The application instance.
+	 *
+	 * @var \SureCart\Application\Application
+	 */
+	protected $app = null;
+
+	/**
 	 * Bootstrap the service.
 	 *
 	 * @return void
@@ -33,6 +40,17 @@ class AccountService {
 	}
 
 	/**
+	 * Seed the account with products and collections.
+	 *
+	 * @param array $products The products to seed.
+	 *
+	 * @return \SureCart\Models\Import|\WP_Error
+	 */
+	public function seed( $products = [] ) {
+		return $this->app->resolve( 'surecart.account.seed' )->seed( $products );
+	}
+
+	/**
 	 * We get the account when the service is loaded.
 	 * Since this is loaded in a service container, its
 	 * cached so it only fetches once, no matter how many calls.
@@ -40,9 +58,14 @@ class AccountService {
 	 * This is also cached in a 60 second transient to prevent
 	 * rate limited calls to the API.
 	 *
-	 * @param \SureCart\Support\Server $server The server utility to use.
+	 * @param \SureCart\Support\Server              $server The server utility to use.
+	 * @param \SureCartCore\Application\Application $app The application instance.
+	 *
+	 * @return void
 	 */
-	public function __construct( \SureCart\Support\Server $server ) {
+	public function __construct( \SureCart\Support\Server $server, \SureCartCore\Application\Application $app ) {
+		$this->app = $app;
+
 		$cache = null;
 
 		if ( defined( 'SURECART_CACHE_ACCOUNT' ) ) {
@@ -51,38 +74,41 @@ class AccountService {
 
 		// do not cache requests if specifically set to false.
 		if ( false === $cache ) {
-			return $this->fetchAccount();
+			$this->fetchAccount();
+			return;
 		}
 
 		// cache requests if specifically set to true.
 		if ( true === $cache ) {
-			return $this->fetchCachedAccount();
+			$this->fetchCachedAccount();
+			return;
 		}
 
 		// don't cache on localhost if constant is not set.
 		if ( $server->isLocalHost() ) {
-			return $this->fetchAccount();
+			$this->fetchAccount();
+			return;
 		}
 
 		// cache requests if not explicitly set.
-		return $this->fetchCachedAccount();
+		$this->fetchCachedAccount();
 	}
 
 	/**
 	 * Fetch the cached account.
 	 *
-	 * @return \SureCart\Models\Account
+	 * @return \SureCart\Models\Account|\WP_Error|null
 	 */
 	public function fetchCachedAccount() {
-		$this->account = get_transient( $this->cache_key );
+		$this->account = $this->convertArrayToAccount( get_transient( $this->cache_key ) );
 
 		// we don't have a cached account.
-		if ( false === $this->account ) {
+		if ( empty( $this->account ) ) {
 			// fetch the account.
 			$this->account = $this->fetchAccount();
 
 			// there was an error or the account could not be fetched by other means.
-			if ( is_wp_error( $this->account ) || empty( $this->account->id ) ) {
+			if ( is_wp_error( $this->account ) || ! ( $this->account instanceof Account ) || empty( $this->account->id ) ) {
 				// get the previously working account.
 				$previously_working_account = $this->convertArrayToAccount( get_option( 'sc_previous_account' ) );
 
@@ -93,7 +119,7 @@ class AccountService {
 				}
 
 				// set previously working account and don't try for 5 minutes.
-				set_transient( $this->cache_key, $previously_working_account, 5 * MINUTE_IN_SECONDS );
+				set_transient( $this->cache_key, $previously_working_account->toArray(), 5 * MINUTE_IN_SECONDS );
 
 				// return the account.
 				return $previously_working_account;
@@ -103,7 +129,7 @@ class AccountService {
 			update_option( 'sc_previous_account', $this->account->toArray() );
 
 			// set the transient.
-			set_transient( $this->cache_key, $this->account, 15 * MINUTE_IN_SECONDS );
+			set_transient( $this->cache_key, $this->account->toArray(), 15 * MINUTE_IN_SECONDS );
 		}
 
 		return $this->account;
@@ -159,7 +185,7 @@ class AccountService {
 			return $data;
 		}
 
-		if ( empty( $data ) || ! isset( $data['id'] ) ) {
+		if ( empty( $data ) || ( ! isset( $data['id'] ) && ! isset( $data->id ) ) ) {
 			return null;
 		}
 

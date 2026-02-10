@@ -1,6 +1,7 @@
 {
 	"name": "surecart/store-logo",
 	"title": "Store Logo",
+	"apiVersion": 3,
 	"description": "Display the store logo.",
 	"category": "surecart",
 	"keywords": ["logo", "image", "store", "store logo"],

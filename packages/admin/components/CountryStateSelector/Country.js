@@ -2,10 +2,9 @@
 import { css, jsx } from '@emotion/react';
 import { ScButton, ScIcon, ScSkeleton } from '@surecart/components-react';
 import { CheckboxControl } from '@wordpress/components';
-import { useDispatch } from '@wordpress/data';
-import { useState, useEffect, useCallback } from '@wordpress/element';
+import { useState, useMemo } from '@wordpress/element';
 import { _n, sprintf } from '@wordpress/i18n';
-import { store as noticesStore } from '@wordpress/notices';
+import { useCountryDetails } from '../../hooks/useAtlas';
 
 export default ({
 	countryIsoCode,
@@ -15,34 +14,13 @@ export default ({
 	onChange,
 }) => {
 	const [isOpen, setIsOpen] = useState(false);
-	const [fetching, setFetching] = useState(false);
-	const [territories, setTerritories] = useState([]);
-	const { createErrorNotice } = useDispatch(noticesStore);
-
-	useEffect(() => {
-		if (!isOpen) return;
-
-		fetchTerritories();
-	}, [isOpen]);
-
-	const fetchTerritories = useCallback(async () => {
-		try {
-			setFetching(true);
-			const response = await fetch(
-				`https://api.surecart.com/v1/public/atlas/${countryIsoCode}`
-			);
-			const country = await response.json();
-			const territories = (country?.states || []).filter(
-				(region) => !!region?.code
-			);
-			setTerritories(territories);
-		} catch (e) {
-			console.error(e);
-			createErrorNotice(e?.message, { type: 'snackbar' });
-		} finally {
-			setFetching(false);
-		}
-	}, [countryIsoCode, createErrorNotice]);
+	const { details, loading: fetching } = useCountryDetails(countryIsoCode, {
+		enabled: isOpen,
+	});
+	const territories = useMemo(
+		() => (details?.states || []).filter((s) => !!s?.code),
+		[details]
+	);
 
 	// when the country is selected, set states as empty array
 	const onSelectCountry = (checked) => {

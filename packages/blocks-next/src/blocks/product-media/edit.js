@@ -62,6 +62,7 @@ export default ({ attributes, setAttributes, context: { postId } }) => {
 			<InspectorControls>
 				<PanelBody title={__('Attributes', 'surecart')}>
 					<ToggleControl
+						__nextHasNoMarginBottom
 						label={__('Enlarge on click', 'surecart')}
 						help={__(
 							'Scale images with a lightbox effect.',
@@ -77,6 +78,7 @@ export default ({ attributes, setAttributes, context: { postId } }) => {
 
 					{!desktop_gallery && (
 						<ToggleControl
+							__nextHasNoMarginBottom
 							label={__('Auto Height', 'surecart')}
 							help={__(
 								'Automatically adjust the height of the slider to the image height.',
@@ -93,6 +95,7 @@ export default ({ attributes, setAttributes, context: { postId } }) => {
 
 					{!desktop_gallery && !auto_height && (
 						<UnitControl
+							__next40pxDefaultSize
 							label={__('Slider Height', 'surecart')}
 							labelPosition="edge"
 							__unstableInputWidth="100px"
@@ -111,6 +114,7 @@ export default ({ attributes, setAttributes, context: { postId } }) => {
 						onChange={(width) => setAttributes({ width: width })}
 					/>
 					<ToggleControl
+						__nextHasNoMarginBottom
 						label={__('Show Thumbnails', 'surecart')}
 						help={__(
 							'Show thumbnails for the image slider.',
@@ -125,6 +129,8 @@ export default ({ attributes, setAttributes, context: { postId } }) => {
 					/>
 					{!desktop_gallery && show_thumbnails && (
 						<RangeControl
+							__nextHasNoMarginBottom
+							__next40pxDefaultSize
 							label={__('Thumbnails Per Page', 'surecart')}
 							min={2}
 							max={12}

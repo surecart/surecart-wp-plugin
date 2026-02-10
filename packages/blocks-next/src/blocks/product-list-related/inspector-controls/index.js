@@ -49,7 +49,7 @@ const sortingOptions = [
 export default function ProductListInspectorControls({
 	onUpdateQuery,
 	attributes: {
-		query: { perPage, pages, order, orderBy, taxonomy, fallback, shuffle },
+		query: { perPage, pages, offset, order, orderBy, taxonomy, fallback },
 	},
 }) {
 	const { records: allTaxonomies } = useEntityRecords('root', 'taxonomy', {
@@ -101,6 +101,8 @@ export default function ProductListInspectorControls({
 				)}
 
 				<RangeControl
+					__nextHasNoMarginBottom
+					__next40pxDefaultSize
 					label={__('Products Per Page', 'surecart')}
 					value={perPage}
 					onChange={(perPage) => onUpdateQuery({ perPage })}
@@ -109,8 +111,19 @@ export default function ProductListInspectorControls({
 					max={40}
 				/>
 
+				<RangeControl
+					label={__('Offset', 'surecart')}
+					value={offset || 0}
+					onChange={(offset) => onUpdateQuery({ offset })}
+					step={1}
+					min={0}
+					max={50}
+				/>
+
 				{orderBy !== 'rand' && (
 					<RangeControl
+						__nextHasNoMarginBottom
+						__next40pxDefaultSize
 						label={__('Max pages to show', 'surecart')}
 						value={pages}
 						onChange={(pages) => onUpdateQuery({ pages })}
@@ -125,6 +138,7 @@ export default function ProductListInspectorControls({
 				)}
 
 				<ToggleControl
+					__nextHasNoMarginBottom
 					label={__('All Products Fallback', 'surecart')}
 					help={__(
 						'If there are no related products, show all products.',

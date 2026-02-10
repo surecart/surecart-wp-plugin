@@ -5,13 +5,12 @@ import { ScFlex } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 
 export const TargetStrategyRow = ({ target, item, editItem }) => {
-	const { id, label, feeKey, discountKey } = target;
+	const { id, label, description, feeKey, discountKey } = target;
 
 	return (
 		<div
 			css={css`
 				padding-bottom: 24px;
-				border-bottom: 1px solid var(--sc-color-gray-200);
 
 				&:last-child {
 					border-bottom: none;
@@ -20,12 +19,24 @@ export const TargetStrategyRow = ({ target, item, editItem }) => {
 		>
 			<h3
 				css={css`
-					margin-bottom: 16px;
+					margin-top: 0;
+					margin-bottom: 4px;
 					font-size: 16px;
 				`}
 			>
 				{label}
 			</h3>
+			{description && (
+				<p
+					css={css`
+						margin: 0 0 16px;
+						font-size: 14px;
+						color: var(--sc-color-gray-500);
+					`}
+				>
+					{description}
+				</p>
+			)}
 
 			<ScFlex
 				style={{

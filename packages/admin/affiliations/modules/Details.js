@@ -5,17 +5,19 @@ import { css, jsx } from '@emotion/core';
  * External dependencies.
  */
 import { __ } from '@wordpress/i18n';
-import { Fragment } from '@wordpress/element';
+import { Fragment, useState } from '@wordpress/element';
 
 /**
  * Internal dependencies.
  */
 import Box from '../../ui/Box';
 import Definition from '../../ui/Definition';
-import { ScAvatar, ScTag } from '@surecart/components-react';
+import { ScAvatar, ScButton, ScIcon, ScTag } from '@surecart/components-react';
 import useAvatar from '../../hooks/useAvatar';
+import EditAffiliate from './EditAffiliate';
 
 export default ({ affiliation, loading }) => {
+	const [modal, setModal] = useState(false);
 	const {
 		status_type,
 		status_display_text,
@@ -23,6 +25,8 @@ export default ({ affiliation, loading }) => {
 		email,
 		code,
 		payout_email,
+		url,
+		bio,
 		created_at_date_time,
 		updated_at_date_time,
 	} = affiliation;
@@ -30,70 +34,111 @@ export default ({ affiliation, loading }) => {
 	const avatarUrl = useAvatar({ email: affiliation?.email });
 
 	return (
-		<Box
-			title={__('Profile', 'surecart')}
-			loading={loading}
-			header_action={
-				<ScTag type={status_type}>{status_display_text}</ScTag>
-			}
-		>
-			<Fragment>
-				<div
-					css={css`
-						display: flex;
-						align-items: center;
-						justify-content: space-between;
-						gap: 2em;
-					`}
-				>
+		<>
+			<Box
+				title={
 					<div
 						css={css`
 							display: flex;
 							align-items: center;
-							justify-content: flex-start;
-							gap: 1em;
-							flex: 1;
+							gap: 0.5em;
 						`}
 					>
-						<ScAvatar
-							image={avatarUrl}
-							initials={(display_name || '').charAt(0)}
-						/>
-						<div>
+						{__('Profile', 'surecart')}
+						<ScTag type={status_type}>{status_display_text}</ScTag>
+					</div>
+				}
+				loading={loading}
+				header_action={
+					<ScButton
+						css={css`
+							margin: -10px;
+						`}
+						type="text"
+						aria-label={__('Edit Affiliate', 'surecart')}
+						title={__('Edit Affiliate', 'surecart')}
+						onClick={() => setModal(true)}
+					>
+						<ScIcon name="edit-2" slot="prefix" />
+					</ScButton>
+				}
+			>
+				<Fragment>
+					<div
+						css={css`
+							display: flex;
+							align-items: center;
+							justify-content: space-between;
+							gap: 2em;
+						`}
+					>
+						<div
+							css={css`
+								display: flex;
+								align-items: center;
+								justify-content: flex-start;
+								gap: 1em;
+								flex: 1;
+							`}
+						>
+							<ScAvatar
+								image={avatarUrl}
+								initials={(display_name || '').charAt(0)}
+							/>
 							<div>
-								<strong>{display_name}</strong>
+								<div>
+									<strong>{display_name}</strong>
+								</div>
+								<div>{email}</div>
 							</div>
-							<div>{email}</div>
 						</div>
 					</div>
-				</div>
 
-				<hr />
+					<hr />
 
-				<Definition title={__('Referral Code', 'surecart')}>
-					<sc-prose>
-						<code>{code}</code>
-					</sc-prose>
-				</Definition>
-
-				<Definition title={__('Payout Email', 'surecart')}>
-					{payout_email}
-				</Definition>
-
-				<hr />
-
-				{!!updated_at_date_time && (
-					<Definition title={__('Last Updated', 'surecart')}>
-						{updated_at_date_time}
+					<Definition title={__('Referral Code', 'surecart')}>
+						<sc-prose>
+							<code>{code}</code>
+						</sc-prose>
 					</Definition>
-				)}
 
-				{!!created_at_date_time && (
-					<Definition title={__('Created', 'surecart')}>
-						{created_at_date_time}
+					<Definition title={__('Payout Email', 'surecart')}>
+						{payout_email}
 					</Definition>
-				)}
-			</Fragment>
-		</Box>
+
+					{url && (
+						<Definition title={__('Website', 'surecart')}>
+							{url}
+						</Definition>
+					)}
+
+					{bio && (
+						<Definition title={__('Bio', 'surecart')}>
+							{bio}
+						</Definition>
+					)}
+
+					<hr />
+
+					{!!updated_at_date_time && (
+						<Definition title={__('Last Updated', 'surecart')}>
+							{updated_at_date_time}
+						</Definition>
+					)}
+
+					{!!created_at_date_time && (
+						<Definition title={__('Created', 'surecart')}>
+							{created_at_date_time}
+						</Definition>
+					)}
+				</Fragment>
+			</Box>
+
+			<EditAffiliate
+				affiliation={affiliation}
+				open={!!modal}
+				onRequestClose={() => setModal(false)}
+			/>
+		</>
 	);
 };

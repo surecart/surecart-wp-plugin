@@ -1,6 +1,6 @@
 import { __ } from '@wordpress/i18n';
 
-export default {
+const TEMPLATES = {
 	start_blank: {
 		enabled: false,
 		amount_adjustment: null,
@@ -40,6 +40,7 @@ export default {
 		},
 		description: __('Buy 1, get the 2nd one for free.', 'surecart'),
 		icon: 'tags',
+		applies_while: 'both',
 	},
 	free_shipping: {
 		enabled: false,
@@ -71,6 +72,7 @@ export default {
 			'surecart'
 		),
 		icon: 'package-check',
+		applies_while: 'initial',
 	},
 	installment_payment_processing_fee: {
 		enabled: false,
@@ -102,6 +104,7 @@ export default {
 			'surecart'
 		),
 		icon: 'credit-card',
+		applies_while: 'initial',
 	},
 	subscription_renewal_discount: {
 		enabled: false,
@@ -110,26 +113,9 @@ export default {
 		fee_target: 'line_item',
 		name: __('Subscription renewal discount', 'surecart'),
 		percent_adjustment: 15,
-		rules: {
-			type: 'group',
-			combinator: 'or',
-			conditions: [
-				{
-					type: 'group',
-					combinator: 'and',
-					conditions: [
-						{
-							type: 'condition',
-							attribute_name: 'checkout.order.order_type',
-							operator_label: 'is',
-							comparison_value: 'subscription',
-						},
-					],
-				},
-			],
-		},
 		description: __('15% discount for subscription renewals.', 'surecart'),
 		icon: 'hand-coins',
+		applies_while: 'renewal',
 	},
 	bulk_purchase_discount: {
 		enabled: false,
@@ -158,6 +144,7 @@ export default {
 		},
 		description: __('10% discount for bulk purchases.', 'surecart'),
 		icon: 'refresh-cw',
+		applies_while: 'both',
 	},
 	member_only_discount: {
 		enabled: false,
@@ -186,6 +173,7 @@ export default {
 		},
 		description: __('5% discount for members only.', 'surecart'),
 		icon: 'users',
+		applies_while: 'both',
 	},
 	first_time_customer_discount: {
 		enabled: false,
@@ -214,5 +202,19 @@ export default {
 		},
 		description: __('15% discount for first time customers.', 'surecart'),
 		icon: 'gift',
+		applies_while: 'initial',
 	},
 };
+
+const TEMPLATE_CHOICES = Object.entries(TEMPLATES).map(
+	([value, { name, description, icon, fee_target, applies_while }]) => ({
+		label: name || value,
+		value,
+		description,
+		icon,
+		fee_target,
+		applies_while,
+	})
+);
+
+export { TEMPLATES, TEMPLATE_CHOICES };

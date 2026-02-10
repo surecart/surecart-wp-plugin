@@ -15,11 +15,10 @@ class AutoFeesListTable extends ListTable {
 	 * @return Void
 	 */
 	public function prepare_items() {
-		$columns  = $this->get_columns();
-		$hidden   = $this->get_hidden_columns();
-		$sortable = $this->get_sortable_columns();
+		$columns = $this->get_columns();
+		$hidden  = $this->get_hidden_columns();
 
-		$this->_column_headers = array( $columns, $hidden, $sortable );
+		$this->_column_headers = array( $columns, $hidden );
 
 		$query = $this->table_data();
 
@@ -31,7 +30,7 @@ class AutoFeesListTable extends ListTable {
 		$this->set_pagination_args(
 			[
 				'total_items' => $query->pagination->count,
-				'per_page'    => $this->get_items_per_page( 'orders' ),
+				'per_page'    => $this->get_items_per_page( 'auto-fees' ),
 			]
 		);
 
@@ -68,11 +67,11 @@ class AutoFeesListTable extends ListTable {
 		];
 
 		foreach ( $stati as $status => $label ) {
-			$link                    = \SureCart::getUrl()->index( 'auto-fees' );
+			$link                    = esc_url_raw( \SureCart::getUrl()->index( 'auto-fees' ) );
 			$current_link_attributes = '';
 
 			if ( ! empty( $_GET['status'] ) ) {
-				if ( $status === $_GET['status'] ) {
+				if ( $status === sanitize_text_field( wp_unslash( $_GET['status'] ) ) ) {
 					$current_link_attributes = ' class="current" aria-current="page"';
 				}
 			} elseif ( 'all' === $status ) {
@@ -106,10 +105,11 @@ class AutoFeesListTable extends ListTable {
 	public function get_columns() {
 		return array_merge(
 			[
-				'name'   => __( 'Name', 'surecart' ),
-				'status' => __( 'Status', 'surecart' ),
-				'type'   => __( 'Type', 'surecart' ),
-				'date'   => __( 'Date', 'surecart' ),
+				'internal_name' => __( 'Name', 'surecart' ),
+				'name'          => __( 'Display Name', 'surecart' ),
+				'status'        => __( 'Status', 'surecart' ),
+				'type'          => __( 'Type', 'surecart' ),
+				'date'          => __( 'Date', 'surecart' ),
 			],
 			parent::get_columns()
 		);
@@ -122,15 +122,6 @@ class AutoFeesListTable extends ListTable {
 	 */
 	public function get_hidden_columns() {
 		return array();
-	}
-
-	/**
-	 * Define the sortable columns
-	 *
-	 * @return array
-	 */
-	public function get_sortable_columns() {
-		return array( 'name' => array( 'name', false ) );
 	}
 
 	/**
@@ -154,7 +145,7 @@ class AutoFeesListTable extends ListTable {
 		return AutoFee::where( $conditions )
 		->paginate(
 			[
-				'per_page' => $this->get_items_per_page( 'subscriptions' ),
+				'per_page' => $this->get_items_per_page( 'auto-fees' ),
 				'page'     => $this->get_pagenum(),
 			]
 		);
@@ -166,9 +157,7 @@ class AutoFeesListTable extends ListTable {
 	 * @return bool|null
 	 */
 	public function getStatus() {
-		$status = sanitize_text_field( wp_unslash( $_GET['status'] ?? false ) );
-
-		return $status;
+		return sanitize_text_field( wp_unslash( $_GET['status'] ?? false ) );
 	}
 
 	/**
@@ -182,7 +171,7 @@ class AutoFeesListTable extends ListTable {
 		$toggle_url = add_query_arg(
 			[
 				'action' => 'toggle_active',
-				'nonce'  => wp_create_nonce( 'archive_product' ), // use archive product nonce.
+				'nonce'  => wp_create_nonce( 'archive_dynamic_price' ),
 				'id'     => $auto_fees->id,
 				'status' => 'all',
 			]
@@ -195,17 +184,28 @@ class AutoFeesListTable extends ListTable {
 	}
 
 	/**
-	 * Handle the status
+	 * Name
 	 *
 	 * @param \SureCart\Models\AutoFees $auto_fees AutoFees model.
 	 *
 	 * @return string
 	 */
 	public function column_name( $auto_fees ) {
+		return $auto_fees->name;
+	}
+
+	/**
+	 * Internal name.
+	 *
+	 * @param \SureCart\Models\AutoFees $auto_fees AutoFees model.
+	 *
+	 * @return string
+	 */
+	public function column_internal_name( $auto_fees ) {
 		ob_start();
 		?>
 		<a href="<?php echo esc_url_raw( \SureCart::getUrl()->edit( 'auto-fee', $auto_fees->id ) ); ?>">
-			<?php echo esc_html( $auto_fees->name ); ?>
+			<?php echo esc_html( $auto_fees->metadata->internal_name ?? '' ); ?>
 		</a>
 		<?php echo wp_kses_post( $this->getRowActions( $auto_fees ) ); ?>
 
@@ -262,10 +262,10 @@ class AutoFeesListTable extends ListTable {
 			esc_html( $target_label )
 		);
 
-		// Build the translated sentence.
+		// Build the translated sentence with flex container for vertical alignment.
 		return sprintf(
 			/* translators: %1$s: Fee or Discount tag HTML, %2$s: Target tag HTML (e.g., Checkout, Line Item, Shipping) */
-			__( 'Apply a %1$s to %2$s', 'surecart' ),
+			'<sc-flex align-items="center" justify-content="flex-start" style="--sc-flex-column-gap: 0.35em; flex-wrap: wrap;">' . __( 'Apply a %1$s to %2$s', 'surecart' ) . '</sc-flex>',
 			$type_tag,
 			$target_tag
 		);
@@ -305,10 +305,10 @@ class AutoFeesListTable extends ListTable {
 			$this->mode_dropdown();
 
 			/**
-			 * Fires before the Filter button on the Posts and Pages list tables.
+			 * Fires before the Filter button on the Auto fees list tables.
 			 *
 			 * The Filter button allows sorting by date and/or category on the
-			 * Posts list table, and sorting by date on the Pages list table.
+			 * auto fees list table, and sorting by date on the Pages list table.
 			 *
 			 * @since 2.1.0
 			 * @since 4.4.0 The `$post_type` parameter was added.
@@ -334,7 +334,7 @@ class AutoFeesListTable extends ListTable {
 
 		<?php
 		/**
-		 * Fires immediately following the closing "actions" div in the tablenav for the posts
+		 * Fires immediately following the closing "actions" div in the tablenav for the auto fees
 		 * list table.
 		 *
 		 * @since 4.4.0
@@ -360,7 +360,7 @@ class AutoFeesListTable extends ListTable {
 					'nonce'  => wp_create_nonce( $action . '_auto_fee' ),
 					'id'     => $id,
 				],
-				esc_url_raw( admin_url( 'admin.php?page=sc-auto-fees' ) )
+				esc_url_raw( \SureCart::getUrl()->index( 'auto-fees' ) )
 			)
 		);
 	}

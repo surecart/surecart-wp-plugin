@@ -43,6 +43,7 @@ export default ({ attributes, setAttributes, isSelected }) => {
 			<InspectorControls>
 				<PanelBody title={__('Attributes', 'surecart')}>
 					<ToggleControl
+						__nextHasNoMarginBottom
 						label={__('Auto Height', 'surecart')}
 						checked={auto_height}
 						onChange={(auto_height) =>
@@ -54,6 +55,7 @@ export default ({ attributes, setAttributes, isSelected }) => {
 
 					{!auto_height && (
 						<UnitControl
+							__next40pxDefaultSize
 							label={__('Slider Height', 'surecart')}
 							labelPosition="edge"
 							__unstableInputWidth="100px"
@@ -75,6 +77,8 @@ export default ({ attributes, setAttributes, isSelected }) => {
 					/>
 
 					<RangeControl
+						__nextHasNoMarginBottom
+						__next40pxDefaultSize
 						label={__('Thumbnails Per Page', 'surecart')}
 						min={2}
 						max={20}

@@ -4,78 +4,59 @@ export const TARGETS = [
 	{
 		id: 'checkout',
 		label: __('Checkout', 'surecart'),
-		feeKey: 'negative_checkout_fee_selection_strategy',
-		discountKey: 'positive_checkout_fee_selection_strategy',
+		description: __(
+			'Choose the behavior when multiple fees or discounts apply to the order total.',
+			'surecart'
+		),
+		feeKey: 'positive_checkout_fee_selection_strategy',
+		discountKey: 'negative_checkout_fee_selection_strategy',
 	},
 	{
 		id: 'line_item',
 		label: __('Line Item', 'surecart'),
-		feeKey: 'negative_line_item_fee_selection_strategy',
-		discountKey: 'positive_line_item_fee_selection_strategy',
+		description: __(
+			'Choose the behavior when multiple fees or discounts apply to individual products in the cart.',
+			'surecart'
+		),
+		feeKey: 'positive_line_item_fee_selection_strategy',
+		discountKey: 'negative_line_item_fee_selection_strategy',
 	},
 	{
 		id: 'shipping',
 		label: __('Shipping', 'surecart'),
-		feeKey: 'negative_shipping_fee_selection_strategy',
-		discountKey: 'positive_shipping_fee_selection_strategy',
-	},
-];
-
-export const FEE_STRATEGIES = [
-	{
-		label: __('Checkout', 'surecart'),
-		target: 'checkout',
-		attribute: 'negative_checkout_fee_selection_strategy',
-	},
-	{
-		label: __('Line Item', 'surecart'),
-		target: 'line_item',
-		attribute: 'negative_line_item_fee_selection_strategy',
-	},
-	{
-		label: __('Shipping', 'surecart'),
-		target: 'shipping',
-		attribute: 'negative_shipping_fee_selection_strategy',
-	},
-];
-
-export const DISCOUNT_STRATEGIES = [
-	{
-		label: __('Checkout', 'surecart'),
-		target: 'checkout',
-		attribute: 'positive_checkout_fee_selection_strategy',
-	},
-	{
-		label: __('Line Item', 'surecart'),
-		target: 'line_item',
-		attribute: 'positive_line_item_fee_selection_strategy',
-	},
-	{
-		label: __('Shipping', 'surecart'),
-		target: 'shipping',
-		attribute: 'positive_shipping_fee_selection_strategy',
+		description: __(
+			'Choose the behavior when multiple fees or discounts apply to the shipping total.',
+			'surecart'
+		),
+		feeKey: 'positive_shipping_fee_selection_strategy',
+		discountKey: 'negative_shipping_fee_selection_strategy',
 	},
 ];
 
 export const STRATEGY_VALUES = ['all', 'first', 'biggest', 'lowest'];
 
+export const STRATEGY_LABELS = {
+	all: __('All', 'surecart'),
+	first: __('First', 'surecart'),
+	biggest: __('Largest', 'surecart'),
+	lowest: __('Smallest', 'surecart'),
+};
+
 export const VALUE_PHRASE = {
-	all: __('All applicable %ss', 'surecart'),
-	first: __('The first applicable %s', 'surecart'),
-	biggest: __('The biggest applicable %s', 'surecart'),
-	lowest: __('The lowest applicable %s', 'surecart'),
+	/* translators: %s: discount type (e.g. discount, coupon) */
+	all: __('All matching %ss', 'surecart'),
+	/* translators: %s: discount type (e.g. discount, coupon) */
+	first: __('Only the first matching %s', 'surecart'),
+	/* translators: %s: discount type (e.g. discount, coupon, fee) */
+	biggest: __('Only the biggest matching %s', 'surecart'),
+	/* translators: %s: discount type (e.g. discount, coupon, fee) */
+	lowest: __('Only the lowest matching %s', 'surecart'),
 };
 
 export const TARGET_PHRASE = {
 	checkout: __('at checkout', 'surecart'),
 	line_item: __('to the line item', 'surecart'),
 	shipping: __('to shipping', 'surecart'),
-};
-
-export const HELP_TEXT_STYLE = {
-	opacity: '0.85',
-	color: 'var(--sc-color-gray-500)',
-	fontSize: 'var(--sc-font-size-small)',
 };
 
 export const getHelpText = (
@@ -88,7 +69,8 @@ export const getHelpText = (
 	}
 
 	return sprintf(
-		__('%s will be applied %s.', 'surecart'),
+		/* translators: %1$s: strategy value (e.g. all, first, biggest, lowest), %2$s: target (e.g. checkout, line_item, shipping) */
+		__('%1$s will be applied %2$s.', 'surecart'),
 		sprintf(VALUE_PHRASE[value], type),
 		TARGET_PHRASE[target]
 	);

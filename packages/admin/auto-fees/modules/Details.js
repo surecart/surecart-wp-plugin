@@ -12,9 +12,11 @@ import { __ } from '@wordpress/i18n';
 import { ScInput, ScPriceInput, ScSelect } from '@surecart/components-react';
 import Box from '../../ui/Box';
 import { useState, useEffect, useCallback } from '@wordpress/element';
+import { getCurrencyCode } from '../utils/helper';
 
 const Details = ({ autoFee, onUpdate, loading }) => {
-	const { name, amount_adjustment, percent_adjustment, discount } = autoFee;
+	const { name, amount_adjustment, percent_adjustment, discount, metadata } =
+		autoFee;
 
 	const [adjustmentType, setAdjustmentType] = useState(
 		amount_adjustment ? 'fixed' : 'percentage'
@@ -33,9 +35,21 @@ const Details = ({ autoFee, onUpdate, loading }) => {
 		}
 	}, [adjustmentType, amount_adjustment, percent_adjustment, onUpdate]);
 
-	const handleNameChange = useCallback(
+	const handleDisplayNameChange = useCallback(
 		(e) => {
 			onUpdate({ name: e.target.value });
+		},
+		[onUpdate]
+	);
+
+	const handleNameChange = useCallback(
+		(e) => {
+			onUpdate({
+				metadata: {
+					...(metadata || {}),
+					internal_name: e.target.value,
+				},
+			});
 		},
 		[onUpdate]
 	);
@@ -65,21 +79,27 @@ const Details = ({ autoFee, onUpdate, loading }) => {
 		[onUpdate]
 	);
 
-	// Get currency code from global or autoFee
-	const currencyCode =
-		autoFee?.currency || window?.scData?.currency_code || 'USD';
-
 	return (
 		<Box title={__('Details', 'surecart')} loading={loading}>
 			<ScInput
 				label={__('Name', 'surecart')}
 				help={__(
-					'A friendly name for your price change. This will be displayed to the customer.',
+					'This is the internal name for your dynamic price. This is not visible to the customer.',
+					'surecart'
+				)}
+				value={metadata?.internal_name}
+				required
+				onScInput={handleNameChange}
+			/>
+			<ScInput
+				label={__('Display Name', 'surecart')}
+				help={__(
+					'A friendly name for your dynamic price. This will be displayed to the customer.',
 					'surecart'
 				)}
 				value={name}
 				required
-				onScInput={handleNameChange}
+				onScInput={handleDisplayNameChange}
 			/>
 			<ScSelect
 				label={__('Price Type', 'surecart')}
@@ -145,7 +165,7 @@ const Details = ({ autoFee, onUpdate, loading }) => {
 					</ScInput>
 				) : (
 					<ScPriceInput
-						currencyCode={currencyCode}
+						currencyCode={getCurrencyCode(autoFee)}
 						attribute="amount_adjustment"
 						label={__('Amount', 'surecart')}
 						value={amount_adjustment || null}

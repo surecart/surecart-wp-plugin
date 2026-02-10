@@ -21,8 +21,14 @@ import {
 } from '@surecart/components-react';
 import DateTimePicker from './DateTimePicker';
 import { formatDate } from '../../util/time';
-import { getInputType } from '../utils/ruleQueryUtils';
-import { attributeLabels, operatorLabels } from '../utils/labelTranslations';
+import { getInputType } from '../utils/helper';
+import {
+	attributeLabels,
+	operatorLabels,
+	supportedValuesLabels,
+} from '../utils/constants';
+
+const SEARCH_RESULT_LIMIT = 8;
 
 export default ({
 	addLeaf,
@@ -34,6 +40,7 @@ export default ({
 	updateRuleJson,
 	leaf,
 	feeTarget,
+	currencyCode,
 }) => {
 	const [attribute, setAttribute] = useState(leaf?.attribute_name || null);
 	const [operator, setOperator] = useState(leaf?.operator_label || null);
@@ -128,16 +135,17 @@ export default ({
 				value={value}
 				onScChange={(e) => setValue(e.target.value)}
 				choices={(attributeSupportedValues ?? []).map((val) => ({
-					label: formatLabel(val),
+					label: supportedValuesLabels?.[val] || formatLabel(val),
 					value: val,
 				}))}
+        search={(attributeSupportedValues ?? []).length > SEARCH_RESULT_LIMIT}
 				required
 			/>
 		);
 	};
 
 	const renderValueInput = () => {
-		const inputType = getInputType(attribute);
+		const inputType = getInputType(attribute, operator);
 		switch (inputType) {
 			case 'date':
 				return (
@@ -199,7 +207,7 @@ export default ({
 						onScInput={(e) => {
 							setValue(e.target.value);
 						}}
-						currency={scData?.currency_code}
+						currencyCode={currencyCode}
 						placeholder={__('Enter an amount', 'surecart')}
 						className={fullWidthClass}
 					/>
@@ -244,6 +252,9 @@ export default ({
 			case 'user_role':
 				return (
 					<ScSelect
+						search={userRoleChoices.length > SEARCH_RESULT_LIMIT}
+						searchPlaceholder={__('Search for a user role', 'surecart')}
+            searchPlaceholderValue={__('Search for a user role...', 'surecart')}
 						value={value}
 						onScChange={(e) => {
 							setValue(e.target.value);
@@ -291,6 +302,7 @@ export default ({
 				`}
 			>
 				<ScSelect
+					search={attributes.length > SEARCH_RESULT_LIMIT}
 					placeholder={__('Select an attribute', 'surecart')}
 					unselect={false}
 					value={attribute}
@@ -315,6 +327,7 @@ export default ({
 					/>
 				)}
 				<ScSelect
+					search={operators[attribute]?.length > SEARCH_RESULT_LIMIT}
 					placeholder={__('Select a condition', 'surecart')}
 					unselect={false}
 					value={operator}

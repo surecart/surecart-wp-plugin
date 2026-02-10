@@ -5,7 +5,7 @@ namespace SureCart\Controllers\Admin\AutoFees;
 use SureCart\Support\Scripts\AdminModelEditController;
 
 /**
- * Affiliation Requests Scripts Controller
+ * Auto Fees Requests Scripts Controller
  */
 class AutoFeesScriptsController extends AdminModelEditController {
 	/**
@@ -21,11 +21,4 @@ class AutoFeesScriptsController extends AdminModelEditController {
 	 * @var string
 	 */
 	protected $path = 'admin/auto-fees';
-
-	/**
-	 * Add the app url to the data.
-	 */
-	public function __construct() {
-		$this->data['api_url'] = \SureCart::requests()->getBaseUrl();
-	}
 }

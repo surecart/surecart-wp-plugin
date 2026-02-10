@@ -14,6 +14,14 @@ import {
 import Box from '../../ui/Box';
 import OrGroup from './OrGroup';
 import { TYPE_CHOICES } from '../utils/constants';
+import { getCurrencyCode } from '../utils/helper';
+
+/**
+ * Checks if any condition in the rules has an order_type attribute.
+ */
+const hasOrderTypeCondition = (rules) => {
+	return JSON.stringify(rules).includes('order_type');
+};
 
 // Extract default condition structure as constants
 const DEFAULT_CONDITION = {
@@ -44,6 +52,12 @@ export default ({ autoFee = {}, onUpdate, loading }) => {
 				(choice) => choice.value === autoFee?.fee_target
 			),
 		[autoFee?.fee_target]
+	);
+
+	// Check if any order_type condition exists in the rules
+	const showAllTransactionsNotice = useMemo(
+		() => rules?.conditions?.length > 0 && !hasOrderTypeCondition(rules),
+		[rules]
 	);
 
 	const updateRuleJson = useCallback(
@@ -100,7 +114,43 @@ export default ({ autoFee = {}, onUpdate, loading }) => {
 	}
 
 	return (
-		<Box title={__('Conditions', 'surecart')} loading={loading}>
+		<Box
+			title={__('Conditions', 'surecart')}
+			loading={loading}
+			header_action={
+				showAllTransactionsNotice && (
+					<sc-popover style={{ '--panel-width': '300px', margin: '-10px 0' }}>
+						<ScTag type="info" pill slot="trigger">
+							<ScIcon name="info" slot="prefix"/>
+							{__('All Transactions', 'surecart')}
+						</ScTag>
+						<span slot="title">
+							{__('All Transactions', 'surecart')}
+						</span>
+						<sc-prose slot="content">
+							<p>
+							{__(
+									'This dynamic price applies to all transactions, including initial checkouts, renewals, upgrades, and downgrades. Add an "Order Type" condition to limit when it applies.',
+									'surecart'
+								)}
+							</p>
+						</sc-prose>
+						<ScButton
+							slot="footer"
+							type="link"
+							target="_blank"
+              style={{
+                fontSize: '12px',
+              }}
+							href="https://surecart.com/docs/dynamic-pricing/#when-to-apply"
+						>
+							{__('Learn More', 'surecart')}{' '}
+							<ScIcon name="external-link" slot="suffix" />
+						</ScButton>
+					</sc-popover>
+				)
+			}
+		>
 			<label
 				css={css`
 					display: block;
@@ -146,6 +196,7 @@ export default ({ autoFee = {}, onUpdate, loading }) => {
 				</ScTag>{' '}
 				{__('where', 'surecart')}
 			</label>
+
 			<ScFlex
 				flexDirection="column"
 				css={css`
@@ -187,6 +238,7 @@ export default ({ autoFee = {}, onUpdate, loading }) => {
 								groupIndex={groupIndex}
 								rules={rules}
 								updateRuleJson={updateRuleJson}
+								currencyCode={getCurrencyCode(autoFee)}
 							/>
 						</div>
 					);

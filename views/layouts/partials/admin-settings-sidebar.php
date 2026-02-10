@@ -38,7 +38,7 @@
 		<sc-tab href="<?php echo esc_url( add_query_arg( [ 'tab' => 'dynamic_pricing' ], menu_page_url( 'sc-settings', false ) ) ); ?>" <?php echo 'dynamic_pricing' === $tab ? 'active' : ''; ?>>
 			<sc-icon slot="prefix" style="width: 18px; height: 18px;" name="badge-percent"></sc-icon>
 			<?php esc_html_e( 'Dynamic Pricing', 'surecart' ); ?>
-			<span class="sc-new-badge"><span>
+			<span class="sc-new-badge"></span>
 		</sc-tab>
 
 		<sc-tab href="<?php echo esc_url( add_query_arg( [ 'tab' => 'affiliation_protocol' ], menu_page_url( 'sc-settings', false ) ) ); ?>" <?php echo 'affiliation_protocol' === $tab ? 'active' : ''; ?> >
