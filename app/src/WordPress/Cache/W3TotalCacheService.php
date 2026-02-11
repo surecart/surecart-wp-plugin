@@ -12,6 +12,11 @@ class W3TotalCacheService extends CacheService {
 	 * @return void
 	 */
 	public function bootstrap() {
+		// Early return if W3 Total Cache plugin is not active.
+		if ( ! $this->isCachePluginActive() ) {
+			return;
+		}
+
 		parent::bootstrap();
 
 		// Use W3TC's filter to prevent caching of SureCart pages.

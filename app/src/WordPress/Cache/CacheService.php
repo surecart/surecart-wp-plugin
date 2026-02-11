@@ -12,6 +12,11 @@ abstract class CacheService {
 	 * @return void
 	 */
 	public function bootstrap() {
+		// Early return if the cache plugin is not active.
+		if ( ! $this->isCachePluginActive() ) {
+			return;
+		}
+
 		// Disable cache for SureCart dynamic pages.
 		add_action( 'wp', [ $this, 'maybeDisableCache' ] );
 

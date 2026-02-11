@@ -12,6 +12,11 @@ class LiteSpeedCacheService extends CacheService {
 	 * @return void
 	 */
 	public function bootstrap() {
+		// Early return if LiteSpeed Cache plugin is not active.
+		if ( ! $this->isCachePluginActive() ) {
+			return;
+		}
+
 		// Use LiteSpeed's finalize hook for cache control decisions.
 		add_action( 'litespeed_control_finalize', [ $this, 'onControlFinalize' ] );
 
