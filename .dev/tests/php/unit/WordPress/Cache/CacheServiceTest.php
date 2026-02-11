@@ -6,6 +6,7 @@ use Mockery\MockInterface;
 use SureCart\Tests\SureCartUnitTestCase;
 use SureCart\WordPress\Cache\LiteSpeedCacheService;
 use SureCart\WordPress\Cache\W3TotalCacheService;
+use SureCart\WordPress\Cache\WpFastestCacheService;
 
 /**
  * @group cache
@@ -27,10 +28,18 @@ class CacheServiceTest extends SureCartUnitTestCase {
 	 */
 	protected $litespeed;
 
+	/**
+	 * The WP Fastest Cache service instance.
+	 *
+	 * @var WpFastestCacheService
+	 */
+	protected $wpfastest;
+
 	public function setUp(): void {
 		parent::setUp();
 		$this->w3tc      = new W3TotalCacheService();
 		$this->litespeed = new LiteSpeedCacheService();
+		$this->wpfastest = new WpFastestCacheService();
 	}
 
 	public function tearDown(): void {
@@ -55,6 +64,15 @@ class CacheServiceTest extends SureCartUnitTestCase {
 	 */
 	protected function createLiteSpeedMock() {
 		return \Mockery::mock( LiteSpeedCacheService::class )->makePartial()->shouldAllowMockingProtectedMethods();
+	}
+
+	/**
+	 * Create a mock WP Fastest Cache service with protected methods enabled.
+	 *
+	 * @return MockInterface|WpFastestCacheService
+	 */
+	protected function createWpFastestCacheMock() {
+		return \Mockery::mock( WpFastestCacheService::class )->makePartial()->shouldAllowMockingProtectedMethods();
 	}
 
 	/**
@@ -206,5 +224,122 @@ class CacheServiceTest extends SureCartUnitTestCase {
 
 		$this->assertIsArray( $result );
 		$this->assertContains( 'wp-api-fetch', $result );
+	}
+
+	/**
+	 * Test shouldExcludeFromCache returns true when on customer dashboard page.
+	 */
+	public function test_should_exclude_from_cache_returns_true_for_customer_dashboard() {
+		$service = $this->createW3TCMock();
+		$service->shouldReceive( 'isCustomerDashboardPage' )->andReturn( true );
+		$service->shouldReceive( 'isCheckoutPage' )->andReturn( false );
+		$service->shouldReceive( 'hasCheckoutFormBlock' )->andReturn( false );
+		$service->shouldReceive( 'isBuyPage' )->andReturn( false );
+
+		$this->assertTrue( $service->shouldExcludeFromCache() );
+	}
+
+	/**
+	 * Test shouldExcludeFromCache returns true when on checkout page.
+	 */
+	public function test_should_exclude_from_cache_returns_true_for_checkout_page() {
+		$service = $this->createW3TCMock();
+		$service->shouldReceive( 'isCustomerDashboardPage' )->andReturn( false );
+		$service->shouldReceive( 'isCheckoutPage' )->andReturn( true );
+		$service->shouldReceive( 'hasCheckoutFormBlock' )->andReturn( false );
+		$service->shouldReceive( 'isBuyPage' )->andReturn( false );
+
+		$this->assertTrue( $service->shouldExcludeFromCache() );
+	}
+
+	/**
+	 * Test shouldExcludeFromCache returns true when page has checkout form block.
+	 */
+	public function test_should_exclude_from_cache_returns_true_for_checkout_form_block() {
+		$service = $this->createW3TCMock();
+		$service->shouldReceive( 'isCustomerDashboardPage' )->andReturn( false );
+		$service->shouldReceive( 'isCheckoutPage' )->andReturn( false );
+		$service->shouldReceive( 'hasCheckoutFormBlock' )->andReturn( true );
+		$service->shouldReceive( 'isBuyPage' )->andReturn( false );
+
+		$this->assertTrue( $service->shouldExcludeFromCache() );
+	}
+
+	/**
+	 * Test shouldExcludeFromCache returns true when on buy page.
+	 */
+	public function test_should_exclude_from_cache_returns_true_for_buy_page() {
+		$service = $this->createW3TCMock();
+		$service->shouldReceive( 'isCustomerDashboardPage' )->andReturn( false );
+		$service->shouldReceive( 'isCheckoutPage' )->andReturn( false );
+		$service->shouldReceive( 'hasCheckoutFormBlock' )->andReturn( false );
+		$service->shouldReceive( 'isBuyPage' )->andReturn( true );
+
+		$this->assertTrue( $service->shouldExcludeFromCache() );
+	}
+
+	/**
+	 * Test shouldExcludeFromCache returns false when on a regular page.
+	 */
+	public function test_should_exclude_from_cache_returns_false_for_regular_page() {
+		$service = $this->createW3TCMock();
+		$service->shouldReceive( 'isCustomerDashboardPage' )->andReturn( false );
+		$service->shouldReceive( 'isCheckoutPage' )->andReturn( false );
+		$service->shouldReceive( 'hasCheckoutFormBlock' )->andReturn( false );
+		$service->shouldReceive( 'isBuyPage' )->andReturn( false );
+
+		$this->assertFalse( $service->shouldExcludeFromCache() );
+	}
+
+	/**
+	 * Test WP Fastest Cache maybeDisableCacheForRestApi disables cache for SureCart REST requests.
+	 */
+	public function test_wpfastest_disables_cache_for_surecart_rest_request() {
+		$_SERVER['REQUEST_URI'] = '/wp-json/surecart/v1/products';
+
+		$service = $this->createWpFastestCacheMock();
+		$service->shouldReceive( 'isCachePluginActive' )->andReturn( true );
+		$service->shouldReceive( 'disableCacheWithBrowserHeaders' )->once()->with( 'SureCart REST API request' );
+
+		$service->maybeDisableCacheForRestApi();
+	}
+
+	/**
+	 * Test WP Fastest Cache maybeDisableCacheForRestApi does nothing when plugin not active.
+	 */
+	public function test_wpfastest_does_not_disable_cache_when_plugin_not_active() {
+		$_SERVER['REQUEST_URI'] = '/wp-json/surecart/v1/products';
+
+		$service = $this->createWpFastestCacheMock();
+		$service->shouldReceive( 'isCachePluginActive' )->andReturn( false );
+		$service->shouldReceive( 'disableCacheWithBrowserHeaders' )->never();
+
+		$service->maybeDisableCacheForRestApi();
+	}
+
+	/**
+	 * Test WP Fastest Cache shouldExcludeFromCache returns true for customer dashboard.
+	 */
+	public function test_wpfastest_should_exclude_from_cache_for_customer_dashboard() {
+		$service = $this->createWpFastestCacheMock();
+		$service->shouldReceive( 'isCustomerDashboardPage' )->andReturn( true );
+		$service->shouldReceive( 'isCheckoutPage' )->andReturn( false );
+		$service->shouldReceive( 'hasCheckoutFormBlock' )->andReturn( false );
+		$service->shouldReceive( 'isBuyPage' )->andReturn( false );
+
+		$this->assertTrue( $service->shouldExcludeFromCache() );
+	}
+
+	/**
+	 * Test WP Fastest Cache shouldExcludeFromCache returns false for regular page.
+	 */
+	public function test_wpfastest_should_exclude_from_cache_for_regular_page() {
+		$service = $this->createWpFastestCacheMock();
+		$service->shouldReceive( 'isCustomerDashboardPage' )->andReturn( false );
+		$service->shouldReceive( 'isCheckoutPage' )->andReturn( false );
+		$service->shouldReceive( 'hasCheckoutFormBlock' )->andReturn( false );
+		$service->shouldReceive( 'isBuyPage' )->andReturn( false );
+
+		$this->assertFalse( $service->shouldExcludeFromCache() );
 	}
 }
