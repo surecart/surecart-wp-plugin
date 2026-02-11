@@ -8,11 +8,20 @@ import {
 	__experimentalUnitControl as UnitControl,
 	__experimentalUseCustomUnits as useCustomUnits,
 } from '@wordpress/components';
-import { useEffect, useState } from '@wordpress/element';
+import { useMemo } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { Disabled } from '@wordpress/components';
 
-export default ({ attributes, setAttributes, context: { postId } }) => {
+// Get placeholder URL with fallback.
+const getPlaceholderUrl = () => {
+	const pluginUrl =
+		window.scBlockData?.plugin_url || window.scData?.plugin_url || '';
+	return pluginUrl
+		? `${pluginUrl}/images/placeholder.jpg`
+		: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400"%3E%3Crect fill="%23f0f0f0" width="400" height="400"/%3E%3Cpath fill="%23ccc" d="M200 150c-27.6 0-50 22.4-50 50s22.4 50 50 50 50-22.4 50-50-22.4-50-50-50zm0 80c-16.5 0-30-13.5-30-30s13.5-30 30-30 30 13.5 30 30-13.5 30-30 30z"/%3E%3Cpath fill="%23ccc" d="M320 100H80c-11 0-20 9-20 20v160c0 11 9 20 20 20h240c11 0 20-9 20-20V120c0-11-9-20-20-20zm0 180H80V120h240v160z"/%3E%3C/svg%3E';
+};
+
+export default ({ attributes, setAttributes, context: { postId } = {} }) => {
 	const {
 		height,
 		thumbnails_per_page,
@@ -22,37 +31,31 @@ export default ({ attributes, setAttributes, context: { postId } }) => {
 		desktop_gallery,
 		show_thumbnails,
 	} = attributes;
-	const [images, setImages] = useState([]);
 	const blockProps = useBlockProps({});
 
-	const { record: { meta: { product } = {} } = {} } = useEntityRecord(
-		'postType',
-		'sc_product',
-		postId
-	);
+	const { record } = useEntityRecord('postType', 'sc_product', postId, {
+		enabled: !!postId,
+	});
+
+	const product = record?.meta?.product;
 
 	const units = useCustomUnits({
 		availableUnits: ['px', 'em', 'rem', 'vh'],
 	});
 
-	useEffect(() => {
-		setImages(
-			product?.gallery
-				? product?.gallery.map((image) => {
-						return {
-							src: image?.url,
-							width,
-						};
-				  })
-				: [...Array(desktop_gallery ? 3 : 20)].map(() => {
-						return {
-							src:
-								scBlockData?.plugin_url +
-								'/images/placeholder.jpg',
-							width,
-						};
-				  })
-		);
+	// Use useMemo to avoid flicker while gallery set.
+	const images = useMemo(() => {
+		const placeholderUrl = getPlaceholderUrl();
+		if (product?.gallery?.length) {
+			return product.gallery.map((image) => ({
+				src: image?.url,
+				width,
+			}));
+		}
+		return [...Array(desktop_gallery ? 3 : 5)].map(() => ({
+			src: placeholderUrl,
+			width,
+		}));
 	}, [width, thumbnails_per_page, product, desktop_gallery]);
 
 	const autoHeightEnabled = desktop_gallery ? true : auto_height;
@@ -177,7 +180,10 @@ export default ({ attributes, setAttributes, context: { postId } }) => {
 						</div>
 
 						{images?.length > 1 && show_thumbnails ? (
-							<div className="sc-image-slider__thumbs">
+							<div
+								className="sc-image-slider__thumbs"
+								style={{ opacity: 1, visibility: 'visible' }}
+							>
 								<div
 									className="sc-image-slider-button__prev"
 									tabIndex="-1"
@@ -190,9 +196,9 @@ export default ({ attributes, setAttributes, context: { postId } }) => {
 										viewBox="0 0 24 24"
 										fill="none"
 										stroke="currentColor"
-										stroke-width="2"
-										stroke-linecap="round"
-										stroke-linejoin="round"
+										strokeWidth="2"
+										strokeLinecap="round"
+										strokeLinejoin="round"
 									>
 										<polyline points="15 18 9 12 15 6" />
 									</svg>
@@ -206,11 +212,6 @@ export default ({ attributes, setAttributes, context: { postId } }) => {
 											<div
 												className="swiper-slide"
 												key={index}
-												onClick={() =>
-													swiper?.current?.slideTo(
-														index
-													)
-												}
 											>
 												<img src={image.src} alt="" />
 											</div>
@@ -230,9 +231,9 @@ export default ({ attributes, setAttributes, context: { postId } }) => {
 										viewBox="0 0 24 24"
 										fill="none"
 										stroke="currentColor"
-										stroke-width="2"
-										stroke-linecap="round"
-										stroke-linejoin="round"
+										strokeWidth="2"
+										strokeLinecap="round"
+										strokeLinejoin="round"
 									>
 										<polyline points="9 18 15 12 9 6" />
 									</svg>
