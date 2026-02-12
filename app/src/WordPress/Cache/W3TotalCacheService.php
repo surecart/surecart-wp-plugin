@@ -72,19 +72,16 @@ class W3TotalCacheService extends CacheService {
 	}
 
 	/**
-	 * Purge product cache when a purchase is created or revoked.
+	 * Purge product cache when stock is adjusted.
 	 *
-	 * @param \SureCart\Models\Purchase $purchase The purchase model.
+	 * @param \SureCart\Models\Product $product The product model.
 	 * @return void
 	 */
-	public function purgeProductCacheOnPurchase( $purchase ) {
+	public function purgeProductCacheOnStockAdjustment( $product ) {
 		// Check if W3TC flush function exists.
 		if ( ! function_exists( 'w3tc_flush_post' ) ) {
 			return;
 		}
-
-		// Get the product from the purchase.
-		$product = $purchase->product ?? null;
 
 		if ( empty( $product ) ) {
 			return;
@@ -98,12 +95,11 @@ class W3TotalCacheService extends CacheService {
 		}
 
 		/**
-		 * Action fired after purging cache for a product on purchase.
+		 * Action fired after purging cache for a product on stock adjustment.
 		 *
-		 * @param \SureCart\Models\Purchase $purchase The purchase model.
-		 * @param mixed $product The product model.
+		 * @param \SureCart\Models\Product $product The product model.
 		 */
-		do_action( 'surecart/cache/purged_product', $purchase, $product );
+		do_action( 'surecart/cache/purged_product', $product );
 	}
 
 	/**

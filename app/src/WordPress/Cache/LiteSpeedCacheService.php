@@ -29,9 +29,8 @@ class LiteSpeedCacheService extends CacheService {
 		// Disable cache for SureCart REST API requests.
 		add_action( 'rest_api_init', [ $this, 'maybeDisableCacheForRestApi' ], 1 );
 
-		// Purge cache on purchase events.
-		add_action( 'surecart/purchase_created', [ $this, 'purgeProductCacheOnPurchase' ] );
-		add_action( 'surecart/purchase_revoked', [ $this, 'purgeProductCacheOnPurchase' ] );
+		// Purge cache when product stock is adjusted.
+		add_action( 'surecart/product_stock_adjusted', [ $this, 'purgeProductCacheOnStockAdjustment' ] );
 	}
 
 	/**
@@ -115,19 +114,16 @@ class LiteSpeedCacheService extends CacheService {
 	}
 
 	/**
-	 * Purge product cache when a purchase is created or revoked.
+	 * Purge product cache when stock is adjusted.
 	 *
-	 * @param \SureCart\Models\Purchase $purchase The purchase model.
+	 * @param \SureCart\Models\Product $product The product model.
 	 * @return void
 	 */
-	public function purgeProductCacheOnPurchase( $purchase ) {
+	public function purgeProductCacheOnStockAdjustment( $product ) {
 		// Only purge if the action is available.
 		if ( ! has_action( 'litespeed_purge_post' ) ) {
 			return;
 		}
-
-		// Get the product from the purchase.
-		$product = $purchase->product ?? null;
 
 		if ( empty( $product ) ) {
 			return;
@@ -141,11 +137,10 @@ class LiteSpeedCacheService extends CacheService {
 		}
 
 		/**
-		 * Action fired after purging cache for a product on purchase.
+		 * Action fired after purging cache for a product on stock adjustment.
 		 *
-		 * @param \SureCart\Models\Purchase $purchase The purchase model.
-		 * @param mixed $product The product model.
+		 * @param \SureCart\Models\Product $product The product model.
 		 */
-		do_action( 'surecart/cache/purged_product', $purchase, $product );
+		do_action( 'surecart/cache/purged_product', $product );
 	}
 }

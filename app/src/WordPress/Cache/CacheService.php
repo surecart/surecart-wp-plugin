@@ -23,9 +23,8 @@ abstract class CacheService {
 		// Disable cache for SureCart REST API requests.
 		add_action( 'rest_api_init', [ $this, 'maybeDisableCacheForRestApi' ], 1 );
 
-		// Purge cache on purchase events.
-		add_action( 'surecart/purchase_created', [ $this, 'purgeProductCacheOnPurchase' ] );
-		add_action( 'surecart/purchase_revoked', [ $this, 'purgeProductCacheOnPurchase' ] );
+		// Purge cache when product stock is adjusted.
+		add_action( 'surecart/product_stock_adjusted', [ $this, 'purgeProductCacheOnStockAdjustment' ] );
 	}
 
 	/**
@@ -139,12 +138,12 @@ abstract class CacheService {
 	}
 
 	/**
-	 * Purge product cache when a purchase is created or revoked.
+	 * Purge product cache when stock is adjusted.
 	 *
-	 * @param \SureCart\Models\Purchase $purchase The purchase model.
+	 * @param \SureCart\Models\Product $product The product model.
 	 * @return void
 	 */
-	public function purgeProductCacheOnPurchase( $purchase ) {
+	public function purgeProductCacheOnStockAdjustment( $product ) {
 		// Override in child classes if needed.
 	}
 
