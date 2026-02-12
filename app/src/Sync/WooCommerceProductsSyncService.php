@@ -98,13 +98,19 @@ class WooCommerceProductsSyncService {
 			return;
 		}
 
-		// get WooCommerce products.
+		// get WooCommerce products (exclude already-imported products).
 		$products = wc_get_products(
 			[
-				'limit'    => $batch_size,
-				'page'     => $page,
-				'return'   => 'ids',
-				'paginate' => true,
+				'limit'      => $batch_size,
+				'page'       => $page,
+				'return'     => 'ids',
+				'paginate'   => true,
+				'meta_query' => [ // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
+					[
+						'key'     => '_surecart_imported',
+						'compare' => 'NOT EXISTS',
+					],
+				],
 			]
 		);
 
@@ -144,14 +150,18 @@ class WooCommerceProductsSyncService {
 
 			// Skip unsupported product types.
 			$product_type = $product->get_type();
-			if ( in_array( $product_type, [ 'grouped' ], true ) ) {
+			if ( in_array( $product_type, [ 'grouped', 'external' ], true ) ) {
 				return;
 			}
 
 			// Map the WooCommerce Product to SureCart and save in the imports batch.
 			$this->mapWooCommerceProductToSureCart( $product );
 
-		} catch ( \Exception $e ) { // phpcs:ignore Generic.CodeAnalysis.EmptyStatement.DetectedCatch
+			// Mark product as imported to prevent duplicate syncing.
+			update_post_meta( $product_id, '_surecart_imported', current_time( 'timestamp' ) );
+
+		} catch ( \Exception $e ) {
+			error_log( sprintf( 'SureCart WooCommerce Sync: Failed to sync product %d - %s', $product_id, $e->getMessage() ) ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 		}
 	}
 
@@ -213,8 +223,7 @@ class WooCommerceProductsSyncService {
 			'sku'          => $product->get_sku() ?? null,
 			'archived'     => $product->get_status() === 'trash',
 			'recurring'    => $this->isSubscriptionProduct( $product ),
-			'cataloged_at' => $product->get_date_created() ? $product->get_date_created()->format( 'c' ) : null,
-			'position'     => (int) $product->get_menu_order(),
+			'cataloged_at' => $product->get_date_created() ? $product->get_date_created()->getTimestamp() : null,
 		];
 
 		// Purchase limit (sold individually).
@@ -297,7 +306,7 @@ class WooCommerceProductsSyncService {
 		// Simple products.
 		$price_data = [
 			'amount'   => $this->convertPriceToInteger( $product->get_price() ),
-			'currency' => \get_woocommerce_currency(),
+			'currency' => strtolower( \get_woocommerce_currency() ),
 			// translators: %s: Product name.
 			'name'     => sprintf( __( '%s Price', 'surecart' ), $product->get_name() ),
 			'position' => 0,
@@ -345,7 +354,7 @@ class WooCommerceProductsSyncService {
 
 		$price_data = [
 			'amount'                             => $this->convertPriceToInteger( $product->get_price() ),
-			'currency'                           => \get_woocommerce_currency(),
+			'currency'                           => strtolower( \get_woocommerce_currency() ),
 			// translators: %s: Product name.
 			'name'                               => sprintf( __( '%s Subscription', 'surecart' ), $product->get_name() ),
 			'position'                           => 0,
@@ -354,7 +363,7 @@ class WooCommerceProductsSyncService {
 			// Recurring fields.
 			'recurring_interval'                 => \WC_Subscriptions_Product::get_period( $product ),
 			'recurring_interval_count'           => (int) \WC_Subscriptions_Product::get_interval( $product ),
-			'recurring_period_count'             => (int) \WC_Subscriptions_Product::get_length( $product ) ?? null,
+			'recurring_period_count'             => ! empty( \WC_Subscriptions_Product::get_length( $product ) ) ? (int) \WC_Subscriptions_Product::get_length( $product ) : null,
 
 			// Trial.
 			'trial_duration_days'                => $this->getTrialDays( $product ),
@@ -431,7 +440,41 @@ class WooCommerceProductsSyncService {
 			true
 		);
 
-		return $zero_decimal ? (int) $price : (int) ( $price * 100 );
+		return $zero_decimal ? (int) $price : (int) round( (float) $price * 100 );
+	}
+
+	/**
+	 * Map WooCommerce weight unit to SureCart accepted value.
+	 *
+	 * @param string $wc_unit WooCommerce weight unit.
+	 * @return string
+	 */
+	public function mapWeightUnit( $wc_unit ) {
+		$map = [
+			'lbs' => 'lb',
+			'oz'  => 'oz',
+			'kg'  => 'kg',
+			'g'   => 'g',
+		];
+		return $map[ $wc_unit ] ?? 'lb';
+	}
+
+	/**
+	 * Map WooCommerce dimension unit to SureCart accepted value.
+	 *
+	 * @param string $wc_unit WooCommerce dimension unit.
+	 * @return string
+	 */
+	public function mapDimensionUnit( $wc_unit ) {
+		$map = [
+			'cm' => 'cm',
+			'mm' => 'mm',
+			'm'  => 'm',
+			'in' => 'in',
+			'ft' => 'ft',
+			'yd' => 'ft',
+		];
+		return $map[ $wc_unit ] ?? 'in';
 	}
 
 	/**
@@ -463,7 +506,7 @@ class WooCommerceProductsSyncService {
 				// If collection exists on API, cache and use it.
 				if ( ! empty( $collection->id ) && ! is_wp_error( $collection ) ) {
 					$this->collections_cache[ $cache_key ] = $collection;
-					$collections[]                          = $collection;
+					$collections[]                         = $collection;
 					continue;
 				}
 
@@ -486,8 +529,9 @@ class WooCommerceProductsSyncService {
 				}
 
 				$this->collections_cache[ $cache_key ] = $collection;
-				$collections[]                          = $collection;
-			} catch ( \Exception $e ) { // phpcs:ignore Generic.CodeAnalysis.EmptyStatement.DetectedCatch
+				$collections[]                         = $collection;
+			} catch ( \Exception $e ) {
+				error_log( sprintf( 'SureCart WooCommerce Sync: Failed to get/create collection for slug "%s" - %s', $cache_key, $e->getMessage() ) ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 			}
 		}
 
@@ -503,19 +547,14 @@ class WooCommerceProductsSyncService {
 	public function mapCategories( $product ) {
 		$category_ids = $product->get_category_ids();
 		$tag_ids      = $product->get_tag_ids();
-
-		if ( empty( $category_ids ) && empty( $tag_ids ) ) {
-			return [];
-		}
-
-		$all_terms = [];
+		$all_terms    = [];
 
 		// Collect categories.
 		foreach ( $category_ids as $cat_id ) {
 			$category = get_term( $cat_id, 'product_cat' );
 			if ( $category && ! is_wp_error( $category ) ) {
 				// Normalize slug for deduplication (lowercase, trim).
-				$normalized_slug = strtolower( trim( $category->slug ) );
+				$normalized_slug               = strtolower( trim( $category->slug ) );
 				$all_terms[ $normalized_slug ] = [
 					'term'   => $category,
 					'source' => 'product_cat',
@@ -592,26 +631,26 @@ class WooCommerceProductsSyncService {
 		$variant_options = [];
 		$variants        = [];
 
-		// Extract variant_options from attributes.
+		// Extract variant_options from attributes and build ordered keys for mapping.
 		$attributes      = $product->get_attributes();
 		$option_position = 0;
+		$option_keys     = [];
 
 		foreach ( $attributes as $attribute ) {
 			if ( ! $attribute->get_variation() ) {
 				continue;
 			}
 
+			// Track the attribute key for ordered variant mapping.
+			$option_keys[] = 'attribute_' . sanitize_title( $attribute->get_name() );
+
 			// Extract values array (CRITICAL).
 			$values = [];
 			if ( $attribute->is_taxonomy() ) {
-				$terms = get_terms(
-					[
-						'taxonomy'   => $attribute->get_name(),
-						'hide_empty' => false,
-					]
-				);
-				if ( ! is_wp_error( $terms ) ) {
-					foreach ( $terms as $term ) {
+				$term_ids = $attribute->get_options();
+				foreach ( $term_ids as $term_id ) {
+					$term = get_term( $term_id );
+					if ( $term && ! is_wp_error( $term ) ) {
 						$values[] = $term->name;
 					}
 				}
@@ -641,13 +680,8 @@ class WooCommerceProductsSyncService {
 				'sku'                          => $variation->get_sku() ?? null,
 				'position'                     => $variant_position++,
 
-				// Pricing (CRITICAL - include currency).
+				// Pricing.
 				'amount'                       => $this->convertPriceToInteger( $variation->get_price() ),
-				'currency'                     => \get_woocommerce_currency(),
-
-				// Sale price.
-				'scratch_amount'               => $variation->is_on_sale() && $variation->get_sale_price() ?
-					$this->convertPriceToInteger( $variation->get_regular_price() ) : null,
 
 				// Stock.
 				'stock_enabled'                => $variation->managing_stock(),
@@ -675,32 +709,35 @@ class WooCommerceProductsSyncService {
 			$variant_weight = (float) $variation->get_weight();
 			if ( $variant_weight > 0 ) {
 				$variant['weight']      = $variant_weight;
-				$variant['weight_unit'] = get_option( 'woocommerce_weight_unit' );
+				$variant['weight_unit'] = $this->mapWeightUnit( get_option( 'woocommerce_weight_unit' ) );
 			}
 
 			// Only include dimensions if at least one dimension is set and greater than 0.
-			$variant_length = (float) $variation->get_length();
-			$variant_width  = (float) $variation->get_width();
-			$variant_height = (float) $variation->get_height();
+			$wc_dim_unit    = get_option( 'woocommerce_dimension_unit' );
+			$dim_multiplier = 'yd' === $wc_dim_unit ? 3 : 1;
+			$variant_length = (float) $variation->get_length() * $dim_multiplier;
+			$variant_width  = (float) $variation->get_width() * $dim_multiplier;
+			$variant_height = (float) $variation->get_height() * $dim_multiplier;
 
 			if ( $variant_length > 0 || $variant_width > 0 || $variant_height > 0 ) {
 				$variant['dimensions'] = [
 					'length' => $variant_length,
 					'width'  => $variant_width,
 					'height' => $variant_height,
-					'unit'   => get_option( 'woocommerce_dimension_unit' ),
+					'unit'   => $this->mapDimensionUnit( $wc_dim_unit ),
 				];
 			}
 
-			// Map attribute values to option_1, option_2, option_3.
-			// Only include options if they have values.
+			// Map attribute values to option_1, option_2, option_3 using parent attribute order.
 			$attributes_map = $variation->get_variation_attributes();
-			$option_index   = 1;
 
-			foreach ( $attributes_map as $attr_name => $attr_value ) {
-				if ( $option_index <= 3 && ! empty( $attr_value ) ) {
-					$variant[ "option_$option_index" ] = $attr_value;
-					++$option_index;
+			foreach ( $option_keys as $index => $key ) {
+				$option_num = $index + 1;
+				if ( $option_num > 3 ) {
+					break;
+				}
+				if ( isset( $attributes_map[ $key ] ) && ! empty( $attributes_map[ $key ] ) ) {
+					$variant[ "option_$option_num" ] = $attributes_map[ $key ];
 				}
 			}
 
@@ -764,20 +801,22 @@ class WooCommerceProductsSyncService {
 		$weight = (float) $product->get_weight();
 		if ( $weight > 0 ) {
 			$shipping_fields['weight']      = $weight;
-			$shipping_fields['weight_unit'] = get_option( 'woocommerce_weight_unit' );
+			$shipping_fields['weight_unit'] = $this->mapWeightUnit( get_option( 'woocommerce_weight_unit' ) );
 		}
 
 		// Only include dimensions if at least one dimension is set and greater than 0.
-		$length = (float) $product->get_length();
-		$width  = (float) $product->get_width();
-		$height = (float) $product->get_height();
+		$wc_dim_unit    = get_option( 'woocommerce_dimension_unit' );
+		$dim_multiplier = 'yd' === $wc_dim_unit ? 3 : 1;
+		$length         = (float) $product->get_length() * $dim_multiplier;
+		$width          = (float) $product->get_width() * $dim_multiplier;
+		$height         = (float) $product->get_height() * $dim_multiplier;
 
 		if ( $length > 0 || $width > 0 || $height > 0 ) {
 			$shipping_fields['dimensions'] = [
 				'length' => $length,
 				'width'  => $width,
 				'height' => $height,
-				'unit'   => get_option( 'woocommerce_dimension_unit' ),
+				'unit'   => $this->mapDimensionUnit( $wc_dim_unit ),
 			];
 		}
 
@@ -794,9 +833,15 @@ class WooCommerceProductsSyncService {
 		$taxable    = $product->is_taxable();
 		$is_digital = $product->is_virtual() || $product->is_downloadable();
 
+		// Determine tax category.
+		$tax_category = $is_digital ? 'digital' : 'tangible';
+		if ( $this->isSubscriptionProduct( $product ) ) {
+			$tax_category = 'saas';
+		}
+
 		return [
 			'tax_enabled'  => $taxable,
-			'tax_category' => $is_digital ? 'digital' : 'tangible',
+			'tax_category' => $tax_category,
 		];
 	}
 
@@ -860,19 +905,14 @@ class WooCommerceProductsSyncService {
 	 * @return array
 	 */
 	public function mapMedia( $product ) {
-		$media    = [];
-		$position = 0;
+		$media = [];
 
-		// Featured image (FIX: line 219 bug).
+		// Featured image.
 		$featured_image_id = $product->get_image_id();
 		if ( $featured_image_id ) {
 			$image_url = wp_get_attachment_url( $featured_image_id );
 			if ( $image_url ) {
-				$media[] = [
-					'type'     => 'image',
-					'url'      => $image_url,
-					'position' => $position++,
-				];
+				$media[] = [ 'url' => $image_url ];
 			}
 		}
 
@@ -880,11 +920,7 @@ class WooCommerceProductsSyncService {
 		foreach ( $product->get_gallery_image_ids() as $id ) {
 			$image_url = wp_get_attachment_url( $id );
 			if ( $image_url ) {
-				$media[] = [
-					'type'     => 'image',
-					'url'      => $image_url,
-					'position' => $position++,
-				];
+				$media[] = [ 'url' => $image_url ];
 			}
 		}
 
@@ -908,7 +944,7 @@ class WooCommerceProductsSyncService {
 			// Product Analytics.
 			'wc_total_sales'         => (int) $product->get_total_sales(),
 			'wc_average_rating'      => (float) $product->get_average_rating(),
-			'wc_rating_counts'       => $product->get_rating_counts(),
+			'wc_rating_counts'       => wp_json_encode( $product->get_rating_counts() ),
 			'wc_review_count'        => (int) $product->get_review_count(),
 
 			// Product Flags.
@@ -917,8 +953,8 @@ class WooCommerceProductsSyncService {
 			'catalog_visibility'     => $product->get_catalog_visibility(),
 
 			// Relationships (Marketing Value).
-			'wc_upsell_ids'          => $product->get_upsell_ids(),
-			'wc_cross_sell_ids'      => $product->get_cross_sell_ids(),
+			'wc_upsell_ids'          => wp_json_encode( $product->get_upsell_ids() ),
+			'wc_cross_sell_ids'      => wp_json_encode( $product->get_cross_sell_ids() ),
 
 			// SEO & Content.
 			'short_description'      => $product->get_short_description(),
@@ -946,7 +982,7 @@ class WooCommerceProductsSyncService {
 					'id'   => $download->get_id(),
 				];
 			}
-			$metadata['download_files']  = $downloads;
+			$metadata['download_files']  = wp_json_encode( $downloads );
 			$metadata['download_limit']  = $product->get_download_limit();
 			$metadata['download_expiry'] = $product->get_download_expiry();
 		}

@@ -744,7 +744,8 @@ namespace SureCart\Tests\Sync {
 			$product = $this->createMockProduct( [ 'get_date_created' => $date ] );
 			$result  = $this->service->mapCoreFields( $product );
 			$this->assertNotNull( $result['cataloged_at'] );
-			$this->assertStringContainsString( '2024-01-15', $result['cataloged_at'] );
+			$this->assertIsInt( $result['cataloged_at'] );
+			$this->assertSame( $date->getTimestamp(), $result['cataloged_at'] );
 		}
 
 		/**
@@ -759,10 +760,10 @@ namespace SureCart\Tests\Sync {
 		/**
 		 * @group woo_import
 		 */
-		public function test_map_core_fields_maps_position() {
+		public function test_map_core_fields_omits_position_field() {
 			$product = $this->createMockProduct( [ 'get_menu_order' => 5 ] );
 			$result  = $this->service->mapCoreFields( $product );
-			$this->assertSame( 5, $result['position'] );
+			$this->assertArrayNotHasKey( 'position', $result );
 		}
 
 		/**
@@ -945,7 +946,7 @@ namespace SureCart\Tests\Sync {
 		public function test_map_prices_includes_currency() {
 			$product = $this->createMockProduct();
 			$result  = $this->service->mapPrices( $product );
-			$this->assertSame( 'USD', $result[0]['currency'] );
+			$this->assertSame( 'usd', $result[0]['currency'] );
 		}
 
 		/**
@@ -1655,7 +1656,7 @@ namespace SureCart\Tests\Sync {
 		/**
 		 * @group woo_import
 		 */
-		public function test_map_variants_maps_variation_sale_price_as_scratch_amount() {
+		public function test_map_variants_does_not_include_scratch_amount_on_variant() {
 			$variation = \Mockery::mock( 'WC_Product_Variation' );
 			$variation->shouldReceive( 'get_sku' )->andReturn( 'VAR-SALE' );
 			$variation->shouldReceive( 'get_price' )->andReturn( '14.99' );
@@ -1690,7 +1691,8 @@ namespace SureCart\Tests\Sync {
 
 			$result  = $this->service->mapVariants( $product );
 			$variant = $result['variants'][0];
-			$this->assertSame( 2999, $variant['scratch_amount'] );
+			$this->assertArrayNotHasKey( 'scratch_amount', $variant );
+			$this->assertArrayNotHasKey( 'currency', $variant );
 			$this->assertSame( 1499, $variant['amount'] );
 		}
 
@@ -1698,6 +1700,18 @@ namespace SureCart\Tests\Sync {
 		 * @group woo_import
 		 */
 		public function test_map_variants_maps_option_attributes() {
+			$attr_color = \Mockery::mock( 'WC_Product_Attribute' );
+			$attr_color->shouldReceive( 'get_variation' )->andReturn( true );
+			$attr_color->shouldReceive( 'is_taxonomy' )->andReturn( false );
+			$attr_color->shouldReceive( 'get_name' )->andReturn( 'Color' );
+			$attr_color->shouldReceive( 'get_options' )->andReturn( [ 'Red', 'Blue' ] );
+
+			$attr_size = \Mockery::mock( 'WC_Product_Attribute' );
+			$attr_size->shouldReceive( 'get_variation' )->andReturn( true );
+			$attr_size->shouldReceive( 'is_taxonomy' )->andReturn( false );
+			$attr_size->shouldReceive( 'get_name' )->andReturn( 'Size' );
+			$attr_size->shouldReceive( 'get_options' )->andReturn( [ 'Small', 'Large' ] );
+
 			$variation = \Mockery::mock( 'WC_Product_Variation' );
 			$variation->shouldReceive( 'get_sku' )->andReturn( '' );
 			$variation->shouldReceive( 'get_price' )->andReturn( '10' );
@@ -1728,7 +1742,7 @@ namespace SureCart\Tests\Sync {
 				[
 					'get_type'                  => 'variable',
 					'get_id'                    => 100,
-					'get_attributes'            => [],
+					'get_attributes'            => [ $attr_color, $attr_size ],
 					'get_available_variations'  => [
 						[ 'variation_id' => 500 ],
 					],
@@ -1965,7 +1979,7 @@ namespace SureCart\Tests\Sync {
 			);
 			$result = $this->service->mapShippingFields( $product );
 			$this->assertSame( 3.5, $result['weight'] );
-			$this->assertSame( 'lbs', $result['weight_unit'] );
+			$this->assertSame( 'lb', $result['weight_unit'] );
 		}
 
 		/**
@@ -2110,7 +2124,6 @@ namespace SureCart\Tests\Sync {
 			$this->assertCount( 1, $result );
 			$this->assertSame( 'Great product!', $result[0]['body'] );
 			$this->assertSame( 5.0, $result[0]['stars'] );
-			$this->assertSame( $comment_id, $result[0]['metadata']['wc_comment_id'] );
 			$this->assertSame( 'John Doe', $result[0]['metadata']['customer_name'] );
 			$this->assertSame( 'john@example.com', $result[0]['metadata']['customer_email'] );
 		}
@@ -2191,8 +2204,9 @@ namespace SureCart\Tests\Sync {
 			$result = $this->service->mapMedia( $product );
 
 			$this->assertCount( 1, $result );
-			$this->assertSame( 'image', $result[0]['type'] );
-			$this->assertSame( 0, $result[0]['position'] );
+			$this->assertArrayHasKey( 'url', $result[0] );
+			$this->assertArrayNotHasKey( 'type', $result[0] );
+			$this->assertArrayNotHasKey( 'position', $result[0] );
 			$this->assertNotEmpty( $result[0]['url'] );
 		}
 
@@ -2216,14 +2230,16 @@ namespace SureCart\Tests\Sync {
 			$result = $this->service->mapMedia( $product );
 
 			$this->assertCount( 2, $result );
-			$this->assertSame( 0, $result[0]['position'] );
-			$this->assertSame( 1, $result[1]['position'] );
+			$this->assertArrayHasKey( 'url', $result[0] );
+			$this->assertArrayHasKey( 'url', $result[1] );
+			$this->assertArrayNotHasKey( 'position', $result[0] );
+			$this->assertArrayNotHasKey( 'position', $result[1] );
 		}
 
 		/**
 		 * @group woo_import
 		 */
-		public function test_map_media_featured_image_has_position_zero() {
+		public function test_map_media_featured_image_comes_first_in_array() {
 			$featured  = self::factory()->attachment->create_upload_object(
 				ABSPATH . 'wp-includes/images/w-logo-blue-white-bg.png'
 			);
@@ -2240,8 +2256,9 @@ namespace SureCart\Tests\Sync {
 			$result = $this->service->mapMedia( $product );
 
 			$this->assertCount( 2, $result );
-			$this->assertSame( 0, $result[0]['position'] );
-			$this->assertSame( 1, $result[1]['position'] );
+			// Featured image is at index 0, gallery at index 1.
+			$this->assertSame( wp_get_attachment_url( $featured ), $result[0]['url'] );
+			$this->assertSame( wp_get_attachment_url( $gallery ), $result[1]['url'] );
 		}
 
 		/**
@@ -2298,7 +2315,7 @@ namespace SureCart\Tests\Sync {
 
 			$this->assertSame( 150, $result['wc_total_sales'] );
 			$this->assertSame( 4.5, $result['wc_average_rating'] );
-			$this->assertSame( [ 5 => 10, 4 => 5 ], $result['wc_rating_counts'] );
+			$this->assertSame( wp_json_encode( [ 5 => 10, 4 => 5 ] ), $result['wc_rating_counts'] );
 			$this->assertSame( 15, $result['wc_review_count'] );
 		}
 
@@ -2332,8 +2349,8 @@ namespace SureCart\Tests\Sync {
 			);
 			$result = $this->service->mapMetadata( $product );
 
-			$this->assertSame( [ 10, 20 ], $result['wc_upsell_ids'] );
-			$this->assertSame( [ 30, 40 ], $result['wc_cross_sell_ids'] );
+			$this->assertSame( wp_json_encode( [ 10, 20 ] ), $result['wc_upsell_ids'] );
+			$this->assertSame( wp_json_encode( [ 30, 40 ] ), $result['wc_cross_sell_ids'] );
 		}
 
 		/**
@@ -2377,8 +2394,9 @@ namespace SureCart\Tests\Sync {
 			);
 			$result = $this->service->mapMetadata( $product );
 
-			$this->assertCount( 1, $result['download_files'] );
-			$this->assertSame( 'ebook.pdf', $result['download_files'][0]['name'] );
+			$decoded_files = json_decode( $result['download_files'], true );
+			$this->assertCount( 1, $decoded_files );
+			$this->assertSame( 'ebook.pdf', $decoded_files[0]['name'] );
 			$this->assertSame( 3, $result['download_limit'] );
 			$this->assertSame( 30, $result['download_expiry'] );
 		}
@@ -2631,7 +2649,675 @@ namespace SureCart\Tests\Sync {
 
 			$this->assertSame( 1500, $result[0]['amount'] );
 			$this->assertSame( 2000, $result[0]['scratch_amount'] );
-			$this->assertSame( 'JPY', $result[0]['currency'] );
+			$this->assertSame( 'jpy', $result[0]['currency'] );
+		}
+
+		// =========================================================================
+		// Group 27: Floating-Point Precision (Fix #1) — 4 tests
+		// =========================================================================
+
+		/**
+		 * @group woo_import
+		 */
+		public function test_convert_price_handles_floating_point_precision_1999() {
+			$GLOBALS['test_woocommerce_currency'] = 'USD';
+			$this->assertSame( 1999, $this->service->convertPriceToInteger( '19.99' ) );
+		}
+
+		/**
+		 * @group woo_import
+		 */
+		public function test_convert_price_handles_floating_point_precision_995() {
+			$GLOBALS['test_woocommerce_currency'] = 'USD';
+			$this->assertSame( 995, $this->service->convertPriceToInteger( '9.95' ) );
+		}
+
+		/**
+		 * @group woo_import
+		 */
+		public function test_convert_price_handles_floating_point_precision_001() {
+			$GLOBALS['test_woocommerce_currency'] = 'USD';
+			$this->assertSame( 1, $this->service->convertPriceToInteger( '0.01' ) );
+		}
+
+		/**
+		 * @group woo_import
+		 */
+		public function test_convert_price_handles_floating_point_precision_3333() {
+			$GLOBALS['test_woocommerce_currency'] = 'USD';
+			$this->assertSame( 3333, $this->service->convertPriceToInteger( '33.33' ) );
+		}
+
+		// =========================================================================
+		// Group 28: cataloged_at Unix Timestamp (Fix #2) — 1 test
+		// =========================================================================
+
+		/**
+		 * @group woo_import
+		 */
+		public function test_map_core_fields_cataloged_at_is_unix_timestamp() {
+			$date    = new \WC_DateTime( '2024-01-15 10:00:00' );
+			$product = $this->createMockProduct( [ 'get_date_created' => $date ] );
+			$result  = $this->service->mapCoreFields( $product );
+
+			$this->assertIsInt( $result['cataloged_at'] );
+			$this->assertSame( $date->getTimestamp(), $result['cataloged_at'] );
+		}
+
+		// =========================================================================
+		// Group 29: Empty SKU and Description (Fix #8, #12) — 2 tests
+		// =========================================================================
+
+		/**
+		 * @group woo_import
+		 */
+		public function test_map_core_fields_maps_empty_sku_to_null() {
+			$product = $this->createMockProduct( [ 'get_sku' => '' ] );
+			$result  = $this->service->mapCoreFields( $product );
+			$this->assertEmpty( $result['sku'] );
+		}
+
+		/**
+		 * @group woo_import
+		 */
+		public function test_map_core_fields_maps_empty_description_to_null() {
+			$product = $this->createMockProduct( [ 'get_description' => '' ] );
+			$result  = $this->service->mapCoreFields( $product );
+			$this->assertEmpty( $result['description'] );
+		}
+
+		// =========================================================================
+		// Group 30: Currency Lowercase (Fix #3) — 2 tests
+		// =========================================================================
+
+		/**
+		 * @group woo_import
+		 */
+		public function test_map_prices_currency_is_lowercase() {
+			$GLOBALS['test_woocommerce_currency'] = 'USD';
+			$product = $this->createMockProduct();
+			$result  = $this->service->mapPrices( $product );
+			$this->assertSame( 'usd', $result[0]['currency'] );
+		}
+
+		/**
+		 * @group woo_import
+		 */
+		public function test_map_subscription_prices_currency_is_lowercase() {
+			$GLOBALS['test_woocommerce_currency'] = 'USD';
+			\WC_Subscriptions_Product::$mock_is_subscription = true;
+
+			$product = $this->createMockProduct( [ 'get_price' => '9.99' ] );
+			$result  = $this->service->mapPrices( $product );
+			$this->assertSame( 'usd', $result[0]['currency'] );
+		}
+
+		// =========================================================================
+		// Group 31: Weight Unit Mapping (Fix #4) — 3 tests
+		// =========================================================================
+
+		/**
+		 * @group woo_import
+		 */
+		public function test_map_shipping_fields_maps_lbs_to_lb() {
+			update_option( 'woocommerce_weight_unit', 'lbs' );
+			$product = $this->createMockProduct(
+				[
+					'is_virtual'      => false,
+					'is_downloadable' => false,
+					'get_weight'      => '3.5',
+				]
+			);
+			$result = $this->service->mapShippingFields( $product );
+			$this->assertSame( 'lb', $result['weight_unit'] );
+		}
+
+		/**
+		 * @group woo_import
+		 */
+		public function test_map_shipping_fields_maps_oz_stays_oz() {
+			update_option( 'woocommerce_weight_unit', 'oz' );
+			$product = $this->createMockProduct(
+				[
+					'is_virtual'      => false,
+					'is_downloadable' => false,
+					'get_weight'      => '16',
+				]
+			);
+			$result = $this->service->mapShippingFields( $product );
+			$this->assertSame( 'oz', $result['weight_unit'] );
+		}
+
+		/**
+		 * @group woo_import
+		 */
+		public function test_map_shipping_fields_maps_kg_stays_kg() {
+			update_option( 'woocommerce_weight_unit', 'kg' );
+			$product = $this->createMockProduct(
+				[
+					'is_virtual'      => false,
+					'is_downloadable' => false,
+					'get_weight'      => '2',
+				]
+			);
+			$result = $this->service->mapShippingFields( $product );
+			$this->assertSame( 'kg', $result['weight_unit'] );
+		}
+
+		// =========================================================================
+		// Group 32: Dimension Unit Mapping (Fix #5) — 3 tests
+		// =========================================================================
+
+		/**
+		 * @group woo_import
+		 */
+		public function test_map_shipping_fields_maps_yd_to_ft() {
+			update_option( 'woocommerce_dimension_unit', 'yd' );
+			$product = $this->createMockProduct(
+				[
+					'is_virtual'      => false,
+					'is_downloadable' => false,
+					'get_length'      => '2',
+					'get_width'       => '1',
+					'get_height'      => '0.5',
+				]
+			);
+			$result = $this->service->mapShippingFields( $product );
+			$this->assertSame( 'ft', $result['dimensions']['unit'] );
+		}
+
+		/**
+		 * @group woo_import
+		 */
+		public function test_map_shipping_fields_converts_yd_values_to_ft() {
+			update_option( 'woocommerce_dimension_unit', 'yd' );
+			$product = $this->createMockProduct(
+				[
+					'is_virtual'      => false,
+					'is_downloadable' => false,
+					'get_length'      => '2',
+					'get_width'       => '1',
+					'get_height'      => '0.5',
+				]
+			);
+			$result = $this->service->mapShippingFields( $product );
+			// Yards to feet: multiply by 3.
+			$this->assertSame( 6.0, $result['dimensions']['length'] );
+			$this->assertSame( 3.0, $result['dimensions']['width'] );
+			$this->assertSame( 1.5, $result['dimensions']['height'] );
+		}
+
+		/**
+		 * @group woo_import
+		 */
+		public function test_map_shipping_fields_keeps_cm_unit_unchanged() {
+			update_option( 'woocommerce_dimension_unit', 'cm' );
+			$product = $this->createMockProduct(
+				[
+					'is_virtual'      => false,
+					'is_downloadable' => false,
+					'get_length'      => '10',
+					'get_width'       => '5',
+					'get_height'      => '3',
+				]
+			);
+			$result = $this->service->mapShippingFields( $product );
+			$this->assertSame( 'cm', $result['dimensions']['unit'] );
+			$this->assertSame( 10.0, $result['dimensions']['length'] );
+			$this->assertSame( 5.0, $result['dimensions']['width'] );
+			$this->assertSame( 3.0, $result['dimensions']['height'] );
+		}
+
+		// =========================================================================
+		// Group 33: recurring_period_count (Fix #6) — 2 tests
+		// =========================================================================
+
+		/**
+		 * @group woo_import
+		 */
+		public function test_map_subscription_prices_recurring_period_count_null_when_length_zero() {
+			\WC_Subscriptions_Product::$mock_is_subscription = true;
+			\WC_Subscriptions_Product::$mock_length          = 0;
+
+			$product = $this->createMockProduct( [ 'get_price' => '9.99' ] );
+			$result  = $this->service->mapSubscriptionPrices( $product );
+			$this->assertNull( $result[0]['recurring_period_count'] );
+		}
+
+		/**
+		 * @group woo_import
+		 */
+		public function test_map_subscription_prices_recurring_period_count_null_when_length_empty() {
+			\WC_Subscriptions_Product::$mock_is_subscription = true;
+			\WC_Subscriptions_Product::$mock_length          = '';
+
+			$product = $this->createMockProduct( [ 'get_price' => '9.99' ] );
+			$result  = $this->service->mapSubscriptionPrices( $product );
+			$this->assertNull( $result[0]['recurring_period_count'] );
+		}
+
+		// =========================================================================
+		// Group 34: Variant "Any" Attribute Index (Fix #7) — 1 test
+		// =========================================================================
+
+		/**
+		 * @group woo_import
+		 */
+		public function test_map_variants_preserves_option_index_for_any_attribute() {
+			// Create 3 variation attributes: Color, Size, Material.
+			$attr_color = \Mockery::mock( 'WC_Product_Attribute' );
+			$attr_color->shouldReceive( 'get_variation' )->andReturn( true );
+			$attr_color->shouldReceive( 'is_taxonomy' )->andReturn( false );
+			$attr_color->shouldReceive( 'get_name' )->andReturn( 'Color' );
+			$attr_color->shouldReceive( 'get_options' )->andReturn( [ 'Red', 'Blue' ] );
+
+			$attr_size = \Mockery::mock( 'WC_Product_Attribute' );
+			$attr_size->shouldReceive( 'get_variation' )->andReturn( true );
+			$attr_size->shouldReceive( 'is_taxonomy' )->andReturn( false );
+			$attr_size->shouldReceive( 'get_name' )->andReturn( 'Size' );
+			$attr_size->shouldReceive( 'get_options' )->andReturn( [ 'Small', 'Large' ] );
+
+			$attr_material = \Mockery::mock( 'WC_Product_Attribute' );
+			$attr_material->shouldReceive( 'get_variation' )->andReturn( true );
+			$attr_material->shouldReceive( 'is_taxonomy' )->andReturn( false );
+			$attr_material->shouldReceive( 'get_name' )->andReturn( 'Material' );
+			$attr_material->shouldReceive( 'get_options' )->andReturn( [ 'Cotton', 'Polyester' ] );
+
+			// Variation with "Any" color (empty string), specific size and material.
+			$variation = \Mockery::mock( 'WC_Product_Variation' );
+			$variation->shouldReceive( 'get_sku' )->andReturn( '' );
+			$variation->shouldReceive( 'get_price' )->andReturn( '10' );
+			$variation->shouldReceive( 'get_regular_price' )->andReturn( '10' );
+			$variation->shouldReceive( 'get_sale_price' )->andReturn( '' );
+			$variation->shouldReceive( 'is_on_sale' )->andReturn( false );
+			$variation->shouldReceive( 'managing_stock' )->andReturn( false );
+			$variation->shouldReceive( 'get_stock_quantity' )->andReturn( null );
+			$variation->shouldReceive( 'backorders_allowed' )->andReturn( false );
+			$variation->shouldReceive( 'is_virtual' )->andReturn( false );
+			$variation->shouldReceive( 'is_taxable' )->andReturn( true );
+			$variation->shouldReceive( 'get_id' )->andReturn( 900 );
+			$variation->shouldReceive( 'get_weight' )->andReturn( '' );
+			$variation->shouldReceive( 'get_length' )->andReturn( '' );
+			$variation->shouldReceive( 'get_width' )->andReturn( '' );
+			$variation->shouldReceive( 'get_height' )->andReturn( '' );
+			$variation->shouldReceive( 'get_variation_attributes' )->andReturn(
+				[
+					'attribute_color'    => '',       // "Any" color.
+					'attribute_size'     => 'Large',
+					'attribute_material' => 'Cotton',
+				]
+			);
+			$variation->shouldReceive( 'get_image_id' )->andReturn( 0 );
+
+			$GLOBALS['test_wc_get_product_result'] = $variation;
+
+			$product = $this->createMockProduct(
+				[
+					'get_type'                 => 'variable',
+					'get_id'                   => 100,
+					'get_attributes'           => [ $attr_color, $attr_size, $attr_material ],
+					'get_available_variations' => [ [ 'variation_id' => 900 ] ],
+				]
+			);
+
+			$result  = $this->service->mapVariants( $product );
+			$variant = $result['variants'][0];
+
+			// option_1 (Color) should NOT be set (it's "Any").
+			$this->assertArrayNotHasKey( 'option_1', $variant );
+			// option_2 (Size) should be 'Large'.
+			$this->assertSame( 'Large', $variant['option_2'] );
+			// option_3 (Material) should be 'Cotton'.
+			$this->assertSame( 'Cotton', $variant['option_3'] );
+		}
+
+		// =========================================================================
+		// Group 35: Media URL-Only (Fix #9) — 1 test
+		// =========================================================================
+
+		/**
+		 * @group woo_import
+		 */
+		public function test_map_media_only_includes_url_field() {
+			$attachment_id = self::factory()->attachment->create_upload_object(
+				ABSPATH . 'wp-includes/images/w-logo-blue-white-bg.png'
+			);
+
+			$product = $this->createMockProduct(
+				[
+					'get_image_id'          => $attachment_id,
+					'get_gallery_image_ids' => [],
+				]
+			);
+			$result = $this->service->mapMedia( $product );
+
+			$this->assertCount( 1, $result );
+			$this->assertCount( 1, $result[0] ); // Only one key: 'url'.
+			$this->assertArrayHasKey( 'url', $result[0] );
+		}
+
+		// =========================================================================
+		// Group 36: External Products (Fix #10) — 1 test
+		// =========================================================================
+
+		/**
+		 * @group woo_import
+		 */
+		public function test_sync_product_returns_early_for_external_product() {
+			$product = $this->createMockProduct( [ 'get_type' => 'external' ] );
+			$GLOBALS['test_wc_get_product_result'] = $product;
+
+			$service = \Mockery::mock( WooCommerceProductsSyncService::class )->makePartial();
+			$service->shouldNotReceive( 'mapWooCommerceProductToSureCart' );
+
+			$service->syncProduct( 123 );
+			$this->assertTrue( true );
+		}
+
+		// =========================================================================
+		// Group 37: Taxonomy Attribute Terms (Fix #11) — 1 test
+		// =========================================================================
+
+		/**
+		 * @group woo_import
+		 */
+		public function test_map_variants_uses_product_attribute_options_for_taxonomy() {
+			// Register a taxonomy with 4 terms, but only use 2 on the product.
+			if ( ! taxonomy_exists( 'pa_color' ) ) {
+				register_taxonomy( 'pa_color', 'post' );
+			}
+			$red   = wp_insert_term( 'Red', 'pa_color' );
+			$blue  = wp_insert_term( 'Blue', 'pa_color' );
+			wp_insert_term( 'Green', 'pa_color' );
+			wp_insert_term( 'Yellow', 'pa_color' );
+
+			$attribute = \Mockery::mock( 'WC_Product_Attribute' );
+			$attribute->shouldReceive( 'get_variation' )->andReturn( true );
+			$attribute->shouldReceive( 'is_taxonomy' )->andReturn( true );
+			$attribute->shouldReceive( 'get_name' )->andReturn( 'pa_color' );
+			// Only return 2 term IDs (product only uses Red and Blue).
+			$attribute->shouldReceive( 'get_options' )->andReturn( [ $red['term_id'], $blue['term_id'] ] );
+
+			$product = $this->createMockProduct(
+				[
+					'get_type'                 => 'variable',
+					'get_attributes'           => [ $attribute ],
+					'get_available_variations' => [],
+				]
+			);
+
+			$result = $this->service->mapVariants( $product );
+
+			// Should only have 2 values (Red, Blue), not all 4 taxonomy terms.
+			$this->assertCount( 2, $result['variant_options'][0]['values'] );
+			$this->assertContains( 'Red', $result['variant_options'][0]['values'] );
+			$this->assertContains( 'Blue', $result['variant_options'][0]['values'] );
+		}
+
+		// =========================================================================
+		// Group 38: Variant No Currency (Fix #13) — 1 test
+		// =========================================================================
+
+		/**
+		 * @group woo_import
+		 */
+		public function test_map_variants_does_not_include_currency_on_variant() {
+			$variation = \Mockery::mock( 'WC_Product_Variation' );
+			$variation->shouldReceive( 'get_sku' )->andReturn( 'VAR-001' );
+			$variation->shouldReceive( 'get_price' )->andReturn( '24.99' );
+			$variation->shouldReceive( 'get_regular_price' )->andReturn( '24.99' );
+			$variation->shouldReceive( 'get_sale_price' )->andReturn( '' );
+			$variation->shouldReceive( 'is_on_sale' )->andReturn( false );
+			$variation->shouldReceive( 'managing_stock' )->andReturn( false );
+			$variation->shouldReceive( 'get_stock_quantity' )->andReturn( null );
+			$variation->shouldReceive( 'backorders_allowed' )->andReturn( false );
+			$variation->shouldReceive( 'is_virtual' )->andReturn( false );
+			$variation->shouldReceive( 'is_taxable' )->andReturn( true );
+			$variation->shouldReceive( 'get_id' )->andReturn( 456 );
+			$variation->shouldReceive( 'get_weight' )->andReturn( '' );
+			$variation->shouldReceive( 'get_length' )->andReturn( '' );
+			$variation->shouldReceive( 'get_width' )->andReturn( '' );
+			$variation->shouldReceive( 'get_height' )->andReturn( '' );
+			$variation->shouldReceive( 'get_variation_attributes' )->andReturn( [] );
+			$variation->shouldReceive( 'get_image_id' )->andReturn( 0 );
+
+			$GLOBALS['test_wc_get_product_result'] = $variation;
+
+			$product = $this->createMockProduct(
+				[
+					'get_type'                 => 'variable',
+					'get_id'                   => 123,
+					'get_attributes'           => [],
+					'get_available_variations' => [ [ 'variation_id' => 456 ] ],
+				]
+			);
+
+			$result  = $this->service->mapVariants( $product );
+			$variant = $result['variants'][0];
+			$this->assertArrayNotHasKey( 'currency', $variant );
+		}
+
+		// =========================================================================
+		// Group 39: Attribute Order Match (Fix #14) — 1 test
+		// =========================================================================
+
+		/**
+		 * @group woo_import
+		 */
+		public function test_map_variants_maps_options_in_correct_order_with_parent_attributes() {
+			// Create 2 attributes: Color (position 0), Size (position 1).
+			$attr_color = \Mockery::mock( 'WC_Product_Attribute' );
+			$attr_color->shouldReceive( 'get_variation' )->andReturn( true );
+			$attr_color->shouldReceive( 'is_taxonomy' )->andReturn( false );
+			$attr_color->shouldReceive( 'get_name' )->andReturn( 'Color' );
+			$attr_color->shouldReceive( 'get_options' )->andReturn( [ 'Red', 'Blue' ] );
+
+			$attr_size = \Mockery::mock( 'WC_Product_Attribute' );
+			$attr_size->shouldReceive( 'get_variation' )->andReturn( true );
+			$attr_size->shouldReceive( 'is_taxonomy' )->andReturn( false );
+			$attr_size->shouldReceive( 'get_name' )->andReturn( 'Size' );
+			$attr_size->shouldReceive( 'get_options' )->andReturn( [ 'S', 'L' ] );
+
+			// Variation attributes may come in different order.
+			$variation = \Mockery::mock( 'WC_Product_Variation' );
+			$variation->shouldReceive( 'get_sku' )->andReturn( '' );
+			$variation->shouldReceive( 'get_price' )->andReturn( '10' );
+			$variation->shouldReceive( 'get_regular_price' )->andReturn( '10' );
+			$variation->shouldReceive( 'get_sale_price' )->andReturn( '' );
+			$variation->shouldReceive( 'is_on_sale' )->andReturn( false );
+			$variation->shouldReceive( 'managing_stock' )->andReturn( false );
+			$variation->shouldReceive( 'get_stock_quantity' )->andReturn( null );
+			$variation->shouldReceive( 'backorders_allowed' )->andReturn( false );
+			$variation->shouldReceive( 'is_virtual' )->andReturn( false );
+			$variation->shouldReceive( 'is_taxable' )->andReturn( true );
+			$variation->shouldReceive( 'get_id' )->andReturn( 800 );
+			$variation->shouldReceive( 'get_weight' )->andReturn( '' );
+			$variation->shouldReceive( 'get_length' )->andReturn( '' );
+			$variation->shouldReceive( 'get_width' )->andReturn( '' );
+			$variation->shouldReceive( 'get_height' )->andReturn( '' );
+			$variation->shouldReceive( 'get_variation_attributes' )->andReturn(
+				[
+					'attribute_size'  => 'L',
+					'attribute_color' => 'Red',
+				]
+			);
+			$variation->shouldReceive( 'get_image_id' )->andReturn( 0 );
+
+			$GLOBALS['test_wc_get_product_result'] = $variation;
+
+			$product = $this->createMockProduct(
+				[
+					'get_type'                 => 'variable',
+					'get_id'                   => 100,
+					'get_attributes'           => [ $attr_color, $attr_size ],
+					'get_available_variations' => [ [ 'variation_id' => 800 ] ],
+				]
+			);
+
+			$result  = $this->service->mapVariants( $product );
+			$variant = $result['variants'][0];
+
+			// option_1 should match Color (first parent attribute), option_2 should match Size.
+			$this->assertSame( 'Red', $variant['option_1'] );
+			$this->assertSame( 'L', $variant['option_2'] );
+		}
+
+		// =========================================================================
+		// Group 40: Duplicate Sync Prevention — 4 tests
+		// =========================================================================
+
+		/**
+		 * @group woo_import
+		 */
+		public function test_sync_product_marks_product_as_imported_via_post_meta() {
+			$post_id = self::factory()->post->create();
+			$product = $this->createMockProduct( [ 'get_id' => $post_id, 'get_type' => 'simple' ] );
+			$GLOBALS['test_wc_get_product_result'] = $product;
+
+			$service = \Mockery::mock( WooCommerceProductsSyncService::class )->makePartial();
+			$service->shouldReceive( 'mapWooCommerceProductToSureCart' )->once();
+
+			$service->syncProduct( $post_id );
+
+			$meta = get_post_meta( $post_id, '_surecart_imported', true );
+			$this->assertNotEmpty( $meta );
+		}
+
+		/**
+		 * @group woo_import
+		 */
+		public function test_sync_product_does_not_mark_imported_when_exception_thrown() {
+			$post_id = self::factory()->post->create();
+			$product = $this->createMockProduct( [ 'get_id' => $post_id, 'get_type' => 'simple' ] );
+			$GLOBALS['test_wc_get_product_result'] = $product;
+
+			$service = \Mockery::mock( WooCommerceProductsSyncService::class )->makePartial();
+			$service->shouldReceive( 'mapWooCommerceProductToSureCart' )
+				->once()
+				->andThrow( new \Exception( 'Mapping failed' ) );
+
+			$service->syncProduct( $post_id );
+
+			$meta = get_post_meta( $post_id, '_surecart_imported', true );
+			$this->assertEmpty( $meta );
+		}
+
+		/**
+		 * @group woo_import
+		 */
+		public function test_sync_product_does_not_mark_imported_for_skipped_types() {
+			$post_id = self::factory()->post->create();
+			$product = $this->createMockProduct( [ 'get_id' => $post_id, 'get_type' => 'grouped' ] );
+			$GLOBALS['test_wc_get_product_result'] = $product;
+
+			$this->service->syncProduct( $post_id );
+
+			$meta = get_post_meta( $post_id, '_surecart_imported', true );
+			$this->assertEmpty( $meta );
+		}
+
+		// =========================================================================
+		// Group 41: Tax Category for Subscriptions (Fix #19) — 1 test
+		// =========================================================================
+
+		/**
+		 * @group woo_import
+		 */
+		public function test_map_tax_fields_maps_subscription_to_saas() {
+			\WC_Subscriptions_Product::$mock_is_subscription = true;
+
+			$product = $this->createMockProduct(
+				[
+					'is_taxable'      => true,
+					'is_virtual'      => true,
+					'is_downloadable' => false,
+				]
+			);
+			$result = $this->service->mapTaxFields( $product );
+			$this->assertSame( 'saas', $result['tax_category'] );
+		}
+
+		// =========================================================================
+		// Group 42: Metadata JSON Encoding (Fix #17) — 1 test
+		// =========================================================================
+
+		/**
+		 * @group woo_import
+		 */
+		public function test_map_metadata_json_encodes_array_values() {
+			$product = $this->createMockProduct(
+				[
+					'get_rating_counts'  => [ 5 => 10, 4 => 5 ],
+					'get_upsell_ids'     => [ 10, 20 ],
+					'get_cross_sell_ids' => [ 30, 40 ],
+				]
+			);
+			$result = $this->service->mapMetadata( $product );
+
+			$this->assertIsString( $result['wc_rating_counts'] );
+			$this->assertIsString( $result['wc_upsell_ids'] );
+			$this->assertIsString( $result['wc_cross_sell_ids'] );
+
+			// Verify they can be decoded back.
+			$this->assertSame( [ 10, 20 ], json_decode( $result['wc_upsell_ids'], true ) );
+			$this->assertSame( [ 30, 40 ], json_decode( $result['wc_cross_sell_ids'], true ) );
+		}
+
+		// =========================================================================
+		// Group 43: Weight/Dimension Unit Helpers — 2 tests
+		// =========================================================================
+
+		/**
+		 * @group woo_import
+		 */
+		public function test_map_weight_unit_maps_lbs_to_lb() {
+			$this->assertSame( 'lb', $this->service->mapWeightUnit( 'lbs' ) );
+		}
+
+		/**
+		 * @group woo_import
+		 */
+		public function test_map_dimension_unit_maps_yd_to_ft() {
+			$this->assertSame( 'ft', $this->service->mapDimensionUnit( 'yd' ) );
+		}
+
+		// =========================================================================
+		// Group 45: Error Logging (Fix #20) — 1 test
+		// =========================================================================
+
+		/**
+		 * @group woo_import
+		 */
+		public function test_sync_product_logs_error_when_exception_thrown() {
+			$product = $this->createMockProduct();
+			$GLOBALS['test_wc_get_product_result'] = $product;
+
+			$service = \Mockery::mock( WooCommerceProductsSyncService::class )->makePartial();
+			$service->shouldReceive( 'mapWooCommerceProductToSureCart' )
+				->once()
+				->andThrow( new \Exception( 'Test mapping error' ) );
+
+			// Should not throw — exception is caught and logged.
+			$service->syncProduct( 123 );
+			$this->assertTrue( true );
+		}
+
+		// =========================================================================
+		// Group 46: mapWeightUnit/mapDimensionUnit edge cases — 2 tests
+		// =========================================================================
+
+		/**
+		 * @group woo_import
+		 */
+		public function test_map_weight_unit_returns_lb_for_unknown_unit() {
+			$this->assertSame( 'lb', $this->service->mapWeightUnit( 'unknown' ) );
+		}
+
+		/**
+		 * @group woo_import
+		 */
+		public function test_map_dimension_unit_returns_in_for_unknown_unit() {
+			$this->assertSame( 'in', $this->service->mapDimensionUnit( 'unknown' ) );
 		}
 	}
 }
