@@ -282,10 +282,10 @@ class ProductReviewBreakdown extends \Elementor\Widget_Base {
 		}
 
 		$attributes = [
-			'size'       => absint( $star_size ),
+			'size'       => absint( $star_size ) . 'px',
 			'columns'    => absint( $columns ),
-			'row_gap'    => absint( $row_gap ),
-			'column_gap' => absint( $column_gap ),
+			'row_gap'    => absint( $row_gap ) . 'px',
+			'column_gap' => absint( $column_gap ) . 'px',
 		];
 
 		// The summary wrapper causes width issues in flex containers.
