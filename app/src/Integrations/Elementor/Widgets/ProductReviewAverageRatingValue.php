@@ -119,7 +119,8 @@ class ProductReviewAverageRatingValue extends \Elementor\Widget_Base {
 				'label'     => esc_html__( 'Text Color', 'surecart' ),
 				'type'      => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
-					$selector => 'color: {{VALUE}};',
+					$selector        => 'color: {{VALUE}} !important;',
+					$selector . ' a' => 'color: {{VALUE}} !important;',
 				],
 			)
 		);
@@ -127,8 +128,25 @@ class ProductReviewAverageRatingValue extends \Elementor\Widget_Base {
 		$this->add_group_control(
 			\Elementor\Group_Control_Typography::get_type(),
 			[
-				'name'     => 'typography',
-				'selector' => $selector,
+				'name'           => 'typography',
+				'selector'       => $selector,
+				'fields_options' => [
+					'font_size'   => [
+						'selectors' => [
+							$selector => 'font-size: {{SIZE}}{{UNIT}} !important;',
+						],
+					],
+					'font_weight' => [
+						'selectors' => [
+							$selector => 'font-weight: {{VALUE}} !important;',
+						],
+					],
+					'line_height' => [
+						'selectors' => [
+							$selector => 'line-height: {{SIZE}}{{UNIT}} !important;',
+						],
+					],
+				],
 			]
 		);
 
@@ -153,7 +171,7 @@ class ProductReviewAverageRatingValue extends \Elementor\Widget_Base {
 	protected function render() {
 		$settings        = $this->get_settings_for_display();
 		$format_style    = $settings['format_style'] ?? 'none';
-		$class_name      = 'none' === $format_style ? '' : ' is-style-' . $format_style;
+		$class_name      = 'none' === $format_style ? '' : 'is-style-' . $format_style;
 		$link_to_reviews = 'yes' === ( $settings['link_to_reviews'] ?? 'yes' );
 
 		if ( \Elementor\Plugin::$instance->editor->is_edit_mode() ) {
@@ -162,7 +180,7 @@ class ProductReviewAverageRatingValue extends \Elementor\Widget_Base {
 		}
 
 		$attributes = [
-			'className'       => trim( $class_name ),
+			'className'       => $class_name,
 			'link_to_reviews' => $link_to_reviews,
 		];
 		?>

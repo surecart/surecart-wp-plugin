@@ -137,15 +137,17 @@ class ProductReviewTotalRating extends \Elementor\Widget_Base {
 			)
 		);
 
+		$selector = '{{WRAPPER}} .wp-block-surecart-product-review-total-rating';
+
 		$this->add_control(
 			'text_color',
 			array(
 				'label'     => esc_html__( 'Color', 'surecart' ),
 				'type'      => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .wp-block-surecart-product-review-total-rating' => 'color: {{VALUE}};',
-					'{{WRAPPER}} .wp-block-surecart-product-review-total-rating.sc-review-link' => 'color: {{VALUE}};',
-					'{{WRAPPER}} a.wp-block-surecart-product-review-total-rating.sc-review-link' => 'color: {{VALUE}};',
+					$selector                     => 'color: {{VALUE}} !important;',
+					$selector . '.sc-review-link' => 'color: {{VALUE}} !important;',
+					'{{WRAPPER}} a' . $selector . '.sc-review-link' => 'color: {{VALUE}} !important;',
 				],
 			)
 		);
@@ -156,8 +158,8 @@ class ProductReviewTotalRating extends \Elementor\Widget_Base {
 				'label'     => esc_html__( 'Hover Color', 'surecart' ),
 				'type'      => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .wp-block-surecart-product-review-total-rating.sc-review-link:hover' => 'color: {{VALUE}};',
-					'{{WRAPPER}} a.wp-block-surecart-product-review-total-rating.sc-review-link:hover' => 'color: {{VALUE}};',
+					$selector . '.sc-review-link:hover' => 'color: {{VALUE}} !important;',
+					'{{WRAPPER}} a' . $selector . '.sc-review-link:hover' => 'color: {{VALUE}} !important;',
 				],
 				'condition' => [
 					'link_to_reviews' => 'yes',
@@ -168,9 +170,26 @@ class ProductReviewTotalRating extends \Elementor\Widget_Base {
 		$this->add_group_control(
 			\Elementor\Group_Control_Typography::get_type(),
 			[
-				'name'     => 'typography',
-				'label'    => esc_html__( 'Typography', 'surecart' ),
-				'selector' => '{{WRAPPER}} .wp-block-surecart-product-review-total-rating, {{WRAPPER}} a.wp-block-surecart-product-review-total-rating.sc-review-link',
+				'name'           => 'typography',
+				'label'          => esc_html__( 'Typography', 'surecart' ),
+				'selector'       => $selector . ', {{WRAPPER}} a' . $selector . '.sc-review-link',
+				'fields_options' => [
+					'font_size'   => [
+						'selectors' => [
+							$selector => 'font-size: {{SIZE}}{{UNIT}} !important;',
+						],
+					],
+					'font_weight' => [
+						'selectors' => [
+							$selector => 'font-weight: {{VALUE}} !important;',
+						],
+					],
+					'line_height' => [
+						'selectors' => [
+							$selector => 'line-height: {{SIZE}}{{UNIT}} !important;',
+						],
+					],
+				],
 			]
 		);
 
@@ -197,17 +216,21 @@ class ProductReviewTotalRating extends \Elementor\Widget_Base {
 		$show_label            = 'yes' === ( $settings['show_label'] ?? 'yes' );
 		$show_for_zero_reviews = 'yes' === ( $settings['show_for_zero_reviews'] ?? 'yes' );
 		$link_to_reviews       = 'yes' === ( $settings['link_to_reviews'] ?? 'yes' );
+		$style_variant         = $settings['style_variant'] ?? 'default';
 
 		if ( \Elementor\Plugin::$instance->editor->is_edit_mode() ) {
 			$this->render_preview( $show_label );
 			return;
 		}
 
+		// Convert style_variant to className for WordPress block styles.
+		$class_name = 'default' !== $style_variant ? 'is-style-' . $style_variant : '';
+
 		$attributes = [
 			'show_label'            => $show_label,
 			'show_for_zero_reviews' => $show_for_zero_reviews,
-			'style_variant'         => $settings['style_variant'] ?? 'default',
 			'link_to_reviews'       => $link_to_reviews,
+			'className'             => $class_name,
 		];
 		?>
 		<div <?php $this->print_render_attribute_string( 'wrapper' ); ?>>
