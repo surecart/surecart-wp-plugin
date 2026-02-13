@@ -1208,7 +1208,7 @@ class Product extends Model implements PageModel {
 		if ( empty( \SureCart::account()->review_protocol->reviews_enabled ) ) {
 			return false;
 		}
-		return $this->attributes['reviews_enabled'] ?? false;
+		return $this->attributes['reviews_enabled'] ?? true;
 	}
 
 	/**
