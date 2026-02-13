@@ -43,12 +43,12 @@ export default ({ review, loading }) => {
 							{__('Verified Buyer', 'surecart')}
 						</ScText>
 
-						<span style={{ color: 'var(--sc-color-success-200)' }}>
+						<span style={{ color: 'var(--sc-color-success-500)' }}>
 							<ScIcon
 								name="verified"
 								style={{
 									fontSize: '24px',
-									color: 'var(--sc-color-success-200)',
+									color: 'var(--sc-color-success-500)',
 								}}
 							/>
 						</span>
