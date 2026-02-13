@@ -109,7 +109,7 @@ class ProductReviewAverageRatingStars extends \Elementor\Widget_Base {
 					'default' => \Elementor\Core\Kits\Documents\Tabs\Global_Colors::COLOR_PRIMARY,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wp-block-surecart-product-review-average-rating-stars svg' => 'stroke: {{VALUE}}; color: {{VALUE}};',
+					'{{WRAPPER}} .wp-block-surecart-product-review-average-rating-stars svg' => 'fill: {{VALUE}}; stroke: {{VALUE}}; color: {{VALUE}};',
 				],
 			)
 		);
@@ -172,7 +172,7 @@ class ProductReviewAverageRatingStars extends \Elementor\Widget_Base {
 	protected function render() {
 		$settings        = $this->get_settings_for_display();
 		$size            = $settings['size']['size'] ?? 20;
-		$fill_color      = 'var(--e-global-color-primary)'; // fallback for block.
+		$fill_color      = ! empty( $settings['fill_color'] ) ? $settings['fill_color'] : 'var(--e-global-color-primary)'; // Fallback to CSS variable if no color is selected.
 		$link_to_reviews = 'yes' === ( $settings['link_to_reviews'] ?? 'yes' );
 
 		if ( \Elementor\Plugin::$instance->editor->is_edit_mode() ) {
@@ -204,23 +204,24 @@ class ProductReviewAverageRatingStars extends \Elementor\Widget_Base {
 		<div class="wp-block-surecart-product-review-average-rating-stars" style="display: flex; line-height:1;">
 			<?php
 			for ( $i = 1; $i <= 5; $i++ ) {
-				$is_full = $i <= 4;
-				$is_half = 5 === $i;
-				?>
-				<svg height="<?php echo esc_attr( $size ); ?>" width="<?php echo esc_attr( $size ); ?>" viewBox="0 0 24 24" fill="<?php echo $is_full ? 'currentColor' : 'none'; ?>" stroke="currentColor" stroke-width="2">
-					<?php if ( $is_half ) : ?>
-						<defs>
-							<linearGradient id="half-fill-<?php echo esc_attr( $i ); ?>">
-								<stop offset="50%" stop-color="currentColor"/>
-								<stop offset="50%" stop-color="transparent"/>
-							</linearGradient>
-						</defs>
-						<path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="url(#half-fill-<?php echo esc_attr( $i ); ?>)" stroke="currentColor"/>
-					<?php else : ?>
-						<path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-					<?php endif; ?>
-				</svg>
-				<?php
+				$is_full_star = $i <= 4;
+				$is_half_star = 5 === $i;
+
+				echo wp_kses(
+					\SureCart::svg()->get(
+						$is_half_star ? 'half-star' : 'star',
+						[
+							'class'        => 'sc-star-row__label__svg',
+							'height'       => esc_attr( $size ),
+							'width'        => esc_attr( $size ),
+							'fill'         => $is_full_star || $is_half_star ? 'currentColor' : 'none',
+							'stroke'       => 'currentColor',
+							'stroke-width' => 2,
+							'aria-hidden'  => 'true',
+						]
+					),
+					sc_allowed_svg_html()
+				);
 			}
 			?>
 		</div>

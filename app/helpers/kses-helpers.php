@@ -26,7 +26,6 @@ function sc_allowed_svg_html(): array {
 				'viewbox'           => true,
 				'fill'              => true,
 				'color'             => true,
-				'fill'              => true,
 				'fill-rule'         => true,
 				'fill-opacity'      => true,
 				'stroke'            => true,
@@ -102,6 +101,7 @@ function sc_allowed_svg_html(): array {
 				'stroke-linecap'    => true,
 				'stroke-linejoin'   => true,
 				'stroke-miterlimit' => true,
+				'clip-path'         => true,
 			),
 			'polyline'       => array(
 				'points'            => true,

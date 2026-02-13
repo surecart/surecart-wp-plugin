@@ -6,6 +6,11 @@
 		// Ensure fill attribute cascades to polygon child element.
 		polygon {
 			fill: inherit;
+
+			// Second polygon in half-star should not be filled (outline only).
+			&:nth-child(2) {
+				fill: none;
+			}
 		}
 	}
 }
