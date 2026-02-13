@@ -182,7 +182,7 @@ class ProductReviewAverageRatingStars extends \Elementor\Widget_Base {
 
 		$attributes = [
 			'fill_color'      => $fill_color,
-			'size'            => absint( $size ),
+			'size'            => absint( $size ) . 'px',
 			'link_to_reviews' => $link_to_reviews,
 		];
 		?>
