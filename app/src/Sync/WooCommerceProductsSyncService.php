@@ -604,16 +604,20 @@ class WooCommerceProductsSyncService {
 			return [];
 		}
 
-		// Extract just the IDs from the ProductCollection objects.
-		$collection_ids = array_map(
-			function ( $collection ) {
-				return $collection->id;
-			},
-			$all_collections
+		// Extract just the IDs from the ProductCollection objects and deduplicate.
+		// Deduplication is needed because fuzzy API queries can match the same collection
+		// for different WooCommerce terms (e.g., category "Digital Products" and tag "digital").
+		$collection_ids = array_unique(
+			array_map(
+				function ( $collection ) {
+					return $collection->id;
+				},
+				$all_collections
+			)
 		);
 
 		return [
-			'product_collections' => $collection_ids,
+			'product_collections' => array_values( $collection_ids ),
 		];
 	}
 
@@ -886,7 +890,7 @@ class WooCommerceProductsSyncService {
 				'body'     => $comment->comment_content,
 				'stars'    => $rating ? (float) $rating : null,
 				'metadata' => [
-					'wc_comment_id'     => $comment->comment_ID,
+					'wc_comment_id'     => (int) $comment->comment_ID,
 					'customer_name'     => $comment->comment_author,
 					'customer_email'    => $comment->comment_author_email,
 					'review_date'       => $comment->comment_date,

@@ -1541,6 +1541,39 @@ namespace SureCart\Tests\Sync {
 			$this->assertEmpty( $result );
 		}
 
+		/**
+		 * @group woo_import
+		 */
+		public function test_map_categories_deduplicates_collection_ids_from_fuzzy_api_match() {
+			if ( ! taxonomy_exists( 'product_cat' ) ) {
+				register_taxonomy( 'product_cat', 'post' );
+			}
+			if ( ! taxonomy_exists( 'product_tag' ) ) {
+				register_taxonomy( 'product_tag', 'post' );
+			}
+
+			$cat_term = wp_insert_term( 'Digital Products', 'product_cat', [ 'slug' => 'digital-products' ] );
+			$tag_term = wp_insert_term( 'digital', 'product_tag', [ 'slug' => 'digital' ] );
+
+			$product = $this->createMockProduct(
+				[
+					'get_category_ids' => [ $cat_term['term_id'] ],
+					'get_tag_ids'      => [ $tag_term['term_id'] ],
+				]
+			);
+
+			// Simulate the API returning the same collection for both terms (fuzzy match).
+			$same_collection = (object) [ 'id' => 'coll_digital_123' ];
+			$service         = \Mockery::mock( WooCommerceProductsSyncService::class )->makePartial();
+			$service->shouldReceive( 'getOrCreateCollections' )
+				->once()
+				->andReturn( [ $same_collection, $same_collection ] );
+
+			$result = $service->mapCategories( $product );
+			$this->assertCount( 1, $result['product_collections'] );
+			$this->assertSame( 'coll_digital_123', $result['product_collections'][0] );
+		}
+
 		// =========================================================================
 		// Group 18: mapVariants() — 9 tests
 		// =========================================================================
