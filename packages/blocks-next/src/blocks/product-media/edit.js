@@ -1,25 +1,17 @@
 import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
-import { useEntityRecord } from '@wordpress/core-data';
 import {
+	Disabled,
 	PanelBody,
+	Placeholder,
 	RangeControl,
 	ToggleControl,
 	__experimentalNumberControl as NumberControl,
 	__experimentalUnitControl as UnitControl,
 	__experimentalUseCustomUnits as useCustomUnits,
 } from '@wordpress/components';
+import { useEntityRecord } from '@wordpress/core-data';
 import { useMemo } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
-import { Disabled } from '@wordpress/components';
-
-// Get placeholder URL with fallback.
-const getPlaceholderUrl = () => {
-	const pluginUrl =
-		window.scBlockData?.plugin_url || window.scData?.plugin_url || '';
-	return pluginUrl
-		? `${pluginUrl}/images/placeholder.jpg`
-		: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400"%3E%3Crect fill="%23f0f0f0" width="400" height="400"/%3E%3Cpath fill="%23ccc" d="M200 150c-27.6 0-50 22.4-50 50s22.4 50 50 50 50-22.4 50-50-22.4-50-50-50zm0 80c-16.5 0-30-13.5-30-30s13.5-30 30-30 30 13.5 30 30-13.5 30-30 30z"/%3E%3Cpath fill="%23ccc" d="M320 100H80c-11 0-20 9-20 20v160c0 11 9 20 20 20h240c11 0 20-9 20-20V120c0-11-9-20-20-20zm0 180H80V120h240v160z"/%3E%3C/svg%3E';
-};
 
 export default ({ attributes, setAttributes, context: { postId } = {} }) => {
 	const {
@@ -31,7 +23,7 @@ export default ({ attributes, setAttributes, context: { postId } = {} }) => {
 		desktop_gallery,
 		show_thumbnails,
 	} = attributes;
-	const blockProps = useBlockProps({});
+	const blockProps = useBlockProps();
 
 	const { record } = useEntityRecord('postType', 'sc_product', postId, {
 		enabled: !!postId,
@@ -45,20 +37,28 @@ export default ({ attributes, setAttributes, context: { postId } = {} }) => {
 
 	// Use useMemo to avoid flicker while gallery set.
 	const images = useMemo(() => {
-		const placeholderUrl = getPlaceholderUrl();
 		if (product?.gallery?.length) {
 			return product.gallery.map((image) => ({
+				type: 'image',
 				src: image?.url,
 				width,
 			}));
 		}
-		return [...Array(desktop_gallery ? 3 : 5)].map(() => ({
-			src: placeholderUrl,
+		return [...Array(desktop_gallery ? 3 : 12)].map(() => ({
+			type: 'placeholder',
 			width,
 		}));
-	}, [width, thumbnails_per_page, product, desktop_gallery]);
+	}, [width, product, desktop_gallery]);
 
 	const autoHeightEnabled = desktop_gallery ? true : auto_height;
+	const placeholderStyle =
+		!autoHeightEnabled && height
+			? { height }
+			: { aspectRatio: '1 / 1', width: '100%' };
+	const thumbnailPlaceholderStyle = {
+		aspectRatio: '4 / 3',
+		width: '100%',
+	};
 
 	return (
 		<>
@@ -113,8 +113,8 @@ export default ({ attributes, setAttributes, context: { postId } = {} }) => {
 						placeholder={__('Unlimited', 'surecart')}
 						value={width}
 						min={1}
-						spinControls={'custom'}
-						onChange={(width) => setAttributes({ width: width })}
+						spinControls="custom"
+						onChange={(width) => setAttributes({ width })}
 					/>
 					<ToggleControl
 						__nextHasNoMarginBottom
@@ -161,16 +161,23 @@ export default ({ attributes, setAttributes, context: { postId } = {} }) => {
 							<div className="swiper-wrapper">
 								{images.map((image, index) => (
 									<div className="swiper-slide" key={index}>
-										<img
-											src={image.src}
-											alt=""
-											width={image.width}
-											style={{
-												height: autoHeightEnabled
-													? 'auto'
-													: height,
-											}}
-										/>
+										{image.type === 'image' ? (
+											<img
+												src={image.src}
+												alt=""
+												width={image.width}
+												style={{
+													height: autoHeightEnabled
+														? 'auto'
+														: height,
+												}}
+											/>
+										) : (
+											<Placeholder
+												withIllustration
+												style={placeholderStyle}
+											/>
+										)}
 									</div>
 								))}
 							</div>
@@ -179,7 +186,7 @@ export default ({ attributes, setAttributes, context: { postId } = {} }) => {
 							<div className="swiper-button-next"></div>
 						</div>
 
-						{images?.length > 1 && show_thumbnails ? (
+						{images.length > 1 && show_thumbnails && (
 							<div
 								className="sc-image-slider__thumbs"
 								style={{ opacity: 1, visibility: 'visible' }}
@@ -213,7 +220,19 @@ export default ({ attributes, setAttributes, context: { postId } = {} }) => {
 												className="swiper-slide"
 												key={index}
 											>
-												<img src={image.src} alt="" />
+												{image.type === 'image' ? (
+													<img
+														src={image.src}
+														alt=""
+													/>
+												) : (
+													<Placeholder
+														withIllustration
+														style={
+															thumbnailPlaceholderStyle
+														}
+													/>
+												)}
 											</div>
 										))}
 									</div>
@@ -239,7 +258,7 @@ export default ({ attributes, setAttributes, context: { postId } = {} }) => {
 									</svg>
 								</div>
 							</div>
-						) : null}
+						)}
 					</div>
 				</Disabled>
 			</div>
