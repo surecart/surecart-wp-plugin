@@ -36,7 +36,7 @@
 			inset-inline-start: 0;
 			justify-content: space-between;
 			padding: 1em;
-			background-color: var(--sc-panel-background-color, #fff);
+			background-color: var(--sc-panel-background-color);
 			border-top: solid var(--sc-input-border-width)
 				var(--sc-input-border-color);
 			z-index: 99;
@@ -130,7 +130,7 @@
 		z-index: 9999;
 		width: 100vw;
 		height: 100vh;
-		background-color: rgba(0, 0, 0, 0.5);
+		background-color: var(--sc-review-overlay-background-color, rgba(0, 0, 0, 0.5));
 		opacity: 0;
 		pointer-events: none;
 		overflow: hidden;
