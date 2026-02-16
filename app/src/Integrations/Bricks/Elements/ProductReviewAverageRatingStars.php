@@ -115,9 +115,12 @@ class ProductReviewAverageRatingStars extends \Bricks\Element {
 			return;
 		}
 
+		// Ensure size has px unit, similar to Elementor implementation.
+		$size_value = is_numeric( $size ) ? absint( $size ) . 'px' : $size;
+
 		echo $this->html( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			[
-				'size'            => (int) $size,
+				'size'            => $size_value,
 				'fill_color'      => esc_attr( $fill_color ),
 				'link_to_reviews' => $link_to_reviews, //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			]
@@ -135,13 +138,19 @@ class ProductReviewAverageRatingStars extends \Bricks\Element {
 	private function render_preview( $size, $fill_color ) {
 		$stars_html = '';
 		for ( $i = 1; $i <= 5; $i++ ) {
+			$is_full_star = $i <= 4;
+			$is_half_star = 5 === $i;
+
 			$stars_html .= \SureCart::svg()->get(
-				'star',
+				$is_half_star ? 'half-star' : 'star',
 				[
-					'height' => esc_attr( $size ),
-					'width'  => esc_attr( $size ),
-					'fill'   => esc_attr( $fill_color ),
-					'stroke' => esc_attr( $fill_color ),
+					'class'        => 'sc-star-row__label__svg',
+					'height'       => esc_attr( $size ),
+					'width'        => esc_attr( $size ),
+					'fill'         => $is_full_star || $is_half_star ? 'currentColor' : 'none',
+					'stroke'       => 'currentColor',
+					'stroke-width' => 2,
+					'aria-hidden'  => 'true',
 				]
 			);
 		}
