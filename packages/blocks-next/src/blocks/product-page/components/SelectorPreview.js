@@ -79,13 +79,6 @@ export default function SelectorPreview({
 						>
 							{title}
 						</a>
-						<ScIcon
-							name="external-link"
-							width="16"
-							height="16"
-							aria-hidden="true"
-							style={{ flexShrink: 0 }}
-						/>
 					</span>
 					{!!subtitle && (
 						<span
