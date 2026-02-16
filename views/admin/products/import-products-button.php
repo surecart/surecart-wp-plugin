@@ -8,7 +8,7 @@
 		</button>
 		<sc-menu>
 			<sc-menu-item href="<?php echo esc_attr( \SureCart::getUrl()->import( 'products' ) ); ?>">
-				<?php esc_html_e( 'Import Products', 'surecart' ); ?>
+				<?php esc_html_e( 'Import Products from Woo', 'surecart' ); ?>
 			</sc-menu-item>
 		</sc-menu>
 	</sc-dropdown>
