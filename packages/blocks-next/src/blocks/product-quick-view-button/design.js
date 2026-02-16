@@ -31,6 +31,8 @@ export default ({ attributes, setAttributes }) => {
 				isShownByDefault
 			>
 				<ToggleGroupControl
+					__next40pxDefaultSize
+					__nextHasNoMarginBottom
 					label={__('Icon & Text', 'surecart')}
 					value={quick_view_button_type}
 					onChange={(quick_view_button_type) =>

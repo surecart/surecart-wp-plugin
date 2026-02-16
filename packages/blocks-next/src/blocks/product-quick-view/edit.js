@@ -62,6 +62,7 @@ export default ({ attributes, setAttributes }) => {
 						onDeselect={() => setAttributes({ width: null })}
 					>
 						<UnitControl
+							__next40pxDefaultSize
 							label={__('Width', 'surecart')}
 							value={width}
 							placeholder={__('500', 'surecart')}
@@ -74,6 +75,7 @@ export default ({ attributes, setAttributes }) => {
 						onDeselect={() => setAttributes({ height: null })}
 					>
 						<UnitControl
+							__next40pxDefaultSize
 							label={__('Height', 'surecart')}
 							value={height}
 							placeholder={__('500', 'surecart')}

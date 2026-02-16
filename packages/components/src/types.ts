@@ -4,6 +4,7 @@ import { StripeElementChangeEvent } from '@stripe/stripe-js';
 
 declare global {
   interface Window {
+    registry: IconLibrary[];
     grecaptcha: any;
     surecart?: {
       product?: {
@@ -74,6 +75,7 @@ declare global {
       user_permissions: {
         manage_sc_shop_settings: boolean;
       };
+      current_user_roles: string[];
     };
     ceRegisterIconLibrary: any;
     ResizeObserver: any;
@@ -89,6 +91,11 @@ interface Model {
   updated_at: number;
 }
 
+export interface IconLibrary {
+  name: string;
+  resolver: IconLibraryResolver;
+  mutator?: IconLibraryMutator;
+}
 export interface ChoiceItem extends Object {
   value: string;
   label: string;
@@ -785,6 +792,16 @@ export interface Checkout extends Object {
     pagination: Pagination;
     data: Array<Subscription>;
   };
+  checkout_fees: {
+    object: 'list';
+    pagination: Pagination;
+    data: Array<Fee>;
+  };
+  shipping_fees: {
+    object: 'list';
+    pagination: Pagination;
+    data: Array<Fee>;
+  };
   purchases: {
     object: 'list';
     pagination: Pagination;
@@ -868,7 +885,38 @@ export interface ProcessorData {
     public_key: string;
     access_code: string;
   };
+  razorpay?: {
+    account_id: string;
+    key_id: string;
+    order_id: string;
+    public_key: string;
+    access_code: string;
+    customer_id: string;
+  };
 }
+
+export interface RazorpayOptions {
+  key: string;
+  order_id: string;
+  prefill?: {
+    name?: string;
+    email?: string;
+    contact?: string;
+  };
+  customer_id?: string;
+  recurring?: boolean;
+  handler: (response: any) => void;
+  modal?: {
+    ondismiss: () => void;
+  };
+}
+
+export interface RazorpayInstance {
+  open: () => void;
+  on: (event: string, callback: (response: any) => void) => void;
+}
+
+export type RazorpayConstructor = new (options: RazorpayOptions) => RazorpayInstance;
 
 export interface ManualPaymentMethod {
   id: string;
@@ -1162,6 +1210,7 @@ export interface PaymentIntent extends Object {
   created_at: number;
   updated_at: number;
   payment_method: PaymentMethod | string;
+  reusable: boolean;
 }
 
 export interface PaymentIntents {

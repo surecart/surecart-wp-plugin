@@ -146,6 +146,8 @@ function Conditions(props) {
 				case 'select':
 					return (
 						<SelectControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							value={value}
 							placeholder={field.placeholder}
 							tooltip={field.tooltip}
@@ -237,6 +239,8 @@ function Conditions(props) {
 				case 'text':
 					return (
 						<TextControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							value={value}
 							placeholder={field.placeholder}
 							tooltip={field.tooltip}

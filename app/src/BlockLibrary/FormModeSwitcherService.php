@@ -97,7 +97,7 @@ class FormModeSwitcherService {
 		}
 
 		// The post must have a checkout form block.
-		if( ! has_block( 'surecart/checkout-form', get_post() ) ) {
+		if ( ! has_block( 'surecart/checkout-form', get_post() ) ) {
 			return;
 		}
 

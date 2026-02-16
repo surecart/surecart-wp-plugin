@@ -1,50 +1,97 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/react';
 import { __, sprintf } from '@wordpress/i18n';
-import { Popover } from '@wordpress/components';
-import { useRef, useState } from '@wordpress/element';
-import { allCountries } from 'country-region-data';
+import { Popover, ProgressBar } from '@wordpress/components';
+import { useRef, useState, useEffect, useMemo } from '@wordpress/element';
+import { useCountries, fetchCountryDetails } from '../../../hooks/useAtlas';
 
-export default ({ shippingZone }) => {
+export default function ShippingZoneSummary({ shippingZone }) {
 	const anchor = useRef();
 	const [isVisible, setIsVisible] = useState(false);
-	const zoneTerritoriesSummary = (shippingZone?.territories || []).map(
-		(territory) => {
-			const countryName = allCountries.find(
-				(country) => country[1] === territory?.country
-			)[0];
+	const { countries, loading } = useCountries();
+	const [countryDetails, setCountryDetails] = useState({});
 
-			if (territory?.states?.length === 1) {
-				const stateName = allCountries
-					.find((country) => country[1] === territory?.country)[2]
-					.find((state) => state[1] === territory?.states[0])?.[0];
+	// Fetch country details for territories that have specific states.
+	useEffect(() => {
+		const territories = shippingZone?.territories || [];
+		if (!countries.length || !territories.length) return;
+
+		async function loadCountryDetails() {
+			const territoriesWithStates = territories.filter(
+				(t) => t?.states?.length > 0
+			);
+
+			const newDetails = {};
+
+			for (const territory of territoriesWithStates) {
+				const countryCode = territory?.country;
+				if (!countryCode || countryDetails[countryCode]) continue;
+
+				try {
+					newDetails[countryCode] = await fetchCountryDetails(countryCode);
+				} catch (e) {
+					console.error(`Failed to fetch details for ${countryCode}:`, e);
+				}
+			}
+
+			if (Object.keys(newDetails).length > 0) {
+				setCountryDetails((prev) => ({ ...prev, ...newDetails }));
+			}
+		}
+
+		loadCountryDetails();
+	}, [countries, shippingZone?.territories]);
+
+	const zoneTerritoriesSummary = useMemo(() => {
+		if (loading || !countries.length) return [];
+
+		const territories = shippingZone?.territories || [];
+
+		return territories.map((territory) => {
+			const countryCode = territory?.country;
+			const country = countries.find((c) => c.code === countryCode);
+			const countryName = country?.name || countryCode;
+			const statesCount = territory?.states?.length || 0;
+
+			// Single state selected - show state name.
+			if (statesCount === 1) {
+				const stateCode = territory.states[0];
+				const stateName =
+					countryDetails[countryCode]?.states?.find(
+						(s) => s.code === stateCode
+					)?.name || stateCode;
 				return `${countryName} (${stateName})`;
 			}
 
-			const total = allCountries.find(
-				(country) => country[1] === territory?.country
-			);
-			const totalStates = total[2]?.length || 0;
-
-			if (
-				territory?.states?.length > 1 &&
-				totalStates !== territory?.states?.length
-			) {
+			// Multiple states selected (but not all) - show count.
+			const totalStates = country?.states_count || 0;
+			if (statesCount > 1 && statesCount !== totalStates) {
 				return sprintf(
 					// translators: %s is the country name, %d is the number of states in the territory, %d is the total number of states in the country.
 					__('%s (%d of %d Regions)', 'surecart'),
 					countryName,
-					territory?.states?.length,
+					statesCount,
 					totalStates
 				);
 			}
 
+			// All states or no states - just show country name.
 			return countryName;
-		}
-	);
+		});
+	}, [loading, countries, countryDetails, shippingZone?.territories]);
 
 	const firstTwoTerritories = zoneTerritoriesSummary.slice(0, 2);
 	const remainingTerritories = zoneTerritoriesSummary.slice(2);
+
+	// Show loading indicator while fetching countries.
+	if (loading) {
+		return (
+			<span style={{ fontWeight: 'normal' }}>
+				{' • '}
+				<ProgressBar />
+			</span>
+		);
+	}
 
 	return (
 		<span style={{ fontWeight: 'normal' }}>
@@ -91,4 +138,4 @@ export default ({ shippingZone }) => {
 			)}
 		</span>
 	);
-};
+}

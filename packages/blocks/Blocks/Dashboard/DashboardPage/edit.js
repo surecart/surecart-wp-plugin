@@ -42,6 +42,8 @@ export default ({ attributes, setAttributes }) => {
 				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
 						<TextControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							label={__('Url Slug', 'surecart')}
 							value={name}
 							onChange={(name) => setAttributes({ name })}
