@@ -556,6 +556,32 @@ add_action(
 			),
 			$static_assets['version']
 		);
+
+		// Order Bumps.
+		$static_assets = include trailingslashit( plugin_dir_path( __FILE__ ) ) . 'build/scripts/order-bumps/index.asset.php';
+		wp_register_script_module(
+			'@surecart/order-bumps',
+			trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/order-bumps/index.js',
+			array(
+				array(
+					'id'     => '@wordpress/interactivity',
+					'import' => 'dynamic',
+				),
+				array(
+					'id'     => '@surecart/checkout',
+					'import' => 'dynamic',
+				),
+				array(
+					'id'     => '@surecart/checkout-service',
+					'import' => 'dynamic',
+				),
+				array(
+					'id'     => '@surecart/a11y',
+					'import' => 'dynamic',
+				),
+			),
+			$static_assets['version']
+		);
 	},
 	10,
 	3
