@@ -236,6 +236,12 @@ class ProductReviewList extends \Bricks\Element {
 					'selector'  => '.wp-block-surecart-product-review-verified-badge svg',
 					'important' => true,
 				],
+				[
+					'property'  => 'gap',
+					'selector'  => '.wp-block-surecart-product-review-verified-badge',
+					'value'     => '4px',
+					'important' => true,
+				],
 			],
 		];
 
