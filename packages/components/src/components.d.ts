@@ -2179,6 +2179,7 @@ export namespace Components {
         "status": OrderStatus;
     }
     interface ScOrderSubmit {
+        "backgroundColor": string;
         /**
           * Currency Code
          */
@@ -2227,6 +2228,7 @@ export namespace Components {
           * The button's size.
          */
         "size": 'small' | 'medium' | 'large';
+        "textColor": string;
         /**
           * The button type.
          */
@@ -9406,6 +9408,7 @@ declare namespace LocalJSX {
         "status"?: OrderStatus;
     }
     interface ScOrderSubmit {
+        "backgroundColor"?: string;
         /**
           * Currency Code
          */
@@ -9454,6 +9457,7 @@ declare namespace LocalJSX {
           * The button's size.
          */
         "size"?: 'small' | 'medium' | 'large';
+        "textColor"?: string;
         /**
           * The button type.
          */

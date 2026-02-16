@@ -210,6 +210,7 @@ return array(
 		\SureCartBlocks\Blocks\ConditionalForm\Block::class,
 		\SureCartBlocks\Blocks\StoreLogo\Block::class,
 		\SureCartBlocks\Blocks\Password\Block::class,
+		\SureCartBlocks\Blocks\Submit\Block::class,
 		\SureCartBlocks\Blocks\CartMenuButton\Block::class,
 		\SureCartBlocks\Blocks\CartSubmit\Block::class,
 		\SureCartBlocks\Blocks\Cart\Block::class,
