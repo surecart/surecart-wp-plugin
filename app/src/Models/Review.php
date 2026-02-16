@@ -82,6 +82,9 @@ class Review extends Model {
 
 		\SureCart::account()->clearCache();
 
+		// Sync the associated product to update cached review statistics.
+		$this->syncProduct();
+
 		return $this;
 	}
 
@@ -123,9 +126,63 @@ class Review extends Model {
 
 		\SureCart::account()->clearCache();
 
+		// Sync the associated product to update cached review statistics.
+		$this->syncProduct();
+
 		return $this;
 	}
 
+	/**
+	 * Delete the review.
+	 *
+	 * @param string $id The id of the review to delete.
+	 *
+	 * @return $this|false
+	 */
+	protected function delete( $id = '' ) {
+		// Store the product_id before deletion since we need it after the model is deleted.
+		$product_id = $this->product_id;
+
+		// Call parent delete.
+		$result = parent::delete( $id );
+
+		// Clear cache after deletion.
+		\SureCart::account()->clearCache();
+
+		// If deletion was successful, sync the product.
+		if ( ! is_wp_error( $result ) && $product_id ) {
+			$this->syncProduct( $product_id );
+		}
+
+		return $result;
+	}
+
+	/**
+	 * Sync a product to refresh cached review statistics.
+	 *
+	 * @param string|null $product_id The product ID. If null, uses $this->product_id.
+	 *
+	 * @return void
+	 */
+	protected function syncProduct( $product_id = null ) {
+		$product_id = $product_id ?? $this->product_id;
+		if ( empty( $product_id ) ) {
+			return;
+		}
+
+		// Queue a background sync to update the WordPress post meta with fresh product data.
+		// This avoids blocking the current request with an API call.
+		\SureCart::queue()->async(
+			'surecart/sync/product',
+			[
+				'id'          => $product_id,
+				'show_notice' => false,
+			]
+		);
+
+		// Trigger the queue to process immediately.
+		\SureCart::queue()->run();
+	}
 
 	/**
 	 * Get all review statuses.
