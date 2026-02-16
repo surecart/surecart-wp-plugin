@@ -199,7 +199,7 @@ class ProductReviewBreakdown extends \Bricks\Element {
 	 * @return void
 	 */
 	public function render() {
-		$star_size  = ! empty( $this->settings['star_size'] ) ? (int) $this->settings['star_size'] : 20;
+		$star_size  = ! empty( $this->settings['star_size'] ) ? $this->settings['star_size'] : '20px';
 		$columns    = ! empty( $this->settings['columns'] ) ? (int) $this->settings['columns'] : 1;
 		$row_gap    = ! empty( $this->settings['row_gap'] ) ? $this->settings['row_gap'] : '2px';
 		$column_gap = ! empty( $this->settings['column_gap'] ) ? $this->settings['column_gap'] : '40px';
@@ -208,8 +208,13 @@ class ProductReviewBreakdown extends \Bricks\Element {
 			$fill_color = 'var(--bricks-color-primary)';
 		}
 
+		// Ensure star_size has a unit for CSS.
+		if ( is_numeric( $star_size ) ) {
+			$star_size = $star_size . 'px';
+		}
+
 		if ( $this->is_admin_editor() ) {
-			$this->render_preview( $star_size, $fill_color, $columns, $column_gap );
+			$this->render_preview( $star_size, $fill_color, $columns, $column_gap, $row_gap );
 			return;
 		}
 
@@ -236,14 +241,15 @@ class ProductReviewBreakdown extends \Bricks\Element {
 	/**
 	 * Render preview in editor.
 	 *
-	 * @param int    $star_size Star size.
+	 * @param string $star_size Star size with unit.
 	 * @param string $fill_color Fill color.
 	 * @param int    $columns Number of columns.
-	 * @param int    $column_gap Column gap in pixels.
+	 * @param string $column_gap Column gap with unit.
+	 * @param string $row_gap Row gap with unit.
 	 *
 	 * @return void
 	 */
-	private function render_preview( $star_size = 20, $fill_color = '', $columns = 1, $column_gap = 20 ) {
+	private function render_preview( $star_size = '20px', $fill_color = '', $columns = 1, $column_gap = '20px', $row_gap = '2px' ) {
 		$breakdown_data = [
 			5 => 45,
 			4 => 25,
@@ -258,7 +264,7 @@ class ProductReviewBreakdown extends \Bricks\Element {
 		}
 
 		// Use CSS Grid for proper column layout (matching the actual block).
-		$grid_style = 'display: grid; width: 100%; min-width: 0; row-gap: 2px; column-gap: ' . esc_attr( $column_gap ) . 'px;';
+		$grid_style = 'display: grid; width: 100%; min-width: 0; column-gap: ' . esc_attr( $column_gap ) . ';';
 		if ( 2 === $columns ) {
 			$grid_style .= ' grid-template-columns: repeat(2, 1fr); grid-auto-flow: column; grid-template-rows: repeat(3, minmax(auto, 1fr));';
 		} elseif ( 3 === $columns ) {
