@@ -39,10 +39,10 @@ class AdminPluginCacheService {
 				// 'w3-total-cache/w3-total-cache.php', // we added support for this in the plugin
 				// 'litespeed-cache/litespeed-cache.php', // we added support for this in the plugin
 				// 'sg-cachepress/sg-cachepress.php', // we added support for this in the plugin
+				// 'wp-fastest-cache/wpFastestCache.php', // we added support for this in the plugin
 				'wp-rocket/wp-rocket.php',
 				'wp-super-cache/wp-cache.php',
 				'autoptimize/autoptimize.php',
-				'wp-fastest-cache/wpFastestCache.php',
 				'cache-enabler/cache-enabler.php',
 				'swift-performance-lite/performance.php',
 				'hummingbird-performance/wp-hummingbird.php',

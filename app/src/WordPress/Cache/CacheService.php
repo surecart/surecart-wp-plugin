@@ -60,10 +60,6 @@ abstract class CacheService {
 	 * @return void
 	 */
 	public function maybeDisableCache() {
-		if ( ! $this->isCachePluginActive() ) {
-			return;
-		}
-
 		if ( $this->isCustomerDashboardPage() ) {
 			$this->disableCacheWithBrowserHeaders( 'SureCart customer dashboard' );
 			return;
@@ -107,10 +103,6 @@ abstract class CacheService {
 	 * @return void
 	 */
 	public function maybeDisableCacheForRestApi() {
-		if ( ! $this->isCachePluginActive() ) {
-			return;
-		}
-
 		if ( $this->isSureCartRestRequest() ) {
 			$this->disableCacheWithBrowserHeaders( 'SureCart REST API request' );
 		}
