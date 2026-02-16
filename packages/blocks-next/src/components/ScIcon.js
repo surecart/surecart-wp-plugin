@@ -130,6 +130,14 @@ export default function ({ name, ...props }) {
 		});
 	}
 
+	// Apply presentation attributes to the root SVG element as well
+	// This ensures CSS `fill: inherit` on child elements works correctly.
+	Object.entries(presentationAttrs).forEach(([attr, value]) => {
+		if (value !== undefined && value !== null) {
+			clonedSvg.setAttribute(attr, value);
+		}
+	});
+
 	// Apply remaining props to the root SVG element
 	Object.entries(otherProps).forEach(([key, value]) => {
 		if (value !== undefined && value !== null) {
