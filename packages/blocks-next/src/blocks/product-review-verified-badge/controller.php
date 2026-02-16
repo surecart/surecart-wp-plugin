@@ -19,5 +19,6 @@ $show_label  = $attributes['show_label'] ?? true;
 $label       = $attributes['label'] ?? '';
 $badge_label = ! empty( $label ) ? $label : __( 'Verified Buyer', 'surecart' );
 $icon_size   = $attributes['icon_size'] ?? 16;
+$icon_color  = $attributes['icon_color'] ?? '';
 
 return 'file:./view.php';

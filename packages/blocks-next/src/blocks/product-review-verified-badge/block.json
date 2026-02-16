@@ -21,6 +21,9 @@
 		"icon_size": {
 			"type": "string",
 			"default": "16px"
+		},
+		"icon_color": {
+			"type": "string"
 		}
 	},
 	"supports": {

@@ -18,10 +18,11 @@ import { __ } from '@wordpress/i18n';
  */
 import ScIcon from '../../components/ScIcon';
 import UnitSpacingControl from '../../components/UnitSpacingControl';
+import ColorInspectorControl from '../../components/ColorInspectorControl';
 import { getSpacingPresetCssVar } from '../../../../blocks/util';
 
 export default ({ attributes, setAttributes, clientId }) => {
-	const { show_label, label, icon_size, style } = attributes;
+	const { show_label, label, icon_size, icon_color, style } = attributes;
 	const blockProps = useBlockProps({
 		style: {
 			gap: getSpacingPresetCssVar(style?.spacing?.blockGap),
@@ -65,6 +66,21 @@ export default ({ attributes, setAttributes, clientId }) => {
 				</ToolsPanelItem>
 			</InspectorControls>
 
+			{/* Icon Color Control */}
+			<ColorInspectorControl
+				settings={[
+					{
+						colorValue: icon_color,
+						label: __('Icon Color', 'surecart'),
+						onColorChange: (icon_color) =>
+							setAttributes({ icon_color }),
+						resetAllFilter: () =>
+							setAttributes({ icon_color: undefined }),
+					},
+				]}
+				panelId={clientId}
+			/>
+
 			<div {...blockProps}>
 				{show_label && (
 					<RichText
@@ -75,11 +91,13 @@ export default ({ attributes, setAttributes, clientId }) => {
 					/>
 				)}
 
-				<ScIcon
-					name="verified"
-					width={icon_size || 16}
-					height={icon_size || 16}
-				/>
+				<span style={icon_color ? { color: icon_color } : undefined}>
+					<ScIcon
+						name="verified"
+						width={icon_size || 16}
+						height={icon_size || 16}
+					/>
+				</span>
 			</div>
 		</>
 	);
