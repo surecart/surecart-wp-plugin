@@ -96,6 +96,9 @@ class Product extends \Bricks\Element {
 							'_typography' => array(
 								'line-height' => '1',
 							),
+							'fill_color'  => array(
+								'hex' => 'var(--bricks-color-primary)',
+							),
 						),
 					),
 					array(
