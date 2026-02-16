@@ -107,11 +107,14 @@ class ProductReviewTotalRating extends \Bricks\Element {
 			return;
 		}
 
+		// Determine class name based on style variant.
+		$class_name = 'default' !== $style_variant ? 'is-style-' . $style_variant : '';
+
 		$attributes = [
 			'show_label'            => $show_label,
 			'show_for_zero_reviews' => $show_for_zero_reviews,
-			'style_variant'         => $style_variant,
 			'link_to_reviews'       => $link_to_reviews,
+			'className'             => $class_name,
 		];
 
 		echo $this->html( $attributes ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
