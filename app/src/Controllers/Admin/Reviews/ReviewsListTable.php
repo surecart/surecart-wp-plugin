@@ -69,7 +69,9 @@ class ReviewsListTable extends ListTable {
 	 * @global string $comment_type
 	 */
 	protected function get_views() {
-		$requested_status = ! empty( $_GET['status'] ) ? sanitize_text_field( wp_unslash( $_GET['status'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$allowed_statuses = array( 'all', 'published', 'in_review', 'unpublished' );
+		$requested_status = ! empty( $_GET['status'] ) && in_array( $_GET['status'], $allowed_statuses, true ) ? sanitize_text_field( wp_unslash( $_GET['status'] ) ) : 'all'; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+
 		foreach ( $this->getStatuses() as $status => $label ) {
 			$link                    = admin_url( 'admin.php?page=sc-reviews' );
 			$current_link_attributes = '';
@@ -86,7 +88,8 @@ class ReviewsListTable extends ListTable {
 
 			$link = esc_url( $link ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
-			$status_links[ $status ] = "<a href='$link'$current_link_attributes>" . $label . '</a>';
+			// translators: %s: The number of reviews for a specific status.
+			$status_links[ $status ] = sprintf( '<a href="%s"%s>%s</a>', esc_url( $link ), $current_link_attributes, esc_html( $label ) );
 		}
 
 		/**

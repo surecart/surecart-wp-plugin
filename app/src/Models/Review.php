@@ -134,9 +134,9 @@ class Review extends Model {
 	 */
 	public function getStatuses(): array {
 		return [
-			'in_review'   => __( 'In Review', 'surecart' ),
-			'published'   => __( 'Approved', 'surecart' ),
-			'unpublished' => __( 'Rejected', 'surecart' ),
+			'in_review'   => esc_html__( 'In Review', 'surecart' ),
+			'published'   => esc_html__( 'Approved', 'surecart' ),
+			'unpublished' => esc_html__( 'Rejected', 'surecart' ),
 		];
 	}
 

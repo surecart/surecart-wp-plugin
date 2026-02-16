@@ -149,10 +149,10 @@ class ReviewsRestServiceProvider extends RestServiceProvider implements RestServ
 			'status'       => [
 				'description' => esc_html__( 'Filter by review status.', 'surecart' ),
 				'type'        => 'string',
-				'enum'        => [ 'published', 'in_review', 'archived' ],
+				'enum'        => [ 'published', 'in_review', 'unpublished' ],
 			],
 			'product_ids'  => [
-				'description' => __( 'Only return reviews for the given products.', 'surecart' ),
+				'description' => esc_html__( 'Only return reviews for the given products.', 'surecart' ),
 				'type'        => 'array',
 				'items'       => [
 					'type' => 'string',
@@ -160,7 +160,7 @@ class ReviewsRestServiceProvider extends RestServiceProvider implements RestServ
 				'default'     => [],
 			],
 			'customer_ids' => [
-				'description' => __( 'Only return reviews from the given customers.', 'surecart' ),
+				'description' => esc_html__( 'Only return reviews from the given customers.', 'surecart' ),
 				'type'        => 'array',
 				'items'       => [
 					'type' => 'string',
@@ -172,7 +172,7 @@ class ReviewsRestServiceProvider extends RestServiceProvider implements RestServ
 				'type'        => 'boolean',
 			],
 			'query'        => [
-				'description' => __( 'The query to be used for full text search of this collection.', 'surecart' ),
+				'description' => esc_html__( 'The query to be used for full text search of this collection.', 'surecart' ),
 				'type'        => 'string',
 			],
 			'page'         => [

@@ -103,7 +103,7 @@ class ReviewsController extends RestController {
 		}
 
 		// Set the customer ID on the review.
-		$class['customer'] = $customer_id;
+		$class['customer'] = sanitize_text_field( $customer_id );
 		return $class;
 	}
 }
