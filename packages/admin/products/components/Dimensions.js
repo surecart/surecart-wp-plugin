@@ -86,7 +86,6 @@ export default ({ dimensions, updateDimensions }) => {
 				}
 			/>
 			<ScSelect
-				slot="suffix"
 				unselect={false}
 				value={unit ?? 'cm'}
 				css={css`
