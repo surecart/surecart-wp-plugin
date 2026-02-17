@@ -5,6 +5,14 @@ import { ScInput, ScSelect } from '@surecart/components-react';
 
 const DIMENSIONS_UNIT_TYPES = [
 	{
+		label: __('in', 'surecart'),
+		value: 'in',
+	},
+	{
+		label: __('ft', 'surecart'),
+		value: 'ft',
+	},
+	{
 		label: __('cm', 'surecart'),
 		value: 'cm',
 	},
@@ -15,14 +23,6 @@ const DIMENSIONS_UNIT_TYPES = [
 	{
 		label: __('m', 'surecart'),
 		value: 'm',
-	},
-	{
-		label: __('in', 'surecart'),
-		value: 'in',
-	},
-	{
-		label: __('ft', 'surecart'),
-		value: 'ft',
 	},
 ];
 
@@ -45,7 +45,10 @@ export default ({ dimensions, updateDimensions }) => {
 					flex: 1;
 				`}
 				label={__('Length', 'surecart')}
-				value={length ?? 0}
+				value={length}
+				type="number"
+				placeholder="0"
+				min="0"
 				onScInput={(e) =>
 					updateDimensions({
 						dimensions: {
@@ -60,7 +63,10 @@ export default ({ dimensions, updateDimensions }) => {
 					flex: 1;
 				`}
 				label={__('Width', 'surecart')}
-				value={width ?? 0}
+				value={width}
+				type="number"
+				placeholder="0"
+				min="0"
 				onScInput={(e) =>
 					updateDimensions({
 						dimensions: {
@@ -75,7 +81,9 @@ export default ({ dimensions, updateDimensions }) => {
 					flex: 1;
 				`}
 				label={__('Height', 'surecart')}
-				value={height ?? 0}
+				value={height}
+				type="number"
+				placeholder="0"
 				onScInput={(e) =>
 					updateDimensions({
 						dimensions: {
@@ -87,7 +95,7 @@ export default ({ dimensions, updateDimensions }) => {
 			/>
 			<ScSelect
 				unselect={false}
-				value={unit ?? 'cm'}
+				value={unit ?? 'in'}
 				css={css`
 					flex: 1;
 				`}
