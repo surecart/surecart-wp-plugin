@@ -84,6 +84,7 @@ export default ({ dimensions, updateDimensions }) => {
 				value={height}
 				type="number"
 				placeholder="0"
+				min="0"
 				onScInput={(e) =>
 					updateDimensions({
 						dimensions: {
