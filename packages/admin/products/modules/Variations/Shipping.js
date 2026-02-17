@@ -62,6 +62,10 @@ export default ({ variant, updateVariant, product }) => {
 							key: 'auto_fulfill_enabled',
 							label: __('Auto fulfill', 'surecart'),
 						},
+						{
+							key: 'dimensions',
+							label: __('Dimensions', 'surecart'),
+						},
 					]}
 					isOverridden={isOverridden}
 					onReset={(fieldKey) => updateVariant({ [fieldKey]: null })}
