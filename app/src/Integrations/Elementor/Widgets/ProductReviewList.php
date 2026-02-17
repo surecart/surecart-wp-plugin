@@ -202,6 +202,20 @@ class ProductReviewList extends \Elementor\Widget_Base {
 				'description' => esc_html__( 'Size of the verified badge icon in pixels.', 'surecart' ),
 				'selectors'   => [
 					'{{WRAPPER}} .wp-block-surecart-product-review-verified-badge svg' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wp-block-surecart-product-review-verified-badge' => 'gap: 4px;',
+					'{{WRAPPER}} .wp-block-surecart-product-review-verified-badge .sc-product-review-verified-badge__icon' => 'display: inline-flex; align-items: center;',
+				],
+			]
+		);
+
+		$this->add_control(
+			'verified_badge_icon_color',
+			[
+				'label'       => esc_html__( 'Verified Badge Icon Color', 'surecart' ),
+				'type'        => \Elementor\Controls_Manager::COLOR,
+				'description' => esc_html__( 'Color of the verified badge icon.', 'surecart' ),
+				'selectors'   => [
+					'{{WRAPPER}} .wp-block-surecart-product-review-verified-badge .sc-product-review-verified-badge__icon' => 'color: {{VALUE}};',
 				],
 			]
 		);
@@ -933,10 +947,10 @@ class ProductReviewList extends \Elementor\Widget_Base {
 		$verified_badge = '
 			<span style="display: inline-flex; align-items: center; gap: 4px;" class="wp-block-surecart-product-review-verified-badge">
 				' . esc_html__( 'Verified Buyer', 'surecart' ) . '
-				' . wp_kses(
+				<span class="sc-product-review-verified-badge__icon" style="display: inline-flex; align-items: center;">' . wp_kses(
 					\SureCart::svg()->get( 'verified' ),
 					sc_allowed_svg_html()
-				) . '
+				) . '</span>
 			</span>';
 
 		$date_html = $show_date ? '<span style="color: #6b7280; font-size: 14px;">' . esc_html__( '2 days ago', 'surecart' ) . '</span>' : '';
