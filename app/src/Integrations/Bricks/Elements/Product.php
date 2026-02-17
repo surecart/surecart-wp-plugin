@@ -108,6 +108,9 @@ class Product extends \Bricks\Element {
 							'show_label'            => true,
 							'link_to_reviews'       => true,
 							'show_for_zero_reviews' => true,
+							'_typography'           => array(
+								'text-decoration' => 'underline',
+							),
 						),
 					),
 				),

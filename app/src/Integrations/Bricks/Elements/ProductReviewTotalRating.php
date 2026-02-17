@@ -79,7 +79,7 @@ class ProductReviewTotalRating extends \Bricks\Element {
 				'default'   => esc_html__( 'Default', 'surecart' ),
 				'plus-sign' => esc_html__( 'Plus Sign', 'surecart' ),
 			],
-			'default' => 'default',
+			'default' => 'plus-sign',
 			'inline'  => true,
 		];
 
