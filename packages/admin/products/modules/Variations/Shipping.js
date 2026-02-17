@@ -132,7 +132,12 @@ export default ({ variant, updateVariant, product }) => {
 			</ScRadioGroup>
 
 			{getValue('shipping_enabled') && (
-				<div>
+				<div
+					css={css`
+						display: grid;
+						gap: 1em;
+					`}
+				>
 					<Dimensions
 						dimensions={getValue('dimensions')}
 						updateDimensions={(dimensions) =>

@@ -36,7 +36,6 @@ export default ({ dimensions, updateDimensions }) => {
 				display: flex;
 				gap: var(--sc-spacing-small);
 				flex-wrap: wrap;
-				margin-bottom: 14px;
 				align-items: flex-end;
 			`}
 		>
