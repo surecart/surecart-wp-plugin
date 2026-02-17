@@ -160,7 +160,6 @@ export default ({ variant, updateVariant, product }) => {
 										onClick={() =>
 											updateVariant(
 												getUpdateValue({
-													...variant,
 													weight_unit: unit,
 												})
 											)
