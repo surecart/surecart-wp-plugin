@@ -242,6 +242,34 @@ class ProductReviewList extends \Bricks\Element {
 					'value'     => '4px',
 					'important' => true,
 				],
+				[
+					'property'  => 'display',
+					'selector'  => '.wp-block-surecart-product-review-verified-badge .sc-product-review-verified-badge__icon',
+					'value'     => 'inline-flex',
+					'important' => true,
+				],
+				[
+					'property'  => 'align-items',
+					'selector'  => '.wp-block-surecart-product-review-verified-badge .sc-product-review-verified-badge__icon',
+					'value'     => 'center',
+					'important' => true,
+				],
+			],
+		];
+
+		$this->controls['verified_badge_icon_color'] = [
+			'tab'         => 'content',
+			'group'       => 'review_item',
+			'label'       => esc_html__( 'Verified Badge Icon Color', 'surecart' ),
+			'type'        => 'color',
+			'reset'       => true,
+			'description' => esc_html__( 'Color of the verified badge icon.', 'surecart' ),
+			'css'         => [
+				[
+					'property'  => 'color',
+					'selector'  => '.wp-block-surecart-product-review-verified-badge .sc-product-review-verified-badge__icon',
+					'important' => true,
+				],
 			],
 		];
 
@@ -540,7 +568,13 @@ class ProductReviewList extends \Bricks\Element {
 		];
 
 		$verified_icon_attrs = [
-			'icon_size' => ! empty( $this->settings['verified_badge_icon_size'] ) ? absint( $this->settings['verified_badge_icon_size'] ) : 16,
+			'icon_size'  => ! empty( $this->settings['verified_badge_icon_size'] ) ? absint( $this->settings['verified_badge_icon_size'] ) : 16,
+			'icon_color' => ! empty( $this->settings['verified_badge_icon_color'] ) ? $this->get_raw_color( 'verified_badge_icon_color' ) : '',
+			'style'      => [
+				'spacing' => [
+					'blockGap' => '4px',
+				],
+			],
 		];
 
 		$date_block    = $show_date ? '<!-- wp:surecart/product-review-date {"format":"human-diff"} /-->' : '';
@@ -717,7 +751,8 @@ class ProductReviewList extends \Bricks\Element {
 			}
 
 			$content .= esc_html__( 'Verified Buyer', 'surecart' );
-			$content .= '</span><span class="wp-block-surecart-product-review-verified-badge" style="display: inline-flex; align-items: center;">';
+			$content .= '</span><span class="wp-block-surecart-product-review-verified-badge" style="display: inline-flex; align-items: center; gap: 4px;">';
+			$content .= '<span class="sc-product-review-verified-badge__icon" style="display: inline-flex; align-items: center;">';
 			$content .= wp_kses(
 				\SureCart::svg()->get(
 					'verified',
@@ -729,7 +764,7 @@ class ProductReviewList extends \Bricks\Element {
 				),
 				sc_allowed_svg_html()
 			);
-			$content .= '</span></div>';
+			$content .= '</span></span></div>';
 			if ( $show_date ) {
 				$content .= '<span style="color: #6b7280; font-size: 14px;">' . esc_html__( '2 days ago', 'surecart' ) . '</span>';
 			}
