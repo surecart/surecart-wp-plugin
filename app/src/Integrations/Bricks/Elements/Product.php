@@ -104,9 +104,10 @@ class Product extends \Bricks\Element {
 					array(
 						'name'     => 'surecart-product-review-total-rating',
 						'settings' => array(
-							'style_variant'   => 'plus-sign',
-							'show_label'      => true,
-							'link_to_reviews' => true,
+							'style_variant'         => 'plus-sign',
+							'show_label'            => true,
+							'link_to_reviews'       => true,
+							'show_for_zero_reviews' => true,
 						),
 					),
 				),
