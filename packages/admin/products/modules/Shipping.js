@@ -12,6 +12,7 @@ import {
 	ScSwitch,
 	ScToggle,
 } from '@surecart/components-react';
+import Dimensions from '../components/Dimensions';
 
 const WEIGHT_UNIT_TYPES = [
 	__('lb', 'surecart'),
@@ -40,7 +41,10 @@ export default ({ loading, product, updateProduct }) => {
 				>
 					{__('Physical product', 'surecart')}
 				</span>
-
+				<Dimensions
+					dimensions={product?.dimensions}
+					updateDimensions={updateProduct}
+				/>
 				<ScInput
 					label={__('Shipping Weight', 'surecart')}
 					value={product?.weight}
