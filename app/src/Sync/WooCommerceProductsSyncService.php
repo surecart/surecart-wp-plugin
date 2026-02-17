@@ -699,6 +699,9 @@ class WooCommerceProductsSyncService {
 				continue;
 			}
 
+			// Determine if this variation manages its own stock (not inherited from parent).
+			$manages_own_stock = true === $variation->managing_stock();
+
 			$variant = [
 				'sku'                          => $variation->get_sku() ?? null,
 				'position'                     => $variant_position++,
@@ -706,9 +709,11 @@ class WooCommerceProductsSyncService {
 				// Pricing.
 				'amount'                       => $this->convertPriceToInteger( $variation->get_price() ),
 
-				// Stock.
-				'stock_enabled'                => $variation->managing_stock(),
-				'stock_adjustment'             => $variation->managing_stock() ? (int) $variation->get_stock_quantity() : 0,
+				// Stock — only set per-variant stock when the variation manages its own stock.
+				// When stock is managed at the parent level ('parent'), product-level stock handles it
+				// to avoid multiplying the total quantity across all variants.
+				'stock_enabled'                => $manages_own_stock,
+				'stock_adjustment'             => $manages_own_stock ? (int) $variation->get_stock_quantity() : 0,
 				'allow_out_of_stock_purchases' => $variation->backorders_allowed(),
 
 				// Shipping.

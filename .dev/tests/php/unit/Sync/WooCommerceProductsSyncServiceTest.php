@@ -1689,6 +1689,51 @@ namespace SureCart\Tests\Sync {
 		/**
 		 * @group woo_import
 		 */
+		public function test_map_variants_skips_stock_when_parent_manages_stock() {
+			$variation = \Mockery::mock( 'WC_Product_Variation' );
+			$variation->shouldReceive( 'get_sku' )->andReturn( 'VAR-PARENT-STOCK' );
+			$variation->shouldReceive( 'get_price' )->andReturn( '19.99' );
+			$variation->shouldReceive( 'get_regular_price' )->andReturn( '19.99' );
+			$variation->shouldReceive( 'get_sale_price' )->andReturn( '' );
+			$variation->shouldReceive( 'is_on_sale' )->andReturn( false );
+			// Returns 'parent' when stock is managed at the parent level.
+			$variation->shouldReceive( 'managing_stock' )->andReturn( 'parent' );
+			$variation->shouldReceive( 'get_stock_quantity' )->andReturn( 11 );
+			$variation->shouldReceive( 'backorders_allowed' )->andReturn( false );
+			$variation->shouldReceive( 'is_virtual' )->andReturn( false );
+			$variation->shouldReceive( 'is_taxable' )->andReturn( true );
+			$variation->shouldReceive( 'get_id' )->andReturn( 456 );
+			$variation->shouldReceive( 'get_weight' )->andReturn( '' );
+			$variation->shouldReceive( 'get_length' )->andReturn( '' );
+			$variation->shouldReceive( 'get_width' )->andReturn( '' );
+			$variation->shouldReceive( 'get_height' )->andReturn( '' );
+			$variation->shouldReceive( 'get_variation_attributes' )->andReturn( [ 'attribute_color' => 'Red' ] );
+			$variation->shouldReceive( 'get_image_id' )->andReturn( 0 );
+
+			$GLOBALS['test_wc_get_product_result'] = $variation;
+
+			$product = $this->createMockProduct(
+				[
+					'get_type'                 => 'variable',
+					'get_id'                   => 123,
+					'get_attributes'           => [],
+					'get_available_variations' => [
+						[ 'variation_id' => 456 ],
+					],
+				]
+			);
+
+			$result  = $this->service->mapVariants( $product );
+			$variant = $result['variants'][0];
+
+			// When parent manages stock, variant should NOT have stock enabled.
+			$this->assertFalse( $variant['stock_enabled'] );
+			$this->assertSame( 0, $variant['stock_adjustment'] );
+		}
+
+		/**
+		 * @group woo_import
+		 */
 		public function test_map_variants_does_not_include_scratch_amount_on_variant() {
 			$variation = \Mockery::mock( 'WC_Product_Variation' );
 			$variation->shouldReceive( 'get_sku' )->andReturn( 'VAR-SALE' );
