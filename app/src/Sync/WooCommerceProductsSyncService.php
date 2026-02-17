@@ -86,6 +86,25 @@ class WooCommerceProductsSyncService {
 	}
 
 	/**
+	 * Exclude already-imported products from wc_get_products query.
+	 *
+	 * @param array $wp_query_args WP_Query args.
+	 * @param array $query_vars    Query vars passed to wc_get_products.
+	 *
+	 * @return array
+	 */
+	public function excludeImportedProducts( $wp_query_args, $query_vars ) {
+		if ( ! empty( $query_vars['surecart_not_imported'] ) ) {
+			$wp_query_args['meta_query'][] = [ // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
+				'key'     => '_surecart_imported',
+				'compare' => 'NOT EXISTS',
+			];
+		}
+
+		return $wp_query_args;
+	}
+
+	/**
 	 * Sync products.
 	 *
 	 * @param string  $page Current page.
@@ -99,20 +118,20 @@ class WooCommerceProductsSyncService {
 		}
 
 		// get WooCommerce products (exclude already-imported products).
+		// Note: wc_get_products() strips raw meta_query args, so we use the official filter.
+		add_filter( 'woocommerce_product_data_store_cpt_get_products_query', [ $this, 'excludeImportedProducts' ], 10, 2 );
+
 		$products = wc_get_products(
 			[
-				'limit'      => $batch_size,
-				'page'       => $page,
-				'return'     => 'ids',
-				'paginate'   => true,
-				'meta_query' => [ // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
-					[
-						'key'     => '_surecart_imported',
-						'compare' => 'NOT EXISTS',
-					],
-				],
+				'limit'                 => $batch_size,
+				'page'                  => $page,
+				'return'                => 'ids',
+				'paginate'              => true,
+				'surecart_not_imported' => true,
 			]
 		);
+
+		remove_filter( 'woocommerce_product_data_store_cpt_get_products_query', [ $this, 'excludeImportedProducts' ], 10 );
 
 		// Sync each product.
 		foreach ( $products->products as $product_id ) {
