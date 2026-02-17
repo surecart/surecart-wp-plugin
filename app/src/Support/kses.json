@@ -1288,6 +1288,7 @@
     "slot": true
   },
   "sc-order-submit": {
+    "background-color": true,
     "currency-code": true,
     "full": true,
     "icon": true,
@@ -1300,6 +1301,7 @@
     "secure-notice-text": true,
     "show-total": true,
     "size": true,
+    "text-color": true,
     "type": true,
     "style": true,
     "id": true,

@@ -55,6 +55,12 @@ export class ScOrderSubmit {
   /** Show the secure notice */
   @Prop() secureNotice: boolean = true;
 
+  /* Background color */
+  @Prop() backgroundColor: string = '';
+
+  /* Text color */
+  @Prop() textColor: string = '';
+
   cannotShipToLocation() {
     return checkoutState?.checkout?.selected_shipping_choice_required && !checkoutState.checkout?.selected_shipping_choice;
   }
@@ -82,7 +88,17 @@ export class ScOrderSubmit {
   render() {
     if (this.cannotShipToLocation() || checkoutIsLocked('OUT_OF_STOCK')) {
       return (
-        <sc-button type={this.type} size={this.size} full={this.full} loading={this.loading || this.paying} disabled={true}>
+        <sc-button
+          type={this.type}
+          size={this.size}
+          full={this.full}
+          loading={this.loading || this.paying}
+          disabled={true}
+          style={{
+            '--sc-color-primary-text': this.textColor,
+            '--sc-color-primary-500': this.backgroundColor,
+          }}
+        >
           {!!this.icon && <sc-icon name={this.icon} slot="prefix" aria-hidden="true"></sc-icon>}
           <slot>{__('Purchase', 'surecart')}</slot>
           {this.showTotal && (
@@ -110,6 +126,10 @@ export class ScOrderSubmit {
           full={this.full}
           loading={this.loading || this.paying}
           disabled={this.loading || this.paying || formBusy() || checkoutIsLocked() || this.cannotShipToLocation()}
+          style={{
+            '--sc-color-primary-text': this.textColor,
+            '--sc-color-primary-500': this.backgroundColor,
+          }}
         >
           {!!this.icon && <sc-icon name={this.icon} slot="prefix" aria-hidden="true"></sc-icon>}
           <slot>{__('Purchase', 'surecart')}</slot>

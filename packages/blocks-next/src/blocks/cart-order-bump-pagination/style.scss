@@ -1,0 +1,9 @@
+.wp-block-surecart-cart-order-bump-pagination {
+	display: flex;
+	align-items: center;
+	gap: 0.25em;
+
+	&[hidden] {
+		display: none;
+	}
+}

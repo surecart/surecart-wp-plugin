@@ -1,0 +1,33 @@
+.wp-block-surecart-cart-order-bump-pagination-next {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding: var(--sc-spacing-xx-small);
+	border: none;
+	background: transparent;
+	color: inherit;
+	cursor: pointer;
+	transition: opacity 0.15s ease;
+
+	&:hover:not(:disabled) {
+		opacity: 0.7;
+	}
+
+	&:focus {
+		outline: none;
+		color: inherit;
+		background: transparent;
+	}
+
+	&:focus-visible {
+		outline: 2px solid currentColor;
+		outline-offset: 2px;
+	}
+
+	&:disabled,
+	&[aria-disabled="true"] {
+		opacity: 0.5;
+		cursor: not-allowed;
+		pointer-events: none;
+	}
+}

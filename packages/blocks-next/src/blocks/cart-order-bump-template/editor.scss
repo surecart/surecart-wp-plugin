@@ -1,0 +1,37 @@
+.wp-block-surecart-cart-order-bump-template,
+.sc-cart-order-bump-template {
+	display: flex !important;
+	flex-direction: row !important;
+	flex-wrap: nowrap !important;
+	overflow: hidden !important;
+	gap: 0.75em;
+}
+
+.sc-cart-order-bump-item {
+	flex: 0 0 100% !important; // Full width in editor - no peek needed
+	min-width: 0;
+	width: 100% !important;
+	max-width: 100% !important;
+	overflow: hidden !important;
+	box-sizing: border-box !important;
+
+	// Ensure inner content doesn't overflow
+	> * {
+		max-width: 100% !important;
+		overflow: hidden !important;
+		box-sizing: border-box !important;
+	}
+
+	// Change the border to match cart line items.
+	> .block-editor-inner-blocks
+		> .block-editor-block-list__layout
+		> .wp-block-group {
+		border: 1px solid var(--sc-input-border-color);
+		border-radius: 12px;
+	}
+
+	&--preview {
+		// Hide preview item completely in editor
+		display: none !important;
+	}
+}
