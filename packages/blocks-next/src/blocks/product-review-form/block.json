@@ -54,7 +54,8 @@
 	"editorStyle": "file:./index.css",
 	"viewScriptModule": [
 		"@surecart/product-page",
-		"@surecart/product-review-form"
+		"@surecart/product-review-form",
+		"wp-a11y"
 	],
 	"style": ["file:./style-index.css", "surecart-block-ui", "surecart-spinner"]
 }

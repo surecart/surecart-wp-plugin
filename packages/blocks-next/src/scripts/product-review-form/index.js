@@ -7,16 +7,9 @@ import { store, getElement, getContext } from '@wordpress/interactivity';
  * Internal dependencies.
  */
 import apiFetch from '@surecart/api-fetch';
+import { inertEverythingExcept, removeInert } from '../utils/inert';
 const { __ } = wp.i18n;
 const { addQueryArgs } = wp.url; // TODO: replace with `@wordpress/url` when available.
-
-/**
- * Tracks elements made inert when lightbox is active.
- * Helps revert only explicitly modified elements.
- *
- * @type {Array<HTMLElement>}
- */
-let inertElements = [];
 
 /**
  * Validate if the event triggers an open/close action.
@@ -289,10 +282,16 @@ const { state, actions, callbacks } = store('surecart/product-review-form', {
 
 					let errorMessage =
 						error?.message ||
-						__('Failed to submit review. Please try again.', 'surecart');
+						__(
+							'Failed to submit review. Please try again.',
+							'surecart'
+						);
 
 					// Append additional error messages if available.
-					if (error?.additional_errors && Array.isArray(error.additional_errors)) {
+					if (
+						error?.additional_errors &&
+						Array.isArray(error.additional_errors)
+					) {
 						const additionalMessages = error.additional_errors
 							.map((err) => err.message)
 							.join(' ');
@@ -321,28 +320,17 @@ const { state, actions, callbacks } = store('surecart/product-review-form', {
 
 		handleOpenChange() {
 			if (state.open) {
-				// Capture elements to make inert when opening.
-				// This ensures we get fresh elements each time in case the DOM has changed.
-				inertElements = Array.from(
-					document.querySelectorAll(
-						'body > :not(.sc-lightbox-overlay):not(.wp-block-surecart-product-review-form)'
-					)
-				).filter(
-					(el) =>
-						!el.hasAttribute('inert') &&
-						!el.querySelector(
-							'.wp-block-surecart-product-review-form'
-						) &&
-						!el.querySelector('.sc-lightbox-overlay')
-				);
-
 				document.body.classList.add('sc-product-review-form-open');
-				inertElements.forEach((el) => el.setAttribute('inert', ''));
+				// Make all elements inert except the review form dialog.
+				inertEverythingExcept(
+					document.querySelector(
+						'.wp-block-surecart-product-review-form'
+					)
+				);
 			} else {
 				document.body.classList.remove('sc-product-review-form-open');
-				inertElements.forEach((el) => el.removeAttribute('inert'));
-				// Clear the array so fresh elements are captured on next open.
-				inertElements = [];
+				// Remove inert from all elements that were made inert.
+				removeInert();
 			}
 		},
 
