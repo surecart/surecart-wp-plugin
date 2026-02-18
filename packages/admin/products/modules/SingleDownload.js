@@ -22,7 +22,7 @@ import { store as noticesStore } from '@wordpress/notices';
 
 import MediaLibrary from '../../components/MediaLibrary';
 
-export default ({ download, product, className }) => {
+export default ({ download, product, className, variant }) => {
 	const { createSuccessNotice, createErrorNotice } =
 		useDispatch(noticesStore);
 	const [loading, setLoading] = useState(false);
@@ -55,7 +55,9 @@ export default ({ download, product, className }) => {
 	};
 
 	// Is this the current release.
-	const isCurrentRelease = product?.current_release_download === download?.id;
+	const isCurrentRelease = variant
+		? variant?.current_release_download === download?.id
+		: product?.current_release_download === download?.id;
 
 	const onRemove = async () => {
 		const r = confirm(
@@ -215,6 +217,19 @@ export default ({ download, product, className }) => {
 							<>
 								<ScTag type="info" size="small">
 									{__('Current Release', 'surecart')}
+								</ScTag>{' '}
+							</>
+						)}
+						{download?.variant && (
+							<>
+								<ScTag type="neutral" size="small">
+									{[
+										download.variant?.option_1,
+										download.variant?.option_2,
+										download.variant?.option_3,
+									]
+										.filter(Boolean)
+										.join(' / ')}
 								</ScTag>{' '}
 							</>
 						)}

@@ -116,7 +116,7 @@ dispatch(coreStore).addEntities([
 		kind: 'surecart',
 		label: __('Download', 'surecart'),
 		baseURL: '/surecart/v1/downloads',
-		baseURLParams: { context: 'edit', expand: ['media'] },
+		baseURLParams: { context: 'edit', expand: ['media', 'variant'] },
 	},
 	{
 		name: 'draft-checkout',

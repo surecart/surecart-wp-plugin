@@ -11,6 +11,7 @@ import Price from './Price';
 import Inventory from './Inventory';
 import Purchases from './Purchases';
 import Licensing from './Licensing';
+import Downloads from './Downloads';
 import Shipping from './Shipping';
 import Tax from './Tax';
 
@@ -172,6 +173,12 @@ export default ({
 						/>
 
 						<Licensing
+							variant={variant}
+							product={product}
+							updateVariant={updateVariant}
+						/>
+
+						<Downloads
 							variant={variant}
 							product={product}
 							updateVariant={updateVariant}

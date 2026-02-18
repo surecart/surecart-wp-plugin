@@ -58,6 +58,42 @@ class DownloadRestServiceProviderTest extends SureCartUnitTestCase
 		];
 	}
 
+	public function listWithVariantIdsProvider()
+	{
+		return [
+			'List: With variant_ids filter' => [['read_sc_downloads'], 'GET', '/surecart/v1/downloads?variant_ids[]=test-variant-id', 200],
+		];
+	}
+
+	/**
+	 * @dataProvider listWithVariantIdsProvider
+	 */
+	public function test_list_with_variant_ids_filter($caps, $method, $route, $status){
+		//mock the requests in the container
+        $requests = \Mockery::mock(RequestService::class);
+        \SureCart::alias('request', function () use ($requests) {
+            return call_user_func_array([$requests, 'makeRequest'], func_get_args());
+        });
+
+        $requests->shouldReceive('makeRequest')
+            ->andReturn((object) [
+                'id' => 'test',
+            ]);
+
+        if (is_array($caps)) {
+            $user = self::factory()->user->create_and_get();
+            foreach ($caps as $cap) {
+                $user->add_cap($cap);
+            }
+
+            wp_set_current_user($user->ID ?? null);
+        }
+
+        $request = new \WP_REST_Request($method, $route);
+        $response = rest_do_request($request);
+        $this->assertSame($status, $response->get_status());
+	}
+
 	/**
 	 * @dataProvider requestProvider
 	 */

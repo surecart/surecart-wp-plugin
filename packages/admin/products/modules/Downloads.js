@@ -208,7 +208,7 @@ export default ({ id, product, updateProduct, loading }) => {
 						</>
 					);
 				})()}
-				{fetching && <ScBlockUi spinner />}
+				{(fetching || isSaving) && <ScBlockUi spinner />}
 			</Box>
 			{modal === 'external_link_modal' && (
 				<AddExternalUrlModal

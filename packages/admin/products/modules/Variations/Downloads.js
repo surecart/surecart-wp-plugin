@@ -1,0 +1,327 @@
+/** @jsx jsx */
+import { css, jsx } from '@emotion/core';
+import {
+	ScBlockUi,
+	ScButton,
+	ScCard,
+	ScDropdown,
+	ScFormControl,
+	ScIcon,
+	ScMenu,
+	ScMenuItem,
+	ScRadio,
+	ScRadioGroup,
+	ScStackedList,
+} from '@surecart/components-react';
+import { store as coreStore } from '@wordpress/core-data';
+import { useDispatch, useSelect } from '@wordpress/data';
+import { useState } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
+import { store as noticesStore } from '@wordpress/notices';
+import Error from '../../../components/Error';
+import MediaLibrary from '../../../components/MediaLibrary';
+import DrawerSection from '../../../ui/DrawerSection';
+import AddExternalUrlModal from '../AddExternalUrlModal';
+import SingleDownload from '../SingleDownload';
+import useVariantValue from '../../hooks/useVariantValue';
+
+export default ({ variant, product, updateVariant }) => {
+	const { saveEntityRecord } = useDispatch(coreStore);
+	const [showArchived, setShowArchived] = useState(false);
+	const { createSuccessNotice } = useDispatch(noticesStore);
+	const [modal, setModal] = useState(null);
+	const [isSaving, setIsSaving] = useState(false);
+	const [error, setError] = useState(null);
+	const { getValue, isOverridden, getUpdateValue } = useVariantValue({
+		variant,
+		product,
+	});
+
+	const { downloads, fetching } = useSelect(
+		(select) => {
+			const queryArgs = [
+				'surecart',
+				'download',
+				{
+					context: 'edit',
+					variant_ids: [variant?.id],
+					per_page: 100,
+				},
+			];
+			return {
+				downloads: select(coreStore).getEntityRecords(...queryArgs),
+				fetching: select(coreStore).isResolving(
+					'getEntityRecords',
+					queryArgs
+				),
+			};
+		},
+		[variant?.id]
+	);
+
+	const addDownload = async (media, isExternal) => {
+		const payload = {
+			variant: variant?.id,
+			enabled: true,
+		};
+
+		if (isExternal) {
+			payload.name = media.name;
+			payload.url = media.url;
+		} else payload.media = media?.id;
+
+		try {
+			setIsSaving(true);
+			await saveEntityRecord('surecart', 'download', payload, {
+				throwOnError: true,
+			});
+			createSuccessNotice(__('Download added.', 'surecart'), {
+				type: 'snackbar',
+			});
+		} catch (e) {
+			setError(e);
+			console.error(e);
+		} finally {
+			setModal(null);
+			setIsSaving(false);
+		}
+	};
+
+	// sort and group.
+	const sorted = (downloads || []).sort(
+		(a, b) => a.created_at - b.created_at
+	);
+	const unArchived = (sorted || []).filter((download) => !download.archived);
+	const archived = (sorted || []).filter((download) => !!download.archived);
+
+	return (
+		<>
+			<DrawerSection
+				title={__('Downloads', 'surecart')}
+			>
+				<ScRadioGroup label={__('Download Behavior', 'surecart')} required>
+					<div
+						css={css`
+							display: grid;
+							gap: 1em;
+							margin-top: 0.5em;
+						`}
+					>
+						<ScRadio
+							checked={getValue('downloads_enabled') == null}
+							value="null"
+							onClick={() =>
+								updateVariant(
+									getUpdateValue({
+										downloads_enabled: null,
+									})
+								)
+							}
+						>
+							{__('Inherit product downloads', 'surecart')}
+							<span
+								slot="description"
+								css={css`
+									margin: 0.5em 0px 0px 0px;
+								`}
+							>
+								{__(
+									'This variant will inherit and deliver all product-level downloads.',
+									'surecart'
+								)}
+							</span>
+						</ScRadio>
+						<ScRadio
+							checked={getValue('downloads_enabled') === true}
+							value="true"
+							onClick={() =>
+								updateVariant(
+									getUpdateValue({
+										downloads_enabled: true,
+									})
+								)
+							}
+						>
+							{__('Custom downloads', 'surecart')}
+							<span
+								slot="description"
+								css={css`
+									margin: 0.5em 0px 0px 0px;
+								`}
+							>
+								{__(
+									'This variant will override product downloads with its own set.',
+									'surecart'
+								)}
+							</span>
+						</ScRadio>
+						<ScRadio
+							checked={getValue('downloads_enabled') === false}
+							value="false"
+							onClick={() =>
+								updateVariant(
+									getUpdateValue({
+										downloads_enabled: false,
+									})
+								)
+							}
+						>
+							{__('No downloads', 'surecart')}
+							<span
+								slot="description"
+								css={css`
+									margin: 0.5em 0px 0px 0px;
+								`}
+							>
+								{__(
+									'This variant will not deliver any downloads.',
+									'surecart'
+								)}
+							</span>
+						</ScRadio>
+					</div>
+				</ScRadioGroup>
+
+				{getValue('downloads_enabled') === true && (
+				<div
+					css={css`
+						position: relative;
+					`}
+				>
+					{error && (
+						<Error error={error} setError={setError} />
+					)}
+
+					{(() => {
+						if (!downloads?.length) return null;
+						return (
+							<ScCard noPadding>
+								<ScStackedList>
+									{(unArchived || [])
+										.sort(
+											(a, b) =>
+												a.created_at -
+												b.created_at
+										)
+										.map((download) => (
+											<SingleDownload
+												download={download}
+												key={download.id}
+												variant={variant}
+											/>
+										))}
+
+									{showArchived &&
+										(archived || [])
+											.sort(
+												(a, b) =>
+													a.created_at -
+													b.created_at
+											)
+											.map((download) => (
+												<SingleDownload
+													css={css`
+														--sc-list-row-background-color: var(
+															--sc-color-warning-50
+														);
+													`}
+													download={download}
+													key={download.id}
+													variant={variant}
+												/>
+											))}
+								</ScStackedList>
+							</ScCard>
+						);
+					})()}
+
+					<div
+						css={css`
+							display: flex;
+							justify-content: space-between;
+							align-items: center;
+							margin-top: var(--sc-spacing-medium);
+						`}
+					>
+						<ScDropdown
+							placement="bottom-start"
+							style={{ '--panel-width': '14em' }}
+						>
+							<ScButton slot="trigger">
+								<ScIcon name="plus" slot="prefix" />
+								{__('Add Downloads', 'surecart')}
+							</ScButton>
+							<ScMenu>
+								<ScFormControl
+									label={__('File', 'surecart')}
+									showLabel={false}
+								>
+									<MediaLibrary
+										onSelect={(data) =>
+											addDownload(data, false)
+										}
+										multiple={true}
+										render={({ setOpen }) => {
+											return (
+												<ScMenuItem
+													onClick={() =>
+														setOpen(true)
+													}
+												>
+													<ScIcon
+														name="shield"
+														slot="prefix"
+													/>
+													{__(
+														'Secure Storage',
+														'surecart'
+													)}
+												</ScMenuItem>
+											);
+										}}
+									/>
+								</ScFormControl>
+								<ScMenuItem
+									onClick={() =>
+										setModal(
+											'external_link_modal'
+										)
+									}
+								>
+									<ScIcon name="link" slot="prefix" />
+									{__('External Link', 'surecart')}
+								</ScMenuItem>
+							</ScMenu>
+						</ScDropdown>
+
+						{!!archived?.length && (
+							<ScSwitch
+								class="sc-show-archived"
+								checked={showArchived}
+								onScChange={(e) =>
+									setShowArchived(e.target.checked)
+								}
+							>
+								{__('Show Archived', 'surecart')}{' '}
+								<sc-tag size="small">
+									{archived?.length}
+								</sc-tag>
+							</ScSwitch>
+						)}
+					</div>
+
+					{(fetching || isSaving) && <ScBlockUi spinner />}
+				</div>
+			)}
+			</DrawerSection>
+
+			{modal === 'external_link_modal' && (
+				<AddExternalUrlModal
+					onSubmit={(data) => addDownload(data, true)}
+					onRequestClose={() => setModal(null)}
+					loading={isSaving}
+				/>
+			)}
+		</>
+	);
+};
