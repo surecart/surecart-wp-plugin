@@ -33,6 +33,7 @@ class WooCommerceProductsSyncService {
 	 */
 	public function bootstrap() {
 		add_action( 'admin_notices', [ $this, 'showSyncNotice' ] );
+		add_action( 'admin_notices', [ $this, 'showCompletionNotice' ] );
 		add_action( 'surecart/sync/woocommerce_products', [ $this, 'sync' ], 10, 2 );
 	}
 
@@ -61,6 +62,40 @@ class WooCommerceProductsSyncService {
 					'type'  => 'info',
 					'title' => esc_html__( 'SureCart: WooCommerce products import in progress.', 'surecart' ),
 					'text'  => '<p>' . esc_html__( 'SureCart is importing WooCommerce products in the background. The process may take a little while, so please be patient.', 'surecart' ) . '</p>',
+				]
+			)
+		);
+	}
+
+	/**
+	 * Show a completion notice after import finishes.
+	 *
+	 * @return void
+	 */
+	public function showCompletionNotice() {
+		// don't show if import is still running.
+		if ( $this->isRunning() ) {
+			return;
+		}
+
+		$import_id = get_option( 'sc_woo_import_id' );
+		if ( empty( $import_id ) ) {
+			return;
+		}
+
+		$results_url = \SureCart::getUrl()->importResults( 'products', $import_id );
+
+		echo wp_kses_post(
+			\SureCart::notices()->render(
+				[
+					'name'  => 'woo_import_complete_' . $import_id,
+					'type'  => 'success',
+					'title' => esc_html__( 'SureCart: WooCommerce products import complete.', 'surecart' ),
+					'text'  => '<p>' . sprintf(
+						/* translators: %s: URL to import results page */
+						__( 'The import has finished. <a href="%s">View Import Results</a>', 'surecart' ),
+						esc_url( $results_url )
+					) . '</p>',
 				]
 			)
 		);
@@ -140,8 +175,13 @@ class WooCommerceProductsSyncService {
 
 		// Create import batch if we have products.
 		if ( ! empty( $this->products_import_batch ) ) {
-			( new ProductImport() )->create( [ 'data' => $this->products_import_batch ] );
+			$import = ( new ProductImport() )->create( [ 'data' => $this->products_import_batch ] );
 			$this->products_import_batch = []; // Clear batch after import.
+
+			// Store the import ID for the completion notice.
+			if ( ! is_wp_error( $import ) && ! empty( $import->id ) ) {
+				update_option( 'sc_woo_import_id', $import->id );
+			}
 		}
 
 		// if the total number of pages less than or equal to the current page, we don't have another page.

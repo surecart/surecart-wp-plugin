@@ -316,6 +316,58 @@ class ProductsController extends AdminController {
 	}
 
 	/**
+	 * Import results page.
+	 *
+	 * @param \SureCartCore\Requests\RequestInterface $request Request.
+	 *
+	 * @return \SureCartCore\View
+	 */
+	public function importResults( $request ) {
+		// add header.
+		$this->withHeader(
+			[
+				'breadcrumbs' => [
+					'products' => [
+						'title' => __( 'Products', 'surecart' ),
+						'href'  => \SureCart::getUrl()->index( 'products' ),
+					],
+					'import_results' => [
+						'title' => __( 'Import Results', 'surecart' ),
+					],
+				],
+			],
+		);
+
+		// TODO: Replace dummy data with real API call using $request->query('import_id').
+		$succeeded_count = 32;
+		$failed_rows     = [
+			[
+				'name'   => 'Graphic tees',
+				'reason' => 'Product type is not supported',
+			],
+			[
+				'name'   => 'Hoodies',
+				'reason' => 'Product type is not supported',
+			],
+			[
+				'name'   => 'Joggers',
+				'reason' => 'Product type is not supported',
+			],
+			[
+				'name'   => 'Baseball caps',
+				'reason' => 'Product type is not supported',
+			],
+		];
+
+		return \SureCart::view( 'admin/products/import-results' )->with(
+			[
+				'succeeded_count' => $succeeded_count,
+				'failed_rows'     => $failed_rows,
+			]
+		);
+	}
+
+	/**
 	 * Start product sync.
 	 *
 	 * @param \SureCartCore\Requests\RequestInterface $request Request.

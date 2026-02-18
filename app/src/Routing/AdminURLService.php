@@ -190,6 +190,25 @@ class AdminURLService {
 		);
 	}
 
+	/**
+	 * Import results page url.
+	 *
+	 * @param string $name Model lowercase name.
+	 * @param string $import_id The import ID.
+	 *
+	 * @return string URL for the page.
+	 */
+	public function importResults( $name, $import_id ) {
+		return esc_url(
+			add_query_arg(
+				[
+					'action'    => 'import_results',
+					'import_id' => $import_id,
+				],
+				$this->index( $name )
+			)
+		);
+	}
 
 	/**
 	 * Edit model action
