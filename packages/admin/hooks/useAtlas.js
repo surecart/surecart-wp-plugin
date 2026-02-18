@@ -23,17 +23,16 @@ function getLocale() {
  * @return {Promise<Array>} The countries array.
  */
 function fetchCountries() {
-	if (!countriesPromiseCache) {
-		countriesPromiseCache = fetch(
-			`${ATLAS_API_BASE}?locale=${getLocale()}`
-		)
-			.then((res) => res.json())
-			.then((data) => data?.data || [])
-			.catch((err) => {
-				countriesPromiseCache = null;
-				throw err;
-			});
-	}
+	if (countriesPromiseCache) return countriesPromiseCache;
+
+	countriesPromiseCache = fetch(`${ATLAS_API_BASE}?locale=${getLocale()}`)
+		.then((res) => res.json())
+		.then((data) => data?.data || [])
+		.catch((err) => {
+			countriesPromiseCache = null;
+			throw err;
+		});
+
 	return countriesPromiseCache;
 }
 
@@ -62,22 +61,10 @@ export function useCountries() {
 	const [error, setError] = useState(null);
 
 	useEffect(() => {
-		let cancelled = false;
-
 		fetchCountries()
-			.then((data) => {
-				if (!cancelled) setCountries(data);
-			})
-			.catch((err) => {
-				if (!cancelled) setError(err);
-			})
-			.finally(() => {
-				if (!cancelled) setLoading(false);
-			});
-
-		return () => {
-			cancelled = true;
-		};
+			.then(setCountries)
+			.catch(setError)
+			.finally(() => setLoading(false));
 	}, []);
 
 	return { countries, loading, error };
