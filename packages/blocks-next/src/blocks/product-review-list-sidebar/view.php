@@ -8,6 +8,8 @@
 		)
 	);
 	?>
+	id="review-filters"
+	role="region"
 	aria-label="<?php echo esc_attr( $attributes['label'] ); ?>"
 	data-wp-interactive='{ "namespace": "surecart/sidebar" }'
 	data-wp-bind--hidden="!state.open"
@@ -47,7 +49,7 @@
 				data-wp-on--keydown="actions.toggleMobile"
 				role="button"
 				tabindex="0"
-				aria-label="<?php esc_attr_e( 'Close sidebar', 'surecart' ); ?>"
+				aria-label="<?php esc_attr_e( 'Close filters', 'surecart' ); ?>"
 			>
 				<?php echo wp_kses( SureCart::svg()->get( 'arrow-right' ), sc_allowed_svg_html() ); ?>
 			</div>

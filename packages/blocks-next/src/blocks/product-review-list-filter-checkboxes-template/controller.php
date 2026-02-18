@@ -25,6 +25,18 @@ for ( $star = 5; $star >= 1; $star-- ) {
 
 	$label = sprintf( '%s (%d)', $star_text, $count );
 
+	// translators: 1: number of stars, 2: number of reviews with that rating.
+	$aria_label = sprintf(
+		_n(
+			'Filter by %1$d star reviews, %2$d result',
+			'Filter by %1$d star reviews, %2$d results',
+			$count,
+			'surecart'
+		),
+		$star,
+		$count
+	);
+
 	$star_value = (string) $star;
 	$is_checked = in_array( $star_value, $ratings_filter, true );
 
@@ -34,12 +46,13 @@ for ( $star = 5; $star >= 1; $star-- ) {
 		: $params->addFilterArg( 'ratings', $star_value );
 
 	$options[] = [
-		'value'    => $star_value,
-		'href'     => $href,
-		'label'    => $label,
-		'count'    => $count,
-		'checked'  => $is_checked,
-		'disabled' => 0 === $count,
+		'value'      => $star_value,
+		'href'       => $href,
+		'label'      => $label,
+		'aria_label' => $aria_label,
+		'count'      => $count,
+		'checked'    => $is_checked,
+		'disabled'   => 0 === $count,
 	];
 }
 

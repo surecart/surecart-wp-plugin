@@ -12,7 +12,9 @@
 	?>
 	data-wp-interactive='{ "namespace": "surecart/product-review" }'
 	data-wp-router-region="<?php echo esc_attr( 'product-reviews-' . $product->id ); ?>"
+	role="region"
+	aria-label="<?php esc_attr_e( 'Customer Reviews', 'surecart' ); ?>"
 >
 	<?php echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-	<div class="sc-block-ui" data-wp-bind--hidden="!state.loading" hidden></div>
+	<div class="sc-block-ui" data-wp-bind--hidden="!state.loading" hidden aria-live="polite" aria-busy="true"></div>
 </div>
