@@ -1,4 +1,4 @@
-import { Fragment, useState, useEffect } from '@wordpress/element';
+import { Fragment, useState, useMemo } from '@wordpress/element';
 import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
 import {
@@ -13,7 +13,7 @@ import {
 	ScCheckbox,
 	ScFlex,
 } from '@surecart/components-react';
-import { countryChoices } from '@surecart/components';
+import { useCountries } from '@admin/hooks/useAtlas';
 
 export default ({ attributes, setAttributes }) => {
 	const {
@@ -28,15 +28,13 @@ export default ({ attributes, setAttributes }) => {
 		line_2,
 	} = attributes;
 	const [sameAsShipping, setSameAsShipping] = useState(false);
-	const [choices, setChoices] = useState([]);
-	const [isLoading, setIsLoading] = useState(true);
 	const blockProps = useBlockProps();
-
-	useEffect(() => {
-		countryChoices()
-			.then((data) => setChoices(data))
-			.finally(() => setIsLoading(false));
-	}, []);
+	const { countries, loading: isLoading } = useCountries();
+	console.log({ isLoading, countries });
+	const choices = useMemo(
+		() => countries.map(({ code, name }) => ({ value: code, label: name })),
+		[countries]
+	);
 
 	const Tag = full ? ScAddress : ScCompactAddress;
 
