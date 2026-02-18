@@ -1,7 +1,12 @@
 import { Fragment, useState, useEffect } from '@wordpress/element';
 import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
-import { TextControl, PanelBody, ToggleControl, ComboboxControl } from '@wordpress/components';
+import {
+	TextControl,
+	PanelBody,
+	ToggleControl,
+	ComboboxControl,
+} from '@wordpress/components';
 import {
 	ScAddress,
 	ScCompactAddress,
@@ -24,11 +29,15 @@ export default ({ attributes, setAttributes }) => {
 	} = attributes;
 	const [sameAsShipping, setSameAsShipping] = useState(false);
 	const [choices, setChoices] = useState([]);
+	const [isLoading, setIsLoading] = useState(true);
 	const blockProps = useBlockProps();
 
 	useEffect(() => {
-		countryChoices().then((data) => setChoices(data));
+		countryChoices()
+			.then((data) => setChoices(data))
+			.finally(() => setIsLoading(false));
 	}, []);
+
 	const Tag = full ? ScAddress : ScCompactAddress;
 
 	return (
@@ -146,10 +155,9 @@ export default ({ attributes, setAttributes }) => {
 						options={choices}
 						value={default_country}
 						onChange={(value) =>
-							setAttributes({
-								default_country: value,
-							})
+							setAttributes({ default_country: value ?? '' })
 						}
+						isLoading={isLoading}
 					/>
 				</PanelBody>
 			</InspectorControls>
