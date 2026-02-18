@@ -7,7 +7,6 @@
 					[
 						'role'                => 'button',
 						'tabindex'            => '0',
-						'aria-disabled'       => empty( $review_form_link ) ? 'true' : null,
 						'aria-label'          => __( 'Write a Review', 'surecart' ),
 						'data-wp-on--click'   => 'actions.open',
 						'data-wp-on--keydown' => 'actions.open',
