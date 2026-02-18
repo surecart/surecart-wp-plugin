@@ -1,10 +1,9 @@
 import { Fragment, useState, useEffect } from '@wordpress/element';
 import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
-import { TextControl, PanelBody, ToggleControl } from '@wordpress/components';
+import { TextControl, PanelBody, ToggleControl, ComboboxControl } from '@wordpress/components';
 import {
 	ScAddress,
-	ScSelect,
 	ScCompactAddress,
 	ScCheckbox,
 	ScFlex,
@@ -139,16 +138,16 @@ export default ({ attributes, setAttributes }) => {
 						/>
 					)}
 
-					<ScSelect
-						style={{ width: '100%' }}
-						search
+					<ComboboxControl
+						__next40pxDefaultSize
+						__nextHasNoMarginBottom
 						label={__('Default country', 'surecart')}
 						placeholder={__('Country', 'surecart')}
-						choices={choices}
+						options={choices}
 						value={default_country}
-						onScChange={(e) =>
+						onChange={(value) =>
 							setAttributes({
-								default_country: e.target.value,
+								default_country: value,
 							})
 						}
 					/>
