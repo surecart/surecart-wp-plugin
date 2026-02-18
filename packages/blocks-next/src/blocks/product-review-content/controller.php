@@ -1,5 +1,5 @@
 <?php
-if ( empty( $block->context['review'] ) ) {
+if ( empty( $block->context['review']->body ) ) {
 	return;
 }
 
