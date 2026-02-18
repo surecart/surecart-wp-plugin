@@ -39,8 +39,18 @@ export default ({ variant, product, updateVariant }) => {
 		product,
 	});
 
+	const downloadsEnabled = getValue('downloads_enabled');
+
 	const { downloads, fetching } = useSelect(
 		(select) => {
+			// Reset/refetch when variant changes and Only fetch downloads when custom downloads mode is enabled.
+			if (!variant?.id || downloadsEnabled !== true) {
+				return {
+					downloads: [],
+					fetching: false,
+				};
+			}
+
 			const queryArgs = [
 				'surecart',
 				'download',
@@ -48,9 +58,7 @@ export default ({ variant, product, updateVariant }) => {
 					context: 'edit',
 					variant_ids: [variant?.id],
 					per_page: 100,
-					expands: [
-						'variant',
-					]
+					expand: ['media', 'variant'],
 				},
 			];
 			return {
@@ -61,7 +69,7 @@ export default ({ variant, product, updateVariant }) => {
 				),
 			};
 		},
-		[variant?.id]
+		[variant?.id, downloadsEnabled]
 	);
 
 	const addDownload = async (media, isExternal) => {
@@ -114,7 +122,7 @@ export default ({ variant, product, updateVariant }) => {
 						`}
 					>
 						<ScRadio
-							checked={getValue('downloads_enabled') == null}
+							checked={downloadsEnabled == null}
 							value="null"
 							onClick={() =>
 								updateVariant(
@@ -138,7 +146,7 @@ export default ({ variant, product, updateVariant }) => {
 							</span>
 						</ScRadio>
 						<ScRadio
-							checked={getValue('downloads_enabled') === true}
+							checked={downloadsEnabled === true}
 							value="true"
 							onClick={() =>
 								updateVariant(
@@ -162,7 +170,7 @@ export default ({ variant, product, updateVariant }) => {
 							</span>
 						</ScRadio>
 						<ScRadio
-							checked={getValue('downloads_enabled') === false}
+							checked={downloadsEnabled === false}
 							value="false"
 							onClick={() =>
 								updateVariant(
@@ -188,7 +196,7 @@ export default ({ variant, product, updateVariant }) => {
 					</div>
 				</ScRadioGroup>
 
-				{getValue('downloads_enabled') === true && (
+				{downloadsEnabled === true && (
 					<div
 						css={css`
 							position: relative;
@@ -197,7 +205,15 @@ export default ({ variant, product, updateVariant }) => {
 						{error && <Error error={error} setError={setError} />}
 
 						{(() => {
-							if (!downloads?.length) return null;
+							// Only show card if there are unarchived downloads or archived downloads are shown.
+							const hasUnarchivedDownloads =
+								unArchived?.length > 0;
+							const hasArchivedToShow =
+								showArchived && archived?.length > 0;
+
+							if (!hasUnarchivedDownloads && !hasArchivedToShow)
+								return null;
+
 							return (
 								<ScCard noPadding>
 									<ScStackedList>

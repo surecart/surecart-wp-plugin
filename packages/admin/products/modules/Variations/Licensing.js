@@ -1,4 +1,6 @@
-import { ScInput, ScSwitch } from '@surecart/components-react';
+import { ScInput, ScSelect, ScSwitch } from '@surecart/components-react';
+import { store as coreStore } from '@wordpress/core-data';
+import { useSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 import DrawerSection from '../../../ui/DrawerSection';
 import useVariantValue from '../../hooks/useVariantValue';
@@ -9,6 +11,49 @@ export default ({ variant, updateVariant, product }) => {
 		variant,
 		product,
 	});
+
+	// Check if custom downloads is enabled
+	const downloadsEnabled = getValue('downloads_enabled');
+
+	// Fetch downloads for current release selection (only when custom downloads enabled)
+	const { downloads, fetching } = useSelect(
+		(select) => {
+			// Reset/refetch when variant changes
+			if (!variant?.id) {
+				return {
+					downloads: [],
+					fetching: false,
+				};
+			}
+
+			// Only fetch when custom downloads mode is enabled
+			if (downloadsEnabled !== true) {
+				return {
+					downloads: [],
+					fetching: false,
+				};
+			}
+
+			const queryArgs = [
+				'surecart',
+				'download',
+				{
+					context: 'edit',
+					variant_ids: [variant?.id],
+					per_page: 100,
+					expand: ['media', 'variant'],
+				},
+			];
+			return {
+				downloads: select(coreStore).getEntityRecords(...queryArgs),
+				fetching: select(coreStore).isResolving(
+					'getEntityRecords',
+					queryArgs
+				),
+			};
+		},
+		[variant?.id, downloadsEnabled]
+	);
 
 	if (!product?.licensing_enabled) {
 		return null;
@@ -23,6 +68,10 @@ export default ({ variant, updateVariant, product }) => {
 						{
 							key: 'license_activation_limit',
 							label: __('Activation limit', 'surecart'),
+						},
+						{
+							key: 'current_release_download',
+							label: __('Current release', 'surecart'),
 						},
 					]}
 					isOverridden={isOverridden}
@@ -47,6 +96,35 @@ export default ({ variant, updateVariant, product }) => {
 					);
 				}}
 			/>
+			{downloadsEnabled === true && (
+				<ScSelect
+					label={__('Current Release', 'surecart')}
+					help={__(
+						'This is the current release zip of your software.',
+						'surecart'
+					)}
+					loading={fetching}
+					value={getValue('current_release_download')}
+					onScChange={(e) => {
+						updateVariant(
+							getUpdateValue({
+								current_release_download: e.target.value || null,
+							})
+						);
+					}}
+					choices={(downloads || [])
+						.filter(
+							(download) =>
+								download?.media?.content_type === 'application/zip'
+						)
+						.map((download) => {
+							return {
+								value: download?.id,
+								label: download?.media?.filename,
+							};
+						})}
+				/>
+			)}
 		</DrawerSection>
 	);
 };

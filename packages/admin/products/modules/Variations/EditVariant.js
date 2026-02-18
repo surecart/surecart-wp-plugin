@@ -10,8 +10,8 @@ import Image from './Image';
 import Price from './Price';
 import Inventory from './Inventory';
 import Purchases from './Purchases';
-import Licensing from './Licensing';
 import Downloads from './Downloads';
+import Licensing from './Licensing';
 import Shipping from './Shipping';
 import Tax from './Tax';
 
@@ -172,13 +172,13 @@ export default ({
 							updateVariant={updateVariant}
 						/>
 
-						<Licensing
+						<Downloads
 							variant={variant}
 							product={product}
 							updateVariant={updateVariant}
 						/>
 
-						<Downloads
+						<Licensing
 							variant={variant}
 							product={product}
 							updateVariant={updateVariant}
