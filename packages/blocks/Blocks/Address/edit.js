@@ -30,7 +30,6 @@ export default ({ attributes, setAttributes }) => {
 	const [sameAsShipping, setSameAsShipping] = useState(false);
 	const blockProps = useBlockProps();
 	const { countries, loading: isLoading } = useCountries();
-	console.log({ isLoading, countries });
 	const choices = useMemo(
 		() => countries.map(({ code, name }) => ({ value: code, label: name })),
 		[countries]
