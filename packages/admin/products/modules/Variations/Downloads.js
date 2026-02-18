@@ -12,6 +12,8 @@ import {
 	ScRadio,
 	ScRadioGroup,
 	ScStackedList,
+	ScSwitch,
+	ScTag,
 } from '@surecart/components-react';
 import { store as coreStore } from '@wordpress/core-data';
 import { useDispatch, useSelect } from '@wordpress/data';
@@ -32,7 +34,7 @@ export default ({ variant, product, updateVariant }) => {
 	const [modal, setModal] = useState(null);
 	const [isSaving, setIsSaving] = useState(false);
 	const [error, setError] = useState(null);
-	const { getValue, isOverridden, getUpdateValue } = useVariantValue({
+	const { getValue, getUpdateValue } = useVariantValue({
 		variant,
 		product,
 	});
@@ -46,6 +48,9 @@ export default ({ variant, product, updateVariant }) => {
 					context: 'edit',
 					variant_ids: [variant?.id],
 					per_page: 100,
+					expands: [
+						'variant',
+					]
 				},
 			];
 			return {
@@ -96,10 +101,11 @@ export default ({ variant, product, updateVariant }) => {
 
 	return (
 		<>
-			<DrawerSection
-				title={__('Downloads', 'surecart')}
-			>
-				<ScRadioGroup label={__('Download Behavior', 'surecart')} required>
+			<DrawerSection title={__('Downloads', 'surecart')}>
+				<ScRadioGroup
+					label={__('Download Behavior', 'surecart')}
+					required
+				>
 					<div
 						css={css`
 							display: grid;
@@ -183,136 +189,131 @@ export default ({ variant, product, updateVariant }) => {
 				</ScRadioGroup>
 
 				{getValue('downloads_enabled') === true && (
-				<div
-					css={css`
-						position: relative;
-					`}
-				>
-					{error && (
-						<Error error={error} setError={setError} />
-					)}
+					<div
+						css={css`
+							position: relative;
+						`}
+					>
+						{error && <Error error={error} setError={setError} />}
 
-					{(() => {
-						if (!downloads?.length) return null;
-						return (
-							<ScCard noPadding>
-								<ScStackedList>
-									{(unArchived || [])
-										.sort(
-											(a, b) =>
-												a.created_at -
-												b.created_at
-										)
-										.map((download) => (
-											<SingleDownload
-												download={download}
-												key={download.id}
-												variant={variant}
-											/>
-										))}
-
-									{showArchived &&
-										(archived || [])
+						{(() => {
+							if (!downloads?.length) return null;
+							return (
+								<ScCard noPadding>
+									<ScStackedList>
+										{(unArchived || [])
 											.sort(
 												(a, b) =>
-													a.created_at -
-													b.created_at
+													a.created_at - b.created_at
 											)
 											.map((download) => (
 												<SingleDownload
-													css={css`
-														--sc-list-row-background-color: var(
-															--sc-color-warning-50
-														);
-													`}
 													download={download}
 													key={download.id}
 													variant={variant}
 												/>
 											))}
-								</ScStackedList>
-							</ScCard>
-						);
-					})()}
 
-					<div
-						css={css`
-							display: flex;
-							justify-content: space-between;
-							align-items: center;
-							margin-top: var(--sc-spacing-medium);
-						`}
-					>
-						<ScDropdown
-							placement="bottom-start"
-							style={{ '--panel-width': '14em' }}
-						>
-							<ScButton slot="trigger">
-								<ScIcon name="plus" slot="prefix" />
-								{__('Add Downloads', 'surecart')}
-							</ScButton>
-							<ScMenu>
-								<ScFormControl
-									label={__('File', 'surecart')}
-									showLabel={false}
-								>
-									<MediaLibrary
-										onSelect={(data) =>
-											addDownload(data, false)
-										}
-										multiple={true}
-										render={({ setOpen }) => {
-											return (
-												<ScMenuItem
-													onClick={() =>
-														setOpen(true)
-													}
-												>
-													<ScIcon
-														name="shield"
-														slot="prefix"
+										{showArchived &&
+											(archived || [])
+												.sort(
+													(a, b) =>
+														a.created_at -
+														b.created_at
+												)
+												.map((download) => (
+													<SingleDownload
+														css={css`
+															--sc-list-row-background-color: var(
+																--sc-color-warning-50
+															);
+														`}
+														download={download}
+														key={download.id}
+														variant={variant}
 													/>
-													{__(
-														'Secure Storage',
-														'surecart'
-													)}
-												</ScMenuItem>
-											);
-										}}
-									/>
-								</ScFormControl>
-								<ScMenuItem
-									onClick={() =>
-										setModal(
-											'external_link_modal'
-										)
+												))}
+									</ScStackedList>
+								</ScCard>
+							);
+						})()}
+
+						<div
+							css={css`
+								display: flex;
+								justify-content: space-between;
+								align-items: center;
+								margin-top: var(--sc-spacing-medium);
+							`}
+						>
+							<ScDropdown
+								placement="bottom-start"
+								style={{ '--panel-width': '14em' }}
+							>
+								<ScButton slot="trigger">
+									<ScIcon name="plus" slot="prefix" />
+									{__('Add Downloads', 'surecart')}
+								</ScButton>
+								<ScMenu>
+									<ScFormControl
+										label={__('File', 'surecart')}
+										showLabel={false}
+									>
+										<MediaLibrary
+											onSelect={(data) =>
+												addDownload(data, false)
+											}
+											multiple={true}
+											render={({ setOpen }) => {
+												return (
+													<ScMenuItem
+														onClick={() =>
+															setOpen(true)
+														}
+													>
+														<ScIcon
+															name="shield"
+															slot="prefix"
+														/>
+														{__(
+															'Secure Storage',
+															'surecart'
+														)}
+													</ScMenuItem>
+												);
+											}}
+										/>
+									</ScFormControl>
+									<ScMenuItem
+										onClick={() =>
+											setModal('external_link_modal')
+										}
+									>
+										<ScIcon name="link" slot="prefix" />
+										{__('External Link', 'surecart')}
+									</ScMenuItem>
+								</ScMenu>
+							</ScDropdown>
+
+							{!!archived?.length && (
+								<ScSwitch
+									className="sc-show-archived"
+									checked={showArchived}
+									onScChange={(e) =>
+										setShowArchived(e.target.checked)
 									}
 								>
-									<ScIcon name="link" slot="prefix" />
-									{__('External Link', 'surecart')}
-								</ScMenuItem>
-							</ScMenu>
-						</ScDropdown>
+									{__('Show Archived', 'surecart')}{' '}
+									<ScTag size="small">
+										{archived?.length}
+									</ScTag>
+								</ScSwitch>
+							)}
+						</div>
 
-						{!!archived?.length && (
-							<ScSwitch
-								class="sc-show-archived"
-								checked={showArchived}
-								onScChange={(e) =>
-									setShowArchived(e.target.checked)
-								}
-							>
-								{__('Show Archived', 'surecart')}{' '}
-								<sc-tag size="small">
-									{archived?.length}
-								</sc-tag>
-							</ScSwitch>
-						)}
+						{(fetching || isSaving) && <ScBlockUi spinner />}
 					</div>
-
-					{(fetching || isSaving) && <ScBlockUi spinner />}
-				</div>
-			)}
+				)}
 			</DrawerSection>
 
 			{modal === 'external_link_modal' && (

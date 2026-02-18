@@ -222,7 +222,7 @@ export default ({ download, product, className, variant }) => {
 						)}
 						{download?.variant && (
 							<>
-								<ScTag type="neutral" size="small">
+								<ScTag type="default" size="small">
 									{[
 										download.variant?.option_1,
 										download.variant?.option_2,
