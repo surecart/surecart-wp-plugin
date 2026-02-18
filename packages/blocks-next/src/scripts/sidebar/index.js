@@ -28,10 +28,10 @@ const { state, actions } = store('surecart/sidebar', {
 		},
 		get ariaLabelDesktop() {
 			return state?.open
-				? __('Close sidebar', 'surecart')
-				: __('Open sidebar', 'surecart');
+				? __('Hide filters', 'surecart')
+				: __('Show filters', 'surecart');
 		},
-		ariaLabelMobile: __('Open sidebar', 'surecart'),
+		ariaLabelMobile: __('Show filters', 'surecart'),
 	},
 
 	actions: {
@@ -44,7 +44,7 @@ const { state, actions } = store('surecart/sidebar', {
 			inertEverythingExcept(
 				document.querySelector('.sc-sidebar-drawer')
 			);
-			state.ariaLabelMobile = __('Close sidebar', 'surecart');
+			state.ariaLabelMobile = __('Hide filters', 'surecart');
 		},
 
 		/**
@@ -54,7 +54,7 @@ const { state, actions } = store('surecart/sidebar', {
 			state.mobileOpen = false;
 			// remove inert attribute from all elements that were made inert
 			removeInert();
-			state.ariaLabelMobile = __('Open sidebar', 'surecart');
+			state.ariaLabelMobile = __('Show filters', 'surecart');
 		},
 
 		/**
