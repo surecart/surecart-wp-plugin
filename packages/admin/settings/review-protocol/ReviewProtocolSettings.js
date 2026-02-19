@@ -59,7 +59,7 @@ const ReviewProtocolSettings = () => {
 			<SettingsBox
 				title={__('Product Reviews Settings', 'surecart')}
 				description={__(
-					'Configure how product reviews and automatic review requests will be sent to customers.',
+					'Configure how product reviews work and how review requests are sent to customers.',
 					'surecart'
 				)}
 				loading={!hasLoadedReviewProtocolItem}
@@ -74,10 +74,10 @@ const ReviewProtocolSettings = () => {
 						});
 					}}
 				>
-					{__('Enable Product Reviews', 'surecart')}
+					{__('Product Reviews', 'surecart')}
 					<span slot="description" style={{ lineHeight: '1.4' }}>
 						{__(
-							'Allow customers to leave reviews on products. Individual products must also have reviews enabled.',
+							'Allow customers to leave reviews on your products. Reviews must also be enabled at the product level.',
 							'surecart'
 						)}
 					</span>
@@ -95,13 +95,13 @@ const ReviewProtocolSettings = () => {
 								});
 							}}
 						>
-							{__('Review Request Email', 'surecart')}
+							{__('Send Review Request Emails', 'surecart')}
 							<span
 								slot="description"
 								style={{ lineHeight: '1.4' }}
 							>
 								{__(
-									'Send automatic review request email to customers after their order is fulfilled.',
+									'Automatically send review request emails after an order is fulfilled.',
 									'surecart'
 								)}
 							</span>
@@ -110,11 +110,11 @@ const ReviewProtocolSettings = () => {
 						{reviewProtocolItem?.solicit_reviews && (
 							<ScInput
 								label={__(
-									'When should we ask for a review?',
+									'When should we send the review request?',
 									'surecart'
 								)}
 								help={__(
-									"Pick how many days after the order is marked fulfilled that we'd send the review request email. Most sellers use 3–14 days.",
+									'Choose how many days after an order is marked as fulfilled to send the review request. Most stores use 3–14 days.',
 									'surecart'
 								)}
 								type="number"
@@ -145,13 +145,13 @@ const ReviewProtocolSettings = () => {
 								setHideVerifiedBadge(!hideVerifiedBadge);
 							}}
 						>
-							{__('Verified Buyer', 'surecart')}
+							{__('Verified Buyer Badge', 'surecart')}
 							<span
 								slot="description"
 								style={{ lineHeight: '1.4' }}
 							>
 								{__(
-									'Show "Verified Buyer" badge for reviews left by customers who purchased the product.',
+									'Display a "Verified Buyer" badge on reviews from customers who purchased the product.',
 									'surecart'
 								)}
 							</span>
