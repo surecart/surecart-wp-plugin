@@ -235,6 +235,7 @@ export default ({ download, product, className, variant }) => {
 								display: flex;
 								align-items: center;
 								gap: 0.5em;
+								flex-wrap: wrap;
 							`}
 						>
 							{download?.media?.byte_size && (
@@ -255,6 +256,14 @@ export default ({ download, product, className, variant }) => {
 									v{download?.media?.release_json?.version}
 								</ScTag>
 							)}
+							{!download?.url && (
+								<ScTag type="success" size="small">
+									<ScFlex alignItems="center">
+										<ScIcon name="shield" />
+										<span>{__('Secure', 'surecart')}</span>
+									</ScFlex>
+								</ScTag>
+							)}
 							{download?.archived && (
 								<div>
 									<ScTag type="warning" size="small">
@@ -266,66 +275,54 @@ export default ({ download, product, className, variant }) => {
 					</div>
 				</div>
 
-				<ScFlex alignItems="center" slot="suffix">
-					{!download?.url && (
-						<ScTag type="success" size="small">
-							<ScFlex alignItems="center">
-								<ScIcon name="shield" />
-								<span>{__('Secure', 'surecart')}</span>
-							</ScFlex>
-						</ScTag>
-					)}
-					<ScDropdown placement="bottom-end">
-						<ScButton type="text" slot="trigger" circle>
-							<ScIcon name="more-horizontal" />
-						</ScButton>
-						<ScMenu>
-							{download?.media && (
-								<Fragment>
-									<MediaLibrary
-										onSelect={replaceItem}
-										multiple={false}
-										render={({ setOpen }) => {
-											return (
-												<ScMenuItem
-													onClick={() =>
-														setOpen(true)
-													}
-												>
-													<ScIcon
-														name="repeat"
-														slot="prefix"
-													/>
-													{__('Replace', 'surecart')}
-												</ScMenuItem>
-											);
-										}}
-									></MediaLibrary>
-									<ScMenuDivider></ScMenuDivider>
-								</Fragment>
-							)}
+				<ScDropdown placement="bottom-end" slot="suffix">
+					<ScButton type="text" slot="trigger" circle>
+						<ScIcon name="more-horizontal" />
+					</ScButton>
+					<ScMenu>
+						{download?.media && (
+							<Fragment>
+								<MediaLibrary
+									onSelect={replaceItem}
+									multiple={false}
+									render={({ setOpen }) => {
+										return (
+											<ScMenuItem
+												onClick={() => setOpen(true)}
+											>
+												<ScIcon
+													name="repeat"
+													slot="prefix"
+												/>
+												{__('Replace', 'surecart')}
+											</ScMenuItem>
+										);
+									}}
+								></MediaLibrary>
+								<ScMenuDivider></ScMenuDivider>
+							</Fragment>
+						)}
 
-							<ScMenuItem onClick={downloadItem}>
-								<ScIcon name="download-cloud" slot="prefix" />
-								{__('Download', 'surecart')}
-							</ScMenuItem>
+						<ScMenuItem onClick={downloadItem}>
+							<ScIcon name="download-cloud" slot="prefix" />
+							{__('Download', 'surecart')}
+						</ScMenuItem>
 
-							<ScMenuDivider></ScMenuDivider>
+						<ScMenuDivider></ScMenuDivider>
 
-							<ScMenuItem onClick={toggleDisable}>
-								<ScIcon name="archive" slot="prefix" />
-								{download?.archived
-									? __('Un-Archive', 'surecart')
-									: __('Archive', 'surecart')}
-							</ScMenuItem>
+						<ScMenuItem onClick={toggleDisable}>
+							<ScIcon name="archive" slot="prefix" />
+							{download?.archived
+								? __('Un-Archive', 'surecart')
+								: __('Archive', 'surecart')}
+						</ScMenuItem>
 
-							<ScMenuItem onClick={onRemove}>
-								<ScIcon name="trash" slot="prefix" />
-								{__('Remove', 'surecart')}
-							</ScMenuItem>
-						</ScMenu>
-					</ScDropdown>
-				</ScFlex>
+						<ScMenuItem onClick={onRemove}>
+							<ScIcon name="trash" slot="prefix" />
+							{__('Remove', 'surecart')}
+						</ScMenuItem>
+					</ScMenu>
+				</ScDropdown>
 			</ScStackedListRow>
 			{loading && <ScBlockUi spinner />}
 		</Fragment>
