@@ -55,7 +55,7 @@ export default () => {
 		successFunction
 	);
 
-	// Migrate legacy referral_url to referral_urls array on first load.
+	// Migrate legacy referral_url to referral_urls array on first load only.
 	useEffect(() => {
 		if (
 			hasLoadedAffiliationProtocolItem &&
@@ -66,7 +66,7 @@ export default () => {
 				referral_urls: [affiliationProtocolItem.referral_url],
 			});
 		}
-	}, [hasLoadedAffiliationProtocolItem]);
+	}, [hasLoadedAffiliationProtocolItem]); // eslint-disable-line react-hooks/exhaustive-deps
 
 	/**
 	 * Form is submitted.
@@ -74,6 +74,13 @@ export default () => {
 	const onSubmit = async () => {
 		setError(null);
 		try {
+			// Strip blank URL entries before saving so empty strings are skipped.
+			editAffiliationProtocolItem({
+				referral_urls: (
+					affiliationProtocolItem?.referral_urls || []
+				).filter((url) => url.trim()),
+			});
+
 			await save({
 				successMessage: __('Settings Updated.', 'surecart'),
 			});
