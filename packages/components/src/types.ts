@@ -271,7 +271,6 @@ export interface Download {
   update_at: number;
   created_at: number;
   url?: string;
-  variant?: string | Variant | null;
 }
 
 export type FormState = 'idle' | 'loading' | 'draft' | 'updating' | 'finalizing' | 'paying' | 'confirming' | 'confirmed' | 'paid' | 'failure' | 'expired' | 'redirecting';
