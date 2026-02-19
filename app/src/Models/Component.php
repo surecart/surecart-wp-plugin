@@ -74,6 +74,7 @@ class Component {
 			"#$this->id",
 			$this->data
 		);
+		$inner_html = apply_filters( 'surecart/dashboard/subscription/inner_html', $inner_html, $this->tag, $this->data );
 		return "<$this->tag id='$this->id'>$inner_html</$this->tag>";
 	}
 
