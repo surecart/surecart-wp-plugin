@@ -52,6 +52,11 @@ class WooCommerceProductsSyncService {
 	 * @return void
 	 */
 	public function showSyncNotice() {
+		// Don't show on the import results page — the user is already viewing results.
+		if ( 'import_results' === ( $_GET['action'] ?? '' ) ) {
+			return;
+		}
+
 		if ( ! $this->isRunning() ) {
 			return;
 		}
@@ -73,6 +78,11 @@ class WooCommerceProductsSyncService {
 	 * @return void
 	 */
 	public function showCompletionNotice() {
+		// Don't show on the import results page — the user is already viewing results.
+		if ( 'import_results' === ( $_GET['action'] ?? '' ) ) {
+			return;
+		}
+
 		// don't show if import is still running.
 		if ( $this->isRunning() ) {
 			return;
