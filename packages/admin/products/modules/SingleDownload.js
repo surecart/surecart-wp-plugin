@@ -60,12 +60,17 @@ export default ({ download, product, className, variant }) => {
 		: product?.current_release_download === download?.id;
 
 	const onRemove = async () => {
-		const r = confirm(
-			__(
-				'Are you sure you want to remove the download from this product?',
-				'surecart'
-			)
-		);
+		const confirmationMessage = !!variant
+			? __(
+					'Are you sure you want to remove the download from this variant?',
+					'surecart'
+			  )
+			: __(
+					'Are you sure you want to remove the download from this product?',
+					'surecart'
+			  );
+
+		const r = confirm(confirmationMessage);
 		if (!r) return;
 
 		setLoading(true);
