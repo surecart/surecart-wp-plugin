@@ -29,10 +29,6 @@ import SingleDownload from '../SingleDownload';
 import useVariantValue from '../../hooks/useVariantValue';
 
 export default ({ variant, product, updateVariant }) => {
-	if (!variant) {
-		return null;
-	}
-
 	const { saveEntityRecord } = useDispatch(coreStore);
 	const [showArchived, setShowArchived] = useState(false);
 	const { createSuccessNotice } = useDispatch(noticesStore);
@@ -79,6 +75,16 @@ export default ({ variant, product, updateVariant }) => {
 	);
 
 	const addDownload = async (media, isExternal) => {
+		if (!variant?.id) {
+			setError(
+				__(
+					'Please save the variant before adding downloads.',
+					'surecart'
+				)
+			);
+			return;
+		}
+
 		const payload = {
 			variant: variant?.id,
 			enabled: true,
