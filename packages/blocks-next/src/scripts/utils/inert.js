@@ -22,7 +22,12 @@ export function inertEverythingExcept(element) {
 		if (!parent) break;
 
 		Array.from(parent.children).forEach((sibling) => {
-			if (sibling !== current && !sibling.hasAttribute('inert')) {
+			if (
+				sibling !== current &&
+				!sibling.hasAttribute('inert') &&
+				!sibling.classList.contains('a11y-speak-region') &&
+				!sibling.classList.contains('a11y-speak-intro-text')
+			) {
 				sibling.setAttribute('inert', '');
 				inertElements.push(sibling);
 			}

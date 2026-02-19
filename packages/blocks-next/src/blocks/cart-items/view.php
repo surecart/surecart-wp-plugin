@@ -69,6 +69,7 @@
 									data-wp-bind--aria-valuemin="context.line_item.min"
 									data-wp-bind--max="context.line_item.max"
 									data-wp-bind--aria-valuemax="context.line_item.max"
+									data-wp-bind--aria-valuenow="context.line_item.quantity"
 									data-wp-bind--disabled="surecart/checkout::state.loading"
 									data-wp-bind--aria-label="surecart/checkout::state.quantityInputAriaLabel"
 									step="1"
@@ -97,7 +98,7 @@
 					<?php if ( $attributes['removable'] ) : ?>
 						<button
 							class="sc-product-line-item__remove-button"
-							aria-label="<?php esc_attr_e( 'Remove item', 'surecart' ); ?>"
+							data-wp-bind--aria-label="surecart/checkout::state.removeItemAriaLabel"
 							data-wp-on--click="surecart/checkout::actions.removeLineItem"
 							data-wp-on--keydown="surecart/checkout::actions.removeLineItem"
 						>

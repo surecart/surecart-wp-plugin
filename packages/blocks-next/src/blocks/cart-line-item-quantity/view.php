@@ -32,6 +32,7 @@
 		data-wp-bind--aria-valuemin="context.line_item.min"
 		data-wp-bind--max="context.line_item.max"
 		data-wp-bind--aria-valuemax="context.line_item.max"
+		data-wp-bind--aria-valuenow="context.line_item.quantity"
 		data-wp-bind--disabled="surecart/checkout::state.loading"
 		data-wp-bind--aria-label="surecart/checkout::state.quantityInputAriaLabel"
 		step="1"

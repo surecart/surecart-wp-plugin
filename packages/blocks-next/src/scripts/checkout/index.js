@@ -343,6 +343,35 @@ const { state, actions } = store('surecart/checkout', {
 			const { line_item } = getContext();
 			return line_item?.quantity > 1;
 		},
+
+		/**
+		 * Check if the quantity controls are disabled (loading or ad_hoc price).
+		 */
+		get isQuantityDisabled() {
+			return !!state.loading;
+		},
+
+		/**
+		 * Check if the quantity increase button is disabled.
+		 */
+		get isQuantityIncreaseDisabled() {
+			const { line_item } = getContext('surecart/checkout');
+			return (
+				state.isQuantityDisabled ||
+				( line_item?.max && line_item?.quantity >= line_item?.max )
+			);
+		},
+
+		/**
+		 * Check if the quantity decrease button is disabled.
+		 */
+		get isQuantityDecreaseDisabled() {
+			const { line_item } = getContext('surecart/checkout');
+			return (
+				state.isQuantityDisabled ||
+				line_item?.quantity <= ( line_item?.min || 1 )
+			);
+		},
 	},
 
 	callbacks: {
@@ -684,11 +713,15 @@ const { state, actions } = store('surecart/checkout', {
 			}
 			const { line_item } = getContext();
 			const quantity = line_item?.quantity + 1;
-			yield actions.updateLineItem({ quantity });
 			const { speak } = yield import(
 				/* webpackIgnore: true */
 				'@surecart/a11y'
 			);
+			speak(
+				__('Updating quantity.', 'surecart'),
+				'assertive'
+			);
+			yield actions.updateLineItem({ quantity });
 			speak(
 				sprintf(
 					/* translators: %d: quantity */
@@ -712,11 +745,15 @@ const { state, actions } = store('surecart/checkout', {
 			if (quantity < 1) {
 				return;
 			}
-			yield actions.updateLineItem({ quantity });
 			const { speak } = yield import(
 				/* webpackIgnore: true */
 				'@surecart/a11y'
 			);
+			speak(
+				__('Updating quantity.', 'surecart'),
+				'assertive'
+			);
+			yield actions.updateLineItem({ quantity });
 			speak(
 				sprintf(
 					/* translators: %d: quantity */
@@ -783,6 +820,8 @@ const { state, actions } = store('surecart/checkout', {
 
 			state.loading = true;
 			const { line_item, mode, formId } = getContext();
+			const productName =
+				line_item?.price?.product?.name || __('item', 'surecart');
 			const { speak } = yield import(
 				/* webpackIgnore: true */
 				'@surecart/a11y'
@@ -791,7 +830,7 @@ const { state, actions } = store('surecart/checkout', {
 			speak(
 				sprintf(
 					__('Removing %s from your cart.', 'surecart'),
-					line_item?.price?.product?.name
+					productName
 				),
 				'assertive'
 			);
@@ -810,22 +849,34 @@ const { state, actions } = store('surecart/checkout', {
 			speak(
 				sprintf(
 					__('Removed %s from your cart.', 'surecart'),
-					line_item?.price?.product?.name
+					productName
 				),
 				'assertive'
 			);
 			actions.announceLatestCheckout();
+
+			// Move focus to the first remaining remove button, or fall back to the cart close button.
+			requestAnimationFrame(() => {
+				const nextFocus =
+					document.querySelector(
+						'.wp-block-surecart-cart-line-item-remove, .sc-product-line-item__remove-button'
+					) ||
+					document.querySelector(
+						'.wp-block-surecart-cart-close-button'
+					);
+				nextFocus?.focus();
+			});
 		},
 		updateCheckout(e) {
 			const { checkout, mode, formId } = e.detail;
 			actions.setCheckout(checkout, mode, formId);
 		},
 		announceLatestCheckout: function* () {
-			clearTimeout(announceTimeout);
 			const { speak } = yield import(
 				/* webpackIgnore: true */
 				'@surecart/a11y'
 			);
+			clearTimeout(announceTimeout);
 			announceTimeout = setTimeout(() => {
 				speak(
 					sprintf(
