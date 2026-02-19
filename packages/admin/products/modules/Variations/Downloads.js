@@ -113,7 +113,7 @@ export default ({ variant, product, updateVariant }) => {
 	};
 
 	// sort and group.
-	const sorted = (downloads || []).sort(
+	const sorted = [...(downloads || [])].sort(
 		(a, b) => a.created_at - b.created_at
 	);
 	const unArchived = sorted.filter((download) => !download.archived);
