@@ -193,17 +193,19 @@ class AdminURLService {
 	/**
 	 * Import results page url.
 	 *
-	 * @param string $name Model lowercase name.
-	 * @param string $import_id The import ID.
+	 * @param string       $name Model lowercase name.
+	 * @param string|array $import_ids The import ID(s).
 	 *
 	 * @return string URL for the page.
 	 */
-	public function importResults( $name, $import_id ) {
+	public function importResults( $name, $import_ids ) {
+		$import_ids = (array) $import_ids;
+
 		return esc_url(
 			add_query_arg(
 				[
-					'action'    => 'import_results',
-					'import_id' => $import_id,
+					'action'     => 'import_results',
+					'import_ids' => implode( ',', $import_ids ),
 				],
 				$this->index( $name )
 			)

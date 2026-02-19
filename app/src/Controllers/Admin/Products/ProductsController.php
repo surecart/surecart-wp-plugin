@@ -4,6 +4,7 @@ namespace SureCart\Controllers\Admin\Products;
 
 use SureCart\Controllers\Admin\AdminController;
 use SureCart\Models\Product;
+use SureCart\Models\ImportRow;
 use SureCart\Controllers\Admin\Products\ProductsListTable;
 use SureCart\Background\BulkActionService;
 
@@ -308,6 +309,9 @@ class ProductsController extends AdminController {
 	 * @return \SureCartCore\Responses\RedirectResponse
 	 */
 	public function import() {
+		// Clear previously accumulated import IDs.
+		delete_option( 'sc_woo_import_ids' );
+
 		// enqueue action.
 		\SureCart::sync()->woocommerce_products()->dispatch();
 
@@ -327,7 +331,7 @@ class ProductsController extends AdminController {
 		$this->withHeader(
 			[
 				'breadcrumbs' => [
-					'products' => [
+					'products'       => [
 						'title' => __( 'Products', 'surecart' ),
 						'href'  => \SureCart::getUrl()->index( 'products' ),
 					],
@@ -338,26 +342,59 @@ class ProductsController extends AdminController {
 			],
 		);
 
-		// TODO: Replace dummy data with real API call using $request->query('import_id').
-		$succeeded_count = 32;
-		$failed_rows     = [
-			[
-				'name'   => 'Graphic tees',
-				'reason' => 'Product type is not supported',
-			],
-			[
-				'name'   => 'Hoodies',
-				'reason' => 'Product type is not supported',
-			],
-			[
-				'name'   => 'Joggers',
-				'reason' => 'Product type is not supported',
-			],
-			[
-				'name'   => 'Baseball caps',
-				'reason' => 'Product type is not supported',
-			],
-		];
+		// Parse import IDs from request (comma-separated), with fallback to legacy singular param.
+		$import_ids_raw = $request->query( 'import_ids' );
+		if ( empty( $import_ids_raw ) ) {
+			$import_ids_raw = $request->query( 'import_id' );
+		}
+
+		if ( empty( $import_ids_raw ) ) {
+			return \SureCart::view( 'admin/products/import-results' )->with(
+				[
+					'succeeded_count' => 0,
+					'failed_rows'     => [],
+				]
+			);
+		}
+
+		// Sanitize and split into array.
+		$import_ids = array_filter( array_map( 'sanitize_text_field', explode( ',', $import_ids_raw ) ) );
+
+		// Fetch all import rows across all pages.
+		$succeeded_count = 0;
+		$failed_rows     = [];
+		$page            = 1;
+		$per_page        = 100;
+
+		do {
+			$collection = ImportRow::where( [ 'import_ids' => $import_ids ] )
+				->paginate(
+					[
+						'page'     => $page,
+						'per_page' => $per_page,
+					]
+				);
+
+			// Handle API errors gracefully.
+			if ( is_wp_error( $collection ) ) {
+				break;
+			}
+
+			foreach ( $collection->data as $row ) {
+				if ( 'succeeded' === ( $row->status ?? '' ) ) {
+					++$succeeded_count;
+				} else {
+					$import_data = $row->import_data ?? null;
+					$failed_rows[] = [
+						'name'   => is_object( $import_data ) ? ( $import_data->name ?? __( 'Unknown', 'surecart' ) ) : __( 'Unknown', 'surecart' ),
+						'reason' => $row->failure_reason ?? __( 'Unknown error', 'surecart' ),
+					];
+				}
+			}
+
+			$has_next_page = $collection->hasNextPage();
+			++$page;
+		} while ( $has_next_page );
 
 		return \SureCart::view( 'admin/products/import-results' )->with(
 			[

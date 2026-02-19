@@ -78,17 +78,17 @@ class WooCommerceProductsSyncService {
 			return;
 		}
 
-		$import_id = get_option( 'sc_woo_import_id' );
-		if ( empty( $import_id ) ) {
+		$import_ids = get_option( 'sc_woo_import_ids', [] );
+		if ( empty( $import_ids ) ) {
 			return;
 		}
 
-		$results_url = \SureCart::getUrl()->importResults( 'products', $import_id );
+		$results_url = \SureCart::getUrl()->importResults( 'products', $import_ids );
 
 		echo wp_kses_post(
 			\SureCart::notices()->render(
 				[
-					'name'  => 'woo_import_complete_' . $import_id,
+					'name'  => 'woo_import_complete_' . md5( implode( ',', $import_ids ) ),
 					'type'  => 'success',
 					'title' => esc_html__( 'SureCart: WooCommerce products import complete.', 'surecart' ),
 					'text'  => '<p>' . sprintf(
@@ -178,9 +178,11 @@ class WooCommerceProductsSyncService {
 			$import = ( new ProductImport() )->create( [ 'data' => $this->products_import_batch ] );
 			$this->products_import_batch = []; // Clear batch after import.
 
-			// Store the import ID for the completion notice.
+			// Accumulate import IDs across batches for the completion notice.
 			if ( ! is_wp_error( $import ) && ! empty( $import->id ) ) {
-				update_option( 'sc_woo_import_id', $import->id );
+				$existing_ids = get_option( 'sc_woo_import_ids', [] );
+				$existing_ids[] = $import->id;
+				update_option( 'sc_woo_import_ids', $existing_ids );
 			}
 		}
 
