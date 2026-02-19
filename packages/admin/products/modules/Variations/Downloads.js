@@ -119,6 +119,9 @@ export default ({ variant, product, updateVariant }) => {
 	const unArchived = sorted.filter((download) => !download.archived);
 	const archived = sorted.filter((download) => !!download.archived);
 
+	const onDownloadBehaviorChange = (value) =>
+		updateVariant(getUpdateValue({ downloads_enabled: value }));
+
 	const renderDownloads = () => {
 		if (
 			unArchived?.length === 0 &&
@@ -162,13 +165,6 @@ export default ({ variant, product, updateVariant }) => {
 				<ScRadioGroup
 					label={__('Download Behavior', 'surecart')}
 					required
-					onScChange={(e) =>
-						updateVariant(
-							getUpdateValue({
-								downloads_enabled: JSON.parse(e.target.value),
-							})
-						)
-					}
 				>
 					<div
 						css={css`
@@ -180,6 +176,7 @@ export default ({ variant, product, updateVariant }) => {
 						<ScRadio
 							checked={downloadsEnabled == null}
 							value="null"
+							onClick={() => onDownloadBehaviorChange(null)}
 						>
 							{__('Inherit product downloads', 'surecart')}
 							<span
@@ -197,6 +194,7 @@ export default ({ variant, product, updateVariant }) => {
 						<ScRadio
 							checked={downloadsEnabled === true}
 							value="true"
+							onClick={() => onDownloadBehaviorChange(true)}
 						>
 							{__('Custom downloads', 'surecart')}
 							<span
@@ -214,6 +212,7 @@ export default ({ variant, product, updateVariant }) => {
 						<ScRadio
 							checked={downloadsEnabled === false}
 							value="false"
+							onClick={() => onDownloadBehaviorChange(false)}
 						>
 							{__('No downloads', 'surecart')}
 							<span
