@@ -7,6 +7,19 @@
 let inertElements = [];
 
 /**
+ * Check if an element is or contains a11y speak regions
+ * @param {Element} element Element to check
+ * @return {boolean} True if element is or contains a11y speak regions
+ */
+function isA11ySpeakElement(element) {
+	return (
+		element.classList.contains('a11y-speak-region') ||
+		element.classList.contains('a11y-speak-intro-text') ||
+		element.querySelector('#a11y-speak-assertive, #a11y-speak-polite, #a11y-speak-intro-text')
+	);
+}
+
+/**
  * Walk up from the given element to <body>, making all siblings inert
  * at each level. This ensures the element remains interactive while
  * everything else on the page is inert.
@@ -25,8 +38,7 @@ export function inertEverythingExcept(element) {
 			if (
 				sibling !== current &&
 				!sibling.hasAttribute('inert') &&
-				!sibling.classList.contains('a11y-speak-region') &&
-				!sibling.classList.contains('a11y-speak-intro-text')
+				!isA11ySpeakElement(sibling)
 			) {
 				sibling.setAttribute('inert', '');
 				inertElements.push(sibling);
