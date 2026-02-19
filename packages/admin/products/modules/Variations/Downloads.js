@@ -106,8 +106,8 @@ export default ({ variant, product, updateVariant }) => {
 	const sorted = (downloads || []).sort(
 		(a, b) => a.created_at - b.created_at
 	);
-	const unArchived = (sorted || []).filter((download) => !download.archived);
-	const archived = (sorted || []).filter((download) => !!download.archived);
+	const unArchived = sorted.filter((download) => !download.archived);
+	const archived = sorted.filter((download) => !!download.archived);
 
 	const renderDownloads = () => {
 		if (
@@ -120,20 +120,16 @@ export default ({ variant, product, updateVariant }) => {
 		return (
 			<ScCard noPadding>
 				<ScStackedList>
-					{(unArchived || [])
-						.sort((a, b) => a.created_at - b.created_at)
-						.map((download) => (
-							<SingleDownload
-								download={download}
-								key={download.id}
-								variant={variant}
-							/>
-						))}
+					{unArchived.map((download) => (
+						<SingleDownload
+							download={download}
+							key={download.id}
+							variant={variant}
+						/>
+					))}
 
 					{showArchived &&
-						(archived || [])
-							.sort((a, b) => a.created_at - b.created_at)
-							.map((download) => (
+						archived.map((download) => (
 								<SingleDownload
 									css={css`
 										--sc-list-row-background-color: var(

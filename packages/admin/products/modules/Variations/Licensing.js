@@ -62,10 +62,14 @@ export default ({ variant, updateVariant, product }) => {
 							key: 'license_activation_limit',
 							label: __('Activation limit', 'surecart'),
 						},
-						{
-							key: 'current_release_download',
-							label: __('Current release', 'surecart'),
-						},
+						...(isCustomDownloads
+							? [
+									{
+										key: 'current_release_download',
+										label: __('Current release', 'surecart'),
+									},
+							  ]
+							: []),
 					]}
 					isOverridden={isOverridden}
 					onReset={(fieldKey) => updateVariant({ [fieldKey]: null })}
