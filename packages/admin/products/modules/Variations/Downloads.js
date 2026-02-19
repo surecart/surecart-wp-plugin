@@ -29,6 +29,10 @@ import SingleDownload from '../SingleDownload';
 import useVariantValue from '../../hooks/useVariantValue';
 
 export default ({ variant, product, updateVariant }) => {
+	if (!variant) {
+		return null;
+	}
+
 	const { saveEntityRecord } = useDispatch(coreStore);
 	const [showArchived, setShowArchived] = useState(false);
 	const { createSuccessNotice } = useDispatch(noticesStore);
@@ -130,17 +134,17 @@ export default ({ variant, product, updateVariant }) => {
 
 					{showArchived &&
 						archived.map((download) => (
-								<SingleDownload
-									css={css`
-										--sc-list-row-background-color: var(
-											--sc-color-warning-50
-										);
-									`}
-									download={download}
-									key={download.id}
-									variant={variant}
-								/>
-							))}
+							<SingleDownload
+								css={css`
+									--sc-list-row-background-color: var(
+										--sc-color-warning-50
+									);
+								`}
+								download={download}
+								key={download.id}
+								variant={variant}
+							/>
+						))}
 				</ScStackedList>
 			</ScCard>
 		);
@@ -152,6 +156,13 @@ export default ({ variant, product, updateVariant }) => {
 				<ScRadioGroup
 					label={__('Download Behavior', 'surecart')}
 					required
+					onScChange={(e) =>
+						updateVariant(
+							getUpdateValue({
+								downloads_enabled: JSON.parse(e.target.value),
+							})
+						)
+					}
 				>
 					<div
 						css={css`
@@ -163,13 +174,6 @@ export default ({ variant, product, updateVariant }) => {
 						<ScRadio
 							checked={downloadsEnabled == null}
 							value="null"
-							onClick={() =>
-								updateVariant(
-									getUpdateValue({
-										downloads_enabled: null,
-									})
-								)
-							}
 						>
 							{__('Inherit product downloads', 'surecart')}
 							<span
@@ -187,13 +191,6 @@ export default ({ variant, product, updateVariant }) => {
 						<ScRadio
 							checked={downloadsEnabled === true}
 							value="true"
-							onClick={() =>
-								updateVariant(
-									getUpdateValue({
-										downloads_enabled: true,
-									})
-								)
-							}
 						>
 							{__('Custom downloads', 'surecart')}
 							<span
@@ -211,13 +208,6 @@ export default ({ variant, product, updateVariant }) => {
 						<ScRadio
 							checked={downloadsEnabled === false}
 							value="false"
-							onClick={() =>
-								updateVariant(
-									getUpdateValue({
-										downloads_enabled: false,
-									})
-								)
-							}
 						>
 							{__('No downloads', 'surecart')}
 							<span
