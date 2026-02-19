@@ -1,0 +1,31 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "surecart/product-review-form-template",
+	"title": "Form",
+	"description": "Template for the review form content. Shown when editing the form.",
+	"version": "1.0.0",
+	"category": "surecart-product-page",
+	"parent": ["surecart/product-review-form"],
+	"usesContext": ["surecart/editingView"],
+	"supports": {
+		"inserter": false,
+		"html": false,
+		"spacing": {
+			"margin": true,
+			"padding": true,
+			"blockGap": true
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true
+		},
+		"__experimentalLayout": {
+			"default": {
+				"type": "constrained"
+			}
+		}
+	},
+	"textdomain": "surecart",
+	"editorScript": "file:./index.js"
+}

@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-02-05T11:55:23",
+  "timestamp": "2026-02-05T17:46:50",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.18.3",
@@ -16685,6 +16685,7 @@
         "sc-purchase-downloads-list",
         "sc-quantity-select",
         "sc-recurring-price-choice-container",
+        "sc-review-stars",
         "sc-rich-text",
         "sc-select",
         "sc-subscription",
@@ -16845,6 +16846,9 @@
           "sc-icon"
         ],
         "sc-recurring-price-choice-container": [
+          "sc-icon"
+        ],
+        "sc-review-stars": [
           "sc-icon"
         ],
         "sc-rich-text": [
@@ -34833,6 +34837,81 @@
         ],
         "sc-product-donation-choices": [
           "sc-recurring-price-choice-container"
+        ]
+      }
+    },
+    {
+      "filePath": "src/components/ui/review-stars/sc-review-stars.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-review-stars",
+      "readme": "# sc-review-average-stars\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "rating",
+          "type": "number",
+          "complexType": {
+            "original": "number",
+            "resolved": "number",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "rating",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "0",
+          "values": [
+            {
+              "type": "number"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "size",
+          "type": "number",
+          "complexType": {
+            "original": "number",
+            "resolved": "number",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "size",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "20",
+          "values": [
+            {
+              "type": "number"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [
+        {
+          "name": "base",
+          "docs": ""
+        }
+      ],
+      "dependents": [],
+      "dependencies": [
+        "sc-icon"
+      ],
+      "dependencyGraph": {
+        "sc-review-stars": [
+          "sc-icon"
         ]
       }
     },
