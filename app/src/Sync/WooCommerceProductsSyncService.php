@@ -243,12 +243,16 @@ class WooCommerceProductsSyncService {
 		$product_import_data = array_merge( $product_import_data, $this->mapCategories( $product ) );
 
 		// Variants (for variable products).
+		// Compute stock-ownership flag once to avoid scanning variations twice.
+		$any_variation_manages_own_stock = false;
 		if ( $product->is_type( 'variable' ) ) {
-			$product_import_data = array_merge( $product_import_data, $this->mapVariants( $product ) );
+			$any_variation_manages_own_stock = $this->anyVariationManagesOwnStock( $product );
+			$product_import_data             = array_merge( $product_import_data, $this->mapVariants( $product, $any_variation_manages_own_stock ) );
 		}
 
 		// Stock, shipping, tax.
-		$product_import_data = array_merge( $product_import_data, $this->mapStockFields( $product ) );
+		// When any variation owns its stock, product-level stock is suppressed.
+		$product_import_data = array_merge( $product_import_data, $this->mapStockFields( $product, $any_variation_manages_own_stock ) );
 		$product_import_data = array_merge( $product_import_data, $this->mapShippingFields( $product ) );
 		$product_import_data = array_merge( $product_import_data, $this->mapTaxFields( $product ) );
 
@@ -686,9 +690,10 @@ class WooCommerceProductsSyncService {
 	 * Map variants for variable products.
 	 *
 	 * @param \WC_Product $product WooCommerce Product.
+	 * @param bool        $any_variation_manages_own_stock Whether any variation manages its own stock.
 	 * @return array
 	 */
-	public function mapVariants( $product ) {
+	public function mapVariants( $product, $any_variation_manages_own_stock = false ) {
 		if ( ! $product->is_type( 'variable' ) ) {
 			return [];
 		}
@@ -732,17 +737,19 @@ class WooCommerceProductsSyncService {
 		}
 
 		// Map variations to variants.
-		$variations       = $product->get_available_variations();
+		// Use get_children() instead of get_available_variations() to include ALL variations,
+		// even those without prices or marked out of stock (which WooCommerce filters out).
+		$variation_ids    = $product->get_children();
 		$variant_position = 0;
 
-		foreach ( $variations as $variation_data ) {
-			$variation = wc_get_product( $variation_data['variation_id'] );
+		foreach ( $variation_ids as $variation_id ) {
+			$variation = wc_get_product( $variation_id );
 			if ( ! $variation ) {
 				continue;
 			}
 
-			// Determine if this variation manages its own stock (not inherited from parent).
-			$manages_own_stock = true === $variation->managing_stock();
+			// Determine stock mode for this variation.
+			$variation_stock_mode = $variation->managing_stock();
 
 			$variant = [
 				'sku'                          => $variation->get_sku() ?? null,
@@ -751,11 +758,9 @@ class WooCommerceProductsSyncService {
 				// Pricing.
 				'amount'                       => $this->convertPriceToInteger( $variation->get_price() ),
 
-				// Stock — only set per-variant stock when the variation manages its own stock.
-				// When stock is managed at the parent level ('parent'), product-level stock handles it
-				// to avoid multiplying the total quantity across all variants.
-				'stock_enabled'                => $manages_own_stock,
-				'stock_adjustment'             => $manages_own_stock ? (int) $variation->get_stock_quantity() : 0,
+				// Stock — determined after array init based on variation stock mode.
+
+				// Backorders.
 				'allow_out_of_stock_purchases' => $variation->backorders_allowed(),
 
 				// Shipping.
@@ -774,6 +779,23 @@ class WooCommerceProductsSyncService {
 					'wc_sale_price'    => $variation->get_sale_price(),
 				],
 			];
+
+			// Set stock fields based on the variation's stock mode and product-wide context.
+			// SureCart requires stock at either product-level or variant-level, not both.
+			if ( true === $variation_stock_mode ) {
+				// Variation has its own dedicated stock pool.
+				$variant['stock_enabled']    = true;
+				$variant['stock_adjustment'] = (int) $variation->get_stock_quantity();
+			} elseif ( 'parent' === $variation_stock_mode && $any_variation_manages_own_stock ) {
+				// Mixed case: this variant inherits parent stock, but other variants have
+				// own stock, so product-level stock is suppressed. Set as out of stock.
+				$variant['stock_enabled']    = true;
+				$variant['stock_adjustment'] = 0;
+			} else {
+				// No stock management, or pure parent-only (product-level handles it).
+				$variant['stock_enabled']    = false;
+				$variant['stock_adjustment'] = 0;
+			}
 
 			// Only include weight if it's set and greater than 0.
 			$variant_weight = (float) $variation->get_weight();
@@ -827,12 +849,44 @@ class WooCommerceProductsSyncService {
 	}
 
 	/**
+	 * Determine whether any variation on a variable product manages its own stock.
+	 *
+	 * Returns true if at least one variation has managing_stock() === true (strict),
+	 * meaning it has a dedicated stock quantity separate from the parent product.
+	 *
+	 * @param \WC_Product $product WooCommerce variable product.
+	 * @return bool
+	 */
+	private function anyVariationManagesOwnStock( $product ) {
+		foreach ( $product->get_children() as $variation_id ) {
+			$variation = wc_get_product( $variation_id );
+			if ( ! $variation ) {
+				continue;
+			}
+			if ( true === $variation->managing_stock() ) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
 	 * Map stock fields.
 	 *
 	 * @param \WC_Product $product WooCommerce Product.
+	 * @param bool        $is_variable_with_variant_stock Whether this is a variable product where variants own the stock.
 	 * @return array
 	 */
-	public function mapStockFields( $product ) {
+	public function mapStockFields( $product, $is_variable_with_variant_stock = false ) {
+		// For variable products where variants own the stock, enable the product-level
+		// master toggle (required for variant stock tracking to work in SureCart)
+		// but do NOT set stock_adjustment to avoid double-counting.
+		if ( $is_variable_with_variant_stock ) {
+			return [
+				'stock_enabled' => true,
+			];
+		}
+
 		$managing_stock = $product->managing_stock();
 
 		if ( ! $managing_stock ) {
