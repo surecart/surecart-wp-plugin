@@ -5,6 +5,7 @@ import {
 	ScButton,
 	ScCard,
 	ScDropdown,
+	ScFlex,
 	ScFormControl,
 	ScIcon,
 	ScMenu,
@@ -40,11 +41,12 @@ export default ({ variant, product, updateVariant }) => {
 	});
 
 	const downloadsEnabled = getValue('downloads_enabled');
+	const isCustomDownloads = downloadsEnabled === true;
 
 	const { downloads, fetching } = useSelect(
 		(select) => {
 			// Reset/refetch when variant changes and Only fetch downloads when custom downloads mode is enabled.
-			if (!variant?.id || downloadsEnabled !== true) {
+			if (!variant?.id || !isCustomDownloads) {
 				return {
 					downloads: [],
 					fetching: false,
@@ -58,7 +60,7 @@ export default ({ variant, product, updateVariant }) => {
 					context: 'edit',
 					variant_ids: [variant?.id],
 					per_page: 100,
-					expand: ['media', 'variant'],
+					expand: ['media'],
 				},
 			];
 			return {
@@ -106,6 +108,47 @@ export default ({ variant, product, updateVariant }) => {
 	);
 	const unArchived = (sorted || []).filter((download) => !download.archived);
 	const archived = (sorted || []).filter((download) => !!download.archived);
+
+	const renderDownloads = () => {
+		if (
+			unArchived?.length === 0 &&
+			(!showArchived || archived?.length === 0)
+		) {
+			return null;
+		}
+
+		return (
+			<ScCard noPadding>
+				<ScStackedList>
+					{(unArchived || [])
+						.sort((a, b) => a.created_at - b.created_at)
+						.map((download) => (
+							<SingleDownload
+								download={download}
+								key={download.id}
+								variant={variant}
+							/>
+						))}
+
+					{showArchived &&
+						(archived || [])
+							.sort((a, b) => a.created_at - b.created_at)
+							.map((download) => (
+								<SingleDownload
+									css={css`
+										--sc-list-row-background-color: var(
+											--sc-color-warning-50
+										);
+									`}
+									download={download}
+									key={download.id}
+									variant={variant}
+								/>
+							))}
+				</ScStackedList>
+			</ScCard>
+		);
+	};
 
 	return (
 		<>
@@ -196,7 +239,7 @@ export default ({ variant, product, updateVariant }) => {
 					</div>
 				</ScRadioGroup>
 
-				{downloadsEnabled === true && (
+				{isCustomDownloads && (
 					<div
 						css={css`
 							position: relative;
@@ -204,55 +247,7 @@ export default ({ variant, product, updateVariant }) => {
 					>
 						{error && <Error error={error} setError={setError} />}
 
-						{(() => {
-							// Only show card if there are unarchived downloads or archived downloads are shown.
-							const hasUnarchivedDownloads =
-								unArchived?.length > 0;
-							const hasArchivedToShow =
-								showArchived && archived?.length > 0;
-
-							if (!hasUnarchivedDownloads && !hasArchivedToShow)
-								return null;
-
-							return (
-								<ScCard noPadding>
-									<ScStackedList>
-										{(unArchived || [])
-											.sort(
-												(a, b) =>
-													a.created_at - b.created_at
-											)
-											.map((download) => (
-												<SingleDownload
-													download={download}
-													key={download.id}
-													variant={variant}
-												/>
-											))}
-
-										{showArchived &&
-											(archived || [])
-												.sort(
-													(a, b) =>
-														a.created_at -
-														b.created_at
-												)
-												.map((download) => (
-													<SingleDownload
-														css={css`
-															--sc-list-row-background-color: var(
-																--sc-color-warning-50
-															);
-														`}
-														download={download}
-														key={download.id}
-														variant={variant}
-													/>
-												))}
-									</ScStackedList>
-								</ScCard>
-							);
-						})()}
+						{renderDownloads()}
 
 						<div
 							css={css`
@@ -319,10 +314,12 @@ export default ({ variant, product, updateVariant }) => {
 										setShowArchived(e.target.checked)
 									}
 								>
-									{__('Show Archived', 'surecart')}{' '}
-									<ScTag size="small">
-										{archived?.length}
-									</ScTag>
+									<ScFlex>
+										{__('Show Archived', 'surecart')}
+										<ScTag size="small">
+											{archived?.length}
+										</ScTag>
+									</ScFlex>
 								</ScSwitch>
 							)}
 						</div>

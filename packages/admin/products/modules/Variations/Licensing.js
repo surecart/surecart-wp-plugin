@@ -14,20 +14,13 @@ export default ({ variant, updateVariant, product }) => {
 
 	// Check if custom downloads is enabled
 	const downloadsEnabled = getValue('downloads_enabled');
+	const isCustomDownloads = downloadsEnabled === true;
 
 	// Fetch downloads for current release selection (only when custom downloads enabled)
 	const { downloads, fetching } = useSelect(
 		(select) => {
-			// Reset/refetch when variant changes
-			if (!variant?.id) {
-				return {
-					downloads: [],
-					fetching: false,
-				};
-			}
-
-			// Only fetch when custom downloads mode is enabled
-			if (downloadsEnabled !== true) {
+			// Reset/refetch when variant changes and Only fetch downloads when custom downloads mode is enabled.
+			if (!variant?.id || !isCustomDownloads) {
 				return {
 					downloads: [],
 					fetching: false,
@@ -41,7 +34,7 @@ export default ({ variant, updateVariant, product }) => {
 					context: 'edit',
 					variant_ids: [variant?.id],
 					per_page: 100,
-					expand: ['media', 'variant'],
+					expand: ['media'],
 				},
 			];
 			return {
@@ -96,7 +89,7 @@ export default ({ variant, updateVariant, product }) => {
 					);
 				}}
 			/>
-			{downloadsEnabled === true && (
+			{isCustomDownloads && (
 				<ScSelect
 					label={__('Current Release', 'surecart')}
 					help={__(
@@ -108,14 +101,16 @@ export default ({ variant, updateVariant, product }) => {
 					onScChange={(e) => {
 						updateVariant(
 							getUpdateValue({
-								current_release_download: e.target.value || null,
+								current_release_download:
+									e.target.value || null,
 							})
 						);
 					}}
 					choices={(downloads || [])
 						.filter(
 							(download) =>
-								download?.media?.content_type === 'application/zip'
+								download?.media?.content_type ===
+								'application/zip'
 						)
 						.map((download) => {
 							return {

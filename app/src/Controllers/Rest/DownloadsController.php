@@ -16,9 +16,9 @@ class DownloadsController extends RestController {
 	protected $class = Download::class;
 
 	/**
-	 * Always fetch with media and variant
+	 * Always fetch with media
 	 *
 	 * @var array
 	 */
-	protected $with = [ 'media', 'variant' ];
+	protected $with = [ 'media' ];
 }

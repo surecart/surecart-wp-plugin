@@ -220,19 +220,6 @@ export default ({ download, product, className, variant }) => {
 								</ScTag>{' '}
 							</>
 						)}
-						{download?.variant && (
-							<>
-								<ScTag type="default" size="small">
-									{[
-										download.variant?.option_1,
-										download.variant?.option_2,
-										download.variant?.option_3,
-									]
-										.filter(Boolean)
-										.join(' / ')}
-								</ScTag>{' '}
-							</>
-						)}
 						<div
 							css={css`
 								overflow: hidden;
