@@ -55,7 +55,8 @@ export default () => {
 		successFunction
 	);
 
-	// Migrate legacy referral_url to referral_urls array on first load only.
+	// Migrate legacy referral_url to referral_urls array on first load.
+	// Intentionally omit affiliationProtocolItem from deps — this should only run once on initial load.
 	useEffect(() => {
 		if (
 			hasLoadedAffiliationProtocolItem &&
@@ -74,11 +75,15 @@ export default () => {
 	const onSubmit = async () => {
 		setError(null);
 		try {
-			// Strip blank URL entries before saving so empty strings are skipped.
+			// Strip blank and duplicate URL entries before saving.
 			editAffiliationProtocolItem({
-				referral_urls: (
-					affiliationProtocolItem?.referral_urls || []
-				).filter((url) => url.trim()),
+				referral_urls: [
+					...new Set(
+						(affiliationProtocolItem?.referral_urls || []).filter(
+							(url) => url.trim()
+						)
+					),
+				],
 			});
 
 			await save({
@@ -443,6 +448,16 @@ export default () => {
 										<ScInput
 											type="url"
 											placeholder="https://example.com"
+											aria-label={
+												// translators: %d is the URL number (e.g. Referral URL 1, Referral URL 2, etc.)
+												sprintf(
+													__(
+														'Referral URL %d',
+														'surecart'
+													),
+													index + 1
+												)
+											}
 											onScInput={(e) => {
 												e.preventDefault();
 												const urls = [
