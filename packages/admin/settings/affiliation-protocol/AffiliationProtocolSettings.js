@@ -3,7 +3,7 @@ import { css, jsx } from '@emotion/core';
 import SettingsTemplate from '../SettingsTemplate';
 import useSave from '../UseSave';
 import { __ } from '@wordpress/i18n';
-import { useState } from '@wordpress/element';
+import { useState, useEffect } from '@wordpress/element';
 import useEntity from '../../hooks/useEntity';
 import Error from '../../components/Error';
 import SettingsBox from '../SettingsBox';
@@ -15,6 +15,7 @@ import {
 	ScDialog,
 	ScButton,
 	ScIcon,
+	ScFormControl,
 } from '@surecart/components-react';
 import { useCopyToClipboard } from '@wordpress/compose';
 import { useDispatch, useSelect } from '@wordpress/data';
@@ -53,6 +54,19 @@ export default () => {
 		trackingScript,
 		successFunction
 	);
+
+	// Migrate legacy referral_url to referral_urls array on first load.
+	useEffect(() => {
+		if (
+			hasLoadedAffiliationProtocolItem &&
+			!affiliationProtocolItem?.referral_urls?.length &&
+			affiliationProtocolItem?.referral_url
+		) {
+			editAffiliationProtocolItem({
+				referral_urls: [affiliationProtocolItem.referral_url],
+			});
+		}
+	}, [hasLoadedAffiliationProtocolItem]);
 
 	/**
 	 * Form is submitted.
@@ -379,21 +393,102 @@ export default () => {
 						)}
 					</span>
 				</ScSwitch>
-				<ScInput
-					label={__('Affiliate Referral URL', 'surecart')}
-					help={__(
-						'Where should affiliates send their traffic? This URL will be used to generate the affiliate referral link for each affiliate with their unique affiliate code.',
-						'surecart'
-					)}
-					type="url"
-					onScInput={(e) => {
-						e.preventDefault();
-						editAffiliationProtocolItem({
-							referral_url: e.target.value,
-						});
-					}}
-					value={affiliationProtocolItem?.referral_url}
-				/>
+				<ScFormControl
+					label={__('Affiliate Referral URLs', 'surecart')}
+				>
+					<div
+						css={css`
+							color: var(--sc-input-help-text-color);
+							font-size: var(
+								--sc-input-help-text-font-size-medium
+							);
+							margin-bottom: var(--sc-spacing-x-small);
+						`}
+					>
+						{__(
+							'Where should affiliates send their traffic? These URLs will be used to generate the affiliate referral link for each affiliate with their unique affiliate code.',
+							'surecart'
+						)}
+					</div>
+					<div
+						css={css`
+							display: flex;
+							flex-direction: column;
+							gap: var(--sc-spacing-x-small);
+						`}
+					>
+						{(affiliationProtocolItem?.referral_urls || []).map(
+							(url, index) => (
+								<div
+									key={index}
+									css={css`
+										display: flex;
+										align-items: center;
+										gap: var(--sc-spacing-x-small);
+									`}
+								>
+									<div
+										css={css`
+											flex: 1;
+											min-width: 0;
+										`}
+									>
+										<ScInput
+											type="url"
+											placeholder="https://example.com"
+											onScInput={(e) => {
+												e.preventDefault();
+												const urls = [
+													...(affiliationProtocolItem?.referral_urls ||
+														[]),
+												];
+												urls[index] = e.target.value;
+												editAffiliationProtocolItem({
+													referral_urls: urls,
+												});
+											}}
+											value={url}
+										/>
+									</div>
+									<ScButton
+										type="text"
+										circle
+										size="small"
+										onClick={(e) => {
+											e.preventDefault();
+											editAffiliationProtocolItem({
+												referral_urls: (
+													affiliationProtocolItem?.referral_urls ||
+													[]
+												).filter((_, i) => i !== index),
+											});
+										}}
+									>
+										<ScIcon name="trash" />
+									</ScButton>
+								</div>
+							)
+						)}
+						<div>
+							<ScButton
+								type="link"
+								onClick={(e) => {
+									e.preventDefault();
+									editAffiliationProtocolItem({
+										referral_urls: [
+											...(affiliationProtocolItem?.referral_urls ||
+												[]),
+											'',
+										],
+									});
+								}}
+							>
+								<ScIcon name="plus" slot="prefix" />
+								{__('Add URL', 'surecart')}
+							</ScButton>
+						</div>
+					</div>
+				</ScFormControl>
 			</SettingsBox>
 			<SettingsBox
 				title={__('Commissions & Payouts', 'surecart')}
