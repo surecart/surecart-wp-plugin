@@ -7,9 +7,8 @@ tools:
   - Edit
   - Grep
   - Glob
-  - Bash
 permissionMode: acceptEdits
-maxTurns: 50
+maxTurns: 20
 ---
 
 # SureCart Integration Builder

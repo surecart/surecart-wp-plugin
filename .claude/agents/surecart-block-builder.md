@@ -7,9 +7,8 @@ tools:
   - Edit
   - Grep
   - Glob
-  - Bash
 permissionMode: acceptEdits
-maxTurns: 50
+maxTurns: 20
 ---
 
 # SureCart Block Builder
@@ -157,7 +156,8 @@ import { someIcon } from '@wordpress/icons';
 
 import edit from './edit';
 import metadata from './block.json';
-import './style.scss'; // only if style.scss exists
+// Add the line below only if creating a style.scss for custom styles:
+// import './style.scss';
 
 registerBlockType( metadata.name, {
     icon: someIcon,

@@ -7,9 +7,8 @@ tools:
   - Edit
   - Grep
   - Glob
-  - Bash
 permissionMode: acceptEdits
-maxTurns: 50
+maxTurns: 20
 ---
 
 # SureCart Endpoint Scaffolder
@@ -18,8 +17,9 @@ You scaffold complete SureCart REST endpoints. One spec → 3 PHP files + config
 
 ## Before You Write Anything
 
-1. Read `app/src/Controllers/Rest/ProductsController.php` and `app/src/Rest/ProductsRestServiceProvider.php` to match current project patterns exactly.
-2. Use Grep to search for `RestServiceProvider` in `app/config.php` to find where similar REST providers are registered, then read the surrounding lines to identify the correct insertion point.
+1. Read `app/src/Controllers/Rest/ProductsController.php` and `app/src/Rest/ProductsRestServiceProvider.php` to match controller and service provider patterns exactly.
+2. Read `app/src/Models/Product.php` to match the Model pattern. If the new resource is database-backed, also read `app/src/Models/Integration.php` as the DatabaseModel reference.
+3. Use Grep to search for `RestServiceProvider` in `app/config.php` to find where similar REST providers are registered, then read the surrounding lines to identify the correct insertion point.
 
 ## Model Base Class Decision (CRITICAL — wrong choice breaks everything)
 

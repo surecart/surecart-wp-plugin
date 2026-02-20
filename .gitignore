@@ -54,3 +54,7 @@ build
 /playwright-report/
 /playwright/.cache/
 undefinedadminState.json
+
+# Claude Code — ignore local/runtime files, but allow committed skills and agents
+.claude/settings.local.json
+.claude/todos/
