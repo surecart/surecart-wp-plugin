@@ -316,6 +316,12 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 
 == Changelog ==
 
+= 3.21.0 - February 24th, 2026 =
+- New: Product Reviews — Let customers leave star ratings and written reviews on your products. Display verified reviews to build trust and boost conversions, with automatic review request emails sent after purchase.
+- New: Product and variant dimensions for shipping.
+- New: Additional php and javascript filters on customer dashbaord.
+- Fix: Issue with default country selector dropdown getting clipped in admin.
+
 = 3.20.1 - February 16th, 2026 =
 - Fix: Issue where razorpay was sometimes not getting selected at checkout if its the only processor.
 - Fix: Issue with order bump labels in admin being slighly misaligned.
