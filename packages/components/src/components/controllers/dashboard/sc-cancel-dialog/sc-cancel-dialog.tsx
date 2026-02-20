@@ -75,7 +75,9 @@ export class ScCancelDialog {
                 this.reset();
                 this.scRequestClose.emit('close-button');
               }}
-            />
+            >
+              <slot name="cancel-popup-content" slot="cancel-popup-content" />
+            </sc-subscription-cancel>
           )}
 
           {this.step === 'survey' && (

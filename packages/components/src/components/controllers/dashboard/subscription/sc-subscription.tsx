@@ -208,7 +208,7 @@ export class ScSubscription {
 
     return (
       <sc-dashboard-module heading={this.heading || __('Current Plan', 'surecart')} class="subscription" error={this.error}>
-        {!!this.subscription && (
+        {!!this.subscription && this?.subscription?.can_modify && (
           <sc-flex slot="end" class="subscription__action-buttons">
             {this.updatePaymentMethodUrl && paymentMethodExists && (
               <sc-button type="link" href={this.updatePaymentMethodUrl}>
@@ -281,7 +281,9 @@ export class ScSubscription {
           open={this.cancelModal}
           onScRequestClose={() => (this.cancelModal = false)}
           onScRefresh={() => this.getSubscription()}
-        />
+        >
+          <slot name="cancel-popup-content" slot="cancel-popup-content" />
+        </sc-cancel-dialog>
         <sc-subscription-reactivate
           subscription={this.subscription}
           open={this.resubscribeModal}
