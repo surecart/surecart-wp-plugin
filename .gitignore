@@ -54,5 +54,3 @@ build
 /playwright-report/
 /playwright/.cache/
 undefinedadminState.json
-
-.claude/
