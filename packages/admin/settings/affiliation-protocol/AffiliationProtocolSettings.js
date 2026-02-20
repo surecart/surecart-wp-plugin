@@ -2,7 +2,7 @@
 import { css, jsx } from '@emotion/core';
 import SettingsTemplate from '../SettingsTemplate';
 import useSave from '../UseSave';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 import { useState, useEffect } from '@wordpress/element';
 import useEntity from '../../hooks/useEntity';
 import Error from '../../components/Error';
@@ -23,6 +23,7 @@ import { store as noticesStore } from '@wordpress/notices';
 import { store as coreStore } from '@wordpress/core-data';
 import { addQueryArgs } from '@wordpress/url';
 import CommissionStructure from '../../components/affiliates/commission/CommissionStructure';
+import { Button } from '@wordpress/components';
 
 export default () => {
 	const { createSuccessNotice } = useDispatch(noticesStore);
@@ -462,10 +463,15 @@ export default () => {
 											value={url}
 										/>
 									</div>
-									<ScButton
-										type="text"
-										circle
-										size="small"
+									<Button
+										label={__('Remove URL', 'surecart')}
+										aria-label={sprintf(
+											__(
+												'Remove referral URL %d',
+												'surecart'
+											),
+											index + 1
+										)}
 										onClick={(e) => {
 											e.preventDefault();
 											editAffiliationProtocolItem({
@@ -477,7 +483,7 @@ export default () => {
 										}}
 									>
 										<ScIcon name="trash" />
-									</ScButton>
+									</Button>
 								</div>
 							)
 						)}
