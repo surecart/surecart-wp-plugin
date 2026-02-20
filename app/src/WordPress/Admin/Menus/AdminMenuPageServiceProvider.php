@@ -17,8 +17,9 @@ class AdminMenuPageServiceProvider implements ServiceProviderInterface {
 	public function register( $container ) {
 		$app = $container[ SURECART_APPLICATION_KEY ];
 
-		$container['surecart.admin.menus']   = fn() => new AdminMenuPageService();
-		$container['surecart.admin.toolbar'] = fn() => new AdminToolbarService( $app );
+		$container['surecart.admin.menus']                    = fn() => new AdminMenuPageService();
+		$container['surecart.admin.toolbar']                  = fn() => new AdminToolbarService( $app );
+		$container['surecart.product_collection_pages.menus'] = fn() => new ProductCollectionsMenuService();
 
 		$app = $container[ SURECART_APPLICATION_KEY ];
 		$app->alias( 'adminToolbar', 'surecart.admin.toolbar' );
@@ -33,5 +34,6 @@ class AdminMenuPageServiceProvider implements ServiceProviderInterface {
 	public function bootstrap( $container ) {
 		$container['surecart.admin.menus']->bootstrap();
 		$container['surecart.admin.toolbar']->bootstrap();
+		$container['surecart.product_collection_pages.menus']->bootstrap();
 	}
 }
