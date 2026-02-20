@@ -45,7 +45,7 @@ const updateSelectedVariant = (productId: string, newValue: ProductState) => {
  */
 const handleStockWithSelectedVariant = (productId: string) => {
   // make sure we have a selected variant and stock needs to be checked.
-  if (!state[productId].selectedVariant || !isStockNeedsToBeChecked) {
+  if (!state[productId].selectedVariant || !isStockNeedsToBeChecked(productId)) {
     return;
   }
 

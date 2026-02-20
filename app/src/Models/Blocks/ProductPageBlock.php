@@ -150,7 +150,7 @@ class ProductPageBlock {
 				'mode'            => \SureCart\Models\Form::getMode( \SureCart::forms()->getDefaultId() ),
 				'checkoutUrl'     => \SureCart::pages()->url( 'checkout' ),
 				'urlPrefix'       => $this->urlParams()->getKey(),
-				'product'         => ! empty( $product ) && ! empty( $product->id ) ? $product->only( [ 'id', 'name', 'has_unlimited_stock', 'available_stock', 'archived', 'permalink', 'preview_image' ] ) : null,
+				'product'         => ! empty( $product ) && ! empty( $product->id ) ? $product->only( [ 'id', 'name', 'has_unlimited_stock', 'stock_enabled', 'allow_out_of_stock_purchases', 'available_stock', 'archived', 'permalink', 'preview_image' ] ) : null,
 				'selectedPrice'   => ! empty( $product->initial_price ) && ! empty( $product->initial_price->id ) ? $product->initial_price->only(
 					[
 						'id',
@@ -214,6 +214,8 @@ class ProductPageBlock {
 							'display_amount',
 							'available_stock',
 							'line_item_image',
+							'stock_enabled',
+							'allow_out_of_stock_purchases',
 						]
 					),
 					$product->variants->data ?? array()
@@ -296,6 +298,8 @@ class ProductPageBlock {
 						'amount',
 						'display_amount',
 						'available_stock',
+						'stock_enabled',
+						'allow_out_of_stock_purchases',
 					]
 				) : [],
 				'isOptionUnavailable'   => function () {
@@ -306,10 +310,15 @@ class ProductPageBlock {
 					$variant_values = $context['variantValues'];
 					$option_number  = $context['optionNumber'];
 
-					// stock is not enabled.
-					if ( $product['has_unlimited_stock'] ) {
-						return false;
-					}
+					// Helper to compute effective stock for a variant, accounting for variant-level overrides.
+					$get_effective_stock = function ( $item ) use ( $product ) {
+						$stock_enabled = $item['stock_enabled'] ?? $product['stock_enabled'] ?? false;
+						$allow_oos     = $item['allow_out_of_stock_purchases'] ?? $product['allow_out_of_stock_purchases'] ?? false;
+						if ( ! $stock_enabled || $allow_oos ) {
+							return PHP_INT_MAX;
+						}
+						return $item['available_stock'];
+					};
 
 					if ( 1 === $option_number ) {
 						$items         = array_filter(
@@ -319,12 +328,7 @@ class ProductPageBlock {
 							}
 						);
 						$highest_stock = max(
-							array_map(
-								function ( $item ) {
-										return $item['available_stock'];
-								},
-								$items ?? []
-							)
+							array_map( $get_effective_stock, array_values( $items ) )
 						);
 
 						return $highest_stock <= 0;
@@ -338,12 +342,7 @@ class ProductPageBlock {
 							}
 						);
 						$highest_stock = max(
-							array_map(
-								function ( $item ) {
-									return $item['available_stock'];
-								},
-								$items
-							)
+							array_map( $get_effective_stock, array_values( $items ) )
 						);
 						return $highest_stock <= 0;
 					}
@@ -356,12 +355,7 @@ class ProductPageBlock {
 					);
 
 					$highest_stock = max(
-						array_map(
-							function ( $item ) {
-								return $item['available_stock'];
-							},
-							$items
-						)
+						array_map( $get_effective_stock, array_values( $items ) )
 					);
 
 					return $highest_stock <= 0;
@@ -393,13 +387,22 @@ class ProductPageBlock {
 					if ( empty( $product ) ) {
 						return false;
 					}
+					$variant = $state['selectedVariant'] ?? [];
+					if ( ! empty( $variant['id'] ) ) {
+						$stock_enabled = $variant['stock_enabled'] ?? $product['stock_enabled'] ?? false;
+						$allow_oos     = $variant['allow_out_of_stock_purchases'] ?? $product['allow_out_of_stock_purchases'] ?? false;
+						if ( ! $stock_enabled || $allow_oos ) {
+							return false;
+						}
+						return $variant['available_stock'] <= 0;
+					}
 					if ( $product['has_unlimited_stock'] ) {
 						return false;
 					}
-					if ( ! empty( $context['variants'] ) && empty( $state['selectedVariant'] ) ) {
+					if ( ! empty( $context['variants'] ) && empty( $variant ) ) {
 						return false;
 					}
-					return ! empty( $state['selectedVariant']['id'] ) ? $state['selectedVariant']['available_stock'] <= 0 : $product['available_stock'] <= 0;
+					return $product['available_stock'] <= 0;
 				},
 				'isUnavailable'         => function () {
 					$context = wp_interactivity_get_context();

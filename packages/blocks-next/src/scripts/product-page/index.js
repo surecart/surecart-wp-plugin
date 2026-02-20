@@ -129,8 +129,7 @@ const { state, actions } = store('surecart/product-page', {
 				parseInt(optionNumber),
 				option_value,
 				variantValues,
-				variants,
-				product
+				variants
 			);
 		},
 
@@ -254,12 +253,16 @@ const { state, actions } = store('surecart/product-page', {
 				return true;
 			}
 			const { product } = context;
+			if (state.selectedVariant?.id) {
+				if (state.selectedVariant.has_unlimited_stock) return false;
+				return state.selectedVariant.available_stock <= 0;
+			}
+
 			if (product?.has_unlimited_stock) {
 				return false;
 			}
-			return state.selectedVariant?.id
-				? state.selectedVariant?.available_stock <= 0
-				: product?.available_stock <= 0;
+
+			return product?.available_stock <= 0;
 		},
 
 		/**
@@ -604,21 +607,20 @@ export const isProductVariantOptionSoldOut = (
 	optionNumber,
 	option,
 	variantValues,
-	variants = [],
-	product
+	variants = []
 ) => {
-	// product stock is not enabled or out of stock purchases are allowed.
-	if (product?.has_unlimited_stock) return false;
+	const getEffectiveStock = (variant) => {
+		if (variant?.has_unlimited_stock) return Infinity;
+		return variant.available_stock;
+	};
 
 	// if this is option 1, check to see if there are any variants with this option.
 	if (optionNumber === 1) {
 		const items = (variants || []).filter?.(
 			(variant) => variant.option_1 === option
 		);
-		const highestStock = Math.max(
-			...items.map((item) => item.available_stock)
-		);
-		return highestStock <= 0;
+		const highestEffectiveStock = Math.max(...items.map(getEffectiveStock));
+		return highestEffectiveStock <= 0;
 	}
 
 	// if this is option 2, check to see if there are any variants with this option and option 1
@@ -628,19 +630,17 @@ export const isProductVariantOptionSoldOut = (
 				variant?.option_1 === variantValues.option_1 &&
 				variant.option_2 === option
 		);
-		const highestStock = Math.max(
-			...items.map((item) => item.available_stock)
-		);
-		return highestStock <= 0;
+		const highestEffectiveStock = Math.max(...items.map(getEffectiveStock));
+		return highestEffectiveStock <= 0;
 	}
 
-	// if this is option 4, check to see if there are any variants with all the options.
+	// if this is option 3, check to see if there are any variants with all the options.
 	const items = (variants || []).filter(
 		(variant) =>
 			variant?.option_1 === variantValues.option_1 &&
 			variant?.option_2 === variantValues.option_2 &&
 			variant.option_3 === option
 	);
-	const highestStock = Math.max(...items.map((item) => item.available_stock));
-	return highestStock <= 0;
+	const highestEffectiveStock = Math.max(...items.map(getEffectiveStock));
+	return highestEffectiveStock <= 0;
 };
