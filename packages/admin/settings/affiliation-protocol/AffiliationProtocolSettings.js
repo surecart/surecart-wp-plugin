@@ -2,7 +2,7 @@
 import { css, jsx } from '@emotion/core';
 import SettingsTemplate from '../SettingsTemplate';
 import useSave from '../UseSave';
-import { __, sprintf } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 import { useState, useEffect } from '@wordpress/element';
 import useEntity from '../../hooks/useEntity';
 import Error from '../../components/Error';
@@ -448,16 +448,6 @@ export default () => {
 										<ScInput
 											type="url"
 											placeholder="https://example.com"
-											aria-label={
-												// translators: %d is the URL number (e.g. Referral URL 1, Referral URL 2, etc.)
-												sprintf(
-													__(
-														'Referral URL %d',
-														'surecart'
-													),
-													index + 1
-												)
-											}
 											onScInput={(e) => {
 												e.preventDefault();
 												const urls = [
