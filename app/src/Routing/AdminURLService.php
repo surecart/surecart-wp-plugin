@@ -200,16 +200,19 @@ class AdminURLService {
 	 */
 	public function importResults( $name, $import_ids ) {
 		$import_ids = (array) $import_ids;
+		$session_id = get_option( 'sc_woo_import_session_id' );
 
-		return esc_url(
-			add_query_arg(
-				[
-					'action'     => 'import_results',
-					'import_ids' => implode( ',', $import_ids ),
-				],
-				$this->index( $name )
-			)
-		);
+		$query_args = [
+			'action'     => 'import_results',
+			'import_ids' => implode( ',', $import_ids ),
+		];
+
+		// Add session_id for skipped products lookup.
+		if ( $session_id ) {
+			$query_args['session_id'] = $session_id;
+		}
+
+		return esc_url( add_query_arg( $query_args, $this->index( $name ) ) );
 	}
 
 	/**

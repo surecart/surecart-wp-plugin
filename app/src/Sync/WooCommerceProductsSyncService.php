@@ -88,12 +88,27 @@ class WooCommerceProductsSyncService {
 			return;
 		}
 
-		$import_ids = get_option( 'sc_woo_import_ids', [] );
-		if ( empty( $import_ids ) ) {
+		$import_ids             = get_option( 'sc_woo_import_ids', [] );
+		$all_skipped_session_id = get_option( 'sc_woo_import_all_skipped' );
+
+		// Generate results URL.
+		if ( ! empty( $import_ids ) ) {
+			// Normal case: has import_ids.
+			$results_url = \SureCart::getUrl()->importResults( 'products', $import_ids );
+		} elseif ( $all_skipped_session_id ) {
+			// All-skipped case: use session_id.
+			$results_url = add_query_arg(
+				[
+					'page'       => 'sc-products',
+					'action'     => 'import_results',
+					'session_id' => $all_skipped_session_id,
+				],
+				admin_url( 'admin.php' )
+			);
+		} else {
+			// No data available, skip notice.
 			return;
 		}
-
-		$results_url = \SureCart::getUrl()->importResults( 'products', $import_ids );
 
 		echo wp_kses_post(
 			\SureCart::notices()->render(
@@ -158,7 +173,10 @@ class WooCommerceProductsSyncService {
 	 * @return void
 	 */
 	public function sync( $page = 1, $batch_size = 100 ) {
+		error_log( '=== SureCart WooCommerce Sync: Starting sync() - Page: ' . $page ); // DEBUG
+
 		if ( ! class_exists( 'WooCommerce' ) ) {
+			error_log( 'SureCart WooCommerce Sync: WooCommerce class not found' ); // DEBUG
 			return;
 		}
 
@@ -178,6 +196,8 @@ class WooCommerceProductsSyncService {
 
 		remove_filter( 'woocommerce_product_data_store_cpt_get_products_query', [ $this, 'excludeImportedProducts' ], 10 );
 
+		error_log( 'SureCart WooCommerce Sync: Found ' . count( $products->products ) . ' products to sync on page ' . $page ); // DEBUG
+
 		// Sync each product.
 		foreach ( $products->products as $product_id ) {
 			$this->syncProduct( $product_id );
@@ -185,19 +205,52 @@ class WooCommerceProductsSyncService {
 
 		// Create import batch if we have products.
 		if ( ! empty( $this->products_import_batch ) ) {
+			error_log( 'SureCart WooCommerce Sync: Creating import batch with ' . count( $this->products_import_batch ) . ' products' ); // DEBUG
 			$import = ( new ProductImport() )->create( [ 'data' => $this->products_import_batch ] );
 			$this->products_import_batch = []; // Clear batch after import.
 
 			// Accumulate import IDs across batches for the completion notice.
 			if ( ! is_wp_error( $import ) && ! empty( $import->id ) ) {
+				error_log( 'SureCart WooCommerce Sync: Import created with ID: ' . $import->id ); // DEBUG
 				$existing_ids = get_option( 'sc_woo_import_ids', [] );
 				$existing_ids[] = $import->id;
 				update_option( 'sc_woo_import_ids', $existing_ids );
+			} elseif ( is_wp_error( $import ) ) {
+				error_log( 'SureCart WooCommerce Sync: Import ERROR: ' . $import->get_error_message() ); // DEBUG
 			}
+		} else {
+			error_log( 'SureCart WooCommerce Sync: No products in batch to import' ); // DEBUG
 		}
 
 		// if the total number of pages less than or equal to the current page, we don't have another page.
 		if ( $products->max_num_pages <= $page ) {
+			error_log( 'SureCart WooCommerce Sync: Last page reached (page ' . $page . ' of ' . $products->max_num_pages . ')' ); // DEBUG
+
+			// All batches processed - check if ANY imports were created.
+			$import_ids = get_option( 'sc_woo_import_ids', [] );
+			error_log( 'SureCart WooCommerce Sync: Total import_ids created: ' . count( $import_ids ) ); // DEBUG
+
+			if ( empty( $import_ids ) ) {
+				error_log( 'SureCart WooCommerce Sync: No import_ids - checking for skipped products' ); // DEBUG
+
+				// No imports created - check if products were skipped.
+				$session_id = get_option( 'sc_woo_import_session_id' );
+				error_log( 'SureCart WooCommerce Sync: Session ID from option: ' . ( $session_id ?: 'NONE' ) ); // DEBUG
+
+				if ( $session_id ) {
+					$transient_key    = 'sc_woo_import_skipped_' . $session_id;
+					$skipped_products = get_transient( $transient_key );
+					error_log( 'SureCart WooCommerce Sync: Skipped products count: ' . ( is_array( $skipped_products ) ? count( $skipped_products ) : 0 ) ); // DEBUG
+
+					if ( ! empty( $skipped_products ) ) {
+						// All products skipped - store session_id for results page.
+						error_log( 'SureCart WooCommerce Sync: All products skipped! Storing session_id for results page' ); // DEBUG
+						update_option( 'sc_woo_import_all_skipped', $session_id, false );
+					}
+				}
+			}
+
+			error_log( '=== SureCart WooCommerce Sync: Sync complete ===' ); // DEBUG
 			return;
 		}
 
@@ -213,17 +266,25 @@ class WooCommerceProductsSyncService {
 	 */
 	public function syncProduct( $product_id ) {
 		try {
+			error_log( 'SureCart WooCommerce Sync: Processing product ID: ' . $product_id ); // DEBUG
+
 			$product = wc_get_product( $product_id );
 
 			if ( ! $product ) {
+				error_log( 'SureCart WooCommerce Sync: Product not found (ID: ' . $product_id . '), tracking as skipped' ); // DEBUG
+				$this->trackSkippedProduct( null, 'invalid', 'product_not_found' );
 				return;
 			}
 
 			// Skip unsupported product types.
 			$product_type = $product->get_type();
 			if ( in_array( $product_type, [ 'grouped', 'external' ], true ) ) {
+				error_log( 'SureCart WooCommerce Sync: Skipping ' . $product_type . ' product: ' . $product->get_name() . ' (ID: ' . $product_id . ')' ); // DEBUG
+				$this->trackSkippedProduct( $product, $product_type, 'unsupported_type' );
 				return;
 			}
+
+			error_log( 'SureCart WooCommerce Sync: Processing ' . $product_type . ' product: ' . $product->get_name() . ' (ID: ' . $product_id . ')' ); // DEBUG
 
 			// Map the WooCommerce Product to SureCart and save in the imports batch.
 			$this->mapWooCommerceProductToSureCart( $product );
@@ -234,6 +295,68 @@ class WooCommerceProductsSyncService {
 		} catch ( \Exception $e ) {
 			error_log( sprintf( 'SureCart WooCommerce Sync: Failed to sync product %d - %s', $product_id, $e->getMessage() ) ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 		}
+	}
+
+	/**
+	 * Get or create import session ID for tracking skipped products.
+	 *
+	 * @return string Session ID (UUID).
+	 */
+	private function getImportSessionId() {
+		$session_id = get_option( 'sc_woo_import_session_id' );
+		if ( ! $session_id ) {
+			$session_id = wp_generate_uuid4();
+			update_option( 'sc_woo_import_session_id', $session_id, false );
+		}
+		return $session_id;
+	}
+
+	/**
+	 * Track a skipped product for import results reporting.
+	 *
+	 * @param \WC_Product|null $product      WooCommerce Product (null if not found).
+	 * @param string           $product_type Product type.
+	 * @param string           $skip_reason  Machine-readable skip reason code.
+	 * @return void
+	 */
+	private function trackSkippedProduct( $product, $product_type, $skip_reason ) {
+		error_log( 'SureCart WooCommerce Sync: trackSkippedProduct() called - Type: ' . $product_type . ', Reason: ' . $skip_reason ); // DEBUG
+
+		// Build human-readable skip reason message.
+		$reason_messages = [
+			'unsupported_type'  => sprintf(
+				/* translators: %s: product type */
+				__( 'Unsupported product type: %s', 'surecart' ),
+				$product_type
+			),
+			'product_not_found' => __( 'Product not found in WooCommerce', 'surecart' ),
+		];
+
+		$reason = $reason_messages[ $skip_reason ] ?? __( 'Product skipped', 'surecart' );
+
+		$skipped_data = [
+			'wc_product_id' => $product ? $product->get_id() : 0,
+			'name'          => $product ? ( $product->get_name() ?: __( 'Unnamed Product', 'surecart' ) ) : __( 'Unknown Product', 'surecart' ),
+			'type'          => $product_type,
+			'reason'        => $reason,
+		];
+
+		// Get session ID for this import.
+		$session_id    = $this->getImportSessionId();
+		$transient_key = 'sc_woo_import_skipped_' . $session_id;
+
+		error_log( 'SureCart WooCommerce Sync: Session ID: ' . $session_id . ', Transient key: ' . $transient_key ); // DEBUG
+
+		// Retrieve existing skipped products from transient.
+		$skipped_products = get_transient( $transient_key );
+		if ( ! is_array( $skipped_products ) ) {
+			$skipped_products = [];
+		}
+
+		$skipped_products[] = $skipped_data;
+
+		// Store for 7 days (matches typical ImportRow retention).
+		set_transient( $transient_key, $skipped_products, 7 * DAY_IN_SECONDS );
 	}
 
 	/**

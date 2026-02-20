@@ -46,6 +46,7 @@
 	.import-results-summary {
 		font-size: 14px;
 		line-height: 1.6;
+		margin:0;
 	}
 
 	.import-results-summary strong {
@@ -97,27 +98,33 @@
 				<sc-heading size="large"><?php esc_html_e( 'Import Products', 'surecart' ); ?></sc-heading>
 
 				<div class="import-results-summary">
-					<?php
-					printf(
-						/* translators: %s: number of successfully imported products */
-						esc_html__( 'You have successfully imported %s products.', 'surecart' ),
-						'<strong>' . esc_html( $succeeded_count ) . '</strong>'
-					);
-					?>
-
-					<?php if ( ! empty( $failed_rows ) ) : ?>
-						<br />
+					<?php if ( ! empty( $all_skipped ) ) : ?>
+						<?php esc_html_e( 'No products were imported. All products were skipped (see details below).', 'surecart' ); ?>
+					<?php elseif ( $succeeded_count > 0 ) : ?>
 						<?php
 						printf(
-							/* translators: %s: number of failed products */
-							esc_html__( '%s products failed to import due to:', 'surecart' ),
-							'<strong>' . esc_html( count( $failed_rows ) ) . '</strong>'
+							/* translators: %s: number of successfully imported products */
+							esc_html__( 'You have successfully imported %s products.', 'surecart' ),
+							'<strong>' . esc_html( $succeeded_count ) . '</strong>'
 						);
 						?>
+					<?php else : ?>
+						<?php esc_html_e( 'No products were imported.', 'surecart' ); ?>
 					<?php endif; ?>
 				</div>
 
 				<?php if ( ! empty( $failed_rows ) ) : ?>
+					<div>
+						<p class="import-results-summary">
+							<?php
+							printf(
+								/* translators: %s: number of failed products */
+								esc_html__( '%s products failed to import due to:', 'surecart' ),
+								'<strong>' . esc_html( count( $failed_rows ) ) . '</strong>'
+							);
+							?>
+						</p>
+					</div>
 					<table class="import-results-table">
 						<thead>
 							<tr>
@@ -134,6 +141,46 @@
 							<?php endforeach; ?>
 						</tbody>
 					</table>
+				<?php endif; ?>
+
+				<?php if ( ! empty( $skipped_products ) ) : ?>
+					<div>
+						<?php if ( empty( $all_skipped ) ) : ?>
+							<p class="import-results-summary" style="margin-bottom: 1em;">
+								<?php
+								printf(
+									/* translators: %s: number of skipped products */
+									esc_html__( '%s products were skipped:', 'surecart' ),
+									'<strong>' . esc_html( count( $skipped_products ) ) . '</strong>'
+								);
+								?>
+							</p>
+						<?php endif; ?>
+						<sc-heading size="medium" style="margin-bottom: 0.5em;">
+							<?php esc_html_e( 'Skipped Products', 'surecart' ); ?>
+						</sc-heading>
+						<p class="description" style="margin-bottom: 1em;">
+							<?php esc_html_e( 'The following products were not imported because they are unsupported product types or could not be processed.', 'surecart' ); ?>
+						</p>
+						<table class="import-results-table">
+							<thead>
+								<tr>
+									<th><?php esc_html_e( 'Product Name', 'surecart' ); ?></th>
+									<th><?php esc_html_e( 'Type', 'surecart' ); ?></th>
+									<th><?php esc_html_e( 'Reason', 'surecart' ); ?></th>
+								</tr>
+							</thead>
+							<tbody>
+								<?php foreach ( $skipped_products as $product ) : ?>
+									<tr>
+										<td><?php echo esc_html( $product['name'] ?? __( 'Unknown', 'surecart' ) ); ?></td>
+										<td><?php echo esc_html( $product['type'] ?? '-' ); ?></td>
+										<td><?php echo esc_html( $product['reason'] ?? __( 'Unknown reason', 'surecart' ) ); ?></td>
+									</tr>
+								<?php endforeach; ?>
+							</tbody>
+						</table>
+					</div>
 				<?php endif; ?>
 
 				<a href="https://surecart.com/docs" target="_blank" rel="noopener noreferrer" class="import-results-docs-link">

@@ -309,11 +309,19 @@ class ProductsController extends AdminController {
 	 * @return \SureCartCore\Responses\RedirectResponse
 	 */
 	public function import() {
-		// Clear previously accumulated import IDs.
+		error_log( '=== SureCart: import() called - Starting WooCommerce product import ===' ); // DEBUG
+
+		// Clear previously accumulated import IDs and session tracking.
 		delete_option( 'sc_woo_import_ids' );
+		delete_option( 'sc_woo_import_session_id' );
+		delete_option( 'sc_woo_import_all_skipped' );
+
+		error_log( 'SureCart: Options cleared, dispatching sync action' ); // DEBUG
 
 		// enqueue action.
 		\SureCart::sync()->woocommerce_products()->dispatch();
+
+		error_log( 'SureCart: Sync action dispatched, redirecting to products page' ); // DEBUG
 
 		// redirect to products page.
 		return \SureCart::redirect()->to( esc_url_raw( \SureCart::getUrl()->index( 'products' ) ) );
@@ -349,16 +357,51 @@ class ProductsController extends AdminController {
 		}
 
 		if ( empty( $import_ids_raw ) ) {
+			// Check if this is an all-skipped import.
+			$all_skipped_session_id = get_option( 'sc_woo_import_all_skipped' );
+
+			if ( $all_skipped_session_id ) {
+				// Fetch skipped products via session ID.
+				$transient_key    = 'sc_woo_import_skipped_' . $all_skipped_session_id;
+				$skipped_products = get_transient( $transient_key );
+
+				if ( ! is_array( $skipped_products ) ) {
+					$skipped_products = [];
+				}
+
+				// Clean up all-skipped flag (not transient - let it expire naturally).
+				delete_option( 'sc_woo_import_all_skipped' );
+
+				return \SureCart::view( 'admin/products/import-results' )->with(
+					[
+						'succeeded_count'  => 0,
+						'failed_rows'      => [],
+						'skipped_products' => $skipped_products,
+						'all_skipped'      => true,
+					]
+				);
+			}
+
+			// No import IDs and no skipped products - show empty state.
 			return \SureCart::view( 'admin/products/import-results' )->with(
 				[
-					'succeeded_count' => 0,
-					'failed_rows'     => [],
+					'succeeded_count'  => 0,
+					'failed_rows'      => [],
+					'skipped_products' => [],
 				]
 			);
 		}
 
 		// Sanitize and split into array.
 		$import_ids = array_filter( array_map( 'sanitize_text_field', explode( ',', $import_ids_raw ) ) );
+
+		// Parse session_id from query (for skipped products lookup).
+		$session_id = $request->query( 'session_id' );
+
+		// Fallback: use current session if available (for backward compatibility).
+		if ( ! $session_id ) {
+			$session_id = get_option( 'sc_woo_import_session_id' );
+		}
 
 		// Fetch all import rows across all pages.
 		$succeeded_count = 0;
@@ -396,10 +439,22 @@ class ProductsController extends AdminController {
 			++$page;
 		} while ( $has_next_page );
 
+		// Fetch skipped products from transient.
+		$skipped_products = [];
+		if ( $session_id ) {
+			$transient_key    = 'sc_woo_import_skipped_' . $session_id;
+			$skipped_products = get_transient( $transient_key );
+
+			if ( ! is_array( $skipped_products ) ) {
+				$skipped_products = [];
+			}
+		}
+
 		return \SureCart::view( 'admin/products/import-results' )->with(
 			[
-				'succeeded_count' => $succeeded_count,
-				'failed_rows'     => $failed_rows,
+				'succeeded_count'  => $succeeded_count,
+				'failed_rows'      => $failed_rows,
+				'skipped_products' => $skipped_products,
 			]
 		);
 	}
