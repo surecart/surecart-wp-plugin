@@ -32,7 +32,9 @@ export const isStockNeedsToBeChecked = (productId: string) => {
   const selectedVariant = state?.[productId]?.selectedVariant;
 
   if (selectedVariant?.id) {
-    return !selectedVariant.has_unlimited_stock;
+    // null means "inherit from product" — fall back to product's has_unlimited_stock
+    const effectiveUnlimited = selectedVariant.has_unlimited_stock ?? product?.has_unlimited_stock;
+    return !effectiveUnlimited;
   }
 
   return !product?.has_unlimited_stock;

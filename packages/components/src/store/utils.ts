@@ -21,7 +21,9 @@ export const getSerializedState = () => {
  */
 export const isProductVariantOptionSoldOut = (optionNumber, option, variantValues, product: Product) => {
   const getEffectiveStock = (variant: Variant): number => {
-    if (variant?.has_unlimited_stock) return Infinity;
+    // null means "inherit from product" — fall back to product's has_unlimited_stock
+    const effectiveUnlimited = variant?.has_unlimited_stock ?? product?.has_unlimited_stock;
+    if (effectiveUnlimited) return Infinity;
     return variant.available_stock;
   };
 
