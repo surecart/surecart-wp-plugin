@@ -2,7 +2,7 @@
  * Component Dependencies
  */
 import { ScOrderPassword } from '@surecart/components-react';
-import { InspectorControls } from '@wordpress/block-editor';
+import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
 import {
 	Button,
 	PanelBody,
@@ -28,6 +28,8 @@ export default ({ className, attributes, setAttributes, isSelected }) => {
 		confirmation_placeholder,
 		confirmation_help,
 	} = attributes;
+
+	const blockProps = useBlockProps();
 
 	return (
 		<Fragment>
@@ -149,18 +151,20 @@ export default ({ className, attributes, setAttributes, isSelected }) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<ScOrderPassword
-				className={className}
-				name={'password'}
-				label={label}
-				placeholder={placeholder}
-				help={help}
-				confirmationPlaceholder={confirmation_placeholder}
-				confirmationLabel={confirmation_label}
-				confirmationHelp={confirmation_help}
-				confirmation={confirmation}
-				required={required}
-			></ScOrderPassword>
+			<div {...blockProps}>
+				<ScOrderPassword
+					className={className}
+					name={'password'}
+					label={label}
+					placeholder={placeholder}
+					help={help}
+					confirmationPlaceholder={confirmation_placeholder}
+					confirmationLabel={confirmation_label}
+					confirmationHelp={confirmation_help}
+					confirmation={confirmation}
+					required={required}
+				></ScOrderPassword>
+			</div>
 		</Fragment>
 	);
 };

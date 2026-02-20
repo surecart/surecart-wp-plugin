@@ -8,6 +8,7 @@ import { siteLogo as icon } from '@wordpress/icons';
 import {
 	store as blockEditorStore,
 	InspectorControls,
+	useBlockProps,
 	useInnerBlocksProps as __stableUseInnerBlocksProps,
 	__experimentalUseInnerBlocksProps,
 } from '@wordpress/block-editor';
@@ -71,23 +72,32 @@ export default ({
 		};
 	});
 
+	// useBlockProps must be called before any early returns
+	const blockProps = useBlockProps();
+
 	if (loading) {
-		return <Placeholder preview={<Spinner />} withIllustration={true} />;
+		return (
+			<div {...blockProps}>
+				<Placeholder preview={<Spinner />} withIllustration={true} />
+			</div>
+		);
 	}
 
 	if (!data?.logo_url && imageEditing) {
 		return (
-			<Placeholder
-				label={__('Store Logo', 'surecart')}
-				icon={icon}
-				instructions={__(
-					'This is also displayed on your invoices, receipts and emails.',
-					'surecart'
-				)}
-				isColumnLayout
-			>
-				<Logo brand={data} editBrand={editBrand} />
-			</Placeholder>
+			<div {...blockProps}>
+				<Placeholder
+					label={__('Store Logo', 'surecart')}
+					icon={icon}
+					instructions={__(
+						'This is also displayed on your invoices, receipts and emails.',
+						'surecart'
+					)}
+					isColumnLayout
+				>
+					<Logo brand={data} editBrand={editBrand} />
+				</Placeholder>
+			</div>
 		);
 	}
 
@@ -203,33 +213,35 @@ export default ({
 				</PanelBody>
 			</InspectorControls>
 
-			<ResizableBox
-				size={{
-					width: currentWidth,
-					height: currentHeight,
-				}}
-				showHandle={isSelected}
-				minWidth={minWidth}
-				maxWidth={maxWidthBuffer}
-				minHeight={minHeight}
-				maxHeight={maxHeight}
-				lockAspectRatio
-				enable={{
-					top: false,
-					right: true,
-					bottom: true,
-					left: false,
-				}}
-				onResizeStop={(event, direction, elt, delta) => {
-					setAttributes({
-						width: parseInt(currentWidth + delta.width, 10),
-						height: parseInt(currentHeight + delta.height, 10),
-						maxHeight: parseInt(currentHeight + delta.height, 10),
-					});
-				}}
-			>
-				{imgWrapper}
-			</ResizableBox>
+			<div {...blockProps}>
+				<ResizableBox
+					size={{
+						width: currentWidth,
+						height: currentHeight,
+					}}
+					showHandle={isSelected}
+					minWidth={minWidth}
+					maxWidth={maxWidthBuffer}
+					minHeight={minHeight}
+					maxHeight={maxHeight}
+					lockAspectRatio
+					enable={{
+						top: false,
+						right: true,
+						bottom: true,
+						left: false,
+					}}
+					onResizeStop={(event, direction, elt, delta) => {
+						setAttributes({
+							width: parseInt(currentWidth + delta.width, 10),
+							height: parseInt(currentHeight + delta.height, 10),
+							maxHeight: parseInt(currentHeight + delta.height, 10),
+						});
+					}}
+				>
+					{imgWrapper}
+				</ResizableBox>
+			</div>
 		</Fragment>
 	);
 };

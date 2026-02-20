@@ -8,16 +8,17 @@ import { store } from '@wordpress/core-data';
 dispatch(store).addEntities([
 	{
 		name: 'product',
-		kind: 'root',
+		kind: 'surecart',
 		label: __('Product', 'surecart'),
-		baseURL: 'surecart/v1/products',
+		baseURL: '/surecart/v1/products',
 		baseURLParams: { context: 'edit' },
+		supportsPagination: true,
 	},
 	{
 		name: 'price',
-		kind: 'root',
+		kind: 'surecart',
 		label: __('Price', 'surecart'),
-		baseURL: 'surecart/v1/prices',
+		baseURL: '/surecart/v1/prices',
 		baseURLParams: { context: 'edit' },
 	},
 ]);

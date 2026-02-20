@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { InspectorControls } from '@wordpress/block-editor';
+import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
 import { PanelBody, PanelRow, TextControl, ToggleControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { Fragment } from '@wordpress/element';
@@ -26,6 +26,8 @@ export default ({ attributes, setAttributes }) => {
 		tax_id_types,
 		required,
 	} = attributes;
+
+	const blockProps = useBlockProps();
 
 	const zones = [
 		{ value: 'ca_gst', label: __('CA GST', 'surecart') },
@@ -198,17 +200,19 @@ export default ({ attributes, setAttributes }) => {
 					</div>
 				</PanelBody>
 			</InspectorControls>
-			<ScOrderTaxIdInput
-				show={true}
-				otherLabel={other_label || null}
-				caGstLabel={ca_gst_label || null}
-				auAbnLabel={au_abn_label || null}
-				gbVatLabel={gb_vat_label || null}
-				euVatLabel={eu_vat_label || null}
-				helpText={help_text || null}
-				taxIdTypes={JSON.stringify(tax_id_types)}
-				required={required || false}
-			></ScOrderTaxIdInput>
+			<div {...blockProps}>
+				<ScOrderTaxIdInput
+					show={true}
+					otherLabel={other_label || null}
+					caGstLabel={ca_gst_label || null}
+					auAbnLabel={au_abn_label || null}
+					gbVatLabel={gb_vat_label || null}
+					euVatLabel={eu_vat_label || null}
+					helpText={help_text || null}
+					taxIdTypes={JSON.stringify(tax_id_types)}
+					required={required || false}
+				></ScOrderTaxIdInput>
+			</div>
 		</Fragment>
 	);
 };

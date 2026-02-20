@@ -1,4 +1,5 @@
 {
+	"apiVersion": 3,
 	"name": "surecart/subtotal",
 	"title": "Subtotal Line Item",
 	"description": "Display a subtotal line item.",

@@ -1,5 +1,5 @@
 import { __ } from '@wordpress/i18n';
-import { InspectorControls } from '@wordpress/block-editor';
+import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
 import { PanelBody, PanelRow, TextControl } from '@wordpress/components';
 import { Fragment } from '@wordpress/element';
 
@@ -11,6 +11,7 @@ export default ({ attributes, setAttributes }) => {
 		free_trial_text,
 		first_payment_total_text,
 	} = attributes;
+	const blockProps = useBlockProps();
 
 	return (
 		<Fragment>
@@ -77,21 +78,23 @@ export default ({ attributes, setAttributes }) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<sc-line-item-total total="total" size="large" show-currency>
-				<span slot="title">{text || __('Total', 'surecart')}</span>
-				<span slot="subscription-title">
-					{subscription_text || text || __('Total', 'surecart')}
-				</span>
-				<span slot="first-payment-total-description">
-					{first_payment_total_text || __('Subtotal', 'surecart')}
-				</span>
-				<span slot="free-trial-description">
-					{free_trial_text || __('Trial', 'surecart')}
-				</span>
-				<span slot="due-amount-description">
-					{due_amount_text || __('Amount Due', 'surecart')}
-				</span>
-			</sc-line-item-total>
+			<div {...blockProps}>
+				<sc-line-item-total total="total" size="large" show-currency>
+					<span slot="title">{text || __('Total', 'surecart')}</span>
+					<span slot="subscription-title">
+						{subscription_text || text || __('Total', 'surecart')}
+					</span>
+					<span slot="first-payment-total-description">
+						{first_payment_total_text || __('Subtotal', 'surecart')}
+					</span>
+					<span slot="free-trial-description">
+						{free_trial_text || __('Trial', 'surecart')}
+					</span>
+					<span slot="due-amount-description">
+						{due_amount_text || __('Amount Due', 'surecart')}
+					</span>
+				</sc-line-item-total>
+			</div>
 		</Fragment>
 	);
 };

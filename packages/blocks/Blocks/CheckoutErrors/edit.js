@@ -5,11 +5,13 @@ import { __ } from '@wordpress/i18n';
 export default () => {
 	const blockProps = useBlockProps();
 	return (
-		<ScAlert type="danger" {...blockProps} open>
-			{__(
-				'If there are errors in the checkout, they will display here.',
-				'surecart'
-			)}
-		</ScAlert>
+		<div {...blockProps}>
+			<ScAlert type="danger" open>
+				{__(
+					'If there are errors in the checkout, they will display here.',
+					'surecart'
+				)}
+			</ScAlert>
+		</div>
 	);
 };

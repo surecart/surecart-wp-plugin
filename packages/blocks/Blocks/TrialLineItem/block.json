@@ -1,7 +1,7 @@
 {
 	"name": "surecart/trial-line-item",
 	"title": "Trial",
-	"apiVersion": 2,
+	"apiVersion": 3,
 	"description": "Display a trial amount.",
 	"category": "surecart",
 	"keywords": ["trial"],

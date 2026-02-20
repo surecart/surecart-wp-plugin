@@ -29,7 +29,7 @@ import {
 	TextareaControl,
 } from '@wordpress/components';
 import { useSelect, useDispatch } from '@wordpress/data';
-import { Fragment, useState, useEffect } from '@wordpress/element';
+import { Fragment, useState, useEffect, useRef } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import ClaimNoticeModal from '../../../admin/components/ClaimNoticeModal';
 
@@ -53,6 +53,15 @@ export default function edit({ clientId, attributes, setAttributes }) {
 		success_url,
 		persist_cart,
 	} = attributes;
+
+	const scCheckoutRef = useRef();
+
+	// Set prices directly on the element for iframe compatibility.
+	useEffect(() => {
+		if (scCheckoutRef.current) {
+			scCheckoutRef.current.prices = prices || [];
+		}
+	}, [prices]);
 
 	const [showClaimNotice, setShowClaimNotice] = useState(false);
 	const claimUrl = window?.scData?.claim_url;
@@ -669,6 +678,7 @@ export default function edit({ clientId, attributes, setAttributes }) {
 							)}
 						</div>
 						<ScCheckout
+							ref={scCheckoutRef}
 							mode="test"
 							formId={formId}
 							processors={scBlockData?.processors}
@@ -698,7 +708,6 @@ export default function edit({ clientId, attributes, setAttributes }) {
 								scBlockData.currency || scData?.currency
 							}
 							choiceType={choice_type}
-							prices={prices}
 						>
 							<div
 								css={css`

@@ -4,6 +4,7 @@
 import { __ } from '@wordpress/i18n';
 import {
 	InspectorControls,
+	useBlockProps,
 	useInnerBlocksProps as __stableUseInnerBlocksProps,
 	__experimentalUseInnerBlocksProps,
 } from '@wordpress/block-editor';
@@ -43,6 +44,7 @@ export default ({ attributes, setAttributes }) => {
 		collapsedOnMobile,
 	} = attributes;
 
+	const blockProps = useBlockProps();
 	const innerBlocksProps = useInnerBlocksProps(
 		{},
 		{
@@ -177,14 +179,16 @@ export default ({ attributes, setAttributes }) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<ScOrderSummary
-				collapsible={collapsible}
-				collapsedOnDesktop={collapsedOnDesktop}
-				orderSummaryText={order_summary_text || null}
-				invoiceSummaryText={invoice_summary_text || null}
-				collapsedOnMobile={collapsedOnMobile}
-				{...innerBlocksProps}
-			></ScOrderSummary>
+			<div {...blockProps}>
+				<ScOrderSummary
+					collapsible={collapsible}
+					collapsedOnDesktop={collapsedOnDesktop}
+					orderSummaryText={order_summary_text || null}
+					invoiceSummaryText={invoice_summary_text || null}
+					collapsedOnMobile={collapsedOnMobile}
+					{...innerBlocksProps}
+				></ScOrderSummary>
+			</div>
 		</Fragment>
 	);
 };

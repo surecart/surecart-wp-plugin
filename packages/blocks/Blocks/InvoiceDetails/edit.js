@@ -3,6 +3,7 @@ import { css, jsx } from '@emotion/react';
 
 import { __ } from '@wordpress/i18n';
 import {
+	useBlockProps,
 	useInnerBlocksProps as __stableUseInnerBlocksProps,
 	__experimentalUseInnerBlocksProps,
 } from '@wordpress/block-editor';
@@ -12,6 +13,7 @@ export default () => {
 		? __stableUseInnerBlocksProps
 		: __experimentalUseInnerBlocksProps;
 
+	const blockProps = useBlockProps();
 	const innerBlocksProps = useInnerBlocksProps(
 		{
 			className: 'sc-invoice-details',
@@ -35,5 +37,9 @@ export default () => {
 		}
 	);
 
-	return <div {...innerBlocksProps}></div>;
+	return (
+		<div {...blockProps}>
+			<div {...innerBlocksProps}></div>
+		</div>
+	);
 };

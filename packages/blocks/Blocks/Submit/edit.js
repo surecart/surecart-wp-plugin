@@ -10,6 +10,7 @@ import { __ } from '@wordpress/i18n';
 import {
 	InspectorControls,
 	__experimentalUseColorProps as useColorProps,
+	useBlockProps,
 } from '@wordpress/block-editor';
 import { RichText } from '@wordpress/block-editor';
 import {
@@ -25,7 +26,7 @@ import {
  */
 import { ScButton } from '@surecart/components-react';
 
-export default ({ className, attributes, setAttributes }) => {
+export default ({ attributes, setAttributes }) => {
 	const {
 		type,
 		text,
@@ -40,9 +41,10 @@ export default ({ className, attributes, setAttributes }) => {
 
 	const colorProps = useColorProps(attributes);
 	const { style: colorStyle } = colorProps;
+	const blockProps = useBlockProps();
 
 	return (
-		<div className={className}>
+		<div {...blockProps}>
 			<InspectorControls>
 				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>

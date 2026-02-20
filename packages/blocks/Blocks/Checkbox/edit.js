@@ -2,7 +2,7 @@
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { InspectorControls, RichText } from '@wordpress/block-editor';
+import { InspectorControls, RichText, useBlockProps } from '@wordpress/block-editor';
 import { Fragment } from '@wordpress/element';
 import {
 	PanelBody,
@@ -15,9 +15,8 @@ import {
  * Component Dependencies
  */
 import { ScCheckbox } from '@surecart/components-react';
-import { useBlockProps } from '@wordpress/block-editor';
 
-export default ({ className, attributes, setAttributes }) => {
+export default ({ attributes, setAttributes }) => {
 	const { label, value, checked, name, required } = attributes;
 
 	const blockProps = useBlockProps();
@@ -63,20 +62,16 @@ export default ({ className, attributes, setAttributes }) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<ScCheckbox
-				className={className}
-				name={name}
-				required={required}
-				edit
-				{...blockProps}
-			>
-				<RichText
-					aria-label={__('Checkbox Text', 'surecart')}
-					placeholder={__('Add some checkbox text...', 'surecart')}
-					value={label}
-					onChange={(label) => setAttributes({ label })}
-				/>
-			</ScCheckbox>
+			<div {...blockProps}>
+				<ScCheckbox name={name} required={required} edit>
+					<RichText
+						aria-label={__('Checkbox Text', 'surecart')}
+						placeholder={__('Add some checkbox text...', 'surecart')}
+						value={label}
+						onChange={(label) => setAttributes({ label })}
+					/>
+				</ScCheckbox>
+			</div>
 		</Fragment>
 	);
 };

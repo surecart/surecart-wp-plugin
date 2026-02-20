@@ -2,18 +2,16 @@
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { InspectorControls, RichText } from '@wordpress/block-editor';
+import { InspectorControls, RichText, useBlockProps } from '@wordpress/block-editor';
 import { Fragment } from '@wordpress/element';
 import {
 	PanelBody,
 	PanelRow,
 	TextControl,
-	ToggleControl,
 } from '@wordpress/components';
-import { useBlockProps } from '@wordpress/block-editor';
 import { ScOrderConfirmationCustomer } from '@surecart/components-react';
 
-export default ({ attributes }) => {
+export default ({ attributes, setAttributes }) => {
 	const { title } = attributes;
 
 	const blockProps = useBlockProps();
@@ -33,17 +31,19 @@ export default ({ attributes }) => {
 					</PanelRow>
 				</PanelBody>
 			</InspectorControls>
-			<ScOrderConfirmationCustomer {...blockProps}>
-				<RichText
-					aria-label={__('Button text', 'surecart')}
-					placeholder={__('Add text…', 'surecart')}
-					value={title}
-					onChange={(title) => setAttributes({ title })}
-					withoutInteractiveFormatting
-					slot="heading"
-					allowedFormats={['core/bold', 'core/italic']}
-				/>
-			</ScOrderConfirmationCustomer>
+			<div {...blockProps}>
+				<ScOrderConfirmationCustomer>
+					<RichText
+						aria-label={__('Button text', 'surecart')}
+						placeholder={__('Add text…', 'surecart')}
+						value={title}
+						onChange={(title) => setAttributes({ title })}
+						withoutInteractiveFormatting
+						slot="heading"
+						allowedFormats={['core/bold', 'core/italic']}
+					/>
+				</ScOrderConfirmationCustomer>
+			</div>
 		</Fragment>
 	);
 };

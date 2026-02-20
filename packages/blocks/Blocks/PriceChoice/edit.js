@@ -1,7 +1,6 @@
 import { __ } from '@wordpress/i18n';
 import { Fragment } from '@wordpress/element';
 import {
-	Disabled,
 	PanelBody,
 	PanelRow,
 	TextControl,
@@ -30,18 +29,7 @@ export default ({ attributes, setAttributes, isSelected }) => {
 		checked,
 	} = attributes;
 
-	const blockProps = useBlockProps({
-		priceId: price_id,
-		type,
-		label,
-		showLabel: show_label,
-		showPrice: show_price,
-		showControl: show_control,
-		description,
-		checked,
-		quantity,
-		style: { width: '100%' },
-	});
+	const blockProps = useBlockProps({ style: { width: '100%' } });
 
 	if (!price_id) {
 		return (
@@ -125,10 +113,21 @@ export default ({ attributes, setAttributes, isSelected }) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<ScPriceChoice
-				onClick={(e) => e.preventDefault()}
-				{...blockProps}
-			/>
+			<div {...blockProps}>
+				<ScPriceChoice
+					onClick={(e) => e.preventDefault()}
+					priceId={price_id}
+					type={type}
+					label={label}
+					showLabel={show_label}
+					showPrice={show_price}
+					showControl={show_control}
+					description={description}
+					checked={checked}
+					quantity={quantity}
+					style={{ width: '100%' }}
+				/>
+			</div>
 		</Fragment>
 	);
 };

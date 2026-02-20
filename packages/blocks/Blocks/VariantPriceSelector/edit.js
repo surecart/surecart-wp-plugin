@@ -108,9 +108,11 @@ export default ({ attributes, setAttributes, clientId }) => {
 
 	if (loadingProduct) {
 		return (
-			<Placeholder>
-				<Spinner />
-			</Placeholder>
+			<div {...blockProps}>
+				<Placeholder>
+					<Spinner />
+				</Placeholder>
+			</div>
 		);
 	}
 

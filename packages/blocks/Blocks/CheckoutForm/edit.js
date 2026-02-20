@@ -6,6 +6,7 @@ import { Spinner, Placeholder } from '@wordpress/components';
 
 import Empty from './components/Empty';
 import Edit from './components/Edit';
+import StyleProvider from '../../components/StyleProvider';
 
 export default ({ attributes, setAttributes }) => {
 	// TODO: Let's store a unique hash in both meta and attribute to find.
@@ -20,8 +21,16 @@ export default ({ attributes, setAttributes }) => {
 	}
 
 	if (!id) {
-		return <Empty attributes={attributes} setAttributes={setAttributes} />;
+		return (
+			<StyleProvider>
+				<Empty attributes={attributes} setAttributes={setAttributes} />
+			</StyleProvider>
+		);
 	}
 
-	return <Edit attributes={attributes} setAttributes={setAttributes} />;
+	return (
+		<StyleProvider>
+			<Edit attributes={attributes} setAttributes={setAttributes} />
+		</StyleProvider>
+	);
 };

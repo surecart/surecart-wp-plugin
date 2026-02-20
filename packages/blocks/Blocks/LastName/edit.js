@@ -2,7 +2,7 @@
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { InspectorControls } from '@wordpress/block-editor';
+import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
 import { Fragment } from '@wordpress/element';
 import {
 	PanelBody,
@@ -19,6 +19,7 @@ import { ScInput } from '@surecart/components-react';
 
 export default ({ attributes, setAttributes }) => {
 	const { label, placeholder, help, required } = attributes;
+	const blockProps = useBlockProps();
 
 	return (
 		<Fragment>
@@ -64,15 +65,17 @@ export default ({ attributes, setAttributes }) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<Disabled>
-				<ScInput
-					required={required}
-					label={label}
-					placeholder={placeholder}
-					name="last_name"
-					help={help}
-				></ScInput>
-			</Disabled>
+			<div {...blockProps}>
+				<Disabled>
+					<ScInput
+						required={required}
+						label={label}
+						placeholder={placeholder}
+						name="last_name"
+						help={help}
+					></ScInput>
+				</Disabled>
+			</div>
 		</Fragment>
 	);
 };

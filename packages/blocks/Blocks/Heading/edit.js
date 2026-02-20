@@ -7,9 +7,9 @@ import {
 	InspectorControls,
 	InnerBlocks,
 	RichText,
+	useBlockProps,
 } from '@wordpress/block-editor';
 import { PanelBody, PanelRow, TextControl } from '@wordpress/components';
-import { useBlockProps } from '@wordpress/block-editor';
 import { ScHeading } from '@surecart/components-react';
 
 export default ({ attributes, setAttributes, isSelected }) => {
@@ -44,38 +44,40 @@ export default ({ attributes, setAttributes, isSelected }) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<ScHeading {...blockProps}>
-				<RichText
-					aria-label={__('Title', 'surecart')}
-					placeholder={__('Add your title...', 'surecart')}
-					value={title}
-					onChange={(title) => setAttributes({ title })}
-					withoutInteractiveFormatting
-					allowedFormats={['core/bold', 'core/italic']}
-				/>
+			<div {...blockProps}>
+				<ScHeading>
+					<RichText
+						aria-label={__('Title', 'surecart')}
+						placeholder={__('Add your title...', 'surecart')}
+						value={title}
+						onChange={(title) => setAttributes({ title })}
+						withoutInteractiveFormatting
+						allowedFormats={['core/bold', 'core/italic']}
+					/>
 
-				{(isSelected || !!description) && (
-					<span slot="description">
-						<RichText
-							aria-label={__('Description', 'surecart')}
-							placeholder={__(
-								'Add your description...',
-								'surecart'
-							)}
-							value={description}
-							onChange={(description) =>
-								setAttributes({ description })
-							}
-							withoutInteractiveFormatting
-							allowedFormats={['core/bold', 'core/italic']}
-						/>
-					</span>
-				)}
+					{(isSelected || !!description) && (
+						<span slot="description">
+							<RichText
+								aria-label={__('Description', 'surecart')}
+								placeholder={__(
+									'Add your description...',
+									'surecart'
+								)}
+								value={description}
+								onChange={(description) =>
+									setAttributes({ description })
+								}
+								withoutInteractiveFormatting
+								allowedFormats={['core/bold', 'core/italic']}
+							/>
+						</span>
+					)}
 
-				<div slot="end">
-					<InnerBlocks />
-				</div>
-			</ScHeading>
+					<div slot="end">
+						<InnerBlocks />
+					</div>
+				</ScHeading>
+			</div>
 		</Fragment>
 	);
 };

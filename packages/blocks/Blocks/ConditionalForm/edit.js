@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
 import { ScTag } from '@surecart/components-react';
 import {
 	Button,
@@ -22,29 +20,61 @@ import {
 
 import { edit } from '@wordpress/icons';
 import { useSelect } from '@wordpress/data';
-import { useState } from 'react';
+import { useState, useEffect } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 import Rules from './rules';
-
 import translations from './translations';
 
 export default ({ attributes, setAttributes, clientId, isSelected }) => {
-	const [editRules, setEditRules] = useState(false);
+	const [ editRules, setEditRules ] = useState( false );
 	const { rule_groups } = attributes;
 
-	const blockProps = useBlockProps({
-		css: css`
-			position: relative;
-			font-size: 16px;
-			font-family: var(--sc-font-sans);
-			outline: 1px dashed var(--wp-admin-theme-color);
-		`,
-	});
+	// Inject modal styles into the parent document for iframe compatibility,
+	// and inner-block nested selectors into the iframe document.
+	useEffect( () => {
+		// Modal CSS → must go into the parent (portal renders there).
+		const modalStyleId = 'sc-conditional-form-modal-styles';
+		const parentDoc = window?.parent?.document || document;
+		if ( ! parentDoc.getElementById( modalStyleId ) ) {
+			const s = parentDoc.createElement( 'style' );
+			s.id = modalStyleId;
+			s.textContent = `.sc-conditional-form-modal { width: 75% !important; max-width: 650px !important; max-height: 80% !important; }`;
+			parentDoc.head.appendChild( s );
+		}
+
+		// Inner-blocks nested selectors → go into the iframe document.
+		const innerStyleId = 'sc-conditional-form-inner-styles';
+		if ( ! document.getElementById( innerStyleId ) ) {
+			const s = document.createElement( 'style' );
+			s.id = innerStyleId;
+			s.textContent = `
+				.sc-conditional-form-inner .block-list-appender { position: relative; }
+				.sc-conditional-form-inner > .wp-block:not(:last-child) { margin: 0 !important; }
+			`;
+			document.head.appendChild( s );
+		}
+
+		return () => {
+			const modal = ( window?.parent?.document || document ).getElementById( modalStyleId );
+			if ( modal ) modal.remove();
+			const inner = document.getElementById( innerStyleId );
+			if ( inner ) inner.remove();
+		};
+	}, [] );
+
+	const blockProps = useBlockProps( {
+		style: {
+			position: 'relative',
+			fontSize: '16px',
+			fontFamily: 'var(--sc-font-sans)',
+			outline: '1px dashed var(--wp-admin-theme-color)',
+		},
+	} );
 
 	const children = useSelect(
-		(select) =>
-			select(blockEditorStore).getBlocksByClientId(clientId)?.[0]
+		( select ) =>
+			select( blockEditorStore ).getBlocksByClientId( clientId )?.[ 0 ]
 				.innerBlocks
 	);
 
@@ -54,24 +84,17 @@ export default ({ attributes, setAttributes, clientId, isSelected }) => {
 
 	const innerBlocksProps = useInnerBlocksProps(
 		{
-			css: css`
-				flex: 1 1 auto;
-				width: 100%;
-				margin: auto;
-				box-shadow: 0 1px 2px #0d131e1a;
-
-				.block-list-appender {
-					position: relative;
-				}
-
-				> .wp-block:not(:last-child) {
-					margin: 0 !important;
-				}
-			`,
+			className: 'sc-conditional-form-inner',
+			style: {
+				flex: '1 1 auto',
+				width: '100%',
+				margin: 'auto',
+				boxShadow: '0 1px 2px #0d131e1a',
+			},
 		},
 		{
 			renderAppender:
-				!children?.length || isSelected
+				! children?.length || isSelected
 					? InnerBlocks.ButtonBlockAppender
 					: false,
 		}
@@ -83,38 +106,35 @@ export default ({ attributes, setAttributes, clientId, isSelected }) => {
 				<ToolbarGroup>
 					<ToolbarButton
 						icon={edit}
-						label={__('Edit Conditions', 'surecart')}
-						onClick={() => setEditRules(true)}
+						label={__( 'Edit Conditions', 'surecart' )}
+						onClick={() => setEditRules( true )}
 					/>
 				</ToolbarGroup>
 			</BlockControls>
 			<InspectorControls>
-				<PanelBody title={__('Conditions', 'surecart')}>
+				<PanelBody title={__( 'Conditions', 'surecart' )}>
 					<PanelRow
-						css={css`
-							flex-wrap: wrap;
-							justify-content: flex-start;
-						`}
+						style={{ flexWrap: 'wrap', justifyContent: 'flex-start' }}
 					>
-						{!rule_groups?.length &&
+						{ ! rule_groups?.length &&
 							__(
 								'Configure different visibility conditions to control when the contents appear to customers.',
 								'surecart'
-							)}
-						{(rule_groups || []).map(({ rules, rulesIndex }) => {
-							return (rules || []).map((rule, index) => (
-								<ScTag key={`${rulesIndex}${index}`}>
-									{translations?.[rule?.condition]}
+							) }
+						{ ( rule_groups || [] ).map( ( { rules, rulesIndex } ) => {
+							return ( rules || [] ).map( ( rule, index ) => (
+								<ScTag key={`${ rulesIndex }${ index }`}>
+									{ translations?.[ rule?.condition ] }
 								</ScTag>
-							));
-						})}
+							) );
+						} ) }
 					</PanelRow>
 					<PanelRow>
 						<Button
 							variant="secondary"
-							onClick={() => setEditRules(true)}
+							onClick={() => setEditRules( true )}
 						>
-							{__('Configure Conditions', 'surecart')}
+							{ __( 'Configure Conditions', 'surecart' ) }
 						</Button>
 					</PanelRow>
 				</PanelBody>
@@ -124,21 +144,21 @@ export default ({ attributes, setAttributes, clientId, isSelected }) => {
 				className="sc-conditional-form__tag"
 				type="info"
 				size="small"
-				css={css`
-					z-index: 10;
-					font-size: 14px;
-					position: absolute;
-					right: -1px;
-					top: -18px;
-					--sc-color-info-700: white;
-					--sc-color-info-100: var(--wp-admin-theme-color);
-					--sc-input-border-radius-small: 0;
-				`}
+				style={ {
+					zIndex: 10,
+					fontSize: '14px',
+					position: 'absolute',
+					right: '-1px',
+					top: '-18px',
+					'--sc-color-info-700': 'white',
+					'--sc-color-info-100': 'var(--wp-admin-theme-color)',
+					'--sc-input-border-radius-small': '0',
+				} }
 			>
-				{__('Conditional', 'surecart')}
+				{ __( 'Conditional', 'surecart' ) }
 			</ScTag>
 
-			{rule_groups?.length ? (
+			{ rule_groups?.length ? (
 				<div {...innerBlocksProps}></div>
 			) : (
 				<Placeholder
@@ -159,37 +179,34 @@ export default ({ attributes, setAttributes, clientId, isSelected }) => {
 							<circle cx="12" cy="12" r="3"></circle>
 						</svg>
 					}
-					label={__('Conditional', 'surecart')}
+					label={__( 'Conditional', 'surecart' )}
 					instructions={__(
 						'First, add some conditions for the display of this group of blocks.',
 						'surecart'
 					)}
 				>
-					<Button isPrimary onClick={() => setEditRules(true)}>
-						{__('Add Conditions', 'surecart')}
+					<Button isPrimary onClick={() => setEditRules( true )}>
+						{ __( 'Add Conditions', 'surecart' ) }
 					</Button>
 				</Placeholder>
-			)}
+			) }
 
-			{editRules && (
+			{ editRules && (
 				<Modal
-					title={__('Configure Conditions', 'surecart')}
-					onRequestClose={() => setEditRules(false)}
+					title={__( 'Configure Conditions', 'surecart' )}
+					onRequestClose={() => setEditRules( false )}
 					shouldCloseOnClickOutside={false}
-					css={css`
-						width: 75%;
-						max-width: 650px;
-						max-height: 80%;
-						--sc-color-primary-text: #fff;
-					`}
+					className="sc-conditional-form-modal"
 				>
-					<Rules
-						attributes={attributes}
-						setAttributes={setAttributes}
-						closeModal={() => setEditRules(false)}
-					/>
+					<div style={{ '--sc-color-primary-text': '#fff' }}>
+						<Rules
+							attributes={attributes}
+							setAttributes={setAttributes}
+							closeModal={() => setEditRules( false )}
+						/>
+					</div>
 				</Modal>
-			)}
+			) }
 		</div>
 	);
 };

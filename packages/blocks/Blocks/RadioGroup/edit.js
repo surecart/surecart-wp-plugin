@@ -31,30 +31,33 @@ export default ({ attributes, setAttributes, isSelected, clientId }) => {
 		? __stableUseInnerBlocksProps
 		: __experimentalUseInnerBlocksProps;
 
-	const blockProps = useBlockProps({
-		css: css`
-			.block-list-appender {
-				position: relative;
-			}
-			.wp-block[data-block] {
-				margin-top: 0;
-			}
-		`,
-	});
+	const blockProps = useBlockProps();
 
 	const childIsSelected = useSelect((select) =>
 		select(blockEditorStore).hasSelectedInnerBlock(clientId, true)
 	);
 
-	const innerBlocksProps = useInnerBlocksProps(blockProps, {
-		className: 'sc-radio',
-		allowedBlocks: ['surecart/radio'],
-		template: [['surecart/radio', {}]],
-		renderAppender:
-			isSelected || childIsSelected
-				? InnerBlocks.ButtonBlockAppender
-				: false,
-	});
+	const innerBlocksProps = useInnerBlocksProps(
+		{
+			className: 'sc-radio',
+			css: css`
+				.block-list-appender {
+					position: relative;
+				}
+				.wp-block[data-block] {
+					margin-top: 0;
+				}
+			`,
+		},
+		{
+			allowedBlocks: ['surecart/radio'],
+			template: [['surecart/radio', {}]],
+			renderAppender:
+				isSelected || childIsSelected
+					? InnerBlocks.ButtonBlockAppender
+					: false,
+		}
+	);
 
 	return (
 		<Fragment>
@@ -80,11 +83,13 @@ export default ({ attributes, setAttributes, isSelected, clientId }) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<ScRadioGroup
-				label={label}
-				required={required}
-				{...innerBlocksProps}
-			></ScRadioGroup>
+			<div {...blockProps}>
+				<ScRadioGroup
+					label={label}
+					required={required}
+					{...innerBlocksProps}
+				></ScRadioGroup>
+			</div>
 		</Fragment>
 	);
 };

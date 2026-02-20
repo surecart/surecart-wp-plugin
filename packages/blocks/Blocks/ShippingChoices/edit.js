@@ -2,7 +2,7 @@
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { InspectorControls } from '@wordpress/block-editor';
+import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
 import { Fragment } from '@wordpress/element';
 import {
 	PanelBody,
@@ -46,8 +46,10 @@ const shippingMethods = [
 	},
 ];
 
-export default ({ className, attributes, setAttributes }) => {
+export default ({ attributes, setAttributes }) => {
 	const { label, showDescription } = attributes;
+
+	const blockProps = useBlockProps();
 
 	return (
 		<Fragment>
@@ -74,12 +76,13 @@ export default ({ className, attributes, setAttributes }) => {
 					</PanelRow>
 				</PanelBody>
 			</InspectorControls>
-			<ScShippingChoices
-				className={className}
-				label={label}
-				shippingChoices={shippingMethods}
-				showDescription={showDescription}
-			/>
+			<div {...blockProps}>
+				<ScShippingChoices
+					label={label}
+					shippingChoices={shippingMethods}
+					showDescription={showDescription}
+				/>
+			</div>
 		</Fragment>
 	);
 };
