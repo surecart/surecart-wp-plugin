@@ -19,7 +19,7 @@ You scaffold complete next-gen SureCart blocks using the WordPress Interactivity
 ## Before You Write Anything
 
 1. Read an existing similar block from `packages/blocks-next/src/blocks/` (e.g., `cart/` or `product-price/`) to match current patterns exactly.
-2. If the block uses any `sc-*` Stencil components, read `app/config.php` lines 251–292 to understand the preload array format before inserting.
+2. If the block uses any `sc-*` Stencil components, use Grep to search for `'preload'` in `app/config.php`, then read the surrounding 30 lines to understand the preload array format before inserting.
 
 ## Architecture Rules (CRITICAL)
 
@@ -147,9 +147,35 @@ export default function Edit( { attributes, setAttributes } ) {
 }
 ```
 
-### 5. `app/config.php` — Preload Entry (ONLY if sc-* Stencil components used)
+### 5. `packages/blocks-next/src/blocks/{block-name}/index.js`
 
-Find the 'preload' array (around line 251) and add:
+Block registration entry point — required for the block to appear in the editor:
+
+```js
+import { registerBlockType } from '@wordpress/blocks';
+import { someIcon } from '@wordpress/icons';
+
+import edit from './edit';
+import metadata from './block.json';
+import './style.scss'; // only if style.scss exists
+
+registerBlockType( metadata.name, {
+    icon: someIcon,
+    edit,
+} );
+```
+
+This file is referenced by `"editorScript": "file:./index.js"` in `block.json`. Always generate it.
+
+### 6. `app/config.php` — Preload Entry (ONLY if sc-* Stencil components used)
+
+Use Grep to find the `'preload'` key in `app/config.php`, then read the surrounding 30 lines to understand the exact array format before inserting:
+
+```php
+Grep pattern: "'preload'" in app/config.php
+```
+
+Then add:
 
 ```php
 'surecart/{block-name}' => ['sc-component-one', 'sc-component-two'],
@@ -188,6 +214,9 @@ Add `packages/blocks-next/src/blocks/{block-name}/style.scss` only if the block 
 
 ### packages/blocks-next/src/blocks/{block-name}/edit.js (created)
 - [editor controls description]
+
+### packages/blocks-next/src/blocks/{block-name}/index.js (created)
+- Registers block via registerBlockType(metadata.name, { icon, edit })
 
 ### app/config.php (updated) [only if sc-* components used]
 - Added preload entry for surecart/{block-name}: [component list]

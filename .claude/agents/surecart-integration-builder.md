@@ -19,7 +19,7 @@ You scaffold complete third-party plugin integrations for SureCart. One spec →
 ## Before You Write Anything
 
 1. Read `app/src/Integrations/LearnDash/LearnDashService.php` and `app/src/Integrations/LearnDash/LearnDashServiceProvider.php` to match current patterns exactly.
-2. Read `app/config.php` lines 16–130 to find the correct insertion point in the 'providers' array (near other integration providers).
+2. Use Grep to search for `Integrations\\` in `app/config.php` to find where other integration providers are registered, then read the surrounding lines to identify the correct insertion point.
 
 ## Architecture Rules (CRITICAL)
 

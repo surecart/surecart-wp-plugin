@@ -31,7 +31,7 @@ Also read `packages/blocks-next/src/blocks/product-price/block.json` to understa
 
 ### Step 3 — Read Preload Format (if Stencil components used)
 
-If the block uses any `sc-*` Stencil components, read `app/config.php` lines 251–292 to understand the exact preload array format before inserting.
+If the block uses any `sc-*` Stencil components, use Grep to search for `'preload'` in `app/config.php`, then read the surrounding 30 lines to understand the exact preload array format before inserting.
 
 ### Step 4 — Invoke the Block Builder Agent
 
@@ -46,6 +46,7 @@ After the builder completes, verify:
 - [ ] `packages/blocks-next/src/blocks/{block-name}/controller.php` exists
 - [ ] `packages/blocks-next/src/blocks/{block-name}/view.php` exists with `data-wp-interactive` attribute
 - [ ] `packages/blocks-next/src/blocks/{block-name}/edit.js` exists
+- [ ] `packages/blocks-next/src/blocks/{block-name}/index.js` exists and calls `registerBlockType(metadata.name, { ... })`
 
 **If Stencil components were specified:**
 - [ ] `app/config.php` 'preload' array contains entry for `'surecart/{block-name}'`
@@ -71,5 +72,6 @@ Created next-gen block surecart/{block-name}:
 - controller.php: server-side render logic
 - view.php: Interactivity API template (namespace: surecart/{namespace})
 - edit.js: block editor component
+- index.js: block registration entry point
 - Preload entry added in app/config.php ✓  (if sc-* components used)
 ```

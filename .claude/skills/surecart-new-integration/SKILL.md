@@ -29,7 +29,7 @@ If the new integration is similar to another existing one, read that too for add
 
 ### Step 3 — Read config.php Registration Point
 
-Read `app/config.php` lines 16–130 to find where other integration providers are registered. Note the surrounding entries to find the right alphabetical/grouped insertion point.
+Use Grep to search for `Integrations\\` in `app/config.php` to find where other integration providers are registered. Note the surrounding entries to find the right alphabetical/grouped insertion point.
 
 ### Step 4 — Invoke the Integration Builder Agent
 

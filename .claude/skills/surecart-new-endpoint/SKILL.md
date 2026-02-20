@@ -33,7 +33,7 @@ If the new resource is database-backed, also read:
 
 ### Step 3 — Read config.php Registration Point
 
-Read `app/config.php` lines 16–130 to find where similar REST providers are registered. Note the surrounding providers to find the right insertion point.
+Use Grep to search for `RestServiceProvider` in `app/config.php` to find where similar REST providers are registered. Note the surrounding providers to find the right insertion point.
 
 ### Step 4 — Invoke the Scaffolder Agent
 
@@ -45,9 +45,9 @@ Provide the agent: resource name, model type, endpoint slug (plural snake_case),
 
 After the scaffolder completes, verify:
 - [ ] `app/src/Models/{Resource}.php` exists with correct base class
-- [ ] `app/src/Controllers/Rest/{Resource}Controller.php` exists
-- [ ] `app/src/Rest/{Resource}RestServiceProvider.php` exists with correct endpoint, controller, and methods
-- [ ] `app/config.php` 'providers' array contains `{Resource}RestServiceProvider::class`
+- [ ] `app/src/Controllers/Rest/{Resources}Controller.php` exists (plural class name, e.g., `ImportRowsController`)
+- [ ] `app/src/Rest/{Resources}RestServiceProvider.php` exists with correct endpoint, controller, and methods (plural, e.g., `ImportRowsRestServiceProvider`)
+- [ ] `app/config.php` 'providers' array contains `{Resources}RestServiceProvider::class`
 
 If any check fails, fix it before finishing.
 
@@ -58,7 +58,7 @@ Summarize what was created:
 Created REST endpoint for {Resource}:
 - Route: /wp-json/surecart/v1/{resources}
 - Model: app/src/Models/{Resource}.php ({type})
-- Controller: app/src/Controllers/Rest/{Resource}Controller.php
-- Provider: app/src/Rest/{Resource}RestServiceProvider.php
+- Controller: app/src/Controllers/Rest/{Resources}Controller.php
+- Provider: app/src/Rest/{Resources}RestServiceProvider.php
 - Registered in app/config.php ✓
 ```

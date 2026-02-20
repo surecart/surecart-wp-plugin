@@ -19,7 +19,7 @@ You scaffold complete SureCart REST endpoints. One spec → 3 PHP files + config
 ## Before You Write Anything
 
 1. Read `app/src/Controllers/Rest/ProductsController.php` and `app/src/Rest/ProductsRestServiceProvider.php` to match current project patterns exactly.
-2. Read `app/config.php` lines 16–130 to find the correct insertion point in the 'providers' array.
+2. Use Grep to search for `RestServiceProvider` in `app/config.php` to find where similar REST providers are registered, then read the surrounding lines to identify the correct insertion point.
 
 ## Model Base Class Decision (CRITICAL — wrong choice breaks everything)
 
@@ -44,14 +44,16 @@ class {Resource} extends Model {          // or DatabaseModel
 
 Available traits to add when relevant: `HasDates`, `HasCustomer`, `HasPurchases`, `HasBillingAddress`, `HasShippingAddress`, `HasPaymentIntent`, `HasPaymentMethod`, `HasDiscount`, `CanFinalize`, `CanDuplicate`, `HasImageSizes`, `HasSubscriptions`, `HasProcessorType`, `HasShippingChoices`, `HasCommissionStructure`.
 
-### 2. Controller — `app/src/Controllers/Rest/{Resource}Controller.php`
+### 2. Controller — `app/src/Controllers/Rest/{Resources}Controller.php`
+
+The controller class name is **plural** (e.g., `ProductsController`, `ImportRowsController`), matching the codebase convention used by all existing controllers.
 
 ```php
 namespace SureCart\Controllers\Rest;
 
 use SureCart\Models\{Resource};
 
-class {Resource}Controller extends RestController {
+class {Resources}Controller extends RestController {
     protected $class = {Resource}::class;
 }
 ```
@@ -74,16 +76,18 @@ public function customAction(\WP_REST_Request $request) {
 
 **Always check `is_wp_error()`** before proceeding. The REST layer auto-converts `WP_Error` to proper HTTP error responses.
 
-### 3. ServiceProvider — `app/src/Rest/{Resource}RestServiceProvider.php`
+### 3. ServiceProvider — `app/src/Rest/{Resources}RestServiceProvider.php`
+
+The service provider class name is also **plural** (e.g., `ProductsRestServiceProvider`, `ImportRowsRestServiceProvider`), matching the codebase convention.
 
 ```php
 namespace SureCart\Rest;
 
-use SureCart\Controllers\Rest\{Resource}Controller;
+use SureCart\Controllers\Rest\{Resources}Controller;
 
-class {Resource}RestServiceProvider extends RestServiceProvider {
+class {Resources}RestServiceProvider extends RestServiceProvider {
     protected $endpoint = '{resources}';              // /wp-json/surecart/v1/{resources}
-    protected $controller = {Resource}Controller::class;
+    protected $controller = {Resources}Controller::class;
     protected $methods = ['index', 'create', 'find', 'edit', 'delete'];
 }
 ```
@@ -107,7 +111,7 @@ For custom routes, add `registerRoutes()`:
 ```php
 public function registerRoutes() {
     register_rest_route(
-        "surecart/v1",
+        "$this->name/v$this->version",
         "{resources}/(?P<id>[\\w-]+)/custom_action/",
         [
             'methods'             => \WP_REST_Server::EDITABLE,
@@ -144,13 +148,13 @@ Add to the 'providers' array. Group with related REST providers (find similar pr
 - Extends Model (API-backed) / DatabaseModel (WP table)
 - Endpoint: {resources}
 
-### app/src/Controllers/Rest/{Resource}Controller.php (created)
+### app/src/Controllers/Rest/{Resources}Controller.php (created)
 - Standard CRUD + any custom actions
 
-### app/src/Rest/{Resource}RestServiceProvider.php (created)
+### app/src/Rest/{Resources}RestServiceProvider.php (created)
 - Route: /wp-json/surecart/v1/{resources}
 - Methods: index, create, find, edit, delete
 
 ### app/config.php (updated)
-- Added {Resource}RestServiceProvider::class to 'providers' array
+- Added {Resources}RestServiceProvider::class to 'providers' array
 ```
