@@ -19,7 +19,7 @@ export default ({ attributes, setAttributes }) => {
 				/>
 				<div
 					slot="price-description"
-					class="sc-invoice-download-link"
+					className="sc-invoice-download-link"
 					style={{
 						display: 'inline-flex',
 						gap: 'var(--sc-spacing-x-small)',

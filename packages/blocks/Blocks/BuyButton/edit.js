@@ -89,7 +89,7 @@ export default ({ className, attributes, setAttributes }) => {
 			<div {...blockProps}>
 				<button
 					type="button"
-					class="sc-button wp-element-button wp-block-button__link sc-button__link"
+					className="sc-button wp-element-button wp-block-button__link sc-button__link"
 					style={{
 						...(backgroundColor
 							? {
@@ -99,7 +99,7 @@ export default ({ className, attributes, setAttributes }) => {
 						...(textColor ? { color: textColor } : {}),
 					}}
 				>
-					<span class="sc-button__link-text">
+					<span className="sc-button__link-text">
 						<RichText
 							aria-label={__('Button text')}
 							placeholder={__('Add text…')}

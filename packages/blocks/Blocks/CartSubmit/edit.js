@@ -94,7 +94,7 @@ export default ({ className, attributes, setAttributes }) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<div class="wp-block-buttons">
+			<div className="wp-block-buttons">
 				<div
 					{...blockProps}
 					className={classnames(blockProps.className, {
