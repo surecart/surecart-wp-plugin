@@ -310,55 +310,24 @@ class ProductPageBlock {
 					$variant_values = $context['variantValues'];
 					$option_number  = $context['optionNumber'];
 
-					// Helper to compute effective stock for a variant, accounting for variant-level overrides.
-					$get_effective_stock = function ( $item ) use ( $product ) {
-						$stock_enabled = $item['stock_enabled'] ?? $product['stock_enabled'] ?? false;
-						$allow_oos     = $item['allow_out_of_stock_purchases'] ?? $product['allow_out_of_stock_purchases'] ?? false;
-						if ( ! $stock_enabled || $allow_oos ) {
-							return PHP_INT_MAX;
-						}
-						return $item['available_stock'];
-					};
-
 					if ( 1 === $option_number ) {
-						$items         = array_filter(
-							$variants ?? [],
-							function ( $variant ) use ( $option ) {
-								return $variant['option_1'] === $option;
-							}
-						);
-						$highest_stock = max(
-							array_map( $get_effective_stock, array_values( $items ) )
-						);
-
-						return $highest_stock <= 0;
+						$items = array_filter( $variants ?? [], fn( $v ) => $v['option_1'] === $option );
+						return max( array_map( fn( $v ) => self::effectiveVariantStock( $v, $product ), array_values( $items ) ) ) <= 0;
 					}
 
 					if ( 2 === $option_number ) {
-						$items         = array_filter(
+						$items = array_filter(
 							$variants ?? [],
-							function ( $variant ) use ( $variant_values, $option ) {
-								return $variant['option_1'] === $variant_values['option_1'] && $variant['option_2'] === $option;
-							}
+							fn( $v ) => $v['option_1'] === $variant_values['option_1'] && $v['option_2'] === $option
 						);
-						$highest_stock = max(
-							array_map( $get_effective_stock, array_values( $items ) )
-						);
-						return $highest_stock <= 0;
+						return max( array_map( fn( $v ) => self::effectiveVariantStock( $v, $product ), array_values( $items ) ) ) <= 0;
 					}
 
 					$items = array_filter(
 						$variants ?? [],
-						function ( $variant ) use ( $variant_values, $option ) {
-							return $variant['option_1'] === $variant_values['option_1'] && $variant['option_2'] === $variant_values['option_2'] && $variant['option_3'] === $option;
-						}
+						fn( $v ) => $v['option_1'] === $variant_values['option_1'] && $v['option_2'] === $variant_values['option_2'] && $v['option_3'] === $option
 					);
-
-					$highest_stock = max(
-						array_map( $get_effective_stock, array_values( $items ) )
-					);
-
-					return $highest_stock <= 0;
+					return max( array_map( fn( $v ) => self::effectiveVariantStock( $v, $product ), array_values( $items ) ) ) <= 0;
 				},
 				'isOptionValueSelected' => function () {
 					$context = wp_interactivity_get_context();
@@ -389,12 +358,7 @@ class ProductPageBlock {
 					}
 					$variant = $state['selectedVariant'] ?? [];
 					if ( ! empty( $variant['id'] ) ) {
-						$stock_enabled = $variant['stock_enabled'] ?? $product['stock_enabled'] ?? false;
-						$allow_oos     = $variant['allow_out_of_stock_purchases'] ?? $product['allow_out_of_stock_purchases'] ?? false;
-						if ( ! $stock_enabled || $allow_oos ) {
-							return false;
-						}
-						return $variant['available_stock'] <= 0;
+						return self::effectiveVariantStock( $variant, $product ) <= 0;
 					}
 					if ( $product['has_unlimited_stock'] ) {
 						return false;
@@ -443,5 +407,22 @@ class ProductPageBlock {
 				},
 			]
 		);
+	}
+
+	/**
+	 * Get the effective available stock for a variant, respecting variant-level stock overrides.
+	 * Returns PHP_INT_MAX when stock is not tracked, it would be then unlimited stock.
+	 *
+	 * @param array $item    Variant data.
+	 * @param array $product Parent product data for fallback.
+	 * @return int
+	 */
+	private static function effectiveVariantStock( array $item, array $product ): int {
+		$stock_enabled      = $item['stock_enabled'] ?? $product['stock_enabled'] ?? false;
+		$allow_out_of_stock = $item['allow_out_of_stock_purchases'] ?? $product['allow_out_of_stock_purchases'] ?? false;
+		if ( ! $stock_enabled || $allow_out_of_stock ) {
+			return PHP_INT_MAX;
+		}
+		return (int) $item['available_stock'];
 	}
 }

@@ -44,16 +44,12 @@ class Variant extends Model {
 	}
 
 	/**
-	 * Get whether this variant has unlimited stock (is not stock-tracked).
-	 *
-	 * Returns null when stock_enabled is not set on the variant, signalling that
-	 * the parent product's setting should be used as fallback. ProductPageBlock
-	 * resolves the null case before serialising data to the view.
+	 * Get whether stock tracking is effectively disabled for this variant.
+	 * Returns null when not set on the variant, so callers can fall back to the product.
 	 *
 	 * @return bool|null
 	 */
 	public function getHasUnlimitedStockAttribute() {
-		// null means "inherit from product" — not resolvable without product context.
 		if ( null === $this->stock_enabled ) {
 			return null;
 		}
