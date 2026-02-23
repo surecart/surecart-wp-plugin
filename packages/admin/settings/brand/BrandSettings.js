@@ -213,6 +213,103 @@ export default () => {
 			</SettingsBox>
 
 			<SettingsBox
+				title={__('Affiliate Portal', 'surecart')}
+				description={__(
+					'Customize the appearance of your affiliate portal, including dark mode settings.',
+					'surecart'
+				)}
+				loading={!hasLoadedItem}
+			>
+				<ScSelect
+					label={__('Portal Theme', 'surecart')}
+					placeholder={__('Select Theme', 'surecart')}
+					value={item?.theme}
+					onScChange={(e) => editItem({ theme: e.target.value })}
+					help={__(
+						'When set to dark, the affiliate portal will always display in dark mode.',
+						'surecart'
+					)}
+					unselect={false}
+					choices={[
+						{
+							label: __('Light', 'surecart'),
+							value: 'light',
+						},
+						{
+							label: __('Dark', 'surecart'),
+							value: 'dark',
+						},
+					]}
+				/>
+				{item?.theme === 'dark' && (
+					<div
+						css={css`
+							gap: 2em;
+							display: grid;
+							align-items: flex-start;
+							grid-template-columns: repeat(2, minmax(0, 1fr));
+						`}
+					>
+						<ScFormControl
+							label={__('Dark Mode Color', 'surecart')}
+							help={__(
+								'The primary color used in the affiliate portal when dark mode is enabled.',
+								'surecart'
+							)}
+						>
+							<div
+								css={css`
+									display: flex;
+									align-items: center;
+									gap: 0.5em;
+								`}
+							>
+								<ColorPopup
+									color={`#${item?.dark_color}`}
+									setColor={(color) => {
+										editItem({
+											dark_color: color?.hex.replace(
+												'#',
+												''
+											),
+										});
+									}}
+								/>
+								<ScInput
+									css={css`
+										flex: 1;
+									`}
+									value={item?.dark_color}
+									onScInput={(e) =>
+										editItem({
+											dark_color: e.target.value.replace(
+												'#',
+												''
+											),
+										})
+									}
+								>
+									<div
+										slot="prefix"
+										style={{ opacity: '0.5' }}
+									>
+										#
+									</div>
+								</ScInput>
+							</div>
+						</ScFormControl>
+						<Logo
+							label={__('Dark Mode Logo', 'surecart')}
+							brand={item}
+							editBrand={editItem}
+							logoKey="dark_logo"
+							logoUrlKey="dark_logo_url"
+						/>
+					</div>
+				)}
+			</SettingsBox>
+
+			<SettingsBox
 				title={__('Cart', 'surecart')}
 				loading={!hasLoadedSettingItem}
 				description={__('Change cart settings.', 'surecart')}

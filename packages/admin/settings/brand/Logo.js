@@ -7,11 +7,11 @@ import { ScFormControl } from '@surecart/components-react';
 import { Button } from '@wordpress/components';
 import MediaLibrary from '../../components/MediaLibrary';
 
-export default ({ label, brand, editBrand, loading }) => {
+export default ({ label, brand, editBrand, loading, logoKey = 'logo', logoUrlKey = 'logo_url' }) => {
 	const onSelectMedia = (media) => {
 		return editBrand({
-			logo: media?.id,
-			logo_url: media?.url,
+			[logoKey]: media?.id,
+			[logoUrlKey]: media?.url,
 		});
 	};
 
@@ -21,13 +21,13 @@ export default ({ label, brand, editBrand, loading }) => {
 		);
 		if (!r) return;
 		return editBrand({
-			logo: null,
-			logo_url: null,
+			[logoKey]: null,
+			[logoUrlKey]: null,
 		});
 	};
 
 	const renderContent = () => {
-		if (brand?.logo_url) {
+		if (brand?.[logoUrlKey]) {
 			return (
 				<div
 					css={css`
@@ -36,7 +36,7 @@ export default ({ label, brand, editBrand, loading }) => {
 					`}
 				>
 					<img
-						src={brand?.logo_url}
+						src={brand?.[logoUrlKey]}
 						alt="logo"
 						css={css`
 							width: 100%;
