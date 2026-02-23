@@ -913,7 +913,7 @@ class WooCommerceProductsSyncService {
 			if ( $attribute->is_taxonomy() ) {
 				$term_ids = $attribute->get_options();
 				foreach ( $term_ids as $term_id ) {
-					$term = get_term( $term_id );
+					$term = get_term( $term_id, $attribute->get_taxonomy() );
 					if ( $term && ! is_wp_error( $term ) ) {
 						$values[] = $term->name;
 					}
@@ -1025,7 +1025,19 @@ class WooCommerceProductsSyncService {
 					break;
 				}
 				if ( isset( $attributes_map[ $key ] ) && ! empty( $attributes_map[ $key ] ) ) {
-					$variant[ "option_$option_num" ] = $attributes_map[ $key ];
+					$value = $attributes_map[ $key ];
+
+					// For taxonomy attributes, WooCommerce stores slugs in variation attributes
+					// but we use term names in variant_options.values — convert slug to name.
+					$taxonomy = str_replace( 'attribute_', '', $key );
+					if ( taxonomy_exists( $taxonomy ) ) {
+						$term = get_term_by( 'slug', $value, $taxonomy );
+						if ( $term && ! is_wp_error( $term ) ) {
+							$value = $term->name;
+						}
+					}
+
+					$variant[ "option_$option_num" ] = $value;
 				}
 			}
 
