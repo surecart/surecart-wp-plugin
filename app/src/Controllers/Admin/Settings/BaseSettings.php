@@ -3,6 +3,7 @@
 namespace SureCart\Controllers\Admin\Settings;
 
 use SureCart\Models\Processor;
+use SureCart\Models\Product;
 use SureCart\Support\Currency;
 use SureCart\Support\TimeDate;
 
@@ -160,6 +161,7 @@ abstract class BaseSettings {
 				'should_load_on_demand_assets' => (bool) \SureCart::theme()->shouldLoadOnDemandBlockAssets(),
 				'claim_url'                    => ! \SureCart::account()->claimed ? \SureCart::routeUrl( 'account.claim' ) : '',
 				'claim_expired'                => \SureCart::account()->claim_expired ?? false,
+				'has_products'                 => (bool) ( Product::where( [ 'archived' => false ] )->paginate( [ 'per_page' => 1 ] )->pagination->count ?? 0 ),
 			]
 		);
 	}

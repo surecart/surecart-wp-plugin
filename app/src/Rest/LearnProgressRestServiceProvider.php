@@ -41,6 +41,16 @@ class LearnProgressRestServiceProvider extends RestServiceProvider implements Re
 					'methods'             => \WP_REST_Server::CREATABLE,
 					'callback'            => $this->callback( LearnProgressController::class, 'create' ),
 					'permission_callback' => [ $this, 'create_item_permissions_check' ],
+					'args'                => [
+						'completed_steps' => [
+							'required'          => true,
+							'type'              => 'array',
+							'items'             => [ 'type' => 'string' ],
+							'sanitize_callback' => function ( $value ) {
+								return array_map( 'sanitize_text_field', (array) $value );
+							},
+						],
+					],
 				],
 				'schema' => [ $this, 'get_item_schema' ],
 			]
@@ -55,7 +65,14 @@ class LearnProgressRestServiceProvider extends RestServiceProvider implements Re
 	 * @return true|\WP_Error
 	 */
 	public function get_items_permissions_check( $request ) {
-		return current_user_can( 'edit_sc_products' );
+		if ( ! current_user_can( 'edit_sc_products' ) ) {
+			return new \WP_Error(
+				'rest_forbidden',
+				__( 'Sorry, you are not allowed to view learn progress.', 'surecart' ),
+				[ 'status' => rest_authorization_required_code() ]
+			);
+		}
+		return true;
 	}
 
 	/**
@@ -66,7 +83,14 @@ class LearnProgressRestServiceProvider extends RestServiceProvider implements Re
 	 * @return true|\WP_Error
 	 */
 	public function create_item_permissions_check( $request ) {
-		return current_user_can( 'edit_sc_products' );
+		if ( ! current_user_can( 'edit_sc_products' ) ) {
+			return new \WP_Error(
+				'rest_forbidden',
+				__( 'Sorry, you are not allowed to update learn progress.', 'surecart' ),
+				[ 'status' => rest_authorization_required_code() ]
+			);
+		}
+		return true;
 	}
 
 	/**

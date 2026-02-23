@@ -112,8 +112,8 @@ test.describe( 'Learn Tab Settings Page', () => {
 		}
 
 		// Each step should have an action button.
-		const firstSectionBody = page.locator( '[aria-expanded="true"]' ).locator( '~div' ).first();
-		const actionButtons = firstSectionBody.locator( 'sc-button' );
+		const firstSection = page.locator( '[aria-expanded="true"]' ).locator( '..' );
+		const actionButtons = firstSection.locator( 'sc-button' );
 		await expect( actionButtons ).toHaveCount( 3 );
 	} );
 
@@ -170,7 +170,7 @@ test.describe( 'Learn Tab Settings Page', () => {
 		await expect( revenueHeader.getByText( /\d+\/7/ ) ).toBeVisible();
 	} );
 
-	test( 'Should toggle step checkbox and persist', async ( { page } ) => {
+	test( 'Should toggle step checkbox and persist', async ( { page, requestUtils } ) => {
 		await page.goto( LEARN_TAB_URL );
 
 		// Expand "Add Your First Product" section.
@@ -179,7 +179,8 @@ test.describe( 'Learn Tab Settings Page', () => {
 
 		// Click the checkbox for "Add Product Variants" (manual step, not auto-detected).
 		const variantsCheckbox = page.getByRole( 'checkbox', { name: 'Add Product Variants' } );
-		await variantsCheckbox.click();
+		await variantsCheckbox.waitFor( { state: 'visible' } );
+		await variantsCheckbox.click( { force: true } );
 
 		// Assert the checkbox is now checked.
 		await expect( variantsCheckbox ).toHaveAttribute( 'aria-checked', 'true' );
@@ -194,6 +195,15 @@ test.describe( 'Learn Tab Settings Page', () => {
 		// The checkbox should still be checked after reload.
 		const variantsCheckboxAfterReload = page.getByRole( 'checkbox', { name: 'Add Product Variants' } );
 		await expect( variantsCheckboxAfterReload ).toHaveAttribute( 'aria-checked', 'true' );
+
+		// Clean up: reset progress so other tests aren't affected.
+		await requestUtils.rest( {
+			method: 'POST',
+			path: '/surecart/v1/learn-progress',
+			data: {
+				completed_steps: [],
+			},
+		} );
 	} );
 
 	test( 'Should show info tooltips on hover', async ( { page } ) => {

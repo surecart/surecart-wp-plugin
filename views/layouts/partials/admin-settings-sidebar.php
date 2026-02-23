@@ -77,6 +77,7 @@
 		<sc-tab href="<?php echo esc_url( add_query_arg( [ 'tab' => 'learn' ], menu_page_url( 'sc-settings', false ) ) ); ?>" <?php echo 'learn' === $tab ? 'active' : ''; ?>>
 			<sc-icon slot="prefix" style="width: 18px; height: 18px;" name="book-open"></sc-icon>
 			<?php esc_html_e( 'Learn', 'surecart' ); ?>
+			<span class="sc-new-badge"></span>
 		</sc-tab>
 	<?php endif; ?>
 

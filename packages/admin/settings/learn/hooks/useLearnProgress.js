@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from '@wordpress/element';
+import { useState, useEffect, useCallback, useMemo } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
 import learnSections from '../data/learnSections';
 
@@ -18,6 +18,7 @@ const autoDetectChecks = {
 		}
 		return false;
 	},
+	hasProducts: () => !! window.scData?.has_products,
 };
 
 /**
@@ -47,7 +48,7 @@ export default function useLearnProgress() {
 	const [ manualSteps, setManualSteps ] = useState( [] );
 	const [ isLoading, setIsLoading ] = useState( true );
 
-	const autoDetectedSteps = getAutoDetectedSteps();
+	const autoDetectedSteps = useMemo( () => getAutoDetectedSteps(), [] );
 
 	// Merge auto-detected and manual steps.
 	const completedSteps = [

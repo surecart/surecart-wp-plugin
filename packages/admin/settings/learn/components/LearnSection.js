@@ -19,6 +19,12 @@ const headerStyles = css`
 	cursor: pointer;
 	user-select: none;
 	transition: background 0.15s ease;
+	background: none;
+	border: none;
+	width: 100%;
+	text-align: left;
+	font: inherit;
+	color: inherit;
 
 	&:hover {
 		background: var(--sc-color-gray-50, #f9fafb);
@@ -129,18 +135,11 @@ export default function LearnSection( {
 
 	return (
 		<div css={ sectionStyles }>
-			<div
+			<button
 				css={ headerStyles }
 				onClick={ () => setIsOpen( ! isOpen ) }
-				role="button"
-				tabIndex={ 0 }
 				aria-expanded={ isOpen }
-				onKeyDown={ ( e ) => {
-					if ( e.key === ' ' || e.key === 'Enter' ) {
-						e.preventDefault();
-						setIsOpen( ! isOpen );
-					}
-				} }
+				type="button"
 			>
 				<div css={ headerLeftStyles }>
 					<div css={ titleRowStyles }>
@@ -181,7 +180,7 @@ export default function LearnSection( {
 						css={ chevronStyles( isOpen ) }
 					/>
 				</div>
-			</div>
+			</button>
 
 			<div css={ bodyStyles( isOpen ) }>
 				{ section.steps.map( ( step ) => (

@@ -30,7 +30,6 @@ const checkboxStyles = ( isCompleted ) => css`
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	cursor: ${ ( props ) => ( props?.readOnly ? 'default' : 'pointer' ) };
 	transition: all 0.15s ease;
 	margin-top: 2px;
 
