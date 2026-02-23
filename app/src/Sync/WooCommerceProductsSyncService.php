@@ -336,7 +336,7 @@ class WooCommerceProductsSyncService {
 
 		$this->skipped_products_batch[] = [
 			'wc_product_id' => $product ? $product->get_id() : 0,
-			'name'          => $product ? ( $product->get_name() ?: __( 'Unnamed Product', 'surecart' ) ) : __( 'Unknown Product', 'surecart' ),
+			'name'          => $product ? ( $product->get_name() ?? __( 'Unnamed Product', 'surecart' ) ) : __( 'Unknown Product', 'surecart' ),
 			'type'          => $product_type,
 			'reason'        => $reason_messages[ $skip_reason ] ?? __( 'Product skipped', 'surecart' ),
 		];
