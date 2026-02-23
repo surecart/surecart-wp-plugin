@@ -108,6 +108,11 @@ namespace {
 	if ( ! function_exists( 'as_enqueue_async_action' ) ) {
 		function as_enqueue_async_action( $hook, $args = [], $group = '' ) {
 			global $test_as_enqueue_result;
+			$GLOBALS['test_as_enqueue_args'] = [
+				'hook'  => $hook,
+				'args'  => $args,
+				'group' => $group,
+			];
 			return $test_as_enqueue_result ?? 1;
 		}
 	}
@@ -374,6 +379,8 @@ namespace SureCart\Tests\Sync {
 		 * @group woo_import
 		 */
 		public function test_dispatch_applies_batch_size_filter() {
+			$GLOBALS['test_as_enqueue_args'] = null;
+
 			add_filter(
 				'surecart/sync/woocommerce_products/batch_size',
 				function () {
@@ -381,9 +388,12 @@ namespace SureCart\Tests\Sync {
 				}
 			);
 
-			// dispatch should apply the filter (returns stub value from as_enqueue_async_action).
 			$result = $this->service->dispatch( 1, 100 );
 			$this->assertSame( 1, $result );
+
+			// Verify the filtered batch_size (25) was passed, not the original (100).
+			$this->assertNotNull( $GLOBALS['test_as_enqueue_args'] );
+			$this->assertSame( 25, $GLOBALS['test_as_enqueue_args']['args']['batch_size'] );
 		}
 
 		// =========================================================================
@@ -393,13 +403,10 @@ namespace SureCart\Tests\Sync {
 		/**
 		 * @group woo_import
 		 */
-		public function test_sync_returns_early_when_woocommerce_not_active() {
-			// The WooCommerce class IS defined in our stubs, so we need a partial mock.
+		public function test_sync_returns_null_with_empty_products_via_partial_mock() {
+			// Partial mock: sync returns null when no products are found.
 			$service = \Mockery::mock( WooCommerceProductsSyncService::class )->makePartial();
-			// Override sync to test the WooCommerce check by calling the real method
-			// but in a context where WooCommerce check can be tested.
-			// Since WooCommerce class IS defined, sync won't return early.
-			// We test this indirectly: if no products, no dispatch happens.
+
 			$GLOBALS['test_wc_products_result'] = (object) [
 				'products'      => [],
 				'max_num_pages' => 0,

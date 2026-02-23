@@ -390,7 +390,7 @@ class ProductsController extends AdminController {
 		$import_ids = array_filter( array_map( 'sanitize_text_field', explode( ',', $import_ids_raw ) ) );
 
 		// Parse session_id from query (for skipped products lookup).
-		$session_id = $request->query( 'session_id' );
+		$session_id = sanitize_text_field( $request->query( 'session_id' ) );
 
 		// Fallback: use current session if available (for backward compatibility).
 		if ( ! $session_id ) {
