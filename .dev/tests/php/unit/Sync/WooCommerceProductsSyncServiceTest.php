@@ -248,6 +248,7 @@ namespace SureCart\Tests\Sync {
 				'get_shipping_class_id'     => 0,
 				'get_attributes'            => [],
 				'get_available_variations'   => [],
+				'get_children'              => [],
 			];
 
 			$config  = array_merge( $defaults, $overrides );
@@ -1676,6 +1677,7 @@ namespace SureCart\Tests\Sync {
 					'get_type'                  => 'variable',
 					'get_id'                    => 123,
 					'get_attributes'            => [],
+					'get_children'              => [ 456 ],
 					'get_available_variations'  => [
 						[ 'variation_id' => 456 ],
 					],
@@ -1724,6 +1726,7 @@ namespace SureCart\Tests\Sync {
 					'get_type'                 => 'variable',
 					'get_id'                   => 123,
 					'get_attributes'           => [],
+					'get_children'             => [ 456 ],
 					'get_available_variations' => [
 						[ 'variation_id' => 456 ],
 					],
@@ -1768,6 +1771,7 @@ namespace SureCart\Tests\Sync {
 					'get_type'                  => 'variable',
 					'get_id'                    => 100,
 					'get_attributes'            => [],
+					'get_children'              => [ 789 ],
 					'get_available_variations'  => [
 						[ 'variation_id' => 789 ],
 					],
@@ -1828,6 +1832,7 @@ namespace SureCart\Tests\Sync {
 					'get_type'                  => 'variable',
 					'get_id'                    => 100,
 					'get_attributes'            => [ $attr_color, $attr_size ],
+					'get_children'              => [ 500 ],
 					'get_available_variations'  => [
 						[ 'variation_id' => 500 ],
 					],
@@ -1874,6 +1879,7 @@ namespace SureCart\Tests\Sync {
 					'get_type'                  => 'variable',
 					'get_id'                    => 100,
 					'get_attributes'            => [],
+					'get_children'              => [ 600 ],
 					'get_available_variations'  => [
 						[ 'variation_id' => 600 ],
 					],
@@ -1922,6 +1928,7 @@ namespace SureCart\Tests\Sync {
 					'get_type'                  => 'variable',
 					'get_id'                    => 100,
 					'get_attributes'            => [],
+					'get_children'              => [ 700 ],
 					'get_available_variations'  => [
 						[ 'variation_id' => 700 ],
 					],
@@ -2632,6 +2639,7 @@ namespace SureCart\Tests\Sync {
 					'get_id'                    => $post_id,
 					'get_type'                  => 'variable',
 					'get_attributes'            => [ $attribute ],
+					'get_children'              => [ 201 ],
 					'get_available_variations'  => [ [ 'variation_id' => 201 ] ],
 					'get_category_ids'          => [],
 					'get_tag_ids'               => [],
@@ -3041,6 +3049,7 @@ namespace SureCart\Tests\Sync {
 					'get_type'                 => 'variable',
 					'get_id'                   => 100,
 					'get_attributes'           => [ $attr_color, $attr_size, $attr_material ],
+					'get_children'             => [ 900 ],
 					'get_available_variations' => [ [ 'variation_id' => 900 ] ],
 				]
 			);
@@ -3173,6 +3182,7 @@ namespace SureCart\Tests\Sync {
 					'get_type'                 => 'variable',
 					'get_id'                   => 123,
 					'get_attributes'           => [],
+					'get_children'             => [ 456 ],
 					'get_available_variations' => [ [ 'variation_id' => 456 ] ],
 				]
 			);
@@ -3235,6 +3245,7 @@ namespace SureCart\Tests\Sync {
 					'get_type'                 => 'variable',
 					'get_id'                   => 100,
 					'get_attributes'           => [ $attr_color, $attr_size ],
+					'get_children'             => [ 800 ],
 					'get_available_variations' => [ [ 'variation_id' => 800 ] ],
 				]
 			);
@@ -3403,6 +3414,39 @@ namespace SureCart\Tests\Sync {
 		 */
 		public function test_map_dimension_unit_returns_in_for_unknown_unit() {
 			$this->assertSame( 'in', $this->service->mapDimensionUnit( 'unknown' ) );
+		}
+
+		// =========================================================================
+		// Group 47: Skip products with >3 variation attributes — 1 test
+		// =========================================================================
+
+		/**
+		 * @group woo_import
+		 */
+		public function test_sync_product_skips_variable_with_more_than_3_variation_attributes() {
+			// Create 4 mock attributes, all marked as variation attributes.
+			$attributes = [];
+			for ( $i = 1; $i <= 4; $i++ ) {
+				$attr = \Mockery::mock( 'WC_Product_Attribute' );
+				$attr->shouldReceive( 'get_variation' )->andReturn( true );
+				$attributes[] = $attr;
+			}
+
+			$post_id = self::factory()->post->create();
+			$product = $this->createMockProduct(
+				[
+					'get_id'         => $post_id,
+					'get_type'       => 'variable',
+					'get_attributes' => $attributes,
+				]
+			);
+			$GLOBALS['test_wc_get_product_result'] = $product;
+
+			$this->service->syncProduct( $post_id );
+
+			// Product should NOT be marked as imported (it was skipped).
+			$meta = get_post_meta( $post_id, '_surecart_imported', true );
+			$this->assertEmpty( $meta );
 		}
 	}
 }

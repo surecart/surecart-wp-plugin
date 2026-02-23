@@ -237,7 +237,7 @@ class WooCommerceProductsSyncService {
 			} elseif ( ! empty( $import->id ) ) {
 				$existing_ids   = get_option( 'sc_woo_import_ids', [] );
 				$existing_ids[] = $import->id;
-				update_option( 'sc_woo_import_ids', $existing_ids );
+				update_option( 'sc_woo_import_ids', $existing_ids, false );
 			}
 		}
 
@@ -290,6 +290,23 @@ class WooCommerceProductsSyncService {
 				return;
 			}
 
+			// Skip variable products with >3 variation attributes (SureCart supports max 3).
+			if ( $product->is_type( 'variable' ) ) {
+				$variation_attribute_count = count(
+					array_filter(
+						$product->get_attributes(),
+						function ( $attr ) {
+							return $attr->get_variation();
+						}
+					)
+				);
+
+				if ( $variation_attribute_count > 3 ) {
+					$this->trackSkippedProduct( $product, $product_type, 'too_many_attributes' );
+					return;
+				}
+			}
+
 			// Map the WooCommerce Product to SureCart and save in the imports batch.
 			$this->mapWooCommerceProductToSureCart( $product );
 
@@ -331,7 +348,8 @@ class WooCommerceProductsSyncService {
 				__( 'Unsupported product type: %s', 'surecart' ),
 				$product_type
 			),
-			'product_not_found' => __( 'Product not found in WooCommerce', 'surecart' ),
+			'product_not_found'   => __( 'Product not found in WooCommerce', 'surecart' ),
+			'too_many_attributes' => __( 'Too many variation attributes (SureCart supports a maximum of 3)', 'surecart' ),
 		];
 
 		$this->skipped_products_batch[] = [
@@ -386,11 +404,12 @@ class WooCommerceProductsSyncService {
 		$product_import_data = array_merge( $product_import_data, $this->mapCategories( $product ) );
 
 		// Variants (for variable products).
-		// Compute stock-ownership flag once to avoid scanning variations twice.
+		// Pre-load all variations once to avoid duplicate DB queries across methods.
 		$any_variation_manages_own_stock = false;
 		if ( $product->is_type( 'variable' ) ) {
-			$any_variation_manages_own_stock = $this->anyVariationManagesOwnStock( $product );
-			$product_import_data             = array_merge( $product_import_data, $this->mapVariants( $product, $any_variation_manages_own_stock ) );
+			$variations                      = array_filter( array_map( 'wc_get_product', $product->get_children() ) );
+			$any_variation_manages_own_stock = $this->anyVariationManagesOwnStock( $variations );
+			$product_import_data             = array_merge( $product_import_data, $this->mapVariants( $product, $any_variation_manages_own_stock, $variations ) );
 		}
 
 		// Stock, shipping, tax.
@@ -853,7 +872,7 @@ class WooCommerceProductsSyncService {
 	 * @param bool        $any_variation_manages_own_stock Whether any variation manages its own stock.
 	 * @return array
 	 */
-	public function mapVariants( $product, $any_variation_manages_own_stock = false ) {
+	public function mapVariants( $product, $any_variation_manages_own_stock = false, $variations = [] ) {
 		if ( ! $product->is_type( 'variable' ) ) {
 			return [];
 		}
@@ -897,9 +916,12 @@ class WooCommerceProductsSyncService {
 		}
 
 		// Map variations to variants.
-		// Use get_children() instead of get_available_variations() to include ALL variations,
-		// even those without prices or marked out of stock (which WooCommerce filters out).
-		$variation_ids    = $product->get_children();
+		// Use pre-loaded variations if available, otherwise load from get_children().
+		if ( empty( $variations ) ) {
+			$children   = $product->get_children();
+			$variations = ! empty( $children ) ? array_filter( array_map( 'wc_get_product', $children ) ) : [];
+		}
+
 		$variant_position = 0;
 
 		// Cache WC unit options before the loop to avoid repeated DB queries.
@@ -907,11 +929,7 @@ class WooCommerceProductsSyncService {
 		$wc_dim_unit    = get_option( 'woocommerce_dimension_unit' );
 		$dim_multiplier = 'yd' === $wc_dim_unit ? 3 : 1;
 
-		foreach ( $variation_ids as $variation_id ) {
-			$variation = wc_get_product( $variation_id );
-			if ( ! $variation ) {
-				continue;
-			}
+		foreach ( $variations as $variation ) {
 
 			// Determine stock mode for this variation.
 			$variation_stock_mode = $variation->managing_stock();
@@ -1017,15 +1035,11 @@ class WooCommerceProductsSyncService {
 	 * Returns true if at least one variation has managing_stock() === true (strict),
 	 * meaning it has a dedicated stock quantity separate from the parent product.
 	 *
-	 * @param \WC_Product $product WooCommerce variable product.
+	 * @param \WC_Product_Variation[] $variations Pre-loaded variation objects.
 	 * @return bool
 	 */
-	private function anyVariationManagesOwnStock( $product ) {
-		foreach ( $product->get_children() as $variation_id ) {
-			$variation = wc_get_product( $variation_id );
-			if ( ! $variation ) {
-				continue;
-			}
+	private function anyVariationManagesOwnStock( $variations ) {
+		foreach ( $variations as $variation ) {
 			if ( true === $variation->managing_stock() ) {
 				return true;
 			}
