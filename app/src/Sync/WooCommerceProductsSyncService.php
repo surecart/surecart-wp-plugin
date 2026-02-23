@@ -27,6 +27,13 @@ class WooCommerceProductsSyncService {
 	private $collections_cache = [];
 
 	/**
+	 * Cached WooCommerce currency (per batch).
+	 *
+	 * @var string|null
+	 */
+	private $currency_cache = null;
+
+	/**
 	 * Bootstrap any actions.
 	 *
 	 * @return void
@@ -53,7 +60,7 @@ class WooCommerceProductsSyncService {
 	 */
 	public function showSyncNotice() {
 		// Don't show on the import results page — the user is already viewing results.
-		if ( 'import_results' === ( $_GET['action'] ?? '' ) ) {
+		if ( 'import_results' === ( isset( $_GET['action'] ) ? sanitize_text_field( wp_unslash( $_GET['action'] ) ) : '' ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			return;
 		}
 
@@ -79,7 +86,7 @@ class WooCommerceProductsSyncService {
 	 */
 	public function showCompletionNotice() {
 		// Don't show on the import results page — the user is already viewing results.
-		if ( 'import_results' === ( $_GET['action'] ?? '' ) ) {
+		if ( 'import_results' === ( isset( $_GET['action'] ) ? sanitize_text_field( wp_unslash( $_GET['action'] ) ) : '' ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			return;
 		}
 
@@ -91,10 +98,12 @@ class WooCommerceProductsSyncService {
 		$import_ids             = get_option( 'sc_woo_import_ids', [] );
 		$all_skipped_session_id = get_option( 'sc_woo_import_all_skipped' );
 
-		// Generate results URL.
+		// Generate results URL and notice name per branch.
+		$notice_name = '';
 		if ( ! empty( $import_ids ) ) {
 			// Normal case: has import_ids.
 			$results_url = \SureCart::getUrl()->importResults( 'products', $import_ids );
+			$notice_name = 'woo_import_complete_' . md5( implode( ',', $import_ids ) );
 		} elseif ( $all_skipped_session_id ) {
 			// All-skipped case: use session_id.
 			$results_url = add_query_arg(
@@ -105,6 +114,7 @@ class WooCommerceProductsSyncService {
 				],
 				admin_url( 'admin.php' )
 			);
+			$notice_name = 'woo_import_complete_' . md5( $all_skipped_session_id );
 		} else {
 			// No data available, skip notice.
 			return;
@@ -113,7 +123,7 @@ class WooCommerceProductsSyncService {
 		echo wp_kses_post(
 			\SureCart::notices()->render(
 				[
-					'name'  => 'woo_import_complete_' . md5( implode( ',', $import_ids ) ),
+					'name'  => $notice_name,
 					'type'  => 'success',
 					'title' => esc_html__( 'SureCart: WooCommerce products import complete.', 'surecart' ),
 					'text'  => '<p>' . sprintf(
@@ -132,7 +142,7 @@ class WooCommerceProductsSyncService {
 	 * @param string  $page Current page.
 	 * @param integer $batch_size Batch size.
 	 *
-	 * @return object
+	 * @return int
 	 */
 	public function dispatch( $page = 1, $batch_size = 100 ) {
 		return as_enqueue_async_action(
@@ -170,13 +180,13 @@ class WooCommerceProductsSyncService {
 	 * @param string  $page Current page.
 	 * @param integer $batch_size Batch size.
 	 *
-	 * @return void
+	 * @return int|void
 	 */
 	public function sync( $page = 1, $batch_size = 100 ) {
-		error_log( '=== SureCart WooCommerce Sync: Starting sync() - Page: ' . $page ); // DEBUG
+		// Reset per-batch caches.
+		$this->currency_cache = null;
 
 		if ( ! class_exists( 'WooCommerce' ) ) {
-			error_log( 'SureCart WooCommerce Sync: WooCommerce class not found' ); // DEBUG
 			return;
 		}
 
@@ -196,7 +206,10 @@ class WooCommerceProductsSyncService {
 
 		remove_filter( 'woocommerce_product_data_store_cpt_get_products_query', [ $this, 'excludeImportedProducts' ], 10 );
 
-		error_log( 'SureCart WooCommerce Sync: Found ' . count( $products->products ) . ' products to sync on page ' . $page ); // DEBUG
+		// Validate wc_get_products() result in case WooCommerce was deactivated mid-sync.
+		if ( ! is_object( $products ) || ! isset( $products->products, $products->max_num_pages ) ) {
+			return;
+		}
 
 		// Sync each product.
 		foreach ( $products->products as $product_id ) {
@@ -205,52 +218,39 @@ class WooCommerceProductsSyncService {
 
 		// Create import batch if we have products.
 		if ( ! empty( $this->products_import_batch ) ) {
-			error_log( 'SureCart WooCommerce Sync: Creating import batch with ' . count( $this->products_import_batch ) . ' products' ); // DEBUG
 			$import = ( new ProductImport() )->create( [ 'data' => $this->products_import_batch ] );
 			$this->products_import_batch = []; // Clear batch after import.
 
 			// Accumulate import IDs across batches for the completion notice.
 			if ( ! is_wp_error( $import ) && ! empty( $import->id ) ) {
-				error_log( 'SureCart WooCommerce Sync: Import created with ID: ' . $import->id ); // DEBUG
 				$existing_ids = get_option( 'sc_woo_import_ids', [] );
 				$existing_ids[] = $import->id;
 				update_option( 'sc_woo_import_ids', $existing_ids );
 			} elseif ( is_wp_error( $import ) ) {
-				error_log( 'SureCart WooCommerce Sync: Import ERROR: ' . $import->get_error_message() ); // DEBUG
+				error_log( 'SureCart WooCommerce Sync: Import failed - ' . $import->get_error_message() ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 			}
-		} else {
-			error_log( 'SureCart WooCommerce Sync: No products in batch to import' ); // DEBUG
 		}
 
 		// if the total number of pages less than or equal to the current page, we don't have another page.
 		if ( $products->max_num_pages <= $page ) {
-			error_log( 'SureCart WooCommerce Sync: Last page reached (page ' . $page . ' of ' . $products->max_num_pages . ')' ); // DEBUG
-
 			// All batches processed - check if ANY imports were created.
 			$import_ids = get_option( 'sc_woo_import_ids', [] );
-			error_log( 'SureCart WooCommerce Sync: Total import_ids created: ' . count( $import_ids ) ); // DEBUG
 
 			if ( empty( $import_ids ) ) {
-				error_log( 'SureCart WooCommerce Sync: No import_ids - checking for skipped products' ); // DEBUG
-
 				// No imports created - check if products were skipped.
 				$session_id = get_option( 'sc_woo_import_session_id' );
-				error_log( 'SureCart WooCommerce Sync: Session ID from option: ' . ( $session_id ?: 'NONE' ) ); // DEBUG
 
 				if ( $session_id ) {
 					$transient_key    = 'sc_woo_import_skipped_' . $session_id;
 					$skipped_products = get_transient( $transient_key );
-					error_log( 'SureCart WooCommerce Sync: Skipped products count: ' . ( is_array( $skipped_products ) ? count( $skipped_products ) : 0 ) ); // DEBUG
 
 					if ( ! empty( $skipped_products ) ) {
 						// All products skipped - store session_id for results page.
-						error_log( 'SureCart WooCommerce Sync: All products skipped! Storing session_id for results page' ); // DEBUG
 						update_option( 'sc_woo_import_all_skipped', $session_id, false );
 					}
 				}
 			}
 
-			error_log( '=== SureCart WooCommerce Sync: Sync complete ===' ); // DEBUG
 			return;
 		}
 
@@ -266,12 +266,9 @@ class WooCommerceProductsSyncService {
 	 */
 	public function syncProduct( $product_id ) {
 		try {
-			error_log( 'SureCart WooCommerce Sync: Processing product ID: ' . $product_id ); // DEBUG
-
 			$product = wc_get_product( $product_id );
 
 			if ( ! $product ) {
-				error_log( 'SureCart WooCommerce Sync: Product not found (ID: ' . $product_id . '), tracking as skipped' ); // DEBUG
 				$this->trackSkippedProduct( null, 'invalid', 'product_not_found' );
 				return;
 			}
@@ -279,18 +276,15 @@ class WooCommerceProductsSyncService {
 			// Skip unsupported product types.
 			$product_type = $product->get_type();
 			if ( in_array( $product_type, [ 'grouped', 'external' ], true ) ) {
-				error_log( 'SureCart WooCommerce Sync: Skipping ' . $product_type . ' product: ' . $product->get_name() . ' (ID: ' . $product_id . ')' ); // DEBUG
 				$this->trackSkippedProduct( $product, $product_type, 'unsupported_type' );
 				return;
 			}
-
-			error_log( 'SureCart WooCommerce Sync: Processing ' . $product_type . ' product: ' . $product->get_name() . ' (ID: ' . $product_id . ')' ); // DEBUG
 
 			// Map the WooCommerce Product to SureCart and save in the imports batch.
 			$this->mapWooCommerceProductToSureCart( $product );
 
 			// Mark product as imported to prevent duplicate syncing.
-			update_post_meta( $product_id, '_surecart_imported', current_time( 'timestamp' ) );
+			update_post_meta( $product_id, '_surecart_imported', time() );
 
 		} catch ( \Exception $e ) {
 			error_log( sprintf( 'SureCart WooCommerce Sync: Failed to sync product %d - %s', $product_id, $e->getMessage() ) ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
@@ -320,8 +314,6 @@ class WooCommerceProductsSyncService {
 	 * @return void
 	 */
 	private function trackSkippedProduct( $product, $product_type, $skip_reason ) {
-		error_log( 'SureCart WooCommerce Sync: trackSkippedProduct() called - Type: ' . $product_type . ', Reason: ' . $skip_reason ); // DEBUG
-
 		// Build human-readable skip reason message.
 		$reason_messages = [
 			'unsupported_type'  => sprintf(
@@ -344,8 +336,6 @@ class WooCommerceProductsSyncService {
 		// Get session ID for this import.
 		$session_id    = $this->getImportSessionId();
 		$transient_key = 'sc_woo_import_skipped_' . $session_id;
-
-		error_log( 'SureCart WooCommerce Sync: Session ID: ' . $session_id . ', Transient key: ' . $transient_key ); // DEBUG
 
 		// Retrieve existing skipped products from transient.
 		$skipped_products = get_transient( $transient_key );
@@ -417,8 +407,8 @@ class WooCommerceProductsSyncService {
 			'slug'         => $product->get_slug(),
 			'featured'     => $product->is_featured(),
 			'status'       => $this->mapStatus( $product ),
-			'description'  => $product->get_description() ?? null,
-			'sku'          => $product->get_sku() ?? null,
+			'description'  => $product->get_description(),
+			'sku'          => $product->get_sku(),
 			'archived'     => $product->get_status() === 'trash',
 			'recurring'    => $this->isSubscriptionProduct( $product ),
 			'cataloged_at' => $product->get_date_created() ? $product->get_date_created()->getTimestamp() : null,
@@ -504,7 +494,7 @@ class WooCommerceProductsSyncService {
 		// Simple products.
 		$price_data = [
 			'amount'   => $this->convertPriceToInteger( $product->get_price() ),
-			'currency' => strtolower( \get_woocommerce_currency() ),
+			'currency' => strtolower( $this->getCurrency() ),
 			// translators: %s: Product name.
 			'name'     => sprintf( __( '%s Price', 'surecart' ), $product->get_name() ),
 			'position' => 0,
@@ -552,7 +542,7 @@ class WooCommerceProductsSyncService {
 
 		$price_data = [
 			'amount'                             => $this->convertPriceToInteger( $product->get_price() ),
-			'currency'                           => strtolower( \get_woocommerce_currency() ),
+			'currency'                           => strtolower( $this->getCurrency() ),
 			// translators: %s: Product name.
 			'name'                               => sprintf( __( '%s Subscription', 'surecart' ), $product->get_name() ),
 			'position'                           => 0,
@@ -629,7 +619,7 @@ class WooCommerceProductsSyncService {
 			return 0;
 		}
 
-		$currency = \get_woocommerce_currency();
+		$currency = $this->getCurrency();
 
 		// Zero-decimal currencies (no cents).
 		$zero_decimal = in_array(
@@ -639,6 +629,18 @@ class WooCommerceProductsSyncService {
 		);
 
 		return $zero_decimal ? (int) $price : (int) round( (float) $price * 100 );
+	}
+
+	/**
+	 * Get cached WooCommerce currency.
+	 *
+	 * @return string
+	 */
+	private function getCurrency() {
+		if ( null === $this->currency_cache ) {
+			$this->currency_cache = \get_woocommerce_currency();
+		}
+		return $this->currency_cache;
 	}
 
 	/**
@@ -875,6 +877,11 @@ class WooCommerceProductsSyncService {
 		$variation_ids    = $product->get_children();
 		$variant_position = 0;
 
+		// Cache WC unit options before the loop to avoid repeated DB queries.
+		$wc_weight_unit = get_option( 'woocommerce_weight_unit' );
+		$wc_dim_unit    = get_option( 'woocommerce_dimension_unit' );
+		$dim_multiplier = 'yd' === $wc_dim_unit ? 3 : 1;
+
 		foreach ( $variation_ids as $variation_id ) {
 			$variation = wc_get_product( $variation_id );
 			if ( ! $variation ) {
@@ -885,7 +892,7 @@ class WooCommerceProductsSyncService {
 			$variation_stock_mode = $variation->managing_stock();
 
 			$variant = [
-				'sku'                          => $variation->get_sku() ?? null,
+				'sku'                          => $variation->get_sku(),
 				'position'                     => $variant_position++,
 
 				// Pricing.
@@ -934,12 +941,10 @@ class WooCommerceProductsSyncService {
 			$variant_weight = (float) $variation->get_weight();
 			if ( $variant_weight > 0 ) {
 				$variant['weight']      = $variant_weight;
-				$variant['weight_unit'] = $this->mapWeightUnit( get_option( 'woocommerce_weight_unit' ) );
+				$variant['weight_unit'] = $this->mapWeightUnit( $wc_weight_unit );
 			}
 
 			// Only include dimensions if at least one dimension is set and greater than 0.
-			$wc_dim_unit    = get_option( 'woocommerce_dimension_unit' );
-			$dim_multiplier = 'yd' === $wc_dim_unit ? 3 : 1;
 			$variant_length = (float) $variation->get_length() * $dim_multiplier;
 			$variant_width  = (float) $variation->get_width() * $dim_multiplier;
 			$variant_height = (float) $variation->get_height() * $dim_multiplier;
@@ -1109,9 +1114,10 @@ class WooCommerceProductsSyncService {
 	 * @return array
 	 */
 	public function mapReviewsFields( $product ) {
+		$comments_open = comments_open( $product->get_id() );
 		return [
-			'reviews_enabled' => comments_open( $product->get_id() ),
-			'solicit_reviews' => comments_open( $product->get_id() ),
+			'reviews_enabled' => $comments_open,
+			'solicit_reviews' => $comments_open,
 		];
 	}
 
@@ -1139,7 +1145,7 @@ class WooCommerceProductsSyncService {
 			$rating = get_comment_meta( $comment->comment_ID, 'rating', true );
 
 			$reviews[] = [
-				'title'    => get_comment_meta( $comment->comment_ID, 'review_title', true ) ?? null,
+				'title'    => get_comment_meta( $comment->comment_ID, 'review_title', true ),
 				'body'     => $comment->comment_content,
 				'stars'    => $rating ? (float) $rating : null,
 				'metadata' => [
