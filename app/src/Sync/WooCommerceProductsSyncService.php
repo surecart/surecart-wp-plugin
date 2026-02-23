@@ -723,8 +723,13 @@ class WooCommerceProductsSyncService {
 				// Find existing ProductCollection by slug using API.
 				$collection = \SureCart\Models\ProductCollection::where( [ 'query' => $cache_key ] )->first();
 
+				// Handle API errors — skip this term to avoid creating duplicates.
+				if ( is_wp_error( $collection ) ) {
+					continue;
+				}
+
 				// If collection exists on API, cache and use it.
-				if ( ! empty( $collection->id ) && ! is_wp_error( $collection ) ) {
+				if ( ! empty( $collection->id ) ) {
 					$this->collections_cache[ $cache_key ] = $collection;
 					$collections[]                         = $collection;
 					continue;

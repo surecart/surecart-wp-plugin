@@ -309,6 +309,11 @@ class ProductsController extends AdminController {
 	 * @return \SureCartCore\Responses\RedirectResponse
 	 */
 	public function import() {
+		// Prevent duplicate imports while a sync is already running.
+		if ( \SureCart::sync()->woocommerce_products()->isRunning() ) {
+			return \SureCart::redirect()->to( esc_url_raw( \SureCart::getUrl()->index( 'products' ) ) );
+		}
+
 		// Clear previously accumulated import IDs and session tracking.
 		delete_option( 'sc_woo_import_ids' );
 		delete_option( 'sc_woo_import_session_id' );
@@ -390,7 +395,7 @@ class ProductsController extends AdminController {
 		$import_ids = array_filter( array_map( 'sanitize_text_field', explode( ',', $import_ids_raw ) ) );
 
 		// Parse session_id from query (for skipped products lookup).
-		$session_id = sanitize_text_field( $request->query( 'session_id' ) );
+		$session_id = sanitize_key( $request->query( 'session_id' ) );
 
 		// Fallback: use current session if available (for backward compatibility).
 		if ( ! $session_id ) {

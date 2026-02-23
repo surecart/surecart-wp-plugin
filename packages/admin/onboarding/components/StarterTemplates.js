@@ -98,7 +98,6 @@ function TemplateItem({ active, template, onItemClick }) {
 		<div
 			css={css`
 				cursor: pointer;
-				background-color: ;
 				background-color: ${active
 					? 'var(--sc-color-brand-primary)'
 					: '#ffffff'};
