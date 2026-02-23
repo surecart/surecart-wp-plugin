@@ -74,6 +74,10 @@
 			<sc-icon slot="prefix" style="width: 18px; height: 18px; opacity: 0.7;" name="zap"></sc-icon>
 			<?php esc_html_e( 'Integrations', 'surecart' ); ?>
 		</sc-tab>
+		<sc-tab href="<?php echo esc_url( add_query_arg( [ 'tab' => 'learn' ], menu_page_url( 'sc-settings', false ) ) ); ?>" <?php echo 'learn' === $tab ? 'active' : ''; ?>>
+			<sc-icon slot="prefix" style="width: 18px; height: 18px;" name="book-open"></sc-icon>
+			<?php esc_html_e( 'Learn', 'surecart' ); ?>
+		</sc-tab>
 	<?php endif; ?>
 
 	<sc-tab href="<?php echo esc_url( add_query_arg( [ 'tab' => 'connection' ], menu_page_url( 'sc-settings', false ) ) ); ?>" <?php echo 'connection' === $tab ? 'active' : ''; ?> >

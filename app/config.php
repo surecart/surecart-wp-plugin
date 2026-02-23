@@ -65,6 +65,7 @@ return array(
 		\SureCart\Rest\UpsellRestServiceProvider::class,
 		\SureCart\Rest\FulfillmentRestServiceProvider::class,
 		\SureCart\Rest\LoginRestServiceProvider::class,
+		\SureCart\Rest\LearnProgressRestServiceProvider::class,
 		\SureCart\Rest\PurchasesRestServiceProvider::class,
 		\SureCart\Rest\StatisticRestServiceProvider::class,
 		\SureCart\Rest\IntegrationsRestServiceProvider::class,
