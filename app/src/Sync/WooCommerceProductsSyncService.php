@@ -34,6 +34,13 @@ class WooCommerceProductsSyncService {
 	private $currency_cache = null;
 
 	/**
+	 * Skipped products accumulated during the current batch.
+	 *
+	 * @var array
+	 */
+	private $skipped_products_batch = [];
+
+	/**
 	 * Bootstrap any actions.
 	 *
 	 * @return void
@@ -216,18 +223,21 @@ class WooCommerceProductsSyncService {
 			$this->syncProduct( $product_id );
 		}
 
+		// Flush skipped products to the transient once per batch.
+		$this->flushSkippedProducts();
+
 		// Create import batch if we have products.
 		if ( ! empty( $this->products_import_batch ) ) {
 			$import                      = ( new ProductImport() )->create( [ 'data' => $this->products_import_batch ] );
 			$this->products_import_batch = []; // Clear batch after import.
 
 			// Accumulate import IDs across batches for the completion notice.
-			if ( ! is_wp_error( $import ) && ! empty( $import->id ) ) {
+			if ( is_wp_error( $import ) ) {
+				error_log( 'SureCart WooCommerce Sync: Import failed - ' . $import->get_error_message() ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+			} elseif ( ! empty( $import->id ) ) {
 				$existing_ids   = get_option( 'sc_woo_import_ids', [] );
 				$existing_ids[] = $import->id;
 				update_option( 'sc_woo_import_ids', $existing_ids );
-			} elseif ( is_wp_error( $import ) ) {
-				error_log( 'SureCart WooCommerce Sync: Import failed - ' . $import->get_error_message() ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 			}
 		}
 
@@ -324,29 +334,39 @@ class WooCommerceProductsSyncService {
 			'product_not_found' => __( 'Product not found in WooCommerce', 'surecart' ),
 		];
 
-		$reason = $reason_messages[ $skip_reason ] ?? __( 'Product skipped', 'surecart' );
-
-		$skipped_data = [
+		$this->skipped_products_batch[] = [
 			'wc_product_id' => $product ? $product->get_id() : 0,
 			'name'          => $product ? ( $product->get_name() ?: __( 'Unnamed Product', 'surecart' ) ) : __( 'Unknown Product', 'surecart' ),
 			'type'          => $product_type,
-			'reason'        => $reason,
+			'reason'        => $reason_messages[ $skip_reason ] ?? __( 'Product skipped', 'surecart' ),
 		];
+	}
 
-		// Get session ID for this import.
+	/**
+	 * Flush accumulated skipped products to the transient in a single write.
+	 *
+	 * @return void
+	 */
+	private function flushSkippedProducts() {
+		if ( empty( $this->skipped_products_batch ) ) {
+			return;
+		}
+
 		$session_id    = $this->getImportSessionId();
 		$transient_key = 'sc_woo_import_skipped_' . $session_id;
 
-		// Retrieve existing skipped products from transient.
+		// Merge with any previously stored skipped products from earlier batches.
 		$skipped_products = get_transient( $transient_key );
 		if ( ! is_array( $skipped_products ) ) {
 			$skipped_products = [];
 		}
 
-		$skipped_products[] = $skipped_data;
+		$skipped_products = array_merge( $skipped_products, $this->skipped_products_batch );
 
 		// Store for 7 days (matches typical ImportRow retention).
 		set_transient( $transient_key, $skipped_products, 7 * DAY_IN_SECONDS );
+
+		$this->skipped_products_batch = [];
 	}
 
 	/**

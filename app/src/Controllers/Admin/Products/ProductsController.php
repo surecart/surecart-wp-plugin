@@ -309,19 +309,13 @@ class ProductsController extends AdminController {
 	 * @return \SureCartCore\Responses\RedirectResponse
 	 */
 	public function import() {
-		error_log( '=== SureCart: import() called - Starting WooCommerce product import ===' ); // DEBUG
-
 		// Clear previously accumulated import IDs and session tracking.
 		delete_option( 'sc_woo_import_ids' );
 		delete_option( 'sc_woo_import_session_id' );
 		delete_option( 'sc_woo_import_all_skipped' );
 
-		error_log( 'SureCart: Options cleared, dispatching sync action' ); // DEBUG
-
 		// enqueue action.
 		\SureCart::sync()->woocommerce_products()->dispatch();
-
-		error_log( 'SureCart: Sync action dispatched, redirecting to products page' ); // DEBUG
 
 		// redirect to products page.
 		return \SureCart::redirect()->to( esc_url_raw( \SureCart::getUrl()->index( 'products' ) ) );
