@@ -9,7 +9,7 @@ export default ({
 	id,
 }) => {
 	const helpTextElement = (
-		<div dangerouslySetInnerHTML={{ __html: help }}></div>
+		<span dangerouslySetInnerHTML={{ __html: help }}></span>
 	);
 
 	return (
