@@ -3259,13 +3259,13 @@ namespace SureCart\Tests\Sync {
 		}
 
 		// =========================================================================
-		// Group 40: Duplicate Sync Prevention — 4 tests
+		// Group 40: Duplicate Sync Prevention — 6 tests
 		// =========================================================================
 
 		/**
 		 * @group woo_import
 		 */
-		public function test_sync_product_marks_product_as_imported_via_post_meta() {
+		public function test_sync_product_defers_imported_meta_to_batch() {
 			$post_id = self::factory()->post->create();
 			$product = $this->createMockProduct( [ 'get_id' => $post_id, 'get_type' => 'simple' ] );
 			$GLOBALS['test_wc_get_product_result'] = $product;
@@ -3275,8 +3275,63 @@ namespace SureCart\Tests\Sync {
 
 			$service->syncProduct( $post_id );
 
+			// Meta should NOT be written yet — deferred until API call succeeds in sync().
+			$meta = get_post_meta( $post_id, '_surecart_imported', true );
+			$this->assertEmpty( $meta );
+
+			// Product ID should be accumulated for deferred writing.
+			$reflection = new \ReflectionClass( WooCommerceProductsSyncService::class );
+			$property   = $reflection->getProperty( 'imported_product_ids' );
+			$property->setAccessible( true );
+			$this->assertContains( $post_id, $property->getValue( $service ) );
+		}
+
+		/**
+		 * @group woo_import
+		 */
+		public function test_sync_writes_imported_meta_after_successful_api_call() {
+			$post_id = self::factory()->post->create();
+			$product = $this->createMockProduct( [ 'get_id' => $post_id ] );
+
+			$GLOBALS['test_wc_products_result']    = (object) [
+				'products'      => [ $post_id ],
+				'max_num_pages' => 1,
+			];
+			$GLOBALS['test_wc_get_product_result'] = $product;
+
+			\Mockery::mock( 'overload:' . \SureCart\Models\ProductImport::class )
+				->shouldReceive( 'create' )
+				->andReturn( (object) [ 'id' => 'import_123' ] );
+
+			$service = new WooCommerceProductsSyncService();
+			$service->sync( 1, 10 );
+
 			$meta = get_post_meta( $post_id, '_surecart_imported', true );
 			$this->assertNotEmpty( $meta );
+		}
+
+		/**
+		 * @group woo_import
+		 */
+		public function test_sync_does_not_write_imported_meta_on_api_failure() {
+			$post_id = self::factory()->post->create();
+			$product = $this->createMockProduct( [ 'get_id' => $post_id ] );
+
+			$GLOBALS['test_wc_products_result']    = (object) [
+				'products'      => [ $post_id ],
+				'max_num_pages' => 1,
+			];
+			$GLOBALS['test_wc_get_product_result'] = $product;
+
+			\Mockery::mock( 'overload:' . \SureCart\Models\ProductImport::class )
+				->shouldReceive( 'create' )
+				->andReturn( new \WP_Error( 'api_error', 'Import failed' ) );
+
+			$service = new WooCommerceProductsSyncService();
+			$service->sync( 1, 10 );
+
+			$meta = get_post_meta( $post_id, '_surecart_imported', true );
+			$this->assertEmpty( $meta, 'Product should not be marked as imported when API call fails.' );
 		}
 
 		/**

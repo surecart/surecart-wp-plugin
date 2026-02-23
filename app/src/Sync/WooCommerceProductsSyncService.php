@@ -41,6 +41,13 @@ class WooCommerceProductsSyncService {
 	private $skipped_products_batch = [];
 
 	/**
+	 * Product IDs successfully mapped in the current batch (meta deferred until API confirms).
+	 *
+	 * @var int[]
+	 */
+	private $imported_product_ids = [];
+
+	/**
 	 * Bootstrap any actions.
 	 *
 	 * @return void
@@ -235,10 +242,18 @@ class WooCommerceProductsSyncService {
 			if ( is_wp_error( $import ) ) {
 				error_log( 'SureCart WooCommerce Sync: Import failed - ' . $import->get_error_message() ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 			} elseif ( ! empty( $import->id ) ) {
+				// Mark products as imported only after the API confirms success.
+				foreach ( $this->imported_product_ids as $imported_id ) {
+					update_post_meta( $imported_id, '_surecart_imported', time() );
+				}
+
 				$existing_ids   = get_option( 'sc_woo_import_ids', [] );
 				$existing_ids[] = $import->id;
 				update_option( 'sc_woo_import_ids', $existing_ids, false );
 			}
+
+			// Clear accumulated IDs regardless of success or failure.
+			$this->imported_product_ids = [];
 		}
 
 		// if the total number of pages less than or equal to the current page, we don't have another page.
@@ -310,8 +325,8 @@ class WooCommerceProductsSyncService {
 			// Map the WooCommerce Product to SureCart and save in the imports batch.
 			$this->mapWooCommerceProductToSureCart( $product );
 
-			// Mark product as imported to prevent duplicate syncing.
-			update_post_meta( $product_id, '_surecart_imported', time() );
+			// Accumulate product ID — meta is written only after API confirms success in sync().
+			$this->imported_product_ids[] = $product_id;
 
 		} catch ( \Exception $e ) {
 			error_log( sprintf( 'SureCart WooCommerce Sync: Failed to sync product %d - %s', $product_id, $e->getMessage() ) ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
