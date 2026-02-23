@@ -7,7 +7,7 @@ export function getMaxStockQuantity(product: Product, selectedVariant?: Variant)
   }
 
   // If stock is not tracked, no max applies.
-  const hasUnlimitedStock = selectedVariant ? selectedVariant.has_unlimited_stock : product?.has_unlimited_stock;
+  const hasUnlimitedStock = selectedVariant ? selectedVariant.has_unlimited_stock ?? product?.has_unlimited_stock : product?.has_unlimited_stock;
   if (hasUnlimitedStock) {
     return null;
   }
