@@ -218,12 +218,12 @@ class WooCommerceProductsSyncService {
 
 		// Create import batch if we have products.
 		if ( ! empty( $this->products_import_batch ) ) {
-			$import = ( new ProductImport() )->create( [ 'data' => $this->products_import_batch ] );
+			$import                      = ( new ProductImport() )->create( [ 'data' => $this->products_import_batch ] );
 			$this->products_import_batch = []; // Clear batch after import.
 
 			// Accumulate import IDs across batches for the completion notice.
 			if ( ! is_wp_error( $import ) && ! empty( $import->id ) ) {
-				$existing_ids = get_option( 'sc_woo_import_ids', [] );
+				$existing_ids   = get_option( 'sc_woo_import_ids', [] );
 				$existing_ids[] = $import->id;
 				update_option( 'sc_woo_import_ids', $existing_ids );
 			} elseif ( is_wp_error( $import ) ) {
@@ -1210,7 +1210,7 @@ class WooCommerceProductsSyncService {
 			'wc_rating_counts'       => wp_json_encode( $product->get_rating_counts() ),
 			'wc_review_count'        => (int) $product->get_review_count(),
 
-			// Product Flags.
+			// Products Flags.
 			'is_virtual'             => $product->is_virtual(),
 			'is_downloadable'        => $product->is_downloadable(),
 			'catalog_visibility'     => $product->get_catalog_visibility(),
