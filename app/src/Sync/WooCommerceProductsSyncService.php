@@ -1192,6 +1192,7 @@ class WooCommerceProductsSyncService {
 				'status'  => 'approve',
 				'orderby' => 'comment_date',
 				'order'   => 'DESC',
+				'number'  => 100,
 			]
 		);
 
