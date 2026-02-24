@@ -12,7 +12,6 @@ import {
 import {
 	PanelBody,
 	PanelRow,
-	TextControl,
 	ToolbarButton,
 	ToolbarGroup,
 } from '@wordpress/components';
@@ -21,13 +20,12 @@ import { store as coreStore } from '@wordpress/core-data';
 import { edit } from '@wordpress/icons';
 
 /**
- * Component Dependencies
+ * Component Dependencies.
  */
-import { ScForm } from '@surecart/components-react';
 import PriceInfo from '@scripts/blocks/components/PriceInfo';
 import Placeholder from './Placeholder';
 
-export default ({ className, attributes, setAttributes }) => {
+export default ({ attributes, setAttributes }) => {
 	const {
 		button_text,
 		price_id,
