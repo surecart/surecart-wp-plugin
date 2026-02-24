@@ -1071,7 +1071,13 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, Object
 	}
 
 	/**
-	 * Get a specific attribute
+	 * Get a specific attribute.
+	 *
+	 * Fires the `surecart/{object_name}/get_attribute` filter, allowing
+	 * third-party code to modify the returned value.
+	 *
+	 * Warning: filter callbacks must NOT read properties on the same model
+	 * instance — doing so re-enters getAttribute() and causes infinite recursion.
 	 *
 	 * @param string $key Attribute name.
 	 *
@@ -1090,7 +1096,12 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, Object
 			$attribute = $this->{$getter}( $attribute );
 		}
 
-		return apply_filters( "surecart/{$this->object_name}/get_attribute", $attribute, $key, $this );
+		// Only invoke the filter when a listener is registered to avoid overhead on every property access.
+		if ( has_filter( "surecart/{$this->object_name}/get_attribute" ) ) {
+			$attribute = apply_filters( "surecart/{$this->object_name}/get_attribute", $attribute, $key, $this );
+		}
+
+		return $attribute;
 	}
 
 	/**
