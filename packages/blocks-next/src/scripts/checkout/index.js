@@ -552,7 +552,7 @@ const { state, actions } = store('surecart/checkout', {
 
 			const { speak } = yield import(
 				/* webpackIgnore: true */
-				'@surecart/a11y'
+				'@wordpress/a11y'
 			);
 
 			speak(__('Applying promotion code.', 'surecart'), 'assertive');
@@ -589,7 +589,7 @@ const { state, actions } = store('surecart/checkout', {
 			const { mode, formId } = context;
 			const { speak } = yield import(
 				/* webpackIgnore: true */
-				'@surecart/a11y'
+				'@wordpress/a11y'
 			);
 			speak(__('Removing promotion code.', 'surecart'), 'assertive');
 			const { handleCouponApply } = yield import(
@@ -715,7 +715,7 @@ const { state, actions } = store('surecart/checkout', {
 			const quantity = line_item?.quantity + 1;
 			const { speak } = yield import(
 				/* webpackIgnore: true */
-				'@surecart/a11y'
+				'@wordpress/a11y'
 			);
 			speak(
 				__('Updating quantity.', 'surecart'),
@@ -747,7 +747,7 @@ const { state, actions } = store('surecart/checkout', {
 			}
 			const { speak } = yield import(
 				/* webpackIgnore: true */
-				'@surecart/a11y'
+				'@wordpress/a11y'
 			);
 			speak(
 				__('Updating quantity.', 'surecart'),
@@ -774,7 +774,7 @@ const { state, actions } = store('surecart/checkout', {
 
 			const { speak } = yield import(
 				/* webpackIgnore: true */
-				'@surecart/a11y'
+				'@wordpress/a11y'
 			);
 			speak(
 				sprintf(
@@ -824,7 +824,7 @@ const { state, actions } = store('surecart/checkout', {
 				line_item?.price?.product?.name || __('item', 'surecart');
 			const { speak } = yield import(
 				/* webpackIgnore: true */
-				'@surecart/a11y'
+				'@wordpress/a11y'
 			);
 
 			speak(
@@ -874,7 +874,7 @@ const { state, actions } = store('surecart/checkout', {
 		announceLatestCheckout: function* () {
 			const { speak } = yield import(
 				/* webpackIgnore: true */
-				'@surecart/a11y'
+				'@wordpress/a11y'
 			);
 			clearTimeout(announceTimeout);
 			announceTimeout = setTimeout(() => {
