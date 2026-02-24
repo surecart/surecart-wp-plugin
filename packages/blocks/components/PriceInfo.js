@@ -59,7 +59,7 @@ export default ({ price_id, variant_id }) => {
 			>
 				{product?.name}
 			</h3>
-			<p
+			<div
 				css={css`
 					opacity: 0.75;
 				`}
@@ -91,7 +91,7 @@ export default ({ price_id, variant_id }) => {
 						</div>
 					</LineItemLabel>
 				)}
-			</p>
+			</div>
 			<Button
 				href={addQueryArgs('admin.php', {
 					page: 'sc-products',

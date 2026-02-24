@@ -111,7 +111,6 @@ export default ({ attributes, setAttributes, clientId, isSelected }) => {
 					</PanelRow>
 					<PanelRow>
 						<RadioControl
-							__nextHasNoMarginBottom
 							label={__('Type', 'surecart')}
 							help="The type of product selection"
 							selected={type}
