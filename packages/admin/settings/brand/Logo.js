@@ -1,17 +1,22 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { useState } from '@wordpress/element';
+import { useState, useEffect } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 import { ScFormControl } from '@surecart/components-react';
 import { Button } from '@wordpress/components';
 import MediaLibrary from '../../components/MediaLibrary';
 
-export default ({ label, brand, editBrand, loading, logoKey = 'logo' }) => {
+export default ({ label, brand, editBrand, logoKey = 'logo', onMediaChange }) => {
 	const [previewUrl, setPreviewUrl] = useState(null);
+
+	useEffect(() => {
+		setPreviewUrl(null);
+	}, [brand?.[logoKey]?.id]);
 
 	const onSelectMedia = (media) => {
 		setPreviewUrl(media?.url);
+		onMediaChange?.(media?.url);
 		return editBrand({ [logoKey]: media?.id });
 	};
 
@@ -21,6 +26,7 @@ export default ({ label, brand, editBrand, loading, logoKey = 'logo' }) => {
 		);
 		if (!r) return;
 		setPreviewUrl(null);
+		onMediaChange?.(null);
 		return editBrand({ [logoKey]: '' });
 	};
 
