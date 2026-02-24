@@ -1,11 +1,7 @@
-/** @jsx jsx */
-
 import apiFetch from '@wordpress/api-fetch';
 import { __ } from '@wordpress/i18n';
 import { useEffect, useState, useRef, useCallback } from '@wordpress/element';
 import { addQueryArgs } from '@wordpress/url';
-import { css, jsx } from '@emotion/core';
-
 import throttle from 'lodash/throttle';
 
 import { ScSelect } from '@surecart/components-react';
@@ -89,19 +85,6 @@ export default ({ form, setForm }) => {
 			placeholder={__('Choose a form', 'surecart')}
 			searchPlaceholder={__('Search for a form...', 'surecart')}
 			search
-			// onScSearch={(e) => findForm(e.detail)}
-			// onScChange={(e) => {
-			// 	const formData = formsData.find(
-			// 		(form) => form.id === parseInt(e.target.value)
-			// 	);
-			// 	setForm(formData);
-			// }}
-			// choices={(formsData || []).map((form) => {
-			// 	return {
-			// 		value: form.id,
-			// 		label: form.title.raw,
-			// 	};
-			// })}
 		/>
 	);
 };
