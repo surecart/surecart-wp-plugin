@@ -1087,10 +1087,10 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, Object
 		$getter = $this->getMutator( $key, 'get' );
 
 		if ( $getter ) {
-			return $this->{$getter}( $attribute );
-		} elseif ( ! is_null( $attribute ) ) {
-			return $attribute;
+			$attribute = $this->{$getter}( $attribute );
 		}
+
+		return apply_filters( "surecart/{$this->object_name}/get_attribute", $attribute, $key, $this );
 	}
 
 	/**
