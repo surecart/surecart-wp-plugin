@@ -11,7 +11,6 @@ import {
 	useSettings,
 	BlockControls,
 } from '@wordpress/block-editor';
-import { useEntityProp } from '@wordpress/core-data';
 import {
 	__experimentalUseCustomUnits as useCustomUnits,
 	PanelBody,
@@ -37,7 +36,7 @@ export default ({
 	setAttributes,
 	__unstableLayoutClassNames,
 }) => {
-	const [theme] = useEntityProp('root', 'site', 'surecart_theme');
+	const theme = window?.scBlockData?.theme || window?.scData?.theme || 'light';
 
 	const [isPatternSelectionModalOpen, setIsPatternSelectionModalOpen] =
 		useState(false);
