@@ -74,7 +74,9 @@ export default ({ attributes, setAttributes, isSelected }) => {
 			</InspectorControls>
 
 			<div {...blockProps}>
-				{!isSelected && !name && <div>Please add a name</div>}
+				{!isSelected && !name && (
+					<div>{__('Please add a name', 'surecart')}</div>
+				)}
 				<ScTextarea
 					required={required}
 					name={name}
