@@ -18,6 +18,13 @@ class ThemeMigrationService extends GeneralMigration {
 	protected $migration_key = 'surecart_theme_to_brand_migration';
 
 	/**
+	 * Whether to prevent marking migration as complete (e.g. on API failure).
+	 *
+	 * @var bool
+	 */
+	private $prevent_complete = false;
+
+	/**
 	 * Run the migration.
 	 *
 	 * @return void
@@ -34,7 +41,7 @@ class ThemeMigrationService extends GeneralMigration {
 		$brand = \SureCart::account()->brand;
 		if ( empty( $brand ) || is_wp_error( $brand ) ) {
 			// API unreachable — prevent complete() so it retries next load.
-			remove_action( 'admin_init', [ $this, 'complete' ], 999999 );
+			$this->prevent_complete = true;
 			return;
 		}
 
@@ -60,8 +67,20 @@ class ThemeMigrationService extends GeneralMigration {
 
 		if ( is_wp_error( $result ) ) {
 			// API call failed — prevent complete() so it retries next load.
-			remove_action( 'admin_init', [ $this, 'complete' ], 999999 );
+			$this->prevent_complete = true;
 			return;
 		}
+	}
+
+	/**
+	 * Only mark complete if the migration actually succeeded.
+	 *
+	 * @return void
+	 */
+	public function complete() {
+		if ( $this->prevent_complete ) {
+			return;
+		}
+		parent::complete();
 	}
 }
