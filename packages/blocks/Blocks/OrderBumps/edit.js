@@ -12,20 +12,13 @@ import {
 
 const bumpData = {
 	percent_off: 20,
-	metadata: {
-		description:
-			"Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-	},
 	price: {
-		currency:
-			(typeof scBlockData !== 'undefined' && scBlockData?.currency) ||
-			'usd',
+		currency: scBlockData?.currency || 'usd',
 		amount: 1234,
 		recurring_interval_count: 1,
 		recurring_interval: 'month',
 		product: {
-			name: 'Product Name',
-			image_url: 'https://source.unsplash.com/daily',
+			name: __('Product Name', 'surecart'),
 		},
 	},
 };
