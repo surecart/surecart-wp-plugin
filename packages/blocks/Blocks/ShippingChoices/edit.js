@@ -3,7 +3,7 @@
  */
 import { __ } from '@wordpress/i18n';
 import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
-import { Fragment } from '@wordpress/element';
+import { Fragment, useRef, useEffect } from '@wordpress/element';
 import {
 	PanelBody,
 	PanelRow,
@@ -19,8 +19,7 @@ import { ScShippingChoices } from '@surecart/components-react';
 const shippingMethods = [
 	{
 		id: '2JLDFJ3',
-		amount: 200,
-		currency: 'USD',
+		display_amount: '$2.00',
 		shipping_method: {
 			name: __('Standard', 'surecart'),
 			description: __('1-2 days', 'surecart'),
@@ -28,8 +27,7 @@ const shippingMethods = [
 	},
 	{
 		id: '3KLDSFJ',
-		amount: 300,
-		currency: 'USD',
+		display_amount: '$3.00',
 		shipping_method: {
 			name: __('Express', 'surecart'),
 			description: __('Next-day delivery', 'surecart'),
@@ -37,8 +35,7 @@ const shippingMethods = [
 	},
 	{
 		id: '4DKLJF9',
-		amount: 150,
-		currency: 'USD',
+		display_amount: '$1.50',
 		shipping_method: {
 			name: __('Economy', 'surecart'),
 			description: __('3-5 days', 'surecart'),
@@ -50,6 +47,13 @@ export default ({ attributes, setAttributes }) => {
 	const { label, showDescription } = attributes;
 
 	const blockProps = useBlockProps();
+	const ref = useRef();
+
+	useEffect(() => {
+		if (ref.current) {
+			ref.current.shippingChoices = shippingMethods;
+		}
+	}, []);
 
 	return (
 		<Fragment>
@@ -78,8 +82,8 @@ export default ({ attributes, setAttributes }) => {
 			</InspectorControls>
 			<div {...blockProps}>
 				<ScShippingChoices
+					ref={ref}
 					label={label}
-					shippingChoices={shippingMethods}
 					showDescription={showDescription}
 				/>
 			</div>

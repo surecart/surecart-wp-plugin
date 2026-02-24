@@ -30,6 +30,9 @@ export class ScShippingChoices {
   /** Whether to show the shipping choice description */
   @Prop() showDescription: boolean = true;
 
+  /** Override shipping choices data (used for editor preview) */
+  @Prop() shippingChoices: any[] | undefined;
+
   /** Maybe update the order. */
   async updateCheckout(selectedShippingChoiceId: string) {
     if (!selectedShippingChoiceId) return;
@@ -56,33 +59,38 @@ export class ScShippingChoices {
   }
 
   render() {
-    // shipping choice is not rewquired.
-    if (!checkoutState?.checkout?.selected_shipping_choice_required) {
-      return <Host style={{ display: 'none' }}></Host>;
-    }
+    const choices = this.shippingChoices || checkoutState?.checkout?.shipping_choices?.data;
 
-    // no shipping choices but no country either
-    if (!checkoutState?.checkout?.shipping_choices?.data?.length && !(checkoutState?.checkout?.shipping_address as Address)?.country) {
-      return (
-        <sc-form-control label={this.label || __('Shipping', 'surecart')}>
-          <div class="shipping-choice__empty">{__('To check available shipping choices, please provide your shipping country in the address section.', 'surecart')}</div>
-        </sc-form-control>
-      );
-    }
+    // When not using prop override, apply checkout state guards.
+    if (!this.shippingChoices) {
+      // shipping choice is not required.
+      if (!checkoutState?.checkout?.selected_shipping_choice_required) {
+        return <Host style={{ display: 'none' }}></Host>;
+      }
 
-    // no shipping choices yet.
-    if (!checkoutState?.checkout?.shipping_choices?.data?.length) {
-      return (
-        <sc-form-control part="empty" label={this.label || __('Shipping', 'surecart')}>
-          <div class="shipping-choice__empty">{__('Sorry, we are not able to ship to your address.', 'surecart')}</div>
-        </sc-form-control>
-      );
+      // no shipping choices but no country either
+      if (!choices?.length && !(checkoutState?.checkout?.shipping_address as Address)?.country) {
+        return (
+          <sc-form-control label={this.label || __('Shipping', 'surecart')}>
+            <div class="shipping-choice__empty">{__('To check available shipping choices, please provide your shipping country in the address section.', 'surecart')}</div>
+          </sc-form-control>
+        );
+      }
+
+      // no shipping choices yet.
+      if (!choices?.length) {
+        return (
+          <sc-form-control part="empty" label={this.label || __('Shipping', 'surecart')}>
+            <div class="shipping-choice__empty">{__('Sorry, we are not able to ship to your address.', 'surecart')}</div>
+          </sc-form-control>
+        );
+      }
     }
 
     return (
       <Host>
         <sc-radio-group part="base" label={this.label || __('Shipping', 'surecart')} class="shipping-choices" onScChange={e => this.updateCheckout(e.detail)}>
-          {(checkoutState?.checkout?.shipping_choices?.data || []).map(({ id, display_amount, shipping_method }) => (
+          {(choices || []).map(({ id, display_amount, shipping_method }) => (
             <sc-radio
               key={id}
               checked={checkoutState?.checkout?.selected_shipping_choice === id}
