@@ -130,6 +130,26 @@ class BrandRestServiceProvider extends RestServiceProvider implements RestServic
 					'type'        => 'string',
 					'context'     => [ 'view', 'edit' ],
 				],
+				'logo'             => [
+					'description' => esc_html__( 'The brand logo media object.', 'surecart' ),
+					'type'        => 'object',
+					'context'     => [ 'view', 'edit' ],
+				],
+				'dark_logo'        => [
+					'description' => esc_html__( 'The dark mode logo media object.', 'surecart' ),
+					'type'        => 'object',
+					'context'     => [ 'view', 'edit' ],
+				],
+				'theme'            => [
+					'description' => esc_html__( 'The affiliate portal theme (light or dark).', 'surecart' ),
+					'type'        => 'string',
+					'context'     => [ 'view', 'edit' ],
+				],
+				'dark_color'       => [
+					'description' => esc_html__( 'The primary color used in dark mode.', 'surecart' ),
+					'type'        => 'string',
+					'context'     => [ 'view', 'edit' ],
+				],
 				'logo_url'         => [
 					'description' => esc_html__( 'The URL of the brand logo.', 'surecart' ),
 					'type'        => 'string',

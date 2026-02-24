@@ -1,33 +1,33 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-
+import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 import { ScFormControl } from '@surecart/components-react';
 import { Button } from '@wordpress/components';
 import MediaLibrary from '../../components/MediaLibrary';
 
-export default ({ label, brand, editBrand, loading, logoKey = 'logo', logoUrlKey = 'logo_url' }) => {
+export default ({ label, brand, editBrand, loading, logoKey = 'logo' }) => {
+	const [previewUrl, setPreviewUrl] = useState(null);
+
 	const onSelectMedia = (media) => {
-		return editBrand({
-			[logoKey]: media?.id,
-			[logoUrlKey]: media?.url,
-		});
+		setPreviewUrl(media?.url);
+		return editBrand({ [logoKey]: media?.id });
 	};
 
-	const onRemoveMedia = (media) => {
+	const onRemoveMedia = () => {
 		const r = confirm(
 			__('Are you sure you want to remove this logo?', 'surecart')
 		);
 		if (!r) return;
-		return editBrand({
-			[logoKey]: null,
-			[logoUrlKey]: null,
-		});
+		setPreviewUrl(null);
+		return editBrand({ [logoKey]: '' });
 	};
 
+	const displayUrl = previewUrl || brand?.[logoKey]?.url;
+
 	const renderContent = () => {
-		if (brand?.[logoUrlKey]) {
+		if (displayUrl) {
 			return (
 				<div
 					css={css`
@@ -36,7 +36,7 @@ export default ({ label, brand, editBrand, loading, logoKey = 'logo', logoUrlKey
 					`}
 				>
 					<img
-						src={brand?.[logoUrlKey]}
+						src={displayUrl}
 						alt="logo"
 						css={css`
 							width: 100%;

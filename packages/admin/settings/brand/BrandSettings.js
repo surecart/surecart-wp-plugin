@@ -303,7 +303,6 @@ export default () => {
 							brand={item}
 							editBrand={editItem}
 							logoKey="dark_logo"
-							logoUrlKey="dark_logo_url"
 						/>
 					</div>
 				)}
