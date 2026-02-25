@@ -316,8 +316,8 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 
 == Changelog ==
 
-= 4.0.0 - February 24th, 2026 =
-- New: Product Reviews — Let customers leave star ratings and written reviews on your products. Display verified reviews to build trust and boost conversions, with automatic review request emails sent after purchase.
+= 4.0.0 - February 25th, 2026 =
+- New: Product Reviews — Let customers leave star ratings and written reviews on your products. [Learn More](https://www.youtube.com/watch?v=9MV_nOwxK_Q)
 - New: Product and variant dimensions for shipping.
 - New: Additional php and javascript filters on customer dashbaord.
 - Fix: Issue with default country selector dropdown getting clipped in admin.
