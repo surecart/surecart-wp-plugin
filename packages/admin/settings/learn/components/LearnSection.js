@@ -227,62 +227,62 @@ export default function LearnSection( {
 							aria-controls={ `learn-section-${ section.id }` }
 							type="button"
 						>
-						<div css={ headerLeftStyles }>
-							<div css={ titleRowStyles }>
-								{ section.icon && (
-									<sc-icon
-										name={ section.icon }
-										css={ sectionIconStyles }
-									/>
-								) }
-								<span css={ titleStyles }>{ section.title }</span>
-								{ section.highlighted && (
-									<sc-icon
-										name="star"
-										style={ {
-											width: '14px',
-											height: '14px',
-											color: '#fbbf24',
-											flexShrink: 0,
-										} }
-									/>
-								) }
-								{ section.badge && (
-									<span css={ badgeStyles( section.badge ) }>
-										{ getBadgeLabel( section.badge ) }
-									</span>
-								) }
-								<span
-									css={ progressBadgeStyles(
-										progress.completed,
-										progress.total
+							<div css={ headerLeftStyles }>
+								<div css={ titleRowStyles }>
+									{ section.icon && (
+										<sc-icon
+											name={ section.icon }
+											css={ sectionIconStyles }
+										/>
 									) }
-								>
-									{ progress.completed }/{ progress.total }
-								</span>
+									<span css={ titleStyles }>{ section.title }</span>
+									{ section.highlighted && (
+										<sc-icon
+											name="star"
+											style={ {
+												width: '14px',
+												height: '14px',
+												color: '#fbbf24',
+												flexShrink: 0,
+											} }
+										/>
+									) }
+									{ section.badge && (
+										<span css={ badgeStyles( section.badge ) }>
+											{ getBadgeLabel( section.badge ) }
+										</span>
+									) }
+									<span
+										css={ progressBadgeStyles(
+											progress.completed,
+											progress.total
+										) }
+									>
+										{ progress.completed }/{ progress.total }
+									</span>
+								</div>
+								<p css={ descriptionStyles }>
+									{ section.description }
+								</p>
 							</div>
-							<p css={ descriptionStyles }>
-								{ section.description }
-							</p>
-						</div>
-
-						<div css={ headerRightStyles }>
-							{ section.docUrl && (
-								<a
-									css={ learnLinkStyles }
-									href={ section.docUrl }
-									target="_blank"
-									rel="noopener noreferrer"
-									onClick={ ( e ) => e.stopPropagation() }
-								>
-									{ __( 'Learn How', 'surecart' ) } &rarr;
-								</a>
-							) }
-							<sc-icon
-								name="chevron-down"
-								css={ chevronStyles( isOpen ) }
-							/>
-						</div>
+	
+							<div css={ headerRightStyles }>
+								{ section.docUrl && (
+									<a
+										css={ learnLinkStyles }
+										href={ section.docUrl }
+										target="_blank"
+										rel="noopener noreferrer"
+										onClick={ ( e ) => e.stopPropagation() }
+									>
+										{ __( 'Learn How', 'surecart' ) } &rarr;
+									</a>
+								) }
+								<sc-icon
+									name="chevron-down"
+									css={ chevronStyles( isOpen ) }
+								/>
+							</div>
 						</button>
 					</h3>
 

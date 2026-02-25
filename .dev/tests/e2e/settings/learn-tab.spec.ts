@@ -67,18 +67,22 @@ test.describe( 'Learn Tab Settings Page', () => {
 		const shippingHeader = page.getByRole( 'heading', { name: 'Set Up Shipping' } ).locator( '..' );
 		await expect( shippingHeader.getByText( 'Optional' ) ).toBeVisible();
 
-		// Sections without badges: Customize Checkout, Manage Orders, Grow Revenue.
-		const noBadgeSections = [
+		// Sections 6 & 7 have 'Recommended' badge.
+		const recommendedSections = [
 			'Customize Checkout Experience',
 			'Manage Orders & Customers',
-			'Grow Your Revenue',
 		];
 
-		for ( const title of noBadgeSections ) {
+		for ( const title of recommendedSections ) {
 			const sectionHeader = page.getByRole( 'heading', { name: title } ).locator( '..' );
-			await expect( sectionHeader.getByText( 'Required' ) ).not.toBeVisible();
-			await expect( sectionHeader.getByText( 'Optional' ) ).not.toBeVisible();
+			await expect( sectionHeader.getByText( 'Recommended' ) ).toBeVisible();
 		}
+
+		// Grow Your Revenue has no badge.
+		const growHeader = page.getByRole( 'heading', { name: 'Grow Your Revenue' } ).locator( '..' );
+		await expect( growHeader.getByText( 'Required' ) ).not.toBeVisible();
+		await expect( growHeader.getByText( 'Optional' ) ).not.toBeVisible();
+		await expect( growHeader.getByText( 'Recommended' ) ).not.toBeVisible();
 	} );
 
 	test( 'Should expand and collapse sections', async ( { page } ) => {
