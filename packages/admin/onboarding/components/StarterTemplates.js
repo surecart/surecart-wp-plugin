@@ -115,9 +115,10 @@ function TemplateItem({ active, template, onItemClick }) {
 		>
 			<div
 				css={css`
-					width: 96px;
-					height: 96px;
+					width: 75px;
+					height: 75px;
 					display: flex;
+					padding: 15px;
 					align-items: center;
 					justify-content: center;
 					color: ${active ? '#ffffff' : '#111827'};
