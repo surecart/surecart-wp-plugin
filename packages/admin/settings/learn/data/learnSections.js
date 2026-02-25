@@ -6,10 +6,11 @@ const learnSections = [
 		id: 'store-basics',
 		title: __( 'Set Up Store Basics', 'surecart' ),
 		description: __(
-			'These are the required steps to activate your store and start selling with SureCart.',
+			'Get your store ready and make your first sale.',
 			'surecart'
 		),
 		badge: 'required',
+		icon: 'home',
 		docUrl: 'https://surecart.com/docs/getting-started',
 		steps: [
 			{
@@ -56,35 +57,7 @@ const learnSections = [
 		],
 	},
 
-	// SECTION 2: Set Up Shipping (Optional)
-	{
-		id: 'setup-shipping',
-		title: __( 'Set Up Shipping', 'surecart' ),
-		description: __(
-			"Configure shipping zones and rates. Only needed if you're selling physical products.",
-			'surecart'
-		),
-		badge: 'optional',
-		docUrl: 'https://surecart.com/docs/shipping',
-		steps: [
-			{
-				id: 'configure-shipping',
-				title: __( 'Configure Shipping Zones & Rates', 'surecart' ),
-				description: __(
-					'Set up shipping zones, rates, and methods for physical products.',
-					'surecart'
-				),
-				actionLabel: __( 'Set Up', 'surecart' ),
-				actionUrl: 'admin.php?page=sc-settings&tab=shipping_protocol',
-				infoTooltip: __(
-					'Define where you ship, how much it costs, and which shipping methods you offer.',
-					'surecart'
-				),
-			},
-		],
-	},
-
-	// SECTION 3: Add Your First Product (Required)
+	// SECTION 2: Add Your First Product (Required)
 	{
 		id: 'first-product',
 		title: __( 'Add Your First Product', 'surecart' ),
@@ -93,6 +66,7 @@ const learnSections = [
 			'surecart'
 		),
 		badge: 'required',
+		icon: 'tag',
 		docUrl: 'https://surecart.com/docs/products',
 		steps: [
 			{
@@ -141,7 +115,7 @@ const learnSections = [
 		],
 	},
 
-	// SECTION 4: Connect Payment Processor (Required)
+	// SECTION 3: Connect Payment Processor (Required)
 	{
 		id: 'payment-processor',
 		title: __( 'Connect Payment Processor', 'surecart' ),
@@ -150,6 +124,7 @@ const learnSections = [
 			'surecart'
 		),
 		badge: 'required',
+		icon: 'credit-card',
 		docUrl: 'https://surecart.com/docs/payment-processors',
 		steps: [
 			{
@@ -163,14 +138,14 @@ const learnSections = [
 				actionUrl: 'admin.php?page=sc-settings&tab=processors',
 				autoDetect: 'hasProcessor',
 				infoTooltip: __(
-					'Connect your Stripe, PayPal, or other payment processor account.',
+					"You'll need an account with your payment provider before connecting.",
 					'surecart'
 				),
 			},
 		],
 	},
 
-	// SECTION 5: Test Your Checkout & Go Live (Required)
+	// SECTION 4: Test Your Checkout & Go Live (Required)
 	{
 		id: 'test-checkout',
 		title: __( 'Test Your Checkout & Go Live', 'surecart' ),
@@ -179,6 +154,7 @@ const learnSections = [
 			'surecart'
 		),
 		badge: 'required',
+		icon: 'zap',
 		docUrl: 'https://surecart.com/docs/test-mode',
 		steps: [
 			{
@@ -188,7 +164,7 @@ const learnSections = [
 					'Run a quick test payment to confirm your checkout, payment gateway, and product setup are working correctly.',
 					'surecart'
 				),
-				actionLabel: __( 'Learn How', 'surecart' ),
+				actionLabel: __( 'View Guide', 'surecart' ),
 				actionUrl: 'https://surecart.com/docs/test-mode',
 				isExternal: true,
 				infoTooltip: __(
@@ -199,7 +175,36 @@ const learnSections = [
 		],
 	},
 
-	// SECTION 6: Customize Checkout Experience
+	// SECTION 5: Set Up Shipping (Optional)
+	{
+		id: 'setup-shipping',
+		title: __( 'Set Up Shipping', 'surecart' ),
+		description: __(
+			"Configure shipping zones and rates. Only needed if you're selling physical products.",
+			'surecart'
+		),
+		badge: 'optional',
+		icon: 'truck',
+		docUrl: 'https://surecart.com/docs/shipping',
+		steps: [
+			{
+				id: 'configure-shipping',
+				title: __( 'Configure Shipping Zones & Rates', 'surecart' ),
+				description: __(
+					'Set up shipping zones, rates, and methods for physical products.',
+					'surecart'
+				),
+				actionLabel: __( 'Set Up', 'surecart' ),
+				actionUrl: 'admin.php?page=sc-settings&tab=shipping_protocol',
+				infoTooltip: __(
+					'Rates can be flat, weight-based, or free over a threshold.',
+					'surecart'
+				),
+			},
+		],
+	},
+
+	// SECTION 6: Customize Checkout Experience (Recommended)
 	{
 		id: 'customize-checkout',
 		title: __( 'Customize Checkout Experience', 'surecart' ),
@@ -207,6 +212,8 @@ const learnSections = [
 			'Personalize your checkout and shop pages to match your brand.',
 			'surecart'
 		),
+		badge: 'recommended',
+		icon: 'pen-tool',
 		docUrl: 'https://surecart.com/docs/checkout-customization',
 		steps: [
 			{
@@ -240,7 +247,7 @@ const learnSections = [
 		],
 	},
 
-	// SECTION 7: Manage Orders & Customers
+	// SECTION 7: Manage Orders & Customers (Recommended)
 	{
 		id: 'manage-business',
 		title: __( 'Manage Orders & Customers', 'surecart' ),
@@ -248,6 +255,8 @@ const learnSections = [
 			'Handle incoming orders and set up self-service customer tools.',
 			'surecart'
 		),
+		badge: 'recommended',
+		icon: 'users',
 		docUrl: 'https://surecart.com/docs/orders',
 		steps: [
 			{
@@ -290,6 +299,8 @@ const learnSections = [
 			'Unlock more revenue from every visitor using built-in conversion and pricing tools.',
 			'surecart'
 		),
+		icon: 'trending-up',
+		highlighted: true,
 		docUrl: 'https://surecart.com/docs/marketing',
 		steps: [
 			{

@@ -157,10 +157,7 @@ export default function LearnStep( {
 					<span
 						style={
 							isCompleted
-								? {
-										textDecoration: 'line-through',
-										opacity: 0.6,
-								  }
+								? { opacity: 0.5 }
 								: {}
 						}
 					>

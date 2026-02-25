@@ -38,7 +38,7 @@ export default function LearnSettings() {
 
 	return (
 		<SettingsTemplate
-			title={ __( 'Learn SureCart', 'surecart' ) }
+			title={ __( 'Setup Checklist', 'surecart' ) }
 			icon={ <sc-icon name="book-open" /> }
 			noButton
 		>
