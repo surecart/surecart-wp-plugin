@@ -184,25 +184,27 @@ export default function LearnStep( {
 				<p css={ descriptionStyles }>{ step.description }</p>
 			</div>
 
-			<div css={ actionStyles }>
-				<sc-button
-					type="link"
-					size="small"
-					{ ...actionProps }
-				>
-					{ step.actionLabel }
-					{ step.isExternal && (
-						<sc-icon
-							name="external-link"
-							slot="suffix"
-							style={ {
-								width: '14px',
-								height: '14px',
-							} }
-						/>
-					) }
-				</sc-button>
-			</div>
+			{ step.actionUrl && (
+				<div css={ actionStyles }>
+					<sc-button
+						type="link"
+						size="small"
+						{ ...actionProps }
+					>
+						{ step.actionLabel }
+						{ step.isExternal && (
+							<sc-icon
+								name="external-link"
+								slot="suffix"
+								style={ {
+									width: '14px',
+									height: '14px',
+								} }
+							/>
+						) }
+					</sc-button>
+				</div>
+			) }
 		</div>
 	);
 }

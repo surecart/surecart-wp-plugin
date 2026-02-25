@@ -141,9 +141,9 @@ test.describe( 'Learn Tab Settings Page', () => {
 	test( 'Should have Learn How links on sections', async ( { page } ) => {
 		await page.goto( LEARN_TAB_URL );
 
-		// All sections should have a "Learn How" link.
+		// 6 of 8 sections have a "Learn How" link (payment-processor and grow-revenue have none).
 		const learnHowLinks = page.locator( 'a:has-text("Learn How")' );
-		await expect( learnHowLinks ).toHaveCount( 8 );
+		await expect( learnHowLinks ).toHaveCount( 6 );
 
 		// Each link should open in a new tab.
 		const firstLink = learnHowLinks.first();

@@ -67,7 +67,7 @@ const learnSections = [
 		),
 		badge: 'required',
 		icon: 'tag',
-		docUrl: 'https://surecart.com/docs/products',
+		docUrl: 'https://surecart.com/docs/create-product/',
 		steps: [
 			{
 				id: 'add-product-details',
@@ -125,7 +125,6 @@ const learnSections = [
 		),
 		badge: 'required',
 		icon: 'credit-card',
-		docUrl: 'https://surecart.com/docs/payment-processors',
 		steps: [
 			{
 				id: 'connect-payment',
@@ -155,7 +154,7 @@ const learnSections = [
 		),
 		badge: 'required',
 		icon: 'zap',
-		docUrl: 'https://surecart.com/docs/test-mode',
+		docUrl: 'https://surecart.com/docs/how-to-make-test-payments/',
 		steps: [
 			{
 				id: 'test-payment',
@@ -164,9 +163,6 @@ const learnSections = [
 					'Run a quick test payment to confirm your checkout, payment gateway, and product setup are working correctly.',
 					'surecart'
 				),
-				actionLabel: __( 'View Guide', 'surecart' ),
-				actionUrl: 'https://surecart.com/docs/test-mode',
-				isExternal: true,
 				infoTooltip: __(
 					'Use test mode to simulate a purchase and verify your entire checkout flow.',
 					'surecart'
@@ -214,7 +210,7 @@ const learnSections = [
 		),
 		badge: 'recommended',
 		icon: 'pen-tool',
-		docUrl: 'https://surecart.com/docs/checkout-customization',
+		docUrl: 'https://surecart.com/docs/edit-checkout-form/',
 		steps: [
 			{
 				id: 'customize-checkout-form',
@@ -301,7 +297,6 @@ const learnSections = [
 		),
 		icon: 'trending-up',
 		highlighted: true,
-		docUrl: 'https://surecart.com/docs/marketing',
 		steps: [
 			{
 				id: 'create-coupon',
