@@ -33,7 +33,7 @@ class LearnSettings extends BaseSettings {
 			$handle,
 			'window.scData = Object.assign( window.scData || {}, ' . wp_json_encode(
 				[
-					'has_products' => (bool) ( \! is_wp_error( $products_result ) ? $products_result->pagination->count ?? 0 : 0 ),
+					'has_products' => (bool) ( ! is_wp_error( $products_result ) ? $products_result->pagination->count ?? 0 : 0 ),
 				]
 			) . ' );',
 			'before'
