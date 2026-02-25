@@ -70,8 +70,7 @@ class LearnProgressController extends RestController {
 			return new \WP_Error( 'invalid_data', __( 'Invalid data format.', 'surecart' ), [ 'status' => 400 ] );
 		}
 
-		// Sanitize step IDs and filter to only valid ones.
-		$completed_steps = array_map( 'sanitize_text_field', $completed_steps );
+		// Filter to only valid step IDs.
 		$completed_steps = array_values( array_intersect( $completed_steps, self::VALID_STEP_IDS ) );
 
 		update_user_meta( get_current_user_id(), $this->meta_key, $completed_steps );

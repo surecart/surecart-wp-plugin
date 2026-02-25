@@ -81,6 +81,8 @@ export default function useLearnProgress() {
 				? manualSteps.filter( ( id ) => id !== stepId )
 				: [ ...manualSteps, stepId ];
 
+			// Capture snapshot before the optimistic update for safe revert.
+			const previousManualSteps = manualSteps;
 			setManualSteps( newManualSteps );
 
 			// Persist to server.
@@ -90,7 +92,7 @@ export default function useLearnProgress() {
 				data: { completed_steps: newManualSteps },
 			} ).catch( () => {
 				// Revert on failure.
-				setManualSteps( manualSteps );
+				setManualSteps( previousManualSteps );
 			} );
 		},
 		[ manualSteps, autoDetectedSteps ]

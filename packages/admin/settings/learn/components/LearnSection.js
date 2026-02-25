@@ -218,6 +218,7 @@ export default function LearnSection( {
 						css={ headerStyles }
 						onClick={ () => setIsOpen( ! isOpen ) }
 						aria-expanded={ isOpen }
+						aria-controls={ `learn-section-${ section.id }` }
 						type="button"
 					>
 						<div css={ headerLeftStyles }>
@@ -278,7 +279,7 @@ export default function LearnSection( {
 						</div>
 					</button>
 
-					<div css={ bodyStyles( isOpen ) }>
+					<div id={ `learn-section-${ section.id }` } css={ bodyStyles( isOpen ) }>
 						{ section.steps.map( ( step ) => (
 							<LearnStep
 								key={ step.id }
