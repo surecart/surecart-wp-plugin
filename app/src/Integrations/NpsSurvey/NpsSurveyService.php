@@ -35,7 +35,7 @@ class NpsSurveyService {
 	 *
 	 * @return void
 	 */
-	public function versionCheck() {
+	public function versionCheck(): void {
 		$file = realpath( $this->nps_lib_path . '/version.json' );
 		if ( ! $file || ! is_file( $file ) ) {
 			return;
@@ -47,7 +47,7 @@ class NpsSurveyService {
 
 		$path = realpath( $this->nps_lib_path . '/nps-survey.php' );
 
-		$version = isset( $file_data['nps-survey'] ) ? $file_data['nps-survey'] : 0;
+		$version = $file_data['nps-survey'] ?? 0;
 
 		if ( null === $nps_survey_version ) {
 			$nps_survey_version = '1.0.0';

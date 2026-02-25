@@ -197,8 +197,10 @@ class NpsSurveyNotice {
 			return $post_data;
 		}
 
-		$post_data['is_free_plan'] = \SureCart::account()->plan->free ?? true;
-		$post_data['plan_slug']    = \SureCart::account()->plan->name ?? '';
+		$account                   = \SureCart::account();
+		$plan                      = $account->plan ?? null;
+		$post_data['is_free_plan'] = $plan->free ?? true;
+		$post_data['plan_slug']    = $plan->name ?? '';
 
 		return $post_data;
 	}
@@ -211,7 +213,7 @@ class NpsSurveyNotice {
 	 * @return string
 	 */
 	public function getNpsSurveyApiEndpoint( string $api_endpoint, array $post_data ): string {
-		if ( 'surecart' !== $post_data['plugin_slug'] ) {
+		if ( 'surecart' !== ( $post_data['plugin_slug'] ?? '' ) ) {
 			return $api_endpoint;
 		}
 
