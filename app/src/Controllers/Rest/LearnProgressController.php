@@ -61,14 +61,10 @@ class LearnProgressController extends RestController {
 	 *
 	 * @param \WP_REST_Request $request The REST request object.
 	 *
-	 * @return array|\WP_Error
+	 * @return array
 	 */
-	public function create( \WP_REST_Request $request ) {
+	public function update( \WP_REST_Request $request ) {
 		$completed_steps = $request->get_param( 'completed_steps' );
-
-		if ( ! is_array( $completed_steps ) ) {
-			return new \WP_Error( 'invalid_data', __( 'Invalid data format.', 'surecart' ), [ 'status' => 400 ] );
-		}
 
 		// Filter to only valid step IDs.
 		$completed_steps = array_values( array_intersect( $completed_steps, self::VALID_STEP_IDS ) );

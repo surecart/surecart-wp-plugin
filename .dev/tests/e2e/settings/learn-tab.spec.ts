@@ -30,7 +30,7 @@ test.describe( 'Learn Tab Settings Page', () => {
 		await page.goto( LEARN_TAB_URL );
 
 		// Check the page heading is visible.
-		await expect( page.getByRole( 'heading', { name: 'Learn SureCart' } ) ).toBeVisible();
+		await expect( page.getByRole( 'heading', { name: 'Setup Checklist' } ) ).toBeVisible();
 
 		// Check the subtitle text is visible.
 		await expect(
@@ -112,7 +112,7 @@ test.describe( 'Learn Tab Settings Page', () => {
 		}
 
 		// Each step should have an action button.
-		const firstSection = page.locator( '[aria-expanded="true"]' ).locator( '..' );
+		const firstSection = page.locator( '[aria-expanded="true"]' ).locator( '../..' );
 		const actionButtons = firstSection.locator( 'sc-button' );
 		await expect( actionButtons ).toHaveCount( 3 );
 	} );
@@ -198,7 +198,7 @@ test.describe( 'Learn Tab Settings Page', () => {
 
 		// Clean up: reset progress so other tests aren't affected.
 		await requestUtils.rest( {
-			method: 'POST',
+			method: 'PUT',
 			path: '/surecart/v1/learn-progress',
 			data: {
 				completed_steps: [],
@@ -229,16 +229,16 @@ test.describe( 'Learn Tab Settings Page', () => {
 		expect( getResponse ).toHaveProperty( 'completed_steps' );
 		expect( Array.isArray( getResponse.completed_steps ) ).toBe( true );
 
-		// POST to save a completed step.
-		const postResponse = await requestUtils.rest( {
-			method: 'POST',
+		// PUT to save a completed step.
+		const putResponse = await requestUtils.rest( {
+			method: 'PUT',
 			path: '/surecart/v1/learn-progress',
 			data: {
 				completed_steps: [ 'add-product-variants' ],
 			},
 		} );
-		expect( postResponse ).toHaveProperty( 'completed_steps' );
-		expect( postResponse.completed_steps ).toContain( 'add-product-variants' );
+		expect( putResponse ).toHaveProperty( 'completed_steps' );
+		expect( putResponse.completed_steps ).toContain( 'add-product-variants' );
 
 		// GET again to confirm persistence.
 		const getAfterPost = await requestUtils.rest( {
@@ -249,7 +249,7 @@ test.describe( 'Learn Tab Settings Page', () => {
 
 		// Clean up: reset progress.
 		await requestUtils.rest( {
-			method: 'POST',
+			method: 'PUT',
 			path: '/surecart/v1/learn-progress',
 			data: {
 				completed_steps: [],

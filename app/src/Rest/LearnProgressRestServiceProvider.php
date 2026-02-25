@@ -38,9 +38,9 @@ class LearnProgressRestServiceProvider extends RestServiceProvider implements Re
 					'permission_callback' => [ $this, 'get_items_permissions_check' ],
 				],
 				[
-					'methods'             => \WP_REST_Server::CREATABLE,
-					'callback'            => $this->callback( LearnProgressController::class, 'create' ),
-					'permission_callback' => [ $this, 'create_item_permissions_check' ],
+					'methods'             => \WP_REST_Server::EDITABLE,
+					'callback'            => $this->callback( LearnProgressController::class, 'update' ),
+					'permission_callback' => [ $this, 'update_item_permissions_check' ],
 					'args'                => [
 						'completed_steps' => [
 							'required'          => true,
@@ -65,7 +65,7 @@ class LearnProgressRestServiceProvider extends RestServiceProvider implements Re
 	 * @return true|\WP_Error
 	 */
 	public function get_items_permissions_check( $request ) {
-		if ( ! current_user_can( 'edit_sc_products' ) ) {
+		if ( ! current_user_can( 'manage_options' ) ) {
 			return new \WP_Error(
 				'rest_forbidden',
 				__( 'Sorry, you are not allowed to view learn progress.', 'surecart' ),
@@ -82,8 +82,8 @@ class LearnProgressRestServiceProvider extends RestServiceProvider implements Re
 	 *
 	 * @return true|\WP_Error
 	 */
-	public function create_item_permissions_check( $request ) {
-		if ( ! current_user_can( 'edit_sc_products' ) ) {
+	public function update_item_permissions_check( $request ) {
+		if ( ! current_user_can( 'manage_options' ) ) {
 			return new \WP_Error(
 				'rest_forbidden',
 				__( 'Sorry, you are not allowed to update learn progress.', 'surecart' ),

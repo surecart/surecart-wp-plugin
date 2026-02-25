@@ -171,6 +171,11 @@ const bodyStyles = ( isOpen ) => css`
 	border-top: 1px solid var(--sc-color-gray-200, #e5e7eb);
 `;
 
+const sectionHeadingStyles = css`
+	margin: 0;
+	font: inherit;
+`;
+
 const getBadgeLabel = ( badge ) => {
 	if ( badge === 'required' ) return __( 'Required', 'surecart' );
 	if ( badge === 'recommended' ) return __( 'Recommended', 'surecart' );
@@ -214,13 +219,14 @@ export default function LearnSection( {
 			) }
 			<div css={ wrapperStyles( section.highlighted ) }>
 				<div css={ sectionStyles( section.highlighted ) }>
-					<button
-						css={ headerStyles }
-						onClick={ () => setIsOpen( ! isOpen ) }
-						aria-expanded={ isOpen }
-						aria-controls={ `learn-section-${ section.id }` }
-						type="button"
-					>
+					<h3 css={ sectionHeadingStyles }>
+						<button
+							css={ headerStyles }
+							onClick={ () => setIsOpen( ! isOpen ) }
+							aria-expanded={ isOpen }
+							aria-controls={ `learn-section-${ section.id }` }
+							type="button"
+						>
 						<div css={ headerLeftStyles }>
 							<div css={ titleRowStyles }>
 								{ section.icon && (
@@ -229,7 +235,7 @@ export default function LearnSection( {
 										css={ sectionIconStyles }
 									/>
 								) }
-								<h3 css={ titleStyles }>{ section.title }</h3>
+								<span css={ titleStyles }>{ section.title }</span>
 								{ section.highlighted && (
 									<sc-icon
 										name="star"
@@ -277,7 +283,8 @@ export default function LearnSection( {
 								css={ chevronStyles( isOpen ) }
 							/>
 						</div>
-					</button>
+						</button>
+					</h3>
 
 					<div id={ `learn-section-${ section.id }` } css={ bodyStyles( isOpen ) }>
 						{ section.steps.map( ( step ) => (

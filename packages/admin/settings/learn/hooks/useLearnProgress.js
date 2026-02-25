@@ -88,7 +88,7 @@ export default function useLearnProgress() {
 			// Persist to server.
 			apiFetch( {
 				path: '/surecart/v1/learn-progress',
-				method: 'POST',
+				method: 'PUT',
 				data: { completed_steps: newManualSteps },
 			} ).catch( () => {
 				// Revert on failure.
