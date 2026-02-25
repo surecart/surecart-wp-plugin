@@ -28,8 +28,8 @@ class NpsSurveyNoticeTest extends SureCartUnitTestCase {
 
 		delete_option( NpsSurveyNotice::SETUP_DATE_OPTION );
 		delete_option( NpsSurveyNotice::LAST_SUBMITTED_OPTION );
+		delete_option( NpsSurveyNotice::NPS_SURVEY_ID );
 		delete_option( 'sc_api_token' );
-		delete_option( 'nps-survey-surecart' );
 	}
 
 	protected function callProtected( string $method ) {
@@ -211,7 +211,7 @@ class NpsSurveyNoticeTest extends SureCartUnitTestCase {
 
 		$result = $this->notice->handleStatusUpdate(
 			false,
-			[ 'plugin_slug' => 'surecart', 'action_type' => 'submit', 'nps_id' => 'nps-survey-surecart' ]
+			[ 'plugin_slug' => 'surecart', 'action_type' => 'submit', 'nps_id' => NpsSurveyNotice::NPS_SURVEY_ID ]
 		);
 
 		$after  = time();
@@ -225,7 +225,7 @@ class NpsSurveyNoticeTest extends SureCartUnitTestCase {
 	public function test_handle_status_update_matches_by_nps_id_when_plugin_slug_is_absent(): void {
 		$result = $this->notice->handleStatusUpdate(
 			false,
-			[ 'nps_id' => 'nps-survey-surecart', 'action_type' => 'submit' ]
+			[ 'nps_id' => NpsSurveyNotice::NPS_SURVEY_ID, 'action_type' => 'submit' ]
 		);
 
 		$this->assertTrue( $result );
@@ -235,7 +235,7 @@ class NpsSurveyNoticeTest extends SureCartUnitTestCase {
 	public function test_handle_status_update_does_not_skip_dismiss_action(): void {
 		$result = $this->notice->handleStatusUpdate(
 			false,
-			[ 'plugin_slug' => 'surecart', 'action_type' => 'dismiss', 'nps_id' => 'nps-survey-surecart' ]
+			[ 'plugin_slug' => 'surecart', 'action_type' => 'dismiss', 'nps_id' => NpsSurveyNotice::NPS_SURVEY_ID ]
 		);
 
 		$this->assertFalse( $result );

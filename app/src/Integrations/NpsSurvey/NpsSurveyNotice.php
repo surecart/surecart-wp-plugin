@@ -24,6 +24,13 @@ class NpsSurveyNotice {
 	public const LAST_SUBMITTED_OPTION = 'surecart_nps_last_submitted';
 
 	/**
+	 * NPS Survey ID used in the library.
+	 *
+	 * @var string
+	 */
+	public const NPS_SURVEY_ID = 'nps-survey-surecart';
+
+	/**
 	 * Number of days after setup before showing NPS survey.
 	 *
 	 * @var int
@@ -117,12 +124,8 @@ class NpsSurveyNotice {
 		$setup_date = get_option( self::SETUP_DATE_OPTION );
 
 		// Existing users without a tracked setup date: start their countdown now.
-		if ( ! $setup_date && ApiToken::get() ) {
-			update_option( self::SETUP_DATE_OPTION, time(), false );
-			return false;
-		}
-
 		if ( ! $setup_date ) {
+			update_option( self::SETUP_DATE_OPTION, time(), false );
 			return false;
 		}
 
@@ -168,7 +171,7 @@ class NpsSurveyNotice {
 		$plugin_slug = $data['plugin_slug'] ?? $data['nps_id'] ?? '';
 
 		// Only handle SureCart's NPS survey.
-		if ( 'surecart' !== $plugin_slug && 'nps-survey-surecart' !== $plugin_slug ) {
+		if ( 'surecart' !== $plugin_slug && self::NPS_SURVEY_ID !== $plugin_slug ) {
 			return $skip;
 		}
 
@@ -190,7 +193,7 @@ class NpsSurveyNotice {
 	 * @return array
 	 */
 	public function getNpsSurveyPostData( array $post_data ): array {
-		if ( 'surecart' !== $post_data['plugin_slug'] ) {
+		if ( 'surecart' !== ( $post_data['plugin_slug'] ?? '' ) ) {
 			return $post_data;
 		}
 
@@ -234,7 +237,7 @@ class NpsSurveyNotice {
 		}
 
 		Nps_Survey::show_nps_notice(
-			'nps-survey-surecart',
+			self::NPS_SURVEY_ID,
 			[
 				'show_if'          => true,
 				'dismiss_timespan' => self::DAYS_BETWEEN_SURVEYS * DAY_IN_SECONDS,

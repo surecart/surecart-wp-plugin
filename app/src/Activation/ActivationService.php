@@ -143,6 +143,6 @@ class ActivationService {
 		delete_option( 'sc_uninstall' );
 		delete_option( \SureCart\Integrations\NpsSurvey\NpsSurveyNotice::SETUP_DATE_OPTION );
 		delete_option( \SureCart\Integrations\NpsSurvey\NpsSurveyNotice::LAST_SUBMITTED_OPTION );
-		delete_option( 'nps-survey-surecart' );
+		delete_option( \SureCart\Integrations\NpsSurvey\NpsSurveyNotice::NPS_SURVEY_ID );
 	}
 }
