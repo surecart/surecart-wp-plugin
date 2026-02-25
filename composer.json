@@ -17,7 +17,7 @@
 		"typisttech/imposter-plugin": "^0.6.2",
 		"surecart/wp-query-builder": "dev-master",
 		"woocommerce/action-scheduler": "^3.6",
-		"brainstormforce/nps-survey": "^1"
+		"brainstormforce/nps-survey": "^1.0"
 	},
 	"require-dev": {
 		"php": "^7.4|^8.0|^8.1",
