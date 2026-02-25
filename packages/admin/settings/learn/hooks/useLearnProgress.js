@@ -10,13 +10,10 @@ const autoDetectChecks = {
 	hasBrandColor: () => !! window.scData?.brand_color,
 	hasProcessor: () => {
 		const processors = window.scData?.processors;
-		if ( Array.isArray( processors ) ) {
-			return processors.length > 0;
+		if ( ! Array.isArray( processors ) ) {
+			return false;
 		}
-		if ( processors && typeof processors === 'object' ) {
-			return Object.keys( processors ).length > 0;
-		}
-		return false;
+		return processors.filter( ( p ) => p.processor_type !== 'mock' ).length > 0;
 	},
 	hasProducts: () => !! window.scData?.has_products,
 };
