@@ -48,9 +48,10 @@ export default function useLearnProgress() {
 	const autoDetectedSteps = useMemo( () => getAutoDetectedSteps(), [] );
 
 	// Merge auto-detected and manual steps.
-	const completedSteps = [
-		...new Set( [ ...autoDetectedSteps, ...manualSteps ] ),
-	];
+	const completedSteps = useMemo(
+		() => [ ...new Set( [ ...autoDetectedSteps, ...manualSteps ] ) ],
+		[ autoDetectedSteps, manualSteps ]
+	);
 
 	// Load persisted progress on mount.
 	useEffect( () => {
