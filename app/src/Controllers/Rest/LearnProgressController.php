@@ -18,6 +18,7 @@ class LearnProgressController extends RestController {
 	 *
 	 * @var array
 	 */
+	// Keep in sync with step IDs in packages/admin/settings/learn/data/learnSections.js.
 	const VALID_STEP_IDS = [
 		'complete-setup',
 		'add-store-details',
