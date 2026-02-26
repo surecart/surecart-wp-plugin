@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
 import {
 	ScButton,
 	ScDropdown,
@@ -111,9 +109,7 @@ export default ({ choice, onUpdate, hideQuantity, onRemove }) => {
 					value={choice?.ad_hoc_amount || price?.amount}
 					max={price?.ad_hoc_max_amount}
 					min={price?.ad_hoc_min_amount}
-					css={css`
-						max-width: 100px;
-					`}
+					style={{ maxWidth: '100px' }}
 				/>
 			);
 		}
@@ -132,10 +128,7 @@ export default ({ choice, onUpdate, hideQuantity, onRemove }) => {
 	return (
 		<sc-table-row>
 			<sc-table-cell
-				css={css`
-					width: 50%;
-					max-width: 50%;
-				`}
+				style={{ width: '50%', maxWidth: '50%' }}
 			>
 				{!choice?.id || !price ? (
 					<Spinner />
@@ -182,9 +175,7 @@ export default ({ choice, onUpdate, hideQuantity, onRemove }) => {
 				<div style={{ display: 'flex', justifyContent: 'center' }}>
 					{renderPrice(true)}{' '}
 					<span
-						css={css`
-							color: var(--sc-color-gray-500);
-						`}
+						style={{ color: 'var(--sc-color-gray-500)' }}
 					>
 						{price &&
 							intervalString(price, {
