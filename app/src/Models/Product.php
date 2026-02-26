@@ -1249,17 +1249,17 @@ class Product extends Model implements PageModel {
 	/**
 	 * Get the review url attribute.
 	 *
-	 * @return string|false
+	 * @return string
 	 */
-	public function getReviewUrlAttribute() {
+	public function getReviewUrlAttribute(): string {
 		if ( empty( \SureCart::account()->review_protocol->reviews_enabled ) ) {
-			return false;
+			return '';
 		}
 
 		if ( ! $this->reviews_enabled ) {
-			return false;
+			return '';
 		}
 
-		return $this->permalink ? add_query_arg( 'product-review-form', $this->id, $this->permalink ) : false;
+		return $this->permalink ? add_query_arg( 'product-review-form', $this->id, $this->permalink ) : '';
 	}
 }

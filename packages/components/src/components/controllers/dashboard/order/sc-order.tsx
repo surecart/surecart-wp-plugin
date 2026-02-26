@@ -165,6 +165,7 @@ export class ScOrder {
 
           return (
             <sc-product-line-item
+              key={item.id}
               image={item?.image}
               name={product?.name}
               price={item?.price?.name}

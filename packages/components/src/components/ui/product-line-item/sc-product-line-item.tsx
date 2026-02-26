@@ -105,6 +105,7 @@ export class ScProductLineItem {
           class={{
             'item': true,
             'item--has-image': !!this.image?.src,
+            'item--has-review': !!this.reviewButtonLink,
             'item--is-rtl': isRtl(),
             'product-line-item__editable': this.editable,
             'product-line-item__removable': this.removable,
