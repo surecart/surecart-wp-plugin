@@ -286,7 +286,7 @@ export default function LearnSection( {
 						</button>
 					</h3>
 
-					<div id={ `learn-section-${ section.id }` } css={ bodyStyles( isOpen ) }>
+					<div id={ `learn-section-${ section.id }` } css={ bodyStyles( isOpen ) } aria-hidden={ ! isOpen }>
 						{ section.steps.map( ( step ) => (
 							<LearnStep
 								key={ step.id }

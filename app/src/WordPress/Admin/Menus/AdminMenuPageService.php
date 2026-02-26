@@ -78,7 +78,7 @@ class AdminMenuPageService {
 		}
 
 		// Highlight "Learn" submenu when on the learn tab.
-		if ( 'sc-settings' === ( $_GET['page'] ?? '' ) && 'learn' === ( $_GET['tab'] ?? '' ) ) {
+		if ( 'sc-settings' === sanitize_key( wp_unslash( $_GET['page'] ?? '' ) ) && 'learn' === sanitize_key( wp_unslash( $_GET['tab'] ?? '' ) ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			// phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 			$submenu_file = 'admin.php?page=sc-settings&tab=learn';
 		}

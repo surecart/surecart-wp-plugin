@@ -12,10 +12,10 @@ const LEARN_TAB_URL = '/wp-admin/admin.php?page=sc-settings&tab=learn';
 
 const SECTION_TITLES = [
 	'Set Up Store Basics',
-	'Set Up Shipping',
 	'Add Your First Product',
 	'Connect Payment Processor',
 	'Test Your Checkout & Go Live',
+	'Set Up Shipping',
 	'Customize Checkout Experience',
 	'Manage Orders & Customers',
 	'Grow Your Revenue',
@@ -313,7 +313,7 @@ test.describe( 'Learn Tab Settings Page', () => {
 		await expect( page.getByRole( 'heading', { name: 'Set Up Store Basics' } ) ).toBeVisible( { timeout: 10000 } );
 	} );
 
-	test( 'Should update progress badge when section steps are completed', async ( { page } ) => {
+	test( 'Should update progress badge when section steps are completed', async ( { page, requestUtils } ) => {
 		await page.goto( LEARN_TAB_URL );
 
 		// Expand "Test Your Checkout & Go Live" — it has 1 step ("test-payment").
@@ -322,14 +322,29 @@ test.describe( 'Learn Tab Settings Page', () => {
 		// Check the "Make a Test Payment" checkbox.
 		const testPaymentCheckbox = page.getByRole( 'checkbox', { name: 'Make a Test Payment' } );
 		await testPaymentCheckbox.click( { force: true } );
-		await expect( testPaymentCheckbox ).toHaveAttribute( 'aria-checked', 'true' );
 
-		// The progress badge should now show "1/1".
-		const sectionHeader = page.getByRole( 'heading', { name: 'Test Your Checkout & Go Live' } ).locator( '..' );
-		await expect( sectionHeader.getByText( '1/1' ) ).toBeVisible();
+		try {
+			await expect( testPaymentCheckbox ).toHaveAttribute( 'aria-checked', 'true' );
 
-		// Clean up — uncheck.
-		await testPaymentCheckbox.click( { force: true } );
+			// The progress badge should now show "1/1".
+			const sectionHeader = page.getByRole( 'heading', { name: 'Test Your Checkout & Go Live' } ).locator( '..' );
+			await expect( sectionHeader.getByText( '1/1' ) ).toBeVisible();
+		} finally {
+			// Always clean up via REST to avoid dirty state.
+			await requestUtils.rest( {
+				method: 'PUT',
+				path: '/wp/v2/users/me',
+				data: {
+					meta: {
+						persisted_preferences: {
+							'surecart/learn': {
+								completedSteps: [],
+							},
+						},
+					},
+				},
+			} );
+		}
 	} );
 
 } );

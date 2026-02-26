@@ -168,13 +168,21 @@ export default function LearnStep( {
 							css={ tooltipWrapperStyles }
 							onMouseEnter={ () => setShowTooltip( true ) }
 							onMouseLeave={ () => setShowTooltip( false ) }
+							onFocus={ () => setShowTooltip( true ) }
+							onBlur={ () => setShowTooltip( false ) }
+							tabIndex={ 0 }
 						>
 							<sc-icon
 								name="info"
 								css={ tooltipIconStyles }
+								aria-describedby={ showTooltip ? `tooltip-${ step.id }` : undefined }
 							/>
 							{ showTooltip && (
-								<div css={ tooltipContentStyles }>
+								<div
+									css={ tooltipContentStyles }
+									role="tooltip"
+									id={ `tooltip-${ step.id }` }
+								>
 									{ step.infoTooltip }
 								</div>
 							) }
