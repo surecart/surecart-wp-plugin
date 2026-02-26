@@ -38,8 +38,11 @@ class ThemeMigrationService extends GeneralMigration {
 		}
 
 		// Safety: stop retrying after 3 failed attempts.
-		$attempts = (int) get_transient( 'sc_theme_migration_attempts' ) ?: 0;
+		// Keep prevent_complete true so the migration stays pending
+		// and the WP option fallback in ThemeService::mode() remains active.
+		$attempts = (int) get_transient( 'sc_theme_migration_attempts' );
 		if ( $attempts >= 3 ) {
+			$this->prevent_complete = true;
 			return;
 		}
 		set_transient( 'sc_theme_migration_attempts', $attempts + 1, HOUR_IN_SECONDS );
@@ -52,13 +55,13 @@ class ThemeMigrationService extends GeneralMigration {
 			return;
 		}
 
-		// If brand.theme is already 'dark', no need to update.
-		if ( 'dark' === ( $brand->theme ?? 'light' ) ) {
-			return;
-		}
+		// Build the update data.
+		$update_data = [];
 
-		// Build the update data: set theme to dark and copy existing values to dark fields.
-		$update_data = [ 'theme' => 'dark' ];
+		// Set theme to dark if not already set on the API.
+		if ( 'dark' !== ( $brand->theme ?? 'light' ) ) {
+			$update_data['theme'] = 'dark';
+		}
 
 		// Copy existing brand color to dark_color if dark_color is not already set.
 		if ( ! empty( $brand->color ) && empty( $brand->dark_color ) ) {
@@ -68,6 +71,11 @@ class ThemeMigrationService extends GeneralMigration {
 		// Copy existing logo to dark_logo if dark_logo is not already set.
 		if ( ! empty( $brand->logo->id ) && empty( $brand->dark_logo->id ) ) {
 			$update_data['dark_logo'] = $brand->logo->id;
+		}
+
+		// Nothing to update — already fully migrated.
+		if ( empty( $update_data ) ) {
+			return;
 		}
 
 		$result = Brand::update( $update_data );

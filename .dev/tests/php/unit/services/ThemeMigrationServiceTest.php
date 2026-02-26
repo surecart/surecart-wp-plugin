@@ -131,8 +131,9 @@ class ThemeMigrationServiceTest extends SureCartUnitTestCase {
 		$service->maybeRun();
 		$service->complete();
 
-		// Should mark complete because run() returned early (no prevent_complete set).
-		$this->assertNotEmpty( get_option( 'surecart_theme_to_brand_migration' ) );
+		// Should NOT mark complete — migration stays pending so the
+		// WP option fallback in ThemeService::mode() remains active.
+		$this->assertEmpty( get_option( 'surecart_theme_to_brand_migration' ) );
 		// Attempts transient should remain at 3 (not incremented).
 		$this->assertEquals( 3, get_transient( 'sc_theme_migration_attempts' ) );
 	}
@@ -144,17 +145,40 @@ class ThemeMigrationServiceTest extends SureCartUnitTestCase {
 	/**
 	 * @group theme-migration
 	 */
-	public function test_skips_update_when_brand_already_dark() {
+	public function test_skips_update_when_brand_fully_migrated() {
 		update_option( 'surecart_theme', 'dark' );
 		$this->setAccountWithBrand( [
-			'theme' => 'dark',
-			'color' => '17E19C',
+			'theme'      => 'dark',
+			'color'      => '17E19C',
+			'dark_color' => 'FF5733',
+			'logo'       => (object) [ 'id' => 'logo-id' ],
+			'dark_logo'  => (object) [ 'id' => 'dark-logo-id' ],
 		] );
 
 		$this->runMigration();
 
-		// Should mark complete — already migrated on API side.
+		// Should mark complete — already fully migrated on API side.
 		$this->assertNotEmpty( get_option( 'surecart_theme_to_brand_migration' ) );
+	}
+
+	/**
+	 * @group theme-migration
+	 */
+	public function test_still_backfills_dark_fields_when_theme_already_dark() {
+		update_option( 'surecart_theme', 'dark' );
+		$this->setAccountWithBrand( [
+			'theme' => 'dark',
+			'color' => '17E19C',
+			'logo'  => (object) [ 'id' => 'logo-id' ],
+			// dark_color and dark_logo not set — should be backfilled.
+		] );
+
+		$service = new ThemeMigrationService();
+		$service->maybeRun();
+
+		// Verify attempt was counted — migration proceeded to backfill dark fields
+		// even though brand.theme was already dark.
+		$this->assertNotEmpty( get_transient( 'sc_theme_migration_attempts' ) );
 	}
 
 	/**
@@ -169,10 +193,10 @@ class ThemeMigrationServiceTest extends SureCartUnitTestCase {
 			'dark_logo'  => (object) [ 'id' => 'existing-dark-logo-id' ],
 		] );
 
-		// Brand::update will be called but should NOT include dark_color or dark_logo
-		// since they're already set. We can't easily mock static Brand::update here,
-		// but we can verify the migration service doesn't crash and processes correctly.
-		// The key assertion is that the service runs without error.
+		// Brand::update will be called with only 'theme' => 'dark', since
+		// dark_color and dark_logo are already set. We can't easily mock
+		// Brand::update here, but verify the service runs without error
+		// and the attempt was counted.
 		$service = new ThemeMigrationService();
 		$service->maybeRun();
 

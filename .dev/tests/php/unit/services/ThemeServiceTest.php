@@ -134,6 +134,17 @@ class ThemeServiceTest extends SureCartUnitTestCase {
 	/**
 	 * @group theme
 	 */
+	public function test_logo_url_falls_back_to_standard_logo_when_dark_theme_has_no_dark_logo() {
+		$this->setAccountWithBrand( [
+			'theme'    => 'dark',
+			'logo_url' => 'https://example.com/logo.png',
+		] );
+		$this->assertSame( 'https://example.com/logo.png', $this->service->logoUrl() );
+	}
+
+	/**
+	 * @group theme
+	 */
 	public function test_logo_url_returns_empty_string_when_brand_is_unavailable() {
 		// No account transient — brand will be empty.
 		$this->assertSame( '', $this->service->logoUrl() );
@@ -161,6 +172,17 @@ class ThemeServiceTest extends SureCartUnitTestCase {
 	public function test_brand_color_returns_regular_color_when_light_theme() {
 		$this->setAccountWithBrand( [
 			'theme' => 'light',
+			'color' => '17E19C',
+		] );
+		$this->assertSame( '17E19C', $this->service->brandColor() );
+	}
+
+	/**
+	 * @group theme
+	 */
+	public function test_brand_color_falls_back_to_standard_color_when_dark_theme_has_no_dark_color() {
+		$this->setAccountWithBrand( [
+			'theme' => 'dark',
 			'color' => '17E19C',
 		] );
 		$this->assertSame( '17E19C', $this->service->brandColor() );
