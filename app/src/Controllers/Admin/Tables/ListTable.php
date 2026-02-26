@@ -207,6 +207,25 @@ abstract class ListTable extends \WP_List_Table {
 	}
 
 	/**
+	 * Get the current orderby value.
+	 *
+	 * @return string
+	 */
+	protected function get_orderby(): string {
+		return isset( $_GET['orderby'] ) ? sanitize_text_field( wp_unslash( $_GET['orderby'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+	}
+
+	/**
+	 * Get the current order value.
+	 *
+	 * @return string
+	 */
+	protected function get_order(): string {
+		$order = isset( $_GET['order'] ) ? sanitize_text_field( wp_unslash( $_GET['order'] ) ) : 'desc'; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		return in_array( strtolower( $order ), [ 'asc', 'desc' ], true ) ? strtolower( $order ) : 'desc';
+	}
+
+	/**
 	 * Display a search form
 	 *
 	 * @param string $text The 'submit' button label.

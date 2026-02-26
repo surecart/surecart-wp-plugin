@@ -201,6 +201,9 @@ class PostSyncService {
 					'scratch_display_amount'       => $model->scratch_display_amount,
 					'range_display_amount'         => $model->range_display_amount,
 					'is_on_sale'                   => $model->is_on_sale,
+					'total_reviews'                => $model->total_reviews,
+					'average_stars'                => $model->average_stars,
+					'reviews_enabled'              => $model->reviews_enabled ?? false,
 				)
 			),
 		);

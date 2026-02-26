@@ -1930,6 +1930,14 @@
     "class": true,
     "slot": true
   },
+  "sc-review-stars": {
+    "rating": true,
+    "size": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-rich-text": {
     "disabled": true,
     "help": true,

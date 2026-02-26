@@ -12,6 +12,7 @@ import {
 	ScSwitch,
 	ScToggle,
 } from '@surecart/components-react';
+import Dimensions from '../components/Dimensions';
 
 const WEIGHT_UNIT_TYPES = [
 	__('lb', 'surecart'),
@@ -40,31 +41,43 @@ export default ({ loading, product, updateProduct }) => {
 				>
 					{__('Physical product', 'surecart')}
 				</span>
-
-				<ScInput
-					label={__('Shipping Weight', 'surecart')}
-					value={product?.weight}
-					onScInput={(e) => updateProduct({ weight: e.target.value })}
+				<div
+					css={css`
+						display: grid;
+						gap: 1em;
+					`}
 				>
-					<ScDropdown slot="suffix" placement="bottom-end">
-						<ScButton type="text" slot="trigger" circle>
-							{product?.weight_unit}{' '}
-							<ScIcon name="chevron-down" />
-						</ScButton>
-						<ScMenu>
-							{WEIGHT_UNIT_TYPES.map((unit) => (
-								<ScMenuItem
-									onClick={() =>
-										updateProduct({ weight_unit: unit })
-									}
-									key={unit}
-								>
-									{unit}
-								</ScMenuItem>
-							))}
-						</ScMenu>
-					</ScDropdown>
-				</ScInput>
+					<Dimensions
+						dimensions={product?.dimensions}
+						updateDimensions={updateProduct}
+					/>
+					<ScInput
+						label={__('Shipping Weight', 'surecart')}
+						value={product?.weight}
+						onScInput={(e) =>
+							updateProduct({ weight: e.target.value })
+						}
+					>
+						<ScDropdown slot="suffix" placement="bottom-end">
+							<ScButton type="text" slot="trigger" circle>
+								{product?.weight_unit}{' '}
+								<ScIcon name="chevron-down" />
+							</ScButton>
+							<ScMenu>
+								{WEIGHT_UNIT_TYPES.map((unit) => (
+									<ScMenuItem
+										onClick={() =>
+											updateProduct({ weight_unit: unit })
+										}
+										key={unit}
+									>
+										{unit}
+									</ScMenuItem>
+								))}
+							</ScMenu>
+						</ScDropdown>
+					</ScInput>
+				</div>
 			</ScToggle>
 
 			<ScToggle

@@ -184,7 +184,7 @@ class CurrencyService {
 		}
 
 		// In case of a custom XML request.
-		if ( ! empty( $_SERVER['REQUEST_URI'] ) && str_contains( $_SERVER['REQUEST_URI'], '.xml' ) ) {
+		if ( ! empty( $_SERVER['REQUEST_URI'] ) && strpos( $_SERVER['REQUEST_URI'], '.xml' ) !== false ) {
 			return true;
 		}
 

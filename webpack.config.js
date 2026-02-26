@@ -1,5 +1,6 @@
 const defaultConfig = require('@wordpress/scripts/config/webpack.config');
 const path = require('path');
+const fs = require('fs');
 const CopyPlugin = require('copy-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 
@@ -85,6 +86,10 @@ module.exports = {
 			__dirname,
 			'packages/admin/licenses/index.js'
 		),
+		['admin/reviews']: path.resolve(
+			__dirname,
+			'packages/admin/reviews/index.js'
+		),
 		['admin/product-groups']: path.resolve(
 			__dirname,
 			'packages/admin/product-groups/index.js'
@@ -124,6 +129,10 @@ module.exports = {
 		['admin/settings/affiliation-protocol']: path.resolve(
 			__dirname,
 			'packages/admin/settings/affiliation-protocol/index.js'
+		),
+		['admin/settings/review-protocol']: path.resolve(
+			__dirname,
+			'packages/admin/settings/review-protocol/index.js'
 		),
 		['admin/settings/abandoned']: path.resolve(
 			__dirname,
@@ -303,5 +312,31 @@ module.exports = {
 				},
 			],
 		}),
+		// Generate icons.json list from icon-assets
+		{
+			apply: (compiler) => {
+				compiler.hooks.afterEmit.tap('GenerateIconsList', () => {
+					const iconDir = path.resolve(
+						__dirname,
+						'./packages/components/src/components/ui/icon/icon-assets'
+					);
+					const iconNames = fs
+						.readdirSync(iconDir)
+						.filter((f) => f.endsWith('.svg'))
+						.map((f) => path.basename(f, '.svg'))
+						.sort((a, b) =>
+							a.toLowerCase().localeCompare(b.toLowerCase())
+						);
+
+					fs.writeFileSync(
+						path.resolve(__dirname, 'dist/icon-assets/icons.json'),
+						JSON.stringify(iconNames, null, 2)
+					);
+					console.log(
+						`✓ Generated icons.json with ${iconNames.length} icons`
+					);
+				});
+			},
+		},
 	],
 };
