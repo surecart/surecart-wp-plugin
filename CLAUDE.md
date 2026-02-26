@@ -2,7 +2,7 @@
 
 Headless e-commerce WordPress plugin. All transactional data (products, checkouts, orders, subscriptions) lives on `api.surecart.com` — WordPress handles rendering, users, and integrations. Built on **WP Emerge** framework with Pimple DI. Monorepo with Yarn workspaces.
 
-See also: `app/CLAUDE.md` (PHP patterns), `packages/CLAUDE.md` (JS/blocks patterns).
+See also: `app/CLAUDE.md` (PHP patterns), `packages/CLAUDE.md` (JS/blocks patterns), `Workflow.md` (task workflow rules).
 
 ## Architecture
 

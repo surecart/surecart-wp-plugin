@@ -84,7 +84,7 @@ class RequestServiceTest extends SureCartUnitTestCase
 		$service->shouldReceive( 'remoteRequest' )
 			// make sure the same arguments are passed each time.
 			->withArgs(function ($url, $args) {
-				return str_contains($url, 'test') && $args['method'] === 'POST' && !empty($args['body']);
+				return strpos($url, 'test') !== false && $args['method'] === 'POST' && !empty($args['body']);
 			})
 			->twice()
 			->andReturn( [
