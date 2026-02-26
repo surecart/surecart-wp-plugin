@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import { InnerBlocks, useBlockProps } from '@wordpress/block-editor';
 import { useRef, useEffect } from '@wordpress/element';
@@ -346,14 +344,8 @@ export default () => {
 	return (
 		<div {...blockProps}>
 			<ScOrderConfirmation ref={confirmationRef}>
-				<div
-					css={css`
-						.wp-block {
-							margin-top: 30px !important;
-							margin-bottom: 30px !important;
-						}
-					`}
-				>
+				<div className="sc-confirmation-blocks">
+					<style>{`.sc-confirmation-blocks .wp-block { margin-top: 30px !important; margin-bottom: 30px !important; }`}</style>
 					<InnerBlocks
 						templateLock={false}
 						template={DEFAULT_TEMPLATE}
