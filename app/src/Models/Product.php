@@ -1252,10 +1252,6 @@ class Product extends Model implements PageModel {
 	 * @return string
 	 */
 	public function getReviewUrlAttribute(): string {
-		if ( empty( \SureCart::account()->review_protocol->reviews_enabled ) ) {
-			return '';
-		}
-
 		if ( ! $this->reviews_enabled ) {
 			return '';
 		}

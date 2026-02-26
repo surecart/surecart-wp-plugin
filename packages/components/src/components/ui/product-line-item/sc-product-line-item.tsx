@@ -177,8 +177,7 @@ export class ScProductLineItem {
               {!!this.reviewButtonLink && (
                 <div class="item__add-review">
                   <sc-button size="small" href={this.reviewButtonLink} target="_blank">
-                    <sc-icon name="star" slot="prefix"></sc-icon>
-                    {__('Add Review', 'surecart')}
+                    {__('Review Product', 'surecart')}
                   </sc-button>
                 </div>
               )}
