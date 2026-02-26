@@ -3154,6 +3154,10 @@ export namespace Components {
          */
         "removable": boolean;
         /**
+          * Show add review button.
+         */
+        "reviewButtonLink": string;
+        /**
           * The line item scratch amount
          */
         "scratch": string;
@@ -10457,6 +10461,10 @@ declare namespace LocalJSX {
           * Is the line item removable
          */
         "removable"?: boolean;
+        /**
+          * Show add review button.
+         */
+        "reviewButtonLink"?: string;
         /**
           * The line item scratch amount
          */

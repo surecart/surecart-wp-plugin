@@ -1245,4 +1245,21 @@ class Product extends Model implements PageModel {
 		ksort( $breakdown );
 		return array_map( 'intval', $breakdown );
 	}
+
+	/**
+	 * Get the review url attribute.
+	 *
+	 * @return string|false
+	 */
+	public function getReviewUrlAttribute() {
+		if ( empty( \SureCart::account()->review_protocol->reviews_enabled ) ) {
+			return false;
+		}
+
+		if ( ! $this->reviews_enabled ) {
+			return false;
+		}
+
+		return $this->permalink ? add_query_arg( 'product-review-form', $this->id, $this->permalink ) : false;
+	}
 }

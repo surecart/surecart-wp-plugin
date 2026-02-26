@@ -86,6 +86,9 @@ export class ScProductLineItem {
   /** The line item note */
   @Prop() note: string;
 
+  /** Show add review button. */
+  @Prop() reviewButtonLink: string = '';
+
   /** Emitted when the quantity changes. */
   @Event({ bubbles: false }) scUpdateQuantity: EventEmitter<number>;
 
@@ -169,6 +172,14 @@ export class ScProductLineItem {
                 <span class="item__description" part="static-quantity">
                   {__('Qty:', 'surecart')} {this.quantity}
                 </span>
+              )}
+              {!!this.reviewButtonLink && (
+                <div class="item__add-review">
+                  <sc-button size="small" href={this.reviewButtonLink} target="_blank">
+                    <sc-icon name="star" slot="prefix"></sc-icon>
+                    {__('Add Review', 'surecart')}
+                  </sc-button>
+                </div>
               )}
               {!!this.removable && (
                 <div
