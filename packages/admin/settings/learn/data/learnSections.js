@@ -1,6 +1,5 @@
 import { __ } from '@wordpress/i18n';
 
-// Step IDs must be kept in sync with VALID_STEP_IDS in app/src/Controllers/Rest/LearnProgressController.php.
 const learnSections = [
 	// SECTION 1: Set Up Store Basics (Required)
 	{

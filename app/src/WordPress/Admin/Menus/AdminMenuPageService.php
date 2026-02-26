@@ -77,6 +77,12 @@ class AdminMenuPageService {
 			$submenu_file = 'post.php?post=' . (int) $post->ID . '&action=edit';
 		}
 
+		// Highlight "Learn" submenu when on the learn tab.
+		if ( 'sc-settings' === ( $_GET['page'] ?? '' ) && 'learn' === ( $_GET['tab'] ?? '' ) ) {
+			// phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+			$submenu_file = 'admin.php?page=sc-settings&tab=learn';
+		}
+
 		// Check if we're editing a taxonomy that applies to sc_product post types.
 		$screen   = get_current_screen();
 		$taxonomy = get_taxonomy( $screen->taxonomy );
@@ -297,6 +303,7 @@ class AdminMenuPageService {
 			'dashboard' => $this->getPage( 'dashboard', __( 'Customer Area', 'surecart' ) ),
 			'forms'     => \add_submenu_page( $this->slug, __( 'Forms', 'surecart' ), '<span class="sc-menu-divider">' . __( 'Custom Forms', 'surecart' ) . '</span>', 'manage_options', 'edit.php?post_type=sc_form', '' ),
 			'settings'  => \add_submenu_page( $this->slug, __( 'Settings', 'surecart' ), __( 'Settings', 'surecart' ), 'manage_options', 'sc-settings', '__return_false' ),
+			'learn'     => \add_submenu_page( $this->slug, __( 'Learn', 'surecart' ), __( 'Learn', 'surecart' ) . '<span class="sc-new-badge"></span>', 'manage_options', 'admin.php?page=sc-settings&tab=learn', '' ),
 		);
 	}
 

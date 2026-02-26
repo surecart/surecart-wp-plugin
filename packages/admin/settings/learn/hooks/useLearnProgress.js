@@ -1,73 +1,74 @@
-import { useState, useEffect, useCallback, useMemo } from '@wordpress/element';
-import apiFetch from '@wordpress/api-fetch';
+import { useCallback, useMemo } from '@wordpress/element';
+import { useEntityRecords } from '@wordpress/core-data';
+import { useDispatch, useSelect } from '@wordpress/data';
+import { store as preferencesStore } from '@wordpress/preferences';
 import learnSections from '../data/learnSections';
-
-/**
- * Auto-detect completion checks based on scData.
- */
-const autoDetectChecks = {
-	hasApiToken: () => !! window.scData?.account_id,
-	hasBrandColor: () => !! window.scData?.brand_color,
-	hasProcessor: () => {
-		const processors = window.scData?.processors;
-		if ( ! Array.isArray( processors ) ) {
-			return false;
-		}
-		return processors.filter( ( p ) => p.processor_type !== 'mock' ).length > 0;
-	},
-	hasProducts: () => !! window.scData?.has_products,
-};
-
-/**
- * Get all auto-detected step IDs.
- */
-function getAutoDetectedSteps() {
-	const detected = [];
-	learnSections.forEach( ( section ) => {
-		section.steps.forEach( ( step ) => {
-			if ( step.autoDetect && autoDetectChecks[ step.autoDetect ] ) {
-				if ( autoDetectChecks[ step.autoDetect ]() ) {
-					detected.push( step.id );
-				}
-			}
-		} );
-	} );
-	return detected;
-}
 
 /**
  * Custom hook for managing learn progress state.
  *
- * Combines auto-detection (checking scData) with manual checkbox tracking
- * persisted via REST endpoint to WordPress user meta.
+ * Combines auto-detection (checking scData and async queries) with manual
+ * checkbox tracking persisted via @wordpress/preferences.
  */
 export default function useLearnProgress() {
-	const [ manualSteps, setManualSteps ] = useState( [] );
-	const [ isLoading, setIsLoading ] = useState( true );
+	// Async product check — replaces synchronous PHP Product API call.
+	const { records: products, isResolving: isResolvingProducts } =
+		useEntityRecords( 'surecart', 'product', {
+			archived: false,
+			per_page: 1,
+		} );
 
-	const autoDetectedSteps = useMemo( () => getAutoDetectedSteps(), [] );
+	// Persisted manual steps via @wordpress/preferences.
+	const { set } = useDispatch( preferencesStore );
+	const manualSteps = useSelect(
+		( select ) =>
+			select( preferencesStore ).get(
+				'surecart/learn',
+				'completedSteps'
+			) ?? [],
+		[]
+	);
+
+	// Auto-detect checks (reactive to async product query).
+	const autoDetectChecks = useMemo(
+		() => ( {
+			hasApiToken: () => !! window.scData?.account_id,
+			hasBrandColor: () => !! window.scData?.brand_color,
+			hasProcessor: () => {
+				const processors = window.scData?.processors;
+				if ( ! Array.isArray( processors ) ) {
+					return false;
+				}
+				return (
+					processors.filter( ( p ) => p.processor_type !== 'mock' )
+						.length > 0
+				);
+			},
+			hasProducts: () =>
+				Array.isArray( products ) && products.length > 0,
+		} ),
+		[ products ]
+	);
+
+	const autoDetectedSteps = useMemo( () => {
+		const detected = [];
+		learnSections.forEach( ( section ) => {
+			section.steps.forEach( ( step ) => {
+				if ( step.autoDetect && autoDetectChecks[ step.autoDetect ] ) {
+					if ( autoDetectChecks[ step.autoDetect ]() ) {
+						detected.push( step.id );
+					}
+				}
+			} );
+		} );
+		return detected;
+	}, [ autoDetectChecks ] );
 
 	// Merge auto-detected and manual steps.
 	const completedSteps = useMemo(
 		() => [ ...new Set( [ ...autoDetectedSteps, ...manualSteps ] ) ],
 		[ autoDetectedSteps, manualSteps ]
 	);
-
-	// Load persisted progress on mount.
-	useEffect( () => {
-		apiFetch( { path: '/surecart/v1/learn-progress' } )
-			.then( ( response ) => {
-				if ( response?.completed_steps ) {
-					setManualSteps( response.completed_steps );
-				}
-			} )
-			.catch( () => {
-				// Silently fail - progress just won't be loaded.
-			} )
-			.finally( () => {
-				setIsLoading( false );
-			} );
-	}, [] );
 
 	// Toggle a step's completion state.
 	const toggleStep = useCallback(
@@ -77,26 +78,12 @@ export default function useLearnProgress() {
 				return;
 			}
 
-			const isCurrentlyManual = manualSteps.includes( stepId );
-			const newManualSteps = isCurrentlyManual
+			const newSteps = manualSteps.includes( stepId )
 				? manualSteps.filter( ( id ) => id !== stepId )
 				: [ ...manualSteps, stepId ];
-
-			// Capture snapshot before the optimistic update for safe revert.
-			const previousManualSteps = manualSteps;
-			setManualSteps( newManualSteps );
-
-			// Persist to server.
-			apiFetch( {
-				path: '/surecart/v1/learn-progress',
-				method: 'PUT',
-				data: { completed_steps: newManualSteps },
-			} ).catch( () => {
-				// Revert on failure.
-				setManualSteps( previousManualSteps );
-			} );
+			set( 'surecart/learn', 'completedSteps', newSteps );
 		},
-		[ manualSteps, autoDetectedSteps ]
+		[ manualSteps, autoDetectedSteps, set ]
 	);
 
 	// Check if a specific step is completed.
@@ -133,6 +120,6 @@ export default function useLearnProgress() {
 		isStepCompleted,
 		isAutoDetected,
 		getSectionProgress,
-		isLoading,
+		isLoading: isResolvingProducts,
 	};
 }
