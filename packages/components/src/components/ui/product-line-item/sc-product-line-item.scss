@@ -65,9 +65,13 @@
     }
   }
 
-  padding-bottom: var(--sc-spacing-large);
-  padding-top: var(--sc-spacing-small);
   border-bottom: solid 1px var(--sc-input-border-color, var(--sc-input-border));
+  padding-top: var(--sc-spacing-small);
+  padding-bottom: var(--sc-spacing-large);
+
+  :host(:first-of-type) & {
+    padding-top: 0;
+  }
 }
 
 .item__text {
