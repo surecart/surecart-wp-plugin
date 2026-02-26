@@ -10,23 +10,22 @@ import {
 	ScIcon,
 	ScMenu,
 	ScMenuItem,
-	ScRadio,
-	ScRadioGroup,
 	ScStackedList,
 	ScSwitch,
 	ScTag,
 } from '@surecart/components-react';
 import { store as coreStore } from '@wordpress/core-data';
-import { useDispatch, useSelect } from '@wordpress/data';
+import { useDispatch } from '@wordpress/data';
 import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
 import Error from '../../../components/Error';
 import MediaLibrary from '../../../components/MediaLibrary';
 import DrawerSection from '../../../ui/DrawerSection';
+import useVariantDownloads from '../../hooks/useVariantDownloads';
+import useVariantValue from '../../hooks/useVariantValue';
 import AddExternalUrlModal from '../AddExternalUrlModal';
 import SingleDownload from '../SingleDownload';
-import useVariantValue from '../../hooks/useVariantValue';
 
 export default ({ variant, product, updateVariant }) => {
 	const { saveEntityRecord } = useDispatch(coreStore);
@@ -43,36 +42,10 @@ export default ({ variant, product, updateVariant }) => {
 	const downloadsEnabled = getValue('downloads_enabled');
 	const isCustomDownloads = downloadsEnabled === true;
 
-	const { downloads, fetching } = useSelect(
-		(select) => {
-			// Reset/refetch when variant changes and Only fetch downloads when custom downloads mode is enabled.
-			if (!variant?.id || !isCustomDownloads) {
-				return {
-					downloads: [],
-					fetching: false,
-				};
-			}
-
-			const queryArgs = [
-				'surecart',
-				'download',
-				{
-					context: 'edit',
-					variant_ids: [variant?.id],
-					per_page: 100,
-					expand: ['media'],
-				},
-			];
-			return {
-				downloads: select(coreStore).getEntityRecords(...queryArgs),
-				fetching: select(coreStore).isResolving(
-					'getEntityRecords',
-					queryArgs
-				),
-			};
-		},
-		[variant?.id, downloadsEnabled]
-	);
+	const { downloads, fetching } = useVariantDownloads({
+		variant,
+		isCustomDownloads,
+	});
 
 	const addDownload = async (media, isExternal) => {
 		if (!variant?.id) {
@@ -119,8 +92,13 @@ export default ({ variant, product, updateVariant }) => {
 	const unArchived = sorted.filter((download) => !download.archived);
 	const archived = sorted.filter((download) => !!download.archived);
 
-	const onDownloadBehaviorChange = (value) =>
-		updateVariant(getUpdateValue({ downloads_enabled: value }));
+	const onToggleDownloads = (checked) => {
+		// When toggling on, enable custom downloads (true).
+		// When toggling off, disable downloads (false).
+		updateVariant(
+			getUpdateValue({ downloads_enabled: checked ? true : false })
+		);
+	};
 
 	const renderDownloads = () => {
 		if (
@@ -162,73 +140,12 @@ export default ({ variant, product, updateVariant }) => {
 	return (
 		<>
 			<DrawerSection title={__('Downloads', 'surecart')}>
-				<ScRadioGroup
-					label={__('Download Behavior', 'surecart')}
-					required
+				<ScSwitch
+					checked={isCustomDownloads}
+					onScChange={(e) => onToggleDownloads(e.target.checked)}
 				>
-					<div
-						css={css`
-							display: grid;
-							gap: 1em;
-							margin-top: 0.5em;
-						`}
-					>
-						<ScRadio
-							checked={downloadsEnabled == null}
-							value="null"
-							onClick={() => onDownloadBehaviorChange(null)}
-						>
-							{__('Inherit product downloads', 'surecart')}
-							<span
-								slot="description"
-								css={css`
-									margin: 0.5em 0px 0px 0px;
-								`}
-							>
-								{__(
-									'This variant will inherit and deliver all product-level downloads.',
-									'surecart'
-								)}
-							</span>
-						</ScRadio>
-						<ScRadio
-							checked={downloadsEnabled === true}
-							value="true"
-							onClick={() => onDownloadBehaviorChange(true)}
-						>
-							{__('Custom downloads', 'surecart')}
-							<span
-								slot="description"
-								css={css`
-									margin: 0.5em 0px 0px 0px;
-								`}
-							>
-								{__(
-									'This variant will override product downloads with its own set.',
-									'surecart'
-								)}
-							</span>
-						</ScRadio>
-						<ScRadio
-							checked={downloadsEnabled === false}
-							value="false"
-							onClick={() => onDownloadBehaviorChange(false)}
-						>
-							{__('No downloads', 'surecart')}
-							<span
-								slot="description"
-								css={css`
-									margin: 0.5em 0px 0px 0px;
-								`}
-							>
-								{__(
-									'This variant will not deliver any downloads.',
-									'surecart'
-								)}
-							</span>
-						</ScRadio>
-					</div>
-				</ScRadioGroup>
+					{__('Enable downloads', 'surecart')}
+				</ScSwitch>
 
 				{isCustomDownloads && (
 					<div
@@ -254,7 +171,7 @@ export default ({ variant, product, updateVariant }) => {
 							>
 								<ScButton slot="trigger">
 									<ScIcon name="plus" slot="prefix" />
-									{__('Add Downloads', 'surecart')}
+									{__('Variant Downloads', 'surecart')}
 								</ScButton>
 								<ScMenu>
 									<ScFormControl

@@ -1,8 +1,7 @@
 import { ScInput, ScSelect, ScSwitch } from '@surecart/components-react';
-import { store as coreStore } from '@wordpress/core-data';
-import { useSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 import DrawerSection from '../../../ui/DrawerSection';
+import useVariantDownloads from '../../hooks/useVariantDownloads';
 import useVariantValue from '../../hooks/useVariantValue';
 import ResetOverridesDropdown from './ResetOverridesDropdown';
 
@@ -17,36 +16,10 @@ export default ({ variant, updateVariant, product }) => {
 	const isCustomDownloads = downloadsEnabled === true;
 
 	// Fetch downloads for current release selection (only when custom downloads enabled)
-	const { downloads, fetching } = useSelect(
-		(select) => {
-			// Reset/refetch when variant changes and Only fetch downloads when custom downloads mode is enabled.
-			if (!variant?.id || !isCustomDownloads) {
-				return {
-					downloads: [],
-					fetching: false,
-				};
-			}
-
-			const queryArgs = [
-				'surecart',
-				'download',
-				{
-					context: 'edit',
-					variant_ids: [variant?.id],
-					per_page: 100,
-					expand: ['media'],
-				},
-			];
-			return {
-				downloads: select(coreStore).getEntityRecords(...queryArgs),
-				fetching: select(coreStore).isResolving(
-					'getEntityRecords',
-					queryArgs
-				),
-			};
-		},
-		[variant?.id, downloadsEnabled]
-	);
+	const { downloads, fetching } = useVariantDownloads({
+		variant,
+		isCustomDownloads,
+	});
 
 	if (!product?.licensing_enabled) {
 		return null;
@@ -66,7 +39,10 @@ export default ({ variant, updateVariant, product }) => {
 							? [
 									{
 										key: 'current_release_download',
-										label: __('Current release', 'surecart'),
+										label: __(
+											'Current release',
+											'surecart'
+										),
 									},
 							  ]
 							: []),
