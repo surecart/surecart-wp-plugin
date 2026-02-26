@@ -86,7 +86,7 @@ export class ScProductLineItem {
   /** The line item note */
   @Prop() note: string;
 
-  /** Show add review button. */
+  /** The review button link. If set, a review button will be shown linking to this URL. */
   @Prop() reviewButtonLink: string = '';
 
   /** Emitted when the quantity changes. */

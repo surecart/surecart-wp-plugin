@@ -3154,7 +3154,7 @@ export namespace Components {
          */
         "removable": boolean;
         /**
-          * Show add review button.
+          * The review button link. If set, a review button will be shown linking to this URL.
          */
         "reviewButtonLink": string;
         /**
@@ -10462,7 +10462,7 @@ declare namespace LocalJSX {
          */
         "removable"?: boolean;
         /**
-          * Show add review button.
+          * The review button link. If set, a review button will be shown linking to this URL.
          */
         "reviewButtonLink"?: string;
         /**
