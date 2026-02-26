@@ -84,6 +84,7 @@ export class ScLogin {
         data: {
           login: this.email,
           code: this.verifyCode,
+          ...(this.getRedirectTo() ? { redirect_to: this.getRedirectTo() } : {}),
         },
       })) as VerificationCode;
       if (!verified) {
@@ -109,6 +110,7 @@ export class ScLogin {
         data: {
           login: this.email,
           password: this.password,
+          ...(this.getRedirectTo() ? { redirect_to: this.getRedirectTo() } : {}),
         },
       })) as any;
       if (redirect_url) {
@@ -120,6 +122,11 @@ export class ScLogin {
       this.handleError(e);
       this.loading = false;
     }
+  }
+
+  getRedirectTo() {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('redirect_to');
   }
 
   async checkEmail() {

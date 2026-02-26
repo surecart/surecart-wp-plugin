@@ -7,7 +7,10 @@ import { css, jsx } from '@emotion/core';
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { InspectorControls } from '@wordpress/block-editor';
+import {
+	InspectorControls,
+	__experimentalUseColorProps as useColorProps,
+} from '@wordpress/block-editor';
 import { RichText } from '@wordpress/block-editor';
 import {
 	PanelBody,
@@ -34,6 +37,9 @@ export default ({ className, attributes, setAttributes }) => {
 		show_secure_notice,
 		secure_notice_text,
 	} = attributes;
+
+	const colorProps = useColorProps(attributes);
+	const { style: colorStyle } = colorProps;
 
 	return (
 		<div className={className}>
@@ -148,6 +154,10 @@ export default ({ className, attributes, setAttributes }) => {
 					submit={submit}
 					icon={show_icon ? 'lock' : false}
 					{...(full ? { full: true } : {})}
+					style={{
+						'--sc-color-primary-text': colorStyle.color,
+						'--sc-color-primary-500': colorStyle.backgroundColor,
+					}}
 					size={size}
 				>
 					{show_icon && (

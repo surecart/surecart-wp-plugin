@@ -18,7 +18,17 @@
 			aria-label="<?php echo esc_html__( 'Decrease quantity by one.', 'surecart' ); ?>"
 			data-wp-on--keydown="callbacks.onQuantityDecrease"
 		>
-			<?php echo wp_kses( SureCart::svg()->get( 'minus' ), sc_allowed_svg_html() ); ?>
+			<?php
+			echo wp_kses(
+				SureCart::svg()->get(
+					'minus',
+					[
+						'aria-hidden' => 'true',
+					]
+				),
+				sc_allowed_svg_html()
+			);
+			?>
 		</div>
 		<input
 			id="sc-quantity"
@@ -44,7 +54,17 @@
 			aria-label="<?php echo esc_html__( 'Increase quantity by one.', 'surecart' ); ?>"
 			data-wp-on--keydown="callbacks.onQuantityIncrease"
 		>
-			<?php echo wp_kses( SureCart::svg()->get( 'plus' ), sc_allowed_svg_html() ); ?>
+			<?php
+			echo wp_kses(
+				SureCart::svg()->get(
+					'plus',
+					[
+						'aria-hidden' => 'true',
+					]
+				),
+				sc_allowed_svg_html()
+			);
+			?>
 		</div>
 	</div>
 </div>

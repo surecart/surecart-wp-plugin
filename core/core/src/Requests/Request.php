@@ -44,7 +44,7 @@ class Request extends ServerRequest implements RequestInterface {
 	 * {@inheritDoc}
 	 */
 	public function getUrl() {
-		return $this->getUri();
+		return (string) $this->getUri();
 	}
 
 	/**
