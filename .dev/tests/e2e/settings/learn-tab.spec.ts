@@ -41,6 +41,12 @@ test.describe( 'Learn Tab Settings Page', () => {
 	test( 'Should display all 8 learning sections', async ( { page } ) => {
 		await page.goto( LEARN_TAB_URL );
 
+		// Expand completed accordion if any sections are already completed.
+		const completedToggle = page.getByRole( 'button', { name: /Completed \(\d+\)/i } );
+		if ( await completedToggle.isVisible().catch( () => false ) ) {
+			await completedToggle.click();
+		}
+
 		// Assert all 8 section titles are visible.
 		for ( const title of SECTION_TITLES ) {
 			await expect( page.getByRole( 'heading', { name: title } ) ).toBeVisible();
@@ -326,11 +332,62 @@ test.describe( 'Learn Tab Settings Page', () => {
 		try {
 			await expect( testPaymentCheckbox ).toHaveAttribute( 'aria-checked', 'true' );
 
+			// The section is now fully complete (1/1) and moves into the completed accordion.
+			// Expand the completed accordion to find it.
+			const completedToggle = page.getByRole( 'button', { name: /Completed \(\d+\)/i } );
+			await expect( completedToggle ).toBeVisible();
+			await completedToggle.click();
+
 			// The progress badge should now show "1/1".
 			const sectionHeader = page.getByRole( 'heading', { name: 'Test Your Checkout & Go Live' } ).locator( '..' );
 			await expect( sectionHeader.getByText( '1/1' ) ).toBeVisible();
 		} finally {
 			// Always clean up via REST to avoid dirty state.
+			await requestUtils.rest( {
+				method: 'PUT',
+				path: '/wp/v2/users/me',
+				data: {
+					meta: {
+						persisted_preferences: {
+							'surecart/learn': {
+								completedSteps: [],
+							},
+						},
+					},
+				},
+			} );
+		}
+	} );
+
+	test( 'Should move completed sections into collapsed accordion', async ( { page, requestUtils } ) => {
+		await page.goto( LEARN_TAB_URL );
+
+		// No completed accordion should be visible initially.
+		await expect( page.getByRole( 'button', { name: /Completed \(\d+\)/i } ) ).not.toBeVisible();
+
+		// Expand "Test Your Checkout & Go Live" (1 step) and complete it.
+		await page.getByRole( 'button', { name: /Test Your Checkout/i } ).click();
+		const testPaymentCheckbox = page.getByRole( 'checkbox', { name: 'Make a Test Payment' } );
+		await testPaymentCheckbox.click( { force: true } );
+		await expect( testPaymentCheckbox ).toHaveAttribute( 'aria-checked', 'true' );
+
+		try {
+			// Completed accordion should now appear, collapsed by default.
+			const completedToggle = page.getByRole( 'button', { name: /Completed \(1\)/i } );
+			await expect( completedToggle ).toBeVisible();
+			await expect( completedToggle ).toHaveAttribute( 'aria-expanded', 'false' );
+
+			// The section heading should not be visible while accordion is collapsed.
+			await expect( page.getByRole( 'heading', { name: 'Test Your Checkout & Go Live' } ) ).not.toBeVisible();
+
+			// Expand the accordion.
+			await completedToggle.click();
+			await expect( completedToggle ).toHaveAttribute( 'aria-expanded', 'true' );
+
+			// The completed section should now be visible inside.
+			await expect( page.getByRole( 'heading', { name: 'Test Your Checkout & Go Live' } ) ).toBeVisible();
+		} finally {
+			// Clean up.
 			await requestUtils.rest( {
 				method: 'PUT',
 				path: '/wp/v2/users/me',
