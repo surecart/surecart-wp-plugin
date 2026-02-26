@@ -26,7 +26,7 @@ const DIMENSIONS_UNIT_TYPES = [
 	},
 ];
 
-export default ({ dimensions, updateDimensions }) => {
+export default ({ dimensions, updateDimensions, hideHeight = false }) => {
 	const { length, width, height, unit } = dimensions || {};
 
 	return (
@@ -75,24 +75,26 @@ export default ({ dimensions, updateDimensions }) => {
 					})
 				}
 			/>
-			<ScInput
-				css={css`
-					flex: 1;
-				`}
-				label={__('Height', 'surecart')}
-				value={height}
-				type="number"
-				placeholder="0"
-				min="0"
-				onScInput={(e) =>
-					updateDimensions({
-						dimensions: {
-							...dimensions,
-							height: e.target.value,
-						},
-					})
-				}
-			/>
+			{!hideHeight && (
+				<ScInput
+					css={css`
+						flex: 1;
+					`}
+					label={__('Height', 'surecart')}
+					value={height}
+					type="number"
+					placeholder="0"
+					min="0"
+					onScInput={(e) =>
+						updateDimensions({
+							dimensions: {
+								...dimensions,
+								height: e.target.value,
+							},
+						})
+					}
+				/>
+			)}
 			<ScSelect
 				unselect={false}
 				value={unit ?? 'in'}

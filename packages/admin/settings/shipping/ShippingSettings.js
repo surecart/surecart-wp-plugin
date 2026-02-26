@@ -22,6 +22,7 @@ import { store as coreStore } from '@wordpress/core-data';
 import AddShippingProfile from './profile/AddShippingProfile';
 import useEntity from '../../hooks/useEntity';
 import ShippingMethods from './method/ShippingMethods';
+import ParcelTemplates from './parcel/ParcelTemplates';
 import useSave from '../UseSave';
 import ShippingProfileListItem from './profile/ShippingProfileListItem';
 
@@ -256,6 +257,7 @@ export default () => {
 					</ScCard>
 				</SettingsBox>
 				<ShippingMethods />
+				<ParcelTemplates />
 			</SettingsTemplate>
 			<AddShippingProfile
 				open={showAddShipping}
