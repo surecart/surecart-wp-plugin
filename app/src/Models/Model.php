@@ -1096,10 +1096,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, Object
 			$attribute = $this->{$getter}( $attribute );
 		}
 
-		// Only invoke the filter when a listener is registered to avoid overhead on every property access.
-		if ( has_filter( "surecart/{$this->object_name}/get_attribute" ) ) {
-			$attribute = apply_filters( "surecart/{$this->object_name}/get_attribute", $attribute, $key, $this );
-		}
+		$attribute = apply_filters( "surecart/{$this->object_name}/get_attribute", $attribute, $key, $this );
 
 		return $attribute;
 	}
