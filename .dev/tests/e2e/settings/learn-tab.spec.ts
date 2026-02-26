@@ -200,12 +200,18 @@ test.describe( 'Learn Tab Settings Page', () => {
 		const variantsCheckboxAfterReload = page.getByRole( 'checkbox', { name: 'Add Product Variants' } );
 		await expect( variantsCheckboxAfterReload ).toHaveAttribute( 'aria-checked', 'true' );
 
-		// Clean up: reset progress so other tests aren't affected.
+		// Clean up: reset learn progress preferences.
 		await requestUtils.rest( {
 			method: 'PUT',
-			path: '/surecart/v1/learn-progress',
+			path: '/wp/v2/users/me',
 			data: {
-				completed_steps: [],
+				meta: {
+					persisted_preferences: {
+						'surecart/learn': {
+							completedSteps: [],
+						},
+					},
+				},
 			},
 		} );
 	} );
@@ -224,40 +230,4 @@ test.describe( 'Learn Tab Settings Page', () => {
 		).toBeVisible();
 	} );
 
-	test( 'REST API - learn progress endpoint', async ( { requestUtils } ) => {
-		// GET should return empty completed_steps initially.
-		const getResponse = await requestUtils.rest( {
-			method: 'GET',
-			path: '/surecart/v1/learn-progress',
-		} );
-		expect( getResponse ).toHaveProperty( 'completed_steps' );
-		expect( Array.isArray( getResponse.completed_steps ) ).toBe( true );
-
-		// PUT to save a completed step.
-		const putResponse = await requestUtils.rest( {
-			method: 'PUT',
-			path: '/surecart/v1/learn-progress',
-			data: {
-				completed_steps: [ 'add-product-variants' ],
-			},
-		} );
-		expect( putResponse ).toHaveProperty( 'completed_steps' );
-		expect( putResponse.completed_steps ).toContain( 'add-product-variants' );
-
-		// GET again to confirm persistence.
-		const getAfterPost = await requestUtils.rest( {
-			method: 'GET',
-			path: '/surecart/v1/learn-progress',
-		} );
-		expect( getAfterPost.completed_steps ).toContain( 'add-product-variants' );
-
-		// Clean up: reset progress.
-		await requestUtils.rest( {
-			method: 'PUT',
-			path: '/surecart/v1/learn-progress',
-			data: {
-				completed_steps: [],
-			},
-		} );
-	} );
 } );
