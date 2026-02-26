@@ -402,7 +402,7 @@ const { state, actions } = store('surecart/product-page', {
 				}
 			}
 
-			// if the button hdoes not have a value, add to cart.
+			// if the button does not have a value, add to cart.
 			if (!e?.submitter?.value) {
 				return yield actions.addToCart(e);
 			}

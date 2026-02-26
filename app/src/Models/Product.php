@@ -29,7 +29,7 @@ class Product extends Model implements PageModel {
 	 *
 	 * @var array
 	 */
-	protected $sync_expands = array( 'prices', 'product_medias', 'product_media.media', 'variants', 'variant_options', 'product_collections', 'featured_product_media' );
+	protected $sync_expands = array( 'prices', 'product_medias', 'product_media.media', 'variants', 'variant_options', 'product_collections', 'featured_product_media', 'reviews_breakdown' );
 
 	/**
 	 * Rest API endpoint
@@ -1197,5 +1197,52 @@ class Product extends Model implements PageModel {
 	 */
 	public function getHasVideosAttribute(): bool {
 		return ! empty( array_filter( $this->gallery, fn( $media ) => $media->isVideo() ) );
+	}
+
+	/**
+	 * Get if the product reviews are enabled.
+	 *
+	 * @return bool
+	 */
+	public function getReviewsEnabledAttribute(): bool {
+		if ( empty( \SureCart::account()->review_protocol->reviews_enabled ) ) {
+			return false;
+		}
+		return $this->attributes['reviews_enabled'] ?? true;
+	}
+
+	/**
+	 * Get the total reviews count from reviews_breakdown.
+	 *
+	 * @return int
+	 */
+	public function getTotalReviewsAttribute(): int {
+		if ( empty( $this->reviews_breakdown ) ) {
+			return 0;
+		}
+		return array_sum( (array) $this->reviews_breakdown );
+	}
+
+	/**
+	 * Get the reviews breakdown as an array with proper structure.
+	 * Ensures all star ratings (1-5) are present with default value of 0.
+	 *
+	 * @return array
+	 */
+	public function getReviewsBreakdownArrayAttribute(): array {
+		$breakdown = array_merge(
+			array(
+				1 => 0,
+				2 => 0,
+				3 => 0,
+				4 => 0,
+				5 => 0,
+			),
+			(array) ( $this->reviews_breakdown ?? array() )
+		);
+
+		// Ensure all values are integers and sort by key.
+		ksort( $breakdown );
+		return array_map( 'intval', $breakdown );
 	}
 }

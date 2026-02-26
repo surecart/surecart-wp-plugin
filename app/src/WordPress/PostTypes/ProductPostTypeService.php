@@ -1215,14 +1215,36 @@ class ProductPostTypeService {
 		return apply_filters(
 			'surecart/product/json_schema',
 			array(
-				'@context'    => 'http://schema.org',
-				'@type'       => 'Product',
-				'name'        => $product->name,
-				'image'       => $gallery_image_urls,
-				'description' => sanitize_text_field( $product->description ),
-				'offers'      => $offers,
+				'@context'        => 'http://schema.org',
+				'@type'           => 'Product',
+				'name'            => $product->name,
+				'image'           => $gallery_image_urls,
+				'description'     => sanitize_text_field( $product->description ),
+				'offers'          => $offers,
+				'aggregateRating' => $this->getAggregateRatingSchema( $product ),
 			),
 			$this
+		);
+	}
+
+	/**
+	 * Get the aggregate rating schema for the product.
+	 *
+	 * @param \SureCart\Models\Product $product The product.
+	 *
+	 * @return array
+	 */
+	public function getAggregateRatingSchema( $product ): array {
+		if ( empty( $product->total_reviews ) ) {
+			return array();
+		}
+
+		return array(
+			'@type'       => 'AggregateRating',
+			'ratingValue' => (string) $product->average_stars,
+			'reviewCount' => (int) $product->total_reviews,
+			'bestRating'  => 5,
+			'worstRating' => 1,
 		);
 	}
 

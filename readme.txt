@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: ecommerce, online store, subscriptions, stripe, payments
 Requires at least: 6.6
 Tested up to: 6.9
-Stable tag: 3.20.1
+Stable tag: 4.0.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -315,6 +315,13 @@ Yes, the checkout form can be customized using our visual builder. You can chang
 Accessibility is a huge priority for the entire team building SureCart. As you know, accessibility is an ongoing improvement task. Our development and QA teams are trained in accessibility best practices and build/test each new feature for accessibility. If you come across any edge issues, we want to know about it and will prioritize its resolution. Please contact us via our website.
 
 == Changelog ==
+
+= 4.0.0 - February 25th, 2026 =
+- New: Product Reviews — Let customers leave star ratings and written reviews on your products. [Learn More](https://www.youtube.com/watch?v=9MV_nOwxK_Q)
+- New: Product and variant dimensions for shipping.
+- New: Additional php and javascript filters on customer dashbaord.
+- Fix: Issue with default country selector dropdown getting clipped in admin.
+- Fix: Added additional security checks to payout make processing endpoints.
 
 = 3.20.1 - February 16th, 2026 =
 - Fix: Issue where razorpay was sometimes not getting selected at checkout if its the only processor.
