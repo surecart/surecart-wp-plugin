@@ -230,4 +230,106 @@ test.describe( 'Learn Tab Settings Page', () => {
 		).toBeVisible();
 	} );
 
+	test( 'Should auto-detect completed steps from scData', async ( { page } ) => {
+		await page.goto( LEARN_TAB_URL );
+
+		// "Complete Setup" has autoDetect: 'hasApiToken' — account_id exists after createAccount().
+		const completeSetupCheckbox = page.getByRole( 'checkbox', { name: 'Complete Setup' } );
+		await expect( completeSetupCheckbox ).toHaveAttribute( 'aria-checked', 'true' );
+	} );
+
+	test( 'Should not allow toggling auto-detected steps', async ( { page } ) => {
+		await page.goto( LEARN_TAB_URL );
+
+		// "Complete Setup" is auto-detected — clicking should NOT uncheck it.
+		const completeSetupCheckbox = page.getByRole( 'checkbox', { name: 'Complete Setup' } );
+		await expect( completeSetupCheckbox ).toHaveAttribute( 'aria-checked', 'true' );
+
+		await completeSetupCheckbox.click( { force: true } );
+
+		// Should still be checked — auto-detected steps are read-only.
+		await expect( completeSetupCheckbox ).toHaveAttribute( 'aria-checked', 'true' );
+	} );
+
+	test( 'Should show Learn submenu item in admin menu', async ( { page } ) => {
+		await page.goto( '/wp-admin/' );
+
+		// Open SureCart menu and find the Learn submenu link.
+		const learnLink = page.locator( '#toplevel_page_sc-dashboard a[href*="tab=learn"]' );
+		await expect( learnLink ).toBeVisible();
+		await expect( learnLink ).toContainText( 'Learn' );
+	} );
+
+	test( 'Should highlight Learn submenu when on learn tab', async ( { page } ) => {
+		await page.goto( LEARN_TAB_URL );
+
+		// The Learn submenu item should have the "current" class.
+		const learnMenuItem = page.locator( '#toplevel_page_sc-dashboard a[href*="tab=learn"]' ).locator( '..' );
+		await expect( learnMenuItem ).toHaveClass( /current/ );
+	} );
+
+	test( 'Should toggle checkbox via keyboard', async ( { page } ) => {
+		await page.goto( LEARN_TAB_URL );
+
+		// Expand "Add Your First Product" section.
+		await page.getByRole( 'button', { name: /Add Your First Product/i } ).click();
+
+		// Focus the "Add Product Variants" checkbox and press Space.
+		const variantsCheckbox = page.getByRole( 'checkbox', { name: 'Add Product Variants' } );
+		await variantsCheckbox.focus();
+		await page.keyboard.press( 'Space' );
+
+		await expect( variantsCheckbox ).toHaveAttribute( 'aria-checked', 'true' );
+
+		// Press Space again to uncheck.
+		await page.keyboard.press( 'Space' );
+		await expect( variantsCheckbox ).toHaveAttribute( 'aria-checked', 'false' );
+	} );
+
+	test( 'Should not render action button for steps without actionUrl', async ( { page } ) => {
+		await page.goto( LEARN_TAB_URL );
+
+		// Expand "Test Your Checkout & Go Live" section.
+		await page.getByRole( 'button', { name: /Test Your Checkout/i } ).click();
+
+		// "Make a Test Payment" step has no actionUrl — verify no button in that step row.
+		const testPaymentStep = page.getByText( 'Make a Test Payment' ).locator( '../..' );
+		await expect( testPaymentStep.locator( 'sc-button' ) ).toHaveCount( 0 );
+	} );
+
+	test( 'Should show loading spinner initially', async ( { page } ) => {
+		// Intercept the product API to delay the response.
+		await page.route( '**/surecart/v1/products**', async ( route ) => {
+			await new Promise( ( resolve ) => setTimeout( resolve, 2000 ) );
+			await route.continue();
+		} );
+
+		await page.goto( LEARN_TAB_URL );
+
+		// Spinner should be visible while products are loading.
+		await expect( page.locator( 'sc-spinner' ) ).toBeVisible();
+
+		// After products load, sections should appear.
+		await expect( page.getByRole( 'heading', { name: 'Set Up Store Basics' } ) ).toBeVisible( { timeout: 10000 } );
+	} );
+
+	test( 'Should update progress badge when section steps are completed', async ( { page } ) => {
+		await page.goto( LEARN_TAB_URL );
+
+		// Expand "Test Your Checkout & Go Live" — it has 1 step ("test-payment").
+		await page.getByRole( 'button', { name: /Test Your Checkout/i } ).click();
+
+		// Check the "Make a Test Payment" checkbox.
+		const testPaymentCheckbox = page.getByRole( 'checkbox', { name: 'Make a Test Payment' } );
+		await testPaymentCheckbox.click( { force: true } );
+		await expect( testPaymentCheckbox ).toHaveAttribute( 'aria-checked', 'true' );
+
+		// The progress badge should now show "1/1".
+		const sectionHeader = page.getByRole( 'heading', { name: 'Test Your Checkout & Go Live' } ).locator( '..' );
+		await expect( sectionHeader.getByText( '1/1' ) ).toBeVisible();
+
+		// Clean up — uncheck.
+		await testPaymentCheckbox.click( { force: true } );
+	} );
+
 } );
