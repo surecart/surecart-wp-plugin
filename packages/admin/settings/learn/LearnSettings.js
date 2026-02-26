@@ -1,6 +1,7 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
+import { ScIcon, ScSpinner } from '@surecart/components-react';
 import SettingsTemplate from '../SettingsTemplate';
 import LearnSection from './components/LearnSection';
 import useLearnProgress from './hooks/useLearnProgress';
@@ -39,7 +40,7 @@ export default function LearnSettings() {
 	return (
 		<SettingsTemplate
 			title={ __( 'Setup Checklist', 'surecart' ) }
-			icon={ <sc-icon name="book-open" /> }
+			icon={ <ScIcon name="book-open" /> }
 			noButton
 		>
 			<p css={ subtitleStyles }>
@@ -51,7 +52,7 @@ export default function LearnSettings() {
 
 			{ isLoading ? (
 				<div css={ loadingStyles }>
-					<sc-spinner />
+					<ScSpinner />
 				</div>
 			) : (
 				<div css={ sectionsStyles }>

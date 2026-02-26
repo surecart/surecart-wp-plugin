@@ -2,13 +2,15 @@
 import { css, jsx, Global } from '@emotion/core';
 import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
+import { ScButton, ScIcon, ScTag } from '@surecart/components-react';
 import LearnStep from './LearnStep';
 
 // Outer wrapper — carries the ::before animation so overflow:hidden on the
 // inner div cannot clip it. Non-highlighted sections use this as a passthrough.
-const wrapperStyles = ( highlighted ) => css`
+const wrapperStyles = (highlighted) => css`
 	border-radius: 8px;
-	${ highlighted && css`
+	${highlighted &&
+	css`
 		position: relative;
 
 		&::before {
@@ -31,20 +33,20 @@ const wrapperStyles = ( highlighted ) => css`
 			border-radius: 8px;
 			pointer-events: none;
 		}
-	` }
+	`}
 `;
 
 // Inner section — handles overflow clipping and the static border for
 // non-highlighted sections. For highlighted, margin:1px exposes the
 // animated border from the outer wrapper.
-const sectionStyles = ( highlighted ) => css`
-	border: ${ highlighted
+const sectionStyles = (highlighted) => css`
+	border: ${highlighted
 		? 'none'
-		: '1px solid var(--sc-color-gray-200, #e5e7eb)' };
-	border-radius: ${ highlighted ? '7px' : '8px' };
+		: '1px solid var(--sc-color-gray-200, #e5e7eb)'};
+	border-radius: ${highlighted ? '7px' : '8px'};
 	overflow: hidden;
 	background: white;
-	${ highlighted && 'margin: 1px;' }
+	${highlighted && 'margin: 1px;'}
 `;
 
 const headerStyles = css`
@@ -95,42 +97,11 @@ const sectionIconStyles = css`
 	flex-shrink: 0;
 `;
 
-const badgeStyles = ( type ) => css`
-	display: inline-flex;
-	align-items: center;
-	padding: 2px 8px;
-	border-radius: 9999px;
-	font-size: 11px;
-	font-weight: 600;
-	text-transform: uppercase;
-	letter-spacing: 0.025em;
-	background: ${ type === 'required'
-		? 'var(--sc-color-primary-50, #eef2ff)'
-		: type === 'recommended'
-		? 'var(--sc-color-warning-50, #fffbeb)'
-		: 'var(--sc-color-gray-100, #f3f4f6)' };
-	color: ${ type === 'required'
-		? 'var(--sc-color-primary-600, #4f46e5)'
-		: type === 'recommended'
-		? 'var(--sc-color-warning-700, #b45309)'
-		: 'var(--sc-color-gray-500, #6b7280)' };
-`;
-
-
-const progressBadgeStyles = ( completed, total ) => css`
-	display: inline-flex;
-	align-items: center;
-	padding: 2px 8px;
-	border-radius: 9999px;
-	font-size: 12px;
-	font-weight: 600;
-	background: ${ completed === total && total > 0
-		? 'var(--sc-color-success-100, #dcfce7)'
-		: 'var(--sc-color-gray-100, #f3f4f6)' };
-	color: ${ completed === total && total > 0
-		? 'var(--sc-color-success-700, #15803d)'
-		: 'var(--sc-color-gray-600, #4b5563)' };
-`;
+const getBadgeType = (badge) => {
+	if (badge === 'required') return 'warning';
+	if (badge === 'recommended') return 'default';
+	return 'default';
+};
 
 const descriptionStyles = css`
 	font-size: 13px;
@@ -147,27 +118,19 @@ const headerRightStyles = css`
 `;
 
 const learnLinkStyles = css`
-	font-size: 13px;
-	font-weight: 500;
-	color: var(--sc-color-primary-500, #6366f1);
-	text-decoration: none;
-	white-space: nowrap;
-
-	&:hover {
-		text-decoration: underline;
-	}
+	font-size: 12px;
 `;
 
-const chevronStyles = ( isOpen ) => css`
+const chevronStyles = (isOpen) => css`
 	width: 20px;
 	height: 20px;
 	color: var(--sc-color-gray-400, #9ca3af);
 	transition: transform 0.2s ease;
-	transform: rotate( ${ isOpen ? '180deg' : '0deg' } );
+	transform: rotate(${isOpen ? '180deg' : '0deg'});
 `;
 
-const bodyStyles = ( isOpen ) => css`
-	display: ${ isOpen ? 'block' : 'none' };
+const bodyStyles = (isOpen) => css`
+	display: ${isOpen ? 'block' : 'none'};
 	border-top: 1px solid var(--sc-color-gray-200, #e5e7eb);
 `;
 
@@ -176,27 +139,27 @@ const sectionHeadingStyles = css`
 	font: inherit;
 `;
 
-const getBadgeLabel = ( badge ) => {
-	if ( badge === 'required' ) return __( 'Required', 'surecart' );
-	if ( badge === 'recommended' ) return __( 'Recommended', 'surecart' );
-	return __( 'Optional', 'surecart' );
+const getBadgeLabel = (badge) => {
+	if (badge === 'required') return __('Required', 'surecart');
+	if (badge === 'recommended') return __('Recommended', 'surecart');
+	return __('Optional', 'surecart');
 };
 
-export default function LearnSection( {
+export default function LearnSection({
 	section,
 	progress,
 	isStepCompleted,
 	isAutoDetected,
 	onToggleStep,
 	defaultOpen = false,
-} ) {
-	const [ isOpen, setIsOpen ] = useState( defaultOpen );
+}) {
+	const [isOpen, setIsOpen] = useState(defaultOpen);
 
 	return (
 		<>
-			{ section.highlighted && (
+			{section.highlighted && (
 				<Global
-					styles={ css`
+					styles={css`
 						@keyframes gradientBorder {
 							0% {
 								background-position: 0% 0%;
@@ -214,88 +177,112 @@ export default function LearnSection( {
 								background-position: 0% 0%;
 							}
 						}
-					` }
+					`}
 				/>
-			) }
-			<div css={ wrapperStyles( section.highlighted ) }>
-				<div css={ sectionStyles( section.highlighted ) }>
-					<h3 css={ sectionHeadingStyles }>
+			)}
+			<div css={wrapperStyles(section.highlighted)}>
+				<div css={sectionStyles(section.highlighted)}>
+					<h3 css={sectionHeadingStyles}>
 						<button
-							css={ headerStyles }
-							onClick={ () => setIsOpen( ! isOpen ) }
-							aria-expanded={ isOpen }
-							aria-controls={ `learn-section-${ section.id }` }
+							css={headerStyles}
+							onClick={() => setIsOpen(!isOpen)}
+							aria-expanded={isOpen}
+							aria-controls={`learn-section-${section.id}`}
 							type="button"
 						>
-							<div css={ headerLeftStyles }>
-								<div css={ titleRowStyles }>
-									{ section.icon && (
-										<sc-icon
-											name={ section.icon }
-											css={ sectionIconStyles }
+							<div css={headerLeftStyles}>
+								<div css={titleRowStyles}>
+									{section.icon && (
+										<ScIcon
+											name={section.icon}
+											css={sectionIconStyles}
 										/>
-									) }
-									<span css={ titleStyles }>{ section.title }</span>
-									{ section.highlighted && (
-										<sc-icon
+									)}
+									<span css={titleStyles}>
+										{section.title}
+									</span>
+									{section.highlighted && (
+										<ScIcon
 											name="star"
-											style={ {
+											style={{
 												width: '14px',
 												height: '14px',
 												color: '#fbbf24',
 												flexShrink: 0,
-											} }
+											}}
 										/>
-									) }
-									{ section.badge && (
-										<span css={ badgeStyles( section.badge ) }>
-											{ getBadgeLabel( section.badge ) }
-										</span>
-									) }
-									<span
-										css={ progressBadgeStyles(
-											progress.completed,
-											progress.total
-										) }
+									)}
+									{section.badge && (
+										<ScTag
+											type={getBadgeType(section.badge)}
+											size="small"
+											pill
+										>
+											{getBadgeLabel(section.badge)}
+										</ScTag>
+									)}
+									<ScTag
+										type={
+											progress.completed ===
+												progress.total &&
+											progress.total > 0
+												? 'success'
+												: 'default'
+										}
+										size="small"
+										pill
 									>
-										{ progress.completed }/{ progress.total }
-									</span>
+										{progress.completed}/{progress.total}
+									</ScTag>
 								</div>
-								<p css={ descriptionStyles }>
-									{ section.description }
+								<p css={descriptionStyles}>
+									{section.description}
 								</p>
 							</div>
-	
-							<div css={ headerRightStyles }>
-								{ section.docUrl && (
-									<a
-										css={ learnLinkStyles }
-										href={ section.docUrl }
+
+							<div css={headerRightStyles}>
+								{section.docUrl && (
+									<ScButton
+										pill
+										css={learnLinkStyles}
+										href={section.docUrl}
 										target="_blank"
 										rel="noopener noreferrer"
-										onClick={ ( e ) => e.stopPropagation() }
+										onClick={(e) => e.stopPropagation()}
 									>
-										{ __( 'Learn How', 'surecart' ) } &rarr;
-									</a>
-								) }
-								<sc-icon
+										{__('Learn How', 'surecart')}
+										<ScIcon
+											name="arrow-up-right"
+											style={{
+												width: '13px',
+												height: '13px',
+											}}
+											slot="suffix"
+										/>
+									</ScButton>
+								)}
+								<ScIcon
 									name="chevron-down"
-									css={ chevronStyles( isOpen ) }
+									css={chevronStyles(isOpen)}
 								/>
 							</div>
 						</button>
 					</h3>
 
-					<div id={ `learn-section-${ section.id }` } css={ bodyStyles( isOpen ) } aria-hidden={ ! isOpen }>
-						{ section.steps.map( ( step ) => (
+					<div
+						id={`learn-section-${section.id}`}
+						css={bodyStyles(isOpen)}
+						aria-hidden={!isOpen}
+					>
+						{section.steps.map((step) => (
 							<LearnStep
-								key={ step.id }
-								step={ step }
-								isCompleted={ isStepCompleted( step.id ) }
-								isAutoDetected={ isAutoDetected( step.id ) }
-								onToggle={ onToggleStep }
+								key={step.id}
+								step={step}
+								isCompleted={isStepCompleted(step.id)}
+								isAutoDetected={isAutoDetected(step.id)}
+								onToggle={onToggleStep}
 							/>
-						) ) }
+						))}
 					</div>
 				</div>
 			</div>

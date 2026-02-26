@@ -2,6 +2,7 @@
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
+import { ScButton, ScIcon } from '@surecart/components-react';
 
 const stepStyles = css`
 	display: flex;
@@ -15,18 +16,18 @@ const stepStyles = css`
 	}
 `;
 
-const checkboxStyles = ( isCompleted ) => css`
+const checkboxStyles = (isCompleted) => css`
 	flex-shrink: 0;
 	width: 22px;
 	height: 22px;
 	border-radius: 50%;
 	border: 2px solid
-		${ isCompleted
+		${isCompleted
 			? 'var(--sc-color-primary-500, #6366f1)'
-			: 'var(--sc-color-gray-300, #d1d5db)' };
-	background: ${ isCompleted
+			: 'var(--sc-color-gray-300, #d1d5db)'};
+	background: ${isCompleted
 		? 'var(--sc-color-primary-500, #6366f1)'
-		: 'transparent' };
+		: 'transparent'};
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -72,14 +73,10 @@ const tooltipWrapperStyles = css`
 `;
 
 const tooltipIconStyles = css`
-	width: 16px;
-	height: 16px;
-	color: var(--sc-color-gray-400, #9ca3af);
+	width: 15px;
+	stroke-width: 2.5px;
+	color: var(--sc-input-help-text-color);
 	cursor: help;
-
-	&:hover {
-		color: var(--sc-color-gray-600, #4b5563);
-	}
 `;
 
 const tooltipContentStyles = css`
@@ -103,17 +100,17 @@ const actionStyles = css`
 	flex-shrink: 0;
 `;
 
-export default function LearnStep( {
+export default function LearnStep({
 	step,
 	isCompleted,
 	isAutoDetected: isAuto,
 	onToggle,
-} ) {
-	const [ showTooltip, setShowTooltip ] = useState( false );
+}) {
+	const [showTooltip, setShowTooltip] = useState(false);
 
 	const handleCheckboxClick = () => {
-		if ( ! isAuto ) {
-			onToggle( step.id );
+		if (!isAuto) {
+			onToggle(step.id);
 		}
 	};
 
@@ -122,23 +119,23 @@ export default function LearnStep( {
 		: { href: step.actionUrl };
 
 	return (
-		<div css={ stepStyles }>
+		<div css={stepStyles}>
 			<div
-				css={ checkboxStyles( isCompleted ) }
-				onClick={ handleCheckboxClick }
+				css={checkboxStyles(isCompleted)}
+				onClick={handleCheckboxClick}
 				role="checkbox"
-				aria-checked={ isCompleted }
-				aria-label={ step.title }
-				tabIndex={ isAuto ? -1 : 0 }
-				onKeyDown={ ( e ) => {
-					if ( e.key === ' ' || e.key === 'Enter' ) {
+				aria-checked={isCompleted}
+				aria-label={step.title}
+				tabIndex={isAuto ? -1 : 0}
+				onKeyDown={(e) => {
+					if (e.key === ' ' || e.key === 'Enter') {
 						e.preventDefault();
 						handleCheckboxClick();
 					}
-				} }
-				style={ { cursor: isAuto ? 'default' : 'pointer' } }
+				}}
+				style={{ cursor: isAuto ? 'default' : 'pointer' }}
 			>
-				{ isCompleted && (
+				{isCompleted && (
 					<svg
 						viewBox="0 0 24 24"
 						fill="none"
@@ -149,70 +146,64 @@ export default function LearnStep( {
 					>
 						<polyline points="20 6 9 17 4 12" />
 					</svg>
-				) }
+				)}
 			</div>
 
-			<div css={ contentStyles }>
-				<div css={ titleStyles }>
-					<span
-						style={
-							isCompleted
-								? { opacity: 0.5 }
-								: {}
-						}
-					>
-						{ step.title }
+			<div css={contentStyles}>
+				<div css={titleStyles}>
+					<span style={isCompleted ? { opacity: 0.5 } : {}}>
+						{step.title}
 					</span>
-					{ step.infoTooltip && (
+					{step.infoTooltip && (
 						<div
-							css={ tooltipWrapperStyles }
-							onMouseEnter={ () => setShowTooltip( true ) }
-							onMouseLeave={ () => setShowTooltip( false ) }
-							onFocus={ () => setShowTooltip( true ) }
-							onBlur={ () => setShowTooltip( false ) }
-							tabIndex={ 0 }
+							css={tooltipWrapperStyles}
+							onMouseEnter={() => setShowTooltip(true)}
+							onMouseLeave={() => setShowTooltip(false)}
+							onFocus={() => setShowTooltip(true)}
+							onBlur={() => setShowTooltip(false)}
+							tabIndex={0}
 						>
-							<sc-icon
+							<ScIcon
 								name="info"
-								css={ tooltipIconStyles }
-								aria-describedby={ showTooltip ? `tooltip-${ step.id }` : undefined }
+								css={tooltipIconStyles}
+								aria-describedby={
+									showTooltip
+										? `tooltip-${step.id}`
+										: undefined
+								}
 							/>
-							{ showTooltip && (
+							{showTooltip && (
 								<div
-									css={ tooltipContentStyles }
+									css={tooltipContentStyles}
 									role="tooltip"
-									id={ `tooltip-${ step.id }` }
+									id={`tooltip-${step.id}`}
 								>
-									{ step.infoTooltip }
+									{step.infoTooltip}
 								</div>
-							) }
+							)}
 						</div>
-					) }
+					)}
 				</div>
-				<p css={ descriptionStyles }>{ step.description }</p>
+				<p css={descriptionStyles}>{step.description}</p>
 			</div>
 
-			{ step.actionUrl && (
-				<div css={ actionStyles }>
-					<sc-button
-						type="link"
-						size="small"
-						{ ...actionProps }
-					>
-						{ step.actionLabel }
-						{ step.isExternal && (
-							<sc-icon
+			{step.actionUrl && !isCompleted && (
+				<div css={actionStyles}>
+					<ScButton type="link" size="small" {...actionProps}>
+						{step.actionLabel}
+						{step.isExternal && (
+							<ScIcon
 								name="external-link"
 								slot="suffix"
-								style={ {
+								style={{
 									width: '14px',
 									height: '14px',
-								} }
+								}}
 							/>
-						) }
-					</sc-button>
+						)}
+					</ScButton>
 				</div>
-			) }
+			)}
 		</div>
 	);
 }
