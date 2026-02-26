@@ -1,24 +1,20 @@
-import { ScInput, ScSelect, ScSwitch } from '@surecart/components-react';
+import { ScInput, ScSelect } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 import DrawerSection from '../../../ui/DrawerSection';
-import useVariantDownloads from '../../hooks/useVariantDownloads';
 import useVariantValue from '../../hooks/useVariantValue';
 import ResetOverridesDropdown from './ResetOverridesDropdown';
 
-export default ({ variant, updateVariant, product }) => {
+export default ({
+	variant,
+	updateVariant,
+	product,
+	downloads,
+	downloadsFetching,
+	isCustomDownloads,
+}) => {
 	const { getValue, isOverridden, getUpdateValue } = useVariantValue({
 		variant,
 		product,
-	});
-
-	// Check if custom downloads is enabled
-	const downloadsEnabled = getValue('downloads_enabled');
-	const isCustomDownloads = downloadsEnabled === true;
-
-	// Fetch downloads for current release selection (only when custom downloads enabled)
-	const { downloads, fetching } = useVariantDownloads({
-		variant,
-		isCustomDownloads,
 	});
 
 	if (!product?.licensing_enabled) {
@@ -76,7 +72,7 @@ export default ({ variant, updateVariant, product }) => {
 						'This is the current release zip of your software.',
 						'surecart'
 					)}
-					loading={fetching}
+					loading={downloadsFetching}
 					value={getValue('current_release_download')}
 					onScChange={(e) => {
 						updateVariant(

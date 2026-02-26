@@ -22,29 +22,28 @@ import { store as noticesStore } from '@wordpress/notices';
 import Error from '../../../components/Error';
 import MediaLibrary from '../../../components/MediaLibrary';
 import DrawerSection from '../../../ui/DrawerSection';
-import useVariantDownloads from '../../hooks/useVariantDownloads';
 import useVariantValue from '../../hooks/useVariantValue';
 import AddExternalUrlModal from '../AddExternalUrlModal';
 import SingleDownload from '../SingleDownload';
+import ResetOverridesDropdown from './ResetOverridesDropdown';
 
-export default ({ variant, product, updateVariant }) => {
+export default ({
+	variant,
+	product,
+	updateVariant,
+	downloads,
+	downloadsFetching,
+	isCustomDownloads,
+}) => {
 	const { saveEntityRecord } = useDispatch(coreStore);
 	const [showArchived, setShowArchived] = useState(false);
 	const { createSuccessNotice } = useDispatch(noticesStore);
 	const [modal, setModal] = useState(null);
 	const [isSaving, setIsSaving] = useState(false);
 	const [error, setError] = useState(null);
-	const { getValue, getUpdateValue } = useVariantValue({
+	const { isOverridden, getUpdateValue } = useVariantValue({
 		variant,
 		product,
-	});
-
-	const downloadsEnabled = getValue('downloads_enabled');
-	const isCustomDownloads = downloadsEnabled === true;
-
-	const { downloads, fetching } = useVariantDownloads({
-		variant,
-		isCustomDownloads,
 	});
 
 	const addDownload = async (media, isExternal) => {
@@ -93,11 +92,7 @@ export default ({ variant, product, updateVariant }) => {
 	const archived = sorted.filter((download) => !!download.archived);
 
 	const onToggleDownloads = (checked) => {
-		// When toggling on, enable custom downloads (true).
-		// When toggling off, disable downloads (false).
-		updateVariant(
-			getUpdateValue({ downloads_enabled: checked ? true : false })
-		);
+		updateVariant(getUpdateValue({ downloads_enabled: !!checked }));
 	};
 
 	const renderDownloads = () => {
@@ -139,7 +134,25 @@ export default ({ variant, product, updateVariant }) => {
 
 	return (
 		<>
-			<DrawerSection title={__('Downloads', 'surecart')}>
+			<DrawerSection
+				title={__('Downloads', 'surecart')}
+				suffix={
+					<ResetOverridesDropdown
+						fields={[
+							{
+								key: 'downloads_enabled',
+								label: __('Downloads enabled', 'surecart'),
+							},
+						]}
+						isOverridden={isOverridden}
+						onReset={(fieldKey) =>
+							updateVariant({
+								[fieldKey]: product?.[fieldKey] ?? null,
+							})
+						}
+					/>
+				}
+			>
 				<ScSwitch
 					checked={isCustomDownloads}
 					onScChange={(e) => onToggleDownloads(e.target.checked)}
@@ -171,7 +184,7 @@ export default ({ variant, product, updateVariant }) => {
 							>
 								<ScButton slot="trigger">
 									<ScIcon name="plus" slot="prefix" />
-									{__('Variant Downloads', 'surecart')}
+									{__('Add Downloads', 'surecart')}
 								</ScButton>
 								<ScMenu>
 									<ScFormControl
@@ -232,7 +245,9 @@ export default ({ variant, product, updateVariant }) => {
 							)}
 						</div>
 
-						{(fetching || isSaving) && <ScBlockUi spinner />}
+						{(downloadsFetching || isSaving) && (
+							<ScBlockUi spinner />
+						)}
 					</div>
 				)}
 			</DrawerSection>
