@@ -9,6 +9,7 @@
 
 namespace SureCartCore\Middleware;
 
+use SureCart\Middleware\ProductReviewRedirectMiddleware;
 use SureCartCore\ServiceProviders\ServiceProviderInterface;
 
 /**
@@ -31,6 +32,10 @@ class MiddlewareServiceProvider implements ServiceProviderInterface {
 
 		$container[ UserCanMiddleware::class ] = function ( $c ) {
 			return new UserCanMiddleware( $c[ SURECART_RESPONSE_SERVICE_KEY ] );
+		};
+
+		$container[ ProductReviewRedirectMiddleware::class ] = function ( $c ) {
+			return new ProductReviewRedirectMiddleware( $c[ SURECART_RESPONSE_SERVICE_KEY ] );
 		};
 	}
 
