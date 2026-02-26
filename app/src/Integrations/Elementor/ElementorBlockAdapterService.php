@@ -193,6 +193,11 @@ class ElementorBlockAdapterService {
 			if ( ! $inside_form ) {
 				$class = $processor->get_attribute( 'class' ) ?? '';
 
+				// Skip for product-review blocks.
+				if ( preg_match( '/wp-block-surecart-product-review-/', $class ) ) {
+					continue;
+				}
+
 				if ( preg_match( '/wp-block-surecart-(?:product|price)-/', $class ) ) {
 					$orphaned_blocks[] = [
 						'tag'   => $processor->get_tag(),

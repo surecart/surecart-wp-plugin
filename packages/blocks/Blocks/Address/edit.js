@@ -1,15 +1,19 @@
-import { Fragment, useState, useEffect } from '@wordpress/element';
+import { Fragment, useState, useMemo } from '@wordpress/element';
 import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
-import { TextControl, PanelBody, ToggleControl } from '@wordpress/components';
+import {
+	TextControl,
+	PanelBody,
+	ToggleControl,
+	ComboboxControl,
+} from '@wordpress/components';
 import {
 	ScAddress,
-	ScSelect,
 	ScCompactAddress,
 	ScCheckbox,
 	ScFlex,
 } from '@surecart/components-react';
-import { countryChoices } from '@surecart/components';
+import { useCountries } from '@admin/hooks/useAtlas';
 
 export default ({ attributes, setAttributes }) => {
 	const {
@@ -24,12 +28,13 @@ export default ({ attributes, setAttributes }) => {
 		line_2,
 	} = attributes;
 	const [sameAsShipping, setSameAsShipping] = useState(false);
-	const [choices, setChoices] = useState([]);
 	const blockProps = useBlockProps();
+	const { countries, loading: isLoading } = useCountries();
+	const choices = useMemo(
+		() => countries.map(({ code, name }) => ({ value: code, label: name })),
+		[countries]
+	);
 
-	useEffect(() => {
-		countryChoices().then((data) => setChoices(data));
-	}, []);
 	const Tag = full ? ScAddress : ScCompactAddress;
 
 	return (
@@ -139,18 +144,17 @@ export default ({ attributes, setAttributes }) => {
 						/>
 					)}
 
-					<ScSelect
-						style={{ width: '100%' }}
-						search
+					<ComboboxControl
+						__next40pxDefaultSize
+						__nextHasNoMarginBottom
 						label={__('Default country', 'surecart')}
 						placeholder={__('Country', 'surecart')}
-						choices={choices}
+						options={choices}
 						value={default_country}
-						onScChange={(e) =>
-							setAttributes({
-								default_country: e.target.value,
-							})
+						onChange={(value) =>
+							setAttributes({ default_country: value ?? '' })
 						}
+						isLoading={isLoading}
 					/>
 				</PanelBody>
 			</InspectorControls>
