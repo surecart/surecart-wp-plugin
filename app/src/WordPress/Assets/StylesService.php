@@ -35,8 +35,7 @@ class StylesService {
 			filemtime( trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/components/surecart/surecart.css' ),
 		);
 		$brand = \SureCart::account()->brand;
-		$theme = \SureCart::theme()->getTheme();
-		$color = ( 'dark' === $theme && ! empty( $brand->dark_color ) ) ? $brand->dark_color : ( $brand->color ?? '000' );
+		$color = \SureCart::theme()->brandColor();
 
 		$style = file_get_contents( plugin_dir_path( SURECART_PLUGIN_FILE ) . 'dist/blocks/cloak.css' );
 

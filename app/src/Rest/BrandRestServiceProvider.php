@@ -143,6 +143,7 @@ class BrandRestServiceProvider extends RestServiceProvider implements RestServic
 				'theme'            => [
 					'description' => esc_html__( 'The affiliate portal theme (light or dark).', 'surecart' ),
 					'type'        => 'string',
+					'enum'        => [ 'light', 'dark' ],
 					'context'     => [ 'view', 'edit' ],
 				],
 				'dark_color'       => [

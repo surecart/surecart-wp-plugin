@@ -17,7 +17,7 @@ class Block extends BaseBlock {
 	 * @return string
 	 */
 	public function render( $attributes, $content ) {
-		$logo = \SureCart::theme()->getLogoUrl();
+		$logo = \SureCart::theme()->logoUrl();
 
 		if ( empty( $logo ) ) {
 			return;

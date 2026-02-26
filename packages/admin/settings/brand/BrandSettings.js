@@ -139,7 +139,7 @@ export default () => {
 								`}
 							>
 								<ColorPopup
-									color={`#${item?.dark_color}`}
+									color={`#${item?.dark_color ?? ''}`}
 									setColor={(color) => {
 										editItem({
 											dark_color: color?.hex.replace(
@@ -206,7 +206,7 @@ export default () => {
 								`}
 							>
 								<ColorPopup
-									color={`#${item?.color}`}
+									color={`#${item?.color ?? ''}`}
 									setColor={(color) => {
 										editItem({
 											color: color?.hex.replace(

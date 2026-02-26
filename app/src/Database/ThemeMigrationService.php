@@ -37,6 +37,13 @@ class ThemeMigrationService extends GeneralMigration {
 			return;
 		}
 
+		// Safety: stop retrying after 3 failed attempts.
+		$attempts = (int) get_transient( 'sc_theme_migration_attempts' ) ?: 0;
+		if ( $attempts >= 3 ) {
+			return;
+		}
+		set_transient( 'sc_theme_migration_attempts', $attempts + 1, HOUR_IN_SECONDS );
+
 		// Check if account/brand is available.
 		$brand = \SureCart::account()->brand;
 		if ( empty( $brand ) || is_wp_error( $brand ) ) {
@@ -70,6 +77,9 @@ class ThemeMigrationService extends GeneralMigration {
 			$this->prevent_complete = true;
 			return;
 		}
+
+		// Clean up the old WP option now that it's migrated to the API.
+		delete_option( 'surecart_theme' );
 	}
 
 	/**
