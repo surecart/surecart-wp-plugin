@@ -53,6 +53,7 @@ export default () => {
 						'discount',
 						'discount.coupon',
 						'customer',
+						'customer.balances',
 					],
 				},
 			];
