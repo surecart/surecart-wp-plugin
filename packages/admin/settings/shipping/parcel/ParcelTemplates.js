@@ -13,6 +13,7 @@ import {
 	ScMenuItem,
 	ScStackedList,
 	ScStackedListRow,
+	ScTag,
 } from '@surecart/components-react';
 import ParcelTemplateForm from './ParcelTemplateForm';
 
@@ -105,44 +106,62 @@ export default () => {
 							<ScStackedListRow
 								key={parcel.id}
 								style={{
-									'--columns': '4',
+									'--columns': '2',
 								}}
 							>
-								<strong>
-									{parcel.name}
-									{parcel.is_default && (
-										<span
-											css={css`
-												margin-left: var(
-													--sc-spacing-x-small
-												);
-												font-size: 0.75em;
-												font-weight: normal;
-												color: var(
-													--sc-color-primary-500
-												);
-											`}
-										>
-											({__('Default', 'surecart')})
-										</span>
-									)}
-								</strong>
-								<div
+								<ScIcon
+									name={
+										parcel.type === 'polymailer'
+											? 'mail'
+											: 'package'
+									}
+									slot="prefix"
 									css={css`
-										color: var(--sc-color-gray-600);
+										font-size: 20px;
+										color: var(--sc-color-gray-500);
 									`}
-								>
-									{TYPE_LABELS[parcel.type] || parcel.type}
-								</div>
-								<div
-									css={css`
-										color: var(--sc-color-gray-600);
-									`}
-								>
-									{getDimensionsSummary(parcel)}
-									{parcel.weight
-										? ` · ${parcel.weight} ${parcel.weight_unit}`
-										: ''}
+								/>
+								<div>
+									<div
+										css={css`
+											display: flex;
+											align-items: center;
+											gap: var(--sc-spacing-x-small);
+										`}
+									>
+										<strong>{parcel.name}</strong>
+										{parcel.is_default && (
+											<ScTag
+												type="primary"
+												size="small"
+											>
+												{__('Default', 'surecart')}
+											</ScTag>
+										)}
+									</div>
+									<div
+										css={css`
+											color: var(--sc-color-gray-500);
+											font-size: var(
+												--sc-font-size-small
+											);
+											margin-top: var(
+												--sc-spacing-xx-small
+											);
+										`}
+									>
+										{[
+											TYPE_LABELS[parcel.type] ||
+												parcel.type,
+											getDimensionsSummary(parcel) !==
+												'\u2013' &&
+												getDimensionsSummary(parcel),
+											parcel.weight &&
+												`${parcel.weight} ${parcel.weight_unit}`,
+										]
+											.filter(Boolean)
+											.join(' · ')}
+									</div>
 								</div>
 								<div>
 									<ScDropdown
