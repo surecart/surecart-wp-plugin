@@ -12,7 +12,7 @@ See `CLAUDE.md` for architecture details, `app/CLAUDE.md` for PHP patterns, and 
 
 1. **Start Docker daemon** (if not already running): `sudo dockerd &>/tmp/dockerd.log &` then `sudo chmod 666 /var/run/docker.sock`
 2. **Start wp-env**: `yarn wp-env start` — starts WordPress on port 8000 (dev) and 8889 (tests)
-3. **Build assets**: `npx wp-scripts build` builds admin/store webpack bundles into `dist/`. Also run `yarn workspace @surecart/blocks-next build` for next-gen blocks.
+3. **Build assets**: First run `yarn bootstrap` to build Stencil web components, React wrappers, and legacy blocks (in dependency order). Then run `npx wp-scripts build` for admin/store webpack bundles into `dist/`, and `yarn workspace @surecart/blocks-next build` for next-gen blocks.
 4. **Dev watch mode**: `yarn dev` runs `composer install && yarn start:workspace` which watches all packages. This is a long-running process.
 
 ### wp-env gotcha: plugin directory name
