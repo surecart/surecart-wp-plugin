@@ -303,7 +303,7 @@ class AdminMenuPageService {
 			'dashboard' => $this->getPage( 'dashboard', __( 'Customer Area', 'surecart' ) ),
 			'forms'     => \add_submenu_page( $this->slug, __( 'Forms', 'surecart' ), '<span class="sc-menu-divider">' . __( 'Custom Forms', 'surecart' ) . '</span>', 'manage_options', 'edit.php?post_type=sc_form', '' ),
 			'settings'  => \add_submenu_page( $this->slug, __( 'Settings', 'surecart' ), __( 'Settings', 'surecart' ), 'manage_options', 'sc-settings', '__return_false' ),
-			'learn'     => \add_submenu_page( $this->slug, __( 'Learn', 'surecart' ), __( 'Learn', 'surecart' ) . '<span class="sc-new-badge"></span>', 'manage_options', 'admin.php?page=sc-settings&tab=learn', '' ),
+			'learn'     => \add_submenu_page( $this->slug, __( 'Learn', 'surecart' ), __( 'Learn', 'surecart' ) . $this->getLearnBadge(), 'manage_options', 'admin.php?page=sc-settings&tab=learn', '' ),
 		);
 	}
 
@@ -410,5 +410,28 @@ class AdminMenuPageService {
 		}
 
 		return $file;
+	}
+
+	/**
+	 * Get the learn menu badge showing remaining steps count.
+	 *
+	 * Total is synced from JS via the surecart_learn_total_steps option.
+	 *
+	 * @return string
+	 */
+	protected function getLearnBadge() {
+		$total_steps = (int) get_option( 'surecart_learn_total_steps', 0 );
+		if ( ! $total_steps ) {
+			return '';
+		}
+
+		$completed = get_option( 'surecart_learn_completed_steps', [] );
+		$remaining = $total_steps - count( (array) $completed );
+
+		if ( $remaining > 0 ) {
+			return sprintf( ' <span class="awaiting-mod">%d</span>', $remaining );
+		}
+
+		return '';
 	}
 }

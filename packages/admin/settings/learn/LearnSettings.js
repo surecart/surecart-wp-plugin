@@ -2,7 +2,7 @@
 import { css, jsx } from '@emotion/core';
 import { useState, useMemo } from '@wordpress/element';
 import { __, sprintf } from '@wordpress/i18n';
-import { ScIcon, ScSpinner } from '@surecart/components-react';
+import { ScAlert, ScIcon, ScSpinner } from '@surecart/components-react';
 import SettingsTemplate from '../SettingsTemplate';
 import LearnSection from './components/LearnSection';
 import useLearnProgress from './hooks/useLearnProgress';
@@ -100,6 +100,16 @@ export default function LearnSettings() {
 				</div>
 			) : (
 				<div css={ sectionsStyles }>
+					{ incompleteSections.length === 0 && (
+						<ScAlert type="success" open>
+							<ScIcon name="check-circle" slot="icon" />
+							{ __(
+								"Your store setup is complete! You're ready to start selling.",
+								'surecart'
+							) }
+						</ScAlert>
+					) }
+
 					{ incompleteSections.map( ( section, index ) => (
 						<LearnSection
 							key={ section.id }

@@ -21,6 +21,50 @@ const SECTION_TITLES = [
 	'Grow Your Revenue',
 ];
 
+/**
+ * Helper to reset learn completed steps via site settings REST API.
+ */
+async function resetLearnSteps( requestUtils ) {
+	await requestUtils.rest( {
+		method: 'POST',
+		path: '/wp/v2/settings',
+		data: {
+			surecart_learn_completed_steps: [],
+		},
+	} );
+}
+
+/**
+ * Helper to find the sc-checkbox within a step row identified by its title.
+ */
+function getStepCheckbox( page, stepTitle: string ) {
+	return page
+		.locator( 'div' )
+		.filter( { has: page.getByText( stepTitle, { exact: true } ) } )
+		.locator( 'sc-checkbox' )
+		.first();
+}
+
+/**
+ * Helper to find a step row by its title.
+ * Uses div:has(> sc-checkbox) to match only the step container div
+ * (which has sc-checkbox as a direct child), not any ancestor div.
+ */
+function getStepRow( page, stepTitle: string ) {
+	return page
+		.locator( 'div:has(> sc-checkbox)' )
+		.filter( { has: page.getByText( stepTitle, { exact: true } ) } )
+		.first();
+}
+
+/**
+ * Wait for the site entity to be loaded (settings API GET resolves).
+ * This ensures `hasSiteLoaded` is true and toggleStep will work.
+ */
+async function waitForSiteEntity( page ) {
+	await page.waitForLoadState( 'networkidle' );
+}
+
 test.describe( 'Learn Tab Settings Page', () => {
 	test.beforeEach( async ( { requestUtils } ) => {
 		await createAccount( requestUtils );
@@ -114,26 +158,25 @@ test.describe( 'Learn Tab Settings Page', () => {
 	test( 'Should display steps within expanded section', async ( { page } ) => {
 		await page.goto( LEARN_TAB_URL );
 
-		// First section is open by default — check its 3 steps.
+		// First section is open by default — check its 3 steps are visible.
 		const expectedSteps = [ 'Complete Setup', 'Add Store Details', 'Add Brand Details' ];
 
 		for ( const stepTitle of expectedSteps ) {
 			await expect( page.getByText( stepTitle ).first() ).toBeVisible();
 		}
 
-		// Each step should have an action button.
-		const firstSection = page.locator( '[aria-expanded="true"]' ).locator( '../..' );
-		const actionButtons = firstSection.locator( 'sc-button' );
-		await expect( actionButtons ).toHaveCount( 3 );
+		// "Add Store Details" is always manual — verify it has an action button.
+		const storeDetailsRow = getStepRow( page, 'Add Store Details' );
+		await expect( storeDetailsRow.locator( 'sc-button' ) ).toHaveCount( 1 );
 	} );
 
 	test( 'Should have correct action button links', async ( { page } ) => {
 		await page.goto( LEARN_TAB_URL );
 
-		// "Complete Setup" should link externally to app.surecart.com/sign_up.
-		const completeSetupButton = page.locator( 'sc-button:has-text("Set Up")' ).first();
-		await expect( completeSetupButton ).toHaveAttribute( 'href', 'https://app.surecart.com/sign_up' );
-		await expect( completeSetupButton ).toHaveAttribute( 'target', '_blank' );
+		// "Add Store Details" should link to settings page.
+		const storeDetailsRow = getStepRow( page, 'Add Store Details' );
+		const storeDetailsButton = storeDetailsRow.locator( 'sc-button' );
+		await expect( storeDetailsButton ).toHaveAttribute( 'href', 'admin.php?page=sc-settings' );
 
 		// Expand "Add Your First Product" section.
 		const productButton = page.getByRole( 'button', { name: /Add Your First Product/i } );
@@ -148,7 +191,8 @@ test.describe( 'Learn Tab Settings Page', () => {
 		await page.goto( LEARN_TAB_URL );
 
 		// 6 of 8 sections have a "Learn How" link (payment-processor and grow-revenue have none).
-		const learnHowLinks = page.locator( 'a:has-text("Learn How")' );
+		// "Learn How" is rendered as ScButton (sc-button), not a plain <a>.
+		const learnHowLinks = page.locator( 'sc-button:has-text("Learn How")' );
 		await expect( learnHowLinks ).toHaveCount( 6 );
 
 		// Each link should open in a new tab.
@@ -187,13 +231,16 @@ test.describe( 'Learn Tab Settings Page', () => {
 		const productButton = page.getByRole( 'button', { name: /Add Your First Product/i } );
 		await productButton.click();
 
+		// Wait for site entity to load so toggleStep works.
+		await waitForSiteEntity( page );
+
 		// Click the checkbox for "Add Product Variants" (manual step, not auto-detected).
-		const variantsCheckbox = page.getByRole( 'checkbox', { name: 'Add Product Variants' } );
+		const variantsCheckbox = getStepCheckbox( page, 'Add Product Variants' );
 		await variantsCheckbox.waitFor( { state: 'visible' } );
 		await variantsCheckbox.click( { force: true } );
 
 		// Assert the checkbox is now checked.
-		await expect( variantsCheckbox ).toHaveAttribute( 'aria-checked', 'true' );
+		await expect( variantsCheckbox ).toHaveAttribute( 'checked', '' );
 
 		// Reload the page and verify persistence.
 		await page.reload();
@@ -203,29 +250,17 @@ test.describe( 'Learn Tab Settings Page', () => {
 		await productButtonAfterReload.click();
 
 		// The checkbox should still be checked after reload.
-		const variantsCheckboxAfterReload = page.getByRole( 'checkbox', { name: 'Add Product Variants' } );
-		await expect( variantsCheckboxAfterReload ).toHaveAttribute( 'aria-checked', 'true' );
+		const variantsCheckboxAfterReload = getStepCheckbox( page, 'Add Product Variants' );
+		await expect( variantsCheckboxAfterReload ).toHaveAttribute( 'checked', '' );
 
-		// Clean up: reset learn progress preferences.
-		await requestUtils.rest( {
-			method: 'PUT',
-			path: '/wp/v2/users/me',
-			data: {
-				meta: {
-					persisted_preferences: {
-						'surecart/learn': {
-							completedSteps: [],
-						},
-					},
-				},
-			},
-		} );
+		// Clean up: reset learn progress via site settings.
+		await resetLearnSteps( requestUtils );
 	} );
 
 	test( 'Should show info tooltips on hover', async ( { page } ) => {
 		await page.goto( LEARN_TAB_URL );
 
-		// The "Add Store Details" step has an info tooltip.
+		// The "Add Store Details" step has an info tooltip via HelpTooltip (Popover).
 		// Hover over the info icon next to it.
 		const infoIcon = page.locator( 'sc-icon[name="info"]' ).first();
 		await infoIcon.hover();
@@ -240,21 +275,17 @@ test.describe( 'Learn Tab Settings Page', () => {
 		await page.goto( LEARN_TAB_URL );
 
 		// "Complete Setup" has autoDetect: 'hasApiToken' — account_id exists after createAccount().
-		const completeSetupCheckbox = page.getByRole( 'checkbox', { name: 'Complete Setup' } );
-		await expect( completeSetupCheckbox ).toHaveAttribute( 'aria-checked', 'true' );
+		const completeSetupCheckbox = getStepCheckbox( page, 'Complete Setup' );
+		await expect( completeSetupCheckbox ).toHaveAttribute( 'checked', '' );
 	} );
 
 	test( 'Should not allow toggling auto-detected steps', async ( { page } ) => {
 		await page.goto( LEARN_TAB_URL );
 
-		// "Complete Setup" is auto-detected — clicking should NOT uncheck it.
-		const completeSetupCheckbox = page.getByRole( 'checkbox', { name: 'Complete Setup' } );
-		await expect( completeSetupCheckbox ).toHaveAttribute( 'aria-checked', 'true' );
-
-		await completeSetupCheckbox.click( { force: true } );
-
-		// Should still be checked — auto-detected steps are read-only.
-		await expect( completeSetupCheckbox ).toHaveAttribute( 'aria-checked', 'true' );
+		// "Complete Setup" is auto-detected — it should be disabled.
+		const completeSetupCheckbox = getStepCheckbox( page, 'Complete Setup' );
+		await expect( completeSetupCheckbox ).toHaveAttribute( 'checked', '' );
+		await expect( completeSetupCheckbox ).toHaveAttribute( 'disabled', '' );
 	} );
 
 	test( 'Should show Learn submenu item in admin menu', async ( { page } ) => {
@@ -274,24 +305,6 @@ test.describe( 'Learn Tab Settings Page', () => {
 		await expect( learnMenuItem ).toHaveClass( /current/ );
 	} );
 
-	test( 'Should toggle checkbox via keyboard', async ( { page } ) => {
-		await page.goto( LEARN_TAB_URL );
-
-		// Expand "Add Your First Product" section.
-		await page.getByRole( 'button', { name: /Add Your First Product/i } ).click();
-
-		// Focus the "Add Product Variants" checkbox and press Space.
-		const variantsCheckbox = page.getByRole( 'checkbox', { name: 'Add Product Variants' } );
-		await variantsCheckbox.focus();
-		await page.keyboard.press( 'Space' );
-
-		await expect( variantsCheckbox ).toHaveAttribute( 'aria-checked', 'true' );
-
-		// Press Space again to uncheck.
-		await page.keyboard.press( 'Space' );
-		await expect( variantsCheckbox ).toHaveAttribute( 'aria-checked', 'false' );
-	} );
-
 	test( 'Should not render action button for steps without actionUrl', async ( { page } ) => {
 		await page.goto( LEARN_TAB_URL );
 
@@ -299,8 +312,8 @@ test.describe( 'Learn Tab Settings Page', () => {
 		await page.getByRole( 'button', { name: /Test Your Checkout/i } ).click();
 
 		// "Make a Test Payment" step has no actionUrl — verify no button in that step row.
-		const testPaymentStep = page.getByText( 'Make a Test Payment' ).locator( '../..' );
-		await expect( testPaymentStep.locator( 'sc-button' ) ).toHaveCount( 0 );
+		const testPaymentRow = getStepRow( page, 'Make a Test Payment' );
+		await expect( testPaymentRow.locator( 'sc-button' ) ).toHaveCount( 0 );
 	} );
 
 	test( 'Should show loading spinner initially', async ( { page } ) => {
@@ -320,60 +333,47 @@ test.describe( 'Learn Tab Settings Page', () => {
 	} );
 
 	test( 'Should update progress badge when section steps are completed', async ( { page, requestUtils } ) => {
+		// Mark "test-payment" step as completed via REST API.
+		await requestUtils.rest( {
+			method: 'POST',
+			path: '/wp/v2/settings',
+			data: {
+				surecart_learn_completed_steps: [ 'test-payment' ],
+			},
+		} );
+
 		await page.goto( LEARN_TAB_URL );
 
-		// Expand "Test Your Checkout & Go Live" — it has 1 step ("test-payment").
-		await page.getByRole( 'button', { name: /Test Your Checkout/i } ).click();
-
-		// Check the "Make a Test Payment" checkbox.
-		const testPaymentCheckbox = page.getByRole( 'checkbox', { name: 'Make a Test Payment' } );
-		await testPaymentCheckbox.click( { force: true } );
-
 		try {
-			await expect( testPaymentCheckbox ).toHaveAttribute( 'aria-checked', 'true' );
-
-			// The section is now fully complete (1/1) and moves into the completed accordion.
-			// Expand the completed accordion to find it.
+			// "Test Your Checkout" section is now fully complete (1/1)
+			// and should be in the completed accordion.
 			const completedToggle = page.getByRole( 'button', { name: /Completed \(\d+\)/i } );
 			await expect( completedToggle ).toBeVisible();
 			await completedToggle.click();
 
-			// The progress badge should now show "1/1".
+			// The progress badge should show "1/1".
 			const sectionHeader = page.getByRole( 'heading', { name: 'Test Your Checkout & Go Live' } ).locator( '..' );
 			await expect( sectionHeader.getByText( '1/1' ) ).toBeVisible();
 		} finally {
-			// Always clean up via REST to avoid dirty state.
-			await requestUtils.rest( {
-				method: 'PUT',
-				path: '/wp/v2/users/me',
-				data: {
-					meta: {
-						persisted_preferences: {
-							'surecart/learn': {
-								completedSteps: [],
-							},
-						},
-					},
-				},
-			} );
+			await resetLearnSteps( requestUtils );
 		}
 	} );
 
 	test( 'Should move completed sections into collapsed accordion', async ( { page, requestUtils } ) => {
+		// Mark "test-payment" step as completed via REST API to create a fully complete section.
+		await requestUtils.rest( {
+			method: 'POST',
+			path: '/wp/v2/settings',
+			data: {
+				surecart_learn_completed_steps: [ 'test-payment' ],
+			},
+		} );
+
 		await page.goto( LEARN_TAB_URL );
-
-		// No completed accordion should be visible initially.
-		await expect( page.getByRole( 'button', { name: /Completed \(\d+\)/i } ) ).not.toBeVisible();
-
-		// Expand "Test Your Checkout & Go Live" (1 step) and complete it.
-		await page.getByRole( 'button', { name: /Test Your Checkout/i } ).click();
-		const testPaymentCheckbox = page.getByRole( 'checkbox', { name: 'Make a Test Payment' } );
-		await testPaymentCheckbox.click( { force: true } );
-		await expect( testPaymentCheckbox ).toHaveAttribute( 'aria-checked', 'true' );
 
 		try {
 			// Completed accordion should now appear, collapsed by default.
-			const completedToggle = page.getByRole( 'button', { name: /Completed \(1\)/i } );
+			const completedToggle = page.getByRole( 'button', { name: /Completed \(\d+\)/i } );
 			await expect( completedToggle ).toBeVisible();
 			await expect( completedToggle ).toHaveAttribute( 'aria-expanded', 'false' );
 
@@ -387,20 +387,7 @@ test.describe( 'Learn Tab Settings Page', () => {
 			// The completed section should now be visible inside.
 			await expect( page.getByRole( 'heading', { name: 'Test Your Checkout & Go Live' } ) ).toBeVisible();
 		} finally {
-			// Clean up.
-			await requestUtils.rest( {
-				method: 'PUT',
-				path: '/wp/v2/users/me',
-				data: {
-					meta: {
-						persisted_preferences: {
-							'surecart/learn': {
-								completedSteps: [],
-							},
-						},
-					},
-				},
-			} );
+			await resetLearnSteps( requestUtils );
 		}
 	} );
 

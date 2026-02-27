@@ -319,6 +319,32 @@ class SettingService {
 				'default'           => false,
 			]
 		);
+		$this->register(
+			'surecart',
+			'learn_completed_steps',
+			[
+				'type'         => 'array',
+				'show_in_rest' => [
+					'schema' => [
+						'type'  => 'array',
+						'items' => [
+							'type' => 'string',
+						],
+					],
+				],
+				'default'      => [],
+			]
+		);
+		$this->register(
+			'surecart',
+			'learn_total_steps',
+			[
+				'type'              => 'integer',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'absint',
+				'default'           => 20,
+			]
+		);
 	}
 	/**
 	 * Register a setting.

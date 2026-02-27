@@ -79,10 +79,17 @@
 			<sc-icon slot="prefix" style="width: 18px; height: 18px; opacity: 0.7;" name="zap"></sc-icon>
 			<?php esc_html_e( 'Integrations', 'surecart' ); ?>
 		</sc-tab>
+		<?php
+		$learn_total     = (int) get_option( 'surecart_learn_total_steps', 0 );
+		$learn_completed = get_option( 'surecart_learn_completed_steps', [] );
+		$learn_remaining = $learn_total ? $learn_total - count( (array) $learn_completed ) : 0;
+		?>
 		<sc-tab href="<?php echo esc_url( add_query_arg( [ 'tab' => 'learn' ], menu_page_url( 'sc-settings', false ) ) ); ?>" <?php echo 'learn' === $tab ? 'active' : ''; ?>>
 			<sc-icon slot="prefix" style="width: 18px; height: 18px;" name="book-open"></sc-icon>
 			<?php esc_html_e( 'Learn', 'surecart' ); ?>
-			<span class="sc-new-badge"></span>
+			<?php if ( $learn_remaining > 0 ) : ?>
+				<span class="awaiting-mod"><?php echo (int) $learn_remaining; ?></span>
+			<?php endif; ?>
 		</sc-tab>
 	<?php endif; ?>
 

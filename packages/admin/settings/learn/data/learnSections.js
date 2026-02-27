@@ -234,7 +234,9 @@ const learnSections = [
 					'surecart'
 				),
 				actionLabel: __( 'Edit Shop', 'surecart' ),
-				actionUrl: 'admin.php?page=sc-products',
+				actionUrl:
+					window.scData?.shop_page_edit_url ||
+					'admin.php?page=sc-settings&tab=learn',
 				infoTooltip: __(
 					'Design your product catalog page using WordPress blocks.',
 					'surecart'
