@@ -112,6 +112,17 @@ Account (shop)
 └── Affiliation -> Referral -> ReferralItem
 ```
 
+## PHPUnit Tests
+
+**Run via Docker** (never run phpunit directly):
+
+```bash
+yarn run test:php                             # full suite
+yarn run test:php --group=specific-test-group # specific group(s)
+```
+
+**Location:** `.dev/tests/php/unit/` — mirrors `app/src/` structure. Extend `SureCartUnitTestCase` (which extends `WP_UnitTestCase`). Use `\Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration` trait. Bootstrap only the providers you need in `setUp()`. WP functions (`get_option`, `update_option`, `wp_set_current_user`, etc.) work natively. Mock SureCart facade services via `\SureCart::alias('account', fn() => ...)`. `tearDown` cleanup is automatic.
+
 ## Critical Gotchas
 
 1. **Never edit `dist/`** — edit source in `packages/`, then build
