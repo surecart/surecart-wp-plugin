@@ -52,7 +52,9 @@ export default ({ fields = [], isOverridden, onReset }) => {
 				</ScTag>
 			</ScButton>
 			<ScMenu>
-				<ScMenuLabel>{__('Reset Overrides', 'surecart')}</ScMenuLabel>
+				<ScMenuLabel>
+					{__('Reset Variant Overrides', 'surecart')}
+				</ScMenuLabel>
 				{overriddenFields.map((field) => (
 					<ScMenuItem
 						key={field.key}
