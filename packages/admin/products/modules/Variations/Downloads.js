@@ -58,7 +58,7 @@ export default ({
 		}
 
 		const payload = {
-			variant: variant?.id,
+			variant: variant.id,
 			enabled: true,
 		};
 
@@ -111,6 +111,7 @@ export default ({
 							download={download}
 							key={download.id}
 							variant={variant}
+							product={product}
 						/>
 					))}
 
@@ -125,6 +126,7 @@ export default ({
 								download={download}
 								key={download.id}
 								variant={variant}
+								product={product}
 							/>
 						))}
 				</ScStackedList>
