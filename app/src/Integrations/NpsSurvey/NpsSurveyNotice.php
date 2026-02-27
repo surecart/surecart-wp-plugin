@@ -3,19 +3,11 @@
 namespace SureCart\Integrations\NpsSurvey;
 
 use Nps_Survey;
-use SureCart\Models\ApiToken;
 
 /**
  * Nps Survey Notice.
  */
 class NpsSurveyNotice {
-	/**
-	 * Option name for setup completion date.
-	 *
-	 * @var string
-	 */
-	public const SETUP_DATE_OPTION = 'surecart_nps_setup_date';
-
 	/**
 	 * Option name for last NPS submission date.
 	 *
@@ -61,75 +53,6 @@ class NpsSurveyNotice {
 		add_filter( 'nps_survey_post_data', [ $this, 'getNpsSurveyPostData' ], 10 );
 		add_filter( 'nps_survey_api_endpoint', [ $this, 'getNpsSurveyApiEndpoint' ], 11, 2 );
 		add_filter( 'nps_survey_should_skip_status_update', [ $this, 'handleStatusUpdate' ], 10, 2 );
-
-		// Track when account is first connected (new user setup).
-		add_action( 'updated_option', [ $this, 'onApiTokenUpdated' ], 10, 3 );
-		add_action( 'added_option', [ $this, 'onApiTokenAdded' ], 10, 2 );
-	}
-
-	/**
-	 * Track setup completion when API token is first updated.
-	 *
-	 * @param string $option    Option name.
-	 * @param mixed  $old_value Old option value.
-	 * @param mixed  $value     New option value.
-	 * @return void
-	 */
-	public function onApiTokenUpdated( string $option, $old_value, $value ): void {
-		if ( 'sc_api_token' !== $option ) {
-			return;
-		}
-
-		// Only record on first-time connection (no previous token).
-		if ( empty( $old_value ) && ! empty( $value ) ) {
-			$this->recordSetupDate();
-		}
-	}
-
-	/**
-	 * Track setup completion when API token is first added.
-	 *
-	 * @param string $option Option name.
-	 * @param mixed  $value  Option value.
-	 * @return void
-	 */
-	public function onApiTokenAdded( string $option, $value ): void {
-		if ( 'sc_api_token' !== $option || empty( $value ) ) {
-			return;
-		}
-		$this->recordSetupDate();
-	}
-
-	/**
-	 * Record setup completion date if not already set.
-	 *
-	 * @return void
-	 */
-	protected function recordSetupDate(): void {
-		if ( get_option( self::SETUP_DATE_OPTION ) ) {
-			return;
-		}
-		update_option( self::SETUP_DATE_OPTION, time(), false );
-	}
-
-	/**
-	 * Check if setup was completed at least 15 days ago.
-	 *
-	 * For existing users without a setup date, sets the date to now
-	 * so their 15-day countdown begins from this plugin update.
-	 *
-	 * @return bool
-	 */
-	protected function isSetupOldEnough(): bool {
-		$setup_date = get_option( self::SETUP_DATE_OPTION );
-
-		// Existing users without a tracked setup date: start their countdown now.
-		if ( ! $setup_date ) {
-			update_option( self::SETUP_DATE_OPTION, time(), false );
-			return false;
-		}
-
-		return time() - (int) $setup_date >= self::DAYS_AFTER_SETUP * DAY_IN_SECONDS;
 	}
 
 	/**
@@ -138,11 +61,6 @@ class NpsSurveyNotice {
 	 * @return bool
 	 */
 	protected function isReadyToShow(): bool {
-		// Setup must have completed at least 15 days ago.
-		if ( ! $this->isSetupOldEnough() ) {
-			return false;
-		}
-
 		// Must not have been submitted within the last 90 days.
 		$last_submitted = get_option( self::LAST_SUBMITTED_OPTION );
 		if ( $last_submitted && time() - (int) $last_submitted < self::DAYS_BETWEEN_SURVEYS * DAY_IN_SECONDS ) {
@@ -237,7 +155,7 @@ class NpsSurveyNotice {
 			[
 				'show_if'          => true,
 				'dismiss_timespan' => self::DAYS_BETWEEN_SURVEYS * DAY_IN_SECONDS,
-				'display_after'    => 0, // Timing handled by isReadyToShow().
+				'display_after'    => self::DAYS_AFTER_SETUP * DAY_IN_SECONDS,
 				'dismiss_count'    => 0, // We handle dismissals ourselves in handleStatusUpdate().
 				'plugin_slug'      => 'surecart',
 				'allow_review'     => true, // Enables promoter (8-10) vs non-promoter (<8) split.
