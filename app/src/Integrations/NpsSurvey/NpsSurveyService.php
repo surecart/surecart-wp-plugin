@@ -41,7 +41,12 @@ class NpsSurveyService {
 			return;
 		}
 
-		$file_data = json_decode( file_get_contents( $file ), true );
+		$contents = file_get_contents( $file );
+		if ( false === $contents ) {
+			return;
+		}
+
+		$file_data = json_decode( $contents, true );
 
 		global $nps_survey_version, $nps_survey_init;
 

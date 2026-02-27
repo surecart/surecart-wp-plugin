@@ -202,7 +202,7 @@ class NpsSurveyNotice {
 			return $post_data;
 		}
 
-		$plan                      = $account->plan ?? null;
+		$plan                      = $account->plan;
 		$post_data['is_free_plan'] = $plan->free ?? true;
 		$post_data['plan_slug']    = $plan->name ?? '';
 
