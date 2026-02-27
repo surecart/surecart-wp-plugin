@@ -30,6 +30,10 @@ class NpsSurveyServiceProvider implements ServiceProviderInterface {
 	 * @param  \Pimple\Container $container Service Container.
 	 */
 	public function bootstrap( $container ) {
+		if ( ! $container['surecart.account']->is_connected ) {
+			return;
+		}
+
 		$container['surecart.nps.survey']->bootstrap();
 		$container['surecart.nps.survey.notice']->bootstrap();
 	}

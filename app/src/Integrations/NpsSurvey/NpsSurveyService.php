@@ -11,7 +11,7 @@ class NpsSurveyService {
 	 *
 	 * @var string
 	 */
-	public string $nps_lib_path;
+	private string $nps_lib_path;
 
 	/**
 	 * Constructor.
@@ -55,7 +55,7 @@ class NpsSurveyService {
 		$version = $file_data['nps-survey'] ?? 0;
 
 		if ( null === $nps_survey_version ) {
-			$nps_survey_version = '1.0.0';
+			$nps_survey_version = '0.0.0';
 		}
 
 		// Compare versions.
@@ -73,7 +73,7 @@ class NpsSurveyService {
 	public function load(): void {
 		global $nps_survey_version, $nps_survey_init;
 
-		if ( is_file( realpath( $nps_survey_init ) ) ) {
+		if ( $nps_survey_init && is_file( realpath( $nps_survey_init ) ) ) {
 			include_once realpath( $nps_survey_init );
 		}
 	}

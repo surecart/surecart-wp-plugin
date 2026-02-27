@@ -138,11 +138,6 @@ class NpsSurveyNotice {
 	 * @return bool
 	 */
 	protected function isReadyToShow(): bool {
-		// Must have an account connected.
-		if ( ! ApiToken::get() ) {
-			return false;
-		}
-
 		// Setup must have completed at least 15 days ago.
 		if ( ! $this->isSetupOldEnough() ) {
 			return false;
@@ -197,14 +192,9 @@ class NpsSurveyNotice {
 			return $post_data;
 		}
 
-		$account = \SureCart::account();
-		if ( empty( $account->plan ) ) {
-			return $post_data;
-		}
-
-		$plan                      = $account->plan;
-		$post_data['is_free_plan'] = $plan->free ?? true;
-		$post_data['plan_slug']    = $plan->name ?? '';
+		$account                   = \SureCart::account();
+		$post_data['is_free_plan'] = $account->plan->free ?? true;
+		$post_data['plan_slug']    = $account->plan->name ?? '';
 
 		return $post_data;
 	}
