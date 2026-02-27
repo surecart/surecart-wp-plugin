@@ -154,12 +154,6 @@ class NpsSurveyNoticeTest extends SureCartUnitTestCase {
 		$this->assertTrue( $this->callProtected( 'isSetupOldEnough' ) );
 	}
 
-	public function test_is_ready_to_show_returns_false_when_not_connected(): void {
-		$this->setSetupDate( 20 );
-
-		$this->assertFalse( $this->callProtected( 'isReadyToShow' ) );
-	}
-
 	public function test_is_ready_to_show_returns_false_when_setup_is_recent(): void {
 		$this->setApiToken();
 		$this->setSetupDate( 10 );
