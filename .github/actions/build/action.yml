@@ -44,7 +44,7 @@ runs:
     - name: Configure Composer GitHub Auth
       shell: bash
       if: ${{ inputs.github_token }}
-      run: composer config -g github-oauth.github.com ${{ inputs.github_token }}
+      run: composer config -g github-oauth.github.com "${{ inputs.github_token }}"
 
     - name: Composer Install
       shell: bash
