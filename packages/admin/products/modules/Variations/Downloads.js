@@ -147,7 +147,7 @@ export default ({
 						isOverridden={isOverridden}
 						onReset={(fieldKey) =>
 							updateVariant({
-								[fieldKey]: product?.[fieldKey] ?? null,
+								[fieldKey]: null,
 							})
 						}
 					/>
