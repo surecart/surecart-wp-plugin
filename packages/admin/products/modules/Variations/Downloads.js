@@ -15,7 +15,7 @@ import {
 	ScTag,
 } from '@surecart/components-react';
 import { store as coreStore } from '@wordpress/core-data';
-import { useDispatch } from '@wordpress/data';
+import { useDispatch, useSelect } from '@wordpress/data';
 import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
@@ -45,6 +45,23 @@ export default ({
 		variant,
 		product,
 	});
+
+	const { productDownloads } = useSelect(
+		(select) => {
+			if (!product?.id) {
+				return { productDownloads: [] };
+			}
+			return {
+				productDownloads:
+					select(coreStore).getEntityRecords('surecart', 'download', {
+						context: 'edit',
+						product_ids: [product.id],
+						per_page: 1,
+					}) || [],
+			};
+		},
+		[product?.id]
+	);
 
 	const addDownload = async (media, isExternal) => {
 		if (!variant?.id) {
@@ -143,7 +160,7 @@ export default ({
 						fields={[
 							{
 								key: 'downloads_enabled',
-								label: __('Downloads enabled', 'surecart'),
+								label: __('Enable Downloads', 'surecart'),
 							},
 						]}
 						isOverridden={isOverridden}
@@ -246,6 +263,23 @@ export default ({
 								</ScSwitch>
 							)}
 						</div>
+
+						{!!productDownloads?.length && (
+							<div
+								css={css`
+									font-size: var(
+										--sc-input-help-text-font-size-medium
+									);
+									color: var(--sc-input-help-text-color);
+									margin-top: var(--sc-spacing-small);
+								`}
+							>
+								{__(
+									'Downloads added here will replace the product downloads for this variant.',
+									'surecart'
+								)}
+							</div>
+						)}
 
 						{(downloadsFetching || isSaving) && (
 							<ScBlockUi spinner />
