@@ -1256,6 +1256,11 @@ class Product extends Model implements PageModel {
 			return '';
 		}
 
-		return $this->permalink ? add_query_arg( 'product-review-form', $this->id, $this->permalink ) : '';
+		$product_post_id = $this->post->ID ?? null;
+		if ( empty( $product_post_id ) ) {
+			return '';
+		}
+
+		return $this->permalink ? add_query_arg( 'product-review-form', $product_post_id, $this->permalink ) : '';
 	}
 }

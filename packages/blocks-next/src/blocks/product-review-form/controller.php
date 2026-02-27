@@ -1,12 +1,12 @@
 <?php
-$product_id     = isset( $_GET['product-review-form'] ) ? sanitize_text_field( wp_unslash( $_GET['product-review-form'] ) ) : null;
+$product_id     = isset( $_GET['product-review-form'] ) ? absint( $_GET['product-review-form'] ) : null; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 $has_product_id = ! empty( $product_id );
 
 // Only fetch product if we have an ID (for server-side rendering when opened via URL).
 $product       = sc_get_product( $product_id );
 $sc_product_id = $product ? $product->id : '';
 
-$close_url      = $has_product_id && ! empty( $product->permalink ) ? $product->permalink : '';
+$close_url      = $has_product_id ? get_permalink( $product_id ) : '';
 $position_class = $attributes['alignment'] ? 'position-' . str_replace( ' ', '-', $attributes['alignment'] ) : '';
 
 $styles = sc_get_block_styles( false );
