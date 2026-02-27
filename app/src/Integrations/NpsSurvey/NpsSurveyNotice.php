@@ -263,9 +263,9 @@ class NpsSurveyNotice {
 					'feedback_content'      => __( "Thanks. This means a lot!\n\nIf you've got a minute, a review on WordPress would mean the world to us. It helps others find us and keeps our momentum strong.", 'surecart' ),
 					'plugin_rating_link'    => esc_url( 'https://wordpress.org/support/plugin/surecart/reviews/#new-post' ),
 
-					// General score (score 0-7): "comment" step — default for all scores < 8.
+					// General score (score 1-7): "comment" step — default for all scores < 8.
 					'plugin_rating_title'   => __( 'Thanks for your honest feedback! 😊', 'surecart' ),
-					'plugin_rating_content' => __( "Sounds like we're close, but not quite there. What's holding you back from giving a 10?\n\nIf there's anything you wish was better or easier, we'd really love to hear it. Your reply could help us make things better at SureCart.", 'surecart' ),
+					'plugin_rating_content' => __( "We'd love to understand what's not working or what's missing for you. What can SureCart improve to earn a higher score from you?", 'surecart' ),
 				],
 			]
 		);
