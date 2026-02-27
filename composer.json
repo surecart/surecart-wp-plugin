@@ -51,7 +51,7 @@
 		{
 			"name": "brainstormforce/nps-survey",
 			"type": "vcs",
-			"url": "git@github.com:brainstormforce/nps-survey.git"
+			"url": "https://github.com/brainstormforce/nps-survey.git"
 		}
 	],
 	"autoload": {

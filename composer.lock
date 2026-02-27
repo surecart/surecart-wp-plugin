@@ -11,7 +11,7 @@
 			"version": "1.0.16",
 			"source": {
 				"type": "git",
-				"url": "git@github.com:brainstormforce/nps-survey.git",
+				"url": "https://github.com/brainstormforce/nps-survey.git",
 				"reference": "bdabfacea1abd84feca540999a8231232fbc7cf9"
 			},
 			"dist": {
