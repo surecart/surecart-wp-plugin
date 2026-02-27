@@ -41,6 +41,7 @@ jobs:
         with:
           bootstrap: true
           package: true
+          github_token: ${{ secrets.COMPOSER_AUTH_TOKEN }}
 
       - name: Upload Plugin
         uses: actions/upload-artifact@v4
