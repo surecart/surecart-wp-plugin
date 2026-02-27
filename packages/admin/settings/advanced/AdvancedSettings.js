@@ -16,6 +16,7 @@ import useEntity from '../../hooks/useEntity';
 import Error from '../../components/Error';
 import useSave from '../UseSave';
 import CustomerSyncModal from './components/CustomerSyncModal';
+import WooCommerceImportModal from './components/WooCommerceImportModal';
 import { useEntityProp } from '@wordpress/core-data';
 import ProductSyncButton from './components/ProductSyncButton';
 
@@ -503,6 +504,35 @@ export default () => {
 						<ProductSyncButton />
 					</div>
 				</div>
+				{scData?.is_woocommerce_active && (
+					<div
+						css={css`
+							display: flex;
+							gap: 1em;
+							justify-content: space-between;
+							--sc-input-label-margin: 0;
+						`}
+					>
+						<ScFormControl
+							label={__('WooCommerce Products', 'surecart')}
+							help={__(
+								'Import your WooCommerce products into SureCart.',
+								'surecart'
+							)}
+						/>
+						<div>
+							<ScButton
+								onClick={() => setModal('woo-import')}
+							>
+								<ScIcon
+									name="download-cloud"
+									slot="prefix"
+								></ScIcon>
+								{__('Import', 'surecart')}
+							</ScButton>
+						</div>
+					</div>
+				)}
 			</SettingsBox>
 
 			<SettingsBox
@@ -553,6 +583,10 @@ export default () => {
 
 			<CustomerSyncModal
 				open={modal === 'customer-sync'}
+				onRequestClose={() => setModal(null)}
+			/>
+			<WooCommerceImportModal
+				open={modal === 'woo-import'}
 				onRequestClose={() => setModal(null)}
 			/>
 		</SettingsTemplate>

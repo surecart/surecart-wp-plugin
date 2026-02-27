@@ -1,7 +1,7 @@
 <?php
 /**
  * WooCommerce function stubs for testing.
- * These must be in the global namespace so the service can call them.
+ * These must be in the global namespace so the mapper can call them.
  */
 
 namespace {
@@ -98,45 +98,27 @@ namespace {
 		}
 	}
 
-	if ( ! function_exists( 'as_has_scheduled_action' ) ) {
-		function as_has_scheduled_action( $hook, $args = null, $group = '' ) {
-			global $test_as_has_scheduled_action;
-			return $test_as_has_scheduled_action ?? false;
-		}
-	}
-
-	if ( ! function_exists( 'as_enqueue_async_action' ) ) {
-		function as_enqueue_async_action( $hook, $args = [], $group = '' ) {
-			global $test_as_enqueue_result;
-			$GLOBALS['test_as_enqueue_args'] = [
-				'hook'  => $hook,
-				'args'  => $args,
-				'group' => $group,
-			];
-			return $test_as_enqueue_result ?? 1;
-		}
-	}
 }
 
 namespace SureCart\Tests\Sync {
 
-	use SureCart\Sync\WooCommerceProductsSyncService;
+	use SureCart\Sync\WooCommerce\WooCommerceProductMapper;
 	use SureCart\Tests\SureCartUnitTestCase;
 
 	/**
-	 * Tests for WooCommerceProductsSyncService.
+	 * Tests for WooCommerceProductMapper.
 	 *
 	 * @group woo_import
 	 */
-	class WooCommerceProductsSyncServiceTest extends SureCartUnitTestCase {
+	class WooCommerceProductMapperTest extends SureCartUnitTestCase {
 		use \Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 
 		/**
-		 * The service instance.
+		 * The mapper instance.
 		 *
-		 * @var WooCommerceProductsSyncService
+		 * @var WooCommerceProductMapper
 		 */
-		protected $service;
+		protected $mapper;
 
 		/**
 		 * Set up the test environment.
@@ -153,7 +135,7 @@ namespace SureCart\Tests\Sync {
 				false
 			);
 
-			$this->service = new WooCommerceProductsSyncService();
+			$this->mapper = new WooCommerceProductMapper();
 
 			// Mock the account alias to prevent BadMethodCallException from CollectionTaxonomyService.
 			\SureCart::alias(
@@ -165,8 +147,6 @@ namespace SureCart\Tests\Sync {
 
 			// Reset globals.
 			$GLOBALS['test_woocommerce_currency']     = 'USD';
-			$GLOBALS['test_as_has_scheduled_action']   = false;
-			$GLOBALS['test_as_enqueue_result']         = 1;
 			$GLOBALS['test_wc_products_result']        = null;
 			$GLOBALS['test_wc_get_product_result']     = null;
 			$GLOBALS['test_wc_verified_owner']         = false;
@@ -181,8 +161,6 @@ namespace SureCart\Tests\Sync {
 		public function tearDown(): void {
 			unset(
 				$GLOBALS['test_woocommerce_currency'],
-				$GLOBALS['test_as_has_scheduled_action'],
-				$GLOBALS['test_as_enqueue_result'],
 				$GLOBALS['test_wc_products_result'],
 				$GLOBALS['test_wc_get_product_result'],
 				$GLOBALS['test_wc_verified_owner']
@@ -274,333 +252,18 @@ namespace SureCart\Tests\Sync {
 		}
 
 		// =========================================================================
-		// Group 1: bootstrap() — 2 tests
-		// =========================================================================
-
-		/**
-		 * @group woo_import
-		 */
-		public function test_bootstrap_registers_admin_notices_action() {
-			$this->service->bootstrap();
-			$this->assertNotFalse( has_action( 'admin_notices', [ $this->service, 'showSyncNotice' ] ) );
-		}
-
-		/**
-		 * @group woo_import
-		 */
-		public function test_bootstrap_registers_sync_action_hook() {
-			$this->service->bootstrap();
-			$this->assertNotFalse( has_action( 'surecart/sync/woocommerce_products', [ $this->service, 'sync' ] ) );
-		}
-
-		// =========================================================================
-		// Group 2: isRunning() — 2 tests
-		// =========================================================================
-
-		/**
-		 * @group woo_import
-		 */
-		public function test_is_running_returns_true_when_action_scheduled() {
-			$GLOBALS['test_as_has_scheduled_action'] = true;
-			$this->assertTrue( $this->service->isRunning() );
-		}
-
-		/**
-		 * @group woo_import
-		 */
-		public function test_is_running_returns_false_when_no_action_scheduled() {
-			$GLOBALS['test_as_has_scheduled_action'] = false;
-			$this->assertFalse( $this->service->isRunning() );
-		}
-
-		// =========================================================================
-		// Group 3: showSyncNotice() — 2 tests
-		// =========================================================================
-
-		/**
-		 * @group woo_import
-		 */
-		public function test_show_sync_notice_outputs_nothing_when_not_running() {
-			$service = \Mockery::mock( WooCommerceProductsSyncService::class )->makePartial();
-			$service->shouldReceive( 'isRunning' )->andReturn( false );
-
-			ob_start();
-			$service->showSyncNotice();
-			$output = ob_get_clean();
-
-			$this->assertEmpty( $output );
-		}
-
-		/**
-		 * @group woo_import
-		 */
-		public function test_show_sync_notice_outputs_notice_when_running() {
-			$service = \Mockery::mock( WooCommerceProductsSyncService::class )->makePartial();
-			$service->shouldReceive( 'isRunning' )->andReturn( true );
-
-			// Mock SureCart notices.
-			$notices = \Mockery::mock( 'stdClass' );
-			$notices->shouldReceive( 'render' )->once()->andReturn( '<div class="notice">WooCommerce products import in progress.</div>' );
-			\SureCart::alias(
-				'notices',
-				function () use ( $notices ) {
-					return $notices;
-				}
-			);
-
-			ob_start();
-			$service->showSyncNotice();
-			$output = ob_get_clean();
-
-			$this->assertStringContainsString( 'import in progress', $output );
-		}
-
-		// =========================================================================
-		// Group 4: dispatch() — 3 tests
-		// =========================================================================
-
-		/**
-		 * @group woo_import
-		 */
-		public function test_dispatch_calls_as_enqueue_with_defaults() {
-			$result = $this->service->dispatch();
-			$this->assertSame( 1, $result );
-		}
-
-		/**
-		 * @group woo_import
-		 */
-		public function test_dispatch_with_custom_page_and_batch_size() {
-			$GLOBALS['test_as_enqueue_result'] = 42;
-			$result = $this->service->dispatch( 3, 50 );
-			$this->assertSame( 42, $result );
-		}
-
-		/**
-		 * @group woo_import
-		 */
-		public function test_dispatch_applies_batch_size_filter() {
-			$GLOBALS['test_as_enqueue_args'] = null;
-
-			add_filter(
-				'surecart/sync/woocommerce_products/batch_size',
-				function () {
-					return 25;
-				}
-			);
-
-			$result = $this->service->dispatch( 1, 100 );
-			$this->assertSame( 1, $result );
-
-			// Verify the filtered batch_size (25) was passed, not the original (100).
-			$this->assertNotNull( $GLOBALS['test_as_enqueue_args'] );
-			$this->assertSame( 25, $GLOBALS['test_as_enqueue_args']['args']['batch_size'] );
-		}
-
-		// =========================================================================
-		// Group 5: sync() — 6 tests
-		// =========================================================================
-
-		/**
-		 * @group woo_import
-		 */
-		public function test_sync_returns_null_with_empty_products_via_partial_mock() {
-			// Partial mock: sync returns null when no products are found.
-			$service = \Mockery::mock( WooCommerceProductsSyncService::class )->makePartial();
-
-			$GLOBALS['test_wc_products_result'] = (object) [
-				'products'      => [],
-				'max_num_pages' => 0,
-			];
-
-			$result = $service->sync( 1, 10 );
-			$this->assertNull( $result );
-		}
-
-		/**
-		 * @group woo_import
-		 */
-		public function test_sync_does_not_create_import_when_batch_is_empty() {
-			$GLOBALS['test_wc_products_result'] = (object) [
-				'products'      => [],
-				'max_num_pages' => 1,
-			];
-
-			// sync should return void, no ProductImport created.
-			$result = $this->service->sync( 1, 10 );
-			$this->assertNull( $result );
-		}
-
-		/**
-		 * @group woo_import
-		 */
-		public function test_sync_dispatches_next_page_when_more_pages_exist() {
-			$product = $this->createMockProduct();
-
-			$GLOBALS['test_wc_products_result']    = (object) [
-				'products'      => [ 123 ],
-				'max_num_pages' => 3,
-			];
-			$GLOBALS['test_wc_get_product_result'] = $product;
-
-			$service = \Mockery::mock( WooCommerceProductsSyncService::class )->makePartial();
-			$service->shouldReceive( 'dispatch' )->once()->with( 2, 10 )->andReturn( 1 );
-
-			// Mock the batch import so it doesn't actually call the API.
-			\Mockery::mock( 'overload:' . \SureCart\Models\ProductImport::class )
-				->shouldReceive( 'create' )
-				->andReturn( (object) [ 'id' => 'import_123' ] );
-
-			$result = $service->sync( 1, 10 );
-			$this->assertSame( 1, $result );
-		}
-
-		/**
-		 * @group woo_import
-		 */
-		public function test_sync_does_not_dispatch_when_on_last_page() {
-			$GLOBALS['test_wc_products_result'] = (object) [
-				'products'      => [],
-				'max_num_pages' => 1,
-			];
-
-			$result = $this->service->sync( 1, 10 );
-			$this->assertNull( $result );
-		}
-
-		/**
-		 * @group woo_import
-		 */
-		public function test_sync_uses_default_parameters() {
-			$GLOBALS['test_wc_products_result'] = (object) [
-				'products'      => [],
-				'max_num_pages' => 1,
-			];
-
-			// Should not throw - just returns null on last page with no products.
-			$result = $this->service->sync();
-			$this->assertNull( $result );
-		}
-
-		/**
-		 * @group woo_import
-		 */
-		public function test_sync_clears_batch_after_import() {
-			$product = $this->createMockProduct();
-
-			$GLOBALS['test_wc_products_result']    = (object) [
-				'products'      => [ 123 ],
-				'max_num_pages' => 1,
-			];
-			$GLOBALS['test_wc_get_product_result'] = $product;
-
-			\Mockery::mock( 'overload:' . \SureCart\Models\ProductImport::class )
-				->shouldReceive( 'create' )
-				->andReturn( (object) [ 'id' => 'import_123' ] );
-
-			$service = new WooCommerceProductsSyncService();
-			$service->sync( 1, 10 );
-
-			// After sync, the internal batch should be cleared.
-			$reflection = new \ReflectionClass( $service );
-			$property   = $reflection->getProperty( 'products_import_batch' );
-			$property->setAccessible( true );
-			$this->assertEmpty( $property->getValue( $service ) );
-		}
-
-		// =========================================================================
-		// Group 6: syncProduct() — 5 tests
-		// =========================================================================
-
-		/**
-		 * @group woo_import
-		 */
-		public function test_sync_product_returns_early_when_product_is_null() {
-			$GLOBALS['test_wc_get_product_result'] = null;
-
-			$service = \Mockery::mock( WooCommerceProductsSyncService::class )->makePartial();
-			$service->shouldNotReceive( 'mapWooCommerceProductToSureCart' );
-
-			$service->syncProduct( 999 );
-
-			// No exception, method returned early.
-			$this->assertTrue( true );
-		}
-
-		/**
-		 * @group woo_import
-		 */
-		public function test_sync_product_returns_early_for_grouped_product() {
-			$product = $this->createMockProduct( [ 'get_type' => 'grouped' ] );
-			$GLOBALS['test_wc_get_product_result'] = $product;
-
-			$service = \Mockery::mock( WooCommerceProductsSyncService::class )->makePartial();
-			$service->shouldNotReceive( 'mapWooCommerceProductToSureCart' );
-
-			$service->syncProduct( 123 );
-			$this->assertTrue( true );
-		}
-
-		/**
-		 * @group woo_import
-		 */
-		public function test_sync_product_processes_simple_product() {
-			$product = $this->createMockProduct( [ 'get_type' => 'simple' ] );
-			$GLOBALS['test_wc_get_product_result'] = $product;
-
-			$service = \Mockery::mock( WooCommerceProductsSyncService::class )->makePartial();
-			$service->shouldReceive( 'mapWooCommerceProductToSureCart' )->once()->with( $product );
-
-			$service->syncProduct( 123 );
-		}
-
-		/**
-		 * @group woo_import
-		 */
-		public function test_sync_product_processes_variable_product() {
-			$product = $this->createMockProduct( [ 'get_type' => 'variable' ] );
-			$GLOBALS['test_wc_get_product_result'] = $product;
-
-			$service = \Mockery::mock( WooCommerceProductsSyncService::class )->makePartial();
-			$service->shouldReceive( 'mapWooCommerceProductToSureCart' )->once()->with( $product );
-
-			$service->syncProduct( 123 );
-		}
-
-		/**
-		 * @group woo_import
-		 */
-		public function test_sync_product_catches_exceptions_silently() {
-			$product = $this->createMockProduct();
-			$GLOBALS['test_wc_get_product_result'] = $product;
-
-			$service = \Mockery::mock( WooCommerceProductsSyncService::class )->makePartial();
-			$service->shouldReceive( 'mapWooCommerceProductToSureCart' )
-				->once()
-				->andThrow( new \Exception( 'Test exception' ) );
-
-			// Should not throw.
-			$service->syncProduct( 123 );
-			$this->assertTrue( true );
-		}
-
-		// =========================================================================
 		// Group 7: mapWooCommerceProductToSureCart() — 4 tests
 		// =========================================================================
 
 		/**
 		 * @group woo_import
 		 */
-		public function test_map_woo_product_adds_to_import_batch() {
+		public function test_map_woo_product_returns_product_data() {
 			$product = $this->createMockProduct();
-			$this->service->mapWooCommerceProductToSureCart( $product );
+			$data = $this->mapper->mapWooCommerceProductToSureCart( $product );
 
-			$reflection = new \ReflectionClass( $this->service );
-			$property   = $reflection->getProperty( 'products_import_batch' );
-			$property->setAccessible( true );
-			$batch = $property->getValue( $this->service );
-
-			$this->assertCount( 1, $batch );
+			$this->assertIsArray( $data );
+			$this->assertArrayHasKey( 'name', $data );
 		}
 
 		/**
@@ -608,13 +271,7 @@ namespace SureCart\Tests\Sync {
 		 */
 		public function test_map_woo_product_includes_all_sections_for_simple_product() {
 			$product = $this->createMockProduct();
-			$this->service->mapWooCommerceProductToSureCart( $product );
-
-			$reflection = new \ReflectionClass( $this->service );
-			$property   = $reflection->getProperty( 'products_import_batch' );
-			$property->setAccessible( true );
-			$batch = $property->getValue( $this->service );
-			$data  = $batch[0];
+			$data = $this->mapper->mapWooCommerceProductToSureCart( $product );
 
 			$this->assertArrayHasKey( 'name', $data );
 			$this->assertArrayHasKey( 'slug', $data );
@@ -644,13 +301,7 @@ namespace SureCart\Tests\Sync {
 				]
 			);
 
-			$this->service->mapWooCommerceProductToSureCart( $product );
-
-			$reflection = new \ReflectionClass( $this->service );
-			$property   = $reflection->getProperty( 'products_import_batch' );
-			$property->setAccessible( true );
-			$batch = $property->getValue( $this->service );
-			$data  = $batch[0];
+			$data = $this->mapper->mapWooCommerceProductToSureCart( $product );
 
 			$this->assertArrayHasKey( 'variant_options', $data );
 			$this->assertArrayHasKey( 'variants', $data );
@@ -669,13 +320,7 @@ namespace SureCart\Tests\Sync {
 			);
 
 			$product = $this->createMockProduct();
-			$this->service->mapWooCommerceProductToSureCart( $product );
-
-			$reflection = new \ReflectionClass( $this->service );
-			$property   = $reflection->getProperty( 'products_import_batch' );
-			$property->setAccessible( true );
-			$batch = $property->getValue( $this->service );
-			$data  = $batch[0];
+			$data = $this->mapper->mapWooCommerceProductToSureCart( $product );
 
 			$this->assertSame( 'filtered_value', $data['custom_field'] );
 		}
@@ -689,7 +334,7 @@ namespace SureCart\Tests\Sync {
 		 */
 		public function test_map_core_fields_returns_correct_name() {
 			$product = $this->createMockProduct( [ 'get_name' => 'My Product' ] );
-			$result  = $this->service->mapCoreFields( $product );
+			$result  = $this->mapper->mapCoreFields( $product );
 			$this->assertSame( 'My Product', $result['name'] );
 		}
 
@@ -698,7 +343,7 @@ namespace SureCart\Tests\Sync {
 		 */
 		public function test_map_core_fields_returns_correct_slug() {
 			$product = $this->createMockProduct( [ 'get_slug' => 'my-product' ] );
-			$result  = $this->service->mapCoreFields( $product );
+			$result  = $this->mapper->mapCoreFields( $product );
 			$this->assertSame( 'my-product', $result['slug'] );
 		}
 
@@ -707,7 +352,7 @@ namespace SureCart\Tests\Sync {
 		 */
 		public function test_map_core_fields_maps_featured_status() {
 			$product = $this->createMockProduct( [ 'is_featured' => true ] );
-			$result  = $this->service->mapCoreFields( $product );
+			$result  = $this->mapper->mapCoreFields( $product );
 			$this->assertTrue( $result['featured'] );
 		}
 
@@ -721,7 +366,7 @@ namespace SureCart\Tests\Sync {
 					'get_sku'         => 'SKU-001',
 				]
 			);
-			$result = $this->service->mapCoreFields( $product );
+			$result = $this->mapper->mapCoreFields( $product );
 			$this->assertSame( 'A great product', $result['description'] );
 			$this->assertSame( 'SKU-001', $result['sku'] );
 		}
@@ -731,7 +376,7 @@ namespace SureCart\Tests\Sync {
 		 */
 		public function test_map_core_fields_sets_archived_for_trash_status() {
 			$product = $this->createMockProduct( [ 'get_status' => 'trash' ] );
-			$result  = $this->service->mapCoreFields( $product );
+			$result  = $this->mapper->mapCoreFields( $product );
 			$this->assertTrue( $result['archived'] );
 		}
 
@@ -740,7 +385,7 @@ namespace SureCart\Tests\Sync {
 		 */
 		public function test_map_core_fields_sets_archived_false_for_non_trash() {
 			$product = $this->createMockProduct( [ 'get_status' => 'publish' ] );
-			$result  = $this->service->mapCoreFields( $product );
+			$result  = $this->mapper->mapCoreFields( $product );
 			$this->assertFalse( $result['archived'] );
 		}
 
@@ -750,7 +395,7 @@ namespace SureCart\Tests\Sync {
 		public function test_map_core_fields_maps_cataloged_at_from_date_created() {
 			$date    = new \WC_DateTime( '2024-01-15 10:00:00' );
 			$product = $this->createMockProduct( [ 'get_date_created' => $date ] );
-			$result  = $this->service->mapCoreFields( $product );
+			$result  = $this->mapper->mapCoreFields( $product );
 			$this->assertNotNull( $result['cataloged_at'] );
 			$this->assertIsInt( $result['cataloged_at'] );
 			$this->assertSame( $date->getTimestamp(), $result['cataloged_at'] );
@@ -761,7 +406,7 @@ namespace SureCart\Tests\Sync {
 		 */
 		public function test_map_core_fields_maps_cataloged_at_null_when_no_date() {
 			$product = $this->createMockProduct( [ 'get_date_created' => null ] );
-			$result  = $this->service->mapCoreFields( $product );
+			$result  = $this->mapper->mapCoreFields( $product );
 			$this->assertNull( $result['cataloged_at'] );
 		}
 
@@ -770,7 +415,7 @@ namespace SureCart\Tests\Sync {
 		 */
 		public function test_map_core_fields_omits_position_field() {
 			$product = $this->createMockProduct( [ 'get_menu_order' => 5 ] );
-			$result  = $this->service->mapCoreFields( $product );
+			$result  = $this->mapper->mapCoreFields( $product );
 			$this->assertArrayNotHasKey( 'position', $result );
 		}
 
@@ -779,7 +424,7 @@ namespace SureCart\Tests\Sync {
 		 */
 		public function test_map_core_fields_sets_purchase_limit_when_sold_individually() {
 			$product = $this->createMockProduct( [ 'get_sold_individually' => true ] );
-			$result  = $this->service->mapCoreFields( $product );
+			$result  = $this->mapper->mapCoreFields( $product );
 			$this->assertSame( 1, $result['purchase_limit'] );
 		}
 
@@ -788,7 +433,7 @@ namespace SureCart\Tests\Sync {
 		 */
 		public function test_map_core_fields_omits_purchase_limit_when_not_sold_individually() {
 			$product = $this->createMockProduct( [ 'get_sold_individually' => false ] );
-			$result  = $this->service->mapCoreFields( $product );
+			$result  = $this->mapper->mapCoreFields( $product );
 			$this->assertArrayNotHasKey( 'purchase_limit', $result );
 		}
 
@@ -801,7 +446,7 @@ namespace SureCart\Tests\Sync {
 			update_post_meta( $post_id, '_license_activation_limit', '5' );
 
 			$product = $this->createMockProduct( [ 'get_id' => $post_id ] );
-			$result  = $this->service->mapCoreFields( $product );
+			$result  = $this->mapper->mapCoreFields( $product );
 
 			$this->assertTrue( $result['licensing_enabled'] );
 			$this->assertSame( 5, $result['license_activation_limit'] );
@@ -821,7 +466,7 @@ namespace SureCart\Tests\Sync {
 					'get_catalog_visibility' => 'visible',
 				]
 			);
-			$this->assertSame( 'published', $this->service->mapStatus( $product ) );
+			$this->assertSame( 'published', $this->mapper->mapStatus( $product ) );
 		}
 
 		/**
@@ -834,7 +479,7 @@ namespace SureCart\Tests\Sync {
 					'get_catalog_visibility' => 'hidden',
 				]
 			);
-			$this->assertSame( 'draft', $this->service->mapStatus( $product ) );
+			$this->assertSame( 'draft', $this->mapper->mapStatus( $product ) );
 		}
 
 		/**
@@ -842,7 +487,7 @@ namespace SureCart\Tests\Sync {
 		 */
 		public function test_map_status_returns_draft_for_private() {
 			$product = $this->createMockProduct( [ 'get_status' => 'private' ] );
-			$this->assertSame( 'draft', $this->service->mapStatus( $product ) );
+			$this->assertSame( 'draft', $this->mapper->mapStatus( $product ) );
 		}
 
 		/**
@@ -850,7 +495,7 @@ namespace SureCart\Tests\Sync {
 		 */
 		public function test_map_status_returns_draft_for_draft() {
 			$product = $this->createMockProduct( [ 'get_status' => 'draft' ] );
-			$this->assertSame( 'draft', $this->service->mapStatus( $product ) );
+			$this->assertSame( 'draft', $this->mapper->mapStatus( $product ) );
 		}
 
 		/**
@@ -858,7 +503,7 @@ namespace SureCart\Tests\Sync {
 		 */
 		public function test_map_status_returns_draft_for_pending() {
 			$product = $this->createMockProduct( [ 'get_status' => 'pending' ] );
-			$this->assertSame( 'draft', $this->service->mapStatus( $product ) );
+			$this->assertSame( 'draft', $this->mapper->mapStatus( $product ) );
 		}
 
 		// =========================================================================
@@ -871,7 +516,7 @@ namespace SureCart\Tests\Sync {
 		public function test_is_subscription_returns_true_when_active() {
 			\WC_Subscriptions_Product::$mock_is_subscription = true;
 			$product = $this->createMockProduct();
-			$this->assertTrue( $this->service->isSubscriptionProduct( $product ) );
+			$this->assertTrue( $this->mapper->isSubscriptionProduct( $product ) );
 		}
 
 		/**
@@ -880,7 +525,7 @@ namespace SureCart\Tests\Sync {
 		public function test_is_subscription_returns_false_when_not_subscription() {
 			\WC_Subscriptions_Product::$mock_is_subscription = false;
 			$product = $this->createMockProduct();
-			$this->assertFalse( $this->service->isSubscriptionProduct( $product ) );
+			$this->assertFalse( $this->mapper->isSubscriptionProduct( $product ) );
 		}
 
 		// =========================================================================
@@ -894,7 +539,7 @@ namespace SureCart\Tests\Sync {
 			$post_id = self::factory()->post->create();
 			update_post_meta( $post_id, '_has_license', 'yes' );
 			$product = $this->createMockProduct( [ 'get_id' => $post_id ] );
-			$this->assertTrue( $this->service->hasLicensing( $product ) );
+			$this->assertTrue( $this->mapper->hasLicensing( $product ) );
 		}
 
 		/**
@@ -904,7 +549,7 @@ namespace SureCart\Tests\Sync {
 			$post_id = self::factory()->post->create();
 			update_post_meta( $post_id, '_has_license', 'no' );
 			$product = $this->createMockProduct( [ 'get_id' => $post_id ] );
-			$this->assertFalse( $this->service->hasLicensing( $product ) );
+			$this->assertFalse( $this->mapper->hasLicensing( $product ) );
 		}
 
 		/**
@@ -914,7 +559,7 @@ namespace SureCart\Tests\Sync {
 			$post_id = self::factory()->post->create();
 			update_post_meta( $post_id, '_license_activation_limit', '5' );
 			$product = $this->createMockProduct( [ 'get_id' => $post_id ] );
-			$this->assertSame( 5, $this->service->getLicenseActivationLimit( $product ) );
+			$this->assertSame( 5, $this->mapper->getLicenseActivationLimit( $product ) );
 		}
 
 		/**
@@ -923,7 +568,7 @@ namespace SureCart\Tests\Sync {
 		public function test_get_license_activation_limit_returns_null_when_empty() {
 			$post_id = self::factory()->post->create();
 			$product = $this->createMockProduct( [ 'get_id' => $post_id ] );
-			$this->assertNull( $this->service->getLicenseActivationLimit( $product ) );
+			$this->assertNull( $this->mapper->getLicenseActivationLimit( $product ) );
 		}
 
 		// =========================================================================
@@ -935,7 +580,7 @@ namespace SureCart\Tests\Sync {
 		 */
 		public function test_map_prices_returns_single_price_for_simple_product() {
 			$product = $this->createMockProduct();
-			$result  = $this->service->mapPrices( $product );
+			$result  = $this->mapper->mapPrices( $product );
 			$this->assertCount( 1, $result );
 		}
 
@@ -944,7 +589,7 @@ namespace SureCart\Tests\Sync {
 		 */
 		public function test_map_prices_converts_amount_to_cents() {
 			$product = $this->createMockProduct( [ 'get_price' => '20.00' ] );
-			$result  = $this->service->mapPrices( $product );
+			$result  = $this->mapper->mapPrices( $product );
 			$this->assertSame( 2000, $result[0]['amount'] );
 		}
 
@@ -953,7 +598,7 @@ namespace SureCart\Tests\Sync {
 		 */
 		public function test_map_prices_includes_currency() {
 			$product = $this->createMockProduct();
-			$result  = $this->service->mapPrices( $product );
+			$result  = $this->mapper->mapPrices( $product );
 			$this->assertSame( 'usd', $result[0]['currency'] );
 		}
 
@@ -962,7 +607,7 @@ namespace SureCart\Tests\Sync {
 		 */
 		public function test_map_prices_includes_name_with_product_name() {
 			$product = $this->createMockProduct( [ 'get_name' => 'Fancy Shoes' ] );
-			$result  = $this->service->mapPrices( $product );
+			$result  = $this->mapper->mapPrices( $product );
 			$this->assertStringContainsString( 'Fancy Shoes', $result[0]['name'] );
 		}
 
@@ -978,7 +623,7 @@ namespace SureCart\Tests\Sync {
 					'get_price'         => '14.99',
 				]
 			);
-			$result = $this->service->mapPrices( $product );
+			$result = $this->mapper->mapPrices( $product );
 			$this->assertSame( 2999, $result[0]['scratch_amount'] );
 			$this->assertSame( 1499, $result[0]['amount'] );
 		}
@@ -988,7 +633,7 @@ namespace SureCart\Tests\Sync {
 		 */
 		public function test_map_prices_omits_scratch_amount_when_not_on_sale() {
 			$product = $this->createMockProduct( [ 'is_on_sale' => false ] );
-			$result  = $this->service->mapPrices( $product );
+			$result  = $this->mapper->mapPrices( $product );
 			$this->assertArrayNotHasKey( 'scratch_amount', $result[0] );
 		}
 
@@ -1002,7 +647,7 @@ namespace SureCart\Tests\Sync {
 					'get_tax_class' => 'standard',
 				]
 			);
-			$result = $this->service->mapPrices( $product );
+			$result = $this->mapper->mapPrices( $product );
 			$this->assertSame( 456, $result[0]['metadata']['wc_product_id'] );
 			$this->assertSame( 'regular', $result[0]['metadata']['wc_price_type'] );
 			$this->assertSame( 'standard', $result[0]['metadata']['wc_tax_class'] );
@@ -1028,7 +673,7 @@ namespace SureCart\Tests\Sync {
 					'get_date_on_sale_to'   => $mock_to,
 				]
 			);
-			$result = $this->service->mapPrices( $product );
+			$result = $this->mapper->mapPrices( $product );
 
 			$this->assertArrayHasKey( 'wc_sale_start', $result[0]['metadata'] );
 			$this->assertArrayHasKey( 'wc_sale_end', $result[0]['metadata'] );
@@ -1047,7 +692,7 @@ namespace SureCart\Tests\Sync {
 			\WC_Subscriptions_Product::$mock_length    = 12;
 
 			$product = $this->createMockProduct( [ 'get_price' => '9.99', 'get_name' => 'Sub Product' ] );
-			$result  = $this->service->mapSubscriptionPrices( $product );
+			$result  = $this->mapper->mapSubscriptionPrices( $product );
 
 			$this->assertCount( 1, $result );
 			$this->assertSame( 'month', $result[0]['recurring_interval'] );
@@ -1063,7 +708,7 @@ namespace SureCart\Tests\Sync {
 			\WC_Subscriptions_Product::$mock_trial_period  = 'week';
 
 			$product = $this->createMockProduct();
-			$result  = $this->service->mapSubscriptionPrices( $product );
+			$result  = $this->mapper->mapSubscriptionPrices( $product );
 			$this->assertSame( 14, $result[0]['trial_duration_days'] );
 		}
 
@@ -1074,7 +719,7 @@ namespace SureCart\Tests\Sync {
 			\WC_Subscriptions_Product::$mock_sign_up_fee = 25.00;
 
 			$product = $this->createMockProduct();
-			$result  = $this->service->mapSubscriptionPrices( $product );
+			$result  = $this->mapper->mapSubscriptionPrices( $product );
 
 			$this->assertTrue( $result[0]['setup_fee_enabled'] );
 			$this->assertSame( 2500, $result[0]['setup_fee_amount'] );
@@ -1087,7 +732,7 @@ namespace SureCart\Tests\Sync {
 			\WC_Subscriptions_Product::$mock_sign_up_fee = 0;
 
 			$product = $this->createMockProduct();
-			$result  = $this->service->mapSubscriptionPrices( $product );
+			$result  = $this->mapper->mapSubscriptionPrices( $product );
 
 			$this->assertFalse( $result[0]['setup_fee_enabled'] );
 			$this->assertSame( 0, $result[0]['setup_fee_amount'] );
@@ -1106,7 +751,7 @@ namespace SureCart\Tests\Sync {
 				]
 			);
 
-			$result = $this->service->mapSubscriptionPrices( $product );
+			$result = $this->mapper->mapSubscriptionPrices( $product );
 			$this->assertSame( 1499, $result[0]['scratch_amount'] );
 		}
 
@@ -1121,7 +766,7 @@ namespace SureCart\Tests\Sync {
 				]
 			);
 
-			$result = $this->service->mapSubscriptionPrices( $product );
+			$result = $this->mapper->mapSubscriptionPrices( $product );
 			$this->assertArrayNotHasKey( 'scratch_amount', $result[0] );
 		}
 
@@ -1130,7 +775,7 @@ namespace SureCart\Tests\Sync {
 		 */
 		public function test_map_subscription_prices_includes_metadata() {
 			$product = $this->createMockProduct( [ 'get_id' => 789 ] );
-			$result  = $this->service->mapSubscriptionPrices( $product );
+			$result  = $this->mapper->mapSubscriptionPrices( $product );
 
 			$this->assertTrue( $result[0]['metadata']['wc_subscription_product'] );
 			$this->assertSame( 789, $result[0]['metadata']['wc_product_id'] );
@@ -1148,7 +793,7 @@ namespace SureCart\Tests\Sync {
 			\WC_Subscriptions_Product::$mock_trial_period  = 'day';
 
 			$product = $this->createMockProduct();
-			$this->assertNull( $this->service->getTrialDays( $product ) );
+			$this->assertNull( $this->mapper->getTrialDays( $product ) );
 		}
 
 		/**
@@ -1159,7 +804,7 @@ namespace SureCart\Tests\Sync {
 			\WC_Subscriptions_Product::$mock_trial_period  = '';
 
 			$product = $this->createMockProduct();
-			$this->assertNull( $this->service->getTrialDays( $product ) );
+			$this->assertNull( $this->mapper->getTrialDays( $product ) );
 		}
 
 		/**
@@ -1170,7 +815,7 @@ namespace SureCart\Tests\Sync {
 			\WC_Subscriptions_Product::$mock_trial_period  = 'day';
 
 			$product = $this->createMockProduct();
-			$this->assertSame( 3, $this->service->getTrialDays( $product ) );
+			$this->assertSame( 3, $this->mapper->getTrialDays( $product ) );
 		}
 
 		/**
@@ -1181,7 +826,7 @@ namespace SureCart\Tests\Sync {
 			\WC_Subscriptions_Product::$mock_trial_period  = 'week';
 
 			$product = $this->createMockProduct();
-			$this->assertSame( 14, $this->service->getTrialDays( $product ) );
+			$this->assertSame( 14, $this->mapper->getTrialDays( $product ) );
 		}
 
 		/**
@@ -1192,7 +837,7 @@ namespace SureCart\Tests\Sync {
 			\WC_Subscriptions_Product::$mock_trial_period  = 'month';
 
 			$product = $this->createMockProduct();
-			$this->assertSame( 30, $this->service->getTrialDays( $product ) );
+			$this->assertSame( 30, $this->mapper->getTrialDays( $product ) );
 		}
 
 		/**
@@ -1203,7 +848,7 @@ namespace SureCart\Tests\Sync {
 			\WC_Subscriptions_Product::$mock_trial_period  = 'year';
 
 			$product = $this->createMockProduct();
-			$this->assertSame( 365, $this->service->getTrialDays( $product ) );
+			$this->assertSame( 365, $this->mapper->getTrialDays( $product ) );
 		}
 
 		// =========================================================================
@@ -1214,14 +859,14 @@ namespace SureCart\Tests\Sync {
 		 * @group woo_import
 		 */
 		public function test_convert_price_returns_zero_for_empty_value() {
-			$this->assertSame( 0, $this->service->convertPriceToInteger( '' ) );
+			$this->assertSame( 0, $this->mapper->convertPriceToInteger( '' ) );
 		}
 
 		/**
 		 * @group woo_import
 		 */
 		public function test_convert_price_returns_zero_for_null_value() {
-			$this->assertSame( 0, $this->service->convertPriceToInteger( null ) );
+			$this->assertSame( 0, $this->mapper->convertPriceToInteger( null ) );
 		}
 
 		/**
@@ -1229,7 +874,7 @@ namespace SureCart\Tests\Sync {
 		 */
 		public function test_convert_price_converts_to_cents_for_usd() {
 			$GLOBALS['test_woocommerce_currency'] = 'USD';
-			$this->assertSame( 2000, $this->service->convertPriceToInteger( '20.00' ) );
+			$this->assertSame( 2000, $this->mapper->convertPriceToInteger( '20.00' ) );
 		}
 
 		/**
@@ -1237,7 +882,7 @@ namespace SureCart\Tests\Sync {
 		 */
 		public function test_convert_price_converts_to_cents_for_eur() {
 			$GLOBALS['test_woocommerce_currency'] = 'EUR';
-			$this->assertSame( 1050, $this->service->convertPriceToInteger( '10.50' ) );
+			$this->assertSame( 1050, $this->mapper->convertPriceToInteger( '10.50' ) );
 		}
 
 		/**
@@ -1245,7 +890,7 @@ namespace SureCart\Tests\Sync {
 		 */
 		public function test_convert_price_returns_integer_for_jpy_zero_decimal() {
 			$GLOBALS['test_woocommerce_currency'] = 'JPY';
-			$this->assertSame( 1000, $this->service->convertPriceToInteger( '1000' ) );
+			$this->assertSame( 1000, $this->mapper->convertPriceToInteger( '1000' ) );
 		}
 
 		/**
@@ -1253,7 +898,7 @@ namespace SureCart\Tests\Sync {
 		 */
 		public function test_convert_price_returns_integer_for_krw_zero_decimal() {
 			$GLOBALS['test_woocommerce_currency'] = 'KRW';
-			$this->assertSame( 5000, $this->service->convertPriceToInteger( '5000' ) );
+			$this->assertSame( 5000, $this->mapper->convertPriceToInteger( '5000' ) );
 		}
 
 		/**
@@ -1261,7 +906,7 @@ namespace SureCart\Tests\Sync {
 		 */
 		public function test_convert_price_handles_whole_dollar_amount() {
 			$GLOBALS['test_woocommerce_currency'] = 'USD';
-			$this->assertSame( 2000, $this->service->convertPriceToInteger( '20' ) );
+			$this->assertSame( 2000, $this->mapper->convertPriceToInteger( '20' ) );
 		}
 
 		// =========================================================================
@@ -1272,7 +917,7 @@ namespace SureCart\Tests\Sync {
 		 * @group woo_import
 		 */
 		public function test_get_or_create_collections_returns_empty_for_empty_input() {
-			$result = $this->service->getOrCreateCollections( [] );
+			$result = $this->mapper->getOrCreateCollections( [] );
 			$this->assertEmpty( $result );
 		}
 
@@ -1288,7 +933,7 @@ namespace SureCart\Tests\Sync {
 			$mock->shouldReceive( 'where' )->andReturnSelf();
 			$mock->shouldReceive( 'first' )->andReturn( $collection );
 
-			$service = new WooCommerceProductsSyncService();
+			$service = new WooCommerceProductMapper();
 			$result  = $service->getOrCreateCollections(
 				[
 					'shoes' => [ 'term' => $term, 'source' => 'product_cat' ],
@@ -1311,7 +956,7 @@ namespace SureCart\Tests\Sync {
 			$mock->shouldReceive( 'first' )->andReturn( (object) [] ); // No id = not found.
 			$mock->shouldReceive( 'create' )->andReturn( $new_coll );
 
-			$service = new WooCommerceProductsSyncService();
+			$service = new WooCommerceProductMapper();
 			$result  = $service->getOrCreateCollections(
 				[
 					'hats' => [ 'term' => $term, 'source' => 'product_cat' ],
@@ -1333,7 +978,7 @@ namespace SureCart\Tests\Sync {
 			$mock->shouldReceive( 'where' )->once()->andReturnSelf(); // Called only once!
 			$mock->shouldReceive( 'first' )->once()->andReturn( $collection );
 
-			$service = new WooCommerceProductsSyncService();
+			$service = new WooCommerceProductMapper();
 
 			// First call.
 			$result1 = $service->getOrCreateCollections(
@@ -1360,7 +1005,7 @@ namespace SureCart\Tests\Sync {
 			$mock->shouldReceive( 'where' )->andReturnSelf();
 			$mock->shouldReceive( 'first' )->andReturn( $collection );
 
-			$service = new WooCommerceProductsSyncService();
+			$service = new WooCommerceProductMapper();
 			$result  = $service->getOrCreateCollections(
 				[ 'Summer-Sale' => [ 'term' => $term, 'source' => 'product_tag' ] ]
 			);
@@ -1379,7 +1024,7 @@ namespace SureCart\Tests\Sync {
 			$mock->shouldReceive( 'first' )->andReturn( (object) [] ); // Not found.
 			$mock->shouldReceive( 'create' )->andReturn( new \WP_Error( 'error', 'Creation failed' ) );
 
-			$service = new WooCommerceProductsSyncService();
+			$service = new WooCommerceProductMapper();
 			$result  = $service->getOrCreateCollections(
 				[ 'error-cat' => [ 'term' => $term, 'source' => 'product_cat' ] ]
 			);
@@ -1401,7 +1046,7 @@ namespace SureCart\Tests\Sync {
 					'get_tag_ids'      => [],
 				]
 			);
-			$result = $this->service->mapCategories( $product );
+			$result = $this->mapper->mapCategories( $product );
 			$this->assertEmpty( $result );
 		}
 
@@ -1423,7 +1068,7 @@ namespace SureCart\Tests\Sync {
 			);
 
 			// Mock collections API.
-			$service = \Mockery::mock( WooCommerceProductsSyncService::class )->makePartial();
+			$service = \Mockery::mock( WooCommerceProductMapper::class )->makePartial();
 			$service->shouldReceive( 'getOrCreateCollections' )
 				->once()
 				->andReturn( [ (object) [ 'id' => 'coll_clothing' ] ] );
@@ -1449,7 +1094,7 @@ namespace SureCart\Tests\Sync {
 				]
 			);
 
-			$service = \Mockery::mock( WooCommerceProductsSyncService::class )->makePartial();
+			$service = \Mockery::mock( WooCommerceProductMapper::class )->makePartial();
 			$service->shouldReceive( 'getOrCreateCollections' )
 				->once()
 				->andReturn( [ (object) [ 'id' => 'coll_sale' ] ] );
@@ -1479,7 +1124,7 @@ namespace SureCart\Tests\Sync {
 				]
 			);
 
-			$service = \Mockery::mock( WooCommerceProductsSyncService::class )->makePartial();
+			$service = \Mockery::mock( WooCommerceProductMapper::class )->makePartial();
 			$service->shouldReceive( 'getOrCreateCollections' )
 				->once()
 				->withArgs(
@@ -1517,7 +1162,7 @@ namespace SureCart\Tests\Sync {
 				]
 			);
 
-			$service = \Mockery::mock( WooCommerceProductsSyncService::class )->makePartial();
+			$service = \Mockery::mock( WooCommerceProductMapper::class )->makePartial();
 			$service->shouldReceive( 'getOrCreateCollections' )
 				->once()
 				->andReturn( [ (object) [ 'id' => 'coll_nike' ] ] );
@@ -1542,7 +1187,7 @@ namespace SureCart\Tests\Sync {
 				]
 			);
 
-			$service = \Mockery::mock( WooCommerceProductsSyncService::class )->makePartial();
+			$service = \Mockery::mock( WooCommerceProductMapper::class )->makePartial();
 			$service->shouldReceive( 'getOrCreateCollections' )->once()->andReturn( [] );
 
 			$result = $service->mapCategories( $product );
@@ -1572,7 +1217,7 @@ namespace SureCart\Tests\Sync {
 
 			// Simulate the API returning the same collection for both terms (fuzzy match).
 			$same_collection = (object) [ 'id' => 'coll_digital_123' ];
-			$service         = \Mockery::mock( WooCommerceProductsSyncService::class )->makePartial();
+			$service         = \Mockery::mock( WooCommerceProductMapper::class )->makePartial();
 			$service->shouldReceive( 'getOrCreateCollections' )
 				->once()
 				->andReturn( [ $same_collection, $same_collection ] );
@@ -1591,7 +1236,7 @@ namespace SureCart\Tests\Sync {
 		 */
 		public function test_map_variants_returns_empty_for_non_variable_product() {
 			$product = $this->createMockProduct( [ 'get_type' => 'simple' ] );
-			$result  = $this->service->mapVariants( $product );
+			$result  = $this->mapper->mapVariants( $product );
 			$this->assertEmpty( $result );
 		}
 
@@ -1613,7 +1258,7 @@ namespace SureCart\Tests\Sync {
 				]
 			);
 
-			$result = $this->service->mapVariants( $product );
+			$result = $this->mapper->mapVariants( $product );
 
 			$this->assertCount( 1, $result['variant_options'] );
 			$this->assertSame( 'Size', $result['variant_options'][0]['name'] );
@@ -1643,7 +1288,7 @@ namespace SureCart\Tests\Sync {
 				]
 			);
 
-			$result = $this->service->mapVariants( $product );
+			$result = $this->mapper->mapVariants( $product );
 			$this->assertCount( 1, $result['variant_options'] );
 		}
 
@@ -1684,7 +1329,7 @@ namespace SureCart\Tests\Sync {
 				]
 			);
 
-			$result = $this->service->mapVariants( $product );
+			$result = $this->mapper->mapVariants( $product );
 
 			$this->assertCount( 1, $result['variants'] );
 			$variant = $result['variants'][0];
@@ -1733,7 +1378,7 @@ namespace SureCart\Tests\Sync {
 				]
 			);
 
-			$result  = $this->service->mapVariants( $product );
+			$result  = $this->mapper->mapVariants( $product );
 			$variant = $result['variants'][0];
 
 			// When parent manages stock, variant should NOT have stock enabled.
@@ -1778,7 +1423,7 @@ namespace SureCart\Tests\Sync {
 				]
 			);
 
-			$result  = $this->service->mapVariants( $product );
+			$result  = $this->mapper->mapVariants( $product );
 			$variant = $result['variants'][0];
 			$this->assertArrayNotHasKey( 'scratch_amount', $variant );
 			$this->assertArrayNotHasKey( 'currency', $variant );
@@ -1839,7 +1484,7 @@ namespace SureCart\Tests\Sync {
 				]
 			);
 
-			$result  = $this->service->mapVariants( $product );
+			$result  = $this->mapper->mapVariants( $product );
 			$variant = $result['variants'][0];
 			$this->assertSame( 'Red', $variant['option_1'] );
 			$this->assertSame( 'Large', $variant['option_2'] );
@@ -1886,7 +1531,7 @@ namespace SureCart\Tests\Sync {
 				]
 			);
 
-			$result  = $this->service->mapVariants( $product );
+			$result  = $this->mapper->mapVariants( $product );
 			$variant = $result['variants'][0];
 
 			$this->assertSame( 2.5, $variant['weight'] );
@@ -1935,7 +1580,7 @@ namespace SureCart\Tests\Sync {
 				]
 			);
 
-			$result  = $this->service->mapVariants( $product );
+			$result  = $this->mapper->mapVariants( $product );
 			$variant = $result['variants'][0];
 
 			$this->assertArrayNotHasKey( 'weight', $variant );
@@ -1962,7 +1607,7 @@ namespace SureCart\Tests\Sync {
 				]
 			);
 
-			$result = $this->service->mapVariants( $product );
+			$result = $this->mapper->mapVariants( $product );
 			$this->assertCount( 1, $result['variants'] );
 			$this->assertTrue( $result['variants'][0]['custom'] );
 		}
@@ -1976,7 +1621,7 @@ namespace SureCart\Tests\Sync {
 		 */
 		public function test_map_stock_fields_returns_empty_when_not_managing_stock() {
 			$product = $this->createMockProduct( [ 'managing_stock' => false ] );
-			$result  = $this->service->mapStockFields( $product );
+			$result  = $this->mapper->mapStockFields( $product );
 			$this->assertEmpty( $result );
 		}
 
@@ -1991,7 +1636,7 @@ namespace SureCart\Tests\Sync {
 					'backorders_allowed' => false,
 				]
 			);
-			$result = $this->service->mapStockFields( $product );
+			$result = $this->mapper->mapStockFields( $product );
 			$this->assertTrue( $result['stock_enabled'] );
 			$this->assertSame( 25, $result['stock_adjustment'] );
 			$this->assertFalse( $result['allow_out_of_stock_purchases'] );
@@ -2008,7 +1653,7 @@ namespace SureCart\Tests\Sync {
 					'backorders_allowed' => true,
 				]
 			);
-			$result = $this->service->mapStockFields( $product );
+			$result = $this->mapper->mapStockFields( $product );
 			$this->assertTrue( $result['allow_out_of_stock_purchases'] );
 		}
 
@@ -2021,7 +1666,7 @@ namespace SureCart\Tests\Sync {
 		 */
 		public function test_map_shipping_fields_returns_digital_for_virtual_product() {
 			$product = $this->createMockProduct( [ 'is_virtual' => true ] );
-			$result  = $this->service->mapShippingFields( $product );
+			$result  = $this->mapper->mapShippingFields( $product );
 			$this->assertFalse( $result['shipping_enabled'] );
 			$this->assertTrue( $result['auto_fulfill_enabled'] );
 		}
@@ -2031,7 +1676,7 @@ namespace SureCart\Tests\Sync {
 		 */
 		public function test_map_shipping_fields_returns_digital_for_downloadable_product() {
 			$product = $this->createMockProduct( [ 'is_downloadable' => true ] );
-			$result  = $this->service->mapShippingFields( $product );
+			$result  = $this->mapper->mapShippingFields( $product );
 			$this->assertFalse( $result['shipping_enabled'] );
 			$this->assertTrue( $result['auto_fulfill_enabled'] );
 		}
@@ -2050,7 +1695,7 @@ namespace SureCart\Tests\Sync {
 					'get_height'      => '',
 				]
 			);
-			$result = $this->service->mapShippingFields( $product );
+			$result = $this->mapper->mapShippingFields( $product );
 			$this->assertTrue( $result['shipping_enabled'] );
 			$this->assertFalse( $result['auto_fulfill_enabled'] );
 			$this->assertArrayNotHasKey( 'weight', $result );
@@ -2069,7 +1714,7 @@ namespace SureCart\Tests\Sync {
 					'get_weight'      => '3.5',
 				]
 			);
-			$result = $this->service->mapShippingFields( $product );
+			$result = $this->mapper->mapShippingFields( $product );
 			$this->assertSame( 3.5, $result['weight'] );
 			$this->assertSame( 'lb', $result['weight_unit'] );
 		}
@@ -2088,7 +1733,7 @@ namespace SureCart\Tests\Sync {
 					'get_height'      => '4',
 				]
 			);
-			$result = $this->service->mapShippingFields( $product );
+			$result = $this->mapper->mapShippingFields( $product );
 			$this->assertArrayHasKey( 'dimensions', $result );
 			$this->assertSame( 12.0, $result['dimensions']['length'] );
 			$this->assertSame( 8.0, $result['dimensions']['width'] );
@@ -2111,7 +1756,7 @@ namespace SureCart\Tests\Sync {
 					'is_downloadable' => false,
 				]
 			);
-			$result = $this->service->mapTaxFields( $product );
+			$result = $this->mapper->mapTaxFields( $product );
 			$this->assertTrue( $result['tax_enabled'] );
 			$this->assertSame( 'tangible', $result['tax_category'] );
 		}
@@ -2126,7 +1771,7 @@ namespace SureCart\Tests\Sync {
 					'is_virtual' => true,
 				]
 			);
-			$result = $this->service->mapTaxFields( $product );
+			$result = $this->mapper->mapTaxFields( $product );
 			$this->assertSame( 'digital', $result['tax_category'] );
 		}
 
@@ -2140,7 +1785,7 @@ namespace SureCart\Tests\Sync {
 					'is_downloadable' => true,
 				]
 			);
-			$result = $this->service->mapTaxFields( $product );
+			$result = $this->mapper->mapTaxFields( $product );
 			$this->assertSame( 'digital', $result['tax_category'] );
 		}
 
@@ -2149,7 +1794,7 @@ namespace SureCart\Tests\Sync {
 		 */
 		public function test_map_tax_fields_returns_disabled_for_non_taxable() {
 			$product = $this->createMockProduct( [ 'is_taxable' => false ] );
-			$result  = $this->service->mapTaxFields( $product );
+			$result  = $this->mapper->mapTaxFields( $product );
 			$this->assertFalse( $result['tax_enabled'] );
 		}
 
@@ -2163,7 +1808,7 @@ namespace SureCart\Tests\Sync {
 		public function test_map_reviews_fields_enabled_when_comments_open() {
 			$post_id = self::factory()->post->create( [ 'comment_status' => 'open' ] );
 			$product = $this->createMockProduct( [ 'get_id' => $post_id ] );
-			$result  = $this->service->mapReviewsFields( $product );
+			$result  = $this->mapper->mapReviewsFields( $product );
 			$this->assertTrue( $result['reviews_enabled'] );
 			$this->assertTrue( $result['solicit_reviews'] );
 		}
@@ -2174,7 +1819,7 @@ namespace SureCart\Tests\Sync {
 		public function test_map_reviews_fields_disabled_when_comments_closed() {
 			$post_id = self::factory()->post->create( [ 'comment_status' => 'closed' ] );
 			$product = $this->createMockProduct( [ 'get_id' => $post_id ] );
-			$result  = $this->service->mapReviewsFields( $product );
+			$result  = $this->mapper->mapReviewsFields( $product );
 			$this->assertFalse( $result['reviews_enabled'] );
 			$this->assertFalse( $result['solicit_reviews'] );
 		}
@@ -2189,7 +1834,7 @@ namespace SureCart\Tests\Sync {
 		public function test_map_reviews_returns_empty_when_no_comments() {
 			$post_id = self::factory()->post->create();
 			$product = $this->createMockProduct( [ 'get_id' => $post_id ] );
-			$result  = $this->service->mapReviews( $product );
+			$result  = $this->mapper->mapReviews( $product );
 			$this->assertEmpty( $result );
 		}
 
@@ -2211,7 +1856,7 @@ namespace SureCart\Tests\Sync {
 			update_comment_meta( $comment_id, 'rating', '5' );
 
 			$product = $this->createMockProduct( [ 'get_id' => $post_id ] );
-			$result  = $this->service->mapReviews( $product );
+			$result  = $this->mapper->mapReviews( $product );
 
 			$this->assertCount( 1, $result );
 			$this->assertSame( 'Great product!', $result[0]['body'] );
@@ -2236,7 +1881,7 @@ namespace SureCart\Tests\Sync {
 			update_comment_meta( $comment_id, 'rating', '3' );
 
 			$product = $this->createMockProduct( [ 'get_id' => $post_id ] );
-			$result  = $this->service->mapReviews( $product );
+			$result  = $this->mapper->mapReviews( $product );
 
 			$this->assertSame( 3.0, $result[0]['stars'] );
 		}
@@ -2256,7 +1901,7 @@ namespace SureCart\Tests\Sync {
 			);
 
 			$product = $this->createMockProduct( [ 'get_id' => $post_id ] );
-			$result  = $this->service->mapReviews( $product );
+			$result  = $this->mapper->mapReviews( $product );
 
 			$this->assertNull( $result[0]['stars'] );
 		}
@@ -2275,7 +1920,7 @@ namespace SureCart\Tests\Sync {
 					'get_gallery_image_ids' => [],
 				]
 			);
-			$result = $this->service->mapMedia( $product );
+			$result = $this->mapper->mapMedia( $product );
 			$this->assertEmpty( $result );
 		}
 
@@ -2293,7 +1938,7 @@ namespace SureCart\Tests\Sync {
 					'get_gallery_image_ids' => [],
 				]
 			);
-			$result = $this->service->mapMedia( $product );
+			$result = $this->mapper->mapMedia( $product );
 
 			$this->assertCount( 1, $result );
 			$this->assertArrayHasKey( 'url', $result[0] );
@@ -2319,7 +1964,7 @@ namespace SureCart\Tests\Sync {
 					'get_gallery_image_ids' => [ $attachment1, $attachment2 ],
 				]
 			);
-			$result = $this->service->mapMedia( $product );
+			$result = $this->mapper->mapMedia( $product );
 
 			$this->assertCount( 2, $result );
 			$this->assertArrayHasKey( 'url', $result[0] );
@@ -2345,7 +1990,7 @@ namespace SureCart\Tests\Sync {
 					'get_gallery_image_ids' => [ $gallery ],
 				]
 			);
-			$result = $this->service->mapMedia( $product );
+			$result = $this->mapper->mapMedia( $product );
 
 			$this->assertCount( 2, $result );
 			// Featured image is at index 0, gallery at index 1.
@@ -2364,7 +2009,7 @@ namespace SureCart\Tests\Sync {
 					'get_gallery_image_ids' => [ 99998 ],
 				]
 			);
-			$result = $this->service->mapMedia( $product );
+			$result = $this->mapper->mapMedia( $product );
 			$this->assertEmpty( $result );
 		}
 
@@ -2383,7 +2028,7 @@ namespace SureCart\Tests\Sync {
 					'get_type' => 'simple',
 				]
 			);
-			$result = $this->service->mapMetadata( $product );
+			$result = $this->mapper->mapMetadata( $product );
 
 			$this->assertSame( $post_id, $result['wc_product_id'] );
 			$this->assertSame( 'simple', $result['wc_product_type'] );
@@ -2403,7 +2048,7 @@ namespace SureCart\Tests\Sync {
 					'get_review_count'   => 15,
 				]
 			);
-			$result = $this->service->mapMetadata( $product );
+			$result = $this->mapper->mapMetadata( $product );
 
 			$this->assertSame( 150, $result['wc_total_sales'] );
 			$this->assertSame( 4.5, $result['wc_average_rating'] );
@@ -2422,7 +2067,7 @@ namespace SureCart\Tests\Sync {
 					'get_catalog_visibility' => 'search',
 				]
 			);
-			$result = $this->service->mapMetadata( $product );
+			$result = $this->mapper->mapMetadata( $product );
 
 			$this->assertTrue( $result['is_virtual'] );
 			$this->assertTrue( $result['is_downloadable'] );
@@ -2439,7 +2084,7 @@ namespace SureCart\Tests\Sync {
 					'get_cross_sell_ids' => [ 30, 40 ],
 				]
 			);
-			$result = $this->service->mapMetadata( $product );
+			$result = $this->mapper->mapMetadata( $product );
 
 			$this->assertSame( wp_json_encode( [ 10, 20 ] ), $result['wc_upsell_ids'] );
 			$this->assertSame( wp_json_encode( [ 30, 40 ] ), $result['wc_cross_sell_ids'] );
@@ -2461,7 +2106,7 @@ namespace SureCart\Tests\Sync {
 					'get_date_modified' => $modified,
 				]
 			);
-			$result = $this->service->mapMetadata( $product );
+			$result = $this->mapper->mapMetadata( $product );
 
 			$this->assertSame( '2024-01-01T00:00:00+00:00', $result['wc_date_created'] );
 			$this->assertSame( '2024-06-01T00:00:00+00:00', $result['wc_date_modified'] );
@@ -2484,7 +2129,7 @@ namespace SureCart\Tests\Sync {
 					'get_download_expiry' => 30,
 				]
 			);
-			$result = $this->service->mapMetadata( $product );
+			$result = $this->mapper->mapMetadata( $product );
 
 			$decoded_files = json_decode( $result['download_files'], true );
 			$this->assertCount( 1, $decoded_files );
@@ -2498,7 +2143,7 @@ namespace SureCart\Tests\Sync {
 		 */
 		public function test_map_metadata_omits_download_files_for_non_downloadable() {
 			$product = $this->createMockProduct( [ 'is_downloadable' => false ] );
-			$result  = $this->service->mapMetadata( $product );
+			$result  = $this->mapper->mapMetadata( $product );
 
 			$this->assertArrayNotHasKey( 'download_files', $result );
 			$this->assertArrayNotHasKey( 'download_limit', $result );
@@ -2515,7 +2160,7 @@ namespace SureCart\Tests\Sync {
 			$term = wp_insert_term( 'Express', 'product_shipping_class', [ 'slug' => 'express' ] );
 
 			$product = $this->createMockProduct( [ 'get_shipping_class_id' => $term['term_id'] ] );
-			$result  = $this->service->mapMetadata( $product );
+			$result  = $this->mapper->mapMetadata( $product );
 
 			$this->assertSame( 'express', $result['wc_shipping_class'] );
 		}
@@ -2533,7 +2178,7 @@ namespace SureCart\Tests\Sync {
 			);
 
 			$product = $this->createMockProduct();
-			$result  = $this->service->mapMetadata( $product );
+			$result  = $this->mapper->mapMetadata( $product );
 
 			$this->assertSame( 'custom_value', $result['custom_meta'] );
 		}
@@ -2571,13 +2216,7 @@ namespace SureCart\Tests\Sync {
 				]
 			);
 
-			$this->service->mapWooCommerceProductToSureCart( $product );
-
-			$reflection = new \ReflectionClass( $this->service );
-			$property   = $reflection->getProperty( 'products_import_batch' );
-			$property->setAccessible( true );
-			$batch = $property->getValue( $this->service );
-			$data  = $batch[0];
+			$data = $this->mapper->mapWooCommerceProductToSureCart( $product );
 
 			// Core fields.
 			$this->assertSame( 'Integration Product', $data['name'] );
@@ -2648,13 +2287,7 @@ namespace SureCart\Tests\Sync {
 				]
 			);
 
-			$this->service->mapWooCommerceProductToSureCart( $product );
-
-			$reflection = new \ReflectionClass( $this->service );
-			$property   = $reflection->getProperty( 'products_import_batch' );
-			$property->setAccessible( true );
-			$batch = $property->getValue( $this->service );
-			$data  = $batch[0];
+			$data = $this->mapper->mapWooCommerceProductToSureCart( $product );
 
 			$this->assertArrayHasKey( 'variant_options', $data );
 			$this->assertArrayHasKey( 'variants', $data );
@@ -2668,24 +2301,21 @@ namespace SureCart\Tests\Sync {
 		/**
 		 * @group woo_import
 		 */
-		public function test_multiple_products_accumulate_in_batch() {
+		public function test_multiple_products_each_return_data() {
 			$product1 = $this->createMockProduct( [ 'get_name' => 'Product 1' ] );
 			$product2 = $this->createMockProduct( [ 'get_name' => 'Product 2' ] );
 			$product3 = $this->createMockProduct( [ 'get_name' => 'Product 3' ] );
 
-			$this->service->mapWooCommerceProductToSureCart( $product1 );
-			$this->service->mapWooCommerceProductToSureCart( $product2 );
-			$this->service->mapWooCommerceProductToSureCart( $product3 );
+			$data1 = $this->mapper->mapWooCommerceProductToSureCart( $product1 );
+			$data2 = $this->mapper->mapWooCommerceProductToSureCart( $product2 );
+			$data3 = $this->mapper->mapWooCommerceProductToSureCart( $product3 );
 
-			$reflection = new \ReflectionClass( $this->service );
-			$property   = $reflection->getProperty( 'products_import_batch' );
-			$property->setAccessible( true );
-			$batch = $property->getValue( $this->service );
-
-			$this->assertCount( 3, $batch );
-			$this->assertSame( 'Product 1', $batch[0]['name'] );
-			$this->assertSame( 'Product 2', $batch[1]['name'] );
-			$this->assertSame( 'Product 3', $batch[2]['name'] );
+			$this->assertIsArray( $data1 );
+			$this->assertIsArray( $data2 );
+			$this->assertIsArray( $data3 );
+			$this->assertSame( 'Product 1', $data1['name'] );
+			$this->assertSame( 'Product 2', $data2['name'] );
+			$this->assertSame( 'Product 3', $data3['name'] );
 		}
 
 		/**
@@ -2710,7 +2340,7 @@ namespace SureCart\Tests\Sync {
 				]
 			);
 
-			$result = $this->service->mapPrices( $product );
+			$result = $this->mapper->mapPrices( $product );
 
 			$this->assertCount( 1, $result );
 			$this->assertSame( 2999, $result[0]['amount'] );
@@ -2738,7 +2368,7 @@ namespace SureCart\Tests\Sync {
 				]
 			);
 
-			$result = $this->service->mapPrices( $product );
+			$result = $this->mapper->mapPrices( $product );
 
 			$this->assertSame( 1500, $result[0]['amount'] );
 			$this->assertSame( 2000, $result[0]['scratch_amount'] );
@@ -2754,7 +2384,7 @@ namespace SureCart\Tests\Sync {
 		 */
 		public function test_convert_price_handles_floating_point_precision_1999() {
 			$GLOBALS['test_woocommerce_currency'] = 'USD';
-			$this->assertSame( 1999, $this->service->convertPriceToInteger( '19.99' ) );
+			$this->assertSame( 1999, $this->mapper->convertPriceToInteger( '19.99' ) );
 		}
 
 		/**
@@ -2762,7 +2392,7 @@ namespace SureCart\Tests\Sync {
 		 */
 		public function test_convert_price_handles_floating_point_precision_995() {
 			$GLOBALS['test_woocommerce_currency'] = 'USD';
-			$this->assertSame( 995, $this->service->convertPriceToInteger( '9.95' ) );
+			$this->assertSame( 995, $this->mapper->convertPriceToInteger( '9.95' ) );
 		}
 
 		/**
@@ -2770,7 +2400,7 @@ namespace SureCart\Tests\Sync {
 		 */
 		public function test_convert_price_handles_floating_point_precision_001() {
 			$GLOBALS['test_woocommerce_currency'] = 'USD';
-			$this->assertSame( 1, $this->service->convertPriceToInteger( '0.01' ) );
+			$this->assertSame( 1, $this->mapper->convertPriceToInteger( '0.01' ) );
 		}
 
 		/**
@@ -2778,7 +2408,7 @@ namespace SureCart\Tests\Sync {
 		 */
 		public function test_convert_price_handles_floating_point_precision_3333() {
 			$GLOBALS['test_woocommerce_currency'] = 'USD';
-			$this->assertSame( 3333, $this->service->convertPriceToInteger( '33.33' ) );
+			$this->assertSame( 3333, $this->mapper->convertPriceToInteger( '33.33' ) );
 		}
 
 		// =========================================================================
@@ -2791,7 +2421,7 @@ namespace SureCart\Tests\Sync {
 		public function test_map_core_fields_cataloged_at_is_unix_timestamp() {
 			$date    = new \WC_DateTime( '2024-01-15 10:00:00' );
 			$product = $this->createMockProduct( [ 'get_date_created' => $date ] );
-			$result  = $this->service->mapCoreFields( $product );
+			$result  = $this->mapper->mapCoreFields( $product );
 
 			$this->assertIsInt( $result['cataloged_at'] );
 			$this->assertSame( $date->getTimestamp(), $result['cataloged_at'] );
@@ -2806,7 +2436,7 @@ namespace SureCart\Tests\Sync {
 		 */
 		public function test_map_core_fields_maps_empty_sku_to_null() {
 			$product = $this->createMockProduct( [ 'get_sku' => '' ] );
-			$result  = $this->service->mapCoreFields( $product );
+			$result  = $this->mapper->mapCoreFields( $product );
 			$this->assertEmpty( $result['sku'] );
 		}
 
@@ -2815,7 +2445,7 @@ namespace SureCart\Tests\Sync {
 		 */
 		public function test_map_core_fields_maps_empty_description_to_null() {
 			$product = $this->createMockProduct( [ 'get_description' => '' ] );
-			$result  = $this->service->mapCoreFields( $product );
+			$result  = $this->mapper->mapCoreFields( $product );
 			$this->assertEmpty( $result['description'] );
 		}
 
@@ -2829,7 +2459,7 @@ namespace SureCart\Tests\Sync {
 		public function test_map_prices_currency_is_lowercase() {
 			$GLOBALS['test_woocommerce_currency'] = 'USD';
 			$product = $this->createMockProduct();
-			$result  = $this->service->mapPrices( $product );
+			$result  = $this->mapper->mapPrices( $product );
 			$this->assertSame( 'usd', $result[0]['currency'] );
 		}
 
@@ -2841,7 +2471,7 @@ namespace SureCart\Tests\Sync {
 			\WC_Subscriptions_Product::$mock_is_subscription = true;
 
 			$product = $this->createMockProduct( [ 'get_price' => '9.99' ] );
-			$result  = $this->service->mapPrices( $product );
+			$result  = $this->mapper->mapPrices( $product );
 			$this->assertSame( 'usd', $result[0]['currency'] );
 		}
 
@@ -2861,7 +2491,7 @@ namespace SureCart\Tests\Sync {
 					'get_weight'      => '3.5',
 				]
 			);
-			$result = $this->service->mapShippingFields( $product );
+			$result = $this->mapper->mapShippingFields( $product );
 			$this->assertSame( 'lb', $result['weight_unit'] );
 		}
 
@@ -2877,7 +2507,7 @@ namespace SureCart\Tests\Sync {
 					'get_weight'      => '16',
 				]
 			);
-			$result = $this->service->mapShippingFields( $product );
+			$result = $this->mapper->mapShippingFields( $product );
 			$this->assertSame( 'oz', $result['weight_unit'] );
 		}
 
@@ -2893,7 +2523,7 @@ namespace SureCart\Tests\Sync {
 					'get_weight'      => '2',
 				]
 			);
-			$result = $this->service->mapShippingFields( $product );
+			$result = $this->mapper->mapShippingFields( $product );
 			$this->assertSame( 'kg', $result['weight_unit'] );
 		}
 
@@ -2915,7 +2545,7 @@ namespace SureCart\Tests\Sync {
 					'get_height'      => '0.5',
 				]
 			);
-			$result = $this->service->mapShippingFields( $product );
+			$result = $this->mapper->mapShippingFields( $product );
 			$this->assertSame( 'ft', $result['dimensions']['unit'] );
 		}
 
@@ -2933,7 +2563,7 @@ namespace SureCart\Tests\Sync {
 					'get_height'      => '0.5',
 				]
 			);
-			$result = $this->service->mapShippingFields( $product );
+			$result = $this->mapper->mapShippingFields( $product );
 			// Yards to feet: multiply by 3.
 			$this->assertSame( 6.0, $result['dimensions']['length'] );
 			$this->assertSame( 3.0, $result['dimensions']['width'] );
@@ -2954,7 +2584,7 @@ namespace SureCart\Tests\Sync {
 					'get_height'      => '3',
 				]
 			);
-			$result = $this->service->mapShippingFields( $product );
+			$result = $this->mapper->mapShippingFields( $product );
 			$this->assertSame( 'cm', $result['dimensions']['unit'] );
 			$this->assertSame( 10.0, $result['dimensions']['length'] );
 			$this->assertSame( 5.0, $result['dimensions']['width'] );
@@ -2973,7 +2603,7 @@ namespace SureCart\Tests\Sync {
 			\WC_Subscriptions_Product::$mock_length          = 0;
 
 			$product = $this->createMockProduct( [ 'get_price' => '9.99' ] );
-			$result  = $this->service->mapSubscriptionPrices( $product );
+			$result  = $this->mapper->mapSubscriptionPrices( $product );
 			$this->assertNull( $result[0]['recurring_period_count'] );
 		}
 
@@ -2985,7 +2615,7 @@ namespace SureCart\Tests\Sync {
 			\WC_Subscriptions_Product::$mock_length          = '';
 
 			$product = $this->createMockProduct( [ 'get_price' => '9.99' ] );
-			$result  = $this->service->mapSubscriptionPrices( $product );
+			$result  = $this->mapper->mapSubscriptionPrices( $product );
 			$this->assertNull( $result[0]['recurring_period_count'] );
 		}
 
@@ -3054,7 +2684,7 @@ namespace SureCart\Tests\Sync {
 				]
 			);
 
-			$result  = $this->service->mapVariants( $product );
+			$result  = $this->mapper->mapVariants( $product );
 			$variant = $result['variants'][0];
 
 			// option_1 (Color) should NOT be set (it's "Any").
@@ -3083,29 +2713,11 @@ namespace SureCart\Tests\Sync {
 					'get_gallery_image_ids' => [],
 				]
 			);
-			$result = $this->service->mapMedia( $product );
+			$result = $this->mapper->mapMedia( $product );
 
 			$this->assertCount( 1, $result );
 			$this->assertCount( 1, $result[0] ); // Only one key: 'url'.
 			$this->assertArrayHasKey( 'url', $result[0] );
-		}
-
-		// =========================================================================
-		// Group 36: External Products (Fix #10) — 1 test
-		// =========================================================================
-
-		/**
-		 * @group woo_import
-		 */
-		public function test_sync_product_returns_early_for_external_product() {
-			$product = $this->createMockProduct( [ 'get_type' => 'external' ] );
-			$GLOBALS['test_wc_get_product_result'] = $product;
-
-			$service = \Mockery::mock( WooCommerceProductsSyncService::class )->makePartial();
-			$service->shouldNotReceive( 'mapWooCommerceProductToSureCart' );
-
-			$service->syncProduct( 123 );
-			$this->assertTrue( true );
 		}
 
 		// =========================================================================
@@ -3129,6 +2741,7 @@ namespace SureCart\Tests\Sync {
 			$attribute->shouldReceive( 'get_variation' )->andReturn( true );
 			$attribute->shouldReceive( 'is_taxonomy' )->andReturn( true );
 			$attribute->shouldReceive( 'get_name' )->andReturn( 'pa_color' );
+			$attribute->shouldReceive( 'get_taxonomy' )->andReturn( 'pa_color' );
 			// Only return 2 term IDs (product only uses Red and Blue).
 			$attribute->shouldReceive( 'get_options' )->andReturn( [ $red['term_id'], $blue['term_id'] ] );
 
@@ -3140,7 +2753,7 @@ namespace SureCart\Tests\Sync {
 				]
 			);
 
-			$result = $this->service->mapVariants( $product );
+			$result = $this->mapper->mapVariants( $product );
 
 			// Should only have 2 values (Red, Blue), not all 4 taxonomy terms.
 			$this->assertCount( 2, $result['variant_options'][0]['values'] );
@@ -3187,7 +2800,7 @@ namespace SureCart\Tests\Sync {
 				]
 			);
 
-			$result  = $this->service->mapVariants( $product );
+			$result  = $this->mapper->mapVariants( $product );
 			$variant = $result['variants'][0];
 			$this->assertArrayNotHasKey( 'currency', $variant );
 		}
@@ -3250,121 +2863,12 @@ namespace SureCart\Tests\Sync {
 				]
 			);
 
-			$result  = $this->service->mapVariants( $product );
+			$result  = $this->mapper->mapVariants( $product );
 			$variant = $result['variants'][0];
 
 			// option_1 should match Color (first parent attribute), option_2 should match Size.
 			$this->assertSame( 'Red', $variant['option_1'] );
 			$this->assertSame( 'L', $variant['option_2'] );
-		}
-
-		// =========================================================================
-		// Group 40: Duplicate Sync Prevention — 6 tests
-		// =========================================================================
-
-		/**
-		 * @group woo_import
-		 */
-		public function test_sync_product_defers_imported_meta_to_batch() {
-			$post_id = self::factory()->post->create();
-			$product = $this->createMockProduct( [ 'get_id' => $post_id, 'get_type' => 'simple' ] );
-			$GLOBALS['test_wc_get_product_result'] = $product;
-
-			$service = \Mockery::mock( WooCommerceProductsSyncService::class )->makePartial();
-			$service->shouldReceive( 'mapWooCommerceProductToSureCart' )->once();
-
-			$service->syncProduct( $post_id );
-
-			// Meta should NOT be written yet — deferred until API call succeeds in sync().
-			$meta = get_post_meta( $post_id, '_surecart_imported', true );
-			$this->assertEmpty( $meta );
-
-			// Product ID should be accumulated for deferred writing.
-			$reflection = new \ReflectionClass( WooCommerceProductsSyncService::class );
-			$property   = $reflection->getProperty( 'imported_product_ids' );
-			$property->setAccessible( true );
-			$this->assertContains( $post_id, $property->getValue( $service ) );
-		}
-
-		/**
-		 * @group woo_import
-		 */
-		public function test_sync_writes_imported_meta_after_successful_api_call() {
-			$post_id = self::factory()->post->create();
-			$product = $this->createMockProduct( [ 'get_id' => $post_id ] );
-
-			$GLOBALS['test_wc_products_result']    = (object) [
-				'products'      => [ $post_id ],
-				'max_num_pages' => 1,
-			];
-			$GLOBALS['test_wc_get_product_result'] = $product;
-
-			\Mockery::mock( 'overload:' . \SureCart\Models\ProductImport::class )
-				->shouldReceive( 'create' )
-				->andReturn( (object) [ 'id' => 'import_123' ] );
-
-			$service = new WooCommerceProductsSyncService();
-			$service->sync( 1, 10 );
-
-			$meta = get_post_meta( $post_id, '_surecart_imported', true );
-			$this->assertNotEmpty( $meta );
-		}
-
-		/**
-		 * @group woo_import
-		 */
-		public function test_sync_does_not_write_imported_meta_on_api_failure() {
-			$post_id = self::factory()->post->create();
-			$product = $this->createMockProduct( [ 'get_id' => $post_id ] );
-
-			$GLOBALS['test_wc_products_result']    = (object) [
-				'products'      => [ $post_id ],
-				'max_num_pages' => 1,
-			];
-			$GLOBALS['test_wc_get_product_result'] = $product;
-
-			\Mockery::mock( 'overload:' . \SureCart\Models\ProductImport::class )
-				->shouldReceive( 'create' )
-				->andReturn( new \WP_Error( 'api_error', 'Import failed' ) );
-
-			$service = new WooCommerceProductsSyncService();
-			$service->sync( 1, 10 );
-
-			$meta = get_post_meta( $post_id, '_surecart_imported', true );
-			$this->assertEmpty( $meta, 'Product should not be marked as imported when API call fails.' );
-		}
-
-		/**
-		 * @group woo_import
-		 */
-		public function test_sync_product_does_not_mark_imported_when_exception_thrown() {
-			$post_id = self::factory()->post->create();
-			$product = $this->createMockProduct( [ 'get_id' => $post_id, 'get_type' => 'simple' ] );
-			$GLOBALS['test_wc_get_product_result'] = $product;
-
-			$service = \Mockery::mock( WooCommerceProductsSyncService::class )->makePartial();
-			$service->shouldReceive( 'mapWooCommerceProductToSureCart' )
-				->once()
-				->andThrow( new \Exception( 'Mapping failed' ) );
-
-			$service->syncProduct( $post_id );
-
-			$meta = get_post_meta( $post_id, '_surecart_imported', true );
-			$this->assertEmpty( $meta );
-		}
-
-		/**
-		 * @group woo_import
-		 */
-		public function test_sync_product_does_not_mark_imported_for_skipped_types() {
-			$post_id = self::factory()->post->create();
-			$product = $this->createMockProduct( [ 'get_id' => $post_id, 'get_type' => 'grouped' ] );
-			$GLOBALS['test_wc_get_product_result'] = $product;
-
-			$this->service->syncProduct( $post_id );
-
-			$meta = get_post_meta( $post_id, '_surecart_imported', true );
-			$this->assertEmpty( $meta );
 		}
 
 		// =========================================================================
@@ -3384,7 +2888,7 @@ namespace SureCart\Tests\Sync {
 					'is_downloadable' => false,
 				]
 			);
-			$result = $this->service->mapTaxFields( $product );
+			$result = $this->mapper->mapTaxFields( $product );
 			$this->assertSame( 'saas', $result['tax_category'] );
 		}
 
@@ -3403,7 +2907,7 @@ namespace SureCart\Tests\Sync {
 					'get_cross_sell_ids' => [ 30, 40 ],
 				]
 			);
-			$result = $this->service->mapMetadata( $product );
+			$result = $this->mapper->mapMetadata( $product );
 
 			$this->assertIsString( $result['wc_rating_counts'] );
 			$this->assertIsString( $result['wc_upsell_ids'] );
@@ -3422,35 +2926,14 @@ namespace SureCart\Tests\Sync {
 		 * @group woo_import
 		 */
 		public function test_map_weight_unit_maps_lbs_to_lb() {
-			$this->assertSame( 'lb', $this->service->mapWeightUnit( 'lbs' ) );
+			$this->assertSame( 'lb', $this->mapper->mapWeightUnit( 'lbs' ) );
 		}
 
 		/**
 		 * @group woo_import
 		 */
 		public function test_map_dimension_unit_maps_yd_to_ft() {
-			$this->assertSame( 'ft', $this->service->mapDimensionUnit( 'yd' ) );
-		}
-
-		// =========================================================================
-		// Group 45: Error Logging (Fix #20) — 1 test
-		// =========================================================================
-
-		/**
-		 * @group woo_import
-		 */
-		public function test_sync_product_logs_error_when_exception_thrown() {
-			$product = $this->createMockProduct();
-			$GLOBALS['test_wc_get_product_result'] = $product;
-
-			$service = \Mockery::mock( WooCommerceProductsSyncService::class )->makePartial();
-			$service->shouldReceive( 'mapWooCommerceProductToSureCart' )
-				->once()
-				->andThrow( new \Exception( 'Test mapping error' ) );
-
-			// Should not throw — exception is caught and logged.
-			$service->syncProduct( 123 );
-			$this->assertTrue( true );
+			$this->assertSame( 'ft', $this->mapper->mapDimensionUnit( 'yd' ) );
 		}
 
 		// =========================================================================
@@ -3461,47 +2944,15 @@ namespace SureCart\Tests\Sync {
 		 * @group woo_import
 		 */
 		public function test_map_weight_unit_returns_lb_for_unknown_unit() {
-			$this->assertSame( 'lb', $this->service->mapWeightUnit( 'unknown' ) );
+			$this->assertSame( 'lb', $this->mapper->mapWeightUnit( 'unknown' ) );
 		}
 
 		/**
 		 * @group woo_import
 		 */
 		public function test_map_dimension_unit_returns_in_for_unknown_unit() {
-			$this->assertSame( 'in', $this->service->mapDimensionUnit( 'unknown' ) );
+			$this->assertSame( 'in', $this->mapper->mapDimensionUnit( 'unknown' ) );
 		}
 
-		// =========================================================================
-		// Group 47: Skip products with >3 variation attributes — 1 test
-		// =========================================================================
-
-		/**
-		 * @group woo_import
-		 */
-		public function test_sync_product_skips_variable_with_more_than_3_variation_attributes() {
-			// Create 4 mock attributes, all marked as variation attributes.
-			$attributes = [];
-			for ( $i = 1; $i <= 4; $i++ ) {
-				$attr = \Mockery::mock( 'WC_Product_Attribute' );
-				$attr->shouldReceive( 'get_variation' )->andReturn( true );
-				$attributes[] = $attr;
-			}
-
-			$post_id = self::factory()->post->create();
-			$product = $this->createMockProduct(
-				[
-					'get_id'         => $post_id,
-					'get_type'       => 'variable',
-					'get_attributes' => $attributes,
-				]
-			);
-			$GLOBALS['test_wc_get_product_result'] = $product;
-
-			$this->service->syncProduct( $post_id );
-
-			// Product should NOT be marked as imported (it was skipped).
-			$meta = get_post_meta( $post_id, '_surecart_imported', true );
-			$this->assertEmpty( $meta );
-		}
 	}
 }

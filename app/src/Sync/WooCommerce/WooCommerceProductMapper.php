@@ -1,23 +1,16 @@
 <?php
 
-
-namespace SureCart\Sync;
-
-use SureCart\Models\ProductImport;
+namespace SureCart\Sync\WooCommerce;
 
 /**
- * Syncs WooCommerce products records to SureCart Products.
+ * Maps WooCommerce products to SureCart import data.
+ *
+ * Stateless mapper that converts WC product objects into the array format
+ * expected by the SureCart product import API.
  *
  * @package SureCart
  */
-class WooCommerceProductsSyncService {
-
-	/**
-	 * Products import data.
-	 *
-	 * @var array
-	 */
-	private $products_import_batch = [];
+class WooCommerceProductMapper {
 
 	/**
 	 * Collections cache (per batch) to avoid duplicate API calls.
@@ -34,139 +27,13 @@ class WooCommerceProductsSyncService {
 	private $currency_cache = null;
 
 	/**
-	 * Skipped products accumulated during the current batch.
-	 *
-	 * @var array
-	 */
-	private $skipped_products_batch = [];
-
-	/**
-	 * Product IDs successfully mapped in the current batch (meta deferred until API confirms).
-	 *
-	 * @var int[]
-	 */
-	private $imported_product_ids = [];
-
-	/**
-	 * Bootstrap any actions.
+	 * Reset per-batch caches.
 	 *
 	 * @return void
 	 */
-	public function bootstrap() {
-		add_action( 'admin_notices', [ $this, 'showSyncNotice' ] );
-		add_action( 'admin_notices', [ $this, 'showCompletionNotice' ] );
-		add_action( 'surecart/sync/woocommerce_products', [ $this, 'sync' ], 10, 2 );
-	}
-
-	/**
-	 * Is this sync running.
-	 *
-	 * @return boolean
-	 */
-	public function isRunning() {
-		return as_has_scheduled_action( 'surecart/sync/woocommerce_products' );
-	}
-
-	/**
-	 * Show an admin notice if products are being synced.
-	 *
-	 * @return void
-	 */
-	public function showSyncNotice() {
-		// Don't show on the import results page — the user is already viewing results.
-		if ( 'import_results' === ( isset( $_GET['action'] ) ? sanitize_text_field( wp_unslash( $_GET['action'] ) ) : '' ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-			return;
-		}
-
-		if ( ! $this->isRunning() ) {
-			return;
-		}
-
-		echo wp_kses_post(
-			\SureCart::notices()->render(
-				[
-					'type'  => 'info',
-					'title' => esc_html__( 'SureCart: WooCommerce products import in progress.', 'surecart' ),
-					'text'  => '<p>' . esc_html__( 'SureCart is importing WooCommerce products in the background. The process may take a little while, so please be patient.', 'surecart' ) . '</p>',
-				]
-			)
-		);
-	}
-
-	/**
-	 * Show a completion notice after import finishes.
-	 *
-	 * @return void
-	 */
-	public function showCompletionNotice() {
-		// Don't show on the import results page — the user is already viewing results.
-		if ( 'import_results' === ( isset( $_GET['action'] ) ? sanitize_text_field( wp_unslash( $_GET['action'] ) ) : '' ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-			return;
-		}
-
-		// don't show if import is still running.
-		if ( $this->isRunning() ) {
-			return;
-		}
-
-		$import_ids             = get_option( 'sc_woo_import_ids', [] );
-		$all_skipped_session_id = get_option( 'sc_woo_import_all_skipped' );
-
-		// Generate results URL and notice name per branch.
-		$notice_name = '';
-		if ( ! empty( $import_ids ) ) {
-			// Normal case: has import_ids.
-			$results_url = \SureCart::getUrl()->importResults( 'products', $import_ids );
-			$notice_name = 'woo_import_complete_' . md5( implode( ',', $import_ids ) );
-		} elseif ( $all_skipped_session_id ) {
-			// All-skipped case: use session_id.
-			$results_url = add_query_arg(
-				[
-					'page'       => 'sc-products',
-					'action'     => 'import_results',
-					'session_id' => $all_skipped_session_id,
-				],
-				admin_url( 'admin.php' )
-			);
-			$notice_name = 'woo_import_complete_' . md5( $all_skipped_session_id );
-		} else {
-			// No data available, skip notice.
-			return;
-		}
-
-		echo wp_kses_post(
-			\SureCart::notices()->render(
-				[
-					'name'  => $notice_name,
-					'type'  => 'success',
-					'title' => esc_html__( 'SureCart: WooCommerce products import complete.', 'surecart' ),
-					'text'  => '<p>' . sprintf(
-						/* translators: %s: URL to import results page */
-						__( 'The import has finished. <a href="%s">View Import Results</a>', 'surecart' ),
-						esc_url( $results_url )
-					) . '</p>',
-				]
-			)
-		);
-	}
-
-	/**
-	 * Enqueue Sync Action.
-	 *
-	 * @param string  $page Current page.
-	 * @param integer $batch_size Batch size.
-	 *
-	 * @return int
-	 */
-	public function dispatch( $page = 1, $batch_size = 100 ) {
-		return as_enqueue_async_action(
-			'surecart/sync/woocommerce_products',
-			[
-				'page'       => $page,
-				'batch_size' => apply_filters( 'surecart/sync/woocommerce_products/batch_size', $batch_size ),
-			],
-			'surecart'
-		);
+	public function resetCaches() {
+		$this->currency_cache    = null;
+		$this->collections_cache = [];
 	}
 
 	/**
@@ -189,224 +56,10 @@ class WooCommerceProductsSyncService {
 	}
 
 	/**
-	 * Sync products.
-	 *
-	 * @param string  $page Current page.
-	 * @param integer $batch_size Batch size.
-	 *
-	 * @return int|void
-	 */
-	public function sync( $page = 1, $batch_size = 100 ) {
-		// Reset per-batch caches.
-		$this->currency_cache = null;
-
-		if ( ! class_exists( 'WooCommerce' ) ) {
-			return;
-		}
-
-		// get WooCommerce products (exclude already-imported products).
-		// Note: wc_get_products() strips raw meta_query args, so we use the official filter.
-		add_filter( 'woocommerce_product_data_store_cpt_get_products_query', [ $this, 'excludeImportedProducts' ], 10, 2 );
-
-		$products = wc_get_products(
-			[
-				'limit'                 => $batch_size,
-				'page'                  => $page,
-				'return'                => 'ids',
-				'paginate'              => true,
-				'surecart_not_imported' => true,
-			]
-		);
-
-		remove_filter( 'woocommerce_product_data_store_cpt_get_products_query', [ $this, 'excludeImportedProducts' ], 10 );
-
-		// Validate wc_get_products() result in case WooCommerce was deactivated mid-sync.
-		if ( ! is_object( $products ) || ! isset( $products->products, $products->max_num_pages ) ) {
-			return;
-		}
-
-		// Sync each product.
-		foreach ( $products->products as $product_id ) {
-			$this->syncProduct( $product_id );
-		}
-
-		// Flush skipped products to the transient once per batch.
-		$this->flushSkippedProducts();
-
-		// Create import batch if we have products.
-		if ( ! empty( $this->products_import_batch ) ) {
-			$import                      = ( new ProductImport() )->create( [ 'data' => $this->products_import_batch ] );
-			$this->products_import_batch = []; // Clear batch after import.
-
-			// Accumulate import IDs across batches for the completion notice.
-			if ( is_wp_error( $import ) ) {
-				error_log( 'SureCart WooCommerce Sync: Import failed - ' . $import->get_error_message() ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
-			} elseif ( ! empty( $import->id ) ) {
-				// Mark products as imported only after the API confirms success.
-				foreach ( $this->imported_product_ids as $imported_id ) {
-					update_post_meta( $imported_id, '_surecart_imported', time() );
-				}
-
-				$existing_ids   = get_option( 'sc_woo_import_ids', [] );
-				$existing_ids[] = $import->id;
-				update_option( 'sc_woo_import_ids', $existing_ids, false );
-			}
-
-			// Clear accumulated IDs regardless of success or failure.
-			$this->imported_product_ids = [];
-		}
-
-		// if the total number of pages less than or equal to the current page, we don't have another page.
-		if ( $products->max_num_pages <= $page ) {
-			// All batches processed - check if ANY imports were created.
-			$import_ids = get_option( 'sc_woo_import_ids', [] );
-
-			if ( empty( $import_ids ) ) {
-				// No imports created - check if products were skipped.
-				$session_id = get_option( 'sc_woo_import_session_id' );
-
-				if ( $session_id ) {
-					$transient_key    = 'sc_woo_import_skipped_' . $session_id;
-					$skipped_products = get_transient( $transient_key );
-
-					if ( ! empty( $skipped_products ) ) {
-						// All products skipped - store session_id for results page.
-						update_option( 'sc_woo_import_all_skipped', $session_id, false );
-					}
-				}
-			}
-
-			return;
-		}
-
-		// get the next batch.
-		return $this->dispatch( $page + 1, $batch_size );
-	}
-
-	/**
-	 * Sync a single product.
-	 *
-	 * @param int $product_id Product ID.
-	 * @return void
-	 */
-	public function syncProduct( $product_id ) {
-		try {
-			$product = wc_get_product( $product_id );
-
-			if ( ! $product ) {
-				$this->trackSkippedProduct( null, 'invalid', 'product_not_found' );
-				return;
-			}
-
-			// Skip unsupported product types.
-			$product_type = $product->get_type();
-			if ( in_array( $product_type, [ 'grouped', 'external' ], true ) ) {
-				$this->trackSkippedProduct( $product, $product_type, 'unsupported_type' );
-				return;
-			}
-
-			// Skip variable products with >3 variation attributes (SureCart supports max 3).
-			if ( $product->is_type( 'variable' ) ) {
-				$variation_attribute_count = count(
-					array_filter(
-						$product->get_attributes(),
-						function ( $attr ) {
-							return $attr->get_variation();
-						}
-					)
-				);
-
-				if ( $variation_attribute_count > 3 ) {
-					$this->trackSkippedProduct( $product, $product_type, 'too_many_attributes' );
-					return;
-				}
-			}
-
-			// Map the WooCommerce Product to SureCart and save in the imports batch.
-			$this->mapWooCommerceProductToSureCart( $product );
-
-			// Accumulate product ID — meta is written only after API confirms success in sync().
-			$this->imported_product_ids[] = $product_id;
-
-		} catch ( \Exception $e ) {
-			error_log( sprintf( 'SureCart WooCommerce Sync: Failed to sync product %d - %s', $product_id, $e->getMessage() ) ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
-		}
-	}
-
-	/**
-	 * Get or create import session ID for tracking skipped products.
-	 *
-	 * @return string Session ID (UUID).
-	 */
-	private function getImportSessionId() {
-		$session_id = get_option( 'sc_woo_import_session_id' );
-		if ( ! $session_id ) {
-			$session_id = wp_generate_uuid4();
-			update_option( 'sc_woo_import_session_id', $session_id, false );
-		}
-		return $session_id;
-	}
-
-	/**
-	 * Track a skipped product for import results reporting.
-	 *
-	 * @param \WC_Product|null $product      WooCommerce Product (null if not found).
-	 * @param string           $product_type Product type.
-	 * @param string           $skip_reason  Machine-readable skip reason code.
-	 * @return void
-	 */
-	private function trackSkippedProduct( $product, $product_type, $skip_reason ) {
-		// Build human-readable skip reason message.
-		$reason_messages = [
-			'unsupported_type'  => sprintf(
-				/* translators: %s: product type */
-				__( 'Unsupported product type: %s', 'surecart' ),
-				$product_type
-			),
-			'product_not_found'   => __( 'Product not found in WooCommerce', 'surecart' ),
-			'too_many_attributes' => __( 'Too many variation attributes (SureCart supports a maximum of 3)', 'surecart' ),
-		];
-
-		$this->skipped_products_batch[] = [
-			'wc_product_id' => $product ? $product->get_id() : 0,
-			'name'          => $product ? ( $product->get_name() ?? __( 'Unnamed Product', 'surecart' ) ) : __( 'Unknown Product', 'surecart' ),
-			'type'          => $product_type,
-			'reason'        => $reason_messages[ $skip_reason ] ?? __( 'Product skipped', 'surecart' ),
-		];
-	}
-
-	/**
-	 * Flush accumulated skipped products to the transient in a single write.
-	 *
-	 * @return void
-	 */
-	private function flushSkippedProducts() {
-		if ( empty( $this->skipped_products_batch ) ) {
-			return;
-		}
-
-		$session_id    = $this->getImportSessionId();
-		$transient_key = 'sc_woo_import_skipped_' . $session_id;
-
-		// Merge with any previously stored skipped products from earlier batches.
-		$skipped_products = get_transient( $transient_key );
-		if ( ! is_array( $skipped_products ) ) {
-			$skipped_products = [];
-		}
-
-		$skipped_products = array_merge( $skipped_products, $this->skipped_products_batch );
-
-		// Store for 7 days (matches typical ImportRow retention).
-		set_transient( $transient_key, $skipped_products, 7 * DAY_IN_SECONDS );
-
-		$this->skipped_products_batch = [];
-	}
-
-	/**
 	 * Map the WooCommerce Product to SureCart.
 	 *
 	 * @param \WC_Product $product WooCommerce Product.
-	 * @return void
+	 * @return array
 	 */
 	public function mapWooCommerceProductToSureCart( $product ) {
 		// Build product data using helper methods.
@@ -446,7 +99,7 @@ class WooCommerceProductsSyncService {
 		// Allow filtering.
 		$product_import_data = apply_filters( 'surecart/woocommerce_sync/product_data', $product_import_data, $product );
 
-		$this->products_import_batch[] = $product_import_data;
+		return $product_import_data;
 	}
 
 	/**
@@ -757,7 +410,7 @@ class WooCommerceProductsSyncService {
 				// Find existing ProductCollection by slug using API.
 				$collection = \SureCart\Models\ProductCollection::where( [ 'query' => $cache_key ] )->first();
 
-				// Handle API errors — skip this term to avoid creating duplicates.
+				// Handle API errors -- skip this term to avoid creating duplicates.
 				if ( is_wp_error( $collection ) ) {
 					continue;
 				}
@@ -885,6 +538,7 @@ class WooCommerceProductsSyncService {
 	 *
 	 * @param \WC_Product $product WooCommerce Product.
 	 * @param bool        $any_variation_manages_own_stock Whether any variation manages its own stock.
+	 * @param array       $variations Pre-loaded variation objects.
 	 * @return array
 	 */
 	public function mapVariants( $product, $any_variation_manages_own_stock = false, $variations = [] ) {
@@ -956,7 +610,7 @@ class WooCommerceProductsSyncService {
 				// Pricing.
 				'amount'                       => $this->convertPriceToInteger( $variation->get_price() ),
 
-				// Stock — determined after array init based on variation stock mode.
+				// Stock -- determined after array init based on variation stock mode.
 
 				// Backorders.
 				'allow_out_of_stock_purchases' => $variation->backorders_allowed(),
@@ -1028,7 +682,7 @@ class WooCommerceProductsSyncService {
 					$value = $attributes_map[ $key ];
 
 					// For taxonomy attributes, WooCommerce stores slugs in variation attributes
-					// but we use term names in variant_options.values — convert slug to name.
+					// but we use term names in variant_options.values -- convert slug to name.
 					$taxonomy = str_replace( 'attribute_', '', $key );
 					if ( taxonomy_exists( $taxonomy ) ) {
 						$term = get_term_by( 'slug', $value, $taxonomy );

@@ -304,29 +304,6 @@ class ProductsController extends AdminController {
 	}
 
 	/**
-	 * Import products.
-	 *
-	 * @return \SureCartCore\Responses\RedirectResponse
-	 */
-	public function import() {
-		// Prevent duplicate imports while a sync is already running.
-		if ( \SureCart::sync()->woocommerce_products()->isRunning() ) {
-			return \SureCart::redirect()->to( esc_url_raw( \SureCart::getUrl()->index( 'products' ) ) );
-		}
-
-		// Clear previously accumulated import IDs and session tracking.
-		delete_option( 'sc_woo_import_ids' );
-		delete_option( 'sc_woo_import_session_id' );
-		delete_option( 'sc_woo_import_all_skipped' );
-
-		// enqueue action.
-		\SureCart::sync()->woocommerce_products()->dispatch();
-
-		// redirect to products page.
-		return \SureCart::redirect()->to( esc_url_raw( \SureCart::getUrl()->index( 'products' ) ) );
-	}
-
-	/**
 	 * Import results page.
 	 *
 	 * @param \SureCartCore\Requests\RequestInterface $request Request.

@@ -64,6 +64,28 @@ class ProductsRestServiceProvider extends RestServiceProvider implements RestSer
 				'permission_callback' => [ $this, 'create_item_permissions_check' ],
 			]
 		);
+		register_rest_route(
+			"$this->name/v$this->version",
+			$this->endpoint . '/import_woocommerce',
+			[
+				[
+					'methods'             => \WP_REST_Server::CREATABLE,
+					'callback'            => $this->callback( $this->controller, 'importWooCommerce' ),
+					'permission_callback' => [ $this, 'update_item_permissions_check' ],
+				],
+			]
+		);
+		register_rest_route(
+			"$this->name/v$this->version",
+			$this->endpoint . '/woocommerce_count',
+			[
+				[
+					'methods'             => \WP_REST_Server::READABLE,
+					'callback'            => $this->callback( $this->controller, 'wooCommerceCount' ),
+					'permission_callback' => [ $this, 'update_item_permissions_check' ],
+				],
+			]
+		);
 	}
 
 	/**

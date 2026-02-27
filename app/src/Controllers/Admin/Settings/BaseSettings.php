@@ -159,6 +159,7 @@ abstract class BaseSettings {
 				'should_load_on_demand_assets' => (bool) \SureCart::theme()->shouldLoadOnDemandBlockAssets(),
 				'claim_url'                    => ! \SureCart::account()->claimed ? \SureCart::routeUrl( 'account.claim' ) : '',
 				'claim_expired'                => \SureCart::account()->claim_expired ?? false,
+				'is_woocommerce_active'        => class_exists( 'WooCommerce' ),
 			]
 		);
 	}
