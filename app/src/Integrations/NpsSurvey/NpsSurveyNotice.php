@@ -197,7 +197,11 @@ class NpsSurveyNotice {
 			return $post_data;
 		}
 
-		$account                   = \SureCart::account();
+		$account = \SureCart::account();
+		if ( empty( $account->plan ) ) {
+			return $post_data;
+		}
+
 		$plan                      = $account->plan ?? null;
 		$post_data['is_free_plan'] = $plan->free ?? true;
 		$post_data['plan_slug']    = $plan->name ?? '';
@@ -244,7 +248,7 @@ class NpsSurveyNotice {
 				'show_if'          => true,
 				'dismiss_timespan' => self::DAYS_BETWEEN_SURVEYS * DAY_IN_SECONDS,
 				'display_after'    => 0, // Timing handled by isReadyToShow().
-				'dismiss_count'    => 1,
+				'dismiss_count'    => 0, // We handle dismissals ourselves in handleStatusUpdate().
 				'plugin_slug'      => 'surecart',
 				'allow_review'     => true, // Enables promoter (8-10) vs non-promoter (<8) split.
 				'show_on_screens'  => \SureCart::pages()->getSureCartPageScreenIds(),
@@ -259,8 +263,7 @@ class NpsSurveyNotice {
 					'feedback_content'      => __( "Thanks. This means a lot!\n\nIf you've got a minute, a review on WordPress would mean the world to us. It helps others find us and keeps our momentum strong.", 'surecart' ),
 					'plugin_rating_link'    => esc_url( 'https://wordpress.org/support/plugin/surecart/reviews/#new-post' ),
 
-					// Neutrals (score 6-7): "comment" step — default for all scores < 8.
-					// JS will swap this to detractor message for scores 0-5.
+					// General score (score 0-7): "comment" step — default for all scores < 8.
 					'plugin_rating_title'   => __( 'Thanks for your honest feedback! 😊', 'surecart' ),
 					'plugin_rating_content' => __( "Sounds like we're close, but not quite there. What's holding you back from giving a 10?\n\nIf there's anything you wish was better or easier, we'd really love to hear it. Your reply could help us make things better at SureCart.", 'surecart' ),
 				],

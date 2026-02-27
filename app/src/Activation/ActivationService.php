@@ -1,6 +1,7 @@
 <?php
 namespace SureCart\Activation;
 
+use SureCart\Integrations\NpsSurvey\NpsSurveyNotice;
 use SureCart\Models\RegisteredWebhook;
 
 /**
@@ -141,8 +142,8 @@ class ActivationService {
 		delete_option( 'sc_api_token' );
 		delete_option( 'sc_previous_account' );
 		delete_option( 'sc_uninstall' );
-		delete_option( \SureCart\Integrations\NpsSurvey\NpsSurveyNotice::SETUP_DATE_OPTION );
-		delete_option( \SureCart\Integrations\NpsSurvey\NpsSurveyNotice::LAST_SUBMITTED_OPTION );
-		delete_option( \SureCart\Integrations\NpsSurvey\NpsSurveyNotice::NPS_SURVEY_ID );
+		delete_option( NpsSurveyNotice::SETUP_DATE_OPTION );
+		delete_option( NpsSurveyNotice::LAST_SUBMITTED_OPTION );
+		delete_option( NpsSurveyNotice::NPS_SURVEY_ID );
 	}
 }
