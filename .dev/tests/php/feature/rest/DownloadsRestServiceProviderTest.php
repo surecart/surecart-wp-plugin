@@ -61,38 +61,41 @@ class DownloadRestServiceProviderTest extends SureCartUnitTestCase
 	public function listWithVariantIdsProvider()
 	{
 		return [
-			'List: Unauthenticated'    => [null,                  'GET', '/surecart/v1/downloads', 401],
-			'List: Missing Capability' => [[],                    'GET', '/surecart/v1/downloads', 403],
-			'List: Has Capability'     => [['read_sc_downloads'], 'GET', '/surecart/v1/downloads', 200],
+			'Single variant ID'    => [['test-variant-id']],
+			'Multiple variant IDs' => [['variant-id-1', 'variant-id-2']],
 		];
 	}
 
 	/**
+	 * Test that variant_ids filter is forwarded to the API call.
+	 *
 	 * @dataProvider listWithVariantIdsProvider
 	 */
-	public function test_list_with_variant_ids_filter($caps, $method, $route, $status){
+	public function test_list_with_variant_ids_filter($variant_ids){
 		$requests = \Mockery::mock(RequestService::class);
 		\SureCart::alias('request', function () use ($requests) {
 			return call_user_func_array([$requests, 'makeRequest'], func_get_args());
 		});
 
 		$requests->shouldReceive('makeRequest')
+			->withArgs(function ($endpoint, $args) use ($variant_ids) {
+				return 'downloads' === $endpoint
+					&& isset($args['query']['variant_ids'])
+					&& $args['query']['variant_ids'] === $variant_ids;
+			})
+			->once()
 			->andReturn((object) [
 				'id' => 'test',
 			]);
 
-		if (is_array($caps)) {
-			$user = self::factory()->user->create_and_get();
-			foreach ($caps as $cap) {
-				$user->add_cap($cap);
-			}
-			wp_set_current_user($user->ID ?? null);
-		}
+		$user = self::factory()->user->create_and_get();
+		$user->add_cap('read_sc_downloads');
+		wp_set_current_user($user->ID);
 
-		$request = new \WP_REST_Request($method, $route);
-		$request->set_query_params(['variant_ids' => ['test-variant-id']]);
+		$request = new \WP_REST_Request('GET', '/surecart/v1/downloads');
+		$request->set_query_params(['variant_ids' => $variant_ids]);
 		$response = rest_do_request($request);
-		$this->assertSame($status, $response->get_status());
+		$this->assertSame(200, $response->get_status());
 	}
 
 	/**
