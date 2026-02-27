@@ -375,6 +375,7 @@ class TemplateUtilityService {
 			'cart'                    => class_exists( 'WooCommerce' ) ? __( 'SureCart Cart', 'surecart' ) : __( 'Cart', 'surecart' ),
 			'checkout'                => class_exists( 'WooCommerce' ) ? __( 'SureCart Checkout', 'surecart' ) : __( 'Checkout', 'surecart' ),
 			'product-quick-view'      => class_exists( 'WooCommerce' ) ? __( 'SureCart Product Quick Add', 'surecart' ) : __( 'Product Quick Add', 'surecart' ),
+			'product-review-form'     => class_exists( 'WooCommerce' ) ? __( 'SureCart Product Review Form', 'surecart' ) : __( 'Product Review Form', 'surecart' ),
 			'single-upsell'           => __( 'Upsells', 'surecart' ),
 			'upsell-info'             => __( 'Upsells', 'surecart' ),
 			'sticky-purchase'         => __( 'Sticky Purchase', 'surecart' ),
@@ -404,6 +405,7 @@ class TemplateUtilityService {
 			'cart'                    => __( 'The slide-out cart template.', 'surecart' ),
 			'checkout'                => __( 'Display the checkout content unless a custom template has been applied.', 'surecart' ),
 			'product-quick-view'      => __( 'Display product quick add.', 'surecart' ),
+			'product-review-form'     => __( 'Display product review form modal.', 'surecart' ),
 			'sticky-purchase'         => __( 'Display a sticky purchase button when the product form is scrolled out of view.', 'surecart' ),
 		);
 
