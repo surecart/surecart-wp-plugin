@@ -15,7 +15,9 @@ function isA11ySpeakElement(element) {
 	return (
 		element.classList.contains('a11y-speak-region') ||
 		element.classList.contains('a11y-speak-intro-text') ||
-		element.querySelector('#a11y-speak-assertive, #a11y-speak-polite, #a11y-speak-intro-text')
+		element.querySelector(
+			'#a11y-speak-assertive, #a11y-speak-polite, #a11y-speak-intro-text'
+		)
 	);
 }
 

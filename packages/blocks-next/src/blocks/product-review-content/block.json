@@ -1,0 +1,52 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "surecart/product-review-content",
+	"title": "Review Content",
+	"description": "Displays the content of a product review.",
+	"version": "1.0.0",
+	"category": "surecart-product-page",
+	"ancestor": ["surecart/product-review-template"],
+	"keywords": ["review", "content", "details"],
+	"usesContext": ["reviewId", "review"],
+	"example": {},
+	"supports": {
+		"interactivity": true,
+		"anchor": true,
+		"color": {
+			"gradients": true,
+			"text": true,
+			"background": false
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true,
+			"__experimentalFontFamily": true,
+			"__experimentalFontWeight": true,
+			"__experimentalFontStyle": true,
+			"__experimentalTextTransform": true,
+			"__experimentalTextDecoration": true,
+			"__experimentalLetterSpacing": true,
+			"__experimentalDefaultControls": {
+				"fontSize": true,
+				"fontAppearance": true,
+				"textTransform": true
+			}
+		},
+		"spacing": {
+			"padding": true,
+			"margin": true,
+			"blockGap": {
+				"__experimentalDefault": "4px"
+			},
+			"__experimentalDefaultControls": {
+				"padding": true,
+				"margin": true,
+				"blockGap": true
+			}
+		}
+	},
+	"textdomain": "surecart",
+	"render": "file:./view.php",
+	"editorScript": "file:./index.js"
+}

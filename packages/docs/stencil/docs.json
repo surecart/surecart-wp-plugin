@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-02-24T13:36:37",
+  "timestamp": "2026-02-24T16:06:25",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.18.3",
@@ -16685,6 +16685,7 @@
         "sc-purchase-downloads-list",
         "sc-quantity-select",
         "sc-recurring-price-choice-container",
+        "sc-review-stars",
         "sc-rich-text",
         "sc-select",
         "sc-subscription",
@@ -16845,6 +16846,9 @@
           "sc-icon"
         ],
         "sc-recurring-price-choice-container": [
+          "sc-icon"
+        ],
+        "sc-review-stars": [
           "sc-icon"
         ],
         "sc-rich-text": [
@@ -31339,7 +31343,7 @@
             "references": {
               "LayoutConfig": {
                 "location": "local",
-                "path": "/Users/rajkiranbagal/LocalSites/app/public/wp-content/plugins/surecart/packages/components/src/components/controllers/products/sc-product-item-list/sc-product-item-list.tsx",
+                "path": "/Users/andre/sites/surecart/wp-content/plugins/surecart/packages/components/src/components/controllers/products/sc-product-item-list/sc-product-item-list.tsx",
                 "id": "src/components/controllers/products/sc-product-item-list/sc-product-item-list.tsx::LayoutConfig"
               }
             }
@@ -34877,6 +34881,81 @@
         ],
         "sc-product-donation-choices": [
           "sc-recurring-price-choice-container"
+        ]
+      }
+    },
+    {
+      "filePath": "src/components/ui/review-stars/sc-review-stars.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-review-stars",
+      "readme": "# sc-review-average-stars\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "rating",
+          "type": "number",
+          "complexType": {
+            "original": "number",
+            "resolved": "number",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "rating",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "0",
+          "values": [
+            {
+              "type": "number"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "size",
+          "type": "number",
+          "complexType": {
+            "original": "number",
+            "resolved": "number",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "size",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "20",
+          "values": [
+            {
+              "type": "number"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [
+        {
+          "name": "base",
+          "docs": ""
+        }
+      ],
+      "dependents": [],
+      "dependencies": [
+        "sc-icon"
+      ],
+      "dependencyGraph": {
+        "sc-review-stars": [
+          "sc-icon"
         ]
       }
     },
@@ -45132,7 +45211,7 @@
       "path": "src/types.ts"
     },
     "src/types.ts::Subscription": {
-      "declaration": "export interface Subscription extends Object {\n  id: string;\n  object: 'subscription';\n  currency?: string;\n  status: SubscriptionStatus;\n  live_mode: boolean;\n  external_subscription_id: string;\n  current_cancellation_act: string | CancellationAct;\n  trial_end_at: number;\n  trial_end_at_date: string;\n  trial_end_at_date_time: string;\n  processor_type: 'stripe' | 'paypal';\n  order: Order;\n  customer: Customer;\n  discount: DiscountResponse;\n  finite: boolean;\n  pending_update: {\n    ad_hoc_amount?: number;\n    price?: string;\n    quantity?: number;\n    variant?: string;\n  };\n  purchase: Purchase | string;\n  cancel_at_period_end: number | false;\n  current_period: string | Period;\n  current_period_end_at: number | false;\n  current_period_end_at_date: string;\n  current_period_end_at_date_time: string;\n  current_period_start_at: number | false;\n  current_period_start_at_date: string;\n  remaining_period_count: number | null;\n  remaining_period_text: string;\n  ended_at: number;\n  ended_at_date: string;\n  end_behavior: 'cancel' | 'complete';\n  payment_method: PaymentMethod | string;\n  manual_payment_method: ManualPaymentMethod | string;\n  manual_payment: boolean;\n  price: Price;\n  ad_hoc_amount: number;\n  variant?: Variant | string;\n  variant_options?: Array<string>;\n  created_at: number;\n  created_at_date: string;\n  updated_at: number;\n  updated_at_date: string;\n  restore_at?: number;\n}",
+      "declaration": "export interface Subscription extends Object {\n  id: string;\n  object: 'subscription';\n  currency?: string;\n  status: SubscriptionStatus;\n  live_mode: boolean;\n  external_subscription_id: string;\n  current_cancellation_act: string | CancellationAct;\n  trial_end_at: number;\n  trial_end_at_date: string;\n  trial_end_at_date_time: string;\n  processor_type: 'stripe' | 'paypal';\n  order: Order;\n  customer: Customer;\n  discount: DiscountResponse;\n  finite: boolean;\n  pending_update: {\n    ad_hoc_amount?: number;\n    price?: string;\n    quantity?: number;\n    variant?: string;\n  };\n  purchase: Purchase | string;\n  cancel_at_period_end: number | false;\n  current_period: string | Period;\n  current_period_end_at: number | false;\n  current_period_end_at_date: string;\n  current_period_end_at_date_time: string;\n  current_period_start_at: number | false;\n  current_period_start_at_date: string;\n  remaining_period_count: number | null;\n  remaining_period_text: string;\n  ended_at: number;\n  ended_at_date: string;\n  end_behavior: 'cancel' | 'complete';\n  payment_method: PaymentMethod | string;\n  manual_payment_method: ManualPaymentMethod | string;\n  manual_payment: boolean;\n  price: Price;\n  ad_hoc_amount: number;\n  variant?: Variant | string;\n  variant_options?: Array<string>;\n  created_at: number;\n  created_at_date: string;\n  updated_at: number;\n  updated_at_date: string;\n  restore_at?: number;\n  can_modify?: boolean;\n}",
       "docstring": "",
       "path": "src/types.ts"
     },

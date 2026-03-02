@@ -28,10 +28,10 @@ const { state, actions } = store('surecart/sidebar', {
 		},
 		get ariaLabelDesktop() {
 			return state?.open
-				? __('Close sidebar', 'surecart')
-				: __('Open sidebar', 'surecart');
+				? __('Hide filters', 'surecart')
+				: __('Show filters', 'surecart');
 		},
-		ariaLabelMobile: __('Open sidebar', 'surecart'),
+		ariaLabelMobile: __('Show filters', 'surecart'),
 	},
 
 	actions: {
@@ -41,9 +41,7 @@ const { state, actions } = store('surecart/sidebar', {
 		open: function* () {
 			state.mobileOpen = true;
 			// also do not add inert for the parent of the current element
-			inertEverythingExcept(
-				document.querySelector('.sc-sidebar-drawer')
-			);
+			inertEverythingExcept(document.querySelector('.sc-sidebar-drawer'));
 			state.ariaLabelMobile = __('Close sidebar', 'surecart');
 		},
 
