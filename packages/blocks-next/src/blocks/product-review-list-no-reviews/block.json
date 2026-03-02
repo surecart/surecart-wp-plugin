@@ -1,0 +1,52 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "surecart/product-review-list-no-reviews",
+	"title": "No reviews",
+	"category": "surecart",
+	"description": "Contains the block elements used to render content when no reviews are found.",
+	"ancestor": ["surecart/product-review-list"],
+	"textdomain": "surecart",
+	"usesContext": ["query"],
+	"example": {
+		"innerBlocks": [
+			{
+				"name": "core/paragraph",
+				"attributes": {
+					"content": "No reviews yet, write one now?"
+				}
+			},
+			{
+				"name": "surecart/product-review-add-button",
+				"attributes": {}
+			}
+		]
+	},
+	"supports": {
+		"align": true,
+		"reusable": false,
+		"html": false,
+		"color": {
+			"gradients": true,
+			"link": true
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true,
+			"__experimentalFontFamily": true,
+			"__experimentalFontWeight": true,
+			"__experimentalFontStyle": true,
+			"__experimentalTextTransform": true,
+			"__experimentalTextDecoration": true,
+			"__experimentalLetterSpacing": true,
+			"__experimentalDefaultControls": {
+				"fontSize": true
+			}
+		},
+		"interactivity": {
+			"clientNavigation": true
+		}
+	},
+	"render": "file:./view.php",
+	"editorScript": "file:./index.js"
+}

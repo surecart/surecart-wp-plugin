@@ -136,6 +136,7 @@ class SubscriptionController extends BaseController {
 		$subscription = Subscription::with(
 			[
 				'price',
+				'periods',
 				'price.product',
 				'product.product_group',
 				'current_period',
@@ -151,7 +152,7 @@ class SubscriptionController extends BaseController {
 		$should_delay_cancellation = $subscription->shouldDelayCancellation();
 		ob_start();
 		?>
-
+		<?php do_action( 'surecart/dashboard/subscription/before_current_plan', $subscription ); ?>
 		<sc-spacing style="--spacing: var(--sc-spacing-large)">
 			<sc-breadcrumbs>
 				<sc-breadcrumb href="<?php echo esc_url( add_query_arg( [ 'tab' => $this->getTab() ], remove_query_arg( array_keys( $_GET ) ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended ?>">
@@ -203,7 +204,7 @@ class SubscriptionController extends BaseController {
 				)->render()
 			);
 			?>
-
+		<?php do_action( 'surecart/dashboard/subscription/after_current_plan', $subscription ); ?>
 		<?php
 		// show switch if we can change it.
 		if ( $subscription->canBeSwitched() ) :

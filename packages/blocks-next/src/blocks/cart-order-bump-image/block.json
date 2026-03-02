@@ -1,0 +1,55 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "surecart/cart-order-bump-image",
+	"title": "Order Bump Image",
+	"description": "Display the order bump product image.",
+	"version": "1.0.0",
+	"category": "surecart-cart",
+	"ancestor": ["surecart/cart-order-bump-template"],
+	"attributes": {
+		"sizing": {
+			"type": "string",
+			"default": "cover"
+		},
+		"aspectRatio": {
+			"type": "string",
+			"default": "1"
+		},
+		"width": {
+			"type": "string"
+		},
+		"height": {
+			"type": "string"
+		}
+	},
+	"supports": {
+		"interactivity": true,
+		"align": ["left", "center", "right", "wide", "full"],
+		"color": {
+			"text": false,
+			"background": false
+		},
+		"filter": {
+			"duotone": true
+		},
+		"spacing": {
+			"margin": true
+		},
+		"__experimentalBorder": {
+			"color": true,
+			"radius": true,
+			"width": true,
+			"__experimentalSkipSerialization": true,
+			"__experimentalDefaultControls": {
+				"color": true,
+				"radius": true,
+				"width": true
+			}
+		}
+	},
+	"render": "file:./view.php",
+	"textdomain": "surecart",
+	"editorScript": "file:./index.js",
+	"style": "file:./style-index.css"
+}

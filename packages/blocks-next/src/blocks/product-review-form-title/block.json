@@ -1,0 +1,64 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "surecart/product-review-form-title",
+	"title": "Review Form Title",
+	"description": "Provide a title input field for product reviews.",
+	"version": "1.0.0",
+	"category": "surecart-product-page",
+	"example": {},
+	"ancestor": ["surecart/product-review-form"],
+	"attributes": {
+		"label": {
+			"type": "string",
+			"default": "Title"
+		},
+		"placeholder": {
+			"type": "string",
+			"default": "Enter a title for your review"
+		},
+		"text_align": {
+			"type": "string"
+		}
+	},
+	"supports": {
+		"interactivity": true,
+		"color": {
+			"gradients": true,
+			"link": false,
+			"__experimentalDefaultControls": {
+				"background": true,
+				"text": true
+			}
+		},
+		"spacing": {
+			"margin": true,
+			"padding": true,
+			"__experimentalDefaultControls": {
+				"padding": true
+			}
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true,
+			"__experimentalFontWeight": true
+		},
+		"__experimentalBorder": {
+			"color": true,
+			"radius": true,
+			"style": true,
+			"width": true,
+			"__experimentalDefaultControls": {
+				"color": true,
+				"radius": true,
+				"style": true,
+				"width": true
+			}
+		}
+	},
+	"textdomain": "surecart",
+	"render": "file:./view.php",
+	"editorScript": "file:./index.js",
+	"style": ["surecart-form-control", "file:./style-index.css"],
+	"viewScriptModule": ["@surecart/product-review-form"]
+}
