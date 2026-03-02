@@ -1,0 +1,27 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "surecart/cart-order-bump-cta",
+	"title": "Order Bump CTA",
+	"description": "Display the order bump call to action text.",
+	"version": "1.0.0",
+	"keywords": ["cta", "order bump"],
+	"category": "surecart-cart",
+	"ancestor": ["surecart/cart-order-bump-template"],
+	"supports": {
+		"interactivity": true,
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true,
+			"__experimentalFontWeight": true
+		},
+		"color": {
+			"text": true,
+			"background": true
+		}
+	},
+	"render": "file:./view.php",
+	"textdomain": "surecart",
+	"editorScript": "file:./index.js",
+	"style": "file:./style-index.css"
+}

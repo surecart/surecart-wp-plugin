@@ -24,6 +24,7 @@ import {
 import DrawerSection from '../../../ui/DrawerSection';
 import useVariantValue from '../../hooks/useVariantValue';
 import ResetOverridesDropdown from './ResetOverridesDropdown';
+import Dimensions from '../../components/Dimensions';
 
 const WEIGHT_UNIT_TYPES = [
 	__('lb', 'surecart'),
@@ -60,6 +61,10 @@ export default ({ variant, updateVariant, product }) => {
 						{
 							key: 'auto_fulfill_enabled',
 							label: __('Auto fulfill', 'surecart'),
+						},
+						{
+							key: 'dimensions',
+							label: __('Dimensions', 'surecart'),
 						},
 					]}
 					isOverridden={isOverridden}
@@ -127,40 +132,55 @@ export default ({ variant, updateVariant, product }) => {
 			</ScRadioGroup>
 
 			{getValue('shipping_enabled') && (
-				<ScInput
-					label={__('Shipping Weight', 'surecart')}
-					value={getValue('weight')}
-					onScInput={(e) =>
-						updateVariant(
-							getUpdateValue({ weight: e.target.value })
-						)
-					}
+				<div
+					css={css`
+						display: grid;
+						gap: 1em;
+					`}
 				>
-					<ScDropdown slot="suffix" placement="bottom-end">
-						<ScButton type="text" slot="trigger" circle>
-							{getValue('weight_unit')}{' '}
-							<ScIcon name="chevron-down" />
-						</ScButton>
-						<ScMenu>
-							{WEIGHT_UNIT_TYPES.map((unit) => (
-								<ScMenuItem
-									onClick={() =>
-										updateVariant(
-											getUpdateValue({
-												...variant,
-												weight_unit: unit,
-											})
-										)
-									}
-									checked={getValue('weight_unit') === unit}
-									key={unit}
-								>
-									{unit}
-								</ScMenuItem>
-							))}
-						</ScMenu>
-					</ScDropdown>
-				</ScInput>
+					<Dimensions
+						dimensions={getValue('dimensions')}
+						updateDimensions={(dimensions) =>
+							updateVariant(getUpdateValue(dimensions))
+						}
+					/>
+
+					<ScInput
+						label={__('Shipping Weight', 'surecart')}
+						value={getValue('weight')}
+						onScInput={(e) =>
+							updateVariant(
+								getUpdateValue({ weight: e.target.value })
+							)
+						}
+					>
+						<ScDropdown slot="suffix" placement="bottom-end">
+							<ScButton type="text" slot="trigger" circle>
+								{getValue('weight_unit')}{' '}
+								<ScIcon name="chevron-down" />
+							</ScButton>
+							<ScMenu>
+								{WEIGHT_UNIT_TYPES.map((unit) => (
+									<ScMenuItem
+										onClick={() =>
+											updateVariant(
+												getUpdateValue({
+													weight_unit: unit,
+												})
+											)
+										}
+										checked={
+											getValue('weight_unit') === unit
+										}
+										key={unit}
+									>
+										{unit}
+									</ScMenuItem>
+								))}
+							</ScMenu>
+						</ScDropdown>
+					</ScInput>
+				</div>
 			)}
 
 			<ScSwitch

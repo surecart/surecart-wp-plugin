@@ -218,6 +218,25 @@ jobs:
           SCREENSHOT_BASE="https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/pr-${PR_NUMBER}/screenshots"
           echo "screenshot_base=$SCREENSHOT_BASE" >> $GITHUB_OUTPUT
 
+      - name: Wait for GitHub Pages deployment
+        run: |
+          PLUGIN_URL="${{ needs.playground-preview.outputs.plugin_url }}"
+          if [ -z "$PLUGIN_URL" ]; then
+            PLUGIN_URL="https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/pr-${{ steps.get-context.outputs.pr_number }}/surecart.zip"
+          fi
+          echo "Waiting for ZIP to be available at: $PLUGIN_URL"
+          for i in $(seq 1 30); do
+            HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" "$PLUGIN_URL")
+            if [ "$HTTP_STATUS" = "200" ]; then
+              echo "ZIP is available (attempt $i/30)"
+              exit 0
+            fi
+            echo "Attempt $i/30: HTTP $HTTP_STATUS - waiting 10s..."
+            sleep 10
+          done
+          echo "::error::ZIP file not available after 5 minutes at $PLUGIN_URL"
+          exit 1
+
       - name: Run Claude QA
         id: claude-qa
         uses: anthropics/claude-code-action@v1

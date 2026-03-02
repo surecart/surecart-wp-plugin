@@ -80,6 +80,7 @@
  - [sc-purchase-downloads-list](../purchase-downloads-list)
  - [sc-quantity-select](../quantity-select)
  - [sc-recurring-price-choice-container](../sc-recurring-price-choice-container)
+ - [sc-review-stars](../review-stars)
  - [sc-rich-text](../rich-text)
  - [sc-select](../select)
  - [sc-subscription](../../controllers/dashboard/subscription)
@@ -149,6 +150,7 @@ graph TD;
   sc-purchase-downloads-list --> sc-icon
   sc-quantity-select --> sc-icon
   sc-recurring-price-choice-container --> sc-icon
+  sc-review-stars --> sc-icon
   sc-rich-text --> sc-icon
   sc-select --> sc-icon
   sc-subscription --> sc-icon

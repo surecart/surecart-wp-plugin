@@ -1,124 +1,134 @@
-# CLAUDE.md
+# SureCart - Claude Context
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+Headless e-commerce WordPress plugin. All transactional data (products, checkouts, orders, subscriptions) lives on `api.surecart.com` — WordPress handles rendering, users, and integrations. Built on **WP Emerge** framework with Pimple DI. Monorepo with Yarn workspaces.
 
-## Project Overview
-
-SureCart is a WordPress e-commerce plugin built on the WP Emerge framework. It provides a headless e-commerce platform with features like checkout forms, customer dashboards, product management, subscriptions, and more.
-
-## Development Commands
-
-### Initial Setup
-```bash
-# Install composer dependencies
-composer install
-
-# Install JavaScript dependencies
-yarn
-
-# Bootstrap the build (required before development)
-yarn bootstrap
-```
-
-### Development Workflow
-```bash
-# Start development mode with file watching
-yarn dev
-
-# Build for production
-yarn plugin:release
-
-# Run PHP tests
-yarn test:php
-
-# Run E2E tests
-yarn test:e2e
-
-# Run E2E tests with UI
-yarn test:e2e:ui
-```
-
-### Code Quality
-```bash
-# PHP code standards check
-./vendor/bin/phpcs
-
-# PHP static analysis
-./vendor/bin/phpstan analyse
-
-# JavaScript linting
-yarn lint:js
-
-# CSS linting
-yarn lint:css
-```
+See also: `app/CLAUDE.md` (PHP patterns), `packages/CLAUDE.md` (JS/blocks patterns), `Workflow.md` (task workflow rules).
 
 ## Architecture
 
-### Core Structure
-- **WP Emerge Framework**: The plugin is built on WP Emerge, providing MVC structure with service providers, routing, and dependency injection
-- **Service Providers**: Located in `app/src/`, they bootstrap different features (e.g., `AccountServiceProvider`, `BlockServiceProvider`)
-- **Models**: Located in `app/src/Models/`, represent data structures (e.g., `Product`, `Customer`, `Order`)
-- **Controllers**: Handle routing logic for admin, web, and AJAX requests
-- **REST API**: Extensive REST endpoints defined in `app/src/Rest/` for API operations
+Bootstrap: `surecart.php` -> composer autoload -> `SureCart` facade -> `app/config.php` (168 service providers) -> `app/hooks.php`
 
-### Key Directories
-- `packages/`: Monorepo structure containing blocks, components, admin interfaces
-- `packages/blocks/`: Gutenberg block definitions
-- `packages/components/`: Web components library (Stencil.js based)
-- `packages/admin/`: React-based admin interfaces
-- `dist/`: Built assets (do not edit directly)
+Service providers have `register($container)` + `bootstrap($container)` methods. All registered in `app/config.php` under `'providers'`.
 
-### Block System
-- Server-side rendered blocks defined in `config.php` under `'blocks'`
-- Legacy Block PHP controllers in `packages/blocks/Blocks/`
-- New Block PHP controllers and views in `packages/blocks-next`
-- Components preloaded per block for performance (see `'preload'` in config)
+API auth: `ApiToken::get()` — token stored in WP options. All outbound API calls go to `api.surecart.com`.
 
-### Middleware System
-- Request middleware defined in `app/src/Middleware/`
-- Configured in `config.php` under `'middleware'`
-- Handles authentication, redirects, asset loading
+PSR-4: `SureCart\` -> `app/src/`, `SureCartBlocks\` -> `packages/blocks/`, `SureCartCore\` -> `core/core/src/`
 
-### Database Integration
-- Uses WordPress database with custom tables
-- Migrations in `app/src/Database/`
-- Models extend `DatabaseModel` or `ExternalApiModel`
+## Model System
 
-### API Integration
-- External API URL: `https://api.surecart.com`
-- Models communicate with SureCart API for data operations
-- Webhook handling for real-time updates
+Three base classes — choosing wrong one breaks everything:
+- **`Model`** — API-backed. CRUD goes to `api.surecart.com/{endpoint}`. Set `$endpoint` and `$object_name`.
+- **`DatabaseModel`** — WordPress custom tables (`surecart_*`). Local DB storage.
+- **`ExternalApiModel`** — Third-party external APIs. Rarely extended.
 
-## Development Guidelines
+```php
+Product::find($id);                                    // GET /products/{id}
+Product::where(['archived' => false])->paginate();     // GET /products?archived=false
+Product::create(['name' => 'Foo']);                     // POST /products
+```
 
-### PHP Standards
-- Follow WordPress coding standards with exceptions defined in `phpcs.xml`
-- Use short array syntax `[]` instead of `array()`
-- Namespace all classes under `SureCart\`
-- Text domain for translations: `surecart`
+## Checkout Flow
 
-### JavaScript Development
-- Monorepo uses Yarn workspaces
-- Components use Stencil.js (packages/components)
-- Admin uses React (packages/admin)
-- Blocks use WordPress block editor APIs
+Most complex flow in the plugin. Involves both PHP REST layer and JS state machine.
 
-### Testing
-- PHP unit tests in `.dev/tests/php/`
-- E2E tests use Playwright
-- Test configuration in `phpunit.xml` and `playwright.config.ts`
+1. **Create draft** — `POST /wp-json/surecart/v1/checkouts`
+2. **Update** — `PATCH .../checkouts/{id}` (email, line items, addresses, coupons)
+3. **Finalize** — `POST .../checkouts/{id}/finalize` -> validates, processes payment
+4. **Confirm** — `DraftCheckoutsController::finalize()` -> confirms, links Customer to WP User
+5. **Post-purchase** — `do_action('surecart/purchase_created', $purchase)` fires per purchase
 
-### Build Process
-- Webpack configuration in `webpack.config.js`
-- Entry points for different admin pages and components
-- Assets copied from packages to dist during build
+**JS state machine** (`packages/components/src/components/providers/form-state-provider/checkout-machine.ts`):
+States: `draft` -> `updating` -> `finalizing` -> `paying` -> `confirming` -> `paid` -> `confirmed` -> `redirecting`
+Terminal states: `expired`, `locked`, `test_mode_restricted`, `failure`
 
-## Important Considerations
-- Always run `yarn bootstrap` after fresh clone
-- Use `yarn dev` for development to watch file changes
-- The plugin integrates with multiple third-party services (LearnDash, MemberPress, etc.)
-- Supports multiple payment processors configured through the admin
-- Has extensive webhook support for real-time updates
-- Includes abandoned cart recovery features
-- Multi-language support with translation files in `languages/`
+Payment processors: Stripe, PayPal, Paystack, Razorpay, Mollie, Manual.
+
+## Two Block Systems
+
+Two systems coexist. **All new blocks go to next-gen.**
+
+- **Legacy** (`packages/blocks/Blocks/`): `Block.php` extends `BaseBlock`, renders Stencil HTML. Maintenance only.
+- **Next-gen** (`packages/blocks-next/src/blocks/`): WordPress Interactivity API. `controller.php` -> `view.php` pipeline. Auto-registered from `build/blocks/**/block.json`.
+
+```php
+// controller.php — runs on render, has $attributes, $content, $block
+$product = sc_get_product();
+return 'file:./view.php';
+```
+
+Context: `surecart/product` injected via `render_block_context` filter when `surecart_current_product` query var is set.
+
+## Component Preloading
+
+When next-gen blocks use Stencil `sc-*` components, add preload mapping in `app/config.php` under `'preload'` key. Omitting this causes layout shift.
+
+```php
+'surecart/product-buy-buttons' => ['sc-product-buy-button', 'sc-button'],
+```
+
+## Webhook System
+
+- Webhooks auto-register on SSL only (skipped on localhost)
+- Signature validation: HMAC-SHA256 via `WebhooksMiddleware`
+- Payload stored in `surecart_incoming_webhooks` table, processed async via `AsyncWebhookService` (Action Scheduler)
+- Key actions fired: `surecart/purchase_created`, `surecart/purchase_revoked`, `surecart/purchase_invoked`, `surecart/purchase_updated`, `surecart/customer_updated`, `surecart/subscription_renewed`, `surecart/account_updated`
+
+## Hook Patterns
+
+```php
+// Purchase lifecycle:
+add_action('surecart/purchase_created', fn($purchase) => /* grant access */);
+add_action('surecart/purchase_revoked', fn($purchase) => /* revoke access */);
+
+// Checkout filters:
+add_filter('surecart/checkout/validate', fn($errors, $args, $req) => $errors, 10, 3);
+add_filter('surecart/checkout/auto-login-new-user', '__return_false');
+add_filter('surecart/checkout/finduser', '__return_false');
+```
+
+## Conventions
+
+- Capabilities: `edit_sc_{model}s`, `publish_sc_{model}s`, `delete_sc_{model}s`
+- Text domain: `surecart` for all i18n calls
+- Stencil tags: `sc-{name}`, classes: `Sc{Name}`
+- Block names: `surecart/{block-name}`
+
+## Entity Relationships
+
+```
+Account (shop)
+├── Product -> Price -> Variant -> VariantOption -> VariantOptionValue (DB)
+├── Customer <-> WP_User (synced at checkout confirmation)
+│     └── PaymentMethod
+├── Checkout -> LineItem -> Purchase
+│     ├── Discount <- Coupon / Promotion
+│     ├── ShippingChoice
+│     └── PaymentIntent -> Charge
+├── Order (from finalized Checkout)
+│     └── Fulfillment -> FulfillmentItem
+├── Subscription -> Period
+├── Invoice
+├── License -> Activation
+└── Affiliation -> Referral -> ReferralItem
+```
+
+## PHPUnit Tests
+
+**Run via Docker** (never run phpunit directly):
+
+```bash
+yarn run test:php                             # full suite
+yarn run test:php --group=specific-test-group # specific group(s)
+```
+
+**Location:** `.dev/tests/php/unit/` — mirrors `app/src/` structure. Extend `SureCartUnitTestCase` (which extends `WP_UnitTestCase`). Use `\Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration` trait. Bootstrap only the providers you need in `setUp()`. WP functions (`get_option`, `update_option`, `wp_set_current_user`, etc.) work natively. Mock SureCart facade services via `\SureCart::alias('account', fn() => ...)`. `tearDown` cleanup is automatic.
+
+## Critical Gotchas
+
+1. **Never edit `dist/`** — edit source in `packages/`, then build
+2. **`yarn bootstrap` required** before first `yarn dev` — builds Stencil components that other packages depend on
+3. **API models store nothing in WP DB** — never query WordPress tables for Product, Checkout, Order, etc.
+4. **Always check `is_wp_error()`** on model operations before proceeding
+5. **`app/config.php` is the master registry** — service providers, blocks, preload mappings all go here
+6. **Customer <-> WP User sync** happens during checkout confirmation via `SyncsCustomer` trait
+7. **Background processing** uses Action Scheduler (`woocommerce/action-scheduler`), not WP cron
