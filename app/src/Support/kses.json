@@ -1877,6 +1877,7 @@
     "has-focus": true,
     "max": true,
     "min": true,
+    "product-name": true,
     "quantity": true,
     "size": true,
     "style": true,
