@@ -1,0 +1,56 @@
+input.wp-block-surecart-product-quantity-input {
+	flex-basis: 40px;
+	display: block;
+	width: 100%;
+	border: none;
+	box-shadow: none;
+	line-height: 1;
+	font-size: var(--sc-font-size-small);
+	text-align: center;
+	-moz-appearance: textfield; /* Firefox */
+	appearance: textfield;
+	padding: 0;
+
+	&:focus {
+		outline: none;
+		border: none;
+	}
+
+	&::-webkit-outer-spin-button,
+	&::-webkit-inner-spin-button {
+		/* display: none; <- Crashes Chrome on hover */
+		-webkit-appearance: none;
+		margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+	}
+	min-height: 0;
+	height: 100%;
+}
+
+.wp-block-surecart-product-quantity-input-increase,
+.wp-block-surecart-product-quantity-input-decrease {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	line-height: 0;
+	height: auto;
+	top: 1px;
+	bottom: 1px;
+	flex-basis: 32px;
+	width: 32px;
+	height: 32px;
+	cursor: pointer;
+	font-size: 13px;
+	user-select: none;
+	border-width: 0;
+	padding: 0;
+
+	svg {
+		width: var(--sc-font-size-medium, 1em);
+		height: var(--sc-font-size-medium, 1em);
+	}
+
+	&.button--disabled {
+		opacity: 0.5;
+		cursor: not-allowed;
+	}
+}

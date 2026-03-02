@@ -398,7 +398,20 @@ class TutorLMSService extends IntegrationService implements IntegrationInterface
 			return;
 		}
 
-		tutor_utils()->do_enroll( $course_id, 0, $wp_user->ID );
-		tutor_utils()->complete_course_enroll( 0 );
+		$enroll_id = tutor_utils()->do_enroll( $course_id, 0, $wp_user->ID );
+
+		// TutorLMS sets enrollment to 'pending' for purchasable courses.
+		// Since SureCart has already processed the payment, we mark it as 'completed' directly.
+		if ( $enroll_id ) {
+			wp_update_post(
+				[
+					'ID'          => $enroll_id,
+					'post_status' => 'completed',
+				]
+			);
+
+			// Fire the enrollment complete action for consistency with TutorLMS hooks.
+			do_action( 'tutor_after_enrolled', $course_id, $wp_user->ID, $enroll_id );
+		}
 	}
 }
