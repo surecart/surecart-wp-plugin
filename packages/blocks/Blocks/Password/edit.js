@@ -53,6 +53,7 @@ export default ({ className, attributes, setAttributes, isSelected }) => {
 				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
 						<ToggleControl
+							__nextHasNoMarginBottom
 							label={__('Required', 'surecart')}
 							checked={required}
 							onChange={(required) => setAttributes({ required })}
@@ -60,6 +61,8 @@ export default ({ className, attributes, setAttributes, isSelected }) => {
 					</PanelRow>
 					<PanelRow>
 						<TextControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							label={__('Label', 'surecart')}
 							value={label}
 							onChange={(label) => setAttributes({ label })}
@@ -67,6 +70,8 @@ export default ({ className, attributes, setAttributes, isSelected }) => {
 					</PanelRow>
 					<PanelRow>
 						<TextControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							label={__('Placeholder', 'surecart')}
 							value={placeholder}
 							onChange={(placeholder) =>
@@ -76,6 +81,8 @@ export default ({ className, attributes, setAttributes, isSelected }) => {
 					</PanelRow>
 					<PanelRow>
 						<TextControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							label={__('Help', 'surecart')}
 							value={help}
 							onChange={(help) => setAttributes({ help })}
@@ -83,6 +90,7 @@ export default ({ className, attributes, setAttributes, isSelected }) => {
 					</PanelRow>
 					<PanelRow>
 						<ToggleControl
+							__nextHasNoMarginBottom
 							label={__('Password Confirmation', 'surecart')}
 							checked={confirmation}
 							onChange={(confirmation) =>
@@ -94,6 +102,8 @@ export default ({ className, attributes, setAttributes, isSelected }) => {
 						<>
 							<PanelRow>
 								<TextControl
+									__next40pxDefaultSize
+									__nextHasNoMarginBottom
 									label={__(
 										'Password Confirmation Label',
 										'surecart'
@@ -106,6 +116,8 @@ export default ({ className, attributes, setAttributes, isSelected }) => {
 							</PanelRow>
 							<PanelRow>
 								<TextControl
+									__next40pxDefaultSize
+									__nextHasNoMarginBottom
 									label={__(
 										'Password Confirmation Placeholder',
 										'surecart'
@@ -120,6 +132,8 @@ export default ({ className, attributes, setAttributes, isSelected }) => {
 							</PanelRow>
 							<PanelRow>
 								<TextControl
+									__next40pxDefaultSize
+									__nextHasNoMarginBottom
 									label={__(
 										'Password Confirmation Help',
 										'surecart'

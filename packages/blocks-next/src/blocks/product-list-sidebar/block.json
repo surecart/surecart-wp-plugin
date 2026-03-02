@@ -72,5 +72,5 @@
 		"wp-a11y"
 	],
 	"render": "file:./view.php",
-	"viewScriptModule": ["@surecart/sidebar"]
+	"viewScriptModule": ["@surecart/sidebar", "wp-a11y"]
 }

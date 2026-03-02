@@ -29,6 +29,8 @@ export default ({ attributes: { alignment, sale_text }, setAttributes }) => {
 			<InspectorControls>
 				<PanelBody>
 					<TextControl
+						__next40pxDefaultSize
+						__nextHasNoMarginBottom
 						label={__('Sale Text', 'surecart')}
 						help={__(
 							'This will be displayed if there is a compare at price, or an upsell discount.',

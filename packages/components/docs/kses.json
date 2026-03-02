@@ -304,6 +304,12 @@
     "class": true,
     "slot": true
   },
+  "sc-checkout-razorpay-payment-provider": {
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-checkout-stock-alert": {
     "style": true,
     "id": true,
@@ -1281,6 +1287,7 @@
     "slot": true
   },
   "sc-order-submit": {
+    "background-color": true,
     "currency-code": true,
     "full": true,
     "icon": true,
@@ -1293,6 +1300,7 @@
     "secure-notice-text": true,
     "show-total": true,
     "size": true,
+    "text-color": true,
     "type": true,
     "style": true,
     "id": true,
@@ -1514,6 +1522,18 @@
   "sc-pill-option": {
     "is-selected": true,
     "is-unavailable": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-popover": {
+    "disabled": true,
+    "distance": true,
+    "hoist": true,
+    "open": true,
+    "placement": true,
+    "skidding": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1888,6 +1908,16 @@
     "class": true,
     "slot": true
   },
+  "sc-razorpay-add-method": {
+    "currency": true,
+    "customer-id": true,
+    "live-mode": true,
+    "success-url": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-recurring-price-choice-container": {
     "label": true,
     "prices": true,
@@ -1896,6 +1926,14 @@
     "show-amount": true,
     "show-control": true,
     "show-details": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-review-stars": {
+    "rating": true,
+    "size": true,
     "style": true,
     "id": true,
     "class": true,
@@ -2066,6 +2104,7 @@
     "slot": true
   },
   "sc-subscription-ad-hoc-confirm": {
+    "currency-code": true,
     "heading": true,
     "price": true,
     "style": true,
@@ -2287,6 +2326,12 @@
     "status": true,
     "tax-id-types": true,
     "type": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-test-mode-info": {
     "style": true,
     "id": true,
     "class": true,

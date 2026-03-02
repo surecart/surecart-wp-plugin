@@ -323,6 +323,46 @@ add_action(
 			$static_assets['version']
 		);
 
+		// Product review script.
+		$static_assets = include trailingslashit( plugin_dir_path( __FILE__ ) ) . 'build/scripts/product-review/index.asset.php';
+		wp_register_script_module(
+			'@surecart/product-review',
+			trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/product-review/index.js',
+			[
+				[
+					'id'     => '@wordpress/interactivity',
+					'import' => 'dynamic',
+				],
+				[
+					'id'     => '@surecart/a11y',
+					'import' => 'dynamic',
+				],
+			],
+			$static_assets['version']
+		);
+
+		// Product review form script.
+		$static_assets = include trailingslashit( plugin_dir_path( __FILE__ ) ) . 'build/scripts/product-review-form/index.asset.php';
+		wp_register_script_module(
+			'@surecart/product-review-form',
+			trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/product-review-form/index.js',
+			[
+				[
+					'id'     => '@wordpress/interactivity',
+					'import' => 'dynamic',
+				],
+				[
+					'id'     => 'surecart/lightbox',
+					'import' => 'dynamic',
+				],
+				[
+					'id'     => '@surecart/a11y',
+					'import' => 'dynamic',
+				],
+			],
+			$static_assets['version']
+		);
+
 		// Sticky purchase button interactivity script.
 		$static_assets = include trailingslashit( plugin_dir_path( __FILE__ ) ) . 'build/scripts/sticky-purchase/index.asset.php';
 		wp_register_script_module(
@@ -551,6 +591,32 @@ add_action(
 			array(
 				array(
 					'id'     => '@wordpress/interactivity',
+					'import' => 'dynamic',
+				),
+			),
+			$static_assets['version']
+		);
+
+		// Order Bumps.
+		$static_assets = include trailingslashit( plugin_dir_path( __FILE__ ) ) . 'build/scripts/order-bumps/index.asset.php';
+		wp_register_script_module(
+			'@surecart/order-bumps',
+			trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/order-bumps/index.js',
+			array(
+				array(
+					'id'     => '@wordpress/interactivity',
+					'import' => 'dynamic',
+				),
+				array(
+					'id'     => '@surecart/checkout',
+					'import' => 'dynamic',
+				),
+				array(
+					'id'     => '@surecart/checkout-service',
+					'import' => 'dynamic',
+				),
+				array(
+					'id'     => '@surecart/a11y',
 					'import' => 'dynamic',
 				),
 			),

@@ -67,7 +67,10 @@ class CartMenuIcon extends \Bricks\Element {
 		$this->controls['cart_icon'] = [
 			'label'   => esc_html__( 'Icon', 'surecart' ),
 			'type'    => 'icon',
-			'default' => null,
+			'default' => [
+				'library' => 'ionicons',
+				'icon'    => 'ion-md-cart',
+			],
 		];
 
 		$this->controls['cart_menu_always_shown'] = [
@@ -107,12 +110,12 @@ class CartMenuIcon extends \Bricks\Element {
 
 		$cart_menu_always_shown = ! empty( $settings['cart_menu_always_shown'] ) ? true : false;
 
-		$this->cart_icon = ! empty( $settings['cart_icon']['icon'] ) ? self::render_icon( $settings['cart_icon'], [ 'icon' ] ) : self::render_icon(
-			[
-				'icon' => 'ti-bag',
-			],
-			[ 'icon' ]
-		);
+		if ( ! empty( $settings['cart_icon'] ) ) {
+			$this->cart_icon = self::render_icon(
+				$settings['cart_icon'],
+				[ 'icon' ]
+			);
+		}
 
 		// Filter cart icon.
 		add_filter( 'sc_cart_menu_icon', [ $this, 'render_bricks_icon' ] );

@@ -97,18 +97,18 @@ class AccountService {
 	/**
 	 * Fetch the cached account.
 	 *
-	 * @return \SureCart\Models\Account
+	 * @return \SureCart\Models\Account|\WP_Error|null
 	 */
 	public function fetchCachedAccount() {
-		$this->account = get_transient( $this->cache_key );
+		$this->account = $this->convertArrayToAccount( get_transient( $this->cache_key ) );
 
 		// we don't have a cached account.
-		if ( false === $this->account ) {
+		if ( empty( $this->account ) ) {
 			// fetch the account.
 			$this->account = $this->fetchAccount();
 
 			// there was an error or the account could not be fetched by other means.
-			if ( is_wp_error( $this->account ) || empty( $this->account->id ) ) {
+			if ( is_wp_error( $this->account ) || ! ( $this->account instanceof Account ) || empty( $this->account->id ) ) {
 				// get the previously working account.
 				$previously_working_account = $this->convertArrayToAccount( get_option( 'sc_previous_account' ) );
 
@@ -119,7 +119,7 @@ class AccountService {
 				}
 
 				// set previously working account and don't try for 5 minutes.
-				set_transient( $this->cache_key, $previously_working_account, 5 * MINUTE_IN_SECONDS );
+				set_transient( $this->cache_key, $previously_working_account->toArray(), 5 * MINUTE_IN_SECONDS );
 
 				// return the account.
 				return $previously_working_account;
@@ -129,7 +129,7 @@ class AccountService {
 			update_option( 'sc_previous_account', $this->account->toArray() );
 
 			// set the transient.
-			set_transient( $this->cache_key, $this->account, 15 * MINUTE_IN_SECONDS );
+			set_transient( $this->cache_key, $this->account->toArray(), 15 * MINUTE_IN_SECONDS );
 		}
 
 		return $this->account;
@@ -141,7 +141,7 @@ class AccountService {
 	 * @return \SureCart\Models\Account
 	 */
 	protected function fetchAccount() {
-		$this->account = Account::with( array( 'brand', 'brand.address', 'customer_portal_protocol', 'tax_protocol', 'tax_protocol.address', 'subscription_protocol', 'shipping_protocol', 'affiliation_protocol' ) )->find();
+		$this->account = Account::with( array( 'brand', 'brand.address', 'customer_portal_protocol', 'tax_protocol', 'tax_protocol.address', 'subscription_protocol', 'review_protocol', 'shipping_protocol', 'affiliation_protocol' ) )->find();
 		return $this->account;
 	}
 
@@ -185,7 +185,7 @@ class AccountService {
 			return $data;
 		}
 
-		if ( empty( $data ) || ! isset( $data['id'] ) ) {
+		if ( empty( $data ) || ( ! isset( $data['id'] ) && ! isset( $data->id ) ) ) {
 			return null;
 		}
 

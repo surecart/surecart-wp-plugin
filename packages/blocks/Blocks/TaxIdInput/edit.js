@@ -54,6 +54,8 @@ export default ({ attributes, setAttributes }) => {
 					</PanelRow>
 					<PanelRow>
 						<TextControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							label={__('CA GST Label', 'surecart')}
 							value={ca_gst_label}
 							placeholder={__('GST Number', 'surecart')}
@@ -64,6 +66,8 @@ export default ({ attributes, setAttributes }) => {
 					</PanelRow>
 					<PanelRow>
 						<TextControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							label={__('AU ABN Label', 'surecart')}
 							value={au_abn_label}
 							placeholder={__('ABN Number', 'surecart')}
@@ -74,6 +78,8 @@ export default ({ attributes, setAttributes }) => {
 					</PanelRow>
 					<PanelRow>
 						<TextControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							label={__('UK VAT Label', 'surecart')}
 							value={gb_vat_label}
 							placeholder={__('UK VAT', 'surecart')}
@@ -84,6 +90,8 @@ export default ({ attributes, setAttributes }) => {
 					</PanelRow>
 					<PanelRow>
 						<TextControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							label={__('EU VAT Label', 'surecart')}
 							value={eu_vat_label}
 							placeholder={__('EU VAT', 'surecart')}
@@ -94,6 +102,8 @@ export default ({ attributes, setAttributes }) => {
 					</PanelRow>
 					<PanelRow>
 						<TextControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							label={__('Other Label', 'surecart')}
 							value={other_label}
 							placeholder={__('Tax ID', 'surecart')}
@@ -104,6 +114,8 @@ export default ({ attributes, setAttributes }) => {
 					</PanelRow>
 					<PanelRow>
 						<TextControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							label={__('Help Text', 'surecart')}
 							value={help_text}
 							onChange={(help_text) =>

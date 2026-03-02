@@ -46,6 +46,7 @@ export default ({ attributes, setAttributes }) => {
 			<PanelBody title={__('Border', 'surecart')}>
 				<PanelRow>
 					<ToggleControl
+						__nextHasNoMarginBottom
 						label={__('Bottom Border', 'surecart')}
 						checked={border}
 						onChange={(border) => setAttributes({ border })}

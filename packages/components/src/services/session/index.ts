@@ -11,6 +11,8 @@ export const baseUrl = 'surecart/v1/checkouts/';
 
 /** Items to always expand. */
 export const expand = [
+  'checkout_fees',
+  'shipping_fees',
   'line_items',
   'line_item.price',
   'line_item.fees',

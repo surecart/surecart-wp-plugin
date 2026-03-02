@@ -540,6 +540,8 @@ export namespace Components {
          */
         "selectorTitle": string;
     }
+    interface ScCheckoutRazorpayPaymentProvider {
+    }
     /**
      * This component listens for stock requirements and displays a dialog to the user.
      */
@@ -2177,6 +2179,7 @@ export namespace Components {
         "status": OrderStatus;
     }
     interface ScOrderSubmit {
+        "backgroundColor": string;
         /**
           * Currency Code
          */
@@ -2225,6 +2228,7 @@ export namespace Components {
           * The button's size.
          */
         "size": 'small' | 'medium' | 'large';
+        "textColor": string;
         /**
           * The button type.
          */
@@ -2634,6 +2638,43 @@ export namespace Components {
          */
         "isSelected": boolean;
         "isUnavailable": boolean;
+    }
+    interface ScPopover {
+        /**
+          * Is this disabled.
+         */
+        "disabled": boolean;
+        /**
+          * The distance in pixels from which to offset the panel away from its trigger.
+         */
+        "distance": number;
+        /**
+          * Enable this option to prevent the panel from being clipped when the component is placed inside a container with `overflow: auto|scroll`.
+         */
+        "hoist": boolean;
+        /**
+          * Indicates whether or not the popover is open. You can use this in lieu of the show/hide methods.
+         */
+        "open"?: boolean;
+        /**
+          * The placement of the popover.
+         */
+        "placement": | 'top'
+    | 'top-start'
+    | 'top-end'
+    | 'bottom'
+    | 'bottom-start'
+    | 'bottom-end'
+    | 'right'
+    | 'right-start'
+    | 'right-end'
+    | 'left'
+    | 'left-start'
+    | 'left-end';
+        /**
+          * The distance in pixels from which to offset the panel along its trigger.
+         */
+        "skidding": number;
     }
     interface ScPremiumTag {
         /**
@@ -3333,6 +3374,12 @@ export namespace Components {
          */
         "value": string;
     }
+    interface ScRazorpayAddMethod {
+        "currency": string;
+        "customerId": string;
+        "liveMode": boolean;
+        "successUrl": string;
+    }
     interface ScRecurringPriceChoiceContainer {
         /**
           * Label for the choice.
@@ -3362,6 +3409,10 @@ export namespace Components {
           * Should we show the price details?
          */
         "showDetails": boolean;
+    }
+    interface ScReviewStars {
+        "rating": number;
+        "size": number;
     }
     interface ScRichText {
         /**
@@ -3663,6 +3714,7 @@ export namespace Components {
         "updatePaymentMethodUrl": string;
     }
     interface ScSubscriptionAdHocConfirm {
+        "currencyCode": string;
         "heading": string;
         "price": Price;
     }
@@ -3944,6 +3996,8 @@ export namespace Components {
           * Type of tax id
          */
         "type": string;
+    }
+    interface ScTestModeInfo {
     }
     interface ScText {
         "tag": 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p';
@@ -4352,6 +4406,10 @@ export interface ScPaypalButtonsCustomEvent<T> extends CustomEvent<T> {
 export interface ScPhoneInputCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScPhoneInputElement;
+}
+export interface ScPopoverCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScPopoverElement;
 }
 export interface ScPriceChoiceCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -4768,6 +4826,12 @@ declare global {
     var HTMLScCheckoutProductPriceVariantSelectorElement: {
         prototype: HTMLScCheckoutProductPriceVariantSelectorElement;
         new (): HTMLScCheckoutProductPriceVariantSelectorElement;
+    };
+    interface HTMLScCheckoutRazorpayPaymentProviderElement extends Components.ScCheckoutRazorpayPaymentProvider, HTMLStencilElement {
+    }
+    var HTMLScCheckoutRazorpayPaymentProviderElement: {
+        prototype: HTMLScCheckoutRazorpayPaymentProviderElement;
+        new (): HTMLScCheckoutRazorpayPaymentProviderElement;
     };
     interface HTMLScCheckoutStockAlertElementEventMap {
         "scUpdateLineItem": LineItemData;
@@ -5844,6 +5908,24 @@ declare global {
         prototype: HTMLScPillOptionElement;
         new (): HTMLScPillOptionElement;
     };
+    interface HTMLScPopoverElementEventMap {
+        "scShow": void;
+        "scHide": void;
+    }
+    interface HTMLScPopoverElement extends Components.ScPopover, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLScPopoverElementEventMap>(type: K, listener: (this: HTMLScPopoverElement, ev: ScPopoverCustomEvent<HTMLScPopoverElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLScPopoverElementEventMap>(type: K, listener: (this: HTMLScPopoverElement, ev: ScPopoverCustomEvent<HTMLScPopoverElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLScPopoverElement: {
+        prototype: HTMLScPopoverElement;
+        new (): HTMLScPopoverElement;
+    };
     interface HTMLScPremiumTagElement extends Components.ScPremiumTag, HTMLStencilElement {
     }
     var HTMLScPremiumTagElement: {
@@ -6173,6 +6255,12 @@ declare global {
         prototype: HTMLScRadioGroupElement;
         new (): HTMLScRadioGroupElement;
     };
+    interface HTMLScRazorpayAddMethodElement extends Components.ScRazorpayAddMethod, HTMLStencilElement {
+    }
+    var HTMLScRazorpayAddMethodElement: {
+        prototype: HTMLScRazorpayAddMethodElement;
+        new (): HTMLScRazorpayAddMethodElement;
+    };
     interface HTMLScRecurringPriceChoiceContainerElementEventMap {
         "scChange": string;
     }
@@ -6189,6 +6277,12 @@ declare global {
     var HTMLScRecurringPriceChoiceContainerElement: {
         prototype: HTMLScRecurringPriceChoiceContainerElement;
         new (): HTMLScRecurringPriceChoiceContainerElement;
+    };
+    interface HTMLScReviewStarsElement extends Components.ScReviewStars, HTMLStencilElement {
+    }
+    var HTMLScReviewStarsElement: {
+        prototype: HTMLScReviewStarsElement;
+        new (): HTMLScReviewStarsElement;
     };
     interface HTMLScRichTextElementEventMap {
         "scChange": void;
@@ -6602,6 +6696,12 @@ declare global {
         prototype: HTMLScTaxIdInputElement;
         new (): HTMLScTaxIdInputElement;
     };
+    interface HTMLScTestModeInfoElement extends Components.ScTestModeInfo, HTMLStencilElement {
+    }
+    var HTMLScTestModeInfoElement: {
+        prototype: HTMLScTestModeInfoElement;
+        new (): HTMLScTestModeInfoElement;
+    };
     interface HTMLScTextElement extends Components.ScText, HTMLStencilElement {
     }
     var HTMLScTextElement: {
@@ -6761,6 +6861,7 @@ declare global {
         "sc-checkout-mollie-payment": HTMLScCheckoutMolliePaymentElement;
         "sc-checkout-paystack-payment-provider": HTMLScCheckoutPaystackPaymentProviderElement;
         "sc-checkout-product-price-variant-selector": HTMLScCheckoutProductPriceVariantSelectorElement;
+        "sc-checkout-razorpay-payment-provider": HTMLScCheckoutRazorpayPaymentProviderElement;
         "sc-checkout-stock-alert": HTMLScCheckoutStockAlertElement;
         "sc-checkout-test-complete": HTMLScCheckoutTestCompleteElement;
         "sc-checkout-unsaved-changes-warning": HTMLScCheckoutUnsavedChangesWarningElement;
@@ -6873,6 +6974,7 @@ declare global {
         "sc-paystack-add-method": HTMLScPaystackAddMethodElement;
         "sc-phone-input": HTMLScPhoneInputElement;
         "sc-pill-option": HTMLScPillOptionElement;
+        "sc-popover": HTMLScPopoverElement;
         "sc-premium-tag": HTMLScPremiumTagElement;
         "sc-price": HTMLScPriceElement;
         "sc-price-choice": HTMLScPriceChoiceElement;
@@ -6905,7 +7007,9 @@ declare global {
         "sc-quantity-select": HTMLScQuantitySelectElement;
         "sc-radio": HTMLScRadioElement;
         "sc-radio-group": HTMLScRadioGroupElement;
+        "sc-razorpay-add-method": HTMLScRazorpayAddMethodElement;
         "sc-recurring-price-choice-container": HTMLScRecurringPriceChoiceContainerElement;
+        "sc-review-stars": HTMLScReviewStarsElement;
         "sc-rich-text": HTMLScRichTextElement;
         "sc-secure-notice": HTMLScSecureNoticeElement;
         "sc-select": HTMLScSelectElement;
@@ -6944,6 +7048,7 @@ declare global {
         "sc-table-row": HTMLScTableRowElement;
         "sc-tag": HTMLScTagElement;
         "sc-tax-id-input": HTMLScTaxIdInputElement;
+        "sc-test-mode-info": HTMLScTestModeInfoElement;
         "sc-text": HTMLScTextElement;
         "sc-textarea": HTMLScTextareaElement;
         "sc-toggle": HTMLScToggleElement;
@@ -7513,6 +7618,8 @@ declare namespace LocalJSX {
           * The title for price and variant selections
          */
         "selectorTitle"?: string;
+    }
+    interface ScCheckoutRazorpayPaymentProvider {
     }
     /**
      * This component listens for stock requirements and displays a dialog to the user.
@@ -9313,6 +9420,7 @@ declare namespace LocalJSX {
         "status"?: OrderStatus;
     }
     interface ScOrderSubmit {
+        "backgroundColor"?: string;
         /**
           * Currency Code
          */
@@ -9361,6 +9469,7 @@ declare namespace LocalJSX {
           * The button's size.
          */
         "size"?: 'small' | 'medium' | 'large';
+        "textColor"?: string;
         /**
           * The button type.
          */
@@ -9786,6 +9895,51 @@ declare namespace LocalJSX {
          */
         "isSelected"?: boolean;
         "isUnavailable"?: boolean;
+    }
+    interface ScPopover {
+        /**
+          * Is this disabled.
+         */
+        "disabled"?: boolean;
+        /**
+          * The distance in pixels from which to offset the panel away from its trigger.
+         */
+        "distance"?: number;
+        /**
+          * Enable this option to prevent the panel from being clipped when the component is placed inside a container with `overflow: auto|scroll`.
+         */
+        "hoist"?: boolean;
+        /**
+          * Emitted when the popover closes. Calling `event.preventDefault()` will prevent it from being closed.
+         */
+        "onScHide"?: (event: ScPopoverCustomEvent<void>) => void;
+        /**
+          * Emitted when the popover opens. Calling `event.preventDefault()` will prevent it from being opened.
+         */
+        "onScShow"?: (event: ScPopoverCustomEvent<void>) => void;
+        /**
+          * Indicates whether or not the popover is open. You can use this in lieu of the show/hide methods.
+         */
+        "open"?: boolean;
+        /**
+          * The placement of the popover.
+         */
+        "placement"?: | 'top'
+    | 'top-start'
+    | 'top-end'
+    | 'bottom'
+    | 'bottom-start'
+    | 'bottom-end'
+    | 'right'
+    | 'right-start'
+    | 'right-end'
+    | 'left'
+    | 'left-start'
+    | 'left-end';
+        /**
+          * The distance in pixels from which to offset the panel along its trigger.
+         */
+        "skidding"?: number;
     }
     interface ScPremiumTag {
         /**
@@ -10544,6 +10698,12 @@ declare namespace LocalJSX {
          */
         "value"?: string;
     }
+    interface ScRazorpayAddMethod {
+        "currency"?: string;
+        "customerId"?: string;
+        "liveMode"?: boolean;
+        "successUrl"?: string;
+    }
     interface ScRecurringPriceChoiceContainer {
         /**
           * Label for the choice.
@@ -10577,6 +10737,10 @@ declare namespace LocalJSX {
           * Should we show the price details?
          */
         "showDetails"?: boolean;
+    }
+    interface ScReviewStars {
+        "rating"?: number;
+        "size"?: number;
     }
     interface ScRichText {
         /**
@@ -10934,6 +11098,7 @@ declare namespace LocalJSX {
         "updatePaymentMethodUrl"?: string;
     }
     interface ScSubscriptionAdHocConfirm {
+        "currencyCode"?: string;
         "heading"?: string;
         "price"?: Price;
     }
@@ -11256,6 +11421,8 @@ declare namespace LocalJSX {
          */
         "type"?: string;
     }
+    interface ScTestModeInfo {
+    }
     interface ScText {
         "tag"?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p';
         "truncate"?: boolean;
@@ -11538,6 +11705,7 @@ declare namespace LocalJSX {
         "sc-checkout-mollie-payment": ScCheckoutMolliePayment;
         "sc-checkout-paystack-payment-provider": ScCheckoutPaystackPaymentProvider;
         "sc-checkout-product-price-variant-selector": ScCheckoutProductPriceVariantSelector;
+        "sc-checkout-razorpay-payment-provider": ScCheckoutRazorpayPaymentProvider;
         "sc-checkout-stock-alert": ScCheckoutStockAlert;
         "sc-checkout-test-complete": ScCheckoutTestComplete;
         "sc-checkout-unsaved-changes-warning": ScCheckoutUnsavedChangesWarning;
@@ -11650,6 +11818,7 @@ declare namespace LocalJSX {
         "sc-paystack-add-method": ScPaystackAddMethod;
         "sc-phone-input": ScPhoneInput;
         "sc-pill-option": ScPillOption;
+        "sc-popover": ScPopover;
         "sc-premium-tag": ScPremiumTag;
         "sc-price": ScPrice;
         "sc-price-choice": ScPriceChoice;
@@ -11682,7 +11851,9 @@ declare namespace LocalJSX {
         "sc-quantity-select": ScQuantitySelect;
         "sc-radio": ScRadio;
         "sc-radio-group": ScRadioGroup;
+        "sc-razorpay-add-method": ScRazorpayAddMethod;
         "sc-recurring-price-choice-container": ScRecurringPriceChoiceContainer;
+        "sc-review-stars": ScReviewStars;
         "sc-rich-text": ScRichText;
         "sc-secure-notice": ScSecureNotice;
         "sc-select": ScSelect;
@@ -11721,6 +11892,7 @@ declare namespace LocalJSX {
         "sc-table-row": ScTableRow;
         "sc-tag": ScTag;
         "sc-tax-id-input": ScTaxIdInput;
+        "sc-test-mode-info": ScTestModeInfo;
         "sc-text": ScText;
         "sc-textarea": ScTextarea;
         "sc-toggle": ScToggle;
@@ -11777,6 +11949,7 @@ declare module "@stencil/core" {
             "sc-checkout-mollie-payment": LocalJSX.ScCheckoutMolliePayment & JSXBase.HTMLAttributes<HTMLScCheckoutMolliePaymentElement>;
             "sc-checkout-paystack-payment-provider": LocalJSX.ScCheckoutPaystackPaymentProvider & JSXBase.HTMLAttributes<HTMLScCheckoutPaystackPaymentProviderElement>;
             "sc-checkout-product-price-variant-selector": LocalJSX.ScCheckoutProductPriceVariantSelector & JSXBase.HTMLAttributes<HTMLScCheckoutProductPriceVariantSelectorElement>;
+            "sc-checkout-razorpay-payment-provider": LocalJSX.ScCheckoutRazorpayPaymentProvider & JSXBase.HTMLAttributes<HTMLScCheckoutRazorpayPaymentProviderElement>;
             /**
              * This component listens for stock requirements and displays a dialog to the user.
              */
@@ -11907,6 +12080,7 @@ declare module "@stencil/core" {
             "sc-paystack-add-method": LocalJSX.ScPaystackAddMethod & JSXBase.HTMLAttributes<HTMLScPaystackAddMethodElement>;
             "sc-phone-input": LocalJSX.ScPhoneInput & JSXBase.HTMLAttributes<HTMLScPhoneInputElement>;
             "sc-pill-option": LocalJSX.ScPillOption & JSXBase.HTMLAttributes<HTMLScPillOptionElement>;
+            "sc-popover": LocalJSX.ScPopover & JSXBase.HTMLAttributes<HTMLScPopoverElement>;
             "sc-premium-tag": LocalJSX.ScPremiumTag & JSXBase.HTMLAttributes<HTMLScPremiumTagElement>;
             /**
              * Internal dependencies.
@@ -11942,7 +12116,9 @@ declare module "@stencil/core" {
             "sc-quantity-select": LocalJSX.ScQuantitySelect & JSXBase.HTMLAttributes<HTMLScQuantitySelectElement>;
             "sc-radio": LocalJSX.ScRadio & JSXBase.HTMLAttributes<HTMLScRadioElement>;
             "sc-radio-group": LocalJSX.ScRadioGroup & JSXBase.HTMLAttributes<HTMLScRadioGroupElement>;
+            "sc-razorpay-add-method": LocalJSX.ScRazorpayAddMethod & JSXBase.HTMLAttributes<HTMLScRazorpayAddMethodElement>;
             "sc-recurring-price-choice-container": LocalJSX.ScRecurringPriceChoiceContainer & JSXBase.HTMLAttributes<HTMLScRecurringPriceChoiceContainerElement>;
+            "sc-review-stars": LocalJSX.ScReviewStars & JSXBase.HTMLAttributes<HTMLScReviewStarsElement>;
             "sc-rich-text": LocalJSX.ScRichText & JSXBase.HTMLAttributes<HTMLScRichTextElement>;
             "sc-secure-notice": LocalJSX.ScSecureNotice & JSXBase.HTMLAttributes<HTMLScSecureNoticeElement>;
             "sc-select": LocalJSX.ScSelect & JSXBase.HTMLAttributes<HTMLScSelectElement>;
@@ -11981,6 +12157,7 @@ declare module "@stencil/core" {
             "sc-table-row": LocalJSX.ScTableRow & JSXBase.HTMLAttributes<HTMLScTableRowElement>;
             "sc-tag": LocalJSX.ScTag & JSXBase.HTMLAttributes<HTMLScTagElement>;
             "sc-tax-id-input": LocalJSX.ScTaxIdInput & JSXBase.HTMLAttributes<HTMLScTaxIdInputElement>;
+            "sc-test-mode-info": LocalJSX.ScTestModeInfo & JSXBase.HTMLAttributes<HTMLScTestModeInfoElement>;
             "sc-text": LocalJSX.ScText & JSXBase.HTMLAttributes<HTMLScTextElement>;
             "sc-textarea": LocalJSX.ScTextarea & JSXBase.HTMLAttributes<HTMLScTextareaElement>;
             "sc-toggle": LocalJSX.ScToggle & JSXBase.HTMLAttributes<HTMLScToggleElement>;

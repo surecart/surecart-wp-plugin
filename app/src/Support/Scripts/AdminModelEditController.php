@@ -149,6 +149,9 @@ abstract class AdminModelEditController {
 		if ( in_array( 'currency', $this->with_data ) ) {
 			$this->data['currency_code'] = \SureCart::account()->currency;
 		}
+		if ( in_array( 'review_protocol', $this->with_data ) ) {
+			$this->data['review_protocol'] = \SureCart::account()->review_protocol;
+		}
 		if ( in_array( 'tax_protocol', $this->with_data ) ) {
 			$this->data['tax_protocol'] = \SureCart::account()->tax_protocol;
 		}
@@ -171,6 +174,9 @@ abstract class AdminModelEditController {
 		// pass entitlements to page.
 		$this->data['entitlements'] = \SureCart::account()->entitlements;
 		$this->data['get_locale']   = str_replace( '_', '-', get_locale() );
+
+		// pass wp user roles to page.
+		$this->data['wp_user_roles'] = get_editable_roles();
 
 		wp_set_script_translations( $this->handle, 'surecart' );
 

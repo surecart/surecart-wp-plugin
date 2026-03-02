@@ -20,9 +20,9 @@
 
 - [sc-flex](../../../ui/flex)
 - [sc-skeleton](../../../ui/skeleton)
+- [sc-line-item](../../../ui/line-item)
 - [sc-empty](../../../ui/empty)
 - [sc-product-line-item](../../../ui/product-line-item)
-- [sc-line-item](../../../ui/line-item)
 - [sc-tag](../../../ui/tag)
 - [sc-divider](../../../ui/divider)
 - [sc-spacing](../../../ui/spacing)
@@ -42,9 +42,9 @@
 graph TD;
   sc-order --> sc-flex
   sc-order --> sc-skeleton
+  sc-order --> sc-line-item
   sc-order --> sc-empty
   sc-order --> sc-product-line-item
-  sc-order --> sc-line-item
   sc-order --> sc-tag
   sc-order --> sc-divider
   sc-order --> sc-spacing

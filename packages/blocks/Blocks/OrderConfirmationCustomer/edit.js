@@ -24,6 +24,8 @@ export default ({ attributes }) => {
 				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
 						<TextControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							label={__('Title', 'surecart')}
 							value={title}
 							onChange={(title) => setAttributes({ title })}

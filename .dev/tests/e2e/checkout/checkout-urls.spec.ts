@@ -96,7 +96,7 @@ test.describe('Checkout Urls', () => {
 <!-- /wp:surecart/divider -->
 
 <!-- wp:surecart/subtotal -->
-<sc-line-item-total total="subtotal" class="wp-block-surecart-subtotal"><span slot="description">Subtotal</span><span slot="total-payments-description">Total Installment Payments</span><span slot="first-payment-subtotal-description">Initial Payment</span></sc-line-item-total>
+<sc-line-item-total total="subtotal" class="wp-block-surecart-subtotal"><span slot="description">Subtotal</span><span slot="total-payments-description">Total Installments (before discounts)</span><span slot="first-payment-subtotal-description">Initial Payment</span></sc-line-item-total>
 <!-- /wp:surecart/subtotal -->
 
 <!-- wp:surecart/trial-line-item /-->
@@ -144,7 +144,7 @@ test.describe('Checkout Urls', () => {
 <!-- /wp:surecart/divider -->
 
 <!-- wp:surecart/subtotal -->
-<sc-line-item-total total="subtotal" class="wp-block-surecart-subtotal"><span slot="description">Subtotal</span><span slot="total-payments-description">Total Installment Payments</span><span slot="first-payment-subtotal-description">Initial Payment</span></sc-line-item-total>
+<sc-line-item-total total="subtotal" class="wp-block-surecart-subtotal"><span slot="description">Subtotal</span><span slot="total-payments-description">Total Installments (before discounts)</span><span slot="first-payment-subtotal-description">Initial Payment</span></sc-line-item-total>
 <!-- /wp:surecart/subtotal -->
 
 <!-- wp:surecart/trial-line-item /-->
