@@ -196,7 +196,7 @@ class AdminMenuPageService {
 		// Product submenu pages.
 		$taxonomies = array_diff( get_object_taxonomies( 'sc_product' ), array( 'sc_account', 'sc_collection' ) );
 		sort( $taxonomies, SORT_STRING ); // Sort the taxonomies alphabetically.
-		$is_product_menu_opened = in_array( $_GET['page'] ?? '', array( 'sc-products', 'sc-product-groups', 'sc-product-collections' ), true ) || in_array( $_GET['taxonomy'] ?? '', array_merge( $taxonomies, array( 'sc_collection' ) ), true );
+		$is_product_menu_opened = in_array( $_GET['page'] ?? '', array( 'sc-products', 'sc-product-groups', 'sc-product-collections', 'sc-reviews' ), true ) || in_array( $_GET['taxonomy'] ?? '', array_merge( $taxonomies, array( 'sc_collection' ) ), true );
 		if ( $is_product_menu_opened ) {
 			$this->pages += array(
 				'product-collections' => \add_submenu_page( $this->slug, __( 'Product Collections', 'surecart' ), '↳ ' . __( 'Collections', 'surecart' ), 'edit_sc_products', 'sc-product-collections', '__return_false' ),
@@ -216,6 +216,7 @@ class AdminMenuPageService {
 			}
 			$this->pages += array(
 				'product-groups' => \add_submenu_page( $this->slug, __( 'Upgrade Groups', 'surecart' ), '↳ ' . __( 'Upgrade Groups', 'surecart' ), 'edit_sc_products', 'sc-product-groups', '__return_false' ),
+				'reviews'        => \add_submenu_page( $this->slug, __( 'Reviews', 'surecart' ), '↳ ' . __( 'Reviews', 'surecart' ) . '<span class="sc-new-badge"><span>', 'edit_sc_products', 'sc-reviews', '__return_false' ),
 			);
 		}
 
@@ -235,7 +236,7 @@ class AdminMenuPageService {
 			 */
 			$this->pages += array(
 				'coupons'  => \add_submenu_page( $this->slug, __( 'Coupons', 'surecart' ), '↳ ' . __( 'Coupons', 'surecart' ), 'edit_sc_coupons', 'sc-coupons', '__return_false' ),
-				'auto_fee' => \add_submenu_page( $this->slug, __( 'Dynamic Pricing', 'surecart' ), '↳ ' . __( 'Dynamic Pricing', 'surecart' ) . '<span class="sc-new-badge"><span>', 'edit_sc_products', 'sc-auto-fees', '__return_false' ),
+				'auto_fee' => \add_submenu_page( $this->slug, __( 'Dynamic Pricing', 'surecart' ), '↳ ' . __( 'Dynamic Pricing', 'surecart' ), 'edit_sc_products', 'sc-auto-fees', '__return_false' ),
 				'bumps'    => \add_submenu_page( $this->slug, __( 'Order Bumps', 'surecart' ), '↳ ' . __( 'Order Bumps', 'surecart' ), 'edit_sc_products', 'sc-bumps', '__return_false' ),
 				'upsells'  => \add_submenu_page( $this->slug, __( 'Upsells', 'surecart' ), '↳ ' . __( 'Upsells', 'surecart' ), 'edit_sc_products', 'sc-upsell-funnels', '__return_false' ),
 			);
