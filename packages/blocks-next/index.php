@@ -621,9 +621,6 @@ add_action(
 /**
  * Load custom block styles only when the block is used.
  */
-/**
- * Load custom block styles only when the block is used.
- */
 add_action(
 	'init',
 	function () {

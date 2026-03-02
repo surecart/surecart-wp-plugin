@@ -1,7 +1,7 @@
 <div <?php echo wp_kses_data( get_block_wrapper_attributes() ); ?>>
 	<?php if ( empty( $attributes['hidden_label'] ) ) : ?>
 		<label for="sc-quantity" class="sc-form-label">
-			<?php echo wp_kses_post( $attributes['label'] ?? esc_html_e( 'Quantity', 'surecart' ) ); ?>
+			<?php echo wp_kses_post( $attributes['label'] ?? esc_html__( 'Quantity', 'surecart' ) ); ?>
 		</label>
 	<?php endif; ?>
 

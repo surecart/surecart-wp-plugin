@@ -4,7 +4,6 @@ import { addQueryArgs, getQueryArg } from '@wordpress/url';
 import apiFetch from '../../functions/fetch';
 import { Checkout, DeletedItem, Invoice, LineItem } from '../../types';
 import { __ } from '@wordpress/i18n';
-import { speak } from '@wordpress/a11y';
 
 /** The base url for this service. */
 export const baseUrl = 'surecart/v1/checkouts/';
@@ -205,8 +204,6 @@ export const removeLineItem = async ({ checkoutId, itemId }) => {
   if (!deleted) {
     throw { code: 'error', message: __('Failed to delete', 'surecart') };
   }
-
-  speak(__('Removed the item from cart', 'surecart'), 'assertive');
 
   return await fetchCheckout({ id: checkoutId });
 };
