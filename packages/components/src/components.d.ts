@@ -1581,6 +1581,10 @@ export namespace Components {
          */
         "clearable": boolean;
         /**
+          * Custom validation message to show when the input is invalid (replaces browser default).
+         */
+        "customValidity": string;
+        /**
           * Disables the input.
          */
         "disabled": boolean;
@@ -8814,6 +8818,10 @@ declare namespace LocalJSX {
           * Adds a clear button when the input is populated.
          */
         "clearable"?: boolean;
+        /**
+          * Custom validation message to show when the input is invalid (replaces browser default).
+         */
+        "customValidity"?: string;
         /**
           * Disables the input.
          */
