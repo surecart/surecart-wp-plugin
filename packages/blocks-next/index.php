@@ -621,12 +621,17 @@ add_action(
 /**
  * Load custom block styles only when the block is used.
  */
-function enqueue_custom_block_styles() {
-	// Scan our styles folder to locate block styles .
-	$files = glob( __DIR__ . '/src/blocks-styles/**.php' );
-	foreach ( $files as $file ) {
-		include $file;
+/**
+ * Load custom block styles only when the block is used.
+ */
+add_action(
+	'init',
+	function () {
+		// Scan our styles folder to locate block styles.
+		$files = glob( __DIR__ . '/src/blocks-styles/**.php' );
+		foreach ( $files as $file ) {
+			include $file;
+		}
 	}
-}
-add_action( 'init', __NAMESPACE__ . '\enqueue_custom_block_styles' );
+);
 
