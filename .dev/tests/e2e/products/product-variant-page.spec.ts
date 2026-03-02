@@ -43,10 +43,11 @@ test.describe('Product Page With Variant', () => {
 		await page.getByRole('button', { name: 'Add To Cart' }).click();
 
 		// expect the cart to have the product.
-		await expect(page.locator('dialog')).toContainText('Test Product');
-		await expect(page.locator('dialog')).toContainText('Small / Red');
-		await expect(page.locator('dialog')).toContainText('One Time');
-		await expect(page.locator('dialog')).toContainText('$20');
+		const cartDrawer = page.getByRole('dialog');
+		await expect(cartDrawer).toContainText('Test Product');
+		await expect(cartDrawer).toContainText('Small / Red');
+		await expect(cartDrawer).toContainText('One Time');
+		await expect(cartDrawer).toContainText('$20');
 	});
 });
 
