@@ -309,6 +309,16 @@ class SettingService {
 				'sanitize_callback' => 'sanitize_text_field',
 			]
 		);
+		$this->register(
+			'surecart',
+			'hide_verified_buyer_badge',
+			[
+				'type'              => 'boolean',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'boolval',
+				'default'           => false,
+			]
+		);
 	}
 	/**
 	 * Register a setting.

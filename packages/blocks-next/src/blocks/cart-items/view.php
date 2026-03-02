@@ -56,7 +56,7 @@
 									data-wp-bind--disabled="state.isQuantityDecreaseDisabled"
 									data-wp-bind--aria-disabled="state.isQuantityDecreaseDisabled"
 									data-wp-class--button--disabled="state.isQuantityDecreaseDisabled"
-									aria-label="<?php echo esc_html__( 'Decrease quantity by one.', 'surecart' ); ?>"
+									data-wp-bind--aria-label="surecart/checkout::state.decreaseQuantityAriaLabel"
 								>
 									<?php echo wp_kses( SureCart::svg()->get( 'minus' ), sc_allowed_svg_html() ); ?>
 								</div>
@@ -69,7 +69,9 @@
 									data-wp-bind--aria-valuemin="context.line_item.min"
 									data-wp-bind--max="context.line_item.max"
 									data-wp-bind--aria-valuemax="context.line_item.max"
+									data-wp-bind--aria-valuenow="context.line_item.quantity"
 									data-wp-bind--disabled="surecart/checkout::state.loading"
+									data-wp-bind--aria-label="surecart/checkout::state.quantityInputAriaLabel"
 									step="1"
 									autocomplete="off"
 									role="spinbutton"
@@ -83,7 +85,7 @@
 									data-wp-bind--disabled="state.isQuantityIncreaseDisabled"
 									data-wp-bind--aria-disabled="state.isQuantityIncreaseDisabled"
 									data-wp-class--button--disabled="state.isQuantityIncreaseDisabled"
-									aria-label="<?php echo esc_html__( 'Increase quantity by one.', 'surecart' ); ?>"
+									data-wp-bind--aria-label="surecart/checkout::state.increaseQuantityAriaLabel"
 								>
 									<?php echo wp_kses( SureCart::svg()->get( 'plus' ), sc_allowed_svg_html() ); ?>
 								</div>
@@ -96,7 +98,7 @@
 					<?php if ( $attributes['removable'] ) : ?>
 						<button
 							class="sc-product-line-item__remove-button"
-							aria-label="<?php esc_attr_e( 'Remove item', 'surecart' ); ?>"
+							data-wp-bind--aria-label="surecart/checkout::state.removeItemAriaLabel"
 							data-wp-on--click="surecart/checkout::actions.removeLineItem"
 							data-wp-on--keydown="surecart/checkout::actions.removeLineItem"
 						>

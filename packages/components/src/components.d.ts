@@ -3310,6 +3310,7 @@ export namespace Components {
         "hasFocus": boolean;
         "max": number;
         "min": number;
+        "productName": string;
         "quantity": number;
         "size": 'small' | 'medium' | 'large';
     }
@@ -3408,6 +3409,10 @@ export namespace Components {
           * Should we show the price details?
          */
         "showDetails": boolean;
+    }
+    interface ScReviewStars {
+        "rating": number;
+        "size": number;
     }
     interface ScRichText {
         /**
@@ -6273,6 +6278,12 @@ declare global {
         prototype: HTMLScRecurringPriceChoiceContainerElement;
         new (): HTMLScRecurringPriceChoiceContainerElement;
     };
+    interface HTMLScReviewStarsElement extends Components.ScReviewStars, HTMLStencilElement {
+    }
+    var HTMLScReviewStarsElement: {
+        prototype: HTMLScReviewStarsElement;
+        new (): HTMLScReviewStarsElement;
+    };
     interface HTMLScRichTextElementEventMap {
         "scChange": void;
         "scInput": void;
@@ -6998,6 +7009,7 @@ declare global {
         "sc-radio-group": HTMLScRadioGroupElement;
         "sc-razorpay-add-method": HTMLScRazorpayAddMethodElement;
         "sc-recurring-price-choice-container": HTMLScRecurringPriceChoiceContainerElement;
+        "sc-review-stars": HTMLScReviewStarsElement;
         "sc-rich-text": HTMLScRichTextElement;
         "sc-secure-notice": HTMLScSecureNoticeElement;
         "sc-select": HTMLScSelectElement;
@@ -10621,6 +10633,7 @@ declare namespace LocalJSX {
           * Emitted when the control receives input.
          */
         "onScInput"?: (event: ScQuantitySelectCustomEvent<number>) => void;
+        "productName"?: string;
         "quantity"?: number;
         "size"?: 'small' | 'medium' | 'large';
     }
@@ -10724,6 +10737,10 @@ declare namespace LocalJSX {
           * Should we show the price details?
          */
         "showDetails"?: boolean;
+    }
+    interface ScReviewStars {
+        "rating"?: number;
+        "size"?: number;
     }
     interface ScRichText {
         /**
@@ -11836,6 +11853,7 @@ declare namespace LocalJSX {
         "sc-radio-group": ScRadioGroup;
         "sc-razorpay-add-method": ScRazorpayAddMethod;
         "sc-recurring-price-choice-container": ScRecurringPriceChoiceContainer;
+        "sc-review-stars": ScReviewStars;
         "sc-rich-text": ScRichText;
         "sc-secure-notice": ScSecureNotice;
         "sc-select": ScSelect;
@@ -12100,6 +12118,7 @@ declare module "@stencil/core" {
             "sc-radio-group": LocalJSX.ScRadioGroup & JSXBase.HTMLAttributes<HTMLScRadioGroupElement>;
             "sc-razorpay-add-method": LocalJSX.ScRazorpayAddMethod & JSXBase.HTMLAttributes<HTMLScRazorpayAddMethodElement>;
             "sc-recurring-price-choice-container": LocalJSX.ScRecurringPriceChoiceContainer & JSXBase.HTMLAttributes<HTMLScRecurringPriceChoiceContainerElement>;
+            "sc-review-stars": LocalJSX.ScReviewStars & JSXBase.HTMLAttributes<HTMLScReviewStarsElement>;
             "sc-rich-text": LocalJSX.ScRichText & JSXBase.HTMLAttributes<HTMLScRichTextElement>;
             "sc-secure-notice": LocalJSX.ScSecureNotice & JSXBase.HTMLAttributes<HTMLScSecureNoticeElement>;
             "sc-select": LocalJSX.ScSelect & JSXBase.HTMLAttributes<HTMLScSelectElement>;

@@ -186,6 +186,7 @@ export const ScRadio = /*@__PURE__*/createReactComponent<JSX.ScRadio, HTMLScRadi
 export const ScRadioGroup = /*@__PURE__*/createReactComponent<JSX.ScRadioGroup, HTMLScRadioGroupElement>('sc-radio-group');
 export const ScRazorpayAddMethod = /*@__PURE__*/createReactComponent<JSX.ScRazorpayAddMethod, HTMLScRazorpayAddMethodElement>('sc-razorpay-add-method');
 export const ScRecurringPriceChoiceContainer = /*@__PURE__*/createReactComponent<JSX.ScRecurringPriceChoiceContainer, HTMLScRecurringPriceChoiceContainerElement>('sc-recurring-price-choice-container');
+export const ScReviewStars = /*@__PURE__*/createReactComponent<JSX.ScReviewStars, HTMLScReviewStarsElement>('sc-review-stars');
 export const ScRichText = /*@__PURE__*/createReactComponent<JSX.ScRichText, HTMLScRichTextElement>('sc-rich-text');
 export const ScSecureNotice = /*@__PURE__*/createReactComponent<JSX.ScSecureNotice, HTMLScSecureNoticeElement>('sc-secure-notice');
 export const ScSelect = /*@__PURE__*/createReactComponent<JSX.ScSelect, HTMLScSelectElement>('sc-select');

@@ -500,7 +500,7 @@ class BlockStyleAttributes {
 	 */
 	public static function getSpacingValue( $spacing_value ) {
 		// Used following code as reference: https://github.com/WordPress/gutenberg/blob/cff6d70d6ff5a26e212958623dc3130569f95685/lib/block-supports/layout.php/#L219-L225.
-		if ( is_string( $spacing_value ) && str_contains( $spacing_value, 'var:preset|spacing|' ) ) {
+		if ( is_string( $spacing_value ) && strpos( $spacing_value, 'var:preset|spacing|' ) !== false ) {
 			$spacing_value = str_replace( 'var:preset|spacing|', '', $spacing_value );
 			return sprintf( 'var(--wp--preset--spacing--%s)', $spacing_value );
 		}
@@ -670,7 +670,7 @@ class BlockStyleAttributes {
 	 * @return (string)
 	 */
 	public static function getColorValue( $color_value ) {
-		if ( is_string( $color_value ) && str_contains( $color_value, 'var:preset|color|' ) ) {
+		if ( is_string( $color_value ) && strpos( $color_value, 'var:preset|color|' ) !== false ) {
 			$color_value = str_replace( 'var:preset|color|', '', $color_value );
 			return sprintf( 'var(--wp--preset--color--%s)', $color_value );
 		}

@@ -1,0 +1,76 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "surecart/product-review-total-rating",
+	"title": "Reviews Count",
+	"description": "Displays the total reviews count for the product.",
+	"version": "1.0.0",
+	"category": "surecart-product-page",
+	"ancestor": [
+		"surecart/product-page",
+		"surecart/product-quick-view",
+		"surecart/product-review-list",
+		"surecart/sticky-purchase"
+	],
+	"usesContext": ["postId"],
+	"attributes": {
+		"show_label": {
+			"type": "boolean",
+			"default": true
+		},
+		"show_for_zero_reviews": {
+			"type": "boolean",
+			"default": true
+		},
+		"link_to_reviews": {
+			"type": "boolean",
+			"default": true
+		}
+	},
+	"styles": [
+		{
+			"name": "default",
+			"label": "Default"
+		},
+		{
+			"name": "plus-sign",
+			"label": "Plus Sign",
+			"isDefault": true
+		}
+	],
+	"example": {},
+	"supports": {
+		"interactivity": true,
+		"anchor": true,
+		"color": {
+			"gradients": true,
+			"text": true,
+			"background": false,
+			"__experimentalDefaultControls": {
+				"text": true,
+				"button": true
+			}
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true,
+			"textAlign": true
+		},
+		"spacing": {
+			"padding": true,
+			"margin": true,
+			"blockGap": {
+				"__experimentalDefault": "4px"
+			},
+			"__experimentalDefaultControls": {
+				"padding": true,
+				"margin": true,
+				"blockGap": true
+			}
+		}
+	},
+	"textdomain": "surecart",
+	"render": "file:./view.php",
+	"style": "file:./style-index.css",
+	"editorScript": "file:./index.js"
+}
