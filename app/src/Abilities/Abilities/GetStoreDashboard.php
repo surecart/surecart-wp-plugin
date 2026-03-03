@@ -35,7 +35,7 @@ class GetStoreDashboard extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function get_description(): string {
-		return __( 'Get a comprehensive store health summary: revenue, order count, active subscriptions, and abandoned checkouts. Best starting point for understanding store performance. Stats sections that fail are omitted; check the errors and partial keys.', 'surecart' );
+		return __( 'Get a comprehensive store health summary: revenue and order count for a given period. Best starting point for understanding store performance.', 'surecart' );
 	}
 
 	/**
@@ -69,20 +69,9 @@ class GetStoreDashboard extends AbstractAbility {
 		return array(
 			'type'       => 'object',
 			'properties' => array(
-				'success'             => array( 'type' => 'boolean' ),
-				'partial'             => array(
-					'type'        => 'boolean',
-					'description' => __( 'True when one or more stats sections failed to load.', 'surecart' ),
-				),
-				'store'               => array( 'type' => 'object' ),
-				'orders'              => array( 'type' => 'object' ),
-				'subscriptions'       => array( 'type' => 'object' ),
-				'abandoned_checkouts' => array( 'type' => 'object' ),
-				'errors'              => array(
-					'type'        => 'array',
-					'items'       => array( 'type' => 'string' ),
-					'description' => __( 'Errors encountered while fetching individual stat sections.', 'surecart' ),
-				),
+				'success' => array( 'type' => 'boolean' ),
+				'store'   => array( 'type' => 'object' ),
+				'orders'  => array( 'type' => 'object' ),
 			),
 			'required'   => array( 'success', 'store' ),
 		);
@@ -110,50 +99,24 @@ class GetStoreDashboard extends AbstractAbility {
 			return $this->error( $this->wp_error_to_message( $account ) );
 		}
 
-		$args   = array(
+		$args = array(
 			'start_at' => $dates['start_at'],
 			'end_at'   => $dates['end_at'],
 			'interval' => $dates['interval'],
 		);
-		$errors = array();
-		$stat   = new Statistic();
-
-		// Get order statistics.
-		$order_stats = $stat->where( $args )->find( 'orders' );
-
-		// Get subscription statistics.
-		$subscription_stats = $stat->where( $args )->find( 'subscriptions' );
-
-		// Get abandoned checkout statistics.
-		$abandoned_checkout_stats = $stat->where( $args )->find( 'abandoned_checkouts' );
 
 		$result = array(
 			'period' => $period,
 			'store'  => $this->model_to_array( $account ),
 		);
 
+		// Get order statistics.
+		$order_stats = ( new Statistic() )->where( $args )->find( 'orders' );
 		if ( is_wp_error( $order_stats ) ) {
-			$errors[] = $this->wp_error_to_message( $order_stats );
-		} else {
-			$result['orders'] = $this->model_to_array( $order_stats );
+			return $this->error( $this->wp_error_to_message( $order_stats ) );
 		}
 
-		if ( is_wp_error( $subscription_stats ) ) {
-			$errors[] = $this->wp_error_to_message( $subscription_stats );
-		} else {
-			$result['subscriptions'] = $this->model_to_array( $subscription_stats );
-		}
-
-		if ( is_wp_error( $abandoned_checkout_stats ) ) {
-			$errors[] = $this->wp_error_to_message( $abandoned_checkout_stats );
-		} else {
-			$result['abandoned_checkouts'] = $this->model_to_array( $abandoned_checkout_stats );
-		}
-
-		if ( ! empty( $errors ) ) {
-			$result['errors']  = $errors;
-			$result['partial'] = true;
-		}
+		$result['orders'] = $this->model_to_array( $order_stats );
 
 		return $this->success( $result );
 	}

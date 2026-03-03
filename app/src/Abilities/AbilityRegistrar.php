@@ -8,7 +8,6 @@ use SureCart\Abilities\Abilities\CreateCoupon;
 use SureCart\Abilities\Abilities\CreatePrice;
 use SureCart\Abilities\Abilities\CreateProduct;
 use SureCart\Abilities\Abilities\DuplicateProduct;
-use SureCart\Abilities\Abilities\GetAbandonedCheckoutStats;
 use SureCart\Abilities\Abilities\GetCustomer;
 use SureCart\Abilities\Abilities\GetOrder;
 use SureCart\Abilities\Abilities\GetOrderStatistics;
@@ -16,7 +15,6 @@ use SureCart\Abilities\Abilities\GetProduct;
 use SureCart\Abilities\Abilities\GetStoreDashboard;
 use SureCart\Abilities\Abilities\GetStoreInfo;
 use SureCart\Abilities\Abilities\GetSubscription;
-use SureCart\Abilities\Abilities\GetSubscriptionStats;
 use SureCart\Abilities\Abilities\ListCustomers;
 use SureCart\Abilities\Abilities\ListOrders;
 use SureCart\Abilities\Abilities\ListPrices;
@@ -80,8 +78,6 @@ class AbilityRegistrar {
 			new ListSubscriptions(),
 			new GetSubscription(),
 			new GetOrderStatistics(),
-			new GetSubscriptionStats(),
-			new GetAbandonedCheckoutStats(),
 			new ListPrices(),
 			new CreatePrice(),
 			new UpdatePrice(),
