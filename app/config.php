@@ -165,6 +165,7 @@ return array(
 		\SureCart\Integrations\TheSEOFramework\TheSEOFrameworkServiceProvider::class,
 		\SureCart\Integrations\SureRank\SureRankServiceProvider::class,
 		\SureCart\Integrations\Yoast\YoastServiceProvider::class,
+		\SureCart\Abilities\AbilitiesServiceProvider::class,
 	),
 
 	/**

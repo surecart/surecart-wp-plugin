@@ -1,0 +1,84 @@
+<?php
+
+namespace SureCart\Abilities\Abilities;
+
+use SureCart\Models\Subscription;
+
+/**
+ * Get a single subscription with details.
+ */
+class GetSubscription extends AbstractAbility {
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_name(): string {
+		return 'surecart/get-subscription';
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_label(): string {
+		return __( 'Get Subscription', 'surecart' );
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_description(): string {
+		return __( 'Get a single SureCart subscription by ID, including price details.', 'surecart' );
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function check_permission(): bool {
+		return current_user_can( 'read_sc_subscriptions' );
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_input_schema(): array {
+		return array(
+			'type'       => 'object',
+			'properties' => array(
+				'id' => array(
+					'type'        => 'string',
+					'description' => __( 'The subscription ID.', 'surecart' ),
+				),
+			),
+			'required'   => array( 'id' ),
+		);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_output_schema(): array {
+		return array(
+			'type'       => 'object',
+			'properties' => array(
+				'success'      => array( 'type' => 'boolean' ),
+				'subscription' => array( 'type' => 'object' ),
+			),
+		);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function execute( array $input ): array {
+		$subscription = Subscription::with( array( 'price', 'price.product' ) )->find( sanitize_text_field( $input['id'] ) );
+		if ( is_wp_error( $subscription ) ) {
+			return $this->error( $subscription->get_error_message() );
+		}
+
+		return $this->success(
+			array(
+				'subscription' => $this->model_to_array( $subscription ),
+			)
+		);
+	}
+}
