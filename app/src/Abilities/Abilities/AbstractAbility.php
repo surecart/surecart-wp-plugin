@@ -120,6 +120,64 @@ abstract class AbstractAbility {
 	}
 
 	/**
+	 * Build a descriptive error message from a WP_Error, appending the HTTP status code when available.
+	 *
+	 * @param \WP_Error $error The WP_Error instance.
+	 *
+	 * @return string
+	 */
+	protected function wp_error_to_message( \WP_Error $error ): string {
+		$message = $error->get_error_message();
+		$data    = $error->get_error_data();
+		if ( ! empty( $data['status'] ) ) {
+			$message .= ' (HTTP ' . absint( $data['status'] ) . ')';
+		}
+		return $message;
+	}
+
+	/**
+	 * Validate and normalize stats query args from ability input.
+	 *
+	 * Accepts YYYY-MM-DD date strings and converts them to Unix timestamps
+	 * as required by the SureCart statistics API.
+	 *
+	 * @param array $input The raw ability input.
+	 *
+	 * @return array|\WP_Error Normalized args array, or WP_Error on validation failure.
+	 */
+	protected function resolve_stats_args( array $input ) {
+		$allowed_intervals = array( 'hour', 'day', 'week', 'month', 'year' );
+		$interval          = sanitize_text_field( $input['interval'] ?? 'day' );
+		if ( ! in_array( $interval, $allowed_intervals, true ) ) {
+			return new \WP_Error(
+				'invalid_interval',
+				/* translators: %s: comma-separated list of valid interval values */
+				sprintf( __( 'Invalid interval. Allowed values: %s', 'surecart' ), implode( ', ', $allowed_intervals ) )
+			);
+		}
+
+		$args = array( 'interval' => $interval );
+
+		if ( ! empty( $input['start_date'] ) ) {
+			$start_date = sanitize_text_field( $input['start_date'] );
+			if ( ! $this->is_valid_date( $start_date ) ) {
+				return new \WP_Error( 'invalid_date', __( 'start_date must be in YYYY-MM-DD format.', 'surecart' ) );
+			}
+			$args['start_at'] = strtotime( $start_date );
+		}
+
+		if ( ! empty( $input['end_date'] ) ) {
+			$end_date = sanitize_text_field( $input['end_date'] );
+			if ( ! $this->is_valid_date( $end_date ) ) {
+				return new \WP_Error( 'invalid_date', __( 'end_date must be in YYYY-MM-DD format.', 'surecart' ) );
+			}
+			$args['end_at'] = strtotime( $end_date );
+		}
+
+		return $args;
+	}
+
+	/**
 	 * Convert a model object to an array, handling nested objects.
 	 *
 	 * @param mixed $model The model or data to convert.

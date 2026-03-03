@@ -81,6 +81,8 @@ class UpdateProduct extends AbstractAbility {
 
 	/**
 	 * {@inheritDoc}
+	 *
+	 * @param array $input The input data.
 	 */
 	public function execute( array $input ): array {
 		$id   = sanitize_text_field( $input['id'] );
@@ -95,17 +97,23 @@ class UpdateProduct extends AbstractAbility {
 		}
 
 		if ( ! empty( $input['metadata'] ) && is_array( $input['metadata'] ) ) {
-			foreach ( $input['metadata'] as $value ) {
+			$sanitized_meta = array();
+			foreach ( $input['metadata'] as $key => $value ) {
 				if ( ! is_string( $value ) && ! is_numeric( $value ) ) {
 					return $this->error( __( 'Metadata values must be strings.', 'surecart' ) );
 				}
+				$sanitized_meta[ sanitize_text_field( $key ) ] = sanitize_text_field( (string) $value );
 			}
-			$data['metadata'] = array_map( 'sanitize_text_field', $input['metadata'] );
+			$data['metadata'] = $sanitized_meta;
+		}
+
+		if ( empty( $data ) ) {
+			return $this->error( __( 'At least one field must be provided to update.', 'surecart' ) );
 		}
 
 		$product = Product::update( $id, $data );
 		if ( is_wp_error( $product ) ) {
-			return $this->error( $product->get_error_message() );
+			return $this->error( $this->wp_error_to_message( $product ) );
 		}
 
 		return $this->success(

@@ -74,7 +74,7 @@ class ArchiveProduct extends AbstractAbility {
 
 		$product = Product::update( $id, array( 'archived' => true ) );
 		if ( is_wp_error( $product ) ) {
-			return $this->error( $product->get_error_message() );
+			return $this->error( $this->wp_error_to_message( $product ) );
 		}
 
 		return $this->success(

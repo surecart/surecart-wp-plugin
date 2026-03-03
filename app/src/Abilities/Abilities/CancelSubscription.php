@@ -73,13 +73,15 @@ class CancelSubscription extends AbstractAbility {
 
 	/**
 	 * {@inheritDoc}
+	 *
+	 * @param array $input The input data.
 	 */
 	public function execute( array $input ): array {
 		$id   = sanitize_text_field( $input['id'] );
-		$args = array();
+		$data = array();
 
 		if ( ! empty( $input['cancel_behavior'] ) ) {
-			$allowed = array( 'immediate', 'pending' );
+			$allowed  = array( 'immediate', 'pending' );
 			$behavior = sanitize_text_field( $input['cancel_behavior'] );
 			if ( ! in_array( $behavior, $allowed, true ) ) {
 				return $this->error(
@@ -87,12 +89,13 @@ class CancelSubscription extends AbstractAbility {
 					sprintf( __( 'Invalid cancel_behavior. Allowed values: %s', 'surecart' ), implode( ', ', $allowed ) )
 				);
 			}
-			$args['cancel_behavior'] = $behavior;
+			$data['cancel_behavior'] = $behavior;
 		}
 
-		$subscription = Subscription::where( array_merge( array( 'id' => $id ), $args ) )->cancel();
+		// fill() puts $data into attributes (request body); pass $id to cancel() to set $this->attributes['id'].
+		$subscription = Subscription::where( array() )->fill( $data )->cancel( $id );
 		if ( is_wp_error( $subscription ) ) {
-			return $this->error( $subscription->get_error_message() );
+			return $this->error( $this->wp_error_to_message( $subscription ) );
 		}
 
 		return $this->success(

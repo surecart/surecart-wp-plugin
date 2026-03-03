@@ -81,37 +81,15 @@ class GetAbandonedCheckoutStats extends AbstractAbility {
 	 * @param array $input The input data.
 	 */
 	public function execute( array $input ): array {
-		$allowed_intervals = array( 'hour', 'day', 'week', 'month', 'year' );
-		$interval          = sanitize_text_field( $input['interval'] ?? 'day' );
-		if ( ! in_array( $interval, $allowed_intervals, true ) ) {
-			return $this->error(
-				/* translators: %s: comma-separated list of valid interval values */
-				sprintf( __( 'Invalid interval. Allowed values: %s', 'surecart' ), implode( ', ', $allowed_intervals ) )
-			);
-		}
-
-		$args = array( 'interval' => $interval );
-
-		if ( ! empty( $input['start_date'] ) ) {
-			$start_date = sanitize_text_field( $input['start_date'] );
-			if ( ! $this->is_valid_date( $start_date ) ) {
-				return $this->error( __( 'start_date must be in YYYY-MM-DD format.', 'surecart' ) );
-			}
-			$args['start_at'] = $start_date;
-		}
-
-		if ( ! empty( $input['end_date'] ) ) {
-			$end_date = sanitize_text_field( $input['end_date'] );
-			if ( ! $this->is_valid_date( $end_date ) ) {
-				return $this->error( __( 'end_date must be in YYYY-MM-DD format.', 'surecart' ) );
-			}
-			$args['end_at'] = $end_date;
+		$args = $this->resolve_stats_args( $input );
+		if ( is_wp_error( $args ) ) {
+			return $this->error( $args->get_error_message() );
 		}
 
 		$stat       = new Statistic();
 		$statistics = $stat->where( $args )->find( 'abandoned_checkouts' );
 		if ( is_wp_error( $statistics ) ) {
-			return $this->error( $statistics->get_error_message() );
+			return $this->error( $this->wp_error_to_message( $statistics ) );
 		}
 
 		return $this->success(

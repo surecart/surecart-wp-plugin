@@ -96,7 +96,7 @@ class ListOrders extends AbstractAbility {
 	public function execute( array $input ): array {
 		$args = array(
 			'page'  => absint( $input['page'] ?? 1 ),
-			'limit' => min( absint( $input['per_page'] ?? 10 ), 100 ),
+			'limit' => max( 1, min( absint( $input['per_page'] ?? 10 ), 100 ) ),
 		);
 
 		if ( ! empty( $input['status'] ) ) {
@@ -109,7 +109,7 @@ class ListOrders extends AbstractAbility {
 
 		$orders = Order::where( $args )->paginate();
 		if ( is_wp_error( $orders ) ) {
-			return $this->error( $orders->get_error_message() );
+			return $this->error( $this->wp_error_to_message( $orders ) );
 		}
 
 		return $this->success(

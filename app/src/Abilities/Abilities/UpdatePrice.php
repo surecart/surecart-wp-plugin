@@ -80,6 +80,8 @@ class UpdatePrice extends AbstractAbility {
 
 	/**
 	 * {@inheritDoc}
+	 *
+	 * @param array $input The input data.
 	 */
 	public function execute( array $input ): array {
 		$id   = sanitize_text_field( $input['id'] );
@@ -87,6 +89,9 @@ class UpdatePrice extends AbstractAbility {
 
 		if ( isset( $input['amount'] ) ) {
 			$data['amount'] = absint( $input['amount'] );
+			if ( $data['amount'] <= 0 ) {
+				return $this->error( __( 'Amount must be greater than zero.', 'surecart' ) );
+			}
 		}
 
 		if ( ! empty( $input['name'] ) ) {
@@ -97,9 +102,13 @@ class UpdatePrice extends AbstractAbility {
 			$data['archived'] = (bool) $input['archived'];
 		}
 
+		if ( empty( $data ) ) {
+			return $this->error( __( 'At least one field must be provided to update.', 'surecart' ) );
+		}
+
 		$price = Price::update( $id, $data );
 		if ( is_wp_error( $price ) ) {
-			return $this->error( $price->get_error_message() );
+			return $this->error( $this->wp_error_to_message( $price ) );
 		}
 
 		return $this->success(

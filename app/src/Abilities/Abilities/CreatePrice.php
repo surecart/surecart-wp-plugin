@@ -89,11 +89,18 @@ class CreatePrice extends AbstractAbility {
 
 	/**
 	 * {@inheritDoc}
+	 *
+	 * @param array $input The input data.
 	 */
 	public function execute( array $input ): array {
+		$amount = absint( $input['amount'] );
+		if ( $amount <= 0 ) {
+			return $this->error( __( 'Amount must be greater than zero.', 'surecart' ) );
+		}
+
 		$data = array(
 			'product'  => sanitize_text_field( $input['product'] ),
-			'amount'   => absint( $input['amount'] ),
+			'amount'   => $amount,
 			'currency' => sanitize_text_field( $input['currency'] ),
 		);
 
@@ -119,7 +126,7 @@ class CreatePrice extends AbstractAbility {
 
 		$price = Price::create( $data );
 		if ( is_wp_error( $price ) ) {
-			return $this->error( $price->get_error_message() );
+			return $this->error( $this->wp_error_to_message( $price ) );
 		}
 
 		return $this->success(

@@ -99,7 +99,7 @@ class ListPrices extends AbstractAbility {
 		$args = array(
 			'archived' => ! empty( $input['archived'] ),
 			'page'     => absint( $input['page'] ?? 1 ),
-			'limit'    => min( absint( $input['per_page'] ?? 10 ), 100 ),
+			'limit'    => max( 1, min( absint( $input['per_page'] ?? 10 ), 100 ) ),
 		);
 
 		if ( ! empty( $input['product_ids'] ) && is_array( $input['product_ids'] ) ) {
@@ -108,7 +108,7 @@ class ListPrices extends AbstractAbility {
 
 		$prices = Price::where( $args )->paginate();
 		if ( is_wp_error( $prices ) ) {
-			return $this->error( $prices->get_error_message() );
+			return $this->error( $this->wp_error_to_message( $prices ) );
 		}
 
 		return $this->success(

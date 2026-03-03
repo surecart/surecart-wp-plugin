@@ -128,7 +128,7 @@ class CreateCoupon extends AbstractAbility {
 
 		$coupon = Coupon::create( $data );
 		if ( is_wp_error( $coupon ) ) {
-			return $this->error( $coupon->get_error_message() );
+			return $this->error( $this->wp_error_to_message( $coupon ) );
 		}
 
 		return $this->success(
