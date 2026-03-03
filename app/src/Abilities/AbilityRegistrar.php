@@ -7,6 +7,11 @@ use SureCart\Abilities\Abilities\CreateCoupon;
 use SureCart\Abilities\Abilities\CreateCustomer;
 use SureCart\Abilities\Abilities\CreateFulfillment;
 use SureCart\Abilities\Abilities\CreateProduct;
+use SureCart\Abilities\Abilities\DeleteFulfillment;
+use SureCart\Abilities\Abilities\GetFulfillment;
+use SureCart\Abilities\Abilities\GetFulfillmentItem;
+use SureCart\Abilities\Abilities\ListFulfillments;
+use SureCart\Abilities\Abilities\UpdateFulfillment;
 use SureCart\Abilities\Abilities\CreatePromotion;
 use SureCart\Abilities\Abilities\CreateRefund;
 use SureCart\Abilities\Abilities\GetCustomer;
@@ -105,8 +110,14 @@ class AbilityRegistrar {
 			new CreatePromotion(),
 			new UpdatePromotion(),
 			new DeletePromotion(),
-			// Fulfillment.
+			// Fulfillments.
+			new ListFulfillments(),
+			new GetFulfillment(),
 			new CreateFulfillment(),
+			new UpdateFulfillment(),
+			new DeleteFulfillment(),
+			// Fulfillment Items.
+			new GetFulfillmentItem(),
 			// Licensing.
 			new ListLicenses(),
 			new GetLicense(),
