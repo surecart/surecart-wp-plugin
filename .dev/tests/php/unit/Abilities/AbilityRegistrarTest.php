@@ -28,11 +28,11 @@ class AbilityRegistrarTest extends SureCartUnitTestCase {
 	}
 
 	/**
-	 * Test that get_abilities returns 13 abilities.
+	 * Test that get_abilities returns 22 abilities.
 	 */
-	public function test_get_abilities_returns_13_abilities() {
+	public function test_get_abilities_returns_22_abilities() {
 		$abilities = $this->registrar->get_abilities();
-		$this->assertCount( 13, $abilities );
+		$this->assertCount( 22, $abilities );
 	}
 
 	/**
@@ -93,8 +93,13 @@ class AbilityRegistrarTest extends SureCartUnitTestCase {
 
 		$expected = array(
 			'surecart/get-store-info',
+			'surecart/get-store-dashboard',
 			'surecart/list-products',
 			'surecart/get-product',
+			'surecart/create-product',
+			'surecart/update-product',
+			'surecart/archive-product',
+			'surecart/duplicate-product',
 			'surecart/list-orders',
 			'surecart/get-order',
 			'surecart/list-customers',
@@ -102,7 +107,11 @@ class AbilityRegistrarTest extends SureCartUnitTestCase {
 			'surecart/list-subscriptions',
 			'surecart/get-subscription',
 			'surecart/get-order-statistics',
-			'surecart/create-product',
+			'surecart/get-subscription-statistics',
+			'surecart/get-abandoned-checkout-statistics',
+			'surecart/list-prices',
+			'surecart/create-price',
+			'surecart/update-price',
 			'surecart/create-coupon',
 			'surecart/cancel-subscription',
 		);
