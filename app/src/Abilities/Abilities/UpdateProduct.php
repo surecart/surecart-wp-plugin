@@ -93,7 +93,7 @@ class UpdateProduct extends AbstractAbility {
 		}
 
 		if ( ! empty( $input['description'] ) ) {
-			$data['description'] = sanitize_textarea_field( $input['description'] );
+			$data['description'] = wp_kses_post( $input['description'] );
 		}
 
 		if ( ! empty( $input['metadata'] ) && is_array( $input['metadata'] ) ) {

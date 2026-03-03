@@ -93,7 +93,7 @@ class CreatePrice extends AbstractAbility {
 	 * @param array $input The input data.
 	 */
 	public function execute( array $input ): array {
-		$amount = absint( $input['amount'] );
+		$amount = intval( $input['amount'] );
 		if ( $amount <= 0 ) {
 			return $this->error( __( 'Amount must be greater than zero.', 'surecart' ) );
 		}

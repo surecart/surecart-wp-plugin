@@ -57,7 +57,7 @@ abstract class AbstractAbility {
 	 * @return bool
 	 */
 	public function check_permission(): bool {
-		return current_user_can( 'edit_sc_products' );
+		return false;
 	}
 
 	/**
@@ -138,8 +138,8 @@ abstract class AbstractAbility {
 	/**
 	 * Validate and normalize stats query args from ability input.
 	 *
-	 * Accepts YYYY-MM-DD date strings and converts them to Unix timestamps
-	 * as required by the SureCart statistics API.
+	 * Accepts optional YYYY-MM-DD date strings and passes them directly
+	 * to the SureCart statistics API.
 	 *
 	 * @param array $input The raw ability input.
 	 *
@@ -190,7 +190,8 @@ abstract class AbstractAbility {
 		}
 
 		if ( $model instanceof \JsonSerializable ) {
-			return (array) $model->jsonSerialize();
+			$data = $model->jsonSerialize();
+			return is_array( $data ) ? $data : array();
 		}
 
 		if ( is_object( $model ) ) {

@@ -73,7 +73,7 @@ class GetStoreDashboard extends AbstractAbility {
 				'store'   => array( 'type' => 'object' ),
 				'orders'  => array( 'type' => 'object' ),
 			),
-			'required'   => array( 'success', 'store' ),
+			'required'   => array( 'success', 'store', 'orders' ),
 		);
 	}
 

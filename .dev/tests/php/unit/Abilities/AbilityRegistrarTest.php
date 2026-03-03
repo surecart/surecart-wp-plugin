@@ -107,8 +107,6 @@ class AbilityRegistrarTest extends SureCartUnitTestCase {
 			'surecart/list-subscriptions',
 			'surecart/get-subscription',
 			'surecart/get-order-statistics',
-			'surecart/get-subscription-statistics',
-			'surecart/get-abandoned-checkout-statistics',
 			'surecart/list-prices',
 			'surecart/create-price',
 			'surecart/update-price',

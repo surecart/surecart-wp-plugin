@@ -88,7 +88,7 @@ class UpdatePrice extends AbstractAbility {
 		$data = array();
 
 		if ( isset( $input['amount'] ) ) {
-			$data['amount'] = absint( $input['amount'] );
+			$data['amount'] = intval( $input['amount'] );
 			if ( $data['amount'] <= 0 ) {
 				return $this->error( __( 'Amount must be greater than zero.', 'surecart' ) );
 			}

@@ -83,7 +83,7 @@ class GetOrderStatistics extends AbstractAbility {
 	public function execute( array $input ): array {
 		$args = $this->resolve_stats_args( $input );
 		if ( is_wp_error( $args ) ) {
-			return $this->error( $args->get_error_message() );
+			return $this->error( $this->wp_error_to_message( $args ) );
 		}
 
 		$stat       = new Statistic();

@@ -74,7 +74,7 @@ class DuplicateProduct extends AbstractAbility {
 
 		$product = Product::duplicate( $id );
 		if ( is_wp_error( $product ) ) {
-			return $this->error( $product->get_error_message() );
+			return $this->error( $this->wp_error_to_message( $product ) );
 		}
 
 		return $this->success(

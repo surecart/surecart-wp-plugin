@@ -111,6 +111,10 @@ class CreateCoupon extends AbstractAbility {
 			'duration' => $duration,
 		);
 
+		if ( empty( $input['percent_off'] ) && empty( $input['amount_off'] ) ) {
+			return $this->error( __( 'Either percent_off or amount_off must be provided.', 'surecart' ) );
+		}
+
 		if ( ! empty( $input['percent_off'] ) ) {
 			$data['percent_off'] = floatval( $input['percent_off'] );
 		} elseif ( ! empty( $input['amount_off'] ) ) {
