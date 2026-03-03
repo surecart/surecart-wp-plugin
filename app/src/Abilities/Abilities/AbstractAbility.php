@@ -108,6 +108,28 @@ abstract class AbstractAbility {
 	}
 
 	/**
+	 * Return an error response from a WP_Error, including validation details.
+	 *
+	 * @param \WP_Error $wp_error The WP_Error object.
+	 *
+	 * @return array
+	 */
+	protected function wp_error( \WP_Error $wp_error ): array {
+		$messages = $wp_error->get_error_messages();
+		$result   = array(
+			'success' => false,
+			'error'   => $messages[0] ?? __( 'Unknown error.', 'surecart' ),
+		);
+
+		// Include individual validation error details.
+		if ( count( $messages ) > 1 ) {
+			$result['validation_errors'] = array_slice( $messages, 1 );
+		}
+
+		return $result;
+	}
+
+	/**
 	 * Convert a model object to an array, handling nested objects.
 	 *
 	 * @param mixed $model The model or data to convert.

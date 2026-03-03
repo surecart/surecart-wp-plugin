@@ -72,7 +72,7 @@ class GetCustomer extends AbstractAbility {
 	public function execute( array $input ): array {
 		$customer = Customer::with( array( 'purchases' ) )->find( sanitize_text_field( $input['id'] ) );
 		if ( is_wp_error( $customer ) ) {
-			return $this->error( $customer->get_error_message() );
+			return $this->wp_error( $customer );
 		}
 
 		return $this->success(

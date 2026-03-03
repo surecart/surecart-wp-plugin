@@ -4,17 +4,28 @@ namespace SureCart\Abilities;
 
 use SureCart\Abilities\Abilities\CancelSubscription;
 use SureCart\Abilities\Abilities\CreateCoupon;
+use SureCart\Abilities\Abilities\CreateCustomer;
+use SureCart\Abilities\Abilities\CreateFulfillment;
 use SureCart\Abilities\Abilities\CreateProduct;
+use SureCart\Abilities\Abilities\CreatePromotion;
+use SureCart\Abilities\Abilities\CreateRefund;
 use SureCart\Abilities\Abilities\GetCustomer;
+use SureCart\Abilities\Abilities\GetLicense;
 use SureCart\Abilities\Abilities\GetOrder;
 use SureCart\Abilities\Abilities\GetOrderStatistics;
 use SureCart\Abilities\Abilities\GetProduct;
 use SureCart\Abilities\Abilities\GetStoreInfo;
 use SureCart\Abilities\Abilities\GetSubscription;
+use SureCart\Abilities\Abilities\ListCoupons;
 use SureCart\Abilities\Abilities\ListCustomers;
+use SureCart\Abilities\Abilities\ListLicenses;
 use SureCart\Abilities\Abilities\ListOrders;
 use SureCart\Abilities\Abilities\ListProducts;
+use SureCart\Abilities\Abilities\ListPromotions;
+use SureCart\Abilities\Abilities\ListRefunds;
 use SureCart\Abilities\Abilities\ListSubscriptions;
+use SureCart\Abilities\Abilities\DeleteCustomer;
+use SureCart\Abilities\Abilities\UpdateCustomer;
 
 /**
  * Registers the ability category and all SureCart abilities.
@@ -56,19 +67,39 @@ class AbilityRegistrar {
 	 */
 	public function get_abilities(): array {
 		return array(
+			// Store.
 			new GetStoreInfo(),
+			// Products.
 			new ListProducts(),
 			new GetProduct(),
+			new CreateProduct(),
+			// Orders.
 			new ListOrders(),
 			new GetOrder(),
+			new GetOrderStatistics(),
+			// Customers.
 			new ListCustomers(),
 			new GetCustomer(),
+			new CreateCustomer(),
+			new UpdateCustomer(),
+			new DeleteCustomer(),
+			// Subscriptions.
 			new ListSubscriptions(),
 			new GetSubscription(),
-			new GetOrderStatistics(),
-			new CreateProduct(),
-			new CreateCoupon(),
 			new CancelSubscription(),
+			// Coupons & Promotions.
+			new ListCoupons(),
+			new CreateCoupon(),
+			new ListPromotions(),
+			new CreatePromotion(),
+			// Fulfillment.
+			new CreateFulfillment(),
+			// Licensing.
+			new ListLicenses(),
+			new GetLicense(),
+			// Refunds.
+			new ListRefunds(),
+			new CreateRefund(),
 		);
 	}
 }
