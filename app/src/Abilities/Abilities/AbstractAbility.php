@@ -108,6 +108,18 @@ abstract class AbstractAbility {
 	}
 
 	/**
+	 * Validate a date string is in YYYY-MM-DD format.
+	 *
+	 * @param string $date The date string to validate.
+	 *
+	 * @return bool
+	 */
+	protected function is_valid_date( string $date ): bool {
+		$d = \DateTime::createFromFormat( 'Y-m-d', $date );
+		return $d && $d->format( 'Y-m-d' ) === $date;
+	}
+
+	/**
 	 * Convert a model object to an array, handling nested objects.
 	 *
 	 * @param mixed $model The model or data to convert.

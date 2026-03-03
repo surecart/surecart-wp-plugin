@@ -76,11 +76,19 @@ class GetAbandonedCheckoutStats extends AbstractAbility {
 		$args = array();
 
 		if ( ! empty( $input['start_date'] ) ) {
-			$args['start_date'] = sanitize_text_field( $input['start_date'] );
+			$start_date = sanitize_text_field( $input['start_date'] );
+			if ( ! $this->is_valid_date( $start_date ) ) {
+				return $this->error( __( 'start_date must be in YYYY-MM-DD format.', 'surecart' ) );
+			}
+			$args['start_date'] = $start_date;
 		}
 
 		if ( ! empty( $input['end_date'] ) ) {
-			$args['end_date'] = sanitize_text_field( $input['end_date'] );
+			$end_date = sanitize_text_field( $input['end_date'] );
+			if ( ! $this->is_valid_date( $end_date ) ) {
+				return $this->error( __( 'end_date must be in YYYY-MM-DD format.', 'surecart' ) );
+			}
+			$args['end_date'] = $end_date;
 		}
 
 		$stat       = new Statistic();

@@ -28,11 +28,12 @@ class AbilityRegistrarTest extends SureCartUnitTestCase {
 	}
 
 	/**
-	 * Test that get_abilities returns 22 abilities.
+	 * Test that all expected abilities are registered.
 	 */
-	public function test_get_abilities_returns_22_abilities() {
+	public function test_get_abilities_count_matches_expected_list() {
 		$abilities = $this->registrar->get_abilities();
-		$this->assertCount( 22, $abilities );
+		$expected  = $this->get_expected_ability_names();
+		$this->assertCount( count( $expected ), $abilities, 'Ability count does not match the expected abilities list. Update test_expected_ability_names_present() when adding or removing abilities.' );
 	}
 
 	/**
@@ -85,13 +86,12 @@ class AbilityRegistrarTest extends SureCartUnitTestCase {
 	}
 
 	/**
-	 * Test expected ability names are present.
+	 * Get the list of expected ability names.
+	 *
+	 * @return array
 	 */
-	public function test_expected_ability_names_present() {
-		$abilities = $this->registrar->get_abilities();
-		$names     = array_map( fn( $a ) => $a->get_name(), $abilities );
-
-		$expected = array(
+	private function get_expected_ability_names(): array {
+		return array(
 			'surecart/get-store-info',
 			'surecart/get-store-dashboard',
 			'surecart/list-products',
@@ -115,8 +115,16 @@ class AbilityRegistrarTest extends SureCartUnitTestCase {
 			'surecart/create-coupon',
 			'surecart/cancel-subscription',
 		);
+	}
 
-		foreach ( $expected as $name ) {
+	/**
+	 * Test expected ability names are present.
+	 */
+	public function test_expected_ability_names_present() {
+		$abilities = $this->registrar->get_abilities();
+		$names     = array_map( fn( $a ) => $a->get_name(), $abilities );
+
+		foreach ( $this->get_expected_ability_names() as $name ) {
 			$this->assertContains( $name, $names, "Expected ability '{$name}' not found." );
 		}
 	}

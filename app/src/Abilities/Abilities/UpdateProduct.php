@@ -57,8 +57,9 @@ class UpdateProduct extends AbstractAbility {
 					'description' => __( 'New product description.', 'surecart' ),
 				),
 				'metadata'    => array(
-					'type'        => 'object',
-					'description' => __( 'Key-value metadata to set on the product.', 'surecart' ),
+					'type'                 => 'object',
+					'description'          => __( 'Key-value metadata to set on the product.', 'surecart' ),
+					'additionalProperties' => array( 'type' => 'string' ),
 				),
 			),
 			'required'   => array( 'id' ),
@@ -94,6 +95,11 @@ class UpdateProduct extends AbstractAbility {
 		}
 
 		if ( ! empty( $input['metadata'] ) && is_array( $input['metadata'] ) ) {
+			foreach ( $input['metadata'] as $value ) {
+				if ( ! is_string( $value ) && ! is_numeric( $value ) ) {
+					return $this->error( __( 'Metadata values must be strings.', 'surecart' ) );
+				}
+			}
 			$data['metadata'] = array_map( 'sanitize_text_field', $input['metadata'] );
 		}
 

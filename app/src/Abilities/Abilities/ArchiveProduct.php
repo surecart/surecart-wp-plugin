@@ -72,7 +72,7 @@ class ArchiveProduct extends AbstractAbility {
 	public function execute( array $input ): array {
 		$id = sanitize_text_field( $input['id'] );
 
-		$product = Product::delete( $id );
+		$product = Product::update( $id, array( 'archived' => true ) );
 		if ( is_wp_error( $product ) ) {
 			return $this->error( $product->get_error_message() );
 		}

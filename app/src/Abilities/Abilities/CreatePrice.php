@@ -98,7 +98,15 @@ class CreatePrice extends AbstractAbility {
 		);
 
 		if ( ! empty( $input['recurring_interval'] ) ) {
-			$data['recurring_interval'] = sanitize_text_field( $input['recurring_interval'] );
+			$allowed_intervals = array( 'day', 'week', 'month', 'year' );
+			$interval          = sanitize_text_field( $input['recurring_interval'] );
+			if ( ! in_array( $interval, $allowed_intervals, true ) ) {
+				return $this->error(
+					/* translators: %s: comma-separated list of valid interval values */
+					sprintf( __( 'Invalid recurring_interval. Allowed values: %s', 'surecart' ), implode( ', ', $allowed_intervals ) )
+				);
+			}
+			$data['recurring_interval'] = $interval;
 		}
 
 		if ( ! empty( $input['recurring_interval_count'] ) ) {

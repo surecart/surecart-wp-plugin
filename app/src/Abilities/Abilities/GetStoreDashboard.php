@@ -62,12 +62,18 @@ class GetStoreDashboard extends AbstractAbility {
 		return array(
 			'type'       => 'object',
 			'properties' => array(
-				'success'   => array( 'type' => 'boolean' ),
-				'store'     => array( 'type' => 'object' ),
-				'orders'    => array( 'type' => 'object' ),
+				'success'             => array( 'type' => 'boolean' ),
+				'store'               => array( 'type' => 'object' ),
+				'orders'              => array( 'type' => 'object' ),
 				'subscriptions'       => array( 'type' => 'object' ),
 				'abandoned_checkouts' => array( 'type' => 'object' ),
+				'errors'              => array(
+					'type'        => 'array',
+					'items'       => array( 'type' => 'string' ),
+					'description' => __( 'Errors encountered while fetching individual stat sections.', 'surecart' ),
+				),
 			),
+			'required'   => array( 'success', 'store' ),
 		);
 	}
 
@@ -75,8 +81,16 @@ class GetStoreDashboard extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function execute( array $input ): array {
-		$period = sanitize_text_field( $input['period'] ?? '30d' );
-		$dates  = $this->get_date_range( $period );
+		$period          = sanitize_text_field( $input['period'] ?? '30d' );
+		$allowed_periods = array( 'today', '7d', '30d', '90d' );
+		if ( ! in_array( $period, $allowed_periods, true ) ) {
+			return $this->error(
+				/* translators: %s: comma-separated list of valid period values */
+				sprintf( __( 'Invalid period. Allowed values: %s', 'surecart' ), implode( ', ', $allowed_periods ) )
+			);
+		}
+
+		$dates = $this->get_date_range( $period );
 
 		// Get store info.
 		$account = Account::find();
@@ -89,16 +103,18 @@ class GetStoreDashboard extends AbstractAbility {
 			'end_date'   => $dates['end_date'],
 		);
 
+		$errors = array();
+
 		// Get order statistics.
-		$stat          = new Statistic();
-		$order_stats   = $stat->where( $args )->find( 'orders' );
+		$stat        = new Statistic();
+		$order_stats = $stat->where( $args )->find( 'orders' );
 
 		// Get subscription statistics.
-		$stat              = new Statistic();
+		$stat               = new Statistic();
 		$subscription_stats = $stat->where( $args )->find( 'subscriptions' );
 
 		// Get abandoned checkout statistics.
-		$stat                    = new Statistic();
+		$stat                     = new Statistic();
 		$abandoned_checkout_stats = $stat->where( $args )->find( 'abandoned_checkouts' );
 
 		$result = array(
@@ -106,16 +122,26 @@ class GetStoreDashboard extends AbstractAbility {
 			'store'  => $this->model_to_array( $account ),
 		);
 
-		if ( ! is_wp_error( $order_stats ) ) {
+		if ( is_wp_error( $order_stats ) ) {
+			$errors[] = $order_stats->get_error_message();
+		} else {
 			$result['orders'] = $this->model_to_array( $order_stats );
 		}
 
-		if ( ! is_wp_error( $subscription_stats ) ) {
+		if ( is_wp_error( $subscription_stats ) ) {
+			$errors[] = $subscription_stats->get_error_message();
+		} else {
 			$result['subscriptions'] = $this->model_to_array( $subscription_stats );
 		}
 
-		if ( ! is_wp_error( $abandoned_checkout_stats ) ) {
+		if ( is_wp_error( $abandoned_checkout_stats ) ) {
+			$errors[] = $abandoned_checkout_stats->get_error_message();
+		} else {
 			$result['abandoned_checkouts'] = $this->model_to_array( $abandoned_checkout_stats );
+		}
+
+		if ( ! empty( $errors ) ) {
+			$result['errors'] = $errors;
 		}
 
 		return $this->success( $result );
