@@ -24,8 +24,14 @@ use SureCart\Abilities\Abilities\ListProducts;
 use SureCart\Abilities\Abilities\ListPromotions;
 use SureCart\Abilities\Abilities\ListRefunds;
 use SureCart\Abilities\Abilities\ListSubscriptions;
+use SureCart\Abilities\Abilities\DeleteCoupon;
 use SureCart\Abilities\Abilities\DeleteCustomer;
+use SureCart\Abilities\Abilities\DeletePromotion;
+use SureCart\Abilities\Abilities\GetCoupon;
+use SureCart\Abilities\Abilities\GetPromotion;
+use SureCart\Abilities\Abilities\UpdateCoupon;
 use SureCart\Abilities\Abilities\UpdateCustomer;
+use SureCart\Abilities\Abilities\UpdatePromotion;
 
 /**
  * Registers the ability category and all SureCart abilities.
@@ -87,11 +93,18 @@ class AbilityRegistrar {
 			new ListSubscriptions(),
 			new GetSubscription(),
 			new CancelSubscription(),
-			// Coupons & Promotions.
+			// Coupons.
 			new ListCoupons(),
+			new GetCoupon(),
 			new CreateCoupon(),
+			new UpdateCoupon(),
+			new DeleteCoupon(),
+			// Promotions.
 			new ListPromotions(),
+			new GetPromotion(),
 			new CreatePromotion(),
+			new UpdatePromotion(),
+			new DeletePromotion(),
 			// Fulfillment.
 			new CreateFulfillment(),
 			// Licensing.

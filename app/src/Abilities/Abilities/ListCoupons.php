@@ -2,39 +2,39 @@
 
 namespace SureCart\Abilities\Abilities;
 
-use SureCart\Models\Customer;
+use SureCart\Models\Coupon;
 
 /**
- * List customers with filters.
+ * List coupons with filters.
  */
-class ListCustomers extends AbstractAbility {
+class ListCoupons extends AbstractAbility {
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function get_name(): string {
-		return 'surecart/list-customers';
+		return 'surecart/list-coupons';
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function get_label(): string {
-		return __( 'List Customers', 'surecart' );
+		return __( 'List Coupons', 'surecart' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function get_description(): string {
-		return __( 'List SureCart customers with optional search and pagination.', 'surecart' );
+		return __( 'List all available SureCart coupons with optional pagination.', 'surecart' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function check_permission(): bool {
-		return current_user_can( 'read_sc_customers' );
+		return current_user_can( 'read_sc_coupons' );
 	}
 
 	/**
@@ -46,7 +46,17 @@ class ListCustomers extends AbstractAbility {
 			'properties' => array(
 				'query'    => array(
 					'type'        => 'string',
-					'description' => __( 'Search query to filter customers by name or email.', 'surecart' ),
+					'description' => __( 'Search query to filter coupons by name.', 'surecart' ),
+				),
+				'archived' => array(
+					'type'        => 'boolean',
+					'description' => __( 'Whether to include archived coupons.', 'surecart' ),
+					'default'     => false,
+				),
+				'ids'      => array(
+					'type'        => 'array',
+					'items'       => array( 'type' => 'string' ),
+					'description' => __( 'Only return coupons with the given IDs.', 'surecart' ),
 				),
 				'page'     => array(
 					'type'        => 'integer',
@@ -55,7 +65,7 @@ class ListCustomers extends AbstractAbility {
 				),
 				'per_page' => array(
 					'type'        => 'integer',
-					'description' => __( 'Number of customers per page (max 100).', 'surecart' ),
+					'description' => __( 'Number of coupons per page (max 100).', 'surecart' ),
 					'default'     => 10,
 				),
 			),
@@ -70,7 +80,7 @@ class ListCustomers extends AbstractAbility {
 			'type'       => 'object',
 			'properties' => array(
 				'success'    => array( 'type' => 'boolean' ),
-				'customers'  => array(
+				'coupons'    => array(
 					'type'  => 'array',
 					'items' => array( 'type' => 'object' ),
 				),
@@ -90,27 +100,38 @@ class ListCustomers extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function execute( array $input ): array {
+		$page     = absint( $input['page'] ?? 1 );
+		$per_page = min( absint( $input['per_page'] ?? 10 ), 100 );
+
 		$args = array(
-			'page'     => absint( $input['page'] ?? 1 ),
-			'per_page' => min( absint( $input['per_page'] ?? 10 ), 100 ),
+			'archived' => ! empty( $input['archived'] ),
 		);
 
 		if ( ! empty( $input['query'] ) ) {
 			$args['query'] = sanitize_text_field( $input['query'] );
 		}
 
-		$customers = Customer::where( $args )->paginate();
-		if ( is_wp_error( $customers ) ) {
-			return $this->wp_error( $customers );
+		if ( ! empty( $input['ids'] ) && \is_array( $input['ids'] ) ) {
+			$args['ids'] = array_map( 'sanitize_text_field', $input['ids'] );
+		}
+
+		$coupons = Coupon::where( $args )->paginate(
+			array(
+				'page'     => $page,
+				'per_page' => $per_page,
+			)
+		);
+		if ( is_wp_error( $coupons ) ) {
+			return $this->wp_error( $coupons );
 		}
 
 		return $this->success(
 			array(
-				'customers'  => array_map( array( $this, 'model_to_array' ), $customers->data ?? array() ),
+				'coupons'    => array_map( array( $this, 'model_to_array' ), $coupons->data ?? array() ),
 				'pagination' => array(
-					'count' => $customers->pagination->count ?? 0,
-					'page'  => $args['page'],
-					'limit' => $args['per_page'],
+					'count' => $coupons->pagination->count ?? 0,
+					'page'  => $page,
+					'limit' => $per_page,
 				),
 			)
 		);
