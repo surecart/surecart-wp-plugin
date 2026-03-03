@@ -106,7 +106,7 @@ class UpdatePrice extends AbstractAbility {
 			return $this->error( __( 'At least one field must be provided to update.', 'surecart' ) );
 		}
 
-		$price = Price::update( $id, $data );
+		$price = ( new Price( $id ) )->update( $data );
 		if ( is_wp_error( $price ) ) {
 			return $this->error( $this->wp_error_to_message( $price ) );
 		}

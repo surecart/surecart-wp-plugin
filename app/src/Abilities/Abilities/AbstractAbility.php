@@ -163,7 +163,7 @@ abstract class AbstractAbility {
 			if ( ! $this->is_valid_date( $start_date ) ) {
 				return new \WP_Error( 'invalid_date', __( 'start_date must be in YYYY-MM-DD format.', 'surecart' ) );
 			}
-			$args['start_at'] = strtotime( $start_date );
+			$args['start_at'] = $start_date;
 		}
 
 		if ( ! empty( $input['end_date'] ) ) {
@@ -171,7 +171,7 @@ abstract class AbstractAbility {
 			if ( ! $this->is_valid_date( $end_date ) ) {
 				return new \WP_Error( 'invalid_date', __( 'end_date must be in YYYY-MM-DD format.', 'surecart' ) );
 			}
-			$args['end_at'] = strtotime( $end_date );
+			$args['end_at'] = $end_date;
 		}
 
 		return $args;

@@ -111,7 +111,7 @@ class UpdateProduct extends AbstractAbility {
 			return $this->error( __( 'At least one field must be provided to update.', 'surecart' ) );
 		}
 
-		$product = Product::update( $id, $data );
+		$product = ( new Product( $id ) )->update( $data );
 		if ( is_wp_error( $product ) ) {
 			return $this->error( $this->wp_error_to_message( $product ) );
 		}

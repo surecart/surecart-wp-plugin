@@ -159,38 +159,38 @@ class GetStoreDashboard extends AbstractAbility {
 	}
 
 	/**
-	 * Get the start timestamp, end timestamp, and grouping interval for a period.
+	 * Get the start date, end date, and grouping interval for a period.
 	 *
 	 * @param string $period The period identifier.
 	 *
-	 * @return array{start_at: int, end_at: int, interval: string}
+	 * @return array{start_at: string, end_at: string, interval: string}
 	 */
 	private function get_date_range( string $period ): array {
-		$end_ts = strtotime( 'today midnight' );
+		$end_at = gmdate( 'Y-m-d' );
 
 		switch ( $period ) {
 			case 'today':
-				$start_ts = strtotime( 'today midnight' );
+				$start_at = $end_at;
 				$interval = 'hour';
 				break;
 			case '7d':
-				$start_ts = strtotime( '-7 days midnight' );
+				$start_at = gmdate( 'Y-m-d', strtotime( '-7 days' ) );
 				$interval = 'day';
 				break;
 			case '90d':
-				$start_ts = strtotime( '-90 days midnight' );
+				$start_at = gmdate( 'Y-m-d', strtotime( '-90 days' ) );
 				$interval = 'week';
 				break;
 			case '30d':
 			default:
-				$start_ts = strtotime( '-30 days midnight' );
+				$start_at = gmdate( 'Y-m-d', strtotime( '-30 days' ) );
 				$interval = 'day';
 				break;
 		}
 
 		return array(
-			'start_at' => $start_ts,
-			'end_at'   => $end_ts,
+			'start_at' => $start_at,
+			'end_at'   => $end_at,
 			'interval' => $interval,
 		);
 	}
