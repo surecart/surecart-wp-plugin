@@ -98,7 +98,7 @@ class ListProducts extends AbstractAbility {
 		$args = array(
 			'archived' => ! empty( $input['archived'] ),
 			'page'     => absint( $input['page'] ?? 1 ),
-			'per_page' => min( absint( $input['per_page'] ?? 10 ), 100 ),
+			'limit'    => min( absint( $input['per_page'] ?? 10 ), 100 ),
 		);
 
 		if ( ! empty( $input['query'] ) ) {
@@ -116,7 +116,7 @@ class ListProducts extends AbstractAbility {
 				'pagination' => array(
 					'count' => $products->pagination->count ?? 0,
 					'page'  => $args['page'],
-					'limit' => $args['per_page'],
+					'limit' => $args['limit'],
 				),
 			)
 		);

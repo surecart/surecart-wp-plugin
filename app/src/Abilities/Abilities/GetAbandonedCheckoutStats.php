@@ -52,6 +52,12 @@ class GetAbandonedCheckoutStats extends AbstractAbility {
 					'type'        => 'string',
 					'description' => __( 'End date in YYYY-MM-DD format.', 'surecart' ),
 				),
+				'interval'   => array(
+					'type'        => 'string',
+					'description' => __( 'Grouping interval for the statistics data.', 'surecart' ),
+					'enum'        => array( 'hour', 'day', 'week', 'month', 'year' ),
+					'default'     => 'day',
+				),
 			),
 		);
 	}
@@ -71,16 +77,27 @@ class GetAbandonedCheckoutStats extends AbstractAbility {
 
 	/**
 	 * {@inheritDoc}
+	 *
+	 * @param array $input The input data.
 	 */
 	public function execute( array $input ): array {
-		$args = array();
+		$allowed_intervals = array( 'hour', 'day', 'week', 'month', 'year' );
+		$interval          = sanitize_text_field( $input['interval'] ?? 'day' );
+		if ( ! in_array( $interval, $allowed_intervals, true ) ) {
+			return $this->error(
+				/* translators: %s: comma-separated list of valid interval values */
+				sprintf( __( 'Invalid interval. Allowed values: %s', 'surecart' ), implode( ', ', $allowed_intervals ) )
+			);
+		}
+
+		$args = array( 'interval' => $interval );
 
 		if ( ! empty( $input['start_date'] ) ) {
 			$start_date = sanitize_text_field( $input['start_date'] );
 			if ( ! $this->is_valid_date( $start_date ) ) {
 				return $this->error( __( 'start_date must be in YYYY-MM-DD format.', 'surecart' ) );
 			}
-			$args['start_date'] = $start_date;
+			$args['start_at'] = $start_date;
 		}
 
 		if ( ! empty( $input['end_date'] ) ) {
@@ -88,7 +105,7 @@ class GetAbandonedCheckoutStats extends AbstractAbility {
 			if ( ! $this->is_valid_date( $end_date ) ) {
 				return $this->error( __( 'end_date must be in YYYY-MM-DD format.', 'surecart' ) );
 			}
-			$args['end_date'] = $end_date;
+			$args['end_at'] = $end_date;
 		}
 
 		$stat       = new Statistic();

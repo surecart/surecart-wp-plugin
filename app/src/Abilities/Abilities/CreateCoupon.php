@@ -61,10 +61,19 @@ class CreateCoupon extends AbstractAbility {
 					'description' => __( 'Three-letter ISO currency code for amount_off (e.g., usd).', 'surecart' ),
 					'default'     => 'usd',
 				),
-				'duration'    => array(
+				'duration'           => array(
 					'type'        => 'string',
 					'description' => __( 'Coupon duration: once, repeating, or forever.', 'surecart' ),
+					'enum'        => array( 'once', 'repeating', 'forever' ),
 					'default'     => 'once',
+				),
+				'duration_in_months' => array(
+					'type'        => 'integer',
+					'description' => __( 'Number of months the coupon applies. Required when duration is "repeating".', 'surecart' ),
+				),
+				'max_redemptions'    => array(
+					'type'        => 'integer',
+					'description' => __( 'Maximum total number of times this coupon can be redeemed.', 'surecart' ),
 				),
 			),
 			'required'   => array( 'name' ),
@@ -88,9 +97,18 @@ class CreateCoupon extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function execute( array $input ): array {
+		$allowed_durations = array( 'once', 'repeating', 'forever' );
+		$duration          = sanitize_text_field( $input['duration'] ?? 'once' );
+		if ( ! in_array( $duration, $allowed_durations, true ) ) {
+			return $this->error(
+				/* translators: %s: comma-separated list of valid duration values */
+				sprintf( __( 'Invalid duration. Allowed values: %s', 'surecart' ), implode( ', ', $allowed_durations ) )
+			);
+		}
+
 		$data = array(
 			'name'     => sanitize_text_field( $input['name'] ),
-			'duration' => sanitize_text_field( $input['duration'] ?? 'once' ),
+			'duration' => $duration,
 		);
 
 		if ( ! empty( $input['percent_off'] ) ) {
@@ -98,6 +116,14 @@ class CreateCoupon extends AbstractAbility {
 		} elseif ( ! empty( $input['amount_off'] ) ) {
 			$data['amount_off'] = absint( $input['amount_off'] );
 			$data['currency']   = sanitize_text_field( $input['currency'] ?? 'usd' );
+		}
+
+		if ( ! empty( $input['duration_in_months'] ) ) {
+			$data['duration_in_months'] = absint( $input['duration_in_months'] );
+		}
+
+		if ( ! empty( $input['max_redemptions'] ) ) {
+			$data['max_redemptions'] = absint( $input['max_redemptions'] );
 		}
 
 		$coupon = Coupon::create( $data );

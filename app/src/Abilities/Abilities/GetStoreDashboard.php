@@ -99,8 +99,9 @@ class GetStoreDashboard extends AbstractAbility {
 		}
 
 		$args = array(
-			'start_date' => $dates['start_date'],
-			'end_date'   => $dates['end_date'],
+			'start_at' => $dates['start_at'],
+			'end_at'   => $dates['end_at'],
+			'interval' => $dates['interval'],
 		);
 
 		$errors = array();
@@ -148,34 +149,39 @@ class GetStoreDashboard extends AbstractAbility {
 	}
 
 	/**
-	 * Get the start and end date for a period.
+	 * Get the start date, end date, and grouping interval for a period.
 	 *
 	 * @param string $period The period identifier.
 	 *
-	 * @return array
+	 * @return array{start_at: string, end_at: string, interval: string}
 	 */
 	private function get_date_range( string $period ): array {
-		$end_date = gmdate( 'Y-m-d' );
+		$end_at = gmdate( 'Y-m-d' );
 
 		switch ( $period ) {
 			case 'today':
-				$start_date = $end_date;
+				$start_at = $end_at;
+				$interval = 'hour';
 				break;
 			case '7d':
-				$start_date = gmdate( 'Y-m-d', strtotime( '-7 days' ) );
+				$start_at = gmdate( 'Y-m-d', strtotime( '-7 days' ) );
+				$interval = 'day';
 				break;
 			case '90d':
-				$start_date = gmdate( 'Y-m-d', strtotime( '-90 days' ) );
+				$start_at = gmdate( 'Y-m-d', strtotime( '-90 days' ) );
+				$interval = 'week';
 				break;
 			case '30d':
 			default:
-				$start_date = gmdate( 'Y-m-d', strtotime( '-30 days' ) );
+				$start_at = gmdate( 'Y-m-d', strtotime( '-30 days' ) );
+				$interval = 'day';
 				break;
 		}
 
 		return array(
-			'start_date' => $start_date,
-			'end_date'   => $end_date,
+			'start_at' => $start_at,
+			'end_at'   => $end_at,
+			'interval' => $interval,
 		);
 	}
 }

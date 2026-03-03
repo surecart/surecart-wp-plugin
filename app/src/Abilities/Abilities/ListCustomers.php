@@ -91,8 +91,8 @@ class ListCustomers extends AbstractAbility {
 	 */
 	public function execute( array $input ): array {
 		$args = array(
-			'page'     => absint( $input['page'] ?? 1 ),
-			'per_page' => min( absint( $input['per_page'] ?? 10 ), 100 ),
+			'page'  => absint( $input['page'] ?? 1 ),
+			'limit' => min( absint( $input['per_page'] ?? 10 ), 100 ),
 		);
 
 		if ( ! empty( $input['query'] ) ) {
@@ -110,7 +110,7 @@ class ListCustomers extends AbstractAbility {
 				'pagination' => array(
 					'count' => $customers->pagination->count ?? 0,
 					'page'  => $args['page'],
-					'limit' => $args['per_page'],
+					'limit' => $args['limit'],
 				),
 			)
 		);
