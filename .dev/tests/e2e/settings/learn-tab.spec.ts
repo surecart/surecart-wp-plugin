@@ -58,18 +58,19 @@ function getStepRow( page, stepTitle: string ) {
 }
 
 /**
- * Wait for the site entity to be loaded (settings API GET resolves).
- * This ensures `hasSiteLoaded` is true and toggleStep will work.
+ * Navigate to the Learn tab and wait for the page to be fully loaded.
+ * Waits for the first section heading to appear, which indicates the site entity
+ * and product queries have resolved (spinner is gone, content is ready).
  */
-async function waitForSiteEntity( page ) {
-	await page.waitForResponse( ( response ) =>
-		response.url().includes( '/wp/v2/settings' ) && response.status() === 200
-	);
+async function gotoAndWaitForLearnTab( page ) {
+	await page.goto( LEARN_TAB_URL );
+	await page.getByRole( 'heading', { name: 'Set Up Store Basics' } ).waitFor( { state: 'visible' } );
 }
 
 test.describe( 'Learn Tab Settings Page', () => {
 	test.beforeEach( async ( { requestUtils } ) => {
 		await createAccount( requestUtils );
+		await resetLearnSteps( requestUtils );
 	} );
 
 	test( 'Should render the Learn tab page', async ( { page } ) => {
@@ -227,19 +228,17 @@ test.describe( 'Learn Tab Settings Page', () => {
 	} );
 
 	test( 'Should toggle step checkbox and persist', async ( { page, requestUtils } ) => {
-		await page.goto( LEARN_TAB_URL );
+		// Navigate and wait for full page load so toggleStep works.
+		await gotoAndWaitForLearnTab( page );
 
 		// Expand "Add Your First Product" section.
 		const productButton = page.getByRole( 'button', { name: /Add Your First Product/i } );
 		await productButton.click();
 
-		// Wait for site entity to load so toggleStep works.
-		await waitForSiteEntity( page );
-
 		// Click the checkbox for "Add Product Variants" (manual step, not auto-detected).
 		const variantsCheckbox = getStepCheckbox( page, 'Add Product Variants' );
 		await variantsCheckbox.waitFor( { state: 'visible' } );
-		await variantsCheckbox.click( { force: true } );
+		await variantsCheckbox.click();
 
 		// Assert the checkbox is now checked.
 		await expect( variantsCheckbox ).toHaveAttribute( 'checked', '' );
@@ -254,9 +253,6 @@ test.describe( 'Learn Tab Settings Page', () => {
 		// The checkbox should still be checked after reload.
 		const variantsCheckboxAfterReload = getStepCheckbox( page, 'Add Product Variants' );
 		await expect( variantsCheckboxAfterReload ).toHaveAttribute( 'checked', '' );
-
-		// Clean up: reset learn progress via site settings.
-		await resetLearnSteps( requestUtils );
 	} );
 
 	test( 'Should show info tooltips on hover', async ( { page } ) => {

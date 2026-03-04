@@ -80,6 +80,7 @@ export default function LearnStep( {
 				disabled={ isAuto }
 				onScChange={ handleCheckboxClick }
 				style={ { marginTop: '2px' } }
+				aria-label={ step.title }
 			/>
 
 			<div css={ contentStyles }>
