@@ -91,6 +91,8 @@ export class ScIcon {
             }
 
             this.svg = svgEl.outerHTML;
+            // add part attribute to the svg element.
+            this.svg = this.svg.replace('<svg', '<svg part="svg" ');
             this.scLoad.emit();
           } else {
             this.svg = '';

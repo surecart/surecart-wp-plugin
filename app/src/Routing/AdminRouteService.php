@@ -44,6 +44,8 @@ class AdminRouteService {
 		'cancellations'           => 'sc-cancellation-insights',
 		'product_collection'      => 'sc-product-collections',
 		'product_collections'     => 'sc-product-collections',
+		'reviews'                 => 'sc-reviews',
+		'review'                  => 'sc-reviews',
 		'restore'                 => 'sc-restore',
 		'affiliates'              => 'sc-affiliates',
 		'affiliate'               => 'sc-affiliate',

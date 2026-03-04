@@ -168,6 +168,20 @@ body .elementor-add-new-section .elementor-add-section-area-button {
     width: 100%;
 }
 
+/* Product Review Content widget - minimize in editor to not affect layout */
+.elementor-widget-surecart-product-review-content {
+    position: absolute !important;
+    width: 0 !important;
+    height: 0 !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+
 /* Responsive adjustments for when fewer templates are shown */
 .sc-elementor-modal.surecart-product .sc-elementor-modal__card-container,
 .sc-elementor-modal.loop-item .sc-elementor-modal__card-container {

@@ -5,7 +5,7 @@ import { css, jsx } from '@emotion/core';
  * External dependencies.
  */
 import { store as coreStore } from '@wordpress/core-data';
-import { useSelect } from '@wordpress/data';
+import { useSelect, select } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -35,7 +35,17 @@ export default ({ product, updateProduct }) => {
 	 * Update a variant by position.
 	 */
 	const updateVariant = (data, position) => {
-		const updatedVariants = product?.variants.map((item) =>
+		// Get the latest product state from the store to avoid stale prop data
+		const currentProduct = select(coreStore).getEditedEntityRecord(
+			'surecart',
+			'product',
+			product?.id
+		);
+
+		// Use store's variants if available, otherwise fall back to props
+		const currentVariants = currentProduct?.variants || product?.variants;
+
+		const updatedVariants = currentVariants.map((item) =>
 			item?.position !== position ? item : { ...item, ...data }
 		);
 		return updateProduct({

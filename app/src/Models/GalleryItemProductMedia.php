@@ -122,8 +122,9 @@ class GalleryItemProductMedia extends ModelsGalleryItem implements GalleryItem {
 				' . \SureCart::svg()->get(
 						'maximize',
 						[
-							'width'  => 16,
-							'height' => 16,
+							'width'       => 16,
+							'height'      => 16,
+							'aria-hidden' => 'true',
 						]
 					) . '
 			</button>';
