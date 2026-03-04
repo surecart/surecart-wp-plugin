@@ -253,15 +253,6 @@ add_action(
 		);
 
 		// instead, use a static loader that injects the script at runtime.
-		$static_assets = include trailingslashit( plugin_dir_path( __FILE__ ) ) . 'build/scripts/a11y/index.asset.php';
-		wp_register_script_module(
-			'@surecart/a11y',
-			trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/a11y/index.js',
-			array(),
-			$static_assets['version']
-		);
-
-		// instead, use a static loader that injects the script at runtime.
 		$static_assets = include trailingslashit( plugin_dir_path( __FILE__ ) ) . 'build/scripts/dropdown/index.asset.php';
 		wp_register_script_module(
 			'@surecart/dropdown',
@@ -316,7 +307,7 @@ add_action(
 					'import' => 'dynamic',
 				],
 				[
-					'id'     => '@surecart/a11y',
+					'id'     => '@wordpress/a11y',
 					'import' => 'dynamic',
 				],
 			],
@@ -576,7 +567,7 @@ add_action(
 					'import' => 'dynamic',
 				),
 				array(
-					'id'     => '@surecart/a11y',
+					'id'     => '@wordpress/a11y',
 					'import' => 'dynamic',
 				),
 			),
@@ -616,7 +607,7 @@ add_action(
 					'import' => 'dynamic',
 				),
 				array(
-					'id'     => '@surecart/a11y',
+					'id'     => '@wordpress/a11y',
 					'import' => 'dynamic',
 				),
 			),
@@ -626,3 +617,18 @@ add_action(
 	10,
 	3
 );
+
+/**
+ * Load custom block styles only when the block is used.
+ */
+add_action(
+	'init',
+	function () {
+		// Scan our styles folder to locate block styles.
+		$files = glob( __DIR__ . '/src/blocks-styles/**.php' );
+		foreach ( $files as $file ) {
+			include $file;
+		}
+	}
+);
+

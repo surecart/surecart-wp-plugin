@@ -258,7 +258,6 @@ class CompatibilityService {
 		$exclude_ids[] = '@surecart/image-slider-js-module';
 		$exclude_ids[] = '@surecart/checkout-js-module';
 		$exclude_ids[] = '@surecart/cart-js-module';
-		$exclude_ids[] = '@surecart/a11y-js-module';
 		$exclude_ids[] = '@surecart/checkout-service-js-module';
 		$exclude_ids[] = '@surecart/checkout-events-js-module';
 		$exclude_ids[] = '@surecart/dropdown-js-module';
