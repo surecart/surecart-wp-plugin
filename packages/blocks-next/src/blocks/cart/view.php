@@ -23,7 +23,6 @@
 					'style'                    => $style,
 					'class'                    => 'sc-drawer sc-cart-drawer',
 					'role'                     => 'dialog',
-					'aria-modal'               => 'true',
 					'data-wp-bind--aria-label' => 'surecart/cart::state.ariaLabel',
 					'data-wp-class--open'      => 'surecart/cart::state.open',
 					'data-wp-on--keydown'      => 'surecart/cart::actions.handleKeydown',
@@ -66,3 +65,4 @@
 	<!-- backdrop -->
 	<div class="sc-drawer__backdrop" data-wp-on--mousedown="surecart/cart::actions.closeOverlay" data-wp-on--touchstart="surecart/cart::actions.closeOverlay" data-wp-class--show="surecart/cart::state.open" data-wp-on--keydown="surecart/cart::actions.handleKeydown"></div>
 </div>
+
