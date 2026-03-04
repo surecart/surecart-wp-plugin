@@ -172,25 +172,6 @@ class AdminURLService {
 	}
 
 	/**
-	 * Import a specific model
-	 *
-	 * @param string $name Model lowercase name.
-	 *
-	 * @return string URL for the page.
-	 */
-	public function import( $name ) {
-		return esc_url(
-			add_query_arg(
-				[
-					'action' => 'import',
-					'nonce'  => wp_create_nonce( "import_$name" ),
-				],
-				$this->index( $name )
-			)
-		);
-	}
-
-	/**
 	 * Import results page url.
 	 *
 	 * @param string       $name Model lowercase name.

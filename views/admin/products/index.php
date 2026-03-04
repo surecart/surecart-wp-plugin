@@ -70,7 +70,7 @@
 		'layouts/partials/admin-index-header',
 		[
 			'title'       => __( 'Products', 'surecart' ),
-			'after_title' => \SureCart::view( 'admin/products/import-products-button' )->toString(),
+			'after_title' => \SureCart::view( 'admin/products/add-new-product-button' )->toString(),
 		]
 	);
 	?>

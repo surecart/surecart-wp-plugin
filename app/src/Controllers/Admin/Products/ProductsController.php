@@ -336,6 +336,12 @@ class ProductsController extends AdminController {
 			// Check if this is an all-skipped import.
 			$all_skipped_session_id = get_option( 'sc_woo_import_all_skipped' );
 
+			// Fallback: if option was already cleaned up, check URL param (e.g. page refresh).
+			if ( ! $all_skipped_session_id ) {
+				$raw_session_id         = $request->query( 'session_id' );
+				$all_skipped_session_id = $raw_session_id ? sanitize_key( $raw_session_id ) : '';
+			}
+
 			if ( $all_skipped_session_id ) {
 				// Fetch skipped products via session ID.
 				$transient_key    = 'sc_woo_import_skipped_' . $all_skipped_session_id;
