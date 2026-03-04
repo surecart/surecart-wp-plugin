@@ -2,6 +2,7 @@
 
 namespace SureCart\Abilities;
 
+use SureCart\Abilities\Abilities\ArchiveProduct;
 use SureCart\Abilities\Abilities\CancelSubscription;
 use SureCart\Abilities\Abilities\CreateCoupon;
 use SureCart\Abilities\Abilities\CreateCustomer;
@@ -15,17 +16,21 @@ use SureCart\Abilities\Abilities\UpdateFulfillment;
 use SureCart\Abilities\Abilities\CreatePromotion;
 use SureCart\Abilities\Abilities\CreateRefund;
 use SureCart\Abilities\Abilities\GetRefund;
+use SureCart\Abilities\Abilities\CreatePrice;
+use SureCart\Abilities\Abilities\DuplicateProduct;
 use SureCart\Abilities\Abilities\GetCustomer;
 use SureCart\Abilities\Abilities\GetLicense;
 use SureCart\Abilities\Abilities\GetOrder;
 use SureCart\Abilities\Abilities\GetOrderStatistics;
 use SureCart\Abilities\Abilities\GetProduct;
+use SureCart\Abilities\Abilities\GetStoreDashboard;
 use SureCart\Abilities\Abilities\GetStoreInfo;
 use SureCart\Abilities\Abilities\GetSubscription;
 use SureCart\Abilities\Abilities\ListCoupons;
 use SureCart\Abilities\Abilities\ListCustomers;
 use SureCart\Abilities\Abilities\ListLicenses;
 use SureCart\Abilities\Abilities\ListOrders;
+use SureCart\Abilities\Abilities\ListPrices;
 use SureCart\Abilities\Abilities\ListProducts;
 use SureCart\Abilities\Abilities\ListPromotions;
 use SureCart\Abilities\Abilities\ListRefunds;
@@ -38,6 +43,8 @@ use SureCart\Abilities\Abilities\GetPromotion;
 use SureCart\Abilities\Abilities\UpdateCoupon;
 use SureCart\Abilities\Abilities\UpdateCustomer;
 use SureCart\Abilities\Abilities\UpdatePromotion;
+use SureCart\Abilities\Abilities\UpdatePrice;
+use SureCart\Abilities\Abilities\UpdateProduct;
 
 /**
  * Registers the ability category and all SureCart abilities.
@@ -86,6 +93,13 @@ class AbilityRegistrar {
 			new GetProduct(),
 			new CreateProduct(),
 			// Orders.
+			new GetStoreDashboard(),
+			new ListProducts(),
+			new GetProduct(),
+			new CreateProduct(),
+			new UpdateProduct(),
+			new ArchiveProduct(),
+			new DuplicateProduct(),
 			new ListOrders(),
 			new GetOrder(),
 			new GetOrderStatistics(),
@@ -98,6 +112,11 @@ class AbilityRegistrar {
 			// Subscriptions.
 			new ListSubscriptions(),
 			new GetSubscription(),
+			new GetOrderStatistics(),
+			new ListPrices(),
+			new CreatePrice(),
+			new UpdatePrice(),
+			new CreateCoupon(),
 			new CancelSubscription(),
 			// Coupons.
 			new ListCoupons(),

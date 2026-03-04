@@ -64,6 +64,7 @@ class CreateCoupon extends AbstractAbility {
 				'duration'                     => array(
 					'type'        => 'string',
 					'description' => __( 'Coupon duration: once, repeating, or forever.', 'surecart' ),
+					'enum'        => array( 'once', 'repeating', 'forever' ),
 					'default'     => 'once',
 				),
 				'duration_in_months'           => array(
@@ -117,9 +118,18 @@ class CreateCoupon extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function execute( array $input ): array {
+		$allowed_durations = array( 'once', 'repeating', 'forever' );
+		$duration          = sanitize_text_field( $input['duration'] ?? 'once' );
+		if ( ! in_array( $duration, $allowed_durations, true ) ) {
+			return $this->error(
+				/* translators: %s: comma-separated list of valid duration values */
+				sprintf( __( 'Invalid duration. Allowed values: %s', 'surecart' ), implode( ', ', $allowed_durations ) )
+			);
+		}
+
 		$data = array(
 			'name'     => sanitize_text_field( $input['name'] ),
-			'duration' => sanitize_text_field( $input['duration'] ?? 'once' ),
+			'duration' => $duration,
 		);
 
 		if ( ! empty( $input['percent_off'] ) && ! empty( $input['amount_off'] ) ) {

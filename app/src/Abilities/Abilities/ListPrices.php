@@ -2,39 +2,39 @@
 
 namespace SureCart\Abilities\Abilities;
 
-use SureCart\Models\Product;
+use SureCart\Models\Price;
 
 /**
- * List products with filters.
+ * List prices with filters.
  */
-class ListProducts extends AbstractAbility {
+class ListPrices extends AbstractAbility {
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function get_name(): string {
-		return 'surecart/list-products';
+		return 'surecart/list-prices';
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function get_label(): string {
-		return __( 'List Products', 'surecart' );
+		return __( 'List Prices', 'surecart' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function get_description(): string {
-		return __( 'List SureCart products with optional filters for status, search query, and pagination.', 'surecart' );
+		return __( 'List prices for a product. Returns amount, currency, billing interval, and status.', 'surecart' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function check_permission(): bool {
-		return current_user_can( 'read_sc_products' );
+		return current_user_can( 'read_sc_prices' );
 	}
 
 	/**
@@ -44,23 +44,24 @@ class ListProducts extends AbstractAbility {
 		return array(
 			'type'       => 'object',
 			'properties' => array(
-				'query'    => array(
-					'type'        => 'string',
-					'description' => __( 'Search query to filter products by name.', 'surecart' ),
+				'product_ids' => array(
+					'type'        => 'array',
+					'items'       => array( 'type' => 'string' ),
+					'description' => __( 'Filter by product IDs.', 'surecart' ),
 				),
-				'archived' => array(
+				'archived'    => array(
 					'type'        => 'boolean',
-					'description' => __( 'Whether to include archived products.', 'surecart' ),
+					'description' => __( 'Whether to include archived prices.', 'surecart' ),
 					'default'     => false,
 				),
-				'page'     => array(
+				'page'        => array(
 					'type'        => 'integer',
 					'description' => __( 'Page number for pagination.', 'surecart' ),
 					'default'     => 1,
 				),
-				'per_page' => array(
+				'per_page'    => array(
 					'type'        => 'integer',
-					'description' => __( 'Number of products per page (max 100).', 'surecart' ),
+					'description' => __( 'Number of prices per page (max 100).', 'surecart' ),
 					'default'     => 10,
 				),
 			),
@@ -74,8 +75,8 @@ class ListProducts extends AbstractAbility {
 		return array(
 			'type'       => 'object',
 			'properties' => array(
-				'success'  => array( 'type' => 'boolean' ),
-				'products' => array(
+				'success'    => array( 'type' => 'boolean' ),
+				'prices'     => array(
 					'type'  => 'array',
 					'items' => array( 'type' => 'object' ),
 				),
@@ -101,20 +102,20 @@ class ListProducts extends AbstractAbility {
 			'limit'    => max( 1, min( absint( $input['per_page'] ?? 10 ), 100 ) ),
 		);
 
-		if ( ! empty( $input['query'] ) ) {
-			$args['query'] = sanitize_text_field( $input['query'] );
+		if ( ! empty( $input['product_ids'] ) && is_array( $input['product_ids'] ) ) {
+			$args['product_ids'] = array_map( 'sanitize_text_field', $input['product_ids'] );
 		}
 
-		$products = Product::where( $args )->paginate();
-		if ( is_wp_error( $products ) ) {
-			return $this->error( $this->wp_error_to_message( $products ) );
+		$prices = Price::where( $args )->paginate();
+		if ( is_wp_error( $prices ) ) {
+			return $this->error( $this->wp_error_to_message( $prices ) );
 		}
 
 		return $this->success(
 			array(
-				'products'   => array_map( array( $this, 'model_to_array' ), $products->data ?? array() ),
+				'prices'     => array_map( array( $this, 'model_to_array' ), $prices->data ?? array() ),
 				'pagination' => array(
-					'count' => $products->pagination->count ?? 0,
+					'count' => $prices->pagination->count ?? 0,
 					'page'  => $args['page'],
 					'limit' => $args['limit'],
 				),

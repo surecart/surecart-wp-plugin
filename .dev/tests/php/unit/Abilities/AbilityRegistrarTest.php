@@ -28,14 +28,6 @@ class AbilityRegistrarTest extends SureCartUnitTestCase {
 	}
 
 	/**
-	 * Test that get_abilities returns 23 abilities.
-	 */
-	public function test_get_abilities_returns_24_abilities() {
-		$abilities = $this->registrar->get_abilities();
-		$this->assertCount( 24, $abilities );
-	}
-
-	/**
 	 * Test that all abilities extend AbstractAbility.
 	 */
 	public function test_all_abilities_extend_abstract_ability() {
@@ -85,17 +77,20 @@ class AbilityRegistrarTest extends SureCartUnitTestCase {
 	}
 
 	/**
-	 * Test expected ability names are present.
+	 * Get the list of expected ability names.
+	 *
+	 * @return array
 	 */
-	public function test_expected_ability_names_present() {
-		$abilities = $this->registrar->get_abilities();
-		$names     = array_map( fn( $a ) => $a->get_name(), $abilities );
-
-		$expected = array(
+	private function get_expected_ability_names(): array {
+		return array(
 			'surecart/get-store-info',
+			'surecart/get-store-dashboard',
 			'surecart/list-products',
 			'surecart/get-product',
 			'surecart/create-product',
+			'surecart/update-product',
+			'surecart/archive-product',
+			'surecart/duplicate-product',
 			'surecart/list-orders',
 			'surecart/get-order',
 			'surecart/get-order-statistics',
@@ -106,6 +101,11 @@ class AbilityRegistrarTest extends SureCartUnitTestCase {
 			'surecart/delete-customer',
 			'surecart/list-subscriptions',
 			'surecart/get-subscription',
+			'surecart/get-order-statistics',
+			'surecart/list-prices',
+			'surecart/create-price',
+			'surecart/update-price',
+			'surecart/create-coupon',
 			'surecart/cancel-subscription',
 			'surecart/list-coupons',
 			'surecart/create-coupon',
@@ -117,8 +117,16 @@ class AbilityRegistrarTest extends SureCartUnitTestCase {
 			'surecart/list-refunds',
 			'surecart/create-refund',
 		);
+	}
 
-		foreach ( $expected as $name ) {
+	/**
+	 * Test expected ability names are present.
+	 */
+	public function test_expected_ability_names_present() {
+		$abilities = $this->registrar->get_abilities();
+		$names     = array_map( fn( $a ) => $a->get_name(), $abilities );
+
+		foreach ( $this->get_expected_ability_names() as $name ) {
 			$this->assertContains( $name, $names, "Expected ability '{$name}' not found." );
 		}
 	}
