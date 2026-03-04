@@ -32,7 +32,7 @@ class ProductsController extends AdminController {
 						'title' => __( 'Products', 'surecart' ),
 					],
 				],
-				'suffix'      => isset( $_GET['debug'] ) ? $this->syncDropdown() : null,
+				'suffix'      => isset( $_GET['debug'] ) ? $this->syncDropdown() : null, // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			),
 		);
 
@@ -345,9 +345,6 @@ class ProductsController extends AdminController {
 					$skipped_products = [];
 				}
 
-				// Clean up all-skipped flag (not transient - let it expire naturally).
-				delete_option( 'sc_woo_import_all_skipped' );
-
 				return \SureCart::view( 'admin/products/import-results' )->with(
 					[
 						'succeeded_count'  => 0,
@@ -364,6 +361,7 @@ class ProductsController extends AdminController {
 					'succeeded_count'  => 0,
 					'failed_rows'      => [],
 					'skipped_products' => [],
+					'all_skipped'      => false,
 				]
 			);
 		}
@@ -372,18 +370,20 @@ class ProductsController extends AdminController {
 		$import_ids = array_filter( array_map( 'sanitize_text_field', explode( ',', $import_ids_raw ) ) );
 
 		// Parse session_id from query (for skipped products lookup).
-		$session_id = sanitize_key( $request->query( 'session_id' ) );
+		$raw        = $request->query( 'session_id' );
+		$session_id = $raw ? sanitize_key( $raw ) : '';
 
 		// Fallback: use current session if available (for backward compatibility).
 		if ( ! $session_id ) {
 			$session_id = get_option( 'sc_woo_import_session_id' );
 		}
 
-		// Fetch all import rows across all pages.
+		// Fetch all import rows (capped at 50 pages to prevent timeouts).
 		$succeeded_count = 0;
 		$failed_rows     = [];
 		$page            = 1;
 		$per_page        = 100;
+		$max_pages       = 50;
 
 		do {
 			$collection = ImportRow::where( [ 'import_ids' => $import_ids ] )
@@ -399,7 +399,7 @@ class ProductsController extends AdminController {
 				break;
 			}
 
-			foreach ( $collection->data as $row ) {
+			foreach ( ( $collection->data ?? [] ) as $row ) {
 				if ( 'succeeded' === ( $row->status ?? '' ) ) {
 					++$succeeded_count;
 				} else {
@@ -413,7 +413,7 @@ class ProductsController extends AdminController {
 
 			$has_next_page = $collection->hasNextPage();
 			++$page;
-		} while ( $has_next_page );
+		} while ( $has_next_page && $page <= $max_pages );
 
 		// Fetch skipped products from transient.
 		$skipped_products = [];
@@ -431,6 +431,7 @@ class ProductsController extends AdminController {
 				'succeeded_count'  => $succeeded_count,
 				'failed_rows'      => $failed_rows,
 				'skipped_products' => $skipped_products,
+				'all_skipped'      => false,
 			]
 		);
 	}

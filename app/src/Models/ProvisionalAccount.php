@@ -94,16 +94,18 @@ class ProvisionalAccount extends Model {
 			}
 		}
 
-		if ( ! empty( $attributes['import_woocommerce_products'] ) ) {
-			$import = \SureCart::sync()->woocommerce_products()->dispatch();
+		// clear account cache first (before potential early return).
+		\SureCart::account()->clearCache();
 
-			if ( is_wp_error( $import ) ) {
-				return $import;
+		if ( ! empty( $attributes['import_woocommerce_products'] ) ) {
+			$service = \SureCart::sync()->woocommerce_products();
+			if ( ! $service->isRunning() ) {
+				$import = $service->dispatch();
+				if ( is_wp_error( $import ) ) {
+					return $import;
+				}
 			}
 		}
-
-		// clear account cache.
-		\SureCart::account()->clearCache();
 
 		// create the products.
 		return $created;

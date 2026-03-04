@@ -96,6 +96,9 @@ export default ({
 function TemplateItem({ active, template, onItemClick }) {
 	return (
 		<div
+			role="button"
+			tabIndex={0}
+			aria-pressed={active}
 			css={css`
 				cursor: pointer;
 				background-color: ${active
@@ -112,6 +115,12 @@ function TemplateItem({ active, template, onItemClick }) {
 				align-items: center;
 			`}
 			onClick={onItemClick}
+			onKeyDown={(e) => {
+				if (e.key === 'Enter' || e.key === ' ') {
+					e.preventDefault();
+					onItemClick();
+				}
+			}}
 		>
 			<div
 				css={css`

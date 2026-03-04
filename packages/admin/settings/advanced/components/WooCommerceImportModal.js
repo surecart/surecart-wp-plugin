@@ -16,6 +16,7 @@ export default ({ open, onRequestClose }) => {
 	const [count, setCount] = useState(null);
 	const [loadingCount, setLoadingCount] = useState(false);
 	const [saving, setSaving] = useState(false);
+	const [countError, setCountError] = useState(false);
 
 	const { createSuccessNotice, createErrorNotice } =
 		useDispatch(noticesStore);
@@ -24,6 +25,7 @@ export default ({ open, onRequestClose }) => {
 	useEffect(() => {
 		if (!open) {
 			setCount(null);
+			setCountError(false);
 			return;
 		}
 
@@ -36,7 +38,7 @@ export default ({ open, onRequestClose }) => {
 				setCount(response?.count ?? 0);
 			} catch (e) {
 				console.error(e);
-				setCount(0);
+				setCountError(true);
 			} finally {
 				setLoadingCount(false);
 			}
@@ -46,6 +48,7 @@ export default ({ open, onRequestClose }) => {
 	}, [open]);
 
 	const submitForm = async () => {
+		if (saving) return;
 		try {
 			setSaving(true);
 			await apiFetch({
@@ -93,6 +96,23 @@ export default ({ open, onRequestClose }) => {
 				>
 					<ScSpinner />
 				</div>
+			) : countError ? (
+				<>
+					<ScAlert type="danger" open icon="alert-circle">
+						{__(
+							'Could not retrieve WooCommerce product count. Please try again.',
+							'surecart'
+						)}
+					</ScAlert>
+					<div>
+						<ScButton
+							type="text"
+							onClick={onRequestClose}
+						>
+							{__('Close', 'surecart')}
+						</ScButton>
+					</div>
+				</>
 			) : (
 				<ScForm
 					onScSubmit={(e) => {

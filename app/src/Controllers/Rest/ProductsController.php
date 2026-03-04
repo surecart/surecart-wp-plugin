@@ -126,7 +126,10 @@ class ProductsController extends RestController {
 			);
 		}
 
-		$service->dispatch();
+		$result = $service->dispatch();
+		if ( is_wp_error( $result ) ) {
+			return $result;
+		}
 
 		return rest_ensure_response( [ 'message' => __( 'WooCommerce import started.', 'surecart' ) ] );
 	}

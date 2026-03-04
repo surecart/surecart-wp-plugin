@@ -216,6 +216,26 @@ class AdminURLService {
 	}
 
 	/**
+	 * Import results page URL by session ID (for all-skipped imports).
+	 *
+	 * @param string $name       Model lowercase name.
+	 * @param string $session_id The session ID.
+	 *
+	 * @return string URL for the page.
+	 */
+	public function importResultsBySession( $name, $session_id ) {
+		return esc_url(
+			add_query_arg(
+				[
+					'action'     => 'import_results',
+					'session_id' => $session_id,
+				],
+				$this->index( $name )
+			)
+		);
+	}
+
+	/**
 	 * Edit model action
 	 */
 	public function editModel( $action, $id, $redirect_url = '' ) {

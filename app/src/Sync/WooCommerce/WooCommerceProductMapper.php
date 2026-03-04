@@ -27,13 +27,22 @@ class WooCommerceProductMapper {
 	private $currency_cache = null;
 
 	/**
-	 * Reset per-batch caches.
+	 * Reset all caches.
 	 *
 	 * @return void
 	 */
 	public function resetCaches() {
 		$this->currency_cache    = null;
 		$this->collections_cache = [];
+	}
+
+	/**
+	 * Reset only the currency cache (collections persist across batches).
+	 *
+	 * @return void
+	 */
+	public function resetCurrencyCache() {
+		$this->currency_cache = null;
 	}
 
 	/**
@@ -407,16 +416,27 @@ class WooCommerceProductMapper {
 					continue;
 				}
 
-				// Find existing ProductCollection by slug using API.
-				$collection = \SureCart\Models\ProductCollection::where( [ 'query' => $cache_key ] )->first();
+				// Find existing ProductCollection by slug using API query, then verify exact match.
+				$results = \SureCart\Models\ProductCollection::where( [ 'query' => $cache_key ] )->get();
 
 				// Handle API errors -- skip this term to avoid creating duplicates.
-				if ( is_wp_error( $collection ) ) {
+				if ( is_wp_error( $results ) ) {
 					continue;
 				}
 
+				// Find exact slug match from search results to avoid fuzzy mismatches.
+				$collection = null;
+				if ( is_array( $results ) ) {
+					foreach ( $results as $result ) {
+						if ( isset( $result->slug ) && $result->slug === $cache_key ) {
+							$collection = $result;
+							break;
+						}
+					}
+				}
+
 				// If collection exists on API, cache and use it.
-				if ( ! empty( $collection->id ) ) {
+				if ( null !== $collection && ! empty( $collection->id ) ) {
 					$this->collections_cache[ $cache_key ] = $collection;
 					$collections[]                         = $collection;
 					continue;

@@ -165,14 +165,7 @@ class WooCommerceImportService {
 			$notice_name = 'woo_import_complete_' . md5( implode( ',', $import_ids ) );
 		} elseif ( $all_skipped_session_id ) {
 			// All-skipped case: use session_id.
-			$results_url = add_query_arg(
-				[
-					'page'       => 'sc-products',
-					'action'     => 'import_results',
-					'session_id' => $all_skipped_session_id,
-				],
-				admin_url( 'admin.php' )
-			);
+			$results_url = \SureCart::getUrl()->importResultsBySession( 'products', $all_skipped_session_id );
 			$notice_name = 'woo_import_complete_' . md5( $all_skipped_session_id );
 		} else {
 			// No data available, skip notice.

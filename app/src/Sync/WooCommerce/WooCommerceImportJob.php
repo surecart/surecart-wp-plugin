@@ -72,8 +72,8 @@ class WooCommerceImportJob extends Job {
 		$page       = $args['page'] ?? 1;
 		$batch_size = $args['batch_size'] ?? 100;
 
-		// Reset per-batch caches.
-		$this->mapper->resetCaches();
+		// Reset per-batch currency cache (collections cache persists across batches).
+		$this->mapper->resetCurrencyCache();
 		$this->skipped_products_batch = [];
 		$this->imported_product_ids   = [];
 
@@ -125,9 +125,7 @@ class WooCommerceImportJob extends Job {
 					update_post_meta( $imported_id, '_surecart_imported', time() );
 				}
 
-				$existing_ids   = get_option( 'sc_woo_import_ids', [] );
-				$existing_ids[] = $import->id;
-				update_option( 'sc_woo_import_ids', $existing_ids, false );
+				$this->appendImportId( $import->id );
 			}
 		}
 
@@ -265,6 +263,7 @@ class WooCommerceImportJob extends Job {
 
 	/**
 	 * Flush accumulated skipped products to the transient in a single write.
+	 * Uses a lock to prevent race conditions between concurrent batches.
 	 *
 	 * @return void
 	 */
@@ -275,6 +274,17 @@ class WooCommerceImportJob extends Job {
 
 		$session_id    = $this->getImportSessionId();
 		$transient_key = 'sc_woo_import_skipped_' . $session_id;
+		$lock_key      = $transient_key . '_lock';
+
+		// Acquire lock (retry up to 5 times with 200ms delay).
+		for ( $i = 0; $i < 5; $i++ ) {
+			if ( false !== get_transient( $lock_key ) ) {
+				usleep( 200000 );
+				continue;
+			}
+			break;
+		}
+		set_transient( $lock_key, 1, 30 );
 
 		// Merge with any previously stored skipped products from earlier batches.
 		$skipped_products = get_transient( $transient_key );
@@ -287,6 +297,35 @@ class WooCommerceImportJob extends Job {
 		// Store for 7 days (matches typical ImportRow retention).
 		set_transient( $transient_key, $skipped_products, 7 * DAY_IN_SECONDS );
 
+		delete_transient( $lock_key );
+
 		$this->skipped_products_batch = [];
+	}
+
+	/**
+	 * Atomically append an import ID to the stored list.
+	 * Uses a lock to prevent race conditions between concurrent batches.
+	 *
+	 * @param string $import_id The import ID to append.
+	 * @return void
+	 */
+	private function appendImportId( $import_id ) {
+		$lock_key = 'sc_woo_import_ids_lock';
+
+		// Acquire lock (retry up to 5 times with 200ms delay).
+		for ( $i = 0; $i < 5; $i++ ) {
+			if ( false !== get_transient( $lock_key ) ) {
+				usleep( 200000 );
+				continue;
+			}
+			break;
+		}
+		set_transient( $lock_key, 1, 30 );
+
+		$existing_ids   = get_option( 'sc_woo_import_ids', [] );
+		$existing_ids[] = $import_id;
+		update_option( 'sc_woo_import_ids', $existing_ids, false );
+
+		delete_transient( $lock_key );
 	}
 }

@@ -157,7 +157,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		\SureCart::route()->get()->where( 'sc_url_var', 'duplicate', 'action' )->middleware( 'nonce:duplicate_product' )->handle( 'ProductsController@duplicate' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'toggle_archive', 'action' )->middleware( 'archive_model:product' )->handle( 'ProductsController@toggleArchive' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'sync_all', 'action' )->middleware( 'nonce:sync_products' )->handle( 'ProductsController@syncAll' );
-		\SureCart::route()->get()->where( 'sc_url_var', 'import_results', 'action' )->middleware( 'user.can:edit_sc_products' )->handle( 'ProductsController@importResults' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'import_results', 'action' )->handle( 'ProductsController@importResults' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'sync', 'action' )->middleware( 'nonce:sync_product' )->handle( 'ProductsController@sync' );
 	}
 );
