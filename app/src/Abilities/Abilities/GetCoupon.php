@@ -69,15 +69,15 @@ class GetCoupon extends AbstractAbility {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function execute( array $input ): array {
+	public function execute( array $input ) {
 		$id = sanitize_text_field( $input['id'] ?? '' );
 		if ( empty( $id ) ) {
-			return $this->error( __( 'A coupon ID is required.', 'surecart' ) );
+			return $this->error( 'missing_id', __( 'A coupon ID is required.', 'surecart' ) );
 		}
 
 		$coupon = Coupon::with( array( 'promotions' ) )->find( $id );
 		if ( is_wp_error( $coupon ) ) {
-			return $this->wp_error( $coupon );
+			return $coupon;
 		}
 
 		return $this->success(

@@ -77,7 +77,7 @@ class CreatePromotion extends AbstractAbility {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function execute( array $input ): array {
+	public function execute( array $input ) {
 		$data = array(
 			'coupon' => sanitize_text_field( $input['coupon'] ),
 		);
@@ -92,7 +92,7 @@ class CreatePromotion extends AbstractAbility {
 
 		$promotion = Promotion::create( $data );
 		if ( is_wp_error( $promotion ) ) {
-			return $this->wp_error( $promotion );
+			return $promotion;
 		}
 
 		return $this->success(

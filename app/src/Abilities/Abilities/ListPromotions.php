@@ -105,7 +105,7 @@ class ListPromotions extends AbstractAbility {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function execute( array $input ): array {
+	public function execute( array $input ) {
 		$page     = absint( $input['page'] ?? 1 );
 		$per_page = min( absint( $input['per_page'] ?? 10 ), 100 );
 
@@ -128,7 +128,7 @@ class ListPromotions extends AbstractAbility {
 			)
 		);
 		if ( is_wp_error( $promotions ) ) {
-			return $this->wp_error( $promotions );
+			return $promotions;
 		}
 
 		return $this->success(

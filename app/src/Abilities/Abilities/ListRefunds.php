@@ -100,7 +100,7 @@ class ListRefunds extends AbstractAbility {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function execute( array $input ): array {
+	public function execute( array $input ) {
 		$args = array(
 			'page'     => absint( $input['page'] ?? 1 ),
 			'per_page' => min( absint( $input['per_page'] ?? 10 ), 100 ),
@@ -120,7 +120,7 @@ class ListRefunds extends AbstractAbility {
 
 		$refunds = Refund::where( $args )->paginate();
 		if ( is_wp_error( $refunds ) ) {
-			return $this->wp_error( $refunds );
+			return $refunds;
 		}
 
 		return $this->success(

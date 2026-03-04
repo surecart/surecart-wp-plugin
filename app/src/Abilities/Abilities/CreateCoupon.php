@@ -117,11 +117,12 @@ class CreateCoupon extends AbstractAbility {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function execute( array $input ): array {
+	public function execute( array $input ) {
 		$allowed_durations = array( 'once', 'repeating', 'forever' );
 		$duration          = sanitize_text_field( $input['duration'] ?? 'once' );
 		if ( ! in_array( $duration, $allowed_durations, true ) ) {
 			return $this->error(
+				'invalid_duration',
 				/* translators: %s: comma-separated list of valid duration values */
 				sprintf( __( 'Invalid duration. Allowed values: %s', 'surecart' ), implode( ', ', $allowed_durations ) )
 			);
@@ -133,7 +134,7 @@ class CreateCoupon extends AbstractAbility {
 		);
 
 		if ( ! empty( $input['percent_off'] ) && ! empty( $input['amount_off'] ) ) {
-			return $this->error( __( 'You cannot set both percent_off and amount_off. Please use one or the other.', 'surecart' ) );
+			return $this->error( 'invalid_input', __( 'You cannot set both percent_off and amount_off. Please use one or the other.', 'surecart' ) );
 		}
 
 		if ( ! empty( $input['percent_off'] ) ) {
@@ -158,7 +159,7 @@ class CreateCoupon extends AbstractAbility {
 
 		$coupon = Coupon::create( $data );
 		if ( is_wp_error( $coupon ) ) {
-			return $this->wp_error( $coupon );
+			return $coupon;
 		}
 
 		return $this->success(

@@ -69,15 +69,15 @@ class GetPromotion extends AbstractAbility {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function execute( array $input ): array {
+	public function execute( array $input ) {
 		$id = sanitize_text_field( $input['id'] ?? '' );
 		if ( empty( $id ) ) {
-			return $this->error( __( 'A promotion ID is required.', 'surecart' ) );
+			return $this->error( 'missing_id', __( 'A promotion ID is required.', 'surecart' ) );
 		}
 
 		$promotion = Promotion::with( array( 'coupon' ) )->find( $id );
 		if ( is_wp_error( $promotion ) ) {
-			return $this->wp_error( $promotion );
+			return $promotion;
 		}
 
 		return $this->success(

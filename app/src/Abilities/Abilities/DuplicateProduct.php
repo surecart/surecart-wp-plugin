@@ -69,12 +69,12 @@ class DuplicateProduct extends AbstractAbility {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function execute( array $input ): array {
+	public function execute( array $input ) {
 		$id = sanitize_text_field( $input['id'] );
 
 		$product = Product::duplicate( $id );
 		if ( is_wp_error( $product ) ) {
-			return $this->error( $this->wp_error_to_message( $product ) );
+			return $product;
 		}
 
 		return $this->success(

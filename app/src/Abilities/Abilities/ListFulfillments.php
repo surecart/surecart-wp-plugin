@@ -94,7 +94,7 @@ class ListFulfillments extends AbstractAbility {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function execute( array $input ): array {
+	public function execute( array $input ) {
 		$page     = absint( $input['page'] ?? 1 );
 		$per_page = min( absint( $input['per_page'] ?? 10 ), 100 );
 
@@ -123,7 +123,7 @@ class ListFulfillments extends AbstractAbility {
 			)
 		);
 		if ( is_wp_error( $fulfillments ) ) {
-			return $this->wp_error( $fulfillments );
+			return $fulfillments;
 		}
 
 		return $this->success(

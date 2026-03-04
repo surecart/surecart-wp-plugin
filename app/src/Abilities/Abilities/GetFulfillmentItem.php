@@ -69,15 +69,15 @@ class GetFulfillmentItem extends AbstractAbility {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function execute( array $input ): array {
+	public function execute( array $input ) {
 		$id = sanitize_text_field( $input['id'] ?? '' );
 		if ( empty( $id ) ) {
-			return $this->error( __( 'A fulfillment item ID is required.', 'surecart' ) );
+			return $this->error( 'missing_id', __( 'A fulfillment item ID is required.', 'surecart' ) );
 		}
 
 		$fulfillment_item = FulfillmentItem::with( array( 'fulfillment', 'line_item' ) )->find( $id );
 		if ( is_wp_error( $fulfillment_item ) ) {
-			return $this->wp_error( $fulfillment_item );
+			return $fulfillment_item;
 		}
 
 		return $this->success(

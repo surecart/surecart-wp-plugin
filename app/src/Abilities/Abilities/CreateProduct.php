@@ -87,7 +87,7 @@ class CreateProduct extends AbstractAbility {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function execute( array $input ): array {
+	public function execute( array $input ) {
 		$data = array(
 			'name' => sanitize_text_field( $input['name'] ),
 		);
@@ -112,7 +112,7 @@ class CreateProduct extends AbstractAbility {
 
 		$product = Product::create( $data );
 		if ( is_wp_error( $product ) ) {
-			return $this->error( $product->get_error_message() );
+			return $product;
 		}
 
 		return $this->success(

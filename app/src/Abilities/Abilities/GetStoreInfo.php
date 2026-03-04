@@ -71,10 +71,10 @@ class GetStoreInfo extends AbstractAbility {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function execute( array $input ): array {
+	public function execute( array $input ) {
 		$account = Account::find();
 		if ( is_wp_error( $account ) ) {
-			return $this->error( $account->get_error_message() );
+			return $account;
 		}
 
 		return $this->success(

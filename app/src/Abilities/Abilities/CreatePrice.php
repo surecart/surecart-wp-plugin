@@ -92,10 +92,10 @@ class CreatePrice extends AbstractAbility {
 	 *
 	 * @param array $input The input data.
 	 */
-	public function execute( array $input ): array {
+	public function execute( array $input ) {
 		$amount = intval( $input['amount'] );
 		if ( $amount <= 0 ) {
-			return $this->error( __( 'Amount must be greater than zero.', 'surecart' ) );
+			return $this->error( 'invalid_amount', __( 'Amount must be greater than zero.', 'surecart' ) );
 		}
 
 		$data = array(
@@ -109,6 +109,7 @@ class CreatePrice extends AbstractAbility {
 			$interval          = sanitize_text_field( $input['recurring_interval'] );
 			if ( ! in_array( $interval, $allowed_intervals, true ) ) {
 				return $this->error(
+					'invalid_interval',
 					/* translators: %s: comma-separated list of valid interval values */
 					sprintf( __( 'Invalid recurring_interval. Allowed values: %s', 'surecart' ), implode( ', ', $allowed_intervals ) )
 				);
@@ -126,7 +127,7 @@ class CreatePrice extends AbstractAbility {
 
 		$price = Price::create( $data );
 		if ( is_wp_error( $price ) ) {
-			return $this->error( $this->wp_error_to_message( $price ) );
+			return $price;
 		}
 
 		return $this->success(

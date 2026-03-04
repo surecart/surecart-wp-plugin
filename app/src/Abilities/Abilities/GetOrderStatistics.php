@@ -80,16 +80,16 @@ class GetOrderStatistics extends AbstractAbility {
 	 *
 	 * @param array $input The input data.
 	 */
-	public function execute( array $input ): array {
+	public function execute( array $input ) {
 		$args = $this->resolve_stats_args( $input );
 		if ( is_wp_error( $args ) ) {
-			return $this->error( $this->wp_error_to_message( $args ) );
+			return $args;
 		}
 
 		$stat       = new Statistic();
 		$statistics = $stat->where( $args )->find( 'orders' );
 		if ( is_wp_error( $statistics ) ) {
-			return $this->error( $this->wp_error_to_message( $statistics ) );
+			return $statistics;
 		}
 
 		return $this->success(

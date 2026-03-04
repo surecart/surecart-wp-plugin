@@ -115,7 +115,7 @@ class CreateFulfillment extends AbstractAbility {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function execute( array $input ): array {
+	public function execute( array $input ) {
 		$data = array(
 			'order' => sanitize_text_field( $input['order_id'] ),
 		);
@@ -187,7 +187,7 @@ class CreateFulfillment extends AbstractAbility {
 
 		$fulfillment = Fulfillment::create( $data );
 		if ( is_wp_error( $fulfillment ) ) {
-			return $this->wp_error( $fulfillment );
+			return $fulfillment;
 		}
 
 		return $this->success(

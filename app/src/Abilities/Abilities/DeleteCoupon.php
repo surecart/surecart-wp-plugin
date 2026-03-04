@@ -73,9 +73,10 @@ class DeleteCoupon extends AbstractAbility {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function execute( array $input ): array {
+	public function execute( array $input ) {
 		if ( empty( $input['confirm'] ) ) {
 			return $this->error(
+				'confirmation_required',
 				__( 'Warning: Deleting this coupon will permanently remove it and all associated promotions. This action cannot be undone. Please set confirm to true to proceed.', 'surecart' )
 			);
 		}
@@ -84,7 +85,7 @@ class DeleteCoupon extends AbstractAbility {
 
 		$deleted = Coupon::delete( $id );
 		if ( is_wp_error( $deleted ) ) {
-			return $this->wp_error( $deleted );
+			return $deleted;
 		}
 
 		return $this->success(

@@ -99,7 +99,7 @@ class ListCoupons extends AbstractAbility {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function execute( array $input ): array {
+	public function execute( array $input ) {
 		$page     = absint( $input['page'] ?? 1 );
 		$per_page = min( absint( $input['per_page'] ?? 10 ), 100 );
 
@@ -122,7 +122,7 @@ class ListCoupons extends AbstractAbility {
 			)
 		);
 		if ( is_wp_error( $coupons ) ) {
-			return $this->wp_error( $coupons );
+			return $coupons;
 		}
 
 		return $this->success(

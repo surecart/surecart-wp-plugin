@@ -115,7 +115,7 @@ class UpdateFulfillment extends AbstractAbility {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function execute( array $input ): array {
+	public function execute( array $input ) {
 		$id   = sanitize_text_field( $input['id'] );
 		$data = array( 'id' => $id );
 
@@ -186,7 +186,7 @@ class UpdateFulfillment extends AbstractAbility {
 
 		$fulfillment = Fulfillment::update( $data );
 		if ( is_wp_error( $fulfillment ) ) {
-			return $this->wp_error( $fulfillment );
+			return $fulfillment;
 		}
 
 		return $this->success(

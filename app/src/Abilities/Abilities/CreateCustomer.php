@@ -123,7 +123,7 @@ class CreateCustomer extends AbstractAbility {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function execute( array $input ): array {
+	public function execute( array $input ) {
 		$data = array(
 			'email' => sanitize_email( $input['email'] ),
 		);
@@ -157,7 +157,7 @@ class CreateCustomer extends AbstractAbility {
 
 		$customer = Customer::create( $data );
 		if ( is_wp_error( $customer ) ) {
-			return $this->wp_error( $customer );
+			return $customer;
 		}
 
 		return $this->success(

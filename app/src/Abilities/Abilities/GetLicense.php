@@ -69,10 +69,10 @@ class GetLicense extends AbstractAbility {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function execute( array $input ): array {
+	public function execute( array $input ) {
 		$license = License::with( array( 'activations', 'purchase' ) )->find( sanitize_text_field( $input['id'] ) );
 		if ( is_wp_error( $license ) ) {
-			return $this->wp_error( $license );
+			return $license;
 		}
 
 		return $this->success(

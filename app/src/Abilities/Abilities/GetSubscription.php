@@ -69,10 +69,10 @@ class GetSubscription extends AbstractAbility {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function execute( array $input ): array {
+	public function execute( array $input ) {
 		$subscription = Subscription::with( array( 'price', 'price.product' ) )->find( sanitize_text_field( $input['id'] ) );
 		if ( is_wp_error( $subscription ) ) {
-			return $this->error( $subscription->get_error_message() );
+			return $subscription;
 		}
 
 		return $this->success(

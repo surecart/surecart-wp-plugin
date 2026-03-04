@@ -73,9 +73,10 @@ class DeleteCustomer extends AbstractAbility {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function execute( array $input ): array {
+	public function execute( array $input ) {
 		if ( empty( $input['confirm'] ) ) {
 			return $this->error(
+				'confirmation_required',
 				__( 'Warning: Deleting this customer will permanently remove all associated subscriptions, payments, and purchases within 24 hours. This action cannot be undone. Please set confirm to true to proceed.', 'surecart' )
 			);
 		}
@@ -84,7 +85,7 @@ class DeleteCustomer extends AbstractAbility {
 
 		$deleted = Customer::delete( $id );
 		if ( is_wp_error( $deleted ) ) {
-			return $this->wp_error( $deleted );
+			return $deleted;
 		}
 
 		return $this->success(

@@ -69,10 +69,10 @@ class GetProduct extends AbstractAbility {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function execute( array $input ): array {
+	public function execute( array $input ) {
 		$product = Product::with( array( 'prices', 'variants' ) )->find( sanitize_text_field( $input['id'] ) );
 		if ( is_wp_error( $product ) ) {
-			return $this->error( $product->get_error_message() );
+			return $product;
 		}
 
 		return $this->success(

@@ -81,7 +81,7 @@ class UpdatePromotion extends AbstractAbility {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function execute( array $input ): array {
+	public function execute( array $input ) {
 		$id   = sanitize_text_field( $input['id'] );
 		$data = array( 'id' => $id );
 
@@ -95,7 +95,7 @@ class UpdatePromotion extends AbstractAbility {
 
 		$promotion = Promotion::update( $data );
 		if ( is_wp_error( $promotion ) ) {
-			return $this->wp_error( $promotion );
+			return $promotion;
 		}
 
 		return $this->success(

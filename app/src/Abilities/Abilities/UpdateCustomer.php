@@ -149,7 +149,7 @@ class UpdateCustomer extends AbstractAbility {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function execute( array $input ): array {
+	public function execute( array $input ) {
 		$id   = sanitize_text_field( $input['id'] );
 		$data = array( 'id' => $id );
 
@@ -184,7 +184,7 @@ class UpdateCustomer extends AbstractAbility {
 
 		$customer = Customer::update( $data );
 		if ( is_wp_error( $customer ) ) {
-			return $this->wp_error( $customer );
+			return $customer;
 		}
 
 		return $this->success(

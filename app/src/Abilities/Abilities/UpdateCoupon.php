@@ -118,7 +118,7 @@ class UpdateCoupon extends AbstractAbility {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function execute( array $input ): array {
+	public function execute( array $input ) {
 		$id   = sanitize_text_field( $input['id'] );
 		$data = array( 'id' => $id );
 
@@ -154,7 +154,7 @@ class UpdateCoupon extends AbstractAbility {
 
 		$coupon = Coupon::update( $data );
 		if ( is_wp_error( $coupon ) ) {
-			return $this->wp_error( $coupon );
+			return $coupon;
 		}
 
 		return $this->success(

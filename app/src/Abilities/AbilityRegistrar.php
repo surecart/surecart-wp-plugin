@@ -88,18 +88,15 @@ class AbilityRegistrar {
 		return array(
 			// Store.
 			new GetStoreInfo(),
-			// Products.
-			new ListProducts(),
-			new GetProduct(),
-			new CreateProduct(),
-			// Orders.
 			new GetStoreDashboard(),
+			// Products.
 			new ListProducts(),
 			new GetProduct(),
 			new CreateProduct(),
 			new UpdateProduct(),
 			new ArchiveProduct(),
 			new DuplicateProduct(),
+			// Orders.
 			new ListOrders(),
 			new GetOrder(),
 			new GetOrderStatistics(),
@@ -112,12 +109,11 @@ class AbilityRegistrar {
 			// Subscriptions.
 			new ListSubscriptions(),
 			new GetSubscription(),
-			new GetOrderStatistics(),
+			new CancelSubscription(),
+			// Prices.
 			new ListPrices(),
 			new CreatePrice(),
 			new UpdatePrice(),
-			new CreateCoupon(),
-			new CancelSubscription(),
 			// Coupons.
 			new ListCoupons(),
 			new GetCoupon(),

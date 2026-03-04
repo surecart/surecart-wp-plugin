@@ -69,15 +69,15 @@ class GetRefund extends AbstractAbility {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function execute( array $input ): array {
+	public function execute( array $input ) {
 		$id = sanitize_text_field( $input['id'] ?? '' );
 		if ( empty( $id ) ) {
-			return $this->error( __( 'A refund ID is required.', 'surecart' ) );
+			return $this->error( 'missing_id', __( 'A refund ID is required.', 'surecart' ) );
 		}
 
 		$refund = Refund::with( array( 'charge', 'refund_items' ) )->find( $id );
 		if ( is_wp_error( $refund ) ) {
-			return $this->wp_error( $refund );
+			return $refund;
 		}
 
 		return $this->success(

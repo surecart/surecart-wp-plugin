@@ -73,9 +73,10 @@ class DeleteFulfillment extends AbstractAbility {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function execute( array $input ): array {
+	public function execute( array $input ) {
 		if ( empty( $input['confirm'] ) ) {
 			return $this->error(
+				'confirmation_required',
 				__( 'Warning: Deleting this fulfillment will permanently remove it and all associated fulfillment items. This action cannot be undone. Please set confirm to true to proceed.', 'surecart' )
 			);
 		}
@@ -84,7 +85,7 @@ class DeleteFulfillment extends AbstractAbility {
 
 		$deleted = Fulfillment::delete( $id );
 		if ( is_wp_error( $deleted ) ) {
-			return $this->wp_error( $deleted );
+			return $deleted;
 		}
 
 		return $this->success(

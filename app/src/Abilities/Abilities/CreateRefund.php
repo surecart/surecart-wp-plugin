@@ -106,7 +106,7 @@ class CreateRefund extends AbstractAbility {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function execute( array $input ): array {
+	public function execute( array $input ) {
 		$data = array(
 			'charge' => sanitize_text_field( $input['charge'] ),
 			'amount' => absint( $input['amount'] ),
@@ -141,7 +141,7 @@ class CreateRefund extends AbstractAbility {
 
 		$refund = Refund::create( $data );
 		if ( is_wp_error( $refund ) ) {
-			return $this->wp_error( $refund );
+			return $refund;
 		}
 
 		return $this->success(
