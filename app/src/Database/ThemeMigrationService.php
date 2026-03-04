@@ -75,6 +75,7 @@ class ThemeMigrationService extends GeneralMigration {
 
 		// Nothing to update — already fully migrated.
 		if ( empty( $update_data ) ) {
+			delete_option( 'surecart_theme' );
 			return;
 		}
 

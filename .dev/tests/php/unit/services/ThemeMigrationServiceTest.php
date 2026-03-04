@@ -159,6 +159,8 @@ class ThemeMigrationServiceTest extends SureCartUnitTestCase {
 
 		// Should mark complete — already fully migrated on API side.
 		$this->assertNotEmpty( get_option( 'surecart_theme_to_brand_migration' ) );
+		// WP option should be cleaned up even though no API update was needed.
+		$this->assertFalse( get_option( 'surecart_theme' ) );
 	}
 
 	/**
