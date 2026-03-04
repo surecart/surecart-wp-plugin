@@ -71,7 +71,7 @@ class DownloadRestServiceProviderTest extends SureCartUnitTestCase
 	 *
 	 * @dataProvider listWithVariantIdsProvider
 	 */
-	public function test_list_with_variant_ids_filter($variant_ids){
+	public function test_list_with_variant_ids_filter( $variant_ids ) {
 		$requests = \Mockery::mock(RequestService::class);
 		\SureCart::alias('request', function () use ($requests) {
 			return call_user_func_array([$requests, 'makeRequest'], func_get_args());
@@ -109,6 +109,45 @@ class DownloadRestServiceProviderTest extends SureCartUnitTestCase
 		$request->set_query_params( [ 'variant_ids' => [ 'test-variant-id' ] ] );
 		$response = rest_do_request( $request );
 		$this->assertSame( 403, $response->get_status() );
+	}
+
+	public function listWithProductIdsProvider() {
+		return [
+			'Single product ID'    => [ [ 'test-product-id' ] ],
+			'Multiple product IDs' => [ [ 'product-id-1', 'product-id-2' ] ],
+		];
+	}
+
+	/**
+	 * Test that product_ids filter is forwarded to the API call.
+	 *
+	 * @dataProvider listWithProductIdsProvider
+	 */
+	public function test_list_with_product_ids_filter( $product_ids ) {
+		$requests = \Mockery::mock( RequestService::class );
+		\SureCart::alias( 'request', function () use ( $requests ) {
+			return call_user_func_array( [ $requests, 'makeRequest' ], func_get_args() );
+		} );
+
+		$requests->shouldReceive( 'makeRequest' )
+			->withArgs( function ( $endpoint, $args ) use ( $product_ids ) {
+				return 'downloads' === $endpoint
+					&& isset( $args['query']['product_ids'] )
+					&& $args['query']['product_ids'] === $product_ids;
+			} )
+			->once()
+			->andReturn( (object) [
+				'id' => 'test',
+			] );
+
+		$user = self::factory()->user->create_and_get();
+		$user->add_cap( 'read_sc_downloads' );
+		wp_set_current_user( $user->ID );
+
+		$request = new \WP_REST_Request( 'GET', '/surecart/v1/downloads' );
+		$request->set_query_params( [ 'product_ids' => $product_ids ] );
+		$response = rest_do_request( $request );
+		$this->assertSame( 200, $response->get_status() );
 	}
 
 	/**
