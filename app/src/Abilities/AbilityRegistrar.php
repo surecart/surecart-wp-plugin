@@ -14,6 +14,7 @@ use SureCart\Abilities\Abilities\ListFulfillments;
 use SureCart\Abilities\Abilities\UpdateFulfillment;
 use SureCart\Abilities\Abilities\CreatePromotion;
 use SureCart\Abilities\Abilities\CreateRefund;
+use SureCart\Abilities\Abilities\GetRefund;
 use SureCart\Abilities\Abilities\GetCustomer;
 use SureCart\Abilities\Abilities\GetLicense;
 use SureCart\Abilities\Abilities\GetOrder;
@@ -123,6 +124,7 @@ class AbilityRegistrar {
 			new GetLicense(),
 			// Refunds.
 			new ListRefunds(),
+			new GetRefund(),
 			new CreateRefund(),
 		);
 	}
