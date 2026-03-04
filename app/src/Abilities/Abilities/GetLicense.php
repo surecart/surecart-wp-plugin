@@ -2,39 +2,39 @@
 
 namespace SureCart\Abilities\Abilities;
 
-use SureCart\Models\Subscription;
+use SureCart\Models\License;
 
 /**
- * Get a single subscription with details.
+ * Get a single license.
  */
-class GetSubscription extends AbstractAbility {
+class GetLicense extends AbstractAbility {
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function get_name(): string {
-		return 'surecart/get-subscription';
+		return 'surecart/get-license';
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function get_label(): string {
-		return __( 'Get Subscription', 'surecart' );
+		return __( 'Get License', 'surecart' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function get_description(): string {
-		return __( 'Get a single SureCart subscription by ID, including price details.', 'surecart' );
+		return __( 'Get details of a specific SureCart license by its ID or key, including activations and purchase info.', 'surecart' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function check_permission(): bool {
-		return current_user_can( 'read_sc_subscriptions' );
+		return current_user_can( 'read_sc_licenses' );
 	}
 
 	/**
@@ -46,7 +46,7 @@ class GetSubscription extends AbstractAbility {
 			'properties' => array(
 				'id' => array(
 					'type'        => 'string',
-					'description' => __( 'The subscription ID.', 'surecart' ),
+					'description' => __( 'The license ID or key.', 'surecart' ),
 				),
 			),
 			'required'   => array( 'id' ),
@@ -60,8 +60,8 @@ class GetSubscription extends AbstractAbility {
 		return array(
 			'type'       => 'object',
 			'properties' => array(
-				'success'      => array( 'type' => 'boolean' ),
-				'subscription' => array( 'type' => 'object' ),
+				'success' => array( 'type' => 'boolean' ),
+				'license' => array( 'type' => 'object' ),
 			),
 		);
 	}
@@ -70,14 +70,14 @@ class GetSubscription extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function execute( array $input ) {
-		$subscription = Subscription::with( array( 'price', 'price.product' ) )->find( sanitize_text_field( $input['id'] ) );
-		if ( is_wp_error( $subscription ) ) {
-			return $subscription;
+		$license = License::with( array( 'activations', 'purchase' ) )->find( sanitize_text_field( $input['id'] ) );
+		if ( is_wp_error( $license ) ) {
+			return $license;
 		}
 
 		return $this->success(
 			array(
-				'subscription' => $this->model_to_array( $subscription ),
+				'license' => $this->model_to_array( $license ),
 			)
 		);
 	}

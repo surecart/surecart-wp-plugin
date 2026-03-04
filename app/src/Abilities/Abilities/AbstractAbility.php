@@ -47,9 +47,9 @@ abstract class AbstractAbility {
 	 *
 	 * @param array $input The input data.
 	 *
-	 * @return array
+	 * @return array|\WP_Error The result array on success, or WP_Error on failure.
 	 */
-	abstract public function execute( array $input ): array;
+	abstract public function execute( array $input );
 
 	/**
 	 * Check if the current user has permission to execute this ability.
@@ -94,17 +94,15 @@ abstract class AbstractAbility {
 	}
 
 	/**
-	 * Return an error response.
+	 * Return a WP_Error for a validation or logic error.
 	 *
+	 * @param string $code    The error code.
 	 * @param string $message The error message.
 	 *
-	 * @return array
+	 * @return \WP_Error
 	 */
-	protected function error( string $message ): array {
-		return array(
-			'success' => false,
-			'error'   => $message,
-		);
+	protected function error( string $code, string $message ): \WP_Error {
+		return new \WP_Error( $code, $message );
 	}
 
 	/**
@@ -117,22 +115,6 @@ abstract class AbstractAbility {
 	protected function is_valid_date( string $date ): bool {
 		$d = \DateTime::createFromFormat( 'Y-m-d', $date );
 		return $d && $d->format( 'Y-m-d' ) === $date;
-	}
-
-	/**
-	 * Build a descriptive error message from a WP_Error, appending the HTTP status code when available.
-	 *
-	 * @param \WP_Error $error The WP_Error instance.
-	 *
-	 * @return string
-	 */
-	protected function wp_error_to_message( \WP_Error $error ): string {
-		$message = $error->get_error_message();
-		$data    = $error->get_error_data();
-		if ( ! empty( $data['status'] ) ) {
-			$message .= ' (HTTP ' . absint( $data['status'] ) . ')';
-		}
-		return $message;
 	}
 
 	/**

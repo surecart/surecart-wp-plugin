@@ -2,39 +2,39 @@
 
 namespace SureCart\Abilities\Abilities;
 
-use SureCart\Models\Product;
+use SureCart\Models\Coupon;
 
 /**
- * List products with filters.
+ * List coupons with filters.
  */
-class ListProducts extends AbstractAbility {
+class ListCoupons extends AbstractAbility {
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function get_name(): string {
-		return 'surecart/list-products';
+		return 'surecart/list-coupons';
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function get_label(): string {
-		return __( 'List Products', 'surecart' );
+		return __( 'List Coupons', 'surecart' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function get_description(): string {
-		return __( 'List SureCart products with optional filters for status, search query, and pagination.', 'surecart' );
+		return __( 'List all available SureCart coupons with optional pagination.', 'surecart' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function check_permission(): bool {
-		return current_user_can( 'read_sc_products' );
+		return current_user_can( 'read_sc_coupons' );
 	}
 
 	/**
@@ -46,12 +46,17 @@ class ListProducts extends AbstractAbility {
 			'properties' => array(
 				'query'    => array(
 					'type'        => 'string',
-					'description' => __( 'Search query to filter products by name.', 'surecart' ),
+					'description' => __( 'Search query to filter coupons by name.', 'surecart' ),
 				),
 				'archived' => array(
 					'type'        => 'boolean',
-					'description' => __( 'Whether to include archived products.', 'surecart' ),
+					'description' => __( 'Whether to include archived coupons.', 'surecart' ),
 					'default'     => false,
+				),
+				'ids'      => array(
+					'type'        => 'array',
+					'items'       => array( 'type' => 'string' ),
+					'description' => __( 'Only return coupons with the given IDs.', 'surecart' ),
 				),
 				'page'     => array(
 					'type'        => 'integer',
@@ -60,7 +65,7 @@ class ListProducts extends AbstractAbility {
 				),
 				'per_page' => array(
 					'type'        => 'integer',
-					'description' => __( 'Number of products per page (max 100).', 'surecart' ),
+					'description' => __( 'Number of coupons per page (max 100).', 'surecart' ),
 					'default'     => 10,
 				),
 			),
@@ -74,8 +79,8 @@ class ListProducts extends AbstractAbility {
 		return array(
 			'type'       => 'object',
 			'properties' => array(
-				'success'  => array( 'type' => 'boolean' ),
-				'products' => array(
+				'success'    => array( 'type' => 'boolean' ),
+				'coupons'    => array(
 					'type'  => 'array',
 					'items' => array( 'type' => 'object' ),
 				),
@@ -95,28 +100,38 @@ class ListProducts extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function execute( array $input ) {
+		$page     = absint( $input['page'] ?? 1 );
+		$per_page = min( absint( $input['per_page'] ?? 10 ), 100 );
+
 		$args = array(
 			'archived' => ! empty( $input['archived'] ),
-			'page'     => absint( $input['page'] ?? 1 ),
-			'limit'    => max( 1, min( absint( $input['per_page'] ?? 10 ), 100 ) ),
 		);
 
 		if ( ! empty( $input['query'] ) ) {
 			$args['query'] = sanitize_text_field( $input['query'] );
 		}
 
-		$products = Product::where( $args )->paginate();
-		if ( is_wp_error( $products ) ) {
-			return $products;
+		if ( ! empty( $input['ids'] ) && \is_array( $input['ids'] ) ) {
+			$args['ids'] = array_map( 'sanitize_text_field', $input['ids'] );
+		}
+
+		$coupons = Coupon::where( $args )->paginate(
+			array(
+				'page'     => $page,
+				'per_page' => $per_page,
+			)
+		);
+		if ( is_wp_error( $coupons ) ) {
+			return $coupons;
 		}
 
 		return $this->success(
 			array(
-				'products'   => array_map( array( $this, 'model_to_array' ), $products->data ?? array() ),
+				'coupons'    => array_map( array( $this, 'model_to_array' ), $coupons->data ?? array() ),
 				'pagination' => array(
-					'count' => $products->pagination->count ?? 0,
-					'page'  => $args['page'],
-					'limit' => $args['limit'],
+					'count' => $coupons->pagination->count ?? 0,
+					'page'  => $page,
+					'limit' => $per_page,
 				),
 			)
 		);

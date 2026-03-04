@@ -95,7 +95,7 @@ class ListPrices extends AbstractAbility {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function execute( array $input ): array {
+	public function execute( array $input ) {
 		$args = array(
 			'archived' => ! empty( $input['archived'] ),
 			'page'     => absint( $input['page'] ?? 1 ),
@@ -108,7 +108,7 @@ class ListPrices extends AbstractAbility {
 
 		$prices = Price::where( $args )->paginate();
 		if ( is_wp_error( $prices ) ) {
-			return $this->error( $this->wp_error_to_message( $prices ) );
+			return $prices;
 		}
 
 		return $this->success(

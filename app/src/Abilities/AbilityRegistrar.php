@@ -5,21 +5,44 @@ namespace SureCart\Abilities;
 use SureCart\Abilities\Abilities\ArchiveProduct;
 use SureCart\Abilities\Abilities\CancelSubscription;
 use SureCart\Abilities\Abilities\CreateCoupon;
-use SureCart\Abilities\Abilities\CreatePrice;
+use SureCart\Abilities\Abilities\CreateCustomer;
+use SureCart\Abilities\Abilities\CreateFulfillment;
 use SureCart\Abilities\Abilities\CreateProduct;
+use SureCart\Abilities\Abilities\DeleteFulfillment;
+use SureCart\Abilities\Abilities\GetFulfillment;
+use SureCart\Abilities\Abilities\GetFulfillmentItem;
+use SureCart\Abilities\Abilities\ListFulfillments;
+use SureCart\Abilities\Abilities\UpdateFulfillment;
+use SureCart\Abilities\Abilities\CreatePromotion;
+use SureCart\Abilities\Abilities\CreateRefund;
+use SureCart\Abilities\Abilities\GetRefund;
+use SureCart\Abilities\Abilities\CreatePrice;
 use SureCart\Abilities\Abilities\DuplicateProduct;
 use SureCart\Abilities\Abilities\GetCustomer;
+use SureCart\Abilities\Abilities\GetLicense;
 use SureCart\Abilities\Abilities\GetOrder;
 use SureCart\Abilities\Abilities\GetOrderStatistics;
 use SureCart\Abilities\Abilities\GetProduct;
 use SureCart\Abilities\Abilities\GetStoreDashboard;
 use SureCart\Abilities\Abilities\GetStoreInfo;
 use SureCart\Abilities\Abilities\GetSubscription;
+use SureCart\Abilities\Abilities\ListCoupons;
 use SureCart\Abilities\Abilities\ListCustomers;
+use SureCart\Abilities\Abilities\ListLicenses;
 use SureCart\Abilities\Abilities\ListOrders;
 use SureCart\Abilities\Abilities\ListPrices;
 use SureCart\Abilities\Abilities\ListProducts;
+use SureCart\Abilities\Abilities\ListPromotions;
+use SureCart\Abilities\Abilities\ListRefunds;
 use SureCart\Abilities\Abilities\ListSubscriptions;
+use SureCart\Abilities\Abilities\DeleteCoupon;
+use SureCart\Abilities\Abilities\DeleteCustomer;
+use SureCart\Abilities\Abilities\DeletePromotion;
+use SureCart\Abilities\Abilities\GetCoupon;
+use SureCart\Abilities\Abilities\GetPromotion;
+use SureCart\Abilities\Abilities\UpdateCoupon;
+use SureCart\Abilities\Abilities\UpdateCustomer;
+use SureCart\Abilities\Abilities\UpdatePromotion;
 use SureCart\Abilities\Abilities\UpdatePrice;
 use SureCart\Abilities\Abilities\UpdateProduct;
 
@@ -63,26 +86,61 @@ class AbilityRegistrar {
 	 */
 	public function get_abilities(): array {
 		return array(
+			// Store.
 			new GetStoreInfo(),
 			new GetStoreDashboard(),
+			// Products.
 			new ListProducts(),
 			new GetProduct(),
 			new CreateProduct(),
 			new UpdateProduct(),
 			new ArchiveProduct(),
 			new DuplicateProduct(),
+			// Orders.
 			new ListOrders(),
 			new GetOrder(),
+			new GetOrderStatistics(),
+			// Customers.
 			new ListCustomers(),
 			new GetCustomer(),
+			new CreateCustomer(),
+			new UpdateCustomer(),
+			new DeleteCustomer(),
+			// Subscriptions.
 			new ListSubscriptions(),
 			new GetSubscription(),
-			new GetOrderStatistics(),
+			new CancelSubscription(),
+			// Prices.
 			new ListPrices(),
 			new CreatePrice(),
 			new UpdatePrice(),
+			// Coupons.
+			new ListCoupons(),
+			new GetCoupon(),
 			new CreateCoupon(),
-			new CancelSubscription(),
+			new UpdateCoupon(),
+			new DeleteCoupon(),
+			// Promotions.
+			new ListPromotions(),
+			new GetPromotion(),
+			new CreatePromotion(),
+			new UpdatePromotion(),
+			new DeletePromotion(),
+			// Fulfillments.
+			new ListFulfillments(),
+			new GetFulfillment(),
+			new CreateFulfillment(),
+			new UpdateFulfillment(),
+			new DeleteFulfillment(),
+			// Fulfillment Items.
+			new GetFulfillmentItem(),
+			// Licensing.
+			new ListLicenses(),
+			new GetLicense(),
+			// Refunds.
+			new ListRefunds(),
+			new GetRefund(),
+			new CreateRefund(),
 		);
 	}
 }

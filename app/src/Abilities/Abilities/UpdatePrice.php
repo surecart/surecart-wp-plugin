@@ -83,14 +83,14 @@ class UpdatePrice extends AbstractAbility {
 	 *
 	 * @param array $input The input data.
 	 */
-	public function execute( array $input ): array {
+	public function execute( array $input ) {
 		$id   = sanitize_text_field( $input['id'] );
 		$data = array();
 
 		if ( isset( $input['amount'] ) ) {
 			$data['amount'] = intval( $input['amount'] );
 			if ( $data['amount'] <= 0 ) {
-				return $this->error( __( 'Amount must be greater than zero.', 'surecart' ) );
+				return $this->error( 'invalid_amount', __( 'Amount must be greater than zero.', 'surecart' ) );
 			}
 		}
 
@@ -103,12 +103,12 @@ class UpdatePrice extends AbstractAbility {
 		}
 
 		if ( empty( $data ) ) {
-			return $this->error( __( 'At least one field must be provided to update.', 'surecart' ) );
+			return $this->error( 'missing_fields', __( 'At least one field must be provided to update.', 'surecart' ) );
 		}
 
 		$price = ( new Price( $id ) )->update( $data );
 		if ( is_wp_error( $price ) ) {
-			return $this->error( $this->wp_error_to_message( $price ) );
+			return $price;
 		}
 
 		return $this->success(

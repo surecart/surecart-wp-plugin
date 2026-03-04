@@ -93,7 +93,7 @@ class ListSubscriptions extends AbstractAbility {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function execute( array $input ): array {
+	public function execute( array $input ) {
 		$args = array(
 			'page'  => absint( $input['page'] ?? 1 ),
 			'limit' => max( 1, min( absint( $input['per_page'] ?? 10 ), 100 ) ),
@@ -109,7 +109,7 @@ class ListSubscriptions extends AbstractAbility {
 
 		$subscriptions = Subscription::where( $args )->paginate();
 		if ( is_wp_error( $subscriptions ) ) {
-			return $this->error( $this->wp_error_to_message( $subscriptions ) );
+			return $subscriptions;
 		}
 
 		return $this->success(

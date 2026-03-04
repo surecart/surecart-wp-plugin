@@ -2,39 +2,39 @@
 
 namespace SureCart\Abilities\Abilities;
 
-use SureCart\Models\Subscription;
+use SureCart\Models\Coupon;
 
 /**
- * Get a single subscription with details.
+ * Get a single coupon by ID.
  */
-class GetSubscription extends AbstractAbility {
+class GetCoupon extends AbstractAbility {
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function get_name(): string {
-		return 'surecart/get-subscription';
+		return 'surecart/get-coupon';
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function get_label(): string {
-		return __( 'Get Subscription', 'surecart' );
+		return __( 'Get Coupon', 'surecart' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function get_description(): string {
-		return __( 'Get a single SureCart subscription by ID, including price details.', 'surecart' );
+		return __( 'Get a single SureCart coupon by ID, including its promotions.', 'surecart' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function check_permission(): bool {
-		return current_user_can( 'read_sc_subscriptions' );
+		return current_user_can( 'read_sc_coupons' );
 	}
 
 	/**
@@ -46,7 +46,7 @@ class GetSubscription extends AbstractAbility {
 			'properties' => array(
 				'id' => array(
 					'type'        => 'string',
-					'description' => __( 'The subscription ID.', 'surecart' ),
+					'description' => __( 'The coupon ID.', 'surecart' ),
 				),
 			),
 			'required'   => array( 'id' ),
@@ -60,8 +60,8 @@ class GetSubscription extends AbstractAbility {
 		return array(
 			'type'       => 'object',
 			'properties' => array(
-				'success'      => array( 'type' => 'boolean' ),
-				'subscription' => array( 'type' => 'object' ),
+				'success' => array( 'type' => 'boolean' ),
+				'coupon'  => array( 'type' => 'object' ),
 			),
 		);
 	}
@@ -70,14 +70,19 @@ class GetSubscription extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function execute( array $input ) {
-		$subscription = Subscription::with( array( 'price', 'price.product' ) )->find( sanitize_text_field( $input['id'] ) );
-		if ( is_wp_error( $subscription ) ) {
-			return $subscription;
+		$id = sanitize_text_field( $input['id'] ?? '' );
+		if ( empty( $id ) ) {
+			return $this->error( 'missing_id', __( 'A coupon ID is required.', 'surecart' ) );
+		}
+
+		$coupon = Coupon::with( array( 'promotions' ) )->find( $id );
+		if ( is_wp_error( $coupon ) ) {
+			return $coupon;
 		}
 
 		return $this->success(
 			array(
-				'subscription' => $this->model_to_array( $subscription ),
+				'coupon' => $this->model_to_array( $coupon ),
 			)
 		);
 	}

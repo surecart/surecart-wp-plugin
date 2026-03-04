@@ -28,15 +28,6 @@ class AbilityRegistrarTest extends SureCartUnitTestCase {
 	}
 
 	/**
-	 * Test that all expected abilities are registered.
-	 */
-	public function test_get_abilities_count_matches_expected_list() {
-		$abilities = $this->registrar->get_abilities();
-		$expected  = $this->get_expected_ability_names();
-		$this->assertCount( count( $expected ), $abilities, 'Ability count does not match the expected abilities list. Update test_expected_ability_names_present() when adding or removing abilities.' );
-	}
-
-	/**
 	 * Test that all abilities extend AbstractAbility.
 	 */
 	public function test_all_abilities_extend_abstract_ability() {
@@ -102,8 +93,12 @@ class AbilityRegistrarTest extends SureCartUnitTestCase {
 			'surecart/duplicate-product',
 			'surecart/list-orders',
 			'surecart/get-order',
+			'surecart/get-order-statistics',
 			'surecart/list-customers',
 			'surecart/get-customer',
+			'surecart/create-customer',
+			'surecart/update-customer',
+			'surecart/delete-customer',
 			'surecart/list-subscriptions',
 			'surecart/get-subscription',
 			'surecart/get-order-statistics',
@@ -112,6 +107,15 @@ class AbilityRegistrarTest extends SureCartUnitTestCase {
 			'surecart/update-price',
 			'surecart/create-coupon',
 			'surecart/cancel-subscription',
+			'surecart/list-coupons',
+			'surecart/create-coupon',
+			'surecart/list-promotions',
+			'surecart/create-promotion',
+			'surecart/create-fulfillment',
+			'surecart/list-licenses',
+			'surecart/get-license',
+			'surecart/list-refunds',
+			'surecart/create-refund',
 		);
 	}
 

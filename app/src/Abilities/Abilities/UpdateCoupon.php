@@ -5,36 +5,36 @@ namespace SureCart\Abilities\Abilities;
 use SureCart\Models\Coupon;
 
 /**
- * Create a new coupon/discount.
+ * Update an existing coupon.
  */
-class CreateCoupon extends AbstractAbility {
+class UpdateCoupon extends AbstractAbility {
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function get_name(): string {
-		return 'surecart/create-coupon';
+		return 'surecart/update-coupon';
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function get_label(): string {
-		return __( 'Create Coupon', 'surecart' );
+		return __( 'Update Coupon', 'surecart' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function get_description(): string {
-		return __( 'Create a new SureCart coupon with a discount amount or percentage.', 'surecart' );
+		return __( 'Update an existing SureCart coupon by ID. Supports name, discount, duration, redemption limits, and product restrictions.', 'surecart' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function check_permission(): bool {
-		return current_user_can( 'publish_sc_coupons' );
+		return current_user_can( 'edit_sc_coupons' );
 	}
 
 	/**
@@ -44,6 +44,10 @@ class CreateCoupon extends AbstractAbility {
 		return array(
 			'type'       => 'object',
 			'properties' => array(
+				'id'                           => array(
+					'type'        => 'string',
+					'description' => __( 'The coupon ID to update.', 'surecart' ),
+				),
 				'name'                         => array(
 					'type'        => 'string',
 					'description' => __( 'Coupon name displayed to customers.', 'surecart' ),
@@ -56,16 +60,9 @@ class CreateCoupon extends AbstractAbility {
 					'type'        => 'integer',
 					'description' => __( 'Fixed amount discount in smallest currency unit (e.g., cents). Use this or percent_off, not both.', 'surecart' ),
 				),
-				'currency'                     => array(
-					'type'        => 'string',
-					'description' => __( 'Three-letter ISO currency code for amount_off (e.g., usd).', 'surecart' ),
-					'default'     => 'usd',
-				),
 				'duration'                     => array(
 					'type'        => 'string',
 					'description' => __( 'Coupon duration: once, repeating, or forever.', 'surecart' ),
-					'enum'        => array( 'once', 'repeating', 'forever' ),
-					'default'     => 'once',
 				),
 				'duration_in_months'           => array(
 					'type'        => 'integer',
@@ -90,14 +87,18 @@ class CreateCoupon extends AbstractAbility {
 				'product_ids'                  => array(
 					'type'        => 'array',
 					'items'       => array( 'type' => 'string' ),
-					'description' => __( 'Product IDs this coupon applies to. Empty means all products.', 'surecart' ),
+					'description' => __( 'Product IDs this coupon applies to. Empty array means all products.', 'surecart' ),
 				),
 				'redeem_by'                    => array(
 					'type'        => 'integer',
 					'description' => __( 'Unix timestamp after which the coupon expires.', 'surecart' ),
 				),
+				'archived'                     => array(
+					'type'        => 'boolean',
+					'description' => __( 'Whether the coupon is archived.', 'surecart' ),
+				),
 			),
-			'required'   => array( 'name' ),
+			'required'   => array( 'id' ),
 		);
 	}
 
@@ -118,46 +119,40 @@ class CreateCoupon extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function execute( array $input ) {
-		$allowed_durations = array( 'once', 'repeating', 'forever' );
-		$duration          = sanitize_text_field( $input['duration'] ?? 'once' );
-		if ( ! in_array( $duration, $allowed_durations, true ) ) {
-			return $this->error(
-				'invalid_duration',
-				/* translators: %s: comma-separated list of valid duration values */
-				sprintf( __( 'Invalid duration. Allowed values: %s', 'surecart' ), implode( ', ', $allowed_durations ) )
-			);
+		$id   = sanitize_text_field( $input['id'] );
+		$data = array( 'id' => $id );
+
+		// String fields.
+		$string_fields = array( 'name', 'duration' );
+		foreach ( $string_fields as $field ) {
+			if ( isset( $input[ $field ] ) && '' !== $input[ $field ] ) {
+				$data[ $field ] = sanitize_text_field( $input[ $field ] );
+			}
 		}
 
-		$data = array(
-			'name'     => sanitize_text_field( $input['name'] ),
-			'duration' => $duration,
-		);
-
-		if ( ! empty( $input['percent_off'] ) && ! empty( $input['amount_off'] ) ) {
-			return $this->error( 'invalid_input', __( 'You cannot set both percent_off and amount_off. Please use one or the other.', 'surecart' ) );
+		// Numeric fields.
+		if ( isset( $input['percent_off'] ) ) {
+			$data['percent_off'] = floatval( $input['percent_off'] );
 		}
 
-		if ( ! empty( $input['percent_off'] ) ) {
-			$data['percent_off'] = \floatval( $input['percent_off'] );
-		} elseif ( ! empty( $input['amount_off'] ) ) {
-			$data['amount_off'] = absint( $input['amount_off'] );
-			$data['currency']   = sanitize_text_field( $input['currency'] ?? 'usd' );
-		}
-
-		// Optional integer fields.
-		$int_fields = array( 'duration_in_months', 'max_redemptions', 'max_redemptions_per_customer', 'min_subtotal_amount', 'max_subtotal_amount', 'redeem_by' );
+		$int_fields = array( 'amount_off', 'duration_in_months', 'max_redemptions', 'max_redemptions_per_customer', 'min_subtotal_amount', 'max_subtotal_amount', 'redeem_by' );
 		foreach ( $int_fields as $field ) {
 			if ( isset( $input[ $field ] ) ) {
 				$data[ $field ] = absint( $input[ $field ] );
 			}
 		}
 
-		// Product restrictions.
+		// Boolean fields.
+		if ( isset( $input['archived'] ) ) {
+			$data['archived'] = (bool) $input['archived'];
+		}
+
+		// Array fields.
 		if ( isset( $input['product_ids'] ) && is_array( $input['product_ids'] ) ) {
 			$data['product_ids'] = array_map( 'sanitize_text_field', $input['product_ids'] );
 		}
 
-		$coupon = Coupon::create( $data );
+		$coupon = Coupon::update( $data );
 		if ( is_wp_error( $coupon ) ) {
 			return $coupon;
 		}

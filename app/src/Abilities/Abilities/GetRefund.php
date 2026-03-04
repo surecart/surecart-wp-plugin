@@ -2,39 +2,39 @@
 
 namespace SureCart\Abilities\Abilities;
 
-use SureCart\Models\Subscription;
+use SureCart\Models\Refund;
 
 /**
- * Get a single subscription with details.
+ * Get a single refund by ID.
  */
-class GetSubscription extends AbstractAbility {
+class GetRefund extends AbstractAbility {
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function get_name(): string {
-		return 'surecart/get-subscription';
+		return 'surecart/get-refund';
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function get_label(): string {
-		return __( 'Get Subscription', 'surecart' );
+		return __( 'Get Refund', 'surecart' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function get_description(): string {
-		return __( 'Get a single SureCart subscription by ID, including price details.', 'surecart' );
+		return __( 'Get a single SureCart refund by ID, including its charge and refund items.', 'surecart' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function check_permission(): bool {
-		return current_user_can( 'read_sc_subscriptions' );
+		return current_user_can( 'read_sc_refunds' );
 	}
 
 	/**
@@ -46,7 +46,7 @@ class GetSubscription extends AbstractAbility {
 			'properties' => array(
 				'id' => array(
 					'type'        => 'string',
-					'description' => __( 'The subscription ID.', 'surecart' ),
+					'description' => __( 'The refund ID.', 'surecart' ),
 				),
 			),
 			'required'   => array( 'id' ),
@@ -60,8 +60,8 @@ class GetSubscription extends AbstractAbility {
 		return array(
 			'type'       => 'object',
 			'properties' => array(
-				'success'      => array( 'type' => 'boolean' ),
-				'subscription' => array( 'type' => 'object' ),
+				'success' => array( 'type' => 'boolean' ),
+				'refund'  => array( 'type' => 'object' ),
 			),
 		);
 	}
@@ -70,14 +70,19 @@ class GetSubscription extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function execute( array $input ) {
-		$subscription = Subscription::with( array( 'price', 'price.product' ) )->find( sanitize_text_field( $input['id'] ) );
-		if ( is_wp_error( $subscription ) ) {
-			return $subscription;
+		$id = sanitize_text_field( $input['id'] ?? '' );
+		if ( empty( $id ) ) {
+			return $this->error( 'missing_id', __( 'A refund ID is required.', 'surecart' ) );
+		}
+
+		$refund = Refund::with( array( 'charge', 'refund_items' ) )->find( $id );
+		if ( is_wp_error( $refund ) ) {
+			return $refund;
 		}
 
 		return $this->success(
 			array(
-				'subscription' => $this->model_to_array( $subscription ),
+				'refund' => $this->model_to_array( $refund ),
 			)
 		);
 	}

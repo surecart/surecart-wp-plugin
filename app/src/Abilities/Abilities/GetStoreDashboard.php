@@ -82,10 +82,11 @@ class GetStoreDashboard extends AbstractAbility {
 	 *
 	 * @param array $input The input data.
 	 */
-	public function execute( array $input ): array {
+	public function execute( array $input ) {
 		$period = sanitize_text_field( $input['period'] ?? '30d' );
 		if ( ! in_array( $period, self::ALLOWED_PERIODS, true ) ) {
 			return $this->error(
+				'invalid_period',
 				/* translators: %s: comma-separated list of valid period values */
 				sprintf( __( 'Invalid period. Allowed values: %s', 'surecart' ), implode( ', ', self::ALLOWED_PERIODS ) )
 			);
@@ -96,7 +97,7 @@ class GetStoreDashboard extends AbstractAbility {
 		// Get store info.
 		$account = Account::find();
 		if ( is_wp_error( $account ) ) {
-			return $this->error( $this->wp_error_to_message( $account ) );
+			return $account;
 		}
 
 		$args = array(
@@ -113,7 +114,7 @@ class GetStoreDashboard extends AbstractAbility {
 		// Get order statistics.
 		$order_stats = ( new Statistic() )->where( $args )->find( 'orders' );
 		if ( is_wp_error( $order_stats ) ) {
-			return $this->error( $this->wp_error_to_message( $order_stats ) );
+			return $order_stats;
 		}
 
 		$result['orders'] = $this->model_to_array( $order_stats );
