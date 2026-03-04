@@ -81,6 +81,7 @@ class DownloadRestServiceProvider extends RestServiceProvider implements RestSer
 				'description'       => esc_html__( 'Filter downloads by variant IDs.', 'surecart' ),
 				'type'              => 'array',
 				'items'             => [ 'type' => 'string' ],
+				'validate_callback' => 'rest_validate_request_arg',
 				'sanitize_callback' => function( $param ) {
 					return array_map( 'sanitize_text_field', (array) $param );
 				},
@@ -89,6 +90,7 @@ class DownloadRestServiceProvider extends RestServiceProvider implements RestSer
 				'description'       => esc_html__( 'Filter downloads by product IDs.', 'surecart' ),
 				'type'              => 'array',
 				'items'             => [ 'type' => 'string' ],
+				'validate_callback' => 'rest_validate_request_arg',
 				'sanitize_callback' => function( $param ) {
 					return array_map( 'sanitize_text_field', (array) $param );
 				},

@@ -47,12 +47,11 @@ export default ({
 	});
 
 	// Check if the product has any downloads (used to show override hint).
-	const { hasProductDownloads, productDownloadsFetching } = useSelect(
+	const { hasProductDownloads } = useSelect(
 		(select) => {
 			if (!product?.id) {
 				return {
 					hasProductDownloads: false,
-					productDownloadsFetching: false,
 				};
 			}
 			const queryArgs = [
@@ -67,10 +66,6 @@ export default ({
 			const records = select(coreStore).getEntityRecords(...queryArgs);
 			return {
 				hasProductDownloads: (records || []).length > 0,
-				productDownloadsFetching: select(coreStore).isResolving(
-					'getEntityRecords',
-					queryArgs
-				),
 			};
 		},
 		[product?.id]
@@ -279,20 +274,22 @@ export default ({
 							)}
 						</div>
 
-						<div
-							css={css`
-								font-size: var(
-									--sc-input-help-text-font-size-medium
-								);
-								color: var(--sc-input-help-text-color);
-								margin-top: var(--sc-spacing-small);
-							`}
-						>
-							{__(
-								'Downloads added here will replace the product downloads for this variant.',
-								'surecart'
-							)}
-						</div>
+						{hasProductDownloads && (
+							<div
+								css={css`
+									font-size: var(
+										--sc-input-help-text-font-size-medium
+									);
+									color: var(--sc-input-help-text-color);
+									margin-top: var(--sc-spacing-small);
+								`}
+							>
+								{__(
+									'Downloads added here will replace the product downloads for this variant.',
+									'surecart'
+								)}
+							</div>
+						)}
 
 						{(downloadsFetching || isSaving) && (
 							<ScBlockUi spinner />
