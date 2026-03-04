@@ -62,7 +62,9 @@ function getStepRow( page, stepTitle: string ) {
  * This ensures `hasSiteLoaded` is true and toggleStep will work.
  */
 async function waitForSiteEntity( page ) {
-	await page.waitForLoadState( 'networkidle' );
+	await page.waitForResponse( ( response ) =>
+		response.url().includes( '/wp/v2/settings' ) && response.status() === 200
+	);
 }
 
 test.describe( 'Learn Tab Settings Page', () => {

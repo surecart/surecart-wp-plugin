@@ -71,10 +71,11 @@ export default function LearnSettings() {
 
 		for ( const section of learnSections ) {
 			const progress = getSectionProgress( section.id );
+			const entry = { section, progress };
 			if ( progress.completed === progress.total && progress.total > 0 ) {
-				completed.push( section );
+				completed.push( entry );
 			} else {
-				incomplete.push( section );
+				incomplete.push( entry );
 			}
 		}
 
@@ -110,11 +111,11 @@ export default function LearnSettings() {
 						</ScAlert>
 					) }
 
-					{ incompleteSections.map( ( section, index ) => (
+					{ incompleteSections.map( ( { section, progress }, index ) => (
 						<LearnSection
 							key={ section.id }
 							section={ section }
-							progress={ getSectionProgress( section.id ) }
+							progress={ progress }
 							isStepCompleted={ isStepCompleted }
 							isAutoDetected={ isAutoDetected }
 							onToggleStep={ toggleStep }
@@ -141,11 +142,11 @@ export default function LearnSettings() {
 								) }
 							</button>
 
-							{ showCompleted && completedSections.map( ( section ) => (
+							{ showCompleted && completedSections.map( ( { section, progress } ) => (
 								<LearnSection
 									key={ section.id }
 									section={ section }
-									progress={ getSectionProgress( section.id ) }
+									progress={ progress }
 									isStepCompleted={ isStepCompleted }
 									isAutoDetected={ isAutoDetected }
 									onToggleStep={ toggleStep }

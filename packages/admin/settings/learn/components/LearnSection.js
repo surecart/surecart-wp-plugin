@@ -5,6 +5,26 @@ import { __ } from '@wordpress/i18n';
 import { ScButton, ScIcon, ScTag } from '@surecart/components-react';
 import LearnStep from './LearnStep';
 
+const gradientKeyframes = css`
+	@keyframes gradientBorder {
+		0% {
+			background-position: 0% 0%;
+		}
+		25% {
+			background-position: 100% 0%;
+		}
+		50% {
+			background-position: 100% 100%;
+		}
+		75% {
+			background-position: 0% 100%;
+		}
+		100% {
+			background-position: 0% 0%;
+		}
+	}
+`;
+
 // Outer wrapper — carries the ::before animation so overflow:hidden on the
 // inner div cannot clip it. Non-highlighted sections use this as a passthrough.
 const wrapperStyles = (highlighted) => css`
@@ -142,7 +162,8 @@ const sectionHeadingStyles = css`
 const getBadgeLabel = (badge) => {
 	if (badge === 'required') return __('Required', 'surecart');
 	if (badge === 'recommended') return __('Recommended', 'surecart');
-	return __('Optional', 'surecart');
+	if (badge === 'optional') return __('Optional', 'surecart');
+	return '';
 };
 
 export default function LearnSection({
@@ -157,29 +178,7 @@ export default function LearnSection({
 
 	return (
 		<>
-			{section.highlighted && (
-				<Global
-					styles={css`
-						@keyframes gradientBorder {
-							0% {
-								background-position: 0% 0%;
-							}
-							25% {
-								background-position: 100% 0%;
-							}
-							50% {
-								background-position: 100% 100%;
-							}
-							75% {
-								background-position: 0% 100%;
-							}
-							100% {
-								background-position: 0% 0%;
-							}
-						}
-					`}
-				/>
-			)}
+			{section.highlighted && <Global styles={gradientKeyframes} />}
 			<div css={wrapperStyles(section.highlighted)}>
 				<div css={sectionStyles(section.highlighted)}>
 					<h3 css={sectionHeadingStyles}>
