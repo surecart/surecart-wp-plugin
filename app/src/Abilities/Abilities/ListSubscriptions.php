@@ -95,8 +95,8 @@ class ListSubscriptions extends AbstractAbility {
 	 */
 	public function execute( array $input ): array {
 		$args = array(
-			'page'     => absint( $input['page'] ?? 1 ),
-			'per_page' => min( absint( $input['per_page'] ?? 10 ), 100 ),
+			'page'  => absint( $input['page'] ?? 1 ),
+			'limit' => max( 1, min( absint( $input['per_page'] ?? 10 ), 100 ) ),
 		);
 
 		if ( ! empty( $input['status'] ) ) {
@@ -109,7 +109,7 @@ class ListSubscriptions extends AbstractAbility {
 
 		$subscriptions = Subscription::where( $args )->paginate();
 		if ( is_wp_error( $subscriptions ) ) {
-			return $this->error( $subscriptions->get_error_message() );
+			return $this->error( $this->wp_error_to_message( $subscriptions ) );
 		}
 
 		return $this->success(
@@ -118,7 +118,7 @@ class ListSubscriptions extends AbstractAbility {
 				'pagination'    => array(
 					'count' => $subscriptions->pagination->count ?? 0,
 					'page'  => $args['page'],
-					'limit' => $args['per_page'],
+					'limit' => $args['limit'],
 				),
 			)
 		);

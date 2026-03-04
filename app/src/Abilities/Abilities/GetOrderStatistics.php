@@ -52,6 +52,12 @@ class GetOrderStatistics extends AbstractAbility {
 					'type'        => 'string',
 					'description' => __( 'End date in YYYY-MM-DD format.', 'surecart' ),
 				),
+				'interval'   => array(
+					'type'        => 'string',
+					'description' => __( 'Grouping interval for the statistics data.', 'surecart' ),
+					'enum'        => array( 'hour', 'day', 'week', 'month', 'year' ),
+					'default'     => 'day',
+				),
 			),
 		);
 	}
@@ -71,22 +77,19 @@ class GetOrderStatistics extends AbstractAbility {
 
 	/**
 	 * {@inheritDoc}
+	 *
+	 * @param array $input The input data.
 	 */
 	public function execute( array $input ): array {
-		$args = array();
-
-		if ( ! empty( $input['start_date'] ) ) {
-			$args['start_date'] = sanitize_text_field( $input['start_date'] );
-		}
-
-		if ( ! empty( $input['end_date'] ) ) {
-			$args['end_date'] = sanitize_text_field( $input['end_date'] );
+		$args = $this->resolve_stats_args( $input );
+		if ( is_wp_error( $args ) ) {
+			return $this->error( $this->wp_error_to_message( $args ) );
 		}
 
 		$stat       = new Statistic();
 		$statistics = $stat->where( $args )->find( 'orders' );
 		if ( is_wp_error( $statistics ) ) {
-			return $this->error( $statistics->get_error_message() );
+			return $this->error( $this->wp_error_to_message( $statistics ) );
 		}
 
 		return $this->success(

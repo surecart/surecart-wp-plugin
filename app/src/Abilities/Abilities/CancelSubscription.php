@@ -44,9 +44,14 @@ class CancelSubscription extends AbstractAbility {
 		return array(
 			'type'       => 'object',
 			'properties' => array(
-				'id' => array(
+				'id'              => array(
 					'type'        => 'string',
 					'description' => __( 'The subscription ID to cancel.', 'surecart' ),
+				),
+				'cancel_behavior' => array(
+					'type'        => 'string',
+					'description' => __( 'When to cancel: "immediate" cancels now, "pending" cancels at end of the current billing period.', 'surecart' ),
+					'enum'        => array( 'immediate', 'pending' ),
 				),
 			),
 			'required'   => array( 'id' ),
@@ -68,13 +73,29 @@ class CancelSubscription extends AbstractAbility {
 
 	/**
 	 * {@inheritDoc}
+	 *
+	 * @param array $input The input data.
 	 */
 	public function execute( array $input ): array {
-		$id = sanitize_text_field( $input['id'] );
+		$id   = sanitize_text_field( $input['id'] );
+		$data = array();
 
-		$subscription = Subscription::where( array( 'id' => $id ) )->cancel();
+		if ( ! empty( $input['cancel_behavior'] ) ) {
+			$allowed  = array( 'immediate', 'pending' );
+			$behavior = sanitize_text_field( $input['cancel_behavior'] );
+			if ( ! in_array( $behavior, $allowed, true ) ) {
+				return $this->error(
+					/* translators: %s: comma-separated list of valid cancel_behavior values */
+					sprintf( __( 'Invalid cancel_behavior. Allowed values: %s', 'surecart' ), implode( ', ', $allowed ) )
+				);
+			}
+			$data['cancel_behavior'] = $behavior;
+		}
+
+		// fill() puts $data into attributes (request body); pass $id to cancel() to set $this->attributes['id'].
+		$subscription = Subscription::where( array() )->fill( $data )->cancel( $id );
 		if ( is_wp_error( $subscription ) ) {
-			return $this->error( $subscription->get_error_message() );
+			return $this->error( $this->wp_error_to_message( $subscription ) );
 		}
 
 		return $this->success(

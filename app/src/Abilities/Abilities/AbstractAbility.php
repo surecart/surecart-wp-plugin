@@ -57,7 +57,7 @@ abstract class AbstractAbility {
 	 * @return bool
 	 */
 	public function check_permission(): bool {
-		return current_user_can( 'edit_sc_products' );
+		return false;
 	}
 
 	/**
@@ -108,6 +108,76 @@ abstract class AbstractAbility {
 	}
 
 	/**
+	 * Validate a date string is in YYYY-MM-DD format.
+	 *
+	 * @param string $date The date string to validate.
+	 *
+	 * @return bool
+	 */
+	protected function is_valid_date( string $date ): bool {
+		$d = \DateTime::createFromFormat( 'Y-m-d', $date );
+		return $d && $d->format( 'Y-m-d' ) === $date;
+	}
+
+	/**
+	 * Build a descriptive error message from a WP_Error, appending the HTTP status code when available.
+	 *
+	 * @param \WP_Error $error The WP_Error instance.
+	 *
+	 * @return string
+	 */
+	protected function wp_error_to_message( \WP_Error $error ): string {
+		$message = $error->get_error_message();
+		$data    = $error->get_error_data();
+		if ( ! empty( $data['status'] ) ) {
+			$message .= ' (HTTP ' . absint( $data['status'] ) . ')';
+		}
+		return $message;
+	}
+
+	/**
+	 * Validate and normalize stats query args from ability input.
+	 *
+	 * Accepts optional YYYY-MM-DD date strings and passes them directly
+	 * to the SureCart statistics API.
+	 *
+	 * @param array $input The raw ability input.
+	 *
+	 * @return array|\WP_Error Normalized args array, or WP_Error on validation failure.
+	 */
+	protected function resolve_stats_args( array $input ) {
+		$allowed_intervals = array( 'hour', 'day', 'week', 'month', 'year' );
+		$interval          = sanitize_text_field( $input['interval'] ?? 'day' );
+		if ( ! in_array( $interval, $allowed_intervals, true ) ) {
+			return new \WP_Error(
+				'invalid_interval',
+				/* translators: %s: comma-separated list of valid interval values */
+				sprintf( __( 'Invalid interval. Allowed values: %s', 'surecart' ), implode( ', ', $allowed_intervals ) )
+			);
+		}
+
+		$args = array( 'interval' => $interval );
+
+		if ( ! empty( $input['start_date'] ) ) {
+			$start_date = sanitize_text_field( $input['start_date'] );
+			if ( ! $this->is_valid_date( $start_date ) ) {
+				return new \WP_Error( 'invalid_date', __( 'start_date must be in YYYY-MM-DD format.', 'surecart' ) );
+			}
+			$args['start_at'] = $start_date;
+		}
+
+		if ( ! empty( $input['end_date'] ) ) {
+			$end_date = sanitize_text_field( $input['end_date'] );
+			if ( ! $this->is_valid_date( $end_date ) ) {
+				return new \WP_Error( 'invalid_date', __( 'end_date must be in YYYY-MM-DD format.', 'surecart' ) );
+			}
+			$args['end_at'] = $end_date;
+		}
+
+		return $args;
+	}
+
+	/**
 	 * Convert a model object to an array, handling nested objects.
 	 *
 	 * @param mixed $model The model or data to convert.
@@ -120,7 +190,8 @@ abstract class AbstractAbility {
 		}
 
 		if ( $model instanceof \JsonSerializable ) {
-			return (array) $model->jsonSerialize();
+			$data = $model->jsonSerialize();
+			return is_array( $data ) ? $data : array();
 		}
 
 		if ( is_object( $model ) ) {

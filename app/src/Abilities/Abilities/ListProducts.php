@@ -98,7 +98,7 @@ class ListProducts extends AbstractAbility {
 		$args = array(
 			'archived' => ! empty( $input['archived'] ),
 			'page'     => absint( $input['page'] ?? 1 ),
-			'per_page' => min( absint( $input['per_page'] ?? 10 ), 100 ),
+			'limit'    => max( 1, min( absint( $input['per_page'] ?? 10 ), 100 ) ),
 		);
 
 		if ( ! empty( $input['query'] ) ) {
@@ -107,7 +107,7 @@ class ListProducts extends AbstractAbility {
 
 		$products = Product::where( $args )->paginate();
 		if ( is_wp_error( $products ) ) {
-			return $this->error( $products->get_error_message() );
+			return $this->error( $this->wp_error_to_message( $products ) );
 		}
 
 		return $this->success(
@@ -116,7 +116,7 @@ class ListProducts extends AbstractAbility {
 				'pagination' => array(
 					'count' => $products->pagination->count ?? 0,
 					'page'  => $args['page'],
-					'limit' => $args['per_page'],
+					'limit' => $args['limit'],
 				),
 			)
 		);
