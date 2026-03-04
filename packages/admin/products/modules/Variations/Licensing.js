@@ -21,6 +21,21 @@ export default ({
 		return null;
 	}
 
+	// Get valid download IDs for this variant to filter inherited values.
+	const validDownloadIds = (downloads || [])
+		.filter(
+			(download) =>
+				download?.media?.content_type === 'application/zip'
+		)
+		.map((download) => download?.id);
+
+	// If inherited value is not in the variant's downloads, show empty.
+	const currentReleaseValue = getValue('current_release_download');
+	const displayReleaseValue =
+		currentReleaseValue && validDownloadIds.includes(currentReleaseValue)
+			? currentReleaseValue
+			: '';
+
 	return (
 		<DrawerSection
 			title={__('Licensing', 'surecart')}
@@ -73,7 +88,7 @@ export default ({
 						'surecart'
 					)}
 					loading={downloadsFetching}
-					value={getValue('current_release_download')}
+					value={displayReleaseValue}
 					onScChange={(e) => {
 						updateVariant(
 							getUpdateValue({

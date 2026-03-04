@@ -85,6 +85,7 @@ export default ({
 		} else payload.media = media?.id;
 
 		try {
+			setError(null);
 			setIsSaving(true);
 			await saveEntityRecord('surecart', 'download', payload, {
 				throwOnError: true,

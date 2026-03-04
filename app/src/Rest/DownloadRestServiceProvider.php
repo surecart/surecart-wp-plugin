@@ -69,13 +69,18 @@ class DownloadRestServiceProvider extends RestServiceProvider implements RestSer
 	 */
 	public function get_collection_params() {
 		return [
-			'page'     => [
+			'page'        => [
 				'description' => esc_html__( 'The page of items you want returned.', 'surecart' ),
 				'type'        => 'integer',
 			],
-			'per_page' => [
+			'per_page'    => [
 				'description' => esc_html__( 'A limit on the number of items to be returned, between 1 and 100.', 'surecart' ),
 				'type'        => 'integer',
+			],
+			'variant_ids' => [
+				'description' => esc_html__( 'Filter downloads by variant IDs.', 'surecart' ),
+				'type'        => 'array',
+				'items'       => [ 'type' => 'string' ],
 			],
 		];
 	}
