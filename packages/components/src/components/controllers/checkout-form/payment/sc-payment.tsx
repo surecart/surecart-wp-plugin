@@ -146,8 +146,8 @@ export class ScPayment {
         </span>
 
         <sc-card>
-          <sc-payment-selected label={__('Credit Card selected for check out.', 'surecart')}>
-            <sc-icon slot="icon" name="credit-card" aria-hidden="true"></sc-icon>
+          <sc-payment-selected label={__('Cards, Netbanking, Wallet & UPI selected for check out.', 'surecart')}>
+            <sc-icon slot="icon" name="razorpay" aria-hidden="true"></sc-icon>
             {__('Another step will appear after submitting your order to complete your purchase details.', 'surecart')}
           </sc-payment-selected>
         </sc-card>

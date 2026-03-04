@@ -2,9 +2,9 @@
 Contributors: 2winfactor, wpcrafter
 Donate link: https://surecart.com
 Tags: ecommerce, online store, subscriptions, stripe, payments
-Requires at least: 6.6
+Requires at least: 6.7
 Tested up to: 6.9
-Stable tag: 4.0.0
+Stable tag: 4.0.1
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -315,6 +315,17 @@ Yes, the checkout form can be customized using our visual builder. You can chang
 Accessibility is a huge priority for the entire team building SureCart. As you know, accessibility is an ongoing improvement task. Our development and QA teams are trained in accessibility best practices and build/test each new feature for accessibility. If you come across any edge issues, we want to know about it and will prioritize its resolution. Please contact us via our website.
 
 == Changelog ==
+
+= 4.0.1 - March 2nd, 2026 =
+- New: Support for multiple referral URLs in the affiliate portal.
+- New: Display customer name and email on the edit subscription page.
+- Improvement: Screenreader and accessibility improvements for cart, checkout, and product list.
+- Improvement: Quantity input styling and width options.
+- Improvement: Better Razorpay display when it's the only payment gateway.
+- Fix: Postal code validation not working correctly for certain countries.
+- Fix: PHP fatal error when running WP-CLI commands.
+- Fix: Tutor LMS integration error during enrollment.
+- Fix: Collections menu item not working correctly in WordPress menus.
 
 = 4.0.0 - February 25th, 2026 =
 - New: Product Reviews — Let customers leave star ratings and written reviews on your products. [Learn More](https://www.youtube.com/watch?v=9MV_nOwxK_Q)
