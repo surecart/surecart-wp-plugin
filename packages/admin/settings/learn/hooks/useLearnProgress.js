@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef } from '@wordpress/element';
+import { useCallback, useEffect, useMemo } from '@wordpress/element';
 import { useEntityProp, useEntityRecords, store as coreStore } from '@wordpress/core-data';
 import { useSelect, useDispatch } from '@wordpress/data';
 import learnSections from '../data/learnSections';
@@ -52,12 +52,6 @@ export default function useLearnProgress() {
 			),
 		[]
 	);
-	useEffect( () => {
-		if ( hasSiteLoaded && siteTotalSteps !== computedTotal ) {
-			setSiteTotalSteps( computedTotal );
-			saveEditedEntityRecord( 'root', 'site' );
-		}
-	}, [ computedTotal, siteTotalSteps, setSiteTotalSteps, saveEditedEntityRecord, hasSiteLoaded ] );
 
 	// Auto-detect checks (reactive to async product query).
 	const autoDetectChecks = useMemo(
@@ -94,26 +88,48 @@ export default function useLearnProgress() {
 		return detected;
 	}, [ autoDetectChecks ] );
 
-	// Sync auto-detected steps into the site option so PHP can read the full count.
-	const syncedRef = useRef( false );
+	// Sync total steps and auto-detected steps to the site option in a single save.
 	useEffect( () => {
-		if ( ! hasSiteLoaded || ! autoDetectedSteps.length || syncedRef.current ) {
+		if ( ! hasSiteLoaded ) {
 			return;
 		}
-		const currentSet = new Set( manualSteps );
-		let changed = false;
-		for ( const stepId of autoDetectedSteps ) {
-			if ( ! currentSet.has( stepId ) ) {
-				currentSet.add( stepId );
-				changed = true;
+		let dirty = false;
+
+		// Sync total steps.
+		if ( siteTotalSteps !== computedTotal ) {
+			setSiteTotalSteps( computedTotal );
+			dirty = true;
+		}
+
+		// Sync auto-detected steps.
+		if ( autoDetectedSteps.length ) {
+			const currentSet = new Set( manualSteps );
+			let stepsChanged = false;
+			for ( const stepId of autoDetectedSteps ) {
+				if ( ! currentSet.has( stepId ) ) {
+					currentSet.add( stepId );
+					stepsChanged = true;
+				}
+			}
+			if ( stepsChanged ) {
+				setSiteSteps( [ ...currentSet ] );
+				dirty = true;
 			}
 		}
-		if ( changed ) {
-			setSiteSteps( [ ...currentSet ] );
+
+		if ( dirty ) {
 			saveEditedEntityRecord( 'root', 'site' );
-			syncedRef.current = true;
 		}
-	}, [ autoDetectedSteps, manualSteps, setSiteSteps, saveEditedEntityRecord, hasSiteLoaded ] );
+	}, [
+		computedTotal,
+		siteTotalSteps,
+		autoDetectedSteps,
+		manualSteps,
+		setSiteTotalSteps,
+		setSiteSteps,
+		saveEditedEntityRecord,
+		hasSiteLoaded,
+	] );
 
 	// Merge auto-detected and manual steps.
 	const completedSteps = useMemo(
@@ -172,6 +188,6 @@ export default function useLearnProgress() {
 		isStepCompleted,
 		isAutoDetected,
 		getSectionProgress,
-		isLoading: isResolvingProducts,
+		isLoading: isResolvingProducts || ! hasSiteLoaded,
 	};
 }

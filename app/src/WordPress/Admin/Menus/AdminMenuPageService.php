@@ -77,7 +77,9 @@ class AdminMenuPageService {
 			$submenu_file = 'post.php?post=' . (int) $post->ID . '&action=edit';
 		}
 
-		// Highlight "Learn" submenu when on the learn tab.
+		// The Learn tab uses a query-param slug ("admin.php?page=sc-settings&tab=learn")
+		// rather than a dedicated page, so WordPress won't auto-highlight the submenu.
+		// Manually set $submenu_file to force the correct "current" state.
 		if ( 'sc-settings' === sanitize_key( wp_unslash( $_GET['page'] ?? '' ) ) && 'learn' === sanitize_key( wp_unslash( $_GET['tab'] ?? '' ) ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			// phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 			$submenu_file = 'admin.php?page=sc-settings&tab=learn';
@@ -420,18 +422,9 @@ class AdminMenuPageService {
 	 * @return string
 	 */
 	protected function getLearnBadge() {
-		$total_steps = (int) get_option( 'surecart_learn_total_steps', 0 );
-		if ( ! $total_steps ) {
-			return '';
-		}
-
-		$completed = get_option( 'surecart_learn_completed_steps', [] );
-		$remaining = $total_steps - count( (array) $completed );
-
-		if ( $remaining > 0 ) {
-			return sprintf( ' <span class="awaiting-mod">%d</span>', $remaining );
-		}
-
-		return '';
+		$remaining = \SureCart::settings()->getLearnRemainingSteps();
+		return $remaining > 0
+			? sprintf( ' <span class="awaiting-mod">%d</span>', $remaining )
+			: '';
 	}
 }

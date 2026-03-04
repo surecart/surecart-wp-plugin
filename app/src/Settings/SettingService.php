@@ -323,8 +323,8 @@ class SettingService {
 			'surecart',
 			'learn_completed_steps',
 			[
-				'type'         => 'array',
-				'show_in_rest' => [
+				'type'              => 'array',
+				'show_in_rest'      => [
 					'schema' => [
 						'type'  => 'array',
 						'items' => [
@@ -332,7 +332,19 @@ class SettingService {
 						],
 					],
 				],
-				'default'      => [],
+				'default'           => [],
+				'sanitize_callback' => function( $value ) {
+					if ( ! is_array( $value ) ) {
+						return [];
+					}
+					return array_values(
+						array_unique(
+							array_filter(
+								array_map( 'sanitize_key', $value )
+							)
+						)
+					);
+				},
 			]
 		);
 		$this->register(
@@ -386,6 +398,17 @@ class SettingService {
 	 */
 	public function get( $name, $default = false ) {
 		return get_option( 'surecart_' . $name, $default );
+	}
+
+	/**
+	 * Get the number of remaining learn steps.
+	 *
+	 * @return int
+	 */
+	public function getLearnRemainingSteps() {
+		$total     = (int) $this->get( 'learn_total_steps', 0 );
+		$completed = $this->get( 'learn_completed_steps', [] );
+		return $total ? max( 0, $total - count( (array) $completed ) ) : 0;
 	}
 
 	/**
