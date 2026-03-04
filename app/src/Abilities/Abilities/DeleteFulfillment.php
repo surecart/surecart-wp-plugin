@@ -81,7 +81,10 @@ class DeleteFulfillment extends AbstractAbility {
 			);
 		}
 
-		$id = sanitize_text_field( $input['id'] );
+		$id = sanitize_text_field( $input['id'] ?? '' );
+		if ( empty( $id ) ) {
+			return $this->error( 'missing_id', __( 'A fulfillment ID is required.', 'surecart' ) );
+		}
 
 		$deleted = Fulfillment::delete( $id );
 		if ( is_wp_error( $deleted ) ) {

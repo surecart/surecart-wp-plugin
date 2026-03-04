@@ -70,7 +70,12 @@ class GetCustomer extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function execute( array $input ) {
-		$customer = Customer::with( array( 'purchases' ) )->find( sanitize_text_field( $input['id'] ) );
+		$id = sanitize_text_field( $input['id'] ?? '' );
+		if ( empty( $id ) ) {
+			return $this->error( 'missing_id', __( 'A customer ID is required.', 'surecart' ) );
+		}
+
+		$customer = Customer::with( array( 'purchases' ) )->find( $id );
 		if ( is_wp_error( $customer ) ) {
 			return $customer;
 		}

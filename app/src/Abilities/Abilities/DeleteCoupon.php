@@ -81,7 +81,10 @@ class DeleteCoupon extends AbstractAbility {
 			);
 		}
 
-		$id = sanitize_text_field( $input['id'] );
+		$id = sanitize_text_field( $input['id'] ?? '' );
+		if ( empty( $id ) ) {
+			return $this->error( 'missing_id', __( 'A coupon ID is required.', 'surecart' ) );
+		}
 
 		$deleted = Coupon::delete( $id );
 		if ( is_wp_error( $deleted ) ) {

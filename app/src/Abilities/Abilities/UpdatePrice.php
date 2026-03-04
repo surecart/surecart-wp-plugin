@@ -84,7 +84,11 @@ class UpdatePrice extends AbstractAbility {
 	 * @param array $input The input data.
 	 */
 	public function execute( array $input ) {
-		$id   = sanitize_text_field( $input['id'] );
+		$id = sanitize_text_field( $input['id'] ?? '' );
+		if ( empty( $id ) ) {
+			return $this->error( 'missing_id', __( 'A price ID is required.', 'surecart' ) );
+		}
+
 		$data = array();
 
 		if ( isset( $input['amount'] ) ) {

@@ -70,7 +70,12 @@ class GetOrder extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function execute( array $input ) {
-		$order = Order::with( array( 'checkout', 'checkout.line_items' ) )->find( sanitize_text_field( $input['id'] ) );
+		$id = sanitize_text_field( $input['id'] ?? '' );
+		if ( empty( $id ) ) {
+			return $this->error( 'missing_id', __( 'An order ID is required.', 'surecart' ) );
+		}
+
+		$order = Order::with( array( 'checkout', 'checkout.line_items' ) )->find( $id );
 		if ( is_wp_error( $order ) ) {
 			return $order;
 		}

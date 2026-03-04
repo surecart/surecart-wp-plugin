@@ -70,7 +70,10 @@ class DuplicateProduct extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function execute( array $input ) {
-		$id = sanitize_text_field( $input['id'] );
+		$id = sanitize_text_field( $input['id'] ?? '' );
+		if ( empty( $id ) ) {
+			return $this->error( 'missing_id', __( 'A product ID is required.', 'surecart' ) );
+		}
 
 		$product = Product::duplicate( $id );
 		if ( is_wp_error( $product ) ) {

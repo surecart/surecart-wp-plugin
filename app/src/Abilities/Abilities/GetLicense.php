@@ -70,7 +70,12 @@ class GetLicense extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function execute( array $input ) {
-		$license = License::with( array( 'activations', 'purchase' ) )->find( sanitize_text_field( $input['id'] ) );
+		$id = sanitize_text_field( $input['id'] ?? '' );
+		if ( empty( $id ) ) {
+			return $this->error( 'missing_id', __( 'A license ID is required.', 'surecart' ) );
+		}
+
+		$license = License::with( array( 'activations', 'purchase' ) )->find( $id );
 		if ( is_wp_error( $license ) ) {
 			return $license;
 		}

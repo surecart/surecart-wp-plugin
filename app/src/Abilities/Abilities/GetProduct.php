@@ -70,7 +70,12 @@ class GetProduct extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function execute( array $input ) {
-		$product = Product::with( array( 'prices', 'variants' ) )->find( sanitize_text_field( $input['id'] ) );
+		$id = sanitize_text_field( $input['id'] ?? '' );
+		if ( empty( $id ) ) {
+			return $this->error( 'missing_id', __( 'A product ID is required.', 'surecart' ) );
+		}
+
+		$product = Product::with( array( 'prices', 'variants' ) )->find( $id );
 		if ( is_wp_error( $product ) ) {
 			return $product;
 		}

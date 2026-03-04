@@ -70,7 +70,12 @@ class GetSubscription extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function execute( array $input ) {
-		$subscription = Subscription::with( array( 'price', 'price.product' ) )->find( sanitize_text_field( $input['id'] ) );
+		$id = sanitize_text_field( $input['id'] ?? '' );
+		if ( empty( $id ) ) {
+			return $this->error( 'missing_id', __( 'A subscription ID is required.', 'surecart' ) );
+		}
+
+		$subscription = Subscription::with( array( 'price', 'price.product' ) )->find( $id );
 		if ( is_wp_error( $subscription ) ) {
 			return $subscription;
 		}
