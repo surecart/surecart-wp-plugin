@@ -48,7 +48,9 @@ function sc_block_template_part( $part ) {
 	if ( ! $template_part || empty( $template_part->content ) ) {
 		return;
 	}
-	echo do_blocks( $template_part->content ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	$content = do_blocks( $template_part->content );
+	$content = do_shortcode( $content );
+	echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 }
 
 /**
@@ -63,5 +65,7 @@ function sc_block_template( $part ) {
 	if ( ! $template_part || empty( $template_part->content ) ) {
 		return;
 	}
-	echo do_blocks( $template_part->content ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	$content = do_blocks( $template_part->content );
+	$content = do_shortcode( $content );
+	echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 }
