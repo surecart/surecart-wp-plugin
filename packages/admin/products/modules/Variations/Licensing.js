@@ -1,4 +1,5 @@
 import { ScInput, ScSelect } from '@surecart/components-react';
+import { useMemo } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import DrawerSection from '../../../ui/DrawerSection';
 import useVariantValue from '../../hooks/useVariantValue';
@@ -22,12 +23,16 @@ export default ({
 	}
 
 	// Get valid download IDs for this variant to filter inherited values.
-	const validDownloadIds = (downloads || [])
-		.filter(
-			(download) =>
-				download?.media?.content_type === 'application/zip'
-		)
-		.map((download) => download?.id);
+	const validDownloadIds = useMemo(
+		() =>
+			(downloads || [])
+				.filter(
+					(download) =>
+						download?.media?.content_type === 'application/zip'
+				)
+				.map((download) => download?.id),
+		[downloads]
+	);
 
 	// Normalize: current_release_download can be a string ID or expanded object.
 	const rawReleaseValue = getValue('current_release_download');
@@ -101,7 +106,6 @@ export default ({
 						);
 					}}
 					choices={[
-						{ value: '', label: __('— None —', 'surecart') },
 						...(downloads || [])
 							// Only .zip files are valid for WP plugin update API releases.
 							.filter(
