@@ -50,7 +50,10 @@ export default ({
 	const { hasProductDownloads, productDownloadsFetching } = useSelect(
 		(select) => {
 			if (!product?.id) {
-				return { hasProductDownloads: false, productDownloadsFetching: false };
+				return {
+					hasProductDownloads: false,
+					productDownloadsFetching: false,
+				};
 			}
 			const queryArgs = [
 				'surecart',
@@ -276,22 +279,20 @@ export default ({
 							)}
 						</div>
 
-						{hasProductDownloads && !productDownloadsFetching && (
-							<div
-								css={css`
-									font-size: var(
-										--sc-input-help-text-font-size-medium
-									);
-									color: var(--sc-input-help-text-color);
-									margin-top: var(--sc-spacing-small);
-								`}
-							>
-								{__(
-									'Downloads added here will replace the product downloads for this variant.',
-									'surecart'
-								)}
-							</div>
-						)}
+						<div
+							css={css`
+								font-size: var(
+									--sc-input-help-text-font-size-medium
+								);
+								color: var(--sc-input-help-text-color);
+								margin-top: var(--sc-spacing-small);
+							`}
+						>
+							{__(
+								'Downloads added here will replace the product downloads for this variant.',
+								'surecart'
+							)}
+						</div>
 
 						{(downloadsFetching || isSaving) && (
 							<ScBlockUi spinner />
