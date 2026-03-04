@@ -138,7 +138,7 @@ class CreateCoupon extends AbstractAbility {
 		}
 
 		if ( ! empty( $input['percent_off'] ) ) {
-			$data['percent_off'] = \floatval( $input['percent_off'] );
+			$data['percent_off'] = floatval( $input['percent_off'] );
 		} elseif ( ! empty( $input['amount_off'] ) ) {
 			$data['amount_off'] = absint( $input['amount_off'] );
 			$data['currency']   = sanitize_text_field( $input['currency'] ?? 'usd' );

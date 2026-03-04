@@ -83,38 +83,60 @@ class AbilityRegistrarTest extends SureCartUnitTestCase {
 	 */
 	private function get_expected_ability_names(): array {
 		return array(
+			// Store.
 			'surecart/get-store-info',
 			'surecart/get-store-dashboard',
+			// Products.
 			'surecart/list-products',
 			'surecart/get-product',
 			'surecart/create-product',
 			'surecart/update-product',
 			'surecart/archive-product',
 			'surecart/duplicate-product',
+			// Orders.
 			'surecart/list-orders',
 			'surecart/get-order',
 			'surecart/get-order-statistics',
+			// Customers.
 			'surecart/list-customers',
 			'surecart/get-customer',
 			'surecart/create-customer',
 			'surecart/update-customer',
 			'surecart/delete-customer',
+			// Subscriptions.
 			'surecart/list-subscriptions',
 			'surecart/get-subscription',
-			'surecart/get-order-statistics',
+			'surecart/cancel-subscription',
+			// Prices.
 			'surecart/list-prices',
 			'surecart/create-price',
 			'surecart/update-price',
-			'surecart/create-coupon',
-			'surecart/cancel-subscription',
+			// Coupons.
 			'surecart/list-coupons',
+			'surecart/get-coupon',
 			'surecart/create-coupon',
+			'surecart/update-coupon',
+			'surecart/delete-coupon',
+			// Promotions.
 			'surecart/list-promotions',
+			'surecart/get-promotion',
 			'surecart/create-promotion',
+			'surecart/update-promotion',
+			'surecart/delete-promotion',
+			// Fulfillments.
+			'surecart/list-fulfillments',
+			'surecart/get-fulfillment',
 			'surecart/create-fulfillment',
+			'surecart/update-fulfillment',
+			'surecart/delete-fulfillment',
+			// Fulfillment Items.
+			'surecart/get-fulfillment-item',
+			// Licensing.
 			'surecart/list-licenses',
 			'surecart/get-license',
+			// Refunds.
 			'surecart/list-refunds',
+			'surecart/get-refund',
 			'surecart/create-refund',
 		);
 	}
