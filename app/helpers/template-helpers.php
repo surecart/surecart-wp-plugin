@@ -36,6 +36,21 @@ function surecart_get_the_block_template_html( $template_content ) {
 }
 
 /**
+ * Process block and shortcode content for template parts.
+ *
+ * @since 5.9.0
+ *
+ * @param string $content The template content to process.
+ * @return string Processed content.
+ */
+function sc_process_template_content( $content ) {
+	$content = do_blocks( $content );
+	$content = shortcode_unautop( $content );
+	$content = do_shortcode( $content );
+	return $content;
+}
+
+/**
  * Prints a block template part.
  *
  * @since 5.9.0
@@ -48,9 +63,7 @@ function sc_block_template_part( $part ) {
 	if ( ! $template_part || empty( $template_part->content ) ) {
 		return;
 	}
-	$content = do_blocks( $template_part->content );
-	$content = do_shortcode( $content );
-	echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	echo sc_process_template_content( $template_part->content ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 }
 
 /**
@@ -65,7 +78,5 @@ function sc_block_template( $part ) {
 	if ( ! $template_part || empty( $template_part->content ) ) {
 		return;
 	}
-	$content = do_blocks( $template_part->content );
-	$content = do_shortcode( $content );
-	echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	echo sc_process_template_content( $template_part->content ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 }
