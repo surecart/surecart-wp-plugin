@@ -5,8 +5,9 @@ namespace SureCart\Sync\WooCommerce;
 /**
  * Maps WooCommerce products to SureCart import data.
  *
- * Stateless mapper that converts WC product objects into the array format
- * expected by the SureCart product import API.
+ * Caching mapper that converts WC product objects into the array format
+ * expected by the SureCart product import API. Caches collections and
+ * currency lookups per batch to avoid duplicate API/DB calls.
  *
  * @package SureCart
  */

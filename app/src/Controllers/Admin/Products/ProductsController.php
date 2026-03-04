@@ -337,9 +337,6 @@ class ProductsController extends AdminController {
 			$all_skipped_session_id = get_option( 'sc_woo_import_all_skipped' );
 
 			if ( $all_skipped_session_id ) {
-				// Clean up after viewing so the notice doesn't persist across page loads.
-				delete_option( 'sc_woo_import_all_skipped' );
-
 				// Fetch skipped products via session ID.
 				$transient_key    = 'sc_woo_import_skipped_' . $all_skipped_session_id;
 				$skipped_products = get_transient( $transient_key );
@@ -389,6 +386,7 @@ class ProductsController extends AdminController {
 		$page            = 1;
 		$per_page        = 100;
 		$max_pages       = 50;
+		$has_next_page   = false;
 
 		do {
 			$collection = ImportRow::where( [ 'import_ids' => $import_ids ] )
@@ -433,6 +431,10 @@ class ProductsController extends AdminController {
 				$skipped_products = [];
 			}
 		}
+
+		// Clean up the completion notice option now that the user has viewed results.
+		// The results page uses URL query params, so this option is no longer needed.
+		delete_option( 'sc_woo_import_ids' );
 
 		return \SureCart::view( 'admin/products/import-results' )->with(
 			[

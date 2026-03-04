@@ -108,10 +108,13 @@
 						<?php esc_html_e( 'No products were imported. All products were skipped (see details below).', 'surecart' ); ?>
 					<?php elseif ( $succeeded_count > 0 ) : ?>
 						<?php
-						printf(
-							/* translators: %s: number of successfully imported products */
-							esc_html__( 'You have successfully imported %s products.', 'surecart' ),
-							'<strong>' . esc_html( $succeeded_count ) . '</strong>'
+						echo wp_kses(
+							sprintf(
+								/* translators: %s: number of successfully imported products */
+								__( 'You have successfully imported %s products.', 'surecart' ),
+								'<strong>' . esc_html( $succeeded_count ) . '</strong>'
+							),
+							[ 'strong' => [] ]
 						);
 						?>
 					<?php else : ?>
@@ -123,10 +126,13 @@
 					<div>
 						<p class="import-results-summary">
 							<?php
-							printf(
-								/* translators: %s: number of failed products */
-								esc_html__( '%s products failed to import due to:', 'surecart' ),
-								'<strong>' . esc_html( count( $failed_rows ) ) . '</strong>'
+							echo wp_kses(
+								sprintf(
+									/* translators: %s: number of failed products */
+									__( '%s products failed to import due to:', 'surecart' ),
+									'<strong>' . esc_html( count( $failed_rows ) ) . '</strong>'
+								),
+								[ 'strong' => [] ]
 							);
 							?>
 						</p>
@@ -154,10 +160,13 @@
 						<?php if ( empty( $all_skipped ) ) : ?>
 							<p class="import-results-summary" style="margin-bottom: 1em;">
 								<?php
-								printf(
-									/* translators: %s: number of skipped products */
-									esc_html__( '%s products were skipped:', 'surecart' ),
-									'<strong>' . esc_html( count( $skipped_products ) ) . '</strong>'
+								echo wp_kses(
+									sprintf(
+										/* translators: %s: number of skipped products */
+										__( '%s products were skipped:', 'surecart' ),
+										'<strong>' . esc_html( count( $skipped_products ) ) . '</strong>'
+									),
+									[ 'strong' => [] ]
 								);
 								?>
 							</p>
