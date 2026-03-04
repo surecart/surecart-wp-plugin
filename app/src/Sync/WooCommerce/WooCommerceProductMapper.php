@@ -616,6 +616,36 @@ class WooCommerceProductMapper {
 
 		$variant_position = 0;
 
+		// Pre-load taxonomy terms to avoid N+1 get_term_by() calls inside the variation loop.
+		$term_name_cache = [];
+		foreach ( $variations as $variation ) {
+			$attrs = $variation->get_variation_attributes();
+			foreach ( $option_keys as $key ) {
+				if ( isset( $attrs[ $key ] ) && ! empty( $attrs[ $key ] ) ) {
+					$taxonomy = str_replace( 'attribute_', '', $key );
+					if ( taxonomy_exists( $taxonomy ) ) {
+						$term_name_cache[ $taxonomy ][] = $attrs[ $key ];
+					}
+				}
+			}
+		}
+		foreach ( $term_name_cache as $taxonomy => $slugs ) {
+			$terms = get_terms(
+				[
+					'taxonomy'   => $taxonomy,
+					'slug'       => array_unique( $slugs ),
+					'hide_empty' => false,
+				]
+			);
+			$resolved = [];
+			if ( ! is_wp_error( $terms ) ) {
+				foreach ( $terms as $t ) {
+					$resolved[ $t->slug ] = $t->name;
+				}
+			}
+			$term_name_cache[ $taxonomy ] = $resolved;
+		}
+
 		// Cache WC unit options before the loop to avoid repeated DB queries.
 		$wc_weight_unit = get_option( 'woocommerce_weight_unit' );
 		$wc_dim_unit    = get_option( 'woocommerce_dimension_unit' );
@@ -706,12 +736,10 @@ class WooCommerceProductMapper {
 
 					// For taxonomy attributes, WooCommerce stores slugs in variation attributes
 					// but we use term names in variant_options.values -- convert slug to name.
+					// Uses pre-loaded $term_name_cache to avoid N+1 get_term_by() queries.
 					$taxonomy = str_replace( 'attribute_', '', $key );
-					if ( taxonomy_exists( $taxonomy ) ) {
-						$term = get_term_by( 'slug', $value, $taxonomy );
-						if ( $term && ! is_wp_error( $term ) ) {
-							$value = $term->name;
-						}
+					if ( isset( $term_name_cache[ $taxonomy ][ $value ] ) ) {
+						$value = $term_name_cache[ $taxonomy ][ $value ];
 					}
 
 					$variant[ "option_$option_num" ] = $value;

@@ -98,6 +98,12 @@
 				<sc-heading size="large"><?php esc_html_e( 'Import Products', 'surecart' ); ?></sc-heading>
 
 				<div class="import-results-summary">
+					<?php if ( ! empty( $results_capped ) ) : ?>
+						<p style="color: #92400e; background: #fef3c7; padding: 8px 12px; border-radius: 4px; margin: 0 0 0.5em;">
+							<?php esc_html_e( 'Note: Only the first 5,000 results are shown below. Your import may have additional rows not displayed here.', 'surecart' ); ?>
+						</p>
+					<?php endif; ?>
+
 					<?php if ( ! empty( $all_skipped ) ) : ?>
 						<?php esc_html_e( 'No products were imported. All products were skipped (see details below).', 'surecart' ); ?>
 					<?php elseif ( $succeeded_count > 0 ) : ?>

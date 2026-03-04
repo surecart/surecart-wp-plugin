@@ -59,6 +59,10 @@ class WooCommerceImportService {
 	/**
 	 * Dispatch the import job.
 	 *
+	 * Only one import can run at a time — isRunning() prevents concurrent dispatches.
+	 * WordPress options (sc_woo_import_ids, sc_woo_import_session_id) are used for
+	 * per-import state tracking, which is safe under this single-import constraint.
+	 *
 	 * @param int $batch_size Products per batch page.
 	 *
 	 * @return array|\WP_Error

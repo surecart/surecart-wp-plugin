@@ -265,6 +265,10 @@ class WooCommerceImportJob extends Job {
 	 * Attempt to acquire a lock using wp_cache_add (atomic).
 	 * Falls back gracefully — wp_cache_add returns false if the key already exists.
 	 *
+	 * Note: On hosts without a persistent object cache (Redis/Memcached), wp_cache_add
+	 * is per-request only. This is acceptable because Action Scheduler processes batches
+	 * sequentially within a single process, making concurrent lock contention unlikely.
+	 *
 	 * @param string $lock_key   Cache key for the lock.
 	 * @param int    $max_retries Maximum number of acquire attempts.
 	 * @return bool Whether the lock was acquired.

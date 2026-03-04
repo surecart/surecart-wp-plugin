@@ -926,12 +926,12 @@ namespace SureCart\Tests\Sync {
 		 */
 		public function test_get_or_create_collections_finds_existing_collection() {
 			$term         = (object) [ 'name' => 'Shoes', 'slug' => 'shoes', 'description' => '', 'term_id' => 1 ];
-			$collection   = (object) [ 'id' => 'coll_123' ];
+			$collection   = (object) [ 'id' => 'coll_123', 'slug' => 'shoes' ];
 
 			// Mock the static calls on ProductCollection.
 			$mock = \Mockery::mock( 'alias:SureCart\Models\ProductCollection' );
 			$mock->shouldReceive( 'where' )->andReturnSelf();
-			$mock->shouldReceive( 'first' )->andReturn( $collection );
+			$mock->shouldReceive( 'get' )->andReturn( [ $collection ] );
 
 			$service = new WooCommerceProductMapper();
 			$result  = $service->getOrCreateCollections(
@@ -953,7 +953,7 @@ namespace SureCart\Tests\Sync {
 
 			$mock = \Mockery::mock( 'alias:SureCart\Models\ProductCollection' );
 			$mock->shouldReceive( 'where' )->andReturnSelf();
-			$mock->shouldReceive( 'first' )->andReturn( (object) [] ); // No id = not found.
+			$mock->shouldReceive( 'get' )->andReturn( [] ); // Empty array = not found.
 			$mock->shouldReceive( 'create' )->andReturn( $new_coll );
 
 			$service = new WooCommerceProductMapper();
@@ -972,11 +972,11 @@ namespace SureCart\Tests\Sync {
 		 */
 		public function test_get_or_create_collections_uses_cache_on_second_call() {
 			$term       = (object) [ 'name' => 'Boots', 'slug' => 'boots', 'description' => '', 'term_id' => 3 ];
-			$collection = (object) [ 'id' => 'coll_789' ];
+			$collection = (object) [ 'id' => 'coll_789', 'slug' => 'boots' ];
 
 			$mock = \Mockery::mock( 'alias:SureCart\Models\ProductCollection' );
 			$mock->shouldReceive( 'where' )->once()->andReturnSelf(); // Called only once!
-			$mock->shouldReceive( 'first' )->once()->andReturn( $collection );
+			$mock->shouldReceive( 'get' )->once()->andReturn( [ $collection ] );
 
 			$service = new WooCommerceProductMapper();
 
@@ -999,11 +999,11 @@ namespace SureCart\Tests\Sync {
 		 */
 		public function test_get_or_create_collections_normalizes_slug_to_lowercase() {
 			$term       = (object) [ 'name' => 'Summer Sale', 'slug' => 'Summer-Sale', 'description' => '', 'term_id' => 4 ];
-			$collection = (object) [ 'id' => 'coll_norm' ];
+			$collection = (object) [ 'id' => 'coll_norm', 'slug' => 'summer-sale' ];
 
 			$mock = \Mockery::mock( 'alias:SureCart\Models\ProductCollection' );
 			$mock->shouldReceive( 'where' )->andReturnSelf();
-			$mock->shouldReceive( 'first' )->andReturn( $collection );
+			$mock->shouldReceive( 'get' )->andReturn( [ $collection ] );
 
 			$service = new WooCommerceProductMapper();
 			$result  = $service->getOrCreateCollections(
@@ -1021,7 +1021,7 @@ namespace SureCart\Tests\Sync {
 
 			$mock = \Mockery::mock( 'alias:SureCart\Models\ProductCollection' );
 			$mock->shouldReceive( 'where' )->andReturnSelf();
-			$mock->shouldReceive( 'first' )->andReturn( (object) [] ); // Not found.
+			$mock->shouldReceive( 'get' )->andReturn( [] ); // Empty array = not found.
 			$mock->shouldReceive( 'create' )->andReturn( new \WP_Error( 'error', 'Creation failed' ) );
 
 			$service = new WooCommerceProductMapper();

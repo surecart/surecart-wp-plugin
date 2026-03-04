@@ -82,6 +82,7 @@ class ProductsRestServiceProvider extends RestServiceProvider implements RestSer
 				[
 					'methods'             => \WP_REST_Server::READABLE,
 					'callback'            => $this->callback( $this->controller, 'wooCommerceCount' ),
+					// Uses edit-level permission (edit_sc_products) intentionally: admin-only import feature, only product editors should see the WooCommerce count.
 					'permission_callback' => [ $this, 'update_item_permissions_check' ],
 				],
 			]

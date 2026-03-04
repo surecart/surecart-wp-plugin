@@ -337,6 +337,9 @@ class ProductsController extends AdminController {
 			$all_skipped_session_id = get_option( 'sc_woo_import_all_skipped' );
 
 			if ( $all_skipped_session_id ) {
+				// Clean up after viewing so the notice doesn't persist across page loads.
+				delete_option( 'sc_woo_import_all_skipped' );
+
 				// Fetch skipped products via session ID.
 				$transient_key    = 'sc_woo_import_skipped_' . $all_skipped_session_id;
 				$skipped_products = get_transient( $transient_key );
@@ -351,6 +354,7 @@ class ProductsController extends AdminController {
 						'failed_rows'      => [],
 						'skipped_products' => $skipped_products,
 						'all_skipped'      => true,
+						'results_capped'   => false,
 					]
 				);
 			}
@@ -362,6 +366,7 @@ class ProductsController extends AdminController {
 					'failed_rows'      => [],
 					'skipped_products' => [],
 					'all_skipped'      => false,
+					'results_capped'   => false,
 				]
 			);
 		}
@@ -415,6 +420,9 @@ class ProductsController extends AdminController {
 			++$page;
 		} while ( $has_next_page && $page <= $max_pages );
 
+		// Flag if results were capped (more rows exist than the pagination limit allows).
+		$results_capped = ( $page > $max_pages && $has_next_page );
+
 		// Fetch skipped products from transient.
 		$skipped_products = [];
 		if ( $session_id ) {
@@ -432,6 +440,7 @@ class ProductsController extends AdminController {
 				'failed_rows'      => $failed_rows,
 				'skipped_products' => $skipped_products,
 				'all_skipped'      => false,
+				'results_capped'   => $results_capped,
 			]
 		);
 	}
