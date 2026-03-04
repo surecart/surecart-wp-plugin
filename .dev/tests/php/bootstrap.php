@@ -80,5 +80,8 @@ tests_add_filter('wp_die_handler', 'fail_if_died');
 // Start up the WP testing environment.
 require $_tests_dir . '/includes/bootstrap.php';
 
+// Load the base test case so it's available before PHPUnit scans subdirectories.
+require_once __DIR__ . '/unit/SureCartUnitTestCase.php';
+
 // Use existing behavior for wp_die during actual test execution.
 // remove_filter('wp_die_handler', 'fail_if_died');

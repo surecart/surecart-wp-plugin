@@ -70,10 +70,11 @@ class GetStoreDashboard extends AbstractAbility {
 			'type'       => 'object',
 			'properties' => array(
 				'success' => array( 'type' => 'boolean' ),
+				'period'  => array( 'type' => 'string' ),
 				'store'   => array( 'type' => 'object' ),
 				'orders'  => array( 'type' => 'object' ),
 			),
-			'required'   => array( 'success', 'store', 'orders' ),
+			'required'   => array( 'success', 'period', 'store', 'orders' ),
 		);
 	}
 

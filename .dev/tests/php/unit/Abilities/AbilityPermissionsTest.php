@@ -95,10 +95,11 @@ class AbilityPermissionsTest extends SureCartUnitTestCase {
 
 		$reflection = new \ReflectionMethod( $ability, 'error' );
 		$reflection->setAccessible( true );
-		$result = $reflection->invoke( $ability, 'Test error message' );
+		$result = $reflection->invoke( $ability, 'test_code', 'Test error message' );
 
-		$this->assertFalse( $result['success'] );
-		$this->assertEquals( 'Test error message', $result['error'] );
+		$this->assertInstanceOf( \WP_Error::class, $result );
+		$this->assertEquals( 'test_code', $result->get_error_code() );
+		$this->assertEquals( 'Test error message', $result->get_error_message() );
 	}
 
 	/**
