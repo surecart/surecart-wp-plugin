@@ -392,7 +392,7 @@ class WooCommerceProductMapper {
 			'm'  => 'm',
 			'in' => 'in',
 			'ft' => 'ft',
-			'yd' => 'ft',
+			'yd' => 'ft', // Intentional: SureCart has no yard unit, so we map to feet and multiply values by 3 (see $dim_multiplier).
 		];
 		return $map[ $wc_unit ] ?? 'in';
 	}

@@ -84,17 +84,19 @@ class WooCommerceImportJob extends Job {
 		// Get WooCommerce products (exclude already-imported products).
 		add_filter( 'woocommerce_product_data_store_cpt_get_products_query', [ $this->mapper, 'excludeImportedProducts' ], 10, 2 );
 
-		$products = wc_get_products(
-			[
-				'limit'                 => $batch_size,
-				'page'                  => $page,
-				'return'                => 'ids',
-				'paginate'              => true,
-				'surecart_not_imported' => true,
-			]
-		);
-
-		remove_filter( 'woocommerce_product_data_store_cpt_get_products_query', [ $this->mapper, 'excludeImportedProducts' ], 10 );
+		try {
+			$products = wc_get_products(
+				[
+					'limit'                 => $batch_size,
+					'page'                  => $page,
+					'return'                => 'ids',
+					'paginate'              => true,
+					'surecart_not_imported' => true,
+				]
+			);
+		} finally {
+			remove_filter( 'woocommerce_product_data_store_cpt_get_products_query', [ $this->mapper, 'excludeImportedProducts' ], 10 );
+		}
 
 		// Validate wc_get_products() result in case WooCommerce was deactivated mid-sync.
 		if ( ! is_object( $products ) || ! isset( $products->products, $products->max_num_pages ) ) {
@@ -191,6 +193,7 @@ class WooCommerceImportJob extends Job {
 
 		} catch ( \Exception $e ) {
 			error_log( sprintf( 'SureCart WooCommerce Sync: Failed to sync product %d - %s', $product_id, $e->getMessage() ) ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+			$this->trackSkippedProduct( null, 'unknown', 'mapping_error' );
 			return null;
 		}
 	}
@@ -244,13 +247,14 @@ class WooCommerceImportJob extends Job {
 	private function trackSkippedProduct( $product, $product_type, $skip_reason ) {
 		// Build human-readable skip reason message.
 		$reason_messages = [
-			'unsupported_type'  => sprintf(
+			'unsupported_type'    => sprintf(
 				/* translators: %s: product type */
 				__( 'Unsupported product type: %s', 'surecart' ),
 				$product_type
 			),
 			'product_not_found'   => __( 'Product not found in WooCommerce', 'surecart' ),
 			'too_many_attributes' => __( 'Too many variation attributes (SureCart supports a maximum of 3)', 'surecart' ),
+			'mapping_error'       => __( 'Failed to map product data during import', 'surecart' ),
 		];
 
 		$this->skipped_products_batch[] = [
@@ -309,9 +313,10 @@ class WooCommerceImportJob extends Job {
 		$transient_key = 'sc_woo_import_skipped_' . $session_id;
 		$lock_key      = $transient_key . '_lock';
 
-		if ( ! $this->acquireLock( $lock_key ) ) {
-			error_log( 'SureCart WooCommerce Sync: Could not acquire lock for skipped products — data may be incomplete.' ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
-			return;
+		$lock_acquired = $this->acquireLock( $lock_key );
+
+		if ( ! $lock_acquired ) {
+			error_log( 'SureCart WooCommerce Sync: Could not acquire lock for skipped products — falling back to direct write.' ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 		}
 
 		// Merge with any previously stored skipped products from earlier batches.
@@ -325,7 +330,9 @@ class WooCommerceImportJob extends Job {
 		// Store for 7 days (matches typical ImportRow retention).
 		set_transient( $transient_key, $skipped_products, 7 * DAY_IN_SECONDS );
 
-		$this->releaseLock( $lock_key );
+		if ( $lock_acquired ) {
+			$this->releaseLock( $lock_key );
+		}
 
 		$this->skipped_products_batch = [];
 	}
