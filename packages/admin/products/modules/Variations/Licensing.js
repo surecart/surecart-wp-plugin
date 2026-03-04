@@ -29,11 +29,14 @@ export default ({
 		)
 		.map((download) => download?.id);
 
+	// Normalize: current_release_download can be a string ID or expanded object.
+	const rawReleaseValue = getValue('current_release_download');
+	const currentReleaseId = rawReleaseValue?.id ?? rawReleaseValue;
+
 	// If inherited value is not in the variant's downloads, show empty.
-	const currentReleaseValue = getValue('current_release_download');
 	const displayReleaseValue =
-		currentReleaseValue && validDownloadIds.includes(currentReleaseValue)
-			? currentReleaseValue
+		currentReleaseId && validDownloadIds.includes(currentReleaseId)
+			? currentReleaseId
 			: '';
 
 	return (
@@ -97,18 +100,20 @@ export default ({
 							})
 						);
 					}}
-					choices={(downloads || [])
-						.filter(
-							(download) =>
-								download?.media?.content_type ===
-								'application/zip'
-						)
-						.map((download) => {
-							return {
+					choices={[
+						{ value: '', label: __('— None —', 'surecart') },
+						...(downloads || [])
+							// Only .zip files are valid for WP plugin update API releases.
+							.filter(
+								(download) =>
+									download?.media?.content_type ===
+									'application/zip'
+							)
+							.map((download) => ({
 								value: download?.id,
 								label: download?.media?.filename,
-							};
-						})}
+							})),
+					]}
 				/>
 			)}
 		</DrawerSection>

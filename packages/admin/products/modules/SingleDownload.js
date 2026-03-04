@@ -55,12 +55,15 @@ export default ({ download, product, className, variant }) => {
 	};
 
 	// Is this the current release.
-	const isCurrentRelease = variant
-		? variant?.current_release_download === download?.id
-		: product?.current_release_download === download?.id;
+	// current_release_download can be a string ID or an expanded Download object.
+	const variantRelease = variant?.current_release_download;
+	const productRelease = product?.current_release_download;
+	const isCurrentRelease = variant?.id
+		? (variantRelease?.id ?? variantRelease) === download?.id
+		: (productRelease?.id ?? productRelease) === download?.id;
 
 	const onRemove = async () => {
-		const confirmationMessage = !!variant
+		const confirmationMessage = variant?.id
 			? __(
 					'Are you sure you want to remove the download from this variant?',
 					'surecart'

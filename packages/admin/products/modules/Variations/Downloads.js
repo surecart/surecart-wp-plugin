@@ -46,18 +46,28 @@ export default ({
 		product,
 	});
 
-	const { productDownloads } = useSelect(
+	// Check if the product has any downloads (used to show override hint).
+	const { hasProductDownloads, productDownloadsFetching } = useSelect(
 		(select) => {
 			if (!product?.id) {
-				return { productDownloads: [] };
+				return { hasProductDownloads: false, productDownloadsFetching: false };
 			}
+			const queryArgs = [
+				'surecart',
+				'download',
+				{
+					context: 'edit',
+					product_ids: [product.id],
+					per_page: 1,
+				},
+			];
+			const records = select(coreStore).getEntityRecords(...queryArgs);
 			return {
-				productDownloads:
-					select(coreStore).getEntityRecords('surecart', 'download', {
-						context: 'edit',
-						product_ids: [product.id],
-						per_page: 1,
-					}) || [],
+				hasProductDownloads: (records || []).length > 0,
+				productDownloadsFetching: select(coreStore).isResolving(
+					'getEntityRecords',
+					queryArgs
+				),
 			};
 		},
 		[product?.id]
@@ -82,7 +92,9 @@ export default ({
 		if (isExternal) {
 			payload.name = media.name;
 			payload.url = media.url;
-		} else payload.media = media?.id;
+		} else {
+			payload.media = media?.id;
+		}
 
 		try {
 			setError(null);
@@ -95,7 +107,6 @@ export default ({
 			});
 		} catch (e) {
 			setError(e);
-			console.error(e);
 		} finally {
 			setModal(null);
 			setIsSaving(false);
@@ -265,7 +276,7 @@ export default ({
 							)}
 						</div>
 
-						{!!productDownloads?.length && (
+						{hasProductDownloads && !productDownloadsFetching && (
 							<div
 								css={css`
 									font-size: var(

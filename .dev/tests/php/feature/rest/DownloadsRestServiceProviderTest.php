@@ -99,6 +99,19 @@ class DownloadRestServiceProviderTest extends SureCartUnitTestCase
 	}
 
 	/**
+	 * Test that variant_ids filter is denied for unauthorized users.
+	 */
+	public function test_list_with_variant_ids_filter_unauthorized() {
+		$user = self::factory()->user->create_and_get();
+		wp_set_current_user( $user->ID );
+
+		$request = new \WP_REST_Request( 'GET', '/surecart/v1/downloads' );
+		$request->set_query_params( [ 'variant_ids' => [ 'test-variant-id' ] ] );
+		$response = rest_do_request( $request );
+		$this->assertSame( 403, $response->get_status() );
+	}
+
+	/**
 	 * @dataProvider requestProvider
 	 */
 	public function test_permissions($caps, $method, $route, $status){

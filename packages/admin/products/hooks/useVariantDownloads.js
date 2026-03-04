@@ -28,7 +28,7 @@ export default function useVariantDownloads({ variant, isCustomDownloads }) {
 				'download',
 				{
 					context: 'edit',
-					variant_ids: [variant?.id],
+					variant_ids: [variant.id],
 					per_page: 100,
 					expand: ['media'],
 				},
