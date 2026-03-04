@@ -2,6 +2,9 @@
 import { jsx, css } from '@emotion/core';
 import { useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
+import { useDispatch } from '@wordpress/data';
+import { store as coreStore } from '@wordpress/core-data';
+import { store as noticeStore } from '@wordpress/notices';
 import {
 	ScBlockUi,
 	ScButton,
@@ -28,35 +31,51 @@ const WEIGHT_UNIT_CHOICES = [
 
 const PARCEL_TYPE_CHOICES = [
 	{ label: __('Box or Tube', 'surecart'), value: 'box' },
-	{ label: __('Polymailer (Envelope)', 'surecart'), value: 'polymailer' },
+	{ label: __('Polymailer (Envelope)', 'surecart'), value: 'poly_mailer' },
 ];
 
-export default ({ selectedParcel, isEdit, onRequestClose, open, onSave }) => {
-	const [parcel, setParcel] = useState({
-		name: '',
-		type: 'box',
-		dimensions: { length: '', width: '', height: '', unit: 'in' },
-		weight: '',
-		weight_unit: 'lb',
-		is_default: false,
+const DEFAULT_PARCEL = {
+	name: '',
+	package_type: 'box',
+	dimensions: { length: '', width: '', height: '', unit: 'in' },
+	weight: '',
+	weight_unit: 'lb',
+	default: false,
+};
+
+export default ({ selectedParcel, isEdit, onRequestClose, open }) => {
+	const { saveEntityRecord, invalidateResolutionForStore } =
+		useDispatch(coreStore);
+	const { createSuccessNotice } = useDispatch(noticeStore);
+
+	const [parcel, setParcel] = useState(() => {
+		if (isEdit && selectedParcel) {
+			return { ...DEFAULT_PARCEL, ...selectedParcel };
+		}
+		return { ...DEFAULT_PARCEL };
 	});
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
 
 	useEffect(() => {
 		if (isEdit && selectedParcel) {
-			setParcel({ ...selectedParcel });
+			setParcel({ ...DEFAULT_PARCEL, ...selectedParcel });
 		} else if (!isEdit) {
-			setParcel({
-				name: '',
-				type: 'box',
-				dimensions: { length: '', width: '', height: '', unit: 'in' },
-				weight: '',
-				weight_unit: 'lb',
-				is_default: false,
-			});
+			setParcel({ ...DEFAULT_PARCEL });
 		}
 	}, [selectedParcel, isEdit, open]);
+
+	// Close dialog on Escape key (workaround for shadow DOM event bubbling).
+	useEffect(() => {
+		if (!open) return;
+		const handleEsc = (e) => {
+			if (e.key === 'Escape') {
+				onRequestClose();
+			}
+		};
+		document.addEventListener('keydown', handleEsc);
+		return () => document.removeEventListener('keydown', handleEsc);
+	}, [open, onRequestClose]);
 
 	const onSubmit = async () => {
 		setLoading(true);
@@ -69,21 +88,62 @@ export default ({ selectedParcel, isEdit, onRequestClose, open, onSave }) => {
 				};
 			}
 
-			const templateToSave = isEdit
-				? { ...parcel }
-				: { ...parcel, id: Date.now() };
+			const data = { ...parcel };
 
-			// Clear height when type is polymailer.
-			if (templateToSave.type === 'polymailer') {
-				templateToSave.dimensions = {
-					...templateToSave.dimensions,
-					height: '',
-				};
+			// Include ID for edit (triggers PATCH), omit for create (triggers POST).
+			if (isEdit && selectedParcel?.id) {
+				data.id = selectedParcel.id;
+			} else {
+				delete data.id;
 			}
 
-			onSave(templateToSave);
+			// Clean up dimensions — omit if all values are empty, otherwise convert empty strings to undefined.
+			if (data.dimensions) {
+				const dims = { ...data.dimensions };
+
+				// Clear height when type is poly_mailer.
+				if (data.package_type === 'poly_mailer') {
+					delete dims.height;
+				}
+
+				const { unit, ...values } = dims;
+				const hasValues = Object.values(values).some(
+					(v) => v !== '' && v !== undefined && v !== null
+				);
+
+				if (!hasValues) {
+					delete data.dimensions;
+				} else {
+					data.dimensions = {
+						...Object.fromEntries(
+							Object.entries(dims).filter(
+								([, v]) =>
+									v !== '' &&
+									v !== undefined &&
+									v !== null
+							)
+						),
+						unit: unit || 'in',
+					};
+				}
+			}
+
+			await saveEntityRecord('surecart', 'parcel-template', data, {
+				throwOnError: true,
+			});
+
+			await invalidateResolutionForStore();
+
+			createSuccessNotice(
+				isEdit
+					? __('Parcel template updated', 'surecart')
+					: __('Parcel template added', 'surecart'),
+				{ type: 'snackbar' }
+			);
+
 			onRequestClose();
 		} catch (err) {
+			console.error(err);
 			setError(err);
 		} finally {
 			setLoading(false);
@@ -122,6 +182,7 @@ export default ({ selectedParcel, isEdit, onRequestClose, open, onSave }) => {
 					<ScInput
 						required
 						label={__('Name', 'surecart')}
+						maxlength={100}
 						onScInput={(e) =>
 							setParcel({
 								...parcel,
@@ -151,12 +212,12 @@ export default ({ selectedParcel, isEdit, onRequestClose, open, onSave }) => {
 						`}
 					>
 						<ToggleGroupControl
-							value={parcel.type}
+							value={parcel.package_type}
 							label={__('Type', 'surecart')}
 							onChange={(value) =>
 								setParcel({
 									...parcel,
-									type: value,
+									package_type: value,
 								})
 							}
 							isBlock
@@ -173,7 +234,7 @@ export default ({ selectedParcel, isEdit, onRequestClose, open, onSave }) => {
 					</div>
 
 					<Dimensions
-						hideHeight={parcel.type === 'polymailer'}
+						hideHeight={parcel.package_type === 'poly_mailer'}
 						dimensions={parcel.dimensions}
 						updateDimensions={({ dimensions }) =>
 							setParcel({
@@ -197,6 +258,7 @@ export default ({ selectedParcel, isEdit, onRequestClose, open, onSave }) => {
 							label={__('Weight', 'surecart')}
 							value={parcel.weight}
 							type="number"
+							step={0.01}
 							placeholder="0"
 							min="0"
 							onScInput={(e) =>
@@ -223,11 +285,11 @@ export default ({ selectedParcel, isEdit, onRequestClose, open, onSave }) => {
 					</div>
 
 					<ScSwitch
-						checked={parcel.is_default}
+						checked={parcel.default}
 						onScChange={(e) =>
 							setParcel({
 								...parcel,
-								is_default: e.target.checked,
+								default: e.target.checked,
 							})
 						}
 					>

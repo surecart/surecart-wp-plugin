@@ -48,6 +48,7 @@ export default ({ dimensions, updateDimensions, hideHeight = false }) => {
 				type="number"
 				placeholder="0"
 				min="0"
+				max="999999"
 				onScInput={(e) =>
 					updateDimensions({
 						dimensions: {
@@ -66,6 +67,7 @@ export default ({ dimensions, updateDimensions, hideHeight = false }) => {
 				type="number"
 				placeholder="0"
 				min="0"
+				max="999999"
 				onScInput={(e) =>
 					updateDimensions({
 						dimensions: {
@@ -85,6 +87,7 @@ export default ({ dimensions, updateDimensions, hideHeight = false }) => {
 					type="number"
 					placeholder="0"
 					min="0"
+				max="999999"
 					onScInput={(e) =>
 						updateDimensions({
 							dimensions: {

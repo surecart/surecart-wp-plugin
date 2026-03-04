@@ -2,12 +2,18 @@
 import { jsx, css } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import { useState } from 'react';
+import { useDispatch } from '@wordpress/data';
+import { store as coreStore, useEntityRecords } from '@wordpress/core-data';
+import { store as noticeStore } from '@wordpress/notices';
 import SettingsBox from '../../SettingsBox';
 import {
+	ScBlockUi,
 	ScButton,
 	ScCard,
+	ScDialog,
 	ScDropdown,
 	ScEmpty,
+	ScFlex,
 	ScIcon,
 	ScMenu,
 	ScMenuItem,
@@ -16,33 +22,20 @@ import {
 	ScTag,
 } from '@surecart/components-react';
 import ParcelTemplateForm from './ParcelTemplateForm';
-
-const STORAGE_KEY = 'sc_parcel_templates';
-
-const getParcelTemplates = () => {
-	try {
-		return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-	} catch {
-		return [];
-	}
-};
-
-const saveParcelTemplates = (templates) => {
-	localStorage.setItem(STORAGE_KEY, JSON.stringify(templates));
-};
+import Error from '../../../components/Error';
 
 const TYPE_LABELS = {
 	box: __('Box or Tube', 'surecart'),
-	polymailer: __('Polymailer (Envelope)', 'surecart'),
+	poly_mailer: __('Polymailer (Envelope)', 'surecart'),
 };
 
 const getDimensionsSummary = (parcel) => {
-	const { dimensions, type } = parcel;
+	const { dimensions, package_type } = parcel;
 	if (!dimensions) return '\u2013';
 
 	const { length, width, height, unit } = dimensions;
 	const parts = [length, width];
-	if (type !== 'polymailer' && height) {
+	if (package_type !== 'poly_mailer' && height) {
 		parts.push(height);
 	}
 
@@ -58,35 +51,41 @@ const modals = {
 };
 
 export default () => {
-	const [parcels, setParcels] = useState(getParcelTemplates);
 	const [currentModal, setCurrentModal] = useState(null);
 	const [selectedParcel, setSelectedParcel] = useState(null);
+	const [deleteTarget, setDeleteTarget] = useState(null);
+	const [busy, setBusy] = useState(false);
+	const [error, setError] = useState(null);
 
-	const handleSave = (template) => {
-		let updated;
+	const { deleteEntityRecord, invalidateResolutionForStore } =
+		useDispatch(coreStore);
+	const { createSuccessNotice } = useDispatch(noticeStore);
 
-		if (template.is_default) {
-			// Unset default on all others.
-			updated = parcels.map((p) => ({ ...p, is_default: false }));
-		} else {
-			updated = [...parcels];
+	const { records: parcels, isResolving: loading } = useEntityRecords(
+		'surecart',
+		'parcel-template',
+		{
+			per_page: 100,
 		}
+	);
 
-		const existingIndex = updated.findIndex((p) => p.id === template.id);
-		if (existingIndex >= 0) {
-			updated[existingIndex] = template;
-		} else {
-			updated.push(template);
+	const handleDelete = async (id) => {
+		setBusy(true);
+		try {
+			await deleteEntityRecord('surecart', 'parcel-template', id, {
+				throwOnError: true,
+			});
+			createSuccessNotice(
+				__('Parcel template removed', 'surecart'),
+				{ type: 'snackbar' }
+			);
+		} catch (err) {
+			console.error(err);
+			setError(err);
+		} finally {
+			setBusy(false);
+			setDeleteTarget(null);
 		}
-
-		saveParcelTemplates(updated);
-		setParcels(updated);
-	};
-
-	const handleDelete = (id) => {
-		const updated = parcels.filter((p) => p.id !== id);
-		saveParcelTemplates(updated);
-		setParcels(updated);
 	};
 
 	return (
@@ -96,10 +95,13 @@ export default () => {
 				'Create reusable parcel templates for shipping.',
 				'surecart'
 			)}
+			loading={loading}
 			noButton
 			wrapperTag="div"
 		>
-			{!!parcels.length && (
+			<Error error={error} setError={setError} />
+
+			{!!(parcels || []).length && (
 				<ScCard noPadding>
 					<ScStackedList>
 						{parcels.map((parcel) => (
@@ -111,7 +113,7 @@ export default () => {
 							>
 								<ScIcon
 									name={
-										parcel.type === 'polymailer'
+										parcel.package_type === 'poly_mailer'
 											? 'mail'
 											: 'package'
 									}
@@ -130,7 +132,7 @@ export default () => {
 										`}
 									>
 										<strong>{parcel.name}</strong>
-										{parcel.is_default && (
+										{parcel.default && (
 											<ScTag
 												type="primary"
 												size="small"
@@ -151,8 +153,8 @@ export default () => {
 										`}
 									>
 										{[
-											TYPE_LABELS[parcel.type] ||
-												parcel.type,
+											TYPE_LABELS[parcel.package_type] ||
+												parcel.package_type,
 											getDimensionsSummary(parcel) !==
 												'\u2013' &&
 												getDimensionsSummary(parcel),
@@ -193,7 +195,7 @@ export default () => {
 											</ScMenuItem>
 											<ScMenuItem
 												onClick={() =>
-													handleDelete(parcel.id)
+													setDeleteTarget(parcel)
 												}
 											>
 												<ScIcon
@@ -211,7 +213,7 @@ export default () => {
 				</ScCard>
 			)}
 
-			{!parcels.length && (
+			{!(parcels || []).length && !loading && (
 				<ScCard noPadding>
 					<ScEmpty>
 						{__(
@@ -235,6 +237,13 @@ export default () => {
 				</ScButton>
 			</div>
 
+			{busy && (
+				<ScBlockUi
+					style={{ '--sc-block-ui-opacity': '0.75' }}
+					spinner
+				/>
+			)}
+
 			{currentModal && (
 				<ParcelTemplateForm
 					open={
@@ -247,8 +256,42 @@ export default () => {
 						setSelectedParcel(null);
 					}}
 					selectedParcel={selectedParcel}
-					onSave={handleSave}
 				/>
+			)}
+
+			{deleteTarget && (
+				<ScDialog
+					open={!!deleteTarget}
+					onScRequestClose={() => setDeleteTarget(null)}
+					label={__('Delete Parcel Template', 'surecart')}
+				>
+					{__(
+						'Are you sure you want to delete this parcel template? This action cannot be undone.',
+						'surecart'
+					)}
+					<ScFlex justifyContent="flex-start" slot="footer">
+						<ScButton
+							type="primary"
+							disabled={busy}
+							onClick={() => handleDelete(deleteTarget.id)}
+						>
+							{__('Delete', 'surecart')}
+						</ScButton>
+						<ScButton
+							type="text"
+							onClick={() => setDeleteTarget(null)}
+							disabled={busy}
+						>
+							{__('Cancel', 'surecart')}
+						</ScButton>
+					</ScFlex>
+					{busy && (
+						<ScBlockUi
+							style={{ '--sc-block-ui-opacity': '0.75' }}
+							spinner
+						/>
+					)}
+				</ScDialog>
 			)}
 		</SettingsBox>
 	);
