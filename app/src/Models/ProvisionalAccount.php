@@ -102,7 +102,7 @@ class ProvisionalAccount extends Model {
 			if ( ! $service->isRunning() ) {
 				$import = $service->dispatch();
 				if ( is_wp_error( $import ) ) {
-					return $import;
+					error_log( 'SureCart: WooCommerce import dispatch failed during onboarding - ' . $import->get_error_message() ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 				}
 			}
 		}

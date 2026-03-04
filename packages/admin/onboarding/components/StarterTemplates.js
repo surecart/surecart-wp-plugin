@@ -9,13 +9,11 @@ const templates = [
 	{
 		id: null,
 		name: __('Start From Scratch', 'surecart'),
-		imgUrl: `${scData?.plugin_url}/images/starter-templates/scratch.png`,
 		icon: 'plus',
 	},
 	{
 		id: 'seed',
 		name: __('Start With Demo Products', 'surecart'),
-		imgUrl: `${scData?.plugin_url}/images/starter-templates/seed.jpg`,
 		icon: 'shirt',
 	},
 	...(scData?.is_woocommerce_active
@@ -23,7 +21,6 @@ const templates = [
 				{
 					id: 'import_woocommerce_products',
 					name: __('Import Products from Woo', 'surecart'),
-					imgUrl: `${scData?.plugin_url}/images/starter-templates/import_woocommerce.png`,
 					icon: 'woo-text-logo',
 				},
 		  ]

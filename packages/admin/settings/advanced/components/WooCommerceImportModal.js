@@ -29,22 +29,30 @@ export default ({ open, onRequestClose }) => {
 			return;
 		}
 
+		const controller = new AbortController();
+
 		const fetchCount = async () => {
 			try {
 				setLoadingCount(true);
 				const response = await apiFetch({
 					path: '/surecart/v1/products/woocommerce_count',
+					signal: controller.signal,
 				});
 				setCount(response?.count ?? 0);
 			} catch (e) {
-				console.error(e);
-				setCountError(true);
+				if (e.name !== 'AbortError') {
+					console.error(e);
+					setCountError(true);
+				}
 			} finally {
-				setLoadingCount(false);
+				if (!controller.signal.aborted) {
+					setLoadingCount(false);
+				}
 			}
 		};
 
 		fetchCount();
+		return () => controller.abort();
 	}, [open]);
 
 	const submitForm = async () => {

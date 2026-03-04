@@ -262,8 +262,37 @@ class WooCommerceImportJob extends Job {
 	}
 
 	/**
+	 * Attempt to acquire a lock using wp_cache_add (atomic).
+	 * Falls back gracefully — wp_cache_add returns false if the key already exists.
+	 *
+	 * @param string $lock_key   Cache key for the lock.
+	 * @param int    $max_retries Maximum number of acquire attempts.
+	 * @return bool Whether the lock was acquired.
+	 */
+	private function acquireLock( $lock_key, $max_retries = 5 ) {
+		for ( $i = 0; $i < $max_retries; $i++ ) {
+			// wp_cache_add is atomic — returns false if key already exists.
+			if ( wp_cache_add( $lock_key, 1, '', 30 ) ) {
+				return true;
+			}
+			usleep( 200000 ); // 200ms.
+		}
+		return false;
+	}
+
+	/**
+	 * Release a previously acquired lock.
+	 *
+	 * @param string $lock_key Cache key for the lock.
+	 * @return void
+	 */
+	private function releaseLock( $lock_key ) {
+		wp_cache_delete( $lock_key );
+	}
+
+	/**
 	 * Flush accumulated skipped products to the transient in a single write.
-	 * Uses a lock to prevent race conditions between concurrent batches.
+	 * Uses an atomic lock to prevent race conditions between concurrent batches.
 	 *
 	 * @return void
 	 */
@@ -276,15 +305,10 @@ class WooCommerceImportJob extends Job {
 		$transient_key = 'sc_woo_import_skipped_' . $session_id;
 		$lock_key      = $transient_key . '_lock';
 
-		// Acquire lock (retry up to 5 times with 200ms delay).
-		for ( $i = 0; $i < 5; $i++ ) {
-			if ( false !== get_transient( $lock_key ) ) {
-				usleep( 200000 );
-				continue;
-			}
-			break;
+		if ( ! $this->acquireLock( $lock_key ) ) {
+			error_log( 'SureCart WooCommerce Sync: Could not acquire lock for skipped products — data may be incomplete.' ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+			return;
 		}
-		set_transient( $lock_key, 1, 30 );
 
 		// Merge with any previously stored skipped products from earlier batches.
 		$skipped_products = get_transient( $transient_key );
@@ -297,14 +321,14 @@ class WooCommerceImportJob extends Job {
 		// Store for 7 days (matches typical ImportRow retention).
 		set_transient( $transient_key, $skipped_products, 7 * DAY_IN_SECONDS );
 
-		delete_transient( $lock_key );
+		$this->releaseLock( $lock_key );
 
 		$this->skipped_products_batch = [];
 	}
 
 	/**
 	 * Atomically append an import ID to the stored list.
-	 * Uses a lock to prevent race conditions between concurrent batches.
+	 * Uses an atomic lock to prevent race conditions between concurrent batches.
 	 *
 	 * @param string $import_id The import ID to append.
 	 * @return void
@@ -312,20 +336,15 @@ class WooCommerceImportJob extends Job {
 	private function appendImportId( $import_id ) {
 		$lock_key = 'sc_woo_import_ids_lock';
 
-		// Acquire lock (retry up to 5 times with 200ms delay).
-		for ( $i = 0; $i < 5; $i++ ) {
-			if ( false !== get_transient( $lock_key ) ) {
-				usleep( 200000 );
-				continue;
-			}
-			break;
+		if ( ! $this->acquireLock( $lock_key ) ) {
+			error_log( 'SureCart WooCommerce Sync: Could not acquire lock for import IDs — ID may be missing from results.' ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+			return;
 		}
-		set_transient( $lock_key, 1, 30 );
 
 		$existing_ids   = get_option( 'sc_woo_import_ids', [] );
 		$existing_ids[] = $import_id;
 		update_option( 'sc_woo_import_ids', $existing_ids, false );
 
-		delete_transient( $lock_key );
+		$this->releaseLock( $lock_key );
 	}
 }

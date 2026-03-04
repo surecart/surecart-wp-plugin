@@ -70,6 +70,7 @@ class WooCommerceImportService {
 		delete_option( 'sc_woo_import_all_skipped' );
 
 		$batch_size = apply_filters( 'surecart/sync/woocommerce_products/batch_size', $batch_size );
+		$batch_size = max( 1, min( 500, (int) $batch_size ) );
 
 		return $this->job()->push_to_queue(
 			[

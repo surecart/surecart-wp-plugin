@@ -354,6 +354,9 @@ class WooCommerceProductMapper {
 	 */
 	private function getCurrency() {
 		if ( null === $this->currency_cache ) {
+			if ( ! function_exists( 'get_woocommerce_currency' ) ) {
+				return 'USD';
+			}
 			$this->currency_cache = \get_woocommerce_currency();
 		}
 		return $this->currency_cache;
@@ -942,7 +945,7 @@ class WooCommerceProductMapper {
 			// Traceability (Critical).
 			'wc_product_id'          => $product->get_id(),
 			'wc_product_type'        => $product->get_type(),
-			'wc_synced_at'           => current_time( 'c' ),
+			'wc_synced_at'           => gmdate( 'c' ),
 			'wc_permalink'           => get_permalink( $product->get_id() ),
 
 			// Product Analytics.
