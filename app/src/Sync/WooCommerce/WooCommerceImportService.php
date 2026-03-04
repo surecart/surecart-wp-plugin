@@ -98,17 +98,19 @@ class WooCommerceImportService {
 
 		add_filter( 'woocommerce_product_data_store_cpt_get_products_query', [ $mapper, 'excludeImportedProducts' ], 10, 2 );
 
-		$products = wc_get_products(
-			[
-				'limit'                 => 1,
-				'page'                  => 1,
-				'return'                => 'ids',
-				'paginate'              => true,
-				'surecart_not_imported' => true,
-			]
-		);
-
-		remove_filter( 'woocommerce_product_data_store_cpt_get_products_query', [ $mapper, 'excludeImportedProducts' ], 10 );
+		try {
+			$products = wc_get_products(
+				[
+					'limit'                 => 1,
+					'page'                  => 1,
+					'return'                => 'ids',
+					'paginate'              => true,
+					'surecart_not_imported' => true,
+				]
+			);
+		} finally {
+			remove_filter( 'woocommerce_product_data_store_cpt_get_products_query', [ $mapper, 'excludeImportedProducts' ], 10 );
+		}
 
 		if ( ! is_object( $products ) || ! isset( $products->total ) ) {
 			return 0;

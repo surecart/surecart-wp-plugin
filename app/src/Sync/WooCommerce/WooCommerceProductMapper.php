@@ -289,7 +289,8 @@ class WooCommerceProductMapper {
 			],
 		];
 
-		// Sale price.
+		// Sale price — scratch_amount uses get_regular_price() (full price shown struck-through)
+		// while amount above uses get_price() which WC resolves to the active sale price.
 		if ( $product->is_on_sale() && $product->get_sale_price() ) {
 			$price_data['scratch_amount'] = $this->convertPriceToInteger( $product->get_regular_price() );
 		}
@@ -315,6 +316,8 @@ class WooCommerceProductMapper {
 			return null;
 		}
 
+		// Intentional approximations: month=30d, year=365d. SureCart trial_duration_days
+		// only accepts whole days, so exact calendar precision isn't possible.
 		$days_map = [
 			'day'   => 1,
 			'week'  => 7,

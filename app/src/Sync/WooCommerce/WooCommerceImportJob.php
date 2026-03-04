@@ -193,7 +193,7 @@ class WooCommerceImportJob extends Job {
 
 		} catch ( \Exception $e ) {
 			error_log( sprintf( 'SureCart WooCommerce Sync: Failed to sync product %d - %s', $product_id, $e->getMessage() ) ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
-			$this->trackSkippedProduct( null, 'unknown', 'mapping_error' );
+			$this->trackSkippedProduct( $product ?? null, isset( $product ) ? $product->get_type() : 'unknown', 'mapping_error' );
 			return null;
 		}
 	}
@@ -347,15 +347,18 @@ class WooCommerceImportJob extends Job {
 	private function appendImportId( $import_id ) {
 		$lock_key = 'sc_woo_import_ids_lock';
 
-		if ( ! $this->acquireLock( $lock_key ) ) {
-			error_log( 'SureCart WooCommerce Sync: Could not acquire lock for import IDs — ID may be missing from results.' ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
-			return;
+		$lock_acquired = $this->acquireLock( $lock_key );
+
+		if ( ! $lock_acquired ) {
+			error_log( 'SureCart WooCommerce Sync: Could not acquire lock for import IDs — falling back to direct write.' ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 		}
 
 		$existing_ids   = get_option( 'sc_woo_import_ids', [] );
 		$existing_ids[] = $import_id;
 		update_option( 'sc_woo_import_ids', $existing_ids, false );
 
-		$this->releaseLock( $lock_key );
+		if ( $lock_acquired ) {
+			$this->releaseLock( $lock_key );
+		}
 	}
 }

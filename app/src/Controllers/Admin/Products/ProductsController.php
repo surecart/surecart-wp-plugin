@@ -345,6 +345,11 @@ class ProductsController extends AdminController {
 					$skipped_products = [];
 				}
 
+				// Clean up completion notice options now that the user has viewed results.
+				delete_option( 'sc_woo_import_all_skipped' );
+				delete_option( 'sc_woo_import_session_id' );
+				delete_option( 'sc_woo_import_ids' );
+
 				return \SureCart::view( 'admin/products/import-results' )->with(
 					[
 						'succeeded_count'  => 0,
@@ -432,9 +437,11 @@ class ProductsController extends AdminController {
 			}
 		}
 
-		// Clean up the completion notice option now that the user has viewed results.
-		// The results page uses URL query params, so this option is no longer needed.
+		// Clean up completion notice options now that the user has viewed results.
+		// The results page uses URL query params, so these options are no longer needed.
 		delete_option( 'sc_woo_import_ids' );
+		delete_option( 'sc_woo_import_all_skipped' );
+		delete_option( 'sc_woo_import_session_id' );
 
 		return \SureCart::view( 'admin/products/import-results' )->with(
 			[
