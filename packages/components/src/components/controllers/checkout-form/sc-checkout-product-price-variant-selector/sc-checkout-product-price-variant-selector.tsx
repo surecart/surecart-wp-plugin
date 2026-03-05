@@ -64,7 +64,8 @@ export class ScProductCheckoutSelectVariantOption {
    */
   isSelectedVariantOutOfStock() {
     if (!this.selectedVariant) return false;
-    return this.hasVariants() && !this.selectedVariant.has_unlimited_stock && this.selectedVariant.available_stock < 1;
+    const hasUnlimitedStock = this.selectedVariant.has_unlimited_stock ?? this.product?.has_unlimited_stock;
+    return this.hasVariants() && !hasUnlimitedStock && this.selectedVariant.available_stock < 1;
   }
 
   /**

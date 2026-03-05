@@ -255,16 +255,12 @@ const { state, actions } = store('surecart/product-page', {
 			}
 			const { product } = context;
 			if (state.selectedVariant?.id) {
-				// null means "inherit from product" — fall back to product's stock settings
-				const stockEnabled =
-					state.selectedVariant.stock_enabled ??
-					product?.stock_enabled ??
-					false;
-				const allowOos =
-					state.selectedVariant.allow_out_of_stock_purchases ??
-					product?.allow_out_of_stock_purchases ??
-					false;
-				if (!stockEnabled || allowOos) return false;
+				// null/undefined means "inherit from product"
+				const hasUnlimitedStock =
+					state.selectedVariant.has_unlimited_stock ??
+					product?.has_unlimited_stock ??
+					true;
+				if (hasUnlimitedStock) return false;
 				return state.selectedVariant.available_stock <= 0;
 			}
 
@@ -621,14 +617,12 @@ export const isProductVariantOptionSoldOut = (
 	product = null
 ) => {
 	const getEffectiveStock = (variant) => {
-		// null means "inherit from product" — fall back to product's stock settings
-		const stockEnabled =
-			variant?.stock_enabled ?? product?.stock_enabled ?? false;
-		const allowOos =
-			variant?.allow_out_of_stock_purchases ??
-			product?.allow_out_of_stock_purchases ??
-			false;
-		if (!stockEnabled || allowOos) return Infinity;
+		// null/undefined means "inherit from product"
+		const hasUnlimitedStock =
+			variant?.has_unlimited_stock ??
+			product?.has_unlimited_stock ??
+			true;
+		if (hasUnlimitedStock) return Infinity;
 		return variant.available_stock;
 	};
 

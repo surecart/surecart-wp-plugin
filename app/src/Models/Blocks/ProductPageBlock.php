@@ -150,7 +150,7 @@ class ProductPageBlock {
 				'mode'            => \SureCart\Models\Form::getMode( \SureCart::forms()->getDefaultId() ),
 				'checkoutUrl'     => \SureCart::pages()->url( 'checkout' ),
 				'urlPrefix'       => $this->urlParams()->getKey(),
-				'product'         => ! empty( $product ) && ! empty( $product->id ) ? $product->only( [ 'id', 'name', 'has_unlimited_stock', 'stock_enabled', 'allow_out_of_stock_purchases', 'available_stock', 'archived', 'permalink', 'preview_image' ] ) : null,
+				'product'         => ! empty( $product ) && ! empty( $product->id ) ? $product->only( [ 'id', 'name', 'has_unlimited_stock', 'available_stock', 'archived', 'permalink', 'preview_image' ] ) : null,
 				'selectedPrice'   => ! empty( $product->initial_price ) && ! empty( $product->initial_price->id ) ? $product->initial_price->only(
 					[
 						'id',
@@ -214,8 +214,7 @@ class ProductPageBlock {
 							'display_amount',
 							'available_stock',
 							'line_item_image',
-							'stock_enabled',
-							'allow_out_of_stock_purchases',
+							'has_unlimited_stock',
 						]
 					),
 					$product->variants->data ?? array()
@@ -298,8 +297,7 @@ class ProductPageBlock {
 						'amount',
 						'display_amount',
 						'available_stock',
-						'stock_enabled',
-						'allow_out_of_stock_purchases',
+						'has_unlimited_stock',
 					]
 				) : [],
 				'isOptionUnavailable'   => function () {
@@ -312,7 +310,7 @@ class ProductPageBlock {
 
 					if ( 1 === $option_number ) {
 						$items = array_filter( $variants ?? [], fn( $v ) => $v['option_1'] === $option );
-						return max( array_map( fn( $v ) => self::effectiveVariantStock( $v, $product ), array_values( $items ) ) ) <= 0;
+						return self::isVariantGroupSoldOut( $items, $product );
 					}
 
 					if ( 2 === $option_number ) {
@@ -320,14 +318,14 @@ class ProductPageBlock {
 							$variants ?? [],
 							fn( $v ) => $v['option_1'] === $variant_values['option_1'] && $v['option_2'] === $option
 						);
-						return max( array_map( fn( $v ) => self::effectiveVariantStock( $v, $product ), array_values( $items ) ) ) <= 0;
+						return self::isVariantGroupSoldOut( $items, $product );
 					}
 
 					$items = array_filter(
 						$variants ?? [],
 						fn( $v ) => $v['option_1'] === $variant_values['option_1'] && $v['option_2'] === $variant_values['option_2'] && $v['option_3'] === $option
 					);
-					return max( array_map( fn( $v ) => self::effectiveVariantStock( $v, $product ), array_values( $items ) ) ) <= 0;
+					return self::isVariantGroupSoldOut( $items, $product );
 				},
 				'isOptionValueSelected' => function () {
 					$context = wp_interactivity_get_context();
@@ -410,6 +408,22 @@ class ProductPageBlock {
 	}
 
 	/**
+	 * Check if a filtered group of variants is sold out.
+	 * Returns false (not sold out) when the group is empty — no matching variants means nothing to sell out.
+	 *
+	 * @param array $items   Filtered variant data arrays.
+	 * @param array $product Parent product data for fallback.
+	 * @return bool
+	 */
+	private static function isVariantGroupSoldOut( array $items, array $product ): bool {
+		$stocks = array_map( fn( $v ) => self::effectiveVariantStock( $v, $product ), array_values( $items ) );
+		if ( empty( $stocks ) ) {
+			return false;
+		}
+		return max( $stocks ) <= 0;
+	}
+
+	/**
 	 * Get the effective available stock for a variant, respecting variant-level stock overrides.
 	 * Returns PHP_INT_MAX when stock is not tracked, it would be then unlimited stock.
 	 *
@@ -418,9 +432,8 @@ class ProductPageBlock {
 	 * @return int
 	 */
 	private static function effectiveVariantStock( array $item, array $product ): int {
-		$stock_enabled      = $item['stock_enabled'] ?? $product['stock_enabled'] ?? false;
-		$allow_out_of_stock = $item['allow_out_of_stock_purchases'] ?? $product['allow_out_of_stock_purchases'] ?? false;
-		if ( ! $stock_enabled || $allow_out_of_stock ) {
+		$has_unlimited_stock = $item['has_unlimited_stock'] ?? $product['has_unlimited_stock'] ?? true;
+		if ( $has_unlimited_stock ) {
 			return PHP_INT_MAX;
 		}
 		return (int) $item['available_stock'];

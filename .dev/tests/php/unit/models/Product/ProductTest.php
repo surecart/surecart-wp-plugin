@@ -625,4 +625,51 @@ class ProductTest extends SureCartUnitTestCase
 		]);
 		$this->assertFalse($product->has_options);
 	}
+
+	/**
+	 * @group stock
+	 * @group product
+	 */
+	public function test_has_unlimited_stock_true_when_stock_not_enabled() {
+		$this->shouldSyncProduct( 'test-stock-1' );
+
+		$product = new Product( [
+			'id'            => 'test-stock-1',
+			'stock_enabled' => false,
+		] );
+
+		$this->assertTrue( $product->has_unlimited_stock );
+	}
+
+	/**
+	 * @group stock
+	 * @group product
+	 */
+	public function test_has_unlimited_stock_true_when_allow_out_of_stock() {
+		$this->shouldSyncProduct( 'test-stock-2' );
+
+		$product = new Product( [
+			'id'                           => 'test-stock-2',
+			'stock_enabled'                => true,
+			'allow_out_of_stock_purchases' => true,
+		] );
+
+		$this->assertTrue( $product->has_unlimited_stock );
+	}
+
+	/**
+	 * @group stock
+	 * @group product
+	 */
+	public function test_has_unlimited_stock_false_when_stock_tracked() {
+		$this->shouldSyncProduct( 'test-stock-3' );
+
+		$product = new Product( [
+			'id'                           => 'test-stock-3',
+			'stock_enabled'                => true,
+			'allow_out_of_stock_purchases' => false,
+		] );
+
+		$this->assertFalse( $product->has_unlimited_stock );
+	}
 }
