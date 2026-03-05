@@ -75,34 +75,36 @@ export default ({ attributes, setAttributes }) => {
 				<Design attributes={attributes} setAttributes={setAttributes} />
 			</InspectorControls>
 
-			<div
-				{...blockProps}
-				className={classnames(blockProps.className, {
-					'wp-block-button': true,
-					'sc-block-button': true,
-					[`has-custom-width wp-block-button__width-${width}`]: width,
-					[`has-custom-width sc-block-button__width-${width}`]: width,
-				})}
-			>
+			<div className="wp-block-buttons">
 				<div
-					className={classnames(
-						'wp-block-button__link',
-						'sc-button__link',
-						colorProps.className,
-						borderProps.className,
-						spacingProps.className,
-						shadowProps.className,
-					)}
-					style={{
-						...borderProps.style,
-						...spacingProps.style,
-						...shadowProps.style,
-						...colorProps.style,
-						gap: getSpacingPresetCssVar(style?.spacing?.blockGap),
-						justifyContent: style?.typography?.textAlign,
-					}}
+					{...blockProps}
+					className={classnames(blockProps.className, {
+						'wp-block-button': true,
+						'sc-block-button': true,
+						[`has-custom-width wp-block-button__width-${width}`]: width,
+						[`has-custom-width sc-block-button__width-${width}`]: width,
+					})}
 				>
-					{renderButton()}
+					<div
+						className={classnames(
+							'wp-block-button__link',
+							'sc-button__link',
+							colorProps.className,
+							borderProps.className,
+							spacingProps.className,
+							shadowProps.className,
+						)}
+						style={{
+							...borderProps.style,
+							...spacingProps.style,
+							...shadowProps.style,
+							...colorProps.style,
+							gap: getSpacingPresetCssVar(style?.spacing?.blockGap),
+							justifyContent: style?.typography?.textAlign,
+						}}
+					>
+						{renderButton()}
+					</div>
 				</div>
 			</div>
 		</>

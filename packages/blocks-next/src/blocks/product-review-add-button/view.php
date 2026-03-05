@@ -1,3 +1,4 @@
+<div class="wp-block-buttons">
 <div <?php
 	echo wp_kses_data(
 		get_block_wrapper_attributes(
@@ -73,6 +74,7 @@
 			?>
 		<?php } ?>
 	</div>
+</div>
 </div>
 
 <?php \SureCart::block()->reviewForm()->render(); ?>
