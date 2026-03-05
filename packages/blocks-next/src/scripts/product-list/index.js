@@ -125,12 +125,12 @@ const { state } = store('surecart/product-list', {
 
 			routerActions.navigate(url.href);
 
-			const { products } = getContext();
+			const searchCtx = getContext();
 			const scSearchedEvent = new CustomEvent('scSearched', {
 				detail: {
 					searchString: value,
-					searchResultCount: products?.length,
-					searchResultIds: products?.map((product) => product.id),
+					searchResultCount: searchCtx?.products?.length,
+					searchResultIds: searchCtx?.products?.map((product) => product.id),
 				},
 				bubbles: true,
 			});
@@ -180,6 +180,9 @@ const { state } = store('surecart/product-list', {
 
 	callbacks: {
 		*onChangeProducts() {
+			const ctx = getContext();
+			if (!ctx?.products) return;
+
 			if (window?.dataLayer || window?.gtag) {
 				yield import(
 					/* webpackIgnore: true */
@@ -194,12 +197,10 @@ const { state } = store('surecart/product-list', {
 				);
 			}
 
-			const { products } = getContext();
-
 			document.dispatchEvent(
 				new CustomEvent('scProductsViewed', {
 					detail: {
-						products: products,
+						products: ctx.products,
 						pageTitle: document.title,
 					},
 					bubbles: true,
