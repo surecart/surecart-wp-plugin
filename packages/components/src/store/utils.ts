@@ -27,26 +27,28 @@ export const isProductVariantOptionSoldOut = (optionNumber, option, variantValue
     return variant.available_stock;
   };
 
+  const isGroupSoldOut = (items: Variant[]): boolean => {
+    if (!items.length) return false;
+    return Math.max(...items.map(getEffectiveStock)) <= 0;
+  };
+
   // if this is option 1, check to see if there are any variants with this option.
   if (optionNumber === 1) {
     const items = (product.variants?.data || []).filter?.(variant => variant.option_1 === option);
-    const highestEffectiveStock = Math.max(...items.map(getEffectiveStock));
-    return highestEffectiveStock <= 0;
+    return isGroupSoldOut(items);
   }
 
   // if this is option 2, check to see if there are any variants with this option and option 1
   if (optionNumber === 2) {
     const items = (product.variants?.data || []).filter(variant => variant?.option_1 === variantValues.option_1 && variant.option_2 === option);
-    const highestEffectiveStock = Math.max(...items.map(getEffectiveStock));
-    return highestEffectiveStock <= 0;
+    return isGroupSoldOut(items);
   }
 
   // if this is option 3, check to see if there are any variants with all the options.
   const items = (product.variants?.data || []).filter(
     variant => variant?.option_1 === variantValues.option_1 && variant?.option_2 === variantValues.option_2 && variant.option_3 === option,
   );
-  const highestEffectiveStock = Math.max(...items.map(getEffectiveStock));
-  return highestEffectiveStock <= 0;
+  return isGroupSoldOut(items);
 };
 
 /**

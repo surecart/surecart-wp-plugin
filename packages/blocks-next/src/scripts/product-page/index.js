@@ -14,6 +14,12 @@ const { sprintf, __ } = wp.i18n;
 const { scProductViewed } = require('./events');
 
 /**
+ * Check if stock is effectively unlimited for a variant, falling back to product.
+ */
+const hasEffectiveUnlimitedStock = (variant, product) =>
+	variant?.has_unlimited_stock ?? product?.has_unlimited_stock ?? true;
+
+/**
  * Check if the key is not submit key.
  */
 const isNotKeySubmit = (e) => {
@@ -255,12 +261,8 @@ const { state, actions } = store('surecart/product-page', {
 			}
 			const { product } = context;
 			if (state.selectedVariant?.id) {
-				// null/undefined means "inherit from product"
-				const hasUnlimitedStock =
-					state.selectedVariant.has_unlimited_stock ??
-					product?.has_unlimited_stock ??
-					true;
-				if (hasUnlimitedStock) return false;
+				if (hasEffectiveUnlimitedStock(state.selectedVariant, product))
+					return false;
 				return state.selectedVariant.available_stock <= 0;
 			}
 
@@ -617,13 +619,13 @@ export const isProductVariantOptionSoldOut = (
 	product = null
 ) => {
 	const getEffectiveStock = (variant) => {
-		// null/undefined means "inherit from product"
-		const hasUnlimitedStock =
-			variant?.has_unlimited_stock ??
-			product?.has_unlimited_stock ??
-			true;
-		if (hasUnlimitedStock) return Infinity;
+		if (hasEffectiveUnlimitedStock(variant, product)) return Infinity;
 		return variant.available_stock;
+	};
+
+	const isGroupSoldOut = (items) => {
+		if (!items.length) return false;
+		return Math.max(...items.map(getEffectiveStock)) <= 0;
 	};
 
 	// if this is option 1, check to see if there are any variants with this option.
@@ -631,8 +633,7 @@ export const isProductVariantOptionSoldOut = (
 		const items = (variants || []).filter?.(
 			(variant) => variant.option_1 === option
 		);
-		const highestEffectiveStock = Math.max(...items.map(getEffectiveStock));
-		return highestEffectiveStock <= 0;
+		return isGroupSoldOut(items);
 	}
 
 	// if this is option 2, check to see if there are any variants with this option and option 1
@@ -642,8 +643,7 @@ export const isProductVariantOptionSoldOut = (
 				variant?.option_1 === variantValues.option_1 &&
 				variant.option_2 === option
 		);
-		const highestEffectiveStock = Math.max(...items.map(getEffectiveStock));
-		return highestEffectiveStock <= 0;
+		return isGroupSoldOut(items);
 	}
 
 	// if this is option 3, check to see if there are any variants with all the options.
@@ -653,6 +653,5 @@ export const isProductVariantOptionSoldOut = (
 			variant?.option_2 === variantValues.option_2 &&
 			variant.option_3 === option
 	);
-	const highestEffectiveStock = Math.max(...items.map(getEffectiveStock));
-	return highestEffectiveStock <= 0;
+	return isGroupSoldOut(items);
 };
