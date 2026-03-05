@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: ecommerce, online store, subscriptions, stripe, payments
 Requires at least: 6.7
 Tested up to: 6.9
-Stable tag: 4.0.1
+Stable tag: 4.0.2
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -315,6 +315,9 @@ Yes, the checkout form can be customized using our visual builder. You can chang
 Accessibility is a huge priority for the entire team building SureCart. As you know, accessibility is an ongoing improvement task. Our development and QA teams are trained in accessibility best practices and build/test each new feature for accessibility. If you come across any edge issues, we want to know about it and will prioritize its resolution. Please contact us via our website.
 
 == Changelog ==
+
+= 4.0.2 - March 5th, 2026 =
+- Fix: Product review form was not opening in version 4.0.1.
 
 = 4.0.1 - March 2nd, 2026 =
 - New: Support for multiple referral URLs in the affiliate portal.
