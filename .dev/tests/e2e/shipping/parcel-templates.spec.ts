@@ -103,7 +103,7 @@ const deleteAllParcelTemplates = async (requestUtils) => {
 			}
 		}
 	} catch (e) {
-		// Ignore cleanup errors.
+		console.warn('Parcel template cleanup failed:', e);
 	}
 };
 

@@ -162,10 +162,6 @@ export default ({ selectedParcel, isEdit, onRequestClose, open }) => {
 					e.stopImmediatePropagation();
 					onSubmit();
 				}}
-				onScFormSubmit={(e) => {
-					e.preventDefault();
-					e.stopImmediatePropagation();
-				}}
 			>
 				<div
 					css={css`

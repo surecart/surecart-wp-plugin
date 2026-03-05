@@ -215,5 +215,6 @@ class ParcelTemplateControllerTest extends SureCartUnitTestCase {
 		$result = $controller->index( $request );
 
 		$this->assertNotWPError( $result );
+		$this->assertCount( 2, $result->data );
 	}
 }
