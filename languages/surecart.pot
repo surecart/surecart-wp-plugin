@@ -4078,14 +4078,13 @@ msgid "reviews"
 msgstr ""
 
 #: src/Integrations/Bricks/Elements/Quantity.php:86
-#: src/blocks/cart-items/view.php:59
-#: src/blocks/cart-line-item-quantity/view.php:22
 #: src/blocks/product-quantity/view.php:18
 #: src/blocks/cart-line-item-quantity/edit.js:24
 msgid "Decrease quantity by one."
 msgstr ""
 
 #: src/Integrations/Bricks/Elements/Quantity.php:104
+#: src/blocks/product-quantity/view.php:44
 #: src/blocks/cart-items/view.php:86
 #: src/blocks/cart-line-item-quantity/view.php:49
 #: src/blocks/product-quantity/view.php:54
@@ -13394,6 +13393,15 @@ msgstr ""
 msgid "Average Order Value Chart"
 msgstr ""
 
+#: dashboard/components/LineChart.js:149
+#: ui/PrevNextButtons.js:35
+#: index.php:139
+#: src/blocks/product-pagination-previous/view.php:36
+#: src/blocks/cart-order-bump-pagination-previous/index.js:21
+#: src/blocks/product-pagination-previous/edit.js:39
+msgid "Previous"
+msgstr ""
+
 #: dashboard/components/LineChart.js:165
 msgid "Line chart comparing current period with previous period data over time"
 msgstr ""
@@ -18412,6 +18420,17 @@ msgstr ""
 
 #: settings/shipping/zone/ShippingZoneForm.js:267
 msgid "Add one postal code per line"
+msgstr ""
+
+#: settings/shipping/zone/ShippingZoneForm.js:288
+#: ui/PrevNextButtons.js:44
+#: Blocks/CheckoutForm/components/Empty.js:100
+#: Blocks/Form/components/ChooseDesign.js:28
+#: index.php:140
+#: src/blocks/product-pagination-next/view.php:22
+#: src/blocks/cart-order-bump-pagination-next/index.js:21
+#: src/blocks/product-pagination-next/edit.js:29
+msgid "Next"
 msgstr ""
 
 #: settings/shipping/zone/ShippingZoneForm.js:314
@@ -24114,11 +24133,6 @@ msgstr ""
 msgid "Cart Button."
 msgstr ""
 
-#: src/blocks/cart-items/view.php:99
-#: src/blocks/cart-line-item-remove/view.php:3
-msgid "Remove item"
-msgstr ""
-
 #: src/blocks/cart-line-item-note/view.php:14
 msgid "Toggle note visibility"
 msgstr ""
@@ -24187,11 +24201,22 @@ msgstr ""
 msgid "Clear search"
 msgstr ""
 
+#: src/blocks/product-list-sidebar-toggle/view.php:40
+#: src/scripts/sidebar/index.js:32
+#: src/scripts/sidebar/index.js:34
+#: src/scripts/sidebar/index.js:57
+msgid "Open sidebar"
+msgstr ""
+
+#: src/blocks/product-list-sidebar/view.php:48
+#: src/scripts/sidebar/index.js:31
+#: src/scripts/sidebar/index.js:47
 #: src/blocks/product-list-sidebar/view.php:48
 msgid "Close sidebar"
 msgstr ""
 
 #. translators: %d is the current count of posts.
+#: src/blocks/product-list-sidebar/view.php:66
 #. translators: %d is the current count of reviews.
 #: src/blocks/product-list-sidebar/view.php:66
 #: src/blocks/product-review-list-sidebar/view.php:70
@@ -24566,6 +24591,10 @@ msgstr ""
 
 #: src/blocks/cart-order-bump-discount-badge/index.js:21
 msgid "Discount Badge"
+msgstr ""
+
+#: src/blocks/cart-order-bump-pagination/index.js:23
+msgid "Pagination"
 msgstr ""
 
 #: src/blocks/cart-order-bump-pagination/query-pagination-arrow-controls.js:17
@@ -25283,45 +25312,85 @@ msgstr ""
 
 #. translators: %d: number of items in the cart
 #: src/scripts/checkout/index.js:248
-msgid "Total of %d item in the cart"
-msgid_plural "Total of %d items in the cart"
+msgid "Total of %d item in your cart"
+msgid_plural "Total of %d items in your cart"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/scripts/checkout/index.js:469
+#: src/scripts/checkout/index.js:265
+msgid "Cart item: %s. Quantity %d. Total price %s."
+msgstr ""
+
+#: src/scripts/checkout/index.js:278
+msgid "Remove %s from your cart."
+msgstr ""
+
+#. translators: %s: product name
+#: src/scripts/checkout/index.js:290
+msgid "Increase quantity for %s."
+msgstr ""
+
+#. translators: %s: product name
+#: src/scripts/checkout/index.js:302
+msgid "Decrease quantity for %s."
+msgstr ""
+
+#. translators: %s: product name
+#: src/scripts/checkout/index.js:314
+msgid "Quantity for %s."
+msgstr ""
+
+#: src/scripts/checkout/index.js:558
 msgid "Applying promotion code."
 msgstr ""
 
 #. translators: %s: promotion code
-#: src/scripts/checkout/index.js:482
+#: src/scripts/checkout/index.js:571
 msgid "Promotion code %s has been applied."
 msgstr ""
 
-#: src/scripts/checkout/index.js:505
+#: src/scripts/checkout/index.js:594
 msgid "Removing promotion code."
 msgstr ""
 
-#: src/scripts/checkout/index.js:518
+#: src/scripts/checkout/index.js:607
 msgid "Promotion code has been removed."
 msgstr ""
 
+#: src/scripts/checkout/index.js:721
+#: src/scripts/checkout/index.js:753
+msgid "Updating quantity."
+msgstr ""
+
 #. translators: %d: quantity
-#: src/scripts/checkout/index.js:635
+#: src/scripts/checkout/index.js:728
 msgid "Quantity increased to %d."
 msgstr ""
 
 #. translators: %d: quantity
-#: src/scripts/checkout/index.js:662
+#: src/scripts/checkout/index.js:760
 msgid "Quantity decreased to %d."
 msgstr ""
 
 #. translators: %d: quantity
-#: src/scripts/checkout/index.js:683
+#: src/scripts/checkout/index.js:782
 msgid "Quantity changed to %d."
 msgstr ""
 
-#: src/scripts/checkout/index.js:727
-msgid "Removing line item."
+#: src/scripts/checkout/index.js:824
+msgid "item"
+msgstr ""
+
+#: src/scripts/checkout/index.js:832
+msgid "Removing %s from your cart."
+msgstr ""
+
+#: src/scripts/checkout/index.js:851
+msgid "Removed %s from your cart."
+msgstr ""
+
+#: src/scripts/checkout/index.js:883
+msgid "Checkout updated. The subtotal is %1$s."
 msgstr ""
 
 #: src/scripts/image-slider/index.js:101
