@@ -38,7 +38,8 @@ const { state } = store('surecart/product-list', {
 		/** Navigate to a url using the router region. */
 		*navigate(event) {
 			const { ref } = getElement();
-			const { history } = getContext();
+			const ctx = getContext();
+			const history = ctx?.history;
 			const queryRef = ref.closest('[data-wp-router-region]');
 			if (isValidLink(ref) && isValidEvent(event) && queryRef) {
 				event.preventDefault();
