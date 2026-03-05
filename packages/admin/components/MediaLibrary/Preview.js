@@ -137,7 +137,16 @@ export default ({ media: initialMedia, onDeleted }) => {
 
 				<ScLineItem>
 					<span slot="title">{__('Filename', 'surecart')}</span>
-					<span slot="price-description">{media.filename}</span>
+					<span
+						slot="price-description"
+						css={css`
+							overflow-wrap: break-word;
+							word-break: break-all;
+							min-width: 0;
+						`}
+					>
+						{media.filename}
+					</span>
 				</ScLineItem>
 
 				<ScLineItem>
