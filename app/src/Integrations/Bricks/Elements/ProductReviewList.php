@@ -154,7 +154,7 @@ class ProductReviewList extends \Bricks\Element {
 			'css'      => [
 				[
 					'property'  => 'color',
-					'selector'  => '.wp-block-surecart-product-review-add-button',
+					'selector'  => '.wp-block-surecart-product-review-add-button .wp-block-button__link',
 					'important' => true,
 				],
 			],
@@ -192,7 +192,7 @@ class ProductReviewList extends \Bricks\Element {
 			'css'      => [
 				[
 					'property'  => 'background-color',
-					'selector'  => '.wp-block-surecart-product-review-add-button',
+					'selector'  => '.wp-block-surecart-product-review-add-button .wp-block-button__link',
 					'important' => true,
 				],
 			],

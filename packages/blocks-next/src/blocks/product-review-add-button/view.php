@@ -27,7 +27,7 @@
 		data-wp-on--click="actions.open"
 		data-wp-on--keydown="actions.open"
 		data-wp-interactive='{ "namespace": "surecart/product-review-form" }'
-		class="wp-block-button__link sc-button__link <?php echo ! empty( $styles['classnames'] ) ? esc_attr( $styles['classnames'] ) : ''; ?>"
+		class="wp-block-button__link wp-element-button sc-button__link <?php echo ! empty( $styles['classnames'] ) ? esc_attr( $styles['classnames'] ) : ''; ?>"
 		style="<?php echo ! empty( $button_style ) ? esc_attr( $button_style ) : ''; ?>"
 	>
 		<?php if ( $show_loading_indicator ) { ?>

@@ -277,7 +277,7 @@ class ProductReviewList extends \Elementor\Widget_Base {
 		$selector        = '{{WRAPPER}} .wp-block-surecart-product-review-list';
 		$review_selector = '{{WRAPPER}} .wp-block-surecart-product-review-list .sc-product-review-link > .wp-block-group';
 		$star_selector   = '{{WRAPPER}} .wp-block-surecart-product-review-rating-stars svg';
-		$button_selector = '{{WRAPPER}} .wp-block-surecart-product-review-add-button';
+		$button_selector = '{{WRAPPER}} .wp-block-surecart-product-review-add-button .wp-block-button__link';
 
 		$this->start_controls_section(
 			'section_review_list_style',

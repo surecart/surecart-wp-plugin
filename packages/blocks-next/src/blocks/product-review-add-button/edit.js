@@ -88,6 +88,7 @@ export default ({ attributes, setAttributes }) => {
 					<div
 						className={classnames(
 							'wp-block-button__link',
+							'wp-element-button',
 							'sc-button__link',
 							colorProps.className,
 							borderProps.className,
