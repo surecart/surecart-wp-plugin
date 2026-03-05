@@ -75,7 +75,8 @@ abstract class AbstractAbility {
 			'output_schema'       => $this->get_output_schema(),
 			'execute_callback'    => array( $this, 'execute' ),
 			'meta'                => array(
-				'mcp' => array(
+				'show_in_rest' => true,
+				'mcp'          => array(
 					'public' => true,
 				),
 			),
