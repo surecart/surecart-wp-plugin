@@ -23,24 +23,17 @@ $styles = sc_get_block_styles();
 
 // Gap and alignment are layout concerns, not block support styles.
 $button_style = ! empty( $gap )
-	? esc_attr( safecss_filter_attr( 'gap:' . $gap ) ) . ';'
+	? 'gap:' . $gap . ';'
 	: '';
 
 if ( ! empty( $alignment ) ) {
-	$button_style .= 'justify-content:' . esc_attr( $alignment ) . ';';
-}
-
-// Handle Colors from third party block editors like Bricks.
-if ( ! empty( $attributes['style']['color']['text'] ) ) {
-	$button_style .= esc_attr( safecss_filter_attr( 'color:' . $attributes['style']['color']['text'] ) ) . ';';
-}
-if ( ! empty( $attributes['style']['color']['background'] ) ) {
-	$button_style .= esc_attr( safecss_filter_attr( 'background-color:' . $attributes['style']['color']['background'] ) ) . ';';
+	$button_style .= 'justify-content:' . $alignment . ';';
 }
 
 // Append block support styles (border, padding, colors).
+// sc_get_block_styles() already handles colors from $attributes['style']['color'] and presets.
 if ( ! empty( $styles['css'] ) ) {
-	$button_style .= esc_attr( $styles['css'] );
+	$button_style .= $styles['css'];
 }
 
 // if no authenticated user found, redirect to Customer dashboard login with the redirect URL set to product page.
