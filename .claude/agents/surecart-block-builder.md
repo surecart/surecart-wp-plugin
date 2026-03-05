@@ -55,7 +55,7 @@ Add `"viewScriptModule"` when using shared JS externals:
 "viewScriptModule": ["@surecart/checkout", "@surecart/cart"]
 ```
 
-Available shared externals: `@surecart/dialog`, `@surecart/cart`, `@surecart/sidebar`, `@surecart/api-fetch`, `@surecart/checkout-service`, `@surecart/checkout-events`, `@surecart/a11y`
+Available shared externals: `@surecart/dialog`, `@surecart/cart`, `@surecart/sidebar`, `@surecart/api-fetch`, `@surecart/checkout-service`, `@surecart/checkout-events`
 
 ### 2. `packages/blocks-next/src/blocks/{block-name}/controller.php`
 
