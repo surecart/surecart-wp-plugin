@@ -71,7 +71,7 @@ class AbilityRegistrarTest extends SureCartUnitTestCase {
 			$this->assertArrayHasKey( 'output_schema', $config );
 			$this->assertArrayHasKey( 'execute_callback', $config );
 			$this->assertArrayHasKey( 'meta', $config );
-			$this->assertEquals( 'surecart/ecommerce', $config['category'] );
+			$this->assertEquals( 'surecart-ecommerce', $config['category'] );
 			$this->assertTrue( $config['meta']['mcp']['public'] );
 		}
 	}

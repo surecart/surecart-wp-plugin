@@ -58,7 +58,7 @@ class AbilityRegistrar {
 	 */
 	public function register_category() {
 		wp_register_ability_category(
-			'surecart/ecommerce',
+			'surecart-ecommerce',
 			array(
 				'label'       => __( 'SureCart E-Commerce', 'surecart' ),
 				'description' => __( 'E-commerce operations including products, orders, customers, and subscriptions.', 'surecart' ),

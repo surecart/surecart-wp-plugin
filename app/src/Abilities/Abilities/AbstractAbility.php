@@ -69,7 +69,7 @@ abstract class AbstractAbility {
 		return array(
 			'label'               => $this->get_label(),
 			'description'         => $this->get_description(),
-			'category'            => 'surecart/ecommerce',
+			'category'            => 'surecart-ecommerce',
 			'permission_callback' => array( $this, 'check_permission' ),
 			'input_schema'        => $this->get_input_schema(),
 			'output_schema'       => $this->get_output_schema(),
