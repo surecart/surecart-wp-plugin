@@ -30,11 +30,11 @@
 		class="wp-block-button__link wp-element-button sc-button__link <?php echo ! empty( $styles['classnames'] ) ? esc_attr( $styles['classnames'] ) : ''; ?>"
 		style="<?php echo ! empty( $button_style ) ? esc_attr( $button_style ) : ''; ?>"
 	>
-		<?php if ( $show_loading_indicator ) { ?>
+		<?php if ( $show_loading_indicator ) : ?>
 			<span class="sc-spinner" aria-hidden="true"></span>
-		<?php } ?>
+		<?php endif; ?>
 
-		<?php if ( $show_icon && 'before' === $icon_position ) { ?>
+		<?php if ( $show_icon && 'before' === $icon_position ) : ?>
 			<?php
 			echo wp_kses(
 				SureCart::svg()->get(
@@ -49,15 +49,15 @@
 				sc_allowed_svg_html()
 			);
 			?>
-		<?php } ?>
+		<?php endif; ?>
 
-		<?php if ( $show_text ) { ?>
+		<?php if ( $show_text ) : ?>
 			<span class="sc-button__link-text">
 				<?php echo esc_html( $label ); ?>
 			</span>
-		<?php } ?>
+		<?php endif; ?>
 
-		<?php if ( $show_icon && 'after' === $icon_position ) { ?>
+		<?php if ( $show_icon && 'after' === $icon_position ) : ?>
 			<?php
 			echo wp_kses(
 				SureCart::svg()->get(
@@ -72,7 +72,7 @@
 				sc_allowed_svg_html()
 			);
 			?>
-		<?php } ?>
+		<?php endif; ?>
 	</div>
 </div>
 </div>
