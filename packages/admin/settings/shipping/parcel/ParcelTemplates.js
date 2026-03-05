@@ -31,7 +31,7 @@ const TYPE_LABELS = {
 
 const getDimensionsSummary = (parcel) => {
 	const { dimensions, package_type } = parcel;
-	if (!dimensions) return '\u2013';
+	if (!dimensions) return null;
 
 	const { length, width, height, unit } = dimensions;
 	const parts = [length, width];
@@ -40,7 +40,7 @@ const getDimensionsSummary = (parcel) => {
 	}
 
 	const hasValues = parts.some((v) => v && v !== '0');
-	if (!hasValues) return '\u2013';
+	if (!hasValues) return null;
 
 	return parts.filter(Boolean).join(' × ') + (unit ? ` ${unit}` : '');
 };
@@ -154,10 +154,7 @@ export default () => {
 										{[
 											TYPE_LABELS[parcel.package_type] ||
 												parcel.package_type,
-											(() => {
-												const dimensionsSummary = getDimensionsSummary(parcel);
-												return dimensionsSummary !== '\u2013' && dimensionsSummary;
-											})(),
+											getDimensionsSummary(parcel),
 											parcel.weight &&
 												`${parcel.weight} ${parcel.weight_unit}`,
 										]
