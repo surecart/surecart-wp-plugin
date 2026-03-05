@@ -639,6 +639,7 @@
     "heading": true,
     "product-id": true,
     "query": true,
+    "variant-id": true,
     "style": true,
     "id": true,
     "class": true,

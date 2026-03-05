@@ -15,6 +15,7 @@ export class ScDownloadsList {
   @Element() el: HTMLScDownloadsListElement;
   @Prop() customerId: string;
   @Prop() productId: string;
+  @Prop() variantId: string;
   @Prop() heading: string;
   @State() downloads: Download[];
   @State() downloading: string;
@@ -58,6 +59,7 @@ export class ScDownloadsList {
     const response = (await apiFetch({
       path: addQueryArgs(`surecart/v1/downloads/`, {
         product_ids: [this.productId],
+        ...(this.variantId ? { variant_ids: [this.variantId] } : {}),
         customer_ids: [this.customerId],
         downloadable: true,
         ...this.query,

@@ -1250,6 +1250,7 @@ export namespace Components {
         "heading": string;
         "productId": string;
         "query": any;
+        "variantId": string;
     }
     interface ScDrawer {
         /**
@@ -8458,6 +8459,7 @@ declare namespace LocalJSX {
         "heading"?: string;
         "productId"?: string;
         "query"?: any;
+        "variantId"?: string;
     }
     interface ScDrawer {
         /**
