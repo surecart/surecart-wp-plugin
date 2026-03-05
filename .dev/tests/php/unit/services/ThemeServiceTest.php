@@ -193,6 +193,6 @@ class ThemeServiceTest extends SureCartUnitTestCase {
 	 */
 	public function test_brand_color_returns_fallback_when_brand_unavailable() {
 		// No account transient — brand will be empty.
-		$this->assertSame( '000', $this->service->brandColor() );
+		$this->assertSame( '000000', $this->service->brandColor() );
 	}
 }

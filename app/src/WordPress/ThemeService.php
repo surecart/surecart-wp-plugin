@@ -53,7 +53,7 @@ class ThemeService {
 			return '';
 		}
 
-		if ( 'dark' === $this->mode() && ! empty( $brand->dark_logo->url ) ) {
+		if ( 'dark' === ( $brand->theme ?? '' ) && ! empty( $brand->dark_logo->url ) ) {
 			return $brand->dark_logo->url;
 		}
 
@@ -72,14 +72,14 @@ class ThemeService {
 		$brand = \SureCart::account()->brand;
 
 		if ( empty( $brand ) || is_wp_error( $brand ) ) {
-			return '000';
+			return '000000';
 		}
 
-		if ( 'dark' === $this->mode() && ! empty( $brand->dark_color ) ) {
+		if ( 'dark' === ( $brand->theme ?? '' ) && ! empty( $brand->dark_color ) ) {
 			return $brand->dark_color;
 		}
 
-		return $brand->color ?? '000';
+		return $brand->color ?? '000000';
 	}
 
 	/**

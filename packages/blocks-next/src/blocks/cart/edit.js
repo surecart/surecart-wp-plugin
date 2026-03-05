@@ -36,6 +36,8 @@ export default ({
 	setAttributes,
 	__unstableLayoutClassNames,
 }) => {
+	// Theme is read from window globals (non-reactive) because it's an API-backed brand setting.
+	// Changes require save + page reload to take effect in the editor preview.
 	const theme = window?.scBlockData?.theme || window?.scData?.theme || 'light';
 
 	const [isPatternSelectionModalOpen, setIsPatternSelectionModalOpen] =

@@ -76,6 +76,7 @@ class ThemeMigrationService extends GeneralMigration {
 		// Nothing to update — already fully migrated.
 		if ( empty( $update_data ) ) {
 			delete_option( 'surecart_theme' );
+			delete_transient( 'sc_theme_migration_attempts' );
 			return;
 		}
 
@@ -87,8 +88,9 @@ class ThemeMigrationService extends GeneralMigration {
 			return;
 		}
 
-		// Clean up the old WP option now that it's migrated to the API.
+		// Clean up the old WP option and retry transient now that it's migrated to the API.
 		delete_option( 'surecart_theme' );
+		delete_transient( 'sc_theme_migration_attempts' );
 	}
 
 	/**

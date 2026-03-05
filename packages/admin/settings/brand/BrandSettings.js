@@ -275,6 +275,7 @@ export default () => {
 						brand={item}
 						editBrand={editItem}
 						logoKey="dark_logo"
+						isDark
 					/>
 				</div>
 				<ScUpgradeRequired

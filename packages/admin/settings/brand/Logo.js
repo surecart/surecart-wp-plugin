@@ -12,6 +12,7 @@ export default ({
 	brand,
 	editBrand,
 	logoKey = 'logo',
+	isDark = false,
 	onMediaChange,
 }) => {
 	const [previewUrl, setPreviewUrl] = useState(null);
@@ -91,7 +92,7 @@ export default ({
 							></MediaLibrary>
 							<Button
 								css={css`
-									${'dark_logo' === logoKey
+									${isDark
 										? '--wp-components-color-accent: #fff;'
 										: ''}
 								`}
@@ -128,7 +129,7 @@ export default ({
 					display: flex;
 					justify-content: center;
 					align-items: center;
-					background: ${'dark_logo' === logoKey
+					background: ${isDark
 						? 'var(--sc-color-gray-900, #1a1a2e)'
 						: 'var(--sc-color-gray-200, #e5e7eb)'};
 					border-radius: var(--sc-input-border-radius-large, 8px);

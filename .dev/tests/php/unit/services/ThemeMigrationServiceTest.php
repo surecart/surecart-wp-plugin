@@ -166,6 +166,27 @@ class ThemeMigrationServiceTest extends SureCartUnitTestCase {
 	/**
 	 * @group theme-migration
 	 */
+	public function test_cleans_up_retry_transient_when_fully_migrated() {
+		update_option( 'surecart_theme', 'dark' );
+		// Simulate previous failed attempts.
+		set_transient( 'sc_theme_migration_attempts', 2, HOUR_IN_SECONDS );
+		$this->setAccountWithBrand( [
+			'theme'      => 'dark',
+			'color'      => '17E19C',
+			'dark_color' => 'FF5733',
+			'logo'       => (object) [ 'id' => 'logo-id' ],
+			'dark_logo'  => (object) [ 'id' => 'dark-logo-id' ],
+		] );
+
+		$this->runMigration();
+
+		// Transient should be cleaned up since migration completed successfully.
+		$this->assertFalse( get_transient( 'sc_theme_migration_attempts' ) );
+	}
+
+	/**
+	 * @group theme-migration
+	 */
 	public function test_still_backfills_dark_fields_when_theme_already_dark() {
 		update_option( 'surecart_theme', 'dark' );
 		$this->setAccountWithBrand( [
