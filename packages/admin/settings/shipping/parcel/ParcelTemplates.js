@@ -155,9 +155,10 @@ export default () => {
 										{[
 											TYPE_LABELS[parcel.package_type] ||
 												parcel.package_type,
-											getDimensionsSummary(parcel) !==
-												'\u2013' &&
-												getDimensionsSummary(parcel),
+											(() => {
+												const dimensionsSummary = getDimensionsSummary(parcel);
+												return dimensionsSummary !== '\u2013' && dimensionsSummary;
+											})(),
 											parcel.weight &&
 												`${parcel.weight} ${parcel.weight_unit}`,
 										]

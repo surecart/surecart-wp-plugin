@@ -31,9 +31,9 @@ class ParcelTemplateRestServiceProvider extends RestServiceProvider implements R
 	protected $methods = [ 'index', 'find', 'edit', 'create', 'delete' ];
 
 	/**
-	 * Get our sample schema for a post.
+	 * Get our sample schema for a parcel template.
 	 *
-	 * @return array The sample schema for a post
+	 * @return array The sample schema for a parcel template
 	 */
 	public function get_item_schema() {
 		if ( $this->schema ) {

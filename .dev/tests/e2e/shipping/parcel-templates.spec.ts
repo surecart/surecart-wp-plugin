@@ -332,47 +332,43 @@ test.describe('Parcel Templates', () => {
 		await expect(heightInput).toBeVisible();
 	});
 
-	test('Should display multiple templates in a list', async ({
-		page,
-		requestUtils,
-	}) => {
-		// Create multiple templates via API.
-		await requestUtils.rest({
-			method: 'POST',
-			path: PARCEL_TEMPLATE_API_PATH,
-			data: {
-				name: 'Small Box',
-				package_type: 'box',
-				dimensions: {
-					length: '12',
-					width: '10',
-					height: '8',
-					unit: 'in',
-				},
-				weight: '1',
-				weight_unit: 'lb',
-				default: false,
-			},
-		});
-		await requestUtils.rest({
-			method: 'POST',
-			path: PARCEL_TEMPLATE_API_PATH,
-			data: {
-				name: 'Large Envelope',
-				package_type: 'poly_mailer',
-				dimensions: {
-					length: '15',
-					width: '12',
-					unit: 'in',
-				},
-				weight: '0.5',
-				weight_unit: 'lb',
-				default: false,
-			},
-		});
-
+	test('Should display multiple templates in a list', async ({ page }) => {
+		// Create first template via UI to avoid back-to-back API race conditions.
 		await page.goto(SHIPPING_SETTINGS_URL);
 		await page.waitForLoadState('networkidle');
+
+		await page.getByText('Add New Template').click();
+		const dialog1 = getParcelDialog(page, 'add');
+		await expect(dialog1).toHaveAttribute('open', '');
+		await fillParcelForm(page, dialog1, {
+			name: 'Small Box',
+			length: '12',
+			width: '10',
+			height: '8',
+			weight: '1',
+		});
+		await dialog1.locator('sc-button[type="primary"]').click();
+		await expect(
+			page
+				.locator('sc-stacked-list-row')
+				.filter({ hasText: 'Small Box' })
+		).toBeVisible({ timeout: 15000 });
+
+		// Create second template via UI.
+		await page.getByText('Add New Template').click();
+		const dialog2 = getParcelDialog(page, 'add');
+		await expect(dialog2).toHaveAttribute('open', '');
+		// Switch to Polymailer.
+		await dialog2
+			.getByRole('radio', { name: 'Polymailer (Envelope)' })
+			.click();
+		await fillParcelForm(page, dialog2, {
+			name: 'Large Envelope',
+			length: '15',
+			width: '12',
+			weight: '1',
+		});
+		await dialog2.locator('sc-button[type="primary"]').click();
 
 		// Verify both templates appear.
 		await expect(
