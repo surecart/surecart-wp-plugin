@@ -5,6 +5,8 @@ import { useState, useEffect } from '@wordpress/element';
 
 const ATLAS_API_BASE = 'https://api.surecart.com/v1/public/atlas';
 
+let countriesPromiseCache = null;
+
 /**
  * Get the current locale.
  *
@@ -12,6 +14,26 @@ const ATLAS_API_BASE = 'https://api.surecart.com/v1/public/atlas';
  */
 function getLocale() {
 	return window?.scData?.locale || 'en';
+}
+
+/**
+ * Fetch and cache the countries list. Concurrent callers share the same
+ * in-flight request; subsequent callers get the already-resolved promise.
+ *
+ * @return {Promise<Array>} The countries array.
+ */
+function fetchCountries() {
+	if (countriesPromiseCache) return countriesPromiseCache;
+
+	countriesPromiseCache = fetch(`${ATLAS_API_BASE}?locale=${getLocale()}`)
+		.then((res) => res.json())
+		.then((data) => data?.data || [])
+		.catch((err) => {
+			countriesPromiseCache = null;
+			throw err;
+		});
+
+	return countriesPromiseCache;
 }
 
 /**
@@ -39,9 +61,8 @@ export function useCountries() {
 	const [error, setError] = useState(null);
 
 	useEffect(() => {
-		fetch(`${ATLAS_API_BASE}?locale=${getLocale()}`)
-			.then((res) => res.json())
-			.then((data) => setCountries(data?.data || []))
+		fetchCountries()
+			.then(setCountries)
 			.catch(setError)
 			.finally(() => setLoading(false));
 	}, []);

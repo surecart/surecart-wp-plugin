@@ -164,6 +164,7 @@ export class ScProductLineItem {
                     /** translators: %1$s: product name, %2$s: product price name */
                     sprintf(__('Change Quantity - %1$s %2$s', 'surecart'), this.name, this.price)
                   }
+                  productName={this.name}
                 ></sc-quantity-select>
               ) : (
                 <span class="item__description" part="static-quantity">
@@ -180,7 +181,7 @@ export class ScProductLineItem {
                     }
                   }}
                   // translators: Remove Item - Product Name Product Price Name
-                  aria-label={sprintf(__('Remove Item - %1$s %2$s', 'surecart'), this.name, this.price)}
+                  aria-label={sprintf(__('Remove Item - %1$s %2$s', 'surecart'), this.name, this.amount)}
                   tabIndex={0}
                 >
                   <sc-icon exportparts="base:remove-icon__base" class="item__remove" name="x" />

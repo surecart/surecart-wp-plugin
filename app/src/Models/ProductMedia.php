@@ -55,16 +55,16 @@ class ProductMedia extends Model {
 	 * @return integer|null
 	 */
 	public function getWidthAttribute() {
-		return ! empty( $this->media ) ? $this->media->width : null;
+		return ! empty( $this->media ) && isset( $this->media->width ) ? $this->media->width : null;
 	}
 
 	/**
-	 * Get the width for the product media.
+	 * Get the height for the product media.
 	 *
 	 * @return integer|null
 	 */
 	public function getHeightAttribute() {
-		return ! empty( $this->media ) ? $this->media->width : null;
+		return ! empty( $this->media ) && isset( $this->media->height ) ? $this->media->height : null;
 	}
 
 	/**

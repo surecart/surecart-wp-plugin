@@ -2,7 +2,7 @@
 
 Headless e-commerce WordPress plugin. All transactional data (products, checkouts, orders, subscriptions) lives on `api.surecart.com` — WordPress handles rendering, users, and integrations. Built on **WP Emerge** framework with Pimple DI. Monorepo with Yarn workspaces.
 
-See also: `app/CLAUDE.md` (PHP patterns), `packages/CLAUDE.md` (JS/blocks patterns).
+See also: `app/CLAUDE.md` (PHP patterns), `packages/CLAUDE.md` (JS/blocks patterns), `Workflow.md` (task workflow rules).
 
 ## Architecture
 
@@ -111,6 +111,17 @@ Account (shop)
 ├── License -> Activation
 └── Affiliation -> Referral -> ReferralItem
 ```
+
+## PHPUnit Tests
+
+**Run via Docker** (never run phpunit directly):
+
+```bash
+yarn run test:php                             # full suite
+yarn run test:php --group=specific-test-group # specific group(s)
+```
+
+**Location:** `.dev/tests/php/unit/` — mirrors `app/src/` structure. Extend `SureCartUnitTestCase` (which extends `WP_UnitTestCase`). Use `\Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration` trait. Bootstrap only the providers you need in `setUp()`. WP functions (`get_option`, `update_option`, `wp_set_current_user`, etc.) work natively. Mock SureCart facade services via `\SureCart::alias('account', fn() => ...)`. `tearDown` cleanup is automatic.
 
 ## Critical Gotchas
 

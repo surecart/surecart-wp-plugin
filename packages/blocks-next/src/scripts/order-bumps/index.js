@@ -296,7 +296,7 @@ const { state, actions } = store('surecart/order-bumps', {
 
 			const { speak } = yield import(
 				/* webpackIgnore: true */
-				'@surecart/a11y'
+				'@wordpress/a11y'
 			);
 
 			try {

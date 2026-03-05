@@ -454,6 +454,15 @@ export default () => {
 							)}
 							model="refund"
 						/>
+						<EmailRow
+							title={__('Review Request', 'surecart')}
+							description={__(
+								'Sent to customers after order fulfillment to request a review.',
+								'surecart'
+							)}
+							model="order"
+							action="solicit_reviews_notification"
+						/>
 					</ScStackedList>
 				</sc-card>
 			</SettingsBox>
@@ -478,6 +487,16 @@ export default () => {
 							)}
 							link="account_notifications"
 							model="order"
+							action="notification"
+						/>
+						<EmailRow
+							title={__('New Review', 'surecart')}
+							description={__(
+								'Sent when a new review is submitted.',
+								'surecart'
+							)}
+							link="account_notifications"
+							model="review"
 							action="notification"
 						/>
 						<EmailRow

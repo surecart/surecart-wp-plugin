@@ -1,0 +1,78 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "surecart/product-review-verified-badge",
+	"title": "Review Verified Badge",
+	"description": "Displays a verified badge for a product review.",
+	"version": "1.0.0",
+	"category": "surecart-product-page",
+	"ancestor": ["surecart/product-review-template"],
+	"keywords": ["review", "verified", "badge"],
+	"usesContext": ["reviewId", "review"],
+	"example": {},
+	"attributes": {
+		"show_label": {
+			"type": "boolean",
+			"default": true
+		},
+		"label": {
+			"type": "string"
+		},
+		"icon_size": {
+			"type": "string",
+			"default": "16px"
+		},
+		"icon_color": {
+			"type": "string"
+		}
+	},
+	"supports": {
+		"interactivity": true,
+		"anchor": true,
+		"color": {
+			"gradients": true,
+			"text": true,
+			"background": false
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true,
+			"__experimentalFontFamily": true,
+			"__experimentalFontWeight": true,
+			"__experimentalFontStyle": true,
+			"__experimentalTextTransform": true,
+			"__experimentalTextDecoration": true,
+			"__experimentalLetterSpacing": true,
+			"__experimentalDefaultControls": {
+				"fontSize": true,
+				"fontAppearance": true,
+				"textTransform": true
+			}
+		},
+		"layout": {
+			"allowSwitching": false,
+			"allowInheriting": false,
+			"default": {
+				"type": "flex",
+				"justifyContent": "center",
+				"verticalAlignment": "center"
+			}
+		},
+		"spacing": {
+			"padding": true,
+			"margin": true,
+			"blockGap": {
+				"__experimentalDefault": "4px"
+			},
+			"__experimentalDefaultControls": {
+				"padding": true,
+				"margin": true,
+				"blockGap": true
+			}
+		}
+	},
+	"textdomain": "surecart",
+	"render": "file:./view.php",
+	"style": "file:./style-index.css",
+	"editorScript": "file:./index.js"
+}

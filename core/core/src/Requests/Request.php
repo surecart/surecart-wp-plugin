@@ -22,6 +22,12 @@ class Request extends ServerRequest implements RequestInterface {
 	 * @return static
 	 */
 	public static function fromGlobals(): \SureCartVendors\Psr\Http\Message\ServerRequestInterface {
+		// getallheaders() is unavailable in CLI context (e.g. WP-CLI).
+		// Guzzle's parent::fromGlobals() calls it unconditionally and throws fatal error.
+		if ( PHP_SAPI === 'cli' ) {
+			return new static( 'GET', '/' );
+		}
+
 		$request = parent::fromGlobals();
 		$new     = new self(
 			$request->getMethod(),

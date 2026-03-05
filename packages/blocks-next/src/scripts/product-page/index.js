@@ -415,7 +415,7 @@ const { state, actions } = store('surecart/product-page', {
 				}
 			}
 
-			// if the button hdoes not have a value, add to cart.
+			// if the button does not have a value, add to cart.
 			if (!e?.submitter?.value) {
 				return yield actions.addToCart(e);
 			}
@@ -538,7 +538,7 @@ const { state, actions } = store('surecart/product-page', {
 			context.quantity = Math.max(parseInt(e.target.value), 1);
 			const { speak } = yield import(
 				/* webpackIgnore: true */
-				'@surecart/a11y'
+				'@wordpress/a11y'
 			);
 
 			speak(`Quantity set to ${context.quantity}`, 'polite');
@@ -560,7 +560,7 @@ const { state, actions } = store('surecart/product-page', {
 
 			const { speak } = yield import(
 				/* webpackIgnore: true */
-				'@surecart/a11y'
+				'@wordpress/a11y'
 			);
 
 			speak(`Quantity set to ${context.quantity}`, 'polite');
@@ -581,7 +581,7 @@ const { state, actions } = store('surecart/product-page', {
 
 			const { speak } = yield import(
 				/* webpackIgnore: true */
-				'@surecart/a11y'
+				'@wordpress/a11y'
 			);
 
 			speak(`Quantity set to ${context.quantity}`, 'polite');
