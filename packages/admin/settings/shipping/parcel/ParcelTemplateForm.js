@@ -82,12 +82,6 @@ export default ({ selectedParcel, isEdit, onRequestClose, open }) => {
 		setError(null);
 
 		try {
-			if (!parcel.name) {
-				throw {
-					message: __('Parcel name is required.', 'surecart'),
-				};
-			}
-
 			const data = { ...parcel };
 
 			// Include ID for edit (triggers PATCH), omit for create (triggers POST).
@@ -269,6 +263,7 @@ export default ({ selectedParcel, isEdit, onRequestClose, open }) => {
 							}
 						/>
 						<ScSelect
+							label={__('Unit', 'surecart')}
 							css={css`
 								flex: 1;
 							`}

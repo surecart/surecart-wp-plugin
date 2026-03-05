@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
-import { useState } from 'react';
+import { useState } from '@wordpress/element';
 import { useDispatch } from '@wordpress/data';
 import { store as coreStore, useEntityRecords } from '@wordpress/core-data';
 import { store as noticeStore } from '@wordpress/notices';
@@ -57,8 +57,7 @@ export default () => {
 	const [busy, setBusy] = useState(false);
 	const [error, setError] = useState(null);
 
-	const { deleteEntityRecord, invalidateResolutionForStore } =
-		useDispatch(coreStore);
+	const { deleteEntityRecord } = useDispatch(coreStore);
 	const { createSuccessNotice } = useDispatch(noticeStore);
 
 	const { records: parcels, isResolving: loading } = useEntityRecords(
