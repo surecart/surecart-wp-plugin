@@ -7,7 +7,13 @@ import { ScFormControl } from '@surecart/components-react';
 import { Button } from '@wordpress/components';
 import MediaLibrary from '../../components/MediaLibrary';
 
-export default ({ label, brand, editBrand, logoKey = 'logo', onMediaChange }) => {
+export default ({
+	label = __('Add Image', 'surecart'),
+	brand,
+	editBrand,
+	logoKey = 'logo',
+	onMediaChange,
+}) => {
 	const [previewUrl, setPreviewUrl] = useState(null);
 
 	useEffect(() => {
@@ -83,7 +89,15 @@ export default ({ label, brand, editBrand, logoKey = 'logo', onMediaChange }) =>
 									);
 								}}
 							></MediaLibrary>
-							<Button isTertiary onClick={onRemoveMedia}>
+							<Button
+								css={css`
+									${'dark_logo' === logoKey
+										? '--wp-components-color-accent: #fff;'
+										: ''}
+								`}
+								isTertiary
+								onClick={onRemoveMedia}
+							>
 								{__('Remove', 'surecart')}
 							</Button>
 						</div>
@@ -93,21 +107,37 @@ export default ({ label, brand, editBrand, logoKey = 'logo', onMediaChange }) =>
 		}
 
 		return (
-			<ScFormControl label={label} showLabel={false}>
-				<MediaLibrary
-					onSelect={onSelectMedia}
-					isPrivate={false}
-					render={({ setOpen }) => {
-						return (
-							<Button isPrimary onClick={() => setOpen(true)}>
-								{__('Add Image', 'surecart')}
-							</Button>
-						);
-					}}
-				></MediaLibrary>
-			</ScFormControl>
+			<MediaLibrary
+				onSelect={onSelectMedia}
+				isPrivate={false}
+				render={({ setOpen }) => {
+					return (
+						<Button isPrimary onClick={() => setOpen(true)}>
+							{__('Add Image', 'surecart')}
+						</Button>
+					);
+				}}
+			></MediaLibrary>
 		);
 	};
 
-	return <ScFormControl label={label}>{renderContent()}</ScFormControl>;
+	return (
+		<ScFormControl label={label}>
+			<div
+				css={css`
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					background: ${'dark_logo' === logoKey
+						? 'var(--sc-color-gray-900, #1a1a2e)'
+						: 'var(--sc-color-gray-200, #e5e7eb)'};
+					border-radius: var(--sc-input-border-radius-large, 8px);
+					padding: 2em;
+					--sc-input-label-color: #fff;
+				`}
+			>
+				{renderContent()}
+			</div>
+		</ScFormControl>
+	);
 };

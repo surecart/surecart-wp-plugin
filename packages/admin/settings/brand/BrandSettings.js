@@ -2,9 +2,10 @@
 import { css, jsx } from '@emotion/core';
 import { useState } from '@wordpress/element';
 import {
+	ScChoices,
+	ScChoice,
 	ScFormControl,
 	ScInput,
-	ScSelect,
 	ScSwitch,
 	ScUpgradeRequired,
 	ScPremiumTag,
@@ -69,8 +70,6 @@ export default () => {
 		}
 	};
 
-	const isDark = item?.theme === 'dark';
-
 	return (
 		<SettingsTemplate
 			title={__('Design & Branding', 'surecart')}
@@ -91,165 +90,196 @@ export default () => {
 				)}
 				loading={!hasLoadedItem}
 			>
-				<ScSelect
+				<ScChoices
 					label={__('Theme', 'surecart')}
-					placeholder={__('Select Theme', 'surecart')}
-					value={item?.theme || 'light'}
-					onScChange={(e) => editItem({ theme: e.target.value })}
 					help={__(
-						'Choose "Dark" if your theme has a dark background. This applies to your WordPress site and affiliate portal.',
+						'This applies to your WordPress site and affiliate portal.',
 						'surecart'
 					)}
-					unselect={false}
-					choices={[
-						{
-							label: __('Light', 'surecart'),
-							value: 'light',
-						},
-						{
-							label: __('Dark', 'surecart'),
-							value: 'dark',
-						},
-					]}
-				/>
-				{isDark ? (
-					<div
-						css={css`
-							gap: 2em;
-							display: grid;
-							align-items: flex-start;
-							grid-template-columns: repeat(
-								2,
-								minmax(0, 1fr)
-							);
-						`}
+					autoWidth
+					style={{
+						'--sc-choices-gap': '6px',
+					}}
+					css={css`
+						--sc-choice-padding: 0.6em 1.2em;
+						--sc-choice-border-radius: var(
+							--sc-input-border-radius-medium,
+							4px
+						);
+					`}
+				>
+					<ScChoice
+						value="light"
+						checked={(item?.theme || 'light') === 'light'}
+						showControl={false}
+						size="small"
+						onScChange={() => editItem({ theme: 'light' })}
 					>
-						<ScFormControl
-							label={__('Dark Mode Color', 'surecart')}
-							help={__(
-								'The primary color used when dark mode is active.',
-								'surecart'
-							)}
+						<span
+							css={css`
+								display: inline-flex;
+								align-items: center;
+								gap: 0.4em;
+							`}
 						>
-							<div
-								css={css`
-									display: flex;
-									align-items: center;
-									gap: 0.5em;
-								`}
-							>
-								<ColorPopup
-									color={`#${item?.dark_color ?? ''}`}
-									setColor={(color) => {
-										editItem({
-											dark_color: color?.hex.replace(
-												'#',
-												''
-											),
-										});
-									}}
-								/>
-								<ScInput
-									css={css`
-										flex: 1;
-									`}
-									value={item?.dark_color}
-									onScInput={(e) =>
-										editItem({
-											dark_color: e.target.value.replace(
-												'#',
-												''
-											),
-										})
-									}
-								>
-									<div
-										slot="prefix"
-										style={{ opacity: '0.5' }}
-									>
-										#
-									</div>
-								</ScInput>
-							</div>
-						</ScFormControl>
-						<Logo
-							label={__('Dark Mode Logo', 'surecart')}
-							brand={item}
-							editBrand={editItem}
-							logoKey="dark_logo"
-						/>
-					</div>
-				) : (
-					<div
-						css={css`
-							gap: 2em;
-							display: grid;
-							align-items: flex-start;
-							grid-template-columns: repeat(
-								2,
-								minmax(0, 1fr)
-							);
-						`}
+							<sc-icon
+								name="sun"
+								style={{ fontSize: '14px' }}
+							></sc-icon>
+							{__('Light', 'surecart')}
+						</span>
+					</ScChoice>
+					<ScChoice
+						value="dark"
+						checked={item?.theme === 'dark'}
+						showControl={false}
+						size="small"
+						onScChange={() => editItem({ theme: 'dark' })}
 					>
-						<ScFormControl
-							label={__('Brand Color', 'surecart')}
-							help={__(
-								'This color will be used for the main button color, links, and various UI elements.',
-								'surecart'
-							)}
+						<span
+							css={css`
+								display: inline-flex;
+								align-items: center;
+								gap: 0.4em;
+							`}
 						>
-							<div
+							<sc-icon
+								name="moon"
+								style={{ fontSize: '14px' }}
+							></sc-icon>
+							{__('Dark', 'surecart')}
+						</span>
+					</ScChoice>
+				</ScChoices>
+
+				{/* Colors row - no background */}
+				<div
+					css={css`
+						gap: 2em;
+						display: grid;
+						align-items: flex-start;
+						grid-template-columns: repeat(2, minmax(0, 1fr));
+					`}
+				>
+					<ScFormControl
+						label={__('Brand Color', 'surecart')}
+						help={__(
+							'This color will be used for the main button color, links, and various UI elements.',
+							'surecart'
+						)}
+					>
+						<div
+							css={css`
+								display: flex;
+								align-items: center;
+								gap: 0.5em;
+							`}
+						>
+							<ColorPopup
+								color={`#${item?.color ?? ''}`}
+								setColor={(color) => {
+									editItem({
+										color: color?.hex.replace('#', ''),
+									});
+								}}
+							/>
+							<ScInput
 								css={css`
-									display: flex;
-									align-items: center;
-									gap: 0.5em;
+									flex: 1;
 								`}
+								value={item?.color}
+								onScInput={(e) =>
+									editItem({
+										color: e.target.value.replace('#', ''),
+									})
+								}
 							>
-								<ColorPopup
-									color={`#${item?.color ?? ''}`}
-									setColor={(color) => {
-										editItem({
-											color: color?.hex.replace(
-												'#',
-												''
-											),
-										});
+								<div
+									slot="prefix"
+									style={{
+										opacity: '0.5',
 									}}
-								/>
-								<ScInput
-									css={css`
-										flex: 1;
-									`}
-									value={item?.color}
-									onScInput={(e) =>
-										editItem({
-											color: e.target.value.replace(
-												'#',
-												''
-											),
-										})
-									}
 								>
-									<div
-										slot="prefix"
-										style={{ opacity: '0.5' }}
-									>
-										#
-									</div>
-								</ScInput>
-							</div>
-						</ScFormControl>
-						<Logo
-							label={__('Logo', 'surecart')}
-							brand={item}
-							editBrand={editItem}
-						/>
-					</div>
-				)}
+									#
+								</div>
+							</ScInput>
+						</div>
+					</ScFormControl>
+
+					<ScFormControl
+						label={__('Dark Mode Color', 'surecart')}
+						help={__(
+							'The primary color used when dark mode is active.',
+							'surecart'
+						)}
+					>
+						<div
+							css={css`
+								display: flex;
+								align-items: center;
+								gap: 0.5em;
+							`}
+						>
+							<ColorPopup
+								color={`#${item?.dark_color ?? ''}`}
+								setColor={(color) => {
+									editItem({
+										dark_color: color?.hex.replace('#', ''),
+									});
+								}}
+							/>
+							<ScInput
+								css={css`
+									flex: 1;
+								`}
+								value={item?.dark_color}
+								onScInput={(e) =>
+									editItem({
+										dark_color: e.target.value.replace(
+											'#',
+											''
+										),
+									})
+								}
+							>
+								<div
+									slot="prefix"
+									style={{
+										opacity: '0.5',
+									}}
+								>
+									#
+								</div>
+							</ScInput>
+						</div>
+					</ScFormControl>
+				</div>
+
+				{/* Logos row - with backgrounds */}
+				<div
+					css={css`
+						gap: 2em;
+						display: grid;
+						align-items: stretch;
+						grid-template-columns: repeat(2, minmax(0, 1fr));
+					`}
+				>
+					<Logo
+						label={__('Logo', 'surecart')}
+						brand={item}
+						editBrand={editItem}
+					/>
+
+					<Logo
+						label={__('Dark Mode Logo', 'surecart')}
+						brand={item}
+						editBrand={editItem}
+						logoKey="dark_logo"
+					/>
+				</div>
 				<ScUpgradeRequired
 					required={
-						!scData?.entitlements
-							?.optional_upfront_payment_method
+						!scData?.entitlements?.optional_upfront_payment_method
 					}
 				>
 					<ScSwitch
