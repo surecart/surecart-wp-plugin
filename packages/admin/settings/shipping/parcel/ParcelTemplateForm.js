@@ -246,6 +246,7 @@ export default ({ selectedParcel, isEdit, onRequestClose, open }) => {
 								flex: 3;
 							`}
 							label={__('Weight', 'surecart')}
+							name="parcel-weight"
 							value={parcel.weight}
 							type="number"
 							step={0.01}

@@ -98,7 +98,7 @@ class ParcelTemplateControllerTest extends SureCartUnitTestCase {
 
 		$controller = new ParcelTemplateController();
 		$request    = new WP_REST_Request( 'POST', '/surecart/v1/parcel_templates' );
-		$request->set_body( wp_json_encode( [ 'name' => 'Small Box', 'type' => 'box' ] ) );
+		$request->set_body( wp_json_encode( [ 'name' => 'Small Box', 'package_type' => 'box' ] ) );
 		$request->set_header( 'Content-Type', 'application/json' );
 
 		$result = $controller->create( $request );

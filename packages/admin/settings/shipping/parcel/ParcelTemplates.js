@@ -39,7 +39,7 @@ const getDimensionsSummary = (parcel) => {
 		parts.push(height);
 	}
 
-	const hasValues = parts.some((v) => v && v !== '0');
+	const hasValues = parts.some((v) => Number(v) > 0);
 	if (!hasValues) return null;
 
 	return parts.filter(Boolean).join(' × ') + (unit ? ` ${unit}` : '');
@@ -64,7 +64,7 @@ export default () => {
 		'surecart',
 		'parcel-template',
 		{
-			per_page: 100,
+			per_page: 100, // Upper bound; pagination not expected for parcel templates.
 		}
 	);
 
@@ -258,7 +258,7 @@ export default () => {
 
 			{deleteTarget && (
 				<ScDialog
-					open={!!deleteTarget}
+					open
 					onScRequestClose={() => setDeleteTarget(null)}
 					label={__('Delete Parcel Template', 'surecart')}
 				>
