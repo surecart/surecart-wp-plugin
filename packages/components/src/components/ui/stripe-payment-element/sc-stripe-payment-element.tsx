@@ -269,7 +269,11 @@ export class ScStripePaymentElement {
     if (checkoutState.checkout?.status !== 'draft') return;
 
     const { name, email } = checkoutState.checkout;
-    const { line_1: line1, line_2: line2, city, state, country, postal_code } = (checkoutState.checkout?.shipping_address as ShippingAddress) || {};
+    const { line_1: line1, line_2: line2, city, state, country, postal_code } = (
+      (!checkoutState.checkout?.billing_matches_shipping && checkoutState.checkout?.billing_address)
+        ? checkoutState.checkout.billing_address
+        : checkoutState.checkout?.shipping_address
+    ) as ShippingAddress || {};
 
     const options = this.maybeApplyFilters({
       defaultValues: {
@@ -326,6 +330,20 @@ export class ScStripePaymentElement {
     return await this.confirm(checkoutState.checkout?.payment_intent?.processor_data?.stripe?.type);
   }
 
+  /** Get the billing address in Stripe format. */
+  getBillingAddress() {
+    const checkout = checkoutState.checkout;
+    const { line_1: line1, line_2: line2, city, state, country, postal_code } = (
+      (!checkout?.billing_matches_shipping && checkout?.billing_address)
+        ? checkout.billing_address
+        : checkout?.shipping_address
+    ) as ShippingAddress || {};
+    if (!line1) return {};
+    return {
+      address: { line1, line2, city, state, postal_code, country },
+    };
+  }
+
   @Method()
   async confirm(type, args = {}) {
     const confirmArgs = {
@@ -337,7 +355,10 @@ export class ScStripePaymentElement {
         }),
         payment_method_data: {
           billing_details: {
-            email: checkoutState.checkout.email,
+            ...(checkoutState.checkout?.email ? { email: checkoutState.checkout.email } : {}),
+            ...(checkoutState.checkout?.name ? { name: checkoutState.checkout.name } : {}),
+            ...(checkoutState.checkout?.phone ? { phone: checkoutState.checkout.phone } : {}),
+            ...this.getBillingAddress(),
           },
         },
       },

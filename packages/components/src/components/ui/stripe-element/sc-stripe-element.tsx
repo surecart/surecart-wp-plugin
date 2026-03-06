@@ -4,7 +4,7 @@ import { __ } from '@wordpress/i18n';
 import { openWormhole } from 'stencil-wormhole';
 import { state as selectedProcessor } from '@store/selected-processor';
 
-import { Checkout, FormState, FormStateSetter, PaymentInfoAddedParams, ProcessorName } from '../../../types';
+import { Checkout, FormState, FormStateSetter, PaymentInfoAddedParams, ProcessorName, ShippingAddress } from '../../../types';
 import { availableProcessors } from '@store/processors/getters';
 import { StripeElementChangeEvent } from '@stripe/stripe-js';
 import { createErrorNotice } from '@store/notices/mutations';
@@ -124,16 +124,31 @@ export class ScStripeElement {
     }
   }
 
+  /** Get billing details for Stripe. */
+  getBillingDetails() {
+    const order = this.order;
+    const { line_1: line1, line_2: line2, city, state, country, postal_code } = (
+      (!order?.billing_matches_shipping && order?.billing_address)
+        ? order.billing_address
+        : order?.shipping_address
+    ) as ShippingAddress || {};
+    return {
+      ...(order?.name ? { name: order.name } : {}),
+      ...(order?.email ? { email: order.email } : {}),
+      ...(order?.phone ? { phone: order.phone } : {}),
+      ...(line1 ? {
+        address: { line1, line2, city, state, postal_code, country },
+      } : {}),
+    };
+  }
+
   /** Confirm card payment */
   @Method('confirmPayment')
   async confirmCardPayment(secret) {
     return this.stripe.confirmCardPayment(secret, {
       payment_method: {
         card: this.element,
-        billing_details: {
-          ...(this?.order?.name ? { name: this.order.name } : {}),
-          ...(this?.order?.email ? { email: this.order.email } : {}),
-        },
+        billing_details: this.getBillingDetails(),
       },
     });
   }
@@ -144,10 +159,7 @@ export class ScStripeElement {
     return this.stripe.confirmCardSetup(secret, {
       payment_method: {
         card: this.element,
-        billing_details: {
-          ...(this?.order?.name ? { name: this.order.name } : {}),
-          ...(this?.order?.email ? { email: this.order.email } : {}),
-        },
+        billing_details: this.getBillingDetails(),
       },
     });
   }

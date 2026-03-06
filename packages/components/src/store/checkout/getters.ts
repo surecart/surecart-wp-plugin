@@ -37,7 +37,7 @@ export const getCompleteAddress = (type = 'shipping') => {
   const isComplete = isAddressComplete(state.checkout?.[`${type}_address`] as Address);
   if (!isComplete) return;
 
-  const { line_1: line1, line_2: line2, ...otherProps } = (state.checkout?.shipping_address as Address) || {};
+  const { line_1: line1, line_2: line2, ...otherProps } = (state.checkout?.[`${type}_address`] as Address) || {};
 
   return {
     line1,
