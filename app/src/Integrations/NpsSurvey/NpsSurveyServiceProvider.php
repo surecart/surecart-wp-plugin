@@ -74,8 +74,8 @@ class NpsSurveyServiceProvider implements ServiceProviderInterface {
 			'init',
 			function () {
 				global $nps_survey_init;
-				if ( $nps_survey_init && is_file( realpath( $nps_survey_init ) ) ) {
-					include_once realpath( $nps_survey_init );
+				if ( $nps_survey_init && is_file( $nps_survey_init ) ) {
+					include_once $nps_survey_init;
 				}
 			},
 			999

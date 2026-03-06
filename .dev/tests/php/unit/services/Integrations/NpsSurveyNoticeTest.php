@@ -132,7 +132,7 @@ class NpsSurveyNoticeTest extends SureCartUnitTestCase {
 		$this->assertEmpty( $output );
 	}
 
-	public function test_show_nps_notice_outputs_nothing_when_not_connected(): void {
+	public function test_show_nps_notice_outputs_nothing_when_library_not_available(): void {
 		wp_set_current_user( $this->factory->user->create( [ 'role' => 'administrator' ] ) );
 
 		ob_start();
