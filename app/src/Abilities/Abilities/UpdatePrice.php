@@ -27,7 +27,25 @@ class UpdatePrice extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function get_description(): string {
-		return __( 'Update an existing price. Change amount, name, or archive it.', 'surecart' );
+		return __( 'Update an existing SureCart price by its ID. Supports changing the display name and archive status. The price amount and currency cannot be changed after creation.', 'surecart' );
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_annotations(): array {
+		return array(
+			'readonly'    => false,
+			'destructive' => false,
+			'idempotent'  => true,
+		);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_instructions(): string {
+		return 'Requires a valid price ID. Note that amount and currency cannot be changed after creation — create a new price instead if you need different pricing. Set archived=true to soft-delete a price.';
 	}
 
 	/**

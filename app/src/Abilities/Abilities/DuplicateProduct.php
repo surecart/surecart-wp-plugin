@@ -27,7 +27,25 @@ class DuplicateProduct extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function get_description(): string {
-		return __( 'Duplicate an existing product including all prices, variants, and settings. Creates a new product with a copy of the original\'s configuration.', 'surecart' );
+		return __( 'Duplicate an existing SureCart product by its ID, creating a new product with all prices, variants, variant options, and settings copied. The duplicated product is created in active state with a modified name.', 'surecart' );
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_annotations(): array {
+		return array(
+			'readonly'    => false,
+			'destructive' => false,
+			'idempotent'  => false,
+		);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_instructions(): string {
+		return 'Requires the ID of the product to duplicate. The new product will have all prices, variants, and settings copied. Useful for creating similar products quickly.';
 	}
 
 	/**

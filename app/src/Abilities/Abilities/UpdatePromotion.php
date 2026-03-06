@@ -27,7 +27,25 @@ class UpdatePromotion extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function get_description(): string {
-		return __( 'Update an existing SureCart promotion by ID. Supports changing the code, coupon, and customer association.', 'surecart' );
+		return __( 'Update an existing SureCart promotion by its ID. Supports changing the promotion code, associated coupon, and customer restriction. Only provided fields are updated.', 'surecart' );
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_annotations(): array {
+		return array(
+			'readonly'    => false,
+			'destructive' => false,
+			'idempotent'  => true,
+		);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_instructions(): string {
+		return 'Requires a valid promotion ID. Only include the fields you want to change. Be cautious when changing the code — existing references to the old code will stop working.';
 	}
 
 	/**

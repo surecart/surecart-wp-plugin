@@ -27,7 +27,25 @@ class ListPrices extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function get_description(): string {
-		return __( 'List prices for a product. Returns amount, currency, billing interval, and status.', 'surecart' );
+		return __( 'Retrieve a paginated list of SureCart prices, optionally filtered by product ID. Returns price amounts, currencies, recurring intervals, and associated product IDs.', 'surecart' );
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_annotations(): array {
+		return array(
+			'readonly'    => true,
+			'destructive' => false,
+			'idempotent'  => true,
+		);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_instructions(): string {
+		return 'Use this to view pricing for one or more products. Filter by product_ids to get prices for specific products. For full product details with prices included, use get-product instead.';
 	}
 
 	/**

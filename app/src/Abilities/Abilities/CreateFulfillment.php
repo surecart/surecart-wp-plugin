@@ -27,7 +27,25 @@ class CreateFulfillment extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function get_description(): string {
-		return __( 'Create a fulfillment record for a SureCart order with tracking info, fulfillment items, and notification settings.', 'surecart' );
+		return __( 'Create a new fulfillment record for a SureCart order. Includes tracking number, carrier, and fulfillment items specifying which line items and quantities are being fulfilled.', 'surecart' );
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_annotations(): array {
+		return array(
+			'readonly'    => false,
+			'destructive' => false,
+			'idempotent'  => false,
+		);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_instructions(): string {
+		return 'Requires an order ID. Include fulfillment_items to specify which line items and quantities are being fulfilled. Set tracking_number and tracking_carrier for shipment tracking. Each call creates a new fulfillment.';
 	}
 
 	/**

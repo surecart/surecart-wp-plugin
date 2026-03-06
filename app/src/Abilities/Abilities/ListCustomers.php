@@ -27,7 +27,25 @@ class ListCustomers extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function get_description(): string {
-		return __( 'List SureCart customers with optional search and pagination.', 'surecart' );
+		return __( 'Retrieve a paginated list of SureCart customers. Supports filtering by search query and email. Returns customer names, IDs, emails, and associated data.', 'surecart' );
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_annotations(): array {
+		return array(
+			'readonly'    => true,
+			'destructive' => false,
+			'idempotent'  => true,
+		);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_instructions(): string {
+		return 'Use this to browse or search the customer list. Search by name or email. For full details on a single customer, use get-customer instead.';
 	}
 
 	/**

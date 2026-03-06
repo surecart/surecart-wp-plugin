@@ -27,7 +27,25 @@ class DeleteCustomer extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function get_description(): string {
-		return __( 'Delete a SureCart customer by ID. Warning: Deleting a customer will permanently remove all associated subscriptions, payments, and purchases within 24 hours. This action cannot be undone. Always confirm with the user before executing.', 'surecart' );
+		return __( 'Permanently delete a SureCart customer by their ID. All associated subscriptions, payments, and purchase records will be permanently removed within 24 hours. Requires explicit confirmation. This action cannot be undone.', 'surecart' );
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_annotations(): array {
+		return array(
+			'readonly'    => false,
+			'destructive' => true,
+			'idempotent'  => true,
+		);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_instructions(): string {
+		return 'This is a permanently destructive action. All associated subscriptions, payments, and purchase records will be permanently removed within 24 hours. Always warn the user and get explicit confirmation before proceeding. The confirm parameter must be set to true.';
 	}
 
 	/**

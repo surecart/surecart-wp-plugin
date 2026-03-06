@@ -27,7 +27,25 @@ class GetCoupon extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function get_description(): string {
-		return __( 'Get a single SureCart coupon by ID, including its promotions.', 'surecart' );
+		return __( 'Retrieve a single SureCart coupon by its ID, including its associated promotions. Returns the full coupon object with discount details and usage limits.', 'surecart' );
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_annotations(): array {
+		return array(
+			'readonly'    => true,
+			'destructive' => false,
+			'idempotent'  => true,
+		);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_instructions(): string {
+		return 'Use this when you need full details about a specific coupon. For browsing multiple coupons, use list-coupons instead.';
 	}
 
 	/**

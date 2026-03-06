@@ -29,6 +29,30 @@ abstract class AbstractAbility {
 	abstract public function get_description(): string;
 
 	/**
+	 * Get the ability annotations.
+	 *
+	 * Returns an array with three boolean keys:
+	 * - 'readonly'    — true if the ability only reads data (maps to GET).
+	 * - 'destructive' — true if the ability deletes or irreversibly modifies data.
+	 * - 'idempotent'  — true if calling multiple times produces the same result.
+	 *
+	 * @return array{readonly: bool, destructive: bool, idempotent: bool}
+	 */
+	abstract public function get_annotations(): array;
+
+	/**
+	 * Get AI-facing instructions for when and how to use this ability.
+	 *
+	 * Override in subclasses to provide guidance on edge cases,
+	 * confirmation requirements, and usage patterns.
+	 *
+	 * @return string
+	 */
+	public function get_instructions(): string {
+		return '';
+	}
+
+	/**
 	 * Get the JSON Schema for the input.
 	 *
 	 * @return array
@@ -75,8 +99,10 @@ abstract class AbstractAbility {
 			'output_schema'       => $this->get_output_schema(),
 			'execute_callback'    => array( $this, 'execute' ),
 			'meta'                => array(
-				'show_in_rest' => true,
-				'mcp'          => array(
+				'show_in_rest'  => true,
+				'annotations'   => $this->get_annotations(),
+				'instructions'  => $this->get_instructions(),
+				'mcp'           => array(
 					'public' => true,
 				),
 			),

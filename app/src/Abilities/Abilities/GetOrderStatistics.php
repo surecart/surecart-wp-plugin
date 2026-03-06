@@ -27,7 +27,25 @@ class GetOrderStatistics extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function get_description(): string {
-		return __( 'Get SureCart sales and order statistics for a given date range.', 'surecart' );
+		return __( 'Retrieve SureCart order and sales statistics for a given date range and interval. Returns time-series data points for revenue, order count, and average order value.', 'surecart' );
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_annotations(): array {
+		return array(
+			'readonly'    => true,
+			'destructive' => false,
+			'idempotent'  => true,
+		);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_instructions(): string {
+		return 'Use this for reporting and analytics dashboards. Supports date range filtering with start_date/end_date in YYYY-MM-DD format and intervals: hour, day, week, month, year.';
 	}
 
 	/**

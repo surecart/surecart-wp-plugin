@@ -27,7 +27,25 @@ class CreateProduct extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function get_description(): string {
-		return __( 'Create a new SureCart product with a name, description, and optional price.', 'surecart' );
+		return __( 'Create a new SureCart product with a name, description, and optional initial price. The product is created in active (non-archived) state. Returns the newly created product object.', 'surecart' );
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_annotations(): array {
+		return array(
+			'readonly'    => false,
+			'destructive' => false,
+			'idempotent'  => false,
+		);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_instructions(): string {
+		return 'A product name is required. An initial price can be set via the price_amount and price_currency fields. Each call creates a new product — do not call multiple times for the same product.';
 	}
 
 	/**

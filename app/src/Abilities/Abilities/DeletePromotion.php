@@ -27,7 +27,25 @@ class DeletePromotion extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function get_description(): string {
-		return __( 'Delete a SureCart promotion by ID. Warning: This will permanently remove the promotion code. This action cannot be undone. Always confirm with the user before executing.', 'surecart' );
+		return __( 'Permanently delete a SureCart promotion code by its ID. This removes the promotion code so it can no longer be used at checkout. Requires explicit confirmation. This action cannot be undone.', 'surecart' );
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_annotations(): array {
+		return array(
+			'readonly'    => false,
+			'destructive' => true,
+			'idempotent'  => true,
+		);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_instructions(): string {
+		return 'This is a permanently destructive action. Always warn the user and get explicit confirmation before proceeding. The confirm parameter must be set to true.';
 	}
 
 	/**

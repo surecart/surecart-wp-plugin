@@ -27,7 +27,25 @@ class UpdateCustomer extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function get_description(): string {
-		return __( 'Update an existing SureCart customer by ID. Supports name, email, phone, address, and tax settings.', 'surecart' );
+		return __( 'Update an existing SureCart customer by their ID. Supports changing email, name, phone number, and billing/shipping addresses. Only provided fields are updated.', 'surecart' );
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_annotations(): array {
+		return array(
+			'readonly'    => false,
+			'destructive' => false,
+			'idempotent'  => true,
+		);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_instructions(): string {
+		return 'Requires a valid customer ID. Only include the fields you want to change — omitted fields are not modified. Email changes may affect login credentials if the customer has a linked WordPress user.';
 	}
 
 	/**

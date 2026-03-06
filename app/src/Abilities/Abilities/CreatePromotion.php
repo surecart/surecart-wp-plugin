@@ -27,7 +27,25 @@ class CreatePromotion extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function get_description(): string {
-		return __( 'Create a new SureCart promotion code linked to a coupon. The code is what customers enter at checkout.', 'surecart' );
+		return __( 'Create a new SureCart promotion code linked to an existing coupon. Promotions are the customer-facing codes that apply a coupon discount at checkout. Optionally restrict to a specific customer.', 'surecart' );
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_annotations(): array {
+		return array(
+			'readonly'    => false,
+			'destructive' => false,
+			'idempotent'  => false,
+		);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_instructions(): string {
+		return 'Requires a valid coupon ID. The code field is the customer-facing promotion code entered at checkout. Optionally set a customer ID to restrict the promotion to a single customer. Each call creates a new promotion.';
 	}
 
 	/**

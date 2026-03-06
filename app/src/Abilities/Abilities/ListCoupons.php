@@ -27,7 +27,25 @@ class ListCoupons extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function get_description(): string {
-		return __( 'List all available SureCart coupons with optional pagination.', 'surecart' );
+		return __( 'Retrieve a paginated list of SureCart coupons. Supports filtering by search query and archived status. Returns coupon names, IDs, discount details, and usage limits.', 'surecart' );
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_annotations(): array {
+		return array(
+			'readonly'    => true,
+			'destructive' => false,
+			'idempotent'  => true,
+		);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_instructions(): string {
+		return 'Use this to browse or search coupons. Set archived=true to include archived coupons. For full details on a single coupon, use get-coupon instead.';
 	}
 
 	/**

@@ -27,7 +27,25 @@ class ListLicenses extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function get_description(): string {
-		return __( 'List SureCart licenses with optional filters for customer, product, purchase, revoked status, search query, and pagination.', 'surecart' );
+		return __( 'Retrieve a paginated list of SureCart licenses. Supports filtering by customer, product, purchase, and revoked status. Returns license keys, IDs, activation counts, and statuses.', 'surecart' );
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_annotations(): array {
+		return array(
+			'readonly'    => true,
+			'destructive' => false,
+			'idempotent'  => true,
+		);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_instructions(): string {
+		return 'Use this to browse or filter licenses. Filter by customer, product, or purchase. Set revoked=true to include revoked licenses. For full details on a single license, use get-license instead.';
 	}
 
 	/**

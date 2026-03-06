@@ -27,7 +27,25 @@ class GetStoreInfo extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function get_description(): string {
-		return __( 'Get information about the connected SureCart store, including name, currency, and settings.', 'surecart' );
+		return __( 'Retrieve the current SureCart store (account) information including store name, currency, URL, branding settings, and entitlements. Returns a single account object.', 'surecart' );
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_annotations(): array {
+		return array(
+			'readonly'    => true,
+			'destructive' => false,
+			'idempotent'  => true,
+		);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_instructions(): string {
+		return 'Use this to check store configuration, currency, or account status. This is often the first call to make when orienting to a store.';
 	}
 
 	/**

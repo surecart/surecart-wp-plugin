@@ -27,7 +27,25 @@ class UpdateCoupon extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function get_description(): string {
-		return __( 'Update an existing SureCart coupon by ID. Supports name, discount, duration, redemption limits, and product restrictions.', 'surecart' );
+		return __( 'Update an existing SureCart coupon by its ID. Supports changing the name, discount amount or percentage, duration, and redemption limits. Only provided fields are updated.', 'surecart' );
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_annotations(): array {
+		return array(
+			'readonly'    => false,
+			'destructive' => false,
+			'idempotent'  => true,
+		);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_instructions(): string {
+		return 'Requires a valid coupon ID. Only include the fields you want to change — omitted fields are not modified. Changes affect all future uses of the coupon but not existing redemptions.';
 	}
 
 	/**

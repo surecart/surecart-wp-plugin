@@ -27,7 +27,25 @@ class DeleteCoupon extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function get_description(): string {
-		return __( 'Delete a SureCart coupon by ID. Warning: Deleting a coupon will permanently remove it and all associated promotions. This action cannot be undone. Always confirm with the user before executing.', 'surecart' );
+		return __( 'Permanently delete a SureCart coupon by its ID. This removes the coupon and all associated promotion codes. Requires explicit confirmation. This action cannot be undone.', 'surecart' );
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_annotations(): array {
+		return array(
+			'readonly'    => false,
+			'destructive' => true,
+			'idempotent'  => true,
+		);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_instructions(): string {
+		return 'This is a permanently destructive action. Always warn the user and get explicit confirmation before proceeding. The confirm parameter must be set to true. Deleting a coupon also removes all associated promotion codes.';
 	}
 
 	/**

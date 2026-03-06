@@ -27,7 +27,25 @@ class ListFulfillments extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function get_description(): string {
-		return __( 'List SureCart fulfillments with optional filters for order and shipment status.', 'surecart' );
+		return __( 'Retrieve a paginated list of SureCart fulfillments. Supports filtering by order and shipment status. Returns fulfillment summaries with tracking information and item counts.', 'surecart' );
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_annotations(): array {
+		return array(
+			'readonly'    => true,
+			'destructive' => false,
+			'idempotent'  => true,
+		);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_instructions(): string {
+		return 'Use this to browse or filter fulfillments. Filter by order_ids to see fulfillments for specific orders, or by shipment_status to find pending/shipped/delivered fulfillments.';
 	}
 
 	/**

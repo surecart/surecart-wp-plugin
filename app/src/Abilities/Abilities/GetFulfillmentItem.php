@@ -27,7 +27,25 @@ class GetFulfillmentItem extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function get_description(): string {
-		return __( 'Get a single SureCart fulfillment item by ID, including its associated fulfillment and line item details.', 'surecart' );
+		return __( 'Retrieve a single SureCart fulfillment item by its ID, including the parent fulfillment and associated line item. Returns the fulfillment item with related data expanded.', 'surecart' );
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_annotations(): array {
+		return array(
+			'readonly'    => true,
+			'destructive' => false,
+			'idempotent'  => true,
+		);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_instructions(): string {
+		return 'Use this when you need details about a specific item within a fulfillment, including its quantity and associated line item.';
 	}
 
 	/**

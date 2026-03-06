@@ -35,7 +35,25 @@ class GetStoreDashboard extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function get_description(): string {
-		return __( 'Get a comprehensive store health summary: revenue and order count for a given period. Best starting point for understanding store performance.', 'surecart' );
+		return __( 'Retrieve a comprehensive SureCart store health summary including total revenue, order count, and recent activity for a given date range and interval. Useful for high-level reporting.', 'surecart' );
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_annotations(): array {
+		return array(
+			'readonly'    => true,
+			'destructive' => false,
+			'idempotent'  => true,
+		);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_instructions(): string {
+		return 'Use this for high-level store health checks. Supports date range filtering with start_date/end_date in YYYY-MM-DD format and intervals: hour, day, week, month, year. Defaults to the last 30 days with daily intervals if not specified.';
 	}
 
 	/**

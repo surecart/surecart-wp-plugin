@@ -27,7 +27,25 @@ class ListRefunds extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function get_description(): string {
-		return __( 'List all SureCart refunds with optional filtering by charge, customer, or return request and pagination.', 'surecart' );
+		return __( 'Retrieve a paginated list of SureCart refunds. Supports filtering by charge, customer, or return request. Returns refund summaries with amounts, statuses, and reasons.', 'surecart' );
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_annotations(): array {
+		return array(
+			'readonly'    => true,
+			'destructive' => false,
+			'idempotent'  => true,
+		);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_instructions(): string {
+		return 'Use this to browse or filter refunds. Filter by charge to see refunds for a specific payment, or by customer to see all refunds for a customer.';
 	}
 
 	/**
