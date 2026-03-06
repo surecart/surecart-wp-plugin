@@ -138,7 +138,7 @@ const { state, actions } = store('surecart/checkout', {
 		get hasTotalScratchAmount() {
 			return (
 				!!state?.checkout?.total_scratch_display_amount &&
-				state?.checkout?.total_savings_amount > 0
+				!!state?.checkout?.total_savings_amount
 			);
 		},
 
