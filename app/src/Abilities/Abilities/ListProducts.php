@@ -27,7 +27,25 @@ class ListProducts extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function get_description(): string {
-		return __( 'List SureCart products with optional filters for status, search query, and pagination.', 'surecart' );
+		return __( 'Retrieve a paginated list of SureCart products. Supports filtering by search query and archived status. Returns product names, IDs, prices, and metadata. By default returns only active (non-archived) products, 10 per page.', 'surecart' );
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_annotations(): array {
+		return array(
+			'readonly'    => true,
+			'destructive' => false,
+			'idempotent'  => true,
+		);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_instructions(): string {
+		return 'Use this to browse or search the product catalog. Set archived=true to include soft-deleted products. Maximum 100 results per page. For full details on a single product, use get-product instead.';
 	}
 
 	/**

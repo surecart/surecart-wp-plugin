@@ -27,7 +27,25 @@ class ListPromotions extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function get_description(): string {
-		return __( 'List all SureCart promotions with optional pagination.', 'surecart' );
+		return __( 'Retrieve a paginated list of SureCart promotions. Supports filtering by associated coupon and customer. Returns promotion codes, IDs, and linked coupon details.', 'surecart' );
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_annotations(): array {
+		return array(
+			'readonly'    => true,
+			'destructive' => false,
+			'idempotent'  => true,
+		);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_instructions(): string {
+		return 'Use this to browse or filter promotion codes. Filter by coupon_ids to see promotions for a specific coupon, or by customer to see customer-specific promotions.';
 	}
 
 	/**

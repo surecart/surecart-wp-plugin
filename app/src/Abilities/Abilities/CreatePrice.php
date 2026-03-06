@@ -27,7 +27,25 @@ class CreatePrice extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function get_description(): string {
-		return __( 'Create a new price for an existing product. Specify amount in smallest currency unit.', 'surecart' );
+		return __( 'Create a new price for an existing SureCart product. Requires the product ID, amount in the smallest currency unit (e.g., cents for USD), and currency code. Supports one-time and recurring pricing.', 'surecart' );
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_annotations(): array {
+		return array(
+			'readonly'    => false,
+			'destructive' => false,
+			'idempotent'  => false,
+		);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_instructions(): string {
+		return 'Requires a valid product ID. The amount is in the smallest currency unit (e.g., 1000 = $10.00 USD). For recurring prices, set recurring_interval (day, week, month, year) and recurring_interval_count. Each call creates a new price — do not call multiple times for the same price.';
 	}
 
 	/**

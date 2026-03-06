@@ -27,7 +27,25 @@ class GetOrder extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function get_description(): string {
-		return __( 'Get a single SureCart order by ID, including checkout and line item details.', 'surecart' );
+		return __( 'Retrieve a single SureCart order by its ID, including its checkout details, line items, customer, and payment information. Returns the full order object with related data expanded.', 'surecart' );
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_annotations(): array {
+		return array(
+			'readonly'    => true,
+			'destructive' => false,
+			'idempotent'  => true,
+		);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_instructions(): string {
+		return 'Use this when you need full details about a specific order. The response includes expanded checkout and line items. For browsing multiple orders, use list-orders instead.';
 	}
 
 	/**

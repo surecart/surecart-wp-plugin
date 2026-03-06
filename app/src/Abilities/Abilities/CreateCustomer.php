@@ -27,7 +27,25 @@ class CreateCustomer extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function get_description(): string {
-		return __( 'Create a new SureCart customer with email, name, phone, address, and tax settings.', 'surecart' );
+		return __( 'Create a new SureCart customer with an email address, name, phone number, and optional billing/shipping addresses. Returns the newly created customer object.', 'surecart' );
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_annotations(): array {
+		return array(
+			'readonly'    => false,
+			'destructive' => false,
+			'idempotent'  => false,
+		);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_instructions(): string {
+		return 'An email address is required. Check if the customer already exists using list-customers before creating to avoid duplicates. Each call creates a new customer record.';
 	}
 
 	/**

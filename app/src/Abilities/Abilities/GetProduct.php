@@ -27,7 +27,25 @@ class GetProduct extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function get_description(): string {
-		return __( 'Get a single SureCart product by ID, including its prices and variants.', 'surecart' );
+		return __( 'Retrieve a single SureCart product by its ID, including its prices, variants, variant options, and metadata. Returns the full product object with all related data expanded.', 'surecart' );
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_annotations(): array {
+		return array(
+			'readonly'    => true,
+			'destructive' => false,
+			'idempotent'  => true,
+		);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_instructions(): string {
+		return 'Use this when you need full details about a specific product. The response includes expanded prices and variants. For browsing multiple products, use list-products instead.';
 	}
 
 	/**

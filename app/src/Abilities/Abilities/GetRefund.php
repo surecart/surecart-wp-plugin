@@ -27,7 +27,25 @@ class GetRefund extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function get_description(): string {
-		return __( 'Get a single SureCart refund by ID, including its charge and refund items.', 'surecart' );
+		return __( 'Retrieve a single SureCart refund by its ID, including the associated charge and refund items. Returns the full refund object with related data expanded.', 'surecart' );
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_annotations(): array {
+		return array(
+			'readonly'    => true,
+			'destructive' => false,
+			'idempotent'  => true,
+		);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_instructions(): string {
+		return 'Use this when you need full details about a specific refund including its status, amount, and associated charge.';
 	}
 
 	/**

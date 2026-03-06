@@ -27,7 +27,25 @@ class ListSubscriptions extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function get_description(): string {
-		return __( 'List SureCart subscriptions with optional filters for status, customer, and pagination.', 'surecart' );
+		return __( 'Retrieve a paginated list of SureCart subscriptions. Supports filtering by status, customer, price, and product. Returns subscription summaries with IDs, statuses, and billing details.', 'surecart' );
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_annotations(): array {
+		return array(
+			'readonly'    => true,
+			'destructive' => false,
+			'idempotent'  => true,
+		);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_instructions(): string {
+		return 'Use this to browse or filter subscriptions. Common status values: active, trialing, past_due, canceled, completed. For full details on a single subscription, use get-subscription instead.';
 	}
 
 	/**

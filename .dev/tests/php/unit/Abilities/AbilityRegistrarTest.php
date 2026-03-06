@@ -152,4 +152,76 @@ class AbilityRegistrarTest extends SureCartUnitTestCase {
 			$this->assertContains( $name, $names, "Expected ability '{$name}' not found." );
 		}
 	}
+
+	/**
+	 * Test that all abilities have explicit annotations with all 3 boolean keys.
+	 */
+	public function test_all_abilities_have_explicit_annotations() {
+		$abilities = $this->registrar->get_abilities();
+		foreach ( $abilities as $ability ) {
+			$annotations = $ability->get_annotations();
+			$name        = $ability->get_name();
+
+			$this->assertArrayHasKey( 'readonly', $annotations, "Ability '{$name}' missing 'readonly' annotation." );
+			$this->assertArrayHasKey( 'destructive', $annotations, "Ability '{$name}' missing 'destructive' annotation." );
+			$this->assertArrayHasKey( 'idempotent', $annotations, "Ability '{$name}' missing 'idempotent' annotation." );
+
+			$this->assertIsBool( $annotations['readonly'], "Ability '{$name}' 'readonly' must be boolean." );
+			$this->assertIsBool( $annotations['destructive'], "Ability '{$name}' 'destructive' must be boolean." );
+			$this->assertIsBool( $annotations['idempotent'], "Ability '{$name}' 'idempotent' must be boolean." );
+		}
+	}
+
+	/**
+	 * Test that all List/Get abilities are marked as readonly.
+	 */
+	public function test_readonly_abilities_have_correct_annotations() {
+		$readonly_prefixes = array( 'surecart/list-', 'surecart/get-' );
+		$abilities         = $this->registrar->get_abilities();
+
+		foreach ( $abilities as $ability ) {
+			$name = $ability->get_name();
+			foreach ( $readonly_prefixes as $prefix ) {
+				if ( str_starts_with( $name, $prefix ) ) {
+					$annotations = $ability->get_annotations();
+					$this->assertTrue( $annotations['readonly'], "Ability '{$name}' should be readonly." );
+					$this->assertFalse( $annotations['destructive'], "Ability '{$name}' should not be destructive." );
+					$this->assertTrue( $annotations['idempotent'], "Ability '{$name}' should be idempotent." );
+				}
+			}
+		}
+	}
+
+	/**
+	 * Test that all Delete abilities are marked as destructive.
+	 */
+	public function test_delete_abilities_have_destructive_annotations() {
+		$abilities = $this->registrar->get_abilities();
+
+		foreach ( $abilities as $ability ) {
+			$name = $ability->get_name();
+			if ( str_starts_with( $name, 'surecart/delete-' ) ) {
+				$annotations = $ability->get_annotations();
+				$this->assertTrue( $annotations['destructive'], "Ability '{$name}' should be destructive." );
+				$this->assertFalse( $annotations['readonly'], "Ability '{$name}' should not be readonly." );
+			}
+		}
+	}
+
+	/**
+	 * Test that get_config() includes annotations and instructions in meta.
+	 */
+	public function test_all_abilities_return_annotations_in_config() {
+		$abilities = $this->registrar->get_abilities();
+
+		foreach ( $abilities as $ability ) {
+			$config = $ability->get_config();
+			$name   = $ability->get_name();
+
+			$this->assertArrayHasKey( 'annotations', $config['meta'], "Ability '{$name}' config missing meta.annotations." );
+			$this->assertArrayHasKey( 'instructions', $config['meta'], "Ability '{$name}' config missing meta.instructions." );
+			$this->assertIsArray( $config['meta']['annotations'], "Ability '{$name}' meta.annotations must be an array." );
+			$this->assertIsString( $config['meta']['instructions'], "Ability '{$name}' meta.instructions must be a string." );
+		}
+	}
 }

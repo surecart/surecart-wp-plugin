@@ -27,7 +27,25 @@ class UpdateProduct extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function get_description(): string {
-		return __( 'Update an existing SureCart product. Provide only the fields you want to change: name, description, or metadata.', 'surecart' );
+		return __( 'Update an existing SureCart product by its ID. Supports changing name, description, metadata, and other product attributes. Only provided fields are updated; omitted fields remain unchanged.', 'surecart' );
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_annotations(): array {
+		return array(
+			'readonly'    => false,
+			'destructive' => false,
+			'idempotent'  => true,
+		);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_instructions(): string {
+		return 'Requires a valid product ID. Only include the fields you want to change — omitted fields are not modified. To archive a product, use archive-product instead.';
 	}
 
 	/**

@@ -27,7 +27,25 @@ class UpdateFulfillment extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function get_description(): string {
-		return __( 'Update an existing SureCart fulfillment by ID. Supports shipment status, tracking info, fulfillment items, and notification settings.', 'surecart' );
+		return __( 'Update an existing SureCart fulfillment by its ID. Supports changing the shipment status, tracking information, and fulfillment items.', 'surecart' );
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_annotations(): array {
+		return array(
+			'readonly'    => false,
+			'destructive' => false,
+			'idempotent'  => true,
+		);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_instructions(): string {
+		return 'Requires a valid fulfillment ID. Use this to update tracking numbers, change shipment status, or modify fulfillment items. Only include the fields you want to change.';
 	}
 
 	/**

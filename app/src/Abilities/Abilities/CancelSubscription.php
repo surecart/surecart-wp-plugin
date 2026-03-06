@@ -27,7 +27,25 @@ class CancelSubscription extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function get_description(): string {
-		return __( 'Cancel a SureCart subscription by ID.', 'surecart' );
+		return __( 'Cancel an active SureCart subscription by its ID. Supports immediate cancellation or pending cancellation at the end of the current billing period. This stops recurring billing and may revoke access to associated products.', 'surecart' );
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_annotations(): array {
+		return array(
+			'readonly'    => false,
+			'destructive' => true,
+			'idempotent'  => true,
+		);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_instructions(): string {
+		return 'Always confirm with the user before canceling. Ask whether they want immediate cancellation or at end of billing period. Immediate cancellation stops access right away; pending lets the customer use their remaining paid time.';
 	}
 
 	/**

@@ -27,7 +27,25 @@ class ArchiveProduct extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function get_description(): string {
-		return __( 'Archive (soft-delete) a product, removing it from the storefront. The product data is preserved and can be restored.', 'surecart' );
+		return __( 'Archive (soft-delete) a SureCart product by its ID. Archived products are hidden from the storefront but can be restored later. This does not delete the product permanently.', 'surecart' );
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_annotations(): array {
+		return array(
+			'readonly'    => false,
+			'destructive' => false,
+			'idempotent'  => true,
+		);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_instructions(): string {
+		return 'This is a soft-delete — the product can be restored by updating its archived status. Archiving hides the product from the storefront but preserves all data, prices, and purchase history.';
 	}
 
 	/**

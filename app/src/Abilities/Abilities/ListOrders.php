@@ -27,7 +27,25 @@ class ListOrders extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function get_description(): string {
-		return __( 'List SureCart orders with optional filters for status, customer, and pagination.', 'surecart' );
+		return __( 'Retrieve a paginated list of SureCart orders. Supports filtering by order status and customer ID. Returns order summaries with IDs, amounts, statuses, and timestamps.', 'surecart' );
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_annotations(): array {
+		return array(
+			'readonly'    => true,
+			'destructive' => false,
+			'idempotent'  => true,
+		);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_instructions(): string {
+		return 'Use this to browse or search orders. Filter by status (paid, unpaid, void, partially_refunded, refunded) and customer. For full details on a single order, use get-order instead.';
 	}
 
 	/**

@@ -27,7 +27,25 @@ class DeleteFulfillment extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function get_description(): string {
-		return __( 'Delete a SureCart fulfillment by ID. Warning: Deleting a fulfillment will permanently remove it and all associated fulfillment items. This action cannot be undone. Always confirm with the user before executing.', 'surecart' );
+		return __( 'Permanently delete a SureCart fulfillment record by its ID. This removes the fulfillment and its tracking information. Requires explicit confirmation. This action cannot be undone.', 'surecart' );
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_annotations(): array {
+		return array(
+			'readonly'    => false,
+			'destructive' => true,
+			'idempotent'  => true,
+		);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_instructions(): string {
+		return 'This is a permanently destructive action. Always warn the user and get explicit confirmation before proceeding. The confirm parameter must be set to true. Deleting a fulfillment removes its tracking information.';
 	}
 
 	/**

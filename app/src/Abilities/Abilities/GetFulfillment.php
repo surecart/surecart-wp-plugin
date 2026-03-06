@@ -27,7 +27,25 @@ class GetFulfillment extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function get_description(): string {
-		return __( 'Get a single SureCart fulfillment by ID, including its fulfillment items and trackings.', 'surecart' );
+		return __( 'Retrieve a single SureCart fulfillment by its ID, including its fulfillment items and tracking information. Returns the full fulfillment object with related data expanded.', 'surecart' );
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_annotations(): array {
+		return array(
+			'readonly'    => true,
+			'destructive' => false,
+			'idempotent'  => true,
+		);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_instructions(): string {
+		return 'Use this when you need full details about a specific fulfillment including tracking numbers and item details.';
 	}
 
 	/**

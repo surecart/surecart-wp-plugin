@@ -27,7 +27,25 @@ class CreateCoupon extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function get_description(): string {
-		return __( 'Create a new SureCart coupon with a discount amount or percentage.', 'surecart' );
+		return __( 'Create a new SureCart coupon with a discount amount or percentage, duration, and optional redemption limits. Coupons define the discount logic and can be linked to one or more promotion codes.', 'surecart' );
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_annotations(): array {
+		return array(
+			'readonly'    => false,
+			'destructive' => false,
+			'idempotent'  => false,
+		);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_instructions(): string {
+		return 'Set either amount_off (in smallest currency unit) or percent_off (0-100), not both. Duration can be once, repeating, or forever. For repeating, also set duration_in_months. Each call creates a new coupon.';
 	}
 
 	/**
