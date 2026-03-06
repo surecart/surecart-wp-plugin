@@ -17,7 +17,7 @@ const { scProductViewed } = require('./events');
  * Check if stock is effectively unlimited for a variant, falling back to product.
  */
 const hasEffectiveUnlimitedStock = (variant, product) =>
-	variant?.has_unlimited_stock ?? product?.has_unlimited_stock ?? true;
+	variant?.has_unlimited_stock ?? product?.has_unlimited_stock ?? false;
 
 /**
  * Check if the key is not submit key.

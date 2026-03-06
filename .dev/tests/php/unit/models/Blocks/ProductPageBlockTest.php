@@ -79,15 +79,15 @@ class ProductPageBlockTest extends SureCartUnitTestCase {
 	}
 
 	/**
-	 * Both missing has_unlimited_stock → defaults to true (unlimited).
+	 * Both missing has_unlimited_stock → defaults to false (stock-tracked) for safety.
 	 */
-	public function test_effective_stock_defaults_unlimited_when_both_missing() {
+	public function test_effective_stock_defaults_tracked_when_both_missing() {
 		$result = $this->callEffectiveVariantStock(
 			[ 'available_stock' => 0 ],
 			[]
 		);
 
-		$this->assertSame( PHP_INT_MAX, $result );
+		$this->assertSame( 0, $result );
 	}
 
 	/**
@@ -168,6 +168,36 @@ class ProductPageBlockTest extends SureCartUnitTestCase {
 				[ 'has_unlimited_stock' => null, 'available_stock' => 0 ],
 			],
 			[ 'has_unlimited_stock' => true ]
+		);
+
+		$this->assertFalse( $result );
+	}
+
+	/**
+	 * Inherited sold-out: variants with null has_unlimited_stock, product stock-tracked, zero stock.
+	 */
+	public function test_inherited_sold_out_when_product_tracked() {
+		$result = $this->callIsVariantGroupSoldOut(
+			[
+				[ 'has_unlimited_stock' => null, 'available_stock' => 0 ],
+				[ 'has_unlimited_stock' => null, 'available_stock' => 0 ],
+			],
+			[ 'has_unlimited_stock' => false ]
+		);
+
+		$this->assertTrue( $result );
+	}
+
+	/**
+	 * Mixed inherited: one variant inherits sold-out, another has stock.
+	 */
+	public function test_mixed_inherited_not_sold_out() {
+		$result = $this->callIsVariantGroupSoldOut(
+			[
+				[ 'has_unlimited_stock' => null, 'available_stock' => 0 ],
+				[ 'has_unlimited_stock' => null, 'available_stock' => 3 ],
+			],
+			[ 'has_unlimited_stock' => false ]
 		);
 
 		$this->assertFalse( $result );

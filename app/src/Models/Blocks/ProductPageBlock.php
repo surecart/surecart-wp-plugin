@@ -432,7 +432,7 @@ class ProductPageBlock {
 	 * @return int
 	 */
 	private static function effectiveVariantStock( array $item, array $product ): int {
-		$has_unlimited_stock = $item['has_unlimited_stock'] ?? $product['has_unlimited_stock'] ?? true;
+		$has_unlimited_stock = $item['has_unlimited_stock'] ?? $product['has_unlimited_stock'] ?? false;
 		if ( $has_unlimited_stock ) {
 			return PHP_INT_MAX;
 		}
