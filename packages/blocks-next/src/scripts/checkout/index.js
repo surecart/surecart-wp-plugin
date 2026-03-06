@@ -133,6 +133,17 @@ const { state, actions } = store('surecart/checkout', {
 		},
 
 		/**
+		 * Check if the checkout has a scratch amount (original price before sale/discount).
+		 */
+		get hasTotalScratchAmount() {
+			return (
+				!!state?.checkout?.total_scratch_display_amount &&
+				state?.checkout?.total_scratch_display_amount !==
+					state?.checkout?.subtotal_display_amount
+			);
+		},
+
+		/**
 		 * Get the checkout line items.
 		 */
 		get checkoutLineItems() {
