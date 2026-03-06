@@ -95,6 +95,9 @@
 		"installer-paths": {
 			"vendor/woocommerce/action-scheduler": [
 				"woocommerce/action-scheduler"
+			],
+			"vendor/brainstormforce/nps-survey": [
+				"brainstormforce/nps-survey"
 			]
 		}
 	},

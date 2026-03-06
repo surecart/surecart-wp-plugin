@@ -4,20 +4,20 @@
 		"Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
 		"This file is @generated automatically"
 	],
-	"content-hash": "de6168bc7e17873548173e515fd8b9ef",
+	"content-hash": "b9dce34efcc86fc0cbd5b4acb6ef2c69",
 	"packages": [
 		{
 			"name": "brainstormforce/nps-survey",
-			"version": "1.0.16",
+			"version": "1.0.17",
 			"source": {
 				"type": "git",
-				"url": "https://github.com/brainstormforce/nps-survey.git",
-				"reference": "bdabfacea1abd84feca540999a8231232fbc7cf9"
+				"url": "git@github.com:brainstormforce/nps-survey.git",
+				"reference": "cc3ea43e127f88d658f822030b3ff09396c8f303"
 			},
 			"dist": {
 				"type": "zip",
-				"url": "https://api.github.com/repos/brainstormforce/nps-survey/zipball/bdabfacea1abd84feca540999a8231232fbc7cf9",
-				"reference": "bdabfacea1abd84feca540999a8231232fbc7cf9",
+				"url": "https://api.github.com/repos/brainstormforce/nps-survey/zipball/cc3ea43e127f88d658f822030b3ff09396c8f303",
+				"reference": "cc3ea43e127f88d658f822030b3ff09396c8f303",
 				"shasum": ""
 			},
 			"require-dev": {
@@ -34,10 +34,18 @@
 			},
 			"type": "wordpress-plugin",
 			"scripts": {
-				"format": ["vendor/bin/phpcbf"],
-				"lint": ["vendor/bin/phpcs"],
-				"test": ["vendor/bin/phpunit"],
-				"phpstan": ["vendor/bin/phpstan --memory-limit=2048M analyse"],
+				"format": [
+					"vendor/bin/phpcbf"
+				],
+				"lint": [
+					"vendor/bin/phpcs"
+				],
+				"test": [
+					"vendor/bin/phpunit"
+				],
+				"phpstan": [
+					"vendor/bin/phpstan --memory-limit=2048M analyse"
+				],
 				"insights": [
 					"./vendor/bin/phpinsights analyse -v --no-interaction"
 				],
@@ -53,10 +61,10 @@
 			},
 			"description": "NPS Survey Plugin",
 			"support": {
-				"source": "https://github.com/brainstormforce/nps-survey/tree/1.0.16",
+				"source": "https://github.com/brainstormforce/nps-survey/tree/1.0.17",
 				"issues": "https://github.com/brainstormforce/nps-survey/issues"
 			},
-			"time": "2026-01-20T05:25:34+00:00"
+			"time": "2026-03-02T10:26:50+00:00"
 		},
 		{
 			"name": "composer/installers",
@@ -8606,5 +8614,5 @@
 	"platform-dev": {
 		"php": "^7.4|^8.0|^8.1"
 	},
-	"plugin-api-version": "2.9.0"
+	"plugin-api-version": "2.6.0"
 }
