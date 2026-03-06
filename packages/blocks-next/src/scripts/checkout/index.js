@@ -135,7 +135,7 @@ const { state, actions } = store('surecart/checkout', {
 		/**
 		 * Check if the checkout has a subtotal scratch amount different from the subtotal.
 		 */
-		get hasTotalScratchAmount() {
+		get hasSubtotalScratchAmount() {
 			return !!state?.checkout?.has_subtotal_scratch_amount;
 		},
 
