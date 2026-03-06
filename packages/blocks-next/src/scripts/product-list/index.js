@@ -80,6 +80,7 @@ const { state } = store('surecart/product-list', {
 			const { value } = e.target;
 
 			const ctx = getContext();
+			if (!ctx) return;
 
 			// Don't navigate if the search didn't really change.
 			if (value === ctx.search) {
@@ -126,12 +127,13 @@ const { state } = store('surecart/product-list', {
 
 			routerActions.navigate(url.href);
 
-			const searchCtx = getContext();
+			// Re-fetch context after navigation.
+			const updatedCtx = getContext();
 			const scSearchedEvent = new CustomEvent('scSearched', {
 				detail: {
 					searchString: value,
-					searchResultCount: searchCtx?.products?.length,
-					searchResultIds: searchCtx?.products?.map((product) => product.id),
+					searchResultCount: updatedCtx?.products?.length,
+					searchResultIds: updatedCtx?.products?.map((product) => product.id),
 				},
 				bubbles: true,
 			});
@@ -153,6 +155,7 @@ const { state } = store('surecart/product-list', {
 			event.preventDefault();
 
 			const ctx = getContext();
+			if (!ctx) return;
 
 			// immediately update the UI.
 			ctx.search = '';
@@ -213,9 +216,9 @@ const { state } = store('surecart/product-list', {
 		 * we can prefetch a page ahead of time without mouse enter (just on load)
 		 */
 		*prefetch() {
-			const { url } = getContext();
+			const ctx = getContext();
 			const { ref } = getElement();
-			if (url && isValidLink(ref)) {
+			if (ctx?.url && isValidLink(ref)) {
 				const { actions } = yield import(
 					/* webpackIgnore: true */
 					'@wordpress/interactivity-router'
