@@ -41,10 +41,8 @@ const { state, actions } = store('surecart/sidebar', {
 		open: function* () {
 			state.mobileOpen = true;
 			// also do not add inert for the parent of the current element
-			inertEverythingExcept(
-				document.querySelector('.sc-sidebar-drawer')
-			);
-			state.ariaLabelMobile = __('Hide filters', 'surecart');
+			inertEverythingExcept(document.querySelector('.sc-sidebar-drawer'));
+			state.ariaLabelMobile = __('Close sidebar', 'surecart');
 		},
 
 		/**
@@ -54,7 +52,7 @@ const { state, actions } = store('surecart/sidebar', {
 			state.mobileOpen = false;
 			// remove inert attribute from all elements that were made inert
 			removeInert();
-			state.ariaLabelMobile = __('Show filters', 'surecart');
+			state.ariaLabelMobile = __('Open sidebar', 'surecart');
 		},
 
 		/**

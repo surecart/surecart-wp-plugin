@@ -1,0 +1,50 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "surecart/product-quantity-input-decrease",
+	"title": "Decrease Quantity",
+	"description": "Display the product quantity input decrease",
+	"version": "1.0.0",
+	"category": "surecart-product-page",
+	"icon": "media-interactive",
+	"ancestor": ["surecart/product-quantity"],
+	"keywords": ["quantity", "form", "product"],
+	"supports": {
+		"interactivity": true,
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true,
+			"textAlign": true,
+			"__experimentalFontFamily": true,
+			"__experimentalFontWeight": true,
+			"__experimentalFontStyle": true,
+			"__experimentalTextTransform": true,
+			"__experimentalTextDecoration": true,
+			"__experimentalLetterSpacing": true,
+			"__experimentalDefaultControls": {
+				"fontSize": true,
+				"fontAppearance": true,
+				"textTransform": true
+			}
+		},
+		"spacing": {
+			"padding": true,
+			"margin": true
+		},
+		"color": true,
+		"__experimentalBorder": {
+			"radius": true,
+			"color": true,
+			"style": true,
+			"width": true
+		},
+		"dimensions": {
+			"minHeight": true
+		}
+	},
+	"textdomain": "surecart",
+	"render": "file:./view.php",
+	"editorScript": "file:./index.js",
+	"editorStyle": ["surecart-quantity-selector", "surecart-input-group"],
+	"style": ["surecart-quantity-selector", "surecart-input-group"]
+}

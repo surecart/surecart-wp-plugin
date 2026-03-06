@@ -11,7 +11,7 @@
 		data-wp-each--line_item="state.checkoutLineItems"
 		data-wp-each-key="context.line_item.id"
 	>
-		<div class="sc-product-line-item" data-wp-class--sc-product-line-item--has-swap="state.swap" role="listitem">
+		<div class="sc-product-line-item" data-wp-class--sc-product-line-item--has-swap="state.swap" role="listitem" data-wp-bind--aria-label="state.lineItemAriaLabel">
 			<div class="sc-product-line-item__content">
 				<?php echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 			</div>
