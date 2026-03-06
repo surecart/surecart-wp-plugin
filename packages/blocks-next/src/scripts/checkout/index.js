@@ -133,13 +133,10 @@ const { state, actions } = store('surecart/checkout', {
 		},
 
 		/**
-		 * Check if the checkout has a scratch amount (original price before sale/discount).
+		 * Check if the checkout has a subtotal scratch amount different from the subtotal.
 		 */
 		get hasTotalScratchAmount() {
-			return (
-				!!state?.checkout?.total_scratch_display_amount &&
-				!!state?.checkout?.total_savings_amount
-			);
+			return !!state?.checkout?.has_subtotal_scratch_amount;
 		},
 
 		/**
