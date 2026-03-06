@@ -16,6 +16,7 @@ use SureCart\Middleware\LoginLinkMiddleware;
 use SureCart\Middleware\OrderRedirectMiddleware;
 use SureCart\Middleware\PathRedirectMiddleware;
 use SureCart\Middleware\PaymentFailureRedirectMiddleware;
+use SureCart\Middleware\ProductReviewRedirectMiddleware;
 use SureCart\Middleware\PurchaseRedirectMiddleware;
 use SureCart\Middleware\SubscriptionRedirectMiddleware;
 use SureCart\Middleware\UpsellMiddleware;
@@ -90,4 +91,5 @@ if ( ! defined( 'ABSPATH' ) ) {
 	// customer dashboard redirect is the fallback if there is a customer_id present.
 	->middleware( CustomerDashboardRedirectMiddleware::class )
 	->middleware( CustomerDashboardLinkRedirectMiddleware::class )
+	->middleware( ProductReviewRedirectMiddleware::class )
 	->handle( 'DashboardController@show' );
