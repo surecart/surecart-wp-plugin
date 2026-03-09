@@ -93,7 +93,7 @@ export default () => {
 				<ScChoices
 					label={__('Theme', 'surecart')}
 					help={__(
-						'This applies to your WordPress site and affiliate portal.',
+						'This applies to your WordPress site, emails and affiliate portal.',
 						'surecart'
 					)}
 					autoWidth

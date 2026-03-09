@@ -59,7 +59,6 @@ export default ({
 							height: auto;
 							display: block;
 							border-radius: var(--sc-border-radius-medium);
-							background: #f3f3f3;
 						`}
 					/>
 					<div
@@ -134,7 +133,6 @@ export default ({
 						: 'var(--sc-color-gray-200, #e5e7eb)'};
 					border-radius: var(--sc-input-border-radius-large, 8px);
 					padding: 2em;
-					--sc-input-label-color: #fff;
 				`}
 			>
 				{renderContent()}

@@ -132,12 +132,12 @@ class BrandRestServiceProvider extends RestServiceProvider implements RestServic
 				],
 				'logo'             => [
 					'description' => esc_html__( 'The brand logo media object.', 'surecart' ),
-					'type'        => 'object',
+					'type'        => [ 'object', 'null' ],
 					'context'     => [ 'view', 'edit' ],
 				],
 				'dark_logo'        => [
 					'description' => esc_html__( 'The dark mode logo media object.', 'surecart' ),
-					'type'        => 'object',
+					'type'        => [ 'object', 'null' ],
 					'context'     => [ 'view', 'edit' ],
 				],
 				'theme'            => [
