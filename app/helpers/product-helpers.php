@@ -23,8 +23,10 @@ if ( ! function_exists( 'sc_get_product' ) ) {
 				[
 					'post_type'  => 'sc_product',
 					'meta_query' => [
-						'key'   => 'sc_id',
-						'value' => $post,
+						[
+							'key'   => 'sc_id',
+							'value' => $post,
+						],
 					],
 				]
 			);
@@ -161,6 +163,24 @@ if ( ! function_exists( 'sc_get_product_featured_image_attributes' ) ) {
 			return '';
 		}
 		return $sc_product->featured_image->attributes( $size, $attrs );
+	}
+}
+
+if ( ! function_exists( 'sc_get_product_review_link' ) ) {
+	/**
+	 * Get the product review link.
+	 *
+	 * @param \SureCart\Models\Product|int|string $product The product.
+	 *
+	 * @return string
+	 */
+	function sc_get_product_review_link( $product = null ): string {
+		$product = sc_get_product( $product );
+		if ( empty( $product ) || empty( $product->permalink ) ) {
+			return '';
+		}
+
+		return $product->permalink . '#reviews';
 	}
 }
 

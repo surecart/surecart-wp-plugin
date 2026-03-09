@@ -38,6 +38,7 @@ class BlockServiceProvider implements ServiceProviderInterface {
 		$container['block.support.anchor']   = fn () => new BlockAnchorSupportService();
 		$container['block.support.currency'] = fn () => new BlockCurrencyConversionSupportService();
 		$container['blocks.quick_view']      = fn () => new ProductQuickViewService();
+		$container['blocks.review_form']     = fn () => new ProductReviewFormService();
 		$container['blocks.patterns']        = fn () => new BlockPatternsService( $app );
 		$container['blocks.mode_switcher']   = fn () => new FormModeSwitcherService( $app );
 		$container['blocks.validations']     = fn () => new BlockValidationService(

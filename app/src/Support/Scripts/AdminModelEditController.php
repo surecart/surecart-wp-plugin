@@ -149,6 +149,9 @@ abstract class AdminModelEditController {
 		if ( in_array( 'currency', $this->with_data ) ) {
 			$this->data['currency_code'] = \SureCart::account()->currency;
 		}
+		if ( in_array( 'review_protocol', $this->with_data ) ) {
+			$this->data['review_protocol'] = \SureCart::account()->review_protocol;
+		}
 		if ( in_array( 'tax_protocol', $this->with_data ) ) {
 			$this->data['tax_protocol'] = \SureCart::account()->tax_protocol;
 		}
