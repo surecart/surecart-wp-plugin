@@ -128,7 +128,7 @@ export class ScStripeElement {
   getBillingDetails() {
     const order = this.order;
     const billingAddr = (
-      (!order?.billing_matches_shipping && order?.billing_address)
+      (order?.billing_matches_shipping === false && order?.billing_address)
         ? order.billing_address
         : undefined
     ) as ShippingAddress;

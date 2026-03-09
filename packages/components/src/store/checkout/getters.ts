@@ -33,7 +33,7 @@ export const shippingAddressRequired = () => state.checkout?.shipping_address_ac
 /**
  * Get Billing address
  */
-export const getCompleteAddress = (type = 'shipping') => {
+export const getCompleteAddress = (type: 'shipping' | 'billing' = 'shipping') => {
   const isComplete = isAddressComplete(state.checkout?.[`${type}_address`] as Address);
   if (!isComplete) return;
 

@@ -271,7 +271,7 @@ export class ScStripePaymentElement {
     if (checkoutState.checkout?.status !== 'draft') return;
 
     const { name, email } = checkoutState.checkout;
-    const useBilling = !checkoutState.checkout?.billing_matches_shipping;
+    const useBilling = checkoutState.checkout?.billing_matches_shipping === false;
     const billingAddr = useBilling ? checkoutState.checkout?.billing_address as ShippingAddress : undefined;
     const addr = (billingAddr?.line_1 ? billingAddr : checkoutState.checkout?.shipping_address as ShippingAddress) || {} as ShippingAddress;
     const { line_1: line1, line_2: line2, city, state, country, postal_code } = addr;
@@ -327,20 +327,16 @@ export class ScStripePaymentElement {
   /** Get the billing address in Stripe format. */
   getBillingAddress() {
     const checkout = checkoutState.checkout;
-    const { line_1: line1, line_2: line2, city, state, country, postal_code } = (
-      (!checkout?.billing_matches_shipping && checkout?.billing_address)
+    const billingAddr = (
+      checkout?.billing_matches_shipping === false && checkout?.billing_address
         ? checkout.billing_address
-        : checkout?.shipping_address
-    ) as ShippingAddress || {};
-    if (!line1) {
-      const shipping = checkout?.shipping_address as ShippingAddress;
-      if (!shipping?.line_1) return {};
-      const { line_1: sLine1, line_2: sLine2, city: sCity, state: sState, country: sCountry, postal_code: sPostalCode } = shipping;
-      return { address: { line1: sLine1, line2: sLine2, city: sCity, state: sState, postal_code: sPostalCode, country: sCountry } };
-    }
-    return {
-      address: { line1, line2, city, state, postal_code, country },
-    };
+        : undefined
+    ) as ShippingAddress;
+    const shippingAddr = checkout?.shipping_address as ShippingAddress || {};
+    const { line_1: line1, line_2: line2, city, state, country, postal_code } =
+      billingAddr?.line_1 ? billingAddr : shippingAddr;
+    if (!line1) return {};
+    return { address: { line1, line2, city, state, postal_code, country } };
   }
 
   @Method()
