@@ -65,18 +65,6 @@ export default ({ selectedParcel, isEdit, onRequestClose, open }) => {
 		}
 	}, [selectedParcel, isEdit, open]);
 
-	// Close dialog on Escape key (workaround for shadow DOM event bubbling).
-	useEffect(() => {
-		if (!open) return;
-		const handleEsc = (e) => {
-			if (e.key === 'Escape') {
-				onRequestClose();
-			}
-		};
-		document.addEventListener('keydown', handleEsc);
-		return () => document.removeEventListener('keydown', handleEsc);
-	}, [open, onRequestClose]);
-
 	const onSubmit = async () => {
 		setLoading(true);
 		setError(null);
@@ -101,21 +89,14 @@ export default ({ selectedParcel, isEdit, onRequestClose, open }) => {
 				}
 
 				const { unit, ...values } = dims;
-				const hasValues = Object.values(values).some(
-					(v) => v !== '' && v !== undefined && v !== null
-				);
+				const hasValues = Object.values(values).some((v) => !!v);
 
 				if (!hasValues) {
 					delete data.dimensions;
 				} else {
 					data.dimensions = {
 						...Object.fromEntries(
-							Object.entries(dims).filter(
-								([, v]) =>
-									v !== '' &&
-									v !== undefined &&
-									v !== null
-							)
+							Object.entries(dims).filter(([, v]) => !!v)
 						),
 						unit: unit || 'in',
 					};
@@ -130,8 +111,8 @@ export default ({ selectedParcel, isEdit, onRequestClose, open }) => {
 
 			createSuccessNotice(
 				isEdit
-					? __('Parcel template updated', 'surecart')
-					: __('Parcel template added', 'surecart'),
+					? __('Parcel template updated.', 'surecart')
+					: __('Parcel template added.', 'surecart'),
 				{ type: 'snackbar' }
 			);
 
@@ -191,9 +172,7 @@ export default ({ selectedParcel, isEdit, onRequestClose, open }) => {
 							);
 							.components-base-control__label {
 								color: var(--sc-input-label-color);
-								font-weight: var(
-									--sc-input-label-font-weight
-								);
+								font-weight: var(--sc-input-label-font-weight);
 								font-size: var(
 									--sc-input-label-font-size-medium
 								);

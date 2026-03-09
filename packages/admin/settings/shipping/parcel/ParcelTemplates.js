@@ -74,10 +74,9 @@ export default () => {
 			await deleteEntityRecord('surecart', 'parcel-template', id, {
 				throwOnError: true,
 			});
-			createSuccessNotice(
-				__('Parcel template removed', 'surecart'),
-				{ type: 'snackbar' }
-			);
+			createSuccessNotice(__('Parcel template removed.', 'surecart'), {
+				type: 'snackbar',
+			});
 		} catch (err) {
 			console.error(err);
 			setError(err);
@@ -132,10 +131,7 @@ export default () => {
 									>
 										<strong>{parcel.name}</strong>
 										{parcel.default && (
-											<ScTag
-												type="primary"
-												size="small"
-											>
+											<ScTag type="primary" size="small">
 												{__('Default', 'surecart')}
 											</ScTag>
 										)}
@@ -226,9 +222,7 @@ export default () => {
 					margin-top: var(--sc-spacing-medium);
 				`}
 			>
-				<ScButton
-					onClick={() => setCurrentModal(modals.MODAL_ADD)}
-				>
+				<ScButton onClick={() => setCurrentModal(modals.MODAL_ADD)}>
 					<ScIcon name="plus" slot="prefix" />
 					{__('Add New Template', 'surecart')}
 				</ScButton>
