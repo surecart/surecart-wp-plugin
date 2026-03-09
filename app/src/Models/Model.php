@@ -148,7 +148,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, Object
 	 * Tracks which attribute keys are currently being filtered
 	 * to prevent infinite recursion in getAttribute().
 	 *
-	 * @var array<string, true>
+	 * @var array<string, mixed>
 	 */
 	protected $filtering_get_attribute = [];
 
@@ -1092,6 +1092,12 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, Object
 	 * @return mixed
 	 */
 	public function getAttribute( $key ) {
+		// Short-circuit: recursive call while the same key is being filtered.
+		// Returns the pre-filter value to avoid warnings and redundant processing.
+		if ( array_key_exists( $key, $this->filtering_get_attribute ) ) {
+			return $this->filtering_get_attribute[ $key ];
+		}
+
 		$attribute = null;
 
 		if ( $this->hasAttribute( $key ) ) {
@@ -1105,10 +1111,9 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, Object
 		}
 
 		if ( $this->object_name
-			&& ! isset( $this->filtering_get_attribute[ $key ] )
 			&& has_filter( "surecart/{$this->object_name}/get_attribute" )
 		) {
-			$this->filtering_get_attribute[ $key ] = true;
+			$this->filtering_get_attribute[ $key ] = $attribute;
 			try {
 				$attribute = apply_filters( "surecart/{$this->object_name}/get_attribute", $attribute, $key, $this );
 			} finally {
