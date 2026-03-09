@@ -145,12 +145,12 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, Object
 	protected $clears_account_cache = false;
 
 	/**
-	 * Tracks which attribute keys are currently being filtered
-	 * to prevent infinite recursion in getAttribute().
+	 * Whether a get_attribute filter is currently executing on this instance.
+	 * While true, getAttribute() bypasses the filter to prevent recursion.
 	 *
-	 * @var array<string, mixed>
+	 * @var bool
 	 */
-	protected $filtering_get_attribute = [];
+	protected $is_filtering_attribute = false;
 
 	/**
 	 * Model constructor
@@ -1084,20 +1084,16 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, Object
 	 * Fires the `surecart/{object_name}/get_attribute` filter, allowing
 	 * third-party code to modify the returned value.
 	 *
-	 * Warning: filter callbacks must NOT read properties on the same model
-	 * instance — doing so re-enters getAttribute() and causes infinite recursion.
+	 * Note: filter callbacks should use $value (first argument) for the
+	 * current attribute. Accessing other attributes on $model (e.g.
+	 * $model->slug inside a name filter) returns unfiltered values to
+	 * prevent recursion. Avoid re-reading the same key — use $value instead.
 	 *
 	 * @param string $key Attribute name.
 	 *
 	 * @return mixed
 	 */
 	public function getAttribute( $key ) {
-		// Short-circuit: recursive call while the same key is being filtered.
-		// Returns the pre-filter value to avoid warnings and redundant processing.
-		if ( array_key_exists( $key, $this->filtering_get_attribute ) ) {
-			return $this->filtering_get_attribute[ $key ];
-		}
-
 		$attribute = null;
 
 		if ( $this->hasAttribute( $key ) ) {
@@ -1110,14 +1106,20 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, Object
 			$attribute = $this->{$getter}( $attribute );
 		}
 
-		if ( $this->object_name
+		if ( ! $this->is_filtering_attribute
+			&& $this->object_name
 			&& has_filter( "surecart/{$this->object_name}/get_attribute" )
 		) {
-			$this->filtering_get_attribute[ $key ] = $attribute;
+			$this->is_filtering_attribute = true;
 			try {
-				$attribute = apply_filters( "surecart/{$this->object_name}/get_attribute", $attribute, $key, $this );
+				$attribute = apply_filters(
+					"surecart/{$this->object_name}/get_attribute",
+					$attribute,
+					$key,
+					$this
+				);
 			} finally {
-				unset( $this->filtering_get_attribute[ $key ] );
+				$this->is_filtering_attribute = false;
 			}
 		}
 
