@@ -37,9 +37,9 @@ const PARCEL_TYPE_CHOICES = [
 const DEFAULT_PARCEL = {
 	name: '',
 	package_type: 'box',
-	dimensions: { length: '', width: '', height: '', unit: 'in' },
+	dimensions: { length: '', width: '', height: '', unit: 'cm' },
 	weight: '',
-	weight_unit: 'lb',
+	weight_unit: 'kg',
 	default: false,
 };
 
@@ -56,6 +56,8 @@ export default ({ selectedParcel, isEdit, onRequestClose, open }) => {
 	});
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
+
+	const isEditingDefault = isEdit && selectedParcel?.default;
 
 	useEffect(() => {
 		if (isEdit && selectedParcel) {
@@ -98,7 +100,7 @@ export default ({ selectedParcel, isEdit, onRequestClose, open }) => {
 						...Object.fromEntries(
 							Object.entries(dims).filter(([, v]) => !!v)
 						),
-						unit: unit || 'in',
+						unit: unit || 'cm',
 					};
 				}
 			}
@@ -205,6 +207,7 @@ export default ({ selectedParcel, isEdit, onRequestClose, open }) => {
 					<Dimensions
 						hideHeight={parcel.package_type === 'poly_mailer'}
 						dimensions={parcel.dimensions}
+						required
 						updateDimensions={({ dimensions }) =>
 							setParcel({
 								...parcel,
@@ -255,23 +258,25 @@ export default ({ selectedParcel, isEdit, onRequestClose, open }) => {
 						/>
 					</div>
 
-					<ScSwitch
-						checked={parcel.default}
-						onScChange={(e) =>
-							setParcel({
-								...parcel,
-								default: e.target.checked,
-							})
-						}
-					>
-						{__('Default Template', 'surecart')}
-						<span slot="description">
-							{__(
-								'Automatically select this parcel template when creating new shipments.',
-								'surecart'
-							)}
-						</span>
-					</ScSwitch>
+					{!isEditingDefault && (
+						<ScSwitch
+							checked={parcel.default}
+							onScChange={(e) =>
+								setParcel({
+									...parcel,
+									default: e.target.checked,
+								})
+							}
+						>
+							{__('Default Template', 'surecart')}
+							<span slot="description">
+								{__(
+									'Automatically select this parcel template when creating new shipments.',
+									'surecart'
+								)}
+							</span>
+						</ScSwitch>
+					)}
 				</div>
 
 				<ScFlex justifyContent="flex-start">

@@ -2,8 +2,8 @@
 import { jsx, css } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
-import { useDispatch } from '@wordpress/data';
-import { store as coreStore, useEntityRecords } from '@wordpress/core-data';
+import { useDispatch, useSelect } from '@wordpress/data';
+import { store as coreStore } from '@wordpress/core-data';
 import { store as noticeStore } from '@wordpress/notices';
 import SettingsBox from '../../SettingsBox';
 import {
@@ -23,6 +23,9 @@ import {
 } from '@surecart/components-react';
 import ParcelTemplateForm from './ParcelTemplateForm';
 import Error from '../../../components/Error';
+import PrevNextButtons from '../../../ui/PrevNextButtons';
+
+const PER_PAGE = 5;
 
 const TYPE_LABELS = {
 	box: __('Box or Tube', 'surecart'),
@@ -56,16 +59,31 @@ export default () => {
 	const [deleteTarget, setDeleteTarget] = useState(null);
 	const [busy, setBusy] = useState(false);
 	const [error, setError] = useState(null);
+	const [currentPage, setCurrentPage] = useState(1);
 
-	const { deleteEntityRecord } = useDispatch(coreStore);
+	const { deleteEntityRecord, saveEntityRecord, invalidateResolutionForStore } =
+		useDispatch(coreStore);
 	const { createSuccessNotice } = useDispatch(noticeStore);
 
-	const { records: parcels, isResolving: loading } = useEntityRecords(
-		'surecart',
-		'parcel-template',
-		{
-			per_page: 100, // Upper bound; pagination not expected for parcel templates.
-		}
+	const { parcels, loading } = useSelect((select) => {
+		const queryArgs = [
+			'surecart',
+			'parcel-template',
+			{
+				per_page: PER_PAGE,
+				page: currentPage,
+			},
+		];
+
+		return {
+			parcels: select(coreStore).getEntityRecords(...queryArgs) || [],
+			loading: select(coreStore).isResolving('getEntityRecords', queryArgs),
+		};
+	});
+
+	// Sort default template to top.
+	const sortedParcels = [...parcels].sort(
+		(a, b) => (b.default ? 1 : 0) - (a.default ? 1 : 0)
 	);
 
 	const handleDelete = async (id) => {
@@ -86,6 +104,28 @@ export default () => {
 		}
 	};
 
+	const handleSetDefault = async (parcel) => {
+		setBusy(true);
+		try {
+			await saveEntityRecord(
+				'surecart',
+				'parcel-template',
+				{ ...parcel, default: true },
+				{ throwOnError: true }
+			);
+			await invalidateResolutionForStore();
+			createSuccessNotice(
+				__('Default parcel template updated.', 'surecart'),
+				{ type: 'snackbar' }
+			);
+		} catch (err) {
+			console.error(err);
+			setError(err);
+		} finally {
+			setBusy(false);
+		}
+	};
+
 	return (
 		<SettingsBox
 			title={__('Parcel Templates', 'surecart')}
@@ -93,16 +133,25 @@ export default () => {
 				'Create reusable parcel templates for shipping.',
 				'surecart'
 			)}
+			end={
+				<ScButton
+					type="primary"
+					onClick={() => setCurrentModal(modals.MODAL_ADD)}
+				>
+					<ScIcon name="plus" />{' '}
+					{__('Add New Template', 'surecart')}
+				</ScButton>
+			}
 			loading={loading}
 			noButton
 			wrapperTag="div"
 		>
 			<Error error={error} setError={setError} />
 
-			{!!(parcels || []).length && (
+			{!!sortedParcels.length && (
 				<ScCard noPadding>
 					<ScStackedList>
-						{parcels.map((parcel) => (
+						{sortedParcels.map((parcel) => (
 							<ScStackedListRow
 								key={parcel.id}
 								style={{
@@ -186,17 +235,35 @@ export default () => {
 												/>
 												{__('Edit', 'surecart')}
 											</ScMenuItem>
-											<ScMenuItem
-												onClick={() =>
-													setDeleteTarget(parcel)
-												}
-											>
-												<ScIcon
-													slot="prefix"
-													name="trash"
-												/>
-												{__('Delete', 'surecart')}
-											</ScMenuItem>
+											{!parcel.default && (
+												<ScMenuItem
+													onClick={() =>
+														handleSetDefault(parcel)
+													}
+												>
+													<ScIcon
+														slot="prefix"
+														name="check-circle"
+													/>
+													{__(
+														'Set as Default',
+														'surecart'
+													)}
+												</ScMenuItem>
+											)}
+											{!parcel.default && (
+												<ScMenuItem
+													onClick={() =>
+														setDeleteTarget(parcel)
+													}
+												>
+													<ScIcon
+														slot="prefix"
+														name="trash"
+													/>
+													{__('Delete', 'surecart')}
+												</ScMenuItem>
+											)}
 										</ScMenu>
 									</ScDropdown>
 								</div>
@@ -206,7 +273,7 @@ export default () => {
 				</ScCard>
 			)}
 
-			{!(parcels || []).length && !loading && (
+			{!parcels.length && !loading && (
 				<ScCard noPadding>
 					<ScEmpty>
 						{__(
@@ -217,16 +284,13 @@ export default () => {
 				</ScCard>
 			)}
 
-			<div
-				css={css`
-					margin-top: var(--sc-spacing-medium);
-				`}
-			>
-				<ScButton onClick={() => setCurrentModal(modals.MODAL_ADD)}>
-					<ScIcon name="plus" slot="prefix" />
-					{__('Add New Template', 'surecart')}
-				</ScButton>
-			</div>
+			<PrevNextButtons
+				data={parcels}
+				page={currentPage}
+				setPage={setCurrentPage}
+				perPage={PER_PAGE}
+				loading={loading}
+			/>
 
 			{busy && (
 				<ScBlockUi

@@ -69,12 +69,12 @@ const fillParcelForm = async (
 };
 
 /**
- * Helper to click edit/delete on a specific row.
+ * Helper to click edit/delete/set-as-default on a specific row.
  */
 const clickRowAction = async (
 	page,
 	rowText: string,
-	action: 'Edit' | 'Delete'
+	action: 'Edit' | 'Delete' | 'Set as Default'
 ) => {
 	const row = page
 		.locator('sc-stacked-list-row')
@@ -219,8 +219,11 @@ test.describe('Parcel Templates', () => {
 		).toBeVisible({ timeout: 15000 });
 	});
 
-	test('Should delete a parcel template', async ({ page, requestUtils }) => {
-		// Create a template via API first.
+	test('Should delete a non-default parcel template', async ({
+		page,
+		requestUtils,
+	}) => {
+		// Create a non-default template via API first.
 		await requestUtils.rest({
 			method: 'POST',
 			path: PARCEL_TEMPLATE_API_PATH,
@@ -650,5 +653,218 @@ test.describe('Parcel Templates', () => {
 			.filter({ hasText: 'Decimal Weight Box' });
 		await expect(row).toBeVisible({ timeout: 15000 });
 		await expect(row).toContainText('2.5');
+	});
+
+	test('Should accept decimal dimension values', async ({ page }) => {
+		await page.goto(SHIPPING_SETTINGS_URL);
+		await page.waitForLoadState('networkidle');
+
+		await page.getByText('Add New Template').click();
+		const dialog = getParcelDialog(page, 'add');
+		await expect(dialog).toHaveAttribute('open', '');
+
+		await fillParcelForm(page, dialog, {
+			name: 'Decimal Dims Box',
+			length: '10.5',
+			width: '8.25',
+			height: '6.75',
+			weight: '2',
+		});
+
+		// Submit.
+		await dialog.locator('sc-button[type="primary"]').click();
+
+		// Verify it appears in the list with decimal dimensions.
+		const row = page
+			.locator('sc-stacked-list-row')
+			.filter({ hasText: 'Decimal Dims Box' });
+		await expect(row).toBeVisible({ timeout: 15000 });
+		await expect(row).toContainText('10.5');
+	});
+
+	test('Should hide delete option for default template', async ({
+		page,
+		requestUtils,
+	}) => {
+		// Create a default template via API.
+		await requestUtils.rest({
+			method: 'POST',
+			path: PARCEL_TEMPLATE_API_PATH,
+			data: {
+				name: 'Default Box',
+				package_type: 'box',
+				dimensions: {
+					length: '10',
+					width: '8',
+					height: '6',
+					unit: 'in',
+				},
+				weight: '1',
+				weight_unit: 'lb',
+				default: true,
+			},
+		});
+
+		await page.goto(SHIPPING_SETTINGS_URL);
+		await page.waitForLoadState('networkidle');
+
+		const row = page
+			.locator('sc-stacked-list-row')
+			.filter({ hasText: 'Default Box' });
+		await expect(row).toBeVisible({ timeout: 15000 });
+
+		// Open the 3-dot menu.
+		await row.locator('sc-button[circle]').click();
+
+		// Edit should be visible, Delete should not.
+		await expect(
+			row.locator('sc-menu-item').filter({ hasText: 'Edit' })
+		).toBeVisible();
+		await expect(
+			row.locator('sc-menu-item').filter({ hasText: 'Delete' })
+		).not.toBeVisible();
+	});
+
+	test('Should show Set as Default for non-default templates', async ({
+		page,
+		requestUtils,
+	}) => {
+		// Create a non-default template via API.
+		await requestUtils.rest({
+			method: 'POST',
+			path: PARCEL_TEMPLATE_API_PATH,
+			data: {
+				name: 'Regular Box',
+				package_type: 'box',
+				dimensions: {
+					length: '10',
+					width: '8',
+					height: '6',
+					unit: 'in',
+				},
+				weight: '1',
+				weight_unit: 'lb',
+				default: false,
+			},
+		});
+
+		await page.goto(SHIPPING_SETTINGS_URL);
+		await page.waitForLoadState('networkidle');
+
+		const row = page
+			.locator('sc-stacked-list-row')
+			.filter({ hasText: 'Regular Box' });
+		await expect(row).toBeVisible({ timeout: 15000 });
+
+		// Open the 3-dot menu.
+		await row.locator('sc-button[circle]').click();
+
+		// "Set as Default" should be visible for non-default templates.
+		await expect(
+			row.locator('sc-menu-item').filter({ hasText: 'Set as Default' })
+		).toBeVisible();
+	});
+
+	test('Should hide default toggle when editing default template', async ({
+		page,
+		requestUtils,
+	}) => {
+		// Create a default template via API.
+		await requestUtils.rest({
+			method: 'POST',
+			path: PARCEL_TEMPLATE_API_PATH,
+			data: {
+				name: 'Default Template',
+				package_type: 'box',
+				dimensions: {
+					length: '10',
+					width: '8',
+					height: '6',
+					unit: 'in',
+				},
+				weight: '1',
+				weight_unit: 'lb',
+				default: true,
+			},
+		});
+
+		await page.goto(SHIPPING_SETTINGS_URL);
+		await page.waitForLoadState('networkidle');
+
+		await expect(
+			page
+				.locator('sc-stacked-list-row')
+				.filter({ hasText: 'Default Template' })
+		).toBeVisible({ timeout: 15000 });
+
+		// Open Edit modal.
+		await clickRowAction(page, 'Default Template', 'Edit');
+		const dialog = getParcelDialog(page, 'edit');
+		await expect(dialog).toHaveAttribute('open', '');
+
+		// Default toggle should be hidden when editing a default template.
+		await expect(dialog.locator('sc-switch')).not.toBeVisible();
+	});
+
+	test('Should sort default template to top of list', async ({
+		page,
+		requestUtils,
+	}) => {
+		// Create a non-default template first.
+		await requestUtils.rest({
+			method: 'POST',
+			path: PARCEL_TEMPLATE_API_PATH,
+			data: {
+				name: 'AAA First Alphabetically',
+				package_type: 'box',
+				dimensions: {
+					length: '10',
+					width: '8',
+					height: '6',
+					unit: 'in',
+				},
+				weight: '1',
+				weight_unit: 'lb',
+				default: false,
+			},
+		});
+
+		// Create a default template second.
+		await requestUtils.rest({
+			method: 'POST',
+			path: PARCEL_TEMPLATE_API_PATH,
+			data: {
+				name: 'ZZZ Default Box',
+				package_type: 'box',
+				dimensions: {
+					length: '10',
+					width: '8',
+					height: '6',
+					unit: 'in',
+				},
+				weight: '1',
+				weight_unit: 'lb',
+				default: true,
+			},
+		});
+
+		await page.goto(SHIPPING_SETTINGS_URL);
+		await page.waitForLoadState('networkidle');
+
+		// Wait for both rows to appear.
+		await expect(
+			page
+				.locator('sc-stacked-list-row')
+				.filter({ hasText: 'ZZZ Default Box' })
+		).toBeVisible({ timeout: 15000 });
+		await expect(
+			page
+				.locator('sc-stacked-list-row')
+				.filter({ hasText: 'AAA First Alphabetically' })
+		).toBeVisible({ timeout: 15000 });
+
+		// The default template should be the first row.
+		const firstRow = page.locator('sc-stacked-list-row').first();
+		await expect(firstRow).toContainText('ZZZ Default Box');
 	});
 });
