@@ -132,8 +132,8 @@ export default ({ selectedParcel, isEdit, onRequestClose, open }) => {
 			open={open}
 			label={
 				isEdit
-					? __('Edit Parcel Template', 'surecart')
-					: __('Add New Parcel Template', 'surecart')
+					? __('Edit', 'surecart')
+					: __('Add New', 'surecart')
 			}
 			onScRequestClose={onRequestClose}
 			style={{ '--dialog-body-overflow': 'visible' }}
@@ -152,20 +152,6 @@ export default ({ selectedParcel, isEdit, onRequestClose, open }) => {
 						gap: var(--sc-spacing-x-large);
 					`}
 				>
-					<ScInput
-						required
-						label={__('Name', 'surecart')}
-						maxlength={100}
-						onScInput={(e) =>
-							setParcel({
-								...parcel,
-								name: e.target.value,
-							})
-						}
-						name="parcel-name"
-						value={parcel.name}
-					/>
-
 					<div
 						css={css`
 							font-size: 16px;
@@ -257,6 +243,20 @@ export default ({ selectedParcel, isEdit, onRequestClose, open }) => {
 							}
 						/>
 					</div>
+
+					<ScInput
+						required
+						label={__('Name', 'surecart')}
+						maxlength={100}
+						onScInput={(e) =>
+							setParcel({
+								...parcel,
+								name: e.target.value,
+							})
+						}
+						name="parcel-name"
+						value={parcel.name}
+					/>
 
 					{!isEditingDefault && (
 						<ScSwitch

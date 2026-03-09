@@ -152,12 +152,14 @@ export default () => {
 				'surecart'
 			)}
 			end={
-				<ScButton
-					type="primary"
-					onClick={() => setCurrentModal(modals.MODAL_ADD)}
-				>
-					<ScIcon name="plus" /> {__('Add New', 'surecart')}
-				</ScButton>
+				parcels.length > 0 && (
+					<ScButton
+						type="primary"
+						onClick={() => setCurrentModal(modals.MODAL_ADD)}
+					>
+						<ScIcon name="plus" /> {__('Add New', 'surecart')}
+					</ScButton>
+				)
 			}
 			loading={loading}
 			noButton
@@ -297,6 +299,12 @@ export default () => {
 							'No parcel templates yet. Create one to get started.',
 							'surecart'
 						)}
+						<ScButton
+							type="default"
+							onClick={() => setCurrentModal(modals.MODAL_ADD)}
+						>
+							<ScIcon name="plus" /> {__('Add New Template', 'surecart')}
+						</ScButton>
 					</ScEmpty>
 				</ScCard>
 			)}
