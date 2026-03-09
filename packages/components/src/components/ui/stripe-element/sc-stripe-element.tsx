@@ -127,11 +127,14 @@ export class ScStripeElement {
   /** Get billing details for Stripe. */
   getBillingDetails() {
     const order = this.order;
-    const { line_1: line1, line_2: line2, city, state, country, postal_code } = (
+    const billingAddr = (
       (!order?.billing_matches_shipping && order?.billing_address)
         ? order.billing_address
-        : order?.shipping_address
-    ) as ShippingAddress || {};
+        : undefined
+    ) as ShippingAddress;
+    const shippingAddr = order?.shipping_address as ShippingAddress || {};
+    const { line_1: line1, line_2: line2, city, state, country, postal_code } =
+      billingAddr?.line_1 ? billingAddr : shippingAddr;
     return {
       ...(order?.name ? { name: order.name } : {}),
       ...(order?.email ? { email: order.email } : {}),

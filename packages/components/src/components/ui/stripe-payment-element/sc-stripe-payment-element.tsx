@@ -214,7 +214,9 @@ export class ScStripePaymentElement {
     if (!processorsState.instances.stripeElements) {
       // we have what we need, load elements.
       processorsState.instances.stripeElements = processorsState.instances.stripe.elements(this.getElementsConfig() as any);
-      const { line1, line2, city, state, country, postal_code } = getCompleteAddress('shipping') ?? {};
+      const useBilling = checkoutState.checkout?.billing_matches_shipping === false;
+      const { line1, line2, city, state, country, postal_code } =
+        (useBilling ? getCompleteAddress('billing') : undefined) ?? getCompleteAddress('shipping') ?? {};
 
       const options = this.maybeApplyFilters({
         defaultValues: {
@@ -269,25 +271,17 @@ export class ScStripePaymentElement {
     if (checkoutState.checkout?.status !== 'draft') return;
 
     const { name, email } = checkoutState.checkout;
-    const { line_1: line1, line_2: line2, city, state, country, postal_code } = (
-      (!checkoutState.checkout?.billing_matches_shipping && checkoutState.checkout?.billing_address)
-        ? checkoutState.checkout.billing_address
-        : checkoutState.checkout?.shipping_address
-    ) as ShippingAddress || {};
+    const useBilling = !checkoutState.checkout?.billing_matches_shipping;
+    const billingAddr = useBilling ? checkoutState.checkout?.billing_address as ShippingAddress : undefined;
+    const addr = (billingAddr?.line_1 ? billingAddr : checkoutState.checkout?.shipping_address as ShippingAddress) || {} as ShippingAddress;
+    const { line_1: line1, line_2: line2, city, state, country, postal_code } = addr;
 
     const options = this.maybeApplyFilters({
       defaultValues: {
         billingDetails: {
           name,
           email,
-          address: {
-            line1,
-            line2,
-            city,
-            state,
-            country,
-            postal_code,
-          },
+          ...(line1 ? { address: { line1, line2, city, state, country, postal_code } } : {}),
         },
       },
       fields: {
@@ -338,7 +332,12 @@ export class ScStripePaymentElement {
         ? checkout.billing_address
         : checkout?.shipping_address
     ) as ShippingAddress || {};
-    if (!line1) return {};
+    if (!line1) {
+      const shipping = checkout?.shipping_address as ShippingAddress;
+      if (!shipping?.line_1) return {};
+      const { line_1: sLine1, line_2: sLine2, city: sCity, state: sState, country: sCountry, postal_code: sPostalCode } = shipping;
+      return { address: { line1: sLine1, line2: sLine2, city: sCity, state: sState, postal_code: sPostalCode, country: sCountry } };
+    }
     return {
       address: { line1, line2, city, state, postal_code, country },
     };
