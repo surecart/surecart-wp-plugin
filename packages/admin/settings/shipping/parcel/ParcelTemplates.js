@@ -24,6 +24,7 @@ import {
 import ParcelTemplateForm from './ParcelTemplateForm';
 import Error from '../../../components/Error';
 import PrevNextButtons from '../../../ui/PrevNextButtons';
+import usePagination from '../../../hooks/usePagination';
 
 const PER_PAGE = 5;
 
@@ -61,11 +62,14 @@ export default () => {
 	const [error, setError] = useState(null);
 	const [currentPage, setCurrentPage] = useState(1);
 
-	const { deleteEntityRecord, saveEntityRecord, invalidateResolutionForStore } =
-		useDispatch(coreStore);
+	const {
+		deleteEntityRecord,
+		saveEntityRecord,
+		invalidateResolutionForStore,
+	} = useDispatch(coreStore);
 	const { createSuccessNotice } = useDispatch(noticeStore);
 
-	const { parcels, loading } = useSelect((select) => {
+	const { parcels, loading, totalItems } = useSelect((select) => {
 		const queryArgs = [
 			'surecart',
 			'parcel-template',
@@ -77,8 +81,22 @@ export default () => {
 
 		return {
 			parcels: select(coreStore).getEntityRecords(...queryArgs) || [],
-			loading: select(coreStore).isResolving('getEntityRecords', queryArgs),
+			loading: select(coreStore).isResolving(
+				'getEntityRecords',
+				queryArgs
+			),
+			totalItems: select(coreStore).getEntityRecordsTotalItems(
+				'surecart',
+				'parcel-template'
+			),
 		};
+	});
+
+	const { hasPagination } = usePagination({
+		data: parcels,
+		page: currentPage,
+		perPage: PER_PAGE,
+		totalItems,
 	});
 
 	// Sort default template to top.
@@ -138,8 +156,7 @@ export default () => {
 					type="primary"
 					onClick={() => setCurrentModal(modals.MODAL_ADD)}
 				>
-					<ScIcon name="plus" />{' '}
-					{__('Add New Template', 'surecart')}
+					<ScIcon name="plus" /> {__('Add New', 'surecart')}
 				</ScButton>
 			}
 			loading={loading}
@@ -284,13 +301,15 @@ export default () => {
 				</ScCard>
 			)}
 
-			<PrevNextButtons
-				data={parcels}
-				page={currentPage}
-				setPage={setCurrentPage}
-				perPage={PER_PAGE}
-				loading={loading}
-			/>
+			{hasPagination && (
+				<PrevNextButtons
+					data={parcels}
+					page={currentPage}
+					setPage={setCurrentPage}
+					perPage={PER_PAGE}
+					loading={loading}
+				/>
+			)}
 
 			{busy && (
 				<ScBlockUi
