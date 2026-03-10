@@ -2,7 +2,7 @@
  * WordPress dependencies
  */
 import { registerBlockType } from '@wordpress/blocks';
-import { postContent as icon } from '@wordpress/icons';
+import { currencyDollar as icon } from '@wordpress/icons';
 
 /**
  * Internal dependencies
