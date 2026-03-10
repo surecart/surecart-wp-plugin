@@ -215,14 +215,14 @@ export class ScStripePaymentElement {
       // we have what we need, load elements.
       processorsState.instances.stripeElements = processorsState.instances.stripe.elements(this.getElementsConfig() as any);
       const useBilling = checkoutState.checkout?.billing_matches_shipping === false;
-      const { line1, line2, city, state, country, postal_code } =
-        (useBilling ? getCompleteAddress('billing') : undefined) ?? getCompleteAddress('shipping') ?? {};
+      const { line1, line2, city, state, country, postal_code } = (useBilling ? getCompleteAddress('billing') : undefined) ?? getCompleteAddress('shipping') ?? {};
 
       const options = this.maybeApplyFilters({
         defaultValues: {
           billingDetails: {
-            name: checkoutState.checkout?.name,
-            email: checkoutState.checkout?.email,
+            ...(checkoutState.checkout?.name ? { name: checkoutState.checkout.name } : {}),
+            ...(checkoutState.checkout?.email ? { email: checkoutState.checkout.email } : {}),
+            ...(checkoutState.checkout?.phone ? { phone: checkoutState.checkout.phone } : {}),
             ...(line1 && { address: { line1, line2, city, state, country, postal_code } }),
           },
         },
@@ -271,7 +271,7 @@ export class ScStripePaymentElement {
     if (checkoutState.checkout?.status !== 'draft') return;
 
     const { name, email } = checkoutState.checkout;
-    const resolvedBillingAddress = getResolvedBillingAddress();
+    const address = getResolvedBillingAddress();
 
     const options = this.maybeApplyFilters({
       defaultValues: {
@@ -279,7 +279,7 @@ export class ScStripePaymentElement {
           name,
           email,
           ...(checkoutState.checkout?.phone ? { phone: checkoutState.checkout.phone } : {}),
-          ...resolvedBillingAddress,
+          ...(address.line1 ? { address } : {}),
         },
       },
       fields: {
@@ -323,7 +323,8 @@ export class ScStripePaymentElement {
   }
 
   @Method()
-  async confirm(type, args = {}) {
+  async confirm(type: 'setup' | 'payment', args = {}) {
+    const address = getResolvedBillingAddress();
     const confirmArgs = {
       elements: processorsState.instances.stripeElements,
       clientSecret: checkoutState.checkout?.payment_intent?.processor_data?.stripe?.client_secret,
@@ -336,7 +337,7 @@ export class ScStripePaymentElement {
             ...(checkoutState.checkout?.email ? { email: checkoutState.checkout.email } : {}),
             ...(checkoutState.checkout?.name ? { name: checkoutState.checkout.name } : {}),
             ...(checkoutState.checkout?.phone ? { phone: checkoutState.checkout.phone } : {}),
-            ...getResolvedBillingAddress(),
+            ...(address.line1 ? { address } : {}),
           },
         },
       },

@@ -128,11 +128,12 @@ export class ScStripeElement {
   /** Get billing details for Stripe. */
   getBillingDetails() {
     const order = this.order;
+    const address = getResolvedBillingAddress(order);
     return {
       ...(order?.name ? { name: order.name } : {}),
       ...(order?.email ? { email: order.email } : {}),
       ...(order?.phone ? { phone: order.phone } : {}),
-      ...getResolvedBillingAddress(order),
+      ...(address.line1 ? { address } : {}),
     };
   }
 

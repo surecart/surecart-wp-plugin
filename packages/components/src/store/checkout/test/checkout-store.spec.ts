@@ -2,7 +2,7 @@ import { state as checkoutState, dispose as disposeCheckout } from '..';
 import { getCheckout } from '../../checkouts/mutations';
 import { dispose } from '../../checkouts';
 import { Checkout, LineItem } from '../../../types';
-import { getResolvedBillingAddress } from '../getters';
+import { getCompleteAddress, getResolvedBillingAddress } from '../getters';
 
 describe('checkout store', () => {
   beforeEach(() => {
@@ -129,6 +129,72 @@ describe('checkout store', () => {
     });
   });
 
+  describe('getCompleteAddress', () => {
+    it('returns shipping address by default', () => {
+      checkoutState.checkout = {
+        shipping_address: {
+          line_1: '456 Shipping Ave',
+          line_2: '',
+          city: 'Shipping City',
+          state: 'SC',
+          postal_code: '67890',
+          country: 'US',
+        },
+      } as Checkout;
+
+      const result = getCompleteAddress();
+      expect(result).toEqual({
+        line1: '456 Shipping Ave',
+        line2: '',
+        city: 'Shipping City',
+        state: 'SC',
+        postal_code: '67890',
+        country: 'US',
+      });
+    });
+
+    it('returns billing address when type is billing', () => {
+      checkoutState.checkout = {
+        billing_address: {
+          line_1: '123 Billing St',
+          line_2: 'Suite 1',
+          city: 'Billing City',
+          state: 'BC',
+          postal_code: '12345',
+          country: 'US',
+        },
+        shipping_address: {
+          line_1: '456 Shipping Ave',
+          line_2: '',
+          city: 'Shipping City',
+          state: 'SC',
+          postal_code: '67890',
+          country: 'US',
+        },
+      } as Checkout;
+
+      const result = getCompleteAddress('billing');
+      expect(result).toEqual({
+        line1: '123 Billing St',
+        line2: 'Suite 1',
+        city: 'Billing City',
+        state: 'BC',
+        postal_code: '12345',
+        country: 'US',
+      });
+    });
+
+    it('returns undefined when address is incomplete', () => {
+      checkoutState.checkout = {
+        shipping_address: {
+          country: 'US',
+        },
+      } as Checkout;
+
+      expect(getCompleteAddress('shipping')).toBeUndefined();
+    });
+  });
+
   describe('getResolvedBillingAddress', () => {
     it('returns billing address when billing_matches_shipping is false and billing has line_1', () => {
       const result = getResolvedBillingAddress({
@@ -152,14 +218,12 @@ describe('checkout store', () => {
       } as Checkout);
 
       expect(result).toEqual({
-        address: {
-          line1: '123 Billing St',
-          line2: 'Suite 1',
-          city: 'Billing City',
-          state: 'BC',
-          postal_code: '12345',
-          country: 'US',
-        },
+        line1: '123 Billing St',
+        line2: 'Suite 1',
+        city: 'Billing City',
+        state: 'BC',
+        postal_code: '12345',
+        country: 'US',
       });
     });
 
@@ -180,14 +244,12 @@ describe('checkout store', () => {
       } as Checkout);
 
       expect(result).toEqual({
-        address: {
-          line1: '456 Shipping Ave',
-          line2: 'Apt 2',
-          city: 'Shipping City',
-          state: 'SC',
-          postal_code: '67890',
-          country: 'US',
-        },
+        line1: '456 Shipping Ave',
+        line2: 'Apt 2',
+        city: 'Shipping City',
+        state: 'SC',
+        postal_code: '67890',
+        country: 'US',
       });
     });
 
@@ -205,20 +267,49 @@ describe('checkout store', () => {
       } as Checkout);
 
       expect(result).toEqual({
-        address: {
-          line1: '456 Shipping Ave',
-          line2: '',
-          city: 'Shipping City',
-          state: 'SC',
-          postal_code: '67890',
-          country: 'US',
-        },
+        line1: '456 Shipping Ave',
+        line2: '',
+        city: 'Shipping City',
+        state: 'SC',
+        postal_code: '67890',
+        country: 'US',
       });
     });
 
     it('returns empty object when no addresses are present', () => {
       const result = getResolvedBillingAddress({} as Checkout);
       expect(result).toEqual({});
+    });
+
+    it('returns empty object when billing has no line_1 and shipping is empty', () => {
+      const result = getResolvedBillingAddress({
+        billing_matches_shipping: false,
+        billing_address: { country: 'US' },
+        shipping_address: {},
+      } as Checkout);
+      expect(result).toEqual({});
+    });
+
+    it('falls back to shipping when billing_matches_shipping is undefined', () => {
+      const result = getResolvedBillingAddress({
+        shipping_address: {
+          line_1: '456 Shipping Ave',
+          line_2: '',
+          city: 'Shipping City',
+          state: 'SC',
+          postal_code: '67890',
+          country: 'US',
+        },
+      } as Checkout);
+
+      expect(result).toEqual({
+        line1: '456 Shipping Ave',
+        line2: '',
+        city: 'Shipping City',
+        state: 'SC',
+        postal_code: '67890',
+        country: 'US',
+      });
     });
   });
 });

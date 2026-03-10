@@ -31,7 +31,7 @@ export const fullShippingAddressRequired = () => state.checkout?.shipping_addres
 export const shippingAddressRequired = () => state.checkout?.shipping_address_accuracy_requirement === 'full' || state.checkout?.shipping_address_accuracy_requirement === 'tax';
 
 /**
- * Get Billing address
+ * Get a complete address by type, with Stripe-formatted field names (line1/line2).
  */
 export const getCompleteAddress = (type: 'shipping' | 'billing' = 'shipping') => {
   const isComplete = isAddressComplete(state.checkout?.[`${type}_address`] as Address);
@@ -49,7 +49,7 @@ export const getCompleteAddress = (type: 'shipping' | 'billing' = 'shipping') =>
 /**
  * Get the resolved billing address for payment processors.
  * Falls back to shipping address when billing matches shipping.
- * Returns Stripe-formatted address fields (line1/line2 instead of line_1/line_2).
+ * Returns flat address with Stripe-formatted field names (line1/line2 instead of line_1/line_2).
  */
 export const getResolvedBillingAddress = (checkout?: Checkout) => {
   const currentOrder = checkout || state.checkout;
@@ -62,10 +62,10 @@ export const getResolvedBillingAddress = (checkout?: Checkout) => {
 
   const shippingAddress = (currentOrder?.shipping_address as Address) || {};
 
-  const { line_1: line1, line_2: line2, city, state: addressState, country, postal_code } =
-    billingAddress?.line_1 ? billingAddress : shippingAddress;
+  const address = billingAddress?.line_1 ? billingAddress : shippingAddress;
+  const { line_1: line1, line_2: line2, city, state: addressState, country, postal_code } = address || {};
 
   if (!line1) return {};
 
-  return { address: { line1, line2, city, state: addressState, postal_code, country } };
+  return { line1, line2, city, state: addressState, postal_code, country };
 };
