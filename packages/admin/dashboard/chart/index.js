@@ -62,8 +62,8 @@ export default ({ liveMode, setLiveMode }) => {
 		const diffMs = endDate.diff(startDate, 'millisecond');
 		const previousStart = dayjs(startDate).subtract(diffMs, 'millisecond');
 
-		getOrderStats(startDate.format(), endDate.format());
-		getPreviousOrderStats(previousStart.format(), startDate.format());
+		getOrderStats(startDate.format('YYYY-MM-DD'), endDate.format('YYYY-MM-DD'));
+		getPreviousOrderStats(previousStart.format('YYYY-MM-DD'), startDate.format('YYYY-MM-DD'));
 	}, [startDate, endDate, reportBy, liveMode]);
 
 	/**
