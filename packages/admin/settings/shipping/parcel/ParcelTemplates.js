@@ -189,15 +189,26 @@ export default () => {
 										color: var(--sc-color-gray-500);
 									`}
 								/>
-								<div>
+								<div css={css`min-width: 0;`}>
 									<div
 										css={css`
 											display: flex;
 											align-items: center;
 											gap: var(--sc-spacing-x-small);
+											min-width: 0;
 										`}
 									>
-										<strong>{parcel.name}</strong>
+										<strong
+											title={parcel.name}
+											css={css`
+												overflow: hidden;
+												text-overflow: ellipsis;
+												white-space: nowrap;
+												min-width: 0;
+											`}
+										>
+											{parcel.name}
+										</strong>
 										{parcel.default && (
 											<ScTag type="primary" size="small">
 												{__('Default', 'surecart')}
