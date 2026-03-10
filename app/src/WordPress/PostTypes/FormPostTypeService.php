@@ -171,11 +171,7 @@ class FormPostTypeService {
 	 * @return WP_Post|null
 	 */
 	public function findById( $id ) {
-		$post = get_post( $id );
-		if ( ! $post || 'sc_form' !== $post->post_type || 'publish' !== $post->post_status ) {
-			return null;
-		}
-		return $post;
+		return get_post( $id );
 	}
 
 	/**
