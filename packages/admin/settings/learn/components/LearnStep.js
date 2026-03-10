@@ -1,10 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import {
-	ScButton,
-	ScCheckbox,
-	ScIcon,
-} from '@surecart/components-react';
+import { ScButton, ScCheckbox, ScIcon } from '@surecart/components-react';
 import HelpTooltip from '../../../components/HelpTooltip';
 
 const stepStyles = css`
@@ -53,15 +49,15 @@ const actionStyles = css`
 	flex-shrink: 0;
 `;
 
-export default function LearnStep( {
+export default function LearnStep({
 	step,
 	isCompleted,
 	isAutoDetected: isAuto,
 	onToggle,
-} ) {
+}) {
 	const handleCheckboxClick = () => {
-		if ( ! isAuto ) {
-			onToggle( step.id );
+		if (!isAuto) {
+			onToggle(step.id);
 		}
 	};
 
@@ -74,53 +70,60 @@ export default function LearnStep( {
 		: { href: step.actionUrl };
 
 	return (
-		<div css={ stepStyles }>
+		<div css={stepStyles}>
 			<ScCheckbox
-				checked={ isCompleted }
-				disabled={ isAuto }
-				onScChange={ handleCheckboxClick }
-				style={ { marginTop: '2px' } }
-				aria-label={ step.title }
+				checked={isCompleted}
+				disabled={isAuto}
+				onScChange={handleCheckboxClick}
+				style={{ marginTop: '2px' }}
+				aria-label={step.title}
 			/>
 
-			<div css={ contentStyles }>
-				<div css={ titleStyles }>
-					<span style={ isCompleted ? { opacity: 0.5 } : {} }>
-						{ step.title }
+			<div css={contentStyles}>
+				<div css={titleStyles}>
+					<span style={isCompleted ? { opacity: 0.5 } : {}}>
+						{step.title}
 					</span>
-					{ step.infoTooltip && (
+					{step.infoTooltip && (
 						<HelpTooltip
-							content={ <p style={ { margin: 0 } }>{ step.infoTooltip }</p> }
+							content={
+								<p style={{ margin: 0 }}>{step.infoTooltip}</p>
+							}
 							position="bottom center"
 							width="260px"
 						>
-							<ScIcon
-								name="info"
-								css={ tooltipIconStyles }
-							/>
+							<ScIcon name="info" css={tooltipIconStyles} />
 						</HelpTooltip>
-					) }
+					)}
 				</div>
-				<p css={ descriptionStyles }>{ step.description }</p>
+				<p css={descriptionStyles}>{step.description}</p>
 			</div>
 
-			{ step.actionUrl && ! isCompleted && (
-				<div css={ actionStyles }>
-					<ScButton type="link" size="small" { ...actionProps }>
-						{ step.actionLabel }
-						{ step.isExternal && (
+			{step.actionUrl && !isCompleted && (
+				<div css={actionStyles}>
+					<ScButton type="link" size="small" {...actionProps}>
+						{step.actionLabel}
+						{step.isExternal && (
 							<ScIcon
 								name="external-link"
 								slot="suffix"
-								style={ {
+								style={{
 									width: '14px',
 									height: '14px',
-								} }
+								}}
 							/>
-						) }
+						)}
+						<ScIcon
+							name="arrow-right"
+							slot="suffix"
+							style={{
+								width: '12px',
+								height: '12px',
+							}}
+						/>
 					</ScButton>
 				</div>
-			) }
+			)}
 		</div>
 	);
 }

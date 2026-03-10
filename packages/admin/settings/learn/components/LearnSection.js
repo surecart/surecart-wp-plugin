@@ -138,7 +138,7 @@ const headerRightStyles = css`
 `;
 
 const learnLinkStyles = css`
-	font-size: 12px;
+	font-size: 10px;
 `;
 
 const chevronStyles = (isOpen) => css`
