@@ -1,4 +1,4 @@
-import { Product, Address } from 'src/types';
+import { Product, Address, Checkout } from 'src/types';
 import { getCheckout } from '../checkouts/mutations';
 import state from './store';
 import { isAddressComplete } from 'src/functions/address';
@@ -44,4 +44,28 @@ export const getCompleteAddress = (type: 'shipping' | 'billing' = 'shipping') =>
     line2,
     ...otherProps,
   };
+};
+
+/**
+ * Get the resolved billing address for payment processors.
+ * Falls back to shipping address when billing matches shipping.
+ * Returns Stripe-formatted address fields (line1/line2 instead of line_1/line_2).
+ */
+export const getResolvedBillingAddress = (checkout?: Checkout) => {
+  const currentOrder = checkout || state.checkout;
+
+  const billingAddress = (
+    currentOrder?.billing_matches_shipping === false && currentOrder?.billing_address
+      ? currentOrder.billing_address
+      : undefined
+  ) as Address;
+
+  const shippingAddress = (currentOrder?.shipping_address as Address) || {};
+
+  const { line_1: line1, line_2: line2, city, state: addressState, country, postal_code } =
+    billingAddress?.line_1 ? billingAddress : shippingAddress;
+
+  if (!line1) return {};
+
+  return { address: { line1, line2, city, state: addressState, postal_code, country } };
 };

@@ -11,7 +11,7 @@ import { state as processorsState } from '@store/processors';
 import { currentFormState } from '@store/form/getters';
 import { createErrorNotice } from '@store/notices/mutations';
 import { updateFormState } from '@store/form/mutations';
-import { getCompleteAddress } from '@store/checkout/getters';
+import { getCompleteAddress, getResolvedBillingAddress } from '@store/checkout/getters';
 import { getProcessorByType } from '@store/processors/getters';
 
 @Component({
@@ -271,17 +271,14 @@ export class ScStripePaymentElement {
     if (checkoutState.checkout?.status !== 'draft') return;
 
     const { name, email } = checkoutState.checkout;
-    const useBilling = checkoutState.checkout?.billing_matches_shipping === false;
-    const billingAddr = useBilling ? checkoutState.checkout?.billing_address as ShippingAddress : undefined;
-    const addr = (billingAddr?.line_1 ? billingAddr : checkoutState.checkout?.shipping_address as ShippingAddress) || {} as ShippingAddress;
-    const { line_1: line1, line_2: line2, city, state, country, postal_code } = addr;
+    const resolvedBillingAddress = getResolvedBillingAddress();
 
     const options = this.maybeApplyFilters({
       defaultValues: {
         billingDetails: {
           name,
           email,
-          ...(line1 ? { address: { line1, line2, city, state, country, postal_code } } : {}),
+          ...resolvedBillingAddress,
         },
       },
       fields: {
@@ -326,17 +323,7 @@ export class ScStripePaymentElement {
 
   /** Get the billing address in Stripe format. */
   getBillingAddress() {
-    const checkout = checkoutState.checkout;
-    const billingAddr = (
-      checkout?.billing_matches_shipping === false && checkout?.billing_address
-        ? checkout.billing_address
-        : undefined
-    ) as ShippingAddress;
-    const shippingAddr = checkout?.shipping_address as ShippingAddress || {};
-    const { line_1: line1, line_2: line2, city, state, country, postal_code } =
-      billingAddr?.line_1 ? billingAddr : shippingAddr;
-    if (!line1) return {};
-    return { address: { line1, line2, city, state, postal_code, country } };
+    return getResolvedBillingAddress();
   }
 
   @Method()
