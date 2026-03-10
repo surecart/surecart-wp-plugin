@@ -333,7 +333,8 @@ class SettingService {
 					],
 				],
 				'default'           => [],
-				'sanitize_callback' => function( $value ) {
+				'autoload'          => false,
+				'sanitize_callback' => function ( $value ) {
 					if ( ! is_array( $value ) ) {
 						return [];
 					}
@@ -355,6 +356,7 @@ class SettingService {
 				'show_in_rest'      => true,
 				'sanitize_callback' => 'absint',
 				'default'           => 20,
+				'autoload'          => false,
 			]
 		);
 	}
