@@ -190,7 +190,7 @@ class Checkout extends Model {
 			return 0;
 		}
 		return array_reduce(
-			$this->line_items->data,
+			$this->line_items->data ?? [],
 			function ( $sum, $item ) {
 				return $sum + (int) ( $item->scratch_amount ?? 0 );
 			},
