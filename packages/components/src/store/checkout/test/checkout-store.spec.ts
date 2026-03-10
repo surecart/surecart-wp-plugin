@@ -2,7 +2,7 @@ import { state as checkoutState, dispose as disposeCheckout } from '..';
 import { getCheckout } from '../../checkouts/mutations';
 import { dispose } from '../../checkouts';
 import { Checkout, LineItem } from '../../../types';
-import { getCompleteAddress, getResolvedBillingAddress } from '../getters';
+import { getCompleteAddress, getResolvedBillingAddress, toStripeAddress } from '../getters';
 
 describe('checkout store', () => {
   beforeEach(() => {
@@ -218,8 +218,8 @@ describe('checkout store', () => {
       } as Checkout);
 
       expect(result).toEqual({
-        line1: '123 Billing St',
-        line2: 'Suite 1',
+        line_1: '123 Billing St',
+        line_2: 'Suite 1',
         city: 'Billing City',
         state: 'BC',
         postal_code: '12345',
@@ -244,8 +244,8 @@ describe('checkout store', () => {
       } as Checkout);
 
       expect(result).toEqual({
-        line1: '456 Shipping Ave',
-        line2: 'Apt 2',
+        line_1: '456 Shipping Ave',
+        line_2: 'Apt 2',
         city: 'Shipping City',
         state: 'SC',
         postal_code: '67890',
@@ -267,8 +267,8 @@ describe('checkout store', () => {
       } as Checkout);
 
       expect(result).toEqual({
-        line1: '456 Shipping Ave',
-        line2: '',
+        line_1: '456 Shipping Ave',
+        line_2: '',
         city: 'Shipping City',
         state: 'SC',
         postal_code: '67890',
@@ -276,18 +276,18 @@ describe('checkout store', () => {
       });
     });
 
-    it('returns empty object when no addresses are present', () => {
+    it('returns undefined when no addresses are present', () => {
       const result = getResolvedBillingAddress({} as Checkout);
-      expect(result).toEqual({});
+      expect(result).toBeUndefined();
     });
 
-    it('returns empty object when billing has no line_1 and shipping is empty', () => {
+    it('returns undefined when billing has no line_1 and shipping is empty', () => {
       const result = getResolvedBillingAddress({
         billing_matches_shipping: false,
         billing_address: { country: 'US' },
         shipping_address: {},
       } as Checkout);
-      expect(result).toEqual({});
+      expect(result).toBeUndefined();
     });
 
     it('falls back to shipping when billing_matches_shipping is undefined', () => {
@@ -303,13 +303,43 @@ describe('checkout store', () => {
       } as Checkout);
 
       expect(result).toEqual({
-        line1: '456 Shipping Ave',
-        line2: '',
+        line_1: '456 Shipping Ave',
+        line_2: '',
         city: 'Shipping City',
         state: 'SC',
         postal_code: '67890',
         country: 'US',
       });
+    });
+  });
+
+  describe('toStripeAddress', () => {
+    it('converts canonical Address to Stripe format', () => {
+      const result = toStripeAddress({
+        line_1: '123 Main St',
+        line_2: 'Suite 1',
+        city: 'Springfield',
+        state: 'IL',
+        postal_code: '62704',
+        country: 'US',
+      });
+
+      expect(result).toEqual({
+        line1: '123 Main St',
+        line2: 'Suite 1',
+        city: 'Springfield',
+        state: 'IL',
+        postal_code: '62704',
+        country: 'US',
+      });
+    });
+
+    it('returns undefined when address is undefined', () => {
+      expect(toStripeAddress(undefined)).toBeUndefined();
+    });
+
+    it('returns undefined when address has no line_1', () => {
+      expect(toStripeAddress({ country: 'US' })).toBeUndefined();
     });
   });
 });
