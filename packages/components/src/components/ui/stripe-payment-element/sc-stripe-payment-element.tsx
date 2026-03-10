@@ -278,6 +278,7 @@ export class ScStripePaymentElement {
         billingDetails: {
           name,
           email,
+          ...(checkoutState.checkout?.phone ? { phone: checkoutState.checkout.phone } : {}),
           ...resolvedBillingAddress,
         },
       },
