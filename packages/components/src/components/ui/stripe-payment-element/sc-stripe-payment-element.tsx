@@ -4,7 +4,7 @@ import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 import { state as selectedProcessor } from '@store/selected-processor';
 
-import { CustomStripeElementChangeEvent, FormStateSetter, PaymentInfoAddedParams, ShippingAddress } from '../../../types';
+import { CustomStripeElementChangeEvent, FormStateSetter, PaymentInfoAddedParams } from '../../../types';
 import { state as checkoutState, onChange } from '@store/checkout';
 import { onChange as onChangeFormState } from '@store/form';
 import { state as processorsState } from '@store/processors';
@@ -321,11 +321,6 @@ export class ScStripePaymentElement {
     return await this.confirm(checkoutState.checkout?.payment_intent?.processor_data?.stripe?.type);
   }
 
-  /** Get the billing address in Stripe format. */
-  getBillingAddress() {
-    return getResolvedBillingAddress();
-  }
-
   @Method()
   async confirm(type, args = {}) {
     const confirmArgs = {
@@ -340,7 +335,7 @@ export class ScStripePaymentElement {
             ...(checkoutState.checkout?.email ? { email: checkoutState.checkout.email } : {}),
             ...(checkoutState.checkout?.name ? { name: checkoutState.checkout.name } : {}),
             ...(checkoutState.checkout?.phone ? { phone: checkoutState.checkout.phone } : {}),
-            ...this.getBillingAddress(),
+            ...getResolvedBillingAddress(),
           },
         },
       },
