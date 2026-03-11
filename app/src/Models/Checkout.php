@@ -216,7 +216,7 @@ class Checkout extends Model {
 	public function getHasSubtotalScratchAmountAttribute() {
 		$scratch  = $this->subtotal_scratch_amount;
 		$subtotal = (int) ( $this->subtotal_amount ?? 0 );
-		return $scratch > 0 && $scratch !== $subtotal;
+		return $scratch > 0 && $scratch > $subtotal;
 	}
 
 	/**
