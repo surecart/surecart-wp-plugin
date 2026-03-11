@@ -69,6 +69,11 @@ export const ATTRIBUTE_REGISTRY = {
 		'order.order_type': __('Order Type', 'surecart'),
 		order_type: __('Order Type', 'surecart'),
 		sku: __('SKU (Product/Variant)', 'surecart'),
+
+		'coupon.name': __('Coupon Name', 'surecart'),
+		'promotion.code': __('Promotion Code', 'surecart'),
+		'checkout.coupon.name': __('Checkout Coupon Name', 'surecart'),
+		'checkout.promotion.code': __('Checkout Promotion Code', 'surecart'),
 	},
 
 	number: {
@@ -96,6 +101,18 @@ export const ATTRIBUTE_REGISTRY = {
 
 	user_role: {
 		wp_user_role: __('WordPress User Role', 'surecart'),
+	},
+
+	uuid: {
+		'customer.id': __('Customer ID', 'surecart'),
+		'coupon.id': __('Coupon ID', 'surecart'),
+		'promotion.id': __('Promotion ID', 'surecart'),
+		'price.id': __('Price ID', 'surecart'),
+		'product.id': __('Product ID', 'surecart'),
+		'product.product_collections.id': __('Product Collection ID', 'surecart'),
+		'product.product_group.id': __('Product Group ID', 'surecart'),
+		'checkout.coupon.id': __('Checkout Coupon ID', 'surecart'),
+		'checkout.promotion.id': __('Checkout Promotion ID', 'surecart'),
 	},
 };
 
@@ -190,3 +207,15 @@ export const APPLIES_WHILE_CHOICES = [
 ];
 
 export const STRING_OPERATORS = ['contains', 'start_with', 'end_with'];
+
+export const UUID_ENTITY_MAP = {
+	'customer.id': 'customer',
+	'coupon.id': 'coupon',
+	'checkout.coupon.id': 'coupon',
+	'promotion.id': 'promotion',
+	'checkout.promotion.id': 'promotion',
+	'price.id': 'price',
+	'product.id': 'product',
+	'product.product_collections.id': 'product-collection',
+	'product.product_group.id': 'product-group',
+};

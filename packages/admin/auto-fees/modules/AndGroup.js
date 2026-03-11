@@ -26,7 +26,9 @@ import {
 	attributeLabels,
 	operatorLabels,
 	supportedValuesLabels,
+	UUID_ENTITY_MAP,
 } from '../utils/constants';
+import ModelSelector from '../../components/ModelSelector';
 
 const SEARCH_RESULT_LIMIT = 8;
 
@@ -261,6 +263,17 @@ export default ({
 						}}
 						required
 						choices={userRoleChoices}
+					/>
+				);
+			case 'uuid':
+				return (
+					<ModelSelector
+						name={UUID_ENTITY_MAP[attribute]}
+						value={value}
+						onSelect={(val) => setValue(val)}
+						placeholder={__('Search...', 'surecart')}
+						required
+						className={fullWidthClass}
 					/>
 				);
 			default:
