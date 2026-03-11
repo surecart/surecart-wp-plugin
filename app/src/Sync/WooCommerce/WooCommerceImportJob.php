@@ -70,7 +70,7 @@ class WooCommerceImportJob extends Job {
 	 */
 	protected function task( $args ) {
 		$page       = $args['page'] ?? 1;
-		$batch_size = $args['batch_size'] ?? 100;
+		$batch_size = max( 1, min( 500, (int) ( $args['batch_size'] ?? 100 ) ) );
 
 		// Reset per-batch currency cache (collections cache persists across batches).
 		$this->mapper->resetCurrencyCache();
@@ -354,7 +354,7 @@ class WooCommerceImportJob extends Job {
 		}
 
 		$existing_ids   = get_option( 'sc_woo_import_ids', [] );
-		$existing_ids[] = $import_id;
+		$existing_ids[] = sanitize_key( $import_id );
 		update_option( 'sc_woo_import_ids', $existing_ids, false );
 
 		if ( $lock_acquired ) {

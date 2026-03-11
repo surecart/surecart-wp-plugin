@@ -17,6 +17,7 @@ import SetupProgress from './components/SetupProgress';
 import StarterTemplates from './components/StarterTemplates';
 import ConfirmExit from './components/ConfirmExit';
 import ConfirmStoreEmail from './components/ConfirmStoreEmail';
+import { IMPORT_WOO_PRODUCTS_TEMPLATE } from './constants';
 import { ScIcon, ScButton } from '@surecart/components-react';
 import Connect from './components/Connect';
 import ConnectDone from './components/ConnectDone';
@@ -86,9 +87,9 @@ export default () => {
 				{
 					account_currency: accountCurrency,
 					email,
-					seed: !!selectedTemplate && selectedTemplate !== 'import_woocommerce_products',
+					seed: !!selectedTemplate && selectedTemplate !== IMPORT_WOO_PRODUCTS_TEMPLATE,
 					import_woocommerce_products:
-						selectedTemplate === 'import_woocommerce_products',
+						selectedTemplate === IMPORT_WOO_PRODUCTS_TEMPLATE,
 				},
 				{
 					throwOnError: true,
@@ -111,7 +112,7 @@ export default () => {
 			}
 
 			// Skip polling for WooCommerce import — it's a background job.
-			if (selectedTemplate === 'import_woocommerce_products') {
+			if (selectedTemplate === IMPORT_WOO_PRODUCTS_TEMPLATE) {
 				handleStepChange('forward');
 				return;
 			}

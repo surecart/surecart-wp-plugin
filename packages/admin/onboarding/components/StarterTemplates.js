@@ -4,6 +4,7 @@ import { __ } from '@wordpress/i18n';
 import Step from './Step';
 import ProgressIndicator from './ProgressIndicator';
 import { ScIcon } from '@surecart/components-react';
+import { IMPORT_WOO_PRODUCTS_TEMPLATE } from '../constants';
 
 const templates = [
 	{
@@ -19,7 +20,7 @@ const templates = [
 	...(scData?.is_woocommerce_active
 		? [
 				{
-					id: 'import_woocommerce_products',
+					id: IMPORT_WOO_PRODUCTS_TEMPLATE,
 					name: __('Import Products from Woo', 'surecart'),
 					icon: 'woo-text-logo',
 				},
