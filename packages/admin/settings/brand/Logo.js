@@ -18,8 +18,10 @@ export default ({
 	const [previewUrl, setPreviewUrl] = useState(null);
 
 	useEffect(() => {
-		setPreviewUrl(null);
-	}, [brand?.[logoKey]?.id]);
+		if (brand?.[logoKey]?.url) {
+			setPreviewUrl(null);
+		}
+	}, [brand?.[logoKey]?.url]);
 
 	const onSelectMedia = (media) => {
 		setPreviewUrl(media?.url);
@@ -42,18 +44,12 @@ export default ({
 	const renderContent = () => {
 		if (displayUrl) {
 			return (
-				<div
-					css={css`
-						display: grid;
-						gap: 1em;
-					`}
-				>
+				<div>
 					<img
 						src={displayUrl}
 						alt="logo"
 						css={css`
 							width: 100%;
-							height: 100%;
 							max-height: 8rem;
 							object-fit: contain;
 							height: auto;
@@ -61,46 +57,86 @@ export default ({
 							border-radius: var(--sc-border-radius-medium);
 						`}
 					/>
+					{/* Overlay icon buttons */}
 					<div
 						css={css`
+							position: absolute;
+							top: 4px;
+							right: 4px;
 							display: flex;
-							align-items: center;
-							gap: 0.5em;
+							gap: 4px;
 						`}
 					>
-						<div
+						<MediaLibrary
+							onSelect={onSelectMedia}
+							isPrivate={false}
+							render={({ setOpen }) => (
+								<Button
+									onClick={() => setOpen(true)}
+									label={__('Replace', 'surecart')}
+									css={css`
+										min-width: 28px !important;
+										width: 28px !important;
+										height: 28px !important;
+										padding: 0 !important;
+										display: flex !important;
+										align-items: center;
+										justify-content: center;
+										background: rgba(
+											${isDark
+												? '255, 255, 255, 0.15'
+												: '0, 0, 0, 0.5'}
+										) !important;
+										border-radius: 6px !important;
+										border: none !important;
+										color: #fff !important;
+										backdrop-filter: blur(4px);
+										&:hover {
+											background: rgba(
+												${isDark
+													? '255, 255, 255, 0.25'
+													: '0, 0, 0, 0.7'}
+											) !important;
+										}
+									`}
+								>
+									<sc-icon
+										name="refresh-cw"
+										style={{ fontSize: '14px' }}
+									></sc-icon>
+								</Button>
+							)}
+						/>
+						<Button
+							onClick={onRemoveMedia}
+							label={__('Remove', 'surecart')}
 							css={css`
-								display: flex;
+								min-width: 28px !important;
+								width: 28px !important;
+								height: 28px !important;
+								padding: 0 !important;
+								display: flex !important;
 								align-items: center;
-								gap: 0.5em;
+								justify-content: center;
+								background: rgba(
+									${isDark
+										? '255, 255, 255, 0.15'
+										: '0, 0, 0, 0.5'}
+								) !important;
+								border-radius: 6px !important;
+								border: none !important;
+								color: #fff !important;
+								backdrop-filter: blur(4px);
+								&:hover {
+									background: rgba(220, 38, 38, 0.8) !important;
+								}
 							`}
 						>
-							<MediaLibrary
-								onSelect={onSelectMedia}
-								isPrivate={false}
-								render={({ setOpen }) => {
-									return (
-										<Button
-											isPrimary
-											onClick={() => setOpen(true)}
-										>
-											{__('Replace', 'surecart')}
-										</Button>
-									);
-								}}
-							></MediaLibrary>
-							<Button
-								css={css`
-									${isDark
-										? '--wp-components-color-accent: #fff;'
-										: ''}
-								`}
-								isTertiary
-								onClick={onRemoveMedia}
-							>
-								{__('Remove', 'surecart')}
-							</Button>
-						</div>
+							<sc-icon
+								name="trash-2"
+								style={{ fontSize: '14px' }}
+							></sc-icon>
+						</Button>
 					</div>
 				</div>
 			);
@@ -125,6 +161,7 @@ export default ({
 		<ScFormControl label={label}>
 			<div
 				css={css`
+					position: relative;
 					display: flex;
 					justify-content: center;
 					align-items: center;
