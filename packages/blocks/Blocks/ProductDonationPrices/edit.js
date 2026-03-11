@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import {
 	PanelBody,
@@ -54,14 +52,10 @@ export default ({ attributes, setAttributes, context }) => {
 	);
 
 	const blockProps = useBlockProps({
+		className: 'sc-donation-prices-editor',
 		style: {
 			'--columns': columns,
 		},
-		css: css`
-			sc-product-donation-choices.wp-block {
-				margin: 0;
-			}
-		`,
 	});
 
 	const { children, innerBlocksProps } = useInnerBlocksProps(blockProps, {
@@ -76,6 +70,11 @@ export default ({ attributes, setAttributes, context }) => {
 
 	return (
 		<>
+			<style>{`
+				.sc-donation-prices-editor sc-product-donation-choices.wp-block {
+					margin: 0;
+				}
+			`}</style>
 			<InspectorControls>
 				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>

@@ -1,5 +1,3 @@
-/** @jsx jsx */
-
 import { __ } from '@wordpress/i18n';
 import {
 	InspectorControls,
@@ -9,7 +7,6 @@ import {
 	useBlockProps,
 	store as blockEditorStore,
 } from '@wordpress/block-editor';
-import { css, jsx } from '@emotion/core';
 import { Fragment } from '@wordpress/element';
 import {
 	PanelBody,
@@ -40,14 +37,6 @@ export default ({ attributes, setAttributes, isSelected, clientId }) => {
 	const innerBlocksProps = useInnerBlocksProps(
 		{
 			className: 'sc-radio',
-			css: css`
-				.block-list-appender {
-					position: relative;
-				}
-				.wp-block[data-block] {
-					margin-top: 0;
-				}
-			`,
 		},
 		{
 			allowedBlocks: ['surecart/radio'],

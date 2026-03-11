@@ -1,5 +1,3 @@
-/** @jsx jsx  */
-import { css, jsx } from '@emotion/core';
 import { __, _n } from '@wordpress/i18n';
 import {
 	InspectorControls,
@@ -65,12 +63,12 @@ export default ({ attributes, setAttributes }) => {
 									</strong>
 								</div>
 								<div
-									css={css`
-										display: flex;
-										align-items: center;
-										gap: 0.25em;
-										color: var(--sc-input-label-color);
-									`}
+									style={{
+										display: 'flex',
+										alignItems: 'center',
+										gap: '0.25em',
+										color: 'var(--sc-input-label-color)',
+									}}
 								>
 									<div>
 										<ScTag type="success">
@@ -105,12 +103,12 @@ export default ({ attributes, setAttributes }) => {
 									</strong>
 								</div>
 								<div
-									css={css`
-										display: flex;
-										align-items: center;
-										gap: 0.25em;
-										color: var(--sc-input-label-color);
-									`}
+									style={{
+										display: 'flex',
+										alignItems: 'center',
+										gap: '0.25em',
+										color: 'var(--sc-input-label-color)',
+									}}
 								>
 									<div>
 										<ScTag type="info">

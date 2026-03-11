@@ -1,6 +1,3 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
-
 /**
  * WordPress dependencies
  */
@@ -87,21 +84,18 @@ export default ({ attributes, setAttributes }) => {
 					label={text}
 				>
 					<span
-						css={css`
-							display: flex;
-							align-items: center;
-							gap: 0.5em;
-						`}
+						style={{
+							display: 'flex',
+							alignItems: 'center',
+							gap: '0.5em',
+						}}
 						slot="label"
 					>
 						{text}
 						{disabled && (
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
-								css={css`
-									width: 16px;
-									height: 16px;
-								`}
+								style={{ width: '16px', height: '16px' }}
 								fill="none"
 								viewBox="0 0 24 24"
 								stroke="currentColor"

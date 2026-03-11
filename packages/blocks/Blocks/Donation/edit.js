@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import { Fragment, useState, useRef, useEffect } from '@wordpress/element';
 import {
@@ -85,11 +83,6 @@ export default ({ attributes, setAttributes, isSelected, clientId }) => {
 		style: {
 			display: 'grid',
 		},
-		css: css`
-			sc-choice.wp-block {
-				margin: 0;
-			}
-		`,
 	});
 
 	const innerBlocksProps = useInnerBlocksProps(
@@ -116,7 +109,7 @@ export default ({ attributes, setAttributes, isSelected, clientId }) => {
 		setShowModal(false);
 	};
 
-	const priceSelected = async ({price_id}) => {
+	const priceSelected = async ({ price_id }) => {
 		const price = await select(coreStore).getEntityRecord(
 			'root',
 			'price',
@@ -155,6 +148,14 @@ export default ({ attributes, setAttributes, isSelected, clientId }) => {
 
 	return (
 		<Fragment>
+			<style>{`
+				.sc-donation-editor sc-choice.wp-block {
+					margin: 0;
+				}
+				.sc-donation-add-amount:hover {
+					border-color: var(--wp-admin-theme-color);
+				}
+			`}</style>
 			<InspectorControls>
 				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
@@ -197,7 +198,10 @@ export default ({ attributes, setAttributes, isSelected, clientId }) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<div {...blockProps}>
+			<div
+				{...blockProps}
+				className={`${blockProps.className || ''} sc-donation-editor`}
+			>
 				<ScDonationChoices
 					label={label}
 					priceId={price_id}
@@ -224,23 +228,20 @@ export default ({ attributes, setAttributes, isSelected, clientId }) => {
 									amountInput.current.triggerFocus();
 								}, 50);
 							}}
-							css={css`
-								border: 1px solid #1e1e1e;
-								color: #1e1e1e;
-								padding: 6px 12px;
-								display: flex;
-								align-items: center;
-								justify-content: center;
-								line-height: 0;
-								cursor: pointer;
-								position: relative;
-								margin: 10px;
-								font-size: 16px;
-
-								&:hover {
-									border-color: var(--wp-admin-theme-color);
-								}
-							`}
+							className="sc-donation-add-amount"
+							style={{
+								border: '1px solid #1e1e1e',
+								color: '#1e1e1e',
+								padding: '6px 12px',
+								display: 'flex',
+								alignItems: 'center',
+								justifyContent: 'center',
+								lineHeight: 0,
+								cursor: 'pointer',
+								position: 'relative',
+								margin: '10px',
+								fontSize: '16px',
+							}}
 						>
 							<sc-icon name="plus"></sc-icon>
 						</div>
@@ -250,9 +251,7 @@ export default ({ attributes, setAttributes, isSelected, clientId }) => {
 				{showModal && (
 					<Modal
 						title={__('Add Suggested Donation Amount', 'surecart')}
-						css={css`
-							max-width: 500px !important;
-						`}
+						style={{ maxWidth: '500px' }}
 						onRequestClose={() => setShowModal(false)}
 						shouldCloseOnClickOutside={false}
 					>

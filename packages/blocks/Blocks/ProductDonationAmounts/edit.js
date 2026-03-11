@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import {
 	PanelBody,
@@ -71,25 +69,12 @@ export default ({ attributes, setAttributes, context }) => {
 	const spacingProps = useSpacingProps(attributes);
 
 	const blockProps = useBlockProps({
-		className: classNames({
+		className: classNames('sc-donation-amounts-editor', {
 			[`has-text-align-${textAlign}`]: textAlign,
 		}),
 		style: {
 			'--columns': columns,
 		},
-		css: css`
-			sc-choices::part(label) {
-				text-align: left;
-			}
-			sc-choice.wp-block {
-				margin: 0;
-			}
-			.block-list-appender {
-				width: 100%;
-				position: relative;
-				display: block;
-			}
-		`,
 	});
 
 	const { children, innerBlocksProps } = useInnerBlocksProps(blockProps, {
@@ -105,6 +90,19 @@ export default ({ attributes, setAttributes, context }) => {
 
 	return (
 		<>
+			<style>{`
+				.sc-donation-amounts-editor sc-choices::part(label) {
+					text-align: left;
+				}
+				.sc-donation-amounts-editor sc-choice.wp-block {
+					margin: 0;
+				}
+				.sc-donation-amounts-editor .block-list-appender {
+					width: 100%;
+					position: relative;
+					display: block;
+				}
+			`}</style>
 			<InspectorControls>
 				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>

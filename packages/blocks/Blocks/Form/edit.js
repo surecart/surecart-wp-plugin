@@ -1,14 +1,10 @@
-/** @jsx jsx */
 import { styles } from '../../../admin/styles/admin';
 import ColorPopup from '../../components/ColorPopup';
 import Cart from './components/Cart';
 import Mode from './components/Mode';
 import Setup from './components/Setup';
-import { css, jsx } from '@emotion/core';
 import { ScCheckout, ScIcon } from '@surecart/components-react';
 import apiFetch from '@wordpress/api-fetch';
-import StyleProvider from '../../components/StyleProvider';
-
 import {
 	InnerBlocks,
 	InspectorControls,
@@ -273,6 +269,31 @@ export default function edit({ clientId, attributes, setAttributes }) {
 
 	return (
 		<Fragment>
+			<style>{`
+				.sc-form-edit-link-control {
+					border: 1px solid #ddd;
+					box-sizing: border-box;
+				}
+				.sc-form-edit-link-control .block-editor-link-control {
+					min-width: 248px;
+					max-width: 248px;
+					overflow: hidden;
+				}
+				.sc-form-edit-link-control .block-editor-link-control__search-item-header {
+					white-space: normal;
+					overflow-wrap: anywhere;
+				}
+				.sc-form-edit-inner-blocks * > * > .wp-block:not(sc-choice):not(sc-column):not(sc-radio):not(sc-price-choice):not(sc-choices > *):not(.sc-invoice-details > *):not(:last-child) {
+					margin-bottom: ${gap} !important;
+				}
+				.sc-form-edit-inner-blocks [data-type*='surecart/'] {
+					pointer-events: all !important;
+				}
+				.sc-form-edit-inner-blocks .wp-block,
+				.sc-form-edit-inner-blocks .block-editor-inserter {
+					pointer-events: all !important;
+				}
+			`}</style>
 			<InspectorControls>
 				<PanelBody title={__('Form Template', 'surecart')}>
 					<PanelRow>
@@ -325,22 +346,7 @@ export default function edit({ clientId, attributes, setAttributes }) {
 					</PanelRow>
 					{custom_success_url && (
 						<PanelRow>
-							<div
-								css={css`
-									border: 1px solid #ddd;
-									box-sizing: border-box;
-									.block-editor-link-control {
-										min-width: 248px;
-										max-width: 248px;
-										overflow: hidden;
-									}
-
-									.block-editor-link-control__search-item-header {
-										white-space: normal;
-										overflow-wrap: anywhere;
-									}
-								`}
-							>
+							<div className="sc-form-edit-link-control">
 								<LinkControl
 									value={{ url: success_url }}
 									shownUnlinkControl={true}
@@ -539,219 +545,184 @@ export default function edit({ clientId, attributes, setAttributes }) {
 			</InspectorControls>
 
 			<div {...blockProps}>
-				<StyleProvider>
-					{showClaimNotice ? (
-						<ClaimNoticeModal
-							title={__('Complete your store setup.', 'surecart')}
-							bodyText={__(
-								"Please complete your store to enable live mode. It's free!",
-								'surecart'
-							)}
-							onRequestClose={() => setShowClaimNotice(false)}
-							claimUrl={claimUrl}
-						/>
-					) : null}
-					{blockCount === 0 ? (
-						<Setup
-							templates={patterns}
-							onCreate={onCreate}
-							clientId={clientId}
-						/>
-					) : (
+				{showClaimNotice ? (
+					<ClaimNoticeModal
+						title={__('Complete your store setup.', 'surecart')}
+						bodyText={__(
+							"Please complete your store to enable live mode. It's free!",
+							'surecart'
+						)}
+						onRequestClose={() => setShowClaimNotice(false)}
+						claimUrl={claimUrl}
+					/>
+				) : null}
+				{blockCount === 0 ? (
+					<Setup
+						templates={patterns}
+						onCreate={onCreate}
+						clientId={clientId}
+					/>
+				) : (
+					<div
+						style={{
+							maxWidth: 'var(--ast-content-width-size)',
+							marginLeft: 'auto',
+							marginRight: 'auto',
+						}}
+					>
 						<div
-							css={css`
-								max-width: var(--ast-content-width-size);
-								margin-left: auto !important;
-								margin-right: auto !important;
-							`}
+							style={{
+								...styles,
+								padding: '10px 16px',
+								borderRadius: '8px',
+								display: 'grid',
+								gap: '0.5em',
+								border: '1px solid transparent',
+								background:
+									'var(--sc-input-background-color-disabled)',
+							}}
 						>
 							<div
-								style={styles}
-								css={css`
-									padding: 10px 16px;
-									border-radius: 8px;
-									display: grid;
-									gap: 0.5em;
-									border: 1px solid transparent;
-									background: var(
-										--sc-input-background-color-disabled
-									);
-								`}
+								style={{
+									display: 'flex',
+									justifyContent: 'space-between',
+									alignItems: 'center',
+									fontSize: '15px',
+								}}
 							>
 								<div
-									css={css`
-										display: flex;
-										justify-content: space-between;
-										align-items: center;
-										font-size: 15px;
-									`}
+									style={{
+										cursor: 'pointer',
+										flex: 1,
+										userSelect: 'none',
+										display: 'inline-block',
+										color: 'var(--sc-input-label-color)',
+										fontWeight:
+											'var(--sc-input-label-font-weight)',
+										textTransform:
+											'var(--sc-input-label-text-transform, none)',
+										letterSpacing:
+											'var(--sc-input-label-letter-spacing, 0)',
+									}}
 								>
+									{__('Form', 'surecart')}
+								</div>
+								<div
+									style={{
+										display: 'flex',
+										alignItems: 'center',
+									}}
+								>
+									<Mode
+										attributes={attributes}
+										onModeSelect={onModeSelect}
+									/>
 									<div
-										css={css`
-											cursor: pointer;
-											flex: 1;
-											user-select: none;
-											display: inline-block;
-											color: var(--sc-input-label-color);
-											font-weight: var(
-												--sc-input-label-font-weight
-											);
-											text-transform: var(
-												--sc-input-label-text-transform,
-												none
-											);
-											letter-spacing: var(
-												--sc-input-label-letter-spacing,
-												0
-											);
-										`}
+										style={{
+											display: 'flex',
+											alignItems: 'center',
+										}}
 									>
-										{__('Form', 'surecart')}
-									</div>
-									<div
-										css={css`
-											display: flex;
-											align-items: center;
-										`}
-									>
-										<Mode
-											attributes={attributes}
-											onModeSelect={onModeSelect}
-										/>
-										<div
-											css={css`
-												display: flex;
-												align-items: center;
-											`}
+										<Button
+											onClick={() =>
+												setTab(
+													tab === 'cart' ? '' : 'cart'
+												)
+											}
 										>
-											<Button
-												onClick={() =>
-													setTab(
-														tab === 'cart'
-															? ''
-															: 'cart'
-													)
-												}
+											<span
+												style={{
+													display: 'inline-block',
+													verticalAlign: 'top',
+													boxSizing: 'border-box',
+													margin: '1px 0 -1px 2px',
+													padding: '0 5px',
+													minWidth: '18px',
+													height: '18px',
+													borderRadius: '9px',
+													backgroundColor:
+														'currentColor',
+													fontSize: '11px',
+													lineHeight: 1.6,
+													textAlign: 'center',
+													zIndex: 26,
+												}}
 											>
 												<span
-													css={css`
-														display: inline-block;
-														vertical-align: top;
-														box-sizing: border-box;
-														margin: 1px 0 -1px 2px;
-														padding: 0 5px;
-														min-width: 18px;
-														height: 18px;
-														border-radius: 9px;
-														background-color: currentColor;
-														font-size: 11px;
-														line-height: 1.6;
-														text-align: center;
-														z-index: 26;
-													`}
-												>
-													<span
-														css={css`
-															color: #fff;
-														`}
-													>
-														{
-															(
-																prices || []
-															).filter(
-																(p) => p?.id
-															)?.length
-														}
-													</span>
-												</span>
-
-												<ScIcon
-													name="shopping-bag"
 													style={{
-														fontSize: '18px',
-														color: 'var(--sc-input-label-color)',
+														color: '#fff',
 													}}
-												/>
-											</Button>
-										</div>
+												>
+													{
+														(prices || []).filter(
+															(p) => p?.id
+														)?.length
+													}
+												</span>
+											</span>
+
+											<ScIcon
+												name="shopping-bag"
+												style={{
+													fontSize: '18px',
+													color: 'var(--sc-input-label-color)',
+												}}
+											/>
+										</Button>
 									</div>
 								</div>
-
-								{tab === 'cart' && (
-									<Cart
-										attributes={attributes}
-										setAttributes={setAttributes}
-									/>
-								)}
 							</div>
-							<ScCheckout
-								ref={scCheckoutRef}
-								mode="test"
-								formId={formId}
-								processors={scBlockData?.processors}
-								stripePaymentElement={
-									scBlockData?.beta?.stripe_payment_element
-								}
-								css={css`
-									margin-top: 2em;
-									font-size: ${font_size}px;
-								`}
-								className={className}
-								style={{
-									...(color
-										? {
-												'--sc-color-primary-500': color,
-												'--sc-focus-ring-color-primary':
-													color,
-												'--sc-input-border-color-focus':
-													color,
-										  }
-										: {}),
-								}}
-								disableComponentsValidation={true}
-								persistSession={false}
-								alignment={align}
-								currencyCode={
-									scBlockData.currency || scData?.currency
-								}
-								choiceType={choice_type}
-							>
-								<div
-									css={css`
-										*
-											> *
-											> .wp-block:not(sc-choice):not(
-												sc-column
-											):not(sc-radio):not(
-												sc-price-choice
-											):not(sc-choices > *):not(
-												.sc-invoice-details > *
-											):not(:last-child) {
-											margin-bottom: ${gap} !important;
-										}
-										// prevents issues with our shadow dom.
-										[data-type*='surecart/'] {
-											pointer-events: all !important;
-										}
-										.wp-block,
-										.block-editor-inserter {
-											pointer-events: all !important;
-										}
-									`}
-								>
-									<InnerBlocks
-										templateLock={false}
-										renderAppender={
-											blockCount
-												? undefined
-												: InnerBlocks.ButtonBlockAppender
-										}
-									/>
-								</div>
-							</ScCheckout>
+
+							{tab === 'cart' && (
+								<Cart
+									attributes={attributes}
+									setAttributes={setAttributes}
+								/>
+							)}
 						</div>
-					)}
-				</StyleProvider>
+						<ScCheckout
+							ref={scCheckoutRef}
+							mode="test"
+							formId={formId}
+							processors={scBlockData?.processors}
+							stripePaymentElement={
+								scBlockData?.beta?.stripe_payment_element
+							}
+							className={className}
+							style={{
+								marginTop: '2em',
+								fontSize: `${font_size}px`,
+								...(color
+									? {
+											'--sc-color-primary-500': color,
+											'--sc-focus-ring-color-primary':
+												color,
+											'--sc-input-border-color-focus':
+												color,
+									  }
+									: {}),
+							}}
+							disableComponentsValidation={true}
+							persistSession={false}
+							alignment={align}
+							currencyCode={
+								scBlockData.currency || scData?.currency
+							}
+							choiceType={choice_type}
+						>
+							<div className="sc-form-edit-inner-blocks">
+								<InnerBlocks
+									templateLock={false}
+									renderAppender={
+										blockCount
+											? undefined
+											: InnerBlocks.ButtonBlockAppender
+									}
+								/>
+							</div>
+						</ScCheckout>
+					</div>
+				)}
 			</div>
 		</Fragment>
 	);

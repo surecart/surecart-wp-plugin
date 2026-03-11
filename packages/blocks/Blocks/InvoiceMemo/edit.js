@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/react';
 import { __ } from '@wordpress/i18n';
 import { RichText, useBlockProps } from '@wordpress/block-editor';
 
@@ -10,13 +8,13 @@ export default ({ attributes, setAttributes }) => {
 	return (
 		<div {...blockProps}>
 			<div
-				css={css`
-					font-size: var(--sc-font-size-small);
-					line-height: var(--sc-line-height-dense);
-					color: var(--sc-input-label-color);
-					display: grid;
-					gap: 5px;
-				`}
+				style={{
+					fontSize: 'var(--sc-font-size-small)',
+					lineHeight: 'var(--sc-line-height-dense)',
+					color: 'var(--sc-input-label-color)',
+					display: 'grid',
+					gap: '5px',
+				}}
 			>
 				<RichText
 					tagName="span"
@@ -28,10 +26,10 @@ export default ({ attributes, setAttributes }) => {
 				/>
 
 				<div
-					css={css`
-						text-align: left;
-						color: var(--sc-input-help-text-color);
-					`}
+					style={{
+						textAlign: 'left',
+						color: 'var(--sc-input-help-text-color)',
+					}}
 				>
 					{__('Thank you for your business!', 'surecart')}
 				</div>

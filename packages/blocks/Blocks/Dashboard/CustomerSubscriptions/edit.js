@@ -1,6 +1,4 @@
-/** @jsx jsx */
 import OverlayLabel from '../../../components/OverlayLabel';
-import { css, jsx } from '@emotion/core';
 import {
 	ScSubscriptionDetails,
 	ScDashboardModule,

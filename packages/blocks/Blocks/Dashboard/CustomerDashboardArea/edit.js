@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
 /**
  * WordPress dependencies
  */
@@ -17,15 +15,7 @@ export default () => {
 		: __experimentalUseInnerBlocksProps;
 
 	const blockProps = useBlockProps({
-		css: css`
-			> * {
-				margin-bottom: var(--sc-spacing-xx-large) !important;
-				font-size: 15px;
-			}
-			.block-list-appender {
-				position: relative;
-			}
-		`,
+		className: 'sc-customer-dashboard-area-editor',
 	});
 
 	const innerBlocksProps = useInnerBlocksProps(blockProps, {
@@ -33,5 +23,18 @@ export default () => {
 		renderAppender: InnerBlocks.ButtonBlockAppender,
 	});
 
-	return <div {...innerBlocksProps}></div>;
+	return (
+		<>
+			<style>{`
+				.sc-customer-dashboard-area-editor > * {
+					margin-bottom: var(--sc-spacing-xx-large) !important;
+					font-size: 15px;
+				}
+				.sc-customer-dashboard-area-editor .block-list-appender {
+					position: relative;
+				}
+			`}</style>
+			<div {...innerBlocksProps}></div>
+		</>
+	);
 };

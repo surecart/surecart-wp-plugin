@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 
 import { useState, useEffect, Fragment } from '@wordpress/element';
@@ -52,9 +50,9 @@ export default ({ onSelect, createNew, ad_hoc, value, open = true }) => {
 		<Fragment>
 			<SelectPrice
 				required
-				css={css`
-					flex: 0 1 50%;
-				`}
+				style={{
+					flex: '0 1 50%',
+				}}
 				value={value}
 				onNew={createNew && onNew}
 				open={open}
@@ -69,10 +67,10 @@ export default ({ onSelect, createNew, ad_hoc, value, open = true }) => {
 				<Modal
 					title="Create a product"
 					isFullScreen={true}
-					css={css`
-						width: 90vw;
-						min-height: 90vh;
-					`}
+					style={{
+						width: '90vw',
+						minHeight: '90vh',
+					}}
 					shouldCloseOnClickOutside={false}
 					onRequestClose={() => setNewModal(false)}
 				>

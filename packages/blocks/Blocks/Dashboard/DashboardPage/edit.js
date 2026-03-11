@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
 /**
  * WordPress dependencies
  */
@@ -24,11 +22,6 @@ export default ({ attributes, setAttributes }) => {
 
 	const blockProps = useBlockProps({
 		name,
-		css: css`
-			> .wp-block:not(sc-columns):not(sc-column):not(:last-child) {
-				margin-bottom: ${gap} !important;
-			}
-		`,
 	});
 
 	const innerBlocksProps = useInnerBlocksProps(blockProps, {
@@ -38,6 +31,11 @@ export default ({ attributes, setAttributes }) => {
 
 	return (
 		<Fragment>
+			<style>{`
+				.sc-dashboard-page-editor > .wp-block:not(sc-columns):not(sc-column):not(:last-child) {
+					margin-bottom: ${gap} !important;
+				}
+			`}</style>
 			<InspectorControls>
 				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
@@ -51,7 +49,10 @@ export default ({ attributes, setAttributes }) => {
 					</PanelRow>
 				</PanelBody>
 			</InspectorControls>
-			<ScTabPanel {...innerBlocksProps}></ScTabPanel>
+			<ScTabPanel
+				className="sc-dashboard-page-editor"
+				{...innerBlocksProps}
+			></ScTabPanel>
 		</Fragment>
 	);
 };

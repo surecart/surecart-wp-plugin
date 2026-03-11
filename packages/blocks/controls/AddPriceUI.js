@@ -1,13 +1,23 @@
-/** @jsx jsx */
 import { __ } from '@wordpress/i18n';
-import { css, Global, jsx } from '@emotion/core';
 import { Button, Modal, Flex } from '@wordpress/components';
+import { useEffect } from '@wordpress/element';
 import PriceChoices from '@scripts/blocks/components/PriceChoices';
 import { addQueryArgs } from '@wordpress/url';
 import { updateCartLineItem } from '../util';
 
 export default ({ attributes, setAttributes, onChange, setAddingLink }) => {
 	const { url, line_items } = attributes;
+
+	useEffect(() => {
+		const style = document.createElement('style');
+		style.textContent = `
+			.components-modal__screen-overlay.surecart-price-overlay {
+				z-index: 99999999 !important;
+			}
+		`;
+		document.head.appendChild(style);
+		return () => style.remove();
+	}, []);
 
 	const removeLineItem = (index) => {
 		setAttributes({ line_items: line_items.filter((_, i) => i !== index) });
@@ -42,23 +52,13 @@ export default ({ attributes, setAttributes, onChange, setAddingLink }) => {
 			title={__('Add A Buy Link', 'surecart')}
 			onRequestClose={() => setAddingLink(false)}
 			shouldCloseOnClickOutside={false}
-			css={css`
-				width: 100%;
-				max-width: 800px;
-				overflow: visible;
-				.components-modal__content {
-					overflow: visible;
-				}
-			`}
+			style={{
+				width: '100%',
+				maxWidth: '800px',
+				overflow: 'visible',
+			}}
 			overlayClassName="surecart-price-overlay"
 		>
-			<Global
-				styles={css`
-					.components-modal__screen-overlay.surecart-price-overlay {
-						z-index: 99999999 !important;
-					}
-				`}
-			/>
 			<PriceChoices
 				choices={line_items}
 				onUpdate={updateLineItem}

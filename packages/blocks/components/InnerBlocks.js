@@ -1,6 +1,3 @@
-/** @jsx jsx */
-
-import { css, jsx } from '@emotion/core';
 import {
 	InnerBlocks,
 	store as blockEditorStore,
@@ -40,24 +37,27 @@ export default withIsPremium((props, clientId) => {
 		[clientId]
 	);
 	return (
-		<div
-			css={css`
-				.block-editor-button-block-appender {
+		<>
+			<style>{`
+				.sc-inner-blocks-editor .block-editor-button-block-appender {
 					box-shadow: none;
 					border: 1px dashed #dcdcdc;
 					margin-top: 30px;
 					box-sizing: border-box;
 				}
-			`}
-		>
-			<InnerBlocks
-				renderAppender={
-					hasChildBlocks ? undefined : InnerBlocks.ButtonBlockAppender
-				}
-				templateLock={isPremium ? 'insert' : 'all'}
-				allowedBlocks={ALLOWED_BLOCKS}
-				{...props}
-			/>
-		</div>
+			`}</style>
+			<div className="sc-inner-blocks-editor">
+				<InnerBlocks
+					renderAppender={
+						hasChildBlocks
+							? undefined
+							: InnerBlocks.ButtonBlockAppender
+					}
+					templateLock={isPremium ? 'insert' : 'all'}
+					allowedBlocks={ALLOWED_BLOCKS}
+					{...props}
+				/>
+			</div>
+		</>
 	);
 });

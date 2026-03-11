@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
 import { useState } from '@wordpress/element';
 import ModelSelector from '../../../../../admin/components/ModelSelector';
 import {
@@ -58,10 +56,10 @@ export default (props) => {
 				<ScFormControl
 					label={label}
 					showLabel={false}
-					css={css`
-						display: grid;
-						gap: var(--sc-spacing-medium);
-					`}
+					style={{
+						display: 'grid',
+						gap: 'var(--sc-spacing-medium)',
+					}}
 				>
 					<ModelSelector
 						placeholder={placeholder}

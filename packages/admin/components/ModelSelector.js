@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
 import { useState, useMemo, useEffect } from '@wordpress/element';
 import { useEntityRecords } from '@wordpress/core-data';
 import SelectModel from './SelectModel';

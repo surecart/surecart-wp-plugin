@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import {
 	useBlockProps,
@@ -21,6 +19,12 @@ export default ({ attributes, setAttributes, isSelected }) => {
 
 	return (
 		<div {...blockProps}>
+			<style>{`
+				.wp-block[data-type="surecart/card"] .wp-block {
+					margin-top: 30px !important;
+					margin-bottom: 30px !important;
+				}
+			`}</style>
 			<InspectorControls>
 				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
@@ -46,12 +50,6 @@ export default ({ attributes, setAttributes, isSelected }) => {
 			</InspectorControls>
 			<ScCard
 				borderless={borderless}
-				css={css`
-					.wp-block {
-						margin-top: 30px !important;
-						margin-bottom: 30px !important;
-					}
-				`}
 			>
 				{(isSelected || !!title) && (
 					<RichText

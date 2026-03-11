@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-02-24T16:06:25",
+  "timestamp": "2026-03-06T11:12:50",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.18.3",
@@ -17177,6 +17177,27 @@
           "required": false
         },
         {
+          "name": "customValidity",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "custom-validity",
+          "reflectToAttr": false,
+          "docs": "Custom validation message to show when the input is invalid (replaces browser default).",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "disabled",
           "type": "boolean",
           "complexType": {
@@ -31343,7 +31364,7 @@
             "references": {
               "LayoutConfig": {
                 "location": "local",
-                "path": "/Users/andre/sites/surecart/wp-content/plugins/surecart/packages/components/src/components/controllers/products/sc-product-item-list/sc-product-item-list.tsx",
+                "path": "/Users/maniruzzamanakash/Local Sites/sc/app/public/wp-content/plugins/surecart/packages/components/src/components/controllers/products/sc-product-item-list/sc-product-item-list.tsx",
                 "id": "src/components/controllers/products/sc-product-item-list/sc-product-item-list.tsx::LayoutConfig"
               }
             }
@@ -33910,6 +33931,28 @@
           "values": [
             {
               "type": "number"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "productName",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "product-name",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "'Product'",
+          "values": [
+            {
+              "type": "string"
             }
           ],
           "optional": false,
@@ -36601,6 +36644,26 @@
           "values": [
             {
               "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "shippingChoices",
+          "type": "any[]",
+          "complexType": {
+            "original": "any[] | undefined",
+            "resolved": "any[]",
+            "references": {}
+          },
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "Override shipping choices data (used for editor preview)",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "any[]"
             }
           ],
           "optional": false,

@@ -1,7 +1,5 @@
-/** @jsx jsx */
 import { ToggleControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
-import { css, jsx } from '@emotion/core';
 import { LinkControl } from '@wordpress/block-editor';
 
 import { ScButton } from '@surecart/components-react';
@@ -68,11 +66,11 @@ export default ({ onCreate, templates }) => {
 			}
 		>
 			<div
-				css={css`
-					display: grid;
-					padding: 32px;
-					grid-gap: 32px;
-				`}
+				style={{
+					display: 'grid',
+					padding: '32px',
+					gridGap: '32px',
+				}}
 			>
 				<SelectPrices
 					template={template}
@@ -93,10 +91,10 @@ export default ({ onCreate, templates }) => {
 					/>
 					{custom_success_url && (
 						<div
-							css={css`
-								border: 1px solid #ddd;
-								box-sizing: border-box;
-							`}
+							style={{
+								border: '1px solid #ddd',
+								boxSizing: 'border-box',
+							}}
 						>
 							<LinkControl
 								value={{ url: success_url }}

@@ -1,6 +1,4 @@
-/** @jsx jsx */
 import { ScTab } from '@surecart/components-react';
-import { css, jsx } from '@emotion/core';
 import {
 	InspectorControls,
 	RichText,
@@ -44,6 +42,11 @@ export default ({ attributes, setAttributes }) => {
 
 	return (
 		<Fragment>
+			<style>{`
+				.sc-dashboard-tab-icon-wrapper svg {
+					fill: none !important;
+				}
+			`}</style>
 			<InspectorControls>
 				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
@@ -60,13 +63,7 @@ export default ({ attributes, setAttributes }) => {
 							<BaseControl.VisualLabel>
 								{__('Tab Icon', 'surecart')}
 							</BaseControl.VisualLabel>
-							<div
-								css={css`
-									svg {
-										fill: none !important;
-									}
-								`}
-							>
+							<div className="sc-dashboard-tab-icon-wrapper">
 								<DropdownMenu
 									popoverProps={{
 										className: 'sc-tab-icon-dropdown',

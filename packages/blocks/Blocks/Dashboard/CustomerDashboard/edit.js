@@ -1,4 +1,3 @@
-/** @jsx jsx */
 import {
 	store as blockEditorStore,
 	useBlockProps,
@@ -8,7 +7,6 @@ import {
 import { createBlock } from '@wordpress/blocks';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { useEffect, useRef } from '@wordpress/element';
-import { css, jsx } from '@emotion/core';
 import { __, sprintf } from '@wordpress/i18n';
 import { ScTabGroup } from '@surecart/components-react';
 
@@ -240,20 +238,24 @@ export default ({ clientId }) => {
 	}, [tabBlocks, panelBlocks]);
 
 	return (
-		<ScTabGroup
-			{...innerBlocksProps}
-			css={css`
-				.block-list-appender {
+		<>
+			<style>{`
+				.sc-customer-dashboard-editor .block-list-appender {
 					position: relative !important;
 					box-sizing: border-box !important;
 					opacity: 0.25;
 					transition: opacity 0.25s ease;
-
-					&:hover {
-						opacity: 1;
-					}
 				}
-			`}
-		></ScTabGroup>
+				.sc-customer-dashboard-editor .block-list-appender:hover {
+					opacity: 1;
+				}
+			`}</style>
+			<ScTabGroup
+				{...innerBlocksProps}
+				className={`sc-customer-dashboard-editor ${
+					innerBlocksProps.className || ''
+				}`}
+			></ScTabGroup>
+		</>
 	);
 };

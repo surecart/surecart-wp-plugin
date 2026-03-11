@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import {
 	store as blockEditorStore,
@@ -320,11 +318,7 @@ export default ({ attributes, setAttributes, clientId }) => {
 						onDone={togglePreview}
 					/>
 				) : (
-					<div
-						css={css`
-							padding: 0.88rem;
-						`}
-					>
+					<div style={{ padding: '0.88rem' }}>
 						<Disabled>
 							{layoutConfig && (
 								<ScProductItemList

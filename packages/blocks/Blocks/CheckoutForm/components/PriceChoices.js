@@ -1,102 +1,101 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
-
 import { __ } from '@wordpress/i18n';
 import { Button } from '@wordpress/components';
 
 import PriceChoice from './PriceChoice';
 
-export default ({ choices, onUpdate, onRemove, onAddProduct, description }) => {
-	const headerStyle = css`
-		border-bottom: 1px solid var(--sc-color-gray-300);
-		border-top: 1px solid var(--sc-color-gray-300);
-		padding: 0.5em 0 !important;
-		font-weight: bold;
-		font-size: 11px;
-		text-transform: uppercase;
-		letter-spacing: 0.05em;
-		color: var(--sc-color-gray-600);
-		border: none !important;
-	`;
+const headerStyle = {
+	borderBottom: '1px solid var(--sc-color-gray-300)',
+	borderTop: '1px solid var(--sc-color-gray-300)',
+	padding: '0.5em 0',
+	fontWeight: 'bold',
+	fontSize: '11px',
+	textTransform: 'uppercase',
+	letterSpacing: '0.05em',
+	color: 'var(--sc-color-gray-600)',
+	border: 'none',
+};
 
+export default ({ choices, onUpdate, onRemove, onAddProduct, description }) => {
 	const renderTable = () => {
 		return (
-			<table
-				css={css`
-					border-spacing: 0;
-
-					tr td:first-child {
+			<>
+				<style>{`
+					.sc-price-choices-table {
+						border-spacing: 0;
+					}
+					.sc-price-choices-table tr td:first-child {
 						padding-left: 0;
 					}
-					tr td:last-child {
+					.sc-price-choices-table tr td:last-child {
 						padding-right: 0;
 					}
-				`}
-			>
-				<thead>
-					<tr
-						css={css`
-							text-align: left;
-						`}
-					>
-						<th
-							css={css`
-								${headerStyle};
-								width: auto;
-							`}
+				`}</style>
+				<table className="sc-price-choices-table">
+					<thead>
+						<tr
+							style={{
+								textAlign: 'left',
+							}}
 						>
-							{__('Product')}
-						</th>
-						<th
-							css={css`
-								${headerStyle};
-								max-width: 70px;
-								width: 70px;
-							`}
-						>
-							{__('Quantity')}
-						</th>
-						<th
-							css={css`
-								${headerStyle};
-								text-align: right;
-							`}
-						>
-							{__('Total')}
-						</th>
-						<th
-							css={css`
-								${headerStyle};
-								width: 0.1%;
-								white-space: nowrap;
-							`}
-						></th>
-					</tr>
-				</thead>
+							<th
+								style={{
+									...headerStyle,
+									width: 'auto',
+								}}
+							>
+								{__('Product')}
+							</th>
+							<th
+								style={{
+									...headerStyle,
+									maxWidth: '70px',
+									width: '70px',
+								}}
+							>
+								{__('Quantity')}
+							</th>
+							<th
+								style={{
+									...headerStyle,
+									textAlign: 'right',
+								}}
+							>
+								{__('Total')}
+							</th>
+							<th
+								style={{
+									...headerStyle,
+									width: '0.1%',
+									whiteSpace: 'nowrap',
+								}}
+							></th>
+						</tr>
+					</thead>
 
-				<tbody>
-					{(choices || []).map((choice, index) => {
-						return (
-							<PriceChoice
-								key={index}
-								choice={choice}
-								onSelect={({price_id}) => onUpdate({ id: price_id }, index)}
-								onRemove={() => onRemove(index)}
-								onUpdate={(data) => onUpdate(data, index)}
-							/>
-						);
-					})}
-				</tbody>
-			</table>
+					<tbody>
+						{(choices || []).map((choice, index) => {
+							return (
+								<PriceChoice
+									key={index}
+									choice={choice}
+									onSelect={({price_id}) => onUpdate({ id: price_id }, index)}
+									onRemove={() => onRemove(index)}
+									onUpdate={(data) => onUpdate(data, index)}
+								/>
+							);
+						})}
+					</tbody>
+				</table>
+			</>
 		);
 	};
 
 	const renderEmpty = () => {
 		return (
 			<div
-				css={css`
-					color: var(--sc-color-gray-500);
-				`}
+				style={{
+					color: 'var(--sc-color-gray-500)',
+				}}
 			>
 				{description
 					? description
@@ -110,19 +109,19 @@ export default ({ choices, onUpdate, onRemove, onAddProduct, description }) => {
 
 	return (
 		<div
-			css={css`
-				display: grid;
-				gap: 1em;
-			`}
+			style={{
+				display: 'grid',
+				gap: '1em',
+			}}
 		>
 			{choices && choices.length > 0 ? renderTable() : renderEmpty()}
 
 			<div
-				css={css`
-					display: flex;
-					gap: 0.5em;
-					align-items: center;
-				`}
+				style={{
+					display: 'flex',
+					gap: '0.5em',
+					alignItems: 'center',
+				}}
 			>
 				<Button isSecondary onClick={onAddProduct}>
 					{__('Add Product', 'surecart')}

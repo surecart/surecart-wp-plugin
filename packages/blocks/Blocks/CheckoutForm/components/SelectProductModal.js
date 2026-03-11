@@ -1,11 +1,8 @@
-/** @jsx jsx */
-
 import apiFetch from '@wordpress/api-fetch';
 import { __ } from '@wordpress/i18n';
 import { useState, useEffect } from '@wordpress/element';
 import { addQueryArgs } from '@wordpress/url';
 import { Button, Modal } from '@wordpress/components';
-import { css, jsx } from '@emotion/core';
 
 import throttle from 'lodash/throttle';
 
@@ -85,19 +82,19 @@ export default ({ onRequestClose, onChoose }) => {
 
 	return (
 		<Modal
-			css={css`
-				overflow: visible !important;
-			`}
+			style={{
+				overflow: 'visible',
+			}}
 			shouldCloseOnClickOutside={false}
 			title={__('Add Product', 'surecart')}
 			onRequestClose={onRequestClose}
 		>
 			<div
-				css={css`
-					display: flex;
-					flex-direction: column;
-					gap: 1em;
-				`}
+				style={{
+					display: 'flex',
+					flexDirection: 'column',
+					gap: '1em',
+				}}
 			>
 				<SelectProduct onSelect={(product) => setProduct(product)} />
 				{/* <ScSelect
@@ -129,11 +126,11 @@ export default ({ onRequestClose, onChoose }) => {
 				/> */}
 
 				<div
-					css={css`
-						display: flex;
-						align-items: center;
-						gap: 0.5em;
-					`}
+					style={{
+						display: 'flex',
+						alignItems: 'center',
+						gap: '0.5em',
+					}}
 				>
 					<Button isPrimary isBusy={busy} onClick={addProduct}>
 						{__('Add Product', 'surecart')}

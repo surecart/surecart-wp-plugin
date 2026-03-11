@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import { PanelBody, PanelRow, TextControl } from '@wordpress/components';
 import {
@@ -21,15 +19,16 @@ export default ({ attributes, setAttributes, context }) => {
 	const spacingProps = useSpacingProps(attributes);
 
 	const blockProps = useBlockProps({
-		css: css`
-			sc-product-donation-choices.wp-block {
-				margin: 0;
-			}
-		`,
+		className: 'sc-donation-recurring-prices-editor',
 	});
 
 	return (
 		<>
+			<style>{`
+				.sc-donation-recurring-prices-editor sc-product-donation-choices.wp-block {
+					margin: 0;
+				}
+			`}</style>
 			<InspectorControls>
 				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>

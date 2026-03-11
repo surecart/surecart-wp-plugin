@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
 import { ScTag } from '@surecart/components-react';
 import {
 	Button,
@@ -54,12 +52,12 @@ export default ({ attributes, setAttributes, clientId, isSelected }) => {
 	}, []);
 
 	const blockProps = useBlockProps({
-		css: css`
-			position: relative;
-			font-size: 16px;
-			font-family: var(--sc-font-sans);
-			outline: 1px dashed var(--wp-admin-theme-color);
-		`,
+		style: {
+			position: 'relative',
+			fontSize: '16px',
+			fontFamily: 'var(--sc-font-sans)',
+			outline: '1px dashed var(--wp-admin-theme-color)',
+		},
 	});
 
 	const children = useSelect(
@@ -74,20 +72,12 @@ export default ({ attributes, setAttributes, clientId, isSelected }) => {
 
 	const innerBlocksProps = useInnerBlocksProps(
 		{
-			css: css`
-				flex: 1 1 auto;
-				width: 100%;
-				margin: auto;
-				box-shadow: 0 1px 2px #0d131e1a;
-
-				.block-list-appender {
-					position: relative;
-				}
-
-				> .wp-block:not(:last-child) {
-					margin: 0 !important;
-				}
-			`,
+			style: {
+				flex: '1 1 auto',
+				width: '100%',
+				margin: 'auto',
+				boxShadow: '0 1px 2px #0d131e1a',
+			},
 		},
 		{
 			renderAppender:
@@ -144,16 +134,16 @@ export default ({ attributes, setAttributes, clientId, isSelected }) => {
 				className="sc-conditional-form__tag"
 				type="info"
 				size="small"
-				css={css`
-					z-index: 10;
-					font-size: 14px;
-					position: absolute;
-					right: -1px;
-					top: -18px;
-					--sc-color-info-700: white;
-					--sc-color-info-100: var(--wp-admin-theme-color);
-					--sc-input-border-radius-small: 0;
-				`}
+				style={{
+					zIndex: 10,
+					fontSize: '14px',
+					position: 'absolute',
+					right: '-1px',
+					top: '-18px',
+					'--sc-color-info-700': 'white',
+					'--sc-color-info-100': 'var(--wp-admin-theme-color)',
+					'--sc-input-border-radius-small': '0',
+				}}
 			>
 				{__('Conditional', 'surecart')}
 			</ScTag>
@@ -196,11 +186,10 @@ export default ({ attributes, setAttributes, clientId, isSelected }) => {
 					title={__('Configure Conditions', 'surecart')}
 					onRequestClose={() => setEditRules(false)}
 					shouldCloseOnClickOutside={false}
-					className="sc-conditional-form-modal"
 					style={{
-						width: '75% !important',
-						maxWidth: '650px !important',
-						maxHeight: '80% !important',
+						width: '75%',
+						maxWidth: '650px',
+						maxHeight: '80%',
 						'--sc-color-primary-text': '#fff',
 					}}
 				>
