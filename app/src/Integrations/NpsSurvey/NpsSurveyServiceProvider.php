@@ -70,15 +70,15 @@ class NpsSurveyServiceProvider implements ServiceProviderInterface {
 			$nps_survey_init    = $path;
 		}
 
-		// add_action(
-		// 	'admin_init',
-		// 	function () {
-		// 		global $nps_survey_init;
-		// 		if ( $nps_survey_init && is_file( $nps_survey_init ) ) {
-		// 			include_once $nps_survey_init;
-		// 		}
-		// 	},
-		// 	999
-		// );
+		add_action(
+			'admin_init',
+			function () {
+				global $nps_survey_init;
+				if ( $nps_survey_init && is_file( $nps_survey_init ) ) {
+					include_once $nps_survey_init;
+				}
+			},
+			999
+		);
 	}
 }
