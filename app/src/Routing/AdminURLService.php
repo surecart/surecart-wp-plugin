@@ -3,7 +3,7 @@
 namespace SureCart\Routing;
 
 /**
- * Generates links for specific amdin urls.
+ * Generates links for specific admin urls.
  */
 class AdminURLService {
 	/**
@@ -180,17 +180,18 @@ class AdminURLService {
 	 * @return string URL for the page.
 	 */
 	public function importResults( $name, $import_ids ) {
-		$import_ids = (array) $import_ids;
+		$import_ids = array_map( 'sanitize_key', (array) $import_ids );
 		$session_id = get_option( 'sc_woo_import_session_id' );
 
 		$query_args = [
 			'action'     => 'import_results',
 			'import_ids' => implode( ',', $import_ids ),
+			'nonce'      => wp_create_nonce( 'sc_import_results' ),
 		];
 
 		// Add session_id for skipped products lookup.
 		if ( $session_id ) {
-			$query_args['session_id'] = $session_id;
+			$query_args['session_id'] = sanitize_key( $session_id );
 		}
 
 		return esc_url( add_query_arg( $query_args, $this->index( $name ) ) );
@@ -209,7 +210,8 @@ class AdminURLService {
 			add_query_arg(
 				[
 					'action'     => 'import_results',
-					'session_id' => $session_id,
+					'session_id' => sanitize_key( $session_id ),
+					'nonce'      => wp_create_nonce( 'sc_import_results' ),
 				],
 				$this->index( $name )
 			)

@@ -99,8 +99,8 @@
 
 				<div class="import-results-summary">
 					<?php if ( ! empty( $results_capped ) ) : ?>
-						<p style="color: #92400e; background: #fef3c7; padding: 8px 12px; border-radius: 4px; margin: 0 0 0.5em;">
-							<?php esc_html_e( 'Note: Only the first 5,000 results are shown below. Your import may have additional rows not displayed here.', 'surecart' ); ?>
+						<p role="alert" style="color: #92400e; background: #fef3c7; padding: 8px 12px; border-radius: 4px; margin: 0 0 0.5em;">
+							&#9888; <?php esc_html_e( 'Note: Only the first 5,000 results are shown below. Your import may have additional rows not displayed here.', 'surecart' ); ?>
 						</p>
 					<?php endif; ?>
 
@@ -138,10 +138,11 @@
 						</p>
 					</div>
 					<table class="import-results-table">
+						<caption class="screen-reader-text"><?php esc_html_e( 'Failed product imports', 'surecart' ); ?></caption>
 						<thead>
 							<tr>
-								<th><?php esc_html_e( 'Product Name', 'surecart' ); ?></th>
-								<th><?php esc_html_e( 'Reason', 'surecart' ); ?></th>
+								<th scope="col"><?php esc_html_e( 'Product Name', 'surecart' ); ?></th>
+								<th scope="col"><?php esc_html_e( 'Reason', 'surecart' ); ?></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -178,11 +179,12 @@
 							<?php esc_html_e( 'The following products were not imported because they are unsupported product types or could not be processed.', 'surecart' ); ?>
 						</p>
 						<table class="import-results-table">
+							<caption class="screen-reader-text"><?php esc_html_e( 'Skipped products', 'surecart' ); ?></caption>
 							<thead>
 								<tr>
-									<th><?php esc_html_e( 'Product Name', 'surecart' ); ?></th>
-									<th><?php esc_html_e( 'Type', 'surecart' ); ?></th>
-									<th><?php esc_html_e( 'Reason', 'surecart' ); ?></th>
+									<th scope="col"><?php esc_html_e( 'Product Name', 'surecart' ); ?></th>
+									<th scope="col"><?php esc_html_e( 'Type', 'surecart' ); ?></th>
+									<th scope="col"><?php esc_html_e( 'Reason', 'surecart' ); ?></th>
 								</tr>
 							</thead>
 							<tbody>
@@ -200,7 +202,8 @@
 
 				<a href="https://surecart.com/docs" target="_blank" rel="noopener noreferrer" class="import-results-docs-link">
 					<?php esc_html_e( 'Go to documentation', 'surecart' ); ?>
-					<sc-icon name="external-link" style="font-size: 14px;"></sc-icon>
+					<span class="screen-reader-text"><?php esc_html_e( '(opens in a new tab)', 'surecart' ); ?></span>
+					<sc-icon name="external-link" style="font-size: 14px;" aria-hidden="true"></sc-icon>
 				</a>
 
 				<div>

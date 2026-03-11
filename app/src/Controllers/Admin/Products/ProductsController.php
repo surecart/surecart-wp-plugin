@@ -339,7 +339,7 @@ class ProductsController extends AdminController {
 			// Fallback: if option was already cleaned up, check URL param (e.g. page refresh).
 			if ( ! $all_skipped_session_id ) {
 				$raw_session_id         = $request->query( 'session_id' );
-				$all_skipped_session_id = $raw_session_id ? sanitize_key( $raw_session_id ) : '';
+				$all_skipped_session_id = $raw_session_id ? substr( sanitize_key( $raw_session_id ), 0, 36 ) : '';
 			}
 
 			if ( $all_skipped_session_id ) {
@@ -379,12 +379,16 @@ class ProductsController extends AdminController {
 			);
 		}
 
-		// Sanitize and split into array.
-		$import_ids = array_filter( array_map( 'sanitize_text_field', explode( ',', $import_ids_raw ) ) );
+		// Sanitize, split into array, and cap at 50 IDs to prevent abuse.
+		$import_ids = array_slice(
+			array_filter( array_map( 'sanitize_key', explode( ',', $import_ids_raw ) ) ),
+			0,
+			50
+		);
 
 		// Parse session_id from query (for skipped products lookup).
 		$raw        = $request->query( 'session_id' );
-		$session_id = $raw ? sanitize_key( $raw ) : '';
+		$session_id = $raw ? substr( sanitize_key( $raw ), 0, 36 ) : '';
 
 		// Fallback: use current session if available (for backward compatibility).
 		if ( ! $session_id ) {

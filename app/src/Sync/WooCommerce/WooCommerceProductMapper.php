@@ -28,13 +28,29 @@ class WooCommerceProductMapper {
 	private $currency_cache = null;
 
 	/**
+	 * Cached WooCommerce weight unit.
+	 *
+	 * @var string|null
+	 */
+	private $weight_unit_cache = null;
+
+	/**
+	 * Cached WooCommerce dimension unit.
+	 *
+	 * @var string|null
+	 */
+	private $dimension_unit_cache = null;
+
+	/**
 	 * Reset all caches.
 	 *
 	 * @return void
 	 */
 	public function resetCaches() {
-		$this->currency_cache    = null;
-		$this->collections_cache = [];
+		$this->currency_cache        = null;
+		$this->weight_unit_cache     = null;
+		$this->dimension_unit_cache  = null;
+		$this->collections_cache     = [];
 	}
 
 	/**
@@ -100,7 +116,7 @@ class WooCommerceProductMapper {
 		$product_import_data            = array_merge( $product_import_data, $this->mapReviewsFields( $product ) );
 		$product_import_data['reviews'] = $this->mapReviews( $product );
 
-		// Media (with bug fix).
+		// Media.
 		$product_import_data['product_medias'] = $this->mapMedia( $product );
 
 		// Metadata (comprehensive WooCommerce data).
@@ -124,7 +140,7 @@ class WooCommerceProductMapper {
 			'slug'         => $product->get_slug(),
 			'featured'     => $product->is_featured(),
 			'status'       => $this->mapStatus( $product ),
-			'description'  => $product->get_description(),
+			'description'  => wp_kses_post( $product->get_description() ),
 			'sku'          => $product->get_sku(),
 			'archived'     => $product->get_status() === 'trash',
 			'recurring'    => $this->isSubscriptionProduct( $product ),
@@ -341,10 +357,13 @@ class WooCommerceProductMapper {
 
 		$currency = $this->getCurrency();
 
-		// Zero-decimal currencies (no cents).
+		// Zero-decimal currencies (no cents). This must be a currency-based check,
+		// not wc_get_price_decimals(), because that function reads the store's display
+		// setting (woocommerce_price_num_decimals option) which a store owner can
+		// misconfigure independently of the actual currency.
 		$zero_decimal = in_array(
 			$currency,
-			[ 'JPY', 'KRW', 'VND', 'CLP', 'PYG', 'BIF', 'DJF', 'GNF', 'ISK', 'KMF', 'XAF', 'XOF', 'XPF' ],
+			[ 'BIF', 'CLP', 'DJF', 'GNF', 'HUF', 'ISK', 'JPY', 'KMF', 'KRW', 'MGA', 'PYG', 'RWF', 'TWD', 'UGX', 'VND', 'VUV', 'XAF', 'XOF', 'XPF' ],
 			true
 		);
 
@@ -364,6 +383,30 @@ class WooCommerceProductMapper {
 			$this->currency_cache = \get_woocommerce_currency();
 		}
 		return $this->currency_cache;
+	}
+
+	/**
+	 * Get cached WooCommerce weight unit.
+	 *
+	 * @return string
+	 */
+	private function getWeightUnit() {
+		if ( null === $this->weight_unit_cache ) {
+			$this->weight_unit_cache = get_option( 'woocommerce_weight_unit', 'lbs' );
+		}
+		return $this->weight_unit_cache;
+	}
+
+	/**
+	 * Get cached WooCommerce dimension unit.
+	 *
+	 * @return string
+	 */
+	private function getDimensionUnit() {
+		if ( null === $this->dimension_unit_cache ) {
+			$this->dimension_unit_cache = get_option( 'woocommerce_dimension_unit', 'in' );
+		}
+		return $this->dimension_unit_cache;
 	}
 
 	/**
@@ -408,61 +451,69 @@ class WooCommerceProductMapper {
 	 */
 	public function getOrCreateCollections( $terms_data ) {
 		$collections = [];
+		$uncached    = [];
 
+		// Step 1: Resolve from cache, collect uncached slugs.
 		foreach ( $terms_data as $slug => $data ) {
-			$wc_term         = $data['term'];
-			$taxonomy_source = $data['source'];
-
-			// Normalize slug for cache key (lowercase, trim).
 			$cache_key = strtolower( trim( $slug ) );
 
+			if ( isset( $this->collections_cache[ $cache_key ] ) ) {
+				$collections[] = $this->collections_cache[ $cache_key ];
+			} else {
+				$uncached[ $cache_key ] = $data;
+			}
+		}
+
+		if ( empty( $uncached ) ) {
+			return $collections;
+		}
+
+		// Step 2: Batch-fetch existing collections from API (single request).
+		$uncached_slugs = array_keys( $uncached );
+		try {
+			$results = \SureCart\Models\ProductCollection::where(
+				[
+					'limit' => min( count( $uncached_slugs ) * 2, 100 ),
+				]
+			)->get();
+
+			if ( ! is_wp_error( $results ) && is_array( $results ) ) {
+				// Build a slug -> collection map from results.
+				foreach ( $results as $result ) {
+					if ( ! empty( $result->slug ) && ! empty( $result->id ) ) {
+						$result_slug = strtolower( trim( $result->slug ) );
+						if ( isset( $uncached[ $result_slug ] ) && ! isset( $this->collections_cache[ $result_slug ] ) ) {
+							$this->collections_cache[ $result_slug ] = $result;
+						}
+					}
+				}
+			}
+		} catch ( \Exception $e ) {
+			error_log( sprintf( 'SureCart WooCommerce Sync: Batch fetch collections failed - %s', $e->getMessage() ) ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+		}
+
+		// Step 3: Resolve newly cached or create missing collections.
+		foreach ( $uncached as $cache_key => $data ) {
 			try {
-				// Check cache first to avoid duplicate API calls.
 				if ( isset( $this->collections_cache[ $cache_key ] ) ) {
 					$collections[] = $this->collections_cache[ $cache_key ];
 					continue;
 				}
 
-				// Find existing ProductCollection by slug using API query, then verify exact match.
-				$results = \SureCart\Models\ProductCollection::where( [ 'query' => $cache_key ] )->get();
-
-				// Handle API errors -- skip this term to avoid creating duplicates.
-				if ( is_wp_error( $results ) ) {
-					continue;
-				}
-
-				// Find exact slug match from search results to avoid fuzzy mismatches.
-				$collection = null;
-				if ( is_array( $results ) ) {
-					foreach ( $results as $result ) {
-						if ( isset( $result->slug ) && $result->slug === $cache_key ) {
-							$collection = $result;
-							break;
-						}
-					}
-				}
-
-				// If collection exists on API, cache and use it.
-				if ( null !== $collection && ! empty( $collection->id ) ) {
-					$this->collections_cache[ $cache_key ] = $collection;
-					$collections[]                         = $collection;
-					continue;
-				}
-
-				// Collection doesn't exist - create it via API.
+				// Collection not found in batch results — create it via API.
+				$wc_term    = $data['term'];
 				$collection = \SureCart\Models\ProductCollection::create(
 					[
 						'name'        => $wc_term->name,
 						'slug'        => $cache_key,
 						'description' => $wc_term->description ?? '',
 						'metadata'    => [
-							'wc_source'  => $taxonomy_source,
+							'wc_source'  => $data['source'],
 							'wc_term_id' => $wc_term->term_id,
 						],
 					]
 				);
 
-				// Check for errors.
 				if ( is_wp_error( $collection ) ) {
 					continue;
 				}
@@ -488,41 +539,62 @@ class WooCommerceProductMapper {
 		$tag_ids      = $product->get_tag_ids();
 		$all_terms    = [];
 
-		// Collect categories.
-		foreach ( $category_ids as $cat_id ) {
-			$category = get_term( $cat_id, 'product_cat' );
-			if ( $category && ! is_wp_error( $category ) ) {
-				// Normalize slug for deduplication (lowercase, trim).
-				$normalized_slug               = strtolower( trim( $category->slug ) );
-				$all_terms[ $normalized_slug ] = [
-					'term'   => $category,
-					'source' => 'product_cat',
-				];
-			}
-		}
-
-		// Collect tags.
-		foreach ( $tag_ids as $tag_id ) {
-			$tag = get_term( $tag_id, 'product_tag' );
-			if ( $tag && ! is_wp_error( $tag ) ) {
-				// Normalize slug for deduplication - if slug exists from category, keep the first source.
-				$normalized_slug = strtolower( trim( $tag->slug ) );
-				if ( ! isset( $all_terms[ $normalized_slug ] ) ) {
+		// Batch-fetch categories to avoid N+1 get_term() calls.
+		if ( ! empty( $category_ids ) ) {
+			$categories = get_terms(
+				[
+					'taxonomy'   => 'product_cat',
+					'include'    => $category_ids,
+					'hide_empty' => false,
+				]
+			);
+			if ( ! is_wp_error( $categories ) ) {
+				foreach ( $categories as $category ) {
+					$normalized_slug               = strtolower( trim( $category->slug ) );
 					$all_terms[ $normalized_slug ] = [
-						'term'   => $tag,
-						'source' => 'product_tag',
+						'term'   => $category,
+						'source' => 'product_cat',
 					];
 				}
 			}
 		}
 
-		// Collect brands (if WC Brands is active).
+		// Batch-fetch tags to avoid N+1 get_term() calls.
+		if ( ! empty( $tag_ids ) ) {
+			$tags = get_terms(
+				[
+					'taxonomy'   => 'product_tag',
+					'include'    => $tag_ids,
+					'hide_empty' => false,
+				]
+			);
+			if ( ! is_wp_error( $tags ) ) {
+				foreach ( $tags as $tag ) {
+					// Normalize slug for deduplication - if slug exists from category, keep the first source.
+					$normalized_slug = strtolower( trim( $tag->slug ) );
+					if ( ! isset( $all_terms[ $normalized_slug ] ) ) {
+						$all_terms[ $normalized_slug ] = [
+							'term'   => $tag,
+							'source' => 'product_tag',
+						];
+					}
+				}
+			}
+		}
+
+		// Batch-fetch brands (if WC Brands is active).
 		if ( taxonomy_exists( 'product_brand' ) ) {
 			$brand_ids = wp_get_post_terms( $product->get_id(), 'product_brand', [ 'fields' => 'ids' ] );
-			if ( ! is_wp_error( $brand_ids ) ) {
-				foreach ( $brand_ids as $brand_id ) {
-					$brand = get_term( $brand_id, 'product_brand' );
-					if ( $brand && ! is_wp_error( $brand ) ) {
+			if ( ! is_wp_error( $brand_ids ) && ! empty( $brand_ids ) ) {
+				$brands = get_terms(
+					[
+						'taxonomy'   => 'product_brand',
+						'include'    => $brand_ids,
+						'hide_empty' => false,
+					]
+				);
+				if ( ! is_wp_error( $brands ) ) {
+					foreach ( $brands as $brand ) {
 						$normalized_slug = strtolower( trim( $brand->slug ) );
 						if ( ! isset( $all_terms[ $normalized_slug ] ) ) {
 							$all_terms[ $normalized_slug ] = [
@@ -650,9 +722,9 @@ class WooCommerceProductMapper {
 			$term_name_cache[ $taxonomy ] = $resolved;
 		}
 
-		// Cache WC unit options before the loop to avoid repeated DB queries.
-		$wc_weight_unit = get_option( 'woocommerce_weight_unit' );
-		$wc_dim_unit    = get_option( 'woocommerce_dimension_unit' );
+		// Use cached WC unit options to avoid repeated DB queries.
+		$wc_weight_unit = $this->getWeightUnit();
+		$wc_dim_unit    = $this->getDimensionUnit();
 		$dim_multiplier = 'yd' === $wc_dim_unit ? 3 : 1;
 
 		foreach ( $variations as $variation ) {
@@ -838,11 +910,11 @@ class WooCommerceProductMapper {
 		$weight = (float) $product->get_weight();
 		if ( $weight > 0 ) {
 			$shipping_fields['weight']      = $weight;
-			$shipping_fields['weight_unit'] = $this->mapWeightUnit( get_option( 'woocommerce_weight_unit' ) );
+			$shipping_fields['weight_unit'] = $this->mapWeightUnit( $this->getWeightUnit() );
 		}
 
 		// Only include dimensions if at least one dimension is set and greater than 0.
-		$wc_dim_unit    = get_option( 'woocommerce_dimension_unit' );
+		$wc_dim_unit    = $this->getDimensionUnit();
 		$dim_multiplier = 'yd' === $wc_dim_unit ? 3 : 1;
 		$length         = (float) $product->get_length() * $dim_multiplier;
 		$width          = (float) $product->get_width() * $dim_multiplier;
@@ -922,7 +994,7 @@ class WooCommerceProductMapper {
 
 			$reviews[] = [
 				'title'    => get_comment_meta( $comment->comment_ID, 'review_title', true ),
-				'body'     => $comment->comment_content,
+				'body'     => wp_kses_post( $comment->comment_content ),
 				'stars'    => $rating ? (float) $rating : null,
 				'metadata' => [
 					'wc_comment_id'     => (int) $comment->comment_ID,
@@ -938,7 +1010,7 @@ class WooCommerceProductMapper {
 	}
 
 	/**
-	 * Map media (with bug fix).
+	 * Map media.
 	 *
 	 * @param \WC_Product $product WooCommerce Product.
 	 * @return array
@@ -996,8 +1068,8 @@ class WooCommerceProductMapper {
 			'wc_cross_sell_ids'      => wp_json_encode( $product->get_cross_sell_ids() ),
 
 			// SEO & Content.
-			'short_description'      => $product->get_short_description(),
-			'purchase_note'          => $product->get_purchase_note(),
+			'short_description'      => wp_kses_post( $product->get_short_description() ),
+			'purchase_note'          => wp_kses_post( $product->get_purchase_note() ),
 
 			// Dates.
 			'wc_date_created'        => $product->get_date_created() ? $product->get_date_created()->format( 'c' ) : null,
@@ -1017,7 +1089,7 @@ class WooCommerceProductMapper {
 			foreach ( $product->get_downloads() as $download ) {
 				$downloads[] = [
 					'name' => $download->get_name(),
-					'file' => $download->get_file(),
+					'file' => esc_url_raw( $download->get_file() ),
 					'id'   => $download->get_id(),
 				];
 			}

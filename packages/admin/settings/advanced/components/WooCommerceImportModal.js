@@ -86,7 +86,7 @@ export default ({ open, onRequestClose }) => {
 		}
 	};
 
-	const hasProducts = count > 0;
+	const hasProducts = count !== null && count > 0;
 
 	return (
 		<ScDialog
@@ -149,6 +149,7 @@ export default ({ open, onRequestClose }) => {
 									type="primary"
 									submit
 									busy={saving}
+									disabled={saving}
 								>
 									{__('Import Products', 'surecart')}
 								</ScButton>
