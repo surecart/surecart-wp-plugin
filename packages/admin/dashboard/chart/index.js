@@ -2,9 +2,7 @@
 import { css, jsx } from '@emotion/core';
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
-import utc from 'dayjs/plugin/utc';
 dayjs.extend(duration);
-dayjs.extend(utc);
 import {
 	ScButton,
 	ScIcon,
@@ -58,12 +56,22 @@ export default ({ liveMode, setLiveMode }) => {
 		}
 
 		// Fetch data for current and previous periods
-		// Calculate the time difference in milliseconds to get exact previous period
-		const diffMs = endDate.diff(startDate, 'millisecond');
-		const previousStart = dayjs(startDate).subtract(diffMs, 'millisecond');
+		// Calculate the day difference to get exact previous period
+		const diffDays = endDate
+			.startOf('day')
+			.diff(startDate.startOf('day'), 'day');
+		const previousStart = startDate
+			.startOf('day')
+			.subtract(diffDays, 'day');
 
-		getOrderStats(startDate.format('YYYY-MM-DD'), endDate.format('YYYY-MM-DD'));
-		getPreviousOrderStats(previousStart.format('YYYY-MM-DD'), startDate.format('YYYY-MM-DD'));
+		getOrderStats(
+			startDate.format('YYYY-MM-DD'),
+			endDate.format('YYYY-MM-DD')
+		);
+		getPreviousOrderStats(
+			previousStart.format('YYYY-MM-DD'),
+			startDate.format('YYYY-MM-DD')
+		);
 	}, [startDate, endDate, reportBy, liveMode]);
 
 	/**
