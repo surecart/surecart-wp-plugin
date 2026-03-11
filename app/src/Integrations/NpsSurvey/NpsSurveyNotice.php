@@ -138,6 +138,12 @@ class NpsSurveyNotice {
 	 * @return void
 	 */
 	public function showNpsNotice(): void {
+		// Early prevent if we're not on a SureCart admin page.
+		$screen = get_current_screen();
+		if ( ! $screen || ! in_array( $screen->id, \SureCart::pages()->getSureCartPageScreenIds(), true ) ) {
+			return;
+		}
+
 		if ( ! class_exists( 'Nps_Survey' ) ) {
 			return;
 		}
