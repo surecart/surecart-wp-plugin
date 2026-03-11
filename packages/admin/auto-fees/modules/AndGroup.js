@@ -265,10 +265,22 @@ export default ({
 						choices={userRoleChoices}
 					/>
 				);
-			case 'uuid':
+			case 'uuid': {
+				const entityName = UUID_ENTITY_MAP[attribute];
+				if (!entityName) {
+					return (
+						<ScInput
+							value={value}
+							onScInput={(e) => setValue(e.target.value)}
+							required
+							placeholder={__('Enter a value', 'surecart')}
+							className={fullWidthClass}
+						/>
+					);
+				}
 				return (
 					<ModelSelector
-						name={UUID_ENTITY_MAP[attribute]}
+						name={entityName}
 						value={value}
 						onSelect={(val) => setValue(val)}
 						placeholder={__('Search...', 'surecart')}
@@ -276,6 +288,7 @@ export default ({
 						className={fullWidthClass}
 					/>
 				);
+			}
 			default:
 				return (
 					<ScInput

@@ -103,6 +103,7 @@ export const ATTRIBUTE_REGISTRY = {
 		wp_user_role: __('WordPress User Role', 'surecart'),
 	},
 
+	// Keep in sync with UUID_ENTITY_MAP below.
 	uuid: {
 		'customer.id': __('Customer ID', 'surecart'),
 		'coupon.id': __('Coupon ID', 'surecart'),
@@ -208,6 +209,7 @@ export const APPLIES_WHILE_CHOICES = [
 
 export const STRING_OPERATORS = ['contains', 'start_with', 'end_with'];
 
+// Keep in sync with ATTRIBUTE_REGISTRY.uuid above.
 export const UUID_ENTITY_MAP = {
 	'customer.id': 'customer',
 	'coupon.id': 'coupon',
