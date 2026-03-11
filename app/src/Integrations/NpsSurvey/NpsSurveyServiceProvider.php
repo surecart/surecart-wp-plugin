@@ -83,12 +83,13 @@ class NpsSurveyServiceProvider implements ServiceProviderInterface {
 			$nps_survey_init    = $path;
 		}
 
-		// Use 'init' with is_admin() guard so the library loads admin-only
-		// but before wp_loaded, which the library needs to register its hooks.
+		// Load at current_screen so the library only initializes on
+		// SureCart admin pages instead of every admin page load.
 		add_action(
-			'init',
+			'current_screen',
 			function () {
-				if ( ! is_admin() ) {
+				$screen = get_current_screen();
+				if ( ! $screen || ! in_array( $screen->id, \SureCart::pages()->getSureCartPageScreenIds(), true ) ) {
 					return;
 				}
 
@@ -96,8 +97,7 @@ class NpsSurveyServiceProvider implements ServiceProviderInterface {
 				if ( $nps_survey_init && is_file( $nps_survey_init ) ) {
 					include_once $nps_survey_init;
 				}
-			},
-			999
+			}
 		);
 	}
 }
