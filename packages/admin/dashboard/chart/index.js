@@ -1,8 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import dayjs from 'dayjs';
-import duration from 'dayjs/plugin/duration';
-dayjs.extend(duration);
 import {
 	ScButton,
 	ScIcon,
@@ -56,21 +54,19 @@ export default ({ liveMode, setLiveMode }) => {
 		}
 
 		// Fetch data for current and previous periods
-		// Calculate the day difference to get exact previous period
-		const diffDays = endDate
-			.startOf('day')
-			.diff(startDate.startOf('day'), 'day');
-		const previousStart = startDate
-			.startOf('day')
-			.subtract(diffDays, 'day');
+		// Normalize to start of day for consistent date-only comparisons
+		const normalizedStart = startDate.startOf('day');
+		const normalizedEnd = endDate.startOf('day');
+		const diffDays = normalizedEnd.diff(normalizedStart, 'day');
+		const previousStart = normalizedStart.subtract(diffDays, 'day');
 
 		getOrderStats(
-			startDate.format('YYYY-MM-DD'),
-			endDate.format('YYYY-MM-DD')
+			normalizedStart.format('YYYY-MM-DD'),
+			normalizedEnd.format('YYYY-MM-DD')
 		);
 		getPreviousOrderStats(
 			previousStart.format('YYYY-MM-DD'),
-			startDate.format('YYYY-MM-DD')
+			normalizedStart.format('YYYY-MM-DD')
 		);
 	}, [startDate, endDate, reportBy, liveMode]);
 
