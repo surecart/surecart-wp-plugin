@@ -39,7 +39,8 @@ class NpsSurveyServiceProvider implements ServiceProviderInterface {
 
 		$this->loadNpsSurveyLibrary();
 
-		$container['surecart.nps.survey.notice']->bootstrap();
+		// Load the NPS survey notice on all admin pages, but it will only display on SureCart admin pages.
+		\SureCart::resolve( 'surecart.nps.survey.notice' )->bootstrap();
 	}
 
 	/**
@@ -51,8 +52,6 @@ class NpsSurveyServiceProvider implements ServiceProviderInterface {
 		if ( self::$library_loaded ) {
 			return;
 		}
-
-		self::$library_loaded = true;
 
 		$nps_lib_path = SURECART_VENDOR_DIR . '/brainstormforce/nps-survey';
 
@@ -83,21 +82,10 @@ class NpsSurveyServiceProvider implements ServiceProviderInterface {
 			$nps_survey_init    = $path;
 		}
 
-		// Use 'init' with is_admin() guard so the library loads admin-only
-		// but before wp_loaded, which the library needs to register its hooks.
-		add_action(
-			'init',
-			function () {
-				if ( ! is_admin() ) {
-					return;
-				}
+		if ( $nps_survey_init && is_file( $nps_survey_init ) ) {
+			include_once $nps_survey_init;
+		}
 
-				global $nps_survey_init;
-				if ( $nps_survey_init && is_file( $nps_survey_init ) ) {
-					include_once $nps_survey_init;
-				}
-			},
-			999
-		);
+		self::$library_loaded = true;
 	}
 }
