@@ -56,10 +56,10 @@ export const ATTRIBUTE_REGISTRY = {
 		),
 
 		'product.product_group.metadata': __(
-			'Product Group Metadata',
+			'Upgrade Group Metadata',
 			'surecart'
 		),
-		'product.product_group.name': __('Product Group Name', 'surecart'),
+		'product.product_group.name': __('Upgrade Group Name', 'surecart'),
 
 		'selected_shipping_method.name': __(
 			'Selected Shipping Method Name',
@@ -106,14 +106,14 @@ export const ATTRIBUTE_REGISTRY = {
 	// Keep in sync with UUID_ENTITY_MAP below.
 	uuid: {
 		'customer.id': __('Customer ID', 'surecart'),
-		'coupon.id': __('Coupon ID', 'surecart'),
-		'promotion.id': __('Promotion ID', 'surecart'),
-		'price.id': __('Price ID', 'surecart'),
-		'product.id': __('Product ID', 'surecart'),
-		'product.product_collections.id': __('Product Collection ID', 'surecart'),
-		'product.product_group.id': __('Product Group ID', 'surecart'),
-		'checkout.coupon.id': __('Checkout Coupon ID', 'surecart'),
-		'checkout.promotion.id': __('Checkout Promotion ID', 'surecart'),
+		'coupon.id': __('Coupon', 'surecart'),
+		'promotion.id': __('Promotion', 'surecart'),
+		'price.id': __('Price', 'surecart'),
+		'product.id': __('Product', 'surecart'),
+		'product.product_collections.id': __('Product Collection', 'surecart'),
+		'product.product_group.id': __('Upgrade Group', 'surecart'),
+		'checkout.coupon.id': __('Checkout Coupon', 'surecart'),
+		'checkout.promotion.id': __('Checkout Promotion', 'surecart'),
 	},
 };
 

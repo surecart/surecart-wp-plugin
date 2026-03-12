@@ -29,6 +29,7 @@ import {
 	UUID_ENTITY_MAP,
 } from '../utils/constants';
 import ModelSelector from '../../components/ModelSelector';
+import PriceSelector from '../../components/PriceSelector';
 
 const SEARCH_RESULT_LIMIT = 8;
 
@@ -54,7 +55,6 @@ export default ({
 		'rule-schema',
 		target
 	);
-
 	// Initialize from existing leaf if available
 	useEffect(() => {
 		if (leaf) {
@@ -140,10 +140,17 @@ export default ({
 					label: supportedValuesLabels?.[val] || formatLabel(val),
 					value: val,
 				}))}
-        search={(attributeSupportedValues ?? []).length > SEARCH_RESULT_LIMIT}
+				search={
+					(attributeSupportedValues ?? []).length >
+					SEARCH_RESULT_LIMIT
+				}
 				required
 			/>
 		);
+	};
+
+	const ENTITY_DISPLAY = {
+		promotion: (item) => item.code || item.id,
 	};
 
 	const renderValueInput = () => {
@@ -255,8 +262,14 @@ export default ({
 				return (
 					<ScSelect
 						search={userRoleChoices.length > SEARCH_RESULT_LIMIT}
-						searchPlaceholder={__('Search for a user role', 'surecart')}
-            searchPlaceholderValue={__('Search for a user role...', 'surecart')}
+						searchPlaceholder={__(
+							'Search for a user role',
+							'surecart'
+						)}
+						searchPlaceholderValue={__(
+							'Search for a user role...',
+							'surecart'
+						)}
 						value={value}
 						onScChange={(e) => {
 							setValue(e.target.value);
@@ -278,11 +291,25 @@ export default ({
 						/>
 					);
 				}
+				if (entityName === 'price') {
+					return (
+						<PriceSelector
+							value={value}
+							onSelect={({ price_id }) => setValue(price_id)}
+							required
+							className={fullWidthClass}
+							includeVariants={false}
+							ad_hoc={false}
+							requestQuery={{ archived: false }}
+						/>
+					);
+				}
 				return (
 					<ModelSelector
 						name={entityName}
 						value={value}
 						onSelect={(val) => setValue(val)}
+						display={ENTITY_DISPLAY[entityName]}
 						placeholder={__('Search...', 'surecart')}
 						required
 						className={fullWidthClass}
