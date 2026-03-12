@@ -114,16 +114,18 @@ const CheckoutPreview = ({ mode = 'light', brandColor = '6366f1', logoUrl }) => 
 					css={css`
 						background: ${cardBg};
 						border-radius: 4px;
-						padding: 6px 8px;
-						height: 20px;
+						padding: 0 8px;
+						height: 12px;
+						display: flex;
+						align-items: center;
 						border: 1px solid ${isLight ? '#e5e7eb' : '#374151'};
 					`}
 				>
 					<div
 						css={css`
 							width: 40%;
-							height: 4px;
-							border-radius: 2px;
+							height: 2px;
+							border-radius: 1px;
 							background: ${mutedColor};
 							opacity: 0.5;
 						`}
@@ -133,16 +135,18 @@ const CheckoutPreview = ({ mode = 'light', brandColor = '6366f1', logoUrl }) => 
 					css={css`
 						background: ${cardBg};
 						border-radius: 4px;
-						padding: 6px 8px;
-						height: 20px;
+						padding: 0 8px;
+						height: 12px;
+						display: flex;
+						align-items: center;
 						border: 1px solid ${isLight ? '#e5e7eb' : '#374151'};
 					`}
 				>
 					<div
 						css={css`
 							width: 60%;
-							height: 4px;
-							border-radius: 2px;
+							height: 2px;
+							border-radius: 1px;
 							background: ${mutedColor};
 							opacity: 0.5;
 						`}

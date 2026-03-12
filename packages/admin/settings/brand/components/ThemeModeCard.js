@@ -90,10 +90,10 @@ const ThemeModeCard = ({
 			{/* Card body */}
 			<div
 				css={css`
-					padding: 1.2em;
+					padding: 1em;
 					display: flex;
 					flex-direction: column;
-					gap: 1.2em;
+					gap: 0.8em;
 				`}
 			>
 				{/* Checkout preview */}

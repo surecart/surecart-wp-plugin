@@ -50,7 +50,7 @@ export default ({
 						alt="logo"
 						css={css`
 							width: 100%;
-							max-height: 8rem;
+							max-height: 5rem;
 							object-fit: contain;
 							height: auto;
 							display: block;
@@ -61,8 +61,8 @@ export default ({
 					<div
 						css={css`
 							position: absolute;
-							top: 4px;
-							right: 4px;
+							top: 6px;
+							right: 6px;
 							display: flex;
 							gap: 4px;
 						`}
@@ -169,7 +169,7 @@ export default ({
 						? 'var(--sc-color-gray-900, #1a1a2e)'
 						: 'var(--sc-color-gray-200, #e5e7eb)'};
 					border-radius: var(--sc-input-border-radius-large, 8px);
-					padding: 2em;
+					padding: 1em;
 				`}
 			>
 				{renderContent()}
