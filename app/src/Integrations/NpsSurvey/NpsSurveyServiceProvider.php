@@ -9,13 +9,6 @@ use SureCartCore\ServiceProviders\ServiceProviderInterface;
  */
 class NpsSurveyServiceProvider implements ServiceProviderInterface {
 	/**
-	 * Whether the NPS survey library has already been loaded.
-	 *
-	 * @var bool
-	 */
-	private static bool $library_loaded = false;
-
-	/**
 	 * Register all dependencies in the IoC container.
 	 *
 	 * @param \Pimple\Container $container Service container.
@@ -37,9 +30,23 @@ class NpsSurveyServiceProvider implements ServiceProviderInterface {
 			return;
 		}
 
+		add_action( 'current_screen', [ $this, 'maybeLoadNpsSurvey' ] );
+	}
+
+	/**
+	 * Load the NPS survey library and bootstrap notice on SureCart admin pages.
+	 *
+	 * @return void
+	 */
+	public function maybeLoadNpsSurvey(): void {
+		$screen = get_current_screen();
+		if ( ! $screen || ! in_array( $screen->id, \SureCart::pages()->getSureCartPageScreenIds(), true ) ) {
+			return;
+		}
+
 		$this->loadNpsSurveyLibrary();
 
-		$container['surecart.nps.survey.notice']->bootstrap();
+		\SureCart::resolve( 'surecart.nps.survey.notice' )->bootstrap();
 	}
 
 	/**
@@ -48,12 +55,6 @@ class NpsSurveyServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	private function loadNpsSurveyLibrary(): void {
-		if ( self::$library_loaded ) {
-			return;
-		}
-
-		self::$library_loaded = true;
-
 		$nps_lib_path = SURECART_VENDOR_DIR . '/brainstormforce/nps-survey';
 
 		$file = realpath( $nps_lib_path . '/version.json' );
@@ -83,21 +84,8 @@ class NpsSurveyServiceProvider implements ServiceProviderInterface {
 			$nps_survey_init    = $path;
 		}
 
-		// Load at current_screen so the library only initializes on
-		// SureCart admin pages instead of every admin page load.
-		add_action(
-			'current_screen',
-			function () {
-				$screen = get_current_screen();
-				if ( ! $screen || ! in_array( $screen->id, \SureCart::pages()->getSureCartPageScreenIds(), true ) ) {
-					return;
-				}
-
-				global $nps_survey_init;
-				if ( $nps_survey_init && is_file( $nps_survey_init ) ) {
-					include_once $nps_survey_init;
-				}
-			}
-		);
+		if ( $nps_survey_init && is_file( $nps_survey_init ) ) {
+			include_once $nps_survey_init;
+		}
 	}
 }

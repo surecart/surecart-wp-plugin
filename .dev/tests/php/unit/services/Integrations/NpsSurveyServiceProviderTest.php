@@ -25,11 +25,6 @@ class NpsSurveyServiceProviderTest extends SureCartUnitTestCase {
 		);
 
 		$this->provider = new NpsSurveyServiceProvider();
-
-		// Reset the static flag between tests.
-		$ref = new \ReflectionProperty( NpsSurveyServiceProvider::class, 'library_loaded' );
-		$ref->setAccessible( true );
-		$ref->setValue( null, false );
 	}
 
 	public function test_register_adds_nps_survey_notice_to_container(): void {
@@ -46,14 +41,13 @@ class NpsSurveyServiceProviderTest extends SureCartUnitTestCase {
 
 		$container['surecart.account'] = (object) [ 'is_connected' => false ];
 
-		// Should not throw or call bootstrap on the notice.
 		$this->provider->bootstrap( $container );
 
-		// Verify no hooks were added by the notice.
-		$this->assertFalse( has_action( 'admin_footer', [ $container['surecart.nps.survey.notice'], 'showNpsNotice' ] ) );
+		// Should not register the current_screen hook.
+		$this->assertFalse( has_action( 'current_screen', [ $this->provider, 'maybeLoadNpsSurvey' ] ) );
 	}
 
-	public function test_bootstrap_registers_hooks_when_connected(): void {
+	public function test_bootstrap_registers_current_screen_hook_when_connected(): void {
 		$container = \SureCart::container();
 		$this->provider->register( $container );
 
@@ -61,27 +55,27 @@ class NpsSurveyServiceProviderTest extends SureCartUnitTestCase {
 
 		$this->provider->bootstrap( $container );
 
-		$this->assertNotFalse( has_action( 'admin_footer', [ $container['surecart.nps.survey.notice'], 'showNpsNotice' ] ) );
-		$this->assertNotFalse( has_filter( 'nps_survey_post_data', [ $container['surecart.nps.survey.notice'], 'getNpsSurveyPostData' ] ) );
-		$this->assertNotFalse( has_filter( 'nps_survey_api_endpoint', [ $container['surecart.nps.survey.notice'], 'getNpsSurveyApiEndpoint' ] ) );
-		$this->assertNotFalse( has_filter( 'nps_survey_should_skip_status_update', [ $container['surecart.nps.survey.notice'], 'handleStatusUpdate' ] ) );
+		$this->assertNotFalse( has_action( 'current_screen', [ $this->provider, 'maybeLoadNpsSurvey' ] ) );
 	}
 
-	public function test_load_nps_survey_library_only_runs_once(): void {
+	public function test_maybe_load_nps_survey_skips_non_surecart_screens(): void {
 		$container = \SureCart::container();
 		$this->provider->register( $container );
 
-		$container['surecart.account'] = (object) [ 'is_connected' => true ];
+		// Mock the pages service to return SureCart screen IDs.
+		$page_service = \Mockery::mock( \SureCart\WordPress\Pages\PageService::class );
+		$page_service->shouldReceive( 'getSureCartPageScreenIds' )->andReturn( [ 'toplevel_page_sc-dashboard' ] );
+		\SureCart::alias( 'pages', function () use ( $page_service ) {
+			return $page_service;
+		} );
 
-		// Call bootstrap twice.
-		$this->provider->bootstrap( $container );
-		$this->provider->bootstrap( $container );
+		// Mock a non-SureCart screen.
+		set_current_screen( 'dashboard' );
 
-		// The admin_init action from loadNpsSurveyLibrary should only be registered once.
-		// Count the admin_footer registrations from notice->bootstrap() — called twice.
-		// But the static flag in loadNpsSurveyLibrary prevents duplicate admin_init actions.
-		$ref = new \ReflectionProperty( NpsSurveyServiceProvider::class, 'library_loaded' );
-		$ref->setAccessible( true );
-		$this->assertTrue( $ref->getValue() );
+		$this->provider->maybeLoadNpsSurvey();
+
+		// Notice hooks should not be registered.
+		$notice = $container['surecart.nps.survey.notice'];
+		$this->assertFalse( has_action( 'admin_footer', [ $notice, 'showNpsNotice' ] ) );
 	}
 }
