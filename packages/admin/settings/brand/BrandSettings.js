@@ -1,11 +1,7 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { useState } from '@wordpress/element';
-import { useEntityProp } from '@wordpress/core-data';
 import {
-	ScFormControl,
-	ScInput,
-	ScSelect,
 	ScSwitch,
 	ScUpgradeRequired,
 	ScPremiumTag,
@@ -13,26 +9,19 @@ import {
 import SettingsTemplate from '../SettingsTemplate';
 import SettingsBox from '../SettingsBox';
 import { __ } from '@wordpress/i18n';
-import ColorPopup from '../../../blocks/components/ColorPopup';
 import Error from '../../components/Error';
 import useSave from '../UseSave';
-import Logo from './Logo';
 import { store as coreStore } from '@wordpress/core-data';
 import { useDispatch, useSelect } from '@wordpress/data';
 import useEntity from '../../hooks/useEntity';
 import CartSettings from './components/CartSettings';
+import ThemeModeCard from './components/ThemeModeCard';
 
 export default () => {
 	const [error, setError] = useState(null);
 	const { save } = useSave();
 
 	const { editEntityRecord } = useDispatch(coreStore);
-
-	const [scThemeData, setScThemeData] = useEntityProp(
-		'root',
-		'site',
-		'surecart_theme'
-	);
 
 	/** Edit Item */
 	const editItem = (data) =>
@@ -76,6 +65,8 @@ export default () => {
 		}
 	};
 
+	const activeTheme = item?.theme || 'light';
+
 	return (
 		<SettingsTemplate
 			title={__('Design & Branding', 'surecart')}
@@ -96,120 +87,95 @@ export default () => {
 				)}
 				loading={!hasLoadedItem}
 			>
+				{/* Theme heading */}
 				<div
 					css={css`
-						gap: 2em;
-						display: grid;
-						align-items: flex-start;
-						grid-template-columns: repeat(2, minmax(0, 1fr));
+						margin-bottom: 0.25em;
 					`}
 				>
-					<ScFormControl
-						label={__('Brand Color', 'surecart')}
-						help={__(
-							'This color will be used for the main button color, links, and various UI elements.',
+					<span
+						css={css`
+							font-weight: 600;
+							font-size: 14px;
+						`}
+					>
+						{__('Theme', 'surecart')}
+					</span>
+					<p
+						css={css`
+							margin: 0.25em 0 0;
+							font-size: 13px;
+							color: var(--sc-color-gray-500, #6b7280);
+						`}
+					>
+						{__(
+							'This applies to your WordPress site, emails and affiliate portal.',
 							'surecart'
 						)}
-					>
-						<div
-							css={css`
-								display: flex;
-								align-items: center;
-								gap: 0.5em;
-							`}
-						>
-							<ColorPopup
-								color={`#${item?.color}`}
-								setColor={(color) => {
-									editItem({
-										color: color?.hex.replace('#', ''),
-									});
-								}}
-							/>
-							<ScInput
-								css={css`
-									flex: 1;
-								`}
-								value={item?.color}
-								onScInput={(e) =>
-									editItem({
-										color: e.target.value.replace('#', ''),
-									})
-								}
-							>
-								<div slot="prefix" style={{ opacity: '0.5' }}>
-									#
-								</div>
-							</ScInput>
-						</div>
-					</ScFormControl>
-					<Logo
-						label={__('Logo', 'surecart')}
+					</p>
+				</div>
+
+				{/* Two mode cards side by side */}
+				<div
+					css={css`
+						display: grid;
+						gap: 1.5em;
+						grid-template-columns: repeat(2, minmax(0, 1fr));
+						@media (max-width: 768px) {
+							grid-template-columns: 1fr;
+						}
+					`}
+				>
+					<ThemeModeCard
+						mode="light"
+						isActive={activeTheme === 'light'}
 						brand={item}
 						editBrand={editItem}
+						colorKey="color"
+						logoKey="logo"
+					/>
+					<ThemeModeCard
+						mode="dark"
+						isActive={activeTheme === 'dark'}
+						brand={item}
+						editBrand={editItem}
+						colorKey="dark_color"
+						logoKey="dark_logo"
 					/>
 				</div>
-				<div
-					css={css`
-						gap: 2em;
-						display: grid;
-					`}
+
+				<ScUpgradeRequired
+					required={
+						!scData?.entitlements?.optional_upfront_payment_method
+					}
 				>
-					<ScSelect
-						label={__('Select Theme (Beta)', 'surecart')}
-						placeholder={__('Select Theme', 'surecart')}
-						value={scThemeData}
-						onScChange={(e) => setScThemeData(e.target.value)}
-						help={__(
-							'Choose "Dark" if your theme already has a dark background.',
-							'surecart'
-						)}
-						unselect={false}
-						choices={[
-							{
-								label: __('Light', 'surecart'),
-								value: 'light',
-							},
-							{
-								label: __('Dark', 'surecart'),
-								value: 'dark',
-							},
-						]}
-					/>
-					<ScUpgradeRequired
-						required={
-							!scData?.entitlements
-								?.optional_upfront_payment_method
+					<ScSwitch
+						checked={
+							scData?.entitlements?.optional_powered_by
+								? !item?.powered_by_enabled
+								: false
+						}
+						onScChange={(e) =>
+							editItem({
+								powered_by_enabled: scData?.entitlements
+									?.optional_powered_by
+									? !e.target.checked
+									: true,
+							})
 						}
 					>
-						<ScSwitch
-							checked={
-								scData?.entitlements?.optional_powered_by
-									? !item?.powered_by_enabled
-									: false
-							}
-							onScChange={(e) =>
-								editItem({
-									powered_by_enabled: scData?.entitlements
-										?.optional_powered_by
-										? !e.target.checked
-										: true,
-								})
-							}
-						>
-							{__('Remove SureCart Branding', 'surecart')}{' '}
-							{!scData?.entitlements?.optional_powered_by && (
-								<ScPremiumTag />
+						{__('Remove SureCart Branding', 'surecart')}{' '}
+						{!scData?.entitlements?.optional_powered_by && (
+							<ScPremiumTag />
+						)}
+						<span slot="description">
+							{__(
+								'Remove "Powered By SureCart" in the footer of emails and receipts/invoices.',
+								'surecart'
 							)}
-							<span slot="description">
-								{__(
-									'Remove "Powered By SureCart" in the footer of emails and receipts/invoices.',
-									'surecart'
-								)}
-							</span>
-						</ScSwitch>
-					</ScUpgradeRequired>
-				</div>
+						</span>
+					</ScSwitch>
+				</ScUpgradeRequired>
 			</SettingsBox>
 
 			<SettingsBox
