@@ -43,11 +43,11 @@ class NpsSurveyServiceProviderTest extends SureCartUnitTestCase {
 
 		$this->provider->bootstrap( $container );
 
-		// Should not register the current_screen hook.
-		$this->assertFalse( has_action( 'current_screen', [ $this->provider, 'maybeLoadNpsSurvey' ] ) );
+		// Should not register any hooks.
+		$this->assertFalse( has_action( 'current_screen', [ $this->provider, 'maybeShowNpsSurvey' ] ) );
 	}
 
-	public function test_bootstrap_registers_current_screen_hook_when_connected(): void {
+	public function test_bootstrap_registers_hooks_when_connected(): void {
 		$container = \SureCart::container();
 		$this->provider->register( $container );
 
@@ -55,27 +55,7 @@ class NpsSurveyServiceProviderTest extends SureCartUnitTestCase {
 
 		$this->provider->bootstrap( $container );
 
-		$this->assertNotFalse( has_action( 'current_screen', [ $this->provider, 'maybeLoadNpsSurvey' ] ) );
-	}
-
-	public function test_maybe_load_nps_survey_skips_non_surecart_screens(): void {
-		$container = \SureCart::container();
-		$this->provider->register( $container );
-
-		// Mock the pages service to return SureCart screen IDs.
-		$page_service = \Mockery::mock( \SureCart\WordPress\Pages\PageService::class );
-		$page_service->shouldReceive( 'getSureCartPageScreenIds' )->andReturn( [ 'toplevel_page_sc-dashboard' ] );
-		\SureCart::alias( 'pages', function () use ( $page_service ) {
-			return $page_service;
-		} );
-
-		// Mock a non-SureCart screen.
-		set_current_screen( 'dashboard' );
-
-		$this->provider->maybeLoadNpsSurvey();
-
-		// Notice hooks should not be registered.
-		$notice = $container['surecart.nps.survey.notice'];
-		$this->assertFalse( has_action( 'admin_footer', [ $notice, 'showNpsNotice' ] ) );
+		// Bootstrap defers display to current_screen action.
+		$this->assertNotFalse( has_action( 'current_screen', [ $this->provider, 'maybeShowNpsSurvey' ] ) );
 	}
 }

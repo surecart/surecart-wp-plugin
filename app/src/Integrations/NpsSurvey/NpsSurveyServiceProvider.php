@@ -30,21 +30,22 @@ class NpsSurveyServiceProvider implements ServiceProviderInterface {
 			return;
 		}
 
-		add_action( 'current_screen', [ $this, 'maybeLoadNpsSurvey' ] );
+		$this->loadNpsSurveyLibrary();
+
+		// Defer display hook to current_screen for SureCart pages only.
+		add_action( 'current_screen', [ $this, 'maybeShowNpsSurvey' ] );
 	}
 
 	/**
-	 * Load the NPS survey library and bootstrap notice on SureCart admin pages.
+	 * Register the display hook on SureCart admin pages only.
 	 *
 	 * @return void
 	 */
-	public function maybeLoadNpsSurvey(): void {
+	public function maybeShowNpsSurvey(): void {
 		$screen = get_current_screen();
 		if ( ! $screen || ! in_array( $screen->id, \SureCart::pages()->getSureCartPageScreenIds(), true ) ) {
 			return;
 		}
-
-		$this->loadNpsSurveyLibrary();
 
 		\SureCart::resolve( 'surecart.nps.survey.notice' )->bootstrap();
 	}
