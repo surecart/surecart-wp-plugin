@@ -2,7 +2,7 @@
 import { css, jsx } from '@emotion/core';
 import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
-import { ScFormControl, ScInput } from '@surecart/components-react';
+import { ScFormControl, ScInput, ScIcon } from '@surecart/components-react';
 import ColorPopup from '../../../../blocks/components/ColorPopup';
 import Logo from '../Logo';
 import CheckoutPreview from './CheckoutPreview';
@@ -62,7 +62,7 @@ const ThemeModeCard = ({
 					}
 				`}
 			>
-				<sc-icon name={iconName} style={{ fontSize: '16px' }}></sc-icon>
+				<ScIcon name={iconName} style={{ fontSize: '16px' }}></ScIcon>
 				<span
 					css={css`
 						font-weight: 600;
@@ -71,16 +71,16 @@ const ThemeModeCard = ({
 				>
 					{label}
 				</span>
-				{isActive && (
-					<sc-icon
-						name="check-circle"
-						style={{
-							fontSize: '16px',
-							color: 'var(--sc-color-primary-500, #10b981)',
-							marginLeft: 'auto',
-						}}
-					></sc-icon>
-				)}
+				<ScIcon
+					name={isActive ? 'check-circle' : 'circle'}
+					style={{
+						fontSize: '16px',
+						color: isActive
+							? 'var(--sc-color-primary-500, #10b981)'
+							: 'var(--sc-color-gray-400, #9ca3af)',
+						marginLeft: 'auto',
+					}}
+				></ScIcon>
 			</div>
 
 			{/* Card body */}
