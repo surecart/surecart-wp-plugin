@@ -71,16 +71,16 @@ const ThemeModeCard = ({
 				>
 					{label}
 				</span>
-				{isActive && (
-					<sc-icon
-						name="check-circle"
-						style={{
-							fontSize: '16px',
-							color: 'var(--sc-color-primary-500, #10b981)',
-							marginLeft: 'auto',
-						}}
-					></sc-icon>
-				)}
+				<sc-icon
+					name={isActive ? 'check-circle' : 'circle'}
+					style={{
+						fontSize: '16px',
+						color: isActive
+							? 'var(--sc-color-primary-500, #10b981)'
+							: 'var(--sc-color-gray-400, #9ca3af)',
+						marginLeft: 'auto',
+					}}
+				></sc-icon>
 			</div>
 
 			{/* Card body */}
