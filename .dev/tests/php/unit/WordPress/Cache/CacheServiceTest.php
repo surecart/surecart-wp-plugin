@@ -102,16 +102,16 @@ class CacheServiceTest extends SureCartUnitTestCase {
 	}
 
 	/**
-	 * Test that maybeDisableCacheForRestApi does nothing when cache plugin is not active.
+	 * Test that bootstrap does not register hooks when cache plugin is not active.
 	 */
 	public function test_does_not_disable_cache_when_plugin_not_active() {
-		$_SERVER['REQUEST_URI'] = '/wp-json/surecart/v1/products';
-
 		$service = $this->createW3TCMock();
 		$service->shouldReceive( 'isCachePluginActive' )->andReturn( false );
-		$service->shouldReceive( 'disableCacheWithBrowserHeaders' )->never();
 
-		$service->maybeDisableCacheForRestApi();
+		$service->bootstrap();
+
+		$this->assertFalse( has_action( 'wp', [ $service, 'maybeDisableCache' ] ) );
+		$this->assertFalse( has_action( 'rest_api_init', [ $service, 'maybeDisableCacheForRestApi' ] ) );
 	}
 
 	/**
@@ -305,16 +305,16 @@ class CacheServiceTest extends SureCartUnitTestCase {
 	}
 
 	/**
-	 * Test WP Fastest Cache maybeDisableCacheForRestApi does nothing when plugin not active.
+	 * Test WP Fastest Cache bootstrap does not register hooks when plugin not active.
 	 */
 	public function test_wpfastest_does_not_disable_cache_when_plugin_not_active() {
-		$_SERVER['REQUEST_URI'] = '/wp-json/surecart/v1/products';
-
 		$service = $this->createWpFastestCacheMock();
 		$service->shouldReceive( 'isCachePluginActive' )->andReturn( false );
-		$service->shouldReceive( 'disableCacheWithBrowserHeaders' )->never();
 
-		$service->maybeDisableCacheForRestApi();
+		$service->bootstrap();
+
+		$this->assertFalse( has_action( 'wp', [ $service, 'maybeDisableCache' ] ) );
+		$this->assertFalse( has_action( 'rest_api_init', [ $service, 'maybeDisableCacheForRestApi' ] ) );
 	}
 
 	/**
