@@ -9,6 +9,13 @@ use SureCartCore\ServiceProviders\ServiceProviderInterface;
  */
 class NpsSurveyServiceProvider implements ServiceProviderInterface {
 	/**
+	 * Whether the NPS survey library has already been loaded.
+	 *
+	 * @var bool
+	 */
+	private static bool $library_loaded = false;
+
+	/**
 	 * Register all dependencies in the IoC container.
 	 *
 	 * @param \Pimple\Container $container Service container.
@@ -42,6 +49,10 @@ class NpsSurveyServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	private function loadNpsSurveyLibrary(): void {
+		if ( self::$library_loaded ) {
+			return;
+		}
+
 		$nps_lib_path = SURECART_VENDOR_DIR . '/brainstormforce/nps-survey';
 
 		$file = realpath( $nps_lib_path . '/version.json' );
@@ -74,5 +85,7 @@ class NpsSurveyServiceProvider implements ServiceProviderInterface {
 		if ( $nps_survey_init && is_file( $nps_survey_init ) ) {
 			include_once $nps_survey_init;
 		}
+
+		self::$library_loaded = true;
 	}
 }
