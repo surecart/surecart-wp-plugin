@@ -27,7 +27,9 @@ const ThemeModeCard = ({
 			css={css`
 				border-width: 2px;
 				border-style: solid;
-				border-color: ${isActive ? '#00824C' : 'var(--sc-color-gray-300, #d1d5db)'};
+				border-color: ${isActive
+					? '#00824C'
+					: 'var(--sc-color-gray-300, #d1d5db)'};
 				border-radius: var(--sc-input-border-radius-large, 8px);
 				overflow: hidden;
 				transition: border-color 0.2s ease;
@@ -38,9 +40,7 @@ const ThemeModeCard = ({
 			<div
 				role="button"
 				tabIndex={0}
-				onClick={() =>
-					editBrand({ theme: mode })
-				}
+				onClick={() => editBrand({ theme: mode })}
 				onKeyDown={(e) => {
 					if (e.key === 'Enter' || e.key === ' ') {
 						e.preventDefault();
@@ -54,8 +54,7 @@ const ThemeModeCard = ({
 					padding: 1em 1.2em;
 					cursor: pointer;
 					background: transparent;
-					border-bottom: 1px solid
-						var(--sc-color-gray-200, #e5e7eb);
+					border-bottom: 1px solid var(--sc-color-gray-200, #e5e7eb);
 					&:hover {
 						background: ${isActive
 							? 'transparent'
@@ -63,10 +62,7 @@ const ThemeModeCard = ({
 					}
 				`}
 			>
-				<sc-icon
-					name={iconName}
-					style={{ fontSize: '16px' }}
-				></sc-icon>
+				<sc-icon name={iconName} style={{ fontSize: '16px' }}></sc-icon>
 				<span
 					css={css`
 						font-weight: 600;
@@ -101,6 +97,7 @@ const ThemeModeCard = ({
 					mode={mode}
 					brandColor={brand?.[colorKey]}
 					logoUrl={previewLogoUrl || brand?.[logoKey]?.url}
+					onClick={() => editBrand({ theme: mode })}
 				/>
 
 				{/* Brand Color */}
@@ -127,17 +124,11 @@ const ThemeModeCard = ({
 							value={brand?.[colorKey]}
 							onScInput={(e) =>
 								editBrand({
-									[colorKey]: e.target.value.replace(
-										'#',
-										''
-									),
+									[colorKey]: e.target.value.replace('#', ''),
 								})
 							}
 						>
-							<div
-								slot="prefix"
-								style={{ opacity: '0.5' }}
-							>
+							<div slot="prefix" style={{ opacity: '0.5' }}>
 								#
 							</div>
 						</ScInput>

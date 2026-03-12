@@ -1,7 +1,13 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
+import { __ } from '@wordpress/i18n';
 
-const CheckoutPreview = ({ mode = 'light', brandColor = '6366f1', logoUrl }) => {
+const CheckoutPreview = ({
+	mode = 'light',
+	brandColor = '6366f1',
+	logoUrl,
+	onClick,
+}) => {
 	const isLight = mode === 'light';
 	const bg = isLight ? '#ffffff' : '#1a1a2e';
 	const cardBg = isLight ? '#f9fafb' : '#252540';
@@ -11,13 +17,26 @@ const CheckoutPreview = ({ mode = 'light', brandColor = '6366f1', logoUrl }) => 
 
 	return (
 		<div
+			role={onClick ? 'button' : undefined}
+			tabIndex={onClick ? 0 : undefined}
+			onClick={onClick}
+			onKeyDown={
+				onClick
+					? (e) => {
+							if (e.key === 'Enter' || e.key === ' ') {
+								e.preventDefault();
+								onClick(e);
+							}
+					  }
+					: undefined
+			}
 			css={css`
 				border-radius: 8px;
 				overflow: hidden;
 				border: 1px solid ${isLight ? '#e5e7eb' : '#374151'};
 				font-size: 10px;
 				user-select: none;
-				pointer-events: none;
+				${onClick ? 'cursor: pointer;' : 'pointer-events: none;'}
 			`}
 		>
 			{/* Browser chrome */}
@@ -166,7 +185,7 @@ const CheckoutPreview = ({ mode = 'light', brandColor = '6366f1', logoUrl }) => 
 						margin-top: 2px;
 					`}
 				>
-					Buy Now
+					{__('Buy Now', 'surecart')}
 				</div>
 			</div>
 		</div>
