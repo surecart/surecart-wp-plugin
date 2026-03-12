@@ -32,21 +32,7 @@ class NpsSurveyServiceProvider implements ServiceProviderInterface {
 
 		$this->loadNpsSurveyLibrary();
 
-		// Defer display hook to current_screen for SureCart pages only.
-		add_action( 'current_screen', [ $this, 'maybeShowNpsSurvey' ] );
-	}
-
-	/**
-	 * Register the display hook on SureCart admin pages only.
-	 *
-	 * @return void
-	 */
-	public function maybeShowNpsSurvey(): void {
-		$screen = get_current_screen();
-		if ( ! $screen || ! in_array( $screen->id, \SureCart::pages()->getSureCartPageScreenIds(), true ) ) {
-			return;
-		}
-
+		// Load the NPS survey notice on all admin pages, but it will only display on SureCart admin pages.
 		\SureCart::resolve( 'surecart.nps.survey.notice' )->bootstrap();
 	}
 

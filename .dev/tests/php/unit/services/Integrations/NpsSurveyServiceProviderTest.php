@@ -44,7 +44,9 @@ class NpsSurveyServiceProviderTest extends SureCartUnitTestCase {
 		$this->provider->bootstrap( $container );
 
 		// Should not register any hooks.
-		$this->assertFalse( has_action( 'current_screen', [ $this->provider, 'maybeShowNpsSurvey' ] ) );
+		$notice = $container['surecart.nps.survey.notice'];
+		$this->assertFalse( has_action( 'admin_footer', [ $notice, 'showNpsNotice' ] ) );
+		$this->assertFalse( has_filter( 'nps_survey_post_data', [ $notice, 'getNpsSurveyPostData' ] ) );
 	}
 
 	public function test_bootstrap_registers_hooks_when_connected(): void {
@@ -55,7 +57,10 @@ class NpsSurveyServiceProviderTest extends SureCartUnitTestCase {
 
 		$this->provider->bootstrap( $container );
 
-		// Bootstrap defers display to current_screen action.
-		$this->assertNotFalse( has_action( 'current_screen', [ $this->provider, 'maybeShowNpsSurvey' ] ) );
+		$notice = $container['surecart.nps.survey.notice'];
+		$this->assertNotFalse( has_action( 'admin_footer', [ $notice, 'showNpsNotice' ] ) );
+		$this->assertNotFalse( has_filter( 'nps_survey_post_data', [ $notice, 'getNpsSurveyPostData' ] ) );
+		$this->assertNotFalse( has_filter( 'nps_survey_api_endpoint', [ $notice, 'getNpsSurveyApiEndpoint' ] ) );
+		$this->assertNotFalse( has_filter( 'nps_survey_should_skip_status_update', [ $notice, 'handleStatusUpdate' ] ) );
 	}
 }

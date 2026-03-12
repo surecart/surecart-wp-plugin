@@ -49,10 +49,10 @@ class NpsSurveyNotice {
 	 * @return void
 	 */
 	public function bootstrap(): void {
-		add_action( 'admin_footer', [ $this, 'showNpsNotice' ], 999 );
 		add_filter( 'nps_survey_post_data', [ $this, 'getNpsSurveyPostData' ], 10 );
 		add_filter( 'nps_survey_api_endpoint', [ $this, 'getNpsSurveyApiEndpoint' ], 11, 2 );
 		add_filter( 'nps_survey_should_skip_status_update', [ $this, 'handleStatusUpdate' ], 10, 2 );
+		add_action( 'admin_footer', [ $this, 'showNpsNotice' ], 999 );
 	}
 
 	/**
@@ -138,6 +138,12 @@ class NpsSurveyNotice {
 	 * @return void
 	 */
 	public function showNpsNotice(): void {
+		// Only show on SureCart admin pages.
+		$screen = get_current_screen();
+		if ( ! $screen || ! in_array( $screen->id, \SureCart::pages()->getSureCartPageScreenIds(), true ) ) {
+			return;
+		}
+
 		if ( ! class_exists( 'Nps_Survey' ) ) {
 			return;
 		}
