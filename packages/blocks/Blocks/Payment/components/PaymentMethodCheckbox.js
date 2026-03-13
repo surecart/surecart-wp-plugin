@@ -8,9 +8,7 @@ export default ({
 	disabled,
 	id,
 }) => {
-	const helpTextElement = (
-		<span dangerouslySetInnerHTML={{ __html: help }}></span>
-	);
+	const helpTextElement = <span>{help}</span>;
 
 	return (
 		<CheckboxControl

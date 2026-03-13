@@ -57,7 +57,7 @@ export default ({ attributes, setAttributes, choice }) => {
 			});
 			setPricesData([...pricesData, ...prices]);
 		} catch (e) {
-			console.log(e);
+			console.error(e);
 		} finally {
 			setIsLoading(false);
 		}
@@ -216,6 +216,7 @@ export default ({ attributes, setAttributes, choice }) => {
 									}
 								</div>
 								<NumberControl
+									__next40pxDefaultSize
 									label={__('Qty:', 'surecart')}
 									labelPosition="side"
 									onChange={(number) => {

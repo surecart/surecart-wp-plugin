@@ -85,16 +85,6 @@ export default ({ attributes, setAttributes, clientId }) => {
 	);
 
 	const onAddToForm = () => {
-		console.log(
-			[
-				...formAttributes?.prices,
-				{
-					id: product?.prices?.data[0]?.id,
-					quantity: 1,
-				},
-			],
-			product
-		);
 		updateBlockAttributes(formClientId, {
 			prices: [
 				...formAttributes?.prices,

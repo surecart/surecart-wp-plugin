@@ -20,7 +20,7 @@ import {
 
 import { edit } from '@wordpress/icons';
 import { useSelect } from '@wordpress/data';
-import { useState, useEffect } from 'react';
+import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 import Rules from './rules';
@@ -29,27 +29,6 @@ import translations from './translations';
 export default ({ attributes, setAttributes, clientId, isSelected }) => {
 	const [editRules, setEditRules] = useState(false);
 	const { rule_groups } = attributes;
-
-	// Inject modal styles into the parent document for iframe (apiVersion:3) compatibility.
-	// Emotion injects <style> into the iframe head, but Modal is a portal in the parent doc.
-	useEffect(() => {
-		const styleId = 'sc-conditional-form-modal-styles';
-		const targetDoc = window?.parent?.document || document;
-		if (!targetDoc.getElementById(styleId)) {
-			const style = targetDoc.createElement('style');
-			style.id = styleId;
-			style.textContent = `
-				.sc-conditional-form-modal { width: 75% !important; max-width: 650px !important; max-height: 80% !important; --sc-color-primary-text: #fff; }
-			`;
-			targetDoc.head.appendChild(style);
-		}
-		return () => {
-			const s = (window?.parent?.document || document).getElementById(
-				styleId
-			);
-			if (s) s.remove();
-		};
-	}, []);
 
 	const blockProps = useBlockProps({
 		style: {
@@ -175,7 +154,7 @@ export default ({ attributes, setAttributes, clientId, isSelected }) => {
 						'surecart'
 					)}
 				>
-					<Button isPrimary onClick={() => setEditRules(true)}>
+					<Button variant="primary" onClick={() => setEditRules(true)}>
 						{__('Add Conditions', 'surecart')}
 					</Button>
 				</Placeholder>

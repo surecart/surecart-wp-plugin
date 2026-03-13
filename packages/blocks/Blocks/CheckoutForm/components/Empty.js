@@ -56,14 +56,18 @@ export default ({ attributes, setAttributes }) => {
 		}
 	};
 
+	const placeholderStyle = (
+		<style>{`
+			.sc-checkout-form-empty-editor .components-placeholder.components-placeholder {
+				padding: 2em;
+			}
+		`}</style>
+	);
+
 	if (step === 'new') {
 		return (
 			<div {...blockProps}>
-				<style>{`
-					.sc-checkout-form-empty-editor .components-placeholder.components-placeholder {
-						padding: 2em;
-					}
-				`}</style>
+				{placeholderStyle}
 				<PlaceholderTemplate
 					header={__('Create a Checkout Form', 'surecart')}
 				>
@@ -117,11 +121,7 @@ export default ({ attributes, setAttributes }) => {
 	if (step === 'select') {
 		return (
 			<div {...blockProps}>
-				<style>{`
-					.sc-checkout-form-empty-editor .components-placeholder.components-placeholder {
-						padding: 2em;
-					}
-				`}</style>
+				{placeholderStyle}
 				<PlaceholderTemplate
 					header={__('Select a checkout form', 'surecart')}
 				>
@@ -161,11 +161,7 @@ export default ({ attributes, setAttributes }) => {
 
 	return (
 		<div {...blockProps}>
-			<style>{`
-				.sc-checkout-form-empty-editor .components-placeholder.components-placeholder {
-					padding: 2em;
-				}
-			`}</style>
+			{placeholderStyle}
 			<Placeholder
 				icon={icon}
 				instructions={__(

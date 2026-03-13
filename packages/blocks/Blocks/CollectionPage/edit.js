@@ -150,6 +150,8 @@ export default ({ clientId }) => {
 						}}
 					>
 						<SearchControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							placeholder={__(
 								'Search or type a collection name',
 								'surecart'

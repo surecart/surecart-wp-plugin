@@ -1,32 +1,17 @@
 import apiFetch from '@wordpress/api-fetch';
 import { __ } from '@wordpress/i18n';
-import { useState, useEffect } from '@wordpress/element';
+import { useState } from '@wordpress/element';
 import { addQueryArgs } from '@wordpress/url';
 import { Button, Modal } from '@wordpress/components';
 
-import throttle from 'lodash/throttle';
-
-import { ScSelect } from '@surecart/components-react';
 import { convertPricesToChoices } from '../../../utils/prices';
-import { useSelect, dispatch, select } from '@wordpress/data';
+import { dispatch, select } from '@wordpress/data';
 import { BLOCKS_STORE_KEY } from '../store';
 import SelectProduct from '../../../components/SelectProduct';
 
 export default ({ onRequestClose, onChoose }) => {
 	const [product, setProduct] = useState({});
-	const [query, setQuery] = useState('');
 	const [busy, setBusy] = useState(false);
-
-	const { products, querying } = useSelect(
-		(select) => {
-			const { isResolving, searchProducts } = select(BLOCKS_STORE_KEY);
-			return {
-				products: searchProducts(query),
-				querying: isResolving('searchProducts', [query]),
-			};
-		},
-		[query]
-	);
 
 	/**
 	 * Does the product have all loaded prices?
@@ -72,14 +57,6 @@ export default ({ onRequestClose, onChoose }) => {
 		onRequestClose();
 	};
 
-	const findProduct = throttle(
-		(value) => {
-			setQuery(value);
-		},
-		750,
-		{ leading: false }
-	);
-
 	return (
 		<Modal
 			style={{
@@ -97,33 +74,6 @@ export default ({ onRequestClose, onChoose }) => {
 				}}
 			>
 				<SelectProduct onSelect={(product) => setProduct(product)} />
-				{/* <ScSelect
-					value={ product?.id }
-					onScChange={ ( e ) => {
-						setProduct( products?.[ e.target.value ] );
-					} }
-					loading={ querying }
-					placeholder={ __( 'Choose a product', 'surecart' ) }
-					searchPlaceholder={ __(
-						'Search for a product...',
-						'surecart'
-					) }
-					search
-					onScSearch={ ( e ) => findProduct( e.detail ) }
-					choices={ ( Object.keys( products ) || {} ).map(
-						( key ) => {
-							const product = products[ key ];
-							return {
-								value: key,
-								label: `${ product?.name } ${
-									product?.metrics?.prices_count > 1
-										? `(${ product?.metrics?.prices_count } Prices)`
-										: ''
-								}`,
-							};
-						}
-					) }
-				/> */}
 
 				<div
 					style={{
@@ -132,7 +82,11 @@ export default ({ onRequestClose, onChoose }) => {
 						gap: '0.5em',
 					}}
 				>
-					<Button isPrimary isBusy={busy} onClick={addProduct}>
+					<Button
+						variant="primary"
+						isBusy={busy}
+						onClick={addProduct}
+					>
 						{__('Add Product', 'surecart')}
 					</Button>
 					<Button variant="link" onClick={onRequestClose}>
