@@ -88,10 +88,12 @@ export default ({ attributes, setAttributes, clientId, isSelected }) => {
 			</BlockControls>
 			<InspectorControls>
 				<PanelBody title={__('Conditions', 'surecart')}>
-					<PanelRow
+					<div
 						style={{
+							display: 'flex',
 							flexWrap: 'wrap',
 							justifyContent: 'flex-start',
+							gap: '4px',
 						}}
 					>
 						{!rule_groups?.length &&
@@ -106,7 +108,7 @@ export default ({ attributes, setAttributes, clientId, isSelected }) => {
 								</ScTag>
 							));
 						})}
-					</PanelRow>
+					</div>
 					<PanelRow>
 						<Button
 							variant="secondary"
