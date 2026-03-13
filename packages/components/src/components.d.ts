@@ -3654,7 +3654,7 @@ export namespace Components {
         "size": 'small' | 'medium' | 'large';
     }
     interface ScStripePaymentElement {
-        "confirm": (type: any, args?: {}) => Promise<void>;
+        "confirm": (type: 'setup' | 'payment', args?: {}) => Promise<void>;
     }
     interface ScStripePaymentRequest {
         /**

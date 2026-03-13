@@ -31,6 +31,7 @@ export default ({
 	isSelected,
 }) => {
 	const [{ naturalWidth, naturalHeight }, setNaturalSize] = useState({});
+	const [previewLogoUrl, setPreviewLogoUrl] = useState(null);
 	const { editEntityRecord } = useDispatch(coreStore);
 	const editBrand = (data) =>
 		editEntityRecord('surecart', 'store', 'brand', data);
@@ -74,6 +75,7 @@ export default ({
 
 	// useBlockProps must be called before any early returns
 	const blockProps = useBlockProps();
+	const logoUrl = previewLogoUrl || data?.logo?.url;
 
 	if (loading) {
 		return (
@@ -83,7 +85,7 @@ export default ({
 		);
 	}
 
-	if (!data?.logo_url && imageEditing) {
+	if (!logoUrl && imageEditing) {
 		return (
 			<div {...blockProps}>
 				<Placeholder
@@ -95,7 +97,11 @@ export default ({
 					)}
 					isColumnLayout
 				>
-					<Logo brand={data} editBrand={editBrand} />
+					<Logo
+						brand={data}
+						editBrand={editBrand}
+						onMediaChange={setPreviewLogoUrl}
+					/>
 				</Placeholder>
 			</div>
 		);
@@ -103,7 +109,7 @@ export default ({
 
 	const img = (
 		<img
-			src={data?.logo_url}
+			src={logoUrl}
 			style={{
 				width: '100%',
 				height: '100%',
@@ -235,7 +241,10 @@ export default ({
 						setAttributes({
 							width: parseInt(currentWidth + delta.width, 10),
 							height: parseInt(currentHeight + delta.height, 10),
-							maxHeight: parseInt(currentHeight + delta.height, 10),
+							maxHeight: parseInt(
+								currentHeight + delta.height,
+								10
+							),
 						});
 					}}
 				>
