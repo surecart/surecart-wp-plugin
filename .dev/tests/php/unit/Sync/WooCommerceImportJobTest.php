@@ -79,7 +79,9 @@ namespace SureCart\Tests\Sync {
 		 * @return \Mockery\MockInterface
 		 */
 		private function createMockTask() {
-			return \Mockery::mock( 'SureCart\Sync\Tasks\Task' );
+			$mock = \Mockery::mock( 'SureCart\Sync\WooCommerce\WooCommerceImportTask' );
+			$mock->shouldReceive( 'queue' )->zeroOrMoreTimes();
+			return $mock;
 		}
 
 		/**
@@ -101,13 +103,10 @@ namespace SureCart\Tests\Sync {
 		 * Test task returns next page args when more products exist.
 		 */
 		public function test_task_returns_next_page_args_when_more_products() {
-			// Simulate a page with 2 products and more pages available.
-			// Products will fail to map (wc_get_product returns null) but pagination still works.
 			$GLOBALS['test_wc_products_result'] = (object) [
 				'products'      => [ 1, 2 ],
 				'max_num_pages' => 3,
 			];
-			$GLOBALS['test_wc_get_product_result'] = null; // products will be skipped.
 
 			$job    = new WooCommerceImportJob( $this->createMockTask() );
 			$result = $this->invokeTask( $job, [ 'page' => 1, 'batch_size' => 10 ] );
@@ -118,26 +117,41 @@ namespace SureCart\Tests\Sync {
 		}
 
 		/**
-		 * Test task skips unsupported product types (grouped, external).
+		 * Test task queues product IDs to the task for processing.
 		 */
-		public function test_task_skips_unsupported_product_types() {
-			$mock_product = \Mockery::mock( 'WC_Product' );
-			$mock_product->shouldReceive( 'get_type' )->andReturn( 'grouped' );
-			$mock_product->shouldReceive( 'get_id' )->andReturn( 42 );
-			$mock_product->shouldReceive( 'get_name' )->andReturn( 'Grouped Product' );
-
+		public function test_task_queues_product_ids_to_task() {
 			$GLOBALS['test_wc_products_result'] = (object) [
-				'products'      => [ 42 ],
+				'products'      => [ 10, 20, 30 ],
 				'max_num_pages' => 1,
 			];
-			$GLOBALS['test_wc_get_product_result'] = $mock_product;
 
-			$job    = new WooCommerceImportJob( $this->createMockTask() );
+			$mock_task = \Mockery::mock( 'SureCart\Sync\WooCommerce\WooCommerceImportTask' );
+			$mock_task->shouldReceive( 'queue' )
+				->once()
+				->with( [ 10, 20, 30 ] );
+
+			$job    = new WooCommerceImportJob( $mock_task );
 			$result = $this->invokeTask( $job, [ 'page' => 1, 'batch_size' => 10 ] );
 
-			// Should complete (only 1 page) and no import IDs stored (product was skipped).
 			$this->assertFalse( $result );
-			$this->assertEmpty( get_option( 'sc_woo_import_ids', [] ) );
+		}
+
+		/**
+		 * Test task does not queue when no products on page.
+		 */
+		public function test_task_does_not_queue_when_empty() {
+			$GLOBALS['test_wc_products_result'] = (object) [
+				'products'      => [],
+				'max_num_pages' => 0,
+			];
+
+			$mock_task = \Mockery::mock( 'SureCart\Sync\WooCommerce\WooCommerceImportTask' );
+			$mock_task->shouldNotReceive( 'queue' );
+
+			$job    = new WooCommerceImportJob( $mock_task );
+			$result = $this->invokeTask( $job, [ 'page' => 1, 'batch_size' => 10 ] );
+
+			$this->assertFalse( $result );
 		}
 
 		/**
@@ -178,32 +192,6 @@ namespace SureCart\Tests\Sync {
 			$result = $this->invokeTask( $job, [ 'page' => 1, 'batch_size' => 10 ] );
 
 			$this->assertFalse( $result );
-		}
-
-		/**
-		 * Test handleCompletion stores all_skipped flag when no imports but skipped products exist.
-		 */
-		public function test_handle_completion_sets_all_skipped_flag() {
-			$mock_product = \Mockery::mock( 'WC_Product' );
-			$mock_product->shouldReceive( 'get_type' )->andReturn( 'external' );
-			$mock_product->shouldReceive( 'get_id' )->andReturn( 99 );
-			$mock_product->shouldReceive( 'get_name' )->andReturn( 'External Product' );
-
-			$GLOBALS['test_wc_products_result'] = (object) [
-				'products'      => [ 99 ],
-				'max_num_pages' => 1, // Only 1 page, so job completes.
-			];
-			$GLOBALS['test_wc_get_product_result'] = $mock_product;
-
-			$job = new WooCommerceImportJob( $this->createMockTask() );
-			$this->invokeTask( $job, [ 'page' => 1, 'batch_size' => 10 ] );
-
-			// Should have set the all_skipped flag since no imports were created.
-			$session_id = get_option( 'sc_woo_import_session_id' );
-			$this->assertNotEmpty( $session_id, 'Session ID should be set for skipped products.' );
-
-			$all_skipped = get_option( 'sc_woo_import_all_skipped' );
-			$this->assertEquals( $session_id, $all_skipped, 'all_skipped should equal session_id.' );
 		}
 	}
 
