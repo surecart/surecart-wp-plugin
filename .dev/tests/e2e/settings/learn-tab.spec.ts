@@ -160,7 +160,7 @@ test.describe( 'Learn Tab Settings Page', () => {
 		await page.goto( LEARN_TAB_URL );
 
 		// First section is open by default — check its key steps are visible.
-		const expectedSteps = [ 'Complete Setup', 'Connect Payment Gateway', 'Add Store Details', 'Add Brand Details', 'Configure Tax Settings', 'Set Up Transactional Emails' ];
+		const expectedSteps = [ 'Complete Setup', 'Connect Payment Gateway', 'Add Store Details', 'Add Brand Details', 'Configure Tax Settings', 'Set Up Transactional Emails', 'Add Privacy Policy & Terms of Service' ];
 
 		for ( const stepTitle of expectedSteps ) {
 			await expect( page.getByText( stepTitle ).first() ).toBeVisible();
@@ -208,9 +208,9 @@ test.describe( 'Learn Tab Settings Page', () => {
 		await page.goto( LEARN_TAB_URL );
 
 		// Each section should show a progress badge in "completed/total" format.
-		// The first section has 6 steps, so expect "X/6" format.
+		// The first section has 7 steps, so expect "X/7" format.
 		const storeBasicsHeader = page.getByRole( 'heading', { name: 'Set Up Store Basics' } ).locator( '..' );
-		await expect( storeBasicsHeader.getByText( /\d+\/6/ ) ).toBeVisible();
+		await expect( storeBasicsHeader.getByText( /\d+\/7/ ) ).toBeVisible();
 
 		// Shipping has 1 step.
 		const shippingHeader = page.getByRole( 'heading', { name: 'Set Up Shipping' } ).locator( '..' );

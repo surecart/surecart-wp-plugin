@@ -164,6 +164,9 @@ abstract class BaseSettings {
 				'shop_page_edit_url'           => \SureCart::pages()->getId( 'shop' )
 					? admin_url( 'post.php?post=' . \SureCart::pages()->getId( 'shop' ) . '&action=edit' )
 					: '',
+				'dashboard_page_edit_url'      => \SureCart::pages()->getId( 'dashboard' )
+					? admin_url( 'post.php?post=' . \SureCart::pages()->getId( 'dashboard' ) . '&action=edit' )
+					: '',
 			]
 		);
 	}

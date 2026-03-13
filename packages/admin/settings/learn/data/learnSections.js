@@ -99,6 +99,21 @@ const learnSections = [
 					'surecart'
 				),
 			},
+			{
+				id: 'add-privacy-terms',
+				title: __('Add Privacy Policy & Terms of Service', 'surecart'),
+				description: __(
+					'Add links to your privacy policy and terms of service so customers can review them at checkout.',
+					'surecart'
+				),
+				badge: 'recommended',
+				actionLabel: __('Configure', 'surecart'),
+				actionUrl: 'admin.php?page=sc-settings',
+				infoTooltip: __(
+					'Display legal links on your checkout form for transparency and compliance.',
+					'surecart'
+				),
+			},
 		],
 	},
 
@@ -200,19 +215,6 @@ const learnSections = [
 					'surecart'
 				),
 			},
-			{
-				id: 'add-privacy-terms',
-				title: __('Add Privacy Policy & Terms of Service', 'surecart'),
-				description: __(
-					'Add links to your privacy policy and terms of service so customers can review them at checkout.',
-					'surecart'
-				),
-				badge: 'recommended',
-				infoTooltip: __(
-					'Display legal links on your checkout form for transparency and compliance.',
-					'surecart'
-				),
-			},
 		],
 	},
 
@@ -305,9 +307,9 @@ const learnSections = [
 					'Control what customers can do from their portal — manage subscriptions, change plans, and update payment methods.',
 					'surecart'
 				),
-				actionLabel: __('Configure Portal', 'surecart'),
+				actionLabel: __('Edit Customer Area', 'surecart'),
 				actionUrl:
-					'admin.php?page=sc-settings&tab=subscription_protocol',
+					window.scData?.dashboard_page_edit_url || undefined,
 				infoTooltip: __(
 					'Enable a self-service portal where customers can manage their purchases.',
 					'surecart'
