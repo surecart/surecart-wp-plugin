@@ -63,10 +63,21 @@ const learnSections = [
 				),
 				actionLabel: __('Set Up', 'surecart'),
 				actionUrl: 'admin.php?page=sc-settings&tab=brand',
+				autoDetect: 'hasBrandDetails',
 				infoTooltip: __(
 					'Upload your logo, set brand colors, and customize email templates.',
 					'surecart'
 				),
+			},
+			{
+				id: 'customer-dashboard-page',
+				title: __('Customer Dashboard Page', 'surecart'),
+				description: __(
+					'Customize the page your customers land on after completing a purchase.',
+					'surecart'
+				),
+				actionLabel: __('Set Up', 'surecart'),
+				actionUrl: window.scData?.dashboard_page_edit_url || undefined,
 			},
 			{
 				id: 'configure-tax',
@@ -307,9 +318,9 @@ const learnSections = [
 					'Control what customers can do from their portal — manage subscriptions, change plans, and update payment methods.',
 					'surecart'
 				),
-				actionLabel: __('Edit Customer Area', 'surecart'),
+				actionLabel: __('Configure Portal', 'surecart'),
 				actionUrl:
-					window.scData?.dashboard_page_edit_url || undefined,
+					'admin.php?page=sc-settings&tab=subscription_protocol',
 				infoTooltip: __(
 					'Enable a self-service portal where customers can manage their purchases.',
 					'surecart'

@@ -69,6 +69,7 @@ export default function useLearnProgress() {
 			},
 			hasProducts: () =>
 				Array.isArray( products ) && products.length > 0,
+			hasBrandDetails: () => !! window.scData?.brand_logo_url,
 		} ),
 		[ products ]
 	);

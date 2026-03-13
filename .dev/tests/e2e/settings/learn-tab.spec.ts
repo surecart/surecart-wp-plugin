@@ -160,7 +160,7 @@ test.describe( 'Learn Tab Settings Page', () => {
 		await page.goto( LEARN_TAB_URL );
 
 		// First section is open by default — check its key steps are visible.
-		const expectedSteps = [ 'Complete Setup', 'Connect Payment Gateway', 'Add Store Details', 'Add Brand Details', 'Configure Tax Settings', 'Set Up Transactional Emails', 'Add Privacy Policy & Terms of Service' ];
+		const expectedSteps = [ 'Complete Setup', 'Connect Payment Gateway', 'Add Store Details', 'Add Brand Details', 'Customer Dashboard Page', 'Configure Tax Settings', 'Set Up Transactional Emails', 'Add Privacy Policy & Terms of Service' ];
 
 		for ( const stepTitle of expectedSteps ) {
 			await expect( page.getByText( stepTitle ).first() ).toBeVisible();
@@ -210,7 +210,7 @@ test.describe( 'Learn Tab Settings Page', () => {
 		// Each section should show a progress badge in "completed/total" format.
 		// The first section has 7 steps, so expect "X/7" format.
 		const storeBasicsHeader = page.getByRole( 'heading', { name: 'Set Up Store Basics' } ).locator( '..' );
-		await expect( storeBasicsHeader.getByText( /\d+\/7/ ) ).toBeVisible();
+		await expect( storeBasicsHeader.getByText( /\d+\/8/ ) ).toBeVisible();
 
 		// Shipping has 1 step.
 		const shippingHeader = page.getByRole( 'heading', { name: 'Set Up Shipping' } ).locator( '..' );
@@ -253,13 +253,15 @@ test.describe( 'Learn Tab Settings Page', () => {
 		await expect( variantsCheckboxAfterReload ).toHaveAttribute( 'checked', '' );
 	} );
 
-	test( 'Should show info tooltips on hover', async ( { page } ) => {
-		await page.goto( LEARN_TAB_URL );
+	test( 'Should show info tooltips on click', async ( { page } ) => {
+		await gotoAndWaitForLearnTab( page );
 
 		// The "Add Store Details" step has an info tooltip via HelpTooltip (Popover).
-		// Hover over the info icon next to it.
+		// Click the tooltip trigger wrapper (parent of sc-icon) to toggle the popover.
+		// We target the wrapper div because sc-icon is a shadow-DOM web component
+		// and mouseenter doesn't bubble, making hover unreliable in Playwright.
 		const infoIcon = page.locator( 'sc-icon[name="info"]' ).first();
-		await infoIcon.hover();
+		await infoIcon.click();
 
 		// Tooltip text should become visible.
 		await expect(
@@ -385,6 +387,34 @@ test.describe( 'Learn Tab Settings Page', () => {
 		} finally {
 			await resetLearnSteps( requestUtils );
 		}
+	} );
+
+	test( 'Should display Customer Dashboard Page step in Store Basics section', async ( { page } ) => {
+		await gotoAndWaitForLearnTab( page );
+
+		// "Customer Dashboard Page" should be visible in the first (already expanded) section.
+		await expect( page.getByText( 'Customer Dashboard Page' ).first() ).toBeVisible();
+		await expect(
+			page.getByText( 'Customize the page your customers land on after completing a purchase.' )
+		).toBeVisible();
+
+		// It should have a "Set Up" action button linking to the dashboard page editor.
+		const dashboardRow = getStepRow( page, 'Customer Dashboard Page' );
+		const dashboardButton = dashboardRow.locator( 'sc-button' );
+		await expect( dashboardButton ).toContainText( 'Set Up' );
+	} );
+
+	test( 'Should link Customer Portal step to subscription settings', async ( { page } ) => {
+		await gotoAndWaitForLearnTab( page );
+
+		// Expand "Manage Orders & Customers" section.
+		await page.getByRole( 'button', { name: /Manage Orders & Customers/i } ).click();
+
+		// "Set Up Customer Portal" should have "Configure Portal" button linking to subscription settings.
+		const portalRow = getStepRow( page, 'Set Up Customer Portal' );
+		const portalButton = portalRow.locator( 'sc-button' );
+		await expect( portalButton ).toContainText( 'Configure Portal' );
+		await expect( portalButton ).toHaveAttribute( 'href', 'admin.php?page=sc-settings&tab=subscription_protocol' );
 	} );
 
 	test( 'Should open action links in new tab', async ( { page } ) => {
