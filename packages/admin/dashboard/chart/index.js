@@ -57,8 +57,11 @@ export default ({ liveMode, setLiveMode }) => {
 		// Normalize to start of day for consistent date-only comparisons
 		const normalizedStart = startDate.startOf('day');
 		const normalizedEnd = endDate.startOf('day');
-		const diffDays = normalizedEnd.diff(normalizedStart, 'day');
-		const previousStart = normalizedStart.subtract(diffDays, 'day');
+		// Period length inclusive of both start and end dates
+		const periodDays = normalizedEnd.diff(normalizedStart, 'day') + 1;
+		// Previous period ends the day before the current period starts (no overlap)
+		const previousEnd = normalizedStart.subtract(1, 'day');
+		const previousStart = previousEnd.subtract(periodDays - 1, 'day');
 
 		getOrderStats(
 			normalizedStart.format('YYYY-MM-DD'),
@@ -66,7 +69,7 @@ export default ({ liveMode, setLiveMode }) => {
 		);
 		getPreviousOrderStats(
 			previousStart.format('YYYY-MM-DD'),
-			normalizedStart.format('YYYY-MM-DD')
+			previousEnd.format('YYYY-MM-DD')
 		);
 	}, [startDate, endDate, reportBy, liveMode]);
 
