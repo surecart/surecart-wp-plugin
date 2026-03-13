@@ -1,7 +1,7 @@
 /**
  * WordPress dependencies.
  */
-import { InnerBlocks, useBlockProps } from '@wordpress/block-editor';
+import { InnerBlocks } from '@wordpress/block-editor';
 
 export default [
 	{
@@ -36,7 +36,6 @@ export default [
 
 			return (
 				<sc-order-summary
-					{...useBlockProps.save()}
 					collapsible={collapsible ? '1' : false}
 					collapsed-on-desktop={collapsedOnDesktop ? '1' : false}
 					order-summary-text={order_summary_text}
