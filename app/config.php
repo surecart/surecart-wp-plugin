@@ -30,7 +30,6 @@ return array(
 		\SureCart\WordPress\Taxonomies\TaxonomyServiceProvider::class,
 		\SureCart\WordPress\Assets\AssetsServiceProvider::class,
 		\SureCart\WordPress\Shortcodes\ShortcodesServiceProvider::class,
-		\SureCart\WordPress\Shortcodes\ProductReviewShortcodesServiceProvider::class,
 		\SureCart\WordPress\Admin\Menus\AdminMenuPageServiceProvider::class,
 		\SureCart\WordPress\Admin\Notices\AdminNoticesServiceProvider::class,
 		\SureCart\WordPress\CLI\CLIServiceProvider::class,
