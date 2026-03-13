@@ -86,78 +86,41 @@ export default function ({ name, ...props }) {
 		return null;
 	}
 
-	// Clone the SVG element and apply passed props as attributes
-	const clonedSvg = svgElement.cloneNode(true);
-
-	// Map React prop names to SVG attribute names for presentation attributes
-	const svgPresentationProps = {
-		fill: 'fill',
-		stroke: 'stroke',
-		strokeWidth: 'stroke-width',
-		strokeLinecap: 'stroke-linecap',
-		strokeLinejoin: 'stroke-linejoin',
-		strokeDasharray: 'stroke-dasharray',
-		strokeDashoffset: 'stroke-dashoffset',
-		strokeOpacity: 'stroke-opacity',
-		strokeMiterlimit: 'stroke-miterlimit',
-		fillOpacity: 'fill-opacity',
-		fillRule: 'fill-rule',
+	// Map hyphenated SVG attribute names to React camelCase equivalents.
+	const SVG_ATTR_MAP = {
+		'class': 'className',
+		'clip-path': 'clipPath',
+		'clip-rule': 'clipRule',
+		'color-interpolation-filters': 'colorInterpolationFilters',
+		'fill-opacity': 'fillOpacity',
+		'fill-rule': 'fillRule',
+		'flood-opacity': 'floodOpacity',
+		'font-size': 'fontSize',
+		'stop-color': 'stopColor',
+		'stop-opacity': 'stopOpacity',
+		'stroke-dasharray': 'strokeDasharray',
+		'stroke-dashoffset': 'strokeDashoffset',
+		'stroke-linecap': 'strokeLinecap',
+		'stroke-linejoin': 'strokeLinejoin',
+		'stroke-miterlimit': 'strokeMiterlimit',
+		'stroke-opacity': 'strokeOpacity',
+		'stroke-width': 'strokeWidth',
 	};
 
-	// Separate presentation props from other props
-	const presentationAttrs = {};
-	const otherProps = {};
-
-	Object.entries(props).forEach(([key, value]) => {
-		if (svgPresentationProps[key]) {
-			presentationAttrs[svgPresentationProps[key]] = value;
-		} else {
-			otherProps[key] = value;
-		}
-	});
-
-	// Apply presentation attributes to inner SVG elements
-	if (Object.keys(presentationAttrs).length > 0) {
-		const innerElements = clonedSvg.querySelectorAll(
-			'path, circle, rect, ellipse, line, polyline, polygon'
-		);
-		innerElements.forEach((el) => {
-			Object.entries(presentationAttrs).forEach(([attr, value]) => {
-				if (value !== undefined && value !== null) {
-					el.setAttribute(attr, value);
-				}
-			});
-		});
-	}
-
-	// Apply presentation attributes to the root SVG element as well
-	// This ensures CSS `fill: inherit` on child elements works correctly.
-	Object.entries(presentationAttrs).forEach(([attr, value]) => {
-		if (value !== undefined && value !== null) {
-			clonedSvg.setAttribute(attr, value);
-		}
-	});
-
-	// Apply remaining props to the root SVG element
-	Object.entries(otherProps).forEach(([key, value]) => {
-		if (value !== undefined && value !== null) {
-			// Convert React prop names to HTML attribute names
-			const attrName = key === 'className' ? 'class' : key;
-			clonedSvg.setAttribute(attrName, value);
-		}
-	});
-
-	// Get SVG attributes to spread on the element.
+	// Read the SVG file's own attributes and convert to React-compatible names.
 	const svgAttrs = {};
-	for (const attr of clonedSvg.attributes) {
-		const name = attr.name === 'class' ? 'className' : attr.name;
-		svgAttrs[name] = attr.value;
+	for (const attr of svgElement.attributes) {
+		const reactName = SVG_ATTR_MAP[attr.name] || attr.name;
+		svgAttrs[reactName] = attr.value;
 	}
 
+	// Caller props override SVG file attributes. Passed directly to React
+	// so objects (style), functions (onClick), etc. work without DOM round-trip.
 	return (
 		<svg
 			{...svgAttrs}
-			dangerouslySetInnerHTML={{ __html: clonedSvg.innerHTML }}
+			{...props}
+			dangerouslySetInnerHTML={{ __html: svgElement.innerHTML }}
 		/>
 	);
 }
