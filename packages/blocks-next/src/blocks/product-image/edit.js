@@ -99,6 +99,7 @@ export default ({
 					panelId={clientId}
 				>
 					<SelectControl
+						__next40pxDefaultSize
 						__nextHasNoMarginBottom
 						label={__('Aspect ratio', 'surecart')}
 						value={aspectRatio}

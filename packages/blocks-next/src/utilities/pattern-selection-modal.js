@@ -79,6 +79,7 @@ export default function PatternSelectionModal({
 			<div className="block-library-query-pattern__selection-content">
 				<div className="block-library-query-pattern__selection-search">
 					<SearchControl
+						__next40pxDefaultSize
 						__nextHasNoMarginBottom
 						onChange={setSearchValue}
 						value={searchValue}

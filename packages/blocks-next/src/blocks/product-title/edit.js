@@ -60,6 +60,7 @@ export default ({
 								checked={linkTarget === '_blank'}
 							/>
 							<TextControl
+								__next40pxDefaultSize
 								__nextHasNoMarginBottom
 								label={__('Link rel', 'surecart')}
 								value={rel}

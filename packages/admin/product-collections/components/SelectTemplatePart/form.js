@@ -97,6 +97,8 @@ export default function PostTemplateForm({
 
 			<div style={{ marginBottom: '16px' }}>
 				<SelectControl
+					__next40pxDefaultSize
+					__nextHasNoMarginBottom
 					label={__('Page Layout', 'surecart')}
 					value={collection?.metadata?.wp_template_id || ''}
 					options={Object.keys(scData?.availableTemplates || {}).map(
@@ -122,6 +124,7 @@ export default function PostTemplateForm({
 			{!!wp_template_id && (
 				<>
 					<SelectControl
+						__next40pxDefaultSize
 						__nextHasNoMarginBottom
 						label={__('Template', 'surecart')}
 						value={

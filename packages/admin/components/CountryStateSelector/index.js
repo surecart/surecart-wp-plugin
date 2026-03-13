@@ -76,6 +76,7 @@ export default ({ value, onChange }) => {
 				`}
 			>
 				<SearchControl
+					__next40pxDefaultSize
 					value={search}
 					placeholder={__(
 						'Search countries and regions to ship to',

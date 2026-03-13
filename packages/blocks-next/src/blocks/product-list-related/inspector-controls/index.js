@@ -112,6 +112,8 @@ export default function ProductListInspectorControls({
 				/>
 
 				<RangeControl
+					__next40pxDefaultSize
+					__nextHasNoMarginBottom
 					label={__('Offset', 'surecart')}
 					value={offset || 0}
 					onChange={(offset) => onUpdateQuery({ offset })}

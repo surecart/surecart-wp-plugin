@@ -5,6 +5,7 @@ export default (props) => {
 
 	return (
 		<TextControl
+			__next40pxDefaultSize
 			className={className}
 			onChange={onChange}
 			help={help}

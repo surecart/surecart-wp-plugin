@@ -31,6 +31,7 @@ export default ({ product, updateProduct, onClose }) => {
 			<InspectorPopoverHeader title={__('URL')} onClose={onClose} />
 
 			<TextControl
+				__next40pxDefaultSize
 				__nextHasNoMarginBottom
 				label={__('Permalink')}
 				value={product?.slug}

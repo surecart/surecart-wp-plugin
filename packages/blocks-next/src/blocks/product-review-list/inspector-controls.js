@@ -19,6 +19,8 @@ export default function ProductReviewListInspectorControls({
 		<InspectorControls>
 			<PanelBody title={__('Attributes', 'surecart')}>
 				<RangeControl
+					__next40pxDefaultSize
+					__nextHasNoMarginBottom
 					label={__('Reviews Per Page', 'surecart')}
 					value={perPage}
 					onChange={(perPage) => onUpdateQuery({ perPage })}
@@ -28,6 +30,8 @@ export default function ProductReviewListInspectorControls({
 				/>
 
 				<RangeControl
+					__next40pxDefaultSize
+					__nextHasNoMarginBottom
 					label={__('Offset', 'surecart')}
 					value={offset}
 					onChange={(offset) => onUpdateQuery({ offset })}

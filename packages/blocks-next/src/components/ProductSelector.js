@@ -74,6 +74,8 @@ export default ({ onProductSelect, currentSelectedIds }) => {
 						}}
 					>
 						<SearchControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							placeholder={__(
 								'Search or type a product name',
 								'surecart'

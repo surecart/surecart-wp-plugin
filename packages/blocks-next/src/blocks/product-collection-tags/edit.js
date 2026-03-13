@@ -60,6 +60,7 @@ export default ({
 				<PanelBody>
 					<PanelRow>
 						<NumberControl
+							__next40pxDefaultSize
 							label={__('Number To Display', 'surecart')}
 							value={count}
 							onChange={(count) =>

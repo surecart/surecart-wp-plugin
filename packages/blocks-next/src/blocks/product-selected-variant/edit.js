@@ -11,6 +11,8 @@ export default ({ attributes, setAttributes }) => {
 			<InspectorControls>
 				<PanelBody title={__('Variant Options Settings', 'surecart')}>
 					<TextControl
+						__next40pxDefaultSize
+						__nextHasNoMarginBottom
 						label={__('Separator', 'surecart')}
 						value={separator}
 						onChange={(value) =>
