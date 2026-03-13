@@ -1,4 +1,4 @@
-import { useState, useEffect } from '@wordpress/element';
+import { useState } from '@wordpress/element';
 import Select from 'react-select';
 
 function Select2(props) {
@@ -16,21 +16,6 @@ function Select2(props) {
 
 	const [selectedValue, setSelectedValue] = useState(value);
 
-	useEffect(() => {
-		const style = document.createElement('style');
-		style.textContent = `
-			.sc__indicator.sc__dropdown-indicator svg {
-				width: 13px !important;
-				height: 13px !important;
-			}
-			.sc__indicator.sc__clear-indicator svg {
-				width: 13px !important;
-			}
-		`;
-		document.head.appendChild(style);
-		return () => style.remove();
-	}, []);
-
 	const handleChange = (value) => {
 		setSelectedValue(value);
 
@@ -41,6 +26,15 @@ function Select2(props) {
 
 	return (
 		<div className="sc-select2-field">
+			<style>{`
+				.sc__indicator.sc__dropdown-indicator svg {
+					width: 13px !important;
+					height: 13px !important;
+				}
+				.sc__indicator.sc__clear-indicator svg {
+					width: 13px !important;
+				}
+			`}</style>
 			<div className="sc-selection-field">
 				{label && <label>{label}</label>}
 

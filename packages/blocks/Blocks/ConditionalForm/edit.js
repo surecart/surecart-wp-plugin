@@ -51,6 +51,7 @@ export default ({ attributes, setAttributes, clientId, isSelected }) => {
 
 	const innerBlocksProps = useInnerBlocksProps(
 		{
+			className: 'sc-conditional-form__inner',
 			style: {
 				flex: '1 1 auto',
 				width: '100%',
@@ -68,6 +69,14 @@ export default ({ attributes, setAttributes, clientId, isSelected }) => {
 
 	return (
 		<div {...blockProps}>
+			<style>{`
+				.sc-conditional-form__inner .block-list-appender {
+					position: relative;
+				}
+				.sc-conditional-form__inner > .wp-block:not(:last-child) {
+					margin: 0 !important;
+				}
+			`}</style>
 			<BlockControls>
 				<ToolbarGroup>
 					<ToolbarButton
@@ -154,7 +163,10 @@ export default ({ attributes, setAttributes, clientId, isSelected }) => {
 						'surecart'
 					)}
 				>
-					<Button variant="primary" onClick={() => setEditRules(true)}>
+					<Button
+						variant="primary"
+						onClick={() => setEditRules(true)}
+					>
 						{__('Add Conditions', 'surecart')}
 					</Button>
 				</Placeholder>
