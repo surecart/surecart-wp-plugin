@@ -26,6 +26,21 @@ const learnSections = [
 				autoDetect: 'hasApiToken',
 			},
 			{
+				id: 'connect-payment',
+				title: __('Connect Payment Gateway', 'surecart'),
+				description: __(
+					'Link Stripe, PayPal, or another supported gateway to start accepting payments.',
+					'surecart'
+				),
+				actionLabel: __('Connect', 'surecart'),
+				actionUrl: 'admin.php?page=sc-settings&tab=processors',
+				autoDetect: 'hasProcessor',
+				infoTooltip: __(
+					"You'll need an account with your payment provider before connecting.",
+					'surecart'
+				),
+			},
+			{
 				id: 'add-store-details',
 				title: __('Add Store Details', 'surecart'),
 				description: __(
@@ -48,9 +63,39 @@ const learnSections = [
 				),
 				actionLabel: __('Set Up', 'surecart'),
 				actionUrl: 'admin.php?page=sc-settings&tab=brand',
-				autoDetect: 'hasBrandColor',
 				infoTooltip: __(
 					'Upload your logo, set brand colors, and customize email templates.',
+					'surecart'
+				),
+			},
+			{
+				id: 'configure-tax',
+				title: __('Configure Tax Settings', 'surecart'),
+				description: __(
+					'Set up tax collection rules so the correct tax is applied at checkout.',
+					'surecart'
+				),
+				badge: 'required',
+				actionLabel: __('Set Up', 'surecart'),
+				actionUrl: 'admin.php?page=sc-settings&tab=tax_protocol',
+				infoTooltip: __(
+					'Configure tax rates, regions, and automatic tax calculation.',
+					'surecart'
+				),
+			},
+			{
+				id: 'setup-transactional-emails',
+				title: __('Set Up Transactional Emails', 'surecart'),
+				description: __(
+					'Configure the emails customers receive for orders, receipts, and account updates.',
+					'surecart'
+				),
+				badge: 'recommended',
+				actionLabel: __('Set Up', 'surecart'),
+				actionUrl:
+					'admin.php?page=sc-settings&tab=customer_notification_protocol',
+				infoTooltip: __(
+					'Customize order confirmation, receipt, and notification emails.',
 					'surecart'
 				),
 			},
@@ -115,92 +160,7 @@ const learnSections = [
 		],
 	},
 
-	// SECTION 3: Connect Payment Processor (Required)
-	{
-		id: 'payment-processor',
-		title: __('Connect Payment Processor', 'surecart'),
-		description: __(
-			'Connect a payment gateway so you can accept real payments from customers.',
-			'surecart'
-		),
-		badge: 'required',
-		icon: 'credit-card',
-		steps: [
-			{
-				id: 'connect-payment',
-				title: __('Connect Payment Gateway', 'surecart'),
-				description: __(
-					'Link Stripe, PayPal, or another supported gateway to start accepting payments.',
-					'surecart'
-				),
-				actionLabel: __('Connect', 'surecart'),
-				actionUrl: 'admin.php?page=sc-settings&tab=processors',
-				autoDetect: 'hasProcessor',
-				infoTooltip: __(
-					"You'll need an account with your payment provider before connecting.",
-					'surecart'
-				),
-			},
-		],
-	},
-
-	// SECTION 4: Test Your Checkout & Go Live (Required)
-	{
-		id: 'test-checkout',
-		title: __('Test Your Checkout & Go Live', 'surecart'),
-		description: __(
-			'Make a test payment to ensure everything works before accepting real orders.',
-			'surecart'
-		),
-		badge: 'required',
-		icon: 'zap',
-		docUrl: 'https://surecart.com/docs/how-to-make-test-payments/',
-		steps: [
-			{
-				id: 'test-payment',
-				title: __('Make a Test Payment', 'surecart'),
-				description: __(
-					'Run a quick test payment to confirm your checkout, payment gateway, and product setup are working correctly.',
-					'surecart'
-				),
-				infoTooltip: __(
-					'Use test mode to simulate a purchase and verify your entire checkout flow.',
-					'surecart'
-				),
-			},
-		],
-	},
-
-	// SECTION 5: Set Up Shipping (Optional)
-	{
-		id: 'setup-shipping',
-		title: __('Set Up Shipping', 'surecart'),
-		description: __(
-			"Configure shipping zones and rates. Only needed if you're selling physical products.",
-			'surecart'
-		),
-		badge: 'optional',
-		icon: 'truck',
-		docUrl: 'https://surecart.com/docs/shipping',
-		steps: [
-			{
-				id: 'configure-shipping',
-				title: __('Configure Shipping Zones & Rates', 'surecart'),
-				description: __(
-					'Set up shipping zones, rates, and methods for physical products.',
-					'surecart'
-				),
-				actionLabel: __('Set Up', 'surecart'),
-				actionUrl: 'admin.php?page=sc-settings&tab=shipping_protocol',
-				infoTooltip: __(
-					'Rates can be flat, weight-based, or free over a threshold.',
-					'surecart'
-				),
-			},
-		],
-	},
-
-	// SECTION 6: Customize Checkout Experience (Recommended)
+	// SECTION 3: Customize Checkout Experience (Recommended)
 	{
 		id: 'customize-checkout',
 		title: __('Customize Checkout Experience', 'surecart'),
@@ -240,10 +200,79 @@ const learnSections = [
 					'surecart'
 				),
 			},
+			{
+				id: 'add-privacy-terms',
+				title: __('Add Privacy Policy & Terms of Service', 'surecart'),
+				description: __(
+					'Add links to your privacy policy and terms of service so customers can review them at checkout.',
+					'surecart'
+				),
+				badge: 'recommended',
+				infoTooltip: __(
+					'Display legal links on your checkout form for transparency and compliance.',
+					'surecart'
+				),
+			},
 		],
 	},
 
-	// SECTION 7: Manage Orders & Customers (Recommended)
+	// SECTION 4: Set Up Shipping (Optional)
+	{
+		id: 'setup-shipping',
+		title: __('Set Up Shipping', 'surecart'),
+		description: __(
+			"Configure shipping zones and rates. Only needed if you're selling physical products.",
+			'surecart'
+		),
+		badge: 'optional',
+		icon: 'truck',
+		docUrl: 'https://surecart.com/docs/shipping',
+		steps: [
+			{
+				id: 'configure-shipping',
+				title: __('Configure Shipping Zones & Rates', 'surecart'),
+				description: __(
+					'Set up shipping zones, rates, and methods for physical products.',
+					'surecart'
+				),
+				actionLabel: __('Set Up', 'surecart'),
+				actionUrl: 'admin.php?page=sc-settings&tab=shipping_protocol',
+				infoTooltip: __(
+					'Rates can be flat, weight-based, or free over a threshold.',
+					'surecart'
+				),
+			},
+		],
+	},
+
+	// SECTION 5: Test Your Checkout & Go Live (Required)
+	{
+		id: 'test-checkout',
+		title: __('Test Your Checkout & Go Live', 'surecart'),
+		description: __(
+			'Make a test payment to ensure everything works before accepting real orders.',
+			'surecart'
+		),
+		badge: 'required',
+		icon: 'zap',
+		docUrl: 'https://surecart.com/docs/how-to-make-test-payments/',
+		steps: [
+			{
+				id: 'test-payment',
+				title: __('Make a Test Payment', 'surecart'),
+				description: __(
+					'Run a quick test payment to confirm your checkout, payment gateway, and product setup are working correctly.',
+					'surecart'
+				),
+				infoTooltip: __(
+					'Use test mode to simulate a purchase and verify your entire checkout flow.',
+					'surecart'
+				),
+			},
+		],
+	},
+
+	// SECTION 6: Manage Orders & Customers (Recommended)
 	{
 		id: 'manage-business',
 		title: __('Manage Orders & Customers', 'surecart'),
@@ -273,12 +302,12 @@ const learnSections = [
 				id: 'customer-portal',
 				title: __('Set Up Customer Portal', 'surecart'),
 				description: __(
-					'Let customers manage their own subscriptions, invoices, and account details.',
+					'Control what customers can do from their portal — manage subscriptions, change plans, and update payment methods.',
 					'surecart'
 				),
-				actionLabel: __('Configure', 'surecart'),
+				actionLabel: __('Configure Portal', 'surecart'),
 				actionUrl:
-					'admin.php?page=sc-settings&tab=customer_notification_protocol',
+					'admin.php?page=sc-settings&tab=subscription_protocol',
 				infoTooltip: __(
 					'Enable a self-service portal where customers can manage their purchases.',
 					'surecart'
@@ -287,7 +316,7 @@ const learnSections = [
 		],
 	},
 
-	// SECTION 8: Grow Your Revenue
+	// SECTION 7: Grow Your Revenue
 	{
 		id: 'grow-revenue',
 		title: __('Grow Your Revenue', 'surecart'),
@@ -297,6 +326,7 @@ const learnSections = [
 		),
 		icon: 'trending-up',
 		highlighted: true,
+		docUrl: 'https://surecart.com/docs-category/revenue-booster/',
 		steps: [
 			{
 				id: 'create-coupon',
@@ -330,7 +360,7 @@ const learnSections = [
 				id: 'order-bumps',
 				title: __('Add Order Bumps', 'surecart'),
 				description: __(
-					'Add a small, high-value add-on directly on the checkout page.',
+					'Add a small, high-value add-on directly on the checkout page. Requires a published product and active checkout before setup.',
 					'surecart'
 				),
 				actionLabel: __('Add Bump', 'surecart'),
@@ -344,7 +374,7 @@ const learnSections = [
 				id: 'upsells',
 				title: __('Create Upsell Offers', 'surecart'),
 				description: __(
-					'Present a follow-up offer after checkout to increase revenue without disrupting the purchase.',
+					'Present a follow-up offer after checkout to increase revenue without disrupting the purchase. Requires a published product and active checkout before setup.',
 					'surecart'
 				),
 				actionLabel: __('Add Upsell', 'surecart'),

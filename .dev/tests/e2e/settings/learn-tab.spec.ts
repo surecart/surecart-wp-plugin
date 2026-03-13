@@ -13,10 +13,9 @@ const LEARN_TAB_URL = '/wp-admin/admin.php?page=sc-settings&tab=learn';
 const SECTION_TITLES = [
 	'Set Up Store Basics',
 	'Add Your First Product',
-	'Connect Payment Processor',
-	'Test Your Checkout & Go Live',
-	'Set Up Shipping',
 	'Customize Checkout Experience',
+	'Set Up Shipping',
+	'Test Your Checkout & Go Live',
 	'Manage Orders & Customers',
 	'Grow Your Revenue',
 ];
@@ -85,7 +84,7 @@ test.describe( 'Learn Tab Settings Page', () => {
 		).toBeVisible();
 	} );
 
-	test( 'Should display all 8 learning sections', async ( { page } ) => {
+	test( 'Should display all 7 learning sections', async ( { page } ) => {
 		await page.goto( LEARN_TAB_URL );
 
 		// Expand completed accordion if any sections are already completed.
@@ -94,7 +93,7 @@ test.describe( 'Learn Tab Settings Page', () => {
 			await completedToggle.click();
 		}
 
-		// Assert all 8 section titles are visible.
+		// Assert all 7 section titles are visible.
 		for ( const title of SECTION_TITLES ) {
 			await expect( page.getByRole( 'heading', { name: title } ) ).toBeVisible();
 		}
@@ -103,11 +102,10 @@ test.describe( 'Learn Tab Settings Page', () => {
 	test( 'Should display Required and Optional badges', async ( { page } ) => {
 		await page.goto( LEARN_TAB_URL );
 
-		// Sections with "Required" badge: Store Basics, First Product, Payment Processor, Test Checkout.
+		// Sections with "Required" badge: Store Basics, First Product, Test Checkout.
 		const requiredSections = [
 			'Set Up Store Basics',
 			'Add Your First Product',
-			'Connect Payment Processor',
 			'Test Your Checkout & Go Live',
 		];
 
@@ -120,7 +118,7 @@ test.describe( 'Learn Tab Settings Page', () => {
 		const shippingHeader = page.getByRole( 'heading', { name: 'Set Up Shipping' } ).locator( '..' );
 		await expect( shippingHeader.getByText( 'Optional' ) ).toBeVisible();
 
-		// Sections 6 & 7 have 'Recommended' badge.
+		// Sections with 'Recommended' badge.
 		const recommendedSections = [
 			'Customize Checkout Experience',
 			'Manage Orders & Customers',
@@ -161,8 +159,8 @@ test.describe( 'Learn Tab Settings Page', () => {
 	test( 'Should display steps within expanded section', async ( { page } ) => {
 		await page.goto( LEARN_TAB_URL );
 
-		// First section is open by default — check its 3 steps are visible.
-		const expectedSteps = [ 'Complete Setup', 'Add Store Details', 'Add Brand Details' ];
+		// First section is open by default — check its key steps are visible.
+		const expectedSteps = [ 'Complete Setup', 'Connect Payment Gateway', 'Add Store Details', 'Add Brand Details', 'Configure Tax Settings', 'Set Up Transactional Emails' ];
 
 		for ( const stepTitle of expectedSteps ) {
 			await expect( page.getByText( stepTitle ).first() ).toBeVisible();
@@ -193,10 +191,10 @@ test.describe( 'Learn Tab Settings Page', () => {
 	test( 'Should have Learn How links on sections', async ( { page } ) => {
 		await page.goto( LEARN_TAB_URL );
 
-		// 6 of 8 sections have a "Learn How" link (payment-processor and grow-revenue have none).
+		// All 7 sections have a "Learn How" link.
 		// "Learn How" is rendered as ScButton (sc-button), not a plain <a>.
 		const learnHowLinks = page.locator( 'sc-button:has-text("Learn How")' );
-		await expect( learnHowLinks ).toHaveCount( 6 );
+		await expect( learnHowLinks ).toHaveCount( 7 );
 
 		// Each link should open in a new tab.
 		const firstLink = learnHowLinks.first();
@@ -210,9 +208,9 @@ test.describe( 'Learn Tab Settings Page', () => {
 		await page.goto( LEARN_TAB_URL );
 
 		// Each section should show a progress badge in "completed/total" format.
-		// The first section has 3 steps, so expect "X/3" format.
+		// The first section has 6 steps, so expect "X/6" format.
 		const storeBasicsHeader = page.getByRole( 'heading', { name: 'Set Up Store Basics' } ).locator( '..' );
-		await expect( storeBasicsHeader.getByText( /\d+\/3/ ) ).toBeVisible();
+		await expect( storeBasicsHeader.getByText( /\d+\/6/ ) ).toBeVisible();
 
 		// Shipping has 1 step.
 		const shippingHeader = page.getByRole( 'heading', { name: 'Set Up Shipping' } ).locator( '..' );
@@ -387,6 +385,16 @@ test.describe( 'Learn Tab Settings Page', () => {
 		} finally {
 			await resetLearnSteps( requestUtils );
 		}
+	} );
+
+	test( 'Should open action links in new tab', async ( { page } ) => {
+		await page.goto( LEARN_TAB_URL );
+
+		// "Add Store Details" action button should open in a new tab.
+		const storeDetailsRow = getStepRow( page, 'Add Store Details' );
+		const storeDetailsButton = storeDetailsRow.locator( 'sc-button' );
+		await expect( storeDetailsButton ).toHaveAttribute( 'target', '_blank' );
+		await expect( storeDetailsButton ).toHaveAttribute( 'rel', 'noopener noreferrer' );
 	} );
 
 } );

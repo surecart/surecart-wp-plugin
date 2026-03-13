@@ -57,7 +57,6 @@ export default function useLearnProgress() {
 	const autoDetectChecks = useMemo(
 		() => ( {
 			hasApiToken: () => !! window.scData?.account_id,
-			hasBrandColor: () => !! window.scData?.brand_color,
 			hasProcessor: () => {
 				const processors = window.scData?.processors;
 				if ( ! Array.isArray( processors ) ) {

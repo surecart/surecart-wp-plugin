@@ -321,6 +321,16 @@ class SettingService {
 		);
 		$this->register(
 			'surecart',
+			'learn_admin_menu',
+			[
+				'type'              => 'boolean',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'boolval',
+				'default'           => true,
+			]
+		);
+		$this->register(
+			'surecart',
 			'learn_completed_steps',
 			[
 				'type'              => 'array',

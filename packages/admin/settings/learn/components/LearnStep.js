@@ -61,13 +61,11 @@ export default function LearnStep({
 		}
 	};
 
-	const actionProps = step.isExternal
-		? {
-				href: step.actionUrl,
-				target: '_blank',
-				rel: 'noopener noreferrer',
-		  }
-		: { href: step.actionUrl };
+	const actionProps = {
+		href: step.actionUrl,
+		target: '_blank',
+		rel: 'noopener noreferrer',
+	};
 
 	return (
 		<div css={stepStyles}>
