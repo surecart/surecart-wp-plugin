@@ -5,7 +5,7 @@
 const v1 = {
 	attributes: {
 		required: {
-			typoe: 'boolean',
+			type: 'boolean',
 		},
 		value: {
 			type: 'string',
