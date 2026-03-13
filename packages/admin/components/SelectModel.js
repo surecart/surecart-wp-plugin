@@ -24,11 +24,16 @@ export default ({
 	...props
 }) => {
 	const selectRef = useRef();
+	const onQueryRef = useRef(onQuery);
+
+	useEffect(() => {
+		onQueryRef.current = onQuery;
+	}, [onQuery]);
 
 	const findItem = useCallback(
 		throttle(
 			(value) => {
-				onQuery(value);
+				onQueryRef.current(value);
 			},
 			750,
 			{ leading: false }

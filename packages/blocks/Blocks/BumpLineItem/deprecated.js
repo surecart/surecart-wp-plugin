@@ -5,6 +5,10 @@ const v1 = {
 			default: 'Bundle Discount',
 		},
 	},
+	supports: {
+		reusable: false,
+		html: false,
+	},
 	save({ attributes, className }) {
 		const { label } = attributes;
 		return (
