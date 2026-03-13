@@ -3,10 +3,15 @@
  */
 import { __ } from '@wordpress/i18n';
 import {
-	__experimentalTruncate as Truncate,
-	ExternalLink,
+	__experimentalHStack as HStack,
+	__experimentalVStack as VStack,
+	FlexBlock,
 } from '@wordpress/components';
-import clsx from 'clsx';
+
+/**
+ * Internal dependencies.
+ */
+import ScIcon from '../../../components/ScIcon';
 
 export default function SelectorPreview({
 	title,
@@ -16,53 +21,83 @@ export default function SelectorPreview({
 	controls,
 }) {
 	return (
-		<div
-			role="group"
-			aria-label={__('Manage link', 'surecart')}
-			className="block-editor-link-control__search-item is-current is-preview"
-			style={{ padding: 0 }}
-		>
-			<div className="block-editor-link-control__search-item-top">
-				<span
-					className="block-editor-link-control__search-item-header"
-					role="figure"
-					aria-label={__('Link information', 'surecart')}
-				>
-					<span
-						className={clsx(
-							'block-editor-link-control__search-item-icon',
-							{ 'is-image': !!imageUrl }
-						)}
-					>
-						{!!imageUrl && (
-							<img
-								className="block-editor-link-control__search-item-image"
-								src={imageUrl}
-								alt={__('Product image', 'surecart')}
-							/>
-						)}
-					</span>
-					<span className="block-editor-link-control__search-item-details">
-						<ExternalLink
-							className="block-editor-link-control__search-item-title"
-							href={url}
-						>
-							<Truncate numberOfLines={1}>
-								<span className="block-editor-link-control__search-item-title">
-									{title}
-								</span>
-							</Truncate>
-						</ExternalLink>
-
-						{!!subtitle && (
-							<span className="block-editor-link-control__search-item-info">
-								{subtitle}
-							</span>
-						)}
-					</span>
-				</span>
-				{controls}
+		<HStack spacing={3} align="center" justify="flex-start">
+			<div
+				style={{
+					width: '48px',
+					height: '48px',
+					borderRadius: '4px',
+					backgroundColor: '#f0f0f0',
+					flexShrink: 0,
+					overflow: 'hidden',
+					display: 'flex',
+					alignItems: 'center',
+					justifyContent: 'center',
+				}}
+			>
+				{imageUrl ? (
+					<img
+						src={imageUrl}
+						alt={__('Product image', 'surecart')}
+						style={{
+							width: '100%',
+							height: '100%',
+							objectFit: 'cover',
+						}}
+					/>
+				) : (
+					<ScIcon
+						name="image"
+						width="24"
+						height="24"
+						style={{ opacity: 0.5 }}
+					/>
+				)}
 			</div>
-		</div>
+			<FlexBlock style={{ minWidth: 0 }}>
+				<VStack spacing={0}>
+					<span
+						style={{
+							display: 'flex',
+							alignItems: 'center',
+							gap: '4px',
+							fontWeight: 500,
+							fontSize: '13px',
+							overflow: 'hidden',
+						}}
+					>
+						<a
+							href={url}
+							target="_blank"
+							rel="noopener noreferrer"
+							style={{
+								textDecoration: 'none',
+								overflow: 'hidden',
+								textOverflow: 'ellipsis',
+								whiteSpace: 'nowrap',
+							}}
+						>
+							{title}
+						</a>
+					</span>
+					{!!subtitle && (
+						<span
+							style={{
+								fontSize: '12px',
+								color: '#757575',
+								display: 'block',
+								marginTop: '2px',
+								overflow: 'hidden',
+								textOverflow: 'ellipsis',
+								whiteSpace: 'nowrap',
+							}}
+						>
+							{subtitle}
+						</span>
+					)}
+				</VStack>
+			</FlexBlock>
+			{controls}
+		</HStack>
 	);
 }

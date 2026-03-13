@@ -325,7 +325,7 @@ add_action(
 					'import' => 'dynamic',
 				],
 				[
-					'id'     => '@surecart/a11y',
+					'id'     => '@wordpress/a11y',
 					'import' => 'dynamic',
 				],
 			],
@@ -347,7 +347,7 @@ add_action(
 					'import' => 'dynamic',
 				],
 				[
-					'id'     => '@surecart/a11y',
+					'id'     => '@wordpress/a11y',
 					'import' => 'dynamic',
 				],
 			],

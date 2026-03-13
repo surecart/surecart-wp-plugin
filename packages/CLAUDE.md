@@ -20,7 +20,7 @@ Non-obvious wiring:
 - `controller.php` is auto-detected via `block_type_metadata_settings` filter in `packages/blocks-next/index.php` — no manual render callback registration needed
 - `surecart/product` block context is injected by `render_block_context` filter only when `surecart_current_product` query var is set (product detail pages). Access via `sc_get_product()` in controller.php
 - If the block uses any `sc-*` Stencil components, **must** add preload entry in `app/config.php` under `'preload'` key
-- Shared JS externals available: `@surecart/dialog`, `@surecart/cart`, `@surecart/sidebar`, `@surecart/api-fetch`, `@surecart/checkout-service`, `@surecart/checkout-events`, `@surecart/a11y`
+- Shared JS externals available: `@surecart/dialog`, `@surecart/cart`, `@surecart/sidebar`, `@surecart/api-fetch`, `@surecart/checkout-service`, `@surecart/checkout-events`
 
 ## Legacy Blocks (Maintenance Only)
 

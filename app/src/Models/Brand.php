@@ -28,6 +28,34 @@ class Brand extends Model {
 	protected $clears_account_cache = true;
 
 	/**
+	 * Set the logo attribute.
+	 *
+	 * @param  mixed $value Logo properties.
+	 * @return void
+	 */
+	public function setLogoAttribute( $value ) {
+		if ( empty( $value ) ) {
+			$this->attributes['logo'] = '';
+			return;
+		}
+		$this->setRelation( 'logo', $value, Media::class );
+	}
+
+	/**
+	 * Set the dark logo attribute.
+	 *
+	 * @param  mixed $value Dark logo properties.
+	 * @return void
+	 */
+	public function setDarkLogoAttribute( $value ) {
+		if ( empty( $value ) ) {
+			$this->attributes['dark_logo'] = '';
+			return;
+		}
+		$this->setRelation( 'dark_logo', $value, Media::class );
+	}
+
+	/**
 	 * Finalize the session for checkout.
 	 *
 	 * @return $this|\WP_Error

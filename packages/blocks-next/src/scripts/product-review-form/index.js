@@ -110,7 +110,7 @@ const { state, actions, callbacks } = store('surecart/product-review-form', {
 			// Announce modal open to screen readers.
 			const { speak } = yield import(
 				/* webpackIgnore: true */
-				'@surecart/a11y'
+				'@wordpress/a11y'
 			);
 			speak(__('Product review form opened.', 'surecart'), 'assertive');
 
@@ -145,7 +145,7 @@ const { state, actions, callbacks } = store('surecart/product-review-form', {
 			// Announce modal close to screen readers.
 			const { speak } = yield import(
 				/* webpackIgnore: true */
-				'@surecart/a11y'
+				'@wordpress/a11y'
 			);
 			speak(__('Product review form closed.', 'surecart'), 'assertive');
 
@@ -221,7 +221,7 @@ const { state, actions, callbacks } = store('surecart/product-review-form', {
 				// Import speak function for screen reader announcements.
 				const { speak } = yield import(
 					/* webpackIgnore: true */
-					'@surecart/a11y'
+					'@wordpress/a11y'
 				);
 
 				if (isInvalidInput(context)) {

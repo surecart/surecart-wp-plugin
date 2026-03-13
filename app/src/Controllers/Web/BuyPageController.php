@@ -129,7 +129,7 @@ class BuyPageController extends BasePageController {
 				'terms_text'       => $this->termsText(),
 				'mode'             => $this->model->buyLink()->getMode(),
 				'store_name'       => \SureCart::account()->name ?? get_bloginfo(),
-				'logo_url'         => \SureCart::account()->brand->logo_url,
+				'logo_url'         => \SureCart::theme()->logoUrl(),
 				'logo_width'       => \SureCart::settings()->get( 'buy_link_logo_width', '180px' ),
 				'user'             => wp_get_current_user(),
 				'logout_link'      => wp_logout_url( $request->getUrl() ),

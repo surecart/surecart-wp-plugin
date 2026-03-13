@@ -26,16 +26,6 @@ class SettingService {
 	public function registerSettings() {
 		$this->register(
 			'surecart',
-			'theme',
-			[
-				'type'              => 'string',
-				'show_in_rest'      => true,
-				'sanitize_callback' => 'sanitize_text_field',
-				'default'           => 'light',
-			]
-		);
-		$this->register(
-			'surecart',
 			'auto_sync_user_to_customer',
 			[
 				'type'              => 'boolean',
