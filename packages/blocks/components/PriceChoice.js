@@ -49,7 +49,7 @@ export default ({ choice, onUpdate, hideQuantity, onRemove }) => {
 		(select) => {
 			if (!price?.product) return;
 			return select(coreStore).getEntityRecord(
-				'surecart',
+				'root',
 				'product',
 				price.product
 			);
@@ -127,9 +127,7 @@ export default ({ choice, onUpdate, hideQuantity, onRemove }) => {
 
 	return (
 		<sc-table-row>
-			<sc-table-cell
-				style={{ width: '50%', maxWidth: '50%' }}
-			>
+			<sc-table-cell style={{ width: '50%', maxWidth: '50%' }}>
 				{!choice?.id || !price ? (
 					<Spinner />
 				) : (
@@ -174,9 +172,7 @@ export default ({ choice, onUpdate, hideQuantity, onRemove }) => {
 			<sc-table-cell style={{ textAlign: 'center' }}>
 				<div style={{ display: 'flex', justifyContent: 'center' }}>
 					{renderPrice(true)}{' '}
-					<span
-						style={{ color: 'var(--sc-color-gray-500)' }}
-					>
+					<span style={{ color: 'var(--sc-color-gray-500)' }}>
 						{price &&
 							intervalString(price, {
 								showOnce: true,
