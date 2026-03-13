@@ -38,7 +38,8 @@ const { state } = store('surecart/product-list', {
 		/** Navigate to a url using the router region. */
 		*navigate(event) {
 			const { ref } = getElement();
-			const { history } = getContext();
+			const ctx = getContext();
+			const history = ctx?.history;
 			const queryRef = ref.closest('[data-wp-router-region]');
 			if (isValidLink(ref) && isValidEvent(event) && queryRef) {
 				event.preventDefault();
@@ -79,6 +80,7 @@ const { state } = store('surecart/product-list', {
 			const { value } = e.target;
 
 			const ctx = getContext();
+			if (!ctx) return;
 
 			// Don't navigate if the search didn't really change.
 			if (value === ctx.search) {
@@ -125,12 +127,13 @@ const { state } = store('surecart/product-list', {
 
 			routerActions.navigate(url.href);
 
-			const { products } = getContext();
+			// Re-fetch context after navigation.
+			const updatedCtx = getContext();
 			const scSearchedEvent = new CustomEvent('scSearched', {
 				detail: {
 					searchString: value,
-					searchResultCount: products?.length,
-					searchResultIds: products?.map((product) => product.id),
+					searchResultCount: updatedCtx?.products?.length,
+					searchResultIds: updatedCtx?.products?.map((product) => product.id),
 				},
 				bubbles: true,
 			});
@@ -152,6 +155,7 @@ const { state } = store('surecart/product-list', {
 			event.preventDefault();
 
 			const ctx = getContext();
+			if (!ctx) return;
 
 			// immediately update the UI.
 			ctx.search = '';
@@ -180,6 +184,9 @@ const { state } = store('surecart/product-list', {
 
 	callbacks: {
 		*onChangeProducts() {
+			const ctx = getContext();
+			if (!ctx?.products) return;
+
 			if (window?.dataLayer || window?.gtag) {
 				yield import(
 					/* webpackIgnore: true */
@@ -194,12 +201,10 @@ const { state } = store('surecart/product-list', {
 				);
 			}
 
-			const { products } = getContext();
-
 			document.dispatchEvent(
 				new CustomEvent('scProductsViewed', {
 					detail: {
-						products: products,
+						products: ctx.products,
 						pageTitle: document.title,
 					},
 					bubbles: true,
@@ -211,9 +216,9 @@ const { state } = store('surecart/product-list', {
 		 * we can prefetch a page ahead of time without mouse enter (just on load)
 		 */
 		*prefetch() {
-			const { url } = getContext();
+			const ctx = getContext();
 			const { ref } = getElement();
-			if (url && isValidLink(ref)) {
+			if (ctx?.url && isValidLink(ref)) {
 				const { actions } = yield import(
 					/* webpackIgnore: true */
 					'@wordpress/interactivity-router'
