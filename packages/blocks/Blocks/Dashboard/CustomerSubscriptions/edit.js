@@ -1,8 +1,5 @@
 import OverlayLabel from '../../../components/OverlayLabel';
-import {
-	ScSubscriptionDetails,
-	ScDashboardModule,
-} from '@surecart/components-react';
+import { ScDashboardModule } from '@surecart/components-react';
 import {
 	InspectorControls,
 	RichText,
@@ -10,15 +7,12 @@ import {
 } from '@wordpress/block-editor';
 import { PanelBody, PanelRow, TextControl } from '@wordpress/components';
 import { Fragment } from '@wordpress/element';
-import { __, _n } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 
 export default ({ attributes, setAttributes }) => {
 	const { title } = attributes;
 
 	const blockProps = useBlockProps();
-
-	var oneYearFromNow = new Date();
-	oneYearFromNow.setFullYear(oneYearFromNow.getFullYear() + 1);
 
 	return (
 		<Fragment>
@@ -26,6 +20,8 @@ export default ({ attributes, setAttributes }) => {
 				<PanelBody>
 					<PanelRow>
 						<TextControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							label={__('Title', 'surecart')}
 							value={title}
 							onChange={(title) => setAttributes({ title })}
@@ -34,78 +30,123 @@ export default ({ attributes, setAttributes }) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<ScDashboardModule {...blockProps}>
-				<OverlayLabel>{__('Sample Data', 'surecart')}</OverlayLabel>
-				<RichText
-					aria-label={__('Title', 'surecart')}
-					placeholder={__('Add A Title…', 'surecart')}
-					value={title}
-					onChange={(title) => setAttributes({ title })}
-					withoutInteractiveFormatting
-					slot="heading"
-					allowedFormats={['core/bold', 'core/italic']}
-				/>
+			<div {...blockProps}>
+				<ScDashboardModule>
+					<OverlayLabel>
+						{__('Sample Data', 'surecart')}
+					</OverlayLabel>
+					<RichText
+						aria-label={__('Title', 'surecart')}
+						placeholder={__('Add A Title…', 'surecart')}
+						value={title}
+						onChange={(title) => setAttributes({ title })}
+						withoutInteractiveFormatting
+						slot="heading"
+						allowedFormats={['core/bold', 'core/italic']}
+					/>
 
-				<sc-button type="link" slot="end">
-					{__('View all', 'surecart')}
-					<sc-icon name="chevron-right" slot="suffix"></sc-icon>
-				</sc-button>
+					<sc-button type="link" slot="end">
+						{__('View all', 'surecart')}
+						<sc-icon
+							name="chevron-right"
+							slot="suffix"
+						></sc-icon>
+					</sc-button>
 
-				<sc-card no-padding style={{ '--overflow': 'hidden' }}>
-					<sc-stacked-list>
-						<sc-stacked-list-row mobile-size={0}>
-							<ScSubscriptionDetails
-								subscription={{
-									id: 'a',
-									status: 'active',
-									current_period_end_at:
-										oneYearFromNow.getTime() / 1000,
-									current_period: {
-										total_amount: 2000,
-										currency: scBlockData?.currency,
-									},
-									price: {
-										recurring_interval_count: 1,
-										recurring_interval: 'month',
-										product: {
-											name: 'Monthly Subscription',
-										},
-									},
-								}}
-							></ScSubscriptionDetails>
-							<sc-icon
-								name="chevron-right"
-								slot="suffix"
-							></sc-icon>
-						</sc-stacked-list-row>
-						<sc-stacked-list-row mobile-size={0}>
-							<ScSubscriptionDetails
-								subscription={{
-									id: 'b',
-									status: 'trialing',
-									trial_end_at:
-										oneYearFromNow.getTime() / 1000,
-									current_period: {
-										total_amount: 2000,
-										currency: scBlockData?.currency,
-									},
-									price: {
-										recurring_interval_count: 1,
-										recurring_interval: 'year',
-										product: {
-											name: 'Yearly Subscription',
-										},
-									},
-								}}
-							></ScSubscriptionDetails>
-							<sc-icon
-								name="chevron-right"
-								slot="suffix"
-							></sc-icon>
-						</sc-stacked-list-row>
-					</sc-stacked-list>
-				</sc-card>
-			</ScDashboardModule>
+					<sc-card no-padding style={{ '--overflow': 'hidden' }}>
+						<sc-stacked-list>
+							<sc-stacked-list-row mobile-size={0}>
+								<sc-spacing
+									style={{
+										'--spacing':
+											'var(--sc-spacing-small)',
+									}}
+								>
+									<div>
+										<strong>
+											{__(
+												'Monthly Subscription',
+												'surecart'
+											)}
+										</strong>
+									</div>
+									<div
+										style={{
+											display: 'flex',
+											alignItems: 'center',
+											gap: '0.25em',
+											color: 'var(--sc-input-label-color)',
+										}}
+									>
+										<sc-tag type="success">
+											{__('Active', 'surecart')}
+										</sc-tag>
+										<sc-format-number
+											type="currency"
+											currency={
+												scBlockData?.currency ||
+												scData?.currency ||
+												'usd'
+											}
+											value={2000}
+										></sc-format-number>
+										{' / '}
+										{__('month', 'surecart')}
+									</div>
+								</sc-spacing>
+								<sc-icon
+									name="chevron-right"
+									slot="suffix"
+								></sc-icon>
+							</sc-stacked-list-row>
+							<sc-stacked-list-row mobile-size={0}>
+								<sc-spacing
+									style={{
+										'--spacing':
+											'var(--sc-spacing-small)',
+									}}
+								>
+									<div>
+										<strong>
+											{__(
+												'Yearly Subscription',
+												'surecart'
+											)}
+										</strong>
+									</div>
+									<div
+										style={{
+											display: 'flex',
+											alignItems: 'center',
+											gap: '0.25em',
+											color: 'var(--sc-input-label-color)',
+										}}
+									>
+										<sc-tag type="info">
+											{__('Trialing', 'surecart')}
+										</sc-tag>
+										<sc-format-number
+											type="currency"
+											currency={
+												scBlockData?.currency ||
+												scData?.currency ||
+												'usd'
+											}
+											value={2000}
+										></sc-format-number>
+										{' / '}
+										{__('year', 'surecart')}
+									</div>
+								</sc-spacing>
+								<sc-icon
+									name="chevron-right"
+									slot="suffix"
+								></sc-icon>
+							</sc-stacked-list-row>
+						</sc-stacked-list>
+					</sc-card>
+				</ScDashboardModule>
+			</div>
 		</Fragment>
 	);
 };

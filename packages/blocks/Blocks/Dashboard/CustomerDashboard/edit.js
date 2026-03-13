@@ -108,16 +108,18 @@ export default ({ clientId }) => {
 		},
 	});
 
-	const innerBlocksProps = useInnerBlocksProps(blockProps, {
-		orientation: 'horizontal',
-		renderAppender: false,
-		template: TEMPLATE,
-	});
+	const innerBlocksProps = useInnerBlocksProps(
+		{},
+		{
+			orientation: 'horizontal',
+			renderAppender: false,
+			template: TEMPLATE,
+		}
+	);
 
 	const { tabBlocks, panelBlocks, panelsWrapper, tabsWrapper } = useSelect(
 		(select) => {
 			const innerBlocks = select('core/block-editor').getBlocks(clientId);
-			console.log({ innerBlocks });
 			const tabsWrapper = (innerBlocks || []).find(
 				(block) => block.name === 'surecart/dashboard-tabs'
 			);
@@ -163,8 +165,6 @@ export default ({ clientId }) => {
 						(previousTab) => previousTab.clientId === tab.clientId
 					)
 			);
-
-			console.log(tabBlocks);
 
 			const title = sprintf(
 				!tabBlocks?.length
@@ -238,7 +238,7 @@ export default ({ clientId }) => {
 	}, [tabBlocks, panelBlocks]);
 
 	return (
-		<>
+		<div {...blockProps}>
 			<style>{`
 				.sc-customer-dashboard-editor .block-list-appender {
 					position: relative !important;
@@ -256,6 +256,6 @@ export default ({ clientId }) => {
 					innerBlocksProps.className || ''
 				}`}
 			></ScTabGroup>
-		</>
+		</div>
 	);
 };

@@ -29,7 +29,8 @@ export default ({ attributes, setAttributes }) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<ScDashboardModule {...blockProps}>
+			<div {...blockProps}>
+			<ScDashboardModule>
 				<OverlayLabel>{__('Sample Data', 'surecart')}</OverlayLabel>
 				<RichText
 					aria-label={__('Title', 'surecart')}
@@ -71,6 +72,7 @@ export default ({ attributes, setAttributes }) => {
 					</sc-stacked-list>
 				</sc-card>
 			</ScDashboardModule>
+			</div>
 		</Fragment>
 	);
 };

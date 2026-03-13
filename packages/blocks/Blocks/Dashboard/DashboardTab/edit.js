@@ -20,10 +20,7 @@ import feather from 'feather-icons';
 export default ({ attributes, setAttributes }) => {
 	const { panel, title, active, icon } = attributes;
 	const tab = useRef();
-	const blockProps = useBlockProps({
-		panel,
-		tab,
-	});
+	const blockProps = useBlockProps();
 
 	useEffect(() => {
 		setAttributes({
@@ -104,22 +101,24 @@ export default ({ attributes, setAttributes }) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<ScTab {...blockProps}>
-				<sc-icon
-					style={{ fontSize: '18px' }}
-					slot="prefix"
-					name={icon || 'home'}
-				></sc-icon>
+			<div {...blockProps}>
+				<ScTab panel={panel} ref={tab}>
+					<sc-icon
+						style={{ fontSize: '18px' }}
+						slot="prefix"
+						name={icon || 'home'}
+					></sc-icon>
 
-				<RichText
-					aria-label={__('Tab Name', 'surecart')}
-					placeholder={__('Add a tab name', 'surecart')}
-					value={title}
-					onChange={(title) => setAttributes({ title })}
-					withoutInteractiveFormatting
-					allowedFormats={['core/bold', 'core/italic']}
-				/>
-			</ScTab>
+					<RichText
+						aria-label={__('Tab Name', 'surecart')}
+						placeholder={__('Add a tab name', 'surecart')}
+						value={title}
+						onChange={(title) => setAttributes({ title })}
+						withoutInteractiveFormatting
+						allowedFormats={['core/bold', 'core/italic']}
+					/>
+				</ScTab>
+			</div>
 		</Fragment>
 	);
 };

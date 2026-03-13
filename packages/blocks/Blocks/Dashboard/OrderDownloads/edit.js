@@ -28,7 +28,8 @@ export default ({ attributes, setAttributes }) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<ScDashboardModule {...blockProps}>
+			<div {...blockProps}>
+			<ScDashboardModule>
 				<RichText
 					aria-label={__('Title', 'surecart')}
 					placeholder={__('Add A Title…', 'surecart')}
@@ -101,6 +102,7 @@ export default ({ attributes, setAttributes }) => {
 					</sc-stacked-list>
 				</sc-card>
 			</ScDashboardModule>
+			</div>
 		</Fragment>
 	);
 };
