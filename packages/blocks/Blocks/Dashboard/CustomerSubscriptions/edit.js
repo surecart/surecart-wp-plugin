@@ -14,6 +14,11 @@ export default ({ attributes, setAttributes }) => {
 
 	const blockProps = useBlockProps();
 
+	var oneYearFromNow = new Date();
+	oneYearFromNow.setFullYear(oneYearFromNow.getFullYear() + 1);
+
+	const nextPaymentDate = oneYearFromNow.toLocaleDateString();
+
 	return (
 		<Fragment>
 			<InspectorControls>
@@ -32,9 +37,7 @@ export default ({ attributes, setAttributes }) => {
 
 			<div {...blockProps}>
 				<ScDashboardModule>
-					<OverlayLabel>
-						{__('Sample Data', 'surecart')}
-					</OverlayLabel>
+					<OverlayLabel>{__('Sample Data', 'surecart')}</OverlayLabel>
 					<RichText
 						aria-label={__('Title', 'surecart')}
 						placeholder={__('Add A Title…', 'surecart')}
@@ -47,10 +50,7 @@ export default ({ attributes, setAttributes }) => {
 
 					<sc-button type="link" slot="end">
 						{__('View all', 'surecart')}
-						<sc-icon
-							name="chevron-right"
-							slot="suffix"
-						></sc-icon>
+						<sc-icon name="chevron-right" slot="suffix"></sc-icon>
 					</sc-button>
 
 					<sc-card no-padding style={{ '--overflow': 'hidden' }}>
@@ -58,8 +58,7 @@ export default ({ attributes, setAttributes }) => {
 							<sc-stacked-list-row mobile-size={0}>
 								<sc-spacing
 									style={{
-										'--spacing':
-											'var(--sc-spacing-small)',
+										'--spacing': 'var(--sc-spacing-small)',
 									}}
 								>
 									<div>
@@ -81,18 +80,19 @@ export default ({ attributes, setAttributes }) => {
 										<sc-tag type="success">
 											{__('Active', 'surecart')}
 										</sc-tag>
-										<sc-format-number
-											type="currency"
-											currency={
-												scBlockData?.currency ||
-												scData?.currency ||
-												'usd'
-											}
-											value={2000}
-										></sc-format-number>
-										{' / '}
-										{__('month', 'surecart')}
+										{__(
+											'Your next payment is on',
+											'surecart'
+										)}{' '}
+										{nextPaymentDate}
 									</div>
+									<sc-tag type="warning">
+										{'⚠ '}
+										{__(
+											'Payment Method Missing',
+											'surecart'
+										)}
+									</sc-tag>
 								</sc-spacing>
 								<sc-icon
 									name="chevron-right"
@@ -102,8 +102,7 @@ export default ({ attributes, setAttributes }) => {
 							<sc-stacked-list-row mobile-size={0}>
 								<sc-spacing
 									style={{
-										'--spacing':
-											'var(--sc-spacing-small)',
+										'--spacing': 'var(--sc-spacing-small)',
 									}}
 								>
 									<div>
@@ -125,17 +124,8 @@ export default ({ attributes, setAttributes }) => {
 										<sc-tag type="info">
 											{__('Trialing', 'surecart')}
 										</sc-tag>
-										<sc-format-number
-											type="currency"
-											currency={
-												scBlockData?.currency ||
-												scData?.currency ||
-												'usd'
-											}
-											value={2000}
-										></sc-format-number>
-										{' / '}
-										{__('year', 'surecart')}
+										{__('Your plan begins on', 'surecart')}{' '}
+										{nextPaymentDate}
 									</div>
 								</sc-spacing>
 								<sc-icon
