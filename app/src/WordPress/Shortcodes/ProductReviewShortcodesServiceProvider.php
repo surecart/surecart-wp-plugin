@@ -42,9 +42,9 @@ class ProductReviewShortcodesServiceProvider implements ServiceProviderInterface
 		'sc_product_review_total_count'  => [
 			'block'    => 'surecart/product-review-total-rating',
 			'defaults' => [
-				'show_label'          => true,
+				'show_label'            => true,
 				'show_for_zero_reviews' => true,
-				'link_to_reviews'     => true,
+				'link_to_reviews'       => true,
 			],
 		],
 		'sc_product_review_breakdown'    => [
@@ -58,12 +58,7 @@ class ProductReviewShortcodesServiceProvider implements ServiceProviderInterface
 		],
 		'sc_product_review_add_button'   => [
 			'block'    => 'surecart/product-review-add-button',
-			'defaults' => [
-				'label'       => 'Write a Review',
-				'button_type' => 'both',
-				'icon'        => 'edit-2',
-				'className'   => 'is-style-fill',
-			],
+			'defaults' => [],
 		],
 	];
 
@@ -100,6 +95,14 @@ class ProductReviewShortcodesServiceProvider implements ServiceProviderInterface
 	public function registerShortcodes() {
 		$service = $this->container['surecart.shortcodes.product_reviews'];
 
+		// Set translatable defaults at runtime (cannot use __() in property declarations).
+		$this->shortcode_map['sc_product_review_add_button']['defaults'] = [
+			'label'       => __( 'Write a Review', 'surecart' ),
+			'button_type' => 'both',
+			'icon'        => 'edit-2',
+			'className'   => 'is-style-fill',
+		];
+
 		// Register simple block shortcodes.
 		foreach ( $this->shortcode_map as $shortcode_name => $config ) {
 			$this->registerSimpleShortcode( $service, $shortcode_name, $config['block'], $config['defaults'] ?? [] );
@@ -115,7 +118,7 @@ class ProductReviewShortcodesServiceProvider implements ServiceProviderInterface
 					'sc_product_review_list'
 				);
 
-				return $service->renderReviewList( $attributes, $content ?? '' );
+				return $service->renderReviewList( $attributes, $content );
 			}
 		);
 	}
@@ -155,7 +158,7 @@ class ProductReviewShortcodesServiceProvider implements ServiceProviderInterface
 				}
 				unset( $attributes['format'] );
 
-				return $service->renderWithProductContext( $block_name, $attributes, $content ?? '' );
+				return $service->renderWithProductContext( $block_name, $attributes, $content );
 			}
 		);
 	}

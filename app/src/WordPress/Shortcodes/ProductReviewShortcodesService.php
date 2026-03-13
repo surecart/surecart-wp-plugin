@@ -35,23 +35,11 @@ class ProductReviewShortcodesService {
 	 *
 	 * @return string
 	 */
-	public function renderWithProductContext( $block_name, $attrs, $content ) {
+	public function renderWithProductContext( $block_name, $attrs, $content = '' ) {
 		$id = $attrs['id'] ?? null;
 		unset( $attrs['id'] );
 
-		$original_product = get_query_var( 'surecart_current_product' );
-
-		// Resolve product: from explicit id, existing query var, or current post context.
-		if ( ! empty( $id ) ) {
-			$product = sc_get_product( absint( $id ) );
-		} elseif ( empty( $original_product ) ) {
-			$product = sc_get_product();
-		}
-
-		// If we resolved a product, set the query var so block controllers can find it.
-		if ( ! empty( $product ) ) {
-			set_query_var( 'surecart_current_product', $product );
-		}
+		$original_product = $this->setupProductContext( $id );
 
 		add_filter( 'should_load_separate_core_block_assets', '__return_false', 11 );
 		wp_enqueue_global_styles();
@@ -61,8 +49,7 @@ class ProductReviewShortcodesService {
 
 		remove_filter( 'doing_it_wrong_trigger_error', [ $this->shortcodes_service, 'removeInteractivityDoingItWrong' ], 10 );
 
-		// Restore original product context.
-		set_query_var( 'surecart_current_product', $original_product );
+		$this->restoreProductContext( $original_product );
 
 		// Strip insignificant whitespace between HTML tags to prevent wpautop from injecting <br> tags.
 		return preg_replace( '/>\s+</', '><', $output );
@@ -79,23 +66,11 @@ class ProductReviewShortcodesService {
 	 *
 	 * @return string
 	 */
-	public function renderReviewList( $attrs, $content ) {
+	public function renderReviewList( $attrs, $content = '' ) {
 		$id = $attrs['id'] ?? null;
 		unset( $attrs['id'] );
 
-		$original_product = get_query_var( 'surecart_current_product' );
-
-		// Resolve product: from explicit id, existing query var, or current post context.
-		if ( ! empty( $id ) ) {
-			$product = sc_get_product( absint( $id ) );
-		} elseif ( empty( $original_product ) ) {
-			$product = sc_get_product();
-		}
-
-		// If we resolved a product, set the query var so block controllers can find it.
-		if ( ! empty( $product ) ) {
-			set_query_var( 'surecart_current_product', $product );
-		}
+		$original_product = $this->setupProductContext( $id );
 
 		add_filter( 'should_load_separate_core_block_assets', '__return_false', 11 );
 		wp_enqueue_global_styles();
@@ -106,14 +81,58 @@ class ProductReviewShortcodesService {
 
 		remove_filter( 'doing_it_wrong_trigger_error', [ $this->shortcodes_service, 'removeInteractivityDoingItWrong' ], 10 );
 
-		set_query_var( 'surecart_current_product', $original_product );
+		$this->restoreProductContext( $original_product );
 
 		// Strip insignificant whitespace between HTML tags to prevent wpautop from injecting <br> tags.
 		return preg_replace( '/>\s+</', '><', $output );
 	}
 
 	/**
+	 * Set up the product context for block rendering.
+	 *
+	 * Resolves the product from an explicit ID, existing query var, or current post context.
+	 * Guards against WP_Error from sc_get_product().
+	 *
+	 * @param int|string|null $id The product post ID, or null to auto-detect.
+	 *
+	 * @return mixed The original product query var value (for restoration).
+	 */
+	protected function setupProductContext( $id ) {
+		$original_product = get_query_var( 'surecart_current_product' );
+		$product          = null;
+
+		// Resolve product: from explicit id, existing query var, or current post context.
+		if ( ! empty( $id ) ) {
+			$product = sc_get_product( absint( $id ) );
+		} elseif ( empty( $original_product ) ) {
+			$product = sc_get_product();
+		}
+
+		// Guard against WP_Error and set query var only for valid products.
+		if ( ! empty( $product ) && ! is_wp_error( $product ) ) {
+			set_query_var( 'surecart_current_product', $product );
+		}
+
+		return $original_product;
+	}
+
+	/**
+	 * Restore the original product context after block rendering.
+	 *
+	 * @param mixed $original_product The original product query var value.
+	 *
+	 * @return void
+	 */
+	protected function restoreProductContext( $original_product ) {
+		set_query_var( 'surecart_current_product', $original_product );
+	}
+
+	/**
 	 * Build the full review list block HTML with all nested inner blocks.
+	 *
+	 * IMPORTANT: This structure must stay in sync with the block.json `example` field in
+	 * packages/blocks-next/src/blocks/product-review-list/block.json.
+	 * If the block's inner block structure changes, update this method accordingly.
 	 *
 	 * @param array $attrs Shortcode attributes.
 	 *
@@ -228,7 +247,8 @@ class ProductReviewShortcodesService {
 		$html  = '<!-- wp:group {"metadata":{"name":"Header"},"layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"space-between"}} -->';
 		$html .= '<div class="wp-block-group">';
 
-		$html .= '<!-- wp:surecart/product-review-list-sidebar-toggle {"label":"Filters"} /-->';
+		// translators: Sidebar toggle label for review filters.
+		$html .= '<!-- wp:surecart/product-review-list-sidebar-toggle {"label":"' . esc_attr__( 'Filters', 'surecart' ) . '"} /-->';
 
 		$html .= '<!-- wp:surecart/product-review-add-button {"width":100,"className":"is-style-fill","style":{"elements":{"link":{"color":{"text":"var:preset|color|white"}}},"spacing":{"blockGap":"4px"}},"backgroundColor":"surecart","textColor":"white"} /-->';
 
@@ -302,6 +322,9 @@ class ProductReviewShortcodesService {
 	 * @return string
 	 */
 	protected function buildReviewTemplateHtml() {
+		// translators: Verified buyer badge label.
+		$verified_label = esc_attr__( 'Verified Buyer', 'surecart' );
+
 		$html = '<!-- wp:surecart/product-review-template {"style":{"spacing":{"blockGap":"0px","margin":{"top":"0","bottom":"0"},"padding":{"top":"0","bottom":"0"}}},"layout":{"type":"grid","columnCount":1}} -->';
 
 		// Individual review item.
@@ -316,7 +339,7 @@ class ProductReviewShortcodesService {
 		$html .= '<!-- wp:group {"style":{"spacing":{"blockGap":"4px","padding":{"right":"0px","left":"0px"},"margin":{"top":"0","bottom":"0"}}},"layout":{"type":"flex","flexWrap":"nowrap"}} -->';
 		$html .= '<div class="wp-block-group" style="margin-top:0;margin-bottom:0;padding-right:0px;padding-left:0px">';
 		$html .= '<!-- wp:surecart/product-review-reviewer-name {"style":{"spacing":{"padding":{"top":"0","bottom":"0"},"margin":{"right":"8px"}},"typography":{"fontStyle":"normal","fontWeight":"500","fontSize":"16px"}}} /-->';
-		$html .= '<!-- wp:surecart/product-review-verified-badge {"label":"Verified Buyer","style":{"typography":{"fontStyle":"normal","fontWeight":"400","fontSize":"16px"},"spacing":{"blockGap":"4px","layout":{"selfStretch":"fit","flexSize":null}},"layout":{"type":"flex","justifyContent":"center","verticalAlignment":"center","orientation":"horizontal"}}} /-->';
+		$html .= '<!-- wp:surecart/product-review-verified-badge {"label":"' . $verified_label . '","style":{"typography":{"fontStyle":"normal","fontWeight":"400","fontSize":"16px"},"spacing":{"blockGap":"4px","layout":{"selfStretch":"fit","flexSize":null}},"layout":{"type":"flex","justifyContent":"center","verticalAlignment":"center","orientation":"horizontal"}}} /-->';
 		$html .= '</div><!-- /wp:group -->';
 
 		// Date.
