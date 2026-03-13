@@ -6,6 +6,7 @@ import {
 	getElement,
 	getContext,
 	withScope,
+	withSyncEvent,
 } from '@wordpress/interactivity';
 
 const { state: productListState } = store('surecart/product-list');
@@ -30,7 +31,7 @@ const isValidEvent = (event) =>
 const { state, actions } = store('surecart/product-quick-view', {
 	actions: {
 		/** Navigate using interactivity router */
-		*navigate(event) {
+		navigate: withSyncEvent(function* (event) {
 			const { url } = getContext();
 
 			event?.preventDefault();
@@ -47,7 +48,7 @@ const { state, actions } = store('surecart/product-quick-view', {
 
 			productListState.loading = false;
 			state.loading = false;
-		},
+		}),
 
 		/** Prefetch URL */
 		*prefetch() {
@@ -60,7 +61,7 @@ const { state, actions } = store('surecart/product-quick-view', {
 		},
 
 		/** Open quick view modal */
-		*open(event) {
+		open: withSyncEvent(function* (event) {
 			if (!isValidEvent(event)) return;
 
 			// prevent default to avoid page reload.
@@ -83,10 +84,10 @@ const { state, actions } = store('surecart/product-quick-view', {
 					'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
 				);
 			firstFocusable?.focus();
-		},
+		}),
 
 		/** Close the product quick view dialog. */
-		*close(event) {
+		close: withSyncEvent(function* (event) {
 			if (!state.open || !isValidEvent(event)) return;
 
 			// prevent default to avoid page reload.
@@ -114,7 +115,7 @@ const { state, actions } = store('surecart/product-quick-view', {
 			state.open = false;
 
 			setTimeout(() => state?.openButton?.focus(), 1);
-		},
+		}),
 	},
 
 	callbacks: {

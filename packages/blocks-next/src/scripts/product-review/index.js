@@ -1,7 +1,7 @@
 /**
  * WordPress dependencies.
  */
-import { store, getElement } from '@wordpress/interactivity';
+import { store, getElement, withSyncEvent } from '@wordpress/interactivity';
 
 /**
  * Check if the link is valid.
@@ -33,7 +33,7 @@ const { state } = store('surecart/product-review', {
 
 	actions: {
 		/** Navigate to a url using the router region. */
-		*navigate(event) {
+		navigate: withSyncEvent(function* (event) {
 			const { ref } = getElement();
 			const queryRef = ref.closest('[data-wp-router-region]');
 			if (isValidLink(ref) && isValidEvent(event) && queryRef) {
@@ -47,7 +47,7 @@ const { state } = store('surecart/product-review', {
 				yield actions.navigate(ref.href);
 				state.loading = false;
 			}
-		},
+		}),
 
 		/** Prefetch upcoming urls. */
 		*prefetch() {

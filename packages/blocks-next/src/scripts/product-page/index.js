@@ -1,7 +1,7 @@
 /**
  * WordPress dependencies.
  */
-import { store, getContext, getElement } from '@wordpress/interactivity';
+import { store, getContext, getElement, withSyncEvent } from '@wordpress/interactivity';
 
 /**
  * Internal dependencies.
@@ -386,7 +386,7 @@ const { state, actions } = store('surecart/product-page', {
 		/**
 		 * Handle submit callback.
 		 */
-		*handleSubmit(e) {
+		handleSubmit: withSyncEvent(function* (e) {
 			if (e.type === 'keydown' && e.key !== 'Enter') {
 				return true;
 			}
@@ -409,12 +409,12 @@ const { state, actions } = store('surecart/product-page', {
 
 			// otherwise, redirect to the provided url.
 			return window.location.assign(e.submitter.value);
-		},
+		}),
 
 		/**
 		 * Set the option.
 		 */
-		setOption: (e) => {
+		setOption: withSyncEvent((e) => {
 			if (isNotKeySubmit(e)) {
 				return true;
 			}
@@ -457,12 +457,12 @@ const { state, actions } = store('surecart/product-page', {
 						option_value_slug,
 				})
 			);
-		},
+		}),
 
 		/**
 		 * Set the price
 		 */
-		setPrice: (e) => {
+		setPrice: withSyncEvent((e) => {
 			if (isNotKeySubmit(e)) {
 				return true;
 			}
@@ -477,7 +477,7 @@ const { state, actions } = store('surecart/product-page', {
 
 			context.selectedPrice = selectedPrice;
 			context.adHocAmount = null;
-		},
+		}),
 
 		/**
 		 * Set the ad_hoc_amount
@@ -507,7 +507,7 @@ const { state, actions } = store('surecart/product-page', {
 		/**
 		 * Redirect to the checkout page if the form is valid.
 		 */
-		redirectToCheckout: (e) => {
+		redirectToCheckout: withSyncEvent((e) => {
 			e?.preventDefault();
 			const form = e?.target?.closest('form');
 			if (form && !form.checkValidity()) {
@@ -515,7 +515,7 @@ const { state, actions } = store('surecart/product-page', {
 			} else {
 				window.location.assign(state.checkoutUrl);
 			}
-		},
+		}),
 
 		/**
 		 * Handle the quantity change.
@@ -534,7 +534,7 @@ const { state, actions } = store('surecart/product-page', {
 		/**
 		 * Handle the quantity decrease.
 		 */
-		onQuantityDecrease: function* (e) {
+		onQuantityDecrease: withSyncEvent(function* (e) {
 			if (isNotKeySubmit(e)) {
 				return true;
 			}
@@ -551,12 +551,12 @@ const { state, actions } = store('surecart/product-page', {
 			);
 
 			speak(`Quantity set to ${context.quantity}`, 'polite');
-		},
+		}),
 
 		/**
 		 * Handle the quantity increase.
 		 */
-		onQuantityIncrease: function* (e) {
+		onQuantityIncrease: withSyncEvent(function* (e) {
 			if (isNotKeySubmit(e)) {
 				return true;
 			}
@@ -572,7 +572,7 @@ const { state, actions } = store('surecart/product-page', {
 			);
 
 			speak(`Quantity set to ${context.quantity}`, 'polite');
-		},
+		}),
 	},
 });
 

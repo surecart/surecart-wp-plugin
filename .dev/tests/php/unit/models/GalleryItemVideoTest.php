@@ -345,7 +345,7 @@ class GalleryItemVideoTest extends SureCartUnitTestCase {
 		
 		$html = $gallery_item->html();
 		
-		$this->assertStringContainsString('data-wp-on-async--click', $html);
+		$this->assertStringContainsString('data-wp-on--click', $html);
 		$this->assertStringContainsString('has-image-lightbox', $html);
 		$this->assertStringContainsString('<button', $html);
 		$this->assertStringContainsString('lightbox-trigger', $html);

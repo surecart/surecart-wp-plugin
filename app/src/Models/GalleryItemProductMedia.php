@@ -100,9 +100,9 @@ class GalleryItemProductMedia extends ModelsGalleryItem implements GalleryItem {
 				)
 			);
 
-			$tags->set_attribute( 'data-wp-on-async--load', 'callbacks.setImageRef' );
+			$tags->set_attribute( 'data-wp-on--load', 'callbacks.setImageRef' );
 			$tags->set_attribute( 'data-wp-init', 'callbacks.setImageRef' );
-			$tags->set_attribute( 'data-wp-on-async--click', 'actions.showLightbox' );
+			$tags->set_attribute( 'data-wp-on--click', 'actions.showLightbox' );
 			$tags->set_attribute( 'data-wp-class--sc-hide', 'state.isContentHidden' );
 			$tags->set_attribute( 'data-wp-class--sc-show', 'state.isContentVisible' );
 			$tags->add_class( 'has-image-lightbox' );
@@ -115,7 +115,7 @@ class GalleryItemProductMedia extends ModelsGalleryItem implements GalleryItem {
 					aria-haspopup="dialog"
 					aria-label="' . esc_attr__( 'Expand image', 'surecart' ) . '"
 					data-wp-init="callbacks.initTriggerButton"
-					data-wp-on-async--click="actions.showLightbox"
+					data-wp-on--click="actions.showLightbox"
 					data-wp-style--right="state.imageButtonRight"
 					data-wp-style--top="state.imageButtonTop"
 				>

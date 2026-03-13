@@ -1,7 +1,7 @@
 /**
  * WordPress dependencies.
  */
-import { store, getElement, getContext } from '@wordpress/interactivity';
+import { store, getElement, getContext, withSyncEvent } from '@wordpress/interactivity';
 
 /**
  * Internal dependencies.
@@ -82,7 +82,7 @@ const setInitialFocus = () => {
 const { state, actions, callbacks } = store('surecart/product-review-form', {
 	actions: {
 		/** Open product review form modal */
-		*open(event) {
+		open: withSyncEvent(function* (event) {
 			if (!isValidEvent(event)) return;
 
 			// prevent default to avoid page reload.
@@ -116,10 +116,10 @@ const { state, actions, callbacks } = store('surecart/product-review-form', {
 
 			// Set initial focus to the first focusable element.
 			setInitialFocus();
-		},
+		}),
 
 		/** Close the product review form dialog. */
-		*close(event) {
+		close: withSyncEvent(function* (event) {
 			if (!state.open || !isValidEvent(event)) return;
 			const context = getContext();
 
@@ -151,7 +151,7 @@ const { state, actions, callbacks } = store('surecart/product-review-form', {
 
 			// restore focus to the open button.
 			setTimeout(() => state?.openButton?.focus(), 1);
-		},
+		}),
 
 		/** Set the stars */
 		setStars(event) {
@@ -160,12 +160,12 @@ const { state, actions, callbacks } = store('surecart/product-review-form', {
 		},
 
 		/** Handle keyboard selection of stars */
-		handleStarKeydown(event) {
+		handleStarKeydown: withSyncEvent(function(event) {
 			if (event.key === ' ' || event.key === 'Enter') {
 				event.preventDefault();
 				actions.selectStar(event.target);
 			}
-		},
+		}),
 
 		/** Handle click selection of stars */
 		handleStarClick(event) {
@@ -197,7 +197,7 @@ const { state, actions, callbacks } = store('surecart/product-review-form', {
 		/**
 		 * Handle form submit.
 		 */
-		*handleSubmit(e) {
+		handleSubmit: withSyncEvent(function* (e) {
 			if (e.type === 'keydown' && e.key !== 'Enter') {
 				return true;
 			}
@@ -305,7 +305,7 @@ const { state, actions, callbacks } = store('surecart/product-review-form', {
 					context.busy = false;
 				}
 			}
-		},
+		}),
 	},
 
 	callbacks: {

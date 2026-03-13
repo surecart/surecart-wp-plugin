@@ -554,8 +554,8 @@ class AddToCartButton extends \Elementor\Widget_Base {
 		?>
 		<button
 			<?php if ( ! empty( $settings['show_sticky_purchase_button'] ) && 'never' !== $settings['show_sticky_purchase_button'] ) : ?>
-				<?php $this->add_render_attribute( 'wrapper', 'data-wp-on-async-window--scroll', 'surecart/sticky-purchase::actions.toggleVisibility' ); ?>
-				<?php $this->add_render_attribute( 'wrapper', 'data-wp-on-async-window--resize', 'surecart/sticky-purchase::actions.toggleVisibility' ); ?>
+				<?php $this->add_render_attribute( 'wrapper', 'data-wp-on-window--scroll', 'surecart/sticky-purchase::actions.toggleVisibility' ); ?>
+				<?php $this->add_render_attribute( 'wrapper', 'data-wp-on-window--resize', 'surecart/sticky-purchase::actions.toggleVisibility' ); ?>
 			<?php endif; ?>
 
 			<?php echo $this->get_render_attribute_string( 'wrapper' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
