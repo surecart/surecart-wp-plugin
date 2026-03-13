@@ -1,4 +1,7 @@
 .wp-block-surecart-product-review-total-rating {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--sc-spacing-product-review-total-rating-gap, 4px);
 	font-size: var(--sc-font-size-small);
 
 	a.sc-review-link,
