@@ -352,7 +352,7 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 		$service = $this->container['surecart.shortcodes'];
 		add_shortcode(
 			'sc_product_review_list',
-			function ( $attributes, $content ) use ( $service ) {
+			function () use ( $service ) {
 				$pattern    = include SURECART_PLUGIN_DIR . '/templates/patterns/product-review-standard.php';
 				$block_html = $pattern['content'] ?? '';
 
