@@ -47,7 +47,7 @@ export default ({ download, product, className, variant }) => {
 			e?.message || __('Something went wrong', 'surecart'),
 			{ type: 'snackbar' }
 		);
-		e?.additional_errors.forEach((e) => {
+		e?.additional_errors?.forEach((e) => {
 			createErrorNotice(e?.message, {
 				type: 'snackbar',
 			});

@@ -18,10 +18,6 @@ export default ({
 		product,
 	});
 
-	if (!product?.licensing_enabled) {
-		return null;
-	}
-
 	// Get valid download IDs for this variant to filter inherited values.
 	const validDownloadIds = useMemo(
 		() =>
@@ -43,6 +39,10 @@ export default ({
 		currentReleaseId && validDownloadIds.includes(currentReleaseId)
 			? currentReleaseId
 			: '';
+
+	if (!product?.licensing_enabled) {
+		return null;
+	}
 
 	return (
 		<DrawerSection

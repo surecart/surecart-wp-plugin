@@ -118,7 +118,7 @@ class DownloadController extends BaseController {
 						)
 					);
 					?>
-				 ">
+				">
 					<?php esc_html_e( 'Downloads', 'surecart' ); ?>
 				</sc-breadcrumb>
 				<sc-breadcrumb>

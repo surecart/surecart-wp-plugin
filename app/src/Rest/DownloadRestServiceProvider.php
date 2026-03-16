@@ -6,7 +6,7 @@ use SureCart\Rest\RestServiceInterface;
 use SureCart\Controllers\Rest\DownloadsController;
 
 /**
- * Service provider for Price Rest Requests
+ * Service provider for Download Rest Requests
  */
 class DownloadRestServiceProvider extends RestServiceProvider implements RestServiceInterface {
 	/**
