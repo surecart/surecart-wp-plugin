@@ -54,12 +54,11 @@ export class ScDownloadsList {
     }
   }
 
-  /** Get all subscriptions */
+  /** Get all downloads */
   async getItems() {
     const response = (await apiFetch({
       path: addQueryArgs(`surecart/v1/downloads/`, {
-        product_ids: [this.productId],
-        ...(this.variantId ? { variant_ids: [this.variantId] } : {}),
+        ...(this.variantId ? { variant_ids: [this.variantId] } : { product_ids: [this.productId] }),
         customer_ids: [this.customerId],
         downloadable: true,
         ...this.query,
@@ -158,9 +157,9 @@ export class ScDownloadsList {
       return this.renderEmpty();
     }
     const downloads = this.downloads || [];
-    
+
     return (
-        <sc-card no-padding>
+      <sc-card no-padding>
         <sc-stacked-list>
           {downloads.map(download => {
             const media = download?.media as Media;
@@ -250,7 +249,7 @@ export class ScDownloadsList {
           onScNextPage={() => this.nextPage()}
           onScPrevPage={() => this.prevPage()}
         ></sc-pagination>
-         {this.busy && <sc-block-ui></sc-block-ui>}
+        {this.busy && <sc-block-ui></sc-block-ui>}
       </sc-dashboard-module>
     );
   }
