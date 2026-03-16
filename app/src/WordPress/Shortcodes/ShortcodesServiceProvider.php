@@ -348,10 +348,13 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 			]
 		);
 
-		// Review list shortcode — renders the full review list pattern.
+		/*
+		 * Pattern shortcodes.
+		 * These are shortcodes that render the content of a pattern file.
+		 */
 		$this->container['surecart.shortcodes']->registerPatternShortcodeByName(
 			'sc_product_review_list',
-			'product-review-standard'
+			'product-review-standard' // Pattern file name without path or extension.
 		);
 	}
 
