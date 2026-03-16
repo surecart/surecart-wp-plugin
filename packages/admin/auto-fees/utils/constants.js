@@ -105,7 +105,7 @@ export const ATTRIBUTE_REGISTRY = {
 
 	// Keep in sync with UUID_ENTITY_MAP below.
 	uuid: {
-		'customer.id': __('Customer ID', 'surecart'),
+		'customer.id': __('Customer', 'surecart'),
 		'coupon.id': __('Coupon', 'surecart'),
 		'promotion.id': __('Promotion', 'surecart'),
 		'price.id': __('Price', 'surecart'),
