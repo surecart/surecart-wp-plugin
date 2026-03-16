@@ -16,7 +16,7 @@ class BrandController {
 	 * @return \WP_REST_Response|\WP_Error
 	 */
 	public function find( \WP_REST_Request $request ) {
-		return Brand::with( [ 'address' ] )->find();
+		return Brand::with( [ 'address', 'logo', 'dark_logo' ] )->find();
 	}
 
 	/**
@@ -27,7 +27,7 @@ class BrandController {
 	 * @return \WP_REST_Response|\WP_Error
 	 */
 	public function edit( \WP_REST_Request $request ) {
-		return Brand::with( [ 'address' ] )->update( $request->get_json_params() );
+		return Brand::with( [ 'address', 'logo', 'dark_logo' ] )->update( $request->get_json_params() );
 	}
 
 	/**
@@ -38,6 +38,6 @@ class BrandController {
 	 * @return \WP_REST_Response
 	 */
 	public function purgeLogo( \WP_REST_Request $request ) {
-		return Brand::with( [ 'address' ] )->where( $request->get_query_params() )->purgeLogo();
+		return Brand::with( [ 'address', 'logo', 'dark_logo' ] )->where( $request->get_query_params() )->purgeLogo();
 	}
 }

@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: ecommerce, online store, subscriptions, stripe, payments
 Requires at least: 6.7
 Tested up to: 6.9
-Stable tag: 4.0.2
+Stable tag: 4.0.3
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -315,6 +315,19 @@ Yes, the checkout form can be customized using our visual builder. You can chang
 Accessibility is a huge priority for the entire team building SureCart. As you know, accessibility is an ongoing improvement task. Our development and QA teams are trained in accessibility best practices and build/test each new feature for accessibility. If you come across any edge issues, we want to know about it and will prioritize its resolution. Please contact us via our website.
 
 == Changelog ==
+
+= 4.0.3 - March 12th, 2026 =
+- New: Dark mode brand settings for store logo and theme colors.
+- New: Cart subtotal scratch amount block for displaying strikethrough discount on cart.
+- Improvement: Automatic cache plugin compatibility for LiteSpeed, W3 Total Cache, and other popular caching plugins.
+- Improvement: Product form block migration to v3 style compatibility.
+- Improvement: Add filter hook for model getAttribute method for better extensibility.
+- Improvement: Send billing details to Stripe for improved Radar fraud detection.
+- Fix: Integration list not scrolling when there are many integrations.
+- Fix: Search filter being cleared when selecting a collection on product list page.
+- Fix: Product list context error when products data is undefined.
+- Fix: Shortcodes not being processed in template part rendering.
+- Fix: Security fix for form shortcode to prevent unauthorized content disclosure.
 
 = 4.0.2 - March 5th, 2026 =
 - Fix: Product review form was not opening in version 4.0.1.

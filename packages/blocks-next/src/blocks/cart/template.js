@@ -894,17 +894,43 @@ export const TEMPLATE = [
 										],
 									],
 									[
-										'surecart/cart-subtotal-amount',
+										'core/group',
 										{
 											style: {
-												typography: {
-													fontSize: '18px',
-													fontStyle: 'normal',
-													fontWeight: '500',
-													lineHeight: '1.4',
-												},
+												spacing: { blockGap: '4px' },
+											},
+											layout: {
+												type: 'flex',
+												flexWrap: 'nowrap',
+												justifyContent: 'right',
 											},
 										},
+										[
+											[
+												'surecart/cart-subtotal-scratch-amount',
+												{
+													style: {
+														typography: {
+															fontSize: '18px',
+															lineHeight: '1.4',
+														},
+													},
+												},
+											],
+											[
+												'surecart/cart-subtotal-amount',
+												{
+													style: {
+														typography: {
+															fontSize: '18px',
+															fontStyle: 'normal',
+															fontWeight: '500',
+															lineHeight: '1.4',
+														},
+													},
+												},
+											],
+										],
 									],
 								],
 							],

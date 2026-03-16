@@ -133,6 +133,23 @@ const { state, actions } = store('surecart/checkout', {
 		},
 
 		/**
+		 * Check if the checkout has a subtotal scratch amount different from the subtotal.
+		 */
+		get hasSubtotalScratchAmount() {
+			return !!state?.checkout?.has_subtotal_scratch_amount;
+		},
+
+		/**
+		 * Get the aria label for the subtotal scratch amount.
+		 */
+		get subtotalScratchAriaLabel() {
+			const amount = state?.checkout?.subtotal_scratch_display_amount;
+			return amount
+				? `${__('Original price:', 'surecart')} ${amount}`
+				: '';
+		},
+
+		/**
 		 * Get the checkout line items.
 		 */
 		get checkoutLineItems() {
@@ -358,7 +375,7 @@ const { state, actions } = store('surecart/checkout', {
 			const { line_item } = getContext('surecart/checkout');
 			return (
 				state.isQuantityDisabled ||
-				( line_item?.max && line_item?.quantity >= line_item?.max )
+				(line_item?.max && line_item?.quantity >= line_item?.max)
 			);
 		},
 
@@ -369,7 +386,7 @@ const { state, actions } = store('surecart/checkout', {
 			const { line_item } = getContext('surecart/checkout');
 			return (
 				state.isQuantityDisabled ||
-				line_item?.quantity <= ( line_item?.min || 1 )
+				line_item?.quantity <= (line_item?.min || 1)
 			);
 		},
 	},
@@ -717,10 +734,7 @@ const { state, actions } = store('surecart/checkout', {
 				/* webpackIgnore: true */
 				'@wordpress/a11y'
 			);
-			speak(
-				__('Updating quantity.', 'surecart'),
-				'assertive'
-			);
+			speak(__('Updating quantity.', 'surecart'), 'assertive');
 			yield actions.updateLineItem({ quantity });
 			speak(
 				sprintf(
@@ -749,10 +763,7 @@ const { state, actions } = store('surecart/checkout', {
 				/* webpackIgnore: true */
 				'@wordpress/a11y'
 			);
-			speak(
-				__('Updating quantity.', 'surecart'),
-				'assertive'
-			);
+			speak(__('Updating quantity.', 'surecart'), 'assertive');
 			yield actions.updateLineItem({ quantity });
 			speak(
 				sprintf(
