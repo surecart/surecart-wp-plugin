@@ -46,15 +46,23 @@ class WooCommerceImportJob extends Job {
 			return false;
 		}
 
-		// Pre-fetch already-imported product IDs (EXISTS meta query is faster than NOT EXISTS).
-		$imported_ids = get_posts(
-			[
-				'post_type'   => 'product',
-				'meta_key'    => '_surecart_imported', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
-				'fields'      => 'ids',
-				'numberposts' => -1,
-			]
-		);
+		// Cache imported IDs for the duration of this job run to avoid
+		// repeated unbounded get_posts() queries on every page.
+		$cache_key    = 'sc_woo_import_excluded_ids';
+		$imported_ids = get_transient( $cache_key );
+
+		if ( false === $imported_ids ) {
+			$imported_ids = get_posts(
+				[
+					'post_type'   => 'product',
+					'meta_key'    => '_surecart_imported', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+					'fields'      => 'ids',
+					'numberposts' => -1,
+				]
+			);
+			// Cache for 1 hour — job will complete well within this window.
+			set_transient( $cache_key, $imported_ids, HOUR_IN_SECONDS );
+		}
 
 		$query_args = [
 			'limit'    => $batch_size,
@@ -96,6 +104,7 @@ class WooCommerceImportJob extends Job {
 	 * Kicks off the queue immediately to start processing tasks.
 	 */
 	protected function complete() {
+		delete_transient( 'sc_woo_import_excluded_ids' );
 		\SureCart::queue()->run();
 		parent::complete();
 	}

@@ -54,15 +54,6 @@ class WooCommerceProductMapper {
 	}
 
 	/**
-	 * Reset only the currency cache (collections persist across batches).
-	 *
-	 * @return void
-	 */
-	public function resetCurrencyCache() {
-		$this->currency_cache = null;
-	}
-
-	/**
 	 * Map the WooCommerce Product to SureCart.
 	 *
 	 * @param \WC_Product $product WooCommerce Product.

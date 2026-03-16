@@ -120,7 +120,7 @@ class WooCommerceImportTask extends Task {
 		if ( null === $this->mapper ) {
 			$this->mapper = new WooCommerceProductMapper();
 		}
-		$this->mapper->resetCurrencyCache();
+		$this->mapper->resetCaches();
 		return $this->mapper;
 	}
 
