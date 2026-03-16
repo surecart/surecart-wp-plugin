@@ -87,6 +87,9 @@ class WooCommerceImportService {
 	/**
 	 * Get the count of importable (not yet imported) WooCommerce products.
 	 *
+	 * Uses pre-fetched imported IDs with 'exclude' parameter instead of
+	 * a slow NOT EXISTS meta query.
+	 *
 	 * @return int
 	 */
 	public function getImportableCount() {
@@ -94,23 +97,28 @@ class WooCommerceImportService {
 			return 0;
 		}
 
-		$mapper = new WooCommerceProductMapper();
+		// Pre-fetch already-imported product IDs (EXISTS meta query is faster than NOT EXISTS).
+		$imported_ids = get_posts(
+			[
+				'post_type'   => 'product',
+				'meta_key'    => '_surecart_imported', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+				'fields'      => 'ids',
+				'numberposts' => -1,
+			]
+		);
 
-		add_filter( 'woocommerce_product_data_store_cpt_get_products_query', [ $mapper, 'excludeImportedProducts' ], 10, 2 );
+		$query_args = [
+			'limit'    => 1,
+			'page'     => 1,
+			'return'   => 'ids',
+			'paginate' => true,
+		];
 
-		try {
-			$products = wc_get_products(
-				[
-					'limit'                 => 1,
-					'page'                  => 1,
-					'return'                => 'ids',
-					'paginate'              => true,
-					'surecart_not_imported' => true,
-				]
-			);
-		} finally {
-			remove_filter( 'woocommerce_product_data_store_cpt_get_products_query', [ $mapper, 'excludeImportedProducts' ], 10 );
+		if ( ! empty( $imported_ids ) ) {
+			$query_args['exclude'] = $imported_ids;
 		}
+
+		$products = wc_get_products( $query_args );
 
 		if ( ! is_object( $products ) || ! isset( $products->total ) ) {
 			return 0;
@@ -163,6 +171,18 @@ class WooCommerceImportService {
 
 		$import_ids             = get_option( 'sc_woo_import_ids', [] );
 		$all_skipped_session_id = get_option( 'sc_woo_import_all_skipped' );
+
+		// Lazily detect the all-skipped case: no imports created but skipped products exist.
+		if ( empty( $import_ids ) && ! $all_skipped_session_id ) {
+			$session_id = get_option( 'sc_woo_import_session_id' );
+			if ( $session_id ) {
+				$skipped = get_transient( 'sc_woo_import_skipped_' . $session_id );
+				if ( ! empty( $skipped ) ) {
+					update_option( 'sc_woo_import_all_skipped', $session_id, false );
+					$all_skipped_session_id = $session_id;
+				}
+			}
+		}
 
 		// Generate results URL and notice name per branch.
 		$notice_name = '';

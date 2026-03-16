@@ -54,34 +54,6 @@ class WooCommerceProductMapper {
 	}
 
 	/**
-	 * Reset only the currency cache (collections persist across batches).
-	 *
-	 * @return void
-	 */
-	public function resetCurrencyCache() {
-		$this->currency_cache = null;
-	}
-
-	/**
-	 * Exclude already-imported products from wc_get_products query.
-	 *
-	 * @param array $wp_query_args WP_Query args.
-	 * @param array $query_vars    Query vars passed to wc_get_products.
-	 *
-	 * @return array
-	 */
-	public function excludeImportedProducts( $wp_query_args, $query_vars ) {
-		if ( ! empty( $query_vars['surecart_not_imported'] ) ) {
-			$wp_query_args['meta_query'][] = [ // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
-				'key'     => '_surecart_imported',
-				'compare' => 'NOT EXISTS',
-			];
-		}
-
-		return $wp_query_args;
-	}
-
-	/**
 	 * Map the WooCommerce Product to SureCart.
 	 *
 	 * @param \WC_Product $product WooCommerce Product.

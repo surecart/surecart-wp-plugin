@@ -20,7 +20,7 @@ export default ({
 		const queryArgs = [
 			'surecart',
 			'integration_provider',
-			{ context: 'edit', model },
+			{ context: 'edit', model, per_page: 100 },
 		];
 		return {
 			providers: select(coreStore).getEntityRecords(...queryArgs),

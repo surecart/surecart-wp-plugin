@@ -90,9 +90,9 @@ class MemberPressService extends IntegrationService implements IntegrationInterf
 
 		$membership_query = new \WP_Query(
 			[
-				'post_type' => \MeprProduct::$cpt,
-				's'         => $search,
-				'per_page'  => 10,
+				'post_type'      => \MeprProduct::$cpt,
+				's'              => $search,
+				'posts_per_page' => 100,
 			]
 		);
 
