@@ -40,7 +40,7 @@ export class ScDownloadsList {
   }
 
   async fetchItems() {
-    if (!this.productId || !this.customerId) {
+    if ((!this.productId && !this.variantId) || !this.customerId) {
       return;
     }
     try {
