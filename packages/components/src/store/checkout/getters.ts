@@ -1,4 +1,4 @@
-import { Product, Address } from 'src/types';
+import { Product, Address, Checkout } from 'src/types';
 import { getCheckout } from '../checkouts/mutations';
 import state from './store';
 import { isAddressComplete } from 'src/functions/address';
@@ -31,17 +31,47 @@ export const fullShippingAddressRequired = () => state.checkout?.shipping_addres
 export const shippingAddressRequired = () => state.checkout?.shipping_address_accuracy_requirement === 'full' || state.checkout?.shipping_address_accuracy_requirement === 'tax';
 
 /**
- * Get Billing address
+ * Get a complete address by type, with Stripe-formatted field names (line1/line2).
  */
-export const getCompleteAddress = (type = 'shipping') => {
+export const getCompleteAddress = (type: 'shipping' | 'billing' = 'shipping') => {
   const isComplete = isAddressComplete(state.checkout?.[`${type}_address`] as Address);
   if (!isComplete) return;
 
-  const { line_1: line1, line_2: line2, ...otherProps } = (state.checkout?.shipping_address as Address) || {};
+  const { line_1: line1, line_2: line2, ...otherProps } = (state.checkout?.[`${type}_address`] as Address) || {};
 
   return {
     line1,
     line2,
     ...otherProps,
   };
+};
+
+/**
+ * Get the resolved billing address for payment processors.
+ * Falls back to shipping address when billing matches shipping.
+ * Returns canonical Address format (line_1/line_2).
+ */
+export const getResolvedBillingAddress = (checkout?: Checkout): Address | undefined => {
+  const currentOrder = checkout || state.checkout;
+
+  const billingAddress =
+    currentOrder?.billing_matches_shipping === false && currentOrder?.billing_address
+      ? (currentOrder.billing_address as Address)
+      : undefined;
+
+  const address = billingAddress?.line_1 ? billingAddress : (currentOrder?.shipping_address as Address);
+
+  if (!address?.line_1) return undefined;
+
+  return address;
+};
+
+/**
+ * Convert a canonical Address to Stripe's expected format (line1/line2 instead of line_1/line_2).
+ */
+export const toStripeAddress = (address?: Address) => {
+  if (!address?.line_1) return undefined;
+
+  const { line_1: line1, line_2: line2, city, state: addressState, country, postal_code } = address;
+  return { line1, line2, city, state: addressState, postal_code, country };
 };
