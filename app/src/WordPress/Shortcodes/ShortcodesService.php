@@ -133,6 +133,34 @@ class ShortcodesService {
 	}
 
 	/**
+	 * Register a pattern file as a shortcode.
+	 *
+	 * @param string $name         Shortcode name (e.g. 'sc_product_review_list').
+	 * @param string $pattern_file Pattern filename without path or extension (e.g. 'product-review-standard').
+	 *
+	 * @return void
+	 */
+	public function registerPatternShortcodeByName( $name, $pattern_file ) {
+		add_shortcode(
+			$name,
+			function () use ( $pattern_file ) {
+				$pattern    = include SURECART_PLUGIN_DIR . '/templates/patterns/' . $pattern_file . '.php';
+				$block_html = $pattern['content'] ?? '';
+
+				add_filter( 'should_load_separate_core_block_assets', '__return_false', 11 );
+				wp_enqueue_global_styles();
+				add_filter( 'doing_it_wrong_trigger_error', [ $this, 'removeInteractivityDoingItWrong' ], 10, 2 );
+
+				$output = wp_interactivity_process_directives( do_blocks( $block_html ) );
+
+				remove_filter( 'doing_it_wrong_trigger_error', [ $this, 'removeInteractivityDoingItWrong' ], 10 );
+
+				return $output;
+			}
+		);
+	}
+
+	/**
 	 * Process the block
 	 *
 	 * @param string $block_name Block name.

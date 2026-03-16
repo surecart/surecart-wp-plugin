@@ -349,23 +349,9 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 		);
 
 		// Review list shortcode — renders the full review list pattern.
-		$service = $this->container['surecart.shortcodes'];
-		add_shortcode(
+		$this->container['surecart.shortcodes']->registerPatternShortcodeByName(
 			'sc_product_review_list',
-			function () use ( $service ) {
-				$pattern    = include SURECART_PLUGIN_DIR . '/templates/patterns/product-review-standard.php';
-				$block_html = $pattern['content'] ?? '';
-
-				add_filter( 'should_load_separate_core_block_assets', '__return_false', 11 );
-				wp_enqueue_global_styles();
-				add_filter( 'doing_it_wrong_trigger_error', [ $service, 'removeInteractivityDoingItWrong' ], 10, 2 );
-
-				$output = wp_interactivity_process_directives( do_blocks( $block_html ) );
-
-				remove_filter( 'doing_it_wrong_trigger_error', [ $service, 'removeInteractivityDoingItWrong' ], 10 );
-
-				return $output;
-			}
+			'product-review-standard'
 		);
 	}
 
