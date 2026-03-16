@@ -65,7 +65,7 @@ class ImportRowsRestServiceProvider extends RestServiceProvider implements RestS
 	 * Read single item permissions.
 	 *
 	 * @param \WP_REST_Request $request Full details about the request.
-	 * @return true|\WP_Error True if the request has access, WP_Error object otherwise.
+	 * @return true|\WP_Error True if the request has access, \WP_Error object otherwise.
 	 */
 	public function get_item_permissions_check( $request ) {
 		return current_user_can( 'edit_sc_products' );
@@ -75,10 +75,9 @@ class ImportRowsRestServiceProvider extends RestServiceProvider implements RestS
 	 * List items permissions.
 	 *
 	 * @param \WP_REST_Request $request Full details about the request.
-	 * @return true|\WP_Error True if the request has access, WP_Error object otherwise.
+	 * @return true|\WP_Error True if the request has access, \WP_Error object otherwise.
 	 */
 	public function get_items_permissions_check( $request ) {
 		return current_user_can( 'edit_sc_products' );
 	}
-
 }
