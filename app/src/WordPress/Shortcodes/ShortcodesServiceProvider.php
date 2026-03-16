@@ -300,94 +300,71 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 			);
 		}
 
-		// Register product review shortcodes that override the auto-generated ones
-		// with product context support, so they work on non-product pages.
+		// Register product review shortcode aliases with friendly names.
+		$this->container['surecart.shortcodes']->registerBlockShortcodeByName(
+			'sc_product_review_rating_stars',
+			'surecart/product-review-average-rating-stars',
+			[
+				'size'            => '20px',
+				'fill_color'      => '',
+				'link_to_reviews' => false,
+			]
+		);
+		$this->container['surecart.shortcodes']->registerBlockShortcodeByName(
+			'sc_product_review_rating_value',
+			'surecart/product-review-average-rating-value',
+			[
+				'link_to_reviews' => false,
+				'format'          => 'none',
+			]
+		);
+		$this->container['surecart.shortcodes']->registerBlockShortcodeByName(
+			'sc_product_review_total_count',
+			'surecart/product-review-total-rating',
+			[
+				'show_label'            => true,
+				'show_for_zero_reviews' => true,
+				'link_to_reviews'       => true,
+			]
+		);
+		$this->container['surecart.shortcodes']->registerBlockShortcodeByName(
+			'sc_product_review_breakdown',
+			'surecart/product-review-breakdown',
+			[
+				'columns'              => 1,
+				'fill_color'           => '',
+				'bar_fill_color'       => '',
+				'bar_background_color' => '',
+			]
+		);
+		$this->container['surecart.shortcodes']->registerBlockShortcodeByName(
+			'sc_product_review_add_button',
+			'surecart/product-review-add-button',
+			[
+				'label'       => __( 'Write a Review', 'surecart' ),
+				'button_type' => 'both',
+				'icon'        => 'edit-2',
+				'className'   => 'is-style-fill',
+			]
+		);
+
+		// Review list shortcode — renders the full review list pattern.
 		$service = $this->container['surecart.shortcodes'];
-
-		// Simple block shortcodes that need product context.
-		$review_shortcodes = [
-			'sc_product_review_rating_stars' => [
-				'block'    => 'surecart/product-review-average-rating-stars',
-				'defaults' => [
-					'size'            => '20px',
-					'fill_color'      => '',
-					'link_to_reviews' => false,
-				],
-			],
-			'sc_product_review_rating_value' => [
-				'block'    => 'surecart/product-review-average-rating-value',
-				'defaults' => [
-					'link_to_reviews' => false,
-					'format'          => 'none',
-				],
-			],
-			'sc_product_review_total_count'  => [
-				'block'    => 'surecart/product-review-total-rating',
-				'defaults' => [
-					'show_label'            => true,
-					'show_for_zero_reviews' => true,
-					'link_to_reviews'       => true,
-				],
-			],
-			'sc_product_review_breakdown'    => [
-				'block'    => 'surecart/product-review-breakdown',
-				'defaults' => [
-					'columns'              => 1,
-					'fill_color'           => '',
-					'bar_fill_color'       => '',
-					'bar_background_color' => '',
-				],
-			],
-			'sc_product_review_add_button'   => [
-				'block'    => 'surecart/product-review-add-button',
-				'defaults' => [
-					'label'       => __( 'Write a Review', 'surecart' ),
-					'button_type' => 'both',
-					'icon'        => 'edit-2',
-					'className'   => 'is-style-fill',
-				],
-			],
-		];
-
-		foreach ( $review_shortcodes as $shortcode_name => $config ) {
-			$block_name = $config['block'];
-			$defaults   = array_merge( [ 'id' => null ], $config['defaults'] );
-
-			add_shortcode(
-				$shortcode_name,
-				function ( $attributes, $content ) use ( $service, $shortcode_name, $block_name, $defaults ) {
-					$attributes = shortcode_atts( $defaults, $attributes, $shortcode_name );
-
-					// Cast boolean attributes.
-					foreach ( $defaults as $key => $default ) {
-						if ( is_bool( $default ) && isset( $attributes[ $key ] ) ) {
-							$attributes[ $key ] = filter_var( $attributes[ $key ], FILTER_VALIDATE_BOOLEAN );
-						}
-					}
-
-					// Convert format attribute to className for block style variants.
-					if ( ! empty( $attributes['format'] ) && 'none' !== $attributes['format'] ) {
-						$attributes['className'] = 'is-style-' . sanitize_html_class( $attributes['format'] );
-					}
-					unset( $attributes['format'] );
-
-					return $service->renderBlockWithProductContext( $block_name, $attributes, $content );
-				}
-			);
-		}
-
-		// Review list shortcode — loads markup from the existing pattern file.
 		add_shortcode(
 			'sc_product_review_list',
 			function ( $attributes, $content ) use ( $service ) {
-				$attributes = shortcode_atts( [ 'id' => null ], $attributes, 'sc_product_review_list' );
-
-				$id = $attributes['id'] ?? null;
-
 				$pattern    = include SURECART_PLUGIN_DIR . '/templates/patterns/product-review-standard.php';
 				$block_html = $pattern['content'] ?? '';
 
-				return $service->renderBlockHtmlWithProductContext( $block_html, ! empty( $id ) ? absint( $id ) : null );
+				add_filter( 'should_load_separate_core_block_assets', '__return_false', 11 );
+				wp_enqueue_global_styles();
+				add_filter( 'doing_it_wrong_trigger_error', [ $service, 'removeInteractivityDoingItWrong' ], 10, 2 );
+
+				$output = wp_interactivity_process_directives( do_blocks( $block_html ) );
+
+				remove_filter( 'doing_it_wrong_trigger_error', [ $service, 'removeInteractivityDoingItWrong' ], 10 );
+
+				return $output;
 			}
 		);
 	}
