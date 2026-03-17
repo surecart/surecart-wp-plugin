@@ -67,6 +67,9 @@ class SyncServiceProvider implements ServiceProviderInterface {
 		$container['surecart.sync.customers']            = fn () => new CustomerSyncService();
 		$container['surecart.sync.woocommerce_products'] = fn () => new WooCommerceImportService( $app );
 		$container['surecart.sync.batch']                = fn () => new BatchCheckService();
+
+		// Import state tracker — reusable for future import types (Shopify, EDD, etc.).
+		$container['surecart.sync.import_state.woo'] = fn () => new ImportState( 'woo' );
 		$container['surecart.sync.content']              = fn () => new ContentSyncService( $app );
 
 		// Alias the sync service.

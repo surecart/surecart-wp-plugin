@@ -174,14 +174,14 @@ class AdminURLService {
 	/**
 	 * Import results page url.
 	 *
-	 * @param string       $name Model lowercase name.
+	 * @param string       $name       Model lowercase name.
 	 * @param string|array $import_ids The import ID(s).
+	 * @param string|null  $session_id Optional session ID for skipped products lookup.
 	 *
 	 * @return string URL for the page.
 	 */
-	public function importResults( $name, $import_ids ) {
+	public function importResults( $name, $import_ids, $session_id = null ) {
 		$import_ids = array_map( 'sanitize_key', (array) $import_ids );
-		$session_id = get_option( 'sc_woo_import_session_id' );
 
 		$query_args = [
 			'action'     => 'import_results',

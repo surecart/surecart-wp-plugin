@@ -107,7 +107,7 @@ class WooCommerceImportTask extends Task {
 				update_post_meta( $imported_id, '_surecart_imported', time() );
 			}
 
-			$this->appendImportId( $import->id );
+			$this->importState()->appendResultId( $import->id );
 		}
 	}
 
@@ -213,46 +213,16 @@ class WooCommerceImportTask extends Task {
 	 * @return void
 	 */
 	private function flushSkippedProducts( $skipped_products ) {
-		if ( empty( $skipped_products ) ) {
-			return;
-		}
-
-		$session_id    = $this->getImportSessionId();
-		$transient_key = 'sc_woo_import_skipped_' . $session_id;
-
-		// Merge with any previously stored skipped products from earlier batches.
-		$existing = get_transient( $transient_key );
-		if ( ! is_array( $existing ) ) {
-			$existing = [];
-		}
-
-		set_transient( $transient_key, array_merge( $existing, $skipped_products ), 7 * DAY_IN_SECONDS );
+		// Delegate to centralized state tracker (same option/transient behavior).
+		$this->importState()->addSkippedItems( $skipped_products );
 	}
 
 	/**
-	 * Append an import ID to the stored list.
+	 * Get the import state tracker.
 	 *
-	 * @param string $import_id The import ID to append.
-	 *
-	 * @return void
+	 * @return \SureCart\Sync\ImportState
 	 */
-	private function appendImportId( $import_id ) {
-		$existing_ids   = get_option( 'sc_woo_import_ids', [] );
-		$existing_ids[] = sanitize_key( $import_id );
-		update_option( 'sc_woo_import_ids', $existing_ids, false );
-	}
-
-	/**
-	 * Get or create import session ID for tracking skipped products.
-	 *
-	 * @return string Session ID (UUID).
-	 */
-	private function getImportSessionId() {
-		$session_id = get_option( 'sc_woo_import_session_id' );
-		if ( ! $session_id ) {
-			$session_id = wp_generate_uuid4();
-			update_option( 'sc_woo_import_session_id', $session_id, false );
-		}
-		return $session_id;
+	private function importState() {
+		return \SureCart::resolve( 'surecart.sync.import_state.woo' );
 	}
 }

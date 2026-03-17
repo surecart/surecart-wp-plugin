@@ -48,6 +48,15 @@ class WooCommerceImportService {
 	}
 
 	/**
+	 * Get the import state tracker.
+	 *
+	 * @return \SureCart\Sync\ImportState
+	 */
+	private function importState() {
+		return $this->app->resolve( 'surecart.sync.import_state.woo' );
+	}
+
+	/**
 	 * Is the import currently running?
 	 *
 	 * @return boolean
@@ -69,9 +78,7 @@ class WooCommerceImportService {
 	 */
 	public function dispatch( $batch_size = 100 ) {
 		// Clear previously accumulated import IDs and session tracking.
-		delete_option( 'sc_woo_import_ids' );
-		delete_option( 'sc_woo_import_session_id' );
-		delete_option( 'sc_woo_import_all_skipped' );
+		$this->importState()->reset();
 
 		$batch_size = apply_filters( 'surecart/sync/woocommerce_products/batch_size', $batch_size );
 		$batch_size = max( 1, min( 500, (int) $batch_size ) );
@@ -169,18 +176,15 @@ class WooCommerceImportService {
 			return;
 		}
 
-		$import_ids             = get_option( 'sc_woo_import_ids', [] );
-		$all_skipped_session_id = get_option( 'sc_woo_import_all_skipped' );
+		$state                  = $this->importState();
+		$import_ids             = $state->getResultIds();
+		$all_skipped_session_id = $state->getAllSkippedSessionId();
 
 		// Lazily detect the all-skipped case: no imports created but skipped products exist.
 		if ( empty( $import_ids ) && ! $all_skipped_session_id ) {
-			$session_id = get_option( 'sc_woo_import_session_id' );
-			if ( $session_id ) {
-				$skipped = get_transient( 'sc_woo_import_skipped_' . $session_id );
-				if ( ! empty( $skipped ) ) {
-					update_option( 'sc_woo_import_all_skipped', $session_id, false );
-					$all_skipped_session_id = $session_id;
-				}
+			if ( $state->getSessionId() && ! empty( $state->getSkippedItems() ) ) {
+				$state->markAllSkipped();
+				$all_skipped_session_id = $state->getAllSkippedSessionId();
 			}
 		}
 
@@ -188,7 +192,7 @@ class WooCommerceImportService {
 		$notice_name = '';
 		if ( ! empty( $import_ids ) ) {
 			// Normal case: has import_ids.
-			$results_url = \SureCart::getUrl()->importResults( 'products', $import_ids );
+			$results_url = \SureCart::getUrl()->importResults( 'products', $import_ids, $state->getSessionId() );
 			$notice_name = 'woo_import_complete_' . md5( implode( ',', $import_ids ) );
 		} elseif ( $all_skipped_session_id ) {
 			// All-skipped case: use session_id.

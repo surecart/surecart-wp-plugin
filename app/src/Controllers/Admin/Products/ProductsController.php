@@ -311,6 +311,8 @@ class ProductsController extends AdminController {
 	 * @return \SureCartCore\View
 	 */
 	public function importResults( $request ) {
+		$state = \SureCart::resolve( 'surecart.sync.import_state.woo' );
+
 		// add header.
 		$this->withHeader(
 			[
@@ -334,7 +336,7 @@ class ProductsController extends AdminController {
 
 		if ( empty( $import_ids_raw ) ) {
 			// Check if this is an all-skipped import.
-			$all_skipped_session_id = get_option( 'sc_woo_import_all_skipped' );
+			$all_skipped_session_id = $state->getAllSkippedSessionId();
 
 			// Fallback: if option was already cleaned up, check URL param (e.g. page refresh).
 			if ( ! $all_skipped_session_id ) {
@@ -344,17 +346,10 @@ class ProductsController extends AdminController {
 
 			if ( $all_skipped_session_id ) {
 				// Fetch skipped products via session ID.
-				$transient_key    = 'sc_woo_import_skipped_' . $all_skipped_session_id;
-				$skipped_products = get_transient( $transient_key );
-
-				if ( ! is_array( $skipped_products ) ) {
-					$skipped_products = [];
-				}
+				$skipped_products = $state->getSkippedItemsBySession( $all_skipped_session_id );
 
 				// Clean up completion notice options now that the user has viewed results.
-				delete_option( 'sc_woo_import_all_skipped' );
-				delete_option( 'sc_woo_import_session_id' );
-				delete_option( 'sc_woo_import_ids' );
+				$state->reset();
 
 				return \SureCart::view( 'admin/products/import-results' )->with(
 					[
@@ -392,7 +387,7 @@ class ProductsController extends AdminController {
 
 		// Fallback: use current session if available (for backward compatibility).
 		if ( ! $session_id ) {
-			$session_id = get_option( 'sc_woo_import_session_id' );
+			$session_id = $state->getSessionId();
 		}
 
 		// Fetch all import rows (capped at 50 pages to prevent timeouts).
@@ -439,19 +434,12 @@ class ProductsController extends AdminController {
 		// Fetch skipped products from transient.
 		$skipped_products = [];
 		if ( $session_id ) {
-			$transient_key    = 'sc_woo_import_skipped_' . $session_id;
-			$skipped_products = get_transient( $transient_key );
-
-			if ( ! is_array( $skipped_products ) ) {
-				$skipped_products = [];
-			}
+			$skipped_products = $state->getSkippedItemsBySession( $session_id );
 		}
 
 		// Clean up completion notice options now that the user has viewed results.
 		// The results page uses URL query params, so these options are no longer needed.
-		delete_option( 'sc_woo_import_ids' );
-		delete_option( 'sc_woo_import_all_skipped' );
-		delete_option( 'sc_woo_import_session_id' );
+		$state->reset();
 
 		return \SureCart::view( 'admin/products/import-results' )->with(
 			[

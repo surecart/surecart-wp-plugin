@@ -7,6 +7,7 @@
 
 namespace SureCart\Tests\Sync {
 
+	use SureCart\Sync\ImportState;
 	use SureCart\Sync\WooCommerce\WooCommerceImportJob;
 	use SureCart\Sync\WooCommerce\WooCommerceImportService;
 	use SureCart\Tests\SureCartUnitTestCase;
@@ -40,9 +41,7 @@ namespace SureCart\Tests\Sync {
 			$GLOBALS['test_woocommerce_currency']   = 'USD';
 
 			// Clean up options.
-			delete_option( 'sc_woo_import_ids' );
-			delete_option( 'sc_woo_import_session_id' );
-			delete_option( 'sc_woo_import_all_skipped' );
+			( new ImportState( 'woo' ) )->reset();
 		}
 
 		/**
@@ -54,9 +53,7 @@ namespace SureCart\Tests\Sync {
 				$GLOBALS['test_wc_get_product_result'],
 				$GLOBALS['test_woocommerce_currency']
 			);
-			delete_option( 'sc_woo_import_ids' );
-			delete_option( 'sc_woo_import_session_id' );
-			delete_option( 'sc_woo_import_all_skipped' );
+			( new ImportState( 'woo' ) )->reset();
 			parent::tearDown();
 		}
 
@@ -219,18 +216,14 @@ namespace SureCart\Tests\Sync {
 			);
 
 			// Clean up options.
-			delete_option( 'sc_woo_import_ids' );
-			delete_option( 'sc_woo_import_session_id' );
-			delete_option( 'sc_woo_import_all_skipped' );
+			( new ImportState( 'woo' ) )->reset();
 		}
 
 		/**
 		 * Tear down.
 		 */
 		public function tearDown(): void {
-			delete_option( 'sc_woo_import_ids' );
-			delete_option( 'sc_woo_import_session_id' );
-			delete_option( 'sc_woo_import_all_skipped' );
+			( new ImportState( 'woo' ) )->reset();
 			parent::tearDown();
 		}
 
@@ -259,6 +252,9 @@ namespace SureCart\Tests\Sync {
 			$app->shouldReceive( 'resolve' )
 				->with( 'surecart.jobs.woo_import' )
 				->andReturn( $mock_job );
+			$app->shouldReceive( 'resolve' )
+				->with( 'surecart.sync.import_state.woo' )
+				->andReturn( new ImportState( 'woo' ) );
 
 			$service = new WooCommerceImportService( $app );
 			$service->dispatch();
@@ -287,6 +283,9 @@ namespace SureCart\Tests\Sync {
 			$app->shouldReceive( 'resolve' )
 				->with( 'surecart.jobs.woo_import' )
 				->andReturn( $mock_job );
+			$app->shouldReceive( 'resolve' )
+				->with( 'surecart.sync.import_state.woo' )
+				->andReturn( new ImportState( 'woo' ) );
 
 			$service = new WooCommerceImportService( $app );
 			$service->dispatch( 9999 );
@@ -310,6 +309,9 @@ namespace SureCart\Tests\Sync {
 			$app->shouldReceive( 'resolve' )
 				->with( 'surecart.jobs.woo_import' )
 				->andReturn( $mock_job );
+			$app->shouldReceive( 'resolve' )
+				->with( 'surecart.sync.import_state.woo' )
+				->andReturn( new ImportState( 'woo' ) );
 
 			$service = new WooCommerceImportService( $app );
 			$service->dispatch( 0 );
