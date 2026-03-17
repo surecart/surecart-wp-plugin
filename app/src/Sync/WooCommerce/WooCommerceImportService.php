@@ -181,6 +181,10 @@ class WooCommerceImportService {
 		$all_skipped_session_id = $state->getAllSkippedSessionId();
 
 		// Lazily detect the all-skipped case: no imports created but skipped products exist.
+		// This mutation lives in the notice renderer (not in Job::complete()) because the Job
+		// finishes before tasks complete — tasks run async via Action Scheduler, so result IDs
+		// aren't available yet at Job::complete() time. The write is idempotent (same session_id
+		// every time), so concurrent admin page loads are harmless.
 		if ( empty( $import_ids ) && ! $all_skipped_session_id ) {
 			if ( $state->getSessionId() && ! empty( $state->getSkippedItems() ) ) {
 				$state->markAllSkipped();
