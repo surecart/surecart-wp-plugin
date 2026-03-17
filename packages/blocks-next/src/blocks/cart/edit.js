@@ -11,7 +11,6 @@ import {
 	useSettings,
 	BlockControls,
 } from '@wordpress/block-editor';
-import { useEntityProp } from '@wordpress/core-data';
 import {
 	__experimentalUseCustomUnits as useCustomUnits,
 	PanelBody,
@@ -37,7 +36,9 @@ export default ({
 	setAttributes,
 	__unstableLayoutClassNames,
 }) => {
-	const [theme] = useEntityProp('root', 'site', 'surecart_theme');
+	// Theme is read from window globals (non-reactive) because it's an API-backed brand setting.
+	// Changes require save + page reload to take effect in the editor preview.
+	const theme = window?.scBlockData?.theme || window?.scData?.theme || 'light';
 
 	const [isPatternSelectionModalOpen, setIsPatternSelectionModalOpen] =
 		useState(false);

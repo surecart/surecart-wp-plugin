@@ -61,14 +61,14 @@ export default ({ attributes, setAttributes }) => {
 					allowedFormats={['core/bold', 'core/italic']}
 				/>
 				<div className="sc-input-group">
-					<span class="sc-input-group-text" id="basic-addon1">
+					<span className="sc-input-group-text" id="basic-addon1">
 						{scData?.currency_symbol}
 					</span>
 					<input
-						class="sc-form-control"
+						className="sc-form-control"
 						type="number"
 						step="0.01"
-						onwheel="this.blur()"
+						onWheel={(e) => e.target.blur()}
 					/>
 				</div>
 			</div>
