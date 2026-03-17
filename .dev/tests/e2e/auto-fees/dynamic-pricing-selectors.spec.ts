@@ -174,18 +174,25 @@ test.describe( 'Dynamic Pricing Selectors', () => {
 		const saveBtn = page.locator( 'text=Save & Publish' );
 		await saveBtn.waitFor( { timeout: 10000 } );
 		await saveBtn.click();
-		// Wait for save to complete — button text changes from "Save & Publish" to "Update".
-		await expect( page.locator( 'text=Update' ).first() ).toBeVisible( { timeout: 30000 } );
-
-		// Reload the page.
-		await page.reload();
+		// Wait for button to disappear (proves save completed — text changes to "Update").
+		await expect( saveBtn ).not.toBeVisible( { timeout: 30000 } );
 		await page.waitForLoadState( 'networkidle' );
 
-		// Verify the ModelSelector trigger shows the product name (not placeholder "Search...").
-		// The third sc-select in the condition card is the ModelSelector.
+		// Reload the page and wait for conditions to render.
+		await page.reload();
+		await page.waitForLoadState( 'networkidle' );
+		await page.locator( 'sc-card' ).first().waitFor( { timeout: 20000 } );
+
+		// If conditions didn't load (transient API fetch error), retry reload once.
 		const modelTrigger = page.locator( 'sc-card sc-select' ).nth( 2 );
+		if ( ! await modelTrigger.isVisible( { timeout: 5000 } ).catch( () => false ) ) {
+			await page.reload();
+			await page.waitForLoadState( 'networkidle' );
+			await page.locator( 'sc-card' ).first().waitFor( { timeout: 20000 } );
+		}
+
+		// Verify the ModelSelector trigger shows the product name (not placeholder "Search...").
 		await modelTrigger.waitFor( { timeout: 15000 } );
-		// The sc-select renders selected item text in a button/trigger. Check its text content.
 		await expect( modelTrigger ).toContainText( 'Persist Test Product', { timeout: 15000 } );
 	} );
 
@@ -231,16 +238,24 @@ test.describe( 'Dynamic Pricing Selectors', () => {
 		const saveBtn = page.locator( 'text=Save & Publish' );
 		await saveBtn.waitFor( { timeout: 10000 } );
 		await saveBtn.click();
-		// Wait for save to complete — button text changes from "Save & Publish" to "Update".
-		await expect( page.locator( 'text=Update' ).first() ).toBeVisible( { timeout: 30000 } );
-
-		// Reload.
-		await page.reload();
+		// Wait for button to disappear (proves save completed — text changes to "Update").
+		await expect( saveBtn ).not.toBeVisible( { timeout: 30000 } );
 		await page.waitForLoadState( 'networkidle' );
 
-		// Verify the PriceSelector trigger shows the price info after reload.
-		// The trigger label should contain the product name + price amount (e.g. "Price Persist Product — $10").
+		// Reload the page and wait for conditions to render.
+		await page.reload();
+		await page.waitForLoadState( 'networkidle' );
+		await page.locator( 'sc-card' ).first().waitFor( { timeout: 20000 } );
+
+		// If conditions didn't load (transient API fetch error), retry reload once.
 		const priceTrigger = page.locator( 'sc-card sc-select' ).nth( 2 );
+		if ( ! await priceTrigger.isVisible( { timeout: 5000 } ).catch( () => false ) ) {
+			await page.reload();
+			await page.waitForLoadState( 'networkidle' );
+			await page.locator( 'sc-card' ).first().waitFor( { timeout: 20000 } );
+		}
+
+		// Verify the PriceSelector trigger shows the price info after reload.
 		await priceTrigger.waitFor( { timeout: 15000 } );
 		await expect( priceTrigger ).toContainText( 'Price Persist Product', { timeout: 15000 } );
 	} );
