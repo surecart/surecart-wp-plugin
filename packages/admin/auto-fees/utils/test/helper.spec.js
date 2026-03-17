@@ -18,6 +18,12 @@ describe( 'getInputType', () => {
 		expect( getInputType( 'product.name', 'end_with' ) ).toBe( 'text' );
 	} );
 
+	it( 'returns "text" when a uuid attribute has a STRING_OPERATOR', () => {
+		expect( getInputType( 'product.id', 'contains' ) ).toBe( 'text' );
+		expect( getInputType( 'product.id', 'start_with' ) ).toBe( 'text' );
+		expect( getInputType( 'product.id', 'end_with' ) ).toBe( 'text' );
+	} );
+
 	it( 'returns "text" for unknown attributes', () => {
 		expect( getInputType( 'nonexistent.attribute' ) ).toBe( 'text' );
 	} );

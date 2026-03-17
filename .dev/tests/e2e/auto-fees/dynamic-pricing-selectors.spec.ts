@@ -65,16 +65,10 @@ async function selectAttribute( page, attributeLabel: string ) {
 	await attributeSelect.waitFor( { timeout: 10000 } );
 	await attributeSelect.click();
 
-	// Wait for dropdown to open and search input to appear.
-	await page.waitForTimeout( 500 );
-
-	// The sc-select search input has placeholder "Search..." — find it globally.
+	// The sc-select search input has placeholder "Search..." — wait for it to appear.
 	const searchInput = page.locator( 'input[placeholder="Search..."]' ).first();
 	await searchInput.waitFor( { timeout: 5000 } );
 	await searchInput.fill( attributeLabel );
-
-	// Wait for search filtering.
-	await page.waitForTimeout( 500 );
 
 	// Click the first visible matching menu item from the filtered dropdown.
 	const menuItem = page.locator( 'sc-menu-item:visible' ).filter( { hasText: attributeLabel } ).first();
@@ -160,14 +154,12 @@ test.describe( 'Dynamic Pricing Selectors', () => {
 		const operatorSelect = page.locator( 'sc-select[placeholder="Select a condition"]' ).first();
 		await operatorSelect.waitFor( { timeout: 10000 } );
 		await operatorSelect.click();
-		await page.waitForTimeout( 500 );
 		// Use value attribute to precisely target "is" (not "is_not", "is_more_than", etc.)
-		await page.locator( 'sc-menu-item[value="is"]' ).first().click();
+		const isMenuItem = page.locator( 'sc-menu-item[value="is"]' ).first();
+		await isMenuItem.waitFor( { timeout: 5000 } );
+		await isMenuItem.click();
 
 		// Wait for the ModelSelector to render after attribute + operator are set.
-		await page.waitForTimeout( 1000 );
-
-		// The ModelSelector (third sc-select) — click to open.
 		const modelSelect = page.locator( 'sc-card sc-select' ).nth( 2 );
 		await modelSelect.waitFor( { timeout: 10000 } );
 		await modelSelect.click();
@@ -182,9 +174,8 @@ test.describe( 'Dynamic Pricing Selectors', () => {
 		const saveBtn = page.locator( 'text=Save & Publish' );
 		await saveBtn.waitFor( { timeout: 10000 } );
 		await saveBtn.click();
-		await page.waitForLoadState( 'networkidle' );
-		// Wait for save to complete.
-		await page.waitForTimeout( 2000 );
+		// Wait for save to complete — button text changes from "Save & Publish" to "Update".
+		await expect( page.locator( 'text=Update' ).first() ).toBeVisible( { timeout: 30000 } );
 
 		// Reload the page.
 		await page.reload();
@@ -219,14 +210,12 @@ test.describe( 'Dynamic Pricing Selectors', () => {
 		const operatorSelect = page.locator( 'sc-select[placeholder="Select a condition"]' ).first();
 		await operatorSelect.waitFor( { timeout: 10000 } );
 		await operatorSelect.click();
-		await page.waitForTimeout( 500 );
 		// Use value attribute to precisely target "is" (not "is_not", "is_more_than", etc.)
-		await page.locator( 'sc-menu-item[value="is"]' ).first().click();
+		const isMenuItem = page.locator( 'sc-menu-item[value="is"]' ).first();
+		await isMenuItem.waitFor( { timeout: 5000 } );
+		await isMenuItem.click();
 
 		// Wait for the PriceSelector to render after attribute + operator are set.
-		await page.waitForTimeout( 1000 );
-
-		// The PriceSelector (third sc-select) — click to open.
 		const priceSelect = page.locator( 'sc-card sc-select' ).nth( 2 );
 		await priceSelect.waitFor( { timeout: 10000 } );
 		await priceSelect.click();
@@ -242,9 +231,8 @@ test.describe( 'Dynamic Pricing Selectors', () => {
 		const saveBtn = page.locator( 'text=Save & Publish' );
 		await saveBtn.waitFor( { timeout: 10000 } );
 		await saveBtn.click();
-		await page.waitForLoadState( 'networkidle' );
-		// Wait for save to complete.
-		await page.waitForTimeout( 2000 );
+		// Wait for save to complete — button text changes from "Save & Publish" to "Update".
+		await expect( page.locator( 'text=Update' ).first() ).toBeVisible( { timeout: 30000 } );
 
 		// Reload.
 		await page.reload();

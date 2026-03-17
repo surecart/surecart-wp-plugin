@@ -32,6 +32,9 @@ import ModelSelector from '../../components/ModelSelector';
 import PriceSelector from '../../components/PriceSelector';
 
 const SEARCH_RESULT_LIMIT = 8;
+const ENTITY_DISPLAY = {
+	promotion: (item) => item.code || item.id,
+};
 
 export default ({
 	addLeaf,
@@ -147,10 +150,6 @@ export default ({
 				required
 			/>
 		);
-	};
-
-	const ENTITY_DISPLAY = {
-		promotion: (item) => item.code || item.id,
 	};
 
 	const renderValueInput = () => {

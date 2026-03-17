@@ -25,6 +25,15 @@ describe( 'ATTRIBUTE_REGISTRY & derived maps', () => {
 			}
 		} );
 
+		it( 'has no orphan keys missing from ATTRIBUTE_REGISTRY.uuid', () => {
+			const registryUuidKeys = Object.keys( ATTRIBUTE_REGISTRY.uuid );
+			const entityMapKeys = Object.keys( UUID_ENTITY_MAP );
+
+			for ( const key of entityMapKeys ) {
+				expect( registryUuidKeys ).toContain( key );
+			}
+		} );
+
 		it( 'values are valid non-empty entity name strings', () => {
 			for ( const [ key, value ] of Object.entries( UUID_ENTITY_MAP ) ) {
 				expect( typeof value ).toBe( 'string' );
