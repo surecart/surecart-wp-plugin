@@ -23,6 +23,13 @@ class WooCommerceImportTask extends Task {
 	protected $action_name = 'surecart/sync/woocommerce_import';
 
 	/**
+	 * Show a notice while tasks are pending.
+	 *
+	 * @var boolean
+	 */
+	protected $show_notice = true;
+
+	/**
 	 * The product mapper.
 	 *
 	 * @var WooCommerceProductMapper|null
