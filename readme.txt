@@ -55,7 +55,7 @@ Because of this architecture, you get:
 The result is a smoother ecommerce experience with less technical overhead and fewer moving parts to manage.
 
 ## Who Is SureCart For? ##
-Each year we send all of our users a survey, so here are the 2026 results of who is using SureCart.
+Each year we send all of our users a survey, so here are the 2025 results of who is using SureCart.
 
 - **Subscription-Based Businesses:** SureCart is ideal for coaches, course creators, membership sites, and SaaS companies that rely on recurring revenue and need powerful subscription management with built-in retention tools.
 - **Service-Based Businesses:** Perfect for web agencies, legal firms, and local businesses that charge through subscriptions, installment plans, or one-time setup fees with flexible billing built right into the checkout.
@@ -161,7 +161,7 @@ Because SureCart is cloud-based and API-driven, subscription processing is handl
 This gives you greater control over subscriber experience, retention, and recurring revenue, all from a single platform.
 
 ## The Best WooCommerce Alternative ##
-SureCart is the [WooCommerce alternative](https://wpastra.com/comparison/shopify-vs-woocommerce-vs-surecart/) WordPress users have been asking for! You can find the detailed comparison [here](https://wpastra.com/comparison/shopify-vs-woocommerce-vs-surecart/).
+SureCart is the [WooCommerce alternative](https://wpastra.com/comparison/shopify-vs-woocommerce-vs-surecart/) WordPress users have been asking for!
 
 We highly respect WooCommerce and how it has paved the way for adding an online store to WordPress. But it's not ideal for everyone.
 
@@ -177,7 +177,7 @@ Where SureCart's approach is different. Everything is built in, no add-on requir
 These are just some of the key features SureCart users love.
 
 * **Multiple Payment Processors, Express Checkout ApplePay & GooglePay:**
-Easily connects to Stripe, PayPal, Razorpay and Mollie with support for 135+ currencies, 45+ countries, and dozens of payment methods including cards, wallets, bank debits, and more. You can use multiple processors on a single checkout form. Also, you can optionally accept ApplePay or GooglePay express checkout options.
+Easily connect to Stripe, PayPal, Razorpay, and Mollie with support for 135+ currencies, 45+ countries, and dozens of payment methods including cards, wallets, bank debits, and more. You can use multiple processors on a single checkout form. Also, you can optionally accept ApplePay or GooglePay express checkout options.
 
 * **Powerful Payment Options:**
 One-time payments, subscriptions, subscriptions with free trials, setup fees, payment plans (installments), pay what you want, donations. SureCart covers most ways you may want to be paid, all included for free.
@@ -281,7 +281,7 @@ Other ecommerce platforms let you integrate with expensive tax calculation servi
 * Astra
 * Bricks Builder
 * Starter Templates
-* Block Editor
+* Block Editor (Gutenberg)
 * Kadence Cloud
 * Meta Box
 * Advanced Custom Fields
