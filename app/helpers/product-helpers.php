@@ -276,7 +276,15 @@ if ( ! function_exists( 'sc_sanitize_image_attributes' ) ) {
 			return (object) array();
 		}
 
-		$safe_keys = array( 'src', 'alt', 'width', 'height', 'srcset', 'sizes', 'loading', 'decoding', 'fetchpriority', 'title' );
+		// Deliberately excluded:
+		// - `class`: WP adds "attachment-{size} size-{size}" which conflicts with component styling.
+		// - `style`: Plugins inject this as a string (e.g. "--dominant-color: #hex"), but JS frameworks
+		//   expect an object — passing a string crashes both React and Stencil renderers.
+		// - `data-*`: Plugin-specific attributes (e.g. data-dominant-color) that are not needed.
+		$safe_keys = apply_filters(
+			'surecart/image_attributes/safe_keys',
+			array( 'src', 'alt', 'width', 'height', 'srcset', 'sizes', 'loading', 'decoding', 'fetchpriority', 'title' )
+		);
 
 		return (object) array_intersect_key( (array) $attributes, array_flip( $safe_keys ) );
 	}
