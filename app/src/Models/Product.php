@@ -1126,7 +1126,7 @@ class Product extends Model implements PageModel {
 	 * @return object
 	 */
 	public function getPreviewImageAttribute() {
-		return is_a( $this->featured_image, GalleryItem::class ) ? $this->featured_image->attributes( 'medium_large' ) : (object) [];
+		return is_a( $this->featured_image, GalleryItem::class ) ? sc_sanitize_image_attributes( $this->featured_image->attributes( 'medium_large' ) ) : (object) [];
 	}
 
 	/**

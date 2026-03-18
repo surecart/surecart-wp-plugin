@@ -267,7 +267,7 @@ if ( ! function_exists( 'sc_sanitize_image_attributes' ) ) {
 	 * `data-*` onto image data. These cause errors when spread onto JavaScript-rendered
 	 * elements in both React and Stencil components.
 	 *
-	 * @param object $attributes Image attributes object.
+	 * @param object|null $attributes Image attributes object.
 	 *
 	 * @return object Sanitized attributes containing only safe img properties.
 	 */
