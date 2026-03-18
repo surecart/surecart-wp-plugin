@@ -27,7 +27,7 @@ export class ScOrderBump {
     const lineItem = this.lineItem();
 
     if (lineItem) {
-      removeCheckoutLineItem(lineItem?.id);
+      removeCheckoutLineItem(lineItem.id);
       speak(__('Order bump Removed.', 'surecart'));
       return;
     }
