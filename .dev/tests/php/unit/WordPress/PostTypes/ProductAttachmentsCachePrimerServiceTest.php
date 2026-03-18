@@ -89,10 +89,6 @@ class ProductAttachmentsCachePrimerServiceTest extends SureCartUnitTestCase {
 		$this->assertNull( $this->primer->extractNumericId( [ 'id' => 'media-uuid' ] ) );
 	}
 
-	// ──────────────────────────────────────────────────
-	// getGalleryIdsFromPost
-	// ──────────────────────────────────────────────────
-
 	/**
 	 * Test getGalleryIdsFromPost returns empty array when no product data.
 	 */
@@ -152,10 +148,6 @@ class ProductAttachmentsCachePrimerServiceTest extends SureCartUnitTestCase {
 		$this->assertEquals( 15, $result[1]->id );
 	}
 
-	// ──────────────────────────────────────────────────
-	// collectImagePostIds
-	// ──────────────────────────────────────────────────
-
 	/**
 	 * Test collectImagePostIds gathers thumbnail and gallery IDs.
 	 */
@@ -186,10 +178,6 @@ class ProductAttachmentsCachePrimerServiceTest extends SureCartUnitTestCase {
 		$this->assertContains( 400, $result );
 		$this->assertNotContains( 'media-skip-me', $result );
 	}
-
-	// ──────────────────────────────────────────────────
-	// filterUncachedIds
-	// ──────────────────────────────────────────────────
 
 	/**
 	 * Test filterUncachedIds skips already-cached IDs.
@@ -227,10 +215,6 @@ class ProductAttachmentsCachePrimerServiceTest extends SureCartUnitTestCase {
 		$this->assertNotContains( 10, $result2 );
 		$this->assertContains( 30, $result2 );
 	}
-
-	// ──────────────────────────────────────────────────
-	// warmPostCaches
-	// ──────────────────────────────────────────────────
 
 	/**
 	 * Test warmPostCaches populates the object cache.
@@ -281,10 +265,6 @@ class ProductAttachmentsCachePrimerServiceTest extends SureCartUnitTestCase {
 
 		$this->assertFalse( wp_cache_get( 999999, 'posts' ) );
 	}
-
-	// ──────────────────────────────────────────────────
-	// prime (integration)
-	// ──────────────────────────────────────────────────
 
 	/**
 	 * Test prime method caches attachment referenced by thumbnail.
