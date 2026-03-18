@@ -55,7 +55,7 @@ Because of this architecture, you get:
 The result is a smoother ecommerce experience with less technical overhead and fewer moving parts to manage.
 
 ## Who Is SureCart For? ##
-Each year we send all of our users a survey, so here are the 2025 results of who is using SureCart.
+Each year we send all of our users a survey, so here are the 2025-26 results of who is using SureCart.
 
 - **Subscription-Based Businesses:** SureCart is ideal for coaches, course creators, membership sites, and SaaS companies that rely on recurring revenue and need powerful subscription management with built-in retention tools.
 - **Service-Based Businesses:** Perfect for web agencies, legal firms, and local businesses that charge through subscriptions, installment plans, or one-time setup fees with flexible billing built right into the checkout.
