@@ -71,9 +71,9 @@ export const ATTRIBUTE_REGISTRY = {
 		sku: __('SKU (Product/Variant)', 'surecart'),
 
 		'coupon.name': __('Coupon Name', 'surecart'),
-		'promotion.code': __('Promotion Code', 'surecart'),
-		'checkout.coupon.name': __('Checkout Coupon Name', 'surecart'),
-		'checkout.promotion.code': __('Checkout Promotion Code', 'surecart'),
+		'promotion.code': __('Promotion Code Name', 'surecart'),
+		'checkout.coupon.name': __('Coupon Name', 'surecart'),
+		'checkout.promotion.code': __('Promotion Code Name', 'surecart'),
 	},
 
 	number: {
@@ -107,13 +107,13 @@ export const ATTRIBUTE_REGISTRY = {
 	uuid: {
 		'customer.id': __('Customer', 'surecart'),
 		'coupon.id': __('Coupon', 'surecart'),
-		'promotion.id': __('Promotion', 'surecart'),
+		'promotion.id': __('Promotion Code', 'surecart'),
 		'price.id': __('Price', 'surecart'),
 		'product.id': __('Product', 'surecart'),
 		'product.product_collections.id': __('Product Collection', 'surecart'),
 		'product.product_group.id': __('Upgrade Group', 'surecart'),
-		'checkout.coupon.id': __('Checkout Coupon', 'surecart'),
-		'checkout.promotion.id': __('Checkout Promotion', 'surecart'),
+		'checkout.coupon.id': __('Coupon', 'surecart'),
+		'checkout.promotion.id': __('Promotion Code', 'surecart'),
 	},
 };
 
