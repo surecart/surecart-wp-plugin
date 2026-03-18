@@ -271,6 +271,8 @@ class ProductListBlock extends AbstractProductListBlock {
 		$this->query = new \WP_Query( $query_vars );
 		remove_filter( 'found_posts', [ $this, 'offsetFoundPosts' ], 1 );
 
+		$this->primeAttachmentCaches();
+
 		return $this;
 	}
 }

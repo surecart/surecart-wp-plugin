@@ -146,6 +146,18 @@ abstract class AbstractProductListBlock {
 	}
 
 	/**
+	 * Prime the post caches for all image-related post IDs in the queried products.
+	 *
+	 * Delegates to ProductAttachmentsCachePrimer to batch-load thumbnails and
+	 * gallery attachments, eliminating N+1 queries during rendering.
+	 */
+	protected function primeAttachmentCaches() {
+		if ( ! empty( $this->query->posts ) ) {
+			\SureCart::productAttachmentsCachePrimer()->prime( $this->query->posts );
+		}
+	}
+
+	/**
 	 * Call the query method.
 	 *
 	 * @param string $method The method.

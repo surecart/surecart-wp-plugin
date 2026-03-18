@@ -131,6 +131,8 @@ class RelatedProductsBlock extends AbstractProductListBlock {
 
 		remove_filter( 'found_posts', [ $this, 'offsetFoundPosts' ], 1 );
 
+		$this->primeAttachmentCaches();
+
 		// return the query.
 		return $this;
 	}
