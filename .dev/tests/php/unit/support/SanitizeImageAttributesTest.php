@@ -43,7 +43,7 @@ class SanitizeImageAttributesTest extends SureCartUnitTestCase {
 		$this->assertEquals( 'Test image', $result->alt );
 		$this->assertEquals( 100, $result->width );
 		$this->assertEquals( 100, $result->height );
-		$this->assertObjectNotHasProperty( 'class', $result );
+		$this->assertEquals( 'attachment-thumbnail size-thumbnail', $result->class );
 		$this->assertObjectNotHasProperty( 'style', $result );
 		$this->assertObjectNotHasProperty( 'data-dominant-color', $result );
 	}
