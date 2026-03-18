@@ -1922,15 +1922,10 @@ export namespace Components {
           * The bump
          */
         "bump": Bump;
-        /**
-          * Should we show the controls
-         */
-        "showControl": boolean;
     }
     interface ScOrderBumps {
         "help": string;
         "label": string;
-        "showControl": boolean;
     }
     interface ScOrderConfirmComponentsValidator {
         /**
@@ -9164,15 +9159,10 @@ declare namespace LocalJSX {
           * The bump
          */
         "bump"?: Bump;
-        /**
-          * Should we show the controls
-         */
-        "showControl"?: boolean;
     }
     interface ScOrderBumps {
         "help"?: string;
         "label"?: string;
-        "showControl"?: boolean;
     }
     interface ScOrderConfirmComponentsValidator {
         /**

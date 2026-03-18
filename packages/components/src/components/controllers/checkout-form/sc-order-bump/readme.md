@@ -7,10 +7,9 @@
 
 ## Properties
 
-| Property      | Attribute      | Description                 | Type      | Default     |
-| ------------- | -------------- | --------------------------- | --------- | ----------- |
-| `bump`        | --             | The bump                    | `Bump`    | `undefined` |
-| `showControl` | `show-control` | Should we show the controls | `boolean` | `undefined` |
+| Property | Attribute | Description | Type   | Default     |
+| -------- | --------- | ----------- | ------ | ----------- |
+| `bump`   | --        | The bump    | `Bump` | `undefined` |
 
 
 ## Shadow Parts
@@ -30,12 +29,14 @@
 ### Depends on
 
 - [sc-choice](../../../ui/choice)
+- [sc-icon](../../../ui/icon)
 - [sc-divider](../../../ui/divider)
 
 ### Graph
 ```mermaid
 graph TD;
   sc-order-bump --> sc-choice
+  sc-order-bump --> sc-icon
   sc-order-bump --> sc-divider
   sc-order-bumps --> sc-order-bump
   style sc-order-bump fill:#f9f,stroke:#333,stroke-width:4px

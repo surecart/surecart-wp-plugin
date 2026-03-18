@@ -3,12 +3,15 @@
 }
 
 .bump {
-  display: grid;
+  display: flex;
+  align-items: center;
   gap: 1em;
 
   &__text {
     display: grid;
     gap: 0.25em;
+    flex: 1;
+    min-width: 0;
   }
   &__tag {
     background: var(--sc-color-primary-500);
@@ -85,6 +88,31 @@
     }
     .bump__interval {
       color: var(--sc-color-gray-500);
+    }
+  }
+
+  &__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2em;
+    min-height: 2em;
+    border-radius: 50%;
+    border: 1px solid var(--sc-color-gray-300);
+    background-color: transparent;
+    color: var(--sc-color-gray-500);
+    flex-shrink: 0;
+    line-height: 1;
+    transition: background-color 150ms ease, border-color 150ms ease, color 150ms ease;
+
+    sc-icon {
+      font-size: 1em;
+    }
+
+    &--checked {
+      background-color: var(--sc-color-primary-500);
+      border-color: var(--sc-color-primary-500);
+      color: var(--sc-color-white, #fff);
     }
   }
 

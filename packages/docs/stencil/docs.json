@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-02-24T16:06:25",
+  "timestamp": "2026-03-18T11:03:34",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.18.3",
@@ -5610,6 +5610,7 @@
         ],
         "sc-order-bump": [
           "sc-choice",
+          "sc-icon",
           "sc-divider"
         ],
         "sc-line-item-tax": [
@@ -15088,6 +15089,7 @@
         ],
         "sc-order-bump": [
           "sc-choice",
+          "sc-icon",
           "sc-divider"
         ],
         "sc-line-item-tax": [
@@ -16667,6 +16669,7 @@
         "sc-line-item-total",
         "sc-login-form",
         "sc-order",
+        "sc-order-bump",
         "sc-order-confirm-provider",
         "sc-order-submit",
         "sc-orders-list",
@@ -16792,6 +16795,9 @@
           "sc-icon"
         ],
         "sc-order": [
+          "sc-icon"
+        ],
+        "sc-order-bump": [
           "sc-icon"
         ],
         "sc-order-confirm-provider": [
@@ -17171,6 +17177,27 @@
           "values": [
             {
               "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "customValidity",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "custom-validity",
+          "reflectToAttr": false,
+          "docs": "Custom validation message to show when the input is invalid (replaces browser default).",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
             }
           ],
           "optional": false,
@@ -21227,27 +21254,6 @@
           ],
           "optional": false,
           "required": false
-        },
-        {
-          "name": "showControl",
-          "type": "boolean",
-          "complexType": {
-            "original": "boolean",
-            "resolved": "boolean",
-            "references": {}
-          },
-          "mutable": false,
-          "attr": "show-control",
-          "reflectToAttr": true,
-          "docs": "Should we show the controls",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
         }
       ],
       "methods": [],
@@ -21270,11 +21276,13 @@
       ],
       "dependencies": [
         "sc-choice",
+        "sc-icon",
         "sc-divider"
       ],
       "dependencyGraph": {
         "sc-order-bump": [
           "sc-choice",
+          "sc-icon",
           "sc-divider"
         ],
         "sc-order-bumps": [
@@ -21332,27 +21340,6 @@
           ],
           "optional": false,
           "required": false
-        },
-        {
-          "name": "showControl",
-          "type": "boolean",
-          "complexType": {
-            "original": "boolean",
-            "resolved": "boolean",
-            "references": {}
-          },
-          "mutable": false,
-          "attr": "show-control",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
         }
       ],
       "methods": [],
@@ -21378,6 +21365,7 @@
         ],
         "sc-order-bump": [
           "sc-choice",
+          "sc-icon",
           "sc-divider"
         ],
         "sc-form-components-validator": [
@@ -31343,7 +31331,7 @@
             "references": {
               "LayoutConfig": {
                 "location": "local",
-                "path": "/Users/andre/sites/surecart/wp-content/plugins/surecart/packages/components/src/components/controllers/products/sc-product-item-list/sc-product-item-list.tsx",
+                "path": "/Users/rajkiranbagal/LocalSites/app/public/wp-content/plugins/surecart/packages/components/src/components/controllers/products/sc-product-item-list/sc-product-item-list.tsx",
                 "id": "src/components/controllers/products/sc-product-item-list/sc-product-item-list.tsx::LayoutConfig"
               }
             }
@@ -33910,6 +33898,28 @@
           "values": [
             {
               "type": "number"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "productName",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "product-name",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "'Product'",
+          "values": [
+            {
+              "type": "string"
             }
           ],
           "optional": false,
@@ -37854,11 +37864,11 @@
             "docs": ""
           },
           "complexType": {
-            "signature": "(type: any, args?: {}) => Promise<void>",
+            "signature": "(type: 'setup' | 'payment', args?: {}) => Promise<void>",
             "parameters": [
               {
                 "name": "type",
-                "type": "any",
+                "type": "\"setup\" | \"payment\"",
                 "docs": ""
               },
               {
@@ -37875,11 +37885,11 @@
             },
             "return": "Promise<void>"
           },
-          "signature": "confirm(type: any, args?: {}) => Promise<void>",
+          "signature": "confirm(type: 'setup' | 'payment', args?: {}) => Promise<void>",
           "parameters": [
             {
               "name": "type",
-              "type": "any",
+              "type": "\"setup\" | \"payment\"",
               "docs": ""
             },
             {

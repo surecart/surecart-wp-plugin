@@ -10,7 +10,6 @@ import { Price, Product } from '../../../../types';
 })
 export class ScOrderBumps {
   @Prop() label: string;
-  @Prop() showControl: boolean;
   @Prop() help: string;
 
   render() {
@@ -24,7 +23,7 @@ export class ScOrderBumps {
       <sc-form-control label={this.label || __('Recommended', 'surecart')} help={this.help}>
         <div class="bumps__list" aria-label={__('Order bump summary', 'surecart')}>
           {bumps.map(bump => (
-            <sc-order-bump key={bump?.id} showControl={this.showControl} bump={bump} />
+            <sc-order-bump key={bump?.id} bump={bump} />
           ))}
         </div>
       </sc-form-control>

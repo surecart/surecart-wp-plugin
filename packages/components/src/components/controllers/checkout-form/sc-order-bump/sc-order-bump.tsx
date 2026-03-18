@@ -16,9 +16,6 @@ export class ScOrderBump {
   /** The bump */
   @Prop() bump: Bump;
 
-  /** Should we show the controls */
-  @Prop({ reflect: true }) showControl: boolean;
-
   /** The bump line item */
   lineItem() {
     return checkoutState?.checkout?.line_items?.data?.find(item => item?.bump === this.bump?.id);
@@ -27,9 +24,10 @@ export class ScOrderBump {
   /** Update the line item. */
   updateLineItem() {
     const price = (this.bump.price as Price)?.id || (this.bump?.price as string);
+    const lineItem = this.lineItem();
 
-    if (this.lineItem()) {
-      removeCheckoutLineItem(this.lineItem()?.id);
+    if (lineItem) {
+      removeCheckoutLineItem(lineItem?.id);
       speak(__('Order bump Removed.', 'surecart'));
       return;
     }
@@ -44,21 +42,6 @@ export class ScOrderBump {
 
   componentDidLoad() {
     trackOrderBump(this.bump?.id);
-  }
-
-  newPrice() {
-    let amount = null;
-    let initialAmount = (this.bump?.price as Price)?.amount || 0;
-
-    if (this.bump?.amount_off) {
-      amount = Math.max(0, initialAmount - this.bump?.amount_off);
-    }
-    if (this.bump?.percent_off) {
-      const off = initialAmount * (this.bump?.percent_off / 100);
-      amount = Math.max(0, initialAmount - off);
-    }
-
-    return amount;
   }
 
   renderInterval() {
@@ -133,12 +116,13 @@ export class ScOrderBump {
 
   render() {
     const product = (this.bump?.price as Price)?.product as Product;
+    const lineItem = this.lineItem();
     return (
       <sc-choice
         value={this.bump?.id}
         type="checkbox"
-        showControl={this.showControl}
-        checked={!!this.lineItem()}
+        showControl={false}
+        checked={!!lineItem}
         onClick={e => {
           e.preventDefault();
           e.stopImmediatePropagation();
@@ -151,9 +135,10 @@ export class ScOrderBump {
             this.updateLineItem();
           }
         }}
-        exportparts="base, control, checked-icon, title"
+        exportparts="base, title"
       >
         <div part="base-content" class="bump">
+          {!!product?.line_item_image?.src && <img {...(product?.line_item_image as any)} class="bump__image" />}
           <div class="bump__text">
             <div
               class="bump__title"
@@ -170,13 +155,21 @@ export class ScOrderBump {
               {this.renderDiscount()}
             </div>
           </div>
+          <div
+            class={{
+              'bump__button': true,
+              'bump__button--checked': !!lineItem,
+            }}
+            aria-hidden="true"
+          >
+            <sc-icon name={lineItem ? 'check' : 'plus'} />
+          </div>
         </div>
 
         {this.bump?.metadata?.description && (
           <div slot="footer" class="bump__product--wrapper">
             <sc-divider style={{ '--spacing': 'var(--sc-spacing-medium)' }}></sc-divider>
             <div class="bump__product">
-              {!!product?.line_item_image?.src && <img {...(product?.line_item_image as any)} class="bump__image" />}
               <div class="bump__product-text">
                 {!!this.bump?.metadata?.cta && (
                   <div class="bump__product-title" aria-hidden="true">
