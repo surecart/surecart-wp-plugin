@@ -260,15 +260,16 @@ function sc_product_list_prefix( $block = null ) {
 
 if ( ! function_exists( 'sc_sanitize_image_attributes' ) ) {
 	/**
-	 * Sanitize image attributes for safe use in React components.
+	 * Sanitize image attributes to only include standard HTML img properties.
 	 *
 	 * WordPress filters (e.g. Performance Lab's Image Placeholders / dominant color)
-	 * can inject attributes like `style` (as a string), `class`, and `data-*` onto
-	 * image data. These cause fatal errors when spread onto a React <img> element.
+	 * can inject non-standard attributes like `style` (as a string), `class`, and
+	 * `data-*` onto image data. These cause errors when spread onto JavaScript-rendered
+	 * elements in both React and Stencil components.
 	 *
 	 * @param object $attributes Image attributes object.
 	 *
-	 * @return object Sanitized attributes safe for React.
+	 * @return object Sanitized attributes containing only safe img properties.
 	 */
 	function sc_sanitize_image_attributes( $attributes ) {
 		if ( empty( $attributes ) ) {
