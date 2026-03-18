@@ -316,7 +316,7 @@ SureCart works with any theme, including:
 * AffiliateWP
 
 ### OttoKit Integrations ###
-The second type of integrations are done with [Ottokit](https://wordpress.org/plugins/suretriggers/), which is like Zapier for WordPress. Ottokit integrates with over 500 apps and services. These will require you to add the Ottokit plugin to your website to integrate with:
+SureCart also integrates with [OttoKit](https://wordpress.org/plugins/suretriggers/), which is like Zapier for WordPress. OttoKit integrates with over 500 apps and services. These will require you to add the OttoKit plugin to your website to integrate with:
 
 * ActiveCampaign
 * ConvertKit
