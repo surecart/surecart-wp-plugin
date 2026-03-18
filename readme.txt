@@ -16,25 +16,53 @@ Make ecommerce easy with a simple to use, all-in-one platform, that anyone can s
 **The New Way To Sell Anything On WordPress!**
 ★★★★★<br>
 
-Say goodbye to old, bloated & complex ecommerce plugins that are hard to use, require expensive add-ons for basic features, and slow down your website.
+eCommerce on WordPress has evolved and so have the tools.
 
-WordPress users have been waiting for something different!
+SureCart brings a modern, intuitive approach to selling online. It’s lightweight, flexible, and built to work seamlessly with your existing WordPress setup.
 
-Meet [SureCart](https://surecart.com/) — the modern, intuitive ecommerce plugin you’ve been looking for.
+Whether you’re selling digital products, subscriptions, services, or physical goods. You can launch a fully functional store without complexity.
 
 [youtube https://www.youtube.com/watch?v=biTedATyVPg]
 
-[What's New](https://surecart.com/whats-new/) | [Docs](https://surecart.com/docs/) | [Video Tutorials](https://www.youtube.com/@SureCartOfficial/) | [Get Help](https://surecart.com/support/open-a-ticket/) | [Community](https://www.facebook.com/groups/surecrafted)
+[What’s New](https://surecart.com/whats-new/) | [Blog](https://surecart.com/blog/) | [Docs](https://surecart.com/docs/) | [Video Tutorials](https://www.youtube.com/@SureCartOfficial/) | [Get Help](https://surecart.com/support/open-a-ticket/) | [Community](https://www.facebook.com/groups/surecrafted)
+
+## Start With a Completely Free Store ##
+
+With SureCart’s free plan, you can create a store with full core functionalities: unlimited products, flexible checkout customization, subscription support, and powerful built-in features, without needing a stack of add-ons.
+
+Scale when you’re ready. No forced upgrades. No unnecessary bloat.
+
+## What Makes SureCart Different? ##
+
+SureCart was built to give WordPress users a modern alternative to traditional ecommerce plugins.
+
+Most WordPress ecommerce solutions run entirely inside your website. As stores grow, this can introduce performance issues, database bloat, plugin conflicts, and caching complications.
+
+SureCart takes a fundamentally different approach.
+
+SureCart consists of two parts: the plugin and the platform. The plugin connects your WordPress site to the SureCart platform — a cloud-based ecommerce engine designed specifically to handle payments, subscriptions, taxes, and checkout processing at scale.
+
+Instead of placing all ecommerce processing load on your website, SureCart handles heavy operations on its own infrastructure. This reduces strain on your server, improves reliability, and minimizes conflicts with themes, caching systems, or other plugins.
+
+Because of this architecture, you get:
+
+* A lighter WordPress footprint
+* Reduced database bloat
+* Fewer plugin conflicts
+* Compatibility with caching systems
+* Built-in security, backups, and infrastructure handling
+
+The result is a smoother ecommerce experience with less technical overhead and fewer moving parts to manage.
 
 ## Who Is SureCart For? ##
-Each year we send all of our users a survey, so here are the 2024 results of who is using SureCart.
+Each year we send all of our users a survey, so here are the 2026 results of who is using SureCart.
 
-- **Agencies:** Instead of passing on higher priced ecommerce projects due to the complexities, web agencies tell us that they are taking on more online store clients because SureCart is easy to set up and manage, and their clients love it
-- **Physical Product Stores:** Sellers love how easy it is to set up an online store, manage order fulfillment, and generate higher AOV with cart abandonment recovery, order bumps, and post purchase upsells
-- **Selling Subscriptions:** Mostly coaching programs, course creators, membership websites, and SaaS companies that want advanced subscription management and retention features
-- **Selling Services:** Mostly web agencies, legal services, local businesses that sell via subscriptions, installment plans, and use setup fees
-- **Digital Downloads:** Ebooks, printables, creative work, and we are seeing an increase in WordPress software developers who are using our licensing system
-- **Donations:** Charities and causes that want to have flexible donation forms, but also be able to sell additional products
+- **Subscription-Based Businesses:** SureCart is ideal for coaches, course creators, membership sites, and SaaS companies that rely on recurring revenue and need powerful subscription management with built-in retention tools.
+- **Service-Based Businesses:** Perfect for web agencies, legal firms, and local businesses that charge through subscriptions, installment plans, or one-time setup fees with flexible billing built right into the checkout.
+- **Digital Product Creators & Developers:** Built for selling ebooks, printables, creative assets, and digital downloads and increasingly trusted by WordPress software developers who leverage SureCart’s built-in licensing system.
+- **Physical Product Stores:** Great for merchants who want a simple way to launch an online store, manage orders and fulfillment, and increase average order value with built-in cart abandonment recovery, order bumps, and post-purchase upsells.
+- **Agencies & Freelancers:** Instead of turning down eCommerce projects due to complexity, agencies are confidently taking on more online store clients. SureCart makes setup and ongoing management simple and their clients love the experience.
+- **Nonprofits & Fundraisers:** Ideal for charities and causes that need flexible donation forms while also having the ability to sell merchandise, event tickets, or other products, all from one streamlined checkout experience.
 
 ## Traditional Storefront ##
 
@@ -46,47 +74,94 @@ SureCart has all the features for selling products this way on your website. The
 
 [youtube https://www.youtube.com/watch?v=uIBCcIX8S54]
 
-## Product Pricing Options ##
-No other ecommerce plugin offers this depth of options on how to price your products.
+## Product Pricing Options (Now with Dynamic Pricing) ##
 
-SureCart's unique approach to let you offer more than one price for a single product is a big reason why SureCart merchants sell more products.
+SureCart gives you flexible, conversion-focused pricing control without duplicating products or creating complex checkout flows.
 
-Some of the pricing options include one-time payments, subscription payments, installment plans, free trials, paid trials, setup fees, setup discounts, and name your own price.
+Instead of being limited to one price per product, you can attach multiple pricing options to a single product and let customers choose what works best for them.
+
+You can offer:
+
+* One-time payments
+* Subscription payments (daily, weekly, monthly, yearly, etc.)
+* Installment plans
+* Free trials
+* Paid trials
+* Setup fees
+* Setup discounts
+* "Name your own price"
+
+**Dynamic Pricing (New)**
+
+SureCart also includes built-in Dynamic Pricing, allowing prices to automatically adjust at checkout based on real conditions.
+
+You can:
+
+* Apply discounts when cart subtotal exceeds a threshold
+* Add conditional fees based on user role or customer type
+* Offer bulk/quantity discounts
+* Reward logged-in customers with special pricing
+* Run BOGO-style offers without duplicating products
+
+Pricing updates instantly at checkout exactly where buying decisions happen.
+
+This makes it easier to increase average order value (AOV), reward loyal customers, and run smarter promotions without adding extra plugins.
 
 [youtube https://www.youtube.com/watch?v=vHOamau4BWw]
 
-## Most Advanced Subscription Plugin For WordPress ##
-Selling subscriptions is easy to do, many form plugins, LMS plugins, membership plugins, ecommerce plugins do this.
+## Advanced Subscription Management & Retention for WordPress ##
 
-But they only assist in selling the subscription and offer little to manage and retain the subscriber! That is where the profit is in selling subscriptions.
+Selling a subscription is the easy part. Managing renewals, reducing churn, and maximizing lifetime value is where subscription businesses actually grow.
 
-If you are using anything other than SureCart to sell subscriptions, you are likely paying higher payment processor fees and having higher churn.
+SureCart goes beyond basic recurring payments by giving you built-in tools to actively manage and retain subscribers and not just collect payments.
 
-**Using SureCart Means Lower Fees**
+**Flexible Subscription Setup**
 
-If you are selling subscriptions on Stripe using form plugins, membership plugins, online course plugins, SaaS platforms like ThriveCart, or any of these ways to sell subscriptions with Stripe...
+With SureCart, you can:
 
-You (the merchant) pay an extra 0.5% - 0.8% of every subscription transaction to Stripe? [See Stripe Pricing](https://stripe.com/billing/pricing)
+* Create flexible billing intervals (daily, weekly, monthly, yearly, or custom)
+* Offer free trials and paid trials
+* Add setup fees or setup discounts
+* Create installment-style subscription payments
+* Apply Dynamic Pricing rules to subscription products
+* Offer multiple pricing options on a single subscription product
 
-When you use SureCart you avoid all of these Stripe fees on subscriptions because we manage the subscription, we handle the invoices, and we can handle the auto payment retries.
-This can save you huge amounts of money.
+**Reduce Churn From Failed Payments**
 
-**Please Note:** Subscriptions are portable! We migrate WooCommerce merchants with active subscribers each week. It's seamless, and the subscriber does not need to resubscribe.
+One of the biggest causes of subscription churn is failed payments. SureCart includes built-in dunning management that:
 
-**Better Subscription Management & Retention With SureCart**
+* Automatically retries failed payments
+* Sends advanced pre-payment reminders
+* Notifies customers about payment issues
+* Helps recover revenue that would otherwise be lost
 
-SureCart has a suite of tools to [manage subscriptions](https://surecart.com/features/subscriptions/) and reduce churn.
+This helps keep subscribers active without requiring third-party add-ons.
 
-Selling subscriptions, the biggest source of churn is from failed payments. SureCart will automatically recover failed payments from your subscribers to keep them subscribed.
+**Reduce Voluntary Cancellations**
 
-Your second source of churn is subscribers wanting to cancel. With SureCart's [Subscription Saver](https://www.youtube.com/watch?v=9Bx4u4DV4_Q) feature, you will have fewer cancelations and greater insights into why people cancel.
+The second major source of churn is subscribers choosing to cancel. SureCart's [Subscription Saver](https://www.youtube.com/watch?v=9Bx4u4DV4_Q) feature helps reduce cancellations and gives you insights into why customers leave.
 
-Additional features include subscription upgrades with proration, subscription downgrades, customers can change the payment method, you can reactivate a canceled subscription, you can pause a subscription, subscribers can change their form of payment to a different payment method, change payment dates, advanced email reminders before payments, and more.
+You can:
 
-These management and retention options are just not available elsewhere!
+* Offer upgrade or downgrade paths with automatic proration
+* Allow customers to pause subscriptions instead of cancelling
+* Reactivate cancelled subscriptions
+* Let customers change payment methods
+* Allow changes to billing dates
+* Provide self-service management via customer dashboards
+
+Instead of forcing cancellations, you give customers flexible options that keep revenue flowing.
+
+**Built-In Management Without Extra Extensions**
+
+Many WordPress setups require multiple add-ons to manage subscriptions effectively. SureCart includes subscription logic, retention tools, and email notifications natively.
+
+Because SureCart is cloud-based and API-driven, subscription processing is handled reliably without adding heavy processing load to your WordPress site.
+
+This gives you greater control over subscriber experience, retention, and recurring revenue, all from a single platform.
 
 ## The Best WooCommerce Alternative ##
-SureCart is the [WooCommerce alternative](https://wpastra.com/comparison/shopify-vs-woocommerce-vs-surecart/) WordPress users have been asking for!
+SureCart is the [WooCommerce alternative](https://wpastra.com/comparison/shopify-vs-woocommerce-vs-surecart/) WordPress users have been asking for! You can find the detailed comparison [here](https://wpastra.com/comparison/shopify-vs-woocommerce-vs-surecart/).
 
 We highly respect WooCommerce and how it has paved the way for adding an online store to WordPress. But it's not ideal for everyone.
 
@@ -102,13 +177,19 @@ Where SureCart's approach is different. Everything is built in, no add-on requir
 These are just some of the key features SureCart users love.
 
 * **Multiple Payment Processors, Express Checkout ApplePay & GooglePay:**
-Easily connect to Stripe, PayPal, and Mollie with support for 135+ currencies, 45+ countries, and dozens of payment methods including cards, wallets, bank debits, and more. You can use multiple processors on a single checkout form. Also, you can optionally accept ApplePay or GooglePay express checkout options.
+Easily connects to Stripe, PayPal, Razorpay and Mollie with support for 135+ currencies, 45+ countries, and dozens of payment methods including cards, wallets, bank debits, and more. You can use multiple processors on a single checkout form. Also, you can optionally accept ApplePay or GooglePay express checkout options.
 
 * **Powerful Payment Options:**
 One-time payments, subscriptions, subscriptions with free trials, setup fees, payment plans (installments), pay what you want, donations. SureCart covers most ways you may want to be paid, all included for free.
 
 * **Most Complete Subscription Payments System:**
 There is a lot more to subscriptions than simply rebilling on an interval. SureCart’s subscription engine is second to none. With our extensive subscription payments options, you can sell your subscriptions how you want. But SureCart goes beyond other ecommerce platforms by offering prorated upgrades or downgrades. So if you are offering a monthly subscription or an annual subscription and your buyer wants to upgrade, SureCart can prorate the upgrade.
+
+* **Built-In Product Reviews**
+SureCart includes a native product review system so you can collect and display verified customer feedback without installing a separate reviews plugin. You can enable star ratings with written feedback, moderate and approve reviews, and display them directly on product and checkout pages. Reviews are managed inside your SureCart dashboard and work seamlessly with your products and pricing options, helping build trust at the point of purchase without adding extra plugins or complexity.
+
+* **Dynamic Pricing**
+SureCart includes built-in Dynamic Pricing so you can automatically adjust prices at checkout based on real conditions without duplicating products or creating complex coupon rules. You can apply discounts or fees based on cart subtotal, product quantity, customer type, user role, or other checkout conditions, and pricing updates instantly where purchase decisions happen. Dynamic Pricing works seamlessly with one-time payments and subscription products, giving you more flexibility to increase average order value and run smarter promotions without adding extra plugins.
 
 * **Order Bumps & Upsell Funnels:**
 SureCart merchants have more profitable stores due to a full suite of revenue optimization features. Generate more revenue with one-click order bumps, post purchase [one-click upsells](https://www.youtube.com/watch?v=97gSH-KPFZU&t=25s), and cart abandonment recovery.
@@ -145,27 +226,6 @@ With other ecommerce plugins, if you get an influx of buyers for that big sale o
 
 * **Real-time VAT & Sales Tax Calculations:**
 Other ecommerce platforms let you integrate with expensive tax calculation services, usually costing $50 per month and up. Not with SureCart, we are fully integrated with TaxJar, and we pay for the calculations, so you don’t have to. And the setup is a breeze.
-
-## What Is Unique About SureCart? ##
-SureCart was made to give WordPress users a better option for selling on their website. Currently most merchants use WooCommerce, which was made over 10 years ago for building big commerce stores like Amazon, Walmart, etc.
-
-SureCart takes a different approach entirely. Made from the ground up to be ultra-high performance, look visually stunning, and be so easy to use that the most non-techie user will have no problem.
-
-Everything can be visually customized to create a truly unique ecommerce experience.
-
-SureCart also solves the technician problems that you run into with ecommerce plugins. They have performance problems or caching issues or something, it’s always something. Not with SureCart, we do all the heavy lifting on our servers to guarantee you a smooth operation, headache free, developer free.
-
-## The SureCart Difference ##
-SureCart is fundamentally different from other WordPress ecommerce plugins that you may have tried, so it's important to understand the differences.
-
-**Platform Based**
-There are two parts to SureCart, the platform, which is the Ecommerce engine, and the plugin.
-
-The platform is built with the same technology that Shopify, Basecamp, GitHub, Twitter, Stripe and more use. These are all multi-billion dollar companies.
-
-The plugin connects to the platform in real-time, taking all the load away from your website and onto our platform that was built and optimized for Ecommerce.
-
-This way you get everything you want with none of the stuff you don’t want. SureCart will not slow down your website, it won’t bloat your database, it’s less likely to have plugin conflicts, and it’s made to work with your caching setup. But the real benefit here is you get assurance and peace of mind because you don’t have to worry about security, storage, or backups.
 
 ## SureCart Integrations ##
 
@@ -260,7 +320,7 @@ There are 2 parts to SureCart, the platform and the plugin. In order for the plu
 
 = What payment processors can I use? =
 
-SureCart currently supports payment processing via Stripe, PayPal, and Mollie with support for 135+ currencies, 45+ countries, and dozens of payment methods including cards, wallets, bank debits, and more.
+SureCart currently supports payment processing via Stripe, PayPal, Razorpay, and Mollie with support for 135+ currencies, 45+ countries, and dozens of payment methods including cards, wallets, bank debits, and more.
 
 = Will SureCart slow down my website? =
 
