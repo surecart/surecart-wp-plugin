@@ -257,3 +257,26 @@ function sc_product_list_prefix( $block = null ) {
 	$controller = new ProductListBlock( $block );
 	return $controller->urlParams()->getKey();
 }
+
+if ( ! function_exists( 'sc_sanitize_image_attributes' ) ) {
+	/**
+	 * Sanitize image attributes for safe use in React components.
+	 *
+	 * WordPress filters (e.g. Performance Lab's Image Placeholders / dominant color)
+	 * can inject attributes like `style` (as a string), `class`, and `data-*` onto
+	 * image data. These cause fatal errors when spread onto a React <img> element.
+	 *
+	 * @param object $attributes Image attributes object.
+	 *
+	 * @return object Sanitized attributes safe for React.
+	 */
+	function sc_sanitize_image_attributes( $attributes ) {
+		if ( empty( $attributes ) ) {
+			return (object) array();
+		}
+
+		$safe_keys = array( 'src', 'alt', 'width', 'height', 'srcset', 'sizes', 'loading', 'decoding', 'fetchpriority', 'title' );
+
+		return (object) array_intersect_key( (array) $attributes, array_flip( $safe_keys ) );
+	}
+}
