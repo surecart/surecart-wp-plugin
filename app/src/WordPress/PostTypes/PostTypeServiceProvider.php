@@ -26,15 +26,10 @@ class PostTypeServiceProvider implements ServiceProviderInterface {
 		$container['surecart.post_types.upsell_page'] = function () {
 			return new ProductUpsellPagePostTypeService();
 		};
-		$container['surecart.post_types.attachments_cache_primer'] = function () {
-			return new ProductAttachmentsCachePrimerService();
-		};
-
 		$app = $container[ SURECART_APPLICATION_KEY ];
 		$app->alias( 'forms', 'surecart.forms' );
 		$app->alias( 'cartPost', 'surecart.cart.post' );
 		$app->alias( 'productPost', 'surecart.post_types.product' );
-		$app->alias( 'productAttachmentsCachePrimer', 'surecart.post_types.attachments_cache_primer' );
 	}
 
 	/**

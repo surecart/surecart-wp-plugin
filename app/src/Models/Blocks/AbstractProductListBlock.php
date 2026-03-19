@@ -146,15 +146,67 @@ abstract class AbstractProductListBlock {
 	}
 
 	/**
-	 * Prime the post caches for all image-related post IDs in the queried products.
+	 * Batch-prime gallery attachment caches for all products in the query.
 	 *
-	 * Delegates to ProductAttachmentsCachePrimer to batch-load thumbnails and
-	 * gallery attachments, eliminating N+1 queries during rendering.
+	 * Collects all numeric attachment IDs from each product's gallery_ids
+	 * metadata and loads them in a single query via WordPress core,
+	 * eliminating N+1 get_post() calls in GalleryItemAttachment::create().
 	 */
 	protected function primeAttachmentCaches() {
-		if ( ! empty( $this->query->posts ) ) {
-			\SureCart::productAttachmentsCachePrimer()->prime( $this->query->posts );
+		if ( empty( $this->query->posts ) ) {
+			return;
 		}
+
+		$ids = $this->collectGalleryAttachmentIds( $this->query->posts );
+
+		if ( ! empty( $ids ) ) {
+			_prime_post_caches( array_unique( $ids ), false, true );
+		}
+	}
+
+	/**
+	 * Collect all numeric WP attachment IDs from product gallery metadata.
+	 *
+	 * @param \WP_Post[] $posts The product posts.
+	 *
+	 * @return int[]
+	 */
+	protected function collectGalleryAttachmentIds( array $posts ) {
+		$ids = [];
+
+		foreach ( $posts as $post ) {
+			$product_data = get_post_meta( $post->ID, 'product', true );
+			if ( empty( $product_data ) ) {
+				continue;
+			}
+
+			// Deep-convert to stdClass for consistent property access.
+			if ( is_string( $product_data ) ) {
+				$product_data = json_decode( $product_data );
+			} elseif ( is_array( $product_data ) ) {
+				$product_data = json_decode( wp_json_encode( $product_data ) );
+			}
+
+			$gallery_ids = $product_data->metadata->gallery_ids ?? '';
+			if ( is_string( $gallery_ids ) ) {
+				$gallery_ids = json_decode( $gallery_ids, true );
+			}
+			if ( ! is_array( $gallery_ids ) ) {
+				continue;
+			}
+
+			foreach ( $gallery_ids as $item ) {
+				if ( is_numeric( $item ) ) {
+					$ids[] = (int) $item;
+				} elseif ( is_object( $item ) && isset( $item->id ) && is_numeric( $item->id ) ) {
+					$ids[] = (int) $item->id;
+				} elseif ( is_array( $item ) && isset( $item['id'] ) && is_numeric( $item['id'] ) ) {
+					$ids[] = (int) $item['id'];
+				}
+			}
+		}
+
+		return $ids;
 	}
 
 	/**
