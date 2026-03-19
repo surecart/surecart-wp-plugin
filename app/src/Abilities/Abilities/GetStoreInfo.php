@@ -61,7 +61,7 @@ class GetStoreInfo extends AbstractAbility {
 	public function get_input_schema(): array {
 		return array(
 			'type'       => 'object',
-			'properties' => new \stdClass(),
+			'properties' => array(),
 		);
 	}
 
