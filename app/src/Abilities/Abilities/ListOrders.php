@@ -45,7 +45,7 @@ class ListOrders extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function get_instructions(): string {
-		return 'Use this to browse or search orders. Filter by status (paid, unpaid, void, partially_refunded, refunded) and customer. For full details on a single order, use get-order instead.';
+		return 'Use this to browse or search orders. Filter by status (paid, processing, draft, payment_failed, void, canceled, requires_approval) and customer. Use canceled for orders shown as Canceled in the dashboard; it is applied as void in the API. For full details on a single order, use get-order instead.';
 	}
 
 	/**
@@ -59,12 +59,15 @@ class ListOrders extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function get_input_schema(): array {
+		$allowed_statuses = $this->get_allowed_order_statuses();
+
 		return array(
 			'type'       => 'object',
 			'properties' => array(
 				'status'      => array(
 					'type'        => 'string',
 					'description' => __( 'Filter by order status.', 'surecart' ),
+					'enum'        => $allowed_statuses,
 				),
 				'customer_id' => array(
 					'type'        => 'string',
@@ -109,7 +112,18 @@ class ListOrders extends AbstractAbility {
 	}
 
 	/**
+	 * Status values accepted for the orders list filter (matches SureCart order model / admin).
+	 *
+	 * @return string[]
+	 */
+	private function get_allowed_order_statuses(): array {
+		return array( 'paid', 'payment_failed', 'processing', 'void', 'canceled', 'draft', 'requires_approval' );
+	}
+
+	/**
 	 * {@inheritDoc}
+	 *
+	 * @param array $input The input data.
 	 */
 	public function execute( array $input ) {
 		$page     = absint( $input['page'] ?? 1 );
@@ -118,7 +132,16 @@ class ListOrders extends AbstractAbility {
 		$args = array();
 
 		if ( ! empty( $input['status'] ) ) {
-			$args['status'] = sanitize_text_field( $input['status'] );
+			$status = sanitize_text_field( $input['status'] );
+			if ( ! in_array( $status, $this->get_allowed_order_statuses(), true ) ) {
+				return $this->error(
+					'invalid_status',
+					/* translators: %s: comma-separated list of valid order status values */
+					sprintf( __( 'Invalid status. Allowed values: %s', 'surecart' ), implode( ', ', $this->get_allowed_order_statuses() ) )
+				);
+			}
+			// Align with admin orders list: UI "canceled" maps to API status void.
+			$args['status'] = 'canceled' === $status ? 'void' : $status;
 		}
 
 		if ( ! empty( $input['customer_id'] ) ) {
