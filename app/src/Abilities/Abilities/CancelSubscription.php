@@ -115,8 +115,7 @@ class CancelSubscription extends AbstractAbility {
 			$data['cancel_behavior'] = $behavior;
 		}
 
-		// fill() puts $data into attributes (request body); pass $id to cancel() to set $this->attributes['id'].
-		$subscription = Subscription::where( array() )->fill( $data )->cancel( $id );
+		$subscription = Subscription::cancel( $id );
 		if ( is_wp_error( $subscription ) ) {
 			return $subscription;
 		}
