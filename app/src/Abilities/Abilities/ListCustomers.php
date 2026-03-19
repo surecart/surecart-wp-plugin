@@ -108,16 +108,21 @@ class ListCustomers extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function execute( array $input ) {
-		$args = array(
-			'page'  => absint( $input['page'] ?? 1 ),
-			'limit' => max( 1, min( absint( $input['per_page'] ?? 10 ), 100 ) ),
-		);
+		$page     = absint( $input['page'] ?? 1 );
+		$per_page = max( 1, min( absint( $input['per_page'] ?? 10 ), 100 ) );
+
+		$args = array();
 
 		if ( ! empty( $input['query'] ) ) {
 			$args['query'] = sanitize_text_field( $input['query'] );
 		}
 
-		$customers = Customer::where( $args )->paginate();
+		$customers = Customer::where( $args )->paginate(
+			array(
+				'page'     => $page,
+				'per_page' => $per_page,
+			)
+		);
 		if ( is_wp_error( $customers ) ) {
 			return $customers;
 		}
@@ -127,8 +132,8 @@ class ListCustomers extends AbstractAbility {
 				'customers'  => array_map( array( $this, 'model_to_array' ), $customers->data ?? array() ),
 				'pagination' => array(
 					'count' => $customers->pagination->count ?? 0,
-					'page'  => $args['page'],
-					'limit' => $args['limit'],
+					'page'  => $page,
+					'limit' => $per_page,
 				),
 			)
 		);

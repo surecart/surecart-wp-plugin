@@ -114,17 +114,23 @@ class ListPrices extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function execute( array $input ) {
+		$page     = absint( $input['page'] ?? 1 );
+		$per_page = max( 1, min( absint( $input['per_page'] ?? 10 ), 100 ) );
+
 		$args = array(
 			'archived' => ! empty( $input['archived'] ),
-			'page'     => absint( $input['page'] ?? 1 ),
-			'limit'    => max( 1, min( absint( $input['per_page'] ?? 10 ), 100 ) ),
 		);
 
 		if ( ! empty( $input['product_ids'] ) && is_array( $input['product_ids'] ) ) {
 			$args['product_ids'] = array_map( 'sanitize_text_field', $input['product_ids'] );
 		}
 
-		$prices = Price::where( $args )->paginate();
+		$prices = Price::where( $args )->paginate(
+			array(
+				'page'     => $page,
+				'per_page' => $per_page,
+			)
+		);
 		if ( is_wp_error( $prices ) ) {
 			return $prices;
 		}
@@ -134,8 +140,8 @@ class ListPrices extends AbstractAbility {
 				'prices'     => array_map( array( $this, 'model_to_array' ), $prices->data ?? array() ),
 				'pagination' => array(
 					'count' => $prices->pagination->count ?? 0,
-					'page'  => $args['page'],
-					'limit' => $args['limit'],
+					'page'  => $page,
+					'limit' => $per_page,
 				),
 			)
 		);

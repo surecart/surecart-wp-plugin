@@ -112,10 +112,10 @@ class ListSubscriptions extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function execute( array $input ) {
-		$args = array(
-			'page'  => absint( $input['page'] ?? 1 ),
-			'limit' => max( 1, min( absint( $input['per_page'] ?? 10 ), 100 ) ),
-		);
+		$page     = absint( $input['page'] ?? 1 );
+		$per_page = max( 1, min( absint( $input['per_page'] ?? 10 ), 100 ) );
+
+		$args = array();
 
 		if ( ! empty( $input['status'] ) ) {
 			$args['status'] = array( sanitize_text_field( $input['status'] ) );
@@ -125,7 +125,12 @@ class ListSubscriptions extends AbstractAbility {
 			$args['customer_ids'] = array( sanitize_text_field( $input['customer_id'] ) );
 		}
 
-		$subscriptions = Subscription::where( $args )->paginate();
+		$subscriptions = Subscription::where( $args )->paginate(
+			array(
+				'page'     => $page,
+				'per_page' => $per_page,
+			)
+		);
 		if ( is_wp_error( $subscriptions ) ) {
 			return $subscriptions;
 		}
@@ -135,8 +140,8 @@ class ListSubscriptions extends AbstractAbility {
 				'subscriptions' => array_map( array( $this, 'model_to_array' ), $subscriptions->data ?? array() ),
 				'pagination'    => array(
 					'count' => $subscriptions->pagination->count ?? 0,
-					'page'  => $args['page'],
-					'limit' => $args['limit'],
+					'page'  => $page,
+					'limit' => $per_page,
 				),
 			)
 		);

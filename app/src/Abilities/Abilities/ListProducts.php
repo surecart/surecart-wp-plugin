@@ -113,17 +113,23 @@ class ListProducts extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function execute( array $input ) {
+		$page     = absint( $input['page'] ?? 1 );
+		$per_page = max( 1, min( absint( $input['per_page'] ?? 10 ), 100 ) );
+
 		$args = array(
 			'archived' => ! empty( $input['archived'] ),
-			'page'     => absint( $input['page'] ?? 1 ),
-			'limit'    => max( 1, min( absint( $input['per_page'] ?? 10 ), 100 ) ),
 		);
 
 		if ( ! empty( $input['query'] ) ) {
 			$args['query'] = sanitize_text_field( $input['query'] );
 		}
 
-		$products = Product::where( $args )->paginate();
+		$products = Product::where( $args )->paginate(
+			array(
+				'page'     => $page,
+				'per_page' => $per_page,
+			)
+		);
 		if ( is_wp_error( $products ) ) {
 			return $products;
 		}
@@ -133,8 +139,8 @@ class ListProducts extends AbstractAbility {
 				'products'   => array_map( array( $this, 'model_to_array' ), $products->data ?? array() ),
 				'pagination' => array(
 					'count' => $products->pagination->count ?? 0,
-					'page'  => $args['page'],
-					'limit' => $args['limit'],
+					'page'  => $page,
+					'limit' => $per_page,
 				),
 			)
 		);

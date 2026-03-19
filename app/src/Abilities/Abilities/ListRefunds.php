@@ -119,10 +119,10 @@ class ListRefunds extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function execute( array $input ) {
-		$args = array(
-			'page'     => absint( $input['page'] ?? 1 ),
-			'per_page' => min( absint( $input['per_page'] ?? 10 ), 100 ),
-		);
+		$page     = absint( $input['page'] ?? 1 );
+		$per_page = max( 1, min( absint( $input['per_page'] ?? 10 ), 100 ) );
+
+		$args = array();
 
 		if ( ! empty( $input['charge_ids'] ) ) {
 			$args['charge_ids'] = array_map( 'sanitize_text_field', $input['charge_ids'] );
@@ -136,7 +136,12 @@ class ListRefunds extends AbstractAbility {
 			$args['return_request_ids'] = array_map( 'sanitize_text_field', $input['return_request_ids'] );
 		}
 
-		$refunds = Refund::where( $args )->paginate();
+		$refunds = Refund::where( $args )->paginate(
+			array(
+				'page'     => $page,
+				'per_page' => $per_page,
+			)
+		);
 		if ( is_wp_error( $refunds ) ) {
 			return $refunds;
 		}
@@ -146,8 +151,8 @@ class ListRefunds extends AbstractAbility {
 				'refunds'    => array_map( array( $this, 'model_to_array' ), $refunds->data ?? array() ),
 				'pagination' => array(
 					'count' => $refunds->pagination->count ?? 0,
-					'page'  => $args['page'],
-					'limit' => $args['per_page'],
+					'page'  => $page,
+					'limit' => $per_page,
 				),
 			)
 		);

@@ -119,7 +119,7 @@ class ListCoupons extends AbstractAbility {
 	 */
 	public function execute( array $input ) {
 		$page     = absint( $input['page'] ?? 1 );
-		$per_page = min( absint( $input['per_page'] ?? 10 ), 100 );
+		$per_page = max( 1, min( absint( $input['per_page'] ?? 10 ), 100 ) );
 
 		$args = array(
 			'archived' => ! empty( $input['archived'] ),
