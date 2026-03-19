@@ -93,7 +93,12 @@ class ArchiveProduct extends AbstractAbility {
 			return $this->error( 'missing_id', __( 'A product ID is required.', 'surecart' ) );
 		}
 
-		$product = ( new Product( $id ) )->update( array( 'archived' => true ) );
+		$product = Product::update(
+			array(
+				'id'       => $id,
+				'archived' => true,
+			)
+		);
 		if ( is_wp_error( $product ) ) {
 			return $product;
 		}
