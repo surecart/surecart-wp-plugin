@@ -27,7 +27,7 @@ class UpdatePrice extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function get_description(): string {
-		return __( 'Update an existing SureCart price by its ID. Supports changing the display name and archive status. The price amount and currency cannot be changed after creation.', 'surecart' );
+		return __( 'Update an existing SureCart price by its ID. You can change the amount (in the smallest currency unit for that price), display name, and archive status. Currency is fixed when the price is created; create a new price to charge in a different currency.', 'surecart' );
 	}
 
 	/**
@@ -45,7 +45,7 @@ class UpdatePrice extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function get_instructions(): string {
-		return 'Requires a valid price ID. Note that amount and currency cannot be changed after creation — create a new price instead if you need different pricing. Set archived=true to soft-delete a price.';
+		return 'Requires a valid price ID. You can update amount, name, and archived. Currency cannot be changed after creation — create a new price for a different currency. Amounts use the smallest unit of the price\'s existing currency. Set archived=true to soft-delete a price.';
 	}
 
 	/**
@@ -68,7 +68,7 @@ class UpdatePrice extends AbstractAbility {
 				),
 				'amount'   => array(
 					'type'        => 'integer',
-					'description' => __( 'New price amount in the smallest currency unit (e.g., cents).', 'surecart' ),
+					'description' => __( 'New price amount in the smallest currency unit (e.g., cents for USD). Currency cannot be changed; it stays the one set when the price was created.', 'surecart' ),
 				),
 				'name'     => array(
 					'type'        => 'string',
