@@ -1,7 +1,7 @@
 # Feature: [Feature Name]
 
 **Version:** [e.g., 4.1.0]
-**PR:** [Link to PR]
+**PR:** [#{number}](https://github.com/surecart/surecart-wp/pull/{number})
 **Linear:** [Link to Linear ticket, if applicable]
 
 ## Overview

@@ -129,6 +129,7 @@ When working on a PR that introduces user-facing changes, create or update a fea
 
 **Naming convention:** `{version}--{feature-slug}--PR-{number}.md`
 - Example: `4.1.0--subscription-pause-resume--PR-3150.md`
+- Version comes from the `surecart.php` header (`Version: X.Y.Z`)
 - Use the template at `docs/features/_TEMPLATE.md` for structure.
 
 **When to create:** Any PR with user-facing changes (new features, UI changes, new settings, behavior changes).
