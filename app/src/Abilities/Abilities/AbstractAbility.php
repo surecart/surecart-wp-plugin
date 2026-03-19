@@ -133,6 +133,20 @@ abstract class AbstractAbility {
 	}
 
 	/**
+	 * Normalize ability input that may be a JSON string or an array (e.g. from form fields).
+	 *
+	 * @param mixed $value Raw input.
+	 *
+	 * @return array|null The decoded or original array, or null if not a valid array.
+	 */
+	protected function parse_json_or_array( $value ): ?array {
+		if ( is_string( $value ) ) {
+			$value = json_decode( $value, true );
+		}
+		return is_array( $value ) ? $value : null;
+	}
+
+	/**
 	 * Validate a date string is in YYYY-MM-DD format.
 	 *
 	 * @param string $date The date string to validate.

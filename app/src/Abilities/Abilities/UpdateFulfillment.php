@@ -150,12 +150,8 @@ class UpdateFulfillment extends AbstractAbility {
 		}
 
 		if ( ! empty( $input['trackings'] ) ) {
-			$trackings = $input['trackings'];
-			// Handle JSON string input from form fields.
-			if ( is_string( $trackings ) ) {
-				$trackings = json_decode( $trackings, true );
-			}
-			if ( is_array( $trackings ) ) {
+			$trackings = $this->parse_json_or_array( $input['trackings'] );
+			if ( null !== $trackings ) {
 				$data['trackings'] = array_map(
 					function ( $tracking ) {
 						$item = array();
@@ -173,12 +169,8 @@ class UpdateFulfillment extends AbstractAbility {
 		}
 
 		if ( ! empty( $input['fulfillment_items'] ) ) {
-			$items = $input['fulfillment_items'];
-			// Handle JSON string input from form fields.
-			if ( is_string( $items ) ) {
-				$items = json_decode( $items, true );
-			}
-			if ( is_array( $items ) ) {
+			$items = $this->parse_json_or_array( $input['fulfillment_items'] );
+			if ( null !== $items ) {
 				$data['fulfillment_items'] = array_map(
 					function ( $item ) {
 						$fulfillment_item = array();
@@ -196,12 +188,8 @@ class UpdateFulfillment extends AbstractAbility {
 		}
 
 		if ( ! empty( $input['metadata'] ) ) {
-			$metadata = $input['metadata'];
-			// Handle JSON string input from form fields.
-			if ( is_string( $metadata ) ) {
-				$metadata = json_decode( $metadata, true );
-			}
-			if ( is_array( $metadata ) ) {
+			$metadata = $this->parse_json_or_array( $input['metadata'] );
+			if ( null !== $metadata ) {
 				$data['metadata'] = array_map( 'sanitize_text_field', $metadata );
 			}
 		}
