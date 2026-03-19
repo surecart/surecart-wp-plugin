@@ -134,7 +134,7 @@ class ListPromotions extends AbstractAbility {
 		// Array filter fields.
 		$array_fields = array( 'coupon_ids', 'customer_ids', 'ids' );
 		foreach ( $array_fields as $field ) {
-			if ( ! empty( $input[ $field ] ) && \is_array( $input[ $field ] ) ) {
+			if ( ! empty( $input[ $field ] ) && is_array( $input[ $field ] ) ) {
 				$args[ $field ] = array_map( 'sanitize_text_field', $input[ $field ] );
 			}
 		}
