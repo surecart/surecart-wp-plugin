@@ -1,6 +1,6 @@
 # Feature: [Feature Name]
 
-**Version:** [e.g., 4.1.0]
+**Version:** [from `surecart.php` Version: header, e.g., 4.1.0]
 **PR:** [#{number}](https://github.com/surecart/surecart-wp/pull/{number})
 **Linear:** [Link to Linear ticket, if applicable]
 
@@ -27,11 +27,10 @@ A brief description of what this feature does and why it was built.
 
 ## Screenshots
 
-<!-- Attach screenshots or add placeholder descriptions -->
-<!-- ![Description](screenshot-url) -->
+<!-- Describe what screenshots the docs team should capture. They will take and add them. -->
 
-- [ ] Screenshot: [describe what to capture]
-- [ ] Screenshot: [describe what to capture]
+- [ ] [describe what to capture]
+- [ ] [describe what to capture]
 
 ## Edge Cases / Notes
 
