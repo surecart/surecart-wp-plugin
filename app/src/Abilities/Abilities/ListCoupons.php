@@ -129,7 +129,7 @@ class ListCoupons extends AbstractAbility {
 			$args['query'] = sanitize_text_field( $input['query'] );
 		}
 
-		if ( ! empty( $input['ids'] ) && \is_array( $input['ids'] ) ) {
+		if ( ! empty( $input['ids'] ) && is_array( $input['ids'] ) ) {
 			$args['ids'] = array_map( 'sanitize_text_field', $input['ids'] );
 		}
 
