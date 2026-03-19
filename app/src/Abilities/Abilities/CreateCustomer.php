@@ -2,12 +2,14 @@
 
 namespace SureCart\Abilities\Abilities;
 
+use SureCart\Abilities\Concerns\MapsGenericAddress;
 use SureCart\Models\Customer;
 
 /**
  * Create a new customer.
  */
 class CreateCustomer extends AbstractAbility {
+	use MapsGenericAddress;
 
 	/**
 	 * {@inheritDoc}
@@ -168,7 +170,7 @@ class CreateCustomer extends AbstractAbility {
 		}
 
 		// Build shipping address from flat fields.
-		$address = $this->build_address( $input, 'shipping_address' );
+		$address = $this->map_generic_address( $input, 'shipping_address' );
 		if ( ! empty( $address ) ) {
 			$data['shipping_address'] = $address;
 		}
@@ -183,34 +185,5 @@ class CreateCustomer extends AbstractAbility {
 				'customer' => $this->model_to_array( $customer ),
 			)
 		);
-	}
-
-	/**
-	 * Build an address array from flat input fields.
-	 *
-	 * @param array  $input  The input data.
-	 * @param string $prefix The address prefix (e.g., 'shipping_address').
-	 *
-	 * @return array
-	 */
-	protected function build_address( array $input, string $prefix ): array {
-		$address        = array();
-		$address_fields = array(
-			'city'        => 'city',
-			'country'     => 'country',
-			'line_1'      => 'line_1',
-			'line_2'      => 'line_2',
-			'postal_code' => 'postal_code',
-			'state'       => 'state',
-		);
-
-		foreach ( $address_fields as $key => $api_key ) {
-			$input_key = $prefix . '_' . $key;
-			if ( ! empty( $input[ $input_key ] ) ) {
-				$address[ $api_key ] = sanitize_text_field( $input[ $input_key ] );
-			}
-		}
-
-		return $address;
 	}
 }
