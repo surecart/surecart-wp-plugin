@@ -123,6 +123,18 @@ yarn run test:php --group=specific-test-group # specific group(s)
 
 **Location:** `.dev/tests/php/unit/` — mirrors `app/src/` structure. Extend `SureCartUnitTestCase` (which extends `WP_UnitTestCase`). Use `\Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration` trait. Bootstrap only the providers you need in `setUp()`. WP functions (`get_option`, `update_option`, `wp_set_current_user`, etc.) work natively. Mock SureCart facade services via `\SureCart::alias('account', fn() => ...)`. `tearDown` cleanup is automatic.
 
+## Feature Documentation for PRs
+
+When working on a PR that introduces user-facing changes, create or update a feature doc in `docs/features/`. This helps the documentation team generate release-ready docs using AI.
+
+**Naming convention:** `{version}--{feature-slug}--PR-{number}.md`
+- Example: `4.1.0--subscription-pause-resume--PR-3150.md`
+- Use the template at `docs/features/_TEMPLATE.md` for structure.
+
+**When to create:** Any PR with user-facing changes (new features, UI changes, new settings, behavior changes).
+**When to skip:** Internal refactors, bug fixes with no visible change, test-only changes.
+**When to update:** If a feature doc already exists for the same feature, update it instead of creating a new one.
+
 ## Critical Gotchas
 
 1. **Never edit `dist/`** — edit source in `packages/`, then build
