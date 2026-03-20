@@ -1,0 +1,198 @@
+{
+	"settings": {
+		"flex_direction": "column",
+		"flex_gap": {
+			"column": "10",
+			"row": "10",
+			"isLinked": true,
+			"unit": "px",
+			"size": 10
+		},
+		"html_tag": "a",
+		"__dynamic__": {
+			"link": "[elementor-tag id=\"1ca6fb3\" name=\"post-url\" settings=\"%7B%7D\"]"
+		},
+		"custom_css": ".sc_product a {text-decoration:none!important;}",
+		"surecart_container_type": "surecart_form",
+		"_title": "Product Form"
+	},
+	"elements": [
+		{
+			"id": "660121bb",
+			"settings": {
+				"content_width": "full",
+				"padding": {
+					"unit": "px",
+					"top": "0",
+					"right": "0",
+					"bottom": "0",
+					"left": "0",
+					"isLinked": true
+				}
+			},
+			"elements": [
+				{
+					"id": "7b9fb3f7",
+					"settings": {
+						"__dynamic__": {
+							"title": "[elementor-tag id=\"\" name=\"post-featured-image\" settings=\"%7B%22before%22%3A%22%22%2C%22after%22%3A%22%22%2C%22fallback%22%3A%22%22%7D\"]"
+						},
+						"space": {
+							"unit": "%",
+							"size": 100,
+							"sizes": []
+						},
+						"align": "center",
+						"object-fit": "contain",
+						"image_border_radius": {
+							"unit": "px",
+							"top": "10",
+							"right": "10",
+							"bottom": "10",
+							"left": "10",
+							"isLinked": true
+						},
+						"width": {
+							"unit": "%",
+							"size": 100,
+							"sizes": []
+						}
+					},
+					"elements": [],
+					"isInner": false,
+					"widgetType": "theme-post-featured-image",
+					"elType": "widget"
+				},
+				{
+					"id": "5387531f",
+					"settings": {
+						"label": "Add",
+						"width": "50",
+						"_padding": {
+							"unit": "px",
+							"top": "0",
+							"right": "0",
+							"bottom": "0",
+							"left": "0",
+							"isLinked": false
+						},
+						"button_typography_typography": "custom",
+						"button_text_color": "#212121",
+						"border_border": "solid",
+						"border_color": "#000000",
+						"button_typography_font_weight": "600",
+						"button_typography_text_transform": "uppercase",
+						"content_align": "center",
+						"padding": {
+							"unit": "px",
+							"top": "10",
+							"right": "10",
+							"bottom": "10",
+							"left": "10",
+							"isLinked": true
+						},
+						"margin": {
+							"unit": "em",
+							"top": "0",
+							"right": "0",
+							"bottom": "0",
+							"left": "0",
+							"isLinked": false
+						},
+						"_element_width": "inherit",
+						"_position": "absolute",
+						"_offset_x": {
+							"unit": "px",
+							"size": 20,
+							"sizes": []
+						},
+						"_offset_y": {
+							"unit": "px",
+							"size": 20,
+							"sizes": []
+						},
+						"button_typography_font_size": {
+							"unit": "px",
+							"size": 12,
+							"sizes": []
+						},
+						"border_radius": {
+							"unit": "px",
+							"top": "100",
+							"right": "100",
+							"bottom": "100",
+							"left": "100",
+							"isLinked": true
+						},
+						"button_background_color": "#F5F5F5"
+					},
+					"elements": [],
+					"isInner": false,
+					"widgetType": "surecart-product-quick-add-button",
+					"elType": "widget"
+				}
+			],
+			"isInner": true,
+			"elType": "container"
+		},
+		{
+			"id": "4d1eff14",
+			"settings": {
+				"__dynamic__": {
+					"title": "[elementor-tag id=\"\" name=\"post-title\" settings=\"%7B%22before%22%3A%22%22%2C%22after%22%3A%22%22%2C%22fallback%22%3A%22%22%7D\"]"
+				},
+				"title": "Add Your Heading Text Here",
+				"header_size": "h2",
+				"typography_typography": "custom",
+				"typography_line_height": {
+					"unit": "px",
+					"size": 24,
+					"sizes": []
+				},
+				"typography_font_size": {
+					"unit": "px",
+					"size": 16,
+					"sizes": []
+				},
+				"title_color": "#111111",
+				"_margin": {
+					"unit": "em",
+					"top": "0",
+					"right": "0",
+					"bottom": "0",
+					"left": "0",
+					"isLinked": false
+				}
+			},
+			"elements": [],
+			"isInner": false,
+			"widgetType": "theme-post-title",
+			"elType": "widget"
+		},
+		{
+			"id": "7ab4b1a6",
+			"settings": {
+				"__dynamic__": {
+					"editor": "[elementor-tag id=\"dc67044\" name=\"sc_product_price\" settings=\"%7B%7D\"]"
+				},
+				"typography_typography": "custom",
+				"typography_font_weight": "600",
+				"typography_line_height": {
+					"unit": "px",
+					"size": 20,
+					"sizes": []
+				},
+				"typography_font_size": {
+					"unit": "px",
+					"size": 14,
+					"sizes": []
+				},
+				"text_color": "#6B7280"
+			},
+			"elements": [],
+			"isInner": false,
+			"widgetType": "text-editor",
+			"elType": "widget"
+		}
+	]
+}

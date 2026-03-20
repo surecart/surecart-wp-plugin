@@ -1,0 +1,62 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "surecart/product-review-pagination",
+	"title": "Pagination",
+	"description": "Display the product review pagination.",
+	"version": "1.0.0",
+	"category": "surecart-product-page",
+	"example": {},
+	"usesContext": ["query", "surecart/product-review/limit"],
+	"ancestor": ["surecart/product-page", "surecart/product-review-list"],
+	"allowedBlocks": [
+		"surecart/product-review-pagination-previous",
+		"surecart/product-review-pagination-numbers",
+		"surecart/product-review-pagination-next"
+	],
+	"attributes": {
+		"paginationArrow": {
+			"type": "string",
+			"default": "arrow"
+		},
+		"showLabel": {
+			"type": "boolean",
+			"default": true
+		}
+	},
+	"providesContext": {
+		"paginationArrow": "paginationArrow",
+		"showLabel": "showLabel"
+	},
+	"supports": {
+		"interactivity": true,
+		"spacing": {
+			"padding": true,
+			"margin": ["top", "bottom"],
+			"blockGap": true
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true,
+			"__experimentalFontWeight": true
+		},
+		"color": {
+			"text": true,
+			"background": false,
+			"enableContrastChecker": true
+		},
+		"layout": {
+			"allowSwitching": false,
+			"allowInheriting": false,
+			"default": {
+				"type": "flex",
+				"justifyContent": "space-between"
+			}
+		},
+		"align": true
+	},
+	"render": "file:./view.php",
+	"textdomain": "surecart",
+	"style": "file:./style-index.css",
+	"editorScript": "file:./index.js"
+}

@@ -25,6 +25,7 @@ class AffiliationPayoutsController extends AdminController {
 					],
 				],
 				'suffix'      => '<sc-button href="' . esc_url( admin_url( 'admin.php?page=sc-affiliate-payouts&action=export' ) ) . '"  type="primary">' . __( 'Export Payouts', 'surecart' ) . '</sc-button>',
+				'report_url'  => SURECART_REPORTS_URL . 'payouts',
 			)
 		);
 

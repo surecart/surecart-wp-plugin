@@ -1,5 +1,5 @@
 {
-	"apiVersion": 2,
+	"apiVersion": 3,
 	"name": "surecart/customer-billing-details",
 	"title": "Customer Billing Details",
 	"description": "Displays the customers billing details.",

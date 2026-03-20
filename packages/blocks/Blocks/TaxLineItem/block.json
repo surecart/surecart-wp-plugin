@@ -5,7 +5,7 @@
 	"category": "surecart",
 	"ancestor": ["surecart/totals"],
 	"keywords": ["tax", "checkout", "total", "subtotal"],
-  "textdomain": "surecart",
+	"textdomain": "surecart",
 	"supports": {
 		"reusable": false,
 		"html": false

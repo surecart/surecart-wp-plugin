@@ -1,11 +1,13 @@
 /**
  * WordPress dependencies
  */
-import { store, getElement } from '@wordpress/interactivity';
+import { store, getElement, withSyncEvent } from '@wordpress/interactivity';
+import { inertEverythingExcept, removeInert } from '../utils/inert';
 const { __ } = wp.i18n;
 
 const { state, actions } = store('surecart/sidebar', {
 	state: {
+		mobileOpen: false,
 		/**
 		 * The sidebar dialog element.
 		 * This gets cached so we can call this many times without querying the DOM.
@@ -17,24 +19,19 @@ const { state, actions } = store('surecart/sidebar', {
 				const { ref } = getElement();
 
 				dialog =
-					ref.parentElement.querySelector('dialog') || // Sibling dialog.
-					ref.closest('dialog') || // Parent dialog.
+					ref.parentElement.querySelector('.sc-sidebar-drawer') || // Sibling sc-sidebar-drawer.
+					ref.closest('.sc-sidebar-drawer') || // Parent sc-sidebar-drawer.
 					null;
-			}
-
-			// No dialog is found.
-			if (dialog instanceof HTMLDialogElement === false) {
-				return;
 			}
 
 			return dialog;
 		},
 		get ariaLabelDesktop() {
 			return state?.open
-				? __('Close sidebar', 'surecart')
-				: __('Open sidebar', 'surecart');
+				? __('Hide filters', 'surecart')
+				: __('Show filters', 'surecart');
 		},
-		ariaLabelMobile: __('Open sidebar', 'surecart'),
+		ariaLabelMobile: __('Show filters', 'surecart'),
 	},
 
 	actions: {
@@ -42,7 +39,9 @@ const { state, actions } = store('surecart/sidebar', {
 		 * Open the sidebar dialog.
 		 */
 		open: function* () {
-			state.dialog?.showModal();
+			state.mobileOpen = true;
+			// also do not add inert for the parent of the current element
+			inertEverythingExcept(document.querySelector('.sc-sidebar-drawer'));
 			state.ariaLabelMobile = __('Close sidebar', 'surecart');
 		},
 
@@ -50,7 +49,9 @@ const { state, actions } = store('surecart/sidebar', {
 		 * Close the sidebar dialog.
 		 */
 		close: () => {
-			state.dialog?.close();
+			state.mobileOpen = false;
+			// remove inert attribute from all elements that were made inert
+			removeInert();
 			state.ariaLabelMobile = __('Open sidebar', 'surecart');
 		},
 
@@ -72,7 +73,7 @@ const { state, actions } = store('surecart/sidebar', {
 		 * Toggle the sidebar dialog.
 		 * This is used for the desktop sidebar.
 		 */
-		toggleDesktop: (e) => {
+		toggleDesktop: withSyncEvent((e) => {
 			// If the key is not space or enter, return.
 			if (e?.key && e?.key !== ' ' && e?.key !== 'Enter') {
 				return;
@@ -82,12 +83,12 @@ const { state, actions } = store('surecart/sidebar', {
 			e?.preventDefault();
 
 			state.open = !state.open;
-		},
+		}),
 
 		/**
 		 * Toggle the sidebar dialog.
 		 */
-		toggleMobile: (e) => {
+		toggleMobile: withSyncEvent((e) => {
 			// If the key is not space or enter, return.
 			if (e?.key && e?.key !== ' ' && e?.key !== 'Enter') {
 				return;
@@ -96,17 +97,30 @@ const { state, actions } = store('surecart/sidebar', {
 			// Prevent default behavior.
 			e?.preventDefault();
 
-			state?.dialog?.open ? actions.close() : actions.open();
-		},
+			state?.mobileOpen ? actions.close() : actions.open();
+		}),
 
 		/**
 		 * Close the dialog if the target is the dialog.
 		 */
-		closeOverlay: (e) => {
+		closeOverlay: withSyncEvent((e) => {
 			// If the target is the dialog, close it.
 			if (e.target === e.currentTarget) {
-				e.currentTarget.close();
+				actions.close();
 			}
-		},
+		}),
+
+		/**
+		 * Handle keydown events.
+		 */
+		handleKeydown: withSyncEvent((event) => {
+			if (state.mobileOpen) {
+				if (event.key === 'Escape') {
+					event.preventDefault();
+					event.stopPropagation();
+					actions.close();
+				}
+			}
+		}),
 	},
 });

@@ -7,6 +7,8 @@ import { css, jsx } from '@emotion/core';
 import { useState, useEffect } from '@wordpress/element';
 import { __experimentalConfirmDialog as ConfirmDialog } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
+import { useSelect } from '@wordpress/data';
+import { store as coreStore } from '@wordpress/core-data';
 
 /**
  * Internal dependencies.
@@ -21,11 +23,12 @@ import {
 	ScCheckbox,
 	ScText,
 	ScFormControl,
-	ScCard,
 } from '@surecart/components-react';
 import { useInvoice } from '../hooks/useInvoice';
 import AddressDisplay from '../../components/AddressDisplay';
 import Box from '../../ui/Box';
+import PhoneNumberDisplay from './PhoneNumberDisplay';
+import PhoneNumberInput from './PhoneNumber';
 
 export default ({ checkout }) => {
 	if (!checkout?.id) {
@@ -33,7 +36,27 @@ export default ({ checkout }) => {
 	}
 
 	const [modal, setModal] = useState(false);
-	const { loading, isDraftInvoice, updateCheckout } = useInvoice();
+	const { loading, isDraftInvoice, updateCheckout, invoice } = useInvoice();
+
+	// Check if Razorpay processor is enabled for the current mode.
+	const isRazorpayEnabled = useSelect(
+		(select) => {
+			const processors = select(coreStore).getEntityRecords(
+				'surecart',
+				'processor',
+				{ context: 'edit', per_page: 100 }
+			);
+			return (processors || []).some(
+				(p) =>
+					p?.processor_type === 'razorpay' &&
+					p?.live_mode === invoice?.live_mode &&
+					p?.enabled &&
+					p?.approved
+			);
+		},
+		[invoice?.live_mode]
+	);
+
 	const [customerShippingAddress, setCustomerShippingAddress] = useState(
 		checkout?.shipping_address
 	);
@@ -138,7 +161,10 @@ export default ({ checkout }) => {
 						>
 							{!!checkout?.shipping_address?.country ? (
 								<AddressDisplay
-									address={checkout?.shipping_address}
+									address={
+										checkout?.shipping_address
+											?.formatted_string
+									}
 								/>
 							) : (
 								<ScText
@@ -182,7 +208,9 @@ export default ({ checkout }) => {
 							`}
 						>
 							{!!billingAddress?.country ? (
-								<AddressDisplay address={billingAddress} />
+								<AddressDisplay
+									address={billingAddress?.formatted_string}
+								/>
 							) : (
 								<ScText
 									style={{
@@ -197,6 +225,10 @@ export default ({ checkout }) => {
 							)}
 						</ScFormControl>
 					</div>
+
+					{isRazorpayEnabled && (
+						<PhoneNumberDisplay phone={checkout?.phone} />
+					)}
 				</div>
 			);
 		}
@@ -212,8 +244,6 @@ export default ({ checkout }) => {
 					onScChangeAddress={(e) =>
 						setCustomerShippingAddress(e?.detail)
 					}
-					defaultCountryFields={scData.i18n.defaultCountryFields}
-					countryFields={scData.i18n.countryFields}
 				/>
 
 				<ScCheckbox
@@ -242,10 +272,10 @@ export default ({ checkout }) => {
 						onScChangeAddress={(e) =>
 							setCustomerBillingAddress(e?.detail)
 						}
-						defaultCountryFields={scData.i18n.defaultCountryFields}
-						countryFields={scData.i18n.countryFields}
 					/>
 				)}
+
+				{isRazorpayEnabled && <PhoneNumberInput checkout={checkout} />}
 			</>
 		);
 	};

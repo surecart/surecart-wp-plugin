@@ -16,10 +16,7 @@ class HelpWidgetServiceProvider implements ServiceProviderInterface {
 	 */
 	public function register( $container ) {
 		$container['surecart.help_widget'] = function ( $container ) {
-			return new HelpWidget( $container['surecart.help_widget.checklist'] );
-		};
-		$container['surecart.help_widget.checklist'] = function ( $container ) {
-			return new Checklist( $container['surecart.account'] );
+			return new HelpWidget();
 		};
 
 		$app = $container[ SURECART_APPLICATION_KEY ];

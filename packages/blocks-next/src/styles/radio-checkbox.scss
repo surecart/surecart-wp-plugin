@@ -18,14 +18,15 @@
 	margin: 0.25em 0;
 	vertical-align: top;
 	background: {
-		color: #fff;
+		color: var(--sc-check-input-unchecked-background-color, #fff);
 		repeat: no-repeat;
 		position: center;
 		size: contain;
 	}
-	border: 1px solid rgba(0, 0, 0, 0.25);
+	border: 1px solid var(--sc-check-input-unchecked-border-color, rgba(0, 0, 0, 0.25));
 	appearance: none;
 	color-adjust: exact;
+	padding: 7px;
 
 	// Radio
 	&[type="radio"] {

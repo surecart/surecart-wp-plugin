@@ -16,8 +16,6 @@
 	}
 
 	&.quantity--disabled {
-		background-color: var(--sc-input-background-color-disabled);
-		border-color: var(--sc-input-border-color-disabled);
 		opacity: 0.5;
 		cursor: not-allowed;
 
@@ -52,27 +50,27 @@
 		}
 
 		&.button--disabled {
-			background-color: var(--sc-input-background-color-disabled);
-			border-color: var(--sc-input-border-color-disabled);
 			opacity: 0.5;
 			cursor: not-allowed;
 		}
 	}
 
-	&:not(.sc-input-group-sm) .sc-quantity-selector__decrease {
-		border-right: 1px solid var(--sc-input-border-color);
-	}
-
-	&:not(.sc-input-group-sm) .sc-quantity-selector__increase {
-		border-left: 1px solid var(--sc-input-border-color);
-	}
-
 	input[type="number"].sc-quantity-selector__control {
 		line-height: 1;
 		font-size: var(--sc-font-size-small);
-		height: 100%;
 		text-align: center;
+		-moz-appearance: textfield; /* Firefox */
+		appearance: textfield;
+		padding: 0;
+
+		&::-webkit-outer-spin-button,
+		&::-webkit-inner-spin-button {
+			/* display: none; <- Crashes Chrome on hover */
+			-webkit-appearance: none;
+			margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+		}
 		min-height: 0;
+		height: 100%;
 	}
 
 	&.quantity--small {

@@ -46,8 +46,11 @@ class CompatibilityService {
 		// Load Divi Compatibility CSS.
 		add_action( 'wp_enqueue_scripts', [ $this, 'diviCompatibility' ] );
 
+		// Load Bricks Compatibility CSS.
+		add_action( 'wp_enqueue_scripts', [ $this, 'bricksCompatibility' ] );
+
 		// Load Blocks Global Styles if enabled by Merchant in the setting.
-		if ( (bool) get_option( 'surecart_load_block_assets_on_demand', false ) ) {
+		if ( (bool) get_option( 'surecart_load_block_assets_on_demand', false ) && \SureCart::theme()->shouldLoadOnDemandBlockAssets() ) {
 			add_filter( 'should_load_separate_core_block_assets', '__return_true' );
 		}
 
@@ -85,6 +88,21 @@ class CompatibilityService {
 			return;
 		}
 		wp_enqueue_style( 'surecart-divi-compatibility', plugins_url( 'styles/divi-compatibility.css', SURECART_PLUGIN_FILE ), '', \SureCart::plugin()->version(), 'all' );
+	}
+
+	/**
+	 * Load Bricks Compatibility CSS.
+	 *
+	 * @return void
+	 */
+	public function bricksCompatibility() {
+		$active_theme = wp_get_theme();
+
+		if ( empty( $active_theme ) || 'Bricks' !== $active_theme->get( 'Name' ) ) {
+			return;
+		}
+
+		wp_enqueue_style( 'surecart-bricks-compatibility', plugins_url( 'styles/bricks-compatibility.css', SURECART_PLUGIN_FILE ), '', \SureCart::plugin()->version(), 'all' );
 	}
 
 	/** Prevent Yoast SEO from outputing SEO meta tags on our custom pages.
@@ -126,6 +144,12 @@ class CompatibilityService {
 	 * @return string
 	 */
 	public function rankMathUrlFix( $canonical ) {
+		// Some Rank Math filters may pass boolean false to indicate the archive/link
+		// should not be included. If $canonical is empty or not a string, don't process.
+		if ( empty( $canonical ) || ! is_string( $canonical ) ) {
+			return $canonical;
+		}
+
 		return remove_query_arg( 'currency', $canonical );
 	}
 
@@ -234,7 +258,6 @@ class CompatibilityService {
 		$exclude_ids[] = '@surecart/image-slider-js-module';
 		$exclude_ids[] = '@surecart/checkout-js-module';
 		$exclude_ids[] = '@surecart/cart-js-module';
-		$exclude_ids[] = '@surecart/a11y-js-module';
 		$exclude_ids[] = '@surecart/checkout-service-js-module';
 		$exclude_ids[] = '@surecart/checkout-events-js-module';
 		$exclude_ids[] = '@surecart/dropdown-js-module';

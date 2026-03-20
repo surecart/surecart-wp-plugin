@@ -21,10 +21,24 @@ class GalleryItemProductMedia extends ModelsGalleryItem implements GalleryItem {
 	}
 
 	/**
+	 * Get the thumbnail attribute markup.
+	 *
+	 * @param string $size The size of the image.
+	 * @param array  $attr The attributes for the tag.
+	 * @param array  $metadata Additional metadata.
+	 *
+	 * @return string
+	 */
+	public function thumbnail( $size = 'full', $attr = [], $metadata = [] ): string {
+		return $this->html( $size, $attr, $metadata );
+	}
+
+	/**
 	 * Get the media attribute markup.
 	 *
 	 * @param string $size The size of the image.
 	 * @param array  $attr The attributes for the tag.
+	 * @param array  $metadata Additional metadata.
 	 *
 	 * @return string
 	 */
@@ -89,8 +103,8 @@ class GalleryItemProductMedia extends ModelsGalleryItem implements GalleryItem {
 			$tags->set_attribute( 'data-wp-on-async--load', 'callbacks.setImageRef' );
 			$tags->set_attribute( 'data-wp-init', 'callbacks.setImageRef' );
 			$tags->set_attribute( 'data-wp-on-async--click', 'actions.showLightbox' );
-			$tags->set_attribute( 'data-wp-class--hide', 'state.isContentHidden' );
-			$tags->set_attribute( 'data-wp-class--show', 'state.isContentVisible' );
+			$tags->set_attribute( 'data-wp-class--sc-hide', 'state.isContentHidden' );
+			$tags->set_attribute( 'data-wp-class--sc-show', 'state.isContentVisible' );
 			$tags->add_class( 'has-image-lightbox' );
 
 			// add the lightbox trigger button.
@@ -108,8 +122,9 @@ class GalleryItemProductMedia extends ModelsGalleryItem implements GalleryItem {
 				' . \SureCart::svg()->get(
 						'maximize',
 						[
-							'width'  => 16,
-							'height' => 16,
+							'width'       => 16,
+							'height'      => 16,
+							'aria-hidden' => 'true',
 						]
 					) . '
 			</button>';
@@ -127,7 +142,7 @@ class GalleryItemProductMedia extends ModelsGalleryItem implements GalleryItem {
 	 *
 	 * @return object
 	 */
-	public function attributes( $size = 'full', $attr = array() ) {
+	public function attributes( $size = 'full', $attr = array() ): object {
 		if ( isset( $this->item->media ) ) {
 			return $this->item->media->attributes( $size, $attr );
 		}

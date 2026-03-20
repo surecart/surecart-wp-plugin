@@ -85,7 +85,7 @@ add_filter(
 		}
 
 		// pass a unique id to each product list block.
-		if ( 'surecart/product-list' === $parsed_block['blockName'] ) {
+		if ( in_array( $parsed_block['blockName'], [ 'surecart/product-list', 'surecart/product-list-related' ], true ) ) {
 			// we use our own counter to ensure uniqueness so that product page urls don't have ids.
 			global $sc_query_id;
 			$sc_query_id = sc_unique_product_list_id();
@@ -97,6 +97,7 @@ add_filter(
 			global $sc_query_id;
 			$sc_query_id = sc_unique_product_page_id();
 		}
+
 		return $context;
 	},
 	10,
@@ -133,10 +134,10 @@ add_action(
 			return;
 		}
 
-		$close_button_label = esc_attr__( 'Close' );
-		$dialog_label       = esc_attr__( 'Enlarged images' );
-		$prev_button_label  = esc_attr__( 'Previous' );
-		$next_button_label  = esc_attr__( 'Next' );
+		$close_button_label = esc_attr__( 'Close', 'surecart' );
+		$dialog_label       = esc_attr__( 'Enlarged images', 'surecart' );
+		$prev_button_label  = esc_attr__( 'Previous', 'surecart' );
+		$next_button_label  = esc_attr__( 'Next', 'surecart' );
 
 		// If the current theme does NOT have a `theme.json`, or the colors are not
 		// defined, it needs to set the background color & close button color to some
@@ -158,7 +159,6 @@ add_action(
 			class="sc-lightbox-overlay zoom"
 			aria-label="$dialog_label"
 			data-wp-interactive="surecart/lightbox"
-			data-wp-context='{}'
 			data-wp-bind--role="state.roleAttribute"
 			data-wp-bind--aria-modal="state.ariaModal"
 			data-wp-class--active="state.overlayEnabled"
@@ -203,21 +203,18 @@ add_action(
 add_action(
 	'init',
 	function () {
+		// Skip script module registration if build files don't exist.
+		$build_path = trailingslashit( plugin_dir_path( __FILE__ ) ) . 'build/scripts/';
+		if ( ! is_dir( $build_path ) ) {
+			return;
+		}
+
 		// instead, use a static loader that injects the script at runtime.
 		$static_assets = include trailingslashit( plugin_dir_path( __FILE__ ) ) . 'build/scripts/fetch/index.asset.php';
 		wp_register_script_module(
 			'@surecart/api-fetch',
 			trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/fetch/index.js',
-			array(
-				array(
-					'id'     => 'wp-url',
-					'import' => 'dynamic',
-				),
-				array(
-					'id'     => 'wp-api-fetch',
-					'import' => 'dynamic',
-				),
-			),
+			$static_assets['dependencies'],
 			$static_assets['version']
 		);
 
@@ -252,15 +249,6 @@ add_action(
 					'import' => 'dynamic',
 				),
 			),
-			$static_assets['version']
-		);
-
-		// instead, use a static loader that injects the script at runtime.
-		$static_assets = include trailingslashit( plugin_dir_path( __FILE__ ) ) . 'build/scripts/a11y/index.asset.php';
-		wp_register_script_module(
-			'@surecart/a11y',
-			trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/a11y/index.js',
-			array(),
 			$static_assets['version']
 		);
 
@@ -319,10 +307,68 @@ add_action(
 					'import' => 'dynamic',
 				],
 				[
-					'id'     => '@surecart/a11y',
+					'id'     => '@wordpress/a11y',
 					'import' => 'dynamic',
 				],
 			],
+			$static_assets['version']
+		);
+
+		// Product review script.
+		$static_assets = include trailingslashit( plugin_dir_path( __FILE__ ) ) . 'build/scripts/product-review/index.asset.php';
+		wp_register_script_module(
+			'@surecart/product-review',
+			trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/product-review/index.js',
+			[
+				[
+					'id'     => '@wordpress/interactivity',
+					'import' => 'dynamic',
+				],
+				[
+					'id'     => '@wordpress/a11y',
+					'import' => 'dynamic',
+				],
+			],
+			$static_assets['version']
+		);
+
+		// Product review form script.
+		$static_assets = include trailingslashit( plugin_dir_path( __FILE__ ) ) . 'build/scripts/product-review-form/index.asset.php';
+		wp_register_script_module(
+			'@surecart/product-review-form',
+			trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/product-review-form/index.js',
+			[
+				[
+					'id'     => '@wordpress/interactivity',
+					'import' => 'dynamic',
+				],
+				[
+					'id'     => 'surecart/lightbox',
+					'import' => 'dynamic',
+				],
+				[
+					'id'     => '@wordpress/a11y',
+					'import' => 'dynamic',
+				],
+			],
+			$static_assets['version']
+		);
+
+		// Sticky purchase button interactivity script.
+		$static_assets = include trailingslashit( plugin_dir_path( __FILE__ ) ) . 'build/scripts/sticky-purchase/index.asset.php';
+		wp_register_script_module(
+			'@surecart/sticky-purchase',
+			trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/sticky-purchase/index.js',
+			array(
+				array(
+					'id'     => '@wordpress/interactivity',
+					'import' => 'dynamic',
+				),
+				array(
+					'id'     => '@surecart/product-page',
+					'import' => 'dynamic',
+				),
+			),
 			$static_assets['version']
 		);
 
@@ -371,6 +417,19 @@ add_action(
 		wp_register_script_module(
 			'surecart/lightbox',
 			trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/lightbox/index.js',
+			array(
+				array(
+					'id'     => '@wordpress/interactivity',
+					'import' => 'dynamic',
+				),
+			),
+			$static_assets['version']
+		);
+
+		$static_assets = include trailingslashit( plugin_dir_path( __FILE__ ) ) . 'build/scripts/video/index.asset.php';
+		wp_register_script_module(
+			'@surecart/video',
+			trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/video/index.js',
 			array(
 				array(
 					'id'     => '@wordpress/interactivity',
@@ -429,6 +488,44 @@ add_action(
 			$static_assets['version']
 		);
 
+		// Product Quick View.
+		$static_assets = include trailingslashit( plugin_dir_path( __FILE__ ) ) . 'build/scripts/product-quick-view/index.asset.php';
+		wp_register_script_module(
+			'@surecart/product-quick-view',
+			trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/product-quick-view/index.js',
+			array(
+				array(
+					'id'     => '@surecart/checkout',
+					'import' => 'dynamic',
+				),
+				array(
+					'id'     => '@surecart/product-page',
+					'import' => 'dynamic',
+				),
+				array(
+					'id'     => 'surecart/lightbox',
+					'import' => 'dynamic',
+				),
+				array(
+					'id'     => '@surecart/image-slider',
+					'import' => 'dynamic',
+				),
+				array(
+					'id'     => '@surecart/checkout-events',
+					'import' => 'dynamic',
+				),
+				array(
+					'id'     => '@wordpress/interactivity',
+					'import' => 'dynamic',
+				),
+				array(
+					'id'     => '@wordpress/interactivity-router',
+					'import' => 'dynamic',
+				),
+			),
+			$static_assets['version']
+		);
+
 		// Cart side drawer.
 		$static_assets = include trailingslashit( plugin_dir_path( __FILE__ ) ) . 'build/scripts/sidebar/index.asset.php';
 		wp_register_script_module(
@@ -470,7 +567,47 @@ add_action(
 					'import' => 'dynamic',
 				),
 				array(
-					'id'     => '@surecart/a11y',
+					'id'     => '@wordpress/a11y',
+					'import' => 'dynamic',
+				),
+			),
+			$static_assets['version']
+		);
+
+		// Line Item Note.
+		$static_assets = include trailingslashit( plugin_dir_path( __FILE__ ) ) . 'build/scripts/line-item-note/index.asset.php';
+		wp_register_script_module(
+			'@surecart/line-item-note',
+			trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/line-item-note/index.js',
+			array(
+				array(
+					'id'     => '@wordpress/interactivity',
+					'import' => 'dynamic',
+				),
+			),
+			$static_assets['version']
+		);
+
+		// Order Bumps.
+		$static_assets = include trailingslashit( plugin_dir_path( __FILE__ ) ) . 'build/scripts/order-bumps/index.asset.php';
+		wp_register_script_module(
+			'@surecart/order-bumps',
+			trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/order-bumps/index.js',
+			array(
+				array(
+					'id'     => '@wordpress/interactivity',
+					'import' => 'dynamic',
+				),
+				array(
+					'id'     => '@surecart/checkout',
+					'import' => 'dynamic',
+				),
+				array(
+					'id'     => '@surecart/checkout-service',
+					'import' => 'dynamic',
+				),
+				array(
+					'id'     => '@wordpress/a11y',
 					'import' => 'dynamic',
 				),
 			),
@@ -480,3 +617,18 @@ add_action(
 	10,
 	3
 );
+
+/**
+ * Load custom block styles only when the block is used.
+ */
+add_action(
+	'init',
+	function () {
+		// Scan our styles folder to locate block styles.
+		$files = glob( __DIR__ . '/src/blocks-styles/**.php' );
+		foreach ( $files as $file ) {
+			include $file;
+		}
+	}
+);
+

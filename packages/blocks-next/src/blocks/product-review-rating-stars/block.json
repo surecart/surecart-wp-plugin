@@ -1,0 +1,51 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "surecart/product-review-rating-stars",
+	"title": "Review Rating Stars",
+	"description": "Displays the rating given by the reviewer for a product review using stars.",
+	"version": "1.0.0",
+	"category": "surecart-product-page",
+	"ancestor": ["surecart/product-review-template"],
+	"keywords": ["review", "rating", "stars"],
+	"usesContext": ["reviewId", "review"],
+	"attributes": {
+		"fill_color": {
+			"type": "string",
+			"default": ""
+		},
+		"size": {
+			"type": "string",
+			"default": "20px"
+		}
+	},
+	"supports": {
+		"interactivity": true,
+		"color": {
+			"text": false,
+			"link": false,
+			"background": false,
+			"__experimentalDefaultControls": {
+				"background": false,
+				"text": false
+			}
+		},
+		"spacing": {
+			"margin": true,
+			"padding": true,
+			"blockGap": {
+				"__experimentalDefault": "2px"
+			},
+			"__experimentalDefaultControls": {
+				"padding": true,
+				"margin": true,
+				"blockGap": true
+			}
+		}
+	},
+	"example": {},
+	"textdomain": "surecart",
+	"render": "file:./view.php",
+	"style": "file:./style-index.css",
+	"editorScript": "file:./index.js"
+}

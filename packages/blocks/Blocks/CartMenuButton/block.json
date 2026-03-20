@@ -1,6 +1,6 @@
 {
 	"$schema": "https://json.schemastore.org/block.json",
-	"apiVersion": 2,
+	"apiVersion": 3,
 	"name": "surecart/cart-menu-icon",
 	"title": "Cart Menu Icon",
 	"description": "The cart menu icon that shows your cart quantity.",

@@ -1,9 +1,13 @@
 .sc-drawer {
+	opacity: 0;
+	display: none;
 	position: fixed;
 	box-sizing: border-box;
 	width: var(--sc-drawer-width, 31rem);
-	min-height: 100dvh;
+	max-height: none;
+	height: auto;
 	min-width: var(--sc-drawer-min-width, "300px");
+	max-width: 100%;
 	background-color: var(--sc-panel-background-color);
 	box-shadow: var(--sc-shadow-x-large);
 	padding: 0;
@@ -15,7 +19,7 @@
 	right: 0;
 	top: 0;
 	left: auto;
-	bottom: auto;
+	bottom: 0;
 	overflow: hidden;
 	font-family: var(--sc-font-sans);
 	font-weight: var(--sc-font-weight-normal);
@@ -31,38 +35,13 @@
 		overflow: hidden;
 	}
 
-	&[open] {
+	&.open {
+		opacity: 1;
+		display: flex;
+		flex-direction: column;
 		animation: slide-in
 			var(--sc-drawer-transition-speed, var(--sc-transition-medium))
 			cubic-bezier(0.4, 0, 0.2, 1);
-
-		&::backdrop {
-			animation: backdrop-fade-in
-				var(--sc-drawer-transition-speed, var(--sc-transition-medium))
-				ease forwards;
-		}
-	}
-
-	&:modal {
-		display: block;
-		margin: 0;
-		padding: 0;
-	}
-
-	&::backdrop {
-		background-color: var(--sc-color-gray-800);
-		opacity: 0.25;
-		pointer-events: all;
-		animation: backdrop-fade-in
-			var(--sc-drawer-transition-speed, var(--sc-transition-medium)) ease
-			backwards;
-		animation-direction: reverse;
-	}
-
-	&[open]::backdrop {
-		animation: backdrop-fade-in
-			var(--sc-drawer-transition-speed, var(--sc-transition-medium)) ease
-			forwards;
 	}
 
 	&__header {
@@ -106,6 +85,26 @@
 		border-top: var(--sc-drawer-border);
 		padding: var(--sc-drawer-footer-spacing, var(--sc-spacing-medium));
 	}
+}
+
+.sc-drawer__backdrop {
+	background-color: var(--sc-color-gray-800);
+	opacity: 0;
+	animation-direction: reverse;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	position: fixed;
+	pointer-events: none;
+}
+
+.sc-drawer__backdrop.show {
+	animation: backdrop-fade-in
+		var(--sc-drawer-transition-speed, var(--sc-transition-medium)) ease
+		forwards;
+	z-index: var(--sc-z-index-drawer-backdrop);
+	pointer-events: all;
 }
 
 @keyframes slide-in {

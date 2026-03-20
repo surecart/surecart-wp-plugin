@@ -1,0 +1,132 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "surecart/product-review-add-button",
+	"title": "Write a Review Button",
+	"description": "A button to open the product review form.",
+	"version": "1.0.0",
+	"category": "surecart-product-page",
+	"example": {
+		"attributes": {
+			"button_type": "both"
+		}
+	},
+	"usesContext": ["postId"],
+	"ancestor": [
+		"surecart/product-page",
+		"surecart/product-template",
+		"surecart/product-quick-view",
+		"surecart/product-review-list",
+		"surecart/product-review-template",
+		"product-review-list-no-reviews",
+		"surecart/sticky-purchase"
+	],
+	"keywords": ["review", "button", "write review"],
+	"attributes": {
+		"icon": {
+			"type": "string",
+			"default": "edit-2"
+		},
+		"icon_position": {
+			"type": "string",
+			"default": "before"
+		},
+		"icon_size": {
+			"type": "number",
+			"default": 15
+		},
+		"label": {
+			"type": "string",
+			"default": "Write a Review"
+		},
+		"button_type": {
+			"type": "string",
+			"default": "both"
+		},
+		"width": {
+			"type": "number"
+		}
+	},
+	"supports": {
+		"interactivity": true,
+		"anchor": true,
+		"spacing": {
+			"__experimentalSkipSerialization": true,
+			"margin": true,
+			"padding": true,
+			"blockGap": true
+		},
+		"color": {
+			"__experimentalSkipSerialization": true,
+			"gradients": true,
+			"link": false,
+			"__experimentalDefaultControls": {
+				"background": true,
+				"text": true
+			}
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true,
+			"textAlign": true,
+			"__experimentalFontFamily": true,
+			"__experimentalFontWeight": true,
+			"__experimentalFontStyle": true,
+			"__experimentalTextTransform": true,
+			"__experimentalTextDecoration": true,
+			"__experimentalLetterSpacing": true,
+			"__experimentalDefaultControls": {
+				"fontSize": true,
+				"fontAppearance": true,
+				"textTransform": true
+			}
+		},
+		"__experimentalBorder": {
+			"color": true,
+			"radius": true,
+			"style": true,
+			"width": true,
+			"__experimentalSkipSerialization": true,
+			"__experimentalDefaultControls": {
+				"color": true,
+				"radius": true,
+				"style": true,
+				"width": true
+			}
+		},
+		"__experimentalStyle": {
+			"variations": {
+				"outline": {
+					"border": {
+						"color": "currentColor",
+						"width": "2px",
+						"style": "solid"
+					},
+					"color": {
+						"text": "currentColor",
+						"gradient": "transparent none"
+					}
+				}
+			}
+		},
+		"__experimentalSelector": ".wp-block-button .wp-block-button__link"
+	},
+	"styles": [
+		{ "name": "fill", "label": "Fill", "isDefault": true },
+		{ "name": "outline", "label": "Outline" }
+	],
+	"textdomain": "surecart",
+	"render": "file:./controller.php",
+	"viewScriptModule": [
+		"@surecart/product-page",
+		"@surecart/product-review-form"
+	],
+	"editorScript": "file:./index.js",
+	"style": [
+		"surecart-wp-buttons",
+		"surecart-wp-button",
+		"wp-block-button",
+		"surecart-spinner",
+		"file:./style-index.css"
+	]
+}

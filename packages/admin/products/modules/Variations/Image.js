@@ -16,12 +16,13 @@ import WordPressMedia from './WordPressMedia';
 
 const ALLOWED_MEDIA_TYPES = ['image'];
 
-export default ({ variant, onAdd, onRemove, value }) => {
+export default ({ variant, onAdd, onRemove, value, size = '36px' }) => {
 	// handle image.
 	if (variant?.metadata?.wp_media) {
 		return (
 			<WordPressMedia
 				id={variant.metadata.wp_media}
+				size={size}
 				onRemove={onRemove}
 			/>
 		);
@@ -29,7 +30,9 @@ export default ({ variant, onAdd, onRemove, value }) => {
 
 	// handle fallback.
 	if (variant?.image_url) {
-		return <VariantImage variant={variant} onRemove={onRemove} />;
+		return (
+			<VariantImage variant={variant} onRemove={onRemove} size={size} />
+		);
 	}
 
 	return (
@@ -42,8 +45,8 @@ export default ({ variant, onAdd, onRemove, value }) => {
 			render={({ open }) => (
 				<div
 					css={css`
-						width: 35px;
-						height: 35px;
+						width: ${size};
+						height: ${size};
 						display: flex;
 						align-items: center;
 						justify-content: center;

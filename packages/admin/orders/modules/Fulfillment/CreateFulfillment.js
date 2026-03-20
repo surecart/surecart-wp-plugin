@@ -35,19 +35,8 @@ export default ({
 
 	const copy = async () => {
 		try {
-			const { name, line_1, line_2, city, state, postal_code, country } =
-				checkout?.shipping_address;
-			const address = [
-				name,
-				line_1,
-				line_2,
-				city,
-				state,
-				country,
-				postal_code,
-			];
 			await navigator.clipboard.writeText(
-				address.filter((item) => !!item).join('\n ')
+				checkout?.shipping_address_display
 			);
 			createSuccessNotice(__('Copied to clipboard.', 'surecart'), {
 				type: 'snackbar',
@@ -274,9 +263,11 @@ export default ({
 										</ScTooltip>
 									)}
 								</div>
-
 								<AddressDisplay
-									address={checkout?.shipping_address}
+									address={
+										checkout?.shipping_address
+											?.formatted_string
+									}
 								/>
 							</ScFormControl>
 						) : (

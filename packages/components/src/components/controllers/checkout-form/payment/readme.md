@@ -38,8 +38,8 @@
 - [sc-card](../../../ui/card)
 - [sc-payment-selected](../../../ui/payment-selected)
 - [sc-checkout-paystack-payment-provider](../sc-checkout-paystack-payment-provider)
+- [sc-checkout-razorpay-payment-provider](../sc-checkout-razorpay-payment-provider)
 - [sc-form-control](../../../ui/form-control)
-- [sc-tag](../../../ui/tag)
 - [sc-checkout-mollie-payment](../sc-checkout-mollie-payment)
 - [sc-alert](../../../ui/alert)
 
@@ -52,8 +52,8 @@ graph TD;
   sc-payment --> sc-card
   sc-payment --> sc-payment-selected
   sc-payment --> sc-checkout-paystack-payment-provider
+  sc-payment --> sc-checkout-razorpay-payment-provider
   sc-payment --> sc-form-control
-  sc-payment --> sc-tag
   sc-payment --> sc-checkout-mollie-payment
   sc-payment --> sc-alert
   sc-payment-method-choice --> sc-card

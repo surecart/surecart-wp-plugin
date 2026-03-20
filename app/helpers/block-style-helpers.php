@@ -34,7 +34,17 @@ function sc_get_cart_block_style( $attributes ) {
 
 	// Text color style.
 	$text_color = $attributes['textColor'] ?? 'var(--sc-line-item-title-color, var(--sc-input-label-color))';
-	$style .= 'color: ' . $text_color . ';';
+	$style     .= 'color: ' . $text_color . ';';
 
 	return $style;
+}
+
+/**
+ * Convert an array to a string of inline styles.
+ *
+ * @param array $styles The styles to convert.
+ * @return string The string of inline styles.
+ */
+function sc_get_inline_styles( $styles ) {
+	return implode( ';', array_map( fn( $key, $value ) => "$key:$value", array_keys( $styles ), array_filter( $styles ?? [] ) ) );
 }

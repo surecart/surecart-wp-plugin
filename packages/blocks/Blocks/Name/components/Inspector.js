@@ -14,6 +14,8 @@ export default ({ attributes, setAttributes }) => {
 			<PanelBody title={__('Attributes', 'surecart')}>
 				<PanelRow>
 					<TextControl
+						__next40pxDefaultSize
+						__nextHasNoMarginBottom
 						label={__('First Name Label', 'surecart')}
 						value={firstnameLabel}
 						onChange={(firstnameLabel) =>
@@ -23,6 +25,8 @@ export default ({ attributes, setAttributes }) => {
 				</PanelRow>
 				<PanelRow>
 					<TextControl
+						__next40pxDefaultSize
+						__nextHasNoMarginBottom
 						label={__('First Name Help', 'surecart')}
 						value={firstnameHelp}
 						onChange={(firstnameHelp) =>
@@ -32,6 +36,8 @@ export default ({ attributes, setAttributes }) => {
 				</PanelRow>
 				<PanelRow>
 					<TextControl
+						__next40pxDefaultSize
+						__nextHasNoMarginBottom
 						label={__('Last Name Label', 'surecart')}
 						value={lastnameLabel}
 						onChange={(lastnameLabel) =>
@@ -41,6 +47,8 @@ export default ({ attributes, setAttributes }) => {
 				</PanelRow>
 				<PanelRow>
 					<TextControl
+						__next40pxDefaultSize
+						__nextHasNoMarginBottom
 						label={__('First Name Help', 'surecart')}
 						value={lastnameHelp}
 						onChange={(lastnameHelp) =>

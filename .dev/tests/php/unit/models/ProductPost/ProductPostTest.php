@@ -26,6 +26,9 @@ class ProductPostTest extends SureCartUnitTestCase
 		// Set up an app instance with whatever stubs and mocks we need before every test.
 		\SureCart::make()->bootstrap([
 			'providers' => [
+				\SureCartAppCore\AppCore\AppCoreServiceProvider::class,
+				\SureCartAppCore\Config\ConfigServiceProvider::class,
+				\SureCartAppCore\Assets\AssetsServiceProvider::class,
 				\SureCart\Database\MigrationsServiceProvider::class,
 				\SureCart\Background\BackgroundServiceProvider::class,
 				\SureCart\Settings\SettingsServiceProvider::class,
@@ -947,5 +950,50 @@ class ProductPostTest extends SureCartUnitTestCase
 
 		// Tax query should be empty.
 		$this->assertEmpty( $tax_query );
+	}
+
+	/**
+	 * @group product-post
+	 */
+	public function test_sc_get_product() {
+		// Create a product post with meta 'product' as array (simulate real product data).
+		$product_data = [
+			'id' => 'prod_123',
+			'name' => 'Test Product',
+			'featured_image' => null,
+		];
+		$post_id = $this->factory()->post->create([
+			'post_type' => 'sc_product',
+			'post_title' => 'Test Product',
+		]);
+		update_post_meta($post_id, 'product', $product_data);
+		update_post_meta($post_id, 'sc_id', 'prod_123');
+
+		// 1. Get product by post ID (int).
+		$product = sc_get_product($post_id);
+		$this->assertInstanceOf(Product::class, $product);
+		$this->assertEquals('prod_123', $product->id);
+
+		// 2. Get product by WP_Post object.
+		$wp_post = get_post($post_id);
+		$product2 = sc_get_product($wp_post);
+		$this->assertInstanceOf(Product::class, $product2);
+		$this->assertEquals('prod_123', $product2->id);
+
+		// 3. Get product by string sc_id (should resolve to post)
+		$product3 = sc_get_product('prod_123');
+		$this->assertInstanceOf(Product::class, $product3);
+		$this->assertEquals('prod_123', $product3->id);
+
+		// 4. Get product with invalid post (should return null)
+		$this->assertNull(sc_get_product(0));
+		$this->assertNull(sc_get_product('nonexistent_id'));
+
+		// 5. Get product with no 'product' meta (should return null)
+		$no_meta_id = $this->factory()->post->create([
+			'post_type' => 'sc_product',
+			'post_title' => 'No Meta Product',
+		]);
+		$this->assertNull(sc_get_product($no_meta_id));
 	}
  }

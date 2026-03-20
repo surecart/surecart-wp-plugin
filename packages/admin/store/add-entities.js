@@ -83,6 +83,20 @@ dispatch(coreStore).addEntities([
 		baseURLParams: { context: 'edit' },
 	},
 	{
+		name: 'auto-fee',
+		kind: 'surecart',
+		label: __('Dynamic Pricing', 'surecart'),
+		baseURL: '/surecart/v1/auto_fees',
+		baseURLParams: { context: 'edit' },
+	},
+	{
+		name: 'rule-schema',
+		kind: 'surecart',
+		label: __('Rule Schema', 'surecart'),
+		baseURL: '/surecart/v1/auto_fees/rule_schema',
+		baseURLParams: { context: 'edit' },
+	},
+	{
 		name: 'customer',
 		kind: 'surecart',
 		label: __('Customer', 'surecart'),
@@ -237,6 +251,7 @@ dispatch(coreStore).addEntities([
 		label: __('Product', 'surecart'),
 		baseURL: '/surecart/v1/products',
 		baseURLParams: { context: 'edit' },
+		supportsPagination: true,
 	},
 	{
 		name: 'product-media',
@@ -272,6 +287,7 @@ dispatch(coreStore).addEntities([
 		label: __('Price', 'surecart'),
 		baseURL: '/surecart/v1/prices',
 		baseURLParams: { context: 'edit' },
+		supportsPagination: true,
 	},
 	{
 		name: 'promotion',
@@ -279,12 +295,20 @@ dispatch(coreStore).addEntities([
 		label: __('Promotion', 'surecart'),
 		baseURL: '/surecart/v1/promotions',
 		baseURLParams: { context: 'edit' },
+		supportsPagination: true,
 	},
 	{
 		name: 'purchase',
 		kind: 'surecart',
 		label: __('Purchase', 'surecart'),
 		baseURL: '/surecart/v1/purchases',
+		baseURLParams: { context: 'edit' },
+	},
+	{
+		name: 'dispute',
+		kind: 'surecart',
+		label: __('Dispute', 'surecart'),
+		baseURL: '/surecart/v1/disputes',
 		baseURLParams: { context: 'edit' },
 	},
 	{
@@ -348,6 +372,7 @@ dispatch(coreStore).addEntities([
 		label: __('Affiliations', 'surecart'),
 		baseURL: '/surecart/v1/affiliations',
 		baseURLParams: { context: 'edit' },
+		supportsPagination: true,
 	},
 	{
 		name: 'affiliation-product',
@@ -480,6 +505,20 @@ dispatch(coreStore).addEntities([
 		kind: 'surecart',
 		label: __('Swap', 'surecart'),
 		baseURL: '/surecart/v1/swaps',
+		baseURLParams: { context: 'edit' },
+	},
+	{
+		name: 'review',
+		kind: 'surecart',
+		label: __('Review', 'surecart'),
+		baseURL: '/surecart/v1/reviews',
+		baseURLParams: { context: 'edit' },
+	},
+	{
+		name: 'review_protocol',
+		kind: 'surecart',
+		label: __('Review Protocol', 'surecart'),
+		baseURL: '/surecart/v1/review_protocol',
 		baseURLParams: { context: 'edit' },
 	},
 ]);

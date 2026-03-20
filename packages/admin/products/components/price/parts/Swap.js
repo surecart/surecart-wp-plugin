@@ -35,7 +35,7 @@ const Swap = ({
 									)}
 								</p>
 								<ExternalLink
-									href="https://docs.surecart.com/docs/pricing/price-upsell"
+									href="https://surecart.com/docs/price-boost/"
 									target="_blank"
 								>
 									{__('Learn More', 'surecart')}

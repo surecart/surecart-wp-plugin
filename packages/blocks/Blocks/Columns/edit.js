@@ -131,6 +131,7 @@ function ColumnsEditContainer({
 						<>
 							<RangeControl
 								__nextHasNoMarginBottom
+								__next40pxDefaultSize
 								label={__('Columns')}
 								value={count}
 								onChange={(value) =>
@@ -162,6 +163,7 @@ function ColumnsEditContainer({
 						}
 					/>
 					<ToggleControl
+						__nextHasNoMarginBottom
 						label={__('Full vertical height')}
 						checked={isFullHeight}
 						onChange={() =>
@@ -171,6 +173,7 @@ function ColumnsEditContainer({
 						}
 					/>
 					<ToggleControl
+						__nextHasNoMarginBottom
 						label={__('Reverse order on mobile')}
 						checked={isReversedOnMobile}
 						onChange={() =>

@@ -98,7 +98,7 @@ export default ({ price_id, variant_id }) => {
 					action: 'edit',
 					id: product?.id,
 				})}
-				isSecondary
+				variant="secondary"
 			>
 				{__('Edit Product', 'surecart')}
 			</Button>

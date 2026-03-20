@@ -1,0 +1,22 @@
+.wp-block-surecart-product-review-list {
+	position: relative;
+	box-sizing: border-box;
+	width: 100%;
+}
+
+.alignwide.wp-block-group:has(.wp-block-surecart-product-review-list),
+.alignwide.wp-block-group:has(+ .wp-block-surecart-product-review-list),
+.alignwide.wp-block-surecart-product-review-list {
+	margin-left: auto;
+	margin-right: auto;
+	max-width: 100%;
+}
+
+/** Fix for if themes dequeue default wordpress global styles */
+.is-layout-flex {
+	display: flex;
+}
+
+.is-layout-grid {
+	display: grid;
+}

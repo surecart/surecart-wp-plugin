@@ -54,14 +54,17 @@ class BlockServiceProvider implements ServiceProviderInterface {
 		add_filter( 'wp_kses_allowed_html', [ $this, 'ksesComponents' ] );
 		add_filter(
 			'safe_style_css',
-			function( $styles ) {
+			function ( $styles ) {
 				return array_merge(
 					[
 						'--spacing',
-						'--font - weight',
-						'--line - height',
-						'--font - size',
+						'--font-weight',
+						'--line-height',
+						'--font-size',
 						'--color',
+						'--sc-pill-option-active-background-color',
+						'--sc-pill-option-active-text-color',
+						'--sc-pill-option-active-border-color',
 					],
 					$styles
 				);

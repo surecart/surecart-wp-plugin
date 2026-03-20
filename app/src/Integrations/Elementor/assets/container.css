@@ -1,0 +1,77 @@
+/**
+ * Container layout flex
+ */
+.wp-block-columns {
+	width: 100%;
+}
+
+.e-con--column,
+.e-flex {
+	.wp-block-surecart-product-price-chooser .sc-choices {
+		display: var(--display);
+		flex-wrap: var(--flex-wrap);
+		justify-content: var(--justify-content);
+		align-items: var(--align-items);
+		align-content: var(--align-content);
+		flex-direction: var(--flex-direction);
+		gap: var(--gap);
+		flex-basis: initial;
+		flex-grow: 1;
+		flex-shrink: initial;
+		align-self: initial;
+	}
+}
+
+/**
+ * Container layout grid
+ */
+.e-con--row,
+.e-flex {
+	.wp-block-surecart-product-price-chooser .sc-choices {
+		display: var(--display);
+		justify-items: var(--justify-items);
+		align-items: var(--align-items);
+		grid-template-columns: var(--e-con-grid-template-columns);
+		grid-template-rows: var(--e-con-grid-template-rows);
+		justify-content: var(--grid-justify-content);
+		align-content: var(--grid-align-content);
+		grid-auto-flow: var(--grid-auto-flow);
+		justify-items: var(--justify-items);
+		align-items: var(--align-items);
+		gap: var(--gap);
+		flex-direction: column;
+	}
+}
+
+.elementor-widget-n-product .elementor-widget-container a,
+.elementor-widget-n-product a {
+	text-decoration: none;
+}
+
+.wp-block-surecart-product-price-choice-template {
+	container-type: inline-size;
+	container-name: product-price-choice-template;
+}
+
+.wp-block-surecart-product-price-choice-template
+	.wp-block-group.is-vertical.is-content-justification-right {
+	text-align: right;
+}
+
+.wp-block-surecart-product-price-choice-template.is-layout-flex {
+	display: flex;
+	justify-content: space-between;
+}
+
+/* Hide Elementor widget if the SureCart product selected price scratch amount is hidden */
+.elementor-widget-text-editor:has(
+		.wp-block-surecart-product-selected-price-scratch-amount[hidden]
+	) {
+	display: none !important;
+}
+
+/* Hide the icon in the busy state of the SureCart button link */
+.sc-button__link--busy .elementor-button-icon {
+	opacity: 0;
+	visibility: hidden;
+}

@@ -41,6 +41,7 @@ class ProductsController extends AdminController {
 				'sync_success' => __( 'Product synced successfully.', 'surecart' ),
 				'archived'     => __( 'Product archived.', 'surecart' ),
 				'unarchived'   => __( 'Product unarchived.', 'surecart' ),
+				'duplicated'   => __( 'Product duplicated successfully.', 'surecart' ),
 			)
 		);
 
@@ -188,8 +189,10 @@ class ProductsController extends AdminController {
 		if ( ! empty( $product ) ) {
 			$gallery_paths = [];
 			$gallery       = $product->gallery_ids ?? [];
-			foreach ( $gallery as $id ) {
-				if ( is_int( $id ) ) {
+			foreach ( $gallery as $gallery_item ) {
+				$id = is_numeric( $gallery_item ) ? (int) $gallery_item : intval( ( (object) $gallery_item )->id ?? 0 );
+
+				if ( $id > 0 ) {
 					$gallery_paths[] = '/wp/v2/media/' . $id . '?context=edit';
 				}
 			}
@@ -318,6 +321,32 @@ class ProductsController extends AdminController {
 			esc_url_raw(
 				add_query_arg(
 					[ 'sync_success' => true ],
+					\SureCart::getUrl()->index( 'products' )
+				)
+			)
+		);
+	}
+
+	/**
+	 * Duplicate a product.
+	 *
+	 * @param \SureCartCore\Requests\RequestInterface $request Request.
+	 *
+	 * @return \SureCartCore\Responses\RedirectResponse
+	 */
+	public function duplicate( $request ) {
+		$duplicated = Product::duplicate( $request->query( 'id' ) );
+
+		if ( is_wp_error( $duplicated ) ) {
+			wp_die( implode( ' ', array_map( 'esc_html', $duplicated->get_error_messages() ) ) );
+		}
+
+		return \SureCart::redirect()->to(
+			esc_url_raw(
+				add_query_arg(
+					[
+						'duplicated' => true,
+					],
 					\SureCart::getUrl()->index( 'products' )
 				)
 			)

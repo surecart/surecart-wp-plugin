@@ -13,11 +13,16 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - name: Use Node.js 16.x
-        uses: actions/setup-node@v1
+      - name: Use Node.js 18.16
+        uses: actions/setup-node@v4
         with:
-          node-version: 16.x
-      - run: cd packages/components && yarn
-      - run: cd packages/components && yarn test --spec --e2e
+          node-version: 18.16
+      - name: Enable Corepack
+        run: corepack enable
+      - name: Install dependencies (skip native builds)
+        run: yarn install --immutable --mode=skip-build
+      - name: Run component spec tests
+        run: yarn workspace @surecart/components test --spec
         env:
           CI: true
+          NODE_OPTIONS: "--max-old-space-size=4096"

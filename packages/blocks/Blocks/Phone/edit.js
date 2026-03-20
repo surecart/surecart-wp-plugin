@@ -1,6 +1,12 @@
 import { ScPhoneInput } from '@surecart/components-react';
 import { InspectorControls } from '@wordpress/block-editor';
-import { Disabled, PanelBody, PanelRow, TextControl, ToggleControl } from '@wordpress/components';
+import {
+	Disabled,
+	PanelBody,
+	PanelRow,
+	TextControl,
+	ToggleControl,
+} from '@wordpress/components';
 import { Fragment } from '@wordpress/element';
 /**
  * WordPress dependencies
@@ -16,6 +22,7 @@ export default ({ attributes, setAttributes }) => {
 				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
 						<ToggleControl
+							__nextHasNoMarginBottom
 							label={__('Required', 'surecart')}
 							checked={required}
 							onChange={(required) => setAttributes({ required })}
@@ -23,6 +30,8 @@ export default ({ attributes, setAttributes }) => {
 					</PanelRow>
 					<PanelRow>
 						<TextControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							label={__('Label', 'surecart')}
 							value={label}
 							onChange={(label) => setAttributes({ label })}
@@ -30,6 +39,8 @@ export default ({ attributes, setAttributes }) => {
 					</PanelRow>
 					<PanelRow>
 						<TextControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							label={__('Placeholder', 'surecart')}
 							value={placeholder}
 							onChange={(placeholder) =>
@@ -39,6 +50,8 @@ export default ({ attributes, setAttributes }) => {
 					</PanelRow>
 					<PanelRow>
 						<TextControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							label={__('Help', 'surecart')}
 							value={help}
 							onChange={(help) => setAttributes({ help })}
@@ -48,11 +61,12 @@ export default ({ attributes, setAttributes }) => {
 			</InspectorControls>
 
 			<Disabled>
-        <ScPhoneInput
-        	required={required}
+				<ScPhoneInput
+					required={required}
 					label={label}
 					placeholder={placeholder}
-					help={help} />
+					help={help}
+				/>
 			</Disabled>
 		</Fragment>
 	);

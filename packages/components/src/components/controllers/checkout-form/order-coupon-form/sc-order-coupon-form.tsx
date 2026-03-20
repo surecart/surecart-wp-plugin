@@ -1,11 +1,12 @@
 import { Component, State, h, Prop } from '@stencil/core';
 import { state as checkoutState } from '@store/checkout';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 import { isRtl } from '../../../../functions/page-align';
 import { formBusy } from '@store/form/getters';
 import { createOrUpdateCheckout } from '@services/session';
 import { Checkout } from 'src/types';
 import { updateFormState } from '@store/form/mutations';
+import { speak } from '@wordpress/a11y';
 
 @Component({
   tag: 'sc-order-coupon-form',
@@ -39,6 +40,19 @@ export class ScOrderCouponForm {
           },
         },
       })) as Checkout;
+
+      if (promotion_code) {
+        speak(
+          // translators: %1$s is the coupon code, %2$s is the discount amount, %3$s is the order total
+          sprintf(
+            __('Coupon code %1$s applied, discount is %2$s and now order total is %3$s', 'surecart'),
+            promotion_code,
+            checkoutState.checkout?.discounts_display_amount,
+            checkoutState.checkout?.total_display_amount,
+          ),
+          'assertive',
+        );
+      }
 
       updateFormState('RESOLVE');
       await this.couponForm?.triggerFocus();

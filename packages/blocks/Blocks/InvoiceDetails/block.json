@@ -1,6 +1,7 @@
 {
 	"name": "surecart/invoice-details",
 	"title": "Invoice details",
+	"apiVersion": 3,
 	"description": "Display the invoice details.",
 	"category": "surecart",
 	"keywords": ["surecart", "invoice", "details"],

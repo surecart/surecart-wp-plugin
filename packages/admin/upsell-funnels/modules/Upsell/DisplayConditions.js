@@ -5,7 +5,7 @@ import { __ } from '@wordpress/i18n';
 
 export default ({ upsell, onUpdate }) => {
 	return (
-		<ScRadioGroup label={__('Customer display conditions')} required>
+		<ScRadioGroup label={__('Visibility', 'surecart')} required>
 			<div
 				css={css`
 					display: grid;

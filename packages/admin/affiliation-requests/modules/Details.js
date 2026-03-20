@@ -29,6 +29,7 @@ export default ({
 		email,
 		payout_email,
 		bio,
+		url,
 	} = affiliationRequest;
 
 	return (
@@ -114,6 +115,21 @@ export default ({
 							payout_email: e.target.value,
 						})
 					}
+				/>
+
+				<ScInput
+					value={url}
+					label={__('Website', 'surecart')}
+					onScInput={(e) =>
+						onUpdate({
+							url: e.target.value,
+						})
+					}
+					help={__(
+						'The primary website or social media account of the affiliate.',
+						'surecart'
+					)}
+					type="url"
 				/>
 
 				<ScTextarea

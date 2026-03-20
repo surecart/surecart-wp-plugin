@@ -30,6 +30,9 @@ class ProductPostTypeService {
 		// register meta.
 		add_action( 'init', array( $this, 'registerMeta' ) );
 
+		// Add thumbnail support for attachments.
+		add_action( 'init', array( $this, 'addThumbnailSupportForAttachments' ) );
+
 		// Hide trash button in block editor.
 		add_action( 'enqueue_block_editor_assets', array( $this, 'modifyProductContentEditor' ) );
 
@@ -115,6 +118,15 @@ class ProductPostTypeService {
 			// validate FSE template and return single if invalid.
 			add_filter( 'template_include', array( $this, 'validateFSETemplate' ), 10, 1 );
 		}
+	}
+
+	/**
+	 * Add thumbnail support for attachments.
+	 *
+	 * @return void
+	 */
+	public function addThumbnailSupportForAttachments() {
+		add_post_type_support( 'attachment', 'thumbnail' );
 	}
 
 	/**
@@ -307,11 +319,12 @@ class ProductPostTypeService {
 	 * @param array $post The post.
 	 * @param array $attachment The attachment.
 	 *
-	 * @return void
+	 * @return array
 	 */
 	public function saveAttachmentFields( $post, $attachment ) {
 		$attachid = $post['ID']; // yes this is actually an array here.
 		update_post_meta( $attachid, 'sc_variant_option', $attachment['sc_variant_option'] ?? '' );
+
 		return $post;
 	}
 
@@ -331,6 +344,7 @@ class ProductPostTypeService {
 			'value'    => get_post_meta( $post->ID, 'sc_variant_option', true ),
 			'helps'    => esc_html__( 'Enter the variant name as it appears in Option Values (e.g., Black, White, Light Green).', 'surecart' ) . ' <a href="https://surecart.com/docs/variant-swatches/" target="_blank">' . esc_html__( 'Learn More.', 'surecart' ) . '</a>',
 		);
+
 		return $form_fields;
 	}
 
@@ -390,6 +404,11 @@ class ProductPostTypeService {
 	 * @return void
 	 */
 	public function addEditLink( $wp_admin_bar ) {
+		// Don't render if admin toolbar is already enabled, the menu will be handled there.
+		if ( \SureCart::adminToolbar()->isEnabled() ) {
+			return;
+		}
+
 		if ( ! is_singular( 'sc_product' ) || ! current_user_can( 'edit_sc_products' ) ) {
 			return;
 		}
@@ -404,7 +423,7 @@ class ProductPostTypeService {
 			[
 				'id'    => 'edit',
 				'title' => __( 'Edit Product', 'surecart' ),
-				'href'  => get_edit_post_link( $product->ID ),
+				'href'  => \SureCart::getUrl()->edit( 'product', $product->id ),
 			]
 		);
 	}
@@ -564,6 +583,9 @@ class ProductPostTypeService {
 			)
 		);
 
+		/*
+		* @deprecated, we use gallery instead to store the product media informations.
+		*/
 		register_meta(
 			'post',
 			'sc_variant_option',
@@ -585,6 +607,11 @@ class ProductPostTypeService {
 	 * @return string
 	 */
 	public function updateEditLink( $link, $post_id ) {
+		// allow edit post link in admin bar only.
+		if ( doing_action( 'admin_bar_menu' ) ) {
+			return $link;
+		}
+
 		// only for our post type.
 		if ( get_post_type( $post_id ) !== $this->post_type ) {
 			return $link;
@@ -644,7 +671,7 @@ class ProductPostTypeService {
 	 */
 	public function replaceContentWithProductInfoPart( $content ) {
 		// not our post type.
-		if ( ! is_singular( 'sc_product' ) ) {
+		if ( ! is_singular( 'sc_product' ) || ! is_main_query() || 'sc_product' !== get_post_type() ) {
 			return $content;
 		}
 
@@ -1180,7 +1207,7 @@ class ProductPostTypeService {
 
 		$gallery_image_urls = ! empty( $product->gallery ) ? array_map(
 			function ( $media ) {
-				return $media->attributes()->src;
+				return $media->attributes()->src ?? '';
 			},
 			$product->gallery
 		) : '';
@@ -1188,14 +1215,36 @@ class ProductPostTypeService {
 		return apply_filters(
 			'surecart/product/json_schema',
 			array(
-				'@context'    => 'http://schema.org',
-				'@type'       => 'Product',
-				'name'        => $product->name,
-				'image'       => $gallery_image_urls,
-				'description' => sanitize_text_field( $product->description ),
-				'offers'      => $offers,
+				'@context'        => 'http://schema.org',
+				'@type'           => 'Product',
+				'name'            => $product->name,
+				'image'           => $gallery_image_urls,
+				'description'     => sanitize_text_field( $product->description ),
+				'offers'          => $offers,
+				'aggregateRating' => $this->getAggregateRatingSchema( $product ),
 			),
 			$this
+		);
+	}
+
+	/**
+	 * Get the aggregate rating schema for the product.
+	 *
+	 * @param \SureCart\Models\Product $product The product.
+	 *
+	 * @return array
+	 */
+	public function getAggregateRatingSchema( $product ): array {
+		if ( empty( $product->total_reviews ) ) {
+			return array();
+		}
+
+		return array(
+			'@type'       => 'AggregateRating',
+			'ratingValue' => (string) $product->average_stars,
+			'reviewCount' => (int) $product->total_reviews,
+			'bestRating'  => 5,
+			'worstRating' => 1,
 		);
 	}
 
@@ -1232,7 +1281,7 @@ class ProductPostTypeService {
 	 */
 	public function renderProductSeoMeta( $product ) {
 		$image_attributes  = $product->featured_image ? $product->featured_image->attributes( apply_filters( 'surecart/og:image/size', 'full' ) ) : null;
-		$product_image_url = $image_attributes ? $image_attributes->src : '';
+		$product_image_url = $image_attributes ? ( $image_attributes->src ?? '' ) : '';
 		?>
 
 		<meta name="description" content="<?php echo esc_attr( sanitize_text_field( $product->meta_description ) ); ?>">

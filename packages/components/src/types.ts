@@ -4,6 +4,7 @@ import { StripeElementChangeEvent } from '@stripe/stripe-js';
 
 declare global {
   interface Window {
+    registry: IconLibrary[];
     grecaptcha: any;
     surecart?: {
       product?: {
@@ -16,7 +17,9 @@ declare global {
       apiFetch: any;
       blocks: any;
       i18n: any;
-      hooks: any;
+      hooks: {
+        applyFilters?: (filterName: string, defaultValue: any, ...args: any[]) => any;
+      };
     };
     dataLayer: any;
     gtag: any;
@@ -42,6 +45,7 @@ declare global {
       root_url: string;
       account_id: string;
       account_slug: string;
+      locale: string;
       api_url: string;
       home_url: string;
       plugin_url: string;
@@ -72,6 +76,7 @@ declare global {
         manage_sc_shop_settings: boolean;
       };
       google_map_api_key: string;
+      current_user_roles: string[];
     };
     ceRegisterIconLibrary: any;
     ResizeObserver: any;
@@ -87,6 +92,11 @@ interface Model {
   updated_at: number;
 }
 
+export interface IconLibrary {
+  name: string;
+  resolver: IconLibraryResolver;
+  mutator?: IconLibraryMutator;
+}
 export interface ChoiceItem extends Object {
   value: string;
   label: string;
@@ -183,6 +193,7 @@ export interface Bump {
   filter_match_type: 'all' | 'any' | 'none';
   filters: any;
   metadata: any;
+  rendered_description: string;
   name: string;
   percent_off: number;
   price: string | Price;
@@ -478,6 +489,7 @@ export interface ImageAttributes {
   sizes?: string;
   srcset?: string;
   width?: number;
+  type?: string;
 }
 
 export interface LineItem extends Object {
@@ -510,6 +522,8 @@ export interface LineItem extends Object {
   fees_amount: number;
   scratch_amount: number;
   scratch_display_amount?: string;
+  subtotal_with_upsell_discount_display_amount?: string;
+  subtotal_with_upsell_discount_amount?: number;
   trial: boolean;
   total_savings_amount: number;
   created_at: number;
@@ -524,7 +538,9 @@ export interface LineItem extends Object {
   variant?: Variant;
   locked: boolean;
   swap?: Swap;
-  can_swap: boolean;
+  is_swappable?: boolean;
+  note?: string;
+  display_note?: string;
 }
 
 export interface DeletedItem {
@@ -618,6 +634,7 @@ export interface Charge extends Object {
   checkout: string | Checkout;
   payment_method: string | PaymentMethod;
   refunded_amount: number;
+  disputed_amount: number;
   status: 'pending' | 'succeeded' | 'failed';
   updated_at: number;
   updated_at_date: string;
@@ -776,6 +793,16 @@ export interface Checkout extends Object {
     pagination: Pagination;
     data: Array<Subscription>;
   };
+  checkout_fees: {
+    object: 'list';
+    pagination: Pagination;
+    data: Array<Fee>;
+  };
+  shipping_fees: {
+    object: 'list';
+    pagination: Pagination;
+    data: Array<Fee>;
+  };
   purchases: {
     object: 'list';
     pagination: Pagination;
@@ -859,7 +886,38 @@ export interface ProcessorData {
     public_key: string;
     access_code: string;
   };
+  razorpay?: {
+    account_id: string;
+    key_id: string;
+    order_id: string;
+    public_key: string;
+    access_code: string;
+    customer_id: string;
+  };
 }
+
+export interface RazorpayOptions {
+  key: string;
+  order_id: string;
+  prefill?: {
+    name?: string;
+    email?: string;
+    contact?: string;
+  };
+  customer_id?: string;
+  recurring?: boolean;
+  handler: (response: any) => void;
+  modal?: {
+    ondismiss: () => void;
+  };
+}
+
+export interface RazorpayInstance {
+  open: () => void;
+  on: (event: string, callback: (response: any) => void) => void;
+}
+
+export type RazorpayConstructor = new (options: RazorpayOptions) => RazorpayInstance;
 
 export interface ManualPaymentMethod {
   id: string;
@@ -977,6 +1035,7 @@ export interface Subscription extends Object {
   updated_at: number;
   updated_at_date: string;
   restore_at?: number;
+  can_modify?: boolean;
 }
 
 export interface CancellationAct {
@@ -1153,6 +1212,7 @@ export interface PaymentIntent extends Object {
   created_at: number;
   updated_at: number;
   payment_method: PaymentMethod | string;
+  reusable: boolean;
 }
 
 export interface PaymentIntents {
@@ -1190,6 +1250,7 @@ export interface Customer extends Object {
   billing_address?: string | Address;
   billing_address_display?: string | Address;
   shipping_address?: string | Address;
+  shipping_address_display?: string | Address;
   billing_matches_shipping: boolean;
   live_mode: boolean;
   unsubscribed: boolean;
@@ -1342,6 +1403,7 @@ export interface ProductState {
   selectedVariant?: Variant;
   variantValues: { option_1?: string; option_2?: string; option_3?: string };
   isProductPage?: boolean;
+  note?: string;
 }
 export interface FeaturedProductMediaAttributes {
   alt: string;
@@ -1422,8 +1484,8 @@ export interface CustomStripeElementChangeEvent extends StripeElementChangeEvent
 
 export interface CountryLocaleFieldValue {
   name: string;
-  priority: number;
-  label: boolean;
+  priority?: number;
+  label: string;
 }
 
 export interface CountryLocaleField {

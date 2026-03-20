@@ -6,6 +6,7 @@ import { useMemo } from '@wordpress/element';
 import { store as coreStore } from '@wordpress/core-data';
 import { store as blockEditorStore } from '@wordpress/block-editor';
 import { decodeEntities } from '@wordpress/html-entities';
+import { useViewportMatch } from '@wordpress/compose';
 import {
 	cloneBlock,
 	getBlockSupport,
@@ -434,4 +435,17 @@ export function searchPatterns(patterns = [], searchValue = '') {
 
 	rankedPatterns.sort(([, rank1], [, rank2]) => rank2 - rank1);
 	return rankedPatterns.map(([pattern]) => pattern);
+}
+
+export function useToolsPanelDropdownMenuProps() {
+	const isMobile = useViewportMatch('medium', '<');
+	return !isMobile
+		? {
+				popoverProps: {
+					placement: 'left-start',
+					// For non-mobile, inner sidebar width (248px) - button width (24px) - border (1px) + padding (16px) + spacing (20px)
+					offset: 259,
+				},
+		  }
+		: {};
 }

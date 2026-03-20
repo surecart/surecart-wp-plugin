@@ -2,8 +2,6 @@
 
 namespace SureCart\WordPress;
 
-use SureCart\Support\Currency;
-
 /**
  * Currency Service
  */
@@ -45,11 +43,11 @@ class CurrencyService {
 	 * @return void
 	 */
 	public function appendUrls() {
-		add_filter( 'page_link', array( $this, 'addCurrencyParam' ), 99 );
-		add_filter( 'post_link', array( $this, 'addCurrencyParam' ), 99 );
-		add_filter( 'term_link', array( $this, 'addCurrencyParam' ), 99 );
-		add_filter( 'post_type_link', array( $this, 'addCurrencyParam' ), 99 );
-		add_filter( 'attachment_link', array( $this, 'addCurrencyParam' ), 99 );
+		add_filter( 'page_link', array( $this, 'maybeAddCurrencyParam' ), 99 );
+		add_filter( 'post_link', array( $this, 'maybeAddCurrencyParam' ), 99 );
+		add_filter( 'term_link', array( $this, 'maybeAddCurrencyParam' ), 99 );
+		add_filter( 'post_type_link', array( $this, 'maybeAddCurrencyParam' ), 99 );
+		add_filter( 'attachment_link', array( $this, 'maybeAddCurrencyParam' ), 99 );
 		add_filter( 'home_url', array( $this, 'addCurrencyParamToHomeUrl' ), 99, 3 );
 		add_filter( 'get_canonical_url', array( $this, 'removeCurrencyParam' ) );
 		add_filter( 'get_pagenum_link', array( $this, 'filterPagenumLink' ), 99, 2 );
@@ -135,6 +133,21 @@ class CurrencyService {
 	}
 
 	/**
+	 * Maybe Filter the link to add the currency parameter.
+	 *
+	 * @param string $permalink The permalink to filter.
+	 *
+	 * @return string The permalink or the filtered permalink.
+	 */
+	public function maybeAddCurrencyParam( $permalink ) {
+		if ( ! $this->shouldModifyUrl() ) {
+			return $permalink;
+		}
+
+		return $this->addCurrencyParam( $permalink );
+	}
+
+	/**
 	 * Filter the link to add the currency parameter.
 	 *
 	 * @param string $permalink The permalink to filter.
@@ -145,7 +158,7 @@ class CurrencyService {
 		if ( apply_filters( 'surecart/currency/filter_url', self::$filter_url, $permalink ) && ! $this->isSitemapOrFeedRequest() ) {
 			// we can't use the Currency::getCurrencyFromRequest here because we don't want to fetch display currencies potentially multiple times per request.
 			$currency = strtolower( sanitize_text_field( $_GET['currency'] ?? $_COOKIE['sc_current_currency'] ?? '' ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-			if ( ! empty( $currency ) && strtolower( $currency ) !== strtolower( \SureCart::account()->currency ) ) {
+			if ( ! empty( $currency ) && strtolower( $currency ) !== strtolower( \SureCart::account()->currency ?? '' ) ) {
 				$permalink = add_query_arg( compact( 'currency' ), $permalink );
 			}
 		}
@@ -171,7 +184,7 @@ class CurrencyService {
 		}
 
 		// In case of a custom XML request.
-		if ( ! empty( $_SERVER['REQUEST_URI'] ) && str_contains( $_SERVER['REQUEST_URI'], '.xml' ) ) {
+		if ( ! empty( $_SERVER['REQUEST_URI'] ) && strpos( $_SERVER['REQUEST_URI'], '.xml' ) !== false ) {
 			return true;
 		}
 
@@ -188,11 +201,29 @@ class CurrencyService {
 	 * @return string
 	 */
 	public function addCurrencyParamToHomeUrl( $url, $path, $scheme ) {
-		if ( 'rest' !== $scheme && ! is_admin() && ! $this->isSitemapOrFeedRequest() ) {
-			$url = $this->addCurrencyParam( $url );
+		if ( ! $this->shouldModifyUrl( $path, $scheme ) ) {
+			return $url;
 		}
 
-		return $url;
+		return $this->addCurrencyParam( $url );
+	}
+
+	/**
+	 * Determines if the URL should be modified with currency parameter.
+	 *
+	 * @param string $path   Optional. The path for home_url. Default empty string.
+	 * @param string $scheme Optional. The scheme for requests. Default empty string.
+	 *
+	 * @return bool Whether the URL should be modified.
+	 */
+	protected function shouldModifyUrl( $path = '', $scheme = '' ) {
+		// Return false if any of these conditions are true (don't modify URL).
+		return empty( $path ) &&
+			! is_admin() &&
+			! ( defined( 'REST_REQUEST' ) && REST_REQUEST ) &&
+			! wp_doing_ajax() &&
+			! $this->isSitemapOrFeedRequest() &&
+			'rest' !== $scheme;
 	}
 
 	/**

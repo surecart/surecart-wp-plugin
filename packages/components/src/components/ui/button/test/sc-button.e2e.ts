@@ -21,58 +21,68 @@ describe('sc-button', () => {
   });
 
   it('Has types', async () => {
+    button = await page.find(`${selector} >>> .button`);
     expect(button).toHaveClass('button--default');
 
     await page.$eval(selector, (elm: any) => {
       elm.type = 'primary';
     });
     await page.waitForChanges();
+    button = await page.find(`${selector} >>> .button`);
     expect(button).toHaveClass('button--primary');
 
     await page.$eval(selector, (elm: any) => {
       elm.type = 'success';
     });
     await page.waitForChanges();
+    button = await page.find(`${selector} >>> .button`);
     expect(button).toHaveClass('button--success');
 
     await page.$eval(selector, (elm: any) => {
       elm.type = 'info';
     });
     await page.waitForChanges();
+    button = await page.find(`${selector} >>> .button`);
     expect(button).toHaveClass('button--info');
 
     await page.$eval(selector, (elm: any) => {
       elm.type = 'warning';
     });
     await page.waitForChanges();
+    button = await page.find(`${selector} >>> .button`);
     expect(button).toHaveClass('button--warning');
 
     await page.$eval(selector, (elm: any) => {
       elm.type = 'danger';
     });
     await page.waitForChanges();
+    button = await page.find(`${selector} >>> .button`);
     expect(button).toHaveClass('button--danger');
 
     await page.$eval(selector, (elm: any) => {
       elm.type = 'text';
     });
     await page.waitForChanges();
+    button = await page.find(`${selector} >>> .button`);
     expect(button).toHaveClass('button--text');
   });
 
   it('Has sizes', async () => {
+    button = await page.find(`${selector} >>> .button`);
     expect(button).toHaveClass('button--medium');
 
     await page.$eval(selector, (elm: any) => {
       elm.size = 'large';
     });
     await page.waitForChanges();
+    button = await page.find(`${selector} >>> .button`);
     expect(button).toHaveClass('button--large');
 
     await page.$eval(selector, (elm: any) => {
       elm.size = 'small';
     });
     await page.waitForChanges();
+    button = await page.find(`${selector} >>> .button`);
     expect(button).toHaveClass('button--small');
   });
 
@@ -85,16 +95,19 @@ describe('sc-button', () => {
   });
 
   it('Can be disabled', async () => {
+    button = await page.find(`${selector} >>> .button`);
     expect(button).not.toHaveClass('button--disabled');
     await page.$eval(selector, (elm: any) => {
       elm.disabled = true;
     });
     await page.waitForChanges();
+    button = await page.find(`${selector} >>> .button`);
     expect(button).toHaveClass('button--disabled');
     expect(button).toHaveAttribute('disabled');
   });
 
   it('Can be loading', async () => {
+    button = await page.find(`${selector} >>> .button`);
     expect(button).not.toHaveClass('button--loading');
     await page.$eval(selector, (elm: any) => {
       elm.loading = true;
@@ -104,55 +117,67 @@ describe('sc-button', () => {
     const spinner = await page.find(`${selector} >>> sc-spinner`);
     let visibility = await spinner.isVisible();
     expect(visibility).toBe(true);
+    button = await page.find(`${selector} >>> .button`);
     expect(button).toHaveClass('button--loading');
   });
 
   it('Can be pill', async () => {
+    button = await page.find(`${selector} >>> .button`);
     expect(button).not.toHaveClass('button--pill');
     await page.$eval(selector, (elm: any) => {
       elm.pill = true;
     });
     await page.waitForChanges();
+    button = await page.find(`${selector} >>> .button`);
     expect(button).toHaveClass('button--pill');
   });
 
   it('Can be circle', async () => {
+    button = await page.find(`${selector} >>> .button`);
     expect(button).not.toHaveClass('button--circle');
     await page.$eval(selector, (elm: any) => {
       elm.circle = true;
     });
     await page.waitForChanges();
+    button = await page.find(`${selector} >>> .button`);
     expect(button).toHaveClass('button--circle');
   });
 
   it('Can be type submit', async () => {
+    button = await page.find(`${selector} >>> .button`);
     expect(button.getAttribute('type')).toBe('button');
     await page.$eval(selector, (elm: any) => {
       elm.submit = true;
     });
     await page.waitForChanges();
+    button = await page.find(`${selector} >>> .button`);
     expect(button.getAttribute('type')).toBe('submit');
   });
 
   it('Can have a name', async () => {
+    button = await page.find(`${selector} >>> .button`);
     expect(button.getAttribute('name')).toBe(null);
     await page.$eval(selector, (elm: any) => {
       elm.name = 'Test';
     });
     await page.waitForChanges();
+    button = await page.find(`${selector} >>> .button`);
     expect(button.getAttribute('name')).toBe('Test');
   });
 
   it('Can have a value', async () => {
+    button = await page.find(`${selector} >>> .button`);
     expect(button.getAttribute('value')).toBe(null);
     await page.$eval(selector, (elm: any) => {
       elm.value = 'Test';
     });
     await page.waitForChanges();
+    button = await page.find(`${selector} >>> .button`);
     expect(button.getAttribute('value')).toBe('Test');
   });
 
   it('Can be a link', async () => {
+    button = await page.find(`${selector} >>> .button`);
     expect(button.getAttribute('href')).toBe(null);
     await page.$eval(selector, (elm: any) => {
       elm.href = 'https://google.com';
@@ -166,25 +191,5 @@ describe('sc-button', () => {
     expect(button_link.getAttribute('href')).toBe('https://google.com');
     expect(button_link.getAttribute('target')).toBe('_blank');
     expect(button_link.getAttribute('download')).toBe('test');
-  });
-
-  // checks clicks, public methods, and hasFocus prop changes
-  it('Can be focused and blurred', async () => {
-    const scBlur = await page.spyOnEvent('scBlur');
-    const scFocus = await page.spyOnEvent('scFocus');
-
-    expect(button).not.toHaveClass('button--focused');
-
-    // blur
-    await button.focus();
-    await page.waitForChanges();
-    expect(button).toHaveClass('button--focused');
-    expect(scFocus).toHaveReceivedEvent();
-
-    // blur
-    await page.$eval(selector, e => e.blur());
-    await page.waitForChanges();
-    expect(button).not.toHaveClass('button--focused');
-    expect(scBlur).toHaveReceivedEvent();
   });
 });

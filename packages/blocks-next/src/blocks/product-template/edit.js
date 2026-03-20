@@ -62,8 +62,7 @@ const TEMPLATE = [
 							dimRatio: 0,
 							isUserOverlayColor: true,
 							focalPoint: { x: 0.5, y: 0.5 },
-							contentPosition: 'top right',
-							isDark: false,
+							contentPosition: 'top center',
 							style: {
 								dimensions: { aspectRatio: '3/4' },
 								layout: { selfStretch: 'fit', flexSize: null },
@@ -74,13 +73,53 @@ const TEMPLATE = [
 						},
 						[
 							[
-								'surecart/product-sale-badge',
+								'core/group',
 								{
-									style: {
-										typography: { fontSize: '12px' },
-										border: { radius: '100px' },
+									layout: {
+										type: 'flex',
+										flexWrap: 'nowrap',
+										justifyContent: 'space-between',
 									},
 								},
+								[
+									[
+										'surecart/product-quick-view-button',
+										{
+											style: {
+												typography: {
+													fontSize: '12px',
+													textAlign: 'center',
+													fontStyle: 'normal',
+													fontWeight: '500',
+												},
+												spacing: {
+													padding: {
+														left: '10px',
+														right: '10px',
+														top: '10px',
+														bottom: '10px',
+													},
+												},
+												border: { radius: '100px' },
+											},
+										},
+									],
+									[
+										'surecart/product-sale-badge',
+										{
+											style: {
+												typography: {
+													fontSize: '12px',
+												},
+												border: { radius: '100px' },
+												layout: {
+													selfStretch: 'fit',
+													flexSize: null,
+												},
+											},
+										},
+									],
+								],
 							],
 						],
 					],

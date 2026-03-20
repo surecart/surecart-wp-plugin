@@ -2,12 +2,15 @@
 
 namespace SureCart\Svg;
 
+/**
+ * Svg handler class.
+ */
 class Svg {
 	/**
 	 * Get the SVG file contents.
 	 *
-	 * @param string $filename
-	 * @param array  $attributes
+	 * @param string $filename The name of the SVG file (without the .svg extension).
+	 * @param array  $attributes Attributes to add to the SVG tag.
 	 *
 	 * @return string SVG file contents
 	 */
@@ -36,19 +39,19 @@ class Svg {
 
 				// If the attribute is 'style', append the style to the SVG file without overwriting the existing styles.
 				if ( 'style' === $attribute ) {
-					$existingStyle = $update_svg->get_attribute( 'style' );
-					$value = $existingStyle ? $existingStyle . '; ' . $value : $value;
+					$existing_style = $update_svg->get_attribute( 'style' );
+					$value          = $existing_style ? $existing_style . '; ' . $value : $value;
 				}
 
-				// Otherwise, set/update the attribute with the new value
+				// Otherwise, set/update the attribute with the new value.
 				$update_svg->set_attribute( $attribute, $value );
 			}
 		}
 
 		// Add the 'pointer-events: none;' style to make the SVG non-interactive.
-		$existingStyle = $update_svg->get_attribute( 'style' );
-		$newStyle = $existingStyle ? $existingStyle . '; pointer-events: none;' : 'pointer-events: none;';
-		$update_svg->set_attribute( 'style', $newStyle );
+		$existing_style = $update_svg->get_attribute( 'style' );
+		$new_style      = $existing_style ? $existing_style . '; pointer-events: none;' : 'pointer-events: none;';
+		$update_svg->set_attribute( 'style', $new_style );
 
 		// Return the updated SVG string.
 		return $update_svg->get_updated_html();

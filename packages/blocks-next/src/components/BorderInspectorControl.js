@@ -1,26 +1,22 @@
 import { __ } from '@wordpress/i18n';
-import styled from '@emotion/styled';
 import { __experimentalUseMultipleOriginColorsAndGradients as useMultipleOriginColorsAndGradients } from '@wordpress/block-editor';
 import {
-	__experimentalBorderBoxControl as BorderBoxControl,
+	BorderBoxControl,
 	__experimentalToolsPanelItem as ToolsPanelItem,
 	__experimentalToolsPanel as ToolsPanel,
 } from '@wordpress/components';
 import { InspectorControls } from '@wordpress/block-editor';
 
-export default (props) => {
-	const SingleColumnItem = styled.div`
-		grid-column: 1 / -1;
+const singleColumnItemStyle = {
+	gridColumn: '1 / -1',
+};
 
-		.components-base-control {
-			margin-bottom: 0 !important;
-		}
-	`;
+export default (props) => {
 	const colorGradientSettings = useMultipleOriginColorsAndGradients();
 
 	return (
 		<InspectorControls group="border">
-			<SingleColumnItem>
+			<div style={singleColumnItemStyle} className="sc-single-column-item">
 				<BorderBoxControl
 					__experimentalIsRenderedInSidebar={true}
 					popoverOffset={40}
@@ -30,7 +26,7 @@ export default (props) => {
 					{...colorGradientSettings}
 					{...props}
 				/>
-			</SingleColumnItem>
+			</div>
 		</InspectorControls>
 	);
 };

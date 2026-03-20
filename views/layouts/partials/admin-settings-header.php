@@ -71,8 +71,8 @@
 		<sc-alert open type="info" closable style="position: relative; z-index: 10;"><?php esc_html_e( 'Cache cleared.', 'surecart' ); ?></sc-alert>
 	<?php endif; ?>
 
-	<?php if ( ! empty( $claim_url ) ) : ?>
-		<sc-provisional-banner claim-url="<?php echo esc_url( $claim_url ); ?>"></sc-provisional-banner>
+	<?php if ( ! empty( $claim_url ) || ! empty( $claim_expired ) ) : ?>
+		<sc-provisional-banner claim-url="<?php echo esc_url( $claim_url ); ?>" expired="<?php echo ! empty( $claim_expired ) ? 'true' : 'false'; ?>"></sc-provisional-banner>
 	<?php endif; ?>
 
 	<div id="sc-settings-header">
@@ -108,7 +108,7 @@
 			<sc-tag>
 				<?php
 				// translators: Version number.
-				echo sprintf( esc_html__( 'Version %s', 'surecart' ), esc_html( \SureCart::plugin()->version() ) );
+				printf( esc_html__( 'Version %s', 'surecart' ), esc_html( \SureCart::plugin()->version() ) );
 				?>
 			</sc-tag>
 		</sc-flex>

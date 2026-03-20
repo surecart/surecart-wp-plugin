@@ -4,7 +4,12 @@
 import { ScRadio } from '@surecart/components-react';
 import { InspectorControls, RichText } from '@wordpress/block-editor';
 import { useBlockProps } from '@wordpress/block-editor';
-import { PanelBody, PanelRow, TextControl, ToggleControl } from '@wordpress/components';
+import {
+	PanelBody,
+	PanelRow,
+	TextControl,
+	ToggleControl,
+} from '@wordpress/components';
 import { Fragment } from '@wordpress/element';
 /**
  * WordPress dependencies
@@ -20,6 +25,8 @@ export default ({ className, attributes, setAttributes }) => {
 				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
 						<TextControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							label={__('Name', 'surecart')}
 							value={name}
 							onChange={(name) => setAttributes({ name })}
@@ -27,6 +34,8 @@ export default ({ className, attributes, setAttributes }) => {
 					</PanelRow>
 					<PanelRow>
 						<TextControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							label={__('Value', 'surecart')}
 							value={value}
 							onChange={(value) => setAttributes({ value })}
@@ -34,6 +43,7 @@ export default ({ className, attributes, setAttributes }) => {
 					</PanelRow>
 					<PanelRow>
 						<ToggleControl
+							__nextHasNoMarginBottom
 							label={__('Checked by default', 'surecart')}
 							checked={checked}
 							onChange={(checked) => setAttributes({ checked })}

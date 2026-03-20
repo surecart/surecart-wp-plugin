@@ -9,7 +9,7 @@ import { Fragment, useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
 import { getQueryArg, addQueryArgs } from '@wordpress/url';
-import { applyFilters, doAction } from '@wordpress/hooks';
+import { doAction } from '@wordpress/hooks';
 import apiFetch from '@wordpress/api-fetch';
 
 import Error from '../components/Error';
@@ -23,19 +23,21 @@ import BuyLink from './modules/BuyLink';
 import Advanced from './modules/Advanced';
 import Details from './modules/Details';
 import Downloads from './modules/Downloads';
-import Image from './modules/Image';
+import Media from './modules/Media';
 import Integrations from './modules/integrations/Integrations';
 import Licensing from './modules/Licensing';
 import Prices from './modules/Prices';
 import Publishing from './modules/Publishing';
 import SearchEngine from './modules/SearchEngine';
 import Tax from './modules/Tax';
+import Template from './modules/Template';
 import Variations from './modules/Variations';
 import Shipping from './modules/Shipping';
 import Inventory from './modules/Inventory';
 import Affiliation from './modules/Affiliation';
 import Collection from './modules/Collection';
 import Taxonomies from './modules/Taxonomies';
+import Reviews from './modules/Reviews';
 import Editor from './components/Editor';
 import ConfirmNavigation from './components/ConfirmNavigation';
 import ProductOptions from './modules/ProductOptions';
@@ -316,7 +318,10 @@ export default ({ id, setBrowserURL }) => {
 						<ActionsDropdown
 							product={product}
 							onDelete={onDeleteProduct}
+							onSubmit={onSubmit}
 							onToggleArchive={onToggleArchiveProduct}
+							setConfirmUrl={setConfirmUrl}
+							hasDirtyRecords={hasDirtyRecords}
 						/>
 
 						{!!product?.permalink && (
@@ -360,7 +365,18 @@ export default ({ id, setBrowserURL }) => {
 							updateProduct={editProduct}
 							loading={!hasLoadedProduct}
 						/>
+						<Template
+							product={product}
+							post={post}
+							updateProduct={editProduct}
+							loading={!hasLoadedProduct}
+						/>
 						<Shipping
+							product={product}
+							updateProduct={editProduct}
+							loading={!hasLoadedProduct}
+						/>
+						<Reviews
 							product={product}
 							updateProduct={editProduct}
 							loading={!hasLoadedProduct}
@@ -414,7 +430,7 @@ export default ({ id, setBrowserURL }) => {
 						loading={!hasLoadedProduct}
 					/>
 
-					<Image
+					<Media
 						productId={id}
 						product={product}
 						updateProduct={editProduct}

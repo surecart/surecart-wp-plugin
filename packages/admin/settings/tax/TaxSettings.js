@@ -141,8 +141,6 @@ export default () => {
 					address={item?.address}
 					names={{}}
 					onScInputAddress={(e) => editItem({ address: e.detail })}
-					defaultCountryFields={scData.i18n.defaultCountryFields}
-					countryFields={scData.i18n.countryFields}
 				/>
 			</SettingsBox>
 

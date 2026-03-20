@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
-import { Fragment } from '@wordpress/element';
+import { Fragment, useState, useEffect } from '@wordpress/element';
 import {
 	TextControl,
 	SelectControl,
@@ -61,7 +61,7 @@ const RULE_SETTINGS_FIELDS = {
 				type: 'select2',
 				placeholder: __('Search for country...', 'surecart'),
 				isMulti: true,
-				options: countryChoices,
+				optionsKey: 'countryChoices',
 			},
 		],
 	},
@@ -72,7 +72,7 @@ const RULE_SETTINGS_FIELDS = {
 				type: 'select2',
 				placeholder: __('Search for country...', 'surecart'),
 				isMulti: true,
-				options: countryChoices,
+				optionsKey: 'countryChoices',
 			},
 		],
 	},
@@ -90,12 +90,21 @@ const RULE_SETTINGS_FIELDS = {
 function Conditions(props) {
 	const {
 		rules,
-		groupIndex,
 		groupsLength,
 		removeConditionFromRuleGroup,
 		updateConditionInRuleGroup,
 		updateConditionOptionInRuleGroup,
 	} = props;
+
+	const [asyncOptions, setAsyncOptions] = useState({
+		countryChoices: [],
+	});
+
+	useEffect(() => {
+		countryChoices().then((data) => {
+			setAsyncOptions((prev) => ({ ...prev, countryChoices: data }));
+		});
+	}, []);
 
 	const renderValueFields = (fields, ruleIndex, { value, operator }) => {
 		return (fields || []).map((field) => {
@@ -137,6 +146,8 @@ function Conditions(props) {
 				case 'select':
 					return (
 						<SelectControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							value={value}
 							placeholder={field.placeholder}
 							tooltip={field.tooltip}
@@ -173,7 +184,11 @@ function Conditions(props) {
 							value={value}
 							placeholder={field.placeholder}
 							tooltip={field.tooltip}
-							options={field.options}
+							options={
+								field.optionsKey
+									? asyncOptions[field.optionsKey]
+									: field.options
+							}
 							isMulti={field.isMulti}
 							onChangeCB={(selection) => {
 								updateConditionOptionInRuleGroup(
@@ -224,6 +239,8 @@ function Conditions(props) {
 				case 'text':
 					return (
 						<TextControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							value={value}
 							placeholder={field.placeholder}
 							tooltip={field.tooltip}

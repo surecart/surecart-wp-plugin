@@ -2,9 +2,9 @@
  * WordPress dependencies.
  */
 import { store, getContext, getElement } from '@wordpress/interactivity';
-
 const { __, sprintf, _n } = wp.i18n;
 const LOCAL_STORAGE_KEY = 'surecart-local-storage';
+let announceTimeout = null;
 
 /**
  * Get checkout data from local storage based on mode and formId.
@@ -27,7 +27,7 @@ const getCheckoutData = (mode = 'live', formId) => {
  * Check if the key is not submit key.
  */
 const isNotKeySubmit = (e) => {
-	return e.type === 'keydown' && e.key !== 'Enter' && e.code !== 'Space';
+	return e.type === 'keydown' && e.key !== 'Enter' && e.key !== ' ';
 };
 
 /**
@@ -100,11 +100,22 @@ const { state, actions } = store('surecart/checkout', {
 		 */
 		get lineItemHasScratchAmount() {
 			const { line_item } = getContext();
-			if (!!line_item?.ad_hoc_amount) {
+			if (
+				!!line_item?.ad_hoc_amount ||
+				!line_item?.scratch_display_amount
+			) {
 				return false;
 			}
 
-			return line_item.price.scratchAmount !== line_item.price.amount;
+			return line_item.scratch_amount !== line_item.subtotal_amount;
+		},
+
+		/**
+		 * Get the line item note.
+		 */
+		get lineItemNote() {
+			const { line_item } = getContext();
+			return line_item?.display_note || '';
 		},
 
 		/**
@@ -115,10 +126,46 @@ const { state, actions } = store('surecart/checkout', {
 		},
 
 		/**
+		 * Check if the checkout has a discount amount applied.
+		 */
+		get hasDiscountAmount() {
+			return !!state?.checkout?.discount_amount;
+		},
+
+		/**
+		 * Check if the checkout has a subtotal scratch amount different from the subtotal.
+		 */
+		get hasSubtotalScratchAmount() {
+			return !!state?.checkout?.has_subtotal_scratch_amount;
+		},
+
+		/**
+		 * Get the aria label for the subtotal scratch amount.
+		 */
+		get subtotalScratchAriaLabel() {
+			const amount = state?.checkout?.subtotal_scratch_display_amount;
+			return amount
+				? `${__('Original price:', 'surecart')} ${amount}`
+				: '';
+		},
+
+		/**
 		 * Get the checkout line items.
 		 */
 		get checkoutLineItems() {
-			return state.checkout?.line_items?.data || [];
+			return (state?.checkout?.line_items?.data || []).sort((a, b) => {
+				const aHasSwap = a?.price?.current_swap || a?.swap ? 1 : 0;
+				const bHasSwap = b?.price?.current_swap || b?.swap ? 1 : 0;
+				return bHasSwap - aHasSwap;
+			});
+		},
+
+		/**
+		 * Get the line item fees.
+		 */
+		get lineItemFees() {
+			const { line_item } = getContext();
+			return line_item?.fees?.data || [];
 		},
 
 		/**
@@ -150,6 +197,23 @@ const { state, actions } = store('surecart/checkout', {
 			return state?.checkout?.line_items?.data?.some(
 				(item) => item?.price?.recurring_interval
 			);
+		},
+
+		get swap() {
+			const { line_item } = getContext();
+			return line_item?.swap || line_item?.price?.current_swap;
+		},
+
+		get swapDisplayAmount() {
+			return state?.swap?.swap_price?.display_amount;
+		},
+
+		get swapIntervalText() {
+			return state?.swap?.swap_price?.short_interval_text;
+		},
+
+		get swapIntervalCountText() {
+			return state?.swap?.swap_price?.short_interval_count_text;
 		},
 
 		/**
@@ -200,12 +264,72 @@ const { state, actions } = store('surecart/checkout', {
 			return sprintf(
 				_n(
 					/* translators: %d: number of items in the cart */
-					'Total of %d item in the cart',
-					'Total of %d items in the cart',
+					'Total of %d item in your cart',
+					'Total of %d items in your cart',
 					count,
 					'surecart'
 				),
 				count
+			);
+		},
+
+		/**
+		 * Get the aria label for the cart icon count.
+		 */
+		get lineItemAriaLabel() {
+			const { line_item } = getContext('surecart/checkout');
+			return sprintf(
+				__('Cart item: %s. Quantity %d. Total price %s.', 'surecart'),
+				line_item?.price?.product?.name,
+				line_item?.quantity,
+				line_item?.subtotal_display_amount
+			);
+		},
+
+		/**
+		 * The cart dialog label.
+		 */
+		get removeItemAriaLabel() {
+			const { line_item } = getContext('surecart/checkout');
+			return sprintf(
+				__('Remove %s from your cart.', 'surecart'),
+				line_item?.price?.product?.name
+			);
+		},
+
+		/**
+		 * Get the aria label for increasing quantity.
+		 */
+		get increaseQuantityAriaLabel() {
+			const { line_item } = getContext('surecart/checkout');
+			return sprintf(
+				/* translators: %s: product name */
+				__('Increase quantity for %s.', 'surecart'),
+				line_item?.price?.product?.name
+			);
+		},
+
+		/**
+		 * Get the aria label for decreasing quantity.
+		 */
+		get decreaseQuantityAriaLabel() {
+			const { line_item } = getContext('surecart/checkout');
+			return sprintf(
+				/* translators: %s: product name */
+				__('Decrease quantity for %s.', 'surecart'),
+				line_item?.price?.product?.name
+			);
+		},
+
+		/**
+		 * Get the aria label for quantity input.
+		 */
+		get quantityInputAriaLabel() {
+			const { line_item } = getContext('surecart/checkout');
+			return sprintf(
+				/* translators: %s: product name */
+				__('Quantity for %s.', 'surecart'),
+				line_item?.price?.product?.name
 			);
 		},
 
@@ -218,6 +342,51 @@ const { state, actions } = store('surecart/checkout', {
 				(line_item?.variant_options || [])
 					.filter(Boolean)
 					.join(' / ') || null
+			);
+		},
+
+		/**
+		 * Get the line item variant.
+		 */
+		get lineItemPriceName() {
+			const { line_item } = getContext();
+			return line_item.price.name ?? '';
+		},
+
+		/**
+		 * Get the line item variant.
+		 */
+		get showLineItemsCount() {
+			const { line_item } = getContext();
+			return line_item?.quantity > 1;
+		},
+
+		/**
+		 * Check if the quantity controls are disabled (loading or ad_hoc price).
+		 */
+		get isQuantityDisabled() {
+			return !!state.loading;
+		},
+
+		/**
+		 * Check if the quantity increase button is disabled.
+		 */
+		get isQuantityIncreaseDisabled() {
+			const { line_item } = getContext('surecart/checkout');
+			return (
+				state.isQuantityDisabled ||
+				(line_item?.max && line_item?.quantity >= line_item?.max)
+			);
+		},
+
+		/**
+		 * Check if the quantity decrease button is disabled.
+		 */
+		get isQuantityDecreaseDisabled() {
+			const { line_item } = getContext('surecart/checkout');
+			return (
+				state.isQuantityDisabled ||
+				line_item?.quantity <= (line_item?.min || 1)
 			);
 		},
 	},
@@ -331,6 +500,22 @@ const { state, actions } = store('surecart/checkout', {
 			}
 		},
 
+		toggleSwap: function* () {
+			const { line_item, mode, formId } = getContext();
+			// fetch the checkout.
+			const { toggleSwap } = yield import(
+				/* webpackIgnore: true */
+				'@surecart/checkout-service'
+			);
+
+			const checkout = yield* toggleSwap({
+				id: line_item?.id,
+				action: line_item?.swap ? 'unswap' : 'swap',
+			});
+
+			actions.setCheckout(checkout, mode, formId);
+		},
+
 		/**
 		 * Set the promotion code.
 		 */
@@ -384,7 +569,7 @@ const { state, actions } = store('surecart/checkout', {
 
 			const { speak } = yield import(
 				/* webpackIgnore: true */
-				'@surecart/a11y'
+				'@wordpress/a11y'
 			);
 
 			speak(__('Applying promotion code.', 'surecart'), 'assertive');
@@ -407,7 +592,7 @@ const { state, actions } = store('surecart/checkout', {
 				);
 				state.error = '';
 				actions.setCheckout(checkout, mode, formId);
-
+				actions.announceLatestCheckout();
 				// Move focus back to #sc-coupon-remove-discount button.
 				moveFocusToElement('#sc-coupon-remove-discount');
 			}
@@ -421,7 +606,7 @@ const { state, actions } = store('surecart/checkout', {
 			const { mode, formId } = context;
 			const { speak } = yield import(
 				/* webpackIgnore: true */
-				'@surecart/a11y'
+				'@wordpress/a11y'
 			);
 			speak(__('Removing promotion code.', 'surecart'), 'assertive');
 			const { handleCouponApply } = yield import(
@@ -439,7 +624,7 @@ const { state, actions } = store('surecart/checkout', {
 					__('Promotion code has been removed.', 'surecart'),
 					'assertive'
 				);
-
+				actions.announceLatestCheckout();
 				// Move focus back to #sc-coupon-trigger button.
 				moveFocusToElement('#sc-coupon-trigger');
 			}
@@ -545,11 +730,12 @@ const { state, actions } = store('surecart/checkout', {
 			}
 			const { line_item } = getContext();
 			const quantity = line_item?.quantity + 1;
-			yield actions.updateLineItem({ quantity });
 			const { speak } = yield import(
 				/* webpackIgnore: true */
-				'@surecart/a11y'
+				'@wordpress/a11y'
 			);
+			speak(__('Updating quantity.', 'surecart'), 'assertive');
+			yield actions.updateLineItem({ quantity });
 			speak(
 				sprintf(
 					/* translators: %d: quantity */
@@ -558,6 +744,7 @@ const { state, actions } = store('surecart/checkout', {
 				),
 				'assertive'
 			);
+			actions.announceLatestCheckout();
 		},
 
 		/**
@@ -572,11 +759,12 @@ const { state, actions } = store('surecart/checkout', {
 			if (quantity < 1) {
 				return;
 			}
-			yield actions.updateLineItem({ quantity });
 			const { speak } = yield import(
 				/* webpackIgnore: true */
-				'@surecart/a11y'
+				'@wordpress/a11y'
 			);
+			speak(__('Updating quantity.', 'surecart'), 'assertive');
+			yield actions.updateLineItem({ quantity });
 			speak(
 				sprintf(
 					/* translators: %d: quantity */
@@ -585,6 +773,7 @@ const { state, actions } = store('surecart/checkout', {
 				),
 				'assertive'
 			);
+			actions.announceLatestCheckout();
 		},
 
 		/**
@@ -592,11 +781,11 @@ const { state, actions } = store('surecart/checkout', {
 		 */
 		onQuantityChange: function* (e) {
 			const quantity = parseInt(e.target.value || '');
-			yield* actions.updateLineItem({ quantity });
+			yield actions.updateLineItem({ quantity });
 
 			const { speak } = yield import(
 				/* webpackIgnore: true */
-				'@surecart/a11y'
+				'@wordpress/a11y'
 			);
 			speak(
 				sprintf(
@@ -606,6 +795,7 @@ const { state, actions } = store('surecart/checkout', {
 				),
 				'assertive'
 			);
+			actions.announceLatestCheckout();
 		},
 
 		/**
@@ -632,14 +822,29 @@ const { state, actions } = store('surecart/checkout', {
 		/**
 		 * Remove the line item.
 		 */
-		removeLineItem: function* () {
+		removeLineItem: function* (e) {
+			if (isNotKeySubmit(e)) {
+				return true;
+			}
+
+			e.preventDefault();
+
 			state.loading = true;
 			const { line_item, mode, formId } = getContext();
+			const productName =
+				line_item?.price?.product?.name || __('item', 'surecart');
 			const { speak } = yield import(
 				/* webpackIgnore: true */
-				'@surecart/a11y'
+				'@wordpress/a11y'
 			);
-			speak(__('Removing line item.', 'surecart'), 'assertive');
+
+			speak(
+				sprintf(
+					__('Removing %s from your cart.', 'surecart'),
+					productName
+				),
+				'assertive'
+			);
 
 			const { removeCheckoutLineItem } = yield import(
 				/* webpackIgnore: true */
@@ -651,10 +856,50 @@ const { state, actions } = store('surecart/checkout', {
 			actions.setCheckout(checkout, mode, formId);
 
 			state.loading = false;
+
+			speak(
+				sprintf(
+					__('Removed %s from your cart.', 'surecart'),
+					productName
+				),
+				'assertive'
+			);
+			actions.announceLatestCheckout();
+
+			// Move focus to the first remaining remove button, or fall back to the cart close button.
+			requestAnimationFrame(() => {
+				const nextFocus =
+					document.querySelector(
+						'.wp-block-surecart-cart-line-item-remove, .sc-product-line-item__remove-button'
+					) ||
+					document.querySelector(
+						'.wp-block-surecart-cart-close-button'
+					);
+				nextFocus?.focus();
+			});
 		},
 		updateCheckout(e) {
 			const { checkout, mode, formId } = e.detail;
 			actions.setCheckout(checkout, mode, formId);
+		},
+		announceLatestCheckout: function* () {
+			const { speak } = yield import(
+				/* webpackIgnore: true */
+				'@wordpress/a11y'
+			);
+			clearTimeout(announceTimeout);
+			announceTimeout = setTimeout(() => {
+				speak(
+					sprintf(
+						__(
+							'Checkout updated. The subtotal is %1$s.',
+							'surecart'
+						),
+						state?.checkout?.subtotal_display_amount
+					),
+					'polite'
+				);
+			}, 1000);
 		},
 	},
 });

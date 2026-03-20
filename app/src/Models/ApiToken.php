@@ -37,7 +37,9 @@ class ApiToken {
 	 * @return bool True if the value was updated, false otherwise.
 	 */
 	protected function save( $value ) {
-		return update_option( $this->key, Encryption::encrypt( $value ) );
+		$saved = update_option( $this->key, Encryption::encrypt( $value ) );
+		\SureCart::requests()->setToken( $value );
+		return $saved;
 	}
 
 	/**

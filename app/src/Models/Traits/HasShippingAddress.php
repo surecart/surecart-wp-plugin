@@ -14,4 +14,13 @@ trait HasShippingAddress {
 		$this->attributes['shipping_address'] = is_string( $value ) ? $value : (object) $value;
 		return $this;
 	}
+
+	/**
+	 * Get the shipping address attribute
+	 *
+	 * @return string|null The shipping address.
+	 */
+	public function getShippingAddressDisplayAttribute() {
+		return $this->shipping_address->formatted_string ?? null;
+	}
 }

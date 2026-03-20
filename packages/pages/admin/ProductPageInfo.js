@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/react';
 import {
 	PluginDocumentSettingPanel,
 	store as editorStore,
@@ -58,11 +56,7 @@ export default () => {
 				cancelButtonText={__('Ignore', 'surecart')}
 				onCancel={() => setIsOpen(false)}
 			>
-				<div
-					css={css`
-						max-width: 350px;
-					`}
-				>
+				<div style={{ maxWidth: '350px' }}>
 					{__(
 						'This product\'s template is missing the "Post Content" block. It must be added to display the content.'
 					)}

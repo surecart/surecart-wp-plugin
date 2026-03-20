@@ -9,7 +9,7 @@ import {
 	ScMenuLabel,
 } from '@surecart/components-react';
 import { ExternalLink } from '@wordpress/components';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 import PriceSelector from '@admin/components/PriceSelector';
 import SwapPriceDisplay from './SwapPriceDisplay';
 import HelpTooltip from '../../../../components/HelpTooltip';
@@ -22,13 +22,14 @@ export default ({
 	onDelete,
 	loading,
 	currentProduct,
+	activePrices,
 }) => {
 	if (loading) {
 		return <ScSkeleton />;
 	}
 
 	const renderPriorityProductPrice = () => {
-		const otherProductPrices = currentProduct?.active_prices?.filter(
+		const otherProductPrices = activePrices?.filter(
 			(priceItem) => priceItem.id !== price?.id && !priceItem.ad_hoc
 		);
 
@@ -119,7 +120,7 @@ export default ({
 								)}
 							</p>
 							<ExternalLink
-								href="https://docs.surecart.com"
+								href="https://surecart.com/docs/price-boost/"
 								target="_blank"
 							>
 								{__('Learn More', 'surecart')}
@@ -151,7 +152,7 @@ export default ({
 					exclude={[price?.id]}
 					prefix={renderPriorityProductPrice()}
 					hidePrefixOnSearch={true}
-					excludeProducts={[price?.product?.id]}
+					excludeProducts={[currentProduct?.id]}
 				/>
 			</ScFormControl>
 		);
@@ -176,7 +177,7 @@ export default ({
 								)}
 							</p>
 							<ExternalLink
-								href="https://docs.surecart.com"
+								href="https://surecart.com/docs/price-boost/"
 								target="_blank"
 							>
 								{__('Learn More', 'surecart')}

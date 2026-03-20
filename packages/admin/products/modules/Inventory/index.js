@@ -122,8 +122,10 @@ export default ({ product, updateProduct, loading }) => {
 				<StockAdjustmentModal
 					open={model}
 					onRequestClose={() => setModel(false)}
-					product={product}
-					updateProduct={updateProduct}
+					stock={product?.stock}
+					available={product?.available_stock}
+					adjustment={product?.stock_adjustment}
+					onUpdate={updateProduct}
 					loading={loading}
 				/>
 			)}

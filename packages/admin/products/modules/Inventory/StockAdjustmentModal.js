@@ -18,14 +18,19 @@ import {
 	ScQuantitySelect,
 } from '@surecart/components-react';
 
-export default ({ onRequestClose, product, updateProduct, loading }) => {
-	const [stockAdjustment, setStockAdjustment] = useState(
-		product?.stock_adjustment
-	);
+export default ({
+	onRequestClose,
+	stock,
+	available,
+	adjustment,
+	onUpdate,
+	loading,
+}) => {
+	const [stockAdjustment, setStockAdjustment] = useState(adjustment);
 
 	const onSubmit = (e) => {
 		e.preventDefault();
-		updateProduct({ stock_adjustment: stockAdjustment });
+		onUpdate({ stock_adjustment: stockAdjustment });
 		onRequestClose();
 	};
 
@@ -78,13 +83,11 @@ export default ({ onRequestClose, product, updateProduct, loading }) => {
 									width: 100%;
 								`}
 								quantity={
-									(product?.available_stock || 0) +
-									(stockAdjustment || 0)
+									(available || 0) + (stockAdjustment || 0)
 								}
 								onScInput={(e) =>
 									setStockAdjustment(
-										e.detail -
-											(product?.available_stock || 0)
+										e.detail - (available || 0)
 									)
 								}
 								min={-9999999}
@@ -98,14 +101,9 @@ export default ({ onRequestClose, product, updateProduct, loading }) => {
 								css={css`
 									width: 100%;
 								`}
-								quantity={
-									(product?.stock || 0) +
-									(stockAdjustment || 0)
-								}
+								quantity={(stock || 0) + (stockAdjustment || 0)}
 								onScInput={(e) =>
-									setStockAdjustment(
-										e.detail - (product?.stock || 0)
-									)
+									setStockAdjustment(e.detail - (stock || 0))
 								}
 								min={-9999999}
 								name="stock"

@@ -54,6 +54,12 @@ class BulkActionService {
 			]
 		)->get();
 
+		// If we got an error, bail early.
+		if ( is_wp_error( $this->bulk_actions ) ) {
+			$this->bulk_actions = [];
+			return;
+		}
+
 		// delete any succeeded bulk actions.
 		$this->deleteCompletedBulkActions();
 	}

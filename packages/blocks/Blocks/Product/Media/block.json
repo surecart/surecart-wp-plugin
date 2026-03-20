@@ -1,5 +1,5 @@
 {
-	"apiVersion": 2,
+	"apiVersion": 3,
 	"name": "surecart/product-media-old",
 	"title": "Product Media",
 	"description": "A container to display the product media",

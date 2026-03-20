@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { __ } from '@wordpress/i18n';
 import { Button, Popover, Icon } from '@wordpress/components';
-import { __experimentalLinkControl as LinkControl } from '@wordpress/block-editor';
+import { LinkControl } from '@wordpress/block-editor';
 import { useState } from '@wordpress/element';
 import { prependHTTP } from '@wordpress/url';
 

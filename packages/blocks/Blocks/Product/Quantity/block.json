@@ -1,5 +1,5 @@
 {
-	"apiVersion": 2,
+	"apiVersion": 3,
 	"name": "surecart/product-quantity-old",
 	"title": "Product Quantity",
 	"description": "Displays quantity selector for a product.",

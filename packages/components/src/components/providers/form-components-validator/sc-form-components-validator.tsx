@@ -3,6 +3,7 @@ import { __ } from '@wordpress/i18n';
 import { state as checkoutState, onChange as onCheckoutChange } from '@store/checkout';
 import { TaxProtocol } from '../../../types';
 import { fullShippingAddressRequired, shippingAddressRequired } from '@store/checkout/getters';
+import { getAvailableProcessor } from '@store/processors/getters';
 
 @Component({
   tag: 'sc-form-components-validator',
@@ -49,6 +50,9 @@ export class ScFormComponentsValidator {
 
   /** Is there a trial line item */
   @State() hasTrialLineItem: boolean;
+
+  /** Is there a customer phone field? */
+  @State() hasCustomerPhone: boolean;
 
   handleOrderChange() {
     // bail if we don't have address invalid error or disabled.
@@ -104,10 +108,16 @@ export class ScFormComponentsValidator {
     this.hasInvoiceDetails = !!this.el.querySelector('sc-invoice-details');
     this.hasInvoiceMemo = !!this.el.querySelector('sc-invoice-memo');
     this.hasTrialLineItem = !!this.el.querySelector('sc-line-item-trial');
+    this.hasCustomerPhone = !!this.el.querySelector('sc-customer-phone');
 
     // if eu vat is required, add the tax id field.
     if (this.taxProtocol?.tax_enabled && this.taxProtocol?.eu_vat_required) {
       this.addTaxIDField();
+    }
+
+    // if razorpay is available, add the customer phone field.
+    if (getAvailableProcessor('razorpay')) {
+      this.addCustomerPhone();
     }
 
     this.handleOrderChange();
@@ -185,6 +195,18 @@ export class ScFormComponentsValidator {
     const taxInput = document.createElement('sc-order-tax-id-input');
     payment.parentNode.insertBefore(taxInput, payment);
     this.hasTaxIDField = true;
+  }
+
+  addCustomerPhone() {
+    if (this.hasCustomerPhone) return;
+    const payment = this.el.querySelector('sc-payment');
+    if (!payment) return;
+
+    const customerPhone = document.createElement('sc-customer-phone');
+    customerPhone.label = __('Phone', 'surecart');
+    customerPhone.required = true;
+    payment.parentNode.insertBefore(customerPhone, payment);
+    this.hasCustomerPhone = true;
   }
 
   addBumps() {

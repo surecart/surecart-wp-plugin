@@ -14,6 +14,7 @@ export default ({
 
 	return (
 		<CheckboxControl
+			__nextHasNoMarginBottom
 			style={{
 				cursor: disabled ? 'not-allowed' : 'inherit',
 				opacity: disabled ? '0.5' : '1',

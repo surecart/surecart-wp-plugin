@@ -101,6 +101,7 @@ export default ({ className, attributes, setAttributes }) => {
 			<InspectorControls>
 				<PanelBody>
 					<ToggleControl
+						__nextHasNoMarginBottom
 						label={__('Show a secure lock icon.', 'surecart')}
 						checked={show_icon}
 						onChange={(show_icon) => setAttributes({ show_icon })}
@@ -110,6 +111,8 @@ export default ({ className, attributes, setAttributes }) => {
 				<PanelBody title={__('Text settings', 'surecart')}>
 					<PanelRow>
 						<TextControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							label={__('Out of stock label', 'surecart')}
 							value={out_of_stock_text}
 							onChange={(value) =>
@@ -119,6 +122,8 @@ export default ({ className, attributes, setAttributes }) => {
 					</PanelRow>
 					<PanelRow>
 						<TextControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							label={__('Unavailable label', 'surecart')}
 							value={unavailable_text}
 							onChange={(value) =>

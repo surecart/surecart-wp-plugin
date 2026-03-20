@@ -143,7 +143,7 @@ export default ({ lineItem, loading, subscription }) => {
 											</div>
 										</LineItemLabel>
 									</div>
-									{!subscription?.finite && (
+									{!subscription?.finite && !subscription?.price_readonly && (
 										<ScButton
 											size="small"
 											href={addQueryArgs('admin.php', {

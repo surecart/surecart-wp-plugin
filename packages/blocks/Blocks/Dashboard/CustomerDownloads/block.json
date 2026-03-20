@@ -1,6 +1,7 @@
 {
 	"name": "surecart/customer-downloads",
 	"title": "Customer Downloads",
+	"apiVersion": 3,
 	"description": "Displays the customer's downloads.",
 	"category": "surecart-customer-dashboard",
 	"keywords": ["download", "customer", "dashboard"],

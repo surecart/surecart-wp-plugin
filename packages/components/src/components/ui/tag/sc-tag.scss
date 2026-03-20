@@ -12,6 +12,26 @@
   cursor: pointer;
   text-decoration: none;
   font-weight: var(--sc-font-weight-bold);
+
+  &__prefix,
+  &__suffix {
+    vertical-align: middle;
+    display: flex;
+  }
+  &__suffix {
+    ::slotted(*) {
+      width: var(--sc-tag-suffix-width, 1.2em);
+      height: var(--sc-tag-suffix-width, 1.2em);
+      margin-left: var(--sc-tag-suffix-margin-left, 5px);
+    }
+  }
+  &__prefix {
+    ::slotted(*) {
+      width: var(--sc-tag-prefix-width, 1.2em);
+      height: var(--sc-tag-prefix-width, 1.2em);
+      margin-right: var(--sc-tag-prefix-margin-right, 5px);
+    }
+  }
 }
 
 .tag__clear::part(base) {

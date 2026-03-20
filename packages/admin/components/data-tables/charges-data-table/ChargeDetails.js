@@ -95,7 +95,7 @@ export default ({ charge, onRequestClose }) => {
 					<span slot="description">{__('Status', 'surecart')}</span>
 					{renderStatusTag()}
 				</ScLineItem>
-				{payment_intent?.platform_fee && (
+				{!!payment_intent?.platform_fee && (
 					<>
 						<div
 							style={{
@@ -177,7 +177,7 @@ export default ({ charge, onRequestClose }) => {
 							})}
 					</>
 				)}
-				{payment_intent?.service_fee && (
+				{!!payment_intent?.service_fee && (
 					<ScLineItem>
 						<span
 							slot="description"
@@ -218,8 +218,8 @@ export default ({ charge, onRequestClose }) => {
 						</span>
 					</ScLineItem>
 				)}
-				{(payment_intent?.platform_fee ||
-					payment_intent?.service_fee) && (
+				{(!!payment_intent?.platform_fee ||
+					!!payment_intent?.service_fee) && (
 					<>
 						<ScDivider style={{ '--spacing': '0.5em' }} />
 						<ScLineItem>
@@ -245,6 +245,18 @@ export default ({ charge, onRequestClose }) => {
 							</span>
 						</ScLineItem>
 					</>
+				)}
+				{!!charge?.disputed_amount && (
+					<ScLineItem
+						style={{ color: 'var(--sc-color-warning-500)' }}
+					>
+						<span slot="description">
+							{__('Disputed Amount', 'surecart')}
+						</span>
+						<span slot="price">
+							{charge?.disputed_display_amount}
+						</span>
+					</ScLineItem>
 				)}
 			</div>
 		</ScDrawer>

@@ -11,13 +11,13 @@ import { __, sprintf } from '@wordpress/i18n';
  */
 import { ScIcon } from '@surecart/components-react';
 
-export default ({ variant, onRemove }) => {
+export default ({ variant, onRemove, size = '36px' }) => {
 	return (
 		<div
 			css={css`
 				position: relative;
-				padding: 10px;
-				margin: -10px;
+				width: ${size};
+				height: ${size};
 				.sc-remove-icon {
 					visibility: hidden;
 					opacity: 0;
@@ -37,8 +37,8 @@ export default ({ variant, onRemove }) => {
 		>
 			<div
 				css={css`
-					width: 35px;
-					height: 35px;
+					width: ${size};
+					height: ${size};
 					display: flex;
 					align-items: center;
 					justify-content: center;
@@ -63,8 +63,8 @@ export default ({ variant, onRemove }) => {
 						src={variant?.image_url}
 						alt={sprintf(__('Image of %s', 'sc'), variant?.name)}
 						css={css`
-							width: 35px;
-							height: 35px;
+							width: ${size};
+							height: ${size};
 							object-fit: cover;
 						`}
 					/>

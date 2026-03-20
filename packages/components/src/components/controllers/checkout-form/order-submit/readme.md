@@ -9,6 +9,7 @@
 
 | Property           | Attribute            | Description                      | Type                                                                                         | Default     |
 | ------------------ | -------------------- | -------------------------------- | -------------------------------------------------------------------------------------------- | ----------- |
+| `backgroundColor`  | `background-color`   |                                  | `string`                                                                                     | `''`        |
 | `currencyCode`     | `currency-code`      | Currency Code                    | `string`                                                                                     | `'usd'`     |
 | `full`             | `full`               | Show a full-width button.        | `boolean`                                                                                    | `true`      |
 | `icon`             | `icon`               | Icon to show.                    | `string`                                                                                     | `undefined` |
@@ -21,6 +22,7 @@
 | `secureNoticeText` | `secure-notice-text` | Secure                           | `string`                                                                                     | `undefined` |
 | `showTotal`        | `show-total`         | Show the total.                  | `boolean`                                                                                    | `undefined` |
 | `size`             | `size`               | The button's size.               | `"large" \| "medium" \| "small"`                                                             | `'medium'`  |
+| `textColor`        | `text-color`         |                                  | `string`                                                                                     | `''`        |
 | `type`             | `type`               | The button type.                 | `"danger" \| "default" \| "info" \| "link" \| "primary" \| "success" \| "text" \| "warning"` | `'primary'` |
 
 

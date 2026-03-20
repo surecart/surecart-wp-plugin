@@ -64,6 +64,12 @@ class Conditions extends Condition_Base {
 	 * @return void
 	 */
 	public function register_sub_conditions() {
-		$this->register_sub_condition( new ProductCondition() );
+		$product_single = new ProductCondition(
+			[
+				'post_type' => 'sc_product',
+			]
+		);
+
+		$this->register_sub_condition( $product_single );
 	}
 }

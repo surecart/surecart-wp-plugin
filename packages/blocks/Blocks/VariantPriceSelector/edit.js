@@ -264,6 +264,8 @@ export default ({ attributes, setAttributes, clientId }) => {
 				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
 						<TextControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							label={__('Selector title', 'surecart')}
 							value={selectorTitle}
 							onChange={(selectorTitle) =>
@@ -274,6 +276,8 @@ export default ({ attributes, setAttributes, clientId }) => {
 					</PanelRow>
 					<PanelRow>
 						<TextControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							label={__('Price selector label', 'surecart')}
 							value={label}
 							onChange={(label) => setAttributes({ label })}

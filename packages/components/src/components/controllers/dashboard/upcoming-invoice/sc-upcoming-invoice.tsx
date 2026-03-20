@@ -79,7 +79,10 @@ export class ScUpcomingInvoice {
         expand: [
           'period.checkout',
           'checkout.line_items',
+          'checkout.checkout_fees',
+          'checkout.shipping_fees',
           'line_item.price',
+          'line_item.fees',
           'price.product',
           'checkout.payment_method',
           'checkout.manual_payment_method',
@@ -231,6 +234,9 @@ export class ScUpcomingInvoice {
     const checkout = this.invoice?.checkout as Checkout;
     const manualPaymentMethod = checkout?.manual_payment ? (checkout?.manual_payment_method as ManualPaymentMethod) : null;
 
+    const checkout_fees = checkout?.checkout_fees?.data;
+    const shipping_fees = checkout?.shipping_fees?.data;
+
     return (
       <Fragment>
         {checkout?.line_items?.data.map(item => (
@@ -242,10 +248,12 @@ export class ScUpcomingInvoice {
             editable={this.quantityUpdatesEnabled}
             purchasableStatus={item?.purchasable_status_display}
             removable={false}
+            note={item?.display_note}
             quantity={item?.quantity}
             amount={item?.subtotal_display_amount}
             interval={`${item?.price?.short_interval_text} ${item?.price?.short_interval_count_text}`}
             onScUpdateQuantity={e => this.updateQuantity(e)}
+            fees={item?.fees?.data}
           ></sc-product-line-item>
         ))}
 
@@ -268,6 +276,17 @@ export class ScUpcomingInvoice {
           </sc-line-item>
         )}
 
+        {checkout_fees?.length > 0 && (
+          <Fragment>
+            {checkout_fees?.map(fee => (
+              <sc-line-item>
+                <span slot="description">{fee?.description}</span>
+                <span slot="price">{fee?.display_amount}</span>
+              </sc-line-item>
+            ))}
+          </Fragment>
+        )}
+
         {!!checkout.trial_amount && (
           <sc-line-item>
             <span slot="description">{__('Trial', 'surecart')}</span>
@@ -284,6 +303,26 @@ export class ScUpcomingInvoice {
           collapsed
           buttonText={__('Add Coupon Code', 'surecart')}
         ></sc-coupon-form>
+
+        {!!checkout?.shipping_amount && (
+          <Fragment>
+            <sc-line-item style={{ marginTop: 'var(--sc-spacing-small)' }}>
+              <span slot="description">{__('Shipping', 'surecart')}</span>
+              <span slot="price">{checkout?.shipping_display_amount}</span>
+            </sc-line-item>
+
+            {shipping_fees?.length > 0 && (
+              <Fragment>
+                {shipping_fees?.map(fee => (
+                  <sc-line-item>
+                    <span slot="description">{fee?.description}</span>
+                    <span slot="price">{fee?.display_amount}</span>
+                  </sc-line-item>
+                ))}
+              </Fragment>
+            )}
+          </Fragment>
+        )}
 
         {!!checkout.tax_amount && (
           <sc-line-item>

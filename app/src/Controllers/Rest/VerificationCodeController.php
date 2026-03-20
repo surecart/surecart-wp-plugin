@@ -100,7 +100,9 @@ class VerificationCodeController extends RestController {
 			return $logged_in;
 		}
 
-		$verify->redirect_url = apply_filters( 'sc_login_redirect_url', null ); // this is the URL to redirect to after login.
+		$redirect_to          = $request->get_param( 'redirect_to' );
+		$redirect_url         = ! empty( $redirect_to ) ? wp_validate_redirect( $redirect_to, false ) : null;
+		$verify->redirect_url = apply_filters( 'sc_login_redirect_url', $redirect_url ); // this is the URL to redirect to after login.
 
 		// return the model.
 		return $verify;

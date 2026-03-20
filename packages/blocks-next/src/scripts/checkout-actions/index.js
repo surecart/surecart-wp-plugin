@@ -194,14 +194,45 @@ export function* removeCheckoutLineItem(id) {
 }
 
 /**
+ * Toggle a swap
+ */
+export function* toggleSwap({ id, action = 'swap' }) {
+	try {
+		checkoutState.loading = true;
+		const item = yield apiFetch({
+			path: addQueryArgs(`surecart/v1/line_items/${id}/${action}`, {
+				expand: [
+					...(expand || []).map((item) => {
+						return item.includes('.') ? item : `checkout.${item}`;
+					}),
+					'checkout',
+				],
+			}),
+			method: 'PATCH',
+		});
+		return item?.checkout;
+	} catch (e) {
+		console.error(e);
+		checkoutState.error = e;
+	} finally {
+		checkoutState.loading = false;
+	}
+}
+
+/**
  * Add a line item.
  */
 export function* addLineItem({ checkout, data, live_mode = false }) {
 	const existingLineItem = (checkout?.line_items?.data || []).find((item) => {
 		if (!item?.variant?.id) {
-			return item.price.id === data.price;
+			return item.price.id === data.price && item.note === data.note;
 		}
-		return item.variant.id === data.variant && item.price.id === data.price;
+
+		return (
+			item.variant.id === data.variant &&
+			item.price.id === data.price &&
+			item.note === data.note
+		);
 	});
 
 	// create the checkout with the line item.
@@ -210,6 +241,7 @@ export function* addLineItem({ checkout, data, live_mode = false }) {
 			method: 'POST', // create
 			path: addQueryArgs(parsePath(null)),
 			data: {
+				...withDefaultData(data),
 				line_items: [data],
 				live_mode,
 			},
@@ -233,7 +265,7 @@ export function* addLineItem({ checkout, data, live_mode = false }) {
 				existingLineItem?.id ? existingLineItem?.id : ''
 			}`,
 			{
-				consolidate: true,
+				consolidate: false,
 				expand: [
 					...(expand || []).map((item) => {
 						return item.includes('.') ? item : `checkout.${item}`;

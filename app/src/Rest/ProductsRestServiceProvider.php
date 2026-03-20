@@ -55,6 +55,15 @@ class ProductsRestServiceProvider extends RestServiceProvider implements RestSer
 				'schema' => [ $this, 'get_item_schema' ],
 			]
 		);
+		register_rest_route(
+			"$this->name/v$this->version",
+			$this->endpoint . '/(?P<id>\S+)/duplicate',
+			[
+				'methods'             => \WP_REST_Server::CREATABLE,
+				'callback'            => $this->callback( $this->controller, 'duplicate' ),
+				'permission_callback' => [ $this, 'create_item_permissions_check' ],
+			]
+		);
 	}
 
 	/**

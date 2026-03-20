@@ -103,6 +103,16 @@ export default () => {
 		'site',
 		'surecart_unrestricted_test_mode'
 	);
+	const [hideHelpWidget, setHideHelpWidget] = useEntityProp(
+		'root',
+		'site',
+		'surecart_hide_help_widget'
+	);
+	const [disableAdminToolbar, setDisableAdminToolbar] = useEntityProp(
+		'root',
+		'site',
+		'surecart_admin_toolbar_disabled'
+	);
 
 	/**
 	 * Validate the Google Maps API key.
@@ -196,7 +206,7 @@ export default () => {
 						)}
 					</span>
 				</ScSwitch>
-				{!scData?.is_block_theme && (
+				{scData?.should_load_on_demand_assets && (
 					<ScSwitch
 						checked={item?.load_block_assets_on_demand}
 						onClick={(e) => {
@@ -531,6 +541,30 @@ export default () => {
 						)}
 					</span>
 				</ScSwitch>
+				<ScSwitch
+					checked={hideHelpWidget}
+					onScChange={(e) => setHideHelpWidget(e.target.checked)}
+				>
+					{__('Hide Help Widget', 'surecart')}
+					<span slot="description" style={{ lineHeight: '1.4' }}>
+						{__(
+							'Hide the help widget that appears in the bottom right corner of SureCart admin pages.',
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
+				<ScSwitch
+					checked={!disableAdminToolbar}
+					onClick={(e) => setDisableAdminToolbar(!e.target.checked)}
+				>
+					{__('Enable Admin Toolbar', 'surecart')}
+					<span slot="description" style={{ lineHeight: '1.4' }}>
+						{__(
+							'This will enable the SureCart toolbar in the WordPress admin bar for easy access to SureCart features.',
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
 			</SettingsBox>
 
 			<SettingsBox
@@ -581,7 +615,7 @@ export default () => {
 					<ScFormControl
 						label={__('Customers', 'surecart')}
 						help={__(
-							'Match all SureCart customers with WordPress users. This is helpful if you have migrated from another eCommerce platform.',
+							"Create WordPress user accounts for SureCart customers who don't already have a WordPress account. Use this after migrating from another eCommerce platform to ensure every SureCart customer can log in.",
 							'surecart'
 						)}
 					/>

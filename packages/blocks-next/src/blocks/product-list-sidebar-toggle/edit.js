@@ -53,6 +53,7 @@ export default ({
 				<PanelBody>
 					<ToggleGroupControl
 						__nextHasNoMarginBottom
+						__next40pxDefaultSize
 						label={__('Icon', 'surecart')}
 						value={icon}
 						onChange={(icon) => setAttributes({ icon })}

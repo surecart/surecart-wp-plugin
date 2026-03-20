@@ -11,7 +11,7 @@ class LoginController extends RestController {
 	/**
 	 * Login user.
 	 *
-	 * @param WP_REST_Request $request The REST request object.
+	 * @param \WP_REST_Request $request The REST request object.
 	 *
 	 * @return array|\WP_Error Returns an array with user details on success, or WP_Error on failure.
 	 */
@@ -28,10 +28,13 @@ class LoginController extends RestController {
 
 		User::find( $user->ID )->login();
 
+		$redirect_to  = $request->get_param( 'redirect_to' );
+		$redirect_url = ! empty( $redirect_to ) ? wp_validate_redirect( $redirect_to, false ) : null;
+
 		return [
 			'name'         => $user->display_name,
 			'email'        => $user->user_email,
-			'redirect_url' => apply_filters( 'sc_login_redirect_url', null ),
+			'redirect_url' => apply_filters( 'sc_login_redirect_url', $redirect_url ),
 		];
 	}
 }

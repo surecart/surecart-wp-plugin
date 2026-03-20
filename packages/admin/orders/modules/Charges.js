@@ -40,6 +40,7 @@ export default ({ checkout }) => {
 						'payment_intent',
 						'payment_intent.platform_fee',
 						'payment_intent.service_fee',
+						'disputes'
 					],
 				},
 			];

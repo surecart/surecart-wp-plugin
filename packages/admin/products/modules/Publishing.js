@@ -4,8 +4,6 @@ import { __ } from '@wordpress/i18n';
 import { useEffect } from '@wordpress/element';
 import Box from '../../ui/Box';
 import Availability from '../components/Availability';
-import SelectTemplate from '../components/SelectTemplate';
-import SelectTemplatePart from '../components/SelectTemplatePart';
 import Status from '../components/Status';
 import Url from '../components/Url';
 import { ScSwitch } from '@surecart/components-react';
@@ -73,19 +71,6 @@ export default ({ product, updateProduct, post, loading }) => {
 			>
 				<Availability product={product} updateProduct={updateProduct} />
 				<Status product={product} updateProduct={updateProduct} />
-				{scData?.is_block_theme ? (
-					<SelectTemplate
-						post={post}
-						product={product}
-						updateProduct={updateProduct}
-					/>
-				) : (
-					<SelectTemplatePart
-						post={post}
-						product={product}
-						updateProduct={updateProduct}
-					/>
-				)}
 				<Url product={product} updateProduct={updateProduct} />
 				<CatalogedAt product={product} updateProduct={updateProduct} />
 			</div>

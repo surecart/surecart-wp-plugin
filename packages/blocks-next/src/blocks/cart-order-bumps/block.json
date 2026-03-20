@@ -1,0 +1,72 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "surecart/cart-order-bumps",
+	"title": "Order Bumps",
+	"description": "Display recommended order bumps in the cart.",
+	"version": "1.0.0",
+	"category": "surecart-cart",
+	"ancestor": ["surecart/slide-out-cart"],
+	"attributes": {
+		"hideAddedItems": {
+			"type": "boolean",
+			"default": true
+		},
+		"style": {
+			"type": "object",
+			"default": {
+				"spacing": {
+					"margin": {
+						"bottom": "1em",
+						"top": "1em"
+					},
+					"padding": {
+						"top": "1.5em",
+						"bottom": "1.5em",
+						"left": "2em",
+						"right": "2em"
+					}
+				},
+				"border": {
+					"top": {
+						"color": "#b0b0b069",
+						"width": "1px"
+					}
+				}
+			}
+		}
+	},
+	"supports": {
+		"interactivity": true,
+		"html": false,
+		"spacing": {
+			"padding": true,
+			"margin": true,
+			"blockGap": true
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true
+		},
+		"color": {
+			"text": true,
+			"background": true
+		},
+		"__experimentalBorder": {
+			"color": true,
+			"radius": true,
+			"width": true,
+			"style": true,
+			"__experimentalDefaultControls": {
+				"color": true,
+				"width": true
+			}
+		}
+	},
+	"render": "file:./view.php",
+	"textdomain": "surecart",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"viewScriptModule": ["@surecart/checkout", "@surecart/order-bumps"],
+	"style": "file:./style-index.css"
+}

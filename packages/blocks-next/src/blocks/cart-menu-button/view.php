@@ -16,8 +16,10 @@
 	data-wp-on--keydown="surecart/cart::actions.toggle"
 	data-wp-bind--hidden="!state.showCartMenuIcon"
 	tabindex="0"
+	role="button"
+	aria-label="<?php esc_attr_e( 'Open cart', 'surecart' ); ?>"
 >
-	<div class="sc-cart-icon" aria-label="<?php esc_attr_e( 'Open cart', 'surecart' ); ?>">
+	<div class="sc-cart-icon">
 		<?php echo wp_kses( $icon, sc_allowed_svg_html() ); ?>
 		<span
 			class="sc-cart-count"

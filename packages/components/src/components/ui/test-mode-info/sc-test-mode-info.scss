@@ -1,0 +1,40 @@
+sc-test-mode-info {
+  .sc-test-mode-info-content {
+    ol {
+      padding-left: 1em;
+      margin: 0;
+      font-size: 12px;
+
+      img {
+        width: 320px;
+        margin-top: 12px;
+      }
+    }
+    ul {
+      padding-left: 1em;
+    }
+  }
+
+  .sc-test-mode-info-footer {
+    display: flex;
+    justify-content: space-between;
+    sc-button > sc-icon {
+      margin-left: 4px;
+    }
+    & > span {
+      font-size: var(--sc-button-font-size-small);
+      align-content: center;
+      opacity: 0.75;
+    }
+  }
+
+  sc-popover {
+    --panel-width: 25em;
+  }
+}
+
+// We need this CSS to set the Icon of the Admin Bar Setting to change the Mode.
+#wpadminbar #wp-admin-bar-sc_change_checkout_mode > .ab-item:before {
+  content: '\f186'/ '';
+  top: 2px;
+}

@@ -92,6 +92,7 @@ const DimensionControls = ({
 				panelId={clientId}
 			>
 				<SelectControl
+					__next40pxDefaultSize
 					__nextHasNoMarginBottom
 					label={__('Aspect ratio', 'surecart')}
 					value={aspectRatio}
@@ -147,6 +148,7 @@ const DimensionControls = ({
 				panelId={clientId}
 			>
 				<UnitControl
+					__next40pxDefaultSize
 					label={__('Height', 'surecart')}
 					labelPosition="top"
 					value={height || ''}
@@ -169,6 +171,7 @@ const DimensionControls = ({
 				panelId={clientId}
 			>
 				<UnitControl
+					__next40pxDefaultSize
 					label={__('Width', 'surecart')}
 					labelPosition="top"
 					value={width || ''}

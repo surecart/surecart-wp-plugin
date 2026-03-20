@@ -18,6 +18,8 @@ export default ({ attributes, setAttributes }) => {
 				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
 						<TextControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							label={__('Total Label', 'surecart')}
 							value={text}
 							onChange={(text) => setAttributes({ text })}
@@ -26,6 +28,8 @@ export default ({ attributes, setAttributes }) => {
 					</PanelRow>
 					<PanelRow>
 						<TextControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							label={__('Trial Label', 'surecart')}
 							value={free_trial_text}
 							onChange={(free_trial_text) =>
@@ -36,6 +40,8 @@ export default ({ attributes, setAttributes }) => {
 					</PanelRow>
 					<PanelRow>
 						<TextControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							label={__('Subtotal Label', 'surecart')}
 							value={first_payment_total_text}
 							onChange={(first_payment_total_text) =>
@@ -46,6 +52,8 @@ export default ({ attributes, setAttributes }) => {
 					</PanelRow>
 					<PanelRow>
 						<TextControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							label={__('Amount Due Label', 'surecart')}
 							value={due_amount_text}
 							onChange={(due_amount_text) =>
@@ -56,6 +64,8 @@ export default ({ attributes, setAttributes }) => {
 					</PanelRow>
 					<PanelRow>
 						<TextControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							label={__('Total Due Today Label', 'surecart')}
 							value={subscription_text}
 							onChange={(subscription_text) =>

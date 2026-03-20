@@ -36,6 +36,8 @@ export default ({ attributes, setAttributes }) => {
 				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
 						<TextControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							label={__('Label for donation', 'surecart')}
 							placeholder={__('Buy me coffee!', 'surecart')}
 							value={label}

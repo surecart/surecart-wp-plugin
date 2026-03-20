@@ -20,6 +20,9 @@ class ProductTest extends SureCartUnitTestCase
 		// Set up an app instance with whatever stubs and mocks we need before every test.
 		\SureCart::make()->bootstrap([
 			'providers' => [
+				\SureCartAppCore\AppCore\AppCoreServiceProvider::class,
+				\SureCartAppCore\Config\ConfigServiceProvider::class,
+				\SureCartAppCore\Assets\AssetsServiceProvider::class,
 				\SureCart\WordPress\PluginServiceProvider::class,
 				\SureCart\Settings\SettingsServiceProvider::class,
 				\SureCart\Request\RequestServiceProvider::class,
@@ -381,5 +384,245 @@ class ProductTest extends SureCartUnitTestCase
 		$this->assertSame(150, $line_item_image->height);
 		$this->assertSame('lazy', $line_item_image->loading);
 		$this->assertSame('async', $line_item_image->decoding);
+	}
+
+	/**
+	 * @group media
+	 * @group product
+	 */
+	public function test_has_gallery_ids_or_object_can_return_valid_ids()
+	{
+		$this->shouldSyncProduct('test-object-product');
+
+		$queue_service = \Mockery::mock(QueueService::class)->makePartial();
+		\SureCart::alias('queue', function () use ($queue_service) {
+			return $queue_service;
+		});
+		$queue_service->shouldReceive('async')->andReturn(true);
+
+		$filename = DIR_TESTDATA . '/images/test-image-large.jpg';
+		$id = $this->factory()->attachment->create_upload_object( $filename );
+
+		$filename = DIR_TESTDATA . '/images/test-image.jpg';
+		$id_2 = $this->factory()->attachment->create_upload_object( $filename );
+
+		$product = new Product([
+			'id' => 'test-object-product',
+			'name' => 'test-object-product',
+			'updated_at' => time(),
+			'created_at' => time(),
+			'metadata' => [
+				'gallery_ids' => [
+					$id,
+					['id' => $id_2],
+				]
+			]
+		]);
+
+		$product = $product->sync();
+		$gallery_items = $product->gallery;
+
+		$this->assertIsArray($gallery_items, 'Gallery IDs should be an array');
+		$this->assertCount(2, $gallery_items, 'Gallery IDs should contain 2 items');
+
+		$this->assertEquals($id, $gallery_items[0]->id ?? $gallery_items[0]);
+		$this->assertEquals($id_2, $gallery_items[1]->id ?? $gallery_items[1]);
+	}
+
+	/**
+	 * @group media
+	 * @group product
+	 */
+	public function test_variant_option_compatibility()
+	{
+		$this->shouldSyncProduct('test-variant-product');
+
+		$queue_service = \Mockery::mock(QueueService::class)->makePartial();
+		\SureCart::alias('queue', function () use ($queue_service) {
+			return $queue_service;
+		});
+		$queue_service->shouldReceive('async')->andReturn(true);
+
+		$filename = DIR_TESTDATA . '/images/test-image-large.jpg';
+		$id = $this->factory()->attachment->create_upload_object( $filename );
+
+		$filename = DIR_TESTDATA . '/images/test-image.jpg';
+		$id_2 = $this->factory()->attachment->create_upload_object( $filename );
+
+		$product = new Product([
+			'id' => 'test-variant-product',
+			'name' => 'test-variant-product',
+			'updated_at' => time(),
+			'created_at' => time(),
+			'metadata' => [
+				'gallery_ids' => [
+					[
+						'id' => $id,
+						'variant_option' => 'Red',
+					],
+					$id_2, // We don't set variant_option here, instead set as post meta to check compatibility.
+				]
+			]
+		]);
+
+		// For attachment $id_2, add sc_variant_option metadata as Blue.
+		update_post_meta($id_2, 'sc_variant_option', 'Blue');
+
+		$product = $product->sync();
+		$gallery_items = $product->gallery;
+
+		$this->assertIsArray($gallery_items, 'Gallery IDs should be an array');
+		$this->assertCount(2, $gallery_items, 'Gallery IDs should contain 2 items');
+
+		$this->assertEquals('Red', $gallery_items[0]->getMetadata('variant_option'));
+		$this->assertEquals('Blue', $gallery_items[1]->getMetadata('variant_option'));
+	}
+
+	/**
+	 * Test has_variants attribute
+	 */
+	public function test_has_variants_attribute()
+	{
+		$this->shouldSyncProduct('test-variants');
+
+		// Test with no variant options
+		$product = new Product([
+			'id' => 'test-no-variants',
+			'variant_options' => (object) [
+				'data' => []
+			]
+		]);
+		$this->assertFalse($product->has_variants);
+
+		// Test with variant options
+		$product = new Product([
+			'id' => 'test-with-variants',
+			'variants' => (object) [
+				'data' => [
+					['id' => 'opt1'],
+					['id' => 'opt2']
+				]
+			]
+		]);
+		$this->assertTrue($product->has_variants, 'Product has variants');
+
+		// Test with null variant_options
+		$product = new Product([
+			'id' => 'test-null-variants'
+		]);
+		$this->assertFalse($product->has_variants);
+	}
+
+	/**
+	 * Test active_ad_hoc_prices attribute
+	 */
+	public function test_active_ad_hoc_prices_attribute()
+	{
+		$this->shouldSyncProduct('test-ad-hoc');
+
+		$product = new Product([
+			'id' => 'test-ad-hoc-prices',
+			'prices' => (object) [
+				'data' => [
+					['id' => 'price1', 'archived' => false, 'ad_hoc' => true, 'amount' => 1000], 
+					['id' => 'price2', 'archived' => false, 'ad_hoc' => false, 'amount' => 2000], 
+					['id' => 'price3', 'archived' => true, 'ad_hoc' => true, 'amount' => 3000], 
+					['id' => 'price4', 'archived' => false, 'ad_hoc' => true, 'amount' => 4000]
+				]
+			]
+		]);
+
+		$activeAdHocPrices = $product->active_ad_hoc_prices;
+
+		// Should only include active (non-archived) ad hoc prices
+		$this->assertCount(2, $activeAdHocPrices);
+		
+		// Convert to array values to ensure proper indexing
+		$activeAdHocPricesArray = array_values($activeAdHocPrices);
+		$this->assertSame('price1', $activeAdHocPricesArray[0]->id);
+		$this->assertSame('price4', $activeAdHocPricesArray[1]->id);
+
+		// Test with no prices
+		$product = new Product([
+			'id' => 'test-no-prices'
+		]);
+		$this->assertEmpty($product->active_ad_hoc_prices);
+
+		// Test with no ad hoc prices
+		$product = new Product([
+			'id' => 'test-no-ad-hoc',
+			'prices' => (object) [
+				'data' => [
+					['id' => 'price5', 'archived' => false, 'ad_hoc' => false, 'amount' => 5000, 'position' => 0]
+				]
+			]
+		]);
+		$this->assertEmpty($product->active_ad_hoc_prices);
+	}
+
+	/**
+	 * Test has_options attribute
+	 */
+	public function test_has_options_attribute()
+	{
+		$this->shouldSyncProduct('test-options');
+
+		// Test with variants
+		$product = new Product([
+			'id' => 'test-options-variants',
+			'variants' => (object) [
+				'data' => [['id' => 'opt1']]
+			],
+			'prices' => (object) [
+				'data' => [['id' => 'price1', 'archived' => false, 'ad_hoc' => false, 'position' => 0]]
+			]
+		]);
+		$this->assertTrue($product->has_options);
+
+		// Test with multiple prices
+		$product = new Product([
+			'id' => 'test-options-multiple-prices',
+			'prices' => (object) [
+				'data' => [
+					['id' => 'price1', 'archived' => false, 'position' => 0],
+					['id' => 'price2', 'archived' => false, 'position' => 1]
+				]
+			]
+		]);
+		$this->assertTrue($product->has_options);
+
+		// Test with ad hoc prices
+		$product = new Product([
+			'id' => 'test-options-ad-hoc',
+			'prices' => (object) [
+				'data' => [
+					['id' => 'price1', 'archived' => false, 'ad_hoc' => true, 'position' => 0]
+				]
+			]
+		]);
+		$this->assertTrue($product->has_options);
+
+		// Test with no options (single non-ad-hoc price, no variants)
+		$product = new Product([
+			'id' => 'test-no-options',
+			'prices' => (object) [
+				'data' => [
+					['id' => 'price1', 'archived' => false, 'ad_hoc' => false, 'position' => 0]
+				]
+			]
+		]);
+		$this->assertFalse($product->has_options);
+
+		// Test with archived prices only (should have no options)
+		$product = new Product([
+			'id' => 'test-archived-prices',
+			'prices' => (object) [
+				'data' => [
+					['id' => 'price1', 'archived' => true, 'position' => 0],
+					['id' => 'price2', 'archived' => true, 'position' => 1]
+				]
+			]
+		]);
+		$this->assertFalse($product->has_options);
 	}
 }

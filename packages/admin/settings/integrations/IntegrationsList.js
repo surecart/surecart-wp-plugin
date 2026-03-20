@@ -5,7 +5,6 @@ import { __ } from '@wordpress/i18n';
 import IntegrationCard from './IntegrationCard';
 import { useEntityRecords } from '@wordpress/core-data';
 import { ProgressBar } from '@wordpress/components';
-import { ScCard } from '@surecart/components-react';
 
 export default () => {
 	const { records, hasResolved } = useEntityRecords(
@@ -18,7 +17,7 @@ export default () => {
 
 	// Group records by category
 	const groupedRecords = (records || []).reduce((acc, record) => {
-		(record._embedded['wp:term'][0] || []).forEach(({ name }) => {
+		(record?._embedded['wp:term']?.[0] || []).forEach(({ name }) => {
 			if (!acc[name]) {
 				acc[name] = [];
 			}

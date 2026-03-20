@@ -54,10 +54,15 @@ apiFetch.use((options, next) => {
 
     if (response.code === 'checkout.finalize_error') {
       response.additional_errors = [
-        {
-          code: 'checkout.finalize_error',
-          message: response.message,
-        },
+        ...(!response?.additional_errors?.length
+          ? [
+              {
+                code: 'checkout.finalize_error',
+                message: response.message,
+              },
+            ]
+          : []),
+        ...(response.additional_errors || []),
       ];
       response.message = __('We were not able to process this order', 'surecart');
     }

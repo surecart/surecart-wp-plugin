@@ -2,8 +2,8 @@
 import { css, jsx } from '@emotion/core';
 import SettingsTemplate from '../SettingsTemplate';
 import useSave from '../UseSave';
-import { __ } from '@wordpress/i18n';
-import { useState } from '@wordpress/element';
+import { __, sprintf } from '@wordpress/i18n';
+import { useState, useEffect } from '@wordpress/element';
 import useEntity from '../../hooks/useEntity';
 import Error from '../../components/Error';
 import SettingsBox from '../SettingsBox';
@@ -15,12 +15,15 @@ import {
 	ScDialog,
 	ScButton,
 	ScIcon,
+	ScFormControl,
 } from '@surecart/components-react';
 import { useCopyToClipboard } from '@wordpress/compose';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { store as noticesStore } from '@wordpress/notices';
 import { store as coreStore } from '@wordpress/core-data';
+import { addQueryArgs } from '@wordpress/url';
 import CommissionStructure from '../../components/affiliates/commission/CommissionStructure';
+import { Button } from '@wordpress/components';
 
 export default () => {
 	const { createSuccessNotice } = useDispatch(noticesStore);
@@ -53,12 +56,37 @@ export default () => {
 		successFunction
 	);
 
+	// Migrate legacy referral_url to referral_urls array on first load.
+	// Intentionally omit affiliationProtocolItem from deps — this should only run once on initial load.
+	useEffect(() => {
+		if (
+			hasLoadedAffiliationProtocolItem &&
+			!affiliationProtocolItem?.referral_urls?.length &&
+			affiliationProtocolItem?.referral_url
+		) {
+			editAffiliationProtocolItem({
+				referral_urls: [affiliationProtocolItem.referral_url],
+			});
+		}
+	}, [hasLoadedAffiliationProtocolItem]); // eslint-disable-line react-hooks/exhaustive-deps
+
 	/**
 	 * Form is submitted.
 	 */
 	const onSubmit = async () => {
 		setError(null);
 		try {
+			// Strip blank and duplicate URL entries before saving.
+			editAffiliationProtocolItem({
+				referral_urls: [
+					...new Set(
+						(affiliationProtocolItem?.referral_urls || []).filter(
+							(url) => url.trim()
+						)
+					),
+				],
+			});
+
 			await save({
 				successMessage: __('Settings Updated.', 'surecart'),
 			});
@@ -192,26 +220,47 @@ export default () => {
 						)}
 					</span>
 				</ScSwitch>
-				<ScInput
-					label={__('Signup URL', 'surecart')}
-					help={__(
-						'This is where you will send affiliates to signup for your affiliate program.',
-						'surecart'
-					)}
-					type="url"
-					readonly
-					value={signupsUrl}
-				>
-					<ScButton
-						type="text"
-						circle
-						slot="suffix"
-						size="small"
-						ref={signupsUrlRef}
+				<div>
+					<ScInput
+						label={__('Signup URL', 'surecart')}
+						type="url"
+						readonly
+						value={signupsUrl}
 					>
-						<ScIcon name="clipboard" />
-					</ScButton>
-				</ScInput>
+						<ScButton
+							type="text"
+							circle
+							slot="suffix"
+							size="small"
+							ref={signupsUrlRef}
+						>
+							<ScIcon name="clipboard" />
+						</ScButton>
+					</ScInput>
+					<div
+						css={css`
+							margin-top: var(--sc-input-label-margin);
+							font-size: var(
+								--sc-input-help-text-font-size-medium
+							);
+							line-height: var(--sc-line-height-dense);
+							color: var(--sc-input-help-text-color);
+						`}
+					>
+						{__(
+							'This is where you will send affiliates to signup for your affiliate program. To change this URL slug, ',
+							'surecart'
+						)}
+						<a
+							href={addQueryArgs('admin.php', {
+								page: 'sc-settings',
+							})}
+						>
+							{__('click here', 'surecart')}
+						</a>
+						.
+					</div>
+				</div>
 			</SettingsBox>
 			<SettingsBox
 				title={__('Referral Tracking', 'surecart')}
@@ -357,21 +406,107 @@ export default () => {
 						)}
 					</span>
 				</ScSwitch>
-				<ScInput
-					label={__('Affiliate Referral URL', 'surecart')}
-					help={__(
-						'Where should affiliates send their traffic? This URL will be used to generate the affiliate referral link for each affiliate with their unique affiliate code.',
-						'surecart'
-					)}
-					type="url"
-					onScInput={(e) => {
-						e.preventDefault();
-						editAffiliationProtocolItem({
-							referral_url: e.target.value,
-						});
-					}}
-					value={affiliationProtocolItem?.referral_url}
-				/>
+				<ScFormControl
+					label={__('Affiliate Referral URLs', 'surecart')}
+				>
+					<div
+						css={css`
+							color: var(--sc-input-help-text-color);
+							font-size: var(
+								--sc-input-help-text-font-size-medium
+							);
+							margin-bottom: var(--sc-spacing-x-small);
+						`}
+					>
+						{__(
+							'Where should affiliates send their traffic? These URLs will be used to generate the affiliate referral link for each affiliate with their unique affiliate code.',
+							'surecart'
+						)}
+					</div>
+					<div
+						css={css`
+							display: flex;
+							flex-direction: column;
+							gap: var(--sc-spacing-x-small);
+						`}
+					>
+						{(affiliationProtocolItem?.referral_urls || []).map(
+							(url, index) => (
+								<div
+									key={index}
+									css={css`
+										display: flex;
+										align-items: center;
+										gap: var(--sc-spacing-x-small);
+									`}
+								>
+									<div
+										css={css`
+											flex: 1;
+											min-width: 0;
+										`}
+									>
+										<ScInput
+											type="url"
+											placeholder="https://example.com"
+											onScInput={(e) => {
+												e.preventDefault();
+												const urls = [
+													...(affiliationProtocolItem?.referral_urls ||
+														[]),
+												];
+												urls[index] = e.target.value;
+												editAffiliationProtocolItem({
+													referral_urls: urls,
+												});
+											}}
+											value={url}
+										/>
+									</div>
+									<Button
+										label={__('Remove URL', 'surecart')}
+										aria-label={sprintf(
+											__(
+												'Remove referral URL %d',
+												'surecart'
+											),
+											index + 1
+										)}
+										onClick={(e) => {
+											e.preventDefault();
+											editAffiliationProtocolItem({
+												referral_urls: (
+													affiliationProtocolItem?.referral_urls ||
+													[]
+												).filter((_, i) => i !== index),
+											});
+										}}
+									>
+										<ScIcon name="trash" />
+									</Button>
+								</div>
+							)
+						)}
+						<div>
+							<ScButton
+								type="link"
+								onClick={(e) => {
+									e.preventDefault();
+									editAffiliationProtocolItem({
+										referral_urls: [
+											...(affiliationProtocolItem?.referral_urls ||
+												[]),
+											'',
+										],
+									});
+								}}
+							>
+								<ScIcon name="plus" slot="prefix" />
+								{__('Add URL', 'surecart')}
+							</ScButton>
+						</div>
+					</div>
+				</ScFormControl>
 			</SettingsBox>
 			<SettingsBox
 				title={__('Commissions & Payouts', 'surecart')}

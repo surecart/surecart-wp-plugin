@@ -44,40 +44,41 @@ export class ScCheckoutStockAlert {
   }
 
   /**
+   * Build line items with adjusted quantities for out-of-stock items.
+   *
+   * Returns all line items, with out-of-stock items adjusted to max available stock.
+   */
+  getStockAdjustedLineItems() {
+    // Get the IDs of out-of-stock line items and their adjusted quantities.
+    const outOfStockItemsMap = new Map<string, number>();
+    this.getOutOfStockLineItems().forEach(lineItem => {
+      const product = lineItem.price?.product as Product;
+      const adjustedQuantity = lineItem?.variant?.id ? Math.max(lineItem?.variant?.available_stock || 0, 0) : Math.max(product?.available_stock || 0, 0);
+      outOfStockItemsMap.set(lineItem.id, adjustedQuantity);
+    });
+
+    // Build the complete line items array with all items, adjusting only the out-of-stock ones.
+    return (checkoutState.checkout?.line_items?.data || []).map(lineItem => {
+      const adjustedQuantity = outOfStockItemsMap.get(lineItem.id);
+      return {
+        id: lineItem.id,
+        price_id: lineItem.price?.id,
+        quantity: adjustedQuantity !== undefined ? adjustedQuantity : lineItem.quantity,
+        ...(lineItem?.variant?.id ? { variant: lineItem.variant.id } : {}),
+      };
+    });
+  }
+
+  /**
    * Update the checkout line items stock to the max available.
    */
   async onSubmit() {
-    const lineItems = this.getOutOfStockLineItems().map(lineItem => {
-      const product = lineItem.price?.product as Product;
-
-      if (lineItem?.variant?.id) {
-        return {
-          ...lineItem,
-          quantity: Math.max(lineItem?.variant?.available_stock || 0, 0),
-        };
-      }
-
-      return {
-        ...lineItem,
-        quantity: Math.max(product?.available_stock || 0, 0),
-      };
-    });
-
     try {
       this.busy = true;
       checkoutState.checkout = (await updateCheckout({
         id: checkoutState.checkout.id,
         data: {
-          line_items: (lineItems || [])
-            .filter(lineItem => !!lineItem.quantity)
-            .map(lineItem => {
-              return {
-                id: lineItem.id,
-                price_id: lineItem.price?.id,
-                quantity: lineItem.quantity,
-                ...(lineItem?.variant?.id ? { variant: lineItem.variant.id } : {}),
-              };
-            }),
+          line_items: this.getStockAdjustedLineItems().filter(lineItem => !!lineItem.quantity),
         },
       })) as Checkout;
     } catch (error) {
@@ -96,6 +97,7 @@ export class ScCheckoutStockAlert {
 
       return {
         name: product?.name,
+        variant: lineItem?.variant_display_options,
         image: lineItem?.image,
         quantity: lineItem.quantity,
         available_stock,
@@ -138,7 +140,10 @@ export class ScCheckoutStockAlert {
                       <sc-table-cell>
                         <sc-flex justifyContent="flex-start" alignItems="center">
                           {item?.image && <img {...(item.image as any)} class="stock-alert__image" />}
-                          <h4>{item.name}</h4>
+                          <div class="stock-alert__product-info">
+                            <h4>{item.name}</h4>
+                            {item?.variant && <span class="stock-alert__variant">{item.variant}</span>}
+                          </div>
                         </sc-flex>
                       </sc-table-cell>
                       <sc-table-cell style={{ width: '100px', textAlign: 'right' }}>

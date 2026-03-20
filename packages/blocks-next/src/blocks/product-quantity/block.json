@@ -7,12 +7,23 @@
 	"version": "1.0.0",
 	"category": "surecart-product-page",
 	"icon": "media-interactive",
-	"ancestor": ["surecart/product-page", "surecart/product-template"],
+	"ancestor": [
+		"surecart/product-page",
+		"surecart/product-quick-view",
+		"surecart/sticky-purchase"
+	],
 	"keywords": ["quantity", "form", "product"],
+	"example": {
+		"viewportWidth": 200
+	},
 	"attributes": {
 		"label": {
 			"type": "string",
 			"default": "Quantity"
+		},
+		"hidden_label": {
+			"type": "boolean",
+			"default": false
 		},
 		"id": {
 			"type": "string"
@@ -22,7 +33,20 @@
 		"interactivity": true,
 		"anchor": true,
 		"typography": {
-			"fontSize": true
+			"fontSize": true,
+			"lineHeight": true,
+			"textAlign": true,
+			"__experimentalFontFamily": true,
+			"__experimentalFontWeight": true,
+			"__experimentalFontStyle": true,
+			"__experimentalTextTransform": true,
+			"__experimentalTextDecoration": true,
+			"__experimentalLetterSpacing": true,
+			"__experimentalDefaultControls": {
+				"fontSize": true,
+				"fontAppearance": true,
+				"textTransform": true
+			}
 		},
 		"spacing": {
 			"padding": true,
@@ -34,7 +58,7 @@
 		},
 		"color": {
 			"gradients": false,
-			"background": false,
+			"background": true,
 			"link": false,
 			"__experimentalDefaultControls": {
 				"background": true,
@@ -42,17 +66,18 @@
 				"link": true
 			}
 		},
-		"__experimentalBorder": {
-			"radius": true,
-			"__experimentalDefaultControls": {
-				"radius": true
-			}
+		"dimensions": {
+			"minHeight": true
 		}
 	},
 	"textdomain": "surecart",
 	"render": "file:./view.php",
 	"editorScript": "file:./index.js",
-	"editorStyle": ["surecart-quantity-selector", "surecart-input-group"],
+	"editorStyle": [
+		"surecart-quantity-selector",
+		"surecart-input-group",
+		"file:./index.css"
+	],
 	"style": [
 		"surecart-quantity-selector",
 		"surecart-input-group",

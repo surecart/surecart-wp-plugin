@@ -153,6 +153,8 @@ export default ({
 			<InspectorControls>
 				<PanelBody title={__('Settings', 'surecart')}>
 					<ToggleControl
+						__next40pxDefaultSize
+						__nextHasNoMarginBottom
 						label={__('Open by default', 'surecart')}
 						help={__(
 							'Do you want sidebar to be open by default?',
@@ -163,6 +165,8 @@ export default ({
 					/>
 
 					<TextControl
+						__next40pxDefaultSize
+						__nextHasNoMarginBottom
 						label={__('Mobile Label', 'surecart')}
 						value={label}
 						onChange={(label) => setAttributes({ label })}

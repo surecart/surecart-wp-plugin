@@ -1,5 +1,5 @@
 {
-	"apiVersion": 2,
+	"apiVersion": 3,
 	"name": "surecart/dashboard-tab",
 	"title": "Customer Dashboard Tab",
 	"description": "Displays the users customer dashboard tab.",

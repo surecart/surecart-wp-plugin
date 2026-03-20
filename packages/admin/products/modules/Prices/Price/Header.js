@@ -4,20 +4,18 @@ import { __ } from '@wordpress/i18n';
 import {
 	ScTag,
 	ScButton,
-	ScDropdown,
-	ScMenu,
-	ScMenuItem,
 	ScIcon,
 	ScSkeleton,
 	ScFlex,
 } from '@surecart/components-react';
-
+import { DropdownMenu, MenuItem } from '@wordpress/components';
+import { moreHorizontal, inbox, trash, addCard } from '@wordpress/icons';
 import ToggleHeader from '../../../../components/ToggleHeader';
 import { intervalString } from '../../../../util/translations';
 import { useState } from 'react';
 import BuyLink from './BuyLink';
-import { ScMenuDivider } from '@surecart/components-react';
 import { SortableKnob } from 'react-easy-sort';
+import DuplicateModel from '../../../components/DuplicateModel';
 
 export default ({
 	isOpen,
@@ -30,6 +28,7 @@ export default ({
 	onArchive,
 	collapsible,
 	onDelete,
+	onDuplicate,
 	loading,
 }) => {
 	const [copyDialog, setCopyDialog] = useState(false);
@@ -181,61 +180,77 @@ export default ({
 	};
 
 	const renderDropdown = () => {
-		if (!onArchive && !onDelete) {
+		if (!onArchive && !onDelete && !onDuplicate) {
 			return null;
 		}
 
 		return (
-			<ScDropdown slot="suffix" placement="bottom-end">
-				<ScButton
-					type="text"
-					slot="trigger"
-					circle
-					title={__('More Options', 'surecart')}
-				>
-					<ScIcon
-						name="more-horizontal"
-						style={{ fontSize: '18px' }}
-					/>
-				</ScButton>
-				<ScMenu>
-					{price?.id && !!onArchive && (
-						<>
-							<ScMenuItem onClick={onArchive}>
-								<ScIcon
-									slot="prefix"
-									style={{
-										opacity: 0.5,
-									}}
-									name="archive"
-								/>
+			<DropdownMenu
+				icon={moreHorizontal}
+				label={__('More Actions', 'surecart')}
+				popoverProps={{
+					placement: 'bottom-end',
+				}}
+				menuProps={{
+					style: {
+						minWidth: '150px',
+					},
+				}}
+			>
+				{({ onClose }) => (
+					<>
+						{price?.id && !!onArchive && (
+							<MenuItem
+								icon={inbox}
+								iconPosition="left"
+								onClick={onArchive}
+							>
 								{price?.archived
 									? __('Un-Archive', 'surecart')
 									: __('Archive', 'surecart')}
-							</ScMenuItem>
-							<ScMenuDivider />
-						</>
-					)}
-					{!!onDelete && (
-						<ScMenuItem onClick={onDelete}>
-							<ScIcon
-								slot="prefix"
-								style={{
-									opacity: 0.5,
-								}}
-								name="trash"
-							/>
-							{__('Delete', 'surecart')}
-						</ScMenuItem>
-					)}
-				</ScMenu>
-			</ScDropdown>
+							</MenuItem>
+						)}
+						{!!onDelete && (
+							<MenuItem
+								icon={trash}
+								iconPosition="left"
+								onClick={onDelete}
+							>
+								{__('Delete', 'surecart')}
+							</MenuItem>
+						)}
+						<DuplicateModel
+							type="price"
+							id={price?.id}
+							onSuccess={(duplicate) => {
+								onDuplicate(duplicate);
+								onClose();
+							}}
+						>
+							{({ onClick }) => (
+								<MenuItem
+									icon={addCard}
+									onClick={onClick}
+									iconPosition="left"
+								>
+									{__('Duplicate', 'surecart')}
+								</MenuItem>
+							)}
+						</DuplicateModel>
+					</>
+				)}
+			</DropdownMenu>
 		);
 	};
 
 	/** Action buttons */
 	const buttons = (
-		<div>
+		<div
+			style={{
+				display: 'flex',
+				alignItems: 'center',
+			}}
+		>
 			{price?.archived ? (
 				<>
 					<ScTag type="warning">{__('Archived', 'surecart')}</ScTag>

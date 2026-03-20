@@ -193,6 +193,8 @@ export default ({ attributes, setAttributes, clientId }) => {
 			<InspectorControls>
 				<PanelBody title={__('Attributes', 'surecart')}>
 					<RangeControl
+						__nextHasNoMarginBottom
+						__next40pxDefaultSize
 						label={__('Columns', 'surecart')}
 						value={columns}
 						onChange={(columns) => setAttributes({ columns })}
@@ -214,6 +216,8 @@ export default ({ attributes, setAttributes, clientId }) => {
 						</Notice>
 					)}
 					<RangeControl
+						__nextHasNoMarginBottom
+						__next40pxDefaultSize
 						label={__('Limit', 'surecart')}
 						value={limit}
 						onChange={(limit) => setAttributes({ limit })}
@@ -225,6 +229,7 @@ export default ({ attributes, setAttributes, clientId }) => {
 						<>
 							<PanelRow>
 								<ToggleControl
+									__nextHasNoMarginBottom
 									label={__('Ajax Pagination', 'surecart')}
 									checked={ajax_pagination}
 									onChange={(ajax_pagination) =>
@@ -236,6 +241,7 @@ export default ({ attributes, setAttributes, clientId }) => {
 							{ajax_pagination && (
 								<PanelRow>
 									<ToggleControl
+										__nextHasNoMarginBottom
 										label={__(
 											'Scroll Into View',
 											'surecart'
@@ -257,6 +263,7 @@ export default ({ attributes, setAttributes, clientId }) => {
 					)}
 					<PanelRow>
 						<ToggleControl
+							__nextHasNoMarginBottom
 							label={__('Sort', 'surecart')}
 							help={__(
 								'Allow the user to sort by newest, alphabetical and more.',
@@ -270,6 +277,7 @@ export default ({ attributes, setAttributes, clientId }) => {
 					</PanelRow>
 					<PanelRow>
 						<ToggleControl
+							__nextHasNoMarginBottom
 							label={__('Search', 'surecart')}
 							help={__('Show a search box.', 'surecart')}
 							checked={search_enabled}
@@ -282,6 +290,7 @@ export default ({ attributes, setAttributes, clientId }) => {
 				<PanelBody>
 					<PanelRow>
 						<UnitControl
+							__next40pxDefaultSize
 							label={__('Pagination Font Size', 'surecart')}
 							onChange={(pagination_size) =>
 								setAttributes({ pagination_size })

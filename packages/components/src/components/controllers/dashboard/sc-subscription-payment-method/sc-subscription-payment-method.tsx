@@ -67,10 +67,6 @@ export class ScSubscriptionPaymentMethod {
     return this.paymentMethods?.length && this.manualPaymentMethods?.length;
   }
 
-  hasMultiplePaymentMethods() {
-    return [...(this?.paymentMethods || []), ...(this?.manualPaymentMethods || [])]?.length > 1;
-  }
-
   componentWillLoad() {
     onFirstVisible(this.el, () => {
       this.getPaymentMethods();
@@ -105,19 +101,11 @@ export class ScSubscriptionPaymentMethod {
 
     this.manualPaymentMethods = (await apiFetch({
       path: addQueryArgs(`surecart/v1/manual_payment_methods`, {
-        customer_ids: [customerId],
         reusable: true,
+        archived: false,
         live_mode: this.subscription?.live_mode,
       }),
     })) as ManualPaymentMethod[];
-
-    // remove archived methods if the current payment method id is not the archived one.
-    this.manualPaymentMethods = this.manualPaymentMethods.filter(method => {
-     if( method?.archived && method?.id !== this.currentPaymentMethodId()) {
-        return false;
-      }
-      return true;
-    });  
   }
 
   async deleteMethod(method: PaymentMethod) {
@@ -184,11 +172,9 @@ export class ScSubscriptionPaymentMethod {
     return (
       <sc-form onScSubmit={e => this.updateMethod(e)}>
         <sc-choices>{this.renderList()}</sc-choices>
-        {this.hasMultiplePaymentMethods() && (
-          <sc-button type="primary" submit full size="large" busy={this.busy} disabled={this.busy}>
-            {__('Update Payment Method', 'surecart')}
-          </sc-button>
-        )}
+        <sc-button type="primary" submit full size="large" busy={this.busy} disabled={this.busy}>
+          {__('Update Payment Method', 'surecart')}
+        </sc-button>
       </sc-form>
     );
   }

@@ -62,7 +62,7 @@ abstract class AbstractProductListBlock {
 	 * Get the query attribute.
 	 *
 	 * @param string $key The key.
-	 * @return \WP_Query
+	 * @return mixed
 	 */
 	public function __get( $key ) {
 		if ( 'has_pagination' === $key ) {
@@ -125,15 +125,24 @@ abstract class AbstractProductListBlock {
 		}
 
 		if ( 'products' === $key ) {
-			return array_map(
-				function ( $post ) {
-					return sc_get_product( $post );
-				},
-				$this->query->posts
-			);
+			// Check if we have a query object (for WP_Query based lists).
+			if ( ! empty( $this->query ) && ! empty( $this->query->posts ) ) {
+				return array_map(
+					function ( $post ) {
+						return sc_get_product( $post );
+					},
+					$this->query->posts
+				);
+			}
+			return [];
 		}
 
-		return $this->query->$key ?? $this->query->query[ $key ] ?? $this->query->query_vars[ $key ] ?? null;
+		// Try to get from query object first.
+		if ( ! empty( $this->query ) ) {
+			return $this->query->$key ?? $this->query->query[ $key ] ?? $this->query->query_vars[ $key ] ?? null;
+		}
+
+		return null;
 	}
 
 	/**
@@ -145,6 +154,9 @@ abstract class AbstractProductListBlock {
 	 * @return mixed
 	 */
 	public function __call( $method, $args ) {
-		return $this->query->$method( ...$args );
+		if ( ! empty( $this->query ) ) {
+			return $this->query->$method( ...$args );
+		}
+		return null;
 	}
 }

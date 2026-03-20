@@ -2,7 +2,6 @@
 
 namespace SureCart\Integrations\Bricks\Elements;
 
-use Bricks\Element;
 use SureCart\Integrations\Bricks\Concerns\ConvertsBlocks;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -12,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Buy Button element.
  */
-class BuyButton extends Element {
+class BuyButton extends \Bricks\Element {
 	use ConvertsBlocks; // we have to use a trait since we can't extend the bricks class.
 
 	/**
@@ -53,6 +52,14 @@ class BuyButton extends Element {
 	}
 
 	/**
+	 * Enqueue element-specific styles and scripts.
+	 */
+	public function enqueue_scripts() {
+		wp_enqueue_style( 'surecart-spinner' );
+		wp_enqueue_style( 'surecart-wp-button' );
+	}
+
+	/**
 	 * Set controls.
 	 *
 	 * @return void
@@ -70,6 +77,21 @@ class BuyButton extends Element {
 			'label'       => esc_html__( 'Go Directly To Checkout', 'surecart' ),
 			'type'        => 'checkbox',
 			'description' => esc_html__( 'Bypass adding to cart and go directly to the checkout.', 'surecart' ),
+		];
+
+		$this->controls['show_sticky_purchase_button'] = [
+			'tab'         => 'content',
+			'label'       => esc_html__( 'Show sticky button', 'surecart' ),
+			'type'        => 'select',
+			'description' => esc_html__( 'Show a sticky purchase button when this button is out of view', 'surecart' ),
+			'options'     => [
+				'never'    => esc_html__( 'Never', 'surecart' ),
+				'in_stock' => esc_html__( 'In stock', 'surecart' ),
+				'always'   => esc_html__( 'Always', 'surecart' ),
+			],
+			'inline'      => true,
+			'fullAccess'  => true,
+			'default'     => 'never',
 		];
 
 		$this->controls['styleSeparator'] = [
@@ -108,7 +130,7 @@ class BuyButton extends Element {
 			'reset' => true,
 		];
 
-		// Icon
+		// Icon.
 		$this->controls['iconSeparator'] = [
 			'label' => esc_html__( 'Icon', 'surecart' ),
 			'type'  => 'separator',
@@ -171,7 +193,8 @@ class BuyButton extends Element {
 	 * @return void
 	 */
 	public function render() {
-		$settings = $this->settings;
+		$settings   = $this->settings;
+		$is_buy_now = isset( $settings['buy_now'] ) ? (bool) $settings['buy_now'] : false;
 
 		$this->set_attribute( '_root', 'class', 'bricks-button' );
 
@@ -200,10 +223,11 @@ class BuyButton extends Element {
 			wp_json_encode(
 				array(
 					'checkoutUrl'     => esc_url( \SureCart::pages()->url( 'checkout' ) ),
-					'text'            => $settings['content'] ?? ( $settings['buy_now'] ? __( 'Add to Cart', 'surecart' ) : __( 'Buy Now', 'surecart' ) ),
+					'text'            => $settings['content'] ?? ( $is_buy_now ? __( 'Buy Now', 'surecart' ) : __( 'Add To Cart', 'surecart' ) ),
 					'outOfStockText'  => esc_attr( __( 'Sold Out', 'surecart' ) ),
 					'unavailableText' => esc_attr( __( 'Unavailable For Purchase', 'surecart' ) ),
-					'addToCart'       => $settings['buy_now'] ? false : true,
+					'addToCart'       => ! $is_buy_now,
+					'buttonText'      => $settings['content'] ?? ( $is_buy_now ? __( 'Buy Now', 'surecart' ) : __( 'Add To Cart', 'surecart' ) ),
 				),
 				JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP
 			)
@@ -221,19 +245,20 @@ class BuyButton extends Element {
 
 		// Link class for busy state.
 		$this->set_attribute( '_root', 'class', 'sc-button__link' );
+		$this->set_attribute( '_root', 'data-wp-class--sc-button__link--busy', 'context.busy' );
+		$this->set_attribute( '_root', 'data-wp-bind--disabled', 'state.isUnavailable' );
 
 		// Set tag and attributes.
-		if ( ! empty( $settings['buy_now'] ) ) {
-			$this->tag = 'a';
-			$this->set_attribute( '_root', 'data-wp-bind--disabled', 'state.isUnavailable' );
-			$this->set_attribute( '_root', 'data-wp-bind--href', 'state.checkoutUrl' );
-		} else {
-			$this->tag = 'button';
-			$this->set_attribute( '_root', 'data-wp-bind--disabled', 'state.isUnavailable' );
-			$this->set_attribute( '_root', 'data-wp-class--sc-button__link--busy', 'context.busy' );
+		if ( $is_buy_now ) {
+			$this->set_attribute( '_root', 'data-wp-on--click', 'callbacks.redirectToCheckout' );
 		}
 
-		$output = "<{$this->tag} {$this->render_attributes( '_root' )}>";
+		if ( ! empty( $settings['show_sticky_purchase_button'] ) && 'never' !== $settings['show_sticky_purchase_button'] ) {
+			$this->set_attribute( '_root', 'data-wp-on-async-window--scroll', 'surecart/sticky-purchase::actions.toggleVisibility' );
+			$this->set_attribute( '_root', 'data-wp-on-async-window--resize', 'surecart/sticky-purchase::actions.toggleVisibility' );
+		}
+
+		$output = "<button {$this->render_attributes( '_root' )}>";
 
 		// Icon.
 		$icon          = ! empty( $settings['icon'] ) ? self::render_icon( $settings['icon'] ) : false;
@@ -243,9 +268,9 @@ class BuyButton extends Element {
 			$output .= $icon;
 		}
 
-		if ( isset( $settings['content'] ) ) {
+		if ( isset( $settings['content'] ) || true ) {
 			if ( $this->is_admin_editor() ) {
-				$output .= trim( $settings['content'] );
+				$output .= trim( $settings['content'] ?? ( $is_buy_now ? __( 'Buy Now', 'surecart' ) : __( 'Add To Cart', 'surecart' ) ) );
 			} else {
 				$output .= '<span class="sc-spinner" aria-hidden="false"></span>';
 				$output .= '<span class="sc-button__link-text" data-wp-text="state.buttonText"></span>';
@@ -256,8 +281,10 @@ class BuyButton extends Element {
 			$output .= $icon;
 		}
 
-		$output .= "</{$this->tag}>";
+		$output .= '</button>';
 
 		echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+
+		\SureCart::render( 'blocks/sticky-purchase', [ 'settings' => $settings ] );
 	}
 }

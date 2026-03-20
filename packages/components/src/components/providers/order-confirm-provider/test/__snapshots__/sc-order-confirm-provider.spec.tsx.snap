@@ -4,7 +4,7 @@ exports[`sc-order-confirm-provider renders 1`] = `
 <sc-order-confirm-provider>
   <mock:shadow-root>
     <slot></slot>
-    <sc-dialog noheader="" style="--body-spacing: var(--sc-spacing-xxx-large);">
+    <sc-dialog noheader="" style="--body-spacing: var(--sc-spacing-xxx-large); --width: 400px;">
       <div class="confirm__icon">
         <div class="confirm__icon-container">
           <sc-icon name="check"></sc-icon>

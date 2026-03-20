@@ -14,14 +14,21 @@ export default ({ context: { postId } }) => {
 		postId
 	);
 
+	if (product) {
+		return (
+			<div
+				{...blockProps}
+				dangerouslySetInnerHTML={{ __html: product?.description }}
+			/>
+		);
+	}
+
 	return (
 		<div {...blockProps}>
-			{product
-				? product?.description
-				: __(
-						'Experience the next level of convenience with our innovative widget. Melding cutting-edge technology with user-friendly design, this product provides unparalleled functionality that caters to your lifestyle.',
-						'surecart'
-				  )}
+			{__(
+				'Experience the next level of convenience with our innovative widget. Melding cutting-edge technology with user-friendly design, this product provides unparalleled functionality that caters to your lifestyle.',
+				'surecart'
+			)}
 		</div>
 	);
 };

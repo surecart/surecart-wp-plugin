@@ -7,9 +7,10 @@
 
 ## Properties
 
-| Property | Attribute | Description | Type                                    | Default        |
-| -------- | --------- | ----------- | --------------------------------------- | -------------- |
-| `total`  | `total`   |             | `"amount_due" \| "subtotal" \| "total"` | `'amount_due'` |
+| Property   | Attribute | Description | Type                                    | Default        |
+| ---------- | --------- | ----------- | --------------------------------------- | -------------- |
+| `checkout` | --        |             | `Checkout`                              | `undefined`    |
+| `total`    | `total`   |             | `"amount_due" \| "subtotal" \| "total"` | `'amount_due'` |
 
 
 ## Dependencies

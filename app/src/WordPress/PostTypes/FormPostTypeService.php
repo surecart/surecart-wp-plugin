@@ -93,12 +93,13 @@ class FormPostTypeService {
 		return \SureCart::render(
 			'layouts/partials/admin-header',
 			[
-				'breadcrumbs' => [
+				'breadcrumbs'   => [
 					'forms' => [
 						'title' => __( 'Forms', 'surecart' ),
 					],
 				],
-				'claim_url'   => ! \SureCart::account()->claimed ? \SureCart::routeUrl( 'account.claim' ) : '',
+				'claim_url'     => ! \SureCart::account()->claimed ? \SureCart::routeUrl( 'account.claim' ) : '',
+				'claim_expired' => \SureCart::account()->claim_expired ?? false,
 			]
 		);
 	}
@@ -106,7 +107,7 @@ class FormPostTypeService {
 	/**
 	 * Force gutenberg in case of classic editor
 	 *
-	 * @param boolean  $use Whether to use Gutenberg.
+	 * @param boolean $use Whether to use Gutenberg.
 	 * @param WP_Post $post Post object.
 	 *
 	 * @return boolean;

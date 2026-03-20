@@ -112,6 +112,21 @@ class SubscriptionProtocolRestServiceProvider extends RestServiceProvider implem
 					'type'        => 'string',
 					'context'     => [ 'view', 'edit', 'embed' ],
 				],
+				'remind_after_days'          => [
+					'description' => esc_html__( 'Minimum days between reminders.', 'surecart' ),
+					'type'        => 'integer',
+					'context'     => [ 'view', 'edit', 'embed' ],
+				],
+				'remind_at_period_percent_remaining' => [
+					'description' => esc_html__( 'Percentage of period remaining when reminder should be sent.', 'surecart' ),
+					'type'        => 'integer',
+					'context'     => [ 'view', 'edit', 'embed' ],
+				],
+				'reschedule_existing_reminders' => [
+					'description' => esc_html__( 'Whether or not existing subscription reminders should be recalculated. Only applicable when remind_at_period_percent_remaining or remind_after_days are changed.', 'surecart' ),
+					'type'        => 'boolean',
+					'context'     => [ 'edit' ],
+				],
 			],
 		];
 

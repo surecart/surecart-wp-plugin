@@ -6,6 +6,7 @@ import PaymentMethod from './modules/PaymentMethod';
 import Price from './modules/Price';
 import Trial from './modules/Trial';
 import UpcomingPeriod from './modules/UpcomingPeriod';
+import Customer from '../show/modules/Customer';
 import { css, jsx } from '@emotion/react';
 import {
 	ScBreadcrumb,
@@ -51,6 +52,8 @@ export default () => {
 						'current_period.checkout',
 						'discount',
 						'discount.coupon',
+						'customer',
+						'customer.balances',
 					],
 				},
 			];
@@ -300,6 +303,11 @@ export default () => {
 			}
 			sidebar={
 				<>
+					<Customer
+						customer={subscription?.customer}
+						loading={!hasLoadedSubscription}
+					/>
+
 					<UpcomingPeriod
 						upcoming={upcoming}
 						loading={!hasLoadedSubscription || loadingUpcoming}

@@ -126,6 +126,7 @@ graph TD;
   sc-form-components-validator --> sc-order-shipping-address
   sc-form-components-validator --> sc-order-billing-address
   sc-form-components-validator --> sc-order-tax-id-input
+  sc-form-components-validator --> sc-customer-phone
   sc-form-components-validator --> sc-order-bumps
   sc-form-components-validator --> sc-line-item-tax
   sc-form-components-validator --> sc-shipping-choices
@@ -168,6 +169,8 @@ graph TD;
   sc-tax-id-input --> sc-button
   sc-tax-id-input --> sc-menu
   sc-tax-id-input --> sc-menu-item
+  sc-customer-phone --> sc-phone-input
+  sc-phone-input --> sc-form-control
   sc-order-bumps --> sc-form-control
   sc-order-bumps --> sc-order-bump
   sc-order-bump --> sc-choice

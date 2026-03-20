@@ -14,18 +14,61 @@ export default [
 						{ count: 1 },
 						[['surecart/product-collection-tag']],
 					],
-					['surecart/product-title'],
 					[
 						'core/group',
 						{
-							style: { spacing: { blockGap: '0' } },
+							style: {
+								spacing: {
+									blockGap: '10px',
+									padding: { right: '0px', left: '0px' },
+								},
+							},
+							layout: { type: 'flex', flexWrap: 'nowrap' },
+						},
+						[
+							['surecart/product-review-average-rating-stars'],
+							[
+								'surecart/product-review-total-rating',
+								{
+									className: 'is-style-plus-sign',
+									style: {
+										spacing: {
+											blockGap: '4px',
+										},
+									},
+								},
+							],
+						],
+					],
+					[
+						'surecart/product-title',
+						{
+							style: {
+								typography: { fontSize: '32px' },
+							},
+						},
+					],
+					[
+						'core/group',
+						{
+							style: {
+								spacing: {
+									blockGap: '0',
+									padding: { right: '0px', left: '0px' },
+								},
+							},
 							layout: { type: 'constrained' },
 						},
 						[
 							[
 								'core/group',
 								{
-									style: { spacing: { blockGap: '0.5em' } },
+									style: {
+										spacing: {
+											blockGap: '0.5em',
+											padding: { right: '0px', left: '0px' },
+										},
+									},
 									layout: {
 										type: 'flex',
 										flexWrap: 'nowrap',
@@ -92,7 +135,12 @@ export default [
 							[
 								'core/group',
 								{
-									style: { spacing: { blockGap: '0.5em' } },
+									style: {
+										spacing: {
+											blockGap: '0.5em',
+											padding: { right: '0px', left: '0px' },
+										},
+									},
 									layout: {
 										type: 'flex',
 										flexWrap: 'nowrap',
@@ -164,6 +212,7 @@ export default [
 											style: {
 												spacing: {
 													blockGap: '0px',
+													padding: { right: '0px', left: '0px' },
 												},
 											},
 											layout: {
@@ -179,6 +228,7 @@ export default [
 													style: {
 														spacing: {
 															blockGap: '0.5rem',
+															padding: { right: '0px', left: '0px' },
 														},
 													},
 													layout: {
@@ -325,5 +375,4 @@ export default [
 			],
 		],
 	],
-	['core/post-content'],
 ];

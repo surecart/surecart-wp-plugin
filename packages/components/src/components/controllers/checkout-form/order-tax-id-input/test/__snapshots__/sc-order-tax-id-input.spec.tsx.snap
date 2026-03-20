@@ -11,7 +11,7 @@ exports[`sc-order-tax-id-input Defaults to type and number first 1`] = `
 exports[`sc-order-tax-id-input Renders AU Tax Type 1`] = `
 <sc-order-tax-id-input>
   <mock:shadow-root>
-    <sc-tax-id-input country="AU" status="unknown"></sc-tax-id-input>
+    <sc-tax-id-input country="AU" status="unknown" type="eu_vat"></sc-tax-id-input>
   </mock:shadow-root>
 </sc-order-tax-id-input>
 `;
@@ -19,7 +19,7 @@ exports[`sc-order-tax-id-input Renders AU Tax Type 1`] = `
 exports[`sc-order-tax-id-input Renders CA Tax Type 1`] = `
 <sc-order-tax-id-input>
   <mock:shadow-root>
-    <sc-tax-id-input country="CA" status="unknown"></sc-tax-id-input>
+    <sc-tax-id-input country="CA" status="unknown" type="eu_vat"></sc-tax-id-input>
   </mock:shadow-root>
 </sc-order-tax-id-input>
 `;
@@ -27,7 +27,7 @@ exports[`sc-order-tax-id-input Renders CA Tax Type 1`] = `
 exports[`sc-order-tax-id-input Renders EU VAT Tax Type 1`] = `
 <sc-order-tax-id-input>
   <mock:shadow-root>
-    <sc-tax-id-input country="DE" status="unknown"></sc-tax-id-input>
+    <sc-tax-id-input country="DE" status="unknown" type="eu_vat"></sc-tax-id-input>
   </mock:shadow-root>
 </sc-order-tax-id-input>
 `;
@@ -35,7 +35,7 @@ exports[`sc-order-tax-id-input Renders EU VAT Tax Type 1`] = `
 exports[`sc-order-tax-id-input Renders UK VAT Tax Type 1`] = `
 <sc-order-tax-id-input>
   <mock:shadow-root>
-    <sc-tax-id-input country="GB" status="unknown"></sc-tax-id-input>
+    <sc-tax-id-input country="GB" status="unknown" type="eu_vat"></sc-tax-id-input>
   </mock:shadow-root>
 </sc-order-tax-id-input>
 `;
@@ -43,7 +43,7 @@ exports[`sc-order-tax-id-input Renders UK VAT Tax Type 1`] = `
 exports[`sc-order-tax-id-input Renders with Help Text 1`] = `
 <sc-order-tax-id-input>
   <mock:shadow-root>
-    <sc-tax-id-input help="Enter your tax identifier" status="unknown"></sc-tax-id-input>
+    <sc-tax-id-input help="Enter your tax identifier" status="unknown" type="eu_vat"></sc-tax-id-input>
   </mock:shadow-root>
 </sc-order-tax-id-input>
 `;
@@ -51,7 +51,7 @@ exports[`sc-order-tax-id-input Renders with Help Text 1`] = `
 exports[`sc-order-tax-id-input renders 1`] = `
 <sc-order-tax-id-input>
   <mock:shadow-root>
-    <sc-tax-id-input status="unknown"></sc-tax-id-input>
+    <sc-tax-id-input status="unknown" type="eu_vat"></sc-tax-id-input>
   </mock:shadow-root>
 </sc-order-tax-id-input>
 `;

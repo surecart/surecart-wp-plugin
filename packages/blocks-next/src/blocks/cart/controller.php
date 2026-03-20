@@ -14,6 +14,8 @@ wp_interactivity_state(
 		],
 		'discountIsRedeemable' => false,
 		'isDiscountApplied'    => false,
+		'hasDiscountAmount'    => false,
+		'hasSubtotalScratchAmount' => false,
 		'itemsCount'           => 0,
 		'hasItems'             => false,
 	)

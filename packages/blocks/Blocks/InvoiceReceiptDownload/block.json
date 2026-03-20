@@ -1,6 +1,7 @@
 {
 	"name": "surecart/invoice-receipt-download",
 	"title": "Invoice Receipt Download",
+	"apiVersion": 3,
 	"description": "Displays the download link for the invoice receipt.",
 	"category": "surecart",
 	"ancestor": ["surecart/invoice-details"],

@@ -1,5 +1,5 @@
 {
-	"apiVersion": 2,
+	"apiVersion": 3,
 	"name": "surecart/customer-payment-methods",
 	"title": "Customer Payment Methods",
 	"description": "Lets the customer update payment methods.",

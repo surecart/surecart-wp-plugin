@@ -2,18 +2,23 @@
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
-import { PanelBody, PanelRow, TextControl } from '@wordpress/components';
 import {
-	__experimentalUseBorderProps as useBorderProps,
+	useBlockProps,
+	useInnerBlocksProps,
+	RichText,
+} from '@wordpress/block-editor';
+import {
 	__experimentalUseColorProps as useColorProps,
 	__experimentalGetElementClassName,
 } from '@wordpress/block-editor';
+import { useState } from '@wordpress/element';
+import LabelControl from '../../components/LabelControl';
+import StyleContentsControl from '../../components/StyleContentsControl';
 
 export default ({ attributes, setAttributes }) => {
-	const { label } = attributes;
-	const { style: borderStyle } = useBorderProps(attributes);
-	const { style: colorStyle } = useColorProps(attributes);
+	const { label, hidden_label } = attributes;
+	const { style: colorStyle, className } = useColorProps(attributes);
+	const [mode, setMode] = useState('contentOnly');
 
 	const blockProps = useBlockProps({
 		style: {
@@ -28,68 +33,38 @@ export default ({ attributes, setAttributes }) => {
 		},
 	});
 
+	const innerBlocksProps = useInnerBlocksProps(
+		{},
+		{
+			allowedBlocks: ['surecart/product-quantity-control'],
+			template: [['surecart/product-quantity-control', {}]],
+			templateLock: mode,
+		}
+	);
+
 	return (
 		<>
-			<InspectorControls>
-				<PanelBody title={__('Attributes', 'surecart')}>
-					<PanelRow>
-						<TextControl
-							label={__('Label', 'surecart')}
-							value={label}
-							onChange={(label) => setAttributes({ label })}
-						/>
-					</PanelRow>
-				</PanelBody>
-			</InspectorControls>
+			<LabelControl
+				label={hidden_label}
+				setLabel={(hidden_label) => setAttributes({ hidden_label })}
+			/>
+			<StyleContentsControl mode={mode} setMode={setMode} />
+
 			<div {...blockProps}>
-				<label className="sc-form-label">{label}</label>
-				<div
-					className="sc-input-group sc-quantity-selector"
-					style={{
-						...(borderStyle?.borderRadius
-							? {
-									'border-radius': borderStyle.borderRadius,
-							  }
-							: {}),
-					}}
-				>
-					<div className="sc-input-group-text sc-quantity-selector__decrease">
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							width="24"
-							height="24"
-							viewBox="0 0 24 24"
-							fill="none"
-							stroke="currentColor"
-							stroke-width="2"
-							stroke-linecap="round"
-							stroke-linejoin="round"
-						>
-							<line x1="5" y1="12" x2="19" y2="12" />
-						</svg>
-					</div>
-					<input
-						className="sc-form-control sc-quantity-selector__control"
-						value={0}
-						type="number"
+				{!hidden_label && (
+					<RichText
+						tagName="label"
+						className={`sc-form-label ${className}`}
+						aria-label={__('Label text', 'surecart')}
+						placeholder={__('Add label…', 'surecart')}
+						value={label}
+						onChange={(label) => setAttributes({ label })}
+						withoutInteractiveFormatting
+						allowedFormats={['core/bold', 'core/italic']}
 					/>
-					<div className="sc-input-group-text sc-quantity-selector__increase">
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							width="24"
-							height="24"
-							viewBox="0 0 24 24"
-							fill="none"
-							stroke="currentColor"
-							stroke-width="2"
-							stroke-linecap="round"
-							stroke-linejoin="round"
-						>
-							<line x1="12" y1="5" x2="12" y2="19" />
-							<line x1="5" y1="12" x2="19" y2="12" />
-						</svg>
-					</div>
-				</div>
+				)}
+
+				<div {...innerBlocksProps}></div>
 			</div>
 		</>
 	);

@@ -1,6 +1,7 @@
 {
 	"name": "surecart/upsell",
 	"title": "Upsell",
+	"apiVersion": 3,
 	"description": "Display an upsell.",
 	"category": "surecart-upsell-page",
 	"keywords": ["upsell", "container"],

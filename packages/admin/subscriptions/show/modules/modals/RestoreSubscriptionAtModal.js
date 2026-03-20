@@ -22,7 +22,8 @@ export default ({ open, onRequestClose, subscription }) => {
 	const id = useSelect((select) => select(dataStore).selectPageId());
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(false);
-	const { createSuccessNotice } = useDispatch(noticesStore);
+	const { createSuccessNotice, createErrorNotice } =
+		useDispatch(noticesStore);
 	const { invalidateResolutionForStore } = useDispatch(coreStore);
 	const [restoreAt, setRestoreAt] = useState(new Date());
 

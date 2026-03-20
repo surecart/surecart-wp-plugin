@@ -28,6 +28,8 @@ describe('sc-switch', () => {
       elm.checked = true;
     });
     await page.waitForChanges();
+    switchEl = await page.find(`${selector} >>> .switch`);
+    input = await page.find(`${selector} >>> input`);
     expect(switchEl).toHaveClass('switch--checked');
     expect(await input.getProperty('checked')).toBeTruthy();
   });

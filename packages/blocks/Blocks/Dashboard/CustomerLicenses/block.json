@@ -1,6 +1,7 @@
 {
 	"name": "surecart/customer-licenses",
 	"title": "Customer Licenses",
+	"apiVersion": 3,
 	"description": "Displays the customer's licenses.",
 	"category": "surecart-customer-dashboard",
 	"keywords": ["license", "customer", "dashboard"],

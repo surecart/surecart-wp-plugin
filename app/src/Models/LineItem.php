@@ -55,16 +55,6 @@ class LineItem extends Model {
 	}
 
 	/**
-	 * Check if the line item can be swapped.
-	 * Right now we only support swapping for products with no variants.
-	 *
-	 * @return bool
-	 */
-	protected function getCanSwapAttribute() {
-		return false;
-	}
-
-	/**
 	 * Upsell a line item.
 	 *
 	 * @param array $attributes The attributes to update.
@@ -183,6 +173,15 @@ class LineItem extends Model {
 	}
 
 	/**
+	 * Get the is_swappable attribute.
+	 *
+	 * @return string
+	 */
+	public function getIsSwappableAttribute() {
+		return ! empty( $this->swap ) || ! empty( $this->price->current_swap );
+	}
+
+	/**
 	 * Get the currency attribute.
 	 *
 	 * TODO: Remove this method once currency added on line item.
@@ -260,6 +259,36 @@ class LineItem extends Model {
 	}
 
 	/**
+	 * Get the display subtotal amount + upsell discount amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getSubtotalWithUpsellDiscountDisplayAmountAttribute() {
+		return Currency::format( (int) $this->subtotal_with_upsell_discount_amount, $this->currency );
+	}
+
+	/**
+	 * Get the subtotal amount + upsell discount amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getSubtotalWithUpsellDiscountAmountAttribute() {
+		if ( empty( $this->fees->data ) || ! is_array( $this->fees->data ) ) {
+			return (int) $this->subtotal_amount;
+		}
+
+		$total_upsell_discount = 0;
+
+		foreach ( $this->fees->data as $fee ) {
+			if ( 'upsell' === $fee->fee_type ) {
+				$total_upsell_discount += $fee->amount ?? 0;
+			}
+		}
+
+		return (int) $this->subtotal_amount + (int) ( $total_upsell_discount ?? 0 );
+	}
+
+	/**
 	 * Get the display full amount attribute.
 	 *
 	 * @return string
@@ -315,6 +344,14 @@ class LineItem extends Model {
 		return Currency::format( (int) $this->total_amount, $this->currency, [ 'convert' => false ] );
 	}
 
+	/**
+	 * Get the note display attribute by strip out HTML tags.
+	 *
+	 * @return string
+	 */
+	public function getDisplayNoteAttribute() {
+		return ! empty( $this->note ) ? wp_strip_all_tags( $this->note, true ) : '';
+	}
 
 	/**
 	 * Purchasable status display

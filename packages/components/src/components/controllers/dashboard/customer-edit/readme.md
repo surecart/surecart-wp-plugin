@@ -7,12 +7,11 @@
 
 ## Properties
 
-| Property     | Attribute     | Description | Type                                                                                        | Default     |
-| ------------ | ------------- | ----------- | ------------------------------------------------------------------------------------------- | ----------- |
-| `customer`   | --            |             | `Customer`                                                                                  | `undefined` |
-| `heading`    | `heading`     |             | `string`                                                                                    | `undefined` |
-| `i18n`       | --            |             | `{ defaultCountryFields: CountryLocaleFieldValue[]; countryFields: CountryLocaleField[]; }` | `undefined` |
-| `successUrl` | `success-url` |             | `string`                                                                                    | `undefined` |
+| Property     | Attribute     | Description | Type       | Default     |
+| ------------ | ------------- | ----------- | ---------- | ----------- |
+| `customer`   | --            |             | `Customer` | `undefined` |
+| `heading`    | `heading`     |             | `string`   | `undefined` |
+| `successUrl` | `success-url` |             | `string`   | `undefined` |
 
 
 ## Dependencies

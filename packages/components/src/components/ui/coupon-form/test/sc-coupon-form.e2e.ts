@@ -31,6 +31,7 @@ describe('sc-coupon-form', () => {
     expect(trigger).toBeDefined();
     await trigger.click();
     await page.waitForChanges();
+    wrapper = await page.find(`${selector} >>> .coupon-form`);
     expect(wrapper).toHaveClass('coupon-form--is-open');
   });
 

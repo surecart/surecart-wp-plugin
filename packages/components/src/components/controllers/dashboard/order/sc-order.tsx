@@ -73,6 +73,8 @@ export class ScOrder {
       path: addQueryArgs(`surecart/v1/orders/${this.orderId}`, {
         expand: [
           'checkout',
+          'checkout.checkout_fees',
+          'checkout.shipping_fees',
           'checkout.line_items',
           'line_item.price',
           'line_item.fees',
@@ -102,6 +104,40 @@ export class ScOrder {
         <sc-skeleton style={{ width: '60%', display: 'inline-block' }}></sc-skeleton>
         <sc-skeleton style={{ width: '40%', display: 'inline-block' }}></sc-skeleton>
       </sc-flex>
+    );
+  }
+
+  renderCheckoutFees(checkout: Checkout) {
+    if (!checkout?.checkout_fees?.data?.length) {
+      return null;
+    }
+
+    return (
+      <Fragment>
+        {checkout?.checkout_fees?.data?.map(fee => (
+          <sc-line-item key={fee.id}>
+            <span slot="description">{fee.description}</span>
+            <span slot="price">{fee.display_amount}</span>
+          </sc-line-item>
+        ))}
+      </Fragment>
+    );
+  }
+
+  renderShippingFees(checkout: Checkout) {
+    if (!checkout?.shipping_fees?.data?.length) {
+      return null;
+    }
+
+    return (
+      <Fragment>
+        {checkout?.shipping_fees?.data?.map(fee => (
+          <sc-line-item key={fee.id}>
+            <span slot="description">{fee.description}</span>
+            <span slot="price">{fee.display_amount}</span>
+          </sc-line-item>
+        ))}
+      </Fragment>
     );
   }
 
@@ -135,6 +171,7 @@ export class ScOrder {
               editable={false}
               removable={false}
               quantity={item.quantity}
+              note={item?.display_note}
               amount={item.subtotal_display_amount}
               trial={item?.price?.trial_text}
               interval={`${item?.price?.short_interval_text} ${item?.price?.short_interval_count_text}`}
@@ -159,6 +196,8 @@ export class ScOrder {
             </span>
           </sc-line-item>
         )}
+
+        {this.renderCheckoutFees(checkout)}
 
         {!!checkout?.trial_amount && (
           <sc-line-item>
@@ -213,6 +252,7 @@ export class ScOrder {
         )}
 
         {!!checkout?.shipping_amount && (
+          <Fragment>
           <sc-line-item>
             <span slot="description">{`${__('Shipping', 'surecart')} ${shippingMethodName ? `(${shippingMethodName})` : ''}`}</span>
             <span
@@ -225,6 +265,8 @@ export class ScOrder {
               {checkout?.shipping_display_amount}
             </span>
           </sc-line-item>
+         { this.renderShippingFees(checkout)}
+         </Fragment>
         )}
 
         {!!checkout?.tax_amount && (

@@ -81,6 +81,40 @@ class Product extends \Bricks\Element {
 					),
 				),
 			),
+			array(
+				'name'     => 'block',
+				'label'    => esc_html__( 'Rating Info', 'surecart' ),
+				'settings' => array(
+					'_direction'  => 'row',
+					'_columnGap'  => '6px',
+					'_alignItems' => 'center',
+				),
+				'children' => array(
+					array(
+						'name'     => 'surecart-product-review-average-rating-stars',
+						'settings' => array(
+							'_typography' => array(
+								'line-height' => '1',
+							),
+							'fill_color'  => array(
+								'hex' => 'var(--bricks-color-primary)',
+							),
+						),
+					),
+					array(
+						'name'     => 'surecart-product-review-total-rating',
+						'settings' => array(
+							'style_variant'         => 'plus-sign',
+							'show_label'            => true,
+							'link_to_reviews'       => true,
+							'show_for_zero_reviews' => true,
+							'_typography'           => array(
+								'text-decoration' => 'underline',
+							),
+						),
+					),
+				),
+			),
 			array( 'name' => 'post-title' ),
 			array(
 				'name'     => 'block',
@@ -220,7 +254,17 @@ class Product extends \Bricks\Element {
 			array(
 				'name'     => 'surecart-product-variant-pills',
 				'children' => array(
-					array( 'name' => 'surecart-product-variant-pill' ),
+					array(
+						'name'     => 'surecart-product-variant-pill',
+						'settings' => array(
+							'highlight_background' => array(
+								'hex' => '#FFD64F',
+							),
+							'highlight_border'     => array(
+								'hex' => '#FFD64F',
+							),
+						),
+					),
 				),
 			),
 			array( 'name' => 'surecart-product-quantity' ),
@@ -276,7 +320,7 @@ class Product extends \Bricks\Element {
 							'_width:mobile_portrait'  => '100%',
 							'_width:mobile_landscape' => '100%',
 							'_direction'              => 'column',
-							'_rowGap'                 => '0.75em',
+							'_rowGap'                 => '0.75rem',
 						),
 						'children' => $right_column_children,
 					),

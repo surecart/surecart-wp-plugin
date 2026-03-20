@@ -1,13 +1,13 @@
 {
 	"$schema": "https://json.schemastore.org/block.json",
-	"apiVersion": 2,
+	"apiVersion": 3,
 	"name": "surecart/order-confirmation-line-items",
 	"title": "Order Confirmation Line Items",
 	"description": "Display an order confirmation line items summary section.",
 	"category": "surecart",
 	"parent": ["surecart/order-confirmation"],
 	"keywords": ["thank", "thank you", "confirm"],
-  "textdomain": "surecart",
+	"textdomain": "surecart",
 	"supports": {
 		"reusable": false,
 		"html": false

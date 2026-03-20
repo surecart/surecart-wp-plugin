@@ -650,4 +650,13 @@ class Subscription extends Model {
 			$this->remaining_period_count
 		);
 	}
+
+	/**
+	 * Get the can modify attribute.
+	 *
+	 * @return string
+	 */
+	public function getCanModifyAttribute() {
+		return apply_filters( 'surecart/subscription/can_modify', true, $this );
+	}
 }

@@ -8,23 +8,26 @@
 	"category": "surecart-product-page",
 	"icon": "media-interactive",
 	"example": {},
-	"ancestor": ["surecart/product-buy-buttons", "surecart/product-template"],
-	"usesContext": ["surecart/product", "postId"],
+	"ancestor": ["surecart/product-buy-buttons"],
+	"usesContext": ["surecart/product", "postId", "providerBlock"],
 	"attributes": {
 		"add_to_cart": {
 			"type": "boolean",
 			"default": false
 		},
+		"show_sticky_purchase_button": {
+			"type": "string",
+			"enum": ["never", "in_stock", "always"],
+			"default": "never"
+		},
 		"text": {
 			"type": "string"
 		},
 		"out_of_stock_text": {
-			"type": "string",
-			"default": "Sold Out"
+			"type": "string"
 		},
 		"unavailable_text": {
-			"type": "string",
-			"default": "Unavailable"
+			"type": "string"
 		},
 		"width": {
 			"type": "number",
@@ -68,6 +71,21 @@
 				"style": true,
 				"width": true
 			}
+		},
+		"__experimentalStyle": {
+			"variations": {
+				"outline": {
+					"border": {
+						"color": "currentColor",
+						"width": "2px",
+						"style": "solid"
+					},
+					"color": {
+						"text": "currentColor",
+						"gradient": "transparent none"
+					}
+				}
+			}
 		}
 	},
 	"variations": [
@@ -105,10 +123,6 @@
 	"render": "file:./view.php",
 	"editorScript": "file:./index.js",
 	"editorStyle": ["surecart-wp-button"],
-	"style": [
-		"surecart-wp-button",
-		"surecart-spinner",
-		"file:./style-index.css"
-	],
+	"style": ["surecart-wp-button", "surecart-spinner"],
 	"viewScriptModule": ["@surecart/checkout", "@surecart/cart"]
 }

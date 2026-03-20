@@ -6,7 +6,7 @@
 	"description": "Displays the name of a price.",
 	"version": "1.0.0",
 	"category": "surecart-product-page",
-	"usesContext": ["surecart/priceId", "surecart/price"],
+	"usesContext": ["surecart/priceId", "surecart/price", "postId"],
 	"ancestor": ["surecart/product-price-choice-template"],
 	"supports": {
 		"interactivity": true,

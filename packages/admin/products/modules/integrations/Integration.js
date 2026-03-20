@@ -94,12 +94,14 @@ export default ({ id, total, product }) => {
 				`}
 			>
 				<ScFlex justifyContent="flex-start" alignItems="center">
-					<Price
-						price_id={price_id}
-						variant_id={variant_id}
-						product={product}
-						total_integrations={total}
-					/>
+					{!!integrationData?.label && (
+						<Price
+							price_id={price_id}
+							variant_id={variant_id}
+							product={product}
+							total_integrations={total}
+						/>
+					)}
 
 					<ScDropdown placement="bottom-end">
 						<ScButton type="text" slot="trigger" circle>

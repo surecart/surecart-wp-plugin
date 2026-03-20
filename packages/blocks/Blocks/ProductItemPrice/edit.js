@@ -45,6 +45,7 @@ export default ({ attributes, setAttributes }) => {
 			<InspectorControls>
 				<PanelBody title={__('Options', 'surecart')}>
 					<ToggleControl
+						__nextHasNoMarginBottom
 						label={__('Price Range', 'surecart')}
 						help={__(
 							'Show a range of prices if multiple prices are available or has variable products.',

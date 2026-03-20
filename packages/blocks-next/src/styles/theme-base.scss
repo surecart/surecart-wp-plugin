@@ -283,6 +283,7 @@
 	--sc-quantity-control-height: 2em;
 	--sc-quantity-control-height-small: 1.7em;
 	--sc-z-index-drawer: 99999;
+	--sc-z-index-drawer-backdrop: 99998;
 	--sc-z-index-dialog: 100000;
 	--sc-z-index-dropdown: 900;
 	--sc-z-index-toast: 950;
@@ -290,6 +291,16 @@
 	--sc-checkout-columns: 1;
 	--sc-dashboard-module-spacing: var(--sc-spacing-x-small);
 	--sc-border-width-zero: 0px;
+	--sc-cart-main-label-text-color: var(--sc-color-gray-600);
+
+	/** Reviews **/
+	--sc-reviews-background-color: transparent;
+	--sc-review-text-color: var(--sc-color-gray-800);
+	--sc-review-secondary-text-color: var(--sc-color-gray-600);
+	--sc-review-border-color: var(--sc-color-gray-200);
+	--sc-star-bar-background-color: var(--sc-color-gray-200);
+	--sc-star-bar-fill-color: var(--sc-color-gray-800);
+	--sc-review-overlay-background-color: rgba(0, 0, 0, 0.5);
 }
 .surecart-theme-dark {
 	/** Let's make these less blue for basic dark mode **/
@@ -339,6 +350,11 @@
 	--sc-input-placeholder-color: var(--sc-color-gray-500);
 	--sc-input-placeholder-color-disabled: var(--sc-color-gray-400);
 	--sc-input-help-text-color: var(--sc-color-gray-400);
+
+	/* Checkbox/Radio */
+	--sc-check-input-unchecked-background-color: var(--sc-color-gray-800);
+	--sc-check-input-unchecked-border-color: var(--sc-color-gray-500);
+
 	--sc-list-row-background-color: var(--sc-color-gray-950);
 	--sc-badge-notice-background-color: var(--sc-color-gray-950);
 	--sc-divider-text-background-color: var(--sc-color-gray-900);
@@ -441,9 +457,19 @@
 	/** Cart **/
 	--sc-cart-counter-background: var(--sc-color-gray-50);
 	--sc-cart-counter-color: var(--sc-color-gray-950);
+	--sc-cart-main-label-text-color: var(--sc-color-neutral-100);
 
 	/** Selected Price **/
 	--sc-selected-price-color: var(--sc-color-gray-50);
+
+	/** Reviews **/
+	--sc-reviews-background-color: var(--sc-color-gray-900); //var(--sc-color-neutral-900); //var(--sc-color-gray-900);
+	--sc-review-text-color: var(--sc-color-gray-200);
+	--sc-review-secondary-text-color: var(--sc-color-gray-400);
+	--sc-review-border-color: var(--sc-color-gray-700);
+	--sc-star-bar-background-color: var(--sc-color-gray-700);
+	--sc-star-bar-fill-color: var(--sc-color-gray-200);
+	--sc-review-overlay-background-color: rgba(0, 0, 0, 0.7);
 }
 
 [class*="wp-block-surecart-"][hidden] {

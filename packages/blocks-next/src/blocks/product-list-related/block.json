@@ -19,6 +19,7 @@
 			"default": {
 				"perPage": 4,
 				"pages": 3,
+				"offset": 0,
 				"postType": "sc_product",
 				"order": "desc",
 				"orderBy": "date",

@@ -18,14 +18,16 @@ describe('sc-radio-group', () => {
     </sc-radio-group>
     `);
 
-    const first = await page.find('sc-radio[value="test"]');
-    const second = await page.find('sc-radio[value="test-2"]');
+    let first = await page.find('sc-radio[value="test"]');
+    let second = await page.find('sc-radio[value="test-2"]');
 
     expect(first).toHaveAttribute('checked');
     expect(second).not.toHaveAttribute('checked');
 
     await second.click();
     await page.waitForChanges();
+    first = await page.find('sc-radio[value="test"]');
+    second = await page.find('sc-radio[value="test-2"]');
 
     expect(first).not.toHaveAttribute('checked');
     expect(second).toHaveAttribute('checked');

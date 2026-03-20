@@ -7,8 +7,6 @@
  * @package SureCart
  */
 
-use SureCart\Rest\IntegrationProvidersRestServiceProvider;
-
 return array(
 	/**
 	 * Array of service providers you wish to enable.
@@ -89,6 +87,7 @@ return array(
 		\SureCart\Rest\BalanceTransactionRestServiceProvider::class,
 		\SureCart\Rest\ChargesRestServiceProvider::class,
 		\SureCart\Rest\RefundsRestServiceProvider::class,
+		\SureCart\Rest\DisputesRestServiceProvider::class,
 		\SureCart\Rest\DownloadRestServiceProvider::class,
 		\SureCart\Rest\LicenseRestServiceProvider::class,
 		\SureCart\Rest\LineItemsRestServiceProvider::class,
@@ -137,6 +136,11 @@ return array(
 		\SureCart\Rest\AffiliationsRestServiceProvider::class,
 		\SureCart\Rest\ExportsRestServiceProvider::class,
 		\SureCart\Rest\SwapRestServiceProvider::class,
+		\SureCart\Rest\ReviewsRestServiceProvider::class,
+		\SureCart\Rest\ReviewProtocolRestServiceProvider::class,
+		\SureCart\Rest\AutoFeeRestServiceProvider::class,
+		\SureCart\Rest\AutoFeeProtocolRestServiceProvider::class,
+		\SureCart\Rest\RuleSchemaRestServiceProvider::class,
 
 		// integrations.
 		\SureCart\Integrations\DiviServiceProvider::class,
@@ -152,9 +156,15 @@ return array(
 		\SureCart\Integrations\Bricks\BricksServiceProvider::class,
 		\SureCart\Integrations\Elementor\ElementorServiceProvider::class,
 		\SureCart\Integrations\Beaver\BeaverServiceProvider::class,
-		\SureCart\Integrations\Bricks\BricksServiceProvider::class,
 		\SureCart\Integrations\Avada\AvadaServiceProvider::class,
+		\SureCart\Integrations\Etch\EtchServiceProvider::class,
 		\SureCart\Integrations\HelpWidget\HelpWidgetServiceProvider::class,
+		\SureCart\Integrations\AIOSEO\AIOSEOServiceProvider::class,
+		\SureCart\Integrations\RankMath\RankMathServiceProvider::class,
+		\SureCart\Integrations\SEOPress\SEOPressServiceProvider::class,
+		\SureCart\Integrations\TheSEOFramework\TheSEOFrameworkServiceProvider::class,
+		\SureCart\Integrations\SureRank\SureRankServiceProvider::class,
+		\SureCart\Integrations\Yoast\YoastServiceProvider::class,
 	),
 
 	/**
@@ -176,6 +186,7 @@ return array(
 		\SureCartBlocks\Blocks\Columns\Block::class,
 		\SureCartBlocks\Blocks\Column\Block::class,
 		\SureCartBlocks\Blocks\CollectionPage\Block::class,
+		\SureCartBlocks\Blocks\Confirmation\Block::class,
 		\SureCartBlocks\Blocks\OrderConfirmationLineItems\Block::class,
 		\SureCartBlocks\Blocks\Form\Block::class,
 		\SureCartBlocks\Blocks\Payment\Block::class,
@@ -199,6 +210,7 @@ return array(
 		\SureCartBlocks\Blocks\ConditionalForm\Block::class,
 		\SureCartBlocks\Blocks\StoreLogo\Block::class,
 		\SureCartBlocks\Blocks\Password\Block::class,
+		\SureCartBlocks\Blocks\Submit\Block::class,
 		\SureCartBlocks\Blocks\CartMenuButton\Block::class,
 		\SureCartBlocks\Blocks\CartSubmit\Block::class,
 		\SureCartBlocks\Blocks\Cart\Block::class,
@@ -245,7 +257,7 @@ return array(
 		'surecart/checkbox'                  => array( 'sc-checkbox' ),
 		'surecart/column'                    => array( 'sc-column' ),
 		'surecart/columns'                   => array( 'sc-columns' ),
-		'surecart/confirmation'              => array( 'sc-order-confirmation' ),
+		'surecart/order-confirmation'        => array( 'sc-order-confirmation' ),
 		'surecart/coupon'                    => array( 'sc-order-coupon-form', 'sc-coupon-form', 'sc-button', 'sc-input' ),
 		'surecart/customer-dashboard-button' => array( 'sc-button' ),
 		'surecart/customer-dashboard'        => array( 'sc-tab-group' ),
@@ -308,6 +320,7 @@ return array(
 		\SureCart\Permissions\Models\InvoicePermissionsController::class,
 		\SureCart\Permissions\Models\PaymentMethodPermissionsController::class,
 		\SureCart\Permissions\Models\PurchasePermissionsController::class,
+		\SureCart\Permissions\Models\DownloadPermissionsController::class,
 		\SureCart\Permissions\Models\RefundPermissionsController::class,
 		\SureCart\Permissions\Models\SubscriptionPermissionsController::class,
 	),

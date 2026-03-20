@@ -22,6 +22,7 @@ describe('sc-radio', () => {
   });
 
   it('Should be clickable', async () => {
+    input = await page.find(`${selector} >>> input`);
     const scBlur = await page.spyOnEvent('scBlur');
     const scFocus = await page.spyOnEvent('scFocus');
 
@@ -30,20 +31,25 @@ describe('sc-radio', () => {
 
     await input.click();
     await page.waitForChanges();
+    label = await page.find(`${selector} >>> .radio`);
     expect(label).toHaveClass('radio');
     expect(label).toHaveClasses(['radio--checked', 'radio--focused']);
     expect(scFocus).toHaveReceivedEvent();
 
     await page.$eval(selector, e => e.blur());
     await page.waitForChanges();
+    label = await page.find(`${selector} >>> .radio`);
     expect(label).not.toHaveClass('radio--focused');
     expect(scBlur).toHaveReceivedEvent();
   });
 
   it('Can be disabled', async () => {
+    input = await page.find(`${selector} >>> input`);
     expect(input).not.toHaveAttribute('disabled');
     element.setProperty('disabled', true);
     await page.waitForChanges();
+    label = await page.find(`${selector} >>> .radio`);
+    input = await page.find(`${selector} >>> input`);
     expect(label).toHaveClasses(['radio', 'radio--disabled']);
     expect(input).toHaveAttribute('disabled');
   });

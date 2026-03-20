@@ -6,6 +6,7 @@ use SureCart\Models\Traits\HasDates;
 use SureCart\Models\Traits\HasImageSizes;
 use SureCart\Models\Traits\HasPurchases;
 use SureCart\Models\Traits\HasCommissionStructure;
+use SureCart\Models\Traits\CanDuplicate;
 use SureCart\Support\Contracts\GalleryItem;
 use SureCart\Support\Contracts\PageModel;
 use SureCart\Support\Currency;
@@ -19,13 +20,16 @@ class Product extends Model implements PageModel {
 	use HasPurchases;
 	use HasCommissionStructure;
 	use HasDates;
+	use canDuplicate {
+		duplicate as protected originalDuplicate;
+	}
 
 	/**
 	 * These always need to be fetched during create/update in order to sync with post model.
 	 *
 	 * @var array
 	 */
-	protected $sync_expands = array( 'prices', 'product_medias', 'product_media.media', 'variants', 'variant_options', 'product_collections', 'featured_product_media' );
+	protected $sync_expands = array( 'prices', 'product_medias', 'product_media.media', 'variants', 'variant_options', 'product_collections', 'featured_product_media', 'reviews_breakdown' );
 
 	/**
 	 * Rest API endpoint
@@ -195,6 +199,150 @@ class Product extends Model implements PageModel {
 
 		// return.
 		return $this;
+	}
+
+	/**
+	 * Duplicate the model.
+	 *
+	 * @param string $id The id of the model to duplicate.
+	 * @return $this|false
+	 */
+	protected function duplicate( $id = '' ) {
+		if ( $id ) {
+			$this->attributes['id'] = $id;
+		}
+
+		// get the post duplication data.
+		$duplication_data = $this->getPostDuplicationData();
+
+		// duplicate the model.
+		$duplicated = $this->originalDuplicate( $id );
+
+		// check for errors.
+		if ( is_wp_error( $duplicated ) ) {
+			return $duplicated;
+		}
+
+		// sync with the post.
+		$post = $this->sync();
+
+		// check for errors.
+		if ( is_wp_error( $post ) ) {
+			return $post;
+		}
+
+		// update the post duplication data.
+		$this->updatePostDuplicationData( $duplication_data );
+
+		return $this;
+	}
+
+	/**
+	 * Get the post duplication data.
+	 *
+	 * @return array|false
+	 */
+	public function getPostDuplicationData() {
+		// we don't have a post.
+		if ( empty( $this->post ) || empty( $this->post->ID ) ) {
+			return [];
+		}
+
+		// store post content before duplication.
+		$current_post_content = $this->post->post_content ?? '';
+
+		// store post meta before duplication.
+		$post_meta = $this->getPostMeta();
+
+		// store post taxonomies before duplication.
+		$taxonomy_names = get_post_taxonomies( $this->post->ID );
+		$taxonomy_terms = [];
+
+		// store post terms before duplication.
+		foreach ( $taxonomy_names as $taxonomy ) {
+			$terms = wp_get_object_terms( $this->post->ID, $taxonomy, [ 'fields' => 'ids' ] );
+			if ( ! empty( $terms ) ) {
+				$taxonomy_terms[ $taxonomy ] = $terms;
+			}
+		}
+
+		return [
+			'post_content'   => $current_post_content,
+			'post_meta'      => $post_meta,
+			'taxonomy_terms' => $taxonomy_terms,
+		];
+	}
+
+	/**
+	 * Update the post duplication data.
+	 *
+	 * @param array $post_data The post data.
+	 *
+	 * @return void
+	 */
+	public function updatePostDuplicationData( $post_data ) {
+		// we don't have a post.
+		if ( empty( $this->post ) || empty( $this->post->ID ) || empty( $post_data ) ) {
+			return;
+		}
+
+		// update the post content.
+		wp_update_post(
+			array(
+				'ID'           => $this->post->ID,
+				'post_content' => $post_data['post_content'],
+			)
+		);
+
+		$post_meta = $post_data['post_meta'] ?? array();
+
+		// update the post meta.
+		if ( ! empty( $post_meta ) ) {
+			foreach ( $post_meta as $meta ) {
+				$meta_value = maybe_unserialize( $meta->meta_value );
+				update_post_meta( $this->post->ID, $meta->meta_key, $meta_value );
+			}
+		}
+
+		$taxonomy_terms = $post_data['taxonomy_terms'] ?? array();
+
+		// update the post taxonomies.
+		if ( ! empty( $taxonomy_terms ) ) {
+			foreach ( $taxonomy_terms as $taxonomy => $terms ) {
+				if ( ! empty( $terms ) ) {
+					wp_set_object_terms( $this->post->ID, $terms, $taxonomy );
+				}
+			}
+		}
+	}
+
+	/**
+	 * Get post meta, excluding specific keys.
+	 *
+	 * @return array|false Array of meta_key/meta_value objects or false if no post.
+	 */
+	public function getPostMeta() {
+		$skip_keys = [
+			'_edit_lock',
+			'_edit_last',
+			'product',
+			'sc_id',
+			'_wp_trash_meta_status',
+			'_wp_trash_meta_time',
+		];
+
+		global $wpdb;
+
+		$placeholders = implode( ',', array_fill( 0, count( $skip_keys ), '%s' ) );
+
+		$not_in_clause = "AND meta_key NOT IN ($placeholders)";
+
+		return $wpdb->get_results(
+			$wpdb->prepare(
+				"SELECT meta_key, meta_value FROM {$wpdb->postmeta} WHERE post_id = %d $not_in_clause",
+				array_merge( [ $this->post->ID ], $skip_keys )
+			)
+		);
 	}
 
 	/**
@@ -467,6 +615,15 @@ class Product extends Model implements PageModel {
 	}
 
 	/**
+	 * Get the has variants attribute.
+	 *
+	 * @return boolean
+	 */
+	public function getHasVariantsAttribute() {
+		return ! empty( $this->variants->data ?? [] );
+	}
+
+	/**
 	 * Get the has multiple prices attribute.
 	 *
 	 * @return boolean
@@ -478,7 +635,7 @@ class Product extends Model implements PageModel {
 	/**
 	 * Return attached active prices.
 	 */
-	public function activeAdHocPrices() {
+	public function getActiveAdHocPricesAttribute() {
 		return array_filter(
 			$this->active_prices ?? array(),
 			function ( $price ) {
@@ -488,16 +645,33 @@ class Product extends Model implements PageModel {
 	}
 
 	/**
+	 * Get the has options attribute.
+	 * Determines if product has options (variants, multiple prices, or ad hoc pricing).
+	 *
+	 * @return boolean
+	 */
+	public function getHasOptionsAttribute() {
+		// Check if product has variant options.
+		return $this->has_variants || $this->has_multiple_prices || ! empty( $this->active_ad_hoc_prices );
+	}
+
+	/**
 	 * Get the featured image attribute.
 	 *
 	 * @return \SureCart\Support\Contracts\GalleryItem|null;
 	 */
 	public function getFeaturedImageAttribute() {
-		$gallery = array_values( $this->gallery ?? array() );
+		$gallery     = array_values( $this->gallery ?? array() );
+		$first_media = $gallery[0] ?? [];
 
-		if ( ! empty( $gallery ) ) {
-			return $gallery[0] ?? null;
+		if ( $first_media instanceof GalleryItemVideoAttachment ) {
+			return $this->getVideoThumbnailOrFallback( $first_media, $gallery );
 		}
+
+		if ( ! empty( $first_media ) ) {
+			return $first_media;
+		}
+
 		if ( empty( $this->featured_product_media ) ) {
 			return null;
 		}
@@ -538,7 +712,7 @@ class Product extends Model implements PageModel {
 	/**
 	 * Get with sorted prices.
 	 *
-	 * @return this
+	 * @return self
 	 */
 	public function withSortedPrices() {
 		if ( empty( $this->prices->data ) ) {
@@ -559,9 +733,9 @@ class Product extends Model implements PageModel {
 	}
 
 	/**
-	 * Get product with acgive and sorted prices.
+	 * Get product with active and sorted prices.
 	 *
-	 * @return this
+	 * @return self
 	 */
 	public function withActivePrices() {
 		if ( empty( $this->prices->data ) ) {
@@ -720,7 +894,7 @@ class Product extends Model implements PageModel {
 	 * @return \WP_Template
 	 */
 	public function getTemplateAttribute() {
-		return null;// get_block_template( $this->getTemplateIdAttribute() );
+		return null;
 	}
 
 	/**
@@ -747,16 +921,32 @@ class Product extends Model implements PageModel {
 				array_filter(
 					array_map(
 						function ( $media ) {
-							return $media->id;
+							return $media->id ?? null;
 						},
 						$this->product_medias->data ?? array()
-					)
-				),
+					),
+					function ( $id ) {
+						return ! empty( $id );
+					}
+				)
 			);
 		}
 
-		// gallery.
-		return json_decode( $this->metadata->gallery_ids ?? '' );
+		// Get the raw gallery ids from metadata.
+		$gallery_ids = $this->metadata->gallery_ids ?? '';
+
+		// Check if it's already an array, if not, we need to decode it.
+		if ( is_array( $gallery_ids ) ) {
+			return $gallery_ids;
+		}
+
+		// If the JSON has been corrupted to PHP syntax, fix it.
+		if ( is_string( $gallery_ids ) && strpos( $gallery_ids, '=>' ) !== false ) {
+			$gallery_ids = str_replace( ' => ', ': ', $gallery_ids );
+		}
+
+		$decoded = json_decode( $gallery_ids, true );
+		return is_array( $decoded ) ? $decoded : array();
 	}
 
 	/**
@@ -784,13 +974,42 @@ class Product extends Model implements PageModel {
 			return $cached;
 		}
 
+		// Get gallery_ids using the accessor method which handles metadata parsing.
+		$gallery_ids = $this->getGalleryIdsAttribute();
+		if ( ! is_array( $gallery_ids ) ) {
+			$gallery_ids = array();
+		}
+
+		$product_featured_image = $this->getFeaturedImageAttribute();
+
 		$gallery = array_values(
 			array_filter(
 				array_map(
-					function ( $id ) {
+					function ( $gallery_item ) use ( $product_featured_image ) {
+						// Extract the ID from the gallery item (can be int, string(ProductMedia) or object).
+						$id = is_string( $gallery_item ) ? $gallery_item : ( is_int( $gallery_item ) ? intval( $gallery_item ) : intval( ( (object) $gallery_item )->id ?? 0 ) );
+
 						// this is an attachment id.
 						if ( is_int( $id ) ) {
-							return new GalleryItemAttachment( $id );
+							$attachment = GalleryItemAttachment::create( $gallery_item, $product_featured_image );
+
+							// If no attachment, return null.
+							if ( empty( $attachment ) || ! $attachment->exists() ) {
+								return null;
+							}
+
+							if ( is_object( $gallery_item ) || is_array( $gallery_item ) ) {
+								$item = (object) $gallery_item;
+								$attachment->setMetadata( 'variant_option', $item->variant_option ?? null );
+								$attachment->setMetadata( 'thumbnail_image', $item->thumbnail_image ?? null );
+								$attachment->setMetadata( 'aspect_ratio', $item->aspect_ratio ?? null );
+								$attachment->setMetadata( 'controls', $item->controls ?? true );
+								$attachment->setMetadata( 'autoplay', $item->autoplay ?? false );
+								$attachment->setMetadata( 'loop', $item->loop ?? false );
+								$attachment->setMetadata( 'muted', $item->muted ?? false );
+							}
+
+							return $attachment;
 						}
 
 						// get the product media item that matches the id.
@@ -809,11 +1028,11 @@ class Product extends Model implements PageModel {
 
 						return null;
 					},
-					$this->gallery_ids
+					$this->gallery_ids ?? []
 				),
 				function ( $item ) {
 					// it must have a src at least.
-					return ! empty( $item ) && ! empty( $item->attributes()->src );
+					return ! empty( $item ) && $item->exists();
 				}
 			)
 		);
@@ -891,7 +1110,12 @@ class Product extends Model implements PageModel {
 	 * @return object
 	 */
 	public function getLineItemImageAttribute() {
-		return is_a( $this->featured_image, GalleryItem::class ) ? $this->featured_image->attributes( 'thumbnail' ) : (object) array();
+		return is_a( $this->featured_image, GalleryItem::class ) ?
+			$this->featured_image->attributes( 'thumbnail' ) :
+			(object) array(
+				'src'  => apply_filters( 'surecart/product-line-item-image/fallback_src', \SureCart::core()->assets()->getUrl() . '/images/image-placeholder.svg', $this ),
+				'type' => 'fallback',
+			);
 	}
 
 	/**
@@ -924,7 +1148,7 @@ class Product extends Model implements PageModel {
 				'checkoutUrl'     => \SureCart::pages()->url( 'checkout' ),
 				'variant_options' => $this->variant_options->data ?? [],
 				'variants'        => $this->variants->data ?? [],
-				'selectedVariant' => $this->first_variant_with_stock ?? null,
+				'selectedVariant' => $this->initial_variant ?? null,
 				'isProductPage'   => ! empty( get_query_var( 'surecart_current_product' )->id ),
 			]
 		);
@@ -937,5 +1161,88 @@ class Product extends Model implements PageModel {
 	 */
 	public function getCatalogedAtDateTimeAttribute() {
 		return ! empty( $this->cataloged_at ) ? TimeDate::formatDateAndTime( $this->cataloged_at ) : '';
+	}
+
+	/**
+	 * Get the video thumbnail or fallback to the next image in the gallery.
+	 *
+	 * @param GalleryItemAttachment $first_media The first media item.
+	 * @param array                 $gallery The gallery items.
+	 *
+	 * @return GalleryItemAttachment|null
+	 */
+	private function getVideoThumbnailOrFallback( $first_media, $gallery ) {
+		$thumbnail_image = $first_media->getMetadata( 'thumbnail_image' ) ?? null;
+		if ( ! empty( $thumbnail_image ) ) {
+			$attachment = GalleryItemAttachment::create( $thumbnail_image );
+			if ( ! empty( $attachment ) && $attachment->exists() ) {
+				return $attachment;
+			}
+		}
+
+		// If no thumbnail, look for next image in gallery.
+		foreach ( $gallery as $media ) {
+			if ( false !== strpos( $media->post_mime_type ?? '', 'image' ) ) {
+				return $media;
+			}
+		}
+
+		return null;
+	}
+
+	/**
+	 * Get if the product has videos.
+	 *
+	 * @return bool
+	 */
+	public function getHasVideosAttribute(): bool {
+		return ! empty( array_filter( $this->gallery, fn( $media ) => $media->isVideo() ) );
+	}
+
+	/**
+	 * Get if the product reviews are enabled.
+	 *
+	 * @return bool
+	 */
+	public function getReviewsEnabledAttribute(): bool {
+		if ( empty( \SureCart::account()->review_protocol->reviews_enabled ) ) {
+			return false;
+		}
+		return $this->attributes['reviews_enabled'] ?? true;
+	}
+
+	/**
+	 * Get the total reviews count from reviews_breakdown.
+	 *
+	 * @return int
+	 */
+	public function getTotalReviewsAttribute(): int {
+		if ( empty( $this->reviews_breakdown ) ) {
+			return 0;
+		}
+		return array_sum( (array) $this->reviews_breakdown );
+	}
+
+	/**
+	 * Get the reviews breakdown as an array with proper structure.
+	 * Ensures all star ratings (1-5) are present with default value of 0.
+	 *
+	 * @return array
+	 */
+	public function getReviewsBreakdownArrayAttribute(): array {
+		$breakdown = array_merge(
+			array(
+				1 => 0,
+				2 => 0,
+				3 => 0,
+				4 => 0,
+				5 => 0,
+			),
+			(array) ( $this->reviews_breakdown ?? array() )
+		);
+
+		// Ensure all values are integers and sort by key.
+		ksort( $breakdown );
+		return array_map( 'intval', $breakdown );
 	}
 }

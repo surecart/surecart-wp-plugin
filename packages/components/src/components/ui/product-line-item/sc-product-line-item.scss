@@ -169,7 +169,7 @@
 @container (max-width: 380px) {
   .item__image,
   .item__image-placeholder {
-    display: none;
+    display: var(--sc-product-line-item-mobile-image-display, none);
   }
 }
 

@@ -1,5 +1,5 @@
 {
-	"apiVersion": 2,
+	"apiVersion": 3,
 	"name": "surecart/button",
 	"title": "Button",
 	"description": "Display a checkout form button.",

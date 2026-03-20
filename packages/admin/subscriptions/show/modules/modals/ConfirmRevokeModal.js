@@ -10,7 +10,7 @@ import { store as coreStore } from '@wordpress/core-data';
 import apiFetch from '@wordpress/api-fetch';
 import { useDispatch } from '@wordpress/data';
 import { useState } from '@wordpress/element';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 import Error from '../../../../components/Error';
 import { useEffect } from 'react';
@@ -99,7 +99,7 @@ export default ({ purchase, open, onRequestClose }) => {
 				!!upcoming?.checkout?.currency
 					? sprintf(
 							__(
-								'The subscription will be restored in order to restore the purchase. The customer will immediately be charged %s for the first billing period.',
+								'The subscription will be restored in order to restore the purchase. The customer will immediately be charged %s.',
 								'surecart'
 							),
 							formatNumber(
@@ -108,7 +108,7 @@ export default ({ purchase, open, onRequestClose }) => {
 							)
 					  )
 					: __(
-							'The subscription will be restored in order to restore the purchase. The customer will immediately be charged the first billing period.',
+							'The subscription will be restored in order to restore the purchase. The customer will immediately be charged.',
 							'surecart'
 					  )}
 			</ScAlert>

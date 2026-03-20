@@ -74,7 +74,10 @@ export default ({
 						Object.keys(columns).map((key) => (
 							<ScTableCell
 								slot="head"
-								style={{ width: columns[key]?.width }}
+								style={{
+									width: columns[key]?.width,
+									minWidth: columns[key]?.minWidth,
+								}}
 								key={key}
 							>
 								{columns[key]?.label}

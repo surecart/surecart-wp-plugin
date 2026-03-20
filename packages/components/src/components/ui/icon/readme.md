@@ -60,6 +60,7 @@
  - [sc-license](../../controllers/dashboard/sc-license)
  - [sc-licenses-list](../../controllers/dashboard/sc-licenses-list)
  - [sc-line-item-invoice-receipt-download](../../controllers/checkout-form/invoice-receipt-download)
+ - [sc-line-item-total](../../controllers/checkout-form/line-item-total)
  - [sc-login-form](../../controllers/login)
  - [sc-order](../../controllers/dashboard/order)
  - [sc-order-confirm-provider](../../providers/order-confirm-provider)
@@ -71,13 +72,16 @@
  - [sc-payment-method](../sc-payment-method)
  - [sc-payment-method-details](../sc-payment-method-details)
  - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
+ - [sc-popover](../popover)
  - [sc-product-item-list](../../controllers/products/sc-product-item-list)
  - [sc-product-line-item](../product-line-item)
+ - [sc-product-line-item-note](../product-line-item-note)
  - [sc-product-selected-price](../../controllers/checkout-form/sc-product-selected-price)
  - [sc-provisional-banner](../sc-provisional-banner)
  - [sc-purchase-downloads-list](../purchase-downloads-list)
  - [sc-quantity-select](../quantity-select)
  - [sc-recurring-price-choice-container](../sc-recurring-price-choice-container)
+ - [sc-review-stars](../review-stars)
  - [sc-rich-text](../rich-text)
  - [sc-select](../select)
  - [sc-subscription](../../controllers/dashboard/subscription)
@@ -89,6 +93,7 @@
  - [sc-subscription-variation-confirm](../../controllers/dashboard/subscription-variation-confirm)
  - [sc-subscriptions-list](../../controllers/dashboard/subscriptions-list)
  - [sc-tax-id-input](../tax-id-input)
+ - [sc-test-mode-info](../test-mode-info)
  - [sc-toggle](../sc-toggle)
  - [sc-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
  - [sc-upgrade-required](../sc-upgrade-required)
@@ -126,6 +131,7 @@ graph TD;
   sc-license --> sc-icon
   sc-licenses-list --> sc-icon
   sc-line-item-invoice-receipt-download --> sc-icon
+  sc-line-item-total --> sc-icon
   sc-login-form --> sc-icon
   sc-order --> sc-icon
   sc-order-confirm-provider --> sc-icon
@@ -137,13 +143,16 @@ graph TD;
   sc-payment-method --> sc-icon
   sc-payment-method-details --> sc-icon
   sc-payment-methods-list --> sc-icon
+  sc-popover --> sc-icon
   sc-product-item-list --> sc-icon
   sc-product-line-item --> sc-icon
+  sc-product-line-item-note --> sc-icon
   sc-product-selected-price --> sc-icon
   sc-provisional-banner --> sc-icon
   sc-purchase-downloads-list --> sc-icon
   sc-quantity-select --> sc-icon
   sc-recurring-price-choice-container --> sc-icon
+  sc-review-stars --> sc-icon
   sc-rich-text --> sc-icon
   sc-select --> sc-icon
   sc-subscription --> sc-icon
@@ -155,6 +164,7 @@ graph TD;
   sc-subscription-variation-confirm --> sc-icon
   sc-subscriptions-list --> sc-icon
   sc-tax-id-input --> sc-icon
+  sc-test-mode-info --> sc-icon
   sc-toggle --> sc-icon
   sc-upcoming-invoice --> sc-icon
   sc-upgrade-required --> sc-icon

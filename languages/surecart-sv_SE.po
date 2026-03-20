@@ -1,0 +1,94 @@
+# Translation of SureCart in Swedish
+# This file is distributed under the same license as the SureCart package.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2026-01-27 12:56:18+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: GlotPress/4.0.3\n"
+"Language: sv_SE\n"
+"Project-Id-Version: SureCart\n"
+
+#: Blocks/InvoiceDetails/block.json
+msgctxt "block title"
+msgid "Invoice details"
+msgstr "Fakturadetaljer"
+
+#: Blocks/InvoiceDetails/block.json Blocks/InvoiceDueDate/block.json
+#: Blocks/InvoiceMemo/block.json Blocks/InvoiceNumber/block.json
+#: Blocks/InvoiceReceiptDownload/block.json
+msgctxt "block keyword"
+msgid "invoice"
+msgstr "faktura"
+
+#: Blocks/InvoiceDueDate/block.json
+msgctxt "block keyword"
+msgid "due"
+msgstr "förfaller"
+
+#: Blocks/InvoiceDueDate/block.json
+msgctxt "block keyword"
+msgid "date"
+msgstr "datum"
+
+#: Blocks/InvoiceMemo/block.json
+msgctxt "block title"
+msgid "Invoice Memo"
+msgstr "Fakturanotis"
+
+#: Blocks/InvoiceMemo/block.json
+msgctxt "block keyword"
+msgid "memo"
+msgstr "anteckning"
+
+#: Blocks/InvoiceNumber/block.json
+msgctxt "block keyword"
+msgid "number"
+msgstr "nummer"
+
+#: Blocks/InvoiceDetails/block.json
+msgctxt "block description"
+msgid "Display the invoice details."
+msgstr "Visa fakturadetaljer."
+
+#: Blocks/InvoiceReceiptDownload/block.json
+msgctxt "block title"
+msgid "Invoice Receipt Download"
+msgstr "Ladda ner fakturakvitto"
+
+#: Blocks/InvoiceNumber/block.json
+msgctxt "block title"
+msgid "Invoice Number"
+msgstr "Fakturanummer"
+
+#: Blocks/InvoiceDueDate/block.json
+msgctxt "block title"
+msgid "Inovoice Due Date"
+msgstr "Förfallodatum för faktura"
+
+#: Blocks/InvoiceReceiptDownload/block.json
+msgctxt "block description"
+msgid "Displays the download link for the invoice receipt."
+msgstr "Visar nedladdningslänken för fakturakvittot."
+
+#: Blocks/InvoiceReceiptDownload/block.json
+msgctxt "block keyword"
+msgid "receipt"
+msgstr "kvitto"
+
+#: src/Controllers/Admin/Licenses/LicensesListTable.php:103
+msgid "Edit License"
+msgstr "Redigera licens"
+
+#: src/Controllers/Admin/Upsells/UpsellsListTable.php:264
+msgid "Edit Upsell"
+msgstr "Redigera merförsäljning"
+
+#. translators: %d is the number of days.
+#: src/Models/CommissionStructure.php:51 src/Models/CommissionStructure.php:68
+msgid "%d Day"
+msgid_plural "%d Days"
+msgstr[0] "%d Dag"
+msgstr[1] "%d Dagar"

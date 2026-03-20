@@ -145,6 +145,8 @@ export default (props) => {
 				<PanelBody title={__('Text settings', 'surecart')}>
 					<PanelRow>
 						<TextControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							label={__('Out of stock label', 'surecart')}
 							value={out_of_stock_text}
 							onChange={(value) =>
@@ -154,6 +156,8 @@ export default (props) => {
 					</PanelRow>
 					<PanelRow>
 						<TextControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							label={__('Unavailable label', 'surecart')}
 							value={unavailable_text}
 							onChange={(value) =>

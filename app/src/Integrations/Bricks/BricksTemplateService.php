@@ -36,7 +36,7 @@ class BricksTemplateService {
 			}
 
 			// Get the post by product id.
-			$post = $product->post;
+			$post = $product->post ?? null;
 			if ( empty( $post ) ) {
 				return $data;
 			}
@@ -46,5 +46,14 @@ class BricksTemplateService {
 		}
 
 		return $data;
+	}
+
+	/**
+	 * Check if the current page is rendered with Bricks.
+	 *
+	 * @return bool
+	 */
+	public function isRenderedWithBricks(): bool {
+		return class_exists( '\Bricks\Helpers' ) && \Bricks\Helpers::render_with_bricks();
 	}
 }

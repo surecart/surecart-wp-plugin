@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 import Box from '../../ui/Box';
 import { useState } from '@wordpress/element';
 import Upsell from './Upsell';

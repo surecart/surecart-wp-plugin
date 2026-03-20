@@ -27,7 +27,9 @@ if ( ! \SureCart::cart()->isCartEnabled() ) {
  * @param string $icon The icon.
  * @param string $mode The icon position.
  */
-$icon = apply_filters(
+
+// pass custom icon if set.
+$icon = $attributes['custom_icon'] ?? apply_filters(
 	'sc_cart_menu_icon',
 	SureCart::svg()->get( $attributes['cart_icon'] ?? 'shopping-bag' ),
 );

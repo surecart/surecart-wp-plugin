@@ -7,6 +7,7 @@ export default ({
 	suffix,
 	description = '',
 	highlight = false,
+	className = '',
 }) => {
 	if (!children) {
 		return null;
@@ -34,7 +35,7 @@ export default ({
 					}
 				`}
 			/>
-			<div style={style}>
+			<div style={style} className={className}>
 				<div
 					css={css`
 						display: grid;
@@ -109,7 +110,10 @@ export default ({
 									var(--sc-color-gray-300)
 								);
 							border-radius: var(--sc-input-border-radius-medium);
-							box-shadow: var(--sc-shadow-small);
+							box-shadow: var(
+								--sc-card-shadow,
+								var(--sc-shadow-small)
+							);
 							${highlight &&
 							css`
 								position: relative;

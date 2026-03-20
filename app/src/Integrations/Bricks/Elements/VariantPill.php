@@ -53,16 +53,37 @@ class VariantPill extends \Bricks\Element {
 		$this->controls['highlight_text'] = array(
 			'label' => esc_html__( 'Highlight Text Color', 'surecart' ),
 			'type'  => 'color',
+			'css'   => [
+				[
+					'property'  => 'color',
+					'selector'  => '&.sc-pill-option__button--selected',
+					'important' => true,
+				],
+			],
 		);
 
 		$this->controls['highlight_background'] = array(
 			'label' => esc_html__( 'Highlight Background Color', 'surecart' ),
 			'type'  => 'color',
+			'css'   => [
+				[
+					'property'  => 'background-color',
+					'selector'  => '&.sc-pill-option__button--selected',
+					'important' => true,
+				],
+			],
 		);
 
 		$this->controls['highlight_border'] = array(
 			'label' => esc_html__( 'Highlight Border Color', 'surecart' ),
 			'type'  => 'color',
+			'css'   => [
+				[
+					'property'  => 'border-color',
+					'selector'  => '&.sc-pill-option__button--selected',
+					'important' => true,
+				],
+			],
 		);
 	}
 

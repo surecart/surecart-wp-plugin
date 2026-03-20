@@ -41,6 +41,8 @@ export class ScOrderConfirmation {
       this.order = (await await apiFetch({
         path: addQueryArgs(`surecart/v1/checkouts/${this.getSessionId()}`, {
           expand: [
+            'checkout_fees',
+            'shipping_fees',
             'line_items',
             'line_item.price',
             'line_item.fees',

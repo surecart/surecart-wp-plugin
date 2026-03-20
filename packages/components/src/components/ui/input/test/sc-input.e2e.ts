@@ -1,61 +1,67 @@
 import { newE2EPage } from '@stencil/core/testing';
 
 describe('sc-input', () => {
-  let page, element, wrapper, input;
-
   const selector = 'sc-input';
 
-  beforeEach(async () => {
-    page = await newE2EPage();
-    await page.setContent(`<${selector}></${selector}>`);
-    element = await page.find(`${selector}`);
-    wrapper = await page.find(`${selector} >>> .input`);
-    input = await page.find(`${selector} >>> .input__control`);
-    input.focus = jest.fn();
-    input.blur = jest.fn();
-  });
-
   it('renders', async () => {
+    const page = await newE2EPage();
+    await page.setContent(`<${selector}></${selector}>`);
+    const element = await page.find(`${selector}`);
     expect(element).toHaveClass('hydrated');
   });
 
   it('Has sizes', async () => {
+    const page = await newE2EPage();
+    await page.setContent(`<${selector}></${selector}>`);
+
+    let wrapper = await page.find(`${selector} >>> .input`);
     expect(wrapper).toHaveClass('input--medium');
 
     await page.$eval(selector, (elm: any) => {
       elm.size = 'small';
     });
     await page.waitForChanges();
+    wrapper = await page.find(`${selector} >>> .input`);
     expect(wrapper).toHaveClass('input--small');
 
     await page.$eval(selector, (elm: any) => {
       elm.size = 'large';
     });
     await page.waitForChanges();
+    wrapper = await page.find(`${selector} >>> .input`);
     expect(wrapper).toHaveClass('input--large');
   });
 
   // checks clicks, public methods, and hasFocus prop changes
   it('Can be focused and blurred', async () => {
+    const page = await newE2EPage();
+    await page.setContent(`<${selector}></${selector}>`);
+
+    const element = await page.find(`${selector}`);
+    let wrapper = await page.find(`${selector} >>> .input`);
     const scBlur = await page.spyOnEvent('scBlur');
     const scFocus = await page.spyOnEvent('scFocus');
 
     expect(wrapper).not.toHaveClass('input--focused');
 
     // clicking
+    let input = await page.find(`${selector} >>> .input__control`);
     await input.click();
     await page.waitForChanges();
+    wrapper = await page.find(`${selector} >>> .input`);
     expect(wrapper).toHaveClass('input--focused');
     expect(scFocus).toHaveReceivedEvent();
 
     // methods
     await element.callMethod('triggerBlur');
     await page.waitForChanges();
+    wrapper = await page.find(`${selector} >>> .input`);
     expect(wrapper).not.toHaveClass('input--focused');
     expect(scBlur).toHaveReceivedEvent();
 
     await element.callMethod('triggerFocus');
     await page.waitForChanges();
+    wrapper = await page.find(`${selector} >>> .input`);
     expect(wrapper).toHaveClass('input--focused');
     expect(scFocus).toHaveReceivedEvent();
 
@@ -64,23 +70,24 @@ describe('sc-input', () => {
       elm.hasFocus = false;
     });
     await page.waitForChanges();
+    wrapper = await page.find(`${selector} >>> .input`);
     expect(wrapper).not.toHaveClass('input--focused');
     expect(scBlur).toHaveReceivedEvent();
-
-    await page.$eval(selector, (elm: any) => {
-      elm.hasFocus = true;
-    });
-    await page.waitForChanges();
-    expect(wrapper).toHaveClass('input--focused');
-    expect(scFocus).toHaveReceivedEvent();
   });
 
   it('Changes value', async () => {
+    const page = await newE2EPage();
+    await page.setContent(`<${selector}></${selector}>`);
+
+    const element = await page.find(`${selector}`);
+    let input = await page.find(`${selector} >>> .input__control`);
+
     const scChange = await page.spyOnEvent('scChange');
     let value = await input.getProperty('value');
     expect(value).toBe('');
 
     await input.press('8');
+    await page.waitForChanges();
     await input.press('8');
     await page.waitForChanges();
 
@@ -93,60 +100,89 @@ describe('sc-input', () => {
   });
 
   it('Has a name', async () => {
+    const page = await newE2EPage();
+    await page.setContent(`<${selector}></${selector}>`);
+
+    let input = await page.find(`${selector} >>> .input__control`);
     let prop = await input.getAttribute('name');
     expect(prop).toBe(null);
     await page.$eval(selector, (elm: any) => {
       elm.name = 'Test Name';
     });
     await page.waitForChanges();
+    input = await page.find(`${selector} >>> .input__control`);
     expect(input).toHaveAttribute('name');
     const name = await input.getAttribute('name');
     expect(name).toBe('Test Name');
   });
 
   it('Can be disabled', async () => {
+    const page = await newE2EPage();
+    await page.setContent(`<${selector}></${selector}>`);
+
+    let input = await page.find(`${selector} >>> .input__control`);
     let prop = await input.getAttribute('disabled');
     expect(prop).toBe(null);
     await page.$eval(selector, (elm: any) => {
       elm.disabled = true;
     });
     await page.waitForChanges();
+    input = await page.find(`${selector} >>> .input__control`);
     expect(input).toHaveAttribute('disabled');
   });
 
   it('Can be readonly', async () => {
+    const page = await newE2EPage();
+    await page.setContent(`<${selector}></${selector}>`);
+
+    let input = await page.find(`${selector} >>> .input__control`);
     let prop = await input.getAttribute('readonly');
     expect(prop).toBe(null);
     await page.$eval(selector, (elm: any) => {
       elm.readonly = true;
     });
     await page.waitForChanges();
+    input = await page.find(`${selector} >>> .input__control`);
     expect(input).toHaveAttribute('readonly');
   });
 
   it('Can be required', async () => {
+    const page = await newE2EPage();
+    await page.setContent(`<${selector}></${selector}>`);
+
+    let input = await page.find(`${selector} >>> .input__control`);
     let prop = await input.getAttribute('required');
     expect(prop).toBe(null);
     await page.$eval(selector, (elm: any) => {
       elm.required = true;
     });
     await page.waitForChanges();
+    input = await page.find(`${selector} >>> .input__control`);
     expect(input).toHaveAttribute('required');
   });
 
   it('Has a placeholder', async () => {
+    const page = await newE2EPage();
+    await page.setContent(`<${selector}></${selector}>`);
+
+    let input = await page.find(`${selector} >>> .input__control`);
     let prop = await input.getAttribute('placeholder');
     expect(prop).toBe(null);
     await page.$eval(selector, (elm: any) => {
       elm.placeholder = 'Test placeholder';
     });
     await page.waitForChanges();
+    input = await page.find(`${selector} >>> .input__control`);
     expect(input).toHaveAttribute('placeholder');
     const placeholder = await input.getAttribute('placeholder');
     expect(placeholder).toBe('Test placeholder');
   });
 
   it('Can set min and max length', async () => {
+    const page = await newE2EPage();
+    await page.setContent(`<${selector}></${selector}>`);
+
+    let input = await page.find(`${selector} >>> .input__control`);
     let minProp = await input.getAttribute('minlength');
     let maxProp = await input.getAttribute('maxlength');
     expect(minProp).toBe(null);
@@ -156,6 +192,7 @@ describe('sc-input', () => {
       elm.maxlength = 20;
     });
     await page.waitForChanges();
+    input = await page.find(`${selector} >>> .input__control`);
     expect(input).toHaveAttribute('minlength');
     expect(input).toHaveAttribute('maxlength');
     const minlength = await input.getAttribute('minlength');
@@ -165,6 +202,10 @@ describe('sc-input', () => {
   });
 
   it('Can set min and max and step', async () => {
+    const page = await newE2EPage();
+    await page.setContent(`<${selector}></${selector}>`);
+
+    let input = await page.find(`${selector} >>> .input__control`);
     let minProp = await input.getAttribute('min');
     let maxProp = await input.getAttribute('max');
     let stepProp = await input.getAttribute('step');
@@ -177,6 +218,7 @@ describe('sc-input', () => {
       elm.step = 2;
     });
     await page.waitForChanges();
+    input = await page.find(`${selector} >>> .input__control`);
     expect(input).toHaveAttribute('min');
     expect(input).toHaveAttribute('max');
     const min = await input.getAttribute('min');

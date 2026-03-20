@@ -20,9 +20,9 @@
 
 - [sc-flex](../../../ui/flex)
 - [sc-skeleton](../../../ui/skeleton)
+- [sc-line-item](../../../ui/line-item)
 - [sc-empty](../../../ui/empty)
 - [sc-product-line-item](../../../ui/product-line-item)
-- [sc-line-item](../../../ui/line-item)
 - [sc-tag](../../../ui/tag)
 - [sc-divider](../../../ui/divider)
 - [sc-spacing](../../../ui/spacing)
@@ -42,9 +42,9 @@
 graph TD;
   sc-order --> sc-flex
   sc-order --> sc-skeleton
+  sc-order --> sc-line-item
   sc-order --> sc-empty
   sc-order --> sc-product-line-item
-  sc-order --> sc-line-item
   sc-order --> sc-tag
   sc-order --> sc-divider
   sc-order --> sc-spacing
@@ -59,8 +59,10 @@ graph TD;
   sc-order --> sc-icon
   sc-order --> sc-purchase-downloads-list
   sc-empty --> sc-icon
+  sc-product-line-item --> sc-product-line-item-note
   sc-product-line-item --> sc-quantity-select
   sc-product-line-item --> sc-icon
+  sc-product-line-item-note --> sc-icon
   sc-quantity-select --> sc-icon
   sc-dashboard-module --> sc-alert
   sc-alert --> sc-icon

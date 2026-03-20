@@ -9,7 +9,13 @@
 	"supports": {
 		"reusable": false,
 		"html": false,
-		"multiple": false
+		"multiple": false,
+		"color": {
+			"__experimentalSkipSerialization": true,
+			"text": true,
+			"link": false,
+			"background": true
+		}
 	},
 	"attributes": {
 		"text": {

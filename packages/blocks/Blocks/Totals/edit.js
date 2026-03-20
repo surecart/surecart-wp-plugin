@@ -86,6 +86,7 @@ export default ({ attributes, setAttributes }) => {
 				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
 						<ToggleControl
+							__nextHasNoMarginBottom
 							label={__('Collapsible', 'surecart')}
 							checked={collapsible}
 							onChange={(collapsible) => {
@@ -103,6 +104,7 @@ export default ({ attributes, setAttributes }) => {
 						<Fragment>
 							<PanelRow>
 								<ToggleControl
+									__nextHasNoMarginBottom
 									label={__(
 										'Collapsed On Desktop',
 										'surecart'
@@ -120,6 +122,7 @@ export default ({ attributes, setAttributes }) => {
 							</PanelRow>
 							<PanelRow>
 								<ToggleControl
+									__nextHasNoMarginBottom
 									label={__(
 										'Collapsed On Mobile',
 										'surecart'
@@ -137,6 +140,8 @@ export default ({ attributes, setAttributes }) => {
 							</PanelRow>
 							<PanelRow>
 								<TextControl
+									__next40pxDefaultSize
+									__nextHasNoMarginBottom
 									label={__('Order Summary Text', 'surecart')}
 									value={order_summary_text}
 									onChange={(order_summary_text) =>
@@ -147,6 +152,8 @@ export default ({ attributes, setAttributes }) => {
 							</PanelRow>
 							<PanelRow>
 								<TextControl
+									__next40pxDefaultSize
+									__nextHasNoMarginBottom
 									label={__(
 										'Invoice Summary Text',
 										'surecart'

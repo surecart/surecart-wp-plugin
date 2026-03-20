@@ -1,6 +1,6 @@
 import { Component, Element, Event, EventEmitter, h, Method, Prop, State, Watch } from '@stencil/core';
 import { Address } from '../../../types';
-import { countryChoices, hasState } from '../../../functions/address';
+import { countryChoices, getCountryDetails } from '../../../functions/address';
 import { __ } from '@wordpress/i18n';
 import { reportChildrenValidity } from '../../../functions/form-data';
 
@@ -74,13 +74,16 @@ export class ScCompactAddress {
   @Event() scInputAddress: EventEmitter<Partial<Address>>;
 
   /** Holds our country choices. */
-  @State() countryChoices: Array<{ value: string; label: string }> = countryChoices;
+  @State() countryChoices: Array<{ value: string; label: string }>;
 
   /** Holds the regions for a given country. */
   @State() regions: Array<{ value: string; label: string }>;
 
   @State() showState: boolean;
   @State() showPostal: boolean;
+
+  /** Postal code regex pattern for validation. */
+  @State() postalCodeRegex: string;
 
   /** When the state changes, we want to update city and postal fields. */
   @Watch('address')
@@ -114,36 +117,33 @@ export class ScCompactAddress {
   }
 
   /** Set the regions based on the country. */
-  setRegions() {
-    if (hasState(this.address.country)) {
-      import('../address/countries.json').then(module => {
-        this.regions = module?.[this.address.country] as Array<{ value: string; label: string }>;
-      });
-    } else {
-      this.regions = [];
-    }
+  async setRegions() {
+    const countryDetails = await getCountryDetails(this.address?.country);
+    this.regions =
+      countryDetails?.states?.map(state => ({
+        value: state?.code,
+        label: state?.name,
+      })) || [];
+
+    this.placeholders = countryDetails?.address_labels;
+    this.postalCodeRegex = countryDetails?.postal_code_regex || undefined;
   }
 
   componentWillLoad() {
+    this.initCountryChoices();
     this.handleAddressChange();
-    const country = this.countryChoices.find(country => country.value === this.address.country)?.value;
+    const country = this.countryChoices?.find(country => country.value === this.address.country)?.value;
     if (country) {
       this.updateAddress({ country });
     }
+  }
+  async initCountryChoices() {
+    this.countryChoices = await countryChoices();
   }
 
   @Method()
   async reportValidity() {
     return reportChildrenValidity(this.el);
-  }
-
-  getStatePlaceholder() {
-    if (this.placeholders?.state) return this.placeholders.state;
-
-    if (this.address?.country === 'CA') return __('Province', 'surecart');
-    if (this.address?.country === 'US') return __('State', 'surecart');
-
-    return __('Province/Region', 'surecart');
   }
 
   render() {
@@ -171,7 +171,7 @@ export class ScCompactAddress {
             {this.showState && (
               <sc-select
                 exportparts="base:select__base, input, form-control, label, help-text, trigger, panel, caret, search__base, search__input, search__form-control, menu__base, spinner__base, empty"
-                placeholder={this.getStatePlaceholder()}
+                placeholder={this.placeholders?.state}
                 name={this.names.state}
                 autocomplete={'address-level1'}
                 value={this?.address?.state}
@@ -190,12 +190,14 @@ export class ScCompactAddress {
                 placeholder={this.placeholders?.postal_code || __('Postal Code/Zip', 'surecart')}
                 name={this.names.postal_code}
                 onScChange={(e: any) => this.updateAddress({ postal_code: e.target.value || null })}
-                onScInput={(e: any) => this.handleAddressInput({ name: e.target.value || null })}
+                onScInput={(e: any) => this.handleAddressInput({ postal_code: e.target.value || null })}
                 autocomplete={'postal-code'}
                 required={this.required}
                 value={this?.address?.postal_code}
                 squared-top
-                maxlength={5}
+                maxlength={this.address?.country === 'US' ? 5 : undefined}
+                pattern={this.postalCodeRegex}
+                customValidity={this.postalCodeRegex ? __('Please enter a valid postal code', 'surecart') : undefined}
                 squared-left={this.showState}
               />
             )}

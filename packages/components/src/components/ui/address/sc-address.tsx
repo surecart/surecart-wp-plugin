@@ -1,10 +1,46 @@
 import { Component, Element, Event, EventEmitter, h, Method, Prop, State, Watch } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
-import { hasCity, hasPostal, countryChoices } from '../../../functions/address';
+import { countryChoices, getCountryDetails } from '../../../functions/address';
 import { reportChildrenValidity } from '../../../functions/form-data';
-import { Address, CountryLocaleField, CountryLocaleFieldValue } from '../../../types';
-import { getCurrentUserCountryCode, sortAddressFields } from 'src/functions/address-settings';
-import { state as i18nState } from '@store/i18n';
+import { Address, CountryLocaleFieldValue } from '../../../types';
+
+const DEFAULT_COUNTRY_FIELDS: Array<CountryLocaleFieldValue> = [
+  {
+    name: 'country',
+    priority: 30,
+    label: __('Country', 'surecart'),
+  },
+  {
+    name: 'name',
+    priority: 40,
+    label: __('Name or Company Name', 'surecart'),
+  },
+  {
+    name: 'line_1',
+    priority: 50,
+    label: __('Address', 'surecart'),
+  },
+  {
+    name: 'line_2',
+    priority: 60,
+    label: __('Line 2', 'surecart'),
+  },
+  {
+    name: 'city',
+    priority: 70,
+    label: __('City', 'surecart'),
+  },
+  {
+    name: 'state',
+    priority: 80,
+    label: __('State / County', 'surecart'),
+  },
+  {
+    name: 'postal_code',
+    priority: 90,
+    label: __('Postal Code', 'surecart'),
+  },
+];
 
 /**
  * @part base - The elements base wrapper.
@@ -75,26 +111,17 @@ export class ScAddress {
   /** Is the name required */
   @Prop({ reflect: true }) requireName: boolean = false;
 
-  /** Default country fields */
-  @Prop({ mutable: true }) defaultCountryFields: Array<CountryLocaleFieldValue>;
-
-  /** Country fields by country code */
-  @Prop({ mutable: true }) countryFields: Array<CountryLocaleField>;
-
   /** Should we show the city field? */
   @State() showCity: boolean = true;
 
   /** Should we show the postal field? */
   @State() showPostal: boolean = true;
 
-  /** Should we show the state field? */
-  @State() showState: boolean = true;
-
-  /** Holds the regions for a given country. */
-  @State() regions: Array<{ value: string; label: string }>;
+  /** Country details. */
+  @State() countryDetails: any = null;
 
   /** Holds our country choices. */
-  @State() countryChoices: Array<{ value: string; label: string }> = countryChoices;
+  @State() countryChoices: Array<{ value: string; label: string }>;
 
   /** Address change event. */
   @Event() scChangeAddress: EventEmitter<Partial<Address>>;
@@ -104,11 +131,11 @@ export class ScAddress {
 
   /** When the state changes, we want to update city and postal fields. */
   @Watch('address')
-  handleAddressChange() {
+  async handleAddressChange() {
     if (!this.address?.country) return;
-    this.setRegions();
-    this.showPostal = !window?.scData?.google_map_api_key ? hasPostal(this.address.country) : this.showPostal;
-    this.showCity = !window?.scData?.google_map_api_key ? hasCity(this.address.country) : this.showCity;
+    if (!this.countryDetails || this.countryDetails?.code !== this.address.country) {
+      this.countryDetails = await getCountryDetails(this.address.country);
+    }
     this.scChangeAddress.emit(this.address);
     this.scInputAddress.emit(this.address);
   }
@@ -144,31 +171,17 @@ export class ScAddress {
     };
   }
 
-  /** Set the regions based on the country. */
-  setRegions() {
-    import('country-region-data').then(module => {
-      this.regions = (module?.[this.address.country]?.[2] || []).map(region => ({
-        value: region[1],
-        label: this.decodeHtmlEntities(region[0]),
-      }));
-
-      if ( window?.wp?.hooks?.applyFilters ) {
-        this.regions = window.wp.hooks.applyFilters('surecart_address_regions', this.regions, this.address.country) as Array<{ value: string; label: string }>;
-      }
-    });
+  componentWillLoad() {
+    this.initCountryChoices();
+    this.handleAddressChange();
+    this.handleNameChange();
   }
 
-  componentWillLoad() {
-    this.handleAddressChange();
-    this.fetchUserCountry();
-    const country = this.countryChoices.find(country => country.value === this.address?.country)?.value || null;
-
-    // Set default country fields.
-    this.defaultCountryFields = this.defaultCountryFields || i18nState.defaultCountryFields || [];
-    this.countryFields = this.countryFields || i18nState.countryFields || [];
-
+  @Method()
+  async initCountryChoices() {
+    this.countryChoices = await countryChoices();
+    const country = this.countryChoices?.find(country => country.value === this.address?.country)?.value || null;
     this.updateAddress({ country });
-    this.handleNameChange();
   }
 
   @Method()
@@ -176,48 +189,32 @@ export class ScAddress {
     return reportChildrenValidity(this.el);
   }
 
-  async fetchUserCountry() {
-    // If already set user country, don't fetch again.
-    if (this.address?.country) {
-      return;
+  sortedFields() {
+    if (!this.countryDetails || !this?.address?.country) {
+      return DEFAULT_COUNTRY_FIELDS;
     }
 
-    const country = await getCurrentUserCountryCode();
-
-    // Update the address with the user's country.
-    if (country) {
-      this.updateAddress({ country });
-    }
+    return (this?.countryDetails?.address_formats?.edit
+      ?.match(/{{([^}]+)}}/g)
+      .map(match => match.slice(2, -2))
+      .map(field => ({
+        name: field,
+        label: this?.countryDetails?.address_labels?.[field] || DEFAULT_COUNTRY_FIELDS?.find(defaultField => defaultField?.name === field)?.label,
+      })) || []) as CountryLocaleFieldValue[];
   }
 
-  toggleAddressFieldsVisibility(show: boolean) {
-    this.showCity = show;
-    this.showState = show;
-    this.showPostal = show;
+  regions() {
+    let regions =
+      this?.countryDetails?.states?.map(state => ({
+        value: state?.code,
+        label: state?.name,
+      })) || [];
 
-    // If Google Map API key is set, Override the showLine2 value.
-    if (!!window?.scData?.google_map_api_key) {
-      this.showLine2 = show;
+    if (window?.wp?.hooks?.applyFilters) {
+      regions = window.wp.hooks.applyFilters('surecart_address_regions', regions, this?.address?.country) as Array<{ value: string; label: string }>;
     }
-  }
 
-  /**
-   * Compute and return the sorted fields based on current country, defaultCountryFields and countryFields.
-   * This method can be used as a computed property.
-   */
-  sortedFields(): Array<CountryLocaleFieldValue> {
-    const countrySpecificFields = this.countryFields?.[this.address?.country] || {};
-    const mergedCountryFields = (this.defaultCountryFields || []).map(field => {
-      if (countrySpecificFields[field.name]) {
-        return {
-          ...field,
-          ...countrySpecificFields[field.name],
-        };
-      }
-      return field;
-    });
-
-    return sortAddressFields(this.address?.country, mergedCountryFields, this.countryFields);
+    return regions as Array<{ value: string; label: string }>;
   }
 
   getRoundedProps(index: number, length: number) {
@@ -232,17 +229,17 @@ export class ScAddress {
   }
 
   render() {
-    const visibleFields = (this.sortedFields() ?? []).filter(field => {
+    const visibleFields = (this.sortedFields() ?? [])?.filter(field => {
       switch (field.name) {
         case 'name':
           return this.showName;
-        case 'address_2':
+        case 'line_2':
           return this.showLine2 || !!this?.address?.line_2?.length;
         case 'city':
           return this.showCity;
         case 'state':
-          return this.showState && !!this?.regions?.length && !!this?.address?.country;
-        case 'postcode':
+          return !!this?.regions()?.length && !!this?.address?.country;
+        case 'postal_code':
           return this.showPostal;
         default:
           return true;
@@ -297,7 +294,7 @@ export class ScAddress {
                   />
                 );
 
-              case 'address_1':
+              case 'line_1':
                 return (
                   <sc-address-suggestions
                     address={this.address}
@@ -312,7 +309,7 @@ export class ScAddress {
                   />
                 );
 
-              case 'address_2':
+              case 'line_2':
                 return (
                   <sc-input
                     exportparts="base:input__base, input, form-control, label, help-text"
@@ -353,7 +350,7 @@ export class ScAddress {
                     autocomplete={'address-level1'}
                     value={this?.address?.state}
                     onScChange={(e: any) => this.updateAddress({ state: e.target.value || e.detail?.value || null })}
-                    choices={this.regions}
+                    choices={this.regions()}
                     required={this.required}
                     disabled={this.disabled}
                     search
@@ -362,7 +359,7 @@ export class ScAddress {
                   />
                 );
 
-              case 'postcode':
+              case 'postal_code':
                 return (
                   <sc-input
                     exportparts="base:input__base, input, form-control, label, help-text"
@@ -374,7 +371,9 @@ export class ScAddress {
                     required={this.required}
                     value={this?.address?.postal_code}
                     disabled={this.disabled}
-                    maxlength={this.address?.country === 'US' ? 5 : null}
+                    maxlength={this.address?.country === 'US' ? 5 : undefined}
+                    pattern={this.countryDetails?.postal_code_regex || undefined}
+                    customValidity={this.countryDetails?.postal_code_regex ? __('Please enter a valid postal code', 'surecart') : undefined}
                     aria-label={field.label}
                     {...roundedProps}
                   />

@@ -65,7 +65,12 @@
 	},
 	"textdomain": "surecart",
 	"editorScript": "file:./index.js",
-	"style": ["file:./style-index.css", "surecart-drawer"],
+	"style": [
+		"file:./style-index.css",
+		"surecart-drawer",
+		"surecart-block-ui",
+		"wp-a11y"
+	],
 	"render": "file:./view.php",
-	"viewScriptModule": ["@surecart/sidebar"]
+	"viewScriptModule": ["@surecart/sidebar", "wp-a11y"]
 }

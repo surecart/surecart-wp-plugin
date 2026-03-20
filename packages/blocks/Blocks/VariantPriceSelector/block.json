@@ -1,5 +1,5 @@
 {
-	"apiVersion": 2,
+	"apiVersion": 3,
 	"name": "surecart/variant-price-selector",
 	"title": "Product Options Selector",
 	"description": "Displays a selector for selecting product prices and/or variants.",

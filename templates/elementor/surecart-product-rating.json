@@ -1,0 +1,44 @@
+{
+	"settings": {
+		"content_width": "full",
+		"flex_gap": {
+			"column": "6",
+			"row": "0",
+			"isLinked": false,
+			"unit": "px",
+			"size": 0
+		},
+		"padding": {
+			"unit": "px",
+			"top": "0",
+			"right": "0",
+			"bottom": "0",
+			"left": "0",
+			"isLinked": true
+		},
+		"_title": "Product Rating",
+		"flex_direction": "row",
+		"flex_justify_content": "flex-start",
+		"flex_align_items": "center"
+	},
+	"elements": [
+		{
+			"id": "5146cd72",
+			"settings": [],
+			"elements": [],
+			"isInner": false,
+			"widgetType": "surecart-product-review-average-rating-stars",
+			"elType": "widget"
+		},
+		{
+			"id": "5885e97b",
+			"settings": {
+				"style_variant": "plus-sign"
+			},
+			"elements": [],
+			"isInner": false,
+			"widgetType": "surecart-product-review-total-rating",
+			"elType": "widget"
+		}
+	]
+}

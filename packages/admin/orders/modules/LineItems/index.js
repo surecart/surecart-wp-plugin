@@ -23,8 +23,8 @@ import { useEntityRecords } from '@wordpress/core-data';
 import Box from '../../../ui/Box';
 import { formatTaxDisplay } from '../../../util/tax';
 import LineItem from './LineItem';
-import { getSKUText } from '../../../util/products';
 import RefundLineItem from '../Refund/RefundLineItem';
+import DisputeLineItems from '../Dispute/DisputeLineItems';
 
 const status = {
 	processing: __('Processing', 'surecart'),
@@ -37,6 +37,8 @@ const status = {
 
 export default ({ order, checkout, chargeIds }) => {
 	const line_items = checkout?.line_items?.data;
+	const checkout_fees = checkout?.checkout_fees?.data;
+	const shipping_fees = checkout?.shipping_fees?.data;
 
 	// get the refunds.
 	const { records: refunds, hasResolved } = useEntityRecords(
@@ -216,6 +218,8 @@ export default ({ order, checkout, chargeIds }) => {
 						</>
 					)}
 
+					<DisputeLineItems chargeIds={chargeIds} order={order} />
+
 					{checkout?.tax_reverse_charged_amount > 0 && (
 						<LineItem
 							label={__(
@@ -244,11 +248,11 @@ export default ({ order, checkout, chargeIds }) => {
 							scratch={item.scratch_display_amount}
 							trial={item?.price?.trial_text}
 							sku={item?.sku}
+							note={item?.display_note}
 							interval={`${item?.price?.short_interval_text} ${item?.price?.short_interval_count_text}`}
 						></ScProductLineItem>
 					);
 				})}
-
 				{/* Subtotal */}
 				{checkout?.subtotal_amount !== checkout?.total_amount && (
 					<LineItem
@@ -256,6 +260,18 @@ export default ({ order, checkout, chargeIds }) => {
 						currency={checkout?.currency}
 						value={checkout?.subtotal_amount}
 					/>
+				)}
+				{checkout_fees?.length > 0 && (
+					<Fragment>
+						{checkout_fees?.map((fee) => (
+							<LineItem
+								key={fee?.id}
+								label={fee?.description}
+								currency={checkout?.currency}
+								value={fee?.amount}
+							/>
+						))}
+					</Fragment>
 				)}
 
 				{/* Trial */}
@@ -293,29 +309,46 @@ export default ({ order, checkout, chargeIds }) => {
 
 				{/* Shipping */}
 				{!!checkout?.shipping_amount && (
-					<span>
-						<LineItem
-							label={`${__('Shipping', 'surecart')} ${
-								selectedShippingMethod?.name
-									? `(${selectedShippingMethod?.name})`
-									: ''
-							}`}
-							currency={checkout?.currency}
-							value={checkout?.shipping_amount}
-						/>
-						{checkout?.selected_shipping_choice?.shipping_method
-							?.name && (
-							<span
-								css={css`
-									font-size: var(--sc-font-size-small);
-									line-height: var(--sc-line-height-dense);
-									color: var(--sc-input-label-color);
-								`}
-							>
-								{`(${checkout?.selected_shipping_choice?.shipping_method?.name})`}
-							</span>
+					<>
+						<span>
+							<LineItem
+								label={`${__('Shipping', 'surecart')} ${
+									selectedShippingMethod?.name
+										? `(${selectedShippingMethod?.name})`
+										: ''
+								}`}
+								currency={checkout?.currency}
+								value={checkout?.shipping_amount}
+							/>
+							{checkout?.selected_shipping_choice?.shipping_method
+								?.name && (
+								<span
+									css={css`
+										font-size: var(--sc-font-size-small);
+										line-height: var(
+											--sc-line-height-dense
+										);
+										color: var(--sc-input-label-color);
+									`}
+								>
+									{`(${checkout?.selected_shipping_choice?.shipping_method?.name})`}
+								</span>
+							)}
+						</span>
+
+						{shipping_fees?.length > 0 && (
+							<>
+								{shipping_fees?.map((fee) => (
+									<LineItem
+										key={fee?.id}
+										label={fee?.description}
+										currency={checkout?.currency}
+										value={fee?.amount}
+									/>
+								))}
+							</>
 						)}
-					</span>
+					</>
 				)}
 
 				{/* Tax */}

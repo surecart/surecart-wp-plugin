@@ -109,6 +109,18 @@ class BumpRestServiceProvider extends RestServiceProvider implements RestService
 					'type'        => 'string',
 					'context'     => [ 'view', 'edit', 'embed' ],
 				],
+				'metadata'    => [
+					'description' => esc_html__( 'Set of key-value pairs for custom data.', 'surecart' ),
+					'type'        => 'object',
+					'context'     => [ 'view', 'edit', 'embed' ],
+					'properties'  => [
+						'description' => [
+							'description'       => esc_html__( 'Offer description.', 'surecart' ),
+							'type'              => 'string',
+							'sanitize_callback' => 'wp_kses_post',
+						],
+					],
+				],
 			],
 		];
 

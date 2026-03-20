@@ -1,6 +1,7 @@
 {
 	"name": "surecart/upsell-no-thanks",
 	"title": "Decline Upsell Button",
+	"apiVersion": 3,
 	"description": "Display a upsell decline button.",
 	"category": "surecart-upsell-page",
 	"keywords": ["no", "thanks", "button", "decline", "upsell"],

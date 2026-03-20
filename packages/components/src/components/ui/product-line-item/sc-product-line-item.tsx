@@ -83,6 +83,9 @@ export class ScProductLineItem {
   /** The purchasable status display */
   @Prop() purchasableStatus: string;
 
+  /** The line item note */
+  @Prop() note: string;
+
   /** Emitted when the quantity changes. */
   @Event({ bubbles: false }) scUpdateQuantity: EventEmitter<number>;
 
@@ -90,6 +93,8 @@ export class ScProductLineItem {
   @Event({ bubbles: false }) scRemove: EventEmitter<void>;
 
   render() {
+    const isImageFallback = this.image?.type === 'fallback';
+
     return (
       <div class="base" part="base">
         <div
@@ -102,7 +107,11 @@ export class ScProductLineItem {
             'product-line-item__removable': this.removable,
           }}
         >
-          {!!this.image?.src ? <img {...(this.image as any)} part="image" class="item__image" /> : <div class="item__image-placeholder"></div>}
+          {!!this.image?.src ? (
+            <img {...(this.image as any)} part={isImageFallback ? 'placeholder__image' : 'image'} class={isImageFallback ? 'item__image-placeholder' : 'item__image'} />
+          ) : (
+            <div class="item__image-placeholder" part="placeholder__image"></div>
+          )}
           <div class="item__text-container">
             <div class="item__row">
               <div class="item__title" part="title">
@@ -127,6 +136,7 @@ export class ScProductLineItem {
                   </div>
                 )}
                 {!!this.purchasableStatus && <div>{this.purchasableStatus}</div>}
+                {!!this.note && <sc-product-line-item-note note={this.note} />}
               </div>
 
               <div class="item__description" part="trial-fees">
@@ -154,6 +164,7 @@ export class ScProductLineItem {
                     /** translators: %1$s: product name, %2$s: product price name */
                     sprintf(__('Change Quantity - %1$s %2$s', 'surecart'), this.name, this.price)
                   }
+                  productName={this.name}
                 ></sc-quantity-select>
               ) : (
                 <span class="item__description" part="static-quantity">
@@ -170,7 +181,7 @@ export class ScProductLineItem {
                     }
                   }}
                   // translators: Remove Item - Product Name Product Price Name
-                  aria-label={sprintf(__('Remove Item - %1$s %2$s', 'surecart'), this.name, this.price)}
+                  aria-label={sprintf(__('Remove Item - %1$s %2$s', 'surecart'), this.name, this.amount)}
                   tabIndex={0}
                 >
                   <sc-icon exportparts="base:remove-icon__base" class="item__remove" name="x" />

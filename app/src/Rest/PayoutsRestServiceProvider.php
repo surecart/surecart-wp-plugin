@@ -142,7 +142,7 @@ class PayoutsRestServiceProvider extends RestServiceProvider implements RestServ
 	 * @return true|\WP_Error True if the request has access to complete an item, WP_Error object otherwise.
 	 */
 	public function complete_permissions_check( $request ) {
-		return get_current_user( 'edit_sc_affiliates' );
+		return current_user_can( 'edit_sc_affiliates' );
 	}
 
 	/**
@@ -152,6 +152,6 @@ class PayoutsRestServiceProvider extends RestServiceProvider implements RestServ
 	 * @return true|\WP_Error True if the request has access to make a payout processing, WP_Error object otherwise.
 	 */
 	public function make_processing_permissions_check( $request ) {
-		return get_current_user( 'edit_sc_affiliates' );
+		return current_user_can( 'edit_sc_affiliates' );
 	}
 }

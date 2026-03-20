@@ -13,7 +13,7 @@ import { useDispatch, useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import { store as noticesStore } from '@wordpress/notices';
 import { addQueryArgs } from '@wordpress/url';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 import apiFetch from '@wordpress/api-fetch';
 
 import Error from '../components/Error';
@@ -82,7 +82,7 @@ export default () => {
 		const r = confirm(
 			sprintf(
 				__(
-					'Warning: Deleting "%s" will permanently remove all associated data, including orders and subscriptions. This action cannot be undone. Are you sure you want to continue?',
+					'Warning: Deleting "%s" will permanently remove all associated subscriptions, payments, and purchases within 24 hours. This action cannot be undone. Are you sure you want to continue?',
 					'surecart'
 				),
 				customer?.name ||

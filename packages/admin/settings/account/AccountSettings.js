@@ -5,6 +5,8 @@ import {
 	ScSelect,
 	ScAddress,
 	ScIcon,
+	ScAlert,
+	ScButton,
 } from '@surecart/components-react';
 import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
@@ -20,6 +22,7 @@ export default () => {
 	const { save } = useSave();
 
 	const {
+		record: savedAccount,
 		editedRecord: accountItem,
 		edit: editAccountItem,
 		hasResolved: hasLoadedAccountItem,
@@ -110,6 +113,42 @@ export default () => {
 						type="url"
 					></ScInput>
 
+					<ScInput
+						value={accountItem?.slug}
+						label={__('Store ID / Subdomain', 'surecart')}
+						onScInput={(e) =>
+							editAccountItem({ slug: e.target.value })
+						}
+						help={__(
+							'This will be used to identify your store in URLs. It can only contain letters, numbers, and dashes.',
+							'surecart'
+						)}
+						required
+					></ScInput>
+
+					<ScSelect
+						search
+						value={accountItem?.time_zone}
+						onScChange={(e) =>
+							editAccountItem({ time_zone: e.target.value })
+						}
+						choices={Object.keys(scData?.time_zones || {}).map(
+							(value) => {
+								const label = scData?.time_zones[value];
+								return {
+									label,
+									value,
+								};
+							}
+						)}
+						label={__('Time Zone', 'surecart')}
+						help={__(
+							'Change this if you want the store to be in a different time zone than your server.',
+							'surecart'
+						)}
+						required
+					/>
+
 					<div
 						css={css`
 							grid-column: 1 / 3;
@@ -135,132 +174,122 @@ export default () => {
 							)}
 							label={__('Store Currency', 'surecart')}
 							required
-							disabled={accountItem?.currency_locked}
-							{...(accountItem?.currency_locked
-								? {}
-								: {
-										help: __(
-											'The default currency for new products.',
-											'surecart'
-										),
-								  })}
+							help={__(
+								'The currency for your store checkouts and default currency for new products.',
+								'surecart'
+							)}
 						/>
-						{accountItem?.currency_locked && (
-							<div
-								css={css`
-									padding: var(--sc-spacing-small);
-									margin: 0;
-									margin-top: var(--sc-spacing-small);
-									background: var(
-										--sc-color-brand-main-background
-									);
-									display: flex;
-									align-items: center;
-									gap: var(--sc-spacing-small);
-									border-radius: var(
-										--sc-border-radius-small
-									);
-								`}
-							>
-								<ScIcon name="alert-circle" />
-								<div>
-									{__(
-										'This option is locked after live orders are placed. To change your store currency, please',
-										'surecart'
-									)}{' '}
-									<a
-										href="https://surecart.com/support/open-a-ticket/"
-										target="_blank"
-										rel="noreferrer"
-									>
-										{__('contact support.', 'surecart')}
-									</a>
-								</div>
-							</div>
-						)}
 					</div>
 
-					<ScSelect
-						search
-						value={accountItem?.time_zone}
-						onScChange={(e) =>
-							editAccountItem({ time_zone: e.target.value })
-						}
-						choices={Object.keys(scData?.time_zones || {}).map(
-							(value) => {
-								const label = scData?.time_zones[value];
-								return {
-									label,
-									value,
-								};
-							}
+					{savedAccount?.currency &&
+						savedAccount?.currency !== accountItem?.currency && (
+							<ScAlert
+								type="warning"
+								open={true}
+								css={css`
+									grid-column: 1 / 3;
+									&::part(base) {
+										margin: 0;
+									}
+								`}
+							>
+								<strong>{__('Important:', 'surecart')}</strong>
+								&nbsp;
+								{__(
+									"Customers can only make purchases in your active store currency. Changing your store currency will cause existing product checkouts to fail until those products and prices are recreated in the new currency. If you have existing orders, analytics reports will also become inaccurate as they don't separate by currency.",
+									'surecart'
+								)}
+								<br />
+								<ScButton
+									href="https://surecart.com/docs/switching-store-currency"
+									target="_blank"
+									rel="noreferrer"
+									type="link"
+									style={{
+										'--sc-button-link-color':
+											'var(--sc-color-warning-600)',
+									}}
+								>
+									{__(
+										'Learn about all implications before switching',
+										'surecart'
+									)}
+									<ScIcon
+										name="arrow-up-right"
+										slot="suffix"
+										style={{
+											width: '14px',
+											height: '14px',
+										}}
+									/>
+								</ScButton>
+							</ScAlert>
 						)}
-						label={__('Time Zone', 'surecart')}
-						help={__(
-							'Change this if you want the store to be in a different time zone than your server.',
-							'surecart'
-						)}
-						required
-					/>
 
-					<ScSelect
-						value={accountItem?.locale}
-						onScChange={(e) =>
-							editAccountItem({ locale: e.target.value })
-						}
-						choices={[
-							{
-								value: 'en',
-								label: 'English - United States',
-							},
-							{
-								value: 'bg',
-								label: 'български (Bŭlgarski)',
-							},
-							{
-								value: 'de',
-								label: 'Deutsch',
-							},
-							{
-								value: 'es',
-								label: 'Español',
-							},
-							{
-								value: 'fr',
-								label: 'Français',
-							},
-							{
-								value: 'it',
-								label: 'Italiano',
-							},
-							{
-								value: 'ja',
-								label: '日本 (Nihon)',
-							},
-							{
-								value: 'nl',
-								label: 'Nederland',
-							},
-							{
-								value: 'pl',
-								label: 'Polski',
-							},
-							{
-								value: 'pt',
-								label: 'Português',
-							},
-							{
-								value: 'pt_br',
-								label: 'Português - Brasil',
-							},
-						]}
-						label={__('Store Language', 'surecart')}
-						help={__(
-							'The language used for notifications, invoices, etc.',
-							'surecart'
-						)}
-						required
-					/>
+					<div
+						css={css`
+							grid-column: 1 / 3;
+						`}
+					>
+						<ScSelect
+							value={accountItem?.locale}
+							onScChange={(e) =>
+								editAccountItem({ locale: e.target.value })
+							}
+							choices={[
+								{
+									value: 'en',
+									label: 'English - United States',
+								},
+								{
+									value: 'bg',
+									label: 'български (Bŭlgarski)',
+								},
+								{
+									value: 'de',
+									label: 'Deutsch',
+								},
+								{
+									value: 'es',
+									label: 'Español',
+								},
+								{
+									value: 'fr',
+									label: 'Français',
+								},
+								{
+									value: 'it',
+									label: 'Italiano',
+								},
+								{
+									value: 'ja',
+									label: '日本 (Nihon)',
+								},
+								{
+									value: 'nl',
+									label: 'Nederland',
+								},
+								{
+									value: 'pl',
+									label: 'Polski',
+								},
+								{
+									value: 'pt',
+									label: 'Português',
+								},
+								{
+									value: 'pt_br',
+									label: 'Português - Brasil',
+								},
+							]}
+							label={__('Store Language', 'surecart')}
+							help={__(
+								'The language used for notifications, invoices, etc.',
+								'surecart'
+							)}
+							required
+						/>
+					</div>
 
 					<ScInput
 						label={__('Terms Page', 'surecart')}
@@ -386,8 +415,6 @@ export default () => {
 					onScInputAddress={(e) =>
 						brandEditItem({ address: e.detail })
 					}
-					defaultCountryFields={scData.i18n.defaultCountryFields}
-					countryFields={scData.i18n.countryFields}
 				/>
 			</SettingsBox>
 		</SettingsTemplate>

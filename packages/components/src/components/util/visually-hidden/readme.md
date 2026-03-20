@@ -12,6 +12,7 @@
  - [sc-checkout-product-price-variant-selector](../../controllers/checkout-form/sc-checkout-product-price-variant-selector)
  - [sc-form-control](../../ui/form-control)
  - [sc-image-slider](../../ui/sc-image-slider)
+ - [sc-line-item-total](../../controllers/checkout-form/line-item-total)
  - [sc-order-submit](../../controllers/checkout-form/order-submit)
  - [sc-pagination](../../ui/pagination)
  - [sc-payment](../../controllers/checkout-form/payment)
@@ -28,6 +29,7 @@ graph TD;
   sc-checkout-product-price-variant-selector --> sc-visually-hidden
   sc-form-control --> sc-visually-hidden
   sc-image-slider --> sc-visually-hidden
+  sc-line-item-total --> sc-visually-hidden
   sc-order-submit --> sc-visually-hidden
   sc-pagination --> sc-visually-hidden
   sc-payment --> sc-visually-hidden

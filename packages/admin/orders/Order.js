@@ -60,6 +60,8 @@ export default () => {
 				context: 'edit',
 				expand: [
 					'checkout',
+					'checkout.checkout_fees',
+					'checkout.shipping_fees',
 					'checkout.charge',
 					'checkout.customer',
 					'checkout.tax_identifier',
@@ -93,6 +95,8 @@ export default () => {
 				{
 					expand: [
 						'checkout',
+						'checkout.checkout_fees',
+						'checkout.shipping_fees',
 						'checkout.charge',
 						'checkout.customer',
 						'checkout.tax_identifier',
@@ -204,7 +208,7 @@ export default () => {
 			});
 		}
 
-		if (['paid'].includes(orderStatus)) {
+		if (['paid', 'processing'].includes(orderStatus)) {
 			menuItems.push({
 				title: __('Resend Notification', 'surecart'),
 				modal: 'order_resend_notification',

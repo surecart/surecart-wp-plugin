@@ -32,7 +32,12 @@ export default ({ upsell, onUpdate }) => {
 
 	return (
 		<>
-			<ScRadioGroup label={__('Discount', 'surecart')}>
+			<ScRadioGroup
+				label={__('Type', 'surecart')}
+				style={{
+					'--sc-input-label-margin': 'var(--sc-spacing-medium)',
+				}}
+			>
 				<ScRadio
 					checked={type === 'none'}
 					onClick={() => {

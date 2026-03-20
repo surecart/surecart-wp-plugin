@@ -1,21 +1,24 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/react';
 import { SearchControl } from '@wordpress/components';
-import { allCountries } from 'country-region-data';
-import { useState } from 'react';
+import { ScSkeleton, ScTag } from '@surecart/components-react';
 import Country from './Country';
 import { __ } from '@wordpress/i18n';
+import { useState, useMemo } from '@wordpress/element';
+import { useCountries } from '../../hooks/useAtlas';
 
 export default ({ value, onChange }) => {
 	const [search, setSearch] = useState('');
+	const { countries: allCountries, loading: fetching } = useCountries();
 
-	const countries = allCountries.filter(
-		(country) =>
-			country[0].toLowerCase().includes(search.toLowerCase()) ||
-			country[2].find((state) => {
-				return state[0].toLowerCase().includes(search.toLowerCase());
-			})
-	);
+	const countries = useMemo(() => {
+		if (!allCountries?.length) return [];
+
+		const searchLower = search.toLowerCase();
+		return allCountries.filter((country) =>
+			country?.name?.toLowerCase().includes(searchLower)
+		);
+	}, [allCountries, search]);
 
 	const onChangeSelection = (newValue, country) => {
 		// country removed.
@@ -41,6 +44,23 @@ export default ({ value, onChange }) => {
 		});
 	};
 
+	if (fetching) {
+		return (
+			<div
+				css={css`
+					display: flex;
+					flex-direction: column;
+					gap: 1.5em;
+					margin-bottom: 2em;
+					padding: 1em;
+				`}
+			>
+				<ScSkeleton style={{ width: '45%' }}></ScSkeleton>
+				<ScSkeleton style={{ width: '65%' }}></ScSkeleton>
+			</div>
+		);
+	}
+
 	return (
 		<div
 			css={css`
@@ -65,20 +85,54 @@ export default ({ value, onChange }) => {
 					__nextHasNoMarginBottom
 				/>
 			</div>
+			{value?.length > 0 && (
+				<div
+					css={css`
+						padding: 0 var(--sc-spacing-medium)
+							var(--sc-spacing-medium);
+						display: flex;
+						flex-wrap: wrap;
+						gap: var(--sc-spacing-x-small);
+					`}
+				>
+					{value.map((item) => {
+						const country = allCountries.find(
+							(c) => c.code === item.country
+						);
+						return (
+							<ScTag
+								key={item.country}
+								size="small"
+								clearable
+								pill
+								onScClear={() =>
+									onChangeSelection(null, item.country)
+								}
+							>
+								{country?.name || item.country}
+							</ScTag>
+						);
+					})}
+				</div>
+			)}
 			<div
 				css={css`
-					height: 400px;
+					height: 300px;
 					overflow-y: auto;
 				`}
+				role="listbox"
+				aria-label={__('Countries and regions list', 'surecart')}
 			>
 				{countries.map((country) => (
 					<Country
-						key={country[0]}
-						country={country}
-						value={value.find((v) => v.country === country[1])}
+						key={country?.code}
+						countryIsoCode={country?.code}
+						countryName={country?.name}
+						value={value.find((v) => v.country === country?.code)}
 						onChange={(newValue) =>
-							onChangeSelection(newValue, country[1])
+							onChangeSelection(newValue, country?.code)
 						}
+						statesCount={country?.states_count}
 					/>
 				))}
 			</div>

@@ -28,4 +28,23 @@ class OrderScriptsController extends AdminModelEditController {
 	 * @var string
 	 */
 	protected $path = 'admin/orders';
+
+	/**
+	 * Enqueue scripts.
+	 *
+	 * @return void
+	 */
+	public function enqueue() {
+		parent::enqueue();
+		// Enqueue CodeMirror editor with wp.codeEditor API.
+		wp_enqueue_code_editor(
+			[
+				'type'       => 'application/json',
+				'codemirror' => [
+					'indentUnit' => 2,
+					'tabSize'    => 2,
+				],
+			]
+		);
+	}
 }

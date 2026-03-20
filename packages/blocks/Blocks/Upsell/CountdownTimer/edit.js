@@ -88,6 +88,7 @@ export default ({ attributes, setAttributes }) => {
 				<PanelBody title={__('Text settings', 'surecart')}>
 					<PanelRow>
 						<ToggleControl
+							__nextHasNoMarginBottom
 							label={__('Show clock icon', 'surecart')}
 							checked={show_icon}
 							onChange={() =>

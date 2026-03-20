@@ -2,8 +2,12 @@
  * WordPress dependencies
  */
 import { useSelect } from '@wordpress/data';
-import { useState } from '@wordpress/element';
-import { store as blockEditorStore } from '@wordpress/block-editor';
+import { useMemo, useState } from '@wordpress/element';
+import {
+	BlockContextProvider,
+	store as blockEditorStore,
+} from '@wordpress/block-editor';
+import { store as coreStore } from '@wordpress/core-data';
 
 /**
  * Internal dependencies
@@ -20,15 +24,44 @@ export default (props) => {
 		(select) => !!select(blockEditorStore).getBlocks(clientId).length,
 		[clientId]
 	);
+
+	const post = useSelect(
+		(select) => {
+			const { getEntityRecord } = select(coreStore);
+			const postId = attributes?.product_post_id;
+			if (!postId) {
+				return null;
+			}
+			return getEntityRecord('postType', 'sc_product', postId);
+		},
+		[attributes?.product_post_id]
+	);
+
+	const blockContext = useMemo(() => {
+		return {
+			...(post?.type ? { postType: post.type } : {}),
+			...(post?.id ? { postId: post.id } : {}),
+			...(post?.class_list ? { classList: post.class_list } : {}),
+			...(name ? { providerBlock: name } : {}),
+		};
+	}, [post, name]);
+
 	const Component = hasInnerBlocks ? QueryContent : QueryPlaceholder;
+
 	return (
 		<>
-			<Component
-				{...props}
-				openPatternSelectionModal={() =>
-					setIsPatternSelectionModalOpen(true)
-				}
-			/>
+			<BlockContextProvider
+				key={blockContext?.postId}
+				value={blockContext}
+			>
+				<Component
+					{...props}
+					openPatternSelectionModal={() =>
+						setIsPatternSelectionModalOpen(true)
+					}
+				/>
+			</BlockContextProvider>
+
 			{isPatternSelectionModalOpen && (
 				<PatternSelectionModal
 					clientId={clientId}

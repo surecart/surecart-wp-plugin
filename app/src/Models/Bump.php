@@ -82,4 +82,13 @@ class Bump extends Model {
 	protected function getTotalDisplayAmountAttribute() {
 		return Currency::format( $this->total_amount, $this->currency );
 	}
+
+	/**
+	 * Get the rendered bump description attribute.
+	 *
+	 * @return string
+	 */
+	public function getRenderedDescriptionAttribute() {
+		return ! empty( $this->metadata->description ) ? wp_kses_post( wpautop( $this->metadata->description ) ) : '';
+	}
 }

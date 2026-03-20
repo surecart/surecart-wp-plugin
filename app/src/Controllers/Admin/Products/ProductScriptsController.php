@@ -99,7 +99,7 @@ class ProductScriptsController extends AdminModelEditController {
 
 		wp_add_inline_script(
 			'surecart-components',
-			sprintf( 'wp.blocks.setCategories( %s );', wp_json_encode( $editor_settings['blockCategories'] ) ),
+			sprintf( 'wp.blocks?.setCategories( %s );', wp_json_encode( $editor_settings['blockCategories'] ) ),
 			'before'
 		);
 
@@ -163,7 +163,7 @@ class ProductScriptsController extends AdminModelEditController {
 
 		wp_add_inline_script(
 			'wp-blocks',
-			sprintf( 'wp.blocks.setCategories( %s );', wp_json_encode( isset( $editor_settings['blockCategories'] ) ? $editor_settings['blockCategories'] : array() ) ),
+			sprintf( 'wp.blocks?.setCategories( %s );', wp_json_encode( isset( $editor_settings['blockCategories'] ) ? $editor_settings['blockCategories'] : array() ) ),
 			'after'
 		);
 

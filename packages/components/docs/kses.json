@@ -1,8 +1,6 @@
 {
   "sc-address": {
     "address": true,
-    "country-fields": true,
-    "default-country-fields": true,
     "disabled": true,
     "label": true,
     "loading": true,
@@ -320,6 +318,12 @@
     "class": true,
     "slot": true
   },
+  "sc-checkout-razorpay-payment-provider": {
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-checkout-stock-alert": {
     "style": true,
     "id": true,
@@ -482,7 +486,6 @@
   "sc-customer-edit": {
     "customer": true,
     "heading": true,
-    "i18n": true,
     "success-url": true,
     "style": true,
     "id": true,
@@ -647,8 +650,9 @@
   },
   "sc-downloads-list": {
     "customer-id": true,
-    "downloads": true,
     "heading": true,
+    "product-id": true,
+    "query": true,
     "style": true,
     "id": true,
     "class": true,
@@ -864,6 +868,7 @@
     "autocorrect": true,
     "autofocus": true,
     "clearable": true,
+    "custom-validity": true,
     "disabled": true,
     "has-focus": true,
     "help": true,
@@ -1297,6 +1302,7 @@
     "slot": true
   },
   "sc-order-submit": {
+    "background-color": true,
     "currency-code": true,
     "full": true,
     "icon": true,
@@ -1309,6 +1315,7 @@
     "secure-notice-text": true,
     "show-total": true,
     "size": true,
+    "text-color": true,
     "type": true,
     "style": true,
     "id": true,
@@ -1336,6 +1343,7 @@
     "gb-vat-label": true,
     "help-text": true,
     "other-label": true,
+    "required": true,
     "show": true,
     "tax-id-types": true,
     "style": true,
@@ -1529,6 +1537,18 @@
   "sc-pill-option": {
     "is-selected": true,
     "is-unavailable": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-popover": {
+    "disabled": true,
+    "distance": true,
+    "hoist": true,
+    "open": true,
+    "placement": true,
+    "skidding": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1745,6 +1765,7 @@
     "interval": true,
     "max": true,
     "name": true,
+    "note": true,
     "price": true,
     "purchasable-status": true,
     "quantity": true,
@@ -1754,6 +1775,13 @@
     "sku": true,
     "trial": true,
     "variant": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-product-line-item-note": {
+    "note": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1839,6 +1867,7 @@
   },
   "sc-provisional-banner": {
     "claim-url": true,
+    "expired": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1863,6 +1892,7 @@
     "has-focus": true,
     "max": true,
     "min": true,
+    "product-name": true,
     "quantity": true,
     "size": true,
     "style": true,
@@ -1893,6 +1923,16 @@
     "class": true,
     "slot": true
   },
+  "sc-razorpay-add-method": {
+    "currency": true,
+    "customer-id": true,
+    "live-mode": true,
+    "success-url": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-recurring-price-choice-container": {
     "label": true,
     "prices": true,
@@ -1901,6 +1941,14 @@
     "show-amount": true,
     "show-control": true,
     "show-details": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-review-stars": {
+    "rating": true,
+    "size": true,
     "style": true,
     "id": true,
     "class": true,
@@ -2071,6 +2119,7 @@
     "slot": true
   },
   "sc-subscription-ad-hoc-confirm": {
+    "currency-code": true,
     "heading": true,
     "price": true,
     "style": true,
@@ -2297,6 +2346,12 @@
     "class": true,
     "slot": true
   },
+  "sc-test-mode-info": {
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-text": {
     "tag": true,
     "truncate": true,
@@ -2370,6 +2425,7 @@
     "slot": true
   },
   "sc-total": {
+    "checkout": true,
     "total": true,
     "style": true,
     "id": true,

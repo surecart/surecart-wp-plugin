@@ -121,7 +121,6 @@ exports[`sc-payment renders mock processor with stripe 1`] = `
               This is a test payment processor used to simulate test transactions. It is only available in test mode.
             </sc-payment-selected>
           </sc-card>
-          <sc-checkout-paystack-payment-provider></sc-checkout-paystack-payment-provider>
         </sc-payment-method-choice>
       </sc-toggles>
     </sc-form-control>

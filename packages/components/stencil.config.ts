@@ -22,11 +22,16 @@ export const config: Config = {
   //   },
   // },
   testing: {
-    // browserHeadless: false,
+    browserWaitUntil: 'networkidle0', // Wait until network is idle
+    browserHeadless: true,
+    browserArgs: process.env.CI
+      ? ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage', '--disable-gpu']
+      : ['--disable-dev-shm-usage'],
+    testPathIgnorePatterns: ['node_modules', 'dist'],
     transform: {
       '^.+\\.(ts|tsx|js|jsx|css)$': '@stencil/core/testing/jest-preprocessor',
     },
-    transformIgnorePatterns: ['node_modules/(?!stencil-fragment)'],
+    transformIgnorePatterns: ['node_modules/(?!(stencil-fragment|@wordpress|memize|country-region-data))'],
     setupFilesAfterEnv: ['./setup-tests.js'],
     moduleNameMapper: {
       '^@store/(.*)$': '<rootDir>/src/store/$1',

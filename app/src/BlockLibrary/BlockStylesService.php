@@ -23,7 +23,7 @@ class BlockStylesService {
 		$block_type       = \WP_Block_Type_Registry::get_instance()->get_registered(
 			$block['blockName']
 		);
-		$block_attributes = $block['attrs'];
+		$block_attributes = $block['attrs'] ?? [];
 
 		$attributes          = array();
 		$has_padding_support = block_has_support( $block_type, array( 'spacing', 'padding' ), false );
@@ -58,7 +58,7 @@ class BlockStylesService {
 		$block_type       = \WP_Block_Type_Registry::get_instance()->get_registered(
 			$block['blockName']
 		);
-		$block_attributes = $block['attrs'];
+		$block_attributes = $block['attrs'] ?? [];
 
 		$border_block_styles      = array();
 		$has_border_color_support = wp_has_border_feature_support( $block_type, 'color' );
@@ -127,6 +127,38 @@ class BlockStylesService {
 	}
 
 	/**
+	 * Get the dimensions values from the block editor
+	 *
+	 * @return array
+	 */
+	public function getDimensionsValues() {
+		$block            = $this->block ? $this->block : \WP_Block_Supports::$block_to_render;
+		$block_type       = \WP_Block_Type_Registry::get_instance()->get_registered(
+			$block['blockName']
+		);
+		$block_attributes = $block['attrs'];
+
+		$attributes = array();
+
+		$has_min_height_support = block_has_support( $block_type, array( 'dimensions', 'minHeight' ), false );
+		$block_styles           = isset( $block_attributes['style'] ) ? $block_attributes['style'] : null;
+
+		if ( ! $block_styles ) {
+			return $attributes;
+		}
+
+		$dimensions_block_styles              = array();
+		$dimensions_block_styles['minHeight'] = null;
+		if ( $has_min_height_support ) {
+			$dimensions_block_styles['minHeight'] = isset( $block_styles['dimensions']['minHeight'] )
+				? $block_styles['dimensions']['minHeight']
+				: null;
+		}
+
+		return $dimensions_block_styles;
+	}
+
+	/**
 	 * Get the color values from the block editor
 	 *
 	 * @return array
@@ -136,7 +168,7 @@ class BlockStylesService {
 		$block_type       = \WP_Block_Type_Registry::get_instance()->get_registered(
 			$block['blockName']
 		);
-		$block_attributes = $block['attrs'];
+		$block_attributes = $block['attrs'] ?? [];
 
 		$color_support = isset( $block_type->supports['color'] ) ? $block_type->supports['color'] : false;
 
@@ -192,6 +224,7 @@ class BlockStylesService {
 					'spacing' => $this->getSpacingValues(),
 					'border'  => $this->getBorderValues(),
 					'color'   => $this->getColorValues(),
+					'dimensions' => $this->getDimensionsValues(),
 				),
 				array(
 					'context' => 'block-supports',
@@ -203,6 +236,7 @@ class BlockStylesService {
 			'spacing' => wp_style_engine_get_styles( array( 'spacing' => $this->getSpacingValues() ) ),
 			'border'  => wp_style_engine_get_styles( array( 'border' => $this->getBorderValues() ) ),
 			'color'   => wp_style_engine_get_styles( array( 'color' => $this->getColorValues() ) ),
+			'dimensions' => wp_style_engine_get_styles( array( 'dimensions' => $this->getDimensionsValues() ) ),
 		);
 	}
 

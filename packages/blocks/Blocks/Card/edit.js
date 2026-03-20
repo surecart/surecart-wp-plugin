@@ -25,6 +25,8 @@ export default ({ attributes, setAttributes, isSelected }) => {
 				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
 						<TextControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							label={__('Title', 'surecart')}
 							value={title}
 							onChange={(title) => setAttributes({ title })}
@@ -32,6 +34,7 @@ export default ({ attributes, setAttributes, isSelected }) => {
 					</PanelRow>
 					<PanelRow>
 						<ToggleControl
+							__nextHasNoMarginBottom
 							label={__('Borderless', 'surecart')}
 							checked={borderless}
 							onChange={(borderless) =>

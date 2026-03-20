@@ -1,5 +1,5 @@
 {
-	"apiVersion": 2,
+	"apiVersion": 3,
 	"name": "surecart/customer-orders",
 	"title": "Customer Orders",
 	"description": "Displays the customers orders.",

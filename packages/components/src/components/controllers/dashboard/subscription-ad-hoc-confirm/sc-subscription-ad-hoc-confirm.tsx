@@ -12,6 +12,7 @@ import { Price } from '../../../../types';
 export class ScSubscriptionAdHocConfirm {
   @Prop() heading: string;
   @Prop() price: Price;
+  @Prop() currencyCode: string;
   @State() busy: boolean = false;
 
   async handleSubmit(e) {
@@ -31,7 +32,7 @@ export class ScSubscriptionAdHocConfirm {
       <sc-dashboard-module heading={this.heading || __('Enter An Amount', 'surecart')} class="subscription-switch">
         <sc-card>
           <sc-form onScSubmit={e => this.handleSubmit(e)}>
-            <sc-price-input label="Amount" name="ad_hoc_amount" autofocus required>
+            <sc-price-input label="Amount" name="ad_hoc_amount" currencyCode={this.currencyCode} autofocus required>
               <span slot="suffix" style={{ opacity: '0.75' }}>
                 {intervalString(this.price)}
               </span>

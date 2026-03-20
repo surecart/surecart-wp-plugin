@@ -67,6 +67,7 @@ export default ({ attributes: { width }, setAttributes }) => {
 			<InspectorControls>
 				<PanelBody>
 					<UnitControl
+						__next40pxDefaultSize
 						label={__('Width', 'surecart')}
 						labelPosition="top"
 						__unstableInputWidth="80px"

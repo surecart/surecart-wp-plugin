@@ -1,5 +1,5 @@
 {
-	"apiVersion": 2,
+	"apiVersion": 3,
 	"name": "surecart/wordpress-account",
 	"title": "WordPress User Account",
 	"description": "WordPress User Account Information",

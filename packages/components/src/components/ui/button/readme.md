@@ -84,6 +84,7 @@
  - [sc-product-price-modal](../../controllers/product/sc-product-price-modal)
  - [sc-product-selected-price](../../controllers/checkout-form/sc-product-selected-price)
  - [sc-purchase-downloads-list](../purchase-downloads-list)
+ - [sc-razorpay-add-method](../sc-razorpay-add-method)
  - [sc-rich-text](../rich-text)
  - [sc-stripe-add-method](../sc-stripe-add-method)
  - [sc-subscription](../../controllers/dashboard/subscription)
@@ -96,6 +97,7 @@
  - [sc-subscription-variation-confirm](../../controllers/dashboard/subscription-variation-confirm)
  - [sc-subscriptions-list](../../controllers/dashboard/subscriptions-list)
  - [sc-tax-id-input](../tax-id-input)
+ - [sc-test-mode-info](../test-mode-info)
  - [sc-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
  - [sc-upgrade-required](../sc-upgrade-required)
  - [sc-upsell](../../controllers/upsell/sc-upsell)
@@ -145,6 +147,7 @@ graph TD;
   sc-product-price-modal --> sc-button
   sc-product-selected-price --> sc-button
   sc-purchase-downloads-list --> sc-button
+  sc-razorpay-add-method --> sc-button
   sc-rich-text --> sc-button
   sc-stripe-add-method --> sc-button
   sc-subscription --> sc-button
@@ -157,6 +160,7 @@ graph TD;
   sc-subscription-variation-confirm --> sc-button
   sc-subscriptions-list --> sc-button
   sc-tax-id-input --> sc-button
+  sc-test-mode-info --> sc-button
   sc-upcoming-invoice --> sc-button
   sc-upgrade-required --> sc-button
   sc-upsell --> sc-button

@@ -1,0 +1,90 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "surecart/product-review-form-submit-button",
+	"title": "Review Form Submit Button",
+	"description": "Provide a submit button for the product review form.",
+	"version": "1.0.0",
+	"icon": "button",
+	"category": "surecart-product-page",
+	"example": {},
+	"ancestor": ["surecart/product-review-form"],
+	"attributes": {
+		"text": {
+			"type": "string"
+		},
+		"width": {
+			"type": "number",
+			"default": 100
+		}
+	},
+	"supports": {
+		"interactivity": true,
+		"anchor": true,
+		"spacing": {
+			"__experimentalSkipSerialization": true,
+			"padding": ["horizontal", "vertical"],
+			"margin": ["top", "bottom"]
+		},
+		"color": {
+			"__experimentalSkipSerialization": true,
+			"gradients": true,
+			"__experimentalDefaultControls": {
+				"background": true,
+				"text": true
+			}
+		},
+		"__experimentalSelector": ".wp-block-button .wp-block-button__link",
+		"typography": {
+			"fontSize": true,
+			"__experimentalFontFamily": true,
+			"__experimentalFontWeight": true,
+			"__experimentalFontStyle": true,
+			"__experimentalTextTransform": true
+		},
+		"reusable": false,
+		"__experimentalBorder": {
+			"color": true,
+			"radius": true,
+			"style": true,
+			"width": true,
+			"__experimentalSkipSerialization": true,
+			"__experimentalDefaultControls": {
+				"color": true,
+				"radius": true,
+				"style": true,
+				"width": true
+			}
+		},
+		"__experimentalStyle": {
+			"variations": {
+				"outline": {
+					"border": {
+						"color": "currentColor",
+						"width": "2px",
+						"style": "solid"
+					},
+					"color": {
+						"text": "currentColor",
+						"gradient": "transparent none"
+					}
+				}
+			}
+		}
+	},
+	"styles": [
+		{ "name": "fill", "label": "Fill", "isDefault": true },
+		{ "name": "outline", "label": "Outline" }
+	],
+	"textdomain": "surecart",
+	"render": "file:./view.php",
+	"editorScript": "file:./index.js",
+	"editorStyle": ["surecart-wp-button"],
+	"style": [
+		"surecart-wp-buttons",
+		"surecart-wp-button",
+		"wp-block-button",
+		"surecart-spinner"
+	],
+	"viewScriptModule": ["@surecart/product-review-form"]
+}

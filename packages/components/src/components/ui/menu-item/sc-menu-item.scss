@@ -17,6 +17,7 @@
   transition: var(--sc-input-transition, var(--sc-transition-medium)) fill, var(--sc-input-transition, var(--sc-transition-medium)) background-color;
   user-select: none;
   white-space: var(--sc-menu-item-white-space, nowrap);
+  text-wrap: auto;
   cursor: pointer;
   text-decoration: none;
 

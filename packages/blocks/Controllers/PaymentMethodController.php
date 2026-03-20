@@ -244,6 +244,23 @@ class PaymentMethodController extends BaseController {
 						</sc-paystack-add-method>
 					</sc-toggle>
 				<?php endif; ?>
+
+				<?php if ( in_array( 'razorpay', $processor_names ) && ! in_array( 'stripe', $processor_names ) && ! in_array( 'paystack', $processor_names ) ) : ?>
+					<sc-toggle class="sc-razorpay-toggle" show-control shady borderless>
+						<span slot="summary" class="sc-payment-toggle-summary">
+							<sc-flex>
+								<sc-icon name="razorpay" style="font-size:24px"></sc-icon>
+								<span><?php esc_html_e( 'Cards, Netbanking, Wallet & UPI', 'surecart' ); ?></span>
+							</sc-flex>
+						</span>
+						<sc-razorpay-add-method
+							success-url="<?php echo esc_url( $success_url ); ?>"
+							live-mode="<?php echo esc_attr( $this->isLiveMode() ? 'true' : 'false' ); ?>"
+							currency="<?php echo esc_attr( \SureCart::account()->currency ); ?>"
+							customer-id="<?php echo esc_attr( User::current()->customerId( $this->isLiveMode() ? 'live' : 'test' ) ); ?>">
+						</sc-razorpay-add-method>
+					</sc-toggle>
+				<?php endif; ?>
 			</sc-toggles>
 
 			<?php endif; ?>

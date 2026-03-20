@@ -1,4 +1,4 @@
-import { Component, Fragment, h, Prop } from '@stencil/core';
+import { Component, h, Prop } from '@stencil/core';
 import { __, sprintf } from '@wordpress/i18n';
 import { Subscription, SubscriptionStatus } from '../../../types';
 
@@ -50,12 +50,9 @@ export class ScSubscriptionStatusBadge {
 
   getText() {
     if (this.subscription?.cancel_at_period_end && this.subscription.current_period_end_at && this.subscription?.status !== 'canceled') {
-      return (
-        <Fragment>
-          {!!this.subscription?.restore_at ? __('Pauses', 'surecart') : __('Cancels', 'surecart')} {this.subscription.current_period_end_at_date}
-        </Fragment>
-      );
+      return __('Cancelling', 'surecart');
     }
+
     switch (this.status || this.subscription?.status) {
       case 'incomplete':
         return __('Incomplete', 'surecart');

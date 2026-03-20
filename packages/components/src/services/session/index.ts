@@ -10,6 +10,8 @@ export const baseUrl = 'surecart/v1/checkouts/';
 
 /** Items to always expand. */
 export const expand = [
+  'checkout_fees',
+  'shipping_fees',
   'line_items',
   'line_item.price',
   'line_item.fees',
@@ -148,9 +150,9 @@ export const finalizeCheckout = async ({ id, data = {}, query = {}, processor }:
 export const addLineItem = async ({ checkout, data, live_mode = false }) => {
   const existingLineItem = (checkout?.line_items?.data || []).find(item => {
     if (!item?.variant?.id) {
-      return item.price.id === data.price;
+      return item.price.id === data.price && item.note === data.note;
     }
-    return item.variant.id === data.variant && item.price.id === data.price;
+    return item.variant.id === data.variant && item.price.id === data.price && item.note === data.note;
   });
 
   // create the checkout with the line item.

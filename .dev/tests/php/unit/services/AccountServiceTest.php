@@ -11,8 +11,11 @@ use SureCart\Request\RequestServiceProvider;
 use SureCart\Models\AffiliationProtocol;
 use SureCart\Models\ShippingProtocol;
 use SureCart\Models\CustomerPortalProtocol;
+use SureCart\Account\AccountService;
 
 class AccountServiceTest extends SureCartUnitTestCase {
+	use \Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+
 	/**
 	 * Set up a new app instance to use for tests.
 	 */
@@ -150,6 +153,9 @@ class AccountServiceTest extends SureCartUnitTestCase {
 		$this->account = $account;
 	}
 
+	/**
+	 * @group account
+	 */
 	public function test_account_service_when_transient_is_set() {
 		$accountService = \SureCart::account();
 
@@ -161,6 +167,95 @@ class AccountServiceTest extends SureCartUnitTestCase {
 
 	}
 
+	/**
+	 * @group account
+	 */
+	public function test_fetch_cached_account_when_transient_is_array() {
+		set_transient('surecart_account', $this->account->toArray());
+
+		$service = \SureCart::account();
+		$account = $service->fetchCachedAccount();
+
+		$this->assertInstanceOf(Account::class, $account);
+		$this->assertSame($this->account->id, $account->id);
+
+		delete_transient('surecart_account');
+	}
+
+	/**
+	 * @group account
+	 */
+	public function test_fetch_cached_account_falls_back_to_previous_account_array() {
+		delete_transient('surecart_account');
+
+		update_option('sc_previous_account', $this->account->toArray());
+
+		$service = \Mockery::mock( AccountService::class )->makePartial()->shouldAllowMockingProtectedMethods();
+	
+		$service->shouldReceive('fetchAccount')->once()->andReturn(new \WP_Error('api_error'));
+
+		$account = $service->fetchCachedAccount();
+
+		$this->assertInstanceOf(Account::class, $account);
+		$this->assertSame($this->account->id, $account->id);
+	}
+	/**
+	 * @group account
+	 */
+	public function test_fetch_cached_account_returns_error_when_no_fallback_exists() {
+		delete_transient('surecart_account');
+		delete_option('sc_previous_account');
+
+		$service = \Mockery::mock( AccountService::class )->makePartial()->shouldAllowMockingProtectedMethods();
+	
+		$service->shouldReceive('fetchAccount')->once()->andReturn(new \WP_Error('api_error'));
+
+		$account = $service->fetchCachedAccount();
+
+		$this->assertInstanceOf(\WP_Error::class, $account);
+	}
+
+	/**
+	 * @group account
+	 */
+	public function test_fetch_cached_account_fallback_accepts_model_object() {
+		delete_transient('surecart_account');
+		update_option('sc_previous_account', $this->account);
+
+		$service = \Mockery::mock( AccountService::class )->makePartial()->shouldAllowMockingProtectedMethods();
+	
+		$service->shouldReceive('fetchAccount')->once()->andReturn(new \WP_Error('api_error'));
+
+		$account = $service->fetchCachedAccount();
+
+		$this->assertInstanceOf(Account::class, $account);
+		$this->assertSame($this->account->id, $account->id);
+	}
+
+	/**
+	 * @group account
+	 */
+	public function test_fetch_cached_account_successfully_sets_cache_and_option() {
+		delete_transient('surecart_account');
+		delete_option('sc_previous_account');
+
+		$service = \Mockery::mock( AccountService::class )->makePartial()->shouldAllowMockingProtectedMethods();
+
+		$service->shouldReceive('fetchAccount')->once()->andReturn($this->account);
+
+		$account = $service->fetchCachedAccount();
+
+		$this->assertSame($this->account->id, $account->id);
+
+		$this->assertIsArray(get_transient('surecart_account'));
+		$this->assertIsArray(get_option('sc_previous_account'));
+		$this->assertSame($this->account->id, get_option('sc_previous_account')['id']);
+		$this->assertSame($this->account->id, get_transient('surecart_account')['id']);
+	}
+
+	/**
+	 * @group account
+	 */
 	public function test_convert_account_to_array() {
 		update_option( 'sc_previous_account', $this->account->toArray() );
 
@@ -197,5 +292,72 @@ class AccountServiceTest extends SureCartUnitTestCase {
 		$this->assertSame($this->account->tax_protocol->eu_tax_enabled, $account->tax_protocol->eu_tax_enabled);
 		$this->assertSame($this->account->tax_protocol->address->city, $account->tax_protocol->address->city);
 		$this->assertSame($this->account->tax_protocol->id, $account->tax_protocol->id);
+	}
+
+	/**
+	 * @group account
+	 */
+	public function test_convert_array_to_account_accepts_model_object() {
+		$accountService = \SureCart::account();
+
+		$result = $accountService->convertArrayToAccount($this->account);
+
+		$this->assertInstanceOf(Account::class, $result);
+		$this->assertSame($this->account->id, $result->id);
+	}
+
+	/**
+	 * @group account
+	 */
+	public function test_convert_array_to_account_with_empty_array() {
+		$accountService = \SureCart::account();
+
+		$result = $accountService->convertArrayToAccount([]);
+
+		$this->assertNull($result);
+	}
+
+	/**
+	 * @group account
+	 */
+	public function test_convert_array_to_account_with_null() {
+		$accountService = \SureCart::account();
+
+		$result = $accountService->convertArrayToAccount(null);
+
+		$this->assertNull($result);
+	}
+
+
+	/**
+	 * @group account
+	 */
+	public function test_claim_expired_with_past_timestamp() {
+		$account = new Account(['claim_window_ends_at' => time() - 3600]);
+		$this->assertTrue($account->claim_expired);
+	}
+	
+	/**
+	 * @group account
+	 */
+	public function test_claim_expired_with_future_timestamp() {
+		$account = new Account(['claim_window_ends_at' => time() + 3600]);
+		$this->assertFalse($account->claim_expired);
+	}
+	
+	/**
+	 * @group account
+	 */
+	public function test_claim_expired_with_null_timestamp() {
+		$account = new Account(['claim_window_ends_at' => null]);
+		$this->assertFalse($account->claim_expired);
+	}
+	
+	/**
+	 * @group account
+	 */
+	public function test_claim_expired_with_invalid_timestamp() {
+		$account = new Account(['claim_window_ends_at' => 'invalid']);
+		$this->assertFalse($account->claim_expired);
 	}
 }

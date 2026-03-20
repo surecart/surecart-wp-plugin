@@ -4,6 +4,9 @@ namespace SureCart\Models\Traits;
 
 use SureCart\Models\Fee;
 
+/**
+ * If the model has an attached customer.
+ */
 trait HasFees {
 	/**
 	 * Set the payouts attribute

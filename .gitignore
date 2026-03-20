@@ -54,3 +54,8 @@ build
 /playwright-report/
 /playwright/.cache/
 undefinedadminState.json
+
+# Ignore all .claude runtime data, but allow committed skills and agents
+.claude/*
+!.claude/agents/
+!.claude/skills/

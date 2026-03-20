@@ -81,6 +81,8 @@ export default ({ attributes, setAttributes }) => {
 						onRequestClose={() => setModal(false)}
 					>
 						<RangeControl
+							__nextHasNoMarginBottom
+							__next40pxDefaultSize
 							label={__('Aspect Ratio', 'surecart')}
 							value={ratio}
 							onChange={(value) =>
@@ -102,6 +104,8 @@ export default ({ attributes, setAttributes }) => {
 			<InspectorControls>
 				<PanelBody>
 					<ToggleGroupControl
+						__next40pxDefaultSize
+						__nextHasNoMarginBottom
 						label={__('Image Cropping', 'surecart')}
 						value={sizing}
 						onChange={(value) => setAttributes({ sizing: value })}

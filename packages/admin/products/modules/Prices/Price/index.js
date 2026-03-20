@@ -19,7 +19,7 @@ import Swap from '../../../components/price/parts/Swap';
 import Advanced from '../../../components/price/parts/Advanced';
 import PaymentType from '../../../components/price/parts/PaymentType';
 
-export default ({ price, product }) => {
+export default ({ price, product, allPrices }) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [error, setError] = useState(null);
 	const [isSaving, setIsSaving] = useState(false);
@@ -32,11 +32,8 @@ export default ({ price, product }) => {
 		price?.current_swap
 	);
 	const ref = useRef(null);
-	const {
-		deleteEntityRecord,
-		saveEntityRecord,
-		invalidateResolutionForStore,
-	} = useDispatch(coreStore);
+	const { deleteEntityRecord, saveEntityRecord, receiveEntityRecords } =
+		useDispatch(coreStore);
 	const editPrice = (data) => {
 		setCurrentPrice({ ...currentPrice, ...data });
 	};
@@ -80,7 +77,6 @@ export default ({ price, product }) => {
 					throwOnError: true,
 				});
 			}
-			await invalidateResolutionForStore();
 			setIsOpen(false);
 			createSuccessNotice(__('Price updated.', 'surecart'), {
 				type: 'snackbar',
@@ -163,6 +159,18 @@ export default ({ price, product }) => {
 		}
 	};
 
+	const onDuplicate = async (duplicate) => {
+		await receiveEntityRecords(
+			'surecart',
+			'price',
+			[...(allPrices || []), duplicate],
+			{ context: 'edit', product_ids: [product?.id], per_page: 100 }
+		);
+		createSuccessNotice(__('Price duplicated.', 'surecart'), {
+			type: 'snackbar',
+		});
+	};
+
 	// get the price type.
 	const getPriceType = () => {
 		if (currentPrice?.recurring_interval) {
@@ -195,6 +203,7 @@ export default ({ price, product }) => {
 				variants={product?.variants}
 				stockEnabled={product?.stock_enabled}
 				onDelete={onDelete}
+				onDuplicate={onDuplicate}
 				collapsible={true}
 			/>
 
@@ -265,7 +274,7 @@ export default ({ price, product }) => {
 								/>
 							)}
 
-							{/* {!product?.variants?.length &&
+							{!product?.variants?.length &&
 								!product?.variants?.data?.length &&
 								!currentPrice?.ad_hoc && (
 									<Swap
@@ -275,7 +284,7 @@ export default ({ price, product }) => {
 										isSaving={isSaving}
 										currentProduct={product}
 									/>
-								)} */}
+								)}
 
 							<Advanced
 								price={currentPrice}

@@ -16,25 +16,26 @@
 
 ## Dependencies
 
-### Used by
-
- - [sc-order-confirmation-totals](../../confirmation/order-confirmation-totals)
-
 ### Depends on
 
-- [sc-divider](../../../ui/divider)
 - [sc-line-item](../../../ui/line-item)
+- [sc-divider](../../../ui/divider)
 - [sc-skeleton](../../../ui/skeleton)
 - [sc-total](../total)
+- [sc-tooltip](../../../ui/tooltip)
+- [sc-icon](../../../ui/icon)
+- [sc-visually-hidden](../../../util/visually-hidden)
 
 ### Graph
 ```mermaid
 graph TD;
-  sc-line-item-total --> sc-divider
   sc-line-item-total --> sc-line-item
+  sc-line-item-total --> sc-divider
   sc-line-item-total --> sc-skeleton
   sc-line-item-total --> sc-total
-  sc-order-confirmation-totals --> sc-line-item-total
+  sc-line-item-total --> sc-tooltip
+  sc-line-item-total --> sc-icon
+  sc-line-item-total --> sc-visually-hidden
   style sc-line-item-total fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

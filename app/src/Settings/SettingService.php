@@ -26,16 +26,6 @@ class SettingService {
 	public function registerSettings() {
 		$this->register(
 			'surecart',
-			'theme',
-			[
-				'type'              => 'string',
-				'show_in_rest'      => true,
-				'sanitize_callback' => 'sanitize_text_field',
-				'default'           => 'light',
-			]
-		);
-		$this->register(
-			'surecart',
 			'auto_sync_user_to_customer',
 			[
 				'type'              => 'boolean',
@@ -205,6 +195,16 @@ class SettingService {
 		);
 		$this->register(
 			'surecart',
+			'admin_toolbar_disabled',
+			[
+				'type'              => 'boolean',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'boolval',
+				'default'           => false,
+			]
+		);
+		$this->register(
+			'surecart',
 			'password_validation_enabled',
 			[
 				'type'              => 'boolean',
@@ -264,6 +264,16 @@ class SettingService {
 		);
 		$this->register(
 			'surecart',
+			'hide_help_widget',
+			[
+				'type'              => 'boolean',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'boolval',
+				'default'           => false,
+			]
+		);
+		$this->register(
+			'surecart',
 			'currency_switcher_alignment',
 			[
 				'type'              => 'string',
@@ -305,6 +315,16 @@ class SettingService {
 				'type'              => 'string',
 				'show_in_rest'      => true,
 				'sanitize_callback' => 'sanitize_text_field',
+			]
+		);
+		$this->register(
+			'surecart',
+			'hide_verified_buyer_badge',
+			[
+				'type'              => 'boolean',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'boolval',
+				'default'           => false,
 			]
 		);
 	}

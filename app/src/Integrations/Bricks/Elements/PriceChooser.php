@@ -51,12 +51,6 @@ class PriceChooser extends \Bricks\Element {
 	public $nestable = true;
 
 	/**
-	 * The css selector.
-	 *
-	 * @var string
-	 */
-
-	/**
 	 * The constructor.
 	 *
 	 * @param \Bricks\Element|null $element The element.

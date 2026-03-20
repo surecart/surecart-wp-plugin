@@ -11,6 +11,7 @@ import { store as noticesStore } from '@wordpress/notices';
 import { store as coreStore } from '@wordpress/core-data';
 import { useState } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
+import { addQueryArgs } from '@wordpress/url';
 
 /**
  * Internal dependencies.
@@ -23,9 +24,9 @@ import {
 	ScFlex,
 	ScIcon,
 	ScMenu,
+	ScMenuDivider,
 	ScMenuItem,
 } from '@surecart/components-react';
-import useSave from '../settings/UseSave';
 import Error from '../components/Error';
 import Logo from '../templates/Logo';
 import UpdateModel from '../templates/UpdateModel';
@@ -34,17 +35,17 @@ import Details from './modules/Details';
 import Referrals from './modules/Referrals';
 import Payouts from './modules/Payouts';
 import Promotions from './modules/Promotions';
-import Url from './modules/Url';
+import Urls from './modules/Urls';
 import Products from './modules/affiliation-products';
 import Commission from './modules/Commission';
+import Metadata from '../components/affiliates/Metadata';
 
 export default ({ id }) => {
-	const { save } = useSave();
 	const [loading, setLoading] = useState(false);
 	const [modal, setModal] = useState(false);
 	const [error, setError] = useState(null);
 	const { createSuccessNotice } = useDispatch(noticesStore);
-	const { editEntityRecord, receiveEntityRecords } = useDispatch(coreStore);
+	const { receiveEntityRecords, deleteEntityRecord } = useDispatch(coreStore);
 
 	const { affiliation, hasLoadedAffiliation } = useSelect(
 		(select) => {
@@ -66,23 +67,6 @@ export default ({ id }) => {
 		'surecart',
 		'affiliation'
 	)?.baseURL;
-
-	/**
-	 * Handle the form submission
-	 */
-	const onSubmit = async () => {
-		try {
-			setLoading(true);
-			await save({
-				successMessage: __('Affiliate updated.', 'surecart'),
-			});
-		} catch (e) {
-			console.error(e);
-			setError(e);
-		} finally {
-			setLoading(false);
-		}
-	};
 
 	/**
 	 * Activate the affiliation.
@@ -160,12 +144,39 @@ export default ({ id }) => {
 		}
 	};
 
-	const updateAffiliation = (data) =>
-		editEntityRecord('surecart', 'affiliation', id, data);
+	/**
+	 * Delete the affiliation.
+	 */
+	const onDelete = async () => {
+		try {
+			setLoading(true);
+			setError(null);
+
+			await deleteEntityRecord('surecart', 'affiliation', id, undefined, {
+				throwOnError: true,
+			});
+
+			createSuccessNotice(
+				__('Affiliate deleted successfully.', 'surecart'),
+				{
+					type: 'snackbar',
+				}
+			);
+
+			// Redirect to affiliates list page after successful deletion
+			window.location.href = addQueryArgs('admin.php', {
+				page: 'sc-affiliates',
+			});
+		} catch (e) {
+			console.error(e);
+			setError(e);
+		} finally {
+			setLoading(false);
+		}
+	};
 
 	return (
 		<UpdateModel
-			onSubmit={onSubmit}
 			title={
 				<ScFlex style={{ gap: '1em' }} align-items="center">
 					<ScButton
@@ -236,6 +247,17 @@ export default ({ id }) => {
 									{__('Deactivate', 'surecart')}
 								</ScMenuItem>
 							)}
+
+							<ScMenuDivider />
+
+							<ScMenuItem onClick={() => setModal('delete')}>
+								<ScIcon
+									slot="prefix"
+									style={{ opacity: 0.65 }}
+									name="trash"
+								/>
+								{__('Delete', 'surecart')}
+							</ScMenuItem>
 						</ScMenu>
 					</ScDropdown>
 				</div>
@@ -246,13 +268,18 @@ export default ({ id }) => {
 						affiliation={affiliation || {}}
 						loading={!hasLoadedAffiliation}
 					/>
-					<Url
-						url={affiliation?.referral_url}
-						code={affiliation?.code}
+					<Urls
+						referralUrl={affiliation?.referral_url}
+						websiteUrl={affiliation?.url}
+						loading={!hasLoadedAffiliation}
 					/>
 					<Commission
 						affiliation={affiliation}
 						loading={!hasLoadedAffiliation || loading}
+					/>
+					<Metadata
+						metadata={affiliation?.metadata}
+						loading={!hasLoadedAffiliation}
 					/>
 				</>
 			}
@@ -288,6 +315,20 @@ export default ({ id }) => {
 			>
 				{__(
 					'Are you sure you want to deactivate the affiliate?',
+					'surecart'
+				)}
+			</ConfirmDialog>
+
+			<ConfirmDialog
+				isOpen={'delete' === modal}
+				onConfirm={() => {
+					onDelete();
+					setModal(false);
+				}}
+				onCancel={() => setModal(false)}
+			>
+				{__(
+					'Are you sure you want to delete this affiliate? This action cannot be undone.',
 					'surecart'
 				)}
 			</ConfirmDialog>

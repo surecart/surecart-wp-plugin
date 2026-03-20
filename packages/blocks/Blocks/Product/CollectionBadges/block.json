@@ -1,5 +1,5 @@
 {
-	"apiVersion": 2,
+	"apiVersion": 3,
 	"name": "surecart/product-collection-badges",
 	"title": "Product Collection Badges",
 	"description": "Displays product collection selector for a product.",

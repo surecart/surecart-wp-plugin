@@ -1,0 +1,74 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "surecart/icon",
+	"title": "Icon",
+	"description": "Display an icon from the SureCart icon library.",
+	"version": "1.0.0",
+	"category": "surecart",
+	"icon": "star-filled",
+	"keywords": ["icon", "svg", "graphic"],
+	"example": {},
+	"attributes": {
+		"icon_name": {
+			"type": "string",
+			"default": "star"
+		},
+		"size": {
+			"type": "number",
+			"default": 24
+		},
+		"stroke_width": {
+			"type": "number",
+			"default": 2
+		},
+		"link_url": {
+			"type": "string"
+		},
+		"link_target": {
+			"type": "string",
+			"default": "_self"
+		},
+		"link_rel": {
+			"type": "string"
+		},
+		"nofollow": {
+			"type": "boolean",
+			"default": false
+		}
+	},
+	"supports": {
+		"html": false,
+		"align": true,
+		"color": {
+			"gradients": true,
+			"link": false,
+			"__experimentalDefaultControls": {
+				"background": true,
+				"text": true
+			}
+		},
+		"spacing": {
+			"margin": true,
+			"padding": true,
+			"__experimentalDefaultControls": {
+				"padding": true,
+				"margin": true
+			}
+		},
+		"__experimentalBorder": {
+			"color": true,
+			"radius": true,
+			"style": true,
+			"width": true,
+			"__experimentalDefaultControls": {
+				"radius": true
+			}
+		}
+	},
+	"textdomain": "surecart",
+	"render": "file:./controller.php",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css"
+}

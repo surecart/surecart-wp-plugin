@@ -1,7 +1,7 @@
 <?php
 namespace SureCart\Integrations\Elementor\Documents;
 
-use \ElementorPro\Modules\ThemeBuilder\Documents\Single_Base;
+use ElementorPro\Modules\ThemeBuilder\Documents\Single_Base;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -68,6 +68,15 @@ class ProductDocument extends Single_Base {
 	 */
 	protected static function get_site_editor_icon() {
 		return 'eicon-single-product';
+	}
+
+	/**
+	 * Get document thumbnail URL.
+	 *
+	 * @return string Document thumbnail URL.
+	 */
+	protected static function get_site_editor_thumbnail_url(): string {
+		return esc_url_raw( trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'images/elementor/product-document.png' );
 	}
 
 	/**

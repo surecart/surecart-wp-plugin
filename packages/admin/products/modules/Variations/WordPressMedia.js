@@ -5,7 +5,7 @@ import { useSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 import { store as coreStore } from '@wordpress/core-data';
 
-export default ({ id, onRemove }) => {
+export default ({ id, onRemove, size = '36px' }) => {
 	const { media, hasLoadedMedia } = useSelect((select) => {
 		return {
 			media: select(coreStore).getMedia(id),
@@ -20,8 +20,8 @@ export default ({ id, onRemove }) => {
 		<div
 			css={css`
 				position: relative;
-				padding: 10px;
-				margin: -10px;
+				width: ${size};
+				height: ${size};
 				.sc-remove-icon {
 					visibility: hidden;
 					opacity: 0;
@@ -41,8 +41,8 @@ export default ({ id, onRemove }) => {
 		>
 			<div
 				css={css`
-					width: 35px;
-					height: 35px;
+					width: ${size};
+					height: ${size};
 					display: flex;
 					align-items: center;
 					justify-content: center;
@@ -76,8 +76,8 @@ export default ({ id, onRemove }) => {
 							media?.source_url
 						}
 						css={css`
-							width: 35px;
-							height: 35px;
+							width: ${size};
+							height: ${size};
 							object-fit: cover;
 						`}
 						alt={media?.alt_text}
@@ -96,8 +96,8 @@ export default ({ id, onRemove }) => {
 					height: 18px;
 					font-size: 10px;
 					position: absolute;
-					right: 0px;
-					top: 0px;
+					right: -5px;
+					top: -5px;
 					border-radius: 999px;
 					display: flex;
 					align-items: center;

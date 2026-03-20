@@ -1,0 +1,73 @@
+.wp-block-surecart-cart-line-item-note {
+	position: relative;
+	color: var(--sc-input-help-text-color);
+	margin-top: var(--sc-spacing-x-small);
+	display: flex;
+	justify-content: center;
+	align-items: flex-start;
+	gap: 0.25em;
+	min-height: 1.5em;
+
+	&[hidden] {
+		display: none !important;
+	}
+
+	&[disabled] {
+		pointer-events: none;
+	}
+
+	.line-item-note__text {
+		line-height: 1.4;
+		color: var(--sc-color-gray-500);
+		flex: 1;
+		display: -webkit-box;
+		-webkit-box-orient: vertical;
+		line-clamp: 1;
+		-webkit-line-clamp: 1;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		word-wrap: break-word;
+		white-space: normal;
+		transition: all 0.2s;
+		max-width: 100%;
+		width: 100%;
+	}
+
+	.line-item-note__toggle {
+		background: none;
+		border: none;
+		color: var(--sc-color-gray-500);
+		cursor: pointer;
+		padding: 0;
+		align-self: flex-start;
+		transition: opacity 0.2s ease;
+		border-radius: var(--sc-border-radius-small);
+	}
+
+	.sc-icon {
+		display: none;
+		transition: transform 0.2s;
+
+		&--rotated {
+			transform: rotate(180deg);
+		}
+	}
+
+	&.line-item-note {
+		&--is-collapsible,
+		&--is-expanded {
+			cursor: pointer;
+
+			.sc-icon {
+				display: inline-flex !important;
+			}
+		}
+
+		&--is-expanded .line-item-note__text {
+			line-clamp: unset;
+			-webkit-line-clamp: unset;
+			overflow: visible;
+			text-overflow: unset;
+		}
+	}
+}

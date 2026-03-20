@@ -146,6 +146,7 @@ textarea {
 	&.sc-form-control {
 		min-height: var(--sc-input-height);
 		height: auto;
+		padding: var(--sc-input-spacing-small) var(--sc-input-spacing-medium);
 
 		&-sm {
 			min-height: var(--sc-input-height-small);

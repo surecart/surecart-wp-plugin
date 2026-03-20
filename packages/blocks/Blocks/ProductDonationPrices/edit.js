@@ -80,6 +80,8 @@ export default ({ attributes, setAttributes, context }) => {
 				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
 						<TextControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							label={__('Label', 'surecart')}
 							value={label}
 							onChange={(label) => setAttributes({ label })}
@@ -87,6 +89,7 @@ export default ({ attributes, setAttributes, context }) => {
 					</PanelRow>
 					<RangeControl
 						__nextHasNoMarginBottom
+						__next40pxDefaultSize
 						label={__('Columns')}
 						value={columns}
 						onChange={(columns) => setAttributes({ columns })}

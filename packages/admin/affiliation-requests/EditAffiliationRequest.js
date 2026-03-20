@@ -19,7 +19,6 @@ import {
 	ScBreadcrumb,
 	ScBreadcrumbs,
 	ScButton,
-	ScButtonGroup,
 	ScDropdown,
 	ScFlex,
 	ScIcon,
@@ -33,6 +32,7 @@ import Error from '../components/Error';
 import Logo from '../templates/Logo';
 import UpdateModel from '../templates/UpdateModel';
 import Details from './modules/Details';
+import Metadata from '../components/affiliates/Metadata';
 
 export default () => {
 	const [loading, setLoading] = useState(false);
@@ -221,6 +221,15 @@ export default () => {
 						</ScBreadcrumb>
 					</ScBreadcrumbs>
 				</ScFlex>
+			}
+			sidebar={
+				affiliationRequest?.metadata &&
+				Object.keys(affiliationRequest?.metadata).length ? (
+					<Metadata
+						metadata={affiliationRequest?.metadata}
+						loading={!hasLoadedAffiliationRequest}
+					/>
+				) : null
 			}
 			button={
 				<div
