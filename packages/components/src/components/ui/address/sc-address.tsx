@@ -117,6 +117,9 @@ export class ScAddress {
   /** Should we show the postal field? */
   @State() showPostal: boolean = true;
 
+  /** Should we show the state field? */
+  @State() showState: boolean = true;
+
   /** Country details. */
   @State() countryDetails: any = null;
 
@@ -220,9 +223,10 @@ export class ScAddress {
   toggleAddressFieldsVisibility(show: boolean) {
     this.showCity = show;
     this.showPostal = show;
+    this.showState = show;
 
     // If Google Map API key is set, Override the showLine2 value.
-    if (!!window?.scData?.google_map_api_key) {
+    if (window?.scData?.google_map_api_key) {
       this.showLine2 = show;
     }
   }
@@ -248,7 +252,7 @@ export class ScAddress {
         case 'city':
           return this.showCity;
         case 'state':
-          return !!this?.regions()?.length && !!this?.address?.country;
+          return this.showState && !!this?.regions()?.length && !!this?.address?.country;
         case 'postal_code':
           return this.showPostal;
         default:
@@ -309,6 +313,7 @@ export class ScAddress {
                   <sc-address-suggestions
                     address={this.address}
                     names={this.names}
+                    regions={this.regions()}
                     label={field.label}
                     disabled={this.disabled}
                     required={this.required}
