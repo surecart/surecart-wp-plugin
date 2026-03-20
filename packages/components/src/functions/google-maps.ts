@@ -1,39 +1,92 @@
 /**
  * Internal dependencies.
  */
-import { CountryLocaleField, CountryLocaleFieldValue } from 'src/types';
+import { Address, GoogleMapAddressComponents } from 'src/types';
 import { getCountryDetails } from './address';
 
 /**
- * Sorts address fields based on the provided country code and the default country fields.
- *
- * @param countryCode
- * @param defaultCountryFields
- * @param countryFields
- *
- * @returns {Array<CountryLocaleFieldValue>} The sorted address fields.
+ * Helper function to find an address component by type.
  */
-export function sortAddressFields(countryCode: string, defaultCountryFields: Array<CountryLocaleFieldValue>, countryFields: Array<CountryLocaleField>) {
-  const fields = defaultCountryFields || [];
-  const fieldsByCountry = countryFields || {};
+const findAddressComponent = (addressComponents: Array<GoogleMapAddressComponents>, type: string): GoogleMapAddressComponents | undefined => {
+  return (addressComponents || []).find(component => component.types?.includes(type));
+};
 
-  if (countryCode && fieldsByCountry?.[countryCode]) {
-    fields.forEach(field => {
-      if (fieldsByCountry?.[countryCode]?.[field?.name]) {
-        const countryField = fieldsByCountry[countryCode][field.name];
-        field.priority = countryField?.priority || field?.priority;
-        field.label = countryField?.label || field?.label;
-      }
-    });
+/**
+ * Get the state only if it exists in our regions list and matches the value.
+ */
+const getState = (addressComponents: Array<GoogleMapAddressComponents>, regions: Array<{ value: string; label: string }>) => {
+  const administrativeAreaLevel1 = findAddressComponent(addressComponents, 'administrative_area_level_1') ?? null;
+  const region = regions?.find(region => region.value === administrativeAreaLevel1?.shortText);
+  if (!region) {
+    return {
+      longText: administrativeAreaLevel1?.longText || null, // for preview in the address suggestion.
+      shortText: null,
+    };
   }
 
-  return fields.sort((a, b) => a.priority - b.priority);
+  return {
+    shortText: region.value,
+    longText: region.label,
+  };
+};
+
+/**
+ * Transforms the place address components into an address object.
+ */
+export function transformPlaceDetails(addressComponents: Array<GoogleMapAddressComponents>, regions: Array<{ value: string; label: string }>): Address {
+  return {
+    line_2: findAddressComponent(addressComponents, 'sublocality')?.shortText || undefined,
+    postal_code: findAddressComponent(addressComponents, 'postal_code')?.shortText || undefined,
+    city: findAddressComponent(addressComponents, 'locality')?.longText || undefined,
+    state: getState(addressComponents, regions)?.shortText || undefined,
+    country: findAddressComponent(addressComponents, 'country')?.shortText || undefined,
+  };
+}
+
+/**
+ * Transforms the place address components into an address object for display.
+ */
+export function getAddressLabels(
+  addressComponents: Array<GoogleMapAddressComponents>,
+  regions: Array<{ value: string; label: string }>,
+): { country: string | null; state: string | null; city: string | null } {
+  const country = findAddressComponent(addressComponents, 'country') ?? null;
+  if (!country) {
+    return {
+      country: null,
+      state: null,
+      city: null,
+    };
+  }
+
+  const state = getState(addressComponents, regions);
+  const labels = {
+    country: country.longText || null,
+    state: state?.longText || null,
+    city: findAddressComponent(addressComponents, 'locality')?.longText || null,
+  };
+
+  switch (country?.shortText) {
+    case 'US':
+      return {
+        ...labels,
+        country: 'USA',
+        state: state?.shortText || null,
+      };
+
+    case 'GB':
+      return {
+        ...labels,
+        country: 'UK',
+      };
+
+    default:
+      return labels;
+  }
 }
 
 /**
  * Fetch the user's geolocation using the Google Geolocation API.
- *
- * @returns {Promise<string | null>} The user's country code.
  */
 async function fetchGeoLocation() {
   const response = await fetch(`https://www.googleapis.com/geolocation/v1/geolocate?key=${window?.scData?.google_map_api_key}`, {
@@ -50,10 +103,6 @@ async function fetchGeoLocation() {
 
 /**
  * Fetch the country information based on latitude and longitude using the Google Geocode API.
- *
- * @param {number} lat - The latitude of the location.
- * @param {number} lng - The longitude of the location.
- * @returns {Promise<any>} The response from the Google Geocode API.
  */
 async function fetchCountryFromCoordinates(lat: number, lng: number) {
   const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${window?.scData?.google_map_api_key}`);
@@ -63,8 +112,6 @@ async function fetchCountryFromCoordinates(lat: number, lng: number) {
 /**
  * Get the user's country code based on Google Geolocation and GeoCode APIs.
  * Caches the result in sessionStorage to avoid repeat API calls.
- *
- * @returns {Promise<string | null>} The user's country code.
  */
 export async function getCurrentUserCountryCode() {
   if (!window?.scData?.google_map_api_key) {
@@ -99,9 +146,6 @@ export async function getCurrentUserCountryCode() {
 
 /**
  * Get the regions for a given country using the Atlas API.
- *
- * @param country
- * @returns {Array<{ value: string, label: string }>} The regions for the specified country.
  */
 export async function getCountryRegions(country: string) {
   if (!country) {
