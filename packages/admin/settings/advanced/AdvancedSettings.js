@@ -123,14 +123,26 @@ export default () => {
 	const validateGoogleMapApiKey = async (apiKey) => {
 		try {
 			const response = await fetch(
-				`https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=${apiKey}`
+				'https://places.googleapis.com/v1/places:searchText',
+				{
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+						'X-Goog-Api-Key': apiKey,
+						'X-Goog-FieldMask': 'places.id',
+					},
+					body: JSON.stringify({
+						textQuery: 'test',
+						pageSize: 1,
+					}),
+				}
 			);
 			const data = await response.json();
-			if (data.status !== 'OK') {
+			if (data?.error?.message) {
 				setError(
 					sprintf(
 						__('Google Map API Key Error: %s', 'surecart'),
-						data.error_message
+						data.error.message
 					)
 				);
 				return false;

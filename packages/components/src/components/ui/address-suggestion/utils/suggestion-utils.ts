@@ -1,42 +1,46 @@
 import { Address, AddressSuggestion, GoogleMapPlace } from 'src/types';
 import { getAddressLabels, transformPlaceDetails } from './address-transformer';
-import { getCountryRegions } from 'src/functions/address-settings';
+import { getCountryRegions } from 'src/functions/google-maps';
+
+const HTML_ESCAPE_MAP: Record<string, string> = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
+const escapeHtml = (s: string) => s.replace(/[&<>"']/g, c => HTML_ESCAPE_MAP[c]);
+const escapeRegex = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
 /**
  * Highlights the matching parts of a text based on a query.
  */
 export function highlightMatch(text: string, query: string): string {
   if (!text || !query) {
-    return text;
+    return escapeHtml(text || '');
   }
 
-  const words = query.split(/\s+/).filter(word => word);
+  const safeText = escapeHtml(text);
+  const words = query
+    .split(/\s+/)
+    .filter(word => word)
+    .map(escapeRegex);
 
   if (words.length === 0) {
-    return text;
+    return safeText;
   }
 
   try {
     const regex = new RegExp(`(${words.join('|')})`, 'gi');
-    return text.replace(regex, '<strong>$1</strong>');
+    return safeText.replace(regex, '<strong>$1</strong>');
   } catch (error) {
-    console.error('Invalid regex in highlightMatch:', error);
-    return text;
+    return safeText;
   }
-}
-
-/**
- * Updates the focus on a specific list element.
- */
-export function updateFocus(listElement: HTMLElement, focusedIndex: number): void {
-  const focusedItem = listElement?.children[focusedIndex] as HTMLElement;
-  focusedItem?.focus();
 }
 
 /**
  * Fetches address suggestions from the Google Maps API.
  */
-export async function fetchAddressSuggestions(input: string, country: string | null, regions: Array<{ value: string; label: string }>): Promise<Array<AddressSuggestion>> {
+export async function fetchAddressSuggestions(
+  input: string,
+  country: string | null,
+  regions: Array<{ value: string; label: string }>,
+  signal?: AbortSignal,
+): Promise<Array<AddressSuggestion>> {
   const response = await fetch('https://places.googleapis.com/v1/places:searchText', {
     method: 'POST',
     headers: {
@@ -49,16 +53,17 @@ export async function fetchAddressSuggestions(input: string, country: string | n
       pageSize: 5,
       regionCode: country,
     }),
+    signal,
   });
 
   const addressResponse = await response.json();
 
-  if (!!addressResponse?.error?.message) {
+  if (addressResponse?.error?.message) {
     throw new Error(addressResponse.error.message);
   }
 
   return (addressResponse?.places || []).map((place: GoogleMapPlace) => {
-    const { city, state, country } = getAddressLabels(place?.addressComponents, regions);
+    const { city, state, country } = getAddressLabels(place?.addressComponents || [], regions);
 
     return {
       displayName: place?.displayName?.text ?? input,
@@ -84,7 +89,7 @@ export async function fetchPlaceDetails(
   }
 
   const { addressComponents } = place;
-  const country = addressComponents.find(component => component.types.includes('country'))?.shortText || null;
+  const country = addressComponents.find(component => component.types?.includes('country'))?.shortText || null;
   const updatedRegions = address?.country !== country ? await getCountryRegions(country) : regions;
   const placeDetails = transformPlaceDetails(addressComponents, updatedRegions);
 

@@ -4,7 +4,7 @@ import { Address, GoogleMapAddressComponents } from 'src/types';
  * Helper function to find an address component by type.
  */
 const findAddressComponent = (addressComponents: Array<GoogleMapAddressComponents>, type: string): GoogleMapAddressComponents | undefined => {
-  return (addressComponents || []).find(component => component.types.includes(type));
+  return (addressComponents || []).find(component => component.types?.includes(type));
 };
 
 /**

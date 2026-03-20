@@ -10,7 +10,7 @@ import { debounce } from 'lodash';
  */
 import { Address, AddressSuggestion } from '../../../types';
 import { createErrorNotice } from '@store/notices/mutations';
-import { highlightMatch, updateFocus, fetchAddressSuggestions, fetchPlaceDetails } from './utils/suggestion-utils';
+import { highlightMatch, fetchAddressSuggestions, fetchPlaceDetails } from './utils/suggestion-utils';
 
 @Component({
   tag: 'sc-address-suggestions',
@@ -18,7 +18,11 @@ import { highlightMatch, updateFocus, fetchAddressSuggestions, fetchPlaceDetails
   shadow: true,
 })
 export class ScAddressSuggestions {
-  @Element() el: HTMLScAddressElement;
+  @Element() el: HTMLScAddressSuggestionsElement;
+
+  private boundHandleKeyDown: (e: KeyboardEvent) => void;
+  private boundHandleOutsideClick: (e: Event) => void;
+  private abortController: AbortController;
 
   @Prop({ mutable: true }) address: Partial<Address> = {
     country: null,
@@ -63,6 +67,9 @@ export class ScAddressSuggestions {
   /** Show address suggestions */
   @Prop({ mutable: true }) showSuggestions: boolean = false;
 
+  /** Loading state for suggestions */
+  @State() loading: boolean = false;
+
   /** Place select event */
   @Event() scChangeAddress: EventEmitter<Address>;
 
@@ -86,21 +93,28 @@ export class ScAddressSuggestions {
 
   // Use Lodash debounce for fetchAddressSuggestions.
   debouncedFetchAddressSuggestions = debounce(async (input: string) => {
+    this.abortController?.abort();
+    this.abortController = new AbortController();
+
     try {
-      this.addressSuggestions = await fetchAddressSuggestions(input, this.address?.country, this.regions);
+      this.loading = true;
+      this.addressSuggestions = await fetchAddressSuggestions(input, this.address?.country, this.regions, this.abortController.signal);
     } catch (error) {
+      if (error?.name === 'AbortError') return;
       createErrorNotice({
         message: sprintf(__('Google Map Error: %s', 'surecart'), error.message),
       });
       this.showSuggestions = false;
       this.addressSuggestions = [];
+    } finally {
+      this.loading = false;
     }
-  }, 50);
+  }, 300);
 
   @Watch('value')
   handleAddressLine1Change(newValue: string) {
     if (!this.address?.country) return;
-    if (!!newValue && this.showSuggestions) {
+    if (newValue && this.showSuggestions) {
       this.debouncedFetchAddressSuggestions(newValue);
     }
   }
@@ -111,7 +125,7 @@ export class ScAddressSuggestions {
     this.value = this.address.line_1;
     this.toggleAddressInputs();
 
-    if (!!this.address.line_1 && this.showSuggestions) {
+    if (this.address.line_1 && this.showSuggestions) {
       this.debouncedFetchAddressSuggestions(this.address.line_1);
     }
   }
@@ -121,7 +135,6 @@ export class ScAddressSuggestions {
     this.scShowSuggestionsChange.emit(newValue);
     if (newValue && this.addressSuggestions.length > 0) {
       this.focusedIndex = 0;
-      this.el.focus();
     }
   }
 
@@ -147,7 +160,7 @@ export class ScAddressSuggestions {
     this.showSuggestions = true;
     this.scChange.emit();
 
-    if (!!this.address?.country && !!e.target?.value) {
+    if (this.address?.country && e.target?.value) {
       this.debouncedFetchAddressSuggestions(e.target?.value);
     }
   }
@@ -155,18 +168,14 @@ export class ScAddressSuggestions {
   handleKeyDown(event: KeyboardEvent) {
     if (!this.addressSuggestions.length) return;
 
-    const listElement = this.el.shadowRoot.querySelector('.sc-address__suggestions--list') as HTMLElement;
-
     switch (event.key) {
       case 'ArrowDown':
         event.preventDefault();
         this.focusedIndex = (this.focusedIndex + 1) % this.addressSuggestions.length;
-        updateFocus(listElement, this.focusedIndex);
         break;
       case 'ArrowUp':
         event.preventDefault();
         this.focusedIndex = (this.focusedIndex - 1 + this.addressSuggestions.length) % this.addressSuggestions.length;
-        updateFocus(listElement, this.focusedIndex);
         break;
       case 'Enter':
         event.preventDefault();
@@ -182,15 +191,14 @@ export class ScAddressSuggestions {
   }
 
   hasAnyAddressField() {
-    return !!this.address?.line_1 || !!this.address?.line_2 || !!this.address?.city || !!this.address?.state || !!this.address?.postal_code;
+    return this.address?.line_1 || this.address?.line_2 || this.address?.city || this.address?.state || this.address?.postal_code;
   }
 
   manualAddress() {
     this.showSuggestions = false;
     this.scShowAddressFields.emit();
 
-    // If the address line 1 is not empty, we want to show the address fields.
-    if (!!this.value) {
+    if (this.value) {
       this.scChangeAddress.emit({
         ...(this.address as Address),
         line_1: this.value,
@@ -199,20 +207,12 @@ export class ScAddressSuggestions {
   }
 
   handleOutsideClick(evt) {
-    // If suggestions are false, return.
-    if (!this.showSuggestions) {
-      return;
-    }
+    if (!this.showSuggestions) return;
 
     const path = evt.composedPath();
-    if (
-      !path.some(item => {
-        return item === this.el;
-      })
-    ) {
+    if (!path.some(item => item === this.el)) {
       this.showSuggestions = false;
 
-      // If the address line 1 is not empty, we want to show the address fields.
       if (this.value) {
         this.scShowAddressFields.emit();
         this.scChangeAddress.emit({
@@ -224,27 +224,36 @@ export class ScAddressSuggestions {
   }
 
   componentWillLoad() {
+    this.boundHandleOutsideClick = evt => this.handleOutsideClick(evt);
+    this.boundHandleKeyDown = evt => this.handleKeyDown(evt);
+
     this.handleAddressChange();
     this.toggleAddressInputs();
 
-    document.addEventListener('mousedown', evt => this.handleOutsideClick(evt));
+    document.addEventListener('mousedown', this.boundHandleOutsideClick);
   }
 
   componentDidLoad() {
-    this.el.addEventListener('keydown', this.handleKeyDown.bind(this));
+    this.el.addEventListener('keydown', this.boundHandleKeyDown);
   }
 
   disconnectedCallback() {
-    this.el.removeEventListener('keydown', this.handleKeyDown.bind(this));
+    document.removeEventListener('mousedown', this.boundHandleOutsideClick);
+    this.el.removeEventListener('keydown', this.boundHandleKeyDown);
     this.debouncedFetchAddressSuggestions.cancel();
+    this.abortController?.abort();
   }
 
   toggleAddressInputs() {
-    if (!!window?.scData?.google_map_api_key && !this.address?.line_1) {
+    if (window?.scData?.google_map_api_key && !this.address?.line_1) {
       this.scHideAddressFields.emit();
     } else {
       this.scShowAddressFields.emit();
     }
+  }
+
+  private getActiveDescendantId(): string | undefined {
+    return this.focusedIndex >= 0 ? `suggestion-${this.focusedIndex}` : undefined;
   }
 
   renderAddressSuggestions() {
@@ -253,11 +262,11 @@ export class ScAddressSuggestions {
     }
 
     return (
-      <ul class="sc-address__suggestions--list" part="suggestions-list" role="list">
+      <ul class="sc-address__suggestions--list" part="suggestions-list" role="listbox" id="address-suggestions-listbox">
         <li
           class="sc-address__suggestions--item sc-address__suggestions--item--no-select sc-address__suggestions--item--powered-by"
           part="suggestion-item powered-by"
-          role="listitem"
+          role="presentation"
           tabindex="-1"
         >
           <span>
@@ -278,11 +287,22 @@ export class ScAddressSuggestions {
           </sc-button>
         </li>
 
-        {this.addressSuggestions.length === 0 && (
+        {this.loading && this.addressSuggestions.length === 0 && (
           <li
             class="sc-address__suggestions--item sc-address__suggestions--item--no-select sc-address__suggestions--item--no-result"
             part="suggestion-item no-result"
-            role="listitem"
+            role="presentation"
+            tabindex="-1"
+          >
+            {__('Loading...', 'surecart')}
+          </li>
+        )}
+
+        {!this.loading && this.addressSuggestions.length === 0 && (
+          <li
+            class="sc-address__suggestions--item sc-address__suggestions--item--no-select sc-address__suggestions--item--no-result"
+            part="suggestion-item no-result"
+            role="presentation"
             tabindex="-1"
           >
             {__('No results found', 'surecart')}
@@ -291,6 +311,7 @@ export class ScAddressSuggestions {
 
         {this.addressSuggestions.map((suggestion, index) => (
           <li
+            id={`suggestion-${index}`}
             class={{
               'sc-address__suggestions--item': true,
               'focused': this.focusedIndex === index,
@@ -299,7 +320,7 @@ export class ScAddressSuggestions {
             role="option"
             aria-selected={this.focusedIndex === index ? 'true' : 'false'}
             aria-label={sprintf(__('Select suggestion %s', 'surecart'), suggestion.fullDisplayName)}
-            tabindex={this.focusedIndex === index ? '0' : '-1'}
+            tabindex="-1"
             onClick={() => this.fetchPlaceDetails(suggestion?.placeId)}
             innerHTML={highlightMatch(suggestion.fullDisplayName, this.value)}
             onMouseEnter={() => (this.focusedIndex = index)}
@@ -311,7 +332,7 @@ export class ScAddressSuggestions {
           <li
             class="sc-address__suggestions--item sc-address__suggestions--item--no-select sc-address__suggestions--item--manually"
             part="suggestion-item manually"
-            role="listitem"
+            role="presentation"
             tabindex="-1"
           >
             <button onClick={() => this.manualAddress()}>{__('Enter address manually', 'surecart')}</button>
@@ -331,6 +352,10 @@ export class ScAddressSuggestions {
           autocomplete="street-address"
           placeholder={this.label}
           aria-label={this.label}
+          aria-expanded={this.showSuggestions ? 'true' : 'false'}
+          aria-controls="address-suggestions-listbox"
+          aria-activedescendant={this.getActiveDescendantId()}
+          role="combobox"
           name={this.names?.line_1}
           disabled={this.disabled}
           required={this.required}
