@@ -392,7 +392,6 @@ class ScriptsService {
 					'dashboard' => \SureCart::pages()->url( 'dashboard' ),
 					'checkout'  => \SureCart::pages()->url( 'checkout' ),
 				],
-				'i18n'                 => \SureCart::state()->i18n()->get(),
 				'google_map_api_key'   => \SureCart::googleMaps()->getApiKey(),
 			]
 		);
