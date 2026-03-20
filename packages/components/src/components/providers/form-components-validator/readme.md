@@ -2,6 +2,7 @@
 
 <!-- Auto Generated Below -->
 
+
 ## Properties
 
 | Property      | Attribute  | Description         | Type          | Default     |
@@ -9,11 +10,12 @@
 | `disabled`    | `disabled` | Disable validation? | `boolean`     | `undefined` |
 | `taxProtocol` | --         | The tax protocol    | `TaxProtocol` | `undefined` |
 
+
 ## Dependencies
 
 ### Used by
 
-- [sc-checkout](../../controllers/checkout-form/checkout)
+ - [sc-checkout](../../controllers/checkout-form/checkout)
 
 ### Depends on
 
@@ -34,7 +36,6 @@
 - [sc-line-item-trial](../../controllers/checkout-form/line-item-trial)
 
 ### Graph
-
 ```mermaid
 graph TD;
   sc-form-components-validator --> sc-order-shipping-address
@@ -71,6 +72,7 @@ graph TD;
   sc-input --> sc-form-control
   sc-address-suggestions --> sc-button
   sc-address-suggestions --> sc-icon
+  sc-address-suggestions --> sc-input
   sc-button --> sc-spinner
   sc-block-ui --> sc-spinner
   sc-compact-address --> sc-form-control
@@ -87,7 +89,6 @@ graph TD;
   sc-tax-id-input --> sc-button
   sc-tax-id-input --> sc-menu
   sc-tax-id-input --> sc-menu-item
-  sc-button --> sc-spinner
   sc-customer-phone --> sc-phone-input
   sc-phone-input --> sc-form-control
   sc-order-bumps --> sc-form-control
@@ -114,6 +115,6 @@ graph TD;
   style sc-form-components-validator fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
----
+----------------------------------------------
 
-_Built with [StencilJS](https://stenciljs.com/)_
+*Built with [StencilJS](https://stenciljs.com/)*

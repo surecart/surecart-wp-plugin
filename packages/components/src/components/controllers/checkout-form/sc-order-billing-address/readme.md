@@ -62,6 +62,7 @@ graph TD;
   sc-input --> sc-form-control
   sc-address-suggestions --> sc-button
   sc-address-suggestions --> sc-icon
+  sc-address-suggestions --> sc-input
   sc-button --> sc-spinner
   sc-block-ui --> sc-spinner
   sc-form-components-validator --> sc-order-billing-address

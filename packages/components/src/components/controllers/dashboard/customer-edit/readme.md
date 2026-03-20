@@ -70,6 +70,7 @@ graph TD;
   sc-select --> sc-menu
   sc-address-suggestions --> sc-button
   sc-address-suggestions --> sc-icon
+  sc-address-suggestions --> sc-input
   sc-button --> sc-spinner
   sc-block-ui --> sc-spinner
   sc-tax-id-input --> sc-icon

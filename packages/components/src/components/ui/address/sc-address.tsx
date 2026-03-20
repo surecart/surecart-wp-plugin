@@ -217,6 +217,16 @@ export class ScAddress {
     return regions as Array<{ value: string; label: string }>;
   }
 
+  toggleAddressFieldsVisibility(show: boolean) {
+    this.showCity = show;
+    this.showPostal = show;
+
+    // If Google Map API key is set, Override the showLine2 value.
+    if (!!window?.scData?.google_map_api_key) {
+      this.showLine2 = show;
+    }
+  }
+
   getRoundedProps(index: number, length: number) {
     const isFirst = index === 0;
     const isLast = index === length - 1;
