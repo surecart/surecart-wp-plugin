@@ -2,10 +2,36 @@
   display: block;
 }
 
+// Remove sc-choice's default padding so the header can be full-width.
+// overflow: hidden ensures the header bg respects border-radius.
+sc-choice::part(base) {
+  padding: 0;
+  overflow: hidden;
+}
+
+// Hover state: green border on the card.
+sc-choice::part(base):hover {
+  border-color: var(--sc-color-primary-500);
+}
+
+.bump__header {
+  background-color: var(--sc-color-gray-100);
+  padding: var(--sc-spacing-x-small);
+  font-weight: var(--sc-font-weight-semibold);
+  font-size: var(--sc-font-size-small);
+  line-height: var(--sc-line-height-dense);
+  border-bottom: 1px dashed var(--sc-color-gray-200);
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-word;
+}
+
 .bump {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 1em;
+  padding: var(--sc-spacing-small);
 
   &__text {
     display: grid;
@@ -13,51 +39,33 @@
     flex: 1;
     min-width: 0;
   }
+  &__title {
+    font-size: var(--sc-font-size-medium);
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-word;
+  }
   &__tag {
     background: var(--sc-color-primary-500);
     color: var(--sc-color-white);
-    border-radius: var(--sc-input-border-radius-medium);
+    border-radius: 999px;
     padding: var(--sc-spacing-x-small);
     font-size: var(--sc-font-size-x-small);
   }
 
-  &__product {
-    display: flex;
-    align-items: center;
-    gap: var(--sc-choice-padding, 1.3em 1.1em);
-    line-height: var(--sc-line-height-dense);
-    &--wrapper {
-      container-type: inline-size;
+  &__description {
+    font-size: var(--sc-font-size-medium);
+    color: #6b7280;
+    line-height: 20px;
+    font-weight: normal;
+    padding: 4px 0;
+    p {
+      margin: 0;
     }
-    @container (max-width: 325px) {
-      flex-direction: column;
-      align-items: start;
-    }
-  }
-
-  &__title {
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-    line-clamp: 2;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    word-break: break-word;
-  }
-
-  &__product-title {
-    font-weight: var(--sc-font-weight-semibold);
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-    line-clamp: 2;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    word-break: break-word;
-  }
-
-  &__product-description {
-    color: var(--sc-input-label-color);
   }
 
   &__image {
@@ -78,12 +86,13 @@
       gap: var(--sc-spacing-x-small);
       .bump__original-price {
         text-decoration: line-through;
-        color: var(--sc-color-gray-500);
-        font-size: var(--sc-font-size-small);
+        color: #6b7280;
+        font-size: var(--sc-font-size-medium);
+        font-weight: normal;
       }
     }
     .bump__new-price {
-      font-size: var(--sc-font-size-large);
+      font-size: var(--sc-font-size-medium);
       color: var(--sc-color-gray-700);
     }
     .bump__interval {
@@ -113,6 +122,15 @@
       background-color: var(--sc-color-primary-500);
       border-color: var(--sc-color-primary-500);
       color: var(--sc-color-white, #fff);
+    }
+
+    &--loading {
+      border-color: var(--sc-color-primary-500);
+
+      sc-spinner {
+        --spinner-size: 1em;
+        --indicator-color: var(--sc-color-gray-500);
+      }
     }
   }
 

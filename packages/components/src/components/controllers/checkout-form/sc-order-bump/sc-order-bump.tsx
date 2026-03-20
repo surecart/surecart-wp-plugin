@@ -1,4 +1,4 @@
-import { Component, h, Prop } from '@stencil/core';
+import { Component, h, Prop, State } from '@stencil/core';
 import { sprintf, __, _x } from '@wordpress/i18n';
 import { speak } from '@wordpress/a11y';
 import { intervalString } from '../../../../functions/price';
@@ -16,28 +16,38 @@ export class ScOrderBump {
   /** The bump */
   @Prop() bump: Bump;
 
+  /** Loading state */
+  @State() loading: boolean = false;
+
   /** The bump line item */
   lineItem() {
     return checkoutState?.checkout?.line_items?.data?.find(item => item?.bump === this.bump?.id);
   }
 
   /** Update the line item. */
-  updateLineItem() {
+  async updateLineItem() {
+    if (this.loading) return;
+
     const price = (this.bump.price as Price)?.id || (this.bump?.price as string);
     const lineItem = this.lineItem();
 
-    if (lineItem) {
-      removeCheckoutLineItem(lineItem.id);
-      speak(__('Order bump Removed.', 'surecart'));
-      return;
-    }
+    this.loading = true;
+    try {
+      if (lineItem) {
+        await removeCheckoutLineItem(lineItem.id);
+        speak(__('Order bump Removed.', 'surecart'));
+        return;
+      }
 
-    addCheckoutLineItem({
-      bump: this.bump?.id,
-      price,
-      quantity: 1,
-    });
-    speak(__('Order bump applied.', 'surecart'));
+      await addCheckoutLineItem({
+        bump: this.bump?.id,
+        price,
+        quantity: 1,
+      });
+      speak(__('Order bump applied.', 'surecart'));
+    } finally {
+      this.loading = false;
+    }
   }
 
   componentDidLoad() {
@@ -137,6 +147,19 @@ export class ScOrderBump {
         }}
         exportparts="base, title"
       >
+        {!!this.bump?.metadata?.cta && (
+          <div
+            slot="header"
+            class="bump__header"
+            aria-label={sprintf(
+              /* translators: %s: order bump CTA */
+              __('Product: %s.', 'surecart'),
+              this.bump?.metadata?.cta,
+            )}
+          >
+            <span aria-hidden="true">{this.bump?.metadata?.cta}</span>
+          </div>
+        )}
         <div part="base-content" class="bump">
           {!!product?.line_item_image?.src && <img {...(product?.line_item_image as any)} class="bump__image" />}
           <div class="bump__text">
@@ -145,54 +168,39 @@ export class ScOrderBump {
               aria-label={sprintf(
                 /* translators: %s: order bump name */
                 __('Product: %s.', 'surecart'),
-                this.bump?.metadata?.cta || this.bump?.name || product?.name,
+                this.bump?.name || product?.name,
               )}
             >
-              <span aria-hidden="true">{this.bump?.metadata?.cta || this.bump?.name || product?.name}</span>
+              <span aria-hidden="true">{this.bump?.name || product?.name}</span>
             </div>
             <div class="bump__amount">
               {this.renderPrice()}
               {this.renderDiscount()}
             </div>
+            {!!this.bump?.metadata?.description && (
+              <div
+                class="bump__description"
+                aria-label={sprintf(
+                  /* translators: %s: Product description */
+                  __('Product description: %s.', 'surecart'),
+                  this.bump?.rendered_description,
+                )}
+              >
+                <span aria-hidden="true" innerHTML={this.bump?.rendered_description}></span>
+              </div>
+            )}
           </div>
           <div
             class={{
               'bump__button': true,
               'bump__button--checked': !!lineItem,
+              'bump__button--loading': this.loading,
             }}
             aria-hidden="true"
           >
-            <sc-icon name={lineItem ? 'check' : 'plus'} />
+            {this.loading ? <sc-spinner /> : <sc-icon name={lineItem ? 'check' : 'plus'} />}
           </div>
         </div>
-
-        {this.bump?.metadata?.description && (
-          <div slot="footer" class="bump__product--wrapper">
-            <sc-divider style={{ '--spacing': 'var(--sc-spacing-medium)' }}></sc-divider>
-            <div class="bump__product">
-              <div class="bump__product-text">
-                {!!this.bump?.metadata?.cta && (
-                  <div class="bump__product-title" aria-hidden="true">
-                    {this.bump.name || product?.name}
-                  </div>
-                )}
-
-                {!!this.bump?.metadata?.description && (
-                  <div
-                    class="bump__product-description"
-                    aria-label={sprintf(
-                      /* translators: %s: Product description */
-                      __('Product description: %s.', 'surecart'),
-                      this.bump?.rendered_description,
-                    )}
-                  >
-                    <span aria-hidden="true" innerHTML={this.bump?.rendered_description}></span>
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-        )}
       </sc-choice>
     );
   }
