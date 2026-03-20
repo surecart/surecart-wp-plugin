@@ -175,22 +175,12 @@ abstract class AbstractProductListBlock {
 		$ids = [];
 
 		foreach ( $posts as $post ) {
-			$product_data = get_post_meta( $post->ID, 'product', true );
-			if ( empty( $product_data ) ) {
+			$product = sc_get_product( $post );
+			if ( empty( $product ) ) {
 				continue;
 			}
 
-			// Deep-convert to stdClass for consistent property access.
-			if ( is_string( $product_data ) ) {
-				$product_data = json_decode( $product_data );
-			} elseif ( is_array( $product_data ) ) {
-				$product_data = json_decode( wp_json_encode( $product_data ) );
-			}
-
-			$gallery_ids = $product_data->metadata->gallery_ids ?? '';
-			if ( is_string( $gallery_ids ) ) {
-				$gallery_ids = json_decode( $gallery_ids, true );
-			}
+			$gallery_ids = $product->gallery_ids ?? [];
 			if ( ! is_array( $gallery_ids ) ) {
 				continue;
 			}
