@@ -26,6 +26,7 @@ class PostTypeServiceProvider implements ServiceProviderInterface {
 		$container['surecart.post_types.upsell_page'] = function () {
 			return new ProductUpsellPagePostTypeService();
 		};
+
 		$app = $container[ SURECART_APPLICATION_KEY ];
 		$app->alias( 'forms', 'surecart.forms' );
 		$app->alias( 'cartPost', 'surecart.cart.post' );
