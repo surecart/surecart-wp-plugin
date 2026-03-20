@@ -58,7 +58,7 @@ class TranslationsServiceProvider implements ServiceProviderInterface {
 	 */
 	public function loadSingleTranslationFile( $file, $handle, $domain ) {
 		if ( 'surecart' === $domain ) {
-			$locale = determine_locale();
+			$locale = apply_filters( 'plugin_locale', determine_locale(), 'surecart' );
 
 			if ( ! file_exists( $file ) && file_exists( WP_LANG_DIR . '/loco/plugins/surecart-' . $locale . '.json' ) ) {
 				return WP_LANG_DIR . '/loco/plugins/surecart-' . $locale . '.json';
@@ -98,16 +98,8 @@ class TranslationsServiceProvider implements ServiceProviderInterface {
 		$lang_dir = apply_filters( 'surecart_languages_directory', $lang_dir );
 
 		// Use determine_locale() which returns user locale in admin, site locale on frontend.
-		$get_locale = determine_locale();
-
-		/**
-		 * Language Locale for SureCart
-		 *
-		 * @var $get_locale The locale to use.
-		 * Uses determine_locale() which returns the appropriate locale
-		 * based on context (user locale in admin, site locale on frontend).
-		 */
-		$locale = apply_filters( 'plugin_locale', $get_locale, 'surecart' );
+		// Allow plugins/themes to override via 'plugin_locale' filter.
+		$locale = apply_filters( 'plugin_locale', determine_locale(), 'surecart' );
 		$mofile = sprintf( '%1$s-%2$s.mo', 'surecart', $locale );
 
 		// Setup paths to current locale file.
