@@ -312,6 +312,9 @@ export default ({
 						placeholder={__('Search...', 'surecart')}
 						required
 						className={fullWidthClass}
+						requestQuery={{
+							archived: false,
+						}}
 					/>
 				);
 			}
