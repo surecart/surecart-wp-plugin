@@ -447,33 +447,22 @@ export default () => {
 
 				{googleMapApiEnabled && (
 					<>
-						<div
-							css={css`
-								gap: var(--sc-form-row-spacing);
-								display: grid;
-								grid-template-columns: repeat(
-									2,
-									minmax(0, 1fr)
-								);
-							`}
-						>
-							<ScInput
-								value={googleMapApiKey}
-								label={__('Google Maps API Key', 'surecart')}
-								placeholder={__(
-									'Google Maps API Key',
-									'surecart'
-								)}
-								onScInput={(e) =>
-									setGoogleMapApiKey(e.target.value)
-								}
-								type="password"
-								help={__(
-									'You can find this on your Google Cloud Platform.',
-									'surecart'
-								)}
-							></ScInput>
-						</div>
+						<ScInput
+							value={googleMapApiKey}
+							label={__('Google Maps API Key', 'surecart')}
+							placeholder={__(
+								'Google Maps API Key',
+								'surecart'
+							)}
+							onScInput={(e) =>
+								setGoogleMapApiKey(e.target.value)
+							}
+							type="password"
+							help={__(
+								'Restrict this key by HTTP referrer in Google Cloud Console to prevent unauthorized usage.',
+								'surecart'
+							)}
+						></ScInput>
 						{!googleMapApiKey && (
 							<ScAlert open>
 								{__(
