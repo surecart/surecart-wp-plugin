@@ -36,7 +36,7 @@ class GoogleMapApiService {
 	 * @return string|\WP_Error
 	 */
 	public function encryptSettings( $value, $old_value, $option ) {
-		if ( empty( $option ) ) {
+		if ( empty( $value ) ) {
 			return $value;
 		}
 
