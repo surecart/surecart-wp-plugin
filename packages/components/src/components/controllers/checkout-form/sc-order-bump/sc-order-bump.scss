@@ -59,10 +59,10 @@ sc-choice::part(base):hover {
 
   &__description {
     font-size: var(--sc-font-size-medium);
-    color: #6b7280;
-    line-height: 20px;
+    color: var(--sc-color-gray-500);
+    line-height: var(--sc-line-height-normal);
     font-weight: normal;
-    padding: 4px 0;
+    padding: var(--sc-spacing-xxx-small) 0;
     p {
       margin: 0;
     }
@@ -86,7 +86,7 @@ sc-choice::part(base):hover {
       gap: var(--sc-spacing-x-small);
       .bump__original-price {
         text-decoration: line-through;
-        color: #6b7280;
+        color: var(--sc-color-gray-500);
         font-size: var(--sc-font-size-medium);
         font-weight: normal;
       }

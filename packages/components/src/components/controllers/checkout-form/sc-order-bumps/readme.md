@@ -31,8 +31,8 @@ graph TD;
   sc-order-bumps --> sc-order-bump
   sc-form-control --> sc-visually-hidden
   sc-order-bump --> sc-choice
+  sc-order-bump --> sc-spinner
   sc-order-bump --> sc-icon
-  sc-order-bump --> sc-divider
   sc-form-components-validator --> sc-order-bumps
   style sc-order-bumps fill:#f9f,stroke:#333,stroke-width:4px
 ```

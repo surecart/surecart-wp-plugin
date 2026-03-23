@@ -25,6 +25,7 @@
 
  - [sc-block-ui](../block-ui)
  - [sc-button](../button)
+ - [sc-order-bump](../../controllers/checkout-form/sc-order-bump)
  - [sc-select](../select)
  - [sc-tax-id-input](../tax-id-input)
 
@@ -33,6 +34,7 @@
 graph TD;
   sc-block-ui --> sc-spinner
   sc-button --> sc-spinner
+  sc-order-bump --> sc-spinner
   sc-select --> sc-spinner
   sc-tax-id-input --> sc-spinner
   style sc-spinner fill:#f9f,stroke:#333,stroke-width:4px

@@ -45,6 +45,8 @@ export class ScOrderBump {
         quantity: 1,
       });
       speak(__('Order bump applied.', 'surecart'));
+    } catch (e) {
+      speak(__('Something went wrong. Please try again.', 'surecart'));
     } finally {
       this.loading = false;
     }
@@ -151,13 +153,9 @@ export class ScOrderBump {
           <div
             slot="header"
             class="bump__header"
-            aria-label={sprintf(
-              /* translators: %s: order bump CTA */
-              __('Product: %s.', 'surecart'),
-              this.bump?.metadata?.cta,
-            )}
+            aria-hidden="true"
           >
-            <span aria-hidden="true">{this.bump?.metadata?.cta}</span>
+            <span>{this.bump?.metadata?.cta}</span>
           </div>
         )}
         <div part="base-content" class="bump">
