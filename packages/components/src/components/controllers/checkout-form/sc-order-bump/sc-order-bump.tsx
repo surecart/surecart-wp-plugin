@@ -36,15 +36,14 @@ export class ScOrderBump {
       if (lineItem) {
         await removeCheckoutLineItem(lineItem.id);
         speak(__('Order bump Removed.', 'surecart'));
-        return;
+      } else {
+        await addCheckoutLineItem({
+          bump: this.bump?.id,
+          price,
+          quantity: 1,
+        });
+        speak(__('Order bump applied.', 'surecart'));
       }
-
-      await addCheckoutLineItem({
-        bump: this.bump?.id,
-        price,
-        quantity: 1,
-      });
-      speak(__('Order bump applied.', 'surecart'));
     } catch (e) {
       speak(__('Something went wrong. Please try again.', 'surecart'));
     } finally {
@@ -153,7 +152,7 @@ export class ScOrderBump {
           <div
             slot="header"
             class="bump__header"
-            aria-hidden="true"
+            role="presentation"
           >
             <span>{this.bump?.metadata?.cta}</span>
           </div>
