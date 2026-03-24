@@ -63,7 +63,7 @@ export class ScOrderBump {
 
   renderPrice() {
     return (
-      <div slot="description" class={{ 'bump__price': true, 'bump__price--has-discount': !!this.bump?.percent_off || !!this.bump?.amount_off }} part="price">
+      <div class={{ 'bump__price': true, 'bump__price--has-discount': !!this.bump?.percent_off || !!this.bump?.amount_off }} part="price">
         {!!(this.bump?.percent_off || this.bump?.amount_off) && (
           <span
             aria-label={
@@ -148,15 +148,6 @@ export class ScOrderBump {
         }}
         exportparts="base, title"
       >
-        {!!this.bump?.metadata?.cta && (
-          <div
-            slot="header"
-            class="bump__header"
-            role="presentation"
-          >
-            <span>{this.bump?.metadata?.cta}</span>
-          </div>
-        )}
         <div part="base-content" class="bump">
           {!!product?.line_item_image?.src && <img {...(product?.line_item_image as any)} class="bump__image" />}
           <div class="bump__text">
@@ -170,6 +161,11 @@ export class ScOrderBump {
             >
               <span aria-hidden="true">{this.bump?.name || product?.name}</span>
             </div>
+            {!!this.bump?.metadata?.cta && (
+              <div class="bump__cta">
+                <span>{this.bump?.metadata?.cta}</span>
+              </div>
+            )}
             <div class="bump__amount">
               {this.renderPrice()}
               {this.renderDiscount()}
