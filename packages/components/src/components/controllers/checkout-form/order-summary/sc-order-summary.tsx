@@ -143,7 +143,7 @@ export class ScOrderSummary {
 
   render() {
     return (
-      <div class={{ 'summary': true, 'summary--open': !this.collapsed }}>
+      <div class={{ 'summary': true, 'summary--open': !this.collapsed, 'summary--collapsible': this.collapsible }}>
         {this.collapsible && this.renderHeader()}
         <div
           ref={el => (this.body = el as HTMLElement)}
