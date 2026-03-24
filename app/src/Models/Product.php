@@ -1245,4 +1245,22 @@ class Product extends Model implements PageModel {
 		ksort( $breakdown );
 		return array_map( 'intval', $breakdown );
 	}
+
+	/**
+	 * Get the review url attribute.
+	 *
+	 * @return string
+	 */
+	public function getReviewUrlAttribute(): string {
+		if ( ! $this->reviews_enabled ) {
+			return '';
+		}
+
+		$product_post_id = $this->post->ID ?? null;
+		if ( empty( $product_post_id ) ) {
+			return '';
+		}
+
+		return $this->permalink ? add_query_arg( 'product-review-form', $product_post_id, $this->permalink ) : '';
+	}
 }
