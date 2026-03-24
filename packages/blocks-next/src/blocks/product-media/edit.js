@@ -1,18 +1,19 @@
 import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
-import { useEntityRecord } from '@wordpress/core-data';
 import {
+	Disabled,
 	PanelBody,
+	Placeholder,
 	RangeControl,
 	ToggleControl,
 	__experimentalNumberControl as NumberControl,
 	__experimentalUnitControl as UnitControl,
 	__experimentalUseCustomUnits as useCustomUnits,
 } from '@wordpress/components';
-import { useEffect, useState } from '@wordpress/element';
+import { useEntityRecord } from '@wordpress/core-data';
+import { useMemo } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
-import { Disabled } from '@wordpress/components';
 
-export default ({ attributes, setAttributes, context: { postId } }) => {
+export default ({ attributes, setAttributes, context: { postId } = {} }) => {
 	const {
 		height,
 		thumbnails_per_page,
@@ -22,40 +23,42 @@ export default ({ attributes, setAttributes, context: { postId } }) => {
 		desktop_gallery,
 		show_thumbnails,
 	} = attributes;
-	const [images, setImages] = useState([]);
-	const blockProps = useBlockProps({});
+	const blockProps = useBlockProps();
 
-	const { record: { meta: { product } = {} } = {} } = useEntityRecord(
-		'postType',
-		'sc_product',
-		postId
-	);
+	const { record } = useEntityRecord('postType', 'sc_product', postId, {
+		enabled: !!postId,
+	});
+
+	const product = record?.meta?.product;
 
 	const units = useCustomUnits({
 		availableUnits: ['px', 'em', 'rem', 'vh'],
 	});
 
-	useEffect(() => {
-		setImages(
-			product?.gallery
-				? product?.gallery.map((image) => {
-						return {
-							src: image?.url,
-							width,
-						};
-				  })
-				: [...Array(desktop_gallery ? 3 : 20)].map(() => {
-						return {
-							src:
-								scBlockData?.plugin_url +
-								'/images/placeholder.jpg',
-							width,
-						};
-				  })
-		);
-	}, [width, thumbnails_per_page, product, desktop_gallery]);
+	// Use useMemo to avoid flicker while gallery set.
+	const images = useMemo(() => {
+		if (product?.gallery?.length) {
+			return product.gallery.map((image) => ({
+				type: 'image',
+				src: image?.url,
+				width,
+			}));
+		}
+		return [...Array(desktop_gallery ? 3 : 12)].map(() => ({
+			type: 'placeholder',
+			width,
+		}));
+	}, [width, product, desktop_gallery]);
 
 	const autoHeightEnabled = desktop_gallery ? true : auto_height;
+	const placeholderStyle =
+		!autoHeightEnabled && height
+			? { height }
+			: { aspectRatio: '1 / 1', width: '100%' };
+	const thumbnailPlaceholderStyle = {
+		aspectRatio: '4 / 3',
+		width: '100%',
+	};
 
 	return (
 		<>
@@ -110,8 +113,8 @@ export default ({ attributes, setAttributes, context: { postId } }) => {
 						placeholder={__('Unlimited', 'surecart')}
 						value={width}
 						min={1}
-						spinControls={'custom'}
-						onChange={(width) => setAttributes({ width: width })}
+						spinControls="custom"
+						onChange={(width) => setAttributes({ width })}
 					/>
 					<ToggleControl
 						__nextHasNoMarginBottom
@@ -158,16 +161,23 @@ export default ({ attributes, setAttributes, context: { postId } }) => {
 							<div className="swiper-wrapper">
 								{images.map((image, index) => (
 									<div className="swiper-slide" key={index}>
-										<img
-											src={image.src}
-											alt=""
-											width={image.width}
-											style={{
-												height: autoHeightEnabled
-													? 'auto'
-													: height,
-											}}
-										/>
+										{image.type === 'image' ? (
+											<img
+												src={image.src}
+												alt=""
+												width={image.width}
+												style={{
+													height: autoHeightEnabled
+														? 'auto'
+														: height,
+												}}
+											/>
+										) : (
+											<Placeholder
+												withIllustration
+												style={placeholderStyle}
+											/>
+										)}
 									</div>
 								))}
 							</div>
@@ -176,8 +186,11 @@ export default ({ attributes, setAttributes, context: { postId } }) => {
 							<div className="swiper-button-next"></div>
 						</div>
 
-						{images?.length > 1 && show_thumbnails ? (
-							<div className="sc-image-slider__thumbs">
+						{images.length > 1 && show_thumbnails && (
+							<div
+								className="sc-image-slider__thumbs"
+								style={{ opacity: 1, visibility: 'visible' }}
+							>
 								<div
 									className="sc-image-slider-button__prev"
 									tabIndex="-1"
@@ -190,9 +203,9 @@ export default ({ attributes, setAttributes, context: { postId } }) => {
 										viewBox="0 0 24 24"
 										fill="none"
 										stroke="currentColor"
-										stroke-width="2"
-										stroke-linecap="round"
-										stroke-linejoin="round"
+										strokeWidth="2"
+										strokeLinecap="round"
+										strokeLinejoin="round"
 									>
 										<polyline points="15 18 9 12 15 6" />
 									</svg>
@@ -206,13 +219,20 @@ export default ({ attributes, setAttributes, context: { postId } }) => {
 											<div
 												className="swiper-slide"
 												key={index}
-												onClick={() =>
-													swiper?.current?.slideTo(
-														index
-													)
-												}
 											>
-												<img src={image.src} alt="" />
+												{image.type === 'image' ? (
+													<img
+														src={image.src}
+														alt=""
+													/>
+												) : (
+													<Placeholder
+														withIllustration
+														style={
+															thumbnailPlaceholderStyle
+														}
+													/>
+												)}
 											</div>
 										))}
 									</div>
@@ -230,15 +250,15 @@ export default ({ attributes, setAttributes, context: { postId } }) => {
 										viewBox="0 0 24 24"
 										fill="none"
 										stroke="currentColor"
-										stroke-width="2"
-										stroke-linecap="round"
-										stroke-linejoin="round"
+										strokeWidth="2"
+										strokeLinecap="round"
+										strokeLinejoin="round"
 									>
 										<polyline points="9 18 15 12 9 6" />
 									</svg>
 								</div>
 							</div>
-						) : null}
+						)}
 					</div>
 				</Disabled>
 			</div>

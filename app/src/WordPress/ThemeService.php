@@ -2,16 +2,13 @@
 
 namespace SureCart\WordPress;
 
-use SureCart\Models\Form;
-
 /**
- * Register translations.
+ * Handles theme-related functionality.
  */
 class ThemeService {
 	/**
 	 * Bootstrap the service.
 	 *
-	 * @param \Pimple\Container $container Service container.
 	 * @return void
 	 */
 	public function bootstrap() {
@@ -21,6 +18,68 @@ class ThemeService {
 		// add the theme class to the body tag.
 		add_filter( 'body_class', [ $this, 'themeBodyClass' ] );
 		add_filter( 'admin_body_class', [ $this, 'themeBodyClassAdmin' ] );
+	}
+
+	/**
+	 * Get the current theme preference.
+	 *
+	 * Reads from brand.theme (API) as the primary source.
+	 * Falls back to the WP option if the API data is unavailable.
+	 *
+	 * @return string 'light' or 'dark'
+	 */
+	public function mode(): string {
+		$brand = \SureCart::account()->brand;
+
+		if ( ! empty( $brand ) && ! is_wp_error( $brand ) && ! empty( $brand->theme ) ) {
+			return 'dark' === $brand->theme ? 'dark' : 'light';
+		}
+
+		return get_option( 'surecart_theme', 'light' );
+	}
+
+	/**
+	 * Get the logo URL based on the current theme.
+	 *
+	 * Returns the dark logo URL when theme is dark and a dark logo exists,
+	 * otherwise returns the standard logo URL.
+	 *
+	 * @return string The logo URL.
+	 */
+	public function logoUrl(): string {
+		$brand = \SureCart::account()->brand;
+
+		if ( empty( $brand ) || is_wp_error( $brand ) ) {
+			return '';
+		}
+
+		if ( 'dark' === ( $brand->theme ?? '' ) && ! empty( $brand->dark_logo->url ) ) {
+			return $brand->dark_logo->url;
+		}
+
+		return $brand->logo_url ?? '';
+	}
+
+	/**
+	 * Get the brand color based on the current theme.
+	 *
+	 * Returns the dark color when theme is dark and a dark color exists,
+	 * otherwise returns the standard brand color.
+	 *
+	 * @return string The brand color hex value (without #).
+	 */
+	public function brandColor(): string {
+		$brand = \SureCart::account()->brand;
+
+		if ( empty( $brand ) || is_wp_error( $brand ) ) {
+			return '000000';
+		}
+
+		if ( 'dark' === ( $brand->theme ?? '' ) && ! empty( $brand->dark_color ) ) {
+			return $brand->dark_color;
+		}
+
+		return $brand->color ?? '000000';
 	}
 
 	/**
@@ -43,7 +102,7 @@ class ThemeService {
 	public function themeBodyClassAdmin( $classes ) {
 		global $pagenow;
 		if ( 'post.php' === $pagenow ) {
-			$classes .= ' surecart-theme-' . get_option( 'surecart_theme', 'light' );
+			$classes .= ' surecart-theme-' . $this->mode();
 		}
 		return $classes;
 	}
@@ -56,7 +115,7 @@ class ThemeService {
 	 * @return array
 	 */
 	public function themeBodyClass( $classes ) {
-		$classes[] = 'surecart-theme-' . get_option( 'surecart_theme', 'light' );
+		$classes[] = 'surecart-theme-' . $this->mode();
 		return $classes;
 	}
 

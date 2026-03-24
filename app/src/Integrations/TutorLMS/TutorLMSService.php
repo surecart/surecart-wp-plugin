@@ -301,10 +301,10 @@ class TutorLMSService extends IntegrationService implements IntegrationInterface
 		wp_reset_query();
 		$course_query = new \WP_Query(
 			[
-				'post_type'   => tutor()->course_post_type,
-				'post_status' => 'publish',
-				's'           => $search,
-				'per_page'    => 10,
+				'post_type'      => tutor()->course_post_type,
+				'post_status'    => 'publish',
+				's'              => $search,
+				'posts_per_page' => 100,
 			]
 		);
 

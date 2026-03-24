@@ -116,7 +116,7 @@ class ScriptsService {
 					'locale'               => str_replace( '_', '-', get_locale() ),
 					'currency'             => \SureCart::account()->currency,
 					'currency_symbol'      => html_entity_decode( Currency::getCurrencySymbol( \SureCart::account()->currency ) ),
-					'theme'                => get_option( 'surecart_theme', 'light' ),
+					'theme'                => \SureCart::theme()->mode(),
 					'pages'                => [
 						'dashboard' => \SureCart::pages()->url( 'dashboard' ),
 						'checkout'  => \SureCart::pages()->url( 'checkout' ),
@@ -348,7 +348,7 @@ class ScriptsService {
 					'currency'             => \SureCart::account()->currency,
 					'locale'               => str_replace( '_', '-', get_locale() ),
 					'currency_symbol'      => html_entity_decode( Currency::getCurrencySymbol( \SureCart::account()->currency ) ),
-					'theme'                => get_option( 'surecart_theme', 'light' ),
+					'theme'                => \SureCart::theme()->mode(),
 					'pages'                => [
 						'dashboard' => \SureCart::pages()->url( 'dashboard' ),
 						'checkout'  => \SureCart::pages()->url( 'checkout' ),
@@ -380,7 +380,7 @@ class ScriptsService {
 				'manualPaymentMethods' => is_admin() ? ( (array) ManualPaymentMethod::get() ?? [] ) : [],
 				'plugin_url'           => \SureCart::core()->assets()->getUrl(),
 				'currency'             => \SureCart::account()->currency,
-				'theme'                => get_option( 'surecart_theme', 'light' ),
+				'theme'                => \SureCart::theme()->mode(),
 				'entitlements'         => \SureCart::account()->entitlements,
 				'upgrade_url'          => \SureCart::config()->links->purchase,
 				'beta'                 => [

@@ -4,14 +4,14 @@ import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 import { state as selectedProcessor } from '@store/selected-processor';
 
-import { CustomStripeElementChangeEvent, FormStateSetter, PaymentInfoAddedParams, ShippingAddress } from '../../../types';
+import { CustomStripeElementChangeEvent, FormStateSetter, PaymentInfoAddedParams } from '../../../types';
 import { state as checkoutState, onChange } from '@store/checkout';
 import { onChange as onChangeFormState } from '@store/form';
 import { state as processorsState } from '@store/processors';
 import { currentFormState } from '@store/form/getters';
 import { createErrorNotice } from '@store/notices/mutations';
 import { updateFormState } from '@store/form/mutations';
-import { getCompleteAddress } from '@store/checkout/getters';
+import { getResolvedBillingAddress, toStripeAddress } from '@store/checkout/getters';
 import { getProcessorByType } from '@store/processors/getters';
 
 @Component({
@@ -214,14 +214,15 @@ export class ScStripePaymentElement {
     if (!processorsState.instances.stripeElements) {
       // we have what we need, load elements.
       processorsState.instances.stripeElements = processorsState.instances.stripe.elements(this.getElementsConfig() as any);
-      const { line1, line2, city, state, country, postal_code } = getCompleteAddress('shipping') ?? {};
+      const address = toStripeAddress(getResolvedBillingAddress());
 
       const options = this.maybeApplyFilters({
         defaultValues: {
           billingDetails: {
-            name: checkoutState.checkout?.name,
-            email: checkoutState.checkout?.email,
-            ...(line1 && { address: { line1, line2, city, state, country, postal_code } }),
+            ...(checkoutState.checkout?.name ? { name: checkoutState.checkout.name } : {}),
+            ...(checkoutState.checkout?.email ? { email: checkoutState.checkout.email } : {}),
+            ...(checkoutState.checkout?.phone ? { phone: checkoutState.checkout.phone } : {}),
+            ...(address ? { address } : {}),
           },
         },
         fields: {
@@ -268,22 +269,15 @@ export class ScStripePaymentElement {
     if (!this.element) return;
     if (checkoutState.checkout?.status !== 'draft') return;
 
-    const { name, email } = checkoutState.checkout;
-    const { line_1: line1, line_2: line2, city, state, country, postal_code } = (checkoutState.checkout?.shipping_address as ShippingAddress) || {};
+    const address = toStripeAddress(getResolvedBillingAddress());
 
     const options = this.maybeApplyFilters({
       defaultValues: {
         billingDetails: {
-          name,
-          email,
-          address: {
-            line1,
-            line2,
-            city,
-            state,
-            country,
-            postal_code,
-          },
+          ...(checkoutState.checkout?.name ? { name: checkoutState.checkout.name } : {}),
+          ...(checkoutState.checkout?.email ? { email: checkoutState.checkout.email } : {}),
+          ...(checkoutState.checkout?.phone ? { phone: checkoutState.checkout.phone } : {}),
+          ...(address ? { address } : {}),
         },
       },
       fields: {
@@ -327,7 +321,8 @@ export class ScStripePaymentElement {
   }
 
   @Method()
-  async confirm(type, args = {}) {
+  async confirm(type: 'setup' | 'payment', args = {}) {
+    const address = toStripeAddress(getResolvedBillingAddress());
     const confirmArgs = {
       elements: processorsState.instances.stripeElements,
       clientSecret: checkoutState.checkout?.payment_intent?.processor_data?.stripe?.client_secret,
@@ -337,7 +332,10 @@ export class ScStripePaymentElement {
         }),
         payment_method_data: {
           billing_details: {
-            email: checkoutState.checkout.email,
+            ...(checkoutState.checkout?.email ? { email: checkoutState.checkout.email } : {}),
+            ...(checkoutState.checkout?.name ? { name: checkoutState.checkout.name } : {}),
+            ...(checkoutState.checkout?.phone ? { phone: checkoutState.checkout.phone } : {}),
+            ...(address ? { address } : {}),
           },
         },
       },

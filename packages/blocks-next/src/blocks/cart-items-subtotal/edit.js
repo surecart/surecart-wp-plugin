@@ -10,7 +10,21 @@ export default () => {
 	const innerBlocksProps = useInnerBlocksProps(blockProps, {
 		template: [
 			['core/paragraph', { content: __('Subtotal', 'surecart') }],
-			['surecart/cart-subtotal-amount'],
+			[
+				'core/group',
+				{
+					style: { spacing: { blockGap: '4px' } },
+					layout: {
+						type: 'flex',
+						flexWrap: 'nowrap',
+						justifyContent: 'right',
+					},
+				},
+				[
+					['surecart/cart-subtotal-scratch-amount', {}],
+					['surecart/cart-subtotal-amount'],
+				],
+			],
 		],
 	});
 

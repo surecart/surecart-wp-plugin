@@ -269,11 +269,10 @@ class URLParamService {
 		// add the new filter.
 		$filters = array_unique( array_merge( $existing_filters, [ $value ] ) );
 
-		// return the new URL without pagination for filtering.
+		// return the new URL without pagination for filtering, preserving search.
 		return remove_query_arg(
 			[
 				$this->getKey( $this->pagination_key, $instance_id ),
-				$this->getKey( $this->search_key, $instance_id ),
 			],
 			add_query_arg( $key, $filters, $this->url )
 		);
@@ -378,11 +377,10 @@ class URLParamService {
 		// remove the new filter.
 		$filters = array_diff( $existing_filters, [ $value ] );
 
-		// return the new URL without pagination for filtering.
+		// return the new URL without pagination for filtering, preserving search.
 		return remove_query_arg(
 			[
 				$this->getKey( $this->pagination_key, $instance_id ),
-				$this->getKey( $this->search_key, $instance_id ),
 			],
 			add_query_arg( $key, $filters, $this->url )
 		);

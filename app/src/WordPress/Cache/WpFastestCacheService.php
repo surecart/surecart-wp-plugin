@@ -5,25 +5,23 @@ namespace SureCart\WordPress\Cache;
 /**
  * WP Fastest Cache Service.
  */
-class WpFastestCacheService {
+class WpFastestCacheService extends CacheService {
 	/**
-	 * Bootstrap the service.
+	 * Check if WP Fastest Cache plugin is active.
+	 *
+	 * @return bool
 	 */
-	public function bootstrap() {
-		add_action( 'wp', [ $this, 'disableCacheForCustomerDashboard' ] );
+	protected function isCachePluginActive(): bool {
+		return function_exists( 'wpfc_exclude_current_page' );
 	}
 
 	/**
-	 * Disable cache for customer dashboard.
+	 * Disable cache for the current page.
 	 *
+	 * @param string $reason Reason for disabling cache.
 	 * @return void
 	 */
-	public function disableCacheForCustomerDashboard() {
-		// If wpfc_exclude_current_page', class available and customer dashboard page, then only proceed.
-		if ( ! function_exists( 'wpfc_exclude_current_page' ) || ! \SureCart::pages()->isCustomerDashboardPageByUrl() ) {
-			return;
-		}
-
+	protected function disableCache( string $reason ): void {
 		wpfc_exclude_current_page();
 	}
 }
