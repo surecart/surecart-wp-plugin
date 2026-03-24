@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-02-24T16:07:28+00:00\n"
+"POT-Creation-Date: 2026-03-24T13:06:15+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.9.0\n"
 
@@ -145,7 +145,7 @@ msgstr ""
 #: src/BlockLibrary/BlockPatternsService.php:53
 #: src/BlockLibrary/BlockServiceProvider.php:130
 #: src/Routing/PermalinkSettingService.php:98
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:294
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:302
 msgid "Shop"
 msgstr ""
 
@@ -165,9 +165,9 @@ msgstr ""
 #: src/Controllers/Admin/AutoFees/AutoFeesListTable.php:226
 #: src/Controllers/Admin/Orders/OrdersListTable.php:261
 #: src/Support/Blocks/TemplateUtilityService.php:376
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:295
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:303
 #: forms/checkout.php:6
-#: auto-fees/utils/constants.js:152
+#: auto-fees/utils/constants.js:170
 #: settings/dynamic-pricing/utils.js:6
 #: store/add-entities.js:74
 msgid "Checkout"
@@ -182,9 +182,9 @@ msgstr ""
 
 #: src/BlockLibrary/BlockServiceProvider.php:126
 #: src/Support/Blocks/TemplateUtilityService.php:375
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:296
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:304
 #: cart.php:6
-#: settings/brand/BrandSettings.js:216
+#: settings/brand/BrandSettings.js:182
 msgid "Cart"
 msgstr ""
 
@@ -195,6 +195,7 @@ msgstr ""
 #: src/Support/Errors/Translations/attributes.php:18
 #: src/WordPress/Admin/Menus/AdminToolbarService.php:163
 #: affiliations/modules/affiliation-products/index.js:245
+#: auto-fees/utils/constants.js:112
 #: bumps/modules/NewCondition.js:83
 #: checkouts/modules/Prices.js:134
 #: components/affiliates/commission/CommissionForm.js:63
@@ -216,7 +217,7 @@ msgstr ""
 #: src/BlockLibrary/BlockServiceProvider.php:138
 #: src/Support/Blocks/TemplateUtilityService.php:379
 #: src/Support/Blocks/TemplateUtilityService.php:380
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:241
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:249
 #: settings/order/OrderProtocol.js:169
 msgid "Upsells"
 msgstr ""
@@ -405,7 +406,7 @@ msgid "Email Sent"
 msgstr ""
 
 #: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:200
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:184
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:192
 #: abandoned-checkouts/modules/Details.js:11
 msgid "Abandoned"
 msgstr ""
@@ -476,7 +477,7 @@ msgstr ""
 
 #: src/Controllers/Admin/AffiliationClicks/AffiliationClicksController.php:21
 #: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:97
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:270
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:278
 #: admin/affiliation-clicks/index.php:6
 #: affiliations/modules/Clicks.js:54
 #: components/data-tables/affiliates/ClicksDataTable.js:36
@@ -608,7 +609,7 @@ msgstr ""
 
 #: src/Controllers/Admin/AffiliationPayouts/AffiliationPayoutsListTable.php:115
 #: src/Controllers/Admin/Affiliations/AffiliationsListTable.php:98
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:271
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:279
 #: affiliation-referrals/EditAffiliationReferral.js:223
 #: affiliations/modules/Referrals.js:55
 #: components/data-tables/affiliates/ReferralsDataTable.js:36
@@ -681,6 +682,8 @@ msgstr ""
 #: settings/display-currency/components/DisplayCurrenciesSettings.js:291
 #: settings/processors/ManualPaymentMethod.js:158
 #: settings/shipping/method/ShippingMethods.js:189
+#: settings/shipping/parcel/ParcelTemplates.js:294
+#: settings/shipping/parcel/ParcelTemplates.js:371
 #: settings/shipping/profile/DeleteShippingProfile.js:69
 #: settings/shipping/profile/ShippingProfile.js:160
 #: settings/shipping/zone/ConfirmDeleteZone.js:56
@@ -829,6 +832,8 @@ msgstr ""
 #: settings/customer/EmailRow.js:43
 #: settings/processors/ManualPaymentMethod.js:124
 #: settings/shipping/method/ShippingMethods.js:176
+#: settings/shipping/parcel/ParcelTemplateForm.js:135
+#: settings/shipping/parcel/ParcelTemplates.js:266
 #: settings/shipping/zone/ShippingZone.js:152
 #: settings/shipping/zone/ShippingZone.js:221
 #: settings/subscription-preservation/Reason.js:103
@@ -946,6 +951,7 @@ msgstr ""
 #: products/components/SelectTemplatePart/create-modal.js:88
 #: products/modules/Details.js:18
 #: settings/shipping/method/ShippingMethodForm.js:115
+#: settings/shipping/parcel/ParcelTemplateForm.js:249
 #: settings/shipping/profile/AddShippingProfile.js:88
 #: settings/shipping/profile/ShippingProfile.js:187
 #: settings/shipping/rate/ShippingRateForm.js:307
@@ -996,7 +1002,7 @@ msgid "Pending"
 msgstr ""
 
 #: src/Controllers/Admin/Affiliations/AffiliationsController.php:24
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:265
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:273
 #: admin/affiliations/index.php:6
 #: layouts/partials/admin-settings-sidebar.php:45
 #: affiliations/ViewAffiliation.js:194
@@ -1094,7 +1100,7 @@ msgstr ""
 
 #: src/Controllers/Admin/AutoFees/AutoFeesController.php:24
 #: src/Controllers/Admin/Settings/BaseSettings.php:52
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:239
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:247
 #: admin/auto-fees/index.php:6
 #: layouts/partials/admin-settings-sidebar.php:40
 #: auto-fees/EditAutoFee.js:148
@@ -1141,6 +1147,7 @@ msgstr ""
 #: src/Controllers/Admin/AutoFees/AutoFeesListTable.php:111
 #: src/Controllers/Admin/Orders/OrdersListTable.php:122
 #: customers/modules/Balance/ViewTransactions.js:105
+#: settings/shipping/parcel/ParcelTemplateForm.js:173
 #: upsell-funnels/modules/Upsell/Discount.js:36
 #: Blocks/CustomerDashboardButton/edit.js:93
 #: Blocks/PriceSelector/edit.js:115
@@ -1148,7 +1155,7 @@ msgid "Type"
 msgstr ""
 
 #: src/Controllers/Admin/AutoFees/AutoFeesListTable.php:230
-#: auto-fees/utils/constants.js:143
+#: auto-fees/utils/constants.js:161
 #: settings/dynamic-pricing/utils.js:16
 msgid "Line Item"
 msgstr ""
@@ -1157,7 +1164,7 @@ msgstr ""
 #: src/Controllers/Admin/Orders/OrdersListTable.php:118
 #: layouts/partials/admin-settings-sidebar.php:61
 #: abandoned-checkouts/modules/LineItems/index.js:114
-#: auto-fees/utils/constants.js:161
+#: auto-fees/utils/constants.js:179
 #: checkouts/modules/Payment.js:106
 #: checkouts/modules/SelectShipping.js:78
 #: checkouts/modules/SelectShipping.js:89
@@ -1172,7 +1179,7 @@ msgstr ""
 #: products/modules/Shipping.js:26
 #: products/modules/Variations/Shipping.js:45
 #: settings/dynamic-pricing/utils.js:26
-#: settings/shipping/ShippingSettings.js:120
+#: settings/shipping/ShippingSettings.js:121
 #: subscriptions/edit/modules/Modals/UpdateRecentPrice.js:257
 #: subscriptions/show/modules/LineItems/index.js:100
 msgid "Shipping"
@@ -1237,6 +1244,7 @@ msgstr ""
 #: src/Controllers/Admin/Products/ProductsListTable.php:146
 #: src/Integrations/Bricks/Elements/Product.php:137
 #: src/Integrations/Bricks/Elements/ProductCard.php:231
+#: auto-fees/utils/constants.js:111
 #: bumps/modules/Price.js:33
 #: coupons/modules/NewRestriction.js:83
 #: invoices/modules/Prices.js:55
@@ -1274,9 +1282,9 @@ msgstr ""
 #: src/Controllers/Admin/Upsells/UpsellsListTable.php:192
 #: products/components/price/parts/PaymentType.js:138
 #: products/modules/Prices/Price/Header.js:83
-#: store/add-entities.js:458
-#: store/add-entities.js:465
-#: subscriptions/edit/EditSubscription.js:239
+#: store/add-entities.js:466
+#: store/add-entities.js:473
+#: subscriptions/edit/EditSubscription.js:242
 msgid "Subscription"
 msgstr ""
 
@@ -1303,6 +1311,7 @@ msgstr ""
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:109
 #: admin/user-profile.php:5
 #: abandoned-checkouts/modules/Customer.js:14
+#: auto-fees/utils/constants.js:108
 #: checkouts/modules/SelectCustomer/index.js:94
 #: coupons/modules/NewRestriction.js:91
 #: dashboard/Orders.js:127
@@ -1388,7 +1397,7 @@ msgid "Coupon Applied"
 msgstr ""
 
 #: src/Controllers/Admin/Coupons/CouponsController.php:24
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:238
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:246
 #: admin/coupons/index.php:6
 #: coupons/EditCoupon.js:133
 #: settings/export/ExportSettings.js:19
@@ -1516,7 +1525,7 @@ msgstr ""
 
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:360
 #: src/Controllers/Admin/Restore/RestoreController.php:26
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:289
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:297
 #: admin/restore/index.php:37
 #: admin/restore/index.php:42
 #: products/modules/Variations/VariantItem.js:321
@@ -1540,12 +1549,12 @@ msgid "Move to Trash"
 msgstr ""
 
 #: src/Controllers/Admin/Customers/CustomersController.php:30
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:281
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:289
 #: admin/customers/index.php:7
 #: bumps/modules/Conditions.js:80
 #: coupons/modules/Restrictions.js:66
 #: customers/EditCustomer.js:156
-#: settings/advanced/AdvancedSettings.js:474
+#: settings/advanced/AdvancedSettings.js:491
 #: settings/export/ExportSettings.js:23
 #: upsell-funnels/modules/Conditions.js:139
 msgid "Customers"
@@ -1693,7 +1702,7 @@ msgstr ""
 
 #: src/Controllers/Admin/Invoices/InvoicesViewController.php:23
 #: src/Controllers/Web/DashboardController.php:139
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:185
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:193
 #: admin/invoices/index.php:10
 #: invoices/Invoice.js:263
 #: Controllers/InvoiceController.php:63
@@ -1702,7 +1711,7 @@ msgid "Invoices"
 msgstr ""
 
 #: src/Controllers/Admin/Licenses/LicensesController.php:23
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:249
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:257
 #: admin/licenses/index.php:7
 #: components/data-tables/licenses-data-table/index.js:26
 #: licenses/License.js:85
@@ -1859,7 +1868,7 @@ msgstr ""
 
 #: src/Controllers/Admin/Orders/OrdersViewController.php:22
 #: src/Controllers/Web/DashboardController.php:127
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:179
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:187
 #: admin/orders/index.php:7
 #: checkouts/CreateCheckout.js:227
 #: components/data-tables/OrdersDataTable.js:27
@@ -1880,7 +1889,7 @@ msgstr ""
 #: src/Controllers/Admin/Products/ProductsController.php:31
 #: src/Support/Blocks/TemplateUtilityService.php:371
 #: src/Support/Blocks/TemplateUtilityService.php:372
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:193
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:201
 #: admin/products/index.php:71
 #: bumps/modules/Conditions.js:73
 #: checkouts/modules/Prices.js:191
@@ -1889,7 +1898,7 @@ msgstr ""
 #: product-collections/components/Products.js:28
 #: product-groups/modules/Products.js:45
 #: products/EditProduct.js:299
-#: settings/advanced/AdvancedSettings.js:496
+#: settings/advanced/AdvancedSettings.js:513
 #: settings/shipping/profile/Products.js:250
 #: upsell-funnels/modules/Conditions.js:132
 #: Blocks/Form/components/SelectPrices.js:111
@@ -1986,7 +1995,7 @@ msgstr ""
 #: src/Integrations/Elementor/Widgets/Quantity.php:85
 #: src/Integrations/Elementor/Widgets/Quantity.php:86
 #: affiliation-referrals/modules/ReferralItems.js:77
-#: auto-fees/utils/constants.js:75
+#: auto-fees/utils/constants.js:80
 #: checkouts/modules/Prices.js:137
 #: invoices/modules/Prices.js:58
 #: orders/modules/Fulfillment/CreateFulfillment.js:182
@@ -1995,12 +2004,16 @@ msgstr ""
 #: products/modules/Variations/Variants.js:134
 #: Blocks/CheckoutForm/components/PriceChoices.js:57
 #: components/PriceChoices.js:18
-#: src/blocks/product-quantity/view.php:3
+#: src/blocks/product-quantity-input/view.php:14
+#: src/blocks/product-quantity/controller.php:9
+#: src/blocks/product-quantity/legacy.php:4
+#: src/blocks/product-quantity/legacy.php:38
+#: src/blocks/product-quantity-input/edit.js:13
 msgid "Quantity"
 msgstr ""
 
 #: src/Controllers/Admin/Products/ProductsListTable.php:150
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:202
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:210
 #: src/WordPress/Taxonomies/CollectionTaxonomyService.php:124
 #: product-collections/EditProductCollection.js:144
 #: products/modules/Collection/index.js:55
@@ -2046,7 +2059,7 @@ msgid "Published"
 msgstr ""
 
 #: src/Controllers/Admin/Products/ProductsListTable.php:516
-#: settings/advanced/AdvancedSettings.js:483
+#: settings/advanced/AdvancedSettings.js:500
 #: settings/advanced/components/ProductSyncButton.js:38
 msgid "Sync"
 msgstr ""
@@ -2106,7 +2119,7 @@ msgstr ""
 
 #: src/Controllers/Admin/Reviews/ReviewsListTable.php:115
 #: reviews/Review.js:232
-#: store/add-entities.js:513
+#: store/add-entities.js:521
 msgid "Review"
 msgstr ""
 
@@ -2172,7 +2185,7 @@ msgstr ""
 
 #: src/Controllers/Admin/Settings/BaseSettings.php:46
 #: layouts/partials/admin-settings-sidebar.php:10
-#: settings/brand/BrandSettings.js:81
+#: settings/brand/BrandSettings.js:72
 msgid "Design & Branding"
 msgstr ""
 
@@ -2199,7 +2212,7 @@ msgstr ""
 
 #: src/Controllers/Admin/Settings/BaseSettings.php:50
 #: src/Controllers/Admin/Subscriptions/SubscriptionsController.php:24
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:256
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:264
 #: admin/subscriptions/index.php:19
 #: layouts/partials/admin-settings-sidebar.php:30
 #: web/dashboard/orders/show.php:58
@@ -2223,7 +2236,7 @@ msgid "Taxes"
 msgstr ""
 
 #: src/Controllers/Admin/Settings/BaseSettings.php:54
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:219
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:227
 #: admin/reviews/index.php:6
 #: layouts/partials/admin-settings-sidebar.php:50
 #: products/modules/Reviews/index.js:29
@@ -2244,12 +2257,18 @@ msgstr ""
 
 #: src/Controllers/Admin/Settings/BaseSettings.php:57
 #: admin/notices/webhook-change.php:17
-#: layouts/partials/admin-settings-sidebar.php:86
+#: layouts/partials/admin-settings-sidebar.php:92
 msgid "Connection"
 msgstr ""
 
 #: src/Controllers/Admin/Settings/BaseSettings.php:59
-#: layouts/partials/admin-settings-sidebar.php:90
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:308
+#: layouts/partials/admin-settings-sidebar.php:85
+msgid "Learn"
+msgstr ""
+
+#: src/Controllers/Admin/Settings/BaseSettings.php:60
+#: layouts/partials/admin-settings-sidebar.php:96
 #: products/components/price/parts/Advanced.js:9
 #: products/modules/Advanced.js:7
 msgid "Advanced"
@@ -2306,7 +2325,7 @@ msgstr[1] ""
 
 #. translators: %d is the number of months.
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:287
-#: src/Models/Checkout.php:644
+#: src/Models/Checkout.php:683
 #: src/Support/Interval.php:44
 #: util/translations.js:28
 msgid "%d month"
@@ -2326,7 +2345,7 @@ msgstr[1] ""
 #. translators: Coupon % off.
 #. translators: %1d is the percentage discount.
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:337
-#: src/Models/Checkout.php:620
+#: src/Models/Checkout.php:659
 #: src/Models/Coupon.php:55
 #: util.js:49
 msgid "%1d%% off"
@@ -2334,7 +2353,7 @@ msgstr ""
 
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:402
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:409
-#: subscriptions/edit/EditSubscription.js:252
+#: subscriptions/edit/EditSubscription.js:255
 msgid "Edit Subscription"
 msgstr ""
 
@@ -2470,8 +2489,8 @@ msgid "Billing"
 msgstr ""
 
 #: src/Controllers/Web/DashboardController.php:121
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:152
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:170
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:160
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:178
 #: web/buy.php:72
 #: dashboard/Dashboard.js:24
 #: Blocks/CustomerDashboardButton/Block.php:33
@@ -2591,7 +2610,7 @@ msgstr ""
 #: src/Integrations/Beaver/BeaverFormModule.php:21
 #: src/Integrations/Elementor/Conditions/Conditions.php:38
 #: src/Integrations/ThriveAutomator/ThriveAutomatorApp.php:25
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:152
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:160
 #: src/WordPress/Admin/Notices/AdminNoticesService.php:115
 #: src/WordPress/Admin/SSLCheck/AdminSSLCheckService.php:31
 #: src/WordPress/CompatibilityService.php:237
@@ -2607,7 +2626,7 @@ msgstr ""
 #: src/WordPress/HealthService.php:183
 #: src/WordPress/HealthService.php:193
 #: src/WordPress/Templates/TemplatesService.php:154
-#: src/WordPress/ThemeService.php:88
+#: src/WordPress/ThemeService.php:147
 #: admin/user-profile.php:1
 #: error.php:2
 msgid "SureCart"
@@ -2623,14 +2642,14 @@ msgstr ""
 #: src/Integrations/Elementor/Widgets/ProductReviewAverageRatingValue.php:67
 #: src/Integrations/Elementor/Widgets/ProductReviewBreakdown.php:67
 #: src/Integrations/Elementor/Widgets/ProductReviewTotalRating.php:67
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:159
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:299
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:167
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:307
 #: src/WordPress/PluginActionLinksService.php:46
 #: layouts/partials/admin-settings-header.php:83
 #: invoices/modules/Tax/index.js:52
 #: products/modules/Media/EditMedia.js:266
 #: Blocks/CartMenuButton/edit.js:31
-#: Blocks/StoreLogo/edit.js:150
+#: Blocks/StoreLogo/edit.js:153
 #: src/blocks/cart-line-item-remove/edit.js:30
 #: src/blocks/cart-menu-button/edit.js:26
 #: src/blocks/cart-order-bump-pagination/edit.js:57
@@ -2640,6 +2659,7 @@ msgstr ""
 #: src/blocks/product-list-filter/edit.js:30
 #: src/blocks/product-list-sidebar/edit.js:154
 #: src/blocks/product-pagination/edit.js:65
+#: src/blocks/product-quantity-control/edit.js:39
 #: src/blocks/product-quick-view-button/settings.js:15
 #: src/blocks/product-review-breakdown/edit.js:54
 #: src/blocks/product-review-date/edit.js:97
@@ -2994,8 +3014,10 @@ msgstr ""
 #: forms/default.php:6
 #: products/utility.js:8
 #: settings/display-currency/components/DisplayCurrenciesSettings.js:99
+#: settings/shipping/parcel/ParcelTemplates.js:214
 #: util/templates.js:8
 #: Blocks/Dashboard/CustomerPaymentMethods/edit.js:84
+#: src/blocks-styles/product-quantity--default.php:9
 msgid "Default"
 msgstr ""
 
@@ -3064,6 +3086,7 @@ msgstr ""
 #: src/Integrations/Bricks/Elements/BuyButton.php:273
 #: src/Integrations/Bricks/Elements/Product.php:291
 #: src/Integrations/Elementor/Widgets/AddToCartButton.php:538
+#: settings/brand/components/CheckoutPreview.js:188
 #: Blocks/AddToCartButton/Block.php:81
 #: Blocks/BuyButton/Block.php:36
 #: src/blocks/product-buy-button/view.php:16
@@ -3153,13 +3176,13 @@ msgid "Auto height"
 msgstr ""
 
 #: src/Integrations/Bricks/Elements/Media.php:96
-#: src/blocks/product-media/edit.js:66
+#: src/blocks/product-media/edit.js:69
 msgid "Enlarge on click"
 msgstr ""
 
 #: src/Integrations/Bricks/Elements/Media.php:105
 #: src/Integrations/Elementor/Widgets/Media.php:130
-#: products/components/Dimensions.js:82
+#: ui/Dimensions.js:89
 #: Blocks/ProductCollectionImage/dimension-controls.js:142
 #: Blocks/ProductCollectionImage/dimension-controls.js:152
 #: src/blocks/cart-line-item-image/edit.js:143
@@ -3178,7 +3201,7 @@ msgstr ""
 
 #: src/Integrations/Bricks/Elements/Media.php:122
 #: Blocks/Product/Media/edit.js:70
-#: src/blocks/product-media/edit.js:110
+#: src/blocks/product-media/edit.js:113
 msgid "Unlimited"
 msgstr ""
 
@@ -3193,7 +3216,7 @@ msgstr ""
 
 #: src/Integrations/Bricks/Elements/Media.php:161
 #: src/Integrations/Elementor/Widgets/Media.php:246
-#: src/blocks/product-media/edit.js:118
+#: src/blocks/product-media/edit.js:121
 msgid "Show Thumbnails"
 msgstr ""
 
@@ -3281,7 +3304,6 @@ msgstr ""
 #: src/blocks/cart-bump-line-item/edit.js:38
 #: src/blocks/cart-coupon/edit.js:156
 #: src/blocks/cart-subtotal/edit.js:35
-#: src/blocks/product-quantity/edit.js:37
 #: src/blocks/product-review-form-content/edit.js:60
 #: src/blocks/product-review-form-rating/edit.js:76
 #: src/blocks/product-review-form-title/edit.js:45
@@ -3546,6 +3568,7 @@ msgstr ""
 #: orders/modules/Fulfillment/components/AddTracking.js:114
 #: products/modules/Media/AddMedia.js:69
 #: settings/shipping/method/ShippingMethodForm.js:146
+#: settings/shipping/parcel/ParcelTemplateForm.js:286
 #: settings/shipping/rate/ShippingRateForm.js:196
 #: Blocks/Dashboard/CustomerPaymentMethods/edit.js:49
 msgid "Add"
@@ -3919,6 +3942,7 @@ msgstr ""
 #: src/Integrations/Bricks/Elements/ProductReviewList.php:655
 #: src/Integrations/Elementor/Widgets/ProductReviewList.php:999
 #: src/blocks/product-list-sidebar-toggle/view.php:40
+#: src/scripts/sidebar/index.js:55
 msgid "Open sidebar"
 msgstr ""
 
@@ -4063,6 +4087,7 @@ msgstr ""
 #: src/Integrations/Bricks/Elements/ProductReviewTotalRating.php:69
 #: src/Integrations/Elementor/Widgets/ProductReviewTotalRating.php:87
 #: Blocks/PriceChoice/edit.js:93
+#: src/components/LabelControl.js:13
 msgid "Show Label"
 msgstr ""
 
@@ -4078,17 +4103,18 @@ msgid "reviews"
 msgstr ""
 
 #: src/Integrations/Bricks/Elements/Quantity.php:86
-#: src/blocks/product-quantity/view.php:18
+#: src/blocks/product-quantity-input-decrease/view.php:10
+#: src/blocks/product-quantity/legacy.php:21
 #: src/blocks/cart-line-item-quantity/edit.js:24
+#: src/blocks/product-quantity-input-decrease/edit.js:8
 msgid "Decrease quantity by one."
 msgstr ""
 
 #: src/Integrations/Bricks/Elements/Quantity.php:104
-#: src/blocks/product-quantity/view.php:44
-#: src/blocks/cart-items/view.php:86
-#: src/blocks/cart-line-item-quantity/view.php:49
-#: src/blocks/product-quantity/view.php:54
+#: src/blocks/product-quantity-input-increase/view.php:10
+#: src/blocks/product-quantity/legacy.php:48
 #: src/blocks/cart-line-item-quantity/edit.js:41
+#: src/blocks/product-quantity-input-increase/edit.js:8
 msgid "Increase quantity by one."
 msgstr ""
 
@@ -4109,7 +4135,7 @@ msgstr ""
 #: src/Integrations/Elementor/Widgets/SelectedPriceAdHocAmount.php:85
 #: src/Integrations/Elementor/Widgets/SelectedPriceAdHocAmount.php:86
 #: src/WordPress/Shortcodes/ShortcodesServiceProvider.php:269
-#: auto-fees/modules/AndGroup.js:211
+#: auto-fees/modules/AndGroup.js:219
 msgid "Enter an amount"
 msgstr ""
 
@@ -4461,19 +4487,20 @@ msgstr ""
 #: src/Integrations/Elementor/Widgets/Quantity.php:153
 #: src/Integrations/Elementor/Widgets/SaleBadge.php:197
 #: src/Integrations/Elementor/Widgets/SelectedPriceAdHocAmount.php:161
-#: products/components/Dimensions.js:64
 #: products/modules/BuyLink.js:180
+#: ui/Dimensions.js:67
 #: Blocks/Cart/edit.js:71
 #: Blocks/Column/edit.js:141
 #: Blocks/ProductCollectionImage/dimension-controls.js:165
 #: Blocks/ProductCollectionImage/dimension-controls.js:175
-#: Blocks/StoreLogo/edit.js:154
+#: Blocks/StoreLogo/edit.js:157
 #: src/blocks/cart-line-item-image/edit.js:155
 #: src/blocks/cart-order-bump-image/edit.js:154
-#: src/blocks/cart/edit.js:104
+#: src/blocks/cart/edit.js:105
 #: src/blocks/product-buy-button/display.js:29
 #: src/blocks/product-buy-button/display.js:38
 #: src/blocks/product-image/edit.js:158
+#: src/blocks/product-quantity-control/edit.js:41
 #: src/blocks/product-quick-view-button/design.js:74
 #: src/blocks/product-quick-view-button/design.js:80
 #: src/blocks/product-quick-view/edit.js:61
@@ -4646,19 +4673,19 @@ msgid "Enlarge on Click"
 msgstr ""
 
 #: src/Integrations/Elementor/Widgets/Media.php:109
-#: src/blocks/product-media/edit.js:67
+#: src/blocks/product-media/edit.js:70
 msgid "Scale images with a lightbox effect."
 msgstr ""
 
 #: src/Integrations/Elementor/Widgets/Media.php:116
 #: Blocks/Product/Media/edit.js:47
-#: src/blocks/product-media/edit.js:82
+#: src/blocks/product-media/edit.js:85
 msgid "Auto Height"
 msgstr ""
 
 #: src/Integrations/Elementor/Widgets/Media.php:172
 #: Blocks/Product/Media/edit.js:69
-#: src/blocks/product-media/edit.js:109
+#: src/blocks/product-media/edit.js:112
 msgid "Max Image Width"
 msgstr ""
 
@@ -5309,14 +5336,14 @@ msgstr ""
 msgid "Multiple Disputes"
 msgstr ""
 
-#: src/Models/Checkout.php:641
+#: src/Models/Checkout.php:680
 #: util/translations.js:7
 #: util/translations.js:53
 #: util/translations.js:60
 msgid "once"
 msgstr ""
 
-#: src/Models/Checkout.php:657
+#: src/Models/Checkout.php:696
 #: src/Models/Price.php:142
 #: checkouts/modules/SelectShipping.js:130
 #: invoices/modules/SelectShipping.js:95
@@ -5631,7 +5658,7 @@ msgstr[1] ""
 #: src/Models/Price.php:311
 #: src/Models/Price.php:355
 #: products/components/price/parts/RevokeAfterDays.js:59
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:361
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:388
 #: settings/review-protocol/ReviewProtocolSettings.js:136
 #: settings/subscription/SubscriptionSettings.js:327
 msgid "days"
@@ -5826,6 +5853,7 @@ msgstr ""
 #: src/Rest/MediaRestServiceProvider.php:53
 #: src/Rest/OrderProtocolRestServiceProvider.php:81
 #: src/Rest/OrderRestServiceProvider.php:75
+#: src/Rest/ParcelTemplateRestServiceProvider.php:53
 #: src/Rest/PaymentIntentsRestServiceProvider.php:76
 #: src/Rest/PaymentMethodsRestServiceProvider.php:76
 #: src/Rest/PayoutGroupsRestServiceProvider.php:52
@@ -6079,18 +6107,34 @@ msgid "The website that will be shown to customers for support, on invoices, etc
 msgstr ""
 
 #: src/Rest/BrandRestServiceProvider.php:134
-msgid "The URL of the brand logo."
+msgid "The brand logo media object."
 msgstr ""
 
 #: src/Rest/BrandRestServiceProvider.php:139
-msgid "The associated address."
+msgid "The dark mode logo media object."
 msgstr ""
 
 #: src/Rest/BrandRestServiceProvider.php:144
+msgid "The SureCart color scheme (light or dark)."
+msgstr ""
+
+#: src/Rest/BrandRestServiceProvider.php:150
+msgid "The primary color used in dark mode."
+msgstr ""
+
+#: src/Rest/BrandRestServiceProvider.php:155
+msgid "The URL of the brand logo."
+msgstr ""
+
+#: src/Rest/BrandRestServiceProvider.php:160
+msgid "The associated address."
+msgstr ""
+
+#: src/Rest/BrandRestServiceProvider.php:165
 msgid "The default memo for invoices and receipts."
 msgstr ""
 
-#: src/Rest/BrandRestServiceProvider.php:149
+#: src/Rest/BrandRestServiceProvider.php:170
 msgid "The default footer for invoices and receipts."
 msgstr ""
 
@@ -6631,8 +6675,7 @@ msgstr ""
 #: src/Routing/PermalinkSettingService.php:153
 #: src/Support/Blocks/TemplateUtilityService.php:373
 #: src/Support/Blocks/TemplateUtilityService.php:374
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:202
-#: src/WordPress/Admin/Menus/ProductCollectionsMenuService.php:36
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:210
 #: admin/product-collections/index.php:6
 #: store/add-entities.js:280
 msgid "Product Collections"
@@ -6659,7 +6702,7 @@ msgstr ""
 msgid "Enter a custom base to use. A base must be set or WordPress will use default instead."
 msgstr ""
 
-#: src/Settings/SettingService.php:118
+#: src/Settings/SettingService.php:108
 #: Blocks/Email/Block.php:21
 msgid "Your email and cart are saved so we can send email reminders about this order."
 msgstr ""
@@ -8777,75 +8820,75 @@ msgstr ""
 msgid "SureCart Webhook Registration Error"
 msgstr ""
 
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:157
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:165
 msgid "Get Started"
 msgstr ""
 
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:158
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:171
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:166
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:179
 #: templates/UpdateModel/index.js:44
 msgid "Complete Signup"
 msgstr ""
 
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:172
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:180
 msgid "Claim Account"
 msgstr ""
 
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:218
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:226
 #: admin/product-groups/index.php:20
 msgid "Upgrade Groups"
 msgstr ""
 
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:227
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:235
 #: settings/export/ExportSettings.js:35
 msgid "Promotions"
 msgstr ""
 
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:240
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:248
 #: bumps/EditBump.js:160
 msgid "Order Bumps"
 msgstr ""
 
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:260
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:268
 msgid "Cancellation Insights"
 msgstr ""
 
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:260
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:268
 msgid "Cancellations"
 msgstr ""
 
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:269
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:277
 msgid "Requests"
 msgstr ""
 
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:272
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:280
 #: affiliations/modules/Payouts.js:54
 #: components/data-tables/affiliates/PayoutsDataTable.js:29
 #: store/add-entities.js:409
 msgid "Payouts"
 msgstr ""
 
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:273
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:281
 #: store/add-entities.js:416
 msgid "Payout Groups"
 msgstr ""
 
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:297
-#: settings/advanced/AdvancedSettings.js:394
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:305
+#: settings/advanced/AdvancedSettings.js:399
 msgid "Customer Area"
 msgstr ""
 
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:298
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:306
 #: src/WordPress/PostTypes/CartPostTypeService.php:153
 #: src/WordPress/PostTypes/FormPostTypeService.php:98
 msgid "Forms"
 msgstr ""
 
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:298
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:306
 msgid "Custom Forms"
 msgstr ""
 
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:324
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:333
 msgid "Deleted"
 msgstr ""
 
@@ -8890,6 +8933,8 @@ msgid "SureCart Coupon"
 msgstr ""
 
 #: src/WordPress/Admin/Menus/AdminToolbarService.php:205
+#: auto-fees/utils/constants.js:109
+#: auto-fees/utils/constants.js:115
 #: store/add-entities.js:81
 msgid "Coupon"
 msgstr ""
@@ -8910,18 +8955,6 @@ msgstr ""
 
 #: src/WordPress/Admin/Menus/AdminToolbarService.php:406
 msgid "Sticky Purchase Template"
-msgstr ""
-
-#: src/WordPress/Admin/Menus/ProductCollectionsMenuService.php:63
-msgid "No product collections added."
-msgstr ""
-
-#: src/WordPress/Admin/Menus/ProductCollectionsMenuService.php:95
-msgid "Select all"
-msgstr ""
-
-#: src/WordPress/Admin/Menus/ProductCollectionsMenuService.php:99
-msgid "Add to menu"
 msgstr ""
 
 #. translators: 1: plugin name, 2: plugin version
@@ -9132,7 +9165,7 @@ msgid "Order Confirmation"
 msgstr ""
 
 #: src/WordPress/Pages/PageService.php:131
-#: settings/advanced/AdvancedSettings.js:358
+#: settings/advanced/AdvancedSettings.js:363
 msgid "Shop Page"
 msgstr ""
 
@@ -9317,7 +9350,7 @@ msgstr ""
 #: src/WordPress/PostTypes/ProductPostTypeService.php:341
 #: products/modules/Prices/Price/BuyLink.js:30
 #: products/modules/Variations/Variants.js:128
-#: store/add-entities.js:486
+#: store/add-entities.js:494
 msgid "Variant"
 msgstr ""
 
@@ -9487,7 +9520,7 @@ msgstr ""
 msgid "Please visit the frontend of your page builder to view the %s shortcode contents."
 msgstr ""
 
-#: src/WordPress/Shortcodes/ShortcodesServiceProvider.php:352
+#: src/WordPress/Shortcodes/ShortcodesServiceProvider.php:346
 msgid "This form is not available or has been deleted."
 msgstr ""
 
@@ -9610,7 +9643,7 @@ msgstr ""
 
 #: admin/advanced.php:30
 #: settings/abandoned/AbandonedSettings.js:284
-#: settings/advanced/AdvancedSettings.js:122
+#: settings/advanced/AdvancedSettings.js:127
 msgid "Advanced Settings"
 msgstr ""
 
@@ -9634,35 +9667,35 @@ msgstr ""
 
 #: admin/advanced.php:41
 #: admin/plugin.php:95
-#: settings/advanced/AdvancedSettings.js:133
+#: settings/advanced/AdvancedSettings.js:138
 msgid "Performance"
 msgstr ""
 
 #: admin/advanced.php:42
 #: admin/plugin.php:96
-#: settings/advanced/AdvancedSettings.js:134
+#: settings/advanced/AdvancedSettings.js:139
 msgid "Change your plugin performance settings."
 msgstr ""
 
 #: admin/advanced.php:45
 #: admin/plugin.php:99
-#: settings/advanced/AdvancedSettings.js:149
+#: settings/advanced/AdvancedSettings.js:154
 msgid "Use JavaScript ESM Loader"
 msgstr ""
 
 #: admin/advanced.php:46
 #: admin/plugin.php:100
-#: settings/advanced/AdvancedSettings.js:151
+#: settings/advanced/AdvancedSettings.js:156
 msgid "This can slightly increase page load speed, but may require you to enable CORS headers for .js files on your CDN. Please check your checkout forms after you enable this option in a private browser window."
 msgstr ""
 
 #: admin/advanced.php:52
-#: settings/advanced/AdvancedSettings.js:429
+#: settings/advanced/AdvancedSettings.js:446
 msgid "Legacy Features"
 msgstr ""
 
 #: admin/advanced.php:53
-#: settings/advanced/AdvancedSettings.js:430
+#: settings/advanced/AdvancedSettings.js:447
 msgid "Opt-in to some legacy features of the plugin."
 msgstr ""
 
@@ -9671,31 +9704,31 @@ msgid "Use the Stripe Card Element"
 msgstr ""
 
 #: admin/advanced.php:57
-#: settings/advanced/AdvancedSettings.js:448
+#: settings/advanced/AdvancedSettings.js:465
 msgid "Use Stripe's Card Element instead of the Payment Element in all forms."
 msgstr ""
 
 #: admin/advanced.php:63
 #: admin/plugin.php:106
-#: settings/advanced/AdvancedSettings.js:528
+#: settings/advanced/AdvancedSettings.js:545
 msgid "Uninstall"
 msgstr ""
 
 #: admin/advanced.php:64
 #: admin/plugin.php:107
-#: settings/advanced/AdvancedSettings.js:529
+#: settings/advanced/AdvancedSettings.js:546
 msgid "Change your plugin uninstall settings."
 msgstr ""
 
 #: admin/advanced.php:67
 #: admin/plugin.php:110
-#: settings/advanced/AdvancedSettings.js:544
+#: settings/advanced/AdvancedSettings.js:561
 msgid "Remove Plugin Data"
 msgstr ""
 
 #: admin/advanced.php:68
 #: admin/plugin.php:111
-#: settings/advanced/AdvancedSettings.js:546
+#: settings/advanced/AdvancedSettings.js:563
 msgid "Completely remove all plugin data when deleted. This cannot be undone."
 msgstr ""
 
@@ -9710,6 +9743,8 @@ msgstr ""
 #: settings/display-currency/components/DisplayCurrenciesSettings.js:241
 #: settings/processors/ManualPaymentMethods.js:80
 #: settings/shipping/method/ShippingMethods.js:114
+#: settings/shipping/parcel/ParcelTemplateForm.js:136
+#: settings/shipping/parcel/ParcelTemplates.js:160
 #: settings/shipping/profile/AddShippingProfile.js:102
 #: settings/shipping/rate/ShippingRateForm.js:368
 #: settings/subscription-preservation/Reasons.js:97
@@ -9912,6 +9947,8 @@ msgstr[1] ""
 #: settings/display-currency/components/DisplayCurrenciesSettings.js:317
 #: settings/processors/CreateEditPaymentMethod.js:152
 #: settings/shipping/method/ShippingMethodForm.js:153
+#: settings/shipping/parcel/ParcelTemplateForm.js:293
+#: settings/shipping/parcel/ParcelTemplates.js:378
 #: settings/shipping/profile/AddShippingProfile.js:110
 #: settings/shipping/profile/DeleteShippingProfile.js:76
 #: settings/shipping/rate/ShippingRateForm.js:511
@@ -10180,6 +10217,7 @@ msgid "Payment"
 msgstr ""
 
 #: web/buy-template.php:54
+#: settings/learn/components/LearnSection.js:164
 #: Blocks/OrderBumps/edit.js:16
 msgid "Recommended"
 msgstr ""
@@ -10411,7 +10449,7 @@ msgstr ""
 #: settings/processors/ManualPaymentMethod.js:52
 #: settings/processors/ManualPaymentMethod.js:83
 #: settings/subscription-preservation/Reason.js:45
-#: subscriptions/edit/EditSubscription.js:206
+#: subscriptions/edit/EditSubscription.js:209
 #: subscriptions/show/modules/CurrentPlan.js:63
 #: subscriptions/show/modules/CurrentPlan.js:68
 #: subscriptions/show/modules/modals/PauseSubscriptionUntilModal.js:74
@@ -10468,7 +10506,7 @@ msgstr ""
 #: affiliations/modules/Urls.js:57
 #: licenses/modules/Details/Copy.js:21
 #: products/modules/Prices/Price/CopyInput.js:32
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:311
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:338
 #: settings/display-currency/components/CurrencySwitcherSettings.js:198
 msgid "Copy"
 msgstr ""
@@ -10661,6 +10699,7 @@ msgstr ""
 #: orders/modules/TaxInfo/EditTaxInfo.js:105
 #: settings/processors/CreateEditPaymentMethod.js:148
 #: settings/shipping/method/ShippingMethodForm.js:145
+#: settings/shipping/parcel/ParcelTemplateForm.js:285
 #: settings/shipping/rate/ShippingRateForm.js:192
 #: settings/subscription-preservation/EditReason.js:145
 #: subscriptions/edit/modules/Modals/UpdateAmount.js:44
@@ -11060,7 +11099,7 @@ msgstr ""
 #: orders/modules/Fulfillment/CreateFulfillment.js:41
 #: products/modules/BuyLink.js:65
 #: products/modules/Prices/Price/CopyInput.js:12
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:46
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:48
 #: settings/display-currency/components/CurrencySwitcherSettings.js:36
 msgid "Copied to clipboard."
 msgstr ""
@@ -11178,43 +11217,48 @@ msgstr ""
 msgid "Permanently delete this Dynamic Price? You cannot undo this action."
 msgstr ""
 
-#: auto-fees/modules/AndGroup.js:171
+#: auto-fees/modules/AndGroup.js:179
 #: auto-fees/modules/DateTimePicker.js:169
 msgid "Set Date"
 msgstr ""
 
-#: auto-fees/modules/AndGroup.js:174
+#: auto-fees/modules/AndGroup.js:182
 msgid "Select a date"
 msgstr ""
 
-#: auto-fees/modules/AndGroup.js:222
-#: auto-fees/modules/AndGroup.js:235
-#: auto-fees/modules/AndGroup.js:248
-#: auto-fees/modules/AndGroup.js:274
+#: auto-fees/modules/AndGroup.js:230
+#: auto-fees/modules/AndGroup.js:243
+#: auto-fees/modules/AndGroup.js:256
+#: auto-fees/modules/AndGroup.js:288
+#: auto-fees/modules/AndGroup.js:329
 msgid "Enter a value"
 msgstr ""
 
-#: auto-fees/modules/AndGroup.js:256
+#: auto-fees/modules/AndGroup.js:264
 msgid "Search for a user role"
 msgstr ""
 
-#: auto-fees/modules/AndGroup.js:257
+#: auto-fees/modules/AndGroup.js:268
 msgid "Search for a user role..."
 msgstr ""
 
-#: auto-fees/modules/AndGroup.js:306
+#: auto-fees/modules/AndGroup.js:312
+msgid "Search..."
+msgstr ""
+
+#: auto-fees/modules/AndGroup.js:361
 msgid "Select an attribute"
 msgstr ""
 
-#: auto-fees/modules/AndGroup.js:325
+#: auto-fees/modules/AndGroup.js:380
 msgid "Enter metadata's key"
 msgstr ""
 
-#: auto-fees/modules/AndGroup.js:331
+#: auto-fees/modules/AndGroup.js:386
 msgid "Select a condition"
 msgstr ""
 
-#: auto-fees/modules/AndGroup.js:359
+#: auto-fees/modules/AndGroup.js:414
 msgid "+ AND"
 msgstr ""
 
@@ -11475,11 +11519,11 @@ msgid "Product Collection Slug"
 msgstr ""
 
 #: auto-fees/utils/constants.js:58
-msgid "Product Group Metadata"
+msgid "Upgrade Group Metadata"
 msgstr ""
 
 #: auto-fees/utils/constants.js:62
-msgid "Product Group Name"
+msgid "Upgrade Group Name"
 msgstr ""
 
 #: auto-fees/utils/constants.js:64
@@ -11495,137 +11539,166 @@ msgstr ""
 msgid "SKU (Product/Variant)"
 msgstr ""
 
+#: auto-fees/utils/constants.js:73
+#: auto-fees/utils/constants.js:75
+#: coupons/CreateCoupon.js:85
+#: coupons/modules/Name.js:8
+msgid "Coupon Name"
+msgstr ""
+
+#: auto-fees/utils/constants.js:74
 #: auto-fees/utils/constants.js:76
+msgid "Promotion Code Name"
+msgstr ""
+
+#: auto-fees/utils/constants.js:81
 msgid "Line Item Quantity"
 msgstr ""
 
-#: auto-fees/utils/constants.js:77
+#: auto-fees/utils/constants.js:82
 msgid "Weight (g)"
 msgstr ""
 
-#: auto-fees/utils/constants.js:78
+#: auto-fees/utils/constants.js:83
 msgid "Customer Order Count"
 msgstr ""
 
-#: auto-fees/utils/constants.js:79
+#: auto-fees/utils/constants.js:84
 msgid "Price Recurring Period Count"
 msgstr ""
 
-#: auto-fees/utils/constants.js:83
+#: auto-fees/utils/constants.js:88
 msgid "Customer Prior Product Purchase Count"
 msgstr ""
 
-#: auto-fees/utils/constants.js:87
+#: auto-fees/utils/constants.js:92
 msgid "Original Checkout Not Revoked Purchases Quantity"
 msgstr ""
 
-#: auto-fees/utils/constants.js:91
+#: auto-fees/utils/constants.js:96
 msgid "Original Checkout Billable Purchases Quantity"
 msgstr ""
 
-#: auto-fees/utils/constants.js:98
+#: auto-fees/utils/constants.js:103
 msgid "WordPress User Role"
 msgstr ""
 
-#: auto-fees/utils/constants.js:120
+#: auto-fees/utils/constants.js:110
+#: auto-fees/utils/constants.js:116
+#: coupons/CreateCoupon.js:100
+msgid "Promotion Code"
+msgstr ""
+
+#: auto-fees/utils/constants.js:113
+#: settings/tax-override/TaxOverrideModal.js:190
+#: Blocks/ProductCollection/edit.js:314
+msgid "Product Collection"
+msgstr ""
+
+#: auto-fees/utils/constants.js:114
+#: products/modules/Upgrades.js:73
+msgid "Upgrade Group"
+msgstr ""
+
+#: auto-fees/utils/constants.js:138
 msgid "is"
 msgstr ""
 
-#: auto-fees/utils/constants.js:121
+#: auto-fees/utils/constants.js:139
 msgid "is not"
 msgstr ""
 
-#: auto-fees/utils/constants.js:122
+#: auto-fees/utils/constants.js:140
 msgid "is more than"
 msgstr ""
 
-#: auto-fees/utils/constants.js:123
+#: auto-fees/utils/constants.js:141
 #: Blocks/ConditionalForm/selectors/SelectOperator.js:33
 #: Blocks/ConditionalForm/translations.js:18
 msgid "is less than"
 msgstr ""
 
-#: auto-fees/utils/constants.js:124
+#: auto-fees/utils/constants.js:142
 msgid "is at least"
 msgstr ""
 
-#: auto-fees/utils/constants.js:125
+#: auto-fees/utils/constants.js:143
 msgid "is at most"
 msgstr ""
 
-#: auto-fees/utils/constants.js:126
+#: auto-fees/utils/constants.js:144
 msgid "is after"
 msgstr ""
 
-#: auto-fees/utils/constants.js:127
+#: auto-fees/utils/constants.js:145
 msgid "is before"
 msgstr ""
 
-#: auto-fees/utils/constants.js:128
+#: auto-fees/utils/constants.js:146
 msgid "is on or after"
 msgstr ""
 
-#: auto-fees/utils/constants.js:129
+#: auto-fees/utils/constants.js:147
 msgid "is on or before"
 msgstr ""
 
-#: auto-fees/utils/constants.js:130
+#: auto-fees/utils/constants.js:148
 msgid "contains"
 msgstr ""
 
-#: auto-fees/utils/constants.js:131
+#: auto-fees/utils/constants.js:149
 msgid "not contains"
 msgstr ""
 
-#: auto-fees/utils/constants.js:132
+#: auto-fees/utils/constants.js:150
 msgid "starts with"
 msgstr ""
 
-#: auto-fees/utils/constants.js:133
+#: auto-fees/utils/constants.js:151
 msgid "ends with"
 msgstr ""
 
-#: auto-fees/utils/constants.js:137
+#: auto-fees/utils/constants.js:155
 msgid "Initial Checkout"
 msgstr ""
 
-#: auto-fees/utils/constants.js:138
+#: auto-fees/utils/constants.js:156
 msgid "Renewal & Plan Changes"
 msgstr ""
 
-#: auto-fees/utils/constants.js:145
+#: auto-fees/utils/constants.js:163
 msgid "Apply this dynamic price to a line item that qualifies."
 msgstr ""
 
-#: auto-fees/utils/constants.js:154
+#: auto-fees/utils/constants.js:172
 msgid "Apply this dynamic price to the entire checkout."
 msgstr ""
 
-#: auto-fees/utils/constants.js:163
+#: auto-fees/utils/constants.js:181
 msgid "Apply this dynamic price to the shipping cost."
 msgstr ""
 
-#: auto-fees/utils/constants.js:173
+#: auto-fees/utils/constants.js:191
 msgid "All transactions"
 msgstr ""
 
-#: auto-fees/utils/constants.js:175
+#: auto-fees/utils/constants.js:193
 msgid "Initial checkout, renewals, upgrades, and downgrades."
 msgstr ""
 
-#: auto-fees/utils/constants.js:181
+#: auto-fees/utils/constants.js:199
 msgid "Initial checkout"
 msgstr ""
 
-#: auto-fees/utils/constants.js:183
+#: auto-fees/utils/constants.js:201
 msgid "New purchases only."
 msgstr ""
 
-#: auto-fees/utils/constants.js:186
+#: auto-fees/utils/constants.js:204
 msgid "Renewals & plan changes"
 msgstr ""
 
-#: auto-fees/utils/constants.js:188
+#: auto-fees/utils/constants.js:206
 msgid "Renewals, upgrades, and downgrades only."
 msgstr ""
 
@@ -11752,6 +11825,7 @@ msgstr ""
 
 #: bumps/modules/CTA.js:11
 #: bumps/modules/Description.js:12
+#: settings/learn/components/LearnSection.js:165
 #: upsell-funnels/modules/Funnel.js:79
 msgid "Optional"
 msgstr ""
@@ -11895,6 +11969,7 @@ msgstr ""
 #: invoices/modules/NewPrice.js:82
 #: product-groups/modules/NewProduct.js:59
 #: product-groups/modules/NewProduct.js:75
+#: settings/learn/data/learnSections.js:150
 #: settings/shipping/profile/Products.js:242
 #: upsell-funnels/modules/Upsell/index.js:52
 #: Blocks/CheckoutForm/components/Options.js:39
@@ -11977,7 +12052,7 @@ msgstr ""
 #: products/components/price/parts/SwapPriceDisplay.js:91
 #: products/modules/Media/WordPressMedia.js:73
 #: products/modules/SingleDownload.js:322
-#: settings/brand/Logo.js:81
+#: settings/brand/Logo.js:112
 #: settings/shipping/profile/Products.js:311
 #: settings/shipping/zone/ShippingZone.js:168
 #: subscriptions/edit/modules/Trial.js:38
@@ -12263,6 +12338,7 @@ msgstr ""
 
 #: components/ClaimNoticeModal.js:40
 #: dashboard/SetupBanner.js:79
+#: settings/learn/data/learnSections.js:18
 msgid "Complete Setup"
 msgstr ""
 
@@ -12641,8 +12717,12 @@ msgstr ""
 msgid "Ok"
 msgstr ""
 
-#: components/SelectPrice.js:91
-#: components/SelectPrice.js:127
+#: components/PriceSelector.js:136
+msgid "Selected Price"
+msgstr ""
+
+#: components/SelectPrice.js:92
+#: components/SelectPrice.js:128
 #: products/components/price/parts/SwapPriceSetting.js:91
 #: products/modules/integrations/NewIntegration.js:97
 #: products/modules/Prices/Price/BuyLink.js:54
@@ -12651,21 +12731,21 @@ msgstr ""
 msgid "%s available"
 msgstr ""
 
-#: components/SelectPrice.js:150
+#: components/SelectPrice.js:151
 #: subscriptions/edit/modules/Modals/UpdatePrice.js:34
 msgid "Select a price"
 msgstr ""
 
-#: components/SelectPrice.js:151
+#: components/SelectPrice.js:152
 msgid "Search for a price..."
 msgstr ""
 
-#: components/SelectPrice.js:157
+#: components/SelectPrice.js:158
 #: components/SelectPrice.js:184
 msgid "Variant Out of Stock."
 msgstr ""
 
-#: components/SelectPrice.js:173
+#: components/SelectPrice.js:174
 #: components/SelectPrice.js:200
 msgid "Add New Product"
 msgstr ""
@@ -12797,18 +12877,9 @@ msgstr ""
 msgid "Create New Coupon"
 msgstr ""
 
-#: coupons/CreateCoupon.js:85
-#: coupons/modules/Name.js:8
-msgid "Coupon Name"
-msgstr ""
-
 #: coupons/CreateCoupon.js:86
 #: coupons/modules/Name.js:11
 msgid "This is an internal name for your coupon. This is not visible to customers."
-msgstr ""
-
-#: coupons/CreateCoupon.js:100
-msgid "Promotion Code"
 msgstr ""
 
 #: coupons/CreateCoupon.js:105
@@ -13391,15 +13462,6 @@ msgstr ""
 #: dashboard/components/LineChart.js:44
 #: dashboard/components/LineChart.js:163
 msgid "Average Order Value Chart"
-msgstr ""
-
-#: dashboard/components/LineChart.js:149
-#: ui/PrevNextButtons.js:35
-#: index.php:139
-#: src/blocks/product-pagination-previous/view.php:36
-#: src/blocks/cart-order-bump-pagination-previous/index.js:21
-#: src/blocks/product-pagination-previous/edit.js:39
-msgid "Previous"
 msgstr ""
 
 #: dashboard/components/LineChart.js:165
@@ -14023,7 +14085,7 @@ msgid "Customize and configure your store settings."
 msgstr ""
 
 #: onboarding/components/ConfirmStoreDetails.js:38
-#: settings/brand/BrandSettings.js:108
+#: settings/brand/components/ThemeModeCard.js:104
 msgid "Brand Color"
 msgstr ""
 
@@ -14072,6 +14134,7 @@ msgid "Enter your api token"
 msgstr ""
 
 #: onboarding/components/Connect.js:79
+#: settings/learn/data/learnSections.js:35
 msgid "Connect"
 msgstr ""
 
@@ -14559,7 +14622,7 @@ msgid "Returned on"
 msgstr ""
 
 #: orders/modules/ReturnRequest/ReturnReasonsSelector.js:14
-#: store/add-entities.js:500
+#: store/add-entities.js:508
 msgid "Return Reason"
 msgstr ""
 
@@ -14723,6 +14786,7 @@ msgid "Manage all template parts"
 msgstr ""
 
 #: product-collections/components/SelectTemplatePart/index.js:124
+#: settings/brand/BrandSettings.js:102
 msgid "Theme"
 msgstr ""
 
@@ -14836,13 +14900,14 @@ msgstr ""
 
 #: product-collections/modules/Image.js:121
 #: products/modules/Variations/NewVariant.js:179
-#: settings/brand/Logo.js:97
+#: settings/brand/Logo.js:11
+#: settings/brand/Logo.js:152
 msgid "Add Image"
 msgstr ""
 
 #: product-collections/modules/Image.js:171
 #: products/modules/SingleDownload.js:297
-#: settings/brand/Logo.js:75
+#: settings/brand/Logo.js:76
 #: src/utilities/patterns-toolbar.js:20
 msgid "Replace"
 msgstr ""
@@ -14976,34 +15041,6 @@ msgstr ""
 
 #: products/components/ConfirmNavigation.js:19
 msgid "Save your changes before going to the editor?"
-msgstr ""
-
-#: products/components/Dimensions.js:8
-msgid "in"
-msgstr ""
-
-#: products/components/Dimensions.js:12
-msgid "ft"
-msgstr ""
-
-#: products/components/Dimensions.js:16
-msgid "cm"
-msgstr ""
-
-#: products/components/Dimensions.js:20
-msgid "mm"
-msgstr ""
-
-#: products/components/Dimensions.js:24
-msgid "m"
-msgstr ""
-
-#: products/components/Dimensions.js:46
-msgid "Length"
-msgstr ""
-
-#: products/components/Dimensions.js:111
-msgid "Unit"
 msgstr ""
 
 #: products/components/DuplicateModel.js:17
@@ -16000,24 +16037,28 @@ msgstr ""
 
 #: products/modules/Shipping.js:18
 #: products/modules/Variations/Shipping.js:30
+#: settings/shipping/parcel/ParcelTemplateForm.js:26
 #: settings/shipping/rate/ShippingRateForm.js:36
 msgid "lb"
 msgstr ""
 
 #: products/modules/Shipping.js:19
 #: products/modules/Variations/Shipping.js:31
+#: settings/shipping/parcel/ParcelTemplateForm.js:27
 #: settings/shipping/rate/ShippingRateForm.js:37
 msgid "kg"
 msgstr ""
 
 #: products/modules/Shipping.js:20
 #: products/modules/Variations/Shipping.js:32
+#: settings/shipping/parcel/ParcelTemplateForm.js:28
 #: settings/shipping/rate/ShippingRateForm.js:38
 msgid "oz"
 msgstr ""
 
 #: products/modules/Shipping.js:21
 #: products/modules/Variations/Shipping.js:33
+#: settings/shipping/parcel/ParcelTemplateForm.js:29
 #: settings/shipping/rate/ShippingRateForm.js:39
 msgid "g"
 msgstr ""
@@ -16171,10 +16212,6 @@ msgstr ""
 msgid "Edit Product Template"
 msgstr ""
 
-#: products/modules/Upgrades.js:73
-msgid "Upgrade Group"
-msgstr ""
-
 #: products/modules/Upgrades.js:78
 msgid "Add this product to a group with others you want the purchaser to switch between."
 msgstr ""
@@ -16280,6 +16317,7 @@ msgid "Shipping enabled"
 msgstr ""
 
 #: products/modules/Variations/Shipping.js:55
+#: settings/shipping/parcel/ParcelTemplateForm.js:216
 msgid "Weight"
 msgstr ""
 
@@ -16448,16 +16486,16 @@ msgstr ""
 
 #: settings/abandoned/AbandonedSettings.js:62
 #: settings/account/AccountSettings.js:56
-#: settings/advanced/AdvancedSettings.js:112
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:64
-#: settings/brand/BrandSettings.js:71
+#: settings/advanced/AdvancedSettings.js:117
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:91
+#: settings/brand/BrandSettings.js:60
 #: settings/connection/ConnectionSettings.js:38
 #: settings/customer/CustomerSettings.js:36
 #: settings/display-currency/DisplayCurrencySettings.js:44
 #: settings/dynamic-pricing/DynamicPricingSettings.js:28
 #: settings/order/OrderProtocol.js:31
 #: settings/review-protocol/ReviewProtocolSettings.js:39
-#: settings/shipping/ShippingSettings.js:91
+#: settings/shipping/ShippingSettings.js:92
 #: settings/subscription-preservation/PreservationSettings.js:135
 #: settings/subscription/SubscriptionSettings.js:94
 #: settings/tax-region/TaxRegionSettings.js:135
@@ -16766,171 +16804,179 @@ msgstr ""
 msgid "Enter a website URL"
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:168
+#: settings/advanced/AdvancedSettings.js:173
 msgid "On Demand Block Assets"
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:170
+#: settings/advanced/AdvancedSettings.js:175
 msgid "Enabling this option will load block assets only when they are rendered. This will happen for ALL blocks on your website, not just SureCart blocks. Please check your pages after you enable this option in a private browser window as this might change the CSS load order."
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:180
+#: settings/advanced/AdvancedSettings.js:185
 msgid "Note: This option is sometimes enabled by the theme. If it is already enabled by the theme, then this setting won't have any effect."
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:191
+#: settings/advanced/AdvancedSettings.js:196
 msgid "Spam Protection & Security"
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:192
+#: settings/advanced/AdvancedSettings.js:197
 msgid "Change your checkout spam protection and security settings."
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:204
+#: settings/advanced/AdvancedSettings.js:209
 msgid "Test Mode Restricted"
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:206
+#: settings/advanced/AdvancedSettings.js:211
 msgid "Restrict test orders to store administrators only. Disable this setting to allow anyone to complete test orders."
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:217
+#: settings/advanced/AdvancedSettings.js:222
 msgid "Honeypot"
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:219
+#: settings/advanced/AdvancedSettings.js:224
 msgid "This adds a field that is invisible to users, but visible to bots in an attempt to trick them into filling it out."
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:233
+#: settings/advanced/AdvancedSettings.js:238
 msgid "Recaptcha v3"
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:235
+#: settings/advanced/AdvancedSettings.js:240
 msgid "Enable Recaptcha spam protection on checkout forms."
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:244
+#: settings/advanced/AdvancedSettings.js:249
 msgid "Important"
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:245
+#: settings/advanced/AdvancedSettings.js:250
 msgid "Please clear checkout page cache after changing this setting."
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:266
-#: settings/advanced/AdvancedSettings.js:267
+#: settings/advanced/AdvancedSettings.js:271
+#: settings/advanced/AdvancedSettings.js:272
 msgid "reCaptcha Site Key"
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:275
-#: settings/advanced/AdvancedSettings.js:291
+#: settings/advanced/AdvancedSettings.js:280
+#: settings/advanced/AdvancedSettings.js:296
 msgid "You can find this on your google Recaptcha dashboard."
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:282
-#: settings/advanced/AdvancedSettings.js:283
+#: settings/advanced/AdvancedSettings.js:287
+#: settings/advanced/AdvancedSettings.js:288
 msgid "reCaptcha Secret Key"
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:299
+#: settings/advanced/AdvancedSettings.js:304
 msgid "To get your Recaptcha keys"
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:304
+#: settings/advanced/AdvancedSettings.js:309
 msgid "register a new site and choose v3."
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:323
+#: settings/advanced/AdvancedSettings.js:328
 msgid "Stripe Fraud Monitoring"
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:328
+#: settings/advanced/AdvancedSettings.js:333
 msgid "This will load stripe.js on every page to help with Fraud monitoring."
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:339
+#: settings/advanced/AdvancedSettings.js:344
 msgid "Strong Password Validation"
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:341
+#: settings/advanced/AdvancedSettings.js:346
 msgid "This ensures all the password fields have a stronger validation for user password input i.e. at least 6 characters and one special character."
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:350
+#: settings/advanced/AdvancedSettings.js:355
 msgid "Admin Appearance"
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:351
+#: settings/advanced/AdvancedSettings.js:356
 msgid "Change some admin UI options."
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:360
+#: settings/advanced/AdvancedSettings.js:365
 msgid "Show a link to edit the shop page in the menu."
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:370
+#: settings/advanced/AdvancedSettings.js:375
 msgid "Cart Page"
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:372
+#: settings/advanced/AdvancedSettings.js:377
 msgid "Show a link to edit the cart in the menu."
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:382
+#: settings/advanced/AdvancedSettings.js:387
 msgid "Checkout Page"
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:384
+#: settings/advanced/AdvancedSettings.js:389
 msgid "Show a link to edit the checkout page in the menu."
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:396
+#: settings/advanced/AdvancedSettings.js:401
 msgid "Show a link to edit the customer area in the menu."
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:406
+#: settings/advanced/AdvancedSettings.js:411
+msgid "Learn Page"
+msgstr ""
+
+#: settings/advanced/AdvancedSettings.js:413
+msgid "Show the Learn page link in the menu."
+msgstr ""
+
+#: settings/advanced/AdvancedSettings.js:423
 msgid "Hide Help Widget"
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:408
+#: settings/advanced/AdvancedSettings.js:425
 msgid "Hide the help widget that appears in the bottom right corner of SureCart admin pages."
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:418
+#: settings/advanced/AdvancedSettings.js:435
 msgid "Enable Admin Toolbar"
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:420
+#: settings/advanced/AdvancedSettings.js:437
 msgid "This will enable the SureCart toolbar in the WordPress admin bar for easy access to SureCart features."
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:446
+#: settings/advanced/AdvancedSettings.js:463
 msgid "Use The Stripe Card Element"
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:457
+#: settings/advanced/AdvancedSettings.js:474
 msgid "Syncing"
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:458
+#: settings/advanced/AdvancedSettings.js:475
 msgid "Manually sync your WordPress install with SureCart."
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:475
+#: settings/advanced/AdvancedSettings.js:492
 msgid "Create WordPress user accounts for SureCart customers who don't already have a WordPress account. Use this after migrating from another eCommerce platform to ensure every SureCart customer can log in."
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:497
+#: settings/advanced/AdvancedSettings.js:514
 msgid "Run a sync on all SureCart products to post types."
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:509
-#: settings/advanced/AdvancedSettings.js:523
+#: settings/advanced/AdvancedSettings.js:526
+#: settings/advanced/AdvancedSettings.js:540
 msgid "Clear Test Data"
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:510
+#: settings/advanced/AdvancedSettings.js:527
 msgid "Clear out all of your test data with one-click."
 msgstr ""
 
@@ -16970,220 +17016,208 @@ msgstr ""
 msgid "Product sync started in the background"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:74
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:101
 msgid "Affiliates Settings"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:84
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:111
 msgid "Affiliate Signups"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:85
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:112
 msgid "Configure how affiliates signup and get approved to promote products in your store."
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:100
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:127
 msgid "Allow New Affiliate Signups"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:102
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:129
 msgid "Do you want to allow new affiliates to sign up?"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:109
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:136
 msgid "Program Description"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:110
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:137
 msgid "Let affiliates know any specifics about your program and what to expect from being an affiliate. This is shown to affiliates when they sign up for your affiliate program."
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:124
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:151
 msgid "Signup Question"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:125
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:152
 msgid "What question do you want to ask affiliates on the signup form? If blank, the default question \"How will you promote this store?\" will be used."
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:129
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:156
 msgid "How will you promote this store?"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:144
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:171
 msgid "Affiliate Terms URL"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:145
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:172
 msgid "Where can affiliates find the terms and conditions for your affiliate program? If provided, this URL will be shown to affiliates when they sign up for your affiliate program."
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:170
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:197
 msgid "Payout Email Field on Signup"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:172
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:199
 msgid "Do you want to include the payout email field on the signup form?"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:188
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:215
 msgid "Auto Approve New Affiliates"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:190
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:217
 msgid "Do you want to automatically approve new affiliate signups? If disabled, you will need to manually approve each affiliate signup."
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:198
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:225
 msgid "Signup URL"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:223
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:250
 msgid "This is where you will send affiliates to signup for your affiliate program. To change this URL slug, "
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:232
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:259
 msgid "click here"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:239
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:266
 msgid "Referral Tracking"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:240
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:267
 msgid "Configure how clicks are tracked and how referrals are credited to affiliates."
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:258
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:285
 msgid "Tracking"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:268
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:295
 msgid "Track affiliate referrals on this site."
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:283
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:310
 msgid "Want to add tracking to a different site?"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:293
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:320
 msgid "Tracking Script"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:296
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:323
 msgid "Copy and paste the tracking code into the <head> section or just before the closing </body> tag of your website. Ensure this is only added to sites that don't already have the script included via the WordPress plugin."
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:332
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:359
 #: settings/dynamic-pricing/utils.js:40
 msgid "First"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:336
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:363
 msgid "Last"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:339
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:366
 msgid "Referrer Type"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:340
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:367
 msgid "Should the first or last referrer be credited?"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:347
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:374
 msgid "Tracking Length"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:348
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:375
 msgid "How many days should the tracking code last for?"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:374
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:401
 msgid "Auto Approve New Referrals"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:376
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:403
 msgid "Do you want to automatically approve new referrals? If disabled, you will need to manually approve each referral."
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:383
-msgid "Affiliate Referral URL"
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:410
+msgid "Affiliate Referral URLs"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:384
-msgid "Where should affiliates send their traffic? This URL will be used to generate the affiliate referral link for each affiliate with their unique affiliate code."
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:421
+msgid "Where should affiliates send their traffic? These URLs will be used to generate the affiliate referral link for each affiliate with their unique affiliate code."
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:399
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:467
+msgid "Remove URL"
+msgstr ""
+
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:469
+msgid "Remove referral URL %d"
+msgstr ""
+
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:505
+msgid "Add URL"
+msgstr ""
+
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:512
 msgid "Commissions & Payouts"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:400
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:513
 msgid "Configure how affiliates earn commissions and how they get paid."
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:425
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:538
 msgid "Payout Instructions"
 msgstr ""
 
-#: settings/affiliation-protocol/AffiliationProtocolSettings.js:426
+#: settings/affiliation-protocol/AffiliationProtocolSettings.js:539
 msgid "Let affiliates know how they will be paid, how often, and any terms or conditions for payment. These details will be shown to affiliates so they know what to expect."
 msgstr ""
 
-#: settings/brand/BrandSettings.js:92
+#: settings/brand/BrandSettings.js:83
 msgid "Brand Settings"
 msgstr ""
 
-#: settings/brand/BrandSettings.js:93
+#: settings/brand/BrandSettings.js:84
 msgid "Customize how your brand appears globally across SureCart. Your logo and colors will be used on hosted pages and emails that are sent to your customers."
 msgstr ""
 
-#: settings/brand/BrandSettings.js:109
-msgid "This color will be used for the main button color, links, and various UI elements."
+#: settings/brand/BrandSettings.js:111
+msgid "This applies to your WordPress site, emails and affiliate portal."
 msgstr ""
 
-#: settings/brand/BrandSettings.js:147
-msgid "Logo"
-msgstr ""
-
-#: settings/brand/BrandSettings.js:159
-msgid "Select Theme (Beta)"
-msgstr ""
-
-#: settings/brand/BrandSettings.js:160
-msgid "Select Theme"
-msgstr ""
-
-#: settings/brand/BrandSettings.js:163
-msgid "Choose \"Dark\" if your theme already has a dark background."
-msgstr ""
-
-#: settings/brand/BrandSettings.js:170
-msgid "Light"
-msgstr ""
-
-#: settings/brand/BrandSettings.js:174
-msgid "Dark"
-msgstr ""
-
-#: settings/brand/BrandSettings.js:200
+#: settings/brand/BrandSettings.js:167
 msgid "Remove SureCart Branding"
 msgstr ""
 
-#: settings/brand/BrandSettings.js:205
+#: settings/brand/BrandSettings.js:172
 msgid "Remove \"Powered By SureCart\" in the footer of emails and receipts/invoices."
 msgstr ""
 
-#: settings/brand/BrandSettings.js:218
+#: settings/brand/BrandSettings.js:184
 msgid "Change cart settings."
 msgstr ""
 
-#: settings/brand/BrandSettings.js:230
+#: settings/brand/BrandSettings.js:196
 msgid "Enable Cart"
 msgstr ""
 
-#: settings/brand/BrandSettings.js:232
+#: settings/brand/BrandSettings.js:198
 msgid "This will enable slide-out cart. If you do not wish to use the cart, you can disable this to prevent cart scripts from loading on your pages."
 msgstr ""
 
@@ -17242,7 +17276,19 @@ msgstr ""
 msgid "Menu Icon"
 msgstr ""
 
-#: settings/brand/Logo.js:20
+#: settings/brand/components/ThemeModeCard.js:22
+msgid "Light Mode"
+msgstr ""
+
+#: settings/brand/components/ThemeModeCard.js:23
+msgid "Dark Mode"
+msgstr ""
+
+#: settings/brand/components/ThemeModeCard.js:140
+msgid "Logo"
+msgstr ""
+
+#: settings/brand/Logo.js:34
 msgid "Are you sure you want to remove this logo?"
 msgstr ""
 
@@ -17525,7 +17571,7 @@ msgid "Sent to customers when their subscription renews."
 msgstr ""
 
 #: settings/customer/CustomerSettings.js:433
-#: settings/customer/CustomerSettings.js:484
+#: settings/customer/CustomerSettings.js:503
 msgid "Subscription Cancellation"
 msgstr ""
 
@@ -17545,39 +17591,55 @@ msgstr ""
 msgid "Sent to customers when a charge is refunded."
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:462
+#: settings/customer/CustomerSettings.js:458
+msgid "Review Request"
+msgstr ""
+
+#: settings/customer/CustomerSettings.js:459
+msgid "Sent to customers after order fulfillment to request a review."
+msgstr ""
+
+#: settings/customer/CustomerSettings.js:471
 msgid "Store Emails"
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:463
+#: settings/customer/CustomerSettings.js:472
 msgid "These are the emails that are sent to you and other team members of this store."
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:474
+#: settings/customer/CustomerSettings.js:483
 msgid "New Order"
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:475
+#: settings/customer/CustomerSettings.js:484
 msgid "Sent when an order is created."
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:485
-msgid "Sent when a subscription is canceled."
+#: settings/customer/CustomerSettings.js:493
+msgid "New Review"
 msgstr ""
 
 #: settings/customer/CustomerSettings.js:494
-msgid "Subscription Payment"
-msgstr ""
-
-#: settings/customer/CustomerSettings.js:495
-msgid "Sent when a subscription renews."
+msgid "Sent when a new review is submitted."
 msgstr ""
 
 #: settings/customer/CustomerSettings.js:504
+msgid "Sent when a subscription is canceled."
+msgstr ""
+
+#: settings/customer/CustomerSettings.js:513
+msgid "Subscription Payment"
+msgstr ""
+
+#: settings/customer/CustomerSettings.js:514
+msgid "Sent when a subscription renews."
+msgstr ""
+
+#: settings/customer/CustomerSettings.js:523
 msgid "Subscription Payment Failure"
 msgstr ""
 
-#: settings/customer/CustomerSettings.js:508
+#: settings/customer/CustomerSettings.js:527
 msgid "Sent when a subscription payment fails."
 msgstr ""
 
@@ -17807,6 +17869,8 @@ msgid "Activating..."
 msgstr ""
 
 #: settings/integrations/Suretriggers.js:120
+#: settings/learn/data/learnSections.js:121
+#: settings/learn/data/learnSections.js:421
 msgid "Configure"
 msgstr ""
 
@@ -17824,6 +17888,431 @@ msgstr ""
 
 #: settings/integrations/Suretriggers.js:164
 msgid "Ottokit lets you connect SureCart to hundreds of apps, CRMs and tools such as Slack, Mailchimp, etc. With this you have have various automations setup between SureCart events & other apps. Whatever you want SureCart & Ottokit has got you covered."
+msgstr ""
+
+#: settings/learn/components/LearnSection.js:163
+#: Blocks/Address/edit.js:46
+#: Blocks/Checkbox/edit.js:32
+#: Blocks/FirstName/edit.js:30
+#: Blocks/Input/edit.js:29
+#: Blocks/LastName/edit.js:30
+#: Blocks/Name/edit.js:30
+#: Blocks/NameYourPrice/edit.js:43
+#: Blocks/Password/edit.js:57
+#: Blocks/Phone/edit.js:26
+#: Blocks/ProductDonation/edit.js:167
+#: Blocks/RadioGroup/edit.js:75
+#: Blocks/Switch/edit.js:30
+#: Blocks/TaxIdInput/edit.js:44
+#: Blocks/Textarea/edit.js:29
+msgid "Required"
+msgstr ""
+
+#: settings/learn/components/LearnSection.js:252
+msgid "Learn How"
+msgstr ""
+
+#: settings/learn/data/learnSections.js:7
+msgid "Set Up Store Basics"
+msgstr ""
+
+#: settings/learn/data/learnSections.js:8
+msgid "Get your store ready and make your first sale."
+msgstr ""
+
+#: settings/learn/data/learnSections.js:19
+msgid "Create your SureCart account and connect your store to start managing products and payments."
+msgstr ""
+
+#: settings/learn/data/learnSections.js:23
+#: settings/learn/data/learnSections.js:50
+#: settings/learn/data/learnSections.js:64
+#: settings/learn/data/learnSections.js:79
+#: settings/learn/data/learnSections.js:90
+#: settings/learn/data/learnSections.js:105
+#: settings/learn/data/learnSections.js:251
+#: settings/learn/data/learnSections.js:365
+#: settings/learn/data/learnSections.js:436
+msgid "Set Up"
+msgstr ""
+
+#: settings/learn/data/learnSections.js:30
+msgid "Connect Payment Gateway"
+msgstr ""
+
+#: settings/learn/data/learnSections.js:31
+msgid "Link Stripe, PayPal, or another supported gateway to start accepting payments."
+msgstr ""
+
+#: settings/learn/data/learnSections.js:38
+msgid "You'll need an account with your payment provider before connecting."
+msgstr ""
+
+#: settings/learn/data/learnSections.js:45
+msgid "Add Store Details"
+msgstr ""
+
+#: settings/learn/data/learnSections.js:46
+msgid "Set up your store's business information, currency, and basic preferences."
+msgstr ""
+
+#: settings/learn/data/learnSections.js:52
+msgid "Configure your store name, business address, currency, and other foundational settings."
+msgstr ""
+
+#: settings/learn/data/learnSections.js:59
+msgid "Add Brand Details"
+msgstr ""
+
+#: settings/learn/data/learnSections.js:60
+msgid "Customize your store's branding so customers recognize you at checkout and in emails."
+msgstr ""
+
+#: settings/learn/data/learnSections.js:67
+msgid "Upload your logo, set brand colors, and customize email templates."
+msgstr ""
+
+#: settings/learn/data/learnSections.js:74
+msgid "Customer Dashboard Page"
+msgstr ""
+
+#: settings/learn/data/learnSections.js:75
+msgid "Customize the page your customers land on after completing a purchase."
+msgstr ""
+
+#: settings/learn/data/learnSections.js:84
+msgid "Configure Tax Settings"
+msgstr ""
+
+#: settings/learn/data/learnSections.js:85
+msgid "Set up tax collection rules so the correct tax is applied at checkout."
+msgstr ""
+
+#: settings/learn/data/learnSections.js:92
+msgid "Configure tax rates, regions, and automatic tax calculation."
+msgstr ""
+
+#: settings/learn/data/learnSections.js:99
+msgid "Set Up Transactional Emails"
+msgstr ""
+
+#: settings/learn/data/learnSections.js:100
+msgid "Configure the emails customers receive for orders, receipts, and account updates."
+msgstr ""
+
+#: settings/learn/data/learnSections.js:108
+msgid "Customize order confirmation, receipt, and notification emails."
+msgstr ""
+
+#: settings/learn/data/learnSections.js:115
+msgid "Add Privacy Policy & Terms of Service"
+msgstr ""
+
+#: settings/learn/data/learnSections.js:116
+msgid "Add links to your privacy policy and terms of service so customers can review them at checkout."
+msgstr ""
+
+#: settings/learn/data/learnSections.js:123
+msgid "Display legal links on your checkout form for transparency and compliance."
+msgstr ""
+
+#: settings/learn/data/learnSections.js:134
+msgid "Add Your First Product"
+msgstr ""
+
+#: settings/learn/data/learnSections.js:135
+msgid "Create the product you want to sell and prepare it for checkout."
+msgstr ""
+
+#: settings/learn/data/learnSections.js:145
+msgid "Add Product Details"
+msgstr ""
+
+#: settings/learn/data/learnSections.js:146
+msgid "Define what you're selling — name, description, pricing, and media."
+msgstr ""
+
+#: settings/learn/data/learnSections.js:153
+msgid "Create your product with images, description, and pricing options."
+msgstr ""
+
+#: settings/learn/data/learnSections.js:160
+msgid "Add Product Variants"
+msgstr ""
+
+#: settings/learn/data/learnSections.js:161
+msgid "Offer variations like formats, licenses, or plans if your product needs them."
+msgstr ""
+
+#: settings/learn/data/learnSections.js:165
+msgid "Add Variants"
+msgstr ""
+
+#: settings/learn/data/learnSections.js:167
+msgid "Create size, color, format, or license options for your product."
+msgstr ""
+
+#: settings/learn/data/learnSections.js:174
+msgid "Publish Your Product"
+msgstr ""
+
+#: settings/learn/data/learnSections.js:175
+msgid "Make your product live and ready to be purchased."
+msgstr ""
+
+#: settings/learn/data/learnSections.js:179
+msgid "Publish"
+msgstr ""
+
+#: settings/learn/data/learnSections.js:181
+msgid "Activate your product so it appears in your store and can be purchased."
+msgstr ""
+
+#: settings/learn/data/learnSections.js:192
+msgid "Customize Checkout Experience"
+msgstr ""
+
+#: settings/learn/data/learnSections.js:193
+msgid "Personalize your checkout and shop pages to match your brand."
+msgstr ""
+
+#: settings/learn/data/learnSections.js:203
+msgid "Customize Checkout Form"
+msgstr ""
+
+#: settings/learn/data/learnSections.js:204
+msgid "Design your checkout form fields, layout, and styling."
+msgstr ""
+
+#: settings/learn/data/learnSections.js:208
+msgid "Customize"
+msgstr ""
+
+#: settings/learn/data/learnSections.js:210
+msgid "Use the WordPress block editor to customize your checkout page design."
+msgstr ""
+
+#: settings/learn/data/learnSections.js:217
+msgid "Set Up Shop Page"
+msgstr ""
+
+#: settings/learn/data/learnSections.js:218
+msgid "Create a page to showcase all your products."
+msgstr ""
+
+#: settings/learn/data/learnSections.js:222
+msgid "Edit Shop"
+msgstr ""
+
+#: settings/learn/data/learnSections.js:224
+msgid "Design your product catalog page using WordPress blocks."
+msgstr ""
+
+#: settings/learn/data/learnSections.js:235
+msgid "Set Up Shipping"
+msgstr ""
+
+#: settings/learn/data/learnSections.js:236
+msgid "Configure shipping zones and rates. Only needed if you're selling physical products."
+msgstr ""
+
+#: settings/learn/data/learnSections.js:246
+msgid "Configure Shipping Zones & Rates"
+msgstr ""
+
+#: settings/learn/data/learnSections.js:247
+msgid "Set up shipping zones, rates, and methods for physical products."
+msgstr ""
+
+#: settings/learn/data/learnSections.js:253
+msgid "Rates can be flat, weight-based, or free over a threshold."
+msgstr ""
+
+#: settings/learn/data/learnSections.js:264
+msgid "Test Your Checkout & Go Live"
+msgstr ""
+
+#: settings/learn/data/learnSections.js:265
+msgid "Make a test payment to ensure everything works before accepting real orders."
+msgstr ""
+
+#: settings/learn/data/learnSections.js:275
+msgid "Make a Test Payment"
+msgstr ""
+
+#: settings/learn/data/learnSections.js:276
+msgid "Run a quick test payment to confirm your checkout, payment gateway, and product setup are working correctly."
+msgstr ""
+
+#: settings/learn/data/learnSections.js:280
+msgid "Use test mode to simulate a purchase and verify your entire checkout flow."
+msgstr ""
+
+#: settings/learn/data/learnSections.js:291
+msgid "Manage Orders & Customers"
+msgstr ""
+
+#: settings/learn/data/learnSections.js:292
+msgid "Handle incoming orders and set up self-service customer tools."
+msgstr ""
+
+#: settings/learn/data/learnSections.js:302
+msgid "View & Manage Orders"
+msgstr ""
+
+#: settings/learn/data/learnSections.js:303
+msgid "Monitor and process customer orders as they come in."
+msgstr ""
+
+#: settings/learn/data/learnSections.js:307
+msgid "View Orders"
+msgstr ""
+
+#: settings/learn/data/learnSections.js:309
+msgid "Access your order dashboard to fulfill, refund, and track orders."
+msgstr ""
+
+#: settings/learn/data/learnSections.js:316
+msgid "Set Up Customer Portal"
+msgstr ""
+
+#: settings/learn/data/learnSections.js:317
+msgid "Control what customers can do from their portal — manage subscriptions, change plans, and update payment methods."
+msgstr ""
+
+#: settings/learn/data/learnSections.js:321
+msgid "Configure Portal"
+msgstr ""
+
+#: settings/learn/data/learnSections.js:324
+msgid "Enable a self-service portal where customers can manage their purchases."
+msgstr ""
+
+#: settings/learn/data/learnSections.js:335
+msgid "Grow Your Revenue"
+msgstr ""
+
+#: settings/learn/data/learnSections.js:336
+msgid "Unlock more revenue from every visitor using built-in conversion and pricing tools."
+msgstr ""
+
+#: settings/learn/data/learnSections.js:346
+msgid "Create Coupons & Discounts"
+msgstr ""
+
+#: settings/learn/data/learnSections.js:347
+msgid "Offer promo codes or limited-time discounts to boost conversions and run campaigns."
+msgstr ""
+
+#: settings/learn/data/learnSections.js:351
+#: subscriptions/show/modules/CurrentPlan.js:245
+msgid "Add Coupon"
+msgstr ""
+
+#: settings/learn/data/learnSections.js:353
+msgid "Create percentage or fixed-amount discount codes for promotions."
+msgstr ""
+
+#: settings/learn/data/learnSections.js:360
+msgid "Apply Dynamic Pricing"
+msgstr ""
+
+#: settings/learn/data/learnSections.js:361
+msgid "Automatically apply fees and discounts based on rules like user roles, purchase history, or location."
+msgstr ""
+
+#: settings/learn/data/learnSections.js:367
+msgid "Create rule-based pricing that adjusts automatically per customer."
+msgstr ""
+
+#: settings/learn/data/learnSections.js:374
+msgid "Add Order Bumps"
+msgstr ""
+
+#: settings/learn/data/learnSections.js:375
+msgid "Add a small, high-value add-on directly on the checkout page. Requires a published product and active checkout before setup."
+msgstr ""
+
+#: settings/learn/data/learnSections.js:379
+msgid "Add Bump"
+msgstr ""
+
+#: settings/learn/data/learnSections.js:381
+msgid "Offer a complementary product as a checkbox on the checkout page."
+msgstr ""
+
+#: settings/learn/data/learnSections.js:388
+msgid "Create Upsell Offers"
+msgstr ""
+
+#: settings/learn/data/learnSections.js:389
+msgid "Present a follow-up offer after checkout to increase revenue without disrupting the purchase. Requires a published product and active checkout before setup."
+msgstr ""
+
+#: settings/learn/data/learnSections.js:393
+msgid "Add Upsell"
+msgstr ""
+
+#: settings/learn/data/learnSections.js:395
+msgid "Show post-purchase offers to increase average order value."
+msgstr ""
+
+#: settings/learn/data/learnSections.js:402
+msgid "Enable Cart Recovery"
+msgstr ""
+
+#: settings/learn/data/learnSections.js:403
+msgid "Recover lost revenue by following up with customers who don't complete checkout."
+msgstr ""
+
+#: settings/learn/data/learnSections.js:407
+#: settings/processors/ManualPaymentMethod.js:135
+msgid "Enable"
+msgstr ""
+
+#: settings/learn/data/learnSections.js:409
+msgid "Send automated emails to customers who abandon their cart."
+msgstr ""
+
+#: settings/learn/data/learnSections.js:416
+msgid "Set Up Subscriptions"
+msgstr ""
+
+#: settings/learn/data/learnSections.js:417
+msgid "Configure recurring billing and subscription management for predictable revenue."
+msgstr ""
+
+#: settings/learn/data/learnSections.js:424
+msgid "Enable subscription billing, trial periods, and renewal settings."
+msgstr ""
+
+#: settings/learn/data/learnSections.js:431
+msgid "Set Up Affiliates"
+msgstr ""
+
+#: settings/learn/data/learnSections.js:432
+msgid "Let others promote your products and earn commissions on sales they refer."
+msgstr ""
+
+#: settings/learn/data/learnSections.js:439
+msgid "Create an affiliate program with custom commission structures."
+msgstr ""
+
+#: settings/learn/LearnSettings.js:87
+msgid "Setup Checklist"
+msgstr ""
+
+#: settings/learn/LearnSettings.js:92
+msgid "Set up your store step by step and make your first sale with confidence."
+msgstr ""
+
+#: settings/learn/LearnSettings.js:107
+msgid "Your store setup is complete! You're ready to start selling."
+msgstr ""
+
+#. translators: %d: number of completed sections
+#: settings/learn/LearnSettings.js:140
+msgid "Completed (%d)"
 msgstr ""
 
 #: settings/order/OrderProtocol.js:52
@@ -17966,10 +18455,6 @@ msgstr ""
 msgid "Payment method enabled."
 msgstr ""
 
-#: settings/processors/ManualPaymentMethod.js:135
-msgid "Enable"
-msgstr ""
-
 #: settings/processors/ManualPaymentMethods.js:47
 msgid "No manual payment methods."
 msgstr ""
@@ -18108,6 +18593,73 @@ msgstr ""
 msgid "Shipping methods represent the different speeds or classes of shipping that your store offers."
 msgstr ""
 
+#: settings/shipping/parcel/ParcelTemplateForm.js:33
+#: settings/shipping/parcel/ParcelTemplates.js:32
+msgid "Box or Tube"
+msgstr ""
+
+#: settings/shipping/parcel/ParcelTemplateForm.js:34
+#: settings/shipping/parcel/ParcelTemplates.js:33
+msgid "Polymailer (Envelope)"
+msgstr ""
+
+#: settings/shipping/parcel/ParcelTemplateForm.js:116
+msgid "Parcel template updated."
+msgstr ""
+
+#: settings/shipping/parcel/ParcelTemplateForm.js:117
+msgid "Parcel template added."
+msgstr ""
+
+#: settings/shipping/parcel/ParcelTemplateForm.js:231
+#: ui/Dimensions.js:122
+msgid "Unit"
+msgstr ""
+
+#: settings/shipping/parcel/ParcelTemplateForm.js:271
+msgid "Default Template"
+msgstr ""
+
+#: settings/shipping/parcel/ParcelTemplateForm.js:273
+msgid "Automatically select this parcel template when creating new shipments."
+msgstr ""
+
+#: settings/shipping/parcel/ParcelTemplates.js:113
+msgid "Parcel template removed."
+msgstr ""
+
+#: settings/shipping/parcel/ParcelTemplates.js:136
+msgid "Default parcel template updated."
+msgstr ""
+
+#: settings/shipping/parcel/ParcelTemplates.js:149
+msgid "Parcel Templates"
+msgstr ""
+
+#: settings/shipping/parcel/ParcelTemplates.js:150
+msgid "Create reusable parcel templates for shipping."
+msgstr ""
+
+#: settings/shipping/parcel/ParcelTemplates.js:278
+msgid "Set as Default"
+msgstr ""
+
+#: settings/shipping/parcel/ParcelTemplates.js:309
+msgid "No parcel templates yet. Create one to get started."
+msgstr ""
+
+#: settings/shipping/parcel/ParcelTemplates.js:317
+msgid "Add New Template"
+msgstr ""
+
+#: settings/shipping/parcel/ParcelTemplates.js:359
+msgid "Delete Parcel Template"
+msgstr ""
+
+#: settings/shipping/parcel/ParcelTemplates.js:361
+msgid "Are you sure you want to delete this parcel template? This action cannot be undone."
+msgstr ""
+
 #: settings/shipping/profile/AddShippingProfile.js:36
 msgid "The profile name is required."
 msgstr ""
@@ -18147,7 +18699,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: settings/shipping/profile/Products.js:253
-#: settings/shipping/ShippingSettings.js:185
+#: settings/shipping/ShippingSettings.js:186
 msgid "All products not in other profiles"
 msgstr ""
 
@@ -18180,7 +18732,7 @@ msgid "Manage Shipping Profile"
 msgstr ""
 
 #: settings/shipping/profile/ShippingProfile.js:174
-#: settings/shipping/ShippingSettings.js:130
+#: settings/shipping/ShippingSettings.js:131
 #: settings/shipping/zone/ShippingZone.js:91
 msgid "No shipping rates"
 msgstr ""
@@ -18278,43 +18830,43 @@ msgstr ""
 msgid "Based on order price"
 msgstr ""
 
-#: settings/shipping/ShippingSettings.js:132
+#: settings/shipping/ShippingSettings.js:133
 msgid "To complete the shipping setup, please add shipping rates to a shipping profile below."
 msgstr ""
 
-#: settings/shipping/ShippingSettings.js:140
+#: settings/shipping/ShippingSettings.js:141
 msgid "Shipping Settings"
 msgstr ""
 
-#: settings/shipping/ShippingSettings.js:146
+#: settings/shipping/ShippingSettings.js:147
 msgid "Enable Shipping Rates"
 msgstr ""
 
-#: settings/shipping/ShippingSettings.js:148
+#: settings/shipping/ShippingSettings.js:149
 msgid "Enabling shipping rates allows you to charge shipping costs and restrict purchase areas."
 msgstr ""
 
-#: settings/shipping/ShippingSettings.js:156
+#: settings/shipping/ShippingSettings.js:157
 msgid "Shipping Profiles"
 msgstr ""
 
-#: settings/shipping/ShippingSettings.js:157
+#: settings/shipping/ShippingSettings.js:158
 msgid "Set where you ship and how much you charge for shipping."
 msgstr ""
 
-#: settings/shipping/ShippingSettings.js:189
+#: settings/shipping/ShippingSettings.js:190
 msgid "All products"
 msgstr ""
 
-#: settings/shipping/ShippingSettings.js:195
+#: settings/shipping/ShippingSettings.js:196
 msgid "Custom Shipping Profiles"
 msgstr ""
 
-#: settings/shipping/ShippingSettings.js:229
+#: settings/shipping/ShippingSettings.js:230
 msgid "Add custom rates or destination restrictions for groups of products."
 msgstr ""
 
-#: settings/shipping/ShippingSettings.js:245
+#: settings/shipping/ShippingSettings.js:246
 msgid "Add New Profile"
 msgstr ""
 
@@ -18420,17 +18972,6 @@ msgstr ""
 
 #: settings/shipping/zone/ShippingZoneForm.js:267
 msgid "Add one postal code per line"
-msgstr ""
-
-#: settings/shipping/zone/ShippingZoneForm.js:288
-#: ui/PrevNextButtons.js:44
-#: Blocks/CheckoutForm/components/Empty.js:100
-#: Blocks/Form/components/ChooseDesign.js:28
-#: index.php:140
-#: src/blocks/product-pagination-next/view.php:22
-#: src/blocks/cart-order-bump-pagination-next/index.js:21
-#: src/blocks/product-pagination-next/edit.js:29
-msgid "Next"
 msgstr ""
 
 #: settings/shipping/zone/ShippingZoneForm.js:314
@@ -18879,11 +19420,6 @@ msgstr ""
 msgid "create a new one"
 msgstr ""
 
-#: settings/tax-override/TaxOverrideModal.js:190
-#: Blocks/ProductCollection/edit.js:314
-msgid "Product Collection"
-msgstr ""
-
 #: settings/tax-override/TaxOverrideModal.js:212
 #: settings/tax-region/RegistrationForm.js:196
 #: settings/tax-region/TaxRegionSettings.js:213
@@ -19327,26 +19863,30 @@ msgid "Shipping Rate"
 msgstr ""
 
 #: store/add-entities.js:451
+msgid "Parcel Template"
+msgstr ""
+
+#: store/add-entities.js:459
 msgid "Statistic"
 msgstr ""
 
-#: store/add-entities.js:472
+#: store/add-entities.js:480
 msgid "Incoming Webhook"
 msgstr ""
 
-#: store/add-entities.js:479
+#: store/add-entities.js:487
 msgid "Variant Option"
 msgstr ""
 
-#: store/add-entities.js:493
+#: store/add-entities.js:501
 msgid "Return Request"
 msgstr ""
 
-#: store/add-entities.js:506
+#: store/add-entities.js:514
 msgid "Swap"
 msgstr ""
 
-#: store/add-entities.js:520
+#: store/add-entities.js:528
 msgid "Review Protocol"
 msgstr ""
 
@@ -19360,23 +19900,23 @@ msgstr ""
 msgid "Integration Providers"
 msgstr ""
 
-#: subscriptions/edit/EditSubscription.js:124
+#: subscriptions/edit/EditSubscription.js:127
 #: subscriptions/show/modules/modals/RenewSubscriptionAtModal.js:51
 #: subscriptions/show/modules/modals/RestoreSubscriptionAtModal.js:61
 msgid "Subscription updated."
 msgstr ""
 
-#: subscriptions/edit/EditSubscription.js:248
+#: subscriptions/edit/EditSubscription.js:251
 #: subscriptions/show/ShowSubscription.js:533
 msgid "Subscription Details"
 msgstr ""
 
-#: subscriptions/edit/EditSubscription.js:286
+#: subscriptions/edit/EditSubscription.js:289
 #: subscriptions/edit/modules/Modals/UpdateRecentPrice.js:174
 msgid "Update Immediately"
 msgstr ""
 
-#: subscriptions/edit/EditSubscription.js:294
+#: subscriptions/edit/EditSubscription.js:297
 #: subscriptions/edit/modules/Modals/UpdateRecentPrice.js:331
 #: subscriptions/show/modules/modals/RenewSubscriptionAtModal.js:116
 #: subscriptions/show/modules/modals/RestoreSubscriptionAtModal.js:162
@@ -19384,7 +19924,7 @@ msgstr ""
 msgid "Update Subscription"
 msgstr ""
 
-#: subscriptions/edit/EditSubscription.js:295
+#: subscriptions/edit/EditSubscription.js:298
 #: subscriptions/edit/modules/Modals/UpdateRecentPrice.js:332
 msgid "Schedule Update"
 msgstr ""
@@ -19512,10 +20052,6 @@ msgstr ""
 
 #: subscriptions/show/modules/CurrentPlan.js:57
 msgid "Coupon Removed"
-msgstr ""
-
-#: subscriptions/show/modules/CurrentPlan.js:245
-msgid "Add Coupon"
 msgstr ""
 
 #: subscriptions/show/modules/Details.js:34
@@ -19814,6 +20350,30 @@ msgstr ""
 
 #: templates/UpdateModel/index.js:53
 msgid "This is a demo of a premium feature. To get this feature, please upgrade your plan."
+msgstr ""
+
+#: ui/Dimensions.js:8
+msgid "in"
+msgstr ""
+
+#: ui/Dimensions.js:12
+msgid "ft"
+msgstr ""
+
+#: ui/Dimensions.js:16
+msgid "cm"
+msgstr ""
+
+#: ui/Dimensions.js:20
+msgid "mm"
+msgstr ""
+
+#: ui/Dimensions.js:24
+msgid "m"
+msgstr ""
+
+#: ui/Dimensions.js:46
+msgid "Length"
 msgstr ""
 
 #: ui/SimplePagination.js:26
@@ -20387,27 +20947,9 @@ msgstr ""
 #: src/blocks/cart-subtotal/edit.js:30
 #: src/blocks/product-list-related/inspector-controls/index.js:73
 #: src/blocks/product-list/inspector-controls/index.js:64
-#: src/blocks/product-media/edit.js:63
-#: src/blocks/product-quantity/edit.js:34
+#: src/blocks/product-media/edit.js:66
 #: src/blocks/product-review-list/inspector-controls.js:20
 msgid "Attributes"
-msgstr ""
-
-#: Blocks/Address/edit.js:46
-#: Blocks/Checkbox/edit.js:32
-#: Blocks/FirstName/edit.js:30
-#: Blocks/Input/edit.js:29
-#: Blocks/LastName/edit.js:30
-#: Blocks/Name/edit.js:30
-#: Blocks/NameYourPrice/edit.js:43
-#: Blocks/Password/edit.js:57
-#: Blocks/Phone/edit.js:26
-#: Blocks/ProductDonation/edit.js:167
-#: Blocks/RadioGroup/edit.js:75
-#: Blocks/Switch/edit.js:30
-#: Blocks/TaxIdInput/edit.js:44
-#: Blocks/Textarea/edit.js:29
-msgid "Required"
 msgstr ""
 
 #: Blocks/Address/edit.js:51
@@ -20560,6 +21102,7 @@ msgid "Create Buy Button"
 msgstr ""
 
 #: Blocks/Card/edit.js:38
+#: src/blocks-styles/product-quantity-borderless.php:9
 msgid "Borderless"
 msgstr ""
 
@@ -21482,12 +22025,12 @@ msgid "Experience the next level of convenience with our innovative widget. Meld
 msgstr ""
 
 #: Blocks/Product/Media/edit.js:59
-#: src/blocks/product-media/edit.js:99
+#: src/blocks/product-media/edit.js:102
 msgid "Slider Height"
 msgstr ""
 
 #: Blocks/Product/Media/edit.js:82
-#: src/blocks/product-media/edit.js:134
+#: src/blocks/product-media/edit.js:137
 msgid "Thumbnails Per Page"
 msgstr ""
 
@@ -21881,23 +22424,23 @@ msgstr ""
 msgid "Show Description"
 msgstr ""
 
-#: Blocks/StoreLogo/edit.js:81
+#: Blocks/StoreLogo/edit.js:84
 msgid "Store Logo"
 msgstr ""
 
-#: Blocks/StoreLogo/edit.js:83
+#: Blocks/StoreLogo/edit.js:86
 msgid "This is also displayed on your invoices, receipts and emails."
 msgstr ""
 
-#: Blocks/StoreLogo/edit.js:168
+#: Blocks/StoreLogo/edit.js:171
 msgid "Set a maximum height"
 msgstr ""
 
-#: Blocks/StoreLogo/edit.js:179
+#: Blocks/StoreLogo/edit.js:182
 msgid "Maximum height"
 msgstr ""
 
-#: Blocks/StoreLogo/edit.js:197
+#: Blocks/StoreLogo/edit.js:200
 msgid "Link image to home"
 msgstr ""
 
@@ -22277,6 +22820,7 @@ msgstr ""
 
 #: Blocks/BumpLineItem/block.json
 #: Blocks/ProductItemPrice/block.json
+#: src/blocks/cart-subtotal-scratch-amount/block.json
 msgctxt "block keyword"
 msgid "discount"
 msgstr ""
@@ -22541,6 +23085,10 @@ msgstr ""
 #: Blocks/Product/CollectionBadges/block.json
 #: Blocks/Product/Quantity/block.json
 #: Blocks/Product/Title/block.json
+#: src/blocks/product-quantity-control/block.json
+#: src/blocks/product-quantity-input-decrease/block.json
+#: src/blocks/product-quantity-input-increase/block.json
+#: src/blocks/product-quantity-input/block.json
 #: src/blocks/product-quantity/block.json
 msgctxt "block keyword"
 msgid "form"
@@ -23233,6 +23781,7 @@ msgstr ""
 #: Blocks/Total/block.json
 #: src/blocks/cart-items-subtotal/block.json
 #: src/blocks/cart-subtotal-amount/block.json
+#: src/blocks/cart-subtotal-scratch-amount/block.json
 #: src/blocks/cart-subtotal/block.json
 msgctxt "block keyword"
 msgid "subtotal"
@@ -23399,6 +23948,10 @@ msgstr ""
 #: Blocks/VariantPriceSelector/block.json
 #: src/blocks/product-buy-buttons/block.json
 #: src/blocks/product-line-item-note/block.json
+#: src/blocks/product-quantity-control/block.json
+#: src/blocks/product-quantity-input-decrease/block.json
+#: src/blocks/product-quantity-input-increase/block.json
+#: src/blocks/product-quantity-input/block.json
 #: src/blocks/product-quantity/block.json
 #: src/blocks/product-review-template/block.json
 #: src/blocks/product-template/block.json
@@ -23576,6 +24129,10 @@ msgid "Displays quantity selector for a product."
 msgstr ""
 
 #: Blocks/Product/Quantity/block.json
+#: src/blocks/product-quantity-control/block.json
+#: src/blocks/product-quantity-input-decrease/block.json
+#: src/blocks/product-quantity-input-increase/block.json
+#: src/blocks/product-quantity-input/block.json
 #: src/blocks/product-quantity/block.json
 msgctxt "block keyword"
 msgid "quantity"
@@ -24112,6 +24669,14 @@ msgstr ""
 msgid "Enlarged images"
 msgstr ""
 
+#: src/blocks-styles/product-quantity-orbit.php:9
+msgid "Orbit"
+msgstr ""
+
+#: src/blocks-styles/product-quantity-pebble.php:9
+msgid "Pebble"
+msgstr ""
+
 #: src/blocks/cart-close-button/view.php:7
 #: src/blocks/cart-header/view.php:15
 #: src/blocks/cart-close-button/edit.js:74
@@ -24201,22 +24766,12 @@ msgstr ""
 msgid "Clear search"
 msgstr ""
 
-#: src/blocks/product-list-sidebar-toggle/view.php:40
-#: src/scripts/sidebar/index.js:32
-#: src/scripts/sidebar/index.js:34
-#: src/scripts/sidebar/index.js:57
-msgid "Open sidebar"
-msgstr ""
-
 #: src/blocks/product-list-sidebar/view.php:48
-#: src/scripts/sidebar/index.js:31
-#: src/scripts/sidebar/index.js:47
-#: src/blocks/product-list-sidebar/view.php:48
+#: src/scripts/sidebar/index.js:45
 msgid "Close sidebar"
 msgstr ""
 
 #. translators: %d is the current count of posts.
-#: src/blocks/product-list-sidebar/view.php:66
 #. translators: %d is the current count of reviews.
 #: src/blocks/product-list-sidebar/view.php:66
 #: src/blocks/product-review-list-sidebar/view.php:70
@@ -24557,6 +25112,7 @@ msgstr ""
 #: src/blocks/product-list-sidebar-toggle/edit.js:96
 #: src/blocks/product-list-sort-radio-group-label/edit.js:10
 #: src/blocks/product-price-chooser/edit.js:127
+#: src/blocks/product-quantity/edit.js:58
 #: src/blocks/product-review-list-filter-checkboxes-label/edit.js:13
 #: src/blocks/product-review-list-filter-tags-clear-all/edit.js:14
 #: src/blocks/product-review-list-filter-tags-label/edit.js:14
@@ -24591,10 +25147,6 @@ msgstr ""
 
 #: src/blocks/cart-order-bump-discount-badge/index.js:21
 msgid "Discount Badge"
-msgstr ""
-
-#: src/blocks/cart-order-bump-pagination/index.js:23
-msgid "Pagination"
 msgstr ""
 
 #: src/blocks/cart-order-bump-pagination/query-pagination-arrow-controls.js:17
@@ -24635,11 +25187,11 @@ msgstr ""
 msgid "Suggested for you"
 msgstr ""
 
-#: src/blocks/cart/edit.js:122
+#: src/blocks/cart/edit.js:123
 msgid "The current template for cart is outdated. Please upgrade to a newer version by clicking "
 msgstr ""
 
-#: src/blocks/cart/edit.js:131
+#: src/blocks/cart/edit.js:132
 msgid " here."
 msgstr ""
 
@@ -24774,6 +25326,7 @@ msgstr ""
 #: src/blocks/product-list-sidebar-toggle/edit.js:97
 #: src/blocks/product-list-sort-radio-group-label/edit.js:11
 #: src/blocks/product-price-chooser/edit.js:128
+#: src/blocks/product-quantity/edit.js:59
 #: src/blocks/product-review-list-filter-checkboxes-label/edit.js:14
 #: src/blocks/product-review-list-filter-tags-clear-all/edit.js:15
 #: src/blocks/product-review-list-filter-tags-label/edit.js:15
@@ -24895,20 +25448,12 @@ msgstr ""
 msgid "Keyword"
 msgstr ""
 
-#: src/blocks/product-media/edit.js:83
+#: src/blocks/product-media/edit.js:86
 msgid "Automatically adjust the height of the slider to the image height."
 msgstr ""
 
-#: src/blocks/product-media/edit.js:119
+#: src/blocks/product-media/edit.js:122
 msgid "Show thumbnails for the image slider."
-msgstr ""
-
-#: src/blocks/product-page/components/SelectorPreview.js:21
-msgid "Manage link"
-msgstr ""
-
-#: src/blocks/product-page/components/SelectorPreview.js:29
-msgid "Link information"
 msgstr ""
 
 #: src/blocks/product-page/components/SelectorPreview.js:41
@@ -25282,6 +25827,10 @@ msgstr ""
 msgid "Sticky purchase settings"
 msgstr ""
 
+#: src/components/LabelControl.js:14
+msgid "Hide Label"
+msgstr ""
+
 #: src/components/LabelInspectorControls.js:22
 msgid "Line Height"
 msgstr ""
@@ -25292,6 +25841,10 @@ msgstr ""
 
 #: src/components/ProductSelector.js:77
 msgid "Search or type a product name"
+msgstr ""
+
+#: src/components/StyleContentsControl.js:11
+msgid "Style & Contents"
 msgstr ""
 
 #: src/scripts/cart/index.js:18
@@ -25310,86 +25863,90 @@ msgstr ""
 msgid "Failed to delete"
 msgstr ""
 
+#: src/scripts/checkout/index.js:148
+msgid "Original price:"
+msgstr ""
+
 #. translators: %d: number of items in the cart
-#: src/scripts/checkout/index.js:248
+#: src/scripts/checkout/index.js:265
 msgid "Total of %d item in your cart"
 msgid_plural "Total of %d items in your cart"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/scripts/checkout/index.js:265
+#: src/scripts/checkout/index.js:282
 msgid "Cart item: %s. Quantity %d. Total price %s."
 msgstr ""
 
-#: src/scripts/checkout/index.js:278
+#: src/scripts/checkout/index.js:295
 msgid "Remove %s from your cart."
 msgstr ""
 
 #. translators: %s: product name
-#: src/scripts/checkout/index.js:290
+#: src/scripts/checkout/index.js:307
 msgid "Increase quantity for %s."
 msgstr ""
 
 #. translators: %s: product name
-#: src/scripts/checkout/index.js:302
+#: src/scripts/checkout/index.js:319
 msgid "Decrease quantity for %s."
 msgstr ""
 
 #. translators: %s: product name
-#: src/scripts/checkout/index.js:314
+#: src/scripts/checkout/index.js:331
 msgid "Quantity for %s."
 msgstr ""
 
-#: src/scripts/checkout/index.js:558
+#: src/scripts/checkout/index.js:575
 msgid "Applying promotion code."
 msgstr ""
 
 #. translators: %s: promotion code
-#: src/scripts/checkout/index.js:571
+#: src/scripts/checkout/index.js:588
 msgid "Promotion code %s has been applied."
 msgstr ""
 
-#: src/scripts/checkout/index.js:594
+#: src/scripts/checkout/index.js:611
 msgid "Removing promotion code."
 msgstr ""
 
-#: src/scripts/checkout/index.js:607
+#: src/scripts/checkout/index.js:624
 msgid "Promotion code has been removed."
 msgstr ""
 
-#: src/scripts/checkout/index.js:721
-#: src/scripts/checkout/index.js:753
+#: src/scripts/checkout/index.js:737
+#: src/scripts/checkout/index.js:766
 msgid "Updating quantity."
 msgstr ""
 
 #. translators: %d: quantity
-#: src/scripts/checkout/index.js:728
+#: src/scripts/checkout/index.js:742
 msgid "Quantity increased to %d."
 msgstr ""
 
 #. translators: %d: quantity
-#: src/scripts/checkout/index.js:760
+#: src/scripts/checkout/index.js:771
 msgid "Quantity decreased to %d."
 msgstr ""
 
 #. translators: %d: quantity
-#: src/scripts/checkout/index.js:782
+#: src/scripts/checkout/index.js:793
 msgid "Quantity changed to %d."
 msgstr ""
 
-#: src/scripts/checkout/index.js:824
+#: src/scripts/checkout/index.js:835
 msgid "item"
 msgstr ""
 
-#: src/scripts/checkout/index.js:832
+#: src/scripts/checkout/index.js:843
 msgid "Removing %s from your cart."
 msgstr ""
 
-#: src/scripts/checkout/index.js:851
+#: src/scripts/checkout/index.js:862
 msgid "Removed %s from your cart."
 msgstr ""
 
-#: src/scripts/checkout/index.js:883
+#: src/scripts/checkout/index.js:894
 msgid "Checkout updated. The subtotal is %1$s."
 msgstr ""
 
@@ -25461,13 +26018,11 @@ msgid "Failed to submit review. Please try again."
 msgstr ""
 
 #: src/scripts/sidebar/index.js:31
-#: src/scripts/sidebar/index.js:47
 msgid "Hide filters"
 msgstr ""
 
 #: src/scripts/sidebar/index.js:32
 #: src/scripts/sidebar/index.js:34
-#: src/scripts/sidebar/index.js:57
 msgid "Show filters"
 msgstr ""
 
@@ -25512,6 +26067,7 @@ msgstr ""
 
 #: src/blocks/cart-items-subtotal/block.json
 #: src/blocks/cart-subtotal-amount/block.json
+#: src/blocks/cart-subtotal-scratch-amount/block.json
 #: src/blocks/cart-subtotal/block.json
 msgctxt "block keyword"
 msgid "cart"
@@ -25802,6 +26358,21 @@ msgstr ""
 #: src/blocks/cart-subtotal-amount/block.json
 msgctxt "block description"
 msgid "Display the cart subtotal amount"
+msgstr ""
+
+#: src/blocks/cart-subtotal-scratch-amount/block.json
+msgctxt "block title"
+msgid "Cart Subtotal Scratch Amount"
+msgstr ""
+
+#: src/blocks/cart-subtotal-scratch-amount/block.json
+msgctxt "block description"
+msgid "Display the cart subtotal scratch amount (original price before discount)."
+msgstr ""
+
+#: src/blocks/cart-subtotal-scratch-amount/block.json
+msgctxt "block keyword"
+msgid "scratch"
 msgstr ""
 
 #: src/blocks/cart/block.json
@@ -26271,6 +26842,46 @@ msgstr ""
 #: src/blocks/product-price/block.json
 msgctxt "block description"
 msgid "Display the static product price."
+msgstr ""
+
+#: src/blocks/product-quantity-control/block.json
+msgctxt "block title"
+msgid "Control"
+msgstr ""
+
+#: src/blocks/product-quantity-control/block.json
+msgctxt "block description"
+msgid "Display the product quantity control"
+msgstr ""
+
+#: src/blocks/product-quantity-input-decrease/block.json
+msgctxt "block title"
+msgid "Decrease Quantity"
+msgstr ""
+
+#: src/blocks/product-quantity-input-decrease/block.json
+msgctxt "block description"
+msgid "Display the product quantity input decrease"
+msgstr ""
+
+#: src/blocks/product-quantity-input-increase/block.json
+msgctxt "block title"
+msgid "Increase Quantity"
+msgstr ""
+
+#: src/blocks/product-quantity-input-increase/block.json
+msgctxt "block description"
+msgid "Display the product quantity input increase"
+msgstr ""
+
+#: src/blocks/product-quantity-input/block.json
+msgctxt "block title"
+msgid "Input"
+msgstr ""
+
+#: src/blocks/product-quantity-input/block.json
+msgctxt "block description"
+msgid "Display the product quantity input"
 msgstr ""
 
 #: src/blocks/product-quantity/block.json

@@ -422,6 +422,14 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 
 == Changelog ==
 
+= 4.1.0 - March 25, 2026 = 
+- New: Learn section on settings page to help with onboarding and setup.
+- New: Shipping parcels creation for shipping with standardized boxes.
+- Improvement: Add "Review Product" buttons to customer dashboard order view screen.
+- Improvement: Select specific products, prices, coupons, promotions for autofee instead of just name matching.
+- Fix: Edge case where order detail page crash when product image has dominant color metadata.
+- Fix: Don't add pointer cursor to summary block if its not collapsible.
+
 = 4.0.3 - March 12th, 2026 =
 - New: Dark mode brand settings for store logo and theme colors.
 - New: Cart subtotal scratch amount block for displaying strikethrough discount on cart.

@@ -257,3 +257,34 @@ function sc_product_list_prefix( $block = null ) {
 	$controller = new ProductListBlock( $block );
 	return $controller->urlParams()->getKey();
 }
+
+if ( ! function_exists( 'sc_sanitize_image_attributes' ) ) {
+	/**
+	 * Sanitize image attributes to only include standard HTML img properties.
+	 *
+	 * WordPress filters (e.g. Performance Lab's Image Placeholders / dominant color)
+	 * can inject non-standard attributes like `style` (as a string), `class`, and
+	 * `data-*` onto image data. These cause errors when spread onto JavaScript-rendered
+	 * elements in both React and Stencil components.
+	 *
+	 * @param object|null $attributes Image attributes object.
+	 *
+	 * @return object Sanitized attributes containing only safe img properties.
+	 */
+	function sc_sanitize_image_attributes( $attributes ) {
+		if ( empty( $attributes ) ) {
+			return (object) array();
+		}
+
+		// Deliberately excluded:
+		// - `style`: Plugins inject this as a string (e.g. "--dominant-color: #hex"), but JS frameworks
+		//   expect an object — passing a string crashes both React and Stencil renderers.
+		// - `data-*`: Plugin-specific attributes (e.g. data-dominant-color) that are not needed.
+		$safe_keys = apply_filters(
+			'surecart/image_attributes/safe_keys',
+			array( 'src', 'alt', 'class', 'width', 'height', 'srcset', 'sizes', 'loading', 'decoding', 'fetchpriority', 'title' )
+		);
+
+		return (object) array_intersect_key( (array) $attributes, array_flip( $safe_keys ) );
+	}
+}

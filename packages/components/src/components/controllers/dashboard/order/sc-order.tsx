@@ -161,11 +161,13 @@ export class ScOrder {
     return (
       <Fragment>
         {(checkout?.line_items?.data || []).map(item => {
+          const product = item?.price?.product as Product;
+
           return (
             <sc-product-line-item
               key={item.id}
               image={item?.image}
-              name={(item?.price?.product as Product)?.name}
+              name={product?.name}
               price={item?.price?.name}
               variant={item?.variant_display_options}
               editable={false}
@@ -178,6 +180,7 @@ export class ScOrder {
               scratch={item?.scratch_display_amount}
               purchasableStatus={item?.purchasable_status_display}
               fees={item?.fees?.data}
+              reviewButtonLink={product?.review_url || ''}
             />
           );
         })}
@@ -253,20 +256,20 @@ export class ScOrder {
 
         {!!checkout?.shipping_amount && (
           <Fragment>
-          <sc-line-item>
-            <span slot="description">{`${__('Shipping', 'surecart')} ${shippingMethodName ? `(${shippingMethodName})` : ''}`}</span>
-            <span
-              slot="price"
-              style={{
-                'font-weight': 'var(--sc-font-weight-semibold)',
-                'color': 'var(--sc-color-gray-800)',
-              }}
-            >
-              {checkout?.shipping_display_amount}
-            </span>
-          </sc-line-item>
-         { this.renderShippingFees(checkout)}
-         </Fragment>
+            <sc-line-item>
+              <span slot="description">{`${__('Shipping', 'surecart')} ${shippingMethodName ? `(${shippingMethodName})` : ''}`}</span>
+              <span
+                slot="price"
+                style={{
+                  'font-weight': 'var(--sc-font-weight-semibold)',
+                  'color': 'var(--sc-color-gray-800)',
+                }}
+              >
+                {checkout?.shipping_display_amount}
+              </span>
+            </sc-line-item>
+            {this.renderShippingFees(checkout)}
+          </Fragment>
         )}
 
         {!!checkout?.tax_amount && (
