@@ -1110,12 +1110,14 @@ class Product extends Model implements PageModel {
 	 * @return object
 	 */
 	public function getLineItemImageAttribute() {
-		return is_a( $this->featured_image, GalleryItem::class ) ?
-			$this->featured_image->attributes( 'thumbnail' ) :
-			(object) array(
+		if ( ! is_a( $this->featured_image, GalleryItem::class ) ) {
+			return (object) array(
 				'src'  => apply_filters( 'surecart/product-line-item-image/fallback_src', \SureCart::core()->assets()->getUrl() . '/images/image-placeholder.svg', $this ),
 				'type' => 'fallback',
 			);
+		}
+
+		return sc_sanitize_image_attributes( $this->featured_image->attributes( 'thumbnail' ) );
 	}
 
 	/**
@@ -1124,7 +1126,7 @@ class Product extends Model implements PageModel {
 	 * @return object
 	 */
 	public function getPreviewImageAttribute() {
-		return is_a( $this->featured_image, GalleryItem::class ) ? $this->featured_image->attributes( 'medium_large' ) : (object) [];
+		return is_a( $this->featured_image, GalleryItem::class ) ? sc_sanitize_image_attributes( $this->featured_image->attributes( 'medium_large' ) ) : (object) [];
 	}
 
 	/**
