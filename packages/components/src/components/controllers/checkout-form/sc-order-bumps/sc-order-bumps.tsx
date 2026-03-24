@@ -23,7 +23,7 @@ export class ScOrderBumps {
       <sc-form-control label={this.label || __('Recommended', 'surecart')} help={this.help}>
         <div class="bumps__list" aria-label={__('Order bump summary', 'surecart')}>
           {bumps.map(bump => (
-            <sc-order-bump key={bump?.id} bump={bump} />
+            <sc-order-bump key={bump?.id} bump={bump} exportparts="choice__base, choice__content, base-content, image, text, title, cta, amount, price, tag, description, button" />
           ))}
         </div>
       </sc-form-control>

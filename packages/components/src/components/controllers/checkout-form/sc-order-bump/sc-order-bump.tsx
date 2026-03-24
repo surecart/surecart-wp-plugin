@@ -92,6 +92,7 @@ export class ScOrderBump {
       return (
         <div
           class="bump__tag"
+          part="tag"
           aria-label={
             /** translators: %1$s: amount off, %2$s: currency */
             sprintf(__('You save %1$s%2$s.', 'surecart'), this.bump?.amount_off, (this.bump?.price as Price).currency)
@@ -108,6 +109,7 @@ export class ScOrderBump {
       return (
         <div
           class="bump__tag"
+          part="tag"
           aria-label={
             /** translators: %s: amount percent off */
             sprintf(__('You save %s%%.', 'surecart'), this.bump?.percent_off)
@@ -134,25 +136,19 @@ export class ScOrderBump {
         type="checkbox"
         showControl={false}
         checked={!!lineItem}
-        onClick={e => {
-          e.preventDefault();
-          e.stopImmediatePropagation();
-          this.updateLineItem();
-        }}
-        onKeyDown={e => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            e.stopImmediatePropagation();
-            this.updateLineItem();
-          }
-        }}
-        exportparts="base, title"
+        exportparts="base:choice__base, content:choice__content"
       >
-        <div part="base-content" class="bump">
-          {!!product?.line_item_image?.src && <img {...(product?.line_item_image as any)} class="bump__image" />}
-          <div class="bump__text">
+        <div
+          part="base-content"
+          class="bump"
+          onClick={e => e.stopPropagation()}
+          onKeyDown={e => e.stopPropagation()}
+        >
+          {!!product?.line_item_image?.src && <img {...(product?.line_item_image as any)} class="bump__image" part="image" />}
+          <div class="bump__text" part="text">
             <div
               class="bump__title"
+              part="title"
               aria-label={sprintf(
                 /* translators: %s: order bump name */
                 __('Product: %s.', 'surecart'),
@@ -162,17 +158,18 @@ export class ScOrderBump {
               <span aria-hidden="true">{this.bump?.name || product?.name}</span>
             </div>
             {!!this.bump?.metadata?.cta && (
-              <div class="bump__cta">
+              <div class="bump__cta" part="cta">
                 <span>{this.bump?.metadata?.cta}</span>
               </div>
             )}
-            <div class="bump__amount">
+            <div class="bump__amount" part="amount">
               {this.renderPrice()}
               {this.renderDiscount()}
             </div>
             {!!this.bump?.metadata?.description && (
               <div
                 class="bump__description"
+                part="description"
                 aria-label={sprintf(
                   /* translators: %s: Product description */
                   __('Product description: %s.', 'surecart'),
@@ -183,16 +180,19 @@ export class ScOrderBump {
               </div>
             )}
           </div>
-          <div
+          <button
+            type="button"
             class={{
               'bump__button': true,
               'bump__button--checked': !!lineItem,
               'bump__button--loading': this.loading,
             }}
-            aria-hidden="true"
+            part="button"
+            onClick={() => this.updateLineItem()}
+            aria-label={lineItem ? __('Remove from order', 'surecart') : __('Add to order', 'surecart')}
           >
             {this.loading ? <sc-spinner /> : <sc-icon name={lineItem ? 'check' : 'plus'} />}
-          </div>
+          </button>
         </div>
       </sc-choice>
     );
