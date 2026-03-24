@@ -12,7 +12,7 @@ import {
 	ScSwitch,
 	ScToggle,
 } from '@surecart/components-react';
-import Dimensions from '../components/Dimensions';
+import Dimensions from '../../ui/Dimensions';
 
 const WEIGHT_UNIT_TYPES = [
 	__('lb', 'surecart'),

@@ -21,7 +21,7 @@ export default ({
 
 	return (
 		<ScFlex
-			style={{ width: '100%' }}
+			style={{ width: '100%', marginTop: '1rem' }}
 			justify-content={justifyContent}
 			align-items="center"
 		>
