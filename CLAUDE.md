@@ -125,16 +125,12 @@ yarn run test:php --group=specific-test-group # specific group(s)
 
 ## Feature Documentation for PRs
 
-When working on a PR that introduces user-facing changes, create or update a feature doc in `docs/features/`. This helps the documentation team generate release-ready docs using AI.
+When working on a PR that introduces user-facing changes, add feature documentation directly in the PR description under the `## Feature Documentation` section. This helps the documentation team generate release-ready docs using AI — no markdown files in the repo.
 
-**Naming convention:** `{version}--{feature-slug}--PR-{number}.md`
-- Example: `4.1.0--subscription-pause-resume--PR-3150.md`
-- Version comes from the `surecart.php` header (`Version: X.Y.Z`)
-- Use the template at `docs/features/_TEMPLATE.md` for structure.
-
-**When to create:** Any PR with user-facing changes (new features, UI changes, new settings, behavior changes).
+**When to add:** Any PR with user-facing changes (new features, UI changes, new settings, behavior changes).
 **When to skip:** Internal refactors, bug fixes with no visible change, test-only changes.
-**When to update:** If a feature doc already exists for the same feature, update it instead of creating a new one.
+
+Use the `/surecart-feature-doc` skill to auto-generate and update the PR description from the branch diff. It analyzes changes, generates the documentation, and updates the PR via `gh pr edit`.
 
 ## Critical Gotchas
 
