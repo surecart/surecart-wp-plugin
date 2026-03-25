@@ -22,7 +22,9 @@ Generates feature documentation from the current branch changes and updates the 
 1. Get the full diff against main: `git diff main...HEAD`
 2. Get the commit log: `git log main..HEAD --oneline`
 3. Read changed files as needed to understand the feature.
-4. Determine if changes are user-facing. If purely internal (refactors, test-only, no visible change), set the Feature Documentation section to "N/A — no user-facing changes" and skip to Step 4.
+4. Determine if changes are user-facing. If purely internal, set the Feature Documentation section to "N/A — no user-facing changes" and skip to Step 4.
+   - **User-facing** (document): new blocks, new settings/options, new admin pages, UI changes, behavior changes, new integrations, new REST endpoints users interact with.
+   - **Internal** (skip): service provider registration, refactors with no visible change, test-only changes, CI/build config, developer tooling, code style fixes.
 
 ### Step 3 — Generate Feature Documentation
 
@@ -66,8 +68,11 @@ Remove any sections that don't apply (e.g., no Settings table if no new settings
 2. Preserve everything above the `## Feature Documentation` section (like Testing Instructions).
 3. Replace the `## Feature Documentation` section (and everything below it) with the generated content.
 4. If there's no existing `## Feature Documentation` section, append it at the end.
-5. Update the PR: `gh pr edit {number} --body "{new body}"`
-6. Show the user the PR URL and a summary of what was documented.
+5. Write the full new PR body to a temp file, then update using `--body-file` to avoid shell interpolation issues with backticks, `$`, or quotes in the content:
+   ```bash
+   gh pr edit {number} --body-file /tmp/pr_body.md
+   ```
+6. Clean up the temp file and show the user the PR URL and a summary of what was documented.
 
 ### Important Notes
 
