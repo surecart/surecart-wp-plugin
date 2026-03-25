@@ -252,11 +252,8 @@ namespace SureCart\Tests\Sync {
 			$app->shouldReceive( 'resolve' )
 				->with( 'surecart.jobs.woo_import' )
 				->andReturn( $mock_job );
-			$app->shouldReceive( 'resolve' )
-				->with( 'surecart.sync.import_state.woo' )
-				->andReturn( new ImportState( 'woo' ) );
 
-			$service = new WooCommerceImportService( $app );
+			$service = new WooCommerceImportService( $app, new ImportState( 'woo' ) );
 			$service->dispatch();
 
 			// Options should be cleared.
@@ -283,11 +280,8 @@ namespace SureCart\Tests\Sync {
 			$app->shouldReceive( 'resolve' )
 				->with( 'surecart.jobs.woo_import' )
 				->andReturn( $mock_job );
-			$app->shouldReceive( 'resolve' )
-				->with( 'surecart.sync.import_state.woo' )
-				->andReturn( new ImportState( 'woo' ) );
 
-			$service = new WooCommerceImportService( $app );
+			$service = new WooCommerceImportService( $app, new ImportState( 'woo' ) );
 			$service->dispatch( 9999 );
 		}
 
@@ -309,11 +303,8 @@ namespace SureCart\Tests\Sync {
 			$app->shouldReceive( 'resolve' )
 				->with( 'surecart.jobs.woo_import' )
 				->andReturn( $mock_job );
-			$app->shouldReceive( 'resolve' )
-				->with( 'surecart.sync.import_state.woo' )
-				->andReturn( new ImportState( 'woo' ) );
 
-			$service = new WooCommerceImportService( $app );
+			$service = new WooCommerceImportService( $app, new ImportState( 'woo' ) );
 			$service->dispatch( 0 );
 		}
 
@@ -328,7 +319,7 @@ namespace SureCart\Tests\Sync {
 
 			$app = \Mockery::mock( 'SureCart\Application' );
 
-			$service = new WooCommerceImportService( $app );
+			$service = new WooCommerceImportService( $app, new ImportState( 'woo' ) );
 			$count   = $service->getImportableCount();
 
 			$this->assertEquals( 0, $count );
@@ -348,7 +339,7 @@ namespace SureCart\Tests\Sync {
 
 			$app = \Mockery::mock( 'SureCart\Application' );
 
-			$service = new WooCommerceImportService( $app );
+			$service = new WooCommerceImportService( $app, new ImportState( 'woo' ) );
 			$count   = $service->getImportableCount();
 
 			$this->assertEquals( 42, $count );

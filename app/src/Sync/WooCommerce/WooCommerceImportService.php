@@ -2,6 +2,8 @@
 
 namespace SureCart\Sync\WooCommerce;
 
+use SureCart\Sync\ImportState;
+
 /**
  * Thin service for WooCommerce product import.
  *
@@ -20,12 +22,21 @@ class WooCommerceImportService {
 	protected $app;
 
 	/**
+	 * WooCommerce import state tracker.
+	 *
+	 * @var ImportState
+	 */
+	protected $import_state;
+
+	/**
 	 * Constructor.
 	 *
 	 * @param \SureCart\Application $app The application.
+	 * @param ImportState           $import_state Import state for WooCommerce runs.
 	 */
-	public function __construct( $app ) {
-		$this->app = $app;
+	public function __construct( $app, ImportState $import_state ) {
+		$this->app          = $app;
+		$this->import_state = $import_state;
 	}
 
 	/**
@@ -45,15 +56,6 @@ class WooCommerceImportService {
 	 */
 	private function job() {
 		return $this->app->resolve( 'surecart.jobs.woo_import' );
-	}
-
-	/**
-	 * Get the import state tracker.
-	 *
-	 * @return \SureCart\Sync\ImportState
-	 */
-	private function importState() {
-		return $this->app->resolve( 'surecart.sync.import_state.woo' );
 	}
 
 	/**
@@ -78,7 +80,7 @@ class WooCommerceImportService {
 	 */
 	public function dispatch( $batch_size = 100 ) {
 		// Clear previously accumulated import IDs and session tracking.
-		$this->importState()->reset();
+		$this->import_state->reset();
 
 		$batch_size = apply_filters( 'surecart/sync/woocommerce_products/batch_size', $batch_size );
 		$batch_size = max( 1, min( 500, (int) $batch_size ) );
@@ -176,7 +178,7 @@ class WooCommerceImportService {
 			return;
 		}
 
-		$state                  = $this->importState();
+		$state                  = $this->import_state;
 		$import_ids             = $state->getResultIds();
 		$all_skipped_session_id = $state->getAllSkippedSessionId();
 

@@ -3,6 +3,7 @@
 namespace SureCart\Sync\WooCommerce;
 
 use SureCart\Models\ProductImport;
+use SureCart\Sync\ImportState;
 use SureCart\Sync\Tasks\Task;
 
 /**
@@ -35,6 +36,22 @@ class WooCommerceImportTask extends Task {
 	 * @var WooCommerceProductMapper|null
 	 */
 	private $mapper = null;
+
+	/**
+	 * WooCommerce import state tracker.
+	 *
+	 * @var ImportState
+	 */
+	private $import_state;
+
+	/**
+	 * Constructor.
+	 *
+	 * @param ImportState $import_state Import state for WooCommerce runs.
+	 */
+	public function __construct( ImportState $import_state ) {
+		$this->import_state = $import_state;
+	}
 
 	/**
 	 * Queue a batch of product IDs for processing.
@@ -114,7 +131,7 @@ class WooCommerceImportTask extends Task {
 				update_post_meta( $imported_id, '_surecart_imported', time() );
 			}
 
-			$this->importState()->appendResultId( $import->id );
+			$this->import_state->appendResultId( $import->id );
 		}
 	}
 
@@ -221,15 +238,6 @@ class WooCommerceImportTask extends Task {
 	 */
 	private function flushSkippedProducts( $skipped_products ) {
 		// Delegate to centralized state tracker (same option/transient behavior).
-		$this->importState()->addSkippedItems( $skipped_products );
-	}
-
-	/**
-	 * Get the import state tracker.
-	 *
-	 * @return \SureCart\Sync\ImportState
-	 */
-	private function importState() {
-		return \SureCart::resolve( 'surecart.sync.import_state.woo' );
+		$this->import_state->addSkippedItems( $skipped_products );
 	}
 }

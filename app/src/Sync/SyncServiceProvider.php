@@ -2,6 +2,7 @@
 
 namespace SureCart\Sync;
 
+use SureCart\Controllers\Admin\Products\ProductsController;
 use SureCart\Sync\CustomerSyncService;
 use SureCart\Sync\WooCommerce\WooCommerceImportJob;
 use SureCart\Sync\WooCommerce\WooCommerceImportService;
@@ -37,13 +38,16 @@ class SyncServiceProvider implements ServiceProviderInterface {
 		 */
 		$app = $container[ SURECART_APPLICATION_KEY ];
 
+		// Import state tracker — reusable for future import types (Shopify, EDD, etc.).
+		$container['surecart.sync.import_state.woo'] = fn () => new ImportState( 'woo' );
+
 		/**
 		 * Async tasks. These handle scheduled tasks.
 		 */
 		$container['surecart.tasks.product.sync']       = fn () => new ProductSyncTask();
 		$container['surecart.tasks.product.cleanup']    = fn () => new ProductCleanupTask();
 		$container['surecart.tasks.collection.cleanup'] = fn () => new CollectionCleanupTask();
-		$container['surecart.tasks.woo_import']         = fn () => new WooCommerceImportTask();
+		$container['surecart.tasks.woo_import']         = fn ( $c ) => new WooCommerceImportTask( $c['surecart.sync.import_state.woo'] );
 
 		/**
 		 * Jobs. These schedule the async tasks.
@@ -65,12 +69,16 @@ class SyncServiceProvider implements ServiceProviderInterface {
 		$container['surecart.sync.store']                = fn () => new StoreSyncService();
 		$container['surecart.process.product_post.sync'] = fn () => new PostSyncService();
 		$container['surecart.sync.customers']            = fn () => new CustomerSyncService();
-		$container['surecart.sync.woocommerce_products'] = fn () => new WooCommerceImportService( $app );
+		$container['surecart.sync.woocommerce_products'] = fn ( $c ) => new WooCommerceImportService( $app, $c['surecart.sync.import_state.woo'] );
 		$container['surecart.sync.batch']                = fn () => new BatchCheckService();
 
-		// Import state tracker — reusable for future import types (Shopify, EDD, etc.).
-		$container['surecart.sync.import_state.woo'] = fn () => new ImportState( 'woo' );
-		$container['surecart.sync.content']              = fn () => new ContentSyncService( $app );
+		$container['surecart.sync.content'] = fn () => new ContentSyncService( $app );
+
+		// Admin ProductsController needs ImportState; GenericFactory uses new Class() unless FQCN is bound.
+		// Handler passes namespace+class with a leading "\" (see admin routes setNamespace); ::class has none — register both keys.
+		$products_controller_factory = fn ( $c ) => new ProductsController( $c['surecart.sync.import_state.woo'] );
+		$container[ ProductsController::class ] = $products_controller_factory;
+		$container[ '\\' . ProductsController::class ] = $products_controller_factory;
 
 		// Alias the sync service.
 		$app->alias( 'sync', 'surecart.sync' );

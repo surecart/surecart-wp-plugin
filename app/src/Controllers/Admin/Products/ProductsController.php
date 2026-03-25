@@ -7,11 +7,28 @@ use SureCart\Models\Product;
 use SureCart\Models\ImportRow;
 use SureCart\Controllers\Admin\Products\ProductsListTable;
 use SureCart\Background\BulkActionService;
+use SureCart\Sync\ImportState;
 
 /**
  * Handles product admin requests.
  */
 class ProductsController extends AdminController {
+	/**
+	 * WooCommerce import state tracker.
+	 *
+	 * @var ImportState
+	 */
+	private $woo_import_state;
+
+	/**
+	 * Constructor.
+	 *
+	 * @param ImportState $woo_import_state Import state for WooCommerce runs.
+	 */
+	public function __construct( ImportState $woo_import_state ) {
+		$this->woo_import_state = $woo_import_state;
+	}
+
 	/**
 	 * Products index.
 	 */
@@ -311,8 +328,6 @@ class ProductsController extends AdminController {
 	 * @return \SureCartCore\View
 	 */
 	public function importResults( $request ) {
-		$state = \SureCart::resolve( 'surecart.sync.import_state.woo' );
-
 		// add header.
 		$this->withHeader(
 			[
@@ -336,7 +351,7 @@ class ProductsController extends AdminController {
 
 		if ( empty( $import_ids_raw ) ) {
 			// Check if this is an all-skipped import.
-			$all_skipped_session_id = $state->getAllSkippedSessionId();
+			$all_skipped_session_id = $this->woo_import_state->getAllSkippedSessionId();
 
 			// Fallback: if option was already cleaned up, check URL param (e.g. page refresh).
 			if ( ! $all_skipped_session_id ) {
@@ -346,10 +361,10 @@ class ProductsController extends AdminController {
 
 			if ( $all_skipped_session_id ) {
 				// Fetch skipped products via session ID.
-				$skipped_products = $state->getSkippedItemsBySession( $all_skipped_session_id );
+				$skipped_products = $this->woo_import_state->getSkippedItemsBySession( $all_skipped_session_id );
 
 				// Clean up completion notice options now that the user has viewed results.
-				$state->reset();
+				$this->woo_import_state->reset();
 
 				return \SureCart::view( 'admin/products/import-results' )->with(
 					[
@@ -387,7 +402,7 @@ class ProductsController extends AdminController {
 
 		// Fallback: use current session if available (for backward compatibility).
 		if ( ! $session_id ) {
-			$session_id = $state->getSessionId();
+			$session_id = $this->woo_import_state->getSessionId();
 		}
 
 		// Fetch all import rows (capped at 50 pages to prevent timeouts).
@@ -434,12 +449,12 @@ class ProductsController extends AdminController {
 		// Fetch skipped products from transient.
 		$skipped_products = [];
 		if ( $session_id ) {
-			$skipped_products = $state->getSkippedItemsBySession( $session_id );
+			$skipped_products = $this->woo_import_state->getSkippedItemsBySession( $session_id );
 		}
 
 		// Clean up completion notice options now that the user has viewed results.
 		// The results page uses URL query params, so these options are no longer needed.
-		$state->reset();
+		$this->woo_import_state->reset();
 
 		return \SureCart::view( 'admin/products/import-results' )->with(
 			[
