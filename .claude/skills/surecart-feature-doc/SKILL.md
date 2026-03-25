@@ -1,7 +1,6 @@
 ---
 name: surecart-feature-doc
 description: Use this skill when the user asks to "generate feature doc", "update PR description", "add feature documentation to PR", "document this PR", or after completing user-facing changes. Analyzes the current branch diff and generates/updates the Feature Documentation section in the GitHub PR description.
-version: 1.0.0
 ---
 
 # Feature Documentation for PR
@@ -20,9 +19,10 @@ Generates feature documentation from the current branch changes and updates the 
 ### Step 2 — Analyze Changes
 
 1. Get the full diff against main: `git diff main...HEAD`
-2. Get the commit log: `git log main..HEAD --oneline`
-3. Read changed files as needed to understand the feature.
-4. Determine if changes are user-facing. If purely internal, set the Feature Documentation section to "N/A — no user-facing changes" and skip to Step 4.
+2. If the diff is empty (no changes vs main), inform the user there are no changes to document and stop.
+3. Get the commit log: `git log main..HEAD --oneline`
+4. Read changed files as needed to understand the feature.
+5. Determine if changes are user-facing. If purely internal, set the Feature Documentation section to "N/A — no user-facing changes" and skip to Step 4.
    - **User-facing** (document): new blocks, new settings/options, new admin pages, UI changes, behavior changes, new integrations, new REST endpoints users interact with.
    - **Internal** (skip): service provider registration, refactors with no visible change, test-only changes, CI/build config, developer tooling, code style fixes.
 
@@ -66,7 +66,7 @@ Remove any sections that don't apply (e.g., no Settings table if no new settings
 
 1. Read the current PR body: `gh pr view --json body -q '.body'`
 2. Preserve everything above the `## Feature Documentation` section (like Testing Instructions).
-3. Replace the `## Feature Documentation` section (and everything below it) with the generated content.
+3. Replace the `## Feature Documentation` section with the generated content. This assumes Feature Documentation is the last section — if there are sections after it, preserve them.
 4. If there's no existing `## Feature Documentation` section, append it at the end.
 5. Write the full new PR body to a temp file, then update using `--body-file` to avoid shell interpolation issues with backticks, `$`, or quotes in the content:
    ```bash
