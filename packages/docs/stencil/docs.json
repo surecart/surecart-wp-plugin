@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-02-24T16:06:25",
+  "timestamp": "2026-03-24T17:58:32",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.18.3",
@@ -2286,6 +2286,7 @@
         "sc-payment-methods-list",
         "sc-paystack-add-method",
         "sc-product-item-list",
+        "sc-product-line-item",
         "sc-product-price-modal",
         "sc-product-selected-price",
         "sc-purchase-downloads-list",
@@ -2405,6 +2406,9 @@
           "sc-button"
         ],
         "sc-product-item-list": [
+          "sc-button"
+        ],
+        "sc-product-line-item": [
           "sc-button"
         ],
         "sc-product-price-modal": [
@@ -17177,6 +17181,27 @@
           "required": false
         },
         {
+          "name": "customValidity",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "custom-validity",
+          "reflectToAttr": false,
+          "docs": "Custom validation message to show when the input is invalid (replaces browser default).",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "disabled",
           "type": "boolean",
           "complexType": {
@@ -19865,6 +19890,7 @@
         "sc-product-line-item": [
           "sc-product-line-item-note",
           "sc-quantity-select",
+          "sc-button",
           "sc-icon"
         ],
         "sc-product-line-item-note": [
@@ -19872,6 +19898,9 @@
         ],
         "sc-quantity-select": [
           "sc-icon"
+        ],
+        "sc-button": [
+          "sc-spinner"
         ],
         "sc-swap": [
           "sc-switch"
@@ -20952,6 +20981,7 @@
         "sc-product-line-item": [
           "sc-product-line-item-note",
           "sc-quantity-select",
+          "sc-button",
           "sc-icon"
         ],
         "sc-product-line-item-note": [
@@ -20959,6 +20989,9 @@
         ],
         "sc-quantity-select": [
           "sc-icon"
+        ],
+        "sc-button": [
+          "sc-spinner"
         ],
         "sc-dashboard-module": [
           "sc-alert"
@@ -20979,9 +21012,6 @@
           "sc-tag",
           "sc-cc-logo",
           "sc-text"
-        ],
-        "sc-button": [
-          "sc-spinner"
         ],
         "sc-cc-logo": [
           "sc-icon"
@@ -21911,6 +21941,7 @@
         "sc-product-line-item": [
           "sc-product-line-item-note",
           "sc-quantity-select",
+          "sc-button",
           "sc-icon"
         ],
         "sc-product-line-item-note": [
@@ -21918,6 +21949,9 @@
         ],
         "sc-quantity-select": [
           "sc-icon"
+        ],
+        "sc-button": [
+          "sc-spinner"
         ],
         "sc-order-confirmation-totals": [
           "sc-line-item",
@@ -22011,6 +22045,7 @@
         "sc-product-line-item": [
           "sc-product-line-item-note",
           "sc-quantity-select",
+          "sc-button",
           "sc-icon"
         ],
         "sc-product-line-item-note": [
@@ -22018,6 +22053,9 @@
         ],
         "sc-quantity-select": [
           "sc-icon"
+        ],
+        "sc-button": [
+          "sc-spinner"
         ],
         "sc-order-confirmation-details": [
           "sc-order-confirmation-line-items"
@@ -32258,6 +32296,28 @@
           "required": false
         },
         {
+          "name": "reviewButtonLink",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "review-button-link",
+          "reflectToAttr": false,
+          "docs": "The review button link. If set, a review button will be shown linking to this URL.",
+          "docsTags": [],
+          "default": "''",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "scratch",
           "type": "string",
           "complexType": {
@@ -32499,12 +32559,14 @@
       "dependencies": [
         "sc-product-line-item-note",
         "sc-quantity-select",
+        "sc-button",
         "sc-icon"
       ],
       "dependencyGraph": {
         "sc-product-line-item": [
           "sc-product-line-item-note",
           "sc-quantity-select",
+          "sc-button",
           "sc-icon"
         ],
         "sc-product-line-item-note": [
@@ -32512,6 +32574,9 @@
         ],
         "sc-quantity-select": [
           "sc-icon"
+        ],
+        "sc-button": [
+          "sc-spinner"
         ],
         "sc-line-items": [
           "sc-product-line-item"
@@ -33910,6 +33975,28 @@
           "values": [
             {
               "type": "number"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "productName",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "product-name",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "'Product'",
+          "values": [
+            {
+              "type": "string"
             }
           ],
           "optional": false,
@@ -37854,11 +37941,11 @@
             "docs": ""
           },
           "complexType": {
-            "signature": "(type: any, args?: {}) => Promise<void>",
+            "signature": "(type: 'setup' | 'payment', args?: {}) => Promise<void>",
             "parameters": [
               {
                 "name": "type",
-                "type": "any",
+                "type": "\"setup\" | \"payment\"",
                 "docs": ""
               },
               {
@@ -37875,11 +37962,11 @@
             },
             "return": "Promise<void>"
           },
-          "signature": "confirm(type: any, args?: {}) => Promise<void>",
+          "signature": "confirm(type: 'setup' | 'payment', args?: {}) => Promise<void>",
           "parameters": [
             {
               "name": "type",
-              "type": "any",
+              "type": "\"setup\" | \"payment\"",
               "docs": ""
             },
             {
@@ -38538,6 +38625,7 @@
         "sc-product-line-item": [
           "sc-product-line-item-note",
           "sc-quantity-select",
+          "sc-button",
           "sc-icon"
         ],
         "sc-product-line-item-note": [
@@ -39255,6 +39343,7 @@
         "sc-product-line-item": [
           "sc-product-line-item-note",
           "sc-quantity-select",
+          "sc-button",
           "sc-icon"
         ],
         "sc-product-line-item-note": [
@@ -44330,6 +44419,7 @@
         "sc-product-line-item": [
           "sc-product-line-item-note",
           "sc-quantity-select",
+          "sc-button",
           "sc-icon"
         ],
         "sc-product-line-item-note": [
@@ -44337,6 +44427,9 @@
         ],
         "sc-quantity-select": [
           "sc-icon"
+        ],
+        "sc-button": [
+          "sc-spinner"
         ],
         "sc-coupon-form": [
           "sc-skeleton",
@@ -44354,9 +44447,6 @@
         ],
         "sc-form-control": [
           "sc-visually-hidden"
-        ],
-        "sc-button": [
-          "sc-spinner"
         ],
         "sc-alert": [
           "sc-icon"
@@ -45111,7 +45201,7 @@
       "path": "src/components/controllers/products/sc-product-item-list/sc-product-item-list.tsx"
     },
     "src/types.ts::Product": {
-      "declaration": "export interface Product extends Object {\n  id: string;\n  name: string;\n  description: string;\n  archived: boolean;\n  archived_at: string;\n  metadata: any;\n  image_url: string;\n  recurring: boolean;\n  tax_category: string;\n  tax_enabled: boolean;\n  purchase_limit: number;\n  metrics: ProductMetrics;\n  line_item_image: ImageAttributes;\n  permalink: string;\n  weight: number;\n  weight_unit: 'kg' | 'lb' | 'g' | 'oz';\n  featured_product_media?: string | ProductMedia;\n  prices: {\n    object: 'list';\n    pagination: Pagination;\n    data: Array<Price>;\n  };\n  variants: {\n    object: 'list';\n    pagination: Pagination;\n    data: Array<Variant>;\n  };\n  variant_options: {\n    object: 'list';\n    pagination: Pagination;\n    data: Array<VariantOption>;\n  };\n  product_medias: {\n    object: 'list';\n    pagination: Pagination;\n    data: Array<ProductMedia>;\n  };\n  downloads: {\n    object: 'list';\n    pagination: Pagination;\n    data: Array<Download>;\n  };\n  product_collections: {\n    object: 'list';\n    pagination: Pagination;\n    data: Array<Collection>;\n  };\n  stock_enabled: boolean;\n  allow_out_of_stock_purchases: boolean;\n  stock: number;\n  available_stock: number;\n  held_stock: number;\n  created_at: number;\n  updated_at: number;\n}",
+      "declaration": "export interface Product extends Object {\n  id: string;\n  name: string;\n  description: string;\n  archived: boolean;\n  archived_at: string;\n  metadata: any;\n  image_url: string;\n  recurring: boolean;\n  tax_category: string;\n  tax_enabled: boolean;\n  purchase_limit: number;\n  metrics: ProductMetrics;\n  line_item_image: ImageAttributes;\n  permalink: string;\n  weight: number;\n  weight_unit: 'kg' | 'lb' | 'g' | 'oz';\n  featured_product_media?: string | ProductMedia;\n  prices: {\n    object: 'list';\n    pagination: Pagination;\n    data: Array<Price>;\n  };\n  variants: {\n    object: 'list';\n    pagination: Pagination;\n    data: Array<Variant>;\n  };\n  variant_options: {\n    object: 'list';\n    pagination: Pagination;\n    data: Array<VariantOption>;\n  };\n  product_medias: {\n    object: 'list';\n    pagination: Pagination;\n    data: Array<ProductMedia>;\n  };\n  downloads: {\n    object: 'list';\n    pagination: Pagination;\n    data: Array<Download>;\n  };\n  product_collections: {\n    object: 'list';\n    pagination: Pagination;\n    data: Array<Collection>;\n  };\n  stock_enabled: boolean;\n  allow_out_of_stock_purchases: boolean;\n  stock: number;\n  available_stock: number;\n  held_stock: number;\n  review_url?: string;\n  created_at: number;\n  updated_at: number;\n}",
       "docstring": "",
       "path": "src/types.ts"
     },

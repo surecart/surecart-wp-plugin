@@ -63,9 +63,11 @@ graph TD;
   sc-upcoming-invoice --> sc-block-ui
   sc-product-line-item --> sc-product-line-item-note
   sc-product-line-item --> sc-quantity-select
+  sc-product-line-item --> sc-button
   sc-product-line-item --> sc-icon
   sc-product-line-item-note --> sc-icon
   sc-quantity-select --> sc-icon
+  sc-button --> sc-spinner
   sc-coupon-form --> sc-skeleton
   sc-coupon-form --> sc-line-item
   sc-coupon-form --> sc-tag
@@ -77,7 +79,6 @@ graph TD;
   sc-coupon-form --> sc-block-ui
   sc-input --> sc-form-control
   sc-form-control --> sc-visually-hidden
-  sc-button --> sc-spinner
   sc-alert --> sc-icon
   sc-block-ui --> sc-spinner
   sc-manual-payment-method --> sc-prose
