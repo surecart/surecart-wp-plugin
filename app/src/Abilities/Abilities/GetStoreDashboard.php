@@ -53,7 +53,7 @@ class GetStoreDashboard extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function get_instructions(): string {
-		return 'Use this for high-level store health checks. Supports date range filtering with start_date/end_date in YYYY-MM-DD format and intervals: hour, day, week, month, year. Defaults to the last 30 days with daily intervals if not specified.';
+		return 'Use this for high-level store health checks. Supports date range filtering with start_date/end_date in YYYY-MM-DD format and intervals: hour, day, week, month, year. Defaults to the last 30 days with daily intervals if not specified. Set test_mode to true to view test transaction data (useful during store setup and QA).';
 	}
 
 	/**
@@ -70,11 +70,16 @@ class GetStoreDashboard extends AbstractAbility {
 		return array(
 			'type'       => 'object',
 			'properties' => array(
-				'period' => array(
+				'period'    => array(
 					'type'        => 'string',
 					'description' => __( 'Time period for the dashboard data.', 'surecart' ),
 					'enum'        => self::ALLOWED_PERIODS,
 					'default'     => '30d',
+				),
+				'test_mode' => array(
+					'type'        => 'boolean',
+					'description' => __( 'Set to true to view test mode data. Defaults to false (live mode).', 'surecart' ),
+					'default'     => false,
 				),
 			),
 		);
@@ -119,11 +124,17 @@ class GetStoreDashboard extends AbstractAbility {
 			return $account;
 		}
 
+		$test_mode = ! empty( $input['test_mode'] );
+
 		$args = array(
 			'start_at' => $dates['start_at'],
 			'end_at'   => $dates['end_at'],
 			'interval' => $dates['interval'],
 		);
+
+		if ( $test_mode ) {
+			$args['live_mode'] = false;
+		}
 
 		$result = array(
 			'period' => $period,
