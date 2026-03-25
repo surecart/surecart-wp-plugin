@@ -45,7 +45,7 @@ class ListCustomers extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function get_instructions(): string {
-		return 'Use this to browse or search the customer list. Search by name or email. For full details on a single customer, use get-customer instead.';
+		return 'Use this to browse or search the customer list. Use the query parameter to filter by name or email. For full details on a single customer, use get-customer instead.';
 	}
 
 	/**
