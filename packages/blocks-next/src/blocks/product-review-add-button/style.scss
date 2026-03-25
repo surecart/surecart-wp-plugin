@@ -10,3 +10,9 @@
 		color: var(--sc-color-primary-500, currentColor);
 	}
 }
+
+// Classic themes don't include WP core block button alignment styles,
+// causing the button to stretch to full container height in flex layouts.
+.wp-block-buttons:has(.wp-block-surecart-product-review-add-button) {
+	align-items: center;
+}
