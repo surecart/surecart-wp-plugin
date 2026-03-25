@@ -78,5 +78,6 @@ Remove any sections that don't apply (e.g., no Settings table if no new settings
 
 - Always preserve the user's Testing Instructions and any other content above Feature Documentation.
 - Use the actual code changes to write accurate documentation — don't guess or hallucinate features.
+- Only describe what the PR adds or changes — never reference removed files, old approaches, or prior implementations in the generated documentation.
 - Keep descriptions concise and focused on what the docs team needs to write user-facing documentation.
 - If the PR has multiple features, document all of them under the same Feature Documentation section.
