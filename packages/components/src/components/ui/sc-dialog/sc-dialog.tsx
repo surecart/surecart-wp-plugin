@@ -17,6 +17,7 @@ export class ScDialog {
   private overlay: HTMLElement;
 
   private originalTrigger: HTMLElement | null;
+  private boundHandleDocumentKeyDown = (event: KeyboardEvent) => this.handleDocumentKeyDown(event);
 
   /** Indicates whether or not the dialog is open. You can use this in lieu of the show/hide methods. */
   @Prop({ reflect: true }) open: boolean = false;
@@ -79,12 +80,20 @@ export class ScDialog {
     }
   }
 
+  /** Handle Escape from document level for slotted light DOM elements that don't bubble into shadow DOM. */
+  handleDocumentKeyDown(event: KeyboardEvent) {
+    if (event.key === 'Escape' && this.open) {
+      this.requestClose('keyboard');
+    }
+  }
+
   @Watch('open')
   async handleOpenChange() {
     if (this.open) {
       // Show
       this.scShow.emit();
 
+      document.addEventListener('keydown', this.boundHandleDocumentKeyDown);
       lockBodyScrolling(this.el);
 
       // When the dialog is shown, Safari will attempt to set focus on whatever element has autofocus. This can cause
@@ -142,6 +151,7 @@ export class ScDialog {
         setTimeout(() => trigger.focus());
       }
 
+      document.removeEventListener('keydown', this.boundHandleDocumentKeyDown);
       this.scAfterHide.emit();
     }
   }
@@ -151,11 +161,13 @@ export class ScDialog {
     this.dialog.hidden = !this.open;
 
     if (this.open) {
+      document.addEventListener('keydown', this.boundHandleDocumentKeyDown);
       lockBodyScrolling(this.el);
     }
   }
 
   disconnectedCallback() {
+    document.removeEventListener('keydown', this.boundHandleDocumentKeyDown);
     unlockBodyScrolling(this.el);
   }
 

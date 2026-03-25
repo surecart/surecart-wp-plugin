@@ -96,6 +96,11 @@ export default () => {
 		'site',
 		'surecart_hide_help_widget'
 	);
+	const [learnMenu, setLearnMenu] = useEntityProp(
+		'root',
+		'site',
+		'surecart_learn_admin_menu'
+	);
 	const [disableAdminToolbar, setDisableAdminToolbar] = useEntityProp(
 		'root',
 		'site',
@@ -395,6 +400,18 @@ export default () => {
 					<span slot="description" style={{ lineHeight: '1.4' }}>
 						{__(
 							'Show a link to edit the customer area in the menu.',
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
+				<ScSwitch
+					checked={learnMenu}
+					onScChange={(e) => setLearnMenu(e.target.checked)}
+				>
+					{__('Learn Page', 'surecart')}
+					<span slot="description" style={{ lineHeight: '1.4' }}>
+						{__(
+							'Show the Learn page link in the menu.',
 							'surecart'
 						)}
 					</span>

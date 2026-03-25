@@ -80,6 +80,7 @@
  - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
  - [sc-paystack-add-method](../sc-paystack-add-method)
  - [sc-product-item-list](../../controllers/products/sc-product-item-list)
+ - [sc-product-line-item](../product-line-item)
  - [sc-product-price-modal](../../controllers/product/sc-product-price-modal)
  - [sc-product-selected-price](../../controllers/checkout-form/sc-product-selected-price)
  - [sc-purchase-downloads-list](../purchase-downloads-list)
@@ -142,6 +143,7 @@ graph TD;
   sc-payment-methods-list --> sc-button
   sc-paystack-add-method --> sc-button
   sc-product-item-list --> sc-button
+  sc-product-line-item --> sc-button
   sc-product-price-modal --> sc-button
   sc-product-selected-price --> sc-button
   sc-purchase-downloads-list --> sc-button

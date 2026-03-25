@@ -86,6 +86,9 @@ export class ScProductLineItem {
   /** The line item note */
   @Prop() note: string;
 
+  /** The review button link. If set, a review button will be shown linking to this URL. */
+  @Prop() reviewButtonLink: string = '';
+
   /** Emitted when the quantity changes. */
   @Event({ bubbles: false }) scUpdateQuantity: EventEmitter<number>;
 
@@ -102,6 +105,7 @@ export class ScProductLineItem {
           class={{
             'item': true,
             'item--has-image': !!this.image?.src,
+            'item--has-review': !!this.reviewButtonLink,
             'item--is-rtl': isRtl(),
             'product-line-item__editable': this.editable,
             'product-line-item__removable': this.removable,
@@ -170,6 +174,13 @@ export class ScProductLineItem {
                 <span class="item__description" part="static-quantity">
                   {__('Qty:', 'surecart')} {this.quantity}
                 </span>
+              )}
+              {!!this.reviewButtonLink && (
+                <div class="item__add-review">
+                  <sc-button size="small" href={this.reviewButtonLink} target="_blank">
+                    {__('Review Product', 'surecart')}
+                  </sc-button>
+                </div>
               )}
               {!!this.removable && (
                 <div

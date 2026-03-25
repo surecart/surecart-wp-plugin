@@ -56,10 +56,10 @@ export const ATTRIBUTE_REGISTRY = {
 		),
 
 		'product.product_group.metadata': __(
-			'Product Group Metadata',
+			'Upgrade Group Metadata',
 			'surecart'
 		),
-		'product.product_group.name': __('Product Group Name', 'surecart'),
+		'product.product_group.name': __('Upgrade Group Name', 'surecart'),
 
 		'selected_shipping_method.name': __(
 			'Selected Shipping Method Name',
@@ -69,6 +69,11 @@ export const ATTRIBUTE_REGISTRY = {
 		'order.order_type': __('Order Type', 'surecart'),
 		order_type: __('Order Type', 'surecart'),
 		sku: __('SKU (Product/Variant)', 'surecart'),
+
+		'coupon.name': __('Coupon Name', 'surecart'),
+		'promotion.code': __('Promotion Code Name', 'surecart'),
+		'checkout.coupon.name': __('Coupon Name', 'surecart'),
+		'checkout.promotion.code': __('Promotion Code Name', 'surecart'),
 	},
 
 	number: {
@@ -96,6 +101,19 @@ export const ATTRIBUTE_REGISTRY = {
 
 	user_role: {
 		wp_user_role: __('WordPress User Role', 'surecart'),
+	},
+
+	// Keep in sync with UUID_ENTITY_MAP below.
+	uuid: {
+		'customer.id': __('Customer', 'surecart'),
+		'coupon.id': __('Coupon', 'surecart'),
+		'promotion.id': __('Promotion Code', 'surecart'),
+		'price.id': __('Price', 'surecart'),
+		'product.id': __('Product', 'surecart'),
+		'product.product_collections.id': __('Product Collection', 'surecart'),
+		'product.product_group.id': __('Upgrade Group', 'surecart'),
+		'checkout.coupon.id': __('Coupon', 'surecart'),
+		'checkout.promotion.id': __('Promotion Code', 'surecart'),
 	},
 };
 
@@ -190,3 +208,16 @@ export const APPLIES_WHILE_CHOICES = [
 ];
 
 export const STRING_OPERATORS = ['contains', 'start_with', 'end_with'];
+
+// Keep in sync with ATTRIBUTE_REGISTRY.uuid above.
+export const UUID_ENTITY_MAP = {
+	'customer.id': 'customer',
+	'coupon.id': 'coupon',
+	'checkout.coupon.id': 'coupon',
+	'promotion.id': 'promotion',
+	'checkout.promotion.id': 'promotion',
+	'price.id': 'price',
+	'product.id': 'product',
+	'product.product_collections.id': 'product-collection',
+	'product.product_group.id': 'product-group',
+};

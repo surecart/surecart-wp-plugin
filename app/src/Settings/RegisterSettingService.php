@@ -35,6 +35,20 @@ class RegisterSettingService {
 	protected $args = [];
 
 	/**
+	 * The autoload value for this option, or null to use WordPress default.
+	 *
+	 * @var bool|null
+	 */
+	protected $autoload;
+
+	/**
+	 * The full prefixed option name.
+	 *
+	 * @var string
+	 */
+	protected $full_option_name;
+
+	/**
 	 * Register a setting.
 	 *
 	 * @param string $option_group A settings group name. Should correspond to an allowed option key name.
@@ -52,11 +66,14 @@ class RegisterSettingService {
 	 *                                         When registering complex settings, this argument may optionally be an
 	 *                                         array with a 'schema' key.
 	 *     @type mixed      $default           Default value when calling `get_option()`.
+	 *     @type bool       $autoload          Whether to autoload this option. Omit to use WordPress default.
 	 */
 	public function __construct( $option_group, $option_name, $args = [] ) {
-		$this->option_group = $option_group;
-		$this->option_name  = $option_name;
-		$this->args         = $args;
+		$this->option_group     = $option_group;
+		$this->full_option_name = $this->prefix . $option_name;
+		$this->option_name      = $option_name;
+		$this->autoload         = array_key_exists( 'autoload', $args ) ? $args['autoload'] : null;
+		$this->args             = array_diff_key( $args, [ 'autoload' => '' ] );
 	}
 
 	/**
@@ -67,6 +84,27 @@ class RegisterSettingService {
 	public function register() {
 		add_action( 'admin_init', [ $this, 'registerSetting' ] );
 		add_action( 'rest_api_init', [ $this, 'registerSetting' ] );
+
+		if ( null !== $this->autoload ) {
+			add_filter( 'wp_default_autoload_value', [ $this, 'filterAutoload' ], 10, 3 );
+		}
+	}
+
+	/**
+	 * Filter the default autoload value for this option.
+	 *
+	 * @param string|null $autoload The default autoload value.
+	 * @param string      $option   The option name.
+	 * @param mixed       $value    The option value.
+	 *
+	 * @return string|null
+	 */
+	public function filterAutoload( $autoload, $option, $value ) {
+		if ( $this->full_option_name !== $option ) {
+			return $autoload;
+		}
+
+		return $this->autoload ? 'yes' : 'no';
 	}
 
 	/**
@@ -77,7 +115,7 @@ class RegisterSettingService {
 	public function registerSetting() {
 		register_setting(
 			$this->option_group,
-			$this->prefix . $this->option_name,
+			$this->full_option_name,
 			$this->args,
 		);
 	}
