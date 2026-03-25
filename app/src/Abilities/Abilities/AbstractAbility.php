@@ -97,12 +97,15 @@ abstract class AbstractAbility {
 			'permission_callback' => array( $this, 'check_permission' ),
 			'input_schema'        => $this->get_input_schema(),
 			'output_schema'       => $this->get_output_schema(),
-			'execute_callback'    => array( $this, 'execute' ),
+			'execute_callback'    => function ( array $input ) {
+				$result = $this->execute( $input );
+				return is_wp_error( $result ) ? $this->extract_detailed_error( $result ) : $result;
+			},
 			'meta'                => array(
-				'show_in_rest'  => true,
-				'annotations'   => $this->get_annotations(),
-				'instructions'  => $this->get_instructions(),
-				'mcp'           => array(
+				'show_in_rest' => true,
+				'annotations'  => $this->get_annotations(),
+				'instructions' => $this->get_instructions(),
+				'mcp'          => array(
 					'public' => true,
 				),
 			),
@@ -130,6 +133,36 @@ abstract class AbstractAbility {
 	 */
 	protected function error( string $code, string $message ): \WP_Error {
 		return new \WP_Error( $code, $message );
+	}
+
+	/**
+	 * Extract a detailed error message from a WP_Error, including validation errors.
+	 *
+	 * The SureCart API often returns a generic top-level message (e.g. "There were some
+	 * validation errors") with field-level details in additional error entries. This method
+	 * combines all error messages into a single, actionable WP_Error.
+	 *
+	 * @param \WP_Error $wp_error The WP_Error to process.
+	 *
+	 * @return \WP_Error A WP_Error with a detailed, combined message.
+	 */
+	private function extract_detailed_error( \WP_Error $wp_error ): \WP_Error {
+		$messages = $wp_error->get_error_messages();
+
+		// If there's only one message, return as-is.
+		if ( count( $messages ) <= 1 ) {
+			return $wp_error;
+		}
+
+		// Combine all messages: skip the generic first message if there are field-level details.
+		$detail_messages = array_slice( $messages, 1 );
+		$combined        = implode( ' ', $detail_messages );
+
+		return new \WP_Error(
+			$wp_error->get_error_code(),
+			$combined,
+			$wp_error->get_error_data()
+		);
 	}
 
 	/**

@@ -144,8 +144,13 @@ class CreateCustomer extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function execute( array $input ) {
+		$email = sanitize_email( $input['email'] );
+		if ( empty( $email ) ) {
+			return $this->error( 'invalid_email', __( 'The email address provided is not valid.', 'surecart' ) );
+		}
+
 		$data = array(
-			'email' => sanitize_email( $input['email'] ),
+			'email' => $email,
 		);
 
 		// Simple string fields.
