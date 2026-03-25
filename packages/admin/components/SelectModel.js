@@ -18,6 +18,7 @@ export default ({
 	onFetch,
 	name,
 	prefix,
+	triggerLabel,
 	loading,
 	children,
 	onScrollEnd = () => {},
@@ -93,7 +94,8 @@ export default ({
 			ref={selectRef}
 			{...props}
 		>
-			{!!prefix && prefix}
+			{!!prefix && <span slot="prefix">{prefix}</span>}
+			{!!triggerLabel && <span>{triggerLabel}</span>}
 			{children}
 		</ScSelect>
 	);

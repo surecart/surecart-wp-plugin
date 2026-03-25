@@ -1756,6 +1756,7 @@
     "purchasable-status": true,
     "quantity": true,
     "removable": true,
+    "review-button-link": true,
     "scratch": true,
     "scratch-display-amount": true,
     "sku": true,
