@@ -29,7 +29,7 @@ export default ({
 			<div
 				style={{
 					display: 'grid',
-					gap: '0.5em',
+					gap: '1em',
 					width: '100%',
 				}}
 			>
@@ -39,7 +39,6 @@ export default ({
 					onRemove={removeLineItem}
 					onNew={() => {}}
 				/>
-				<hr />
 				<div
 					style={{
 						display: 'flex',

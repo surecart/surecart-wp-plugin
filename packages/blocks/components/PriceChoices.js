@@ -53,7 +53,14 @@ export default ({ choices, onUpdate, onRemove, description, ...rest }) => {
 	};
 
 	return (
-		<div style={{ ...styles, display: 'grid', gap: '1em' }}>
+		<div
+			style={{
+				...styles,
+				display: 'grid',
+				gap: '1em',
+				borderStyle: 'none',
+			}}
+		>
 			{choices && choices.length > 0 ? renderTable() : renderEmpty()}
 
 			<div

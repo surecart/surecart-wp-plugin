@@ -23,6 +23,7 @@ export default ({
 	onScrollEnd = () => {},
 	includeVariants = true,
 	allowOutOfStockSelection = false,
+	style: externalStyle,
 	...props
 }) => {
 	const selectRef = useRef();
@@ -210,7 +211,14 @@ export default ({
 
 	return (
 		<ScSelect
-			style={{ ...styles, width: '100%' }}
+			{...props}
+			style={{
+				...styles,
+				width: '100%',
+				minWidth: '24rem',
+				borderStyle: 'none',
+				...externalStyle,
+			}}
 			required={required}
 			ref={selectRef}
 			value={value}
@@ -220,7 +228,6 @@ export default ({
 			placeholder={__('Select a product', 'surecart')}
 			searchPlaceholder={__('Search for a product...', 'surecart')}
 			search
-			{...props}
 		>
 			{onNew && (
 				<span slot="prefix">
