@@ -27,7 +27,7 @@ class CreateRefund extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function get_description(): string {
-		return __( 'Issue a monetary refund against a SureCart charge. Requires the charge ID, refund amount in the smallest currency unit (e.g., cents for USD), and a reason code. This initiates an irreversible financial transaction that returns money to the customer\'s payment method.', 'surecart' );
+		return __( 'Issue a monetary refund against a SureCart charge. Requires the charge ID, refund amount in the smallest currency unit (e.g., cents for USD), and a reason code(duplicate, fraudulent, requested_by_customer, expired_uncaptured_charge). This initiates an irreversible financial transaction that returns money to the customer\'s payment method.', 'surecart' );
 	}
 
 	/**
@@ -45,7 +45,7 @@ class CreateRefund extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function get_instructions(): string {
-		return 'This is a destructive financial action that cannot be reversed. Always confirm the refund amount and reason with the user before executing. Valid reasons: duplicate, fraudulent, requested_by_customer, expired_uncaptured_charge. The amount must not exceed the original charge amount minus any previous refunds.';
+		return 'This is a destructive financial action that cannot be reversed. All three parameters are required: charge (the charge UUID, not charge_id), amount (in smallest currency unit, e.g. 49000 for $490), and reason (one of: duplicate, fraudulent, requested_by_customer, expired_uncaptured_charge). The amount must not exceed the original charge amount minus any previous refunds. A charge that has already been fully refunded cannot be refunded again. Always confirm the refund amount and reason with the user before executing.';
 	}
 
 	/**
