@@ -155,7 +155,8 @@ abstract class AbstractAbility {
 		}
 
 		// Combine all messages: skip the generic first message if there are field-level details.
-		$detail_messages = array_slice( $messages, 1 );
+		// Deduplicate to avoid repeated messages (e.g. "Amount is invalid. Amount is invalid.").
+		$detail_messages = array_unique( array_slice( $messages, 1 ) );
 		$combined        = implode( ' ', $detail_messages );
 
 		return new \WP_Error(
