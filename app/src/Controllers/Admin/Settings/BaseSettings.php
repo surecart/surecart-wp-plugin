@@ -162,16 +162,13 @@ abstract class BaseSettings {
 				'should_load_on_demand_assets' => (bool) \SureCart::theme()->shouldLoadOnDemandBlockAssets(),
 				'claim_url'                    => ! \SureCart::account()->claimed ? \SureCart::routeUrl( 'account.claim' ) : '',
 				'claim_expired'                => \SureCart::account()->claim_expired ?? false,
-<<<<<<< HEAD
 				'is_woocommerce_active'        => class_exists( 'WooCommerce' ),
-=======
 				'shop_page_edit_url'           => \SureCart::pages()->getId( 'shop' )
 					? admin_url( 'post.php?post=' . \SureCart::pages()->getId( 'shop' ) . '&action=edit' )
 					: '',
 				'dashboard_page_edit_url'      => \SureCart::pages()->getId( 'dashboard' )
 					? admin_url( 'post.php?post=' . \SureCart::pages()->getId( 'dashboard' ) . '&action=edit' )
 					: '',
->>>>>>> origin/main
 			]
 		);
 	}
