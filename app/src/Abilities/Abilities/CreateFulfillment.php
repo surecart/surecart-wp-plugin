@@ -113,7 +113,7 @@ class CreateFulfillment extends AbstractAbility {
 					'description' => __( 'Set of key-value pairs to attach to the fulfillment.', 'surecart' ),
 				),
 			),
-			'required'   => array( 'order_id' ),
+			'required'   => array( 'order_id', 'shipment_status', 'fulfillment_items' ),
 		);
 	}
 
@@ -134,13 +134,15 @@ class CreateFulfillment extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function execute( array $input ) {
-		$data = array(
-			'order' => sanitize_text_field( $input['order_id'] ),
-		);
-
-		if ( ! empty( $input['shipment_status'] ) ) {
-			$data['shipment_status'] = sanitize_text_field( $input['shipment_status'] );
+		$shipment_status = sanitize_text_field( $input['shipment_status'] ?? '' );
+		if ( empty( $shipment_status ) ) {
+			return $this->error( 'missing_shipment_status', __( 'Shipment status is required. Valid values: unshippable, unshipped, shipped, delivered.', 'surecart' ) );
 		}
+
+		$data = array(
+			'order'           => sanitize_text_field( $input['order_id'] ),
+			'shipment_status' => $shipment_status,
+		);
 
 		if ( isset( $input['notifications_enabled'] ) ) {
 			$data['notifications_enabled'] = (bool) $input['notifications_enabled'];
