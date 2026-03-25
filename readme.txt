@@ -4,37 +4,65 @@ Donate link: https://surecart.com
 Tags: ecommerce, online store, subscriptions, stripe, payments
 Requires at least: 6.7
 Tested up to: 6.9
-Stable tag: 4.0.3
+Stable tag: 4.1.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Make ecommerce easy with a simple to use, all-in-one platform, that anyone can set up in just a few minutes!
+Make ecommerce easy with a simple-to-use, all-in-one platform that anyone can set up in just a few minutes!
 
 == Description ==
 
 **The New Way To Sell Anything On WordPress!**
 ★★★★★<br>
 
-Say goodbye to old, bloated & complex ecommerce plugins that are hard to use, require expensive add-ons for basic features, and slow down your website.
+eCommerce on WordPress has evolved and so have the tools.
 
-WordPress users have been waiting for something different!
+SureCart brings a modern, intuitive approach to selling online. It’s lightweight, flexible, and built to work seamlessly with your existing WordPress setup.
 
-Meet [SureCart](https://surecart.com/) — the modern, intuitive ecommerce plugin you’ve been looking for.
+Whether you’re selling digital products, subscriptions, services, or physical goods, you can launch a fully functional store without complexity.
 
 [youtube https://www.youtube.com/watch?v=biTedATyVPg]
 
-[What's New](https://surecart.com/whats-new/) | [Docs](https://surecart.com/docs/) | [Video Tutorials](https://www.youtube.com/@SureCartOfficial/) | [Get Help](https://surecart.com/support/open-a-ticket/) | [Community](https://www.facebook.com/groups/surecrafted)
+[What’s New](https://surecart.com/whats-new/) | [Blog](https://surecart.com/blog/) | [Docs](https://surecart.com/docs/) | [Video Tutorials](https://www.youtube.com/@SureCartOfficial/) | [Get Help](https://surecart.com/support/open-a-ticket/) | [Community](https://www.facebook.com/groups/surecrafted)
+
+## Start With a Completely Free Store ##
+
+With SureCart’s free plan, you can create a store with full core functionalities: unlimited products, flexible checkout customization, subscription support, and powerful built-in features, without needing a stack of add-ons.
+
+Scale when you’re ready. No forced upgrades. No unnecessary bloat.
+
+## What Makes SureCart Different? ##
+
+SureCart was built to give WordPress users a modern alternative to traditional ecommerce plugins.
+
+Most WordPress ecommerce solutions run entirely inside your website. As stores grow, this can introduce performance issues, database bloat, plugin conflicts, and caching complications.
+
+SureCart takes a fundamentally different approach.
+
+SureCart consists of two parts: the plugin and the platform. The plugin connects your WordPress site to the SureCart platform — a cloud-based ecommerce engine designed specifically to handle payments, subscriptions, taxes, and checkout processing at scale.
+
+Instead of placing all ecommerce processing load on your website, SureCart handles heavy operations on its own infrastructure. This reduces strain on your server, improves reliability, and minimizes conflicts with themes, caching systems, or other plugins.
+
+Because of this architecture, you get:
+
+* A lighter WordPress footprint
+* Reduced database bloat
+* Fewer plugin conflicts
+* Compatibility with caching systems
+* Built-in security, backups, and infrastructure handling
+
+The result is a smoother ecommerce experience with less technical overhead and fewer moving parts to manage.
 
 ## Who Is SureCart For? ##
-Each year we send all of our users a survey, so here are the 2024 results of who is using SureCart.
+Each year we send all of our users a survey, so here are the 2025-26 results of who is using SureCart.
 
-- **Agencies:** Instead of passing on higher priced ecommerce projects due to the complexities, web agencies tell us that they are taking on more online store clients because SureCart is easy to set up and manage, and their clients love it
-- **Physical Product Stores:** Sellers love how easy it is to set up an online store, manage order fulfillment, and generate higher AOV with cart abandonment recovery, order bumps, and post purchase upsells
-- **Selling Subscriptions:** Mostly coaching programs, course creators, membership websites, and SaaS companies that want advanced subscription management and retention features
-- **Selling Services:** Mostly web agencies, legal services, local businesses that sell via subscriptions, installment plans, and use setup fees
-- **Digital Downloads:** Ebooks, printables, creative work, and we are seeing an increase in WordPress software developers who are using our licensing system
-- **Donations:** Charities and causes that want to have flexible donation forms, but also be able to sell additional products
+- **Subscription-Based Businesses:** SureCart is ideal for coaches, course creators, membership sites, and SaaS companies that rely on recurring revenue and need powerful subscription management with built-in retention tools.
+- **Service-Based Businesses:** Perfect for web agencies, legal firms, and local businesses that charge through subscriptions, installment plans, or one-time setup fees with flexible billing built right into the checkout.
+- **Digital Product Creators & Developers:** Built for selling ebooks, printables, creative assets, and digital downloads and increasingly trusted by WordPress software developers who leverage SureCart’s built-in licensing system.
+- **Physical Product Stores:** Great for merchants who want a simple way to launch an online store, manage orders and fulfillment, and increase average order value with built-in cart abandonment recovery, order bumps, and post-purchase upsells.
+- **Agencies & Freelancers:** Instead of turning down eCommerce projects due to complexity, agencies are confidently taking on more online store clients. SureCart makes setup and ongoing management simple and their clients love the experience.
+- **Nonprofits & Fundraisers:** Ideal for charities and causes that need flexible donation forms while also having the ability to sell merchandise, event tickets, or other products, all from one streamlined checkout experience.
 
 ## Traditional Storefront ##
 
@@ -46,44 +74,91 @@ SureCart has all the features for selling products this way on your website. The
 
 [youtube https://www.youtube.com/watch?v=uIBCcIX8S54]
 
-## Product Pricing Options ##
-No other ecommerce plugin offers this depth of options on how to price your products.
+## Product Pricing Options (Now with Dynamic Pricing) ##
 
-SureCart's unique approach to let you offer more than one price for a single product is a big reason why SureCart merchants sell more products.
+SureCart gives you flexible, conversion-focused pricing control without duplicating products or creating complex checkout flows.
 
-Some of the pricing options include one-time payments, subscription payments, installment plans, free trials, paid trials, setup fees, setup discounts, and name your own price.
+Instead of being limited to one price per product, you can attach multiple pricing options to a single product and let customers choose what works best for them.
+
+You can offer:
+
+* One-time payments
+* Subscription payments (daily, weekly, monthly, yearly, etc.)
+* Installment plans
+* Free trials
+* Paid trials
+* Setup fees
+* Setup discounts
+* "Name your own price"
+
+**Dynamic Pricing (New)**
+
+SureCart also includes built-in Dynamic Pricing, allowing prices to automatically adjust at checkout based on real conditions.
+
+You can:
+
+* Apply discounts when cart subtotal exceeds a threshold
+* Add conditional fees based on user role or customer type
+* Offer bulk/quantity discounts
+* Reward logged-in customers with special pricing
+* Run BOGO-style offers without duplicating products
+
+Pricing updates instantly at checkout exactly where buying decisions happen.
+
+This makes it easier to increase average order value (AOV), reward loyal customers, and run smarter promotions without adding extra plugins.
 
 [youtube https://www.youtube.com/watch?v=vHOamau4BWw]
 
-## Most Advanced Subscription Plugin For WordPress ##
-Selling subscriptions is easy to do, many form plugins, LMS plugins, membership plugins, ecommerce plugins do this.
+## Advanced Subscription Management & Retention for WordPress ##
 
-But they only assist in selling the subscription and offer little to manage and retain the subscriber! That is where the profit is in selling subscriptions.
+Selling a subscription is the easy part. Managing renewals, reducing churn, and maximizing lifetime value is where subscription businesses actually grow.
 
-If you are using anything other than SureCart to sell subscriptions, you are likely paying higher payment processor fees and having higher churn.
+SureCart goes beyond basic recurring payments by giving you built-in tools to actively manage and retain subscribers and not just collect payments.
 
-**Using SureCart Means Lower Fees**
+**Flexible Subscription Setup**
 
-If you are selling subscriptions on Stripe using form plugins, membership plugins, online course plugins, SaaS platforms like ThriveCart, or any of these ways to sell subscriptions with Stripe...
+With SureCart, you can:
 
-You (the merchant) pay an extra 0.5% - 0.8% of every subscription transaction to Stripe? [See Stripe Pricing](https://stripe.com/billing/pricing)
+* Create flexible billing intervals (daily, weekly, monthly, yearly, or custom)
+* Offer free trials and paid trials
+* Add setup fees or setup discounts
+* Create installment-style subscription payments
+* Apply Dynamic Pricing rules to subscription products
+* Offer multiple pricing options on a single subscription product
 
-When you use SureCart you avoid all of these Stripe fees on subscriptions because we manage the subscription, we handle the invoices, and we can handle the auto payment retries.
-This can save you huge amounts of money.
+**Reduce Churn From Failed Payments**
 
-**Please Note:** Subscriptions are portable! We migrate WooCommerce merchants with active subscribers each week. It's seamless, and the subscriber does not need to resubscribe.
+One of the biggest causes of subscription churn is failed payments. SureCart includes built-in dunning management that:
 
-**Better Subscription Management & Retention With SureCart**
+* Automatically retries failed payments
+* Sends advanced pre-payment reminders
+* Notifies customers about payment issues
+* Helps recover revenue that would otherwise be lost
 
-SureCart has a suite of tools to [manage subscriptions](https://surecart.com/features/subscriptions/) and reduce churn.
+This helps keep subscribers active without requiring third-party add-ons.
 
-Selling subscriptions, the biggest source of churn is from failed payments. SureCart will automatically recover failed payments from your subscribers to keep them subscribed.
+**Reduce Voluntary Cancellations**
 
-Your second source of churn is subscribers wanting to cancel. With SureCart's [Subscription Saver](https://www.youtube.com/watch?v=9Bx4u4DV4_Q) feature, you will have fewer cancelations and greater insights into why people cancel.
+The second major source of churn is subscribers choosing to cancel. SureCart's [Subscription Saver](https://www.youtube.com/watch?v=9Bx4u4DV4_Q) feature helps reduce cancellations and gives you insights into why customers leave.
 
-Additional features include subscription upgrades with proration, subscription downgrades, customers can change the payment method, you can reactivate a canceled subscription, you can pause a subscription, subscribers can change their form of payment to a different payment method, change payment dates, advanced email reminders before payments, and more.
+You can:
 
-These management and retention options are just not available elsewhere!
+* Offer upgrade or downgrade paths with automatic proration
+* Allow customers to pause subscriptions instead of cancelling
+* Reactivate cancelled subscriptions
+* Let customers change payment methods
+* Allow changes to billing dates
+* Provide self-service management via customer dashboards
+
+Instead of forcing cancellations, you give customers flexible options that keep revenue flowing.
+
+**Built-In Management Without Extra Extensions**
+
+Many WordPress setups require multiple add-ons to manage subscriptions effectively. SureCart includes subscription logic, retention tools, and email notifications natively.
+
+Because SureCart is cloud-based and API-driven, subscription processing is handled reliably without adding heavy processing load to your WordPress site.
+
+This gives you greater control over subscriber experience, retention, and recurring revenue, all from a single platform.
 
 ## The Best WooCommerce Alternative ##
 SureCart is the [WooCommerce alternative](https://wpastra.com/comparison/shopify-vs-woocommerce-vs-surecart/) WordPress users have been asking for!
@@ -102,13 +177,19 @@ Where SureCart's approach is different. Everything is built in, no add-on requir
 These are just some of the key features SureCart users love.
 
 * **Multiple Payment Processors, Express Checkout ApplePay & GooglePay:**
-Easily connect to Stripe, PayPal, and Mollie with support for 135+ currencies, 45+ countries, and dozens of payment methods including cards, wallets, bank debits, and more. You can use multiple processors on a single checkout form. Also, you can optionally accept ApplePay or GooglePay express checkout options.
+Easily connect to Stripe, PayPal, Razorpay, and Mollie with support for 135+ currencies, 45+ countries, and dozens of payment methods including cards, wallets, bank debits, and more. You can use multiple processors on a single checkout form. Also, you can optionally accept ApplePay or GooglePay express checkout options.
 
 * **Powerful Payment Options:**
 One-time payments, subscriptions, subscriptions with free trials, setup fees, payment plans (installments), pay what you want, donations. SureCart covers most ways you may want to be paid, all included for free.
 
 * **Most Complete Subscription Payments System:**
 There is a lot more to subscriptions than simply rebilling on an interval. SureCart’s subscription engine is second to none. With our extensive subscription payments options, you can sell your subscriptions how you want. But SureCart goes beyond other ecommerce platforms by offering prorated upgrades or downgrades. So if you are offering a monthly subscription or an annual subscription and your buyer wants to upgrade, SureCart can prorate the upgrade.
+
+* **Built-In Product Reviews**
+SureCart includes a native product review system so you can collect and display verified customer feedback without installing a separate reviews plugin. You can enable star ratings with written feedback, moderate and approve reviews, and display them directly on product and checkout pages. Reviews are managed inside your SureCart dashboard and work seamlessly with your products and pricing options, helping build trust at the point of purchase without adding extra plugins or complexity.
+
+* **Dynamic Pricing**
+SureCart includes built-in Dynamic Pricing so you can automatically adjust prices at checkout based on real conditions without duplicating products or creating complex coupon rules. You can apply discounts or fees based on cart subtotal, product quantity, customer type, user role, or other checkout conditions, and pricing updates instantly where purchase decisions happen. Dynamic Pricing works seamlessly with one-time payments and subscription products, giving you more flexibility to increase average order value and run smarter promotions without adding extra plugins.
 
 * **Order Bumps & Upsell Funnels:**
 SureCart merchants have more profitable stores due to a full suite of revenue optimization features. Generate more revenue with one-click order bumps, post purchase [one-click upsells](https://www.youtube.com/watch?v=97gSH-KPFZU&t=25s), and cart abandonment recovery.
@@ -146,43 +227,73 @@ With other ecommerce plugins, if you get an influx of buyers for that big sale o
 * **Real-time VAT & Sales Tax Calculations:**
 Other ecommerce platforms let you integrate with expensive tax calculation services, usually costing $50 per month and up. Not with SureCart, we are fully integrated with TaxJar, and we pay for the calculations, so you don’t have to. And the setup is a breeze.
 
-## What Is Unique About SureCart? ##
-SureCart was made to give WordPress users a better option for selling on their website. Currently most merchants use WooCommerce, which was made over 10 years ago for building big commerce stores like Amazon, Walmart, etc.
-
-SureCart takes a different approach entirely. Made from the ground up to be ultra-high performance, look visually stunning, and be so easy to use that the most non-techie user will have no problem.
-
-Everything can be visually customized to create a truly unique ecommerce experience.
-
-SureCart also solves the technician problems that you run into with ecommerce plugins. They have performance problems or caching issues or something, it’s always something. Not with SureCart, we do all the heavy lifting on our servers to guarantee you a smooth operation, headache free, developer free.
-
-## The SureCart Difference ##
-SureCart is fundamentally different from other WordPress ecommerce plugins that you may have tried, so it's important to understand the differences.
-
-**Platform Based**
-There are two parts to SureCart, the platform, which is the Ecommerce engine, and the plugin.
-
-The platform is built with the same technology that Shopify, Basecamp, GitHub, Twitter, Stripe and more use. These are all multi-billion dollar companies.
-
-The plugin connects to the platform in real-time, taking all the load away from your website and onto our platform that was built and optimized for Ecommerce.
-
-This way you get everything you want with none of the stuff you don’t want. SureCart will not slow down your website, it won’t bloat your database, it’s less likely to have plugin conflicts, and it’s made to work with your caching setup. But the real benefit here is you get assurance and peace of mind because you don’t have to worry about security, storage, or backups.
-
 ## SureCart Integrations ##
 
-### Page Builders ###
-SureCart works with all WordPress page builders, including:
+### Recommended ###
+* OttoKit
+* SureDash
+* SureMembers
+* Astra
+* Starter Templates
 
-* Elementor
+### Analytics ###
+* Google Analytics
+* Facebook Pixel
+* Analytics WP
+* Conversion Bridge
+* Independent Analytics
+* Kadence Insights
+
+### Automation ###
+* OttoKit
+* Bit Flows
+* Zapier
+* WPFusion
+* Bit Integrations
+* Flowmattic
+* Integrately
+* Omnisend
+* Pabbly Connect
+* Thrive Automator
+* viaSocket
+
+### Booking & Events ###
+* LatePoint
+* Pie Calendar
+
+### Community / Network ###
+* SureDash
+* BuddyBoss
+* GamiPress
+* Omnisend
+
+### Courses & Online Learning ###
+* SureDash
+* LearnDash
+* LifterLMS
+* Masteriyo
+* TutorLMS
+
+### Data Management ###
+* WP Ultimate CSV Importer
+
+### Design & Theme ###
+* Astra
 * Bricks Builder
+* Starter Templates
+* Block Editor (Gutenberg)
+* Kadence Cloud
+* Meta Box
+* Advanced Custom Fields
+* JetEngine
+* Elementor
 * Spectra Website Builder
 * Divi Builder
 * Beaver Builder
 * Thrive Architect
-* Gutenberg
 * Oxygen Builder
-* And others
 
-### WooCommerce Themes ###
+### Themes ###
 SureCart works with any theme, including:
 
 * Astra Theme
@@ -196,21 +307,16 @@ SureCart works with any theme, including:
 * OceanWP
 * Spectra One Theme
 
-### WordPress Plugins ###
-SureCart has 2 types of integrations. The first are natively available directly in the plugin and include:
-
-* BuddyBoss
+### Membership ###
 * SureMembers
-* Presto Player
-* TutorLMS
-* LearnDash
-* LifterLMS
 * MemberPress
-* AffiliateWP
-* Thrive Automator
-* And more are coming
 
-The second type of integrations are done with [Ottokit](https://wordpress.org/plugins/suretriggers/), which is like Zapier for WordPress. Ottokit integrates with over 500 apps and services. These will require you to add the Ottokit plugin to your website to integrate with:
+### Other Integrations ###
+* Presto Player
+* AffiliateWP
+
+### OttoKit Integrations ###
+SureCart also integrates with [OttoKit](https://wordpress.org/plugins/suretriggers/), which is like Zapier for WordPress. OttoKit integrates with over 500 apps and services. These will require you to add the OttoKit plugin to your website to integrate with:
 
 * ActiveCampaign
 * ConvertKit
@@ -260,7 +366,7 @@ There are 2 parts to SureCart, the platform and the plugin. In order for the plu
 
 = What payment processors can I use? =
 
-SureCart currently supports payment processing via Stripe, PayPal, and Mollie with support for 135+ currencies, 45+ countries, and dozens of payment methods including cards, wallets, bank debits, and more.
+SureCart currently supports payment processing via Stripe, PayPal, Razorpay, and Mollie with support for 135+ currencies, 45+ countries, and dozens of payment methods including cards, wallets, bank debits, and more.
 
 = Will SureCart slow down my website? =
 
@@ -316,6 +422,14 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 
 == Changelog ==
 
+= 4.1.0 - March 24th, 2026 = 
+- New: Learn section on settings page to help with onboarding and setup.
+- New: Shipping parcels creation for shipping with standardized boxes.
+- Improvement: Add "Review Product" buttons to customer dashboard order view screen.
+- Improvement: Select specific products, prices, coupons, promotions for autofee instead of just name matching.
+- Fix: Edge case where order detail page crash when product image has dominant color metadata.
+- Fix: Don't add pointer cursor to summary block if its not collapsible.
+
 = 4.0.3 - March 12th, 2026 =
 - New: Dark mode brand settings for store logo and theme colors.
 - New: Cart subtotal scratch amount block for displaying strikethrough discount on cart.
@@ -346,13 +460,13 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 = 4.0.0 - February 25th, 2026 =
 - New: Product Reviews — Let customers leave star ratings and written reviews on your products. [Learn More](https://www.youtube.com/watch?v=9MV_nOwxK_Q)
 - New: Product and variant dimensions for shipping.
-- New: Additional php and javascript filters on customer dashbaord.
+- New: Additional php and javascript filters on customer dashboard.
 - Fix: Issue with default country selector dropdown getting clipped in admin.
 - Fix: Added additional security checks to payout make processing endpoints.
 
 = 3.20.1 - February 16th, 2026 =
-- Fix: Issue where razorpay was sometimes not getting selected at checkout if its the only processor.
-- Fix: Issue with order bump labels in admin being slighly misaligned.
+- Fix: Issue where razorpay was sometimes not getting selected at checkout if it's the only processor.
+- Fix: Issue with order bump labels in admin being slightly misaligned.
 - Fix: Instant Checkout page requests could fail when strict type checks were applied to the server request URI.
 
 = 3.20.0 - February 12th, 2026 =
@@ -448,10 +562,10 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 - Fix: WordPress 6.9 compatibility.
 - Fix: Small Bricks css compatibility script was sometimes loading on non-Bricks themes.
 
-= 3.16.6 - Novermber 18th, 2025 =
+= 3.16.6 - November 18th, 2025 =
 - Fix: Revert previous Stripe change as they are rolling out a fix on their end.
 
-= 3.16.5 - Novermber 18th, 2025 =
+= 3.16.5 - November 18th, 2025 =
 - Fix: Issue with Stripe payment element not loading for non-recurring payments due to remote API change.
 
 = 3.16.4 - November 10th, 2025 =
@@ -494,7 +608,7 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 - Fix: PHP error on collections page if collections page was not re-saved.
 
 = 3.15.4 - October 8th, 2025 =
-- Fix: Issue with downloads not being able to listed by customers with more restricted capabilities.
+- Fix: Issue with downloads not being able to be listed by customers with more restricted capabilities.
 
 = 3.15.3 - October 7th, 2025 =
 - Improvement: Increase automatic video poster quality generation.
@@ -506,7 +620,7 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 
 = 3.15.1 - October 1st, 2025 =
 - Improvement: Improve message when customer has reached purchase limit of a product.
-- Fix: Media thumbnail badges on admin apear under the image.
+- Fix: Media thumbnail badges on admin appear under the image.
 - Fix: RankMath adding unnecessary link in sitemap.
 - Fix: Issue with Etch backend showing floating cart icon.
 - Fix: Badge overlap in integrations section when integration is disabled.
@@ -546,7 +660,7 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 - Improvement: Update claim banner on settings page for unclaimed stores.
 - Improvement: Add new Product Content element for Bricks Builder to display designer content properly.
 - Improvement: Status badge text refined to “Cancelling” for a cleaner and more consistent UI.
-- Fix: Resolved Stripe "Invalid value for stripe.confirmPayment()" error that ocurred in some cases.
+- Fix: Resolved Stripe "Invalid value for stripe.confirmPayment()" error that occurred in some cases.
 - Fix: "Edit with Bricks" / "Edit with WordPress" setting not working on product page.
 - Fix: Issue with PayPal payment method button loading when free trial was enabled.
 - Fix: Resolved sticky purchase button spacing issue in the editor for cleaner layouts.
@@ -560,8 +674,8 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 - New: Sticky purchase button feature to improve product page conversions.
 - New: Subscription reminder settings with configurable minimum days between reminders to prevent excessive notifications.
 - Improvement: Removed onboarding checklist functionality completely from the plugin.
-- Fix Updated subscription reminder notification text to reflect percentage-based timing.
-- Fix: Order confirmation block now correctly displays totals correctly and shows preview values in the editor.
+- Fix: Updated subscription reminder notification text to reflect percentage-based timing.
+- Fix: Order confirmation block now correctly displays totals and shows preview values in the editor.
 - Fix: Resolved PHP warning that appeared in DEBUG mode due to a translation being called before WordPress init.
 - Fix: Quantity element now properly displays in Bricks Builder backend editor.
 
@@ -589,7 +703,7 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 - Fix: Enhanced stability of Bricks Builder elements and edit links.
 
 = 3.10.0 - July 8th, 2025 =
-- [Overview] (https://surecart.com/changelog/surecart-3-10-features-that-speed-up-your-workflow-and-boost-revenue/)
+- [Overview](https://surecart.com/changelog/surecart-3-10-features-that-speed-up-your-workflow-and-boost-revenue/)
 - New: Price boosts. 1-click price swaps on your checkout page.
 - New: Duplicate products and prices.
 - New: Add a product form anywhere on your website.
@@ -648,7 +762,7 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 - Fix: Fix issue with dynamic shortcode `{post_terms_sc_collection}` not working in Bricks Builder.
 - Fix: The `sc_login_redirect_url` filter does not work with login codes.
 - Fix: Typography settings not working for product list radio & checkbox filters.
-- Fix: Disabled manual payment method were previously appearing in upgrades.
+- Fix: Disabled manual payment methods were previously appearing in upgrades.
 - Fix: Hide integrations menu item unless API is connected.
 - Fix: Upsell page countdown timer block shows html tags on frontend instead of rendering.
 
@@ -667,7 +781,7 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 - Fix: Issue with missing pagination on license activations and licenses list (if more than 20).
 
 = 3.7.2 - April 23rd, 2025 =
-- Improvement: Product metaboxes are now only on the product content editor page only for better compatibility.
+- Improvement: Product metaboxes are now only on the product content editor page for better compatibility.
 - Improvement: Cleanup old synced products/collections when connected store changes.
 - Fix: Issue with specific DIVI settings not allowing admin edit product page to load.
 - Fix: Issue with specific LifterLMS settings not allowing admin edit product page to load.
@@ -775,136 +889,5 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 - Change: Internal refactor from return_url to external_url.
 - Fix: Fix missing redirection to product list page after deleting a product.
 - Fix: Product pages sometimes loading the default template instead of the selected template.
-
-= 3.2.2 - January 16th, 2025 =
-- Fix: Issue with buy now buttons sometimes clearing out existing cart items after purchase.
-- Fix: Issue where more than 30 products on shipping zone were not being shown.
-- Fix: Issue with legacy blocks javascript not being loaded on some instances.
-
-= 3.2.1 - January 14th, 2025 =
-- Change: Rename "Add Payment Method" to "Select Payment Method" on invoice creation page.
-- Change: Make sure id is passed with delete hook for 3rd parties to be able to access the deleted record id.
-- Fix: Issue where adding a new integration was showing a blank dropdown.
-- Fix: Add context to "save" string to differentiate between saving a form and saving money.
-
-= 3.2.0 - January 13th, 2025 =
-- New: Related products block. [Docs](https://surecart.com/docs/related-products/)
-- New: Integrations section on settings page.
-- New: Ability for 3rd party developers to add UI elements to admin pages. [Docs](https://developer.surecart.com/docs/admin-custom-ui-elements)
-- Improvement: Format checkout finalize error message.
-- Fix: CSS issue for shop page filter tags incorrectly breaking lines on shortcodes and page builders.
-- Fix: Compatibility with Winden and some other plugins that use ajax to load data with posts in admin.
-- Fix: Issue where max-width of product media block could sometimes overflow on mobile.
-- Fix: Issue with extra space below line items on mobile in some cases.
-- Fix: Compatibility issue with object cache pro where SureCart was not returning a string for cache_key.
-- Fix: Issue where custom tax labels could not be changed after they were created.
-
-= 3.1.6 - December 23rd, 2024 =
-- Improvement: Improve wording of bump auto-apply help text in admin.
-- Fix: Silent error handling when adding a custom salt to the wp-config file fails.
-
-= 3.1.5 - December 19th, 2024 =
-- New: Alphabetical sorting to product lists.
-- New: Customizable product list page empty state.
-- Fix: Issue where attachment page slugs could not be updated.
-- Fix: Apple pay showing as "pending" in express payment element instead of the total amount.
-- Fix: Issue where product filter could have a fatal error if the taxonomy was removed.
-
-= 3.1.4 - December 17th, 2024 =
-- Improvement: Automatic cache exclusions for customer dashboard login page.
-- Improvement: Write custom salt for api key encryption to prevent disconnection when using salt shaker plugins.
-- Improvement: Use WordPress server time for all times and dates throughout the plugin.
-- Improvement: Avada theme compatibility.
-- Improvement: Add refunded amount on customer dashboard order details page.
-- Improvement: Update js deprecation notices for WordPress 6.7.
-- Fix: Issue where full address was being collected in some cases where only a compact address was required.
-- Fix: Issue where updating the customer address in the admin could sometimes update to the current user address.
-- Fix: Stripe sometimes not loading if invoice was in live mode, but the store was in test mode.
-- Fix: Apple pay showing as "pending" in express payment element instead of the total amount.
-- Fix: Free accounts can now correctly limit payment methods on each form.
-
-= 3.1.3 - December 9th, 2024 =
-- New: Setting to force reusable payment methods on checkout.
-- Improvement: Added link to invoice from order page if order has an invoice.
-- Fix: Issue where terms, privacy and subscription changes were not able to be saved.
-- Fix: Issue where a paused subscription could not be canceled.
-- Fix: Warning when passing additional address parameters to Stripe payment elements.
-- Fix: Issue where previous access was not getting revoked on some integrations when subscription was updated.
-
-= 3.1.2 - December 2nd, 2024 =
-- Improvement: Added clarification text on checkout page for when a coupon is applied after a trial starts.
-- Improvement: Add trial line item block to checkout for better totals calculation.
-- Improvement: Added automatic cache exclusions for SiteGround Optimizer.
-- Improvement: Progressively load accessibility scripts on front-end pages only when speech is needed.
-- Improvement: Add css to product page block to prevent themes from applying unwanted negative margins.
-- Improvement: Added PHP filters for the number formatter to allow easier customization of currency formatting.
-- Improvement: Disabled loading of slideshow script on product pages without multiple images.
-- Fix: Resolved obscure bug where cents were not formatting correctly with currencies using commas instead of dots when a required PHP library was missing.
-- Fix: Fixed incorrect line item amounts displayed when updating subscription plans with coupons.
-- Fix: Fixed issue where customer dashboard subscription filter was missing when only one plan type was available.
-
-= 3.1.1 - November 28th, 2024 =
-- Fix: Issue where shipping address was not displaying regions for some countries on the checkout page.
-
-= 3.1.0 - November 26th, 2024 =
-- New: Shipping territories/regions. Create shipping rules for specific states, provinces and territories.
-- Improvement: Change the "Change Price" button on edit subscription to just "Change" to avoid confusion as you can change to a different product.
-- Fix: Make minimum version of WordPress required 6.6.
-- Fix: Recent orders on the customer dashboard should show checkout entered name instead of customer name.
-
-= 3.0.5 - November 22nd, 2024 =
-- Fix: Issue with XML exports and ZipWP compatibility.
-
-= 3.0.4 - November 21st, 2024 =
-- Fix: Issue where connecting an existing site would take you to the dashboard without instructions during onboarding.
-- Fix: Issue if there are more than 10 product taxonomies, there is a possibility the you may not be able to select it as the product shop page filter.
-- Fix: Issue where creating a new product could sometimes show a blank screen after saving.
-- Fix: PHP notices that could happen due to migration from 2.x to 3.x.
-- Fix: Deprecation warning with PHP version 8.2+.
-
-= 3.0.3 - November 20th, 2024 =
-- New: Add Taxonomy Support to Products
-- New: Add ability to filter by any taxonomy on product list front-end.
-- New: Extra security setting to prevent non-admin users from making test payments.
-- Improvement: Lazy load javascript modules on front-end for improved performance.
-- Fix: Customer dashboard template no longer being recognized in WordPress 6.7 with Full Site Editing themes.
-- Fix: Issue where product form was wrapping some non-content elementor templates.
-- Fix: Issue with Mollie and Paystack payment redirects sometimes not creating WordPress user accounts.
-- Fix: Opacity of backdrop on cart in firefox.
-- Fix: Potential race condition in cart due to module imports under certain caching conditions.
-- Fix: Upgrade staging site warning should no longer show if you have already upgraded to 3.0.
-- Fix: Issue with no quotes around aria-label in cart causing unexpected output in some cases.
-- Fix: Issue with non-cached items sometimes loading on front-end if there is a server timeout.
-- Fix: Minor security issue.
-
-= 3.0.2 - November 13th, 2024 =
-- Improvement: WordPress 6.7 compatibility.
-- Improvement: Rename "Orders & Receipts" to "Orders & Invoices" on settings page.
-- Improvement: Add minimum height to quantity selector to prevent conflicts with some themes.
-- Fix: Rare race condition in WordPress 6.7 that could cause cart not to load on some pages.
-- Fix: Issue in WordPress 6.7 where multiple shop page filter tags were not displaying.
-- Fix: Incorrect amount paid displayed on customer dashboard order details in some cases.
-
-= 3.0.1 - November 11th, 2024 =
-- Improvement: Update Interactivity API search and cart functions to work with upcoming WordPress 6.7 release.
-- Fix: Issue with invoices not clearing cart once purchased.
-
-= 3.0.0 - November 11th, 2024 =
-- New: Completely rebuilt Shop, Product, and Cart systems using the Interactivity API for better performance and customization.
-- New: Variant images - automatically show/hide images based on the selected variation.
-- New: Bricks Builder integration.
-- New: Advanced Custom Fields integration.
-- New: Meta Box integration.
-- New: Product now sync with custom post types for better compatibility with other plugins.
-- New: Products now use the WP Media Library for images.
-- New: 1-click shop page patterns/templates for easy styles.
-- Improvement: More customizable product, shop and cart templates.
-- Improvement: Preload pagination and filter links on shop page.
-- Improvement: More performant loading of shop and product pages due to server side rendering of state.
-- Improvement: Realtime search of products on shop page.
-- Improvement: Slide out cart traps focus for better accessibility.
-- Improvement: Quick view icon to view product from edit product page.
-- Improvement: Upsells are now out of beta.
-- Improvement: Move SureCart admin menu to further up to help with navigation, due to the number of submenu items.
 
 Full changelog can be found here – [SureCart changelog](https://surecart.com/whats-new/)

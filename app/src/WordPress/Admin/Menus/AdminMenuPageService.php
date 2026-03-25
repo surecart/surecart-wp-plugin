@@ -77,6 +77,14 @@ class AdminMenuPageService {
 			$submenu_file = 'post.php?post=' . (int) $post->ID . '&action=edit';
 		}
 
+		// The Learn tab uses a query-param slug ("admin.php?page=sc-settings&tab=learn")
+		// rather than a dedicated page, so WordPress won't auto-highlight the submenu.
+		// Manually set $submenu_file to force the correct "current" state.
+		if ( 'sc-settings' === sanitize_key( wp_unslash( $_GET['page'] ?? '' ) ) && 'learn' === sanitize_key( wp_unslash( $_GET['tab'] ?? '' ) ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			// phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+			$submenu_file = 'admin.php?page=sc-settings&tab=learn';
+		}
+
 		// Check if we're editing a taxonomy that applies to sc_product post types.
 		$screen   = get_current_screen();
 		$taxonomy = get_taxonomy( $screen->taxonomy );
@@ -297,6 +305,7 @@ class AdminMenuPageService {
 			'dashboard' => $this->getPage( 'dashboard', __( 'Customer Area', 'surecart' ) ),
 			'forms'     => \add_submenu_page( $this->slug, __( 'Forms', 'surecart' ), '<span class="sc-menu-divider">' . __( 'Custom Forms', 'surecart' ) . '</span>', 'manage_options', 'edit.php?post_type=sc_form', '' ),
 			'settings'  => \add_submenu_page( $this->slug, __( 'Settings', 'surecart' ), __( 'Settings', 'surecart' ), 'manage_options', 'sc-settings', '__return_false' ),
+			'learn'     => get_option( 'surecart_learn_admin_menu', true ) ? \add_submenu_page( $this->slug, __( 'Learn', 'surecart' ), __( 'Learn', 'surecart' ) . $this->getLearnBadge(), 'manage_options', 'admin.php?page=sc-settings&tab=learn', '' ) : null,
 		);
 	}
 
@@ -403,5 +412,19 @@ class AdminMenuPageService {
 		}
 
 		return $file;
+	}
+
+	/**
+	 * Get the learn menu badge showing remaining steps count.
+	 *
+	 * Total is synced from JS via the surecart_learn_total_steps option.
+	 *
+	 * @return string
+	 */
+	protected function getLearnBadge() {
+		$remaining = \SureCart::settings()->getLearnRemainingSteps();
+		return $remaining > 0
+			? sprintf( ' <span class="awaiting-mod">%d</span>', $remaining )
+			: '';
 	}
 }

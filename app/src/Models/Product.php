@@ -1110,12 +1110,14 @@ class Product extends Model implements PageModel {
 	 * @return object
 	 */
 	public function getLineItemImageAttribute() {
-		return is_a( $this->featured_image, GalleryItem::class ) ?
-			$this->featured_image->attributes( 'thumbnail' ) :
-			(object) array(
+		if ( ! is_a( $this->featured_image, GalleryItem::class ) ) {
+			return (object) array(
 				'src'  => apply_filters( 'surecart/product-line-item-image/fallback_src', \SureCart::core()->assets()->getUrl() . '/images/image-placeholder.svg', $this ),
 				'type' => 'fallback',
 			);
+		}
+
+		return sc_sanitize_image_attributes( $this->featured_image->attributes( 'thumbnail' ) );
 	}
 
 	/**
@@ -1124,7 +1126,7 @@ class Product extends Model implements PageModel {
 	 * @return object
 	 */
 	public function getPreviewImageAttribute() {
-		return is_a( $this->featured_image, GalleryItem::class ) ? $this->featured_image->attributes( 'medium_large' ) : (object) [];
+		return is_a( $this->featured_image, GalleryItem::class ) ? sc_sanitize_image_attributes( $this->featured_image->attributes( 'medium_large' ) ) : (object) [];
 	}
 
 	/**
@@ -1244,5 +1246,23 @@ class Product extends Model implements PageModel {
 		// Ensure all values are integers and sort by key.
 		ksort( $breakdown );
 		return array_map( 'intval', $breakdown );
+	}
+
+	/**
+	 * Get the review url attribute.
+	 *
+	 * @return string
+	 */
+	public function getReviewUrlAttribute(): string {
+		if ( ! $this->reviews_enabled ) {
+			return '';
+		}
+
+		$product_post_id = $this->post->ID ?? null;
+		if ( empty( $product_post_id ) ) {
+			return '';
+		}
+
+		return $this->permalink ? add_query_arg( 'product-review-form', $product_post_id, $this->permalink ) : '';
 	}
 }

@@ -26,6 +26,7 @@ export default ({
 	includeVariants = true,
 	showOutOfStock = false,
 	prefix = false,
+	triggerLabel,
 	...props
 }) => {
 	const selectRef = useRef();
@@ -179,6 +180,8 @@ export default ({
 			)}
 
 			{prefix && <span slot="prefix">{prefix}</span>}
+
+			{triggerLabel && <span>{triggerLabel}</span>}
 
 			{children}
 		</ScSelect>
