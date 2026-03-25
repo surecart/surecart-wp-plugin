@@ -20,6 +20,7 @@ import {
 	calculateSum,
 	calculateAverage,
 	calculateTrend,
+	calculatePreviousPeriod,
 	getValidReportByOptions,
 	getOptimalReportBy,
 } from './utils';
@@ -57,11 +58,12 @@ export default ({ liveMode, setLiveMode }) => {
 		// Normalize to start of day for consistent date-only comparisons
 		const normalizedStart = startDate.startOf('day');
 		const normalizedEnd = endDate.startOf('day');
-		// Period length inclusive of both start and end dates
-		const periodDays = normalizedEnd.diff(normalizedStart, 'day') + 1;
-		// Previous period ends the day before the current period starts (no overlap)
-		const previousEnd = normalizedStart.subtract(1, 'day');
-		const previousStart = previousEnd.subtract(periodDays - 1, 'day');
+
+		// Calculate previous period to match platform (active_date_range)
+		const { previousStart, previousEnd } = calculatePreviousPeriod(
+			normalizedStart,
+			normalizedEnd
+		);
 
 		getOrderStats(
 			normalizedStart.format('YYYY-MM-DD'),
@@ -111,6 +113,7 @@ export default ({ liveMode, setLiveMode }) => {
 					end_at: endAt,
 					live_mode: liveMode,
 					interval: reportBy,
+					currency,
 				}),
 			});
 			setPreviousData(data);
