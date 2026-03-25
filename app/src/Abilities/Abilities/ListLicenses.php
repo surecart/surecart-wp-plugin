@@ -76,7 +76,7 @@ class ListLicenses extends AbstractAbility {
 				),
 				'revoked'     => array(
 					'type'        => 'boolean',
-					'description' => __( 'Filter by revoked status.', 'surecart' ),
+					'description' => __( 'Set to true to show only revoked licenses, or false for active licenses. This is a boolean filter, not a string status field.', 'surecart' ),
 				),
 				'query'       => array(
 					'type'        => 'string',
