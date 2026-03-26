@@ -122,6 +122,9 @@ class WooCommerceImportTask extends Task {
 
 		if ( is_wp_error( $import ) ) {
 			error_log( 'SureCart WooCommerce Sync: Import failed - ' . $import->get_error_message() ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+
+			// Track failed batch products so they appear on the results page.
+			$this->trackFailedBatch( $products_import_batch, $import->get_error_message() );
 			return;
 		}
 
@@ -227,6 +230,34 @@ class WooCommerceImportTask extends Task {
 			'type'          => $product_type,
 			'reason'        => $reason_messages[ $skip_reason ] ?? __( 'Product skipped', 'surecart' ),
 		];
+	}
+
+	/**
+	 * Track all products in a failed API batch as skipped items.
+	 *
+	 * When the API batch call fails, none of the products in the batch
+	 * are imported. This ensures they appear on the results page.
+	 *
+	 * @param array  $batch         Array of mapped product data sent to the API.
+	 * @param string $error_message The API error message.
+	 *
+	 * @return void
+	 */
+	private function trackFailedBatch( array $batch, string $error_message ) {
+		$failed_items = [];
+		foreach ( $batch as $product_data ) {
+			$failed_items[] = [
+				'wc_product_id' => 0,
+				'name'          => $product_data['name'] ?? __( 'Unknown Product', 'surecart' ),
+				'type'          => 'api_error',
+				'reason'        => sprintf(
+					/* translators: %s: error message from the API */
+					__( 'API import failed: %s', 'surecart' ),
+					$error_message
+				),
+			];
+		}
+		$this->import_state->addSkippedItems( $failed_items );
 	}
 
 	/**
