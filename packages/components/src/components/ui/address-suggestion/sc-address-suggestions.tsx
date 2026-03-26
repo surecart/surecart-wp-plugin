@@ -252,12 +252,23 @@ export class ScAddressSuggestions {
     }
   }
 
-  private getActiveDescendantId(): string | undefined {
+  getActiveDescendantId(): string | undefined {
     return this.focusedIndex >= 0 ? `suggestion-${this.focusedIndex}` : undefined;
   }
 
+  getSuggestionsStatusText(): string {
+    if (!this.showSuggestions || !this.value) return '';
+    if (this.loading) return __('Loading suggestions...', 'surecart');
+    if (this.addressSuggestions.length === 0) return __('No suggestions found', 'surecart');
+    return sprintf(__('%d suggestions available', 'surecart'), this.addressSuggestions.length);
+  }
+
+  isSuggestionsVisible(): boolean {
+    return this.showSuggestions && !!this.value;
+  }
+
   renderAddressSuggestions() {
-    if (!this.showSuggestions || !this.value) {
+    if (!this.isSuggestionsVisible()) {
       return null;
     }
 
@@ -271,7 +282,7 @@ export class ScAddressSuggestions {
         >
           <span>
             {__('Suggestions powered by ', 'surecart')}
-            <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">
+            <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" aria-label={__('Google Privacy Policy (opens in new tab)', 'surecart')}>
               <span>{__('Google', 'surecart')}</span>
             </a>
           </span>
@@ -335,7 +346,9 @@ export class ScAddressSuggestions {
             role="presentation"
             tabindex="-1"
           >
-            <button onClick={() => this.manualAddress()}>{__('Enter address manually', 'surecart')}</button>
+            <button onClick={() => this.manualAddress()} aria-label={__('Enter address manually instead of using suggestions', 'surecart')}>
+              {__('Enter address manually', 'surecart')}
+            </button>
           </li>
         )}
       </ul>
@@ -343,17 +356,23 @@ export class ScAddressSuggestions {
   }
 
   render() {
+    const suggestionsVisible = this.isSuggestionsVisible();
+
     return (
       <div part="base">
+        {window?.scData?.google_map_api_key && (
+          <span class="sr-only">{__('Start typing to see address suggestions. Additional fields will appear after selection.', 'surecart')}</span>
+        )}
+
         <sc-input
           exportparts="base:input__base, input, form-control, label, help-text"
           value={this?.value}
           onScInput={(e: any) => this.handleInputChange(e)}
-          autocomplete="street-address"
+          autocomplete="off"
           placeholder={this.label}
           aria-label={this.label}
-          aria-expanded={this.showSuggestions ? 'true' : 'false'}
-          aria-controls="address-suggestions-listbox"
+          aria-expanded={suggestionsVisible ? 'true' : 'false'}
+          aria-controls={suggestionsVisible ? 'address-suggestions-listbox' : undefined}
           aria-activedescendant={this.getActiveDescendantId()}
           role="combobox"
           name={this.names?.line_1}
@@ -362,12 +381,17 @@ export class ScAddressSuggestions {
           {...this.inputProps}
         />
 
+        <div role="status" aria-live="polite" aria-atomic="true" class="sr-only">
+          {this.getSuggestionsStatusText()}
+        </div>
+
         <div
           class={{
             'sc-address__suggestions': true,
-            'sc-address__suggestions--visible': this.showSuggestions,
+            'sc-address__suggestions--visible': suggestionsVisible,
           }}
           part="suggestions"
+          aria-hidden={!suggestionsVisible ? 'true' : 'false'}
         >
           {this.renderAddressSuggestions()}
         </div>

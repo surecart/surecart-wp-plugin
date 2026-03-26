@@ -56,7 +56,12 @@ sc-input {
       color: var(--sc-color-primary);
     }
 
-    &:focus {
+    &:focus-visible {
+      outline: 2px solid var(--sc-focus-ring-color, var(--sc-color-primary));
+      outline-offset: -2px;
+    }
+
+    &:focus:not(:focus-visible) {
       outline: none;
     }
 
@@ -72,12 +77,12 @@ sc-input {
     }
 
     &--no-result {
-      color: var(--sc-color-gray-500);
+      color: var(--sc-color-gray-600);
     }
 
     &--powered-by {
       font-size: var(--sc-font-size-small);
-      color: var(--sc-color-gray-500);
+      color: var(--sc-color-gray-600);
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -86,7 +91,7 @@ sc-input {
       margin-top: 1px;
 
       a {
-        color: var(--sc-color-gray-500);
+        color: var(--sc-color-gray-600);
         text-decoration: none;
 
         span {
@@ -102,7 +107,7 @@ sc-input {
       button {
         background: none;
         border: none;
-        color: var(--sc-color-gray-500);
+        color: var(--sc-color-gray-600);
         font-size: var(--sc-font-size-small);
         padding: 0;
         cursor: pointer;
@@ -110,7 +115,23 @@ sc-input {
         &:hover {
           text-decoration: underline;
         }
+
+        &:focus-visible {
+          outline: 2px solid var(--sc-focus-ring-color, var(--sc-color-primary));
+          outline-offset: 2px;
+        }
       }
     }
   }
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
 }
