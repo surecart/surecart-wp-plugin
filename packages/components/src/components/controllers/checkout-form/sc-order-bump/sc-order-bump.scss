@@ -8,6 +8,8 @@ sc-choice::part(base) {
   padding: 0;
   overflow: hidden;
   border-radius: var(--sc-order-bump-border-radius, 12px);
+  // !important is needed to override sc-choice's checked/focus styles,
+  // but it blocks consumer overrides via ::part(choice__base).
   border-color: var(--sc-order-bump-border-color, #e0e0e0) !important;
   box-shadow: none !important;
   outline: none !important;

@@ -45,6 +45,7 @@ export class ScOrderBump {
         speak(__('Order bump applied.', 'surecart'));
       }
     } catch (e) {
+      console.error('[sc-order-bump] updateLineItem failed:', e);
       speak(__('Something went wrong. Please try again.', 'surecart'));
     } finally {
       this.loading = false;
@@ -142,7 +143,7 @@ export class ScOrderBump {
           part="base-content"
           class="bump"
           onClick={e => e.stopPropagation()}
-          onKeyDown={e => e.stopPropagation()}
+          onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') e.stopPropagation(); }}
         >
           {!!product?.line_item_image?.src && <img {...(product?.line_item_image as any)} class="bump__image" part="image" />}
           <div class="bump__text" part="text">
@@ -190,6 +191,8 @@ export class ScOrderBump {
             part="button"
             onClick={() => this.updateLineItem()}
             aria-label={lineItem ? __('Remove from order', 'surecart') : __('Add to order', 'surecart')}
+            aria-pressed={!!lineItem}
+            aria-busy={this.loading}
           >
             {this.loading ? <sc-spinner /> : <sc-icon name={lineItem ? 'check' : 'plus'} />}
           </button>
