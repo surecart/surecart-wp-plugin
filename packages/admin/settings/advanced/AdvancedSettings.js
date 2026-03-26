@@ -172,7 +172,16 @@ export default () => {
 		setError(null);
 		try {
 			// Validate Google Maps API key if enabled.
-			if (googleMapApiEnabled && !!googleMapApiKey) {
+			if (googleMapApiEnabled) {
+				if (!googleMapApiKey) {
+					setError(
+						__(
+							'Please enter a Google Maps API key or disable the Google Maps API.',
+							'surecart'
+						)
+					);
+					return;
+				}
 				const isValid = await validateGoogleMapApiKey(googleMapApiKey);
 				if (!isValid) return;
 			}
@@ -440,7 +449,7 @@ export default () => {
 					</span>
 				</ScSwitch>
 
-				{showNotice && googleMapApiKey && (
+				{showNotice && (
 					<ScAlert open>
 						<span slot="title">{__('Important', 'surecart')}</span>
 						{__(
@@ -455,10 +464,7 @@ export default () => {
 						<ScInput
 							value={googleMapApiKey}
 							label={__('Google Maps API Key', 'surecart')}
-							placeholder={__(
-								'Google Maps API Key',
-								'surecart'
-							)}
+							placeholder={__('Google Maps API Key', 'surecart')}
 							onScInput={(e) =>
 								setGoogleMapApiKey(e.target.value)
 							}
