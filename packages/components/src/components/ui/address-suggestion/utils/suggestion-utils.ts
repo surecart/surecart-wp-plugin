@@ -1,5 +1,5 @@
 import { Address, AddressSuggestion, GoogleMapPlace } from 'src/types';
-import { getAddressLabels, transformPlaceDetails } from 'src/functions/google-maps';
+import { getAddressLabels, transformPlaceDetails, getStreetAddress } from 'src/functions/google-maps';
 import { getCountryRegions } from 'src/functions/address';
 
 const HTML_ESCAPE_MAP: Record<string, string> = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
@@ -97,7 +97,7 @@ export async function fetchPlaceDetails(
     updatedAddress: {
       ...address,
       ...placeDetails,
-      line_1: place?.displayName ?? '',
+      line_1: getStreetAddress(place?.addressComponents) || place?.displayName || '',
     },
     updatedRegions,
   };

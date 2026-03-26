@@ -11,6 +11,16 @@ const findAddressComponent = (addressComponents: Array<GoogleMapAddressComponent
 };
 
 /**
+ * Build a street address from address components (street_number + route).
+ */
+export function getStreetAddress(addressComponents: Array<GoogleMapAddressComponents> | null): string {
+  if (!addressComponents) return '';
+  const streetNumber = findAddressComponent(addressComponents, 'street_number')?.longText || '';
+  const route = findAddressComponent(addressComponents, 'route')?.longText || '';
+  return [streetNumber, route].filter(Boolean).join(' ');
+}
+
+/**
  * Get the state only if it exists in our regions list and matches the value.
  */
 const getState = (addressComponents: Array<GoogleMapAddressComponents>, regions: Array<{ value: string; label: string }>) => {
@@ -117,7 +127,7 @@ export async function getCurrentUserCountryCode() {
     return null;
   }
 
-  const cached = sessionStorage.getItem('sc_user_country');
+  const cached = sessionStorage.getItem('surecart_user_country');
   if (cached) return cached;
 
   try {
@@ -135,7 +145,7 @@ export async function getCurrentUserCountryCode() {
 
     const countryCode = countryData?.results?.[0]?.address_components?.find(component => component.types.includes('country'))?.short_name || null;
     if (countryCode) {
-      sessionStorage.setItem('sc_user_country', countryCode);
+      sessionStorage.setItem('surecart_user_country', countryCode);
     }
     return countryCode;
   } catch {
