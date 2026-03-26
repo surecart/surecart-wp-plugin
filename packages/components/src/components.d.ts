@@ -60,7 +60,7 @@ export namespace Components {
         /**
           * Props for the input element
          */
-        "inputProps": any;
+        "inputProps": Record<string, unknown>;
         /**
           * The label for the address input
          */
@@ -7184,7 +7184,7 @@ declare namespace LocalJSX {
         /**
           * Props for the input element
          */
-        "inputProps"?: any;
+        "inputProps"?: Record<string, unknown>;
         /**
           * The label for the address input
          */

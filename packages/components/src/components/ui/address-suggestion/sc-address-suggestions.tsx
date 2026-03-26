@@ -47,7 +47,7 @@ export class ScAddressSuggestions {
   @Prop() label: string = __('Address', 'surecart');
 
   /** Props for the input element */
-  @Prop() inputProps: any = {};
+  @Prop() inputProps: Record<string, unknown> = {};
 
   /** If the address input is disabled */
   @Prop() disabled: boolean = false;
