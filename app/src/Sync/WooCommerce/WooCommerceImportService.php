@@ -106,6 +106,9 @@ class WooCommerceImportService {
 			return 0;
 		}
 
+		// Purge stale import flags (throttled — runs once every 6 hours).
+		$this->purgeStaleImportMeta();
+
 		// Pre-fetch already-imported product IDs (EXISTS meta query is faster than NOT EXISTS).
 		$imported_ids = get_posts(
 			[
@@ -134,6 +137,92 @@ class WooCommerceImportService {
 		}
 
 		return (int) $products->total;
+	}
+
+	/**
+	 * Cross-reference WC import flags against local sc_product posts.
+	 * Clears stale _surecart_imported meta for WC products whose
+	 * corresponding SC product no longer exists locally.
+	 *
+	 * Throttled to run at most once every 6 hours.
+	 *
+	 * @return void
+	 */
+	protected function purgeStaleImportMeta() {
+		// Throttle: skip if already checked recently.
+		if ( get_transient( 'sc_woo_import_purge_checked' ) ) {
+			return;
+		}
+
+		// 1. Get all WC products marked as imported.
+		$imported_wc_ids = get_posts(
+			[
+				'post_type'   => 'product',
+				'meta_key'    => '_surecart_imported', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+				'fields'      => 'ids',
+				'numberposts' => -1,
+			]
+		);
+
+		// Mark as checked (even if nothing to do).
+		set_transient( 'sc_woo_import_purge_checked', true, 6 * HOUR_IN_SECONDS );
+
+		if ( empty( $imported_wc_ids ) ) {
+			return;
+		}
+
+		// 2. Single DB query: get all wc_product_ids from sc_product posts.
+		$valid_wc_ids = $this->getValidImportedWcIds();
+
+		// 3. Find stale entries.
+		$stale_wc_ids = array_diff( $imported_wc_ids, $valid_wc_ids );
+
+		if ( empty( $stale_wc_ids ) ) {
+			return;
+		}
+
+		// 4. Clear stale import flags.
+		foreach ( $stale_wc_ids as $wc_id ) {
+			delete_post_meta( (int) $wc_id, '_surecart_imported' );
+		}
+
+		// 5. Invalidate cached excluded IDs.
+		delete_transient( 'sc_woo_import_excluded_ids' );
+	}
+
+	/**
+	 * Single DB query to extract wc_product_id values from sc_product post meta.
+	 * Uses LIKE to skip non-WC products at the DB level.
+	 *
+	 * @return int[] Valid WC product IDs that still have a local SC product.
+	 */
+	protected function getValidImportedWcIds() {
+		global $wpdb;
+
+		// One query: join posts + postmeta, filter to sc_product with wc_product_id.
+		$rows = $wpdb->get_col(
+			"SELECT pm.meta_value
+			 FROM {$wpdb->postmeta} pm
+			 JOIN {$wpdb->posts} p ON p.ID = pm.post_id
+			 WHERE p.post_type = 'sc_product'
+			   AND pm.meta_key = 'product'
+			   AND pm.meta_value LIKE '%wc_product_id%'"
+		);
+
+		$valid_ids = [];
+		foreach ( $rows as $serialized ) {
+			$data = maybe_unserialize( $serialized );
+
+			// Extract metadata — may be object or array at any nesting level.
+			$metadata = is_object( $data ) ? ( $data->metadata ?? null ) : ( $data['metadata'] ?? null );
+			$wc_id    = is_object( $metadata ) ? ( $metadata->wc_product_id ?? null ) : ( is_array( $metadata ) ? ( $metadata['wc_product_id'] ?? null ) : null );
+
+			if ( ! empty( $wc_id ) ) {
+				$valid_ids[] = (int) $wc_id;
+			}
+		}
+
+		return $valid_ids;
 	}
 
 	/**

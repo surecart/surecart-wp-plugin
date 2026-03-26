@@ -5,6 +5,7 @@ namespace SureCart\Sync;
 use SureCart\Controllers\Admin\Products\ProductsController;
 use SureCart\Sync\CustomerSyncService;
 use SureCart\Sync\WooCommerce\WooCommerceImportJob;
+use SureCart\Sync\WooCommerce\WooCommerceImportCleanupService;
 use SureCart\Sync\WooCommerce\WooCommerceImportService;
 use SureCart\Sync\WooCommerce\WooCommerceImportTask;
 use SureCart\Sync\PostSyncService;
@@ -70,6 +71,7 @@ class SyncServiceProvider implements ServiceProviderInterface {
 		$container['surecart.process.product_post.sync'] = fn () => new PostSyncService();
 		$container['surecart.sync.customers']            = fn () => new CustomerSyncService();
 		$container['surecart.sync.woocommerce_products'] = fn ( $c ) => new WooCommerceImportService( $app, $c['surecart.sync.import_state.woo'] );
+		$container['surecart.sync.woo_import_cleanup']  = fn () => new WooCommerceImportCleanupService();
 		$container['surecart.sync.batch']                = fn () => new BatchCheckService();
 
 		$container['surecart.sync.content'] = fn () => new ContentSyncService( $app );
@@ -101,6 +103,7 @@ class SyncServiceProvider implements ServiceProviderInterface {
 		$container['surecart.sync.products']->bootstrap();
 		$container['surecart.sync.customers']->bootstrap();
 		$container['surecart.sync.woocommerce_products']->bootstrap();
+		$container['surecart.sync.woo_import_cleanup']->bootstrap();
 		$container['surecart.sync.store']->bootstrap();
 		$container['surecart.sync.content']->bootstrap();
 
