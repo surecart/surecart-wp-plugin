@@ -2,6 +2,7 @@ import { Component, Element, Event, EventEmitter, h, Method, Prop, State, Watch 
 import { __ } from '@wordpress/i18n';
 import { countryChoices, getCountryDetails } from '../../../functions/address';
 import { reportChildrenValidity } from '../../../functions/form-data';
+import { getCurrentUserCountryCode } from '../../../functions/google-maps';
 import { Address, CountryLocaleFieldValue } from '../../../types';
 
 const DEFAULT_COUNTRY_FIELDS: Array<CountryLocaleFieldValue> = [
@@ -178,6 +179,18 @@ export class ScAddress {
     this.initCountryChoices();
     this.handleAddressChange();
     this.handleNameChange();
+    this.fetchUserCountry();
+  }
+
+  async fetchUserCountry() {
+    if (this.address?.country) {
+      return;
+    }
+
+    const countryCode = await getCurrentUserCountryCode();
+    if (countryCode) {
+      this.updateAddress({ country: countryCode });
+    }
   }
 
   @Method()
