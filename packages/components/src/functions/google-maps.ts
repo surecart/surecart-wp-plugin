@@ -44,11 +44,11 @@ const getState = (addressComponents: Array<GoogleMapAddressComponents>, regions:
  */
 export function transformPlaceDetails(addressComponents: Array<GoogleMapAddressComponents>, regions: Array<{ value: string; label: string }>): Address {
   return {
-    line_2: findAddressComponent(addressComponents, 'sublocality')?.shortText || undefined,
-    postal_code: findAddressComponent(addressComponents, 'postal_code')?.shortText || undefined,
-    city: findAddressComponent(addressComponents, 'locality')?.longText || undefined,
-    state: getState(addressComponents, regions)?.shortText || undefined,
-    country: findAddressComponent(addressComponents, 'country')?.shortText || undefined,
+    line_2: findAddressComponent(addressComponents, 'sublocality')?.shortText || null,
+    postal_code: findAddressComponent(addressComponents, 'postal_code')?.shortText || null,
+    city: findAddressComponent(addressComponents, 'locality')?.longText || null,
+    state: getState(addressComponents, regions)?.shortText || null,
+    country: findAddressComponent(addressComponents, 'country')?.shortText || null,
   };
 }
 

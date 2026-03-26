@@ -1265,13 +1265,13 @@ export interface Customer extends Object {
 }
 
 export interface Address extends Object {
-  name?: string;
-  line_1?: string;
-  line_2?: string;
-  city?: string;
-  state?: string;
-  postal_code?: string;
-  country?: string;
+  name?: string | null;
+  line_1?: string | null;
+  line_2?: string | null;
+  city?: string | null;
+  state?: string | null;
+  postal_code?: string | null;
+  country?: string | null;
 }
 
 export interface GoogleMapAddressComponents extends Object {
