@@ -156,13 +156,9 @@ export class ScAddressSuggestions {
   }
 
   handleInputChange(e: any) {
-    this.value = e.target?.value;
     this.showSuggestions = true;
+    this.value = e.target?.value;
     this.scChange.emit();
-
-    if (this.address?.country && e.target?.value) {
-      this.debouncedFetchAddressSuggestions(e.target?.value);
-    }
   }
 
   handleKeyDown(event: KeyboardEvent) {
@@ -260,6 +256,18 @@ export class ScAddressSuggestions {
     if (!this.showSuggestions || !this.value) return '';
     if (this.loading) return __('Loading suggestions...', 'surecart');
     if (this.addressSuggestions.length === 0) return __('No suggestions found', 'surecart');
+
+    // Announce the focused suggestion for screen readers.
+    if (this.focusedIndex >= 0 && this.addressSuggestions[this.focusedIndex]) {
+      return sprintf(
+        /* translators: 1: suggestion text, 2: current position, 3: total suggestions */
+        __('%1$s, %2$d of %3$d. Press Enter to select.', 'surecart'),
+        this.addressSuggestions[this.focusedIndex].fullDisplayName,
+        this.focusedIndex + 1,
+        this.addressSuggestions.length,
+      );
+    }
+
     return sprintf(__('%d suggestions available', 'surecart'), this.addressSuggestions.length);
   }
 
