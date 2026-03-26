@@ -23,6 +23,7 @@ export class ScAddressSuggestions {
   private boundHandleKeyDown: (e: KeyboardEvent) => void;
   private boundHandleOutsideClick: (e: Event) => void;
   private abortController: AbortController;
+  private isSyncingFromAddress: boolean = false;
 
   @Prop({ mutable: true }) address: Partial<Address> = {
     country: null,
@@ -113,6 +114,7 @@ export class ScAddressSuggestions {
 
   @Watch('value')
   handleAddressLine1Change(newValue: string) {
+    if (this.isSyncingFromAddress) return;
     if (!this.address?.country) return;
     if (newValue && this.showSuggestions) {
       this.debouncedFetchAddressSuggestions(newValue);
@@ -122,7 +124,9 @@ export class ScAddressSuggestions {
   @Watch('address')
   handleAddressChange() {
     if (!this.address?.country) return;
-    this.value = this.address.line_1;
+    this.isSyncingFromAddress = true;
+    this.value = this.address.line_1 || '';
+    this.isSyncingFromAddress = false;
     this.toggleAddressInputs();
 
     if (this.address.line_1 && this.showSuggestions) {
