@@ -2,7 +2,6 @@
  * Internal dependencies.
  */
 import { Address, GoogleMapAddressComponents } from 'src/types';
-import { getCountryDetails } from './address';
 
 /**
  * Helper function to find an address component by type.
@@ -142,19 +141,4 @@ export async function getCurrentUserCountryCode() {
   } catch {
     return null;
   }
-}
-
-/**
- * Get the regions for a given country using the Atlas API.
- */
-export async function getCountryRegions(country: string) {
-  if (!country) {
-    return [];
-  }
-
-  const details = await getCountryDetails(country);
-  return (details?.states || []).map((state: { code: string; name: string }) => ({
-    value: state.code,
-    label: state.name,
-  }));
 }

@@ -1,5 +1,6 @@
 import { Address, AddressSuggestion, GoogleMapPlace } from 'src/types';
-import { getAddressLabels, transformPlaceDetails, getCountryRegions } from 'src/functions/google-maps';
+import { getAddressLabels, transformPlaceDetails } from 'src/functions/google-maps';
+import { getCountryRegions } from 'src/functions/address';
 
 const HTML_ESCAPE_MAP: Record<string, string> = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
 const escapeHtml = (s: string) => s.replace(/[&<>"']/g, c => HTML_ESCAPE_MAP[c]);
