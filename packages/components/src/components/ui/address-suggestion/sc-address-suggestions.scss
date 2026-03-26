@@ -19,11 +19,13 @@ sc-input {
   border: solid 1px var(--sc-panel-border-color);
   border-radius: var(--sc-border-radius-medium);
   opacity: 0;
+  visibility: hidden;
   transform: translateY(2px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
 
   &--visible {
     opacity: 1;
+    visibility: visible;
     transform: translateY(0);
   }
 
