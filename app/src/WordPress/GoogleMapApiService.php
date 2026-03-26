@@ -40,7 +40,12 @@ class GoogleMapApiService {
 			return $value;
 		}
 
-		return Encryption::encrypt( $value );
+		$encrypted = Encryption::encrypt( $value );
+		if ( is_wp_error( $encrypted ) ) {
+			return $old_value;
+		}
+
+		return $encrypted;
 	}
 
 	/**
@@ -56,7 +61,7 @@ class GoogleMapApiService {
 		}
 
 		$decrypted_value = Encryption::decrypt( $value );
-		if ( empty( $decrypted_value ) ) {
+		if ( empty( $decrypted_value ) || is_wp_error( $decrypted_value ) ) {
 			return '';
 		}
 
