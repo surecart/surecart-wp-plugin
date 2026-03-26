@@ -3186,6 +3186,10 @@ export namespace Components {
          */
         "removable": boolean;
         /**
+          * The review button link. If set, a review button will be shown linking to this URL.
+         */
+        "reviewButtonLink": string;
+        /**
           * The line item scratch amount
          */
         "scratch": string;
@@ -10573,6 +10577,10 @@ declare namespace LocalJSX {
           * Is the line item removable
          */
         "removable"?: boolean;
+        /**
+          * The review button link. If set, a review button will be shown linking to this URL.
+         */
+        "reviewButtonLink"?: string;
         /**
           * The line item scratch amount
          */

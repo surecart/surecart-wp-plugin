@@ -446,6 +446,14 @@ dispatch(coreStore).addEntities([
 		baseURLParams: { context: 'edit' },
 	},
 	{
+		name: 'parcel-template',
+		kind: 'surecart',
+		label: __('Parcel Template', 'surecart'),
+		baseURL: '/surecart/v1/parcel_templates',
+		baseURLParams: { context: 'edit' },
+		supportsPagination: true,
+	},
+	{
 		name: 'stat',
 		kind: 'surecart',
 		label: __('Statistic', 'surecart'),

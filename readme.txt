@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: ecommerce, online store, subscriptions, stripe, payments
 Requires at least: 6.7
 Tested up to: 6.9
-Stable tag: 4.0.3
+Stable tag: 4.1.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -421,6 +421,14 @@ Yes, the checkout form can be customized using our visual builder. You can chang
 Accessibility is a huge priority for the entire team building SureCart. As you know, accessibility is an ongoing improvement task. Our development and QA teams are trained in accessibility best practices and build/test each new feature for accessibility. If you come across any edge issues, we want to know about it and will prioritize its resolution. Please contact us via our website.
 
 == Changelog ==
+
+= 4.1.0 - March 24th, 2026 = 
+- New: Learn section on settings page to help with onboarding and setup.
+- New: Shipping parcels creation for shipping with standardized boxes.
+- Improvement: Add "Review Product" buttons to customer dashboard order view screen.
+- Improvement: Select specific products, prices, coupons, promotions for autofee instead of just name matching.
+- Fix: Edge case where order detail page crash when product image has dominant color metadata.
+- Fix: Don't add pointer cursor to summary block if its not collapsible.
 
 = 4.0.3 - March 12th, 2026 =
 - New: Dark mode brand settings for store logo and theme colors.
