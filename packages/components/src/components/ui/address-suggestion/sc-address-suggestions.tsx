@@ -228,13 +228,13 @@ export class ScAddressSuggestions {
     this.boundHandleKeyDown = evt => this.handleKeyDown(evt);
 
     this.handleAddressChange();
-    this.toggleAddressInputs();
 
     document.addEventListener('mousedown', this.boundHandleOutsideClick);
   }
 
   componentDidLoad() {
     this.el.addEventListener('keydown', this.boundHandleKeyDown);
+    this.toggleAddressInputs();
   }
 
   disconnectedCallback() {
