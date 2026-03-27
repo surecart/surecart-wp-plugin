@@ -181,6 +181,45 @@ class Checkout extends Model {
 	}
 
 	/**
+	 * Get the subtotal scratch amount (sum of all line items' scratch amounts).
+	 *
+	 * @return int
+	 */
+	public function getSubtotalScratchAmountAttribute() {
+		if ( empty( $this->line_items ) || empty( $this->line_items->data ) ) {
+			return 0;
+		}
+		return array_reduce(
+			$this->line_items->data ?? [],
+			function ( $sum, $item ) {
+				return $sum + (int) ( $item->scratch_amount ?? 0 );
+			},
+			0
+		);
+	}
+
+	/**
+	 * Get the display subtotal scratch amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getSubtotalScratchDisplayAmountAttribute() {
+		$scratch = $this->subtotal_scratch_amount;
+		return ! empty( $scratch ) ? Currency::format( $scratch, $this->currency ) : '';
+	}
+
+	/**
+	 * Check if the checkout has a subtotal scratch amount different from the subtotal.
+	 *
+	 * @return bool
+	 */
+	public function getHasSubtotalScratchAmountAttribute() {
+		$scratch  = $this->subtotal_scratch_amount;
+		$subtotal = (int) ( $this->subtotal_amount ?? 0 );
+		return $scratch > 0 && $scratch > $subtotal;
+	}
+
+	/**
 	 * Get the converts currency attribute.
 	 * We should convert currency by default.
 	 *

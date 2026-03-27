@@ -145,6 +145,14 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, Object
 	protected $clears_account_cache = false;
 
 	/**
+	 * Whether a get_attribute filter is currently executing on this instance.
+	 * While true, getAttribute() bypasses the filter to prevent recursion.
+	 *
+	 * @var bool
+	 */
+	protected $is_filtering_attribute = false;
+
+	/**
 	 * Model constructor
 	 *
 	 * @param array $attributes Optional attributes.
@@ -1071,7 +1079,15 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, Object
 	}
 
 	/**
-	 * Get a specific attribute
+	 * Get a specific attribute.
+	 *
+	 * Fires the `surecart/{object_name}/get_attribute` filter, allowing
+	 * third-party code to modify the returned value.
+	 *
+	 * Note: filter callbacks should use $value (first argument) for the
+	 * current attribute. Accessing other attributes on $model (e.g.
+	 * $model->slug inside a name filter) returns unfiltered values to
+	 * prevent recursion. Avoid re-reading the same key — use $value instead.
 	 *
 	 * @param string $key Attribute name.
 	 *
@@ -1087,10 +1103,27 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, Object
 		$getter = $this->getMutator( $key, 'get' );
 
 		if ( $getter ) {
-			return $this->{$getter}( $attribute );
-		} elseif ( ! is_null( $attribute ) ) {
-			return $attribute;
+			$attribute = $this->{$getter}( $attribute );
 		}
+
+		if ( ! $this->is_filtering_attribute
+			&& $this->object_name
+			&& has_filter( "surecart/{$this->object_name}/get_attribute" )
+		) {
+			$this->is_filtering_attribute = true;
+			try {
+				$attribute = apply_filters(
+					"surecart/{$this->object_name}/get_attribute",
+					$attribute,
+					$key,
+					$this
+				);
+			} finally {
+				$this->is_filtering_attribute = false;
+			}
+		}
+
+		return $attribute;
 	}
 
 	/**

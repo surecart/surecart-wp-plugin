@@ -84,15 +84,15 @@ class LearnDashGroupService extends IntegrationService implements IntegrationInt
 	public function getItems( $items = [], $search = '' ) {
 		$course_query = new \WP_Query(
 			[
-				'post_type' => 'groups',
-				's'         => $search,
-				'per_page'  => 10,
+				'post_type'      => 'groups',
+				's'              => $search,
+				'posts_per_page' => 100,
 			]
 		);
 
 		if ( ( isset( $course_query->posts ) ) && ( ! empty( $course_query->posts ) ) ) {
 			$items = array_map(
-				function( $post ) {
+				function ( $post ) {
 					return (object) [
 						'id'    => $post->ID,
 						'label' => $post->post_title,
