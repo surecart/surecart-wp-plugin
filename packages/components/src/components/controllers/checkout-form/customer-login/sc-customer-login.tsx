@@ -37,13 +37,19 @@ export class ScCustomerLogin {
   /** Code sent icon */
   @State() codeSentIcon: string = '';
 
+  /** Seconds remaining in the resend cooldown */
+  @State() resendCooldown: number = 60;
+
+  /** Interval timer reference for cleanup */
+  private cooldownInterval: any = null;
+
   /** Verified */
   @State() verified: boolean = false;
 
   /** Error */
   @State() error: string = '';
 
-  /** Code Error comin from the parent */
+  /** Code Error coming from the parent */
   @Prop() codeError: string = '';
 
   /** Login Password */
@@ -67,6 +73,7 @@ export class ScCustomerLogin {
         data: {
           login: userState.email,
           code: code,
+          checkout_mode: checkoutState.mode,
         },
       })) as any;
       userState.verificationStatus = VERIFIED;
@@ -113,7 +120,7 @@ export class ScCustomerLogin {
         data,
       })) as Checkout;
     } catch (error) {
-      console.error(error);
+      this.error = error?.message || __('Failed to update checkout. Please try again.', 'surecart');
     } finally {
       this.busy = false;
     }
@@ -137,9 +144,11 @@ export class ScCustomerLogin {
       this.codeSentIcon = 'check';
 
       setTimeout(() => {
-        this.codeSentLabel = __('Resend Code', 'surecart');
+        this.codeSentLabel = '';
         this.codeSentIcon = '';
       }, 3000);
+
+      this.startCooldown();
     } catch (e) {
       console.error(e);
       this.handleCodeSendError(e);
@@ -152,12 +161,32 @@ export class ScCustomerLogin {
     (error?.additional_errors || []).forEach((e: any) => {
       if (e?.code === 'verification_code.email.blocked_duplicate') {
         this.error = e?.message || __('A code was just sent to you, please wait a minute before resending.', 'surecart');
-
-        setTimeout(() => {
-          this.error = '';
-        }, 3000);
+        this.startCooldown();
       }
     });
+  }
+
+  startCooldown() {
+    clearInterval(this.cooldownInterval);
+    this.resendCooldown = 60;
+
+    this.cooldownInterval = setInterval(() => {
+      this.resendCooldown--;
+
+      if (this.resendCooldown <= 0) {
+        clearInterval(this.cooldownInterval);
+        this.cooldownInterval = null;
+        speak(__('You can resend the code now.', 'surecart'), 'assertive');
+      }
+    }, 1000);
+  }
+
+  componentWillLoad() {
+    this.startCooldown();
+  }
+
+  disconnectedCallback() {
+    clearInterval(this.cooldownInterval);
   }
 
   async loginByPassword(e: any) {
@@ -182,7 +211,6 @@ export class ScCustomerLogin {
         apiFetch.nonceMiddleware.nonce = nonce;
       }
 
-      this.busy = false;
       this.verified = true;
 
       userState.loggedIn = true;
@@ -238,13 +266,18 @@ export class ScCustomerLogin {
         </div>
 
         <div class="customer-code__resend">
-          <sc-button type="link" onClick={() => this.resendCode()} disabled={this.codeResending} loading={this.codeResending}>
+          <sc-button type="link" onClick={() => this.resendCode()} disabled={this.codeResending || this.resendCooldown > 0} loading={this.codeResending}>
             {!!this.codeSentIcon ? (
               <span style={{ color: 'var(--sc-color-success-900)' }}>
                 <sc-icon name={this.codeSentIcon} aria-hidden="true" />
               </span>
+            ) : this.resendCooldown > 0 ? (
+              <span>
+                {__('Resend in', 'surecart')} {this.resendCooldown}
+                {__('s', 'surecart')}
+              </span>
             ) : (
-              <span>{this.codeSentLabel || __('Resend Code', 'surecart')}</span>
+              <span>{__('Resend Code', 'surecart')}</span>
             )}
           </sc-button>
         </div>
