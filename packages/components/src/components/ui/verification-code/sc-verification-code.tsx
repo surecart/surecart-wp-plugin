@@ -138,6 +138,8 @@ export class ScVerificationCode {
             onKeyDown={e => this.handleKeyDown(e, index)}
             onFocus={e => this.handleFocus(e)}
             autocomplete="one-time-code"
+            inputmode="numeric"
+            pattern="[0-9]*"
             autofocus={index === 0}
             required
             aria-label={__(`Verification code ${index + 1} of ${this.total}`, 'surecart')}
