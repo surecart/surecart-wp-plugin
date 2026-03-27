@@ -40,7 +40,12 @@ class TimeDate {
 	 * @return string
 	 */
 	public static function formatDate( $timestamp ) {
-		return wp_date( self::getDateFormat(), $timestamp );
+		switch_to_locale( get_locale() );
+		try {
+			return wp_date( self::getDateFormat(), $timestamp );
+		} finally {
+			restore_previous_locale();
+		}
 	}
 
 	/**
@@ -49,7 +54,12 @@ class TimeDate {
 	 * @return string
 	 */
 	public static function formatTime( $timestamp ) {
-		return wp_date( self::getTimeFormat(), $timestamp );
+		switch_to_locale( get_locale() );
+		try {
+			return wp_date( self::getTimeFormat(), $timestamp );
+		} finally {
+			restore_previous_locale();
+		}
 	}
 
 	/**
@@ -69,14 +79,19 @@ class TimeDate {
 	 * @return string
 	 */
 	public static function humanTimeDiff( $timestamp, $ignore_after = '1 day' ) {
-		if ( $timestamp > strtotime( "-$ignore_after", time() ) ) {
-			return sprintf(
-			/* translators: %s: human-readable time difference */
-				_x( '%s ago', '%s = human-readable time difference', 'surecart' ),
-				human_time_diff( $timestamp, time() )
-			);
-		} else {
-			return self::formatDate( $timestamp );
+		switch_to_locale( get_locale() );
+		try {
+			if ( $timestamp > strtotime( "-$ignore_after", time() ) ) {
+				return sprintf(
+				/* translators: %s: human-readable time difference */
+					_x( '%s ago', '%s = human-readable time difference', 'surecart' ),
+					human_time_diff( $timestamp, time() )
+				);
+			} else {
+				return self::formatDate( $timestamp );
+			}
+		} finally {
+			restore_previous_locale();
 		}
 	}
 
