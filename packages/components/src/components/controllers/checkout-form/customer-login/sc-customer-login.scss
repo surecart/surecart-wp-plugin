@@ -72,14 +72,20 @@
   &__preview {
     font-weight: var(--sc-font-weight-semibold);
   }
+
+  &__error {
+    color: var(--sc-color-danger-500, red);
+    font-size: 0.8rem;
+    text-align: center;
+  }
 }
 
 .customer-password {
   padding: var(--sc-input-spacing-medium);
-}
 
-.login-error {
-  color: red;
-  font-size: 0.8rem;
-  text-align: center;
+  &__error {
+    color: var(--sc-color-danger-500, red);
+    font-size: 0.8rem;
+    text-align: center;
+  }
 }

@@ -108,6 +108,8 @@ export class ScCustomerLogin {
       }
 
       userState.verificationStatus = UNVERIFIED;
+    } finally {
+      this.busy = false;
     }
   }
 
@@ -134,6 +136,7 @@ export class ScCustomerLogin {
         path: 'surecart/v1/verification_codes',
         data: {
           login: userState.email,
+          checkout_mode: checkoutState.mode,
         },
       });
 
@@ -245,7 +248,7 @@ export class ScCustomerLogin {
             {__('Login', 'surecart')}
           </sc-button>
         </sc-flex>
-        {!!this.error && <p class="login-error">{this.error}</p>}
+        {!!this.error && <p class="customer-password__error" role="alert">{this.error}</p>}
       </div>
     );
   }
@@ -260,7 +263,7 @@ export class ScCustomerLogin {
           <div class="customer-code__reset">
             <sc-verification-code total={6} loading={this.busy} onChange={value => this.verifyCode(value)} />
           </div>
-          {(!!this.error || !!this.codeError) && <p class="login-error">{this.error || this.codeError}</p>}
+          {(!!this.error || !!this.codeError) && <p class="customer-code__error" role="alert">{this.error || this.codeError}</p>}
         </div>
 
         <div class="customer-code__resend">
@@ -294,26 +297,26 @@ export class ScCustomerLogin {
             </div>
             <div class="customer-login__back">
               <sc-button type="text" size="small" onClick={() => resetUser()}>
-                <sc-icon name="x" class="customer-login__back-icon" aria-label={__('Reset User', 'surecart')} />
+                <sc-icon name="x" class="customer-login__back-icon" aria-label={__('Change email address', 'surecart')} />
               </sc-button>
             </div>
           </div>
 
           {this.mode === 'code' ? this.renderCodeView() : this.renderPasswordView()}
-        </div>
 
-        <div class="customer-login__mode">
-          {this.mode === 'code' ? (
-            <sc-button type="text" size="small" onClick={() => (this.mode = 'password')}>
-              <sc-icon name="lock" slot="prefix" aria-hidden="true" />
-              {__('Use Password', 'surecart')}
-            </sc-button>
-          ) : (
-            <sc-button type="text" size="small" onClick={() => (this.mode = 'code')}>
-              <sc-icon name="key" slot="prefix" aria-hidden="true" />
-              {__('Use Login Code', 'surecart')}
-            </sc-button>
-          )}
+          <div class="customer-login__mode">
+            {this.mode === 'code' ? (
+              <sc-button type="text" size="small" onClick={() => (this.mode = 'password')}>
+                <sc-icon name="lock" slot="prefix" aria-hidden="true" />
+                {__('Use Password', 'surecart')}
+              </sc-button>
+            ) : (
+              <sc-button type="text" size="small" onClick={() => (this.mode = 'code')}>
+                <sc-icon name="key" slot="prefix" aria-hidden="true" />
+                {__('Use Login Code', 'surecart')}
+              </sc-button>
+            )}
+          </div>
         </div>
       </Host>
     );
