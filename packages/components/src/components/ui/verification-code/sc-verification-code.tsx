@@ -41,7 +41,7 @@ export class ScVerificationCode {
     // If value is greater than 1, then put all of the characters to the input one by one (e.g. paste).
     if (value.length > 1) {
       const newCodes = [...this.codes];
-      for (let i = 0; i < this.total - index; i++) {
+      for (let i = 0; i < this.total - index && i < value.length; i++) {
         const input = this.getElementByIndex(index + i);
 
         // No need to work with focus, we'll add that manually later.
@@ -72,8 +72,8 @@ export class ScVerificationCode {
       this.getElementByIndex(index).blur();
     }
 
-    // Submit the code, only for the last input changes.
-    if (index === this.codes.length - 1) {
+    // Submit the code when all inputs are filled.
+    if (this.filledAllInputs()) {
       this.handleCodeChange();
     }
   }
