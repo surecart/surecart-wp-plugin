@@ -47,7 +47,7 @@ class LoginRestServiceProvider extends RestServiceProvider implements RestServic
 			'logout',
 			[
 				[
-					'methods'             => \WP_REST_Server::EDITABLE,
+					'methods'             => \WP_REST_Server::CREATABLE,
 					'callback'            => $this->callback( LoginController::class, 'logout' ),
 					'permission_callback' => [ $this, 'logout_permissions_check' ],
 				],
@@ -104,8 +104,17 @@ class LoginRestServiceProvider extends RestServiceProvider implements RestServic
 	 * Only logged in users can logout.
 	 *
 	 * @param \WP_REST_Request $request Full details about the request.
+	 *
+	 * @return true|\WP_Error
 	 */
 	public function logout_permissions_check( $request ) {
-		return is_user_logged_in();
+		if ( ! is_user_logged_in() ) {
+			return new \WP_Error(
+				'rest_not_logged_in',
+				__( 'You must be logged in to logout.', 'surecart' ),
+				[ 'status' => 401 ]
+			);
+		}
+		return true;
 	}
 }

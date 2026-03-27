@@ -19,7 +19,7 @@ import { Checkout } from 'src/types';
 @Component({
   tag: 'sc-customer-login',
   styleUrl: 'sc-customer-login.scss',
-  shadow: false,
+  shadow: true,
 })
 export class ScCustomerLogin {
   /** The mode of the login */
@@ -75,11 +75,18 @@ export class ScCustomerLogin {
         throw { message: __('Verification code is not valid. Please try again.', 'surecart') };
       }
 
+      // Update the nonce after login to prevent rest_cookie_invalid_nonce errors.
+      // @ts-ignore - nonceMiddleware is set in fetch.ts but not in @wordpress/api-fetch types.
+      if (user?.nonce && apiFetch.nonceMiddleware) {
+        // @ts-ignore
+        apiFetch.nonceMiddleware.nonce = user.nonce;
+      }
+
       // Update userState and make the user as logged in user.
       userState.loggedIn = true;
-      userState.name = user?.customer?.first_name + ' ' + user?.customer?.last_name || 'N/A';
+      userState.name = user?.name || [user?.customer?.first_name, user?.customer?.last_name].filter(Boolean).join(' ') || 'N/A';
 
-      speak(__('Verification is successfull. Please continue your purchase.', 'surecart'), 'assertive');
+      speak(__('Verification is successful. Please continue your purchase.', 'surecart'), 'assertive');
 
       // Update checkout with the shipping address.
       await this.updateCheckout({
@@ -159,7 +166,7 @@ export class ScCustomerLogin {
     try {
       this.error = '';
       this.busy = true;
-      const { name, email } = (await apiFetch({
+      const { name, email, nonce } = (await apiFetch({
         method: 'POST',
         path: 'surecart/v1/login',
         data: {
@@ -167,6 +174,14 @@ export class ScCustomerLogin {
           password: this.password,
         },
       })) as any;
+
+      // Update the nonce after login to prevent rest_cookie_invalid_nonce errors.
+      // @ts-ignore - nonceMiddleware is set in fetch.ts but not in @wordpress/api-fetch types.
+      if (nonce && apiFetch.nonceMiddleware) {
+        // @ts-ignore
+        apiFetch.nonceMiddleware.nonce = nonce;
+      }
+
       this.busy = false;
       this.verified = true;
 
