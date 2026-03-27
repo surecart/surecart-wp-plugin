@@ -14,8 +14,11 @@ const maybeUpdateProcessor = () => {
   const ids = [...availableProcessors().map(({ processor_type }) => processor_type), ...availableManualPaymentMethods().map(({ id }) => id)];
   // selected processor is available.
   if (ids.includes(selectedProcessor.id)) return;
-  // set to first if we have one, otherwise unset.
-  selectedProcessor.id = ids?.length ? ids?.[0] : null;
+
+  if (!window?.wp?.hooks?.applyFilters || window.wp.hooks.applyFilters('surecart_auto_select_payment_method', true)) {
+    // set to first if we have one, otherwise unset.
+    selectedProcessor.id = ids?.length ? ids?.[0] : null;
+  }
 };
 
 /**
@@ -24,6 +27,11 @@ const maybeUpdateProcessor = () => {
 const maybeUpdateMethod = () => {
   // get method ids.
   const ids = (availableMethodTypes() || []).map(({ id }) => id);
+  // if the processor is not mollie, unset the method.
+  if (selectedProcessor?.id !== 'mollie') {
+    selectedProcessor.method = null;
+    return;
+  }
   // selected method is available
   if (ids.includes(selectedProcessor.method)) return;
   // if the current method is not available, set the first method.
@@ -39,4 +47,5 @@ onChangeProcessor('id', () => maybeUpdateProcessor());
 
 // when processors and methods are first loaded, select first one.
 onChange('processors', () => maybeUpdateProcessor());
+onChange('disabled', () => maybeUpdateProcessor());
 onChange('methods', () => maybeUpdateMethod());

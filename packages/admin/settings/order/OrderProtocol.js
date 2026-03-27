@@ -7,6 +7,7 @@ import {
 	ScFlex,
 	ScInput,
 	ScSelect,
+	ScSwitch,
 	ScTextarea,
 } from '@surecart/components-react';
 import { useState } from '@wordpress/element';
@@ -37,7 +38,7 @@ export default () => {
 
 	return (
 		<SettingsTemplate
-			title={__('Orders & Receipts', 'surecart')}
+			title={__('Orders & Invoices', 'surecart')}
 			icon={<sc-icon name="shopping-bag"></sc-icon>}
 			onSubmit={onSubmit}
 		>
@@ -114,6 +115,29 @@ export default () => {
 			</SettingsBox>
 
 			<SettingsBox
+				title={__('Payment', 'surecart')}
+				description={__('Configure payment settings.', 'surecart')}
+				loading={!hasLoadedItem}
+			>
+				<ScSwitch
+					checked={item?.require_reusable_payment_methods}
+					onScChange={(e) =>
+						editItem({
+							require_reusable_payment_methods: e.target.checked,
+						})
+					}
+				>
+					{__('Reusable Payment Methods Only', 'surecart')}
+					<span slot="description">
+						{__(
+							'Require all checkouts to only display reusable payment methods - even if a subscription is not present. This allows the payment method to be saved for future purchases, but can limit the payment methods available to customers.',
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
+			</SettingsBox>
+
+			<SettingsBox
 				title={__('Invoices & Receipts', 'surecart')}
 				description={__(
 					'Add additional information to receipts and invoices.',
@@ -139,6 +163,32 @@ export default () => {
 						'surecart'
 					)}
 				></ScTextarea>
+			</SettingsBox>
+
+			<SettingsBox
+				title={__('Upsells', 'surecart')}
+				description={__('Upsell behavior settings.', 'surecart')}
+				loading={!hasLoadedItem}
+			>
+				<ScInput
+					label={__('Time Limit', 'surecart')}
+					value={item?.upsells_expire_after_minutes}
+					onScInput={(e) =>
+						editItem({
+							upsells_expire_after_minutes: e.target.value,
+						})
+					}
+					help={__(
+						'The number of minutes that the upsell offer will be available for after the initial purchase.',
+						'surecart'
+					)}
+					type="number"
+					step="1"
+					min="0"
+					max="1440"
+				>
+					<span slot="suffix">{__('Minutes', 'surecart')}</span>
+				</ScInput>
 			</SettingsBox>
 		</SettingsTemplate>
 	);

@@ -5,7 +5,6 @@ import {
 	ScButton,
 	ScDropdown,
 	ScFlex,
-	ScFormatDate,
 	ScFormatNumber,
 	ScIcon,
 	ScMenu,
@@ -120,21 +119,8 @@ export default ({ subscriptionId }) => {
 						return {
 							period: (
 								<>
-									<ScFormatDate
-										type="timestamp"
-										date={period?.start_at}
-										month="short"
-										day="numeric"
-										year="numeric"
-									/>{' '}
-									&mdash;{' '}
-									<ScFormatDate
-										type="timestamp"
-										date={period?.end_at}
-										month="short"
-										day="numeric"
-										year="numeric"
-									/>
+									{period?.start_at_date} &mdash;{' '}
+									{period?.end_at_date}
 								</>
 							),
 							amount: (
@@ -161,17 +147,9 @@ export default ({ subscriptionId }) => {
 											}}
 										>
 											{__('Next retry:', 'surecart')}{' '}
-											<ScFormatDate
-												type="timestamp"
-												date={
-													period?.next_payment_retry_at
-												}
-												month="short"
-												hour="numeric"
-												minute="numeric"
-												day="numeric"
-												year="numeric"
-											/>
+											{
+												period?.next_payment_retry_at_date_time
+											}
 										</div>
 									)}
 								</ScFlex>

@@ -179,8 +179,8 @@ abstract class IntegrationService extends AbstractIntegration implements Integra
 	public function onPurchaseUpdated( Purchase $purchase, $request ) {
 		$this->purchase = $purchase;
 
-		$data     = $request->data->object ?? null;
-		$previous = $request->data->previous_attributes ?? null;
+		$data     = (object) $request->data->object ?? null;
+		$previous = (object) $request->data->previous_attributes ?? null;
 
 		// we need data or a previous.
 		if ( empty( $data ) || empty( $previous ) ) {
@@ -203,8 +203,27 @@ abstract class IntegrationService extends AbstractIntegration implements Integra
 			return;
 		}
 
+		// price or variant has changed. We need to revoke access to the old one
+		// and provide access to the new one.
+		$previous_variant = $previous->variant ?? null;
+		$previous_price   = $previous->price ?? null;
+		if ( $data->price !== $previous_price || $data->variant !== $previous_variant ) {
+			$previous_purchase = new Purchase(
+				array_merge(
+					$purchase->toArray(),
+					[
+						'price'   => $previous_price,
+						'variant' => $previous_variant,
+					]
+				)
+			);
+			$this->onPurchaseProductUpdated( $purchase, $previous_purchase, $request );
+			return;
+		}
+
 		// The quantity has not changed.
-		if ( (int) $data->quantity === (int) $previous->quantity ) {
+		$previous_quantity = $previous->quantity ?? 1;
+		if ( (int) $data->quantity === $previous_quantity ) {
 			return;
 		}
 
@@ -237,7 +256,7 @@ abstract class IntegrationService extends AbstractIntegration implements Integra
 	 *
 	 * @return void
 	 */
-	public function onPurchaseProductUpdated( \SureCart\Models\Purchase $purchase, \SureCart\Models\Purchase $previous_purchase, $request ) {
+	public function onPurchaseProductUpdated( Purchase $purchase, Purchase $previous_purchase, $request ) {
 		$this->purchase = $purchase;
 
 		// product added.
@@ -256,12 +275,22 @@ abstract class IntegrationService extends AbstractIntegration implements Integra
 
 		// product removed.
 		$integrations = (array) $this->getIntegrationData( $previous_purchase ) ?? [];
+
+		// Check if product has changed for Product upgrade group change.
+		$product_changed = $purchase->product_id !== $previous_purchase->product_id;
+
 		foreach ( $integrations as $integration ) {
 			if ( ! $integration->id ) {
 				continue;
 			}
 
 			if ( $this->purchaseIsNotMatchedWithPriceOrVariant( $integration, $previous_purchase ) ) {
+				continue;
+			}
+
+			// If no price & variant has been added for the integration, don't revoke it.
+			// unless the product has changed with the upgrade group.
+			if ( empty( $integration->price_id ) && empty( $integration->variant_id ) && ! $product_changed ) {
 				continue;
 			}
 
@@ -319,6 +348,11 @@ abstract class IntegrationService extends AbstractIntegration implements Integra
 		$integrations = (array) $this->getIntegrationData( $purchase ) ?? [];
 		foreach ( $integrations as $integration ) {
 			if ( ! $integration->id ) {
+				continue;
+			}
+
+			// If the integration has a price_id or variant_id, then we need to match with specific price or variant.
+			if ( $this->purchaseIsNotMatchedWithPriceOrVariant( $integration, $purchase ) ) {
 				continue;
 			}
 
@@ -410,8 +444,8 @@ abstract class IntegrationService extends AbstractIntegration implements Integra
 	/**
 	 * Check if the integration does not match with purchase price or variant.
 	 *
-	 * @param Integration $integration
-	 * @param Purchase    $purchase
+	 * @param Integration $integration The integration.
+	 * @param Purchase    $purchase    The purchase.
 	 *
 	 * @return boolean
 	 */

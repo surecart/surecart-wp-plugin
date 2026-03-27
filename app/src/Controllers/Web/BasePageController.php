@@ -86,8 +86,6 @@ abstract class BasePageController {
 		add_action( 'wp_enqueue_scripts', [ $this, 'scripts' ] );
 		// preload image.
 		add_action( 'wp_head', [ $this, 'preloadImage' ] );
-		// maybe add json schema.
-		add_action( 'wp_head', [ $this, 'displaySchema' ] );
 		// add meta title and description.
 		add_action( 'wp_head', [ $this, 'addSeoMetaData' ] );
 	}
@@ -103,6 +101,9 @@ abstract class BasePageController {
 		<meta name="title" content="<?php echo esc_attr( sanitize_text_field( $this->model->page_title ) ); ?>">
 		<meta name="description" content="<?php echo esc_attr( sanitize_text_field( $this->model->meta_description ) ); ?>">
 
+		<!-- Canonical -->
+		<link rel="canonical" href="<?php echo esc_url( $this->model->permalink ); ?>">
+
 		<!-- Open Graph -->
 		<meta property="og:locale" content="<?php echo esc_attr( get_locale() ); ?>" />
 		<meta property="og:type" content="website" />
@@ -113,22 +114,6 @@ abstract class BasePageController {
 		<?php if ( ! empty( $this->model->getImageUrl( 800 ) ) ) { ?>
 			<meta property="og:image" content="<?php echo esc_url( $this->model->getImageUrl( 800 ) ); ?>" />
 		<?php } ?>
-		<?php
-	}
-
-	/**
-	 * Display the JSON Schema.
-	 *
-	 * @return void
-	 */
-	public function displaySchema(): void {
-		$schema = $this->model->getJsonSchemaArray() ?? [];
-
-		if ( empty( $schema ) ) {
-			return;
-		}
-		?>
-		<script type="application/ld+json"><?php echo wp_json_encode( $schema ); ?></script>
 		<?php
 	}
 
@@ -163,7 +148,7 @@ abstract class BasePageController {
 	 *
 	 * @return string
 	 */
-	public function disallowPreTitle( $title ): string {
+	public function disallowPreTitle( $title ) {
 		if ( ! empty( $this->model->id ) ) {
 			return '';
 		}

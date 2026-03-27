@@ -61,26 +61,29 @@ class AssetsService {
 	 */
 	public function bootstrap() {
 		// register assets we will reuse.
-		add_action( 'init', [ $this->scripts, 'register' ] );
-		add_action( 'init', [ $this->styles, 'register' ] );
+		add_action( 'init', array( $this->scripts, 'register' ) );
+		add_action( 'init', array( $this->styles, 'register' ) );
 		// globals.
-		add_action( 'wp_enqueue_scripts', [ $this, 'enqueueGlobals' ] );
+		add_action( 'wp_enqueue_scripts', array( $this, 'enqueueGlobals' ) );
 
-		add_filter( 'enqueue_block_assets', [ $this, 'preloadBlockAssets' ] );
-		add_filter( 'render_block_data', [ $this, 'preloadComponents' ] );
+		add_filter( 'enqueue_block_assets', array( $this, 'preloadBlockAssets' ) );
+		add_filter( 'render_block_data', array( $this, 'preloadComponents' ) );
 
 		// block editor.
-		add_action( 'enqueue_block_editor_assets', [ $this, 'editorAssets' ] );
+		add_action( 'enqueue_block_editor_assets', array( $this, 'editorAssets' ) );
 
 		// Shortcode usages scripts load.
-		add_action( 'wp_head', [ $this, 'maybeEnqueueScriptsForNonBlocks' ] );
+		add_action( 'wp_head', array( $this, 'maybeEnqueueScriptsForNonBlocks' ) );
 
 		// front-end styles. These only load when the block is being rendered on the page.
 		$this->loader->whenRendered( 'surecart/form', [ $this, 'enqueueForm' ] );
+		$this->loader->whenRendered( 'surecart/logout-button', [ $this, 'enqueueComponents' ] );
+		$this->loader->whenRendered( 'surecart/customer-dashboard-button', [ $this, 'enqueueComponents' ] );
 		$this->loader->whenRendered( 'surecart/buy-button', [ $this, 'enqueueComponents' ] );
 		$this->loader->whenRendered( 'surecart/customer-dashboard', [ $this, 'enqueueComponents' ] );
 		$this->loader->whenRendered( 'surecart/checkout-form', [ $this, 'enqueueComponents' ] );
 		$this->loader->whenRendered( 'surecart/order-confirmation', [ $this, 'enqueueComponents' ] );
+		$this->loader->whenRendered( 'surecart/product-item-list', [ $this, 'enqueueComponents' ] );
 	}
 
 	public function preloadBlockAssets() {
@@ -101,12 +104,6 @@ class AssetsService {
 	 * @return void
 	 */
 	public function enqueueGlobals() {
-		if ( \SureCart::account()->affiliation_protocol->wordpress_plugin_tracking_enabled || ( defined( 'SURECART_ENABLE_AFFILIATE_SCRIPT' ) && ! empty( SURECART_ENABLE_AFFILIATE_SCRIPT ) ) ) {
-			if ( \SureCart::account()->entitlements->affiliates ) {
-				wp_enqueue_script( 'surecart-affiliate-tracking' );
-			}
-		}
-
 		if ( is_page_template( 'pages/template-surecart-dashboard.php' ) ) {
 			// enqueue it.
 			wp_enqueue_style( 'surecart-themes-default' );
@@ -115,9 +112,21 @@ class AssetsService {
 			wp_enqueue_style(
 				'surecart-templates-customer-dashboard',
 				trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'dist/templates/customer-dashboard.css',
-				[ 'surecart-themes-default' ],
+				array( 'surecart-themes-default' ),
 				$asset_file['version'],
 			);
+		}
+
+		$account = \SureCart::account();
+		if ( ! $account->isConnected() ) {
+			return;
+		}
+
+		$tracking_enabled         = $account->affiliation_protocol->wordpress_plugin_tracking_enabled ?? false;
+		$affiliate_script_defined = defined( 'SURECART_ENABLE_AFFILIATE_SCRIPT' ) && ! empty( SURECART_ENABLE_AFFILIATE_SCRIPT );
+
+		if ( ( $tracking_enabled || $affiliate_script_defined ) && $account->entitlements->affiliates ) {
+			wp_enqueue_script( 'surecart-affiliate-tracking' );
 		}
 	}
 
@@ -167,6 +176,15 @@ class AssetsService {
 	}
 
 	/**
+	 * Print admin colors.
+	 *
+	 * @return void
+	 */
+	public function printAdminColors() {
+		$this->styles->addInlineAdminColors( 'surecart-themes-default' );
+	}
+
+	/**
 	 * Output brand colors.
 	 *
 	 * @return void
@@ -199,10 +217,11 @@ class AssetsService {
 	 * @param array  $data Data to add.
 	 * @return void
 	 */
-	public function addComponentData( $tag, $selector, $data = [] ) {
-		if ( $this->loader->isUsingPageBuilder() || wp_doing_ajax() ) {
+	public function addComponentData( $tag, $selector, $data = array() ) {
+		if ( ( $this->loader->isUsingPageBuilder() ) && 'thrive' !== $this->loader->getPageBuilder() ) {
 			return $this->outputComponentScript( $tag, $selector, $data );
 		}
+
 		add_action(
 			'wp_footer',
 			function () use ( $tag, $selector, $data ) {
@@ -234,7 +253,7 @@ class AssetsService {
 	 * @param string $selector Specific selector (class or id).
 	 * @param array  $data Data to add.
 	 */
-	public function outputComponentScript( $tag, $selector, $data = [] ) {
+	public function outputComponentScript( $tag, $selector, $data = array() ) {
 		?>
 		<script>
 			(async () => {

@@ -1,10 +1,11 @@
 <?php
+
 namespace SureCart\Integrations\RankMath;
 
 use SureCartCore\ServiceProviders\ServiceProviderInterface;
 
 /**
- * Handles the learnDash Service.
+ * Handles the Rank Math integration.
  */
 class RankMathServiceProvider implements ServiceProviderInterface {
 	/**
@@ -14,7 +15,7 @@ class RankMathServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function register( $container ) {
-		$container['surecart.rankmath'] = function () {
+		$container['surecart.plugins.rank_math'] = function () {
 			return new RankMathService();
 		};
 	}
@@ -22,9 +23,9 @@ class RankMathServiceProvider implements ServiceProviderInterface {
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @param  \Pimple\Container $container Service Container.
+	 * @param \Pimple\Container $container Service Container.
 	 */
 	public function bootstrap( $container ) {
-		$container['surecart.rankmath']->bootstrap();
+		$container['surecart.plugins.rank_math']->bootstrap();
 	}
 }

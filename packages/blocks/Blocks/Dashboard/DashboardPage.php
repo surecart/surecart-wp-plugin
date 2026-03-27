@@ -35,7 +35,7 @@ abstract class DashboardPage extends BaseBlock {
 		global $post;
 		$postcontent = $post->post_content;
 		$blocks      = parse_blocks( $postcontent );
-		$named       = \SureCart::blocks()->filterBy( 'blockName', 'surecart/dashboard-tab', $blocks );
+		$named       = \SureCart::block()->filterBy( 'blockName', 'surecart/dashboard-tab', $blocks );
 		return ! empty( $named[0]['attrs']['panel'] ) ? $named[0]['attrs']['panel'] : $tab;
 	}
 
@@ -49,7 +49,7 @@ abstract class DashboardPage extends BaseBlock {
 	protected function middleware( $attributes, $content ) {
 		// user must be logged in.
 		if ( ! is_user_logged_in() ) {
-			return \SureCart::blocks()->render( 'web/login' );
+			return \SureCart::block()->render( 'web/login' );
 		}
 
 		// cannot get user.

@@ -2,8 +2,8 @@
 import DataTable from '../../../components/DataTable';
 import { intervalString } from '../../../util/translations';
 import { css, jsx } from '@emotion/core';
-import { ScFormatDate, ScFormatNumber } from '@surecart/components-react';
-import { __ } from '@wordpress/i18n';
+import { ScFormatNumber } from '@surecart/components-react';
+import { __, sprintf } from '@wordpress/i18n';
 import { useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import LineItemLabel from '../../components/LineItemLabel';
@@ -113,13 +113,7 @@ export default ({ subscription }) => {
 									opacity: 0.5;
 								`}
 							>
-								<ScFormatDate
-									date={subscription?.current_period_end_at}
-									type="timestamp"
-									month="long"
-									day="numeric"
-									year="numeric"
-								></ScFormatDate>
+								{subscription?.current_period_end_at_date}
 							</div>
 						</div>
 					),

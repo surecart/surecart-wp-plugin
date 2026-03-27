@@ -1,8 +1,7 @@
 import { Component, h, Host, Prop } from '@stencil/core';
 import { Media, Product, ProductMedia } from '../../../../types';
-import { sizeImage } from '../../../../functions/media';
+import { sizeImage, getFeaturedProductMediaAttributes } from '../../../../functions/media';
 import { applyFilters } from '@wordpress/hooks';
-import { getFeaturedProductMediaAttributes } from 'src/functions/media';
 
 @Component({
   tag: 'sc-product-item-image',
@@ -25,7 +24,7 @@ export class ScProductItemImage {
       return sizeImage(((this.product?.featured_product_media as ProductMedia)?.media as Media)?.url, applyFilters('surecart/product-list/media/size', 900));
     }
 
-    return '';
+    return `${window.scData?.plugin_url}/images/placeholder.jpg`;
   }
 
   render() {

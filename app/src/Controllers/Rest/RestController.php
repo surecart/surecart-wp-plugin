@@ -94,7 +94,7 @@ abstract class RestController {
 	 *
 	 * @param \WP_REST_Request $request Rest Request.
 	 *
-	 * @return \WP_REST_Response|\WP_Error
+	 * @return \SureCart\Models\Model|\WP_Error
 	 */
 	public function find( \WP_REST_Request $request ) {
 		$model = $this->middleware( new $this->class(), $request );

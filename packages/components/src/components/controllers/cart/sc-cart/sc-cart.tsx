@@ -2,7 +2,7 @@ import { Component, Fragment, h, Listen, Prop, State, Watch, Element } from '@st
 import apiFetch from '../../../../functions/fetch';
 import { addQueryArgs } from '@wordpress/url';
 import { baseUrl } from '../../../../services/session';
-import { getCheckout, setCheckout } from '@store/checkouts/mutations';
+import { getCheckout, setCheckout, clearCheckout } from '@store/checkouts/mutations';
 import { state as checkoutState } from '@store/checkout';
 import uiStore from '@store/ui';
 import { expand } from '../../../../services/session';
@@ -95,6 +95,10 @@ export class ScCart {
 
   /** Fetch the order */
   async fetchOrder() {
+    if (!checkoutState.checkout?.id) {
+      return;
+    }
+
     try {
       updateFormState('FETCH');
       checkoutState.checkout = (await apiFetch({
@@ -108,6 +112,10 @@ export class ScCart {
       console.error(e);
       updateFormState('REJECT');
       createErrorNotice(e);
+
+      if(e?.code === 'checkout.not_found') {
+        clearCheckout(this.formId, this.mode);
+      }
     }
   }
 

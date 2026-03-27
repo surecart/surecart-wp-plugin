@@ -5,7 +5,7 @@ exports[`sc-subscription-cancel renders 1`] = `
   <mock:shadow-root>
     <sc-dashboard-module class="subscription-cancel" heading="Cancel your plan" style="--sc-dashboard-module-spacing: 1em;">
       <div slot="description">
-        Your plan will be canceled immediately. You cannot change your mind.
+        Your plan will be canceled immediately and cannot be modified later.
       </div>
       <sc-flex justifycontent="flex-start">
         <sc-button type="primary">

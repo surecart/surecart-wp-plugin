@@ -73,7 +73,7 @@ export class ScShippingChoices {
     // no shipping choices yet.
     if (!checkoutState?.checkout?.shipping_choices?.data?.length) {
       return (
-        <sc-form-control part='empty' label={this.label || __('Shipping', 'surecart')}>
+        <sc-form-control part="empty" label={this.label || __('Shipping', 'surecart')}>
           <div class="shipping-choice__empty">{__('Sorry, we are not able to ship to your address.', 'surecart')}</div>
         </sc-form-control>
       );
@@ -81,16 +81,22 @@ export class ScShippingChoices {
 
     return (
       <Host>
-        <sc-radio-group part='base' label={this.label || __('Shipping', 'surecart')} class="shipping-choices" onScChange={e => this.updateCheckout(e.detail)}>
-          {(checkoutState?.checkout?.shipping_choices?.data || []).map(({ id, amount, currency, shipping_method }) => (
-            <sc-radio key={id} checked={checkoutState?.checkout?.selected_shipping_choice === id} exportparts='base:radio__base,label:radio__label,control:radio__control,checked-icon:radio__checked-icon' class="shipping-choice" value={id}>
+        <sc-radio-group part="base" label={this.label || __('Shipping', 'surecart')} class="shipping-choices" onScChange={e => this.updateCheckout(e.detail)}>
+          {(checkoutState?.checkout?.shipping_choices?.data || []).map(({ id, display_amount, shipping_method }) => (
+            <sc-radio
+              key={id}
+              checked={checkoutState?.checkout?.selected_shipping_choice === id}
+              exportparts="base:radio__base,label:radio__label,control:radio__control,checked-icon:radio__checked-icon"
+              class="shipping-choice"
+              value={id}
+            >
               <div class="shipping-choice__text">
                 <div class="shipping-choice__name">{(shipping_method as ShippingMethod)?.name || __('Standard Shipping', 'surecart')}</div>
                 {this.showDescription && !!(shipping_method as ShippingMethod)?.description && (
                   <div class="shipping-choice__description">{(shipping_method as ShippingMethod)?.description}</div>
                 )}
               </div>
-              <div class="shipping-choice__price">{!!amount ? <sc-format-number type="currency" value={amount} currency={currency} /> : __('Free', 'surecart')}</div>
+              <div class="shipping-choice__price">{!!display_amount ? display_amount : __('Free', 'surecart')}</div>
             </sc-radio>
           ))}
         </sc-radio-group>

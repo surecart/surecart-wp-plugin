@@ -26,6 +26,7 @@ export default ({ order, open, onRequestClose, hasLoading }) => {
 					`surecart/v1/checkouts/${order?.checkout?.id}/cancel`,
 					{
 						expand: ['order'],
+						context: 'edit',
 					}
 				),
 			});

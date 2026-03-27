@@ -11,7 +11,7 @@ export const getSerializedState = () => {
     throw Error('Parsed state is not an object');
   } catch (e) {
     // eslint-disable-next-line no-console
-    console.log(e);
+    console.error(e);
   }
   return {};
 };

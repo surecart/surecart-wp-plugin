@@ -1,12 +1,12 @@
 {
 	"$schema": "https://json.schemastore.org/block.json",
-	"apiVersion": 2,
+	"apiVersion": 3,
 	"name": "surecart/order-confirmation-customer",
 	"title": "Order Confirmation Customer Details",
 	"description": "Display an order confirmation customer section.",
 	"category": "surecart",
 	"keywords": ["customer", "thank you", "confirm"],
-  "textdomain": "surecart",
+	"textdomain": "surecart",
 	"supports": {
 		"reusable": false,
 		"html": false

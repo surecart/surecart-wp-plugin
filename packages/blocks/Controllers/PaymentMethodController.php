@@ -23,13 +23,16 @@ class PaymentMethodController extends BaseController {
 			return false;
 		}
 
+		$protocol = \SureCart::account()->subscription_protocol;
+
 		return wp_kses_post(
 			Component::tag( 'sc-payment-methods-list' )
 			->id( 'sc-customer-payment-methods-list' )
 			->with(
 				[
-					'isCustomer' => User::current()->isCustomer(),
-					'query'      => [
+					'isCustomer'                    => User::current()->isCustomer(),
+					'canDetachDefaultPaymentMethod' => $protocol->default_payment_method_detach_enabled ?? false,
+					'query'                         => [
 						'customer_ids' => array_values( User::current()->customerIds() ),
 						'page'         => 1,
 						'per_page'     => 100,
@@ -72,11 +75,38 @@ class PaymentMethodController extends BaseController {
 	}
 
 	/**
-	 * Show a view to add a payment method.
+	 * Get the success url.
+	 *
+	 * @param array $attributes The block attributes.
 	 *
 	 * @return string
 	 */
-	public function create() {
+	public function getSuccessUrl( $attributes = [] ) {
+		// attribute.
+		if ( ! empty( $attributes['success_url'] ) ) {
+			return esc_url( $attributes['success_url'] );
+		}
+
+		// url parameter.
+		if ( ! empty( $_GET['success_url'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			return esc_url( $_GET['success_url'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		}
+
+		// default.
+		return home_url( add_query_arg( [ 'tab' => $this->getTab() ], remove_query_arg( array_keys( $_GET ) ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+	}
+
+	/**
+	 * Show a view to add a payment method.
+	 *
+	 * @param array $attributes The block attributes.
+	 *
+	 * @return string
+	 */
+	public function create( $attributes = [] ) {
+		// get the success url.
+		$success_url = $this->getSuccessUrl( $attributes );
+
 		if ( empty( User::current()->customerId( $this->isLiveMode() ? 'live' : 'test' ) ) ) {
 			ob_start(); ?>
 				<sc-alert type="info" open>
@@ -117,8 +147,6 @@ class PaymentMethodController extends BaseController {
 			return '<sc-alert type="info" open>' . __( 'You cannot currently add a payment method. Please contact us for support.', 'surecart' ) . '</sc-alert>';
 		}
 
-		$success_url = esc_url( $_GET['success_url'] ?? home_url( add_query_arg( [ 'tab' => $this->getTab() ], remove_query_arg( array_keys( $_GET ) ) ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-
 		ob_start();
 		?>
 
@@ -135,7 +163,7 @@ class PaymentMethodController extends BaseController {
 								'tab'    => $this->getTab(),
 								'model'  => 'customer',
 								'action' => 'show',
-								'id'     => User::current()->customerId( 'false' === $_GET['live_mode'] ? 'test' : 'live' ), // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+								'id'     => User::current()->customerId( $this->isLiveMode() ? 'live' : 'test' ),
 							],
 							remove_query_arg( array_keys( $_GET ) ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 						)
@@ -192,7 +220,7 @@ class PaymentMethodController extends BaseController {
 							<sc-icon name="paypal" style="width: 80px; font-size: 24px"></sc-icon>
 						</span>
 						<sc-paypal-add-method
-							success-url="<?php echo esc_url( home_url( add_query_arg( [ 'tab' => $this->getTab() ], remove_query_arg( array_keys( $_GET ) ) ) ) );  // phpcs:ignore WordPress.Security.NonceVerification.Recommended ?>"
+							success-url="<?php echo esc_url( $success_url ); ?>"
 							live-mode="<?php echo esc_attr( $this->isLiveMode() ? 'true' : 'false' ); ?>"
 							currency="<?php echo esc_attr( \SureCart::account()->currency ); ?>"
 							customer-id="<?php echo esc_attr( User::current()->customerId( $this->isLiveMode() ? 'live' : 'test' ) ); ?>">
@@ -209,11 +237,28 @@ class PaymentMethodController extends BaseController {
 							</sc-flex>
 						</span>
 						<sc-paystack-add-method
-							success-url="<?php echo esc_url( home_url( add_query_arg( [ 'tab' => $this->getTab() ], remove_query_arg( array_keys( $_GET ) ) ) ) );  // phpcs:ignore WordPress.Security.NonceVerification.Recommended ?>"
+							success-url="<?php echo esc_url( $success_url ); ?>"
 							live-mode="<?php echo esc_attr( $this->isLiveMode() ? 'true' : 'false' ); ?>"
 							currency="<?php echo esc_attr( \SureCart::account()->currency ); ?>"
 							customer-id="<?php echo esc_attr( User::current()->customerId( $this->isLiveMode() ? 'live' : 'test' ) ); ?>">
 						</sc-paystack-add-method>
+					</sc-toggle>
+				<?php endif; ?>
+
+				<?php if ( in_array( 'razorpay', $processor_names ) && ! in_array( 'stripe', $processor_names ) && ! in_array( 'paystack', $processor_names ) ) : ?>
+					<sc-toggle class="sc-razorpay-toggle" show-control shady borderless>
+						<span slot="summary" class="sc-payment-toggle-summary">
+							<sc-flex>
+								<sc-icon name="razorpay" style="font-size:24px"></sc-icon>
+								<span><?php esc_html_e( 'Cards, Netbanking, Wallet & UPI', 'surecart' ); ?></span>
+							</sc-flex>
+						</span>
+						<sc-razorpay-add-method
+							success-url="<?php echo esc_url( $success_url ); ?>"
+							live-mode="<?php echo esc_attr( $this->isLiveMode() ? 'true' : 'false' ); ?>"
+							currency="<?php echo esc_attr( \SureCart::account()->currency ); ?>"
+							customer-id="<?php echo esc_attr( User::current()->customerId( $this->isLiveMode() ? 'live' : 'test' ) ); ?>">
+						</sc-razorpay-add-method>
 					</sc-toggle>
 				<?php endif; ?>
 			</sc-toggles>

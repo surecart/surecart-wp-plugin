@@ -30,6 +30,7 @@
 ### Used by
 
  - [sc-order](../../controllers/dashboard/order)
+ - [sc-payment-method-details](../sc-payment-method-details)
  - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
  - [sc-subscription-next-payment](../../controllers/dashboard/subscription-details)
  - [sc-subscription-payment](../../controllers/dashboard/subscription-payment)
@@ -57,6 +58,7 @@ graph TD;
   sc-button --> sc-spinner
   sc-cc-logo --> sc-icon
   sc-order --> sc-payment-method
+  sc-payment-method-details --> sc-payment-method
   sc-payment-methods-list --> sc-payment-method
   sc-subscription-next-payment --> sc-payment-method
   sc-subscription-payment --> sc-payment-method

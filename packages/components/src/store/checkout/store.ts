@@ -17,9 +17,11 @@ interface Store {
   taxProtocol: TaxProtocol;
   isCheckoutPage: boolean;
   validateStock: boolean;
+  persist: 'browser' | 'url' | false;
+  paymentMethodRequiresShipping: boolean;
 }
 
-const { state, onChange, on, set, get, dispose } = createStore<Store>(
+const { state, onChange, on, set, get, dispose, reset } = createStore<Store>(
   {
     formId: null,
     groupId: null,
@@ -32,6 +34,8 @@ const { state, onChange, on, set, get, dispose } = createStore<Store>(
     initialLineItems: [],
     isCheckoutPage: false,
     validateStock: false,
+    persist: 'browser',
+    paymentMethodRequiresShipping: false,
     ...checkout,
   },
   (newValue, oldValue) => {
@@ -40,4 +44,4 @@ const { state, onChange, on, set, get, dispose } = createStore<Store>(
 );
 
 export default state;
-export { state, onChange, on, set, get, dispose };
+export { state, onChange, on, set, get, dispose, reset };

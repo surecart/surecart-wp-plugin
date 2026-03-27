@@ -1,10 +1,8 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import {
-	ScDialog,
 	ScDrawer,
 	ScEmpty,
-	ScFormatDate,
 	ScFormatNumber,
 	ScIcon,
 	ScSkeleton,
@@ -57,6 +55,12 @@ export default ({ open, customerId, onRequestClose }) => {
 			case 'applied_to_checkout':
 				return (
 					<ScTag type="warning">{__('Applied', 'surecart')}</ScTag>
+				);
+			case 'checkout_below_currency_minimum':
+				return (
+					<ScTag type="warning">
+						{__('Below Minimum', 'surecart')}
+					</ScTag>
 				);
 		}
 
@@ -116,7 +120,7 @@ export default ({ open, customerId, onRequestClose }) => {
 							currency,
 							ending_balance_amount,
 							transaction_type,
-							created_at,
+							created_at_date,
 						}) => (
 							<ScTableRow>
 								<ScTableCell>
@@ -136,12 +140,7 @@ export default ({ open, customerId, onRequestClose }) => {
 										value={-ending_balance_amount}
 									/>
 								</ScTableCell>
-								<ScTableCell>
-									<ScFormatDate
-										type="timestamp"
-										date={created_at}
-									/>
-								</ScTableCell>
+								<ScTableCell>{created_at_date}</ScTableCell>
 							</ScTableRow>
 						)
 					)}

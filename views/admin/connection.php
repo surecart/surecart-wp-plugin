@@ -49,7 +49,7 @@
 						</sc-card>
 						<?php if ( defined( 'SURECART_APP_URL' ) ) : ?>
 							<sc-flex justify-content="center">
-								<sc-button href="<?php echo esc_url( SURECART_APP_URL ); ?>" type="link" target="_blank">
+								<sc-button href="<?php echo esc_url( SURECART_APP_URL ) . '?switch_account_id=' . \SureCart::account()->id ?? null; ?>" type="link" target="_blank">
 									<?php esc_html_e( 'Find My Api Token', 'surecart' ); ?>
 									<sc-icon name="arrow-right" slot="suffix"></sc-icon>
 								</sc-button>

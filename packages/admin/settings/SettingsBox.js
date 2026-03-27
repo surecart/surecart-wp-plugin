@@ -17,8 +17,11 @@ export default ({
 		<ScDashboardModule
 			heading={title}
 			style={{
-				'--sc-dashboard-module-spacing': '1em',
+				'--sc-dashboard-module-spacing': 'var(--sc-spacing-large)',
 				'--sc-dashbaord-module-heading-size': '1.1em',
+				'--sc-card-padding': 'var(--sc-spacing-x-large)',
+				'--sc-form-row-spacing': 'var(--sc-spacing-large)',
+				'--sc-input-label-margin': 'var(--sc-spacing-x-small)',
 			}}
 		>
 			{!!description && <span slot="description">{description}</span>}

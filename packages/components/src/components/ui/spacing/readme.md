@@ -10,6 +10,7 @@
 ### Used by
 
  - [sc-fulfillments](../../controllers/dashboard/fulfillments)
+ - [sc-license](../../controllers/dashboard/sc-license)
  - [sc-order](../../controllers/dashboard/order)
  - [sc-purchase-downloads-list](../purchase-downloads-list)
 
@@ -17,6 +18,7 @@
 ```mermaid
 graph TD;
   sc-fulfillments --> sc-spacing
+  sc-license --> sc-spacing
   sc-order --> sc-spacing
   sc-purchase-downloads-list --> sc-spacing
   style sc-spacing fill:#f9f,stroke:#333,stroke-width:4px

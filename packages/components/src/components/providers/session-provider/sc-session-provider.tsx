@@ -2,12 +2,13 @@ import { Component, Element, Event, EventEmitter, h, Listen, Method, Prop, Watch
 import { state as checkoutState } from '@store/checkout';
 import { clearCheckout } from '@store/checkout/mutations';
 import { state as selectedProcessor } from '@store/selected-processor';
+import { state as processorsState } from '@store/processors';
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs, getQueryArg, getQueryArgs, removeQueryArgs } from '@wordpress/url';
 import { updateFormState } from '@store/form/mutations';
 
 import { parseFormData } from '../../../functions/form-data';
-import { createOrUpdateCheckout, fetchCheckout, finalizeCheckout } from '../../../services/session';
+import { createCheckout, createOrUpdateCheckout, fetchCheckout, finalizeCheckout } from '../../../services/session';
 import { Checkout, FormStateSetter, LineItemData, PriceChoice } from '../../../types';
 import { createErrorNotice, createInfoNotice, removeNotice } from '@store/notices/mutations';
 
@@ -76,6 +77,23 @@ export class ScSessionProvider {
 
     updateFormState('FINALIZE');
 
+    if (checkoutState?.checkout?.payment_method_required && selectedProcessor?.id === 'stripe' && processorsState.config.stripe.paymentElement) {
+      // not initialized.
+      if (!processorsState?.instances?.stripeElements) {
+        updateFormState('REJECT');
+        this.handleErrorResponse({ message: 'Stripe Elements not found.', code: 'stripe_elements_not_found' });
+        return new Error('Stripe Elements not found.');
+      }
+      // submit the elements.
+      const { error } = await processorsState?.instances?.stripeElements.submit();
+      if (error) {
+        console.error({ error });
+        updateFormState('REJECT');
+        createErrorNotice(error);
+        return;
+      }
+    }
+
     // Get current form state.
     let data = await this.getFormData();
 
@@ -117,14 +135,14 @@ export class ScSessionProvider {
         },
       });
 
-      // the checkout is paid.
-      if (['paid', 'processing'].includes(checkoutState.checkout?.status)) {
-        this.scPaid.emit();
-      }
-
       if (checkoutState.checkout?.payment_intent?.processor_data?.mollie?.checkout_url) {
         updateFormState('PAYING');
         return setTimeout(() => window.location.assign(checkoutState.checkout?.payment_intent?.processor_data?.mollie?.checkout_url), 50);
+      }
+
+      // the checkout is paid.
+      if (['paid', 'processing'].includes(checkoutState.checkout?.status)) {
+        this.scPaid.emit();
       }
 
       setTimeout(() => {
@@ -155,18 +173,6 @@ export class ScSessionProvider {
     });
   }
 
-  /** Handles coupon updates. */
-  @Listen('scApplyCoupon')
-  async handleCouponApply(e) {
-    const promotion_code = e.detail;
-    removeNotice();
-    this.loadUpdate({
-      discount: {
-        ...(promotion_code ? { promotion_code } : {}),
-      },
-    });
-  }
-
   /** Find or create session on load. */
   componentDidLoad() {
     this.findOrCreateOrder();
@@ -180,14 +186,16 @@ export class ScSessionProvider {
     window.history.replaceState(
       {},
       document.title,
-      removeQueryArgs(window.location.href, 'redirect_status', 'coupon', 'line_items', 'confirm_checkout_id', 'checkout_id', 'no_cart'),
+      removeQueryArgs(window.location.href, 'redirect_status', 'coupon', 'line_items', 'confirm_checkout_id', 'checkout_id', 'no_cart', 'is_surecart_payment_redirect'),
     );
 
     // handle abandoned checkout.
     if (!!is_surecart_payment_redirect && !!checkout_id) {
       updateFormState('FINALIZE');
       updateFormState('PAYING');
-      return this.handleCheckoutIdFromUrl(checkout_id, coupon as string);
+      return this.handleCheckoutIdFromUrl(checkout_id, coupon as string, {
+        refresh_status: true,
+      });
     }
 
     // handle redirect status.
@@ -232,7 +240,6 @@ export class ScSessionProvider {
     // success, refetch the checkout
     try {
       updateFormState('FINALIZE');
-      updateFormState('PAID');
       checkoutState.checkout = (await fetchCheckout({
         id,
         query: {
@@ -243,6 +250,7 @@ export class ScSessionProvider {
       // TODO: should we even check this?
       if (checkoutState.checkout?.status && ['paid', 'processing'].includes(checkoutState.checkout?.status)) {
         setTimeout(() => {
+          updateFormState('PAID');
           this.scPaid.emit();
         }, 100);
       }
@@ -252,7 +260,7 @@ export class ScSessionProvider {
   }
 
   /** Handle abandoned checkout from URL */
-  async handleCheckoutIdFromUrl(id, promotion_code = '') {
+  async handleCheckoutIdFromUrl(id, promotion_code = '', query = {}) {
     console.info('Handling existing checkout from url.', promotion_code, id);
 
     // if coupon code, load the checkout with the code.
@@ -260,7 +268,8 @@ export class ScSessionProvider {
       return this.loadUpdate({
         id,
         discount: { promotion_code },
-        refresh_price_versions: true,
+        refresh_line_items: true,
+        ...query,
       });
     }
 
@@ -269,19 +278,10 @@ export class ScSessionProvider {
       checkoutState.checkout = (await fetchCheckout({
         id,
         query: {
-          refresh_status: true,
+          refresh_line_items: true,
+          ...query,
         },
       })) as Checkout;
-
-      const isModeMismatch = checkoutState.mode !== (checkoutState.checkout?.live_mode ? 'live' : 'test');
-
-      if (isModeMismatch) {
-        console.info('Mode mismatch, creating new checkout.');
-        clearCheckout();
-        checkoutState.checkout = null;
-        await this.handleNewCheckout(promotion_code);
-        return;
-      }
 
       updateFormState('RESOLVE');
     } catch (e) {
@@ -299,23 +299,19 @@ export class ScSessionProvider {
         }, 100);
 
       case 'payment_failed':
-        clearCheckout();
         createErrorNotice({
-          message: __('Payment unsuccessful. Please try again.', 'surecart'),
+          message: __('Payment unsuccessful.', 'surecart'),
         });
+        updateFormState('REJECT');
         return;
 
       case 'payment_intent_canceled':
+        updateFormState('REJECT');
+        return;
       case 'canceled':
         clearCheckout();
         createErrorNotice({
           message: __('Payment canceled. Please try again.', 'surecart'),
-        });
-        return;
-
-      case 'finalized':
-        createErrorNotice({
-          message: __('Payment unsuccessful. Please try again.', 'surecart'),
         });
         updateFormState('REJECT');
         return;
@@ -327,10 +323,9 @@ export class ScSessionProvider {
     console.info('Handling initial line items.');
     // TODO: move this to central store.
     const address = this.el.querySelector('sc-order-shipping-address');
-    clearCheckout();
     return this.loadUpdate({
       line_items,
-      refresh_price_versions: true,
+      refresh_line_items: true,
       ...(promotion_code ? { discount: { promotion_code } } : {}),
       ...(address?.defaultCountry
         ? {
@@ -351,7 +346,7 @@ export class ScSessionProvider {
 
     try {
       updateFormState('FETCH');
-      checkoutState.checkout = (await createOrUpdateCheckout({
+      checkoutState.checkout = (await createCheckout({
         data: {
           ...data,
           ...(promotion_code ? { discount: { promotion_code } } : {}),
@@ -370,6 +365,12 @@ export class ScSessionProvider {
     } catch (e) {
       console.error(e);
       this.handleErrorResponse(e);
+
+      // Handle any invalid coupon set on checkout URL.
+      if (e?.additional_errors?.[0]?.code === 'checkout.discount.coupon.blank') {
+        await this.handleNewCheckout(false);
+        createErrorNotice(e);
+      }
     }
   }
 
@@ -383,14 +384,20 @@ export class ScSessionProvider {
         id,
         data: {
           ...(promotion_code ? { discount: { promotion_code } } : {}),
-          refresh_price_versions: true,
           ...(checkoutState.taxProtocol?.eu_vat_required ? { tax_identifier: { number_type: 'eu_vat' } } : {}),
+          refresh_line_items: true,
         },
       })) as Checkout;
       updateFormState('RESOLVE');
     } catch (e) {
       console.error(e);
       this.handleErrorResponse(e);
+
+      // Handle any invalid coupon set on checkout URL.
+      if (e?.additional_errors?.[0]?.code === 'checkout.discount.coupon.blank') {
+        await this.handleExistingCheckout(id, false);
+        createErrorNotice(e);
+      }
     }
   }
 
@@ -398,21 +405,31 @@ export class ScSessionProvider {
   async handleErrorResponse(e) {
     // reinitalize if order not found.
     if (['checkout.not_found'].includes(e?.code)) {
-      window.history.replaceState({}, document.title, removeQueryArgs(window.location.href, 'checkout_id'));
       clearCheckout();
       return this.handleNewCheckout(false);
     }
 
-    // one of these is an old price version error.
-    if ((e?.additional_errors || []).some(error => error?.code == 'checkout.price.old_version')) {
+    if (['test_mode_restricted'].includes(e?.code)) {
+      updateFormState('TEST_MODE_RESTRICTED');
+      return;
+    }
+
+    const hasPriceVersionChangeError = (e?.additional_errors || []).some(error => {
+      const purchasableStatuses = error?.data?.options?.purchasable_statuses || [];
+      return ['price_old_version', 'variant_old_version'].some(status => purchasableStatuses.includes(status));
+    });
+
+    if (hasPriceVersionChangeError) {
       await this.loadUpdate({
         id: checkoutState?.checkout?.id,
-        data: {
-          status: 'draft',
-          refresh_price_versions: true,
-        },
+        refresh_line_items: true,
+        status: 'draft',
       });
-      createInfoNotice(__('The price a product in your order has changed. We have adjusted your order to the new price.', 'surecart'));
+      createInfoNotice(
+        e?.additional_errors?.[0]?.message ||
+          __('Some products in your order were outdated and have been updated. Please review your order summary before proceeding to payment.', 'surecart'),
+      );
+      updateFormState('REJECT');
       return;
     }
 
@@ -426,9 +443,7 @@ export class ScSessionProvider {
     if (['order.invalid_status_transition'].includes(e?.code)) {
       await this.loadUpdate({
         id: checkoutState?.checkout?.id,
-        data: {
-          status: 'draft',
-        },
+        status: 'draft',
       });
       this.handleFormSubmit();
       return;

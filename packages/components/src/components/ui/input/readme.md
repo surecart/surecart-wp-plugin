@@ -11,6 +11,7 @@
 | `autocorrect`    | `autocorrect`     | The input's autocorrect attribute.                                                                                                                                                                            | `string`                                                                                | `undefined` |
 | `autofocus`      | `autofocus`       | The input's autofocus attribute.                                                                                                                                                                              | `boolean`                                                                               | `undefined` |
 | `clearable`      | `clearable`       | Adds a clear button when the input is populated.                                                                                                                                                              | `boolean`                                                                               | `false`     |
+| `customValidity` | `custom-validity` | Custom validation message to show when the input is invalid (replaces browser default).                                                                                                                       | `string`                                                                                | `undefined` |
 | `disabled`       | `disabled`        | Disables the input.                                                                                                                                                                                           | `boolean`                                                                               | `false`     |
 | `hasFocus`       | `has-focus`       | Inputs focus                                                                                                                                                                                                  | `boolean`                                                                               | `undefined` |
 | `help`           | `help`            | The input's help text.                                                                                                                                                                                        | `string`                                                                                | `''`        |
@@ -69,6 +70,12 @@ Type: `Promise<boolean>`
 
 Sets a custom validation message. If `message` is not empty, the field will be considered invalid.
 
+#### Parameters
+
+| Name      | Type     | Description |
+| --------- | -------- | ----------- |
+| `message` | `string` |             |
+
 #### Returns
 
 Type: `Promise<void>`
@@ -88,6 +95,12 @@ Type: `Promise<void>`
 ### `triggerFocus(options?: FocusOptions) => Promise<void>`
 
 Sets focus on the input.
+
+#### Parameters
+
+| Name      | Type           | Description |
+| --------- | -------------- | ----------- |
+| `options` | `FocusOptions` |             |
 
 #### Returns
 
@@ -130,7 +143,7 @@ Type: `Promise<void>`
  - [sc-customer-lastname](../../controllers/checkout-form/customer-lastname)
  - [sc-customer-login](../../controllers/checkout-form/customer-login)
  - [sc-customer-name](../../controllers/checkout-form/customer-name)
- - [sc-licenses-list](../../controllers/dashboard/sc-licenses-list)
+ - [sc-license](../../controllers/dashboard/sc-license)
  - [sc-login-form](../../controllers/login)
  - [sc-login-provider](../../providers/sc-login-provider)
  - [sc-password](../sc-password)
@@ -158,7 +171,7 @@ graph TD;
   sc-customer-lastname --> sc-input
   sc-customer-login --> sc-input
   sc-customer-name --> sc-input
-  sc-licenses-list --> sc-input
+  sc-license --> sc-input
   sc-login-form --> sc-input
   sc-login-provider --> sc-input
   sc-password --> sc-input

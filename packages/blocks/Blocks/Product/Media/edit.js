@@ -11,7 +11,6 @@ import {
 } from '@wordpress/components';
 import { useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
-import useProductPageWarning from '../../../hooks/useProductPageWarning';
 
 export default ({ attributes, setAttributes, isSelected }) => {
 	const { height, show_thumbnails, thumbnails_per_page, auto_height, width } =
@@ -39,16 +38,12 @@ export default ({ attributes, setAttributes, isSelected }) => {
 		);
 	}, [width, thumbnails_per_page]);
 
-	const warning = useProductPageWarning();
-	if (warning) {
-		return <div {...blockProps}>{warning}</div>;
-	}
-
 	return (
 		<>
 			<InspectorControls>
 				<PanelBody title={__('Attributes', 'surecart')}>
 					<ToggleControl
+						__nextHasNoMarginBottom
 						label={__('Auto Height', 'surecart')}
 						checked={auto_height}
 						onChange={(auto_height) =>
@@ -60,6 +55,7 @@ export default ({ attributes, setAttributes, isSelected }) => {
 
 					{!auto_height && (
 						<UnitControl
+							__next40pxDefaultSize
 							label={__('Slider Height', 'surecart')}
 							labelPosition="edge"
 							__unstableInputWidth="100px"
@@ -81,6 +77,8 @@ export default ({ attributes, setAttributes, isSelected }) => {
 					/>
 
 					<RangeControl
+						__nextHasNoMarginBottom
+						__next40pxDefaultSize
 						label={__('Thumbnails Per Page', 'surecart')}
 						min={2}
 						max={20}

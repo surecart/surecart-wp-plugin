@@ -2,11 +2,9 @@
 
 namespace SureCart\Controllers\Admin\Coupons;
 
-use NumberFormatter;
 use SureCart\Models\Coupon;
 use SureCart\Models\Product;
 use SureCart\Models\Promotion;
-use SureCart\Support\Currency;
 use SureCart\Controllers\Admin\Tables\ListTable;
 
 // WP_List_Table is not loaded automatically so we need to load it in our application.
@@ -70,14 +68,17 @@ class CouponsListTable extends ListTable {
 	 * @return Array
 	 */
 	public function get_columns() {
-		return [
-			// 'cb'          => '<input type="checkbox" />',
-			'name'           => __( 'Name', 'surecart' ),
-			'promotion_code' => __( 'Code', 'surecart' ),
-			'price'          => __( 'Price', 'surecart' ),
-			'usage'          => __( 'Usage', 'surecart' ),
-			'date'           => __( 'Date', 'surecart' ),
-		];
+		return array_merge(
+			[
+				// 'cb'          => '<input type="checkbox" />',
+				'name'           => __( 'Name', 'surecart' ),
+				'promotion_code' => __( 'Code', 'surecart' ),
+				'price'          => __( 'Price', 'surecart' ),
+				'usage'          => __( 'Usage', 'surecart' ),
+				'date'           => __( 'Date', 'surecart' ),
+			],
+			parent::get_columns()
+		);
 	}
 
 	/**
@@ -160,23 +161,24 @@ class CouponsListTable extends ListTable {
 		echo \esc_html( "$coupon->times_redeemed / $max" );
 		?>
 		<br />
-		<div style="opacity: 0.75"><?php echo \esc_html( $this->get_expiration_string( $coupon->redeem_by ) ); ?></div>
+		<div style="opacity: 0.75"><?php echo \esc_html( $this->get_expiration_string( $coupon ) ); ?></div>
 		<?php
 		return ob_get_clean();
 	}
 
 	/**
-	 * Render the "Redeem By"
+	 * Render the Valid Until string.
 	 *
-	 * @param string $timestamp Redeem timestamp.
+	 * @param \SureCart\Models\Coupon $coupon Coupon model.
 	 * @return string
 	 */
-	public function get_expiration_string( $timestamp = '' ) {
-		if ( ! $timestamp ) {
+	public function get_expiration_string( $coupon ) {
+		if ( ! $coupon->redeem_by ) {
 			return '';
 		}
+
 		// translators: coupon expiration date.
-		return sprintf( __( 'Valid until %s', 'surecart' ), date_i18n( get_option( 'date_format' ), $timestamp ) );
+		return sprintf( __( 'Valid until %s', 'surecart' ), $coupon->redeem_by_date );
 	}
 
 	/**
@@ -195,8 +197,7 @@ class CouponsListTable extends ListTable {
 		}
 
 		if ( ! empty( $coupon->amount_off ) ) {
-			// translators: Coupon amount off.
-			return '<sc-format-number type="currency" currency="' . $coupon->currency . '" value="' . $coupon->amount_off . '"></sc-format-number>';
+			return $coupon->human_discount;
 		}
 
 		return esc_html__( 'No discount.', 'surecart' );
@@ -252,14 +253,14 @@ class CouponsListTable extends ListTable {
 	public function column_name( $coupon ) {
 		ob_start();
 		?>
-		<a class="row-title" aria-label="Edit Coupon" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'coupon', $coupon->id ) ); ?>">
-			<?php echo esc_html_e( $coupon->name, 'surecart' ); ?>
+		<a class="row-title" aria-label="<?php esc_attr_e( 'Edit Coupon', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'coupon', $coupon->id ) ); ?>">
+			<?php echo esc_html( $coupon->name ); ?>
 		</a>
 
 		<?php
 		echo $this->row_actions(
 			[
-				'edit' => '<a href="' . esc_url( \SureCart::getUrl()->edit( 'coupon', $coupon->id ) ) . '" aria-label="' . esc_attr( 'Edit Coupon', 'surecart' ) . '">' . __( 'Edit', 'surecart' ) . '</a>',
+				'edit' => '<a href="' . esc_url( \SureCart::getUrl()->edit( 'coupon', $coupon->id ) ) . '" aria-label="' . esc_attr__( 'Edit Coupon', 'surecart' ) . '">' . __( 'Edit', 'surecart' ) . '</a>',
 			],
 		);
 
@@ -280,7 +281,8 @@ class CouponsListTable extends ListTable {
 		$and = '';
 		if ( $coupon->promotions->pagination->count > 1 ) {
 			$coupon_count = $coupon->promotions->pagination->count - 1;
-			$and          = sprintf( __( '+ %d more', 'surecart' ), number_format_i18n( $coupon_count ) );
+			// translators: %d is the number of additional coupons.
+			$and = sprintf( __( '+ %d more', 'surecart' ), number_format_i18n( $coupon_count ) );
 		}
 		return '<code>' . sanitize_text_field( $coupon->promotions->data[0]->code ) . '</code> ' . $and;
 	}

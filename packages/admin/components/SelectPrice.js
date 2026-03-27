@@ -19,10 +19,14 @@ export default ({
 	children,
 	ad_hoc = true,
 	variable = true,
+	exclude = [],
+	excludeProducts = [],
 	loading,
 	onScrollEnd = () => {},
 	includeVariants = true,
 	showOutOfStock = false,
+	prefix = false,
+	triggerLabel,
 	...props
 }) => {
 	const selectRef = useRef();
@@ -42,6 +46,16 @@ export default ({
 			if (!product?.prices?.data?.length) {
 				return false;
 			}
+			if (excludeProducts && excludeProducts?.includes(product.id)) {
+				return false;
+			}
+			// if all prices of the product are ad_hoc and ad_hoc is false, skip the product.
+			if (
+				!ad_hoc &&
+				product?.prices?.data?.every((price) => price?.ad_hoc)
+			) {
+				return false;
+			}
 			return true;
 		})
 		.map((product) => {
@@ -57,6 +71,7 @@ export default ({
 						return true;
 					})
 					.filter((price) => !price?.archived)
+					.filter((price) => !exclude.includes(price.id))
 					.map((price) => {
 						const variants = product?.variants?.data || [];
 
@@ -114,7 +129,8 @@ export default ({
 												variant?.available_stock
 										  )
 										: null,
-									disabled: variantUnavailable && !showOutOfStock,
+									disabled:
+										variantUnavailable && !showOutOfStock,
 									variant_id: variant?.id,
 								};
 							});
@@ -130,7 +146,7 @@ export default ({
 			ref={selectRef}
 			value={value}
 			className={className}
-			open={open}
+			{...(open && { open })}
 			loading={loading}
 			placeholder={__('Select a price', 'surecart')}
 			searchPlaceholder={__('Search for a price...', 'surecart')}
@@ -162,6 +178,11 @@ export default ({
 					></ScDivider>
 				</span>
 			)}
+
+			{prefix && <span slot="prefix">{prefix}</span>}
+
+			{triggerLabel && <span>{triggerLabel}</span>}
+
 			{children}
 		</ScSelect>
 	);

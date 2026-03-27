@@ -4,19 +4,18 @@ import { __ } from '@wordpress/i18n';
 import {
 	ScTag,
 	ScButton,
-	ScDropdown,
-	ScMenu,
-	ScMenuItem,
 	ScIcon,
 	ScSkeleton,
 	ScFlex,
 } from '@surecart/components-react';
-
+import { DropdownMenu, MenuItem } from '@wordpress/components';
+import { moreHorizontal, inbox, trash, addCard } from '@wordpress/icons';
 import ToggleHeader from '../../../../components/ToggleHeader';
 import { intervalString } from '../../../../util/translations';
 import { useState } from 'react';
-import { getFormattedPrice } from '../../../../util';
 import BuyLink from './BuyLink';
+import { SortableKnob } from 'react-easy-sort';
+import DuplicateModel from '../../../components/DuplicateModel';
 
 export default ({
 	isOpen,
@@ -29,6 +28,7 @@ export default ({
 	onArchive,
 	collapsible,
 	onDelete,
+	onDuplicate,
 	loading,
 }) => {
 	const [copyDialog, setCopyDialog] = useState(false);
@@ -39,9 +39,7 @@ export default ({
 				{!!price?.trial_duration_days && (
 					<>
 						{' '}
-						<sc-tag type="info" size="small">
-							{__('Free Trial', 'surecart')}
-						</sc-tag>
+						<sc-tag type="info">{__('Trial', 'surecart')}</sc-tag>
 					</>
 				)}
 			</>
@@ -54,8 +52,10 @@ export default ({
 				{!!price?.setup_fee_enabled && (
 					<>
 						{' '}
-						<sc-tag type="default" size="small">
-							{__('Setup Fee', 'surecart')}
+						<sc-tag type="default">
+							{price?.setup_fee_amount < 0
+								? __('Discount', 'surecart')
+								: __('Setup Fee', 'surecart')}
 						</sc-tag>
 					</>
 				)}
@@ -70,7 +70,6 @@ export default ({
 				return (
 					<sc-tag
 						type="primary"
-						size="small"
 						style={{
 							'--sc-tag-primary-background-color': '#f3e8ff',
 							'--sc-tag-primary-color': '#6b21a8',
@@ -81,16 +80,10 @@ export default ({
 				);
 			}
 			return (
-				<sc-tag type="success" size="small">
-					{__('Subscription', 'surecart')}
-				</sc-tag>
+				<sc-tag type="success">{__('Subscription', 'surecart')}</sc-tag>
 			);
 		}
-		return (
-			<sc-tag type="info" size="small">
-				{__('One Time', 'surecart')}
-			</sc-tag>
-		);
+		return <sc-tag type="info">{__('One Time', 'surecart')}</sc-tag>;
 	};
 
 	/** Header name */
@@ -99,144 +92,186 @@ export default ({
 			<div
 				css={css`
 					display: grid;
-					gap: 4px;
+					gap: 0.75rem;
 				`}
 			>
-				<div>
-					{priceType()}
-					{trial()}
-					{setupFee()}
-				</div>
-
 				<div
 					css={css`
 						display: flex;
 						align-items: center;
-						gap: 0.5em;
+						gap: 0.75rem;
 						flex-wrap: wrap;
 					`}
 				>
-					{!!price?.name && (
-						<div>
-							<strong>{price?.name}</strong> &mdash;
-						</div>
-					)}
-					{price?.ad_hoc ? (
-						__('Custom Amount', 'surecart')
-					) : (
-						<>
-							{!!price?.scratch_amount &&
-								price?.scratch_amount > price?.amount && (
-									<div
-										css={css`
-											font-weight: bold;
-											font-size: 14px;
-											opacity: 0.75;
-											text-decoration: line-through;
-										`}
-									>
-										{getFormattedPrice({
-											amount: price?.scratch_amount,
-											currency:
-												price?.currency ||
-												scData.currency_code,
-										})}
-									</div>
-								)}
-							<div
-								css={css`
-									font-weight: bold;
-									font-size: 14px;
-								`}
-							>
-								{getFormattedPrice({
-									amount: price?.amount,
-									currency:
-										price?.currency || scData.currency_code,
-								})}
-							</div>
-						</>
-					)}{' '}
-					<div
-						css={css`
-							opacity: 0.75;
-							line-height: 1;
-						`}
-					>
-						{intervalString(price, {
-							labels: { interval: __('every', 'surecart') },
-						})}
+					<SortableKnob>
+						<ScIcon
+							name="drag"
+							css={css`
+								font-size: 16px;
+								cursor: grab;
+							`}
+						/>
+					</SortableKnob>
+					<div>
+						{!!price?.name && (
+							<span>
+								<strong>{price?.name}</strong>{' '}
+								<span
+									css={css`
+										padding: 0 2px;
+									`}
+								>
+									&bull;
+								</span>{' '}
+							</span>
+						)}
+						{price?.ad_hoc ? (
+							__('Custom Amount', 'surecart')
+						) : (
+							<>
+								{!!price?.scratch_amount &&
+									price?.scratch_amount > price?.amount && (
+										<>
+											<span
+												css={css`
+													font-weight: bold;
+													font-size: 14px;
+													opacity: 0.75;
+													text-decoration: line-through;
+												`}
+											>
+												{price?.scratch_display_amount}
+											</span>{' '}
+										</>
+									)}
+								<span
+									css={css`
+										font-weight: bold;
+										font-size: 14px;
+									`}
+								>
+									{price?.display_amount}
+								</span>
+							</>
+						)}{' '}
+						<span
+							css={css`
+								opacity: 0.75;
+								line-height: 1;
+							`}
+						>
+							{intervalString(price, {
+								labels: { interval: __('every', 'surecart') },
+							})}
+						</span>
 					</div>
+				</div>
+				<div
+					css={css`
+						font-size: 13px;
+					`}
+				>
+					{priceType()}
+					{trial()}
+					{setupFee()}
 				</div>
 			</div>
 		);
 	};
 
 	const renderDropdown = () => {
-		if (!onArchive && !onDelete) {
+		if (!onArchive && !onDelete && !onDuplicate) {
 			return null;
 		}
 
 		return (
-			<ScDropdown slot="suffix" placement="bottom-end">
-				<ScButton type="text" slot="trigger" circle>
-					<ScIcon
-						name="more-horizontal"
-						style={{ fontSize: '18px' }}
-					/>
-				</ScButton>
-				<ScMenu>
-					{price?.id && !!onArchive && (
-						<ScMenuItem onClick={onArchive}>
-							<ScIcon
-								slot="prefix"
-								style={{
-									opacity: 0.5,
-								}}
-								name="archive"
-							/>
-							{price?.archived
-								? __('Un-Archive', 'surecart')
-								: __('Archive', 'surecart')}
-						</ScMenuItem>
-					)}
-					{!!onDelete && (
-						<ScMenuItem onClick={onDelete}>
-							<ScIcon
-								slot="prefix"
-								style={{
-									opacity: 0.5,
-								}}
-								name="trash"
-							/>
-							{__('Delete', 'surecart')}
-						</ScMenuItem>
-					)}
-				</ScMenu>
-			</ScDropdown>
+			<DropdownMenu
+				icon={moreHorizontal}
+				label={__('More Actions', 'surecart')}
+				popoverProps={{
+					placement: 'bottom-end',
+				}}
+				menuProps={{
+					style: {
+						minWidth: '150px',
+					},
+				}}
+			>
+				{({ onClose }) => (
+					<>
+						{price?.id && !!onArchive && (
+							<MenuItem
+								icon={inbox}
+								iconPosition="left"
+								onClick={onArchive}
+							>
+								{price?.archived
+									? __('Un-Archive', 'surecart')
+									: __('Archive', 'surecart')}
+							</MenuItem>
+						)}
+						{!!onDelete && (
+							<MenuItem
+								icon={trash}
+								iconPosition="left"
+								onClick={onDelete}
+							>
+								{__('Delete', 'surecart')}
+							</MenuItem>
+						)}
+						<DuplicateModel
+							type="price"
+							id={price?.id}
+							onSuccess={(duplicate) => {
+								onDuplicate(duplicate);
+								onClose();
+							}}
+						>
+							{({ onClick }) => (
+								<MenuItem
+									icon={addCard}
+									onClick={onClick}
+									iconPosition="left"
+								>
+									{__('Duplicate', 'surecart')}
+								</MenuItem>
+							)}
+						</DuplicateModel>
+					</>
+				)}
+			</DropdownMenu>
 		);
 	};
 
 	/** Action buttons */
 	const buttons = (
-		<div>
+		<div
+			style={{
+				display: 'flex',
+				alignItems: 'center',
+			}}
+		>
 			{price?.archived ? (
-				<ScTag type="warning">{__('Archived', 'surecart')}</ScTag>
+				<>
+					<ScTag type="warning">{__('Archived', 'surecart')}</ScTag>
+					{renderDropdown()}
+				</>
 			) : (
 				<>
+					{renderDropdown()}
 					{!!scData?.checkout_page_url && price?.id && (
 						<ScButton
 							className={'sc-price-copy'}
-							size="small"
+							circle
+							type="text"
 							onClick={() => setCopyDialog(true)}
+							title={__('Copy Links', 'surecart')}
 						>
-							<ScIcon name="clipboard" slot="prefix" />
-							{__('Copy Links', 'surecart')}
+							<ScIcon name="clipboard" />
 						</ScButton>
 					)}
 				</>
 			)}
-			{renderDropdown()}
 		</div>
 	);
 

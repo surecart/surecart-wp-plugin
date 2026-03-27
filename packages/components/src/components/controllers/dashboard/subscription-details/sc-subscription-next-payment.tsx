@@ -1,10 +1,9 @@
-import { Component, h, Prop, State, Host, Watch } from '@stencil/core';
+import { Component, Fragment, h, Prop, State, Host, Watch } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 import apiFetch from '../../../../functions/fetch';
-import { intervalString, translateRemainingPayments } from '../../../../functions/price';
 import { formatTaxDisplay } from '../../../../functions/tax';
-import { Checkout, Period, Product, ResponseError, Subscription } from '../../../../types';
+import { Checkout, Period, Product, ResponseError, Subscription, ManualPaymentMethod } from '../../../../types';
 
 @Component({
   tag: 'sc-subscription-next-payment',
@@ -12,6 +11,9 @@ import { Checkout, Period, Product, ResponseError, Subscription } from '../../..
 })
 export class ScSubscriptionNextPayment {
   @Prop() subscription: Subscription;
+  /** Update the payment method url */
+  @Prop() updatePaymentMethodUrl: string;
+
   @State() period: Period;
   @State() loading: boolean = true;
   @State() error: ResponseError;
@@ -44,12 +46,16 @@ export class ScSubscriptionNextPayment {
           expand: [
             'period.checkout',
             'checkout.line_items',
+            'checkout.checkout_fees',
+            'checkout.shipping_fees',
             'checkout.payment_method',
+            'checkout.manual_payment_method',
             'payment_method.card',
             'payment_method.payment_instrument',
             'payment_method.paypal_account',
             'payment_method.bank_account',
             'line_item.price',
+            'line_item.fees',
             'price.product',
             'period.subscription',
           ],
@@ -87,17 +93,20 @@ export class ScSubscriptionNextPayment {
         </div>
       );
 
+    const manualPaymentMethod = checkout?.manual_payment ? (checkout?.manual_payment_method as ManualPaymentMethod) : null;
+    const paymentMethodExists = this?.subscription.payment_method || this?.subscription.manual_payment;
+
+    const checkout_fees = checkout?.checkout_fees?.data;
+    const shipping_fees = checkout?.shipping_fees?.data;
+
     return (
       <Host>
         <sc-toggle borderless shady>
           <span slot="summary">
             <sc-subscription-details subscription={this.subscription}>
               <div style={{ fontSize: 'var(--sc-font-size-small)' }}>
-                {__('Your next payment is', 'surecart')}{' '}
-                <strong>
-                  <sc-format-number type="currency" currency={checkout?.currency} value={checkout?.amount_due} />
-                </strong>{' '}
-                {!!this.subscription?.finite && ' — ' + translateRemainingPayments(this.subscription?.remaining_period_count)}
+                {__('Your next payment is', 'surecart')} <strong>{checkout?.amount_due_display_amount}</strong>{' '}
+                {!!this.subscription?.remaining_period_text && `— ${this.subscription?.remaining_period_text}`}
               </div>
             </sc-subscription-details>
           </span>
@@ -105,86 +114,125 @@ export class ScSubscriptionNextPayment {
           <sc-card noPadding borderless>
             {checkout?.line_items?.data.map(item => (
               <sc-product-line-item
-                imageUrl={(item.price?.product as Product)?.image_url}
+                image={(item.price?.product as Product)?.line_item_image}
                 name={(item.price?.product as Product)?.name}
-                priceName={item?.price?.name}
-                variantLabel={(item?.variant_options || []).filter(Boolean).join(' / ') || null}
+                price={item?.price?.name}
+                variant={item?.variant_display_options}
                 editable={false}
                 removable={false}
+                note={item?.display_note}
+                scratchDisplayAmount={item?.scratch_display_amount}
+                displayAmount={item?.subtotal_display_amount}
                 quantity={item?.quantity}
-                amount={item?.total_amount}
-                currency={item?.price?.currency}
-                interval={intervalString(item?.price)}
+                amount={item?.subtotal_display_amount}
+                interval={`${item?.price?.short_interval_text} ${item?.price?.short_interval_count_text}`}
+                purchasableStatus={item?.purchasable_status_display}
+                fees={item?.fees?.data}
               ></sc-product-line-item>
             ))}
 
             <sc-line-item>
               <span slot="description">{__('Subtotal', 'surecart')}</span>
-              <sc-format-number slot="price" type="currency" currency={checkout?.currency} value={checkout?.subtotal_amount}></sc-format-number>
+              <span slot="price-description">{checkout?.subtotal_display_amount}</span>
             </sc-line-item>
 
             {!!checkout.proration_amount && (
               <sc-line-item>
                 <span slot="description">{__('Proration Credit', 'surecart')}</span>
-                <sc-format-number slot="price" type="currency" currency={checkout?.currency} value={-checkout?.proration_amount}></sc-format-number>
+                <span slot="price-description">{checkout?.proration_display_amount}</span>
               </sc-line-item>
             )}
 
             {!!checkout.applied_balance_amount && (
               <sc-line-item>
                 <span slot="description">{__('Applied Balance', 'surecart')}</span>
-                <sc-format-number slot="price" type="currency" currency={checkout?.currency} value={-checkout?.applied_balance_amount}></sc-format-number>
+                <span slot="price-description">{checkout?.applied_balance_display_amount}</span>
               </sc-line-item>
+            )}
+
+            {checkout_fees?.length > 0 && (
+              <Fragment>
+                {checkout_fees?.map(fee => (
+                  <sc-line-item>
+                    <span slot="description">{fee?.description}</span>
+                    <span slot="price">{fee?.display_amount}</span>
+                  </sc-line-item>
+                ))}
+              </Fragment>
             )}
 
             {!!checkout.trial_amount && (
               <sc-line-item>
-                <span slot="description">{__('Free Trial', 'surecart')}</span>
-                <sc-format-number slot="price" type="currency" currency={checkout?.currency} value={checkout?.trial_amount}></sc-format-number>
+                <span slot="description">{__('Trial', 'surecart')}</span>
+                <span slot="price-description">{checkout?.trial_display_amount}</span>
               </sc-line-item>
             )}
 
             {!!checkout?.discount_amount && (
               <sc-line-item>
                 <span slot="description">{__('Discounts', 'surecart')}</span>
-                <sc-format-number slot="price" type="currency" currency={checkout?.currency} value={checkout?.discount_amount}></sc-format-number>
+                <span slot="price-description">{checkout?.discounts_display_amount}</span>
               </sc-line-item>
             )}
 
             {!!checkout?.shipping_amount && (
-              <sc-line-item style={{ marginTop: 'var(--sc-spacing-small)' }}>
-                <span slot="description">{__('Shipping', 'surecart')}</span>
-                <sc-format-number slot="price" type="currency" currency={checkout?.currency} value={checkout?.shipping_amount}></sc-format-number>
-              </sc-line-item>
+              <Fragment>
+                <sc-line-item style={{ marginTop: 'var(--sc-spacing-small)' }}>
+                  <span slot="description">{__('Shipping', 'surecart')}</span>
+                  <span slot="price-description">{checkout?.shipping_display_amount}</span>
+                </sc-line-item>
+                {shipping_fees?.length > 0 && (
+                  <Fragment>
+                    {shipping_fees?.map(fee => (
+                      <sc-line-item>
+                        <span slot="description">{fee?.description}</span>
+                        <span slot="price">{fee?.display_amount}</span>
+                      </sc-line-item>
+                    ))}
+                  </Fragment>
+                )}
+              </Fragment>
             )}
 
             {!!checkout.tax_amount && (
               <sc-line-item>
                 <span slot="description">{formatTaxDisplay(checkout?.tax_label)}</span>
-                <sc-format-number slot="price" type="currency" currency={checkout?.currency} value={checkout?.tax_amount}></sc-format-number>
+                <span slot="price-description">{checkout?.tax_display_amount}</span>
               </sc-line-item>
             )}
 
             <sc-divider style={{ '--spacing': '0' }}></sc-divider>
 
-            <sc-line-item>
-              <span slot="description">{__('Payment', 'surecart')}</span>
-              <a
-                href={addQueryArgs(window.location.href, {
-                  action: 'update_payment_method',
-                })}
-                slot="price-description"
-              >
-                <sc-flex justify-content="flex-start" align-items="center" style={{ '--spacing': '0.5em' }}>
-                  <sc-payment-method paymentMethod={checkout?.payment_method}></sc-payment-method>
-                  <sc-icon name="edit-3"></sc-icon>
-                </sc-flex>
-              </a>
-            </sc-line-item>
+            {this?.subscription?.can_modify && (
+              <sc-line-item>
+                <span slot="description">{__('Payment', 'surecart')}</span>
+                {paymentMethodExists && (
+                  <a href={this.updatePaymentMethodUrl} slot="price-description">
+                    <sc-flex justify-content="flex-start" align-items="center" style={{ '--spacing': '0.5em' }}>
+                      {manualPaymentMethod ? <sc-manual-payment-method paymentMethod={manualPaymentMethod} /> : <sc-payment-method paymentMethod={checkout?.payment_method} />}
+                      <sc-icon name="edit-3"></sc-icon>
+                    </sc-flex>
+                  </a>
+                )}
+                {!paymentMethodExists && (
+                  <a
+                    href={addQueryArgs(window.location.href, {
+                      action: 'create',
+                      model: 'payment_method',
+                      id: this?.subscription.id,
+                      ...(this?.subscription?.live_mode === false ? { live_mode: false } : {}),
+                    })}
+                    slot="price-description"
+                  >
+                    {__('Add Payment Method', 'surecart')}
+                  </a>
+                )}
+              </sc-line-item>
+            )}
 
             <sc-line-item style={{ '--price-size': 'var(--sc-font-size-x-large)' }}>
               <span slot="title">{__('Total Due', 'surecart')}</span>
-              <sc-format-number slot="price" type="currency" currency={checkout?.currency} value={checkout?.amount_due}></sc-format-number>
+              <span slot="price">{checkout?.amount_due_display_amount}</span>
               <span slot="currency">{checkout.currency}</span>
             </sc-line-item>
           </sc-card>

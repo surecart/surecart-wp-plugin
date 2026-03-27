@@ -1,4 +1,8 @@
 /** @jsx jsx */
+
+/**
+ * External dependencies.
+ */
 import { css, jsx } from '@emotion/core';
 import {
 	ScButton,
@@ -7,21 +11,20 @@ import {
 	ScIcon,
 	ScLineItem,
 	ScProductLineItem,
-	ScSkeleton,
 } from '@surecart/components-react';
-import { store as coreStore } from '@wordpress/core-data';
-import { useSelect } from '@wordpress/data';
 import { Fragment } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
+import { useEntityRecords } from '@wordpress/core-data';
 
-/** @jsx jsx */
+/**
+ * Internal dependencies.
+ */
 import Box from '../../../ui/Box';
 import { formatTaxDisplay } from '../../../util/tax';
-import { intervalString } from '../../../util/translations';
 import LineItem from './LineItem';
-import { getFeaturedProductMediaAttributes } from '@surecart/components';
-import { getSKUText } from '../../../util/products';
+import RefundLineItem from '../Refund/RefundLineItem';
+import DisputeLineItems from '../Dispute/DisputeLineItems';
 
 const status = {
 	processing: __('Processing', 'surecart'),
@@ -29,10 +32,25 @@ const status = {
 	paid: __('Paid', 'surecart'),
 	canceled: __('Canceled', 'surecart'),
 	void: __('Canceled', 'surecart'),
+	draft: __('Draft', 'surecart'),
 };
 
-export default ({ order, checkout, loading }) => {
+export default ({ order, checkout, chargeIds }) => {
 	const line_items = checkout?.line_items?.data;
+	const checkout_fees = checkout?.checkout_fees?.data;
+	const shipping_fees = checkout?.shipping_fees?.data;
+
+	// get the refunds.
+	const { records: refunds, hasResolved } = useEntityRecords(
+		'surecart',
+		'refund',
+		{
+			context: 'edit',
+			charge_ids: chargeIds,
+			per_page: 100,
+			expand: ['refund_items', 'refund_item.line_item'],
+		}
+	);
 
 	const statusBadge = () => {
 		if (!order?.status) {
@@ -74,53 +92,11 @@ export default ({ order, checkout, loading }) => {
 		);
 	};
 
-	const { charge, loadedCharge } = useSelect(
-		(select) => {
-			if (!checkout?.id) {
-				return {
-					charge: {},
-					loading: true,
-				};
-			}
-			const entityData = [
-				'surecart',
-				'charge',
-				{
-					checkout_ids: checkout?.id ? [checkout?.id] : null,
-					expand: [
-						'payment_method',
-						'payment_method.card',
-						'payment_method.payment_instrument',
-						'payment_method.paypal_account',
-						'payment_method.bank_account',
-					],
-				},
-			];
-			return {
-				charge: select(coreStore)?.getEntityRecords?.(
-					...entityData
-				)?.[0],
-				loadedCharge: select(coreStore)?.hasFinishedResolution?.(
-					'getEntityRecords',
-					[...entityData]
-				),
-			};
-		},
-		[checkout?.id]
-	);
-
-	const getImageAttributes = (item) => {
-		const featuredMedia = getFeaturedProductMediaAttributes(
-			item?.price?.product,
-			item?.variant
-		);
-
-		return {
-			imageUrl: featuredMedia?.url,
-			imageAlt: featuredMedia?.alt,
-			imageTitle: featuredMedia?.title,
-		};
-	};
+	const selectedShippingMethod = (
+		checkout?.shipping_choices?.data || []
+	)?.find(
+		({ id }) => checkout?.selected_shipping_choice === id
+	)?.shipping_method;
 
 	return (
 		<Box
@@ -136,7 +112,7 @@ export default ({ order, checkout, loading }) => {
 					{status[order?.status] || order?.status}
 				</div>
 			}
-			loading={loading}
+			loading={!hasResolved}
 			header_action={
 				order?.statement_url && (
 					<div
@@ -162,44 +138,97 @@ export default ({ order, checkout, loading }) => {
 				)
 			}
 			footer={
-				!loadedCharge ? (
-					<ScLineItem
-						style={{
-							width: '100%',
-						}}
-					>
-						<ScSkeleton slot="title"></ScSkeleton>
-						<ScSkeleton slot="price"></ScSkeleton>
-					</ScLineItem>
-				) : (
-					(!!charge?.amount || !!charge?.refunded_amount) && (
-						<ScLineItem
-							style={{
-								width: '100%',
-								'--price-size': 'var(--sc-font-size-x-large)',
-							}}
-						>
-							<span slot="title">
-								{charge?.refunded_amount
-									? __('Net Payment', 'surecart')
-									: __('Paid', 'surecart')}
-							</span>
+				<div
+					css={css`
+						width: 100%;
+						display: grid;
+						gap: var(--sc-spacing-small);
+					`}
+				>
+					{/* Total */}
+					<LineItem
+						title={__('Total', 'surecart')}
+						currency={checkout?.currency}
+						value={checkout?.total_amount}
+					/>
 
-							<ScFormatNumber
-								slot="price"
-								type="currency"
-								currency={charge?.currency}
-								value={
-									charge?.amount
-										? charge?.amount -
-										  charge?.refunded_amount
-										: 0
-								}
-							></ScFormatNumber>
-							<span slot="currency">{charge?.currency}</span>
-						</ScLineItem>
-					)
-				)
+					{/* Proration */}
+					{!!checkout?.proration_amount && (
+						<LineItem
+							label={__('Proration', 'surecart')}
+							currency={checkout?.currency}
+							value={checkout?.proration_amount}
+						/>
+					)}
+
+					{/* Applied Balance */}
+					{!!checkout?.applied_balance_amount && (
+						<LineItem
+							label={__('Applied Balance', 'surecart')}
+							currency={checkout?.currency}
+							value={checkout?.applied_balance_amount}
+						/>
+					)}
+
+					{/* Credited Balance */}
+					{!!checkout?.credited_balance_amount && (
+						<LineItem
+							label={__('Credited Balance', 'surecart')}
+							currency={checkout?.currency}
+							value={checkout?.credited_balance_amount}
+						/>
+					)}
+
+					{/* Amount Due */}
+					{checkout?.amount_due !== checkout?.total_amount && (
+						<LineItem
+							title={__('Amount Due', 'surecart')}
+							currency={checkout?.currency}
+							value={checkout?.amount_due}
+						/>
+					)}
+
+					<ScDivider
+						style={{ '--spacing': 'var(--sc-spacing-small)' }}
+					/>
+
+					{checkout?.paid_amount > 0 && (
+						<LineItem
+							title={__('Paid', 'surecart')}
+							currency={checkout?.currency}
+							value={checkout?.paid_amount}
+						/>
+					)}
+
+					{!!checkout?.refunded_amount && (
+						<>
+							{(refunds || []).map((refund) => (
+								<RefundLineItem
+									key={refund.id}
+									order={order}
+									refund={refund}
+									label={__('Refund', 'surecart')}
+								/>
+							))}
+							<LineItem
+								title={__('Net Payment', 'surecart')}
+								currency={checkout?.currency}
+								value={checkout?.net_paid_amount}
+							/>
+						</>
+					)}
+
+					<DisputeLineItems chargeIds={chargeIds} order={order} />
+
+					{checkout?.tax_reverse_charged_amount > 0 && (
+						<LineItem
+							label={__(
+								'*Tax to be paid on reverse charge basis',
+								'surecart'
+							)}
+						/>
+					)}
+				</div>
 			}
 		>
 			<Fragment>
@@ -207,54 +236,54 @@ export default ({ order, checkout, loading }) => {
 					return (
 						<ScProductLineItem
 							key={item.id}
-							{...getImageAttributes(item)}
+							image={item?.image}
 							name={item?.price?.product?.name}
-							priceName={item?.price?.name}
-							variantLabel={
-								(item?.variant_options || [])
-									.filter(Boolean)
-									.join(' / ') || null
-							}
+							price={item?.price?.name}
+							variant={item?.variant_display_options}
 							editable={false}
 							removable={false}
 							fees={item?.fees?.data}
 							quantity={item.quantity}
-							amount={item.subtotal_amount}
-							currency={item?.price?.currency}
-							trialDurationDays={item?.price?.trial_duration_days}
-							interval={intervalString(item?.price)}
-							sku={getSKUText(item)}
+							amount={item.subtotal_display_amount}
+							scratch={item.scratch_display_amount}
+							trial={item?.price?.trial_text}
+							sku={item?.sku}
+							note={item?.display_note}
+							interval={`${item?.price?.short_interval_text} ${item?.price?.short_interval_count_text}`}
 						></ScProductLineItem>
 					);
 				})}
-
-				<ScDivider
-					style={{ '--spacing': 'var(--sc-spacing-x-small)' }}
-				/>
-
-				<LineItem
-					label={__('Subtotal', 'surecart')}
-					currency={checkout?.currency}
-					value={checkout?.subtotal_amount}
-				/>
-
-				{!!checkout?.proration_amount && (
+				{/* Subtotal */}
+				{checkout?.subtotal_amount !== checkout?.total_amount && (
 					<LineItem
-						label={__('Proration', 'surecart')}
+						label={__('Subtotal', 'surecart')}
 						currency={checkout?.currency}
-						value={checkout?.proration_amount}
+						value={checkout?.subtotal_amount}
+					/>
+				)}
+				{checkout_fees?.length > 0 && (
+					<Fragment>
+						{checkout_fees?.map((fee) => (
+							<LineItem
+								key={fee?.id}
+								label={fee?.description}
+								currency={checkout?.currency}
+								value={fee?.amount}
+							/>
+						))}
+					</Fragment>
+				)}
+
+				{/* Trial */}
+				{!!checkout?.trial_amount && (
+					<LineItem
+						label={__('Trial', 'surecart')}
+						currency={checkout?.currency}
+						value={checkout?.trial_amount}
 					/>
 				)}
 
-				{!!checkout?.applied_balance_amount && (
-					<LineItem
-						label={__('Applied Balance', 'surecart')}
-						currency={checkout?.currency}
-						value={checkout?.applied_balance_amount}
-					/>
-				)}
-
-				{!!checkout?.discount_amount && (
+				{!!checkout?.discount && (
 					<LineItem
 						label={
 							<>
@@ -278,60 +307,75 @@ export default ({ order, checkout, loading }) => {
 					/>
 				)}
 
+				{/* Shipping */}
 				{!!checkout?.shipping_amount && (
-					<LineItem
-						label={__('Shipping', 'surecart')}
-						currency={checkout?.currency}
-						value={checkout?.shipping_amount}
-					/>
+					<>
+						<span>
+							<LineItem
+								label={`${__('Shipping', 'surecart')} ${
+									selectedShippingMethod?.name
+										? `(${selectedShippingMethod?.name})`
+										: ''
+								}`}
+								currency={checkout?.currency}
+								value={checkout?.shipping_amount}
+							/>
+							{checkout?.selected_shipping_choice?.shipping_method
+								?.name && (
+								<span
+									css={css`
+										font-size: var(--sc-font-size-small);
+										line-height: var(
+											--sc-line-height-dense
+										);
+										color: var(--sc-input-label-color);
+									`}
+								>
+									{`(${checkout?.selected_shipping_choice?.shipping_method?.name})`}
+								</span>
+							)}
+						</span>
+
+						{shipping_fees?.length > 0 && (
+							<>
+								{shipping_fees?.map((fee) => (
+									<LineItem
+										key={fee?.id}
+										label={fee?.description}
+										currency={checkout?.currency}
+										value={fee?.amount}
+									/>
+								))}
+							</>
+						)}
+					</>
 				)}
 
+				{/* Tax */}
 				{!!checkout?.tax_amount && (
-					<LineItem
-						label={`${formatTaxDisplay(checkout?.tax_label)} (${
-							checkout?.tax_percent
-						}%)`}
-						currency={checkout?.currency}
-						value={checkout?.tax_amount}
-					/>
-				)}
-
-				<ScDivider style={{ '--spacing': 'var(--sc-spacing-small)' }} />
-
-				<ScLineItem
-					style={{
-						width: '100%',
-						'--price-size': 'var(--sc-font-size-x-large)',
-					}}
-				>
-					<span slot="title">{__('Total', 'surecart')}</span>
-					<span slot="price">
+					<ScLineItem>
+						<span slot="description">{`${formatTaxDisplay(
+							checkout?.tax_label,
+							checkout?.tax_status === 'estimated'
+						)} (${checkout?.tax_percent}%)`}</span>
 						<ScFormatNumber
+							slot="price"
+							style={{
+								fontWeight: 'var(--sc-font-weight-semibold)',
+								color: 'var(--sc-color-gray-800)',
+							}}
 							type="currency"
 							currency={checkout?.currency}
-							value={checkout?.amount_due}
-						></ScFormatNumber>
-					</span>
-					<span slot="currency">{checkout?.currency}</span>
-				</ScLineItem>
-
-				{!!charge?.refunded_amount && (
-					<ScLineItem
-						style={{
-							width: '100%',
-						}}
-					>
-						<span slot="description">
-							{__('Refunded', 'surecart')}
-						</span>
-						<span slot="price">
-							-
-							<ScFormatNumber
-								type="currency"
-								currency={charge?.currency}
-								value={charge?.refunded_amount}
-							></ScFormatNumber>
-						</span>
+							value={
+								checkout?.tax_exclusive_amount ||
+								checkout?.tax_inclusive_amount
+							}
+						/>
+						{!!checkout?.tax_inclusive_amount && (
+							<span slot="price-description">
+								{`(${__('included', 'surecart')})`}
+							</span>
+						)}
 					</ScLineItem>
 				)}
 			</Fragment>

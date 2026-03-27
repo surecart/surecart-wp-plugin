@@ -13,6 +13,7 @@ export const checkoutMachine = createMachine({
         FINALIZE: 'finalizing',
         FETCH: 'updating',
         REJECT: 'draft',
+        LOCK: 'locked',
       },
     },
     updating: {
@@ -20,6 +21,7 @@ export const checkoutMachine = createMachine({
         RESOLVE: 'draft',
         EXPIRE: 'expired',
         REJECT: 'draft',
+        LOCK: 'locked',
       },
     },
     finalizing: {
@@ -27,6 +29,7 @@ export const checkoutMachine = createMachine({
         PAYING: 'paying',
         REJECT: 'draft',
         PAID: 'confirming',
+        TEST_MODE_RESTRICTED: 'test_mode_restricted',
       },
     },
     paying: {
@@ -48,11 +51,13 @@ export const checkoutMachine = createMachine({
       },
     },
     expired: {},
+    locked: {},
     confirmed: {
       on: {
         REDIRECT: 'redirecting',
       },
     },
+    test_mode_restricted: {},
     redirecting: {},
     failure: {
       on: {

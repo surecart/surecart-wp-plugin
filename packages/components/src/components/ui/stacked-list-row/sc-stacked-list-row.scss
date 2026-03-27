@@ -23,7 +23,7 @@
   gap: var(--sc-spacing-xx-small);
   padding: var(--sc-spacing-medium) var(--sc-spacing-large);
   transition: background-color var(--sc-transition-fast) ease;
-  border-radius: var(--sc-input-border-radius-medium);
+  border-radius: var(--sc-stacked-list-row-border-radius, var(--sc-input-border-radius-medium));
   min-width: 0px;
   min-height: 0px;
 
@@ -57,7 +57,7 @@
 }
 
 .list-row.breakpoint-lg {
-  grid-template-columns: repeat(calc(var(--columns) - 1), 1fr) 0.5fr;
+  grid-template-columns: repeat(calc(var(--columns) - 1), 1fr) 1fr;
   gap: var(--sc-spacing-large);
 
   ::slotted(:last-child:not(:first-child)) {

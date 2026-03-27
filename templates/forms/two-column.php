@@ -29,6 +29,8 @@ return [
 		<sc-line-item-total total="subtotal" class="wp-block-surecart-subtotal"><span slot="description">Subtotal</span></sc-line-item-total>
 		<!-- /wp:surecart/subtotal -->
 
+		<!-- wp:surecart/trial-line-item /-->
+
 		<!-- wp:surecart/coupon {"text":"Add Coupon Code","button_text":"Apply Coupon"} -->
 		<sc-order-coupon-form label="Add Coupon Code">Apply Coupon</sc-order-coupon-form>
 		<!-- /wp:surecart/coupon -->
@@ -67,10 +69,6 @@ return [
 		<!-- wp:surecart/password -->
 		<sc-order-password label="Password" placeholder="" size="medium" type="password" name="password" value="" class="wp-block-surecart-password"></sc-order-password>
 		<!-- /wp:surecart/password -->
-
-		<!-- wp:surecart/address -->
-		<sc-order-shipping-address label="Address"></sc-order-shipping-address>
-		<!-- /wp:surecart/address -->
 
 		<!-- wp:surecart/payment {"secure_notice":"This is a secure, encrypted payment"} -->
 		<sc-payment label="Payment" secure-notice="This is a secure, encrypted payment" class="wp-block-surecart-payment"></sc-payment>

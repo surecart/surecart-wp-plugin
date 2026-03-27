@@ -7,13 +7,13 @@ use SureCart\Models\RegisteredWebhook;
 /**
  * Run this migration when version changes or for new installations.
  */
-class WebhookMigrationsService extends GeneralMigration {
+class WebhookMigrationsService extends VersionMigration {
 	/**
-	 * The version number when we will run the migration.
+	 * The key for the migration.
 	 *
 	 * @var string
 	 */
-	protected $version = '2.4.0';
+	protected $migration_key = 'surecart_webhook_migration_version';
 
 	/**
 	 * Run the migration.
@@ -21,6 +21,7 @@ class WebhookMigrationsService extends GeneralMigration {
 	 * @return void
 	 */
 	public function run(): void {
+		error_log( 'webhook' );
 		// Get the registered webhooks.
 		$webhook = RegisteredWebhook::get();
 
@@ -28,6 +29,7 @@ class WebhookMigrationsService extends GeneralMigration {
 		if ( ! $webhook || is_wp_error( $webhook ) || empty( $webhook->id ) || empty( $webhook->url ) ) {
 			return;
 		}
+
 		// Update the webhook. This will update the events on the server.
 		try {
 			RegisteredWebhook::update();

@@ -41,6 +41,8 @@ export class ScOrderConfirmation {
       this.order = (await await apiFetch({
         path: addQueryArgs(`surecart/v1/checkouts/${this.getSessionId()}`, {
           expand: [
+            'checkout_fees',
+            'shipping_fees',
             'line_items',
             'line_item.price',
             'line_item.fees',
@@ -55,6 +57,7 @@ export class ScOrderConfirmation {
             'shipping_address',
           ],
           refresh_status: true,
+          currency_conversion: false,
         }),
       })) as Checkout;
     } catch (e) {
@@ -98,7 +101,7 @@ export class ScOrderConfirmation {
     return (
       <sc-alert type="info" open>
         <span slot="title">{paymentMethod?.name}</span>
-        {paymentMethod?.instructions}
+        <div innerHTML={paymentMethod?.instructions}></div>
       </sc-alert>
     );
   }

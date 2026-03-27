@@ -30,7 +30,6 @@
 ### Used by
 
  - [sc-product-donation-choices](../../controllers/checkout-form/product-donation-choices)
- - [sc-product-price-choices](../../controllers/product/sc-product-price-choices)
 
 ### Depends on
 
@@ -51,7 +50,6 @@ graph TD;
   sc-recurring-price-choice-container --> sc-menu
   sc-recurring-price-choice-container --> sc-menu-item
   sc-product-donation-choices --> sc-recurring-price-choice-container
-  sc-product-price-choices --> sc-recurring-price-choice-container
   style sc-recurring-price-choice-container fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

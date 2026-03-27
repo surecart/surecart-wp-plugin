@@ -1,9 +1,4 @@
-import {
-	ScFormatDate,
-	ScFormatNumber,
-	ScSpacing,
-	ScText,
-} from '@surecart/components-react';
+import { ScFormatNumber, ScSpacing, ScText } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 import DataTable from '../../components/DataTable';
 
@@ -35,7 +30,7 @@ export default ({ failures, loading }) => {
 					const {
 						currency,
 						amount,
-						created_at,
+						created_at_date_time,
 						error_type,
 						error_message,
 					} = failure;
@@ -54,30 +49,7 @@ export default ({ failures, loading }) => {
 								/>
 							</ScText>
 						),
-						created: (
-							<div>
-								<ScFormatDate
-									type="timestamp"
-									date={created_at}
-									month="short"
-									day="numeric"
-									year="numeric"
-								></ScFormatDate>
-								<br />
-								<div
-									style={{
-										color: 'var(--sc-color-gray-600)',
-									}}
-								>
-									<ScFormatDate
-										date={created_at}
-										hour="numeric"
-										minute="numeric"
-										type="timestamp"
-									/>
-								</div>
-							</div>
-						),
+						created: <div>{created_at_date_time}</div>,
 						message: (
 							<ScSpacing style={{ '--spacing': '0.5em' }}>
 								<div>

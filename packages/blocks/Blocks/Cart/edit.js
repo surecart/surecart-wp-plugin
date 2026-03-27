@@ -25,7 +25,7 @@ const allowedBlocks = [
 	'surecart/cart-message',
 ];
 
-import { useSetting } from '@wordpress/block-editor';
+import { useSettings } from '@wordpress/block-editor';
 
 export default ({ attributes: { width }, setAttributes }) => {
 	const blockProps = useBlockProps({
@@ -41,23 +41,10 @@ export default ({ attributes: { width }, setAttributes }) => {
 
 	const innerBlocksProps = useInnerBlocksProps(
 		{
-			css: css`
-				flex: 1 1 auto;
-				overflow: auto;
-				max-width: ${width};
-				width: 100%;
-				margin: auto;
-				border: var(--sc-drawer-border);
-				box-shadow: 0 1px 2px #0d131e1a;
-
-				.block-list-appender {
-					position: relative;
-				}
-
-				> .wp-block:not(:last-child) {
-					margin: 0 !important;
-				}
-			`,
+			className: 'sc-cart__editor-container',
+			style: {
+				maxWidth: width,
+			},
 		},
 		{
 			renderAppender: InnerBlocks.ButtonBlockAppender,
@@ -66,7 +53,7 @@ export default ({ attributes: { width }, setAttributes }) => {
 	);
 
 	const units = useCustomUnits({
-		availableUnits: useSetting('spacing.units') || [
+		availableUnits: useSettings('spacing.units') || [
 			'%',
 			'px',
 			'em',
@@ -80,6 +67,7 @@ export default ({ attributes: { width }, setAttributes }) => {
 			<InspectorControls>
 				<PanelBody>
 					<UnitControl
+						__next40pxDefaultSize
 						label={__('Width', 'surecart')}
 						labelPosition="top"
 						__unstableInputWidth="80px"

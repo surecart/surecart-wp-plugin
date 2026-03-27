@@ -71,7 +71,8 @@ class RolesService {
 			__( 'SureCart Accountant', 'surecart' ),
 			[
 				'read'         => true,
-				'edit_posts'   => false,
+				'upload_files' => true,
+				'edit_posts'   => true,
 				'delete_posts' => false,
 			]
 		);
@@ -81,7 +82,6 @@ class RolesService {
 			__( 'SureCart Shop Worker', 'surecart' ),
 			[
 				'read'         => true,
-				'edit_posts'   => false,
 				'upload_files' => true,
 				'delete_posts' => false,
 			]
@@ -100,7 +100,7 @@ class RolesService {
 	 * Add new shop-specific capabilities
 	 *
 	 * @since  1.4.4
-	 * @global WP_Roles $wp_roles
+	 * @global \WP_Roles $wp_roles
 	 * @return void
 	 */
 	public function addCaps() {
@@ -118,6 +118,12 @@ class RolesService {
 			$wp_roles->add_cap( 'sc_shop_manager', 'view_sc_shop_sensitive_data' );
 			$wp_roles->add_cap( 'sc_shop_manager', 'export_sc_shop_reports' );
 			$wp_roles->add_cap( 'sc_shop_manager', 'manage_sc_shop_settings' );
+			$wp_roles->add_cap( 'sc_shop_manager', 'list_users' );
+			$wp_roles->add_cap( 'sc_shop_manager', 'edit_user' );
+
+			$wp_roles->add_cap( 'sc_shop_worker', 'edit_posts' );
+			$wp_roles->add_cap( 'sc_shop_worker', 'edit_published_posts' );
+			$wp_roles->add_cap( 'sc_shop_worker', 'edit_others_posts' );
 
 			$wp_roles->add_cap( 'administrator', 'view_sc_shop_reports' );
 			$wp_roles->add_cap( 'administrator', 'view_sc_shop_sensitive_data' );
@@ -125,17 +131,17 @@ class RolesService {
 			$wp_roles->add_cap( 'administrator', 'manage_sc_shop_settings' );
 			$wp_roles->add_cap( 'administrator', 'manage_sc_account_settings' );
 
-			// Add the main model capabilities
+			// Add the main model capabilities.
 			$capabilities = $this->getModelCaps();
 			foreach ( $capabilities as $cap_group ) {
 				foreach ( $cap_group as $cap ) {
 					$wp_roles->add_cap( 'administrator', $cap );
 					$wp_roles->add_cap( 'sc_shop_manager', $cap );
 					$wp_roles->add_cap( 'sc_shop_worker', $cap );
+					$wp_roles->add_cap( 'sc_shop_accountant', $cap );
 				}
 			}
 
-			$wp_roles->add_cap( 'sc_shop_accountant', 'edit_sc_products' );
 			$wp_roles->add_cap( 'sc_shop_accountant', 'view_sc_shop_reports' );
 			$wp_roles->add_cap( 'sc_shop_accountant', 'export_sc_shop_reports' );
 			$wp_roles->add_cap( 'sc_shop_accountant', 'edit_sc_shop_charges' );
@@ -165,10 +171,13 @@ class RolesService {
 			'sc_invoice',
 			'sc_price',
 			'sc_refund',
+			'sc_dispute',
 			'sc_charge',
 			'sc_media',
 			'sc_payment_method',
 			'sc_subscription',
+			'sc_affiliate',
+			'sc_review',
 		];
 
 		foreach ( $capability_types as $capability_type ) {

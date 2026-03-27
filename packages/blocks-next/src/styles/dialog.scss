@@ -1,0 +1,103 @@
+.sc-dialog {
+	box-sizing: border-box;
+	width: var(--sc-dialog-width, 31rem);
+	background-color: var(--sc-panel-background-color);
+	border-radius: var(--sc-border-radius-medium);
+	box-shadow: var(--sc-shadow-x-large);
+	padding: 0;
+	margin: auto !important;
+	box-shadow: var(--sc-shadow-x-large);
+	border: none;
+	outline: none;
+	animation: fade-out 0.25s ease;
+
+	&[open] {
+		animation: fade-in 0.25s ease;
+	}
+
+	&[open]::backdrop {
+		animation: backdrop-fade-in 0.25s ease forwards;
+	}
+}
+
+.sc-dialog__header {
+	flex: 0 0 auto;
+	display: flex;
+	align-items: center;
+	border-bottom: 1px solid var(--sc-color-gray-300);
+}
+
+.sc-dialog__title {
+	flex: 1 1 auto;
+	font: inherit;
+	font-size: var(--sc-font-size-large);
+	line-height: var(--sc-line-height-dense);
+	padding: var(--sc-dialog-header-spacing, var(--sc-spacing-large));
+	margin: 0;
+}
+
+.sc-dialog__close {
+	content: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAyNCAyNCcgZmlsbD0nbm9uZScgc3Ryb2tlPSdjdXJyZW50Q29sb3InIHN0cm9rZS13aWR0aD0nMicgc3Ryb2tlLWxpbmVjYXA9J3JvdW5kJyBzdHJva2UtbGluZWpvaW49J3JvdW5kJz48bGluZSB4MT0nMTgnIHkxPSc2JyB4Mj0nNicgeTI9JzE4JyAvPjxsaW5lIHgxPSc2JyB5MT0nNicgeDI9JzE4JyB5Mj0nMTgnIC8+PC9zdmc+');
+	flex: 0 0 auto;
+	display: flex;
+	align-items: center;
+	font-size: var(--sc-font-size-x-large);
+	padding: 0
+		calc(var(--sc-dialog-header-spacing, var(--sc-spacing-large)) / 2);
+	z-index: 2;
+	font-size: 14px;
+	width: 24px;
+	height: 24px;
+	color: var(--sc-color-gray-500);
+	padding: var(--sc-dialog-header-spacing, var(--sc-spacing-large));
+	cursor: pointer;
+}
+
+.sc-dialog__body {
+	flex: 1 1 auto;
+	padding: var(--sc-dialog-body-spacing, var(--sc-spacing-large));
+	overflow: var(--sc-dialog-body-overflow, auto);
+	-webkit-overflow-scrolling: touch;
+}
+
+.sc-dialog__footer {
+	flex: 0 0 auto;
+	text-align: right;
+	padding: var(--sc-dialog-footer-spacing, var(--sc-spacing-large));
+}
+
+/* Animation keyframes */
+
+@keyframes fade-in {
+	0% {
+		opacity: 0;
+		transform: scale(0.9);
+	}
+
+	100% {
+		opacity: 1;
+		transform: scale(1);
+	}
+}
+
+@keyframes fade-out {
+	0% {
+		opacity: 1;
+		transform: scale(1);
+	}
+
+	100% {
+		opacity: 0;
+		transform: scale(0.9);
+	}
+}
+
+@keyframes backdrop-fade-in {
+	0% {
+		background-color: rgb(0 0 0 / 0%);
+	}
+
+	100% {
+		background-color: rgb(0 0 0 / 25%);
+	}
+}

@@ -9,7 +9,7 @@ import {
 	ToggleControl,
 } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
-import { useSetting } from '@wordpress/block-editor';
+import { useSettings } from '@wordpress/block-editor';
 import {
 	Icon,
 	positionCenter,
@@ -50,7 +50,7 @@ export default ({ attributes, setAttributes }) => {
 	];
 
 	const units = useCustomUnits({
-		availableUnits: useSetting('spacing.units') || [
+		availableUnits: useSettings('spacing.units') || [
 			'%',
 			'px',
 			'em',
@@ -62,6 +62,7 @@ export default ({ attributes, setAttributes }) => {
 	return (
 		<>
 			<ToggleControl
+				__nextHasNoMarginBottom
 				className="block-editor-hooks__toggle-control"
 				label={__('Inner blocks use content width', 'surecart')}
 				checked={layout?.type === 'constrained'}
@@ -93,6 +94,7 @@ export default ({ attributes, setAttributes }) => {
 					<div className="block-editor-hooks__layout-controls">
 						<div className="block-editor-hooks__layout-controls-unit">
 							<UnitControl
+								__next40pxDefaultSize
 								label={__('Content', 'surecart')}
 								labelPosition="top"
 								__unstableInputWidth="80px"
@@ -113,6 +115,7 @@ export default ({ attributes, setAttributes }) => {
 						</div>
 						<div className="block-editor-hooks__layout-controls-unit">
 							<UnitControl
+								__next40pxDefaultSize
 								label={__('Wide', 'surecart')}
 								labelPosition="top"
 								__unstableInputWidth="80px"
@@ -139,6 +142,8 @@ export default ({ attributes, setAttributes }) => {
 						)}
 					</p>
 					<ToggleGroupControl
+						__next40pxDefaultSize
+						__nextHasNoMarginBottom
 						__experimentalIsBorderless
 						label={__('Justification', 'surecart')}
 						value={justifyContent}

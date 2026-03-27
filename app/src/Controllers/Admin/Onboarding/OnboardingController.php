@@ -30,6 +30,7 @@ class OnboardingController {
 		return \SureCart::view( 'admin/onboarding/complete' )->with( [ 'status' => $request->query( 'status' ) ] );
 	}
 
+
 	/**
 	 * Save the API Token.
 	 *

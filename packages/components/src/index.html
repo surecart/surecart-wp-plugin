@@ -27,8 +27,50 @@
 </head>
 
 <body>
-  <h1>Reactivate subscription</h1>
-  <sc-subscription-reactivate></sc-subscription-reactivate>
+  <div style="height: 100vh; display: flex; align-items: center; justify-content: center; font-size: 15px;">
+    <div style="width: 450px; display: flex; flex-direction: column; gap: 40px;">
+      <sc-product-line-item amount="100" currency="USD" fees="10" interval="every 3 months" quantity="2"
+        name="Gold Subscription" price-name="Subscribe & Save" variant-label="Large / Blue" trial-duration-days="7"
+        scratch-amount="10" removable="true" purchasable-status-display="Unavailable"></sc-product-line-item>
+
+      <sc-product-line-item amount="7900" currency="USD" fees="10" interval="every year" quantity="1"
+        name="Presto Player" price-name="Ultimate" scratch-amount="10000" removable="true"
+        purchasable-status-display="Out Of Stock"></sc-product-line-item>
+
+      <sc-product-line-item amount="1000" currency="USD" fees="10" interval="every month" quantity="1"
+        name="Silver Subscription" sku="123456" price-name="Monthly" variant-label="Large / Blue" scratch-amount="10000"
+        removable="true"></sc-product-line-item>
+
+      <sc-product-line-item amount="2400" currency="USD" quantity="1" name="Multiple Variation Product"
+        variant-label="Medium / Black" removable="true"></sc-product-line-item>
+
+      <sc-product-line-item amount="2400" currency="USD" quantity="1" name="Community Edition" price-name="Lifetime"
+        removable="true"></sc-product-line-item>
+    </div>
+  </div>
 </body>
+
+<script>
+  const productLineItems = document.querySelectorAll('sc-product-line-item');
+  productLineItems.forEach((productLineItem, index) => {
+    if (index !== 3) {
+      productLineItem.image = {
+        src: 'https://placehold.co/85x85',
+        alt: 'Product Image'
+      }
+    }
+
+    if (index == 1) {
+      productLineItem.fees = [
+        {
+          amount: -1000,
+          currency: 'USD',
+          description: 'First Year Discount',
+          fee_type: 'setup'
+        }
+      ]
+    }
+  });
+</script>
 
 </html>

@@ -40,8 +40,15 @@
  - [sc-custom-order-price-input](../../controllers/checkout-form/custom-order-price-input)
  - [sc-customer-details](../customer-details)
  - [sc-donation-choices](../../controllers/checkout-form/donation-choices)
+ - [sc-downloads-list](../../controllers/dashboard/sc-downloads-list)
  - [sc-fulfillments](../../controllers/dashboard/fulfillments)
+ - [sc-invoice-memo](../../controllers/checkout-form/invoice-memo)
  - [sc-invoices-list](../../controllers/dashboard/invoices-list)
+ - [sc-license](../../controllers/dashboard/sc-license)
+ - [sc-licenses-list](../../controllers/dashboard/sc-licenses-list)
+ - [sc-line-item-invoice-due-date](../../controllers/checkout-form/invoice-due-date)
+ - [sc-line-item-invoice-number](../../controllers/checkout-form/invoice-number)
+ - [sc-line-item-invoice-receipt-download](../../controllers/checkout-form/invoice-receipt-download)
  - [sc-line-item-shipping](../../controllers/checkout-form/sc-line-item-shipping)
  - [sc-line-item-total](../../controllers/checkout-form/line-item-total)
  - [sc-line-items](../../controllers/checkout-form/line-items)
@@ -69,6 +76,7 @@
  - [sc-subscription-reactivate](../../controllers/dashboard/subscription-reactivate)
  - [sc-subscription-switch](../../controllers/dashboard/subscription-switch)
  - [sc-subscriptions-list](../../controllers/dashboard/subscriptions-list)
+ - [sc-summary](../sc-summary)
  - [sc-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
 
 ### Graph
@@ -81,8 +89,15 @@ graph TD;
   sc-custom-order-price-input --> sc-skeleton
   sc-customer-details --> sc-skeleton
   sc-donation-choices --> sc-skeleton
+  sc-downloads-list --> sc-skeleton
   sc-fulfillments --> sc-skeleton
+  sc-invoice-memo --> sc-skeleton
   sc-invoices-list --> sc-skeleton
+  sc-license --> sc-skeleton
+  sc-licenses-list --> sc-skeleton
+  sc-line-item-invoice-due-date --> sc-skeleton
+  sc-line-item-invoice-number --> sc-skeleton
+  sc-line-item-invoice-receipt-download --> sc-skeleton
   sc-line-item-shipping --> sc-skeleton
   sc-line-item-total --> sc-skeleton
   sc-line-items --> sc-skeleton
@@ -110,6 +125,7 @@ graph TD;
   sc-subscription-reactivate --> sc-skeleton
   sc-subscription-switch --> sc-skeleton
   sc-subscriptions-list --> sc-skeleton
+  sc-summary --> sc-skeleton
   sc-upcoming-invoice --> sc-skeleton
   style sc-skeleton fill:#f9f,stroke:#333,stroke-width:4px
 ```

@@ -57,7 +57,7 @@ export class ScProductQuantity {
         >
           <sc-quantity-select
             size={this.size}
-            quantity={Math.max(state[this.productId].selectedPrice?.ad_hoc ? 1 : state[this.productId].quantity, 1)}
+            quantity={Math.max(state[this.productId]?.selectedPrice?.ad_hoc ? 1 : state[this.productId]?.quantity, 1)}
             disabled={state[this.productId]?.selectedPrice?.ad_hoc}
             onScInput={e => setProduct(this.productId, { quantity: e.detail })}
             {...(!!maxStockQuantity ? { max: maxStockQuantity } : {})}

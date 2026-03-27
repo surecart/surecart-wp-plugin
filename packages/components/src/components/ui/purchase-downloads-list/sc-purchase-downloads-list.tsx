@@ -48,6 +48,7 @@ export class ScPurchaseDownloadsList {
   renderList() {
     return this.purchases.map(purchase => {
       const downloads = (purchase?.product as Product)?.downloads?.data.filter((d: Download) => !d.archived);
+      const totalDownloads = (purchase?.product as Product)?.downloads?.pagination?.count;
       const mediaBytesList = (downloads || []).map(item => (item?.media ? (item?.media as Media)?.byte_size : 0));
       const mediaByteTotalSize = mediaBytesList.reduce((prev, curr) => prev + curr, 0);
 
@@ -75,7 +76,7 @@ export class ScPurchaseDownloadsList {
               <strong>{(purchase?.product as Product)?.name}</strong>
             </div>
             <div class="download__details">
-              {sprintf(_n('%s file', '%s files', downloads?.length, 'surecart'), downloads?.length)}
+              {sprintf(_n('%s file', '%s files', totalDownloads, 'surecart'), totalDownloads)}
               {!!mediaByteTotalSize && (
                 <Fragment>
                   {' '}

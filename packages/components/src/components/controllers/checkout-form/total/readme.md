@@ -7,10 +7,10 @@
 
 ## Properties
 
-| Property | Attribute | Description | Type                                    | Default        |
-| -------- | --------- | ----------- | --------------------------------------- | -------------- |
-| `order`  | --        |             | `Checkout`                              | `undefined`    |
-| `total`  | `total`   |             | `"amount_due" \| "subtotal" \| "total"` | `'amount_due'` |
+| Property   | Attribute | Description | Type                                    | Default        |
+| ---------- | --------- | ----------- | --------------------------------------- | -------------- |
+| `checkout` | --        |             | `Checkout`                              | `undefined`    |
+| `total`    | `total`   |             | `"amount_due" \| "subtotal" \| "total"` | `'amount_due'` |
 
 
 ## Dependencies
@@ -21,14 +21,9 @@
  - [sc-order-submit](../order-submit)
  - [sc-order-summary](../order-summary)
 
-### Depends on
-
-- [sc-format-number](../../../util/format-number)
-
 ### Graph
 ```mermaid
 graph TD;
-  sc-total --> sc-format-number
   sc-line-item-total --> sc-total
   sc-order-submit --> sc-total
   sc-order-summary --> sc-total

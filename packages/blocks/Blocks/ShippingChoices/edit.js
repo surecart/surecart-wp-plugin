@@ -55,6 +55,8 @@ export default ({ className, attributes, setAttributes }) => {
 				<PanelBody title={__('Shipping Choices', 'surecart')}>
 					<PanelRow>
 						<TextControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							label={__('Label', 'surecart')}
 							value={label}
 							onChange={(label) => setAttributes({ label })}
@@ -62,6 +64,7 @@ export default ({ className, attributes, setAttributes }) => {
 					</PanelRow>
 					<PanelRow>
 						<ToggleControl
+							__nextHasNoMarginBottom
 							label={__('Show Description', 'surecart')}
 							checked={showDescription}
 							onChange={(showDescription) =>

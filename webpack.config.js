@@ -1,5 +1,6 @@
 const defaultConfig = require('@wordpress/scripts/config/webpack.config');
 const path = require('path');
+const fs = require('fs');
 const CopyPlugin = require('copy-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 
@@ -33,6 +34,10 @@ module.exports = {
 			__dirname,
 			'packages/admin/coupons/index.js'
 		),
+		['admin/auto-fees']: path.resolve(
+			__dirname,
+			'packages/admin/auto-fees/index.js'
+		),
 		['admin/products']: path.resolve(
 			__dirname,
 			'packages/admin/products/index.js'
@@ -41,6 +46,26 @@ module.exports = {
 			__dirname,
 			'packages/admin/customers/index.js'
 		),
+		['admin/affiliations']: path.resolve(
+			__dirname,
+			'packages/admin/affiliations/index.js'
+		),
+		['admin/affiliation-requests']: path.resolve(
+			__dirname,
+			'packages/admin/affiliation-requests/index.js'
+		),
+		['admin/affiliation-referrals']: path.resolve(
+			__dirname,
+			'packages/admin/affiliation-referrals/index.js'
+		),
+		['admin/affiliation-payouts']: path.resolve(
+			__dirname,
+			'packages/admin/affiliation-payouts/index.js'
+		),
+		['admin/affiliation-payouts-groups']: path.resolve(
+			__dirname,
+			'packages/admin/affiliation-payouts-groups/index.js'
+		),
 		['admin/checkouts']: path.resolve(
 			__dirname,
 			'packages/admin/checkouts/index.js'
@@ -48,10 +73,6 @@ module.exports = {
 		['admin/orders']: path.resolve(
 			__dirname,
 			'packages/admin/orders/index.js'
-		),
-		['admin/abandoned-checkouts-stats']: path.resolve(
-			__dirname,
-			'packages/admin/abandoned-checkouts-stats/index.js'
 		),
 		['admin/abandoned-checkouts']: path.resolve(
 			__dirname,
@@ -65,6 +86,10 @@ module.exports = {
 			__dirname,
 			'packages/admin/licenses/index.js'
 		),
+		['admin/reviews']: path.resolve(
+			__dirname,
+			'packages/admin/reviews/index.js'
+		),
 		['admin/product-groups']: path.resolve(
 			__dirname,
 			'packages/admin/product-groups/index.js'
@@ -77,6 +102,10 @@ module.exports = {
 			__dirname,
 			'packages/admin/bumps/index.js'
 		),
+		['admin/upsell-funnels']: path.resolve(
+			__dirname,
+			'packages/admin/upsell-funnels/index.js'
+		),
 		['admin/subscriptions/show']: path.resolve(
 			__dirname,
 			'packages/admin/subscriptions/show/index.js'
@@ -85,18 +114,6 @@ module.exports = {
 			__dirname,
 			'packages/admin/subscriptions/edit/index.js'
 		),
-		['admin/cart/edit']: path.resolve(
-			__dirname,
-			'packages/admin/cart/edit/index.js'
-		),
-		['admin/cancellation-insights']: path.resolve(
-			__dirname,
-			'packages/admin/cancellation-insights/index.js'
-		),
-		['admin/subscription-insights']: path.resolve(
-			__dirname,
-			'packages/admin/subscription-insights/index.js'
-		),
 
 		/**
 		 * Settings.
@@ -104,6 +121,18 @@ module.exports = {
 		['admin/settings/account']: path.resolve(
 			__dirname,
 			'packages/admin/settings/account/index.js'
+		),
+		['admin/settings/dynamic-pricing']: path.resolve(
+			__dirname,
+			'packages/admin/settings/dynamic-pricing/index.js'
+		),
+		['admin/settings/affiliation-protocol']: path.resolve(
+			__dirname,
+			'packages/admin/settings/affiliation-protocol/index.js'
+		),
+		['admin/settings/review-protocol']: path.resolve(
+			__dirname,
+			'packages/admin/settings/review-protocol/index.js'
 		),
 		['admin/settings/abandoned']: path.resolve(
 			__dirname,
@@ -165,6 +194,18 @@ module.exports = {
 			__dirname,
 			'packages/admin/settings/shipping/profile/index.js'
 		),
+		['admin/settings/integrations']: path.resolve(
+			__dirname,
+			'packages/admin/settings/integrations/index.js'
+		),
+		['admin/settings/display-currency']: path.resolve(
+			__dirname,
+			'packages/admin/settings/display-currency/index.js'
+		),
+		['admin/settings/learn']: path.resolve(
+			__dirname,
+			'packages/admin/settings/learn/index.js'
+		),
 
 		/**
 		 * Data.
@@ -204,6 +245,17 @@ module.exports = {
 		['styles/webhook-notice']: path.resolve(
 			__dirname,
 			'packages/admin/styles/webhook-notice.js'
+		),
+		/**
+		 * Deactivation survey.
+		 */
+		['styles/plugin-deactivation-feedback']: path.resolve(
+			__dirname,
+			'styles/plugin-deactivation-feedback.css'
+		),
+		['scripts/plugin-deactivation-feedback']: path.resolve(
+			__dirname,
+			'scripts/plugin-deactivation-feedback.js'
 		),
 	},
 	output: {
@@ -260,5 +312,31 @@ module.exports = {
 				},
 			],
 		}),
+		// Generate icons.json list from icon-assets
+		{
+			apply: (compiler) => {
+				compiler.hooks.afterEmit.tap('GenerateIconsList', () => {
+					const iconDir = path.resolve(
+						__dirname,
+						'./packages/components/src/components/ui/icon/icon-assets'
+					);
+					const iconNames = fs
+						.readdirSync(iconDir)
+						.filter((f) => f.endsWith('.svg'))
+						.map((f) => path.basename(f, '.svg'))
+						.sort((a, b) =>
+							a.toLowerCase().localeCompare(b.toLowerCase())
+						);
+
+					fs.writeFileSync(
+						path.resolve(__dirname, 'dist/icon-assets/icons.json'),
+						JSON.stringify(iconNames, null, 2)
+					);
+					console.log(
+						`✓ Generated icons.json with ${iconNames.length} icons`
+					);
+				});
+			},
+		},
 	],
 };

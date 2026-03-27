@@ -5,7 +5,7 @@
 	gap: var(--sc-column-spacing, var(--sc-spacing-xxxx-large));
 	margin-left: auto;
 	margin-right: auto;
-	flex-wrap: wrap !important;
+	flex-wrap: wrap;
 	align-items: initial !important;
 }
 .wp-block-surecart-columns.are-vertically-aligned-top {

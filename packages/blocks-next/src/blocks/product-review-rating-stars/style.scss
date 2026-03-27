@@ -1,0 +1,16 @@
+.wp-block-surecart-product-review-rating-stars {
+	display: flex;
+	gap: 2px;
+
+	.sc-star-row__label__svg {
+		// Ensure fill attribute cascades to polygon child element.
+		polygon {
+			fill: inherit;
+
+			// Second polygon in half-star should not be filled (outline only).
+			&:nth-child(2) {
+				fill: none;
+			}
+		}
+	}
+}

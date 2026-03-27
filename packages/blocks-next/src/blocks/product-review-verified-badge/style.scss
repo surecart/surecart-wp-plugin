@@ -1,0 +1,12 @@
+.wp-block-surecart-product-review-verified-badge {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: var(--sc-review-secondary-text-color, var(--sc-color-gray-600));
+	gap: var(--sc-product-review-verified-badge-gap, 4px);
+
+	.sc-product-review-verified-badge__icon {
+		display: inline-flex;
+		align-items: center;
+	}
+}

@@ -26,4 +26,22 @@ class Account extends Model {
 	 * @var boolean
 	 */
 	protected $clears_account_cache = true;
+
+	/**
+	 * Get the account ID.
+	 *
+	 * @return string
+	 */
+	public function getIsConnectedAttribute() {
+		return ! empty( ApiToken::get() ) && ! empty( $this->id );
+	}
+
+	/**
+	 * Get the claim expired attribute.
+	 *
+	 * @return bool
+	 */
+	public function getClaimExpiredAttribute() {
+		return ! empty( $this->claim_window_ends_at ) && time() > $this->claim_window_ends_at;
+	}
 }

@@ -1,6 +1,7 @@
 {
 	"name": "surecart/line-item-shipping",
 	"title": "Shipping Line Item",
+	"apiVersion": 3,
 	"description": "Display the shipping amount",
 	"category": "surecart",
 	"ancestor": ["surecart/totals"],

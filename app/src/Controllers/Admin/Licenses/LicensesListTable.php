@@ -39,10 +39,11 @@ class LicensesListTable extends ListTable {
 		$this->items = $query->data;
 	}
 
-	public function search() { ?>
+	public function search() {
+		?>
 	<form class="search-form"
 		method="get">
-		<?php $this->search_box( __( 'Search Licenses' ), 'user' ); ?>
+		<?php $this->search_box( __( 'Search Licenses', 'surecart' ), 'user' ); ?>
 		<input type="hidden"
 			name="id"
 			value="1" />
@@ -56,13 +57,16 @@ class LicensesListTable extends ListTable {
 	 * @return Array
 	 */
 	public function get_columns() {
-		return [
-			'key'      => __( 'Key', 'surecart' ),
-			'customer' => __( 'Customer', 'surecart' ),
-			'purchase' => __( 'Purchase', 'surecart' ),
-			'status'   => __( 'Status', 'surecart' ),
-			'created'  => __( 'Created', 'surecart' ),
-		];
+		return array_merge(
+			[
+				'key'      => __( 'Key', 'surecart' ),
+				'customer' => __( 'Customer', 'surecart' ),
+				'purchase' => __( 'Purchase', 'surecart' ),
+				'status'   => __( 'Status', 'surecart' ),
+				'created'  => __( 'Created', 'surecart' ),
+			],
+			parent::get_columns()
+		);
 	}
 
 	/**
@@ -100,14 +104,14 @@ class LicensesListTable extends ListTable {
 	public function column_key( $license ) {
 		ob_start();
 		?>
-		<a class="row-title" aria-label="<?php echo esc_attr( 'Edit License', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'licenses', $license->id ) ); ?>">
+		<a class="row-title" aria-label="<?php esc_attr_e( 'Edit License', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'licenses', $license->id ) ); ?>">
 			<?php echo wp_kses_post( $license->key ); ?>
 		</a>
 
 		<?php
 		echo $this->row_actions(
 			[
-				'edit' => '<a href="' . esc_url( \SureCart::getUrl()->edit( 'licenses', $license->id ) ) . '" aria-label="' . esc_attr( 'Edit License', 'surecart' ) . '">' . __( 'Edit', 'surecart' ) . '</a>',
+				'edit' => '<a href="' . esc_url( \SureCart::getUrl()->edit( 'licenses', $license->id ) ) . '" aria-label="' . esc_attr__( 'Edit License', 'surecart' ) . '">' . __( 'Edit', 'surecart' ) . '</a>',
 			],
 		);
 		?>
@@ -131,7 +135,7 @@ class LicensesListTable extends ListTable {
 	public function column_customer( $license ) {
 		ob_start();
 		?>
-		<a aria-label="<?php echo esc_attr( 'Edit Customer', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'customers', $license->purchase->customer->id ) ); ?>">
+		<a aria-label="<?php esc_attr_e( 'Edit Customer', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'customers', $license->purchase->customer->id ) ); ?>">
 			<?php echo wp_kses_post( $license->purchase->customer->name ?? $license->purchase->customer->email ); ?>
 			<?php if ( ! empty( $license->purchase->customer->name ) ) : ?>
 				&mdash;
@@ -148,7 +152,7 @@ class LicensesListTable extends ListTable {
 		}
 		ob_start();
 		?>
-		<a aria-label="<?php echo esc_attr( 'Edit Product', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'product', $license->purchase->product->id ) ); ?>">
+		<a aria-label="<?php esc_attr_e( 'Edit Product', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'product', $license->purchase->product->id ) ); ?>">
 			<?php echo wp_kses_post( $license->purchase->product->name ); ?>
 		</a>
 		<?php
@@ -184,6 +188,9 @@ class LicensesListTable extends ListTable {
 	 * @return Mixed
 	 */
 	public function column_default( $product, $column_name ) {
+		// Call the parent method to handle custom columns
+        parent::column_default( $product, $column_name );
+
 		switch ( $column_name ) {
 			case 'name':
 				return '<a href="' . \SureCart::getUrl()->edit( 'product', $product->id ) . '">' . $product->name . '</a>';

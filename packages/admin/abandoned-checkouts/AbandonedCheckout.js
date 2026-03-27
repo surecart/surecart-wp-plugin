@@ -56,6 +56,7 @@ export default () => {
 						'customer',
 						'checkout.tax_identifier',
 						'checkout.shipping_address',
+						'checkout.billing_address',
 						'checkout.discount',
 						'checkout.line_items',
 						'discount.promotion',
@@ -64,6 +65,7 @@ export default () => {
 						'customer.balances',
 						'price.product',
 						'product.featured_product_media',
+						'product.product_medias',
 						'product_media.media',
 					],
 				},
@@ -205,10 +207,21 @@ export default () => {
 						abandoned={abandoned}
 						loading={!hasLoadedAbandoned}
 					/>
-					{!!abandoned?.checkout?.shipping_address && (
+					{!!abandoned?.checkout?.shipping_address_display && (
 						<Address
 							label={__('Shipping & Tax Address', 'surecart')}
-							address={abandoned?.checkout?.shipping_address}
+							address={
+								abandoned?.checkout?.shipping_address_display
+							}
+							loading={!hasLoadedAbandoned}
+						/>
+					)}
+					{!!abandoned?.checkout?.billing_address_display && (
+						<Address
+							label={__('Billing Address', 'surecart')}
+							address={
+								abandoned?.checkout?.billing_address_display
+							}
 							loading={!hasLoadedAbandoned}
 						/>
 					)}

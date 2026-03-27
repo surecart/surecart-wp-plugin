@@ -2,13 +2,20 @@
 
 namespace SureCart\Models;
 
+use SureCart\Models\Traits\HasCheckout;
 use SureCart\Models\Traits\HasCustomer;
+use SureCart\Models\Traits\HasDates;
+use SureCart\Models\Traits\HasPromotion;
+use SureCart\Support\TimeDate;
 
 /**
  * Order model
  */
 class AbandonedCheckout extends Model {
 	use HasCustomer;
+	use HasCheckout;
+	use HasDates;
+	use HasPromotion;
 
 	/**
 	 * Rest API endpoint
@@ -44,5 +51,19 @@ class AbandonedCheckout extends Model {
 	protected function stats( $args = [] ) {
 		$stat = new Statistic();
 		return $stat->where( $args )->find( 'abandoned_checkouts' );
+	}
+
+	/**
+	 * Get the notifications scheduled at date and time attribute.
+	 *
+	 * @return string
+	 */
+	public function getNotificationsScheduledAtDateTimeAttribute() {
+		return array_map(
+			function ( $scheduled_at ) {
+				return TimeDate::formatDateAndTime( $scheduled_at );
+			},
+			$this->notifications_scheduled_at ?? []
+		);
 	}
 }

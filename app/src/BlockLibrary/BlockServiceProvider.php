@@ -6,7 +6,7 @@
 
 namespace SureCart\BlockLibrary;
 
-use SureCartBlocks\Blocks\BlockService;
+use SureCart\BlockLibrary\BlockService;
 use SureCartCore\ServiceProviders\ServiceProviderInterface;
 
 /**
@@ -19,6 +19,13 @@ use SureCartCore\ServiceProviders\ServiceProviderInterface;
  */
 class BlockServiceProvider implements ServiceProviderInterface {
 	/**
+	 * Cached components from kses.json
+	 *
+	 * @var array
+	 */
+	private static $components = [];
+
+	/**
 	 * {@inheritDoc}
 	 *
 	 *  @param  \Pimple\Container $container Service Container.
@@ -26,33 +33,27 @@ class BlockServiceProvider implements ServiceProviderInterface {
 	public function register( $container ) {
 		$app = $container[ SURECART_APPLICATION_KEY ];
 
-		$container['blocks'] = function () use ( $app ) {
-			return new BlockService( $app );
-		};
+		$container['block'] = fn () => new BlockService( $app );
 
-		$container['blocks.patterns'] = function () use ( $app ) {
-			return new BlockPatternsService( $app );
-		};
-
-		$container['blocks.validations'] = function () {
-			return new BlockValidationService(
-				apply_filters(
-					'surecart_block_validators',
-					[
-						new \SureCart\BlockValidator\VariantChoice(),
-					]
+		$container['block.support.anchor']   = fn () => new BlockAnchorSupportService();
+		$container['block.support.currency'] = fn () => new BlockCurrencyConversionSupportService();
+		$container['blocks.quick_view']      = fn () => new ProductQuickViewService();
+		$container['blocks.review_form']     = fn () => new ProductReviewFormService();
+		$container['blocks.patterns']        = fn () => new BlockPatternsService( $app );
+		$container['blocks.mode_switcher']   = fn () => new FormModeSwitcherService( $app );
+		$container['blocks.validations']     = fn () => new BlockValidationService(
+			apply_filters(
+				'surecart_block_validators',
+				array(
+					new \SureCart\BlockValidator\VariantChoice(),
 				)
-			);
-		};
-
-		$app->alias( 'blocks', 'blocks' );
-
-		$app->alias(
-			'block',
-			function () use ( $app ) {
-				return call_user_func_array( [ $app->blocks(), 'render' ], func_get_args() );
-			}
+			)
 		);
+
+		$app->alias( 'block', 'block' );
+
+		// Register blocks.
+		include plugin_dir_path( SURECART_PLUGIN_FILE ) . 'packages/blocks-next/index.php';
 	}
 
 	/**
@@ -67,13 +68,16 @@ class BlockServiceProvider implements ServiceProviderInterface {
 	public function bootstrap( $container ) {
 		$container['blocks.patterns']->bootstrap();
 		$container['blocks.validations']->bootstrap();
+		$container['blocks.mode_switcher']->bootstrap();
+		$container['block.support.anchor']->bootstrap();
+		$container['block.support.currency']->bootstrap();
 
 		// allow design tokens in css.
 		add_filter(
 			'safe_style_css',
-			function( $styles ) {
+			function ( $styles ) {
 				return array_merge(
-					[
+					array(
 						'--spacing',
 						'--font-weight',
 						'--line-height',
@@ -87,17 +91,17 @@ class BlockServiceProvider implements ServiceProviderInterface {
 						'--sc-color-primary-500',
 						'--sc-focus-ring-color-primary',
 						'--sc-input-border-color-focus',
-					],
+					),
 					$styles
 				);
 			}
 		);
 		// allow our web components in wp_kses contexts.
-		add_filter( 'wp_kses_allowed_html', [ $this, 'ksesComponents' ] );
+		add_filter( 'wp_kses_allowed_html', array( $this, 'ksesComponents' ) );
 		// register our blocks.
-		add_action( 'init', [ $this, 'registerBlocks' ] );
+		add_action( 'init', array( $this, 'registerBlocks' ) );
 		// register our category.
-		add_action( 'block_categories_all', [ $this, 'registerBlockCategories' ] );
+		add_action( 'block_categories_all', array( $this, 'registerBlockCategories' ) );
 	}
 
 	/**
@@ -107,15 +111,35 @@ class BlockServiceProvider implements ServiceProviderInterface {
 	 * @return array
 	 */
 	public function registerBlockCategories( $categories ) {
-		return [
-			...[
-				[
+		return array(
+			...array(
+				array(
 					'slug'  => 'surecart',
-					'title' => esc_html__( 'SureCart', 'surecart' ),
-				],
-			],
+					'title' => esc_html__( 'Checkout', 'surecart' ),
+				),
+				array(
+					'slug'  => 'surecart-customer-dashboard',
+					'title' => esc_html__( 'Customer Dashboard', 'surecart' ),
+				),
+				array(
+					'slug'  => 'surecart-cart',
+					'title' => esc_html__( 'Cart', 'surecart' ),
+				),
+				array(
+					'slug'  => 'surecart-product-list',
+					'title' => esc_html__( 'Shop', 'surecart' ),
+				),
+				array(
+					'slug'  => 'surecart-product-page',
+					'title' => esc_html__( 'Product', 'surecart' ),
+				),
+				array(
+					'slug'  => 'surecart-upsell-page',
+					'title' => esc_html__( 'Upsells', 'surecart' ),
+				),
+			),
 			...$categories,
-		];
+		);
 	}
 
 	/**
@@ -126,14 +150,16 @@ class BlockServiceProvider implements ServiceProviderInterface {
 	 * @return array
 	 */
 	public function ksesComponents( $tags ) {
-		$components = json_decode( file_get_contents( plugin_dir_path( SURECART_PLUGIN_FILE ) . 'app/src/Support/kses.json' ), true );
+		if ( empty( self::$components ) ) {
+			self::$components = json_decode( file_get_contents( plugin_dir_path( SURECART_PLUGIN_FILE ) . 'app/src/Support/kses.json' ), true );
+		}
 
 		// add slot to defaults.
 		$tags['span']['slot']         = true;
 		$tags['div']['slot']          = true;
 		$tags['sc-spinner']['data-*'] = true;
 
-		return array_merge( $components, $tags );
+		return array_merge( self::$components, $tags );
 	}
 
 	/**

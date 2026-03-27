@@ -1,0 +1,30 @@
+.wp-block-surecart-cart-order-bumps {
+	width: 100%;
+	max-width: 100%;
+	overflow: hidden;
+	position: relative;
+	box-sizing: border-box;
+
+	// Ensure all nested content respects boundaries
+	* {
+		box-sizing: border-box;
+	}
+}
+
+// Ensure the block wrapper in editor also clips overflow
+.wp-block[data-type="surecart/cart-order-bumps"] {
+	overflow: hidden;
+	max-width: 100%;
+}
+
+// Ensure the template block wrapper also constrains properly
+.wp-block[data-type="surecart/cart-order-bump-template"] {
+	overflow: hidden;
+	max-width: 100%;
+}
+
+// Editor-specific: ensure the template container clips properly
+.wp-block-surecart-cart-order-bumps .wp-block-surecart-cart-order-bump-template {
+	overflow: hidden;
+	max-width: 100%;
+}

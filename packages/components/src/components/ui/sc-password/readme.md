@@ -44,6 +44,12 @@ Type: `Promise<boolean>`
 
 Sets focus on the input.
 
+#### Parameters
+
+| Name      | Type           | Description |
+| --------- | -------------- | ----------- |
+| `options` | `FocusOptions` |             |
+
 #### Returns
 
 Type: `Promise<void>`

@@ -70,6 +70,7 @@ Type: `Promise<void>`
  - [sc-checkout](../../controllers/checkout-form/checkout)
  - [sc-checkout-form-errors](../../controllers/checkout-form/checkout-form-errors)
  - [sc-checkout-mollie-payment](../../controllers/checkout-form/sc-checkout-mollie-payment)
+ - [sc-checkout-test-complete](../../controllers/checkout-form/checkout-test-complete)
  - [sc-coupon-form](../coupon-form)
  - [sc-custom-order-price-input](../../controllers/checkout-form/custom-order-price-input)
  - [sc-dashboard-module](../dashboard-module)
@@ -88,11 +89,13 @@ Type: `Promise<void>`
  - [sc-product-buy-button](../../controllers/product/sc-product-buy-button)
  - [sc-product-item-list](../../controllers/products/sc-product-item-list)
  - [sc-product-price-modal](../../controllers/product/sc-product-price-modal)
+ - [sc-razorpay-add-method](../sc-razorpay-add-method)
  - [sc-stripe-add-method](../sc-stripe-add-method)
  - [sc-stripe-payment-request](../stripe-payment-request)
  - [sc-subscription-reactivate](../../controllers/dashboard/subscription-reactivate)
  - [sc-subscription-switch](../../controllers/dashboard/subscription-switch)
  - [sc-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
+ - [sc-upsell](../../controllers/upsell/sc-upsell)
 
 ### Depends on
 
@@ -106,6 +109,7 @@ graph TD;
   sc-checkout --> sc-alert
   sc-checkout-form-errors --> sc-alert
   sc-checkout-mollie-payment --> sc-alert
+  sc-checkout-test-complete --> sc-alert
   sc-coupon-form --> sc-alert
   sc-custom-order-price-input --> sc-alert
   sc-dashboard-module --> sc-alert
@@ -124,11 +128,13 @@ graph TD;
   sc-product-buy-button --> sc-alert
   sc-product-item-list --> sc-alert
   sc-product-price-modal --> sc-alert
+  sc-razorpay-add-method --> sc-alert
   sc-stripe-add-method --> sc-alert
   sc-stripe-payment-request --> sc-alert
   sc-subscription-reactivate --> sc-alert
   sc-subscription-switch --> sc-alert
   sc-upcoming-invoice --> sc-alert
+  sc-upsell --> sc-alert
   style sc-alert fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

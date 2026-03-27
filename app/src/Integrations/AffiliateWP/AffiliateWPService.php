@@ -19,7 +19,7 @@ class AffiliateWPService {
 
 		add_action(
 			'plugins_loaded',
-			function() {
+			function () {
 				if ( class_exists( 'Affiliate_WP_Recurring_Base' ) ) {
 					new AffiliateWPRecurringIntegration();
 				}
@@ -36,9 +36,9 @@ class AffiliateWPService {
 	 */
 	public function register( $integrations ) {
 		$integrations['surecart'] = [
-			'name'     => __( 'SureCart', 'surecart' ),
+			'name'     => 'SureCart',
 			'class'    => AffiliateWPIntegration::class,
-			'file'     => dirname( __FILE__ ) . '/AffiliateWPIntegration.php',
+			'file'     => __DIR__ . '/AffiliateWPIntegration.php',
 			'supports' => [ 'sales_reporting' ],
 		];
 		return $integrations;

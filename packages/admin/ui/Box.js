@@ -37,6 +37,10 @@ export default ({
 				.components-card__footer {
 					background: var(--sc-color-gray-50, #f9fafb);
 				}
+
+				&.components-card {
+					border-radius: var(--sc-card-border-radius, 7px);
+				}
 			`}
 			size={size}
 			isRounded={isRounded}
@@ -70,7 +74,7 @@ export default ({
 				<CardBody
 					css={css`
 						display: grid;
-						gap: 10px;
+						gap: 18px;
 						> * {
 							width: 100%;
 						}

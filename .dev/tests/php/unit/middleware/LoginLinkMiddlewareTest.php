@@ -115,7 +115,7 @@ use SureCartCore\Requests\RequestInterface;
 // 				"email" => "newaccount@example.com",
 // 				"expired" => false,
 // 				"first_used_at" => 1644273782,
-// 				"return_url" => "https://example.com",
+// 				"external_url" => "https://example.com",
 // 				"customer" => "testcustomerid",
 // 				"created_at" => 1644273782,
 // 				"updated_at" => 1644273782
@@ -158,7 +158,7 @@ use SureCartCore\Requests\RequestInterface;
 // 				"email" => "newaccount@example.com",
 // 				"expired" => false,
 // 				"first_used_at" => 1644273782,
-// 				"return_url" => "https://example.com",
+// 				"external_url" => "https://example.com",
 // 				"customer" => null,
 // 				"created_at" => 1644273782,
 // 				"updated_at" => 1644273782
@@ -196,7 +196,7 @@ use SureCartCore\Requests\RequestInterface;
 // 				"email" => "customer@example.com",
 // 				"expired" => false,
 // 				"first_used_at" => 1644273782,
-// 				"return_url" => "https://example.com",
+// 				"external_url" => "https://example.com",
 // 				"customer" => "testcustomerid",
 // 				"created_at" => 1644273782,
 // 				"updated_at" => 1644273782
@@ -238,7 +238,7 @@ use SureCartCore\Requests\RequestInterface;
 // 				"email" => "customer@example.com",
 // 				"expired" => false,
 // 				"first_used_at" => 1644273782,
-// 				"return_url" => "https://example.com",
+// 				"external_url" => "https://example.com",
 // 				"customer" => "testcustomerid",
 // 				"created_at" => 1644273782,
 // 				"updated_at" => 1644273782

@@ -8,7 +8,6 @@ import type { FullConfig } from '@playwright/test';
  * WordPress dependencies
  */
 import { RequestUtils } from '@wordpress/e2e-test-utils-playwright';
-import cleanup from './cleanup';
 
 async function globalSetup(config: FullConfig) {
 	const { storageState, baseURL } = config.projects[0].use;
@@ -26,8 +25,9 @@ async function globalSetup(config: FullConfig) {
 	// Authenticate and save the storageState to disk.
 	await requestUtils.setupRest();
 
-	// clean database and get ready.
-	await cleanup(requestUtils);
+	// Reactivate the plugin to trigger activation hook which seeds checkout pages/forms all the time.
+	await requestUtils.deactivatePlugin('surecart');
+	await requestUtils.activatePlugin('surecart');
 
 	await requestContext.dispose();
 }

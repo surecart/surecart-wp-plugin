@@ -7,11 +7,43 @@ use SureCart\Models\Product;
 use SureCart\Models\Subscription;
 use SureCart\Models\SubscriptionProtocol;
 use SureCart\Models\User;
-
+use SureCartBlocks\Controllers\Middleware\MissingPaymentMethodMiddleware;
+use SureCartBlocks\Controllers\Middleware\UpdateSubscriptionMiddleware;
+use SureCartBlocks\Controllers\Middleware\SubscriptionPermissionsControllerMiddleware;
+use SureCartBlocks\Controllers\Middleware\SubscriptionNonceVerificationMiddleware;
 /**
  * The subscription controller.
  */
 class SubscriptionController extends BaseController {
+	/**
+	 * The middleware for this controller.
+	 *
+	 * @var array
+	 */
+	protected $middleware = [
+		'confirm'               => [
+			SubscriptionPermissionsControllerMiddleware::class,
+			UpdateSubscriptionMiddleware::class,
+			MissingPaymentMethodMiddleware::class,
+		],
+		'confirm_amount'        => [
+			SubscriptionPermissionsControllerMiddleware::class,
+			UpdateSubscriptionMiddleware::class,
+			MissingPaymentMethodMiddleware::class,
+		],
+		'confirm_variation'     => [
+			SubscriptionPermissionsControllerMiddleware::class,
+			UpdateSubscriptionMiddleware::class,
+			MissingPaymentMethodMiddleware::class,
+		],
+		'update_payment_method' => [
+			SubscriptionNonceVerificationMiddleware::class,
+			SubscriptionPermissionsControllerMiddleware::class,
+			UpdateSubscriptionMiddleware::class,
+			MissingPaymentMethodMiddleware::class,
+		],
+	];
+
 	/**
 	 * Render the block
 	 *
@@ -64,7 +96,7 @@ class SubscriptionController extends BaseController {
 					'surecart/dashboard/subscription_list/query',
 					[
 						'customer_ids' => array_values( User::current()->customerIds() ),
-						'status'       => [ 'active', 'trialing', 'canceled' ],
+						'status'       => [ 'active', 'trialing', 'canceled', 'past_due' ],
 						'page'         => 1,
 						'per_page'     => 20,
 					]
@@ -104,6 +136,7 @@ class SubscriptionController extends BaseController {
 		$subscription = Subscription::with(
 			[
 				'price',
+				'periods',
 				'price.product',
 				'product.product_group',
 				'current_period',
@@ -119,7 +152,7 @@ class SubscriptionController extends BaseController {
 		$should_delay_cancellation = $subscription->shouldDelayCancellation();
 		ob_start();
 		?>
-
+		<?php do_action( 'surecart/dashboard/subscription/before_current_plan', $subscription ); ?>
 		<sc-spacing style="--spacing: var(--sc-spacing-large)">
 			<sc-breadcrumbs>
 				<sc-breadcrumb href="<?php echo esc_url( add_query_arg( [ 'tab' => $this->getTab() ], remove_query_arg( array_keys( $_GET ) ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended ?>">
@@ -152,15 +185,26 @@ class SubscriptionController extends BaseController {
 				->id( 'customer-subscription-edit' )
 				->with(
 					[
-						'heading'      => __( 'Current Plan', 'surecart' ),
-						'showCancel'   => \SureCart::account()->portal_protocol->subscription_cancellations_enabled && ! $subscription->remaining_period_count && ! $should_delay_cancellation,
-						'protocol'     => SubscriptionProtocol::with( [ 'preservation_coupon' ] )->find(), // \SureCart::account()->subscription_protocol,
-						'subscription' => $subscription,
+						'heading'                => __( 'Current Plan', 'surecart' ),
+						'showCancel'             => \SureCart::account()->customer_portal_protocol->subscription_cancellations_enabled && ! $subscription->remaining_period_count && ! $should_delay_cancellation,
+						'protocol'               => SubscriptionProtocol::with( [ 'preservation_coupon' ] )->find(), // \SureCart::account()->subscription_protocol,
+						'subscription'           => $subscription,
+						'updatePaymentMethodUrl' => esc_url_raw(
+							home_url(
+								add_query_arg(
+									[
+										'tab'    => $this->getTab(),
+										'action' => 'update_payment_method',
+										'nonce'  => wp_create_nonce( 'subscription-switch' ),
+									]
+								)
+							)
+						),
 					]
 				)->render()
 			);
 			?>
-
+		<?php do_action( 'surecart/dashboard/subscription/after_current_plan', $subscription ); ?>
 		<?php
 		// show switch if we can change it.
 		if ( $subscription->canBeSwitched() ) :
@@ -171,8 +215,20 @@ class SubscriptionController extends BaseController {
 					[
 						'heading'        => __( 'Update Plan', 'surecart' ),
 						'productId'      => $subscription->price->product->id,
-						'productGroupId' => $subscription->price->product->product_group->archived ? null : $subscription->price->product->product_group->id,
+						'productGroupId' => ( $subscription->price->product->product_group
+						? ( $subscription->price->product->product_group->archived
+							? null
+							: $subscription->price->product->product_group->id )
+						: null ),
 						'subscription'   => $subscription,
+						'successUrl'     => home_url(
+							add_query_arg(
+								[
+									'tab'   => $this->getTab(),
+									'nonce' => wp_create_nonce( 'subscription-switch' ),
+								]
+							)
+						),
 					]
 				)->render()
 			);
@@ -294,18 +350,21 @@ class SubscriptionController extends BaseController {
 	 */
 	public function getTermsText() {
 		$account     = \SureCart::account();
-		$privacy_url = $account->portal_protocol->privacy_url ?? \get_privacy_policy_url();
-		$terms_url   = $account->portal_protocol->terms_url ?? '';
+		$privacy_url = $account->customer_portal_protocol->privacy_url ?? \get_privacy_policy_url();
+		$terms_url   = $account->customer_portal_protocol->terms_url ?? '';
 
 		if ( ! empty( $privacy_url ) && ! empty( $terms_url ) ) {
+			// translators: %1$s is the terms URL, %2$s is the terms link text, %3$s is the privacy URL, %4$s is the privacy link text.
 			return sprintf( __( 'By updating or canceling your plan, you agree to the <a href="%1$1s" target="_blank">%2$2s</a> and <a href="%3$3s" target="_blank">%4$4s</a>', 'surecart' ), esc_url( $terms_url ), __( 'Terms', 'surecart' ), esc_url( $privacy_url ), __( 'Privacy Policy', 'surecart' ) );
 		}
 
 		if ( ! empty( $privacy_url ) ) {
+			// translators: %1$s is the privacy policy URL, %2$s is the privacy policy link text.
 			return sprintf( __( 'By updating or canceling your plan, you agree to the <a href="%1$1s" target="_blank">%2$2s</a>', 'surecart' ), esc_url( $privacy_url ), __( 'Privacy Policy', 'surecart' ) );
 		}
 
 		if ( ! empty( $terms_url ) ) {
+			// translators: %1$s is the terms URL, %2$s is the terms link text.
 			return sprintf( __( 'By updating or canceling your plan, you agree to the <a href="%1$1s" target="_blank">%2$2s</a>', 'surecart' ), esc_url( $terms_url ), __( 'Terms', 'surecart' ) );
 		}
 
@@ -356,9 +415,10 @@ class SubscriptionController extends BaseController {
 				->id( 'subscription-ad-hoc-confirm' )
 				->with(
 					[
-						'heading' => __( 'Enter An Amount', 'surecart' ),
-						'price'   => $price,
-						'variant' => $this->getParam( 'variant' ),
+						'heading'      => __( 'Enter An Amount', 'surecart' ),
+						'price'        => $price,
+						'variant'      => $this->getParam( 'variant' ),
+						'currencyCode' => \SureCart::account()->currency,
 					]
 				)->render()
 			);
@@ -495,7 +555,7 @@ class SubscriptionController extends BaseController {
 
 			<?php
 			$terms            = $this->getTermsText();
-			$quantity_enabled = (bool) \SureCart::account()->portal_protocol->subscription_quantity_updates_enabled;
+			$quantity_enabled = (bool) \SureCart::account()->customer_portal_protocol->subscription_quantity_updates_enabled;
 			if ( $this->getParam( 'ad_hoc_amount' ) ) {
 				$quantity_enabled = false;
 			}
@@ -523,7 +583,6 @@ class SubscriptionController extends BaseController {
 
 		<?php
 		return ob_get_clean();
-
 	}
 
 	/**
@@ -602,6 +661,7 @@ class SubscriptionController extends BaseController {
 				'ad_hoc_amount' => $this->getParam( 'ad_hoc_amount' ),
 				'id'            => $this->getId(),
 				'price_id'      => $this->getParam( 'price_id' ),
+				'nonce'         => wp_create_nonce( 'subscription-switch' ),
 			],
 			remove_query_arg( array_keys( $_GET ) ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		);

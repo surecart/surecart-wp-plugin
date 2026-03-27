@@ -89,7 +89,7 @@ class BrandRestServiceProvider extends RestServiceProvider implements RestServic
 				'id'               => [
 					'description' => esc_html__( 'Unique identifier for the object.', 'surecart' ),
 					'type'        => 'string',
-					'context'     => [ 'edit' ],
+					'context'     => [ 'view', 'edit', 'embed' ],
 					'readonly'    => true,
 				],
 				'object'           => [
@@ -127,6 +127,27 @@ class BrandRestServiceProvider extends RestServiceProvider implements RestServic
 				],
 				'website'          => [
 					'description' => esc_html__( 'The website that will be shown to customers for support, on invoices, etc.', 'surecart' ),
+					'type'        => 'string',
+					'context'     => [ 'view', 'edit' ],
+				],
+				'logo'             => [
+					'description' => esc_html__( 'The brand logo media object.', 'surecart' ),
+					'type'        => [ 'object', 'null' ],
+					'context'     => [ 'view', 'edit' ],
+				],
+				'dark_logo'        => [
+					'description' => esc_html__( 'The dark mode logo media object.', 'surecart' ),
+					'type'        => [ 'object', 'null' ],
+					'context'     => [ 'view', 'edit' ],
+				],
+				'theme'            => [
+					'description' => esc_html__( 'The SureCart color scheme (light or dark).', 'surecart' ),
+					'type'        => 'string',
+					'enum'        => [ 'light', 'dark' ],
+					'context'     => [ 'view', 'edit' ],
+				],
+				'dark_color'       => [
+					'description' => esc_html__( 'The primary color used in dark mode.', 'surecart' ),
 					'type'        => 'string',
 					'context'     => [ 'view', 'edit' ],
 				],

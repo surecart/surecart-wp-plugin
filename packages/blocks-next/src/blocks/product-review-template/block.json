@@ -1,0 +1,61 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "surecart/product-review-template",
+	"keywords": ["product", "review", "template"],
+	"title": "Template",
+	"description": "Displays product review template",
+	"version": "1.0.0",
+	"category": "surecart-product-page",
+	"example": {},
+	"ancestor": ["surecart/product-review-list-content"],
+	"usesContext": ["query", "surecart/product-review/limit"],
+	"providesContext": {
+		"reviewId": "id",
+		"review": "review"
+	},
+	"supports": {
+		"interactivity": true,
+		"inserter": false,
+		"layout": {
+			"allowSwitching": false,
+			"allowInheriting": false,
+			"default": {
+				"type": "flex"
+			}
+		},
+		"align": true,
+		"spacing": {
+			"padding": true,
+			"margin": true,
+			"blockGap": {
+				"__experimentalDefault": "1.25em"
+			},
+			"__experimentalDefaultControls": {
+				"padding": true,
+				"margin": true,
+				"blockGap": true
+			}
+		},
+		"color": {
+			"text": false,
+			"background": true
+		},
+		"__experimentalBorder": {
+			"color": true,
+			"radius": true,
+			"width": true,
+			"__experimentalDefaultControls": {
+				"color": true,
+				"radius": true,
+				"width": true
+			}
+		}
+	},
+	"textdomain": "surecart",
+	"editorScript": "file:./index.js",
+	"viewScriptModule": ["@surecart/product-list", "@surecart/product-page"],
+	"viewScript": ["wp-url", "wp-api-fetch", "wp-i18n", "wp-a11y"],
+	"style": "file:./style-index.css",
+	"render": "file:./view.php"
+}

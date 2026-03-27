@@ -1,8 +1,7 @@
-import { Component, h, Prop, Event, EventEmitter, Element, Fragment } from '@stencil/core';
+import { Component, h, Prop, Event, EventEmitter, Element } from '@stencil/core';
 import { __, _n, sprintf } from '@wordpress/i18n';
 import { isRtl } from '../../../functions/page-align';
-import { Fee } from '../../../types';
-import { sizeImage } from '../../../functions/media';
+import { Fee, ImageAttributes } from '../../../types';
 
 /**
  * @part base - The component base
@@ -33,47 +32,41 @@ import { sizeImage } from '../../../functions/media';
 export class ScProductLineItem {
   @Element() el: HTMLScProductLineItemElement;
 
-  /** Url for the product image */
-  @Prop() imageUrl: string;
-
-  /** Title for the product image */
-  @Prop() imageTitle: string;
-
-  /** Alternative description for the product image */
-  @Prop() imageAlt: string;
+  /** Image attributes. */
+  @Prop() image: ImageAttributes;
 
   /** Product name */
   @Prop() name: string;
 
-  /** Price name */
-  @Prop() priceName?: string;
-
-  /** Product variant label */
-  @Prop() variantLabel: string = '';
-
-  /** Quantity */
-  @Prop() quantity: number;
-
   /** Product monetary amount */
-  @Prop() amount: number;
+  @Prop() amount: string;
+
+  /** The line item scratch amount */
+  @Prop() scratch: string;
+
+  /** Product display amount */
+  @Prop() displayAmount: string;
+
+  /** Product scratch display amount */
+  @Prop() scratchDisplayAmount: string;
 
   /** Product line item fees. */
   @Prop() fees: Fee[];
 
-  /** Is the setup fee not included in the free trial? */
-  @Prop() setupFeeTrialEnabled: boolean = true;
+  /** Price name */
+  @Prop() price?: string;
 
-  /** The line item scratch amount */
-  @Prop() scratchAmount: number;
+  /** Product variant label */
+  @Prop() variant: string = '';
 
-  /** Currency for the product */
-  @Prop() currency: string;
+  /** Quantity */
+  @Prop() quantity: number;
 
   /** Recurring interval (i.e. monthly, once, etc.) */
   @Prop() interval: string;
 
-  /** Trial duration days */
-  @Prop() trialDurationDays: number;
+  /** Trial text */
+  @Prop() trial: string;
 
   /** Is the line item removable */
   @Prop() removable: boolean;
@@ -82,10 +75,19 @@ export class ScProductLineItem {
   @Prop() editable: boolean = true;
 
   /** The max allowed. */
-  @Prop() max: number = 100;
+  @Prop() max: number;
 
   /** The SKU. */
   @Prop() sku: string = '';
+
+  /** The purchasable status display */
+  @Prop() purchasableStatus: string;
+
+  /** The line item note */
+  @Prop() note: string;
+
+  /** The review button link. If set, a review button will be shown linking to this URL. */
+  @Prop() reviewButtonLink: string = '';
 
   /** Emitted when the quantity changes. */
   @Event({ bubbles: false }) scUpdateQuantity: EventEmitter<number>;
@@ -93,137 +95,113 @@ export class ScProductLineItem {
   /** Emitted when the quantity changes. */
   @Event({ bubbles: false }) scRemove: EventEmitter<void>;
 
-  renderPriceAndInterval() {
-    const setupFee = (this.fees || []).find(fee => fee.fee_type === 'setup');
-    if (this.trialDurationDays) {
-      return (
-        <div class="item__price" part="price">
-          <div class="price" part="price__amount">
-            {!!setupFee && !this.setupFeeTrialEnabled ? (
-              <Fragment>
-                {setupFee?.description} <sc-format-number part="price__amount" type="currency" currency={this.currency} value={setupFee.amount}></sc-format-number>
-              </Fragment>
-            ) : (
-              sprintf(_n('%d day free', '%d days free', this.trialDurationDays, 'surecart'), this.trialDurationDays)
-            )}
-          </div>
-          <div class="price__description" part="price__description">
-            {
-              /** translators: 30 days free, Then $99 per month. */
-              __('Then', 'surecart')
-            }{' '}
-            {!!this.scratchAmount && this.scratchAmount > this.amount && (
-              <Fragment>
-                <sc-format-number class="item__scratch-price" part="price__scratch" type="currency" currency={this.currency} value={this.scratchAmount}></sc-format-number>{' '}
-              </Fragment>
-            )}
-            <sc-format-number part="price__amount" type="currency" currency={this.currency} value={this.amount}></sc-format-number> {!!this.interval && this.interval}
-            {!!setupFee && !this.setupFeeTrialEnabled && sprintf(_n('starting in %d day', 'starting in %d days', this.trialDurationDays, 'surecart'), this.trialDurationDays)}
-          </div>
-        </div>
-      );
-    }
-
-    return (
-      <div class="item__price" part="price">
-        <div class="price" part="price__amount">
-          {!!this.scratchAmount && this.scratchAmount !== this.amount && (
-            <Fragment>
-              <sc-format-number class="item__scratch-price" type="currency" currency={this.currency} value={this.scratchAmount}></sc-format-number>{' '}
-            </Fragment>
-          )}
-          <sc-format-number type="currency" currency={this.currency} value={this.amount}></sc-format-number>
-        </div>
-        {!!this.interval && (
-          <div class="price__description" part="price__description">
-            {this.interval}
-          </div>
-        )}
-      </div>
-    );
-  }
-
   render() {
+    const isImageFallback = this.image?.type === 'fallback';
+
     return (
       <div class="base" part="base">
         <div
           part="product-line-item"
           class={{
             'item': true,
-            'item--has-image': !!this.imageUrl,
+            'item--has-image': !!this.image?.src,
+            'item--has-review': !!this.reviewButtonLink,
             'item--is-rtl': isRtl(),
             'product-line-item__editable': this.editable,
             'product-line-item__removable': this.removable,
           }}
         >
-          {!!this.imageUrl && (
-            <img part="image" src={sizeImage(this.imageUrl, 130)} class="item__image" alt={this.imageAlt} {...(this.imageTitle ? { title: this.imageTitle } : {})} />
+          {!!this.image?.src ? (
+            <img {...(this.image as any)} part={isImageFallback ? 'placeholder__image' : 'image'} class={isImageFallback ? 'item__image-placeholder' : 'item__image'} />
+          ) : (
+            <div class="item__image-placeholder" part="placeholder__image"></div>
           )}
-          <div class="item__text" part="text">
-            <div class="item__text-details">
+          <div class="item__text-container">
+            <div class="item__row">
               <div class="item__title" part="title">
                 <slot name="title">{this.name}</slot>
               </div>
-              <div class="item__description item__price-variant" part="description">
-                <div>{this.variantLabel}</div>
-                <div>{this.priceName}</div>
-                {!!this.sku && (
+              <div class="price" part="price__amount">
+                {!!this.scratch && this.scratch !== this.amount && <span class="item__scratch-price">{this.scratch}</span>}
+                {this.amount}
+                <div class="price__description" part="price__description">
+                  {this.interval}
+                </div>
+              </div>
+            </div>
+
+            <div class="item__row">
+              <div class="item__description" part="description">
+                {this.variant && <div>{this.variant}</div>}
+                {this.price && <div>{this.price}</div>}
+                {this.sku && (
                   <div>
                     {__('SKU:', 'surecart')} {this.sku}
                   </div>
                 )}
+                {!!this.purchasableStatus && <div>{this.purchasableStatus}</div>}
+                {!!this.note && <sc-product-line-item-note note={this.note} />}
               </div>
-              {!this.editable && this.quantity > 1 && (
+
+              <div class="item__description" part="trial-fees">
+                {!!this.trial && <div>{this.trial}</div>}
+                {(this.fees || []).map(fee => {
+                  return (
+                    <div>
+                      {fee?.display_amount} {fee?.description}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            <div class="item__row stick-bottom">
+              {this.editable ? (
+                <sc-quantity-select
+                  max={this.max || Infinity}
+                  exportparts="base:quantity, minus:quantity__minus, minus-icon:quantity__minus-icon, plus:quantity__plus, plus-icon:quantity__plus-icon, input:quantity__input"
+                  clickEl={this.el}
+                  quantity={this.quantity}
+                  size="small"
+                  onScChange={e => e.detail && this.scUpdateQuantity.emit(e.detail)}
+                  aria-label={
+                    /** translators: %1$s: product name, %2$s: product price name */
+                    sprintf(__('Change Quantity - %1$s %2$s', 'surecart'), this.name, this.price)
+                  }
+                  productName={this.name}
+                ></sc-quantity-select>
+              ) : (
                 <span class="item__description" part="static-quantity">
                   {__('Qty:', 'surecart')} {this.quantity}
                 </span>
               )}
+              {!!this.reviewButtonLink && (
+                <div class="item__add-review">
+                  <sc-button size="small" href={this.reviewButtonLink} target="_blank">
+                    {__('Review Product', 'surecart')}
+                  </sc-button>
+                </div>
+              )}
+              {!!this.removable && (
+                <div
+                  class="item__remove-container"
+                  onClick={() => this.scRemove.emit()}
+                  onKeyDown={e => {
+                    if (e.key === 'Enter') {
+                      this.scRemove.emit();
+                    }
+                  }}
+                  // translators: Remove Item - Product Name Product Price Name
+                  aria-label={sprintf(__('Remove Item - %1$s %2$s', 'surecart'), this.name, this.amount)}
+                  tabIndex={0}
+                >
+                  <sc-icon exportparts="base:remove-icon__base" class="item__remove" name="x" />
+                  <span class="item__remove-text">{__('Remove', 'surecart')}</span>
+                </div>
+              )}
             </div>
-
-            {this.editable && (
-              <sc-quantity-select
-                max={this.max || Infinity}
-                exportparts="base:quantity, minus:quantity__minus, minus-icon:quantity__minus-icon, plus:quantity__plus, plus-icon:quantity__plus-icon, input:quantity__input"
-                clickEl={this.el}
-                quantity={this.quantity}
-                size="small"
-                onScChange={e => e.detail && this.scUpdateQuantity.emit(e.detail)}
-                aria-label={sprintf(__('Change Quantity - %s %s', 'surecart'), this.name, this.priceName)}
-              ></sc-quantity-select>
-            )}
-          </div>
-          <div class="item__suffix" part="suffix">
-            {this.removable ? (
-              <sc-icon
-                exportparts="base:remove-icon__base"
-                class="item__remove"
-                name="x"
-                onClick={() => this.scRemove.emit()}
-                onKeyDown={e => {
-                  if (e.key === 'Enter') {
-                    this.scRemove.emit();
-                  }
-                }}
-                tabindex="0"
-                aria-label={sprintf(__('Remove Item - %s %s', 'surecart'), this.name, this.priceName)}
-              ></sc-icon>
-            ) : (
-              <div></div>
-            )}
-            {this.renderPriceAndInterval()}
           </div>
         </div>
-        {(this.fees || []).map(fee => {
-          if (this.trialDurationDays && !this.setupFeeTrialEnabled && fee.fee_type === 'setup') return null;
-          return (
-            <sc-line-item exportparts="price-description:line-item__price-description">
-              <sc-format-number slot="price-description" type="currency" value={fee?.amount} currency={this.currency || 'usd'} />
-              <span slot="price-description" class="fee__description">
-                {fee?.description}
-              </span>
-            </sc-line-item>
-          );
-        })}
       </div>
     );
   }

@@ -32,7 +32,14 @@ class Processor extends Model {
 	 *
 	 * @var string
 	 */
-	protected $cache_key = 'processors_updated_at';
+	protected $cache_key = 'processors';
+
+	/**
+	 * Is this optimized caching?
+	 *
+	 * @var boolean
+	 */
+	protected $optimized_caching = true;
 
 	/**
 	 * Get payment method types.

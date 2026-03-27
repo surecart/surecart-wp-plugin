@@ -20,12 +20,11 @@
 
 - [sc-flex](../../../ui/flex)
 - [sc-skeleton](../../../ui/skeleton)
+- [sc-line-item](../../../ui/line-item)
 - [sc-empty](../../../ui/empty)
 - [sc-product-line-item](../../../ui/product-line-item)
-- [sc-divider](../../../ui/divider)
-- [sc-line-item](../../../ui/line-item)
-- [sc-format-number](../../../util/format-number)
 - [sc-tag](../../../ui/tag)
+- [sc-divider](../../../ui/divider)
 - [sc-spacing](../../../ui/spacing)
 - [sc-dashboard-module](../../../ui/dashboard-module)
 - [sc-order-manual-instructions](../../confirmation/manual-instructions)
@@ -33,7 +32,6 @@
 - [sc-stacked-list](../../../ui/stacked-list)
 - [sc-stacked-list-row](../../../ui/stacked-list-row)
 - [sc-order-status-badge](../../../ui/order-status-badge)
-- [sc-format-date](../../../util/format-date)
 - [sc-payment-method](../../../ui/sc-payment-method)
 - [sc-button](../../../ui/button)
 - [sc-icon](../../../ui/icon)
@@ -44,12 +42,11 @@
 graph TD;
   sc-order --> sc-flex
   sc-order --> sc-skeleton
+  sc-order --> sc-line-item
   sc-order --> sc-empty
   sc-order --> sc-product-line-item
-  sc-order --> sc-divider
-  sc-order --> sc-line-item
-  sc-order --> sc-format-number
   sc-order --> sc-tag
+  sc-order --> sc-divider
   sc-order --> sc-spacing
   sc-order --> sc-dashboard-module
   sc-order --> sc-order-manual-instructions
@@ -57,17 +54,18 @@ graph TD;
   sc-order --> sc-stacked-list
   sc-order --> sc-stacked-list-row
   sc-order --> sc-order-status-badge
-  sc-order --> sc-format-date
   sc-order --> sc-payment-method
   sc-order --> sc-button
   sc-order --> sc-icon
   sc-order --> sc-purchase-downloads-list
   sc-empty --> sc-icon
-  sc-product-line-item --> sc-format-number
+  sc-product-line-item --> sc-product-line-item-note
   sc-product-line-item --> sc-quantity-select
+  sc-product-line-item --> sc-button
   sc-product-line-item --> sc-icon
-  sc-product-line-item --> sc-line-item
+  sc-product-line-item-note --> sc-icon
   sc-quantity-select --> sc-icon
+  sc-button --> sc-spinner
   sc-dashboard-module --> sc-alert
   sc-alert --> sc-icon
   sc-order-manual-instructions --> sc-alert
@@ -78,7 +76,6 @@ graph TD;
   sc-payment-method --> sc-tag
   sc-payment-method --> sc-cc-logo
   sc-payment-method --> sc-text
-  sc-button --> sc-spinner
   sc-cc-logo --> sc-icon
   sc-purchase-downloads-list --> sc-divider
   sc-purchase-downloads-list --> sc-empty

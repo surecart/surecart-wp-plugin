@@ -1,0 +1,9 @@
+:host {
+  display: block;
+}
+
+.order-billing-address {
+  &__toggle {
+    margin-bottom: var(--sc-form-row-spacing, var(--sc-spacing-medium));
+  }
+}

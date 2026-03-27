@@ -24,7 +24,9 @@
   border-radius: 2px;
   background-color: var(--sc-input-background-color);
   color: var(--sc-color-white);
-  transition: var(--sc-input-transition, var(--sc-transition-medium)) border-color, var(--sc-input-transition, var(--sc-transition-medium)) opacity, var(--sc-input-transition, var(--sc-transition-medium)) background-color, var(--sc-input-transition, var(--sc-transition-medium)) color, var(--sc-input-transition, var(--sc-transition-medium)) box-shadow;
+  transition: var(--sc-input-transition, var(--sc-transition-medium)) border-color, var(--sc-input-transition, var(--sc-transition-medium)) opacity,
+    var(--sc-input-transition, var(--sc-transition-medium)) background-color, var(--sc-input-transition, var(--sc-transition-medium)) color,
+    var(--sc-input-transition, var(--sc-transition-medium)) box-shadow;
 
   input[type='checkbox'] {
     position: absolute;
@@ -88,6 +90,7 @@
 
 .checkbox__label {
   line-height: var(--sc-checkbox-size);
+  margin-top: var(--sc-input-border-width);
   margin-left: 0.5em;
   flex: 1;
   // user-select: none;

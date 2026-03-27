@@ -4,7 +4,6 @@ namespace SureCart\Controllers\Web;
 
 use SureCart\Models\IncomingWebhook;
 use SureCart\Models\RegisteredWebhook;
-use SureCartCore\Responses\RedirectResponse;
 use SureCartVendors\Psr\Http\Message\ResponseInterface;
 
 /**
@@ -37,8 +36,7 @@ class WebhookController {
 		// test it.
 		$registered->test();
 
-		// respond back.
-		return ( new RedirectResponse( $request ) )->back();
+		return \SureCart::redirect()->to( esc_url_raw( admin_url( 'admin.php?page=sc-dashboard' ) ) );
 	}
 
 	/**
@@ -62,8 +60,7 @@ class WebhookController {
 			wp_die( wp_kses_post( $updated->get_error_message() ) );
 		}
 
-		// redirect back.
-		return ( new RedirectResponse( $request ) )->back();
+		return \SureCart::redirect()->to( esc_url_raw( admin_url( 'admin.php?page=sc-dashboard' ) ) );
 	}
 
 	/**

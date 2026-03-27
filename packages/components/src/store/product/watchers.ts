@@ -17,7 +17,8 @@ on('set', (productId: string, newValue: ProductState, oldValue: ProductState) =>
     handleStockWithSelectedVariant(productId);
   }
 
-  const shouldUpdateLineItem = !oldValue || ['selectedPrice', 'adHocAmount', 'quantity'].some(key => JSON.stringify(newValue[key]) !== JSON.stringify(oldValue[key]));
+  const shouldUpdateLineItem =
+    !oldValue || ['selectedPrice', 'adHocAmount', 'quantity', 'selectedVariant'].some(key => JSON.stringify(newValue[key]) !== JSON.stringify(oldValue[key]));
   if (shouldUpdateLineItem) {
     setLineItem(productId);
   }
@@ -73,7 +74,7 @@ const setLineItem = (productId: string) => {
   setProduct(productId, {
     line_item: {
       price_id: state[productId]?.selectedPrice?.id,
-      quantity: state[productId]?.selectedPrice?.ad_hoc ? 1 : state[productId].quantity,
+      quantity: Math.max(state[productId]?.selectedPrice?.ad_hoc ? 1 : state[productId].quantity, 1),
       ...(state[productId]?.selectedPrice?.ad_hoc ? { ad_hoc_amount: state[productId]?.adHocAmount } : {}),
       variant: state[productId].selectedVariant?.id,
     },

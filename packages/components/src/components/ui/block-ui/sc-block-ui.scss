@@ -1,11 +1,11 @@
 :host {
   display: block;
-  position: absolute;
+  position: var(--sc-block-ui-position, absolute);
   top: -5px;
   left: -5px;
   right: -5px;
   bottom: -5px;
-  overflow:hidden;
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -16,12 +16,12 @@
 
   &:after {
     content: '';
-    position: absolute;
+    position: var(--sc-block-ui-position, absolute);
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    cursor: wait;
+    cursor: var(--sc-block-ui-cursor, wait);
     background: var(--sc-block-ui-background-color, var(--sc-color-white));
     opacity: var(--sc-block-ui-opacity, 0.15);
   }

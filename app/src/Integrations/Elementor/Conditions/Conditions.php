@@ -35,7 +35,7 @@ class Conditions extends Condition_Base {
 	 * @return string
 	 */
 	public function get_label() {
-		return esc_html__( 'SureCart', 'elementor-pro' );
+		return esc_html__( 'SureCart', 'surecart' );
 	}
 
 	/**
@@ -44,7 +44,7 @@ class Conditions extends Condition_Base {
 	 * @return string
 	 */
 	public function get_all_label() {
-		return esc_html__( 'All Products', 'elementor-pro' );
+		return esc_html__( 'All Products', 'surecart' );
 	}
 
 	/**
@@ -55,7 +55,7 @@ class Conditions extends Condition_Base {
 	 * @return bool
 	 */
 	public function check( $args ) {
-		return get_query_var( 'surecart_current_product' );
+		return sc_get_product() && empty( get_query_var( 'surecart_current_upsell' ) );
 	}
 
 	/**
@@ -64,6 +64,12 @@ class Conditions extends Condition_Base {
 	 * @return void
 	 */
 	public function register_sub_conditions() {
-		$this->register_sub_condition( new ProductCondition() );
+		$product_single = new ProductCondition(
+			[
+				'post_type' => 'sc_product',
+			]
+		);
+
+		$this->register_sub_condition( $product_single );
 	}
 }

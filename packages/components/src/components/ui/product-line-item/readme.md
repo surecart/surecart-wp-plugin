@@ -7,26 +7,27 @@
 
 ## Properties
 
-| Property               | Attribute                 | Description                                      | Type      | Default     |
-| ---------------------- | ------------------------- | ------------------------------------------------ | --------- | ----------- |
-| `amount`               | `amount`                  | Product monetary amount                          | `number`  | `undefined` |
-| `currency`             | `currency`                | Currency for the product                         | `string`  | `undefined` |
-| `editable`             | `editable`                | Can we select the quantity                       | `boolean` | `true`      |
-| `fees`                 | --                        | Product line item fees.                          | `Fee[]`   | `undefined` |
-| `imageAlt`             | `image-alt`               | Alternative description for the product image    | `string`  | `undefined` |
-| `imageTitle`           | `image-title`             | Title for the product image                      | `string`  | `undefined` |
-| `imageUrl`             | `image-url`               | Url for the product image                        | `string`  | `undefined` |
-| `interval`             | `interval`                | Recurring interval (i.e. monthly, once, etc.)    | `string`  | `undefined` |
-| `max`                  | `max`                     | The max allowed.                                 | `number`  | `100`       |
-| `name`                 | `name`                    | Product name                                     | `string`  | `undefined` |
-| `priceName`            | `price-name`              | Price name                                       | `string`  | `undefined` |
-| `quantity`             | `quantity`                | Quantity                                         | `number`  | `undefined` |
-| `removable`            | `removable`               | Is the line item removable                       | `boolean` | `undefined` |
-| `scratchAmount`        | `scratch-amount`          | The line item scratch amount                     | `number`  | `undefined` |
-| `setupFeeTrialEnabled` | `setup-fee-trial-enabled` | Is the setup fee not included in the free trial? | `boolean` | `true`      |
-| `sku`                  | `sku`                     | The SKU.                                         | `string`  | `''`        |
-| `trialDurationDays`    | `trial-duration-days`     | Trial duration days                              | `number`  | `undefined` |
-| `variantLabel`         | `variant-label`           | Product variant label                            | `string`  | `''`        |
+| Property               | Attribute                | Description                                                                        | Type              | Default     |
+| ---------------------- | ------------------------ | ---------------------------------------------------------------------------------- | ----------------- | ----------- |
+| `amount`               | `amount`                 | Product monetary amount                                                            | `string`          | `undefined` |
+| `displayAmount`        | `display-amount`         | Product display amount                                                             | `string`          | `undefined` |
+| `editable`             | `editable`               | Can we select the quantity                                                         | `boolean`         | `true`      |
+| `fees`                 | --                       | Product line item fees.                                                            | `Fee[]`           | `undefined` |
+| `image`                | --                       | Image attributes.                                                                  | `ImageAttributes` | `undefined` |
+| `interval`             | `interval`               | Recurring interval (i.e. monthly, once, etc.)                                      | `string`          | `undefined` |
+| `max`                  | `max`                    | The max allowed.                                                                   | `number`          | `undefined` |
+| `name`                 | `name`                   | Product name                                                                       | `string`          | `undefined` |
+| `note`                 | `note`                   | The line item note                                                                 | `string`          | `undefined` |
+| `price`                | `price`                  | Price name                                                                         | `string`          | `undefined` |
+| `purchasableStatus`    | `purchasable-status`     | The purchasable status display                                                     | `string`          | `undefined` |
+| `quantity`             | `quantity`               | Quantity                                                                           | `number`          | `undefined` |
+| `removable`            | `removable`              | Is the line item removable                                                         | `boolean`         | `undefined` |
+| `reviewButtonLink`     | `review-button-link`     | The review button link. If set, a review button will be shown linking to this URL. | `string`          | `''`        |
+| `scratch`              | `scratch`                | The line item scratch amount                                                       | `string`          | `undefined` |
+| `scratchDisplayAmount` | `scratch-display-amount` | Product scratch display amount                                                     | `string`          | `undefined` |
+| `sku`                  | `sku`                    | The SKU.                                                                           | `string`          | `''`        |
+| `trial`                | `trial`                  | Trial text                                                                         | `string`          | `undefined` |
+| `variant`              | `variant`                | Product variant label                                                              | `string`          | `''`        |
 
 
 ## Events
@@ -45,6 +46,7 @@
 | `"description"`                  |                                 |
 | `"image"`                        | The product image               |
 | `"line-item__price-description"` | The line item price description |
+| `"placeholder__image"`           |                                 |
 | `"price"`                        | The product price               |
 | `"price__amount"`                | The product price amount        |
 | `"price__description"`           | The product price description   |
@@ -61,6 +63,7 @@
 | `"suffix"`                       | The product suffix              |
 | `"text"`                         | The product text                |
 | `"title"`                        | The product title               |
+| `"trial-fees"`                   |                                 |
 
 
 ## Dependencies
@@ -75,19 +78,21 @@
 
 ### Depends on
 
-- [sc-format-number](../../util/format-number)
+- [sc-product-line-item-note](../product-line-item-note)
 - [sc-quantity-select](../quantity-select)
+- [sc-button](../button)
 - [sc-icon](../icon)
-- [sc-line-item](../line-item)
 
 ### Graph
 ```mermaid
 graph TD;
-  sc-product-line-item --> sc-format-number
+  sc-product-line-item --> sc-product-line-item-note
   sc-product-line-item --> sc-quantity-select
+  sc-product-line-item --> sc-button
   sc-product-line-item --> sc-icon
-  sc-product-line-item --> sc-line-item
+  sc-product-line-item-note --> sc-icon
   sc-quantity-select --> sc-icon
+  sc-button --> sc-spinner
   sc-line-items --> sc-product-line-item
   sc-order --> sc-product-line-item
   sc-order-confirmation-line-items --> sc-product-line-item

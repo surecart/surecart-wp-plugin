@@ -1,0 +1,189 @@
+.sc-image-gallery {
+	.swiper-slide {
+		border-radius: var(--sc-border-radius-medium);
+		background: rgba(0, 0, 0, 0.1);
+		overflow: hidden;
+
+		img {
+			display: block;
+			flex: 1 0;
+			object-fit: var(--sc-image-gallery-object-fit, cover);
+			width: 100%;
+		}
+	}
+
+	// Make sure to take up the full height of the container.
+	.wp-block-surecart-product-media {
+		height: 100%;
+	}
+
+	.swiper-wrapper {
+		display: grid;
+		grid-auto-flow: row;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 1em;
+
+		// the first child is large, or the first item with swiper-slide.
+		:nth-child(1 of .swiper-slide) {
+			grid-column: 1 / -1;
+			width: 100%;
+		}
+	}
+
+	.sc-image-slider__thumbs {
+		display: none;
+	}
+}
+
+.sc-image-slider {
+	user-select: none;
+
+	$themeColor: #09090a !default;
+	--swiper-navigation-size: 32px;
+	--swiper-navigation-color: var(--sc-color-primary-500);
+
+	@import "swiper/scss";
+	@import "swiper/scss/a11y";
+	@import "swiper/scss/thumbs";
+	@import "swiper/scss/navigation";
+	@import "swiper/scss/pagination";
+
+	// hide navigation if there are not enough slides.
+	.swiper-button-lock {
+		display: none;
+	}
+
+	.swiper-button-next,
+	.swiper-button-prev {
+		background: var(--sc-color-white);
+		box-shadow: var(--sc-shadow-medium);
+		width: 40px;
+		height: 40px;
+		border-radius: 9999px;
+		--swiper-navigation-size: 12px;
+		margin-top: -20px;
+	}
+
+	// don't display until the slider is initialized.
+	:not(.swiper-initialized) {
+		.swiper-button-next,
+		.swiper-button-prev {
+			display: none;
+		}
+	}
+
+	&__thumbs {
+		margin-top: var(--sc-slider-spacing, var(--sc-spacing-small));
+		display: flex;
+		align-items: stretch;
+		gap: calc(var(--sc-slider-spacing, var(--sc-spacing-small)) / 2);
+
+		&:not(:has(.swiper-initialized)) {
+			opacity: 0;
+			visibility: hidden;
+		}
+
+		.swiper {
+			flex: 1; // important to prevent slideshow from collapsing.
+		}
+	}
+
+	&-button__prev,
+	&-button__next {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		font-size: 24px;
+		cursor: pointer;
+
+		&,
+		&:focus,
+		&:hover {
+			color: var(--swiper-navigation-color);
+		}
+
+		&.swiper-button-disabled {
+			opacity: 0.25;
+			cursor: default;
+		}
+	}
+
+	/** Slider **/
+	.swiper-slide {
+		border-radius: var(--sc-border-radius-medium);
+		background: rgba(0, 0, 0, 0.1);
+		overflow: hidden;
+		cursor: grab;
+
+		img {
+			display: block;
+			margin: auto;
+			width: 100%;
+			height: auto;
+			max-height: 100%;
+			object-fit: contain;
+			object-postion: center;
+		}
+	}
+
+	@media (min-width: 432px) {
+		@for $i from 2 through 12 {
+			.sc-has-#{$i}-thumbs .swiper-slide {
+				width: calc(100% / #{$i} - 8px) !important;
+			}
+		}
+	}
+
+	/** Thumbnails **/
+	.sc-image-slider__thumbs {
+		.swiper-slide {
+			cursor: pointer;
+			margin-right: 10px;
+			background: rgba(0, 0, 0, 0.1);
+			border-radius: var(--sc-border-radius-medium);
+			border: none;
+			padding: 0;
+			width: calc(33.3333% - 8px);
+
+			img {
+				width: 100%;
+				height: auto;
+				display: block;
+				transition: outline-color var(--sc-transition-medium) ease;
+				outline: var(
+					--sc-image-slideshow-thumb-active-outline,
+					2px solid transparent
+				);
+				outline-color: transparent;
+				outline-offset: -2px;
+				object-fit: var(--sc-image-slideshow-thumb-object-fit, cover);
+				aspect-ratio: var(
+					--sc-image-slideshow-thumb-aspect-ratio,
+					4 / 3
+				);
+				border-radius: var(--sc-border-radius-medium);
+			}
+
+			&.swiper-slide-thumb-active {
+				img {
+					outline-color: var(
+						--sc-focus-ring-color-primary,
+						var(--sc-color-primary-500)
+					);
+				}
+			}
+
+			&:hover,
+			&:focus {
+				background: rgba(0, 0, 0, 0.1);
+				border: none;
+			}
+		}
+	}
+}
+
+// Bricks fix: TODO: move to bricks specific css::after
+.dynamic:has(.sc-image-slider) {
+	width: 100%;
+}

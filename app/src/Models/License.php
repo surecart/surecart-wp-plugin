@@ -2,10 +2,16 @@
 
 namespace SureCart\Models;
 
+use SureCart\Models\Traits\HasCustomer;
+use SureCart\Models\Traits\HasDates;
+
 /**
- * Price model
+ * License model
  */
 class License extends Model {
+	use HasCustomer;
+	use HasDates;
+
 	/**
 	 * Rest API endpoint
 	 *

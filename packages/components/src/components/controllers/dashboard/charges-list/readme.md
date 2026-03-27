@@ -22,9 +22,7 @@
 - [sc-tag](../../../ui/tag)
 - [sc-stacked-list-row](../../../ui/stacked-list-row)
 - [sc-skeleton](../../../ui/skeleton)
-- [sc-format-date](../../../util/format-date)
 - [sc-text](../../../ui/text)
-- [sc-format-number](../../../util/format-number)
 - [sc-dashboard-module](../../../ui/dashboard-module)
 - [sc-button](../../../ui/button)
 - [sc-icon](../../../ui/icon)
@@ -39,9 +37,7 @@ graph TD;
   sc-charges-list --> sc-tag
   sc-charges-list --> sc-stacked-list-row
   sc-charges-list --> sc-skeleton
-  sc-charges-list --> sc-format-date
   sc-charges-list --> sc-text
-  sc-charges-list --> sc-format-number
   sc-charges-list --> sc-dashboard-module
   sc-charges-list --> sc-button
   sc-charges-list --> sc-icon

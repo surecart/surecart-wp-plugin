@@ -10,9 +10,9 @@ export default ({ title, model }) => {
 				href={
 					scData?.claim_url
 						? scData?.claim_url
-						: `${scData?.app_url}/exports`
+						: `${scData?.app_url}/exports?switch_account_id=${scData?.account_id}`
 				}
-				target={scData?.claim_url ? '_self' : '_blank'}
+				target="_blank"
 			>
 				<sc-icon name="download" slot="suffix"></sc-icon>
 				{__('Export CSV', 'surecart')}

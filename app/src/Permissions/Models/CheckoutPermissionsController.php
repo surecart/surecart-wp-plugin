@@ -30,6 +30,15 @@ class CheckoutPermissionsController extends ModelPermissionsController {
 		if ( ! $checkout || is_wp_error( $checkout ) ) {
 			return false;
 		}
+
+		$params = $args[3] ?? [];
+
+		// If request has some specific keys, then stop.
+		// as only admin can edit some of those fields.
+		if ( $this->requestHasKeys( $params, array( 'tax_behavior' ) ) ) {
+			return false;
+		}
+
 		return in_array( $checkout->status, [ 'draft', 'finalized' ] );
 	}
 

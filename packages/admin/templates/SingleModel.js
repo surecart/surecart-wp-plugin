@@ -11,7 +11,6 @@ import UnsavedChangesWarning from '../components/unsaved-changes-warning';
 import ErrorBoundary from '../components/error-boundary';
 import { ScForm, ScButton } from '@surecart/components-react';
 import useSnackbar from '../hooks/useSnackbar';
-import admin from '../styles/admin';
 
 export default ({
 	children,
@@ -38,7 +37,6 @@ export default ({
 		<Fragment>
 			<Global
 				styles={css`
-					${admin}
 					#wpwrap {
 						background-color: var(--sc-color-gray-100);
 					}

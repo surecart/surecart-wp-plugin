@@ -12,5 +12,5 @@
 ::slotted(*:focus-within),
 ::slotted(*:active) {
   position: relative;
-  z-index: 5;
+  z-index: var(--sc-form-focus-within-z-index, auto); /* Handle sc-drawer opening: Give default z-index, but allow it to be overridden */
 }

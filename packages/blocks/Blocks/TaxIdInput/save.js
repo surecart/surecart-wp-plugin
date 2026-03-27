@@ -1,12 +1,14 @@
-export default ({ className, attributes }) => {
+export default ({ attributes }) => {
 	const {
 		other_label,
 		ca_gst_label,
 		au_abn_label,
 		gb_vat_label,
 		eu_vat_label,
+		help_text,
+		tax_id_types,
+		required,
 	} = attributes;
-
 	return (
 		<sc-order-tax-id-input
 			other-label={other_label || null}
@@ -14,6 +16,9 @@ export default ({ className, attributes }) => {
 			au-abn-label={au_abn_label || null}
 			gb-vat-label={gb_vat_label || null}
 			eu-vat-label={eu_vat_label || null}
+			help-text={help_text || null}
+			tax-id-types={JSON.stringify(tax_id_types)}
+			required={required || false}
 		></sc-order-tax-id-input>
 	);
 };

@@ -52,6 +52,13 @@ export default function PostTemplateForm({
 
 	const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
 
+	// possibly convert "0" to false
+	const wp_template_id =
+		collection?.metadata?.wp_template_id &&
+		collection?.metadata?.wp_template_id !== '0'
+			? collection?.metadata?.wp_template_id
+			: false;
+
 	return (
 		<div
 			css={css`
@@ -112,52 +119,57 @@ export default function PostTemplateForm({
 				/>
 			</div>
 
-			<SelectControl
-				__nextHasNoMarginBottom
-				label={__('Template', 'surecart')}
-				value={
-					template?.id || 'surecart/surecart//product-collection-part'
-				}
-				options={(parts ?? []).map((part) => {
-					return {
-						value: part?.id,
-						label: getTemplateTitle(part),
-					};
-				})}
-				onChange={(slug) => {
-					updateCollection({
-						metadata: {
-							...collection.metadata,
-							wp_template_part_id: slug,
-						},
-					});
-				}}
-			/>
-
-			{canCreate && (
-				<p>
-					<Button
-						variant="link"
-						href={addQueryArgs('site-editor.php', {
-							postType: 'wp_template_part',
-							postId:
-								template?.id ||
-								'surecart/surecart//product-collection-part',
-							canvas: 'edit',
+			{!!wp_template_id && (
+				<>
+					<SelectControl
+						__nextHasNoMarginBottom
+						label={__('Template', 'surecart')}
+						value={
+							template?.id ||
+							'surecart/surecart//product-collection-part'
+						}
+						options={(parts ?? []).map((part) => {
+							return {
+								value: part?.id,
+								label: getTemplateTitle(part),
+							};
 						})}
-					>
-						{__('Edit template', 'surecart')}
-					</Button>
-				</p>
-			)}
+						onChange={(slug) => {
+							updateCollection({
+								metadata: {
+									...collection.metadata,
+									wp_template_part_id: slug,
+								},
+							});
+						}}
+					/>
 
-			{isCreateModalOpen && (
-				<PostTemplateCreateModal
-					template={defaultPart}
-					collection={collection}
-					updateCollection={updateCollection}
-					onClose={() => setIsCreateModalOpen(false)}
-				/>
+					{canCreate && (
+						<p>
+							<Button
+								variant="link"
+								href={addQueryArgs('site-editor.php', {
+									postType: 'wp_template_part',
+									postId:
+										template?.id ||
+										'surecart/surecart//product-collection-part',
+									canvas: 'edit',
+								})}
+							>
+								{__('Edit template', 'surecart')}
+							</Button>
+						</p>
+					)}
+
+					{isCreateModalOpen && (
+						<PostTemplateCreateModal
+							template={defaultPart}
+							collection={collection}
+							updateCollection={updateCollection}
+							onClose={() => setIsCreateModalOpen(false)}
+						/>
+					)}
+				</>
 			)}
 		</div>
 	);

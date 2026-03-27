@@ -46,7 +46,9 @@
 		"name": null,
 		"phone": null,
 		"created_at": 1624395743,
-		"updated_at": 1624395743
+		"updated_at": 1624395743,
+    "billing_address":[],
+    "billing_address_display": []
 	},
 	"processor_intent": {
 		"id": "691d1abb-543d-4872-8175-e1e3aa2af98a",

@@ -526,7 +526,7 @@
 									"$ref": "#/components/schemas/line_item_body"
 								}
 							},
-							"refresh_price_versions": {
+							"refresh_line_items": {
 								"type": "boolean",
 								"description": "When set to true the prices that are associated with each line item will be refreshed to reference the most recent version. (This should be used if you are receiving an error when trying to finalize a checkout that is referencing old price versions.)"
 							},

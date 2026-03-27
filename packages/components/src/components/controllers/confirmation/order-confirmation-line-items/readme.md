@@ -38,11 +38,13 @@ graph TD;
   sc-order-confirmation-line-items --> sc-line-item
   sc-order-confirmation-line-items --> sc-skeleton
   sc-order-confirmation-line-items --> sc-product-line-item
-  sc-product-line-item --> sc-format-number
+  sc-product-line-item --> sc-product-line-item-note
   sc-product-line-item --> sc-quantity-select
+  sc-product-line-item --> sc-button
   sc-product-line-item --> sc-icon
-  sc-product-line-item --> sc-line-item
+  sc-product-line-item-note --> sc-icon
   sc-quantity-select --> sc-icon
+  sc-button --> sc-spinner
   sc-order-confirmation-details --> sc-order-confirmation-line-items
   style sc-order-confirmation-line-items fill:#f9f,stroke:#333,stroke-width:4px
 ```

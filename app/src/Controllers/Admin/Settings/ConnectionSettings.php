@@ -18,22 +18,6 @@ class ConnectionSettings extends BaseSettings {
 	];
 
 	/**
-	 * Show the page.
-	 *
-	 * @param \SureCartCore\Requests\RequestInterface $request Request.
-	 * @return function
-	 */
-	// public function show( \SureCartCore\Requests\RequestInterface $request ) {
-	// return \SureCart::view( 'admin/connection' )->with(
-	// [
-	// 'tab'       => $request->query( 'tab' ) ?? '',
-	// 'api_token' => ApiToken::get(),
-	// 'status'    => $request->query( 'status' ),
-	// ]
-	// );
-	// }
-
-	/**
 	 * Save the page.
 	 *
 	 * @param \SureCartCore\Requests\RequestInterface $request Request.

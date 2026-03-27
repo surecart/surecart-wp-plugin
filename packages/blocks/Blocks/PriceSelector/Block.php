@@ -54,7 +54,10 @@ class Block extends BaseBlock {
 
 		// there are no checked, so use the first one.
 		if ( empty( $checked ) ) {
-			$checked = [ $choices[0] ] ?? [];
+			if ( ! apply_filters( 'sc_checkout_price_selector_first_price_as_default', true ) ) {
+				return [];
+			}
+			$checked = ! empty( $choices[0] ) ? [ $choices[0] ] : [];
 		}
 
 		// get the line items.

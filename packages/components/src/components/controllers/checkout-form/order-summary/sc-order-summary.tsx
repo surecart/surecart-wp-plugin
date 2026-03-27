@@ -6,7 +6,7 @@ import { state as checkoutState } from '@store/checkout';
 import { formBusy, formLoading } from '@store/form/getters';
 import { animateTo, shimKeyframesHeightAuto, stopAnimations } from '../../../../functions/animate';
 import { getAnimation, setDefaultAnimation } from '../../../../functions/animation-registry';
-import { Checkout } from '../../../../types';
+import { Checkout, Invoice } from '../../../../types';
 
 @Component({
   tag: 'sc-order-summary',
@@ -18,8 +18,8 @@ export class ScOrderSummary {
   @Element() el: HTMLScOrderSummaryElement;
   @Prop() order: Checkout;
   @Prop() busy: boolean;
-  @Prop() closedText: string = __('Show Summary', 'surecart');
-  @Prop() openText: string = __('Summary', 'surecart');
+  @Prop() orderSummaryText: string = __('Summary', 'surecart');
+  @Prop() invoiceSummaryText: string = __('Invoice Summary', 'surecart');
   @Prop() collapsible: boolean = false;
   @Prop() collapsedOnMobile: boolean = false;
   @Prop() collapsedOnDesktop: boolean;
@@ -58,6 +58,15 @@ export class ScOrderSummary {
     return !checkoutState.checkout?.line_items?.pagination?.count || (checkoutState?.checkout?.live_mode ? checkoutState?.mode === 'test' : checkoutState?.mode === 'live');
   }
 
+  getSummaryText() {
+    // If we have an invoice, show the invoice summary text instead.
+    if ((checkoutState.checkout?.invoice as Invoice)?.id) {
+      return this.invoiceSummaryText || __('Invoice Summary', 'surecart');
+    }
+
+    return this.orderSummaryText || __('Summary', 'surecart');
+  }
+
   renderHeader() {
     // busy state
     if ((formBusy() || formLoading()) && !checkoutState.checkout?.line_items?.data?.length) {
@@ -77,15 +86,15 @@ export class ScOrderSummary {
           slot="title"
           onClick={e => this.handleClick(e)}
           tabIndex={0}
-          aria-label={sprintf(__('Order Summary %2$s', 'surecart'), this.collapsed ? __('collapsed', 'surecart') : __('expanded', 'surecart'))}
+          aria-label={sprintf(__('Order Summary %s', 'surecart'), this.collapsed ? __('collapsed', 'surecart') : __('expanded', 'surecart'))}
           onKeyDown={e => {
             if (e.key === ' ') {
               this.handleClick(e);
-              speak(sprintf(__('Order Summary %2$s', 'surecart'), this.collapsed ? __('collapsed', 'surecart') : __('expanded', 'surecart')), 'assertive');
+              speak(sprintf(__('Order Summary %s', 'surecart'), this.collapsed ? __('collapsed', 'surecart') : __('expanded', 'surecart')), 'assertive');
             }
           }}
         >
-          {this.collapsed ? this.closedText || __('Order Summary', 'surecart') : this.openText || __('Order Summary', 'surecart')}
+          {this.getSummaryText()}
           <svg xmlns="http://www.w3.org/2000/svg" class="collapse-link__icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
           </svg>
@@ -97,19 +106,12 @@ export class ScOrderSummary {
         {/* We have a trial, do not show total_savings_amount since it's based on the total_amount */}
         {checkoutState.checkout?.total_amount !== checkoutState.checkout?.amount_due ? (
           <span slot="price" class={{ 'price': true, 'price--collapsed': this.collapsed }}>
-            <sc-format-number class="total-price" type="currency" currency={checkoutState.checkout?.currency} value={checkoutState.checkout?.amount_due}></sc-format-number>
+            {checkoutState.checkout?.amount_due_display_amount}
           </span>
         ) : (
           <span slot="price" class={{ 'price': true, 'price--collapsed': this.collapsed }}>
-            {!!checkoutState.checkout?.total_savings_amount && (
-              <sc-format-number
-                class="total-price scratch-price"
-                type="currency"
-                value={-checkoutState.checkout?.total_savings_amount + checkoutState.checkout?.total_amount}
-                currency={checkoutState.checkout?.currency || 'usd'}
-              />
-            )}
-            <sc-total class="total-price" total={'total'} order={checkoutState.checkout}></sc-total>
+            {!!checkoutState.checkout?.total_savings_amount && <span class="total-price scratch-price">{checkoutState?.checkout?.total_scratch_display_amount}</span>}
+            <sc-total class="total-price" total={'total'}></sc-total>
           </span>
         )}
       </sc-line-item>
@@ -141,7 +143,7 @@ export class ScOrderSummary {
 
   render() {
     return (
-      <div class={{ 'summary': true, 'summary--open': !this.collapsed }}>
+      <div class={{ 'summary': true, 'summary--open': !this.collapsed, 'summary--collapsible': this.collapsible }}>
         {this.collapsible && this.renderHeader()}
         <div
           ref={el => (this.body = el as HTMLElement)}

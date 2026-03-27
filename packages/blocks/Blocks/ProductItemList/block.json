@@ -1,6 +1,6 @@
 {
 	"$schema": "https://json.schemastore.org/block.json",
-	"apiVersion": 2,
+	"apiVersion": 3,
 	"name": "surecart/product-item-list",
 	"title": "Product List",
 	"description": "Display a list of products from your store.",
@@ -10,6 +10,7 @@
 		"align": true,
 		"reusable": false,
 		"html": false,
+		"inserter": false,
 		"spacing": {
 			"blockGap": true,
 			"__experimentalDefaultControls": {

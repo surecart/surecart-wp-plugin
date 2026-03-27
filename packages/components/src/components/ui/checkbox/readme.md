@@ -64,6 +64,12 @@ Type: `Promise<void>`
 
 Sets focus on the checkbox.
 
+#### Parameters
+
+| Name      | Type           | Description |
+| --------- | -------------- | ----------- |
+| `options` | `FocusOptions` |             |
+
 #### Returns
 
 Type: `Promise<void>`
@@ -81,6 +87,21 @@ Type: `Promise<void>`
 | `"indeterminate-icon"` | Indeterminate icon.        |
 | `"label"`              | The label.                 |
 
+
+## Dependencies
+
+### Used by
+
+ - [sc-customer-edit](../../controllers/dashboard/customer-edit)
+ - [sc-order-billing-address](../../controllers/checkout-form/sc-order-billing-address)
+
+### Graph
+```mermaid
+graph TD;
+  sc-customer-edit --> sc-checkbox
+  sc-order-billing-address --> sc-checkbox
+  style sc-checkbox fill:#f9f,stroke:#333,stroke-width:4px
+```
 
 ----------------------------------------------
 

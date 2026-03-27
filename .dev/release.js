@@ -32,6 +32,7 @@ if (hasPackageProp('files')) {
 			'build/**',
 			'includes/**',
 			'languages/**',
+			'styles/**',
 			'public/**',
 			`${name}.php`,
 			'uninstall.php',

@@ -1,7 +1,7 @@
 /** @jsx jsx */
-import DataTable from '../../../components/DataTable';
-import { intervalString } from '../../../util/translations';
 import { css, jsx } from '@emotion/core';
+import { useEffect, useState } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
 import {
 	ScBlockUi,
 	ScInput,
@@ -13,14 +13,23 @@ import {
 	ScMenuItem,
 	ScTag,
 } from '@surecart/components-react';
-import { useEffect, useState } from '@wordpress/element';
-import { __ } from '@wordpress/i18n';
+import LineItemLabel from '../../components/LineItemLabel';
+import DataTable from '../../../components/DataTable';
 import UpdateAmount from './Modals/UpdateAmount';
 import UpdatePrice from './Modals/UpdatePrice';
+import UpdateRecentPrice from './Modals/UpdateRecentPrice';
 import { getHumanDiscount } from '../../../util';
-import LineItemLabel from '../../components/LineItemLabel';
+import { intervalString } from '../../../util/translations';
 
-export default ({ subscription, updateSubscription, upcoming, loading }) => {
+export default ({
+	subscription,
+	updateSubscription,
+	setRefresh,
+	setUpdateBehavior,
+	setSkipProration,
+	upcoming,
+	loading,
+}) => {
 	const [price, setPrice] = useState(null);
 	const [dialog, setDialog] = useState(null);
 	const lineItem = upcoming?.checkout?.line_items?.data?.[0];
@@ -33,6 +42,61 @@ export default ({ subscription, updateSubscription, upcoming, loading }) => {
 
 	const coupon =
 		upcoming?.checkout?.discount?.coupon || subscription?.discount?.coupon;
+
+	const renderPriceChange = () => {
+		if (subscription?.price_readonly) {
+			return null;
+		}
+
+		return (
+			<ScDropdown
+				placement="bottom-end"
+				css={css`
+					margin-left: auto;
+				`}
+			>
+				<ScButton circle type="text" slot="trigger">
+					<ScIcon name="more-vertical" />
+				</ScButton>
+				<ScMenu>
+					{price?.ad_hoc && (
+						<ScMenuItem onClick={() => setDialog('amount')}>
+							{__('Edit Amount', 'surecart')}
+						</ScMenuItem>
+					)}
+					<ScMenuItem onClick={() => setDialog('price')}>
+						{__('Change', 'surecart')}
+					</ScMenuItem>
+					{!price?.current_version && (
+						<ScMenuItem onClick={() => setDialog('recent_price')}>
+							{__('Use Current Version', 'surecart')}
+						</ScMenuItem>
+					)}
+				</ScMenu>
+			</ScDropdown>
+		);
+	};
+
+	const renderQuantityChange = () => {
+		if (subscription?.price_readonly) {
+			return subscription?.quantity;
+		}
+
+		return (
+			<ScInput
+				type="number"
+				value={subscription?.quantity}
+				onScChange={(e) => {
+					updateSubscription({
+						price: price?.id,
+						quantity: e.target.value,
+					});
+				}}
+				style={{ maxWidth: 75 }}
+				required
+			/>
+		);
+	};
 
 	return (
 		<div
@@ -90,52 +154,21 @@ export default ({ subscription, updateSubscription, upcoming, loading }) => {
 											{intervalString(price, {
 												labels: { interval: '/' },
 											})}
+											{!price?.current_version && (
+												<ScTag type="info" pill>
+													{__(
+														'Previous Price Version',
+														'surecart'
+													)}
+												</ScTag>
+											)}
 										</div>
 									</LineItemLabel>
 								</div>
-
-								<ScDropdown
-									placement="bottom-end"
-									css={css`
-										margin-left: auto;
-									`}
-								>
-									<ScButton circle type="text" slot="trigger">
-										<ScIcon name="more-vertical" />
-									</ScButton>
-									<ScMenu>
-										{price?.ad_hoc && (
-											<ScMenuItem
-												onClick={() =>
-													setDialog('amount')
-												}
-											>
-												{__('Edit Amount', 'surecart')}
-											</ScMenuItem>
-										)}
-										<ScMenuItem
-											onClick={() => setDialog('price')}
-										>
-											{__('Change Price', 'surecart')}
-										</ScMenuItem>
-									</ScMenu>
-								</ScDropdown>
+								{renderPriceChange()}
 							</div>
 						),
-						quantity: (
-							<ScInput
-								type="number"
-								value={subscription?.quantity}
-								onScChange={(e) => {
-									updateSubscription({
-										price: price?.id,
-										quantity: e.target.value,
-									});
-								}}
-								style={{ maxWidth: 75 }}
-								required
-							></ScInput>
-						),
+						quantity: renderQuantityChange(),
 						total: (
 							<div
 								css={css`
@@ -164,7 +197,14 @@ export default ({ subscription, updateSubscription, upcoming, loading }) => {
 											{coupon?.name}
 										</ScTag>
 									),
-									total: <>{getHumanDiscount(coupon)}</>,
+									total: (
+										<>
+											{getHumanDiscount(
+												coupon,
+												coupon?.currency
+											)}
+										</>
+									),
 								},
 						  ]
 						: []),
@@ -191,6 +231,23 @@ export default ({ subscription, updateSubscription, upcoming, loading }) => {
 					});
 				}}
 				open={dialog === 'price'}
+				onRequestClose={() => setDialog(null)}
+			/>
+
+			<UpdateRecentPrice
+				price={price}
+				subscription={subscription}
+				onUpdateRecentVersion={(
+					updateBehavior = null,
+					skipProration
+				) => {
+					setRefresh(true);
+					setSkipProration(skipProration);
+					if (updateBehavior) {
+						setUpdateBehavior('immediate');
+					}
+				}}
+				open={dialog === 'recent_price'}
 				onRequestClose={() => setDialog(null)}
 			/>
 		</div>

@@ -1,0 +1,290 @@
+<?php
+
+use SureCart\Models\Blocks\ProductListBlock;
+use SureCart\Models\Blocks\RelatedProductsBlock;
+
+if ( ! function_exists( 'sc_get_product' ) ) {
+	/**
+	 * Get the product.
+	 *
+	 * @param \WP_Post|int|string $post The product post.
+	 *
+	 * @return \SureCart\Models\Product|null
+	 */
+	function sc_get_product( $post = false ) {
+		// backwards compatibility.
+		if ( get_query_var( 'surecart_current_product' ) ) {
+			return get_query_var( 'surecart_current_product' );
+		}
+
+		// allow getting the product by sc_id.
+		if ( is_string( $post ) ) {
+			$posts = get_posts(
+				[
+					'post_type'  => 'sc_product',
+					'meta_query' => [
+						[
+							'key'   => 'sc_id',
+							'value' => $post,
+						],
+					],
+				]
+			);
+			$post  = count( $posts ) > 0 ? $posts[0] : get_post( $post );
+		} else {
+			$post = get_post( $post );
+		}
+
+		// no post.
+		if ( ! $post ) {
+			return null;
+		}
+
+		// get the product.
+		$product = get_post_meta( $post->ID, 'product', true );
+		if ( empty( $product ) ) {
+			return null;
+		}
+
+		if ( is_array( $product ) ) {
+			$decoded = json_decode( wp_json_encode( $product ) );
+			if ( json_last_error() !== JSON_ERROR_NONE ) {
+				wp_trigger_error( '', 'JSON decode error: ' . json_last_error_msg() );
+			}
+			$product = new \SureCart\Models\Product( $decoded );
+			return $product;
+		}
+
+		// decode the product.
+		if ( is_string( $product ) ) {
+			$decoded = json_decode( $product );
+			if ( json_last_error() !== JSON_ERROR_NONE ) {
+				wp_trigger_error( '', 'JSON decode error: ' . json_last_error_msg() );
+			}
+			$product = new \SureCart\Models\Product( $decoded );
+			return $product;
+		}
+
+		// return the product.
+		return $product;
+	}
+}
+
+if ( ! function_exists( 'sc_get_products' ) ) {
+	/**
+	 * Standard way of retrieving products based on certain parameters.
+	 *
+	 * This function should be used for product retrieval so that we have a data agnostic
+	 * way to get a list of products.
+	 *
+	 * @param  array $args Array of args (above).
+	 * @return array|stdClass Number of pages and an array of product objects if
+	 */
+	function sc_get_products( $args = [] ) {
+		return get_posts(
+			wp_parse_args(
+				$args,
+				[
+					'post_type'   => 'sc_product',
+					'post_status' => 'publish',
+				]
+			)
+		);
+	}
+}
+
+if ( ! function_exists( 'sc_query_products' ) ) {
+	/**
+	 * Standard way of retrieving products based on certain parameters.
+	 *
+	 * This function should be used for product retrieval so that we have a data agnostic
+	 * way to query a list of products.
+	 *
+	 * @param  array $args Array of args (above).
+	 * @return \WP_Query The query.
+	 */
+	function sc_query_products( $args = [] ) {
+		return new \WP_Query(
+			[
+				$args,
+				[
+					'post_type'   => 'sc_product',
+					'post_status' => 'publish',
+				],
+			]
+		);
+	}
+}
+
+if ( ! function_exists( 'sc_setup_product_data' ) ) {
+	/**
+	 * Set global $sc_product.
+	 *
+	 * @param mixed $post Post Object or ID.
+	 *
+	 * @return \SureCart\Models\Product
+	 */
+	function sc_setup_product_data( $post = '' ) {
+		return \SureCart::productPost()->setupData( $post );
+	}
+}
+
+
+if ( ! function_exists( 'sc_get_product_featured_image' ) ) {
+	/**
+	 * Set global $sc_product.
+	 *
+	 * @param string $size The image size.
+	 * @param array  $attrs The attributes.
+	 *
+	 * @return string
+	 */
+	function sc_get_product_featured_image( $size = 'full', $attrs = [] ) {
+		$sc_product = sc_get_product();
+		if ( empty( $sc_product ) || empty( $sc_product->featured_image ) ) {
+			return '';
+		}
+		return $sc_product->featured_image->html( $size, $attrs );
+	}
+}
+
+if ( ! function_exists( 'sc_get_product_featured_image_attributes' ) ) {
+	/**
+	 * Set global $sc_product.
+	 *
+	 * @param string $size The image size.
+	 * @param array  $attrs The attributes.
+	 *
+	 * @return object
+	 */
+	function sc_get_product_featured_image_attributes( $size = 'full', $attrs = [] ) {
+		$sc_product = sc_get_product();
+		if ( empty( $sc_product ) || empty( $sc_product->featured_image ) ) {
+			return '';
+		}
+		return $sc_product->featured_image->attributes( $size, $attrs );
+	}
+}
+
+if ( ! function_exists( 'sc_get_product_review_link' ) ) {
+	/**
+	 * Get the product review link.
+	 *
+	 * @param \SureCart\Models\Product|int|string $product The product.
+	 *
+	 * @return string
+	 */
+	function sc_get_product_review_link( $product = null ): string {
+		$product = sc_get_product( $product );
+		if ( empty( $product ) || empty( $product->permalink ) ) {
+			return '';
+		}
+
+		return $product->permalink . '#reviews';
+	}
+}
+
+if ( ! function_exists( 'sc_html_attributes' ) ) {
+	/**
+	 * Get the html attributes.
+	 *
+	 * @param array $attributes The attributes.
+	 * @param bool  $show_empty_values Whether to show empty values.
+	 *
+	 * @return string
+	 */
+	function sc_html_attributes( $attributes = [], $show_empty_values = false ) {
+		$html = '';
+		foreach ( $attributes as $key => $value ) {
+			if ( $value || $show_empty_values ) {
+				$html .= sprintf( ' %s="%s"', esc_attr( $key ), esc_attr( $value ) );
+			}
+		}
+		return $html;
+	}
+}
+
+/**
+ * Get the product page id.
+ *
+ * @param string $prefix The prefix.
+ *
+ * @return string
+ */
+function sc_unique_product_page_id( $prefix = '' ) {
+	static $id_counter = -1;
+	return $prefix . (string) ++$id_counter;
+}
+
+/**
+ * Get the product list id.
+ *
+ * @param string $prefix The prefix.
+ *
+ * @return string
+ */
+function sc_unique_product_list_id( $prefix = '' ) {
+	static $id_counter = -1;
+	return $prefix . (string) ++$id_counter;
+}
+
+/**
+ * Get the product list query.
+ *
+ * @param \WP_Block $block The block.
+ *
+ * @return \WP_Query
+ */
+function sc_product_list_query( $block ) {
+	// we are handling related products here.
+	if ( ! empty( $block->parsed_block['attrs']['query']['related'] ) || ! empty( $block->context['query']['related'] ) ) {
+		$controller = new RelatedProductsBlock( $block );
+		return $controller->query();
+	}
+
+	// we are handling regular product list queries here.
+	$controller = new ProductListBlock( $block );
+	return $controller->query();
+}
+
+/**
+ * Get the product list prefix.
+ *
+ * @param \WP_Block $block The block.
+ * @return string
+ */
+function sc_product_list_prefix( $block = null ) {
+	$controller = new ProductListBlock( $block );
+	return $controller->urlParams()->getKey();
+}
+
+if ( ! function_exists( 'sc_sanitize_image_attributes' ) ) {
+	/**
+	 * Sanitize image attributes to only include standard HTML img properties.
+	 *
+	 * WordPress filters (e.g. Performance Lab's Image Placeholders / dominant color)
+	 * can inject non-standard attributes like `style` (as a string), `class`, and
+	 * `data-*` onto image data. These cause errors when spread onto JavaScript-rendered
+	 * elements in both React and Stencil components.
+	 *
+	 * @param object|null $attributes Image attributes object.
+	 *
+	 * @return object Sanitized attributes containing only safe img properties.
+	 */
+	function sc_sanitize_image_attributes( $attributes ) {
+		if ( empty( $attributes ) ) {
+			return (object) array();
+		}
+
+		// Deliberately excluded:
+		// - `style`: Plugins inject this as a string (e.g. "--dominant-color: #hex"), but JS frameworks
+		//   expect an object — passing a string crashes both React and Stencil renderers.
+		// - `data-*`: Plugin-specific attributes (e.g. data-dominant-color) that are not needed.
+		$safe_keys = apply_filters(
+			'surecart/image_attributes/safe_keys',
+			array( 'src', 'alt', 'class', 'width', 'height', 'srcset', 'sizes', 'loading', 'decoding', 'fetchpriority', 'title' )
+		);
+
+		return (object) array_intersect_key( (array) $attributes, array_flip( $safe_keys ) );
+	}
+}

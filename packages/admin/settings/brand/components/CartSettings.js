@@ -203,7 +203,7 @@ export default () => {
 						{__('Always Show Cart (Menu Only)', 'surecart')}
 						<span slot="description" style={{ lineHeight: '1.4' }}>
 							{__(
-								'Enable to always show the cart button, even your cart is empty.',
+								'Enable to always show the cart button, even when your cart is empty.',
 								'surecart'
 							)}
 						</span>

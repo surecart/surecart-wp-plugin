@@ -31,10 +31,11 @@ class TutorLMSService extends IntegrationService implements IntegrationInterface
 	 * Show our purchase button if we have an integration.
 	 *
 	 * @param string $output The button HTML.
+	 * @param int    $course_id The course id.
 	 *
 	 * @return string
 	 */
-	public function loopPurchaseButton( $output ) {
+	public function loopPurchaseButton( $output, $course_id ) {
 		// check first to see if we have any integrations.
 		$integrations = Integration::where( 'integration_id', get_the_ID() )->andWhere( 'model_name', 'product' )->get();
 		if ( empty( $integrations ) ) {
@@ -66,8 +67,11 @@ class TutorLMSService extends IntegrationService implements IntegrationInterface
 		// template.
 		ob_start(); ?>
 
-		<div class="tutor-course-list-btn"><?php echo apply_filters( 'tutor_course_restrict_new_entry', '<a href="' . get_the_permalink() . '" class="tutor-btn tutor-btn-outline-primary tutor-btn-md tutor-btn-block ' . $required_loggedin_class . '">' . __( 'Enroll Course', 'tutor' ) . '</a>' ); ?></div>
-
+		<div class="tutor-course-list-btn">
+			<?php
+				echo apply_filters( 'tutor_course_restrict_new_entry', '<a href="' . get_the_permalink() . '" class="tutor-btn tutor-btn-outline-primary tutor-btn-md tutor-btn-block ' . $required_loggedin_class . '">' . esc_html__( 'Enroll Course', 'surecart' ) . '</a>', $course_id ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			?>
+		</div>
 		<?php
 		return ob_get_clean();
 	}
@@ -242,7 +246,7 @@ class TutorLMSService extends IntegrationService implements IntegrationInterface
 	 * @return string
 	 */
 	public function getLogo() {
-		return esc_url_raw( trailingslashit( plugin_dir_url( SURECART_PLUGIN_FILE ) ) . 'images/integrations/tutor.svg' );
+		return esc_url_raw( trailingslashit( plugin_dir_url( SURECART_PLUGIN_FILE ) ) . 'images/integrations/tutorlms.svg' );
 	}
 
 	/**
@@ -297,16 +301,16 @@ class TutorLMSService extends IntegrationService implements IntegrationInterface
 		wp_reset_query();
 		$course_query = new \WP_Query(
 			[
-				'post_type'   => tutor()->course_post_type,
-				'post_status' => 'publish',
-				's'           => $search,
-				'per_page'    => 10,
+				'post_type'      => tutor()->course_post_type,
+				'post_status'    => 'publish',
+				's'              => $search,
+				'posts_per_page' => 100,
 			]
 		);
 
 		if ( ( isset( $course_query->posts ) ) && ( ! empty( $course_query->posts ) ) ) {
 			$items = array_map(
-				function( $post ) {
+				function ( $post ) {
 					return (object) [
 						'id'    => $post->ID,
 						'label' => $post->post_title,
@@ -394,7 +398,20 @@ class TutorLMSService extends IntegrationService implements IntegrationInterface
 			return;
 		}
 
-		tutor_utils()->do_enroll( $course_id, 0, $wp_user->ID );
-		tutor_utils()->complete_course_enroll( 0 );
+		$enroll_id = tutor_utils()->do_enroll( $course_id, 0, $wp_user->ID );
+
+		// TutorLMS sets enrollment to 'pending' for purchasable courses.
+		// Since SureCart has already processed the payment, we mark it as 'completed' directly.
+		if ( $enroll_id ) {
+			wp_update_post(
+				[
+					'ID'          => $enroll_id,
+					'post_status' => 'completed',
+				]
+			);
+
+			// Fire the enrollment complete action for consistency with TutorLMS hooks.
+			do_action( 'tutor_after_enrolled', $course_id, $wp_user->ID, $enroll_id );
+		}
 	}
 }

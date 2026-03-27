@@ -59,7 +59,7 @@ class LoginLinkMiddleware {
 			if ( is_wp_error( $user ) ) {
 				return $user;
 			}
-			
+
 			if ( $user ) {
 				$linked = $user->setCustomerId( $link->customer->id, $link->customer->live_mode ? 'live' : 'test' );
 				if ( is_wp_error( $linked ) ) {

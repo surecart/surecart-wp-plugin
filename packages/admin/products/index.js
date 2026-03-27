@@ -1,4 +1,4 @@
-import { render } from '@wordpress/element';
+import { createRoot } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -14,4 +14,5 @@ import '../store/add-entities';
 /**
  * Render
  */
-render(<Product />, document.getElementById('app'));
+const root = createRoot(document.getElementById('app'));
+root.render(<Product />);

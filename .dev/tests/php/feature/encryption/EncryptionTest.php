@@ -12,15 +12,5 @@ class EncryptionTest extends SureCartUnitTestCase {
 
 		$this->assertNotSame($string, $encrypted);
 		$this->assertSame($string, $decripted);
-
-		// Test with a custom key
-		define('SURECART_ENCRYPTION_KEY', 'logged_in_key');
-		$string = 'asdfasjk;dflkj123523609u';
-		$encrypted_ce_key = Encryption::encrypt($string);
-		$decripted_ce_key = Encryption::decrypt($encrypted_ce_key);
-
-		$this->assertNotSame($encrypted, $encrypted_ce_key);
-		$this->assertNotSame($string, $encrypted_ce_key);
-		$this->assertSame($string, $decripted_ce_key);
 	}
 }

@@ -21,10 +21,13 @@ const ALLOWED_BLOCKS = [
 	'surecart/divider',
 	'surecart/line-items',
 	'surecart/tax-line-item',
+	'surecart/trial-line-item',
 	'surecart/total',
 	'surecart/bump-line-item',
 	'surecart/subtotal',
 	'surecart/line-item-shipping',
+	'surecart/invoice-details',
+	'surecart/conditional-form',
 ];
 
 export default ({ attributes, setAttributes }) => {
@@ -35,8 +38,8 @@ export default ({ attributes, setAttributes }) => {
 	const {
 		collapsible,
 		collapsedOnDesktop,
-		closed_text,
-		open_text,
+		order_summary_text,
+		invoice_summary_text,
 		collapsedOnMobile,
 	} = attributes;
 
@@ -53,6 +56,7 @@ export default ({ attributes, setAttributes }) => {
 						text: __('Subtotal', 'surecart'),
 					},
 				],
+				['surecart/trial-line-item', {}],
 				[
 					'surecart/coupon',
 					{
@@ -82,6 +86,7 @@ export default ({ attributes, setAttributes }) => {
 				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
 						<ToggleControl
+							__nextHasNoMarginBottom
 							label={__('Collapsible', 'surecart')}
 							checked={collapsible}
 							onChange={(collapsible) => {
@@ -99,6 +104,7 @@ export default ({ attributes, setAttributes }) => {
 						<Fragment>
 							<PanelRow>
 								<ToggleControl
+									__nextHasNoMarginBottom
 									label={__(
 										'Collapsed On Desktop',
 										'surecart'
@@ -116,6 +122,7 @@ export default ({ attributes, setAttributes }) => {
 							</PanelRow>
 							<PanelRow>
 								<ToggleControl
+									__nextHasNoMarginBottom
 									label={__(
 										'Collapsed On Mobile',
 										'surecart'
@@ -133,20 +140,36 @@ export default ({ attributes, setAttributes }) => {
 							</PanelRow>
 							<PanelRow>
 								<TextControl
-									label={__('Closed Text', 'surecart')}
-									value={closed_text}
-									onChange={(closed_text) =>
-										setAttributes({ closed_text })
+									__next40pxDefaultSize
+									__nextHasNoMarginBottom
+									label={__('Order Summary Text', 'surecart')}
+									value={order_summary_text}
+									onChange={(order_summary_text) =>
+										setAttributes({ order_summary_text })
 									}
+									placeholder={__('Summary', 'surecart')}
 								/>
 							</PanelRow>
 							<PanelRow>
 								<TextControl
-									label={__('Open Text', 'surecart')}
-									value={open_text}
-									onChange={(open_text) =>
-										setAttributes({ open_text })
+									__next40pxDefaultSize
+									__nextHasNoMarginBottom
+									label={__(
+										'Invoice Summary Text',
+										'surecart'
+									)}
+									value={invoice_summary_text}
+									onChange={(invoice_summary_text) =>
+										setAttributes({ invoice_summary_text })
 									}
+									help={__(
+										'Displayed on the summary when this is an invoice.',
+										'surecart'
+									)}
+									placeholder={__(
+										'Invoice Summary',
+										'surecart'
+									)}
 								/>
 							</PanelRow>
 						</Fragment>
@@ -157,8 +180,8 @@ export default ({ attributes, setAttributes }) => {
 			<ScOrderSummary
 				collapsible={collapsible}
 				collapsedOnDesktop={collapsedOnDesktop}
-				closedText={closed_text || null}
-				openText={open_text || null}
+				orderSummaryText={order_summary_text || null}
+				invoiceSummaryText={invoice_summary_text || null}
 				collapsedOnMobile={collapsedOnMobile}
 				{...innerBlocksProps}
 			></ScOrderSummary>

@@ -87,6 +87,11 @@ export class ScSwitch {
       this.checked = true;
       this.scChange.emit();
     }
+
+    if (event.key === ' ' || event.key === 'Enter') {
+      event.preventDefault();
+      this.handleClick();
+    }
   }
 
   handleMouseDown(event: MouseEvent) {
@@ -105,11 +110,14 @@ export class ScSwitch {
     }
   }
 
+  componentWillLoad() {
+    this.hasDescription = !!this.el.querySelector('[slot="description"]');
+  }
+
   componentDidLoad() {
     this.formController = new FormSubmitController(this.el, {
       value: (control: HTMLScChoiceElement) => (control.checked ? control.value : undefined),
     }).addFormData();
-    this.hasDescription = !!this.el.querySelector('[slot="description"]');
   }
 
   disconnectedCallback() {
@@ -154,7 +162,7 @@ export class ScSwitch {
             onKeyDown={e => this.handleKeyDown(e)}
           />
         </span>
-        <span class="switch__label">
+        <span class="switch__label" part="label">
           <span part="title" id={this.labelId} class="switch__title">
             <slot></slot>
           </span>

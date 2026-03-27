@@ -4,7 +4,7 @@ import { state as checkoutState } from '@store/checkout';
 
 import { updateCheckout } from '../../../services/session';
 import { Checkout, LineItemData } from '../../../types';
-import { createErrorNotice, removeNotice } from '@store/notices/mutations';
+import { createErrorNotice } from '@store/notices/mutations';
 import { updateFormState } from '@store/form/mutations';
 import { clearCheckout } from '@store/checkout/mutations';
 
@@ -27,18 +27,6 @@ export class ScCartSessionProvider {
     } else {
       this.loadUpdate(data);
     }
-  }
-
-  /** Handles coupon updates. */
-  @Listen('scApplyCoupon')
-  async handleCouponApply(e) {
-    const promotion_code = e.detail;
-    removeNotice();
-    this.loadUpdate({
-      discount: {
-        ...(promotion_code ? { promotion_code } : {}),
-      },
-    });
   }
 
   /** Handle the error response. */

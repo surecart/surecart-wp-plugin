@@ -16,11 +16,11 @@ class AccountServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function register( $container ) {
-		$container['surecart.account'] = function () {
-			return new AccountService( new Server( get_site_url() ) );
-		};
-
 		$app = $container[ SURECART_APPLICATION_KEY ];
+
+		$container['surecart.account.seed'] = fn() => new ProvisionalAccountSeedService();
+		$container['surecart.account']      = fn() => new AccountService( new Server( get_site_url() ), $app );
+
 		$app->alias( 'account', 'surecart.account' );
 	}
 

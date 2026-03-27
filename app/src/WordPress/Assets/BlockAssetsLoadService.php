@@ -44,7 +44,7 @@ class BlockAssetsLoadService {
 		 *                        is to ensure the content exists.
 		 * @return string Block content.
 		 */
-		$callback = static function( $content, $block ) use ( $block_name, $enqueue_callback ) {
+		$callback = static function ( $content, $block ) use ( $block_name, $enqueue_callback ) {
 			// Sanity check.
 			if ( empty( $block['blockName'] ) || $block_name !== $block['blockName'] ) {
 				return $content;
@@ -74,6 +74,7 @@ class BlockAssetsLoadService {
 	/**
 	 * Handle when using a page builder.
 	 *
+	 * @param string $enqueue_callback Function Name.
 	 * @return void
 	 */
 	public function whenUsingPageBuilder( $enqueue_callback ) {
@@ -88,25 +89,53 @@ class BlockAssetsLoadService {
 	 * @return boolean
 	 */
 	public function isUsingPageBuilder() {
+		return ! empty( $this->getPageBuilder() );
+	}
+
+	/**
+	 * Get the page builder.
+	 *
+	 * @return string
+	 */
+	public function getPageBuilder() {
 		// enable on Elementor.
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		if ( ! empty( $_GET['action'] ) && 'elementor' === sanitize_text_field( $_GET['action'] ) ) {
-			return true;
+			return 'elementor';
 		}
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		if ( isset( $_GET['elementor-preview'] ) ) {
-			return true;
+			return 'elementor';
 		}
+
+		if ( class_exists( '\Elementor\Plugin' ) ) { // We are doing this because since elementor refresh editor using ajax if shortcode changes, the $_GET['action'] is not available.
+			$elementor_instance = \Elementor\Plugin::instance();
+			if ( isset( $elementor_instance->editor ) && method_exists( $elementor_instance->editor, 'is_edit_mode' ) && $elementor_instance->editor->is_edit_mode() ) {
+				return 'elementor';
+			}
+		}
+
 		// load for beaver builder.
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		if ( isset( $_GET['fl_builder'] ) ) {
-			return true;
+			return 'beaver';
 		}
 		// load for Divi builder.
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		if ( isset( $_GET['et_fb'] ) ) {
-			return true;
+		if ( isset( $_GET['et_fb'] ) || isset( $_GET['et_pb_preview'] ) ) {
+			return 'divi';
 		}
-		return false;
+
+		// load for thrive architect builder.
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing
+		if ( isset( $_POST['tve_content'] ) ) {
+			return 'thrive';
+		}
+
+		if ( ( ! empty( $_GET['bricks'] ) && 'run' === $_GET['bricks'] ) || ( \defined( 'BRICKS_IS_BUILDER' ) && \BRICKS_IS_BUILDER ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			return 'bricks';
+		}
+
+		return '';
 	}
 }

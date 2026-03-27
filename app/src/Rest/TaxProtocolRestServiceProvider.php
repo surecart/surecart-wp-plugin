@@ -80,51 +80,51 @@ class TaxProtocolRestServiceProvider extends RestServiceProvider implements Rest
 				'id'                         => [
 					'description' => esc_html__( 'Unique identifier for the object.', 'surecart' ),
 					'type'        => 'string',
-					'context'     => [ 'edit' ],
+					'context'     => [ 'view', 'edit', 'embed' ],
 					'readonly'    => true,
 				],
 				'created_at'                 => [
 					'type'    => 'integer',
-					'context' => [ 'edit' ],
+					'context' => [ 'view', 'edit', 'embed' ],
 				],
 				'updated_at'                 => [
 					'type'    => 'integer',
-					'context' => [ 'edit' ],
+					'context' => [ 'view', 'edit', 'embed' ],
 				],
 				'ca_tax_enabled'             => [
 					'description' => esc_html__( 'If set to true GST taxes will be calculated for all Canadian provinces.', 'surecart' ),
 					'type'        => 'boolean',
-					'context'     => [ 'view', 'edit' ],
+					'context'     => [ 'view', 'edit', 'embed' ],
 				],
 				'eu_micro_exemption_enabled' => [
 					'description' => esc_html__( "If set to true VAT taxes will be calculated using the account's home country VAT rate.", 'surecart' ),
 					'type'        => 'boolean',
-					'context'     => [ 'view', 'edit' ],
+					'context'     => [ 'view', 'edit', 'embed' ],
 				],
 				'eu_tax_enabled'             => [
 					'description' => esc_html__( 'If set to true VAT taxes will be calculated for all EU countries.', 'surecart' ),
 					'type'        => 'boolean',
-					'context'     => [ 'view', 'edit' ],
+					'context'     => [ 'view', 'edit', 'embed' ],
 				],
 				'tax_enabled'                => [
 					'description' => esc_html__( 'If set to true taxes will be automatically calculated.', 'surecart' ),
 					'type'        => 'boolean',
-					'context'     => [ 'view', 'edit' ],
+					'context'     => [ 'view', 'edit', 'embed' ],
 				],
 				'address'                    => [
 					'description' => esc_html__( 'Upgrade behavior. Either pending or immediate.', 'surecart' ),
 					'type'        => 'object',
-					'context'     => [ 'view', 'edit' ],
+					'context'     => [ 'view', 'edit', 'embed' ],
 				],
 				'ca_tax_identifier'          => [
 					'description' => esc_html__( 'The associated Canadian tax identifier.', 'surecart' ),
 					'type'        => 'object',
-					'context'     => [ 'view', 'edit' ],
+					'context'     => [ 'view', 'edit', 'embed' ],
 				],
 				'eu_tax_identifier'          => [
 					'description' => esc_html__( 'The associated EU tax identifier.', 'surecart' ),
 					'type'        => 'object',
-					'context'     => [ 'view', 'edit' ],
+					'context'     => [ 'view', 'edit', 'embed' ],
 				],
 			],
 		];

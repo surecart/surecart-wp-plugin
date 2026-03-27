@@ -19,6 +19,8 @@ export default ({ attributes, setAttributes }) => {
 				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
 						<TextControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							label={__('Title', 'surecart')}
 							value={title}
 							onChange={(title) => setAttributes({ title })}
@@ -30,8 +32,8 @@ export default ({ attributes, setAttributes }) => {
 			<ScDashboardModule {...blockProps}>
 				<OverlayLabel>{__('Sample Data', 'surecart')}</OverlayLabel>
 				<RichText
-					aria-label={__('Title')}
-					placeholder={__('Add A Title…')}
+					aria-label={__('Title', 'surecart')}
+					placeholder={__('Add A Title…', 'surecart')}
 					value={title}
 					onChange={(title) => setAttributes({ title })}
 					withoutInteractiveFormatting

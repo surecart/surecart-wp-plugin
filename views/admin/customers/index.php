@@ -11,7 +11,11 @@
 	?>
 
 	<?php $table->search_form( __( 'Search Customers', 'surecart' ), 'sc-search-customers' ); ?>
-	<?php $table->display(); ?>
+	<form id="posts-filter" method="get">
+		<?php $table->display(); ?>
+
+		<div id="ajax-response"></div>
+	</form>
 </div>
 
 

@@ -9,7 +9,7 @@ export default ({ loading, bump, updateBump }) => {
 				label={__('Bump Name', 'surecart')}
 				required
 				help={__(
-					'A name for this bump that will be visible to customers.',
+					'This is shown to the customer on invoices and line items.',
 					'surecart'
 				)}
 				onScInput={(e) => updateBump({ name: e.target.value })}

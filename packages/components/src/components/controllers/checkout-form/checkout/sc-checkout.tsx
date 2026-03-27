@@ -288,6 +288,16 @@ export class ScCheckout {
               {formState.text.loading[formState.formState.value] || __('Processing payment...', 'surecart')}
             </sc-block-ui>
           )}
+
+          {['locked'].includes(formState.formState.value) && (
+            <sc-block-ui style={{ '--sc-block-ui-opacity': '1', 'z-index': '30', '--sc-block-ui-position': 'fixed', '--sc-block-ui-cursor': 'normal' }}>
+              <div style={{ 'text-align': 'center', 'padding': '2rem', 'max-width': '600px' }}>
+                {__('This invoice is not currently available for payment. If you have any questions, please contact us.', 'surecart')}
+              </div>
+            </sc-block-ui>
+          )}
+
+          <sc-checkout-test-complete checkout-status={formState.formState.value} success-url={this.successUrl} />
         </Universe.Provider>
       </div>
     );

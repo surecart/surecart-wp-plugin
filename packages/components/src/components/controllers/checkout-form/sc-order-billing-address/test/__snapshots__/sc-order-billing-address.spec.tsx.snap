@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sc-order-billing-address renders 1`] = `
+<sc-order-billing-address>
+  <mock:shadow-root>
+    <sc-address exportparts="label, help-text, form-control, input__base, select__base, columns, search__base, menu__base" label="Billing Address" required=""></sc-address>
+  </mock:shadow-root>
+</sc-order-billing-address>
+`;

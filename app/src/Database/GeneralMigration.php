@@ -59,7 +59,6 @@ abstract class GeneralMigration {
 	 * @return void
 	 */
 	protected function run() {
-
 	}
 
 	/**

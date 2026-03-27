@@ -36,15 +36,6 @@ export default ({
 					letter-spacing: var(--sc-input-label-letter-spacing, 0);
 				`}
 			>
-				<SortableKnob>
-					<ScIcon
-						name="drag"
-						css={css`
-							font-size: 16px;
-							cursor: grab;
-						`}
-					/>
-				</SortableKnob>
 				{children}
 			</div>
 			<div
@@ -63,27 +54,12 @@ export default ({
 				</div>
 				{collapsible && (
 					<ScButton
-						type="text"
-						circle
 						onClick={() => setIsOpen && setIsOpen(!isOpen)}
+						css={css`
+							margin-left: 10px;
+						`}
 					>
-						<svg
-							css={css`
-								transition: transform 250ms ease;
-								transform: rotate(${isOpen ? '180deg' : '0'});
-							`}
-							xmlns="http://www.w3.org/2000/svg"
-							width="16"
-							height="16"
-							viewBox="0 0 24 24"
-							fill="none"
-							stroke="currentColor"
-							strokeWidth="2"
-							strokeLinecap="round"
-							strokeLinejoin="round"
-						>
-							<polyline points="6 9 12 15 18 9"></polyline>
-						</svg>
+						{__('Edit', 'surecart')}
 					</ScButton>
 				)}
 			</div>

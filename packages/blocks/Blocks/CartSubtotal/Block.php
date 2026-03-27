@@ -21,7 +21,7 @@ class Block extends CartBlock {
 		ob_start(); ?>
 
 		<sc-line-item-total
-			total="total"
+			total="subtotal"
 			size="large"
 			class="<?php echo esc_attr( $attributes['className'] ?? '' ); ?>"
 			style="<?php echo esc_attr( $this->getStyle( $attributes ) ); ?>"

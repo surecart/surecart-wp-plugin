@@ -46,7 +46,10 @@
 .summary {
   position: relative;
   user-select: none;
-  cursor: pointer;
+
+  &--collapsible {
+    cursor: pointer;
+  }
 
   .collapse-link__icon {
     transition: transform 0.25s ease-in-out;
@@ -70,7 +73,7 @@
   margin: 4px 0 !important;
 }
 ::slotted(sc-divider) {
-  margin: 16px 0 !important;
+  margin: 20px 0 !important;
 }
 sc-line-item ~ sc-line-item {
   margin-top: 14px;

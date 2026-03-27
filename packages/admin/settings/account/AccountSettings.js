@@ -1,64 +1,50 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { ScInput, ScSelect, ScAddress } from '@surecart/components-react';
+import {
+	ScInput,
+	ScSelect,
+	ScAddress,
+	ScIcon,
+	ScAlert,
+	ScButton,
+} from '@surecart/components-react';
 import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 import Error from '../../components/Error';
-import useEntity from '../../hooks/useEntity';
 import SettingsBox from '../SettingsBox';
 import SettingsTemplate from '../SettingsTemplate';
 import useSave from '../UseSave';
-import { useSelect, useDispatch } from '@wordpress/data';
-import { store as coreStore } from '@wordpress/core-data';
-import { getCurrencySymbol } from '../../util';
+import { useEntityRecord } from '@wordpress/core-data';
 
 export default () => {
 	const [error, setError] = useState(null);
 	const { save } = useSave();
-	const { editEntityRecord } = useDispatch(coreStore);
-	const {
-		item: accountItem,
-		itemError: accountItemError,
-		editItem: editAccountItem,
-		hasLoadedItem: hasLoadedAccountItem,
-	} = useEntity('store', 'account');
 
 	const {
-		item: portalItem,
-		itemError: portalItemError,
-		editItem: portalEditItem,
-		hasLoadedItem: portalHasLoadedItem,
-	} = useEntity('store', 'portal_protocol');
-	const {
-		item: notificationItem,
-		itemError: notificationItemError,
-		editItem: notificationEditItem,
-		hasLoadedItem: notificationHasLoadedItem,
-	} = useEntity('store', 'customer_notification_protocol');
-	/** Edit Item */
-	const brandEditItem = (data) =>
-		editEntityRecord('surecart', 'store', 'brand', data);
+		record: savedAccount,
+		editedRecord: accountItem,
+		edit: editAccountItem,
+		hasResolved: hasLoadedAccountItem,
+	} = useEntityRecord('surecart', 'store', 'account');
 
-	/** Load Item */
 	const {
-		item: brandItem,
-		itemError: brandItemError,
-		hasLoadedItem: brandHasLoadedItem,
-	} = useSelect((select) => {
-		const entityData = ['surecart', 'store', 'brand'];
-		return {
-			item: select(coreStore).getEditedEntityRecord(...entityData),
-			itemError: select(coreStore)?.getResolutionError?.(
-				'getEditedEntityRecord',
-				...entityData
-			),
-			hasLoadedItem: select(coreStore)?.hasFinishedResolution?.(
-				'getEditedEntityRecord',
-				[...entityData]
-			),
-		};
-	});
+		editedRecord: portalItem,
+		edit: portalEditItem,
+		hasResolved: portalHasLoadedItem,
+	} = useEntityRecord('surecart', 'store', 'customer_portal_protocol');
+
+	const {
+		editedRecord: notificationItem,
+		edit: notificationEditItem,
+		hasResolved: notificationHasLoadedItem,
+	} = useEntityRecord('surecart', 'store', 'customer_notification_protocol');
+
+	const {
+		editedRecord: brandItem,
+		edit: brandEditItem,
+		hasResolved: brandHasLoadedItem,
+	} = useEntityRecord('surecart', 'store', 'brand');
 
 	/**
 	 * Form is submitted.
@@ -82,17 +68,7 @@ export default () => {
 			onSubmit={onSubmit}
 			loading={!hasLoadedAccountItem || !portalHasLoadedItem}
 		>
-			<Error
-				error={
-					accountItemError ||
-					portalItemError ||
-					brandItemError ||
-					notificationItemError ||
-					error
-				}
-				setError={setError}
-				margin="80px"
-			/>
+			<Error error={error} setError={setError} margin="80px" />
 
 			<SettingsBox
 				title={__('Store Details', 'surecart')}
@@ -137,31 +113,18 @@ export default () => {
 						type="url"
 					></ScInput>
 
-					<ScSelect
-						css={css`
-							grid-column: 1 / 3;
-						`}
-						search
-						value={accountItem?.currency}
-						onScChange={(e) =>
-							editAccountItem({ currency: e.target.value })
+					<ScInput
+						value={accountItem?.slug}
+						label={__('Store ID / Subdomain', 'surecart')}
+						onScInput={(e) =>
+							editAccountItem({ slug: e.target.value })
 						}
-						choices={Object.keys(
-							scData?.supported_currencies || {}
-						).map((value) => {
-							const label = scData?.supported_currencies[value];
-							return {
-								label: `${label} (${getCurrencySymbol(value)})`,
-								value,
-							};
-						})}
-						label={__('Default Currency', 'surecart')}
 						help={__(
-							'The default currency for new products.',
+							'This will be used to identify your store in URLs. It can only contain letters, numbers, and dashes.',
 							'surecart'
 						)}
 						required
-					/>
+					></ScInput>
 
 					<ScSelect
 						search
@@ -186,64 +149,147 @@ export default () => {
 						required
 					/>
 
-					<ScSelect
-						value={accountItem?.locale}
-						onScChange={(e) =>
-							editAccountItem({ locale: e.target.value })
-						}
-						choices={[
-							{
-								value: 'en',
-								label: 'English - United States',
-							},
-							{
-								value: 'bg',
-								label: 'български (Bŭlgarski)',
-							},
-							{
-								value: 'de',
-								label: 'Deutsch',
-							},
-							{
-								value: 'es',
-								label: 'Español',
-							},
-							{
-								value: 'fr',
-								label: 'Français',
-							},
-							{
-								value: 'it',
-								label: 'Italiano',
-							},
-							{
-								value: 'ja',
-								label: '日本 (Nihon)',
-							},
-							{
-								value: 'nl',
-								label: 'Nederland',
-							},
-							{
-								value: 'pl',
-								label: 'Polski',
-							},
-							{
-								value: 'pt',
-								label: 'Português',
-							},
-							{
-								value: 'pt_br',
-								label: 'Português - Brasil',
-							},
-						]}
-						label={__('Store Language', 'surecart')}
-						help={__(
-							'The language used for notifications, invoices, etc.',
-							'surecart'
+					<div
+						css={css`
+							grid-column: 1 / 3;
+						`}
+					>
+						<ScSelect
+							search
+							value={accountItem?.currency}
+							onScChange={(e) =>
+								editAccountItem({ currency: e.target.value })
+							}
+							choices={(scData?.supported_currencies || []).map(
+								({
+									name,
+									symbol,
+									currency: value,
+									flag: icon,
+								}) => ({
+									label: `${name} (${symbol})`,
+									value,
+									icon,
+								})
+							)}
+							label={__('Store Currency', 'surecart')}
+							required
+							help={__(
+								'The currency for your store checkouts and default currency for new products.',
+								'surecart'
+							)}
+						/>
+					</div>
+
+					{savedAccount?.currency &&
+						savedAccount?.currency !== accountItem?.currency && (
+							<ScAlert
+								type="warning"
+								open={true}
+								css={css`
+									grid-column: 1 / 3;
+									&::part(base) {
+										margin: 0;
+									}
+								`}
+							>
+								<strong>{__('Important:', 'surecart')}</strong>
+								&nbsp;
+								{__(
+									"Customers can only make purchases in your active store currency. Changing your store currency will cause existing product checkouts to fail until those products and prices are recreated in the new currency. If you have existing orders, analytics reports will also become inaccurate as they don't separate by currency.",
+									'surecart'
+								)}
+								<br />
+								<ScButton
+									href="https://surecart.com/docs/switching-store-currency"
+									target="_blank"
+									rel="noreferrer"
+									type="link"
+									style={{
+										'--sc-button-link-color':
+											'var(--sc-color-warning-600)',
+									}}
+								>
+									{__(
+										'Learn about all implications before switching',
+										'surecart'
+									)}
+									<ScIcon
+										name="arrow-up-right"
+										slot="suffix"
+										style={{
+											width: '14px',
+											height: '14px',
+										}}
+									/>
+								</ScButton>
+							</ScAlert>
 						)}
-						required
-					/>
+
+					<div
+						css={css`
+							grid-column: 1 / 3;
+						`}
+					>
+						<ScSelect
+							value={accountItem?.locale}
+							onScChange={(e) =>
+								editAccountItem({ locale: e.target.value })
+							}
+							choices={[
+								{
+									value: 'en',
+									label: 'English - United States',
+								},
+								{
+									value: 'bg',
+									label: 'български (Bŭlgarski)',
+								},
+								{
+									value: 'de',
+									label: 'Deutsch',
+								},
+								{
+									value: 'es',
+									label: 'Español',
+								},
+								{
+									value: 'fr',
+									label: 'Français',
+								},
+								{
+									value: 'it',
+									label: 'Italiano',
+								},
+								{
+									value: 'ja',
+									label: '日本 (Nihon)',
+								},
+								{
+									value: 'nl',
+									label: 'Nederland',
+								},
+								{
+									value: 'pl',
+									label: 'Polski',
+								},
+								{
+									value: 'pt',
+									label: 'Português',
+								},
+								{
+									value: 'pt_br',
+									label: 'Português - Brasil',
+								},
+							]}
+							label={__('Store Language', 'surecart')}
+							help={__(
+								'The language used for notifications, invoices, etc.',
+								'surecart'
+							)}
+							required
+						/>
+					</div>
 
 					<ScInput
 						label={__('Terms Page', 'surecart')}

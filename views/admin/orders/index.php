@@ -5,7 +5,7 @@
 		'layouts/partials/admin-index-header',
 		[
 			'title' => __( 'Orders', 'surecart' ),
-			'new_link' => \SureCart::getUrl()->edit( 'checkout' ),
+			'new_link' => \SureCart::getUrl()->create( 'invoices' ) . '&live_mode=true',
 		]
 	);
 	?>

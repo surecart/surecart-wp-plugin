@@ -41,6 +41,7 @@ export class ScMollieAddMethod {
           return_url: this.successUrl,
           payment_method_type: this.selectedMethodId,
           currency: this.currency,
+          refresh_status: true,
         },
       });
       if (this.paymentIntent.processor_data?.mollie?.checkout_url) {
@@ -58,7 +59,7 @@ export class ScMollieAddMethod {
       this.loading = true;
       const response = (await apiFetch({
         path: addQueryArgs(`surecart/v1/processors/${this.processorId}/payment_method_types`, {
-          amount: 2500,
+          amount: 0,
           country: this.country,
           currency: this.currency,
           reusable: true,

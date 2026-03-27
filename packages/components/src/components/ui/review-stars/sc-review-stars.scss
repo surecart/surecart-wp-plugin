@@ -1,0 +1,23 @@
+:host {
+  display: flex;
+  gap: var(--star-gap, 2px);
+
+  --sc-review-stars-primary: var(--sc-color-gray-500);
+}
+
+sc-icon {
+  &.full-star::part(svg) {
+    fill: var(--sc-review-stars-primary);
+    stroke: var(--sc-review-stars-primary);
+    color: var(--sc-review-stars-primary);
+  }
+
+  &.half-star::part(svg) {
+    stroke: var(--sc-review-stars-primary);
+    color: var(--sc-review-stars-primary);
+  }
+
+  &.empty-star::part(svg) {
+    color: var(--sc-review-stars-primary);
+  }
+}

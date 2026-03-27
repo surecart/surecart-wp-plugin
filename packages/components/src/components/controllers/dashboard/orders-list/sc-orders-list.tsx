@@ -145,9 +145,9 @@ export class ScOrdersList {
 
   renderList() {
     return this.orders.map(order => {
-      const { checkout, created_at, id } = order;
+      const { checkout, created_at_date, id } = order;
       if (!checkout) return null;
-      const { line_items, amount_due, currency, charge } = checkout as Checkout;
+      const { line_items, amount_due_display_amount, charge } = checkout as Checkout;
       return (
         <sc-stacked-list-row
           href={addQueryArgs(window.location.href, {
@@ -158,11 +158,7 @@ export class ScOrdersList {
           style={{ '--columns': '4' }}
           mobile-size={500}
         >
-          <div>
-            {typeof charge !== 'string' && (
-              <sc-format-date class="order__date" date={(charge?.created_at || created_at) * 1000} month="short" day="numeric" year="numeric"></sc-format-date>
-            )}
-          </div>
+          <div class="order__date">{typeof charge !== 'string' && (charge?.created_at_date || created_at_date)}</div>
           <div>
             <sc-text
               truncate
@@ -177,9 +173,7 @@ export class ScOrdersList {
             {this.renderStatusBadge(order)}
             <sc-order-shipment-badge status={order?.shipment_status}></sc-order-shipment-badge>
           </div>
-          <div>
-            <sc-format-number type="currency" currency={currency} value={amount_due}></sc-format-number>
-          </div>
+          <div>{amount_due_display_amount}</div>
         </sc-stacked-list-row>
       );
     });

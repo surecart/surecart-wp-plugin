@@ -5,27 +5,38 @@ namespace SureCart\Models;
 use SureCart\Models\Traits\HasCustomer;
 use SureCart\Models\Traits\HasSubscriptions;
 use SureCart\Models\LineItem;
+use SureCart\Models\Fee;
 use SureCart\Models\Traits\CanFinalize;
+use SureCart\Models\Traits\HasBillingAddress;
 use SureCart\Models\Traits\HasDiscount;
+use SureCart\Models\Traits\HasInvoice;
+use SureCart\Models\Traits\HasPaymentFailures;
 use SureCart\Models\Traits\HasPaymentIntent;
 use SureCart\Models\Traits\HasPaymentMethod;
 use SureCart\Models\Traits\HasProcessorType;
 use SureCart\Models\Traits\HasPurchases;
 use SureCart\Models\Traits\HasShippingAddress;
+use SureCart\Models\Traits\HasShippingChoices;
+use SureCart\Support\Currency;
+use SureCart\Support\TimeDate;
 
 /**
  * Order model
  */
 class Checkout extends Model {
-	use HasCustomer,
-		HasSubscriptions,
-		HasDiscount,
-		HasShippingAddress,
-		HasPaymentIntent,
-		HasPaymentMethod,
-		HasPurchases,
-		CanFinalize,
-		HasProcessorType;
+	use HasCustomer;
+	use HasSubscriptions;
+	use HasDiscount;
+	use HasShippingAddress;
+	use HasShippingChoices;
+	use HasPaymentIntent;
+	use HasPaymentMethod;
+	use HasPurchases;
+	use CanFinalize;
+	use HasProcessorType;
+	use HasBillingAddress;
+	use HasPaymentFailures;
+	use HasInvoice;
 
 	/**
 	 * Rest API endpoint
@@ -53,6 +64,255 @@ class Checkout extends Model {
 	}
 
 	/**
+	 * Get the display subtotal amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getAmountDueDisplayAmountAttribute() {
+		return Currency::format( $this->amount_due ?? 0, $this->currency );
+	}
+
+	/**
+	 * Get the display subtotal amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getSubtotalDisplayAmountAttribute() {
+		return ! empty( $this->subtotal_amount ) ? Currency::format( $this->subtotal_amount, $this->currency ) : '';
+	}
+
+	/**
+	 * Get the display discounts amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getDiscountsDisplayAmountAttribute() {
+		return ! empty( $this->discount_amount ) ? Currency::format( $this->discount_amount, $this->currency ) : '';
+	}
+
+	/**
+	 * Get the display tax reverse charged amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getTaxReverseChargedDisplayAmountAttribute() {
+		return ! empty( $this->tax_reverse_charged_amount ) ? Currency::format( $this->tax_reverse_charged_amount, $this->currency ) : '';
+	}
+
+	/**
+	 * Get the display tax reverse charged amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getDiscountsDisplayAttribute() {
+		return ! empty( $this->discounts ) ? Currency::format( $this->discounts, $this->currency ) : '';
+	}
+
+	/**
+	 * Get the display scratch amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getScratchDisplayAmountAttribute() {
+		return Currency::format( (int) ( -$this->total_savings_amount + $this->total_amount ), $this->currency );
+	}
+
+	/**
+	 * Get the display subtotal amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getTrialDisplayAmountAttribute() {
+		return ! empty( $this->trial_amount ) ? Currency::format( $this->trial_amount, $this->currency ) : '';
+	}
+
+	/**
+	 * Get the display remaining amount due attribute.
+	 *
+	 * @return string
+	 */
+	public function getRemainingAmountDueDisplayAmountAttribute() {
+		return ! empty( $this->remaining_amount_due ) ? Currency::format( $this->remaining_amount_due, $this->currency ) : '';
+	}
+
+	/**
+	 * Get the display refunded amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getRefundedDisplayAmountAttribute() {
+		return ! empty( $this->refunded_amount ) ? Currency::format( $this->refunded_amount, $this->currency ) : '';
+	}
+
+	/**
+	 * Get the display net paid amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getNetPaidDisplayAmountAttribute() {
+		return ! empty( $this->net_paid_amount ) ? Currency::format( $this->net_paid_amount, $this->currency ) : '';
+	}
+
+	/**
+	 * Get the display subtotal amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getTotalDisplayAmountAttribute() {
+		return Currency::format( (int) $this->total_amount, $this->currency );
+	}
+
+	/**
+	 * Get the display total savings amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getTotalSavingsDisplayAmountAttribute() {
+		return Currency::format( (int) $this->total_savings_amount, $this->currency );
+	}
+
+	/**
+	 * Get the display total scratch price attribute.
+	 *
+	 * @return string
+	 */
+	public function getTotalScratchDisplayAmountAttribute() {
+		return Currency::format( - (int) $this->total_savings_amount + (int) $this->total_amount, $this->currency );
+	}
+
+	/**
+	 * Get the subtotal scratch amount (sum of all line items' scratch amounts).
+	 *
+	 * @return int
+	 */
+	public function getSubtotalScratchAmountAttribute() {
+		if ( empty( $this->line_items ) || empty( $this->line_items->data ) ) {
+			return 0;
+		}
+		return array_reduce(
+			$this->line_items->data ?? [],
+			function ( $sum, $item ) {
+				return $sum + (int) ( $item->scratch_amount ?? 0 );
+			},
+			0
+		);
+	}
+
+	/**
+	 * Get the display subtotal scratch amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getSubtotalScratchDisplayAmountAttribute() {
+		$scratch = $this->subtotal_scratch_amount;
+		return ! empty( $scratch ) ? Currency::format( $scratch, $this->currency ) : '';
+	}
+
+	/**
+	 * Check if the checkout has a subtotal scratch amount different from the subtotal.
+	 *
+	 * @return bool
+	 */
+	public function getHasSubtotalScratchAmountAttribute() {
+		$scratch  = $this->subtotal_scratch_amount;
+		$subtotal = (int) ( $this->subtotal_amount ?? 0 );
+		return $scratch > 0 && $scratch > $subtotal;
+	}
+
+	/**
+	 * Get the converts currency attribute.
+	 * We should convert currency by default.
+	 *
+	 * @return bool
+	 */
+	public function getShowConvertedTotalAttribute() {
+		return apply_filters( 'surecart_checkout_show_converted_total', true, $this );
+	}
+
+	/**
+	 * Get the display full amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getFullDisplayAmountAttribute() {
+		return ! empty( $this->full_amount ) ? Currency::format( $this->full_amount, $this->currency ) : '';
+	}
+
+	/**
+	 * Get the display discount amount amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getDiscountDisplayAmountAttribute() {
+		return ! empty( $this->discount_amount ) ? Currency::format( $this->discount_amount, $this->currency ) : '';
+	}
+
+	/**
+	 * Get the display bump amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getBumpDisplayAmountAttribute() {
+		return ! empty( $this->bump_amount ) ? Currency::format( $this->bump_amount, $this->currency ) : '';
+	}
+
+	/**
+	 * Get the converted total amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getConvertedTotalAmountAttribute() {
+		if ( $this->is_zero_decimal || empty( $this->total_amount ) ) {
+			return $this->total_amount;
+		}
+		return $this->total_amount / 100;
+	}
+
+	/**
+	 * Is the checkout an installment.
+	 *
+	 * @return bool
+	 */
+	public function getIsInstallmentAttribute() {
+		return $this->full_amount !== $this->subtotal_amount;
+	}
+
+	/**
+	 * Get the line items count attribute.
+	 *
+	 * @return int
+	 */
+	public function getLineItemsCountAttribute() {
+		if ( empty( $this->line_items ) || empty( $this->line_items->data ) ) {
+			return 0;
+		}
+		return array_reduce(
+			$this->line_items->data ?? [],
+			function ( $count, $item ) {
+				return $count + ( $item->quantity ?? 0 );
+			},
+			0
+		);
+	}
+
+	/**
+	 * Get the has recurring attribute.
+	 *
+	 * Do any line items have a recurring price?
+	 *
+	 * @return bool
+	 */
+	public function getHasRecurringAttribute() {
+		return array_reduce(
+			$this->line_items->data ?? [],
+			function ( $carry, $item ) {
+				return $carry || isset( $item->price->recurring_interval );
+			},
+			false
+		);
+	}
+
+	/**
 	 * Set attributes during write actions.
 	 *
 	 * @return void
@@ -62,6 +322,74 @@ class Checkout extends Model {
 		if ( isset( $_COOKIE['sc_click_id'] ) ) {
 			$this->setAttribute( 'last_click', $_COOKIE['sc_click_id'] );
 		}
+	}
+
+	/**
+	 * Set the upsell funnel attribute
+	 *
+	 * @param  object $value The data array.
+	 * @return void
+	 */
+	public function setUpsellFunnelAttribute( $value ) {
+		$this->setRelation( 'upsell_funnel', $value, UpsellFunnel::class );
+	}
+
+	/**
+	 * Set the upsell funnel attribute
+	 *
+	 * @param  object $value The data array.
+	 * @return void
+	 */
+	public function setCurrentUpsellAttribute( $value ) {
+		$this->setRelation( 'current_upsell', $value, Upsell::class );
+	}
+
+	/**
+	 * Set the recommended bumps attribute
+	 *
+	 * @param  object $value Subscription data array.
+	 * @return void
+	 */
+	public function setRecommendedBumpsAttribute( $value ) {
+		$this->setCollection( 'recommended_bumps', $value, Bump::class );
+	}
+
+	/**
+	 * Set the checkout fees attribute
+	 *
+	 * @param  object $value Subscription data array.
+	 * @return void
+	 */
+	public function setCheckoutFeesAttribute( $value ) {
+		$this->setCollection( 'checkout_fees', $value, Fee::class );
+	}
+
+	/**
+	 * Set the shipping fees attribute
+	 *
+	 * @param  object $value Subscription data array.
+	 * @return void
+	 */
+	public function setShippingFeesAttribute( $value ) {
+		$this->setCollection( 'shipping_fees', $value, Fee::class );
+	}
+
+	/**
+	 * Get the display checkout fees amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getCheckoutFeesDisplayAmountAttribute() {
+		return ! empty( $this->checkout_fees_amount ) ? Currency::format( $this->checkout_fees_amount, $this->currency ) : '';
+	}
+
+	/**
+	 * Get the display shipping fees amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getShippingFeesDisplayAmountAttribute() {
+		return ! empty( $this->shipping_fees_amount ) ? Currency::format( $this->shipping_fees_amount, $this->currency ) : '';
 	}
 
 	/**
@@ -85,6 +413,7 @@ class Checkout extends Model {
 	 */
 	protected function update( $attributes = [] ) {
 		$this->setWriteAttributes();
+
 		return parent::update( $attributes );
 	}
 
@@ -183,5 +512,286 @@ class Checkout extends Model {
 		$this->fireModelEvent( 'cancelled' );
 
 		return $this;
+	}
+
+	/**
+	 * Offer a bump.
+	 *
+	 * @param  string|\SureCart\Models\Bump $bump The bump object.
+	 *
+	 * @return true|\WP_Error
+	 */
+	protected function offerBump( $bump ) {
+		if ( $this->fireModelEvent( 'offering_bump' ) === false ) {
+			return false;
+		}
+
+		if ( empty( $this->attributes['id'] ) ) {
+			return new \WP_Error( 'not_saved', 'Please create the checkout.' );
+		}
+
+		$id = is_a( $bump, Bump::class ) ? $bump->id : $bump;
+
+		if ( empty( $id ) ) {
+			return new \WP_Error( 'not_saved', 'Please pass an upsell.' );
+		}
+
+		$offered = $this->makeRequest(
+			[
+				'method' => 'PATCH',
+				'query'  => $this->query,
+				'body'   => [
+					$this->object_name => $this->getAttributes(),
+				],
+			],
+			$this->endpoint . '/' . $this->attributes['id'] . '/offer_bump/' . $id
+		);
+
+		if ( is_wp_error( $offered ) ) {
+			return $offered;
+		}
+
+		return true;
+	}
+
+	/**
+	 * Offer an upsell.
+	 *
+	 * @param  string|\SureCart\Models\Upsell $upsell The upsell object.
+	 *
+	 * @return true|\WP_Error
+	 */
+	protected function offerUpsell( $upsell ) {
+		if ( $this->fireModelEvent( 'offering_upsell' ) === false ) {
+			return false;
+		}
+
+		if ( empty( $this->attributes['id'] ) ) {
+			return new \WP_Error( 'not_saved', 'Please create the checkout.' );
+		}
+
+		$id = is_a( $upsell, Upsell::class ) ? $upsell->id : $upsell;
+
+		if ( empty( $id ) ) {
+			return new \WP_Error( 'not_saved', 'Please pass an upsell.' );
+		}
+
+		$offered = $this->makeRequest(
+			[
+				'method' => 'PATCH',
+				'query'  => $this->query,
+				'body'   => [
+					$this->object_name => $this->getAttributes(),
+				],
+			],
+			$this->endpoint . '/' . $this->attributes['id'] . '/offer_upsell/' . $id
+		);
+
+		if ( is_wp_error( $offered ) ) {
+			return $offered;
+		}
+
+		return true;
+	}
+
+	/**
+	 * Decline an upsell.
+	 *
+	 * @param  string|\SureCart\Models\Upsell $upsell The upsell object.
+	 *
+	 * @return $this|\WP_Error
+	 */
+	protected function declineUpsell( $upsell ) {
+		if ( $this->fireModelEvent( 'declining_upsell' ) === false ) {
+			return false;
+		}
+
+		if ( empty( $this->attributes['id'] ) ) {
+			return new \WP_Error( 'not_saved', 'Please create the checkout.' );
+		}
+
+		$id = is_a( $upsell, Upsell::class ) ? $upsell->id : $upsell;
+
+		if ( empty( $id ) ) {
+			return new \WP_Error( 'not_saved', 'Please pass an upsell.' );
+		}
+
+		$declined = $this->makeRequest(
+			[
+				'method' => 'PATCH',
+				'query'  => $this->query,
+				'body'   => [
+					$this->object_name => $this->getAttributes(),
+				],
+			],
+			$this->endpoint . '/' . $this->attributes['id'] . '/decline_upsell/' . $id
+		);
+
+		if ( is_wp_error( $declined ) ) {
+			return $declined;
+		}
+
+		$this->resetAttributes();
+
+		$this->fill( $declined );
+
+		$this->fireModelEvent( 'declined' );
+
+		return $this;
+	}
+
+	/**
+	 * Get the human discount attribute.
+	 *
+	 * @return string
+	 */
+	public function getHumanDiscountAttribute() {
+		if ( empty( $this->discount->coupon ) ) {
+			return '';
+		}
+
+		if ( ! empty( $this->discount->coupon->percent_off ) ) {
+			if ( ! empty( $this->discount->coupon->amount_off ) && ! empty( $this->currency ) ) {
+				return Currency::format( $this->discount->coupon->amount_off, $this->currency );
+			}
+
+			// translators: %1d is the percentage discount.
+			return sprintf( __( '%1d%% off', 'surecart' ), $this->discount->coupon->percent_off | 0 );
+		}
+
+		return '';
+	}
+
+	/**
+	 * Get the human discount with duration attribute.
+	 *
+	 * @return string
+	 */
+	public function getHumanDiscountWithDurationAttribute() {
+		if ( ! $this->hasRecurring ) {
+			return $this->human_discount;
+		}
+
+		$duration           = $this->discount->coupon->duration ?? '';
+		$duration_in_months = $this->discount->coupon->duration_in_months ?? 0;
+
+		switch ( $duration ) {
+			case 'once':
+				return sprintf( '%s %s', $this->human_discount, __( 'once', 'surecart' ) );
+			case 'repeating':
+				// translators: %d is the number of months.
+				$months_label = sprintf( _n( '%d month', '%d months', $duration_in_months, 'surecart' ), $duration_in_months );
+				return sprintf( '%s for %s', $this->human_discount, $months_label );
+			default:
+				return $this->human_discount;
+		}
+	}
+
+	/**
+	 * Get the shipping display amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getShippingDisplayAmountAttribute() {
+		return $this->shipping_amount ? Currency::format( $this->shipping_amount, $this->currency ) : __( 'Free', 'surecart' );
+	}
+
+	/**
+	 * If the shipping address is required.
+	 *
+	 * @return bool
+	 */
+	public function getShippingAddressRequiredAttribute(): bool {
+		return in_array( $this->shipping_address_accuracy_requirement, [ 'tax', 'full' ], true );
+	}
+
+	/**
+	 * Get the paid display amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getPaidDisplayAmountAttribute() {
+		return Currency::format( $this->paid_amount, $this->currency );
+	}
+
+	/**
+	 * Get the Paid at Date attribute.
+	 *
+	 * @return string
+	 */
+	public function getPaidAtDateAttribute() {
+		return ! empty( $this->paid_at ) ? TimeDate::formatDate( $this->paid_at ) : '';
+	}
+
+	/**
+	 * Get the proration display amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getProrationDisplayAmountAttribute() {
+		return Currency::format( $this->proration_amount, $this->currency );
+	}
+
+	/**
+	 * Get the applied balance display amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getAppliedBalanceDisplayAmountAttribute() {
+		return Currency::format( $this->applied_balance_amount, $this->currency );
+	}
+
+	/**
+	 * Get the credited balance display amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getCreditedBalanceDisplayAmountAttribute() {
+		return Currency::format( $this->credited_balance_amount, $this->currency );
+	}
+
+	/**
+	 * Get the store currency amount due display amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getAmountDueDefaultCurrencyDisplayAmountAttribute() {
+		return Currency::format( $this->amount_due, $this->currency, [ 'convert' => false ] );
+	}
+
+	/**
+	 * Get the store currency amount due display amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getCurrentCurrencyAttribute() {
+		return Currency::getCurrentCurrency();
+	}
+
+	/**
+	 * Get the tax exclusive display amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getTaxExclusiveDisplayAmountAttribute() {
+		return Currency::format( $this->tax_exclusive_amount, $this->currency );
+	}
+
+	/**
+	 * Get the tax inclusive display amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getTaxInclusiveDisplayAmountAttribute() {
+		return Currency::format( $this->tax_inclusive_amount, $this->currency );
+	}
+
+	/**
+	 * Get the tax display amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getTaxDisplayAmountAttribute() {
+		return Currency::format( $this->tax_amount, $this->currency );
 	}
 }

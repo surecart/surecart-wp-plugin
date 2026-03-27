@@ -2,7 +2,7 @@
 namespace SureCart\Controllers\Web;
 
 /**
- * Handles webhooks
+ * Handles Instant Checkout Page.
  */
 class BuyPageController extends BasePageController {
 	/**
@@ -14,12 +14,14 @@ class BuyPageController extends BasePageController {
 		parent::filters();
 		// Add edit product link to admin bar.
 		add_action( 'admin_bar_menu', [ $this, 'addEditProductLink' ], 99 );
-		// do not persist the cart for this page.
-		add_filter( 'surecart-components/scData', [ $this, 'doNotPersistCart' ], 10, 2 );
 		// add styles.
 		add_action( 'wp_enqueue_scripts', [ $this, 'styles' ] );
 		// add scripts.
 		add_action( 'wp_enqueue_scripts', [ $this, 'scripts' ] );
+		// add seo meta data.
+		add_action( 'wp_head', [ $this, 'addSeoMetaData' ] );
+		// add json schema.
+		add_action( 'wp_head', [ $this, 'addProductJsonSchema' ] );
 	}
 
 	/**
@@ -86,7 +88,7 @@ class BuyPageController extends BasePageController {
 		}
 
 		// get active prices.
-		$active_prices = $this->model->activePrices();
+		$active_prices = $this->model->active_prices;
 
 		// must have at least one active price.
 		if ( empty( $active_prices[0] ) ) {
@@ -101,7 +103,7 @@ class BuyPageController extends BasePageController {
 
 		// prepare data.
 		$this->model              = $this->model->withActivePrices()->withSortedPrices();
-		$first_variant_with_stock = $this->model->getFirstVariantWithStock();
+		$first_variant_with_stock = $this->model->first_variant_with_stock;
 
 		if ( ! empty( $this->model->prices->data[0]->id ) ) {
 			$line_item = array_merge(
@@ -127,7 +129,7 @@ class BuyPageController extends BasePageController {
 				'terms_text'       => $this->termsText(),
 				'mode'             => $this->model->buyLink()->getMode(),
 				'store_name'       => \SureCart::account()->name ?? get_bloginfo(),
-				'logo_url'         => \SureCart::account()->brand->logo_url,
+				'logo_url'         => \SureCart::theme()->logoUrl(),
 				'logo_width'       => \SureCart::settings()->get( 'buy_link_logo_width', '180px' ),
 				'user'             => wp_get_current_user(),
 				'logout_link'      => wp_logout_url( $request->getUrl() ),
@@ -138,6 +140,7 @@ class BuyPageController extends BasePageController {
 				'show_image'       => $this->model->buyLink()->templatePartEnabled( 'image' ),
 				'show_description' => $this->model->buyLink()->templatePartEnabled( 'description' ),
 				'show_coupon'      => $this->model->buyLink()->templatePartEnabled( 'coupon' ),
+				'success_url'      => $this->model->buyLink()->getSuccessUrl(),
 			]
 		);
 	}
@@ -167,8 +170,8 @@ class BuyPageController extends BasePageController {
 	 * @return string
 	 */
 	public function termsText() {
-		$terms_url   = \SureCart::account()->portal_protocol->terms_url;
-		$privacy_url = \SureCart::account()->portal_protocol->privacy_url;
+		$terms_url   = \SureCart::account()->customer_portal_protocol->terms_url;
+		$privacy_url = \SureCart::account()->customer_portal_protocol->privacy_url;
 
 		if ( ! empty( $terms_url ) && ! empty( $privacy_url ) ) {
 			return sprintf(
@@ -206,14 +209,49 @@ class BuyPageController extends BasePageController {
 	}
 
 	/**
-	 * Do not persist the cart on the buy page.
+	 * Add the SEO meta data.
 	 *
-	 * @param array $data ScData array.
-	 *
-	 * @return array
+	 * @return void
 	 */
-	public function doNotPersistCart( $data ) {
-		$data['do_not_persist_cart'] = true;
-		return $data;
+	public function addSeoMetaData(): void {
+		$product = $this->model;
+
+		if ( empty( $product ) ) {
+			return;
+		}
+
+		$display_seo_meta = apply_filters( 'sc_display_instant_checkout_seo_meta', true, $product );
+		if ( ! $display_seo_meta ) {
+			return;
+		}
+
+		// render the seo meta.
+		\SureCart::productPost()->renderProductSeoMeta( $product );
+	}
+
+	/**
+	 * Add the JSON-LD schema for the product.
+	 *
+	 * @return void
+	 */
+	public function addProductJsonSchema(): void {
+		$product = $this->model;
+
+		if ( empty( $product ) ) {
+			return;
+		}
+
+		$display_schema = apply_filters( 'sc_display_instant_checkout_json_ld_schema', true, $product );
+		if ( ! $display_schema ) {
+			return;
+		}
+
+		$schema = \SureCart::productPost()->getJsonSchemaArray( $product ) ?? [];
+		if ( empty( $schema ) ) {
+			return;
+		}
+		?>
+		<script type="application/ld+json"><?php echo wp_json_encode( $schema ); ?></script>
+		<?php
 	}
 }

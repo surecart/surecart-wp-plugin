@@ -1,4 +1,4 @@
-import { ScInput, ScTag, ScTextarea } from '@surecart/components-react';
+import { ScFlex, ScInput, ScTag, ScTextarea } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 import Box from '../../ui/Box';
 
@@ -7,8 +7,10 @@ export default ({ loading, bump, updateBump }) => {
 		<Box
 			title={
 				<>
-					{__('Add a description', 'surecart')}{' '}
-					<ScTag>{__('Optional', 'surecart')}</ScTag>
+					<ScFlex alignItems="center" justifyContent="flex-start">
+						{__('Add a description', 'surecart')}{' '}
+						<ScTag>{__('Optional', 'surecart')}</ScTag>
+					</ScFlex>
 				</>
 			}
 			loading={loading}

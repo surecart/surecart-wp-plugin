@@ -13,13 +13,14 @@ import Types from './modules/Types';
 import Limits from './modules/Limits';
 import SelectCustomer from './modules/SelectCustomer';
 import ProductRestrictions from './modules/ProductRestrictions';
+import SelectAffiliate from './modules/SelectAffiliate';
+import Error from '../components/Error';
 
 export default ({ id, setId }) => {
 	const [isSaving, setIsSaving] = useState(false);
-	const [name, setName] = useState('');
 	const [promotion, setPromotion] = useState(null);
 	const [coupon, setCoupon] = useState(null);
-	const [error, setError] = useState('');
+	const [error, setError] = useState(false);
 	const { createSuccessNotice } = useDispatch(noticesStore);
 	const { saveEntityRecord } = useDispatch(coreStore);
 
@@ -37,17 +38,20 @@ export default ({ id, setId }) => {
 		});
 	};
 
-	// create the product.
+	// create the coupon.
 	const onSubmit = async (e) => {
 		e.preventDefault();
 		try {
+			setError(false);
 			setIsSaving(true);
 			const response = await saveEntityRecord(
 				'surecart',
 				'coupon',
 				{
 					...coupon,
-					promotions: [promotion],
+					...(promotion
+						? { promotions: [promotion] }
+						: { promotions: [{}] }),
 				},
 				{ throwOnError: true }
 			);
@@ -57,16 +61,14 @@ export default ({ id, setId }) => {
 			});
 		} catch (e) {
 			console.error(e);
-			setError(e?.message || __('Something went wrong.', 'surecart'));
+			setError(e);
 			setIsSaving(false);
 		}
 	};
 
 	return (
 		<CreateTemplate id={id}>
-			<ScAlert open={error?.length} type="danger" closable scrollOnOpen>
-				<span slot="title">{error}</span>
-			</ScAlert>
+			<Error error={error} />
 
 			<ScForm
 				onScSubmit={onSubmit}
@@ -112,6 +114,11 @@ export default ({ id, setId }) => {
 						/>
 
 						<SelectCustomer
+							promotion={promotion}
+							updatePromotion={updatePromotion}
+						/>
+
+						<SelectAffiliate
 							promotion={promotion}
 							updatePromotion={updatePromotion}
 						/>

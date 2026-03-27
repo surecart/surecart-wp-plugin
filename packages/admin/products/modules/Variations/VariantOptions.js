@@ -144,7 +144,7 @@ export default ({ product, updateProduct }) => {
 							.length || 1);
 					return (
 						<SortableItem key={index}>
-							<div class="variant-option">
+							<div className="variant-option">
 								<VariantOption
 									product={product}
 									updateProduct={updateProduct}
@@ -157,7 +157,7 @@ export default ({ product, updateProduct }) => {
 									}}
 									onDelete={() => onDelete(index)}
 									index={index}
-									canAddValue={total < 100}
+									canAddValue={total <= 300}
 								/>
 							</div>
 						</SortableItem>

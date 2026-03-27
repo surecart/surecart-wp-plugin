@@ -24,6 +24,8 @@ export default ({ attributes }) => {
 				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
 						<TextControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							label={__('Title', 'surecart')}
 							value={title}
 							onChange={(title) => setAttributes({ title })}
@@ -33,8 +35,8 @@ export default ({ attributes }) => {
 			</InspectorControls>
 			<ScOrderConfirmationCustomer {...blockProps}>
 				<RichText
-					aria-label={__('Button text')}
-					placeholder={__('Add text…')}
+					aria-label={__('Button text', 'surecart')}
+					placeholder={__('Add text…', 'surecart')}
 					value={title}
 					onChange={(title) => setAttributes({ title })}
 					withoutInteractiveFormatting

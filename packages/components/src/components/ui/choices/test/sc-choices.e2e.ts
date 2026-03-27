@@ -18,14 +18,17 @@ describe('sc-choices', () => {
     </sc-choices>
     `);
 
-    const first = await page.find('sc-choice[value="test"]');
-    const second = await page.find('sc-choice[value="test-2"]');
+    let first = await page.find('sc-choice[value="test"]');
+    let second = await page.find('sc-choice[value="test-2"]');
 
     expect(first).toHaveAttribute('checked');
     expect(second).not.toHaveAttribute('checked');
 
     await second.click();
     await page.waitForChanges();
+
+    first = await page.find('sc-choice[value="test"]');
+    second = await page.find('sc-choice[value="test-2"]');
 
     expect(first).not.toHaveAttribute('checked');
     expect(second).toHaveAttribute('checked');
@@ -40,8 +43,8 @@ describe('sc-choices', () => {
     </sc-choices>
     `);
 
-    const first = await page.find('sc-choice[value="test"]');
-    const second = await page.find('sc-choice[value="test-2"]');
+    let first = await page.find('sc-choice[value="test"]');
+    let second = await page.find('sc-choice[value="test-2"]');
 
     expect(first).toHaveAttribute('checked');
     expect(second).not.toHaveAttribute('checked');
@@ -49,11 +52,15 @@ describe('sc-choices', () => {
     await second.triggerEvent('click');
     await page.waitForChanges();
 
+    first = await page.find('sc-choice[value="test"]');
+    second = await page.find('sc-choice[value="test-2"]');
+
     expect(first).toHaveAttribute('checked');
     expect(second).toHaveAttribute('checked');
 
     await first.triggerEvent('click');
     await page.waitForChanges();
+    first = await page.find('sc-choice[value="test"]');
     expect(first).not.toHaveAttribute('checked');
   });
 });

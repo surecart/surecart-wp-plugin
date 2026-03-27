@@ -1,0 +1,62 @@
+.wp-block-surecart-cart-order-bump-template {
+	list-style: none !important;
+	padding: 0;
+	margin: 0;
+	display: flex !important;
+	flex-direction: row !important;
+	flex-wrap: nowrap !important;
+	align-items: stretch !important; // Equal height for all items
+	gap: 0.75em;
+	overflow: hidden; // Default to hidden for single item
+	scroll-snap-type: x mandatory;
+	scroll-behavior: smooth;
+	-webkit-overflow-scrolling: touch;
+	scrollbar-width: none; // Firefox
+	-ms-overflow-style: none; // IE/Edge
+
+	&::-webkit-scrollbar {
+		display: none; // Chrome/Safari
+	}
+
+	// Enable horizontal scroll only when multiple bumps
+	&.has-overflow {
+		overflow-x: auto;
+		overflow-y: hidden;
+	}
+}
+
+.sc-cart-order-bump-item {
+	list-style: none !important;
+	// Default: full width for single item
+	flex: 0 0 100% !important;
+	scroll-snap-align: start;
+	min-width: 0;
+	width: 100% !important;
+	box-sizing: border-box;
+	display: flex; // Make item a flex container to stretch inner content
+
+	// Change the border to match cart line items.
+	> .wp-block-group {
+		border: 1px solid var(--sc-input-border-color);
+		border-radius: 12px;
+	}
+
+	// When multiple bumps, use 85% to show peek of next item (desktop only)
+	.wp-block-surecart-cart-order-bump-template.has-overflow & {
+		@media (min-width: 600px) {
+			flex: 0 0 85% !important;
+			width: 85% !important;
+		}
+	}
+
+	> * {
+		width: 100%;
+		height: 100%; // Stretch inner content to fill height
+	}
+
+	// Remove bullet marker
+	&::marker {
+		content: none;
+		display: none;
+	}
+}

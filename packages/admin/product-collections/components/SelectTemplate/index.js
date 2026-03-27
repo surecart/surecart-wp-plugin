@@ -1,10 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-
-/**
- * External dependencies.
- */
-import { Button, Dropdown, PanelRow } from '@wordpress/components';
+import { Button, Dropdown, PanelRow, Spinner } from '@wordpress/components';
 import { store as coreStore } from '@wordpress/core-data';
 import { useSelect } from '@wordpress/data';
 import { useMemo, useState } from '@wordpress/element';
@@ -12,35 +8,59 @@ import { __, sprintf } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 
 /**
- * Internal dependencies.
+ * Internal dependencies
  */
-import CollectionTemplateForm from './form';
-import { getTemplateTitle } from '../../../products/utility';
+import TemplateForm from './form';
 
-export default function SelectTemplate({ collection, updateCollection }) {
+export default function PostTemplate({ collection, updateCollection }) {
 	// Use internal state instead of a ref to make sure that the component
 	// re-renders when the popover's anchor updates.
 	const [popoverAnchor, setPopoverAnchor] = useState(null);
-
 	// Memoize popoverProps to avoid returning a new object every time.
 	const popoverProps = useMemo(
 		() => ({ anchor: popoverAnchor, placement: 'bottom-end' }),
 		[popoverAnchor]
 	);
 
+	// get the assigned template.
 	const template = useSelect(
 		(select) => {
-			return (
-				select(coreStore).canUser('create', 'templates') &&
-				select(coreStore).getEntityRecord(
-					'postType',
-					'wp_template',
-					collection?.metadata?.wp_template_id ||
-						'surecart/surecart//product-collection'
-				)
+			const {
+				taxonomy,
+				slug,
+				template: currentTemplate,
+			} = collection?.term || {};
+			const { getEntityRecords } = select(coreStore);
+			const selectorArgs = ['postType', 'wp_template', { per_page: -1 }];
+			const templates = getEntityRecords(...selectorArgs) || [];
+			const defaultTemplateId = select(coreStore).getDefaultTemplateId({
+				slug: slug
+					? `taxonomy-${taxonomy}-${slug}`
+					: `taxonomy-${taxonomy}`,
+			});
+
+			// have have set a current template with a slug.
+			if (currentTemplate) {
+				const templateWithSameSlug = templates?.find(
+					(template) => template.slug === currentTemplate
+				);
+
+				if (templateWithSameSlug?.id) {
+					return select(coreStore).getEditedEntityRecord(
+						'postType',
+						'wp_template',
+						templateWithSameSlug.id
+					);
+				}
+			}
+
+			return select(coreStore).getEditedEntityRecord(
+				'postType',
+				'wp_template',
+				defaultTemplateId
 			);
 		},
-		[collection?.metadata?.wp_template_id]
+		[collection?.term?.template, collection?.term?.slug]
 	);
 
 	return (
@@ -58,7 +78,7 @@ export default function SelectTemplate({ collection, updateCollection }) {
 					}
 				`}
 				renderToggle={({ isOpen, onToggle }) => (
-					<CollectionTemplateToggle
+					<PostTemplateToggle
 						isOpen={isOpen}
 						onClick={onToggle}
 						template={template}
@@ -72,7 +92,7 @@ export default function SelectTemplate({ collection, updateCollection }) {
 								padding: 8px;
 							`}
 						>
-							<CollectionTemplateForm
+							<TemplateForm
 								onClose={onClose}
 								template={template}
 								collection={collection}
@@ -109,13 +129,7 @@ export default function SelectTemplate({ collection, updateCollection }) {
 	);
 }
 
-function CollectionTemplateToggle({ isOpen, onClick, template }) {
-	// if (!template) {
-	// 	return <Spinner />;
-	// }
-
-	let templateTitle = getTemplateTitle(template);
-
+function PostTemplateToggle({ isOpen, onClick, template }) {
 	return (
 		<Button
 			css={css`
@@ -128,17 +142,17 @@ function CollectionTemplateToggle({ isOpen, onClick, template }) {
 			variant="tertiary"
 			aria-expanded={isOpen}
 			aria-label={
-				templateTitle
+				template?.title
 					? sprintf(
 							// translators: %s: Name of the currently selected template.
-							__('Select template: %s'),
-							templateTitle
+							__('Select template: %s', 'surecart'),
+							template?.title
 					  )
 					: __('Select template')
 			}
 			onClick={onClick}
 		>
-			{templateTitle ?? __('Default template')}
+			{template?.title}
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				fill="none"

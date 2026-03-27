@@ -7,14 +7,15 @@
 
 ## Properties
 
-| Property         | Attribute         | Description                       | Type                   | Default     |
-| ---------------- | ----------------- | --------------------------------- | ---------------------- | ----------- |
-| `heading`        | `heading`         | Heading to display                | `string`               | `undefined` |
-| `protocol`       | --                | The subscription protocol         | `SubscriptionProtocol` | `undefined` |
-| `query`          | --                | Query to pass to the API          | `object`               | `undefined` |
-| `showCancel`     | `show-cancel`     | Whether to show the cancel button | `boolean`              | `undefined` |
-| `subscription`   | --                | The subscription                  | `Subscription`         | `undefined` |
-| `subscriptionId` | `subscription-id` | The subscription ID               | `string`               | `undefined` |
+| Property                 | Attribute                   | Description                       | Type                   | Default     |
+| ------------------------ | --------------------------- | --------------------------------- | ---------------------- | ----------- |
+| `heading`                | `heading`                   | Heading to display                | `string`               | `undefined` |
+| `protocol`               | --                          | The subscription protocol         | `SubscriptionProtocol` | `undefined` |
+| `query`                  | --                          | Query to pass to the API          | `object`               | `undefined` |
+| `showCancel`             | `show-cancel`               | Whether to show the cancel button | `boolean`              | `undefined` |
+| `subscription`           | --                          | The subscription                  | `Subscription`         | `undefined` |
+| `subscriptionId`         | `subscription-id`           | The subscription ID               | `string`               | `undefined` |
+| `updatePaymentMethodUrl` | `update-payment-method-url` | Update the payment method url     | `string`               | `undefined` |
 
 
 ## Dependencies
@@ -22,7 +23,6 @@
 ### Depends on
 
 - [sc-subscription-status-badge](../../../ui/subscription-status-badge)
-- [sc-format-date](../../../util/format-date)
 - [sc-stacked-list-row](../../../ui/stacked-list-row)
 - [sc-skeleton](../../../ui/skeleton)
 - [sc-subscription-next-payment](../subscription-details)
@@ -40,7 +40,6 @@
 ```mermaid
 graph TD;
   sc-subscription --> sc-subscription-status-badge
-  sc-subscription --> sc-format-date
   sc-subscription --> sc-stacked-list-row
   sc-subscription --> sc-skeleton
   sc-subscription --> sc-subscription-next-payment
@@ -53,22 +52,20 @@ graph TD;
   sc-subscription --> sc-block-ui
   sc-subscription --> sc-cancel-dialog
   sc-subscription --> sc-subscription-reactivate
-  sc-subscription-status-badge --> sc-format-date
   sc-subscription-status-badge --> sc-tag
   sc-subscription-next-payment --> sc-toggle
   sc-subscription-next-payment --> sc-flex
   sc-subscription-next-payment --> sc-skeleton
   sc-subscription-next-payment --> sc-subscription-details
-  sc-subscription-next-payment --> sc-format-number
   sc-subscription-next-payment --> sc-card
   sc-subscription-next-payment --> sc-product-line-item
   sc-subscription-next-payment --> sc-line-item
   sc-subscription-next-payment --> sc-divider
+  sc-subscription-next-payment --> sc-manual-payment-method
   sc-subscription-next-payment --> sc-payment-method
   sc-subscription-next-payment --> sc-icon
   sc-toggle --> sc-icon
   sc-subscription-details --> sc-subscription-status-badge
-  sc-subscription-details --> sc-format-date
   sc-subscription-details --> sc-skeleton
   sc-subscription-details --> sc-format-number
   sc-subscription-details --> sc-flex
@@ -78,14 +75,17 @@ graph TD;
   sc-subscription-details --> sc-card
   sc-subscription-details --> sc-stacked-list
   sc-subscription-details --> sc-stacked-list-row
+  sc-subscription-details --> sc-icon
   sc-dialog --> sc-button
   sc-dialog --> sc-icon
   sc-button --> sc-spinner
-  sc-product-line-item --> sc-format-number
+  sc-product-line-item --> sc-product-line-item-note
   sc-product-line-item --> sc-quantity-select
+  sc-product-line-item --> sc-button
   sc-product-line-item --> sc-icon
-  sc-product-line-item --> sc-line-item
+  sc-product-line-item-note --> sc-icon
   sc-quantity-select --> sc-icon
+  sc-manual-payment-method --> sc-prose
   sc-payment-method --> sc-tooltip
   sc-payment-method --> sc-button
   sc-payment-method --> sc-icon
@@ -102,7 +102,6 @@ graph TD;
   sc-cancel-dialog --> sc-subscription-cancel
   sc-cancel-dialog --> sc-cancel-survey
   sc-cancel-dialog --> sc-cancel-discount
-  sc-subscription-cancel --> sc-format-date
   sc-subscription-cancel --> sc-skeleton
   sc-subscription-cancel --> sc-dashboard-module
   sc-subscription-cancel --> sc-flex
@@ -129,9 +128,7 @@ graph TD;
   sc-subscription-reactivate --> sc-dialog
   sc-subscription-reactivate --> sc-dashboard-module
   sc-subscription-reactivate --> sc-alert
-  sc-subscription-reactivate --> sc-format-number
   sc-subscription-reactivate --> sc-text
-  sc-subscription-reactivate --> sc-format-date
   sc-subscription-reactivate --> sc-button
   sc-subscription-reactivate --> sc-block-ui
   style sc-subscription fill:#f9f,stroke:#333,stroke-width:4px

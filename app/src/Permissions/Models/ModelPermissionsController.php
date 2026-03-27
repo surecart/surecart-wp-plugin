@@ -109,4 +109,21 @@ abstract class ModelPermissionsController {
 		}
 		return true;
 	}
+
+	/**
+	 * Check permissions for specific properties of the request (has keys).
+	 *
+	 * @param \WP_REST_Request $request Full details about the request.
+	 * @param array            $keys Keys to check.
+	 *
+	 * @return boolean
+	 */
+	protected function requestHasKeys( $request, $keys ) {
+		foreach ( (array) $request as $key => $value ) {
+			if ( in_array( $key, $keys, true ) ) {
+				return true;
+			}
+		}
+		return false;
+	}
 }

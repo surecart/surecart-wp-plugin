@@ -1,0 +1,12 @@
+:host {
+  display: block;
+}
+
+sc-divider {
+  margin: 16px 0 !important;
+}
+.conversion-description {
+  color: var(--sc-color-gray-500);
+  font-size: var(--sc-font-size-small);
+  margin-right: var(--sc-spacing-xx-small);
+}

@@ -3,14 +3,20 @@
 namespace SureCart\Models;
 
 use SureCart\Models\Traits\HasCustomer;
+use SureCart\Models\Traits\HasDates;
 use SureCart\Models\Traits\HasPrice;
 use SureCart\Models\Traits\HasPurchase;
+use SureCart\Support\Currency;
+use SureCart\Support\TimeDate;
 
 /**
  * Subscription model
  */
 class Subscription extends Model {
-	use HasCustomer, HasPrice, HasPurchase;
+	use HasCustomer;
+	use HasPrice;
+	use HasPurchase;
+	use HasDates;
 
 	/**
 	 * Rest API endpoint
@@ -25,6 +31,16 @@ class Subscription extends Model {
 	 * @var string
 	 */
 	protected $object_name = 'subscription';
+
+	/**
+	 * Set the current period attribute
+	 *
+	 * @param  object $value Return request properties.
+	 * @return void
+	 */
+	public function setCurrentPeriodAttribute( $value ) {
+		$this->setRelation( 'current_period', $value, Period::class );
+	}
 
 	/**
 	 * Update the model.
@@ -48,10 +64,10 @@ class Subscription extends Model {
 			do_action(
 				'surecart/purchase_updated',
 				$updated->purchase,
-				[
-					'data' => [
-						'object'              => $updated->purchase->toArray(),
-						'previous_attributes' => array_filter(
+				(object) [
+					'data' => (object) [
+						'object'              => (object) $updated->purchase->toArray(),
+						'previous_attributes' => (object) array_filter(
 							[
 								// conditionally have the previous product and quantity as the previous attributes.
 								'product'  => $updated->purchase->product_id !== $existing->purchase->product_id ? ( $existing->purchase->product_id ?? null ) : null,
@@ -184,12 +200,13 @@ class Subscription extends Model {
 			return new \WP_Error( 'not_saved', 'Please create the subscription.' );
 		}
 
-		$restored = \SureCart::request(
-			$this->endpoint . '/' . $this->attributes['id'] . '/restore/',
+		$restored = $this->with( array( 'purchase' ) )
+		->makeRequest(
 			[
 				'method' => 'PATCH',
 				'query'  => $this->query,
-			]
+			],
+			$this->endpoint . '/' . $this->attributes['id'] . '/restore/'
 		);
 
 		if ( is_wp_error( $restored ) ) {
@@ -201,6 +218,11 @@ class Subscription extends Model {
 		$this->fill( $restored );
 
 		$this->fireModelEvent( 'restored' );
+
+		// purchase invoked event.
+		if ( ! empty( $this->purchase ) ) {
+			do_action( 'surecart/purchase_invoked', $this->purchase );
+		}
 
 		return $this;
 	}
@@ -294,7 +316,7 @@ class Subscription extends Model {
 	 * Preview the upcoming invoice.
 	 *
 	 * @param string $args Arguments
-	 * @return $this|\WP_Error
+	 * @return Period|\WP_Error
 	 */
 	protected function upcomingPeriod( $args = [] ) {
 		if ( ! empty( $args['id'] ) ) {
@@ -325,13 +347,11 @@ class Subscription extends Model {
 			return $upcoming_period;
 		}
 
-		$this->resetAttributes();
-
-		$this->fill( $upcoming_period );
+		$upcoming_period = new Period( $upcoming_period );
 
 		$this->fireModelEvent( 'previewedUpcomingPeriod' );
 
-		return $this;
+		return $upcoming_period;
 	}
 
 	/**
@@ -399,7 +419,7 @@ class Subscription extends Model {
 	 */
 	private function checkIfCanBeSwitched() {
 		// updates are not enabled for the account.
-		if ( empty( \SureCart::account()->portal_protocol->subscription_updates_enabled ) ) {
+		if ( empty( \SureCart::account()->customer_portal_protocol->subscription_updates_enabled ) ) {
 			return false;
 		}
 		// already set to canceling.
@@ -439,11 +459,11 @@ class Subscription extends Model {
 		}
 
 		$cancel_window_days = $protocol->cancel_window_days;
-		$now                = (new \DateTime())->format('Y-m-d');
+		$now                = ( new \DateTime() )->format( 'Y-m-d' );
 		$end                = new \DateTime();
 		$end->setTimestamp( $this->attributes['current_period_end_at'] );
 		$end = $end->modify( "-{$cancel_window_days} days" );
-		$end = $end->format('Y-m-d');
+		$end = $end->format( 'Y-m-d' );
 
 		return $now < $end;
 	}
@@ -455,7 +475,7 @@ class Subscription extends Model {
 	 */
 	private function checkIfCanBeCanceled() {
 		// updates are not enabled for the account.
-		if ( empty( \SureCart::account()->portal_protocol->subscription_cancellations_enabled ) ) {
+		if ( empty( \SureCart::account()->customer_portal_protocol->subscription_cancellations_enabled ) ) {
 			return false;
 		}
 
@@ -483,7 +503,7 @@ class Subscription extends Model {
 	 */
 	private function checkIfCanUpdateQuantity() {
 		// quantity changes are not enabled for this account.
-		if ( empty( \SureCart::account()->portal_protocol->subscription_quantity_updates_enabled ) ) {
+		if ( empty( \SureCart::account()->customer_portal_protocol->subscription_quantity_updates_enabled ) ) {
 			return false;
 		}
 		return true;
@@ -500,5 +520,143 @@ class Subscription extends Model {
 		$stat = new Statistic();
 		return $stat->where( $args )->find( 'subscriptions' );
 	}
-}
 
+	/**
+	 * Get the current period start at date.
+	 *
+	 * @return string
+	 */
+	public function getCurrentPeriodStartAtDateAttribute() {
+		return ! empty( $this->current_period_start_at ) ? TimeDate::formatDate( $this->current_period_start_at ) : '';
+	}
+
+	/**
+	 * Get the current period end at date.
+	 *
+	 * @return string
+	 */
+	public function getCurrentPeriodEndAtDateAttribute() {
+		return ! empty( $this->current_period_end_at ) ? TimeDate::formatDate( $this->current_period_end_at ) : '';
+	}
+
+	/**
+	 * Get the current period end at date time.
+	 *
+	 * @return string
+	 */
+	public function getCurrentPeriodEndAtDateTimeAttribute() {
+		return ! empty( $this->current_period_end_at ) ? TimeDate::formatDateAndTime( $this->current_period_end_at ) : '';
+	}
+
+	/**
+	 * Get the start at date.
+	 *
+	 * @return string
+	 */
+	public function getStartAtDateAttribute() {
+		return ! empty( $this->start_at ) ? TimeDate::formatDate( $this->start_at ) : '';
+	}
+
+	/**
+	 * Get the end at date.
+	 *
+	 * @return string
+	 */
+	public function getEndAtDateAttribute() {
+		return ! empty( $this->end_at ) ? TimeDate::formatDate( $this->end_at ) : '';
+	}
+
+	/**
+	 * Get the ended at date.
+	 *
+	 * @return string
+	 */
+	public function getEndedAtDateAttribute() {
+		return ! empty( $this->ended_at ) ? TimeDate::formatDate( $this->ended_at ) : '';
+	}
+
+	/**
+	 * Get the restore at date.
+	 *
+	 * @return string
+	 */
+	public function getRestoreAtDateAttribute() {
+		return ! empty( $this->restore_at ) ? TimeDate::formatDate( $this->restore_at ) : '';
+	}
+
+	/**
+	 * Get the trial end at date.
+	 *
+	 * @return string
+	 */
+	public function getTrialEndAtDateAttribute() {
+		return ! empty( $this->trial_end_at ) ? TimeDate::formatDate( $this->trial_end_at ) : '';
+	}
+
+	/**
+	 * Get the trial end at date time.
+	 *
+	 * @return string
+	 */
+	public function getTrialEndAtAtDateTimeAttribute() {
+		return ! empty( $this->trial_end_at ) ? TimeDate::formatDateAndTime( $this->trial_end_at ) : '';
+	}
+
+	/**
+	 * Get the affiliation expires at date.
+	 *
+	 * @return string
+	 */
+	public function getAffiliationExpiresAtDateAttribute() {
+		return ! empty( $this->affiliation_expires_at ) ? TimeDate::formatDate( $this->affiliation_expires_at ) : '';
+	}
+
+	/**
+	 * Get the affiliation expires at date and time.
+	 *
+	 * @return string
+	 */
+	public function getAffiliationExpiresAtDateTimeAttribute() {
+		return ! empty( $this->affiliation_expires_at ) ? TimeDate::formatDateAndTime( $this->affiliation_expires_at ) : '';
+	}
+
+	/**
+	 * Get the ad hoc display amount.
+	 *
+	 * @return string|null
+	 */
+	public function getAdHocDisplayAmountAttribute() {
+		return $this->ad_hoc_amount ? Currency::format( $this->ad_hoc_amount, $this->currency ) : null;
+	}
+
+	/**
+	 * Get the remaining period text attribute.
+	 *
+	 * @return string
+	 */
+	public function getRemainingPeriodTextAttribute() {
+		if ( empty( $this->remaining_period_count ) ) {
+			return '';
+		}
+
+		return sprintf(
+			// translators: %d is the number of remaining payments.
+			_n(
+				'%d payment remaining',
+				'%d payments remaining',
+				$this->remaining_period_count,
+				'surecart'
+			),
+			$this->remaining_period_count
+		);
+	}
+
+	/**
+	 * Get the can modify attribute.
+	 *
+	 * @return string
+	 */
+	public function getCanModifyAttribute() {
+		return apply_filters( 'surecart/subscription/can_modify', true, $this );
+	}
+}

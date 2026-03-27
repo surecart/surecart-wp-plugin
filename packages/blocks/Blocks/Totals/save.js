@@ -7,8 +7,8 @@ export default function save({ attributes }) {
 	const {
 		collapsedOnDesktop,
 		collapsible,
-		closed_text,
-		open_text,
+		order_summary_text,
+		invoice_summary_text,
 		collapsedOnMobile,
 	} = attributes;
 
@@ -16,8 +16,8 @@ export default function save({ attributes }) {
 		<sc-order-summary
 			collapsible={collapsible ? '1' : false}
 			collapsed-on-desktop={collapsedOnDesktop ? '1' : false}
-			closed-text={closed_text}
-			open-text={open_text}
+			order-summary-text={order_summary_text}
+			invoice-summary-text={invoice_summary_text}
 			collapsed-on-mobile={collapsedOnMobile ? '1' : false}
 		>
 			<InnerBlocks.Content />

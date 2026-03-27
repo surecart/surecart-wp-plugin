@@ -1,15 +1,16 @@
 {
 	"$schema": "https://json.schemastore.org/block.json",
-	"apiVersion": 2,
+	"apiVersion": 3,
 	"name": "surecart/cart-bump-line-item",
 	"title": "Cart Bump Line Item",
 	"description": "Display the cart bump line item",
 	"category": "surecart",
-  "textdomain": "surecart",
+	"textdomain": "surecart",
 	"supports": {
 		"reusable": false,
 		"html": false,
-		"multiple": false
+		"multiple": false,
+		"inserter": false
 	},
 	"ancestor": ["surecart/cart"],
 	"attributes": {

@@ -147,10 +147,7 @@ export default ({
 			);
 		} catch (e) {
 			console.error(e);
-			setError(
-				e?.message ||
-					__('Something went wrong. Please try again.', 'surecart')
-			);
+			setError(e);
 		} finally {
 			setUploading(false);
 		}

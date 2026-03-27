@@ -60,10 +60,14 @@ export default ({ attributes, setAttributes, clientId }) => {
 		ajax_pagination,
 		pagination_auto_scroll,
 		pagination_size,
+		query,
 		ids,
 	} = attributes;
 
 	const apiTokenConnected = scData?.is_account_connected;
+
+	const updateQuery = (newQuery) =>
+		setAttributes({ query: { ...query, ...newQuery } });
 
 	const blockProps = useBlockProps();
 
@@ -204,6 +208,7 @@ export default ({ attributes, setAttributes, clientId }) => {
 
 	useEffect(() => {
 		if (ids.length) {
+			updateQuery({ include: ids });
 			setAttributes({ type: 'custom' });
 		}
 	}, [ids]);
@@ -228,6 +233,8 @@ export default ({ attributes, setAttributes, clientId }) => {
 			<InspectorControls>
 				<PanelBody title={__('Attributes', 'surecart')}>
 					<RangeControl
+						__nextHasNoMarginBottom
+						__next40pxDefaultSize
 						label={__('Columns', 'surecart')}
 						value={columns}
 						onChange={(columns) => setAttributes({ columns })}
@@ -248,6 +255,8 @@ export default ({ attributes, setAttributes, clientId }) => {
 						</Notice>
 					)}
 					<RangeControl
+						__nextHasNoMarginBottom
+						__next40pxDefaultSize
 						label={
 							pagination_enabled
 								? __('Products Per Page', 'surecart')
@@ -261,6 +270,7 @@ export default ({ attributes, setAttributes, clientId }) => {
 					/>
 					<PanelRow>
 						<ToggleControl
+							__nextHasNoMarginBottom
 							label={__('Paginate', 'surecart')}
 							checked={pagination_enabled}
 							onChange={(pagination_enabled) =>
@@ -272,6 +282,7 @@ export default ({ attributes, setAttributes, clientId }) => {
 						<>
 							<PanelRow>
 								<ToggleControl
+									__nextHasNoMarginBottom
 									label={__('Ajax Pagination', 'surecart')}
 									checked={ajax_pagination}
 									onChange={(ajax_pagination) =>
@@ -283,6 +294,7 @@ export default ({ attributes, setAttributes, clientId }) => {
 							{ajax_pagination && (
 								<PanelRow>
 									<ToggleControl
+										__nextHasNoMarginBottom
 										label={__(
 											'Scroll Into View',
 											'surecart'
@@ -304,6 +316,7 @@ export default ({ attributes, setAttributes, clientId }) => {
 					)}
 					<PanelRow>
 						<ToggleControl
+							__nextHasNoMarginBottom
 							label={__('Sort', 'surecart')}
 							help={__(
 								'Allow the user to sort by newest, alphabetical and more.',
@@ -317,6 +330,7 @@ export default ({ attributes, setAttributes, clientId }) => {
 					</PanelRow>
 					<PanelRow>
 						<ToggleControl
+							__nextHasNoMarginBottom
 							label={__('Search', 'surecart')}
 							help={__('Show a search box.', 'surecart')}
 							checked={search_enabled}
@@ -327,6 +341,7 @@ export default ({ attributes, setAttributes, clientId }) => {
 					</PanelRow>
 					<PanelRow>
 						<ToggleControl
+							__nextHasNoMarginBottom
 							label={__('Collection', 'surecart')}
 							help={__('Show collection filtering.', 'surecart')}
 							checked={collection_enabled}
@@ -339,6 +354,7 @@ export default ({ attributes, setAttributes, clientId }) => {
 				<PanelBody>
 					<PanelRow>
 						<UnitControl
+							__next40pxDefaultSize
 							label={__('Pagination Font Size', 'surecart')}
 							onChange={(pagination_size) =>
 								setAttributes({ pagination_size })
@@ -369,6 +385,13 @@ export default ({ attributes, setAttributes, clientId }) => {
 								setAttributes({
 									type: e.target.value,
 								});
+								if (
+									ids?.length &&
+									('all' === e.target.value ||
+										'featured' === e.target.value)
+								) {
+									setAttributes({ ids: [] });
+								}
 							}}
 							choices={[
 								{
@@ -404,8 +427,10 @@ export default ({ attributes, setAttributes, clientId }) => {
 												key={id}
 												id={id}
 												onClear={() =>
-													setAttributes({
-														ids: (ids || []).filter(
+													updateQuery({
+														include: (
+															ids || []
+														).filter(
 															(product_id) =>
 																product_id !==
 																id
@@ -530,11 +555,9 @@ export default ({ attributes, setAttributes, clientId }) => {
 										? pagination_enabled
 										: false
 								}
-								products={
-									!apiTokenConnected
-										? getDummyProducts(limit)
-										: []
-								}
+								{...(!apiTokenConnected
+									? { products: getDummyProducts(limit) }
+									: {})}
 								collectionEnabled={collection_enabled}
 							/>
 						)}

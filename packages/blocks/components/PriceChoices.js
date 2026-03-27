@@ -17,7 +17,7 @@ export default ({ choices, onUpdate, onRemove, description, ...rest }) => {
 					<sc-table-cell slot="head" style={{ width: '70px' }}>
 						{__('Quantity')}
 					</sc-table-cell>
-					<sc-table-cell style={{ textAlign: 'right' }} slot="head">
+					<sc-table-cell style={{ textAlign: 'center' }} slot="head">
 						{__('Total')}
 					</sc-table-cell>
 					<sc-table-cell
@@ -77,7 +77,6 @@ export default ({ choices, onUpdate, onRemove, description, ...rest }) => {
 				`}
 			>
 				<PriceSelector
-					ad_hoc={false}
 					onSelect={({ price_id, variant_id }) =>
 						onUpdate({ id: price_id, variant_id })
 					}

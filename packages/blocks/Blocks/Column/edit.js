@@ -12,7 +12,7 @@ import {
 	BlockVerticalAlignmentToolbar,
 	InspectorControls,
 	useBlockProps,
-	useSetting,
+	useSettings,
 	useInnerBlocksProps as __stableUseInnerBlocksProps,
 	__experimentalUseInnerBlocksProps,
 	store as blockEditorStore,
@@ -51,7 +51,7 @@ function ColumnEdit({ attributes, setAttributes, clientId }) {
 	});
 
 	const units = useCustomUnits({
-		availableUnits: useSetting('spacing.units') || [
+		availableUnits: useSettings('spacing.units') || [
 			'%',
 			'px',
 			'em',
@@ -137,6 +137,7 @@ function ColumnEdit({ attributes, setAttributes, clientId }) {
 
 				<PanelBody title={__('Column settings')}>
 					<UnitControl
+						__next40pxDefaultSize
 						label={__('Width')}
 						labelPosition="edge"
 						__unstableInputWidth="80px"
@@ -151,12 +152,14 @@ function ColumnEdit({ attributes, setAttributes, clientId }) {
 				</PanelBody>
 				<PanelBody title={__('Sticky')}>
 					<ToggleControl
+						__nextHasNoMarginBottom
 						label={__('Sticky', 'surecart')}
 						checked={sticky}
 						onChange={(sticky) => setAttributes({ sticky })}
 					/>
 					{sticky && (
 						<UnitControl
+							__next40pxDefaultSize
 							label={__('Top Offset')}
 							labelPosition="edge"
 							__unstableInputWidth="80px"

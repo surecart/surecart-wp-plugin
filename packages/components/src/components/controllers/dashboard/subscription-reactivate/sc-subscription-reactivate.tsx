@@ -47,7 +47,7 @@ export class ScSubscriptionReactivate {
         },
       });
     } catch (e) {
-      this.error = e?.message || __('Something went wrong', 'surecart');
+      this.error = e?.additional_errors?.length ? e.additional_errors.map(err => err.message).join(', ') : e?.message || __('Something went wrong', 'surecart');
     } finally {
       this.loading = false;
     }
@@ -64,7 +64,7 @@ export class ScSubscriptionReactivate {
       this.scRefresh.emit();
       this.scRequestClose.emit('close-button');
     } catch (e) {
-      this.error = e?.message || __('Something went wrong', 'surecart');
+      this.error = e?.additional_errors?.length ? e.additional_errors.map(err => err.message).join(', ') : e?.message || __('Something went wrong', 'surecart');
     } finally {
       this.busy = false;
     }
@@ -96,8 +96,7 @@ export class ScSubscriptionReactivate {
             <Fragment>
               <div slot="description">
                 <sc-alert open type="warning" title={__('Confirm Charge', 'surecart')}>
-                  {__('You will be charged', 'surecart')}{' '}
-                  <sc-format-number type="currency" value={(this.upcomingPeriod?.checkout as Checkout)?.amount_due} currency={this.subscription?.currency}></sc-format-number>{' '}
+                  {__('You will be charged', 'surecart')} {(this.upcomingPeriod?.checkout as Checkout)?.amount_due_display_amount}{' '}
                   {__('immediately for your subscription.', 'surecart')}
                 </sc-alert>
                 <sc-text
@@ -108,10 +107,7 @@ export class ScSubscriptionReactivate {
                     'margin-top': 'var(--sc-spacing-medium)',
                   }}
                 >
-                  {__('Your subscription will be reactivated and will renew automatically on', 'surecart')}{' '}
-                  <strong>
-                    <sc-format-date type="timestamp" date={this.upcomingPeriod?.end_at} month="long" day="numeric" year="numeric"></sc-format-date>
-                  </strong>
+                  {__('Your subscription will be reactivated and will renew automatically on', 'surecart')} <strong>{this.upcomingPeriod?.end_at_date}</strong>
                 </sc-text>
               </div>
               <sc-flex justifyContent="flex-start">

@@ -9,7 +9,7 @@ import { ScAlert, ScButton, ScForm, ScInput } from '@surecart/components-react';
 import CreateTemplate from '../templates/CreateModel';
 import Box from '../ui/Box';
 
-export default ({ id, setId }) => {
+export default ({ id, onCreateProduct }) => {
 	const [isSaving, setIsSaving] = useState(false);
 	const [name, setName] = useState('');
 	const [error, setError] = useState('');
@@ -39,7 +39,7 @@ export default ({ id, setId }) => {
 				};
 			}
 
-			setId(product.id);
+			onCreateProduct(product.id);
 		} catch (e) {
 			console.error(e);
 			setError(e?.message || __('Something went wrong.', 'surecart'));

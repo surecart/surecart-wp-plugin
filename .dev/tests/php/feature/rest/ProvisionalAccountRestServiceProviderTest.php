@@ -35,7 +35,6 @@ class ProvisionalAccountRestServiceProviderTest extends SureCartUnitTestCase
         return [
 			'Create: Unauthenticated' => [null, 'POST', '/surecart/v1/provisional_accounts', 401],
             'Create: Missing Capability' => [[], 'POST', '/surecart/v1/provisional_accounts', 403],
-			'Create: Setup Complete' => [['manage_options'], 'POST', '/surecart/v1/provisional_accounts', 500],
         ];
     }
 

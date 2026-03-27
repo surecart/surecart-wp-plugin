@@ -1,0 +1,6 @@
+.sc-prose {
+	// keep empty paragraphs from collapsing.
+	p {
+		min-height: 1px;
+	}
+}

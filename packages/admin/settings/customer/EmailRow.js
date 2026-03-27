@@ -34,10 +34,11 @@ export default ({
 						? `#`
 						: scData?.claim_url
 						? scData?.claim_url
-						: `${scData?.app_url}/notification_templates/:${link}/${model}/${action}/edit`
+						: `${scData?.app_url}/notification_templates/:${link}/${model}/${action}/edit?switch_account_id=${scData?.account_id}`
 				}
 				disabled={disabled}
-				target={scData?.claim_url ? '_self' : '_blank'}
+				target="_blank"
+				rel="noopener noreferrer"
 			>
 				{__('Edit', 'surecart')}
 				<ScIcon

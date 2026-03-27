@@ -2,7 +2,7 @@
  * External dependencies.
  */
 import { Component, Fragment, h, Prop } from '@stencil/core';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 
 /**
  * Internal dependencies.
@@ -32,7 +32,9 @@ export class ScLineItemTotal {
   }
 
   hasSubscription(checkout: Checkout) {
-    return (checkout?.line_items?.data || []).some(lineItem => lineItem?.price?.recurring_interval === 'month' && !!lineItem?.price?.recurring_interval && !lineItem?.price?.recurring_period_count);
+    return (checkout?.line_items?.data || []).some(
+      lineItem => lineItem?.price?.recurring_interval === 'month' && !!lineItem?.price?.recurring_interval && !lineItem?.price?.recurring_period_count,
+    );
   }
 
   renderLineItemTitle(checkout: Checkout) {
@@ -51,6 +53,23 @@ export class ScLineItemTotal {
     );
   }
 
+  renderCheckoutFees(checkout: Checkout) {
+    if (!checkout?.checkout_fees?.data?.length) {
+      return null;
+    }
+
+    return (
+      <Fragment>
+        {checkout?.checkout_fees?.data?.map(fee => (
+          <sc-line-item key={fee.id}>
+            <span slot="description">{fee.description}</span>
+            <span slot="price">{fee.display_amount}</span>
+          </sc-line-item>
+        ))}
+      </Fragment>
+    );
+  }
+
   renderLineItemDescription(checkout: Checkout) {
     if (this.total === 'subtotal' && this.hasInstallmentPlan(checkout)) {
       return (
@@ -64,6 +83,55 @@ export class ScLineItemTotal {
       <span slot="description">
         <slot name="description" />
       </span>
+    );
+  }
+
+  // Determine if the currency should be displayed to avoid duplication in the amount display.
+  getCurrencyToDisplay() {
+    const checkout = this.checkout || checkoutState?.checkout;
+    return checkout?.amount_due_default_currency_display_amount?.toLowerCase()?.includes(checkout?.currency?.toLowerCase()) ? '' : checkout?.currency?.toUpperCase();
+  }
+
+  renderConversion() {
+    if (this.total !== 'total') {
+      return null;
+    }
+
+    const checkout = this.checkout || checkoutState?.checkout;
+
+    if (!checkout?.show_converted_total) {
+      return null;
+    }
+
+    // the currency is the same as the current currency.
+    if (checkout?.currency === checkout?.current_currency) {
+      return null;
+    }
+
+    // there is no amount due.
+    if (!checkout?.amount_due) {
+      return null;
+    }
+
+    return (
+      <Fragment>
+        <sc-divider></sc-divider>
+        <sc-line-item style={{ '--price-size': 'var(--sc-font-size-x-large)' }}>
+          <span slot="title">
+            <slot name="charge-amount-description">{__('Payment Total', 'surecart')}</slot>
+          </span>
+          <span slot="price">
+            {this.getCurrencyToDisplay() && <span class="currency-label">{this.getCurrencyToDisplay()}</span>}
+            {checkout?.amount_due_default_currency_display_amount}
+          </span>
+        </sc-line-item>
+        <sc-line-item>
+          <span slot="description" class="conversion-description">
+            {/* translators: %s is the currency code */}
+            {sprintf(__('Your payment will be processed in %s.', 'surecart'), checkout?.currency?.toUpperCase())}
+          </span>
+        </sc-line-item>
+      </Fragment>
     );
   }
 
@@ -97,18 +165,16 @@ export class ScLineItemTotal {
               )}
             </span>
             <span slot="price">
-              <sc-total order={checkout} total={this.total}></sc-total>
+              <sc-total total={this.total} checkout={checkout}></sc-total>
             </span>
           </sc-line-item>
 
           {!!checkout.trial_amount && (
             <sc-line-item>
               <span slot="description">
-                <slot name="free-trial-description">{__('Free Trial', 'surecart')}</slot>
+                <slot name="free-trial-description">{__('Trial', 'surecart')}</slot>
               </span>
-              <span slot="price">
-                <sc-format-number type="currency" value={checkout.trial_amount} currency={checkout.currency} />
-              </span>
+              <span slot="price">{checkout?.trial_display_amount}</span>
             </sc-line-item>
           )}
 
@@ -123,10 +189,10 @@ export class ScLineItemTotal {
               </span>
             )}
 
-            <span slot="price">
-              <sc-format-number type="currency" currency={checkout?.currency} value={checkout?.amount_due}></sc-format-number>
-            </span>
+            <span slot="price">{checkout?.amount_due_display_amount}</span>
           </sc-line-item>
+
+          {this.renderConversion()}
         </div>
       );
     }
@@ -136,11 +202,22 @@ export class ScLineItemTotal {
         {this.total === 'subtotal' && this.hasInstallmentPlan(checkout) && (
           <sc-line-item style={this.size === 'large' ? { '--price-size': 'var(--sc-font-size-x-large)' } : {}}>
             <span slot="description">
-              <slot name="total-payments-description">{__('Total Installment Payments', 'surecart')}</slot>
+              {!!checkout?.discount_amount ? (
+                <sc-tooltip
+                  class="total-payments-tooltip"
+                  type="text"
+                  text={__('This is the total of all installment payments at full price, before any discounts are applied.', 'surecart')}
+                  width="275px"
+                >
+                  <slot name="total-payments-description">{__('Total Installments', 'surecart')}</slot> {__('(before discounts)', 'surecart')}
+                  <sc-icon name="info" aria-hidden="true"></sc-icon>
+                  <sc-visually-hidden>{__('This is the total of all installment payments at full price, before any discounts are applied.', 'surecart')}</sc-visually-hidden>
+                </sc-tooltip>
+              ) : (
+                <slot name="total-payments-description">{__('Total Installments', 'surecart')}</slot>
+              )}
             </span>
-            <span slot="price">
-              <sc-format-number type="currency" value={checkout?.full_amount} currency={checkout?.currency || 'usd'} />
-            </span>
+            <span slot="price">{checkout?.full_display_amount}</span>
           </sc-line-item>
         )}
 
@@ -148,12 +225,13 @@ export class ScLineItemTotal {
           {this.renderLineItemTitle(checkout)}
           {this.renderLineItemDescription(checkout)}
           <span slot="price">
-            {!!checkout?.total_savings_amount && this.total === 'total' && (
-              <sc-format-number class="scratch-price" type="currency" value={-checkout?.total_savings_amount + checkout?.total_amount} currency={checkout?.currency || 'usd'} />
-            )}
-            <sc-total class="total-price" order={checkout} total={this.total}></sc-total>
+            {!!checkout?.total_savings_amount && this.total === 'total' && <span class="scratch-price">{checkout?.total_scratch_display_amount}</span>}
+            <sc-total class="total-price" total={this.total} checkout={checkout}></sc-total>
           </span>
         </sc-line-item>
+
+        {this.renderConversion()}
+        {this.total === 'subtotal' && this.renderCheckoutFees(checkout)}
       </Fragment>
     );
   }

@@ -17,13 +17,13 @@ import { store as noticesStore } from '@wordpress/notices';
 import Error from '../../../../components/Error';
 import { addQueryArgs } from '@wordpress/url';
 import { useEffect } from 'react';
-import { formatTime } from '../../../../util/time';
 
 export default ({ open, onRequestClose, subscription }) => {
 	const id = useSelect((select) => select(dataStore).selectPageId());
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(false);
-	const { createSuccessNotice } = useDispatch(noticesStore);
+	const { createSuccessNotice, createErrorNotice } =
+		useDispatch(noticesStore);
 	const { invalidateResolutionForStore } = useDispatch(coreStore);
 	const [restoreAt, setRestoreAt] = useState(new Date());
 
@@ -130,9 +130,7 @@ export default ({ open, onRequestClose, subscription }) => {
 								'This subscription is going to be paused on %s. When would you like the subscription to be restored?',
 								'surecart '
 							),
-							formatTime(subscription?.current_period_end_at, {
-								dateStyle: 'medium',
-							})
+							subscription?.current_period_end_at_date
 						)}
 					</ScAlert>
 				)}

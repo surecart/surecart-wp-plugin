@@ -35,6 +35,7 @@
  - [sc-downloads-list](../../controllers/dashboard/sc-downloads-list)
  - [sc-fulfillments](../../controllers/dashboard/fulfillments)
  - [sc-invoices-list](../../controllers/dashboard/invoices-list)
+ - [sc-license](../../controllers/dashboard/sc-license)
  - [sc-licenses-list](../../controllers/dashboard/sc-licenses-list)
  - [sc-login-form](../../controllers/login)
  - [sc-mollie-add-method](../sc-mollie-add-method)
@@ -44,6 +45,7 @@
  - [sc-password-nag](../../controllers/dashboard/sc-password-nag)
  - [sc-payment](../../controllers/checkout-form/payment)
  - [sc-payment-method-choice](../../processors/sc-payment-method-choice)
+ - [sc-payment-method-details](../sc-payment-method-details)
  - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
  - [sc-purchase-downloads-list](../purchase-downloads-list)
  - [sc-subscription](../../controllers/dashboard/subscription)
@@ -70,6 +72,7 @@ graph TD;
   sc-downloads-list --> sc-card
   sc-fulfillments --> sc-card
   sc-invoices-list --> sc-card
+  sc-license --> sc-card
   sc-licenses-list --> sc-card
   sc-login-form --> sc-card
   sc-mollie-add-method --> sc-card
@@ -79,6 +82,7 @@ graph TD;
   sc-password-nag --> sc-card
   sc-payment --> sc-card
   sc-payment-method-choice --> sc-card
+  sc-payment-method-details --> sc-card
   sc-payment-methods-list --> sc-card
   sc-purchase-downloads-list --> sc-card
   sc-subscription --> sc-card

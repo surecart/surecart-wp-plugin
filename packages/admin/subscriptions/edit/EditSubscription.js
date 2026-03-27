@@ -1,5 +1,4 @@
 /** @jsx jsx */
-import useEntity from '../../hooks/useEntity';
 import Logo from '../../templates/Logo';
 import SaveButton from '../../templates/SaveButton';
 import UpdateModel from '../../templates/UpdateModel';
@@ -7,6 +6,7 @@ import PaymentMethod from './modules/PaymentMethod';
 import Price from './modules/Price';
 import Trial from './modules/Trial';
 import UpcomingPeriod from './modules/UpcomingPeriod';
+import Customer from '../show/modules/Customer';
 import { css, jsx } from '@emotion/react';
 import {
 	ScBreadcrumb,
@@ -34,6 +34,7 @@ export default () => {
 	const [loadingUpcoming, setLoadingUpcoming] = useState(false);
 	const [skipProration, setSkipProration] = useState(false);
 	const [savingSubscription, setSavingSubscription] = useState(false);
+	const [refreshPriceVersion, setRefreshPriceVersion] = useState(false);
 	const [updateBehavior, setUpdateBehavior] = useState('pending');
 	const { editEntityRecord } = useDispatch(coreStore);
 
@@ -51,6 +52,8 @@ export default () => {
 						'current_period.checkout',
 						'discount',
 						'discount.coupon',
+						'customer',
+						'customer.balances',
 					],
 				},
 			];
@@ -87,6 +90,12 @@ export default () => {
 		skipProration,
 		updateBehavior,
 	]);
+
+	useEffect(() => {
+		if (subscription?.id && refreshPriceVersion) {
+			onSubmit();
+		}
+	}, [refreshPriceVersion]);
 
 	const fetchUpcomingPeriod = async () => {
 		setLoadingUpcoming(true);
@@ -149,6 +158,8 @@ export default () => {
 			price,
 			variant,
 			payment_method,
+			manual_payment,
+			manual_payment_method,
 		} = subscription;
 
 		return apiFetch({
@@ -161,6 +172,7 @@ export default () => {
 					skip_proration: skipProration,
 					update_behavior: updateBehavior,
 					skip_product_group_validation: true,
+					refresh_price_version: refreshPriceVersion,
 					expand: [
 						'period.checkout',
 						'checkout.line_items',
@@ -176,7 +188,13 @@ export default () => {
 				...(ad_hoc_amount ? { ad_hoc_amount } : {}),
 				...(cancel_at_period_end ? { cancel_at_period_end } : {}),
 				...(discount ? { discount } : {}),
-				...(payment_method ? { payment_method } : {}),
+				...(payment_method
+					? { payment_method }
+					: { payment_method: null }),
+				...(manual_payment_method
+					? { manual_payment_method }
+					: { manual_payment_method: null }),
+				manual_payment,
 				trial_end_at,
 				quantity,
 				purge_pending_update: true,
@@ -241,7 +259,21 @@ export default () => {
 				</div>
 			}
 			button={
-				<ScFlex alignItems="center">
+				<div
+					css={css`
+						display: flex;
+						gap: var(
+							--sc-flex-column-gap,
+							var(--sc-spacing-x-small)
+						);
+						align-items: center;
+
+						// small mobile screens.
+						@media screen and (max-width: 600px) {
+							flex-direction: column;
+						}
+					`}
+				>
 					{!subscription?.finite && (
 						<>
 							<ScSwitch
@@ -267,10 +299,15 @@ export default () => {
 							</SaveButton>
 						</>
 					)}
-				</ScFlex>
+				</div>
 			}
 			sidebar={
 				<>
+					<Customer
+						customer={subscription?.customer}
+						loading={!hasLoadedSubscription}
+					/>
+
 					<UpcomingPeriod
 						upcoming={upcoming}
 						loading={!hasLoadedSubscription || loadingUpcoming}
@@ -288,13 +325,18 @@ export default () => {
 					upcoming={upcoming}
 					loading={loadingUpcoming}
 					priceId={subscription?.price?.id || subscription?.price}
+					refresh={refreshPriceVersion}
+					setRefresh={setRefreshPriceVersion}
+					setUpdateBehavior={setUpdateBehavior}
+					setSkipProration={setSkipProration}
 				/>
 				<Trial
 					subscription={subscription}
 					updateSubscription={editSubscription}
 					loading={!hasLoadedSubscription}
 				/>
-				{subscription?.payment_method && (
+				{(subscription?.payment_method ||
+					subscription?.manual_payment) && (
 					<PaymentMethod
 						subscription={subscription}
 						updateSubscription={editSubscription}

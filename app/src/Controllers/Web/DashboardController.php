@@ -17,7 +17,7 @@ class DashboardController {
 	public function getEnabledNavigation( $id ) {
 		return array_values(
 			array_filter(
-				[ 'orders', 'subscriptions', 'downloads', 'account', 'billing' ],
+				[ 'orders', 'invoices', 'subscriptions', 'downloads', 'account', 'billing' ],
 				function( $name ) use ( $id ) {
 					if ( 'billing' === $name ) {
 						if ( ! get_post_meta( $id, '_surecart_dashboard_navigation_billing', true ) ) {
@@ -42,7 +42,7 @@ class DashboardController {
 	public function getData() {
 		return [
 			'show_logo'          => get_post_meta( get_the_ID(), '_surecart_dashboard_show_logo', true ),
-			'logo_url'           => \SureCart::account()->brand->logo_url,
+			'logo_url'           => \SureCart::theme()->logoUrl() ?: null,
 			'logo_width'         => get_post_meta( get_the_ID(), '_surecart_dashboard_logo_width', true ),
 			'current_url'        => ( is_ssl() ? 'https://' : 'http://' ) . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'],
 			'user'               => wp_get_current_user(),
@@ -130,6 +130,18 @@ class DashboardController {
 						[
 							'action' => 'index',
 							'model'  => 'order',
+						],
+						$dashboard_url
+					),
+				],
+				'invoices'        => [
+					'icon_name' => 'inbox',
+					'name'      => __( 'Invoices', 'surecart' ),
+					'active'    => $this->isActive( 'invoice' ),
+					'href'      => add_query_arg(
+						[
+							'action' => 'index',
+							'model'  => 'invoice',
 						],
 						$dashboard_url
 					),

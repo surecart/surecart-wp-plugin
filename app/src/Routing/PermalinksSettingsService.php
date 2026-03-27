@@ -31,9 +31,10 @@ class PermalinksSettingsService {
 		return wp_parse_args(
 			$settings,
 			[
-				'buy_page'        => _x( 'buy', 'buy-page-slug', 'surecart' ),
-				'product_page'    => _x( 'products', 'product-page-slug', 'surecart' ),
-				'collection_page' => _x( 'collections', 'collection-page-slug', 'surecart' ),
+				'buy_page'        => 'buy',
+				'product_page'    => 'products',
+				'collection_page' => 'collections',
+				'upsell_page'     => 'offer',
 			]
 		);
 	}
@@ -41,14 +42,39 @@ class PermalinksSettingsService {
 	/**
 	 * Update the permalink settings.
 	 *
-	 * @param array $value The value to update.
+	 * @param string $key   The key to update.
+	 * @param array  $value The value to update.
 	 *
 	 * @return bool
 	 */
 	public function updatePermalinkSettings( $key, $value ) {
-		$this->permalinks[ $key ] = $value;
+		$this->permalinks[ $key ] = $this->sanitize( $value );
 		return update_option( 'surecart_permalinks', $this->permalinks );
 	}
+
+	/**
+	 * Sanitize the permalink.
+	 *
+	 * @param string $value The value to sanitize.
+	 *
+	 * @return string
+	 */
+	public function sanitize( $value ): string {
+		global $wpdb;
+
+		$value = $wpdb->strip_invalid_text_for_column( $wpdb->options, 'option_value', $value ?? '' );
+
+		if ( is_wp_error( $value ) ) {
+			$value = '';
+		}
+
+		$value = sanitize_url( trim( $value ) );
+		$value = str_replace( 'http://', '', $value );
+		$value = str_replace( 'https://', '', $value );
+		$value = ltrim( $value, '/' );
+		return untrailingslashit( $value );
+	}
+
 
 	/**
 	 * Get get the base for a slug.

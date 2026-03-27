@@ -30,7 +30,7 @@ class Block extends BaseBlock {
 		}
 
 		// no ad_hoc prices.
-		if ( ! count( $product->activeAdHocPrices() ) ) {
+		if ( ! count( $product->active_ad_hoc_prices ) ) {
 			return false;
 		}
 
@@ -52,7 +52,7 @@ class Block extends BaseBlock {
 						'amounts'       => $amounts,
 						'ad_hoc_amount' => null,
 						'custom_amount' => null,
-						'selectedPrice' => ( $product->activePrices() || array() )[0] ?? null,
+						'selectedPrice' => ( $product->active_prices || array() )[0] ?? null,
 					),
 				),
 			)
@@ -60,7 +60,9 @@ class Block extends BaseBlock {
 
 		[ 'styles' => $styles, 'classes' => $classes ] = BlockStyleAttributes::getClassesAndStylesFromAttributes( $attributes );
 
-		$styles .= '--sc-input-label-color: ' . $attributes['textColor'] . '; ';
+		if ( ! empty( $attributes['textColor'] ) ) {
+			$styles .= '--sc-input-label-color: ' . $attributes['textColor'] . '; ';
+		}
 
 		$wrapper_attributes = get_block_wrapper_attributes(
 			array(
@@ -86,14 +88,14 @@ class Block extends BaseBlock {
 	 * @return array
 	 */
 	public function getInitialLineItems( $product, $amounts ) {
-		if ( empty( $product->activeAdHocPrices()[0] ) ) {
+		if ( empty( $product->active_ad_hoc_prices[0] ) ) {
 			return array();
 		}
 
 		return array(
 			array(
-				'price'         => $product->activeAdHocPrices()[0]->id,
-				'ad_hoc_amount' => $product->activeAdHocPrices()[0]->amount,
+				'price'         => $product->active_ad_hoc_prices[0]->id,
+				'ad_hoc_amount' => $product->active_ad_hoc_prices[0]->amount,
 				'quantity'      => 1,
 			),
 		);

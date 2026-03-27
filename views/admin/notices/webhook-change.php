@@ -24,7 +24,7 @@
 			'surecart'
 		);
 		?>
-		<a href="https://surecart.com/docs/" target="_blank" class="learn-more-safe-mode">
+		<a href="https://surecart.com/docs/change-surecart-url/" target="_blank" class="learn-more-safe-mode">
 			<?php esc_html_e( 'Learn More', 'surecart' ); ?>
 		</a>
 	</p>

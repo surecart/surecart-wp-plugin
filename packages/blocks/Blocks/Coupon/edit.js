@@ -35,6 +35,7 @@ export default ({ attributes, setAttributes }) => {
 				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
 						<ToggleControl
+							__nextHasNoMarginBottom
 							label={__('Collapsed', 'surecart')}
 							checked={collapsed}
 							onChange={(collapsed) =>
@@ -44,6 +45,8 @@ export default ({ attributes, setAttributes }) => {
 					</PanelRow>
 					<PanelRow>
 						<TextControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							label={__('Label', 'surecart')}
 							value={text}
 							onChange={(text) => setAttributes({ text })}
@@ -51,6 +54,8 @@ export default ({ attributes, setAttributes }) => {
 					</PanelRow>
 					<PanelRow>
 						<TextControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							label={__('Placeholder', 'surecart')}
 							value={placeholder}
 							onChange={(placeholder) =>
@@ -60,6 +65,8 @@ export default ({ attributes, setAttributes }) => {
 					</PanelRow>
 					<PanelRow>
 						<TextControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							label={__('Button Text', 'surecart')}
 							value={button_text}
 							onChange={(button_text) =>

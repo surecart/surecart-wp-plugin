@@ -29,12 +29,14 @@
 
 ### Used by
 
+ - [sc-line-item-total](../../controllers/checkout-form/line-item-total)
  - [sc-payment-method](../sc-payment-method)
  - [sc-verification-code](../verification-code)
 
 ### Graph
 ```mermaid
 graph TD;
+  sc-line-item-total --> sc-tooltip
   sc-payment-method --> sc-tooltip
   sc-verification-code --> sc-tooltip
   style sc-tooltip fill:#f9f,stroke:#333,stroke-width:4px

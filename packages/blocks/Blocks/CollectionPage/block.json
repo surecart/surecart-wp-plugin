@@ -1,5 +1,5 @@
 {
-	"apiVersion": 2,
+	"apiVersion": 3,
 	"name": "surecart/collection-page",
 	"title": "Product Collection",
 	"description": "A Product collection page for SureCart",
@@ -10,7 +10,8 @@
 	"supports": {
 		"reusable": false,
 		"html": false,
-		"className": false
+		"className": false,
+		"inserter": false
 	},
 	"attributes": {}
 }

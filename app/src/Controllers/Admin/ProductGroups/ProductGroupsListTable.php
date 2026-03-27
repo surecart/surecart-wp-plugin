@@ -14,7 +14,7 @@ class ProductGroupsListTable extends ListTable {
 	/**
 	 * Prepare the items for the table to process
 	 *
-	 * @return Void
+	 * @return void
 	 */
 	public function prepare_items() {
 		$columns  = $this->get_columns();
@@ -63,9 +63,8 @@ class ProductGroupsListTable extends ListTable {
 			'all'      => __( 'All', 'surecart' ),
 		];
 
-		$link = \SureCart::getUrl()->index( 'product_groups' );
-
 		foreach ( $stati as $status => $label ) {
+			$link                    = \SureCart::getUrl()->index( 'product_groups' );
 			$current_link_attributes = '';
 
 			if ( ! empty( $_GET['status'] ) ) {
@@ -77,6 +76,8 @@ class ProductGroupsListTable extends ListTable {
 			}
 
 			$link = add_query_arg( 'status', $status, $link );
+
+			$link = esc_url( $link );
 
 			$status_links[ $status ] = "<a href='$link'$current_link_attributes>" . $label . '</a>';
 		}
@@ -99,11 +100,14 @@ class ProductGroupsListTable extends ListTable {
 	 * @return Array
 	 */
 	public function get_columns() {
-		return [
-			'name'    => __( 'Name', 'surecart' ),
-			'status'  => __( 'Status', 'surecart' ),
-			'created' => __( 'Created', 'surecart' ),
-		];
+		return array_merge(
+			[
+				'name'    => __( 'Name', 'surecart' ),
+				'status'  => __( 'Status', 'surecart' ),
+				'created' => __( 'Created', 'surecart' ),
+			],
+			parent::get_columns()
+		);
 	}
 
 	/**
@@ -162,17 +166,6 @@ class ProductGroupsListTable extends ListTable {
 	}
 
 	/**
-	 * Handle the total column
-	 *
-	 * @param \SureCart\Models\Order $order Checkout Session Model.
-	 *
-	 * @return string
-	 */
-	public function column_date( $order ) {
-		return "<sc-format-date date='$order->created' type='timestamp'></sc-format-date>";
-	}
-
-	/**
 	 * Handle the status
 	 *
 	 * @param \SureCart\Models\Order $order Order Model.
@@ -192,7 +185,7 @@ class ProductGroupsListTable extends ListTable {
 		<?php
 		echo $this->row_actions(
 			[
-				'view' => '<a href="' . esc_url( \SureCart::getUrl()->show( 'product_group', $group->id ) ) . '" aria-label="' . esc_attr( 'View Product Group', 'surecart' ) . '">' . __( 'View', 'surecart' ) . '</a>',
+				'view' => '<a href="' . esc_url( \SureCart::getUrl()->show( 'product_group', $group->id ) ) . '" aria-label="' . esc_attr__( 'View Product Group', 'surecart' ) . '">' . __( 'View', 'surecart' ) . '</a>',
 			],
 		);
 		return ob_get_clean();

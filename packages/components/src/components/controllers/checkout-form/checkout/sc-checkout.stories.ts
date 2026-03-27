@@ -121,7 +121,7 @@ Default.parameters = {
             publishable_key: 'pk_test_51FrVhTKIxBDlEhovnzFUjE1K3e8s9QInYW4a2S1BrYYgePmNIFZUCSvUY90MmD10PNh0ZxYFoxkW6P1xsfPofCYG00JTdSKWFO',
           },
         },
-        return_url: 'http://localhost:8888/one-time/',
+        external_url: 'http://localhost:8888/one-time/',
         status: 'draft',
         subtotal_amount: 2400,
         tax_amount: 0,

@@ -1,0 +1,10 @@
+.wp-block-surecart-product-media {
+	text-align: center;
+
+	img,
+	video {
+		max-width: 100%;
+		height: auto;
+		object-fit: contain;
+	}
+}

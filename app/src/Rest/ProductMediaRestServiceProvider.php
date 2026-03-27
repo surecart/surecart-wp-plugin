@@ -29,7 +29,28 @@ class ProductMediaRestServiceProvider extends RestServiceProvider implements Res
 	 *
 	 * @var array
 	 */
-	protected $methods = [ 'index', 'create', 'find', 'edit','delete' ];
+	protected $methods = [ 'index', 'create', 'find', 'edit', 'delete' ];
+
+	/**
+	 * Register Additional REST Routes
+	 *
+	 * @return void
+	 */
+	public function registerRoutes() {
+		register_rest_route(
+			"$this->name/v$this->version",
+			$this->endpoint . '/(?P<id>\S+)/download/',
+			[
+				[
+					'methods'             => \WP_REST_Server::EDITABLE,
+					'callback'            => $this->callback( $this->controller, 'download' ),
+					'permission_callback' => [ $this, 'update_item_permissions_check' ],
+				],
+				// Register our schema callback.
+				'schema' => [ $this, 'get_item_schema' ],
+			]
+		);
+	}
 
 	/**
 	 * Get our sample schema for a post.
@@ -97,7 +118,7 @@ class ProductMediaRestServiceProvider extends RestServiceProvider implements Res
 				'description' => esc_html__( 'A limit on the number of items to be returned, between 1 and 100.', 'surecart' ),
 				'type'        => 'integer',
 			],
-			'limit'    => [
+			'limit'       => [
 				'description' => esc_html__( 'A limit on the number of records returned', 'surecart' ),
 				'type'        => 'integer',
 			],

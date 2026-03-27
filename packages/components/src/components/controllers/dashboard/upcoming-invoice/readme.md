@@ -25,14 +25,13 @@
 
 ### Depends on
 
-- [sc-format-date](../../../util/format-date)
 - [sc-skeleton](../../../ui/skeleton)
-- [sc-format-number](../../../util/format-number)
 - [sc-product-line-item](../../../ui/product-line-item)
 - [sc-line-item](../../../ui/line-item)
 - [sc-coupon-form](../../../ui/coupon-form)
 - [sc-divider](../../../ui/divider)
 - [sc-flex](../../../ui/flex)
+- [sc-manual-payment-method](../../../ui/sc-manual-payment-method)
 - [sc-payment-method](../../../ui/sc-payment-method)
 - [sc-icon](../../../ui/icon)
 - [sc-alert](../../../ui/alert)
@@ -46,14 +45,13 @@
 ### Graph
 ```mermaid
 graph TD;
-  sc-upcoming-invoice --> sc-format-date
   sc-upcoming-invoice --> sc-skeleton
-  sc-upcoming-invoice --> sc-format-number
   sc-upcoming-invoice --> sc-product-line-item
   sc-upcoming-invoice --> sc-line-item
   sc-upcoming-invoice --> sc-coupon-form
   sc-upcoming-invoice --> sc-divider
   sc-upcoming-invoice --> sc-flex
+  sc-upcoming-invoice --> sc-manual-payment-method
   sc-upcoming-invoice --> sc-payment-method
   sc-upcoming-invoice --> sc-icon
   sc-upcoming-invoice --> sc-alert
@@ -63,24 +61,27 @@ graph TD;
   sc-upcoming-invoice --> sc-button
   sc-upcoming-invoice --> sc-text
   sc-upcoming-invoice --> sc-block-ui
-  sc-product-line-item --> sc-format-number
+  sc-product-line-item --> sc-product-line-item-note
   sc-product-line-item --> sc-quantity-select
+  sc-product-line-item --> sc-button
   sc-product-line-item --> sc-icon
-  sc-product-line-item --> sc-line-item
+  sc-product-line-item-note --> sc-icon
   sc-quantity-select --> sc-icon
+  sc-button --> sc-spinner
   sc-coupon-form --> sc-skeleton
   sc-coupon-form --> sc-line-item
   sc-coupon-form --> sc-tag
   sc-coupon-form --> sc-format-number
+  sc-coupon-form --> sc-icon
   sc-coupon-form --> sc-input
   sc-coupon-form --> sc-button
   sc-coupon-form --> sc-alert
   sc-coupon-form --> sc-block-ui
   sc-input --> sc-form-control
   sc-form-control --> sc-visually-hidden
-  sc-button --> sc-spinner
   sc-alert --> sc-icon
   sc-block-ui --> sc-spinner
+  sc-manual-payment-method --> sc-prose
   sc-payment-method --> sc-tooltip
   sc-payment-method --> sc-button
   sc-payment-method --> sc-icon

@@ -1,40 +1,66 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 
 import {
+	ScButton,
+	ScDropdown,
+	ScIcon,
 	ScInput,
+	ScMenu,
+	ScMenuItem,
 	ScPremiumTag,
 	ScPriceInput,
 	ScSwitch,
-	ScUpgradeRequired,
 } from '@surecart/components-react';
 
+const SETUP_AMOUNT_TYPES = {
+	fee: __('Setup fee', 'surecart'),
+	discount: __('Setup discount', 'surecart'),
+};
+
 export default ({ price, updatePrice }) => {
+	const amountType = price?.setup_fee_amount < 0 ? 'discount' : 'fee';
+
 	return (
-		<ScUpgradeRequired
-			required={!scData?.entitlements?.subscription_setup_fees}
+		<div
 			css={css`
-				display: grid;
-				gap: var(--sc-spacing-small);
+				> *:not(:last-child) {
+					margin-bottom: var(--sc-spacing-medium);
+				}
 			`}
 		>
 			<ScSwitch
-				checked={price.setup_fee_enabled}
+				checked={price?.setup_fee_enabled}
 				onScChange={(e) =>
-					updatePrice({ setup_fee_enabled: e.target.checked })
+					updatePrice({
+						setup_fee_enabled: e.target.checked,
+						setup_fee_amount: 0,
+						...(!e.target.checked && {
+							setup_fee_name: null,
+							setup_fee_amount: 0,
+						}),
+					})
 				}
 			>
-				{__('Setup fee', 'surecart')}
+				{__('Setup fee or discount', 'surecart')}
+
 				{!scData?.entitlements?.subscription_setup_fees && (
 					<>
 						{' '}
 						<ScPremiumTag />
 					</>
 				)}
+
+				<span slot="description">
+					{__(
+						'Charge an initial fee or offer a discount for the first payment.',
+						'surecart'
+					)}
+				</span>
 			</ScSwitch>
 
-			{price.setup_fee_enabled && (
+			{price?.setup_fee_enabled && (
 				<div
 					css={css`
 						display: flex;
@@ -46,29 +72,80 @@ export default ({ price, updatePrice }) => {
 					`}
 				>
 					<ScInput
-						label={__('Setup fee name', 'surecart')}
+						label={sprintf(
+							__('%s name', 'surecart'),
+							SETUP_AMOUNT_TYPES[amountType]
+						)}
 						value={price?.setup_fee_name}
-						onScInput={(e) => {
+						onScInput={(e) =>
 							updatePrice({
 								setup_fee_name: e.target.value,
-							});
-						}}
+							})
+						}
 						name="name"
 						required
 					/>
 					<ScPriceInput
-						label={__('Setup fee amount', 'surecart')}
+						label={SETUP_AMOUNT_TYPES[amountType]}
 						currencyCode={price?.currency || scData.currency_code}
-						value={price?.setup_fee_amount}
-						onScInput={(e) =>
+						value={Math.abs(price?.setup_fee_amount)}
+						max={amountType === 'fee' ? null : price?.amount}
+						onScInput={(e) => {
 							updatePrice({
-								setup_fee_amount: e.target.value,
-							})
-						}
+								setup_fee_amount:
+									amountType === 'fee'
+										? Math.abs(e.target.value)
+										: -Math.abs(e.target.value),
+							});
+						}}
 						required
-					/>
+					>
+						<ScDropdown slot="suffix" placement="bottom-end">
+							<ScButton
+								type="text"
+								slot="trigger"
+								css={css`
+									&::part(label) {
+										padding-right: 0;
+									}
+								`}
+							>
+								<span>
+									{amountType === 'fee'
+										? __('Fee', 'surecart')
+										: __('Discount', 'surecart')}
+								</span>
+								<ScIcon name="chevron-down" />
+							</ScButton>
+							<ScMenu>
+								<ScMenuItem
+									onClick={() =>
+										updatePrice({
+											setup_fee_amount: Math.abs(
+												price.setup_fee_amount
+											),
+										})
+									}
+								>
+									{__('Fee', 'surecart')}
+								</ScMenuItem>
+								<ScMenuItem
+									onClick={() =>
+										updatePrice({
+											setup_fee_amount: -Math.abs(
+												price.setup_fee_amount
+											),
+											setup_fee_trial_enabled: true,
+										})
+									}
+								>
+									{__('Discount', 'surecart')}
+								</ScMenuItem>
+							</ScMenu>
+						</ScDropdown>
+					</ScPriceInput>
 				</div>
 			)}
-		</ScUpgradeRequired>
+		</div>
 	);
 };

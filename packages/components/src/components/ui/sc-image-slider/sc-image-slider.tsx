@@ -1,6 +1,7 @@
 import { Component, Prop, State, Watch, h } from '@stencil/core';
 import { __, sprintf } from '@wordpress/i18n';
-import Swiper, { Navigation } from 'swiper';
+import Swiper from 'swiper';
+import { Navigation } from 'swiper/modules';
 
 @Component({
   tag: 'sc-image-slider',

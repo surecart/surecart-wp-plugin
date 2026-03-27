@@ -3,14 +3,12 @@ import { css, jsx, Global } from '@emotion/core';
 
 import { __ } from '@wordpress/i18n';
 import ErrorBoundary from '../components/error-boundary';
-import admin from '../styles/admin';
 
 export default ({ children, onError }) => {
 	return (
 		<ErrorBoundary onError={onError}>
 			<Global
 				styles={css`
-					${admin}
 					#wpwrap {
 						background-color: var(--sc-color-gray-100);
 					}

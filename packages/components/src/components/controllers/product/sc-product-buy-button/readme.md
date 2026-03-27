@@ -13,7 +13,7 @@
 | `checkoutLink` | `checkout-link` |             | `string`           | `undefined` |
 | `formId`       | `form-id`       |             | `number`           | `undefined` |
 | `mode`         | `mode`          |             | `"live" \| "test"` | `'live'`    |
-| `product`      | --              |             | `Product`          | `undefined` |
+| `productId`    | `product-id`    |             | `string`           | `undefined` |
 
 
 ## Dependencies

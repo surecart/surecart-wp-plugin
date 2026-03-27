@@ -34,13 +34,7 @@ return [
 	<div style="height:1px" aria-hidden="true" class="wp-block-spacer"></div>
 	<!-- /wp:spacer -->
 
-	<!-- wp:surecart/heading {"title":"Address"} -->
-	<sc-heading>Address<span slot="description"></span><span slot="end"></span></sc-heading>
-	<!-- /wp:surecart/heading -->
-
-	<!-- wp:surecart/address {"label":""} -->
-	<sc-order-shipping-address label=""></sc-order-shipping-address>
-	<!-- /wp:surecart/address -->
+	<!-- wp:surecart/address /-->
 
 	<!-- wp:spacer {"height":1} -->
 	<div style="height:1px" aria-hidden="true" class="wp-block-spacer"></div>
@@ -78,6 +72,8 @@ return [
 	<!-- wp:surecart/subtotal -->
 	<sc-line-item-total total="subtotal" class="wp-block-surecart-subtotal"><span slot="description">Subtotal</span></sc-line-item-total>
 	<!-- /wp:surecart/subtotal -->
+
+	<!-- wp:surecart/trial-line-item /-->
 
 	<!-- wp:surecart/coupon {"text":"Add Coupon Code","button_text":"Apply Coupon"} -->
 	<sc-order-coupon-form label="Add Coupon Code">Apply Coupon</sc-order-coupon-form>

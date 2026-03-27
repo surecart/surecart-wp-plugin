@@ -6,7 +6,7 @@ import { __ } from '@wordpress/i18n';
 import { store as coreStore } from '@wordpress/core-data';
 import { ScButton } from '@surecart/components-react';
 
-export default function SaveButton({ onSave, children, busy }) {
+export default function SaveButton({ onSave, children, busy, disabled }) {
 	const { isDirty, isSaving } = useSelect((select) => {
 		const { __experimentalGetDirtyEntityRecords, isSavingEntityRecord } =
 			select(coreStore);
@@ -19,13 +19,12 @@ export default function SaveButton({ onSave, children, busy }) {
 		};
 	}, []);
 
-	const disabled = !isDirty || isSaving;
+	disabled = disabled !== null ? disabled : !isDirty || isSaving;
 
 	return (
 		<ScButton
 			type="primary"
 			submit
-			style={{ '--button-border-radius': '2px' }}
 			aria-disabled={disabled}
 			disabled={disabled || isSaving || busy}
 			busy={isSaving || busy}

@@ -17,7 +17,7 @@
 		.sc-settings-header-container {
 			position: sticky;
 			top: 32px;
-			z-index: 9989	;
+			z-index: 9989;
 		}
 	}
 
@@ -71,33 +71,8 @@
 		<sc-alert open type="info" closable style="position: relative; z-index: 10;"><?php esc_html_e( 'Cache cleared.', 'surecart' ); ?></sc-alert>
 	<?php endif; ?>
 
-	<?php if ( ! empty( $claim_url ) ) : ?>
-		<sc-provisional-banner claim-url="<?php echo esc_url( $claim_url ); ?>"></sc-provisional-banner>
-	<?php elseif ( ! \SureCart::notices()->isDismissed( 'migrate_to_surecart' ) ) : ?>
-		<div class="sc-migrate" data-dismissible="disable-done-notice-forever">
-			<div class="sc-migrate-content">
-				<?php esc_html_e( 'Looking to migrate from another ecommerce platform?', 'surecart' ); ?>
-				<a class="sc-migrate-link" target="_blank" href="https://surecart.com/migrate-to-surecart/">
-					<?php esc_html_e( 'Contact Us', 'surecart' ); ?>
-					<sc-icon name="arrow-right"></sc-icon>
-				</a>
-			</div>
-			<a href="
-			<?php
-			echo esc_url(
-				add_query_arg(
-					[
-						'surecart_action' => 'dismiss_notices',
-						'surecart_notice' => sanitize_text_field( 'migrate_to_surecart' ),
-						'surecart_nonce'  => wp_create_nonce( 'surecart_notice_nonce' ),
-					]
-				)
-			);
-			?>
-			" class="sc-migrate__close">
-				<sc-icon name="x"></sc-icon>
-			</a>
-		</div>
+	<?php if ( ! empty( $claim_url ) || ! empty( $claim_expired ) ) : ?>
+		<sc-provisional-banner claim-url="<?php echo esc_url( $claim_url ); ?>" expired="<?php echo ! empty( $claim_expired ) ? 'true' : 'false'; ?>"></sc-provisional-banner>
 	<?php endif; ?>
 
 	<div id="sc-settings-header">
@@ -133,7 +108,7 @@
 			<sc-tag>
 				<?php
 				// translators: Version number.
-				echo sprintf( esc_html__( 'Version %s', 'surecart' ), esc_html( \SureCart::plugin()->version() ) );
+				printf( esc_html__( 'Version %s', 'surecart' ), esc_html( \SureCart::plugin()->version() ) );
 				?>
 			</sc-tag>
 		</sc-flex>

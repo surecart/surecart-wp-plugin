@@ -2,10 +2,14 @@
 
 namespace SureCart\Models;
 
+use SureCart\Models\Traits\HasDates;
+
 /**
- * Price model
+ * TaxRegistration model
  */
 class TaxRegistration extends Model {
+	use HasDates;
+
 	/**
 	 * Rest API endpoint
 	 *

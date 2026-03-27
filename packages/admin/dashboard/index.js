@@ -1,12 +1,8 @@
-import { render } from '@wordpress/element';
+import { createRoot } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
-/**
- * App
- */
+import '../store/add-entities';
+
 import Dashboard from './Dashboard';
 
-/**
- * Render
- */
-render(<Dashboard />, document.getElementById('app'));
+createRoot(document.getElementById('app')).render(<Dashboard />);

@@ -3,10 +3,7 @@
 namespace SureCart\Controllers\Admin\Bumps;
 
 use SureCart\Models\Bump;
-use SureCart\Support\Currency;
-use SureCart\Support\TimeDate;
 use SureCart\Controllers\Admin\Tables\ListTable;
-use SureCart\Models\Integration;
 
 /**
  * Create a new table class that will extend the WP_List_Table
@@ -56,9 +53,8 @@ class BumpsListTable extends ListTable {
 			'all'      => __( 'All', 'surecart' ),
 		];
 
-		$link = admin_url( 'admin.php?page=sc-bumps' );
-
 		foreach ( $stati as $status => $label ) {
+			$link                    = admin_url( 'admin.php?page=sc-bumps' );
 			$current_link_attributes = '';
 
 			if ( ! empty( $_GET['status'] ) ) {
@@ -70,6 +66,8 @@ class BumpsListTable extends ListTable {
 			}
 
 			$link = add_query_arg( 'status', $status, $link );
+
+			$link = esc_url( $link );
 
 			$status_links[ $status ] = "<a href='$link'$current_link_attributes>" . $label . '</a>';
 		}
@@ -92,15 +90,18 @@ class BumpsListTable extends ListTable {
 	 * @return Array
 	 */
 	public function get_columns() {
-		return [
-			// 'cb'          => '<input type="checkbox" />',
-			'name'  => __( 'Name', 'surecart' ),
-			// 'description' => __( 'Description', 'surecart' ),
-			'price' => __( 'Price', 'surecart' ),
-			// 'type'         => __( 'Type', 'surecart' ),
-			// 'integrations' => __( 'Integrations', 'surecart' ),
-			'date'  => __( 'Date', 'surecart' ),
-		];
+		return array_merge(
+			[
+				// 'cb'          => '<input type="checkbox" />',
+				'name'  => __( 'Name', 'surecart' ),
+				// 'description' => __( 'Description', 'surecart' ),
+				'price' => __( 'Price', 'surecart' ),
+				// 'type'         => __( 'Type', 'surecart' ),
+				// 'integrations' => __( 'Integrations', 'surecart' ),
+				'date'  => __( 'Date', 'surecart' ),
+			],
+			parent::get_columns()
+		);
 	}
 
 	/**
@@ -211,30 +212,6 @@ class BumpsListTable extends ListTable {
 	}
 
 	/**
-	 * Handle the status
-	 *
-	 * @param \SureCart\Models\Price $bump Bump model.
-	 *
-	 * @return string
-	 */
-	public function column_date( $bump ) {
-		$created = sprintf(
-			'<time datetime="%1$s" title="%2$s">%3$s</time>',
-			esc_attr( $bump->created_at ),
-			esc_html( TimeDate::formatDateAndTime( $bump->created_at ) ),
-			esc_html( TimeDate::humanTimeDiff( $bump->created_at ) )
-		);
-		$updated = sprintf(
-			'%1$s <time datetime="%2$s" title="%3$s">%4$s</time>',
-			__( 'Updated', 'surecart' ),
-			esc_attr( $bump->updated_at ),
-			esc_html( TimeDate::formatDateAndTime( $bump->updated_at ) ),
-			esc_html( TimeDate::humanTimeDiff( $bump->updated_at ) )
-		);
-		return $created . '<br /><small style="opacity: 0.75">' . $updated . '</small>';
-	}
-
-	/**
 	 * Price
 	 *
 	 * @param \SureCart\Models\Bump $bump Bump model.
@@ -251,12 +228,11 @@ class BumpsListTable extends ListTable {
 		ob_start();
 		?>
 			<strong><?php echo esc_html( $price->product->name ); ?></strong><br/>
-			<sc-format-number type="currency" currency="<?php echo esc_attr( $price->currency ); ?>" value="<?php echo (float) $price->amount; ?>"></sc-format-number>
-			<sc-format-interval value="<?php echo (int) $price->recurring_interval_count; ?>" interval="<?php echo esc_attr( $price->recurring_interval ); ?>"></sc-format-interval>
+			<?php echo esc_html( $price->display_amount ); ?>
+			<?php echo esc_html( $price->short_interval_text ); ?>
+			<?php echo esc_html( $price->short_interval_count_text ); ?>
 		<?php
 		return ob_get_clean();
-
-		return '<sc-format-number type="currency" currency="' . esc_attr( $price->currency ) . '" value="' . (float) $price->amount . '"></sc-format-number>';
 	}
 
 	/**
@@ -270,15 +246,15 @@ class BumpsListTable extends ListTable {
 		ob_start();
 		?>
 
-	  <div>
-		<a class="row-title" aria-label="<?php echo esc_attr( 'Edit Bump', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'bump', $bump->id ) ); ?>">
+		<div>
+		<a class="row-title" aria-label="<?php esc_attr_e( 'Edit Bump', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'bump', $bump->id ) ); ?>">
 			<?php echo esc_html( $bump->name ? $bump->name : $bump->price->product->name ); ?>
 		</a>
 
 		<?php
 		echo $this->row_actions(
 			[
-				'edit' => ' <a href="' . esc_url( \SureCart::getUrl()->edit( 'bump', $bump->id ) ) . '" aria-label="' . esc_attr( 'Edit Bump', 'surecart' ) . '">' . __( 'Edit', 'surecart' ) . '</a>',
+				'edit' => ' <a href="' . esc_url( \SureCart::getUrl()->edit( 'bump', $bump->id ) ) . '" aria-label="' . esc_attr__( 'Edit Bump', 'surecart' ) . '">' . __( 'Edit', 'surecart' ) . '</a>',
 			],
 		);
 		?>
@@ -298,10 +274,10 @@ class BumpsListTable extends ListTable {
 	 * @return Mixed
 	 */
 	public function column_default( $bump, $column_name ) {
+		// Call the parent method to handle custom columns.
+		parent::column_default( $bump, $column_name );
+
 		switch ( $column_name ) {
-			case 'name':
-				return ' < a href     = "' . \SureCart::getUrl()->edit( 'bump', $bump->id ) . '" > ' . $bump->name . ' < / a > ';
-			case 'name':
 			case 'description':
 				return $bump->$column_name ?? '';
 		}

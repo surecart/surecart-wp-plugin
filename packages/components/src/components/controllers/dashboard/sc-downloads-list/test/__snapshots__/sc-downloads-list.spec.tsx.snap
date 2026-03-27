@@ -9,9 +9,15 @@ exports[`sc-purchase renders 1`] = `
           Downloads
         </slot>
       </span>
-      <sc-card no-padding="">
-        <sc-stacked-list></sc-stacked-list>
-      </sc-card>
+      <div>
+        <sc-divider style="--spacing: 0;"></sc-divider>
+        <slot name="empty">
+          <sc-empty icon="download">
+            You don't have any downloads.
+          </sc-empty>
+        </slot>
+      </div>
+      <sc-pagination page="1" perpage="20" total="0" totalpages="0"></sc-pagination>
     </sc-dashboard-module>
   </mock:shadow-root>
 </sc-downloads-list>

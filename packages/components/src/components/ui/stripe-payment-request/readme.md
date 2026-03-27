@@ -7,21 +7,17 @@
 
 ## Properties
 
-| Property          | Attribute           | Description                                         | Type                       | Default     |
-| ----------------- | ------------------- | --------------------------------------------------- | -------------------------- | ----------- |
-| `amount`          | `amount`            | Amount                                              | `number`                   | `0`         |
-| `country`         | `country`           | Country                                             | `string`                   | `'US'`      |
-| `currencyCode`    | `currency-code`     | Currency                                            | `string`                   | `'usd'`     |
-| `debug`           | `debug`             | Is this in debug mode.                              | `boolean`                  | `false`     |
-| `error`           | --                  |                                                     | `ResponseError`            | `undefined` |
-| `formId`          | `form-id`           | This is required to validate the form on the server | `number \| string`         | `undefined` |
-| `label`           | `label`             | Label                                               | `string`                   | `'total'`   |
-| `order`           | --                  | Checkout Session                                    | `Checkout`                 | `undefined` |
-| `paymentMethod`   | `payment-method`    |                                                     | `string`                   | `undefined` |
-| `prices`          | --                  |                                                     | `{ [id: string]: Price; }` | `undefined` |
-| `publishableKey`  | `publishable-key`   | Stripe publishable key                              | `string`                   | `undefined` |
-| `stripeAccountId` | `stripe-account-id` | Your stripe connected account id.                   | `string`                   | `undefined` |
-| `theme`           | `theme`             | Payment request theme                               | `string`                   | `'dark'`    |
+| Property          | Attribute           | Description                       | Type                       | Default     |
+| ----------------- | ------------------- | --------------------------------- | -------------------------- | ----------- |
+| `amount`          | `amount`            | Amount                            | `number`                   | `0`         |
+| `country`         | `country`           | Country                           | `string`                   | `'US'`      |
+| `debug`           | `debug`             | Is this in debug mode.            | `boolean`                  | `false`     |
+| `error`           | --                  |                                   | `ResponseError`            | `undefined` |
+| `label`           | `label`             | Label                             | `string`                   | `'total'`   |
+| `prices`          | --                  | Prices                            | `{ [id: string]: Price; }` | `undefined` |
+| `publishableKey`  | `publishable-key`   | Stripe publishable key            | `string`                   | `undefined` |
+| `stripeAccountId` | `stripe-account-id` | Your stripe connected account id. | `string`                   | `undefined` |
+| `theme`           | `theme`             | Payment request theme             | `string`                   | `'dark'`    |
 
 
 ## Events

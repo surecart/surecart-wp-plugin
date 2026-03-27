@@ -1,7 +1,6 @@
 import Box from '../../../ui/Box';
 import {
 	ScBlockUi,
-	ScFormatDate,
 	ScFormatNumber,
 	ScLineItem,
 	ScSwitch,
@@ -44,14 +43,7 @@ export default ({
 							__('Bills Now', 'surecart')
 						) : (
 							<>
-								{__('Bills on')}{' '}
-								<ScFormatDate
-									date={upcoming?.start_at}
-									type="timestamp"
-									month="long"
-									day="numeric"
-									year="numeric"
-								/>
+								{__('Bills on')} {upcoming?.start_at_date}
 							</>
 						)}
 					</span>
@@ -74,7 +66,7 @@ export default ({
 				)}
 				{!!hasTrial && (
 					<ScLineItem>
-						<span slot="title">{__('Free Trial', 'surecart')}</span>
+						<span slot="title">{__('Trial', 'surecart')}</span>
 						<span slot="price">
 							{sprintf(
 								_n(
@@ -88,14 +80,7 @@ export default ({
 						</span>
 						<span slot="price-description">
 							<>
-								{__('Ends on')}{' '}
-								<ScFormatDate
-									date={upcoming?.end_at}
-									type="timestamp"
-									month="long"
-									day="numeric"
-									year="numeric"
-								/>
+								{__('Ends on')} {upcoming?.end_at_date}
 							</>
 						</span>
 					</ScLineItem>

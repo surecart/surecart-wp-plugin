@@ -1,5 +1,5 @@
 {
-	"apiVersion": 2,
+	"apiVersion": 3,
 	"name": "surecart/donation",
 	"title": "Donation",
 	"description": "Displays a donation amount for the user to choose from.",

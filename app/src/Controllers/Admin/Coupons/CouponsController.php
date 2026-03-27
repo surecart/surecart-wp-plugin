@@ -18,11 +18,13 @@ class CouponsController extends AdminController {
 		$table->prepare_items();
 
 		$this->withHeader(
-			[
-				'coupons' => [
-					'title' => __( 'Coupons', 'surecart' ),
+			array(
+				'breadcrumbs' => [
+					'coupons' => [
+						'title' => __( 'Coupons', 'surecart' ),
+					],
 				],
-			]
+			)
 		);
 
 		return \SureCart::view( 'admin/coupons/index' )->with(

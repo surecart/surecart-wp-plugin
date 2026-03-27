@@ -15,16 +15,15 @@ class SettingService {
 	 * @return void
 	 */
 	public function bootstrap() {
-		$this->register(
-			'surecart',
-			'theme',
-			[
-				'type'              => 'string',
-				'show_in_rest'      => true,
-				'sanitize_callback' => 'sanitize_text_field',
-				'default'           => 'light',
-			]
-		);
+		add_action( 'init', [ $this, 'registerSettings' ] );
+	}
+
+	/**
+	 * Register settings.
+	 *
+	 * @return void
+	 */
+	public function registerSettings() {
 		$this->register(
 			'surecart',
 			'auto_sync_user_to_customer',
@@ -178,6 +177,16 @@ class SettingService {
 		);
 		$this->register(
 			'surecart',
+			'admin_toolbar_disabled',
+			[
+				'type'              => 'boolean',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'boolval',
+				'default'           => false,
+			]
+		);
+		$this->register(
+			'surecart',
 			'password_validation_enabled',
 			[
 				'type'              => 'boolean',
@@ -226,8 +235,131 @@ class SettingService {
 				'default'           => true,
 			]
 		);
+		$this->register(
+			'surecart',
+			'unrestricted_test_mode',
+			[
+				'type'              => 'boolean',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'boolval',
+			]
+		);
+		$this->register(
+			'surecart',
+			'hide_help_widget',
+			[
+				'type'              => 'boolean',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'boolval',
+				'default'           => false,
+			]
+		);
+		$this->register(
+			'surecart',
+			'currency_switcher_alignment',
+			[
+				'type'              => 'string',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'sanitize_text_field',
+				'default'           => 'right',
+			]
+		);
+		$this->register(
+			'surecart',
+			'currency_switcher_selected_ids',
+			[
+				'type'         => 'array',
+				'items'        => 'integer',
+				'show_in_rest' => [
+					'schema' => [
+						'type'  => 'array',
+						'items' => [
+							'type' => 'integer',
+						],
+					],
+				],
+			]
+		);
+		$this->register(
+			'surecart',
+			'currency_geolocation_enabled',
+			[
+				'type'              => 'boolean',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'boolval',
+				'default'           => true,
+			]
+		);
+		$this->register(
+			'surecart',
+			'currency_locale',
+			[
+				'type'              => 'string',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'sanitize_text_field',
+			]
+		);
+		$this->register(
+			'surecart',
+			'hide_verified_buyer_badge',
+			[
+				'type'              => 'boolean',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'boolval',
+				'default'           => false,
+			]
+		);
+		$this->register(
+			'surecart',
+			'learn_admin_menu',
+			[
+				'type'              => 'boolean',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'boolval',
+				'default'           => true,
+			]
+		);
+		$this->register(
+			'surecart',
+			'learn_completed_steps',
+			[
+				'type'              => 'array',
+				'show_in_rest'      => [
+					'schema' => [
+						'type'  => 'array',
+						'items' => [
+							'type' => 'string',
+						],
+					],
+				],
+				'default'           => [],
+				'autoload'          => false,
+				'sanitize_callback' => function ( $value ) {
+					if ( ! is_array( $value ) ) {
+						return [];
+					}
+					return array_values(
+						array_unique(
+							array_filter(
+								array_map( 'sanitize_key', $value )
+							)
+						)
+					);
+				},
+			]
+		);
+		$this->register(
+			'surecart',
+			'learn_total_steps',
+			[
+				'type'              => 'integer',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'absint',
+				'default'           => 20,
+				'autoload'          => false,
+			]
+		);
 	}
-
 	/**
 	 * Register a setting.
 	 *
@@ -267,7 +399,18 @@ class SettingService {
 	 * @return mixed
 	 */
 	public function get( $name, $default = false ) {
-		return get_option( "surecart_${name}", $default );
+		return get_option( 'surecart_' . $name, $default );
+	}
+
+	/**
+	 * Get the number of remaining learn steps.
+	 *
+	 * @return int
+	 */
+	public function getLearnRemainingSteps() {
+		$total     = (int) $this->get( 'learn_total_steps', 0 );
+		$completed = $this->get( 'learn_completed_steps', [] );
+		return $total ? max( 0, $total - count( (array) $completed ) ) : 0;
 	}
 
 	/**

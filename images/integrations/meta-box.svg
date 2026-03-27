@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="128"
+   height="128"
+   viewBox="0 0 128 128"
+   fill="none"
+   version="1.1"
+   id="svg6"
+   sodipodi:docname="Logo-meta-box.svg"
+   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs10" />
+  <sodipodi:namedview
+     id="namedview8"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     showgrid="false"
+     inkscape:zoom="3.2773437"
+     inkscape:cx="134.56019"
+     inkscape:cy="109.2348"
+     inkscape:window-width="2560"
+     inkscape:window-height="1403"
+     inkscape:window-x="1920"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg6" />
+  <rect
+     width="128"
+     height="128"
+     rx="10"
+     fill="#000000"
+     id="rect2"
+     x="0"
+     y="0"
+     style="stroke-width:0.25" />
+  <path
+     d="m 16.294925,102.75 v -8.545 l 7.56835,-1.46475 V 41.71475 L 16.294925,40.25 V 31.65625 H 23.863275 44.957 l 19.38475,49.5605 h 0.293 l 18.75,-49.5605 h 28.711 V 40.25 l -7.61725,1.46475 v 51.0255 l 7.61725,1.46475 v 8.545 h -29.4435 v -8.545 l 7.959,-1.46475 v -13.623 L 90.8555,47.037 90.5625,46.98825 69.32225,101.7735 h -10.791 l -21.7285,-54.34575 -0.293,0.04875 0.83,30.17575 v 15.088 l 8.3985,1.46475 v 8.545 z"
+     fill="#ffffff"
+     id="path4"
+     style="stroke-width:0.25" />
+</svg>

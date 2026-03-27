@@ -7,10 +7,11 @@
 
 ## Properties
 
-| Property  | Attribute | Description              | Type      | Default     |
-| --------- | --------- | ------------------------ | --------- | ----------- |
-| `label`   | `label`   | The label for the price. | `string`  | `undefined` |
-| `product` | --        | The product.             | `Product` | `undefined` |
+| Property        | Attribute        | Description                                | Type      | Default     |
+| --------------- | ---------------- | ------------------------------------------ | --------- | ----------- |
+| `label`         | `label`          | The label for the price.                   | `string`  | `undefined` |
+| `product`       | --               | The product.                               | `Product` | `undefined` |
+| `selectorTitle` | `selector-title` | The title for price and variant selections | `string`  | `undefined` |
 
 
 ## Methods
@@ -46,7 +47,6 @@ graph TD;
   sc-checkout-product-price-variant-selector --> sc-price-choice-container
   sc-form-control --> sc-visually-hidden
   sc-choices --> sc-form-control
-  sc-price-choice-container --> sc-format-number
   sc-price-choice-container --> sc-choice-container
   sc-price-choice-container --> sc-skeleton
   sc-price-choice-container --> sc-visually-hidden

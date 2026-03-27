@@ -78,18 +78,23 @@ export class ScLogin {
   async submitCode() {
     try {
       this.loading = true;
-      const { verified } = (await apiFetch({
+      const { verified, redirect_url } = (await apiFetch({
         method: 'POST',
         path: 'surecart/v1/verification_codes/verify',
         data: {
           login: this.email,
           code: this.verifyCode,
+          ...(this.getRedirectTo() ? { redirect_to: this.getRedirectTo() } : {}),
         },
       })) as VerificationCode;
       if (!verified) {
         throw { message: __('Verification code is not valid. Please try again.', 'surecart') };
       }
-      window.location.reload();
+      if (redirect_url) {
+        window.location.replace(redirect_url);
+      } else {
+        window.location.reload();
+      }
     } catch (e) {
       this.handleError(e);
       this.loading = false;
@@ -105,6 +110,7 @@ export class ScLogin {
         data: {
           login: this.email,
           password: this.password,
+          ...(this.getRedirectTo() ? { redirect_to: this.getRedirectTo() } : {}),
         },
       })) as any;
       if (redirect_url) {
@@ -116,6 +122,11 @@ export class ScLogin {
       this.handleError(e);
       this.loading = false;
     }
+  }
+
+  getRedirectTo() {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('redirect_to');
   }
 
   async checkEmail() {

@@ -24,8 +24,8 @@ class PageService {
 	/**
 	 * Restrict default page deletion
 	 *
-	 * @param boolean $delete Delete status.
-	 * @param boject  $post Post object.
+	 * @param boolean  $delete Delete status.
+	 * @param \WP_Post $post Post object.
 	 *
 	 * @return null;
 	 */
@@ -86,17 +86,16 @@ class PageService {
 	}
 
 	/**
-	 * Find page by its id
+	 * Find Post/Page by its id
 	 *
-	 * @param integer $id Page ID.
-	 * @param string  $post_type Post type slug.
+	 * @param integer $id Post/Page ID.
 	 *
 	 * @return \WP_Post|null
 	 */
-	public function find( $id, $post_type ) {
-		$page_object = get_post( $id );
-		if ( $page_object && $post_type === $page_object->post_type && ! in_array( $page_object->post_status, [ 'pending', 'trash', 'future', 'auto-draft' ], true ) ) {
-			return $page_object;
+	public function find( $id ) {
+		$post = get_post( $id );
+		if ( $post && ! in_array( $post->post_status, [ 'pending', 'trash', 'future', 'auto-draft' ], true ) ) {
+			return $post;
 		}
 		return null;
 	}
@@ -181,12 +180,12 @@ class PageService {
 	 * @return \WP_Post|null
 	 */
 	public function findByName( $option, $post_type = 'page' ) {
-		// get the option fro the database.
+		// get the option from the database.
 		$option_value = (int) get_option( $this->getOptionName( $option, $post_type ) );
 
 		// check if page has been created.
 		if ( $option_value > 0 ) {
-			$page = $this->find( $option_value, $post_type );
+			$page = $this->find( $option_value );
 			if ( $page ) {
 				return $page;
 			}
@@ -252,5 +251,64 @@ class PageService {
 		}
 
 		return get_post( $page_id );
+	}
+
+	/**
+	 * Check if the page is the customer dashboard page by current URL.
+	 *
+	 * @return boolean
+	 */
+	public function isCustomerDashboardPageByUrl(): bool {
+		$customer_dashboard_url = $this->url( 'dashboard' );
+
+		// If the customer dashboard URL is empty, return false.
+		if ( empty( $customer_dashboard_url ) ) {
+			return false;
+		}
+
+		// Get the current URL.
+		$scheme      = is_ssl() ? 'https://' : 'http://';
+		$host        = filter_input( INPUT_SERVER, 'HTTP_HOST', FILTER_SANITIZE_URL );
+		$request_uri = filter_input( INPUT_SERVER, 'REQUEST_URI', FILTER_SANITIZE_URL );
+		$current_url = $scheme . $host . $request_uri;
+
+		// Check if the current URL is the customer dashboard URL.
+		return untrailingslashit( $current_url ) === untrailingslashit( $customer_dashboard_url );
+	}
+
+	/**
+	 * Get SureCart page screen ids.
+	 *
+	 * @return array
+	 */
+	public function getSureCartPageScreenIds(): array {
+		return apply_filters(
+			'sc_surecart_page_screen_ids',
+			[
+				'toplevel_page_sc-dashboard',
+				'surecart_page_sc-orders',
+				'surecart_page_sc-abandoned-checkouts',
+				'surecart_page_sc-invoices',
+				'sc_product',
+				'surecart_page_sc-products',
+				'surecart_page_sc-product-collections',
+				'surecart_page_sc-bumps',
+				'surecart_page_sc-upsell-funnels',
+				'surecart_page_sc-product-groups',
+				'surecart_page_sc-coupons',
+				'surecart_page_sc-licenses',
+				'surecart_page_sc-subscriptions',
+				'surecart_page_sc-cancellation-insights',
+				'surecart_page_sc-affiliates',
+				'surecart_page_sc-affiliate-requests',
+				'surecart_page_sc-affiliate-clicks',
+				'surecart_page_sc-affiliate-referrals',
+				'surecart_page_sc-affiliate-payouts',
+				'surecart_page_sc-customers',
+				'edit-sc_form',
+				'sc_form',
+				'surecart_page_sc-settings',
+			]
+		);
 	}
 }

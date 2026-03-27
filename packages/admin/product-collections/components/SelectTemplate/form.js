@@ -1,8 +1,7 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/react';
-
 /**
- * External dependencies.
+ * WordPress dependencies
  */
 import { useState } from '@wordpress/element';
 import { __experimentalInspectorPopoverHeader as InspectorPopoverHeader } from '@wordpress/block-editor';
@@ -14,50 +13,57 @@ import { store as coreStore } from '@wordpress/core-data';
 import { addQueryArgs } from '@wordpress/url';
 
 /**
- * Internal dependencies.
+ * Internal dependencies
  */
-import CollectionTemplateCreateModal from './create-modal';
-import { getTemplateTitle } from '../../../products/utility';
+import CreateModal from './create-modal';
+import { useDispatch } from '@wordpress/data';
 
-export default function CollectionTemplateForm({
+export default function PostTemplateForm({
 	onClose,
 	collection,
 	updateCollection,
 	template,
 }) {
+	const { editEntityRecord } = useDispatch(coreStore);
+
 	const { templates, defaultTemplate, canCreate, canEdit } = useSelect(
 		(select) => {
 			const { canUser, getEntityRecords } = select(coreStore);
 			const selectorArgs = ['postType', 'wp_template', { per_page: -1 }];
-			const templates = (getEntityRecords(...selectorArgs) || []).filter(
-				(template) => {
-					return (
-						template.id ===
-							'surecart/surecart//product-collection' ||
-						template.slug.includes('sc-product-collection')
-					);
-				}
-			);
+			const templates = getEntityRecords(...selectorArgs) || [];
+			const { taxonomy, slug } = collection?.term;
+			const defaultTemplateId = select(coreStore).getDefaultTemplateId({
+				slug: slug
+					? `taxonomy-${taxonomy}-${slug}`
+					: `taxonomy-${taxonomy}`,
+			});
 			return {
-				templates,
-				defaultTemplate: templates.find(
-					(template) => template.theme === 'surecart/surecart'
+				templates: templates.filter((template) => {
+					const slug = template?.slug || '';
+					return slug.includes('sc-product-collection');
+				}),
+				defaultTemplate: select(coreStore).getEditedEntityRecord(
+					'postType',
+					'wp_template',
+					defaultTemplateId
 				),
 				canCreate: canUser('create', 'templates'),
 				canEdit: canUser('create', 'templates'),
 			};
 		},
-		[]
+		[collection?.term]
 	);
 
-	const options = (templates ?? []).map((template) => ({
-		value: template?.id,
-		label: getTemplateTitle(template),
-	}));
-
-	const selected = templates.find(
-		(template) => template.id === collection?.metadata?.wp_template_id
-	);
+	const options = (templates ?? [])
+		.map((template) => ({
+			value: template?.slug,
+			label:
+				template?.title?.rendered || template?.title || template?.slug,
+		}))
+		.filter(
+			(option, index, self) =>
+				index === self.findIndex((t) => t.value === option.value)
+		);
 
 	const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
 
@@ -82,8 +88,7 @@ export default function CollectionTemplateForm({
 			<InspectorPopoverHeader
 				title={__('Template')}
 				help={__(
-					'Templates define the way product collection page is displayed when viewing your site.',
-					'surecart'
+					'Templates define the way this product collection is displayed when viewing your site.'
 				)}
 				actions={
 					canCreate && [
@@ -100,10 +105,27 @@ export default function CollectionTemplateForm({
 			<SelectControl
 				__nextHasNoMarginBottom
 				hideLabelFromVision
-				label={__('Template', 'surecart')}
-				value={selected?.id || 'surecart/surecart//product-collection'}
-				options={options}
+				label={__('Template')}
+				value={template?.slug}
+				options={[
+					{
+						value: '',
+						label:
+							defaultTemplate?.title?.rendered ||
+							defaultTemplate?.title ||
+							defaultTemplate?.slug,
+					},
+					...options,
+				]}
 				onChange={(slug) => {
+					editEntityRecord(
+						'taxonomy',
+						'sc_collection',
+						collection?.id,
+						{ template: slug },
+						{ undoIgnore: true }
+					);
+					// needed to make sure sync does not overwrite the template
 					updateCollection({
 						metadata: {
 							...collection.metadata,
@@ -120,18 +142,18 @@ export default function CollectionTemplateForm({
 						href={addQueryArgs('site-editor.php', {
 							postType: 'wp_template',
 							postId:
-								selected?.id ||
-								'surecart/surecart//product-collection',
+								template?.id ||
+								'surecart/surecart//taxonomy-sc_collection',
 							canvas: 'edit',
 						})}
 					>
-						{__('Edit template', 'surecart')}
+						{__('Edit template')}
 					</Button>
 				</p>
 			)}
 
 			{isCreateModalOpen && (
-				<CollectionTemplateCreateModal
+				<CreateModal
 					template={defaultTemplate}
 					collection={collection}
 					updateCollection={updateCollection}

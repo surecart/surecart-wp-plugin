@@ -67,6 +67,12 @@ Type: `Promise<boolean>`
 
 Sets a custom validation message. If `message` is not empty, the field will be considered invalid.
 
+#### Parameters
+
+| Name      | Type     | Description |
+| --------- | -------- | ----------- |
+| `message` | `string` |             |
+
 #### Returns
 
 Type: `Promise<void>`
@@ -86,6 +92,12 @@ Type: `Promise<void>`
 ### `triggerFocus(options?: FocusOptions) => Promise<void>`
 
 Sets focus on the input.
+
+#### Parameters
+
+| Name      | Type           | Description |
+| --------- | -------------- | ----------- |
+| `options` | `FocusOptions` |             |
 
 #### Returns
 

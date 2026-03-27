@@ -93,6 +93,11 @@ class PreloadService {
 	 * @return void
 	 */
 	public function renderComponents() {
+		// For Single product page, we no longer need to preload the components.
+		if ( is_singular( 'sc_product' ) ) {
+			return;
+		}
+
 		if ( ! empty( $this->components ) ) {
 			$this->renderTag( $this->components );
 			$this->components = [];

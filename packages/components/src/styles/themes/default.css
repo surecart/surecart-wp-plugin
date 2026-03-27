@@ -259,6 +259,7 @@ sc-button-group > sc-tooltip > sc-button.sc-focus {
   --sc-z-index-drawer: 700;
   --sc-z-index-dialog: 800;
   --sc-z-index-dropdown: 900;
+  --sc-z-index-popover: 900;
   --sc-z-index-toast: 950;
   --sc-z-index-tooltip: 1000;
 }

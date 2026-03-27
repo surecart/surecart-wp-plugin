@@ -97,7 +97,6 @@ class DraftCheckoutRestServiceProvider extends RestServiceProvider implements Re
 				'metadata'    => [
 					'description' => esc_html__( 'Metadata for the order.', 'surecart' ),
 					'type'        => 'object',
-					// 'context'     => [ 'edit' ],
 				],
 				'customer_id' => [
 					'description' => esc_html__( 'The customer id for the order.', 'surecart' ),

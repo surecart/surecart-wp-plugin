@@ -13,11 +13,15 @@ import Error from '../../../../components/Error';
 import { addQueryArgs } from '@wordpress/url';
 import { useEffect } from 'react';
 import { ScAlert } from '@surecart/components-react';
-import { formatTime } from '../../../../util/time';
 
 const CANCEL_BEHAVIOR = 'pending';
 
-export default ({ open, onRequestClose, currentPeriodEndAt }) => {
+export default ({
+	open,
+	onRequestClose,
+	currentPeriodEndAt,
+	currentPeriodEndAtDate,
+}) => {
 	const id = useSelect((select) => select(dataStore).selectPageId());
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(false);
@@ -123,9 +127,7 @@ export default ({ open, onRequestClose, currentPeriodEndAt }) => {
 								'This will automatically pause the subscription on %s. Please choose a restoration date.',
 								'surecart '
 							),
-							formatTime(currentPeriodEndAt, {
-								dateStyle: 'medium',
-							})
+							currentPeriodEndAtDate
 						)}
 					</ScAlert>
 				)}

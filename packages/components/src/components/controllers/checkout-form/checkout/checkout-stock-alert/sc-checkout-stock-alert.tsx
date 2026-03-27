@@ -30,8 +30,9 @@ export class ScCheckoutStockAlert {
   getOutOfStockLineItems() {
     return (checkoutState.checkout?.line_items?.data || []).filter(lineItem => {
       const product = lineItem.price?.product as Product;
-      // no stock handling.
-      if (!product?.stock_enabled || product?.allow_out_of_stock_purchases) return;
+
+      // this item is not out of stock, don't include it.
+      if (lineItem?.purchasable_status !== 'out_of_stock') return false;
 
       // check the variant stock.
       if (lineItem?.variant?.id) {
@@ -43,40 +44,41 @@ export class ScCheckoutStockAlert {
   }
 
   /**
+   * Build line items with adjusted quantities for out-of-stock items.
+   *
+   * Returns all line items, with out-of-stock items adjusted to max available stock.
+   */
+  getStockAdjustedLineItems() {
+    // Get the IDs of out-of-stock line items and their adjusted quantities.
+    const outOfStockItemsMap = new Map<string, number>();
+    this.getOutOfStockLineItems().forEach(lineItem => {
+      const product = lineItem.price?.product as Product;
+      const adjustedQuantity = lineItem?.variant?.id ? Math.max(lineItem?.variant?.available_stock || 0, 0) : Math.max(product?.available_stock || 0, 0);
+      outOfStockItemsMap.set(lineItem.id, adjustedQuantity);
+    });
+
+    // Build the complete line items array with all items, adjusting only the out-of-stock ones.
+    return (checkoutState.checkout?.line_items?.data || []).map(lineItem => {
+      const adjustedQuantity = outOfStockItemsMap.get(lineItem.id);
+      return {
+        id: lineItem.id,
+        price_id: lineItem.price?.id,
+        quantity: adjustedQuantity !== undefined ? adjustedQuantity : lineItem.quantity,
+        ...(lineItem?.variant?.id ? { variant: lineItem.variant.id } : {}),
+      };
+    });
+  }
+
+  /**
    * Update the checkout line items stock to the max available.
    */
   async onSubmit() {
-    const lineItems = this.getOutOfStockLineItems().map(lineItem => {
-      const product = lineItem.price?.product as Product;
-
-      if (lineItem?.variant?.id) {
-        return {
-          ...lineItem,
-          quantity: Math.max(lineItem?.variant?.available_stock || 0, 0),
-        };
-      }
-
-      return {
-        ...lineItem,
-        quantity: Math.max(product?.available_stock || 0, 0),
-      };
-    });
-
     try {
       this.busy = true;
       checkoutState.checkout = (await updateCheckout({
         id: checkoutState.checkout.id,
         data: {
-          line_items: (lineItems || [])
-            .filter(lineItem => !!lineItem.quantity)
-            .map(lineItem => {
-              return {
-                id: lineItem.id,
-                price_id: lineItem.price?.id,
-                quantity: lineItem.quantity,
-                ...(lineItem?.variant?.id ? { variant: lineItem.variant.id } : {}),
-              };
-            }),
+          line_items: this.getStockAdjustedLineItems().filter(lineItem => !!lineItem.quantity),
         },
       })) as Checkout;
     } catch (error) {
@@ -91,13 +93,12 @@ export class ScCheckoutStockAlert {
     // stock errors.
     const stockErrors = (this.getOutOfStockLineItems() || []).map(lineItem => {
       const product = lineItem.price?.product as Product;
-      const variantImage = typeof lineItem?.variant?.image !== 'string' ? lineItem?.variant?.image?.url : null;
-
       const available_stock = lineItem?.variant?.id ? lineItem?.variant?.available_stock : product?.available_stock;
 
       return {
         name: product?.name,
-        image_url: variantImage || product?.image_url,
+        variant: lineItem?.variant_display_options,
+        image: lineItem?.image,
         quantity: lineItem.quantity,
         available_stock,
       };
@@ -108,18 +109,12 @@ export class ScCheckoutStockAlert {
 
     return (
       <Host>
-        <sc-dialog
-          style={{ '--body-spacing': 'var(--sc-spacing-x-large)' }}
-          open={!!stockErrors.length && currentFormState() === 'draft'}
-          noHeader={true}
-          onScRequestClose={e => e.preventDefault()}
-        >
+        <sc-dialog open={!!stockErrors.length && currentFormState() === 'draft'} noHeader={true} onScRequestClose={e => e.preventDefault()} class="stock-alert">
           <sc-dashboard-module class="subscription-cancel" error={this.error} style={{ '--sc-dashboard-module-spacing': '1em' }}>
             <sc-flex slot="heading" align-items="center" justify-content="flex-start">
               <sc-icon name="alert-circle" style={{ color: 'var(--sc-color-primary-500' }}></sc-icon>
               {hasOutOfStockItems ? __('Out of Stock', 'surecart') : __('Quantity Update', 'surecart')}
             </sc-flex>
-
             <span slot="description">
               {hasOutOfStockItems
                 ? __('Some items are no longer available. Your cart will be updated.', 'surecart')
@@ -136,11 +131,19 @@ export class ScCheckoutStockAlert {
                 {stockErrors.map((item, index) => {
                   const isLastChild = index === stockErrors.length - 1;
                   return (
-                    <sc-table-row style={{ '--columns': '2', ...(isLastChild ? { border: 'none' } : {}) }}>
+                    <sc-table-row
+                      style={{
+                        '--columns': '2',
+                        ...(isLastChild ? { border: 'none' } : {}),
+                      }}
+                    >
                       <sc-table-cell>
                         <sc-flex justifyContent="flex-start" alignItems="center">
-                          <img class="stock-alert__image" src={`https://surecart.com/cdn-cgi/image/fit=scale-down,format=auto,width=100/${item?.image_url}`} />
-                          <h4>{item.name}</h4>
+                          {item?.image && <img {...(item.image as any)} class="stock-alert__image" />}
+                          <div class="stock-alert__product-info">
+                            <h4>{item.name}</h4>
+                            {item?.variant && <span class="stock-alert__variant">{item.variant}</span>}
+                          </div>
                         </sc-flex>
                       </sc-table-cell>
                       <sc-table-cell style={{ width: '100px', textAlign: 'right' }}>

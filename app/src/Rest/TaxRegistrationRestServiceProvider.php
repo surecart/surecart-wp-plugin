@@ -45,26 +45,26 @@ class TaxRegistrationRestServiceProvider extends RestServiceProvider implements 
 				'id'             => [
 					'description' => esc_html__( 'Unique identifier for the object.', 'surecart' ),
 					'type'        => 'string',
-					'context'     => [ 'edit' ],
+					'context'     => [ 'view', 'edit', 'embed' ],
 					'readonly'    => true,
 				],
 				'created_at'     => [
 					'type'    => 'integer',
-					'context' => [ 'edit' ],
+					'context' => [ 'view', 'edit', 'embed' ],
 				],
 				'updated_at'     => [
 					'type'    => 'integer',
-					'context' => [ 'edit' ],
+					'context' => [ 'view', 'edit', 'embed' ],
 				],
 				'tax_identifier' => [
 					'description' => esc_html__( 'The associated tax identifier.', 'surecart' ),
 					'type'        => 'object',
-					'context'     => [ 'view', 'edit' ],
+					'context'     => [ 'view', 'edit', 'embed' ],
 				],
 				'tax_zone'       => [
 					'description' => esc_html__( 'The associated tax zone.', 'surecart' ),
 					'type'        => 'object',
-					'context'     => [ 'view', 'edit' ],
+					'context'     => [ 'view', 'edit', 'embed' ],
 				],
 			],
 		];

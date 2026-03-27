@@ -2,7 +2,7 @@ import { state as checkoutState } from '@store/checkout';
 import { addQueryArgs, getQueryArg } from '@wordpress/url';
 
 import apiFetch from '../../functions/fetch';
-import { Checkout, DeletedItem, LineItem } from '../../types';
+import { Checkout, DeletedItem, Invoice, LineItem } from '../../types';
 import { __ } from '@wordpress/i18n';
 
 /** The base url for this service. */
@@ -10,13 +10,20 @@ export const baseUrl = 'surecart/v1/checkouts/';
 
 /** Items to always expand. */
 export const expand = [
+  'checkout_fees',
+  'shipping_fees',
   'line_items',
   'line_item.price',
   'line_item.fees',
   'line_item.variant',
+  'line_item.swap',
   'variant.image',
   'price.product',
+  'price.current_swap',
+  'swap.swap_price',
+  'product.product_medias',
   'product.featured_product_media',
+  'product.product_collections',
   'product_media.media',
   'customer',
   'customer.shipping_address',
@@ -25,13 +32,16 @@ export const expand = [
   'discount.promotion',
   'recommended_bumps',
   'bump.price',
+  'current_upsell',
   'product.variants',
   'discount.coupon',
   'shipping_address',
+  'billing_address',
   'tax_identifier',
   'manual_payment_method',
   'shipping_choices',
   'shipping_choice.shipping_method',
+  'invoice',
 ];
 
 /** Default data we send with every request. */
@@ -39,12 +49,14 @@ export const withDefaultData = (data: { metadata?: any } = {}) => ({
   live_mode: checkoutState.mode !== 'test',
   group_key: checkoutState.groupId,
   abandoned_checkout_enabled: checkoutState.abandonedCheckoutEnabled,
+  billing_matches_shipping: checkoutState.checkout?.billing_matches_shipping,
   metadata: {
     ...(data?.metadata || {}),
     ...(window?.scData?.page_id && { page_id: window?.scData?.page_id }),
     ...(checkoutState?.product?.id && { buy_page_product_id: checkoutState?.product?.id }),
     page_url: window.location.href,
   },
+  ...(checkoutState?.checkout?.email && { email: checkoutState?.checkout?.email }),
   ...data,
 });
 
@@ -52,6 +64,7 @@ export const withDefaultData = (data: { metadata?: any } = {}) => ({
 export const withDefaultQuery = (query = {}) => ({
   ...(!!checkoutState?.formId && { form_id: checkoutState?.formId }),
   ...(!!checkoutState?.product?.id && { product_id: checkoutState?.product?.id }),
+  ...(!!(checkoutState?.checkout?.invoice as Invoice)?.id && { type: 'open_invoice' }),
   ...query,
 });
 
@@ -98,6 +111,15 @@ export const createOrUpdateCheckout = async ({ id = null, data = {}, query = {} 
   });
 };
 
+/** Create the checkout */
+export const createCheckout = async ({ data = {}, query = {} }) => {
+  return await apiFetch({
+    method: 'POST', // create
+    path: addQueryArgs(parsePath(null), withDefaultQuery(query)),
+    data: withDefaultData(data),
+  });
+};
+
 /** Update the checkout. */
 export const updateCheckout = async ({ id, data = {}, query = {} }) => {
   return await apiFetch({
@@ -128,9 +150,9 @@ export const finalizeCheckout = async ({ id, data = {}, query = {}, processor }:
 export const addLineItem = async ({ checkout, data, live_mode = false }) => {
   const existingLineItem = (checkout?.line_items?.data || []).find(item => {
     if (!item?.variant?.id) {
-      return item.price.id === data.price;
+      return item.price.id === data.price && item.note === data.note;
     }
-    return item.variant.id === data.variant && item.price.id === data.price;
+    return item.variant.id === data.variant && item.price.id === data.price && item.note === data.note;
   });
 
   // create the checkout with the line item.
@@ -201,6 +223,22 @@ export const updateLineItem = async ({ id, data }) => {
     }),
     method: 'PATCH',
     data,
+  })) as LineItem;
+
+  return item?.checkout as Checkout;
+};
+
+export const toggleSwap = async ({ id, action = 'swap' }) => {
+  const item = (await apiFetch({
+    path: addQueryArgs(`surecart/v1/line_items/${id}/${action}`, {
+      expand: [
+        ...(expand || []).map(item => {
+          return item.includes('.') ? item : `checkout.${item}`;
+        }),
+        'checkout',
+      ],
+    }),
+    method: 'PATCH',
   })) as LineItem;
 
   return item?.checkout as Checkout;

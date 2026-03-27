@@ -3,7 +3,8 @@
 namespace SureCart\WordPress;
 
 use SureCart\WordPress\PluginService;
-use SureCart\WordPress\Sitemap\SitemapsService;
+use SureCart\WordPress\UpgradeNoticeService;
+use SureCart\WordPress\PluginActionLinksService;
 use SureCartCore\ServiceProviders\ServiceProviderInterface;
 
 /**
@@ -17,32 +18,42 @@ class PluginServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function register( $container ) {
-		$container['surecart.plugin'] = function( $c ) {
+		$container['surecart.plugin'] = function ( $c ) {
 			return new PluginService( $c[ SURECART_APPLICATION_KEY ] );
 		};
 
-		$container['surecart.actions'] = function() {
+		$container['surecart.upgrade.notice'] = function ( $c ) {
+			return new UpgradeNoticeService( $c[ SURECART_APPLICATION_KEY ] );
+		};
+
+		$container['surecart.plugin.action.links'] = function ( $c ) {
+			return new PluginActionLinksService( $c[ SURECART_APPLICATION_KEY ] );
+		};
+
+		$container['surecart.actions'] = function () {
 			return new ActionsService();
 		};
 
-		$container['surecart.config.setting'] = function( $c ) {
+		$container['surecart.config.setting'] = function ( $c ) {
 			return json_decode( json_encode( $c[ SURECART_CONFIG_KEY ] ) );
 		};
 
-		$container['surecart.health'] = function() {
+		$container['surecart.health'] = function () {
 			return new HealthService();
 		};
 
-		$container['surecart.sitemaps'] = function() {
-			return new SitemapsService();
-		};
-
-		$container['surecart.compatibility'] = function() {
+		$container['surecart.compatibility'] = function () {
 			return new CompatibilityService();
 		};
 
+		// singleton.
+		$currency_service               = new CurrencyService();
+		$container['surecart.currency'] = function () use ( $currency_service ) {
+			return $currency_service;
+		};
+
 		$singleton                          = new StateService( [] );
-		$container['surecart.initialstate'] = function() use ( $singleton ) {
+		$container['surecart.initialstate'] = function () use ( $singleton ) {
 			return $singleton;
 		};
 
@@ -52,16 +63,19 @@ class PluginServiceProvider implements ServiceProviderInterface {
 		$app->alias( 'config', 'surecart.config.setting' );
 		$app->alias( 'healthCheck', 'surecart.health' );
 		$app->alias( 'state', 'surecart.initialstate' );
+		$app->alias( 'currency', 'surecart.currency' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function bootstrap( $container ) {
-		$container['surecart.sitemaps']->bootstrap();
 		$container['surecart.health']->bootstrap();
 		$container['surecart.compatibility']->bootstrap();
 		$container['surecart.initialstate']->bootstrap();
+		$container['surecart.upgrade.notice']->bootstrap();
+		$container['surecart.plugin.action.links']->bootstrap();
+		$container['surecart.currency']->bootstrap();
 	}
 
 	/**

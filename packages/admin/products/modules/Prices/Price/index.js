@@ -1,10 +1,11 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { store as coreStore } from '@wordpress/core-data';
+import { store as coreStore, useEntityRecord } from '@wordpress/core-data';
 import { useDispatch, useSelect } from '@wordpress/data';
-import { useState } from '@wordpress/element';
+import { useRef, useState, useEffect } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
+import { ScButton, ScIcon, ScDrawer, ScForm } from '@surecart/components-react';
 
 import Error from '../../../../components/Error';
 // hocs
@@ -12,44 +13,86 @@ import Multiple from '../../../components/price/Multiple';
 import OneTime from '../../../components/price/OneTime';
 import PriceName from '../../../components/price/parts/PriceName';
 // components
-import Tax from '../../../components/price/parts/Tax';
 import Subscription from '../../../components/price/Subscription';
 import Header from './Header';
+import Swap from '../../../components/price/parts/Swap';
+import Advanced from '../../../components/price/parts/Advanced';
+import PaymentType from '../../../components/price/parts/PaymentType';
 
-export default ({ price, product }) => {
-	// are the price details open?
+export default ({ price, product, allPrices }) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [error, setError] = useState(null);
+	const [isSaving, setIsSaving] = useState(false);
+	const [currentPrice, setCurrentPrice] = useState(price);
+	const [currentSwap, setCurrentSwap] = useState(null);
 	const { createSuccessNotice } = useDispatch(noticesStore);
+	const { record: swap } = useEntityRecord(
+		'surecart',
+		'swap',
+		price?.current_swap
+	);
+	const ref = useRef(null);
+	const { deleteEntityRecord, saveEntityRecord, receiveEntityRecords } =
+		useDispatch(coreStore);
+	const editPrice = (data) => {
+		setCurrentPrice({ ...currentPrice, ...data });
+	};
+	const editSwap = (data) => {
+		setCurrentSwap({ ...currentSwap, ...data });
+	};
+
+	// make sure current price stays up to date with changes.
+	useEffect(() => {
+		setCurrentPrice(price);
+	}, [price]);
+
+	useEffect(() => {
+		setCurrentSwap(swap);
+	}, [swap]);
 
 	// get any save errors.
 	const { savePriceError } = useSelect(
 		(select) => {
-			if (!price?.id) return {};
-			const entityData = ['surecart', 'price', price?.id];
+			if (!currentPrice?.id) return {};
+			const entityData = ['surecart', 'price', currentPrice?.id];
 			return {
 				savePriceError: select(coreStore)?.getLastEntitySaveError?.(
 					...entityData
 				),
 			};
 		},
-		[price?.id]
+		[currentPrice?.id]
 	);
 
-	// dispatchers.
-	const { editEntityRecord, deleteEntityRecord, saveEditedEntityRecord } =
-		useDispatch(coreStore);
-	const savePrice = (options = {}) =>
-		saveEditedEntityRecord('surecart', 'price', price?.id, options);
-	const deletePrice = (options = {}) =>
-		deleteEntityRecord('surecart', 'price', price?.id, {}, options);
-	const editPrice = (data) =>
-		editEntityRecord('surecart', 'price', price?.id, data);
+	const saveEditedPrice = async (e) => {
+		e.stopPropagation();
+		try {
+			setIsSaving(true);
+			await saveEntityRecord('surecart', 'price', currentPrice, {
+				throwOnError: true,
+			});
+
+			if (currentSwap) {
+				await saveEntityRecord('surecart', 'swap', currentSwap, {
+					throwOnError: true,
+				});
+			}
+			setIsOpen(false);
+			createSuccessNotice(__('Price updated.', 'surecart'), {
+				type: 'snackbar',
+			});
+		} catch (e) {
+			console.error(e);
+			setError(e);
+		} finally {
+			setIsSaving(false);
+		}
+	};
 
 	// toggle the archive.
 	const toggleArchive = async () => {
 		const r = confirm(
-			price?.archived
+			currentPrice?.archived
 				? __(
 						'Un-Archive this price? This will make the product purchaseable again.',
 						'surecart'
@@ -62,10 +105,18 @@ export default ({ price, product }) => {
 		if (!r) return;
 
 		try {
-			await editPrice({ archived: !price?.archived });
-			await savePrice({ throwOnError: true });
+			await saveEntityRecord(
+				'surecart',
+				'price',
+				{
+					...currentPrice,
+					archived: !currentPrice?.archived,
+				},
+				{ throwOnError: true }
+			);
+
 			createSuccessNotice(
-				price?.archived
+				currentPrice?.archived
 					? __('Price unarchived.', 'surecart')
 					: __('Price archived.'),
 				{
@@ -92,7 +143,13 @@ export default ({ price, product }) => {
 
 		try {
 			setError(null);
-			await deletePrice({ throwOnError: true });
+			await deleteEntityRecord(
+				'surecart',
+				'price',
+				currentPrice?.id,
+				null,
+				{ throwOnError: true }
+			);
 			createSuccessNotice(__('Price deleted.', 'surecart'), {
 				type: 'snackbar',
 			});
@@ -102,10 +159,22 @@ export default ({ price, product }) => {
 		}
 	};
 
+	const onDuplicate = async (duplicate) => {
+		await receiveEntityRecords(
+			'surecart',
+			'price',
+			[...(allPrices || []), duplicate],
+			{ context: 'edit', product_ids: [product?.id], per_page: 100 }
+		);
+		createSuccessNotice(__('Price duplicated.', 'surecart'), {
+			type: 'snackbar',
+		});
+	};
+
 	// get the price type.
 	const getPriceType = () => {
-		if (price?.recurring_interval) {
-			if (price?.recurring_period_count !== null) {
+		if (currentPrice?.recurring_interval) {
+			if (currentPrice?.recurring_period_count !== null) {
 				return 'multiple';
 			}
 			return 'subscription';
@@ -116,68 +185,174 @@ export default ({ price, product }) => {
 	return (
 		<div
 			css={css`
-				border: 1px solid
-					${price?.archived
-						? 'var(--sc-color-warning-300)'
-						: 'var(--sc-color-gray-300)'};
-				border-radius: var(--sc-border-radius-medium);
-				box-shadow: var(--sc-shadow-small);
-				display: grid;
-				background: #fff;
+				padding: 28px;
+				background: ${currentPrice?.archived
+					? 'var(--sc-color-warning-50)'
+					: 'white'};
+				border-bottom: 1px solid var(--sc-color-gray-200);
+				border-top: 1px solid var(--sc-color-gray-200);
+				margin-top: -1px;
 			`}
 		>
 			<Header
 				isOpen={isOpen}
 				setIsOpen={setIsOpen}
-				price={price}
+				price={currentPrice}
 				onArchive={toggleArchive}
 				variantOptions={product?.variant_options}
 				variants={product?.variants}
 				stockEnabled={product?.stock_enabled}
 				onDelete={onDelete}
-				css={css`
-					padding: var(--sc-spacing-large);
-				`}
+				onDuplicate={onDuplicate}
 				collapsible={true}
 			/>
 
 			<Error error={savePriceError || error} setError={setError} />
 
-			<div
-				css={css`
-					gap: var(--sc-form-row-spacing);
-					border-top: 1px solid var(--sc-color-gray-300);
-					padding: var(--sc-spacing-large);
-					background: ${price?.archived
-						? 'var(--sc-color-warning-50)'
-						: 'var(--sc-color-gray-50)'};
-					display: ${isOpen ? 'grid' : 'none'};
-				`}
-			>
-				<PriceName price={price} updatePrice={editPrice} />
-
-				{getPriceType() === 'subscription' && (
-					<Subscription price={price} updatePrice={editPrice} />
-				)}
-
-				{getPriceType() === 'multiple' && (
-					<Multiple price={price} updatePrice={editPrice} />
-				)}
-
-				{getPriceType() === 'once' && (
-					<OneTime price={price} updatePrice={editPrice} />
-				)}
-
-				<Tax
+			<ScForm onScFormSubmit={saveEditedPrice}>
+				<ScDrawer
+					label={__('Edit Price', 'surecart')}
 					style={{
-						marginTop: '0.5em',
-						display: 'inline-block',
+						'--sc-drawer-size': '38rem',
+						'--sc-input-label-margin': 'var(--sc-spacing-small)',
 					}}
-					price={price}
-					product={product}
-					updatePrice={editPrice}
-				/>
-			</div>
+					onScRequestClose={() => setIsOpen(false)}
+					open={isOpen}
+					onScAfterShow={() => ref.current.triggerFocus()}
+					stickyHeader
+				>
+					<div
+						css={css`
+							display: flex;
+							flex-direction: column;
+							height: 100%;
+							background: var(--sc-color-gray-50);
+						`}
+					>
+						<div
+							css={css`
+								padding: 30px;
+								display: grid;
+								gap: 2em;
+							`}
+						>
+							<Error error={error} setError={setError} />
+
+							<PriceName
+								price={currentPrice}
+								updatePrice={editPrice}
+								ref={ref}
+							/>
+
+							<PaymentType
+								type={getPriceType()}
+								price={currentPrice}
+								updatePrice={editPrice}
+							/>
+
+							{getPriceType() === 'subscription' && (
+								<Subscription
+									price={currentPrice}
+									updatePrice={editPrice}
+									product={product}
+								/>
+							)}
+
+							{getPriceType() === 'multiple' && (
+								<Multiple
+									price={currentPrice}
+									updatePrice={editPrice}
+									product={product}
+								/>
+							)}
+
+							{getPriceType() === 'once' && (
+								<OneTime
+									price={currentPrice}
+									updatePrice={editPrice}
+									product={product}
+								/>
+							)}
+
+							{!product?.variants?.length &&
+								!product?.variants?.data?.length &&
+								!currentPrice?.ad_hoc && (
+									<Swap
+										currentPrice={currentPrice}
+										updateSwap={editSwap}
+										currentSwap={currentSwap}
+										isSaving={isSaving}
+										currentProduct={product}
+									/>
+								)}
+
+							<Advanced
+								price={currentPrice}
+								updatePrice={editPrice}
+								product={product}
+							/>
+						</div>
+					</div>
+
+					<div
+						css={css`
+							display: flex;
+							justify-content: space-between;
+						`}
+						slot="footer"
+					>
+						<div>
+							<ScButton
+								type="primary"
+								submit
+								isBusy={isSaving}
+								disabled={isSaving}
+							>
+								{__('Update Price', 'surecart')}
+							</ScButton>
+							<ScButton
+								type="text"
+								onClick={() => {
+									setCurrentPrice(price);
+									setIsOpen(false);
+								}}
+							>
+								{__('Cancel', 'surecart')}
+							</ScButton>
+						</div>
+						<div
+							css={css`
+								align-content: center;
+							`}
+						>
+							{product?.tax_enabled &&
+								scData?.tax_protocol?.tax_enabled &&
+								scData?.tax_protocol?.tax_behavior ===
+									'inclusive' && (
+									<span
+										css={css`
+											text-align: right;
+										`}
+									>
+										<ScButton
+											size="small"
+											type="text"
+											target="_blank"
+											href="admin.php?page=sc-settings&tab=tax_protocol"
+										>
+											{__('Tax is included', 'surecart')}
+											<ScIcon
+												name="external-link"
+												slot="suffix"
+											/>
+										</ScButton>
+									</span>
+								)}
+						</div>
+					</div>
+					{isSaving && <sc-block-ui spinner></sc-block-ui>}
+				</ScDrawer>
+			</ScForm>
 		</div>
 	);
 };

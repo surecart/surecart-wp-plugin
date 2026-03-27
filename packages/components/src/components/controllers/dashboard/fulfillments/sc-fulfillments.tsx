@@ -81,10 +81,9 @@ export class ScFulfillments {
                       <div class="trackings__details">
                         <div class="trackings__title">{_n('Tracking number', 'Tracking numbers', fulfillment?.trackings?.data?.length, 'surecart')}</div>
                         <div class="trackings__list">
-                          {(fulfillment?.trackings?.data || []).map(({ courier_name, number, url }) => (
+                          {(fulfillment?.trackings?.data || []).map(({ number, url }) => (
                             <a href={url} target="_blank">
                               {number}
-                              {!!courier_name && ` (${courier_name})`}
                             </a>
                           ))}
                         </div>
@@ -99,7 +98,7 @@ export class ScFulfillments {
                       <div>
                         <div class="line_item__info">
                           <div class="line_item__image">
-                            {!!(line_item?.price?.product as Product)?.image_url && <img src={(line_item?.price?.product as Product)?.image_url} />}
+                            {!!(line_item?.price?.product as Product)?.line_item_image && <img {...((line_item?.price?.product as Product)?.line_item_image as any)} />}
                           </div>
                           <div class="line_item__text">
                             <div>{(line_item?.price?.product as Product)?.name}</div>

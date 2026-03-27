@@ -21,7 +21,6 @@ class BlockTemplatesService {
 		add_theme_support( 'appearance-tools' );
 		add_theme_support( 'custom-spacing' );
 		add_theme_support( 'custom-line-height' );
-		$this->utility = \SureCart::utility()->blockTemplates();
 	}
 
 	/**
@@ -30,6 +29,7 @@ class BlockTemplatesService {
 	 * @return void
 	 */
 	public function bootstrap() {
+		$this->utility = \SureCart::utility()->blockTemplates();
 		// add block templates.
 		add_filter( 'get_block_templates', [ $this, 'addBlockTemplates' ], 10, 3 );
 		add_filter( 'pre_get_block_file_template', [ $this, 'getBlockFileTemplate' ], 10, 3 );
@@ -71,12 +71,7 @@ class BlockTemplatesService {
 			return $template;
 		}
 
-		list( $template_id, $template_slug ) = $template_name_parts;
-
-		// If we are not dealing with a SureCart template let's return early and let it continue through the process.
-		if ( $this->utility::PLUGIN_SLUG !== $template_id ) {
-			return $template;
-		}
+		$template_slug = $template_name_parts[1];
 
 		// If we don't have a template let Gutenberg do its thing.
 		if ( ! $this->blockTemplateIsAvailable( $template_slug, $template_type ) ) {
@@ -85,8 +80,11 @@ class BlockTemplatesService {
 
 		$directory          = $this->utility->getTemplatesDirectory( $template_type );
 		$template_file_path = $directory . '/' . $template_slug . '.html';
-		$template_object    = $this->utility->createNewBlockTemplateObject( $template_file_path, $template_type, $template_slug );
-		$template_built     = $this->utility->buildTemplateResultFromFile( $template_object, $template_type );
+		if ( ! is_readable( $template_file_path ) ) {
+			return $template;
+		}
+		$template_object = $this->utility->createNewBlockTemplateObject( $template_file_path, $template_type, $template_slug );
+		$template_built  = $this->utility->buildTemplateResultFromFile( $template_object, $template_type );
 
 		if ( null !== $template_built ) {
 			return $template_built;
@@ -110,11 +108,6 @@ class BlockTemplatesService {
 			return $query_result;
 		}
 
-		// supports block templates, don't use parts.
-		if ( 'wp_template_part' === $template_type && $this->utility->supportsBlockTemplates() ) {
-			return $query_result;
-		}
-
 		$post_type = $query['post_type'] ?? '';
 		$slugs     = $query['slug__in'] ?? [];
 
@@ -125,9 +118,13 @@ class BlockTemplatesService {
 			// on the template file, then lets skip it so that it doesn't get added. This is typically used to hide templates
 			// in the template dropdown on the Edit Post page.
 			if ( $post_type &&
-				isset( $template_file->post_types ) &&
-				! in_array( $post_type, $template_file->post_types, true )
+				! in_array( $post_type, $template_file->post_types ?? [], true )
 			) {
+				continue;
+			}
+
+			// this supports block templates and the template is not available in the site editor.
+			if ( $this->utility->supportsBlockTemplates() && ! $this->utility->isBlockAvailableInSiteEditor( $template_file->slug ) ) {
 				continue;
 			}
 
@@ -167,7 +164,7 @@ class BlockTemplatesService {
 		 * templates that aren't listed in theme.json.
 		 */
 		$query_result = array_map(
-			function( $template ) {
+			function ( $template ) {
 				if ( 'theme' === $template->origin && $this->utility->templateHasTitle( $template ) ) {
 					return $template;
 				}
@@ -221,6 +218,19 @@ class BlockTemplatesService {
 				$template->description = __( 'Template used for specific single SureCart collection pages.', 'surecart' );
 			}
 		}
+
+		if ( preg_match( '/(sc-upsell)-(.+)/', $template->slug, $matches ) ) {
+			$type = $matches[1];
+
+			if ( 'sc-upsell' === $type ) {
+				$template->title = sprintf(
+					// translators: Represents the title of a user's custom template in the Site Editor, where %s is the author's name, e.g. "Author: Jane Doe".
+					__( 'Upsell: %s', 'surecart' ),
+					$template->title
+				);
+				$template->description = __( 'Template used for specific single SureCart upsell pages.', 'surecart' );
+			}
+		}
 		return $template;
 	}
 
@@ -268,7 +278,7 @@ class BlockTemplatesService {
 		$saved_sc_templates = $check_query->posts;
 
 		return array_map(
-			function( $saved_sc_template ) {
+			function ( $saved_sc_template ) {
 				return $this->utility->buildTemplateResultsFromPost( $saved_sc_template );
 			},
 			$saved_sc_templates
@@ -321,5 +331,4 @@ class BlockTemplatesService {
 
 		return $templates;
 	}
-
 }

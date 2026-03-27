@@ -1,15 +1,9 @@
 /** @jsx jsx */
-import { css, Global, jsx } from '@emotion/core';
-import {
-	ScButton,
-	ScForm,
-	ScSelect,
-	ScSwitch,
-} from '@surecart/components-react';
-import { Modal } from '@wordpress/components';
+import { css, jsx } from '@emotion/core';
+import { ScButton, ScForm, ScIcon, ScDrawer } from '@surecart/components-react';
 import { store as coreStore } from '@wordpress/core-data';
 import { useDispatch } from '@wordpress/data';
-import { useEffect, useState } from '@wordpress/element';
+import { useEffect, useRef, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
 
@@ -17,36 +11,39 @@ import Multiple from '../../../components/price/Multiple';
 import OneTime from '../../../components/price/OneTime';
 import PriceName from '../../../components/price/parts/PriceName';
 import Subscription from '../../../components/price/Subscription';
+import Error from '../../../../components/Error';
+import Swap from '../../../components/price/parts/Swap';
+import Advanced from '../../../components/price/parts/Advanced';
+import PaymentType from '../../../components/price/parts/PaymentType';
 
-export default ({ onRequestClose, product }) => {
+export default ({ isOpen, onRequestClose, product }) => {
+	if (!isOpen) return null;
+
 	const [error, setError] = useState(null);
-	const [additionalErrors, setAdditionalErrors] = useState([]);
 	const [loading, setLoading] = useState(false);
-	const [price, setPrice] = useState({});
+	const [price, setPrice] = useState({
+		portal_subscription_update_enabled: true,
+	});
+	const [currentSwap, setCurrentSwap] = useState(null);
 	const [type, setType] = useState('once');
 	const { saveEntityRecord } = useDispatch(coreStore);
 	const { createSuccessNotice } = useDispatch(noticesStore);
+	const ref = useRef(null);
 
 	// update the price.
 	const updatePrice = (data) => {
 		setPrice({ ...price, ...data });
 	};
 
-	const onClose = () => {
-		if (price?.amount) {
-			const r = confirm(
-				__('Are you sure you want to discard this price?', 'surecart')
-			);
-			if (!r) return;
-		}
-		onRequestClose();
+	const editSwap = (data) => {
+		setCurrentSwap({ ...currentSwap, ...data });
 	};
 
 	const onSubmit = async (e) => {
-		e.preventDefault();
+		e.stopPropagation();
 		try {
 			setLoading(true);
-			await saveEntityRecord(
+			const newPrice = await saveEntityRecord(
 				'surecart',
 				'price',
 				{
@@ -55,16 +52,25 @@ export default ({ onRequestClose, product }) => {
 				},
 				{ throwOnError: true }
 			);
-			createSuccessNotice(__('Price created.', 'surecart'), {
+
+			if (currentSwap) {
+				await saveEntityRecord(
+					'surecart',
+					'swap',
+					{
+						...currentSwap,
+						price: newPrice.id,
+					},
+					{ throwOnError: true }
+				);
+			}
+			createSuccessNotice(__('Price added.', 'surecart'), {
 				type: 'snackbar',
 			});
 			onRequestClose();
 		} catch (e) {
 			console.error(e);
-			setError(e?.message || __('Something went wrong.', 'surecart'));
-			if (e?.additional_errors) {
-				setAdditionalErrors(e.additional_errors);
-			}
+			setError(e);
 		} finally {
 			setLoading(false);
 		}
@@ -77,7 +83,6 @@ export default ({ onRequestClose, product }) => {
 					recurring_interval: 'month',
 					recurring_interval_count: 1,
 					recurring_period_count: null,
-					recurring_end_behavior: 'cancel',
 				});
 				break;
 			case 'multiple':
@@ -85,7 +90,7 @@ export default ({ onRequestClose, product }) => {
 					recurring_interval: 'month',
 					recurring_interval_count: 1,
 					recurring_period_count: 3,
-					recurring_end_behavior: 'complete',
+					revoke_purchases_on_completed: false,
 				});
 				break;
 			case 'once':
@@ -93,103 +98,105 @@ export default ({ onRequestClose, product }) => {
 					recurring_interval: null,
 					recurring_interval_count: null,
 					recurring_period_count: null,
-					recurring_end_behavior: null,
 				});
 				break;
 		}
 	}, [type]);
 
 	return (
-		<Modal
-			title={__('Add A Price', 'surecart')}
-			css={css`
-				width: 100%;
-				box-sizing: border-box;
-			`}
-			overlayClassName={'sc-modal-overflow'}
-			onRequestClose={onClose}
-			shouldCloseOnClickOutside={false}
-		>
-			<Global
-				styles={css`
-					.sc-modal-overflow {
-						box-sizing: border-box;
-						.components-modal__content,
-						.components-modal__frame {
-							/* overflow: visible !important; */
-							box-sizing: border-box;
-							max-width: 600px !important;
-							width: 100%;
-						}
-					}
-				`}
-			/>
-
-			<ScForm
-				onScFormSubmit={onSubmit}
-				css={css`
-					--sc-form-row-spacing: var(--sc-spacing-large);
-				`}
+		<ScForm onScFormSubmit={onSubmit}>
+			<ScDrawer
+				label={__('Add A Price', 'surecart')}
+				style={{
+					'--sc-drawer-size': '38rem',
+					'--sc-input-label-margin': 'var(--sc-spacing-small)',
+				}}
+				onScAfterHide={onRequestClose}
+				open={isOpen}
+				stickyHeader
+				stickyFooter
+				onScAfterShow={() => ref.current.triggerFocus()}
 			>
-				<sc-alert type="danger" open={error?.length}>
-					<span slot="title">{error}</span>
-					{additionalErrors.map((e) => (
-						<div>{e?.message}</div>
-					))}
-				</sc-alert>
-
-				<PriceName price={price} updatePrice={updatePrice} />
-
-				<ScSelect
-					label={__('Payment Type', 'surecart')}
-					required
-					unselect={false}
-					value={type}
-					onScChange={(e) => setType(e.target.value)}
-					choices={[
-						{
-							value: 'once',
-							label: __('One Time', 'surecart'),
-						},
-						{
-							value: 'multiple',
-							label: __('Installment', 'surecart'),
-						},
-						{
-							value: 'subscription',
-							label: __('Subscription', 'surecart'),
-						},
-					]}
-				/>
-
-				{type === 'subscription' && (
-					<Subscription price={price} updatePrice={updatePrice} />
-				)}
-
-				{type === 'multiple' && (
-					<Multiple price={price} updatePrice={updatePrice} />
-				)}
-
-				{type === 'once' && (
-					<OneTime price={price} updatePrice={updatePrice} />
-				)}
-
 				<div
 					css={css`
 						display: flex;
-						align-items: center;
-						justify-content: space-between;
-						gap: 0.5em;
-						margin-top: var(--sc-spacing-xx-large);
+						flex-direction: column;
+						height: 100%;
+						background: var(--sc-color-gray-50);
 					`}
 				>
 					<div
 						css={css`
-							display: flex;
-							align-items: center;
-							gap: 0.5em;
+							padding: 30px;
+							display: grid;
+							gap: 2em;
 						`}
 					>
+						<Error error={error} setError={setError} />
+
+						<PriceName
+							price={price}
+							updatePrice={updatePrice}
+							ref={ref}
+						/>
+
+						<PaymentType
+							type={type}
+							setType={setType}
+							price={price}
+							updatePrice={updatePrice}
+						/>
+
+						{type === 'subscription' && (
+							<Subscription
+								price={price}
+								updatePrice={updatePrice}
+								product={product}
+							/>
+						)}
+
+						{type === 'multiple' && (
+							<Multiple
+								price={price}
+								updatePrice={updatePrice}
+								product={product}
+							/>
+						)}
+
+						{type === 'once' && (
+							<OneTime
+								price={price}
+								updatePrice={updatePrice}
+								product={product}
+							/>
+						)}
+						{!product?.variants?.length &&
+							!product?.variants?.data?.length &&
+							!price?.ad_hoc && (
+								<Swap
+									currentPrice={price}
+									updateSwap={editSwap}
+									currentSwap={currentSwap}
+									currentProduct={product}
+									isSaving={loading}
+								/>
+							)}
+
+						<Advanced
+							price={price}
+							updatePrice={updatePrice}
+							product={product}
+						/>
+					</div>
+				</div>
+				<div
+					css={css`
+						display: flex;
+						justify-content: space-between;
+					`}
+					slot="footer"
+				>
+					<div>
 						<ScButton
 							type="primary"
 							isBusy={loading}
@@ -198,33 +205,42 @@ export default ({ onRequestClose, product }) => {
 						>
 							{__('Create Price', 'surecart')}
 						</ScButton>
-						<ScButton type="text" onClick={onClose}>
+						<ScButton
+							type="text"
+							onClick={(e) =>
+								e.target.closest('sc-drawer').requestClose()
+							}
+						>
 							{__('Cancel', 'surecart')}
 						</ScButton>
 					</div>
-
-					{product?.tax_enabled && scData?.tax_protocol?.tax_enabled && (
-						<ScSwitch
-							style={{
-								marginTop: '0.5em',
-								display: 'inline-block',
-							}}
-							checked={price?.tax_behavior === 'inclusive'}
-							onScChange={() =>
-								updatePrice({
-									tax_behavior:
-										price?.tax_behavior === 'inclusive'
-											? 'exclusive'
-											: 'inclusive',
-								})
-							}
-						>
-							{__('Tax is included', 'surecart')}
-						</ScSwitch>
-					)}
+					<div
+						css={css`
+							align-content: center;
+						`}
+					>
+						{product?.tax_enabled &&
+							scData?.tax_protocol?.tax_enabled &&
+							scData?.tax_protocol?.tax_behavior ===
+								'inclusive' && (
+								<ScButton
+									size="small"
+									type="text"
+									target="_blank"
+									href="admin.php?page=sc-settings&tab=tax_protocol"
+								>
+									{__('Tax is included', 'surecart')}
+									<ScIcon
+										name="external-link"
+										slot="suffix"
+									/>
+								</ScButton>
+							)}
+					</div>
 				</div>
-			</ScForm>
-			{loading && <sc-block-ui spinner></sc-block-ui>}
-		</Modal>
+
+				{loading && <sc-block-ui spinner></sc-block-ui>}
+			</ScDrawer>
+		</ScForm>
 	);
 };

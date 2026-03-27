@@ -13,7 +13,7 @@ class OrderScriptsController extends AdminModelEditController {
 	 *
 	 * @var array
 	 */
-	protected $with_data = [ 'currency', 'supported_currencies', 'links', 'shipping_protocol' ];
+	protected $with_data = [ 'currency', 'supported_currencies', 'links', 'shipping_protocol', 'i18n' ];
 
 	/**
 	 * Script handle.
@@ -28,4 +28,23 @@ class OrderScriptsController extends AdminModelEditController {
 	 * @var string
 	 */
 	protected $path = 'admin/orders';
+
+	/**
+	 * Enqueue scripts.
+	 *
+	 * @return void
+	 */
+	public function enqueue() {
+		parent::enqueue();
+		// Enqueue CodeMirror editor with wp.codeEditor API.
+		wp_enqueue_code_editor(
+			[
+				'type'       => 'application/json',
+				'codemirror' => [
+					'indentUnit' => 2,
+					'tabSize'    => 2,
+				],
+			]
+		);
+	}
 }

@@ -1,0 +1,21 @@
+.wp-block-surecart-cart-order-bump-image {
+	box-sizing: border-box;
+	height: auto;
+	max-width: 100%;
+	vertical-align: bottom;
+	border-color: var(--sc-color-gray-300);
+
+	&.sc-is-covered {
+		object-fit: cover;
+	}
+
+	&.sc-is-contained {
+		object-fit: contain;
+	}
+}
+
+.sc-cart-order-bump-image-wrap {
+	margin: 0;
+	padding: 0;
+	flex-shrink: 0; // Prevent the image from shrinking below the fixed size.
+}

@@ -30,6 +30,17 @@ class AdminNoticesService {
 	}
 
 	/**
+	 * Reset the notice.
+	 *
+	 * @param string $name Notice name.
+	 *
+	 * @return void
+	 */
+	public function reset( $name ) {
+		delete_option( $this->notice_key . '_' . sanitize_text_field( $name ) );
+	}
+
+	/**
 	 * Is the notice dismissed.
 	 *
 	 * @param string $name Notice name.
@@ -95,7 +106,7 @@ class AdminNoticesService {
 
 		add_action(
 			'admin_notices',
-			function() use ( $notice_data ) {
+			function () use ( $notice_data ) {
 				echo wp_kses_post(
 					$this->render(
 						[
@@ -118,7 +129,7 @@ class AdminNoticesService {
 	public function add( $notice_data ) {
 		add_action(
 			'admin_notices',
-			function() use ( $notice_data ) {
+			function () use ( $notice_data ) {
 				echo wp_kses_post(
 					$this->render( $notice_data )
 				);

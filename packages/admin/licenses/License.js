@@ -6,7 +6,6 @@ import {
 	ScButton,
 } from '@surecart/components-react';
 import { store } from '@surecart/data';
-import { store as coreStore } from '@wordpress/core-data';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
@@ -22,8 +21,15 @@ import Activations from './modules/Activations';
 import Customer from './modules/Customer';
 import Details from './modules/Details';
 import Purchase from './modules/Purchase';
+import EditKeyModal from './modules/modals/EditKeyModal';
+import { useState } from '@wordpress/element';
+
+const modals = {
+	EDIT_LICENSE_KEY: 'edit_license_key',
+};
 
 export default () => {
+	const [activeModal, setActiveModal] = useState('');
 	const { createSuccessNotice } = useDispatch(noticesStore);
 	const id = useSelect((select) => select(store).selectPageId());
 	const {
@@ -48,57 +54,75 @@ export default () => {
 	};
 
 	return (
-		<UpdateModel
-			onSubmit={onSubmit}
-			button={
-				<SaveButton busy={!hasLoadedLicense || savingLicense}>
-					{__('Save License', 'surecart')}
-				</SaveButton>
-			}
-			title={
-				<div
-					css={css`
-						display: flex;
-						align-items: center;
-						gap: 1em;
-					`}
-				>
-					<ScButton
-						circle
-						size="small"
-						href="admin.php?page=sc-licenses"
+		<>
+			<UpdateModel
+				onSubmit={onSubmit}
+				button={
+					<SaveButton busy={!hasLoadedLicense || savingLicense}>
+						{__('Save License', 'surecart')}
+					</SaveButton>
+				}
+				title={
+					<div
+						css={css`
+							display: flex;
+							align-items: center;
+							gap: 1em;
+						`}
 					>
-						<sc-icon name="arrow-left"></sc-icon>
-					</ScButton>
-					<ScBreadcrumbs>
-						<ScBreadcrumb>
-							<Logo display="block" />
-						</ScBreadcrumb>
-						<ScBreadcrumb href="admin.php?page=sc-licenses">
-							{__('Licenses', 'surecart')}
-						</ScBreadcrumb>
-						<ScBreadcrumb>
-							{__('View License', 'surecart')}
-						</ScBreadcrumb>
-					</ScBreadcrumbs>
-				</div>
-			}
-			sidebar={
+						<ScButton
+							circle
+							size="small"
+							href="admin.php?page=sc-licenses"
+						>
+							<sc-icon name="arrow-left"></sc-icon>
+						</ScButton>
+						<ScBreadcrumbs>
+							<ScBreadcrumb>
+								<Logo display="block" />
+							</ScBreadcrumb>
+							<ScBreadcrumb href="admin.php?page=sc-licenses">
+								{__('Licenses', 'surecart')}
+							</ScBreadcrumb>
+							<ScBreadcrumb>
+								{__('View License', 'surecart')}
+							</ScBreadcrumb>
+						</ScBreadcrumbs>
+					</div>
+				}
+				sidebar={
+					<>
+						<Customer licenseId={id} />
+						<Purchase licenseId={id} />
+					</>
+				}
+			>
 				<>
-					<Customer licenseId={id} />
-					<Purchase licenseId={id} />
+					<Error
+						error={saveLicenseError || licenseError}
+						margin="80px"
+					/>
+					<Details
+						license={license}
+						updateLicense={(data) => editLicense(data)}
+						loading={!hasLoadedLicense}
+						onEditKey={() =>
+							setActiveModal(modals.EDIT_LICENSE_KEY)
+						}
+					/>
+					<Activations id={id} license={license} />
 				</>
-			}
-		>
-			<>
-				<Error error={saveLicenseError || licenseError} margin="80px" />
-				<Details
-					license={license}
-					updateLicense={(data) => editLicense(data)}
-					loading={!hasLoadedLicense}
-				/>
-				<Activations id={id} license={license} />
-			</>
-		</UpdateModel>
+			</UpdateModel>
+
+			{activeModal && (
+				<>
+					<EditKeyModal
+						open={activeModal === modals.EDIT_LICENSE_KEY}
+						onRequestClose={() => setActiveModal('')}
+						license={license}
+					/>
+				</>
+			)}
+		</>
 	);
 };

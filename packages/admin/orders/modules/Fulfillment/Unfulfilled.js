@@ -16,6 +16,9 @@ import ProductLineItem from '../../../ui/ProductLineItem';
 
 export default ({ items, checkout, orderId, onCreateSuccess }) => {
 	const [modal, setModal] = useState(false);
+	let total = (items || []).reduce((accumulator, item) => {
+		return accumulator + (item?.quantity - item?.fulfilled_quantity);
+	}, 0);
 
 	return (
 		<>
@@ -44,13 +47,8 @@ export default ({ items, checkout, orderId, onCreateSuccess }) => {
 							type={'warning'}
 						>
 							{sprintf(
-								_n(
-									'%d Item',
-									'%d Items',
-									items?.length,
-									'surecart'
-								),
-								items?.length
+								_n('%d Item', '%d Items', total, 'surecart'),
+								total
 							)}
 						</ScTag>
 					</div>

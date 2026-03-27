@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, h, Prop, Watch } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, h, Method, Prop, Watch } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 
 import { animateTo, stopAnimations } from '../../../functions/animate';
@@ -18,7 +18,7 @@ export class ScDrawer {
   private originalTrigger: HTMLElement | null;
 
   @Event({ cancelable: true }) scInitialFocus: EventEmitter<void>;
-  @Event({ cancelable: true }) scRequestClose: EventEmitter<'close-button' | 'keyboard' | 'overlay'>;
+  @Event({ cancelable: true }) scRequestClose: EventEmitter<'close-button' | 'keyboard' | 'overlay' | 'method'>;
   @Event() scShow: EventEmitter<void>;
   @Event() scHide: EventEmitter<void>;
   @Event() scAfterShow: EventEmitter<void>;
@@ -50,6 +50,9 @@ export class ScDrawer {
 
   /** Sticky drawer header */
   @Prop() stickyHeader: boolean = false;
+
+  /** Sticky drawer footer */
+  @Prop() stickyFooter: boolean = false;
 
   componentDidLoad() {
     this.drawer.hidden = !this.open;
@@ -87,7 +90,8 @@ export class ScDrawer {
     this.open = false;
   }
 
-  private requestClose(source: 'close-button' | 'keyboard' | 'overlay') {
+  @Method()
+  async requestClose(source: 'close-button' | 'keyboard' | 'overlay' | 'method' = 'method') {
     const slRequestClose = this.scRequestClose.emit(source);
 
     if (slRequestClose.defaultPrevented) {
@@ -236,7 +240,7 @@ export class ScDrawer {
           <div part="body" class="drawer__body">
             <slot></slot>
           </div>
-          <footer part="footer" class="drawer__footer">
+          <footer part="footer" class={this.stickyFooter ? 'drawer__footer is-sticky' : 'drawer__footer'}>
             <slot name="footer"></slot>
           </footer>
         </div>

@@ -23,18 +23,20 @@ exports[`sc-customer-edit renders 1`] = `
           <sc-column>
             <sc-phone-input label="Phone" name="phone"></sc-phone-input>
           </sc-column>
-          <div>
-            <sc-address label="Shipping Address" showname=""></sc-address>
-          </div>
-          <div>
-            <sc-switch name="billing_matches_shipping" value="on">
-              Billing address same as shipping
-            </sc-switch>
-          </div>
-          <div style="display: block;">
-            <sc-address label="Billing Address" showname=""></sc-address>
-          </div>
-          <sc-tax-id-input show=""></sc-tax-id-input>
+          <sc-flex flexdirection="column" style="--sc-flex-column-gap: var(--sc-spacing-medium);">
+            <div>
+              <sc-address label="Shipping Address" showline2="" showname=""></sc-address>
+            </div>
+            <div>
+              <sc-checkbox name="billing_matches_shipping" value="on">
+                Billing address is same as shipping
+              </sc-checkbox>
+            </div>
+            <div style="display: block;">
+              <sc-address label="Billing Address" required="" showline2="" showname=""></sc-address>
+            </div>
+            <sc-tax-id-input show=""></sc-tax-id-input>
+          </sc-flex>
           <div>
             <sc-button full="" submit="" type="primary">
               Save

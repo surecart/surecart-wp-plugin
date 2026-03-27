@@ -1,0 +1,22 @@
+.wp-block-surecart-product-pagination-previous {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--sc-spacing-xx-small);
+	text-decoration: none !important;
+	color: inherit;
+
+	&__icon {
+		width: 1em;
+		height: 1em;
+	}
+
+	&:focus:not(:focus-visible) {
+		outline: none;
+	}
+
+	&[aria-disabled] {
+		pointer-events: none;
+		text-decoration: none;
+		opacity: 0.5;
+	}
+}

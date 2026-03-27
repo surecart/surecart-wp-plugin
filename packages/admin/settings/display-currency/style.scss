@@ -1,0 +1,36 @@
+@import "@wordpress/dataviews/build-style/style.css";
+
+// Define variables
+$padding-size: 20px;
+
+.dataviews-view-table {
+	tr {
+		td,
+		th {
+			&:first-child {
+				padding-left: $padding-size;
+			}
+
+			&:last-child {
+				padding-right: $padding-size;
+			}
+		}
+	}
+}
+
+.dataviews {
+	&__view-actions,
+	&-footer,
+	&-filters__container {
+		padding-left: $padding-size;
+		padding-right: $padding-size;
+	}
+}
+
+.dataviews-wrapper {
+	--wp-components-color-gray-100: var(--sc-color-brand-main-background);
+}
+
+.dataviews-view-table tr.is-hovered {
+	background-color: var(--sc-color-brand-main-background);
+}

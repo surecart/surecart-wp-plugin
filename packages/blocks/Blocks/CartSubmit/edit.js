@@ -23,7 +23,7 @@ import {
 import { __ } from '@wordpress/i18n';
 
 export default ({ className, attributes, setAttributes }) => {
-	const { text, textAlign, style, padding, border, backgroundColor } =
+	const { text, textAlign, style, padding, border, sectionBackgroundColor } =
 		attributes;
 
 	const blockProps = useBlockProps({
@@ -34,7 +34,9 @@ export default ({ className, attributes, setAttributes }) => {
 			...(padding?.bottom ? { paddingBottom: padding?.bottom } : {}),
 			...(padding?.left ? { paddingLeft: padding?.left } : {}),
 			...(padding?.right ? { paddingRight: padding?.right } : {}),
-			...(backgroundColor ? { backgroundColor: backgroundColor } : {}),
+			...(sectionBackgroundColor
+				? { backgroundColor: sectionBackgroundColor }
+				: {}),
 		},
 	});
 
@@ -49,9 +51,9 @@ export default ({ className, attributes, setAttributes }) => {
 					title={__('Section Color', 'surecart')}
 					colorSettings={[
 						{
-							value: backgroundColor,
-							onChange: (backgroundColor) =>
-								setAttributes({ backgroundColor }),
+							value: sectionBackgroundColor,
+							onChange: (sectionBackgroundColor) =>
+								setAttributes({ sectionBackgroundColor }),
 							label: __('Background Color', 'surecart'),
 						},
 					]}
@@ -72,6 +74,7 @@ export default ({ className, attributes, setAttributes }) => {
 				<PanelBody title={__('Border', 'surecart')}>
 					<PanelRow>
 						<ToggleControl
+							__nextHasNoMarginBottom
 							label={__('Bottom Border', 'surecart')}
 							checked={border}
 							onChange={(border) => setAttributes({ border })}
@@ -81,6 +84,8 @@ export default ({ className, attributes, setAttributes }) => {
 				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
 						<TextControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							label={__('Button Text', 'surecart')}
 							value={text}
 							onChange={(text) => setAttributes({ text })}
@@ -98,8 +103,8 @@ export default ({ className, attributes, setAttributes }) => {
 					})}
 				>
 					<RichText
-						aria-label={__('Button text')}
-						placeholder={__('Add text…')}
+						aria-label={__('Button text', 'surecart')}
+						placeholder={__('Add text…', 'surecart')}
 						className={classnames(
 							className,
 							'wp-block-button__link',
@@ -118,6 +123,9 @@ export default ({ className, attributes, setAttributes }) => {
 							...colorProps.style,
 							...spacingProps.style,
 							width: '100%',
+							...(blockProps?.style?.fontSize
+								? { fontSize: blockProps?.style?.fontSize }
+								: {}),
 						}}
 						value={text}
 						onChange={(value) => setAttributes({ text: value })}

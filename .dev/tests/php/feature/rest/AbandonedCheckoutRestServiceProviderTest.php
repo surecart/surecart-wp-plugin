@@ -45,6 +45,7 @@ class AbandonedCheckoutRestServiceProviderTest extends SureCartUnitTestCase {
 
 	/**
 	 * @dataProvider requestProvider
+	 * @group permissions
 	 */
 	public function test_permissions( $caps, $method, $route, $status) {
 		// mock the requests in the container

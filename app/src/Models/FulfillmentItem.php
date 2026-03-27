@@ -2,10 +2,14 @@
 
 namespace SureCart\Models;
 
+use SureCart\Models\Traits\HasLineItem;
+
 /**
  * Fulfillment model.
  */
 class FulfillmentItem extends Model {
+	use HasLineItem;
+
 	/**
 	 * Rest API endpoint
 	 *

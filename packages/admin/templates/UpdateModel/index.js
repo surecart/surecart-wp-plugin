@@ -2,7 +2,6 @@
 import Notices from '../../components/Notices';
 import Notifications from '../../components/Notifications';
 import ErrorBoundary from '../../components/error-boundary';
-import admin from '../../styles/admin';
 import UnsavedChangesWarning from './UnsavedChangesWarning';
 import { css, jsx, Global } from '@emotion/core';
 import {
@@ -11,11 +10,15 @@ import {
 	ScFeatureDemoBanner,
 } from '@surecart/components-react';
 import { PostLockedModal } from '@wordpress/editor';
-import { Fragment } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { store as uiStore } from '../../store/ui';
 import { useDispatch, useSelect } from '@wordpress/data';
 import UpgradeModal from '../../components/UpgradeModal';
+import { SlotFillProvider } from '@wordpress/components';
+import Main from './MainSlot';
+import Sidebar from './SidebarSlot';
+import { getAddons } from './register';
+import Box from '../../ui/Box';
 
 export default ({
 	children,
@@ -57,18 +60,35 @@ export default ({
 
 		// provisional.
 		if (!!scData?.claim_url) {
-			return <ScProvisionalBanner claim-url={scData?.claim_url} />;
+			return (
+				<ScProvisionalBanner
+					claimUrl={scData?.claim_url}
+					expired={scData?.claim_expired || false}
+				/>
+			);
 		}
 
 		// nothing.
 		return null;
 	};
 
+	const addonsMain = getAddons('main');
+	const addonsSidebar = getAddons('sidebar');
+
 	return (
-		<Fragment>
+		<SlotFillProvider>
+			<Main.Fill>
+				{addonsMain?.map((addon) => (
+					<Box title={addon?.title}>{addon?.render()}</Box>
+				))}
+			</Main.Fill>
+			<Sidebar.Fill>
+				{addonsSidebar?.map((addon) => (
+					<Box title={addon?.title}>{addon?.render()}</Box>
+				))}
+			</Sidebar.Fill>
 			<Global
 				styles={css`
-					${admin}
 					#wpwrap {
 						background-color: var(--sc-color-gray-100);
 					}
@@ -171,7 +191,7 @@ export default ({
 							padding: 0 5px;
 							display: grid;
 							margin: auto;
-							max-width: ${sidebar ? '1160px' : '752px'};
+							max-width: ${sidebar ? '1160px' : '866px'};
 							${sidebar &&
 							`@media screen and (min-width: 960px) {
 								grid-template-columns: 1fr 380px;
@@ -190,6 +210,7 @@ export default ({
 						>
 							<Notices margin="80px" />
 							{children}
+							<Main.Slot />
 							{footer && (
 								<div>
 									<hr
@@ -211,6 +232,7 @@ export default ({
 								`}
 							>
 								{sidebar}
+								<Sidebar.Slot />
 							</div>
 						</div>
 					</div>
@@ -231,6 +253,6 @@ export default ({
 				{modal && <UpgradeModal onRequestClose={onRequestClose} />}
 			</ErrorBoundary>
 			<PostLockedModal />
-		</Fragment>
+		</SlotFillProvider>
 	);
 };

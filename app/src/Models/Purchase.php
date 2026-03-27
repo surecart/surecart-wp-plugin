@@ -4,6 +4,7 @@ namespace SureCart\Models;
 
 use SureCart\Models\Order;
 use SureCart\Models\Traits\HasCustomer;
+use SureCart\Models\Traits\HasLicense;
 use SureCart\Models\Traits\HasProduct;
 use SureCart\Models\Traits\HasRefund;
 use SureCart\Models\Traits\HasSubscription;
@@ -12,7 +13,7 @@ use SureCart\Models\Traits\HasSubscription;
  * Purchase model.
  */
 class Purchase extends Model {
-	use HasCustomer, HasProduct, HasSubscription, HasRefund;
+	use HasCustomer, HasProduct, HasSubscription, HasRefund, HasLicense;
 
 	/**
 	 * Rest API endpoint

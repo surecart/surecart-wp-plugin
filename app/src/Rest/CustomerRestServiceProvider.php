@@ -61,9 +61,9 @@ class CustomerRestServiceProvider extends RestServiceProvider implements RestSer
 		 * @return array The sample schema for a post
 		 */
 	public function sync_schema() {
-		if ( $this->sync_schema ) {
+		if ( ! empty( $this->schema ) ) {
 			// Since WordPress 5.3, the schema can be cached in the $schema property.
-			return $this->sync_schema;
+			return $this->schema;
 		}
 
 		$this->schema = [

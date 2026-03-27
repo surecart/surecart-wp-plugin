@@ -55,7 +55,6 @@ export class ScOrderConfirmationDetails {
         <span slot="end">{this.renderOrderStatus()}</span>
         <sc-card>
           <sc-order-confirmation-line-items></sc-order-confirmation-line-items>
-          <sc-divider></sc-divider>
           <sc-order-confirmation-totals></sc-order-confirmation-totals>
         </sc-card>
       </sc-dashboard-module>

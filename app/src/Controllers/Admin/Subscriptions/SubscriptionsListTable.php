@@ -5,11 +5,14 @@ namespace SureCart\Controllers\Admin\Subscriptions;
 use SureCart\Support\Currency;
 use SureCart\Controllers\Admin\Tables\ListTable;
 use SureCart\Models\Subscription;
+use SureCart\Controllers\Admin\Tables\HasModeFilter;
 
 /**
  * Create a new table class that will extend the WP_List_Table
  */
 class SubscriptionsListTable extends ListTable {
+	use HasModeFilter;
+
 	/**
 	 * Prepare the items for the table to process
 	 *
@@ -64,9 +67,8 @@ class SubscriptionsListTable extends ListTable {
 			'canceled' => __( 'Canceled', 'surecart' ),
 		];
 
-		$link = \SureCart::getUrl()->index( 'subscriptions' );
-
 		foreach ( $stati as $status => $label ) {
+			$link                    = \SureCart::getUrl()->index( 'subscriptions' );
 			$current_link_attributes = '';
 
 			if ( ! empty( $_GET['status'] ) ) {
@@ -78,6 +80,8 @@ class SubscriptionsListTable extends ListTable {
 			}
 
 			$link = add_query_arg( 'status', $status, $link );
+
+			$link = esc_url( $link );
 
 			$status_links[ $status ] = "<a href='$link'$current_link_attributes>" . $label . '</a>';
 		}
@@ -100,15 +104,18 @@ class SubscriptionsListTable extends ListTable {
 	 * @return Array
 	 */
 	public function get_columns() {
-		return [
-			'customer'           => __( 'Customer', 'surecart' ),
-			'status'             => __( 'Status', 'surecart' ),
-			'plan'               => __( 'Plan', 'surecart' ),
-			'remaining_payments' => __( 'Remaining Payments', 'surecart' ),
-			'integrations'       => __( 'Integrations', 'surecart' ),
-			'created'            => __( 'Created', 'surecart' ),
-			'mode'               => '',
-		];
+		return array_merge(
+			[
+				'customer'           => __( 'Customer', 'surecart' ),
+				'status'             => __( 'Status', 'surecart' ),
+				'plan'               => __( 'Plan', 'surecart' ),
+				'remaining_payments' => __( 'Remaining Payments', 'surecart' ),
+				'integrations'       => __( 'Integrations', 'surecart' ),
+				'created'            => __( 'Created', 'surecart' ),
+				'mode'               => '',
+			],
+			parent::get_columns()
+		);
 	}
 
 	/**
@@ -131,7 +138,14 @@ class SubscriptionsListTable extends ListTable {
 	 */
 	public function column_integrations( $subscription ) {
 		$product = $subscription->purchase->product ?? null;
-		$output  = $product ? $this->productIntegrationsList( $product ) : false;
+		$output  = $product ? $this->productIntegrationsList(
+			[
+				'product_id' => $product,
+				'price_id'   => $subscription->purchase->price->id ?? $subscription->purchase->price ?? null,
+				'variant_id' => $subscription->purchase->variant->id ?? $subscription->purchase->variant ?? null,
+			]
+		) : false;
+
 		return $output ? $output : '-';
 	}
 	/**
@@ -158,12 +172,19 @@ class SubscriptionsListTable extends ListTable {
 	 * @return Array
 	 */
 	protected function table_data() {
-		return Subscription::where(
-			[
-				'status' => $this->getStatus(),
-				'query'  => $this->get_search_query(),
-			]
-		)->with( [ 'customer', 'price', 'price.product', 'current_period', 'purchase' ] )
+		$mode = sanitize_text_field( wp_unslash( $_GET['mode'] ?? '' ) );
+
+		$conditions = [
+			'status' => $this->getStatus(),
+			'query'  => $this->get_search_query(),
+		];
+
+		if ( ! empty( $mode ) ) {
+			$conditions['live_mode'] = 'live' === $mode;
+		}
+
+		return Subscription::where( $conditions )
+		->with( [ 'customer', 'price', 'price.product', 'current_period', 'purchase' ] )
 		->paginate(
 			[
 				'per_page' => $this->get_items_per_page( 'subscriptions' ),
@@ -224,64 +245,52 @@ class SubscriptionsListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_plan( $subscription ) {
-		$amount       = $subscription->price->ad_hoc_amount ?? $subscription->price->amount ?? 0;
-		$interval     = $subscription->price->recurring_interval ?? '';
-		$count        = $subscription->price->recurring_interval_count ?? 1;
-		$period_count = $subscription->price->recurring_period_count ?? null;
-
-
 		ob_start();
-		echo '<sc-format-number type="currency" currency="' . esc_html( strtoupper( $subscription->currency ?? 'usd' ) ) . '" value="' . (float) $amount . '"></sc-format-number>';
-		echo esc_html( $this->getInterval( $interval, $count ) );
-		if ( null !== $period_count ) {
-			if ( 1 === $period_count ) {
-				echo ' ' . esc_html( __( '(one time)', 'surecart' ) );
-			} else {
-				echo esc_html( $this->getInterval( $interval, $period_count, __( 'for', 'surecart' ) ) );
-			}
-		}
-		echo  $this->getProductDisplay( $subscription ) ;
+		echo ! empty( $subscription->ad_hoc_display_amount ) ? esc_html( $subscription->ad_hoc_display_amount ) : esc_html( $subscription->price->display_amount );
+		echo ' ' . esc_html( $subscription->price->interval_text );
+		echo ' ' . esc_html( $subscription->price->interval_count_text );
+		echo wp_kses_post( $this->getProductDisplay( $subscription ) );
 		if ( ! empty( $subscription->variant_options ) ) {
 			echo '<div>' . esc_html( implode( ' / ', $subscription->variant_options ) ) . '</div>';
-        }
+		}
 
 		return ob_get_clean();
 	}
 
-	private function getProductDisplay($subscription){
-		if(empty($subscription->price->product->name)){
+	private function getProductDisplay( $subscription ) {
+		if ( empty( $subscription->price->product->name ) ) {
 			return $subscription->price->name ?? __( 'No Product', 'surecart' );
 		}
 
-		$price_name = !empty($subscription->price->name) ? ' - '.$subscription->price->name : '';
+		$price_name = ! empty( $subscription->price->name ) ? ' - ' . $subscription->price->name : '';
 
-		return '<br/><a href="' . esc_url( \SureCart::getUrl()->edit( 'product', $subscription->price->product->id ) ) . '">' . $subscription->price->product->name . '</a>'.$price_name;
+		return '<br/><a href="' . esc_url( \SureCart::getUrl()->edit( 'product', $subscription->price->product->id ) ) . '">' . $subscription->price->product->name . '</a>' . $price_name;
 	}
 
 	public function getInterval( $interval, $count, $separator = '/', $show_single = false ) {
 		switch ( $interval ) {
 			case 'day':
 				return " $separator " . sprintf(
-					// translators: number of days.
-					$show_single ? _n( '%d day', '%d days', $count, 'surecart' ) : _n( 'day', '%d days', $count, 'surecart' ),
+					// translators: %d is the number of days.
+					$show_single ? _n( '%d day', '%d days', $count, 'surecart' ) : _n( '%d day', '%d days', $count, 'surecart' ),
 					$count
 				);
 			case 'week':
 				return " $separator " . sprintf(
-					// translators: number of weeks.
-					$show_single ? _n( '%d week', '%d weeks', $count, 'surecart' ) : _n( 'week', '%d weeks', $count, 'surecart' ),
+					// translators: %d is the number of weeks.
+					$show_single ? _n( '%d week', '%d weeks', $count, 'surecart' ) : _n( '%d week', '%d weeks', $count, 'surecart' ),
 					$count
 				);
 			case 'month':
 				return " $separator " . sprintf(
-					// translators: number of months
-					$show_single ? _n( '%d month', '%d months', $count, 'surecart' ) : _n( 'month', '%d months', $count, 'surecart' ),
+					// translators: %d is the number of months.
+					$show_single ? _n( '%d month', '%d months', $count, 'surecart' ) : _n( '%d month', '%d months', $count, 'surecart' ),
 					$count
 				);
 			case 'year':
 				return " $separator " . sprintf(
-					// translators: number of yearls
-					$show_single ? _n( '%d year', '%d years', $count, 'surecart' ) : _n( 'year', '%d years', $count, 'surecart' ),
+					// translators: %d is the number of years.
+					$show_single ? _n( '%d year', '%d years', $count, 'surecart' ) : _n( '%d year', '%d years', $count, 'surecart' ),
 					$count
 				);
 		}
@@ -390,18 +399,73 @@ class SubscriptionsListTable extends ListTable {
 			$name = $subscription->customer->email ?? __( 'No name provided', 'surecart' );
 		}
 		?>
-		<a class="row-title" aria-label="<?php echo esc_attr__( 'Edit Subscription', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->show( 'subscription', $subscription->id ) ); ?>">
+		<a class="row-title" aria-label="<?php esc_attr_e( 'Edit Subscription', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->show( 'subscription', $subscription->id ) ); ?>">
 			<?php echo esc_html( $name ); ?>
 		</a>
 
 		<?php
 		echo $this->row_actions(
 			[
-				'edit' => '<a href="' . esc_url( \SureCart::getUrl()->show( 'subscription', $subscription->id ) ) . '" aria-label="' . esc_attr( 'Edit Subscription', 'surecart' ) . '">' . __( 'Edit', 'surecart' ) . '</a>',
+				'edit' => '<a href="' . esc_url( \SureCart::getUrl()->show( 'subscription', $subscription->id ) ) . '" aria-label="' . esc_attr__( 'Edit Subscription', 'surecart' ) . '">' . __( 'Edit', 'surecart' ) . '</a>',
 			],
 		);
 		?>
 		<?php
 		return ob_get_clean();
+	}
+
+	/**
+	 * Displays extra table navigation.
+	 *
+	 * @param string $which Top or bottom placement.
+	 */
+	protected function extra_tablenav( $which ) {
+		?>
+		<input type="hidden" name="page" value="sc-subscriptions" />
+
+		<div class="alignleft actions">
+		<?php
+		if ( 'top' === $which ) {
+			ob_start();
+			$this->mode_dropdown();
+
+			/**
+			 * Fires before the Filter button on the Posts and Pages list tables.
+			 *
+			 * The Filter button allows sorting by date and/or category on the
+			 * Posts list table, and sorting by date on the Pages list table.
+			 *
+			 * @since 2.1.0
+			 * @since 4.4.0 The `$post_type` parameter was added.
+			 * @since 4.6.0 The `$which` parameter was added.
+			 *
+			 * @param string $post_type The post type slug.
+			 * @param string $which     The location of the extra table nav markup:
+			 *                          'top' or 'bottom' for WP_Posts_List_Table,
+			 *                          'bar' for WP_Media_List_Table.
+			 */
+			do_action( 'restrict_manage_subscriptions', $this->screen->post_type, $which );
+
+			$output = ob_get_clean();
+
+			if ( ! empty( $output ) ) {
+				echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				submit_button( __( 'Filter', 'surecart' ), '', 'filter_action', false, array( 'id' => 'filter-by-mode-submit' ) );
+			}
+		}
+
+		?>
+		</div>
+
+		<?php
+		/**
+		 * Fires immediately following the closing "actions" div in the tablenav for the posts
+		 * list table.
+		 *
+		 * @since 4.4.0
+		 *
+		 * @param string $which The location of the extra table nav markup: 'top' or 'bottom'.
+		 */
+		do_action( 'manage_subscriptions_extra_tablenav', $which );
 	}
 }

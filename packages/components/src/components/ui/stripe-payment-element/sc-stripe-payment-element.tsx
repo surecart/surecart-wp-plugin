@@ -1,17 +1,18 @@
 import { Component, Element, Event, EventEmitter, h, Method, State, Watch } from '@stencil/core';
-import { Stripe, StripeElementChangeEvent } from '@stripe/stripe-js';
 import { loadStripe } from '@stripe/stripe-js/pure';
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 import { state as selectedProcessor } from '@store/selected-processor';
 
-import { FormStateSetter, PaymentInfoAddedParams, ShippingAddress } from '../../../types';
-import { availableProcessors } from '@store/processors/getters';
+import { CustomStripeElementChangeEvent, FormStateSetter, PaymentInfoAddedParams } from '../../../types';
 import { state as checkoutState, onChange } from '@store/checkout';
 import { onChange as onChangeFormState } from '@store/form';
+import { state as processorsState } from '@store/processors';
 import { currentFormState } from '@store/form/getters';
 import { createErrorNotice } from '@store/notices/mutations';
 import { updateFormState } from '@store/form/mutations';
+import { getResolvedBillingAddress, toStripeAddress } from '@store/checkout/getters';
+import { getProcessorByType } from '@store/processors/getters';
 
 @Component({
   tag: 'sc-stripe-payment-element',
@@ -25,14 +26,8 @@ export class ScStripePaymentElement {
   /** Holds the element container. */
   private container: HTMLDivElement;
 
-  /** holds the elements instance. */
-  private elements: any;
-
   /** holds the stripe element. */
   private element: any;
-
-  /** holds the stripe instance. */
-  private stripe: Stripe;
 
   private unlistenToFormState: () => void;
   private unlistenToCheckout: () => void;
@@ -42,6 +37,12 @@ export class ScStripePaymentElement {
 
   /** Are we confirming the order? */
   @State() confirming: boolean = false;
+
+  /** Are we initializing stripe? */
+  @State() isInitializingStripe: boolean = false;
+
+  /** Are we creating our updating stripe elements? */
+  @State() isCreatingUpdatingStripeElement: boolean = false;
 
   /** Are we loaded? */
   @State() loaded: boolean = false;
@@ -59,6 +60,7 @@ export class ScStripePaymentElement {
 
   async componentWillLoad() {
     this.fetchStyles();
+    this.syncCheckoutMode();
   }
 
   @Watch('styles')
@@ -87,18 +89,30 @@ export class ScStripePaymentElement {
     });
   }
 
-  /** Maybe load the stripe element on load. */
+  /** Sync the checkout mode */
+  async syncCheckoutMode() {
+    onChange('checkout', () => {
+      this.initializeStripe();
+    });
+  }
+
   async componentDidLoad() {
-    const processor = (availableProcessors() || []).find(processor => processor.processor_type === 'stripe');
-    if (!processor) {
+    this.initializeStripe();
+  }
+
+  async initializeStripe() {
+    if (typeof checkoutState?.checkout?.live_mode === 'undefined' || processorsState?.instances?.stripe || this.isInitializingStripe) {
       return;
     }
-    const { account_id, publishable_key } = processor?.processor_data || {};
+    this.isInitializingStripe = true;
+    const { processor_data } = getProcessorByType('stripe') || {};
 
     try {
-      this.stripe = await loadStripe(publishable_key, { stripeAccount: account_id });
+      processorsState.instances.stripe = await loadStripe(processor_data?.publishable_key, { stripeAccount: processor_data?.account_id });
+      this.error = '';
     } catch (e) {
       this.error = e?.message || __('Stripe could not be loaded', 'surecart');
+      this.isInitializingStripe = false;
       // don't continue.
       return;
     }
@@ -114,25 +128,44 @@ export class ScStripePaymentElement {
 
     // we need to listen to the form state and pay when the form state enters the paying state.
     this.unlistenToFormState = onChangeFormState('formState', () => {
-      if ('finalizing' === currentFormState()) {
-        this.submit();
-      }
+      if (!checkoutState?.checkout?.payment_method_required) return;
       if ('paying' === currentFormState()) {
         this.maybeConfirmOrder();
       }
     });
+    this.isInitializingStripe = false;
+  }
+
+  clearStripeInstances() {
+    this.isInitializingStripe = false;
+    this.isCreatingUpdatingStripeElement = false;
+    if (this?.element) {
+      try {
+        this.element?.unmount?.(); // If Stripe provides this method
+      } catch (e) {
+        console.warn('Could not unmount Stripe element:', e);
+      }
+      this.element = null;
+    }
+    if (processorsState?.instances?.stripeElements) {
+      processorsState.instances.stripeElements = null;
+    }
+    if (processorsState?.instances?.stripe) {
+      processorsState.instances.stripe = null;
+    }
   }
 
   disconnectedCallback() {
     this.unlistenToFormState();
     this.unlistenToCheckout();
+    this.clearStripeInstances();
   }
 
   getElementsConfig() {
     const styles = getComputedStyle(this.el);
     return {
-      mode: checkoutState.checkout?.reusable_payment_method_required ? 'subscription' : 'payment',
-      amount: checkoutState.checkout?.amount_due,
+      mode: checkoutState.checkout?.remaining_amount_due > 0 ? 'payment' : 'setup',
+      amount: checkoutState.checkout?.remaining_amount_due,
       currency: checkoutState.checkout?.currency,
       setupFutureUsage: checkoutState.checkout?.reusable_payment_method_required ? 'off_session' : null,
       appearance: {
@@ -156,51 +189,65 @@ export class ScStripePaymentElement {
     };
   }
 
+  maybeApplyFilters(options: any): any {
+    if (!window?.wp?.hooks?.applyFilters) return options;
+
+    return {
+      ...options,
+      paymentMethodOrder: window.wp.hooks.applyFilters('surecart_stripe_payment_element_payment_method_order', [], checkoutState.checkout),
+      wallets: window.wp.hooks.applyFilters('surecart_stripe_payment_element_wallets', {}, checkoutState.checkout),
+      terms: window.wp.hooks.applyFilters('surecart_stripe_payment_element_terms', {}, checkoutState.checkout),
+      fields: window.wp.hooks.applyFilters('surecart_stripe_payment_element_fields', options.fields ?? {}),
+    };
+  }
+
   /** Update the payment element mode, amount and currency when it changes. */
   createOrUpdateElements() {
     // need an order amount, etc.
     if (!checkoutState?.checkout?.payment_method_required) return;
-    if (!this.stripe) return;
+    if (!processorsState.instances.stripe || this.isCreatingUpdatingStripeElement) return;
+    if (checkoutState.checkout?.status && ['paid', 'processing'].includes(checkoutState.checkout?.status)) return;
+
+    this.isCreatingUpdatingStripeElement = true;
 
     // create the elements if they have not yet been created.
-    if (!this.elements) {
+    if (!processorsState.instances.stripeElements) {
       // we have what we need, load elements.
-      this.elements = this.stripe.elements(this.getElementsConfig() as any);
+      processorsState.instances.stripeElements = processorsState.instances.stripe.elements(this.getElementsConfig() as any);
+      const address = toStripeAddress(getResolvedBillingAddress());
 
-      const { line_1: line1, line_2: line2, city, state, country, postal_code } = (checkoutState.checkout?.shipping_address as ShippingAddress) || {};
+      const options = this.maybeApplyFilters({
+        defaultValues: {
+          billingDetails: {
+            ...(checkoutState.checkout?.name ? { name: checkoutState.checkout.name } : {}),
+            ...(checkoutState.checkout?.email ? { email: checkoutState.checkout.email } : {}),
+            ...(checkoutState.checkout?.phone ? { phone: checkoutState.checkout.phone } : {}),
+            ...(address ? { address } : {}),
+          },
+        },
+        fields: {
+          billingDetails: {
+            email: 'never',
+          },
+        },
+      } as any);
 
       // create the payment element.
-      this.elements
-        .create('payment', {
-          defaultValues: {
-            billingDetails: {
-              name: checkoutState.checkout?.name,
-              email: checkoutState.checkout?.email,
-              address: {
-                line1,
-                line2,
-                city,
-                state,
-                country,
-                postal_code,
-              },
-            },
-          },
-          fields: {
-            billingDetails: {
-              email: 'never',
-            },
-          },
-        })
-        .mount(this.container);
+      (processorsState.instances.stripeElements as any).create('payment', options).mount(this.container);
 
-      this.element = this.elements.getElement('payment');
+      this.element = processorsState.instances.stripeElements.getElement('payment');
       this.element.on('ready', () => (this.loaded = true));
-      this.element.on('change', (event: StripeElementChangeEvent) => {
+      this.element.on('change', (event: CustomStripeElementChangeEvent) => {
+        const requiredShippingPaymentTypes = ['cashapp', 'klarna', 'clearpay'];
+        checkoutState.paymentMethodRequiresShipping = requiredShippingPaymentTypes.includes(event?.value?.type);
+
         if (event.complete) {
           this.scPaymentInfoAdded.emit({
             checkout_id: checkoutState.checkout?.id,
+            currency: checkoutState.checkout?.currency,
             processor_type: 'stripe',
+            total_amount: checkoutState.checkout?.total_amount,
+            line_items: checkoutState.checkout?.line_items,
             payment_method: {
               billing_details: {
                 email: checkoutState.checkout?.email,
@@ -210,9 +257,11 @@ export class ScStripePaymentElement {
           });
         }
       });
+      this.isCreatingUpdatingStripeElement = false;
       return;
     }
-    this.elements.update(this.getElementsConfig());
+    processorsState.instances.stripeElements.update(this.getElementsConfig());
+    this.isCreatingUpdatingStripeElement = false;
   }
 
   /** Update the default attributes of the element when they cahnge. */
@@ -220,22 +269,15 @@ export class ScStripePaymentElement {
     if (!this.element) return;
     if (checkoutState.checkout?.status !== 'draft') return;
 
-    const { name, email } = checkoutState.checkout;
-    const { line_1: line1, line_2: line2, city, state, country, postal_code } = (checkoutState.checkout?.shipping_address as ShippingAddress) || {};
+    const address = toStripeAddress(getResolvedBillingAddress());
 
-    this.element.update({
+    const options = this.maybeApplyFilters({
       defaultValues: {
         billingDetails: {
-          name,
-          email,
-          address: {
-            line1,
-            line2,
-            city,
-            state,
-            country,
-            postal_code,
-          },
+          ...(checkoutState.checkout?.name ? { name: checkoutState.checkout.name } : {}),
+          ...(checkoutState.checkout?.email ? { email: checkoutState.checkout.email } : {}),
+          ...(checkoutState.checkout?.phone ? { phone: checkoutState.checkout.phone } : {}),
+          ...(address ? { address } : {}),
         },
       },
       fields: {
@@ -243,14 +285,16 @@ export class ScStripePaymentElement {
           email: 'never',
         },
       },
-    });
+    } as any);
+
+    this.element.update(options);
   }
 
   async submit() {
     // this processor is not selected.
     if (selectedProcessor?.id !== 'stripe') return;
     // submit the elements.
-    const { error } = await this.elements.submit();
+    const { error } = await (processorsState.instances.stripeElements as any).submit();
     if (error) {
       console.error({ error });
       updateFormState('REJECT');
@@ -277,9 +321,10 @@ export class ScStripePaymentElement {
   }
 
   @Method()
-  async confirm(type, args = {}) {
+  async confirm(type: 'setup' | 'payment', args = {}) {
+    const address = toStripeAddress(getResolvedBillingAddress());
     const confirmArgs = {
-      elements: this.elements,
+      elements: processorsState.instances.stripeElements,
       clientSecret: checkoutState.checkout?.payment_intent?.processor_data?.stripe?.client_secret,
       confirmParams: {
         return_url: addQueryArgs(window.location.href, {
@@ -287,7 +332,10 @@ export class ScStripePaymentElement {
         }),
         payment_method_data: {
           billing_details: {
-            email: checkoutState.checkout.email,
+            ...(checkoutState.checkout?.email ? { email: checkoutState.checkout.email } : {}),
+            ...(checkoutState.checkout?.name ? { name: checkoutState.checkout.name } : {}),
+            ...(checkoutState.checkout?.phone ? { phone: checkoutState.checkout.phone } : {}),
+            ...(address ? { address } : {}),
           },
         },
       },
@@ -299,11 +347,12 @@ export class ScStripePaymentElement {
     if (this.confirming) return;
 
     // stripe must be loaded.
-    if (!this.stripe) return;
+    if (!processorsState.instances.stripe) return;
 
     try {
       this.scSetState.emit('PAYING');
-      const response = type === 'setup' ? await this.stripe.confirmSetup(confirmArgs as any) : await this.stripe.confirmPayment(confirmArgs as any);
+      const response =
+        type === 'setup' ? await processorsState.instances.stripe.confirmSetup(confirmArgs as any) : await processorsState.instances.stripe.confirmPayment(confirmArgs as any);
       if (response?.error) {
         this.error = response.error.message;
         throw response.error;

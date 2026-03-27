@@ -13,7 +13,7 @@ class CheckoutScriptsController extends AdminModelEditController {
 	 *
 	 * @var array
 	 */
-	protected $with_data = [ 'currency', 'supported_currencies', 'links' ];
+	protected $with_data = [ 'currency', 'supported_currencies', 'links', 'i18n' ];
 
 	/**
 	 * Script handle.

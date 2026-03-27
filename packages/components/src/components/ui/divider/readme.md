@@ -21,8 +21,12 @@
 ### Used by
 
  - [sc-customer-details](../customer-details)
+ - [sc-downloads-list](../../controllers/dashboard/sc-downloads-list)
  - [sc-express-payment](../../controllers/checkout-form/express-payment)
+ - [sc-form-components-validator](../../providers/form-components-validator)
  - [sc-invoices-list](../../controllers/dashboard/invoices-list)
+ - [sc-licenses-list](../../controllers/dashboard/sc-licenses-list)
+ - [sc-line-item-total](../../controllers/checkout-form/line-item-total)
  - [sc-login-form](../../controllers/login)
  - [sc-order](../../controllers/dashboard/order)
  - [sc-order-bump](../../controllers/checkout-form/sc-order-bump)
@@ -35,13 +39,18 @@
  - [sc-subscription-next-payment](../../controllers/dashboard/subscription-details)
  - [sc-subscriptions-list](../../controllers/dashboard/subscriptions-list)
  - [sc-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
+ - [sc-upsell-totals](../../controllers/upsell/sc-upsell-totals)
 
 ### Graph
 ```mermaid
 graph TD;
   sc-customer-details --> sc-divider
+  sc-downloads-list --> sc-divider
   sc-express-payment --> sc-divider
+  sc-form-components-validator --> sc-divider
   sc-invoices-list --> sc-divider
+  sc-licenses-list --> sc-divider
+  sc-line-item-total --> sc-divider
   sc-login-form --> sc-divider
   sc-order --> sc-divider
   sc-order-bump --> sc-divider
@@ -54,6 +63,7 @@ graph TD;
   sc-subscription-next-payment --> sc-divider
   sc-subscriptions-list --> sc-divider
   sc-upcoming-invoice --> sc-divider
+  sc-upsell-totals --> sc-divider
   style sc-divider fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

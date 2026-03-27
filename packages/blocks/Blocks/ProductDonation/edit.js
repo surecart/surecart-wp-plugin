@@ -163,6 +163,7 @@ export default ({ attributes, setAttributes }) => {
 				<PanelBody>
 					<PanelRow>
 						<ToggleControl
+							__nextHasNoMarginBottom
 							label={__('Required', 'surecart')}
 							checked={required}
 							onChange={(required) => setAttributes({ required })}

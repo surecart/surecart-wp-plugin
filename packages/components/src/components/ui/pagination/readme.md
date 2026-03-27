@@ -30,7 +30,10 @@
 
  - [sc-charges-list](../../controllers/dashboard/charges-list)
  - [sc-dashboard-downloads-list](../../controllers/dashboard/dashboard-downloads-list)
+ - [sc-downloads-list](../../controllers/dashboard/sc-downloads-list)
  - [sc-invoices-list](../../controllers/dashboard/invoices-list)
+ - [sc-license](../../controllers/dashboard/sc-license)
+ - [sc-licenses-list](../../controllers/dashboard/sc-licenses-list)
  - [sc-orders-list](../../controllers/dashboard/orders-list)
  - [sc-product-item-list](../../controllers/products/sc-product-item-list)
  - [sc-subscriptions-list](../../controllers/dashboard/subscriptions-list)
@@ -52,7 +55,10 @@ graph TD;
   sc-button --> sc-spinner
   sc-charges-list --> sc-pagination
   sc-dashboard-downloads-list --> sc-pagination
+  sc-downloads-list --> sc-pagination
   sc-invoices-list --> sc-pagination
+  sc-license --> sc-pagination
+  sc-licenses-list --> sc-pagination
   sc-orders-list --> sc-pagination
   sc-product-item-list --> sc-pagination
   sc-subscriptions-list --> sc-pagination

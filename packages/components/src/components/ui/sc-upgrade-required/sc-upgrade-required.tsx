@@ -50,7 +50,7 @@ export class ScUpgradeRequired {
           <slot name="content">
             <p>{__('Unlock revenue boosting features when you upgrade your plan!', 'surecart')}</p>
           </slot>
-          <sc-button href="https://app.surecart.com/billing" type="primary" target="_blank" full>
+          <sc-button href={`https://app.surecart.com/plans?switch_account_id=${window?.scData?.account_id}`} type="primary" target="_blank" full>
             {__('Upgrade Now', 'surecart')}
             <sc-icon name="arrow-right" slot="suffix" />
           </sc-button>

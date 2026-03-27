@@ -1,18 +1,20 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
+import { __, sprintf } from '@wordpress/i18n';
+
+/**
+ * Internal dependencies.
+ */
 import LineItem from './LineItem';
-import { ScFormatNumber } from '@surecart/components-react';
+import {
+	ScFormatNumber,
+	ScProductLineItemNote,
+} from '@surecart/components-react';
 import LineItemLabel from './LineItemLabel';
-import { getFeaturedProductMediaAttributes } from '@surecart/components';
 
 export default ({ lineItem, suffix, showWeight, showQuantity, children }) => {
-	const { url, alt, title } = getFeaturedProductMediaAttributes(
-		lineItem?.price?.product,
-		lineItem?.variant
-	);
-
 	return (
-		<LineItem suffix={suffix} media={{ url, alt, title }}>
+		<LineItem suffix={suffix} image={lineItem?.image}>
 			<span
 				css={css`
 					box-sizing: border-box;
@@ -49,15 +51,16 @@ export default ({ lineItem, suffix, showWeight, showQuantity, children }) => {
 						/>
 					</div>
 				)}
+
 				{showQuantity && !!lineItem?.quantity && (
 					<div>
 						{sprintf(
 							__('Qty: %d', 'surecart'),
-							line_item.quantity - line_item.fulfilled_quantity ||
-								0
+							lineItem.quantity - lineItem.fulfilled_quantity || 0
 						)}
 					</div>
 				)}
+				<ScProductLineItemNote note={lineItem?.display_note} />
 				{children}
 			</LineItemLabel>
 		</LineItem>

@@ -1,0 +1,68 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "surecart/product-review-form-rating",
+	"title": "Review Form Rating",
+	"description": "Provide a star rating input for product reviews.",
+	"version": "1.0.0",
+	"category": "surecart-product-page",
+	"example": {},
+	"ancestor": ["surecart/product-review-form"],
+	"attributes": {
+		"label": {
+			"type": "string",
+			"default": "Your rating"
+		},
+		"size": {
+			"type": "string",
+			"default": "20px"
+		},
+		"fill_color": {
+			"type": "string"
+		},
+		"text_align": {
+			"type": "string"
+		}
+	},
+	"supports": {
+		"interactivity": true,
+		"color": {
+			"gradients": true,
+			"link": false,
+			"__experimentalDefaultControls": {
+				"background": true,
+				"text": true
+			}
+		},
+		"spacing": {
+			"margin": true,
+			"padding": true,
+			"__experimentalDefaultControls": {
+				"padding": true,
+				"margin": true
+			}
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true,
+			"__experimentalFontWeight": true
+		},
+		"__experimentalBorder": {
+			"color": true,
+			"radius": true,
+			"style": true,
+			"width": true,
+			"__experimentalDefaultControls": {
+				"color": true,
+				"radius": true,
+				"style": true,
+				"width": true
+			}
+		}
+	},
+	"textdomain": "surecart",
+	"render": "file:./view.php",
+	"editorScript": "file:./index.js",
+	"style": ["surecart-form-control", "file:./style-index.css"],
+	"viewScriptModule": ["@surecart/product-review-form"]
+}

@@ -24,12 +24,65 @@ class LineItemsRestServiceProvider extends RestServiceProvider implements RestSe
 	protected $controller = LineItemsController::class;
 
 	/**
+	 * Whether the rest service provider converts currency.
+	 *
+	 * @var boolean
+	 */
+	protected $converts_currency = true;
+
+	/**
 	 * Methods allowed for the model.
 	 *
 	 * @var array
 	 */
 	protected $methods = [ 'index', 'edit', 'create', 'find', 'delete' ];
 
+	/**
+	 * Register REST Routes.
+	 *
+	 * @return void
+	 */
+	public function registerRoutes() {
+		register_rest_route(
+			"$this->name/v$this->version",
+			$this->endpoint . '/upsell/',
+			[
+				[
+					'methods'             => \WP_REST_Server::EDITABLE,
+					'callback'            => $this->callback( $this->controller, 'upsell' ),
+					'permission_callback' => [ $this, 'update_item_permissions_check' ],
+				],
+				// Register our schema callback.
+				'schema' => [ $this, 'get_item_schema' ],
+			]
+		);
+		register_rest_route(
+			"$this->name/v$this->version",
+			$this->endpoint . '/(?P<id>\S+)/swap/',
+			[
+				[
+					'methods'             => \WP_REST_Server::EDITABLE,
+					'callback'            => $this->callback( $this->controller, 'swap' ),
+					'permission_callback' => [ $this, 'update_item_permissions_check' ],
+				],
+				// Register our schema callback.
+				'schema' => [ $this, 'get_item_schema' ],
+			]
+		);
+		register_rest_route(
+			"$this->name/v$this->version",
+			$this->endpoint . '/(?P<id>\S+)/unswap/',
+			[
+				[
+					'methods'             => \WP_REST_Server::EDITABLE,
+					'callback'            => $this->callback( $this->controller, 'unswap' ),
+					'permission_callback' => [ $this, 'update_item_permissions_check' ],
+				],
+				// Register our schema callback.
+				'schema' => [ $this, 'get_item_schema' ],
+			]
+		);
+	}
 
 	/**
 	 * Get our sample schema for a post.
@@ -50,11 +103,23 @@ class LineItemsRestServiceProvider extends RestServiceProvider implements RestSe
 			'type'       => 'object',
 			// In JSON Schema you can specify object properties in the properties attribute.
 			'properties' => [
-				'id' => [
+				'id'       => [
 					'description' => esc_html__( 'Unique identifier for the object.', 'surecart' ),
 					'type'        => 'string',
 					'context'     => [ 'view', 'edit', 'embed' ],
 					'readonly'    => true,
+				],
+				'checkout' => [
+					'description' => esc_html__( 'The checkout for the line item.', 'surecart' ),
+					'type'        => 'object',
+					'context'     => [ 'view', 'edit', 'embed' ],
+					'properties'  => [
+						'customer' => [
+							'description' => esc_html__( 'The customer associated with the checkout.', 'surecart' ),
+							'type'        => 'object',
+							'context'     => [ 'edit' ], // customer is only available in the edit context.
+						],
+					],
 				],
 			],
 		];

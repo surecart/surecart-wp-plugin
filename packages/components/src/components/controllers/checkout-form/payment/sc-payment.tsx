@@ -12,6 +12,7 @@ import {
   hasOtherAvailableCreditCardProcessor,
 } from '@store/processors/getters';
 import { addQueryArgs } from '@wordpress/url';
+import { MockProcessor } from './MockProcessor';
 
 /**
  * @part base - The elements base wrapper.
@@ -44,7 +45,10 @@ export class ScPayment {
   @Prop() hideTestModeBadge: boolean;
 
   componentWillLoad() {
-    processorsState.disabled.processors = this.disabledProcessorTypes;
+    processorsState.disabled = {
+      ...processorsState.disabled,
+      processors: this.disabledProcessorTypes,
+    };
   }
 
   renderStripe(processor) {
@@ -98,6 +102,10 @@ export class ScPayment {
     );
   }
 
+  renderMock(processor) {
+    return <MockProcessor processor={processor} />;
+  }
+
   renderPaystack(processor) {
     const title = hasOtherAvailableCreditCardProcessor('paystack') ? __('Credit Card (Paystack)', 'surecart') : __('Credit Card', 'surecart');
 
@@ -124,6 +132,30 @@ export class ScPayment {
     );
   }
 
+  renderRazorpay(processor) {
+    // if system currency is not in the supported currency list, then stop.
+    if (!(processor?.supported_currencies ?? []).includes(window?.scData?.currency)) {
+      return;
+    }
+
+    return (
+      <sc-payment-method-choice key={processor?.id} processor-id="razorpay">
+        <span slot="summary" class="sc-payment-toggle-summary">
+          <sc-icon name="razorpay" style={{ fontSize: '24px' }} aria-hidden="true"></sc-icon>
+          <span>{__('Cards, Netbanking, Wallet & UPI', 'surecart')}</span>
+        </span>
+
+        <sc-card>
+          <sc-payment-selected label={__('Cards, Netbanking, Wallet & UPI selected for check out.', 'surecart')}>
+            <sc-icon slot="icon" name="razorpay" aria-hidden="true"></sc-icon>
+            {__('Another step will appear after submitting your order to complete your purchase details.', 'surecart')}
+          </sc-payment-selected>
+        </sc-card>
+        <sc-checkout-razorpay-payment-provider />
+      </sc-payment-method-choice>
+    );
+  }
+
   render() {
     // payment is not required for this order.
     if (checkoutState.checkout?.payment_method_required === false) {
@@ -138,11 +170,7 @@ export class ScPayment {
         <sc-form-control label={this.label} exportparts="label, help-text, form-control">
           <div class="sc-payment-label" slot="label">
             <div>{this.label}</div>
-            {checkoutState.mode === 'test' && !this.hideTestModeBadge && (
-              <sc-tag type="warning" size="small" exportparts="base:test-badge__base, content:test-badge__content">
-                {__('Test Mode', 'surecart')}
-              </sc-tag>
-            )}
+            <slot name="label-end" />
           </div>
 
           {mollie?.id ? (
@@ -178,6 +206,10 @@ export class ScPayment {
                     return this.renderPayPal(processor);
                   case 'paystack':
                     return this.renderPaystack(processor);
+                  case 'razorpay':
+                    return this.renderRazorpay(processor);
+                  case 'mock':
+                    return this.renderMock(processor);
                 }
               })}
               <ManualPaymentMethods methods={availableManualPaymentMethods()} />

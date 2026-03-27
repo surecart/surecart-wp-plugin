@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sc-license renders 1`] = `
+<sc-license>
+  <mock:shadow-root>
+    <sc-spacing style="--spacing: var(--sc-spacing-large);">
+      <sc-empty icon="activity">
+        License not found.
+      </sc-empty>
+      <sc-dialog noheader="" style="--body-spacing: var(--sc-spacing-x-large);">
+        <sc-button circle="" class="close__button" type="text">
+          <sc-icon name="x"></sc-icon>
+        </sc-button>
+        <sc-dashboard-module class="license-cancel" error="" heading="Delete Activation" style="--sc-dashboard-module-spacing: 1em;">
+          <span slot="description">
+            Are you sure you want to delete activation?
+          </span>
+          <sc-flex justifycontent="flex-start">
+            <sc-button type="primary">
+              Delete Activation
+            </sc-button>
+            <sc-button type="text" style="color: var(--sc-color-gray-500;">
+              Cancel
+            </sc-button>
+          </sc-flex>
+        </sc-dashboard-module>
+      </sc-dialog>
+    </sc-spacing>
+  </mock:shadow-root>
+</sc-license>
+`;

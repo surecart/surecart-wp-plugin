@@ -2,6 +2,14 @@
   display: inline-block;
 }
 
+::slotted([slot='description']) {
+  display: block;
+  color: var(--sc-radio-description-color, var(--sc-input-help-text-color, var(--sc-color-gray-500)));
+  line-height: var(--sc-line-height-dense);
+  margin: 0.5em 0 0;
+  font-size: var(--sc-font-size-small);
+}
+
 .radio {
   display: inline-flex;
   align-items: flex-start;

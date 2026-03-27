@@ -180,37 +180,95 @@ export class ScProductCheckoutSelectVariantOption {
     return this.product?.variants?.data?.length > 0;
   }
 
+  isProductInCheckout() {
+    return (checkoutState.checkout?.line_items?.data || []).some(lineItem => ((lineItem.price as Price)?.product as Product)?.id === this.product?.id);
+  }
+
+  renderDropdown({ name, values, index }) {
+    if (!this.isProductInCheckout()) {
+      return null;
+    }
+    return (
+      <div class="sc-select-option__wrapper">
+        <label class="sc-form-label">{name}</label>
+        <select class="sc-form-select" onChange={e => (this[`option${index + 1}`] = (e.target as HTMLSelectElement).value)}>
+          {values.map(value => {
+            const isUnavailable =
+              isProductVariantOptionSoldOut.apply(void 0, [
+                index + 1,
+                value,
+                {
+                  ...(this.option1 ? { option_1: this.option1 } : {}),
+                  ...(this.option2 ? { option_2: this.option2 } : {}),
+                  ...(this.option3 ? { option_3: this.option3 } : {}),
+                },
+                this.product,
+              ]) ||
+              isProductVariantOptionMissing.apply(void 0, [
+                index + 1,
+                value,
+                {
+                  ...(this.option1 ? { option_1: this.option1 } : {}),
+                  ...(this.option2 ? { option_2: this.option2 } : {}),
+                  ...(this.option3 ? { option_3: this.option3 } : {}),
+                },
+                this.product,
+              ]);
+
+            return (
+              <option value={value} selected={this[`option${index + 1}`] === value}>
+                {value} {isUnavailable && <Fragment> {__('(unavailable)', 'surecart')}</Fragment>}
+              </option>
+            );
+          })}
+        </select>
+      </div>
+    );
+  }
+
+  renderPills({ name, values, index }) {
+    if (!this.isProductInCheckout()) {
+      return null;
+    }
+    return (
+      <sc-form-control label={name}>
+        <div class="sc-checkout-product-price-variant-selector__pills-wrapper">
+          {(values || []).map(value => {
+            const args = [
+              index + 1,
+              value,
+              {
+                ...(this.option1 ? { option_1: this.option1 } : {}),
+                ...(this.option2 ? { option_2: this.option2 } : {}),
+                ...(this.option3 ? { option_3: this.option3 } : {}),
+              },
+              this.product,
+            ];
+            const isUnavailable = isProductVariantOptionSoldOut.apply(void 0, args) || isProductVariantOptionMissing.apply(void 0, args);
+            return (
+              <sc-pill-option isUnavailable={isUnavailable} isSelected={this[`option${index + 1}`] === value} onClick={() => (this[`option${index + 1}`] = value)}>
+                <span aria-hidden="true">{value}</span>
+                <sc-visually-hidden>
+                  {sprintf(__('Select %s: %s', 'surecart'), name, value)}
+                  {isUnavailable && <Fragment> {__('(option unavailable)', 'surecart')}</Fragment>}
+                </sc-visually-hidden>
+              </sc-pill-option>
+            );
+          })}
+        </div>
+      </sc-form-control>
+    );
+  }
+
   render() {
     return (
       <sc-form-control class="sc-checkout-product-price-variant-selector" label={this.selectorTitle}>
-        {(this.product.variant_options.data || []).map(({ name, values }, index) => (
-          <sc-form-control label={name}>
-            <div class="sc-checkout-product-price-variant-selector__pills-wrapper">
-              {(values || []).map(value => {
-                const args = [
-                  index + 1,
-                  value,
-                  {
-                    ...(this.option1 ? { option_1: this.option1 } : {}),
-                    ...(this.option2 ? { option_2: this.option2 } : {}),
-                    ...(this.option3 ? { option_3: this.option3 } : {}),
-                  },
-                  this.product,
-                ];
-                const isUnavailable = isProductVariantOptionSoldOut.apply(void 0, args) || isProductVariantOptionMissing.apply(void 0, args);
-                return (
-                  <sc-pill-option isUnavailable={isUnavailable} isSelected={this[`option${index + 1}`] === value} onClick={() => (this[`option${index + 1}`] = value)}>
-                    <span aria-hidden="true">{value}</span>
-                    <sc-visually-hidden>
-                      {sprintf(__('Select %s: %s', 'surecart'), name, value)}
-                      {isUnavailable && <Fragment> {__('(option unavailable)', 'surecart')}</Fragment>}
-                    </sc-visually-hidden>
-                  </sc-pill-option>
-                );
-              })}
-            </div>
-          </sc-form-control>
-        ))}
+        {(this.product.variant_options.data || []).map(({ name, values, display_type }, index) => {
+          if (display_type === 'dropdown') {
+            return this.renderDropdown({ name, values, index });
+          }
+          return this.renderPills({ name, values, index });
+        })}
 
         {this.product?.prices?.data?.length > 1 && (
           <sc-form-control label={!!this.product.variant_options.data?.length ? this.label : null}>

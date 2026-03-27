@@ -8,8 +8,13 @@ import {
 	ScFormControl,
 	ScInput,
 	ScDivider,
+	ScButton,
+	ScTag,
+	ScIcon,
+	ScProse,
 } from '@surecart/components-react';
-import { useState } from '@wordpress/element';
+import { Modal } from '@wordpress/components';
+import { useState, useEffect, useRef } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 import Error from '../../components/Error';
@@ -20,8 +25,11 @@ import useSave from '../UseSave';
 
 export default () => {
 	const [error, setError] = useState(null);
+	const [showConfirmModal, setShowConfirmModal] = useState(false);
+	const [rescheduleReminders, setRescheduleReminders] = useState(false);
+	const [pendingSave, setPendingSave] = useState(false);
 	const { save } = useSave();
-	const { item, itemError, editItem, hasLoadedItem } = useEntity(
+	const { item, itemError, editItem, hasLoadedItem, edits } = useEntity(
 		'store',
 		'subscription_protocol'
 	);
@@ -31,21 +39,91 @@ export default () => {
 		itemError: portalItemError,
 		editItem: portalEditItem,
 		hasLoadedItem: portalHasLoadedItem,
-	} = useEntity('store', 'portal_protocol');
+	} = useEntity('store', 'customer_portal_protocol');
+
+	// Track original reminder values
+	const originalReminders = useRef(null);
+
+	// Store original values when item first loads
+	useEffect(() => {
+		if (hasLoadedItem && item && !originalReminders.current) {
+			originalReminders.current = {
+				remind_after_days: item.remind_after_days,
+				remind_at_period_percent_remaining:
+					item.remind_at_period_percent_remaining,
+			};
+		}
+	}, [hasLoadedItem, item]);
+
+	/**
+	 * Check if reminder settings have changed.
+	 */
+	const hasReminderChanges = () => {
+		if (!originalReminders.current || !edits) {
+			return false;
+		}
+
+		const hasRemindAfterDaysChange =
+			edits.remind_after_days !== undefined &&
+			edits.remind_after_days !==
+				originalReminders.current.remind_after_days;
+
+		const hasRemindAtPercentChange =
+			edits.remind_at_period_percent_remaining !== undefined &&
+			edits.remind_at_period_percent_remaining !==
+				originalReminders.current.remind_at_period_percent_remaining;
+
+		return hasRemindAfterDaysChange || hasRemindAtPercentChange;
+	};
+
+	/**
+	 * Perform the actual save operation.
+	 */
+	const performSave = async () => {
+		setError(null);
+		try {
+			setPendingSave(true);
+			// If we need to reschedule reminders, add the flag to the edits
+			if (hasReminderChanges()) {
+				editItem({
+					reschedule_existing_reminders: rescheduleReminders,
+				});
+			}
+
+			await save({
+				successMessage: __('Settings Updated.', 'surecart'),
+			});
+
+			// Update original values after successful save
+			if (item) {
+				originalReminders.current = {
+					remind_after_days: item.remind_after_days,
+					remind_at_period_percent_remaining:
+						item.remind_at_period_percent_remaining,
+				};
+			}
+		} catch (e) {
+			console.error(e);
+			setError(e);
+		} finally {
+			setPendingSave(false);
+			setShowConfirmModal(false);
+		}
+	};
 
 	/**
 	 * Form is submitted.
 	 */
 	const onSubmit = async () => {
-		setError(null);
-		try {
-			await save({
-				successMessage: __('Settings Updated.', 'surecart'),
-			});
-		} catch (e) {
-			console.error(e);
-			setError(e);
+		// Check if reminder settings changed
+		if (hasReminderChanges()) {
+			setShowConfirmModal(true);
+			setRescheduleReminders(false);
+			return;
 		}
+
+		// No reminder changes, proceed with normal save
+		await performSave();
 	};
 
 	const choices = [
@@ -166,7 +244,7 @@ export default () => {
 						)}
 						<span slot="description" style={{ lineHeight: '1.4' }}>
 							{__(
-								'When enabled, this feature prevents customers from cancelling their subscription on the customer dashboard until a set number of days before renewal.',
+								'The number of days prior to a subscription renewing that the cancel option will be visible to customers.',
 								'surecart'
 							)}
 						</span>
@@ -194,6 +272,61 @@ export default () => {
 						</span>
 					</ScInput>
 				)}
+			</SettingsBox>
+
+			<SettingsBox
+				title={__('Subscription Renewals', 'surecart')}
+				description={__(
+					'Manage your store subscription renewal behavior.',
+					'surecart'
+				)}
+				loading={!hasLoadedItem}
+			>
+				<ScInput
+					value={item?.remind_at_period_percent_remaining}
+					label={__('Subscription Renewal Reminders', 'surecart')}
+					type="number"
+					min="0"
+					max="100"
+					onScInput={(e) =>
+						editItem({
+							remind_at_period_percent_remaining: e.target.value,
+						})
+					}
+					help={__(
+						'Specify the percentage of the subscription period remaining when a reminder should be sent to customers. For instance, entering 25% will trigger the reminder when 25% of the period is left.',
+						'surecart'
+					)}
+					required
+				>
+					<span slot="suffix" style={{ opacity: '0.65' }}>
+						{__('% of Period Remaining', 'surecart')}
+					</span>
+				</ScInput>
+
+				<ScInput
+					value={item?.remind_after_days}
+					label={__('Minimum Days Between Reminders', 'surecart')}
+					placeholder={__('(no limit)', 'surecart')}
+					type="number"
+					min="0"
+					max="365"
+					onScInput={(e) =>
+						editItem({
+							remind_after_days: e.target.value
+								? parseInt(e.target.value)
+								: null,
+						})
+					}
+					help={__(
+						'Set how long to wait between reminders. For example, 180 days means customers get at most one reminder every 180 days, regardless of renewal frequency.',
+						'surecart'
+					)}
+				>
+					<span slot="suffix" style={{ opacity: '0.65' }}>
+						{__('days', 'surecart')}
+					</span>
+				</ScInput>
 			</SettingsBox>
 
 			<SettingsBox
@@ -290,7 +423,24 @@ export default () => {
 						</span>
 					</ScSwitch>
 				</ScUpgradeRequired>
-
+				<ScSwitch
+					checked={item?.bypass_duplicate_trials}
+					onClick={(e) => {
+						e.preventDefault();
+						editItem({
+							bypass_duplicate_trials:
+								!item?.bypass_duplicate_trials,
+						});
+					}}
+				>
+					{__('Prevent Duplicate Trials', 'surecart')}
+					<span slot="description" style={{ lineHeight: '1.4' }}>
+						{__(
+							'When enabled, this setting prevents customers from receiving multiple trial periods for the same product. If a customer has previously used a trial for the product, they will be charged the full price instead of receiving another trial.',
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
 				<div
 					css={css`
 						gap: var(--sc-form-row-spacing);
@@ -406,7 +556,120 @@ export default () => {
 						)}
 					</span>
 				</ScSwitch>
+				<ScSwitch
+					checked={item?.default_payment_method_detach_enabled}
+					onScChange={(e) => {
+						e.preventDefault();
+						editItem({
+							default_payment_method_detach_enabled:
+								!item?.default_payment_method_detach_enabled,
+						});
+					}}
+				>
+					{__(
+						'Allow Customers To Remove Default Payment Method',
+						'surecart'
+					)}
+					<span slot="description" style={{ lineHeight: '1.4' }}>
+						{__(
+							'When enabled, customers are allowed to remove their default payment method on file. This can lead to subscription payments failing since there is no payment method on file.',
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
 			</SettingsBox>
+
+			{showConfirmModal && (
+				<Modal
+					title={__('Save Changes', 'surecart')}
+					onRequestClose={() => {
+						setShowConfirmModal(false);
+						setPendingSave(false);
+					}}
+					shouldCloseOnClickOutside={false}
+					style={{ maxWidth: '450px' }}
+				>
+					<ScProse>
+						<p style={{ color: 'var(--sc-color-gray-500)' }}>
+							{__(
+								'These changes will affect to all new subscription reminders. Should we include existing subscription reminders too?',
+								'surecart'
+							)}
+						</p>
+						<ScSwitch
+							checked={rescheduleReminders}
+							onScChange={(e) => {
+								e.preventDefault();
+								setRescheduleReminders(!rescheduleReminders);
+							}}
+							css={css`
+								--sc-toggle-size: 20px;
+							`}
+						>
+							{__('Reschedule Existing Reminders', 'surecart')}
+						</ScSwitch>
+						<ScTag
+							css={css`
+								margin-top: var(--sc-spacing-x-large);
+								--sc-tag-default-background-color: var(
+									--sc-color-gray-50
+								);
+								border: 1px solid var(--sc-color-gray-200);
+								--sc-tag-prefix-margin-right: 8px;
+								width: 100%;
+							`}
+						>
+							<ScIcon
+								style={{
+									width: '16px',
+									height: '16px',
+									color: 'var(--sc-color-gray-500)',
+								}}
+								name="info"
+								slot="prefix"
+							/>
+							<p
+								style={{
+									color: '#111827',
+									fontSize: '12px',
+									fontWeight: 400,
+								}}
+							>
+								{__(
+									"Reminders within 2 hours won't be affected.",
+									'surecart'
+								)}
+							</p>
+						</ScTag>
+					</ScProse>
+					<div
+						css={css`
+							display: flex;
+							flex-wrap: wrap;
+							gap: var(--sc-spacing-small);
+							margin-top: var(--sc-spacing-x-large);
+						`}
+					>
+						<ScButton
+							type="primary"
+							loading={pendingSave}
+							onClick={() => performSave()}
+						>
+							{__('Confirm', 'surecart')}
+						</ScButton>
+						<ScButton
+							type="default"
+							disabled={pendingSave}
+							onClick={() => {
+								setShowConfirmModal(false);
+								setPendingSave(false);
+							}}
+						>
+							{__('Cancel', 'surecart')}
+						</ScButton>
+					</div>
+				</Modal>
+			)}
 		</SettingsTemplate>
 	);
 };

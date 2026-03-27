@@ -1,8 +1,8 @@
 import { Component, Element, Fragment, h, Prop, State } from '@stencil/core';
 import { sprintf, __ } from '@wordpress/i18n';
-import { addQueryArgs, getQueryArg } from '@wordpress/url';
+import { addQueryArgs } from '@wordpress/url';
 import apiFetch from '../../../../functions/fetch';
-import {  Subscription, SubscriptionProtocol } from '../../../../types';
+import { Subscription, SubscriptionProtocol } from '../../../../types';
 import { onFirstVisible } from '../../../../functions/lazy';
 import { productNameWithPrice } from '../../../../functions/price';
 @Component({
@@ -30,6 +30,9 @@ export class ScSubscription {
 
   /** The subscription */
   @Prop({ mutable: true }) subscription: Subscription;
+
+  /** Update the payment method url */
+  @Prop() updatePaymentMethodUrl: string;
 
   /** Loading state */
   @State() loading: boolean;
@@ -132,23 +135,33 @@ export class ScSubscription {
     if (subscription?.cancel_at_period_end && subscription.current_period_end_at) {
       return (
         <span>
-          {tag} {sprintf(__('Your plan will be canceled on', 'surecart'))}{' '}
-          <sc-format-date date={subscription.current_period_end_at * 1000} month="long" day="numeric" year="numeric"></sc-format-date>
+          {tag}{' '}
+          {
+            /* translators: %s: current period end date */
+            sprintf(__('Your plan will be canceled on %s', 'surecart'), subscription.current_period_end_at_date)
+          }
         </span>
       );
     }
     if (subscription.status === 'trialing' && subscription.trial_end_at) {
       return (
         <span>
-          {tag} {sprintf(__('Your plan begins on', 'surecart'))} <sc-format-date date={subscription.trial_end_at * 1000} month="long" day="numeric" year="numeric"></sc-format-date>
+          {tag}{' '}
+          {
+            /* translators: %s: trial end date */
+            sprintf(__('Your plan begins on %s', 'surecart'), subscription.trial_end_at_date)
+          }
         </span>
       );
     }
     if (subscription.status === 'active' && subscription.current_period_end_at) {
       return (
         <span>
-          {tag} {sprintf(__('Your plan renews on', 'surecart'))}{' '}
-          <sc-format-date date={subscription.current_period_end_at * 1000} month="long" day="numeric" year="numeric"></sc-format-date>
+          {tag}{' '}
+          {
+            /* translators: %s: current period end date */
+            sprintf(__('Your plan renews on %s', 'surecart'), subscription.current_period_end_at_date)
+          }
         </span>
       );
     }
@@ -183,7 +196,7 @@ export class ScSubscription {
 
     return (
       <Fragment>
-        <sc-subscription-next-payment subscription={this.subscription}>
+        <sc-subscription-next-payment subscription={this.subscription} updatePaymentMethodUrl={this.updatePaymentMethodUrl}>
           <sc-subscription-details subscription={this.subscription}></sc-subscription-details>
         </sc-subscription-next-payment>
       </Fragment>
@@ -191,19 +204,30 @@ export class ScSubscription {
   }
 
   render() {
+    const paymentMethodExists = this?.subscription.payment_method || this?.subscription.manual_payment;
+
     return (
       <sc-dashboard-module heading={this.heading || __('Current Plan', 'surecart')} class="subscription" error={this.error}>
-        {!!this.subscription && (
+        {!!this.subscription && this?.subscription?.can_modify && (
           <sc-flex slot="end" class="subscription__action-buttons">
-            {getQueryArg(window.location.href, 'action') !== 'update_payment_method' && (
+            {this.updatePaymentMethodUrl && paymentMethodExists && (
+              <sc-button type="link" href={this.updatePaymentMethodUrl}>
+                <sc-icon name="credit-card" slot="prefix"></sc-icon>
+                {__('Update Payment Method', 'surecart')}
+              </sc-button>
+            )}
+            {!paymentMethodExists && (
               <sc-button
                 type="link"
                 href={addQueryArgs(window.location.href, {
-                  action: 'update_payment_method',
+                  action: 'create',
+                  model: 'payment_method',
+                  id: this?.subscription.id,
+                  ...(this?.subscription?.live_mode === false ? { live_mode: false } : {}),
                 })}
               >
                 <sc-icon name="credit-card" slot="prefix"></sc-icon>
-                {__('Update Payment Method', 'surecart')}
+                {__('Add Payment Method', 'surecart')}
               </sc-button>
             )}
             {!!Object.keys(this.subscription?.pending_update).length && (
@@ -230,14 +254,12 @@ export class ScSubscription {
             {this.subscription?.status === 'canceled' && (
               <sc-button
                 type="link"
-                {...(!!this.subscription?.payment_method
+                {...(!!this.subscription?.payment_method || this?.subscription.manual_payment
                   ? {
                       onClick: () => (this.resubscribeModal = true),
                     }
                   : {
-                      href: addQueryArgs(window.location.href, {
-                        action: 'update_payment_method',
-                      }),
+                      href: this?.updatePaymentMethodUrl,
                     })}
               >
                 <sc-icon name="repeat" slot="prefix"></sc-icon>
@@ -259,7 +281,9 @@ export class ScSubscription {
           open={this.cancelModal}
           onScRequestClose={() => (this.cancelModal = false)}
           onScRefresh={() => this.getSubscription()}
-        />
+        >
+          <slot name="cancel-popup-content" slot="cancel-popup-content" />
+        </sc-cancel-dialog>
         <sc-subscription-reactivate
           subscription={this.subscription}
           open={this.resubscribeModal}

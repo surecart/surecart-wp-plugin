@@ -34,7 +34,6 @@
 
 ### Depends on
 
-- [sc-format-date](../../../util/format-date)
 - [sc-skeleton](../../../ui/skeleton)
 - [sc-dashboard-module](../../../ui/dashboard-module)
 - [sc-flex](../../../ui/flex)
@@ -44,7 +43,6 @@
 ### Graph
 ```mermaid
 graph TD;
-  sc-subscription-cancel --> sc-format-date
   sc-subscription-cancel --> sc-skeleton
   sc-subscription-cancel --> sc-dashboard-module
   sc-subscription-cancel --> sc-flex

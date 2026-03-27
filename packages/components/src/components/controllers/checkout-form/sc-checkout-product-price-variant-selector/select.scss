@@ -1,0 +1,85 @@
+// Label
+.sc-form-label {
+  font-family: var(--sc-font-sans);
+  font-size: var(--sc-font-size-medium);
+  font-weight: var(--sc-font-weight-normal);
+  margin-bottom: var(--sc-input-label-margin);
+  display: inline-block;
+  color: var(--sc-input-label-color);
+  font-weight: var(--sc-input-label-font-weight);
+  text-transform: var(--sc-input-label-text-transform, none);
+  letter-spacing: var(--sc-input-label-letter-spacing, 0);
+}
+
+.sc-form-select {
+  --sc-form-select-bg-img: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23374151' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+  display: block;
+  width: 100%;
+  padding: 0 var(--sc-input-spacing-medium);
+  height: calc(var(--sc-input-height-medium) - var(--sc-input-border-width) * 2);
+  font-size: var(--sc-input-font-size-medium);
+  font-family: var(--sc-input-font-family);
+  font-weight: var(--sc-input-font-weight);
+  color: var(--sc-color-gray-700);
+  box-sizing: border-box;
+  background-color: var(--sc-input-background-color);
+  background-image: var(--sc-form-select-bg-img), var(--sc-form-select-bg-icon, none);
+  background-repeat: no-repeat;
+  background-position: right calc(var(--sc-input-spacing-medium) - 2px) center;
+  background-size: 16px 12px;
+  border: var(--sc-input-border-width) solid var(--sc-input-border-color);
+  border-radius: var(--sc-border-radius-medium);
+  box-shadow: var(--sc-input-box-shadow);
+  transition: var(--sc-input-transition, var(--sc-transition-medium)) color, var(--sc-input-transition, var(--sc-transition-medium)) border,
+    var(--sc-input-transition, var(--sc-transition-medium)) box-shadow;
+  appearance: none;
+
+  &:hover {
+    color: var(--sc-input-color-hover);
+    background-color: var(--sc-input-background-color-hover);
+    border-color: var(--sc-input-border-color-hover);
+    z-index: 7;
+  }
+
+  &:focus {
+    color: var(--sc-input-color-focus);
+    background-color: var(--sc-input-background-color-focus) !important;
+    border-color: var(--sc-input-border-color-focus) !important;
+    outline: 0;
+    box-shadow: 0 0 0 var(--sc-focus-ring-width) var(--sc-focus-ring-color-primary);
+  }
+
+  &[multiple],
+  &[size]:not([size='1']) {
+    padding-right: var(--sc-input-spacing-medium);
+    background-image: none;
+  }
+
+  &:disabled {
+    color: var(--sc-input-color-disabled);
+    background-color: var(--sc-input-background-color-disabled);
+    border-color: var(--sc-input-border-color-disabled);
+  }
+
+  // Remove outline from select box in FF
+  &:-moz-focusring {
+    color: transparent;
+    text-shadow: 0 0 0 var(--sc-input-color);
+  }
+}
+
+.form-select-sm {
+  padding-top: var(--sc-input-spacing-small);
+  padding-bottom: var(--sc-input-spacing-small);
+  padding-left: var(--sc-input-spacing-small);
+  font-size: var(--sc-input-font-size-small);
+  border-radius: var(--sc-border-radius-small);
+}
+
+.form-select-lg {
+  padding-top: var(--sc-input-spacing-large);
+  padding-bottom: var(--sc-input-spacing-large);
+  padding-left: var(--sc-input-spacing-large);
+  font-size: var(--sc-input-font-size-large);
+  border-radius: var(--sc-border-radius-large);
+}

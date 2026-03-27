@@ -2,7 +2,14 @@ import { ScButton, ScFlex, ScIcon } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 import usePagination from '../hooks/usePagination';
 
-export default ({ data, page, setPage, perPage, loading }) => {
+export default ({
+	data,
+	page,
+	setPage,
+	perPage,
+	loading,
+	justifyContent = 'space-between',
+}) => {
 	// show pagination if we are at least on second page or the data length is at least per page.
 	const { hasPagination, hasNext, hasPrevious } = usePagination({
 		data,
@@ -14,8 +21,8 @@ export default ({ data, page, setPage, perPage, loading }) => {
 
 	return (
 		<ScFlex
-			style={{ width: '100%' }}
-			justify-content="space-between"
+			style={{ width: '100%', marginTop: '1rem' }}
+			justify-content={justifyContent}
 			align-items="center"
 		>
 			<ScButton

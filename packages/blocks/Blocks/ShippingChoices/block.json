@@ -1,6 +1,7 @@
 {
 	"name": "surecart/shipping-choices",
 	"title": "Shipping Choices",
+	"apiVersion": 3,
 	"description": "Display the list of shipping choices",
 	"category": "surecart",
 	"keywords": ["shipping", "checkout"],

@@ -28,7 +28,7 @@ class SubscriptionPermissionsController extends ModelPermissionsController {
 		}
 
 		// It's disabled on the account.
-		if ( empty( \SureCart::account()->portal_protocol->subscription_cancellations_enabled ) ) {
+		if ( empty( \SureCart::account()->customer_portal_protocol->subscription_cancellations_enabled ) ) {
 			return false;
 		}
 
@@ -86,7 +86,7 @@ class SubscriptionPermissionsController extends ModelPermissionsController {
 
 		$subscription = Subscription::find( $args[2] );
 
-		if ( empty( \SureCart::account()->portal_protocol->subscription_quantity_updates_enabled ) ) {
+		if ( empty( \SureCart::account()->customer_portal_protocol->subscription_quantity_updates_enabled ) ) {
 			$subscription = Subscription::find( $args[2] );
 			if ( is_wp_error( $subscription ) ) {
 				return false;
@@ -127,7 +127,7 @@ class SubscriptionPermissionsController extends ModelPermissionsController {
 		}
 
 		// It's disabled on the account.
-		if ( empty( \SureCart::account()->portal_protocol->subscription_updates_enabled ) ) {
+		if ( empty( \SureCart::account()->customer_portal_protocol->subscription_updates_enabled ) ) {
 			return false;
 		}
 
@@ -194,6 +194,11 @@ class SubscriptionPermissionsController extends ModelPermissionsController {
 	 * @return boolean Does user have permission.
 	 */
 	public function edit_sc_subscription( $user, $args, $allcaps ) {
+		// user has full access.
+		if ( ! empty( $allcaps['edit_sc_subscriptions'] ) ) {
+			return true;
+		}
+
 		// no user to check.
 		if ( empty( $user->ID ) ) {
 			return false;
@@ -204,10 +209,6 @@ class SubscriptionPermissionsController extends ModelPermissionsController {
 			return false;
 		}
 
-		if ( ! empty( $allcaps['edit_sc_subscriptions'] ) ) {
-			return true;
-		}
-
 		// no data provided to update. Make sure to at least pass an empty array.
 		if ( is_null( $args[3] ?? null ) ) {
 			return false;
@@ -216,12 +217,16 @@ class SubscriptionPermissionsController extends ModelPermissionsController {
 		$params = $args[3];
 
 		// request has blacklisted keys.
-		if ( ! $this->requestOnlyHasKeys( $params, array( 'cancel_at_period_end', 'quantity', 'price', 'purge_pending_update', 'payment_method', 'cancellation_act', 'ad_hoc_amount', 'variant', 'discount' ) ) ) {
+		if ( ! $this->requestOnlyHasKeys( $params, array( 'cancel_at_period_end', 'quantity', 'price', 'purge_pending_update', 'payment_method', 'manual_payment_method', 'manual_payment', 'cancellation_act', 'ad_hoc_amount', 'variant', 'discount' ) ) ) {
 			return false;
 		}
 
 		// check if they can modify price.
 		if ( ! empty( $params['price'] ) && ! $this->switch_sc_subscription( $user, $args, $allcaps ) ) {
+			return false;
+		}
+
+		if ( ! empty( $params['variant'] ) && ! $this->switch_sc_subscription( $user, $args, $allcaps ) ) {
 			return false;
 		}
 

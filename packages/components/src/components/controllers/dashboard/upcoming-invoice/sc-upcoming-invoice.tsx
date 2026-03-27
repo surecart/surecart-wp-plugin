@@ -4,9 +4,8 @@ import { addQueryArgs } from '@wordpress/url';
 
 import apiFetch from '../../../../functions/fetch';
 import { onFirstVisible } from '../../../../functions/lazy';
-import { intervalString } from '../../../../functions/price';
 import { formatTaxDisplay } from '../../../../functions/tax';
-import { Checkout, PaymentMethod, Period, Price, Product } from '../../../../types';
+import { Checkout, PaymentMethod, Period, Price, Product, ManualPaymentMethod } from '../../../../types';
 import { productNameWithPrice } from '../../../../functions/price';
 @Component({
   tag: 'sc-upcoming-invoice',
@@ -73,15 +72,20 @@ export class ScUpcomingInvoice {
 
   async getInvoice() {
     if (!this.subscriptionId) return;
+
     this.invoice = (await apiFetch({
       method: 'PATCH',
       path: addQueryArgs(`surecart/v1/subscriptions/${this.subscriptionId}/upcoming_period/`, {
         expand: [
           'period.checkout',
           'checkout.line_items',
+          'checkout.checkout_fees',
+          'checkout.shipping_fees',
           'line_item.price',
+          'line_item.fees',
           'price.product',
           'checkout.payment_method',
+          'checkout.manual_payment_method',
           'checkout.discount',
           'discount.promotion',
           'discount.coupon',
@@ -169,8 +173,7 @@ export class ScUpcomingInvoice {
         <div>
           {__("You'll be switched to this plan", 'surecart')}{' '}
           <strong>
-            {__('at the end of your billing cycle on', 'surecart')}{' '}
-            <sc-format-date type="timestamp" date={this.invoice?.start_at} month="short" day="numeric" year="numeric"></sc-format-date>
+            {__('at the end of your billing cycle on', 'surecart')} {this.invoice?.start_at_date}
           </strong>
         </div>
       );
@@ -212,7 +215,7 @@ export class ScUpcomingInvoice {
       <div class="new-plan">
         <div class="new-plan__heading">{this.renderName(this.price)}</div>
         <div>
-          <sc-format-number type="currency" currency={checkout?.currency} value={checkout?.total_amount}></sc-format-number> {intervalString(this.price)}
+          <span slot="price">{checkout?.subtotal_display_amount}</span>
         </div>
         <div style={{ fontSize: 'var(--sc-font-size-small)' }}>{this.renderRenewalText()}</div>
       </div>
@@ -229,63 +232,102 @@ export class ScUpcomingInvoice {
     }
 
     const checkout = this.invoice?.checkout as Checkout;
+    const manualPaymentMethod = checkout?.manual_payment ? (checkout?.manual_payment_method as ManualPaymentMethod) : null;
+
+    const checkout_fees = checkout?.checkout_fees?.data;
+    const shipping_fees = checkout?.shipping_fees?.data;
+
     return (
       <Fragment>
         {checkout?.line_items?.data.map(item => (
           <sc-product-line-item
-            imageUrl={(item.price?.product as Product)?.image_url}
+            image={(item.price?.product as Product)?.line_item_image}
             name={(item.price?.product as Product)?.name}
-            priceName={item?.price?.name}
-            variantLabel={(item?.variant_options || []).filter(Boolean).join(' / ') || null}
+            price={item?.price?.name}
+            variant={item?.variant_display_options}
             editable={this.quantityUpdatesEnabled}
+            purchasableStatus={item?.purchasable_status_display}
             removable={false}
+            note={item?.display_note}
             quantity={item?.quantity}
-            amount={item?.total_amount}
-            currency={item?.price?.currency}
-            interval={intervalString(item?.price)}
+            amount={item?.subtotal_display_amount}
+            interval={`${item?.price?.short_interval_text} ${item?.price?.short_interval_count_text}`}
             onScUpdateQuantity={e => this.updateQuantity(e)}
+            fees={item?.fees?.data}
           ></sc-product-line-item>
         ))}
 
         <sc-line-item>
           <span slot="description">{__('Subtotal', 'surecart')}</span>
-          <sc-format-number slot="price" type="currency" currency={checkout?.currency} value={checkout?.subtotal_amount}></sc-format-number>
+          <span slot="price">{checkout?.subtotal_display_amount}</span>
         </sc-line-item>
 
         {!!checkout.proration_amount && (
           <sc-line-item>
             <span slot="description">{__('Proration Credit', 'surecart')}</span>
-            <sc-format-number slot="price" type="currency" currency={checkout?.currency} value={-checkout?.proration_amount}></sc-format-number>
+            <span slot="price">{checkout?.proration_display_amount}</span>
           </sc-line-item>
         )}
 
         {!!checkout.applied_balance_amount && (
           <sc-line-item>
             <span slot="description">{__('Applied Balance', 'surecart')}</span>
-            <sc-format-number slot="price" type="currency" currency={checkout?.currency} value={-checkout?.applied_balance_amount}></sc-format-number>
+            <span slot="price">{checkout?.applied_balance_display_amount}</span>
           </sc-line-item>
+        )}
+
+        {checkout_fees?.length > 0 && (
+          <Fragment>
+            {checkout_fees?.map(fee => (
+              <sc-line-item>
+                <span slot="description">{fee?.description}</span>
+                <span slot="price">{fee?.display_amount}</span>
+              </sc-line-item>
+            ))}
+          </Fragment>
         )}
 
         {!!checkout.trial_amount && (
           <sc-line-item>
-            <span slot="description">{__('Free Trial', 'surecart')}</span>
-            <sc-format-number slot="price" type="currency" currency={checkout?.currency} value={checkout?.trial_amount}></sc-format-number>
+            <span slot="description">{__('Trial', 'surecart')}</span>
+            <span slot="price">{checkout?.trial_display_amount}</span>
           </sc-line-item>
         )}
 
         <sc-coupon-form
           discount={checkout?.discount}
-          label={__('Add Coupon Code')}
+          discountsDisplayAmount={checkout?.discounts_display_amount}
+          label={__('Add Coupon Code', 'surecart')}
           onScApplyCoupon={e => this.applyCoupon(e)}
           error={this.couponError}
           collapsed
-          buttonText={__('Add Coupon Code')}
+          buttonText={__('Add Coupon Code', 'surecart')}
         ></sc-coupon-form>
+
+        {!!checkout?.shipping_amount && (
+          <Fragment>
+            <sc-line-item style={{ marginTop: 'var(--sc-spacing-small)' }}>
+              <span slot="description">{__('Shipping', 'surecart')}</span>
+              <span slot="price">{checkout?.shipping_display_amount}</span>
+            </sc-line-item>
+
+            {shipping_fees?.length > 0 && (
+              <Fragment>
+                {shipping_fees?.map(fee => (
+                  <sc-line-item>
+                    <span slot="description">{fee?.description}</span>
+                    <span slot="price">{fee?.display_amount}</span>
+                  </sc-line-item>
+                ))}
+              </Fragment>
+            )}
+          </Fragment>
+        )}
 
         {!!checkout.tax_amount && (
           <sc-line-item>
             <span slot="description">{formatTaxDisplay(checkout?.tax_label)}</span>
-            <sc-format-number slot="price" type="currency" currency={checkout?.currency} value={checkout?.tax_amount}></sc-format-number>
+            <span slot="price">{checkout?.tax_display_amount}</span>
           </sc-line-item>
         )}
 
@@ -300,7 +342,8 @@ export class ScUpcomingInvoice {
             slot="price-description"
           >
             <sc-flex justify-content="flex-start" align-items="center" style={{ '--spacing': '0.5em' }}>
-              <sc-payment-method paymentMethod={checkout?.payment_method}></sc-payment-method>
+              {!!manualPaymentMethod && <sc-manual-payment-method paymentMethod={manualPaymentMethod} />}
+              {!manualPaymentMethod && <sc-payment-method paymentMethod={checkout?.payment_method}></sc-payment-method>}
               <sc-icon name="edit-3"></sc-icon>
             </sc-flex>
           </a>
@@ -308,7 +351,7 @@ export class ScUpcomingInvoice {
 
         <sc-line-item style={{ '--price-size': 'var(--sc-font-size-x-large)' }}>
           <span slot="title">{__('Total Due', 'surecart')}</span>
-          <sc-format-number slot="price" type="currency" currency={checkout?.currency} value={checkout?.amount_due}></sc-format-number>
+          <span slot="price">{checkout?.amount_due_display_amount}</span>
           <span slot="currency">{checkout.currency}</span>
         </sc-line-item>
       </Fragment>

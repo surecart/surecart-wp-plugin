@@ -12,47 +12,59 @@ import {
 	ScStackedListRow,
 } from '@surecart/components-react';
 
-export default ({ loading, media, onRemove, icon, children }) => {
+export default ({
+	loading,
+	media,
+	image,
+	onRemove,
+	icon,
+	children,
+	suffix,
+}) => {
 	return (
-		<ScStackedListRow
-			style={{
-				'--columns': '1',
-			}}
-		>
+		<ScStackedListRow mobileSize={320}>
 			{loading ? (
-				<ScFlex alignItems="center" justifyContent="flex-start">
-					{(!!media?.url || !!icon) && (
+				<ScFlex
+					alignItems="center"
+					justifyContent="flex-start"
+					style={{ width: '100%' }}
+				>
+					{(!!image?.src || !!icon) && (
 						<ScSkeleton
 							css={css`
-								width: 40px;
-								height: 40px;
+								width: 60px;
+								height: 60px;
 							`}
 							style={{
 								'--border-radius':
 									' var(--sc-border-radius-small)',
+								flex: '0 0 60px',
 							}}
 						/>
 					)}
-					<ScSkeleton style={{ width: '25%' }} />
+					<ScSkeleton style={{ width: '25%', minWidth: '100px' }} />
 				</ScFlex>
 			) : (
 				<>
 					<ScFlex alignItems="center" justifyContent="flex-start">
-						{media?.url ? (
+						{!!image?.src ? (
 							<img
-								src={media.url}
-								alt={media.alt}
-								{...(media.title ? { title: media.title } : {})}
+								{...image}
 								css={css`
-									width: 40px;
-									height: 40px;
+									width: 60px;
+									height: 60px;
 									object-fit: cover;
 									background: #f3f3f3;
 									display: flex;
 									align-items: center;
 									justify-content: center;
+									align-self: flex-start;
 									border-radius: var(
 										--sc-border-radius-small
+									);
+									border: 1px solid var(--sc-color-gray-300);
+									border-radius: var(
+										--sc-input-border-radius-medium
 									);
 								`}
 							/>
@@ -60,13 +72,14 @@ export default ({ loading, media, onRemove, icon, children }) => {
 							icon && (
 								<div
 									css={css`
-										width: 40px;
-										height: 40px;
+										width: 60px;
+										height: 60px;
 										object-fit: cover;
 										background: var(--sc-color-gray-100);
 										display: flex;
 										align-items: center;
 										justify-content: center;
+										align-self: flex-start;
 										border-radius: var(
 											--sc-border-radius-small
 										);
@@ -84,17 +97,21 @@ export default ({ loading, media, onRemove, icon, children }) => {
 						)}
 						<div>{children}</div>
 					</ScFlex>
-					<ScDropdown slot="suffix" placement="bottom-end">
-						<ScButton type="text" slot="trigger" circle>
-							<ScIcon name="more-horizontal" />
-						</ScButton>
-						<ScMenu>
-							<ScMenuItem onClick={onRemove}>
-								<ScIcon slot="prefix" name="trash" />
-								{__('Remove', 'surecart')}
-							</ScMenuItem>
-						</ScMenu>
-					</ScDropdown>
+					{!!suffix ? (
+						suffix
+					) : (
+						<ScDropdown slot="suffix" placement="bottom-end">
+							<ScButton type="text" slot="trigger" circle>
+								<ScIcon name="more-horizontal" />
+							</ScButton>
+							<ScMenu>
+								<ScMenuItem onClick={onRemove}>
+									<ScIcon slot="prefix" name="trash" />
+									{__('Remove', 'surecart')}
+								</ScMenuItem>
+							</ScMenu>
+						</ScDropdown>
+					)}
 				</>
 			)}
 		</ScStackedListRow>

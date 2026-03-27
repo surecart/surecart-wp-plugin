@@ -103,7 +103,7 @@ function ArchivedToggle({ isOpen, onClick, product }) {
 			aria-expanded={isOpen}
 			isDestructive={product?.archived}
 			// translators: %s: Current post URL.
-			aria-label={sprintf(__('Change URL: %s'), label)}
+			aria-label={sprintf(__('Change URL: %s', 'surecart'), label)}
 			onClick={onClick}
 		>
 			{label}

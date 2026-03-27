@@ -27,7 +27,6 @@ import {
 	__experimentalGetElementClassName,
 } from '@wordpress/block-editor';
 import { isKeyboardEvent } from '@wordpress/keycodes';
-import useProductPageWarning from '../../../hooks/useProductPageWarning';
 
 function WidthPanel({ selectedWidth, setAttributes }) {
 	function handleChange(newWidth) {
@@ -95,11 +94,6 @@ export default (props) => {
 		onKeyDown,
 	});
 
-	const warning = useProductPageWarning();
-	if (warning) {
-		return <div {...blockProps}>{warning}</div>;
-	}
-
 	return (
 		<>
 			<div
@@ -151,6 +145,8 @@ export default (props) => {
 				<PanelBody title={__('Text settings', 'surecart')}>
 					<PanelRow>
 						<TextControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							label={__('Out of stock label', 'surecart')}
 							value={out_of_stock_text}
 							onChange={(value) =>
@@ -160,6 +156,8 @@ export default (props) => {
 					</PanelRow>
 					<PanelRow>
 						<TextControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							label={__('Unavailable label', 'surecart')}
 							value={unavailable_text}
 							onChange={(value) =>

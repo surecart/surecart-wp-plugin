@@ -5,6 +5,24 @@ Template Name: SureCart
 
 use SureCartBlocks\Blocks\Form\Block as FormBlock;
 
+// this needs to happen before wp_head to ensure that blocks can add scripts and styles in wp_head().
+global $post;
+$post = $product->post; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+setup_postdata( $product->post );
+ob_start();
+require 'buy-template.php';
+$content = ob_get_clean();
+
+$template_html = filter_block_content(
+	( new FormBlock() )->render(
+		[
+			'product'     => $product,
+			'mode'        => $mode,
+			'success_url' => $success_url,
+		],
+		do_blocks( $content )
+	),
+);
 
 ?>
 <!DOCTYPE html>
@@ -23,18 +41,19 @@ use SureCartBlocks\Blocks\Form\Block as FormBlock;
 </head>
 
 <body <?php body_class( 'sc-buy-page' ); ?>>
+
+	<?php wp_body_open(); ?>
+
 	<?php do_action( 'surecart_buy_page_body_open' ); ?>
 
 	<header class="sc-buy-header">
 		<div class="sc-buy-logo">
 			<a href="<?php echo esc_url( home_url( '/' ) ); ?>">
-				<?php if ( $show_logo ) : ?>
-					<img src="<?php echo esc_url( $logo_url ); ?>"
+				<?php if ( ! empty( $show_logo ) && ! empty( $logo_url ) ) : ?>
+					<img src="<?php echo esc_url( $logo_url ?? '' ); ?>"
 						style="max-width: <?php echo esc_attr( $logo_width ?? '180px' ); ?>; width: 100%; height: auto;"
 						alt="<?php echo esc_attr( get_bloginfo() ); ?>"
 					/>
-				<?php else : ?>
-					<sc-text style="--font-size: var(--sc-font-size-xx-large); --font-weight: var(--sc-font-weight-bold)"><?php echo esc_html( get_bloginfo() ); ?></sc-text>
 				<?php endif; ?>
 			</a>
 			<?php if ( empty( $enabled ) ) : ?>
@@ -65,22 +84,7 @@ use SureCartBlocks\Blocks\Form\Block as FormBlock;
 	</header>
 
 
-	<?php
-	ob_start();
-	require 'buy-template.php';
-	$content = ob_get_clean();
-
-	echo filter_block_content(
-		( new FormBlock() )->render(
-			[
-				'product' => $product,
-				'mode'    => $mode,
-			],
-			do_blocks( $content )
-		),
-	);
-
-	?>
+	<?php echo $template_html; ?>
 
 	<?php wp_footer(); ?>
 </body>

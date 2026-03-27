@@ -8,8 +8,10 @@ import { ScTable, ScTableRow, ScTableCell } from '@surecart/components-react';
 export default ({
 	title = '',
 	footer = '',
+	after = '',
 	items = [],
 	hideHeader = false,
+	headerAction = '',
 	columns = {},
 	children,
 	empty = '',
@@ -19,9 +21,17 @@ export default ({
 }) => {
 	if ((items || []).length === 0 && !loading && !updating) {
 		return (
-			<Box title={title} loading={loading} footer={footer}>
-				{empty}
-			</Box>
+			<>
+				<Box
+					title={title}
+					loading={loading}
+					footer={footer}
+					header_action={headerAction}
+				>
+					{empty}
+				</Box>
+				{after}
+			</>
 		);
 	}
 
@@ -49,6 +59,7 @@ export default ({
 				title={title}
 				noPadding={true}
 				loading={loading || updating}
+				header_action={headerAction}
 				footer={footer}
 			>
 				<ScTable
@@ -63,7 +74,10 @@ export default ({
 						Object.keys(columns).map((key) => (
 							<ScTableCell
 								slot="head"
-								style={{ width: columns[key]?.width }}
+								style={{
+									width: columns[key]?.width,
+									minWidth: columns[key]?.minWidth,
+								}}
 								key={key}
 							>
 								{columns[key]?.label}
@@ -81,6 +95,16 @@ export default ({
 
 				{children}
 			</Box>
+			{!!after && (
+				<div
+					css={css`
+						margin-top: var(--sc-spacing-medium);
+						margin-bottom: var(--sc-spacing-xxx-large);
+					`}
+				>
+					{after}
+				</div>
+			)}
 		</div>
 	);
 };

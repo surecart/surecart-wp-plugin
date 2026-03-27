@@ -17,13 +17,13 @@
 		"collapsedOnDesktop": {
 			"type": "boolean"
 		},
-		"closed_text": {
-			"type": "string",
-			"default": "Show Summary"
-		},
-		"open_text": {
+		"order_summary_text": {
 			"type": "string",
 			"default": "Summary"
+		},
+		"invoice_summary_text": {
+			"type": "string",
+			"default": "Invoice Summary"
 		},
 		"collapsedOnMobile": {
 			"type": "boolean",

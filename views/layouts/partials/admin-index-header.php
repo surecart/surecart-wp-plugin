@@ -16,7 +16,11 @@ header( 'Expires: 0' );
 <?php endif; ?>
 
 <?php if ( isset( $after_title ) ) : ?>
-	<?php echo wp_kses_post( $after_title ); ?>
+	<?php
+	$allowed                   = wp_kses_allowed_html( 'post' );
+	$allowed['button']['slot'] = true;
+	echo wp_kses( $after_title, $allowed );
+	?>
 <?php endif; ?>
 
 <hr class="wp-header-end" />

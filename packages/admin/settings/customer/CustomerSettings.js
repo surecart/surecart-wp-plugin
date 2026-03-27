@@ -160,6 +160,20 @@ export default () => {
 				)}
 
 				<ScSwitch
+					checked={item?.upsell_accepted_enabled}
+					name="upsell_accepted_enabled"
+					onScChange={toggleNotificationSetting}
+				>
+					{__('Post Purchase Offer Accepted Emails', 'surecart')}
+					<span slot="description" style={{ lineHeight: '1.4' }}>
+						{__(
+							'Sent when a post purchase offer is accepted and the order is updated.',
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
+
+				<ScSwitch
 					checked={item?.refund_enabled}
 					name="refund_enabled"
 					onScChange={toggleNotificationSetting}
@@ -214,7 +228,7 @@ export default () => {
 					{__('Subscription Reminder Notifications', 'surecart')}{' '}
 					<span slot="description" style={{ lineHeight: '1.4' }}>
 						{__(
-							'Send a reminder to your subscribers 3 days before their subscription renews.',
+							'Send a reminder to your subscribers based on the percentage of the subscription period remaining.',
 							'surecart'
 						)}
 					</span>
@@ -304,6 +318,36 @@ export default () => {
 							action="notification3"
 						/>
 						<EmailRow
+							title={__('Card Expiration', 'surecart')}
+							description={__(
+								"Sent one month before a customer's card expires.",
+								'surecart'
+							)}
+							model="payment_method"
+							action="card_expiration_notification"
+						/>
+						<EmailRow
+							title={__('Order Confirmation', 'surecart')}
+							description={__(
+								'Sent after an order is placed.',
+								'surecart'
+							)}
+							model="order"
+							action="notification"
+						/>
+						<EmailRow
+							title={__(
+								'Post Purchase Offer Accepted',
+								'surecart'
+							)}
+							description={__(
+								'Sent when a post purchase offer is accepted and the order is updated.',
+								'surecart'
+							)}
+							model="order"
+							action="upsell_accepted_notification"
+						/>
+						<EmailRow
 							title={__('Email Verification Code', 'surecart')}
 							description={__(
 								'Sent to customers to login to the customer portal without a password.',
@@ -339,6 +383,23 @@ export default () => {
 							action="delivered_notification"
 						/>
 						<EmailRow
+							title={__('Invoice Opened', 'surecart')}
+							description={__(
+								'Sent after an invoice is opened.',
+								'surecart'
+							)}
+							model="invoice"
+						/>
+						<EmailRow
+							title={__('Invoice Reminder', 'surecart')}
+							description={__(
+								'Sent after an invoice hits the due date and is not paid yet.',
+								'surecart'
+							)}
+							model="invoice"
+							action="reminder_notification"
+						/>
+						<EmailRow
 							title={__('Subscription Recovery', 'surecart')}
 							description={__(
 								"Sent to customers when their subscription's payment method fails.",
@@ -353,7 +414,7 @@ export default () => {
 						<EmailRow
 							title={__('Subscription Reminder', 'surecart')}
 							description={__(
-								'Sent to customers 3 days before a subscription renews.',
+								'Sent to customers based on the percentage of the subscription period remaining.',
 								'surecart'
 							)}
 							model="subscription"
@@ -393,6 +454,15 @@ export default () => {
 							)}
 							model="refund"
 						/>
+						<EmailRow
+							title={__('Review Request', 'surecart')}
+							description={__(
+								'Sent to customers after order fulfillment to request a review.',
+								'surecart'
+							)}
+							model="order"
+							action="solicit_reviews_notification"
+						/>
 					</ScStackedList>
 				</sc-card>
 			</SettingsBox>
@@ -417,6 +487,16 @@ export default () => {
 							)}
 							link="account_notifications"
 							model="order"
+							action="notification"
+						/>
+						<EmailRow
+							title={__('New Review', 'surecart')}
+							description={__(
+								'Sent when a new review is submitted.',
+								'surecart'
+							)}
+							link="account_notifications"
+							model="review"
 							action="notification"
 						/>
 						<EmailRow

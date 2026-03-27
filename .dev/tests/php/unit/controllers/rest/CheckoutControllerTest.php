@@ -33,6 +33,7 @@ class CheckoutsControllerTest extends SureCartUnitTestCase
 
 	/**
 	 * Middleware gets called.
+	 * @group checkout
 	 */
 	public function test_middlewareGetsCalled()
 	{
@@ -51,6 +52,7 @@ class CheckoutsControllerTest extends SureCartUnitTestCase
 
 	/**
 	 * Test login credentials validation.
+	 * @group checkout
 	 */
 	public function test_maybeValidateLoginCreds()
 	{
@@ -69,6 +71,7 @@ class CheckoutsControllerTest extends SureCartUnitTestCase
 
 	/**
 	 * Test validation.
+	 * @group checkout
 	 */
 	public function test_validate()
 	{
@@ -84,6 +87,10 @@ class CheckoutsControllerTest extends SureCartUnitTestCase
 		$this->assertFalse($errors->has_errors());
 	}
 
+	/**
+	 * Test validation.
+	 * @group checkout
+	 */
 	public function test_finalize()
 	{
 		// finalized checkout
@@ -137,6 +144,7 @@ class CheckoutsControllerTest extends SureCartUnitTestCase
 	}
 
 	/**
+	 * @group checkout
 	 * @group rest
 	 * @group integration
 	 */
@@ -180,7 +188,10 @@ class CheckoutsControllerTest extends SureCartUnitTestCase
 		$this->assertSame(1, did_action('surecart/checkout_confirmed'), 'Checkout confirmed action was not called');
 	}
 
-
+	/**
+	 * @group checkout
+	 * @group customer
+	 */
 	public function test_linkCustomerId()
 	{
 		$user = User::find(self::factory()->user->create())

@@ -31,23 +31,31 @@ class StylesService {
 		wp_register_style(
 			'surecart-themes-default',
 			trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'dist/components/surecart/surecart.css',
-			[],
+			array(),
 			filemtime( trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/components/surecart/surecart.css' ),
 		);
-		$brand = \SureCart::account()->brand;
+		$brand   = \SureCart::account()->brand;
+		$color   = preg_replace( '/[^a-fA-F0-9]/', '', \SureCart::theme()->brandColor() );
+		$heading = preg_replace( '/[^a-fA-F0-9]/', '', $brand->heading ?? '000' );
 
 		$style = file_get_contents( plugin_dir_path( SURECART_PLUGIN_FILE ) . 'dist/blocks/cloak.css' );
 
 		$style .= ':root {';
-		$style .= '--sc-color-primary-500: #' . ( $brand->color ?? '000' ) . ';';
-		$style .= '--sc-focus-ring-color-primary: #' . ( $brand->color ?? '000' ) . ';';
-		$style .= '--sc-input-border-color-focus: #' . ( $brand->color ?? '000' ) . ';';
-		$style .= '--sc-color-gray-900: #' . ( $brand->heading ?? '000' ) . ';';
-		$style .= '--sc-color-primary-text: #' . \SureCart::utility()->color()->calculateForegroundColor( $brand->color ?? '000000' ) . ';';
+		$style .= '--sc-color-primary-500: #' . $color . ';';
+		$style .= '--sc-focus-ring-color-primary: #' . $color . ';';
+		$style .= '--sc-input-border-color-focus: #' . $color . ';';
+		$style .= '--sc-color-gray-900: #' . $heading . ';';
+		$style .= '--sc-color-primary-text: #' . \SureCart::utility()->color()->calculateForegroundColor( $color ) . ';';
 		$style .= '}';
 
 		wp_add_inline_style(
 			'surecart-themes-default',
+			$style
+		);
+
+		// blocks-next.
+		wp_add_inline_style(
+			'surecart-theme-base',
 			$style
 		);
 	}
@@ -83,6 +91,36 @@ class StylesService {
 	 *
 	 * @return void
 	 */
+	public function addInlineAdminColors( $handle ) {
+		ob_start();
+		?>
+		:root:root {
+			--wp-admin-theme-color: #007cba;
+			--wp-admin-theme-color-darker-10: #1f63a0;
+			--wp-admin-theme-color-darker-20: #1a5080;
+			--sc-color-primary-500: var(--wp-admin-theme-color);
+			--sc-focus-ring-color-primary: var(
+				--wp-admin-theme-color
+			);
+			--sc-input-border-color-focus: var(
+				--wp-admin-theme-color
+			);
+		}
+		<?php
+
+		wp_add_inline_style(
+			$handle,
+			ob_get_clean()
+		);
+	}
+
+	/**
+	 * Add inline brand styles to theme.
+	 *
+	 * @param string $handle The handle to add the styles to.
+	 *
+	 * @return void
+	 */
 	public function addInlineBrandColors( $handle ) {
 		ob_start();
 		?>
@@ -92,13 +130,20 @@ class StylesService {
 			--sc-input-border-color-focus: var(--sc-color-brand-primary);
 			--sc-color-gray-900: var(--sc-color-brand-heading);
 			--sc-color-gray-800: var(--sc-color-brand-text);
-			--sc-tab-active-color: var(--sc-color-brand-heading);
-			--sc-tab-active-background: var(--sc-color-brand-main-background);
+			--sc-tab-active-color: var(--sc-color-brand-primary);
+			--sc-tab-active-background: transparent;
 			--sc-tag-default-background-color: var(--sc-color-brand-main-background);
 			--sc-tag-default-border-color: var(--sc-color-brand-stroke);
 			--sc-tag-default-color: var(--sc-color-brand-body);
 			--sc-stacked-list-row-hover-color: var(--sc-color-brand-main-background);
 			--sc-color-primary-text: white;
+		}
+
+		sc-tab:not([active]):not(:hover) sc-icon {
+			color: var(--sc-color-gray-500);
+		}
+		sc-tab::part(base) {
+			font-weight: 400;
 		}
 		<?php
 

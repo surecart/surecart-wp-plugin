@@ -1,4 +1,6 @@
 sc-checkout {
+  --sc-form-focus-within-z-index: 5;
+
   display: block;
   font-family: var(--sc-font-sans);
   font-size: var(--sc-checkout-font-size, 16px);

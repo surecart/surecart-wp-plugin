@@ -22,6 +22,9 @@ export class ScPaymentMethodsList {
   /** Is this a customer */
   @Prop() isCustomer: boolean;
 
+  /** Whether default payment method can be detached */
+  @Prop() canDetachDefaultPaymentMethod: boolean = false;
+
   /** Loaded payment methods */
   @State() paymentMethods: Array<PaymentMethod> = [];
 
@@ -161,6 +164,26 @@ export class ScPaymentMethodsList {
     );
   }
 
+  renderPaymentMethodActions(paymentMethod: PaymentMethod) {
+    const { id, customer } = paymentMethod;
+
+    // If this is a string, don't show the actions.
+    if (typeof customer === 'string') return;
+
+    // If this is the default payment method and it cannot be detached, don't show the actions.
+    if (customer.default_payment_method === id && !this.canDetachDefaultPaymentMethod) return;
+
+    return (
+      <sc-dropdown placement="bottom-end" slot="suffix">
+        <sc-icon role="button" tabIndex={0} name="more-horizontal" slot="trigger"></sc-icon>
+        <sc-menu>
+          {customer.default_payment_method !== id && <sc-menu-item onClick={() => (this.editPaymentMethod = paymentMethod)}>{__('Make Default', 'surecart')}</sc-menu-item>}
+          <sc-menu-item onClick={() => (this.deletePaymentMethod = paymentMethod)}>{__('Delete', 'surecart')}</sc-menu-item>
+        </sc-menu>
+      </sc-dropdown>
+    );
+  }
+
   renderList() {
     return this.paymentMethods.map(paymentMethod => {
       const { id, card, customer, live_mode, billing_agreement, paypal_account } = paymentMethod;
@@ -182,15 +205,7 @@ export class ScPaymentMethodsList {
             {typeof customer !== 'string' && customer?.default_payment_method === id && <sc-tag type="info">{__('Default', 'surecart')}</sc-tag>}
             {!live_mode && <sc-tag type="warning">{__('Test', 'surecart')}</sc-tag>}
           </sc-flex>
-          {typeof customer !== 'string' && customer?.default_payment_method !== id && (
-            <sc-dropdown placement="bottom-end" slot="suffix">
-              <sc-icon role='button' tabIndex={0} name="more-horizontal" slot="trigger"></sc-icon>
-              <sc-menu>
-                <sc-menu-item onClick={() => (this.editPaymentMethod = paymentMethod)}>{__('Make Default', 'surecart')}</sc-menu-item>
-                <sc-menu-item onClick={() => (this.deletePaymentMethod = paymentMethod)}>{__('Delete', 'surecart')}</sc-menu-item>
-              </sc-menu>
-            </sc-dropdown>
-          )}
+          {this.renderPaymentMethodActions(paymentMethod)}
         </sc-stacked-list-row>
       );
     });

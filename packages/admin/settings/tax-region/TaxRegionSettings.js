@@ -1,4 +1,4 @@
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 import { useState, Fragment } from '@wordpress/element';
 import { useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
@@ -17,6 +17,7 @@ import Error from '../../components/Error';
 import useSave from '../UseSave';
 import RegistrationDialog from './RegistrationDialog';
 import RegionSettings from './RegionSettings';
+import TaxOverrides from '../tax-override';
 
 const zoneIconName = {
 	au: 'australia-flag',
@@ -105,7 +106,7 @@ export default () => {
 	const { registrations, fetching } = useSelect((select) => {
 		const queryArgs = [
 			'surecart',
-			'tax_registration',
+			'tax-registration',
 			{ context: 'edit', per_page: 100 },
 		];
 		const registrations = select(coreStore).getEntityRecords(...queryArgs);
@@ -209,7 +210,7 @@ export default () => {
 					<ScCard no-padding style={{ position: 'relative' }}>
 						<ScTable>
 							<ScTableCell slot="head">
-								{__('Country', 'surecart')}
+								{__('Region', 'surecart')}
 							</ScTableCell>
 							{hasManualTax && (
 								<ScTableCell
@@ -219,6 +220,9 @@ export default () => {
 									{__('Tax Rate', 'surecart')}
 								</ScTableCell>
 							)}
+							<ScTableCell slot="head">
+								{__('Tax Label', 'surecart')}
+							</ScTableCell>
 							<ScTableCell
 								slot="head"
 								style={{ textAlign: 'right' }}
@@ -252,13 +256,7 @@ export default () => {
 											</ScTableCell>
 										)}
 										<ScTableCell>
-											<sc-format-date
-												type="timestamp"
-												month="short"
-												day="numeric"
-												year="numeric"
-												date={registration?.updated_at}
-											></sc-format-date>
+											{registration?.updated_at_date}
 										</ScTableCell>
 									</ScTableRow>
 								);
@@ -279,11 +277,19 @@ export default () => {
 						{fetching && <sc-block-ui spinner></sc-block-ui>}
 					</ScCard>
 				</SettingsBox>
+
+				<TaxOverrides
+					region={region}
+					taxProtocol={item}
+					registrations={registrations}
+					hasLoadedItem={hasLoadedItem}
+				/>
 			</SettingsTemplate>
 			<RegistrationDialog
 				region={region}
 				open={dialog}
 				registration={dialog}
+				registrations={registrations}
 				onRequestClose={() => setDialog(null)}
 			/>
 		</Fragment>

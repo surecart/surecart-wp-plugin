@@ -48,6 +48,8 @@ export default ({ attributes, setAttributes }) => {
 				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
 						<TextControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							label={__('Title', 'surecart')}
 							value={title}
 							onChange={(title) => setAttributes({ title })}
@@ -113,8 +115,8 @@ export default ({ attributes, setAttributes }) => {
 				></sc-icon>
 
 				<RichText
-					aria-label={__('Tab Name')}
-					placeholder={__('Add a tab name')}
+					aria-label={__('Tab Name', 'surecart')}
+					placeholder={__('Add a tab name', 'surecart')}
 					value={title}
 					onChange={(title) => setAttributes({ title })}
 					withoutInteractiveFormatting

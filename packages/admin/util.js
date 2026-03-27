@@ -29,16 +29,20 @@ export const maybeConvertAmount = (amount, currency) => {
 		'XPF',
 		'XPT',
 		'XTS',
-	].includes(currency.toUpperCase())
+	].includes(currency?.toUpperCase())
 		? amount
 		: amount / 100;
 };
 
-export const getHumanDiscount = (coupon) => {
-	if (coupon?.amount_off && coupon?.currency) {
-		return getFormattedPrice({
-			amount: coupon.amount_off,
-		});
+export const getHumanDiscount = (coupon, currency = 'usd') => {
+	if (coupon?.amount_off && currency) {
+		return sprintf(
+			__('%s off', 'surecart'),
+			getFormattedPrice({
+				amount: coupon.amount_off,
+				currency,
+			})
+		);
 	}
 
 	if (coupon?.percent_off) {
@@ -51,9 +55,12 @@ export const getHumanDiscount = (coupon) => {
 export const getFormattedPrice = ({ amount, currency = 'usd' }) => {
 	const converted = maybeConvertAmount(parseFloat(amount), currency);
 
+	const minimumFractionDigits = amount % 1 == 0 ? 0 : 2;
+
 	return `${new Intl.NumberFormat(undefined, {
 		style: 'currency',
 		currency,
+		minimumFractionDigits,
 	}).format(parseFloat(converted.toFixed(2)))}`;
 };
 
@@ -82,6 +89,13 @@ export const translate = (key) => {
 		archived: __('Archived', 'surecart'),
 		draft: __('Draft', 'surecart'),
 		active: __('Active', 'surecart'),
+		inactive: __('Inactive', 'surecart'),
+		pending: __('Pending', 'surecart'),
+		approved: __('Approved', 'surecart'),
+		denied: __('Denied', 'surecart'),
+		reviewing: __('Reviewing', 'surecart'),
+		processing: __('Processing', 'surecart'),
+		paid: __('Paid', 'surecart'),
 	};
 	return map?.[key] || key;
 };
@@ -108,6 +122,6 @@ export const createErrorString = (error) => {
 		.map((error) => error?.message)
 		.filter((n) => n);
 	return `${error?.message || __('Something went wrong.', 'surecart')}${
-		additionalErrors?.length && ` ${additionalErrors.join('. ')}`
+		!!additionalErrors?.length ? ` ${additionalErrors.join('. ')}` : ''
 	}`;
 };

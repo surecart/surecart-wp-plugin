@@ -1,13 +1,14 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
+/**
+ * WordPress dependencies.
+ */
 import { __ } from '@wordpress/i18n';
-import {
-	ScProductLineItem,
-	ScStackedListRow,
-} from '@surecart/components-react';
+import { ScProductLineItem } from '@surecart/components-react';
 import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
 import { PanelBody, PanelRow, ToggleControl } from '@wordpress/components';
-import useCartBlockProps from '../../hooks/useCartBlockProps';
+
+/**
+ * Internal dependencies.
+ */
 import CartInspectorControls from '../../components/CartInspectorControls';
 import useCartStyles from '../../hooks/useCartStyles';
 
@@ -17,6 +18,9 @@ export default ({ attributes, setAttributes }) => {
 	const blockProps = useBlockProps({
 		style: useCartStyles({ attributes }),
 	});
+
+	const placeholderImageUrl =
+		scBlockData?.plugin_url + '/images/placeholder-thumbnail.jpg';
 
 	return (
 		<>
@@ -28,6 +32,7 @@ export default ({ attributes, setAttributes }) => {
 				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
 						<ToggleControl
+							__nextHasNoMarginBottom
 							label={__('Removable', 'surecart')}
 							help={__(
 								'Allow line items to be removed.',
@@ -41,6 +46,7 @@ export default ({ attributes, setAttributes }) => {
 					</PanelRow>
 					<PanelRow>
 						<ToggleControl
+							__nextHasNoMarginBottom
 							label={__('Editable', 'surecart')}
 							help={__(
 								'Allow line item quantities to be editable.',
@@ -54,33 +60,24 @@ export default ({ attributes, setAttributes }) => {
 			</InspectorControls>
 
 			<div {...blockProps}>
-				<div
-					css={css`
-						min-height: 400px;
-						sc-product-line-item ~ sc-product-line-item,
-						sc-line-item ~ sc-line-item {
-							margin-top: 20px;
-						}
-					`}
-				>
+				<div style={{ minHeight: '400px' }}>
 					<ScProductLineItem
 						removable={removable}
 						editable={editable}
-						imageUrl="https://source.unsplash.com/daily"
-						amount={12345}
-						currency={scData?.currency || 'usd'}
+						imageUrl={placeholderImageUrl}
+						amount={'$123.45'}
 						name={__('Example Product', 'surecart')}
 						priceName={__('Basic', 'surecart')}
 					></ScProductLineItem>
 					<ScProductLineItem
 						removable={removable}
 						editable={editable}
-						amount={1234}
-						interval={__('every month', 'surecart')}
-						currency={scData?.currency || 'usd'}
-						imageUrl="https://source.unsplash.com/daily"
+						amount={'$123.45'}
+						interval={__(' / mo', 'surecart')}
+						imageUrl={placeholderImageUrl}
 						name={__('Example Product', 'surecart')}
 						priceName={__('Monthly', 'surecart')}
+						style={{ marginTop: '20px' }}
 					></ScProductLineItem>
 				</div>
 			</div>

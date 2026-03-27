@@ -99,7 +99,7 @@ function StatusToggle({ isOpen, onClick, product }) {
 			variant="tertiary"
 			aria-expanded={isOpen}
 			// translators: %s: Current post status.
-			aria-label={sprintf(__('Change Status: %s'), label)}
+			aria-label={sprintf(__('Change Status: %s', 'surecart'), label)}
 			onClick={onClick}
 		>
 			{label}

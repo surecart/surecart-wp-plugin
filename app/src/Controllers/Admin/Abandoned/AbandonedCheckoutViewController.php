@@ -13,15 +13,15 @@ class AbandonedCheckoutViewController extends AdminController {
 	 * Index.
 	 */
 	public function index() {
-		// enqueue stats.
-		add_action( 'admin_enqueue_scripts', \SureCart::closure()->method( AbandonedCheckoutStatsScriptsController::class, 'enqueue' ) );
-
 		$this->withHeader(
-			[
-				'orders' => [
-					'title' => __( 'Abandoned Checkouts', 'surecart' ),
+			array(
+				'breadcrumbs' => [
+					'orders' => [
+						'title' => __( 'Abandoned Checkouts', 'surecart' ),
+					],
 				],
-			]
+				'report_url'       => SURECART_REPORTS_URL . 'abandoned_checkouts',
+			)
 		);
 
 		$table = new AbandonedCheckoutListTable();

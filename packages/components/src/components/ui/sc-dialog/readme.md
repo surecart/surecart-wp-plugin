@@ -46,6 +46,8 @@
 
  - [sc-cancel-dialog](../../controllers/dashboard/sc-cancel-dialog)
  - [sc-checkout-stock-alert](../../controllers/checkout-form/checkout/checkout-stock-alert)
+ - [sc-checkout-test-complete](../../controllers/checkout-form/checkout-test-complete)
+ - [sc-license](../../controllers/dashboard/sc-license)
  - [sc-login-provider](../../providers/sc-login-provider)
  - [sc-order-confirm-provider](../../providers/order-confirm-provider)
  - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
@@ -53,6 +55,7 @@
  - [sc-subscription-details](../../controllers/dashboard/subscription-details)
  - [sc-subscription-reactivate](../../controllers/dashboard/subscription-reactivate)
  - [sc-upgrade-required](../sc-upgrade-required)
+ - [sc-upsell](../../controllers/upsell/sc-upsell)
 
 ### Depends on
 
@@ -67,6 +70,8 @@ graph TD;
   sc-button --> sc-spinner
   sc-cancel-dialog --> sc-dialog
   sc-checkout-stock-alert --> sc-dialog
+  sc-checkout-test-complete --> sc-dialog
+  sc-license --> sc-dialog
   sc-login-provider --> sc-dialog
   sc-order-confirm-provider --> sc-dialog
   sc-payment-methods-list --> sc-dialog
@@ -74,6 +79,7 @@ graph TD;
   sc-subscription-details --> sc-dialog
   sc-subscription-reactivate --> sc-dialog
   sc-upgrade-required --> sc-dialog
+  sc-upsell --> sc-dialog
   style sc-dialog fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

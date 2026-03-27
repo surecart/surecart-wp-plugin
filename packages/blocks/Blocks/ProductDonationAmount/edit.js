@@ -19,14 +19,16 @@ export default ({ attributes, setAttributes }) => {
 			width: '100%',
 		},
 	});
+	const labelCurrency = currency || scBlockData?.currency || 'usd';
 
 	useEffect(() => {
 		if (label) return;
-		const formattedNumber = getFormattedPrice({ amount, currency });
+
 		setAttributes({
-			label: formattedNumber,
+			label: getFormattedPrice({ amount, currency: labelCurrency }),
+			currency: labelCurrency,
 		});
-	}, [amount, currency]);
+	}, [amount, labelCurrency]);
 
 	return (
 		<Fragment>
@@ -34,6 +36,8 @@ export default ({ attributes, setAttributes }) => {
 				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
 						<TextControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							label={__('Label for donation', 'surecart')}
 							placeholder={__('Buy me coffee!', 'surecart')}
 							value={label}

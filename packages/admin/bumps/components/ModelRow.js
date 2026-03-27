@@ -8,7 +8,7 @@ import {
 	ScStackedListRow,
 } from '@surecart/components-react';
 
-export default ({ loading, media, icon, children, suffix }) => {
+export default ({ loading, image, icon, children, suffix }) => {
 	return (
 		<ScStackedListRow
 			style={{
@@ -31,11 +31,9 @@ export default ({ loading, media, icon, children, suffix }) => {
 			) : (
 				<>
 					<ScFlex alignItems="center" justifyContent="flex-start">
-						{media?.url ? (
+						{image?.src ? (
 							<img
-								src={media.url}
-								alt={media.alt}
-								{...(media.title ? { title: media.title } : {})}
+								{...image}
 								css={css`
 									width: var(
 										--sc-product-line-item-image-size,

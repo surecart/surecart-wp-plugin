@@ -4,6 +4,7 @@ import { loadStripe } from '@stripe/stripe-js/pure';
 import { __ } from '@wordpress/i18n';
 import apiFetch from '../../../functions/fetch';
 import { PaymentIntent } from '../../../types';
+import { addQueryArgs } from '@wordpress/url';
 
 @Component({
   tag: 'sc-stripe-add-method',
@@ -105,6 +106,7 @@ export class ScStripeAddMethod {
           processor_type: 'stripe',
           live_mode: this.liveMode,
           customer_id: this.customerId,
+          refresh_status: true,
         },
       });
     } catch (e) {
@@ -124,7 +126,9 @@ export class ScStripeAddMethod {
       const confirmed = await this.stripe.confirmSetup({
         elements: this.elements,
         confirmParams: {
-          return_url: this.successUrl,
+          return_url: addQueryArgs(this.successUrl, {
+            payment_intent: this.paymentIntent?.id,
+          }),
         },
         redirect: 'always',
       });

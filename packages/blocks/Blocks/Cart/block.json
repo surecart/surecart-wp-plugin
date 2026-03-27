@@ -1,6 +1,6 @@
 {
 	"$schema": "https://json.schemastore.org/block.json",
-	"apiVersion": 2,
+	"apiVersion": 3,
 	"name": "surecart/cart",
 	"title": "Cart",
 	"description": "The cart",
@@ -9,7 +9,8 @@
 	"supports": {
 		"reusable": false,
 		"html": false,
-		"multiple": false
+		"multiple": false,
+		"inserter": false
 	},
 	"attributes": {
 		"title": {
@@ -20,5 +21,6 @@
 			"type": "string",
 			"default": "500px"
 		}
-	}
+	},
+	"editorStyle": "file:./editor.css"
 }

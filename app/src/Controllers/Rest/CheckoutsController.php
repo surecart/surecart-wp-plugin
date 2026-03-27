@@ -4,7 +4,6 @@ namespace SureCart\Controllers\Rest;
 
 use SureCart\Models\Checkout;
 use SureCart\Models\Form;
-use SureCart\Models\Product;
 use SureCart\Models\User;
 use SureCart\WordPress\Users\CustomerLinkService;
 use SureCart\WordPress\RecaptchaValidationService;
@@ -29,10 +28,30 @@ class CheckoutsController extends RestController {
 	 * @return \SureCart\Models\Model|\WP_Error
 	 */
 	protected function middleware( $class, \WP_REST_Request $request ) {
-		// if abandoned checkout is enabled, set the return url.
-		$request->set_param( 'abandoned_checkout_return_url', ! empty( $request->get_param( 'abandoned_checkout_enabled' ) ) ? esc_url_raw( get_home_url( null, 'surecart/redirect' ) ) : null );
+		// Set the return url.
+		$request->set_param( 'external_url', esc_url_raw( get_home_url( null, 'surecart/redirect' ) ) );
 
-		return $this->maybeSetUser( $class, $request );
+		// if this is an open invoice, we don't set the user.
+		if ( 'open_invoice' === $request->get_param( 'type' ) ) {
+			return apply_filters( 'surecart/request/model', $class, $request );
+		}
+
+		$request->set_param(
+			'metadata',
+			array_merge(
+				$request->get_param( 'metadata' ) ?? [],
+				[
+					// this must always be set to ensure the user cannot override the user role.
+					'wp_user_role' => is_user_logged_in() ? wp_get_current_user()->roles : null,
+				]
+			)
+		);
+
+		// set the user.
+		$class = $this->maybeSetUser( $class, $request );
+
+		// return the class.
+		return apply_filters( 'surecart/request/model', $class, $request );
 	}
 
 	/**
@@ -167,9 +186,6 @@ class CheckoutsController extends RestController {
 		$finalized = $checkout->where( $request->get_query_params() )
 		->finalize( $request->get_body_params() );
 
-		// validate the finalized request.
-		$finalized = $this->validateFinalizeRequest( $finalized, $request );
-
 		// bail if error.
 		if ( is_wp_error( $finalized ) ) {
 			return $finalized;
@@ -262,12 +278,6 @@ class CheckoutsController extends RestController {
 	public function validate( $args, $request ) {
 		$errors = new \WP_Error();
 
-		// check if they are trying to sign in.
-		// $valid_login = $this->maybeValidateLoginCreds( $request->get_param( 'email' ), $request->get_param( 'password' ) );
-		// if ( is_wp_error( $valid_login ) ) {
-		// $errors->add( $valid_login->get_error_code(), $valid_login->get_error_message() );
-		// }
-
 		// Check if honeypot checkbox checked or not.
 		$metadata = $request->get_param( 'metadata' );
 		if ( $metadata && ! empty( $metadata['get_feedback'] ) ) {
@@ -284,6 +294,66 @@ class CheckoutsController extends RestController {
 		}
 
 		return apply_filters( 'surecart/checkout/validate', $errors, $args, $request );
+	}
+
+	/**
+	 * Cancel an checkout
+	 *
+	 * @param \WP_REST_Request $request Rest Request.
+	 *
+	 * @return \SureCart\Models\Checkout|\WP_Error
+	 */
+	public function cancel( \WP_REST_Request $request ) {
+		$order = $this->middleware( new $this->class( $request['id'] ), $request );
+		if ( is_wp_error( $order ) ) {
+			return $order;
+		}
+		return $order->where( $request->get_query_params() )->cancel();
+	}
+
+	/**
+	 * Offer the bump (used for analytics).
+	 *
+	 * @param \WP_REST_Request $request Rest Request.
+	 *
+	 * @return \SureCart\Models\Checkout|\WP_Error
+	 */
+	public function offerBump( \WP_REST_Request $request ) {
+		$order = $this->middleware( new $this->class( $request['id'] ), $request );
+		if ( is_wp_error( $order ) ) {
+			return $order;
+		}
+		return $order->where( $request->get_query_params() )->offerBump( $request['bump_id'] );
+	}
+
+	/**
+	 * Offer the bump (used for analytics).
+	 *
+	 * @param \WP_REST_Request $request Rest Request.
+	 *
+	 * @return \SureCart\Models\Checkout|\WP_Error
+	 */
+	public function offerUpsell( \WP_REST_Request $request ) {
+		$order = $this->middleware( new $this->class( $request['id'] ), $request );
+		if ( is_wp_error( $order ) ) {
+			return $order;
+		}
+		return $order->where( $request->get_query_params() )->offerUpsell( $request['upsell_id'] );
+	}
+
+	/**
+	 * Offer the bump (used for analytics).
+	 *
+	 * @param \WP_REST_Request $request Rest Request.
+	 *
+	 * @return \SureCart\Models\Checkout|\WP_Error
+	 */
+	public function declineUpsell( \WP_REST_Request $request ) {
+		$order = $this->middleware( new $this->class( $request['id'] ), $request );
+		if ( is_wp_error( $order ) ) {
+			return $order;
+		}
+		return $order->where( $request->get_query_params() )->declineUpsell( $request['upsell_id'] );
 	}
 
 	/**
@@ -309,93 +379,6 @@ class CheckoutsController extends RestController {
 	}
 
 	/**
-	 * Validate the finalized request.
-	 * We do this to make sure the form is in "Test" mode
-	 * if a test payment is requested. This prevents the spamming of any
-	 * forms on your site that are not in test mode or creating access to something
-	 * with a fake test payment.
-	 *
-	 * @param \SureCart\Models\Checkout $finalized Finalized checkout.
-	 * @param \WP_REST_Request          $request The request.
-	 *
-	 * @return \WP_Error|\SureCart\Models\Checkout
-	 */
-	public function validateFinalizeRequest( $finalized, $request ) {
-		// allow this if the user can edit orders.
-		if ( current_user_can( 'edit_sc_orders' ) ) {
-			return $finalized;
-		}
-
-		// make sure the form id is valid.
-		if ( ! empty( $request['form_id'] ) ) {
-			return $this->validateFormId( $finalized, $request );
-		}
-
-		return $this->validateProductId( $finalized, $request );
-	}
-
-	/**
-	 * Validate the product id.
-	 *
-	 * @param \WP_REST_Request       $request The rest request.
-	 * @param \SureCart\Models\Order $finalized The finalized order.
-	 *
-	 * @return \WP_Error|\SureCart\Models\Order
-	 */
-	public function validateProductId( $finalized, $request ) {
-		// make sure the product is valid.
-		if ( empty( $request['product_id'] ) ) {
-			return new \WP_Error( 'missing_parameters', 'You must pass a form id or product id in order to make this payment.', [ 'status' => 400 ] );
-		}
-		// make sure the product is valid.
-		$product = Product::find( $request['product_id'] );
-		if ( empty( $product->id ) ) {
-			return new \WP_Error( 'product_id_invalid', esc_html__( 'This product is invalid.', 'surecart' ), [ 'status' => 400 ] );
-		}
-
-		// check to make sure the product buy page is enabled.
-		if ( ! $product->buyLink()->isEnabled() ) {
-			return new \WP_Error( 'product_buy_page_disabled', esc_html__( 'This product is not available for purchase.', 'surecart' ), [ 'status' => 400 ] );
-		}
-
-		// the mode must match.
-		$mode = $product->buyLink()->getMode();
-		// if the request is for test mode, but the form is not test, return an error.
-		if ( false === $finalized->live_mode && 'test' !== $mode ) {
-			return new \WP_Error( 'invalid_mode', 'This page is set to live mode, but the request is for test mode. Please clear any site caching and try again.', [ 'status' => 400 ] );
-		}
-
-		// At least one line item must be for this product.
-		foreach ( $finalized->line_items->data as $line_item ) {
-			if ( $line_item->price->product->id === $product->id ) {
-				return $finalized;
-			}
-		}
-
-		return new \WP_Error( 'product_buy_page_disabled', esc_html__( 'This product is not available for purchase.', 'surecart' ), [ 'status' => 400 ] );
-	}
-
-	/**
-	 * Validate the form id.
-	 *
-	 * @param \WP_REST_Request       $request The rest request.
-	 * @param \SureCart\Models\Order $finalized The finalized order.
-	 *
-	 * @return \WP_Error|\SureCart\Models\Order
-	 */
-	public function validateFormId( $finalized, $request ) {
-		// the form's mode must be test.
-		$mode = $this->getFormMode( (int) $request['form_id'] );
-
-		// if the request is for test mode, but the form is not test, return an error.
-		if ( false === $finalized->live_mode && 'test' !== $mode ) {
-			return new \WP_Error( 'invalid_mode', 'The form is set to live mode, but the request is for test mode.', [ 'status' => 400 ] );
-		}
-
-		return $finalized;
-	}
-
-	/**
 	 * Create or login the user.
 	 *
 	 * @param string $user_email Username.
@@ -412,20 +395,5 @@ class CheckoutsController extends RestController {
 				'user_password' => $password,
 			]
 		);
-	}
-
-	/**
-	 * Cancel an checkout
-	 *
-	 * @param \WP_REST_Request $request Rest Request.
-	 *
-	 * @return \SureCart\Models\Checkout|\WP_Error
-	 */
-	public function cancel( \WP_REST_Request $request ) {
-		$order = $this->middleware( new $this->class( $request['id'] ), $request );
-		if ( is_wp_error( $order ) ) {
-			return $order;
-		}
-		return $order->where( $request->get_query_params() )->cancel();
 	}
 }

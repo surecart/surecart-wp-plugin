@@ -1,6 +1,6 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
-	"apiVersion": 2,
+	"apiVersion": 3,
 	"name": "surecart/columns",
 	"title": "SureCart Columns",
 	"category": "surecart",
@@ -42,13 +42,12 @@
 				"padding": true
 			}
 		},
-		"__experimentalLayout": {
-			"allowSwitching": false,
-			"allowInheriting": false,
-			"allowEditing": false,
+		"layout": {
+			"allowInheriting": true,
+			"allowEditing": true,
 			"default": {
 				"type": "flex",
-				"flexWrap": "nowrap"
+				"flexWrap": "wrap"
 			}
 		}
 	},

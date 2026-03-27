@@ -7,28 +7,23 @@
  * @package SureCart
  */
 
+use SureCart\Middleware\CheckoutFormModeMiddleware;
 use SureCart\Middleware\CheckoutRedirectMiddleware;
 use SureCart\Middleware\CustomerDashboardRedirectMiddleware;
+use SureCart\Middleware\CustomerDashboardLinkRedirectMiddleware;
+use SureCart\Middleware\InvoiceRedirectMiddleware;
 use SureCart\Middleware\LoginLinkMiddleware;
 use SureCart\Middleware\OrderRedirectMiddleware;
 use SureCart\Middleware\PathRedirectMiddleware;
 use SureCart\Middleware\PaymentFailureRedirectMiddleware;
+use SureCart\Middleware\ProductReviewRedirectMiddleware;
 use SureCart\Middleware\PurchaseRedirectMiddleware;
 use SureCart\Middleware\SubscriptionRedirectMiddleware;
+use SureCart\Middleware\UpsellMiddleware;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-
-/*
-|--------------------------------------------------------------------------
-| Product Page
-|--------------------------------------------------------------------------
-*/
-\SureCart::route()
-->get()
-->where( 'query_var', 'sc_product_page_id' )
-->handle( 'ProductPageController@show' );
 
 /*
 |--------------------------------------------------------------------------
@@ -42,13 +37,26 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 /*
 |--------------------------------------------------------------------------
-| Collection Page
+|  Upsell Page
 |--------------------------------------------------------------------------
 */
 \SureCart::route()
 	->get()
-	->where( 'query_var', 'sc_collection_page_id' )
-	->handle( 'CollectionPageController@show' );
+	->where( 'query_var', 'sc_upsell_id' )
+	->middleware( UpsellMiddleware::class )
+	->handle( 'UpsellPageController@show' );
+
+/*
+|--------------------------------------------------------------------------
+| Checkout Change Mode
+|--------------------------------------------------------------------------
+*/
+\SureCart::route()
+	->get()
+	->where( 'query_var', 'sc_checkout_change_mode' )
+	->where( 'query_var', 'sc_checkout_post' )
+	->middleware( CheckoutFormModeMiddleware::class )
+	->handle( 'CheckoutFormsController@changeMode' );
 
 /*
 |--------------------------------------------------------------------------
@@ -68,17 +76,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 |--------------------------------------------------------------------------
 */
 \SureCart::route()
-->get()
-->where( 'query_var', 'sc_redirect' )
-// handle login.
-->middleware( LoginLinkMiddleware::class )
-// redirect in this order.
-->middleware( PathRedirectMiddleware::class )
-->middleware( OrderRedirectMiddleware::class )
-->middleware( PurchaseRedirectMiddleware::class )
-->middleware( CheckoutRedirectMiddleware::class )
-->middleware( PaymentFailureRedirectMiddleware::class )
-->middleware( SubscriptionRedirectMiddleware::class )
-// customer dashboard redirect is the fallback if there is a customer_id present.
-->middleware( CustomerDashboardRedirectMiddleware::class )
-->handle( 'DashboardController@show' );
+	->get()
+	->where( 'query_var', 'sc_redirect' )
+	// handle login.
+	->middleware( LoginLinkMiddleware::class )
+	// redirect in this order.
+	->middleware( PathRedirectMiddleware::class )
+	->middleware( OrderRedirectMiddleware::class )
+	->middleware( InvoiceRedirectMiddleware::class )
+	->middleware( PurchaseRedirectMiddleware::class )
+	->middleware( CheckoutRedirectMiddleware::class )
+	->middleware( PaymentFailureRedirectMiddleware::class )
+	->middleware( SubscriptionRedirectMiddleware::class )
+	// customer dashboard redirect is the fallback if there is a customer_id present.
+	->middleware( CustomerDashboardRedirectMiddleware::class )
+	->middleware( CustomerDashboardLinkRedirectMiddleware::class )
+	->middleware( ProductReviewRedirectMiddleware::class )
+	->handle( 'DashboardController@show' );

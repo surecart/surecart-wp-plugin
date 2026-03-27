@@ -30,6 +30,8 @@ export default ({ attributes, setAttributes }) => {
 				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
 						<TextControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							label={__('Label', 'surecart')}
 							value={label}
 							onChange={(label) => setAttributes({ label })}
@@ -38,15 +40,17 @@ export default ({ attributes, setAttributes }) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<ScLineItem {...blockProps}>
-				<span slot="title">{label}</span>
-				<ScFormatNumber
-					slot="price"
-					type="currency"
-					value={1234}
-					currency={scData?.currency || 'usd'}
-				></ScFormatNumber>
-			</ScLineItem>
+			<div {...blockProps}>
+				<ScLineItem>
+					<span slot="title">{label}</span>
+					<ScFormatNumber
+						slot="price"
+						type="currency"
+						value={1234}
+						currency={scData?.currency || 'usd'}
+					></ScFormatNumber>
+				</ScLineItem>
+			</div>
 		</Fragment>
 	);
 };

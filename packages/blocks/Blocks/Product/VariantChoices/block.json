@@ -1,10 +1,11 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
-	"apiVersion": 2,
+	"apiVersion": 3,
 	"name": "surecart/product-variant-choices",
 	"title": "Product Variants",
 	"description": "Displays possible choices for product variants.",
 	"category": "surecart",
+	"ancestor": ["surecart/upsell"],
 	"keywords": ["variant", "product", "choice"],
 	"supports": {
 		"reusable": false,

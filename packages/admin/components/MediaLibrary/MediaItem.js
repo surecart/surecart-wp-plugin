@@ -3,8 +3,6 @@ import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import {
 	ScFormatBytes,
-	ScFormatDate,
-	ScStackedListRow,
 	ScTableCell,
 	ScTableRow,
 	ScTag,
@@ -98,15 +96,7 @@ export default ({ media, onClick, selected, disabled }) => {
 					<ScTag type="warning">{__('Private', 'surecart')}</ScTag>
 				)}
 			</ScTableCell>
-			<ScTableCell>
-				<ScFormatDate
-					date={media?.created_at}
-					month="short"
-					day="numeric"
-					year="numeric"
-					type="timestamp"
-				></ScFormatDate>
-			</ScTableCell>
+			<ScTableCell>{media?.created_at_date_time}</ScTableCell>
 		</ScTableRow>
 	);
 };

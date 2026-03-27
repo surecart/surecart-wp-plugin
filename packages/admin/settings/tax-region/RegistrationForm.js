@@ -1,11 +1,22 @@
-import { __ } from '@wordpress/i18n';
+/** @jsx jsx */
+import { jsx, css } from '@emotion/core';
+
+/**
+ * External dependencies.
+ */
+import { __, sprintf } from '@wordpress/i18n';
 import { useState, useEffect } from '@wordpress/element';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
+
+/**
+ * Internal dependencies.
+ */
 import {
 	ScAlert,
 	ScButton,
 	ScForm,
+	ScIcon,
 	ScInput,
 	ScSelect,
 	ScTaxIdInput,
@@ -18,7 +29,7 @@ const types = {
 	eu: 'eu_vat',
 	uk: 'gb_vat',
 };
-const zoneName = {
+export const zoneName = {
 	au: __('Country', 'surecart'),
 	eu: __('Country', 'surecart'),
 	uk: __('Country', 'surecart'),
@@ -26,11 +37,16 @@ const zoneName = {
 	us: __('State', 'surecart'),
 };
 
-export default ({ region, registration, onSubmitted, onDeleted }) => {
+export default ({
+	region,
+	registration,
+	registrations,
+	onSubmitted,
+	onDeleted,
+}) => {
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
 	const [type, setType] = useState('other');
-	const [additionalErrors, setAdditionalErrors] = useState([]);
 	const { saveEntityRecord, deleteEntityRecord } = useDispatch(coreStore);
 	const [taxType, setTaxType] = useState(
 		registration?.manual_rate ? 'manual' : 'automatic'
@@ -55,7 +71,7 @@ export default ({ region, registration, onSubmitted, onDeleted }) => {
 		(select) => {
 			const queryArgs = [
 				'surecart',
-				'tax_zone',
+				'tax-zone',
 				{ context: 'edit', regions: [region], per_page: 100 },
 			];
 			return {
@@ -97,7 +113,7 @@ export default ({ region, registration, onSubmitted, onDeleted }) => {
 			setLoading(true);
 			await saveEntityRecord(
 				'surecart',
-				'tax_registration',
+				'tax-registration',
 				{
 					...(registration?.id ? { id: registration?.id } : {}),
 					...data,
@@ -109,10 +125,7 @@ export default ({ region, registration, onSubmitted, onDeleted }) => {
 			onSubmitted();
 		} catch (e) {
 			console.error(e);
-			setError(e?.message || __('Something went wrong.', 'surecart'));
-			if (e?.additional_errors) {
-				setAdditionalErrors(e.additional_errors);
-			}
+			setError(e);
 		} finally {
 			setLoading(false);
 		}
@@ -124,7 +137,7 @@ export default ({ region, registration, onSubmitted, onDeleted }) => {
 			setLoading(true);
 			await deleteEntityRecord(
 				'surecart',
-				'tax_registration',
+				'tax-registration',
 				registration?.id,
 				{},
 				{ throwOnError: true }
@@ -132,14 +145,40 @@ export default ({ region, registration, onSubmitted, onDeleted }) => {
 			onDeleted();
 		} catch (e) {
 			console.error(e);
-			setError(e?.message || __('Something went wrong.', 'surecart'));
-			if (e?.additional_errors) {
-				setAdditionalErrors(e.additional_errors);
-			}
+			setError(e);
 		} finally {
 			setLoading(false);
 		}
 	};
+
+	const isZoneRegistered = (zone) =>
+		(registrations || []).some((r) => r.tax_zone?.id === zone.id);
+
+	const availableZones = (zones || []).filter(
+		(zone) => !isZoneRegistered(zone)
+	);
+
+	const selectedZone = availableZones.find((z) => z.id === data?.tax_zone);
+
+	const defaultTaxLabel = (availableZones || []).find(
+		(z) => z.id === data?.tax_zone
+	)?.default_label;
+
+	const requiresManualTaxOverride =
+		selectedZone?.default_rate === 0 ||
+		(region === 'ca' &&
+			['QC', 'SK', 'MB', 'BC'].includes(
+				selectedZone?.state || registration?.tax_zone?.state
+			));
+
+	// Set taxType to 'manual' if requiresManualTaxOverride is true.
+	useEffect(() => {
+		setTaxType(
+			requiresManualTaxOverride || registration?.manual_rate
+				? 'manual'
+				: 'automatic'
+		);
+	}, [requiresManualTaxOverride]);
 
 	return (
 		<ScForm
@@ -147,41 +186,73 @@ export default ({ region, registration, onSubmitted, onDeleted }) => {
 			style={{ '--sc-form-row-spacing': 'var(--sc-spacing-large)' }}
 		>
 			<Error error={error} setError={setError} />
-			<ScSelect
-				search
-				loading={fetching}
-				disabled={registration?.id}
-				value={data?.tax_zone}
-				unselect={false}
-				label={zoneName[region] || __('Region', 'surecart')}
-				onScChange={(e) => updateData({ tax_zone: e.target.value })}
-				choices={(zones || [])
-					.reverse()
-					.map(({ state_name, country_name, id }) => {
-						return {
-							label: state_name || country_name,
-							value: id,
-						};
-					})}
-				required
-			/>
+			{!registration?.id && (
+				<ScSelect
+					search
+					loading={fetching}
+					disabled={registration?.id}
+					value={data?.tax_zone}
+					unselect={false}
+					label={zoneName[region] || __('Region', 'surecart')}
+					onScChange={(e) => updateData({ tax_zone: e.target.value })}
+					choices={(availableZones || [])
+						.reverse()
+						.map(({ state_name, country_name, id }) => {
+							return {
+								label: state_name || country_name,
+								value: id,
+							};
+						})}
+					required
+				/>
+			)}
 
 			{region !== 'other' && (
-				<ScSelect
-					label={__('Tax Calculation', 'surecart')}
-					value={taxType}
-					onScChange={(e) => setTaxType(e.target.value)}
-					choices={[
-						{
-							value: 'manual',
-							label: __('Manual', 'surecart'),
-						},
-						{
-							value: 'automatic',
-							label: __('Automatic', 'surecart'),
-						},
-					]}
-				/>
+				<>
+					{requiresManualTaxOverride ? (
+						<div
+							css={css`
+								color: var(--sc-input-help-text-color);
+								display: flex;
+							`}
+						>
+							<ScIcon name="info" />
+							<span
+								css={css`
+									margin-left: var(--sc-spacing-small);
+								`}
+							>
+								{sprintf(
+									/* translators: %s: state/region name */
+									__(
+										'Please specify a tax rate for %s, as it requires manual entry',
+										'surecart'
+									),
+									selectedZone?.state_name ||
+										selectedZone?.country_name,
+									selectedZone?.state_name ||
+										selectedZone?.country_name
+								)}
+							</span>
+						</div>
+					) : (
+						<ScSelect
+							label={__('Tax Calculation', 'surecart')}
+							value={taxType}
+							onScChange={(e) => setTaxType(e.target.value)}
+							choices={[
+								{
+									value: 'manual',
+									label: __('Manual', 'surecart'),
+								},
+								{
+									value: 'automatic',
+									label: __('Automatic', 'surecart'),
+								},
+							]}
+						/>
+					)}
+				</>
 			)}
 
 			{(region === 'other' || taxType === 'manual') && (
@@ -189,7 +260,7 @@ export default ({ region, registration, onSubmitted, onDeleted }) => {
 					type="number"
 					min="0"
 					max="100"
-					step="0.01"
+					step="0.0001"
 					required
 					label={__('Tax Rate', 'surecart')}
 					value={data?.manual_rate}
@@ -202,6 +273,22 @@ export default ({ region, registration, onSubmitted, onDeleted }) => {
 					<span slot="suffix">%</span>
 				</ScInput>
 			)}
+
+			<ScInput
+				type="text"
+				label={__('Tax Label', 'surecart')}
+				value={data?.label}
+				help={__(
+					'The name of the tax that is displayed to customers during checkout and on invoices and receipts.',
+					'surecart'
+				)}
+				placeholder={
+					defaultTaxLabel ||
+					tax_zone?.default_label ||
+					__('Tax', 'surecart')
+				}
+				onScInput={(e) => updateData({ label: e.target.value })}
+			></ScInput>
 
 			{region !== 'us' && (
 				<ScTaxIdInput
@@ -252,7 +339,9 @@ export default ({ region, registration, onSubmitted, onDeleted }) => {
 					)}
 				</div>
 				<ScButton type="primary" submit>
-					{__('Collect Tax', 'surecart')}
+					{registration?.id
+						? __('Save Changes', 'surecart')
+						: __('Collect Tax', 'surecart')}
 				</ScButton>
 			</sc-flex>
 

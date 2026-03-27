@@ -35,8 +35,7 @@ export class ScProductDonationCustomAmount {
           show-control="false"
           checked={checked}
           onClick={() => this.priceInput.triggerFocus()}
-          onKeyDown={e => {
-            this.priceInput.value = e.key;
+          onKeyDown={() => {
             this.priceInput.triggerFocus();
           }}
           role="button"

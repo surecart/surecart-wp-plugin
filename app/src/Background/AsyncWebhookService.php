@@ -25,11 +25,21 @@ class AsyncWebhookService extends AsyncRequest {
 		'period'           => \SureCart\Models\Period::class,
 		'order'            => \SureCart\Models\Order::class,
 		'refund'           => \SureCart\Models\Refund::class,
+		'dispute'          => \SureCart\Models\Dispute::class,
 		'subscription'     => \SureCart\Models\Subscription::class,
 		'invoice'          => \SureCart\Models\Invoice::class,
 		'account'          => \SureCart\Models\Account::class,
 		'webhook_endpoint' => \SureCart\Models\Webhook::class,
 	];
+
+	/**
+	 * Bootstrap the service.
+	 *
+	 * @return void
+	 */
+	public function bootstrap() {
+		// nothing to bootstrap.
+	}
 
 	/**
 	 * Enqueue an action to run one time, as soon as possible
@@ -54,7 +64,7 @@ class AsyncWebhookService extends AsyncRequest {
 	 */
 	public function handle( $id = 0 ) {
 		// get the webhook.
-		$id = $id ? $id : $_POST['id']; // phpcs:ignore WordPress.Security.NonceVerification.Missing
+		$id = (int) ( $id ? $id : $_POST['id'] ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
 
 		// get the event name.
 		if ( empty( $id ) ) {

@@ -44,7 +44,7 @@ export class ScSelectDropdown {
   private labelId = `select-label-${id}`;
 
   /** The input's autocomplete attribute. */
-  @Prop() autocomplete: string;
+  @Prop({ reflect: true }) autocomplete: string;
 
   /** Placeholder for no value */
   @Prop() placeholder: string = '';
@@ -196,7 +196,7 @@ export class ScSelectDropdown {
     if (checked) {
       return true;
     }
-    return value && this.value === value;
+    return !!value && this.value === value;
   }
 
   /** Sets a custom validation message. If `message` is not empty, the field will be considered invalid. */
@@ -230,6 +230,20 @@ export class ScSelectDropdown {
     }
 
     this.scChange.emit(choice);
+  }
+
+  handleInputChange() {
+    // Sync autofilled value to component state
+    if (!this.input || this.input.value === this.value) return;
+
+    const inputValue = this.input.value;
+    // Match by value (code) or label (name) since Chrome may autofill either
+    const choice = this.choices.find(c => c.value === inputValue || c.label === inputValue);
+
+    if (choice) {
+      this.value = choice.value;
+      this.scChange.emit(choice);
+    }
   }
 
   @Watch('searchTerm')
@@ -289,6 +303,7 @@ export class ScSelectDropdown {
 
   @Listen('keydown')
   handleKeyDown(event: KeyboardEvent) {
+    event.stopPropagation();
     const target = event.target as HTMLElement;
     const items = this.getItems();
 
@@ -395,14 +410,16 @@ export class ScSelectDropdown {
   }
 
   renderItem(choice: ChoiceItem, index: number) {
+    const uniqueKey = `${choice?.value || choice?.label || 'item'}-${index}`;
+
     if (choice?.choices?.length) {
-      return <sc-menu-label key={index}>{choice.label}</sc-menu-label>;
+      return <sc-menu-label key={uniqueKey}>{choice?.label}</sc-menu-label>;
     }
 
     return (
       <sc-menu-item
         class={{ 'is-unavailable': choice?.unavailable }}
-        key={index}
+        key={uniqueKey}
         checked={this.isChecked(choice)}
         value={choice?.value}
         onClick={() => !choice.disabled && this.handleSelect(choice)}
@@ -464,10 +481,12 @@ export class ScSelectDropdown {
             value={this.value}
             required={this.required}
             disabled={this.disabled}
-            aria-hidden="true"
+            autocomplete={this.autocomplete}
+            tabindex="-1"
             aria-label={this.displayValue() || this.label || this.placeholder}
             onBlur={() => this.handleBlur()}
             onFocus={() => this.handleFocus()}
+            onChange={() => this.handleInputChange()}
           ></input>
 
           <sc-dropdown
@@ -496,7 +515,7 @@ export class ScSelectDropdown {
             {this.search && (
               <sc-input
                 exportparts="base:search__base, input:search__input, form-control:search__form-control"
-                placeholder={this.searchPlaceholder || 'Search...'}
+                placeholder={this.searchPlaceholder || __('Search...', 'surecart')}
                 onScInput={e => this.handleQuery(e)}
                 class="search"
                 clearable
@@ -509,7 +528,12 @@ export class ScSelectDropdown {
               </sc-input>
             )}
 
-            <sc-menu style={{ maxHeight: '210px', overflow: 'auto' }} exportparts="base:menu__base" onScroll={e => this.handleMenuScroll(e)} aria-multiselectable="false">
+            <sc-menu
+              style={{ maxHeight: this.open ? '210px' : '0px', overflow: 'auto' }}
+              exportparts="base:menu__base"
+              onScroll={e => this.handleMenuScroll(e)}
+              aria-multiselectable="false"
+            >
               <slot name="prefix"></slot>
               {(this.filteredChoices || []).map((choice, index) => {
                 return [this.renderItem(choice, index), (choice.choices || []).map(choice => this.renderItem(choice, index))];

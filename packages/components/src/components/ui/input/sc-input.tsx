@@ -1,4 +1,4 @@
-import { Component, Prop, State, Watch, h, Event, EventEmitter, Method, Element, Host } from '@stencil/core';
+import { Component, Prop, State, Watch, h, Event, EventEmitter, Method, Element, Host, Listen } from '@stencil/core';
 import { FormSubmitController } from '../../../functions/form-data';
 
 let id = 0;
@@ -94,6 +94,9 @@ export class ScInput {
   /** A pattern to validate input against. */
   @Prop() pattern: string;
 
+  /** Custom validation message to show when the input is invalid (replaces browser default). */
+  @Prop() customValidity: string;
+
   /** Makes the input a required field. */
   @Prop({ reflect: true }) required = false;
 
@@ -164,6 +167,14 @@ export class ScInput {
     return this.input.blur();
   }
 
+  /** Prevent mouse scroll wheel from modifying input value */
+  @Listen('wheel')
+  handleWheel() {
+    if (this.type === 'number') {
+      this.input?.blur();
+    }
+  }
+
   /** Selects all the text in the input. */
   select() {
     return this.input.select();
@@ -186,7 +197,20 @@ export class ScInput {
 
   handleInput() {
     this.value = this.input.value;
+    // Clear custom validity so browser can re-validate.
+    this.input.setCustomValidity('');
     this.scInput.emit();
+  }
+
+  handleInvalid() {
+    // Only show custom validity message for pattern mismatch, not for required/empty fields.
+    if (this.customValidity && this.input.validity.patternMismatch) {
+      this.input.setCustomValidity(this.customValidity);
+    } else {
+      // this is needed if the user switches from a country with a regex to one without.
+      // we want to clear out the custom validity so it does not persist.
+      this.input.setCustomValidity('');
+    }
   }
 
   handleClearClick(event: MouseEvent) {
@@ -298,9 +322,15 @@ export class ScInput {
                 value={this.value}
                 onChange={() => this.handleChange()}
                 onInput={() => this.handleInput()}
-                // onInvalid={this.handleInvalid}
+                onInvalid={() => this.handleInvalid()}
                 onFocus={() => this.handleFocus()}
                 onBlur={() => this.handleBlur()}
+                onKeyDown={e => {
+                  // Only stop propagation on keys that are not handled by the browser
+                  if (!['Enter', 'ArrowRight', 'ArrowLeft', 'ArrowUp', 'ArrowDown', 'Tab'].includes(e.key)) {
+                    e.stopPropagation();
+                  }
+                }}
               />
             </slot>
 

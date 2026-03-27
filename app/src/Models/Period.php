@@ -5,6 +5,7 @@ namespace SureCart\Models;
 use SureCart\Models\Traits\HasCheckout;
 use SureCart\Models\Traits\HasPrice;
 use SureCart\Models\Traits\HasSubscription;
+use SureCart\Support\TimeDate;
 
 /**
  * Period model
@@ -66,5 +67,30 @@ class Period extends Model {
 		return $this;
 	}
 
-}
+	/**
+	 * Get the start at date.
+	 *
+	 * @return string
+	 */
+	public function getStartAtDateAttribute() {
+		return ! empty( $this->start_at ) ? TimeDate::formatDate( $this->start_at ) : '';
+	}
 
+	/**
+	 * Get the end at date.
+	 *
+	 * @return string
+	 */
+	public function getEndAtDateAttribute() {
+		return ! empty( $this->end_at ) ? TimeDate::formatDate( $this->end_at ) : '';
+	}
+
+	/**
+	 * Get the next payment retry at date time.
+	 *
+	 * @return string
+	 */
+	public function getNextPaymentRetryAtDateTimeAttribute() {
+		return ! empty( $this->next_payment_retry_at ) ? TimeDate::formatDateAndTime( $this->next_payment_retry_at ) : '';
+	}
+}

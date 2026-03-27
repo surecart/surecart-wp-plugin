@@ -20,8 +20,6 @@ import { __ } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
 import { useEffect, useState } from 'react';
 
-import { formatTime } from '../../../util/time';
-
 export default ({ activation }) => {
 	const [openModal, setOpenModal] = useState();
 	const [busy, setBusy] = useState(false);
@@ -198,17 +196,7 @@ export default ({ activation }) => {
 				</div>
 
 				<div>
-					<strong>
-						{formatTime(activation?.created_at, {
-							dateStyle: 'medium',
-							timeZone: 'UTC',
-						})}
-					</strong>
-					<br />
-					{formatTime(activation?.created_at, {
-						timeStyle: 'medium',
-						timeZone: 'UTC',
-					})}
+					<strong>{activation?.created_at_date_time}</strong>
 				</div>
 
 				<ScDropdown slot="suffix" placement="bottom-end">

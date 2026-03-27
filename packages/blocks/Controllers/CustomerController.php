@@ -56,9 +56,9 @@ class CustomerController extends BaseController {
 			</sc-breadcrumbs>
 
 
-		<?php echo ( new PaymentMethodController() )->index( [ 'title' => esc_html( 'Payment Methods', 'surecart' ) ], '' ); ?>
+		<?php echo ( new PaymentMethodController() )->index( [ 'title' => esc_html__( 'Payment Methods', 'surecart' ) ], '' ); ?>
 
-		<?php echo $this->preview( [ 'title' => esc_html( 'Billing Details', 'surecart' ) ], '' ); ?>
+		<?php echo $this->preview( [ 'title' => esc_html__( 'Billing Details', 'surecart' ) ], '' ); ?>
 
 		</sc-spacing>
 
@@ -102,7 +102,7 @@ class CustomerController extends BaseController {
 						)
 					);
 					?>
-				 ">
+				">
 					<?php esc_html_e( 'Billing', 'surecart' ); ?>
 				</sc-breadcrumb>
 				<sc-breadcrumb>

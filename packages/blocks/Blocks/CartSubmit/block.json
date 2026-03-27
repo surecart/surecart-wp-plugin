@@ -1,6 +1,6 @@
 {
 	"$schema": "https://json.schemastore.org/block.json",
-	"apiVersion": 2,
+	"apiVersion": 3,
 	"name": "surecart/cart-submit",
 	"title": "Cart Submit Button",
 	"description": "The cart submit button",
@@ -12,6 +12,7 @@
 		"align": false,
 		"alignWide": false,
 		"multiple": false,
+		"inserter": false,
 		"spacing": {
 			"__experimentalSkipSerialization": true,
 			"padding": ["horizontal", "vertical"],
@@ -56,6 +57,9 @@
 		},
 		"border": {
 			"type": "boolean"
+		},
+		"sectionBackgroundColor": {
+			"type": "string"
 		},
 		"padding": {
 			"type": "object",

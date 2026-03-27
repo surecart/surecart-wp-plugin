@@ -12,10 +12,9 @@
 		"tests": {
 			"config": {
 				"FS_METHOD": "direct",
-				"WP_DEBUG": true,
-				"SURECART_API_TOKEN": "rJLEGce6TpeaUm7xaNiw2x77",
+				"WP_DEBUG": false,
 				"SURECART_API_URL": "https://api.staging.surecart.com",
-				"CE_TESTING": true
+				"SC_E2E_TESTING": true
 			},
 			"plugins": [
 				".",

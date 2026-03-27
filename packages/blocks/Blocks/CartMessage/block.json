@@ -1,15 +1,15 @@
 {
 	"$schema": "https://json.schemastore.org/block.json",
-	"apiVersion": 2,
+	"apiVersion": 3,
 	"name": "surecart/cart-message",
 	"title": "Cart Message",
 	"description": "Display a custom message in the cart",
 	"category": "surecart",
-  "textdomain": "surecart",
+	"textdomain": "surecart",
 	"supports": {
 		"reusable": false,
 		"html": false,
-		"typography": true
+		"inserter": false
 	},
 	"ancestor": ["surecart/cart"],
 	"attributes": {

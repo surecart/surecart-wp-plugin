@@ -16,6 +16,9 @@ html :where(.wp-block-column) {
 	}
 }
 
-.editor-styles-wrapper :where(body .is-layout-flow) > :last-child:last-child {
-    margin-top: 0;
+.wp-block-columns
+	.editor-styles-wrapper
+	:where(body .is-layout-flow)
+	> :last-child:last-child {
+	margin-top: 0;
 }

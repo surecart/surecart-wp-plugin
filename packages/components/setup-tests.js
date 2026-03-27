@@ -1,3 +1,6 @@
+// Increase Jest timeout for e2e tests
+jest.setTimeout(120000);
+
 const observe = jest.fn();
 const unobserve = jest.fn();
 

@@ -25,6 +25,10 @@ class Block extends BaseBlock {
 	 * @return string
 	 */
 	public function render( $attributes, $content ) {
+		if ( empty( $attributes['price_id'] ) ) {
+			return null;
+		}
+
 		$price = Price::with( array( 'product' ) )->find( $attributes['price_id'] );
 
 		// empty check.
@@ -43,6 +47,24 @@ class Block extends BaseBlock {
 			]
 		);
 
+		if ( !empty($attributes['checked']) ) {
+			sc_initial_state(
+				[
+					'checkout' => [
+						'initialLineItems' => sc_initial_line_items(
+							[
+								[
+									'price_id' => $price->id,
+									'quantity' => $attributes['quantity'] ?? 1,
+									'variant'  => $price->variant_id ?? null,
+								],
+							]
+						),
+					],
+				]
+			);
+		}
+
 		ob_start(); ?>
 		<sc-price-choice
 			id="sc-price-choice-<?php echo (int) self::$instance; ?>"
@@ -52,7 +74,7 @@ class Block extends BaseBlock {
 			description="<?php echo esc_attr( $attributes['description'] ?? '' ); ?>"
 			checked="<?php echo esc_attr( ! empty( $attributes['checked'] ) ? 'true' : 'false' ); ?>"
 			show-label="<?php echo esc_attr( ! empty( $attributes['show_label'] ) ? 'true' : 'false' ); ?>"
-			show-price="<?php echo esc_attr( ! empty( $attributes['show_price'] ) ? 'true' : 'false' ); ?>"
+			show-price="<?php echo esc_attr( wp_validate_boolean( $attributes['show_price'] ) ? 'true' : 'false' ); ?>"
 			show-control="<?php echo esc_attr( ! empty( $attributes['show_control'] ) ? 'true' : 'false' ); ?>"
 			quantity="<?php echo esc_attr( $attributes['quantity'] ?? '1' ); ?>"
 		></sc-price-choice>

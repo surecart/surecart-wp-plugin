@@ -1,8 +1,22 @@
-import DataTable from '../../DataTable';
-import { ScButton, ScPaymentMethod } from '@surecart/components-react';
+/**
+ * External dependencies.
+ */
 import { Fragment } from '@wordpress/element';
 import { __, _n } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
+
+/**
+ * Internal dependencies.
+ */
+import DataTable from '../../DataTable';
+import {
+	ScButton,
+	ScPaymentMethod,
+	ScDropdown,
+	ScIcon,
+	ScMenu,
+	ScMenuItem,
+} from '@surecart/components-react';
 
 export default ({
 	data = [],
@@ -13,6 +27,7 @@ export default ({
 	isFetching,
 	page,
 	onRefundClick,
+	onChargeClick,
 	setPage,
 	pagination,
 	columns,
@@ -22,6 +37,14 @@ export default ({
 	const renderStatusTag = (charge) => {
 		if (charge?.fully_refunded) {
 			return <sc-tag type="danger">{__('Refunded', 'surecart')}</sc-tag>;
+		}
+
+		if (charge?.disputed_amount) {
+			return (
+				<sc-tag type={charge?.dispute_status_type ?? 'warning'}>
+					{charge?.dispute_status}
+				</sc-tag>
+			);
 		}
 
 		if (charge?.refunded_amount && charge?.refunded_amount) {
@@ -36,49 +59,19 @@ export default ({
 	};
 
 	const renderRefundButton = (charge) => {
-		if (charge?.fully_refunded) {
-			return null;
-		}
-		if (!onRefundClick) {
+		if (
+			charge?.fully_refunded ||
+			!onRefundClick ||
+			charge?.fully_disputed
+		) {
 			return null;
 		}
 
 		return (
-			<ScButton size="small" onClick={() => onRefundClick(charge)}>
+			<ScMenuItem onClick={() => onRefundClick(charge)}>
 				{__('Refund', 'surecart')}
-			</ScButton>
+			</ScMenuItem>
 		);
-	};
-
-	const getExternalChargeLink = (charge) => {
-		const paymentType = charge?.payment_method?.processor_type;
-
-		if (!['stripe', 'paypal'].includes(paymentType)) return null;
-
-		const externalChargeId = charge?.external_charge_id;
-		const isLiveMode = charge?.live_mode;
-
-		if (!externalChargeId) return null;
-
-		if (paymentType === 'stripe')
-			return `https://dashboard.stripe.com/${
-				!isLiveMode ? 'test/' : ''
-			}charges/${externalChargeId}`;
-
-		if (paymentType === 'paypal') {
-			return `https://www.${
-				!isLiveMode ? 'sandbox.' : ''
-			}paypal.com/activity/payment/${externalChargeId}`;
-		}
-	};
-
-	const getProcessorName = (type) => {
-		switch (type) {
-			case 'stripe':
-				return 'Stripe';
-			case 'paypal':
-				return 'PayPal';
-		}
 	};
 
 	return (
@@ -90,7 +83,7 @@ export default ({
 				items={(data || [])
 					.sort((a, b) => b.created_at - a.created_at)
 					.map((charge) => {
-						const { currency, amount, created_at } = charge;
+						const { created_at_date } = charge;
 						return {
 							amount: (
 								<sc-text
@@ -99,52 +92,47 @@ export default ({
 											'var(--sc-font-weight-bold)',
 									}}
 								>
-									<sc-format-number
-										type="currency"
-										currency={currency}
-										value={amount}
-									></sc-format-number>
+									{charge?.amount_display_amount}
 									{!!charge?.refunded_amount && (
 										<div
 											style={{
 												color: 'var(--sc-color-danger-500)',
 											}}
 										>
-											-{' '}
-											<sc-format-number
-												type="currency"
-												currency={charge?.currency}
-												value={charge?.refunded_amount}
-											></sc-format-number>{' '}
+											- {charge?.refunded_display_amount}{' '}
 											{__('Refunded', 'surecart')}
+										</div>
+									)}
+									{!!charge?.disputed_amount && (
+										<div
+											style={{
+												color:
+													charge?.dispute_status_type ===
+													'danger'
+														? 'var(--sc-color-danger-500)'
+														: 'var(--sc-color-warning-500)',
+											}}
+										>
+											- {charge?.disputed_display_amount}{' '}
+											{__('Disputed', 'surecart')}
 										</div>
 									)}
 								</sc-text>
 							),
-							date: (
-								<sc-format-date
-									type="timestamp"
-									date={created_at}
-									month="long"
-									day="numeric"
-									year="numeric"
-								></sc-format-date>
-							),
+							date: created_at_date,
 							method: (
 								<ScPaymentMethod
 									paymentMethod={charge?.payment_method}
-									externalLink={getExternalChargeLink(charge)}
+									externalLink={charge?.external_charge_link}
 									externalLinkTooltipText={`${__(
 										'View charge on ',
 										'surecart'
-									)} ${getProcessorName(
-										charge?.payment_method
-											?.processor_type || ''
-									)}`}
+									)} ${
+										charge?.payment_method?.processor_name
+									}`}
 								/>
 							),
 							status: renderStatusTag(charge),
-							refund: renderRefundButton(charge),
 							order: charge?.checkout?.order?.id && (
 								<ScButton
 									href={addQueryArgs('admin.php', {
@@ -156,6 +144,32 @@ export default ({
 								>
 									{__('View Order', 'surecart')}
 								</ScButton>
+							),
+							more: (
+								<ScDropdown placement="bottom-end">
+									<ScButton
+										circle
+										type="text"
+										style={{
+											'--button-color':
+												'var(--sc-color-gray-600)',
+											margin: '-10px',
+										}}
+										slot="trigger"
+									>
+										<ScIcon name="more-horizontal" />
+									</ScButton>
+									<ScMenu>
+										{renderRefundButton(charge)}
+										<ScMenuItem
+											onClick={() =>
+												onChargeClick(charge)
+											}
+										>
+											{__('View Details', 'surecart')}
+										</ScMenuItem>
+									</ScMenu>
+								</ScDropdown>
 							),
 						};
 					})}

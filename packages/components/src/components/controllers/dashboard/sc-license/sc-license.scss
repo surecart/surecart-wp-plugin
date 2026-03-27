@@ -1,0 +1,30 @@
+:host {
+  display: block;
+}
+
+.license {
+  &__date {
+    font-weight: var(--sc-font-weight-semibold);
+  }
+  &__heading {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  &__key {
+    display: block;
+  }
+}
+
+.close__button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 22px;
+  z-index: 1;
+}
+
+.license-cancel {
+  display: grid;
+  gap: 0.5em;
+}

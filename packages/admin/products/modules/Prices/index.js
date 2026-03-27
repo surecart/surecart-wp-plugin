@@ -20,7 +20,7 @@ export default ({ product, productId }) => {
 	const [newPriceModal, setNewPriceModal] = useState(false);
 	const [showArchived, setShowArchived] = useState(false);
 
-	const { active, archived, updating, loading } = useSelectPrices({
+	const { active, archived, updating, loading, allPrices } = useSelectPrices({
 		productId,
 	});
 
@@ -59,14 +59,24 @@ export default ({ product, productId }) => {
 				title={__('Pricing', 'surecart')}
 				loading={loading}
 				footer={footer()}
+				css={
+					!loading &&
+					css`
+						* {
+							box-sizing: border-box;
+						}
+						.components-card-body {
+							padding: 0;
+						}
+					`
+				}
 			>
-				<div
-					css={css`
-						display: grid;
-						gap: 1em;
-					`}
-				>
-					<List prices={active} product={product}>
+				<div>
+					<List
+						prices={active}
+						product={product}
+						allPrices={allPrices}
+					>
 						<ScEmpty icon="shopping-bag">
 							<ScSpacing>
 								<p
@@ -105,8 +115,9 @@ export default ({ product, productId }) => {
 				{updating && <ScBlockUi spinner></ScBlockUi>}
 			</Box>
 
-			{!!newPriceModal && product?.id && (
+			{!!product?.id && (
 				<NewPrice
+					isOpen={newPriceModal}
 					onRequestClose={() => setNewPriceModal(false)}
 					product={product}
 				/>

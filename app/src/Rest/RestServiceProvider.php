@@ -10,6 +10,13 @@ use SureCart\Rest\RestServiceInterface;
  */
 abstract class RestServiceProvider extends \WP_REST_Controller implements RestServiceInterface {
 	/**
+	 * Whether the rest service provider converts currency.
+	 *
+	 * @var boolean
+	 */
+	protected $converts_currency = false;
+
+	/**
 	 * Mark specific properties that need additional permissions checks
 	 * before modifying. We don't want customers being able to modify these.
 	 *
@@ -165,6 +172,37 @@ abstract class RestServiceProvider extends \WP_REST_Controller implements RestSe
 	}
 
 	/**
+	 * Get our sample schema for a post.
+	 *
+	 * @return array The sample schema for a post
+	 */
+	public function get_item_schema() {
+		if ( $this->schema ) {
+			// Since WordPress 5.3, the schema can be cached in the $schema property.
+			return $this->schema;
+		}
+
+		$this->schema = [
+			// This tells the spec of JSON Schema we are using which is draft 4.
+			'$schema'    => 'http://json-schema.org/draft-04/schema#',
+			// The title property marks the identity of the resource.
+			'title'      => $this->endpoint,
+			'type'       => 'object',
+			// In JSON Schema you can specify object properties in the properties attribute.
+			'properties' => [
+				'id' => [
+					'description' => esc_html__( 'Unique identifier for the object.', 'surecart' ),
+					'type'        => 'string',
+					'context'     => [ 'view', 'edit', 'embed' ],
+					'readonly'    => true,
+				],
+			],
+		];
+
+		return $this->schema;
+	}
+
+	/**
 	 * Process the callback for the route.
 	 *
 	 * @param string $class Class name.
@@ -176,20 +214,26 @@ abstract class RestServiceProvider extends \WP_REST_Controller implements RestSe
 		do_action( 'litespeed_control_set_nocache', 'surecart api request' );
 
 		return function ( $request ) use ( $class, $method ) {
-			// get and call controller with request.
-			$controller = \SureCart::closure()->method( $class, $method );
-			$model      = $controller( $request );
-
 			// check and filter context.
 			$context = ! empty( $request['context'] ) ? $request['context'] : 'view';
 
-			if ( is_wp_error( $model ) ) {
-				return $model;
+			// should we convert currency?
+			$converts_currency = $this->converts_currency && 'edit' !== $context;
+
+			// allow override of currency conversion in a per-request basis.
+			if ( isset( $request['currency_conversion'] ) ) {
+				$converts_currency = wp_validate_boolean( $request['currency_conversion'] );
 			}
 
-			// if we are editing, creating, deleting, we are in an edit context. No need to pass the context.
-			if ( in_array( $method, [ 'edit', 'create', 'delete' ], true ) ) {
-				$context = 'edit';
+			// convert currency if needed.
+			\SureCart::currency()->convert( $converts_currency );
+
+			// get and call controller with request.
+			$controller = \SureCart::closure()->method( $class, $method );
+			$model      = $controller( apply_filters( "rest_{$this->endpoint}_request", $request, $method ) );
+
+			if ( is_wp_error( $model ) ) {
+				return $model;
 			}
 
 			// remove wp_created_by to prevent user ids from being leaked.
@@ -199,7 +243,7 @@ abstract class RestServiceProvider extends \WP_REST_Controller implements RestSe
 
 			$response = rest_ensure_response( $this->filter_response_by_context( is_a( $model, Model::class ) ? $model->toArray() : $model, $context ) );
 
-			if ( is_a( $model, Model::class ) ) {
+			if ( is_a( $model, Model::class ) && ! empty( $model->getCacheStatus() ) ) {
 				$response->header( 'X-SURECART-CACHE-STATUS', $model->getCacheStatus() );
 			}
 

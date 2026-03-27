@@ -43,6 +43,7 @@
 - [sc-line-item](../../../ui/line-item)
 - [sc-skeleton](../../../ui/skeleton)
 - [sc-product-line-item](../../../ui/product-line-item)
+- [sc-swap](../sc-swap)
 
 ### Graph
 ```mermaid
@@ -50,11 +51,15 @@ graph TD;
   sc-line-items --> sc-line-item
   sc-line-items --> sc-skeleton
   sc-line-items --> sc-product-line-item
-  sc-product-line-item --> sc-format-number
+  sc-line-items --> sc-swap
+  sc-product-line-item --> sc-product-line-item-note
   sc-product-line-item --> sc-quantity-select
+  sc-product-line-item --> sc-button
   sc-product-line-item --> sc-icon
-  sc-product-line-item --> sc-line-item
+  sc-product-line-item-note --> sc-icon
   sc-quantity-select --> sc-icon
+  sc-button --> sc-spinner
+  sc-swap --> sc-switch
   style sc-line-items fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

@@ -21,6 +21,7 @@ import { store as noticesStore } from '@wordpress/notices';
 import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
 import { useEffect, useState } from 'react';
+import { Tooltip } from '@wordpress/components';
 
 import Logo from '../../templates/Logo';
 import Template from '../../templates/UpdateModel';
@@ -42,13 +43,20 @@ import LineItems from './modules/LineItems';
 import RestoreSubscriptionAtModal from './modules/modals/RestoreSubscriptionAtModal';
 import PauseSubscriptionUntilModal from './modules/modals/PauseSubscriptionUntilModal';
 import RenewSubscriptionAtModal from './modules/modals/RenewSubscriptionAtModal';
+import Affiliates from '../../components/affiliates';
+import ForceCancelModal from './modules/modals/ForceCancelModal';
+import Confirm from '../../components/confirm';
+import SubscriptionSettings from './modules/SubscriptionSettings';
 
 export default () => {
 	const id = useSelect((select) => select(dataStore).selectPageId());
 	const [modal, setModal] = useState();
 	const [upcoming, setUpcoming] = useState();
 	const [loadingUpcoming, setLoadingUpcoming] = useState(false);
-	const { saveEntityRecord } = useDispatch(coreStore);
+	const [busy, setBusy] = useState(false);
+	const [error, setError] = useState(null);
+	const { saveEntityRecord, invalidateResolutionForStore } =
+		useDispatch(coreStore);
 	const { createErrorNotice, createSuccessNotice } =
 		useDispatch(noticesStore);
 
@@ -68,6 +76,7 @@ export default () => {
 							'price.product',
 							'period.subscription',
 							'product.featured_product_media',
+							'product.product_medias',
 							'product_media.media',
 						],
 					}
@@ -85,7 +94,10 @@ export default () => {
 		}
 	};
 
-	const editSubscription = async (data) => {
+	const editSubscription = async (data, successMessage = null) => {
+		successMessage =
+			successMessage || __('Payment method updated.', 'surecart');
+
 		try {
 			await saveEntityRecord(
 				'surecart',
@@ -93,7 +105,7 @@ export default () => {
 				{ id, ...data },
 				{ throwOnError: true }
 			);
-			createSuccessNotice(__('Payment method updated.', 'surecart'), {
+			createSuccessNotice(successMessage, {
 				type: 'snackbar',
 			});
 		} catch (e) {
@@ -129,6 +141,7 @@ export default () => {
 						'price',
 						'price.product',
 						'product.featured_product_media',
+						'product.product_medias',
 						'product_media.media',
 						'customer',
 						'customer.balances',
@@ -165,32 +178,50 @@ export default () => {
 	);
 
 	useEffect(() => {
-		if (id) {
+		if (
+			id &&
+			!['completed', 'canceled', undefined].includes(subscription?.status)
+		) {
 			fetchUpcomingPeriod();
 		}
-	}, [id, subscription?.discount?.id]);
+	}, [id, subscription?.discount?.id, subscription?.status]);
 
 	/** Render the cancel button */
 	const renderCancelButton = () => {
-		if (
-			subscription?.status === 'canceled' ||
-			subscription?.status === 'completed'
-		)
+		// completed.
+		if ('completed' === subscription?.status) return null;
+
+		// canceled but not paused.
+		if ('canceled' === subscription?.status && !subscription?.restore_at)
 			return null;
-		if (subscription?.cancel_at_period_end && subscription?.restore_at) {
+
+		// scheduled for cancelation.
+		if (subscription?.cancel_at_period_end && !subscription?.restore_at) {
 			return (
-				<ScMenuItem onClick={() => setModal('dont_cancel')}>
-					{__("Don't Pause", 'surecart')}
+				<>
+					<ScMenuItem onClick={() => setModal('dont_cancel')}>
+						{__("Don't Cancel", 'surecart')}
+					</ScMenuItem>
+					<ScMenuItem onClick={() => setModal('force_cancel')}>
+						{__('Cancel Now', 'surecart')}
+					</ScMenuItem>
+				</>
+			);
+		}
+
+		// paused(canceled) or scheduled paused.
+		if (
+			(subscription?.cancel_at_period_end ||
+				subscription?.status === 'canceled') &&
+			subscription?.restore_at
+		) {
+			return (
+				<ScMenuItem onClick={() => setModal('cancel_paused')}>
+					{__('Cancel Subscription', 'surecart')}
 				</ScMenuItem>
 			);
 		}
-		if (subscription?.cancel_at_period_end) {
-			return (
-				<ScMenuItem onClick={() => setModal('dont_cancel')}>
-					{__("Don't Cancel", 'surecart')}
-				</ScMenuItem>
-			);
-		}
+
 		return (
 			<ScMenuItem onClick={() => setModal('cancel')}>
 				{__('Cancel Subscription', 'surecart')}
@@ -245,19 +276,24 @@ export default () => {
 
 	/** Render the pause button */
 	const renderPauseButton = () => {
-		if (subscription?.finite) return null;
-
-		if (
-			subscription?.cancel_at_period_end &&
-			subscription.current_period_end_at &&
-			subscription.restore_at
-		)
-			return null;
 		if (['completed', 'canceled'].includes(subscription?.status))
 			return null;
 
+		if (subscription?.cancel_at_period_end && !subscription?.restore_at) {
+			return null;
+		}
+
+		if (subscription?.cancel_at_period_end && subscription?.restore_at) {
+			return (
+				<ScMenuItem onClick={() => setModal('dont_cancel')}>
+					{__("Don't Pause", 'surecart')}
+				</ScMenuItem>
+			);
+		}
+
 		const upgradeRequired =
 			!window.scData?.entitlements?.subscription_restore_at;
+
 		return (
 			<ScMenuItem
 				onClick={() =>
@@ -322,14 +358,147 @@ export default () => {
 
 		if (!['past_due', 'active'].includes(subscription?.status)) return null;
 
-		return (
-			<ScMenuItem onClick={() => setModal('renew_at')}>
+		const isPastDue = subscription?.status === 'past_due';
+
+		const menuItem = (
+			<ScMenuItem
+				onClick={() => !isPastDue && setModal('renew_at')}
+				disabled={isPastDue}
+			>
 				{__('Change Renewal Date', 'surecart')}
 			</ScMenuItem>
+		);
+
+		// For past_due subscriptions, wrap in tooltip
+		if (isPastDue) {
+			return (
+				<Tooltip
+					text={__(
+						'To change the renewal date on a past due subscription, please add a trial period instead.',
+						'surecart'
+					)}
+				>
+					{menuItem}
+				</Tooltip>
+			);
+		}
+
+		return menuItem;
+	};
+
+	// If any of the menu items are shown, show the action button.
+	const showActionButton = () => {
+		const hasPendingUpdate = !!Object.keys(
+			subscription?.pending_update || {}
+		).length;
+
+		// Check if any of the action buttons would be rendered.
+		const hasUpdateButton = renderUpdateButton() !== null;
+		const hasRenewAtButton = renderRenewAtButton() !== null;
+		const hasPauseButton = renderPauseButton() !== null;
+		const hasPayOffButton = renderPayOffButton() !== null;
+		const hasCompleteButton = renderCompleteButton() !== null;
+		const hasCancelButton = renderCancelButton() !== null;
+		const hasRestoreAtButton = renderRestoreAtButton() !== null;
+		const hasRestoreButton = renderRestoreButton() !== null;
+
+		return (
+			hasPendingUpdate ||
+			hasUpdateButton ||
+			hasRenewAtButton ||
+			hasPauseButton ||
+			hasPayOffButton ||
+			hasCompleteButton ||
+			hasCancelButton ||
+			hasRestoreAtButton ||
+			hasRestoreButton
+		);
+	};
+
+	const renderActionButton = () => {
+		// Don't render the action button if there are no actions to show
+		if (!showActionButton()) return null;
+
+		return (
+			<ScDropdown
+				position="bottom-right"
+				style={{ '--panel-width': '14em' }}
+			>
+				<ScButton
+					type="primary"
+					slot="trigger"
+					loading={!hasLoadedSubscription}
+					caret
+				>
+					{__('Actions', 'surecart')}
+				</ScButton>
+				<ScMenu>
+					{!!Object.keys(subscription?.pending_update || {})
+						.length && (
+						<ScMenuItem onClick={() => setModal('cancel_update')}>
+							{__('Cancel Pending Update', 'surecart')}
+						</ScMenuItem>
+					)}
+					{renderUpdateButton()}
+					{renderRenewAtButton()}
+					{renderPauseButton()}
+					{renderPayOffButton()}
+					{renderCompleteButton()}
+					{renderCancelButton()}
+					{renderRestoreAtButton()}
+					{renderRestoreButton()}
+				</ScMenu>
+			</ScDropdown>
 		);
 	};
 
 	const onRequestCloseModal = () => setModal(false);
+
+	const onCancel = async (e) => {
+		const { cancel_behavior } = await e.target.getFormJson();
+		try {
+			setBusy(true);
+			setError(null);
+
+			// If the subscription is already cancelled and has a restore_at date,
+			// we just need to update the restore_at date to null to cancel the subscription.
+			const subscriptionCancelUrl = `surecart/v1/subscriptions/${id}${
+				!(
+					subscription?.status === 'canceled' &&
+					subscription?.restore_at
+				)
+					? '/cancel'
+					: ''
+			}`;
+
+			await apiFetch({
+				method: 'PATCH',
+				path: addQueryArgs(subscriptionCancelUrl, {
+					cancel_behavior,
+				}),
+				data: {
+					restore_at: null,
+				},
+			});
+
+			await invalidateResolutionForStore();
+
+			createSuccessNotice(
+				cancel_behavior === 'immediate'
+					? __('Subscription canceled.', 'surecart')
+					: __('Subscription scheduled for cancelation.', 'surecart'),
+				{
+					type: 'snackbar',
+				}
+			);
+			onRequestCloseModal();
+		} catch (e) {
+			console.error(e);
+			setError(e);
+		} finally {
+			setBusy(false);
+		}
+	};
 
 	return (
 		<Template
@@ -378,41 +547,33 @@ export default () => {
 						subscription={subscription}
 						loading={!hasLoadedSubscription}
 					/>
+					<SubscriptionSettings
+						subscription={subscription}
+						updateSubscription={(data) =>
+							editSubscription(
+								data,
+								__('Subscription settings updated.', 'surecart')
+							)
+						}
+						loading={!hasLoadedSubscription}
+					/>
+					<Affiliates
+						item={subscription}
+						updateItem={(data) =>
+							editSubscription(
+								data,
+								__('Affiliate commissions updated.', 'surecart')
+							)
+						}
+						loading={!hasLoadedSubscription}
+						commissionText={__(
+							'Commission On This Subscription',
+							'surecart'
+						)}
+					/>
 				</>
 			}
-			button={
-				<ScDropdown
-					position="bottom-right"
-					style={{ '--panel-width': '14em' }}
-				>
-					<ScButton
-						type="primary"
-						slot="trigger"
-						loading={!hasLoadedSubscription}
-						caret
-					>
-						{__('Actions', 'surecart')}
-					</ScButton>
-					<ScMenu>
-						{!!Object.keys(subscription?.pending_update || {})
-							.length && (
-							<ScMenuItem
-								onClick={() => setModal('cancel_update')}
-							>
-								{__('Cancel Pending Update', 'surecart')}
-							</ScMenuItem>
-						)}
-						{renderUpdateButton()}
-						{renderRenewAtButton()}
-						{renderPauseButton()}
-						{renderPayOffButton()}
-						{renderCompleteButton()}
-						{renderCancelButton()}
-						{renderRestoreAtButton()}
-						{renderRestoreButton()}
-					</ScMenu>
-				</ScDropdown>
-			}
+			button={renderActionButton()}
 		>
 			<>
 				<Details
@@ -435,13 +596,14 @@ export default () => {
 					<PendingUpdate subscription={subscription} />
 				)}
 
-				{!!upcoming && (
+				{!!upcoming && 'canceled' !== subscription?.status && (
 					<LineItems period={upcoming} loading={loadingUpcoming} />
 				)}
 
 				<Periods subscriptionId={id} />
 
-				{subscription?.payment_method && (
+				{(subscription?.payment_method ||
+					subscription?.manual_payment) && (
 					<PaymentMethod
 						subscription={subscription}
 						updateSubscription={editSubscription}
@@ -457,6 +619,34 @@ export default () => {
 			<CancelSubscriptionModal
 				subscription={subscription}
 				open={modal === 'cancel'}
+				onRequestClose={onRequestCloseModal}
+				onCancel={onCancel}
+				error={error}
+				setError={setError}
+				loading={!hasLoadedSubscription || busy}
+			/>
+			<Confirm
+				open={modal === 'cancel_paused'}
+				onRequestClose={onRequestCloseModal}
+				error={error}
+				loading={!hasLoadedSubscription || busy}
+				onConfirm={() =>
+					onCancel({
+						target: {
+							getFormJson: () => ({
+								cancel_behavior: 'immediate',
+							}),
+						},
+					})
+				}
+			>
+				{__(
+					'Are you sure? Subscription will be canceled immediately.',
+					'surecart'
+				)}
+			</Confirm>
+			<ForceCancelModal
+				open={modal === 'force_cancel'}
 				onRequestClose={onRequestCloseModal}
 			/>
 			<DontCancelModal
@@ -483,6 +673,9 @@ export default () => {
 				open={modal === 'pause'}
 				onRequestClose={onRequestCloseModal}
 				currentPeriodEndAt={subscription?.current_period_end_at}
+				currentPeriodEndAtDate={
+					subscription?.current_period_end_at_date
+				}
 			/>
 			<RenewSubscriptionAtModal
 				open={modal === 'renew_at'}

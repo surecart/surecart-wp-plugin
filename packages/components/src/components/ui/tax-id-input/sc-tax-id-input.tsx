@@ -1,7 +1,7 @@
 import { Component, h, Prop, Fragment, Watch, Event, EventEmitter, Method } from '@stencil/core';
 import { __, sprintf } from '@wordpress/i18n';
 import { speak } from '@wordpress/a11y';
-import { zones, getType } from '../../../functions/tax';
+import { zones } from '../../../functions/tax';
 
 @Component({
   tag: 'sc-tax-id-input',
@@ -48,6 +48,9 @@ export class ScTaxIdInput {
   /** EU zone label */
   @Prop() euVatLabel: string = __('EU VAT', 'surecart');
 
+  /** Tax ID Types which will be shown */
+  @Prop() taxIdTypes: string[] = [];
+
   /** Whether tax input is required */
   @Prop({ reflect: true }) required: boolean = false;
 
@@ -82,9 +85,6 @@ export class ScTaxIdInput {
   }
 
   componentWillLoad() {
-    if (this.country && !this.type) {
-      this.type = getType(this.country);
-    }
     this.onLabelChange();
   }
 
@@ -97,14 +97,42 @@ export class ScTaxIdInput {
     }
   }
 
+  filteredZones() {
+    if (!!this.taxIdTypes.length) {
+      return Object.keys(zones)
+        .filter(name => this.taxIdTypes.includes(name))
+        .reduce((obj, key) => {
+          obj[key] = zones[key];
+          return obj;
+        }, {});
+    }
+
+    return zones;
+  }
+
+  @Watch('taxIdTypes')
+  onTaxIdTypesChange() {
+    // If there is no other type, set the first one as default type.
+    if (!!this.taxIdTypes.length) {
+      this.type = !this.taxIdTypes.includes('other') ? this.taxIdTypes[0] : 'other';
+    }
+  }
+
+  getZoneLabel() {
+    const filteredZones = this.filteredZones() || {};
+
+    // Get the label of the current type or the other type.
+    // If there is no other type, get the first one.
+    return filteredZones?.[this?.type || 'other']?.label || filteredZones?.[Object.keys(filteredZones)[0]]?.label;
+  }
+
   render() {
     return (
       <Fragment>
         <sc-input name="tax_identifier.number_type" required={this.required} value={this.type} style={{ display: 'none' }} />
-
         <sc-input
           ref={el => (this.input = el as HTMLScInputElement)}
-          label={zones?.[this?.type || 'other']?.label}
+          label={this.getZoneLabel()}
           aria-label={__('Tax ID', 'surecart')}
           placeholder={__('Enter Tax ID', 'surecart')}
           name="tax_identifier.number"
@@ -123,31 +151,23 @@ export class ScTaxIdInput {
               number_type: this.type || 'other',
             });
           }}
+          help={this.help}
           required={this.required}
         >
           {this.loading && this.type === 'eu_vat' ? <sc-spinner slot="prefix" style={{ '--spinner-size': '10px' }}></sc-spinner> : this.renderStatus()}
 
-          <sc-dropdown slot="suffix" position="bottom-right" role="select" aria-multiselectable="false" aria-label={__('Select number type', 'surecart')}>
-            <sc-button type="text" slot="trigger" caret loading={false} style={{ color: 'var(--sc-input-label-color)' }} tabindex="0">
-              {zones?.[this?.type || 'other']?.label_small}
-            </sc-button>
-            <sc-menu>
-              {Object.keys(zones || {}).map(name => (
-                <sc-menu-item
-                  role="option"
-                  onClick={() => {
-                    this.scInput.emit({
-                      number: this.number,
-                      number_type: name,
-                    });
-                    this.scChange.emit({
-                      number: this.number,
-                      number_type: name,
-                    });
-                    this.type = name;
-                  }}
-                  onKeyDown={e => {
-                    if (e.key === 'Enter') {
+          {Object.keys(this.filteredZones() || {})?.length === 1 ? (
+            <span slot="suffix">{Object.values(this.filteredZones() || {})?.[0]?.['label_small']}</span>
+          ) : (
+            <sc-dropdown slot="suffix" position="bottom-right" role="select" aria-multiselectable="false" aria-label={__('Select number type', 'surecart')}>
+              <sc-button type="text" slot="trigger" caret loading={false} style={{ color: 'var(--sc-input-label-color)' }} tabindex="0">
+                {this.filteredZones()?.[this?.type || 'other']?.label_small}
+              </sc-button>
+              <sc-menu>
+                {Object.keys(this.filteredZones() || {}).map(name => (
+                  <sc-menu-item
+                    role="option"
+                    onClick={() => {
                       this.scInput.emit({
                         number: this.number,
                         number_type: name,
@@ -157,19 +177,32 @@ export class ScTaxIdInput {
                         number_type: name,
                       });
                       this.type = name;
-                      this.input?.triggerFocus();
-                      speak(sprintf(__('%s selected', 'surecart'), zones[name].label_small, 'assertive'));
-                    }
-                  }}
-                  checked={this.type === name}
-                  aria-selected={this.type === name ? 'true' : 'false'}
-                  aria-label={zones[name].label_small}
-                >
-                  {zones[name].label_small}
-                </sc-menu-item>
-              ))}
-            </sc-menu>
-          </sc-dropdown>
+                    }}
+                    onKeyDown={e => {
+                      if (e.key === 'Enter') {
+                        this.scInput.emit({
+                          number: this.number,
+                          number_type: name,
+                        });
+                        this.scChange.emit({
+                          number: this.number,
+                          number_type: name,
+                        });
+                        this.type = name;
+                        this.input?.triggerFocus();
+                        speak(sprintf(__('%s selected', 'surecart'), zones[name].label_small, 'assertive'));
+                      }
+                    }}
+                    checked={this.type === name}
+                    aria-selected={this.type === name ? 'true' : 'false'}
+                    aria-label={zones[name].label_small}
+                  >
+                    {zones[name].label_small}
+                  </sc-menu-item>
+                ))}
+              </sc-menu>
+            </sc-dropdown>
+          )}
         </sc-input>
       </Fragment>
     );

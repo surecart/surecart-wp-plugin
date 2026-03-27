@@ -189,7 +189,8 @@ export class ScRadio {
           />
         </span>
         <span part="label" id={this.labelId} class="radio__label">
-          <slot></slot>
+          <slot />
+          <slot name="description"></slot>
         </span>
       </Tag>
     );

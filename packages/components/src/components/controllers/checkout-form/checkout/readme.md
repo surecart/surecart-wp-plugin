@@ -44,6 +44,12 @@
 
 Submit the form
 
+#### Parameters
+
+| Name  | Type                            | Description |
+| ----- | ------------------------------- | ----------- |
+| `__0` | `{ skip_validation: boolean; }` |             |
+
 #### Returns
 
 Type: `Promise<Checkout | Timeout | Error>`
@@ -75,6 +81,7 @@ Type: `Promise<boolean>`
 - [sc-order-confirm-provider](../../../providers/order-confirm-provider)
 - [sc-session-provider](../../../providers/session-provider)
 - [sc-block-ui](../../../ui/block-ui)
+- [sc-checkout-test-complete](../checkout-test-complete)
 
 ### Graph
 ```mermaid
@@ -89,6 +96,7 @@ graph TD;
   sc-checkout --> sc-order-confirm-provider
   sc-checkout --> sc-session-provider
   sc-checkout --> sc-block-ui
+  sc-checkout --> sc-checkout-test-complete
   sc-alert --> sc-icon
   sc-checkout-stock-alert --> sc-dialog
   sc-checkout-stock-alert --> sc-dashboard-module
@@ -116,16 +124,25 @@ graph TD;
   sc-form-error-provider --> sc-checkout-form-errors
   sc-checkout-form-errors --> sc-alert
   sc-form-components-validator --> sc-order-shipping-address
+  sc-form-components-validator --> sc-order-billing-address
   sc-form-components-validator --> sc-order-tax-id-input
+  sc-form-components-validator --> sc-customer-phone
   sc-form-components-validator --> sc-order-bumps
   sc-form-components-validator --> sc-line-item-tax
   sc-form-components-validator --> sc-shipping-choices
   sc-form-components-validator --> sc-line-item-shipping
+  sc-form-components-validator --> sc-invoice-details
+  sc-form-components-validator --> sc-line-item-invoice-number
+  sc-form-components-validator --> sc-line-item-invoice-due-date
+  sc-form-components-validator --> sc-line-item-invoice-receipt-download
+  sc-form-components-validator --> sc-divider
+  sc-form-components-validator --> sc-invoice-memo
+  sc-form-components-validator --> sc-line-item-trial
   sc-order-shipping-address --> sc-address
   sc-order-shipping-address --> sc-compact-address
   sc-address --> sc-form-control
-  sc-address --> sc-input
   sc-address --> sc-select
+  sc-address --> sc-input
   sc-address --> sc-block-ui
   sc-select --> sc-icon
   sc-select --> sc-menu-label
@@ -139,6 +156,8 @@ graph TD;
   sc-compact-address --> sc-select
   sc-compact-address --> sc-input
   sc-compact-address --> sc-block-ui
+  sc-order-billing-address --> sc-checkbox
+  sc-order-billing-address --> sc-address
   sc-order-tax-id-input --> sc-tax-id-input
   sc-tax-id-input --> sc-icon
   sc-tax-id-input --> sc-input
@@ -147,27 +166,39 @@ graph TD;
   sc-tax-id-input --> sc-button
   sc-tax-id-input --> sc-menu
   sc-tax-id-input --> sc-menu-item
+  sc-customer-phone --> sc-phone-input
+  sc-phone-input --> sc-form-control
   sc-order-bumps --> sc-form-control
   sc-order-bumps --> sc-order-bump
-  sc-order-bump --> sc-format-number
   sc-order-bump --> sc-choice
   sc-order-bump --> sc-divider
   sc-line-item-tax --> sc-line-item
-  sc-line-item-tax --> sc-format-number
   sc-shipping-choices --> sc-form-control
   sc-shipping-choices --> sc-radio-group
   sc-shipping-choices --> sc-radio
-  sc-shipping-choices --> sc-format-number
   sc-shipping-choices --> sc-block-ui
   sc-line-item-shipping --> sc-line-item
   sc-line-item-shipping --> sc-skeleton
-  sc-line-item-shipping --> sc-format-number
+  sc-line-item-invoice-number --> sc-line-item
+  sc-line-item-invoice-number --> sc-skeleton
+  sc-line-item-invoice-due-date --> sc-line-item
+  sc-line-item-invoice-due-date --> sc-skeleton
+  sc-line-item-invoice-receipt-download --> sc-line-item
+  sc-line-item-invoice-receipt-download --> sc-skeleton
+  sc-line-item-invoice-receipt-download --> sc-icon
+  sc-invoice-memo --> sc-skeleton
+  sc-line-item-trial --> sc-line-item
   sc-order-confirm-provider --> sc-dialog
   sc-order-confirm-provider --> sc-icon
   sc-order-confirm-provider --> sc-dashboard-module
   sc-order-confirm-provider --> sc-alert
   sc-order-confirm-provider --> sc-button
   sc-session-provider --> sc-line-items-provider
+  sc-checkout-test-complete --> sc-dialog
+  sc-checkout-test-complete --> sc-icon
+  sc-checkout-test-complete --> sc-dashboard-module
+  sc-checkout-test-complete --> sc-alert
+  sc-checkout-test-complete --> sc-button
   style sc-checkout fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

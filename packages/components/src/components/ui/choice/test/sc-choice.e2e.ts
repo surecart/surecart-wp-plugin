@@ -42,6 +42,8 @@ describe('sc-choice', () => {
   // });
 
   it('Should be clickable', async () => {
+    label = await page.find(`${selector} >>> .choice`);
+    input = await page.find(`${selector} >>> input`);
     const scBlur = await page.spyOnEvent('scBlur');
     const scFocus = await page.spyOnEvent('scFocus');
 
@@ -50,28 +52,35 @@ describe('sc-choice', () => {
 
     await input.click();
     await page.waitForChanges();
+    label = await page.find(`${selector} >>> .choice`);
     expect(label).toHaveClass('choice');
     expect(label).toHaveClasses(['choice--checked', 'choice--focused']);
     expect(scFocus).toHaveReceivedEvent();
 
     await page.$eval(selector, e => e.blur());
     await page.waitForChanges();
+    label = await page.find(`${selector} >>> .choice`);
     expect(label).not.toHaveClass('choice--focused');
     expect(scBlur).toHaveReceivedEvent();
   });
 
   it('Can be disabled', async () => {
+    input = await page.find(`${selector} >>> input`);
     expect(input).not.toHaveAttribute('disabled');
     element.setProperty('disabled', true);
     await page.waitForChanges();
+    label = await page.find(`${selector} >>> .choice`);
+    input = await page.find(`${selector} >>> input`);
     expect(label).toHaveClasses(['choice', 'choice--disabled']);
     expect(input).toHaveAttribute('disabled');
   });
 
   it('Can be radio or checkbox', async () => {
+    input = await page.find(`${selector} >>> input`);
     expect(input).toEqualAttribute('type', 'radio');
     element.setProperty('type', 'checkbox');
     await page.waitForChanges();
+    input = await page.find(`${selector} >>> input`);
     expect(input).toEqualAttribute('type', 'checkbox');
   });
 

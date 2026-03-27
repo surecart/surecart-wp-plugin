@@ -21,6 +21,7 @@ export class ScSubscriptionSwitch {
   @Prop() productId: string;
   @Prop() subscription: Subscription;
   @Prop() filterAbove: number = 4;
+  @Prop() successUrl: string = window.location.href;
 
   /** The currently selected price. */
   @State() selectedPrice: Price;
@@ -78,7 +79,8 @@ export class ScSubscriptionSwitch {
       .map(product => (product as Product)?.prices?.data)
       .flat()
       .filter((v, i, a) => a.findIndex(t => t.id === v.id) === i) // remove duplicates.
-      .filter(price => !price?.archived); // remove archived
+      .filter(price => !price?.archived) // remove archived
+      .filter(price => price.portal_subscription_update_enabled); // only show prices that can be upgraded to.
 
     this.showFilters = this.prices?.length > this.filterAbove;
   }
@@ -101,6 +103,10 @@ export class ScSubscriptionSwitch {
   @Watch('subscription')
   handleSubscriptionChange() {
     this.filter = (this.subscription?.price as Price)?.recurring_interval || 'month';
+  }
+
+  hasMultipleFilters() {
+    return Object.values(this.hasFilters || {}).filter(v => !!v).length > 1;
   }
 
   /** Get all subscriptions */
@@ -137,9 +143,10 @@ export class ScSubscriptionSwitch {
     if (this.subscription?.variant_options?.length) {
       this.busy = true;
       return window.location.assign(
-        addQueryArgs(window.location.href, {
+        addQueryArgs(this.successUrl, {
           action: 'confirm_variation',
           price_id: plan,
+          ...(this.subscription?.live_mode === false ? { live_mode: false } : {}),
         }),
       );
     }
@@ -148,9 +155,10 @@ export class ScSubscriptionSwitch {
     if (price?.ad_hoc) {
       this.busy = true;
       return window.location.assign(
-        addQueryArgs(window.location.href, {
+        addQueryArgs(this.successUrl, {
           action: 'confirm_amount',
           price_id: plan,
+          ...(this.subscription?.live_mode === false ? { live_mode: false } : {}),
         }),
       );
     }
@@ -158,16 +166,16 @@ export class ScSubscriptionSwitch {
     // confirm plan.
     this.busy = true;
     window.location.assign(
-      addQueryArgs(window.location.href, {
+      addQueryArgs(this.successUrl, {
         action: 'confirm',
         price_id: plan,
+        ...(this.subscription?.live_mode === false ? { live_mode: false } : {}),
       }),
     );
   }
 
-  renderSwitcher() {
-    const hasMultipleFilters = Object.values(this.hasFilters || {}).filter(v => !!v).length > 1;
-    if (!hasMultipleFilters) return;
+  renderSwitcher() { 
+    if (!this.hasMultipleFilters()) return;
     if (!this.showFilters) return;
 
     return (
@@ -213,8 +221,8 @@ export class ScSubscriptionSwitch {
 
   /** Is the price hidden or not */
   isHidden(price: Price) {
-    // don't hide if no filters.
-    if (!this.showFilters) return false;
+    // don't hide if no filters or has no multiple filters available.
+    if (!this.showFilters || !this.hasMultipleFilters()) return false;
 
     // hide if the filter does not match the recurring interval.
     let hidden = this.filter !== price.recurring_interval;
@@ -243,6 +251,7 @@ export class ScSubscriptionSwitch {
           {(this.prices || [])
             .filter(price => !price.archived)
             .filter(price => price?.currency === this.subscription?.currency)
+            .sort((a, b) => a.amount - b.amount)
             .map(price => {
               const currentPlan = (this.subscription?.price as Price)?.id === price?.id;
               const product = this.products.find(product => product.id === price?.product);

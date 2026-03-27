@@ -30,6 +30,7 @@ export default ({
 	isSelected,
 }) => {
 	const [{ naturalWidth, naturalHeight }, setNaturalSize] = useState({});
+	const [previewLogoUrl, setPreviewLogoUrl] = useState(null);
 	const { editEntityRecord } = useDispatch(coreStore);
 	const editBrand = (data) =>
 		editEntityRecord('surecart', 'store', 'brand', data);
@@ -71,11 +72,13 @@ export default ({
 		};
 	});
 
+	const logoUrl = previewLogoUrl || data?.logo?.url;
+
 	if (loading) {
 		return <Placeholder preview={<Spinner />} withIllustration={true} />;
 	}
 
-	if (!data?.logo_url && imageEditing) {
+	if (!logoUrl && imageEditing) {
 		return (
 			<Placeholder
 				label={__('Store Logo', 'surecart')}
@@ -86,14 +89,14 @@ export default ({
 				)}
 				isColumnLayout
 			>
-				<Logo brand={data} editBrand={editBrand} />
+				<Logo brand={data} editBrand={editBrand} onMediaChange={setPreviewLogoUrl} />
 			</Placeholder>
 		);
 	}
 
 	const img = (
 		<img
-			src={data?.logo_url}
+			src={logoUrl}
 			style={{
 				width: '100%',
 				height: '100%',
@@ -150,6 +153,7 @@ export default ({
 				<PanelBody title={__('Settings', 'surecart')}>
 					<RangeControl
 						__nextHasNoMarginBottom
+						__next40pxDefaultSize
 						label={__('Width', 'surecart')}
 						value={width}
 						min={10}
@@ -163,6 +167,7 @@ export default ({
 					/>
 
 					<ToggleControl
+						__nextHasNoMarginBottom
 						label={__('Set a maximum height', 'surecart')}
 						onChange={() =>
 							setAttributes({ maxHeight: maxHeight ? null : 100 })
@@ -173,6 +178,7 @@ export default ({
 					{maxHeight !== null && (
 						<RangeControl
 							__nextHasNoMarginBottom
+							__next40pxDefaultSize
 							label={__('Maximum height', 'surecart')}
 							value={maxHeight}
 							min={10}
@@ -190,6 +196,7 @@ export default ({
 					)}
 
 					<ToggleControl
+						__nextHasNoMarginBottom
 						label={__('Link image to home', 'surecart')}
 						onChange={() =>
 							setAttributes({ isLinkToHome: !isLinkToHome })

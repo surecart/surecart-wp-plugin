@@ -13,7 +13,7 @@
 		"php": ">=7.4",
 		"composer/installers": "^1.4",
 		"pimple/pimple": "^3.2",
-		"guzzlehttp/psr7": "^1.5",
+		"guzzlehttp/psr7": "^2.7.0",
 		"typisttech/imposter-plugin": "^0.6.2",
 		"surecart/wp-query-builder": "dev-master",
 		"woocommerce/action-scheduler": "^3.6"
@@ -22,11 +22,11 @@
 		"php": "^7.4|^8.0|^8.1",
 		"filp/whoops": "^2.2",
 		"htmlburger/wpemerge-cli": "~0.16.0",
-		"wp-phpunit/wp-phpunit": "^5.8.3",
+		"wp-phpunit/wp-phpunit": "^6",
 		"wp-cli/wp-cli-bundle": "*",
 		"mockery/mockery": "^1.4",
 		"symfony/debug": "~3.0",
-		"wp-coding-standards/wpcs": "^2.0",
+		"wp-coding-standards/wpcs": "^3.1.0",
 		"dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
 		"phpstan/phpstan": "^1.2",
 		"szepeviktor/phpstan-wordpress": "^1.0",
@@ -98,6 +98,14 @@
 			"dealerdirect/phpcodesniffer-composer-installer": true,
 			"composer/installers": true,
 			"typisttech/imposter-plugin": true
+		},
+		"audit": {
+			"ignore": [
+				"PKSA-wws7-mr54-jsny",
+				"PKSA-b8f7-zn44-r4gz",
+				"PKSA-s25b-vbmp-jvhh",
+				"PKSA-jn72-4kr8-gj3h"
+			]
 		}
 	}
 }

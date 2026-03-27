@@ -8,8 +8,8 @@ import { expand } from '../../../services/session';
 import { state as checkoutState } from '@store/checkout';
 import { state as formState } from '@store/form';
 import { Checkout, ManualPaymentMethod } from '../../../types';
-import { clearCheckout } from '@store/checkout/mutations';
 import { createErrorNotice } from '@store/notices/mutations';
+import { clearCheckout } from '@store/checkout/mutations';
 /**
  * This component listens to the order status
  * and confirms the order when payment is successful.
@@ -26,6 +26,9 @@ export class ScOrderConfirmProvider {
 
   /** Whether to show success modal */
   @State() showSuccessModal: boolean = false;
+
+  /** Whether to show success modal */
+  @State() manualPaymentMethod: ManualPaymentMethod;
 
   /** Checkout status to listen and do payment related stuff. */
   @Prop() checkoutStatus: string;
@@ -63,17 +66,37 @@ export class ScOrderConfirmProvider {
       console.error(e);
       createErrorNotice(e);
     } finally {
-      // always clear the checkout.
-      clearCheckout();
+      this.manualPaymentMethod = (checkoutState.checkout?.manual_payment_method as ManualPaymentMethod) || null;
+      const checkout = checkoutState.checkout;
+      const formId = checkoutState.formId;
+
+      // If there is an initial upsell redirect to it.
+      if (!!checkout?.current_upsell?.permalink) {
+        setTimeout(
+          () =>
+            window.location.assign(
+              addQueryArgs(checkout?.current_upsell?.permalink, {
+                sc_checkout_id: checkout?.id,
+                sc_form_id: formId,
+              }),
+            ),
+          50,
+        );
+        clearCheckout();
+        return;
+      }
+
       // get success url.
-      const successUrl = checkoutState.checkout?.metadata?.success_url || this.successUrl;
+      const successUrl = checkout?.metadata?.success_url || this.successUrl;
       if (successUrl) {
         // set state to redirecting.
         this.scSetState.emit('REDIRECT');
-        setTimeout(() => window.location.assign(addQueryArgs(successUrl, { sc_order: checkoutState.checkout?.id })), 50);
+        const redirectUrl = addQueryArgs(successUrl, { sc_order: checkout?.id });
+        setTimeout(() => window.location.assign(redirectUrl), 50);
       } else {
         this.showSuccessModal = true;
       }
+      clearCheckout();
     }
   }
 
@@ -92,12 +115,15 @@ export class ScOrderConfirmProvider {
   }
 
   render() {
-    const manualPaymentMethod = checkoutState.checkout?.manual_payment_method as ManualPaymentMethod;
-
     return (
       <Host>
         <slot />
-        <sc-dialog open={!!this.showSuccessModal} style={{ '--body-spacing': 'var(--sc-spacing-xxx-large)' }} noHeader onScRequestClose={e => e.preventDefault()}>
+        <sc-dialog
+          open={!!this.showSuccessModal}
+          style={{ '--body-spacing': 'var(--sc-spacing-xxx-large)', '--width': '400px' }}
+          noHeader
+          onScRequestClose={e => e.preventDefault()}
+        >
           <div class="confirm__icon">
             <div class="confirm__icon-container">
               <sc-icon name="check" />
@@ -108,12 +134,10 @@ export class ScOrderConfirmProvider {
             style={{ '--sc-dashboard-module-spacing': 'var(--sc-spacing-x-large)', 'textAlign': 'center' }}
           >
             <span slot="description">{formState?.text?.success?.description || __('Your payment was successful. A receipt is on its way to your inbox.', 'surecart')}</span>
-            {!!manualPaymentMethod?.name && !!manualPaymentMethod?.instructions && (
+            {!!this.manualPaymentMethod?.name && !!this.manualPaymentMethod?.instructions && (
               <sc-alert type="info" open style={{ 'text-align': 'left' }}>
-                <span slot="title">{manualPaymentMethod?.name}</span>
-                {manualPaymentMethod?.instructions.split('\n').map(i => {
-                  return <p>{i}</p>;
-                })}
+                <span slot="title">{this.manualPaymentMethod?.name}</span>
+                <div innerHTML={this.manualPaymentMethod?.instructions}></div>
               </sc-alert>
             )}
             <sc-button href={this.getSuccessUrl()} size="large" type="primary" ref={el => (this.continueButton = el as HTMLScButtonElement)}>

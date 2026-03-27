@@ -16,8 +16,6 @@ import {
 } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 
-import useProductPageWarning from '../../../hooks/useProductPageWarning';
-
 export default ({ attributes, setAttributes, context }) => {
 	const { label, columns, show_price } = attributes;
 	const blockProps = useBlockProps({
@@ -29,16 +27,13 @@ export default ({ attributes, setAttributes, context }) => {
 	const colorProps = useColorProps(attributes);
 	const spacingProps = useSpacingProps(attributes);
 
-	const warning = useProductPageWarning();
-	if (warning) {
-		return <div {...blockProps}>{warning}</div>;
-	}
-
 	return (
 		<>
 			<InspectorControls>
 				<PanelBody>
 					<RangeControl
+						__nextHasNoMarginBottom
+						__next40pxDefaultSize
 						label={__('Columns', 'surecart')}
 						value={columns}
 						onChange={(columns) => setAttributes({ columns })}
@@ -54,6 +49,7 @@ export default ({ attributes, setAttributes, context }) => {
 					)}
 					<PanelRow>
 						<ToggleControl
+							__nextHasNoMarginBottom
 							label={__('Show Price', 'surecart')}
 							checked={show_price}
 							onChange={() =>
@@ -63,6 +59,8 @@ export default ({ attributes, setAttributes, context }) => {
 					</PanelRow>
 					<PanelRow>
 						<TextControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							label={__('Label', 'surecart')}
 							value={label}
 							onChange={(label) => setAttributes({ label })}

@@ -18,9 +18,10 @@ export default ({ price, updatePrice, locked }) => {
 				suffix={
 					<span style={{ opacity: '0.5' }}>
 						{intervalString(price)}
-						{price?.recurring_end_behavior === 'cancel' && (
-							<> {__('then cancels', 'surecart')}</>
-						)}
+						{price?.revoke_purchases_on_completed &&
+							price?.recurring_period_count && (
+								<> {__('then cancels', 'surecart')}</>
+							)}
 					</span>
 				}
 			/>
@@ -42,7 +43,7 @@ export default ({ price, updatePrice, locked }) => {
 				`}
 				required
 				disabled={price?.id}
-				label={__('Repeat Payment Every', 'surecart')}
+				label={__('Repeat payment every', 'surecart')}
 			>
 				<div
 					css={css`
@@ -65,7 +66,7 @@ export default ({ price, updatePrice, locked }) => {
 							flex: 1;
 						`}
 						type="number"
-						max={price?.recurring_interval === 'year' ? 1 : null}
+						max={price?.recurring_interval === 'year' ? 10 : null}
 						required
 					/>
 					<ScSelect

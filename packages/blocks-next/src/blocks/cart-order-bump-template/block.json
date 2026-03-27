@@ -1,0 +1,40 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "surecart/cart-order-bump-template",
+	"title": "Order Bump Template",
+	"description": "Template for rendering each order bump item.",
+	"version": "1.0.0",
+	"category": "surecart-cart",
+	"ancestor": ["surecart/cart-order-bumps"],
+	"usesContext": ["surecart/order-bumps/perPage"],
+	"supports": {
+		"interactivity": true,
+		"inserter": false,
+		"layout": {
+			"default": {
+				"type": "grid",
+				"columnCount": 3
+			},
+			"allowSwitching": true
+		},
+		"spacing": {
+			"padding": true,
+			"margin": true,
+			"blockGap": true
+		},
+		"color": {
+			"background": true
+		},
+		"__experimentalBorder": {
+			"color": true,
+			"radius": true,
+			"width": true
+		}
+	},
+	"render": "file:./view.php",
+	"textdomain": "surecart",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css"
+}

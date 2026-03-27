@@ -1,0 +1,33 @@
+.wp-block-surecart-icon {
+	line-height: 0;
+
+	svg {
+		width: 100%;
+		height: 100%;
+		stroke: currentColor;
+	}
+
+	span {
+		display: inline-block;
+	}
+
+	&.aligncenter {
+		text-align: center;
+	}
+}
+
+a.wp-block-surecart-icon {
+	display: inline-block;
+	text-decoration: none;
+	color: inherit;
+
+	&:hover {
+		opacity: 0.8;
+	}
+}
+
+.surecart-icon {
+	width: 100%;
+	height: 100%;
+	display: inline-block;
+}

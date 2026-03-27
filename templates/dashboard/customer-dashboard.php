@@ -11,6 +11,8 @@ return [
 
 	<!-- wp:surecart/customer-orders /-->
 
+	<!-- wp:surecart/customer-invoices /-->
+
 	<!-- wp:surecart/customer-downloads /-->
 
 	<!-- /wp:surecart/dashboard-area -->',

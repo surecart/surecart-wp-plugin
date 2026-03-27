@@ -2,13 +2,15 @@
 
 namespace SureCart\Models;
 
+use SureCart\Models\Traits\HasDates;
 use SureCart\Models\Traits\HasSubscription;
+use SureCart\Support\TimeDate;
 
 /**
  * Cancellation Reason Model
  */
 class CancellationAct extends Model {
-	use HasSubscription;
+	use HasSubscription, HasDates;
 
 	/**
 	 * Rest API endpoint
@@ -53,5 +55,23 @@ class CancellationAct extends Model {
 	protected function stats( $args = [] ) {
 		$stat = new Statistic();
 		return $stat->where( $args )->find( 'cancellation_acts' );
+	}
+
+	/**
+	 * Get the performed at date.
+	 *
+	 * @return string
+	 */
+	public function getPerformedAtDateAttribute() {
+		return TimeDate::formatDate( $this->performed_at );
+	}
+
+	/**
+	 * Get the performed at date time.
+	 *
+	 * @return string
+	 */
+	public function getPerformedAtDateTimeAttribute() {
+		return TimeDate::formatDateAndTime( $this->performed_at );
 	}
 }

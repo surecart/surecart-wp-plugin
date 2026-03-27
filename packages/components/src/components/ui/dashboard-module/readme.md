@@ -38,11 +38,13 @@
  - [sc-cancel-survey](../../controllers/dashboard/sc-cancel-survey)
  - [sc-charges-list](../../controllers/dashboard/charges-list)
  - [sc-checkout-stock-alert](../../controllers/checkout-form/checkout/checkout-stock-alert)
+ - [sc-checkout-test-complete](../../controllers/checkout-form/checkout-test-complete)
  - [sc-customer-details](../customer-details)
  - [sc-customer-edit](../../controllers/dashboard/customer-edit)
  - [sc-downloads-list](../../controllers/dashboard/sc-downloads-list)
  - [sc-fulfillments](../../controllers/dashboard/fulfillments)
  - [sc-invoices-list](../../controllers/dashboard/invoices-list)
+ - [sc-license](../../controllers/dashboard/sc-license)
  - [sc-licenses-list](../../controllers/dashboard/sc-licenses-list)
  - [sc-order](../../controllers/dashboard/order)
  - [sc-order-confirm-provider](../../providers/order-confirm-provider)
@@ -61,6 +63,7 @@
  - [sc-subscription-variation-confirm](../../controllers/dashboard/subscription-variation-confirm)
  - [sc-subscriptions-list](../../controllers/dashboard/subscriptions-list)
  - [sc-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
+ - [sc-upsell](../../controllers/upsell/sc-upsell)
  - [sc-wordpress-password-edit](../../controllers/dashboard/wordpress-password-edit)
  - [sc-wordpress-user](../../controllers/dashboard/wordpress-user)
  - [sc-wordpress-user-edit](../../controllers/dashboard/wordpress-user-edit)
@@ -78,11 +81,13 @@ graph TD;
   sc-cancel-survey --> sc-dashboard-module
   sc-charges-list --> sc-dashboard-module
   sc-checkout-stock-alert --> sc-dashboard-module
+  sc-checkout-test-complete --> sc-dashboard-module
   sc-customer-details --> sc-dashboard-module
   sc-customer-edit --> sc-dashboard-module
   sc-downloads-list --> sc-dashboard-module
   sc-fulfillments --> sc-dashboard-module
   sc-invoices-list --> sc-dashboard-module
+  sc-license --> sc-dashboard-module
   sc-licenses-list --> sc-dashboard-module
   sc-order --> sc-dashboard-module
   sc-order-confirm-provider --> sc-dashboard-module
@@ -101,6 +106,7 @@ graph TD;
   sc-subscription-variation-confirm --> sc-dashboard-module
   sc-subscriptions-list --> sc-dashboard-module
   sc-upcoming-invoice --> sc-dashboard-module
+  sc-upsell --> sc-dashboard-module
   sc-wordpress-password-edit --> sc-dashboard-module
   sc-wordpress-user --> sc-dashboard-module
   sc-wordpress-user-edit --> sc-dashboard-module

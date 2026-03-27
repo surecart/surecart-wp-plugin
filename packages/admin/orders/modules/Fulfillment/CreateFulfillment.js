@@ -20,7 +20,6 @@ import { useState, useEffect } from 'react';
 import AddressDisplay from '../../../components/AddressDisplay';
 import Tracking from './components/Tracking';
 import ProductLineItem from '../../../ui/ProductLineItem';
-import { getFeaturedProductMediaAttributes } from '@surecart/components';
 
 export default ({
 	items: fulfillmentItems,
@@ -36,19 +35,8 @@ export default ({
 
 	const copy = async () => {
 		try {
-			const { name, line_1, line_2, city, state, postal_code, country } =
-				checkout?.shipping_address;
-			const address = [
-				name,
-				line_1,
-				line_2,
-				city,
-				state,
-				country,
-				postal_code,
-			];
 			await navigator.clipboard.writeText(
-				address.filter((item) => !!item).join('\n ')
+				checkout?.shipping_address_display
 			);
 			createSuccessNotice(__('Copied to clipboard.', 'surecart'), {
 				type: 'snackbar',
@@ -147,16 +135,6 @@ export default ({
 		(item) => item?.price?.product?.shipping_enabled
 	);
 
-	const getImageAttributes = (product) => {
-		const featuredMedia = getFeaturedProductMediaAttributes(product);
-
-		return {
-			imageUrl: featuredMedia?.url,
-			imageAlt: featuredMedia?.alt,
-			imageTitle: featuredMedia?.title,
-		};
-	};
-
 	return (
 		<ScForm
 			style={{
@@ -199,9 +177,6 @@ export default ({
 									key={item?.id}
 									lineItem={item}
 									showWeight={true}
-									{...getImageAttributes(
-										item?.price?.product
-									)}
 									suffix={
 										<ScInput
 											label={__('Quantity', 'surecart')}
@@ -288,9 +263,11 @@ export default ({
 										</ScTooltip>
 									)}
 								</div>
-
 								<AddressDisplay
-									address={checkout?.shipping_address}
+									address={
+										checkout?.shipping_address
+											?.formatted_string
+									}
 								/>
 							</ScFormControl>
 						) : (

@@ -59,12 +59,13 @@ class Block extends BaseBlock {
 						'taxProtocol'              => \SureCart::account()->tax_protocol,
 						'isCheckoutPage'           => true,
 						'validateStock'            => ! is_admin(),
+						'persist'                  => $this->getPeristance( $attributes, $attributes['form_id'] ?? $sc_form_id ),
 					],
 					'processors' => [
 						'processors'           => array_values(
 							array_filter(
 								$processors ?? [],
-								function( $processor ) {
+								function ( $processor ) {
 									return $processor->approved && $processor->enabled;
 								}
 							)
@@ -106,7 +107,7 @@ class Block extends BaseBlock {
 			);
 		}
 
-		return \SureCart::blocks()->render(
+		return \SureCart::block()->render(
 			'blocks/form',
 			[
 				'align'            => $attributes['align'] ?? '',
@@ -122,6 +123,32 @@ class Block extends BaseBlock {
 	}
 
 	/**
+	 * Get persistent mode.
+	 *
+	 * @param  array $attributes Block attributes.
+	 * @return string|false
+	 */
+	public function getPeristance( $attributes, $id = null ) {
+		// don't persist in the admin.
+		if ( is_admin() ) {
+			return false;
+		}
+
+		// if there is a checkout id in the url, use url persistence.
+		if ( ! empty( $_GET['checkout_id'] ) ) {
+			return 'url';
+		}
+
+		// default checkout form should persist in the browser.
+		if ( \SureCart::forms()->getDefaultId() === (int) $id ) {
+			return 'browser';
+		}
+
+		// otherwise, use the attributes with url as the fallback.
+		return $attributes['persist_cart'] ?? 'url';
+	}
+
+	/**
 	 * Convert price blocks to line items
 	 *
 	 * @param array $prices Array of prices.
@@ -131,12 +158,13 @@ class Block extends BaseBlock {
 	public function convertPricesToLineItems( $prices ) {
 		return array_values(
 			array_map(
-				function( $price ) {
+				function ( $price ) {
 					return array_filter(
 						[
-							'price'    => $price['id'],
-							'variant'  => $price['variant_id'] ?? null,
-							'quantity' => $price['quantity'] ?? 1,
+							'price'         => $price['id'],
+							'variant'       => $price['variant_id'] ?? null,
+							'quantity'      => $price['quantity'] ?? 1,
+							'ad_hoc_amount' => $price['ad_hoc_amount'] ?? null,
 						]
 					);
 				},

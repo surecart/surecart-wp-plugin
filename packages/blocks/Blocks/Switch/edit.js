@@ -26,6 +26,7 @@ export default ({ className, attributes, setAttributes, isSelected }) => {
 				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
 						<ToggleControl
+							__nextHasNoMarginBottom
 							label={__('Required', 'surecart')}
 							checked={required}
 							onChange={(required) => setAttributes({ required })}
@@ -33,6 +34,8 @@ export default ({ className, attributes, setAttributes, isSelected }) => {
 					</PanelRow>
 					<PanelRow>
 						<TextControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							label={__('Name', 'surecart')}
 							value={name}
 							onChange={(name) => setAttributes({ name })}
@@ -40,6 +43,8 @@ export default ({ className, attributes, setAttributes, isSelected }) => {
 					</PanelRow>
 					<PanelRow>
 						<TextControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							label={__('Value', 'surecart')}
 							value={value}
 							onChange={(value) => setAttributes({ value })}
@@ -47,6 +52,7 @@ export default ({ className, attributes, setAttributes, isSelected }) => {
 					</PanelRow>
 					<PanelRow>
 						<ToggleControl
+							__nextHasNoMarginBottom
 							label={__('Checked by default', 'surecart')}
 							checked={checked}
 							onChange={(checked) => setAttributes({ checked })}
@@ -65,8 +71,8 @@ export default ({ className, attributes, setAttributes, isSelected }) => {
 			>
 				<RichText
 					tagName="span"
-					aria-label={__('Switch label')}
-					placeholder={__('Add some text...')}
+					aria-label={__('Switch label', 'surecart')}
+					placeholder={__('Add some text...', 'surecart')}
 					value={label}
 					onChange={(label) => setAttributes({ label })}
 				/>
@@ -74,7 +80,7 @@ export default ({ className, attributes, setAttributes, isSelected }) => {
 					<RichText
 						tagName="span"
 						slot="description"
-						aria-label={__('Switch label')}
+						aria-label={__('Switch label', 'surecart')}
 						placeholder={__('Enter a description...', 'surecart')}
 						value={description}
 						onChange={(description) =>

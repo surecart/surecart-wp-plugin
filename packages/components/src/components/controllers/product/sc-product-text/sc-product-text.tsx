@@ -11,7 +11,7 @@ export class ScProductText {
   @Prop() productId: string;
 
   render() {
-    const product = state[this.productId].product;
+    const product = state[this.productId]?.product;
 
     if (product?.[this.text]) {
       return <span style={{ whiteSpace: 'pre-line' }} innerHTML={product[this.text]}></span>;

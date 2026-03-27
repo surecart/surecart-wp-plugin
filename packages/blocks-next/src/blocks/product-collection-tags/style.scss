@@ -1,0 +1,10 @@
+ul.wp-block-surecart-product-collection-tags,
+.wp-block-surecart-product-page ul.wp-block-surecart-product-collection-tags {
+	display: flex;
+	gap: 3px;
+	width: 100%; // prevent collapsing during loading.
+	list-style: none;
+	margin: 0;
+	max-width: 100%;
+	padding: 0;
+}

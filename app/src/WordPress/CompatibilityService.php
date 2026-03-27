@@ -1,5 +1,7 @@
 <?php
 /**
+ * Compatibility service.
+ *
  * @package   SureCartAppCore
  * @author    SureCart <support@surecart.com>
  * @copyright  SureCart
@@ -25,10 +27,101 @@ class CompatibilityService {
 		add_action( 'render_block_data', [ $this, 'maybeEnqueueUAGBAssets' ] );
 		// SC Form Shortcode fix.
 		add_filter( 'surecart/shortcode/render', [ $this, 'maybeEnqueueUAGBAssetsForShortcode' ], 5, 3 );
+
 		// rankmath fix.
 		add_action( 'rank_math/head', [ $this, 'rankMathFix' ] );
+		add_filter( 'rank_math/frontend/canonical', [ $this, 'rankMathUrlFix' ] );
+		add_filter( 'rank_math/sitemap/xml_post_url', [ $this, 'rankMathUrlFix' ] );
+		add_filter( 'rank_math/sitemap/post_type_archive_link', [ $this, 'rankMathUrlFix' ] );
+
+		// Yoast SEO fix.
+		add_action( 'wpseo_frontend_presenters', [ $this, 'yoastSEOFix' ] );
+
+		// Siteground JS combine exclude.
+		add_filter( 'sgo_javascript_combine_exclude_ids', [ $this, 'sitegroundJsCombineExcludeScriptIds' ] );
+
 		// Show gutenberg active notice.
 		add_action( 'admin_init', [ $this, 'gutenbergActiveNotice' ] );
+
+		// Load Divi Compatibility CSS.
+		add_action( 'wp_enqueue_scripts', [ $this, 'diviCompatibility' ] );
+
+		// Load Bricks Compatibility CSS.
+		add_action( 'wp_enqueue_scripts', [ $this, 'bricksCompatibility' ] );
+
+		// Load Blocks Global Styles if enabled by Merchant in the setting.
+		if ( (bool) get_option( 'surecart_load_block_assets_on_demand', false ) && \SureCart::theme()->shouldLoadOnDemandBlockAssets() ) {
+			add_filter( 'should_load_separate_core_block_assets', '__return_true' );
+		}
+
+		add_action( 'render_block', [ $this, 'fixKadenceAccordionPaneButtonType' ], 10, 2 );
+	}
+
+	/**
+	 * Adds type="button" to the button in the Kadence Accordion Pane.
+	 * This prevents the button from submitting the form.
+	 *
+	 * @param string $content Block content.
+	 * @param array  $block Block data.
+	 *
+	 * @return string
+	 */
+	public function fixKadenceAccordionPaneButtonType( $content, $block ) {
+		if ( 'kadence/pane' === $block['blockName'] ) {
+			$processor = new \WP_HTML_Tag_Processor( $content );
+			$has_tag   = $processor->next_tag( 'button' );
+			if ( $has_tag ) {
+				$processor->set_attribute( 'type', 'button' );
+			}
+			return $processor->get_updated_html();
+		}
+		return $content;
+	}
+
+	/**
+	 * Load Divi Compatibility CSS.
+	 *
+	 * @return void
+	 */
+	public function diviCompatibility() {
+		if ( ! is_plugin_active( 'divi-builder/divi-builder.php' ) ) {
+			return;
+		}
+		wp_enqueue_style( 'surecart-divi-compatibility', plugins_url( 'styles/divi-compatibility.css', SURECART_PLUGIN_FILE ), '', \SureCart::plugin()->version(), 'all' );
+	}
+
+	/**
+	 * Load Bricks Compatibility CSS.
+	 *
+	 * @return void
+	 */
+	public function bricksCompatibility() {
+		$active_theme = wp_get_theme();
+
+		if ( empty( $active_theme ) || 'Bricks' !== $active_theme->get( 'Name' ) ) {
+			return;
+		}
+
+		wp_enqueue_style( 'surecart-bricks-compatibility', plugins_url( 'styles/bricks-compatibility.css', SURECART_PLUGIN_FILE ), '', \SureCart::plugin()->version(), 'all' );
+	}
+
+	/** Prevent Yoast SEO from outputing SEO meta tags on our custom pages.
+	 *
+	 * @param array $presenters Presenters.
+	 * @return array Empty Array.
+	 */
+	public function yoastSEOFix( $presenters ) {
+		if ( is_singular( 'sc_product' ) || is_singular( 'sc_collection' ) || is_singular( 'sc_upsell' ) ) {
+			$title_presenters = array_filter(
+				$presenters,
+				function ( $item ) {
+					return strpos( get_class( $item ), 'SEO\Presenters\Title_Presenter' );
+				}
+			);
+			return apply_filters( 'sc_wpseo_frontend_presenters', $title_presenters, $presenters );
+		}
+
+		return $presenters;
 	}
 
 	/**
@@ -37,10 +130,27 @@ class CompatibilityService {
 	 * @return void
 	 */
 	public function rankMathFix() {
-		if ( is_singular( 'sc_product' ) || is_singular( 'sc_collection' ) ) {
+		if ( is_singular( 'sc_product' ) || is_singular( 'sc_collection' ) || is_singular( 'sc_upsell' ) ) {
 			remove_all_actions( 'rank_math/opengraph/facebook' );
 			remove_all_actions( 'rank_math/opengraph/twitter' );
 		}
+	}
+
+	/**
+	 * Fix the canonical URL for rankmath.
+	 *
+	 * @param string $canonical The canonical URL.
+	 *
+	 * @return string
+	 */
+	public function rankMathUrlFix( $canonical ) {
+		// Some Rank Math filters may pass boolean false to indicate the archive/link
+		// should not be included. If $canonical is empty or not a string, don't process.
+		if ( empty( $canonical ) || ! is_string( $canonical ) ) {
+			return $canonical;
+		}
+
+		return remove_query_arg( 'currency', $canonical );
 	}
 
 	/**
@@ -57,17 +167,21 @@ class CompatibilityService {
 		}
 
 		// must be our checkout form block.
-		if ( 'surecart/checkout-form' !== $parsed_block['blockName'] ) {
+		if ( 'surecart/checkout-form' !== $parsed_block['blockName'] && 'surecart/upsell' !== $parsed_block['blockName'] ) {
 			return $parsed_block;
 		}
 
-		// must have an ID.
-		if ( empty( $parsed_block['attrs']['id'] ) ) {
+		$post      = get_post();
+		$upsell_id = isset( $post->upsell->id ) ? $post->upsell->id : null;
+
+		$id = $parsed_block['attrs']['id'] ?? $upsell_id;
+
+		if ( empty( $id ) ) {
 			return $parsed_block;
 		}
 
 		// If Spectra Blocks are present in the form, enqueue the assets.
-		$post_assets_instance = new \UAGB_Post_Assets( $parsed_block['attrs']['id'] );
+		$post_assets_instance = new \UAGB_Post_Assets( $id );
 		$post_assets_instance->enqueue_scripts(); // This will enqueue the JS and CSS files.
 
 		if ( ! empty( $post_assets_instance->file_generation ) && 'disabled' === $post_assets_instance->file_generation ) {
@@ -126,5 +240,29 @@ class CompatibilityService {
 			);
 		}
 	}
-}
 
+	/**
+	 * Exclude SureCart JS modules from Siteground JS combine.
+	 * This is to prevent the JS modules from being combined and minified by Siteground.
+	 *
+	 * @param array $exclude_ids Array of JS module IDs to exclude.
+	 *
+	 * @return array
+	 */
+	public function sitegroundJsCombineExcludeScriptIds( $exclude_ids ) {
+		// WordPress scripts which depends on interactivity.
+		$exclude_ids[] = '@wordpress/block-library/navigation/view-js-module';
+
+		// SureCart scripts.
+		$exclude_ids[] = '@surecart/product-page-js-module';
+		$exclude_ids[] = '@surecart/image-slider-js-module';
+		$exclude_ids[] = '@surecart/checkout-js-module';
+		$exclude_ids[] = '@surecart/cart-js-module';
+		$exclude_ids[] = '@surecart/checkout-service-js-module';
+		$exclude_ids[] = '@surecart/checkout-events-js-module';
+		$exclude_ids[] = '@surecart/dropdown-js-module';
+		$exclude_ids[] = '@surecart/product-list-js-module';
+
+		return $exclude_ids;
+	}
+}

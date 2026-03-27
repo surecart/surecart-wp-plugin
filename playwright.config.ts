@@ -17,14 +17,10 @@ export default defineConfig({
 	globalSetup: require.resolve('./.dev/tests/e2e/global-setup.ts'),
 
 	/* Run tests for specific directories */
-	testDir: 'packages',
+	// testDir: 'packages',
 
 	/* Test file match extension. Currently only supporting `.spec.ts` extension */
-	testMatch: [
-		'packages/blocks/Blocks/**/*.spec.ts',
-		'packages/admin/**/*.spec.ts',
-		'packages/admin/**/**/*.spec.ts',
-	],
+	testMatch: ['.dev/tests/e2e/**/*.spec.ts'],
 
 	/* Run tests for specific file matches [If needs] */
 	// testMatch: ["**/test/*-pw.spec.ts"],
@@ -35,11 +31,11 @@ export default defineConfig({
 	/* Fail the build on CI if you accidentally left test.only in the source code. */
 	forbidOnly: !!CI,
 
-	/* Retry only on CI */
-	retries: 4,
+	/* Retry */
+	retries: 0,
 
 	/* Opt out of parallel tests on CI. */
-	// workers: CI ? 1 : undefined,
+	workers: 1,
 
 	/* Reporter to use. See https://playwright.dev/docs/test-reporters */
 	reporter: 'html',
@@ -48,11 +44,11 @@ export default defineConfig({
 	reportSlowTests: null,
 
 	/* https://playwright.dev/docs/test-timeouts#set-test-timeout-in-the-config */
-	timeout: parseInt(TIMEOUT || '', 1000) || 1000_000, // 1000 seconds.
+	timeout: parseInt(TIMEOUT || '', 10) || 60_000,
 
 	/* Web-first assertions - separate timeout. See https://playwright.dev/docs/test-timeouts#expect-timeout */
 	expect: {
-		timeout: 10 * 1000, // 30 seconds
+		timeout: 10 * 1000, // 10 seconds
 	},
 
 	/* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */

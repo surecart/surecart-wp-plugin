@@ -7,7 +7,6 @@ import {
 	__experimentalGetElementClassName,
 } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
-import useProductPageWarning from '../../../hooks/useProductPageWarning';
 
 export default ({ attributes, setAttributes }) => {
 	const { label } = attributes;
@@ -27,17 +26,14 @@ export default ({ attributes, setAttributes }) => {
 		},
 	});
 
-	const warning = useProductPageWarning();
-	if (warning) {
-		return <div {...blockProps}>{warning}</div>;
-	}
-
 	return (
 		<>
 			<InspectorControls>
 				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
 						<TextControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							label={__('Label', 'surecart')}
 							value={label}
 							onChange={(label) => setAttributes({ label })}

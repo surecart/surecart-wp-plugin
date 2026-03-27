@@ -24,11 +24,10 @@ export default ({ attributes }) => {
 				{subscription_text || text || __('Total Due Today', 'surecart')}
 			</span>
 			<span slot="first-payment-total-description">
-				{first_payment_total_text ||
-					__('Subtotal', 'surecart')}
+				{first_payment_total_text || __('Subtotal', 'surecart')}
 			</span>
 			<span slot="free-trial-description">
-				{free_trial_text || __('Free Trial', 'surecart')}
+				{free_trial_text || __('Trial', 'surecart')}
 			</span>
 			<span slot="due-amount-description">
 				{due_amount_text || __('Amount Due', 'surecart')}

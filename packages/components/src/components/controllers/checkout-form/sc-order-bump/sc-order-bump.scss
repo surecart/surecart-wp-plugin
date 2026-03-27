@@ -32,8 +32,25 @@
     }
   }
 
+  &__title {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-word;
+  }
+
   &__product-title {
     font-weight: var(--sc-font-weight-semibold);
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-word;
   }
 
   &__product-description {
@@ -52,10 +69,15 @@
   }
 
   &__price {
-    &--has-discount .bump__original-price {
-      text-decoration: line-through;
-      color: var(--sc-color-gray-500);
-      font-size: var(--sc-font-size-small);
+    &--has-discount {
+      display: flex;
+      align-items: baseline;
+      gap: var(--sc-spacing-x-small);
+      .bump__original-price {
+        text-decoration: line-through;
+        color: var(--sc-color-gray-500);
+        font-size: var(--sc-font-size-small);
+      }
     }
     .bump__new-price {
       font-size: var(--sc-font-size-large);

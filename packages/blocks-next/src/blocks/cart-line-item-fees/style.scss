@@ -1,0 +1,22 @@
+// Wrapper div for fee items
+div.wp-block-surecart-cart-line-item-fees {
+	color: var(--sc-input-help-text-color);
+	max-width: 100%;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
+	line-clamp: 2;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	word-break: break-word;
+
+	// Right align when has the alignment class.
+	&.has-text-align-right {
+		text-align: right;
+	}
+}
+
+// Both spans should be inline.
+span.wp-block-surecart-cart-line-item-fees {
+	display: inline;
+}

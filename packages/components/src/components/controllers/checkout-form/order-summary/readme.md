@@ -7,16 +7,16 @@
 
 ## Properties
 
-| Property             | Attribute              | Description | Type       | Default                          |
-| -------------------- | ---------------------- | ----------- | ---------- | -------------------------------- |
-| `busy`               | `busy`                 |             | `boolean`  | `undefined`                      |
-| `closedText`         | `closed-text`          |             | `string`   | `__('Show Summary', 'surecart')` |
-| `collapsed`          | `collapsed`            |             | `boolean`  | `false`                          |
-| `collapsedOnDesktop` | `collapsed-on-desktop` |             | `boolean`  | `undefined`                      |
-| `collapsedOnMobile`  | `collapsed-on-mobile`  |             | `boolean`  | `false`                          |
-| `collapsible`        | `collapsible`          |             | `boolean`  | `false`                          |
-| `openText`           | `open-text`            |             | `string`   | `__('Summary', 'surecart')`      |
-| `order`              | --                     |             | `Checkout` | `undefined`                      |
+| Property             | Attribute              | Description | Type       | Default                             |
+| -------------------- | ---------------------- | ----------- | ---------- | ----------------------------------- |
+| `busy`               | `busy`                 |             | `boolean`  | `undefined`                         |
+| `collapsed`          | `collapsed`            |             | `boolean`  | `false`                             |
+| `collapsedOnDesktop` | `collapsed-on-desktop` |             | `boolean`  | `undefined`                         |
+| `collapsedOnMobile`  | `collapsed-on-mobile`  |             | `boolean`  | `false`                             |
+| `collapsible`        | `collapsible`          |             | `boolean`  | `false`                             |
+| `invoiceSummaryText` | `invoice-summary-text` |             | `string`   | `__('Invoice Summary', 'surecart')` |
+| `order`              | --                     |             | `Checkout` | `undefined`                         |
+| `orderSummaryText`   | `order-summary-text`   |             | `string`   | `__('Summary', 'surecart')`         |
 
 
 ## Events
@@ -33,7 +33,6 @@
 
 - [sc-line-item](../../../ui/line-item)
 - [sc-skeleton](../../../ui/skeleton)
-- [sc-format-number](../../../util/format-number)
 - [sc-total](../total)
 
 ### Graph
@@ -41,9 +40,7 @@
 graph TD;
   sc-order-summary --> sc-line-item
   sc-order-summary --> sc-skeleton
-  sc-order-summary --> sc-format-number
   sc-order-summary --> sc-total
-  sc-total --> sc-format-number
   style sc-order-summary fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

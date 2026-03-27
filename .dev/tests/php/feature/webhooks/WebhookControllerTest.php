@@ -32,7 +32,6 @@ class WebhookControllerTest extends SureCartUnitTestCase
 
 	/**
 	 * Checks that our recieve function calls the correct event.
-	 * @group failing
 	 */
 	public function test_can_receive()
 	{

@@ -4,7 +4,6 @@ import { __ } from '@wordpress/i18n';
 import { useEffect, useState } from '@wordpress/element';
 import {
 	ScButton,
-	ScFormatDate,
 	ScTag,
 	ScCard,
 	ScEmpty,
@@ -155,7 +154,7 @@ export default () => {
 									id,
 									webhook_id,
 									data,
-									created_at,
+									created_at_date_time,
 									processed,
 								}) => {
 									return {
@@ -176,15 +175,7 @@ export default () => {
 											</div>
 										),
 										key: id,
-										date: (
-											<ScFormatDate
-												date={created_at}
-												month="short"
-												day="numeric"
-												hour="numeric"
-												minute="numeric"
-											/>
-										),
+										date: created_at_date_time,
 										status: processed ? (
 											<ScTag type="success" size="small">
 												{__('Processed', 'surecart')}

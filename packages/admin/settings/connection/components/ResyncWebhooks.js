@@ -2,11 +2,10 @@
 import { css, jsx } from '@emotion/core';
 import { ScAlert, ScButton, ScIcon } from '@surecart/components-react';
 import { store as noticesStore } from '@wordpress/notices';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 import apiFetch from '@wordpress/api-fetch';
 import { useDispatch } from '@wordpress/data';
 import { useState } from '@wordpress/element';
-import { formatTime } from '../../../util/time';
 
 export default ({ webhook }) => {
 	const [saving, setSaving] = useState(false);
@@ -59,13 +58,11 @@ export default ({ webhook }) => {
 							'If this endpoint is important to your integration, please try and fix the issue. We will disable this endpoint on %s if it continues to fail.',
 							'surecart'
 						),
-						formatTime(webhook?.erroring_grace_period_ends_at, {
-							dateStyle: 'medium',
-						})
+						webhook?.erroring_grace_period_ends_at_date_time
 					)}
 					<br />
 					<ScButton
-						href={`${scData.app_url}/developer`}
+						href={`${scData.app_url}/webhook_endpoints?switch_account_id=${scData?.account_id}`}
 						target="_blank"
 					>
 						{__('View Logs', 'surecart')}

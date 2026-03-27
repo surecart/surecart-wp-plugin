@@ -1,4 +1,4 @@
-import { Component, h, Method, Prop } from '@stencil/core';
+import { Component, h, Method, Prop, State, Watch } from '@stencil/core';
 import { state as checkoutState } from '@store/checkout';
 import { __ } from '@wordpress/i18n';
 import { createOrUpdateCheckout } from '../../../../services/session';
@@ -35,6 +35,23 @@ export class ScOrderTaxIdInput {
   /** EU zone label */
   @Prop() euVatLabel: string;
 
+  /** Help text */
+  @Prop() helpText: string;
+
+  /** Tax ID Types which will be shown Eg: '["eu_vat", "gb_vat"]' */
+  @Prop() taxIdTypes: string | string[];
+
+  /** Whether tax input is required */
+  @Prop() required: boolean = false;
+
+  /** Tax ID Types data as array */
+  @State() taxIdTypesData: string[] = [];
+
+  @Watch('taxIdTypes')
+  handleTaxIdTypesChange() {
+    this.taxIdTypesData = typeof this.taxIdTypes === 'string' ? JSON.parse(this.taxIdTypes) : this.taxIdTypes;
+  }
+
   @Method()
   async reportValidity() {
     return this.input.reportValidity();
@@ -65,8 +82,22 @@ export class ScOrderTaxIdInput {
     }
   }
 
-  required() {
-    return checkoutState.taxProtocol?.eu_vat_required && checkoutState.checkout?.tax_identifier?.number_type === 'eu_vat';
+  componentWillLoad() {
+    this.handleTaxIdTypesChange();
+  }
+
+  isRequired() {
+    // If the block has explicitly set required, use that value.
+    if (this.required) {
+      return true;
+    }
+
+    // Only apply EU VAT requirement if eu_vat is one of the allowed tax types.
+    // If taxIdTypesData is empty, all types are allowed.
+    const isEuVatAllowed = !this.taxIdTypesData?.length || this.taxIdTypesData.includes('eu_vat');
+
+    // Fall back to EU VAT protocol requirement only if EU VAT is an allowed type.
+    return isEuVatAllowed && checkoutState.taxProtocol?.eu_vat_required && checkoutState.checkout?.tax_identifier?.number_type === 'eu_vat';
   }
 
   render() {
@@ -75,7 +106,7 @@ export class ScOrderTaxIdInput {
         ref={el => (this.input = el as HTMLScTaxIdInputElement)}
         show={this.show}
         number={checkoutState.checkout?.tax_identifier?.number}
-        type={checkoutState.checkout?.tax_identifier?.number_type}
+        type={checkoutState.checkout?.tax_identifier?.number_type || this.taxIdTypesData?.[0] || 'eu_vat'}
         country={(checkoutState.checkout?.shipping_address as Address)?.country}
         status={this.getStatus()}
         loading={formBusy()}
@@ -88,7 +119,9 @@ export class ScOrderTaxIdInput {
         auAbnLabel={this.auAbnLabel}
         gbVatLabel={this.gbVatLabel}
         euVatLabel={this.euVatLabel}
-        required={this.required()}
+        help={this.helpText}
+        taxIdTypes={this.taxIdTypesData}
+        required={this.isRequired()}
       ></sc-tax-id-input>
     );
   }

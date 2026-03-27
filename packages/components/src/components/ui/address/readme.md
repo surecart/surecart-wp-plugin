@@ -7,18 +7,17 @@
 
 ## Properties
 
-| Property       | Attribute      | Description                | Type                                                                                                                                                                                                                                                                                                                                                                            | Default                                                                                                                                                                                                                            |
-| -------------- | -------------- | -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `address`      | --             | The address.               | `{ name?: string; line_1?: string; line_2?: string; city?: string; state?: string; postal_code?: string; country?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }` | `{     country: null,     city: null,     line_1: null,     line_2: null,     postal_code: null,     state: null,   }`                                                                                                             |
-| `disabled`     | `disabled`     | Is this disabled?          | `boolean`                                                                                                                                                                                                                                                                                                                                                                       | `undefined`                                                                                                                                                                                                                        |
-| `label`        | `label`        | The label for the field.   | `string`                                                                                                                                                                                                                                                                                                                                                                        | `undefined`                                                                                                                                                                                                                        |
-| `loading`      | `loading`      | Is this loading?           | `boolean`                                                                                                                                                                                                                                                                                                                                                                       | `false`                                                                                                                                                                                                                            |
-| `names`        | --             |                            | `{ name?: string; line_1?: string; line_2?: string; city?: string; state?: string; postal_code?: string; country?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }` | `{     name: 'shipping_name',     country: 'shipping_country',     city: 'shipping_city',     line_1: 'shipping_line_1',     line_2: 'shipping_line_2',     postal_code: 'shipping_postal_code',     state: 'shipping_state',   }` |
-| `placeholders` | --             |                            | `{ name?: string; line_1?: string; line_2?: string; city?: string; state?: string; postal_code?: string; country?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }` | `{}`                                                                                                                                                                                                                               |
-| `requireName`  | `require-name` | Is the name required       | `boolean`                                                                                                                                                                                                                                                                                                                                                                       | `false`                                                                                                                                                                                                                            |
-| `required`     | `required`     | Is this required?          | `boolean`                                                                                                                                                                                                                                                                                                                                                                       | `false`                                                                                                                                                                                                                            |
-| `showLine2`    | `show-line-2`  | Should we show name field? | `boolean`                                                                                                                                                                                                                                                                                                                                                                       | `undefined`                                                                                                                                                                                                                        |
-| `showName`     | `show-name`    | Should we show name field? | `boolean`                                                                                                                                                                                                                                                                                                                                                                       | `undefined`                                                                                                                                                                                                                        |
+| Property      | Attribute      | Description                | Type                                                                                                                                                                                                                                                                                                                                                                            | Default                                                                                                                                                                                                                            |
+| ------------- | -------------- | -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `address`     | --             | The address.               | `{ name?: string; line_1?: string; line_2?: string; city?: string; state?: string; postal_code?: string; country?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }` | `{     country: null,     city: null,     line_1: null,     line_2: null,     postal_code: null,     state: null,   }`                                                                                                             |
+| `disabled`    | `disabled`     | Is this disabled?          | `boolean`                                                                                                                                                                                                                                                                                                                                                                       | `undefined`                                                                                                                                                                                                                        |
+| `label`       | `label`        | The label for the field.   | `string`                                                                                                                                                                                                                                                                                                                                                                        | `undefined`                                                                                                                                                                                                                        |
+| `loading`     | `loading`      | Is this loading?           | `boolean`                                                                                                                                                                                                                                                                                                                                                                       | `false`                                                                                                                                                                                                                            |
+| `names`       | --             |                            | `{ name?: string; line_1?: string; line_2?: string; city?: string; state?: string; postal_code?: string; country?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }` | `{     name: 'shipping_name',     country: 'shipping_country',     city: 'shipping_city',     line_1: 'shipping_line_1',     line_2: 'shipping_line_2',     postal_code: 'shipping_postal_code',     state: 'shipping_state',   }` |
+| `requireName` | `require-name` | Is the name required       | `boolean`                                                                                                                                                                                                                                                                                                                                                                       | `false`                                                                                                                                                                                                                            |
+| `required`    | `required`     | Is this required?          | `boolean`                                                                                                                                                                                                                                                                                                                                                                       | `false`                                                                                                                                                                                                                            |
+| `showLine2`   | `show-line-2`  | Should we show name field? | `boolean`                                                                                                                                                                                                                                                                                                                                                                       | `undefined`                                                                                                                                                                                                                        |
+| `showName`    | `show-name`    | Should we show name field? | `boolean`                                                                                                                                                                                                                                                                                                                                                                       | `undefined`                                                                                                                                                                                                                        |
 
 
 ## Events
@@ -30,6 +29,16 @@
 
 
 ## Methods
+
+### `initCountryChoices() => Promise<void>`
+
+
+
+#### Returns
+
+Type: `Promise<void>`
+
+
 
 ### `reportValidity() => Promise<boolean>`
 
@@ -50,7 +59,6 @@ Type: `Promise<boolean>`
 | `"block-ui"`             | The block ui base component.                   |
 | `"block-ui__content"`    | The block ui content (spinner).                |
 | `"caret"`                | The select box caret.                          |
-| `"columns"`              |                                                |
 | `"empty"`                | The select empty message.                      |
 | `"form-control"`         | The form control wrapper.                      |
 | `"help-text"`            | Help text that describes how to use the input. |
@@ -73,24 +81,24 @@ Type: `Promise<boolean>`
 ### Used by
 
  - [sc-customer-edit](../../controllers/dashboard/customer-edit)
+ - [sc-order-billing-address](../../controllers/checkout-form/sc-order-billing-address)
  - [sc-order-shipping-address](../../controllers/checkout-form/order-shipping-address)
 
 ### Depends on
 
 - [sc-form-control](../form-control)
-- [sc-input](../input)
 - [sc-select](../select)
+- [sc-input](../input)
 - [sc-block-ui](../block-ui)
 
 ### Graph
 ```mermaid
 graph TD;
   sc-address --> sc-form-control
-  sc-address --> sc-input
   sc-address --> sc-select
+  sc-address --> sc-input
   sc-address --> sc-block-ui
   sc-form-control --> sc-visually-hidden
-  sc-input --> sc-form-control
   sc-select --> sc-icon
   sc-select --> sc-menu-label
   sc-select --> sc-menu-item
@@ -99,8 +107,10 @@ graph TD;
   sc-select --> sc-input
   sc-select --> sc-spinner
   sc-select --> sc-menu
+  sc-input --> sc-form-control
   sc-block-ui --> sc-spinner
   sc-customer-edit --> sc-address
+  sc-order-billing-address --> sc-address
   sc-order-shipping-address --> sc-address
   style sc-address fill:#f9f,stroke:#333,stroke-width:4px
 ```

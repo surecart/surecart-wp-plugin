@@ -6,8 +6,8 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import edit from './edit';
 import metadata from './block.json';
+import { BlockReplacer } from './BlockReplacer';
 
 const { name } = metadata;
 
@@ -32,5 +32,11 @@ export const settings = {
 			<path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
 		</svg>
 	),
-	edit,
+	edit: ({ clientId, attributes }) => (
+		<BlockReplacer
+			clientId={clientId}
+			attributes={attributes}
+			blockType="surecart/cart-menu-icon-button"
+		/>
+	),
 };

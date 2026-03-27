@@ -2,8 +2,8 @@
 
 namespace SureCartBlocks\Blocks\Product\Price;
 
-use SureCart\Support\Currency;
 use SureCartBlocks\Blocks\Product\ProductBlock;
+use SureCart\Support\Currency;
 
 /**
  * Product Title Block
@@ -25,8 +25,14 @@ class Block extends ProductBlock {
 	 * @return string
 	 */
 	public function render( $attributes, $content ) {
+		if ( empty( $attributes['id'] ) && empty( get_query_var( 'sc_upsell_id' ) ) ) {
+			return \SureCart::block()
+			->productSelectedPriceMigration( $attributes, $this->block )
+			->render();
+		}
+
 		$product = $this->getProductAndSetInitialState( $attributes['id'] ?? '' );
-		if ( empty( $product ) || empty( $product->activePrices() ) ) {
+		if ( empty( $product ) || empty( $product->active_prices ) ) {
 			return '';
 		}
 
@@ -34,13 +40,13 @@ class Block extends ProductBlock {
 			[
 				'sale-text'  => esc_attr( $attributes['sale_text'] ?? '' ),
 				'class'      => esc_attr( $this->getClasses( $attributes ) . ' product-price surecart-block' ),
-				'style'      => esc_attr( $this->getStyles( $attributes ) . ' --sc-product-price-alignment:' . esc_attr( $attributes['alignment'] ?? 'left' ) ),
+				'style'      => esc_attr( $this->getStyles( $attributes ) . ' --sc-product-price-alignment:' . esc_attr( $attributes['alignment'] ?? 'left' ) . '; text-align:' . esc_attr( $attributes['alignment'] ?? 'left' ) . ';' ),
 				'product-id' => esc_attr( $product->id ),
 			]
 		);
 
 		// first price.
-		$first_price = $product->activePrices()[0];
+		$first_price = $product->active_prices[0];
 
 		return wp_sprintf(
 			'<sc-product-price %1$s>

@@ -15,6 +15,7 @@ export class ScProductItem {
   @Prop() layoutConfig: LayoutConfig;
 
   render() {
+    console.log(this.product);
     return (
       <a href={this.product?.permalink} class={{ 'product-item': true }}>
         {this.product &&

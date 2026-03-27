@@ -17,6 +17,7 @@ import Error from '../../components/Error';
 import useSave from '../UseSave';
 import CustomerSyncModal from './components/CustomerSyncModal';
 import { useEntityProp } from '@wordpress/core-data';
+import ProductSyncButton from './components/ProductSyncButton';
 
 export default () => {
 	const [error, setError] = useState(null);
@@ -69,6 +70,7 @@ export default () => {
 		'site',
 		'surecart_shop_admin_menu'
 	);
+
 	const [cartMenu, setCartMenu] = useEntityProp(
 		'root',
 		'site',
@@ -83,6 +85,26 @@ export default () => {
 		'root',
 		'site',
 		'surecart_dashboard_admin_menu'
+	);
+	const [unrestrictedTestMode, setUnrestrictedTestMode] = useEntityProp(
+		'root',
+		'site',
+		'surecart_unrestricted_test_mode'
+	);
+	const [hideHelpWidget, setHideHelpWidget] = useEntityProp(
+		'root',
+		'site',
+		'surecart_hide_help_widget'
+	);
+	const [learnMenu, setLearnMenu] = useEntityProp(
+		'root',
+		'site',
+		'surecart_learn_admin_menu'
+	);
+	const [disableAdminToolbar, setDisableAdminToolbar] = useEntityProp(
+		'root',
+		'site',
+		'surecart_admin_toolbar_disabled'
 	);
 
 	/**
@@ -137,6 +159,37 @@ export default () => {
 						)}
 					</span>
 				</ScSwitch>
+				{scData?.should_load_on_demand_assets && (
+					<ScSwitch
+						checked={item?.load_block_assets_on_demand}
+						onClick={(e) => {
+							e.preventDefault();
+							editItem({
+								load_block_assets_on_demand:
+									!item?.load_block_assets_on_demand,
+							});
+						}}
+					>
+						{__('On Demand Block Assets', 'surecart')}
+						<span slot="description" style={{ lineHeight: '1.4' }}>
+							{__(
+								'Enabling this option will load block assets only when they are rendered. This will happen for ALL blocks on your website, not just SureCart blocks. Please check your pages after you enable this option in a private browser window as this might change the CSS load order.',
+								'surecart'
+							)}
+							<div
+								style={{
+									fontStyle: 'italic',
+									marginTop: '0.5em',
+								}}
+							>
+								{__(
+									"Note: This option is sometimes enabled by the theme. If it is already enabled by the theme, then this setting won't have any effect.",
+									'surecart'
+								)}
+							</div>
+						</span>
+					</ScSwitch>
+				)}
 			</SettingsBox>
 
 			<SettingsBox
@@ -147,6 +200,21 @@ export default () => {
 				)}
 				loading={!hasLoadedItem}
 			>
+				<ScSwitch
+					checked={!unrestrictedTestMode}
+					onScChange={(e) =>
+						setUnrestrictedTestMode(!e.target.checked)
+					}
+				>
+					{__('Test Mode Restricted', 'surecart')}
+					<span slot="description">
+						{__(
+							'Restrict test orders to store administrators only. Disable this setting to allow anyone to complete test orders.',
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
+
 				<ScSwitch
 					checked={honeypotEnabled}
 					onScChange={(e) => setHoneypotEnabled(e.target.checked)}
@@ -247,24 +315,28 @@ export default () => {
 						)}
 					</>
 				)}
-				{(scData.processors || []).some(
-					(processor) => processor.processor_type === 'stripe'
-				) && (
-					<ScSwitch
-						checked={stripeScriptEnabled}
-						onScChange={(e) =>
-							setStripeScriptEnabled(e.target.checked)
-						}
-					>
-						{__('Stripe Fraud Monitoring', 'surecart')}
-						<span slot="description" style={{ lineHeight: '1.4' }}>
-							{__(
-								'This will load stripe.js on every page to help with Fraud monitoring.',
-								'surecart'
-							)}
-						</span>
-					</ScSwitch>
-				)}
+				{Array.isArray(scData.processors) &&
+					scData.processors.some(
+						(processor) => processor.processor_type === 'stripe'
+					) && (
+						<ScSwitch
+							checked={stripeScriptEnabled}
+							onScChange={(e) =>
+								setStripeScriptEnabled(e.target.checked)
+							}
+						>
+							{__('Stripe Fraud Monitoring', 'surecart')}
+							<span
+								slot="description"
+								style={{ lineHeight: '1.4' }}
+							>
+								{__(
+									'This will load stripe.js on every page to help with Fraud monitoring.',
+									'surecart'
+								)}
+							</span>
+						</ScSwitch>
+					)}
 				<ScSwitch
 					checked={passwordValidation}
 					onScChange={(e) => setPasswordValidation(e.target.checked)}
@@ -332,6 +404,42 @@ export default () => {
 						)}
 					</span>
 				</ScSwitch>
+				<ScSwitch
+					checked={learnMenu}
+					onScChange={(e) => setLearnMenu(e.target.checked)}
+				>
+					{__('Learn Page', 'surecart')}
+					<span slot="description" style={{ lineHeight: '1.4' }}>
+						{__(
+							'Show the Learn page link in the menu.',
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
+				<ScSwitch
+					checked={hideHelpWidget}
+					onScChange={(e) => setHideHelpWidget(e.target.checked)}
+				>
+					{__('Hide Help Widget', 'surecart')}
+					<span slot="description" style={{ lineHeight: '1.4' }}>
+						{__(
+							'Hide the help widget that appears in the bottom right corner of SureCart admin pages.',
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
+				<ScSwitch
+					checked={!disableAdminToolbar}
+					onClick={(e) => setDisableAdminToolbar(!e.target.checked)}
+				>
+					{__('Enable Admin Toolbar', 'surecart')}
+					<span slot="description" style={{ lineHeight: '1.4' }}>
+						{__(
+							'This will enable the SureCart toolbar in the WordPress admin bar for easy access to SureCart features.',
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
 			</SettingsBox>
 
 			<SettingsBox
@@ -373,43 +481,45 @@ export default () => {
 			>
 				<div
 					css={css`
-						display: grid;
-						gap: 0.5em;
+						display: flex;
+						gap: 1em;
+						justify-content: space-between;
+						--sc-input-label-margin: 0;
 					`}
 				>
 					<ScFormControl
 						label={__('Customers', 'surecart')}
 						help={__(
-							'Match all SureCart customers with WordPress users. This is helpful if you have migrated from another eCommerce platform.',
+							"Create WordPress user accounts for SureCart customers who don't already have a WordPress account. Use this after migrating from another eCommerce platform to ensure every SureCart customer can log in.",
 							'surecart'
 						)}
 					/>
 					<div>
 						<ScButton onClick={() => setModal('customer-sync')}>
-							<ScIcon name="users" slot="prefix"></ScIcon>
-							{__('Sync Customers', 'surecart')}
+							<ScIcon name="refresh-ccw" slot="prefix"></ScIcon>
+							{__('Sync', 'surecart')}
 						</ScButton>
 					</div>
 				</div>
-			</SettingsBox>
-
-			<SettingsBox
-				title={__('Migration', 'surecart')}
-				description={__(
-					'Looking to migrate from another ecommerce platform?',
-					'surecart'
-				)}
-				loading={!hasLoadedItem}
-				noButton={true}
-			>
-				<ScButton
-					href={'https://surecart.com/migrate-to-surecart/'}
-					target="_blank"
-					outline
+				<div
+					css={css`
+						display: flex;
+						gap: 1em;
+						justify-content: space-between;
+						--sc-input-label-margin: 0;
+					`}
 				>
-					{__('Contact Us', 'surecart')}
-					<ScIcon name="external-link" slot="suffix" />
-				</ScButton>
+					<ScFormControl
+						label={__('Products', 'surecart')}
+						help={__(
+							'Run a sync on all SureCart products to post types.',
+							'surecart'
+						)}
+					/>
+					<div>
+						<ProductSyncButton />
+					</div>
+				</div>
 			</SettingsBox>
 
 			<SettingsBox
@@ -423,7 +533,7 @@ export default () => {
 			>
 				<ScButton
 					type="danger"
-					href={'https://app.surecart.com/account/edit'}
+					href={`https://app.surecart.com/account/edit?switch_account_id=${scData?.account_id}`}
 					target="_blank"
 					outline
 				>

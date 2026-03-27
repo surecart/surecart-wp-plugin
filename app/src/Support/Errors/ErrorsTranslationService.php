@@ -67,7 +67,17 @@ class ErrorsTranslationService {
 
 	public function attributeOptionsTranslation( $attribute, $type, $options ) {
 		if ( 'line_items.ad_hoc_amount' === $attribute && 'outside_range' === $type ) {
-			return sprintf( __( 'You must enter an amount between %1$s and %2$s', 'surecart' ), $options['min'] / 100, $options['max'] / 100 );
+			$min = Currency::format( $options['min'] );
+			$max = $options['max'] ?? null;
+
+			// If max is empty, show a message without the upper limit.
+			if ( empty( $max ) ) {
+				// translators: %s is the minimum amount.
+				return sprintf( __( 'You must enter an amount of at least %s', 'surecart' ), $min );
+			}
+
+			// translators: 1. minimum amount, 2. maximum amount.
+			return sprintf( __( 'You must enter an amount between %1$s and %2$s', 'surecart' ), $min, Currency::format( $max ) );
 		}
 
 		if ( 'line_items.quantity' === $attribute && 'greater_than_or_equal_to' === $type ) {
@@ -75,11 +85,63 @@ class ErrorsTranslationService {
 				return __( 'The product is out of stock. Please remove it from your cart.', 'surecart' );
 			}
 
+			// translators: minimum quantity.
 			return sprintf( __( 'You must enter a quantity greater than or equal to %s', 'surecart' ), $options['value'] );
 		}
 
-		if ( 'coupon' === $attribute && 'less_than_min_subtotal_amount' === $type ) {
-			return sprintf( __( 'You must spend at least %1$s to use this coupon.', 'surecart' ), Currency::format( $options['coupon_min_subtotal_amount'], $options['currency'] ?? 'usd' ) );
+		// refund quantity greater than or equal to.
+		if ( 'refund_items.quantity' === $attribute && 'greater_than_or_equal_to' === $type && ! empty( $options['value'] ) ) {
+			// translators: minimum quantity.
+			return sprintf( __( 'You must enter a quantity greater than or equal to %s', 'surecart' ), $options['value'] );
+		}
+
+		if ( 'coupon' === $attribute && 'less_than_min_subtotal_amount' === $type && ! empty( $options['coupon_min_subtotal_amount'] ) && ! empty( $options['currency'] ) ) {
+			// translators: minimum amount for coupon.
+			return sprintf( __( 'You must spend at least %s to use this coupon.', 'surecart' ), Currency::format( $options['coupon_min_subtotal_amount'], $options['currency'] ) );
+		}
+
+		// Minimum order amount by processor.
+		if ( 'amount_due' === $attribute && 'less_than_currency_minimum' === $type && ! empty( $options['minimum_amount'] ) && ! empty( $options['currency'] ) ) {
+			// translators: minimum amount for processor.
+			return sprintf( __( 'The minimum order amount for the processor is %s.', 'surecart' ), Currency::format( $options['minimum_amount'], $options['currency'] ) );
+		}
+
+		// Remind at period percent remaining translation.
+		if ( 'remind_at_period_percent_remaining' === $attribute && isset( $options['count'] ) ) {
+			if ( 'greater_than_or_equal_to' === $type ) {
+				// translators: minimum percentage.
+				return sprintf( __( 'You must enter a percentage greater than or equal to %s', 'surecart' ), $options['count'] );
+			} elseif ( 'less_than_or_equal_to' === $type ) {
+				// translators: maximum percentage.
+				return sprintf( __( 'You must enter a percentage less than or equal to %s', 'surecart' ), $options['count'] );
+			}
+		}
+
+		if ( 'line_items' === $attribute && 'not_purchasable' === $type && ! empty( $options['purchasable_statuses'] ) ) {
+			$line_item_translations = array(
+				'price_gone'             => __( 'One or more items in your cart is no longer available. Please update your cart and try again.', 'surecart' ),
+				'price_old_version'      => __( 'The price of one of the items on cart has changed. Please review and try again.', 'surecart' ),
+				'variant_missing'        => __( 'One of the items on cart is no longer available. Please review and try again.', 'surecart' ),
+				'variant_gone'           => __( 'One of the items on cart is no longer available. Please review and try again.', 'surecart' ),
+				'variant_old_version'    => __( 'One of the items on cart has changed. Please review and try again.', 'surecart' ),
+				'out_of_stock'           => __( 'One of the items on cart is out of stock. Please review and try again.', 'surecart' ),
+				'exceeds_purchase_limit' => __( 'One or more items in your cart exceed the purchase limit. Please adjust the quantity or remove the item to proceed with the checkout.', 'surecart' ),
+			);
+
+			$line_item_translated_error = $line_item_translations[ $options['purchasable_statuses'][0] ?? '' ] ?? false;
+
+			if ( $line_item_translated_error ) {
+				return $line_item_translated_error;
+			}
+		}
+
+		// Unique name translation.
+		if ( 'name' === $attribute && 'taken' === $type ) {
+			return sprintf(
+				// translators: %s is the name.
+				__( 'The name "%s" is already taken. Please choose a different name.', 'surecart' ),
+				$options['value'],
+			);
 		}
 
 		return false;
@@ -113,14 +175,14 @@ class ErrorsTranslationService {
 	 * @return \WP_Error
 	 */
 	public function translateErrorMessage( $response, $fallback = null ) {
-		// translate specific error code.
-		$translated = $this->codeTranslation( $response['code'] ?? '' );
+		// translate attribute.
+		$translated = $this->attributeTranslation( $response['attribute'] ?? '', $response['type'] ?? '', $response['options'] ?? [] );
 		if ( $translated ) {
 			return apply_filters( 'surecart/translated_error', $translated, $response );
 		}
 
-		// translate attribute.
-		$translated = $this->attributeTranslation( $response['attribute'] ?? '', $response['type'] ?? '', $response['options'] ?? [] );
+		// translate specific error code.
+		$translated = $this->codeTranslation( $response['code'] ?? '' );
 		if ( $translated ) {
 			return apply_filters( 'surecart/translated_error', $translated, $response );
 		}

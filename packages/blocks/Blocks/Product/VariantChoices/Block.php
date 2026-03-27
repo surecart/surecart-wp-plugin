@@ -18,6 +18,12 @@ class Block extends ProductBlock {
 	 * @return string
 	 */
 	public function render( $attributes, $content ) {
+		if ( empty( $attributes['id'] ) && empty( get_query_var( 'sc_upsell_id' ) ) ) {
+			return \SureCart::block()
+			->productVariantsMigration( $attributes, $this->block )
+			->render();
+		}
+
 		// check for product.
 		$product = $this->getProductAndSetInitialState( $attributes['id'] ?? '' );
 		if ( empty( $product ) || empty( $product->variant_options->data ) ) {

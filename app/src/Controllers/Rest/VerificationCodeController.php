@@ -110,9 +110,12 @@ class VerificationCodeController extends RestController {
 			'shipping_address' => $customer->shipping_address ?? [],
 		];
 
-		// return the data.
-		$verify->name = $user->display_name ?? $user->user_login;
+		$verify->name         = $user->display_name ?? $user->user_login;
+		$redirect_to          = $request->get_param( 'redirect_to' );
+		$redirect_url         = ! empty( $redirect_to ) ? wp_validate_redirect( $redirect_to, false ) : null;
+		$verify->redirect_url = apply_filters( 'sc_login_redirect_url', $redirect_url ); // this is the URL to redirect to after login.
 
+		// return the model.
 		return $verify;
 	}
 

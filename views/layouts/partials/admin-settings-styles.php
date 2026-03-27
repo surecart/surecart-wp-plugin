@@ -15,25 +15,6 @@
 		}
 	}
 
-	a.surecart-help {
-		position: fixed;
-		box-shadow: var(--sc-shadow-large);
-		display: flex;
-		align-items: center;
-		font-size: var(--sc-font-size-large);
-		gap: 0.5em;
-		padding: 0.2em 1.5em;
-		bottom: 30px;
-		right: 30px;
-		background: var(--sc-color-brand-primary);
-		text-decoration: none;
-		color: white;
-		line-height: 50px;
-		border-radius: 999px;
-		line-height: 50px;
-		z-index: 99;
-	}
-
 	#wpfooter {
 		display:none;
 	}
@@ -119,7 +100,7 @@
 	.sc-content {
 		margin-left: auto;
 		margin-right: auto;
-		max-width: 768px;
+		max-width: var(--sc-settings-content-width, 768px);
 		padding: 2rem;
 		display: flex;
 		flex-direction: column;

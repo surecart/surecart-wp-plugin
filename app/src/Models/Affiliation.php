@@ -1,0 +1,190 @@
+<?php
+
+namespace SureCart\Models;
+
+use SureCart\Models\Traits\HasCommissionStructure;
+use SureCart\Models\Traits\HasDates;
+use SureCart\Models\Traits\HasPayouts;
+use SureCart\Models\Traits\HasReferrals;
+use SureCart\Support\Currency;
+use SureCart\Support\TimeDate;
+
+/**
+ * Holds the data of the current Affiliation.
+ */
+class Affiliation extends Model {
+	use HasReferrals;
+	use HasPayouts;
+	use HasCommissionStructure;
+	use HasDates;
+
+	/**
+	 * Rest API endpoint
+	 *
+	 * @var string
+	 */
+	protected $endpoint = 'affiliations';
+
+	/**
+	 * Object name
+	 *
+	 * @var string
+	 */
+	protected $object_name = 'affiliation';
+
+	/**
+	 * Activate an affiliation
+	 *
+	 * @param string $id Affiliation ID.
+	 *
+	 * @return $this|\WP_Error
+	 */
+	protected function activate( $id = null ) {
+		if ( $id ) {
+			$this->setAttribute( 'id', $id );
+		}
+
+		if ( $this->fireModelEvent( 'activating' ) === false ) {
+			return $this;
+		}
+
+		if ( empty( $this->attributes['id'] ) ) {
+			return new \WP_Error( 'not_saved', 'Please create the affiliation.' );
+		}
+
+		$activated = \SureCart::request(
+			$this->endpoint . '/' . $this->attributes['id'] . '/activate',
+			[
+				'method' => 'PATCH',
+				'query'  => $this->query,
+			]
+		);
+
+		if ( is_wp_error( $activated ) ) {
+			return $activated;
+		}
+
+		$this->resetAttributes();
+		$this->fill( $activated );
+		$this->fireModelEvent( 'activated' );
+
+		return $this;
+	}
+
+	/**
+	 * Deactivate an affiliation
+	 *
+	 * @param string $id Affiliation ID.
+	 *
+	 * @return $this|\WP_Error
+	 */
+	protected function deactivate( $id = null ) {
+		if ( $id ) {
+			$this->setAttribute( 'id', $id );
+		}
+
+		if ( $this->fireModelEvent( 'deactivating' ) === false ) {
+			return $this;
+		}
+
+		if ( empty( $this->attributes['id'] ) ) {
+			return new \WP_Error( 'not_saved', 'Please create the affiliation.' );
+		}
+
+		$deactivated = \SureCart::request(
+			$this->endpoint . '/' . $this->attributes['id'] . '/deactivate',
+			[
+				'method' => 'PATCH',
+				'query'  => $this->query,
+			]
+		);
+
+		if ( is_wp_error( $deactivated ) ) {
+			return $deactivated;
+		}
+
+		$this->resetAttributes();
+		$this->fill( $deactivated );
+		$this->fireModelEvent( 'deactivated' );
+
+		return $this;
+	}
+
+	/**
+	 * Set the clicks attribute
+	 *
+	 * @param object $value Array of click objects.
+	 *
+	 * @return void
+	 */
+	public function setClicksAttribute( $value ) {
+		$this->setCollection( 'clicks', $value, Click::class );
+	}
+
+	/**
+	 * Get the display name
+	 *
+	 * @return string
+	 */
+	protected function getDisplayNameAttribute() {
+		if ( ! empty( $this->first_name . $this->last_name ) ) {
+			return $this->first_name . ' ' . $this->last_name;
+		}
+		return $this->email;
+	}
+
+	/**
+	 * Get the display status attribute.
+	 *
+	 * @return string
+	 */
+	public function getStatusDisplayTextAttribute() {
+		return $this->active ? __( 'Active', 'surecart' ) : __( 'Inactive', 'surecart' );
+	}
+
+	/**
+	 * Get the display status attribute.
+	 *
+	 * @return string
+	 */
+	public function getStatusTypeAttribute() {
+		return $this->active ? 'success' : 'default';
+	}
+
+
+	/**
+	 * Get the expires at date.
+	 *
+	 * @return string
+	 */
+	public function getExpiresAtDateAttribute() {
+		return ! empty( $this->expires_at ) ? TimeDate::formatDate( $this->expires_at ) : '';
+	}
+
+	/**
+	 * Get the expires at date and time.
+	 *
+	 * @return string
+	 */
+	public function getExpiresAtDateTimeAttribute() {
+		return ! empty( $this->expires_at ) ? TimeDate::formatDateAndTime( $this->expires_at ) : '';
+	}
+
+	/**
+	 * Get the total commission amount display.
+	 *
+	 * @return string
+	 */
+	public function getTotalCommissionDisplayAmountAttribute() {
+		return Currency::format( $this->total_commission_amount );
+	}
+
+	/**
+	 * Get the total commission amount display.
+	 *
+	 * @return string
+	 */
+	public function getTotalNotPaidCommissionDisplayAmountAttribute() {
+		return Currency::format( $this->total_not_paid_commission_amount );
+	}
+}

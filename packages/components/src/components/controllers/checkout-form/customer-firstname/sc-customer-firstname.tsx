@@ -82,22 +82,7 @@ export class ScCustomerFirstname {
 
   @Method()
   async reportValidity() {
-    if (!this.required) {
-      return await this.input?.reportValidity?.();
-    }
-    this.input?.setCustomValidity?.('');
-
-    if (!this.input?.value.trim().length) {
-      this.input.setCustomValidity(__('Field must not be empty.', 'surecart'));
-    }
-
-    const valid = await this.input?.reportValidity?.();
-
-    if (!valid) {
-      return false;
-    }
-
-    return valid;
+    return this.input.reportValidity();
   }
 
   /** Silently update the checkout when the input changes. */
@@ -159,6 +144,7 @@ export class ScCustomerFirstname {
         onScInput={() => this.scInput.emit()}
         onScFocus={() => this.scFocus.emit()}
         onScBlur={() => this.scBlur.emit()}
+        {...(this.disabled && { disabled: true })}
       ></sc-input>
     );
   }

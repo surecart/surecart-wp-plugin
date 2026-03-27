@@ -29,7 +29,7 @@
 		},
 		"free_trial_text": {
 			"type": "string",
-			"default": "Free Trial"
+			"default": "Trial"
 		}
 	}
 }

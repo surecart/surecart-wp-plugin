@@ -38,7 +38,6 @@ sc-dropdown {
   user-select: none;
   white-space: nowrap;
   vertical-align: middle;
-  padding: 0;
   transition: var(--sc-input-transition, var(--sc-transition-medium)) background-color, var(--sc-input-transition, var(--sc-transition-medium)) color,
     var(--sc-input-transition, var(--sc-transition-medium)) border, var(--sc-input-transition, var(--sc-transition-medium)) box-shadow;
   cursor: inherit;
@@ -47,7 +46,7 @@ sc-dropdown {
   min-height: var(--sc-input-height-medium);
   line-height: calc(var(--sc-input-height-medium) - var(--sc-input-border-width) * 2);
   border-radius: var(--sc-input-border-radius-medium);
-  padding: 0 var(--sc-spacing-small);
+  padding: 0 var(--sc-spacing-medium);
   svg {
     display: block;
     width: 1em;

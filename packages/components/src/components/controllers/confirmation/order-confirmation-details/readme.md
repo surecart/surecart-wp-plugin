@@ -45,21 +45,16 @@ graph TD;
   sc-order-confirmation-line-items --> sc-line-item
   sc-order-confirmation-line-items --> sc-skeleton
   sc-order-confirmation-line-items --> sc-product-line-item
-  sc-product-line-item --> sc-format-number
+  sc-product-line-item --> sc-product-line-item-note
   sc-product-line-item --> sc-quantity-select
+  sc-product-line-item --> sc-button
   sc-product-line-item --> sc-icon
-  sc-product-line-item --> sc-line-item
+  sc-product-line-item-note --> sc-icon
   sc-quantity-select --> sc-icon
+  sc-button --> sc-spinner
   sc-order-confirmation-totals --> sc-line-item
   sc-order-confirmation-totals --> sc-tag
-  sc-order-confirmation-totals --> sc-format-number
-  sc-order-confirmation-totals --> sc-line-item-total
   sc-order-confirmation-totals --> sc-divider
-  sc-line-item-total --> sc-line-item
-  sc-line-item-total --> sc-skeleton
-  sc-line-item-total --> sc-total
-  sc-line-item-total --> sc-format-number
-  sc-total --> sc-format-number
   style sc-order-confirmation-details fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

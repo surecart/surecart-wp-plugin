@@ -75,36 +75,36 @@ class SettingsRestServiceProvider extends RestServiceProvider implements RestSer
 				'id'         => [
 					'description' => esc_html__( 'Unique identifier for the object.', 'surecart' ),
 					'type'        => 'string',
-					'context'     => [ 'edit' ],
+					'context'     => [ 'view', 'edit', 'embed' ],
 					'readonly'    => true,
 				],
 				'object'     => [
 					'description' => esc_html__( 'Type of object (Settings)', 'surecart' ),
 					'type'        => 'string',
-					'context'     => [ 'view', 'edit' ],
+					'context'     => [ 'view', 'edit', 'embed' ],
 					'readonly'    => true,
 				],
 				'created_at' => [
 					'description' => esc_html__( 'Created at timestamp', 'surecart' ),
 					'type'        => 'integer',
-					'context'     => [ 'edit' ],
+					'context'     => [ 'view', 'edit', 'embed' ],
 					'readonly'    => true,
 				],
 				'updated_at' => [
 					'description' => esc_html__( 'Created at timestamp', 'surecart' ),
 					'type'        => 'integer',
-					'context'     => [ 'edit' ],
+					'context'     => [ 'view', 'edit', 'embed' ],
 					'readonly'    => true,
 				],
 				'name'       => [
 					'description' => esc_html__( 'The name of the account.', 'surecart' ),
 					'type'        => 'string',
-					'context'     => [ 'view', 'edit' ],
+					'context'     => [ 'view', 'edit', 'embed' ],
 				],
 				'currency'   => [
 					'description' => esc_html__( 'The default currency for the account.', 'surecart' ),
 					'type'        => 'string',
-					'context'     => [ 'view', 'edit' ],
+					'context'     => [ 'view', 'edit', 'embed' ],
 				],
 				'owner'      => [
 					'description' => esc_html__( 'Owner data.', 'surecart' ),

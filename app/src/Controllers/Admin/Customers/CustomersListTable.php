@@ -2,15 +2,57 @@
 
 namespace SureCart\Controllers\Admin\Customers;
 
-use SureCart\Models\Product;
 use SureCart\Models\Customer;
-use SureCart\Support\Currency;
-use SureCart\Support\TimeDate;
 use SureCart\Controllers\Admin\Tables\ListTable;
+use SureCart\Controllers\Admin\Tables\HasModeFilter;
+
 /**
  * Create a new table class that will extend the WP_List_Table
  */
 class CustomersListTable extends ListTable {
+	use HasModeFilter;
+
+	/**
+	 * The checkbox.
+	 *
+	 * @var bool
+	 */
+	public $checkbox = true;
+
+	/**
+	 * The error message.
+	 *
+	 * @var string
+	 */
+	public $error = '';
+
+	/**
+	 * The BulkActionService instance.
+	 *
+	 * @var \SureCart\Background\BulkActionService
+	 */
+	public $bulk_actions = null;
+
+	/**
+	 * Constructor.
+	 *
+	 * @param \SureCart\Background\BulkActionService $bulk_actions The BulkActionService instance.
+	 */
+	public function __construct( \SureCart\Background\BulkActionService $bulk_actions ) {
+		parent::__construct();
+
+		$this->bulk_actions = $bulk_actions;
+
+		add_action( 'admin_notices', [ $this, 'show_bulk_action_admin_notice' ] );
+	}
+
+	/**
+	 * Show bulk action admin notice.
+	 */
+	public function show_bulk_action_admin_notice() {
+		$this->bulk_actions->showBulkActionAdminNotice( 'delete_customers' );
+	}
+
 	/**
 	 * Prepare the items for the table to process
 	 *
@@ -25,6 +67,7 @@ class CustomersListTable extends ListTable {
 
 		$query = $this->table_data();
 		if ( is_wp_error( $query ) ) {
+			$this->error = $query->get_error_message();
 			$this->items = [];
 			return;
 		}
@@ -42,33 +85,37 @@ class CustomersListTable extends ListTable {
 	/**
 	 * Override the parent columns method. Defines the columns to use in your listing table
 	 *
-	 * @return Array
+	 * @return array
 	 */
 	public function get_columns() {
-		return [
-			'name'    => __( 'Name', 'surecart' ),
-			'email'   => __( 'Email', 'surecart' ),
-			'created' => __( 'Created', 'surecart' ),
-			'mode'    => '',
-		];
+		return array_merge(
+			[
+				'cb'      => '<input type="checkbox" />',
+				'name'    => __( 'Name', 'surecart' ),
+				'email'   => __( 'Email', 'surecart' ),
+				'created' => __( 'Created', 'surecart' ),
+				'mode'    => '',
+			],
+			parent::get_columns()
+		);
 	}
 
 	/**
 	 * Displays the checkbox column.
 	 *
-	 * @param Product $product The product model.
+	 * @param Customer $customer The customer model.
 	 */
-	public function column_cb( $product ) {
+	public function column_cb( $customer ) {
 		?>
-		<label class="screen-reader-text" for="cb-select-<?php echo esc_attr( $product['id'] ); ?>"><?php _e( 'Select comment', 'surecart' ); ?></label>
-		<input id="cb-select-<?php echo esc_attr( $product['id'] ); ?>" type="checkbox" name="delete_comments[]" value="<?php echo esc_attr( $product['id'] ); ?>" />
+		<label class="screen-reader-text" for="cb-select-<?php echo esc_attr( $customer['id'] ); ?>"><?php esc_html_e( 'Select customer', 'surecart' ); ?></label>
+		<input id="cb-select-<?php echo esc_attr( $customer['id'] ); ?>" type="checkbox" name="bulk_action_customer_ids[]" value="<?php echo esc_attr( $customer['id'] ); ?>" />
 			<?php
 	}
 
 	/**
 	 * Define which columns are hidden
 	 *
-	 * @return Array
+	 * @return array
 	 */
 	public function get_hidden_columns() {
 		return array();
@@ -77,7 +124,7 @@ class CustomersListTable extends ListTable {
 	/**
 	 * Define the sortable columns
 	 *
-	 * @return Array
+	 * @return array
 	 */
 	public function get_sortable_columns() {
 		return array( 'title' => array( 'title', false ) );
@@ -86,11 +133,19 @@ class CustomersListTable extends ListTable {
 	/**
 	 * Get the table data
 	 *
-	 * @return Object
+	 * @return object|\WP_Error
 	 */
 	private function table_data() {
-		return Customer::with( [ 'orders' ] )
-		->where( [ 'query' => $this->get_search_query() ] )
+		$mode       = sanitize_text_field( wp_unslash( $_GET['mode'] ?? '' ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$conditions = array(
+			'query' => $this->get_search_query(),
+		);
+
+		if ( ! empty( $mode ) ) {
+			$conditions['live_mode'] = 'live' === $mode;
+		}
+
+		return Customer::where( $conditions )
 		->paginate(
 			[
 				'per_page' => $this->get_items_per_page( 'customers' ),
@@ -105,18 +160,11 @@ class CustomersListTable extends ListTable {
 	 * @return void
 	 */
 	public function no_items() {
+		if ( $this->error ) {
+			echo esc_html( $this->error );
+			return;
+		}
 		echo esc_html_e( 'No customers found.', 'surecart' );
-	}
-
-	/**
-	 * Handle the orders column.
-	 *
-	 * @param \SureCart\Models\Customer $customer Customer model.
-	 *
-	 * @return string
-	 */
-	public function column_orders( $customer ) {
-		return __( 'No price', 'surecart' );
 	}
 
 	/**
@@ -138,18 +186,26 @@ class CustomersListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_name( $customer ) {
+		$pending_record_ids    = $this->bulk_actions->getRecordIds( 'delete_customers', 'pending' );
+		$processing_record_ids = $this->bulk_actions->getRecordIds( 'delete_customers', 'processing' );
+		$succeeded_record_ids  = $this->bulk_actions->getRecordIds( 'delete_customers', 'succeeded' );
+		$bulk_status           = '';
+		if ( ! empty( $pending_record_ids ) && in_array( $customer->id, $pending_record_ids, true ) ) {
+			$bulk_status = 'pending';
+		} elseif ( ! empty( $processing_record_ids ) && in_array( $customer->id, $processing_record_ids, true ) ) {
+			$bulk_status = 'processing';
+		} elseif ( ! empty( $succeeded_record_ids ) && in_array( $customer->id, $succeeded_record_ids, true ) ) {
+			$bulk_status = 'succeeded';
+		}
+
 		ob_start();
 		?>
-		<a class="row-title" aria-label="<?php echo esc_attr( 'Edit Customer', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'customers', $customer->id ) ); ?>">
+		<a class="row-title" aria-label="<?php esc_attr_e( 'Edit Customer', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'customers', $customer->id ) ); ?>">
 			<?php echo wp_kses_post( $customer->name ?? $customer->email ); ?>
 		</a>
 
 		<?php
-		echo $this->row_actions(
-			[
-				'edit' => '<a href="' . esc_url( \SureCart::getUrl()->edit( 'customers', $customer->id ) ) . '" aria-label="' . esc_attr( 'Edit Customer', 'surecart' ) . '">' . __( 'Edit', 'surecart' ) . '</a>',
-			],
-		);
+		echo wp_kses_post( $this->getRowActions( $customer, $bulk_status ) );
 		?>
 
 		<?php
@@ -157,40 +213,121 @@ class CustomersListTable extends ListTable {
 	}
 
 	/**
-	 * Toggle archive action link and text.
+	 * Get row actions.
 	 *
-	 * @param \SureCart\Models\Product $product Product model.
+	 * @param \SureCart\Models\Customer $customer Customer model.
+	 * @param string                    $bulk_status Bulk status.
+	 *
 	 * @return string
 	 */
-	public function action_toggle_archive( $product ) {
-		$text            = $product->archived ? __( 'Un-Archive', 'surecart' ) : __( 'Archive', 'surecart' );
-		$confirm_message = $product->archived ? __( 'Are you sure you want to restore this product? This will be be available to purchase.', 'surecart' ) : __( 'Are you sure you want to archive this product? This will be unavailable for purchase.', 'surecart' );
-		$link            = \SureCart::getUrl()->toggleArchive( 'product', $product->id );
+	public function getRowActions( $customer, $bulk_status ) {
+		if ( 'succeeded' === $bulk_status ) {
+			return '<div>' . esc_html__( 'Successfully deleted.', 'surecart' ) . '</div>';
+		}
 
-		return sprintf(
-			'<a class="submitdelete" onclick="return confirm(\'%1s\')" href="%2s" aria-label="%3s">%4s</a>',
-			esc_attr( $confirm_message ),
-			esc_url( $link ),
-			esc_attr__( 'Toggle Product Archive', 'surecart' ),
-			esc_html( $text )
+		if ( 'pending' === $bulk_status || 'processing' === $bulk_status ) {
+			return '<div>' . esc_html__( 'Queued for deletion.', 'surecart' ) . '</div>';
+		}
+
+		return $this->row_actions(
+			[
+				'edit' => '<a href="' . esc_url( \SureCart::getUrl()->edit( 'customers', $customer->id ) ) . '" aria-label="' . esc_attr__( 'Edit Customer', 'surecart' ) . '">' . __( 'Edit', 'surecart' ) . '</a>',
+			],
 		);
 	}
 
 	/**
 	 * Define what data to show on each column of the table
 	 *
-	 * @param \SureCart\Models\Product $product Product model.
-	 * @param String                   $column_name - Current column name.
+	 * @param Customer $customer Customer model.
+	 * @param string   $column_name - Current column name.
 	 *
-	 * @return Mixed
+	 * @return mixed
 	 */
-	public function column_default( $product, $column_name ) {
+	public function column_default( $customer, $column_name ) {
+		// Call the parent method to handle custom columns.
+		parent::column_default( $customer, $column_name );
+
 		switch ( $column_name ) {
-			case 'name':
-				return '<a href="' . \SureCart::getUrl()->edit( 'product', $product->id ) . '">' . $product->name . '</a>';
-			case 'name':
 			case 'description':
-				return $product->$column_name ?? '';
+				return $customer->$column_name ?? '';
 		}
+	}
+
+	/**
+	 * Displays extra table navigation.
+	 *
+	 * @param string $which Top or bottom placement.
+	 */
+	protected function extra_tablenav( $which ) {
+		?>
+		<input type="hidden" name="page" value="sc-customers" />
+
+		<div class="alignleft actions">
+		<?php
+		if ( 'top' === $which ) {
+			ob_start();
+			$this->mode_dropdown();
+
+			/**
+			 * Fires before the Filter button on the Posts and Pages list tables.
+			 *
+			 * The Filter button allows sorting by date and/or category on the
+			 * Posts list table, and sorting by date on the Pages list table.
+			 *
+			 * @since 2.1.0
+			 * @since 4.4.0 The `$post_type` parameter was added.
+			 * @since 4.6.0 The `$which` parameter was added.
+			 *
+			 * @param string $post_type The post type slug.
+			 * @param string $which     The location of the extra table nav markup:
+			 *                          'top' or 'bottom' for WP_Posts_List_Table,
+			 *                          'bar' for WP_Media_List_Table.
+			 */
+			do_action( 'restrict_manage_customers', $this->screen->post_type, $which );
+
+			$output = ob_get_clean();
+
+			if ( ! empty( $output ) ) {
+				echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				submit_button( __( 'Filter', 'surecart' ), '', 'filter_action', false, array( 'id' => 'filter-by-mode-submit' ) );
+			}
+		}
+
+		?>
+		</div>
+
+		<?php
+		/**
+		 * Fires immediately following the closing "actions" div in the tablenav
+		 * for the affiliate referrals list table.
+		 *
+		 * @param string $which The location of the extra table nav markup: 'top' or 'bottom'.
+		 */
+		do_action( 'manage_customers_extra_tablenav', $which );
+	}
+
+	/**
+	 * Get bulk actions.
+	 *
+	 * @return array
+	 */
+	protected function get_bulk_actions() {
+		$actions           = array();
+		$actions['delete'] = __( 'Delete permanently', 'surecart' );
+		return $actions;
+	}
+
+	/**
+	 * Gets the current action selected from the bulk actions dropdown.
+	 *
+	 * @return string|false The action name. False if no action was selected.
+	 */
+	public function current_action() {
+		if ( ! empty( $_REQUEST['delete_all'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			return 'delete_all';
+		}
+
+		return parent::current_action();
 	}
 }

@@ -10,13 +10,6 @@
 	\SureCart::render( 'layouts/partials/admin-index-styles' );
 	?>
 
-	<?php
-	\SureCart::render(
-		'layouts/partials/admin-index-header',
-		[ 'title' => __( 'Subscription Insights', 'surecart' ) ]
-	);
-	?>
-
 	<div id="app"></div>
 
 	<?php
@@ -29,5 +22,9 @@
 	?>
 
 	<?php $table->search_form( __( 'Search Subscriptions', 'surecart' ), 'sc-search-subscriptions' ); ?>
-	<?php $table->display(); ?>
+	<form id="posts-filter" method="get">
+		<?php $table->views(); ?>
+		<?php $table->display(); ?>
+		<div id="ajax-response"></div>
+	</form>
 </div>

@@ -1,0 +1,11 @@
+.wp-block-surecart-cart-line-item-quantity {
+	color: var(--sc-input-color);
+	&.sc-input-group {
+		border: none;
+		box-shadow: none;
+	}
+	&.sc-input-group-text,
+	input[type="number"].sc-form-control.sc-quantity-selector__control {
+		color: inherit;
+	}
+}

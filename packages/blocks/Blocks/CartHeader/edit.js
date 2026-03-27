@@ -35,8 +35,8 @@ export default ({ attributes, setAttributes }) => {
 			<div {...blockProps}>
 				<ScCartHeader>
 					<RichText
-						aria-label={__('Header Text')}
-						placeholder={__('Add a title…')}
+						aria-label={__('Header Text', 'surecart')}
+						placeholder={__('Add a title…', 'surecart')}
 						value={text}
 						onChange={(text) => setAttributes({ text })}
 						withoutInteractiveFormatting

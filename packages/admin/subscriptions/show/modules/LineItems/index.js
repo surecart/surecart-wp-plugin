@@ -3,7 +3,6 @@ import { intervalString } from '../../../../util/translations';
 import LineItem from './LineItem';
 import {
 	ScDivider,
-	ScFormatDate,
 	ScFormatNumber,
 	ScLineItem,
 	ScProductLineItem,
@@ -11,22 +10,11 @@ import {
 import { Fragment } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { formatTaxDisplay } from '../../../../util/tax';
-import { getFeaturedProductMediaAttributes } from '@surecart/components';
 import { getVariantLabel } from '../../../../util/variation';
 
 export default ({ period, loading }) => {
 	const checkout = period?.checkout;
 	const line_items = period?.checkout?.line_items?.data;
-
-	const getImageAttributes = (product) => {
-		const featuredMedia = getFeaturedProductMediaAttributes(product);
-
-		return {
-			imageUrl: featuredMedia?.url,
-			imageAlt: featuredMedia?.alt,
-			imageTitle: featuredMedia?.title,
-		};
-	};
 
 	return (
 		<Box
@@ -35,14 +23,7 @@ export default ({ period, loading }) => {
 			header_action={
 				!!period?.start_at && (
 					<div>
-						{__('Bills on', 'surecart')}{' '}
-						<ScFormatDate
-							type="timestamp"
-							date={period?.start_at}
-							month="short"
-							day="numeric"
-							year="numeric"
-						></ScFormatDate>
+						{__('Bills on', 'surecart')} {period?.start_at_date}
 					</div>
 				)
 			}
@@ -53,22 +34,20 @@ export default ({ period, loading }) => {
 						<>
 							<ScProductLineItem
 								key={item.id}
-								{...getImageAttributes(item?.price?.product)}
+								image={item?.image}
 								name={item?.price?.product?.name}
-								priceName={item?.price?.name}
+								price={item?.price?.name}
+								variant={item?.variant_display_options}
 								editable={false}
 								removable={false}
 								fees={item?.fees?.data}
 								quantity={item.quantity}
-								amount={item.subtotal_amount}
-								currency={item?.price?.currency}
-								trialDurationDays={
-									item?.price?.trial_duration_days
-								}
-								variantLabel={getVariantLabel(
-									item?.variant_options || []
-								)}
-								interval={intervalString(item?.price)}
+								amount={item.subtotal_display_amount}
+								scratch={item.scratch_display_amount}
+								trial={item?.price?.trial_text}
+								sku={item?.sku}
+								note={item?.display_note}
+								interval={`${item?.price?.short_interval_text} ${item?.price?.short_interval_count_text}`}
 							></ScProductLineItem>
 						</>
 					);

@@ -12,7 +12,7 @@ return [
 	<!-- /wp:paragraph -->
 
 	<!-- wp:surecart/order-confirmation-line-items -->
-	<sc-dashboard-module heading="Summary" class="wp-block-surecart-order-confirmation-line-items"><sc-card><sc-order-confirmation-line-items></sc-order-confirmation-line-items><sc-divider></sc-divider><sc-order-confirmation-totals></sc-order-confirmation-totals></sc-card></sc-dashboard-module>
+	<sc-dashboard-module heading="Summary" class="wp-block-surecart-order-confirmation-line-items"><sc-card><sc-order-confirmation-line-items></sc-order-confirmation-line-items><sc-order-confirmation-totals></sc-order-confirmation-totals></sc-card></sc-dashboard-module>
 	<!-- /wp:surecart/order-confirmation-line-items -->
 
 	<!-- wp:surecart/customer-dashboard-button {"label":"Manage Orders", "full": true} /--></sc-order-confirmation>

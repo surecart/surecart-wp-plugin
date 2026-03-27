@@ -9,15 +9,6 @@ export default ({ children }) => {
 		<Fragment>
 			<Global
 				styles={css`
-					:root {
-						--sc-color-primary-500: var(--sc-color-brand-primary);
-						--sc-focus-ring-color-primary: var(
-							--sc-color-brand-primary
-						);
-						--sc-input-border-color-focus: var(
-							--sc-color-brand-primary
-						);
-					}
 					#wpcontent {
 						margin: 0 !important;
 						padding: 0;

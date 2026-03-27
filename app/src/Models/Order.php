@@ -2,10 +2,18 @@
 
 namespace SureCart\Models;
 
+use SureCart\Models\Traits\CanResendNotifications;
+use SureCart\Models\Traits\HasCheckout;
+use SureCart\Models\Traits\HasDates;
+
 /**
  * Order model
  */
 class Order extends Model {
+	use HasCheckout;
+	use HasDates;
+	use CanResendNotifications;
+
 	/**
 	 * Rest API endpoint
 	 *
@@ -19,17 +27,6 @@ class Order extends Model {
 	 * @var string
 	 */
 	protected $object_name = 'order';
-
-
-	/**
-	 * Set the checkout attribute
-	 *
-	 * @param  object $value Checkout properties.
-	 * @return void
-	 */
-	public function setCheckoutAttribute( $value ) {
-		$this->setRelation( 'checkout', $value, Checkout::class );
-	}
 
 	/**
 	 * Get stats for the order.

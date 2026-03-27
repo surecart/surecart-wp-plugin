@@ -17,6 +17,7 @@ export const submitCartForm = async (productId: string) => {
       quantity: Math.max(productState.selectedPrice?.ad_hoc ? 1 : productState.quantity, 1),
       ...(productState.selectedPrice?.ad_hoc ? { ad_hoc_amount: productState.adHocAmount } : {}),
       variant: productState.selectedVariant?.id,
+      ...(productState.note ? { note: productState.note } : {}),
     });
     toggleCart(true);
     setProduct(productId, { dialog: null });
@@ -37,7 +38,7 @@ export const getProductBuyLink = (productId: string, url: string, query = {}) =>
 
   if (!productState) return;
   if (!productState.selectedPrice?.id) return;
-  if (productState.selectedPrice?.ad_hoc && !productState.adHocAmount) return;
+  if (productState.selectedPrice?.ad_hoc && !productState.adHocAmount && 0 !== productState.adHocAmount) return;
 
   return addQueryArgs(url, {
     line_items: [
@@ -46,6 +47,7 @@ export const getProductBuyLink = (productId: string, url: string, query = {}) =>
         quantity: Math.max(productState.selectedPrice?.ad_hoc ? 1 : productState.quantity, 1),
         ...(productState.selectedPrice?.ad_hoc ? { ad_hoc_amount: productState.adHocAmount } : {}),
         ...(productState.selectedVariant?.id ? { variant: productState.selectedVariant?.id } : {}),
+        ...(productState.note ? { note: productState.note } : {}),
       },
     ],
     ...query,

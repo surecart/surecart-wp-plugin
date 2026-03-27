@@ -6,12 +6,24 @@ import { ScPriceInput, ScSwitch } from '@surecart/components-react';
 
 export default ({ price, updatePrice }) => {
 	return (
-		<>
+		<div
+			css={css`
+				> *:not(:last-child) {
+					margin-bottom: var(--sc-spacing-medium);
+				}
+			`}
+		>
 			<ScSwitch
 				checked={price?.ad_hoc}
 				onScChange={(e) => updatePrice({ ad_hoc: e.target.checked })}
 			>
-				{__('Allow customers to pay what they want', 'surecart')}
+				{__('Pay what you want', 'surecart')}
+				<span slot="description">
+					{__(
+						'Allow customers to pay any amount they want, ideal for donations or perceived value they place on your cause or service.',
+						'surecart'
+					)}
+				</span>
 			</ScSwitch>
 
 			{!!price?.ad_hoc && (
@@ -24,14 +36,13 @@ export default ({ price, updatePrice }) => {
 						css={css`
 							display: flex;
 							gap: var(--sc-form-row-spacing);
-							margin-bottom: var(--sc-spacing-small);
 							> * {
 								flex: 1;
 							}
 						`}
 					>
 						<ScPriceInput
-							label={__('Minimum Price', 'surecart')}
+							label={__('Minimum price', 'surecart')}
 							className="sc-ad-hoc-min-amount"
 							currencyCode={
 								price?.currency || scData.currency_code
@@ -44,7 +55,7 @@ export default ({ price, updatePrice }) => {
 							}
 						/>
 						<ScPriceInput
-							label={__('Maximum Price', 'surecart')}
+							label={__('Maximum price', 'surecart')}
 							className="sc-ad-hoc-max-amount"
 							currencyCode={
 								price?.currency || scData.currency_code
@@ -60,6 +71,6 @@ export default ({ price, updatePrice }) => {
 					</div>
 				</div>
 			)}
-		</>
+		</div>
 	);
 };

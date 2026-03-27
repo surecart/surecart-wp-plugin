@@ -25,7 +25,6 @@ class Block extends ProductBlock {
 	 */
 	public function render( $attributes, $content ) {
 		global $content_width;
-
 		$product = $this->getProductAndSetInitialState( $attributes['id'] ?? '' );
 		if ( empty( $product ) ) {
 			return '';
@@ -65,8 +64,8 @@ class Block extends ProductBlock {
 				wp_json_encode( $images ),
 				wp_json_encode( $thumbnails ),
 				esc_attr( $attributes['thumbnails_per_page'] ?? 5 ),
-				esc_attr( ! empty( $attributes['auto_height'] ) ? 'true' : 'false' ),
-				esc_attr( ! empty( $attributes['auto_height'] ) ? 'auto' : ( esc_attr( $attributes['height'] ?? 'auto' ) ) )
+				esc_attr( wp_validate_boolean( $attributes['auto_height'] ) ? 'true' : 'false' ),
+				esc_attr( wp_validate_boolean( $attributes['auto_height'] ) ? 'auto' : ( esc_attr( $attributes['height'] ?? 'auto' ) ) )
 			);
 		}
 
@@ -77,8 +76,8 @@ class Block extends ProductBlock {
 			</figure>',
 			get_block_wrapper_attributes(),
 			esc_url( $product->product_medias->data[0]->getUrl( 800 ) ),
-			esc_attr( $product->featured_media->alt ),
-			esc_attr( $product->featured_media->title )
+			esc_attr( $product->featured_media->alt ?? '' ),
+			esc_attr( $product->featured_media->title ?? '' )
 		);
 	}
 
@@ -97,7 +96,7 @@ class Block extends ProductBlock {
 			function( $product_media ) use ( $product, $width ) {
 				$items = [
 					'src'    => esc_url( $product_media->getUrl( $width ) ),
-					'alt'    => esc_attr( $product_media->media->alt ?? $product_media->media->filename ?? $product->name ?? '' ),
+					'alt'    => esc_attr( $product_media->media->alt ?? esc_url( $product_media->media->filename ?? $product->name ?? '' ) ),
 					'title'  => $product_media->media->title ?? '',
 					'width'  => $product_media->width,
 					'height' => $product_media->height,

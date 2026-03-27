@@ -1,8 +1,19 @@
-import { ScOrderTaxIdInput } from '@surecart/components-react';
+/** @jsx jsx */
+import { css, jsx } from '@emotion/core';
 import { InspectorControls } from '@wordpress/block-editor';
-import { PanelBody, PanelRow, TextControl } from '@wordpress/components';
+import { PanelBody, PanelRow, TextControl, ToggleControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
-import { Fragment } from 'react';
+import { Fragment } from '@wordpress/element';
+
+/**
+ * Internal dependencies.
+ */
+import {
+	ScFormControl,
+	ScOrderTaxIdInput,
+	ScSelect,
+	ScTag,
+} from '@surecart/components-react';
 
 export default ({ attributes, setAttributes }) => {
 	const {
@@ -11,14 +22,40 @@ export default ({ attributes, setAttributes }) => {
 		au_abn_label,
 		gb_vat_label,
 		eu_vat_label,
+		help_text,
+		tax_id_types,
+		required,
 	} = attributes;
+
+	const zones = [
+		{ value: 'ca_gst', label: __('CA GST', 'surecart') },
+		{ value: 'au_abn', label: __('AU ABN', 'surecart') },
+		{ value: 'gb_vat', label: __('UK VAT', 'surecart') },
+		{ value: 'eu_vat', label: __('EU VAT', 'surecart') },
+		{ value: 'other', label: __('Other', 'surecart') },
+	];
 
 	return (
 		<Fragment>
 			<InspectorControls>
 				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
+						<ToggleControl
+							label={__('Required', 'surecart')}
+							checked={required}
+							onChange={(required) =>
+								setAttributes({ required })
+							}
+							help={__(
+								'Make this field required for all customers',
+								'surecart'
+							)}
+						/>
+					</PanelRow>
+					<PanelRow>
 						<TextControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							label={__('CA GST Label', 'surecart')}
 							value={ca_gst_label}
 							placeholder={__('GST Number', 'surecart')}
@@ -29,6 +66,8 @@ export default ({ attributes, setAttributes }) => {
 					</PanelRow>
 					<PanelRow>
 						<TextControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							label={__('AU ABN Label', 'surecart')}
 							value={au_abn_label}
 							placeholder={__('ABN Number', 'surecart')}
@@ -39,6 +78,8 @@ export default ({ attributes, setAttributes }) => {
 					</PanelRow>
 					<PanelRow>
 						<TextControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							label={__('UK VAT Label', 'surecart')}
 							value={gb_vat_label}
 							placeholder={__('UK VAT', 'surecart')}
@@ -49,6 +90,8 @@ export default ({ attributes, setAttributes }) => {
 					</PanelRow>
 					<PanelRow>
 						<TextControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							label={__('EU VAT Label', 'surecart')}
 							value={eu_vat_label}
 							placeholder={__('EU VAT', 'surecart')}
@@ -59,6 +102,8 @@ export default ({ attributes, setAttributes }) => {
 					</PanelRow>
 					<PanelRow>
 						<TextControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
 							label={__('Other Label', 'surecart')}
 							value={other_label}
 							placeholder={__('Tax ID', 'surecart')}
@@ -67,6 +112,90 @@ export default ({ attributes, setAttributes }) => {
 							}
 						/>
 					</PanelRow>
+					<PanelRow>
+						<TextControl
+							__next40pxDefaultSize
+							__nextHasNoMarginBottom
+							label={__('Help Text', 'surecart')}
+							value={help_text}
+							onChange={(help_text) =>
+								setAttributes({ help_text })
+							}
+						/>
+					</PanelRow>
+				</PanelBody>
+
+				<PanelBody title={__('Tax types', 'surecart')}>
+					<div
+						css={css`
+							display: grid;
+							gap: 0.5em;
+						`}
+					>
+						<ScFormControl
+							label={__('Limit tax types', 'surecart')}
+						>
+							{!!(tax_id_types || [])?.length && (
+								<div
+									css={css`
+										display: flex;
+										flex-wrap: wrap;
+										gap: 0.5em;
+										margin-top: 0.5em;
+									`}
+								>
+									{(tax_id_types || []).map((type) => (
+										<ScTag
+											key={type}
+											css={css`
+												margin-right: 0.5em;
+												margin-bottom: 0.5em;
+											`}
+											clearable
+											onScClear={() =>
+												setAttributes({
+													tax_id_types: (
+														tax_id_types || []
+													).filter(
+														(taxType) =>
+															taxType !== type
+													),
+												})
+											}
+										>
+											{
+												zones.find(
+													(zone) =>
+														zone.value === type
+												)?.label
+											}
+										</ScTag>
+									))}
+								</div>
+							)}
+						</ScFormControl>
+
+						<ScSelect
+							value={''}
+							onScChange={(e) => {
+								setAttributes({
+									tax_id_types: [
+										...(tax_id_types || []),
+										e.target.value,
+									],
+								});
+							}}
+							choices={
+								!!(tax_id_types || []).length
+									? zones.filter((zone) => {
+											return !tax_id_types.includes(
+												zone.value
+											);
+									  })
+									: zones
+							}
+						/>
+					</div>
 				</PanelBody>
 			</InspectorControls>
 			<ScOrderTaxIdInput
@@ -76,6 +205,9 @@ export default ({ attributes, setAttributes }) => {
 				auAbnLabel={au_abn_label || null}
 				gbVatLabel={gb_vat_label || null}
 				euVatLabel={eu_vat_label || null}
+				helpText={help_text || null}
+				taxIdTypes={JSON.stringify(tax_id_types)}
+				required={required || false}
 			></ScOrderTaxIdInput>
 		</Fragment>
 	);
