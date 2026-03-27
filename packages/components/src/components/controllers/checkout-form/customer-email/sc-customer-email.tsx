@@ -254,7 +254,7 @@ export class ScCustomerEmail {
         </div>
         <sc-dropdown placement="bottom-end">
           <sc-button type="text" slot="trigger" loading={this.logoutBusy}>
-            <sc-icon name="chevron-down" aria-label={__('Toggle dropdown', 'surecart')}></sc-icon>
+            <sc-icon name="chevron-down" aria-label={__('Account options', 'surecart')}></sc-icon>
           </sc-button>
           <sc-menu>
             <sc-menu-item onClick={() => this.logout()}>

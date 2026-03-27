@@ -2,37 +2,163 @@
 
 exports[`sc-customer-email Logged In Url Params Checkout email provided 1`] = `
 <sc-customer-email size="medium">
-  <mock:shadow-root></mock:shadow-root>
+  <mock:shadow-root>
+    <div class="email-preview">
+      <div class="email-preview__info">
+        <sc-avatar image="https://secure.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e?size=48&amp;default=404" initials=""></sc-avatar>
+        <div class="email-preview__text">
+          <div class="email-preview__name"></div>
+          <div class="email-preview__email"></div>
+        </div>
+      </div>
+      <sc-dropdown placement="bottom-end">
+        <sc-button slot="trigger" type="text">
+          <sc-icon aria-label="Account options" name="chevron-down"></sc-icon>
+        </sc-button>
+        <sc-menu>
+          <sc-menu-item>
+            <sc-icon name="log-out" slot="prefix"></sc-icon>
+            Logout
+          </sc-menu-item>
+        </sc-menu>
+      </sc-dropdown>
+    </div>
+  </mock:shadow-root>
 </sc-customer-email>
 `;
 
 exports[`sc-customer-email Logged In Url Params Customer and Checkout email provided 1`] = `
 <sc-customer-email size="medium">
-  <mock:shadow-root></mock:shadow-root>
+  <mock:shadow-root>
+    <div class="email-preview">
+      <div class="email-preview__info">
+        <sc-avatar image="https://secure.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e?size=48&amp;default=404" initials=""></sc-avatar>
+        <div class="email-preview__text">
+          <div class="email-preview__name"></div>
+          <div class="email-preview__email"></div>
+        </div>
+      </div>
+      <sc-dropdown placement="bottom-end">
+        <sc-button slot="trigger" type="text">
+          <sc-icon aria-label="Account options" name="chevron-down"></sc-icon>
+        </sc-button>
+        <sc-menu>
+          <sc-menu-item>
+            <sc-icon name="log-out" slot="prefix"></sc-icon>
+            Logout
+          </sc-menu-item>
+        </sc-menu>
+      </sc-dropdown>
+    </div>
+  </mock:shadow-root>
 </sc-customer-email>
 `;
 
 exports[`sc-customer-email Logged In Url Params Customer email provided 1`] = `
 <sc-customer-email size="medium">
-  <mock:shadow-root></mock:shadow-root>
+  <mock:shadow-root>
+    <div class="email-preview">
+      <div class="email-preview__info">
+        <sc-avatar image="https://secure.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e?size=48&amp;default=404" initials=""></sc-avatar>
+        <div class="email-preview__text">
+          <div class="email-preview__name"></div>
+          <div class="email-preview__email"></div>
+        </div>
+      </div>
+      <sc-dropdown placement="bottom-end">
+        <sc-button slot="trigger" type="text">
+          <sc-icon aria-label="Account options" name="chevron-down"></sc-icon>
+        </sc-button>
+        <sc-menu>
+          <sc-menu-item>
+            <sc-icon name="log-out" slot="prefix"></sc-icon>
+            Logout
+          </sc-menu-item>
+        </sc-menu>
+      </sc-dropdown>
+    </div>
+  </mock:shadow-root>
 </sc-customer-email>
 `;
 
 exports[`sc-customer-email Logged In Without Url Params Checkout email provided 1`] = `
 <sc-customer-email size="medium">
-  <mock:shadow-root></mock:shadow-root>
+  <mock:shadow-root>
+    <div class="email-preview">
+      <div class="email-preview__info">
+        <sc-avatar image="https://secure.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e?size=48&amp;default=404" initials=""></sc-avatar>
+        <div class="email-preview__text">
+          <div class="email-preview__name"></div>
+          <div class="email-preview__email"></div>
+        </div>
+      </div>
+      <sc-dropdown placement="bottom-end">
+        <sc-button slot="trigger" type="text">
+          <sc-icon aria-label="Account options" name="chevron-down"></sc-icon>
+        </sc-button>
+        <sc-menu>
+          <sc-menu-item>
+            <sc-icon name="log-out" slot="prefix"></sc-icon>
+            Logout
+          </sc-menu-item>
+        </sc-menu>
+      </sc-dropdown>
+    </div>
+  </mock:shadow-root>
 </sc-customer-email>
 `;
 
 exports[`sc-customer-email Logged In Without Url Params Customer and Checkout email provided 1`] = `
 <sc-customer-email size="medium">
-  <mock:shadow-root></mock:shadow-root>
+  <mock:shadow-root>
+    <div class="email-preview">
+      <div class="email-preview__info">
+        <sc-avatar image="https://secure.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e?size=48&amp;default=404" initials=""></sc-avatar>
+        <div class="email-preview__text">
+          <div class="email-preview__name"></div>
+          <div class="email-preview__email"></div>
+        </div>
+      </div>
+      <sc-dropdown placement="bottom-end">
+        <sc-button slot="trigger" type="text">
+          <sc-icon aria-label="Account options" name="chevron-down"></sc-icon>
+        </sc-button>
+        <sc-menu>
+          <sc-menu-item>
+            <sc-icon name="log-out" slot="prefix"></sc-icon>
+            Logout
+          </sc-menu-item>
+        </sc-menu>
+      </sc-dropdown>
+    </div>
+  </mock:shadow-root>
 </sc-customer-email>
 `;
 
 exports[`sc-customer-email Logged In Without Url Params Customer email provided 1`] = `
 <sc-customer-email size="medium">
-  <mock:shadow-root></mock:shadow-root>
+  <mock:shadow-root>
+    <div class="email-preview">
+      <div class="email-preview__info">
+        <sc-avatar image="https://secure.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e?size=48&amp;default=404" initials=""></sc-avatar>
+        <div class="email-preview__text">
+          <div class="email-preview__name"></div>
+          <div class="email-preview__email"></div>
+        </div>
+      </div>
+      <sc-dropdown placement="bottom-end">
+        <sc-button slot="trigger" type="text">
+          <sc-icon aria-label="Account options" name="chevron-down"></sc-icon>
+        </sc-button>
+        <sc-menu>
+          <sc-menu-item>
+            <sc-icon name="log-out" slot="prefix"></sc-icon>
+            Logout
+          </sc-menu-item>
+        </sc-menu>
+      </sc-dropdown>
+    </div>
+  </mock:shadow-root>
 </sc-customer-email>
 `;
 

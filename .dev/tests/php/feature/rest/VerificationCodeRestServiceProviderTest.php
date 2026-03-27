@@ -54,6 +54,86 @@ class VerificationCodeRestServiceProviderTest extends SureCartUnitTestCase {
 		$this->assertTrue(is_user_logged_in(), 'User is not logged in when verifying a code.');
 	}
 
+	/**
+	 * @group login
+	 */
+	public function test_verify_success_returns_nonce() {
+		$requests = \Mockery::mock(RequestService::class);
+		\SureCart::alias('request', function () use ($requests) {
+			return call_user_func_array([$requests, 'makeRequest'], func_get_args());
+		});
+		$requests->shouldReceive('makeRequest')->once()->andReturn((object) ['verified' => true]);
+
+		$request = new \WP_REST_Request('POST', '/surecart/v1/verification_codes/verify');
+		$request->set_body_params([
+			'login' => self::factory()->user->create_and_get()->user_email,
+			'code'  => 'test_code',
+		]);
+		$response = rest_do_request( $request );
+		$this->assertSame(200, $response->get_status());
+		$data = $response->get_data();
+		$this->assertArrayHasKey('nonce', $data, 'Verify response should include a nonce.');
+		$this->assertNotEmpty($data['nonce'], 'Nonce should not be empty.');
+	}
+
+	/**
+	 * @group login
+	 */
+	public function test_verify_success_returns_name() {
+		$user = self::factory()->user->create_and_get([
+			'display_name' => 'Test Display Name',
+		]);
+
+		$requests = \Mockery::mock(RequestService::class);
+		\SureCart::alias('request', function () use ($requests) {
+			return call_user_func_array([$requests, 'makeRequest'], func_get_args());
+		});
+		$requests->shouldReceive('makeRequest')->once()->andReturn((object) ['verified' => true]);
+
+		$request = new \WP_REST_Request('POST', '/surecart/v1/verification_codes/verify');
+		$request->set_body_params([
+			'login' => $user->user_email,
+			'code'  => 'test_code',
+		]);
+		$response = rest_do_request( $request );
+		$this->assertSame(200, $response->get_status());
+		$data = $response->get_data();
+		$this->assertArrayHasKey('name', $data, 'Verify response should include a name.');
+		$this->assertSame('Test Display Name', $data['name']);
+	}
+
+	/**
+	 * @group login
+	 */
+	public function test_verify_success_returns_customer_fallback_data() {
+		$user = self::factory()->user->create_and_get([
+			'display_name' => 'Fallback Name',
+		]);
+
+		// Mock request for verify call — no customer linked, so customer() returns false.
+		$requests = \Mockery::mock(RequestService::class);
+		\SureCart::alias('request', function () use ($requests) {
+			return call_user_func_array([$requests, 'makeRequest'], func_get_args());
+		});
+		$requests->shouldReceive('makeRequest')->once()->andReturn((object) ['verified' => true]);
+
+		$request = new \WP_REST_Request('POST', '/surecart/v1/verification_codes/verify');
+		$request->set_body_params([
+			'login' => $user->user_email,
+			'code'  => 'test_code',
+		]);
+		$response = rest_do_request( $request );
+		$this->assertSame(200, $response->get_status());
+		$data = $response->get_data();
+
+		// No customer linked, so fallback values should be returned.
+		$this->assertArrayHasKey('customer', $data, 'Verify response should include customer data.');
+		$this->assertSame('Fallback Name', $data['customer']['first_name'], 'Should fallback to display_name when no customer.');
+		$this->assertSame('', $data['customer']['last_name']);
+		$this->assertSame('', $data['customer']['phone']);
+		$this->assertEmpty($data['customer']['shipping_address']);
+	}
+
 	public function test_verify_failure() {
 		// mock the requests in the container
 		$requests =  \Mockery::mock(RequestService::class);
@@ -118,6 +198,114 @@ class VerificationCodeRestServiceProviderTest extends SureCartUnitTestCase {
 		$data = $response->get_data();
 		// wp_validate_redirect returns false for external URLs, which is then set to null or false.
 		$this->assertEmpty($data['redirect_url'], 'Redirect URL should be empty/false for external URLs.');
+	}
+
+	/**
+	 * @group login
+	 */
+	public function test_create_rejects_unknown_email() {
+		$request = new \WP_REST_Request('POST', '/surecart/v1/verification_codes');
+		$request->set_body_params([
+			'login' => 'nonexistent@example.com',
+		]);
+		$response = rest_do_request( $request );
+		$this->assertTrue($response->is_error(), 'Should reject unknown email.');
+		$this->assertSame('invalid_email', $response->as_error()->get_error_code());
+	}
+
+	/**
+	 * @group login
+	 */
+	public function test_create_rejects_unknown_username() {
+		$request = new \WP_REST_Request('POST', '/surecart/v1/verification_codes');
+		$request->set_body_params([
+			'login' => 'nonexistentuser',
+		]);
+		$response = rest_do_request( $request );
+		$this->assertTrue($response->is_error(), 'Should reject unknown username.');
+		$this->assertSame('invalid_username', $response->as_error()->get_error_code());
+	}
+
+	/**
+	 * @group login
+	 */
+	public function test_create_accepts_valid_user() {
+		$requests = \Mockery::mock(RequestService::class);
+		\SureCart::alias('request', function () use ($requests) {
+			return call_user_func_array([$requests, 'makeRequest'], func_get_args());
+		});
+		$requests->shouldReceive('makeRequest')->once()->andReturn((object) ['id' => 'vc_123']);
+
+		$user = self::factory()->user->create_and_get();
+		$request = new \WP_REST_Request('POST', '/surecart/v1/verification_codes');
+		$request->set_body_params([
+			'login' => $user->user_email,
+		]);
+		$response = rest_do_request( $request );
+		$this->assertSame(200, $response->get_status(), 'Should create verification code for valid user.');
+	}
+
+	/**
+	 * @group login
+	 */
+	public function test_verify_returns_404_for_unknown_user() {
+		$requests = \Mockery::mock(RequestService::class);
+		\SureCart::alias('request', function () use ($requests) {
+			return call_user_func_array([$requests, 'makeRequest'], func_get_args());
+		});
+		$requests->shouldReceive('makeRequest')->andReturn((object) ['verified' => true]);
+
+		$request = new \WP_REST_Request('POST', '/surecart/v1/verification_codes/verify');
+		$request->set_body_params([
+			'login' => 'nonexistent@example.com',
+			'code'  => 'test_code',
+		]);
+		$response = rest_do_request( $request );
+		$this->assertSame(404, $response->get_status(), 'Should return 404 for unknown user.');
+		$this->assertSame('invalid_email', $response->as_error()->get_error_code());
+	}
+
+	/**
+	 * @group login
+	 */
+	public function test_verify_failure_returns_400() {
+		$requests = \Mockery::mock(RequestService::class);
+		\SureCart::alias('request', function () use ($requests) {
+			return call_user_func_array([$requests, 'makeRequest'], func_get_args());
+		});
+		$requests->shouldReceive('makeRequest')->once()->andReturn((object) ['verified' => false]);
+
+		$request = new \WP_REST_Request('POST', '/surecart/v1/verification_codes/verify');
+		$request->set_body_params([
+			'login' => self::factory()->user->create_and_get()->user_email,
+			'code'  => 'wrong_code',
+		]);
+		$response = rest_do_request( $request );
+		$this->assertSame(400, $response->get_status(), 'Invalid code should return 400.');
+		$this->assertSame('invalid_code', $response->as_error()->get_error_code());
+	}
+
+	/**
+	 * @group login
+	 */
+	public function test_verify_with_login_username() {
+		$user = self::factory()->user->create_and_get([
+			'user_login' => 'verifyuser',
+		]);
+
+		$requests = \Mockery::mock(RequestService::class);
+		\SureCart::alias('request', function () use ($requests) {
+			return call_user_func_array([$requests, 'makeRequest'], func_get_args());
+		});
+		$requests->shouldReceive('makeRequest')->once()->andReturn((object) ['verified' => true]);
+
+		$request = new \WP_REST_Request('POST', '/surecart/v1/verification_codes/verify');
+		$request->set_body_params([
+			'login' => 'verifyuser',
+			'code'  => 'test_code',
+		]);
+		$response = rest_do_request( $request );
+		$this->assertSame(200, $response->get_status(), 'Should accept username as login parameter.');
 	}
 
 	/**
