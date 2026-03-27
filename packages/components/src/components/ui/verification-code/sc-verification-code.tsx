@@ -1,13 +1,13 @@
 /**
  * External dependencies.
  */
-import { Component, h, Element, Prop, State, Listen, Watch } from '@stencil/core';
+import { Component, h, Element, Prop, State, Watch } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies.
  */
-import { state as userState } from '@store/user';
+import { state as userState, onChange as onUserChange } from '@store/user';
 import { MATCHED, VERIFYING } from '@store/user/constants';
 
 @Component({
@@ -29,7 +29,6 @@ export class ScVerificationCode {
   /** On change verification code */
   @Prop() onChange: (value: string) => void;
 
-  @Listen('keydown')
   handleKeyDown(e: KeyboardEvent, index: number) {
     if ((e.key === 'Backspace' || e.key === 'Delete') && index > 0) {
       e.preventDefault();
@@ -44,8 +43,9 @@ export class ScVerificationCode {
     const target = e.target as HTMLInputElement;
     let value = target.value;
 
-    // If value is greater than 1, then put all of the characters to the input one by one.
+    // If value is greater than 1, then put all of the characters to the input one by one (e.g. paste).
     if (value.length > 1) {
+      const newCodes = [...this.codes];
       for (let i = 0; i < this.total - index; i++) {
         const input = this.getElementByIndex(index + i);
 
@@ -53,8 +53,9 @@ export class ScVerificationCode {
         input.blur();
 
         input.value = value[i];
-        this.codes[index + i] = value[i];
+        newCodes[index + i] = value[i];
       }
+      this.codes = newCodes;
 
       // Update the index to the last character to be able to continue typing.
       index = index + value.length - 1;
@@ -64,7 +65,7 @@ export class ScVerificationCode {
     }
 
     if (index < this.codes.length) {
-      this.codes[index] = value;
+      this.codes = [...this.codes.slice(0, index), value, ...this.codes.slice(index + 1)];
     }
 
     if (index < this.codes.length - 1 && value.length > 0) {
@@ -112,8 +113,24 @@ export class ScVerificationCode {
     this.getElementByIndex(0)?.focus();
   }
 
+  private removeUserListener: () => void;
+
+  componentWillLoad() {
+    this.removeUserListener = onUserChange('verificationStatus', val => {
+      this.verificationStatus = val;
+    });
+  }
+
+  disconnectedCallback() {
+    this.removeUserListener?.();
+  }
+
   @Watch('verificationStatus')
   resetAfterCodeWatches() {
+    if (this.verificationStatus === MATCHED) {
+      this.reset();
+      return;
+    }
     this.getElementByIndex(0)?.focus();
   }
 
@@ -133,13 +150,9 @@ export class ScVerificationCode {
   };
 
   render() {
-    if (userState.verificationStatus === MATCHED) {
-      this.verificationStatus = userState.verificationStatus;
-      this.reset();
-    }
-
     return (
       <div class="sc-verification-code">
+        {/* Hidden inputs to prevent browser autofill from targeting verification code fields */}
         {this.renderDummyInput()}
         {this.renderDummyInput()}
         {Array.from({ length: this.total }).map((_, index) => (

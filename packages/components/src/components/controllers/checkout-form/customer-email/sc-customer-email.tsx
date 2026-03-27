@@ -109,7 +109,19 @@ export class ScCustomerEmail {
     }
   }
 
+  private loginCodeDebounce: number;
+
   @Watch('value')
+  handleValueChange() {
+    if (this.loginCodeDebounce) {
+      clearTimeout(this.loginCodeDebounce);
+    }
+    this.loginCodeDebounce = window.setTimeout(() => {
+      this.createLoginCode();
+      this.loginCodeDebounce = null;
+    }, 800);
+  }
+
   async createLoginCode() {
     if (!this.value) return;
     if (userState.loggedIn) return;
@@ -187,9 +199,9 @@ export class ScCustomerEmail {
       if (e?.code === 'verification_code.email.blocked_duplicate') {
         userState.email = this.input?.value || '';
         userState.verificationStatus = MATCHED;
+      } else {
+        this.error = e?.message || __('Verification code is not valid. Please try again.', 'surecart');
       }
-
-      this.error = e?.message || __('Verification code is not valid. Please try again.', 'surecart');
     });
   }
 
@@ -256,7 +268,6 @@ export class ScCustomerEmail {
           onScChange={() => this.handleChange()}
           onScInput={() => {
             this.scInput.emit();
-            this.createLoginCode();
           }}
           onScFocus={() => this.scFocus.emit()}
           onScBlur={() => this.scBlur.emit()}
