@@ -1,14 +1,8 @@
 /**
  * External dependencies.
  */
-import { Component, h, Element, Prop, State, Watch } from '@stencil/core';
+import { Component, h, Element, Prop, State } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
-
-/**
- * Internal dependencies.
- */
-import { state as userState, onChange as onUserChange } from '@store/user';
-import { CODE_SENT, VERIFYING } from '@store/user/constants';
 
 @Component({
   tag: 'sc-verification-code',
@@ -23,8 +17,8 @@ export class ScVerificationCode {
   /** The verification codes */
   @State() codes: string[] = Array(this.total).fill('');
 
-  /** Verification status */
-  @State() verificationStatus: string = userState.verificationStatus;
+  /** Whether the component is in a loading/verifying state */
+  @Prop() loading: boolean = false;
 
   /** On change verification code */
   @Prop() onChange: (value: string) => void;
@@ -114,27 +108,6 @@ export class ScVerificationCode {
     this.getElementByIndex(0)?.focus();
   }
 
-  private removeUserListener: () => void;
-
-  componentWillLoad() {
-    this.removeUserListener = onUserChange('verificationStatus', val => {
-      this.verificationStatus = val;
-    });
-  }
-
-  disconnectedCallback() {
-    this.removeUserListener?.();
-  }
-
-  @Watch('verificationStatus')
-  resetAfterCodeWatches() {
-    if (this.verificationStatus === CODE_SENT) {
-      this.reset();
-      return;
-    }
-    this.getElementByIndex(0)?.focus();
-  }
-
   renderDummyInput() {
     return (
       <input
@@ -175,7 +148,7 @@ export class ScVerificationCode {
           type="text"
           style={{ display: 'inline-block', cursor: 'help', height: '36px', visibility: this.filledAllInputs() ? 'visible' : 'hidden' }}
         >
-          <sc-button type="text" onClick={() => this.reset()} loading={userState.verificationStatus === VERIFYING}>
+          <sc-button type="text" onClick={() => this.reset()} loading={this.loading}>
             <sc-icon name="x-circle" />
           </sc-button>
         </sc-tooltip>
