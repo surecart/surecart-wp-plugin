@@ -498,12 +498,6 @@
     "class": true,
     "slot": true
   },
-  "sc-customer-email-preview": {
-    "style": true,
-    "id": true,
-    "class": true,
-    "slot": true
-  },
   "sc-customer-firstname": {
     "autofocus": true,
     "disabled": true,
@@ -2489,6 +2483,7 @@
     "slot": true
   },
   "sc-verification-code": {
+    "loading": true,
     "on-change": true,
     "total": true,
     "style": true,

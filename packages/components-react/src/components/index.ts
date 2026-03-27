@@ -55,7 +55,6 @@ export const ScCustomOrderPriceInput = /*@__PURE__*/createReactComponent<JSX.ScC
 export const ScCustomerDetails = /*@__PURE__*/createReactComponent<JSX.ScCustomerDetails, HTMLScCustomerDetailsElement>('sc-customer-details');
 export const ScCustomerEdit = /*@__PURE__*/createReactComponent<JSX.ScCustomerEdit, HTMLScCustomerEditElement>('sc-customer-edit');
 export const ScCustomerEmail = /*@__PURE__*/createReactComponent<JSX.ScCustomerEmail, HTMLScCustomerEmailElement>('sc-customer-email');
-export const ScCustomerEmailPreview = /*@__PURE__*/createReactComponent<JSX.ScCustomerEmailPreview, HTMLScCustomerEmailPreviewElement>('sc-customer-email-preview');
 export const ScCustomerFirstname = /*@__PURE__*/createReactComponent<JSX.ScCustomerFirstname, HTMLScCustomerFirstnameElement>('sc-customer-firstname');
 export const ScCustomerLastname = /*@__PURE__*/createReactComponent<JSX.ScCustomerLastname, HTMLScCustomerLastnameElement>('sc-customer-lastname');
 export const ScCustomerLogin = /*@__PURE__*/createReactComponent<JSX.ScCustomerLogin, HTMLScCustomerLoginElement>('sc-customer-login');

@@ -943,8 +943,6 @@ export namespace Components {
          */
         "value": string;
     }
-    interface ScCustomerEmailPreview {
-    }
     interface ScCustomerFirstname {
         /**
           * The input's autofocus attribute.
@@ -4244,6 +4242,10 @@ export namespace Components {
     }
     interface ScVerificationCode {
         /**
+          * Whether the component is in a loading/verifying state
+         */
+        "loading": boolean;
+        /**
           * On change verification code
          */
         "onChange": (value: string) => void;
@@ -5073,12 +5075,6 @@ declare global {
     var HTMLScCustomerEmailElement: {
         prototype: HTMLScCustomerEmailElement;
         new (): HTMLScCustomerEmailElement;
-    };
-    interface HTMLScCustomerEmailPreviewElement extends Components.ScCustomerEmailPreview, HTMLStencilElement {
-    }
-    var HTMLScCustomerEmailPreviewElement: {
-        prototype: HTMLScCustomerEmailPreviewElement;
-        new (): HTMLScCustomerEmailPreviewElement;
     };
     interface HTMLScCustomerFirstnameElementEventMap {
         "scChange": void;
@@ -6922,7 +6918,6 @@ declare global {
         "sc-customer-details": HTMLScCustomerDetailsElement;
         "sc-customer-edit": HTMLScCustomerEditElement;
         "sc-customer-email": HTMLScCustomerEmailElement;
-        "sc-customer-email-preview": HTMLScCustomerEmailPreviewElement;
         "sc-customer-firstname": HTMLScCustomerFirstnameElement;
         "sc-customer-lastname": HTMLScCustomerLastnameElement;
         "sc-customer-login": HTMLScCustomerLoginElement;
@@ -8117,8 +8112,6 @@ declare namespace LocalJSX {
           * The input's value attribute.
          */
         "value"?: string;
-    }
-    interface ScCustomerEmailPreview {
     }
     interface ScCustomerFirstname {
         /**
@@ -11719,6 +11712,10 @@ declare namespace LocalJSX {
     }
     interface ScVerificationCode {
         /**
+          * Whether the component is in a loading/verifying state
+         */
+        "loading"?: boolean;
+        /**
           * On change verification code
          */
         "onChange"?: (value: string) => void;
@@ -11795,7 +11792,6 @@ declare namespace LocalJSX {
         "sc-customer-details": ScCustomerDetails;
         "sc-customer-edit": ScCustomerEdit;
         "sc-customer-email": ScCustomerEmail;
-        "sc-customer-email-preview": ScCustomerEmailPreview;
         "sc-customer-firstname": ScCustomerFirstname;
         "sc-customer-lastname": ScCustomerLastname;
         "sc-customer-login": ScCustomerLogin;
@@ -12049,7 +12045,6 @@ declare module "@stencil/core" {
             "sc-customer-details": LocalJSX.ScCustomerDetails & JSXBase.HTMLAttributes<HTMLScCustomerDetailsElement>;
             "sc-customer-edit": LocalJSX.ScCustomerEdit & JSXBase.HTMLAttributes<HTMLScCustomerEditElement>;
             "sc-customer-email": LocalJSX.ScCustomerEmail & JSXBase.HTMLAttributes<HTMLScCustomerEmailElement>;
-            "sc-customer-email-preview": LocalJSX.ScCustomerEmailPreview & JSXBase.HTMLAttributes<HTMLScCustomerEmailPreviewElement>;
             "sc-customer-firstname": LocalJSX.ScCustomerFirstname & JSXBase.HTMLAttributes<HTMLScCustomerFirstnameElement>;
             "sc-customer-lastname": LocalJSX.ScCustomerLastname & JSXBase.HTMLAttributes<HTMLScCustomerLastnameElement>;
             "sc-customer-login": LocalJSX.ScCustomerLogin & JSXBase.HTMLAttributes<HTMLScCustomerLoginElement>;
