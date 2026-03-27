@@ -2,6 +2,7 @@
 
 <!-- Auto Generated Below -->
 
+
 ## Properties
 
 | Property    | Attribute   | Description                                                                                            | Type                                                                                         | Default     |
@@ -24,12 +25,14 @@
 | `type`      | `type`      | The button's type.                                                                                     | `"danger" \| "default" \| "info" \| "link" \| "primary" \| "success" \| "text" \| "warning"` | `'default'` |
 | `value`     | `value`     | An optional value for the button. Ignored when `href` is set.                                          | `string`                                                                                     | `undefined` |
 
+
 ## Events
 
 | Event     | Description                          | Type                |
 | --------- | ------------------------------------ | ------------------- |
 | `scBlur`  | Emitted when the button loses focus. | `CustomEvent<void>` |
 | `scFocus` | Emitted when the button gains focus. | `CustomEvent<void>` |
+
 
 ## Shadow Parts
 
@@ -42,73 +45,74 @@
 | `"spinner"` | The button spinner.        |
 | `"suffix"`  | The button suffix.         |
 
+
 ## Dependencies
 
 ### Used by
 
-- [sc-cancel-dialog](../../controllers/dashboard/sc-cancel-dialog)
-- [sc-cancel-discount](../../controllers/dashboard/sc-cancel-discount)
-- [sc-cancel-survey](../../controllers/dashboard/sc-cancel-survey)
-- [sc-cart-form-submit](../../controllers/cart/cart-form-submit)
-- [sc-charges-list](../../controllers/dashboard/charges-list)
-- [sc-checkout-stock-alert](../../controllers/checkout-form/checkout/checkout-stock-alert)
-- [sc-checkout-test-complete](../../controllers/checkout-form/checkout-test-complete)
-- [sc-coupon-form](../coupon-form)
-- [sc-customer-details](../customer-details)
-- [sc-customer-edit](../../controllers/dashboard/customer-edit)
-- [sc-customer-email-preview](../../controllers/checkout-form/customer-email-preview)
-- [sc-customer-login](../../controllers/checkout-form/customer-login)
-- [sc-dialog](../sc-dialog)
-- [sc-donation-choices](../../controllers/checkout-form/donation-choices)
-- [sc-downloads-list](../../controllers/dashboard/sc-downloads-list)
-- [sc-invoices-list](../../controllers/dashboard/invoices-list)
-- [sc-license](../../controllers/dashboard/sc-license)
-- [sc-licenses-list](../../controllers/dashboard/sc-licenses-list)
-- [sc-login-form](../../controllers/login)
-- [sc-login-provider](../../providers/sc-login-provider)
-- [sc-mollie-add-method](../sc-mollie-add-method)
-- [sc-order](../../controllers/dashboard/order)
-- [sc-order-confirm-provider](../../providers/order-confirm-provider)
-- [sc-order-submit](../../controllers/checkout-form/order-submit)
-- [sc-orders-list](../../controllers/dashboard/orders-list)
-- [sc-pagination](../pagination)
-- [sc-password-nag](../../controllers/dashboard/sc-password-nag)
-- [sc-payment-method](../sc-payment-method)
-- [sc-payment-method-details](../sc-payment-method-details)
-- [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
-- [sc-paystack-add-method](../sc-paystack-add-method)
-- [sc-product-item-list](../../controllers/products/sc-product-item-list)
-- [sc-product-line-item](../product-line-item)
-- [sc-product-price-modal](../../controllers/product/sc-product-price-modal)
-- [sc-product-selected-price](../../controllers/checkout-form/sc-product-selected-price)
-- [sc-purchase-downloads-list](../purchase-downloads-list)
-- [sc-razorpay-add-method](../sc-razorpay-add-method)
-- [sc-rich-text](../rich-text)
-- [sc-stripe-add-method](../sc-stripe-add-method)
-- [sc-subscription](../../controllers/dashboard/subscription)
-- [sc-subscription-ad-hoc-confirm](../../controllers/dashboard/subscription-ad-hoc-confirm)
-- [sc-subscription-cancel](../../controllers/dashboard/subscription-cancel)
-- [sc-subscription-payment](../../controllers/dashboard/subscription-payment)
-- [sc-subscription-payment-method](../../controllers/dashboard/sc-subscription-payment-method)
-- [sc-subscription-reactivate](../../controllers/dashboard/subscription-reactivate)
-- [sc-subscription-switch](../../controllers/dashboard/subscription-switch)
-- [sc-subscription-variation-confirm](../../controllers/dashboard/subscription-variation-confirm)
-- [sc-subscriptions-list](../../controllers/dashboard/subscriptions-list)
-- [sc-tax-id-input](../tax-id-input)
-- [sc-test-mode-info](../test-mode-info)
-- [sc-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
-- [sc-upgrade-required](../sc-upgrade-required)
-- [sc-upsell](../../controllers/upsell/sc-upsell)
-- [sc-wordpress-password-edit](../../controllers/dashboard/wordpress-password-edit)
-- [sc-wordpress-user](../../controllers/dashboard/wordpress-user)
-- [sc-wordpress-user-edit](../../controllers/dashboard/wordpress-user-edit)
+ - [sc-cancel-dialog](../../controllers/dashboard/sc-cancel-dialog)
+ - [sc-cancel-discount](../../controllers/dashboard/sc-cancel-discount)
+ - [sc-cancel-survey](../../controllers/dashboard/sc-cancel-survey)
+ - [sc-cart-form-submit](../../controllers/cart/cart-form-submit)
+ - [sc-charges-list](../../controllers/dashboard/charges-list)
+ - [sc-checkout-stock-alert](../../controllers/checkout-form/checkout/checkout-stock-alert)
+ - [sc-checkout-test-complete](../../controllers/checkout-form/checkout-test-complete)
+ - [sc-coupon-form](../coupon-form)
+ - [sc-customer-details](../customer-details)
+ - [sc-customer-edit](../../controllers/dashboard/customer-edit)
+ - [sc-customer-email-preview](../../controllers/checkout-form/customer-email-preview)
+ - [sc-customer-login](../../controllers/checkout-form/customer-login)
+ - [sc-dialog](../sc-dialog)
+ - [sc-donation-choices](../../controllers/checkout-form/donation-choices)
+ - [sc-downloads-list](../../controllers/dashboard/sc-downloads-list)
+ - [sc-invoices-list](../../controllers/dashboard/invoices-list)
+ - [sc-license](../../controllers/dashboard/sc-license)
+ - [sc-licenses-list](../../controllers/dashboard/sc-licenses-list)
+ - [sc-login-form](../../controllers/login)
+ - [sc-login-provider](../../providers/sc-login-provider)
+ - [sc-mollie-add-method](../sc-mollie-add-method)
+ - [sc-order](../../controllers/dashboard/order)
+ - [sc-order-confirm-provider](../../providers/order-confirm-provider)
+ - [sc-order-submit](../../controllers/checkout-form/order-submit)
+ - [sc-orders-list](../../controllers/dashboard/orders-list)
+ - [sc-pagination](../pagination)
+ - [sc-password-nag](../../controllers/dashboard/sc-password-nag)
+ - [sc-payment-method](../sc-payment-method)
+ - [sc-payment-method-details](../sc-payment-method-details)
+ - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
+ - [sc-paystack-add-method](../sc-paystack-add-method)
+ - [sc-product-item-list](../../controllers/products/sc-product-item-list)
+ - [sc-product-line-item](../product-line-item)
+ - [sc-product-price-modal](../../controllers/product/sc-product-price-modal)
+ - [sc-product-selected-price](../../controllers/checkout-form/sc-product-selected-price)
+ - [sc-purchase-downloads-list](../purchase-downloads-list)
+ - [sc-razorpay-add-method](../sc-razorpay-add-method)
+ - [sc-rich-text](../rich-text)
+ - [sc-stripe-add-method](../sc-stripe-add-method)
+ - [sc-subscription](../../controllers/dashboard/subscription)
+ - [sc-subscription-ad-hoc-confirm](../../controllers/dashboard/subscription-ad-hoc-confirm)
+ - [sc-subscription-cancel](../../controllers/dashboard/subscription-cancel)
+ - [sc-subscription-payment](../../controllers/dashboard/subscription-payment)
+ - [sc-subscription-payment-method](../../controllers/dashboard/sc-subscription-payment-method)
+ - [sc-subscription-reactivate](../../controllers/dashboard/subscription-reactivate)
+ - [sc-subscription-switch](../../controllers/dashboard/subscription-switch)
+ - [sc-subscription-variation-confirm](../../controllers/dashboard/subscription-variation-confirm)
+ - [sc-subscriptions-list](../../controllers/dashboard/subscriptions-list)
+ - [sc-tax-id-input](../tax-id-input)
+ - [sc-test-mode-info](../test-mode-info)
+ - [sc-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
+ - [sc-upgrade-required](../sc-upgrade-required)
+ - [sc-upsell](../../controllers/upsell/sc-upsell)
+ - [sc-verification-code](../verification-code)
+ - [sc-wordpress-password-edit](../../controllers/dashboard/wordpress-password-edit)
+ - [sc-wordpress-user](../../controllers/dashboard/wordpress-user)
+ - [sc-wordpress-user-edit](../../controllers/dashboard/wordpress-user-edit)
 
 ### Depends on
 
 - [sc-spinner](../spinner)
 
 ### Graph
-
 ```mermaid
 graph TD;
   sc-button --> sc-spinner
@@ -165,12 +169,13 @@ graph TD;
   sc-upcoming-invoice --> sc-button
   sc-upgrade-required --> sc-button
   sc-upsell --> sc-button
+  sc-verification-code --> sc-button
   sc-wordpress-password-edit --> sc-button
   sc-wordpress-user --> sc-button
   sc-wordpress-user-edit --> sc-button
   style sc-button fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
----
+----------------------------------------------
 
-_Built with [StencilJS](https://stenciljs.com/)_
+*Built with [StencilJS](https://stenciljs.com/)*

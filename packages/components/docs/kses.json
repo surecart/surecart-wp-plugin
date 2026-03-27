@@ -2488,6 +2488,14 @@
     "class": true,
     "slot": true
   },
+  "sc-verification-code": {
+    "on-change": true,
+    "total": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-visually-hidden": {
     "style": true,
     "id": true,

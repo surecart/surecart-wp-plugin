@@ -241,6 +241,7 @@ export const ScUpsellCountdownTimer = /*@__PURE__*/createReactComponent<JSX.ScUp
 export const ScUpsellNoThanksButton = /*@__PURE__*/createReactComponent<JSX.ScUpsellNoThanksButton, HTMLScUpsellNoThanksButtonElement>('sc-upsell-no-thanks-button');
 export const ScUpsellSubmitButton = /*@__PURE__*/createReactComponent<JSX.ScUpsellSubmitButton, HTMLScUpsellSubmitButtonElement>('sc-upsell-submit-button');
 export const ScUpsellTotals = /*@__PURE__*/createReactComponent<JSX.ScUpsellTotals, HTMLScUpsellTotalsElement>('sc-upsell-totals');
+export const ScVerificationCode = /*@__PURE__*/createReactComponent<JSX.ScVerificationCode, HTMLScVerificationCodeElement>('sc-verification-code');
 export const ScVisuallyHidden = /*@__PURE__*/createReactComponent<JSX.ScVisuallyHidden, HTMLScVisuallyHiddenElement>('sc-visually-hidden');
 export const ScWordpressPasswordEdit = /*@__PURE__*/createReactComponent<JSX.ScWordpressPasswordEdit, HTMLScWordpressPasswordEditElement>('sc-wordpress-password-edit');
 export const ScWordpressUser = /*@__PURE__*/createReactComponent<JSX.ScWordpressUser, HTMLScWordpressUserElement>('sc-wordpress-user');
