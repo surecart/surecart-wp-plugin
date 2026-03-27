@@ -9,9 +9,7 @@ import { speak } from '@wordpress/a11y';
 /**
  * Internal dependencies.
  */
-import { state as userState } from '@store/user';
-import { resetUser } from '@store/user/mutations';
-import { VERIFYING, VERIFIED, UNVERIFIED } from '@store/user/constants';
+import { state as userState, resetUser, VERIFYING, VERIFIED, UNVERIFIED } from '@store/user';
 import { createOrUpdateCheckout } from '@services/session';
 import { state as checkoutState } from '@store/checkout';
 import { Checkout } from 'src/types';
@@ -260,7 +258,7 @@ export class ScCustomerLogin {
         </p>
         <div>
           <div class="customer-code__reset">
-            <sc-verification-code total={6} onChange={value => this.verifyCode(value)} />
+            <sc-verification-code total={6} loading={this.busy} onChange={value => this.verifyCode(value)} />
           </div>
           {(!!this.error || !!this.codeError) && <p class="login-error">{this.error || this.codeError}</p>}
         </div>

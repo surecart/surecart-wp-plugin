@@ -2,13 +2,13 @@ import { Component, Event, EventEmitter, Fragment, h, Method, Prop, State, Watch
 import { __ } from '@wordpress/i18n';
 import { speak } from '@wordpress/a11y';
 import apiFetch from '@wordpress/api-fetch';
+import MD5 from 'crypto-js/md5';
 
 import { createOrUpdateCheckout } from '../../../../services/session';
 import { Checkout, Customer } from '../../../../types';
 import { getValueFromUrl } from '../../../../functions/util';
-import { state as userState, onChange as onChangeUser } from '@store/user';
+import { state as userState, onChange as onChangeUser, resetUser, CODE_SENT, UNVERIFIED, VERIFYING } from '@store/user';
 import { state as checkoutState, onChange } from '@store/checkout';
-import { CODE_SENT, UNVERIFIED, VERIFYING } from '@store/user/constants';
 
 @Component({
   tag: 'sc-customer-email',
@@ -68,6 +68,9 @@ export class ScCustomerEmail {
 
   /** Is busy or not eg: email checking */
   @State() busy: boolean;
+
+  /** Is logout in progress */
+  @State() logoutBusy: boolean = false;
 
   /** Error */
   @State() error: string = '';
@@ -211,6 +214,59 @@ export class ScCustomerEmail {
     this.removeUserListener();
   }
 
+  async logout() {
+    try {
+      this.logoutBusy = true;
+      checkoutState.checkout = (await createOrUpdateCheckout({ id: checkoutState.checkout.id, data: { email: '' } })) as Checkout;
+
+      const response = (await apiFetch({
+        method: 'POST',
+        path: 'surecart/v1/logout',
+      })) as any;
+
+      // @ts-ignore - nonceMiddleware is set in fetch.ts but not in @wordpress/api-fetch types.
+      if (response?.nonce && apiFetch.nonceMiddleware) {
+        // @ts-ignore
+        apiFetch.nonceMiddleware.nonce = response.nonce;
+      }
+
+      resetUser();
+      speak(__('Logged out successfully.', 'surecart'), 'assertive');
+    } catch (e) {
+      console.error(e);
+    } finally {
+      this.logoutBusy = false;
+    }
+  }
+
+  renderLoggedIn() {
+    return (
+      <div class="email-preview">
+        <div class="email-preview__info">
+          <sc-avatar
+            image={`https://secure.gravatar.com/avatar/${MD5((userState.email || '').toLowerCase().trim())}?size=48&default=404`}
+            initials={(userState?.name || userState?.email).charAt(0)}
+          />
+          <div class="email-preview__text">
+            <div class="email-preview__name">{userState.name}</div>
+            <div class="email-preview__email">{userState.email}</div>
+          </div>
+        </div>
+        <sc-dropdown placement="bottom-end">
+          <sc-button type="text" slot="trigger" loading={this.logoutBusy}>
+            <sc-icon name="chevron-down" aria-label={__('Toggle dropdown', 'surecart')}></sc-icon>
+          </sc-button>
+          <sc-menu>
+            <sc-menu-item onClick={() => this.logout()}>
+              <sc-icon slot="prefix" name="log-out"></sc-icon>
+              {__('Logout', 'surecart')}
+            </sc-menu-item>
+          </sc-menu>
+        </sc-dropdown>
+      </div>
+    );
+  }
+
   renderOptIn() {
     if (!this.trackingConfirmationMessage) return null;
 
@@ -240,7 +296,7 @@ export class ScCustomerEmail {
 
   render() {
     if (userState.loggedIn) {
-      return <sc-customer-email-preview></sc-customer-email-preview>;
+      return this.renderLoggedIn();
     }
 
     if (userState.verificationStatus === CODE_SENT || userState.verificationStatus === VERIFYING || userState.verificationStatus === UNVERIFIED) {

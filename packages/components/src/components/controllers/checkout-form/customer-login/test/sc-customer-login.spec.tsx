@@ -1,8 +1,7 @@
 import { newSpecPage } from '@stencil/core/testing';
 import { dispose as disposeCheckout } from '@store/checkout';
-import { dispose as disposeUser, state as userState } from '@store/user';
+import { dispose as disposeUser, state as userState, CODE_SENT, UNVERIFIED } from '@store/user';
 import { ScCustomerLogin } from '../sc-customer-login';
-import { CODE_SENT, UNVERIFIED } from '@store/user/constants';
 
 describe('sc-customer-login', () => {
   beforeEach(() => {
