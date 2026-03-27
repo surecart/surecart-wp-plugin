@@ -24,7 +24,7 @@ import {
 import DrawerSection from '../../../ui/DrawerSection';
 import useVariantValue from '../../hooks/useVariantValue';
 import ResetOverridesDropdown from './ResetOverridesDropdown';
-import Dimensions from '../../components/Dimensions';
+import Dimensions from '../../../ui/Dimensions';
 
 const WEIGHT_UNIT_TYPES = [
 	__('lb', 'surecart'),

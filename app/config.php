@@ -120,6 +120,7 @@ return array(
 		\SureCart\Rest\ShippingRateRestServiceProvider::class,
 		\SureCart\Rest\ShippingZoneRestServiceProvider::class,
 		\SureCart\Rest\ShippingProtocolRestServiceProvider::class,
+		\SureCart\Rest\ParcelTemplateRestServiceProvider::class,
 		\SureCart\Rest\ProvisionalAccountRestServiceProvider::class,
 		\SureCart\Rest\IntegrationProvidersRestServiceProvider::class,
 		\SureCart\Rest\ProductMediaRestServiceProvider::class,
