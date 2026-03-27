@@ -32,10 +32,17 @@ export class ScCustomerEmailPreview {
       checkoutState.checkout = (await createOrUpdateCheckout({ id: checkoutState.checkout.id, data: { email: '' } })) as Checkout;
 
       // Logout.
-      await apiFetch({
+      const response = (await apiFetch({
         method: 'POST',
         path: 'surecart/v1/logout',
-      });
+      })) as any;
+
+      // Update the nonce after logout to prevent rest_cookie_invalid_nonce errors.
+      // @ts-ignore - nonceMiddleware is set in fetch.ts but not in @wordpress/api-fetch types.
+      if (response?.nonce && apiFetch.nonceMiddleware) {
+        // @ts-ignore
+        apiFetch.nonceMiddleware.nonce = response.nonce;
+      }
 
       // Reset user state.
       resetUser();
