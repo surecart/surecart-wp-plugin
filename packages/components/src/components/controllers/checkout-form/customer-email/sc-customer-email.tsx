@@ -8,7 +8,7 @@ import { Checkout, Customer } from '../../../../types';
 import { getValueFromUrl } from '../../../../functions/util';
 import { state as userState, onChange as onChangeUser } from '@store/user';
 import { state as checkoutState, onChange } from '@store/checkout';
-import { MATCHED, UNVERIFIED, VERIFYING } from '@store/user/constants';
+import { CODE_SENT, UNVERIFIED, VERIFYING } from '@store/user/constants';
 
 @Component({
   tag: 'sc-customer-email',
@@ -142,7 +142,7 @@ export class ScCustomerEmail {
         },
       });
       userState.email = this.value;
-      userState.verificationStatus = MATCHED;
+      userState.verificationStatus = CODE_SENT;
 
       speak(__('Verification code is sent to your email. Please check your email.', 'surecart'), 'assertive');
     } catch (e) {
@@ -198,7 +198,7 @@ export class ScCustomerEmail {
     (error?.additional_errors || []).forEach((e: any) => {
       if (e?.code === 'verification_code.email.blocked_duplicate') {
         userState.email = this.input?.value || '';
-        userState.verificationStatus = MATCHED;
+        userState.verificationStatus = CODE_SENT;
       } else {
         this.error = e?.message || __('Verification code is not valid. Please try again.', 'surecart');
       }
@@ -243,7 +243,7 @@ export class ScCustomerEmail {
       return <sc-customer-email-preview></sc-customer-email-preview>;
     }
 
-    if (userState.verificationStatus === MATCHED || userState.verificationStatus === VERIFYING || userState.verificationStatus === UNVERIFIED) {
+    if (userState.verificationStatus === CODE_SENT || userState.verificationStatus === VERIFYING || userState.verificationStatus === UNVERIFIED) {
       return <sc-customer-login codeError={this.error}></sc-customer-login>;
     }
 

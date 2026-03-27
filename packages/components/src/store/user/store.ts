@@ -13,7 +13,7 @@ interface Store {
   loggedIn: boolean;
   email: string;
   name: string;
-  verificationStatus: 'matched' | 'verifying' | 'verified' | 'unverified' | null;
+  verificationStatus: 'code_sent' | 'verifying' | 'verified' | 'unverified' | null;
 }
 
 const { state, onChange, dispose } = createStore<Store>({

@@ -2,7 +2,7 @@ import { newSpecPage } from '@stencil/core/testing';
 import { dispose as disposeCheckout } from '@store/checkout';
 import { dispose as disposeUser, state as userState } from '@store/user';
 import { ScCustomerLogin } from '../sc-customer-login';
-import { MATCHED, UNVERIFIED } from '@store/user/constants';
+import { CODE_SENT, UNVERIFIED } from '@store/user/constants';
 
 describe('sc-customer-login', () => {
   beforeEach(() => {
@@ -20,7 +20,7 @@ describe('sc-customer-login', () => {
 
   it('renders with user logged in and matched', async () => {
     userState.loggedIn = true;
-    userState.verificationStatus = MATCHED;
+    userState.verificationStatus = CODE_SENT;
     userState.email = 'test@example.com';
     userState.name = 'Test User';
 
@@ -46,7 +46,7 @@ describe('sc-customer-login', () => {
 
   it('renders with user not logged in and matched', async () => {
     userState.loggedIn = false;
-    userState.verificationStatus = MATCHED;
+    userState.verificationStatus = CODE_SENT;
     userState.email = 'test@example.com';
     userState.name = 'Test User';
 

@@ -1068,7 +1068,7 @@ export namespace Components {
     }
     interface ScCustomerLogin {
         /**
-          * Code Error comin from the parent
+          * Code Error coming from the parent
          */
         "codeError": string;
     }
@@ -8272,7 +8272,7 @@ declare namespace LocalJSX {
     }
     interface ScCustomerLogin {
         /**
-          * Code Error comin from the parent
+          * Code Error coming from the parent
          */
         "codeError"?: string;
     }

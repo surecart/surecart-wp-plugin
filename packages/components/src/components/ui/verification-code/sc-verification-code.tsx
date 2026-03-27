@@ -8,7 +8,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies.
  */
 import { state as userState, onChange as onUserChange } from '@store/user';
-import { MATCHED, VERIFYING } from '@store/user/constants';
+import { CODE_SENT, VERIFYING } from '@store/user/constants';
 
 @Component({
   tag: 'sc-verification-code',
@@ -30,12 +30,13 @@ export class ScVerificationCode {
   @Prop() onChange: (value: string) => void;
 
   handleKeyDown(e: KeyboardEvent, index: number) {
-    if ((e.key === 'Backspace' || e.key === 'Delete') && index > 0) {
+    if (e.key === 'Backspace' || e.key === 'Delete') {
       e.preventDefault();
-
-      const input = this.getElementByIndex(index);
-      input.value = '';
-      this.focusInput(index - 1);
+      this.getElementByIndex(index).value = '';
+      this.codes = [...this.codes.slice(0, index), '', ...this.codes.slice(index + 1)];
+      if (index > 0) {
+        this.focusInput(index - 1);
+      }
     }
   }
 
@@ -127,7 +128,7 @@ export class ScVerificationCode {
 
   @Watch('verificationStatus')
   resetAfterCodeWatches() {
-    if (this.verificationStatus === MATCHED) {
+    if (this.verificationStatus === CODE_SENT) {
       this.reset();
       return;
     }
@@ -180,8 +181,7 @@ export class ScVerificationCode {
         </sc-tooltip>
         {this.renderDummyInput()}
 
-        {/* Hidden Submit button for screen readers */}
-        <button type="submit" style={{ position: 'absolute', left: '-9999px' }} aria-hidden="true" onClick={() => this.onChange(this.codes.join(''))}>
+        <button type="submit" class="visually-hidden" onClick={() => this.onChange(this.codes.join(''))}>
           {__('Submit', 'surecart')}
         </button>
       </div>
