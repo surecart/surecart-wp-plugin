@@ -35,6 +35,7 @@ class LoginController extends RestController {
 			'name'         => $user->display_name,
 			'email'        => $user->user_email,
 			'redirect_url' => apply_filters( 'sc_login_redirect_url', $redirect_url ),
+			'nonce'        => ( wp_installing() && ! is_multisite() ) ? '' : wp_create_nonce( 'wp_rest' ),
 		];
 	}
 
