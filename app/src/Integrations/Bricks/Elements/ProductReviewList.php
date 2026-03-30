@@ -198,6 +198,54 @@ class ProductReviewList extends \Bricks\Element {
 			],
 		];
 
+		$this->controls['add_button_border_width'] = [
+			'tab'      => 'content',
+			'group'    => 'review_button',
+			'label'    => esc_html__( 'Button Border Width', 'surecart' ),
+			'type'     => 'number',
+			'units'    => true,
+			'required' => [ 'show_add_button', '=', true ],
+			'css'      => [
+				[
+					'property'  => 'border-width',
+					'selector'  => '.wp-block-surecart-product-review-add-button .wp-block-button__link',
+					'important' => true,
+				],
+			],
+		];
+
+		$this->controls['add_button_border_color'] = [
+			'tab'      => 'content',
+			'group'    => 'review_button',
+			'label'    => esc_html__( 'Button Border Color', 'surecart' ),
+			'type'     => 'color',
+			'reset'    => true,
+			'required' => [ 'show_add_button', '=', true ],
+			'css'      => [
+				[
+					'property'  => 'border-color',
+					'selector'  => '.wp-block-surecart-product-review-add-button .wp-block-button__link',
+					'important' => true,
+				],
+			],
+		];
+
+		$this->controls['add_button_border_radius'] = [
+			'tab'      => 'content',
+			'group'    => 'review_button',
+			'label'    => esc_html__( 'Button Border Radius', 'surecart' ),
+			'type'     => 'number',
+			'units'    => true,
+			'required' => [ 'show_add_button', '=', true ],
+			'css'      => [
+				[
+					'property'  => 'border-radius',
+					'selector'  => '.wp-block-surecart-product-review-add-button .wp-block-button__link',
+					'important' => true,
+				],
+			],
+		];
+
 		$this->controls['show_review_date'] = [
 			'tab'     => 'content',
 			'group'   => 'review_item',
@@ -620,6 +668,18 @@ class ProductReviewList extends \Bricks\Element {
 			],
 		];
 
+		// Add border attributes if set.
+		if ( ! empty( $this->settings['add_button_border_width'] ) ) {
+			$btn_attrs['style']['border']['width'] = sanitize_text_field( $this->settings['add_button_border_width'] );
+			$btn_attrs['style']['border']['style']  = 'solid';
+		}
+		if ( ! empty( $this->settings['add_button_border_color'] ) ) {
+			$btn_attrs['style']['border']['color'] = $this->get_raw_color( 'add_button_border_color' );
+		}
+		if ( ! empty( $this->settings['add_button_border_radius'] ) ) {
+			$btn_attrs['style']['border']['radius'] = sanitize_text_field( $this->settings['add_button_border_radius'] );
+		}
+
 		return '<!-- wp:surecart/product-review-add-button ' . wp_json_encode( $btn_attrs ) . ' /-->';
 	}
 
@@ -672,7 +732,23 @@ class ProductReviewList extends \Bricks\Element {
 				$btn_label      = ! empty( $this->settings['add_button_label'] ) ? wp_kses_post( $this->settings['add_button_label'] ) : esc_html__( 'Write a Review', 'surecart' );
 				$btn_bg_color   = ! empty( $this->settings['add_button_background_color'] ) ? $this->get_raw_color( 'add_button_background_color' ) : 'var(--bricks-color-primary)';
 				$btn_text_color = ! empty( $this->settings['add_button_text_color'] ) ? $this->get_raw_color( 'add_button_text_color' ) : '#000000';
-				$content       .= '<div style="padding: 10px 20px; border-radius: 50px; display: inline-flex; align-items: center; gap: 8px; background-color: ' . esc_attr( $btn_bg_color ) . '; color: ' . esc_attr( $btn_text_color ) . ';" class="wp-block-surecart-product-review-add-button">';
+
+				// Border styles for preview.
+				$btn_border_styles = '';
+				if ( ! empty( $this->settings['add_button_border_width'] ) ) {
+					$border_width       = is_numeric( $this->settings['add_button_border_width'] ) ? $this->settings['add_button_border_width'] . 'px' : $this->settings['add_button_border_width'];
+					$btn_border_styles .= 'border-width: ' . esc_attr( $border_width ) . '; border-style: solid;';
+				}
+				if ( ! empty( $this->settings['add_button_border_color'] ) ) {
+					$btn_border_styles .= ' border-color: ' . esc_attr( $this->get_raw_color( 'add_button_border_color' ) ) . ';';
+				}
+				if ( ! empty( $this->settings['add_button_border_radius'] ) ) {
+					$border_radius      = is_numeric( $this->settings['add_button_border_radius'] ) ? $this->settings['add_button_border_radius'] . 'px' : $this->settings['add_button_border_radius'];
+					$btn_border_styles .= ' border-radius: ' . esc_attr( $border_radius ) . ';';
+				}
+
+				$default_border_radius = empty( $btn_border_styles ) ? 'border-radius: 50px;' : ( strpos( $btn_border_styles, 'border-radius' ) === false ? 'border-radius: 50px;' : '' );
+				$content              .= '<div style="padding: 10px 20px; ' . $default_border_radius . ' display: inline-flex; align-items: center; gap: 8px; background-color: ' . esc_attr( $btn_bg_color ) . '; color: ' . esc_attr( $btn_text_color ) . '; ' . $btn_border_styles . '" class="wp-block-surecart-product-review-add-button">';
 				$content       .= wp_kses(
 					\SureCart::svg()->get(
 						'edit-2',
