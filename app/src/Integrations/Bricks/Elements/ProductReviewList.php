@@ -747,7 +747,7 @@ class ProductReviewList extends \Bricks\Element {
 					$btn_border_styles .= ' border-radius: ' . esc_attr( $border_radius ) . ';';
 				}
 
-				$default_border_radius = empty( $btn_border_styles ) ? 'border-radius: 50px;' : ( strpos( $btn_border_styles, 'border-radius' ) === false ? 'border-radius: 50px;' : '' );
+				$default_border_radius = strpos( $btn_border_styles, 'border-radius' ) === false ? 'border-radius: 50px;' : '';
 				$content              .= '<div style="padding: 10px 20px; ' . $default_border_radius . ' display: inline-flex; align-items: center; gap: 8px; background-color: ' . esc_attr( $btn_bg_color ) . '; color: ' . esc_attr( $btn_text_color ) . '; ' . $btn_border_styles . '" class="wp-block-surecart-product-review-add-button">';
 				$content       .= wp_kses(
 					\SureCart::svg()->get(

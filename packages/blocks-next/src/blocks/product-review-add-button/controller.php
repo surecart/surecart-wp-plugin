@@ -23,11 +23,11 @@ $styles = sc_get_block_styles();
 
 // Gap and alignment are layout concerns, not block support styles.
 $button_style = ! empty( $gap )
-	? 'gap:' . $gap . ';'
+	? esc_attr( safecss_filter_attr( 'gap:' . $gap ) ) . ';'
 	: '';
 
 if ( ! empty( $alignment ) ) {
-	$button_style .= 'justify-content:' . $alignment . ';';
+	$button_style .= esc_attr( safecss_filter_attr( 'justify-content:' . $alignment ) ) . ';';
 }
 
 // Append block support styles (border, padding, colors).
