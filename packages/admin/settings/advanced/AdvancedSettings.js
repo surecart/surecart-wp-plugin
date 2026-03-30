@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { __, sprintf } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
 import {
 	ScButton,
@@ -65,18 +65,6 @@ export default () => {
 		'surecart_password_validation_enabled'
 	);
 
-	const [googleMapApiEnabled, setGoogleMapApiEnabled] = useEntityProp(
-		'root',
-		'site',
-		'surecart_google_map_api_key_enabled'
-	);
-
-	const [googleMapApiKey, setGoogleMapApiKey] = useEntityProp(
-		'root',
-		'site',
-		'surecart_google_map_api_key'
-	);
-
 	const [shopMenu, setShopMenu] = useEntityProp(
 		'root',
 		'site',
@@ -120,72 +108,11 @@ export default () => {
 	);
 
 	/**
-	 * Validate the Google Maps API key.
-	 *
-	 * @param {string} apiKey - The Google Maps API key.
-	 * @returns {boolean} - Returns true if the API key is valid, otherwise false.
-	 */
-	const validateGoogleMapApiKey = async (apiKey) => {
-		try {
-			const response = await fetch(
-				'https://places.googleapis.com/v1/places:searchText',
-				{
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json',
-						'X-Goog-Api-Key': apiKey,
-						'X-Goog-FieldMask': 'places.id',
-					},
-					body: JSON.stringify({
-						textQuery: 'test',
-						pageSize: 1,
-					}),
-				}
-			);
-			const data = await response.json();
-			if (data?.error?.message) {
-				setError(
-					sprintf(
-						__('Google Map API Key Error: %s', 'surecart'),
-						data.error.message
-					)
-				);
-				return false;
-			}
-			return true;
-		} catch (e) {
-			console.error(e);
-			setError(
-				__(
-					'An error occurred while validating the API key.',
-					'surecart'
-				)
-			);
-			return false;
-		}
-	};
-
-	/**
 	 * Form is submitted.
 	 */
 	const onSubmit = async () => {
 		setError(null);
 		try {
-			// Validate Google Maps API key if enabled.
-			if (googleMapApiEnabled) {
-				if (!googleMapApiKey) {
-					setError(
-						__(
-							'Please enter a Google Maps API key or disable the Google Maps API.',
-							'surecart'
-						)
-					);
-					return;
-				}
-				const isValid = await validateGoogleMapApiKey(googleMapApiKey);
-				if (!isValid) return;
-			}
-
 			await save({
 				successMessage: __('Settings Updated.', 'surecart'),
 			});
@@ -423,83 +350,6 @@ export default () => {
 						)}
 					</span>
 				</ScSwitch>
-			</SettingsBox>
-
-			<SettingsBox
-				title={__('Advanced Integrations', 'surecart')}
-				description={__(
-					'Add advanced integrations to your store.',
-					'surecart'
-				)}
-				loading={!hasLoadedItem}
-			>
-				<ScSwitch
-					checked={googleMapApiEnabled}
-					onScChange={(e) => {
-						setGoogleMapApiEnabled(e.target.checked);
-						setShowNotice(true);
-					}}
-				>
-					{__('Google Maps API', 'surecart')}
-					<span slot="description">
-						{__(
-							'Enable Google Maps API for the shipping address field autocompletion.',
-							'surecart'
-						)}
-					</span>
-				</ScSwitch>
-
-				{showNotice && (
-					<ScAlert open>
-						<span slot="title">{__('Important', 'surecart')}</span>
-						{__(
-							'Please clear checkout page cache after changing this setting.',
-							'surecart'
-						)}
-					</ScAlert>
-				)}
-
-				{googleMapApiEnabled && (
-					<>
-						<ScInput
-							value={googleMapApiKey}
-							label={__('Google Maps API Key', 'surecart')}
-							placeholder={__('Google Maps API Key', 'surecart')}
-							onScInput={(e) =>
-								setGoogleMapApiKey(e.target.value)
-							}
-							type="password"
-							help={__(
-								'Restrict this key by HTTP referrer in Google Cloud Console to prevent unauthorized usage.',
-								'surecart'
-							)}
-						></ScInput>
-						{!googleMapApiKey && (
-							<ScAlert open>
-								{__(
-									'To use Google Maps features, you need an API key.',
-									'surecart'
-								)}{' '}
-								<a
-									href="https://console.cloud.google.com/apis/credentials"
-									target="_blank"
-									rel="noopener noreferrer"
-								>
-									{__(
-										'Get your API key from Google Cloud Platform',
-										'surecart'
-									)}
-								</a>
-								<p>
-									{__(
-										'Create a new project and enable the Places, Geocoding, and Geolocation API for it. Then, create a new API key and add it here.',
-										'surecart'
-									)}
-								</p>
-							</ScAlert>
-						)}
-					</>
-				)}
 			</SettingsBox>
 
 			<SettingsBox
