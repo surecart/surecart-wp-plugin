@@ -14,7 +14,6 @@ sc-input {
   background: var(--sc-panel-background-color);
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
   max-height: var(--sc-panel-height, 350px);
-  overflow-y: auto;
   width: 100%;
   border: solid 1px var(--sc-panel-border-color);
   border-radius: var(--sc-border-radius-medium);
@@ -22,11 +21,57 @@ sc-input {
   visibility: hidden;
   transform: translateY(2px);
   transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
 
   &--visible {
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
+  }
+
+  &--body {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    min-height: 0;
+    max-height: 100%;
+    overflow: hidden;
+  }
+
+  &--scroll {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  &--footer {
+    flex-shrink: 0;
+    padding: 10px 20px;
+    font-size: var(--sc-font-size-small);
+    border-top: solid 1px var(--sc-color-gray-200);
+    background-color: var(--sc-panel-background-color);
+
+    button {
+      background: none;
+      border: none;
+      color: var(--sc-color-gray-600);
+      font-size: var(--sc-font-size-small);
+      padding: 0;
+      cursor: pointer;
+
+      &:hover {
+        text-decoration: underline;
+      }
+
+      &:focus-visible {
+        outline: 2px solid var(--sc-focus-ring-color, var(--sc-color-primary));
+        outline-offset: 2px;
+      }
+    }
   }
 
   &--list {
@@ -87,7 +132,7 @@ sc-input {
       align-items: center;
       justify-content: space-between;
       text-align: center;
-      padding: 0px 20px;
+      padding: 0 0 0 20px;
       margin-top: 1px;
 
       a {
@@ -96,29 +141,6 @@ sc-input {
 
         span {
           font-weight: var(--sc-font-weight-bold);
-        }
-      }
-    }
-
-    &--manually {
-      font-size: var(--sc-font-size-small);
-      border-top: solid 1px var(--sc-color-gray-200);
-
-      button {
-        background: none;
-        border: none;
-        color: var(--sc-color-gray-600);
-        font-size: var(--sc-font-size-small);
-        padding: 0;
-        cursor: pointer;
-
-        &:hover {
-          text-decoration: underline;
-        }
-
-        &:focus-visible {
-          outline: 2px solid var(--sc-focus-ring-color, var(--sc-color-primary));
-          outline-offset: 2px;
         }
       }
     }
