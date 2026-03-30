@@ -67,7 +67,7 @@ export default ({ subscription, updateSubscription, loading }) => {
 							editHandler={() => setEdit(true)}
 						/>
 					)}
-				{!hasPaymentMethod && (
+				{!hasPaymentMethod && !loading && (
 					<ScAlert type="warning" open>
 						{__('No payment methods found.', 'surecart')}
 					</ScAlert>

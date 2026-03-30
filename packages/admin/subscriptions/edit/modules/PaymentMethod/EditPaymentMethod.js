@@ -1,5 +1,6 @@
 import { __ } from '@wordpress/i18n';
 import {
+	ScAlert,
 	ScBlockUi,
 	ScButton,
 	ScChoice,
@@ -87,12 +88,23 @@ export default ({
 		[customerId, open]
 	);
 
+	const hasFinishedLoading = !loading && !manualLoading;
+	const isEmpty = hasFinishedLoading && !(payment_methods || []).length && !(manual_payment_methods || []).length;
+
 	return (
 		<ScDialog
 			label={isAdding ? __('Add Payment Method', 'surecart') : __('Update Payment Method', 'surecart')}
 			open={open}
 			onScRequestClose={() => setOpen(false)}
 		>
+			{isEmpty && (
+				<ScAlert type="info" open>
+					{__('No payment methods available for this customer.', 'surecart')}{' '}
+					<a href="admin.php?page=sc-settings&tab=processors">
+						{__('Create a manual payment method', 'surecart')}
+					</a>
+				</ScAlert>
+			)}
 			<ScChoices onScChange={(e) => setPaymentMethod(e.target.value)}>
 				{(payment_methods || []).map((payment_method) => {
 					return (
@@ -150,8 +162,9 @@ export default ({
 			{loading || (manualLoading && <ScBlockUi spinner />)}
 			<ScButton
 				type="primary"
+				disabled={isEmpty || !paymentMethodId}
 				onClick={() => {
-					const isManualPaymentMethod = manual_payment_methods.find(
+					const isManualPaymentMethod = (manual_payment_methods || []).find(
 						({ id }) => id === paymentMethodId
 					);
 					updatePaymentMethod({
