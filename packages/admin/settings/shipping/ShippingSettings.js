@@ -230,7 +230,6 @@ export default () => {
 						</span>
 					</ScSwitch>
 				</SettingsBox>
-
 				<SettingsBox
 					title={__('Address Autocomplete', 'surecart')}
 					description={__(
@@ -312,7 +311,6 @@ export default () => {
 						</>
 					)}
 				</SettingsBox>
-
 				<SettingsBox
 					title={__('Shipping Profiles', 'surecart')}
 					description={__(
