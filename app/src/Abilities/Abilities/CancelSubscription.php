@@ -115,7 +115,7 @@ class CancelSubscription extends AbstractAbility {
 			$data['cancel_behavior'] = $behavior;
 		}
 
-		$subscription = Subscription::cancel( $id );
+		$subscription = ( new Subscription( $data ) )->cancel( $id );
 		if ( is_wp_error( $subscription ) ) {
 			return $subscription;
 		}
