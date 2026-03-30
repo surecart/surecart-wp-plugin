@@ -111,6 +111,7 @@ export default ({ attributes, setAttributes }) => {
 				isShownByDefault
 			>
 				<NumberControl
+					__next40pxDefaultSize
 					label={__('Icon Size', 'surecart')}
 					help={__('Size of the icon in pixels.', 'surecart')}
 					value={icon_size}

@@ -1,4 +1,3 @@
-/** @jsx jsx */
 import {
 	ColorPicker,
 	ColorIndicator,
@@ -7,7 +6,6 @@ import {
 } from '@wordpress/components';
 import { useState, useEffect, Fragment } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
-import { jsx } from '@emotion/core';
 
 export default ({ color, setColor, onFocus }) => {
 	const [open, setOpen] = useState(false);
@@ -22,7 +20,11 @@ export default ({ color, setColor, onFocus }) => {
 	return (
 		<Fragment>
 			<ColorIndicator
-				css={{ width: '25px', height: '25px', borderRadius: '9999px' }}
+				style={{
+					width: '25px',
+					height: '25px',
+					borderRadius: '9999px',
+				}}
 				colorValue={color}
 				onClick={() => {
 					setOpen(!open);
@@ -45,7 +47,7 @@ export default ({ color, setColor, onFocus }) => {
 						disableAlpha
 					/>
 					<div
-						css={{
+						style={{
 							display: 'flex',
 							alignItems: 'center',
 							justifyContent: 'space-between',
@@ -53,7 +55,7 @@ export default ({ color, setColor, onFocus }) => {
 						}}
 					>
 						<Button
-							css={{ margin: '0 5px' }}
+							style={{ margin: '0 5px' }}
 							isTertiary
 							onClick={() => {
 								setColor({ hex: null });
@@ -63,14 +65,14 @@ export default ({ color, setColor, onFocus }) => {
 							{__('Reset', 'surecart')}
 						</Button>
 						<div
-							css={{
+							style={{
 								display: 'flex',
 								justifyContent: 'flex-end',
 								padding: '10px',
 							}}
 						>
 							<Button
-								css={{ margin: '0 5px' }}
+								style={{ margin: '0 5px' }}
 								isTertiary
 								onClick={() => {
 									setColor({ hex: original });

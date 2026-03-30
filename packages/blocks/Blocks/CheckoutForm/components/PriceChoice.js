@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 
 import { Fragment } from '@wordpress/element';
@@ -88,10 +86,10 @@ export default ({ choice, onUpdate, onSelect, onRemove, onNew }) => {
 	return (
 		<tr>
 			<td
-				css={css`
-					width: 50%;
-					max-width: 50%;
-				`}
+				style={{
+					width: '50%',
+					maxWidth: '50%',
+				}}
 			>
 				{!choice?.id ? (
 					<PriceSelector
@@ -115,9 +113,9 @@ export default ({ choice, onUpdate, onSelect, onRemove, onNew }) => {
 							)}
 						</div>
 						<div
-							css={css`
-								color: var(--sc-color-gray-500);
-							`}
+							style={{
+								color: 'var(--sc-color-gray-500)',
+							}}
 						>
 							{renderPrice()}
 						</div>
@@ -125,10 +123,10 @@ export default ({ choice, onUpdate, onSelect, onRemove, onNew }) => {
 				)}
 			</td>
 			<td
-				css={css`
-					max-width: 70px;
-					width: 70px;
-				`}
+				style={{
+					maxWidth: '70px',
+					width: '70px',
+				}}
 			>
 				<ScInput
 					type="number"
@@ -137,9 +135,9 @@ export default ({ choice, onUpdate, onSelect, onRemove, onNew }) => {
 				/>
 			</td>
 			<td
-				css={css`
-					text-align: right;
-				`}
+				style={{
+					textAlign: 'right',
+				}}
 			>
 				{renderPrice(true)}
 			</td>

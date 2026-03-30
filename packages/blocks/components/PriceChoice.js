@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
 import {
 	ScButton,
 	ScDropdown,
@@ -12,11 +10,15 @@ import {
 import { Spinner } from '@wordpress/components';
 import { store as coreStore } from '@wordpress/core-data';
 import { useSelect } from '@wordpress/data';
+import { useRef, useEffect } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { intervalString } from '../../admin/util/translations';
 import LineItemLabel from '../../admin/ui/LineItemLabel';
 
 export default ({ choice, onUpdate, hideQuantity, onRemove }) => {
+	const quantityRef = useRef();
+	const priceInputRef = useRef();
+
 	// get price from choice.
 	const price = useSelect(
 		(select) => {
@@ -55,6 +57,45 @@ export default ({ choice, onUpdate, hideQuantity, onRemove }) => {
 		[price]
 	);
 
+	// Register quantity input event listener for iframe compatibility.
+	useEffect(() => {
+		const element = quantityRef.current;
+		if (!element) return;
+
+		const handleChange = (e) => {
+			onUpdate({
+				id: choice?.id,
+				quantity: e.target.value,
+				...(choice?.variant_id
+					? { variant_id: choice.variant_id }
+					: {}),
+			});
+		};
+
+		element.addEventListener('scChange', handleChange);
+		return () => element.removeEventListener('scChange', handleChange);
+	}, [choice, onUpdate]);
+
+	// Register price input event listener for iframe compatibility.
+	useEffect(() => {
+		const element = priceInputRef.current;
+		if (!element) return;
+
+		const handleInput = (e) => {
+			onUpdate({
+				id: choice?.id,
+				ad_hoc_amount: e.target.value,
+				quantity: choice?.quantity || 1,
+				...(choice?.variant_id
+					? { variant_id: choice.variant_id }
+					: {}),
+			});
+		};
+
+		element.addEventListener('scInput', handleInput);
+		return () => element.removeEventListener('scInput', handleInput);
+	}, [choice, onUpdate]);
+
 	const renderPrice = (withQuantity = false) => {
 		if (!price?.id) return '—';
 
@@ -62,24 +103,13 @@ export default ({ choice, onUpdate, hideQuantity, onRemove }) => {
 		if (price?.ad_hoc) {
 			return (
 				<ScPriceInput
+					ref={priceInputRef}
 					placeholder={__('Enter Custom Amount', 'surecart')}
 					currencyCode={scData.currency}
 					value={choice?.ad_hoc_amount || price?.amount}
-					onScInput={(e) => {
-						onUpdate({
-							id: choice?.id,
-							ad_hoc_amount: e.target.value,
-							quantity: choice?.quantity || 1,
-							...(choice?.variant_id
-								? { variant_id: choice.variant_id }
-								: {}),
-						});
-					}}
 					max={price?.ad_hoc_max_amount}
 					min={price?.ad_hoc_min_amount}
-					css={css`
-						max-width: 100px;
-					`}
+					style={{ maxWidth: '100px' }}
 				/>
 			);
 		}
@@ -97,12 +127,7 @@ export default ({ choice, onUpdate, hideQuantity, onRemove }) => {
 
 	return (
 		<sc-table-row>
-			<sc-table-cell
-				css={css`
-					width: 50%;
-					max-width: 50%;
-				`}
-			>
+			<sc-table-cell style={{ width: '50%', maxWidth: '50%' }}>
 				{!choice?.id || !price ? (
 					<Spinner />
 				) : (
@@ -137,17 +162,9 @@ export default ({ choice, onUpdate, hideQuantity, onRemove }) => {
 			{!hideQuantity && (
 				<sc-table-cell style={{ width: '100px' }}>
 					<ScInput
+						ref={quantityRef}
 						type="number"
 						value={choice?.quantity}
-						onScChange={(e) =>
-							onUpdate({
-								id: choice?.id,
-								quantity: e.target.value,
-								...(choice?.variant_id
-									? { variant_id: choice.variant_id }
-									: {}),
-							})
-						}
 						disabled={!!price?.ad_hoc}
 					/>
 				</sc-table-cell>
@@ -155,11 +172,7 @@ export default ({ choice, onUpdate, hideQuantity, onRemove }) => {
 			<sc-table-cell style={{ textAlign: 'center' }}>
 				<div style={{ display: 'flex', justifyContent: 'center' }}>
 					{renderPrice(true)}{' '}
-					<span
-						css={css`
-							color: var(--sc-color-gray-500);
-						`}
-					>
+					<span style={{ color: 'var(--sc-color-gray-500)' }}>
 						{price &&
 							intervalString(price, {
 								showOnce: true,

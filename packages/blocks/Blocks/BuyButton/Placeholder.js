@@ -1,6 +1,3 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
-
 /**
  * WordPress dependencies
  */
@@ -30,11 +27,11 @@ export default ({
 	return (
 		<Placeholder icon={icon} label={__('Select some products', 'surecart')}>
 			<div
-				css={css`
-					display: grid;
-					gap: 0.5em;
-					width: 100%;
-				`}
+				style={{
+					display: 'grid',
+					gap: '1em',
+					width: '100%',
+				}}
 			>
 				<PriceChoices
 					choices={line_items}
@@ -42,14 +39,13 @@ export default ({
 					onRemove={removeLineItem}
 					onNew={() => {}}
 				/>
-				<hr />
 				<div
-					css={css`
-						display: flex;
-						justify-content: ${!!selectedLineItems?.length
+					style={{
+						display: 'flex',
+						justifyContent: selectedLineItems?.length
 							? 'space-between'
-							: 'flex-end'};
-					`}
+							: 'flex-end',
+					}}
 				>
 					{!!selectedLineItems?.length && (
 						<Button

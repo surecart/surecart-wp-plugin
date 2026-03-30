@@ -3,7 +3,7 @@
  */
 import { __ } from '@wordpress/i18n';
 import { Fragment } from '@wordpress/element';
-import { InspectorControls } from '@wordpress/block-editor';
+import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
 import {
 	PanelBody,
 	PanelRow,
@@ -13,6 +13,7 @@ import {
 
 export default ({ attributes, setAttributes }) => {
 	const { removable, editable } = attributes;
+	const blockProps = useBlockProps();
 
 	return (
 		<Fragment>
@@ -47,12 +48,14 @@ export default ({ attributes, setAttributes }) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<Disabled>
-				<sc-line-items
-					removable={removable}
-					editable={editable}
-				></sc-line-items>
-			</Disabled>
+			<div {...blockProps}>
+				<Disabled>
+					<sc-line-items
+						removable={removable}
+						editable={editable}
+					></sc-line-items>
+				</Disabled>
+			</div>
 		</Fragment>
 	);
 };
