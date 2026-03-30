@@ -1,10 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import dayjs from 'dayjs';
-import duration from 'dayjs/plugin/duration';
-import utc from 'dayjs/plugin/utc';
-dayjs.extend(duration);
-dayjs.extend(utc);
 import {
 	ScButton,
 	ScIcon,
@@ -24,6 +20,7 @@ import {
 	calculateSum,
 	calculateAverage,
 	calculateTrend,
+	calculatePreviousPeriod,
 	getValidReportByOptions,
 	getOptimalReportBy,
 } from './utils';
@@ -58,12 +55,24 @@ export default ({ liveMode, setLiveMode }) => {
 		}
 
 		// Fetch data for current and previous periods
-		// Calculate the time difference in milliseconds to get exact previous period
-		const diffMs = endDate.diff(startDate, 'millisecond');
-		const previousStart = dayjs(startDate).subtract(diffMs, 'millisecond');
+		// Normalize to start of day for consistent date-only comparisons
+		const normalizedStart = startDate.startOf('day');
+		const normalizedEnd = endDate.startOf('day');
 
-		getOrderStats(startDate.format(), endDate.format());
-		getPreviousOrderStats(previousStart.format(), startDate.format());
+		// Calculate previous period to match platform (active_date_range)
+		const { previousStart, previousEnd } = calculatePreviousPeriod(
+			normalizedStart,
+			normalizedEnd
+		);
+
+		getOrderStats(
+			normalizedStart.format('YYYY-MM-DD'),
+			normalizedEnd.format('YYYY-MM-DD')
+		);
+		getPreviousOrderStats(
+			previousStart.format('YYYY-MM-DD'),
+			previousEnd.format('YYYY-MM-DD')
+		);
 	}, [startDate, endDate, reportBy, liveMode]);
 
 	/**
@@ -104,6 +113,7 @@ export default ({ liveMode, setLiveMode }) => {
 					end_at: endAt,
 					live_mode: liveMode,
 					interval: reportBy,
+					currency,
 				}),
 			});
 			setPreviousData(data);
