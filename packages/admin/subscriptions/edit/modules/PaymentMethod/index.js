@@ -1,6 +1,6 @@
 import Box from '../../../../ui/Box';
 import EditPaymentMethod from './EditPaymentMethod';
-import { ScPaymentMethodDetails } from '@surecart/components-react';
+import { ScPaymentMethodDetails, ScButton, ScIcon, ScAlert } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 import { store as coreStore } from '@wordpress/core-data';
 import { useState } from 'react';
@@ -10,9 +10,13 @@ import ManualPaymentMethod from './ManualPaymentMethod';
 export default ({ subscription, updateSubscription, loading }) => {
 	const id = subscription?.payment_method?.id || subscription?.payment_method;
 	const [edit, setEdit] = useState();
+	const hasPaymentMethod = !!subscription?.payment_method || !!subscription?.manual_payment;
 
 	const { payment_method, hasLoadedPaymentmethod } = useSelect(
 		(select) => {
+			if (!id) {
+				return { payment_method: null, hasLoadedPaymentmethod: true };
+			}
 			const entityData = [
 				'surecart',
 				'payment_method',
@@ -45,6 +49,15 @@ export default ({ subscription, updateSubscription, loading }) => {
 		<Box
 			title={__('Payment Method', 'surecart')}
 			loading={loading || !hasLoadedPaymentmethod}
+			footer={
+				!hasPaymentMethod &&
+				!loading && (
+					<ScButton onClick={() => setEdit(true)}>
+						<ScIcon name="plus" slot="prefix" />
+						{__('Add Payment Method', 'surecart')}
+					</ScButton>
+				)
+			}
 		>
 			<>
 				{subscription?.payment_method &&
@@ -54,6 +67,11 @@ export default ({ subscription, updateSubscription, loading }) => {
 							editHandler={() => setEdit(true)}
 						/>
 					)}
+				{!hasPaymentMethod && (
+					<ScAlert type="warning" open>
+						{__('No payment methods found.', 'surecart')}
+					</ScAlert>
+				)}
 				{subscription?.manual_payment && (
 					<ManualPaymentMethod
 						subscription={subscription}
@@ -71,6 +89,7 @@ export default ({ subscription, updateSubscription, loading }) => {
 					manualPayment={subscription?.manual_payment}
 					manualPaymentMethod={subscription?.manual_payment_method}
 					paymentMethod={subscription?.payment_method}
+					isAdding={!hasPaymentMethod}
 					updatePaymentMethod={(data) => {
 						updateSubscription(data);
 						setEdit(false);

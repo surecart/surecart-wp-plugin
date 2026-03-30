@@ -21,6 +21,7 @@ export default ({
 	manualPaymentMethod,
 	updatePaymentMethod,
 	manualPayment,
+	isAdding,
 }) => {
 	const [paymentMethodId, setPaymentMethod] = useState(
 		manualPayment
@@ -88,7 +89,7 @@ export default ({
 
 	return (
 		<ScDialog
-			label={__('Update Payment Method', 'surecart')}
+			label={isAdding ? __('Add Payment Method', 'surecart') : __('Update Payment Method', 'surecart')}
 			open={open}
 			onScRequestClose={() => setOpen(false)}
 		>
@@ -165,7 +166,7 @@ export default ({
 				}}
 				slot="footer"
 			>
-				{__('Update', 'surecart')}
+				{isAdding ? __('Add', 'surecart') : __('Update', 'surecart')}
 			</ScButton>
 			<ScButton type="text" onClick={() => setOpen(false)} slot="footer">
 				{__('Cancel', 'surecart')}
