@@ -220,6 +220,7 @@ function Conditions(props) {
 					case 'number':
 						return (
 							<NumberControl
+								__next40pxDefaultSize
 								value={value}
 								placeholder={field.placeholder}
 								tooltip={field.tooltip}
