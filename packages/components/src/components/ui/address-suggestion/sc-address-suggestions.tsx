@@ -285,85 +285,82 @@ export class ScAddressSuggestions {
     }
 
     return (
-      <ul class="sc-address__suggestions--list" part="suggestions-list" role="listbox" id="address-suggestions-listbox">
-        <li
-          class="sc-address__suggestions--item sc-address__suggestions--item--no-select sc-address__suggestions--item--powered-by"
-          part="suggestion-item powered-by"
-          role="presentation"
-          tabindex="-1"
-        >
-          <span>
-            {__('Suggestions powered by ', 'surecart')}
-            <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" aria-label={__('Google Privacy Policy (opens in new tab)', 'surecart')}>
-              <span>{__('Google', 'surecart')}</span>
-            </a>
-          </span>
-          <sc-button
-            type="text"
-            onClick={() => {
-              this.showSuggestions = false;
-              this.addressSuggestions = [];
-            }}
-            aria-label={__('Close suggestions', 'surecart')}
-          >
-            <sc-icon name="x" style={{ color: 'var(--sc-color-gray-500)' }}></sc-icon>
-          </sc-button>
-        </li>
+      <div class="sc-address__suggestions--body">
+        <div class="sc-address__suggestions--scroll">
+          <ul class="sc-address__suggestions--list" part="suggestions-list" role="listbox" id="address-suggestions-listbox">
+            <li
+              class="sc-address__suggestions--item sc-address__suggestions--item--no-select sc-address__suggestions--item--powered-by"
+              part="suggestion-item powered-by"
+              role="presentation"
+              tabindex="-1"
+            >
+              <span>
+                {__('Suggestions powered by ', 'surecart')}
+                <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" aria-label={__('Google Privacy Policy (opens in new tab)', 'surecart')}>
+                  <span>{__('Google', 'surecart')}</span>
+                </a>
+              </span>
+              <sc-button
+                type="text"
+                onClick={() => {
+                  this.showSuggestions = false;
+                  this.addressSuggestions = [];
+                }}
+                aria-label={__('Close suggestions', 'surecart')}
+              >
+                <sc-icon name="x" style={{ color: 'var(--sc-color-gray-500)' }}></sc-icon>
+              </sc-button>
+            </li>
 
-        {this.loading && this.addressSuggestions.length === 0 && (
-          <li
-            class="sc-address__suggestions--item sc-address__suggestions--item--no-select sc-address__suggestions--item--no-result"
-            part="suggestion-item no-result"
-            role="presentation"
-            tabindex="-1"
-          >
-            {__('Loading...', 'surecart')}
-          </li>
-        )}
+            {this.loading && this.addressSuggestions.length === 0 && (
+              <li
+                class="sc-address__suggestions--item sc-address__suggestions--item--no-select sc-address__suggestions--item--no-result"
+                part="suggestion-item no-result"
+                role="presentation"
+                tabindex="-1"
+              >
+                {__('Loading...', 'surecart')}
+              </li>
+            )}
 
-        {!this.loading && this.addressSuggestions.length === 0 && (
-          <li
-            class="sc-address__suggestions--item sc-address__suggestions--item--no-select sc-address__suggestions--item--no-result"
-            part="suggestion-item no-result"
-            role="presentation"
-            tabindex="-1"
-          >
-            {__('No results found', 'surecart')}
-          </li>
-        )}
+            {!this.loading && this.addressSuggestions.length === 0 && (
+              <li
+                class="sc-address__suggestions--item sc-address__suggestions--item--no-select sc-address__suggestions--item--no-result"
+                part="suggestion-item no-result"
+                role="presentation"
+                tabindex="-1"
+              >
+                {__('No results found', 'surecart')}
+              </li>
+            )}
 
-        {this.addressSuggestions.map((suggestion, index) => (
-          <li
-            id={`suggestion-${index}`}
-            class={{
-              'sc-address__suggestions--item': true,
-              'focused': this.focusedIndex === index,
-            }}
-            part="suggestion-item"
-            role="option"
-            aria-selected={this.focusedIndex === index ? 'true' : 'false'}
-            aria-label={sprintf(__('Select suggestion %s', 'surecart'), suggestion.fullDisplayName)}
-            tabindex="-1"
-            onClick={() => this.fetchPlaceDetails(suggestion?.placeId)}
-            innerHTML={highlightMatch(suggestion.fullDisplayName, this.value)}
-            onMouseEnter={() => (this.focusedIndex = index)}
-            onMouseLeave={() => (this.focusedIndex = -1)}
-          ></li>
-        ))}
+            {this.addressSuggestions.map((suggestion, index) => (
+              <li
+                id={`suggestion-${index}`}
+                class={{
+                  'sc-address__suggestions--item': true,
+                  'focused': this.focusedIndex === index,
+                }}
+                part="suggestion-item"
+                role="option"
+                aria-selected={this.focusedIndex === index ? 'true' : 'false'}
+                aria-label={sprintf(__('Select suggestion %s', 'surecart'), suggestion.fullDisplayName)}
+                tabindex="-1"
+                onClick={() => this.fetchPlaceDetails(suggestion?.placeId)}
+                innerHTML={highlightMatch(suggestion.fullDisplayName, this.value)}
+                onMouseEnter={() => (this.focusedIndex = index)}
+                onMouseLeave={() => (this.focusedIndex = -1)}
+              ></li>
+            ))}
+          </ul>
+        </div>
 
-        {!this.hasAnyAddressField() && (
-          <li
-            class="sc-address__suggestions--item sc-address__suggestions--item--no-select sc-address__suggestions--item--manually"
-            part="suggestion-item manually"
-            role="presentation"
-            tabindex="-1"
-          >
-            <button onClick={() => this.manualAddress()} aria-label={__('Enter address manually instead of using suggestions', 'surecart')}>
-              {__('Enter address manually', 'surecart')}
-            </button>
-          </li>
-        )}
-      </ul>
+        <div class="sc-address__suggestions--footer" part="suggestion-item manually" role="presentation">
+          <button type="button" onClick={() => this.manualAddress()} aria-label={__('Enter address manually instead of using suggestions', 'surecart')}>
+            {__('Enter address manually', 'surecart')}
+          </button>
+        </div>
+      </div>
     );
   }
 
