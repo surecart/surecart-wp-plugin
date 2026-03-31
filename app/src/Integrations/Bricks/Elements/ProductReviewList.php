@@ -748,7 +748,8 @@ class ProductReviewList extends \Bricks\Element {
 				}
 
 				$default_border_radius = strpos( $btn_border_styles, 'border-radius' ) === false ? 'border-radius: 50px;' : '';
-				$content              .= '<div style="padding: 10px 20px; ' . $default_border_radius . ' display: inline-flex; align-items: center; gap: 8px; background-color: ' . esc_attr( $btn_bg_color ) . '; color: ' . esc_attr( $btn_text_color ) . '; ' . $btn_border_styles . '" class="wp-block-surecart-product-review-add-button">';
+				$content              .= '<div class="wp-block-surecart-product-review-add-button">';
+				$content              .= '<div class="wp-block-button__link" style="padding: 10px 20px; ' . $default_border_radius . ' display: inline-flex; align-items: center; gap: 8px; background-color: ' . esc_attr( $btn_bg_color ) . '; color: ' . esc_attr( $btn_text_color ) . '; ' . $btn_border_styles . '">';
 				$content       .= wp_kses(
 					\SureCart::svg()->get(
 						'edit-2',
@@ -762,6 +763,7 @@ class ProductReviewList extends \Bricks\Element {
 					sc_allowed_svg_html()
 				);
 				$content       .= '<span>' . esc_html( $btn_label ) . '</span>';
+				$content       .= '</div>';
 				$content       .= '</div>';
 			}
 
