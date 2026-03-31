@@ -30,12 +30,12 @@
 
 ### Used by
 
- - [sc-customer-email-preview](../../controllers/checkout-form/customer-email-preview)
+ - [sc-customer-email](../../controllers/checkout-form/customer-email)
 
 ### Graph
 ```mermaid
 graph TD;
-  sc-customer-email-preview --> sc-avatar
+  sc-customer-email --> sc-avatar
   style sc-avatar fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

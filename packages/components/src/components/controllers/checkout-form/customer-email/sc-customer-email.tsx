@@ -7,7 +7,7 @@ import MD5 from 'crypto-js/md5';
 import { createOrUpdateCheckout } from '../../../../services/session';
 import { Checkout, Customer } from '../../../../types';
 import { getValueFromUrl } from '../../../../functions/util';
-import { state as userState, onChange as onChangeUser, resetUser, CODE_SENT, UNVERIFIED, VERIFYING } from '@store/user';
+import { state as userState, onChange as onChangeUser, resetUser, CODE_SENT, UNVERIFIED, VERIFYING, CODE_EXPIRED } from '@store/user';
 import { state as checkoutState, onChange } from '@store/checkout';
 
 @Component({
@@ -299,7 +299,7 @@ export class ScCustomerEmail {
       return this.renderLoggedIn();
     }
 
-    if (userState.verificationStatus === CODE_SENT || userState.verificationStatus === VERIFYING || userState.verificationStatus === UNVERIFIED) {
+    if (userState.verificationStatus === CODE_SENT || userState.verificationStatus === VERIFYING || userState.verificationStatus === UNVERIFIED || userState.verificationStatus === CODE_EXPIRED) {
       return <sc-customer-login codeError={this.error}></sc-customer-login>;
     }
 

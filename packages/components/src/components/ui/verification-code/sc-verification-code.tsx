@@ -1,7 +1,7 @@
 /**
  * External dependencies.
  */
-import { Component, h, Element, Prop, State } from '@stencil/core';
+import { Component, Fragment, h, Element, Prop, State } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 
 @Component({
@@ -108,17 +108,6 @@ export class ScVerificationCode {
     this.getElementByIndex(0)?.focus();
   }
 
-  renderDummyInput() {
-    return (
-      <input
-        style={{
-          visibility: 'hidden',
-        }}
-        aria-hidden="true"
-      />
-    );
-  }
-
   filledAllInputs = () => {
     return this.codes.join('').trim().length === this.total;
   };
@@ -126,35 +115,25 @@ export class ScVerificationCode {
   render() {
     return (
       <div class="sc-verification-code">
-        {/* Hidden inputs to prevent browser autofill from targeting verification code fields */}
-        {this.renderDummyInput()}
-        {this.renderDummyInput()}
         {Array.from({ length: this.total }).map((_, index) => (
-          <input
-            key={index}
-            id={`code-input-${index}`}
-            value={!!this.codes[index] ? this.codes[index] : ''}
-            onInput={e => this.handleInput(e, index)}
-            onKeyDown={e => this.handleKeyDown(e, index)}
-            onFocus={e => this.handleFocus(e)}
-            autocomplete="one-time-code"
-            inputmode="numeric"
-            pattern="[0-9]*"
-            autofocus={index === 0}
-            required
-            aria-label={__(`Verification code ${index + 1} of ${this.total}`, 'surecart')}
-          />
+          <Fragment>
+            {index === Math.floor(this.total / 2) && <span class="sc-verification-code__separator" aria-hidden="true">&mdash;</span>}
+            <input
+              key={index}
+              id={`code-input-${index}`}
+              value={!!this.codes[index] ? this.codes[index] : ''}
+              onInput={e => this.handleInput(e, index)}
+              onKeyDown={e => this.handleKeyDown(e, index)}
+              onFocus={e => this.handleFocus(e)}
+              autocomplete="one-time-code"
+              inputmode="numeric"
+              pattern="[0-9]*"
+              autofocus={index === 0}
+              required
+              aria-label={__(`Verification code ${index + 1} of ${this.total}`, 'surecart')}
+            />
+          </Fragment>
         ))}
-        <sc-tooltip
-          text={__('Clear code', 'surecart')}
-          type="text"
-          style={{ display: 'inline-block', cursor: 'help', height: '36px', visibility: this.filledAllInputs() ? 'visible' : 'hidden' }}
-        >
-          <sc-button type="text" onClick={() => this.reset()} loading={this.loading}>
-            <sc-icon name="x-circle" />
-          </sc-button>
-        </sc-tooltip>
-        {this.renderDummyInput()}
 
         <button type="submit" class="visually-hidden" onClick={() => this.onChange(this.codes.join(''))}>
           {__('Submit', 'surecart')}

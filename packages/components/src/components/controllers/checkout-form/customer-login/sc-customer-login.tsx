@@ -9,7 +9,7 @@ import { speak } from '@wordpress/a11y';
 /**
  * Internal dependencies.
  */
-import { state as userState, resetUser, VERIFYING, VERIFIED, UNVERIFIED } from '@store/user';
+import { state as userState, resetUser, VERIFYING, VERIFIED, UNVERIFIED, CODE_EXPIRED } from '@store/user';
 import { createOrUpdateCheckout } from '@services/session';
 import { state as checkoutState } from '@store/checkout';
 import { Checkout } from 'src/types';
@@ -29,12 +29,6 @@ export class ScCustomerLogin {
   /** Is code resending */
   @State() codeResending: boolean = false;
 
-  /** Code sent label */
-  @State() codeSentLabel: string = '';
-
-  /** Code sent icon */
-  @State() codeSentIcon: string = '';
-
   /** Seconds remaining in the resend cooldown */
   @State() resendCooldown: number = 60;
 
@@ -52,6 +46,12 @@ export class ScCustomerLogin {
 
   /** Login Password */
   @State() password: string = '';
+
+  formatCooldown(): string {
+    const minutes = Math.floor(this.resendCooldown / 60);
+    const seconds = this.resendCooldown % 60;
+    return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+  }
 
   async verifyCode(code: string) {
     // If not valid email and code, then return.
@@ -100,14 +100,21 @@ export class ScCustomerLogin {
         last_name: user?.customer?.last_name,
         phone: user?.customer?.phone,
       });
-    } catch (e) {
-      if (e.code === 'not_found') {
-        this.error = __('Verification code is not valid. Please try again.', 'surecart');
+    } catch (e: any) {
+      // If cooldown has elapsed, treat as expired code.
+      if (this.resendCooldown <= 0) {
+        userState.verificationStatus = CODE_EXPIRED;
+        this.error = '';
+        speak(__('Code expired. Please send a new code.', 'surecart'), 'assertive');
       } else {
-        this.error = e?.message || __('Verification code is not valid. Please try again.', 'surecart');
+        if (e.code === 'not_found') {
+          this.error = __('Incorrect code. Please try again.', 'surecart');
+        } else {
+          this.error = e?.message || __('Incorrect code. Please try again.', 'surecart');
+        }
+        userState.verificationStatus = UNVERIFIED;
+        speak(this.error, 'assertive');
       }
-
-      userState.verificationStatus = UNVERIFIED;
     } finally {
       this.busy = false;
     }
@@ -120,7 +127,7 @@ export class ScCustomerLogin {
         data,
       })) as Checkout;
     } catch (error) {
-      this.error = error?.message || __('Failed to update checkout. Please try again.', 'surecart');
+      this.error = (error as any)?.message || __('Failed to update checkout. Please try again.', 'surecart');
     } finally {
       this.busy = false;
     }
@@ -140,15 +147,8 @@ export class ScCustomerLogin {
         },
       });
 
-      this.codeSentLabel = __('Code sent', 'surecart');
-      speak(this.codeSentLabel, 'assertive');
-      this.codeSentIcon = 'check';
-
-      setTimeout(() => {
-        this.codeSentLabel = '';
-        this.codeSentIcon = '';
-      }, 3000);
-
+      speak(__('Code sent', 'surecart'), 'assertive');
+      userState.verificationStatus = UNVERIFIED;
       this.startCooldown();
     } catch (e) {
       console.error(e);
@@ -218,16 +218,79 @@ export class ScCustomerLogin {
       userState.verificationStatus = VERIFIED;
       userState.name = name;
       userState.email = email;
-    } catch (e) {
+    } catch (e: any) {
       this.error = e?.message || __('Login failed. Please try again.', 'surecart');
     } finally {
       this.busy = false;
     }
   }
 
+  renderSentInfo() {
+    return (
+      <div class="customer-code__sent-info">
+        <sc-icon name="mail" class="customer-code__mail-icon" aria-hidden="true" />
+        <span>
+          {__('Code sent to', 'surecart')} <strong class="customer-code__sent-email">{userState.email}</strong>
+        </span>
+        <a
+          href="#"
+          class="customer-code__change-link"
+          onClick={e => {
+            e.preventDefault();
+            resetUser();
+          }}
+        >
+          {__('Change', 'surecart')}
+        </a>
+      </div>
+    );
+  }
+
+  renderCodeFooter() {
+    const isExpired = userState.verificationStatus === CODE_EXPIRED;
+
+    return (
+      <div class="customer-code__footer">
+        <div class="customer-code__footer-left">
+          {!isExpired && this.resendCooldown > 0 && (
+            <span class="customer-code__resend-timer">
+              {__('Resend code in', 'surecart')} {this.formatCooldown()}
+            </span>
+          )}
+          {!isExpired && this.resendCooldown <= 0 && (
+            <a
+              href="#"
+              class="customer-code__resend-link"
+              onClick={e => {
+                e.preventDefault();
+                this.resendCode();
+              }}
+            >
+              {this.codeResending ? __('Sending...', 'surecart') : __('Resend Code', 'surecart')}
+            </a>
+          )}
+        </div>
+        <div class="customer-code__footer-right">
+          <a
+            href="#"
+            class="customer-code__mode-link"
+            onClick={e => {
+              e.preventDefault();
+              this.mode = 'password';
+            }}
+          >
+            <sc-icon name="lock" aria-hidden="true" />
+            {__('Use Password', 'surecart')}
+          </a>
+        </div>
+      </div>
+    );
+  }
+
   renderPasswordView() {
     return (
       <div class="customer-password">
+        {this.renderSentInfo()}
         <sc-flex alignItems="center">
           <sc-input
             type="password"
@@ -248,40 +311,72 @@ export class ScCustomerLogin {
             {__('Login', 'surecart')}
           </sc-button>
         </sc-flex>
-        {!!this.error && <p class="customer-password__error" role="alert">{this.error}</p>}
+        {!!this.error && (
+          <p class="customer-password__error" role="alert">
+            {this.error}
+          </p>
+        )}
+        <div class="customer-code__footer">
+          <div class="customer-code__footer-left"></div>
+          <div class="customer-code__footer-right">
+            <a
+              href="#"
+              class="customer-code__mode-link"
+              onClick={e => {
+                e.preventDefault();
+                this.mode = 'code';
+              }}
+            >
+              <sc-icon name="key" aria-hidden="true" />
+              {__('Use Login Code', 'surecart')}
+            </a>
+          </div>
+        </div>
       </div>
     );
   }
 
   renderCodeView() {
+    const isExpired = userState.verificationStatus === CODE_EXPIRED;
+    const isVerifying = userState.verificationStatus === VERIFYING;
+
     return (
       <div class="customer-code">
-        <p class="customer-code__hint">
-          {__('Enter the code sent to', 'surecart')} <span class="customer-code__preview">{userState.email}</span> {__('to securely use your saved information.', 'surecart')}
-        </p>
+        {this.renderSentInfo()}
+
         <div>
-          <div class="customer-code__reset">
-            <sc-verification-code total={6} loading={this.busy} onChange={value => this.verifyCode(value)} />
-          </div>
-          {(!!this.error || !!this.codeError) && <p class="customer-code__error" role="alert">{this.error || this.codeError}</p>}
+          <sc-verification-code total={6} loading={this.busy} onChange={((value: string) => this.verifyCode(value)) as any} />
         </div>
 
-        <div class="customer-code__resend">
-          <sc-button type="link" onClick={() => this.resendCode()} disabled={this.codeResending || this.resendCooldown > 0} loading={this.codeResending}>
-            {!!this.codeSentIcon ? (
-              <span style={{ color: 'var(--sc-color-success-900)' }}>
-                <sc-icon name={this.codeSentIcon} aria-hidden="true" />
-              </span>
-            ) : this.resendCooldown > 0 ? (
-              <span>
-                {__('Resend in', 'surecart')} {this.resendCooldown}
-                {__('s', 'surecart')}
-              </span>
-            ) : (
-              <span>{__('Resend Code', 'surecart')}</span>
-            )}
-          </sc-button>
-        </div>
+        {isVerifying && (
+          <div class="customer-code__verifying">
+            <sc-spinner />
+            <span>{__('Verifying...', 'surecart')}</span>
+          </div>
+        )}
+
+        {isExpired && (
+          <p class="customer-code__expired" role="alert">
+            {__('Code expired.', 'surecart')}{' '}
+            <a
+              href="#"
+              onClick={e => {
+                e.preventDefault();
+                this.resendCode();
+              }}
+            >
+              {__('Send new code', 'surecart')}
+            </a>
+          </p>
+        )}
+
+        {!isExpired && (!!this.error || !!this.codeError) && (
+          <p class="customer-code__error" role="alert">
+            {this.error || this.codeError}
+          </p>
+        )}
+
+        {this.renderCodeFooter()}
       </div>
     );
   }
@@ -289,35 +384,7 @@ export class ScCustomerLogin {
   render() {
     return (
       <Host>
-        <div class="customer-login">
-          <div class="customer-login__email">
-            <div class="customer-login__email-text">
-              <div class="customer-login__email-label">{__('Email', 'surecart')}</div>
-              <div class="customer-login__email-value">{userState.email}</div>
-            </div>
-            <div class="customer-login__back">
-              <sc-button type="text" size="small" onClick={() => resetUser()}>
-                <sc-icon name="x" class="customer-login__back-icon" aria-label={__('Change email address', 'surecart')} />
-              </sc-button>
-            </div>
-          </div>
-
-          {this.mode === 'code' ? this.renderCodeView() : this.renderPasswordView()}
-
-          <div class="customer-login__mode">
-            {this.mode === 'code' ? (
-              <sc-button type="text" size="small" onClick={() => (this.mode = 'password')}>
-                <sc-icon name="lock" slot="prefix" aria-hidden="true" />
-                {__('Use Password', 'surecart')}
-              </sc-button>
-            ) : (
-              <sc-button type="text" size="small" onClick={() => (this.mode = 'code')}>
-                <sc-icon name="key" slot="prefix" aria-hidden="true" />
-                {__('Use Login Code', 'surecart')}
-              </sc-button>
-            )}
-          </div>
-        </div>
+        <div class="customer-login">{this.mode === 'code' ? this.renderCodeView() : this.renderPasswordView()}</div>
       </Host>
     );
   }

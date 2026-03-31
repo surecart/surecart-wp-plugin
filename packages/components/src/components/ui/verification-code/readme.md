@@ -7,10 +7,11 @@
 
 ## Properties
 
-| Property   | Attribute | Description                 | Type                      | Default     |
-| ---------- | --------- | --------------------------- | ------------------------- | ----------- |
-| `onChange` | --        | On change verification code | `(value: string) => void` | `undefined` |
-| `total`    | `total`   | Total number of inputs      | `number`                  | `6`         |
+| Property   | Attribute | Description                                           | Type                      | Default     |
+| ---------- | --------- | ----------------------------------------------------- | ------------------------- | ----------- |
+| `loading`  | `loading` | Whether the component is in a loading/verifying state | `boolean`                 | `false`     |
+| `onChange` | --        | On change verification code                           | `(value: string) => void` | `undefined` |
+| `total`    | `total`   | Total number of inputs                                | `number`                  | `6`         |
 
 
 ## Dependencies

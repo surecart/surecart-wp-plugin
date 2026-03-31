@@ -46,7 +46,7 @@
  - [sc-checkout-test-complete](../../controllers/checkout-form/checkout-test-complete)
  - [sc-coupon-form](../coupon-form)
  - [sc-customer-details](../customer-details)
- - [sc-customer-email-preview](../../controllers/checkout-form/customer-email-preview)
+ - [sc-customer-email](../../controllers/checkout-form/customer-email)
  - [sc-customer-login](../../controllers/checkout-form/customer-login)
  - [sc-dialog](../sc-dialog)
  - [sc-downloads-list](../../controllers/dashboard/sc-downloads-list)
@@ -119,7 +119,7 @@ graph TD;
   sc-checkout-test-complete --> sc-icon
   sc-coupon-form --> sc-icon
   sc-customer-details --> sc-icon
-  sc-customer-email-preview --> sc-icon
+  sc-customer-email --> sc-icon
   sc-customer-login --> sc-icon
   sc-dialog --> sc-icon
   sc-downloads-list --> sc-icon

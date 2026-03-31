@@ -56,7 +56,12 @@ Type: `Promise<boolean>`
 
 ### Depends on
 
-- [sc-customer-email-preview](../customer-email-preview)
+- [sc-avatar](../../../ui/sc-avatar)
+- [sc-dropdown](../../../ui/dropdown)
+- [sc-button](../../../ui/button)
+- [sc-icon](../../../ui/icon)
+- [sc-menu](../../../ui/menu)
+- [sc-menu-item](../../../ui/menu-item)
 - [sc-customer-login](../customer-login)
 - [sc-input](../../../ui/input)
 - [sc-spinner](../../../ui/spinner)
@@ -64,16 +69,15 @@ Type: `Promise<boolean>`
 ### Graph
 ```mermaid
 graph TD;
-  sc-customer-email --> sc-customer-email-preview
+  sc-customer-email --> sc-avatar
+  sc-customer-email --> sc-dropdown
+  sc-customer-email --> sc-button
+  sc-customer-email --> sc-icon
+  sc-customer-email --> sc-menu
+  sc-customer-email --> sc-menu-item
   sc-customer-email --> sc-customer-login
   sc-customer-email --> sc-input
   sc-customer-email --> sc-spinner
-  sc-customer-email-preview --> sc-avatar
-  sc-customer-email-preview --> sc-dropdown
-  sc-customer-email-preview --> sc-button
-  sc-customer-email-preview --> sc-icon
-  sc-customer-email-preview --> sc-menu
-  sc-customer-email-preview --> sc-menu-item
   sc-button --> sc-spinner
   sc-customer-login --> sc-flex
   sc-customer-login --> sc-input

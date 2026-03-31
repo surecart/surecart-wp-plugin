@@ -7,9 +7,9 @@
 
 ## Properties
 
-| Property    | Attribute    | Description                      | Type     | Default |
-| ----------- | ------------ | -------------------------------- | -------- | ------- |
-| `codeError` | `code-error` | Code Error comin from the parent | `string` | `''`    |
+| Property    | Attribute    | Description                       | Type     | Default |
+| ----------- | ------------ | --------------------------------- | -------- | ------- |
+| `codeError` | `code-error` | Code Error coming from the parent | `string` | `''`    |
 
 
 ## Dependencies

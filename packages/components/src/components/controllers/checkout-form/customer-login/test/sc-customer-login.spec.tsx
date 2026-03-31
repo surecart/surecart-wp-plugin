@@ -1,6 +1,6 @@
 import { newSpecPage } from '@stencil/core/testing';
 import { dispose as disposeCheckout } from '@store/checkout';
-import { dispose as disposeUser, state as userState, CODE_SENT, UNVERIFIED } from '@store/user';
+import { dispose as disposeUser, state as userState, CODE_SENT, UNVERIFIED, CODE_EXPIRED } from '@store/user';
 import { ScCustomerLogin } from '../sc-customer-login';
 
 describe('sc-customer-login', () => {
@@ -56,7 +56,7 @@ describe('sc-customer-login', () => {
     expect(page.root).toMatchSnapshot();
   });
 
-  it('displays user email in the login view', async () => {
+  it('displays user email in the sent info line', async () => {
     userState.email = 'user@example.com';
     userState.verificationStatus = CODE_SENT;
 
@@ -65,8 +65,8 @@ describe('sc-customer-login', () => {
       html: `<sc-customer-login></sc-customer-login>`,
     });
 
-    const emailValue = page.root.shadowRoot.querySelector('.customer-login__email-value');
-    expect(emailValue?.textContent).toBe('user@example.com');
+    const sentEmail = page.root.shadowRoot.querySelector('.customer-code__sent-email');
+    expect(sentEmail?.textContent).toBe('user@example.com');
   });
 
   it('defaults to code mode and shows verification code view', async () => {
@@ -93,12 +93,11 @@ describe('sc-customer-login', () => {
       html: `<sc-customer-login></sc-customer-login>`,
     });
 
-    // Find the mode toggle button (Use Password).
-    const modeButtons = page.root.shadowRoot.querySelectorAll('.customer-login__mode sc-button');
-    const usePasswordBtn = modeButtons[0];
-    expect(usePasswordBtn).toBeDefined();
+    // Find the Use Password link in the footer.
+    const modeLink = page.root.shadowRoot.querySelector('.customer-code__mode-link') as HTMLElement;
+    expect(modeLink).not.toBeNull();
 
-    usePasswordBtn.dispatchEvent(new Event('click'));
+    modeLink.click();
     await page.waitForChanges();
 
     const passwordView = page.root.shadowRoot.querySelector('.customer-password');
@@ -135,7 +134,7 @@ describe('sc-customer-login', () => {
     expect(alerts.length).toBeGreaterThan(0);
   });
 
-  it('renders change email button with accessible label', async () => {
+  it('renders change link with accessible text', async () => {
     userState.email = 'user@example.com';
     userState.verificationStatus = CODE_SENT;
 
@@ -144,8 +143,38 @@ describe('sc-customer-login', () => {
       html: `<sc-customer-login></sc-customer-login>`,
     });
 
-    const backIcon = page.root.shadowRoot.querySelector('.customer-login__back-icon');
-    expect(backIcon).not.toBeNull();
-    expect(backIcon.getAttribute('aria-label')).toContain('Change email');
+    const changeLink = page.root.shadowRoot.querySelector('.customer-code__change-link');
+    expect(changeLink).not.toBeNull();
+    expect(changeLink.textContent).toContain('Change');
+  });
+
+  it('shows expired state with send new code link', async () => {
+    userState.email = 'user@example.com';
+    userState.verificationStatus = CODE_EXPIRED;
+
+    const page = await newSpecPage({
+      components: [ScCustomerLogin],
+      html: `<sc-customer-login></sc-customer-login>`,
+    });
+
+    const expiredEl = page.root.shadowRoot.querySelector('.customer-code__expired');
+    expect(expiredEl).not.toBeNull();
+    expect(expiredEl.getAttribute('role')).toBe('alert');
+    expect(expiredEl.textContent).toContain('Code expired');
+    expect(expiredEl.textContent).toContain('Send new code');
+  });
+
+  it('shows resend timer in footer', async () => {
+    userState.email = 'user@example.com';
+    userState.verificationStatus = CODE_SENT;
+
+    const page = await newSpecPage({
+      components: [ScCustomerLogin],
+      html: `<sc-customer-login></sc-customer-login>`,
+    });
+
+    const timer = page.root.shadowRoot.querySelector('.customer-code__resend-timer');
+    expect(timer).not.toBeNull();
+    expect(timer.textContent).toContain('Resend code in');
   });
 });

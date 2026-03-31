@@ -4,15 +4,16 @@ sc-verification-code {
 
   .sc-verification-code {
     display: flex;
-    justify-content: center;
     align-items: center;
-    gap: var(--sc-spacing-medium);
-    margin-top: var(--sc-spacing-large);
-    margin-bottom: var(--sc-spacing-large);
+    gap: var(--sc-spacing-small);
+    margin-top: var(--sc-spacing-medium);
+    margin-bottom: var(--sc-spacing-medium);
 
     input {
-      width: var(--sc-input-width, 36px);
-      height: var(--sc-input-height, 36px);
+      flex: 1;
+      min-width: 0;
+      height: var(--sc-input-height, 48px);
+      max-width: 64px;
       box-sizing: border-box;
       font-family: var(--sc-input-font-family);
       font-weight: var(--sc-input-font-weight);
@@ -48,6 +49,14 @@ sc-verification-code {
         color: var(--sc-input-color-focus);
         z-index: 8;
       }
+    }
+
+    .sc-verification-code__separator {
+      color: var(--sc-input-help-text-color);
+      font-size: var(--sc-font-size-large);
+      user-select: none;
+      display: flex;
+      align-items: center;
     }
 
     .visually-hidden {

@@ -13,12 +13,13 @@ export const VERIFIED = 'verified';
 export const VERIFYING = 'verifying';
 export const CODE_SENT = 'code_sent';
 export const UNVERIFIED = 'unverified';
+export const CODE_EXPIRED = 'code_expired';
 
 interface Store {
   loggedIn: boolean;
   email: string;
   name: string;
-  verificationStatus: 'code_sent' | 'verifying' | 'verified' | 'unverified' | null;
+  verificationStatus: 'code_sent' | 'verifying' | 'verified' | 'unverified' | 'code_expired' | null;
 }
 
 const { state, onChange, dispose } = createStore<Store>({
