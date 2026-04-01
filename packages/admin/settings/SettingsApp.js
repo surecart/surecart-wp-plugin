@@ -54,66 +54,51 @@ const tabs = {
 };
 
 /**
+ * Skeleton block matching the SettingsBox loading pattern.
+ */
+const SkeletonBlock = ({ titleWidth = '30%', bodyWidth = '40%' }) => (
+	<div>
+		<sc-skeleton
+			style={{
+				width: titleWidth,
+				marginBottom: '1.5em',
+				display: 'inline-block',
+			}}
+		></sc-skeleton>
+		<sc-card>
+			<div>
+				<sc-skeleton
+					style={{
+						width: '100%',
+						marginBottom: '15px',
+						display: 'inline-block',
+					}}
+				></sc-skeleton>
+				<sc-skeleton
+					style={{ width: bodyWidth, display: 'inline-block' }}
+				></sc-skeleton>
+			</div>
+		</sc-card>
+	</div>
+);
+
+/**
  * Loading placeholder for lazy-loaded tabs.
- * Matches the SettingsBox skeleton pattern used across the app.
  */
 const TabLoading = () => (
 	<div style={{ display: 'grid', gap: '3em' }}>
-		{/* Mimic a SettingsBox header + content skeleton */}
-		<div>
-			<sc-skeleton
-				style={{
-					width: '30%',
-					marginBottom: '1.5em',
-					display: 'inline-block',
-				}}
-			></sc-skeleton>
-			<sc-card>
-				<div>
-					<sc-skeleton
-						style={{
-							width: '100%',
-							marginBottom: '15px',
-							display: 'inline-block',
-						}}
-					></sc-skeleton>
-					<sc-skeleton
-						style={{
-							width: '40%',
-							display: 'inline-block',
-						}}
-					></sc-skeleton>
-				</div>
-			</sc-card>
-		</div>
-		<div>
-			<sc-skeleton
-				style={{
-					width: '25%',
-					marginBottom: '1.5em',
-					display: 'inline-block',
-				}}
-			></sc-skeleton>
-			<sc-card>
-				<div>
-					<sc-skeleton
-						style={{
-							width: '100%',
-							marginBottom: '15px',
-							display: 'inline-block',
-						}}
-					></sc-skeleton>
-					<sc-skeleton
-						style={{
-							width: '60%',
-							display: 'inline-block',
-						}}
-					></sc-skeleton>
-				</div>
-			</sc-card>
-		</div>
+		<SkeletonBlock titleWidth="30%" bodyWidth="40%" />
+		<SkeletonBlock titleWidth="25%" bodyWidth="60%" />
 	</div>
 );
+
+/**
+ * Sub-route lookup: maps "tab:type" combinations to resolved tab keys.
+ */
+const SUB_ROUTES = {
+	'tax_protocol:region': 'tax_region',
+	'shipping_protocol:shipping_profile': 'shipping_profile',
+};
 
 /**
  * Main Settings App with client-side routing.
@@ -123,23 +108,8 @@ export default function SettingsApp() {
 
 	// Determine active tab from URL params.
 	const currentTab = location?.params?.tab || '';
-
-	// Handle sub-routes: tax_protocol with type=region -> tax_region
-	const resolvedTab = (() => {
-		if (
-			currentTab === 'tax_protocol' &&
-			location?.params?.type === 'region'
-		) {
-			return 'tax_region';
-		}
-		if (
-			currentTab === 'shipping_protocol' &&
-			location?.params?.type === 'shipping_profile'
-		) {
-			return 'shipping_profile';
-		}
-		return currentTab;
-	})();
+	const subKey = `${currentTab}:${location?.params?.type || ''}`;
+	const resolvedTab = SUB_ROUTES[subKey] || currentTab;
 
 	const TabComponent = tabs[resolvedTab];
 
