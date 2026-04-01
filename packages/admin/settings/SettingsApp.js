@@ -115,7 +115,7 @@ export default function SettingsApp() {
 	// Determine active tab from URL params.
 	// Fall back to connection tab when no API token and tab requires one.
 	let currentTab = location?.params?.tab || '';
-	if (!hasApiToken && currentTab && !NO_TOKEN_TABS.includes(currentTab)) {
+	if (!hasApiToken && !NO_TOKEN_TABS.includes(currentTab)) {
 		currentTab = 'connection';
 	}
 
