@@ -13,7 +13,7 @@ import { useLink } from '../router';
  */
 function SidebarTab({ tab, icon, label, currentTab, badge, iconStyle }) {
 	const params = tab ? { page: 'sc-settings', tab } : { page: 'sc-settings' };
-	const { href, onClick } = useLink(params, { replace: true });
+	const { href, onClick } = useLink(params);
 
 	const isActive = tab ? currentTab === tab : !currentTab;
 
