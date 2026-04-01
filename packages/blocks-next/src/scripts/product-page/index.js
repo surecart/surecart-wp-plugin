@@ -422,7 +422,7 @@ const { state, actions } = store('surecart/product-page', {
 			e.preventDefault();
 
 			// Get context values and option data
-			const { variantValues, optionNumber, urlPrefix } = getContext();
+			const { variantValues, optionNumber, urlPrefix, product } = getContext();
 
 			// get data from select element or context.
 			let optionData = e?.target?.selectedOptions?.[0]?.dataset?.wpContext
@@ -445,7 +445,6 @@ const { state, actions } = store('surecart/product-page', {
 			variantValues[`option_${optionNumber}`] = value;
 
 			// Sync variant selection to Stencil product store (needed for upsell flow).
-			const { product } = getContext();
 			if (product?.id) {
 				document.dispatchEvent(
 					new CustomEvent('scVariantValuesUpdated', {

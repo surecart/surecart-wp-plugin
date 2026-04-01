@@ -72,12 +72,18 @@ const updateSelectedPrice = (productId: string, newValue: ProductState) => {
 
 // Sync variant selection from Interactivity API (next-gen blocks) into the Stencil product store.
 // This bridges the two state systems so upsell flows use the customer's selected variant.
-if (typeof document !== 'undefined') {
+let variantSyncRegistered = false;
+if (typeof document !== 'undefined' && !variantSyncRegistered) {
+  variantSyncRegistered = true;
   document.addEventListener('scVariantValuesUpdated', ((e: CustomEvent) => {
     const { productId, variantValues } = e.detail || {};
-    if (productId && state[productId] && variantValues) {
-      setProduct(productId, { variantValues });
+    if (!productId || !state[productId] || !variantValues || typeof variantValues !== 'object') {
+      return;
     }
+    // Only allow expected variant option keys.
+    const allowed = ['option_1', 'option_2', 'option_3'];
+    const filtered = Object.fromEntries(Object.entries(variantValues).filter(([key]) => allowed.includes(key)));
+    setProduct(productId, { variantValues: filtered });
   }) as EventListener);
 }
 
