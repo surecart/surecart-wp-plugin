@@ -45,6 +45,7 @@ use SureCart\Abilities\Abilities\UpdateCustomer;
 use SureCart\Abilities\Abilities\UpdatePromotion;
 use SureCart\Abilities\Abilities\UpdatePrice;
 use SureCart\Abilities\Abilities\UpdateProduct;
+use SureCart\Abilities\Abilities\UpdateSubscriptionRenewalDate;
 
 /**
  * Registers the ability category and all SureCart abilities.
@@ -110,6 +111,7 @@ class AbilityRegistrar {
 			new ListSubscriptions(),
 			new GetSubscription(),
 			new CancelSubscription(),
+			new UpdateSubscriptionRenewalDate(),
 			// Prices.
 			new ListPrices(),
 			new CreatePrice(),
