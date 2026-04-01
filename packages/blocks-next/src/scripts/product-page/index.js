@@ -444,6 +444,17 @@ const { state, actions } = store('surecart/product-page', {
 			// first we set the option to optimistically update all the ui.
 			variantValues[`option_${optionNumber}`] = value;
 
+			// Sync variant selection to Stencil product store (needed for upsell flow).
+			const { product } = getContext();
+			if (product?.id) {
+				document.dispatchEvent(
+					new CustomEvent('scVariantValuesUpdated', {
+						detail: { productId: product.id, variantValues: { ...variantValues } },
+						bubbles: true,
+					})
+				);
+			}
+
 			// if we have the name and value, update the url.
 			if (!option_value || !option_name) {
 				return;
