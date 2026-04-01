@@ -1,15 +1,20 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { addQueryArgs } from '@wordpress/url';
 import { __ } from '@wordpress/i18n';
+import { useLink, useLocation } from '../../router';
 
 export default ({ title, icon, description, region }) => {
+	const location = useLocation();
+	const { href, onClick } = useLink({
+		...location.params,
+		type: 'region',
+		region,
+	});
+
 	return (
 		<sc-stacked-list-row
-			href={addQueryArgs(window.location.href, {
-				type: 'region',
-				region,
-			})}
+			href={href}
+			onClick={onClick}
 			style={{ '--columns': '3', marginBottom: 0 }}
 		>
 			<strong
