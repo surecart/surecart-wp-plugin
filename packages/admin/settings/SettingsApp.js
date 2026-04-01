@@ -50,7 +50,6 @@ const tabs = {
 	integrations: lazy(() => import('./integrations/Integrations')),
 	learn: lazy(() => import('./learn/LearnSettings')),
 	advanced: lazy(() => import('./advanced/AdvancedSettings')),
-	upgrade: lazy(() => import('./upgrade/UpgradeSettings')),
 };
 
 /**
@@ -101,13 +100,25 @@ const SUB_ROUTES = {
 };
 
 /**
+ * Tabs that don't require an API token.
+ */
+const NO_TOKEN_TABS = ['connection', 'advanced'];
+
+/**
  * Main Settings App with client-side routing.
  */
 export default function SettingsApp() {
 	const location = useLocation();
 
+	const hasApiToken = !!window.scSettingsData?.has_api_token;
+
 	// Determine active tab from URL params.
-	const currentTab = location?.params?.tab || '';
+	// Fall back to connection tab when no API token and tab requires one.
+	let currentTab = location?.params?.tab || '';
+	if (!hasApiToken && currentTab && !NO_TOKEN_TABS.includes(currentTab)) {
+		currentTab = 'connection';
+	}
+
 	const subKey = `${currentTab}:${location?.params?.type || ''}`;
 	const resolvedTab = SUB_ROUTES[subKey] || currentTab;
 
