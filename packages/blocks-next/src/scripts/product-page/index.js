@@ -449,7 +449,6 @@ const { state, actions } = store('surecart/product-page', {
 				document.dispatchEvent(
 					new CustomEvent('scVariantValuesUpdated', {
 						detail: { productId: product.id, variantValues: { ...variantValues } },
-						bubbles: true,
 					})
 				);
 			}
