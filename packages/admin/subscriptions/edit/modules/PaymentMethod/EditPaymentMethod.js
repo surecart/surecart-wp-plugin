@@ -159,7 +159,7 @@ export default ({
 					);
 				})}
 			</ScChoices>
-			{loading || (manualLoading && <ScBlockUi spinner />)}
+			{(loading || manualLoading) && <ScBlockUi spinner />}
 			<ScButton
 				type="primary"
 				disabled={isEmpty || !paymentMethodId}
