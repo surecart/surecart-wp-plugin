@@ -311,11 +311,7 @@ export class ScCustomerLogin {
             {__('Login', 'surecart')}
           </sc-button>
         </sc-flex>
-        {!!this.error && (
-          <p class="customer-password__error" role="alert">
-            {this.error}
-          </p>
-        )}
+        {!!this.error && <p class="customer-password__error" role="alert" innerHTML={this.error}></p>}
         <div class="customer-code__footer">
           <div class="customer-code__footer-left"></div>
           <div class="customer-code__footer-right">
@@ -370,11 +366,7 @@ export class ScCustomerLogin {
           </p>
         )}
 
-        {!isExpired && (!!this.error || !!this.codeError) && (
-          <p class="customer-code__error" role="alert">
-            {this.error || this.codeError}
-          </p>
-        )}
+        {!isExpired && (!!this.error || !!this.codeError) && <p class="customer-code__error" role="alert" innerHTML={this.error || this.codeError}></p>}
 
         {this.renderCodeFooter()}
       </div>
