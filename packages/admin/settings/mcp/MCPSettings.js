@@ -193,8 +193,7 @@ export default () => {
 
 			{mcpServerEnabled && (
 				<AIClientInstructions
-					siteUrl={mcpData.site_url}
-					restNamespace={mcpData.rest_namespace}
+					restUrl={mcpData.rest_url}
 					appPasswordsUrl={mcpData.app_passwords_url}
 				/>
 			)}

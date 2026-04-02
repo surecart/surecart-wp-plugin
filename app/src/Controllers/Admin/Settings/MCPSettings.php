@@ -64,7 +64,7 @@ class MCPSettings extends BaseSettings {
 				'ajax_url'                 => admin_url( 'admin-ajax.php' ),
 				'nonce'                    => wp_create_nonce( 'sc_mcp_adapter_action' ),
 				'site_url'                 => site_url(),
-				'rest_namespace'           => 'surecart/v1',
+				'rest_url'                 => rest_url( 'mcp/v1/sse' ),
 				'app_passwords_url'        => admin_url( 'profile.php#application-passwords-section' ),
 				'wp_version'               => get_bloginfo( 'version' ),
 				'abilities_api_available'   => function_exists( 'wp_register_ability_category' ),

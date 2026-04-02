@@ -128,11 +128,11 @@ const clientChoices = Object.entries(AI_CLIENTS).map(([key, { label }]) => ({
 	label,
 }));
 
-export default ({ siteUrl, restNamespace, appPasswordsUrl }) => {
+export default ({ restUrl, appPasswordsUrl }) => {
 	const [selectedClient, setSelectedClient] = useState('claude_desktop');
 	const [copied, setCopied] = useState(false);
 
-	const mcpUrl = `${siteUrl}/wp-json/${restNamespace}/mcp`;
+	const mcpUrl = restUrl;
 	const currentUsername = window.wp?.data
 		?.select?.('core')
 		?.getCurrentUser?.()?.slug;
