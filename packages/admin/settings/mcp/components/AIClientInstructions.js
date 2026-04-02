@@ -144,11 +144,24 @@ export default ({ siteUrl, restNamespace, appPasswordsUrl }) => {
 	const config = client.getConfig(mcpUrl, currentUser);
 	const configJson = JSON.stringify(config, null, 2);
 
-	const handleCopy = () => {
-		navigator.clipboard.writeText(configJson).then(() => {
+	const handleCopy = async () => {
+		try {
+			await navigator.clipboard.writeText(configJson);
 			setCopied(true);
 			setTimeout(() => setCopied(false), 2000);
-		});
+		} catch (err) {
+			// Fallback for older browsers or non-HTTPS contexts.
+			const textarea = document.createElement('textarea');
+			textarea.value = configJson;
+			textarea.style.position = 'fixed';
+			textarea.style.opacity = '0';
+			document.body.appendChild(textarea);
+			textarea.select();
+			document.execCommand('copy');
+			document.body.removeChild(textarea);
+			setCopied(true);
+			setTimeout(() => setCopied(false), 2000);
+		}
 	};
 
 	// Step numbering shifts for Claude Code since it has an extra CLI step.
@@ -330,6 +343,7 @@ export default ({ siteUrl, restNamespace, appPasswordsUrl }) => {
 									--sc-border-radius-medium
 								);
 								padding: var(--sc-spacing-large);
+								padding-right: 5em;
 								overflow-x: auto;
 								font-size: 0.85em;
 								line-height: 1.5;
@@ -338,23 +352,27 @@ export default ({ siteUrl, restNamespace, appPasswordsUrl }) => {
 						>
 							{configJson}
 						</pre>
-						<ScButton
-							size="small"
+						<div
 							css={css`
 								position: absolute;
 								top: var(--sc-spacing-small);
 								right: var(--sc-spacing-small);
+								z-index: 1;
 							`}
-							onClick={handleCopy}
 						>
-							<ScIcon
-								name={copied ? 'check' : 'copy'}
-								slot="prefix"
-							/>
-							{copied
-								? __('Copied!', 'surecart')
-								: __('Copy', 'surecart')}
-						</ScButton>
+							<ScButton
+								size="small"
+								onClick={handleCopy}
+							>
+								<ScIcon
+									name={copied ? 'check' : 'copy'}
+									slot="prefix"
+								/>
+								{copied
+									? __('Copied!', 'surecart')
+									: __('Copy', 'surecart')}
+							</ScButton>
+						</div>
 					</div>
 				</div>
 
