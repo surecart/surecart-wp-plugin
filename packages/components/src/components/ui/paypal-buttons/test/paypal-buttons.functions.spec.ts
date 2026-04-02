@@ -73,6 +73,30 @@ describe('Paypal Buttons Functions', () => {
       expect(params.locale).toBe('en_US');
     });
 
+    it('should handle multi-hyphen locales like zh-Hant-TW', () => {
+      const params = getScriptLoadParams({
+        clientId: 'client_id',
+        reusable: false,
+        merchantId: 'merchant_id',
+        currency: 'usd',
+        merchantInitiated: false,
+        locale: 'zh-Hant-TW',
+      });
+      expect(params.locale).toBe('zh_Hant_TW');
+    });
+
+    it('should fall back to en_US when locale is null', () => {
+      const params = getScriptLoadParams({
+        clientId: 'client_id',
+        reusable: false,
+        merchantId: 'merchant_id',
+        currency: 'usd',
+        merchantInitiated: false,
+        locale: null,
+      });
+      expect(params.locale).toBe('en_US');
+    });
+
     it('should use a merchant_id for a non-subscription order (regardless of CIB/MIB)', () => {
       // MIB off.
       expect(
