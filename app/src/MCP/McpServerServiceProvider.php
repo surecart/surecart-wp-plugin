@@ -54,14 +54,11 @@ class McpServerServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function register_mcp_route() {
-		// Check if the MCP Adapter plugin provides the transport class.
-		if ( ! class_exists( 'Jetwp\MCP_Adapter\MCP_REST_Transport' ) && ! class_exists( 'MCP_REST_Transport' ) ) {
+		$transport_class = $this->get_transport_class();
+
+		if ( ! $transport_class ) {
 			return;
 		}
-
-		$transport_class = class_exists( 'Jetwp\MCP_Adapter\MCP_REST_Transport' )
-			? 'Jetwp\MCP_Adapter\MCP_REST_Transport'
-			: 'MCP_REST_Transport';
 
 		$transport = new $transport_class(
 			array(
@@ -71,5 +68,29 @@ class McpServerServiceProvider implements ServiceProviderInterface {
 		);
 
 		$transport->register_routes();
+	}
+
+	/**
+	 * Get the MCP transport class if available.
+	 *
+	 * The MCP Adapter plugin namespace has changed across versions,
+	 * so we check multiple possible class names.
+	 *
+	 * @return string|false The transport class name or false if not available.
+	 */
+	private function get_transport_class() {
+		$possible_classes = array(
+			'WP\\MCP\\Transport\\HttpTransport',         // v0.4+ (current).
+			'Jetwp\\MCP_Adapter\\MCP_REST_Transport',    // Legacy namespace.
+			'MCP_REST_Transport',                         // Fallback.
+		);
+
+		foreach ( $possible_classes as $class ) {
+			if ( class_exists( $class ) ) {
+				return $class;
+			}
+		}
+
+		return false;
 	}
 }

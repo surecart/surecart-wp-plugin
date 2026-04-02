@@ -113,13 +113,16 @@ class AbilityRegistrar {
 	private function should_register_ability( $ability ): bool {
 		$annotations = $ability->get_annotations();
 
+		$is_readonly    = $annotations['readonly'] ?? false;
+		$is_destructive = $annotations['destructive'] ?? false;
+
 		// If edit abilities are disabled, skip non-readonly, non-destructive abilities (create/update).
-		if ( ! $this->settings['edit_enabled'] && ! $annotations['readonly'] && ! $annotations['destructive'] ) {
+		if ( ! $this->settings['edit_enabled'] && ! $is_readonly && ! $is_destructive ) {
 			return false;
 		}
 
 		// If delete abilities are disabled, skip destructive abilities.
-		if ( ! $this->settings['delete_enabled'] && $annotations['destructive'] ) {
+		if ( ! $this->settings['delete_enabled'] && $is_destructive ) {
 			return false;
 		}
 

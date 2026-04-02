@@ -24,10 +24,18 @@ class MCPSettings extends BaseSettings {
 
 	/**
 	 * The MCP Adapter GitHub download URL.
+	 * Also referenced in MCPAdapterNotice.js for the manual download fallback — keep in sync.
 	 *
 	 * @var string
 	 */
 	const MCP_ADAPTER_DOWNLOAD_URL = 'https://github.com/WordPress/mcp-adapter/releases/latest/download/mcp-adapter.zip';
+
+	/**
+	 * The MCP Adapter GitHub repository URL.
+	 *
+	 * @var string
+	 */
+	const MCP_ADAPTER_REPO_URL = 'https://github.com/WordPress/mcp-adapter';
 
 	/**
 	 * Enqueue the show scripts.
@@ -49,16 +57,18 @@ class MCPSettings extends BaseSettings {
 			'surecart/scripts/admin/mcp',
 			'scMCPData',
 			[
-				'mcp_adapter_installed'   => $is_installed,
-				'mcp_adapter_active'      => $is_active,
-				'ajax_url'                => admin_url( 'admin-ajax.php' ),
-				'nonce'                   => wp_create_nonce( 'sc_mcp_adapter_action' ),
-				'site_url'                => site_url(),
-				'rest_namespace'          => 'surecart/v1',
-				'app_passwords_url'       => admin_url( 'profile.php#application-passwords-section' ),
-				'wp_version'              => get_bloginfo( 'version' ),
-				'abilities_api_available' => function_exists( 'wp_register_ability_category' ),
-				'settings_url'            => admin_url( 'admin.php?page=sc-settings&tab=mcp' ),
+				'mcp_adapter_installed'    => $is_installed,
+				'mcp_adapter_active'       => $is_active,
+				'mcp_adapter_download_url' => self::MCP_ADAPTER_DOWNLOAD_URL,
+				'mcp_adapter_repo_url'     => self::MCP_ADAPTER_REPO_URL,
+				'ajax_url'                 => admin_url( 'admin-ajax.php' ),
+				'nonce'                    => wp_create_nonce( 'sc_mcp_adapter_action' ),
+				'site_url'                 => site_url(),
+				'rest_namespace'           => 'surecart/v1',
+				'app_passwords_url'        => admin_url( 'profile.php#application-passwords-section' ),
+				'wp_version'               => get_bloginfo( 'version' ),
+				'abilities_api_available'   => function_exists( 'wp_register_ability_category' ),
+				'settings_url'             => admin_url( 'admin.php?page=sc-settings&tab=mcp' ),
 			]
 		);
 	}
@@ -89,6 +99,21 @@ class MCPSettings extends BaseSettings {
 		require_once ABSPATH . 'wp-admin/includes/plugin-install.php';
 		require_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
 		require_once ABSPATH . 'wp-admin/includes/plugin.php';
+
+		// Don't reinstall if already present.
+		$all_plugins = get_plugins();
+		if ( isset( $all_plugins[ self::MCP_ADAPTER_SLUG ] ) ) {
+			// Already installed — just try to activate.
+			$activate = activate_plugin( self::MCP_ADAPTER_SLUG );
+			if ( is_wp_error( $activate ) ) {
+				wp_send_json_error( [ 'message' => $activate->get_error_message() ] );
+			}
+			wp_send_json_success( [
+				'installed' => true,
+				'activated' => true,
+				'message'   => __( 'MCP Adapter activated successfully.', 'surecart' ),
+			] );
+		}
 
 		// Use a silent skin to suppress output.
 		$skin     = new \WP_Ajax_Upgrader_Skin();

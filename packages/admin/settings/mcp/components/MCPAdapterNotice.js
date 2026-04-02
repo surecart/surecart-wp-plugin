@@ -5,10 +5,6 @@ import { useState } from '@wordpress/element';
 import { ScButton, ScAlert, ScIcon } from '@surecart/components-react';
 import SettingsBox from '../../SettingsBox';
 
-const GITHUB_DOWNLOAD_URL =
-	'https://github.com/WordPress/mcp-adapter/releases/latest/download/mcp-adapter.zip';
-const GITHUB_REPO_URL = 'https://github.com/WordPress/mcp-adapter';
-
 export default ({ isInstalled }) => {
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
@@ -16,6 +12,8 @@ export default ({ isInstalled }) => {
 	const [lastAction, setLastAction] = useState(null);
 
 	const mcpData = window.scMCPData || {};
+	const downloadUrl = mcpData.mcp_adapter_download_url || 'https://github.com/WordPress/mcp-adapter/releases/latest/download/mcp-adapter.zip';
+	const repoUrl = mcpData.mcp_adapter_repo_url || 'https://github.com/WordPress/mcp-adapter';
 
 	const handleAction = async (action) => {
 		setLoading(true);
@@ -160,7 +158,7 @@ export default ({ isInstalled }) => {
 								>
 									<li>
 										<a
-											href={GITHUB_DOWNLOAD_URL}
+											href={downloadUrl}
 											target="_blank"
 											rel="noopener noreferrer"
 										>
@@ -193,7 +191,7 @@ export default ({ isInstalled }) => {
 									`}
 								>
 									<a
-										href={GITHUB_REPO_URL}
+										href={repoUrl}
 										target="_blank"
 										rel="noopener noreferrer"
 									>
