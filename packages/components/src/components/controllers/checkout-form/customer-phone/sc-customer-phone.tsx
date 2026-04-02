@@ -1,6 +1,7 @@
 import { Component, Event, EventEmitter, h, Method, Prop } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { state as checkoutState, onChange } from '@store/checkout';
+import { state as userState } from '@store/user';
 
 import { Customer } from '../../../../types';
 
@@ -95,19 +96,11 @@ export class ScCustomerPhone {
   }
 
   handleCheckoutChange() {
-    // we only want to do this  if we don't have a value.
-    if (this?.value) return;
+    const checkoutPhone = checkoutState.checkout?.phone || (checkoutState.checkout?.customer as Customer)?.phone;
 
-    // if the checkout has a phone, use that.
-    if (checkoutState.checkout?.phone) {
-      this.value = checkoutState.checkout?.phone;
-      return;
-    }
-
-    // if the customer has a phone, use that.
-    if ((checkoutState.checkout?.customer as Customer)?.phone) {
-      this.value = (checkoutState.checkout?.customer as Customer)?.phone;
-      return;
+    // Allow update if no value yet, or if logged in and checkout has new data from customer profile.
+    if (!this?.value || (userState.loggedIn && checkoutPhone && checkoutPhone !== this.value)) {
+      this.value = checkoutPhone || '';
     }
   }
 

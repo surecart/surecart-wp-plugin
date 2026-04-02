@@ -23,14 +23,37 @@ class LoginController extends RestController {
 			return $user;
 		}
 
-		User::find( $user->ID )->login();
+		$sc_user = User::find( $user->ID );
+		$sc_user->login();
 
 		$redirect_to  = $request->get_param( 'redirect_to' );
 		$redirect_url = ! empty( $redirect_to ) ? wp_validate_redirect( $redirect_to, false ) : null;
 
+		// Fetch customer data with shipping address for auto-fill at checkout.
+		$mode     = $request->get_param( 'checkout_mode' ) ?? 'live';
+		$customer = $sc_user->customer( $mode, [ 'shipping_address' ] );
+
+		$customer_data = [];
+		if ( $customer && ! is_wp_error( $customer ) ) {
+			$customer_data = [
+				'first_name'       => $customer->first_name ?? $user->display_name ?? $user->user_login,
+				'last_name'        => $customer->last_name ?? '',
+				'phone'            => $customer->phone ?? '',
+				'shipping_address' => $customer->shipping_address ?? [],
+			];
+		} else {
+			$customer_data = [
+				'first_name'       => $user->display_name ?? $user->user_login,
+				'last_name'        => '',
+				'phone'            => '',
+				'shipping_address' => [],
+			];
+		}
+
 		return [
 			'name'         => $user->display_name,
 			'email'        => $user->user_email,
+			'customer'     => $customer_data,
 			'redirect_url' => apply_filters( 'sc_login_redirect_url', $redirect_url ),
 			'nonce'        => ( wp_installing() && ! is_multisite() ) ? '' : wp_create_nonce( 'wp_rest' ),
 		];

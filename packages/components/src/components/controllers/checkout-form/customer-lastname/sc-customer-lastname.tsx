@@ -88,19 +88,19 @@ export class ScCustomerLastname {
 
   /** Sync customer last name with session if it's updated by other means */
   handleSessionChange() {
-    // we already have a value.
-    if (this.value) return;
-
     const fromUrl = getValueFromUrl('last_name');
     if (!userState.loggedIn && !!fromUrl) {
       this.value = fromUrl;
       return;
     }
 
-    if (userState.loggedIn) {
-      this.value = (checkoutState?.checkout?.customer as Customer)?.last_name || checkoutState?.checkout?.last_name;
-    } else {
-      this.value = checkoutState?.checkout?.last_name || (checkoutState?.checkout?.customer as Customer)?.last_name;
+    const checkoutLastName = userState.loggedIn
+      ? (checkoutState?.checkout?.customer as Customer)?.last_name || checkoutState?.checkout?.last_name
+      : checkoutState?.checkout?.last_name || (checkoutState?.checkout?.customer as Customer)?.last_name;
+
+    // Allow update if no value yet, or if logged in and checkout has new data from customer profile.
+    if (!this.value || (userState.loggedIn && checkoutLastName && checkoutLastName !== this.value)) {
+      this.value = checkoutLastName;
     }
   }
 

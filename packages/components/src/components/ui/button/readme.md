@@ -103,7 +103,6 @@
  - [sc-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
  - [sc-upgrade-required](../sc-upgrade-required)
  - [sc-upsell](../../controllers/upsell/sc-upsell)
- - [sc-verification-code](../verification-code)
  - [sc-wordpress-password-edit](../../controllers/dashboard/wordpress-password-edit)
  - [sc-wordpress-user](../../controllers/dashboard/wordpress-user)
  - [sc-wordpress-user-edit](../../controllers/dashboard/wordpress-user-edit)
@@ -169,7 +168,6 @@ graph TD;
   sc-upcoming-invoice --> sc-button
   sc-upgrade-required --> sc-button
   sc-upsell --> sc-button
-  sc-verification-code --> sc-button
   sc-wordpress-password-edit --> sc-button
   sc-wordpress-user --> sc-button
   sc-wordpress-user-edit --> sc-button

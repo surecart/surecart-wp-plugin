@@ -7,6 +7,7 @@ import { createOrUpdateCheckout } from '../../../../services/session';
 import { Address, Checkout } from '../../../../types';
 import { fullShippingAddressRequired, shippingAddressRequired } from '@store/checkout/getters';
 import { formLoading } from '@store/form/getters';
+import { state as userState } from '@store/user';
 
 @Component({
   tag: 'sc-order-shipping-address',
@@ -83,12 +84,24 @@ export class ScOrderShippingAddress {
   }
 
   prefillAddress() {
+    const shippingAddress = checkoutState.checkout?.shipping_address as Address;
+    if (!shippingAddress) return;
+
     // check if address keys are empty, if so, update them.
     const addressKeys = Object.keys(this.address).filter(key => key !== 'country');
     const emptyAddressKeys = addressKeys.filter(key => !this.address[key]);
-    if (emptyAddressKeys.length === addressKeys.length) {
-      this.address = { ...this.address, ...(checkoutState.checkout?.shipping_address as Address) };
+
+    // Update address if all fields are empty, or if the user is logged in
+    // and the checkout has address data (e.g. auto-filled from customer profile after login).
+    if (emptyAddressKeys.length === addressKeys.length || (userState.loggedIn && this.hasNewAddressData(shippingAddress))) {
+      this.address = { ...this.address, ...shippingAddress };
     }
+  }
+
+  /** Check if the checkout has new address data different from the current address. */
+  private hasNewAddressData(newAddress: Partial<Address>): boolean {
+    const keys = ['city', 'line_1', 'line_2', 'postal_code', 'state', 'country'];
+    return keys.some(key => newAddress[key] && newAddress[key] !== this.address[key]);
   }
 
   componentWillLoad() {

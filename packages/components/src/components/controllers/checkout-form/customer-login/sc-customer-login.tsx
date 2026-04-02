@@ -87,19 +87,21 @@ export class ScCustomerLogin {
         apiFetch.nonceMiddleware.nonce = user.nonce;
       }
 
-      // Update userState and make the user as logged in user.
-      userState.loggedIn = true;
-      userState.name = user?.name || [user?.customer?.first_name, user?.customer?.last_name].filter(Boolean).join(' ') || 'N/A';
-
       speak(__('Verification is successful. Please continue your purchase.', 'surecart'), 'assertive');
 
-      // Update checkout with the shipping address.
+      // Update checkout with the shipping address BEFORE setting user state.
+      // This ensures the checkout store is updated while all components are still mounted,
+      // since setting userState.loggedIn triggers a re-render that unmounts this component.
       await this.updateCheckout({
         shipping_address: user?.customer?.shipping_address,
         first_name: user?.customer?.first_name,
         last_name: user?.customer?.last_name,
         phone: user?.customer?.phone,
       });
+
+      // Update userState and make the user as logged in user.
+      userState.loggedIn = true;
+      userState.name = user?.name || [user?.customer?.first_name, user?.customer?.last_name].filter(Boolean).join(' ') || 'N/A';
     } catch (e: any) {
       // If cooldown has elapsed, treat as expired code.
       if (this.resendCooldown <= 0) {
@@ -196,12 +198,13 @@ export class ScCustomerLogin {
     try {
       this.error = '';
       this.busy = true;
-      const { name, email, nonce } = (await apiFetch({
+      const { name, email, nonce, customer } = (await apiFetch({
         method: 'POST',
         path: 'surecart/v1/login',
         data: {
           login: userState.email,
           password: this.password,
+          checkout_mode: checkoutState.mode,
         },
       })) as any;
 
@@ -212,11 +215,21 @@ export class ScCustomerLogin {
         apiFetch.nonceMiddleware.nonce = nonce;
       }
 
+      // Update checkout with the customer's address data BEFORE setting user state.
+      // This ensures the checkout store is updated while all components are still mounted,
+      // since setting userState.loggedIn triggers a re-render that unmounts this component.
+      await this.updateCheckout({
+        shipping_address: customer?.shipping_address,
+        first_name: customer?.first_name,
+        last_name: customer?.last_name,
+        phone: customer?.phone,
+      });
+
       this.verified = true;
 
       userState.loggedIn = true;
       userState.verificationStatus = VERIFIED;
-      userState.name = name;
+      userState.name = name || [customer?.first_name, customer?.last_name].filter(Boolean).join(' ') || 'N/A';
       userState.email = email;
     } catch (e: any) {
       this.error = e?.message || __('Login failed. Please try again.', 'surecart');
