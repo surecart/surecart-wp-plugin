@@ -24,6 +24,8 @@ export class ScAddressSuggestions {
   private boundHandleOutsideClick: (e: Event) => void;
   private abortController: AbortController;
   private isSyncingFromAddress: boolean = false;
+  /** Tracks whether the local value was set by user input / browser autofill and hasn't been synced to the address prop yet. */
+  private hasUnsyncedLocalValue: boolean = false;
 
   @Prop({ mutable: true }) address: Partial<Address> = {
     country: null,
@@ -125,7 +127,15 @@ export class ScAddressSuggestions {
   handleAddressChange() {
     if (!this.address?.country) return;
     this.isSyncingFromAddress = true;
-    this.value = this.address.line_1 || '';
+    // Only preserve the local value if it was set by user input / browser
+    // autofill and hasn't been synced to the address prop yet.
+    // Otherwise always sync from the address prop (e.g. country change clears fields).
+    if (this.hasUnsyncedLocalValue && !this.address.line_1) {
+      // Keep current local value — browser autofill hasn't synced yet.
+    } else {
+      this.value = this.address.line_1 || '';
+      this.hasUnsyncedLocalValue = false;
+    }
     this.isSyncingFromAddress = false;
     this.toggleAddressInputs();
 
@@ -162,7 +172,20 @@ export class ScAddressSuggestions {
   handleInputChange(e: any) {
     this.showSuggestions = true;
     this.value = e.target?.value;
+    this.hasUnsyncedLocalValue = !!this.value;
     this.scChange.emit();
+  }
+
+  /** Sync the input value back to the parent address on change events (blur, browser autofill). */
+  handleInputValueChange(e: any) {
+    const newValue = e.target?.value;
+    if (newValue && newValue !== this.address?.line_1) {
+      this.hasUnsyncedLocalValue = false;
+      this.scChangeAddress.emit({
+        ...(this.address as Address),
+        line_1: newValue,
+      });
+    }
   }
 
   handleKeyDown(event: KeyboardEvent) {
@@ -245,9 +268,19 @@ export class ScAddressSuggestions {
   }
 
   toggleAddressInputs() {
-    if (window?.scData?.google_map_api_key && !this.address?.line_1) {
+    // Check the local input value when it hasn't been synced to the address prop yet
+    // (e.g. browser autofill filled the input but the change event hasn't fired).
+    const hasValue = this.address?.line_1 || (this.hasUnsyncedLocalValue && this.value);
+    if (window?.scData?.google_map_api_key && !hasValue) {
       this.scHideAddressFields.emit();
     } else {
+      this.scShowAddressFields.emit();
+    }
+  }
+
+  /** Show address fields on focus so browser autofill can fill them. */
+  handleInputFocus() {
+    if (window?.scData?.google_map_api_key) {
       this.scShowAddressFields.emit();
     }
   }
@@ -377,7 +410,9 @@ export class ScAddressSuggestions {
           exportparts="base:input__base, input, form-control, label, help-text"
           value={this?.value}
           onScInput={(e: any) => this.handleInputChange(e)}
-          autocomplete="off"
+          onScChange={(e: any) => this.handleInputValueChange(e)}
+          onFocus={() => this.handleInputFocus()}
+          autocomplete="address-line1"
           placeholder={this.label}
           aria-label={this.label}
           aria-expanded={suggestionsVisible ? 'true' : 'false'}

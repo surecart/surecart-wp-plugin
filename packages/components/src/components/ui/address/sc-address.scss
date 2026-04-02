@@ -27,6 +27,20 @@
     }
   }
 
+  &__collapsible {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.2s ease-out, opacity 0.15s ease-out;
+
+    &--expanded {
+      max-height: 500px;
+      opacity: 1;
+      overflow: visible;
+      transition: max-height 0.25s ease-in, opacity 0.2s ease-in;
+    }
+  }
+
   &__columns {
     display: flex;
     flex-direction: row;
