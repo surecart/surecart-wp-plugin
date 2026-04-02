@@ -2,6 +2,7 @@
 
 namespace SureCart\Abilities\Abilities;
 
+use SureCart\Models\Period;
 use SureCart\Models\Subscription;
 
 /**
@@ -136,8 +137,8 @@ class UpdateSubscriptionRenewalDate extends AbstractAbility {
 			);
 		}
 
-		// Fetch the existing subscription.
-		$subscription = Subscription::find( $id );
+		// Fetch the existing subscription with current_period expanded.
+		$subscription = Subscription::with( array( 'current_period' ) )->find( $id );
 		if ( is_wp_error( $subscription ) ) {
 			return $subscription;
 		}
@@ -158,6 +159,16 @@ class UpdateSubscriptionRenewalDate extends AbstractAbility {
 			return $this->error(
 				'no_period_end',
 				__( 'This subscription does not have a current period end date. It may be a lifetime subscription.', 'surecart' )
+			);
+		}
+
+		// Ensure we have the current period ID.
+		$current_period = $subscription->current_period ?? null;
+		$period_id      = is_object( $current_period ) ? ( $current_period->id ?? '' ) : ( is_string( $current_period ) ? $current_period : '' );
+		if ( empty( $period_id ) ) {
+			return $this->error(
+				'no_current_period',
+				__( 'Could not resolve the current billing period for this subscription.', 'surecart' )
 			);
 		}
 
@@ -195,16 +206,16 @@ class UpdateSubscriptionRenewalDate extends AbstractAbility {
 			return $this->error( 'invalid_date', __( 'The new renewal date must be on or after the current period end date.', 'surecart' ) );
 		}
 
-		// Update the subscription with the new period end timestamp.
-		$updated = Subscription::update(
+		// Update the Period's end_at — this is how the admin UI extends renewal dates.
+		$updated_period = Period::update(
 			array(
-				'id'                    => $id,
-				'current_period_end_at' => $new_date->getTimestamp(),
+				'id'     => $period_id,
+				'end_at' => $new_date->getTimestamp(),
 			)
 		);
 
-		if ( is_wp_error( $updated ) ) {
-			return $updated;
+		if ( is_wp_error( $updated_period ) ) {
+			return $updated_period;
 		}
 
 		return $this->success(
@@ -212,7 +223,7 @@ class UpdateSubscriptionRenewalDate extends AbstractAbility {
 				'subscription_id'     => $id,
 				'old_renewal_date'    => $old_date->format( 'Y-m-d' ),
 				'new_renewal_date'    => $new_date->format( 'Y-m-d' ),
-				'subscription_status' => $updated->status ?? 'active',
+				'subscription_status' => $status,
 			)
 		);
 	}
