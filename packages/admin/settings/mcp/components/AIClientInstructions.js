@@ -133,13 +133,12 @@ export default ({ siteUrl, restNamespace, appPasswordsUrl }) => {
 	const [copied, setCopied] = useState(false);
 
 	const mcpUrl = `${siteUrl}/wp-json/${restNamespace}/mcp`;
-	const currentUser =
-		window.scData?.username ||
-		window.wp?.data?.select?.('core')?.getCurrentUser?.()?.username ||
-		'admin';
+	const currentUsername = window.wp?.data
+		?.select?.('core')
+		?.getCurrentUser?.()?.slug;
 
 	const client = AI_CLIENTS[selectedClient];
-	const config = client.getConfig(mcpUrl, currentUser);
+	const config = client.getConfig(mcpUrl, currentUsername);
 	const configJson = JSON.stringify(config, null, 2);
 
 	const handleCopy = async () => {
