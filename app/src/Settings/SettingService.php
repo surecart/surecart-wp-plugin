@@ -355,7 +355,7 @@ class SettingService {
 				'type'              => 'integer',
 				'show_in_rest'      => true,
 				'sanitize_callback' => 'absint',
-				'default'           => 20,
+				'default'           => 24,
 				'autoload'          => false,
 			]
 		);
