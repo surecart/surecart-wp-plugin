@@ -45,7 +45,7 @@ class ListLicenses extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function get_instructions(): string {
-		return 'Use this to browse or filter licenses. Filter by customer, product, or purchase. Set revoked=true to include revoked licenses. For full details on a single license, use get-license instead.';
+		return 'Use this to browse or filter licenses. To search, use the "query" parameter (not "search"). Filter by customer, product, or purchase. Set revoked=true to include revoked licenses. For full details on a single license, use get-license instead. Only known parameters are accepted: query, customer, product, purchase, revoked, page, per_page.';
 	}
 
 	/**

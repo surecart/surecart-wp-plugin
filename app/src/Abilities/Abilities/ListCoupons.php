@@ -45,7 +45,7 @@ class ListCoupons extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function get_instructions(): string {
-		return 'Use this to browse or search coupons. Set archived=true to include archived coupons. For full details on a single coupon, use get-coupon instead.';
+		return 'Use this to browse or search coupons. To search by name, use the "query" parameter (not "search" or "name") — e.g. query="SUMMER". Set archived=true to include archived coupons. For full details on a single coupon, use get-coupon instead. Only known parameters are accepted: query, archived, page, per_page.';
 	}
 
 	/**

@@ -45,7 +45,7 @@ class ListPrices extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function get_instructions(): string {
-		return 'Use this to view pricing for one or more products. Filter by product_ids to get prices for specific products. For full product details with prices included, use get-product instead.';
+		return 'Use this to view pricing for one or more products. Filter by product_ids (array of product IDs) to get prices for specific products. For full product details with prices included, use get-product instead. Only known parameters are accepted: product_ids, page, per_page.';
 	}
 
 	/**
