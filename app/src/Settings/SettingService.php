@@ -408,9 +408,9 @@ class SettingService {
 	 * @return int
 	 */
 	public function getLearnRemainingSteps() {
-		$total     = (int) $this->get( 'learn_total_steps', 0 );
+		$total     = (int) $this->get( 'learn_total_steps', 24 );
 		$completed = $this->get( 'learn_completed_steps', [] );
-		return $total ? max( 0, $total - count( (array) $completed ) ) : 0;
+		return max( 0, $total - count( (array) $completed ) );
 	}
 
 	/**
