@@ -97,6 +97,18 @@ describe('Paypal Buttons Functions', () => {
       expect(params.locale).toBe('en_US');
     });
 
+    it('should fall back to en_US when locale is an empty string', () => {
+      const params = getScriptLoadParams({
+        clientId: 'client_id',
+        reusable: false,
+        merchantId: 'merchant_id',
+        currency: 'usd',
+        merchantInitiated: false,
+        locale: '',
+      });
+      expect(params.locale).toBe('en_US');
+    });
+
     it('should use a merchant_id for a non-subscription order (regardless of CIB/MIB)', () => {
       // MIB off.
       expect(
