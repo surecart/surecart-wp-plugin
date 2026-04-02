@@ -46,6 +46,7 @@ export class ScPaypalAddMethod {
             merchantId: account_id,
             merchantInitiated: merchant_initiated,
             reusable: true,
+            locale: (window as any).scData?.locale,
           }),
         );
 
