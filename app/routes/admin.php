@@ -562,6 +562,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 		// Integrations.
 		\SureCart::route()->get()->where( 'sc_url_var', 'integrations', 'tab' )->name( 'settings.integrations' )->handle( 'Integrations@show' );
 
+		// MCP.
+		\SureCart::route()->get()->where( 'sc_url_var', 'mcp', 'tab' )->name( 'settings.mcp' )->handle( 'MCPSettings@show' );
+
 		// Learn.
 		\SureCart::route()->get()->where( 'sc_url_var', 'learn', 'tab' )->name( 'settings.learn' )->handle( 'LearnSettings@show' );
 	}

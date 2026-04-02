@@ -56,6 +56,7 @@ abstract class BaseSettings {
 			'export'                         => __( 'Data Export', 'surecart' ),
 			'connection'                     => __( 'Connection', 'surecart' ),
 			'integrations'                   => __( 'Integrations', 'surecart' ),
+			'mcp'                            => __( 'MCP', 'surecart' ),
 			'learn'                          => __( 'Learn', 'surecart' ),
 			'advanced'                       => __( 'Advanced', 'surecart' ),
 		];

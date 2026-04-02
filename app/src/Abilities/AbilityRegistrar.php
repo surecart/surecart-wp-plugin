@@ -52,6 +52,26 @@ use SureCart\Abilities\Abilities\UpdateProduct;
 class AbilityRegistrar {
 
 	/**
+	 * MCP settings for filtering abilities.
+	 *
+	 * @var array
+	 */
+	private $settings = array(
+		'edit_enabled'   => true,
+		'delete_enabled' => true,
+	);
+
+	/**
+	 * Set the MCP toggle settings.
+	 *
+	 * @param array $settings The settings array with 'edit_enabled' and 'delete_enabled' keys.
+	 * @return void
+	 */
+	public function set_settings( array $settings ) {
+		$this->settings = array_merge( $this->settings, $settings );
+	}
+
+	/**
 	 * Register the SureCart e-commerce ability category.
 	 *
 	 * @return void
@@ -75,8 +95,35 @@ class AbilityRegistrar {
 		$abilities = $this->get_abilities();
 
 		foreach ( $abilities as $ability ) {
+			// Filter out abilities based on MCP settings.
+			if ( ! $this->should_register_ability( $ability ) ) {
+				continue;
+			}
+
 			wp_register_ability( $ability->get_name(), $ability->get_config() );
 		}
+	}
+
+	/**
+	 * Check if an ability should be registered based on the current settings.
+	 *
+	 * @param \SureCart\Abilities\Abilities\AbstractAbility $ability The ability to check.
+	 * @return bool
+	 */
+	private function should_register_ability( $ability ): bool {
+		$annotations = $ability->get_annotations();
+
+		// If edit abilities are disabled, skip non-readonly, non-destructive abilities (create/update).
+		if ( ! $this->settings['edit_enabled'] && ! $annotations['readonly'] && ! $annotations['destructive'] ) {
+			return false;
+		}
+
+		// If delete abilities are disabled, skip destructive abilities.
+		if ( ! $this->settings['delete_enabled'] && $annotations['destructive'] ) {
+			return false;
+		}
+
+		return true;
 	}
 
 	/**

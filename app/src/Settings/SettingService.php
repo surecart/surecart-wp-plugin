@@ -359,6 +359,46 @@ class SettingService {
 				'autoload'          => false,
 			]
 		);
+		$this->register(
+			'surecart',
+			'mcp_abilities_enabled',
+			[
+				'type'              => 'boolean',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'boolval',
+				'default'           => true,
+			]
+		);
+		$this->register(
+			'surecart',
+			'mcp_edit_abilities_enabled',
+			[
+				'type'              => 'boolean',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'boolval',
+				'default'           => true,
+			]
+		);
+		$this->register(
+			'surecart',
+			'mcp_delete_abilities_enabled',
+			[
+				'type'              => 'boolean',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'boolval',
+				'default'           => true,
+			]
+		);
+		$this->register(
+			'surecart',
+			'mcp_server_enabled',
+			[
+				'type'              => 'boolean',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'boolval',
+				'default'           => false,
+			]
+		);
 	}
 	/**
 	 * Register a setting.

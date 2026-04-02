@@ -206,6 +206,10 @@ module.exports = {
 			__dirname,
 			'packages/admin/settings/learn/index.js'
 		),
+		['admin/settings/mcp']: path.resolve(
+			__dirname,
+			'packages/admin/settings/mcp/index.js'
+		),
 
 		/**
 		 * Data.
