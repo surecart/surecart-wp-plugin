@@ -135,9 +135,7 @@ export default ({ siteUrl, restNamespace, appPasswordsUrl }) => {
 	const mcpUrl = `${siteUrl}/wp-json/${restNamespace}/mcp`;
 	const currentUser =
 		window.scData?.username ||
-		window.wp?.data
-			?.select?.('core')
-			?.getCurrentUser?.()?.username ||
+		window.wp?.data?.select?.('core')?.getCurrentUser?.()?.username ||
 		'admin';
 
 	const client = AI_CLIENTS[selectedClient];
@@ -232,10 +230,7 @@ export default ({ siteUrl, restNamespace, appPasswordsUrl }) => {
 								target="_blank"
 								rel="noopener noreferrer"
 							>
-								{__(
-									'Open Application Passwords',
-									'surecart'
-								)}
+								{__('Open Application Passwords', 'surecart')}
 							</a>
 						</p>
 					</div>
@@ -304,9 +299,7 @@ export default ({ siteUrl, restNamespace, appPasswordsUrl }) => {
 							css={css`
 								background: var(--sc-color-gray-100);
 								padding: 2px 6px;
-								border-radius: var(
-									--sc-border-radius-small
-								);
+								border-radius: var(--sc-border-radius-small);
 								font-size: 0.85em;
 								color: var(--sc-color-gray-700);
 							`}
@@ -339,9 +332,7 @@ export default ({ siteUrl, restNamespace, appPasswordsUrl }) => {
 							css={css`
 								background: var(--sc-color-gray-900);
 								color: var(--sc-color-gray-100);
-								border-radius: var(
-									--sc-border-radius-medium
-								);
+								border-radius: var(--sc-border-radius-medium);
 								padding: var(--sc-spacing-large);
 								padding-right: 5em;
 								overflow-x: auto;
@@ -360,10 +351,7 @@ export default ({ siteUrl, restNamespace, appPasswordsUrl }) => {
 								z-index: 1;
 							`}
 						>
-							<ScButton
-								size="small"
-								onClick={handleCopy}
-							>
+							<ScButton size="small" onClick={handleCopy}>
 								<ScIcon
 									name={copied ? 'check' : 'copy'}
 									slot="prefix"

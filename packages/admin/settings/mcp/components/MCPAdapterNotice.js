@@ -13,6 +13,7 @@ export default ({ isInstalled }) => {
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
 	const [success, setSuccess] = useState(null);
+	const [lastAction, setLastAction] = useState(null);
 
 	const mcpData = window.scMCPData || {};
 
@@ -20,6 +21,7 @@ export default ({ isInstalled }) => {
 		setLoading(true);
 		setError(null);
 		setSuccess(null);
+		setLastAction(action);
 
 		try {
 			const response = await fetch(mcpData.ajax_url, {
@@ -57,10 +59,7 @@ export default ({ isInstalled }) => {
 	return (
 		<SettingsBox
 			title={__('MCP', 'surecart')}
-			description={__(
-				'Connect AI assistants to your store.',
-				'surecart'
-			)}
+			description={__('Connect AI assistants to your store.', 'surecart')}
 			noButton
 		>
 			{!!success && (
@@ -123,7 +122,9 @@ export default ({ isInstalled }) => {
 					{!!error && (
 						<ScAlert type="danger" open>
 							<span slot="title">
-								{__('Installation failed', 'surecart')}
+								{lastAction === 'activate'
+									? __('Activation failed', 'surecart')
+									: __('Installation failed', 'surecart')}
 							</span>
 							<div
 								css={css`
@@ -167,8 +168,7 @@ export default ({ isInstalled }) => {
 												'Download MCP Adapter',
 												'surecart'
 											)}
-										</a>
-										{' '}
+										</a>{' '}
 										{__(
 											'from GitHub releases.',
 											'surecart'
@@ -197,11 +197,7 @@ export default ({ isInstalled }) => {
 										target="_blank"
 										rel="noopener noreferrer"
 									>
-										{__(
-											'View on GitHub',
-											'surecart'
-										)}
-										{' '}
+										{__('View on GitHub', 'surecart')}{' '}
 										<ScIcon
 											name="external-link"
 											style={{
