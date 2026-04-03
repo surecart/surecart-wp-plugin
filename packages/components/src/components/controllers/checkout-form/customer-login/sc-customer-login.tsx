@@ -276,6 +276,7 @@ export class ScCustomerLogin {
             class="customer-code__mode-link"
             onClick={e => {
               e.preventDefault();
+              this.error = '';
               this.mode = 'password';
             }}
           >
@@ -320,6 +321,7 @@ export class ScCustomerLogin {
               class="customer-code__mode-link"
               onClick={e => {
                 e.preventDefault();
+                this.error = '';
                 this.mode = 'code';
               }}
             >
