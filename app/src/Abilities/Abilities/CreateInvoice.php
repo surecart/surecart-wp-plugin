@@ -64,34 +64,39 @@ class CreateInvoice extends AbstractAbility {
 		return array(
 			'type'       => 'object',
 			'properties' => array(
-				'customer_id'  => array(
+				'customer_id'           => array(
 					'type'        => 'string',
 					'description' => __( 'The SureCart customer ID to invoice.', 'surecart' ),
 				),
-				'price_id'     => array(
+				'price_id'              => array(
 					'type'        => 'string',
 					'description' => __( 'The price ID to add as a line item. Use surecart/list-prices to find available prices.', 'surecart' ),
 				),
-				'variant_id'   => array(
+				'variant_id'            => array(
 					'type'        => 'string',
 					'description' => __( 'The variant ID for multi-variant products. Required when the product has variants. Use surecart/get-product to see available variants and their IDs.', 'surecart' ),
 				),
-				'due_date'     => array(
+				'due_date'              => array(
 					'type'        => 'string',
 					'description' => __( 'Due date in YYYY-MM-DD format.', 'surecart' ),
 				),
-				'ad_hoc_amount' => array(
+				'ad_hoc_amount'         => array(
 					'type'        => 'integer',
 					'description' => __( 'Custom amount in smallest currency unit (e.g., 9999 for $99.99). Only works with ad-hoc enabled prices.', 'surecart' ),
 				),
-				'quantity'     => array(
+				'quantity'              => array(
 					'type'        => 'integer',
 					'description' => __( 'Line item quantity. Defaults to 1.', 'surecart' ),
 					'default'     => 1,
 				),
-				'description'  => array(
+				'description'           => array(
 					'type'        => 'string',
 					'description' => __( 'Invoice memo or description.', 'surecart' ),
+				),
+				'notifications_enabled' => array(
+					'type'        => 'boolean',
+					'description' => __( 'Whether to send an email notification to the customer when the invoice is opened. Defaults to true.', 'surecart' ),
+					'default'     => true,
 				),
 			),
 			'required'   => array( 'customer_id', 'price_id', 'due_date' ),
@@ -142,11 +147,9 @@ class CreateInvoice extends AbstractAbility {
 		}
 
 		// Step 1: Create a draft invoice.
-		$invoice = Invoice::create(
-			array(
-				'live_mode' => true,
-			)
-		);
+		// Do not hardcode live_mode — let SureCart inherit the store's active mode.
+		// This ensures invoices can be created for both live and test mode customers.
+		$invoice = Invoice::create( array() );
 
 		if ( is_wp_error( $invoice ) ) {
 			return $invoice;
@@ -162,8 +165,13 @@ class CreateInvoice extends AbstractAbility {
 		}
 
 		// Step 2: Update the checkout with the customer.
-		// The admin UI uses customer_id (not customer) when patching the checkout.
-		$checkout = Checkout::update(
+		// Expand customer.shipping_address so we can sync it to the checkout (mirrors admin UI behavior).
+		$checkout = Checkout::with(
+			array(
+				'customer',
+				'customer.shipping_address',
+			)
+		)->update(
 			array(
 				'id'          => $checkout_id,
 				'customer_id' => $customer_id,
@@ -172,6 +180,28 @@ class CreateInvoice extends AbstractAbility {
 
 		if ( is_wp_error( $checkout ) ) {
 			return $checkout;
+		}
+
+		// Step 2b: Sync the customer's shipping address to the checkout.
+		// The admin UI does this as a second PATCH after attaching the customer.
+		// Without this, open() fails with "Please enter additional shipping address information".
+		if ( ! empty( $checkout->customer->shipping_address ) ) {
+			$shipping_address = $checkout->customer->shipping_address;
+
+			// Convert the address model/object to an array for the update.
+			$address_data = is_object( $shipping_address ) ? (array) $shipping_address : $shipping_address;
+
+			$checkout = Checkout::update(
+				array(
+					'id'               => $checkout_id,
+					'customer_id'      => $customer_id,
+					'shipping_address' => $address_data,
+				)
+			);
+
+			if ( is_wp_error( $checkout ) ) {
+				return $checkout;
+			}
 		}
 
 		// Step 3: Add a line item to the checkout.
@@ -203,6 +233,11 @@ class CreateInvoice extends AbstractAbility {
 
 		if ( ! empty( $input['description'] ) ) {
 			$invoice_update_data['memo'] = sanitize_textarea_field( $input['description'] );
+		}
+
+		// Persist notifications_enabled before opening so the open action respects it.
+		if ( isset( $input['notifications_enabled'] ) ) {
+			$invoice_update_data['notifications_enabled'] = (bool) $input['notifications_enabled'];
 		}
 
 		$updated_invoice = Invoice::update( $invoice_update_data );
