@@ -29,7 +29,7 @@ class CreateInvoice extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function get_description(): string {
-		return __( 'Create a new SureCart invoice for a customer. Requires a customer ID, a price ID for the line item, and a due date. Optionally set a custom ad-hoc amount, quantity, and a memo/description. The invoice is created in draft status and then opened so the customer can pay.', 'surecart' );
+		return __( 'Create a new SureCart invoice for a customer. Requires a customer ID, a price ID for the line item, and a due date. For multi-variant products, a variant_id is required to specify which variant to invoice. Optionally set a custom ad-hoc amount, quantity, and a memo/description. The invoice is created in draft status and then opened so the customer can pay.', 'surecart' );
 	}
 
 	/**
@@ -47,7 +47,7 @@ class CreateInvoice extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function get_instructions(): string {
-		return 'This ability creates a full invoice in one step. It requires a customer_id and a price_id (use surecart/list-prices to find one). If the price has ad_hoc enabled, you can override the amount with ad_hoc_amount in smallest currency unit (e.g., 9999 for $99.99). A due_date in YYYY-MM-DD format is required. The invoice is created as a draft, populated with the line item and customer, then opened automatically. Each call creates a new invoice — do not call multiple times for the same invoice. Always confirm the details with the user before creating.';
+		return 'This ability creates a full invoice in one step. It requires a customer_id and a price_id (use surecart/list-prices to find one). For products with multiple variants, you MUST also provide a variant_id — use surecart/get-product to retrieve the product and inspect its variants array to find the correct variant ID. Without a variant_id on multi-variant products, the invoice will fail with "Item no longer available". If the price has ad_hoc enabled, you can override the amount with ad_hoc_amount in smallest currency unit (e.g., 9999 for $99.99). A due_date in YYYY-MM-DD format is required. The invoice is created as a draft, populated with the line item and customer, then opened automatically. Each call creates a new invoice — do not call multiple times for the same invoice. Always confirm the details with the user before creating.';
 	}
 
 	/**
@@ -71,6 +71,10 @@ class CreateInvoice extends AbstractAbility {
 				'price_id'     => array(
 					'type'        => 'string',
 					'description' => __( 'The price ID to add as a line item. Use surecart/list-prices to find available prices.', 'surecart' ),
+				),
+				'variant_id'   => array(
+					'type'        => 'string',
+					'description' => __( 'The variant ID for multi-variant products. Required when the product has variants. Use surecart/get-product to see available variants and their IDs.', 'surecart' ),
 				),
 				'due_date'     => array(
 					'type'        => 'string',
@@ -176,6 +180,10 @@ class CreateInvoice extends AbstractAbility {
 			'price'    => $price_id,
 			'quantity' => $quantity,
 		);
+
+		if ( ! empty( $input['variant_id'] ) ) {
+			$line_item_data['variant'] = sanitize_text_field( $input['variant_id'] );
+		}
 
 		if ( ! empty( $input['ad_hoc_amount'] ) ) {
 			$line_item_data['ad_hoc_amount'] = absint( $input['ad_hoc_amount'] );
