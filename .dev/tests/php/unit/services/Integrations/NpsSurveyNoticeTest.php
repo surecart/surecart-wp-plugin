@@ -186,4 +186,103 @@ class NpsSurveyNoticeTest extends SureCartUnitTestCase {
 
 		$this->assertSame( NpsSurveyNotice::OTTOKIT_WEBHOOK_URL, $result );
 	}
+
+	public function test_ensure_nps_survey_vars_fills_missing_nonce_for_admin(): void {
+		wp_set_current_user( $this->factory->user->create( [ 'role' => 'administrator' ] ) );
+
+		$result = $this->notice->ensureNpsSurveyVars( [ 'ajaxurl' => '/wp-admin/admin-ajax.php', 'rest_api_nonce' => '' ] );
+
+		$this->assertNotEmpty( $result['rest_api_nonce'] );
+	}
+
+	public function test_ensure_nps_survey_vars_preserves_existing_nonce(): void {
+		wp_set_current_user( $this->factory->user->create( [ 'role' => 'administrator' ] ) );
+
+		$result = $this->notice->ensureNpsSurveyVars( [ 'rest_api_nonce' => 'existing_nonce' ] );
+
+		$this->assertSame( 'existing_nonce', $result['rest_api_nonce'] );
+	}
+
+	public function test_ensure_nps_survey_vars_does_not_set_nonce_for_non_admin(): void {
+		wp_set_current_user( $this->factory->user->create( [ 'role' => 'subscriber' ] ) );
+
+		$result = $this->notice->ensureNpsSurveyVars( [ 'rest_api_nonce' => '' ] );
+
+		$this->assertEmpty( $result['rest_api_nonce'] );
+	}
+
+	private function setUpSureCartScreen(): void {
+		\SureCart::alias( 'pages', function () {
+			return new class {
+				public function getSureCartPageScreenIds() {
+					return [ 'toplevel_page_sc-dashboard' ];
+				}
+			};
+		} );
+
+		set_current_screen( 'toplevel_page_sc-dashboard' );
+	}
+
+	public function test_force_nps_asset_src_overrides_script_on_surecart_screens(): void {
+		$this->setUpSureCartScreen();
+
+		$astra_src = 'https://example.com/wp-content/themes/astra/inc/lib/nps-survey/dist/main.js?ver=1.0.0';
+		$result    = $this->notice->forceNpsAssetSrc( $astra_src, 'nps-survey-script' );
+
+		$this->assertStringContainsString( 'vendor/brainstormforce/nps-survey/dist/main.js', $result );
+		$this->assertStringNotContainsString( 'astra', $result );
+	}
+
+	public function test_force_nps_asset_src_overrides_style_on_surecart_screens(): void {
+		$this->setUpSureCartScreen();
+
+		$astra_src = 'https://example.com/wp-content/themes/astra/inc/lib/nps-survey/dist/style-main.css?ver=1.0.0';
+		$result    = $this->notice->forceNpsAssetSrc( $astra_src, 'nps-survey-style' );
+
+		$this->assertStringContainsString( 'vendor/brainstormforce/nps-survey/dist/style-main.css', $result );
+		$this->assertStringNotContainsString( 'astra', $result );
+	}
+
+	public function test_force_nps_asset_src_preserves_query_string(): void {
+		$this->setUpSureCartScreen();
+
+		$src    = 'https://example.com/nps-survey/dist/main.js?ver=1.2.3';
+		$result = $this->notice->forceNpsAssetSrc( $src, 'nps-survey-script' );
+
+		$this->assertStringEndsWith( '?ver=1.2.3', $result );
+	}
+
+	public function test_force_nps_asset_src_handles_src_without_query_string(): void {
+		$this->setUpSureCartScreen();
+
+		$src    = 'https://example.com/nps-survey/dist/main.js';
+		$result = $this->notice->forceNpsAssetSrc( $src, 'nps-survey-script' );
+
+		$this->assertStringContainsString( 'vendor/brainstormforce/nps-survey/dist/main.js', $result );
+		$this->assertStringNotContainsString( '?', $result );
+	}
+
+	public function test_force_nps_asset_src_passes_through_for_unrelated_handles(): void {
+		$src    = 'https://example.com/some-other-script.js?ver=1.0.0';
+		$result = $this->notice->forceNpsAssetSrc( $src, 'some-other-script' );
+
+		$this->assertSame( $src, $result );
+	}
+
+	public function test_force_nps_asset_src_passes_through_on_non_surecart_screens(): void {
+		\SureCart::alias( 'pages', function () {
+			return new class {
+				public function getSureCartPageScreenIds() {
+					return [ 'toplevel_page_sc-dashboard' ];
+				}
+			};
+		} );
+
+		set_current_screen( 'dashboard' );
+
+		$astra_src = 'https://example.com/wp-content/themes/astra/inc/lib/nps-survey/dist/main.js?ver=1.0.0';
+		$result    = $this->notice->forceNpsAssetSrc( $astra_src, 'nps-survey-script' );
+
+		$this->assertSame( $astra_src, $result );
+	}
 }

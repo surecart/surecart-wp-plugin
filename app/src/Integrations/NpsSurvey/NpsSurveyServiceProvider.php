@@ -9,11 +9,11 @@ use SureCartCore\ServiceProviders\ServiceProviderInterface;
  */
 class NpsSurveyServiceProvider implements ServiceProviderInterface {
 	/**
-	 * Whether the NPS survey library has already been loaded.
+	 * Whether the NPS survey version check has already been performed.
 	 *
 	 * @var bool
 	 */
-	private static bool $library_loaded = false;
+	private static bool $version_checked = false;
 
 	/**
 	 * Register all dependencies in the IoC container.
@@ -37,19 +37,25 @@ class NpsSurveyServiceProvider implements ServiceProviderInterface {
 			return;
 		}
 
-		$this->loadNpsSurveyLibrary();
+		$this->versionCheck();
+
+		if ( did_action( 'init' ) ) {
+			$this->loadNpsSurveyLibrary();
+		} else {
+			add_action( 'init', [ $this, 'loadNpsSurveyLibrary' ], 999 );
+		}
 
 		// Load the NPS survey notice on all admin pages, but it will only display on SureCart admin pages.
 		\SureCart::resolve( 'surecart.nps.survey.notice' )->bootstrap();
 	}
 
 	/**
-	 * Load the NPS survey library with version check.
+	 * Register SureCart's NPS survey version in the global version auction.
 	 *
 	 * @return void
 	 */
-	private function loadNpsSurveyLibrary(): void {
-		if ( self::$library_loaded ) {
+	private function versionCheck(): void {
+		if ( self::$version_checked ) {
 			return;
 		}
 
@@ -76,16 +82,24 @@ class NpsSurveyServiceProvider implements ServiceProviderInterface {
 			$nps_survey_version = '0.0.0';
 		}
 
-		// Compare versions.
 		if ( version_compare( $version, $nps_survey_version, '>=' ) ) {
 			$nps_survey_version = $version;
 			$nps_survey_init    = $path;
 		}
 
+		self::$version_checked = true;
+	}
+
+	/**
+	 * Load the winning NPS survey library file.
+	 *
+	 * @return void
+	 */
+	public function loadNpsSurveyLibrary(): void {
+		global $nps_survey_init;
+
 		if ( $nps_survey_init && is_file( $nps_survey_init ) ) {
 			include_once $nps_survey_init;
 		}
-
-		self::$library_loaded = true;
 	}
 }

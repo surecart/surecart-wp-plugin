@@ -52,6 +52,9 @@ class NpsSurveyNotice {
 		add_filter( 'nps_survey_post_data', [ $this, 'getNpsSurveyPostData' ], 10 );
 		add_filter( 'nps_survey_api_endpoint', [ $this, 'getNpsSurveyApiEndpoint' ], 11, 2 );
 		add_filter( 'nps_survey_should_skip_status_update', [ $this, 'handleStatusUpdate' ], 10, 2 );
+		add_filter( 'nps_survey_vars', [ $this, 'ensureNpsSurveyVars' ], 10 );
+		add_filter( 'script_loader_src', [ $this, 'forceNpsAssetSrc' ], 10, 2 );
+		add_filter( 'style_loader_src', [ $this, 'forceNpsAssetSrc' ], 10, 2 );
 		add_action( 'admin_footer', [ $this, 'showNpsNotice' ], 999 );
 	}
 
@@ -130,6 +133,54 @@ class NpsSurveyNotice {
 		}
 
 		return self::OTTOKIT_WEBHOOK_URL;
+	}
+
+	/**
+	 * Ensure NPS survey vars include a valid REST API nonce for admins.
+	 *
+	 * @param array $vars Localized script variables.
+	 * @return array
+	 */
+	public function ensureNpsSurveyVars( array $vars ): array {
+		if ( empty( $vars['rest_api_nonce'] ) && current_user_can( 'manage_options' ) ) {
+			$vars['rest_api_nonce'] = wp_create_nonce( 'wp_rest' );
+		}
+
+		return $vars;
+	}
+
+	/**
+	 * Map of NPS survey asset handles to their corresponding filenames.
+	 *
+	 * @var array<string, string>
+	 */
+	private const NPS_ASSET_MAP = [
+		'nps-survey-script' => 'main.js',
+		'nps-survey-style'  => 'style-main.css',
+	];
+
+	/**
+	 * Force NPS survey assets to load from SureCart's vendor copy on SureCart admin pages.
+	 *
+	 * @param string $src    Asset source URL.
+	 * @param string $handle Asset handle name.
+	 * @return string
+	 */
+	public function forceNpsAssetSrc( string $src, string $handle ): string {
+		$filename = self::NPS_ASSET_MAP[ $handle ] ?? null;
+		if ( ! $filename ) {
+			return $src;
+		}
+
+		$screen = get_current_screen();
+		if ( ! $screen || ! in_array( $screen->id, \SureCart::pages()->getSureCartPageScreenIds(), true ) ) {
+			return $src;
+		}
+
+		$query = wp_parse_url( $src, PHP_URL_QUERY );
+
+		return plugins_url( 'vendor/brainstormforce/nps-survey/dist/' . $filename, SURECART_PLUGIN_FILE )
+			. ( $query ? '?' . $query : '' );
 	}
 
 	/**
