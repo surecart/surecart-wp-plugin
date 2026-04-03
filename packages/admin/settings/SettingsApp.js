@@ -127,7 +127,7 @@ export default function SettingsApp() {
 	return (
 		<div id="sc-settings-content">
 			<SettingsSidebar currentTab={currentTab} />
-			<div className="sc-container">
+			<div className={`sc-container tab-${currentTab}`}>
 				<div className="sc-content" id="app">
 					<ErrorBoundary>
 						<Suspense fallback={<TabLoading />}>
