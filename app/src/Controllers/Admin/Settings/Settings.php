@@ -3,12 +3,11 @@
 namespace SureCart\Controllers\Admin\Settings;
 
 /**
- * Unified settings controller for client-side routed settings SPA.
- * Replaces all individual per-tab settings controllers for the main render.
+ * Settings controller for the client-side routed settings SPA.
  */
-class UnifiedSettings extends BaseSettings {
+class Settings extends BaseSettings {
 	/**
-	 * Script handles for the unified settings page.
+	 * Script handles for the settings page.
 	 *
 	 * @var array
 	 */

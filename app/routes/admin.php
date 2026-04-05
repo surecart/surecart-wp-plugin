@@ -509,7 +509,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->group(
 	function () {
 		// All GET requests render the unified settings SPA shell.
-		\SureCart::route()->get()->name( 'settings' )->handle( 'UnifiedSettings@show' );
+		\SureCart::route()->get()->name( 'settings' )->handle( 'Settings@show' );
 
 		// POST routes still need server-side handling.
 		\SureCart::route()->post()->where( 'sc_url_var', 'advanced', 'tab' )->middleware( 'nonce:update_plugin_settings' )->name( 'settings.advanced.save' )->handle( 'AdvancedSettings@save' );
