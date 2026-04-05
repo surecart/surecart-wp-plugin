@@ -33,6 +33,11 @@ export default function UnsavedChangesWarning() {
 		// conditions with `BrowserURL` where `componentDidUpdate` gets the
 		// new value of `isEditedPostDirty` before this component does,
 		// causing this component to incorrectly think a trashed post is still dirty.
+		// Skip when the navigation guard already handled the confirmation.
+		if (window.__surecartSkipUnloadWarning) {
+			return;
+		}
+
 		if (isDirty()) {
 			event.preventDefault();
 			event.returnValue = __(

@@ -8,7 +8,7 @@ import { createRoot } from '@wordpress/element';
  */
 import '../store/add-entities';
 import ErrorBoundary from '../components/error-boundary';
-import { RouterProvider } from '../router';
+import { RouterProvider, NavigationGuardProvider } from '../router';
 import SettingsApp from './SettingsApp';
 
 const container = document.getElementById('sc-settings-app');
@@ -18,7 +18,9 @@ if (container) {
 	root.render(
 		<ErrorBoundary>
 			<RouterProvider>
-				<SettingsApp />
+				<NavigationGuardProvider>
+					<SettingsApp />
+				</NavigationGuardProvider>
 			</RouterProvider>
 		</ErrorBoundary>
 	);
