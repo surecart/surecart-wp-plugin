@@ -10,6 +10,21 @@ import {
 } from '@surecart/components-react';
 import SettingsBox from '../../SettingsBox';
 
+/**
+ * Build the MCP args array. When the site is served over plain HTTP
+ * (e.g. local development), the `--allow-http` flag is required.
+ *
+ * @param {string} mcpUrl The REST URL for the MCP endpoint.
+ * @return {string[]} The args for the npx command.
+ */
+const getMcpArgs = (mcpUrl) => {
+	const args = ['-y', '@automattic/mcp-wordpress-remote@latest'];
+	if (mcpUrl && mcpUrl.startsWith('http://')) {
+		args.push('--allow-http');
+	}
+	return args;
+};
+
 const AI_CLIENTS = {
 	claude_desktop: {
 		label: __('Claude Desktop', 'surecart'),
@@ -19,7 +34,7 @@ const AI_CLIENTS = {
 			mcpServers: {
 				surecart: {
 					command: 'npx',
-					args: ['-y', '@automattic/mcp-wordpress-remote@latest'],
+					args: getMcpArgs(mcpUrl),
 					env: {
 						WP_API_URL: mcpUrl,
 						WP_API_USERNAME: username,
@@ -32,13 +47,16 @@ const AI_CLIENTS = {
 	claude_code: {
 		label: __('Claude Code', 'surecart'),
 		configPath: '.mcp.json (project) or ~/.claude.json (global)',
-		cliCommand: () =>
-			'claude mcp add surecart -- npx -y @automattic/mcp-wordpress-remote@latest',
+		cliCommand: (mcpUrl) => {
+			const allowHttp =
+				mcpUrl && mcpUrl.startsWith('http://') ? ' --allow-http' : '';
+			return `claude mcp add surecart -- npx -y @automattic/mcp-wordpress-remote@latest${allowHttp}`;
+		},
 		getConfig: (mcpUrl, username) => ({
 			mcpServers: {
 				surecart: {
 					command: 'npx',
-					args: ['-y', '@automattic/mcp-wordpress-remote@latest'],
+					args: getMcpArgs(mcpUrl),
 					env: {
 						WP_API_URL: mcpUrl,
 						WP_API_USERNAME: username,
@@ -55,7 +73,7 @@ const AI_CLIENTS = {
 			mcpServers: {
 				surecart: {
 					command: 'npx',
-					args: ['-y', '@automattic/mcp-wordpress-remote@latest'],
+					args: getMcpArgs(mcpUrl),
 					env: {
 						WP_API_URL: mcpUrl,
 						WP_API_USERNAME: username,
@@ -73,7 +91,7 @@ const AI_CLIENTS = {
 			servers: {
 				surecart: {
 					command: 'npx',
-					args: ['-y', '@automattic/mcp-wordpress-remote@latest'],
+					args: getMcpArgs(mcpUrl),
 					env: {
 						WP_API_URL: mcpUrl,
 						WP_API_USERNAME: username,
@@ -91,7 +109,7 @@ const AI_CLIENTS = {
 				{
 					name: 'surecart',
 					command: 'npx',
-					args: ['-y', '@automattic/mcp-wordpress-remote@latest'],
+					args: getMcpArgs(mcpUrl),
 					env: {
 						WP_API_URL: mcpUrl,
 						WP_API_USERNAME: username,
@@ -108,7 +126,7 @@ const AI_CLIENTS = {
 			mcpServers: {
 				surecart: {
 					command: 'npx',
-					args: ['-y', '@automattic/mcp-wordpress-remote@latest'],
+					args: getMcpArgs(mcpUrl),
 					env: {
 						WP_API_URL: mcpUrl,
 						WP_API_USERNAME: username,
@@ -269,7 +287,7 @@ export default ({ restUrl, appPasswordsUrl }) => {
 									margin: 0;
 								`}
 							>
-								{client.cliCommand()}
+								{client.cliCommand(mcpUrl)}
 							</pre>
 						</div>
 					)}
@@ -364,25 +382,64 @@ export default ({ restUrl, appPasswordsUrl }) => {
 				</div>
 
 				<ScAlert open type="info">
-					<span
+					<div
 						css={css`
-							line-height: 1.5;
+							line-height: 1.6;
+							display: flex;
+							flex-direction: column;
+							gap: 6px;
 						`}
 					>
-						<strong>WP_API_URL</strong>
-						{' — '}
-						{__("your site's MCP endpoint.", 'surecart')}{' '}
-						<strong>WP_API_USERNAME</strong>
-						{' — '}
-						{__('your WordPress username.', 'surecart')}{' '}
-						<strong>WP_API_PASSWORD</strong>
-						{' — '}
-						{__(
-							'the application password you generated.',
-							'surecart'
-						)}
-					</span>
+						<div>
+							<strong>WP_API_URL</strong>
+							{' — '}
+							{__("your site's MCP endpoint.", 'surecart')}{' '}
+							<strong>WP_API_USERNAME</strong>
+							{' — '}
+							{__('your WordPress username.', 'surecart')}{' '}
+							<strong>WP_API_PASSWORD</strong>
+							{' — '}
+							{__(
+								'the application password you generated.',
+								'surecart'
+							)}
+						</div>
+						<div>
+							{__(
+								'Requires Node.js 20.1+. Verify with',
+								'surecart'
+							)}{' '}
+							<code>node -v</code>
+							{__(' in your terminal.', 'surecart')}{' '}
+							{__(
+								'If you have an older version, remove or switch it using nvm (e.g.',
+								'surecart'
+							)}{' '}
+							<code>nvm install 20 && nvm use 20</code>
+							{__(') before connecting.', 'surecart')}
+						</div>
+					</div>
 				</ScAlert>
+
+				{mcpUrl && mcpUrl.startsWith('http://') && (
+					<ScAlert open type="warning">
+						<span
+							css={css`
+								line-height: 1.5;
+							`}
+						>
+							{__(
+								'Your site is using HTTP. The config above includes the',
+								'surecart'
+							)}{' '}
+							<code>--allow-http</code>{' '}
+							{__(
+								'flag required for non-SSL connections. Use HTTPS in production.',
+								'surecart'
+							)}
+						</span>
+					</ScAlert>
+				)}
 			</div>
 		</SettingsBox>
 	);
