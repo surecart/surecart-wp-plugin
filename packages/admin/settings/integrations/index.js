@@ -3,15 +3,13 @@ import ErrorBoundary from '../../components/error-boundary';
 import '../store';
 
 import Settings from './Integrations';
-import { RouterProvider, NavigationGuardProvider } from '../../router';
+import { RouterProvider } from '../../router';
 
 const root = createRoot(document.getElementById('app'));
 root.render(
 	<ErrorBoundary>
 		<RouterProvider>
-			<NavigationGuardProvider>
-				<Settings />
-			</NavigationGuardProvider>
+			<Settings />
 		</RouterProvider>
 	</ErrorBoundary>
 );

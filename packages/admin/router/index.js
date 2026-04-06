@@ -40,4 +40,3 @@ export function RouterProvider({ children }) {
 }
 
 export * from './useLink';
-export { NavigationGuardProvider } from './NavigationGuard';
