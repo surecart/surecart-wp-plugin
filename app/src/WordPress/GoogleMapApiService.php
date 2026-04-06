@@ -33,7 +33,7 @@ class GoogleMapApiService {
 	 * @param mixed  $old_value Old value.
 	 * @param string $option    Option name.
 	 *
-	 * @return string|\WP_Error
+	 * @return string
 	 */
 	public function encryptSettings( $value, $old_value, $option ) {
 		if ( empty( $value ) ) {
@@ -53,7 +53,7 @@ class GoogleMapApiService {
 	 *
 	 * @param mixed $value  Value.
 	 *
-	 * @return string|\WP_Error
+	 * @return string
 	 */
 	public function decryptSettings( $value ) {
 		if ( empty( $value ) || is_wp_error( $value ) ) {
