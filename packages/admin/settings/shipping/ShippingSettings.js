@@ -232,10 +232,6 @@ export default () => {
 				</SettingsBox>
 				<SettingsBox
 					title={__('Address Autocomplete', 'surecart')}
-					description={__(
-						'Enable Google Maps API for the shipping address field autocompletion.',
-						'surecart'
-					)}
 					loading={!hasLoadedShippingProtocol}
 				>
 					<ScSwitch
