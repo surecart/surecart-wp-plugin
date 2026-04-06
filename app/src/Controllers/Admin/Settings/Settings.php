@@ -29,7 +29,6 @@ class Settings extends BaseSettings {
 
 		return \SureCart::view( $this->template )->with(
 			[
-				'tab'           => $request->query( 'tab' ) ?? '',
 				'breadcrumb'    => '',
 				'claim_url'     => ! \SureCart::account()->claimed ? \SureCart::routeUrl( 'account.claim' ) : '',
 				'claim_expired' => \SureCart::account()->claim_expired ?? false,

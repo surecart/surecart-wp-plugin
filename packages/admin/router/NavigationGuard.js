@@ -7,11 +7,14 @@ import {
 	useState,
 	useCallback,
 } from '@wordpress/element';
-import { useDispatch } from '@wordpress/data';
-import { select } from '@wordpress/data';
+import { useDispatch, select } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import { store as noticesStore } from '@wordpress/notices';
-import { Modal, Button, __experimentalHStack as HStack } from '@wordpress/components';
+import {
+	Modal,
+	Button,
+	__experimentalHStack as HStack,
+} from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -19,7 +22,17 @@ import { __ } from '@wordpress/i18n';
  */
 import history from './history';
 
-const NavigationGuardContext = createContext();
+/**
+ * Default context value — plain navigation with no dirty-record check.
+ * Used when no NavigationGuardProvider is in the tree so useLink
+ * still works on every admin page without crashing.
+ */
+const NavigationGuardContext = createContext({
+	navigate: (params) => {
+		history.push(params);
+		window.scrollTo(0, 0);
+	},
+});
 
 /**
  * Hook to access the guarded navigation function.
@@ -103,7 +116,12 @@ export function NavigationGuardProvider({ children }) {
 		} finally {
 			setIsSaving(false);
 		}
-	}, [pendingNavigation, saveEditedEntityRecord, createSuccessNotice, createErrorNotice]);
+	}, [
+		pendingNavigation,
+		saveEditedEntityRecord,
+		createSuccessNotice,
+		createErrorNotice,
+	]);
 
 	/**
 	 * Discard changes by doing a full page navigation (clears in-memory state).
@@ -151,7 +169,7 @@ export function NavigationGuardProvider({ children }) {
 							'surecart'
 						)}
 					</p>
-					<HStack justify="right">
+					<HStack justify="space-between">
 						<Button
 							variant="tertiary"
 							onClick={handleCancel}
@@ -159,22 +177,24 @@ export function NavigationGuardProvider({ children }) {
 						>
 							{__('Cancel', 'surecart')}
 						</Button>
-						<Button
-							variant="secondary"
-							isDestructive
-							onClick={handleDiscard}
-							disabled={isSaving}
-						>
-							{__('Discard', 'surecart')}
-						</Button>
-						<Button
-							variant="primary"
-							onClick={handleSave}
-							isBusy={isSaving}
-							disabled={isSaving}
-						>
-							{__('Save', 'surecart')}
-						</Button>
+						<HStack justify="right" gap={2}>
+							<Button
+								variant="secondary"
+								isDestructive
+								onClick={handleDiscard}
+								disabled={isSaving}
+							>
+								{__('Discard', 'surecart')}
+							</Button>
+							<Button
+								variant="primary"
+								onClick={handleSave}
+								isBusy={isSaving}
+								disabled={isSaving}
+							>
+								{__('Save', 'surecart')}
+							</Button>
+						</HStack>
 					</HStack>
 				</Modal>
 			)}
