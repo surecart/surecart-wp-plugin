@@ -496,7 +496,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 /*
 |--------------------------------------------------------------------------
-| Settings (Unified SPA — all tabs handled client-side)
+| Settings
 |--------------------------------------------------------------------------
 */
 \SureCart::route()
@@ -508,7 +508,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\Settings\\' )
 ->group(
 	function () {
-		// All GET requests render the unified settings SPA shell.
+		// All GET requests render the settings page, the actual tab is determined client-side.
 		\SureCart::route()->get()->name( 'settings' )->handle( 'Settings@show' );
 
 		// POST routes still need server-side handling.

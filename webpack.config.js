@@ -116,7 +116,7 @@ module.exports = {
 		),
 
 		/**
-		 * Settings (unified SPA entry point).
+		 * Settings root entry for SPA settings pages with tabs.
 		 */
 		['admin/settings']: path.resolve(
 			__dirname,

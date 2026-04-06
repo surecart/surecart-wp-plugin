@@ -7,7 +7,7 @@ use SureCart\Support\Currency;
 use SureCart\Support\TimeDate;
 
 /**
- * Settings controller for the client-side routed settings SPA.
+ * Settings controller for the client-side routed settings.
  */
 class Settings {
 	/**
@@ -30,7 +30,7 @@ class Settings {
 	}
 
 	/**
-	 * Enqueue the scripts and styles for the settings SPA.
+	 * Enqueue the scripts and styles for the settings.
 	 *
 	 * @return void
 	 */

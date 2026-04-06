@@ -11,8 +11,6 @@
 		]
 	);
 	?>
-
-	<?php // The React SPA mounts here and renders both the sidebar and content area. ?>
 	<div id="sc-settings-app"></div>
 </div>
 
