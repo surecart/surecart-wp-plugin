@@ -23,11 +23,10 @@ export class ScAddressSuggestions {
   private boundHandleKeyDown: (e: KeyboardEvent) => void;
   private boundHandleOutsideClick: (e: Event) => void;
   private abortController: AbortController;
-  private isSyncingFromAddress: boolean = false;
   /** Tracks whether the local value was set by user input / browser autofill and hasn't been synced to the address prop yet. */
   private hasUnsyncedLocalValue: boolean = false;
 
-  @Prop({ mutable: true }) address: Partial<Address> = {
+  @Prop() address: Partial<Address> = {
     country: null,
     city: null,
     line_1: null,
@@ -67,17 +66,14 @@ export class ScAddressSuggestions {
   /** Address suggestions */
   @State() addressSuggestions: Array<AddressSuggestion> = [];
 
-  /** Show address suggestions */
-  @Prop({ mutable: true }) showSuggestions: boolean = false;
+  /** Whether the suggestions dropdown is visible. */
+  @State() showSuggestions: boolean = false;
 
   /** Loading state for suggestions */
   @State() loading: boolean = false;
 
-  /** Place select event */
+  /** Address changed — emitted to parent to update address state. */
   @Event() scChangeAddress: EventEmitter<Address>;
-
-  /** Show suggestions change event */
-  @Event() scShowSuggestionsChange: EventEmitter<boolean>;
 
   /** Event to show address fields manually */
   @Event() scShowAddressFields: EventEmitter<void>;
@@ -85,14 +81,13 @@ export class ScAddressSuggestions {
   /** Event to hide address fields */
   @Event() scHideAddressFields: EventEmitter<void>;
 
-  /** Event to update address */
-  @Event() scChange: EventEmitter<void>;
-
-  /** On input change */
-  @Event() scInput: EventEmitter<void>;
-
   /** Focused index for keyboard navigation */
   @State() focusedIndex: number = -1;
+
+  /** Whether Google Maps autocomplete is active. */
+  isGoogleMapsActive(): boolean {
+    return !!window?.scData?.google_map_api_key;
+  }
 
   // Use Lodash debounce for fetchAddressSuggestions.
   debouncedFetchAddressSuggestions = debounce(async (input: string) => {
@@ -115,8 +110,9 @@ export class ScAddressSuggestions {
   }, 300);
 
   @Watch('value')
-  handleAddressLine1Change(newValue: string) {
-    if (this.isSyncingFromAddress) return;
+  handleValueChange(newValue: string) {
+    // Only fetch suggestions for user input, not prop syncs.
+    if (!this.hasUnsyncedLocalValue) return;
     if (!this.address?.country) return;
     if (newValue && this.showSuggestions) {
       this.debouncedFetchAddressSuggestions(newValue);
@@ -126,40 +122,39 @@ export class ScAddressSuggestions {
   @Watch('address')
   handleAddressChange() {
     if (!this.address?.country) return;
-    this.isSyncingFromAddress = true;
+
     // Only preserve the local value if it was set by user input / browser
     // autofill and hasn't been synced to the address prop yet.
     // Otherwise always sync from the address prop (e.g. country change clears fields).
     if (this.hasUnsyncedLocalValue && !this.address.line_1) {
       // Keep current local value — browser autofill hasn't synced yet.
     } else {
-      this.value = this.address.line_1 || '';
+      // Set flag before value so the @Watch('value') sees it correctly.
       this.hasUnsyncedLocalValue = false;
+      this.value = this.address.line_1 || '';
     }
-    this.isSyncingFromAddress = false;
-    this.toggleAddressInputs();
+
+    this.updateFieldVisibility();
 
     if (this.address.line_1 && this.showSuggestions) {
       this.debouncedFetchAddressSuggestions(this.address.line_1);
     }
   }
 
-  @Watch('showSuggestions')
-  handleShowSuggestionsChange(newValue: boolean) {
-    this.scShowSuggestionsChange.emit(newValue);
-    if (newValue && this.addressSuggestions.length > 0) {
-      this.focusedIndex = 0;
-    }
+  /** Emit an address update to the parent, merging changes with current address. */
+  private emitAddressUpdate(changes: Partial<Address>) {
+    this.scChangeAddress.emit({
+      ...(this.address as Address),
+      ...changes,
+    });
   }
 
-  async fetchPlaceDetails(placeId: string) {
+  /** Select a suggestion by place ID — used by both click and keyboard. */
+  async selectSuggestion(placeId: string) {
     try {
       const { updatedAddress, updatedRegions } = await fetchPlaceDetails(placeId, this.addressSuggestions, this.address, this.regions);
       this.regions = updatedRegions;
-      this.scChangeAddress.emit({
-        ...(this.address as Address),
-        ...updatedAddress,
-      });
+      this.emitAddressUpdate(updatedAddress);
       this.showSuggestions = false;
       this.scShowAddressFields.emit();
     } catch (error) {
@@ -170,13 +165,11 @@ export class ScAddressSuggestions {
   }
 
   handleInputChange(e: any) {
-    // Only show suggestions when Google Maps autocomplete is active.
-    if (window?.scData?.google_map_api_key) {
+    if (this.isGoogleMapsActive()) {
       this.showSuggestions = true;
     }
     this.value = e.target?.value;
     this.hasUnsyncedLocalValue = !!this.value;
-    this.scChange.emit();
   }
 
   /** Sync the input value back to the parent address on change events (blur, browser autofill). */
@@ -184,10 +177,7 @@ export class ScAddressSuggestions {
     const newValue = e.target?.value;
     if (newValue && newValue !== this.address?.line_1) {
       this.hasUnsyncedLocalValue = false;
-      this.scChangeAddress.emit({
-        ...(this.address as Address),
-        line_1: newValue,
-      });
+      this.emitAddressUpdate({ line_1: newValue });
     }
   }
 
@@ -206,7 +196,7 @@ export class ScAddressSuggestions {
       case 'Enter':
         event.preventDefault();
         if (this.focusedIndex >= 0) {
-          this.fetchPlaceDetails(this.addressSuggestions[this.focusedIndex].placeId);
+          this.selectSuggestion(this.addressSuggestions[this.focusedIndex].placeId);
         }
         break;
       case 'Escape':
@@ -216,19 +206,12 @@ export class ScAddressSuggestions {
     }
   }
 
-  hasAnyAddressField() {
-    return this.address?.line_1 || this.address?.line_2 || this.address?.city || this.address?.state || this.address?.postal_code;
-  }
-
   manualAddress() {
     this.showSuggestions = false;
     this.scShowAddressFields.emit();
 
     if (this.value) {
-      this.scChangeAddress.emit({
-        ...(this.address as Address),
-        line_1: this.value,
-      });
+      this.emitAddressUpdate({ line_1: this.value });
     }
   }
 
@@ -241,10 +224,7 @@ export class ScAddressSuggestions {
 
       if (this.value) {
         this.scShowAddressFields.emit();
-        this.scChangeAddress.emit({
-          ...(this.address as Address),
-          line_1: this.value,
-        });
+        this.emitAddressUpdate({ line_1: this.value });
       }
     }
   }
@@ -260,7 +240,7 @@ export class ScAddressSuggestions {
 
   componentDidLoad() {
     this.el.addEventListener('keydown', this.boundHandleKeyDown);
-    this.toggleAddressInputs();
+    this.updateFieldVisibility();
   }
 
   disconnectedCallback() {
@@ -270,17 +250,17 @@ export class ScAddressSuggestions {
     this.abortController?.abort();
   }
 
-  toggleAddressInputs() {
-    // Check the local input value when it hasn't been synced to the address prop yet
-    // (e.g. browser autofill filled the input but the change event hasn't fired).
+  /** Tell the parent whether to show or hide the collapsible address fields. */
+  updateFieldVisibility() {
+    if (!this.isGoogleMapsActive()) return; // Not our concern — parent shows all fields.
+
     const hasValue = this.address?.line_1 || (this.hasUnsyncedLocalValue && this.value);
-    if (window?.scData?.google_map_api_key && !hasValue) {
-      this.scHideAddressFields.emit();
-    } else {
+    if (hasValue) {
       this.scShowAddressFields.emit();
+    } else {
+      this.scHideAddressFields.emit();
     }
   }
-
 
   getActiveDescendantId(): string | undefined {
     return this.focusedIndex >= 0 ? `suggestion-${this.focusedIndex}` : undefined;
@@ -376,7 +356,7 @@ export class ScAddressSuggestions {
                 aria-selected={this.focusedIndex === index ? 'true' : 'false'}
                 aria-label={sprintf(__('Select suggestion %s', 'surecart'), suggestion.fullDisplayName)}
                 tabindex="-1"
-                onClick={() => this.fetchPlaceDetails(suggestion?.placeId)}
+                onClick={() => this.selectSuggestion(suggestion?.placeId)}
                 innerHTML={highlightMatch(suggestion.fullDisplayName, this.value)}
                 onMouseEnter={() => (this.focusedIndex = index)}
                 onMouseLeave={() => (this.focusedIndex = -1)}
@@ -399,9 +379,7 @@ export class ScAddressSuggestions {
 
     return (
       <div part="base">
-        {window?.scData?.google_map_api_key && (
-          <span class="sr-only">{__('Start typing to see address suggestions, or select one to auto-fill your address.', 'surecart')}</span>
-        )}
+        {this.isGoogleMapsActive() && <span class="sr-only">{__('Start typing to see address suggestions, or select one to auto-fill your address.', 'surecart')}</span>}
 
         <sc-input
           exportparts="base:input__base, input, form-control, label, help-text"

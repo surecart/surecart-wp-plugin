@@ -22,7 +22,6 @@
     "names": true,
     "regions": true,
     "required": true,
-    "show-suggestions": true,
     "style": true,
     "id": true,
     "class": true,

@@ -74,10 +74,6 @@ export namespace Components {
           * If the address is required
          */
         "required": boolean;
-        /**
-          * Show address suggestions
-         */
-        "showSuggestions": boolean;
     }
     interface ScAlert {
         /**
@@ -4584,11 +4580,8 @@ declare global {
     };
     interface HTMLScAddressSuggestionsElementEventMap {
         "scChangeAddress": Address;
-        "scShowSuggestionsChange": boolean;
         "scShowAddressFields": void;
         "scHideAddressFields": void;
-        "scChange": void;
-        "scInput": void;
     }
     interface HTMLScAddressSuggestionsElement extends Components.ScAddressSuggestions, HTMLStencilElement {
         addEventListener<K extends keyof HTMLScAddressSuggestionsElementEventMap>(type: K, listener: (this: HTMLScAddressSuggestionsElement, ev: ScAddressSuggestionsCustomEvent<HTMLScAddressSuggestionsElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -7191,11 +7184,7 @@ declare namespace LocalJSX {
         "label"?: string;
         "names"?: Partial<Address>;
         /**
-          * Event to update address
-         */
-        "onScChange"?: (event: ScAddressSuggestionsCustomEvent<void>) => void;
-        /**
-          * Place select event
+          * Address changed — emitted to parent to update address state.
          */
         "onScChangeAddress"?: (event: ScAddressSuggestionsCustomEvent<Address>) => void;
         /**
@@ -7203,17 +7192,9 @@ declare namespace LocalJSX {
          */
         "onScHideAddressFields"?: (event: ScAddressSuggestionsCustomEvent<void>) => void;
         /**
-          * On input change
-         */
-        "onScInput"?: (event: ScAddressSuggestionsCustomEvent<void>) => void;
-        /**
           * Event to show address fields manually
          */
         "onScShowAddressFields"?: (event: ScAddressSuggestionsCustomEvent<void>) => void;
-        /**
-          * Show suggestions change event
-         */
-        "onScShowSuggestionsChange"?: (event: ScAddressSuggestionsCustomEvent<boolean>) => void;
         /**
           * Holds the regions for a given country.
          */
@@ -7222,10 +7203,6 @@ declare namespace LocalJSX {
           * If the address is required
          */
         "required"?: boolean;
-        /**
-          * Show address suggestions
-         */
-        "showSuggestions"?: boolean;
     }
     interface ScAlert {
         /**

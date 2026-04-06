@@ -176,10 +176,9 @@ export class ScAddress {
   }
 
   componentWillLoad() {
-    // When Google Maps autocomplete is active and no address data exists yet,
-    // start with fields collapsed. They'll expand when user selects a suggestion
-    // or enters an address manually.
-    if (this.isGoogleMapsActive() && !this.hasAnyAddressValue()) {
+    // Start collapsed when Google Maps is active — the child component
+    // will emit show/hide events to control this going forward.
+    if (window?.scData?.google_map_api_key) {
       this.toggleAddressFieldsVisibility(false);
     }
 
@@ -244,11 +243,6 @@ export class ScAddress {
     this.showCity = show;
     this.showPostal = show;
     this.showState = show;
-
-    // If Google Map API key is set, Override the showLine2 value.
-    if (window?.scData?.google_map_api_key) {
-      this.showLine2 = show;
-    }
   }
 
   getRoundedProps(index: number, length: number) {
@@ -262,25 +256,17 @@ export class ScAddress {
     };
   }
 
-  /** Whether Google Maps autocomplete is active. */
-  isGoogleMapsActive(): boolean {
-    return !!window?.scData?.google_map_api_key;
-  }
-
-  /** Whether the address has any filled value (excluding country and name). */
-  hasAnyAddressValue(): boolean {
-    return !!(this.address?.line_1 || this.address?.line_2 || this.address?.city || this.address?.state || this.address?.postal_code);
-  }
-
-  /** Whether the collapsible fields are expanded. */
+  /** Whether the collapsible fields are expanded.
+   *  When Google Maps is off, showCity stays at its default (true) and fields are always expanded.
+   *  When Google Maps is on, the child toggles this via show/hide events. */
   isFieldsExpanded(): boolean {
-    return this.showCity || !this.isGoogleMapsActive();
+    return this.showCity;
   }
 
   /** Names of fields that collapse when Google Maps autocomplete is active. */
   private collapsibleFieldNames = ['line_2', 'city', 'state', 'postal_code'];
 
-  /** Whether a field should be included in the render (non-collapsible filters). */
+  /** Whether a field should be included in the render. */
   isFieldIncluded(field: CountryLocaleFieldValue): boolean {
     switch (field.name) {
       case 'name':
@@ -288,11 +274,10 @@ export class ScAddress {
       case 'state':
         return !!this?.regions()?.length && !!this?.address?.country;
       case 'line_2':
-        // When not using Google Maps, use the original showLine2 logic.
-        if (!this.isGoogleMapsActive()) {
-          return this.showLine2 || !!this?.address?.line_2?.length;
-        }
-        return true;
+        // When collapsed, always include so browser autocomplete can fill it (CSS hides it).
+        // When expanded, respect the showLine2 prop from settings.
+        if (!this.isFieldsExpanded()) return true;
+        return this.showLine2 || !!this?.address?.line_2?.length;
       default:
         return true;
     }
