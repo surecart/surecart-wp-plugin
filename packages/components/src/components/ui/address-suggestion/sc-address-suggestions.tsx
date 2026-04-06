@@ -170,7 +170,10 @@ export class ScAddressSuggestions {
   }
 
   handleInputChange(e: any) {
-    this.showSuggestions = true;
+    // Only show suggestions when Google Maps autocomplete is active.
+    if (window?.scData?.google_map_api_key) {
+      this.showSuggestions = true;
+    }
     this.value = e.target?.value;
     this.hasUnsyncedLocalValue = !!this.value;
     this.scChange.emit();
@@ -278,12 +281,6 @@ export class ScAddressSuggestions {
     }
   }
 
-  /** Show address fields on focus so browser autofill can fill them. */
-  handleInputFocus() {
-    if (window?.scData?.google_map_api_key) {
-      this.scShowAddressFields.emit();
-    }
-  }
 
   getActiveDescendantId(): string | undefined {
     return this.focusedIndex >= 0 ? `suggestion-${this.focusedIndex}` : undefined;
@@ -403,7 +400,7 @@ export class ScAddressSuggestions {
     return (
       <div part="base">
         {window?.scData?.google_map_api_key && (
-          <span class="sr-only">{__('Start typing to see address suggestions. Additional fields will appear after selection.', 'surecart')}</span>
+          <span class="sr-only">{__('Start typing to see address suggestions, or select one to auto-fill your address.', 'surecart')}</span>
         )}
 
         <sc-input
@@ -411,7 +408,6 @@ export class ScAddressSuggestions {
           value={this?.value}
           onScInput={(e: any) => this.handleInputChange(e)}
           onScChange={(e: any) => this.handleInputValueChange(e)}
-          onFocus={() => this.handleInputFocus()}
           autocomplete="address-line1"
           placeholder={this.label}
           aria-label={this.label}

@@ -28,16 +28,20 @@
   }
 
   &__collapsible {
-    max-height: 0;
-    overflow: hidden;
+    // Stripe-like technique: fields stay in the DOM so browser autocomplete
+    // can detect and fill them, but they are visually hidden and non-interactive.
     opacity: 0;
-    transition: max-height 0.2s ease-out, opacity 0.15s ease-out;
+    pointer-events: none;
+    position: absolute;
+    transform: translateY(-8px);
+    width: 100%;
 
     &--expanded {
-      max-height: 500px;
       opacity: 1;
-      overflow: visible;
-      transition: max-height 0.25s ease-in, opacity 0.2s ease-in;
+      pointer-events: auto;
+      position: relative;
+      transform: translateY(0);
+      transition: opacity 0.2s ease-in, transform 0.2s ease-in;
     }
   }
 

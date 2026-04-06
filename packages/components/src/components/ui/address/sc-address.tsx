@@ -176,6 +176,13 @@ export class ScAddress {
   }
 
   componentWillLoad() {
+    // When Google Maps autocomplete is active and no address data exists yet,
+    // start with fields collapsed. They'll expand when user selects a suggestion
+    // or enters an address manually.
+    if (this.isGoogleMapsActive() && !this.hasAnyAddressValue()) {
+      this.toggleAddressFieldsVisibility(false);
+    }
+
     this.initCountryChoices();
     this.handleAddressChange();
     this.handleNameChange();
@@ -258,6 +265,11 @@ export class ScAddress {
   /** Whether Google Maps autocomplete is active. */
   isGoogleMapsActive(): boolean {
     return !!window?.scData?.google_map_api_key;
+  }
+
+  /** Whether the address has any filled value (excluding country and name). */
+  hasAnyAddressValue(): boolean {
+    return !!(this.address?.line_1 || this.address?.line_2 || this.address?.city || this.address?.state || this.address?.postal_code);
   }
 
   /** Whether the collapsible fields are expanded. */
@@ -445,6 +457,7 @@ export class ScAddress {
               'sc-address__collapsible': true,
               'sc-address__collapsible--expanded': isExpanded,
             }}
+            aria-hidden={!isExpanded ? 'true' : 'false'}
           >
             {bottomFields.map((field: any, index: number) => {
               const globalIndex = topFields.length + index;

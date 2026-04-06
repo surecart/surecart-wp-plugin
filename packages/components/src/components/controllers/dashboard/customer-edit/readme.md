@@ -55,10 +55,10 @@ graph TD;
   sc-input --> sc-form-control
   sc-form-control --> sc-visually-hidden
   sc-phone-input --> sc-form-control
-  sc-address --> sc-form-control
   sc-address --> sc-select
   sc-address --> sc-input
   sc-address --> sc-address-suggestions
+  sc-address --> sc-form-control
   sc-address --> sc-block-ui
   sc-select --> sc-icon
   sc-select --> sc-menu-label
