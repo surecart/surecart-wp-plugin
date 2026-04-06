@@ -9,6 +9,17 @@
 		display: none;
 	}
 
+	#sc-admin-header {
+		width: 100%;
+		margin-left: 0;
+	}
+
+	@media screen and (max-width: 600px) {
+		#sc-admin-header {
+			padding-top: var(--wp-admin--admin-bar--height, 46px);
+		}
+	}
+
 	body {
 		background: var(--sc-color-brand-main-background);
 	}
