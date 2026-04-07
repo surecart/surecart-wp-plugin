@@ -128,6 +128,7 @@ export class ScCustomerEmail {
   async createLoginCode() {
     if (!this.value) return;
     if (userState.loggedIn) return;
+    if (!checkoutState.autoLoginEnabled) return;
 
     // Check if a valid email using regex, if not return.
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.value)) {

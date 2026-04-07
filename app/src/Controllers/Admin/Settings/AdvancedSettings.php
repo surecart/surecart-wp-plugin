@@ -38,6 +38,9 @@ class AdvancedSettings extends BaseSettings {
 		// update performance option.
 		update_option( 'surecart_use_esm_loader', $request->body( 'use_esm_loader' ) === 'on' );
 
+		// update checkout auto login option.
+		update_option( 'surecart_checkout_auto_login', $request->body( 'checkout_auto_login' ) === 'on' );
+
 		return \SureCart::redirect()->to( esc_url_raw( add_query_arg( 'status', 'saved', $url ) ) );
 	}
 }

@@ -49,6 +49,17 @@
 					</sc-flex>
 
 					<sc-flex flex-direction="column">
+						<sc-text style="--font-size: var(--sc-font-size-large); --font-weight: var(--sc-font-weight-bold); --line-height:1; --color: var(--sc-color-brand-heading)"><?php esc_html_e( 'Checkout', 'surecart' ); ?></sc-text>
+						<sc-text style="margin-bottom: 1em; --line-height:1; --color: var(--sc-color-brand-body)"><?php esc_html_e( 'Change your checkout settings.', 'surecart' ); ?></sc-text>
+						<sc-card>
+							<sc-switch name="checkout_auto_login" <?php checked( get_option( 'surecart_checkout_auto_login', false ), 1 ); ?> value="on">
+								<?php esc_html_e( 'Checkout Auto Login', 'surecart' ); ?>
+								<span slot="description" style="line-height: 1.4"><?php esc_html_e( 'Automatically log in new users after they complete a checkout. When disabled, users will need to log in manually after their account is created.', 'surecart' ); ?></span>
+							</sc-switch>
+						</sc-card>
+					</sc-flex>
+
+					<sc-flex flex-direction="column">
 						<sc-text style="--font-size: var(--sc-font-size-large); --font-weight: var(--sc-font-weight-bold); --line-height:1;"><?php esc_html_e( 'Legacy Features', 'surecart' ); ?></sc-text>
 						<sc-text style="margin-bottom: 1em; --line-height:1; --color: var(--sc-color-brand-body)"><?php esc_html_e( 'Opt-in to some legacy features of the plugin.', 'surecart' ); ?></sc-text>
 						<sc-card>
