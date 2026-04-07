@@ -98,7 +98,6 @@
  - [sc-upgrade-required](../sc-upgrade-required)
  - [sc-upsell](../../controllers/upsell/sc-upsell)
  - [sc-upsell-countdown-timer](../../controllers/upsell/sc-upsell-countdown-timer)
- - [sc-verification-code](../verification-code)
  - [sc-wordpress-user](../../controllers/dashboard/wordpress-user)
 
 ### Graph
@@ -171,7 +170,6 @@ graph TD;
   sc-upgrade-required --> sc-icon
   sc-upsell --> sc-icon
   sc-upsell-countdown-timer --> sc-icon
-  sc-verification-code --> sc-icon
   sc-wordpress-user --> sc-icon
   style sc-icon fill:#f9f,stroke:#333,stroke-width:4px
 ```

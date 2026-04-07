@@ -106,6 +106,11 @@ export default () => {
 		'site',
 		'surecart_admin_toolbar_disabled'
 	);
+	const [checkoutAutoLogin, setCheckoutAutoLogin] = useEntityProp(
+		'root',
+		'site',
+		'surecart_checkout_auto_login'
+	);
 
 	/**
 	 * Form is submitted.
@@ -345,6 +350,18 @@ export default () => {
 					<span slot="description">
 						{__(
 							'This ensures all the password fields have a stronger validation for user password input i.e. at least 6 characters and one special character.',
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
+				<ScSwitch
+					checked={checkoutAutoLogin}
+					onScChange={(e) => setCheckoutAutoLogin(e.target.checked)}
+				>
+					{__('Checkout Auto Login', 'surecart')}
+					<span slot="description" style={{ lineHeight: '1.4' }}>
+						{__(
+							'Automatically log in new users after they complete a checkout. When disabled, users will need to log in manually after their account is created.',
 							'surecart'
 						)}
 					</span>

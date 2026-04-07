@@ -79,16 +79,14 @@ graph TD;
   sc-customer-email --> sc-input
   sc-customer-email --> sc-spinner
   sc-button --> sc-spinner
+  sc-customer-login --> sc-icon
   sc-customer-login --> sc-flex
   sc-customer-login --> sc-input
   sc-customer-login --> sc-button
-  sc-customer-login --> sc-icon
   sc-customer-login --> sc-verification-code
+  sc-customer-login --> sc-spinner
   sc-input --> sc-form-control
   sc-form-control --> sc-visually-hidden
-  sc-verification-code --> sc-tooltip
-  sc-verification-code --> sc-button
-  sc-verification-code --> sc-icon
   style sc-customer-email fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
