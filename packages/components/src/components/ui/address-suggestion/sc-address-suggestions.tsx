@@ -325,6 +325,7 @@ export class ScAddressSuggestions {
               </span>
               <sc-button
                 type="text"
+                onMouseDown={e => e.preventDefault()}
                 onClick={() => {
                   this.showSuggestions = false;
                   this.addressSuggestions = [];
@@ -369,6 +370,7 @@ export class ScAddressSuggestions {
                 aria-selected={this.focusedIndex === index ? 'true' : 'false'}
                 aria-label={sprintf(__('Select suggestion %s', 'surecart'), suggestion.fullDisplayName)}
                 tabindex="-1"
+                onMouseDown={e => e.preventDefault()}
                 onClick={() => this.selectSuggestion(suggestion?.placeId)}
                 innerHTML={highlightMatch(suggestion.fullDisplayName, this.value)}
                 onMouseEnter={() => (this.focusedIndex = index)}
@@ -379,7 +381,7 @@ export class ScAddressSuggestions {
         </div>
 
         <div class="sc-address__suggestions--footer" part="suggestion-item manually" role="presentation">
-          <button type="button" onClick={() => this.manualAddress()} aria-label={__('Enter address manually instead of using suggestions', 'surecart')}>
+          <button type="button" onMouseDown={e => e.preventDefault()} onClick={() => this.manualAddress()} aria-label={__('Enter address manually instead of using suggestions', 'surecart')}>
             {__('Enter address manually', 'surecart')}
           </button>
         </div>
