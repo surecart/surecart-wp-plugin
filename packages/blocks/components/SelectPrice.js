@@ -1,5 +1,5 @@
 import { __, sprintf } from '@wordpress/i18n';
-import { useRef } from '@wordpress/element';
+import { useRef, useEffect, useCallback } from '@wordpress/element';
 import { ScSelect, ScDivider, ScMenuItem } from '@surecart/components-react';
 import throttle from 'lodash/throttle';
 import { formatNumber } from '../../admin/util';
@@ -23,15 +23,20 @@ export default ({
 	onScrollEnd = () => {},
 	includeVariants = true,
 	allowOutOfStockSelection = false,
+	style: externalStyle,
 	...props
 }) => {
 	const selectRef = useRef();
-	const findProduct = throttle(
-		(value) => {
-			onQuery(value);
-		},
-		750,
-		{ leading: false }
+
+	const findProduct = useCallback(
+		throttle(
+			(value) => {
+				onQuery(value);
+			},
+			750,
+			{ leading: false }
+		),
+		[]
 	);
 
 	const choices = (products || [])
@@ -164,9 +169,56 @@ export default ({
 			};
 		});
 
+	// Set choices directly on the element for iframe compatibility.
+	useEffect(() => {
+		if (selectRef.current) {
+			selectRef.current.choices = choices;
+		}
+	}, [products]);
+
+	// Register event listeners directly for iframe compatibility.
+	useEffect(() => {
+		const element = selectRef.current;
+		if (!element) return;
+
+		const handleOpen = () => onFetch();
+		const handleSearch = (e) => findProduct(e.detail);
+		const handleChange = (e) => {
+			if (!e?.target?.value) return;
+			if (e?.detail?.suffixUnavailable) {
+				alert(__('Variant Out of Stock.', 'surecart'));
+				return;
+			}
+			onSelect({
+				price_id: e?.target?.value,
+				variant_id: e?.detail?.variant_id,
+			});
+		};
+		const handleScrollEnd = () => onScrollEnd();
+
+		element.addEventListener('scOpen', handleOpen);
+		element.addEventListener('scSearch', handleSearch);
+		element.addEventListener('scChange', handleChange);
+		element.addEventListener('scScrollEnd', handleScrollEnd);
+
+		return () => {
+			element.removeEventListener('scOpen', handleOpen);
+			element.removeEventListener('scSearch', handleSearch);
+			element.removeEventListener('scChange', handleChange);
+			element.removeEventListener('scScrollEnd', handleScrollEnd);
+		};
+	}, [onFetch, onScrollEnd, onSelect, findProduct]);
+
 	return (
 		<ScSelect
-			style={styles}
+			{...props}
+			style={{
+				...styles,
+				width: '100%',
+				minWidth: '24rem',
+				borderStyle: 'none',
+				...externalStyle,
+			}}
 			required={required}
 			ref={selectRef}
 			value={value}
@@ -176,22 +228,6 @@ export default ({
 			placeholder={__('Select a product', 'surecart')}
 			searchPlaceholder={__('Search for a product...', 'surecart')}
 			search
-			onScOpen={onFetch}
-			onScSearch={(e) => findProduct(e.detail)}
-			onScChange={(e) => {
-				if (!e?.target?.value) return;
-				if (e?.detail?.suffixUnavailable) {
-					alert(__('Variant Out of Stock.', 'surecart'));
-					return;
-				}
-				onSelect({
-					price_id: e?.target?.value,
-					variant_id: e?.detail?.variant_id,
-				});
-			}}
-			choices={choices}
-			onScScrollEnd={onScrollEnd}
-			{...props}
 		>
 			{onNew && (
 				<span slot="prefix">

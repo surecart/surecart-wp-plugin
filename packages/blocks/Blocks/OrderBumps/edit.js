@@ -1,6 +1,7 @@
 import { ScFormControl, ScOrderBump } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
+import { useRef, useEffect } from '@wordpress/element';
 import {
 	Disabled,
 	PanelBody,
@@ -9,12 +10,30 @@ import {
 	ToggleControl,
 } from '@wordpress/components';
 
+const bumpData = {
+	percent_off: 20,
+	price: {
+		currency: scBlockData?.currency || 'usd',
+		amount: 1234,
+		recurring_interval_count: 1,
+		recurring_interval: 'month',
+		product: {
+			name: __('Product Name', 'surecart'),
+		},
+	},
+};
+
 export default ({ attributes, setAttributes }) => {
 	const { label, show_control } = attributes;
 
-	const blockProps = useBlockProps({
-		label: label || __('Recommended', 'surecart'),
-	});
+	const blockProps = useBlockProps();
+	const bumpRef = useRef();
+
+	useEffect(() => {
+		if (bumpRef.current) {
+			bumpRef.current.bump = bumpData;
+		}
+	}, []);
 
 	return (
 		<>
@@ -41,33 +60,18 @@ export default ({ attributes, setAttributes }) => {
 					</PanelRow>
 				</PanelBody>
 			</InspectorControls>
-			<ScFormControl {...blockProps}>
-				<Disabled>
-					<div class="bumps__list">
-						<ScOrderBump
-							showControl={show_control}
-							bump={{
-								percent_off: 20,
-								metadata: {
-									description:
-										"Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-								},
-								price: {
-									currency: scBlockData?.currency || 'usd',
-									amount: 1234,
-									recurring_interval_count: 1,
-									recurring_interval: 'month',
-									product: {
-										name: 'Product Name',
-										image_url:
-											'https://source.unsplash.com/daily',
-									},
-								},
-							}}
-						/>
-					</div>
-				</Disabled>
-			</ScFormControl>
+			<div {...blockProps}>
+				<ScFormControl label={label || __('Recommended', 'surecart')}>
+					<Disabled>
+						<div className="bumps__list">
+							<ScOrderBump
+								ref={bumpRef}
+								showControl={show_control}
+							/>
+						</div>
+					</Disabled>
+				</ScFormControl>
+			</div>
 		</>
 	);
 };

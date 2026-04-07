@@ -1,6 +1,3 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
-
 /**
  * WordPress dependencies
  */
@@ -26,11 +23,7 @@ export default ({ attributes, setAttributes }) => {
 	const [form, setForm] = useState({});
 
 	const blockProps = useBlockProps({
-		css: css`
-			.components-placeholder.components-placeholder {
-				padding: 2em;
-			}
-		`,
+		className: 'sc-checkout-form-empty-editor',
 		style: styles,
 	});
 
@@ -63,24 +56,33 @@ export default ({ attributes, setAttributes }) => {
 		}
 	};
 
+	const placeholderStyle = (
+		<style>{`
+			.sc-checkout-form-empty-editor .components-placeholder.components-placeholder {
+				padding: 2em;
+			}
+		`}</style>
+	);
+
 	if (step === 'new') {
 		return (
 			<div {...blockProps}>
+				{placeholderStyle}
 				<PlaceholderTemplate
 					header={__('Create a Checkout Form', 'surecart')}
 				>
 					<div
-						css={css`
-							display: grid;
-							gap: 0.5em;
-							width: 100%;
-						`}
+						style={{
+							display: 'grid',
+							gap: '0.5em',
+							width: '100%',
+						}}
 					>
 						<div>{__('Form Title', 'surecart')}</div>
 						<ScInput
-							css={css`
-								max-width: 400px;
-							`}
+							style={{
+								maxWidth: '400px',
+							}}
 							value={title}
 							placeholder={__(
 								'Enter a title for your form',
@@ -119,15 +121,16 @@ export default ({ attributes, setAttributes }) => {
 	if (step === 'select') {
 		return (
 			<div {...blockProps}>
+				{placeholderStyle}
 				<PlaceholderTemplate
 					header={__('Select a checkout form', 'surecart')}
 				>
 					<div
-						css={css`
-							display: grid;
-							gap: 0.5em;
-							width: 100%;
-						`}
+						style={{
+							display: 'grid',
+							gap: '0.5em',
+							width: '100%',
+						}}
 					>
 						<SelectForm form={form} setForm={setForm} />
 						<div>
@@ -158,6 +161,7 @@ export default ({ attributes, setAttributes }) => {
 
 	return (
 		<div {...blockProps}>
+			{placeholderStyle}
 			<Placeholder
 				icon={icon}
 				instructions={__(
@@ -167,10 +171,10 @@ export default ({ attributes, setAttributes }) => {
 				label={__('Add a checkout form', 'surecart')}
 			>
 				<div
-					css={css`
-						display: flex;
-						gap: 0.5em;
-					`}
+					style={{
+						display: 'flex',
+						gap: '0.5em',
+					}}
 				>
 					<ScButton
 						type="primary"

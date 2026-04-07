@@ -1,6 +1,4 @@
-/** @jsx jsx */
 import { __ } from '@wordpress/i18n';
-import { css, jsx } from '@emotion/core';
 import {
 	Popover,
 	CardBody,
@@ -72,9 +70,7 @@ export default ({ value, addingLink, setAddingLink, onChange, isActive }) => {
 		>
 			<CardBody>
 				<Flex
-					css={css`
-						margin-bottom: 1em;
-					`}
+					style={{ marginBottom: '1em' }}
 					justify="space-between"
 					align="center"
 				>
@@ -92,12 +88,7 @@ export default ({ value, addingLink, setAddingLink, onChange, isActive }) => {
 						</ExternalLink>
 					)}
 				</Flex>
-				<ScCard
-					css={css`
-						min-width: 300px;
-					`}
-					no-padding
-				>
+				<ScCard style={{ minWidth: '300px' }} no-padding>
 					<ScStackedList>
 						{(initialLineItems || []).map(({ id, quantity }) => (
 							<Price key={id} id={id} quantity={quantity} />

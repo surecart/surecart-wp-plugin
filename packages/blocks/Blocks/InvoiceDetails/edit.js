@@ -1,8 +1,6 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/react';
-
 import { __ } from '@wordpress/i18n';
 import {
+	useBlockProps,
 	useInnerBlocksProps as __stableUseInnerBlocksProps,
 	__experimentalUseInnerBlocksProps,
 } from '@wordpress/block-editor';
@@ -12,17 +10,10 @@ export default () => {
 		? __stableUseInnerBlocksProps
 		: __experimentalUseInnerBlocksProps;
 
+	const blockProps = useBlockProps();
 	const innerBlocksProps = useInnerBlocksProps(
 		{
 			className: 'sc-invoice-details',
-			css: css`
-				> * {
-					margin: 4px 0 !important;
-				}
-				> sc-divider {
-					margin: 16px 0 !important;
-				}
-			`,
 		},
 		{
 			template: [
@@ -35,5 +26,17 @@ export default () => {
 		}
 	);
 
-	return <div {...innerBlocksProps}></div>;
+	return (
+		<div {...blockProps}>
+			<style>{`
+				.sc-invoice-details > * {
+					margin: 4px 0 !important;
+				}
+				.sc-invoice-details > sc-divider {
+					margin: 16px 0 !important;
+				}
+			`}</style>
+			<div {...innerBlocksProps}></div>
+		</div>
+	);
 };
