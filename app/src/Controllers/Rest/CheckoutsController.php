@@ -102,7 +102,8 @@ class CheckoutsController extends RestController {
 		$class['email'] = $user->user_email;
 
 		// force the customer id, if it exists.
-		$customer_id = $user->customerId( ! empty( $request['live_mode'] ) ? 'live' : 'test' );
+		$mode        = ! empty( $request['live_mode'] ) ? 'live' : 'test';
+		$customer_id = $user->customerId( $mode );
 		if ( ! empty( $customer_id ) ) {
 			$class['customer'] = $customer_id;
 		}
@@ -113,6 +114,28 @@ class CheckoutsController extends RestController {
 			$class['first_name'] = $user->first_name;
 			$class['last_name']  = $user->last_name;
 			$class['phone']      = $user->phone;
+		}
+
+		// Auto-fill customer data (name, phone, shipping address) when the request
+		// doesn't already include a shipping address and the user has a linked customer.
+		// This handles the case where a user logs in mid-checkout — the next checkout
+		// update triggers this middleware and populates the fields from their saved profile.
+		if ( ! empty( $customer_id ) && ! $request->get_param( 'shipping_address' ) ) {
+			$customer = $user->customer( $mode, [ 'shipping_address' ] );
+			if ( $customer && ! is_wp_error( $customer ) ) {
+				if ( ! empty( $customer->shipping_address ) ) {
+					$class['shipping_address'] = $customer->shipping_address;
+				}
+				if ( ! $request->get_param( 'first_name' ) && ! empty( $customer->first_name ) ) {
+					$class['first_name'] = $customer->first_name;
+				}
+				if ( ! $request->get_param( 'last_name' ) && ! empty( $customer->last_name ) ) {
+					$class['last_name'] = $customer->last_name;
+				}
+				if ( ! $request->get_param( 'phone' ) && ! empty( $customer->phone ) ) {
+					$class['phone'] = $customer->phone;
+				}
+			}
 		}
 
 		return $class;
