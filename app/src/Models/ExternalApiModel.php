@@ -364,7 +364,8 @@ abstract class ExternalApiModel implements ArrayAccess, JsonSerializable, Arraya
 	 * @param mixed $offset Array offset.
 	 * @return mixed
 	 */
-	public function offsetGet( $offset ): mixed {
+	#[\ReturnTypeWillChange]
+	public function offsetGet( $offset ) {
 		return $this->getAttribute( $offset );
 	}
 
@@ -392,7 +393,8 @@ abstract class ExternalApiModel implements ArrayAccess, JsonSerializable, Arraya
 	/**
 	 * JsonSerializable implementation
 	 */
-	public function jsonSerialize(): mixed {
+	#[\ReturnTypeWillChange]
+	public function jsonSerialize() {
 		return $this->toArray();
 	}
 
