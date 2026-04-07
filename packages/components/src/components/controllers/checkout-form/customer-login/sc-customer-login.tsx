@@ -92,9 +92,8 @@ export class ScCustomerLogin {
       // Update checkout before setting user state — setting loggedIn unmounts this component.
       await this.updateCheckout({});
 
-
       userState.loggedIn = true;
-      userState.name = user?.name || user?.email || 'N/A';
+      userState.name = user?.name || [user?.customer?.first_name, user?.customer?.last_name].filter(Boolean).join(' ') || 'N/A';
     } catch (e: any) {
       // If cooldown has elapsed, treat as expired code.
       if (this.resendCooldown <= 0) {
