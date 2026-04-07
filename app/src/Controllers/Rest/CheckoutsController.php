@@ -116,10 +116,7 @@ class CheckoutsController extends RestController {
 			$class['phone']      = $user->phone;
 		}
 
-		// Auto-fill customer data (name, phone, shipping address) when the request
-		// doesn't already include a shipping address and the user has a linked customer.
-		// This handles the case where a user logs in mid-checkout — the next checkout
-		// update triggers this middleware and populates the fields from their saved profile.
+		// Auto-fill customer profile data when not already provided in the request.
 		if ( ! empty( $customer_id ) && ! $request->get_param( 'shipping_address' ) ) {
 			$customer = $user->customer( $mode, [ 'shipping_address' ] );
 			if ( $customer && ! is_wp_error( $customer ) ) {

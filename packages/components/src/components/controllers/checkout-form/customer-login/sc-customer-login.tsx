@@ -89,13 +89,10 @@ export class ScCustomerLogin {
 
       speak(__('Verification is successful. Please continue your purchase.', 'surecart'), 'assertive');
 
-      // Trigger a checkout update BEFORE setting user state.
-      // The server-side middleware (maybeSetUser) auto-fills customer data (name, phone, shipping address)
-      // when it detects the logged-in user. We must do this before setting userState.loggedIn because
-      // that triggers a re-render that unmounts this component.
+      // Update checkout before setting user state — setting loggedIn unmounts this component.
       await this.updateCheckout({});
 
-      // Update userState and make the user as logged in user.
+
       userState.loggedIn = true;
       userState.name = user?.name || user?.email || 'N/A';
     } catch (e: any) {
