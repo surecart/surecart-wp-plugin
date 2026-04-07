@@ -290,7 +290,7 @@ export class ScAddress {
           <sc-select
             exportparts="base:select__base, input, form-control, label, help-text, trigger, panel, caret, search__base, search__input, search__form-control, menu__base, spinner__base, empty"
             part="name__input"
-            value={this.address?.country}
+            value={this.address?.country ?? ''}
             onScChange={(e: any) => {
               if (e.target.value === this.address?.country) return;
               this.clearAddress();
@@ -313,7 +313,7 @@ export class ScAddress {
         return (
           <sc-input
             exportparts="base:input__base, input, form-control, label, help-text"
-            value={this?.address?.name}
+            value={this?.address?.name ?? ''}
             onScChange={(e: any) => this.updateAddress({ name: e.target.value || null })}
             onScInput={(e: any) => this.handleAddressInput({ name: e.target.value || null })}
             autocomplete="name"
@@ -346,7 +346,7 @@ export class ScAddress {
         return (
           <sc-input
             exportparts="base:input__base, input, form-control, label, help-text"
-            value={this?.address?.line_2}
+            value={this?.address?.line_2 ?? ''}
             onScChange={(e: any) => this.updateAddress({ line_2: e.target.value || null })}
             onScInput={(e: any) => this.handleAddressInput({ line_2: e.target.value || null })}
             autocomplete="address-line2"
@@ -364,7 +364,7 @@ export class ScAddress {
             exportparts="base:input__base, input, form-control, label, help-text"
             placeholder={field.label}
             name={this.names?.city}
-            value={this?.address?.city}
+            value={this?.address?.city ?? ''}
             onScChange={(e: any) => this.updateAddress({ city: e.target.value || null })}
             onScInput={(e: any) => this.handleAddressInput({ city: e.target.value || null })}
             autocomplete={'address-level2'}
@@ -382,7 +382,7 @@ export class ScAddress {
             placeholder={field.label}
             name={this.names?.state}
             autocomplete={'address-level1'}
-            value={this?.address?.state}
+            value={this?.address?.state ?? ''}
             onScChange={(e: any) => this.updateAddress({ state: e.target.value || e.detail?.value || null })}
             choices={this.regions()}
             required={isRequired}
@@ -403,7 +403,7 @@ export class ScAddress {
             onScInput={(e: any) => this.handleAddressInput({ postal_code: e.target.value || null })}
             autocomplete={'postal-code'}
             required={isRequired}
-            value={this?.address?.postal_code}
+            value={this?.address?.postal_code ?? ''}
             disabled={this.disabled}
             maxlength={this.address?.country === 'US' ? 5 : undefined}
             pattern={this.countryDetails?.postal_code_regex || undefined}

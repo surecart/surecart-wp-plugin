@@ -5,10 +5,12 @@ exports[`sc-address renders 1`] = `
   <mock:shadow-root>
     <div class="sc-address" part="base">
       <sc-form-control class="sc-address__control" exportparts="label, help-text, form-control">
-        <sc-select aria-label="Country" autocomplete="country-name" exportparts="base:select__base, input, form-control, label, help-text, trigger, panel, caret, search__base, search__input, search__form-control, menu__base, spinner__base, empty" name="shipping_country" part="name__input" placeholder="Country" search="" squaredbottom=""></sc-select>
-        <sc-input aria-label="Address" autocomplete="street-address" exportparts="base:input__base, input, form-control, label, help-text" name="shipping_line_1" placeholder="Address" squared=""></sc-input>
-        <sc-input aria-label="City" exportparts="base:input__base, input, form-control, label, help-text" name="shipping_city" placeholder="City" squared=""></sc-input>
-        <sc-input aria-label="Postal Code" autocomplete="postal-code" exportparts="base:input__base, input, form-control, label, help-text" name="shipping_postal_code" placeholder="Postal Code" squaredtop=""></sc-input>
+        <sc-select aria-label="Country" autocomplete="country-name" exportparts="base:select__base, input, form-control, label, help-text, trigger, panel, caret, search__base, search__input, search__form-control, menu__base, spinner__base, empty" name="shipping_country" part="name__input" placeholder="Country" search="" squaredbottom="" value=""></sc-select>
+        <sc-address-suggestions label="Address"></sc-address-suggestions>
+        <div aria-hidden="false" class="sc-address__collapsible sc-address__collapsible--expanded">
+          <sc-input aria-label="City" autocomplete="address-level2" exportparts="base:input__base, input, form-control, label, help-text" name="shipping_city" placeholder="City" squared="" value=""></sc-input>
+          <sc-input aria-label="Postal Code" autocomplete="postal-code" exportparts="base:input__base, input, form-control, label, help-text" name="shipping_postal_code" placeholder="Postal Code" squaredtop="" value=""></sc-input>
+        </div>
       </sc-form-control>
     </div>
   </mock:shadow-root>
@@ -20,10 +22,12 @@ exports[`sc-address renders CA address fields 1`] = `
   <mock:shadow-root>
     <div class="sc-address" part="base">
       <sc-form-control class="sc-address__control" exportparts="label, help-text, form-control">
-        <sc-select aria-label="Country" autocomplete="country-name" exportparts="base:select__base, input, form-control, label, help-text, trigger, panel, caret, search__base, search__input, search__form-control, menu__base, spinner__base, empty" name="shipping_country" part="name__input" placeholder="Country" search="" squaredbottom=""></sc-select>
-        <sc-input aria-label="Address" autocomplete="street-address" exportparts="base:input__base, input, form-control, label, help-text" name="shipping_line_1" placeholder="Address" squared="" value="303 Park Ave"></sc-input>
-        <sc-input aria-label="City" exportparts="base:input__base, input, form-control, label, help-text" name="shipping_city" placeholder="City" squared="" value="Monona"></sc-input>
-        <sc-input aria-label="Postal Code" autocomplete="postal-code" exportparts="base:input__base, input, form-control, label, help-text" name="shipping_postal_code" placeholder="Postal Code" squaredtop="" value="12345"></sc-input>
+        <sc-select aria-label="Country" autocomplete="country-name" exportparts="base:select__base, input, form-control, label, help-text, trigger, panel, caret, search__base, search__input, search__form-control, menu__base, spinner__base, empty" name="shipping_country" part="name__input" placeholder="Country" search="" squaredbottom="" value=""></sc-select>
+        <sc-address-suggestions label="Address"></sc-address-suggestions>
+        <div aria-hidden="false" class="sc-address__collapsible sc-address__collapsible--expanded">
+          <sc-input aria-label="City" autocomplete="address-level2" exportparts="base:input__base, input, form-control, label, help-text" name="shipping_city" placeholder="City" squared="" value="Monona"></sc-input>
+          <sc-input aria-label="Postal Code" autocomplete="postal-code" exportparts="base:input__base, input, form-control, label, help-text" name="shipping_postal_code" placeholder="Postal Code" squaredtop="" value="12345"></sc-input>
+        </div>
       </sc-form-control>
     </div>
   </mock:shadow-root>
@@ -35,10 +39,12 @@ exports[`sc-address renders EU address fields 1`] = `
   <mock:shadow-root>
     <div class="sc-address" part="base">
       <sc-form-control class="sc-address__control" exportparts="label, help-text, form-control">
-        <sc-select aria-label="Country" autocomplete="country-name" exportparts="base:select__base, input, form-control, label, help-text, trigger, panel, caret, search__base, search__input, search__form-control, menu__base, spinner__base, empty" name="shipping_country" part="name__input" placeholder="Country" search="" squaredbottom=""></sc-select>
-        <sc-input aria-label="Address" autocomplete="street-address" exportparts="base:input__base, input, form-control, label, help-text" name="shipping_line_1" placeholder="Address" squared="" value="303 Park Ave"></sc-input>
-        <sc-input aria-label="City" exportparts="base:input__base, input, form-control, label, help-text" name="shipping_city" placeholder="City" squared="" value="Monona"></sc-input>
-        <sc-input aria-label="Postal Code" autocomplete="postal-code" exportparts="base:input__base, input, form-control, label, help-text" name="shipping_postal_code" placeholder="Postal Code" squaredtop="" value="12345"></sc-input>
+        <sc-select aria-label="Country" autocomplete="country-name" exportparts="base:select__base, input, form-control, label, help-text, trigger, panel, caret, search__base, search__input, search__form-control, menu__base, spinner__base, empty" name="shipping_country" part="name__input" placeholder="Country" search="" squaredbottom="" value=""></sc-select>
+        <sc-address-suggestions label="Address"></sc-address-suggestions>
+        <div aria-hidden="false" class="sc-address__collapsible sc-address__collapsible--expanded">
+          <sc-input aria-label="City" autocomplete="address-level2" exportparts="base:input__base, input, form-control, label, help-text" name="shipping_city" placeholder="City" squared="" value="Monona"></sc-input>
+          <sc-input aria-label="Postal Code" autocomplete="postal-code" exportparts="base:input__base, input, form-control, label, help-text" name="shipping_postal_code" placeholder="Postal Code" squaredtop="" value="12345"></sc-input>
+        </div>
       </sc-form-control>
     </div>
   </mock:shadow-root>
@@ -50,10 +56,12 @@ exports[`sc-address renders US address fields 1`] = `
   <mock:shadow-root>
     <div class="sc-address" part="base">
       <sc-form-control class="sc-address__control" exportparts="label, help-text, form-control">
-        <sc-select aria-label="Country" autocomplete="country-name" exportparts="base:select__base, input, form-control, label, help-text, trigger, panel, caret, search__base, search__input, search__form-control, menu__base, spinner__base, empty" name="shipping_country" part="name__input" placeholder="Country" search="" squaredbottom=""></sc-select>
-        <sc-input aria-label="Address" autocomplete="street-address" exportparts="base:input__base, input, form-control, label, help-text" name="shipping_line_1" placeholder="Address" squared="" value="303 Park Ave"></sc-input>
-        <sc-input aria-label="City" exportparts="base:input__base, input, form-control, label, help-text" name="shipping_city" placeholder="City" squared="" value="Monona"></sc-input>
-        <sc-input aria-label="Postal Code" autocomplete="postal-code" exportparts="base:input__base, input, form-control, label, help-text" name="shipping_postal_code" placeholder="Postal Code" squaredtop="" value="12345"></sc-input>
+        <sc-select aria-label="Country" autocomplete="country-name" exportparts="base:select__base, input, form-control, label, help-text, trigger, panel, caret, search__base, search__input, search__form-control, menu__base, spinner__base, empty" name="shipping_country" part="name__input" placeholder="Country" search="" squaredbottom="" value=""></sc-select>
+        <sc-address-suggestions label="Address"></sc-address-suggestions>
+        <div aria-hidden="false" class="sc-address__collapsible sc-address__collapsible--expanded">
+          <sc-input aria-label="City" autocomplete="address-level2" exportparts="base:input__base, input, form-control, label, help-text" name="shipping_city" placeholder="City" squared="" value="Monona"></sc-input>
+          <sc-input aria-label="Postal Code" autocomplete="postal-code" exportparts="base:input__base, input, form-control, label, help-text" name="shipping_postal_code" placeholder="Postal Code" squaredtop="" value="12345"></sc-input>
+        </div>
       </sc-form-control>
     </div>
   </mock:shadow-root>
@@ -65,10 +73,12 @@ exports[`sc-address renders loading 1`] = `
   <mock:shadow-root>
     <div class="sc-address" part="base">
       <sc-form-control class="sc-address__control" exportparts="label, help-text, form-control">
-        <sc-select aria-label="Country" autocomplete="country-name" exportparts="base:select__base, input, form-control, label, help-text, trigger, panel, caret, search__base, search__input, search__form-control, menu__base, spinner__base, empty" name="shipping_country" part="name__input" placeholder="Country" search="" squaredbottom=""></sc-select>
-        <sc-input aria-label="Address" autocomplete="street-address" exportparts="base:input__base, input, form-control, label, help-text" name="shipping_line_1" placeholder="Address" squared=""></sc-input>
-        <sc-input aria-label="City" exportparts="base:input__base, input, form-control, label, help-text" name="shipping_city" placeholder="City" squared=""></sc-input>
-        <sc-input aria-label="Postal Code" autocomplete="postal-code" exportparts="base:input__base, input, form-control, label, help-text" name="shipping_postal_code" placeholder="Postal Code" squaredtop=""></sc-input>
+        <sc-select aria-label="Country" autocomplete="country-name" exportparts="base:select__base, input, form-control, label, help-text, trigger, panel, caret, search__base, search__input, search__form-control, menu__base, spinner__base, empty" name="shipping_country" part="name__input" placeholder="Country" search="" squaredbottom="" value=""></sc-select>
+        <sc-address-suggestions label="Address"></sc-address-suggestions>
+        <div aria-hidden="false" class="sc-address__collapsible sc-address__collapsible--expanded">
+          <sc-input aria-label="City" autocomplete="address-level2" exportparts="base:input__base, input, form-control, label, help-text" name="shipping_city" placeholder="City" squared="" value=""></sc-input>
+          <sc-input aria-label="Postal Code" autocomplete="postal-code" exportparts="base:input__base, input, form-control, label, help-text" name="shipping_postal_code" placeholder="Postal Code" squaredtop="" value=""></sc-input>
+        </div>
       </sc-form-control>
       <sc-block-ui exportparts="base:block-ui, content:block-ui__content"></sc-block-ui>
     </div>
@@ -81,11 +91,13 @@ exports[`sc-address shows and requires name if requireName is true 1`] = `
   <mock:shadow-root>
     <div class="sc-address" part="base">
       <sc-form-control class="sc-address__control" exportparts="label, help-text, form-control">
-        <sc-select aria-label="Country" autocomplete="country-name" exportparts="base:select__base, input, form-control, label, help-text, trigger, panel, caret, search__base, search__input, search__form-control, menu__base, spinner__base, empty" name="shipping_country" part="name__input" placeholder="Country" search="" squaredbottom=""></sc-select>
-        <sc-input aria-label="Name or Company Name" autocomplete="street-address" exportparts="base:input__base, input, form-control, label, help-text" name="shipping_name" placeholder="Name or Company Name" required="" squared=""></sc-input>
-        <sc-input aria-label="Address" autocomplete="street-address" exportparts="base:input__base, input, form-control, label, help-text" name="shipping_line_1" placeholder="Address" squared=""></sc-input>
-        <sc-input aria-label="City" exportparts="base:input__base, input, form-control, label, help-text" name="shipping_city" placeholder="City" squared=""></sc-input>
-        <sc-input aria-label="Postal Code" autocomplete="postal-code" exportparts="base:input__base, input, form-control, label, help-text" name="shipping_postal_code" placeholder="Postal Code" squaredtop=""></sc-input>
+        <sc-select aria-label="Country" autocomplete="country-name" exportparts="base:select__base, input, form-control, label, help-text, trigger, panel, caret, search__base, search__input, search__form-control, menu__base, spinner__base, empty" name="shipping_country" part="name__input" placeholder="Country" search="" squaredbottom="" value=""></sc-select>
+        <sc-input aria-label="Name or Company Name" autocomplete="name" exportparts="base:input__base, input, form-control, label, help-text" name="shipping_name" placeholder="Name or Company Name" required="" squared="" value=""></sc-input>
+        <sc-address-suggestions label="Address"></sc-address-suggestions>
+        <div aria-hidden="false" class="sc-address__collapsible sc-address__collapsible--expanded">
+          <sc-input aria-label="City" autocomplete="address-level2" exportparts="base:input__base, input, form-control, label, help-text" name="shipping_city" placeholder="City" squared="" value=""></sc-input>
+          <sc-input aria-label="Postal Code" autocomplete="postal-code" exportparts="base:input__base, input, form-control, label, help-text" name="shipping_postal_code" placeholder="Postal Code" squaredtop="" value=""></sc-input>
+        </div>
       </sc-form-control>
     </div>
   </mock:shadow-root>
@@ -97,11 +109,13 @@ exports[`sc-address shows the name field if showName is true 1`] = `
   <mock:shadow-root>
     <div class="sc-address" part="base">
       <sc-form-control class="sc-address__control" exportparts="label, help-text, form-control">
-        <sc-select aria-label="Country" autocomplete="country-name" exportparts="base:select__base, input, form-control, label, help-text, trigger, panel, caret, search__base, search__input, search__form-control, menu__base, spinner__base, empty" name="shipping_country" part="name__input" placeholder="Country" search="" squaredbottom=""></sc-select>
-        <sc-input aria-label="Name or Company Name" autocomplete="street-address" exportparts="base:input__base, input, form-control, label, help-text" name="shipping_name" placeholder="Name or Company Name" squared=""></sc-input>
-        <sc-input aria-label="Address" autocomplete="street-address" exportparts="base:input__base, input, form-control, label, help-text" name="shipping_line_1" placeholder="Address" squared=""></sc-input>
-        <sc-input aria-label="City" exportparts="base:input__base, input, form-control, label, help-text" name="shipping_city" placeholder="City" squared=""></sc-input>
-        <sc-input aria-label="Postal Code" autocomplete="postal-code" exportparts="base:input__base, input, form-control, label, help-text" name="shipping_postal_code" placeholder="Postal Code" squaredtop=""></sc-input>
+        <sc-select aria-label="Country" autocomplete="country-name" exportparts="base:select__base, input, form-control, label, help-text, trigger, panel, caret, search__base, search__input, search__form-control, menu__base, spinner__base, empty" name="shipping_country" part="name__input" placeholder="Country" search="" squaredbottom="" value=""></sc-select>
+        <sc-input aria-label="Name or Company Name" autocomplete="name" exportparts="base:input__base, input, form-control, label, help-text" name="shipping_name" placeholder="Name or Company Name" squared="" value=""></sc-input>
+        <sc-address-suggestions label="Address"></sc-address-suggestions>
+        <div aria-hidden="false" class="sc-address__collapsible sc-address__collapsible--expanded">
+          <sc-input aria-label="City" autocomplete="address-level2" exportparts="base:input__base, input, form-control, label, help-text" name="shipping_city" placeholder="City" squared="" value=""></sc-input>
+          <sc-input aria-label="Postal Code" autocomplete="postal-code" exportparts="base:input__base, input, form-control, label, help-text" name="shipping_postal_code" placeholder="Postal Code" squaredtop="" value=""></sc-input>
+        </div>
       </sc-form-control>
     </div>
   </mock:shadow-root>

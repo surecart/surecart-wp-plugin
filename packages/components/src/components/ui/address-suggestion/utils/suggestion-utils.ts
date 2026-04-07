@@ -75,6 +75,33 @@ export async function fetchAddressSuggestions(
 }
 
 /**
+ * Returns a full replacement address — preserves recipient name only, does not merge with the
+ * previous address. Merging would leak stale line_2/city/postal_code when the new place omits them.
+ */
+export function buildReplacementAddressFromPlace(
+  place: AddressSuggestion,
+  regions: Array<{ value: string; label: string }>,
+  previousName: string | null | undefined,
+): Partial<Address> {
+  if (!place?.addressComponents?.length) {
+    throw new Error('Place details not found.');
+  }
+
+  const placeDetails = transformPlaceDetails(place.addressComponents, regions);
+  const line1 = getStreetAddress(place.addressComponents) || place.displayName || '';
+
+  return {
+    name: previousName ?? null,
+    line_1: line1,
+    line_2: placeDetails.line_2 ?? null,
+    city: placeDetails.city ?? null,
+    state: placeDetails.state ?? null,
+    postal_code: placeDetails.postal_code ?? null,
+    country: placeDetails.country ?? null,
+  };
+}
+
+/**
  * Fetches place details from the Google Maps API.
  */
 export async function fetchPlaceDetails(
@@ -91,14 +118,9 @@ export async function fetchPlaceDetails(
   const { addressComponents } = place;
   const country = addressComponents.find(component => component.types?.includes('country'))?.shortText || null;
   const updatedRegions = address?.country !== country ? await getCountryRegions(country) : regions;
-  const placeDetails = transformPlaceDetails(addressComponents, updatedRegions);
 
   return {
-    updatedAddress: {
-      ...address,
-      ...placeDetails,
-      line_1: getStreetAddress(place?.addressComponents) || place?.displayName || '',
-    },
+    updatedAddress: buildReplacementAddressFromPlace(place, updatedRegions, address.name),
     updatedRegions,
   };
 }

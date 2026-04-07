@@ -148,10 +148,6 @@ export class ScAddressSuggestions {
     }
 
     this.updateFieldVisibility();
-
-    if (this.address.line_1 && this.showSuggestions) {
-      this.debouncedFetchAddressSuggestions(this.address.line_1);
-    }
   }
 
   /** Emit an address update to the parent, merging changes with current address. */
@@ -164,11 +160,14 @@ export class ScAddressSuggestions {
 
   /** Select a suggestion by place ID — used by both click and keyboard. */
   async selectSuggestion(placeId: string) {
+    // Cancel any queued/in-flight suggestions fetch so a stale response can't overwrite state after we close.
+    this.debouncedFetchAddressSuggestions.cancel();
+    this.abortController?.abort();
     try {
       const { updatedAddress, updatedRegions } = await fetchPlaceDetails(placeId, this.addressSuggestions, this.address, this.regions);
       this.regions = updatedRegions;
       this.closeSuggestionsDropdown();
-      this.emitAddressUpdate(updatedAddress);
+      this.scChangeAddress.emit(updatedAddress as Address);
       this.scShowAddressFields.emit();
     } catch (error) {
       createErrorNotice({
