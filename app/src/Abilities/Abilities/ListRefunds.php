@@ -45,7 +45,7 @@ class ListRefunds extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function get_instructions(): string {
-		return 'Use this to browse or filter refunds. Filter by charge to see refunds for a specific payment, or by customer to see all refunds for a customer.';
+		return 'Use this to browse or filter refunds. Filter by charge to see refunds for a specific payment, or by customer to see all refunds for a customer. Only known parameters are accepted: charge, customer, return_request, page, per_page.';
 	}
 
 	/**

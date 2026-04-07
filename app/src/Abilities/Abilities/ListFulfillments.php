@@ -45,7 +45,7 @@ class ListFulfillments extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function get_instructions(): string {
-		return 'Use this to browse or filter fulfillments. Filter by order_ids to see fulfillments for specific orders, or by shipment_status to find pending/shipped/delivered fulfillments.';
+		return 'Use this to browse or filter fulfillments. Filter by order_ids to see fulfillments for specific orders, or by shipment_status to find pending/shipped/delivered fulfillments. Only known parameters are accepted: order_ids, shipment_status, page, per_page.';
 	}
 
 	/**

@@ -45,7 +45,7 @@ class ListPromotions extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function get_instructions(): string {
-		return 'Use this to browse or filter promotion codes. Filter by coupon_ids to see promotions for a specific coupon, or by customer to see customer-specific promotions.';
+		return 'Use this to browse or filter promotion codes. Filter by coupon_ids to see promotions for a specific coupon, or by customer to see customer-specific promotions. Only known parameters are accepted: coupon_ids, customer, page, per_page.';
 	}
 
 	/**

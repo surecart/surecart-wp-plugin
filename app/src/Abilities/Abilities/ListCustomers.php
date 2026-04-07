@@ -27,7 +27,7 @@ class ListCustomers extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function get_description(): string {
-		return __( 'Retrieve a paginated list of SureCart customers. Supports filtering by search query and email. Returns customer names, IDs, emails, and associated data.', 'surecart' );
+		return __( 'Retrieve a paginated list of SureCart customers. Supports filtering by search query and email. By default returns live mode customers only. Set live_mode to false to search test mode customers. Returns customer names, IDs, emails, and associated data.', 'surecart' );
 	}
 
 	/**
@@ -45,7 +45,7 @@ class ListCustomers extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function get_instructions(): string {
-		return 'Use this to browse or search the customer list. Use the query parameter to filter by name or email. For full details on a single customer, use get-customer instead.';
+		return 'Use this to browse or search the customer list. To search by name or email, use the "query" parameter (not "search" or "email") — e.g. query="john@example.com". By default, only live mode customers are returned. If the customer is not found, try setting live_mode to false to search test mode customers before creating a new one — this prevents duplicate customer records. For full details on a single customer, use get-customer instead. Only known parameters are accepted: query, live_mode, page, per_page.';
 	}
 
 	/**
@@ -62,11 +62,16 @@ class ListCustomers extends AbstractAbility {
 		return array(
 			'type'       => 'object',
 			'properties' => array(
-				'query'    => array(
+				'query'     => array(
 					'type'        => 'string',
 					'description' => __( 'Search query to filter customers by name or email.', 'surecart' ),
 				),
-				'page'     => array(
+				'live_mode' => array(
+					'type'        => 'boolean',
+					'description' => __( 'Filter by mode. Defaults to true (live customers). Set to false to search test mode customers.', 'surecart' ),
+					'default'     => true,
+				),
+				'page'      => array(
 					'type'        => 'integer',
 					'description' => __( 'Page number for pagination.', 'surecart' ),
 					'default'     => 1,
@@ -115,6 +120,11 @@ class ListCustomers extends AbstractAbility {
 
 		if ( ! empty( $input['query'] ) ) {
 			$args['query'] = sanitize_text_field( $input['query'] );
+		}
+
+		// Filter by live/test mode. Defaults to live mode (true).
+		if ( isset( $input['live_mode'] ) && false === $input['live_mode'] ) {
+			$args['live_mode'] = false;
 		}
 
 		$customers = Customer::where( $args )->paginate(

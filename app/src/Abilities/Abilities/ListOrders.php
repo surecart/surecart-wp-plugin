@@ -45,7 +45,7 @@ class ListOrders extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function get_instructions(): string {
-		return 'Use this to browse or search orders. Filter by status (paid, processing, draft, payment_failed, void, canceled, requires_approval) and customer. Use canceled for orders shown as Canceled in the dashboard; it is applied as void in the API. For full details on a single order, use get-order instead.';
+		return 'Use this to browse or search orders. Filter by status (paid, processing, draft, payment_failed, void, canceled, requires_approval) and customer. Use canceled for orders shown as Canceled in the dashboard; it is applied as void in the API. For full details on a single order, use get-order instead. Only known parameters are accepted: status, customer, page, per_page.';
 	}
 
 	/**

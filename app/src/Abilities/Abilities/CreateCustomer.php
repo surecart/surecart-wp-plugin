@@ -47,7 +47,7 @@ class CreateCustomer extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function get_instructions(): string {
-		return 'An email address is required. Check if the customer already exists using list-customers before creating to avoid duplicates. Each call creates a new customer record.';
+		return 'An email address is required. IMPORTANT: Before creating, always check if the customer already exists using list-customers with the email as the query. Search BOTH live mode (default) and test mode (live_mode=false) to avoid creating duplicates. The SureCart API allows multiple customers with the same email, so failing to check will create duplicate records. Each call creates a new customer record — this cannot be undone easily.';
 	}
 
 	/**

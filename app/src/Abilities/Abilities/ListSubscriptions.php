@@ -45,7 +45,7 @@ class ListSubscriptions extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function get_instructions(): string {
-		return 'Use this to browse or filter subscriptions. Common status values: active, trialing, past_due, canceled, completed. For full details on a single subscription, use get-subscription instead.';
+		return 'Use this to browse or filter subscriptions. Common status values: active, trialing, past_due, canceled, completed. For full details on a single subscription, use get-subscription instead. Only known parameters are accepted: status, customer, price, product, page, per_page.';
 	}
 
 	/**
