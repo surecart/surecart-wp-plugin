@@ -207,10 +207,7 @@ export class ScCustomerLogin {
         apiFetch.nonceMiddleware.nonce = nonce;
       }
 
-      // Trigger a checkout update BEFORE setting user state.
-      // The server-side middleware (maybeSetUser) auto-fills customer data (name, phone, shipping address)
-      // when it detects the logged-in user. We must do this before setting userState.loggedIn because
-      // that triggers a re-render that unmounts this component.
+      // Update checkout before setting user state — setting loggedIn unmounts this component.
       await this.updateCheckout({});
 
       this.verified = true;
