@@ -119,9 +119,22 @@ export class ScAddressSuggestions {
     }
   }
 
+  /** Close the suggestions list and cancel in-flight fetch. */
+  private closeSuggestionsDropdown() {
+    this.showSuggestions = false;
+    this.addressSuggestions = [];
+    this.focusedIndex = -1;
+    this.debouncedFetchAddressSuggestions.cancel();
+    this.abortController?.abort();
+  }
+
   @Watch('address')
   handleAddressChange() {
     if (!this.address?.country) return;
+
+    if (this.showSuggestions) {
+      this.closeSuggestionsDropdown();
+    }
 
     // Only preserve the local value if it was set by user input / browser
     // autofill and hasn't been synced to the address prop yet.
@@ -154,8 +167,8 @@ export class ScAddressSuggestions {
     try {
       const { updatedAddress, updatedRegions } = await fetchPlaceDetails(placeId, this.addressSuggestions, this.address, this.regions);
       this.regions = updatedRegions;
+      this.closeSuggestionsDropdown();
       this.emitAddressUpdate(updatedAddress);
-      this.showSuggestions = false;
       this.scShowAddressFields.emit();
     } catch (error) {
       createErrorNotice({
@@ -177,6 +190,7 @@ export class ScAddressSuggestions {
     const newValue = e.target?.value;
     if (newValue && newValue !== this.address?.line_1) {
       this.hasUnsyncedLocalValue = false;
+      this.closeSuggestionsDropdown();
       this.emitAddressUpdate({ line_1: newValue });
     }
   }
