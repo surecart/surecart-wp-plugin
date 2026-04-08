@@ -1,0 +1,122 @@
+@import "@wordpress/dataviews/build-style/style.css";
+
+// Define variables
+$padding-size: 20px;
+
+// ─── Checkbox visibility: hide on rows, show on hover/check/focus ───
+.sc-products-dataview-wrapper {
+	.dataviews-view-table {
+		// Hide row checkboxes by default.
+		tr td .components-checkbox-control__input-container {
+			opacity: 0;
+			transition: opacity 0.1s ease;
+		}
+
+		// Show on hover, focus-within, or when checked/indeterminate.
+		tr:hover td .components-checkbox-control__input-container,
+		tr:focus-within td .components-checkbox-control__input-container,
+		tr td .components-checkbox-control__input:checked + .components-checkbox-control__input-container,
+		tr td .components-checkbox-control__input-container:has(input:checked),
+		tr td .components-checkbox-control__input-container:has(input:indeterminate) {
+			opacity: 1;
+		}
+
+		// Always show the header checkbox.
+		thead th .components-checkbox-control__input-container {
+			opacity: 1;
+		}
+	}
+
+	// Touch devices: always show checkboxes.
+	@media (hover: none) {
+		.dataviews-view-table tr td .components-checkbox-control__input-container {
+			opacity: 1;
+		}
+	}
+}
+
+// ─── Table padding ───
+.sc-products-dataview-wrapper {
+	.dataviews-view-table {
+		width: 100%;
+
+		tr {
+			td,
+			th {
+				&:first-child {
+					padding-left: $padding-size;
+				}
+
+				&:last-child {
+					padding-right: $padding-size;
+				}
+			}
+		}
+	}
+
+	// Ensure the table wrapper stretches full width.
+	.dataviews-view-table-wrapper {
+		width: 100%;
+	}
+}
+
+// ─── Search, footer and filter container padding ───
+.sc-products-dataview-wrapper {
+	.dataviews__view-actions,
+	.dataviews-footer,
+	.dataviews-filters__container {
+		padding-left: $padding-size;
+		padding-right: $padding-size;
+	}
+}
+
+// ─── Hover row color ───
+.sc-products-dataview-wrapper {
+	.dataviews-wrapper {
+		--wp-components-color-gray-100: var(--sc-color-brand-main-background);
+	}
+
+	.dataviews-view-table tr.is-hovered {
+		background-color: var(--sc-color-brand-main-background);
+	}
+}
+
+// ─── Settings / View options popover: constrain width ───
+.sc-products-dataview-wrapper {
+	.dataviews-view-config {
+		width: 320px;
+		max-width: 320px;
+	}
+}
+
+// ─── Footer alignment: checkbox+items left, pagination right ───
+.sc-products-dataview-wrapper {
+	.dataviews-footer {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		min-height: 48px;
+	}
+}
+
+// ─── Bulk actions footer: proper alignment ───
+.sc-products-dataview-wrapper {
+	.dataviews-bulk-actions-footer__container {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+	}
+}
+
+// ─── Full width table on loading/empty states ───
+.sc-products-dataview-wrapper {
+	.dataviews-view-table {
+		width: 100%;
+	}
+
+	// Give the name column more breathing room.
+	.dataviews-view-table th:nth-child(2),
+	.dataviews-view-table td:nth-child(2) {
+		width: 25%;
+	}
+}

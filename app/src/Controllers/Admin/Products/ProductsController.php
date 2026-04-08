@@ -4,8 +4,6 @@ namespace SureCart\Controllers\Admin\Products;
 
 use SureCart\Controllers\Admin\AdminController;
 use SureCart\Models\Product;
-use SureCart\Controllers\Admin\Products\ProductsListTable;
-use SureCart\Background\BulkActionService;
 
 /**
  * Handles product admin requests.
@@ -15,13 +13,8 @@ class ProductsController extends AdminController {
 	 * Products index.
 	 */
 	public function index() {
-		// instantiate the bulk actions service.
-		$bulk_action_service = new BulkActionService();
-		$bulk_action_service->bootstrap();
-
-		// instantiate the products list table.
-		$table = new ProductsListTable( $bulk_action_service );
-		$table->prepare_items();
+		// enqueue the products list DataView script.
+		add_action( 'admin_enqueue_scripts', \SureCart::closure()->method( ProductsListScriptsController::class, 'enqueue' ) );
 
 		// add header.
 		$this->withHeader(
@@ -35,18 +28,8 @@ class ProductsController extends AdminController {
 			),
 		);
 
-		// add notices.
-		$this->withNotices(
-			array(
-				'sync_success' => __( 'Product synced successfully.', 'surecart' ),
-				'archived'     => __( 'Product archived.', 'surecart' ),
-				'unarchived'   => __( 'Product unarchived.', 'surecart' ),
-				'duplicated'   => __( 'Product duplicated successfully.', 'surecart' ),
-			)
-		);
-
 		// return view.
-		return \SureCart::view( 'admin/products/index' )->with( [ 'table' => $table ] );
+		return \SureCart::view( 'admin/products/index' );
 	}
 
 	/**
