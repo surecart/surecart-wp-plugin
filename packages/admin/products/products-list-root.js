@@ -1,20 +1,7 @@
-import { createRoot } from '@wordpress/element';
-
 /**
- * App
+ * Products list — DataView entry point.
  */
+import { createListRoot } from '../components/dataview-list';
 import ProductsList from './ProductsList';
 
-/**
- * Register store and entities.
- */
-import '../store/add-entities';
-
-/**
- * Render the products list DataView.
- */
-const container = document.getElementById( 'sc-products-list-app' );
-if ( container ) {
-	const root = createRoot( container );
-	root.render( <ProductsList /> );
-}
+createListRoot( 'sc-products-list-app', ProductsList );

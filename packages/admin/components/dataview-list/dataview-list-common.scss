@@ -1,0 +1,116 @@
+// Vendor CSS (@wordpress/dataviews) is loaded via a dedicated webpack entry:
+//   packages/admin/components/dataview-list/dataview-vendor-styles.js
+// → dist/admin/style-dataview-vendor.css
+// Do NOT @import it here — that causes unpredictable splitChunks deduplication.
+
+// ─── Shared variables ───
+$padding-size: 20px;
+
+// ─── DataView list wrapper ───
+// Apply to .sc-dataview-list-wrapper (or entity-specific variant).
+.sc-dataview-list-wrapper {
+	// ─── Checkbox visibility: hide on rows, show on hover/check/focus ───
+	.dataviews-view-table {
+		tr td .components-checkbox-control__input-container {
+			opacity: 0;
+			transition: opacity 0.1s ease;
+		}
+
+		tr:hover td .components-checkbox-control__input-container,
+		tr:focus-within td .components-checkbox-control__input-container,
+		tr td .components-checkbox-control__input:checked + .components-checkbox-control__input-container,
+		tr td .components-checkbox-control__input-container:has(input:checked),
+		tr td .components-checkbox-control__input-container:has(input:indeterminate) {
+			opacity: 1;
+		}
+
+		thead th .components-checkbox-control__input-container {
+			opacity: 1;
+		}
+	}
+
+	// Touch devices: always show checkboxes.
+	@media (hover: none) {
+		.dataviews-view-table tr td .components-checkbox-control__input-container {
+			opacity: 1;
+		}
+	}
+
+	// ─── Table full-width + padding ───
+	.dataviews-view-table {
+		width: 100%;
+
+		tr {
+			td,
+			th {
+				&:first-child {
+					padding-left: $padding-size;
+				}
+
+				&:last-child {
+					padding-right: $padding-size;
+				}
+			}
+		}
+	}
+
+	.dataviews-view-table-wrapper {
+		width: 100%;
+	}
+
+	// ─── Search, footer and filter container padding ───
+	.dataviews__view-actions,
+	.dataviews-footer,
+	.dataviews-filters__container {
+		padding-left: $padding-size;
+		padding-right: $padding-size;
+	}
+
+	// ─── Hover row color ───
+	.dataviews-wrapper {
+		--wp-components-color-gray-100: var(--sc-color-brand-main-background);
+	}
+
+	.dataviews-view-table tr.is-hovered {
+		background-color: var(--sc-color-brand-main-background);
+	}
+
+	// ─── Footer alignment ───
+	.dataviews-footer {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		min-height: 48px;
+	}
+
+	// ─── Bulk actions footer ───
+	.dataviews-bulk-actions-footer__container {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+	}
+
+	// ─── Loading / empty state centering ───
+	.dataviews-loading,
+	.dataviews-no-results {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		min-height: 200px;
+		width: 100%;
+	}
+}
+
+// ─── Settings / View options popover: constrain width ───
+// NOTE: This is OUTSIDE the wrapper because WP Popover renders as a portal
+// at the body level, not inside the DataView wrapper DOM.
+.dataviews-view-config {
+	width: 320px;
+	max-width: 320px;
+}
+
+// ─── Snackbar toast positioning ───
+// Handled by the Notifications component wrapper div (position: fixed; right: 20px).
+// WP's SnackbarList applies its own Emotion `position: fixed; left: -20px` which
+// cannot be overridden via CSS alone. The Notifications component wraps SnackbarList
+// in a fixed-position div and forces the list to `position: static` via Emotion.

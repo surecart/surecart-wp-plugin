@@ -9,6 +9,5 @@
 	);
 	?>
 
-	<?php $table->search_form( __( 'Search product collections', 'surecart' ), 'sc-search-products' ); ?>
-	<?php $table->display(); ?>
+	<div id="sc-product-collections-list-app"></div>
 </div>

@@ -102,6 +102,14 @@ module.exports = {
 			__dirname,
 			'packages/admin/product-collections/index.js'
 		),
+		['admin/product-collections-list']: path.resolve(
+			__dirname,
+			'packages/admin/product-collections/product-collections-list-root.js'
+		),
+		['admin/dataview-vendor']: path.resolve(
+			__dirname,
+			'packages/admin/components/dataview-list/dataview-vendor-styles.js'
+		),
 		['admin/bumps']: path.resolve(
 			__dirname,
 			'packages/admin/bumps/index.js'

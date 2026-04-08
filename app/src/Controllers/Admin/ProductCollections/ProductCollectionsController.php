@@ -12,13 +12,10 @@ class ProductCollectionsController {
 	 * Index.
 	 */
 	public function index() {
-		$table = new ProductCollectionsListTable();
-		$table->prepare_items();
-		return \SureCart::view( 'admin/product-collections/index' )->with(
-			[
-				'table' => $table,
-			]
-		);
+		// enqueue the product collections list DataView script.
+		add_action( 'admin_enqueue_scripts', \SureCart::closure()->method( ProductCollectionsListScriptsController::class, 'enqueue' ) );
+
+		return \SureCart::view( 'admin/product-collections/index' );
 	}
 
 	/**

@@ -1,33 +1,33 @@
 <?php
 
-namespace SureCart\Controllers\Admin\Products;
+namespace SureCart\Controllers\Admin\ProductCollections;
 
 use SureCart\Support\Scripts\AdminModelEditController;
 
 /**
- * Products List Page Scripts
+ * Product Collections List Page Scripts
  */
-class ProductsListScriptsController extends AdminModelEditController {
+class ProductCollectionsListScriptsController extends AdminModelEditController {
 	/**
 	 * What types of data to add the the page.
 	 *
 	 * @var array
 	 */
-	protected $with_data = [ 'currency', 'links' ];
+	protected $with_data = [ 'links' ];
 
 	/**
 	 * Script handle.
 	 *
 	 * @var string
 	 */
-	protected $handle = 'surecart/scripts/admin/products-list';
+	protected $handle = 'surecart/scripts/admin/product-collections-list';
 
 	/**
 	 * Script path.
 	 *
 	 * @var string
 	 */
-	protected $path = 'admin/products-list';
+	protected $path = 'admin/product-collections-list';
 
 	/**
 	 * Add the app url to the data.

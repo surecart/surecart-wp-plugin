@@ -280,6 +280,7 @@ dispatch(coreStore).addEntities([
 		label: __('Product Collections', 'surecart'),
 		baseURL: '/surecart/v1/product_collections',
 		baseURLParams: { context: 'edit', expand: ['media'] },
+		supportsPagination: true,
 	},
 	{
 		name: 'price',
