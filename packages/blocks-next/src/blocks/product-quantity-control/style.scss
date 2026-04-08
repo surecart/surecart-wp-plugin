@@ -4,9 +4,10 @@
 	gap: 1px;
 }
 
-// Safari/WebKit ignores width: fit-content on flex containers with WP's is-layout-flex.
-@supports (-webkit-hyphens: none) {
-	:root .wp-block-surecart-product-quantity-control:not([class*="is-style-"]) {
+// Safari/WebKit and Firefox ignore width: fit-content on flex containers with WP's is-layout-flex.
+@supports (-webkit-hyphens: none) or (selector(::-moz-color-swatch)) {
+	:root
+		.wp-block-surecart-product-quantity-control:not([class*="is-style-"]) {
 		width: var(--sc-quantity-select-width, 100px);
 	}
 }
