@@ -35,17 +35,27 @@ class TimeDate {
 	}
 
 	/**
+	 * Get the site locale from the WPLANG option.
+	 *
+	 * WordPress REST API requests include `_locale=user` which triggers
+	 * switch_to_user_locale(), causing wp_date() to output month names in
+	 * the user's profile language instead of the site language. We read
+	 * WPLANG directly from the database to bypass the switched locale.
+	 *
+	 * @return string
+	 */
+	public static function getSiteLocale() {
+		$wplang = get_option( 'WPLANG' );
+		return ! empty( $wplang ) ? $wplang : 'en_US';
+	}
+
+	/**
 	 *  Date Format - Allows to change date format for everything SureCart
 	 *
 	 * @return string
 	 */
 	public static function formatDate( $timestamp ) {
-		// Force the site locale for date formatting. WordPress REST API requests include
-		// `_locale=user` which triggers switch_to_user_locale(), causing wp_date() to
-		// output month names in the user's profile language instead of the site language.
-		// We read WPLANG directly from the database to bypass the switched locale.
-		$site_locale = ! empty( get_option( 'WPLANG' ) ) ? get_option( 'WPLANG' ) : 'en_US';
-		switch_to_locale( $site_locale );
+		switch_to_locale( self::getSiteLocale() );
 		try {
 			return wp_date( self::getDateFormat(), $timestamp );
 		} finally {
@@ -59,9 +69,7 @@ class TimeDate {
 	 * @return string
 	 */
 	public static function formatTime( $timestamp ) {
-		// Force the site locale — see formatDate() for explanation.
-		$site_locale = ! empty( get_option( 'WPLANG' ) ) ? get_option( 'WPLANG' ) : 'en_US';
-		switch_to_locale( $site_locale );
+		switch_to_locale( self::getSiteLocale() );
 		try {
 			return wp_date( self::getTimeFormat(), $timestamp );
 		} finally {
@@ -86,9 +94,7 @@ class TimeDate {
 	 * @return string
 	 */
 	public static function humanTimeDiff( $timestamp, $ignore_after = '1 day' ) {
-		// Force the site locale — see formatDate() for explanation.
-		$site_locale = ! empty( get_option( 'WPLANG' ) ) ? get_option( 'WPLANG' ) : 'en_US';
-		switch_to_locale( $site_locale );
+		switch_to_locale( self::getSiteLocale() );
 		try {
 			if ( $timestamp > strtotime( "-$ignore_after", time() ) ) {
 				return sprintf(
