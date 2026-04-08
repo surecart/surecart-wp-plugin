@@ -422,7 +422,7 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 
 == Changelog ==
 
-= 4.1.1 - April 7th, 2026 =
+= 4.1.1 - April 8th, 2026 =
 - New: SureCart Abilities API for AI-powered store management.
 - New: Product review shortcodes for use in all page builders or different page contexts.
 - Improvement: Checkout and dashboard blocks migrated to v3 compatibility.
