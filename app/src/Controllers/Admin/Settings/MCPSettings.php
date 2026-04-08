@@ -68,7 +68,6 @@ class MCPSettings extends BaseSettings {
 				'app_passwords_url'        => admin_url( 'profile.php#application-passwords-section' ),
 				'wp_version'               => get_bloginfo( 'version' ),
 				'abilities_api_available'   => function_exists( 'wp_register_ability_category' ),
-				'settings_url'             => admin_url( 'admin.php?page=sc-settings&tab=mcp' ),
 			]
 		);
 	}
