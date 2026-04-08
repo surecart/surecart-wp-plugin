@@ -1,6 +1,3 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
-
 import { __ } from '@wordpress/i18n';
 
 import PriceChoice from './PriceChoice';
@@ -44,11 +41,7 @@ export default ({ choices, onUpdate, onRemove, description, ...rest }) => {
 
 	const renderEmpty = () => {
 		return (
-			<div
-				css={css`
-					color: var(--sc-color-gray-500);
-				`}
-			>
+			<div style={{ color: 'var(--sc-color-gray-500)' }}>
 				{description
 					? description
 					: __(
@@ -61,20 +54,17 @@ export default ({ choices, onUpdate, onRemove, description, ...rest }) => {
 
 	return (
 		<div
-			style={styles}
-			css={css`
-				display: grid;
-				gap: 1em;
-			`}
+			style={{
+				...styles,
+				display: 'grid',
+				gap: '1em',
+				borderStyle: 'none',
+			}}
 		>
 			{choices && choices.length > 0 ? renderTable() : renderEmpty()}
 
 			<div
-				css={css`
-					display: flex;
-					gap: 0.5em;
-					align-items: center;
-				`}
+				style={{ display: 'flex', gap: '0.5em', alignItems: 'center' }}
 			>
 				<PriceSelector
 					onSelect={({ price_id, variant_id }) =>

@@ -8,6 +8,8 @@ export default ({ bump, updateBump, loading }) => {
 	return (
 		<Box title={__('Priority', 'surecart')} loading={loading}>
 			<RangeControl
+				__next40pxDefaultSize
+				__nextHasNoMarginBottom
 				label={__('Priority', 'surecart')}
 				hideLabelFromVision={true}
 				css={css`

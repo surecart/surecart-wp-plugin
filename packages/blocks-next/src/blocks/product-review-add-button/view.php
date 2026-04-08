@@ -16,8 +16,6 @@
 					]
 				)
 			);
-			?>
-			<?php
 			echo wp_kses_data(
 				wp_interactivity_data_wp_context(
 					[
@@ -28,50 +26,50 @@
 			);
 			?>
 		>
-			<?php if ( $show_loading_indicator ) { ?>
-				<span class="sc-spinner" aria-hidden="true"></span>
-			<?php } ?>
-			
-			<?php if ( $show_icon && 'before' === $icon_position ) { ?>
-				<?php
-				echo wp_kses(
-					SureCart::svg()->get(
-						$icon,
-						[
-							'class'       => 'wp-block-surecart-product-review-form-button__icon sc-button__link-text',
-							'width'       => $icon_size,
-							'height'      => $icon_size,
-							'aria-hidden' => 'true',
-						]
-					),
-					sc_allowed_svg_html()
-				);
+		<?php
+		if ( $show_loading_indicator ) {
+			?>
+			<span class="sc-spinner" aria-hidden="true"></span><?php } ?>
+			<?php
+			if ( $show_icon && 'before' === $icon_position ) {
 				?>
+						<?php
+						echo wp_kses(
+							SureCart::svg()->get(
+								$icon,
+								[
+									'class'       => 'wp-block-surecart-product-review-form-button__icon sc-button__link-text',
+									'width'       => $icon_size,
+									'height'      => $icon_size,
+									'aria-hidden' => 'true',
+								]
+							),
+							sc_allowed_svg_html()
+						);
+						?>
 			<?php } ?>
-
-			<?php if ( $show_text ) { ?>
-				<span class="sc-button__link-text">
-					<?php echo esc_html( $label ); ?>
-				</span>
-			<?php } ?>
-
-			<?php if ( $show_icon && 'after' === $icon_position ) { ?>
-				<?php
-				echo wp_kses(
-					SureCart::svg()->get(
-						$icon,
-						[
-							'class'       => 'wp-block-surecart-product-review-form-button__icon sc-button__link-text',
-							'width'       => $icon_size,
-							'height'      => $icon_size,
-							'aria-hidden' => 'true',
-						]
-					),
-					sc_allowed_svg_html()
-				);
+			<?php
+			if ( $show_text ) {
 				?>
-			<?php } ?>
-		</div>
+	<span class="sc-button__link-text"><?php echo esc_html( $label ); ?></span><?php } ?>
+	<?php
+	if ( $show_icon && 'after' === $icon_position ) {
+		?>
+		<?php
+		echo wp_kses(
+			SureCart::svg()->get(
+				$icon,
+				[
+					'class'       => 'wp-block-surecart-product-review-form-button__icon sc-button__link-text',
+					'width'       => $icon_size,
+					'height'      => $icon_size,
+					'aria-hidden' => 'true',
+				]
+			),
+			sc_allowed_svg_html()
+		);
+		?>
+	<?php } ?></div>
 	</div>
 </div>
 

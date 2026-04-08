@@ -2,14 +2,17 @@
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { InspectorControls, RichText } from '@wordpress/block-editor';
+import {
+	InspectorControls,
+	RichText,
+	useBlockProps,
+} from '@wordpress/block-editor';
 import { Fragment } from '@wordpress/element';
 import {
 	PanelBody,
 	PanelRow,
 	TextControl,
 	ToggleControl,
-	Disabled,
 } from '@wordpress/components';
 
 /**
@@ -17,8 +20,10 @@ import {
  */
 import { ScSwitch } from '@surecart/components-react';
 
-export default ({ className, attributes, setAttributes, isSelected }) => {
+export default ({ attributes, setAttributes, isSelected }) => {
 	const { label, value, checked, name, required, description } = attributes;
+
+	const blockProps = useBlockProps();
 
 	return (
 		<Fragment>
@@ -61,34 +66,36 @@ export default ({ className, attributes, setAttributes, isSelected }) => {
 				</PanelBody>
 			</InspectorControls>
 
-			{!isSelected && !name && <div>Please add a name</div>}
+			<div {...blockProps}>
+				{!isSelected && !name && (
+					<div>{__('Please add a name', 'surecart')}</div>
+				)}
 
-			<ScSwitch
-				className={className}
-				name={name}
-				required={required}
-				edit
-			>
-				<RichText
-					tagName="span"
-					aria-label={__('Switch label', 'surecart')}
-					placeholder={__('Add some text...', 'surecart')}
-					value={label}
-					onChange={(label) => setAttributes({ label })}
-				/>
-				{(description || isSelected) && (
+				<ScSwitch name={name} required={required} edit>
 					<RichText
 						tagName="span"
-						slot="description"
 						aria-label={__('Switch label', 'surecart')}
-						placeholder={__('Enter a description...', 'surecart')}
-						value={description}
-						onChange={(description) =>
-							setAttributes({ description })
-						}
+						placeholder={__('Add some text...', 'surecart')}
+						value={label}
+						onChange={(label) => setAttributes({ label })}
 					/>
-				)}
-			</ScSwitch>
+					{(description || isSelected) && (
+						<RichText
+							tagName="span"
+							slot="description"
+							aria-label={__('Switch label', 'surecart')}
+							placeholder={__(
+								'Enter a description...',
+								'surecart'
+							)}
+							value={description}
+							onChange={(description) =>
+								setAttributes({ description })
+							}
+						/>
+					)}
+				</ScSwitch>
+			</div>
 		</Fragment>
 	);
 };

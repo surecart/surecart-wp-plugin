@@ -31,6 +31,7 @@ export default ({ collection, updateCollection, onClose }) => {
 			<InspectorPopoverHeader title={__('URL', 'surecart')} onClose={onClose} />
 
 			<TextControl
+				__next40pxDefaultSize
 				__nextHasNoMarginBottom
 				label={__('Permalink', 'surecart')}
 				value={collection?.slug}

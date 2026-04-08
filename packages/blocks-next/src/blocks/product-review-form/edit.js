@@ -78,6 +78,8 @@ export default function Edit({ attributes, setAttributes }) {
 			<InspectorControls>
 				<PanelBody title={__('Modal Settings', 'surecart')}>
 					<SelectControl
+						__next40pxDefaultSize
+						__nextHasNoMarginBottom
 						label={__('Alignment', 'surecart')}
 						value={alignment}
 						options={[
@@ -124,6 +126,8 @@ export default function Edit({ attributes, setAttributes }) {
 					/>
 
 					<TextControl
+						__next40pxDefaultSize
+						__nextHasNoMarginBottom
 						label={__('Width', 'surecart')}
 						value={width}
 						onChange={(value) => setAttributes({ width: value })}
@@ -134,6 +138,8 @@ export default function Edit({ attributes, setAttributes }) {
 					/>
 
 					<TextControl
+						__next40pxDefaultSize
+						__nextHasNoMarginBottom
 						label={__('Height', 'surecart')}
 						value={height}
 						onChange={(value) => setAttributes({ height: value })}

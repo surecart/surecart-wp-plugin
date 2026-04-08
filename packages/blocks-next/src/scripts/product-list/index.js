@@ -1,7 +1,7 @@
 /**
  * WordPress dependencies
  */
-import { store, getContext, getElement } from '@wordpress/interactivity';
+import { store, getContext, getElement, withSyncEvent } from '@wordpress/interactivity';
 
 /**
  * Check if the link is valid.
@@ -36,7 +36,7 @@ const { state } = store('surecart/product-list', {
 
 	actions: {
 		/** Navigate to a url using the router region. */
-		*navigate(event) {
+		navigate: withSyncEvent(function* (event) {
 			const { ref } = getElement();
 			const ctx = getContext();
 			const history = ctx?.history;
@@ -61,7 +61,7 @@ const { state } = store('surecart/product-list', {
 				// this may move the browser window to the top of the page if it is offscreen.
 				firstAnchor?.focus();
 			}
-		},
+		}),
 		/** Prefetch upcoming urls. */
 		*prefetch() {
 			const { ref } = getElement();
@@ -74,7 +74,7 @@ const { state } = store('surecart/product-list', {
 			}
 		},
 		/** Handle search input. */
-		*onSearchInput(e) {
+		onSearchInput: withSyncEvent(function* (e) {
 			e.preventDefault();
 
 			const { value } = e.target;
@@ -141,9 +141,9 @@ const { state } = store('surecart/product-list', {
 
 			state.loading = false;
 			state.searching = false;
-		},
+		}),
 		/** Clear the search input. */
-		*clearSearch(event) {
+		clearSearch: withSyncEvent(function* (event) {
 			// no-op if not enter or space key
 			if (
 				event?.type === 'keydown' &&
@@ -179,7 +179,7 @@ const { state } = store('surecart/product-list', {
 
 			state.loading = false;
 			state.searching = false;
-		},
+		}),
 	},
 
 	callbacks: {
