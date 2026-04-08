@@ -11,6 +11,22 @@ const findAddressComponent = (addressComponents: Array<GoogleMapAddressComponent
 };
 
 /**
+ * Find the city from address components using a fallback chain.
+ *
+ * Google Places API returns the city under different component types depending on the country:
+ * - `locality` — most countries (e.g. US, CA, AU)
+ * - `administrative_area_level_2` — Brazil (município), parts of Italy, etc.
+ * - `postal_town` — UK, Sweden, and some other European countries
+ */
+const findCity = (addressComponents: Array<GoogleMapAddressComponents>): GoogleMapAddressComponents | undefined => {
+  return (
+    findAddressComponent(addressComponents, 'locality') ??
+    findAddressComponent(addressComponents, 'administrative_area_level_2') ??
+    findAddressComponent(addressComponents, 'postal_town')
+  );
+};
+
+/**
  * Build a street address from address components (street_number + route).
  */
 export function getStreetAddress(addressComponents: Array<GoogleMapAddressComponents> | null): string {
@@ -46,7 +62,7 @@ export function transformPlaceDetails(addressComponents: Array<GoogleMapAddressC
   return {
     line_2: findAddressComponent(addressComponents, 'sublocality')?.shortText || null,
     postal_code: findAddressComponent(addressComponents, 'postal_code')?.shortText || null,
-    city: findAddressComponent(addressComponents, 'locality')?.longText || null,
+    city: findCity(addressComponents)?.longText || null,
     state: getState(addressComponents, regions)?.shortText || null,
     country: findAddressComponent(addressComponents, 'country')?.shortText || null,
   };
@@ -72,7 +88,7 @@ export function getAddressLabels(
   const labels = {
     country: country.longText || null,
     state: state?.longText || null,
-    city: findAddressComponent(addressComponents, 'locality')?.longText || null,
+    city: findCity(addressComponents)?.longText || null,
   };
 
   switch (country?.shortText) {
