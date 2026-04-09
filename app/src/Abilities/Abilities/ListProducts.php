@@ -45,7 +45,7 @@ class ListProducts extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function get_instructions(): string {
-		return 'Use this to browse or search the product catalog. Set archived=true to include soft-deleted products. Maximum 100 results per page. For full details on a single product, use get-product instead.';
+		return 'Use this to browse or search the product catalog. To search by name, use the "query" parameter (not "search" or "name") — e.g. query="T-Shirt". Set archived=true to include soft-deleted products. Maximum 100 results per page. For full details on a single product, use get-product instead. Only known parameters are accepted: query, archived, page, per_page.';
 	}
 
 	/**

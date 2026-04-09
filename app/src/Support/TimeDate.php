@@ -35,12 +35,32 @@ class TimeDate {
 	}
 
 	/**
+	 * Get the site locale from the WPLANG option.
+	 *
+	 * WordPress REST API requests include `_locale=user` which triggers
+	 * switch_to_user_locale(), causing wp_date() to output month names in
+	 * the user's profile language instead of the site language. We read
+	 * WPLANG directly from the database to bypass the switched locale.
+	 *
+	 * @return string
+	 */
+	public static function getSiteLocale() {
+		$wplang = get_option( 'WPLANG' );
+		return ! empty( $wplang ) ? $wplang : 'en_US';
+	}
+
+	/**
 	 *  Date Format - Allows to change date format for everything SureCart
 	 *
 	 * @return string
 	 */
 	public static function formatDate( $timestamp ) {
-		return wp_date( self::getDateFormat(), $timestamp );
+		switch_to_locale( self::getSiteLocale() );
+		try {
+			return wp_date( self::getDateFormat(), $timestamp );
+		} finally {
+			restore_previous_locale();
+		}
 	}
 
 	/**
@@ -49,7 +69,12 @@ class TimeDate {
 	 * @return string
 	 */
 	public static function formatTime( $timestamp ) {
-		return wp_date( self::getTimeFormat(), $timestamp );
+		switch_to_locale( self::getSiteLocale() );
+		try {
+			return wp_date( self::getTimeFormat(), $timestamp );
+		} finally {
+			restore_previous_locale();
+		}
 	}
 
 	/**
@@ -69,14 +94,19 @@ class TimeDate {
 	 * @return string
 	 */
 	public static function humanTimeDiff( $timestamp, $ignore_after = '1 day' ) {
-		if ( $timestamp > strtotime( "-$ignore_after", time() ) ) {
-			return sprintf(
-			/* translators: %s: human-readable time difference */
-				_x( '%s ago', '%s = human-readable time difference', 'surecart' ),
-				human_time_diff( $timestamp, time() )
-			);
-		} else {
-			return self::formatDate( $timestamp );
+		switch_to_locale( self::getSiteLocale() );
+		try {
+			if ( $timestamp > strtotime( "-$ignore_after", time() ) ) {
+				return sprintf(
+				/* translators: %s: human-readable time difference */
+					_x( '%s ago', '%s = human-readable time difference', 'surecart' ),
+					human_time_diff( $timestamp, time() )
+				);
+			} else {
+				return self::formatDate( $timestamp );
+			}
+		} finally {
+			restore_previous_locale();
 		}
 	}
 

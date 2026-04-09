@@ -335,14 +335,11 @@ export default () => {
 					updateSubscription={editSubscription}
 					loading={!hasLoadedSubscription}
 				/>
-				{(subscription?.payment_method ||
-					subscription?.manual_payment) && (
-					<PaymentMethod
-						subscription={subscription}
-						updateSubscription={editSubscription}
-						loading={!hasLoadedSubscription}
-					/>
-				)}
+				<PaymentMethod
+					subscription={subscription}
+					updateSubscription={editSubscription}
+					loading={!hasLoadedSubscription}
+				/>
 			</>
 		</UpdateModel>
 	);

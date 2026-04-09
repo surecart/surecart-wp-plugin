@@ -6,7 +6,6 @@ import ProgressIndicator from './ProgressIndicator';
 import { ScFormControl, ScInput, ScSelect } from '@surecart/components-react';
 import ColorPopup from '../../../blocks/components/ColorPopup';
 import { ScIcon } from '@surecart/components-react';
-import { getCurrencySymbol } from '../../util';
 
 export default ({
 	currentStep,
@@ -14,6 +13,7 @@ export default ({
 	currency,
 	onSelectCurrency,
 	brandColor,
+	defaultBrandColor,
 	onBrandColorChange,
 }) => {
 	return (
@@ -48,7 +48,11 @@ export default ({
 						<ColorPopup
 							color={`#${brandColor}`}
 							setColor={(color) =>
-								onBrandColorChange(color?.hex.replace('#', ''))
+								onBrandColorChange(
+									color?.hex
+										? color.hex.replace('#', '')
+										: defaultBrandColor
+								)
 							}
 						/>
 						<ScInput

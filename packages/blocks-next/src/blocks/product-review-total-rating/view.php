@@ -20,14 +20,7 @@
 	);
 	?>
 	>
-
 	<span class="sc-review-count" aria-hidden="true"><?php echo esc_html( $number ); ?></span>
-
-	<span class="<?php echo esc_attr( empty( $attributes['show_label'] ) ? 'sc-screen-reader-text' : 'surecart-review-label' ); ?>" aria-hidden="true">
-		<?php
-		// translators: 1: number of reviews, 2: label "review" or "reviews".
-		echo ' ' . esc_html( _n( 'review', 'reviews', $count, 'surecart' ) );
-		?>
-	</span>
-
+	<?php // translators: 1: number of reviews, 2: label "review" or "reviews". ?>
+	<span class="<?php echo esc_attr( empty( $attributes['show_label'] ) ? 'sc-screen-reader-text' : 'surecart-review-label' ); ?>" aria-hidden="true"><?php echo ' ' . esc_html( _n( 'review', 'reviews', $count, 'surecart' ) ); ?></span>
 </<?php echo esc_html( $html_tag ); ?>>

@@ -7,6 +7,7 @@ use SureCart\Abilities\Abilities\CancelSubscription;
 use SureCart\Abilities\Abilities\CreateCoupon;
 use SureCart\Abilities\Abilities\CreateCustomer;
 use SureCart\Abilities\Abilities\CreateFulfillment;
+use SureCart\Abilities\Abilities\CreateInvoice;
 use SureCart\Abilities\Abilities\CreateProduct;
 use SureCart\Abilities\Abilities\DeleteFulfillment;
 use SureCart\Abilities\Abilities\GetFulfillment;
@@ -45,6 +46,8 @@ use SureCart\Abilities\Abilities\UpdateCustomer;
 use SureCart\Abilities\Abilities\UpdatePromotion;
 use SureCart\Abilities\Abilities\UpdatePrice;
 use SureCart\Abilities\Abilities\UpdateProduct;
+use SureCart\Abilities\Abilities\UpdateInvoice;
+use SureCart\Abilities\Abilities\UpdateSubscriptionRenewalDate;
 
 /**
  * Registers the ability category and all SureCart abilities.
@@ -160,6 +163,7 @@ class AbilityRegistrar {
 			new ListSubscriptions(),
 			new GetSubscription(),
 			new CancelSubscription(),
+			new UpdateSubscriptionRenewalDate(),
 			// Prices.
 			new ListPrices(),
 			new CreatePrice(),
@@ -176,6 +180,9 @@ class AbilityRegistrar {
 			new CreatePromotion(),
 			new UpdatePromotion(),
 			new DeletePromotion(),
+			// Invoices.
+			new CreateInvoice(),
+			new UpdateInvoice(),
 			// Fulfillments.
 			new ListFulfillments(),
 			new GetFulfillment(),
