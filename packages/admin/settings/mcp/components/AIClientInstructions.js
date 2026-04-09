@@ -7,6 +7,7 @@ import {
 	ScIcon,
 	ScSelect,
 	ScAlert,
+	ScText,
 } from '@surecart/components-react';
 import SettingsBox from '../../SettingsBox';
 
@@ -179,10 +180,7 @@ export default ({ restUrl, appPasswordsUrl }) => {
 		}
 	};
 
-	// Step numbering shifts for Claude Code since it has an extra CLI step.
 	const isClaudeCode = selectedClient === 'claude_code';
-	const configStepNum = isClaudeCode ? 3 : 2;
-	const replaceStepNum = isClaudeCode ? 4 : 3;
 
 	return (
 		<SettingsBox
@@ -208,52 +206,17 @@ export default ({ restUrl, appPasswordsUrl }) => {
 					choices={clientChoices}
 				/>
 
-				<div
+				<ol
 					css={css`
+						margin: 0;
+						padding: 0 0 0 1.5em;
 						display: flex;
 						flex-direction: column;
 						gap: var(--sc-spacing-medium);
 					`}
 				>
 					{/* Step 1: Create Application Password */}
-					<div
-						css={css`
-							display: flex;
-							flex-direction: column;
-							gap: var(--sc-spacing-small);
-						`}
-					>
-						<p
-							css={css`
-								margin: 0;
-								font-weight: 600;
-								color: var(--sc-color-gray-800);
-							`}
-						>
-							{__(
-								'1. Create an Application Password',
-								'surecart'
-							)}
-						</p>
-						<p
-							css={css`
-								margin: 0;
-								color: var(--sc-color-gray-600);
-								font-size: 0.9em;
-							`}
-						>
-							<a
-								href={appPasswordsUrl}
-								target="_blank"
-								rel="noopener noreferrer"
-							>
-								{__('Open Application Passwords', 'surecart')}
-							</a>
-						</p>
-					</div>
-
-					{/* Step 2 (Claude Code only): CLI command */}
-					{isClaudeCode && client.cliCommand && (
+					<li>
 						<div
 							css={css`
 								display: flex;
@@ -261,125 +224,173 @@ export default ({ restUrl, appPasswordsUrl }) => {
 								gap: var(--sc-spacing-small);
 							`}
 						>
+							<ScText
+								style={{
+									'--font-weight': '600',
+									'--color': 'var(--sc-color-gray-800)',
+								}}
+							>
+								{__(
+									'Create an Application Password',
+									'surecart'
+								)}
+							</ScText>
 							<p
 								css={css`
 									margin: 0;
-									font-weight: 600;
-									color: var(--sc-color-gray-800);
+									color: var(--sc-color-gray-600);
+									font-size: 0.9em;
 								`}
 							>
-								{__(
-									'2. Or use this CLI command to add the server quickly (you will still need to set the environment variables):',
-									'surecart'
-								)}
+								<a
+									href={appPasswordsUrl}
+									target="_blank"
+									rel="noopener noreferrer"
+								>
+									{__(
+										'Open Application Passwords',
+										'surecart'
+									)}
+								</a>
 							</p>
-							<pre
+						</div>
+					</li>
+
+					{/* Step 2 (Claude Code only): CLI command */}
+					{isClaudeCode && client.cliCommand && (
+						<li>
+							<div
 								css={css`
-									background: var(--sc-color-gray-100);
-									border: 1px solid var(--sc-color-gray-300);
-									border-radius: var(
-										--sc-border-radius-medium
-									);
-									padding: var(--sc-spacing-medium);
-									overflow-x: auto;
-									font-size: 0.85em;
-									line-height: 1.5;
-									margin: 0;
+									display: flex;
+									flex-direction: column;
+									gap: var(--sc-spacing-small);
 								`}
 							>
-								{client.cliCommand(mcpUrl)}
-							</pre>
-						</div>
+								<ScText
+									style={{
+										'--font-weight': '600',
+										'--color': 'var(--sc-color-gray-800)',
+									}}
+								>
+									{__(
+										'Or use this CLI command to add the server quickly (you will still need to set the environment variables):',
+										'surecart'
+									)}
+								</ScText>
+								<pre
+									css={css`
+										background: var(--sc-color-gray-100);
+										border: 1px solid
+											var(--sc-color-gray-300);
+										border-radius: var(
+											--sc-border-radius-medium
+										);
+										padding: var(--sc-spacing-medium);
+										overflow-x: auto;
+										font-size: 0.85em;
+										line-height: 1.5;
+										margin: 0;
+									`}
+								>
+									{client.cliCommand(mcpUrl)}
+								</pre>
+							</div>
+						</li>
 					)}
 
 					{/* Copy config step */}
-					<div
-						css={css`
-							display: flex;
-							flex-direction: column;
-							gap: var(--sc-spacing-small);
-						`}
-					>
-						<p
-							css={css`
-								margin: 0;
-								font-weight: 600;
-								color: var(--sc-color-gray-800);
-							`}
-						>
-							{`${configStepNum}. ${__(
-								'Copy the JSON config below into:',
-								'surecart'
-							)}`}
-						</p>
-						<code
-							css={css`
-								background: var(--sc-color-gray-100);
-								padding: 2px 6px;
-								border-radius: var(--sc-border-radius-small);
-								font-size: 0.85em;
-								color: var(--sc-color-gray-700);
-							`}
-						>
-							{client.configPath}
-						</code>
-					</div>
-
-					{/* Replace password step */}
-					<p
-						css={css`
-							margin: 0;
-							font-weight: 600;
-							color: var(--sc-color-gray-800);
-						`}
-					>
-						{`${replaceStepNum}. ${__(
-							'Replace "your-application-password" with the password from Step 1.',
-							'surecart'
-						)}`}
-					</p>
-
-					{/* JSON config block */}
-					<div
-						css={css`
-							position: relative;
-						`}
-					>
-						<pre
-							css={css`
-								background: var(--sc-color-gray-900);
-								color: var(--sc-color-gray-100);
-								border-radius: var(--sc-border-radius-medium);
-								padding: var(--sc-spacing-large);
-								padding-right: 5em;
-								overflow-x: auto;
-								font-size: 0.85em;
-								line-height: 1.5;
-								margin: 0;
-							`}
-						>
-							{configJson}
-						</pre>
+					<li>
 						<div
 							css={css`
-								position: absolute;
-								top: var(--sc-spacing-small);
-								right: var(--sc-spacing-small);
-								z-index: 1;
+								display: flex;
+								flex-direction: column;
+								gap: var(--sc-spacing-small);
 							`}
 						>
-							<ScButton size="small" onClick={handleCopy}>
-								<ScIcon
-									name={copied ? 'check' : 'copy'}
-									slot="prefix"
-								/>
-								{copied
-									? __('Copied!', 'surecart')
-									: __('Copy', 'surecart')}
-							</ScButton>
+							<ScText
+								style={{
+									'--font-weight': '600',
+									'--color': 'var(--sc-color-gray-800)',
+								}}
+							>
+								{__(
+									'Copy the JSON config below into:',
+									'surecart'
+								)}
+							</ScText>
+							<code
+								css={css`
+									background: var(--sc-color-gray-100);
+									padding: 2px 6px;
+									border-radius: var(
+										--sc-border-radius-small
+									);
+									font-size: 0.85em;
+									color: var(--sc-color-gray-700);
+								`}
+							>
+								{client.configPath}
+							</code>
+							{/* JSON config block */}
+							<div
+								css={css`
+									position: relative;
+								`}
+							>
+								<pre
+									css={css`
+										background: var(--sc-color-gray-900);
+										color: var(--sc-color-gray-100);
+										border-radius: var(
+											--sc-border-radius-medium
+										);
+										padding: var(--sc-spacing-large);
+										padding-right: 5em;
+										overflow-x: auto;
+										font-size: 0.85em;
+										line-height: 1.5;
+										margin: 0;
+									`}
+								>
+									{configJson}
+								</pre>
+								<div
+									css={css`
+										position: absolute;
+										top: var(--sc-spacing-small);
+										right: var(--sc-spacing-small);
+										z-index: 1;
+									`}
+								>
+									<ScButton size="small" onClick={handleCopy}>
+										<ScIcon
+											name={copied ? 'check' : 'copy'}
+											slot="prefix"
+										/>
+										{copied
+											? __('Copied!', 'surecart')
+											: __('Copy', 'surecart')}
+									</ScButton>
+								</div>
+							</div>
 						</div>
-					</div>
-				</div>
+					</li>
+
+					{/* Replace password step */}
+					<li>
+						<ScText
+							style={{
+								'--font-weight': '600',
+								'--color': 'var(--sc-color-gray-800)',
+							}}
+						>
+							{__(
+								'Replace "your-application-password" with the password from Step 1.',
+								'surecart'
+							)}
+						</ScText>
+					</li>
+				</ol>
 
 				<ScAlert open type="info">
 					<div
@@ -429,12 +440,12 @@ export default ({ restUrl, appPasswordsUrl }) => {
 							`}
 						>
 							{__(
-								'Your site is using HTTP. The config above includes the',
+								'Your site is running over HTTP (likely a local dev environment). The config above includes the',
 								'surecart'
 							)}{' '}
 							<code>--allow-http</code>{' '}
 							{__(
-								'flag required for non-SSL connections. Use HTTPS in production.',
+								'flag to allow the connection. This flag is not needed — and will not appear — on production sites using HTTPS.',
 								'surecart'
 							)}
 						</span>
