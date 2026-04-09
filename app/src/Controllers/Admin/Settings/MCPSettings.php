@@ -67,7 +67,7 @@ class MCPSettings extends BaseSettings {
 				'rest_url'                 => rest_url( 'mcp/mcp-adapter-default-server' ),
 				'app_passwords_url'        => admin_url( 'profile.php#application-passwords-section' ),
 				'wp_version'               => get_bloginfo( 'version' ),
-				'abilities_api_available'   => function_exists( 'wp_register_ability_category' ),
+				'abilities_api_available'  => function_exists( 'wp_register_ability_category' ),
 			]
 		);
 	}
@@ -107,11 +107,13 @@ class MCPSettings extends BaseSettings {
 			if ( is_wp_error( $activate ) ) {
 				wp_send_json_error( [ 'message' => $activate->get_error_message() ] );
 			}
-			wp_send_json_success( [
-				'installed' => true,
-				'activated' => true,
-				'message'   => __( 'MCP Adapter activated successfully.', 'surecart' ),
-			] );
+			wp_send_json_success(
+				[
+					'installed' => true,
+					'activated' => true,
+					'message'   => __( 'MCP Adapter activated successfully.', 'surecart' ),
+				]
+			);
 		}
 
 		// Use a silent skin to suppress output.
@@ -135,18 +137,22 @@ class MCPSettings extends BaseSettings {
 		$activate = activate_plugin( self::MCP_ADAPTER_SLUG );
 		if ( is_wp_error( $activate ) ) {
 			// Installed but activation failed — still report install success.
-			wp_send_json_success( [
-				'installed' => true,
-				'activated' => false,
-				'message'   => __( 'Plugin installed but activation failed. Please activate it manually.', 'surecart' ),
-			] );
+			wp_send_json_success(
+				[
+					'installed' => true,
+					'activated' => false,
+					'message'   => __( 'Plugin installed but activation failed. Please activate it manually.', 'surecart' ),
+				]
+			);
 		}
 
-		wp_send_json_success( [
-			'installed' => true,
-			'activated' => true,
-			'message'   => __( 'MCP Adapter installed and activated successfully.', 'surecart' ),
-		] );
+		wp_send_json_success(
+			[
+				'installed' => true,
+				'activated' => true,
+				'message'   => __( 'MCP Adapter installed and activated successfully.', 'surecart' ),
+			]
+		);
 	}
 
 	/**
@@ -170,9 +176,11 @@ class MCPSettings extends BaseSettings {
 			wp_send_json_error( [ 'message' => $activate->get_error_message() ] );
 		}
 
-		wp_send_json_success( [
-			'activated' => true,
-			'message'   => __( 'MCP Adapter activated successfully.', 'surecart' ),
-		] );
+		wp_send_json_success(
+			[
+				'activated' => true,
+				'message'   => __( 'MCP Adapter activated successfully.', 'surecart' ),
+			]
+		);
 	}
 }
