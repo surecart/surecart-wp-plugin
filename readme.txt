@@ -2,7 +2,7 @@
 Contributors: 2winfactor, wpcrafter
 Donate link: https://surecart.com
 Tags: ecommerce, online store, subscriptions, stripe, payments
-Requires at least: 6.7
+Requires at least: 6.8
 Tested up to: 6.9
 Stable tag: 4.1.1
 Requires PHP: 7.4
@@ -422,7 +422,7 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 
 == Changelog ==
 
-= 4.1.1 - April 7th, 2026 =
+= 4.1.1 - April 8th, 2026 =
 - New: SureCart Abilities API for AI-powered store management.
 - New: Product review shortcodes for use in all page builders or different page contexts.
 - Improvement: Checkout and dashboard blocks migrated to v3 compatibility.
