@@ -31,7 +31,7 @@ class LoginController extends RestController {
 		$customer_data = [];
 		if ( $request->get_param( 'checkout_mode' ) && (bool) get_option( 'surecart_checkout_auto_login', false ) ) {
 			$mode     = $request->get_param( 'checkout_mode' );
-			$customer = $sc_user->customer( $mode, [ 'shipping_address' ] );
+			$customer = $sc_user->customer( $mode, [ 'shipping_address', 'billing_address' ] );
 
 			if ( $customer && ! is_wp_error( $customer ) ) {
 				$customer_data = [

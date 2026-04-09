@@ -105,7 +105,7 @@ class VerificationCodeController extends RestController {
 		// Only fetch when called from a checkout context with auto-login enabled.
 		if ( $request->get_param( 'checkout_mode' ) && (bool) get_option( 'surecart_checkout_auto_login', false ) ) {
 			$mode     = $request->get_param( 'checkout_mode' );
-			$customer = $user->customer( $mode, [ 'shipping_address' ] );
+			$customer = $user->customer( $mode, [ 'shipping_address', 'billing_address' ] );
 
 			if ( $customer && ! is_wp_error( $customer ) ) {
 				$verify->customer = [
@@ -113,6 +113,7 @@ class VerificationCodeController extends RestController {
 					'last_name'        => $customer->last_name ?? '',
 					'phone'            => $customer->phone ?? '',
 					'shipping_address' => $customer->shipping_address ?? [],
+					'billing_address'  => $customer->billing_address ?? [],
 				];
 			} else {
 				$verify->customer = [
@@ -120,6 +121,7 @@ class VerificationCodeController extends RestController {
 					'last_name'        => '',
 					'phone'            => '',
 					'shipping_address' => [],
+					'billing_address'  => [],
 				];
 			}
 		}
