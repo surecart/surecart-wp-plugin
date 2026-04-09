@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
 import { ScSwitch, ScAlert, ScIcon } from '@surecart/components-react';
@@ -10,8 +8,6 @@ import Error from '../../components/Error';
 import { useEntityProp } from '@wordpress/core-data';
 import MCPAdapterNotice from './components/MCPAdapterNotice';
 import AIClientInstructions from './components/AIClientInstructions';
-
-/* global scMCPData */
 
 export default () => {
 	const [error, setError] = useState(null);
@@ -64,7 +60,7 @@ export default () => {
 		return (
 			<SettingsTemplate
 				title={__('MCP', 'surecart')}
-				icon={<sc-icon name="cpu"></sc-icon>}
+				icon={<ScIcon name="cpu"></ScIcon>}
 				onSubmit={onSubmit}
 				noButton
 			>
@@ -92,7 +88,7 @@ export default () => {
 		return (
 			<SettingsTemplate
 				title={__('MCP', 'surecart')}
-				icon={<sc-icon name="cpu"></sc-icon>}
+				icon={<ScIcon name="cpu"></ScIcon>}
 				onSubmit={onSubmit}
 				noButton
 			>
@@ -104,7 +100,7 @@ export default () => {
 	return (
 		<SettingsTemplate
 			title={__('MCP', 'surecart')}
-			icon={<sc-icon name="cpu"></sc-icon>}
+			icon={<ScIcon name="cpu"></ScIcon>}
 			onSubmit={onSubmit}
 		>
 			<Error error={error} setError={setError} margin="80px" />
