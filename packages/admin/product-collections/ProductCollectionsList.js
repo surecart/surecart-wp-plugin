@@ -1,6 +1,6 @@
 /** @jsx jsx */
-import { __, _n, sprintf } from '@wordpress/i18n';
 import { css, jsx } from '@emotion/react';
+import { __, _n, sprintf } from '@wordpress/i18n';
 import { useDispatch } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import { addQueryArgs } from '@wordpress/url';
@@ -154,19 +154,7 @@ export default function ProductCollectionsList() {
 				id: 'created',
 				label: __('Created', 'surecart'),
 				enableSorting: false,
-				render: ({ item }) => {
-					if (!item?.created_at) {
-						return '-';
-					}
-					const date = new Date(item.created_at * 1000);
-					return date.toLocaleDateString(undefined, {
-						year: 'numeric',
-						month: 'short',
-						day: 'numeric',
-						hour: '2-digit',
-						minute: '2-digit',
-					});
-				},
+				render: ({ item }) => item?.created_at_date_time || '-',
 			},
 		],
 		[]
