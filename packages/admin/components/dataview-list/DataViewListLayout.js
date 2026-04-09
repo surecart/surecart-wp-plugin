@@ -2,6 +2,7 @@
 import { __ } from '@wordpress/i18n';
 import { css, jsx } from '@emotion/react';
 import { DataViews } from '@wordpress/dataviews/wp';
+import { Spinner } from '@wordpress/components';
 import Notifications from '../Notifications';
 
 /**
@@ -34,7 +35,7 @@ import Notifications from '../Notifications';
  *
  * All remaining props are forwarded to <DataViews>.
  */
-export default function DataViewListLayout( {
+export default function DataViewListLayout({
 	tabs,
 	activeTab,
 	onTabChange,
@@ -49,18 +50,18 @@ export default function DataViewListLayout( {
 	paginationInfo,
 	actions,
 	isLoading,
+	isMutating = false,
 	defaultLayouts,
 	...rest
-} ) {
+}) {
 	const hasTabs = tabs && tabs.length > 0;
 	const hasControls = hasTabs || headerControls;
 
 	return (
-		<div className={ `sc-dataview-list-wrapper ${ className }`.trim() }>
-			{ /* ─── Tabs + Header Controls Bar ─── */ }
-			{ hasControls && (
+		<div className={`sc-dataview-list-wrapper ${className}`.trim()}>
+			{hasControls && (
 				<div
-					css={ css`
+					css={css`
 						display: flex;
 						align-items: center;
 						justify-content: space-between;
@@ -68,42 +69,48 @@ export default function DataViewListLayout( {
 						margin-top: 12px;
 						margin-bottom: 16px;
 						flex-wrap: wrap;
-					` }
+					`}
 				>
-					{ hasTabs ? (
+					{hasTabs ? (
 						<ul
-							css={ css`
+							css={css`
 								display: flex;
 								gap: 0;
 								margin: 0;
 								padding: 0;
 								list-style: none;
 								border-bottom: 1px solid #c3c4c7;
-							` }
+							`}
 						>
-							{ tabs.map( ( tab ) => (
+							{tabs.map((tab) => (
 								<li
-									key={ tab.value }
-									css={ css`
+									key={tab.value}
+									css={css`
 										margin: 0 0 -1px 0;
-									` }
+									`}
 								>
 									<a
-										href={ `#${ tab.value }` }
-										onClick={ ( e ) => {
+										href={`#${tab.value}`}
+										onClick={(e) => {
 											e.preventDefault();
-											onTabChange?.( tab.value );
-										} }
-										css={ css`
+											onTabChange?.(tab.value);
+										}}
+										css={css`
 											display: inline-block;
 											padding: 6px 12px;
 											text-decoration: none;
 											font-size: 14px;
-											font-weight: ${ activeTab === tab.value ? '600' : '400' };
-											color: ${ activeTab === tab.value ? '#1d2327' : '#646970' };
-											border-bottom: ${ activeTab === tab.value
+											font-weight: ${activeTab ===
+											tab.value
+												? '600'
+												: '400'};
+											color: ${activeTab === tab.value
+												? '#1d2327'
+												: '#646970'};
+											border-bottom: ${activeTab ===
+											tab.value
 												? '2px solid #1d2327'
-												: '2px solid transparent' };
+												: '2px solid transparent'};
 											transition: color 0.15s ease;
 											&:hover {
 												color: #1d2327;
@@ -112,57 +119,79 @@ export default function DataViewListLayout( {
 												outline: none;
 												color: #1d2327;
 											}
-										` }
+										`}
 									>
-										{ tab.label }
+										{tab.label}
 									</a>
 								</li>
-							) ) }
+							))}
 						</ul>
 					) : (
-						<div /> // spacer when no tabs but headerControls exist
-					) }
+						<div />
+					)}
 
-					{ headerControls && (
+					{headerControls && (
 						<div
-							css={ css`
+							css={css`
 								min-width: 240px;
-							` }
+							`}
 						>
-							{ headerControls }
+							{headerControls}
 						</div>
-					) }
+					)}
 				</div>
-			) }
+			)}
 
-			{ /* ─── DataView Card ─── */ }
 			<div
-				css={ css`
-					background: var( --sc-card-background-color, var( --sc-color-white ) );
-					border: 1px solid var( --sc-card-border-color, var( --sc-color-gray-300 ) );
-					border-radius: var( --sc-input-border-radius-medium );
-					box-shadow: var( --sc-shadow-small );
-					${ ! hasControls ? 'margin-top: 12px;' : '' }
-				` }
+				css={css`
+					position: relative;
+					background: var(
+						--sc-card-background-color,
+						var(--sc-color-white)
+					);
+					border: 1px solid
+						var(--sc-card-border-color, var(--sc-color-gray-300));
+					border-radius: var(--sc-input-border-radius-medium);
+					box-shadow: var(--sc-shadow-small);
+					${!hasControls ? 'margin-top: 12px;' : ''}
+				`}
 			>
 				<DataViews
-					data={ data }
-					fields={ fields }
-					view={ view }
-					onChangeView={ onChangeView }
-					paginationInfo={ paginationInfo }
-					actions={ actions }
-					isLoading={ isLoading }
-					defaultLayouts={ defaultLayouts || {
-						table: {},
-					} }
-					header={ header }
+					data={data}
+					fields={fields}
+					view={view}
+					onChangeView={onChangeView}
+					paginationInfo={paginationInfo}
+					actions={actions}
+					isLoading={isLoading}
+					defaultLayouts={
+						defaultLayouts || {
+							table: {},
+						}
+					}
+					header={header}
 					search
-					{ ...rest }
+					{...rest}
 				/>
+
+				{isMutating && (
+					<div
+						css={css`
+							position: absolute;
+							inset: 0;
+							display: flex;
+							align-items: center;
+							justify-content: center;
+							background: rgba(255, 255, 255, 0.6);
+							border-radius: inherit;
+							z-index: 10;
+						`}
+					>
+						<Spinner style={{ width: '28px', height: '28px' }} />
+					</div>
+				)}
 			</div>
 
-			{ /* ─── Snackbar Notices ─── */ }
 			<Notifications />
 		</div>
 	);

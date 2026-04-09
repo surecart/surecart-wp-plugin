@@ -5,18 +5,13 @@ import { useDispatch } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import { addQueryArgs } from '@wordpress/url';
 import { useMemo, useCallback } from 'react';
-import {
-	Button,
-	__experimentalText as Text,
-	__experimentalVStack as VStack,
-	__experimentalHStack as HStack,
-	Icon,
-} from '@wordpress/components';
+import { Icon } from '@wordpress/components';
 import { store as noticesStore } from '@wordpress/notices';
 import { trash, edit, external } from '@wordpress/icons';
 import {
 	DataViewListLayout,
 	useDataViewState,
+	ConfirmDeleteModal,
 } from '../components/dataview-list';
 import './product-collections-list-style.scss';
 
@@ -249,34 +244,20 @@ export default function ProductCollectionsList() {
 				supportsBulk: true,
 				hideModalHeader: true,
 				RenderModal: ({ items, closeModal }) => (
-					<VStack>
-						<Text>
-							{sprintf(
-								_n(
-									'Are you sure you want to permanently delete %d collection?',
-									'Are you sure you want to permanently delete %d collections?',
-									items.length,
-									'surecart'
-								),
-								items.length
-							)}
-						</Text>
-						<HStack justify="end">
-							<Button variant="tertiary" onClick={closeModal}>
-								{__('Cancel', 'surecart')}
-							</Button>
-							<Button
-								variant="primary"
-								isDestructive
-								onClick={() => {
-									handleDelete(items);
-									closeModal();
-								}}
-							>
-								{__('Delete', 'surecart')}
-							</Button>
-						</HStack>
-					</VStack>
+					<ConfirmDeleteModal
+						items={items}
+						closeModal={closeModal}
+						onDelete={handleDelete}
+						message={sprintf(
+							_n(
+								'Are you sure you want to permanently delete %d collection?',
+								'Are you sure you want to permanently delete %d collections?',
+								items.length,
+								'surecart'
+							),
+							items.length
+						)}
+					/>
 				),
 			},
 		],

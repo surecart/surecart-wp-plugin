@@ -4,21 +4,15 @@ import { css, jsx } from '@emotion/react';
 import { useDispatch } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import { addQueryArgs } from '@wordpress/url';
-import { useMemo, useCallback, useEffect } from 'react';
-import {
-	Button,
-	__experimentalText as Text,
-	__experimentalVStack as VStack,
-	__experimentalHStack as HStack,
-	Icon,
-} from '@wordpress/components';
+import { useMemo, useCallback, useEffect, useState } from 'react';
+import { Icon } from '@wordpress/components';
 import { store as noticesStore } from '@wordpress/notices';
 import { trash, copy, archive, edit, external } from '@wordpress/icons';
 import apiFetch from '@wordpress/api-fetch';
 import ModelSelector from '../components/ModelSelector';
 import { ScMenuItem, ScDivider } from '@surecart/components-react';
 import { getQueryArgs } from '@wordpress/url';
-import { DataViewListLayout, useDataViewState } from '../components/dataview-list';
+import { DataViewListLayout, useDataViewState, ConfirmDeleteModal } from '../components/dataview-list';
 import './product-list-style.scss';
 
 /**
@@ -91,6 +85,10 @@ function getEditUrl( id ) {
 export default function ProductsList() {
 	const { saveEntityRecord, deleteEntityRecord } = useDispatch( coreStore );
 	const { createSuccessNotice, createErrorNotice } = useDispatch( noticesStore );
+
+	// Tracks whether an inline action (archive/unarchive/duplicate) is in-flight.
+	// Passed to isLoading so the table shows a loading state during mutations.
+	const [ isMutating, setIsMutating ] = useState( false );
 
 	// Reusable data view state hook.
 	const {
@@ -349,6 +347,7 @@ export default function ProductsList() {
 	// ─── Action handlers ───
 	const handleArchiveToggle = useCallback(
 		async ( items ) => {
+			setIsMutating( true );
 			try {
 				await Promise.all(
 					items.map( ( item ) =>
@@ -378,6 +377,8 @@ export default function ProductsList() {
 					error?.message || __( 'Failed to update product.', 'surecart' ),
 					{ type: 'snackbar' }
 				);
+			} finally {
+				setIsMutating( false );
 			}
 		},
 		[ saveEntityRecord, createSuccessNotice, createErrorNotice, invalidateList ]
@@ -385,6 +386,7 @@ export default function ProductsList() {
 
 	const handleDuplicate = useCallback(
 		async ( items ) => {
+			setIsMutating( true );
 			try {
 				await Promise.all(
 					items.map( ( item ) =>
@@ -402,6 +404,8 @@ export default function ProductsList() {
 					error?.message || __( 'Failed to duplicate product.', 'surecart' ),
 					{ type: 'snackbar' }
 				);
+			} finally {
+				setIsMutating( false );
 			}
 		},
 		[ createSuccessNotice, createErrorNotice, invalidateList ]
@@ -484,34 +488,20 @@ export default function ProductsList() {
 				supportsBulk: true,
 				hideModalHeader: true,
 				RenderModal: ( { items, closeModal } ) => (
-					<VStack>
-						<Text>
-							{ sprintf(
-								_n(
-									'Are you sure you want to permanently delete %d product?',
-									'Are you sure you want to permanently delete %d products?',
-									items.length,
-									'surecart'
-								),
-								items.length
-							) }
-						</Text>
-						<HStack justify="end">
-							<Button variant="tertiary" onClick={ closeModal }>
-								{ __( 'Cancel', 'surecart' ) }
-							</Button>
-							<Button
-								variant="primary"
-								isDestructive
-								onClick={ () => {
-									handleDelete( items );
-									closeModal();
-								} }
-							>
-								{ __( 'Delete', 'surecart' ) }
-							</Button>
-						</HStack>
-					</VStack>
+					<ConfirmDeleteModal
+						items={ items }
+						closeModal={ closeModal }
+						onDelete={ handleDelete }
+						message={ sprintf(
+							_n(
+								'Are you sure you want to permanently delete %d product?',
+								'Are you sure you want to permanently delete %d products?',
+								items.length,
+								'surecart'
+							),
+							items.length
+						) }
+					/>
 				),
 			},
 		],
@@ -559,6 +549,7 @@ export default function ProductsList() {
 			paginationInfo={ paginationInfo }
 			actions={ actions }
 			isLoading={ ! hasResolved }
+			isMutating={ isMutating }
 		/>
 	);
 }
