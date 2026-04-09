@@ -38,6 +38,7 @@ export default ({ attributes, setAttributes }) => {
 				isShownByDefault
 			>
 				<ToggleGroupControl
+					__next40pxDefaultSize
 					label={__('Icon & Text', 'surecart')}
 					value={button_type}
 					onChange={(button_type) => setAttributes({ button_type })}
@@ -80,6 +81,7 @@ export default ({ attributes, setAttributes }) => {
 				onDeselect={() => setAttributes({ width: undefined })}
 			>
 				<ToggleGroupControl
+					__next40pxDefaultSize
 					label={__('Width', 'surecart')}
 					help={__(
 						'The width of the button in its container.',
@@ -111,6 +113,7 @@ export default ({ attributes, setAttributes }) => {
 				isShownByDefault
 			>
 				<NumberControl
+					__next40pxDefaultSize
 					label={__('Icon Size', 'surecart')}
 					help={__('Size of the icon in pixels.', 'surecart')}
 					value={icon_size}

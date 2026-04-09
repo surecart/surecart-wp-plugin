@@ -93,15 +93,16 @@ export default ({ attributes, setAttributes }) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<ScCustomOrderPriceInput
-				{...blockProps}
-				priceId={price_id}
-				label={label}
-				placeholder={placeholder}
-				help={help}
-				showCode={show_currency_code}
-				required={required}
-			/>
+			<div {...blockProps}>
+				<ScCustomOrderPriceInput
+					priceId={price_id}
+					label={label}
+					placeholder={placeholder}
+					help={help}
+					showCode={show_currency_code}
+					required={required}
+				/>
+			</div>
 		</Fragment>
 	);
 };

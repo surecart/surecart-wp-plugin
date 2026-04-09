@@ -3,13 +3,13 @@ import { ScOrderConfirmationDetails } from '@surecart/components-react';
 
 export default ({ attributes }) => {
 	const { title } = attributes;
-	const blockProps = useBlockProps({
-		heading: title,
-	});
+	const blockProps = useBlockProps();
 
 	return (
-		<ScOrderConfirmationDetails
-			{...blockProps}
-		></ScOrderConfirmationDetails>
+		<div {...blockProps}>
+			<ScOrderConfirmationDetails
+				heading={title}
+			></ScOrderConfirmationDetails>
+		</div>
 	);
 };

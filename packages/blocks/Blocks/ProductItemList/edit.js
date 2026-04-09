@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import {
 	store as blockEditorStore,
@@ -245,9 +243,7 @@ export default ({ attributes, setAttributes, clientId }) => {
 						<Notice
 							status="warning"
 							isDismissible={false}
-							css={css`
-								margin-bottom: 20px;
-							`}
+							style={{ marginBottom: '20px' }}
 						>
 							{__(
 								'This column count exceeds the recommended amount and may cause visual breakage.'
@@ -372,12 +368,7 @@ export default ({ attributes, setAttributes, clientId }) => {
 					</PanelRow>
 				</PanelBody>
 				<PanelBody title={__('Products', 'surecart')}>
-					<div
-						css={css`
-							display: grid;
-							gap: 1em;
-						`}
-					>
+					<div style={{ display: 'grid', gap: '1em' }}>
 						<ScSelect
 							label={__('Products To Show', 'surecart')}
 							value={type}
@@ -415,12 +406,12 @@ export default ({ attributes, setAttributes, clientId }) => {
 							>
 								{!!ids?.length && (
 									<div
-										css={css`
-											display: flex;
-											flex-wrap: wrap;
-											gap: 0.5em;
-											margin-bottom: 1em;
-										`}
+										style={{
+											display: 'flex',
+											flexWrap: 'wrap',
+											gap: '0.5em',
+											marginBottom: '1em',
+										}}
 									>
 										{(ids || []).map((id) => (
 											<ProductTag
@@ -474,18 +465,14 @@ export default ({ attributes, setAttributes, clientId }) => {
 					<Notice
 						status="warning"
 						isDismissible={false}
-						css={css`
-							margin-bottom: 20px;
-						`}
+						style={{ marginBottom: '20px' }}
 					>
 						<div
-							css={css`
-								display: ${!apiTokenConnected
-									? 'flex'
-									: 'none'};
-								flex-direction: column;
-								gap: 1em;
-							`}
+							style={{
+								display: !apiTokenConnected ? 'flex' : 'none',
+								flexDirection: 'column',
+								gap: '1em',
+							}}
 						>
 							{__(
 								'These are sample products. Setup a new store / Connect existing to have real items.',
@@ -494,20 +481,14 @@ export default ({ attributes, setAttributes, clientId }) => {
 							<ScButton
 								type="primary"
 								href={window.scData?.getting_started_url}
-								css={css`
-									width: fit-content;
-								`}
+								style={{ width: 'fit-content' }}
 							>
 								{__('Setup Store', 'surecart')}
 							</ScButton>
 						</div>
 					</Notice>
 				)}
-				<div
-					css={css`
-						display: ${isEditing ? 'block' : 'none'};
-					`}
-				>
+				<div style={{ display: isEditing ? 'block' : 'none' }}>
 					<EditLayoutConfig
 						label={__('All Products', 'surecart')}
 						description={__(
@@ -519,10 +500,10 @@ export default ({ attributes, setAttributes, clientId }) => {
 					/>
 				</div>
 				<div
-					css={css`
-						padding: 0.88rem;
-						display: ${!isEditing ? 'block' : 'none'};
-					`}
+					style={{
+						padding: '0.88rem',
+						display: !isEditing ? 'block' : 'none',
+					}}
 				>
 					<Disabled>
 						{layoutConfig && (

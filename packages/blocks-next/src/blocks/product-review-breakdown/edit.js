@@ -53,6 +53,8 @@ export default function ({ attributes, setAttributes, clientId }) {
 			<InspectorControls>
 				<PanelBody title={__('Settings', 'surecart')}>
 					<RangeControl
+						__next40pxDefaultSize
+						__nextHasNoMarginBottom
 						label={__('Columns', 'surecart')}
 						value={columns}
 						onChange={(value) => setAttributes({ columns: value })}
