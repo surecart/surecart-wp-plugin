@@ -116,25 +116,6 @@ class CheckoutsController extends RestController {
 			$class['phone']      = $user->phone;
 		}
 
-		// Auto-fill customer profile data when not already provided in the request.
-		if ( ! empty( $customer_id ) && ! $request->get_param( 'shipping_address' ) ) {
-			$customer = $user->customer( $mode, [ 'shipping_address' ] );
-			if ( $customer && ! is_wp_error( $customer ) ) {
-				if ( ! empty( $customer->shipping_address ) ) {
-					$class['shipping_address'] = $customer->shipping_address;
-				}
-				if ( ! $request->get_param( 'first_name' ) && ! empty( $customer->first_name ) ) {
-					$class['first_name'] = $customer->first_name;
-				}
-				if ( ! $request->get_param( 'last_name' ) && ! empty( $customer->last_name ) ) {
-					$class['last_name'] = $customer->last_name;
-				}
-				if ( ! $request->get_param( 'phone' ) && ! empty( $customer->phone ) ) {
-					$class['phone'] = $customer->phone;
-				}
-			}
-		}
-
 		return $class;
 	}
 

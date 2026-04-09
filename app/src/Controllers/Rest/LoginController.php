@@ -23,7 +23,34 @@ class LoginController extends RestController {
 			return $user;
 		}
 
-		User::find( $user->ID )->login();
+		$sc_user = User::find( $user->ID );
+		$sc_user->login();
+
+		// Fetch customer profile data to return to the client for auto-filling checkout.
+		// Only fetch when called from a checkout context with auto-login enabled.
+		$customer_data = [];
+		if ( $request->get_param( 'checkout_mode' ) && (bool) get_option( 'surecart_checkout_auto_login', false ) ) {
+			$mode     = $request->get_param( 'checkout_mode' );
+			$customer = $sc_user->customer( $mode, [ 'shipping_address' ] );
+
+			if ( $customer && ! is_wp_error( $customer ) ) {
+				$customer_data = [
+					'first_name'       => $customer->first_name ?? $user->display_name ?? $user->user_login,
+					'last_name'        => $customer->last_name ?? '',
+					'phone'            => $customer->phone ?? '',
+					'shipping_address' => $customer->shipping_address ?? [],
+					'billing_address'  => $customer->billing_address ?? [],
+				];
+			} else {
+				$customer_data = [
+					'first_name'       => $user->display_name ?? $user->user_login,
+					'last_name'        => '',
+					'phone'            => '',
+					'shipping_address' => [],
+					'billing_address'  => [],
+				];
+			}
+		}
 
 		$redirect_to  = $request->get_param( 'redirect_to' );
 		$redirect_url = ! empty( $redirect_to ) ? wp_validate_redirect( $redirect_to, false ) : null;
@@ -31,6 +58,7 @@ class LoginController extends RestController {
 		return [
 			'name'         => $user->display_name,
 			'email'        => $user->user_email,
+			'customer'     => $customer_data,
 			'redirect_url' => apply_filters( 'sc_login_redirect_url', $redirect_url ),
 			'nonce'        => ( wp_installing() && ! is_multisite() ) ? '' : wp_create_nonce( 'wp_rest' ),
 		];

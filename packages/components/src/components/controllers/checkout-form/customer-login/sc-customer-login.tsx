@@ -90,10 +90,17 @@ export class ScCustomerLogin {
       speak(__('Verification is successful. Please continue your purchase.', 'surecart'), 'assertive');
 
       // Update checkout before setting user state — setting loggedIn unmounts this component.
-      await this.updateCheckout({});
+      // Pass customer profile data from the verification response to auto-fill the checkout.
+      const customer = user?.customer || {};
+      await this.updateCheckout({
+        ...(customer.shipping_address ? { shipping_address: customer.shipping_address } : {}),
+        ...(customer.first_name ? { first_name: customer.first_name } : {}),
+        ...(customer.last_name ? { last_name: customer.last_name } : {}),
+        ...(customer.phone ? { phone: customer.phone } : {}),
+      });
 
       userState.loggedIn = true;
-      userState.name = user?.name || [user?.customer?.first_name, user?.customer?.last_name].filter(Boolean).join(' ') || 'N/A';
+      userState.name = user?.name || [customer?.first_name, customer?.last_name].filter(Boolean).join(' ') || 'N/A';
     } catch (e: any) {
       // If cooldown has elapsed, treat as expired code.
       if (this.resendCooldown <= 0) {
@@ -190,12 +197,13 @@ export class ScCustomerLogin {
     try {
       this.error = '';
       this.busy = true;
-      const { name, email, nonce } = (await apiFetch({
+      const { name, email, nonce, customer } = (await apiFetch({
         method: 'POST',
         path: 'surecart/v1/login',
         data: {
           login: userState.email,
           password: this.password,
+          checkout_mode: checkoutState.mode,
         },
       })) as any;
 
@@ -207,7 +215,14 @@ export class ScCustomerLogin {
       }
 
       // Update checkout before setting user state — setting loggedIn unmounts this component.
-      await this.updateCheckout({});
+      // Pass customer profile data from the login response to auto-fill the checkout.
+      const customerData = customer || {};
+      await this.updateCheckout({
+        ...(customerData.shipping_address ? { shipping_address: customerData.shipping_address } : {}),
+        ...(customerData.first_name ? { first_name: customerData.first_name } : {}),
+        ...(customerData.last_name ? { last_name: customerData.last_name } : {}),
+        ...(customerData.phone ? { phone: customerData.phone } : {}),
+      });
 
       this.verified = true;
 
