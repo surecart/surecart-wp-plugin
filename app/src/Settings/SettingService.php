@@ -392,17 +392,6 @@ class SettingService {
 				'autoload'          => false,
 			]
 		);
-		$this->register(
-			'surecart',
-			'mcp_server_enabled',
-			[
-				'type'              => 'boolean',
-				'show_in_rest'      => true,
-				'sanitize_callback' => 'boolval',
-				'default'           => false,
-				'autoload'          => false,
-			]
-		);
 	}
 	/**
 	 * Register a setting.

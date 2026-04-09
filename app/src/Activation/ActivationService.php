@@ -147,6 +147,5 @@ class ActivationService {
 		delete_option( 'surecart_mcp_abilities_enabled' );
 		delete_option( 'surecart_mcp_edit_abilities_enabled' );
 		delete_option( 'surecart_mcp_delete_abilities_enabled' );
-		delete_option( 'surecart_mcp_server_enabled' );
 	}
 }

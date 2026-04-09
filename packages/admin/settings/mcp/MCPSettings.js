@@ -29,11 +29,6 @@ export default () => {
 		'site',
 		'surecart_mcp_delete_abilities_enabled'
 	);
-	const [mcpServerEnabled, setMcpServerEnabled] = useEntityProp(
-		'root',
-		'site',
-		'surecart_mcp_server_enabled'
-	);
 
 	const mcpData = window.scMCPData || {};
 	const isAdapterActive = mcpData.mcp_adapter_active;
@@ -166,28 +161,7 @@ export default () => {
 				)}
 			</SettingsBox>
 
-			<SettingsBox
-				title={__('MCP Server', 'surecart')}
-				description={__(
-					'Allow external AI apps to connect to your store.',
-					'surecart'
-				)}
-			>
-				<ScSwitch
-					checked={mcpServerEnabled}
-					onScChange={(e) => setMcpServerEnabled(e.target.checked)}
-				>
-					{__('Enable MCP Server', 'surecart')}
-					<span slot="description" style={{ lineHeight: '1.4' }}>
-						{__(
-							'Creates a connection endpoint that AI apps like Claude Desktop and Cursor can use to interact with your store. When disabled, external AI apps cannot connect to SureCart.',
-							'surecart'
-						)}
-					</span>
-				</ScSwitch>
-			</SettingsBox>
-
-			{mcpServerEnabled && (
+			{abilitiesEnabled && (
 				<AIClientInstructions
 					restUrl={mcpData.rest_url}
 					appPasswordsUrl={mcpData.app_passwords_url}
