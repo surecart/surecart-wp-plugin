@@ -109,6 +109,7 @@ export default ({ attributes, setAttributes, context: { postId } = {} }) => {
 					)}
 
 					<NumberControl
+						__next40pxDefaultSize
 						label={__('Max Image Width', 'surecart')}
 						placeholder={__('Unlimited', 'surecart')}
 						value={width}

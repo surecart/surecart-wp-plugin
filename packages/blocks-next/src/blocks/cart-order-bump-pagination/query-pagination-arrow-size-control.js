@@ -7,6 +7,8 @@ import { RangeControl } from '@wordpress/components';
 export function QueryPaginationArrowSizeControl({ value, onChange }) {
 	return (
 		<RangeControl
+			__next40pxDefaultSize
+			__nextHasNoMarginBottom
 			label={__('Arrow Size', 'surecart')}
 			value={value}
 			onChange={onChange}

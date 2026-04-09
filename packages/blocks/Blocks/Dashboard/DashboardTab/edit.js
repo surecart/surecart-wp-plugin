@@ -1,6 +1,4 @@
-/** @jsx jsx */
 import { ScTab } from '@surecart/components-react';
-import { css, jsx } from '@emotion/core';
 import {
 	InspectorControls,
 	RichText,
@@ -22,10 +20,7 @@ import feather from 'feather-icons';
 export default ({ attributes, setAttributes }) => {
 	const { panel, title, active, icon } = attributes;
 	const tab = useRef();
-	const blockProps = useBlockProps({
-		panel,
-		tab,
-	});
+	const blockProps = useBlockProps();
 
 	useEffect(() => {
 		setAttributes({
@@ -44,6 +39,11 @@ export default ({ attributes, setAttributes }) => {
 
 	return (
 		<Fragment>
+			<style>{`
+				.sc-dashboard-tab-icon-wrapper svg {
+					fill: none !important;
+				}
+			`}</style>
 			<InspectorControls>
 				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
@@ -60,13 +60,7 @@ export default ({ attributes, setAttributes }) => {
 							<BaseControl.VisualLabel>
 								{__('Tab Icon', 'surecart')}
 							</BaseControl.VisualLabel>
-							<div
-								css={css`
-									svg {
-										fill: none !important;
-									}
-								`}
-							>
+							<div className="sc-dashboard-tab-icon-wrapper">
 								<DropdownMenu
 									popoverProps={{
 										className: 'sc-tab-icon-dropdown',
@@ -107,22 +101,24 @@ export default ({ attributes, setAttributes }) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<ScTab {...blockProps}>
-				<sc-icon
-					style={{ fontSize: '18px' }}
-					slot="prefix"
-					name={icon || 'home'}
-				></sc-icon>
+			<div {...blockProps}>
+				<ScTab panel={panel} ref={tab}>
+					<sc-icon
+						style={{ fontSize: '18px' }}
+						slot="prefix"
+						name={icon || 'home'}
+					></sc-icon>
 
-				<RichText
-					aria-label={__('Tab Name', 'surecart')}
-					placeholder={__('Add a tab name', 'surecart')}
-					value={title}
-					onChange={(title) => setAttributes({ title })}
-					withoutInteractiveFormatting
-					allowedFormats={['core/bold', 'core/italic']}
-				/>
-			</ScTab>
+					<RichText
+						aria-label={__('Tab Name', 'surecart')}
+						placeholder={__('Add a tab name', 'surecart')}
+						value={title}
+						onChange={(title) => setAttributes({ title })}
+						withoutInteractiveFormatting
+						allowedFormats={['core/bold', 'core/italic']}
+					/>
+				</ScTab>
+			</div>
 		</Fragment>
 	);
 };

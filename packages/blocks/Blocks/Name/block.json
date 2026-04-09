@@ -1,4 +1,5 @@
 {
+	"apiVersion": 3,
 	"name": "surecart/name",
 	"title": "Full Name",
 	"description": "Display a name collection field.",

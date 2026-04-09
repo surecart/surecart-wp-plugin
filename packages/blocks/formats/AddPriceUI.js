@@ -1,8 +1,6 @@
-/** @jsx jsx */
 import { __ } from '@wordpress/i18n';
-import { css, jsx, Global } from '@emotion/core';
 import { Button, Modal, Flex } from '@wordpress/components';
-import { useState } from '@wordpress/element';
+import { useState, useEffect } from '@wordpress/element';
 import PriceChoices from '@scripts/blocks/components/PriceChoices';
 import { addQueryArgs } from '@wordpress/url';
 import { create, insert, isCollapsed, applyFormat } from '@wordpress/rich-text';
@@ -15,6 +13,17 @@ export default ({ value, onChange, setAddingLink, addingLink, isActive }) => {
 		? JSON.parse(initialLineItemsJSON)
 		: [];
 	const [line_items, setLineItems] = useState(initialLineItems);
+
+	useEffect(() => {
+		const style = document.createElement('style');
+		style.textContent = `
+			.components-modal__screen-overlay.surecart-price-overlay {
+				z-index: 99999999 !important;
+			}
+		`;
+		document.head.appendChild(style);
+		return () => style.remove();
+	}, []);
 
 	const removeLineItem = (index) => {
 		setLineItems(line_items.filter((_, i) => i !== index));
@@ -83,23 +92,13 @@ export default ({ value, onChange, setAddingLink, addingLink, isActive }) => {
 			title={__('Create A Buy Link', 'surecart')}
 			onRequestClose={() => setAddingLink(false)}
 			shouldCloseOnClickOutside={false}
-			css={css`
-				width: 100%;
-				max-width: 800px;
-				overflow: visible;
-				.components-modal__content {
-					overflow: visible;
-				}
-			`}
+			style={{
+				width: '100%',
+				maxWidth: '800px',
+				overflow: 'visible',
+			}}
 			overlayClassName="surecart-price-overlay"
 		>
-			<Global
-				styles={css`
-					.components-modal__screen-overlay.surecart-price-overlay {
-						z-index: 99999999 !important;
-					}
-				`}
-			/>
 			<PriceChoices
 				choices={line_items}
 				onAddProduct={addLineItem}

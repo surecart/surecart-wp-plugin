@@ -1,4 +1,4 @@
-export default ({ className, attributes }) => {
+export default ({ attributes }) => {
 	const {
 		label,
 		clearable,
@@ -26,7 +26,6 @@ export default ({ className, attributes }) => {
 
 	return (
 		<sc-input
-			class={className}
 			label={label}
 			clearable={clearable ? '1' : null}
 			disabled={disabled ? '1' : null}

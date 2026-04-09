@@ -2,6 +2,51 @@
 	position: relative;
 	box-sizing: border-box;
 	width: 100%;
+
+	// Page builders like Divi wrap shortcode output inside text modules
+	// (e.g. .et_pb_text_inner) that apply line-height to all descendants.
+	// This causes whitespace text nodes (newlines between block comments
+	// in the pattern HTML) to render as visible vertical gaps.
+	// Flex column layout naturally ignores whitespace text nodes.
+	display: flex !important;
+	flex-direction: column;
+
+	// WordPress's is-layout-constrained sets margin-inline: auto !important
+	// on children, which in flex context shrinks items to content width and
+	// centers them. Override to make children stretch full-width.
+	&.is-layout-constrained > * {
+		margin-inline: 0 !important;
+		max-width: 100%;
+	}
+
+	// Divi overrides WP's .wp-block-buttons from flex to block, causing
+	// whitespace text nodes inside .wp-block-button (inline-block) to
+	// inflate its height via inherited line-height.
+	.wp-block-buttons {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+	}
+
+	.wp-block-button {
+		display: flex;
+		align-items: center;
+	}
+}
+
+// Same whitespace text node fix for the no-reviews block.
+// Nested under parent to beat WordPress's generated layout selectors
+// (e.g. .wp-block-surecart-product-review-list-is-layout-flow > * + *)
+// without needing !important.
+.wp-block-surecart-product-review-list
+	.wp-block-surecart-product-review-list-no-reviews {
+	display: flex !important;
+	flex-direction: column;
+	margin-block-start: 0;
+
+	p {
+		margin-block-start: 0;
+	}
 }
 
 .alignwide.wp-block-group:has(.wp-block-surecart-product-review-list),

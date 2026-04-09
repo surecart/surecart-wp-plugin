@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
 /**
  * WordPress dependencies
  */
@@ -15,8 +13,9 @@ import { Fragment } from '@wordpress/element';
 import { ScTabPanel } from '@surecart/components-react';
 import { PanelBody, PanelRow, TextControl } from '@wordpress/components';
 
-export default ({ attributes, setAttributes }) => {
+export default ({ attributes, setAttributes, clientId }) => {
 	const { name, gap } = attributes;
+	const instanceClass = `sc-dashboard-page-editor-${clientId}`;
 
 	const useInnerBlocksProps = __stableUseInnerBlocksProps
 		? __stableUseInnerBlocksProps
@@ -24,20 +23,23 @@ export default ({ attributes, setAttributes }) => {
 
 	const blockProps = useBlockProps({
 		name,
-		css: css`
-			> .wp-block:not(sc-columns):not(sc-column):not(:last-child) {
-				margin-bottom: ${gap} !important;
-			}
-		`,
 	});
 
-	const innerBlocksProps = useInnerBlocksProps(blockProps, {
-		templateLock: false,
-		renderAppender: InnerBlocks.ButtonBlockAppender,
-	});
+	const innerBlocksProps = useInnerBlocksProps(
+		{},
+		{
+			templateLock: false,
+			renderAppender: InnerBlocks.ButtonBlockAppender,
+		}
+	);
 
 	return (
 		<Fragment>
+			<style>{`
+				.${instanceClass} > .wp-block:not(sc-columns):not(sc-column):not(:last-child) {
+					margin-bottom: ${gap} !important;
+				}
+			`}</style>
 			<InspectorControls>
 				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
@@ -51,7 +53,12 @@ export default ({ attributes, setAttributes }) => {
 					</PanelRow>
 				</PanelBody>
 			</InspectorControls>
-			<ScTabPanel {...innerBlocksProps}></ScTabPanel>
+			<div {...blockProps}>
+				<ScTabPanel
+					className={instanceClass}
+					{...innerBlocksProps}
+				></ScTabPanel>
+			</div>
 		</Fragment>
 	);
 };

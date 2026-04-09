@@ -66,6 +66,7 @@ export default ({ attributes, setAttributes, isSelected }) => {
 					)}
 
 					<NumberControl
+						__next40pxDefaultSize
 						label={__('Max Image Width', 'surecart')}
 						placeholder={__('Unlimited', 'surecart')}
 						value={width}

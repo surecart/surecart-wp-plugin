@@ -1,5 +1,5 @@
 import { ScPhoneInput } from '@surecart/components-react';
-import { InspectorControls } from '@wordpress/block-editor';
+import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
 import {
 	Disabled,
 	PanelBody,
@@ -15,6 +15,7 @@ import { __ } from '@wordpress/i18n';
 
 export default ({ attributes, setAttributes }) => {
 	const { label, placeholder, help, required } = attributes;
+	const blockProps = useBlockProps();
 
 	return (
 		<Fragment>
@@ -60,14 +61,16 @@ export default ({ attributes, setAttributes }) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<Disabled>
-				<ScPhoneInput
-					required={required}
-					label={label}
-					placeholder={placeholder}
-					help={help}
-				/>
-			</Disabled>
+			<div {...blockProps}>
+				<Disabled>
+					<ScPhoneInput
+						required={required}
+						label={label}
+						placeholder={placeholder}
+						help={help}
+					/>
+				</Disabled>
+			</div>
 		</Fragment>
 	);
 };

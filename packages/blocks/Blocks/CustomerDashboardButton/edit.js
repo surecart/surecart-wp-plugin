@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
 /**
  * WordPress dependencies
  */
@@ -26,7 +24,7 @@ export default ({ className, attributes, setAttributes }) => {
 	const blockProps = useBlockProps();
 
 	return (
-		<div className={className} css={css``}>
+		<div className={className}>
 			<InspectorControls>
 				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>

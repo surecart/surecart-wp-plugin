@@ -1,4 +1,5 @@
 {
+	"apiVersion": 3,
 	"name": "surecart/line-items",
 	"title": "Line Items",
 	"description": "Displays checkout line items.",
