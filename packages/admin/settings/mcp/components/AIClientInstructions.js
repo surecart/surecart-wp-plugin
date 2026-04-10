@@ -7,7 +7,7 @@ import {
 	ScIcon,
 	ScSelect,
 	ScAlert,
-	ScText,
+	ScProse,
 } from '@surecart/components-react';
 import SettingsBox from '../../SettingsBox';
 import { ExternalLink } from '@wordpress/components';
@@ -208,187 +208,167 @@ export default ({ restUrl, appPasswordsUrl }) => {
 				/>
 
 				<ol
-						css={css`
-							list-style: none;
-							counter-reset: steps;
-							margin: 0;
-							padding: 0;
+					css={css`
+						list-style: none;
+						counter-reset: steps;
+						margin: 0;
+						padding: 0;
 
-							li {
-								counter-increment: steps;
-								position: relative;
-								padding-left: 48px;
-								padding-bottom: var(--sc-spacing-large);
-							}
+						li {
+							counter-increment: steps;
+							position: relative;
+							padding-left: 48px;
+							padding-bottom: var(--sc-spacing-large);
+						}
 
-							li > p:first-child,
-							li > p:first-child > strong {
-								line-height: 28px;
-								margin-top: 0;
-							}
+						li:last-child {
+							padding-bottom: 0;
+						}
 
-							li:last-child {
-								padding-bottom: 0;
-							}
+						li > :first-child {
+							line-height: 28px;
+							margin-top: 0;
+						}
 
-							/* Circled number */
-							li::before {
-								content: counter(steps);
-								position: absolute;
-								left: 0;
-								top: 0;
-								width: 28px;
-								height: 28px;
-								border-radius: 50%;
-								background: var(--sc-color-gray-200);
-								color: var(--sc-color-gray-700);
-								font-size: 13px;
-								font-weight: 600;
-								display: flex;
-								align-items: center;
-								justify-content: center;
-								z-index: 1;
-							}
+						/* Circled number */
+						li::before {
+							content: counter(steps);
+							position: absolute;
+							left: 0;
+							top: 0;
+							width: 28px;
+							height: 28px;
+							border-radius: 50%;
+							background: var(--sc-color-gray-200);
+							color: var(--sc-color-gray-700);
+							font-size: 13px;
+							font-weight: 600;
+							display: flex;
+							align-items: center;
+							justify-content: center;
+							z-index: 1;
+						}
 
-							/* Vertical connector line */
-							li::after {
-								content: '';
-								position: absolute;
-								left: 13px;
-								top: 28px;
-								bottom: 0;
-								width: 2px;
-								background: var(--sc-color-gray-200);
-							}
+						/* Vertical connector line */
+						li::after {
+							content: '';
+							position: absolute;
+							left: 13px;
+							top: 28px;
+							bottom: 0;
+							width: 2px;
+							background: var(--sc-color-gray-200);
+						}
 
-							li:last-child::after {
-								display: none;
-							}
-						`}
-					>
-						{/* Step 1: Create Application Password */}
+						li:last-child::after {
+							display: none;
+						}
+					`}
+				>
+					{/* Step 1: Create Application Password */}
+					<li>
+						<strong>
+							{__(
+								'Create an Application Password',
+								'surecart'
+							)}
+						</strong>
+						<p>
+							<ExternalLink href={appPasswordsUrl}>
+								{__(
+									'Open Application Passwords',
+									'surecart'
+								)}
+							</ExternalLink>
+						</p>
+					</li>
+
+					{/* Step 2 (Claude Code only): CLI command */}
+					{isClaudeCode && client.cliCommand && (
 						<li>
-							<p>
-								<strong>
-									{__(
-										'Create an Application Password',
-										'surecart'
-									)}
-								</strong>
-							</p>
-							<p>
-								<ExternalLink
-									href={appPasswordsUrl}
-									target="_blank"
-									rel="noopener noreferrer"
-								>
-									{__(
-										'Open Application Passwords',
-										'surecart'
-									)}
-								</ExternalLink>
-							</p>
+							<strong>
+								{__(
+									'Or use this CLI command to add the server quickly (you will still need to set the environment variables):',
+									'surecart'
+								)}
+							</strong>
+							<pre
+								style={{
+									backgroundColor:
+										'var(--sc-color-gray-100)',
+									color: 'var(--sc-color-gray-800)',
+									border: '1px solid var(--sc-color-gray-300)',
+									margin: 0,
+								}}
+							>
+								{client.cliCommand(mcpUrl)}
+							</pre>
 						</li>
+					)}
 
-						{/* Step 2 (Claude Code only): CLI command */}
-						{isClaudeCode && client.cliCommand && (
-							<li>
-								<p>
-									{__(
-										'Or use this CLI command to add the server quickly (you will still need to set the environment variables):',
-										'surecart'
-									)}
-								</p>
-								<pre
-									css={css`
-										background: var(--sc-color-gray-100);
-										padding: 2px 6px;
-										border-radius: var(
-											--sc-border-radius-small
-										);
-										font-size: 0.85em;
-										color: var(--sc-color-gray-700);
-									`}
-								>
-									{client.cliCommand(mcpUrl)}
-								</pre>
-							</li>
-						)}
+					{/* Copy config step */}
+					<li>
+						<strong>
+							{__(
+								'Copy the JSON config below into:',
+								'surecart'
+							)}
+						</strong>
+						<br />
+						<code>{client.configPath}</code>
 
-						{/* Copy config step */}
-						<li>
-							<p>
-								<strong>
-									{__(
-										'Copy the JSON config below into:',
-										'surecart'
-									)}
-								</strong>
-							</p>
-							<code>{client.configPath}</code>
-							{/* JSON config block */}
+						<div
+							css={css`
+								position: relative;
+								margin-top: var(--sc-spacing-small);
+							`}
+						>
+							<pre
+								style={{
+									paddingRight: '5em',
+									backgroundColor:
+										'var(--sc-color-gray-900)',
+									color: 'var(--sc-color-gray-100)',
+									margin: 0,
+								}}
+							>
+								{configJson}
+							</pre>
 							<div
 								css={css`
-									position: relative;
+									position: absolute;
+									top: var(--sc-spacing-small);
+									right: var(--sc-spacing-small);
+									z-index: 1;
 								`}
 							>
-								<pre
-									css={css`
-										background: var(--sc-color-gray-100);
-										padding: 2px 6px;
-										border-radius: var(
-											--sc-border-radius-small
-										);
-										font-size: 0.85em;
-										color: var(--sc-color-gray-700);
-									`}
-								>
-									{configJson}
-								</pre>
-								<div
-									css={css`
-										position: absolute;
-										top: var(--sc-spacing-small);
-										right: var(--sc-spacing-small);
-										z-index: 1;
-									`}
-								>
-									<ScButton size="small" onClick={handleCopy}>
-										<ScIcon
-											name={copied ? 'check' : 'copy'}
-											slot="prefix"
-										/>
-										{copied
-											? __('Copied!', 'surecart')
-											: __('Copy', 'surecart')}
-									</ScButton>
-								</div>
+								<ScButton size="small" onClick={handleCopy}>
+									<ScIcon
+										name={copied ? 'check' : 'copy'}
+										slot="prefix"
+									/>
+									{copied
+										? __('Copied!', 'surecart')
+										: __('Copy', 'surecart')}
+								</ScButton>
 							</div>
-						</li>
+						</div>
+					</li>
 
-						{/* Replace password step */}
-						<li>
-							<p>
-								<strong>
-									{__(
-										'Replace "your-application-password" with the password from Step 1.',
-										'surecart'
-									)}
-								</strong>
-							</p>
-						</li>
-					</ol>
+					{/* Replace password step */}
+					<li>
+						<strong>
+							{__(
+								'Replace "your-application-password" with the password from Step 1.',
+								'surecart'
+							)}
+						</strong>
+					</li>
+				</ol>
 
 				<ScAlert open type="info">
-					<div
-						css={css`
-							line-height: 1.6;
-							display: flex;
-							flex-direction: column;
-							gap: 6px;
-						`}
-					>
-						<div>
+					<ScProse>
+						<p>
 							<strong>WP_API_URL</strong>
 							{' — '}
 							{__("your site's MCP endpoint.", 'surecart')}{' '}
@@ -401,8 +381,8 @@ export default ({ restUrl, appPasswordsUrl }) => {
 								'the application password you generated.',
 								'surecart'
 							)}
-						</div>
-						<div>
+						</p>
+						<p>
 							{__(
 								'Requires Node.js 20.1+. Verify with',
 								'surecart'
@@ -415,27 +395,25 @@ export default ({ restUrl, appPasswordsUrl }) => {
 							)}{' '}
 							<code>nvm install 20 && nvm use 20</code>
 							{__(') before connecting.', 'surecart')}
-						</div>
-					</div>
+						</p>
+					</ScProse>
 				</ScAlert>
 
 				{mcpUrl && mcpUrl.startsWith('http://') && (
 					<ScAlert open type="warning">
-						<span
-							css={css`
-								line-height: 1.5;
-							`}
-						>
-							{__(
-								'Your site is running over HTTP (likely a local dev environment). The config above includes the',
-								'surecart'
-							)}{' '}
-							<code>--allow-http</code>{' '}
-							{__(
-								'flag to allow the connection. This flag is not needed — and will not appear — on production sites using HTTPS.',
-								'surecart'
-							)}
-						</span>
+						<ScProse>
+							<p>
+								{__(
+									'Your site is running over HTTP (likely a local dev environment). The config above includes the',
+									'surecart'
+								)}{' '}
+								<code>--allow-http</code>{' '}
+								{__(
+									'flag to allow the connection. This flag is not needed — and will not appear — on production sites using HTTPS.',
+									'surecart'
+								)}
+							</p>
+						</ScProse>
 					</ScAlert>
 				)}
 			</div>
