@@ -1073,7 +1073,7 @@ class ProductPostTypeService {
 					'item_scheduled'           => __( 'Product scheduled.', 'surecart' ),
 					'item_updated'             => __( 'Product updated.', 'surecart' ),
 				),
-				'hierarchical'    => true,
+				'hierarchical'    => false,
 				'public'          => true,
 				'show_ui'         => true,
 				'show_in_menu'    => false,
@@ -1091,7 +1091,6 @@ class ProductPostTypeService {
 					'custom-fields',
 					'editor',
 					'thumbnail',
-					'page-attributes',
 				),
 			)
 		);
