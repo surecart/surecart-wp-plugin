@@ -1073,6 +1073,9 @@ class ProductPostTypeService {
 					'item_scheduled'           => __( 'Product scheduled.', 'surecart' ),
 					'item_updated'             => __( 'Product updated.', 'surecart' ),
 				),
+				// Must remain false — hierarchical types include attachments in slug
+				// uniqueness checks and URL resolution, causing product pages to
+				// redirect to attachment pages when a media file shares the same slug.
 				'hierarchical'    => false,
 				'public'          => true,
 				'show_ui'         => true,
