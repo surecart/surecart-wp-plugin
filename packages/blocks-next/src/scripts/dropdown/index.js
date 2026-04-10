@@ -1,7 +1,12 @@
 /**
  * WordPress dependencies
  */
-import { store, getContext, getElement } from '@wordpress/interactivity';
+import {
+	store,
+	getContext,
+	getElement,
+	withSyncEvent,
+} from '@wordpress/interactivity';
 
 const { actions } = store('surecart/dropdown', {
 	state: {
@@ -14,11 +19,11 @@ const { actions } = store('surecart/dropdown', {
 
 	actions: {
 		// Toggle the menu.
-		toggleMenu: (e) => {
+		toggleMenu: withSyncEvent((e) => {
 			e.preventDefault();
 			const context = getContext();
 			context.isMenuOpen = !context.isMenuOpen;
-		},
+		}),
 
 		// Select item programmatically.
 		selectItem: () => {
@@ -28,7 +33,7 @@ const { actions } = store('surecart/dropdown', {
 		},
 
 		// Handle keyup event.
-		menuKeyUp: (e) => {
+		menuKeyUp: withSyncEvent((e) => {
 			const context = getContext();
 			const dropdown = getElement().ref;
 			const options = dropdown.querySelectorAll('[role="menuitem"]');
@@ -75,13 +80,13 @@ const { actions } = store('surecart/dropdown', {
 				context.activeMenuItemId =
 					options[context.index].attributes.id.value;
 			}
-		},
+		}),
 
-		menuKeyDown: (e) => {
+		menuKeyDown: withSyncEvent((e) => {
 			if (['ArrowDown', 'ArrowUp', 'Enter', 'Escape'].includes(e.key)) {
 				e.preventDefault();
 			}
-		},
+		}),
 	},
 
 	callbacks: {

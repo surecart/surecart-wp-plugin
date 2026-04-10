@@ -141,6 +141,7 @@ class Collection {
 	 * @param  mixed $offset Name.
 	 * @return mixed
 	 */
+	#[\ReturnTypeWillChange]
 	public function offsetGet( $offset ) {
 		return $this->getAttribute( $offset );
 	}

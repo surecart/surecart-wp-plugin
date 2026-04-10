@@ -1,10 +1,12 @@
 import { ScAlert, ScFormControl } from '@surecart/components-react';
+import { useBlockProps } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
 import Inspector from './components/Inspector';
 
 export default ({ attributes, setAttributes, context }) => {
 	const { label } = attributes;
 	const { 'surecart/form/mode': mode } = context; // get mode context from parent.
+	const blockProps = useBlockProps();
 
 	const processors = (scBlockData?.processors || [])
 		.filter(
@@ -27,29 +29,31 @@ export default ({ attributes, setAttributes, context }) => {
 				context={context}
 			/>
 
-			<ScFormControl label={label}>
-				{mode === 'test' && (
-					<sc-tag slot="label-end" type="warning" size="small">
-						{__('Test Mode', 'surecart')}
-					</sc-tag>
-				)}
+			<div {...blockProps}>
+				<ScFormControl label={label}>
+					{mode === 'test' && (
+						<sc-tag slot="label-end" type="warning" size="small">
+							{__('Test Mode', 'surecart')}
+						</sc-tag>
+					)}
 
-				{processors.length === 0 ? (
-					<ScAlert type="warning" open>
-						{__(
-							'No payment processors are enabled for this mode.',
-							'surecart'
-						)}
-					</ScAlert>
-				) : (
-					<ScAlert type="info" open>
-						{__(
-							'Please preview your form on the front-end to view processors.',
-							'surecart'
-						)}
-					</ScAlert>
-				)}
-			</ScFormControl>
+					{processors.length === 0 ? (
+						<ScAlert type="warning" open>
+							{__(
+								'No payment processors are enabled for this mode.',
+								'surecart'
+							)}
+						</ScAlert>
+					) : (
+						<ScAlert type="info" open>
+							{__(
+								'Please preview your form on the front-end to view processors.',
+								'surecart'
+							)}
+						</ScAlert>
+					)}
+				</ScFormControl>
+			</div>
 		</>
 	);
 };

@@ -1,11 +1,12 @@
 import { __ } from '@wordpress/i18n';
-import { InspectorControls } from '@wordpress/block-editor';
+import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
 import { PanelBody, PanelRow, TextControl } from '@wordpress/components';
 import { Fragment } from '@wordpress/element';
 
 export default ({ attributes, setAttributes }) => {
 	const { text, total_payments_text, first_payment_subtotal_text } =
 		attributes;
+	const blockProps = useBlockProps();
 
 	return (
 		<Fragment>
@@ -54,19 +55,21 @@ export default ({ attributes, setAttributes }) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<sc-line-item-total total="subtotal">
-				<span slot="description">
-					{text || __('Subtotal', 'surecart')}
-				</span>
-				<span slot="total-payments-description">
-					{total_payments_text ||
-						__('Total Installment Payments', 'surecart')}
-				</span>
-				<span slot="first-payment-subtotal-description">
-					{first_payment_subtotal_text ||
-						__('Initial Payment', 'surecart')}
-				</span>
-			</sc-line-item-total>
+			<div {...blockProps}>
+				<sc-line-item-total total="subtotal">
+					<span slot="description">
+						{text || __('Subtotal', 'surecart')}
+					</span>
+					<span slot="total-payments-description">
+						{total_payments_text ||
+							__('Total Installment Payments', 'surecart')}
+					</span>
+					<span slot="first-payment-subtotal-description">
+						{first_payment_subtotal_text ||
+							__('Initial Payment', 'surecart')}
+					</span>
+				</sc-line-item-total>
+			</div>
 		</Fragment>
 	);
 };

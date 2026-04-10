@@ -7,6 +7,9 @@ inputs:
   package:
     required: false
     description: "Do you want to package the files?"
+  github_token:
+    required: false
+    description: "GitHub token for private repo access"
 runs:
   using: "composite"
   steps:
@@ -37,6 +40,11 @@ runs:
         key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
         restore-keys: |
           ${{ runner.os }}-composer-
+
+    - name: Configure Composer GitHub Auth
+      shell: bash
+      if: ${{ inputs.github_token }}
+      run: composer config -g github-oauth.github.com "${{ inputs.github_token }}"
 
     - name: Composer Install
       shell: bash

@@ -71,6 +71,7 @@ export default ({
 					panelId={clientId}
 				>
 					<ToggleGroupControl
+						__next40pxDefaultSize
 						label={__('Image Cropping', 'surecart')}
 						value={sizing}
 						onChange={(value) => setAttributes({ sizing: value })}
@@ -96,6 +97,7 @@ export default ({
 					panelId={clientId}
 				>
 					<SelectControl
+						__next40pxDefaultSize
 						__nextHasNoMarginBottom
 						label={__('Aspect ratio', 'surecart')}
 						value={aspectRatio}
@@ -140,6 +142,7 @@ export default ({
 					/>
 				</ToolsPanelItem>
 				<UnitControl
+					__next40pxDefaultSize
 					label={__('Height', 'surecart')}
 					labelPosition="top"
 					placeholder={__('Auto', 'surecart')}
@@ -151,6 +154,7 @@ export default ({
 					units={units}
 				/>
 				<UnitControl
+					__next40pxDefaultSize
 					label={__('Width', 'surecart')}
 					labelPosition="top"
 					placeholder={__('Auto', 'surecart')}

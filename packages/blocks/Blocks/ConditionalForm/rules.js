@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
 import { ScButton, ScIcon, ScToggle } from '@surecart/components-react';
 import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
@@ -148,7 +146,7 @@ const Rules = ({ attributes, setAttributes, closeModal }) => {
 						'var(--wp-admin-theme-color)',
 					'--sc-input-border-color-focus':
 						'var(--wp-admin-theme-color)',
-            '--sc-color-primary-text': '#fff',
+					'--sc-color-primary-text': '#fff',
 				}}
 			>
 				{draftRuleGroups.map(({ group_id, rules }, groupIndex) => {
@@ -159,11 +157,7 @@ const Rules = ({ attributes, setAttributes, closeModal }) => {
 								summary={renderRuleTitle(rules)}
 								open
 							>
-								<div
-									css={css`
-										margin-bottom: 15px;
-									`}
-								>
+								<div style={{ marginBottom: '15px' }}>
 									{rules.length !== 0 && (
 										<Conditions
 											rules={rules}
@@ -205,11 +199,7 @@ const Rules = ({ attributes, setAttributes, closeModal }) => {
 									)}
 								</div>
 
-								<div
-									css={css`
-										text-align: center;
-									`}
-								>
+								<div style={{ textAlign: 'center' }}>
 									<ScButton
 										type="link"
 										onClick={() =>
@@ -225,15 +215,13 @@ const Rules = ({ attributes, setAttributes, closeModal }) => {
 							{parseInt(groupIndex) + 1 <
 							draftRuleGroups.length ? (
 								<div
-									css={css`
-										text-align: center;
-										margin: 25px auto;
-									`}
+									style={{
+										textAlign: 'center',
+										margin: '25px auto',
+									}}
 								>
 									<ScButton
-										css={css`
-											pointer-events: none;
-										`}
+										style={{ pointerEvents: 'none' }}
 										pill
 										type="default"
 										size="small"
@@ -243,10 +231,10 @@ const Rules = ({ attributes, setAttributes, closeModal }) => {
 								</div>
 							) : (
 								<div
-									css={css`
-										margin: 15px 0 0;
-										text-align: center;
-									`}
+									style={{
+										margin: '15px 0 0',
+										textAlign: 'center',
+									}}
 								>
 									<ScButton type="link" onClick={addNewGroup}>
 										<ScIcon name="plus" slot="prefix" />
@@ -258,10 +246,10 @@ const Rules = ({ attributes, setAttributes, closeModal }) => {
 					);
 				})}
 				<div
-					css={css`
-						display: flex;
-						justify-content: flex-end;
-					`}
+					style={{
+						display: 'flex',
+						justifyContent: 'flex-end',
+					}}
 				>
 					<ScButton variant="secondary" onClick={closeModal}>
 						{__('Cancel', 'surecart')}
@@ -269,9 +257,7 @@ const Rules = ({ attributes, setAttributes, closeModal }) => {
 					<ScButton
 						type="primary"
 						submit={true}
-						css={css`
-							margin-left: 15px;
-						`}
+						style={{ marginLeft: '15px' }}
 					>
 						{__('Set Rules', 'surecart')}
 					</ScButton>

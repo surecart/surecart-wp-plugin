@@ -174,7 +174,7 @@ abstract class AdminModelEditController {
 
 		// pass entitlements to page.
 		$this->data['entitlements'] = \SureCart::account()->entitlements;
-		$this->data['get_locale']   = str_replace( '_', '-', get_locale() );
+		$this->data['get_locale']   = str_replace( '_', '-', determine_locale() );
 
 		// pass wp user roles to page.
 		$this->data['wp_user_roles'] = get_editable_roles();

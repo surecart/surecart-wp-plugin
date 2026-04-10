@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 
 import PriceChoices from '@scripts/blocks/components/PriceChoices';
@@ -19,10 +17,10 @@ export default ({ attributes, setAttributes }) => {
 
 	return (
 		<div
-			css={css`
-				font-size: 13px;
-				padding-bottom: 8px;
-			`}
+			style={{
+				fontSize: '13px',
+				paddingBottom: '8px',
+			}}
 		>
 			<PriceChoices
 				choices={prices}

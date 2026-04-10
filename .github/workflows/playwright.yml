@@ -38,6 +38,9 @@ jobs:
                   restore-keys: |
                       ${{ runner.os }}-yarn-
 
+            - name: Configure Composer GitHub Auth
+              run: composer config -g github-oauth.github.com "${{ secrets.COMPOSER_AUTH_TOKEN }}"
+
             - name: Composer Install
               run: composer install --optimize-autoloader --prefer-dist
 
