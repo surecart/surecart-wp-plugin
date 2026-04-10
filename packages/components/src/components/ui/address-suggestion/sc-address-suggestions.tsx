@@ -180,8 +180,10 @@ export class ScAddressSuggestions {
     if (this.isGoogleMapsActive()) {
       this.showSuggestions = true;
     }
+
+    // Must set before assigning value — the @Watch('value') handler reads this flag synchronously.
+    this.hasUnsyncedLocalValue = !!e.target?.value;
     this.value = e.target?.value;
-    this.hasUnsyncedLocalValue = !!this.value;
   }
 
   /** Sync the input value back to the parent address on change events (blur, browser autofill). */
@@ -381,7 +383,12 @@ export class ScAddressSuggestions {
         </div>
 
         <div class="sc-address__suggestions--footer" part="suggestion-item manually" role="presentation">
-          <button type="button" onMouseDown={e => e.preventDefault()} onClick={() => this.manualAddress()} aria-label={__('Enter address manually instead of using suggestions', 'surecart')}>
+          <button
+            type="button"
+            onMouseDown={e => e.preventDefault()}
+            onClick={() => this.manualAddress()}
+            aria-label={__('Enter address manually instead of using suggestions', 'surecart')}
+          >
             {__('Enter address manually', 'surecart')}
           </button>
         </div>

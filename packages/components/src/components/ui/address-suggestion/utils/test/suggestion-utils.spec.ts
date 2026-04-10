@@ -94,6 +94,92 @@ describe('buildReplacementAddressFromPlace', () => {
     expect(result.city).toBe('San Francisco');
   });
 
+  it('maps state from administrative_area_level_2 when level_1 does not match regions (Spain)', () => {
+    const place: AddressSuggestion = {
+      displayName: 'Sagrada Família',
+      fullDisplayName: 'Sagrada Família, Barcelona, Spain',
+      placeId: 'places/es1',
+      addressComponents: [
+        { types: ['country'], shortText: 'ES', longText: 'Spain', languageCode: 'es' },
+        { types: ['route'], shortText: 'C/ de Mallorca', longText: 'Carrer de Mallorca', languageCode: 'es' },
+        { types: ['street_number'], shortText: '401', longText: '401', languageCode: 'es' },
+        { types: ['locality'], shortText: 'Barcelona', longText: 'Barcelona', languageCode: 'es' },
+        { types: ['administrative_area_level_2'], shortText: 'B', longText: 'Barcelona', languageCode: 'es' },
+        { types: ['administrative_area_level_1'], shortText: 'CT', longText: 'Cataluña', languageCode: 'es' },
+        { types: ['postal_code'], shortText: '08013', longText: '08013', languageCode: 'es' },
+      ],
+    };
+
+    const regions = [
+      { value: 'B', label: 'Barcelona' },
+      { value: 'M', label: 'Madrid' },
+      { value: 'V', label: 'Valencia/València' },
+    ];
+    const result = buildReplacementAddressFromPlace(place, regions, null);
+
+    expect(result.state).toBe('B');
+    expect(result.city).toBe('Barcelona');
+    expect(result.postal_code).toBe('08013');
+    expect(result.country).toBe('ES');
+  });
+
+  it('maps state from administrative_area_level_2 when level_1 does not match regions (Italy)', () => {
+    const place: AddressSuggestion = {
+      displayName: 'Colosseum',
+      fullDisplayName: 'Colosseum, Roma, Italy',
+      placeId: 'places/it1',
+      addressComponents: [
+        { types: ['country'], shortText: 'IT', longText: 'Italy', languageCode: 'it' },
+        { types: ['route'], shortText: 'Piazza del Colosseo', longText: 'Piazza del Colosseo', languageCode: 'it' },
+        { types: ['street_number'], shortText: '1', longText: '1', languageCode: 'it' },
+        { types: ['locality'], shortText: 'Roma', longText: 'Roma', languageCode: 'it' },
+        { types: ['administrative_area_level_2'], shortText: 'RM', longText: 'Città Metropolitana di Roma Capitale', languageCode: 'it' },
+        { types: ['administrative_area_level_1'], shortText: 'Lazio', longText: 'Lazio', languageCode: 'it' },
+        { types: ['postal_code'], shortText: '00184', longText: '00184', languageCode: 'it' },
+      ],
+    };
+
+    const regions = [
+      { value: 'RM', label: 'Roma' },
+      { value: 'MI', label: 'Milano' },
+      { value: 'NA', label: 'Napoli' },
+    ];
+    const result = buildReplacementAddressFromPlace(place, regions, null);
+
+    expect(result.state).toBe('RM');
+    expect(result.city).toBe('Roma');
+    expect(result.postal_code).toBe('00184');
+    expect(result.country).toBe('IT');
+  });
+
+  it('maps state via label match when shortText is abbreviated and longText lacks diacritics (Mexico)', () => {
+    // Real Google Places API response: shortText "Yuc.", longText "Yucatan" (no accent).
+    // SureCart stores { value: "YUC", label: "Yucatán" } (with accent).
+    const place: AddressSuggestion = {
+      displayName: 'Chichén Itzá',
+      fullDisplayName: 'Chichén Itzá, Yucatan, Mexico',
+      placeId: 'places/mx1',
+      addressComponents: [
+        { types: ['country'], shortText: 'MX', longText: 'Mexico', languageCode: 'en' },
+        { types: ['administrative_area_level_1'], shortText: 'Yuc.', longText: 'Yucatan', languageCode: 'en' },
+        { types: ['postal_code'], shortText: '97751', longText: '97751', languageCode: 'en-US' },
+      ],
+    };
+
+    const regions = [
+      { value: 'YUC', label: 'Yucatán' },
+      { value: 'AGU', label: 'Aguascalientes' },
+      { value: 'JAL', label: 'Jalisco' },
+    ];
+    const result = buildReplacementAddressFromPlace(place, regions, null);
+
+    expect(result.state).toBe('YUC');
+    // No locality component in Google response for this landmark — city is null.
+    expect(result.city).toBeNull();
+    expect(result.postal_code).toBe('97751');
+    expect(result.country).toBe('MX');
+  });
+
   it('preserves null name when previous name is unset', () => {
     const place: AddressSuggestion = {
       displayName: '1 Broadway',

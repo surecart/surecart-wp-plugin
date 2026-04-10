@@ -37,14 +37,66 @@ export function getStreetAddress(addressComponents: Array<GoogleMapAddressCompon
 }
 
 /**
- * Get the state only if it exists in our regions list and matches the value.
+ * Normalize a string for fuzzy matching:
+ *  - strip trailing periods (Google abbreviates, e.g. "Yuc." for "Yucatán")
+ *  - remove diacritics (Google may return "Yucatan" while we store "Yucatán")
+ *  - lowercase
+ */
+const normalizeForMatch = (value: string | null | undefined): string =>
+  (value || '')
+    .replace(/\.$/, '')
+    .trim()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase();
+
+/**
+ * Try to find a matching region from a Google address component.
+ *
+ * Match precedence:
+ *  1. component.shortText === region.value  (exact code match)
+ *  2. component.longText  ≈  region.label   (case-insensitive label match)
+ */
+const findRegionMatch = (
+  component: GoogleMapAddressComponents | null | undefined,
+  regions: Array<{ value: string; label: string }>,
+): { value: string; label: string } | undefined => {
+  if (!component || !regions?.length) return undefined;
+
+  // 1. Exact code match (e.g. "GO" === "GO", "RM" === "RM").
+  const byCode = regions.find(r => r.value === component.shortText);
+  if (byCode) return byCode;
+
+  // 2. Case-insensitive label match (e.g. "Yucatán" ≈ "Yucatán").
+  const normalizedLong = normalizeForMatch(component.longText);
+  if (normalizedLong) {
+    const byLabel = regions.find(r => normalizeForMatch(r.label) === normalizedLong);
+    if (byLabel) return byLabel;
+  }
+
+  return undefined;
+};
+
+/**
+ * Get the state/province from address components using a fallback chain.
+ *
+ * Google Places maps states/provinces to different administrative levels depending on the country:
+ *  - `administrative_area_level_1` — most countries (US, BR, CA, AU, MX)
+ *  - `administrative_area_level_2` — Spain (province codes like "B"), Italy (province codes like "RM")
+ *
+ * For some countries (e.g. Mexico) the shortText is abbreviated ("Yuc.") while SureCart stores
+ * ISO codes ("YUC"), so we also attempt a label-based match using the longText.
  */
 const getState = (addressComponents: Array<GoogleMapAddressComponents>, regions: Array<{ value: string; label: string }>) => {
-  const administrativeAreaLevel1 = findAddressComponent(addressComponents, 'administrative_area_level_1') ?? null;
-  const region = regions?.find(region => region.value === administrativeAreaLevel1?.shortText);
+  const adminLevel1 = findAddressComponent(addressComponents, 'administrative_area_level_1') ?? null;
+  const adminLevel2 = findAddressComponent(addressComponents, 'administrative_area_level_2') ?? null;
+
+  // Try level 1 first (covers US, BR, CA, AU, MX, etc.), then fall back to level 2 (covers ES, IT).
+  const region = findRegionMatch(adminLevel1, regions) ?? findRegionMatch(adminLevel2, regions);
+
   if (!region) {
     return {
-      longText: administrativeAreaLevel1?.longText || null, // for preview in the address suggestion.
+      longText: adminLevel1?.longText || null, // for preview in the address suggestion.
       shortText: null,
     };
   }
