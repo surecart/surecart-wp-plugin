@@ -1091,6 +1091,7 @@ class ProductPostTypeService {
 					'custom-fields',
 					'editor',
 					'thumbnail',
+					'page-attributes',
 				),
 			)
 		);
