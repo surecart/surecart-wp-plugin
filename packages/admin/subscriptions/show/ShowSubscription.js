@@ -602,14 +602,11 @@ export default () => {
 
 				<Periods subscriptionId={id} />
 
-				{(subscription?.payment_method ||
-					subscription?.manual_payment) && (
-					<PaymentMethod
-						subscription={subscription}
-						updateSubscription={editSubscription}
-						loading={!hasLoadedSubscription}
-					/>
-				)}
+				<PaymentMethod
+					subscription={subscription}
+					updateSubscription={editSubscription}
+					loading={!hasLoadedSubscription}
+				/>
 			</>
 
 			<CancelPendingUpdate

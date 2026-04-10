@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
 import { useState, useEffect } from '@wordpress/element';
 import { store as coreStore } from '@wordpress/core-data';
 import { select, useDispatch } from '@wordpress/data';
@@ -108,9 +106,7 @@ export default ({
 	return (
 		<SelectPrice
 			required={required}
-			css={css`
-				flex: 0 1 50%;
-			`}
+			style={{ flex: '0 1 50%' }}
 			value={value}
 			ad_hoc={ad_hoc}
 			variable={variable}

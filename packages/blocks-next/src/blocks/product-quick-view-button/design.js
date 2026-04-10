@@ -77,6 +77,7 @@ export default ({ attributes, setAttributes }) => {
 				onDeselect={() => setAttributes({ width: undefined })}
 			>
 				<ToggleGroupControl
+					__next40pxDefaultSize
 					label={__('Width', 'surecart')}
 					help={__(
 						'The width of the button in its container.',

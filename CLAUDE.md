@@ -17,9 +17,10 @@ PSR-4: `SureCart\` -> `app/src/`, `SureCartBlocks\` -> `packages/blocks/`, `Sure
 ## Model System
 
 Three base classes — choosing wrong one breaks everything:
-- **`Model`** — API-backed. CRUD goes to `api.surecart.com/{endpoint}`. Set `$endpoint` and `$object_name`.
-- **`DatabaseModel`** — WordPress custom tables (`surecart_*`). Local DB storage.
-- **`ExternalApiModel`** — Third-party external APIs. Rarely extended.
+
+-   **`Model`** — API-backed. CRUD goes to `api.surecart.com/{endpoint}`. Set `$endpoint` and `$object_name`.
+-   **`DatabaseModel`** — WordPress custom tables (`surecart_*`). Local DB storage.
+-   **`ExternalApiModel`** — Third-party external APIs. Rarely extended.
 
 ```php
 Product::find($id);                                    // GET /products/{id}
@@ -47,8 +48,8 @@ Payment processors: Stripe, PayPal, Paystack, Razorpay, Mollie, Manual.
 
 Two systems coexist. **All new blocks go to next-gen.**
 
-- **Legacy** (`packages/blocks/Blocks/`): `Block.php` extends `BaseBlock`, renders Stencil HTML. Maintenance only.
-- **Next-gen** (`packages/blocks-next/src/blocks/`): WordPress Interactivity API. `controller.php` -> `view.php` pipeline. Auto-registered from `build/blocks/**/block.json`.
+-   **Legacy** (`packages/blocks/Blocks/`): `Block.php` extends `BaseBlock`, renders Stencil HTML. Maintenance only.
+-   **Next-gen** (`packages/blocks-next/src/blocks/`): WordPress Interactivity API. `controller.php` -> `view.php` pipeline. Auto-registered from `build/blocks/**/block.json`.
 
 ```php
 // controller.php — runs on render, has $attributes, $content, $block
@@ -68,10 +69,10 @@ When next-gen blocks use Stencil `sc-*` components, add preload mapping in `app/
 
 ## Webhook System
 
-- Webhooks auto-register on SSL only (skipped on localhost)
-- Signature validation: HMAC-SHA256 via `WebhooksMiddleware`
-- Payload stored in `surecart_incoming_webhooks` table, processed async via `AsyncWebhookService` (Action Scheduler)
-- Key actions fired: `surecart/purchase_created`, `surecart/purchase_revoked`, `surecart/purchase_invoked`, `surecart/purchase_updated`, `surecart/customer_updated`, `surecart/subscription_renewed`, `surecart/account_updated`
+-   Webhooks auto-register on SSL only (skipped on localhost)
+-   Signature validation: HMAC-SHA256 via `WebhooksMiddleware`
+-   Payload stored in `surecart_incoming_webhooks` table, processed async via `AsyncWebhookService` (Action Scheduler)
+-   Key actions fired: `surecart/purchase_created`, `surecart/purchase_revoked`, `surecart/purchase_invoked`, `surecart/purchase_updated`, `surecart/customer_updated`, `surecart/subscription_renewed`, `surecart/account_updated`
 
 ## Hook Patterns
 
@@ -88,10 +89,10 @@ add_filter('surecart/checkout/finduser', '__return_false');
 
 ## Conventions
 
-- Capabilities: `edit_sc_{model}s`, `publish_sc_{model}s`, `delete_sc_{model}s`
-- Text domain: `surecart` for all i18n calls
-- Stencil tags: `sc-{name}`, classes: `Sc{Name}`
-- Block names: `surecart/{block-name}`
+-   Capabilities: `edit_sc_{model}s`, `publish_sc_{model}s`, `delete_sc_{model}s`
+-   Text domain: `surecart` for all i18n calls
+-   Stencil tags: `sc-{name}`, classes: `Sc{Name}`
+-   Block names: `surecart/{block-name}`
 
 ## Entity Relationships
 
@@ -132,6 +133,10 @@ When working on a PR that introduces user-facing changes, add feature documentat
 
 Use the `/surecart-feature-doc` skill to auto-generate and update the PR description from the branch diff. It analyzes changes, generates the documentation, and updates the PR via `gh pr edit`.
 
+## Git
+
+- **Never add `Co-Authored-By` lines to commit messages.** Commits should use the developer's git account only.
+
 ## Critical Gotchas
 
 1. **Never edit `dist/`** — edit source in `packages/`, then build
@@ -141,3 +146,4 @@ Use the `/surecart-feature-doc` skill to auto-generate and update the PR descrip
 5. **`app/config.php` is the master registry** — service providers, blocks, preload mappings all go here
 6. **Customer <-> WP User sync** happens during checkout confirmation via `SyncsCustomer` trait
 7. **Background processing** uses Action Scheduler (`woocommerce/action-scheduler`), not WP cron
+8. **Don't use \ before WP functions**, While using WordPress functions, like don't use `\is_wp_error()`, use like `is_wp_error()`

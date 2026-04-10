@@ -58,24 +58,26 @@ class TranslationsServiceProvider implements ServiceProviderInterface {
 	 */
 	public function loadSingleTranslationFile( $file, $handle, $domain ) {
 		if ( 'surecart' === $domain ) {
-			if ( ! file_exists( $file ) && file_exists( WP_LANG_DIR . '/loco/plugins/surecart-' . get_locale() . '.json' ) ) {
-				return WP_LANG_DIR . '/loco/plugins/surecart-' . get_locale() . '.json';
+			$locale = apply_filters( 'plugin_locale', determine_locale(), 'surecart' );
+
+			if ( ! file_exists( $file ) && file_exists( WP_LANG_DIR . '/loco/plugins/surecart-' . $locale . '.json' ) ) {
+				return WP_LANG_DIR . '/loco/plugins/surecart-' . $locale . '.json';
 			}
-			if ( file_exists( WP_LANG_DIR . '/plugins/surecart-' . get_locale() . '.json' ) ) {
-				return WP_LANG_DIR . '/plugins/surecart-' . get_locale() . '.json';
+			if ( file_exists( WP_LANG_DIR . '/plugins/surecart-' . $locale . '.json' ) ) {
+				return WP_LANG_DIR . '/plugins/surecart-' . $locale . '.json';
 			}
 			if ( is_string( $file ) ) {
 				if ( false !== strpos( $file, SURECART_PLUGIN_DIR_NAME . '/languages/' ) ) {
 					$first_part = substr( $file, 0, strpos( $file, SURECART_PLUGIN_DIR_NAME . '/languages/' ) );
-					$file       = $first_part . SURECART_PLUGIN_DIR_NAME . '/languages/surecart-' . get_locale() . '.json';
+					$file       = $first_part . SURECART_PLUGIN_DIR_NAME . '/languages/surecart-' . $locale . '.json';
 				} else {
 					$first_part = substr( $file, 0, strpos( $file, 'plugins/surecart-' ) );
-					$file       = $first_part . 'plugins/surecart-' . get_locale() . '.json';
+					$file       = $first_part . 'plugins/surecart-' . $locale . '.json';
 				}
 			}
 
 			if ( false === $file ) {
-				$file = SURECART_LANGUAGE_DIR . '/surecart-' . get_locale() . '.json';
+				$file = SURECART_LANGUAGE_DIR . '/surecart-' . $locale . '.json';
 			}
 		}
 		return $file;
@@ -85,33 +87,19 @@ class TranslationsServiceProvider implements ServiceProviderInterface {
 	 * This is needed for Loco translate to work properly.
 	 */
 	public function loadPluginTextDomain() {
-		// Default languages directory for CartFlows Pro.
+		// Default languages directory for SureCart.
 		$lang_dir = trailingslashit( SURECART_LANGUAGE_DIR );
 
 		/**
-		 * Filters the languages directory path to use for CartFlows Pro.
+		 * Filters the languages directory path to use for SureCart.
 		 *
 		 * @param string $lang_dir The languages directory path.
 		 */
 		$lang_dir = apply_filters( 'surecart_languages_directory', $lang_dir );
 
-		// Traditional WordPress plugin locale filter.
-		global $wp_version;
-
-		$get_locale = get_locale();
-
-		if ( $wp_version >= 4.7 ) {
-			$get_locale = get_user_locale();
-		}
-
-		/**
-		 * Language Locale for CartFlows Pro
-		 *
-		 * @var $get_locale The locale to use.
-		 * Uses get_user_locale()` in WordPress 4.7 or greater,
-		 * otherwise uses `get_locale()`.
-		 */
-		$locale = apply_filters( 'plugin_locale', $get_locale, 'surecart' );
+		// Use determine_locale() which returns user locale in admin, site locale on frontend.
+		// Allow plugins/themes to override via 'plugin_locale' filter.
+		$locale = apply_filters( 'plugin_locale', determine_locale(), 'surecart' );
 		$mofile = sprintf( '%1$s-%2$s.mo', 'surecart', $locale );
 
 		// Setup paths to current locale file.

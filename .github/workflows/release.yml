@@ -24,6 +24,7 @@ jobs:
         with:
           bootstrap: true
           package: true
+          github_token: ${{ secrets.COMPOSER_AUTH_TOKEN }}
 
       - name: WordPress Plugin Deploy
         uses: 10up/action-wordpress-plugin-deploy@stable

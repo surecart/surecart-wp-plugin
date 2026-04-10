@@ -1,7 +1,7 @@
 {
 	"name": "surecart/form",
 	"title": "Form",
-	"apiVersion": 2,
+	"apiVersion": 3,
 	"description": "Displays a form.",
 	"category": "surecart",
 	"parent": ["surecart/checkout-form"],

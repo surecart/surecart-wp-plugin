@@ -1,5 +1,5 @@
 {
-	"apiVersion": 2,
+	"apiVersion": 3,
 	"name": "surecart/checkbox",
 	"title": "Checkbox",
 	"description": "Display a checkbox input",

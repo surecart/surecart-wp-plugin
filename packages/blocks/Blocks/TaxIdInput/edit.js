@@ -1,7 +1,10 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
-import { InspectorControls } from '@wordpress/block-editor';
-import { PanelBody, PanelRow, TextControl, ToggleControl } from '@wordpress/components';
+import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
+import {
+	PanelBody,
+	PanelRow,
+	TextControl,
+	ToggleControl,
+} from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { Fragment } from '@wordpress/element';
 
@@ -27,6 +30,8 @@ export default ({ attributes, setAttributes }) => {
 		required,
 	} = attributes;
 
+	const blockProps = useBlockProps();
+
 	const zones = [
 		{ value: 'ca_gst', label: __('CA GST', 'surecart') },
 		{ value: 'au_abn', label: __('AU ABN', 'surecart') },
@@ -41,11 +46,10 @@ export default ({ attributes, setAttributes }) => {
 				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
 						<ToggleControl
+							__nextHasNoMarginBottom
 							label={__('Required', 'surecart')}
 							checked={required}
-							onChange={(required) =>
-								setAttributes({ required })
-							}
+							onChange={(required) => setAttributes({ required })}
 							help={__(
 								'Make this field required for all customers',
 								'surecart'
@@ -127,30 +131,30 @@ export default ({ attributes, setAttributes }) => {
 
 				<PanelBody title={__('Tax types', 'surecart')}>
 					<div
-						css={css`
-							display: grid;
-							gap: 0.5em;
-						`}
+						style={{
+							display: 'grid',
+							gap: '0.5em',
+						}}
 					>
 						<ScFormControl
 							label={__('Limit tax types', 'surecart')}
 						>
 							{!!(tax_id_types || [])?.length && (
 								<div
-									css={css`
-										display: flex;
-										flex-wrap: wrap;
-										gap: 0.5em;
-										margin-top: 0.5em;
-									`}
+									style={{
+										display: 'flex',
+										flexWrap: 'wrap',
+										gap: '0.5em',
+										marginTop: '0.5em',
+									}}
 								>
 									{(tax_id_types || []).map((type) => (
 										<ScTag
 											key={type}
-											css={css`
-												margin-right: 0.5em;
-												margin-bottom: 0.5em;
-											`}
+											style={{
+												marginRight: '0.5em',
+												marginBottom: '0.5em',
+											}}
 											clearable
 											onScClear={() =>
 												setAttributes({
@@ -198,17 +202,19 @@ export default ({ attributes, setAttributes }) => {
 					</div>
 				</PanelBody>
 			</InspectorControls>
-			<ScOrderTaxIdInput
-				show={true}
-				otherLabel={other_label || null}
-				caGstLabel={ca_gst_label || null}
-				auAbnLabel={au_abn_label || null}
-				gbVatLabel={gb_vat_label || null}
-				euVatLabel={eu_vat_label || null}
-				helpText={help_text || null}
-				taxIdTypes={JSON.stringify(tax_id_types)}
-				required={required || false}
-			></ScOrderTaxIdInput>
+			<div {...blockProps}>
+				<ScOrderTaxIdInput
+					show={true}
+					otherLabel={other_label || null}
+					caGstLabel={ca_gst_label || null}
+					auAbnLabel={au_abn_label || null}
+					gbVatLabel={gb_vat_label || null}
+					euVatLabel={eu_vat_label || null}
+					helpText={help_text || null}
+					taxIdTypes={JSON.stringify(tax_id_types)}
+					required={required || false}
+				></ScOrderTaxIdInput>
+			</div>
 		</Fragment>
 	);
 };

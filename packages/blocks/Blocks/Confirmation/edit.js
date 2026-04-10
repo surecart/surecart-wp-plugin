@@ -1,7 +1,6 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import { InnerBlocks, useBlockProps } from '@wordpress/block-editor';
+import { useRef, useEffect } from '@wordpress/element';
 import { ScOrderConfirmation } from '@surecart/components-react';
 
 const currency = scData?.currency || 'usd';
@@ -33,6 +32,7 @@ const DEFAULT_TEMPLATE = [
 
 export default () => {
 	const blockProps = useBlockProps();
+	const confirmationRef = useRef();
 
 	const order = {
 		billing_address: null,
@@ -335,17 +335,17 @@ export default () => {
 		updated_at: 1638898265,
 	};
 
+	useEffect(() => {
+		if (confirmationRef.current) {
+			confirmationRef.current.order = order;
+		}
+	}, []);
+
 	return (
 		<div {...blockProps}>
-			<ScOrderConfirmation {...blockProps} order={order}>
-				<div
-					css={css`
-						.wp-block {
-							margin-top: 30px !important;
-							margin-bottom: 30px !important;
-						}
-					`}
-				>
+			<ScOrderConfirmation ref={confirmationRef}>
+				<div className="sc-confirmation-blocks">
+					<style>{`.sc-confirmation-blocks .wp-block { margin-top: 30px !important; margin-bottom: 30px !important; }`}</style>
 					<InnerBlocks
 						templateLock={false}
 						template={DEFAULT_TEMPLATE}
