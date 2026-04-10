@@ -60,7 +60,7 @@ function getProductsUrl(collectionId) {
 /**
  * Product Collections list DataView component.
  */
-export default function ProductCollectionsList() {
+export default function ProductCollectionsList({ navigation }) {
 	const { deleteEntityRecord } = useDispatch(coreStore);
 	const { createSuccessNotice, createErrorNotice } =
 		useDispatch(noticesStore);
@@ -101,6 +101,10 @@ export default function ProductCollectionsList() {
 							<div>
 								<a
 									href={getEditUrl(item?.id)}
+									onClick={(e) => {
+										e.preventDefault();
+										navigation.goToEdit(item?.id);
+									}}
 									css={css`
 										font-weight: 600;
 										color: var(--sc-color-gray-900);
@@ -212,7 +216,7 @@ export default function ProductCollectionsList() {
 				label: __('Edit', 'surecart'),
 				icon: <Icon icon={edit} />,
 				callback: ([item]) => {
-					window.location.href = getEditUrl(item.id);
+					navigation.goToEdit(item.id);
 				},
 			},
 			{
@@ -249,7 +253,7 @@ export default function ProductCollectionsList() {
 				),
 			},
 		],
-		[handleDelete]
+		[handleDelete, navigation]
 	);
 
 	return (

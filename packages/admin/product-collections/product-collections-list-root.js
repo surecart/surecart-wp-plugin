@@ -1,7 +1,15 @@
 /**
- * Product Collections list — DataView entry point.
+ * Product Collections admin — SPA entry point.
+ *
+ * Mounts the unified ProductCollectionsApp which handles list, create, and edit views
+ * via client-side routing (no full page reloads).
  */
-import { createListRoot } from '../components/dataview-list';
-import ProductCollectionsList from './ProductCollectionsList';
+import { createRoot } from '@wordpress/element';
+import '../store/add-entities';
+import ProductCollectionsApp from './ProductCollectionsApp';
 
-createListRoot( 'sc-product-collections-list-app', ProductCollectionsList );
+const container = document.getElementById('sc-product-collections-list-app');
+if (container) {
+	const root = createRoot(container);
+	root.render(<ProductCollectionsApp />);
+}

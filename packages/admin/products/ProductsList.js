@@ -2,15 +2,13 @@
 import { __, _n, sprintf } from '@wordpress/i18n';
 import { css, jsx } from '@emotion/react';
 import { useDispatch } from '@wordpress/data';
-import { store as coreStore } from '@wordpress/core-data';
+import { store as coreStore, useEntityRecords } from '@wordpress/core-data';
 import { addQueryArgs, getQueryArgs } from '@wordpress/url';
 import { useMemo, useCallback, useEffect, useState } from 'react';
 import { Icon } from '@wordpress/components';
 import { store as noticesStore } from '@wordpress/notices';
 import { trash, copy, archive, edit, external } from '@wordpress/icons';
 import apiFetch from '@wordpress/api-fetch';
-import ModelSelector from '../components/ModelSelector';
-import { ScMenuItem, ScDivider } from '@surecart/components-react';
 import {
 	DataViewListLayout,
 	useDataViewState,
@@ -22,12 +20,42 @@ import './product-list-style.scss';
  * Supports: ?sc_collection=xxx (from Product Collections page), ?status=archived
  */
 const URL_PARAMS = getQueryArgs(window.location.href);
-const INITIAL_FILTERS = URL_PARAMS.sc_collection
-	? { collectionId: URL_PARAMS.sc_collection }
-	: {};
-const INITIAL_STATUS = ['active', 'archived', 'all'].includes(URL_PARAMS.status)
-	? URL_PARAMS.status
-	: 'active';
+
+/**
+ * Build initial DataViews filters from URL params.
+ * Translates ?sc_collection=xxx and ?status=xxx to native DataViews filters.
+ */
+const INITIAL_VIEW_FILTERS = (() => {
+	const filters = [];
+	// Status filter from URL — only add when explicitly set (archived or all).
+	// By default (no param), Active is implicit in buildQueryArgs so no chip shows.
+	const urlStatus = URL_PARAMS.status;
+	if (urlStatus === 'archived' || urlStatus === 'all') {
+		filters.push({
+			field: 'archive_status',
+			operator: 'is',
+			value: urlStatus,
+		});
+	}
+	// Collection filter from URL.
+	if (URL_PARAMS.sc_collection) {
+		filters.push({
+			field: 'product_collections',
+			operator: 'isAny',
+			value: [URL_PARAMS.sc_collection],
+		});
+	}
+	return filters;
+})();
+
+/**
+ * Status filter options.
+ */
+const STATUS_ELEMENTS = [
+	{ value: 'active', label: __('Active', 'surecart') },
+	{ value: 'archived', label: __('Archived', 'surecart') },
+	{ value: 'all', label: __('All', 'surecart') },
+];
 
 /**
  * Sort field map — mirrors PHP get_sort_map().
@@ -38,20 +66,9 @@ const SORT_MAP = {
 };
 
 /**
- * Status tabs configuration.
- */
-const STATUS_TABS = [
-	{ value: 'active', label: __('Active', 'surecart') },
-	{ value: 'archived', label: __('Archived', 'surecart') },
-	{ value: 'all', label: __('All', 'surecart') },
-];
-
-/**
  * Column width styles via DataViews layout.styles API.
- * Replaces fragile CSS nth-child selectors.
  */
 const LAYOUT_STYLES = {
-	name: { width: '25%' },
 	featured: { width: '60px' },
 };
 
@@ -82,8 +99,11 @@ function getEditUrl(id) {
 
 /**
  * Products list DataView component.
+ *
+ * @param {Object} props
+ * @param {Object} props.navigation - SPA navigation from useProductsNavigation.
  */
-export default function ProductsList() {
+export default function ProductsList({ navigation }) {
 	const { saveEntityRecord } = useDispatch(coreStore);
 	const { createSuccessNotice, createErrorNotice } =
 		useDispatch(noticesStore);
@@ -92,14 +112,25 @@ export default function ProductsList() {
 	// Passed to isLoading so the table shows a loading state during mutations.
 	const [isMutating, setIsMutating] = useState(false);
 
+	// Fetch product collections for the DataViews filter dropdown.
+	const { records: collectionRecords } = useEntityRecords(
+		'surecart',
+		'product-collection',
+		{ per_page: 100 }
+	);
+	const collectionElements = useMemo(
+		() =>
+			(collectionRecords || []).map((c) => ({
+				value: c.id,
+				label: c.name,
+			})),
+		[collectionRecords]
+	);
+
 	// Reusable data view state hook.
 	const {
 		view,
 		setView,
-		status,
-		setStatus,
-		filters,
-		setFilter,
 		records,
 		hasResolved,
 		paginationInfo,
@@ -110,27 +141,34 @@ export default function ProductsList() {
 		sortMap: SORT_MAP,
 		defaultFields: DEFAULT_FIELDS,
 		layoutStyles: LAYOUT_STYLES,
-		initialFilters: INITIAL_FILTERS,
-		defaultStatus: INITIAL_STATUS,
-		buildQueryArgs: ({
-			status: currentStatus,
-			filters: currentFilters,
-		}) => {
+		initialViewFilters: INITIAL_VIEW_FILTERS,
+		buildQueryArgs: ({ view: currentView }) => {
 			const args = {
 				// Expand relations needed for the list columns.
 				expand: ['product_collections', 'commission_structure'],
 			};
 
-			// Archive status filter.
-			if (currentStatus === 'active') {
-				args.archived = false;
-			} else if (currentStatus === 'archived') {
+			// Status filter (from DataViews native filters).
+			// Default: show active (non-archived) products when no filter is set.
+			const statusFilter = currentView.filters?.find(
+				(f) => f.field === 'archive_status'
+			);
+			const statusValue = statusFilter?.value;
+			if (statusValue === 'archived') {
 				args.archived = true;
+			} else if (statusValue === 'all') {
+				// Show everything — don't set archived param.
+			} else {
+				// No filter or 'active' → default to active products.
+				args.archived = false;
 			}
 
-			// Collection filter.
-			if (currentFilters.collectionId) {
-				args.product_collection_ids = [currentFilters.collectionId];
+			// Collection filter (from DataViews native filters).
+			const collectionFilter = currentView.filters?.find(
+				(f) => f.field === 'product_collections'
+			);
+			if (collectionFilter?.value?.length) {
+				args.product_collection_ids = collectionFilter.value;
 			}
 
 			return args;
@@ -138,28 +176,47 @@ export default function ProductsList() {
 	});
 
 	// ─── Sync state to URL bar ───
+	const activeStatusFilter = view.filters?.find(
+		(f) => f.field === 'archive_status'
+	);
+	const activeStatusValue = activeStatusFilter?.value || '';
+	const activeCollectionFilter = view.filters?.find(
+		(f) => f.field === 'product_collections'
+	);
+	const activeCollectionId = activeCollectionFilter?.value?.[0] || '';
+
 	useEffect(() => {
 		const params = { page: 'sc-products' };
 
-		// Only add status param when not the default.
-		if (status && status !== 'active') {
-			params.status = status;
+		// Only add status param when explicitly filtering (not the default Active).
+		if (activeStatusValue === 'archived' || activeStatusValue === 'all') {
+			params.status = activeStatusValue;
 		}
 
 		// Collection filter.
-		if (filters.collectionId) {
-			params.sc_collection = filters.collectionId;
+		if (activeCollectionId) {
+			params.sc_collection = activeCollectionId;
 		}
 
 		const url = addQueryArgs('admin.php', params);
 		window.history.replaceState(null, '', url);
-	}, [status, filters.collectionId]);
-
-	const collectionId = filters.collectionId || '';
+	}, [activeStatusValue, activeCollectionId]);
 
 	// ─── Field definitions ───
 	const fields = useMemo(
 		() => [
+			// Archive status filter (not a visible column — only drives the filter dropdown).
+			{
+				id: 'archive_status',
+				label: __('Status', 'surecart'),
+				enableSorting: false,
+				enableHiding: false,
+				filterBy: {
+					operators: ['is'],
+				},
+				elements: STATUS_ELEMENTS,
+				render: () => null,
+			},
 			{
 				id: 'name',
 				label: __('Name', 'surecart'),
@@ -226,6 +283,10 @@ export default function ProductsList() {
 						<div>
 							<a
 								href={getEditUrl(item?.id)}
+								onClick={(e) => {
+									e.preventDefault();
+									navigation.goToEdit(item?.id);
+								}}
 								css={css`
 									font-weight: 600;
 									color: var(--sc-color-gray-900);
@@ -273,6 +334,10 @@ export default function ProductsList() {
 				id: 'product_collections',
 				label: __('Collections', 'surecart'),
 				enableSorting: false,
+				filterBy: {
+					operators: ['isAny'],
+				},
+				elements: collectionElements,
 				render: ({ item }) => {
 					const itemCollections =
 						item?.product_collections?.data || [];
@@ -338,7 +403,7 @@ export default function ProductsList() {
 				render: ({ item }) => item?.cataloged_at_date_time || '-',
 			},
 		],
-		[]
+		[collectionElements]
 	);
 
 	// ─── Action handlers ───
@@ -431,7 +496,7 @@ export default function ProductsList() {
 				label: __('Edit', 'surecart'),
 				icon: <Icon icon={edit} />,
 				callback: ([item]) => {
-					window.location.href = getEditUrl(item.id);
+					navigation.goToEdit(item.id);
 				},
 			},
 			{
@@ -487,45 +552,11 @@ export default function ProductsList() {
 				},
 			},
 		],
-		[handleArchiveToggle, handleDuplicate]
-	);
-
-	// ─── Collection filter control ───
-	const collectionFilter = (
-		<ModelSelector
-			name="product-collection"
-			placeholder={__('All Product Collections', 'surecart')}
-			searchPlaceholder={__('Search collections…', 'surecart')}
-			value={collectionId}
-			onSelect={(id) => {
-				setFilter('collectionId', id === collectionId ? '' : id);
-			}}
-			style={{ width: '100%' }}
-			prefix={
-				collectionId ? (
-					<>
-						<ScMenuItem
-							onClick={() => {
-								setFilter('collectionId', '');
-							}}
-						>
-							{__('All Product Collections', 'surecart')}
-						</ScMenuItem>
-						<ScDivider
-							style={{ '--spacing': 'var(--sc-spacing-x-small)' }}
-						/>
-					</>
-				) : null
-			}
-		/>
+		[handleArchiveToggle, handleDuplicate, navigation]
 	);
 
 	return (
 		<DataViewListLayout
-			tabs={STATUS_TABS}
-			activeTab={status}
-			onTabChange={setStatus}
-			headerControls={collectionFilter}
 			data={records}
 			fields={fields}
 			view={view}

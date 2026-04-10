@@ -3,6 +3,8 @@
 namespace SureCart\Controllers\Admin\Products;
 
 use SureCart\Controllers\Admin\AdminController;
+use SureCart\Controllers\Admin\SpaShellScriptsController;
+use SureCart\Controllers\Admin\Settings\SettingsScriptsController;
 use SureCart\Models\Product;
 
 /**
@@ -10,13 +12,37 @@ use SureCart\Models\Product;
  */
 class ProductsController extends AdminController {
 	/**
-	 * Products index.
+	 * Enqueue scripts shared by all SPA routes (list, create, edit).
+	 *
+	 * @return void
 	 */
-	public function index() {
-		// enqueue the products list DataView script.
-		add_action( 'admin_enqueue_scripts', \SureCart::closure()->method( ProductsListScriptsController::class, 'enqueue' ) );
+	private function enqueueSpaScripts() {
+		// Unified SPA shell (handles routing between Products, Collections, etc.).
+		add_action( 'admin_enqueue_scripts', \SureCart::closure()->method( SpaShellScriptsController::class, 'enqueue' ) );
 
-		// add header.
+		// Product edit page dependencies (block editor, media, etc.).
+		add_action( 'admin_enqueue_scripts', \SureCart::closure()->method( ProductScriptsController::class, 'enqueue' ) );
+
+		// Product collections edit page dependencies.
+		add_action(
+			'admin_enqueue_scripts',
+			\SureCart::closure()->method(
+				\SureCart\Controllers\Admin\ProductCollections\ProductCollectionsScriptsController::class,
+				'enqueue'
+			)
+		);
+
+		// Settings page dependencies (scData, scSettingsData, media, styles).
+		add_action( 'admin_enqueue_scripts', \SureCart::closure()->method( SettingsScriptsController::class, 'enqueue' ) );
+	}
+
+	/**
+	 * Render the SPA shell view.
+	 *
+	 * @return \SureCartCore\Responses\ResponseInterface
+	 */
+	private function renderSpaView() {
+		// SureCart branded breadcrumb header.
 		$this->withHeader(
 			array(
 				'breadcrumbs' => [
@@ -24,12 +50,26 @@ class ProductsController extends AdminController {
 						'title' => __( 'Products', 'surecart' ),
 					],
 				],
-				'suffix'      => isset( $_GET['debug'] ) ? $this->syncDropdown() : null,
 			),
 		);
 
-		// return view.
-		return \SureCart::view( 'admin/products/index' );
+		return \SureCart::view( 'admin/spa-shell' )->with(
+			[
+				'title'    => __( 'Products', 'surecart' ),
+				'new_link' => \SureCart::getUrl()->edit( 'product' ),
+			]
+		);
+	}
+
+	/**
+	 * Products index.
+	 *
+	 * This is the single entry point for the products admin SPA.
+	 * The React app handles list, create, and edit views via client-side routing.
+	 */
+	public function index() {
+		$this->enqueueSpaScripts();
+		return $this->renderSpaView();
 	}
 
 	/**
@@ -150,16 +190,18 @@ class ProductsController extends AdminController {
 	/**
 	 * Edit a product.
 	 *
+	 * Handled by the SPA — use the same index view so the React app
+	 * picks up the action=edit URL param and renders the edit/create view.
+	 *
 	 * @param \SureCartCore\Requests\RequestInterface $request Request.
 	 */
 	public function edit( $request ) {
-		// enqueue needed script.
-		add_action( 'admin_enqueue_scripts', \SureCart::closure()->method( ProductScriptsController::class, 'enqueue' ) );
+		$this->enqueueSpaScripts();
 
 		// define product.
 		$product = null;
 
-		// find the product.
+		// find the product for preloading.
 		if ( $request->query( 'id' ) ) {
 			$product = Product::find( $request->query( 'id' ) );
 
@@ -218,24 +260,27 @@ class ProductsController extends AdminController {
 		}
 
 		// add product link.
-		add_action(
-			'admin_bar_menu',
-			function ( $wp_admin_bar ) use ( $product ) {
-				$wp_admin_bar->add_node(
-					[
-						'id'    => 'view-product-page',
-						'title' => __( 'View Product', 'surecart' ),
-						'href'  => esc_url( $product->permalink ?? '#' ),
-						'meta'  => [
-							'class' => empty( $product->permalink ) ? 'hidden' : '',
-						],
-					]
-				);
-			},
-			99
-		);
+		if ( ! empty( $product ) ) {
+			add_action(
+				'admin_bar_menu',
+				function ( $wp_admin_bar ) use ( $product ) {
+					$wp_admin_bar->add_node(
+						[
+							'id'    => 'view-product-page',
+							'title' => __( 'View Product', 'surecart' ),
+							'href'  => esc_url( $product->permalink ?? '#' ),
+							'meta'  => [
+								'class' => empty( $product->permalink ) ? 'hidden' : '',
+							],
+						]
+					);
+				},
+				99
+			);
+		}
 
-		return '<div id="app"></div>';
+		// Use the shared SPA shell view.
+		return $this->renderSpaView();
 	}
 
 	/**

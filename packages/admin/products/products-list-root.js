@@ -1,7 +1,15 @@
 /**
- * Products list — DataView entry point.
+ * Products admin — SPA entry point.
+ *
+ * Mounts the unified ProductsApp which handles list, create, and edit views
+ * via client-side routing (no full page reloads).
  */
-import { createListRoot } from '../components/dataview-list';
-import ProductsList from './ProductsList';
+import { createRoot } from '@wordpress/element';
+import '../store/add-entities';
+import ProductsApp from './ProductsApp';
 
-createListRoot( 'sc-products-list-app', ProductsList );
+const container = document.getElementById('sc-products-list-app');
+if (container) {
+	const root = createRoot(container);
+	root.render(<ProductsApp />);
+}

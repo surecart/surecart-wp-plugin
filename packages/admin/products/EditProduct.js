@@ -42,7 +42,7 @@ import Editor from './components/Editor';
 import ConfirmNavigation from './components/ConfirmNavigation';
 import ProductOptions from './modules/ProductOptions';
 
-export default ({ id, setBrowserURL }) => {
+export default ({ id, setBrowserURL, navigation }) => {
 	const [error, setError] = useState(null);
 	const [saving, setSaving] = useState(false);
 	const [confirmUrl, setConfirmUrl] = useState(null);
@@ -212,10 +212,14 @@ export default ({ id, setBrowserURL }) => {
 				type: 'snackbar',
 			});
 
-			// Redirect to products page.
-			window.location.href = addQueryArgs('admin.php', {
-				page: 'sc-products',
-			});
+			// Navigate back to products list.
+			if (navigation) {
+				navigation.goToList();
+			} else {
+				window.location.href = addQueryArgs('admin.php', {
+					page: 'sc-products',
+				});
+			}
 		} catch (e) {
 			setError(e);
 		}
@@ -287,7 +291,17 @@ export default ({ id, setBrowserURL }) => {
 						<ScButton
 							circle
 							size="small"
-							href="admin.php?page=sc-products"
+							{...(navigation
+								? {}
+								: { href: 'admin.php?page=sc-products' })}
+							onClick={() => {
+								if (navigation) {
+									navigation.goToList();
+								} else {
+									window.location.href =
+										'admin.php?page=sc-products';
+								}
+							}}
 						>
 							<sc-icon name="arrow-left"></sc-icon>
 						</ScButton>
@@ -295,8 +309,25 @@ export default ({ id, setBrowserURL }) => {
 							<sc-breadcrumb>
 								<Logo display="block" />
 							</sc-breadcrumb>
-							<sc-breadcrumb href="admin.php?page=sc-products">
-								{__('Products', 'surecart')}
+							<sc-breadcrumb>
+								<a
+									href="admin.php?page=sc-products"
+									onClick={(e) => {
+										if (navigation) {
+											e.preventDefault();
+											navigation.goToList();
+										}
+									}}
+									css={css`
+										text-decoration: none;
+										color: inherit;
+										&:hover {
+											text-decoration: underline;
+										}
+									`}
+								>
+									{__('Products', 'surecart')}
+								</a>
 							</sc-breadcrumb>
 							<sc-breadcrumb>
 								<sc-flex style={{ gap: '1em' }}>

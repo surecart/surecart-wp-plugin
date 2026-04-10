@@ -51,6 +51,7 @@ export default function useDataViewState( config ) {
 		layoutStyles = {},
 		buildQueryArgs,
 		initialFilters = {},
+		initialViewFilters = [],
 	} = config;
 
 	// Status tab state.
@@ -69,7 +70,7 @@ export default function useDataViewState( config ) {
 		page: 1,
 		sort: defaultSort,
 		search: '',
-		filters: [],
+		filters: initialViewFilters,
 		fields: defaultFields,
 		layout: {
 			styles: layoutStyles,

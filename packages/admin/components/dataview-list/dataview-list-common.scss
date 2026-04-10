@@ -39,6 +39,7 @@ $padding-size: 20px;
 	// ─── Table full-width + padding ───
 	.dataviews-view-table {
 		width: 100%;
+		table-layout: auto;
 
 		tr {
 			td,
@@ -56,6 +57,7 @@ $padding-size: 20px;
 
 	.dataviews-view-table-wrapper {
 		width: 100%;
+		overflow-x: auto;
 	}
 
 	// ─── Search, footer and filter container padding ───

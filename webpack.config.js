@@ -106,6 +106,10 @@ module.exports = {
 			__dirname,
 			'packages/admin/product-collections/product-collections-list-root.js'
 		),
+		['admin/spa-shell']: path.resolve(
+			__dirname,
+			'packages/admin/spa-shell/index.js'
+		),
 		['admin/dataview-vendor']: path.resolve(
 			__dirname,
 			'packages/admin/components/dataview-list/dataview-vendor-styles.js'
