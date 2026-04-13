@@ -3,59 +3,36 @@
 namespace SureCart\Controllers\Admin\Settings;
 
 use SureCart\Controllers\Admin\AdminController;
-use SureCart\Controllers\Admin\SpaShellScriptsController;
-use SureCart\Controllers\Admin\Products\ProductScriptsController;
-use SureCart\Controllers\Admin\ProductCollections\ProductCollectionsScriptsController;
 
 /**
- * Settings controller for the client-side routed settings.
+ * Settings controller — standalone SPA entry.
  *
- * Now uses the unified SPA shell — the React-rendered SettingsPage component
- * handles the settings layout, header, and tab routing.
+ * The settings-root.js bundle mounts SettingsPage on `#sc-settings-app`.
+ * SettingsPage owns its RouterProvider and lazy-loads each tab.
  */
 class Settings extends AdminController {
 	/**
-	 * Enqueue scripts shared by all SPA routes.
+	 * Enqueue the settings SPA bundle.
 	 *
 	 * @return void
 	 */
 	private function enqueueSpaScripts() {
 		remove_all_actions( 'admin_notices' );
-
-		// Unified SPA shell (handles routing between Products, Collections, Settings, etc.).
-		add_action( 'admin_enqueue_scripts', \SureCart::closure()->method( SpaShellScriptsController::class, 'enqueue' ) );
-
-		// Product edit page dependencies (block editor, media, etc.).
-		add_action( 'admin_enqueue_scripts', \SureCart::closure()->method( ProductScriptsController::class, 'enqueue' ) );
-
-		// Product collections edit page dependencies.
-		add_action( 'admin_enqueue_scripts', \SureCart::closure()->method( ProductCollectionsScriptsController::class, 'enqueue' ) );
-
-		// Settings page dependencies (scData, scSettingsData, media, styles).
 		add_action( 'admin_enqueue_scripts', \SureCart::closure()->method( SettingsScriptsController::class, 'enqueue' ) );
 	}
 
 	/**
-	 * Render the SPA shell view.
+	 * Render the settings view.
 	 *
 	 * @return \SureCartCore\Responses\ResponseInterface
 	 */
 	private function renderSpaView() {
-		// SureCart branded breadcrumb header — rendered in DOM so it's available
-		// when SPA-navigating to list/detail pages (Products, Collections).
-		$this->withHeader(
-			array(
-				'breadcrumbs' => [
-					'settings' => [
-						'title' => __( 'Settings', 'surecart' ),
-					],
-				],
-			),
-		);
 
-		return \SureCart::view( 'admin/spa-shell' )->with(
+		return \SureCart::view( 'admin/settings-page' )->with(
 			[
-				'title' => __( 'Settings', 'surecart' ),
+				'claim_url'     => ! \SureCart::account()->claimed ? \SureCart::routeUrl( 'account.claim' ) : '',
+				'claim_expired' => \SureCart::account()->claim_expired ?? false,
+				'breadcrumb'    => __( 'Settings', 'surecart' ),
 			]
 		);
 	}

@@ -3,8 +3,6 @@
 namespace SureCart\Controllers\Admin\Products;
 
 use SureCart\Controllers\Admin\AdminController;
-use SureCart\Controllers\Admin\SpaShellScriptsController;
-use SureCart\Controllers\Admin\Settings\SettingsScriptsController;
 use SureCart\Models\Product;
 
 /**
@@ -12,37 +10,22 @@ use SureCart\Models\Product;
  */
 class ProductsController extends AdminController {
 	/**
-	 * Enqueue scripts shared by all SPA routes (list, create, edit).
+	 * Enqueue the products SPA bundle. The bundle owns its own router and
+	 * lazy-loads the heavy edit chunk on first navigation — no cross-page
+	 * shell, no sidebar interception.
 	 *
 	 * @return void
 	 */
 	private function enqueueSpaScripts() {
-		// Unified SPA shell (handles routing between Products, Collections, etc.).
-		add_action( 'admin_enqueue_scripts', \SureCart::closure()->method( SpaShellScriptsController::class, 'enqueue' ) );
-
-		// Product edit page dependencies (block editor, media, etc.).
 		add_action( 'admin_enqueue_scripts', \SureCart::closure()->method( ProductScriptsController::class, 'enqueue' ) );
-
-		// Product collections edit page dependencies.
-		add_action(
-			'admin_enqueue_scripts',
-			\SureCart::closure()->method(
-				\SureCart\Controllers\Admin\ProductCollections\ProductCollectionsScriptsController::class,
-				'enqueue'
-			)
-		);
-
-		// Settings page dependencies (scData, scSettingsData, media, styles).
-		add_action( 'admin_enqueue_scripts', \SureCart::closure()->method( SettingsScriptsController::class, 'enqueue' ) );
 	}
 
 	/**
-	 * Render the SPA shell view.
+	 * Render the products SPA view.
 	 *
 	 * @return \SureCartCore\Responses\ResponseInterface
 	 */
 	private function renderSpaView() {
-		// SureCart branded breadcrumb header.
 		$this->withHeader(
 			array(
 				'breadcrumbs' => [
@@ -53,9 +36,8 @@ class ProductsController extends AdminController {
 			),
 		);
 
-		return \SureCart::view( 'admin/spa-shell' )->with(
+		return \SureCart::view( 'admin/products/spa' )->with(
 			[
-				'title'    => __( 'Products', 'surecart' ),
 				'new_link' => \SureCart::getUrl()->edit( 'product' ),
 			]
 		);

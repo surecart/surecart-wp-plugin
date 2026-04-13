@@ -106,7 +106,7 @@ export default () => {
 
 	const upgradeRequired = () => {
 		const shippingProfileEntitlements =
-			scData?.entitlements.shipping_profiles;
+			window.scData?.entitlements?.shipping_profiles;
 
 		return (
 			!!shippingProfileEntitlements?.limit &&
@@ -124,18 +124,20 @@ export default () => {
 				onSubmit={onSubmit}
 			>
 				<Error error={error} setError={setError} margin="80px" />{' '}
-				{!loading && !hasZones && shippingProtocol?.shipping_enabled && (
-					<ScAlert
-						type="warning"
-						open
-						title={__('No shipping rates', 'surecart')}
-					>
-						{__(
-							'To complete the shipping setup, please add shipping rates to a shipping profile below.',
-							'surecart'
-						)}
-					</ScAlert>
-				)}
+				{!loading &&
+					!hasZones &&
+					shippingProtocol?.shipping_enabled && (
+						<ScAlert
+							type="warning"
+							open
+							title={__('No shipping rates', 'surecart')}
+						>
+							{__(
+								'To complete the shipping setup, please add shipping rates to a shipping profile below.',
+								'surecart'
+							)}
+						</ScAlert>
+					)}
 				<SettingsBox
 					loading={!hasLoadedShippingProtocol}
 					title={__('Shipping Settings', 'surecart')}

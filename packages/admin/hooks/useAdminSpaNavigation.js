@@ -1,111 +1,66 @@
-import { useState, useEffect, useCallback } from 'react';
-import { addQueryArgs, getQueryArgs } from '@wordpress/url';
-
 /**
- * useAdminSpaNavigation — Reusable SPA navigation hook for SureCart admin pages.
+ * useAdminSpaNavigation — Thin shim over the SureCart admin router.
  *
- * Uses pushState/popstate to navigate between list, create, and edit views
- * without full page reloads.
+ * Existed before the router landed; preserved for components that already
+ * call `navigation.goToEdit(id)` etc. New code should use `useHistory`,
+ * `useLocation`, and `useLink` from `../router` directly — they're modeled
+ * after `@wordpress/router` and used the same way as in @wordpress/edit-site.
  *
- * @param {string} pageSlug - The admin page slug (e.g. 'sc-products', 'sc-product-collections').
- * @return {Object} Route state and navigation helpers.
+ * @param {string} pageSlug - Admin page slug, kept on every URL we push.
  */
-export default function useAdminSpaNavigation(pageSlug) {
-	/**
-	 * Parse the current URL into a route descriptor.
-	 */
-	const parseRoute = useCallback(() => {
-		const args = getQueryArgs(window.location.href);
-		return {
-			action: args.action || null,
-			id: args.id || null,
-		};
-	}, []);
+import { useCallback, useMemo } from 'react';
+import { useHistory, useLocation } from '../router';
 
-	/**
-	 * Build a URL from route params.
-	 */
-	const buildUrl = useCallback(
-		(params) => {
-			const base = { page: pageSlug };
-			Object.entries(params).forEach(([key, value]) => {
+export default function useAdminSpaNavigation(pageSlug) {
+	const history = useHistory();
+	const location = useLocation();
+
+	const params = location?.params || {};
+	const action = params.action || null;
+	const id = params.id || null;
+
+	const buildParams = useCallback(
+		(next) => {
+			const merged = { page: pageSlug };
+			Object.entries(next).forEach(([key, value]) => {
 				if (value !== null && value !== undefined && value !== '') {
-					base[key] = value;
+					merged[key] = value;
 				}
 			});
-			return addQueryArgs('admin.php', base);
+			return merged;
 		},
 		[pageSlug]
 	);
 
-	const [route, setRoute] = useState(parseRoute);
-
-	// Re-sync route from URL when the pageSlug changes (cross-page SPA nav).
-	useEffect(() => {
-		setRoute(parseRoute());
-	}, [pageSlug, parseRoute]);
-
-	// Listen for browser back/forward.
-	useEffect(() => {
-		const onPopState = () => {
-			setRoute(parseRoute());
-		};
-		window.addEventListener('popstate', onPopState);
-		return () => window.removeEventListener('popstate', onPopState);
-	}, [parseRoute]);
-
-	/**
-	 * Navigate to a new route via pushState (no page reload).
-	 */
 	const navigateTo = useCallback(
-		(params) => {
-			const url = buildUrl(params);
-			window.history.pushState(params, '', url);
-			setRoute({
-				action: params.action || null,
-				id: params.id || null,
-			});
-		},
-		[buildUrl]
+		(next) => history.push(buildParams(next)),
+		[history, buildParams]
 	);
 
-	/**
-	 * Navigate to the list page.
-	 */
-	const goToList = useCallback(() => {
-		navigateTo({});
-	}, [navigateTo]);
-
-	/**
-	 * Navigate to the create page.
-	 */
-	const goToCreate = useCallback(() => {
-		navigateTo({ action: 'edit' });
-	}, [navigateTo]);
-
-	/**
-	 * Navigate to edit a specific item.
-	 *
-	 * @param {string} id         - Item ID.
-	 * @param {Object} [extra={}] - Extra query params.
-	 */
+	const goToList = useCallback(() => navigateTo({}), [navigateTo]);
+	const goToCreate = useCallback(
+		() => navigateTo({ action: 'edit' }),
+		[navigateTo]
+	);
 	const goToEdit = useCallback(
-		(id, extra = {}) => {
-			navigateTo({ action: 'edit', id, ...extra });
-		},
+		(editId, extra = {}) =>
+			navigateTo({ action: 'edit', id: editId, ...extra }),
 		[navigateTo]
 	);
 
-	return {
-		action: route.action,
-		id: route.id,
-		isList: !route.action,
-		isCreate: route.action === 'edit' && !route.id,
-		isEdit: route.action === 'edit' && !!route.id,
-		pageSlug,
-		navigateTo,
-		goToList,
-		goToCreate,
-		goToEdit,
-	};
+	return useMemo(
+		() => ({
+			action,
+			id,
+			isList: !action,
+			isCreate: action === 'edit' && !id,
+			isEdit: action === 'edit' && !!id,
+			pageSlug,
+			navigateTo,
+			goToList,
+			goToCreate,
+			goToEdit,
+		}),
+		[action, id, pageSlug, navigateTo, goToList, goToCreate, goToEdit]
+	);
 }

@@ -68,19 +68,17 @@ const SORT_MAP = {
 
 /**
  * Column width styles via DataViews layout.styles API.
- * Constrained so all columns (checkbox + 8 fields + actions) fit the container
- * without horizontal overflow on typical admin screens (~1300px content width).
  */
 const LAYOUT_STYLES = {
-	name: { width: '15%' },
-	price: { width: '60px' },
-	commission_amount: { width: '80px' },
-	quantity: { width: '50px' },
-	integrations: { width: '100px' },
-	product_collections: { width: '120px' },
-	status: { width: '80px' },
-	featured: { width: '50px' },
-	date: { width: '120px' },
+	name: { width: '25%' },
+	price: { width: '7%' },
+	commission_amount: { width: '8%' },
+	quantity: { width: '6%' },
+	integrations: { width: '13%' },
+	product_collections: { width: '12%' },
+	status: { width: '9%' },
+	featured: { width: '6%' },
+	date: { width: '10%' },
 };
 
 /**
@@ -354,6 +352,7 @@ export default function ProductsList({ navigation }) {
 							align-items: center;
 							gap: 12px;
 							min-width: 0;
+							white-space: normal;
 						`}
 					>
 						{item?.line_item_image?.src &&

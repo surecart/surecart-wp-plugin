@@ -1,141 +1,95 @@
-# PHP List Table to WP DataView Migrator
+---
+name: php-list-to-wp-dataview-migrator
+description: Migrate SureCart PHP `WP_List_Table` admin pages to React `@wordpress/dataviews`. Use this when converting a server-rendered list page (Coupons, Orders, Subscriptions, etc.) to a standalone client-side SPA that follows the @wordpress/edit-site pattern — one entry per admin page, RouterProvider at the top, lazy-loaded detail chunk.
+---
 
-This skill documents the pattern for migrating SureCart's PHP `WP_List_Table`-based admin pages to React-based `@wordpress/dataviews` components, using a **reusable component library** and the **unified SPA shell** established by the product list migration.
+# PHP List Table → WP DataView Migrator
+
+Migrates SureCart's `WP_List_Table`-based admin pages to React `@wordpress/dataviews`, using the **standalone per-page SPA** pattern modeled after `@wordpress/edit-site`.
 
 ## Architecture Overview
 
-SureCart has ~20 PHP `WP_List_Table` subclasses for admin list pages (Products, Coupons, Orders, Subscriptions, etc.). The migration replaces server-rendered HTML tables with client-side React `<DataViews>` components that:
+Each migrated admin page is a self-contained React app:
 
-- Fetch data via SureCart REST API (`/surecart/v1/{endpoint}`) using `@wordpress/core-data`
-- Support server-side pagination, sorting, filtering, and search
-- Provide bulk actions with confirmation modals
-- Integrate with SureCart admin UI patterns (sc-\* components, Emotion CSS, ModelSelector)
+```
+?page=sc-{entity}            ← single wp-admin page
+  └── React root mounted on  #sc-{entity}-app
+       └── <RouterProvider>          ← from packages/admin/router
+            └── <ErrorBoundary>
+                 └── useLocation() → list view OR lazy-loaded detail chunk
+```
 
-### SPA Shell Architecture
+**No cross-page SPA. No sidebar interception.** Clicking a different wp-admin menu item is a normal full page reload — exactly how the WordPress site editor behaves between `wp-admin/site-editor.php` and `wp-admin/edit.php`.
 
-All DataView list pages run inside a **unified SPA shell** (`packages/admin/spa-shell/`). The shell handles:
+Reference implementations:
 
-- Client-side routing between list and detail views via `pushState`/`popstate`
-- Cross-page navigation (Products ↔ Collections ↔ Settings) without full page reloads
-- WordPress admin sidebar interception and active state management
-- Header/title toggling between list and edit views
+-   **Products** (with tabs + filters): `packages/admin/products/`
+-   **Product Collections** (simple, no tabs): `packages/admin/product-collections/`
 
-New entity list pages are registered in **`packages/admin/spa-shell/page-registry.js`** — no standalone entry points, PHP controllers, or view templates needed per entity.
+Both follow the identical pattern. Read both before migrating a new entity.
 
-### Reusable Component Library
-
-All shared code lives in `packages/admin/components/dataview-list/`:
-
-| File | Purpose |
-|------|---------|
-| `useDataViewState.js` | Hook: view state, query building, data fetching, status tabs, custom filters |
-| `DataViewListLayout.js` | Component: tabs, header controls, card-wrapped DataViews table |
-| `ConfirmDeleteModal.js` | Modal: reusable deletion confirmation with async busy state |
-| `dataview-list-common.scss` | Shared styles: viewport-fit layout, checkbox visibility, padding, hover, footer, popover |
-| `dataview-vendor-styles.js` | Webpack entry that imports `dataview-vendor.scss` → produces `dist/admin/style-dataview-vendor.css` |
-| `dataview-vendor.scss` | Imports `@wordpress/dataviews/build-style/style.css` for extraction by webpack |
-| `index.js` | Barrel export for all of the above |
-
-PHP base class: `app/src/Support/Scripts/AdminListDataviewController.php` — extends `AdminModelEditController` with lighter deps and automatic CSS enqueuing.
-
-## Reference Implementations
-
-- **Products list** (with tabs + filters): `packages/admin/products/ProductsList.js`
-- **Product Collections list** (simple, no tabs): `packages/admin/product-collections/ProductCollectionsList.js`
-- **Currencies DataView**: `packages/admin/settings/display-currency/components/DisplayCurrenciesSettings.js`
-
-Study both list implementations before starting any migration — Products has the most complete pattern (tabs, filters, bulk actions), Collections shows the minimal pattern (no tabs, simple CRUD).
-
-## File Structure
-
-Each DataView migration produces **one file** — the list component. Registration is done in the page registry.
+## Per-Entity File Layout
 
 ```
 packages/admin/{entity}/
-  ├── {Entity}List.js             # Main component (uses useDataViewState + DataViewListLayout)
+  ├── {Entity}App.js              # Router root (RouterProvider + ErrorBoundary + lazy detail)
+  ├── {Entity}List.js             # List view (useDataViewState + DataViewListLayout)
+  ├── {Entity}.js                 # Detail/edit view (existing — already used by the legacy edit page)
+  ├── index.js                    # Mounts {Entity}App on #sc-{entity}-app
   └── {entity}-list-style.scss    # Imports shared common styles + entity-specific overrides
 
-packages/admin/spa-shell/
-  └── page-registry.js            # Register new entity here (list + detail components)
+views/admin/{entity}/
+  └── spa.php                     # Page header + <div id="sc-{entity}-app">
 
-packages/admin/components/dataview-list/   # SHARED — do not duplicate
-  ├── index.js
-  ├── useDataViewState.js
-  ├── DataViewListLayout.js
-  ├── ConfirmDeleteModal.js
-  ├── dataview-list-common.scss
-  ├── dataview-vendor-styles.js            # Webpack entry → dist/admin/style-dataview-vendor.css
-  └── dataview-vendor.scss                 # Imports @wordpress/dataviews vendor CSS
+app/src/Controllers/Admin/{Entity}/
+  ├── {Entity}Controller.php      # index() / edit() — calls enqueueSpaScripts() + renderSpaView()
+  └── {Entity}ScriptsController.php  # Enqueues admin/{entity}.js + scData
+
+webpack.config.js                 # New entry: ['admin/{entity}']: 'packages/admin/{entity}/index.js'
 ```
 
-**No per-entity files needed for:** webpack entries, PHP controllers, PHP view templates, entry point roots, or App wrappers. The SPA shell handles all of that.
+## Shared Reusable Library (do not duplicate)
+
+`packages/admin/components/dataview-list/`:
+
+| File                        | Purpose                                                                                                               |
+| --------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| `useDataViewState.js`       | Hook: view state, query building, data fetching, status tabs, custom filters                                          |
+| `DataViewListLayout.js`     | Component: tabs, header controls, card-wrapped DataViews table                                                        |
+| `ConfirmDeleteModal.js`     | Modal: reusable deletion confirmation with async busy state                                                           |
+| `dataview-list-common.scss` | Shared styles: viewport-fit layout, checkbox visibility, padding, hover, footer, popover                              |
+| `index.js`                  | Barrel export — also imports `@wordpress/dataviews/build-style/style.css` so each consuming bundle ships its own copy |
+
+`packages/admin/router/` (already established, used by Settings):
+
+| File         | Purpose                                                  |
+| ------------ | -------------------------------------------------------- |
+| `index.js`   | `RouterProvider`, `useLocation`, `useHistory`            |
+| `useLink.js` | `useLink({ params })` → `{ href, onClick }`              |
+| `history.js` | `history` library wrapper with `getLocationWithParams()` |
+
+`packages/admin/hooks/useAdminSpaNavigation.js` — thin shim over `useLocation`/`useHistory` that returns `{ action, id, isList, isCreate, isEdit, goToList, goToCreate, goToEdit }`. Pass the page slug; the shim reads URL params and exposes navigation helpers. New code should prefer `useHistory()`/`useLink()` directly; the shim exists so existing list/detail components keep working.
 
 ## Migration Checklist
 
-### 1. Verify Entity Registration
+### 1. Verify entity registration
 
-Check `packages/admin/store/add-entities.js` for the entity. It should have:
+Check `packages/admin/store/add-entities.js` for the entity:
 
 ```js
 {
-  name: 'product',           // entity name
-  kind: 'surecart',          // always 'surecart'
+  name: 'product',
+  kind: 'surecart',
   label: __('Product', 'surecart'),
   baseURL: '/surecart/v1/products',
   baseURLParams: { context: 'edit' },
-  supportsPagination: true,  // REQUIRED for server-side pagination
+  supportsPagination: true,   // REQUIRED — without it useEntityRecords returns no totalItems/totalPages
 }
 ```
 
-If `supportsPagination` is missing, add it. Without it, `useEntityRecords` won't return `totalItems`/`totalPages`.
+### 2. Create the list component
 
-### 2. Register in the SPA Page Registry
-
-Add the new entity to `packages/admin/spa-shell/page-registry.js`:
-
-```js
-import EntityList from '../{entity}/{Entity}List';
-import Entity from '../{entity}/{Entity}';  // existing detail/edit component
-
-const PAGES = {
-  // ... existing pages ...
-  'sc-{entity}': {
-    list: EntityList,
-    detail: Entity,
-    title: __('{Entity}s', 'surecart'),
-    newLabel: __('Add New', 'surecart'),  // set to null to hide "Add New" button
-  },
-};
-```
-
-The SPA shell automatically handles:
-- Routing between list and detail views based on URL params (`action=edit&id=xxx`)
-- Header title and "Add New" button rendering
-- WordPress admin sidebar active state
-- Browser history (back/forward)
-
-The list component receives a `navigation` prop with helpers: `goToList()`, `goToCreate()`, `goToEdit(id)`, `isList`, `isCreate`, `isEdit`.
-
-### 3. Update the PHP Controller
-
-The existing PHP controller for the entity page needs to render the SPA shell view instead of its legacy view. Use the shared `enqueueSpaScripts()` and `renderSpaView()` pattern:
-
-```php
-// In the entity's controller (e.g., OrdersController.php):
-public function index() {
-    $this->enqueueSpaScripts();
-    return $this->renderSpaView([
-        'title'    => __('Orders', 'surecart'),
-        'new_link' => \SureCart::getUrl()->edit('order'),
-    ]);
-}
-```
-
-The `enqueueSpaScripts()` method enqueues the SPA shell bundle which includes all registered entity components. No per-entity script controller is needed.
-
-### 4. Create the List Component (using useDataViewState + DataViewListLayout)
-
-The main component uses the reusable hook and layout. It receives `navigation` from the SPA shell:
+Pattern (copy from `packages/admin/products/ProductsList.js`):
 
 ```jsx
 /** @jsx jsx */
@@ -148,41 +102,29 @@ import { store as noticesStore } from '@wordpress/notices';
 import { DataViewListLayout, useDataViewState } from '../components/dataview-list';
 import './entity-list-style.scss';
 
-const SORT_MAP = {
-  name: 'name',
-  date: 'cataloged_at',
-};
-
+const SORT_MAP = { name: 'name', date: 'cataloged_at' };
 const STATUS_TABS = [
   { value: 'active', label: __('Active', 'surecart') },
   { value: 'archived', label: __('Archived', 'surecart') },
   { value: 'all', label: __('All', 'surecart') },
 ];
-
-const LAYOUT_STYLES = {
-  name: { width: '25%' },       // Name column gets more space
-  featured: { width: '60px' },  // Fixed-width columns
-};
-
-const DEFAULT_FIELDS = ['name', 'price', 'quantity', 'date'];
+const LAYOUT_STYLES = { name: { width: '25%' }, featured: { width: '60px' } };
+const DEFAULT_FIELDS = ['name', 'price', 'date'];
 
 export default function EntityList({ navigation }) {
   const { saveEntityRecord, deleteEntityRecord } = useDispatch(coreStore);
   const { createSuccessNotice, createErrorNotice } = useDispatch(noticesStore);
 
   const {
-    view, setView,
-    status, setStatus,
-    filters, setFilter,
-    records, hasResolved, paginationInfo,
-    invalidateList,
+    view, setView, status, setStatus, filters, setFilter,
+    records, hasResolved, paginationInfo, invalidateList,
   } = useDataViewState({
-    entity: 'product',                    // core-data entity name
+    entity: 'product',
     defaultSort: { field: 'date', direction: 'desc' },
-    sortMap: SORT_MAP,                    // view field → API sort field
-    defaultFields: DEFAULT_FIELDS,        // visible columns
-    layoutStyles: LAYOUT_STYLES,          // column widths via DataViews API
-    initialFilters: INITIAL_FILTERS,      // seed filters from URL params (see section below)
+    sortMap: SORT_MAP,
+    defaultFields: DEFAULT_FIELDS,
+    layoutStyles: LAYOUT_STYLES,
+    initialFilters: INITIAL_FILTERS,                  // see step 7
     buildQueryArgs: ({ status, filters }) => {
       const args = {};
       if (status === 'active') args.archived = false;
@@ -192,16 +134,15 @@ export default function EntityList({ navigation }) {
     },
   });
 
-  // Field definitions, action handlers, actions (see sections 5-7 below)
-  const fields = useMemo(() => [/* ... */], []);
-  const actions = useMemo(() => [/* ... */], []);
+  const fields = useMemo(() => [/* see step 4 */], []);
+  const actions = useMemo(() => [/* see step 8 */], []);
 
   return (
     <DataViewListLayout
       tabs={STATUS_TABS}
       activeTab={status}
       onTabChange={setStatus}
-      headerControls={/* optional filter dropdowns */}
+      headerControls={/* optional ModelSelector */}
       data={records}
       fields={fields}
       view={view}
@@ -214,9 +155,186 @@ export default function EntityList({ navigation }) {
 }
 ```
 
-### 5. Map PHP Columns to DataView Fields
+The `navigation` prop comes from `useAdminSpaNavigation` (passed in by `{Entity}App.js`). Use `navigation.goToEdit(item.id)` for row edit links — never `window.location.href`.
 
-For each column in the PHP `get_columns()` method, create a field definition:
+### 3. Create the App root (`{Entity}App.js`)
+
+Copy from `packages/admin/products/ProductsApp.js`. Substitute the entity name, slug, list component, detail import:
+
+```jsx
+import { Suspense, lazy, useEffect } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
+import { Spinner } from '@wordpress/components';
+
+import { RouterProvider, useHistory } from '../router';
+import ErrorBoundary from '../components/error-boundary';
+import EntityList from './EntityList';
+import useAdminSpaNavigation from '../hooks/useAdminSpaNavigation';
+
+const Entity = lazy(() =>
+	import(/* webpackChunkName: "sc-{entity}-detail" */ './Entity')
+);
+
+const PAGE_SLUG = 'sc-{entity}';
+
+function PageLoader() {
+	/* small Spinner */
+}
+
+function useHeaderSync(isList) {
+	const history = useHistory();
+	useEffect(() => {
+		const header = document.getElementById('sc-{entity}-list-header');
+		if (header) header.style.display = isList ? '' : 'none';
+	}, [isList]);
+
+	useEffect(() => {
+		const button = document.querySelector(
+			'#sc-{entity}-list-header [data-test-id="add-new-button"]'
+		);
+		if (!button) return;
+		const handleClick = (e) => {
+			if (
+				e.metaKey ||
+				e.ctrlKey ||
+				e.shiftKey ||
+				e.altKey ||
+				e.button !== 0
+			)
+				return;
+			e.preventDefault();
+			history.push({ page: PAGE_SLUG, action: 'edit' });
+		};
+		button.addEventListener('click', handleClick);
+		return () => button.removeEventListener('click', handleClick);
+	}, [history]);
+}
+
+function useWrapClass(isList) {
+	useEffect(() => {
+		const el = document.getElementById('sc-{entity}-app');
+		if (el) el.classList.toggle('wrap', isList);
+	}, [isList]);
+}
+
+function EntityRouter() {
+	const navigation = useAdminSpaNavigation(PAGE_SLUG);
+	useHeaderSync(navigation.isList);
+	useWrapClass(navigation.isList);
+
+	if (navigation.isList) return <EntityList navigation={navigation} />;
+	return (
+		<Suspense fallback={<PageLoader />}>
+			<Entity navigation={navigation} />
+		</Suspense>
+	);
+}
+
+export default function EntityApp() {
+	return (
+		<RouterProvider>
+			<ErrorBoundary>
+				<EntityRouter />
+			</ErrorBoundary>
+		</RouterProvider>
+	);
+}
+```
+
+The two effects (`useHeaderSync`, `useWrapClass`) are scoped to this page only — they only touch DOM elements that belong to it. No sidebar mutation, no cross-page coordination.
+
+### 4. Create the entry (`packages/admin/{entity}/index.js`)
+
+```js
+import { createRoot } from '@wordpress/element';
+
+import EntityApp from './EntityApp';
+import '../store/add-entities';
+
+const container = document.getElementById('sc-{entity}-app');
+if (container) {
+	createRoot(container).render(<EntityApp />);
+}
+```
+
+### 5. Add the webpack entry
+
+`webpack.config.js`:
+
+```js
+['admin/{entity}']: path.resolve(__dirname, 'packages/admin/{entity}/index.js'),
+```
+
+### 6. Create the PHP view
+
+`views/admin/{entity}/spa.php`:
+
+```php
+<div class="wrap" id="sc-{entity}-list-header">
+    <?php \SureCart::render( 'components/admin/flash-messages' ); ?>
+    <h1 class="wp-heading-inline"><?php esc_html_e( '{Entity}s', 'surecart' ); ?></h1>
+    <?php if ( ! empty( $new_link ) ) : ?>
+        <a href="<?php echo esc_url( $new_link ); ?>" class="page-title-action" data-test-id="add-new-button">
+            <?php esc_html_e( 'Add New', 'surecart' ); ?>
+        </a>
+    <?php endif; ?>
+    <hr class="wp-header-end" />
+</div>
+
+<div id="sc-{entity}-app"></div>
+```
+
+### 7. Wire the PHP controller
+
+`app/src/Controllers/Admin/{Entity}/{Entity}Controller.php`:
+
+```php
+use SureCart\Controllers\Admin\AdminController;
+
+class {Entity}Controller extends AdminController {
+    private function enqueueSpaScripts() {
+        add_action( 'admin_enqueue_scripts', \SureCart::closure()->method( {Entity}ScriptsController::class, 'enqueue' ) );
+    }
+
+    private function renderSpaView() {
+        $this->withHeader( [ 'breadcrumbs' => [
+            '{entity}' => [ 'title' => __( '{Entity}s', 'surecart' ) ],
+        ] ] );
+
+        return \SureCart::view( 'admin/{entity}/spa' )->with( [
+            'new_link' => \SureCart::getUrl()->edit( '{entity}' ),
+        ] );
+    }
+
+    public function index() {
+        $this->enqueueSpaScripts();
+        return $this->renderSpaView();
+    }
+
+    // edit() — same enqueue + view; the React app reads ?action=edit&id= from URL
+}
+```
+
+`{Entity}ScriptsController.php` — extends `AdminModelEditController`, sets `$handle = 'surecart/scripts/admin/{entity}'` and `$path = 'admin/{entity}'`. Standard pattern — copy from `ProductScriptsController.php`.
+
+### 8. URL parameter pre-filtering
+
+If the legacy page supports `?sc_collection=xxx`-style deep links, seed filters at module scope:
+
+```js
+import { getQueryArgs } from '@wordpress/url';
+
+const URL_PARAMS = getQueryArgs(window.location.href);
+const INITIAL_FILTERS = URL_PARAMS.sc_collection
+	? { collectionId: URL_PARAMS.sc_collection }
+	: {};
+```
+
+Pass `INITIAL_FILTERS` to `useDataViewState` so the ModelSelector reflects the pre-selected value on first render.
+
+### 9. Map PHP columns → fields
+
+For each column in the legacy `get_columns()`, define a field:
 
 ```js
 const fields = useMemo(() => [
@@ -225,231 +343,73 @@ const fields = useMemo(() => [
     label: __('Name', 'surecart'),
     enableSorting: true,
     enableGlobalSearch: true,
-    render: ({ item }) => (
-      <div css={css`display:flex;align-items:center;gap:12px;`}>
-        {/* Image thumbnail + edit link */}
-      </div>
-    ),
+    render: ({ item }) => (/* image + edit link */),
   },
   {
     id: 'price',
     label: __('Price', 'surecart'),
-    enableSorting: false,
     render: ({ item }) => item?.range_display_amount || '-',
   },
   {
     id: 'date',
     label: __('Created', 'surecart'),
     enableSorting: true,
-    render: ({ item }) => {
-      if (!item?.cataloged_at) return '-';
-      return new Date(item.cataloged_at * 1000).toLocaleDateString(undefined, {
-        year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit',
-      });
-    },
+    render: ({ item }) => formatDate(item.cataloged_at),
   },
 ], []);
 ```
 
-**Field rules:**
-- `enableSorting: true` only for columns that exist in PHP `get_sortable_columns()`
-- `enableGlobalSearch: true` only for the primary search field
-- Use `render` for custom cell content (images, tags, links, icons)
-- For price display, use `item.range_display_amount` — pre-formatted like "$50 - $70"
+Rules:
 
-### 6. Column Widths via layout.styles API
+-   `enableSorting: true` only for columns in PHP `get_sortable_columns()`
+-   `enableGlobalSearch: true` only on the primary search field
+-   Column widths via `layoutStyles` (DataViews `layout.styles` API), **never** CSS `nth-child`
+-   Right-align quantitative data; left-align text/dates
 
-Use the DataViews native `layout.styles` API for column widths — **NOT** CSS `nth-child` selectors (fragile, breaks when columns reorder):
+### 10. Map PHP filter dropdowns → ModelSelector
 
-```js
-// Pass to useDataViewState as layoutStyles:
-const LAYOUT_STYLES = {
-  name: { width: '25%' },
-  featured: { width: '60px' },
-  price: { maxWidth: '150px' },
-};
+Use SureCart's `ModelSelector`, never a native `<select>`. Pass as `headerControls` on `DataViewListLayout`.
 
-// The hook sets: view.layout.styles = LAYOUT_STYLES
-```
+### 11. Map PHP row actions → DataViews actions
 
-**Supported properties per field:** `width`, `maxWidth`, `minWidth`.
-**Alignment guideline:** Right-align quantitative data (numbers, currency) — left-align text, dates, labels.
+Use `navigation.goToEdit(id)` for edit; use `RenderModal` for destructive bulk actions. After any mutation, **call `invalidateList()`** — `saveEntityRecord` / `deleteEntityRecord` / `apiFetch` do not refresh the list query on their own.
 
-### 7. Map PHP Dropdown Filters to ModelSelector
-
-If the PHP table has `extra_tablenav()` with dropdowns, use `ModelSelector` — **NOT** a native `<select>`. Pass it as `headerControls` to `DataViewListLayout`:
-
-```jsx
-import ModelSelector from '../components/ModelSelector';
-import { ScMenuItem, ScDivider } from '@surecart/components-react';
-
-const collectionFilter = (
-  <ModelSelector
-    name="product-collection"
-    placeholder={__('All Product Collections', 'surecart')}
-    searchPlaceholder={__('Search collections…', 'surecart')}
-    value={filters.collectionId || ''}
-    onSelect={(id) => setFilter('collectionId', id === filters.collectionId ? '' : id)}
-    style={{ width: '100%' }}
-    prefix={filters.collectionId ? (
-      <>
-        <ScMenuItem onClick={() => setFilter('collectionId', '')}>
-          {__('All Product Collections', 'surecart')}
-        </ScMenuItem>
-        <ScDivider style={{ '--spacing': 'var(--sc-spacing-x-small)' }} />
-      </>
-    ) : null}
-  />
-);
-
-// In render:
-<DataViewListLayout headerControls={collectionFilter} ... />
-```
-
-### 8. URL Parameter Pre-Filtering (initialFilters)
-
-If the PHP page supports navigation from another page with query parameters (e.g., `?sc_collection=xxx`), seed the filter state from the URL at module scope:
-
-```js
-import { getQueryArgs } from '@wordpress/url';
-
-// Read URL params at module scope (runs once on load).
-const URL_PARAMS = getQueryArgs( window.location.href );
-const INITIAL_FILTERS = URL_PARAMS.sc_collection
-  ? { collectionId: URL_PARAMS.sc_collection }
-  : {};
-
-// Pass to useDataViewState:
-const { filters, setFilter, ... } = useDataViewState({
-  entity: 'product',
-  initialFilters: INITIAL_FILTERS,
-  buildQueryArgs: ({ filters }) => {
-    const args = {};
-    if (filters.collectionId) args.product_collection_ids = [filters.collectionId];
-    return args;
-  },
-});
-```
-
-The `initialFilters` config seeds `useState` for the custom filter state, so the ModelSelector `value` prop automatically reflects the pre-selected filter on first render. The `buildQueryArgs` callback converts it to API params. No extra logic needed — the hook handles page resets on filter change.
-
-### 9. Map PHP Row Actions to DataView Actions
-
-Use `navigation.goToEdit(id)` for SPA edit navigation instead of `window.location.href`:
-
-```js
-const actions = useMemo(() => [
-  {
-    id: 'edit',
-    label: __('Edit', 'surecart'),
-    icon: <Icon icon={edit} />,
-    callback: ([item]) => { navigation.goToEdit(item.id); },
-  },
-  {
-    id: 'archive',
-    label: __('Archive', 'surecart'),
-    icon: <Icon icon={archive} />,
-    isEligible: (item) => !item.archived,
-    supportsBulk: true,
-    callback: (items) => handleArchiveToggle(items),
-  },
-  {
-    id: 'delete',
-    label: __('Delete permanently', 'surecart'),
-    icon: <Icon icon={trash} />,
-    isDestructive: true,
-    supportsBulk: true,
-    hideModalHeader: true,
-    RenderModal: ({ items, closeModal }) => (
-      <VStack>
-        <Text>{sprintf(_n('Delete %d item?', 'Delete %d items?', items.length, 'surecart'), items.length)}</Text>
-        <HStack justify="end">
-          <Button variant="tertiary" onClick={closeModal}>{__('Cancel', 'surecart')}</Button>
-          <Button variant="primary" isDestructive onClick={() => { handleDelete(items); closeModal(); }}>
-            {__('Delete', 'surecart')}
-          </Button>
-        </HStack>
-      </VStack>
-    ),
-  },
-], [navigation, handleArchiveToggle, handleDelete]);
-```
-
-### 10. Invalidating the List After Mutations
-
-After any mutation (archive, duplicate, delete), **you must call `invalidateList()`** to re-fetch data. Without this, the list shows stale data until a page reload.
-
-```js
-const { invalidateList } = useDataViewState({ ... });
-
-const handleArchiveToggle = useCallback(async (items) => {
-  try {
-    await Promise.all(items.map(item =>
-      saveEntityRecord('surecart', 'product', { id: item.id, archived: !item.archived }, { throwOnError: true })
-    ));
-    invalidateList();  // ← Re-fetches the current query
-    createSuccessNotice(__('Product archived.', 'surecart'), { type: 'snackbar' });
-  } catch (error) {
-    createErrorNotice(error?.message || __('Failed to update product.', 'surecart'), { type: 'snackbar' });
-  }
-}, [saveEntityRecord, invalidateList, createSuccessNotice, createErrorNotice]);
-```
-
-**Why `invalidateList()` is needed:**
-- `saveEntityRecord` updates the entity in the core-data store, but doesn't invalidate the list query — the table still shows the old set of results
-- `deleteEntityRecord` removes the entity but the list query cache isn't refreshed
-- `apiFetch` (for custom endpoints like duplicate) creates entities outside the store entirely
-- `invalidateList()` calls `invalidateResolution('getEntityRecords', [kind, entity, queryArgs])` which triggers `useEntityRecords` to re-fetch
-
-**Snackbar notices:** The `DataViewListLayout` component includes a `<Notifications>` component that renders `@wordpress/notices` snackbar notices. Use `createSuccessNotice(msg, { type: 'snackbar' })` and `createErrorNotice(msg, { type: 'snackbar' })` from `useDispatch(noticesStore)`.
-
-### 11. SCSS Styles
-
-Import the shared common styles. Add entity-specific overrides only if needed:
+### 12. SCSS
 
 ```scss
 // packages/admin/{entity}/{entity}-list-style.scss
-@import "../components/dataview-list/dataview-list-common.scss";
-
-// Entity-specific overrides go here (usually none needed).
+@import '../components/dataview-list/dataview-list-common.scss';
+// Entity-specific overrides only if needed (usually none).
 ```
 
-The shared `dataview-list-common.scss` provides:
-- **Viewport-fit layout:** `max-height: calc(100vh - 200px)` with `overflow-y: auto` on `.dataviews-wrapper`, sticky search bar and footer — keeps pagination visible without page scrolling
-- Checkbox visibility (hide on rows, show on hover/check/focus, always show on touch devices)
-- Table full-width + cell padding
-- Search/footer/filter container padding
-- Hover row color (SureCart brand background)
-- Settings popover width constraint (320px — at global scope because it renders as a portal)
-- Footer alignment (items left, pagination right)
-- Bulk actions footer layout
-- Loading/empty state centering
+The shared SCSS provides viewport-fit layout, checkbox visibility, padding, hover, footer, popover constraints. The vendor CSS (`@wordpress/dataviews/build-style/style.css`) is imported by `dataview-list/index.js` — it ships with the bundle that uses the components. Do not import it again.
 
-**Do NOT** `@import "@wordpress/dataviews/build-style/style.css"` in entity SCSS or in `dataview-list-common.scss`. That vendor CSS is handled by the dedicated `admin/dataview-vendor` webpack entry, producing a predictable `dist/admin/style-dataview-vendor.css` that all PHP controllers enqueue.
-
-## useDataViewState Hook API
+## useDataViewState API
 
 ```js
 const {
-  view, setView,           // DataViews view state
-  status, setStatus,       // Tab status (resets page to 1)
-  filters, setFilter,      // Custom filter state: setFilter('key', value)
-  records,                 // Fetched records array
-  hasResolved,             // Data fetching complete?
-  paginationInfo,          // { totalItems, totalPages }
-  invalidateList,          // Call after mutations to re-fetch data
-  queryArgs,               // Computed query args (for debugging)
+	view,
+	setView,
+	status,
+	setStatus, // resets page to 1
+	filters,
+	setFilter, // setFilter('key', value) — resets page to 1
+	records,
+	hasResolved,
+	paginationInfo,
+	invalidateList, // call after mutations
+	queryArgs, // for debugging
 } = useDataViewState({
-  entity: 'product',                                     // core-data entity name
-  kind: 'surecart',                                      // default: 'surecart'
-  defaultSort: { field: 'date', direction: 'desc' },     // initial sort
-  sortMap: { name: 'name', date: 'cataloged_at' },       // view field → API field
-  defaultFields: ['name', 'price', 'date'],              // visible columns
-  perPage: 20,                                           // items per page
-  defaultStatus: 'active',                               // initial tab
-  layoutStyles: { name: { width: '25%' } },              // column widths
-  initialFilters: {},                                    // seed from URL params (see section 8)
-  buildQueryArgs: ({ view, status, filters }) => ({}),   // entity-specific query args
+	entity: 'product',
+	kind: 'surecart', // default
+	defaultSort: { field: 'date', direction: 'desc' },
+	sortMap: { name: 'name', date: 'cataloged_at' }, // view field → API field
+	defaultFields: ['name', 'price', 'date'],
+	perPage: 20,
+	defaultStatus: 'active',
+	layoutStyles: { name: { width: '25%' } },
+	initialFilters: {},
+	buildQueryArgs: ({ view, status, filters }) => ({}),
 });
 ```
 
@@ -457,18 +417,11 @@ const {
 
 ```jsx
 <DataViewListLayout
-  // Tabs (optional — omit for pages without status tabs)
-  tabs={[{ value: 'active', label: 'Active' }]}
+  tabs={[{ value: 'active', label: 'Active' }]}      // optional
   activeTab="active"
   onTabChange={(value) => {}}
-
-  // Header controls (optional — filter dropdowns, buttons, etc.)
-  headerControls={<ModelSelector ... />}
-
-  // Content rendered next to the gear icon inside DataViews (optional)
-  header={<Button>Export</Button>}
-
-  // DataViews props (all forwarded)
+  headerControls={<ModelSelector ... />}             // optional
+  header={<Button>Export</Button>}                   // rendered next to gear icon
   data={records}
   fields={fields}
   view={view}
@@ -476,100 +429,41 @@ const {
   paginationInfo={paginationInfo}
   actions={actions}
   isLoading={!hasResolved}
-  isMutating={isMutating}  // shows loading overlay during inline mutations
-
-  // Additional DataViews props as needed
-  defaultLayouts={{ table: {} }}
+  isMutating={isMutating}
 />
 ```
 
-## DataViews API Quick Reference (v4.11.1)
-
-### View State Shape
-```js
-{
-  type: 'table',              // 'table' | 'grid' | 'list'
-  perPage: 20,
-  page: 1,
-  sort: { field: 'date', direction: 'desc' },
-  search: '',
-  filters: [{ field: 'status', operator: 'is', value: 'active' }],
-  fields: ['name', 'price'],  // visible field IDs + order
-  layout: {
-    styles: { name: { width: '25%' }, featured: { width: '60px' } },
-    density: 'comfortable',   // 'comfortable' | 'balanced' | 'compact'
-  },
-}
-```
-
-### Field Properties
-- `id`, `label`, `type` ('text'|'integer'|'date'|'boolean')
-- `render: ({ item }) => ReactNode` — custom cell renderer
-- `getValue: ({ item }) => any` — data accessor
-- `enableSorting`, `enableHiding`, `enableGlobalSearch` — booleans
-- `elements: [{ value, label }]` — for built-in filter dropdowns
-- `filterBy: { operators: ['is', 'isNot'] }` — filter configuration
-
-### Action Properties
-- `id`, `label`, `icon`, `callback: (items) => void`
-- `isPrimary`, `isDestructive`, `supportsBulk`
-- `isEligible: (item) => boolean` — per-item availability
-- `RenderModal`, `hideModalHeader`, `modalHeader`
-
-### Important Props
-- `search: true` — enables search input (DataViewListLayout sets this by default)
-- `header` — React content rendered next to the gear icon
-- `empty` — custom empty state UI
-- `isItemClickable` / `onClickItem` — row click behavior
-
 ## Common Pitfalls
 
-1. **Don't use `filterSortAndPaginate`** with server-side data — it re-paginates client-side
-2. **Don't use `table-layout: fixed`** — causes text overlap. Use `layout.styles` for column widths
-3. **Don't use CSS `nth-child` for column widths** — fragile, breaks on column reorder. Use `layout.styles`
-4. **Don't set `titleField`** in view state unless you want DataViews to create a combined primary column (which duplicates your explicit name field)
+1. **Don't use `filterSortAndPaginate`** with server-side data — re-paginates client-side
+2. **Don't use `table-layout: fixed`** — text overlap. Use `layout.styles` for column widths
+3. **Don't use CSS `nth-child` for column widths** — fragile; use `layout.styles`
+4. **Don't set `titleField`** unless you want a duplicate combined primary column
 5. **Use `@emotion/react`** (not `@emotion/core`) for the css prop
 6. **Text domain must be `'surecart'`**
-7. **Use `range_display_amount`** for price display — `metrics.min_price_amount_display` doesn't exist
-8. **Use `ModelSelector`** for filter dropdowns, not native `<select>`
-9. **Always check `hasResolved`** (or use `isLoading={!hasResolved}`) before rendering data
-10. **Tabs must be WP-style text links** (`<ul>/<li>/<a>`) — not button groups or `TabPanel`
-11. **Vendor CSS is a dedicated entry** — Don't `@import "@wordpress/dataviews/build-style/style.css"` in entity SCSS files. It's handled by the shared `admin/dataview-vendor` webpack entry → `dist/admin/style-dataview-vendor.css`. All PHP controllers enqueue this one file. If you import it in entity SCSS, webpack's splitChunks deduplicates unpredictably across entries
-12. **Settings popover is a portal** — `.dataviews-view-config` renders as a WP Popover at the body level, NOT inside `.sc-dataview-list-wrapper`. Width constraints must be at global scope in `dataview-list-common.scss`
-13. **No-tabs spacing** — When a page has no tabs/headerControls, the DataView card needs `margin-top: 12px` to maintain spacing from the page title. `DataViewListLayout` handles this automatically via the `!hasControls` condition
-14. **Always call `invalidateList()` after mutations** — `saveEntityRecord`, `deleteEntityRecord`, and `apiFetch` do NOT automatically refresh the list query. Without `invalidateList()`, the table shows stale data until page reload. See section 10
-15. **Seed filters from URL params at module scope** — Use `getQueryArgs(window.location.href)` outside the component (runs once on load) and pass as `initialFilters` to `useDataViewState`. This ensures the ModelSelector reflects the pre-selected value on first render. See section 8
-16. **Use `navigation.goToEdit(id)` for edit links** — not `window.location.href`. The `navigation` prop from the SPA shell enables client-side routing without page reloads
-17. **Register in page-registry.js** — not as a separate webpack entry. The SPA shell bundles all registered pages into one entry
-18. **Component receives `navigation` prop** — the SPA shell passes `{ goToList, goToCreate, goToEdit, isList, isCreate, isEdit }` to all registered list/detail components
+7. **Use `range_display_amount`** for price display
+8. **Use `ModelSelector`**, not native `<select>`, for filter dropdowns
+9. **Always check `hasResolved`** (or `isLoading={!hasResolved}`) before rendering
+10. **Tabs are WP-style text links** (`<ul>/<li>/<a>`) — not button groups or `TabPanel`
+11. **Settings popover is a portal** — `.dataviews-view-config` renders at body level. Width constraints belong at global scope in `dataview-list-common.scss`
+12. **Always call `invalidateList()` after mutations** — `saveEntityRecord` / `deleteEntityRecord` / `apiFetch` don't refresh the list on their own
+13. **Seed filters from URL params at module scope** — `getQueryArgs(window.location.href)` outside the component, pass as `initialFilters`
+14. **Use `navigation.goToEdit(id)` for edit links** — not `window.location.href`
+15. **Each page is its own webpack entry, PHP controller, view, and React root** — there is no shared shell or page registry. Keep the file layout strictly per-entity
+16. **Modifier-clicks on "Add New"** — let the browser handle Cmd/Ctrl/Shift/middle-clicks normally. The header sync effect in `{Entity}App.js` already does this; don't simplify it away
+17. **No sidebar interception** — clicking a different wp-admin menu item must full-reload. Anything else fights WordPress
 
 ## Quick Migration Template
 
-To migrate a new entity (e.g., Orders):
+To migrate Orders:
 
-**1. `packages/admin/orders/OrdersList.js`** — Copy `ProductsList.js`, update:
-- Entity name, sort map, tabs, fields, actions, filters
-- Use `useDataViewState` + `DataViewListLayout`
-- Accept `navigation` prop
+1. **`packages/admin/orders/OrdersList.js`** — copy `ProductsList.js`; update entity, sort map, tabs, fields, actions
+2. **`packages/admin/orders/OrdersApp.js`** — copy `ProductsApp.js`; substitute `Order`/`OrdersList`/`sc-orders`
+3. **`packages/admin/orders/index.js`** — mount `<OrdersApp />` on `#sc-orders-app`
+4. **`packages/admin/orders/order-list-style.scss`** — `@import "../components/dataview-list/dataview-list-common.scss";`
+5. **`webpack.config.js`** — add `['admin/orders']: 'packages/admin/orders/index.js'`
+6. **`views/admin/orders/spa.php`** — header + `<div id="sc-orders-app">`
+7. **`app/src/Controllers/Admin/Orders/OrdersController.php`** — `enqueueSpaScripts()` enqueues `OrdersScriptsController` only; `renderSpaView()` returns `admin/orders/spa`
+8. **`app/src/Controllers/Admin/Orders/OrdersScriptsController.php`** — extends `AdminModelEditController`; `$handle = 'surecart/scripts/admin/orders'`, `$path = 'admin/orders'`
 
-**2. `packages/admin/orders/order-list-style.scss`**
-```scss
-@import "../components/dataview-list/dataview-list-common.scss";
-```
-
-**3. `packages/admin/spa-shell/page-registry.js`** — Register the entity:
-```js
-import OrdersList from '../orders/OrdersList';
-import Order from '../orders/Order';  // existing detail component
-
-'sc-orders': {
-  list: OrdersList,
-  detail: Order,
-  title: __('Orders', 'surecart'),
-  newLabel: __('Add New', 'surecart'),
-},
-```
-
-**4. Update the entity's PHP controller** to use `enqueueSpaScripts()` + `renderSpaView()` instead of the legacy list table view.
-
-That's it — no webpack entries, no standalone roots, no per-entity PHP script controllers needed.
+That's it.

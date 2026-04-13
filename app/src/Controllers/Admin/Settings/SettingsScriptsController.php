@@ -55,6 +55,7 @@ class SettingsScriptsController {
 		// the SPA shell's AdminModelEditController base class). Using Object.assign
 		// ensures we don't overwrite existing properties like upgrade_url, links, etc.
 		$settings_sc_data = [
+			'entitlements'                 => \SureCart::account()->entitlements,
 			'supported_currencies'         => Currency::list(),
 			'locales'                      => Currency::getLocales(),
 			'app_url'                      => defined( 'SURECART_APP_URL' ) ? untrailingslashit( SURECART_APP_URL ) : 'https://app.surecart.com',
@@ -75,31 +76,26 @@ class SettingsScriptsController {
 				: '',
 		];
 
-		// Attach to the SPA shell handle so data is available before React renders.
-		// The SPA shell script loads before the settings script, and it bundles
-		// SettingsPage which reads scSettingsData at render time.
-		$spa_handle = 'surecart/scripts/admin/spa-shell';
-
 		wp_add_inline_script(
-			$spa_handle,
+			$handle,
 			'window.scData = Object.assign(window.scData || {}, ' . wp_json_encode( $settings_sc_data ) . ');',
 			'before'
 		);
 
 		// Localize settings-specific config (separate from scData).
 		wp_localize_script(
-			$spa_handle,
+			$handle,
 			'scSettingsData',
 			[
-				'has_api_token'    => (bool) \SureCart\Models\ApiToken::get(),
-				'show_learn'       => (bool) get_option( 'surecart_learn_admin_menu', true ),
-				'logo_url'         => esc_url( trailingslashit( plugin_dir_url( SURECART_PLUGIN_FILE ) ) . 'images/logo.svg' ),
-				'settings_url'     => esc_url( menu_page_url( 'sc-settings', false ) ),
-				'cache_clear_url'  => esc_url_raw( add_query_arg( [ 'cache' => 'clear' ], menu_page_url( 'sc-settings', false ) ) ),
-				'cache_nonce'      => wp_create_nonce( 'update_plugin_settings' ),
-				'version'          => \SureCart::plugin()->version(),
-				'claim_url'        => ! \SureCart::account()->claimed ? \SureCart::routeUrl( 'account.claim' ) : '',
-				'claim_expired'    => \SureCart::account()->claim_expired ?? false,
+				'has_api_token'   => (bool) \SureCart\Models\ApiToken::get(),
+				'show_learn'      => (bool) get_option( 'surecart_learn_admin_menu', true ),
+				'logo_url'        => esc_url( trailingslashit( plugin_dir_url( SURECART_PLUGIN_FILE ) ) . 'images/logo.svg' ),
+				'settings_url'    => esc_url( menu_page_url( 'sc-settings', false ) ),
+				'cache_clear_url' => esc_url_raw( add_query_arg( [ 'cache' => 'clear' ], menu_page_url( 'sc-settings', false ) ) ),
+				'cache_nonce'     => wp_create_nonce( 'update_plugin_settings' ),
+				'version'         => \SureCart::plugin()->version(),
+				'claim_url'       => ! \SureCart::account()->claimed ? \SureCart::routeUrl( 'account.claim' ) : '',
+				'claim_expired'   => \SureCart::account()->claim_expired ?? false,
 			]
 		);
 	}

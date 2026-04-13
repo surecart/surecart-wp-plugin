@@ -94,11 +94,11 @@ export default () => {
 	}
 
 	const upgradeRequired = () => {
-		const shippingMethods = scData.entitlements?.shipping_methods;
+		const shippingMethods = window.scData?.entitlements?.shipping_methods;
 
 		return (
-			!!shippingMethods.limit &&
-			shippingMethods.count >= shippingMethods.limit
+			!!shippingMethods?.limit &&
+			shippingMethods?.count >= shippingMethods?.limit
 		);
 	};
 

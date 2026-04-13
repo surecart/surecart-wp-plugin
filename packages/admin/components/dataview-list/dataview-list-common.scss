@@ -1,7 +1,8 @@
-// Vendor CSS (@wordpress/dataviews) is loaded via a dedicated webpack entry:
-//   packages/admin/components/dataview-list/dataview-vendor-styles.js
-// → dist/admin/style-dataview-vendor.css
-// Do NOT @import it here — that causes unpredictable splitChunks deduplication.
+// Vendor CSS — @wordpress/dataviews base styles.
+// Imported here (SCSS) instead of JS to avoid the DependencyExtractionPlugin
+// treating it as a script handle (wp-dataviews/build-style/style.css),
+// which breaks wp_enqueue_script.
+@import "@wordpress/dataviews/build-style/style.css";
 
 // ─── Shared variables ───
 $padding-size: 20px;
@@ -49,20 +50,27 @@ $padding-size: 20px;
 	// ─── Table full-width + padding ───
 	.dataviews-view-table {
 		width: 100%;
-		table-layout: auto;
+		table-layout: fixed;
 
-		// Prevent text overlap with fixed layout — truncate long content.
-		// td, th {
-		// 	overflow: hidden;
-		// 	text-overflow: ellipsis;
-		// 	white-space: nowrap;
-		// }
+		// With table-layout:fixed the browser respects explicit column widths.
+		// Clip overflow on every cell so content never widens the column.
+		td,
+		th {
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
 
-		// But allow wrapping inside cells that use custom render (e.g. name with image).
-		// td .dataviews-view-table__cell-content-wrapper {
-		// 	overflow: hidden;
-		// 	text-overflow: ellipsis;
-		// }
+		// Header cells: single-line, truncated.
+		th {
+			white-space: nowrap;
+		}
+
+		// Data cells: default to nowrap for compact display.
+		// Columns with custom renders (e.g. name with thumbnail) can override
+		// white-space via their own Emotion/inline styles.
+		td {
+			white-space: nowrap;
+		}
 
 		tr {
 			td,
