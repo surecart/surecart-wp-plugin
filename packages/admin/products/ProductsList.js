@@ -4,11 +4,12 @@ import { css, jsx } from '@emotion/react';
 import { useDispatch } from '@wordpress/data';
 import { store as coreStore, useEntityRecords } from '@wordpress/core-data';
 import { addQueryArgs, getQueryArgs } from '@wordpress/url';
-import { useMemo, useCallback, useEffect, useState } from 'react';
+import { useMemo, useCallback, useEffect, useState, useRef } from 'react';
 import { Icon } from '@wordpress/components';
 import { store as noticesStore } from '@wordpress/notices';
 import { trash, copy, archive, edit, external } from '@wordpress/icons';
 import apiFetch from '@wordpress/api-fetch';
+import { ScTag } from '@surecart/components-react';
 import {
 	DataViewListLayout,
 	useDataViewState,
@@ -67,9 +68,19 @@ const SORT_MAP = {
 
 /**
  * Column width styles via DataViews layout.styles API.
+ * Constrained so all columns (checkbox + 8 fields + actions) fit the container
+ * without horizontal overflow on typical admin screens (~1300px content width).
  */
 const LAYOUT_STYLES = {
-	featured: { width: '60px' },
+	name: { width: '15%' },
+	price: { width: '60px' },
+	commission_amount: { width: '80px' },
+	quantity: { width: '50px' },
+	integrations: { width: '100px' },
+	product_collections: { width: '120px' },
+	status: { width: '80px' },
+	featured: { width: '50px' },
+	date: { width: '120px' },
 };
 
 /**
@@ -80,6 +91,7 @@ const DEFAULT_FIELDS = [
 	'price',
 	'commission_amount',
 	'quantity',
+	'integrations',
 	'product_collections',
 	'status',
 	'featured',
@@ -101,7 +113,7 @@ function getEditUrl(id) {
  * Products list DataView component.
  *
  * @param {Object} props
- * @param {Object} props.navigation - SPA navigation from useProductsNavigation.
+ * @param {Object} props.navigation - SPA navigation from useAdminSpaNavigation.
  */
 export default function ProductsList({ navigation }) {
 	const { saveEntityRecord } = useDispatch(coreStore);
@@ -126,6 +138,13 @@ export default function ProductsList({ navigation }) {
 			})),
 		[collectionRecords]
 	);
+
+	// ─── Integrations data (local DB, not part of product API entity) ───
+	// Batch-fetch integrations for all visible products.
+	const [integrationsByProduct, setIntegrationsByProduct] = useState({});
+	const [integrationProviders, setIntegrationProviders] = useState({});
+	const [integrationItemLabels, setIntegrationItemLabels] = useState({});
+	const prevProductIdsRef = useRef('');
 
 	// Reusable data view state hook.
 	const {
@@ -202,6 +221,112 @@ export default function ProductsList({ navigation }) {
 		window.history.replaceState(null, '', url);
 	}, [activeStatusValue, activeCollectionId]);
 
+	// ─── Fetch integrations for visible products ───
+	useEffect(() => {
+		if (!records?.length) return;
+		const productIds = records.map((r) => r.id);
+		const key = productIds.join(',');
+		// Skip if product list hasn't changed.
+		if (key === prevProductIdsRef.current) return;
+		prevProductIdsRef.current = key;
+
+		const controller = new AbortController();
+		(async () => {
+			try {
+				// Fetch integrations for all visible products in one request.
+				const integrations = await apiFetch({
+					path: addQueryArgs('/surecart/v1/integrations', {
+						model_ids: productIds,
+						per_page: 100,
+						context: 'edit',
+					}),
+					signal: controller.signal,
+				});
+
+				// Group by model_id (product).
+				const grouped = {};
+				for (const integration of integrations) {
+					if (!grouped[integration.model_id]) {
+						grouped[integration.model_id] = [];
+					}
+					grouped[integration.model_id].push(integration);
+				}
+				setIntegrationsByProduct(grouped);
+
+				// Fetch provider metadata if we have integrations.
+				if (integrations.length) {
+					// Get unique provider slugs from the integrations.
+					const uniqueProviders = [
+						...new Set(integrations.map((i) => i.provider)),
+					];
+					// Fetch each provider's metadata.
+					const providerResults = await Promise.all(
+						uniqueProviders.map((slug) =>
+							apiFetch({
+								path: addQueryArgs(
+									`/surecart/v1/integration_providers/${slug}`,
+									{
+										context: 'edit',
+										provider: slug,
+									}
+								),
+								signal: controller.signal,
+							}).catch(() => null)
+						)
+					);
+					const providerMap = {};
+					uniqueProviders.forEach((slug, i) => {
+						if (providerResults[i]) {
+							providerMap[slug] = providerResults[i];
+						}
+					});
+					setIntegrationProviders(providerMap);
+
+					// Fetch individual item labels for each integration.
+					const uniqueItems = integrations.reduce(
+						(acc, integration) => {
+							const key = `${integration.provider}:${integration.integration_id}`;
+							if (!acc.has(key)) {
+								acc.set(key, integration);
+							}
+							return acc;
+						},
+						new Map()
+					);
+					const itemResults = await Promise.all(
+						[...uniqueItems.values()].map((integration) =>
+							apiFetch({
+								path: addQueryArgs(
+									`/surecart/v1/integration_provider_items/${integration.integration_id}`,
+									{
+										context: 'edit',
+										provider: integration.provider,
+									}
+								),
+								signal: controller.signal,
+							}).catch(() => null)
+						)
+					);
+					// Build label map keyed by integration_id.
+					const labelMap = {};
+					[...uniqueItems.values()].forEach((integration, i) => {
+						if (itemResults[i]?.label) {
+							labelMap[integration.integration_id] =
+								itemResults[i].label;
+						}
+					});
+					setIntegrationItemLabels(labelMap);
+				}
+			} catch (err) {
+				if (err?.name !== 'AbortError') {
+					// Silently fail — integrations column just shows '-'.
+				}
+			}
+		})();
+
+		return () => controller.abort();
+	}, [records]);
+
 	// ─── Field definitions ───
 	const fields = useMemo(
 		() => [
@@ -228,6 +353,7 @@ export default function ProductsList({ navigation }) {
 							display: flex;
 							align-items: center;
 							gap: 12px;
+							min-width: 0;
 						`}
 					>
 						{item?.line_item_image?.src &&
@@ -280,7 +406,12 @@ export default function ProductsList({ navigation }) {
 								</svg>
 							</div>
 						)}
-						<div>
+						<div
+							css={css`
+								min-width: 0;
+								overflow: hidden;
+							`}
+						>
 							<a
 								href={getEditUrl(item?.id)}
 								onClick={(e) => {
@@ -291,6 +422,7 @@ export default function ProductsList({ navigation }) {
 									font-weight: 600;
 									color: var(--sc-color-gray-900);
 									text-decoration: none;
+									word-break: break-word;
 									&:hover {
 										color: var(--sc-color-primary-500);
 									}
@@ -331,6 +463,69 @@ export default function ProductsList({ navigation }) {
 				},
 			},
 			{
+				id: 'integrations',
+				label: __('Integrations', 'surecart'),
+				enableSorting: false,
+				render: ({ item }) => {
+					const itemIntegrations =
+						integrationsByProduct[item?.id] || [];
+					if (!itemIntegrations.length) {
+						return '-';
+					}
+					return (
+						<div
+							css={css`
+								display: flex;
+								flex-direction: column;
+								gap: 4px;
+							`}
+						>
+							{itemIntegrations.map((integration) => {
+								const provider =
+									integrationProviders[integration.provider];
+								return (
+									<div
+										key={integration.id}
+										css={css`
+											display: flex;
+											align-items: center;
+											gap: 4px;
+											font-size: 12px;
+										`}
+										title={provider?.label || ''}
+									>
+										{provider?.logo && (
+											<img
+												src={provider.logo}
+												alt=""
+												css={css`
+													width: 18px;
+													height: 18px;
+													flex: 0 0 18px;
+												`}
+											/>
+										)}
+										<span
+											css={css`
+												overflow: hidden;
+												text-overflow: ellipsis;
+												white-space: nowrap;
+											`}
+										>
+											{integrationItemLabels[
+												integration.integration_id
+											] ||
+												provider?.label ||
+												integration.provider}
+										</span>
+									</div>
+								);
+							})}
+						</div>
+					);
+				},
+			},
+			{
 				id: 'product_collections',
 				label: __('Collections', 'surecart'),
 				enableSorting: false,
@@ -353,9 +548,9 @@ export default function ProductsList({ navigation }) {
 							`}
 						>
 							{itemCollections.map((collection) => (
-								<sc-tag key={collection.id} type="info">
+								<ScTag key={collection.id} type="info">
 									{collection.name}
-								</sc-tag>
+								</ScTag>
 							))}
 						</div>
 					);
@@ -368,11 +563,11 @@ export default function ProductsList({ navigation }) {
 				render: ({ item }) => {
 					const isPublished = item?.status === 'published';
 					return (
-						<sc-tag type={isPublished ? 'success' : ''}>
+						<ScTag type={isPublished ? 'success' : ''}>
 							{isPublished
 								? __('Published', 'surecart')
 								: __('Draft', 'surecart')}
-						</sc-tag>
+						</ScTag>
 					);
 				},
 			},
@@ -400,10 +595,15 @@ export default function ProductsList({ navigation }) {
 				id: 'date',
 				label: __('Created', 'surecart'),
 				enableSorting: true,
-				render: ({ item }) => item?.cataloged_at_date_time || '-',
+				render: ({ item }) => item?.created_at_date || '-',
 			},
 		],
-		[collectionElements]
+		[
+			collectionElements,
+			integrationsByProduct,
+			integrationProviders,
+			integrationItemLabels,
+		]
 	);
 
 	// ─── Action handlers ───

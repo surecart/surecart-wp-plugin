@@ -18,9 +18,16 @@ $padding-size: 20px;
 
 		tr:hover td .components-checkbox-control__input-container,
 		tr:focus-within td .components-checkbox-control__input-container,
-		tr td .components-checkbox-control__input:checked + .components-checkbox-control__input-container,
+		tr
+			td
+			.components-checkbox-control__input:checked
+			+ .components-checkbox-control__input-container,
 		tr td .components-checkbox-control__input-container:has(input:checked),
-		tr td .components-checkbox-control__input-container:has(input:indeterminate) {
+		tr
+			td
+			.components-checkbox-control__input-container:has(
+				input:indeterminate
+			) {
 			opacity: 1;
 		}
 
@@ -31,7 +38,10 @@ $padding-size: 20px;
 
 	// Touch devices: always show checkboxes.
 	@media (hover: none) {
-		.dataviews-view-table tr td .components-checkbox-control__input-container {
+		.dataviews-view-table
+			tr
+			td
+			.components-checkbox-control__input-container {
 			opacity: 1;
 		}
 	}
@@ -40,6 +50,19 @@ $padding-size: 20px;
 	.dataviews-view-table {
 		width: 100%;
 		table-layout: auto;
+
+		// Prevent text overlap with fixed layout — truncate long content.
+		// td, th {
+		// 	overflow: hidden;
+		// 	text-overflow: ellipsis;
+		// 	white-space: nowrap;
+		// }
+
+		// But allow wrapping inside cells that use custom render (e.g. name with image).
+		// td .dataviews-view-table__cell-content-wrapper {
+		// 	overflow: hidden;
+		// 	text-overflow: ellipsis;
+		// }
 
 		tr {
 			td,

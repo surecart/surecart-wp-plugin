@@ -42,10 +42,6 @@ module.exports = {
 			__dirname,
 			'packages/admin/products/index.js'
 		),
-		['admin/products-list']: path.resolve(
-			__dirname,
-			'packages/admin/products/products-list-root.js'
-		),
 		['admin/customers']: path.resolve(
 			__dirname,
 			'packages/admin/customers/index.js'
@@ -101,10 +97,6 @@ module.exports = {
 		['admin/product-collections']: path.resolve(
 			__dirname,
 			'packages/admin/product-collections/index.js'
-		),
-		['admin/product-collections-list']: path.resolve(
-			__dirname,
-			'packages/admin/product-collections/product-collections-list-root.js'
 		),
 		['admin/spa-shell']: path.resolve(
 			__dirname,
