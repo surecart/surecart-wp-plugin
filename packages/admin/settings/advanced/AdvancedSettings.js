@@ -358,10 +358,10 @@ export default () => {
 					checked={checkoutAutoLogin}
 					onScChange={(e) => setCheckoutAutoLogin(e.target.checked)}
 				>
-					{__('Checkout Auto Login', 'surecart')}
+					{__('Require Login at Checkout', 'surecart')}
 					<span slot="description" style={{ lineHeight: '1.4' }}>
 						{__(
-							'Automatically log in new users after they complete a checkout. When disabled, users will need to log in manually after their account is created.',
+							'When enabled, customers will be prompted to log in during checkout. Recommended for subscription-based stores. Disable for impulse-buy or low-cost products where a frictionless checkout experience is preferred.',
 							'surecart'
 						)}
 					</span>
