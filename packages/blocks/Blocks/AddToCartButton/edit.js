@@ -12,7 +12,6 @@ import {
 import {
 	PanelBody,
 	PanelRow,
-	TextControl,
 	ToolbarButton,
 	ToolbarGroup,
 } from '@wordpress/components';
@@ -21,13 +20,12 @@ import { store as coreStore } from '@wordpress/core-data';
 import { edit } from '@wordpress/icons';
 
 /**
- * Component Dependencies
+ * Component Dependencies.
  */
-import { ScForm } from '@surecart/components-react';
 import PriceInfo from '@scripts/blocks/components/PriceInfo';
 import Placeholder from './Placeholder';
 
-export default ({ className, attributes, setAttributes }) => {
+export default ({ attributes, setAttributes }) => {
 	const {
 		button_text,
 		price_id,
@@ -104,7 +102,7 @@ export default ({ className, attributes, setAttributes }) => {
 			<div {...blockProps}>
 				<>
 					{price?.ad_hoc && (
-						<div class="sc-form-group">
+						<div className="sc-form-group">
 							<RichText
 								aria-label={__(
 									'Custom amount label',
@@ -120,9 +118,9 @@ export default ({ className, attributes, setAttributes }) => {
 								allowedFormats={['core/bold', 'core/italic']}
 							/>
 
-							<div class="sc-input-group">
+							<div className="sc-input-group">
 								<span
-									class="sc-input-group-text"
+									className="sc-input-group-text"
 									id="basic-addon1"
 								>
 									{price?.currency_symbol ||
@@ -130,7 +128,7 @@ export default ({ className, attributes, setAttributes }) => {
 								</span>
 
 								<input
-									class="sc-form-control"
+									className="sc-form-control"
 									id="sc-product-custom-amount"
 									type="number"
 									required
@@ -155,7 +153,7 @@ export default ({ className, attributes, setAttributes }) => {
 					<div className="wp-block-button">
 						<button
 							type="button"
-							class="sc-button wp-element-button wp-block-button__link sc-button__link"
+							className="sc-button wp-element-button wp-block-button__link sc-button__link"
 							style={{
 								...(backgroundColor
 									? {
@@ -165,7 +163,7 @@ export default ({ className, attributes, setAttributes }) => {
 								...(textColor ? { color: textColor } : {}),
 							}}
 						>
-							<span class="sc-button__link-text">
+							<span className="sc-button__link-text">
 								<RichText
 									aria-label={__('Button text')}
 									placeholder={__('Add text…')}

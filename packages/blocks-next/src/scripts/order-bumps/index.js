@@ -1,7 +1,7 @@
 /**
  * WordPress dependencies.
  */
-import { store, getContext, getElement } from '@wordpress/interactivity';
+import { store, getContext, getElement, withSyncEvent } from '@wordpress/interactivity';
 
 const { __, sprintf } = wp.i18n;
 const { state: checkoutState, actions: checkoutActions } =
@@ -205,59 +205,59 @@ const { state, actions } = store('surecart/order-bumps', {
 		/**
 		 * Handle keydown on add button (Enter/Space to add).
 		 */
-		handleAddButtonKeydown: function* (e) {
+		handleAddButtonKeydown: withSyncEvent(function* (e) {
 			if (e.key === 'Enter' || e.key === ' ') {
 				e.preventDefault();
 				yield* actions.addBumpToCart(e);
 			}
-		},
+		}),
 
 		/**
 		 * Scroll to previous item.
 		 */
-		previousPage: function* (e) {
+		previousPage: withSyncEvent(function* (e) {
 			e?.preventDefault();
 			if (state.hasPreviousPage) {
 				state.currentIndex--;
 				actions.scrollToCurrentItem(e);
 			}
-		},
+		}),
 
 		/**
 		 * Scroll to next item.
 		 */
-		nextPage: function* (e) {
+		nextPage: withSyncEvent(function* (e) {
 			e?.preventDefault();
 			if (state.hasNextPage) {
 				state.currentIndex++;
 				actions.scrollToCurrentItem(e);
 			}
-		},
+		}),
 
 		/**
 		 * Handle keydown on previous button (Enter/Space to navigate).
 		 */
-		handlePreviousKeydown(e) {
+		handlePreviousKeydown: withSyncEvent(function(e) {
 			if (e.key === 'Enter' || e.key === ' ') {
 				e.preventDefault();
 				actions.previousPage(e);
 			}
-		},
+		}),
 
 		/**
 		 * Handle keydown on next button (Enter/Space to navigate).
 		 */
-		handleNextKeydown(e) {
+		handleNextKeydown: withSyncEvent(function(e) {
 			if (e.key === 'Enter' || e.key === ' ') {
 				e.preventDefault();
 				actions.nextPage(e);
 			}
-		},
+		}),
 
 		/**
 		 * Handle keydown on carousel for arrow key navigation.
 		 */
-		handleCarouselKeydown(e) {
+		handleCarouselKeydown: withSyncEvent(function(e) {
 			// Only handle arrow keys.
 			if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
 				e.preventDefault();
@@ -268,12 +268,12 @@ const { state, actions } = store('surecart/order-bumps', {
 					actions.nextPage(e);
 				}
 			}
-		},
+		}),
 
 		/**
 		 * Add bump to cart.
 		 */
-		addBumpToCart: function* (e) {
+		addBumpToCart: withSyncEvent(function* (e) {
 			e?.preventDefault();
 
 			const context = getContext();
@@ -325,7 +325,7 @@ const { state, actions } = store('surecart/order-bumps', {
 			} finally {
 				checkoutState.loading = false;
 			}
-		},
+		}),
 
 		/**
 		 * Scroll to current item in the carousel.

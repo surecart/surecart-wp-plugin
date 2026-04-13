@@ -1,0 +1,38 @@
+const v1 = {
+	attributes: {
+		required: {
+			type: 'boolean',
+			default: false,
+		},
+		label: {
+			type: 'string',
+			default: 'Phone',
+		},
+		help: {
+			type: 'string',
+			default: '',
+		},
+		placeholder: {
+			type: 'string',
+		},
+	},
+	save({ className, attributes }) {
+		const { label, help, autofocus, placeholder, showLabel, size, required } =
+			attributes;
+
+		return (
+			<sc-customer-phone
+				class={className || false}
+				label={label || false}
+				help={help || false}
+				autofocus={autofocus || false}
+				placeholder={placeholder || false}
+				showLabel={showLabel || false}
+				size={size || false}
+				required={required}
+			></sc-customer-phone>
+		);
+	},
+};
+
+export default [v1];

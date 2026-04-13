@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
 import { addSubmenu as icon } from '@wordpress/icons';
 
 /**
@@ -48,7 +46,14 @@ export default ({ attributes, setAttributes, clientId }) => {
 					loadingProduct: false,
 				};
 
-			const queryArgs = ['surecart', 'product', product_id];
+			const queryArgs = [
+				'surecart',
+				'product',
+				product_id,
+				{
+					expand: ['variants', 'variant_options', 'prices'],
+				},
+			];
 
 			return {
 				product: select(coreStore).getEntityRecord(...queryArgs),
@@ -80,16 +85,6 @@ export default ({ attributes, setAttributes, clientId }) => {
 	);
 
 	const onAddToForm = () => {
-		console.log(
-			[
-				...formAttributes?.prices,
-				{
-					id: product?.prices?.data[0]?.id,
-					quantity: 1,
-				},
-			],
-			product
-		);
 		updateBlockAttributes(formClientId, {
 			prices: [
 				...formAttributes?.prices,
@@ -102,15 +97,17 @@ export default ({ attributes, setAttributes, clientId }) => {
 		removeBlock(clientId);
 	};
 
-	const hasMultipleVariants = product?.variants.length > 1;
+	const hasMultipleVariants = product?.variants?.length > 1;
 	const hasMultiplePrices =
-		product?.prices?.data.filter((v) => !v?.archived)?.length > 1;
+		product?.prices?.data?.filter((v) => !v?.archived)?.length > 1;
 
 	if (loadingProduct) {
 		return (
-			<Placeholder>
-				<Spinner />
-			</Placeholder>
+			<div {...blockProps}>
+				<Placeholder>
+					<Spinner />
+				</Placeholder>
+			</div>
 		);
 	}
 
@@ -127,30 +124,25 @@ export default ({ attributes, setAttributes, clientId }) => {
 				>
 					<>
 						<div
-							css={css`
-								width: 100%;
-								display: flex;
-								--sc-color-primary-500: var(
-									--wp-admin-theme-color
-								);
-								--sc-focus-ring-color-primary: var(
-									--wp-admin-theme-color
-								);
-								--sc-input-border-color-focus: var(
-									--wp-admin-theme-color
-								);
-								--sc-color-primary-text: #fff;
-							`}
+							style={{
+								width: '100%',
+								display: 'flex',
+								'--sc-color-primary-500':
+									'var(--wp-admin-theme-color)',
+								'--sc-focus-ring-color-primary':
+									'var(--wp-admin-theme-color)',
+								'--sc-input-border-color-focus':
+									'var(--wp-admin-theme-color)',
+								'--sc-color-primary-text': '#fff',
+							}}
 						>
 							<ModelSelector
 								name="product"
 								placeholder={__('Choose product', 'surecart')}
-								css={css`
-									width: 100%;
-								`}
-								onScChange={(e) => {
+								style={{ width: '100%' }}
+								onSelect={(id) => {
 									setAttributes({
-										product_id: e.target.value,
+										product_id: id,
 									});
 								}}
 								requestQuery={{
@@ -192,17 +184,7 @@ export default ({ attributes, setAttributes, clientId }) => {
 					<Notice
 						isDismissible={false}
 						politeness="polite"
-						css={css`
-							margin: 0;
-							.components-notice__actions {
-								display: flex;
-								gap: 1em;
-								margin-top: 1em;
-							}
-							.components-button {
-								margin: 0;
-							}
-						`}
+						style={{ margin: 0 }}
 						actions={[
 							{
 								label: 'Add To Form',
@@ -224,23 +206,23 @@ export default ({ attributes, setAttributes, clientId }) => {
 			);
 		}
 
+		const prices = product.prices?.data || [];
+		const variants = product.variants?.data || product.variants || [];
+		const variantOptions =
+			product.variant_options?.data || product.variant_options || [];
+
 		return (
 			<ScCheckoutProductPriceVariantSelector
 				product={{
 					...product,
 					prices: {
-						...product.prices,
-						data: product.prices.data.filter(
-							(price) => !price?.archived
-						),
+						data: prices.filter((price) => !price?.archived),
 					},
 					variants: {
-						...product.variants,
-						data: product.variants,
+						data: variants,
 					},
 					variant_options: {
-						...product.variant_options,
-						data: product.variant_options,
+						data: variantOptions,
 					},
 				}}
 				selectorTitle={selectorTitle}

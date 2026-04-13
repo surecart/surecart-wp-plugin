@@ -1,6 +1,6 @@
 {
 	"$schema": "https://json.schemastore.org/block.json",
-	"apiVersion": 2,
+	"apiVersion": 3,
 	"name": "surecart/checkout-form",
 	"title": "Checkout Form",
 	"description": "Display a checkout form",
