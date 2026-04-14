@@ -182,6 +182,7 @@ export default ({ restUrl, appPasswordsUrl }) => {
 	};
 
 	const isClaudeCode = selectedClient === 'claude_code';
+	const isClaudeDesktop = selectedClient === 'claude_desktop';
 
 	return (
 		<SettingsBox
@@ -197,6 +198,7 @@ export default ({ restUrl, appPasswordsUrl }) => {
 					display: flex;
 					flex-direction: column;
 					gap: var(--sc-spacing-large);
+					overflow: hidden;
 				`}
 			>
 				<ScSelect
@@ -214,24 +216,24 @@ export default ({ restUrl, appPasswordsUrl }) => {
 						margin: 0;
 						padding: 0;
 
-						li {
+						& > li {
 							counter-increment: steps;
 							position: relative;
 							padding-left: 48px;
 							padding-bottom: var(--sc-spacing-large);
 						}
 
-						li:last-child {
+						& > li:last-child {
 							padding-bottom: 0;
 						}
 
-						li > :first-child {
+						& > li > :first-child {
 							line-height: 28px;
 							margin-top: 0;
 						}
 
 						/* Circled number */
-						li::before {
+						& > li::before {
 							content: counter(steps);
 							position: absolute;
 							left: 0;
@@ -250,7 +252,7 @@ export default ({ restUrl, appPasswordsUrl }) => {
 						}
 
 						/* Vertical connector line */
-						li::after {
+						& > li::after {
 							content: '';
 							position: absolute;
 							left: 13px;
@@ -260,7 +262,7 @@ export default ({ restUrl, appPasswordsUrl }) => {
 							background: var(--sc-color-gray-200);
 						}
 
-						li:last-child::after {
+						& > li:last-child::after {
 							display: none;
 						}
 					`}
@@ -270,11 +272,56 @@ export default ({ restUrl, appPasswordsUrl }) => {
 						<strong>
 							{__('Create an Application Password', 'surecart')}
 						</strong>
-						<p>
-							<ExternalLink href={appPasswordsUrl}>
-								{__('Open Application Passwords', 'surecart')}
-							</ExternalLink>
-						</p>
+						<ol
+							css={css`
+								margin: var(--sc-spacing-small) 0 0;
+								padding-left: 1.25em;
+								list-style: lower-roman;
+								color: var(--sc-color-gray-700);
+								line-height: 1.6;
+
+								li {
+									padding: 2px 0;
+								}
+							`}
+						>
+							<li>
+								<ExternalLink href={appPasswordsUrl}>
+									{__(
+										'Open Application Passwords',
+										'surecart'
+									)}
+								</ExternalLink>{' '}
+								{__(
+									'to go to your WordPress profile.',
+									'surecart'
+								)}
+							</li>
+							<li>
+								{__(
+									'In the "New Application Password Name" field, enter a recognizable name (e.g.',
+									'surecart'
+								)}{' '}
+								<code>{client.label}</code>
+								{').'}
+							</li>
+							<li>
+								{__('Click', 'surecart')}{' '}
+								<strong>
+									{__(
+										'Add New Application Password',
+										'surecart'
+									)}
+								</strong>
+								.
+							</li>
+							<li>
+								{__(
+									'Copy the generated password immediately — it will not be shown again.',
+									'surecart'
+								)}
+							</li>
+						</ol>
 					</li>
 
 					{/* Step 2 (Claude Code only): CLI command */}
@@ -289,12 +336,10 @@ export default ({ restUrl, appPasswordsUrl }) => {
 							<pre
 								style={{
 									padding: '1em',
-									paddingRight: '4em',
 									backgroundColor: 'var(--sc-color-gray-900)',
 									color: 'var(--sc-color-gray-100)',
 									margin: 0,
 									overflow: 'auto',
-									maxWidth: '600px',
 								}}
 							>
 								{client.cliCommand(mcpUrl)}
@@ -302,13 +347,91 @@ export default ({ restUrl, appPasswordsUrl }) => {
 						</li>
 					)}
 
-					{/* Copy config step */}
+					{/* Copy config step — Claude Desktop gets expanded sub-steps */}
 					<li>
 						<strong>
-							{__('Copy the JSON config below into:', 'surecart')}
+							{isClaudeDesktop
+								? __(
+										'Add the config to Claude Desktop',
+										'surecart'
+								  )
+								: __(
+										'Copy the JSON config below into:',
+										'surecart'
+								  )}
 						</strong>
-						<br />
-						<code>{client.configPath}</code>
+
+						{isClaudeDesktop ? (
+							<ol
+								css={css`
+									margin: var(--sc-spacing-small) 0 0;
+									padding-left: 1.25em;
+									list-style: lower-roman;
+									color: var(--sc-color-gray-700);
+									line-height: 1.6;
+
+									li {
+										padding: 2px 0;
+									}
+								`}
+							>
+								<li>
+									{__('Open', 'surecart')}{' '}
+									<strong>
+										{__('Claude Desktop', 'surecart')}
+									</strong>
+									.
+								</li>
+								<li>
+									{__(
+										'Click the dropdown next to your name (bottom-left)',
+										'surecart'
+									)}{' '}
+									{'>'}{' '}
+									<strong>
+										{__('Settings', 'surecart')}
+									</strong>
+									.
+								</li>
+								<li>
+									{__(
+										'In the left sidebar, click',
+										'surecart'
+									)}{' '}
+									<strong>
+										{__('Developer', 'surecart')}
+									</strong>
+									.
+								</li>
+								<li>
+									{__(
+										'Under "Local MCP Servers", click',
+										'surecart'
+									)}{' '}
+									<strong>
+										{__('Edit Config', 'surecart')}
+									</strong>
+									.
+								</li>
+								<li>
+									{__(
+										'Open the file in your preferred text editor (e.g. TextEdit, Notepad, VS Code).',
+										'surecart'
+									)}
+								</li>
+								<li>
+									{__(
+										'Paste the JSON config below into the file and save it.',
+										'surecart'
+									)}
+								</li>
+							</ol>
+						) : (
+							<>
+								<br />
+								<code>{client.configPath}</code>
+							</>
+						)}
 
 						<div
 							css={css`
@@ -317,15 +440,17 @@ export default ({ restUrl, appPasswordsUrl }) => {
 							`}
 						>
 							<pre
-								style={{
-									padding: '1em',
-									paddingRight: '4em',
-									backgroundColor: 'var(--sc-color-gray-900)',
-									color: 'var(--sc-color-gray-100)',
-									margin: 0,
-									overflow: 'auto',
-									maxWidth: '600px',
-								}}
+								css={css`
+									padding: 1em;
+									padding-right: 5em;
+									background-color: var(--sc-color-gray-900);
+									color: var(--sc-color-gray-100);
+									margin: 0;
+									overflow: auto;
+									border-radius: var(
+										--sc-border-radius-medium
+									);
+								`}
 							>
 								{configJson}
 							</pre>
@@ -334,7 +459,6 @@ export default ({ restUrl, appPasswordsUrl }) => {
 									position: absolute;
 									top: var(--sc-spacing-small);
 									right: var(--sc-spacing-small);
-									z-index: 1;
 								`}
 							>
 								<ScButton size="small" onClick={handleCopy}>
