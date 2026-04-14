@@ -179,17 +179,22 @@ abstract class ListTable extends \WP_List_Table {
 			}
 			if ( ! empty( $item->label ) ) {
 				ob_start();
-				?>
-				<sc-tooltip text="<?php echo esc_attr( $provider->label ?? '' ); ?>" type="text" style="display:inline-block; cursor: help">
-					<sc-flex justify-content="flex-start">
-					<?php if ( $provider->logo ) : ?>
-							<img src="<?php echo esc_url( $provider->logo ); ?>" style="width: 18px; height: 18px"/>
-						<?php endif; ?>
-					<?php echo wp_kses_post( $item->label ); ?>
-					</sc-flex>
-				</sc-tooltip>
-				<br />
-				<?php
+				if ( ! empty( $provider->logo ) ) {
+					?>
+					<img
+						src="<?php echo esc_url( $provider->logo ); ?>"
+						alt="<?php echo esc_attr( $item->label ); ?>"
+						title="<?php echo esc_attr( $item->label ); ?>"
+						style="width: 20px; height: 20px; cursor: help; display: inline-block; margin: 2px;"
+					/>
+					<?php
+				} else {
+					?>
+					<span title="<?php echo esc_attr( $item->label ); ?>" style="cursor: help;">
+						<?php echo wp_kses_post( $item->label ); ?>
+					</span>
+					<?php
+				}
 				$output .= ob_get_clean();
 			}
 		}

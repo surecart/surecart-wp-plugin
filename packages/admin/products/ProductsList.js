@@ -9,7 +9,7 @@ import { Icon } from '@wordpress/components';
 import { store as noticesStore } from '@wordpress/notices';
 import { trash, copy, archive, edit, external } from '@wordpress/icons';
 import apiFetch from '@wordpress/api-fetch';
-import { ScTag } from '@surecart/components-react';
+import { ScTag, ScTooltip } from '@surecart/components-react';
 import {
 	DataViewListLayout,
 	useDataViewState,
@@ -87,7 +87,6 @@ const LAYOUT_STYLES = {
 const DEFAULT_FIELDS = [
 	'name',
 	'price',
-	'commission_amount',
 	'quantity',
 	'integrations',
 	'product_collections',
@@ -475,49 +474,42 @@ export default function ProductsList({ navigation }) {
 						<div
 							css={css`
 								display: flex;
-								flex-direction: column;
+								flex-wrap: wrap;
 								gap: 4px;
 							`}
 						>
 							{itemIntegrations.map((integration) => {
 								const provider =
 									integrationProviders[integration.provider];
-								return (
-									<div
+								const label =
+									integrationItemLabels[
+										integration.integration_id
+									] ||
+									provider?.label ||
+									integration.provider;
+								return !!provider?.logo ? (
+									<ScTooltip
 										key={integration.id}
+										text={label}
 										css={css`
-											display: flex;
-											align-items: center;
-											gap: 4px;
-											font-size: 12px;
+											display: inline-flex;
 										`}
-										title={provider?.label || ''}
 									>
-										{provider?.logo && (
-											<img
-												src={provider.logo}
-												alt=""
-												css={css`
-													width: 18px;
-													height: 18px;
-													flex: 0 0 18px;
-												`}
-											/>
-										)}
-										<span
+										<img
+											src={provider?.logo}
+											alt={label}
 											css={css`
-												overflow: hidden;
-												text-overflow: ellipsis;
-												white-space: nowrap;
+												width: 20px;
+												height: 20px;
+												flex: 0 0 20px;
+												cursor: help;
 											`}
-										>
-											{integrationItemLabels[
-												integration.integration_id
-											] ||
-												provider?.label ||
-												integration.provider}
-										</span>
-									</div>
+										/>
+									</ScTooltip>
+								) : (
+									<ScTag key={integration.id} type="info">
+										{label}
+									</ScTag>
 								);
 							})}
 						</div>
