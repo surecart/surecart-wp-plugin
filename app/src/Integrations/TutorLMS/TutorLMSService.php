@@ -133,6 +133,11 @@ class TutorLMSService extends IntegrationService implements IntegrationInterface
 				]
 			)->get();
 
+			// Don't cache or return WP_Error — allow retry on next request.
+			if ( is_wp_error( $prices ) ) {
+				return [];
+			}
+
 			// store in transient.
 			set_transient( $cache_key, $prices, apply_filters( 'surecart_tutor_lms_product_cache_time', DAY_IN_SECONDS, $this ) );
 		}
