@@ -129,6 +129,31 @@ abstract class AdminModelEditController {
 			true
 		);
 
+		// Enqueue extracted CSS if the build produced a stylesheet for this entry.
+		$style_path = plugin_dir_path( SURECART_PLUGIN_FILE ) . "dist/$this->path.css";
+		if ( file_exists( $style_path ) ) {
+			wp_enqueue_style(
+				$this->handle,
+				trailingslashit( \SureCart::core()->assets()->getUrl() ) . "dist/$this->path.css",
+				array(),
+				$asset_file['version']
+			);
+		}
+
+		// Enqueue the vendor/library stylesheet (style-{entry}.css) produced by splitChunks.
+		$vendor_style_basename = 'style-' . basename( $this->path );
+		$vendor_style_dir      = dirname( $this->path );
+		$vendor_style_rel      = ( '.' === $vendor_style_dir ? '' : $vendor_style_dir . '/' ) . $vendor_style_basename . '.css';
+		$vendor_style_path     = plugin_dir_path( SURECART_PLUGIN_FILE ) . "dist/$vendor_style_rel";
+		if ( file_exists( $vendor_style_path ) ) {
+			wp_enqueue_style(
+				$this->handle . '-vendor',
+				trailingslashit( \SureCart::core()->assets()->getUrl() ) . "dist/$vendor_style_rel",
+				array(),
+				$asset_file['version']
+			);
+		}
+
 		// pass app url.
 		$this->data['upgrade_url']          = \SureCart::config()->links->purchase;
 		$this->data['surecart_app_url']     = defined( 'SURECART_APP_URL' ) ? SURECART_APP_URL : '';
