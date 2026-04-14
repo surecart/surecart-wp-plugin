@@ -26,3 +26,15 @@ html:has(.sc-drawer.open) {
 	overflow: hidden;
 	scrollbar-gutter: stable;
 }
+
+// Fix for themes that dequeue WordPress global styles (e.g., Etch).
+// Without these, block groups using is-layout-flex/grid lose their layout.
+.sc-cart-drawer {
+	.is-layout-flex {
+		display: flex;
+	}
+
+	.is-layout-grid {
+		display: grid;
+	}
+}
