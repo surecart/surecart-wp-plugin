@@ -268,17 +268,11 @@ export default ({ restUrl, appPasswordsUrl }) => {
 					{/* Step 1: Create Application Password */}
 					<li>
 						<strong>
-							{__(
-								'Create an Application Password',
-								'surecart'
-							)}
+							{__('Create an Application Password', 'surecart')}
 						</strong>
 						<p>
 							<ExternalLink href={appPasswordsUrl}>
-								{__(
-									'Open Application Passwords',
-									'surecart'
-								)}
+								{__('Open Application Passwords', 'surecart')}
 							</ExternalLink>
 						</p>
 					</li>
@@ -294,11 +288,13 @@ export default ({ restUrl, appPasswordsUrl }) => {
 							</strong>
 							<pre
 								style={{
-									backgroundColor:
-										'var(--sc-color-gray-100)',
-									color: 'var(--sc-color-gray-800)',
-									border: '1px solid var(--sc-color-gray-300)',
+									padding: '1em',
+									paddingRight: '4em',
+									backgroundColor: 'var(--sc-color-gray-900)',
+									color: 'var(--sc-color-gray-100)',
 									margin: 0,
+									overflow: 'auto',
+									maxWidth: '600px',
 								}}
 							>
 								{client.cliCommand(mcpUrl)}
@@ -309,10 +305,7 @@ export default ({ restUrl, appPasswordsUrl }) => {
 					{/* Copy config step */}
 					<li>
 						<strong>
-							{__(
-								'Copy the JSON config below into:',
-								'surecart'
-							)}
+							{__('Copy the JSON config below into:', 'surecart')}
 						</strong>
 						<br />
 						<code>{client.configPath}</code>
@@ -325,11 +318,13 @@ export default ({ restUrl, appPasswordsUrl }) => {
 						>
 							<pre
 								style={{
-									paddingRight: '5em',
-									backgroundColor:
-										'var(--sc-color-gray-900)',
+									padding: '1em',
+									paddingRight: '4em',
+									backgroundColor: 'var(--sc-color-gray-900)',
 									color: 'var(--sc-color-gray-100)',
 									margin: 0,
+									overflow: 'auto',
+									maxWidth: '600px',
 								}}
 							>
 								{configJson}
