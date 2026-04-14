@@ -73,11 +73,11 @@ const LAYOUT_STYLES = {
 	name: { width: '25%' },
 	price: { width: '7%' },
 	commission_amount: { width: '8%' },
-	quantity: { width: '6%' },
-	integrations: { width: '13%' },
-	product_collections: { width: '12%' },
-	status: { width: '9%' },
-	featured: { width: '6%' },
+	quantity: { width: '4%' },
+	integrations: { width: '10%' },
+	product_collections: { width: '10%' },
+	status: { width: '6%' },
+	featured: { width: '5%' },
 	date: { width: '10%' },
 };
 
