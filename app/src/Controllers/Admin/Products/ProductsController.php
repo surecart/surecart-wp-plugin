@@ -3,6 +3,8 @@
 namespace SureCart\Controllers\Admin\Products;
 
 use SureCart\Controllers\Admin\AdminController;
+use SureCart\Controllers\Admin\Products\ProductsListTable;
+use SureCart\Background\BulkActionService;
 use SureCart\Models\Product;
 
 /**
@@ -44,14 +46,61 @@ class ProductsController extends AdminController {
 	}
 
 	/**
+	 * Check if the enhanced admin views are enabled.
+	 *
+	 * @return bool
+	 */
+	private function isEnhancedAdminViewsEnabled() {
+		return (bool) get_option( 'surecart_enhanced_admin_views', false );
+	}
+
+	/**
+	 * Render the legacy list table view.
+	 *
+	 * @return \SureCartCore\Responses\ResponseInterface
+	 */
+	private function renderLegacyView() {
+		$bulk_action_service = new BulkActionService();
+		$bulk_action_service->bootstrap();
+
+		$table = new ProductsListTable( $bulk_action_service );
+		$table->prepare_items();
+
+		$this->withHeader(
+			array(
+				'breadcrumbs' => [
+					'products' => [
+						'title' => __( 'Products', 'surecart' ),
+					],
+				],
+			),
+		);
+
+		$this->withNotices(
+			array(
+				'sync_success' => __( 'Product synced successfully.', 'surecart' ),
+				'archived'     => __( 'Product archived.', 'surecart' ),
+				'unarchived'   => __( 'Product unarchived.', 'surecart' ),
+				'duplicated'   => __( 'Product duplicated successfully.', 'surecart' ),
+			)
+		);
+
+		return \SureCart::view( 'admin/products/index' )->with( [ 'table' => $table ] );
+	}
+
+	/**
 	 * Products index.
 	 *
-	 * This is the single entry point for the products admin SPA.
-	 * The React app handles list, create, and edit views via client-side routing.
+	 * Renders the SPA view if enhanced admin views are enabled,
+	 * otherwise falls back to the legacy list table view.
 	 */
 	public function index() {
-		$this->enqueueSpaScripts();
-		return $this->renderSpaView();
+		if ( $this->isEnhancedAdminViewsEnabled() ) {
+			$this->enqueueSpaScripts();
+			return $this->renderSpaView();
+		}
+
+		return $this->renderLegacyView();
 	}
 
 	/**

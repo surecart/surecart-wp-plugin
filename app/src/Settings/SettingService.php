@@ -359,6 +359,16 @@ class SettingService {
 				'autoload'          => false,
 			]
 		);
+		$this->register(
+			'surecart',
+			'enhanced_admin_views',
+			[
+				'type'              => 'boolean',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'boolval',
+				'default'           => false,
+			]
+		);
 	}
 	/**
 	 * Register a setting.

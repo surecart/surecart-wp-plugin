@@ -43,13 +43,53 @@ class ProductCollectionsController extends AdminController {
 	}
 
 	/**
+	 * Check if the enhanced admin views are enabled.
+	 *
+	 * @return bool
+	 */
+	private function isEnhancedAdminViewsEnabled() {
+		return (bool) get_option( 'surecart_enhanced_admin_views', false );
+	}
+
+	/**
+	 * Render the legacy list table view.
+	 *
+	 * @return \SureCartCore\Responses\ResponseInterface
+	 */
+	private function renderLegacyView() {
+		$table = new ProductCollectionsListTable();
+		$table->prepare_items();
+
+		$this->withHeader(
+			array(
+				'breadcrumbs' => [
+					'product-collections' => [
+						'title' => __( 'Product Collections', 'surecart' ),
+					],
+				],
+			),
+		);
+
+		return \SureCart::view( 'admin/product-collections/index' )->with(
+			[
+				'table' => $table,
+			]
+		);
+	}
+
+	/**
 	 * Index — list view.
 	 *
-	 * SPA entry point — React handles list, create, and edit via client-side routing.
+	 * Renders the SPA view if enhanced admin views are enabled,
+	 * otherwise falls back to the legacy list table view.
 	 */
 	public function index() {
-		$this->enqueueSpaScripts();
-		return $this->renderSpaView();
+		if ( $this->isEnhancedAdminViewsEnabled() ) {
+			$this->enqueueSpaScripts();
+			return $this->renderSpaView();
+		}
+
+		return $this->renderLegacyView();
 	}
 
 	/**

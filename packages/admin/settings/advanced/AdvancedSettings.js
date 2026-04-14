@@ -106,6 +106,11 @@ export default () => {
 		'site',
 		'surecart_admin_toolbar_disabled'
 	);
+	const [enhancedAdminViews, setEnhancedAdminViews] = useEntityProp(
+		'root',
+		'site',
+		'surecart_enhanced_admin_views'
+	);
 
 	/**
 	 * Form is submitted.
@@ -436,6 +441,18 @@ export default () => {
 					<span slot="description" style={{ lineHeight: '1.4' }}>
 						{__(
 							'This will enable the SureCart toolbar in the WordPress admin bar for easy access to SureCart features.',
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
+				<ScSwitch
+					checked={enhancedAdminViews}
+					onScChange={(e) => setEnhancedAdminViews(e.target.checked)}
+				>
+					{__('Enhanced Admin Views', 'surecart')}
+					<span slot="description" style={{ lineHeight: '1.4' }}>
+						{__(
+							'Enable the new DataView and single-page application experience for admin pages. This provides a modern, faster interface with inline filtering and sorting.',
 							'surecart'
 						)}
 					</span>
