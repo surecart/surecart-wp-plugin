@@ -167,9 +167,6 @@ class TutorLMSService extends IntegrationService implements IntegrationInterface
 
 		// get the first product.
 		$prices = $this->getCachedProductPrices( $integrations[0]->model_id );
-		if ( is_wp_error( $prices ) ) {
-			return $prices;
-		}
 
 		// there is no price.
 		if ( empty( $prices ) ) {
