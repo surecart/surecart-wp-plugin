@@ -1,8 +1,6 @@
 /**
  * WordPress dependencies
  */
-/** @jsx jsx */
-import { jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import { useBlockProps, useInnerBlocksProps } from '@wordpress/block-editor';
 

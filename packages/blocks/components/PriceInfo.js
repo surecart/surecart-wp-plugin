@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 
 import { Spinner, Button } from '@wordpress/components';
@@ -53,16 +51,16 @@ export default ({ price_id, variant_id }) => {
 	return (
 		<div>
 			<h3
-				css={css`
-					margin: 0 !important;
-				`}
+				style={{
+					margin: 0,
+				}}
 			>
 				{product?.name}
 			</h3>
-			<p
-				css={css`
-					opacity: 0.75;
-				`}
+			<div
+				style={{
+					opacity: 0.75,
+				}}
 			>
 				{price?.ad_hoc ? (
 					__('Name Your Price', 'surecart')
@@ -91,7 +89,7 @@ export default ({ price_id, variant_id }) => {
 						</div>
 					</LineItemLabel>
 				)}
-			</p>
+			</div>
 			<Button
 				href={addQueryArgs('admin.php', {
 					page: 'sc-products',
@@ -99,6 +97,9 @@ export default ({ price_id, variant_id }) => {
 					id: product?.id,
 				})}
 				variant="secondary"
+				style={{
+					marginTop: '1em',
+				}}
 			>
 				{__('Edit Product', 'surecart')}
 			</Button>

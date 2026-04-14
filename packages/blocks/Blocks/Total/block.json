@@ -1,4 +1,5 @@
 {
+	"apiVersion": 3,
 	"name": "surecart/total",
 	"title": "Total",
 	"description": "Displays the total line item.",

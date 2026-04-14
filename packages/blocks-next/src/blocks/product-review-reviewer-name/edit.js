@@ -41,6 +41,8 @@ export default ({ attributes, setAttributes, context }) => {
 			<InspectorControls>
 				<PanelBody title={__('Settings', 'surecart')}>
 					<SelectControl
+						__next40pxDefaultSize
+						__nextHasNoMarginBottom
 						label={__('Name Format', 'surecart')}
 						value={format}
 						options={[

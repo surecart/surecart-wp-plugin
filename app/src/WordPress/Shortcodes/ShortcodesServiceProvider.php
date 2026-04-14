@@ -299,7 +299,65 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 				$metadata['name'],
 			);
 		}
+
+		// Register product review shortcode aliases with friendly names.
+		$this->container['surecart.shortcodes']->registerBlockShortcodeByName(
+			'sc_product_review_rating_stars',
+			'surecart/product-review-average-rating-stars',
+			[
+				'size'            => '20px',
+				'fill_color'      => '',
+				'link_to_reviews' => false,
+			]
+		);
+		$this->container['surecart.shortcodes']->registerBlockShortcodeByName(
+			'sc_product_review_rating_value',
+			'surecart/product-review-average-rating-value',
+			[
+				'link_to_reviews' => false,
+				'format'          => 'none',
+			]
+		);
+		$this->container['surecart.shortcodes']->registerBlockShortcodeByName(
+			'sc_product_review_total_count',
+			'surecart/product-review-total-rating',
+			[
+				'show_label'            => true,
+				'show_for_zero_reviews' => true,
+				'link_to_reviews'       => true,
+			]
+		);
+		$this->container['surecart.shortcodes']->registerBlockShortcodeByName(
+			'sc_product_review_breakdown',
+			'surecart/product-review-breakdown',
+			[
+				'columns'              => 1,
+				'fill_color'           => '',
+				'bar_fill_color'       => '',
+				'bar_background_color' => '',
+			]
+		);
+		$this->container['surecart.shortcodes']->registerBlockShortcodeByName(
+			'sc_product_review_add_button',
+			'surecart/product-review-add-button',
+			[
+				'label'       => __( 'Write a Review', 'surecart' ),
+				'button_type' => 'both',
+				'icon'        => 'edit-2',
+				'className'   => 'is-style-fill',
+			]
+		);
+
+		/*
+		 * Pattern shortcodes.
+		 * These are shortcodes that render the content of a pattern file.
+		 */
+		$this->container['surecart.shortcodes']->registerPatternShortcodeByName(
+			'sc_product_review_list',
+			'product-review-standard' // Pattern file name without path or extension.
+		);
 	}
+
 	/**
 	 * Dashboard tab shortcode.
 	 *

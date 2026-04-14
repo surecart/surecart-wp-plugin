@@ -1,7 +1,7 @@
 <ul
 	<?php echo wp_kses_data( get_block_wrapper_attributes( [ 'role' => 'list' ] ) ); ?>
 	data-wp-class--has-overflow="state.hasMultipleBumps"
-	data-wp-on-async--scrollend="callbacks.onCarouselScroll"
+	data-wp-on--scrollend="callbacks.onCarouselScroll"
 	data-wp-on--keydown="actions.handleCarouselKeydown"
 	tabindex="0"
 	data-wp-bind--aria-label="state.orderBumpsListAriaLabel"

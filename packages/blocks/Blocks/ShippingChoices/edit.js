@@ -2,8 +2,8 @@
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { InspectorControls } from '@wordpress/block-editor';
-import { Fragment } from '@wordpress/element';
+import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
+import { Fragment, useRef, useEffect } from '@wordpress/element';
 import {
 	PanelBody,
 	PanelRow,
@@ -19,8 +19,7 @@ import { ScShippingChoices } from '@surecart/components-react';
 const shippingMethods = [
 	{
 		id: '2JLDFJ3',
-		amount: 200,
-		currency: 'USD',
+		display_amount: '$2.00',
 		shipping_method: {
 			name: __('Standard', 'surecart'),
 			description: __('1-2 days', 'surecart'),
@@ -28,8 +27,7 @@ const shippingMethods = [
 	},
 	{
 		id: '3KLDSFJ',
-		amount: 300,
-		currency: 'USD',
+		display_amount: '$3.00',
 		shipping_method: {
 			name: __('Express', 'surecart'),
 			description: __('Next-day delivery', 'surecart'),
@@ -37,8 +35,7 @@ const shippingMethods = [
 	},
 	{
 		id: '4DKLJF9',
-		amount: 150,
-		currency: 'USD',
+		display_amount: '$1.50',
 		shipping_method: {
 			name: __('Economy', 'surecart'),
 			description: __('3-5 days', 'surecart'),
@@ -46,8 +43,17 @@ const shippingMethods = [
 	},
 ];
 
-export default ({ className, attributes, setAttributes }) => {
+export default ({ attributes, setAttributes }) => {
 	const { label, showDescription } = attributes;
+
+	const blockProps = useBlockProps();
+	const ref = useRef();
+
+	useEffect(() => {
+		if (ref.current) {
+			ref.current.shippingChoices = shippingMethods;
+		}
+	}, []);
 
 	return (
 		<Fragment>
@@ -74,12 +80,13 @@ export default ({ className, attributes, setAttributes }) => {
 					</PanelRow>
 				</PanelBody>
 			</InspectorControls>
-			<ScShippingChoices
-				className={className}
-				label={label}
-				shippingChoices={shippingMethods}
-				showDescription={showDescription}
-			/>
+			<div {...blockProps}>
+				<ScShippingChoices
+					ref={ref}
+					label={label}
+					showDescription={showDescription}
+				/>
+			</div>
 		</Fragment>
 	);
 };

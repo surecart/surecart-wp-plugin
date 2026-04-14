@@ -1,8 +1,6 @@
 /**
  * WordPress dependencies
  */
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import { Fragment, useState } from '@wordpress/element';
 import {
@@ -123,11 +121,11 @@ export default ({ attributes, setAttributes }) => {
 			</InspectorControls>
 			<div
 				{...blockProps}
-				css={css`
-					padding: 0 !important;
-					margin: 0 !important;
-					border: none !important;
-				`}
+				style={{
+					padding: '0 !important',
+					margin: '0 !important',
+					border: 'none !important',
+				}}
 			>
 				<ResizableBox
 					minHeight={100}

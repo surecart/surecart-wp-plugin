@@ -1,7 +1,7 @@
 /**
  * WordPress dependencies
  */
-import { store, getContext, getElement } from '@wordpress/interactivity';
+import { store, getContext, getElement, withSyncEvent } from '@wordpress/interactivity';
 
 /**
  * Tracks whether user is touching screen; used to differentiate behavior for
@@ -319,7 +319,7 @@ const { state, actions, callbacks } = store('surecart/lightbox', {
 				}
 			}
 		},
-		handleTouchMove(event) {
+		handleTouchMove: withSyncEvent(function(event) {
 			// On mobile devices, prevents triggering the scroll event because
 			// otherwise the page jumps around when it resets the scroll position.
 			// This also means that closing the lightbox requires that a user
@@ -329,7 +329,7 @@ const { state, actions, callbacks } = store('surecart/lightbox', {
 			if (state.overlayEnabled) {
 				event.preventDefault();
 			}
-		},
+		}),
 		handleTouchStart() {
 			isTouching = true;
 		},

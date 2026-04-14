@@ -29,8 +29,8 @@
 			style="<?php echo ! empty( $styles['css'] ) ? esc_attr( $styles['css'] ) : ''; ?>"
 			data-wp-on--click="callbacks.redirectToCheckout"
 			<?php if ( 'never' !== $attributes['show_sticky_purchase_button'] ) { ?>
-				data-wp-on-async-window--scroll="surecart/sticky-purchase::actions.toggleVisibility"
-				data-wp-on-async-window--resize="surecart/sticky-purchase::actions.toggleVisibility"
+				data-wp-on-window--scroll="surecart/sticky-purchase::actions.toggleVisibility"
+				data-wp-on-window--resize="surecart/sticky-purchase::actions.toggleVisibility"
 			<?php } ?>
 		>
 			<span class="sc-button__link-text" data-wp-text="state.buttonText">
@@ -45,8 +45,8 @@
 			data-wp-class--sc-button__link--busy="context.busy"
 			style="<?php echo ! empty( $styles['css'] ) ? esc_attr( $styles['css'] ) : ''; ?>"
 			<?php if ( 'never' !== $attributes['show_sticky_purchase_button'] ) { ?>
-				data-wp-on-async-window--scroll="surecart/sticky-purchase::actions.toggleVisibility"
-				data-wp-on-async-window--resize="surecart/sticky-purchase::actions.toggleVisibility"
+				data-wp-on-window--scroll="surecart/sticky-purchase::actions.toggleVisibility"
+				data-wp-on-window--resize="surecart/sticky-purchase::actions.toggleVisibility"
 			<?php } ?>
 		>
 			<span class="sc-spinner" aria-hidden="true"></span>

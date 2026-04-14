@@ -1,5 +1,5 @@
 {
-	"apiVersion": 2,
+	"apiVersion": 3,
 	"name": "surecart/coupon",
 	"title": "Coupon",
 	"description": "Display a coupon form.",

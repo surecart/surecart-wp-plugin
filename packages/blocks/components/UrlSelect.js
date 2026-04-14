@@ -1,11 +1,8 @@
-/** @jsx jsx */
 import { __ } from '@wordpress/i18n';
 import { Button, Popover, Icon } from '@wordpress/components';
 import { LinkControl } from '@wordpress/block-editor';
 import { useState } from '@wordpress/element';
 import { prependHTTP } from '@wordpress/url';
-
-import { css, jsx } from '@emotion/core';
 
 export default ({ setSettings, settings }) => {
 	const [visible, setVisible] = useState(false);
@@ -80,48 +77,53 @@ export default ({ setSettings, settings }) => {
 
 	return (
 		<span>
+			<style>{`
+				.sc-url-select-trash-icon:hover {
+					color: #cc1818;
+				}
+			`}</style>
 			{url ? (
 				<div
-					css={css`
-						display: flex;
-						justify-content: space-between;
-					`}
+					style={{
+						display: 'flex',
+						justifyContent: 'space-between',
+					}}
 				>
 					<div
-						css={css`
-							max-width: 85%;
-							overflow: hidden;
-							display: flex;
-							align-items: center;
-						`}
+						style={{
+							maxWidth: '85%',
+							overflow: 'hidden',
+							display: 'flex',
+							alignItems: 'center',
+						}}
 					>
 						<a
 							href="#"
-							css={css`
-								padding: 10px;
-								background: #f3f3f3;
-								border-radius: 4px;
-								width: 100%;
-								display: inline-flex;
-								align-items: center;
-								white-space: nowrap;
-								overflow: hidden;
-								text-overflow: ellipsis;
-								text-decoration: none;
-							`}
+							style={{
+								padding: '10px',
+								background: '#f3f3f3',
+								borderRadius: '4px',
+								width: '100%',
+								display: 'inline-flex',
+								alignItems: 'center',
+								whiteSpace: 'nowrap',
+								overflow: 'hidden',
+								textOverflow: 'ellipsis',
+								textDecoration: 'none',
+							}}
 							onClick={() => setVisible(!visible)}
 						>
 							<Icon
 								icon="edit"
-								css={css`
-									cursor: pointer;
-									opacity: 0.75;
-									margin: 0 2px;
-									font-size: 16px;
-									width: 16px;
-									height: 16px;
-									text-decoration: none;
-								`}
+								style={{
+									cursor: 'pointer',
+									opacity: 0.75,
+									margin: '0 2px',
+									fontSize: '16px',
+									width: '16px',
+									height: '16px',
+									textDecoration: 'none',
+								}}
 							/>
 							{url}
 						</a>
@@ -138,27 +140,23 @@ export default ({ setSettings, settings }) => {
 						)}
 					</div>
 					<div
-						css={css`
-							display: flex;
-							align-items: center;
-						`}
+						style={{
+							display: 'flex',
+							alignItems: 'center',
+						}}
 					>
 						<Icon
 							onClick={confirmTrash}
 							icon="trash"
-							className="presto-icon"
-							css={css`
-								cursor: pointer;
-								opacity: 0.75;
-								margin: 0 2px;
-								fontsize: 18px;
-								width: 18px;
-								height: 18px;
-
-								&:hover {
-									color: #cc1818;
-								}
-							`}
+							className="presto-icon sc-url-select-trash-icon"
+							style={{
+								cursor: 'pointer',
+								opacity: 0.75,
+								margin: '0 2px',
+								fontSize: '18px',
+								width: '18px',
+								height: '18px',
+							}}
 						/>
 					</div>
 				</div>

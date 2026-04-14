@@ -34,7 +34,7 @@ class Block extends BaseBlock {
 
 		ob_start(); ?>
 
-		<div>
+		<div <?php echo get_block_wrapper_attributes(); ?>>
 
 		<?php if ( $attributes['isLinkToHome'] ) { ?>
 			<a href="<?php echo esc_url( get_home_url() ); ?>" style="<?php echo esc_attr( $this->getStyles( $attributes ) ); ?> rel="home">
