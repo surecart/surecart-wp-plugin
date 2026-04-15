@@ -32,7 +32,7 @@ html:has(.sc-drawer.open) {
 :where(.sc-cart-drawer) {
 	:where(.is-layout-flex) {
 		display: flex;
-		gap: 0.5em;
+		gap: var(--wp--style--block-gap, 0.5em);
 	}
 
 	:where(.is-layout-grid) {
@@ -50,6 +50,6 @@ html:has(.sc-drawer.open) {
 
 	// Line items gap matching the cart template's blockGap: 2em.
 	:where(.wp-block-surecart-slide-out-cart-line-items) > * + * {
-		margin-block-start: 2em;
+		margin-block-start: var(--wp--style--block-gap, 2em);
 	}
 }
