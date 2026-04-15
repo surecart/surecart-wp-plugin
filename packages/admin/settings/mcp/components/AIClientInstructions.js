@@ -37,45 +37,25 @@ const getServerConfig = (mcpUrl, username) => ({
 	},
 });
 
+/**
+ * Config shape builders — each client wraps the server config differently.
+ */
+const CONFIG_SHAPES = {
+	default: (server) => ({ mcpServers: { surecart: server } }),
+	vscode: (server) => ({ servers: { surecart: server } }),
+	array: (server) => ({ mcpServers: [{ name: 'surecart', ...server }] }),
+};
+
 const AI_CLIENTS = {
 	claude_desktop: {
 		label: __('Claude Desktop', 'surecart'),
-		getConfig: (mcpUrl, username) => ({
-			mcpServers: { surecart: getServerConfig(mcpUrl, username) },
-		}),
+		shape: 'default',
 	},
-	claude_code: {
-		label: __('Claude Code', 'surecart'),
-		getConfig: (mcpUrl, username) => ({
-			mcpServers: { surecart: getServerConfig(mcpUrl, username) },
-		}),
-	},
-	cursor: {
-		label: __('Cursor', 'surecart'),
-		getConfig: (mcpUrl, username) => ({
-			mcpServers: { surecart: getServerConfig(mcpUrl, username) },
-		}),
-	},
-	vscode: {
-		label: __('VS Code (Copilot)', 'surecart'),
-		getConfig: (mcpUrl, username) => ({
-			servers: { surecart: getServerConfig(mcpUrl, username) },
-		}),
-	},
-	continue: {
-		label: __('Continue', 'surecart'),
-		getConfig: (mcpUrl, username) => ({
-			mcpServers: [
-				{ name: 'surecart', ...getServerConfig(mcpUrl, username) },
-			],
-		}),
-	},
-	other: {
-		label: __('Other', 'surecart'),
-		getConfig: (mcpUrl, username) => ({
-			mcpServers: { surecart: getServerConfig(mcpUrl, username) },
-		}),
-	},
+	claude_code: { label: __('Claude Code', 'surecart'), shape: 'default' },
+	cursor: { label: __('Cursor', 'surecart'), shape: 'default' },
+	vscode: { label: __('VS Code (Copilot)', 'surecart'), shape: 'vscode' },
+	continue: { label: __('Continue', 'surecart'), shape: 'array' },
+	other: { label: __('Other', 'surecart'), shape: 'default' },
 };
 
 /**
@@ -168,7 +148,8 @@ export default ({ restUrl, appPasswordsUrl }) => {
 	const currentUsername = window.scMCPData?.current_username || '';
 
 	const client = AI_CLIENTS[selectedClient];
-	const config = client.getConfig(mcpUrl, currentUsername);
+	const server = getServerConfig(mcpUrl, currentUsername);
+	const config = CONFIG_SHAPES[client.shape](server);
 	const configJson = JSON.stringify(config, null, 2);
 
 	const handleCopy = async () => {
