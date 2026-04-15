@@ -6,8 +6,7 @@ import { formLoading } from '@store/form/getters';
 import { lockCheckout, unLockCheckout } from '@store/checkout/mutations';
 import { createOrUpdateCheckout } from '@services/session';
 import { ScCheckboxCustomEvent } from 'src/components';
-import { state as userState, onChange as onUserChange } from '@store/user';
-import { getCustomerAddresses } from '../../../../services/customer-address';
+import { isAddressEmpty } from '../../../../services/customer-address';
 
 @Component({
   tag: 'sc-order-billing-address',
@@ -49,36 +48,11 @@ export class ScOrderBillingAddress {
     return this.input?.reportValidity?.();
   }
 
-  /** Check if all address fields (except country) are empty. */
-  isAddressEmpty() {
-    const addressKeys = Object.keys(this.address).filter(key => key !== 'country');
-    return addressKeys.every(key => !this.address[key]);
-  }
-
   prefillAddress() {
-    // check if address keys are empty, if so, update them.
-    if (this.isAddressEmpty()) {
+    // Autofill (including logged-in customer profile) is driven via checkoutState.checkout
+    // by sc-login-provider. Only merge when our local fields are empty so we never overwrite typed data.
+    if (isAddressEmpty(this.address)) {
       this.address = { ...this.address, ...(checkoutState.checkout?.billing_address as Address) };
-    }
-  }
-
-  /** Fetch and prefill billing address from customer profile if user is logged in. */
-  async prefillFromCustomerProfile() {
-    if (!userState.loggedIn) return;
-    if (!this.isAddressEmpty()) return;
-
-    try {
-      const data = await getCustomerAddresses(checkoutState.mode);
-      const billingAddress = data?.billing_address;
-
-      // Only prefill local UI state. The shipping component handles the checkout API update
-      // with both addresses to avoid race conditions.
-      if (billingAddress && !Array.isArray(billingAddress) && Object.keys(billingAddress).length && this.isAddressEmpty()) {
-        this.address = { ...this.address, ...billingAddress };
-      }
-    } catch (e) {
-      // Silently fail — auto-fill is a convenience feature.
-      console.error(e);
     }
   }
 
@@ -89,16 +63,6 @@ export class ScOrderBillingAddress {
 
     this.prefillAddress();
     onChange('checkout', () => this.prefillAddress());
-
-    // Fetch customer address from API for logged-in users.
-    this.prefillFromCustomerProfile();
-
-    // Also fetch when user logs in mid-checkout.
-    onUserChange('loggedIn', loggedIn => {
-      if (loggedIn) {
-        this.prefillFromCustomerProfile();
-      }
-    });
   }
 
   async updateAddressState(address: Partial<Address>) {
