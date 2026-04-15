@@ -41,7 +41,7 @@ export class ScCheckoutAutofillProvider {
     this.removeCheckoutListener?.();
   }
 
-  private async maybeApplyProfile() {
+  async maybeApplyProfile() {
     if (!userState.loggedIn) return;
 
     const checkoutId = checkoutState.checkout?.id;
