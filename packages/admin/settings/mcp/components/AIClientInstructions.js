@@ -153,9 +153,7 @@ export default ({ restUrl, appPasswordsUrl }) => {
 	const [copied, setCopied] = useState(false);
 
 	const mcpUrl = restUrl;
-	const currentUsername = window.wp?.data
-		?.select?.('core')
-		?.getCurrentUser?.()?.slug;
+	const currentUsername = window.scMCPData?.current_username || '';
 
 	const client = AI_CLIENTS[selectedClient];
 	const config = client.getConfig(mcpUrl, currentUsername);
@@ -471,33 +469,46 @@ export default ({ restUrl, appPasswordsUrl }) => {
 						</div>
 					</li>
 
-					{/* Replace password step */}
+					{/* Update environment variables step */}
 					<li>
 						<strong>
-							{__(
-								'Replace "your-application-password" with the password from Step 1.',
-								'surecart'
-							)}
+							{__('Update the environment variables', 'surecart')}
 						</strong>
+						<ol
+							css={css`
+								margin: var(--sc-spacing-small) 0 0;
+								padding-left: 1.25em;
+								list-style: lower-roman;
+								color: var(--sc-color-gray-700);
+								line-height: 1.6;
+
+								li {
+									padding: 2px 0;
+								}
+							`}
+						>
+							<li>
+								<strong>WP_API_USERNAME</strong>
+								{' — '}
+								{__(
+									'your WordPress username (prefilled).',
+									'surecart'
+								)}
+							</li>
+							<li>
+								<strong>WP_API_PASSWORD</strong>
+								{' — '}
+								{__(
+									'replace "your-application-password" with the password from Step 1.',
+									'surecart'
+								)}
+							</li>
+						</ol>
 					</li>
 				</ol>
 
 				<ScAlert open type="info">
 					<ScProse>
-						<p>
-							<strong>WP_API_URL</strong>
-							{' — '}
-							{__("your site's MCP endpoint.", 'surecart')}{' '}
-							<strong>WP_API_USERNAME</strong>
-							{' — '}
-							{__('your WordPress username.', 'surecart')}{' '}
-							<strong>WP_API_PASSWORD</strong>
-							{' — '}
-							{__(
-								'the application password you generated.',
-								'surecart'
-							)}
-						</p>
 						<p>
 							{__(
 								'Requires Node.js 20.1+. Verify with',
