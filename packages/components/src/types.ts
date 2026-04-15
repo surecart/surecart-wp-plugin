@@ -1273,6 +1273,14 @@ export interface Address extends Object {
   country?: string;
 }
 
+export interface CustomerAddressData {
+  shipping_address: Partial<Address> | [];
+  billing_address: Partial<Address> | [];
+  first_name: string;
+  last_name: string;
+  phone: string;
+}
+
 export interface Fulfillment {
   id: string;
   object: 'fulfillment';
