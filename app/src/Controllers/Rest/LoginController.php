@@ -23,8 +23,7 @@ class LoginController extends RestController {
 			return $user;
 		}
 
-		$sc_user = User::find( $user->ID );
-		$sc_user->login();
+		User::find( $user->ID )->login();
 
 		$redirect_to  = $request->get_param( 'redirect_to' );
 		$redirect_url = ! empty( $redirect_to ) ? wp_validate_redirect( $redirect_to, false ) : null;

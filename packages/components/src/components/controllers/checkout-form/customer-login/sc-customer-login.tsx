@@ -86,9 +86,7 @@ export class ScCustomerLogin {
 
       speak(__('Verification is successful. Please continue your purchase.', 'surecart'), 'assertive');
 
-      // Address and customer profile data are now auto-filled by the dedicated
-      // customer-addresses API via sc-order-shipping-address and sc-order-billing-address
-      // components when loggedIn state changes.
+      // Set user as logged in to trigger fetching of customer data like addresses.
       userState.loggedIn = true;
       userState.name = user?.name || 'N/A';
     } catch (e: any) {
