@@ -1108,6 +1108,7 @@
   },
   "sc-order-bump": {
     "bump": true,
+    "show-control": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1116,6 +1117,7 @@
   "sc-order-bumps": {
     "help": true,
     "label": true,
+    "show-control": true,
     "style": true,
     "id": true,
     "class": true,

@@ -168,6 +168,7 @@ abstract class BaseSettings {
 				'dashboard_page_edit_url'      => \SureCart::pages()->getId( 'dashboard' )
 					? admin_url( 'post.php?post=' . \SureCart::pages()->getId( 'dashboard' ) . '&action=edit' )
 					: '',
+				'show_order_bump_design_toggle' => false !== get_option( 'surecart_order_bump_design' ),
 			]
 		);
 	}

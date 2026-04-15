@@ -173,6 +173,7 @@ graph TD;
   sc-order-bump --> sc-choice
   sc-order-bump --> sc-spinner
   sc-order-bump --> sc-icon
+  sc-order-bump --> sc-divider
   sc-line-item-tax --> sc-line-item
   sc-shipping-choices --> sc-form-control
   sc-shipping-choices --> sc-radio-group

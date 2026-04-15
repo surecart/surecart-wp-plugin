@@ -141,5 +141,6 @@ class ActivationService {
 		delete_option( 'sc_api_token' );
 		delete_option( 'sc_previous_account' );
 		delete_option( 'sc_uninstall' );
+		delete_option( 'surecart_order_bump_design' );
 	}
 }

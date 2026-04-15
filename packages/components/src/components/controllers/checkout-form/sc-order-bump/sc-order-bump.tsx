@@ -1,4 +1,4 @@
-import { Component, h, Prop, State } from '@stencil/core';
+import { Component, Element, h, Prop, State } from '@stencil/core';
 import { sprintf, __, _x } from '@wordpress/i18n';
 import { speak } from '@wordpress/a11y';
 import { intervalString } from '../../../../functions/price';
@@ -13,11 +13,19 @@ import { addCheckoutLineItem, removeCheckoutLineItem, trackOrderBump } from '@st
   shadow: true,
 })
 export class ScOrderBump {
+  @Element() el: HTMLElement;
+
   /** The bump */
   @Prop() bump: Bump;
 
+  /** Should we show the controls (classic design) */
+  @Prop({ reflect: true }) showControl: boolean;
+
   /** Loading state */
   @State() loading: boolean = false;
+
+  /** Cached design mode */
+  private isModern: boolean = true;
 
   /** The bump line item */
   lineItem() {
@@ -52,6 +60,11 @@ export class ScOrderBump {
     }
   }
 
+  componentWillLoad() {
+    this.isModern = !!(window as any).scData?.modern_order_bump;
+    this.el.setAttribute('data-design', this.isModern ? 'modern' : 'classic');
+  }
+
   componentDidLoad() {
     trackOrderBump(this.bump?.id);
   }
@@ -60,32 +73,6 @@ export class ScOrderBump {
     const interval = intervalString(this.bump?.price as Price, { labels: { interval: '/', period: __('for', 'surecart') } });
     if (!interval.trim().length) return null;
     return <span class="bump__interval">{interval}</span>;
-  }
-
-  renderPrice() {
-    return (
-      <div class={{ 'bump__price': true, 'bump__price--has-discount': !!this.bump?.percent_off || !!this.bump?.amount_off }} part="price">
-        {!!(this.bump?.percent_off || this.bump?.amount_off) && (
-          <span
-            aria-label={
-              /** translators: %s: old price */
-              sprintf(__('Originally priced at %s.', 'surecart'), this.bump?.subtotal_display_amount)
-            }
-            class="bump__original-price"
-          >
-            {this.bump?.subtotal_display_amount}
-          </span>
-        )}
-
-        <span>
-          <span aria-hidden="true">
-            {this.bump?.total_amount === 0 && __('Free', 'surecart')}
-            {this.bump?.total_amount > 0 && <span class="bump__new-price">{this.bump?.total_display_amount}</span>}
-            {this.renderInterval()}
-          </span>
-        </span>
-      </div>
-    );
   }
 
   renderDiscount() {
@@ -128,7 +115,62 @@ export class ScOrderBump {
     }
   }
 
-  render() {
+  /** Modern price (no slot) */
+  renderModernPrice() {
+    return (
+      <div class={{ 'bump__price': true, 'bump__price--has-discount': !!this.bump?.percent_off || !!this.bump?.amount_off }} part="price">
+        {!!(this.bump?.percent_off || this.bump?.amount_off) && (
+          <span
+            aria-label={
+              /** translators: %s: old price */
+              sprintf(__('Originally priced at %s.', 'surecart'), this.bump?.subtotal_display_amount)
+            }
+            class="bump__original-price"
+          >
+            {this.bump?.subtotal_display_amount}
+          </span>
+        )}
+
+        <span>
+          <span aria-hidden="true">
+            {this.bump?.total_amount === 0 && __('Free', 'surecart')}
+            {this.bump?.total_amount > 0 && <span class="bump__new-price">{this.bump?.total_display_amount}</span>}
+            {this.renderInterval()}
+          </span>
+        </span>
+      </div>
+    );
+  }
+
+  /** Classic price (with slot="description") */
+  renderClassicPrice() {
+    return (
+      <div slot="description" class={{ 'bump__price': true, 'bump__price--has-discount': !!this.bump?.percent_off || !!this.bump?.amount_off }} part="price">
+        {!!(this.bump?.percent_off || this.bump?.amount_off) && (
+          <span
+            aria-label={
+              /** translators: %s: old price */
+              sprintf(__('Originally priced at %s.', 'surecart'), this.bump?.subtotal_display_amount)
+            }
+            class="bump__original-price"
+          >
+            {this.bump?.subtotal_display_amount}
+          </span>
+        )}
+
+        <span>
+          <span aria-hidden="true">
+            {this.bump?.total_amount === 0 && __('Free', 'surecart')}
+            {this.bump?.total_amount > 0 && <span class="bump__new-price">{this.bump?.total_display_amount}</span>}
+            {this.renderInterval()}
+          </span>
+        </span>
+      </div>
+    );
+  }
+
+  /** Modern design: rounded button, inline image, no checkbox */
+  renderModern() {
     const product = (this.bump?.price as Price)?.product as Product;
     const lineItem = this.lineItem();
     return (
@@ -164,7 +206,7 @@ export class ScOrderBump {
               </div>
             )}
             <div class="bump__amount" part="amount">
-              {this.renderPrice()}
+              {this.renderModernPrice()}
               {this.renderDiscount()}
             </div>
             {!!this.bump?.metadata?.description && (
@@ -199,5 +241,84 @@ export class ScOrderBump {
         </div>
       </sc-choice>
     );
+  }
+
+  /** Classic design: checkbox control, footer with divider + image + description */
+  renderClassic() {
+    const product = (this.bump?.price as Price)?.product as Product;
+    return (
+      <sc-choice
+        value={this.bump?.id}
+        type="checkbox"
+        showControl={this.showControl}
+        checked={!!this.lineItem()}
+        disabled={this.loading}
+        onClick={e => {
+          e.preventDefault();
+          e.stopImmediatePropagation();
+          this.updateLineItem();
+        }}
+        onKeyDown={e => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            this.updateLineItem();
+          }
+        }}
+        exportparts="base, control, checked-icon, title"
+      >
+        <div part="base-content" class="bump">
+          <div class="bump__text">
+            <div
+              class="bump__title"
+              aria-label={sprintf(
+                /* translators: %s: order bump name */
+                __('Product: %s.', 'surecart'),
+                this.bump?.metadata?.cta || this.bump?.name || product?.name,
+              )}
+            >
+              <span aria-hidden="true">{this.bump?.metadata?.cta || this.bump?.name || product?.name}</span>
+            </div>
+            <div class="bump__amount">
+              {this.renderClassicPrice()}
+              {this.renderDiscount()}
+            </div>
+          </div>
+        </div>
+
+        {this.bump?.metadata?.description && (
+          <div slot="footer" class="bump__product--wrapper">
+            <sc-divider style={{ '--spacing': 'var(--sc-spacing-medium)' }}></sc-divider>
+            <div class="bump__product">
+              {!!product?.line_item_image?.src && <img {...(product?.line_item_image as any)} class="bump__image" />}
+              <div class="bump__product-text">
+                {!!this.bump?.metadata?.cta && (
+                  <div class="bump__product-title" aria-hidden="true">
+                    {this.bump.name || product?.name}
+                  </div>
+                )}
+
+                {!!this.bump?.metadata?.description && (
+                  <div
+                    class="bump__product-description"
+                    aria-label={sprintf(
+                      /* translators: %s: Product description */
+                      __('Product description: %s.', 'surecart'),
+                      this.bump?.rendered_description,
+                    )}
+                  >
+                    <span aria-hidden="true" innerHTML={this.bump?.rendered_description}></span>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
+      </sc-choice>
+    );
+  }
+
+  render() {
+    return this.isModern ? this.renderModern() : this.renderClassic();
   }
 }

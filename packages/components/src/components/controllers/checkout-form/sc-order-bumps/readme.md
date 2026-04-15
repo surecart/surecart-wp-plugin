@@ -7,10 +7,11 @@
 
 ## Properties
 
-| Property | Attribute | Description | Type     | Default     |
-| -------- | --------- | ----------- | -------- | ----------- |
-| `help`   | `help`    |             | `string` | `undefined` |
-| `label`  | `label`   |             | `string` | `undefined` |
+| Property      | Attribute      | Description                                  | Type      | Default     |
+| ------------- | -------------- | -------------------------------------------- | --------- | ----------- |
+| `help`        | `help`         |                                              | `string`  | `undefined` |
+| `label`       | `label`        |                                              | `string`  | `undefined` |
+| `showControl` | `show-control` | Should we show the controls (classic design) | `boolean` | `undefined` |
 
 
 ## Dependencies
@@ -33,6 +34,7 @@ graph TD;
   sc-order-bump --> sc-choice
   sc-order-bump --> sc-spinner
   sc-order-bump --> sc-icon
+  sc-order-bump --> sc-divider
   sc-form-components-validator --> sc-order-bumps
   style sc-order-bumps fill:#f9f,stroke:#333,stroke-width:4px
 ```
