@@ -2,9 +2,9 @@
 Contributors: 2winfactor, wpcrafter
 Donate link: https://surecart.com
 Tags: ecommerce, online store, subscriptions, stripe, payments
-Requires at least: 6.7
+Requires at least: 6.8
 Tested up to: 6.9
-Stable tag: 4.1.0
+Stable tag: 4.1.1
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -422,7 +422,20 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 
 == Changelog ==
 
-= 4.1.0 - March 24th, 2026 = 
+= 4.1.1 - April 8th, 2026 =
+- New: SureCart Abilities API for AI-powered store management.
+- New: Product review shortcodes for use in all page builders or different page contexts.
+- Improvement: Checkout and dashboard blocks migrated to v3 compatibility.
+- Improvement: WordPress 7.0 compatibility and deprecation fixes.
+- Improvement: Model serialization now supports getAttribute filter.
+- Improvement: Added an optional in-plugin feedback survey to make it easier for users to share their experience and help shape future improvements.
+- Fix: Dashboard analytics date and timezone calculation issues.
+- Fix: UX issue in latest version of Safari version 26.4.
+- Fix: Translation locale handling so SureCart now uses the correct language by context.
+- Fix: Brand color picker showing blank swatch and misaligned popover on newer WordPress versions.
+
+
+= 4.1.0 - March 24th, 2026 =
 - New: Learn section on settings page to help with onboarding and setup.
 - New: Shipping parcels creation for shipping with standardized boxes.
 - Improvement: Add "Review Product" buttons to customer dashboard order view screen.

@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import {
 	PanelBody,
@@ -62,11 +60,6 @@ export default ({ attributes, setAttributes }) => {
 	const spacingProps = useSpacingProps(attributes);
 
 	const blockProps = useBlockProps({
-		css: css`
-			&.has-child-selected {
-				z-index: 1;
-			}
-		`,
 		style: {
 			'--sc-input-label-color': colorProps?.style?.color,
 			backgroundColor: colorProps?.style?.backgroundColor,
@@ -122,12 +115,15 @@ export default ({ attributes, setAttributes }) => {
 		return (
 			<div
 				{...blockProps}
-				css={css`
-					--sc-color-primary-500: var(--wp-admin-theme-color);
-					--sc-focus-ring-color-primary: var(--wp-admin-theme-color);
-					--sc-input-border-color-focus: var(--wp-admin-theme-color);
-					--sc-color-primary-text: #fff;
-				`}
+				style={{
+					...blockProps.style,
+					'--sc-color-primary-500': 'var(--wp-admin-theme-color)',
+					'--sc-focus-ring-color-primary':
+						'var(--wp-admin-theme-color)',
+					'--sc-input-border-color-focus':
+						'var(--wp-admin-theme-color)',
+					'--sc-color-primary-text': '#fff',
+				}}
 			>
 				<Placeholder
 					icon={icon}
@@ -159,6 +155,11 @@ export default ({ attributes, setAttributes }) => {
 
 	return (
 		<>
+			<style>{`
+				.wp-block[data-type="surecart/product-donation"].has-child-selected {
+					z-index: 1;
+				}
+			`}</style>
 			<InspectorControls>
 				<PanelBody>
 					<PanelRow>

@@ -103,6 +103,7 @@ export default function PostTemplateForm({
 			/>
 
 			<SelectControl
+				__next40pxDefaultSize
 				__nextHasNoMarginBottom
 				hideLabelFromVision
 				label={__('Template')}

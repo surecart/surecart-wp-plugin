@@ -63,6 +63,7 @@ export default ({
 			<InspectorControls>
 				<PanelBody>
 					<ToggleGroupControl
+						__next40pxDefaultSize
 						__nextHasNoMarginBottom
 						label={__('Icon', 'surecart')}
 						value={icon}

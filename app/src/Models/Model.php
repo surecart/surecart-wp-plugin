@@ -1193,8 +1193,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, Object
 					$pieces           = preg_split( '/(?=[A-Z])/', $key );
 					$pieces           = array_map( 'strtolower', array_filter( $pieces ) );
 					$key              = implode( '_', $pieces );
-					$value            = array_key_exists( $key, $this->attributes ) ? $this->attributes[ $key ] : null;
-					$attributes->$key = $this->{$method}( $value );
+					$attributes->$key = $this->getAttribute( $key );
 				}
 			}
 		}
@@ -1232,8 +1231,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, Object
 					$pieces             = preg_split( '/(?=[A-Z])/', $key );
 					$pieces             = array_map( 'strtolower', array_filter( $pieces ) );
 					$key                = implode( '_', $pieces );
-					$value              = array_key_exists( $key, $this->attributes ) ? $this->attributes[ $key ] : null;
-					$attributes[ $key ] = $this->{$method}( $value );
+					$attributes[ $key ] = $this->getAttribute( $key );
 				}
 			}
 		}

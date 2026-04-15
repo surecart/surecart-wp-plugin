@@ -16,12 +16,14 @@ import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
  */
 import { ScButton } from '@surecart/components-react';
 
-export default ({ className, attributes, setAttributes }) => {
+export default ({ attributes, setAttributes }) => {
 	const { type, label, submit, size, show_icon, redirectToCurrent } =
 		attributes;
 
+	const blockProps = useBlockProps();
+
 	return (
-		<div className={className}>
+		<div {...blockProps}>
 			<InspectorControls>
 				<PanelBody title={__('Logout button settings')}>
 					<PanelRow>
@@ -60,26 +62,20 @@ export default ({ className, attributes, setAttributes }) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<div
-				{...useBlockProps({
-					className: 'logged-in',
-				})}
-			>
-				<ScButton type={type} submit={submit} size={size} type={type}>
-					{show_icon && (
-						<sc-icon name="log-out" slot="prefix"></sc-icon>
-					)}
+			<ScButton type={type} submit={submit} size={size}>
+				{show_icon && (
+					<sc-icon name="log-out" slot="prefix"></sc-icon>
+				)}
 
-					<RichText
-						aria-label={__('Button text', 'surecart')}
-						placeholder={__('Add text…', 'surecart')}
-						value={label}
-						onChange={(label) => setAttributes({ label })}
-						withoutInteractiveFormatting
-						allowedFormats={['core/bold', 'core/italic']}
-					/>
-				</ScButton>
-			</div>
+				<RichText
+					aria-label={__('Button text', 'surecart')}
+					placeholder={__('Add text…', 'surecart')}
+					value={label}
+					onChange={(label) => setAttributes({ label })}
+					withoutInteractiveFormatting
+					allowedFormats={['core/bold', 'core/italic']}
+				/>
+			</ScButton>
 		</div>
 	);
 };

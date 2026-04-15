@@ -7,8 +7,8 @@
 				'style'                           => $style,
 				'data-wp-interactive'             => '{ "namespace": "surecart/sticky-purchase" }',
 				'data-wp-class--is-visible'       => 'state.isVisible',
-				'data-wp-on-async-window--scroll' => 'callbacks.updateStickyOffsetVariables',
-				'data-wp-on-async-window--resize' => 'callbacks.updateStickyOffsetVariables',
+				'data-wp-on-window--scroll' => 'callbacks.updateStickyOffsetVariables',
+				'data-wp-on-window--resize' => 'callbacks.updateStickyOffsetVariables',
 				'data-wp-on--transitionend'       => 'callbacks.updateStickyOffsetVariables',
 			]
 		)

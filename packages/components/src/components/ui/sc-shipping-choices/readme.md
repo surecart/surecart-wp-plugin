@@ -7,10 +7,11 @@
 
 ## Properties
 
-| Property          | Attribute          | Description                                     | Type      | Default     |
-| ----------------- | ------------------ | ----------------------------------------------- | --------- | ----------- |
-| `label`           | `label`            | The shipping section label                      | `string`  | `undefined` |
-| `showDescription` | `show-description` | Whether to show the shipping choice description | `boolean` | `true`      |
+| Property          | Attribute          | Description                                              | Type      | Default     |
+| ----------------- | ------------------ | -------------------------------------------------------- | --------- | ----------- |
+| `label`           | `label`            | The shipping section label                               | `string`  | `undefined` |
+| `shippingChoices` | --                 | Override shipping choices data (used for editor preview) | `any[]`   | `undefined` |
+| `showDescription` | `show-description` | Whether to show the shipping choice description          | `boolean` | `true`      |
 
 
 ## Shadow Parts

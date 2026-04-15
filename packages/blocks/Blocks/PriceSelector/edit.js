@@ -1,5 +1,3 @@
-/** @jsx jsx */
-
 import { __ } from '@wordpress/i18n';
 import { Fragment, useEffect } from '@wordpress/element';
 import {
@@ -20,9 +18,6 @@ import {
 import { createBlock } from '@wordpress/blocks';
 import { select, dispatch, useSelect } from '@wordpress/data';
 
-import { css, jsx, Global } from '@emotion/core';
-import styles from './editor-styles';
-
 /**
  * Component Dependencies
  */
@@ -37,8 +32,8 @@ export default ({ attributes, setAttributes, clientId, isSelected }) => {
 
 	const insertPrice = () => {
 		const innerCount =
-			select('core/editor').getBlocksByClientId(clientId)[0].innerBlocks
-				.length;
+			select('core/block-editor').getBlocksByClientId(clientId)[0]
+				.innerBlocks.length;
 		let block = createBlock('surecart/price-choice');
 		dispatch('core/block-editor').insertBlock(block, innerCount, clientId);
 	};
@@ -47,15 +42,7 @@ export default ({ attributes, setAttributes, clientId, isSelected }) => {
 		label,
 		type,
 		columns,
-		css: css`
-			z-index: 9;
-			sc-choices::part(choices) {
-				grid-template-columns: repeat(1, 1fr);
-			}
-			.block-list-appender {
-				position: relative;
-			}
-		`,
+		style: { zIndex: 9, position: 'relative' },
 	});
 
 	const { children, childIsSelected } = useSelect((select) => {
@@ -97,7 +84,6 @@ export default ({ attributes, setAttributes, clientId, isSelected }) => {
 
 	return (
 		<Fragment>
-			<Global styles={styles} />
 			<InspectorControls>
 				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
@@ -113,7 +99,7 @@ export default ({ attributes, setAttributes, clientId, isSelected }) => {
 						<RadioControl
 							__nextHasNoMarginBottom
 							label={__('Type', 'surecart')}
-							help="The type of product selection"
+							help={__('The type of product selection', 'surecart')}
 							selected={type}
 							options={[
 								{

@@ -3,9 +3,8 @@
  */
 import { __ } from '@wordpress/i18n';
 import { Fragment } from '@wordpress/element';
-import { InspectorControls } from '@wordpress/block-editor';
+import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
 import { PanelBody, PanelRow, TextControl } from '@wordpress/components';
-import { useBlockProps } from '@wordpress/block-editor';
 /**
  * Component Dependencies
  */
@@ -36,7 +35,9 @@ export default ({ attributes, setAttributes }) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<ScDivider {...blockProps}>{text}</ScDivider>
+			<div {...blockProps}>
+				<ScDivider>{text}</ScDivider>
+			</div>
 		</Fragment>
 	);
 };

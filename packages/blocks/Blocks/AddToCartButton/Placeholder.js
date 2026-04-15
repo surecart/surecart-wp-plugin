@@ -1,6 +1,3 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
-
 /**
  * WordPress dependencies
  */
@@ -19,10 +16,10 @@ export default ({ setAttributes, selectedPriceId }) => {
 		<Placeholder icon={icon} label={__('Select a product', 'surecart')}>
 			<div>
 				<div
-					css={css`
-						color: var(--sc-color-gray-500);
-						margin-bottom: 1em;
-					`}
+					style={{
+						color: 'var(--sc-color-gray-500)',
+						marginBottom: '1em',
+					}}
 				>
 					{__(
 						'To add a product for the cart button, click the "Select Product" button.',

@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import { Fragment, useState, useEffect } from '@wordpress/element';
 import {
@@ -107,29 +105,12 @@ function Conditions(props) {
 	}, []);
 
 	const renderValueFields = (fields, ruleIndex, { value, operator }) => {
-		return (fields || []).map((field) => {
-			switch (field.type) {
-				case 'products':
-					return (
-						<SelectProducts
-							value={value}
-							placeholder={field.placeholder}
-							onChange={(selection) => {
-								updateConditionOptionInRuleGroup(
-									ruleIndex,
-									selection,
-									'value'
-								);
-							}}
-						/>
-					);
-
-				case 'coupons':
-					if ('exist' === operator || 'not_exist' === operator) {
-						// If required we will add field here for these two option
-					} else {
+		return (fields || []).map((field, fieldIndex) => {
+			const el = (() => {
+				switch (field.type) {
+					case 'products':
 						return (
-							<SelectCoupons
+							<SelectProducts
 								value={value}
 								placeholder={field.placeholder}
 								onChange={(selection) => {
@@ -141,119 +122,143 @@ function Conditions(props) {
 								}}
 							/>
 						);
-					}
 
-				case 'select':
-					return (
-						<SelectControl
-							__next40pxDefaultSize
-							__nextHasNoMarginBottom
-							value={value}
-							placeholder={field.placeholder}
-							tooltip={field.tooltip}
-							options={field.options}
-							isMulti={field.isMulti}
-							onChange={(selection) => {
-								updateConditionOptionInRuleGroup(
-									ruleIndex,
-									selection,
-									'value'
-								);
-							}}
-						/>
-					);
+					case 'coupons':
+						if ('exist' === operator || 'not_exist' === operator) {
+							// If required we will add field here for these two option
+						} else {
+							return (
+								<SelectCoupons
+									value={value}
+									placeholder={field.placeholder}
+									onChange={(selection) => {
+										updateConditionOptionInRuleGroup(
+											ruleIndex,
+											selection,
+											'value'
+										);
+									}}
+								/>
+							);
+						}
 
-				case 'processors':
-					return (
-						<SelectProcessors
-							value={value}
-							placeholder={field.placeholder}
-							onChange={(selection) => {
-								updateConditionOptionInRuleGroup(
-									ruleIndex,
-									selection,
-									'value'
-								);
-							}}
-						/>
-					);
+					case 'select':
+						return (
+							<SelectControl
+								__next40pxDefaultSize
+								__nextHasNoMarginBottom
+								value={value}
+								placeholder={field.placeholder}
+								tooltip={field.tooltip}
+								options={field.options}
+								isMulti={field.isMulti}
+								onChange={(selection) => {
+									updateConditionOptionInRuleGroup(
+										ruleIndex,
+										selection,
+										'value'
+									);
+								}}
+							/>
+						);
 
-				case 'select2':
-					return (
-						<Select2
-							value={value}
-							placeholder={field.placeholder}
-							tooltip={field.tooltip}
-							options={
-								field.optionsKey
-									? asyncOptions[field.optionsKey]
-									: field.options
-							}
-							isMulti={field.isMulti}
-							onChangeCB={(selection) => {
-								updateConditionOptionInRuleGroup(
-									ruleIndex,
-									selection,
-									'value'
-								);
-							}}
-						/>
-					);
+					case 'processors':
+						return (
+							<SelectProcessors
+								value={value}
+								placeholder={field.placeholder}
+								onChange={(selection) => {
+									updateConditionOptionInRuleGroup(
+										ruleIndex,
+										selection,
+										'value'
+									);
+								}}
+							/>
+						);
 
-				case 'price':
-					return (
-						<ScPriceInput
-							value={value}
-							currencyCode={scBlockData?.currency}
-							label={''}
-							placeholder={field.placeholder}
-							help={field.tooltip}
-							onScInput={(e) => {
-								updateConditionOptionInRuleGroup(
-									ruleIndex,
-									e.target.value,
-									'value'
-								);
-							}}
-						></ScPriceInput>
-					);
+					case 'select2':
+						return (
+							<Select2
+								value={value}
+								placeholder={field.placeholder}
+								tooltip={field.tooltip}
+								options={
+									field.optionsKey
+										? asyncOptions[field.optionsKey]
+										: field.options
+								}
+								isMulti={field.isMulti}
+								onChangeCB={(selection) => {
+									updateConditionOptionInRuleGroup(
+										ruleIndex,
+										selection,
+										'value'
+									);
+								}}
+							/>
+						);
 
-				case 'number':
-					return (
-						<NumberControl
-							value={value}
-							placeholder={field.placeholder}
-							tooltip={field.tooltip}
-							onChange={(selection) => {
-								updateConditionOptionInRuleGroup(
-									ruleIndex,
-									selection,
-									'value'
-								);
-							}}
-							isShiftStepEnabled={true}
-							shiftStep={1}
-						/>
-					);
+					case 'price':
+						return (
+							<ScPriceInput
+								value={value}
+								currencyCode={scBlockData?.currency}
+								label={''}
+								placeholder={field.placeholder}
+								help={field.tooltip}
+								onScInput={(e) => {
+									updateConditionOptionInRuleGroup(
+										ruleIndex,
+										e.target.value,
+										'value'
+									);
+								}}
+							></ScPriceInput>
+						);
 
-				case 'text':
-					return (
-						<TextControl
-							__next40pxDefaultSize
-							__nextHasNoMarginBottom
-							value={value}
-							placeholder={field.placeholder}
-							tooltip={field.tooltip}
-							onChange={(selection) => {
-								updateConditionOptionInRuleGroup(
-									ruleIndex,
-									selection,
-									'value'
-								);
-							}}
-						/>
-					);
-			}
+					case 'number':
+						return (
+							<NumberControl
+								__next40pxDefaultSize
+								value={value}
+								placeholder={field.placeholder}
+								tooltip={field.tooltip}
+								onChange={(selection) => {
+									updateConditionOptionInRuleGroup(
+										ruleIndex,
+										selection,
+										'value'
+									);
+								}}
+								isShiftStepEnabled={true}
+								shiftStep={1}
+							/>
+						);
+
+					case 'text':
+						return (
+							<TextControl
+								__next40pxDefaultSize
+								__nextHasNoMarginBottom
+								value={value}
+								placeholder={field.placeholder}
+								tooltip={field.tooltip}
+								onChange={(selection) => {
+									updateConditionOptionInRuleGroup(
+										ruleIndex,
+										selection,
+										'value'
+									);
+								}}
+							/>
+						);
+				}
+			})();
+
+			return el != null ? (
+				<Fragment key={fieldIndex}>{el}</Fragment>
+			) : null;
 		});
 	};
 
@@ -264,12 +269,12 @@ function Conditions(props) {
 		return (
 			<ScButton
 				circle
-				css={css`
-					--sc-input-height-medium: 30px;
-					position: absolute;
-					top: -10px;
-					right: -10px;
-				`}
+				style={{
+					'--sc-input-height-medium': '30px',
+					position: 'absolute',
+					top: '-10px',
+					right: '-10px',
+				}}
 				onClick={() => {
 					removeConditionFromRuleGroup(ruleIndex);
 				}}
@@ -288,14 +293,14 @@ function Conditions(props) {
 				if (!ruleFieldData) return;
 
 				return (
-					<>
+					<Fragment key={ruleIndex}>
 						{0 !== ruleIndex && (
 							<div
-								css={css`
-									text-align: center;
-									margin: 15px auto;
-									pointer-events: none;
-								`}
+								style={{
+									textAlign: 'center',
+									margin: '15px auto',
+									pointerEvents: 'none',
+								}}
 							>
 								<ScButton pill size="small">
 									{__('AND', 'surecart')}
@@ -312,17 +317,15 @@ function Conditions(props) {
 						>
 							<ScFlex alignItems="center">
 								<div
-									css={css`
-										flex: 1;
-										display: grid;
-										gap: var(--sc-spacing-small);
-									`}
+									style={{
+										flex: 1,
+										display: 'grid',
+										gap: 'var(--sc-spacing-small)',
+									}}
 								>
 									<ScFlex>
 										<SelectConditions
-											css={css`
-												flex: 1;
-											`}
+											style={{ flex: 1 }}
 											onChange={(selection) =>
 												updateConditionInRuleGroup(
 													ruleIndex,
@@ -333,9 +336,7 @@ function Conditions(props) {
 										/>
 
 										<SelectOperator
-											css={css`
-												flex: 1;
-											`}
+											style={{ flex: 1 }}
 											type={ruleFieldData?.operatorType}
 											value={ruleData.operator}
 											onChange={(selection) => {
@@ -361,7 +362,7 @@ function Conditions(props) {
 								)}
 							</ScFlex>
 						</ScCard>
-					</>
+					</Fragment>
 				);
 			})}
 		</Fragment>
