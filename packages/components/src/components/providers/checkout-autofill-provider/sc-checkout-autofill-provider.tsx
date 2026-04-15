@@ -70,16 +70,19 @@ export class ScCheckoutAutofillProvider {
         patch.phone = data.phone;
       }
 
+      // Nothing to apply — skip the lock entirely.
       if (!Object.keys(patch).length) return;
 
       lockCheckout('customer-profile-autofill');
-      checkoutState.checkout = (await createOrUpdateCheckout({ id: checkoutId, data: patch })) as Checkout;
+      try {
+        checkoutState.checkout = (await createOrUpdateCheckout({ id: checkoutState.checkout?.id, data: patch })) as Checkout;
+      } finally {
+        unLockCheckout('customer-profile-autofill');
+      }
     } catch (e) {
       // Convenience feature — don't block checkout; clear the flag so a later trigger can retry.
-      this.appliedForCheckoutId = null;
+      this.appliedForCheckoutId = undefined;
       console.error(e);
-    } finally {
-      unLockCheckout('customer-profile-autofill');
     }
   }
 
