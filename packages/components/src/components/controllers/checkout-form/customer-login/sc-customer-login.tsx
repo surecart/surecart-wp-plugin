@@ -10,9 +10,7 @@ import { speak } from '@wordpress/a11y';
  * Internal dependencies.
  */
 import { state as userState, resetUser, VERIFYING, VERIFIED, UNVERIFIED, CODE_EXPIRED } from '@store/user';
-import { createOrUpdateCheckout } from '@services/session';
 import { state as checkoutState } from '@store/checkout';
-import { Checkout } from 'src/types';
 
 @Component({
   tag: 'sc-customer-login',
@@ -71,7 +69,6 @@ export class ScCustomerLogin {
         data: {
           login: userState.email,
           code: code,
-          checkout_mode: checkoutState.mode,
         },
       })) as any;
       userState.verificationStatus = VERIFIED;
@@ -89,18 +86,11 @@ export class ScCustomerLogin {
 
       speak(__('Verification is successful. Please continue your purchase.', 'surecart'), 'assertive');
 
-      // Update checkout before setting user state — setting loggedIn unmounts this component.
-      // Pass customer profile data from the verification response to auto-fill the checkout.
-      const customer = user?.customer || {};
-      await this.updateCheckout({
-        ...(customer.shipping_address ? { shipping_address: customer.shipping_address } : {}),
-        ...(customer.first_name ? { first_name: customer.first_name } : {}),
-        ...(customer.last_name ? { last_name: customer.last_name } : {}),
-        ...(customer.phone ? { phone: customer.phone } : {}),
-      });
-
+      // Address and customer profile data are now auto-filled by the dedicated
+      // customer-addresses API via sc-order-shipping-address and sc-order-billing-address
+      // components when loggedIn state changes.
       userState.loggedIn = true;
-      userState.name = user?.name || [customer?.first_name, customer?.last_name].filter(Boolean).join(' ') || 'N/A';
+      userState.name = user?.name || 'N/A';
     } catch (e: any) {
       // If cooldown has elapsed, treat as expired code.
       if (this.resendCooldown <= 0) {
@@ -116,19 +106,6 @@ export class ScCustomerLogin {
         userState.verificationStatus = UNVERIFIED;
         speak(this.error, 'assertive');
       }
-    } finally {
-      this.busy = false;
-    }
-  }
-
-  async updateCheckout(data: any) {
-    try {
-      checkoutState.checkout = (await createOrUpdateCheckout({
-        id: checkoutState.checkout.id,
-        data,
-      })) as Checkout;
-    } catch (error) {
-      this.error = (error as any)?.message || __('Failed to update checkout. Please try again.', 'surecart');
     } finally {
       this.busy = false;
     }
@@ -197,13 +174,12 @@ export class ScCustomerLogin {
     try {
       this.error = '';
       this.busy = true;
-      const { name, email, nonce, customer } = (await apiFetch({
+      const { name, email, nonce } = (await apiFetch({
         method: 'POST',
         path: 'surecart/v1/login',
         data: {
           login: userState.email,
           password: this.password,
-          checkout_mode: checkoutState.mode,
         },
       })) as any;
 
@@ -213,16 +189,6 @@ export class ScCustomerLogin {
         // @ts-ignore
         apiFetch.nonceMiddleware.nonce = nonce;
       }
-
-      // Update checkout before setting user state — setting loggedIn unmounts this component.
-      // Pass customer profile data from the login response to auto-fill the checkout.
-      const customerData = customer || {};
-      await this.updateCheckout({
-        ...(customerData.shipping_address ? { shipping_address: customerData.shipping_address } : {}),
-        ...(customerData.first_name ? { first_name: customerData.first_name } : {}),
-        ...(customerData.last_name ? { last_name: customerData.last_name } : {}),
-        ...(customerData.phone ? { phone: customerData.phone } : {}),
-      });
 
       this.verified = true;
 

@@ -7,6 +7,8 @@ import { createOrUpdateCheckout } from '../../../../services/session';
 import { Address, Checkout } from '../../../../types';
 import { fullShippingAddressRequired, shippingAddressRequired } from '@store/checkout/getters';
 import { formLoading } from '@store/form/getters';
+import { state as userState, onChange as onUserChange } from '@store/user';
+import { fetchCustomerAddresses, clearCustomerAddressCache } from '../../../../services/customer-address';
 
 @Component({
   tag: 'sc-order-shipping-address',
@@ -82,12 +84,55 @@ export class ScOrderShippingAddress {
     return this.input?.reportValidity?.();
   }
 
+  /** Check if all address fields (except country) are empty. */
+  isAddressEmpty() {
+    const addressKeys = Object.keys(this.address).filter(key => key !== 'country');
+    return addressKeys.every(key => !this.address[key]);
+  }
+
   prefillAddress() {
     // check if address keys are empty, if so, update them.
-    const addressKeys = Object.keys(this.address).filter(key => key !== 'country');
-    const emptyAddressKeys = addressKeys.filter(key => !this.address[key]);
-    if (emptyAddressKeys.length === addressKeys.length) {
+    if (this.isAddressEmpty()) {
       this.address = { ...this.address, ...(checkoutState.checkout?.shipping_address as Address) };
+    }
+  }
+
+  /** Fetch and prefill shipping address from customer profile if user is logged in. */
+  async prefillFromCustomerProfile() {
+    if (!userState.loggedIn) return;
+    if (!this.isAddressEmpty()) return;
+
+    try {
+      const data = await fetchCustomerAddresses(checkoutState.mode);
+      const shippingAddress = data?.shipping_address;
+
+      // Only prefill if we got valid address data and fields are still empty.
+      if (shippingAddress && !Array.isArray(shippingAddress) && Object.keys(shippingAddress).length && this.isAddressEmpty()) {
+        this.address = { ...this.address, ...shippingAddress };
+
+        // Update the checkout with all prefilled customer data (shipping, billing, name, phone).
+        if (checkoutState.checkout?.id) {
+          const billingAddress = data?.billing_address;
+          lockCheckout('shipping-address');
+          try {
+            checkoutState.checkout = (await createOrUpdateCheckout({
+              id: checkoutState.checkout.id,
+              data: {
+                shipping_address: this.address as Address,
+                ...(billingAddress && !Array.isArray(billingAddress) && Object.keys(billingAddress).length ? { billing_address: billingAddress } : {}),
+                ...(data.first_name ? { first_name: data.first_name } : {}),
+                ...(data.last_name ? { last_name: data.last_name } : {}),
+                ...(data.phone ? { phone: data.phone } : {}),
+              },
+            })) as Checkout;
+          } finally {
+            unLockCheckout('shipping-address');
+          }
+        }
+      }
+    } catch (e) {
+      // Silently fail — auto-fill is a convenience feature.
+      console.error(e);
     }
   }
 
@@ -98,6 +143,17 @@ export class ScOrderShippingAddress {
 
     this.prefillAddress();
     onChange('checkout', () => this.prefillAddress());
+
+    // Fetch customer address from API for logged-in users.
+    this.prefillFromCustomerProfile();
+
+    // Also fetch when user logs in mid-checkout.
+    onUserChange('loggedIn', loggedIn => {
+      if (loggedIn) {
+        clearCustomerAddressCache();
+        this.prefillFromCustomerProfile();
+      }
+    });
   }
 
   render() {

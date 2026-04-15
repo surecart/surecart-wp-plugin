@@ -101,31 +101,6 @@ class VerificationCodeController extends RestController {
 			return $logged_in;
 		}
 
-		// Fetch customer profile data for auto-filling checkout fields.
-		// Only fetch when called from a checkout context with auto-login enabled.
-		if ( $request->get_param( 'checkout_mode' ) && (bool) get_option( 'surecart_checkout_auto_login', false ) ) {
-			$mode     = $request->get_param( 'checkout_mode' );
-			$customer = $user->customer( $mode, [ 'shipping_address', 'billing_address' ] );
-
-			if ( $customer && ! is_wp_error( $customer ) ) {
-				$verify->customer = [
-					'first_name'       => $customer->first_name ?? $user->display_name ?? $user->user_login,
-					'last_name'        => $customer->last_name ?? '',
-					'phone'            => $customer->phone ?? '',
-					'shipping_address' => $customer->shipping_address ?? [],
-					'billing_address'  => $customer->billing_address ?? [],
-				];
-			} else {
-				$verify->customer = [
-					'first_name'       => $user->display_name ?? $user->user_login,
-					'last_name'        => '',
-					'phone'            => '',
-					'shipping_address' => [],
-					'billing_address'  => [],
-				];
-			}
-		}
-
 		$verify->name         = $user->display_name ?? $user->user_login;
 		$verify->nonce        = ( wp_installing() && ! is_multisite() ) ? '' : wp_create_nonce( 'wp_rest' );
 		$redirect_to          = $request->get_param( 'redirect_to' );
