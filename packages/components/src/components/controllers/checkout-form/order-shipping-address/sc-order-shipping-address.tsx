@@ -8,7 +8,7 @@ import { Address, Checkout } from '../../../../types';
 import { fullShippingAddressRequired, shippingAddressRequired } from '@store/checkout/getters';
 import { formLoading } from '@store/form/getters';
 import { state as userState, onChange as onUserChange } from '@store/user';
-import { fetchCustomerAddresses, clearCustomerAddressCache } from '../../../../services/customer-address';
+import { getCustomerAddresses } from '../../../../services/customer-address';
 
 @Component({
   tag: 'sc-order-shipping-address',
@@ -103,7 +103,7 @@ export class ScOrderShippingAddress {
     if (!this.isAddressEmpty()) return;
 
     try {
-      const data = await fetchCustomerAddresses(checkoutState.mode);
+      const data = await getCustomerAddresses(checkoutState.mode);
       const shippingAddress = data?.shipping_address;
 
       // Only prefill if we got valid address data and fields are still empty.
@@ -150,7 +150,6 @@ export class ScOrderShippingAddress {
     // Also fetch when user logs in mid-checkout.
     onUserChange('loggedIn', loggedIn => {
       if (loggedIn) {
-        clearCustomerAddressCache();
         this.prefillFromCustomerProfile();
       }
     });

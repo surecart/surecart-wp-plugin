@@ -7,7 +7,7 @@ import { lockCheckout, unLockCheckout } from '@store/checkout/mutations';
 import { createOrUpdateCheckout } from '@services/session';
 import { ScCheckboxCustomEvent } from 'src/components';
 import { state as userState, onChange as onUserChange } from '@store/user';
-import { fetchCustomerAddresses, clearCustomerAddressCache } from '../../../../services/customer-address';
+import { getCustomerAddresses } from '../../../../services/customer-address';
 
 @Component({
   tag: 'sc-order-billing-address',
@@ -68,7 +68,7 @@ export class ScOrderBillingAddress {
     if (!this.isAddressEmpty()) return;
 
     try {
-      const data = await fetchCustomerAddresses(checkoutState.mode);
+      const data = await getCustomerAddresses(checkoutState.mode);
       const billingAddress = data?.billing_address;
 
       // Only prefill local UI state. The shipping component handles the checkout API update
@@ -96,7 +96,6 @@ export class ScOrderBillingAddress {
     // Also fetch when user logs in mid-checkout.
     onUserChange('loggedIn', loggedIn => {
       if (loggedIn) {
-        clearCustomerAddressCache();
         this.prefillFromCustomerProfile();
       }
     });
