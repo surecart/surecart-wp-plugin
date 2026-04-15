@@ -100,17 +100,7 @@ export default function ({ mcpUrl, configJson, copied, onCopy }) {
 							'Locate and open the MCP config file in a text editor:',
 							'surecart'
 						)}
-						<div
-							css={css`
-								margin: var(--sc-spacing-x-small) 0 0;
-								padding: 1em;
-								background: var(--sc-color-gray-50);
-								border: 1px solid var(--sc-color-gray-200);
-								border-radius: var(--sc-border-radius-medium);
-								font-size: var(--sc-font-size-small);
-								line-height: 1.7;
-							`}
-						>
+						<div>
 							<div>
 								<strong>
 									{__(
