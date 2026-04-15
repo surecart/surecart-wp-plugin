@@ -27,14 +27,29 @@ html:has(.sc-drawer.open) {
 	scrollbar-gutter: stable;
 }
 
-// Fix for themes that dequeue WordPress global styles (e.g., Etch).
-// Without these, block groups using is-layout-flex/grid lose their layout.
-.sc-cart-drawer {
-	.is-layout-flex {
+// Fallback layout styles for themes that dequeue WP block-library/global styles (e.g., Etch).
+// Wrapped in :where() for zero specificity so block editor customizations always win.
+:where(.sc-cart-drawer) {
+	:where(.is-layout-flex) {
 		display: flex;
+		gap: 0.5em;
 	}
 
-	.is-layout-grid {
+	:where(.is-layout-grid) {
 		display: grid;
+	}
+
+	// Flow layout defaults.
+	:where(.is-layout-flow) > :first-child {
+		margin-block-start: 0;
+	}
+
+	:where(.is-layout-flow) > * + * {
+		margin-block-start: var(--wp--style--block-gap, 0.5em);
+	}
+
+	// Line items gap matching the cart template's blockGap: 2em.
+	:where(.wp-block-surecart-slide-out-cart-line-items) > * + * {
+		margin-block-start: 2em;
 	}
 }
