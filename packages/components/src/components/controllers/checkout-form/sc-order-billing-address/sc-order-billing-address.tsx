@@ -49,8 +49,7 @@ export class ScOrderBillingAddress {
   }
 
   prefillAddress() {
-    // Autofill (including logged-in customer profile) is driven via checkoutState.checkout
-    // by sc-login-provider. Only merge when our local fields are empty so we never overwrite typed data.
+    // Autofill is handled by sc-checkout-autofill-provider which patches checkoutState.checkout with any logged-in customer profile data.
     if (isAddressEmpty(this.address)) {
       this.address = { ...this.address, ...(checkoutState.checkout?.billing_address as Address) };
     }
