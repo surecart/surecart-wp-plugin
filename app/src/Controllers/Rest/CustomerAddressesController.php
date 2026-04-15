@@ -22,28 +22,23 @@ class CustomerAddressesController extends RestController {
 		$mode = $request->get_param( 'mode' ) ?? 'live';
 		$user = User::current();
 
-		$customer_id = $user->customerId( $mode );
+		$customer_id           = $user->customerId( $mode );
+		$default_customer_data = [
+			'shipping_address' => [],
+			'billing_address'  => [],
+			'first_name'       => '',
+			'last_name'        => '',
+			'phone'            => '',
+		];
 
 		if ( empty( $customer_id ) ) {
-			return [
-				'shipping_address' => [],
-				'billing_address'  => [],
-				'first_name'       => '',
-				'last_name'        => '',
-				'phone'            => '',
-			];
+			return $default_customer_data;
 		}
 
 		$customer = $user->customer( $mode, [ 'shipping_address', 'billing_address' ] );
 
 		if ( ! $customer || is_wp_error( $customer ) ) {
-			return [
-				'shipping_address' => [],
-				'billing_address'  => [],
-				'first_name'       => '',
-				'last_name'        => '',
-				'phone'            => '',
-			];
+			return $default_customer_data;
 		}
 
 		return [
