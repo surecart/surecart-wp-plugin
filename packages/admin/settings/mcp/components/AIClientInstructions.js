@@ -308,10 +308,7 @@ export default ({ restUrl, appPasswordsUrl }) => {
 							<li>
 								{__('Click', 'surecart')}{' '}
 								<strong>
-									{__(
-										'Add New Application Password',
-										'surecart'
-									)}
+									{__('Add Application Password', 'surecart')}
 								</strong>
 								.
 							</li>
