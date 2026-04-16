@@ -367,6 +367,13 @@ export interface Variant {
   product: string | Product;
   sku?: string | null;
   display_amount?: string;
+  downloads_enabled?: boolean | null;
+  current_release_download?: string | Download | null;
+  downloads?: {
+    object: 'list';
+    pagination: Pagination;
+    data: Array<Download>;
+  };
   created_at: number;
   updated_at: number;
 }
@@ -965,6 +972,7 @@ export interface Purchase {
   line_item: string | LineItem;
   order: string | Order;
   product: string | Product;
+  variant?: string | Variant;
   refund: string | Refund;
   subscription: string | Subscription;
   license: string | License;

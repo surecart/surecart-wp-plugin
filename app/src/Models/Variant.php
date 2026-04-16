@@ -44,6 +44,16 @@ class Variant extends Model {
 	}
 
 	/**
+	 * Set the current_release_download attribute
+	 *
+	 * @param  mixed $value Download properties.
+	 * @return void
+	 */
+	public function setCurrentReleaseDownloadAttribute( $value ) {
+		$this->setRelation( 'current_release_download', $value, Download::class );
+	}
+
+	/**
 	 * Get the display amount attribute
 	 *
 	 * @return string
