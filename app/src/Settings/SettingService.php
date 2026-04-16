@@ -373,7 +373,7 @@ class SettingService {
 				'type'              => 'integer',
 				'show_in_rest'      => true,
 				'sanitize_callback' => 'absint',
-				'default'           => 20,
+				'default'           => 24,
 				'autoload'          => false,
 			]
 		);
@@ -426,9 +426,9 @@ class SettingService {
 	 * @return int
 	 */
 	public function getLearnRemainingSteps() {
-		$total     = (int) $this->get( 'learn_total_steps', 0 );
+		$total     = (int) $this->get( 'learn_total_steps', 24 );
 		$completed = $this->get( 'learn_completed_steps', [] );
-		return $total ? max( 0, $total - count( (array) $completed ) ) : 0;
+		return max( 0, $total - count( (array) $completed ) );
 	}
 
 	/**

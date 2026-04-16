@@ -60,6 +60,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\Dashboard\\' )
 ->handle( 'DashboardController@index' );
 
+/*
+|--------------------------------------------------------------------------
+| Learn
+|--------------------------------------------------------------------------
+*/
+\SureCart::route()
+->get()
+->where( 'admin', 'sc-learn' )
+->middleware( 'user.can:manage_options' )
+->middleware( 'assets.components' )
+->middleware( 'assets.brand_colors' )
+->setNamespace( '\\SureCart\\Controllers\\Admin\\Learn\\' )
+->handle( 'LearnController@index' );
+
 
 /*
 |--------------------------------------------------------------------------
@@ -562,8 +576,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 		// Integrations.
 		\SureCart::route()->get()->where( 'sc_url_var', 'integrations', 'tab' )->name( 'settings.integrations' )->handle( 'Integrations@show' );
 
-		// Learn.
-		\SureCart::route()->get()->where( 'sc_url_var', 'learn', 'tab' )->name( 'settings.learn' )->handle( 'LearnSettings@show' );
 	}
 );
 
