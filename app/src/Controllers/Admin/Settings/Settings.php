@@ -103,7 +103,8 @@ class Settings {
 			$handle,
 			'scSettingsData',
 			[
-				'has_api_token' => (bool) \SureCart\Models\ApiToken::get(),
+				'has_api_token'           => (bool) \SureCart\Models\ApiToken::get(),
+				'abilities_api_available' => function_exists( 'wp_register_ability_category' ),
 			]
 		);
 
