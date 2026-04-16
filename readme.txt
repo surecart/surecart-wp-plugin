@@ -433,7 +433,6 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 - Fix: Product review form dialog could sometimes block the cart/buy buttons.
 - Fix: Alignment issue with tags in the customer dashboard.
 - Fix: PayPal locale issue where buttons could render in the user's browser language instead of the site language.
-- Fix: Product review buttons not applying custom border radius.
 
 = 4.1.1 - April 8th, 2026 =
 - New: SureCart Abilities API for AI-powered store management.
