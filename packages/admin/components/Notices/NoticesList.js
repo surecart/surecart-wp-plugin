@@ -1,6 +1,6 @@
+import { Fragment } from '@wordpress/element';
 import { ScAlert } from '@surecart/components-react';
 import { useDispatch, useSelect } from '@wordpress/data';
-import { __ } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
 
 export default ({ margin = '0', scrollOnOpen = true, type: noticeType }) => {
@@ -16,6 +16,8 @@ export default ({ margin = '0', scrollOnOpen = true, type: noticeType }) => {
 	const alertType = {
 		error: 'danger',
 		notice: 'info',
+		info: 'info',
+		success: 'success',
 		warning: 'warning',
 	};
 
@@ -32,12 +34,58 @@ export default ({ margin = '0', scrollOnOpen = true, type: noticeType }) => {
 				});
 			}}
 		>
-			{filteredNotices.map((notice, index) => {
-				if (0 === index) {
-					return <span slot="title">{notice.content}</span>;
-				}
-				return notice.content;
-			})}
+			{filteredNotices.map((notice, index) => (
+				<Fragment key={notice.id}>
+					<p
+						style={{
+							margin: index === 0 ? 0 : '0.5rem 0 0',
+							whiteSpace: 'pre-line',
+						}}
+					>
+						{notice.content}
+					</p>
+					{notice.actions?.length > 0 && (
+						<div
+							style={{
+								display: 'flex',
+								flexWrap: 'wrap',
+								gap: '0.75rem',
+								marginTop: '0.5rem',
+							}}
+						>
+							{notice.actions.map((action, actionIndex) =>
+								action.url ? (
+									<a
+										key={actionIndex}
+										href={action.url}
+										target="_blank"
+										rel="noopener noreferrer"
+									>
+										{action.label}
+									</a>
+								) : (
+									<button
+										key={actionIndex}
+										type="button"
+										onClick={action.onClick}
+										style={{
+											background: 'none',
+											border: 'none',
+											padding: 0,
+											cursor: 'pointer',
+											textDecoration: 'underline',
+											font: 'inherit',
+											color: 'inherit',
+										}}
+									>
+										{action.label}
+									</button>
+								)
+							)}
+						</div>
+					)}
+				</Fragment>
+			))}
 		</ScAlert>
 	);
 };

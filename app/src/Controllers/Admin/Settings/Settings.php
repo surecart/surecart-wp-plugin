@@ -106,5 +106,12 @@ class Settings {
 				'show_learn'    => (bool) get_option( 'surecart_learn_admin_menu', true ),
 			]
 		);
+
+		// Localize data for the MCP settings tab (client-side routed).
+		wp_localize_script(
+			$handle,
+			'scMCPData',
+			MCPSettings::getLocalizedData()
+		);
 	}
 }
