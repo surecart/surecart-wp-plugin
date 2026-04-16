@@ -7,80 +7,22 @@ use SureCart\Support\Currency;
 use SureCart\Support\TimeDate;
 
 /**
- * Controls the settings page.
+ * Settings controller for the client-side routed settings.
  */
-abstract class BaseSettings {
+class Settings {
 	/**
-	 * Script handles for pages
-	 *
-	 * @var array
-	 */
-	protected $scripts = [];
-
-	/**
-	 * The template for the page.
-	 *
-	 * @var string
-	 */
-	protected $template = 'admin/settings-page';
-
-	/**
-	 * Additional dependencies for this page.
-	 *
-	 * @var array
-	 */
-	protected $dependencies = [];
-
-	/**
-	 * Tabs for the page.
-	 *
-	 * @var array
-	 */
-	protected $tabs = [];
-
-	/**
-	 * Constructor.
-	 */
-	public function __construct() {
-		$this->tabs = [
-			'brand'                          => __( 'Design & Branding', 'surecart' ),
-			'order'                          => __( 'Orders & Invoices', 'surecart' ),
-			'abandoned_checkout'             => __( 'Abandoned Checkout', 'surecart' ),
-			'customer_notification_protocol' => __( 'Notifications', 'surecart' ),
-			'subscription_protocol'          => __( 'Subscriptions', 'surecart' ),
-			'subscription_preservation'      => __( 'Subscription Saver', 'surecart' ),
-			'dynamic_pricing'                => __( 'Dynamic Pricing', 'surecart' ),
-			'tax_protocol'                   => __( 'Taxes', 'surecart' ),
-			'review_protocol'                => __( 'Reviews', 'surecart' ),
-			'processors'                     => __( 'Payment Processors', 'surecart' ),
-			'export'                         => __( 'Data Export', 'surecart' ),
-			'connection'                     => __( 'Connection', 'surecart' ),
-			'integrations'                   => __( 'Integrations', 'surecart' ),
-			'advanced'                       => __( 'Advanced', 'surecart' ),
-		];
-	}
-
-	/**
-	 * Show the page.
+	 * Show the settings page.
 	 *
 	 * @param \SureCartCore\Requests\RequestInterface $request Request.
 	 * @return function
 	 */
 	public function show( \SureCartCore\Requests\RequestInterface $request ) {
-		// don't show admin notices on settings pages.
 		remove_all_actions( 'admin_notices' );
+		add_action( 'admin_enqueue_scripts', [ $this, 'enqueueScripts' ] );
 
-		add_action( 'admin_enqueue_scripts', [ $this, 'showScripts' ] );
-
-		return \SureCart::view( $this->template )->with(
+		return \SureCart::view( 'admin/settings-page' )->with(
 			[
-				'tab'           => $request->query( 'tab' ) ?? '',
-				'breadcrumb'    => ! empty( $this->tabs[ $request->query( 'tab' ) ?? '' ] ) ? $this->tabs[ $request->query( 'tab' ) ?? '' ] : '',
-				'is_free'       => (bool) ( \SureCart::account()->plan->free ?? true ),
-				'entitlements'  => \SureCart::account()->entitlements,
-				'upgrade_url'   => \SureCart::config()->links->purchase,
-				'brand_color'   => \SureCart::account()->brand->color ?? null,
-				'status'        => $request->query( 'status' ),
+				'breadcrumb'    => '',
 				'claim_url'     => ! \SureCart::account()->claimed ? \SureCart::routeUrl( 'account.claim' ) : '',
 				'claim_expired' => \SureCart::account()->claim_expired ?? false,
 			]
@@ -88,28 +30,14 @@ abstract class BaseSettings {
 	}
 
 	/**
-	 * Enqueue the show scripts.
+	 * Enqueue the scripts and styles for the settings.
 	 *
 	 * @return void
 	 */
-	public function showScripts() {
-		if ( ! empty( $this->scripts['show'] ) ) {
-			$this->enqueue( $this->scripts['show'][0], $this->scripts['show'][1] );
-		}
-	}
-
-	/**
-	 * Enqueue a script.
-	 *
-	 * @param string $handle Script handle.
-	 * @param string $path  Path to script.
-	 * @param array  $deps Dependencies.
-	 *
-	 * @return void
-	 */
-	public function enqueue( $handle, $path, $deps = [] ) {
-		$deps = array_merge( $deps, $this->dependencies );
-		$deps = array_merge( $deps, [ 'sc-ui-data', 'wp-data', 'wp-core-data' ] );
+	public function enqueueScripts() {
+		$handle = 'surecart/scripts/admin/settings';
+		$path   = 'admin/settings';
+		$deps   = [ 'sc-ui-data', 'wp-data', 'wp-core-data' ];
 
 		wp_enqueue_media();
 		wp_enqueue_style( 'wp-components' );
@@ -122,7 +50,6 @@ abstract class BaseSettings {
 		// automatically load dependencies and version.
 		$asset_file = include plugin_dir_path( SURECART_PLUGIN_FILE ) . "dist/$path.asset.php";
 
-		// Enqueue scripts.
 		wp_enqueue_script(
 			$handle,
 			trailingslashit( \SureCart::core()->assets()->getUrl() ) . "dist/$path.js",
@@ -169,6 +96,22 @@ abstract class BaseSettings {
 					? admin_url( 'post.php?post=' . \SureCart::pages()->getId( 'dashboard' ) . '&action=edit' )
 					: '',
 			]
+		);
+
+		// Localize data needed by the React sidebar.
+		wp_localize_script(
+			$handle,
+			'scSettingsData',
+			[
+				'has_api_token' => (bool) \SureCart\Models\ApiToken::get(),
+			]
+		);
+
+		// Localize data for the MCP settings tab (client-side routed).
+		wp_localize_script(
+			$handle,
+			'scMCPData',
+			MCPSettings::getLocalizedData()
 		);
 	}
 }

@@ -79,6 +79,12 @@
 			<sc-icon slot="prefix" style="width: 18px; height: 18px; opacity: 0.7;" name="zap"></sc-icon>
 			<?php esc_html_e( 'Integrations', 'surecart' ); ?>
 		</sc-tab>
+		<?php if ( function_exists( 'wp_register_ability_category' ) ) : ?>
+		<sc-tab href="<?php echo esc_url( add_query_arg( [ 'tab' => 'mcp' ], menu_page_url( 'sc-settings', false ) ) ); ?>" <?php echo 'mcp' === $tab ? 'active' : ''; ?>>
+			<sc-icon slot="prefix" style="width: 18px; height: 18px;" name="cpu"></sc-icon>
+			<?php esc_html_e( 'MCP', 'surecart' ); ?>
+		</sc-tab>
+		<?php endif; ?>
 	<?php endif; ?>
 
 	<sc-tab href="<?php echo esc_url( add_query_arg( [ 'tab' => 'connection' ], menu_page_url( 'sc-settings', false ) ) ); ?>" <?php echo 'connection' === $tab ? 'active' : ''; ?> >

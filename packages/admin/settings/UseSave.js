@@ -11,11 +11,37 @@ export const isKeepBusy = () => _keepBusy;
 
 export default function useSave() {
 	const { createSuccessNotice } = useDispatch(noticesStore);
-	const { saveEditedEntityRecord } = useDispatch(coreStore);
+	const { saveEditedEntityRecord, editEntityRecord } =
+		useDispatch(coreStore);
 
-	/**
-	 * Handle the form submission
-	 */
+	const discard = () => {
+		const dirtyRecords =
+			select(coreStore).__experimentalGetDirtyEntityRecords();
+
+		dirtyRecords.forEach(({ kind, name, key: recordId }) => {
+			const edits = select(coreStore).getEntityRecordEdits(
+				kind,
+				name,
+				recordId
+			);
+			if (!edits || !Object.keys(edits).length) {
+				return;
+			}
+			const raw = select(coreStore).getRawEntityRecord(
+				kind,
+				name,
+				recordId
+			);
+			const resetEdits = {};
+			Object.keys(edits).forEach((editKey) => {
+				resetEdits[editKey] = raw?.[editKey];
+			});
+			editEntityRecord(kind, name, recordId, resetEdits, {
+				undoIgnore: true,
+			});
+		});
+	};
+
 	const save = async ({ successMessage, keepBusy }) => {
 		if (keepBusy) {
 			_keepBusy = true;
@@ -45,5 +71,6 @@ export default function useSave() {
 
 	return {
 		save,
+		discard,
 	};
 }

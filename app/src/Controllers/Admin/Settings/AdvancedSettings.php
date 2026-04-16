@@ -2,23 +2,12 @@
 
 namespace SureCart\Controllers\Admin\Settings;
 
-use SureCart\Models\ApiToken;
-
 /**
- * Controls the settings page.
+ * Handles the Advanced settings form submission.
  */
-class AdvancedSettings extends BaseSettings {
+class AdvancedSettings {
 	/**
-	 * Script handles for pages
-	 *
-	 * @var array
-	 */
-	protected $scripts = [
-		'show' => [ 'surecart/scripts/admin/advanced', 'admin/settings/advanced' ],
-	];
-
-	/**
-	 * Save the page.
+	 * Save the advanced settings.
 	 *
 	 * @param \SureCartCore\Requests\RequestInterface $request Request.
 	 * @return function
@@ -29,7 +18,7 @@ class AdvancedSettings extends BaseSettings {
 		// update uninstall option.
 		update_option( 'sc_uninstall', $request->body( 'uninstall' ) === 'on' );
 
-		// update uninstall option.
+		// update stripe payment element option.
 		update_option( 'sc_stripe_payment_element', $request->body( 'stripe-payment-element' ) !== 'off' );
 
 		// update load blocks styles on demand option.

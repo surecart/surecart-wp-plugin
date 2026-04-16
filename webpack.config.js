@@ -116,92 +116,16 @@ module.exports = {
 		),
 
 		/**
-		 * Settings.
+		 * Settings root entry for SPA settings pages with tabs.
 		 */
-		['admin/settings/account']: path.resolve(
+		['admin/settings']: path.resolve(
 			__dirname,
-			'packages/admin/settings/account/index.js'
+			'packages/admin/settings/settings-root.js'
 		),
-		['admin/settings/dynamic-pricing']: path.resolve(
-			__dirname,
-			'packages/admin/settings/dynamic-pricing/index.js'
-		),
-		['admin/settings/affiliation-protocol']: path.resolve(
-			__dirname,
-			'packages/admin/settings/affiliation-protocol/index.js'
-		),
-		['admin/settings/review-protocol']: path.resolve(
-			__dirname,
-			'packages/admin/settings/review-protocol/index.js'
-		),
-		['admin/settings/abandoned']: path.resolve(
-			__dirname,
-			'packages/admin/settings/abandoned/index.js'
-		),
-		['admin/settings/subscription']: path.resolve(
-			__dirname,
-			'packages/admin/settings/subscription/index.js'
-		),
-		['admin/settings/subscription-preservation']: path.resolve(
-			__dirname,
-			'packages/admin/settings/subscription-preservation/index.js'
-		),
-		['admin/settings/processors']: path.resolve(
-			__dirname,
-			'packages/admin/settings/processors/index.js'
-		),
-		['admin/settings/tax']: path.resolve(
-			__dirname,
-			'packages/admin/settings/tax/index.js'
-		),
-		['admin/settings/export']: path.resolve(
-			__dirname,
-			'packages/admin/settings/export/index.js'
-		),
-		['admin/settings/tax-region']: path.resolve(
-			__dirname,
-			'packages/admin/settings/tax-region/index.js'
-		),
-		['admin/settings/brand']: path.resolve(
-			__dirname,
-			'packages/admin/settings/brand/index.js'
-		),
-		['admin/settings/order']: path.resolve(
-			__dirname,
-			'packages/admin/settings/order/index.js'
-		),
-		['admin/settings/customer']: path.resolve(
-			__dirname,
-			'packages/admin/settings/customer/index.js'
-		),
-		['admin/settings/connection']: path.resolve(
-			__dirname,
-			'packages/admin/settings/connection/index.js'
-		),
-		['admin/settings/advanced']: path.resolve(
-			__dirname,
-			'packages/admin/settings/advanced/index.js'
-		),
-		['admin/settings/upgrade']: path.resolve(
-			__dirname,
-			'packages/admin/settings/upgrade/index.js'
-		),
-		['admin/settings/shipping']: path.resolve(
-			__dirname,
-			'packages/admin/settings/shipping/index.js'
-		),
-		['admin/settings/shipping/profile']: path.resolve(
-			__dirname,
-			'packages/admin/settings/shipping/profile/index.js'
-		),
-		['admin/settings/integrations']: path.resolve(
-			__dirname,
-			'packages/admin/settings/integrations/index.js'
-		),
-		['admin/settings/display-currency']: path.resolve(
-			__dirname,
-			'packages/admin/settings/display-currency/index.js'
-		),
+
+		/**
+		 * Standalone Learn page (separate from Settings SPA).
+		 */
 		['admin/settings/learn']: path.resolve(
 			__dirname,
 			'packages/admin/settings/learn/index.js'
@@ -266,6 +190,27 @@ module.exports = {
 	},
 	optimization: {
 		...defaultConfig.optimization,
+		splitChunks: {
+			...defaultConfig.optimization?.splitChunks,
+			cacheGroups: {
+				...defaultConfig.optimization?.splitChunks?.cacheGroups,
+				style: {
+					type: 'css/mini-extract',
+					test: /[\\/]style(\.module)?\.(pc|sc|sa|c)ss$/,
+					chunks: 'all',
+					enforce: true,
+					name(_, chunks, cacheGroupKey) {
+						const chunkName = chunks[0].name;
+						if (!chunkName) {
+							return cacheGroupKey;
+						}
+						return `${path.dirname(
+							chunkName
+						)}/${cacheGroupKey}-${path.basename(chunkName)}`;
+					},
+				},
+			},
+		},
 		minimizer: [
 			new TerserPlugin({
 				parallel: true,
