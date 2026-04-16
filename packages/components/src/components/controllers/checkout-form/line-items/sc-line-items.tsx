@@ -2,10 +2,34 @@ import { Component, h, Prop } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 
 import { state as checkoutState } from '@store/checkout';
-import { LineItem, Product, Variant } from '../../../../types';
+import { LineItem, Price, Product, Variant } from '../../../../types';
 import { removeCheckoutLineItem, updateCheckoutLineItem } from '@store/checkout/mutations';
 import { formBusy } from '@store/form/getters';
 import { getMaxStockQuantity } from '../../../../functions/quantity';
+
+/**
+ * Separate line items into regular items, bundle parents, and components grouped by parent.
+ */
+const groupLineItems = (items: LineItem[]) => {
+  const regular: LineItem[] = [];
+  const bundleParents: LineItem[] = [];
+  const componentsByParent: Record<string, LineItem[]> = {};
+
+  items.forEach(item => {
+    if (item.bundle_parent_id) {
+      if (!componentsByParent[item.bundle_parent_id]) {
+        componentsByParent[item.bundle_parent_id] = [];
+      }
+      componentsByParent[item.bundle_parent_id].push(item);
+    } else if ((item.price as Price)?.bundle) {
+      bundleParents.push(item);
+    } else {
+      regular.push(item);
+    }
+  });
+
+  return { regular, bundleParents, componentsByParent };
+};
 
 /**
  * @part base - The component base
@@ -77,9 +101,32 @@ export class ScLineItems {
       return bHasSwap - aHasSwap;
     });
 
+    // Group bundle parents and their components.
+    const { regular, bundleParents, componentsByParent } = groupLineItems(sortedItems);
+
     return (
       <div class="line-items" part="base" tabindex="0">
-        {sortedItems.map(item => {
+        {/* Render bundle parents with nested components */}
+        {bundleParents.map(parent => {
+          const components = componentsByParent[parent.id] || [];
+          const max = getMaxStockQuantity(parent?.price?.product as Product, parent?.variant as Variant);
+          return (
+            <div class="line-item" key={parent.id}>
+              <sc-bundle-line-item
+                item={parent}
+                components={components}
+                {...(max ? { max } : {})}
+                editable={this.isEditable(parent)}
+                removable={!parent?.locked && this.removable}
+                onScUpdateQuantity={e => updateCheckoutLineItem({ id: parent.id, data: { quantity: e.detail } })}
+                onScRemove={() => removeCheckoutLineItem(parent?.id)}
+              />
+            </div>
+          );
+        })}
+
+        {/* Render regular (non-bundle) line items */}
+        {regular.map(item => {
           const max = getMaxStockQuantity(item?.price?.product as Product, item?.variant as Variant);
           return (
             <div class={`line-item ${item?.is_swappable ? 'line-item--has-swap' : ''}`}>

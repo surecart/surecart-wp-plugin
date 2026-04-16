@@ -14,6 +14,37 @@ class Price extends Model {
 	use CanDuplicate;
 
 	/**
+	 * Set the bundle_items collection from API expansion.
+	 *
+	 * @param  array $value Bundle items data.
+	 * @return void
+	 */
+	public function setBundleItemsAttribute( $value ) {
+		$this->setCollection( 'bundle_items', $value, BundleItem::class );
+	}
+
+	/**
+	 * Is this a bundle price?
+	 *
+	 * @return bool
+	 */
+	public function getIsBundleAttribute() {
+		return ! empty( $this->bundle );
+	}
+
+	/**
+	 * Get the bundle savings display amount.
+	 *
+	 * @return string
+	 */
+	public function getBundleSavingsDisplayAmountAttribute() {
+		if ( empty( $this->bundle_savings_amount ) ) {
+			return '';
+		}
+		return Currency::format( $this->bundle_savings_amount, $this->currency );
+	}
+
+	/**
 	 * Rest API endpoint
 	 *
 	 * @var string

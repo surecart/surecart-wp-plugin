@@ -156,6 +156,16 @@ export class ScPriceChoiceContainer {
                   {this.priceData?.setup_fee_name || (this.priceData?.setup_fee_amount < 0 ? __('Discount', 'surecart') : __('Setup Fee', 'surecart'))}
                 </div>
               )}
+
+              {!!this.priceData?.bundle && !!this.priceData?.bundle_savings_amount && (
+                <div class="price-choice__bundle-savings">
+                  {sprintf(
+                    /** translators: %s: savings amount */
+                    __('Save %s', 'surecart'),
+                    this.priceData?.bundle_savings_display_amount,
+                  )}
+                </div>
+              )}
             </div>
           )}
         </div>

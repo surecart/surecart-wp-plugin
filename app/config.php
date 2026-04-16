@@ -59,6 +59,7 @@ return array(
 		\SureCart\Rest\AccountRestServiceProvider::class,
 		\SureCart\Rest\BrandRestServiceProvider::class,
 		\SureCart\Rest\BumpRestServiceProvider::class,
+		\SureCart\Rest\BundleItemsRestServiceProvider::class,
 		\SureCart\Rest\UpsellFunnelRestServiceProvider::class,
 		\SureCart\Rest\UpsellRestServiceProvider::class,
 		\SureCart\Rest\FulfillmentRestServiceProvider::class,
@@ -277,7 +278,7 @@ return array(
 		'surecart/form'                      => array( 'sc-checkout', 'sc-form', 'sc-checkout-unsaved-changes-warning', 'sc-line-items-provider', 'sc-block-ui' ),
 		'surecart/heading'                   => array( 'sc-heading' ),
 		'surecart/input'                     => array( 'sc-input' ),
-		'surecart/line-items'                => array( 'sc-line-items', 'sc-line-item', 'sc-line-item-tax', 'sc-product-line-item', 'sc-format-number', 'sc-skeleton' ),
+		'surecart/line-items'                => array( 'sc-line-items', 'sc-line-item', 'sc-line-item-tax', 'sc-product-line-item', 'sc-bundle-line-item', 'sc-format-number', 'sc-skeleton' ),
 		'surecart/logout-button'             => array( 'sc-button' ),
 		'surecart/name'                      => array( 'sc-customer-name', 'sc-input' ),
 		'surecart/first-name'                => array( 'sc-customer-firstname', 'sc-input' ),
@@ -300,6 +301,7 @@ return array(
 		'surecart/product-variant-choices'   => array( 'sc-product-variation-choices' ),
 		'surecart/product-quantity'          => array( 'sc-product-quantity', 'sc-form-control', 'sc-icon', 'sc-quantity-select' ),
 		'surecart/product-collection-badges' => array(),
+		'surecart/product-bundle-items'      => array(),
 	),
 
 	/**

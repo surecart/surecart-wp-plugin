@@ -163,6 +163,14 @@ export interface Price {
   portal_subscription_update_enabled: boolean;
   metadata: { [key: string]: string };
   current_swap?: Swap;
+  bundle?: boolean;
+  bundle_items?: {
+    object: 'list';
+    pagination: Pagination;
+    data: Array<BundleItem>;
+  };
+  bundle_savings_amount?: number;
+  bundle_savings_display_amount?: string;
 }
 export interface VariantOption {
   id: string;
@@ -541,6 +549,15 @@ export interface LineItem extends Object {
   is_swappable?: boolean;
   note?: string;
   display_note?: string;
+  bundle_parent_id?: string;
+  bundle_parent?: string | LineItem;
+  bundle_component?: boolean;
+  bundle_components?: {
+    object: 'list';
+    pagination: Pagination;
+    data: Array<LineItem>;
+  };
+  bundle_allocated_unit_amount?: number;
 }
 
 export interface DeletedItem {
@@ -558,6 +575,20 @@ export interface Fee {
   description: string;
   fee_type: 'manual' | 'bump' | 'setup' | 'upsell';
   line_item: string | LineItem;
+  created_at: number;
+  updated_at: number;
+}
+
+export interface BundleItem {
+  id: string;
+  object: 'bundle_item';
+  bundle_price: string | Price;
+  price: string | Price;
+  product?: string | Product;
+  variant?: string | Variant;
+  quantity: number;
+  position: number;
+  metadata?: { [key: string]: string };
   created_at: number;
   updated_at: number;
 }

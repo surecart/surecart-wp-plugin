@@ -15,6 +15,7 @@ export const ScBadgeNotice = /*@__PURE__*/createReactComponent<JSX.ScBadgeNotice
 export const ScBlockUi = /*@__PURE__*/createReactComponent<JSX.ScBlockUi, HTMLScBlockUiElement>('sc-block-ui');
 export const ScBreadcrumb = /*@__PURE__*/createReactComponent<JSX.ScBreadcrumb, HTMLScBreadcrumbElement>('sc-breadcrumb');
 export const ScBreadcrumbs = /*@__PURE__*/createReactComponent<JSX.ScBreadcrumbs, HTMLScBreadcrumbsElement>('sc-breadcrumbs');
+export const ScBundleLineItem = /*@__PURE__*/createReactComponent<JSX.ScBundleLineItem, HTMLScBundleLineItemElement>('sc-bundle-line-item');
 export const ScButton = /*@__PURE__*/createReactComponent<JSX.ScButton, HTMLScButtonElement>('sc-button');
 export const ScButtonGroup = /*@__PURE__*/createReactComponent<JSX.ScButtonGroup, HTMLScButtonGroupElement>('sc-button-group');
 export const ScCancelDialog = /*@__PURE__*/createReactComponent<JSX.ScCancelDialog, HTMLScCancelDialogElement>('sc-cancel-dialog');

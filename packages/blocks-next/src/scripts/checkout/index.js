@@ -161,6 +161,68 @@ const { state, actions } = store('surecart/checkout', {
 		},
 
 		/**
+		 * Get only regular (non-bundle-component) line items for cart display.
+		 * Bundle components are filtered out — they render nested under their parent.
+		 */
+		get cartLineItems() {
+			return state.checkoutLineItems.filter(
+				(item) => !item.bundle_parent_id
+			);
+		},
+
+		/**
+		 * Check if the current line item (from context) is a bundle parent.
+		 */
+		get isBundleParent() {
+			const { line_item } = getContext();
+			return !line_item?.bundle_parent_id && !!line_item?.price?.bundle;
+		},
+
+		/**
+		 * Get the bundle components for the current line item (from context).
+		 */
+		get bundleComponents() {
+			const { line_item } = getContext();
+			if (!line_item?.price?.bundle) return [];
+			return (state?.checkout?.line_items?.data || []).filter(
+				(item) => item.bundle_parent_id === line_item.id
+			);
+		},
+
+		/**
+		 * Get the count of bundle components.
+		 */
+		get bundleComponentsCount() {
+			return state.bundleComponents.length;
+		},
+
+		/**
+		 * Get the bundle components label text.
+		 */
+		get bundleComponentsLabel() {
+			const count = state.bundleComponentsCount;
+			return count > 0
+				? sprintf(
+						_n(
+							'Includes %d item',
+							'Includes %d items',
+							count,
+							'surecart'
+						),
+						count
+				  )
+				: '';
+		},
+
+		/**
+		 * Get the bundle savings display amount.
+		 */
+		get bundleSavingsAmount() {
+			const { line_item } = getContext();
+			return line_item?.price?.bundle_savings_display_amount || '';
+		},
+
+		/**
 		 * Get the line item fees.
 		 */
 		get lineItemFees() {

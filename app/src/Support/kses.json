@@ -73,6 +73,17 @@
     "class": true,
     "slot": true
   },
+  "sc-bundle-line-item": {
+    "components": true,
+    "editable": true,
+    "item": true,
+    "max": true,
+    "removable": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-button": {
     "autofocus": true,
     "busy": true,

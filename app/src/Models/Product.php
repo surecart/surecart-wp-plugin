@@ -29,7 +29,7 @@ class Product extends Model implements PageModel {
 	 *
 	 * @var array
 	 */
-	protected $sync_expands = array( 'prices', 'product_medias', 'product_media.media', 'variants', 'variant_options', 'product_collections', 'featured_product_media', 'reviews_breakdown' );
+	protected $sync_expands = array( 'prices', 'price.bundle_items', 'bundle_item.price', 'bundle_item.product', 'product_medias', 'product_media.media', 'variants', 'variant_options', 'product_collections', 'featured_product_media', 'reviews_breakdown' );
 
 	/**
 	 * Rest API endpoint

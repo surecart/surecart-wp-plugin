@@ -45,6 +45,7 @@
 
 ### Used by
 
+ - [sc-bundle-line-item](../bundle-line-item)
  - [sc-product-line-item](../product-line-item)
  - [sc-product-quantity](../../controllers/product/sc-product-quantity)
 
@@ -56,6 +57,7 @@
 ```mermaid
 graph TD;
   sc-quantity-select --> sc-icon
+  sc-bundle-line-item --> sc-quantity-select
   sc-product-line-item --> sc-quantity-select
   sc-product-quantity --> sc-quantity-select
   style sc-quantity-select fill:#f9f,stroke:#333,stroke-width:4px

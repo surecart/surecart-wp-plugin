@@ -36,6 +36,7 @@
  - [sc-alert](../alert)
  - [sc-breadcrumb](../breadcrumb)
  - [sc-breadcrumbs](../breadcrumbs)
+ - [sc-bundle-line-item](../bundle-line-item)
  - [sc-cancel-dialog](../../controllers/dashboard/sc-cancel-dialog)
  - [sc-cancel-survey](../../controllers/dashboard/sc-cancel-survey)
  - [sc-cart-form-submit](../../controllers/cart/cart-form-submit)
@@ -106,6 +107,7 @@ graph TD;
   sc-alert --> sc-icon
   sc-breadcrumb --> sc-icon
   sc-breadcrumbs --> sc-icon
+  sc-bundle-line-item --> sc-icon
   sc-cancel-dialog --> sc-icon
   sc-cancel-survey --> sc-icon
   sc-cart-form-submit --> sc-icon

@@ -43,6 +43,44 @@ class LineItem extends Model {
 	}
 
 	/**
+	 * Set the bundle_parent relation (expandable).
+	 *
+	 * @param  string $value Bundle parent line item.
+	 * @return void
+	 */
+	public function setBundleParentAttribute( $value ) {
+		$this->setRelation( 'bundle_parent', $value, self::class );
+	}
+
+	/**
+	 * Set the bundle_components collection (expandable).
+	 *
+	 * @param  array $value Bundle component line items.
+	 * @return void
+	 */
+	public function setBundleComponentsAttribute( $value ) {
+		$this->setCollection( 'bundle_components', $value, self::class );
+	}
+
+	/**
+	 * Is this line item a bundle parent?
+	 *
+	 * @return bool
+	 */
+	public function getIsBundleParentAttribute() {
+		return empty( $this->bundle_parent_id ) && ! empty( $this->price ) && is_a( $this->price, Price::class ) && ! empty( $this->price->bundle );
+	}
+
+	/**
+	 * Is this a bundle component line item?
+	 *
+	 * @return bool
+	 */
+	public function getIsBundleComponentAttribute() {
+		return ! empty( $this->bundle_parent_id );
+	}
+
+	/**
 	 * Get the variant attribute.
 	 *
 	 * @return string
