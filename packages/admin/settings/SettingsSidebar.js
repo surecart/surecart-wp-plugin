@@ -146,6 +146,12 @@ const TABS = [
 		iconStyle: { width: '18px', height: '18px', opacity: '0.7' },
 	},
 	{
+		tab: 'mcp',
+		icon: 'cpu',
+		label: __('MCP', 'surecart'),
+		requiresToken: true,
+	},
+	{
 		tab: 'learn',
 		icon: 'book-open',
 		label: __('Learn', 'surecart'),

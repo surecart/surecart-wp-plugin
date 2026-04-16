@@ -122,10 +122,6 @@ module.exports = {
 			__dirname,
 			'packages/admin/settings/settings-root.js'
 		),
-		['admin/settings/mcp']: path.resolve(
-			__dirname,
-			'packages/admin/settings/mcp/index.js'
-		),
 
 		/**
 		 * Data.

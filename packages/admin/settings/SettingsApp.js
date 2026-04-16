@@ -48,6 +48,7 @@ const tabs = {
 	),
 	connection: lazy(() => import('./connection/ConnectionSettings')),
 	integrations: lazy(() => import('./integrations/Integrations')),
+	mcp: lazy(() => import('./mcp/MCPSettings')),
 	learn: lazy(() => import('./learn/LearnSettings')),
 	advanced: lazy(() => import('./advanced/AdvancedSettings')),
 };

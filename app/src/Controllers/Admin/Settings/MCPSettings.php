@@ -3,18 +3,13 @@
 namespace SureCart\Controllers\Admin\Settings;
 
 /**
- * Controls the MCP settings page.
+ * MCP (Model Context Protocol) settings helper.
+ *
+ * Exposes AJAX handlers for install/activate of the MCP Adapter plugin and
+ * the data required by the client-side MCP settings tab (localized via the
+ * main Settings controller).
  */
-class MCPSettings extends BaseSettings {
-	/**
-	 * Script handles for pages
-	 *
-	 * @var array
-	 */
-	protected $scripts = [
-		'show' => [ 'surecart/scripts/admin/mcp', 'admin/settings/mcp' ],
-	];
-
+class MCPSettings {
 	/**
 	 * The MCP Adapter plugin slug.
 	 *
@@ -38,13 +33,14 @@ class MCPSettings extends BaseSettings {
 	const MCP_ADAPTER_REPO_URL = 'https://github.com/WordPress/mcp-adapter';
 
 	/**
-	 * Enqueue the show scripts.
+	 * Get the data required by the client-side MCP settings tab.
 	 *
-	 * @return void
+	 * Called from the main Settings controller to localize `scMCPData` on
+	 * the shared settings script (the MCP tab no longer has its own entry).
+	 *
+	 * @return array
 	 */
-	public function showScripts() {
-		parent::showScripts();
-
+	public static function getLocalizedData() {
 		if ( ! function_exists( 'get_plugins' ) ) {
 			require_once ABSPATH . 'wp-admin/includes/plugin.php';
 		}
@@ -53,24 +49,20 @@ class MCPSettings extends BaseSettings {
 		$is_installed = isset( $all_plugins[ self::MCP_ADAPTER_SLUG ] );
 		$is_active    = is_plugin_active( self::MCP_ADAPTER_SLUG );
 
-		wp_localize_script(
-			'surecart/scripts/admin/mcp',
-			'scMCPData',
-			[
-				'mcp_adapter_installed'    => $is_installed,
-				'mcp_adapter_active'       => $is_active,
-				'mcp_adapter_download_url' => self::MCP_ADAPTER_DOWNLOAD_URL,
-				'mcp_adapter_repo_url'     => self::MCP_ADAPTER_REPO_URL,
-				'ajax_url'                 => admin_url( 'admin-ajax.php' ),
-				'nonce'                    => wp_create_nonce( 'sc_mcp_adapter_action' ),
-				'site_url'                 => site_url(),
-				'rest_url'                 => rest_url( 'mcp/mcp-adapter-default-server' ),
-				'app_passwords_url'        => admin_url( 'profile.php#application-passwords-section' ),
-				'wp_version'               => get_bloginfo( 'version' ),
-				'abilities_api_available'  => function_exists( 'wp_register_ability_category' ),
-				'current_username'         => wp_get_current_user()->user_login,
-			]
-		);
+		return [
+			'mcp_adapter_installed'    => $is_installed,
+			'mcp_adapter_active'       => $is_active,
+			'mcp_adapter_download_url' => self::MCP_ADAPTER_DOWNLOAD_URL,
+			'mcp_adapter_repo_url'     => self::MCP_ADAPTER_REPO_URL,
+			'ajax_url'                 => admin_url( 'admin-ajax.php' ),
+			'nonce'                    => wp_create_nonce( 'sc_mcp_adapter_action' ),
+			'site_url'                 => site_url(),
+			'rest_url'                 => rest_url( 'mcp/mcp-adapter-default-server' ),
+			'app_passwords_url'        => admin_url( 'profile.php#application-passwords-section' ),
+			'wp_version'               => get_bloginfo( 'version' ),
+			'abilities_api_available'  => function_exists( 'wp_register_ability_category' ),
+			'current_username'         => wp_get_current_user()->user_login,
+		];
 	}
 
 	/**
