@@ -526,7 +526,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 		\SureCart::route()->get()->name( 'settings' )->handle( 'Settings@show' );
 
 		// POST routes still need server-side handling.
-		\SureCart::route()->post()->where( 'sc_url_var', 'advanced', 'tab' )->middleware( 'nonce:update_plugin_settings' )->name( 'settings.advanced.save' )->handle( 'AdvancedSettings@save' );
 		\SureCart::route()->post()->where( 'sc_url_var', 'clear', 'cache' )->middleware( 'nonce:update_plugin_settings' )->handle( 'CacheSettings@clear' );
 	}
 );
