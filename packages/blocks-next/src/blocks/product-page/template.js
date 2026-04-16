@@ -183,6 +183,10 @@ export default [
 					],
 					['surecart/product-description'],
 					[
+						'surecart/product-bundle-items',
+						{ title: 'What\'s Included' },
+					],
+					[
 						'surecart/product-variant-pills',
 						[
 							[

@@ -6,6 +6,29 @@ import { PanelBody, TextControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { useEntityRecord } from '@wordpress/core-data';
 
+/**
+ * Dummy bundle items shown in the editor when no real data exists.
+ * Same pattern as TEST_VARIANTS in product-variant-pills.
+ */
+const DUMMY_BUNDLE_ITEMS = [
+	{
+		id: 'dummy-1',
+		product: { name: __( 'Premium WordPress Theme', 'surecart' ) },
+		quantity: 1,
+	},
+	{
+		id: 'dummy-2',
+		product: { name: __( 'SEO Toolkit Plugin', 'surecart' ) },
+		variant: { name: __( 'Pro', 'surecart' ) },
+		quantity: 1,
+	},
+	{
+		id: 'dummy-3',
+		product: { name: __( 'Stock Photo Pack', 'surecart' ) },
+		quantity: 2,
+	},
+];
+
 export default ({ attributes, setAttributes, context: { postId } }) => {
 	const blockProps = useBlockProps();
 
@@ -15,12 +38,13 @@ export default ({ attributes, setAttributes, context: { postId } }) => {
 		postId
 	);
 
-	// Get bundle items from the initial price.
+	// Get real bundle items from the initial price, fall back to dummy data.
 	const initialPrice = (product?.prices?.data || []).find((p) => !p.archived);
-	const bundleItems = initialPrice?.bundle
-		? initialPrice?.bundle_items?.data || []
-		: [];
-	const isBundle = bundleItems.length > 0;
+	const realBundleItems =
+		initialPrice?.bundle && initialPrice?.bundle_items?.data?.length
+			? initialPrice.bundle_items.data
+			: null;
+	const bundleItems = realBundleItems || DUMMY_BUNDLE_ITEMS;
 
 	return (
 		<>
@@ -35,63 +59,50 @@ export default ({ attributes, setAttributes, context: { postId } }) => {
 			</InspectorControls>
 
 			<div {...blockProps}>
-				{!isBundle ? (
-					<div
-						style={{
-							padding: '16px',
-							background: '#f0f0f0',
-							borderRadius: '4px',
-							fontSize: '13px',
-							color: '#757575',
-						}}
-					>
-						{__(
-							'Bundle items will appear here when the product has a bundle price.',
-							'surecart'
-						)}
-					</div>
-				) : (
-					<>
-						{!!attributes.title && (
-							<div
-								style={{
-									fontWeight: 600,
-									marginBottom: '8px',
-								}}
-							>
-								{attributes.title}
-							</div>
-						)}
-						<ul
-							style={{
-								listStyle: 'none',
-								padding: 0,
-								margin: 0,
-								display: 'grid',
-								gap: '8px',
-							}}
-						>
-							{bundleItems.map((item) => (
+				<div className="sc-bundle-items">
+					{!!attributes.title && (
+						<div className="sc-bundle-items__title">
+							{attributes.title}
+						</div>
+					)}
+
+					<ul className="sc-bundle-items__list">
+						{bundleItems.map((item) => {
+							const name =
+								item.product?.name ||
+								item.price?.name ||
+								__('Component', 'surecart');
+							const variantName = item.variant?.name || '';
+							const quantity = item.quantity ?? 1;
+
+							return (
 								<li
 									key={item.id}
-									style={{
-										display: 'flex',
-										alignItems: 'center',
-										gap: '10px',
-										fontSize: '14px',
-									}}
+									className="sc-bundle-items__item"
 								>
-									<span>{item.product?.name || item.price?.name || __('Component', 'surecart')}</span>
-									{item.quantity > 1 && (
-										<span style={{ color: '#757575' }}>
-											&times; {item.quantity}
+									<div className="sc-bundle-items__item-image-placeholder" />
+
+									<div className="sc-bundle-items__item-info">
+										<span className="sc-bundle-items__item-name">
+											{name}
+										</span>
+										{!!variantName && (
+											<span className="sc-bundle-items__item-variant">
+												{variantName}
+											</span>
+										)}
+									</div>
+
+									{quantity > 1 && (
+										<span className="sc-bundle-items__item-qty">
+											&times; {quantity}
 										</span>
 									)}
 								</li>
-							))}
-						</ul>
-					</>
-				)}
+							);
+						})}
+					</ul>
+				</div>
 			</div>
 		</>
 	);

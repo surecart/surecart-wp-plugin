@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-03-24T17:58:32",
+  "timestamp": "2026-04-16T07:59:11",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.18.3",
@@ -1738,6 +1738,262 @@
       "dependencyGraph": {
         "sc-breadcrumbs": [
           "sc-icon"
+        ]
+      }
+    },
+    {
+      "filePath": "src/components/ui/bundle-line-item/sc-bundle-line-item.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-bundle-line-item",
+      "docs": "Renders a bundle parent line item with its component items nested inside.",
+      "docsTags": [
+        {
+          "name": "part",
+          "text": "base - The component base"
+        },
+        {
+          "name": "part",
+          "text": "bundle-line-item - The bundle line item wrapper"
+        },
+        {
+          "name": "part",
+          "text": "image - The bundle product image"
+        },
+        {
+          "name": "part",
+          "text": "title - The bundle product title"
+        },
+        {
+          "name": "part",
+          "text": "price - The bundle price"
+        },
+        {
+          "name": "part",
+          "text": "components - The bundle components list"
+        },
+        {
+          "name": "part",
+          "text": "component - A single bundle component"
+        },
+        {
+          "name": "part",
+          "text": "savings - The savings badge"
+        }
+      ],
+      "usage": {},
+      "props": [
+        {
+          "name": "components",
+          "type": "LineItem[]",
+          "complexType": {
+            "original": "LineItem[]",
+            "resolved": "LineItem[]",
+            "references": {
+              "LineItem": {
+                "location": "import",
+                "path": "../../../types",
+                "id": "src/types.ts::LineItem"
+              }
+            }
+          },
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "The component line items.",
+          "docsTags": [],
+          "default": "[]",
+          "values": [
+            {
+              "type": "LineItem[]"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "editable",
+          "type": "boolean",
+          "complexType": {
+            "original": "boolean",
+            "resolved": "boolean",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "editable",
+          "reflectToAttr": false,
+          "docs": "Is the line item editable?",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "item",
+          "type": "LineItem",
+          "complexType": {
+            "original": "LineItem",
+            "resolved": "LineItem",
+            "references": {
+              "LineItem": {
+                "location": "import",
+                "path": "../../../types",
+                "id": "src/types.ts::LineItem"
+              }
+            }
+          },
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "The bundle parent line item.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "LineItem"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "max",
+          "type": "number",
+          "complexType": {
+            "original": "number",
+            "resolved": "number",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "max",
+          "reflectToAttr": false,
+          "docs": "Max quantity.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "number"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "removable",
+          "type": "boolean",
+          "complexType": {
+            "original": "boolean",
+            "resolved": "boolean",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "removable",
+          "reflectToAttr": false,
+          "docs": "Is the line item removable?",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [
+        {
+          "event": "scRemove",
+          "detail": "void",
+          "bubbles": false,
+          "complexType": {
+            "original": "void",
+            "resolved": "void",
+            "references": {}
+          },
+          "cancelable": true,
+          "composed": true,
+          "docs": "Emitted when the item is removed.",
+          "docsTags": []
+        },
+        {
+          "event": "scUpdateQuantity",
+          "detail": "number",
+          "bubbles": false,
+          "complexType": {
+            "original": "number",
+            "resolved": "number",
+            "references": {}
+          },
+          "cancelable": true,
+          "composed": true,
+          "docs": "Emitted when the quantity changes.",
+          "docsTags": []
+        }
+      ],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [
+        {
+          "name": "base",
+          "docs": "The component base"
+        },
+        {
+          "name": "bundle-line-item",
+          "docs": "The bundle line item wrapper"
+        },
+        {
+          "name": "component",
+          "docs": "A single bundle component"
+        },
+        {
+          "name": "components",
+          "docs": "The bundle components list"
+        },
+        {
+          "name": "image",
+          "docs": "The bundle product image"
+        },
+        {
+          "name": "placeholder__image",
+          "docs": ""
+        },
+        {
+          "name": "price",
+          "docs": "The bundle price"
+        },
+        {
+          "name": "savings",
+          "docs": "The savings badge"
+        },
+        {
+          "name": "static-quantity",
+          "docs": ""
+        },
+        {
+          "name": "title",
+          "docs": "The bundle product title"
+        }
+      ],
+      "dependents": [
+        "sc-line-items"
+      ],
+      "dependencies": [
+        "sc-icon",
+        "sc-quantity-select"
+      ],
+      "dependencyGraph": {
+        "sc-bundle-line-item": [
+          "sc-icon",
+          "sc-quantity-select"
+        ],
+        "sc-quantity-select": [
+          "sc-icon"
+        ],
+        "sc-line-items": [
+          "sc-bundle-line-item"
         ]
       }
     },
@@ -16645,6 +16901,7 @@
         "sc-alert",
         "sc-breadcrumb",
         "sc-breadcrumbs",
+        "sc-bundle-line-item",
         "sc-cancel-dialog",
         "sc-cancel-survey",
         "sc-cart-form-submit",
@@ -16718,6 +16975,9 @@
           "sc-icon"
         ],
         "sc-breadcrumbs": [
+          "sc-icon"
+        ],
+        "sc-bundle-line-item": [
           "sc-icon"
         ],
         "sc-cancel-dialog": [
@@ -19877,6 +20137,7 @@
       "dependencies": [
         "sc-line-item",
         "sc-skeleton",
+        "sc-bundle-line-item",
         "sc-product-line-item",
         "sc-swap"
       ],
@@ -19884,8 +20145,16 @@
         "sc-line-items": [
           "sc-line-item",
           "sc-skeleton",
+          "sc-bundle-line-item",
           "sc-product-line-item",
           "sc-swap"
+        ],
+        "sc-bundle-line-item": [
+          "sc-icon",
+          "sc-quantity-select"
+        ],
+        "sc-quantity-select": [
+          "sc-icon"
         ],
         "sc-product-line-item": [
           "sc-product-line-item-note",
@@ -19894,9 +20163,6 @@
           "sc-icon"
         ],
         "sc-product-line-item-note": [
-          "sc-icon"
-        ],
-        "sc-quantity-select": [
           "sc-icon"
         ],
         "sc-button": [
@@ -31381,7 +31647,7 @@
             "references": {
               "LayoutConfig": {
                 "location": "local",
-                "path": "/Users/andre/sites/surecart/wp-content/plugins/surecart/packages/components/src/components/controllers/products/sc-product-item-list/sc-product-item-list.tsx",
+                "path": "/Users/maniruzzamanakash/Local Sites/sc/app/public/wp-content/plugins/surecart/packages/components/src/components/controllers/products/sc-product-item-list/sc-product-item-list.tsx",
                 "id": "src/components/controllers/products/sc-product-item-list/sc-product-item-list.tsx::LayoutConfig"
               }
             }
@@ -34145,6 +34411,7 @@
         }
       ],
       "dependents": [
+        "sc-bundle-line-item",
         "sc-product-line-item",
         "sc-product-quantity"
       ],
@@ -34154,6 +34421,9 @@
       "dependencyGraph": {
         "sc-quantity-select": [
           "sc-icon"
+        ],
+        "sc-bundle-line-item": [
+          "sc-quantity-select"
         ],
         "sc-product-line-item": [
           "sc-quantity-select"
@@ -36688,6 +36958,26 @@
           "values": [
             {
               "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "shippingChoices",
+          "type": "any[]",
+          "complexType": {
+            "original": "any[] | undefined",
+            "resolved": "any[]",
+            "references": {}
+          },
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "Override shipping choices data (used for editor preview)",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "any[]"
             }
           ],
           "optional": false,
@@ -45256,12 +45546,12 @@
       "path": "src/types.ts"
     },
     "src/types.ts::Price": {
-      "declaration": "export interface Price {\n  id: string;\n  name: string;\n  description?: string;\n  amount: number;\n  display_amount: string;\n  setup_fee_display_amount: string;\n  setup_fee_text: string;\n  full_amount: number;\n  currency: string;\n  recurring: boolean;\n  recurring_interval?: 'week' | 'month' | 'year' | 'never';\n  recurring_interval_count?: number;\n  trial_duration_days?: number;\n  trial_text?: string;\n  ad_hoc: boolean;\n  ad_hoc_max_amount: number;\n  ad_hoc_min_amount: number;\n  scratch_amount: number;\n  scratch_display_amount: string;\n  setup_fee_enabled: boolean;\n  setup_fee_amount: number;\n  short_interval_text: string;\n  short_interval_count_text: string;\n  interval_text: string;\n  interval_count_text: string;\n  setup_fee_name: string;\n  setup_fee_trial_enabled: boolean;\n  recurring_period_count: number;\n  archived: boolean;\n  product_id?: string;\n  archived_at?: string;\n  created_at: number;\n  updated_at: number;\n  product?: Product | string;\n  position: number;\n  portal_subscription_update_enabled: boolean;\n  metadata: { [key: string]: string };\n  current_swap?: Swap;\n}",
+      "declaration": "export interface Price {\n  id: string;\n  name: string;\n  description?: string;\n  amount: number;\n  display_amount: string;\n  setup_fee_display_amount: string;\n  setup_fee_text: string;\n  full_amount: number;\n  currency: string;\n  recurring: boolean;\n  recurring_interval?: 'week' | 'month' | 'year' | 'never';\n  recurring_interval_count?: number;\n  trial_duration_days?: number;\n  trial_text?: string;\n  ad_hoc: boolean;\n  ad_hoc_max_amount: number;\n  ad_hoc_min_amount: number;\n  scratch_amount: number;\n  scratch_display_amount: string;\n  setup_fee_enabled: boolean;\n  setup_fee_amount: number;\n  short_interval_text: string;\n  short_interval_count_text: string;\n  interval_text: string;\n  interval_count_text: string;\n  setup_fee_name: string;\n  setup_fee_trial_enabled: boolean;\n  recurring_period_count: number;\n  archived: boolean;\n  product_id?: string;\n  archived_at?: string;\n  created_at: number;\n  updated_at: number;\n  product?: Product | string;\n  position: number;\n  portal_subscription_update_enabled: boolean;\n  metadata: { [key: string]: string };\n  current_swap?: Swap;\n  bundle?: boolean;\n  bundle_items?: {\n    object: 'list';\n    pagination: Pagination;\n    data: Array<BundleItem>;\n  };\n  bundle_savings_amount?: number;\n  bundle_savings_display_amount?: string;\n}",
       "docstring": "",
       "path": "src/types.ts"
     },
     "src/types.ts::LineItem": {
-      "declaration": "export interface LineItem extends Object {\n  id?: string;\n  ad_hoc_amount?: number;\n  ad_hoc_display_amount?: string;\n  name: string;\n  object: string;\n  quantity: number;\n  currency: string;\n  checkout: string | Checkout;\n  bump: string | Bump;\n  image: ImageAttributes;\n  fees?: {\n    object: 'list';\n    pagination: Pagination;\n    data: Array<Fee>;\n  };\n  bump_amount: number;\n  bump_display_amount: string;\n  discount_amount: number;\n  subtotal_amount: number;\n  subtotal_display_amount?: string;\n  total_amount: number;\n  total_default_currency_display_amount: string;\n  total_display_amount: string;\n  trial_amount: number;\n  tax_amount: number;\n  tax_display_amount: string;\n  fees_amount: number;\n  scratch_amount: number;\n  scratch_display_amount?: string;\n  subtotal_with_upsell_discount_display_amount?: string;\n  subtotal_with_upsell_discount_amount?: number;\n  trial: boolean;\n  total_savings_amount: number;\n  created_at: number;\n  updated_at: number;\n  price?: Price;\n  price_id: string;\n  sku: string;\n  purchasable_status: 'price_gone' | 'price_old_version' | 'variant_mising' | 'variant_gone' | 'variant_old_version' | 'out_of_stock' | 'exceeds_purchase_limit' | 'purchasable';\n  purchasable_status_display: string;\n  variant_options: Array<string>;\n  variant_display_options: string;\n  variant?: Variant;\n  locked: boolean;\n  swap?: Swap;\n  is_swappable?: boolean;\n  note?: string;\n  display_note?: string;\n}",
+      "declaration": "export interface LineItem extends Object {\n  id?: string;\n  ad_hoc_amount?: number;\n  ad_hoc_display_amount?: string;\n  name: string;\n  object: string;\n  quantity: number;\n  currency: string;\n  checkout: string | Checkout;\n  bump: string | Bump;\n  image: ImageAttributes;\n  fees?: {\n    object: 'list';\n    pagination: Pagination;\n    data: Array<Fee>;\n  };\n  bump_amount: number;\n  bump_display_amount: string;\n  discount_amount: number;\n  subtotal_amount: number;\n  subtotal_display_amount?: string;\n  total_amount: number;\n  total_default_currency_display_amount: string;\n  total_display_amount: string;\n  trial_amount: number;\n  tax_amount: number;\n  tax_display_amount: string;\n  fees_amount: number;\n  scratch_amount: number;\n  scratch_display_amount?: string;\n  subtotal_with_upsell_discount_display_amount?: string;\n  subtotal_with_upsell_discount_amount?: number;\n  trial: boolean;\n  total_savings_amount: number;\n  created_at: number;\n  updated_at: number;\n  price?: Price;\n  price_id: string;\n  sku: string;\n  purchasable_status: 'price_gone' | 'price_old_version' | 'variant_mising' | 'variant_gone' | 'variant_old_version' | 'out_of_stock' | 'exceeds_purchase_limit' | 'purchasable';\n  purchasable_status_display: string;\n  variant_options: Array<string>;\n  variant_display_options: string;\n  variant?: Variant;\n  locked: boolean;\n  swap?: Swap;\n  is_swappable?: boolean;\n  note?: string;\n  display_note?: string;\n  bundle_parent_id?: string;\n  bundle_parent?: string | LineItem;\n  bundle_component?: boolean;\n  bundle_components?: {\n    object: 'list';\n    pagination: Pagination;\n    data: Array<LineItem>;\n  };\n  bundle_allocated_unit_amount?: number;\n}",
       "docstring": "",
       "path": "src/types.ts"
     },

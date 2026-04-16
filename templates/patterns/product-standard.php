@@ -53,6 +53,8 @@ return [
 
 		<!-- wp:surecart/product-description /-->
 
+		<!-- wp:surecart/product-bundle-items {"title":"What\'s Included"} /-->
+
 		<!-- wp:surecart/product-variant-pills -->
 		<!-- wp:surecart/product-variant-pill /-->
 		<!-- /wp:surecart/product-variant-pills -->

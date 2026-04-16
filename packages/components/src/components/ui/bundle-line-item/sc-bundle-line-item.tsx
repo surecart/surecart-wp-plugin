@@ -1,7 +1,7 @@
 import { Component, h, Prop, Event, EventEmitter, Element, State } from '@stencil/core';
 import { __, sprintf } from '@wordpress/i18n';
 import { isRtl } from '../../../functions/page-align';
-import { Fee, ImageAttributes, LineItem, Price, Product, Variant } from '../../../types';
+import { LineItem, Price, Product } from '../../../types';
 
 /**
  * Renders a bundle parent line item with its component items nested inside.
@@ -54,22 +54,6 @@ export class ScBundleLineItem {
       return this.item.ad_hoc_display_amount;
     }
     return this.item?.subtotal_display_amount || '';
-  }
-
-  /** Get the total from components (the actual charged amount). */
-  private getComponentsTotal(): string {
-    if (!this.components?.length) {
-      return this.getBundleAmount();
-    }
-
-    // The parent subtotal is 0, so we sum component totals for display.
-    const total = this.components.reduce((sum, c) => sum + (c?.subtotal_amount || 0), 0);
-    // If parent has a subtotal (non-zero), prefer that.
-    if (this.item?.subtotal_amount > 0) {
-      return this.item.subtotal_display_amount;
-    }
-    // Otherwise use first component's currency formatting as a reference.
-    return this.components[0]?.subtotal_display_amount ? this.item?.total_display_amount : '';
   }
 
   render() {
