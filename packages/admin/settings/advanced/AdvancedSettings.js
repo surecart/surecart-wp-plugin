@@ -305,6 +305,7 @@ export default () => {
 								<a
 									href="https://www.google.com/recaptcha/admin/create"
 									target="_blank"
+									rel="noopener noreferrer"
 								>
 									{__(
 										'register a new site and choose v3.',
@@ -535,6 +536,7 @@ export default () => {
 					type="danger"
 					href={`https://app.surecart.com/account/edit?switch_account_id=${scData?.account_id}`}
 					target="_blank"
+					rel="noopener noreferrer"
 					outline
 				>
 					{__('Clear Test Data', 'surecart')}

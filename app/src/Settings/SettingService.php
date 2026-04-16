@@ -92,6 +92,24 @@ class SettingService {
 		);
 		$this->register(
 			'surecart',
+			'google_map_api_key_enabled',
+			[
+				'type'              => 'boolean',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'boolval',
+			]
+		);
+		$this->register(
+			'surecart',
+			'google_map_api_key',
+			[
+				'type'              => 'string',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'sanitize_text_field',
+			]
+		);
+		$this->register(
+			'surecart',
 			'tracking_confirmation',
 			[
 				'type'              => 'boolean',

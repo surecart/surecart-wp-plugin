@@ -13,7 +13,7 @@ class CustomersScriptsController extends AdminModelEditController {
 	 *
 	 * @var array
 	 */
-	protected $with_data = [ 'currency', 'supported_currencies', 'i18n' ];
+	protected $with_data = [ 'currency', 'supported_currencies', 'i18n', 'google_map_api_key' ];
 
 	/**
 	 * Script handle.
