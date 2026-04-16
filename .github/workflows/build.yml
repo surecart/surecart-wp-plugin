@@ -9,6 +9,9 @@ on:
         package:
           required: false
           type: boolean
+    secrets:
+      COMPOSER_AUTH_TOKEN:
+        required: false
 
 jobs:
   build:

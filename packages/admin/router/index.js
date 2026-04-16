@@ -11,6 +11,7 @@ import {
  * Internal dependencies
  */
 import history from './history';
+import { NavigationConfirmProvider } from './NavigationConfirmProvider';
 
 const RoutesContext = createContext();
 const HistoryContext = createContext();
@@ -33,10 +34,11 @@ export function RouterProvider({ children }) {
 	return (
 		<HistoryContext.Provider value={history}>
 			<RoutesContext.Provider value={location}>
-				{children}
+				<NavigationConfirmProvider>{children}</NavigationConfirmProvider>
 			</RoutesContext.Provider>
 		</HistoryContext.Provider>
 	);
 }
 
+export { useNavigationConfirm } from './NavigationConfirmProvider';
 export * from './useLink';

@@ -27,10 +27,19 @@ export default ({
 				styles={css`
 					:root {
 						--wp-admin-theme-color: var(--sc-color-primary-500);
+						--wp-components-color-accent: var(
+							--sc-color-primary-500
+						);
 						--wp-admin-theme-color-darker-10: var(
 							--sc-color-primary-500
 						);
+						--wp-components-color-accent-darker-10: var(
+							--sc-color-primary-500
+						);
 						--wp-admin-theme-color-darker-20: var(
+							--sc-color-primary-500
+						);
+						--wp-components-color-accent-darker-20: var(
 							--sc-color-primary-500
 						);
 						--sc-color-primary-text: #fff;
