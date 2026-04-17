@@ -13,6 +13,7 @@ import {
 	useDataViewState,
 	ConfirmDeleteModal,
 } from '../components/dataview-list';
+import ListHeader from '../components/ListHeader';
 import './product-collections-list-style.scss';
 
 /**
@@ -36,10 +37,7 @@ const LAYOUT_STYLES = {
  */
 const DEFAULT_FIELDS = ['name', 'products_count', 'description', 'created'];
 
-/**
- * Persistence key for the Collections list view.
- */
-const PERSIST_KEY = 'surecart/product-collections-list-view/v1';
+const PREFERENCE_KEY = 'product-collections-list-view';
 
 /**
  * Get the collection edit URL.
@@ -83,8 +81,8 @@ export default function ProductCollectionsList({ navigation }) {
 		sortMap: SORT_MAP,
 		defaultFields: DEFAULT_FIELDS,
 		layoutStyles: LAYOUT_STYLES,
-		defaultStatus: null, // No tabs for collections.
-		persistKey: PERSIST_KEY,
+		defaultStatus: null,
+		preferenceKey: PREFERENCE_KEY,
 		buildQueryArgs: () => ({}),
 	});
 
@@ -265,14 +263,25 @@ export default function ProductCollectionsList({ navigation }) {
 	);
 
 	return (
-		<DataViewListLayout
-			data={records}
-			fields={fields}
-			view={view}
-			onChangeView={setView}
-			paginationInfo={paginationInfo}
-			actions={actions}
-			isLoading={!hasResolved}
-		/>
+		<>
+			<ListHeader
+				title={__('Product Collections', 'surecart')}
+				actionLabel={__('Add Collection', 'surecart')}
+				actionHref={addQueryArgs('admin.php', {
+					page: 'sc-product-collections',
+					action: 'edit',
+				})}
+				onAction={() => navigation.goToCreate()}
+			/>
+			<DataViewListLayout
+				data={records}
+				fields={fields}
+				view={view}
+				onChangeView={setView}
+				paginationInfo={paginationInfo}
+				actions={actions}
+				isLoading={!hasResolved}
+			/>
+		</>
 	);
 }

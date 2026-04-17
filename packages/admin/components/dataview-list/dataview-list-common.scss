@@ -152,8 +152,8 @@ $padding-size: 20px;
 	max-width: 320px;
 }
 
-// Shared list page header — markup in views/components/admin/list-header.php.
-.wrap.sc-list-header {
+// Shared list page header — rendered by packages/admin/components/ListHeader.js.
+.sc-list-header {
 	padding-bottom: 0;
 	margin-top: var(--sc-spacing-large);
 	margin-bottom: var(--sc-spacing-large);

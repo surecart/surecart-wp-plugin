@@ -14,6 +14,7 @@ import {
 	DataViewListLayout,
 	useDataViewState,
 } from '../components/dataview-list';
+import ListHeader from '../components/ListHeader';
 import './product-list-style.scss';
 
 /**
@@ -58,17 +59,12 @@ const STATUS_ELEMENTS = [
 	{ value: 'all', label: __('All', 'surecart') },
 ];
 
-/**
- * Sort field map — mirrors PHP get_sort_map().
- */
+// Maps view-field ids to API sort field names.
 const SORT_MAP = {
 	name: 'name',
-	date: 'cataloged_at',
+	created_at: 'cataloged_at',
 };
 
-/**
- * Column width styles via DataViews layout.styles API.
- */
 const LAYOUT_STYLES = {
 	name: { width: '25%' },
 	price: { width: '7%' },
@@ -78,19 +74,11 @@ const LAYOUT_STYLES = {
 	product_collections: { width: '10%' },
 	status: { width: '6%' },
 	featured: { width: '5%' },
-	date: { width: '10%' },
+	created_at: { width: '10%' },
 };
 
-/**
- * Default visible fields.
- */
 const DEFAULT_FIELDS = ['name', 'status', 'price', 'product_collections'];
-
-/**
- * Persistence key for the Products list view. Bumping the version suffix
- * will invalidate any previously stored view snapshots for users.
- */
-const PERSIST_KEY = 'surecart/products-list-view/v1';
+const PREFERENCE_KEY = 'products-list-view';
 
 /**
  * URL helpers.
@@ -149,12 +137,12 @@ export default function ProductsList({ navigation }) {
 		invalidateList,
 	} = useDataViewState({
 		entity: 'product',
-		defaultSort: { field: 'date', direction: 'desc' },
+		defaultSort: { field: 'created_at', direction: 'desc' },
 		sortMap: SORT_MAP,
 		defaultFields: DEFAULT_FIELDS,
 		layoutStyles: LAYOUT_STYLES,
 		initialViewFilters: INITIAL_VIEW_FILTERS,
-		persistKey: PERSIST_KEY,
+		preferenceKey: PREFERENCE_KEY,
 		buildQueryArgs: ({ view: currentView }) => {
 			const args = {
 				// Expand relations needed for the list columns.
@@ -188,34 +176,7 @@ export default function ProductsList({ navigation }) {
 		},
 	});
 
-	// ─── Sync state to URL bar ───
-	const activeStatusFilter = view.filters?.find(
-		(f) => f.field === 'archive_status'
-	);
-	const activeStatusValue = activeStatusFilter?.value || '';
-	const activeCollectionFilter = view.filters?.find(
-		(f) => f.field === 'product_collections'
-	);
-	const activeCollectionId = activeCollectionFilter?.value?.[0] || '';
-
-	useEffect(() => {
-		const params = { page: 'sc-products' };
-
-		// Only add status param when explicitly filtering (not the default Active).
-		if (activeStatusValue === 'archived' || activeStatusValue === 'all') {
-			params.status = activeStatusValue;
-		}
-
-		// Collection filter.
-		if (activeCollectionId) {
-			params.sc_collection = activeCollectionId;
-		}
-
-		const url = addQueryArgs('admin.php', params);
-		window.history.replaceState(null, '', url);
-	}, [activeStatusValue, activeCollectionId]);
-
-	// ─── Fetch integrations for visible products ───
+	// Fetch integrations for visible products.
 	useEffect(() => {
 		if (!records?.length) return;
 		const productIds = records.map((r) => r.id);
@@ -580,7 +541,7 @@ export default function ProductsList({ navigation }) {
 				),
 			},
 			{
-				id: 'date',
+				id: 'created_at',
 				label: __('Created', 'surecart'),
 				enableSorting: true,
 				render: ({ item }) => item?.created_at_date || '-',
@@ -744,15 +705,26 @@ export default function ProductsList({ navigation }) {
 	);
 
 	return (
-		<DataViewListLayout
-			data={records}
-			fields={fields}
-			view={view}
-			onChangeView={setView}
-			paginationInfo={paginationInfo}
-			actions={actions}
-			isLoading={!hasResolved}
-			isMutating={isMutating}
-		/>
+		<>
+			<ListHeader
+				title={__('Products', 'surecart')}
+				actionLabel={__('Add Product', 'surecart')}
+				actionHref={addQueryArgs('admin.php', {
+					page: 'sc-products',
+					action: 'edit',
+				})}
+				onAction={() => navigation.goToCreate()}
+			/>
+			<DataViewListLayout
+				data={records}
+				fields={fields}
+				view={view}
+				onChangeView={setView}
+				paginationInfo={paginationInfo}
+				actions={actions}
+				isLoading={!hasResolved}
+				isMutating={isMutating}
+			/>
+		</>
 	);
 }

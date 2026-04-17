@@ -6,7 +6,11 @@ use SureCart\Controllers\Admin\Tables\ListTable;
 use SureCart\Models\ProductCollection;
 
 /**
- * Create a new table class that will extend the WP_List_Table
+ * Legacy WP_List_Table for Product Collections.
+ *
+ * @deprecated 4.1.1 Superseded by the React DataViews list in packages/admin/product-collections.
+ *                   Still rendered when the `surecart_enhanced_admin_views` feature flag is off.
+ *                   Scheduled for removal in 5.0.0.
  */
 class ProductCollectionsListTable extends ListTable {
 	/**
