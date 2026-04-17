@@ -38,6 +38,8 @@ export default function Edit({ attributes, setAttributes }) {
 			<InspectorControls>
 				<PanelBody title={__('Settings', 'surecart')}>
 					<RangeControl
+						__next40pxDefaultSize
+						__nextHasNoMarginBottom
 						label={__('Rows', 'surecart')}
 						value={rows}
 						onChange={(value) => setAttributes({ rows: value })}

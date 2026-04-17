@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
 import { ScTag } from '@surecart/components-react';
 import {
 	Button,
@@ -22,11 +20,10 @@ import {
 
 import { edit } from '@wordpress/icons';
 import { useSelect } from '@wordpress/data';
-import { useState } from 'react';
+import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 import Rules from './rules';
-
 import translations from './translations';
 
 export default ({ attributes, setAttributes, clientId, isSelected }) => {
@@ -34,12 +31,12 @@ export default ({ attributes, setAttributes, clientId, isSelected }) => {
 	const { rule_groups } = attributes;
 
 	const blockProps = useBlockProps({
-		css: css`
-			position: relative;
-			font-size: 16px;
-			font-family: var(--sc-font-sans);
-			outline: 1px dashed var(--wp-admin-theme-color);
-		`,
+		style: {
+			position: 'relative',
+			fontSize: '16px',
+			fontFamily: 'var(--sc-font-sans)',
+			outline: '1px dashed var(--wp-admin-theme-color)',
+		},
 	});
 
 	const children = useSelect(
@@ -54,20 +51,13 @@ export default ({ attributes, setAttributes, clientId, isSelected }) => {
 
 	const innerBlocksProps = useInnerBlocksProps(
 		{
-			css: css`
-				flex: 1 1 auto;
-				width: 100%;
-				margin: auto;
-				box-shadow: 0 1px 2px #0d131e1a;
-
-				.block-list-appender {
-					position: relative;
-				}
-
-				> .wp-block:not(:last-child) {
-					margin: 0 !important;
-				}
-			`,
+			className: 'sc-conditional-form__inner',
+			style: {
+				flex: '1 1 auto',
+				width: '100%',
+				margin: 'auto',
+				boxShadow: '0 1px 2px #0d131e1a',
+			},
 		},
 		{
 			renderAppender:
@@ -79,6 +69,14 @@ export default ({ attributes, setAttributes, clientId, isSelected }) => {
 
 	return (
 		<div {...blockProps}>
+			<style>{`
+				.sc-conditional-form__inner .block-list-appender {
+					position: relative;
+				}
+				.sc-conditional-form__inner > .wp-block:not(:last-child) {
+					margin: 0 !important;
+				}
+			`}</style>
 			<BlockControls>
 				<ToolbarGroup>
 					<ToolbarButton
@@ -90,11 +88,13 @@ export default ({ attributes, setAttributes, clientId, isSelected }) => {
 			</BlockControls>
 			<InspectorControls>
 				<PanelBody title={__('Conditions', 'surecart')}>
-					<PanelRow
-						css={css`
-							flex-wrap: wrap;
-							justify-content: flex-start;
-						`}
+					<div
+						style={{
+							display: 'flex',
+							flexWrap: 'wrap',
+							justifyContent: 'flex-start',
+							gap: '4px',
+						}}
 					>
 						{!rule_groups?.length &&
 							__(
@@ -108,7 +108,7 @@ export default ({ attributes, setAttributes, clientId, isSelected }) => {
 								</ScTag>
 							));
 						})}
-					</PanelRow>
+					</div>
 					<PanelRow>
 						<Button
 							variant="secondary"
@@ -124,16 +124,16 @@ export default ({ attributes, setAttributes, clientId, isSelected }) => {
 				className="sc-conditional-form__tag"
 				type="info"
 				size="small"
-				css={css`
-					z-index: 10;
-					font-size: 14px;
-					position: absolute;
-					right: -1px;
-					top: -18px;
-					--sc-color-info-700: white;
-					--sc-color-info-100: var(--wp-admin-theme-color);
-					--sc-input-border-radius-small: 0;
-				`}
+				style={{
+					zIndex: 10,
+					fontSize: '14px',
+					position: 'absolute',
+					right: '-1px',
+					top: '-18px',
+					'--sc-color-info-700': 'white',
+					'--sc-color-info-100': 'var(--wp-admin-theme-color)',
+					'--sc-input-border-radius-small': '0',
+				}}
 			>
 				{__('Conditional', 'surecart')}
 			</ScTag>
@@ -165,7 +165,10 @@ export default ({ attributes, setAttributes, clientId, isSelected }) => {
 						'surecart'
 					)}
 				>
-					<Button isPrimary onClick={() => setEditRules(true)}>
+					<Button
+						variant="primary"
+						onClick={() => setEditRules(true)}
+					>
 						{__('Add Conditions', 'surecart')}
 					</Button>
 				</Placeholder>
@@ -176,12 +179,12 @@ export default ({ attributes, setAttributes, clientId, isSelected }) => {
 					title={__('Configure Conditions', 'surecart')}
 					onRequestClose={() => setEditRules(false)}
 					shouldCloseOnClickOutside={false}
-					css={css`
-						width: 75%;
-						max-width: 650px;
-						max-height: 80%;
-						--sc-color-primary-text: #fff;
-					`}
+					style={{
+						width: '75%',
+						maxWidth: '650px',
+						maxHeight: '80%',
+						'--sc-color-primary-text': '#fff',
+					}}
 				>
 					<Rules
 						attributes={attributes}

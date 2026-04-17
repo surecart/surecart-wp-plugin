@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { css, Global, jsx } from '@emotion/core';
 import feather from 'feather-icons';
 import { ScToggle } from '@surecart/components-react';
 import {
@@ -23,6 +21,11 @@ export default ({ attributes, setAttributes }) => {
 	const innerBlocksProps = useInnerBlocksProps();
 	return (
 		<>
+			<style>{`
+				.sc-collapsible-row-icon-wrapper svg {
+					fill: none !important;
+				}
+			`}</style>
 			<InspectorControls>
 				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
@@ -38,13 +41,7 @@ export default ({ attributes, setAttributes }) => {
 							<BaseControl.VisualLabel>
 								{__('Tab Icon', 'surecart')}
 							</BaseControl.VisualLabel>
-							<div
-								css={css`
-									svg {
-										fill: none !important;
-									}
-								`}
-							>
+							<div className="sc-collapsible-row-icon-wrapper">
 								<DropdownMenu
 									popoverProps={{
 										className: 'sc-tab-icon-dropdown',

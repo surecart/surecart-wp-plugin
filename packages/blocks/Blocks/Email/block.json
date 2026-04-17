@@ -1,4 +1,5 @@
 {
+	"apiVersion": 3,
 	"name": "surecart/email",
 	"title": "Email",
 	"description": "Displays an email form field.",

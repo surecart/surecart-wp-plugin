@@ -3580,6 +3580,10 @@ export namespace Components {
          */
         "label": string;
         /**
+          * Override shipping choices data (used for editor preview)
+         */
+        "shippingChoices": any[] | undefined;
+        /**
           * Whether to show the shipping choice description
          */
         "showDescription": boolean;
@@ -10953,6 +10957,10 @@ declare namespace LocalJSX {
           * The shipping section label
          */
         "label"?: string;
+        /**
+          * Override shipping choices data (used for editor preview)
+         */
+        "shippingChoices"?: any[] | undefined;
         /**
           * Whether to show the shipping choice description
          */
