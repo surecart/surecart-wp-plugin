@@ -84,16 +84,13 @@ const LAYOUT_STYLES = {
 /**
  * Default visible fields.
  */
-const DEFAULT_FIELDS = [
-	'name',
-	'price',
-	'quantity',
-	'integrations',
-	'product_collections',
-	'status',
-	'featured',
-	'date',
-];
+const DEFAULT_FIELDS = ['name', 'status', 'price', 'product_collections'];
+
+/**
+ * Persistence key for the Products list view. Bumping the version suffix
+ * will invalidate any previously stored view snapshots for users.
+ */
+const PERSIST_KEY = 'surecart/products-list-view/v1';
 
 /**
  * URL helpers.
@@ -136,7 +133,6 @@ export default function ProductsList({ navigation }) {
 		[collectionRecords]
 	);
 
-	// ─── Integrations data (local DB, not part of product API entity) ───
 	// Batch-fetch integrations for all visible products.
 	const [integrationsByProduct, setIntegrationsByProduct] = useState({});
 	const [integrationProviders, setIntegrationProviders] = useState({});
@@ -158,6 +154,7 @@ export default function ProductsList({ navigation }) {
 		defaultFields: DEFAULT_FIELDS,
 		layoutStyles: LAYOUT_STYLES,
 		initialViewFilters: INITIAL_VIEW_FILTERS,
+		persistKey: PERSIST_KEY,
 		buildQueryArgs: ({ view: currentView }) => {
 			const args = {
 				// Expand relations needed for the list columns.
@@ -330,7 +327,7 @@ export default function ProductsList({ navigation }) {
 			// Archive status filter (not a visible column — only drives the filter dropdown).
 			{
 				id: 'archive_status',
-				label: __('Status', 'surecart'),
+				label: __('Archive status', 'surecart'),
 				enableSorting: false,
 				enableHiding: false,
 				filterBy: {
@@ -539,9 +536,9 @@ export default function ProductsList({ navigation }) {
 							`}
 						>
 							{itemCollections.map((collection) => (
-								<ScTag key={collection.id} type="info">
+								<span key={collection.id}>
 									{collection.name}
-								</ScTag>
+								</span>
 							))}
 						</div>
 					);
@@ -549,7 +546,7 @@ export default function ProductsList({ navigation }) {
 			},
 			{
 				id: 'status',
-				label: __('Product Page', 'surecart'),
+				label: __('Status', 'surecart'),
 				enableSorting: false,
 				render: ({ item }) => {
 					const isPublished = item?.status === 'published';
@@ -686,6 +683,7 @@ export default function ProductsList({ navigation }) {
 				id: 'edit',
 				label: __('Edit', 'surecart'),
 				icon: <Icon icon={edit} />,
+				isPrimary: true,
 				callback: ([item]) => {
 					navigation.goToEdit(item.id);
 				},
@@ -709,6 +707,7 @@ export default function ProductsList({ navigation }) {
 			{
 				id: 'view',
 				label: __('View Product', 'surecart'),
+				isPrimary: true,
 				icon: <Icon icon={external} />,
 				isEligible: (item) => !!item.permalink,
 				callback: ([item]) => {
@@ -728,9 +727,7 @@ export default function ProductsList({ navigation }) {
 				label: __('Delete permanently', 'surecart'),
 				isDestructive: true,
 				supportsBulk: true,
-				// Redirect to the PHP bulk-delete confirmation page (handles both
-				// single and bulk). The server shows a confirmation form with a
-				// nonce before performing the actual deletion.
+				// Redirect to the PHP bulk-delete confirmation page (handles both single and bulk).
 				callback: (items) => {
 					const params = new URLSearchParams({
 						page: 'sc-products',

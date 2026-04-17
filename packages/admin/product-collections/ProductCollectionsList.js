@@ -37,6 +37,11 @@ const LAYOUT_STYLES = {
 const DEFAULT_FIELDS = ['name', 'products_count', 'description', 'created'];
 
 /**
+ * Persistence key for the Collections list view.
+ */
+const PERSIST_KEY = 'surecart/product-collections-list-view/v1';
+
+/**
  * Get the collection edit URL.
  */
 function getEditUrl(id) {
@@ -79,6 +84,7 @@ export default function ProductCollectionsList({ navigation }) {
 		defaultFields: DEFAULT_FIELDS,
 		layoutStyles: LAYOUT_STYLES,
 		defaultStatus: null, // No tabs for collections.
+		persistKey: PERSIST_KEY,
 		buildQueryArgs: () => ({}),
 	});
 
@@ -215,6 +221,7 @@ export default function ProductCollectionsList({ navigation }) {
 				id: 'edit',
 				label: __('Edit', 'surecart'),
 				icon: <Icon icon={edit} />,
+				isPrimary: true,
 				callback: ([item]) => {
 					navigation.goToEdit(item.id);
 				},
@@ -233,6 +240,7 @@ export default function ProductCollectionsList({ navigation }) {
 				icon: <Icon icon={trash} />,
 				label: __('Delete permanently', 'surecart'),
 				isDestructive: true,
+				isPrimary: true,
 				supportsBulk: true,
 				hideModalHeader: true,
 				RenderModal: ({ items, closeModal }) => (

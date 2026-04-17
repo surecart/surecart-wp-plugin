@@ -20,6 +20,12 @@ const ProductCollections = lazy(() =>
 
 const PAGE_SLUG = 'sc-product-collections';
 
+/**
+ * Sync the PHP-rendered list header with the current view.
+ *
+ * On detail/create views we hide it; on list view we show it and intercept
+ * the "Add Collection" anchor so it pushes a client-side route.
+ */
 function useHeaderSync(isList) {
 	const history = useHistory();
 

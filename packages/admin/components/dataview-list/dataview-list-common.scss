@@ -52,22 +52,7 @@ $padding-size: 20px;
 		width: 100%;
 		table-layout: fixed;
 
-		// With table-layout:fixed the browser respects explicit column widths.
-		// Clip overflow on every cell so content never widens the column.
-		td,
-		th {
-			overflow: hidden;
-			text-overflow: ellipsis;
-		}
-
-		// Header cells: single-line, truncated.
-		th {
-			white-space: nowrap;
-		}
-
-		// Data cells: default to nowrap for compact display.
-		// Columns with custom renders (e.g. name with thumbnail) can override
-		// white-space via their own Emotion/inline styles.
+		th,
 		td {
 			white-space: nowrap;
 		}
@@ -108,7 +93,34 @@ $padding-size: 20px;
 		background-color: var(--sc-color-brand-main-background);
 	}
 
-	// ─── Footer alignment ───
+	// ─── Primary action icons: visible on row hover / focus-within ───
+	// Actions with `isPrimary: true` + `icon` are rendered as always-visible
+	// icon buttons by @wordpress/dataviews. We hide them by default and only
+	// reveal on row hover / focus so the table stays clean. The kebab menu
+	// (`.dataviews-all-actions-button`) stays visible so touch users still
+	// have access to every action.
+	.dataviews-view-table__row
+		.dataviews-item-actions
+		.components-button:not(.dataviews-all-actions-button) {
+		visibility: hidden;
+	}
+
+	.dataviews-view-table__row.is-hovered
+		.dataviews-item-actions
+		.components-button,
+	.dataviews-view-table__row:focus-within
+		.dataviews-item-actions
+		.components-button {
+		visibility: visible;
+	}
+
+	// Touch devices: always show action icons since hover is unreliable.
+	@media (hover: none) {
+		.dataviews-view-table__row .dataviews-item-actions .components-button {
+			visibility: visible;
+		}
+	}
+
 	.dataviews-footer {
 		display: flex;
 		align-items: center;
@@ -116,14 +128,12 @@ $padding-size: 20px;
 		min-height: 48px;
 	}
 
-	// ─── Bulk actions footer ───
 	.dataviews-bulk-actions-footer__container {
 		display: flex;
 		align-items: center;
 		gap: 12px;
 	}
 
-	// ─── Loading / empty state centering ───
 	.dataviews-loading,
 	.dataviews-no-results {
 		display: flex;
@@ -142,8 +152,36 @@ $padding-size: 20px;
 	max-width: 320px;
 }
 
-// ─── Snackbar toast positioning ───
-// Handled by the Notifications component wrapper div (position: fixed; right: 20px).
-// WP's SnackbarList applies its own Emotion `position: fixed; left: -20px` which
-// cannot be overridden via CSS alone. The Notifications component wraps SnackbarList
-// in a fixed-position div and forces the list to `position: static` via Emotion.
+// ─── Shared list page header ───
+// Used by every entity list page (Products, Product Collections, and any
+// future DataView-backed admin screen). The PHP partial lives at
+// views/components/admin/list-header.php. Entity pages attach their own
+// `id="sc-{entity}-list-header"` for JS visibility sync, but share this
+// class so the layout/styles only live in one place.
+.wrap.sc-list-header {
+	padding-bottom: 0;
+	margin-top: var(--sc-spacing-large);
+	margin-bottom: var(--sc-spacing-large);
+
+	.sc-list-header__bar {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 12px;
+		flex-wrap: wrap;
+	}
+
+	.wp-heading-inline {
+		margin-right: 0;
+	}
+
+	.sc-list-header__action {
+		flex-shrink: 0;
+	}
+
+	// WP hides `.wp-header-end` by default but it still takes layout space
+	// in some themes — force it out of flow.
+	.wp-header-end {
+		display: none;
+	}
+}

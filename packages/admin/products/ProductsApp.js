@@ -29,7 +29,8 @@ const PAGE_SLUG = 'sc-products';
  *
  * The header markup is rendered server-side (see views/admin/products/spa.php).
  * On detail/create views we hide it; on list view we show it and intercept
- * the "Add New" button so it pushes a route instead of reloading.
+ * the "Add Product" anchor so it pushes a client-side route instead of
+ * reloading the page.
  */
 function useHeaderSync(isList) {
 	const history = useHistory();

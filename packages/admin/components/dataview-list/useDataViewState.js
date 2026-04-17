@@ -8,6 +8,7 @@
  *   defaultSort: { field: 'date', direction: 'desc' },
  *   sortMap: { name: 'name', date: 'cataloged_at' },
  *   defaultFields: ['name', 'price', 'date'],
+ *   persistKey: 'surecart/products-list-view/v1',
  *   buildQueryArgs: ({ view, status, filters }) => {
  *     const args = {};
  *     if (status === 'active') args.archived = false;
@@ -16,10 +17,70 @@
  *   },
  * });
  */
-import { useMemo, useState, useCallback } from 'react';
+import { useMemo, useState, useCallback, useEffect, useRef } from 'react';
 import { useEntityRecords, store as coreStore } from '@wordpress/core-data';
 import { useDispatch } from '@wordpress/data';
 import { getQueryArgs } from '@wordpress/url';
+
+/**
+ * Keys of the view state we persist to localStorage.
+ *
+ * We deliberately skip `page` and `search` because they represent transient
+ * interaction state — reloading a page shouldn't remember that the user was
+ * mid-search on page 7. Everything else (visible columns, column widths,
+ * per-page, sort, filters) is considered part of the user's view preference.
+ */
+const PERSISTED_VIEW_KEYS = [
+	'fields',
+	'layout',
+	'perPage',
+	'sort',
+	'filters',
+];
+
+/**
+ * Safely read a persisted view snapshot from localStorage.
+ *
+ * @param {string|undefined} key Storage key.
+ * @return {Object|null} Parsed snapshot or null.
+ */
+function readPersistedView( key ) {
+	if ( ! key || typeof window === 'undefined' || ! window.localStorage ) {
+		return null;
+	}
+	try {
+		const raw = window.localStorage.getItem( key );
+		if ( ! raw ) return null;
+		const parsed = JSON.parse( raw );
+		return parsed && typeof parsed === 'object' ? parsed : null;
+	} catch ( err ) {
+		return null;
+	}
+}
+
+/**
+ * Write a whitelisted subset of view state to localStorage.
+ *
+ * @param {string|undefined} key  Storage key.
+ * @param {Object}           view Full view object.
+ */
+function writePersistedView( key, view ) {
+	if ( ! key || typeof window === 'undefined' || ! window.localStorage ) {
+		return;
+	}
+	try {
+		const subset = {};
+		for ( const field of PERSISTED_VIEW_KEYS ) {
+			if ( view[ field ] !== undefined ) {
+				subset[ field ] = view[ field ];
+			}
+		}
+		window.localStorage.setItem( key, JSON.stringify( subset ) );
+	} catch ( err ) {
+		// Quota exceeded / SecurityError — silently ignore. The in-memory
+		// view state still works, we just won't rehydrate on next load.
+	}
+}
 
 /**
  * @typedef {Object} DataViewStateConfig
@@ -52,6 +113,7 @@ export default function useDataViewState( config ) {
 		buildQueryArgs,
 		initialFilters = {},
 		initialViewFilters = [],
+		persistKey,
 	} = config;
 
 	// Status tab state.
@@ -63,19 +125,61 @@ export default function useDataViewState( config ) {
 
 	const { invalidateResolution } = useDispatch( coreStore );
 
-	// DataView view state.
-	const [ view, setView ] = useState( {
-		type: 'table',
-		perPage,
-		page: 1,
-		sort: defaultSort,
-		search: '',
-		filters: initialViewFilters,
-		fields: defaultFields,
-		layout: {
+	// Build the initial view. Precedence (highest wins): URL-derived
+	// `initialViewFilters` > persisted state > defaults. URL params winning
+	// last ensures deep-links (e.g. ?sc_collection=xxx) always reflect the
+	// requested filter even when the user has a different saved view.
+	const [ view, setView ] = useState( () => {
+		const baseView = {
+			type: 'table',
+			perPage,
+			page: 1,
+			sort: defaultSort,
+			search: '',
+			filters: initialViewFilters,
+			fields: defaultFields,
+			layout: {
+				styles: layoutStyles,
+			},
+		};
+
+		const persisted = readPersistedView( persistKey );
+		if ( ! persisted ) {
+			return baseView;
+		}
+
+		// Merge persisted state on top of defaults — but always force
+		// URL-derived filters to take precedence if they exist.
+		const merged = { ...baseView };
+		for ( const field of PERSISTED_VIEW_KEYS ) {
+			if ( persisted[ field ] !== undefined ) {
+				merged[ field ] = persisted[ field ];
+			}
+		}
+		// Layout.styles is always sourced from config — it holds the
+		// component's render-time width hints, not user-editable state.
+		merged.layout = {
+			...( merged.layout || {} ),
 			styles: layoutStyles,
-		},
+		};
+		if ( initialViewFilters && initialViewFilters.length ) {
+			merged.filters = initialViewFilters;
+		}
+		return merged;
 	} );
+
+	// Persist a whitelisted subset of the view on every change.
+	// Using a ref to avoid writing on the very first render when state
+	// matches what we just rehydrated from storage.
+	const isFirstRenderRef = useRef( true );
+	useEffect( () => {
+		if ( ! persistKey ) return;
+		if ( isFirstRenderRef.current ) {
+			isFirstRenderRef.current = false;
+			return;
+		}
+		writePersistedView( persistKey, view );
+	}, [ view, persistKey ] );
 
 	/**
 	 * Update a custom filter value and reset to page 1.
