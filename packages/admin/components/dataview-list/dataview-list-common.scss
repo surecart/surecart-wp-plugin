@@ -152,12 +152,7 @@ $padding-size: 20px;
 	max-width: 320px;
 }
 
-// ─── Shared list page header ───
-// Used by every entity list page (Products, Product Collections, and any
-// future DataView-backed admin screen). The PHP partial lives at
-// views/components/admin/list-header.php. Entity pages attach their own
-// `id="sc-{entity}-list-header"` for JS visibility sync, but share this
-// class so the layout/styles only live in one place.
+// Shared list page header — markup in views/components/admin/list-header.php.
 .wrap.sc-list-header {
 	padding-bottom: 0;
 	margin-top: var(--sc-spacing-large);
