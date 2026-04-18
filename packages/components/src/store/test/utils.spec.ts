@@ -1,22 +1,25 @@
 import { isProductVariantOptionSoldOut } from '../utils';
+import { Product, Variant } from '../../types';
 
-const makeProduct = (overrides = {}) => ({
-  id: 'prod_1',
-  has_unlimited_stock: false,
-  available_stock: 10,
-  variants: { data: [] },
-  ...overrides,
-});
+const makeProduct = (overrides: Record<string, any> = {}): Product =>
+  ({
+    id: 'prod_1',
+    has_unlimited_stock: false,
+    available_stock: 10,
+    variants: { data: [] },
+    ...overrides,
+  } as unknown as Product);
 
-const makeVariant = (overrides = {}) => ({
-  id: 'var_1',
-  option_1: 'Small',
-  option_2: null,
-  option_3: null,
-  has_unlimited_stock: false,
-  available_stock: 5,
-  ...overrides,
-});
+const makeVariant = (overrides: Record<string, any> = {}): Variant =>
+  ({
+    id: 'var_1',
+    option_1: 'Small',
+    option_2: null,
+    option_3: null,
+    has_unlimited_stock: false,
+    available_stock: 5,
+    ...overrides,
+  } as unknown as Variant);
 
 describe('isProductVariantOptionSoldOut', () => {
   it('returns false when variant has stock', () => {
@@ -31,10 +34,7 @@ describe('isProductVariantOptionSoldOut', () => {
   it('returns true when all matching variants have zero stock', () => {
     const product = makeProduct({
       variants: {
-        data: [
-          makeVariant({ option_1: 'Small', available_stock: 0 }),
-          makeVariant({ id: 'var_2', option_1: 'Small', available_stock: 0 }),
-        ],
+        data: [makeVariant({ option_1: 'Small', available_stock: 0 }), makeVariant({ id: 'var_2', option_1: 'Small', available_stock: 0 })],
       },
     });
     expect(isProductVariantOptionSoldOut(1, 'Small', {}, product)).toBe(true);
@@ -52,9 +52,7 @@ describe('isProductVariantOptionSoldOut', () => {
   it('returns false when variant has unlimited stock even with zero available', () => {
     const product = makeProduct({
       variants: {
-        data: [
-          makeVariant({ option_1: 'Small', has_unlimited_stock: true, available_stock: 0 }),
-        ],
+        data: [makeVariant({ option_1: 'Small', has_unlimited_stock: true, available_stock: 0 })],
       },
     });
     expect(isProductVariantOptionSoldOut(1, 'Small', {}, product)).toBe(false);
@@ -64,9 +62,7 @@ describe('isProductVariantOptionSoldOut', () => {
     const product = makeProduct({
       has_unlimited_stock: true,
       variants: {
-        data: [
-          makeVariant({ option_1: 'Small', has_unlimited_stock: null, available_stock: 0 }),
-        ],
+        data: [makeVariant({ option_1: 'Small', has_unlimited_stock: null, available_stock: 0 })],
       },
     });
     expect(isProductVariantOptionSoldOut(1, 'Small', {}, product)).toBe(false);
@@ -76,9 +72,7 @@ describe('isProductVariantOptionSoldOut', () => {
     const product = makeProduct({
       has_unlimited_stock: false,
       variants: {
-        data: [
-          makeVariant({ option_1: 'Small', has_unlimited_stock: null, available_stock: 0 }),
-        ],
+        data: [makeVariant({ option_1: 'Small', has_unlimited_stock: null, available_stock: 0 })],
       },
     });
     expect(isProductVariantOptionSoldOut(1, 'Small', {}, product)).toBe(true);
@@ -87,10 +81,7 @@ describe('isProductVariantOptionSoldOut', () => {
   it('handles option 2 filtering correctly', () => {
     const product = makeProduct({
       variants: {
-        data: [
-          makeVariant({ option_1: 'Small', option_2: 'Red', available_stock: 0 }),
-          makeVariant({ id: 'var_2', option_1: 'Small', option_2: 'Blue', available_stock: 5 }),
-        ],
+        data: [makeVariant({ option_1: 'Small', option_2: 'Red', available_stock: 0 }), makeVariant({ id: 'var_2', option_1: 'Small', option_2: 'Blue', available_stock: 5 })],
       },
     });
     expect(isProductVariantOptionSoldOut(2, 'Red', { option_1: 'Small' }, product)).toBe(true);
