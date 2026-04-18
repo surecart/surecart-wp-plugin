@@ -124,6 +124,14 @@ module.exports = {
 		),
 
 		/**
+		 * Standalone Learn page (separate from Settings SPA).
+		 */
+		['admin/settings/learn']: path.resolve(
+			__dirname,
+			'packages/admin/settings/learn/index.js'
+		),
+
+		/**
 		 * Data.
 		 */
 		['store/data']: path.resolve(

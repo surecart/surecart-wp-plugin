@@ -60,6 +60,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\Dashboard\\' )
 ->handle( 'DashboardController@index' );
 
+/*
+|--------------------------------------------------------------------------
+| Learn
+|--------------------------------------------------------------------------
+*/
+\SureCart::route()
+->get()
+->where( 'admin', 'sc-learn' )
+->middleware( 'user.can:manage_options' )
+->middleware( 'assets.components' )
+->middleware( 'assets.brand_colors' )
+->setNamespace( '\\SureCart\\Controllers\\Admin\\Learn\\' )
+->handle( 'LearnController@index' );
+
 
 /*
 |--------------------------------------------------------------------------
@@ -512,7 +526,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 		\SureCart::route()->get()->name( 'settings' )->handle( 'Settings@show' );
 
 		// POST routes still need server-side handling.
-		\SureCart::route()->post()->where( 'sc_url_var', 'advanced', 'tab' )->middleware( 'nonce:update_plugin_settings' )->name( 'settings.advanced.save' )->handle( 'AdvancedSettings@save' );
 		\SureCart::route()->post()->where( 'sc_url_var', 'clear', 'cache' )->middleware( 'nonce:update_plugin_settings' )->handle( 'CacheSettings@clear' );
 	}
 );

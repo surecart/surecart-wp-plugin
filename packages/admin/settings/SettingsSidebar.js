@@ -146,11 +146,11 @@ const TABS = [
 		iconStyle: { width: '18px', height: '18px', opacity: '0.7' },
 	},
 	{
-		tab: 'learn',
-		icon: 'book-open',
-		label: __('Learn', 'surecart'),
+		tab: 'mcp',
+		icon: 'cpu',
+		label: __('MCP', 'surecart'),
 		requiresToken: true,
-		requiresLearn: true,
+		requiresAbilities: true,
 	},
 
 	// Tabs always visible (even without API token).
@@ -173,13 +173,13 @@ const TABS = [
  */
 export default function SettingsSidebar({ currentTab }) {
 	const hasApiToken = !!window.scSettingsData?.has_api_token;
-	const showLearn = !!window.scSettingsData?.show_learn;
+	const abilitiesApiAvailable = !!window.scSettingsData?.abilities_api_available;
 
 	return (
 		<div id="sc-nav" style={{ '--sc-tabs-min-width': '0' }}>
 			{TABS.filter((item) => {
 				if (item.requiresToken && !hasApiToken) return false;
-				if (item.requiresLearn && !showLearn) return false;
+				if (item.requiresAbilities && !abilitiesApiAvailable) return false;
 				return true;
 			}).map((item) => (
 				<SidebarTab

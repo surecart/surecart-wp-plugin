@@ -3,6 +3,12 @@ import { store as noticesStore } from '@wordpress/notices';
 import { select, useDispatch } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 
+// Module-level flag to keep all SaveButton instances in a busy/spinner state
+// after save completes (e.g. while the page reloads). Set via keepBusy option
+// in save(), read by SaveButton via isKeepBusy(). Resets on page reload.
+let _keepBusy = false;
+export const isKeepBusy = () => _keepBusy;
+
 export default function useSave() {
 	const { createSuccessNotice } = useDispatch(noticesStore);
 	const { saveEditedEntityRecord, editEntityRecord } =
@@ -36,7 +42,10 @@ export default function useSave() {
 		});
 	};
 
-	const save = async ({ successMessage }) => {
+	const save = async ({ successMessage, keepBusy }) => {
+		if (keepBusy) {
+			_keepBusy = true;
+		}
 		// build up pending records to save.
 		const dirtyRecords =
 			select(coreStore).__experimentalGetDirtyEntityRecords();
