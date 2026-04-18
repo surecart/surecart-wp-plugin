@@ -3158,6 +3158,10 @@ export namespace Components {
          */
         "removable": boolean;
         /**
+          * The review button link. If set, a review button will be shown linking to this URL.
+         */
+        "reviewButtonLink": string;
+        /**
           * The line item scratch amount
          */
         "scratch": string;
@@ -3573,6 +3577,10 @@ export namespace Components {
          */
         "label": string;
         /**
+          * Override shipping choices data (used for editor preview)
+         */
+        "shippingChoices": any[] | undefined;
+        /**
           * Whether to show the shipping choice description
          */
         "showDescription": boolean;
@@ -3650,7 +3658,7 @@ export namespace Components {
         "size": 'small' | 'medium' | 'large';
     }
     interface ScStripePaymentElement {
-        "confirm": (type: any, args?: {}) => Promise<void>;
+        "confirm": (type: 'setup' | 'payment', args?: {}) => Promise<void>;
     }
     interface ScStripePaymentRequest {
         /**
@@ -10467,6 +10475,10 @@ declare namespace LocalJSX {
          */
         "removable"?: boolean;
         /**
+          * The review button link. If set, a review button will be shown linking to this URL.
+         */
+        "reviewButtonLink"?: string;
+        /**
           * The line item scratch amount
          */
         "scratch"?: string;
@@ -10939,6 +10951,10 @@ declare namespace LocalJSX {
           * The shipping section label
          */
         "label"?: string;
+        /**
+          * Override shipping choices data (used for editor preview)
+         */
+        "shippingChoices"?: any[] | undefined;
         /**
           * Whether to show the shipping choice description
          */

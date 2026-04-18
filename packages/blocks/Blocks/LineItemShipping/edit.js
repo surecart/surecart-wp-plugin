@@ -26,18 +26,20 @@ export default ({ attributes, setAttributes }) => {
 					</PanelRow>
 				</PanelBody>
 			</InspectorControls>
-			<sc-line-item {...blockProps}>
-				<span slot="description">
-					{label || __('Shipping Amount', 'surecart')}
-				</span>
-				<span slot="price">
-					<sc-format-number
-						type="currency"
-						currency={scData?.currency}
-						value={1234}
-					></sc-format-number>
-				</span>
-			</sc-line-item>
+			<div {...blockProps}>
+				<sc-line-item>
+					<span slot="description">
+						{label || __('Shipping Amount', 'surecart')}
+					</span>
+					<span slot="price">
+						<sc-format-number
+							type="currency"
+							currency={scData?.currency}
+							value={1234}
+						></sc-format-number>
+					</span>
+				</sc-line-item>
+			</div>
 		</Fragment>
 	);
 };

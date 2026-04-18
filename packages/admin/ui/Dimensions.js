@@ -26,7 +26,7 @@ const DIMENSIONS_UNIT_TYPES = [
 	},
 ];
 
-export default ({ dimensions, updateDimensions }) => {
+export default ({ dimensions, updateDimensions, hideHeight = false, required = false }) => {
 	const { length, width, height, unit } = dimensions || {};
 
 	return (
@@ -46,8 +46,11 @@ export default ({ dimensions, updateDimensions }) => {
 				label={__('Length', 'surecart')}
 				value={length}
 				type="number"
+				step={0.01}
 				placeholder="0"
-				min="0"
+				min={required ? '0.01' : '0'}
+				max="999999"
+				required={required}
 				onScInput={(e) =>
 					updateDimensions({
 						dimensions: {
@@ -64,8 +67,11 @@ export default ({ dimensions, updateDimensions }) => {
 				label={__('Width', 'surecart')}
 				value={width}
 				type="number"
+				step={0.01}
 				placeholder="0"
-				min="0"
+				min={required ? '0.01' : '0'}
+				max="999999"
+				required={required}
 				onScInput={(e) =>
 					updateDimensions({
 						dimensions: {
@@ -75,27 +81,32 @@ export default ({ dimensions, updateDimensions }) => {
 					})
 				}
 			/>
-			<ScInput
-				css={css`
-					flex: 1;
-				`}
-				label={__('Height', 'surecart')}
-				value={height}
-				type="number"
-				placeholder="0"
-				min="0"
-				onScInput={(e) =>
-					updateDimensions({
-						dimensions: {
-							...dimensions,
-							height: e.target.value,
-						},
-					})
-				}
-			/>
+			{!hideHeight && (
+				<ScInput
+					css={css`
+						flex: 1;
+					`}
+					label={__('Height', 'surecart')}
+					value={height}
+					type="number"
+					step={0.01}
+					placeholder="0"
+					min={required ? '0.01' : '0'}
+					max="999999"
+					required={required}
+					onScInput={(e) =>
+						updateDimensions({
+							dimensions: {
+								...dimensions,
+								height: e.target.value,
+							},
+						})
+					}
+				/>
+			)}
 			<ScSelect
 				unselect={false}
-				value={unit ?? 'in'}
+				value={unit ?? 'cm'}
 				css={css`
 					flex: 1;
 				`}

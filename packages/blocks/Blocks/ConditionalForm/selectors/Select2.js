@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import { useState } from '@wordpress/element';
 import Select from 'react-select';
-import { Global, css } from '@emotion/react';
 
 function Select2(props) {
 	const {
@@ -27,18 +26,15 @@ function Select2(props) {
 
 	return (
 		<div className="sc-select2-field">
-			<Global
-				styles={css`
-					.sc__indicator.sc__dropdown-indicator svg {
-						width: 13px !important;
-						height: 13px !important;
-					}
-					.sc__indicator.sc__clear-indicator svg {
-						width: 13px !important;
-					}
-				`}
-			/>
-
+			<style>{`
+				.sc__indicator.sc__dropdown-indicator svg {
+					width: 13px !important;
+					height: 13px !important;
+				}
+				.sc__indicator.sc__clear-indicator svg {
+					width: 13px !important;
+				}
+			`}</style>
 			<div className="sc-selection-field">
 				{label && <label>{label}</label>}
 

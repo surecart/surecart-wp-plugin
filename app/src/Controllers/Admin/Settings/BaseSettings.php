@@ -56,6 +56,7 @@ abstract class BaseSettings {
 			'export'                         => __( 'Data Export', 'surecart' ),
 			'connection'                     => __( 'Connection', 'surecart' ),
 			'integrations'                   => __( 'Integrations', 'surecart' ),
+			'learn'                          => __( 'Learn', 'surecart' ),
 			'advanced'                       => __( 'Advanced', 'surecart' ),
 		];
 	}
@@ -154,12 +155,19 @@ abstract class BaseSettings {
 				'time_zones'                   => TimeDate::timezoneOptions(),
 				'entitlements'                 => \SureCart::account()->entitlements,
 				'brand_color'                  => \SureCart::account()->brand->color ?? null,
+				'brand_logo_url'               => \SureCart::account()->brand->logo_url ?? null,
 				'plan_name'                    => \SureCart::account()->plan->name ?? '',
 				'processors'                   => Processor::get(),
 				'is_block_theme'               => (bool) wp_is_block_theme(),
 				'should_load_on_demand_assets' => (bool) \SureCart::theme()->shouldLoadOnDemandBlockAssets(),
 				'claim_url'                    => ! \SureCart::account()->claimed ? \SureCart::routeUrl( 'account.claim' ) : '',
 				'claim_expired'                => \SureCart::account()->claim_expired ?? false,
+				'shop_page_edit_url'           => \SureCart::pages()->getId( 'shop' )
+					? admin_url( 'post.php?post=' . \SureCart::pages()->getId( 'shop' ) . '&action=edit' )
+					: '',
+				'dashboard_page_edit_url'      => \SureCart::pages()->getId( 'dashboard' )
+					? admin_url( 'post.php?post=' . \SureCart::pages()->getId( 'dashboard' ) . '&action=edit' )
+					: '',
 			]
 		);
 	}

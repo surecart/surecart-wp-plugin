@@ -202,6 +202,10 @@ module.exports = {
 			__dirname,
 			'packages/admin/settings/display-currency/index.js'
 		),
+		['admin/settings/learn']: path.resolve(
+			__dirname,
+			'packages/admin/settings/learn/index.js'
+		),
 
 		/**
 		 * Data.

@@ -1,15 +1,11 @@
 /**
- * @jsx jsx
- */
-import { css, jsx } from '@emotion/core';
-
-/**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
 import {
 	InspectorControls,
 	__experimentalUseColorProps as useColorProps,
+	useBlockProps,
 } from '@wordpress/block-editor';
 import { RichText } from '@wordpress/block-editor';
 import {
@@ -25,7 +21,7 @@ import {
  */
 import { ScButton } from '@surecart/components-react';
 
-export default ({ className, attributes, setAttributes }) => {
+export default ({ attributes, setAttributes }) => {
 	const {
 		type,
 		text,
@@ -40,9 +36,10 @@ export default ({ className, attributes, setAttributes }) => {
 
 	const colorProps = useColorProps(attributes);
 	const { style: colorStyle } = colorProps;
+	const blockProps = useBlockProps();
 
 	return (
-		<div className={className}>
+		<div {...blockProps}>
 			<InspectorControls>
 				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
@@ -142,12 +139,11 @@ export default ({ className, attributes, setAttributes }) => {
 			</InspectorControls>
 
 			<div
-				css={css`
-					display: block;
-					width: auto;
-					display: grid;
-					gap: var(--sc-form-row-spacing);
-				`}
+				style={{
+					display: 'grid',
+					width: 'auto',
+					gap: 'var(--sc-form-row-spacing)',
+				}}
 			>
 				<ScButton
 					type={type}
@@ -196,10 +192,10 @@ export default ({ className, attributes, setAttributes }) => {
 
 				{show_secure_notice && (
 					<div
-						css={css`
-							display: flex;
-							justify-content: center;
-						`}
+						style={{
+							display: 'flex',
+							justifyContent: 'center',
+						}}
 					>
 						<sc-secure-notice>
 							{secure_notice_text}

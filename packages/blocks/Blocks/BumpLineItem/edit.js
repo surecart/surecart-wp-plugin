@@ -1,11 +1,12 @@
 import { __ } from '@wordpress/i18n';
-import { InspectorControls } from '@wordpress/block-editor';
+import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
 import { PanelBody, PanelRow, TextControl } from '@wordpress/components';
 import { ScLineItem, ScFormatNumber } from '@surecart/components-react';
 import { Fragment } from '@wordpress/element';
 
 export default ({ attributes, setAttributes }) => {
 	const { label } = attributes;
+	const blockProps = useBlockProps();
 
 	return (
 		<Fragment>
@@ -23,18 +24,20 @@ export default ({ attributes, setAttributes }) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<ScLineItem>
-				<span slot="description">
-					{label || __('Bundle Discount', 'surecart')}
-				</span>
-				<span slot="price">
-					<ScFormatNumber
-						type="currency"
-						currency={scBlockData?.currency || 'usd'}
-						value={-123}
-					></ScFormatNumber>
-				</span>
-			</ScLineItem>
+			<div {...blockProps}>
+				<ScLineItem>
+					<span slot="description">
+						{label || __('Bundle Discount', 'surecart')}
+					</span>
+					<span slot="price">
+						<ScFormatNumber
+							type="currency"
+							currency={scBlockData?.currency || 'usd'}
+							value={-123}
+						></ScFormatNumber>
+					</span>
+				</ScLineItem>
+			</div>
 		</Fragment>
 	);
 };

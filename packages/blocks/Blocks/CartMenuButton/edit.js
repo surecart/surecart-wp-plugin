@@ -26,7 +26,7 @@ export default ({ attributes, setAttributes }) => {
 	});
 
 	return (
-		<div>
+		<div {...blockProps}>
 			<InspectorControls>
 				<PanelBody title={__('Settings', 'surecart')}>
 					<PanelRow>
@@ -85,7 +85,7 @@ export default ({ attributes, setAttributes }) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<a {...blockProps}>
+			<a>
 				<ScCartButton cartMenuAlwaysShown={true} showEmptyCount={true}>
 					<ScIcon name={cart_icon} />
 				</ScCartButton>

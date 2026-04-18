@@ -27,6 +27,9 @@ class CacheServiceProvider implements ServiceProviderInterface {
 		$container['surecart.wpfastest_cache'] = function () {
 			return new WpFastestCacheService();
 		};
+		$container['surecart.w3total_cache']   = function () {
+			return new W3TotalCacheService();
+		};
 	}
 
 	/**
@@ -35,7 +38,16 @@ class CacheServiceProvider implements ServiceProviderInterface {
 	 * @param  \Pimple\Container $container Service Container.
 	 */
 	public function bootstrap( $container ) {
-		$container['surecart.litespeed_cache']->bootstrap();
-		$container['surecart.wpfastest_cache']->bootstrap();
+		// Bootstrap cache services on 'plugins_loaded' to ensure all plugins
+		// are loaded before we check for active cache plugins.
+		add_action(
+			'plugins_loaded',
+			function () use ( $container ) {
+				$container['surecart.litespeed_cache']->bootstrap();
+				$container['surecart.wpfastest_cache']->bootstrap();
+				$container['surecart.w3total_cache']->bootstrap();
+			},
+			999 // Late priority to ensure it runs after most plugins have loaded.
+		);
 	}
 }

@@ -1,7 +1,7 @@
 /**
  * WordPress dependencies.
  */
-import { store, getContext, getElement } from '@wordpress/interactivity';
+import { store, getContext, getElement, withSyncEvent } from '@wordpress/interactivity';
 const { __, sprintf, _n } = wp.i18n;
 const LOCAL_STORAGE_KEY = 'surecart-local-storage';
 let announceTimeout = null;
@@ -130,6 +130,23 @@ const { state, actions } = store('surecart/checkout', {
 		 */
 		get hasDiscountAmount() {
 			return !!state?.checkout?.discount_amount;
+		},
+
+		/**
+		 * Check if the checkout has a subtotal scratch amount different from the subtotal.
+		 */
+		get hasSubtotalScratchAmount() {
+			return !!state?.checkout?.has_subtotal_scratch_amount;
+		},
+
+		/**
+		 * Get the aria label for the subtotal scratch amount.
+		 */
+		get subtotalScratchAriaLabel() {
+			const amount = state?.checkout?.subtotal_scratch_display_amount;
+			return amount
+				? `${__('Original price:', 'surecart')} ${amount}`
+				: '';
 		},
 
 		/**
@@ -358,7 +375,7 @@ const { state, actions } = store('surecart/checkout', {
 			const { line_item } = getContext('surecart/checkout');
 			return (
 				state.isQuantityDisabled ||
-				( line_item?.max && line_item?.quantity >= line_item?.max )
+				(line_item?.max && line_item?.quantity >= line_item?.max)
 			);
 		},
 
@@ -369,7 +386,7 @@ const { state, actions } = store('surecart/checkout', {
 			const { line_item } = getContext('surecart/checkout');
 			return (
 				state.isQuantityDisabled ||
-				line_item?.quantity <= ( line_item?.min || 1 )
+				line_item?.quantity <= (line_item?.min || 1)
 			);
 		},
 	},
@@ -464,7 +481,7 @@ const { state, actions } = store('surecart/checkout', {
 		/**
 		 * Toggle the discount input.
 		 */
-		toggleDiscountInput(e) {
+		toggleDiscountInput: withSyncEvent(function(e) {
 			// check if keydown event and not enter/space key.
 			if (isNotKeySubmit(e)) {
 				return true;
@@ -481,7 +498,7 @@ const { state, actions } = store('surecart/checkout', {
 			if (input) {
 				setTimeout(() => input.focus(), 0);
 			}
-		},
+		}),
 
 		toggleSwap: function* () {
 			const { line_item, mode, formId } = getContext();
@@ -512,7 +529,7 @@ const { state, actions } = store('surecart/checkout', {
 		 * We're handling it additionally here to maintain an order with
 		 * escape key calling for this input and cart drawer.
 		 */
-		maybeApplyDiscountOnKeyChange(e) {
+		maybeApplyDiscountOnKeyChange: withSyncEvent(function(e) {
 			if (e.key === 'Escape' || e.key === 'Enter') {
 				e.preventDefault();
 				e.stopPropagation();
@@ -535,12 +552,12 @@ const { state, actions } = store('surecart/checkout', {
 
 			// if pressed other keys, set the promotion code.
 			actions.setPromotionCode(e);
-		},
+		}),
 
 		/**
 		 * Apply the promotion code.
 		 */
-		applyDiscount: function* (e) {
+		applyDiscount: withSyncEvent(function* (e) {
 			e.preventDefault();
 			e.stopPropagation();
 
@@ -579,7 +596,7 @@ const { state, actions } = store('surecart/checkout', {
 				// Move focus back to #sc-coupon-remove-discount button.
 				moveFocusToElement('#sc-coupon-remove-discount');
 			}
-		},
+		}),
 
 		/**
 		 * Remove the promotion code.
@@ -717,10 +734,7 @@ const { state, actions } = store('surecart/checkout', {
 				/* webpackIgnore: true */
 				'@wordpress/a11y'
 			);
-			speak(
-				__('Updating quantity.', 'surecart'),
-				'assertive'
-			);
+			speak(__('Updating quantity.', 'surecart'), 'assertive');
 			yield actions.updateLineItem({ quantity });
 			speak(
 				sprintf(
@@ -749,10 +763,7 @@ const { state, actions } = store('surecart/checkout', {
 				/* webpackIgnore: true */
 				'@wordpress/a11y'
 			);
-			speak(
-				__('Updating quantity.', 'surecart'),
-				'assertive'
-			);
+			speak(__('Updating quantity.', 'surecart'), 'assertive');
 			yield actions.updateLineItem({ quantity });
 			speak(
 				sprintf(
@@ -811,7 +822,7 @@ const { state, actions } = store('surecart/checkout', {
 		/**
 		 * Remove the line item.
 		 */
-		removeLineItem: function* (e) {
+		removeLineItem: withSyncEvent(function* (e) {
 			if (isNotKeySubmit(e)) {
 				return true;
 			}
@@ -866,7 +877,7 @@ const { state, actions } = store('surecart/checkout', {
 					);
 				nextFocus?.focus();
 			});
-		},
+		}),
 		updateCheckout(e) {
 			const { checkout, mode, formId } = e.detail;
 			actions.setCheckout(checkout, mode, formId);

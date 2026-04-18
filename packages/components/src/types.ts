@@ -432,6 +432,7 @@ export interface Product extends Object {
   stock: number;
   available_stock: number;
   held_stock: number;
+  review_url?: string;
   created_at: number;
   updated_at: number;
 }

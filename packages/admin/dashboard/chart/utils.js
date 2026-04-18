@@ -59,6 +59,70 @@ export const getValidReportByOptions = (
 	return validOptions;
 };
 
+// Calculate previous period dates matching platform (active_date_range library).
+// Detects calendar-aligned ranges (year, quarter, month, week) and subtracts
+// the corresponding calendar unit. Multi-month full ranges subtract by month count.
+// All other ranges shift back by the inclusive day count.
+export const calculatePreviousPeriod = (normalizedStart, normalizedEnd) => {
+	const days = normalizedEnd.diff(normalizedStart, 'day') + 1;
+	const startsOnFirst = normalizedStart.date() === 1;
+	const endsOnLastDay =
+		normalizedEnd.date() === normalizedEnd.daysInMonth();
+
+	// Detect granularity: year, quarter, month, week
+	const isOneYear =
+		days >= 365 &&
+		days <= 366 &&
+		normalizedStart.month() === 0 &&
+		startsOnFirst &&
+		normalizedEnd.month() === 11 &&
+		normalizedEnd.date() === 31;
+	const isOneQuarter =
+		days >= 90 &&
+		days <= 92 &&
+		startsOnFirst &&
+		normalizedStart.month() % 3 === 0 &&
+		endsOnLastDay &&
+		normalizedEnd.diff(normalizedStart, 'month') === 2;
+	const isOneMonth =
+		days >= 28 &&
+		days <= 31 &&
+		startsOnFirst &&
+		endsOnLastDay &&
+		normalizedStart.month() === normalizedEnd.month() &&
+		normalizedStart.year() === normalizedEnd.year();
+	const isOneWeek =
+		days === 7 &&
+		normalizedStart.day() === 1 &&
+		normalizedEnd.day() === 0;
+	const isFullMonth = startsOnFirst && endsOnLastDay;
+
+	const previousEnd = normalizedStart.subtract(1, 'day');
+	let previousStart;
+
+	if (isOneYear) {
+		previousStart = normalizedStart.subtract(1, 'year');
+	} else if (isOneQuarter) {
+		previousStart = normalizedStart.subtract(3, 'month');
+	} else if (isOneMonth) {
+		previousStart = normalizedStart.subtract(1, 'month');
+	} else if (isOneWeek) {
+		previousStart = normalizedStart.subtract(1, 'week');
+	} else if (isFullMonth) {
+		// Multi-month full range: subtract by number of months
+		const monthCount =
+			(normalizedEnd.year() - normalizedStart.year()) * 12 +
+			(normalizedEnd.month() - normalizedStart.month()) +
+			1;
+		previousStart = normalizedStart.subtract(monthCount, 'month');
+	} else {
+		// Standard shift-back by inclusive period length
+		previousStart = normalizedStart.subtract(days, 'day');
+	}
+
+	return { previousStart, previousEnd };
+};
+
 // Get the most granular valid reportBy option for the date range
 export const getOptimalReportBy = (
 	startDate,
